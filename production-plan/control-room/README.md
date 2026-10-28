@@ -50,3 +50,9 @@ v25: visual polish (soft colour glows, rounder roomier panels, pill bars) and th
 - Each card has a "Full preview" box. It lists every preview made so far (the video's `previews` plus each act's own `url`, with duplicates removed). It also has a big "Watch everything so far" button, which opens `previewUrl` or a preview labelled all/full/combined.
 - "Feedback on whole video" button: writes a `requests` doc with kind `feedback` and act `"all"`, and shows the same status icons as act feedback.
 - Rule (Pushpam 28 Oct 22:44Z): a card can come off the production line once its full video is scheduled on Zernio. Reels no longer hold a card.
+
+## v28 (28 Oct 2026)
+The 2D and 3D cards now render the same way:
+- "Your feedback" was blank when a doc's `feedback` was a list of plain strings, which is what the 2D and 3D threads write. It now shows the latest string.
+- The main preview (`mainPreview`) uses `previewUrl` (3D). If that's missing, it falls back to the `previews` entry labelled all/full/combined, or to "Act(s) preview" (2D). Both "Watch everything so far" and the per-act Watch fallback use it, so 2D acts get Watch buttons too.
+- An act labelled "0" now reads "Cold open", the same as "CO".

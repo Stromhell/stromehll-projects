@@ -359,7 +359,7 @@ function clock(t){
   return d.toDateString() === n.toDateString() ? `${time} today` : `${d.toLocaleDateString([], {weekday:"short"})} ${time}`;
 }
 function safeUrl(u){ return typeof u==="string" && /^https:\/\/claude\.ai\//.test(u) ? u : ""; }
-function fbOf(f){ if (Array.isArray(f)) { const x = f[f.length-1]; return x ? {text: x.note || x.text || "", at: typeof x.at === "number" ? x.at : (Date.parse(x.at)/1000 || null)} : null; } return f; }
+function fbOf(f){ if (Array.isArray(f)) { const x = f[f.length-1]; return x ? (typeof x === "string" ? {text: x, at: null} : {text: x.note || x.text || "", at: typeof x.at === "number" ? x.at : (Date.parse(x.at)/1000 || null)}) : null; } if (typeof f === "string") return f ? {text: f, at: null} : null; return f; }
 function esc(s){ return String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
 
 function live(v, el){ // interpolated percent for a video
@@ -467,7 +467,7 @@ document.addEventListener("submit", e => {
   if (!text){ m.textContent = "Type your feedback first."; return; }
   const v = rows().find(x => x.id === f.dataset.vid); if (!v) return;
   const a = (v.acts||[]).find(x => String(x.label) === f.dataset.act) || {label: f.dataset.act};
-  const name = a.label==="all" ? "Whole video" : a.name ? a.name : (String(a.label).toUpperCase()==="CO" ? "Cold open" : "Act " + a.label);
+  const name = a.label==="all" ? "Whole video" : a.name ? a.name : (["CO","0"].includes(String(a.label).toUpperCase()) ? "Cold open" : "Act " + a.label);
   const btn = f.querySelector("button.send"); btn.disabled = true; m.textContent = "Sending…";
   sendReq(v, "feedback", String(a.label), name, text, f.closest("li") || f.closest(".fullpv")).then(r => { btn.disabled = false; m.textContent = r.msg; if (r.ok){ FB_DRAFT[k] = ""; f.querySelector("textarea").value = ""; } HOLD = Date.now() + 4000; });
 });
@@ -476,12 +476,17 @@ let HOLD = 0;
   try { CMT = await window.claude?.use?.("comments"); if (CMT){ const c = await CMT.canSendToClaude(); CMT_OK = c === "available"; } } catch (e) { CMT_OK = false; }
   try { const db = await window.claude?.use?.("db"); if (!db) return; db.collection("requests").onSnapshot(qs => { REQS = (qs.docs||[]).map(d => Object.assign({id: d.id}, d.data())); built = false; }, () => {}); } catch (e) {}
 })();
+function mainPreview(v){
+  const P = (v.previews||[]).filter(x => x && /^https:\/\//.test(x.url||""));
+  const pick = P.find(x => /all|full|combined/i.test(x.label||"")) || P.find(x => /act/i.test(x.label||"") && /preview/i.test(x.label||""));
+  return safeUrl(v.previewUrl || "") || (pick ? (actUrl(pick.url) || safeUrl(pick.url)) : "") || "";
+}
 function fullPreview(v){
   const seen = new Set(), L = [];
   const add = (label, url) => { const u = actUrl(url || "") || safeUrl(url || ""); if (!u || !/^https:\/\//.test(u) || seen.has(u)) return; seen.add(u); L.push({label, url: u}); };
   (v.previews||[]).forEach(x => add(x.label, x.url));
-  (v.acts||[]).forEach(a => add(a.name ? a.name : (String(a.label).toUpperCase()==="CO" ? "Cold open" : "Act " + a.label), a.url || a.preview));
-  const main = safeUrl(v.previewUrl || "") || ((L.find(x => /all|full|combined/i.test(x.label))||{}).url) || "";
+  (v.acts||[]).forEach(a => add(a.name ? a.name : (["CO","0"].includes(String(a.label).toUpperCase()) ? "Cold open" : "Act " + a.label), a.url || a.preview));
+  const main = mainPreview(v);
   const k = v.id + "|all"; const r = actReq(v.id, "all");
   const fbIcon = `<svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></svg>`;
   return `<section class="fullpv" aria-label="Full preview"><div class="fph"><span>Full preview</span><b>${(L.length + (main && !seen.has(main) ? 1 : 0)) ? (L.length + (main && !seen.has(main) ? 1 : 0)) + " made so far" : "Nothing rendered yet"}</b></div>
@@ -494,9 +499,9 @@ function actsBlock(v){
   const A = Array.isArray(v.acts) ? v.acts : [];
   if (!A.length) return "";
   const ST = {done:"Done", active:"Working", review:"Waiting for your OK", fix:"Fixing", todo:"Not started"};
-  const nm = a => a.name ? a.name : (String(a.label).toUpperCase()==="CO" ? "Cold open" : "Act " + a.label);
+  const nm = a => a.name ? a.name : (["CO","0"].includes(String(a.label).toUpperCase()) ? "Cold open" : "Act " + a.label);
   const done = A.filter(a => a.state === "done").length;
-  return `<div class="acts"><div class="acthead"><span>Act by act</span><b>${done} of ${A.length} done</b></div><ol class="actlist">${A.map(a => { const own = actUrl(a.url || a.preview || ""); const u = own || ((a.state && a.state !== "todo") ? actUrl(v.previewUrl || "") : ""); const vu = actUrl(a.video || ""); const st = ST[a.state] || esc(a.state || "Not started"); return `<li class="${esc(a.state||"todo")}"><span class="an">${esc(nm(a))}</span><span class="as"><i></i>${st}${a.pct!=null&&a.state==="active"?` ${Math.round(a.pct)}%`:""}</span><span class="al">${vu?`<button type="button" class="play" data-v="${esc(vu)}" aria-label="Play ${esc(nm(a))}">▶ Play</button>`:""}${u?`<a class="watch" href="${esc(u)}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path d="M7 5v14l12-7z" fill="currentColor"/></svg>${vu?"Open":"Watch"}</a>`:(vu?"":`<span class="np">No render yet</span>`)}<button type="button" class="fbbtn" data-vid="${esc(v.id)}" data-act="${esc(a.label)}" aria-expanded="${FB_OPEN.has(v.id+"|"+a.label)}"><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></svg>Feedback</button></span>${(() => { const r = actReq(v.id, a.label); return r ? `<div class="actnote"><p class="nt">Your note: ${esc(r.text||"")}</p>${stepper(r)}</div>` : ""; })()}${FB_OPEN.has(v.id+"|"+a.label)?fbForm(v.id, a.label, nm(a)):""}</li>`; }).join("")}</ol></div>`;
+  return `<div class="acts"><div class="acthead"><span>Act by act</span><b>${done} of ${A.length} done</b></div><ol class="actlist">${A.map(a => { const own = actUrl(a.url || a.preview || ""); const u = own || ((a.state && a.state !== "todo") ? mainPreview(v) : ""); const vu = actUrl(a.video || ""); const st = ST[a.state] || esc(a.state || "Not started"); return `<li class="${esc(a.state||"todo")}"><span class="an">${esc(nm(a))}</span><span class="as"><i></i>${st}${a.pct!=null&&a.state==="active"?` ${Math.round(a.pct)}%`:""}</span><span class="al">${vu?`<button type="button" class="play" data-v="${esc(vu)}" aria-label="Play ${esc(nm(a))}">▶ Play</button>`:""}${u?`<a class="watch" href="${esc(u)}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path d="M7 5v14l12-7z" fill="currentColor"/></svg>${vu?"Open":"Watch"}</a>`:(vu?"":`<span class="np">No render yet</span>`)}<button type="button" class="fbbtn" data-vid="${esc(v.id)}" data-act="${esc(a.label)}" aria-expanded="${FB_OPEN.has(v.id+"|"+a.label)}"><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></svg>Feedback</button></span>${(() => { const r = actReq(v.id, a.label); return r ? `<div class="actnote"><p class="nt">Your note: ${esc(r.text||"")}</p>${stepper(r)}</div>` : ""; })()}${FB_OPEN.has(v.id+"|"+a.label)?fbForm(v.id, a.label, nm(a)):""}</li>`; }).join("")}</ol></div>`;
 }
 function buildRows(){
   if (!rows().length) { $("vids").innerHTML = `<p class="stage">No videos in production right now. New ones show up here when they start.</p>`; }
