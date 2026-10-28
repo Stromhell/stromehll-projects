@@ -352,15 +352,23 @@ async function sendReq(v, kind, act, actName, text, anchorEl){
   const fmt = (typeof fmtOf === "function") ? fmtOf(v) : (v.format||"");
   const doc = {video: v.id, short: v.short||v.title, title: v.title, format: fmt, kind, act: act||null, actName: actName||null, text, at: Math.floor(Date.now()/1000), status: "new"};
   try { await db.collection("requests").doc(id).set(doc); } catch (e) { return {ok:false, msg:"Not saved. Check your connection and try again."}; }
-  let sent = false;
+  let sent = false, why = "";
   try {
-    if (CMT && CMT_OK && anchorEl){
-      const anchor = await CMT.anchorFor(anchorEl);
-      const lines = [`Control Room request ${id}`, `Video: ${v.title} (${fmt})`, act ? `Act: ${actName}` : null, `Request: ${kind==="feedback"?"Feedback":(KIND_TXT[kind]||[kind,kind])[1]}`, text && kind==="feedback" ? text : null, "Production plan thread: pass this to the thread making this video and update db requests/"+id+"."].filter(Boolean);
-      await CMT.sendToClaude({anchor, text: lines.join("\n")}); sent = true;
+    if (!CMT) CMT = await window.claude?.use?.("comments");
+    if (!CMT) why = "comments are off in this view";
+    else {
+      let c = "off"; try { c = await CMT.canSendToClaude(); } catch (e) { c = "off"; }
+      CMT_OK = c === "available";
+      if (!CMT_OK) why = c === "no_session" ? "no Claude session was listening" : c === "writers_only" ? "only editors can send to Claude" : "sending to Claude is off in this view";
+      else if (anchorEl){
+        const anchor = await CMT.anchorFor(anchorEl);
+        const lines = [`Control Room request ${id}`, `Video: ${v.title} (${fmt})`, act ? `Act: ${actName}` : null, `Request: ${kind==="feedback"?"Feedback":(KIND_TXT[kind]||[kind,kind])[1]}`, text && kind==="feedback" ? text : null, "Production plan thread: pass this to the thread making this video and update db requests/"+id+"."].filter(Boolean);
+        await CMT.sendToClaude({anchor, text: lines.join("\n")}); sent = true;
+      }
     }
-  } catch (e) {}
-  return {ok:true, msg: sent ? "Sent. Claude is passing it to the team now." : "Saved. The team picks it up on its next update."};
+  } catch (e) { why = e && e.code === "consent_required" ? "you didn't allow the page to comment for you" : e && e.code === "forbidden" ? "commenting from the page is turned off for you" : e && e.code === "rate_limited" ? "too many sends in a row" : "the instant send failed (" + ((e && e.code) || "error") + ")"; }
+  if (!sent){ try { await db.collection("requests").doc(id).update({sendError: why || "unknown"}); } catch (e) {} }
+  return {ok:true, msg: sent ? "Sent. Claude is passing it to the team now." : `Saved, but it couldn't be sent instantly (${why}). It is checked every hour and passed on then.`};
 }
 document.addEventListener("click", e => {
   const fb = e.target.closest && e.target.closest("button.fbbtn");
