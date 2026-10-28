@@ -1,0 +1,189 @@
+{
+ "dur": 42.565999999999995,
+ "cues": [
+  {
+   "t": 0,
+   "name": "swell",
+   "gain": 0.35
+  },
+  {
+   "t": 0.4,
+   "name": "scrape",
+   "gain": 0.25
+  },
+  {
+   "t": 1.6,
+   "name": "scrape",
+   "gain": 0.2
+  },
+  {
+   "t": 3.538,
+   "name": "coins_cascade",
+   "gain": 0.4
+  },
+  {
+   "t": 5.338,
+   "name": "hit",
+   "gain": 0.55
+  },
+  {
+   "t": 6.533,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 6.733,
+   "name": "night_loop",
+   "gain": 0.2
+  },
+  {
+   "t": 8.701,
+   "name": "door_slam",
+   "gain": 0.25
+  },
+  {
+   "t": 9.001,
+   "name": "crowd_loop",
+   "gain": 0.3
+  },
+  {
+   "t": 13.681,
+   "name": "chime",
+   "gain": 0.4
+  },
+  {
+   "t": 14.896,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 16.863,
+   "name": "stamp",
+   "gain": 0.55
+  },
+  {
+   "t": 16.903,
+   "name": "thud",
+   "gain": 0.3
+  },
+  {
+   "t": 17.533,
+   "name": "thud",
+   "gain": 0.3
+  },
+  {
+   "t": 18.163,
+   "name": "thud",
+   "gain": 0.3
+  },
+  {
+   "t": 18.793,
+   "name": "thud",
+   "gain": 0.3
+  },
+  {
+   "t": 19.423,
+   "name": "thud",
+   "gain": 0.3
+  },
+  {
+   "t": 20.053,
+   "name": "thud",
+   "gain": 0.3
+  },
+  {
+   "t": 20.183,
+   "name": "heartbeat",
+   "gain": 0.55
+  },
+  {
+   "t": 21.458,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 22.942,
+   "name": "riser",
+   "gain": 0.5
+  },
+  {
+   "t": 24.342,
+   "name": "hit",
+   "gain": 0.6
+  },
+  {
+   "t": 28.749,
+   "name": "whoosh",
+   "gain": 0.5
+  },
+  {
+   "t": 33.496,
+   "name": "paper",
+   "gain": 0.5
+  },
+  {
+   "t": 33.696,
+   "name": "swell",
+   "gain": 0.4
+  },
+  {
+   "t": 37.866,
+   "name": "riser",
+   "gain": 0.5
+  },
+  {
+   "t": 38.116,
+   "name": "hit",
+   "gain": 0.9
+  },
+  {
+   "t": 38.166,
+   "name": "swell",
+   "gain": 0.5
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 7.233,
+   "name": "hum_loop",
+   "gain": 0.35
+  },
+  {
+   "start": 6.433,
+   "end": 15.596,
+   "name": "night_loop",
+   "gain": 0.45
+  },
+  {
+   "start": 14.796,
+   "end": 22.158,
+   "name": "office_loop",
+   "gain": 0.35
+  },
+  {
+   "start": 14.796,
+   "end": 22.158,
+   "name": "tension",
+   "gain": 0.3
+  },
+  {
+   "start": 21.358,
+   "end": 29.449,
+   "name": "hum_loop",
+   "gain": 0.5
+  },
+  {
+   "start": 28.649,
+   "end": 38.565999999999995,
+   "name": "hum_loop",
+   "gain": 0.5
+  },
+  {
+   "start": 37.766,
+   "end": 43.36599999999999,
+   "name": "hum_loop",
+   "gain": 0.4
+  }
+ ]
+}

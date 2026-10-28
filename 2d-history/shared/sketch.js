@@ -28,6 +28,14 @@
     switch (name) {
       case 'fire': fire(c, x, y, s); break;
       case 'tree': tree(c, x, y, s); break;
+      case 'dome': rect(c, x - S * .8, y - S * 1.3, S * 1.6, S * 1.3, 1.4); ell(c, x, y - S * 1.3, S * .8, S * .75, Math.PI, Math.PI * 2, 1.6); ln(c, [[x, y - S * 2.05], [x, y - S * 2.35]], 1); rect(c, x - S * .2, y - S * .6, S * .4, S * .6, 1); rect(c, x + S * 1, y - S * 2.4, S * .22, S * 2.4, 1.1); if (lab) label(c, lab, x, y + 16); break;
+      case 'trebuchet': ln(c, [[x - S, y], [x, y - S * 1.4], [x + S, y]], 1.8); ln(c, [[x - S * 1.4, y - S * 2.2], [x + S * .9, y - S * .9]], 2); rect(c, x + S * .7, y - S * .9, S * .4, S * .4, 1.2); ln(c, [[x - S * 1.4, y - S * 2.2], [x - S * 1.5, y - S * 1.6]], 1); circ(c, x - S * 1.5, y - S * 1.5, S * .12, 1); if (lab) label(c, lab, x, y + 16); break;
+      case 'horse': { ell(c, x, y - S * 1.25, S * 1.25, S * .5); for (const dx of [-.95, -.65, .6, .9]) ln(c, [[x + dx * S, y - S * .95], [x + dx * S + j(2), y - S * .4], [x + dx * S + j(2), y]], 1.6); ln(c, [[x + S * .9, y - S * 1.55], [x + S * 1.35, y - S * 2.45]], 2); ln(c, [[x + S * 1.15, y - S * 1.2], [x + S * 1.6, y - S * 2.2]], 2); ln(c, [[x + S * 1.3, y - S * 2.55], [x + S * 2.05, y - S * 1.95], [x + S * 1.9, y - S * 1.75], [x + S * 1.55, y - S * 2.1]], 1.8); ln(c, [[x + S * 1.3, y - S * 2.55], [x + S * 1.38, y - S * 2.8], [x + S * 1.48, y - S * 2.52]], 1.2); hatch(c, x + S * .9, y - S * 2.5, S * .45, S * .9, 4, .3); ln(c, [[x - S * 1.2, y - S * 1.4], [x - S * 1.6, y - S * .9], [x - S * 1.5, y - S * .5]], 1.6); hatch(c, x - S * 1.1, y - S * 1.6, S * 2.2, S * .6, 9, .12); if (lab) label(c, lab, x, y + 16); break; }
+      case 'ger': ell(c, x, y - S * .9, S * 1.3, S * .5, Math.PI, Math.PI * 2); ln(c, [[x - S * 1.3, y - S * .9], [x - S * 1.3, y], [x + S * 1.3, y], [x + S * 1.3, y - S * .9]]); rect(c, x - S * .25, y - S * .7, S * .5, S * .7, 1.2); hatch(c, x - S * 1.3, y - S * .9, S * 2.6, S * .9, 10, .12); circ(c, x, y - S * 1.38, S * .12, 1); if (lab) label(c, lab, x, y + 16); break;
+      case 'bow': ell(c, x, y, S * .35, S * 1, -Math.PI / 2, Math.PI / 2, 2); ln(c, [[x, y - S], [x, y + S]], .9); ln(c, [[x - S * .9, y], [x + S * .6, y]], 1.2); if (lab) label(c, lab, x, y + S + 16); break;
+      case 'wall': { ln(c, [[x - S * 3, y], [x + S * 3, y]]); ln(c, [[x - S * 3, y - S], [x + S * 3, y - S]]); for (let k = -3; k < 3; k += .5) rect(c, x + k * S, y - S * 1.3, S * .25, S * .3, 1); rect(c, x - S * .5, y - S * 1.9, S, S * 1.9); if (lab) label(c, lab, x, y + 16); break; }
+      case 'ship': ln(c, [[x - S * 1.5, y - S * .5], [x - S, y], [x + S, y], [x + S * 1.5, y - S * .5], [x - S * 1.5, y - S * .5]], 1.6); ln(c, [[x, y - S * .5], [x, y - S * 2]], 1.6); rect(c, x - S * .6, y - S * 1.9, S * 1.2, S * 1.1, 1.2); if (lab) label(c, lab, x, y + 16); break;
+      case 'tomb': ell(c, x, y, S * 1.6, S * .7, Math.PI, Math.PI * 2); ln(c, [[x - S * 1.6, y], [x + S * 1.6, y]]); label(c, '?', x, y - S * .3, 34); if (lab) label(c, lab, x, y + 16); break;
       case 'hut': hut(c, x, y, s); break;
       case 'rock': ell(c, x, y, S * .8, S * .4, Math.PI, Math.PI * 2); ln(c, [[x - S * .8, y], [x + S * .8, y]]); break;
       case 'phone': rect(c, x - S * .3, y - S * .55, S * .6, S * 1.1); rect(c, x - S * .22, y - S * .45, S * .44, S * .8, 1); break;
@@ -65,6 +73,8 @@
     if (lab) label(c, lab, x, y + S * .9 + 12, 17);
   };
   const BG = {
+    steppe: (c, x0, w) => { ln(c, [[x0, 300], [x0 + w * .25, 284], [x0 + w * .5, 296], [x0 + w * .8, 280], [x0 + w, 292]], 1.2, .5); ground(c, 320); circ(c, x0 + w * .82, 120, 20, 1.2); for (let i = 0; i < 4; i++) ln(c, [[x0 + w * (.1 + i * .2), 360 + i * 30], [x0 + w * (.16 + i * .2), 356 + i * 30]], .9, .4); },
+    oldcity: (c, x0, w) => { ground(c, 380); ln(c, [[x0, 300], [x0 + w, 300]]); for (let xx = x0; xx < x0 + w; xx += 22) rect(c, xx, 288, 12, 12, 1); for (let i = 0; i < 4; i++) { const cx = x0 + w * (.15 + i * .24), r = 28 + R() * 18; rect(c, cx - r, 300 - r * 1.6, r * 2, r * 1.6, 1.2); ell(c, cx, 300 - r * 1.6, r, r * .9, Math.PI, Math.PI * 2, 1.4); ln(c, [[cx, 300 - r * 2.5], [cx, 300 - r * 2.8]], 1); } for (const f of [.08, .62]) { const mx = x0 + w * f; rect(c, mx, 140, 14, 160, 1.2); ell(c, mx + 7, 140, 7, 10, Math.PI, Math.PI * 2, 1); } hatch(c, x0, 300, w, 80, 11, .1); ln(c, [[x0, 380], [x0 + w, 380]]); },
     savanna: (c, x0, w) => { ln(c, [[x0, 280], [x0 + w * .3, 268], [x0 + w * .6, 276], [x0 + w, 266]], 1.2, .5); ground(c, 300); circ(c, x0 + w * .75, 250, 18, 1.2); tree(c, x0 + w * .18, 330, .9); },
     savannaNight: (c, x0, w) => { hatch(c, x0, 0, w, 300, 5, .28); BG.savanna(c, x0, w); },
     night: (c, x0, w) => { hatch(c, x0, 0, w, H, 5, .3); ground(c, 330); },

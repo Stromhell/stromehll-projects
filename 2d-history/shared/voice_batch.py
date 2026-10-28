@@ -26,7 +26,7 @@ def respell(t):
     t = re.sub(r"\b2000s\b", 'two thousands', t)
     t = re.sub(r"\b(1[89]\d\d|20[0-4]\d)\b", lambda m: year(int(m.group(1))), t)
     return t
-vids = sys.argv[1:]
+os.chdir(os.path.dirname(os.path.abspath(__file__)) + '/..'); vids = [os.path.abspath(v) for v in sys.argv[1:]]
 acts = {v: sorted(glob.glob(f'{v}/production/voice/act*.txt'), key=lambda p: int(re.search(r'act(\d+)', p).group(1))) for v in vids}
 acts = {v: [p for p in ps if not p.endswith('.say.txt')] for v, ps in acts.items()}
 for i in range(max(len(x) for x in acts.values())):
@@ -37,5 +37,5 @@ for i in range(max(len(x) for x in acts.values())):
         if len(glob.glob(f'{out}/vo-*.wav')) >= n: continue
         say = src[:-4] + '.say.txt'; open(say, 'w').write(respell(open(src).read()))
         t0 = time.time()
-        r = subprocess.run([PY, SPEAK, '--file', say, '--scenes', '--energy', '0.45', '--pace', '0.42', '--pause', '0.4', '--out', f'{out}/vo.wav'], capture_output=True, text=True)
+        r = subprocess.run([PY, SPEAK, '--file', say, '--scenes', '--energy', '0.45', '--pace', '0.42', '--pause', '0.4', '--out', f'{out}/vo.wav'], capture_output=True, text=True, cwd='/tmp')
         print(v, os.path.basename(src), 'rc', r.returncode, f'{time.time()-t0:.0f}s', (r.stdout + r.stderr)[-300:].replace('\n', ' | '), flush=True)

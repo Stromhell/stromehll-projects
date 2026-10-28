@@ -1,0 +1,125 @@
+<!doctype html><html><head><meta charset="utf-8"><title>BR act 0 - cold open</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig.js"></script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../../../shared/p2/world.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['skyline', 'boardroom', 'worldmap', 'court', 'trading']) K.load(n, PL + n + '.jpg');
+for (const n of ['fg_crt']) K.load(n, PL + n + '.png');
+const T = window.TIMING; const last = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length + 1, start: last.end, end: last.end + 4.8, vo_start: last.end, vo_end: last.end, text: '' }); T.dur = last.end + 4.8;
+const SW = 1920, SH = 1080, INK = '#1d1712', CREAM = '#f6efe2', GOLD = '#e8b44a', RED = '#d9483b';
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+const font = (px, fam = 'Anton') => `${px}px ${fam}`;
+const rr = (c, x, y, w, h, r) => { c.beginPath(); c.roundRect(x, y, w, h, r); };
+// glass panel (screen space)
+const panel = (c, x, y, w, h, a = 1) => { c.save(); c.globalAlpha *= a; c.fillStyle = 'rgba(8,10,18,.72)'; rr(c, x, y, w, h, 18); c.fill(); c.strokeStyle = 'rgba(232,180,74,.55)'; c.lineWidth = 2; c.stroke(); c.restore(); };
+// a small dark tower glyph
+const towerIcon = (c, x, y, s, col = '#0e1118') => { c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = col; c.beginPath(); c.moveTo(-14, 0); c.lineTo(-11, -70); c.lineTo(-2, -82); c.lineTo(11, -74); c.lineTo(14, 0); c.fill(); c.fillStyle = GOLD; for (let j = 0; j < 3; j++) for (let i = 0; i < 3; i++) c.fillRect(-8 + i * 6, -70 + j * 6, 3.5, 3.5); c.restore(); };
+// ownership bars panel: rows appear at given times
+const ownBars = (rows, opts = {}) => (c, lt) => { const x = opts.x ?? 1040, y = opts.y ?? 250, w = 780, a = K.seg(lt, opts.at ?? .2, (opts.at ?? .2) + .4); if (a <= 0) return; c.save(); c.globalAlpha = a; c.translate(0, (1 - E.out(a)) * 30);
+  panel(c, x, y, w, 120 + rows.length * 150); c.fillStyle = 'rgba(246,239,226,.7)'; c.font = font(26, 'Oswald'); c.textBaseline = 'middle'; c.fillText('SHARE OF NVIDIA OWNED', x + 36, y + 50);
+  const bx = x + 36, bw = w - 72, max = 10; c.strokeStyle = 'rgba(246,239,226,.15)'; c.lineWidth = 1; for (let k = 0; k <= 10; k += 2) { const gx = bx + bw * k / max; c.beginPath(); c.moveTo(gx, y + 90); c.lineTo(gx, y + 90 + rows.length * 150); c.stroke(); c.fillStyle = 'rgba(246,239,226,.35)'; c.font = font(18, 'Oswald'); c.fillText(k + '%', gx - 10, y + 105 + rows.length * 150); }
+  rows.forEach((r0, i) => { const ry = y + 110 + i * 150, u = E.io(K.seg(lt, r0.at, r0.at + (r0.dur ?? 2.2))); if (lt < r0.at - .3) return; const ap = K.seg(lt, r0.at - .3, r0.at);
+    c.globalAlpha = a * ap; c.fillStyle = CREAM; c.font = font(38); c.fillText(r0.label, bx + (r0.icon ? 46 : 0), ry + 18); if (r0.icon) towerIcon(c, bx + 16, ry + 44, .5, '#d8dce8');
+    c.fillStyle = 'rgba(246,239,226,.12)'; rr(c, bx, ry + 50, bw, 52, 10); c.fill(); const vw = bw * r0.v / max * u; const g = c.createLinearGradient(bx, 0, bx + vw, 0); g.addColorStop(0, r0.c0); g.addColorStop(1, r0.c1); c.fillStyle = g; rr(c, bx, ry + 50, Math.max(vw, 1), 52, 10); c.fill();
+    c.fillStyle = '#fff'; c.font = font(40); c.textAlign = 'right'; c.fillText('~' + (r0.v * u).toFixed(1) + '%', bx + Math.max(vw, 120) - 12, ry + 77); c.textAlign = 'left'; });
+  c.restore(); };
+// chip with a stamped X
+const noChip = (at) => (c, lt) => { const p = pop(lt, at); if (p <= 0) return; c.save(); c.translate(1500, 790); c.scale(p * .85, p * .85); c.fillStyle = '#2a2f3a'; rr(c, -60, -60, 120, 120, 10); c.fill(); c.strokeStyle = '#c9a24a'; c.lineWidth = 4; for (let k = -2; k <= 2; k++) { for (const s of [-1, 1]) { c.beginPath(); c.moveTo(k * 22, s * 60); c.lineTo(k * 22, s * 80); c.stroke(); c.beginPath(); c.moveTo(s * 60, k * 22); c.lineTo(s * 80, k * 22); c.stroke(); } } c.fillStyle = '#3a4252'; rr(c, -34, -34, 68, 68, 6); c.fill();
+  const q = K.seg(lt, at + .5, at + .75); if (q > 0) { c.strokeStyle = RED; c.lineWidth = 18; c.lineCap = 'round'; c.globalAlpha = q; c.beginPath(); c.moveTo(-95, -95); c.lineTo(95, 95); c.moveTo(95, -95); c.lineTo(-95, 95); c.stroke(); } c.restore();
+  if (lt > at + .5) K.outlined(c, 'NEVER DESIGNED A CHIP', 1500, 925, 44, { alpha: K.seg(lt, at + .5, at + .9) }); };
+// company tile grid with ownership wedges
+const tiles = (S) => { const names = ['APPLE', 'MICROSOFT', 'AMAZON', 'ALPHABET', 'META', 'NVIDIA', 'JPMORGAN', 'EXXON', 'WALMART', 'VISA', 'PFIZER', 'COCA-COLA', 'BOEING', 'DISNEY', 'NIKE', 'INTEL', 'PEPSICO', 'CHEVRON'];
+  const t0 = A.at(S, 'Apple', .4), t1 = A.at(S, 'almost every', 3.2); const cols = ['#4a6fa5', '#5b8c5a', '#c7843a', '#8a5aa8', '#3a8fa3', '#76a03c', '#a34a4a', '#b0703a', '#3c6fbf', '#2d5f9a', '#4a8ab0', '#b23a3a', '#4a6aa0', '#3a5aa8', '#c25a2a', '#3a7ac0', '#2a6ab0', '#3a9a7a'];
+  return (c, lt) => { c.fillStyle = `rgba(6,8,14,${.55 * K.seg(lt, 0, .5)})`; c.fillRect(0, 0, SW, SH);
+    names.forEach((n, i) => { const big = i < 2, at = big ? t0 + i * .45 : t1 + (i - 2) * .12; const p = pop(lt, at - .2, .4); if (p <= 0) return; let x, y, w, h;
+      if (big) { w = 520; h = 300; x = 410 + i * 580; y = 220; } else { const k = i - 2, col = k % 8, row = k / 8 | 0; w = 190; h = 120; x = 150 + col * 210; y = 620 + row * 150; }
+      c.save(); c.translate(x + w / 2, y + h / 2); c.scale(p, p); c.fillStyle = 'rgba(0,0,0,.4)'; rr(c, -w / 2 + 6, -h / 2 + 8, w, h, 16); c.fill(); const g = c.createLinearGradient(0, -h / 2, 0, h / 2); g.addColorStop(0, cols[i]); g.addColorStop(1, '#1a1e2a'); c.fillStyle = g; rr(c, -w / 2, -h / 2, w, h, 16); c.fill();
+      c.fillStyle = CREAM; c.font = font(big ? 64 : 26); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(n, 0, big ? -20 : 0);
+      const wq = E.out(K.seg(lt, at + .35, at + 1.1)); if (wq > 0) { c.fillStyle = 'rgba(8,8,12,.85)'; c.beginPath(); c.moveTo(w / 2 - 6, -h / 2 + 6); c.arc(w / 2 - 6, -h / 2 + 6, (big ? 120 : 52) * wq, Math.PI / 2, Math.PI, false); c.closePath(); c.fill(); towerIcon(c, w / 2 - (big ? 42 : 20), -h / 2 + (big ? 70 : 34), big ? .55 : .26, GOLD); }
+      if (big && wq > .6) { c.fillStyle = GOLD; c.font = font(48, 'Oswald'); c.fillText('~7–8%', 0, 70); }
+      c.restore(); }); }; };
+// crossed-out items (no factory / product / shop)
+const noItems = (S) => { const items = [['factory', 'NO FACTORY'], ['product', 'NO PRODUCT'], ['shop', 'NO SHOP']].map(([w, l], i) => ({ l, at: A.at(S, w, 3 + i * .6) }));
+  S.D.sfx.push(...items.map(it => [it.at, 'stamp', .5]));
+  return (c, lt) => items.forEach((it, i) => { const p = pop(lt, it.at, .35); if (p <= 0) return; const x = 360 + i * 600, y = 780; c.save(); c.translate(x, y); c.scale(p, p); c.rotate((i - 1) * .04); c.fillStyle = 'rgba(8,10,18,.78)'; rr(c, -230, -62, 460, 124, 14); c.fill(); c.fillStyle = CREAM; c.font = font(58); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(it.l, 0, 4); c.strokeStyle = RED; c.lineWidth = 10; c.lineCap = 'round'; const q = E.out(K.seg(lt, it.at + .2, it.at + .45)); c.beginPath(); c.moveTo(-200, 0); c.lineTo(-200 + 400 * q, 0); c.stroke(); c.restore(); }); };
+// coin stack on the boardroom table (world coords), height to value
+const coins = (S) => { const at = A.at(S, 'fifteen', 2.6); S.D.sfx.push([at - .4, 'coins_cascade', .5], [at + 1.6, 'hit', .5]);
+  return { live: (c, lt) => { const u = E.out(K.seg(lt, .3, at + 1.6)), n = Math.round(4 + 70 * u), x = 1280, y = 1120; c.save(); c.fillStyle = 'rgba(0,0,0,.35)'; c.beginPath(); c.ellipse(x, y + 6, 120, 26, 0, 0, 7); c.fill();
+      for (let i = 0; i < n; i++) { const yy = y - i * 9, dx = Math.sin(i * 1.7) * 4; const g = c.createLinearGradient(x - 90, 0, x + 90, 0); g.addColorStop(0, '#8a6420'); g.addColorStop(.35, '#f2cc6a'); g.addColorStop(.7, '#c99a3a'); g.addColorStop(1, '#7a5418'); c.fillStyle = g; c.fillRect(x - 90 + dx, yy - 9, 180, 9); c.fillStyle = '#ffe9a8'; c.beginPath(); c.ellipse(x + dx, yy - 9, 90, 18, 0, 0, 7); c.fill(); c.strokeStyle = 'rgba(120,80,20,.6)'; c.lineWidth = 1.5; c.stroke(); }
+      const top = y - n * 9; c.globalCompositeOperation = 'screen'; const rg = c.createRadialGradient(x, top, 0, x, top, 260); rg.addColorStop(0, 'rgba(255,210,120,.35)'); rg.addColorStop(1, 'rgba(255,210,120,0)'); c.fillStyle = rg; c.fillRect(x - 260, top - 260, 520, 520); c.restore();
+      for (let k = 0; k < 10; k++) { const ph = (lt * 1.3 + k * .37) % 1; if (lt < .5 || lt > at + 1.6) continue; const fx = x - 70 + (k * 37) % 140, fy = top - 260 + ph * 260; c.fillStyle = `rgba(255,220,130,${1 - ph})`; c.beginPath(); c.ellipse(fx, fy, 22, 7, k, 0, 7); c.fill(); } },
+    over: (c, lt) => { K.counter(c, 0, 15.3, lt, { at: at - .3, dur: 1.9, fmt: v => '$' + v.toFixed(1), post: ' TRILLION', x: SW / 2, y: 170, px: 120, fill: GOLD }); K.badge(c, 'MID-2026 · ASSETS MANAGED', lt, { at: at + .3 }); } }; };
+// map highlights + GDP stack
+const mapScene = (S) => { const pr = { x0: 160, y0: 272, k: 6.2222, lon0: -170, lat0: 84 }; const ts = ['India', 'Japan', 'France'].map((n, i) => ({ n, at: A.at(S, n, 1 + i * .7) })); const gdp = { India: 4.2, Japan: 4.2, France: 3.2 }, cols = { India: '#e07a3a', Japan: '#d94a5a', France: '#4a7ad0' };
+  S.D.sfx.push(...ts.map(t => [t.at, 'pop', .5]));
+  const path = (c, name) => { const rings = (window.WORLD || {})[name] || []; c.beginPath(); for (const R0 of rings) { for (let i = 0; i < R0.length; i += 2) { let lon = R0[i]; if (lon < pr.lon0) lon += 360; const x = pr.x0 + (lon - pr.lon0) * pr.k, y = pr.y0 + (pr.lat0 - R0[i + 1]) * pr.k; i ? c.lineTo(x, y) : c.moveTo(x, y); } c.closePath(); } };
+  const ct = { India: [79, 22], Japan: [138, 37], France: [2.5, 46.5] };
+  return { live: (c, lt) => ts.forEach(t => { const a = K.seg(lt, t.at, t.at + .4); if (a <= 0) return; const pulse = 1 + .3 * Math.exp(-(lt - t.at) * 3) * Math.sin((lt - t.at) * 14); c.save(); c.globalAlpha = .85 * a; c.fillStyle = cols[t.n]; path(c, t.n); c.fill(); c.strokeStyle = '#fff6e0'; c.lineWidth = 3 * pulse; c.stroke(); c.restore();
+      const [lon, lat] = ct[t.n], x = pr.x0 + (lon - pr.lon0) * pr.k, y = pr.y0 + (pr.lat0 - lat) * pr.k; c.save(); c.globalAlpha = a; c.strokeStyle = cols[t.n]; c.lineWidth = 4; c.beginPath(); c.arc(x, y, 30 + 60 * (1 - a) + 8 * pulse, 0, 7); c.stroke(); K.outlined(c, t.n.toUpperCase(), x, y - 64, 38, { alpha: a }); c.restore(); }),
+    over: (c, lt) => { const a = K.seg(lt, ts[0].at - .2, ts[0].at + .3); if (a <= 0) return; const x = 120, base = 900, k = 34, w = 150; c.save(); c.globalAlpha = a; panel(c, x - 40, 200, 480, 800);
+      let y = base; ts.forEach(t => { const u = E.out(K.seg(lt, t.at + .1, t.at + .7)); const h = gdp[t.n] * k * 1.1 * u; c.fillStyle = cols[t.n]; c.fillRect(x, y - h, w, h); c.strokeStyle = 'rgba(0,0,0,.35)'; c.strokeRect(x, y - h, w, h); if (u > .5) { c.fillStyle = '#fff'; c.font = font(24, 'Oswald'); c.textAlign = 'center'; c.fillText(t.n.toUpperCase() + ' ~$' + gdp[t.n] + 'T', x + w / 2, y - h / 2 + 8); } y -= h; });
+      const bu = E.out(K.seg(lt, ts[2].at + .6, ts[2].at + 1.6)), bh = 15.3 * k * 1.1 * bu; const g = c.createLinearGradient(0, base - bh, 0, base); g.addColorStop(0, '#2a3040'); g.addColorStop(1, '#0c0f16'); c.fillStyle = g; c.fillRect(x + w + 40, base - bh, w, bh); c.strokeStyle = GOLD; c.lineWidth = 3; c.strokeRect(x + w + 40, base - bh, w, bh); if (bu > .3) towerIcon(c, x + w * 1.5 + 40, base - bh - 6, .7, '#0e1118');
+      c.fillStyle = CREAM; c.font = font(24, 'Oswald'); c.textAlign = 'center'; c.fillText('3 ECONOMIES', x + w / 2, base + 40); c.fillText('BLACKROCK', x + w * 1.5 + 40, base + 40); if (bu > .9) { c.fillStyle = GOLD; c.font = font(40); c.fillText('$15.3T', x + w * 1.5 + 40, base - bh - 120); }
+      c.fillStyle = 'rgba(246,239,226,.5)'; c.font = font(17, 'Oswald'); c.fillText('GDP: IMF 2025 estimates', x + 200, 975); c.restore(); K.card(c, 'BIGGER THAN NATIONS', lt, { at: ts[2].at + 1.2, x: 1150, y: 140, px: 64, rot: -2 }); } }; };
+// podium overlay: redraw the painted podium on top of the speaker
+const podiumFront = (px) => (c) => { const x = px - 125, y = 1411 - 300 - 40, w = 250, h = 340; c.drawImage(K.imgs.court, x, y, w, h, x, y, w, h); };
+const quoteCard = (txt, who, x, y, at, until, rot) => (c, lt) => { K.card(c, txt, lt, { at, until, x, y, px: 46, rot, fam: 'Caveat' }); if (lt > at) K.outlined(c, who, x, y - 86, 28, { fam: 'Oswald', alpha: K.seg(lt, at, at + .4) * (1 - K.seg(lt, until - .3, until)) }); };
+// CRT text with a red loss flash (screen space, after fg_crt sprite drawn at plate scale)
+const crtScreen = (S) => { const at = A.at(S, 'hundred million', 6.5); S.D.sfx.push([at - .1, 'hit', .7], [at, 'heartbeat', .6]);
+  const lines = ['FIRST BOSTON  MORTGAGE DESK', 'POSITION   CMO TRANCHE B', 'RATE MOVE  -50 BP', 'MARK       RECALC ...', 'P&L        ', '']; return (c, lt, u) => { const k = 1920 / 2560, bx = ENVBOX.x * k, by = ENVBOX.y * k, bw = ENVBOX.w * k, bh = ENVBOX.h * k;
+    c.save(); c.beginPath(); c.rect(bx, by, bw, bh); c.clip(); const red = lt > at; const fl = red ? (Math.sin(lt * 18) > 0 ? 1 : .7) : 1; c.fillStyle = red ? `rgba(90,8,8,${.9 * fl})` : '#06140a'; c.fillRect(bx, by, bw, bh);
+    c.font = '34px "Courier New", monospace'; c.textBaseline = 'top'; const typed = Math.floor((lt - .4) * 22); let cnt = 0; lines.forEach((l, i) => { const vis = l.slice(0, Math.max(0, typed - cnt)); cnt += l.length; c.fillStyle = red ? '#ffb0a0' : '#5af07a'; c.fillText(vis, bx + 40, by + 40 + i * 52); });
+    if (red) { c.fillStyle = '#ff5040'; c.font = font(96, 'Anton'); c.textAlign = 'center'; c.fillText('-$100,000,000', bx + bw / 2, by + bh * .62); }
+    c.fillStyle = 'rgba(0,0,0,.25)'; for (let y = by; y < by + bh; y += 4) c.fillRect(bx, y, bw, 1.5); c.restore(); if (red) { c.save(); c.globalCompositeOperation = 'screen'; const g = c.createRadialGradient(bx + bw / 2, by + bh / 2, 0, bx + bw / 2, by + bh / 2, 900); g.addColorStop(0, `rgba(255,40,30,${.35 * fl})`); g.addColorStop(1, 'rgba(255,40,30,0)'); c.fillStyle = g; c.fillRect(0, 0, SW, SH); c.restore(); } }; };
+const ENVBOX = { x: 1150, y: 526, w: 873, h: 618 };
+// windows flicker on the hero tower (title)
+const towerFlicker = (c, lt) => { c.save(); c.globalCompositeOperation = 'screen'; for (let k = 0; k < 40; k++) { const on = Math.sin(lt * (1 + k % 5) + k * 7) > .6; if (!on) continue; const x = 1170 + (k * 53) % 220, y = 260 + (k * 97) % 860; c.fillStyle = 'rgba(255,214,140,.55)'; c.fillRect(x, y, 7, 11); } c.restore(); };
+
+window.SHOTS = [
+  // 1 CU: Jensen in the boardroom; his share bar fills to 3.5%
+  { plate: 'boardroom', cam: { z: [1.18, 1.24], x: [1000, 1010], y: [760, 770] }, bed: [['hum_loop', .4], ['city_loop', .25]], inSfx: false,
+    figs: [{ x: 560, y: 1420, s: 2.6, pose: 'stand', costume: 'leather', hair: 'swept', glasses: true, facing: 1, talk: [0, 0] }],
+    over: [ownBars([{ label: 'JENSEN HUANG', v: 3.5, at: 2.6, c0: '#5aa86a', c1: '#8ad07a' }], { at: 2.2 })],
+    sfx: [[0, 'swell', .4], ['three and a half', 'tick', .4]] },
+  // 2 the second bar (BlackRock) passes his; it never designed a chip
+  { plate: 'boardroom', cam: { z: [1.24, 1.3], x: [1010, 1020], y: [770, 780] }, bed: [['hum_loop', .4], ['city_loop', .25]],
+    figs: [{ x: 560, y: 1420, s: 2.6, pose: 'think', costume: 'leather', hair: 'swept', glasses: true, facing: 1 }],
+    init: S => { const t8 = A.at(S, 'eight percent', 2.5), tc = A.at(S, 'never designed', 4.6); S.D.over = [ownBars([{ label: 'JENSEN HUANG', v: 3.5, at: -5, c0: '#5aa86a', c1: '#8ad07a' }, { label: 'BLACKROCK', icon: true, v: 8, at: t8 - 1.6, dur: 2.4, c0: '#3a4256', c1: '#e8b44a' }], { at: -1 }), noChip(tc)]; S.D.sfx = [[t8 - 1.5, 'tension', .5], [t8, 'hit', .55], [tc + .5, 'stamp', .55]]; } },
+  // 3 tiles: Apple, Microsoft, then the rest of corporate America
+  { plate: 'boardroom', cam: { z: [1.3, 1.36], x: [1020, 1030], y: [780, 790] }, bed: [['hum_loop', .35]],
+    init: S => { S.D.over = [tiles(S)]; const t0 = A.at(S, 'Apple', .4), t1 = A.at(S, 'almost every', 3.2); S.D.sfx = [[t0 - .2, 'pop', .45], [t0 + .25, 'pop', .45]]; for (let i = 0; i < 16; i++) S.D.sfx.push([t1 + i * .12 - .2, 'tick', .25]); } },
+  // 4 WIDE: night skyline, push in on the black tower; no factory, no product, no shop
+  { plate: 'skyline', cam: { z: [1.0, 1.35], x: [1280, 1280], y: [720, 600], ease: E.io }, bed: [['city_loop', .7], ['night_loop', .3]], inSfx: 'whoosh',
+    live: [towerFlicker],
+    init: S => { const tn = A.at(S, 'BlackRock', .5); S.D.over = [(c, lt) => K.title(c, 'BLACKROCK', lt, { at: tn, until: tn + 2.2, y: 240, px: 130 }), noItems(S)]; S.D.sfx.push([tn, 'hit', .6]); } },
+  // 5 coins on the boardroom table race to $15.3T
+  { plate: 'boardroom', cam: { z: [1.35, 1.45], x: [1280, 1280], y: [880, 860] }, bed: [['hum_loop', .35]],
+    init: S => { const k = coins(S); S.D.live = [k.live]; S.D.over = [k.over]; } },
+  // 6 MAP: India, Japan, France light up; their GDPs stack beside one taller bar
+  { plate: 'worldmap', cam: { z: [1.0, 1.06], x: [1280, 1330], y: [720, 700] }, bed: [['hum_loop', .3]], inSfx: 'paper',
+    init: S => { const m = mapScene(S); S.D.live = [m.live]; S.D.over = [m.over]; } },
+  // 7 court: two podiums, right vs left, then pan to the courthouse
+  { plate: 'court', cam: { z: [1.45, 1.2], x: [700, 1500], y: [960, 820], ease: E.io }, bed: [['crowd_loop', .35], ['wind_loop', .2]],
+    figs: [{ x: 358, y: 1230, s: 1.55, pose: 'point', costume: 'suit', hair: 'short', facing: 1, talk: [0, 3] }, { x: 870, y: 1230, s: 1.55, pose: 'point', costume: 'suit', hair: 'bald', facing: -1, talk: [3, 6] }],
+    front: [podiumFront(358), podiumFront(870)],
+    init: S => { const tL = A.at(S, 'Critics', 3.2), tC = A.at(S, 'States', 6.5); S.D.cam = { z: [1.45, 1.15], x: [620, 1650], y: [960, 760], ease: t => E.io((t * (S.end - S.start) - (tC - .8)) / 2.4) };
+      S.D.figs[0].talk = [.3, tL - .3]; S.D.figs[1].talk = [tL, tC - .5];
+      S.D.over = [quoteCard('"PUSHING A\nCLIMATE AGENDA"', 'THE RIGHT', 520, 260, .5, tL - .2, -3), quoteCard('"WALL STREET\'S REACH"', 'THE LEFT', 1400, 260, tL + .2, tC - .6, 3), (c, lt) => K.card(c, 'TAKEN TO COURT', lt, { at: tC + 1.2, x: 1300, y: 200, px: 70, rot: -3 })];
+      S.D.sfx = [[.4, 'camera_shutter', .35], [tL + .1, 'camera_shutter', .35], [tC - .6, 'whoosh_soft', .5], [tC + 1.2, 'stamp', .6]]; } },
+  // 8 1986: the trading floor, then the screen goes red
+  { plate: 'trading', cam: { z: [1.1, 1.3], x: [1280, 1280], y: [720, 760] }, bed: [['trading_loop', .45], ['office_loop', .2]],
+    figs: [{ x: 980, y: 1420, s: 2.4, pose: 'think', costume: 'suit80', hair: 'short', glasses: true, facing: 1, mood: 'worried' }],
+    init: S => { const tb = A.at(S, 'It starts', 4.6); const scr = crtScreen(S); S.D.sfx = [[.3, 'phone_ring', .35], [1.8, 'phone_ring', .3], [tb - .2, 'whoosh_soft', .5], [tb + .3, 'typing', .4]];
+      S.D.over = [(c, lt) => { if (lt < tb - .4) { K.badge(c, 'NEW YORK · 1986', lt, { at: .4 }); return; } const a = E.io(K.seg(lt, tb - .4, tb + .3)); c.save(); c.globalAlpha = a; c.fillStyle = 'rgba(8,10,6,.7)'; c.fillRect(0, 0, SW, SH); const z = 1 + .06 * K.seg(lt, tb, S.end - S.start); c.translate(SW / 2, SH / 2); c.scale(z, z); c.translate(-SW / 2, -SH / 2); c.drawImage(K.imgs.fg_crt, 0, 0, SW, SH); scr(c, lt); c.restore(); }]; } },
+  // 9 TITLE over the tower at night
+  { plate: 'skyline', cam: { z: [1.12, 1.05], x: [1280, 1280], y: [640, 660] }, bed: [['city_loop', .6]], inSfx: 'riser',
+    live: [towerFlicker],
+    over: [A.dim(.25), (c, lt) => K.title(c, 'BLACKROCK', lt, { at: .35, y: 420, px: 150, sub: 'THE COMPANY THAT OWNS EVERYTHING', subPx: 64, subOpts: { fill: GOLD } })], sfx: [[.35, 'hit', .9], [.4, 'swell', .5]] },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; D.sfx = D.sfx || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>

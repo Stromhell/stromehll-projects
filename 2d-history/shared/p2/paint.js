@@ -5,7 +5,7 @@ const fs = require('fs'), path = require('path');
 (async () => {
   const [platesFile, outDir, list] = process.argv.slice(2);
   fs.mkdirSync(outDir, { recursive: true });
-  const lib = ['engine.js', 'motifs.js', 'envs.js', 'room.js', 'props.js', 'rooms.js', 'world.js', 'finance.js'].map(f => fs.readFileSync(path.join(__dirname, f), 'utf8')).join('\n');
+  const lib = ['engine.js', 'motifs.js', 'envs.js', 'room.js', 'props.js', 'rooms.js', 'world.js', 'finance.js', 'diner.js'].map(f => fs.readFileSync(path.join(__dirname, f), 'utf8')).join('\n');
   const extra = fs.existsSync(path.join(__dirname, 'extra.js')) ? fs.readFileSync(path.join(__dirname, 'extra.js'), 'utf8') : '';
   const plates = fs.readFileSync(platesFile, 'utf8');
   const browser = await chromium.launch();
