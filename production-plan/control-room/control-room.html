@@ -371,7 +371,7 @@ let built = false;
 function actUrl(u){ return typeof u==="string" && /^https:\/\/(claude\.ai|drive\.google\.com|docs\.google\.com|[a-z0-9-]+\.claudeusercontent\.com)\//.test(u) ? u : ""; }
 document.addEventListener("click", e => { const b = e.target.closest && e.target.closest("button.play"); if (!b) return; const li = b.closest("li"); const old = li.querySelector("video"); if (old){ old.remove(); b.textContent = "▶ Play"; return; } const vd = document.createElement("video"); vd.src = b.dataset.v; vd.controls = true; vd.autoplay = true; vd.playsInline = true; vd.className = "actvid"; li.appendChild(vd); b.textContent = "■ Close"; });
 const FB_OPEN = new Set(); const FB_DRAFT = {}; let REQS = []; let CMT = null, CMT_OK = false;
-function fbForm(vid, act, name){ const k = vid+"|"+act; return `<form class="fbform" data-vid="${esc(vid)}" data-act="${esc(act)}"><label for="fb-${esc(k)}">Feedback on ${esc(name)}</label><textarea id="fb-${esc(k)}" rows="3" placeholder="What should change in this act?">${esc(FB_DRAFT[k]||"")}</textarea><div class="fbrow"><button type="submit" class="send">Send to the team</button><span class="fbmsg" aria-live="polite"></span></div></form>`; }
+function fbForm(vid, act, name){ const k = vid+"|"+act; return `<form class="fbform" data-vid="${esc(vid)}" data-act="${esc(act)}"><label for="fb-${esc(k)}">Feedback on ${esc(name)}</label><textarea id="fb-${esc(k)}" rows="3" placeholder="${act==="all"?"Everything you want changed across the whole video":"What should change in this act?"}">${esc(FB_DRAFT[k]||"")}</textarea><div class="fbrow"><button type="submit" class="send">Send to the team</button><span class="fbmsg" aria-live="polite"></span></div></form>`; }
 const ICON_COMBINE = `<svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="7" height="7" rx="1.5"/><rect x="14" y="4" width="7" height="7" rx="1.5"/><path d="M6.5 11v3.5a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V11"/><path d="M12 16.5V21"/><path d="M9.5 18.5 12 21l2.5-2.5"/></svg>`;
 const ICON_REELS = `<svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M11 9.5v5l4-2.5z" fill="currentColor"/><path d="M3.5 6v12M20.5 6v12"/></svg>`;
 const ICON_SCHED = `<svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/><path d="m9 15 2 2 4-4"/></svg>`;
@@ -467,15 +467,29 @@ document.addEventListener("submit", e => {
   if (!text){ m.textContent = "Type your feedback first."; return; }
   const v = rows().find(x => x.id === f.dataset.vid); if (!v) return;
   const a = (v.acts||[]).find(x => String(x.label) === f.dataset.act) || {label: f.dataset.act};
-  const name = a.name ? a.name : (String(a.label).toUpperCase()==="CO" ? "Cold open" : "Act " + a.label);
+  const name = a.label==="all" ? "Whole video" : a.name ? a.name : (String(a.label).toUpperCase()==="CO" ? "Cold open" : "Act " + a.label);
   const btn = f.querySelector("button.send"); btn.disabled = true; m.textContent = "Sending…";
-  sendReq(v, "feedback", String(a.label), name, text, f.closest("li")).then(r => { btn.disabled = false; m.textContent = r.msg; if (r.ok){ FB_DRAFT[k] = ""; f.querySelector("textarea").value = ""; } HOLD = Date.now() + 4000; });
+  sendReq(v, "feedback", String(a.label), name, text, f.closest("li") || f.closest(".fullpv")).then(r => { btn.disabled = false; m.textContent = r.msg; if (r.ok){ FB_DRAFT[k] = ""; f.querySelector("textarea").value = ""; } HOLD = Date.now() + 4000; });
 });
 let HOLD = 0;
 (async () => {
   try { CMT = await window.claude?.use?.("comments"); if (CMT){ const c = await CMT.canSendToClaude(); CMT_OK = c === "available"; } } catch (e) { CMT_OK = false; }
   try { const db = await window.claude?.use?.("db"); if (!db) return; db.collection("requests").onSnapshot(qs => { REQS = (qs.docs||[]).map(d => Object.assign({id: d.id}, d.data())); built = false; }, () => {}); } catch (e) {}
 })();
+function fullPreview(v){
+  const seen = new Set(), L = [];
+  const add = (label, url) => { const u = actUrl(url || "") || safeUrl(url || ""); if (!u || !/^https:\/\//.test(u) || seen.has(u)) return; seen.add(u); L.push({label, url: u}); };
+  (v.previews||[]).forEach(x => add(x.label, x.url));
+  (v.acts||[]).forEach(a => add(a.name ? a.name : (String(a.label).toUpperCase()==="CO" ? "Cold open" : "Act " + a.label), a.url || a.preview));
+  const main = safeUrl(v.previewUrl || "") || ((L.find(x => /all|full|combined/i.test(x.label))||{}).url) || "";
+  const k = v.id + "|all"; const r = actReq(v.id, "all");
+  const fbIcon = `<svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></svg>`;
+  return `<section class="fullpv" aria-label="Full preview"><div class="fph"><span>Full preview</span><b>${(L.length + (main && !seen.has(main) ? 1 : 0)) ? (L.length + (main && !seen.has(main) ? 1 : 0)) + " made so far" : "Nothing rendered yet"}</b></div>
+    <div class="fpa">${main ? `<a class="watch" href="${esc(main)}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path d="M7 5v14l12-7z" fill="currentColor"/></svg>Watch everything so far</a>` : ""}<button type="button" class="fbbtn" data-vid="${esc(v.id)}" data-act="all" aria-expanded="${FB_OPEN.has(k)}">${fbIcon}Feedback on whole video</button></div>
+    ${L.length ? `<div class="pv">${L.map(x => `<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.label)}</a>`).join("")}</div>` : ""}
+    ${r ? `<div class="actnote"><p class="nt">Your note: ${esc(r.text||"")}</p>${stepper(r)}</div>` : ""}
+    ${FB_OPEN.has(k) ? fbForm(v.id, "all", "the whole video") : ""}</section>`;
+}
 function actsBlock(v){
   const A = Array.isArray(v.acts) ? v.acts : [];
   if (!A.length) return "";
@@ -491,7 +505,6 @@ function buildRows(){
       <div class="top"><div class="title">${v.format?`<span class="fmt f${esc(String(v.format).toLowerCase())}">${esc(v.format)}</span>`:""}${esc(v.title)}</div><span style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill ${v.status}">${LABEL[v.status]||v.status}</span>${v.external&&v.status!=="external"?`<span class="pill queued">Other project</span>`:""}</span></div>
       ${railBlock(v)}
       <p class="stage">${esc(v.stage)}</p>
-      ${safeUrl(v.previewUrl)?`<a class="prev" href="${esc(safeUrl(v.previewUrl))}" target="_blank" rel="noopener">Open preview ↗</a>`:""}
       ${(v.latest||v.feedback)?`<dl class="notes">${v.latest?`<div><dt>Latest</dt><dd>${esc(v.latest.text)}<time>${clock(v.latest.at)}</time></dd></div>`:""}${v.feedback?`<div class="fb"><dt>Your feedback</dt><dd>${esc(v.feedback.text)}${v.feedback.at?`<time>${clock(v.feedback.at)}</time>`:""}</dd></div>`:""}</dl>`:""}
       <div class="barrow"><div class="bar ${v.status==="working"?"live":v.status}"><i></i></div><div class="pct" data-k="pct"></div></div>
       <div class="meta">
@@ -500,7 +513,7 @@ function buildRows(){
         <div><span>${v.status==="working"?"Running since":"Starts in"}</span><b data-k="start"></b></div>
         <div><span>Done around</span><b data-k="fin"></b></div>
       </div>
-      ${(v.previews&&v.previews.length)?`<div class="pv"><span>Previews</span>${v.previews.map(x=>/^https:\/\//.test(x.url)?`<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.label)}</a>`:"").join("")}</div>`:""}
+      ${fullPreview(v)}
       ${actsBlock(v)}
       ${ctlBlock(v)}
       <div class="steps">
@@ -1018,4 +1031,19 @@ button.big{border-radius:12px;min-height:72px;padding:14px 16px}
   .title{font-size:22px}
 }
 @media (prefers-reduced-motion:reduce){.siderail{transition:none}}
+</style>
+
+<style>
+/* v27 full preview block */
+.fullpv{display:grid;gap:8px;padding:10px 12px;border:1px solid color-mix(in srgb,var(--green) 40%,var(--line));border-radius:8px;background:color-mix(in srgb,var(--green) 6%,transparent);min-width:0}
+.fullpv .fph{display:flex;justify-content:space-between;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+.fullpv .fph b{color:var(--ink);font-weight:600}
+.fullpv .fpa{display:flex;flex-wrap:wrap;gap:8px}
+.fullpv .watch,.fullpv .fbbtn{display:inline-flex;align-items:center;gap:6px;font:inherit;font-family:var(--mono);font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:8px 14px;border-radius:8px;cursor:pointer;text-decoration:none;min-height:36px;line-height:1}
+.fullpv .watch{background:var(--green);color:#06120c;border:1px solid var(--green)}
+.fullpv .watch:hover{filter:brightness(1.1)}
+.fullpv .fbbtn{background:transparent;color:var(--cyan);border:1px solid var(--cyan)}
+.fullpv .fbbtn:hover,.fullpv .fbbtn[aria-expanded="true"]{background:var(--cyan);color:#071016}
+.fullpv .watch:focus-visible,.fullpv .fbbtn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.fullpv .pv a{max-width:100%;overflow:hidden;text-overflow:ellipsis}
 </style>

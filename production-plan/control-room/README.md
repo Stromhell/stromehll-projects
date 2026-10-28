@@ -45,3 +45,8 @@ v25: visual polish (soft colour glows, rounder roomier panels, pill bars) and th
 
 ## v26 (28 Oct 2026)
 - 3D acts now show a Watch button. The 3D docs give only a whole-video `previewUrl`, no per-act `url`, so acts showed "No render yet". Each started act (not `todo`) now falls back to the video's `previewUrl`. A per-act `url` / `video` still wins when present.
+
+## v27 (28 Oct 2026)
+- Each card has a "Full preview" box. It lists every preview made so far (the video's `previews` plus each act's own `url`, with duplicates removed). It also has a big "Watch everything so far" button, which opens `previewUrl` or a preview labelled all/full/combined.
+- "Feedback on whole video" button: writes a `requests` doc with kind `feedback` and act `"all"`, and shows the same status icons as act feedback.
+- Rule (Pushpam 28 Oct 22:44Z): a card can come off the production line once its full video is scheduled on Zernio. Reels no longer hold a card.
