@@ -1,24 +1,167 @@
 {
-  "asOf": "2026-10-28T20:00:00Z",
-  "note": "Release rule: 3 x 2D videos, then 1 x 3D. Full videos at least 2 days apart, 15:00 ET on weekdays and 11:00 ET on weekends. Reels go out only after their full video. Kept by the Production plan thread.",
-  "rows": [
-    {"n": 1, "format": "2D", "title": "Rome", "status": "live", "et": "Published", "ist": ""},
-    {"n": 2, "format": "2D", "title": "The Great War, Part 1", "status": "live", "et": "Published", "ist": "", "note": "Last reels run until 30 Oct"},
-    {"n": 3, "format": "2D", "title": "The 30 Years That Made Hitler", "status": "zernio", "et": "Fri 30 Oct, 15:00 ET", "ist": "Sat 31 Oct, 00:30 IST", "note": "Full video and 15 reels scheduled"},
-    {"n": 4, "format": "3D", "title": "FZ1073: The Co-Pilot of Flight 1073", "status": "zernio", "et": "Mon 2 Nov, 15:00 ET", "ist": "Tue 3 Nov, 01:30 IST", "note": "6 of 15 reels scheduled. Reels 2, 3, 5, 8, 10 and 12 to 15 still missing"},
-    {"n": 5, "format": "2D", "title": "Salman the Persian", "status": "zernio", "et": "Mon 9 Nov, 15:00 ET", "ist": "Tue 10 Nov, 01:30 IST", "note": "Full video and 15 reels scheduled"},
-    {"n": 6, "format": "2D", "title": "The Tiger Inside: Osho on the Ego", "status": "zernio", "et": "Thu 12 Nov, 15:00 ET", "ist": "Fri 13 Nov, 01:30 IST", "note": "Full video and 15 reels scheduled"},
-    {"n": 7, "format": "2D", "title": "Secret Service", "status": "zernio", "et": "Sat 14 Nov, 11:00 ET", "ist": "Sat 14 Nov, 21:30 IST", "note": "Full video and 15 reels scheduled (14 to 21 Nov)"},
-    {"n": 8, "format": "3D", "title": "Tesla vs Edison", "status": "proposed", "et": "Mon 16 Nov, 15:00 ET", "ist": "Tue 17 Nov, 01:30 IST", "note": "Proposed 3D slot after 3 x 2D. Needs El Mencho moved 1 day and Pushpam's OK. Film combining now"},
-    {"n": 9, "format": "2D", "title": "The Rise and Fall of El Mencho", "status": "zernio", "et": "Tue 17 Nov, 15:00 ET", "ist": "Wed 18 Nov, 01:30 IST", "note": "On Zernio. Moves to Wed 18 Nov if the Tesla slot is approved"},
-    {"n": 10, "format": "2D", "title": "The Great War, Part 2", "status": "zernio", "et": "Sat 28 Nov, 11:00 ET", "ist": "Sat 28 Nov, 21:30 IST", "note": "Full video and 10 reels scheduled"},
-    {"n": 11, "format": "2D", "title": "How LEGO Got So Big", "status": "zernio", "et": "Mon 30 Nov, 15:00 ET", "ist": "Tue 1 Dec, 01:30 IST", "note": "Full video and 15 reels scheduled"},
-    {"n": 12, "format": "3D", "title": "North Korea", "status": "proposed", "et": "Wed 2 Dec, 15:00 ET", "ist": "Thu 3 Dec, 01:30 IST", "note": "Planned. Booked once the film and reels are finished"},
-    {"n": 13, "format": "2D", "title": "Ancient Humans", "status": "proposed", "et": "Fri 4 Dec, 15:00 ET", "ist": "Sat 5 Dec, 01:30 IST", "note": "Planned. In production"},
-    {"n": 14, "format": "2D", "title": "BlackRock", "status": "proposed", "et": "Sun 6 Dec, 11:00 ET", "ist": "Sun 6 Dec, 21:30 IST", "note": "Planned. In production"},
-    {"n": 15, "format": "2D", "title": "NVIDIA", "status": "proposed", "et": "Tue 8 Dec, 15:00 ET", "ist": "Wed 9 Dec, 01:30 IST", "note": "Planned. In production"},
-    {"n": 16, "format": "3D", "title": "McDonald's in Africa", "status": "proposed", "et": "Thu 10 Dec, 15:00 ET", "ist": "Fri 11 Dec, 01:30 IST", "note": "Planned. In production"},
-    {"n": 17, "format": "3D", "title": "Operation Thunderbolt", "status": "waiting", "et": "After 3 more 2D videos", "ist": "", "note": "Script done, queued for a 3D slot. Needs 3 new 2D videos released before it"},
-    {"n": 18, "format": "3D", "title": "The Ides of March (Caesar)", "status": "waiting", "et": "After 3 more 2D videos", "ist": "", "note": "Script done, queued after Thunderbolt"}
-  ]
+ "asOf": "2026-10-28T20:10:00Z",
+ "note": "Release rule: 3 x 2D videos, then 1 x 3D. Full videos at least 2 days apart, 15:00 ET on weekdays and 11:00 ET on weekends. Reels go out only after their full video. Kept by the Production plan thread.",
+ "rows": [
+  {
+   "n": 1,
+   "format": "2D",
+   "title": "Rome",
+   "status": "live",
+   "et": "Published",
+   "ist": ""
+  },
+  {
+   "n": 2,
+   "format": "2D",
+   "title": "The Great War, Part 1",
+   "status": "live",
+   "et": "Published",
+   "ist": "",
+   "note": "Last reels run until 30 Oct"
+  },
+  {
+   "n": 3,
+   "format": "2D",
+   "title": "The 30 Years That Made Hitler",
+   "status": "zernio",
+   "et": "Fri 30 Oct, 15:00 ET",
+   "ist": "Sat 31 Oct, 00:30 IST",
+   "note": "Full video and 15 reels scheduled"
+  },
+  {
+   "n": 4,
+   "format": "3D",
+   "title": "FZ1073: The Co-Pilot of Flight 1073",
+   "status": "zernio",
+   "et": "Mon 2 Nov, 15:00 ET",
+   "ist": "Tue 3 Nov, 01:30 IST",
+   "note": "6 of 15 reels scheduled. Reels 2, 3, 5, 8, 10 and 12 to 15 still missing"
+  },
+  {
+   "n": 5,
+   "format": "2D",
+   "title": "Salman the Persian",
+   "status": "zernio",
+   "et": "Mon 9 Nov, 15:00 ET",
+   "ist": "Tue 10 Nov, 01:30 IST",
+   "note": "Full video and 15 reels scheduled"
+  },
+  {
+   "n": 6,
+   "format": "2D",
+   "title": "The Tiger Inside: Osho on the Ego",
+   "status": "zernio",
+   "et": "Thu 12 Nov, 15:00 ET",
+   "ist": "Fri 13 Nov, 01:30 IST",
+   "note": "Full video and 15 reels scheduled"
+  },
+  {
+   "n": 7,
+   "format": "2D",
+   "title": "Secret Service",
+   "status": "zernio",
+   "et": "Sat 14 Nov, 11:00 ET",
+   "ist": "Sat 14 Nov, 21:30 IST",
+   "note": "Full video and 15 reels scheduled (14 to 21 Nov)"
+  },
+  {
+   "n": 8,
+   "format": "3D",
+   "title": "Tesla vs Edison",
+   "status": "proposed",
+   "et": "Mon 16 Nov, 15:00 ET",
+   "ist": "Tue 17 Nov, 01:30 IST",
+   "note": "Slot approved by Pushpam 28 Oct. Goes on Zernio when the render is ready."
+  },
+  {
+   "n": 9,
+   "format": "2D",
+   "title": "The Rise and Fall of El Mencho",
+   "status": "zernio",
+   "et": "Wed 18 Nov, 15:00 ET",
+   "ist": "Thu 19 Nov, 01:30 IST",
+   "note": "Moved from 17 Nov for the Tesla slot. 15 reels 19 to 28 Nov."
+  },
+  {
+   "n": 10,
+   "format": "2D",
+   "title": "The Great War, Part 2",
+   "status": "zernio",
+   "et": "Sat 28 Nov, 11:00 ET",
+   "ist": "Sat 28 Nov, 21:30 IST",
+   "note": "Full video and 10 reels scheduled"
+  },
+  {
+   "n": 11,
+   "format": "2D",
+   "title": "How LEGO Got So Big",
+   "status": "zernio",
+   "et": "Mon 30 Nov, 15:00 ET",
+   "ist": "Tue 1 Dec, 01:30 IST",
+   "note": "Full video and 15 reels scheduled"
+  },
+  {
+   "n": 12,
+   "format": "3D",
+   "title": "North Korea",
+   "status": "proposed",
+   "et": "Wed 2 Dec, 15:00 ET",
+   "ist": "Thu 3 Dec, 01:30 IST",
+   "note": "Planned. Booked once the film and reels are finished"
+  },
+  {
+   "n": 13,
+   "format": "2D",
+   "title": "Ancient Humans",
+   "status": "proposed",
+   "et": "Fri 4 Dec, 15:00 ET",
+   "ist": "Sat 5 Dec, 01:30 IST",
+   "note": "Planned. In production"
+  },
+  {
+   "n": 14,
+   "format": "2D",
+   "title": "BlackRock",
+   "status": "proposed",
+   "et": "Sun 6 Dec, 11:00 ET",
+   "ist": "Sun 6 Dec, 21:30 IST",
+   "note": "Planned. In production"
+  },
+  {
+   "n": 15,
+   "format": "2D",
+   "title": "NVIDIA",
+   "status": "proposed",
+   "et": "Tue 8 Dec, 15:00 ET",
+   "ist": "Wed 9 Dec, 01:30 IST",
+   "note": "Planned. In production"
+  },
+  {
+   "n": 16,
+   "format": "3D",
+   "title": "McDonald's in Africa",
+   "status": "proposed",
+   "et": "Thu 10 Dec, 15:00 ET",
+   "ist": "Fri 11 Dec, 01:30 IST",
+   "note": "Planned. In production"
+  },
+  {
+   "n": 17,
+   "format": "3D",
+   "title": "Operation Thunderbolt",
+   "status": "waiting",
+   "et": "After 3 more 2D videos",
+   "ist": "",
+   "note": "Script done, queued for a 3D slot. Needs 3 new 2D videos released before it"
+  },
+  {
+   "n": 18,
+   "format": "3D",
+   "title": "The Ides of March (Caesar)",
+   "status": "waiting",
+   "et": "After 3 more 2D videos",
+   "ist": "",
+   "note": "Script done, queued after Thunderbolt"
+  }
+ ]
 }

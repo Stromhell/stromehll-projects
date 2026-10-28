@@ -12,7 +12,7 @@ Full-video times were checked one by one in Zernio on 28 Oct 2026 at 17:35 UTC. 
 | 2 | FZ1073: The Co-Pilot of Flight 1073 | **3D** | Mon 2 Nov, 15:00 | Tue 3 Nov, 01:30 | 2026-11-02 20:00 | `6ae15631a3f4cceb70dd0386` |
 | 3 | Salman the Persian | 2D | Mon 9 Nov, 15:00 | Tue 10 Nov, 01:30 | 2026-11-09 20:00 | `6ae1d893eb3ba1ed54c5f32a` |
 | 4 | The Tiger Inside: Osho on the Ego | 2D | Thu 12 Nov, 15:00 | Fri 13 Nov, 01:30 | 2026-11-12 20:00 | `6ae1df4b7db1f3c46e56d325` |
-| 5 | The Rise and Fall of El Mencho | 2D | Tue 17 Nov, 15:00 | Wed 18 Nov, 01:30 | 2026-11-17 20:00 | `6ae1e5c2c2b6604c4cabe0d5` |
+| 5 | The Rise and Fall of El Mencho | 2D | Wed 18 Nov, 15:00 | Thu 19 Nov, 01:30 | 2026-11-18 20:00 | `6ae1e5c2c2b6604c4cabe0d5` |
 | 6 | The Great War, Part 2 | 2D | Sat 28 Nov, 11:00 | Sat 28 Nov, 21:30 | 2026-11-28 16:00 | `6adf95a57919771d329c6159` |
 | 7 | How LEGO Got So Big | 2D | Mon 30 Nov, 15:00 | Tue 1 Dec, 01:30 | 2026-11-30 20:00 | `6ae220a33dbe895f1dfc9b05` |
 
@@ -25,7 +25,7 @@ Full-video times were checked one by one in Zernio on 28 Oct 2026 at 17:35 UTC. 
 | FZ1073 | 15 | 3 to 8 Nov (reels 1, 4, 6, 7, 9, 11) | **reels 2, 3, 5, 8, 10 and 12 to 15 not scheduled** |
 | Salman | 15 | 10 to 17 Nov | on Zernio |
 | Osho | 15 | 14 to 22 Nov | on Zernio |
-| El Mencho | 15 | 18 to 27 Nov | on Zernio |
+| El Mencho | 15 | 19 to 28 Nov (moved 1 day on 28 Oct for Tesla) | on Zernio |
 | Great War Part 2 | 10 | 28 Nov to 3 Dec | on Zernio |
 | LEGO | 15 | 1 to 9 Dec | on Zernio |
 
