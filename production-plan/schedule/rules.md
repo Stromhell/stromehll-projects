@@ -28,3 +28,7 @@ Pushpam's approval covers scheduling and moving posts. It does not cover deletin
 |---|---|
 | YouTube `latentindiaclips` (Stromhell) | `6add4e45e997d795ad6dfc72` |
 | Instagram `indiasgotlatentclips_reels` | `6add4e3335057a25ed050012` |
+
+## Rule 10: December (Pushpam, 28 Oct 2026)
+
+December slots may now be used, but only for new videos that don't fit into the current schedule. Never move a video that is already scheduled into December.
