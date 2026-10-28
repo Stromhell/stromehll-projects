@@ -150,6 +150,31 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,6vw,54px);lin
 .actlist li.active{border-left-color:var(--amber)} .actlist li.active .as{color:var(--amber)} .actlist li.active .as i{background:var(--amber)}
 @media (max-width:640px){.actlist{grid-template-columns:1fr 1fr}}
 .actlist li.review,.actlist li.fix{border-left-color:var(--violet)} .actlist li.review .as i,.actlist li.fix .as i{background:var(--violet)}
+.actlist li{position:relative}
+.actlist li:has(.fbform){grid-column:1/-1}
+.actlist .fbbtn{font:inherit;font-size:11px;background:transparent;color:var(--mute);border:1px solid var(--line);border-radius:3px;padding:1px 7px;cursor:pointer}
+.actlist .fbbtn[aria-expanded="true"]{color:var(--ink);border-color:var(--ink)}
+.fbform{grid-column:1/-1;display:grid;gap:6px;margin-top:6px}
+.fbform label{font-size:12px;color:var(--mute)}
+.fbform textarea{font:inherit;font-size:14px;width:100%;box-sizing:border-box;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:8px;resize:vertical}
+.fbform textarea:focus{outline:2px solid var(--amber);outline-offset:0}
+.fbrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.fbform .send{font:inherit;font-size:13px;font-weight:600;background:var(--ink);color:var(--panel);border:0;border-radius:4px;padding:6px 12px;cursor:pointer}
+.fbmsg,.ctlmsg{font-size:12px;color:var(--mute);margin:0}
+.ctl{display:grid;gap:8px}
+.bigbtns{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.big{display:flex;align-items:center;gap:12px;text-align:left;font:inherit;background:var(--bg);color:var(--ink);border:2px solid var(--line);border-radius:6px;padding:12px 14px;cursor:pointer;min-height:64px}
+.big:hover{border-color:var(--mute)} .big:disabled{opacity:.6;cursor:progress}
+.big[data-kind="combine"] svg{color:var(--amber)} .big[data-kind="reels"] svg{color:var(--violet)} .big[data-kind="schedule"] svg{color:var(--green)}
+.big b{display:block;font-family:var(--display);font-size:20px;font-weight:600;letter-spacing:.02em}
+.big small{display:block;font-size:12px;color:var(--mute)}
+.big.armed{border-color:var(--amber);background:var(--panel)}
+.reqs{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.reqs li{display:grid;grid-template-columns:110px minmax(0,1fr) auto;gap:10px;font-size:13px;align-items:baseline}
+.reqs .rk{font-family:var(--mono);font-size:11px;color:var(--mute)}
+.reqs .rt small{display:block;color:var(--mute);font-size:12px}
+.reqs .rs{font-size:12px;color:var(--mute)} .reqs .rs.done{color:var(--green)} .reqs .rs.relayed,.reqs .rs.working{color:var(--amber)}
+@media (max-width:640px){.bigbtns{grid-template-columns:1fr}.reqs li{grid-template-columns:1fr auto}.reqs .rk{grid-column:1/-1}}
 .steps{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .act{font-family:var(--mono);font-size:11px;min-width:28px;height:22px;display:inline-grid;place-items:center;border-radius:3px;border:1px solid var(--line);color:var(--mute);padding:0 5px}
 .act.done{background:var(--green);border-color:var(--green);color:var(--panel)}
@@ -308,13 +333,70 @@ function live(v, el){ // interpolated percent for a video
 let built = false;
 function actUrl(u){ return typeof u==="string" && /^https:\/\/(claude\.ai|drive\.google\.com|docs\.google\.com|[a-z0-9-]+\.claudeusercontent\.com)\//.test(u) ? u : ""; }
 document.addEventListener("click", e => { const b = e.target.closest && e.target.closest("button.play"); if (!b) return; const li = b.closest("li"); const old = li.querySelector("video"); if (old){ old.remove(); b.textContent = "▶ Play"; return; } const vd = document.createElement("video"); vd.src = b.dataset.v; vd.controls = true; vd.autoplay = true; vd.playsInline = true; vd.className = "actvid"; li.appendChild(vd); b.textContent = "■ Close"; });
+const FB_OPEN = new Set(); const FB_DRAFT = {}; let REQS = []; let CMT = null, CMT_OK = false;
+function fbForm(vid, act, name){ const k = vid+"|"+act; return `<form class="fbform" data-vid="${esc(vid)}" data-act="${esc(act)}"><label for="fb-${esc(k)}">Feedback on ${esc(name)}</label><textarea id="fb-${esc(k)}" rows="3" placeholder="What should change in this act?">${esc(FB_DRAFT[k]||"")}</textarea><div class="fbrow"><button type="submit" class="send">Send to the team</button><span class="fbmsg" aria-live="polite"></span></div></form>`; }
+const ICON_COMBINE = `<svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="7" height="7" rx="1.5"/><rect x="14" y="4" width="7" height="7" rx="1.5"/><path d="M6.5 11v3.5a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V11"/><path d="M12 16.5V21"/><path d="M9.5 18.5 12 21l2.5-2.5"/></svg>`;
+const ICON_REELS = `<svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M11 9.5v5l4-2.5z" fill="currentColor"/><path d="M3.5 6v12M20.5 6v12"/></svg>`;
+const ICON_SCHED = `<svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/><path d="m9 15 2 2 4-4"/></svg>`;
+const KIND_TXT = {combine:["Combine acts","Combine all acts into the full video."], reels:["Create reels","Create the 15 reels from the full video."], schedule:["Schedule","Schedule the full video and its reels on Zernio in the planned slot."]};
+const REQ_ST = {new:"Sent", relayed:"Passed to the team", working:"Being done", done:"Done", declined:"Not done"};
+function reqsFor(vid){ return REQS.filter(r => r.video === vid).sort((a,b) => (b.at||0)-(a.at||0)).slice(0,4); }
+function ctlBlock(v){
+  const rs = reqsFor(v.id);
+  return `<div class="ctl"><div class="bigbtns"><button type="button" class="big" data-kind="combine" data-vid="${esc(v.id)}">${ICON_COMBINE}<span><b>Combine acts</b><small>Join all acts into the full video</small></span></button><button type="button" class="big" data-kind="reels" data-vid="${esc(v.id)}">${ICON_REELS}<span><b>Create reels</b><small>Cut 15 reels from the full video</small></span></button><button type="button" class="big" data-kind="schedule" data-vid="${esc(v.id)}">${ICON_SCHED}<span><b>Schedule</b><small>Put the video and reels on Zernio</small></span></button></div><p class="ctlmsg" aria-live="polite" data-for="${esc(v.id)}"></p>${rs.length?`<ul class="reqs">${rs.map(r => `<li><span class="rk">${r.kind==="feedback"?esc(r.actName||"Feedback"):esc((KIND_TXT[r.kind]||[r.kind])[0])}</span><span class="rt">${esc(r.text||"")}${r.reply?`<small>${esc(r.reply)}</small>`:""}</span><span class="rs ${esc(r.status||"new")}">${REQ_ST[r.status]||esc(r.status||"Sent")}</span></li>`).join("")}</ul>`:""}</div>`;
+}
+async function sendReq(v, kind, act, actName, text, anchorEl){
+  const db = await window.claude?.use?.("db");
+  if (!db) return {ok:false, msg:"Can't save from this view. Open the Control Room in claude.ai while signed in."};
+  const id = Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+  const fmt = (typeof fmtOf === "function") ? fmtOf(v) : (v.format||"");
+  const doc = {video: v.id, short: v.short||v.title, title: v.title, format: fmt, kind, act: act||null, actName: actName||null, text, at: Math.floor(Date.now()/1000), status: "new"};
+  try { await db.collection("requests").doc(id).set(doc); } catch (e) { return {ok:false, msg:"Not saved. Check your connection and try again."}; }
+  let sent = false;
+  try {
+    if (CMT && CMT_OK && anchorEl){
+      const anchor = await CMT.anchorFor(anchorEl);
+      const lines = [`Control Room request ${id}`, `Video: ${v.title} (${fmt})`, act ? `Act: ${actName}` : null, `Request: ${kind==="feedback"?"Feedback":(KIND_TXT[kind]||[kind,kind])[1]}`, text && kind==="feedback" ? text : null, "Production plan thread: pass this to the thread making this video and update db requests/"+id+"."].filter(Boolean);
+      await CMT.sendToClaude({anchor, text: lines.join("\n")}); sent = true;
+    }
+  } catch (e) {}
+  return {ok:true, msg: sent ? "Sent. Claude is passing it to the team now." : "Saved. The team picks it up on its next update."};
+}
+document.addEventListener("click", e => {
+  const fb = e.target.closest && e.target.closest("button.fbbtn");
+  if (fb){ const k = fb.dataset.vid+"|"+fb.dataset.act; if (FB_OPEN.has(k)) FB_OPEN.delete(k); else FB_OPEN.add(k); built = false; tick(); setTimeout(() => { const t = document.getElementById("fb-"+k); if (t) t.focus(); }, 0); return; }
+  const big = e.target.closest && e.target.closest("button.big");
+  if (big){
+    const v = rows().find(x => x.id === big.dataset.vid); if (!v) return;
+    const msg = document.querySelector(`.ctlmsg[data-for="${CSS.escape(v.id)}"]`);
+    if (big.dataset.armed !== "1"){ document.querySelectorAll("button.big[data-armed='1']").forEach(b => { b.dataset.armed = ""; b.classList.remove("armed"); }); big.dataset.armed = "1"; big.classList.add("armed"); if (msg) msg.textContent = `Tap "${KIND_TXT[big.dataset.kind][0]}" again to confirm for ${v.short||v.title}.`; HOLD = Date.now() + 6000; setTimeout(() => { if (big.dataset.armed === "1"){ big.dataset.armed = ""; big.classList.remove("armed"); if (msg && msg.textContent.startsWith("Tap")) msg.textContent = ""; } }, 6000); return; }
+    big.dataset.armed = ""; big.classList.remove("armed"); big.disabled = true; if (msg) msg.textContent = "Sending…";
+    sendReq(v, big.dataset.kind, null, null, KIND_TXT[big.dataset.kind][1], big).then(r => { big.disabled = false; if (msg) msg.textContent = r.msg; HOLD = Date.now() + 4000; });
+  }
+});
+document.addEventListener("input", e => { const t = e.target; if (t && t.tagName === "TEXTAREA" && t.closest(".fbform")){ const f = t.closest(".fbform"); FB_DRAFT[f.dataset.vid+"|"+f.dataset.act] = t.value; } });
+document.addEventListener("submit", e => {
+  const f = e.target.closest && e.target.closest(".fbform"); if (!f) return; e.preventDefault();
+  const k = f.dataset.vid+"|"+f.dataset.act; const text = (FB_DRAFT[k]||"").trim(); const m = f.querySelector(".fbmsg");
+  if (!text){ m.textContent = "Type your feedback first."; return; }
+  const v = rows().find(x => x.id === f.dataset.vid); if (!v) return;
+  const a = (v.acts||[]).find(x => String(x.label) === f.dataset.act) || {label: f.dataset.act};
+  const name = a.name ? a.name : (String(a.label).toUpperCase()==="CO" ? "Cold open" : "Act " + a.label);
+  const btn = f.querySelector("button.send"); btn.disabled = true; m.textContent = "Sending…";
+  sendReq(v, "feedback", String(a.label), name, text, f.closest("li")).then(r => { btn.disabled = false; m.textContent = r.msg; if (r.ok){ FB_DRAFT[k] = ""; f.querySelector("textarea").value = ""; } HOLD = Date.now() + 4000; });
+});
+let HOLD = 0;
+(async () => {
+  try { CMT = await window.claude?.use?.("comments"); if (CMT){ const c = await CMT.canSendToClaude(); CMT_OK = c === "available"; } } catch (e) { CMT_OK = false; }
+  try { const db = await window.claude?.use?.("db"); if (!db) return; db.collection("requests").onSnapshot(qs => { REQS = (qs.docs||[]).map(d => Object.assign({id: d.id}, d.data())); built = false; }, () => {}); } catch (e) {}
+})();
 function actsBlock(v){
   const A = Array.isArray(v.acts) ? v.acts : [];
   if (!A.length) return "";
   const ST = {done:"Done", active:"Working", review:"Waiting for your OK", fix:"Fixing", todo:"Not started"};
   const nm = a => a.name ? a.name : (String(a.label).toUpperCase()==="CO" ? "Cold open" : "Act " + a.label);
   const done = A.filter(a => a.state === "done").length;
-  return `<div class="acts"><div class="acthead"><span>Act by act</span><b>${done} of ${A.length} done</b></div><ol class="actlist">${A.map(a => { const u = actUrl(a.url || a.preview || ""); const vu = actUrl(a.video || ""); const st = ST[a.state] || esc(a.state || "Not started"); return `<li class="${esc(a.state||"todo")}"><span class="an">${esc(nm(a))}</span><span class="as"><i></i>${st}${a.pct!=null&&a.state==="active"?` ${Math.round(a.pct)}%`:""}</span><span class="al">${vu?`<button type="button" class="play" data-v="${esc(vu)}" aria-label="Play ${esc(nm(a))}">▶ Play</button>`:""}${u?`<a href="${esc(u)}" target="_blank" rel="noopener">${vu?"Open":"Watch"} ↗</a>`:(vu?"":`<span class="np">No render yet</span>`)}</span></li>`; }).join("")}</ol></div>`;
+  return `<div class="acts"><div class="acthead"><span>Act by act</span><b>${done} of ${A.length} done</b></div><ol class="actlist">${A.map(a => { const u = actUrl(a.url || a.preview || ""); const vu = actUrl(a.video || ""); const st = ST[a.state] || esc(a.state || "Not started"); return `<li class="${esc(a.state||"todo")}"><span class="an">${esc(nm(a))}</span><span class="as"><i></i>${st}${a.pct!=null&&a.state==="active"?` ${Math.round(a.pct)}%`:""}</span><span class="al">${vu?`<button type="button" class="play" data-v="${esc(vu)}" aria-label="Play ${esc(nm(a))}">▶ Play</button>`:""}${u?`<a href="${esc(u)}" target="_blank" rel="noopener">${vu?"Open":"Watch"} ↗</a>`:(vu?"":`<span class="np">No render yet</span>`)}<button type="button" class="fbbtn" data-vid="${esc(v.id)}" data-act="${esc(a.label)}" aria-expanded="${FB_OPEN.has(v.id+"|"+a.label)}">Feedback</button></span>${FB_OPEN.has(v.id+"|"+a.label)?fbForm(v.id, a.label, nm(a)):""}</li>`; }).join("")}</ol></div>`;
 }
 function buildRows(){
   if (!rows().length) { $("vids").innerHTML = `<p class="stage">No videos in production right now. New ones show up here when they start.</p>`; }
@@ -333,6 +415,7 @@ function buildRows(){
       </div>
       ${(v.previews&&v.previews.length)?`<div class="pv"><span>Previews</span>${v.previews.map(x=>/^https:\/\//.test(x.url)?`<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.label)}</a>`:"").join("")}</div>`:""}
       ${actsBlock(v)}
+      ${ctlBlock(v)}
       <div class="steps">
         ${(v.phases||[]).filter(p=>!["script","acts"].includes(p.key)).map(p => `<span class="ph ${p.state}">${esc(p.name)}${p.state==="active"&&p.pct?` ${p.pct}%`:""}</span>`).join("")}
       </div>
@@ -364,7 +447,8 @@ function buildRows(){
   built = true;
 }
 function tick(){
-  if (!built) buildRows();
+  const ae = document.activeElement; const typing = ae && ae.closest && ae.closest("#vids") && (ae.tagName === "TEXTAREA" || ae.tagName === "BUTTON" && ae.classList.contains("big"));
+  if (!built && !typing && Date.now() > HOLD) buildRows();
   const now = Date.now()/1000, el = Math.max(0, now - S.asOf);
   const R = rows(), P = plan();
   const op = R.length ? Math.min(100, R.reduce((t, v) => t + live(v, elOf(v, now)), 0) / R.length) : 100;
