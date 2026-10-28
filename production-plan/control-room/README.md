@@ -28,3 +28,5 @@ Status flow on each `requests` doc (shown on the act and in the list):
 - `working` (Working on it now) or `queued` (Queued for later)
 - `done` (+ optional `url` of the fixed render), or `declined` + `reply`
 The producing thread sets understood/working/queued/done itself.
+
+v19: Combine / Create reels / Schedule buttons show the latest request of that kind as three icons (Received, Working or Queued, Done) using the same status field.

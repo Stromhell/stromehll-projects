@@ -168,6 +168,15 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,6vw,54px);lin
 .big[data-kind="combine"] svg{color:var(--amber)} .big[data-kind="reels"] svg{color:var(--violet)} .big[data-kind="schedule"] svg{color:var(--green)}
 .big b{display:block;font-family:var(--display);font-size:20px;font-weight:600;letter-spacing:.02em}
 .big small{display:block;font-size:12px;color:var(--mute)}
+.bst{display:flex;align-items:center;gap:3px;margin-top:6px;font-size:12px}
+.bst .bi{display:inline-flex;color:var(--mute);opacity:.5}
+.bst .bi.ok{color:var(--green);opacity:1} .bst .bi.on{color:var(--amber);opacity:1}
+.bst .bi.no{color:var(--mute);opacity:1}
+.big[data-kind] .bst svg{color:inherit}
+.bst .bl{display:inline-block;width:10px;height:2px;background:var(--line);font-size:0}
+.bst em{font-style:normal;margin-left:6px;color:var(--ink);font-weight:600;font-family:var(--body)}
+@keyframes bspin{to{transform:rotate(360deg)}} .bst .bi.spin svg{animation:bspin 2.4s linear infinite}
+@media (prefers-reduced-motion:reduce){.bst .bi.spin svg{animation:none}}
 .big.armed{border-color:var(--amber);background:var(--panel)}
 .reqs{list-style:none;margin:0;padding:0;display:grid;gap:4px}
 .reqs li{display:grid;grid-template-columns:110px minmax(0,1fr) auto;gap:10px;font-size:13px;align-items:baseline}
@@ -359,11 +368,26 @@ function stepper(r){
   const sub = i===0 ? (r.status==="relayed" ? "The team has it. Waiting for them to confirm." : "Saved. Passing it to the team.") : "";
   return `<div class="nst">${L.map((l,k) => `<span class="nstp ${(k<i||i===3)?"ok":k===i?"on":""}">${(k<i||i===3)?"✓ ":""}${esc(l)}</span>`).join("")}${r.summary?`<p class="sum"><b>What will change:</b> ${esc(r.summary)}</p>`:""}${sub?`<p class="sum">${sub}</p>`:""}${r.status==="done"&&actUrl(r.url||"")?`<p class="sum"><a href="${esc(actUrl(r.url))}" target="_blank" rel="noopener">See the fix ↗</a></p>`:""}</div>`;
 }
+const BI = {
+  rec: `<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13h4l2 3h4l2-3h4"/><path d="M4 13 6.5 5h11L20 13v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/></svg>`,
+  work: `<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M2 12h3M19 12h3M4.9 19.1 7 17M17 7l2.1-2.1"/></svg>`,
+  wait: `<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>`,
+  done: `<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 2.5 2.5L16 9.5"/></svg>`,
+  no: `<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6M15 9l-6 6"/></svg>`};
+function bst(vid, kind){
+  const r = REQS.filter(x => x.video===vid && x.kind===kind).sort((a,b)=>(b.at||0)-(a.at||0))[0];
+  if (!r) return "";
+  if (r.status === "declined") return `<span class="bst" title="Not done${r.reply?": "+esc(r.reply):""}"><i class="bi no">${BI.no}</i><em>Not done</em></span>`;
+  const i = stepIdx(r), later = r.status==="queued" || (r.when==="later" && r.status!=="working" && i<3);
+  const it = [["rec","Received"], [later?"wait":"work", later?"Queued":"Working"], ["done","Done"]];
+  const cur = i>=3 ? 2 : i>=2 ? 1 : 0;
+  return `<span class="bst" title="${esc(r.summary||REQ_ST[r.status]||"")}">${it.map(([ic,l],k) => `<i class="bi ${k<cur||cur===2?"ok":k===cur?"on":""}${k===1&&k===cur&&!later?" spin":""}" aria-label="${l}${k<cur||cur===2?" (done)":k===cur?" (now)":""}">${BI[ic]}</i>`).join('<b class="bl"></b>')}<em>${esc(it[cur][1])}</em></span>`;
+}
 function actReq(vid, act){ return REQS.filter(r => r.video===vid && r.kind==="feedback" && String(r.act)===String(act)).sort((a,b)=>(b.at||0)-(a.at||0))[0]; }
 function reqsFor(vid){ return REQS.filter(r => r.video === vid).sort((a,b) => (b.at||0)-(a.at||0)).slice(0,4); }
 function ctlBlock(v){
   const rs = reqsFor(v.id);
-  return `<div class="ctl"><div class="bigbtns"><button type="button" class="big" data-kind="combine" data-vid="${esc(v.id)}">${ICON_COMBINE}<span><b>Combine acts</b><small>Join all acts into the full video</small></span></button><button type="button" class="big" data-kind="reels" data-vid="${esc(v.id)}">${ICON_REELS}<span><b>Create reels</b><small>Cut 15 reels from the full video</small></span></button><button type="button" class="big" data-kind="schedule" data-vid="${esc(v.id)}">${ICON_SCHED}<span><b>Schedule</b><small>Put the video and reels on Zernio</small></span></button></div><p class="ctlmsg" aria-live="polite" data-for="${esc(v.id)}"></p>${rs.length?`<ul class="reqs">${rs.map(r => `<li><span class="rk">${r.kind==="feedback"?esc(r.actName||"Feedback"):esc((KIND_TXT[r.kind]||[r.kind])[0])}</span><span class="rt">${esc(r.text||"")}${r.reply?`<small>${esc(r.reply)}</small>`:""}</span><span class="rs ${esc(r.status||"new")}">${REQ_ST[r.status]||esc(r.status||"Received")}</span></li>`).join("")}</ul>`:""}</div>`;
+  return `<div class="ctl"><div class="bigbtns"><button type="button" class="big" data-kind="combine" data-vid="${esc(v.id)}">${ICON_COMBINE}<span><b>Combine acts</b><small>Join all acts into the full video</small>${bst(v.id,"combine")}</span></button><button type="button" class="big" data-kind="reels" data-vid="${esc(v.id)}">${ICON_REELS}<span><b>Create reels</b><small>Cut 15 reels from the full video</small>${bst(v.id,"reels")}</span></button><button type="button" class="big" data-kind="schedule" data-vid="${esc(v.id)}">${ICON_SCHED}<span><b>Schedule</b><small>Put the video and reels on Zernio</small>${bst(v.id,"schedule")}</span></button></div><p class="ctlmsg" aria-live="polite" data-for="${esc(v.id)}"></p>${rs.length?`<ul class="reqs">${rs.map(r => `<li><span class="rk">${r.kind==="feedback"?esc(r.actName||"Feedback"):esc((KIND_TXT[r.kind]||[r.kind])[0])}</span><span class="rt">${esc(r.text||"")}${r.reply?`<small>${esc(r.reply)}</small>`:""}</span><span class="rs ${esc(r.status||"new")}">${REQ_ST[r.status]||esc(r.status||"Received")}</span></li>`).join("")}</ul>`:""}</div>`;
 }
 async function sendReq(v, kind, act, actName, text, anchorEl){
   const db = await window.claude?.use?.("db");
