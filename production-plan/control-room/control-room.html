@@ -251,6 +251,9 @@ button.big.armed{border-color:var(--amber);background:var(--panel)}
       <div class="m cyan"><b class="num" id="mReq">–</b><span>Open requests</span></div>
       <div class="m green"><b class="num" id="mLive">–</b><span>Full videos on Zernio</span></div>
     </div>
+    <nav class="jump" aria-label="Jump to a channel">
+      <a href="#s-line" data-j="s-line"><b>01</b>Production line</a><a href="#s-order" data-j="s-order"><b>02</b>Running order</a><a href="#s-rel" data-j="s-rel"><b>03</b>Release plan</a><a href="#s-cal" data-j="s-cal"><b>04</b>Calendar</a><a href="#s-an" data-j="s-an"><b>05</b>Analytics</a><a href="#s-log" data-j="s-log"><b>06</b>Activity log</a>
+    </nav>
   </header>
 
   <section class="summary" aria-label="Overall progress">
@@ -264,18 +267,18 @@ button.big.armed{border-color:var(--amber);background:var(--panel)}
     <p class="rule" id="rule"></p>
   </section>
 
-  <section class="list" aria-label="Videos">
+  <section class="list" id="s-line" aria-label="Videos">
     <h2>Production line</h2>
     <div class="list" id="vids"></div>
   </section>
 
-  <section class="tl" aria-label="Running order">
+  <section class="tl" id="s-order" aria-label="Running order">
     <h2>Running order</h2>
     <div class="tlgrid" id="tl"></div>
     <div class="axis"><div></div><div class="ticks" id="ticks"></div></div>
   </section>
 
-  <section class="rel" aria-label="Running order and release plan">
+  <section class="rel" id="s-rel" aria-label="Release plan">
     <h2>Release plan</h2>
     <div class="relcols">
       <div><h3>In production now</h3><div class="chips" id="relNow"></div></div>
@@ -284,7 +287,7 @@ button.big.armed{border-color:var(--amber);background:var(--panel)}
     <div><h3>Release order (goes live on YouTube in this order)</h3><ol class="relist" id="relList"></ol></div>
     <p class="relnote" id="relNote"></p>
   </section>
-  <section class="cal" aria-label="Zernio calendar">
+  <section class="cal" id="s-cal" aria-label="Zernio calendar">
     <h2>Zernio calendar</h2>
     <div class="calhead"><button type="button" id="calPrev" aria-label="Previous month">&#8249;</button><span class="mo" id="calMo"></span><button type="button" id="calNext" aria-label="Next month">&#8250;</button><button type="button" id="calToday">Today</button>
       <span class="calleg"><span><i style="background:var(--amber)"></i>2D full video</span><span><i style="background:var(--violet)"></i>3D full video</span><span><i style="border:1px dashed var(--mute)"></i>Planned, not on Zernio</span><span><i style="background:var(--amber2);border-radius:50%"></i>Reel (YouTube + Instagram)</span></span></div>
@@ -293,7 +296,12 @@ button.big.armed{border-color:var(--amber);background:var(--panel)}
     <p class="calnote" id="calNote"></p>
   </section>
 
-  <section class="feed" aria-label="Activity">
+  <section class="an" id="s-an" aria-label="Analytics">
+    <h2>Analytics</h2>
+    <div id="anBody"><p class="calnote">Loading stats from Zernio…</p></div>
+  </section>
+
+  <section class="feed" id="s-log" aria-label="Activity">
     <h2>Activity log</h2>
     <ol id="feed"></ol>
   </section>
@@ -758,4 +766,152 @@ a{color:var(--cyan)}
 }
 .summary .big{display:block}
 @media (prefers-reduced-motion:reduce){.lamp,.rail li.active i{animation:none}}
+</style>
+
+<script>
+/* Analytics channel: reads db board/analytics (snapshot of Zernio stats written by the Production plan thread). */
+(() => {
+  let AN = null, OPEN = false, SORT = "views", Q = "";
+  const $ = id => document.getElementById(id);
+  const e = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const n = x => (x == null || isNaN(x)) ? "–" : Number(x) >= 10000 ? (Number(x)/1000).toFixed(1).replace(/\.0$/,"") + "k" : Number(x).toLocaleString("en-US");
+  const pct = x => (x == null || !isFinite(x)) ? "–" : (Math.round(x*10)/10) + "%";
+  const okUrl = u => /^https:\/\/(www\.)?(youtube\.com|youtu\.be|instagram\.com)\//.test(u||"") ? u : "";
+  const day = s => { try { return new Date(s).toLocaleDateString("en-GB", {day:"numeric", month:"short", timeZone:"America/New_York"}); } catch (x) { return ""; } };
+  const sum = (arr, k) => arr.reduce((a, p) => a + (Number(p[k]) || 0), 0);
+  const eng = arr => { const v = sum(arr,"views"); return v ? 100*(sum(arr,"likes")+sum(arr,"comments")+sum(arr,"shares")+sum(arr,"saves"))/v : null; };
+  function spark(h, col){
+    if (!h || h.length < 2) return "";
+    const ys = h.map(x => x[1]), mx = Math.max(1, ...ys), mn = Math.min(...ys), W = 120, H = 32;
+    const pts = ys.map((y,i) => `${(i*W/(ys.length-1)).toFixed(1)},${(H-2-(H-4)*(y-mn)/Math.max(1,mx-mn)).toFixed(1)}`).join(" ");
+    return `<svg class="spark" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" aria-hidden="true"><polyline points="${pts}" fill="none" stroke="${col}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg>`;
+  }
+  function chart(D){
+    if (!Array.isArray(D) || !D.length) return "";
+    const rows = D.map(([d, m]) => [d, (m.youtube||{}).views||0, (m.instagram||{}).views||0]);
+    const mx = Math.max(1, ...rows.map(r => r[1]+r[2]));
+    return `<div class="anchart" role="img" aria-label="Views per day, YouTube and Instagram">${rows.map(([d,y,i]) => `<div class="col" title="${e(day(d+"T12:00:00Z"))}: YouTube ${n(y)}, Instagram ${n(i)}"><div class="stk"><i class="ig" style="height:${(100*i/mx).toFixed(1)}%"></i><i class="yt" style="height:${(100*y/mx).toFixed(1)}%"></i></div><b>${n(y+i)}</b><span>${e(day(d+"T12:00:00Z"))}</span></div>`).join("")}</div>`;
+  }
+  function platCard(cls, name, big, bigLbl, sub, hist, P){
+    const v = sum(P,"views"), gain = hist && hist.length ? hist[hist.length-1][1] - hist[0][1] : null;
+    return `<div class="acard ${cls}"><div class="ah"><span class="pl">${name}</span>${spark(hist, cls==="yt"?"var(--red)":"var(--violet)")}</div>
+      <div class="abig"><b class="num">${n(big)}</b><span>${bigLbl}${gain!=null?` · <em class="${gain>0?"up":""}">${gain>=0?"+":""}${n(gain)} in ${hist.length} days</em>`:""}</span></div>
+      <dl class="amet"><div><dt>Post views</dt><dd>${n(v)}</dd></div><div><dt>Likes</dt><dd>${n(sum(P,"likes"))}</dd></div><div><dt>Comments</dt><dd>${n(sum(P,"comments"))}</dd></div><div><dt>Shares</dt><dd>${n(sum(P,"shares"))}</dd></div><div><dt>Saves</dt><dd>${n(sum(P,"saves"))}</dd></div><div><dt>Engagement</dt><dd>${pct(eng(P))}</dd></div></dl>
+      <p class="asub">${sub}</p></div>`;
+  }
+  function detail(P){
+    const groups = {};
+    P.forEach(p => { const k = p.v || "Other posts on these accounts"; (groups[k] = groups[k] || []).push(p); });
+    const q = Q.trim().toLowerCase();
+    const keys = Object.keys(groups).filter(k => !q || k.toLowerCase().includes(q) || groups[k].some(p => (p.title||"").toLowerCase().includes(q)))
+      .sort((a,b) => (a.startsWith("Other")?1:0) - (b.startsWith("Other")?1:0) || sum(groups[b],"views") - sum(groups[a],"views"));
+    const srt = (a,b) => SORT==="date" ? String(b.at).localeCompare(String(a.at)) : (Number(b[SORT])||0) - (Number(a[SORT])||0);
+    return `<div class="adet"><div class="adtools"><label>Find <input type="search" id="anQ" value="${e(Q)}" placeholder="Video or title"></label><label>Sort by <select id="anSort">${[["views","Views"],["likes","Likes"],["comments","Comments"],["shares","Shares"],["saves","Saves"],["date","Newest"]].map(([k,l]) => `<option value="${k}"${SORT===k?" selected":""}>${l}</option>`).join("")}</select></label></div>
+    ${keys.map(k => { const G = groups[k], yt = G.filter(p => p.plat==="youtube"), ig = G.filter(p => p.plat==="instagram"), full = G.filter(p => p.kind==="full"), reels = G.filter(p => p.kind!=="full");
+      return `<details class="agrp"${keys.length<=3||q?" open":""}><summary><span class="gn">${e(k)}</span><span class="gs"><b>${n(sum(G,"views"))}</b> views · ${n(sum(G,"likes"))} likes · ${n(sum(G,"comments"))} comments · ${pct(eng(G))} engagement</span><span class="gp">YouTube ${n(sum(yt,"views"))} · Instagram ${n(sum(ig,"views"))} · ${full.length} full, ${reels.length} reel posts</span></summary>
+      <div class="atw"><table class="atab"><thead><tr><th>Where</th><th>Post</th><th>Posted</th><th>Views</th><th>Likes</th><th>Comments</th><th>Shares</th><th>Saves</th><th>Reach</th><th>Avg watch</th><th>Skip rate</th></tr></thead><tbody>
+      ${G.slice().sort(srt).map(p => { const u = okUrl(p.url); return `<tr><td><span class="pf ${p.plat==="youtube"?"yt":"ig"}">${p.plat==="youtube"?"YT":"IG"}</span> <small>${p.kind==="full"?"Full":"Reel"}</small></td><td class="tt">${u?`<a href="${e(u)}" target="_blank" rel="noopener">${e(p.title)}</a>`:e(p.title)}</td><td>${e(day(p.at))}</td><td class="num">${n(p.views)}</td><td class="num">${n(p.likes)}</td><td class="num">${n(p.comments)}</td><td class="num">${n(p.shares)}</td><td class="num">${n(p.saves)}</td><td class="num">${p.plat==="instagram"?n(p.reach):"–"}</td><td class="num">${p.watch?p.watch+" s"+(p.dur?` / ${p.dur} s`:""):"–"}</td><td class="num">${p.skip!=null&&p.plat==="instagram"?pct(p.skip):"–"}</td></tr>`; }).join("")}
+      </tbody></table></div></details>`; }).join("")}</div>`;
+  }
+  function render(){
+    const B = $("anBody"); if (!B) return;
+    if (!AN || !Array.isArray(AN.posts)) { B.innerHTML = `<p class="calnote">No stats yet. They are copied from Zernio by the Production plan thread.</p>`; return; }
+    const P = AN.posts, yt = P.filter(p => p.plat==="youtube"), ig = P.filter(p => p.plat==="instagram");
+    const top = P.slice().sort((a,b) => (b.views||0)-(a.views||0)).slice(0,5);
+    const Y = AN.yt || {}, I = AN.ig || {};
+    const foc = document.activeElement && document.activeElement.id;
+    B.innerHTML = `<div class="acards">${platCard("yt","YouTube", Y.subs, "subscribers", `${n(Y.totalViews)} channel views · ${n(Y.videos)} videos on the channel`, Y.hist, yt)}${platCard("ig","Instagram", I.followers, "followers", `${n(I.media)} posts on the account`, I.hist, ig)}</div>
+      <div class="arow"><div class="abox"><h3>Views per day</h3>${chart(AN.daily)}<p class="leg"><i class="yt"></i>YouTube <i class="ig"></i>Instagram</p></div>
+      <div class="abox"><h3>Top posts</h3><ol class="atop">${top.map(p => { const u = okUrl(p.url); return `<li><span class="pf ${p.plat==="youtube"?"yt":"ig"}">${p.plat==="youtube"?"YT":"IG"}</span><span class="tt">${u?`<a href="${e(u)}" target="_blank" rel="noopener">${e(p.title)}</a>`:e(p.title)}<small>${e(p.v||"Other post")} · ${e(day(p.at))}</small></span><b class="num">${n(p.views)}</b></li>`; }).join("")}</ol></div></div>
+      <div class="actl"><button type="button" class="anbtn" id="anOpen" aria-expanded="${OPEN}">${OPEN?"Hide":"Open"} all video analytics</button><button type="button" class="anref" id="anRef">Refresh stats</button><span class="anmsg" id="anMsg" aria-live="polite"></span><span class="anasof">Stats from Zernio, ${e(AN.asOf ? new Date(AN.asOf).toLocaleString("en-GB",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit",timeZone:"Asia/Kolkata"})+" IST" : "time unknown")}. YouTube shares and saves are not reported.</span></div>
+      ${OPEN ? detail(P) : ""}`;
+    if (foc === "anQ") { const q = $("anQ"); if (q){ q.focus(); q.setSelectionRange(q.value.length, q.value.length); } }
+  }
+  document.addEventListener("click", async ev => {
+    const j = ev.target.closest && ev.target.closest("a[data-j]");
+    if (j){ const s = document.getElementById(j.dataset.j); if (s){ ev.preventDefault(); s.scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start"}); } return; }
+    if (ev.target.closest && ev.target.closest("#anOpen")){ OPEN = !OPEN; render(); return; }
+    if (ev.target.closest && ev.target.closest("#anRef")){
+      const m = $("anMsg"), b = $("anRef"); b.disabled = true; m.textContent = "Asking for fresh stats…";
+      try { const mcp = await window.claude?.use?.("mcp"); if (!mcp) throw {code:"off"}; await mcp.callTool("Claude Code Remote", "fire_trigger", {trigger_id: "trig_01Lx8uJDGUGKHpcdeNhkHLyi", text: "Refresh analytics: rebuild db board/analytics from Zernio now."}); m.textContent = "Requested. New numbers show here in a few minutes."; }
+      catch (x) { m.textContent = "Couldn't ask right now. Stats refresh every night anyway."; }
+      setTimeout(() => { b.disabled = false; }, 60000); return; }
+  });
+  document.addEventListener("input", ev => { if (ev.target.id === "anQ"){ Q = ev.target.value; render(); } });
+  document.addEventListener("change", ev => { if (ev.target.id === "anSort"){ SORT = ev.target.value; render(); } });
+  // highlight the channel in view
+  try { const io = new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting) document.querySelectorAll(".jump a").forEach(a => a.classList.toggle("on", a.dataset.j === x.target.id)); }), {rootMargin: "-40% 0px -55% 0px"}); ["s-line","s-order","s-rel","s-cal","s-an","s-log"].forEach(id => { const s = document.getElementById(id); if (s) io.observe(s); }); } catch (x) {}
+  render();
+  (async () => { try { const db = await window.claude?.use?.("db"); if (!db) return; db.doc("board/analytics").onSnapshot(s => { if (s.exists){ AN = s.data(); render(); } }, () => {}); } catch (x) {} })();
+})();
+</script>
+
+<style>
+/* quick jump + analytics */
+.jump{grid-column:1/-1;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-top:2px}
+.jump::-webkit-scrollbar{display:none}
+.jump a{flex:none;display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);text-decoration:none;border:1px solid var(--line);border-radius:4px;padding:6px 10px;background:var(--bg)}
+.jump a b{color:var(--amber);font-weight:600}
+.jump a:hover,.jump a:focus-visible{color:var(--ink);border-color:var(--amber);outline:none}
+.jump a.on{color:var(--bg);background:var(--amber);border-color:var(--amber)} .jump a.on b{color:var(--bg)}
+section[id]{scroll-margin-top:240px}
+.wrap>*{min-width:0} .an{grid-template-columns:minmax(0,1fr)} #anBody,.adet,.agrp{min-width:0}
+.an{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:8px;padding:18px;display:grid;gap:14px}
+.acards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.acard{border:1px solid var(--line);border-radius:6px;background:var(--bg);padding:14px;display:grid;gap:10px;border-top:3px solid var(--slate)}
+.acard.yt{border-top-color:var(--red)} .acard.ig{border-top-color:var(--violet)}
+.ah{display:flex;justify-content:space-between;align-items:center}
+.pl{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+.abig b{font-family:var(--mono);font-size:38px;font-weight:500;line-height:1;display:block}
+.abig span{font-size:12px;color:var(--mute);text-transform:uppercase;letter-spacing:.06em;font-family:var(--mono)}
+.abig em{font-style:normal;color:var(--mute)} .abig em.up{color:var(--green)}
+.amet{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0}
+.amet dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.amet dd{margin:0;font-family:var(--mono);font-size:18px}
+.asub{margin:0;font-size:12px;color:var(--mute)}
+.arow{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:12px}
+.abox{border:1px solid var(--line);border-radius:6px;background:var(--bg);padding:12px 14px;min-width:0}
+.abox h3{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin:0 0 10px;font-weight:500}
+.anchart{display:flex;gap:6px;align-items:flex-end;height:170px}
+.anchart .col{flex:1;display:grid;grid-template-rows:1fr auto auto;height:100%;text-align:center;min-width:0}
+.anchart .stk{display:flex;flex-direction:column-reverse;justify-content:flex-start;height:100%;border-bottom:1px solid var(--line)}
+.anchart .stk i{display:block;width:100%;max-width:44px;margin:0 auto}
+.anchart .stk i.yt{background:var(--red);border-radius:2px 2px 0 0} .anchart .stk i.ig{background:var(--violet)}
+.anchart b{font-family:var(--mono);font-size:11px;font-weight:500;margin-top:4px}
+.anchart span{font-family:var(--mono);font-size:10.5px;color:var(--mute)}
+.leg{margin:8px 0 0;font-size:12px;color:var(--mute);display:flex;gap:6px;align-items:center}
+.leg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-left:8px} .leg i:first-child{margin-left:0}
+.leg i.yt{background:var(--red)} .leg i.ig{background:var(--violet)}
+.atop{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.atop li{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:baseline;font-size:13px}
+.atop .tt small{display:block;color:var(--mute);font-size:11.5px}
+.atop b{font-family:var(--mono);font-weight:500}
+.pf{font-family:var(--mono);font-size:10px;font-weight:600;padding:1px 5px;border-radius:2px;color:#0a0d11}
+.pf.yt{background:var(--red)} .pf.ig{background:var(--violet)}
+.tt a{color:var(--ink);text-decoration:none} .tt a:hover{color:var(--cyan);text-decoration:underline}
+.actl{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.anbtn{font:inherit;font-family:var(--display);font-size:18px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--cyan);color:#071016;border:0;border-radius:6px;padding:10px 18px;cursor:pointer}
+.anref{font:inherit;font-size:13px;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:9px 14px;cursor:pointer}
+.anref:disabled{opacity:.6;cursor:default}
+.anmsg{font-size:12px;color:var(--cyan)}
+.anasof{font-size:11.5px;color:var(--mute);flex-basis:100%}
+.adet{display:grid;gap:8px}
+.adtools{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--mute)}
+.adtools input,.adtools select{font:inherit;font-size:13px;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:5px 8px;margin-left:6px}
+.agrp{border:1px solid var(--line);border-radius:6px;background:var(--bg)}
+.agrp summary{cursor:pointer;padding:10px 12px;display:grid;gap:2px;list-style:none}
+.agrp summary::-webkit-details-marker{display:none}
+.agrp summary .gn{font-family:var(--display);font-size:20px;font-weight:600}
+.agrp summary .gn::before{content:"▸ ";color:var(--amber)} .agrp[open] summary .gn::before{content:"▾ "}
+.agrp .gs{font-size:13px} .agrp .gs b{font-family:var(--mono);color:var(--amber)}
+.agrp .gp{font-size:12px;color:var(--mute)}
+.atw{overflow-x:auto;border-top:1px solid var(--line)}
+.atab{width:100%;border-collapse:collapse;font-size:12.5px;min-width:820px}
+.atab th{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);font-weight:500;text-align:right;padding:7px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+.atab th:nth-child(-n+3){text-align:left}
+.atab td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+.atab td:nth-child(-n+3){text-align:left} .atab td.tt{white-space:normal;min-width:220px}
+.atab td small{color:var(--mute)}
+.atab tr:last-child td{border-bottom:0}
+@media (max-width:760px){.acards,.arow{grid-template-columns:1fr}.jump{position:sticky;top:0}section[id]{scroll-margin-top:12px}.anchart{height:140px}}
 </style>
