@@ -32,3 +32,5 @@ The producing thread sets understood/working/queued/done itself.
 v19: Combine / Create reels / Schedule buttons show the latest request of that kind as three icons (Received, Working or Queued, Done) using the same status field.
 
 v20: act notes use the same icons (inbox Received, bulb Understood, gear Working / clock Queued, tick Done) with the current step named.
+
+v21: redesign as a dark broadcast-style control room. Top desk bar (IST/ET clocks, meters: in production, need your OK, open requests, full videos on Zernio), numbered channels (CH 01 Production line, CH 02 Running order, CH 03 Release plan, CH 04 Zernio calendar, CH 05 Activity log), per-video pipeline rail (Acts, Combine, Reels, Schedule). Colours: amber = working, red = needs your OK, cyan = requested/notes, green = done/live, violet = 3D. Light theme kept for data-theme=light.
