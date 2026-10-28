@@ -1,5 +1,5 @@
 {
- "asOf": "2026-10-28T20:40:00Z",
+ "asOf": "2026-10-28T21:00:00Z",
  "note": "Release rule: 3 x 2D videos, then 1 x 3D. Full videos at least 2 days apart, 15:00 ET on weekdays and 11:00 ET on weekends. Reels go out only after their full video. Kept by the Production plan thread.",
  "rows": [
   {
@@ -196,26 +196,62 @@
    "status": "waiting",
    "et": "Earliest Mon 14 Dec, 15:00 ET",
    "ist": "Tue 15 Dec, 01:30 IST",
-   "note": "Batch 2. One more 2D needed before Caesar",
+   "note": "Batch 2",
    "n": 22
   },
   {
-   "n": 23,
+   "format": "2D",
+   "title": "Spain part 3: The Spanish Civil War and Franco",
+   "status": "waiting",
+   "et": "Earliest Wed 16 Dec, 15:00 ET",
+   "ist": "Thu 17 Dec, 01:30 IST",
+   "note": "Batch 3. Completes the 3 x 2D block before Caesar",
+   "n": 23
+  },
+  {
+   "n": 24,
    "format": "3D",
    "title": "The Ides of March (Caesar)",
    "status": "waiting",
-   "et": "After Spain 1, Spain 2 and one more 2D",
-   "ist": "",
-   "note": "Script done, queued after Thunderbolt"
+   "et": "Earliest Fri 18 Dec, 15:00 ET",
+   "ist": "Sat 19 Dec, 01:30 IST",
+   "note": "Script done. 3D slot after Spain 1, 2 and 3"
+  },
+  {
+   "format": "2D",
+   "title": "Japan's postwar comeback",
+   "status": "waiting",
+   "et": "Earliest Sun 20 Dec, 11:00 ET",
+   "ist": "Sun 20 Dec, 21:30 IST",
+   "note": "Batch 3",
+   "n": 25
+  },
+  {
+   "format": "2D",
+   "title": "Why Putin is so hard to kill",
+   "status": "waiting",
+   "et": "Earliest Tue 22 Dec, 15:00 ET",
+   "ist": "Wed 23 Dec, 01:30 IST",
+   "note": "Batch 3. One more 2D needed before Shackleton (Education Trap, if Pushpam confirms it)",
+   "n": 26
   },
   {
    "format": "3D",
    "title": "Lost in Antarctica for 497 Days (Shackleton)",
    "status": "waiting",
-   "et": "After 3 more 2D videos following Caesar",
+   "et": "After Japan, Putin and one more 2D",
    "ist": "",
-   "note": "Batch 2. 3D queue is Thunderbolt, Caesar, then Shackleton",
-   "n": 24
+   "note": "Batch 2. 3D queue is Thunderbolt, Caesar, Shackleton, Bermuda",
+   "n": 27
+  },
+  {
+   "format": "3D",
+   "title": "The Bermuda Triangle",
+   "status": "waiting",
+   "et": "After 3 more 2D videos following Shackleton",
+   "ist": "",
+   "note": "Batch 3",
+   "n": 28
   }
  ]
 }

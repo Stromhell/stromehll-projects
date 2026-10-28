@@ -1,6 +1,6 @@
 # Release order
 
-This is what goes live on YouTube, in order. Updated 28 Oct 2026, 20:40 UTC. The same list is on the Production Control Room board (db doc `board/releases`).
+This is what goes live on YouTube, in order. Updated 28 Oct 2026, 21:00 UTC. The same list is on the Production Control Room board (db doc `board/releases`).
 
 Release rule: 3 x 2D videos, then 1 x 3D. Full videos go out at least 2 days apart. Fill open November slots before using December (Pushpam, 28 Oct).
 
@@ -27,6 +27,10 @@ Release rule: 3 x 2D videos, then 1 x 3D. Full videos go out at least 2 days apa
 | 19 | 2D | Dark Web King (Ross Ulbricht, Silk Road) | Earliest Tue 8 Dec, 15:00 ET | Wed 9 Dec, 01:30 IST | Waiting | Batch 2. Completes the 3 x 2D block before Thunderbolt |
 | 20 | 3D | Operation Thunderbolt | Earliest Thu 10 Dec, 15:00 ET | Fri 11 Dec, 01:30 IST | Waiting | Script done. 3D slot after Mongols, JPMorgan and Dark Web |
 | 21 | 2D | Spain part 1: Al-Andalus to 1492 | Earliest Sat 12 Dec, 11:00 ET | Sat 12 Dec, 21:30 IST | Waiting | Batch 2 |
-| 22 | 2D | Spain part 2: The Spanish Empire, 1492 to 1898 | Earliest Mon 14 Dec, 15:00 ET | Tue 15 Dec, 01:30 IST | Waiting | Batch 2. One more 2D needed before Caesar |
-| 23 | 3D | The Ides of March (Caesar) | After Spain 1, Spain 2 and one more 2D |  | Waiting | Script done, queued after Thunderbolt |
-| 24 | 3D | Lost in Antarctica for 497 Days (Shackleton) | After 3 more 2D videos following Caesar |  | Waiting | Batch 2. 3D queue is Thunderbolt, Caesar, then Shackleton |
+| 22 | 2D | Spain part 2: The Spanish Empire, 1492 to 1898 | Earliest Mon 14 Dec, 15:00 ET | Tue 15 Dec, 01:30 IST | Waiting | Batch 2 |
+| 23 | 2D | Spain part 3: The Spanish Civil War and Franco | Earliest Wed 16 Dec, 15:00 ET | Thu 17 Dec, 01:30 IST | Waiting | Batch 3. Completes the 3 x 2D block before Caesar |
+| 24 | 3D | The Ides of March (Caesar) | Earliest Fri 18 Dec, 15:00 ET | Sat 19 Dec, 01:30 IST | Waiting | Script done. 3D slot after Spain 1, 2 and 3 |
+| 25 | 2D | Japan's postwar comeback | Earliest Sun 20 Dec, 11:00 ET | Sun 20 Dec, 21:30 IST | Waiting | Batch 3 |
+| 26 | 2D | Why Putin is so hard to kill | Earliest Tue 22 Dec, 15:00 ET | Wed 23 Dec, 01:30 IST | Waiting | Batch 3. One more 2D needed before Shackleton (Education Trap, if Pushpam confirms it) |
+| 27 | 3D | Lost in Antarctica for 497 Days (Shackleton) | After Japan, Putin and one more 2D |  | Waiting | Batch 2. 3D queue is Thunderbolt, Caesar, Shackleton, Bermuda |
+| 28 | 3D | The Bermuda Triangle | After 3 more 2D videos following Shackleton |  | Waiting | Batch 3 |
