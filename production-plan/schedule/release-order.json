@@ -1,5 +1,5 @@
 {
- "asOf": "2026-10-28T20:20:00Z",
+ "asOf": "2026-10-28T20:40:00Z",
  "note": "Release rule: 3 x 2D videos, then 1 x 3D. Full videos at least 2 days apart, 15:00 ET on weekdays and 11:00 ET on weekends. Reels go out only after their full video. Kept by the Production plan thread.",
  "rows": [
   {
@@ -146,22 +146,76 @@
    "note": "Planned (Nov slots filled first). Booked on Zernio once the film and reels are finished."
   },
   {
-   "n": 17,
+   "format": "2D",
+   "title": "The Entire History of the Mongol Empire",
+   "status": "waiting",
+   "et": "Earliest Fri 4 Dec, 15:00 ET",
+   "ist": "Sat 5 Dec, 01:30 IST",
+   "note": "Batch 2. Next free slot if finished in time",
+   "n": 17
+  },
+  {
+   "format": "2D",
+   "title": "Why Is JPMorgan So Powerful? (Jamie Dimon)",
+   "status": "waiting",
+   "et": "Earliest Sun 6 Dec, 11:00 ET",
+   "ist": "Sun 6 Dec, 21:30 IST",
+   "note": "Batch 2. Next free slot if finished in time",
+   "n": 18
+  },
+  {
+   "format": "2D",
+   "title": "Dark Web King (Ross Ulbricht, Silk Road)",
+   "status": "waiting",
+   "et": "Earliest Tue 8 Dec, 15:00 ET",
+   "ist": "Wed 9 Dec, 01:30 IST",
+   "note": "Batch 2. Completes the 3 x 2D block before Thunderbolt",
+   "n": 19
+  },
+  {
+   "n": 20,
    "format": "3D",
    "title": "Operation Thunderbolt",
    "status": "waiting",
-   "et": "After 3 more 2D videos",
-   "ist": "",
-   "note": "Script done, queued for a 3D slot. Needs 3 new 2D videos released before it"
+   "et": "Earliest Thu 10 Dec, 15:00 ET",
+   "ist": "Fri 11 Dec, 01:30 IST",
+   "note": "Script done. 3D slot after Mongols, JPMorgan and Dark Web"
   },
   {
-   "n": 18,
+   "format": "2D",
+   "title": "Spain part 1: Al-Andalus to 1492",
+   "status": "waiting",
+   "et": "Earliest Sat 12 Dec, 11:00 ET",
+   "ist": "Sat 12 Dec, 21:30 IST",
+   "note": "Batch 2",
+   "n": 21
+  },
+  {
+   "format": "2D",
+   "title": "Spain part 2: The Spanish Empire, 1492 to 1898",
+   "status": "waiting",
+   "et": "Earliest Mon 14 Dec, 15:00 ET",
+   "ist": "Tue 15 Dec, 01:30 IST",
+   "note": "Batch 2. One more 2D needed before Caesar",
+   "n": 22
+  },
+  {
+   "n": 23,
    "format": "3D",
    "title": "The Ides of March (Caesar)",
    "status": "waiting",
-   "et": "After 3 more 2D videos",
+   "et": "After Spain 1, Spain 2 and one more 2D",
    "ist": "",
    "note": "Script done, queued after Thunderbolt"
+  },
+  {
+   "format": "3D",
+   "title": "Lost in Antarctica for 497 Days (Shackleton)",
+   "status": "waiting",
+   "et": "After 3 more 2D videos following Caesar",
+   "ist": "",
+   "note": "Batch 2. 3D queue is Thunderbolt, Caesar, then Shackleton",
+   "n": 24
   }
  ]
 }
