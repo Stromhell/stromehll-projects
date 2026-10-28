@@ -38,3 +38,5 @@ v21: redesign as a dark broadcast-style control room. Top desk bar (IST/ET clock
 v22: quick-jump bar under the header (channels 01-06, highlights the one in view) and CH 05 Analytics from db board/analytics (see automation/analytics-refresh.md). Button 'Open all video analytics' shows every post grouped by video with views, likes, comments, shares, saves, reach, average watch time and skip rate.
 
 v23: per-act Play/Watch (green) and Feedback (blue) are full-size buttons on their own row; fixed act names picking up the analytics panel style.
+
+v24: channel quick-jump moved to a fixed side rail (left with names on wide screens, right-edge number buttons on phones) plus a Top button; it stays put while scrolling and lights the channel in view.

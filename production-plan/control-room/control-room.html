@@ -241,7 +241,8 @@ button.big.armed{border-color:var(--amber);background:var(--panel)}
 @media (prefers-reduced-motion:reduce){.bar.live i,.pill.working::before{animation:none}.bar i{transition:none}}
 </style>
 
-<div class="wrap">
+<nav class="siderail" aria-label="Channels"><a href="#s-top" data-j="s-top" title="Top"><b>↑</b><span>Top</span></a><a href="#s-line" data-j="s-line" title="Production line"><b>01</b><span>Production line</span></a><a href="#s-order" data-j="s-order" title="Running order"><b>02</b><span>Running order</span></a><a href="#s-rel" data-j="s-rel" title="Release plan"><b>03</b><span>Release plan</span></a><a href="#s-cal" data-j="s-cal" title="Calendar"><b>04</b><span>Calendar</span></a><a href="#s-an" data-j="s-an" title="Analytics"><b>05</b><span>Analytics</span></a><a href="#s-log" data-j="s-log" title="Activity log"><b>06</b><span>Activity log</span></a></nav>
+<div class="wrap" id="s-top">
   <header class="desk">
     <div class="brand"><span class="lamp" aria-hidden="true"></span><div><div class="eyebrow">Stromhell studio · production pipeline</div><h1>Production Control Room</h1></div></div>
     <div class="clocks" aria-label="Clocks"><div><span>IST</span><b class="num" id="clkIst">–</b></div><div><span>ET</span><b class="num" id="clkEt">–</b></div></div>
@@ -840,7 +841,7 @@ a{color:var(--cyan)}
   document.addEventListener("input", ev => { if (ev.target.id === "anQ"){ Q = ev.target.value; render(); } });
   document.addEventListener("change", ev => { if (ev.target.id === "anSort"){ SORT = ev.target.value; render(); } });
   // highlight the channel in view
-  try { const io = new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting) document.querySelectorAll(".jump a").forEach(a => a.classList.toggle("on", a.dataset.j === x.target.id)); }), {rootMargin: "-40% 0px -55% 0px"}); ["s-line","s-order","s-rel","s-cal","s-an","s-log"].forEach(id => { const s = document.getElementById(id); if (s) io.observe(s); }); } catch (x) {}
+  try { const io = new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting) document.querySelectorAll(".jump a,.siderail a").forEach(a => a.classList.toggle("on", a.dataset.j === x.target.id)); }), {rootMargin: "-40% 0px -55% 0px"}); ["s-line","s-order","s-rel","s-cal","s-an","s-log"].forEach(id => { const s = document.getElementById(id); if (s) io.observe(s); }); } catch (x) {}
   render();
   (async () => { try { const db = await window.claude?.use?.("db"); if (!db) return; db.doc("board/analytics").onSnapshot(s => { if (s.exists){ AN = s.data(); render(); } }, () => {}); } catch (x) {} })();
 })();
@@ -927,4 +928,25 @@ section[id]{scroll-margin-top:240px}
 .actlist .fbbtn:hover,.actlist .fbbtn[aria-expanded="true"]{background:var(--cyan);color:#071016;border-color:var(--cyan)}
 .actlist .np{font-family:var(--mono);font-size:11px;color:var(--mute);padding:6px 0}
 .actlist .watch:focus-visible,.actlist .play:focus-visible,.actlist .fbbtn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+</style>
+
+<style>
+/* fixed side rail: channel quick access that stays put while scrolling */
+.jump{display:none}
+.siderail{position:fixed;z-index:20;left:max(10px,env(safe-area-inset-left,0px));top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:4px;padding:8px;border:1px solid var(--line);border-radius:10px;background:color-mix(in srgb,var(--panel) 92%,transparent);backdrop-filter:blur(6px);box-shadow:0 10px 30px -12px #000}
+.siderail a{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--mute);font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;padding:7px 10px;border-radius:6px;border:1px solid transparent;white-space:nowrap}
+.siderail a b{display:inline-grid;place-items:center;min-width:26px;height:22px;border-radius:4px;background:var(--bg);border:1px solid var(--line);color:var(--amber);font-weight:600;font-size:11px}
+.siderail a:hover,.siderail a:focus-visible{color:var(--ink);border-color:var(--line);background:var(--bg);outline:none}
+.siderail a.on{color:var(--ink);border-color:var(--amber)} .siderail a.on b{background:var(--amber);color:var(--bg);border-color:var(--amber);box-shadow:var(--glow) color-mix(in srgb,var(--amber) 50%,transparent)}
+.siderail a[data-j="s-top"] b{color:var(--mute)}
+body{padding-left:200px}
+.desk{position:static}
+section[id]{scroll-margin-top:16px}
+@media (max-width:1100px){
+  body{padding-left:0;padding-right:52px}
+  .siderail{left:auto;right:max(6px,env(safe-area-inset-right,0px));padding:5px;gap:3px}
+  .siderail a{padding:3px}
+  .siderail a span{display:none}
+  .siderail a b{min-width:34px;height:34px;font-size:12px}
+}
 </style>
