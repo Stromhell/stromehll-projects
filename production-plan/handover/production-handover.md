@@ -35,7 +35,7 @@ Pushpam approved this on 27 Oct 2026: *"okay now its ur job is to shedule each v
 | 3 | Schedule **everything on Zernio**. | 27 Oct | Project chat |
 | 4 | **Reels go to YouTube and Instagram. Full combined videos go to YouTube only, never Instagram.** | 27 Oct | Project chat |
 | 5 | **Every post at the ideal US audience time.** | 27 Oct | Project chat ("make sure evry video gets live accoring to the ideal us time") |
-| 6 | **A video's reels go out only after its full video is live.** Otherwise the "watch the full video" call to action points at nothing. | 28 Oct | Pushpam's Hitler message ("Post the reels only after the full video is live"), and the GW2 reels notes |
+| 6 | **A video's reels go out only after its full video is live.** Otherwise the "watch the full video" call to action points at nothing. | 28 Oct | Pushpam's Hitler message ("Post the reels only after the full video is live"), and the GW2 reels notes | **Changed 28 Oct (later): Pushpam now allows reels before the full video.**
 | 7 | **Finished mp4s go in the Drive "Ready to post" folder.** The nightly run picks them up. In practice the other projects schedule on Zernio themselves when given exact times (see section 8). | 27 Oct | Scheduling thread |
 | 8 | **Nightly run at 22:11 IST** updates the count and plan and schedules new files. | 27 Oct | Scheduled task "Video plan refresh" |
 | 9 | Proposed slots aren't put on Zernio until Pushpam says go. This was superseded on 27 Oct by rule 3 for any video that is finished. | 27 Oct | Memory |
