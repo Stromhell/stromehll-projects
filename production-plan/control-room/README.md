@@ -15,3 +15,16 @@ Control from the page (v15): each act has a Feedback box; each video has big Com
 Every action writes a doc to db collection `requests` {video, short, title, format, kind feedback|combine|reels|schedule, act, actName, text, at, status new|relayed|working|done|declined, reply?} and, when available, a "Send to Claude" comment that wakes the Production plan thread, which relays it to the thread making that video. The producing thread sets status (and an optional `reply`) as it works. Schedule requests are handled by the Production plan thread itself.
 Safety net: scheduled task "Control Room request check" (trig_01Lx8uJDGUGKHpcdeNhkHLyi, hourly at :33) relays any request still "new". A failed instant send is recorded on the doc as `sendError`.
 Release list (v17): each board/releases row may carry `key` (= board/calendar post `v`) and `reelsTotal`; the page shows full-video and reel posting progress from board/calendar, and hides a row once its full video and all reels are posted (a scheduled post past its time counts as posted).
+
+## v18 (28 Oct 2026): feedback status and instant link
+
+Why notes got stuck: the page's "send to Claude" path (comments) reports `off` in the view Pushpam uses, so notes were saved but only picked up by the hourly check. The Ancient Humans note (requests/mvsn298jghr4) recorded `sendError: "sending to Claude is off in this view"`.
+
+Fix: on save, the page now calls the Claude Code Remote connector's `fire_trigger` on the "Control Room request check" scheduled task (trig_01Lx8uJDGUGKHpcdeNhkHLyi), which runs in the Production plan session right away. Fallbacks: comments sendToClaude, then the hourly run. The first press asks the viewer to allow the connector once. The doc gets `sentVia: "instant"` or `sendError` with the reasons.
+
+Status flow on each `requests` doc (shown on the act and in the list):
+- `new` Received (saved) -> `relayed` Received by the team
+- `understood` + `summary` (one line on what will change) + `when` now|later
+- `working` (Working on it now) or `queued` (Queued for later)
+- `done` (+ optional `url` of the fixed render), or `declined` + `reply`
+The producing thread sets understood/working/queued/done itself.

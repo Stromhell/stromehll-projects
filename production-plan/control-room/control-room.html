@@ -151,7 +151,7 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,6vw,54px);lin
 @media (max-width:640px){.actlist{grid-template-columns:1fr 1fr}}
 .actlist li.review,.actlist li.fix{border-left-color:var(--violet)} .actlist li.review .as i,.actlist li.fix .as i{background:var(--violet)}
 .actlist li{position:relative}
-.actlist li:has(.fbform){grid-column:1/-1}
+.actlist li:has(.fbform),.actlist li:has(.actnote){grid-column:1/-1}
 .actlist .fbbtn{font:inherit;font-size:11px;background:transparent;color:var(--mute);border:1px solid var(--line);border-radius:3px;padding:1px 7px;cursor:pointer}
 .actlist .fbbtn[aria-expanded="true"]{color:var(--ink);border-color:var(--ink)}
 .fbform{grid-column:1/-1;display:grid;gap:6px;margin-top:6px}
@@ -174,6 +174,14 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,6vw,54px);lin
 .reqs .rk{font-family:var(--mono);font-size:11px;color:var(--mute)}
 .reqs .rt small{display:block;color:var(--mute);font-size:12px}
 .reqs .rs{font-size:12px;color:var(--mute)} .reqs .rs.done{color:var(--green)} .reqs .rs.relayed,.reqs .rs.working{color:var(--amber)}
+.nst{display:flex;flex-wrap:wrap;gap:4px;align-items:center;margin-top:4px}
+.nstp{font-size:11.5px;padding:2px 8px;border-radius:999px;border:1px solid var(--line,#ccc);color:var(--mute)}
+.nstp.ok{color:var(--green);border-color:currentColor}
+.nstp.on{color:var(--amber);border-color:currentColor;font-weight:600}
+.nst .sum{flex-basis:100%;margin:2px 0 0;font-size:12.5px;color:var(--ink,inherit)}
+.actnote{grid-column:1/-1;margin:4px 0 2px;padding:6px 8px;border-left:3px solid var(--amber);background:color-mix(in srgb,var(--amber) 8%,transparent);border-radius:4px}
+.actnote .nt{margin:0;font-size:12.5px}
+.rstep{grid-column:1/-1}
 @media (max-width:640px){.bigbtns{grid-template-columns:1fr}.reqs li{grid-template-columns:1fr auto}.reqs .rk{grid-column:1/-1}}
 .zst{display:flex;flex-direction:column;gap:2px;margin-top:4px}
 .zl{font-weight:500;font-size:12px;color:var(--mute);font-family:var(--mono)}
@@ -342,11 +350,20 @@ const ICON_COMBINE = `<svg viewBox="0 0 24 24" width="28" height="28" aria-hidde
 const ICON_REELS = `<svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M11 9.5v5l4-2.5z" fill="currentColor"/><path d="M3.5 6v12M20.5 6v12"/></svg>`;
 const ICON_SCHED = `<svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/><path d="m9 15 2 2 4-4"/></svg>`;
 const KIND_TXT = {combine:["Combine acts","Combine all acts into the full video."], reels:["Create reels","Create the 15 reels from the full video."], schedule:["Schedule","Schedule the full video and its reels on Zernio in the planned slot."]};
-const REQ_ST = {new:"Sent", relayed:"Passed to the team", working:"Being done", done:"Done", declined:"Not done"};
+const REQ_ST = {new:"Received", relayed:"Received by the team", understood:"Understood", working:"Working on it now", queued:"Queued for later", done:"Done", declined:"Not done"};
+function stepIdx(r){ const s = r.status||"new"; return s==="done"?3 : (s==="working"||s==="queued")?2 : s==="understood"?1 : 0; }
+function stepper(r){
+  if (r.status === "declined") return `<div class="nst no"><span class="nstp on">Not done</span>${r.reply?`<p class="sum">${esc(r.reply)}</p>`:""}</div>`;
+  const i = stepIdx(r), later = r.status==="queued" || (r.when==="later" && r.status!=="working");
+  const L = ["Received", "Understood", later ? "Queued for later" : (i>=2 ? "Working on it now" : "Now or later"), "Done"];
+  const sub = i===0 ? (r.status==="relayed" ? "The team has it. Waiting for them to confirm." : "Saved. Passing it to the team.") : "";
+  return `<div class="nst">${L.map((l,k) => `<span class="nstp ${(k<i||i===3)?"ok":k===i?"on":""}">${(k<i||i===3)?"✓ ":""}${esc(l)}</span>`).join("")}${r.summary?`<p class="sum"><b>What will change:</b> ${esc(r.summary)}</p>`:""}${sub?`<p class="sum">${sub}</p>`:""}${r.status==="done"&&actUrl(r.url||"")?`<p class="sum"><a href="${esc(actUrl(r.url))}" target="_blank" rel="noopener">See the fix ↗</a></p>`:""}</div>`;
+}
+function actReq(vid, act){ return REQS.filter(r => r.video===vid && r.kind==="feedback" && String(r.act)===String(act)).sort((a,b)=>(b.at||0)-(a.at||0))[0]; }
 function reqsFor(vid){ return REQS.filter(r => r.video === vid).sort((a,b) => (b.at||0)-(a.at||0)).slice(0,4); }
 function ctlBlock(v){
   const rs = reqsFor(v.id);
-  return `<div class="ctl"><div class="bigbtns"><button type="button" class="big" data-kind="combine" data-vid="${esc(v.id)}">${ICON_COMBINE}<span><b>Combine acts</b><small>Join all acts into the full video</small></span></button><button type="button" class="big" data-kind="reels" data-vid="${esc(v.id)}">${ICON_REELS}<span><b>Create reels</b><small>Cut 15 reels from the full video</small></span></button><button type="button" class="big" data-kind="schedule" data-vid="${esc(v.id)}">${ICON_SCHED}<span><b>Schedule</b><small>Put the video and reels on Zernio</small></span></button></div><p class="ctlmsg" aria-live="polite" data-for="${esc(v.id)}"></p>${rs.length?`<ul class="reqs">${rs.map(r => `<li><span class="rk">${r.kind==="feedback"?esc(r.actName||"Feedback"):esc((KIND_TXT[r.kind]||[r.kind])[0])}</span><span class="rt">${esc(r.text||"")}${r.reply?`<small>${esc(r.reply)}</small>`:""}</span><span class="rs ${esc(r.status||"new")}">${REQ_ST[r.status]||esc(r.status||"Sent")}</span></li>`).join("")}</ul>`:""}</div>`;
+  return `<div class="ctl"><div class="bigbtns"><button type="button" class="big" data-kind="combine" data-vid="${esc(v.id)}">${ICON_COMBINE}<span><b>Combine acts</b><small>Join all acts into the full video</small></span></button><button type="button" class="big" data-kind="reels" data-vid="${esc(v.id)}">${ICON_REELS}<span><b>Create reels</b><small>Cut 15 reels from the full video</small></span></button><button type="button" class="big" data-kind="schedule" data-vid="${esc(v.id)}">${ICON_SCHED}<span><b>Schedule</b><small>Put the video and reels on Zernio</small></span></button></div><p class="ctlmsg" aria-live="polite" data-for="${esc(v.id)}"></p>${rs.length?`<ul class="reqs">${rs.map(r => `<li><span class="rk">${r.kind==="feedback"?esc(r.actName||"Feedback"):esc((KIND_TXT[r.kind]||[r.kind])[0])}</span><span class="rt">${esc(r.text||"")}${r.reply?`<small>${esc(r.reply)}</small>`:""}</span><span class="rs ${esc(r.status||"new")}">${REQ_ST[r.status]||esc(r.status||"Received")}</span></li>`).join("")}</ul>`:""}</div>`;
 }
 async function sendReq(v, kind, act, actName, text, anchorEl){
   const db = await window.claude?.use?.("db");
@@ -355,8 +372,15 @@ async function sendReq(v, kind, act, actName, text, anchorEl){
   const fmt = (typeof fmtOf === "function") ? fmtOf(v) : (v.format||"");
   const doc = {video: v.id, short: v.short||v.title, title: v.title, format: fmt, kind, act: act||null, actName: actName||null, text, at: Math.floor(Date.now()/1000), status: "new"};
   try { await db.collection("requests").doc(id).set(doc); } catch (e) { return {ok:false, msg:"Not saved. Check your connection and try again."}; }
-  let sent = false, why = "";
+  let sent = false, why = "", mwhy = "";
   try {
+    const mcp = await window.claude?.use?.("mcp");
+    if (mcp){
+      await mcp.callTool("Claude Code Remote", "fire_trigger", {trigger_id: "trig_01Lx8uJDGUGKHpcdeNhkHLyi", text: `New Control Room request ${id}: ${v.title} (${fmt})${act?", "+actName:""}. Handle it now.`});
+      sent = true;
+    } else mwhy = "the instant link is off in this view";
+  } catch (e) { mwhy = "instant link: " + ((e && e.code) || "error"); }
+  if (!sent) try {
     if (!CMT) CMT = await window.claude?.use?.("comments");
     if (!CMT) why = "comments are off in this view";
     else {
@@ -370,8 +394,8 @@ async function sendReq(v, kind, act, actName, text, anchorEl){
       }
     }
   } catch (e) { why = e && e.code === "consent_required" ? "you didn't allow the page to comment for you" : e && e.code === "forbidden" ? "commenting from the page is turned off for you" : e && e.code === "rate_limited" ? "too many sends in a row" : "the instant send failed (" + ((e && e.code) || "error") + ")"; }
-  if (!sent){ try { await db.collection("requests").doc(id).update({sendError: why || "unknown"}); } catch (e) {} }
-  return {ok:true, msg: sent ? "Sent. Claude is passing it to the team now." : `Saved, but it couldn't be sent instantly (${why}). It is checked every hour and passed on then.`};
+  try { await db.collection("requests").doc(id).update(sent ? {sentVia: "instant"} : {sendError: (mwhy ? mwhy + "; " : "") + (why || "unknown")}); } catch (e) {}
+  return {ok:true, msg: sent ? "Received. Watch the status below: it moves to Understood once the team reads it." : `Received and saved. The instant link didn't work here (${why}), so it will be picked up at the next hourly check. Watch the status below.`};
 }
 document.addEventListener("click", e => {
   const fb = e.target.closest && e.target.closest("button.fbbtn");
@@ -407,7 +431,7 @@ function actsBlock(v){
   const ST = {done:"Done", active:"Working", review:"Waiting for your OK", fix:"Fixing", todo:"Not started"};
   const nm = a => a.name ? a.name : (String(a.label).toUpperCase()==="CO" ? "Cold open" : "Act " + a.label);
   const done = A.filter(a => a.state === "done").length;
-  return `<div class="acts"><div class="acthead"><span>Act by act</span><b>${done} of ${A.length} done</b></div><ol class="actlist">${A.map(a => { const u = actUrl(a.url || a.preview || ""); const vu = actUrl(a.video || ""); const st = ST[a.state] || esc(a.state || "Not started"); return `<li class="${esc(a.state||"todo")}"><span class="an">${esc(nm(a))}</span><span class="as"><i></i>${st}${a.pct!=null&&a.state==="active"?` ${Math.round(a.pct)}%`:""}</span><span class="al">${vu?`<button type="button" class="play" data-v="${esc(vu)}" aria-label="Play ${esc(nm(a))}">▶ Play</button>`:""}${u?`<a href="${esc(u)}" target="_blank" rel="noopener">${vu?"Open":"Watch"} ↗</a>`:(vu?"":`<span class="np">No render yet</span>`)}<button type="button" class="fbbtn" data-vid="${esc(v.id)}" data-act="${esc(a.label)}" aria-expanded="${FB_OPEN.has(v.id+"|"+a.label)}">Feedback</button></span>${FB_OPEN.has(v.id+"|"+a.label)?fbForm(v.id, a.label, nm(a)):""}</li>`; }).join("")}</ol></div>`;
+  return `<div class="acts"><div class="acthead"><span>Act by act</span><b>${done} of ${A.length} done</b></div><ol class="actlist">${A.map(a => { const u = actUrl(a.url || a.preview || ""); const vu = actUrl(a.video || ""); const st = ST[a.state] || esc(a.state || "Not started"); return `<li class="${esc(a.state||"todo")}"><span class="an">${esc(nm(a))}</span><span class="as"><i></i>${st}${a.pct!=null&&a.state==="active"?` ${Math.round(a.pct)}%`:""}</span><span class="al">${vu?`<button type="button" class="play" data-v="${esc(vu)}" aria-label="Play ${esc(nm(a))}">▶ Play</button>`:""}${u?`<a href="${esc(u)}" target="_blank" rel="noopener">${vu?"Open":"Watch"} ↗</a>`:(vu?"":`<span class="np">No render yet</span>`)}<button type="button" class="fbbtn" data-vid="${esc(v.id)}" data-act="${esc(a.label)}" aria-expanded="${FB_OPEN.has(v.id+"|"+a.label)}">Feedback</button></span>${(() => { const r = actReq(v.id, a.label); return r ? `<div class="actnote"><p class="nt">Your note: ${esc(r.text||"")}</p>${stepper(r)}</div>` : ""; })()}${FB_OPEN.has(v.id+"|"+a.label)?fbForm(v.id, a.label, nm(a)):""}</li>`; }).join("")}</ol></div>`;
 }
 function buildRows(){
   if (!rows().length) { $("vids").innerHTML = `<p class="stage">No videos in production right now. New ones show up here when they start.</p>`; }
