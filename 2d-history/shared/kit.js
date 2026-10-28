@@ -83,7 +83,7 @@
   K.frame = (t) => { const cur = K.scenes.filter(s => t >= s.start && t < s.end + K.xfade).sort((a, b) => a.start - b.start);
     const main = cur.filter(s => t < s.end).pop() || K.scenes[K.scenes.length - 1]; const prev = cur.find(s => s !== main && t >= s.end && t < s.end + K.xfade && main.start >= s.end - .01);
     drawScene(ctx, main, t);
-    if (prev && main.start <= t && t < main.start + K.xfade) { drawScene(octx, prev, t); ctx.save(); K.screen(ctx); ctx.globalAlpha = 1 - E.sine((t - main.start) / K.xfade); ctx.drawImage(off, 0, 0); ctx.restore(); }
+    const xf = main.xfade ?? K.xfade; if (prev && xf > 0 && main.start <= t && t < main.start + xf) { drawScene(octx, prev, t); ctx.save(); K.screen(ctx); ctx.globalAlpha = 1 - E.sine((t - main.start) / xf); ctx.drawImage(off, 0, 0); ctx.restore(); }
     if (K.overlay) { ctx.save(); K.screen(ctx); K.overlay(ctx, t, main); ctx.restore(); }
     K.drawSubs(ctx, t, main); K.post(ctx, t); };
   K.boot = async () => { await document.fonts.ready; await Promise.all(['Anton', 'Oswald', 'Caveat'].map(f => document.fonts.load(`40px ${f}`))); await K.ready(); window.KIT_READY = true; };

@@ -7,3 +7,5 @@ window.PLATES = {
   trading: (c, r, W, H) => ENV.trading(c, r, W, H),
   fg_crt: (c, r, W, H) => ENV.fgCrt(c, r, W, H),
 };
+window.PLATES.suburb = (c, r, W, H) => ENV.suburb(c, r, W, H);
+window.PLATES.bank = (c, r, W, H) => ENV.bankHall(c, r, W, H);

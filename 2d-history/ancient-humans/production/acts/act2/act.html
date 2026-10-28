@@ -1,0 +1,142 @@
+<!doctype html><html><head><meta charset="utf-8"><title>AH act 2 - a day without a clock</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig.js"></script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/', INK = '#2b1e16', CREAM = '#f6eedc', GOLD = '#e8b44a', RED = '#c8402e', GREEN = '#3f7a3a';
+for (const n of ['sav_dawn']) K.load(n, PL + n + '.jpg');
+{ const T = window.TIMING, L = T.shots[T.shots.length - 1]; L.end += 1.8; T.dur = L.end; }
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+const font = (px, fam = 'Anton') => `${px}px ${fam}, Oswald, sans-serif`;
+const spear = (x, y, k) => (c) => { if (k <= 0) return; c.save(); c.translate(x, y); c.scale(k, k); c.fillStyle = 'rgba(30,18,8,.35)'; c.beginPath(); c.ellipse(-30, 4, 70, 12, 0, 0, 7); c.fill(); c.fillStyle = '#7a5a34'; c.beginPath(); c.ellipse(0, 2, 26, 9, 0, 0, 7); c.fill(); c.rotate(-.12); c.strokeStyle = R.INK; c.lineWidth = 15; c.lineCap = 'round'; c.beginPath(); c.moveTo(0, 0); c.lineTo(0, -470); c.stroke(); c.strokeStyle = '#8a5a32'; c.lineWidth = 9; c.stroke(); c.fillStyle = '#6a6458'; c.strokeStyle = R.INK; c.lineWidth = 3; c.beginPath(); c.moveTo(-17, -460); c.lineTo(0, -540); c.lineTo(17, -460); c.closePath(); c.fill(); c.stroke(); c.strokeStyle = '#c8a878'; c.lineWidth = 4; for (let k2 = 0; k2 < 4; k2++) { c.beginPath(); c.moveTo(-8, -450 + k2 * 7); c.lineTo(8, -446 + k2 * 7); c.stroke(); } c.restore(); };
+const hide = (x, y, w, k, col = '#8b5e3a') => (c) => { if (k <= 0) return; c.save(); c.translate(x, y); c.scale(k, k); c.fillStyle = 'rgba(30,18,8,.3)'; c.beginPath(); c.ellipse(0, 6, w * .55, w * .1, 0, 0, 7); c.fill(); c.fillStyle = col; c.strokeStyle = R.INK; c.lineWidth = 3; c.beginPath(); c.moveTo(-w / 2, 0); c.quadraticCurveTo(-w * .4, -w * .2, -w * .1, -w * .16); c.quadraticCurveTo(w * .2, -w * .26, w * .48, -w * .08); c.quadraticCurveTo(w * .55, 0, w * .4, w * .04); c.quadraticCurveTo(0, w * .1, -w / 2, 0); c.fill(); c.stroke();
+  c.strokeStyle = 'rgba(40,20,8,.35)'; c.lineWidth = 2; for (let j = 0; j < 14; j++) { const hx = -w * .4 + j * w * .06; c.beginPath(); c.moveTo(hx, -w * .1); c.lineTo(hx + 6, -w * .02); c.stroke(); } c.restore(); };
+const firePit = (x, y, k = 1) => (c) => { c.save(); c.translate(x, y); c.scale(k, k); c.fillStyle = 'rgba(20,10,4,.45)'; c.beginPath(); c.ellipse(0, 4, 70, 16, 0, 0, 7); c.fill(); c.fillStyle = '#1a120c'; c.beginPath(); c.ellipse(0, 0, 46, 11, 0, 0, 7); c.fill();
+  c.lineCap = 'round'; for (const [a, b2, col] of [[-.3, .3, '#5a3a22'], [.4, -.2, '#6a4628'], [3, 2.8, '#4a2e18']]) { c.strokeStyle = R.INK; c.lineWidth = 15; c.beginPath(); c.moveTo(Math.cos(a) * -48, -4 + Math.sin(a) * 6); c.lineTo(Math.cos(b2) * 40, -12); c.stroke(); c.strokeStyle = col; c.lineWidth = 10; c.stroke(); }
+  for (let k2 = 0; k2 < 11; k2++) { const an = k2 / 11 * Math.PI * 2; const sx = Math.cos(an) * 62, sy = Math.sin(an) * 15 + 2; c.fillStyle = k2 % 2 ? '#7a7064' : '#8f8678'; c.strokeStyle = R.INK; c.lineWidth = 2.5; c.beginPath(); c.ellipse(sx, sy, 15, 9, 0, 0, 7); c.fill(); c.stroke(); } c.restore(); };
+// the band: hunter (our 'you'), a woman, an elder, a younger man
+const HUNTER = { costume: 'hide', hair: 'long', beard: true, seed: 3 };
+const WOMAN = { costume: 'hideW', hair: 'bun', hairCol: '#2a1a10', seed: 5 };
+const ELDER = { costume: 'hide', hair: 'bald', beard: true, seed: 8 };
+const YOUNG = { costume: 'hideBare', hair: 'curly', seed: 9 };
+const FIRE = [1075, 1308];
+const camp = () => [firePit(FIRE[0], FIRE[1], .7), (c, lt) => A.fire(FIRE[0], FIRE[1] - 6, .42, { glow: 220 })(c, lt), A.smoke(FIRE[0], FIRE[1] - 48, 1)];
+// eating: near hand comes up to the mouth now and then
+const eat = (ph = 0) => (o, lt) => { const r = Math.max(0, Math.sin(lt * 1.6 + ph)); if (r > .2) o.arms = (t, P) => ({ shR: K.lerp(P.shR, 70, r), elR: K.lerp(P.elR, -150, r) }); };
+// skewer of meat / pile of nuts (world)
+const skewer = (x, y, k) => (c) => { if (k <= 0) return; c.save(); c.translate(x, y); c.scale(k, k); c.strokeStyle = '#6a4a2a'; c.lineWidth = 5; c.lineCap = 'round'; c.beginPath(); c.moveTo(-40, 10); c.lineTo(40, -40); c.stroke(); for (let i = 0; i < 3; i++) { c.fillStyle = ['#8a3a22', '#9a4a2a', '#7a321e'][i]; c.strokeStyle = INK; c.lineWidth = 2.5; c.beginPath(); c.ellipse(-16 + i * 20, -2 - i * 12, 15, 11, -.5, 0, 7); c.fill(); c.stroke(); } c.restore(); };
+const nuts = (x, y, k) => (c) => { if (k <= 0) return; c.save(); c.translate(x, y); c.scale(k, k); c.fillStyle = 'rgba(30,18,8,.3)'; c.beginPath(); c.ellipse(0, 4, 50, 10, 0, 0, 7); c.fill(); c.fillStyle = '#9a7a4a'; c.strokeStyle = INK; c.lineWidth = 2.5; c.beginPath(); c.ellipse(0, 0, 46, 12, 0, 0, 7); c.fill(); c.stroke(); for (let i = 0; i < 12; i++) { c.fillStyle = i % 2 ? '#8a5a2a' : '#b07a3a'; c.beginPath(); c.ellipse(-30 + (i % 6) * 12, -6 - Math.floor(i / 6) * 8, 7, 5, 0, 0, 7); c.fill(); c.stroke(); } c.restore(); };
+// speech bubble (world) with an icon drawer
+const bubble = (x, y, at, until, draw, label) => (c, lt) => { const p = pop(lt, at) * (1 - K.seg(lt, until - .3, until)); if (p <= 0) return; c.save(); c.translate(x, y); c.scale(p, p); c.fillStyle = CREAM; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.roundRect(-110, -150, 220, 130, 24); c.fill(); c.stroke(); c.beginPath(); c.moveTo(-20, -22); c.lineTo(-6, 18); c.lineTo(14, -22); c.closePath(); c.fill(); c.stroke(); c.fillStyle = CREAM; c.fillRect(-18, -26, 30, 8);
+  c.save(); c.translate(0, -105); draw(c, lt); c.restore(); c.fillStyle = INK; c.font = font(26, 'Oswald'); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(label, 0, -46); c.restore(); };
+const drop = (c) => { c.fillStyle = '#4a8ac0'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(0, -30); c.bezierCurveTo(-24, 0, -18, 22, 0, 22); c.bezierCurveTo(18, 22, 24, 0, 0, -30); c.fill(); c.stroke(); c.fillStyle = 'rgba(255,255,255,.7)'; c.beginPath(); c.ellipse(-7, 6, 4, 8, -.3, 0, 7); c.fill(); };
+const hooves = (c) => { c.fillStyle = '#5a3a20'; for (const [x, y] of [[-40, 8], [-12, -6], [16, 8], [44, -6]]) { c.beginPath(); c.ellipse(x - 5, y, 5, 9, -.2, 0, 7); c.ellipse(x + 5, y, 5, 9, .2, 0, 7); c.fill(); } };
+// drying rack with meat strips (world)
+const meatRack = (x, y, k, n) => (c, lt) => { if (k <= 0) return; c.save(); c.translate(x, y); c.scale(k, k); c.fillStyle = 'rgba(30,18,8,.3)'; c.beginPath(); c.ellipse(0, 6, 150, 16, 0, 0, 7); c.fill(); c.strokeStyle = INK; c.lineWidth = 12; c.lineCap = 'round'; c.beginPath(); c.moveTo(-120, 0); c.lineTo(-110, -200); c.moveTo(120, 0); c.lineTo(110, -200); c.moveTo(-130, -190); c.lineTo(130, -190); c.stroke(); c.strokeStyle = '#7a5434'; c.lineWidth = 7; c.stroke();
+  for (let i = 0; i < n; i++) { const sx = -95 + i * 32, sw = Math.sin(lt * 1.3 + i) * .05; c.save(); c.translate(sx, -186); c.rotate(sw); c.fillStyle = i % 2 ? '#8a3a22' : '#a04a2a'; c.strokeStyle = INK; c.lineWidth = 2.5; c.beginPath(); c.moveTo(-9, 0); c.lineTo(9, 0); c.lineTo(7, 70 + (i % 3) * 14); c.lineTo(-6, 76 + (i % 3) * 14); c.closePath(); c.fill(); c.stroke(); c.restore(); } c.restore(); };
+// basket held in hand (hand-local)
+const basket = { near: (c) => { c.rotate(0); c.fillStyle = '#b08a4a'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(-34, 14); c.lineTo(34, 14); c.lineTo(26, 60); c.lineTo(-26, 60); c.closePath(); c.fill(); c.stroke(); c.strokeStyle = 'rgba(60,40,20,.5)'; c.lineWidth = 2; for (let k = 0; k < 4; k++) { c.beginPath(); c.moveTo(-30 + k * 3, 24 + k * 10); c.lineTo(30 - k * 3, 24 + k * 10); c.stroke(); } c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.arc(0, 14, 30, Math.PI, 0); c.stroke(); } };
+const hammerstone = { near: (c) => { c.fillStyle = '#8a8478'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.ellipse(0, 16, 16, 12, .3, 0, 7); c.fill(); c.stroke(); } };
+const scraper = { near: (c) => { c.fillStyle = '#6a6458'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(-18, 10); c.lineTo(18, 10); c.lineTo(12, 30); c.lineTo(-12, 30); c.closePath(); c.fill(); c.stroke(); } };
+// stone flakes popping off at a point (world)
+const flakes = (x, y, t0, t1, rate = 1.6) => (c, lt) => { if (lt < t0 || lt > t1 + 1) return; for (let k = 0; k < 10; k++) { const ph = ((lt - t0) * rate + k / 10) % 1; if (lt > t1 && ph < .1) continue; const a = -1.6 + (k % 5 - 2) * .35, d = ph * 90; c.fillStyle = `rgba(200,195,180,${1 - ph})`; c.strokeStyle = `rgba(43,30,22,${1 - ph})`; c.lineWidth = 1.5; c.beginPath(); c.moveTo(x + Math.cos(a) * d, y + Math.sin(a) * d + ph * ph * 60); c.lineTo(x + Math.cos(a) * d + 8, y + Math.sin(a) * d + ph * ph * 60 + 3); c.lineTo(x + Math.cos(a) * d + 2, y + Math.sin(a) * d + ph * ph * 60 + 8); c.closePath(); c.fill(); c.stroke(); } };
+// spear shaft lying on the ground with a stone point (world)
+const shaft = (x, y, k, sharp) => (c) => { c.save(); c.translate(x, y); c.scale(k, k); c.fillStyle = 'rgba(30,18,8,.3)'; c.beginPath(); c.ellipse(0, 4, 200, 10, 0, 0, 7); c.fill(); c.rotate(-.04); c.strokeStyle = INK; c.lineWidth = 12; c.lineCap = 'round'; c.beginPath(); c.moveTo(-200, 0); c.lineTo(170, 0); c.stroke(); c.strokeStyle = '#8a6a3e'; c.lineWidth = 7; c.stroke();
+  c.fillStyle = sharp ? '#b8b0a0' : '#8a8478'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(160, -12); c.lineTo(160 + 40 + sharp * 26, 0); c.lineTo(160, 12); c.closePath(); c.fill(); c.stroke(); if (sharp > .5) { c.strokeStyle = 'rgba(255,255,255,.8)'; c.lineWidth = 2; c.beginPath(); c.moveTo(168, -6); c.lineTo(190 + sharp * 20, -1); c.stroke(); } c.restore(); };
+// screen-space checklist card
+const checklist = (c, lt, x, y, rows) => { const n = rows.filter(r => lt > r[1]).length; if (!n) return; const a = K.seg(lt, rows[0][1], rows[0][1] + .3); c.save(); c.globalAlpha = a; c.translate(x, y); c.rotate(-.03); const w = 470, h = 70 + rows.length * 66; c.fillStyle = 'rgba(20,12,6,.35)'; c.fillRect(10, 12, w, h); c.fillStyle = CREAM; c.fillRect(0, 0, w, h); c.strokeStyle = INK; c.lineWidth = 5; c.strokeRect(0, 0, w, h);
+  rows.forEach(([txt, at], i) => { const yy = 60 + i * 66; c.strokeStyle = INK; c.lineWidth = 3; c.strokeRect(30, yy - 22, 40, 40); c.fillStyle = INK; c.font = font(38, 'Caveat'); c.textBaseline = 'middle'; c.fillText(txt, 90, yy); const p = K.seg(lt, at, at + .3); if (p > 0) { c.strokeStyle = GREEN; c.lineWidth = 8; c.lineCap = 'round'; c.beginPath(); c.moveTo(34, yy); c.lineTo(34 + 14 * Math.min(1, p * 2), yy + 14 * Math.min(1, p * 2)); if (p > .5) c.lineTo(48 + 30 * (p - .5) * 2, yy + 14 - 34 * (p - .5) * 2); c.stroke(); } }); c.restore(); };
+// screen-space sun-arc dial: dawn -> early afternoon
+const sunArc = (c, lt, at, x, y) => { const a = K.seg(lt, at, at + .4); if (a <= 0) return; const u = E.io(K.seg(lt, at + .3, at + 2.6)); c.save(); c.globalAlpha = a; c.translate(x, y); c.fillStyle = 'rgba(20,12,6,.55)'; c.beginPath(); c.roundRect(-300, -230, 600, 340, 20); c.fill(); c.strokeStyle = 'rgba(246,238,220,.6)'; c.lineWidth = 4; c.setLineDash([12, 10]); c.beginPath(); c.arc(0, 20, 220, Math.PI, 0); c.stroke(); c.setLineDash([]);
+  c.fillStyle = 'rgba(246,238,220,.85)'; c.font = font(26, 'Oswald'); c.textAlign = 'center'; c.fillText('DAWN', -220, 50); c.fillText('DUSK', 220, 50); const an = Math.PI + u * Math.PI * .62, sx = Math.cos(an) * 220, sy = 20 + Math.sin(an) * 220; const g = c.createRadialGradient(sx, sy, 0, sx, sy, 70); g.addColorStop(0, 'rgba(255,220,120,.9)'); g.addColorStop(1, 'rgba(255,200,80,0)'); c.fillStyle = g; c.beginPath(); c.arc(sx, sy, 70, 0, 7); c.fill(); c.fillStyle = '#ffd25a'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.arc(sx, sy, 26, 0, 7); c.fill(); c.stroke();
+  if (u > .95) { c.fillStyle = GOLD; c.font = font(34, 'Anton'); c.fillText('EARLY AFTERNOON', 0, 92); } c.restore(); };
+
+window.SHOTS = [
+  // 1 CU: he wakes by the embers as the sun clears the hills; no alarm
+  { plate: 'sav_dawn', cam: { z: [2.7, 2.4], x: [1300, 1290], y: [1250, 1230] }, inSfx: false, bed: [['birds_loop', .5], ['fire_loop', .3]],
+    figs: [{ x: 1440, y: 1345, s: .85, ...HUNTER, pose: 'lie', facing: 1, anim: (o, lt, u, S) => { const op = A.at(S, 'first light', 1); o.eyesClosed = lt < op ? 1 : lt < op + .4 ? 1 - (lt - op) / .4 : null; o.mood = lt > op + .6 ? 'happy' : 'neutral'; } }],
+    init: S => { const tL = A.at(S, 'first light', 1), tE = A.at(S, 'slept enough', 2.6);
+      S.D.live = [...camp(), (c, lt) => { const a = K.seg(lt, tL - .4, tL + 1.6); c.save(); c.globalCompositeOperation = 'screen'; const g = c.createRadialGradient(1800, 1000, 0, 1800, 1000, 900); g.addColorStop(0, `rgba(255,200,120,${.4 * a})`); g.addColorStop(1, 'rgba(255,200,120,0)'); c.fillStyle = g; c.fillRect(600, 700, 1900, 800); c.restore(); }];
+      S.D.over = [(c, lt) => K.badge(c, 'A DAY, 50,000 YEARS AGO', lt, { at: .3 }), (c, lt) => K.card(c, 'NO ALARM.\nSLEPT ENOUGH.', lt, { at: tE, x: 1440, y: 250, px: 56, rot: -3, fam: 'Caveat' })];
+      S.D.sfx = [[.2, 'breath', .4], [tL, 'chime', .35], [tE, 'pop', .5]]; } },
+  // 2 the band around last night's fire, eating leftovers
+  { plate: 'sav_dawn', cam: { z: [2.15, 2.25], x: [1090, 1080], y: [1200, 1210] }, bed: [['fire_loop', .5], ['birds_loop', .35]],
+    figs: [
+      { x: 850, y: 1338, s: .85, ...HUNTER, pose: 'sit', facing: 1, mood: 'happy', anim: eat(0) },
+      { x: 975, y: 1272, s: .74, ...WOMAN, pose: 'sit', facing: 1, mood: 'happy', talk: true },
+      { x: 1185, y: 1272, s: .74, ...ELDER, pose: 'sit', facing: -1, anim: eat(2) },
+      { x: 1310, y: 1338, s: .85, ...YOUNG, pose: 'sit', facing: -1, mood: 'happy', anim: eat(4) }],
+    init: S => { const tF = A.at(S, 'still alive', 1.4), tM = A.at(S, 'meat', 3.6), tN = A.at(S, 'nuts', 4.4);
+      S.D.live = [firePit(FIRE[0], FIRE[1], .7), (c, lt) => A.fire(FIRE[0], FIRE[1] - 6, .42 * (1 + .3 * Math.exp(-Math.max(0, lt - tF) * 2) * (lt > tF ? 1 : 0)), { glow: 260 })(c, lt), A.smoke(FIRE[0], FIRE[1] - 48, 1)];
+      S.D.front = [(c, lt) => skewer(1010, 1352, pop(lt, tM))(c), (c, lt) => skewer(1140, 1356, pop(lt, tM + .2))(c), (c, lt) => nuts(1075, 1395, pop(lt, tN))(c)];
+      S.D.over = [(c, lt) => K.card(c, 'LEFTOVERS FOR BREAKFAST', lt, { at: tM, x: 1400, y: 170, px: 46, rot: 3 })];
+      S.D.sfx = [[tF, 'whoosh_soft', .4], [tM, 'pop', .5], [tM + .2, 'pop', .4], [tN, 'pop', .5]]; } },
+  // 3 the morning meeting: water, tracks, and everyone gets a say
+  { plate: 'sav_dawn', cam: { z: [1.85, 1.95], x: [1090, 1085], y: [1150, 1160] }, bed: [['fire_loop', .45], ['birds_loop', .35]],
+    figs: [
+      { x: 850, y: 1338, s: .85, ...HUNTER, pose: 'sit', facing: 1, talk: true },
+      { x: 975, y: 1272, s: .74, ...WOMAN, pose: 'sit', facing: 1 },
+      { x: 1185, y: 1272, s: .74, ...ELDER, pose: 'sit', facing: -1 },
+      { x: 1310, y: 1338, s: .85, ...YOUNG, pose: 'sit', facing: -1 }],
+    init: S => { const tW = A.at(S, 'water', 1.4), tT = A.at(S, 'tracks', 3.2), tP = A.at(S, 'whole plan', 4.6), tE = A.at(S, 'everyone has a say', 6);
+      const F = S.D.figs; F[1].talk = [tW - .2, tW + 1.4]; F[2].talk = [tT - .4, tT + 1.2];
+      F.forEach((f, i) => { f.anim = (o, lt) => { const r = E.out(K.seg(lt, tE + i * .12, tE + i * .12 + .35)); o.mood = lt > tE ? 'happy' : 'neutral'; if (r > 0) o.arms = (t, P) => ({ shR: K.lerp(P.shR, 150, r), elR: K.lerp(P.elR, -12, r) }); }; });
+      S.D.live = camp();
+      S.D.front = [bubble(975, 1080, tW - .1, tT - .2, drop, 'GOOD WATER'), bubble(1185, 1080, tT - .1, tP, hooves, 'FRESH TRACKS')];
+      S.D.over = [(c, lt) => K.card(c, "THAT'S THE WHOLE PLAN", lt, { at: tP, until: tE, x: 960, y: 170, px: 54, rot: -2 }), (c, lt) => K.card(c, 'EVERYONE HAS A SAY', lt, { at: tE, x: 960, y: 170, px: 60, rot: 2, bg: GOLD })];
+      S.D.sfx = [[tW, 'pop', .5], [tT, 'pop', .5], [tP, 'paper', .45], [tE, 'crowd_cheer', .25], [tE, 'pop', .5]]; } },
+  // 4 no hunt today: the drying rack is still full
+  { plate: 'sav_dawn', cam: { z: [2.0, 2.1], x: [1360, 1370], y: [1170, 1180] }, bed: [['birds_loop', .45], ['wind_loop', .25]],
+    figs: [{ x: 1200, y: 1340, s: .85, ...HUNTER, pose: 'stand', facing: 1, anim: (o, lt, u, S) => { const t2 = A.at(S, 'two days', 2.4); o.pose = lt > t2 - .2 ? 'point' : 'stand'; o.mood = lt > t2 + 1.5 ? 'happy' : 'neutral'; } }],
+    init: S => { const tN = A.at(S, 'nobody needs', .6), t2 = A.at(S, 'two days', 2.4), tS = A.at(S, 'still food', 4);
+      S.D.live = [meatRack(1520, 1350, .85, 7)];
+      S.D.front = [(c, lt) => nuts(1680, 1395, pop(lt, tS))(c), (c, lt) => skewer(1330, 1400, pop(lt, tS + .2))(c)];
+      S.D.over = [(c, lt) => K.card(c, 'NO HUNT TODAY', lt, { at: tN, x: 480, y: 190, px: 60, rot: -4 }), (c, lt) => { const p = pop(lt, t2); if (p <= 0) return; c.save(); c.translate(1500, 200); c.scale(p, p); c.fillStyle = 'rgba(20,12,6,.35)'; c.fillRect(-196, -56, 400, 128); c.fillStyle = CREAM; c.fillRect(-200, -64, 400, 128); c.strokeStyle = INK; c.lineWidth = 5; c.strokeRect(-200, -64, 400, 128); c.fillStyle = INK; c.font = font(30, 'Oswald'); c.textAlign = 'center'; c.fillText('LAST KILL', 0, -24); c.lineWidth = 8; c.lineCap = 'round'; for (let k = 0; k < 2; k++) { const q = K.seg(lt, t2 + .3 + k * .25, t2 + .45 + k * .25); if (q <= 0) continue; c.beginPath(); c.moveTo(-30 + k * 40, 12); c.lineTo(-30 + k * 40, 12 + 40 * q); c.stroke(); } c.font = font(28, 'Oswald'); c.fillText('DAYS AGO', 120, 34); c.restore(); }, (c, lt) => K.card(c, 'STILL FOOD LEFT', lt, { at: tS, x: 1500, y: 380, px: 44, rot: 3, bg: GOLD })];
+      S.D.sfx = [[tN, 'stamp', .45], [t2 + .3, 'tick', .4], [t2 + .55, 'tick', .4], [tS, 'pop', .5]]; } },
+  // 5 a few people head out across the grass with baskets
+  { plate: 'sav_dawn', cam: { z: [1.3, 1.36], x: [1330, 1380], y: [1010, 1020] }, bed: [['birds_loop', .5], ['wind_loop', .3]],
+    figs: [
+      { x: 1150, y: 1255, s: .62, ...WOMAN, hold: basket, walk: { x0: 1150, x1: 1750, t0: .2, dur: 3.6 } },
+      { x: 960, y: 1300, s: .7, ...YOUNG, hold: basket, walk: { x0: 960, x1: 1560, t0: .5, dur: 3.4 } },
+      { x: 1400, y: 1215, s: .55, ...WOMAN, hairCol: '#4a2a18', seed: 15, hold: basket, walk: { x0: 1400, x1: 1950, t0: 0, dur: 3.8 } }],
+    init: S => { const tR = A.at(S, 'roots', 1.8), tN = A.at(S, 'nuts', 2.4), tB = A.at(S, 'berries', 3);
+      const icon = (txt, i, at, draw) => (c, lt) => { const p = pop(lt, at); if (p <= 0) return; const x = 1290 + i * 200, y = 170; c.save(); c.translate(x, y); c.scale(p, p); c.fillStyle = 'rgba(20,12,6,.35)'; c.beginPath(); c.arc(6, 8, 78, 0, 7); c.fill(); c.fillStyle = CREAM; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.arc(0, 0, 78, 0, 7); c.fill(); c.stroke(); draw(c); c.fillStyle = INK; c.font = font(26, 'Oswald'); c.textAlign = 'center'; c.fillText(txt, 0, 54); c.restore(); };
+      S.D.over = [icon('ROOTS', 0, tR, c => { c.strokeStyle = '#8a5a2a'; c.lineWidth = 12; c.lineCap = 'round'; c.beginPath(); c.moveTo(-6, -40); c.quadraticCurveTo(10, -6, -4, 22); c.stroke(); c.lineWidth = 4; c.beginPath(); c.moveTo(0, 0); c.lineTo(22, 14); c.moveTo(-2, 12); c.lineTo(-24, 22); c.stroke(); c.fillStyle = GREEN; c.beginPath(); c.ellipse(-14, -44, 14, 6, -.6, 0, 7); c.ellipse(10, -46, 14, 6, .6, 0, 7); c.fill(); }),
+        icon('NUTS', 1, tN, c => { for (const [x, y] of [[-18, -12], [16, -16], [0, 10]]) { c.fillStyle = '#9a6a3a'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.ellipse(x, y, 16, 13, 0, 0, 7); c.fill(); c.stroke(); } }),
+        icon('BERRIES', 2, tB, c => { for (const [x, y] of [[-16, -10], [10, -18], [16, 6], [-6, 8], [0, -30]]) { c.fillStyle = '#7a2a4a'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.arc(x, y, 12, 0, 7); c.fill(); c.stroke(); c.fillStyle = 'rgba(255,255,255,.6)'; c.beginPath(); c.arc(x - 4, y - 4, 3, 0, 7); c.fill(); } })];
+      S.D.live = camp();
+      S.D.sfx = [[.3, 'footsteps', .35], [tR, 'pop', .5], [tN, 'pop', .5], [tB, 'pop', .5]]; } },
+  // 6 CU: he stays and works his gear; flakes fly, then the hide softens
+  { plate: 'sav_dawn', cam: { z: [2.6, 2.75], x: [1300, 1310], y: [1240, 1250] }, bed: [['birds_loop', .4], ['fire_loop', .25]],
+    figs: [{ x: 1270, y: 1340, s: .85, ...HUNTER, pose: 'work', facing: 1, workSpeed: 3, mood: 'neutral', anim: (o, lt, u, S) => { const tH = A.at(S, 'stiff hide', 3.8); o.hold = lt < tH - .4 ? hammerstone : scraper; o.mood = lt > tH + 2 ? 'happy' : 'neutral'; } }],
+    init: S => { const tS = A.at(S, 'sharpen', 1.5), tH = A.at(S, 'stiff hide', 3.8), tO = A.at(S, 'soft', 5.6);
+      S.D.live = [firePit(FIRE[0], FIRE[1], .7), (c, lt) => A.fire(FIRE[0], FIRE[1] - 6, .4, { glow: 200 })(c, lt)];
+      S.D.front = [(c, lt) => { if (lt >= tH - .4) return; const sh = K.seg(lt, tS, tH - .6); c.save(); c.translate(1352, 1292); c.rotate(Math.atan2(1292 - 1395, 1352 - 1560)); c.translate(-(160 + 40) * .6, 0); shaft(0, 0, .6, sh)(c); c.restore(); c.save(); c.fillStyle = 'rgba(30,18,8,.3)'; c.beginPath(); c.ellipse(1560, 1398, 40, 8, 0, 0, 7); c.fill(); c.restore(); }, flakes(1350, 1290, tS - .2, tH - .6, 2.2),
+        (c, lt) => { if (lt < tH - .4) return; const soft = K.seg(lt, tH, tO); const col = `rgb(${Math.round(139 + soft * 60)},${Math.round(94 + soft * 56)},${Math.round(58 + soft * 46)})`; hide(1470, 1362, 200, pop(lt, tH - .4))(c); c.save(); c.globalAlpha = soft * .6; hide(1470, 1362, 200, 1, '#d4b08a')(c); c.restore(); }];
+      S.D.over = [(c, lt) => checklist(c, lt, 1380, 120, [['sharpen spear point', tS + 1], ['soften the hide', tO]]), (c, lt) => K.card(c, 'STIFF  >  SOFT', lt, { at: tH + .2, until: tO + .2, x: 520, y: 220, px: 50, rot: -3 })];
+      S.D.sfx = [[tS, 'knap', .6], [tS + .6, 'knap', .5], [tS + 1.2, 'knap', .5], [tH, 'scrape', .5], [tH + .8, 'scrape', .45], [tO, 'chime', .4]]; } },
+  // 7 no boss; skill earns respect from the band
+  { plate: 'sav_dawn', cam: { z: [1.9, 2.0], x: [1110, 1120], y: [1170, 1180] }, bed: [['birds_loop', .4], ['fire_loop', .3]],
+    figs: [
+      { x: 1250, y: 1340, s: .85, ...HUNTER, pose: 'stand', facing: -1, anim: (o, lt, u, S) => { const tR = A.at(S, 'skill earns', 2.4); o.pose = lt > tR - .3 ? 'present' : 'stand'; o.mood = lt > tR ? 'happy' : 'neutral'; } },
+      { x: 930, y: 1300, s: .78, ...ELDER, pose: 'stand', facing: 1, anim: (o, lt, u, S) => { const tR = A.at(S, 'respect', 2.8); o.mood = lt > tR ? 'happy' : 'neutral'; o.pose = lt > tR + .2 && lt < tR + 2.2 ? 'cheer' : 'stand'; } },
+      { x: 760, y: 1345, s: .85, ...YOUNG, pose: 'stand', facing: 1, anim: (o, lt, u, S) => { const tR = A.at(S, 'respect', 2.8); o.mood = lt > tR ? 'shocked' : 'neutral'; o.pose = lt > tR + .5 ? 'point' : 'stand'; } }],
+    init: S => { const tB = A.at(S, 'boss', .9), tR = A.at(S, 'skill earns', 2.4), tW = A.at(S, 'worth more', 4.6);
+      S.D.live = [...camp(), (c, lt) => spear(1400, 1336, .45)(c)];
+      S.D.over = [(c, lt, u) => { const a = pop(lt, tB - .3) * (1 - K.seg(lt, tR - .5, tR - .1)); if (a <= 0) return; c.save(); c.translate(1500, 330); c.scale(a, a); c.fillStyle = 'rgba(20,12,6,.35)'; c.beginPath(); c.arc(8, 10, 210, 0, 7); c.fill(); c.fillStyle = '#e8eef2'; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.arc(0, 0, 210, 0, 7); c.fill(); c.stroke(); c.save(); c.beginPath(); c.arc(0, 0, 204, 0, 7); c.clip();
+          A.figure(c, { x: 0, y: 230, s: .95, costume: 'suit', hair: 'bald', glasses: true, pose: 'point', facing: -1, mood: 'worried', talk: true, seed: 30 }, lt, u, S); c.restore(); const x = K.seg(lt, tB + .4, tB + .8); if (x > 0) { c.strokeStyle = RED; c.lineWidth = 22; c.lineCap = 'round'; c.beginPath(); c.moveTo(-140, -140); c.lineTo(-140 + 280 * Math.min(1, x * 2), -140 + 280 * Math.min(1, x * 2)); if (x > .5) { c.moveTo(140, -140); c.lineTo(140 - 280 * (x - .5) * 2, -140 + 280 * (x - .5) * 2); } c.stroke(); } c.fillStyle = INK; c.font = font(40); c.textAlign = 'center'; c.fillText('NO BOSS', 0, 260); c.restore(); },
+        (c, lt) => K.card(c, 'SKILL  =  RESPECT', lt, { at: tR, x: 1460, y: 200, px: 60, rot: -3 }), (c, lt) => K.card(c, 'RESPECT  >  ANYTHING\nYOU COULD OWN', lt, { at: tW, x: 1460, y: 400, px: 46, rot: 2, bg: GOLD })];
+      S.D.sfx = [[tB - .3, 'pop', .5], [tB + .4, 'stamp', .55], [tR, 'pop', .5], [A.at(S, 'respect', 2.8) + .2, 'crowd_cheer', .2], [tW, 'chime', .4]]; } },
+  // 8 wide: the sun climbs to early afternoon; the jobs are done and he rests in the acacia's shade
+  { plate: 'sav_dawn', cam: { z: [1.55, 1.65], x: [930, 900], y: [930, 950] }, bed: [['birds_loop', .5], ['wind_loop', .3]],
+    over: [A.grade('255,236,200', .14, 'screen')],
+    figs: [{ x: 560, y: 1092, s: .42, ...HUNTER, pose: 'lie', facing: 1, eyesClosed: .8, mood: 'happy' }],
+    init: S => { const tA = A.at(S, 'early afternoon', .8), tD = A.at(S, 'done', 2.8);
+      S.D.live = [...camp(), (c, lt) => { c.save(); c.globalAlpha = .35; c.fillStyle = '#3a2a10'; c.beginPath(); c.ellipse(470, 1096, 220, 26, 0, 0, 7); c.fill(); c.restore(); }];
+      S.D.over.push((c, lt) => sunArc(c, lt, tA - .6, 1500, 300), (c, lt) => K.card(c, 'JOBS DONE', lt, { at: tD, x: 1500, y: 600, px: 64, rot: -3, bg: GOLD }));
+      S.D.sfx = [[tA - .6, 'riser', .3], [tD, 'stamp', .5], [tD + .4, 'chime', .4]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; D.sfx = D.sfx || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>

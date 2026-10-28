@@ -37,7 +37,7 @@
         for (const L of D.front || []) { c.save(); L(c, lt, u, S); c.restore(); }
         K.screen(c);
         for (const L of D.over || []) { c.save(); L(c, lt, u, S); c.restore(); }
-      }, { whoosh: false });
+      }, { whoosh: false, xfade: D.xfade });
       if (D.inSfx !== false && i > 0) K.cue(S.start + .1, D.inSfx || 'whoosh_soft', .5);
       for (const [when, name, gain] of D.sfx || []) { const tt = typeof when === 'string' ? A.at(S, when, 0) : when; K.cue(S.start + tt, name, gain ?? 1); }
       if (D.bed) { const list = Array.isArray(D.bed) && Array.isArray(D.bed[0]) ? D.bed : [D.bed]; for (const b of list) { const [n, g] = Array.isArray(b) ? b : [b, 1]; A.beds.push({ start: S.start, end: S.end + .8, name: n, gain: g ?? 1 }); } }

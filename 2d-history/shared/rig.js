@@ -43,14 +43,22 @@
     if (o.rim) { ctx.save(); path(w * .7); ctx.strokeStyle = 'rgba(255,226,180,.18)'; ctx.lineWidth = w * .22; ctx.stroke(); ctx.restore(); }
   }
   // white mitten with a thumb, pointing along angle a (0 = down)
-  function mitten(ctx, x, y, a, near, thumbSide = 1) {
-    ctx.save(); ctx.translate(x, y); ctx.rotate(-a);
-    const fill = near ? SKIN : SKIN_SH;
-    ctx.beginPath(); ctx.moveTo(-9, -4); ctx.bezierCurveTo(-13, 8, -11, 21, 0, 23); ctx.bezierCurveTo(11, 21, 13, 8, 9, -4); ctx.closePath();
-    ctx.fillStyle = fill; ctx.fill(); ctx.strokeStyle = INK; ctx.lineWidth = 3; ctx.lineJoin = 'round'; ctx.stroke();
-    // thumb
-    ctx.beginPath(); ctx.moveTo(8 * thumbSide, 2); ctx.quadraticCurveTo(17 * thumbSide, 2, 15 * thumbSide, 11); ctx.quadraticCurveTo(12 * thumbSide, 14, 8 * thumbSide, 10); ctx.fillStyle = fill; ctx.fill(); ctx.stroke();
-    ctx.fillStyle = 'rgba(150,120,90,.18)'; ctx.beginPath(); ctx.ellipse(-4 * thumbSide, 12, 4, 8, 0, 0, 7); ctx.fill();
+  function mitten(ctx, x, y, a, near, thumbSide = 1, mode) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(-a); ctx.scale(1.28, 1.28);
+    const fill = near ? SKIN : SKIN_SH; ctx.strokeStyle = INK; ctx.lineWidth = 2.6; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    if (mode === 'point') { // fist with the index finger out along the arm
+      ctx.beginPath(); ctx.moveTo(-9, -4); ctx.bezierCurveTo(-12, 6, -10, 15, 0, 16); ctx.bezierCurveTo(10, 15, 12, 6, 9, -4); ctx.closePath(); ctx.fillStyle = fill; ctx.fill(); ctx.stroke();
+      ctx.beginPath(); ctx.roundRect(1, 8, 8, 20, 4); ctx.fill(); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(-6, 9); ctx.quadraticCurveTo(-2, 12, 2, 10); ctx.stroke();
+    } else if (mode === 'open') { // flat open palm, fingers together, thumb out
+      ctx.beginPath(); ctx.moveTo(-9, -4); ctx.bezierCurveTo(-12, 8, -12, 24, -2, 25); ctx.bezierCurveTo(8, 25, 12, 12, 9, -4); ctx.closePath(); ctx.fillStyle = fill; ctx.fill(); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(8 * thumbSide, 0); ctx.quadraticCurveTo(20 * thumbSide, -2, 19 * thumbSide, 6); ctx.quadraticCurveTo(16 * thumbSide, 11, 8 * thumbSide, 9); ctx.fill(); ctx.stroke();
+      ctx.strokeStyle = 'rgba(120,90,60,.35)'; ctx.lineWidth = 1.4; for (const fx of [-4, 1]) { ctx.beginPath(); ctx.moveTo(fx, 15); ctx.lineTo(fx, 23); ctx.stroke(); }
+    } else { // relaxed mitten
+      ctx.beginPath(); ctx.moveTo(-9, -4); ctx.bezierCurveTo(-13, 8, -11, 21, 0, 22); ctx.bezierCurveTo(11, 21, 13, 8, 9, -4); ctx.closePath(); ctx.fillStyle = fill; ctx.fill(); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(8 * thumbSide, 2); ctx.quadraticCurveTo(15 * thumbSide, 3, 13 * thumbSide, 11); ctx.quadraticCurveTo(11 * thumbSide, 13, 7 * thumbSide, 10); ctx.fill(); ctx.stroke();
+    }
+    ctx.fillStyle = 'rgba(150,120,90,.16)'; ctx.beginPath(); ctx.ellipse(-4 * thumbSide, 10, 3.5, 6, 0, 0, 7); ctx.fill();
     ctx.restore();
   }
   const ease = t => t < 0 ? 0 : t > 1 ? 1 : t * t * (3 - 2 * t);
@@ -73,15 +81,15 @@
     } else if (o.pose === 'squat' || o.pose === 'work') {
       P.hipL = 75; P.hipR = 50; P.kneeL = -140; P.kneeR = -110; P.lean = 22;
       const w = Math.sin(t * (o.workSpeed ?? 7)); P.shL = 55 + w * 14; P.elL = -40 - w * 18; P.shR = 40 - w * 10; P.elR = -60;
-    } else if (o.pose === 'point') { P.shR = 95; P.elR = -5; P.shL = -8; P.elL = 6; }
+    } else if (o.pose === 'point') { P.shR = 92; P.elR = -4; P.shL = -3; P.elL = -8; P.handR = 'point'; }
     else if (o.pose === 'reach') { P.shR = 75; P.elR = -15; P.shL = 25; P.elL = -40; }
     else if (o.pose === 'carry') { P.shL = 30; P.elL = -75; P.shR = 35; P.elR = -75; }
-    else if (o.pose === 'cheer') { P.shL = -150; P.elL = 12; P.shR = 150; P.elR = -12; }
-    else if (o.pose === 'think') { P.shR = 22; P.elR = -128; P.shL = -8; P.elL = 6; }
-    else if (o.pose === 'shrug') { P.shL = -42; P.elL = 100; P.shR = 42; P.elR = -100; }
-    else if (o.pose === 'present') { P.shR = 70; P.elR = -40; P.shL = -8; P.elL = 6; }
+    else if (o.pose === 'cheer') { P.shL = -150; P.elL = 12; P.shR = 150; P.elR = -12; P.handL = 'open'; P.handR = 'open'; }
+    else if (o.pose === 'think') { P.shR = 0; P.elR = 0; P.shL = -3; P.elL = -8; P.chin = 1; }
+    else if (o.pose === 'shrug') { P.shL = -30; P.elL = 78; P.shR = 30; P.elR = -78; P.handL = 'open'; P.handR = 'open'; }
+    else if (o.pose === 'present') { P.shR = 58; P.elR = -24; P.shL = -3; P.elL = -8; P.handR = 'open'; }
     else if (o.pose === 'lie') { }
-    else { const sw = Math.sin(t * 1.3 + (o.seed || 0)); P.hipL = -3 + sw * .8; P.hipR = 3 + sw * .8; P.kneeL = -2; P.kneeR = -2; P.shL = -9 - sw * 1.5; P.shR = 9 + sw * 1.5; P.elL = 6; P.elR = -6; P.bob = breathe * -1.5; }
+    else { const sw = Math.sin(t * 1.3 + (o.seed || 0)); P.hipL = -3 + sw * .8; P.hipR = 3 + sw * .8; P.kneeL = -2; P.kneeR = -2; P.shL = -3 - sw * 1.2; P.shR = 4 + sw * 1.2; P.elL = -8; P.elR = -10; P.bob = breathe * -1.5; }
     if (o.arms) Object.assign(P, o.arms(t, P));
     return P;
   }
@@ -119,7 +127,8 @@
       ctx.restore();
     };
     const arm = (side, near) => {
-      const sx = neck.x + side * shW * .84, sy = neck.y + 16, a1 = P[side < 0 ? 'shL' : 'shR'] * D2R, a2 = a1 - P[side < 0 ? 'elL' : 'elR'] * D2R;
+      const sx = neck.x + side * shW * .84, sy = neck.y + 16; let a1 = P[side < 0 ? 'shL' : 'shR'] * D2R, a2 = a1 - P[side < 0 ? 'elL' : 'elR'] * D2R;
+      if (P.chin && side > 0) { const tx = neck.x + 30, ty = neck.y + 4, dx = tx - sx, dy = ty - sy, d = Math.min(armU + armL - 1, Math.hypot(dx, dy)), base = Math.atan2(dx, dy), k = Math.acos((armU * armU + d * d - armL * armL) / (2 * armU * d)); a1 = base + k; const ex0 = sx + Math.sin(a1) * armU, ey0 = sy + Math.cos(a1) * armU; a2 = Math.atan2(tx - ex0, ty - ey0); }
       const ex = sx + Math.sin(a1) * armU, ey = sy + Math.cos(a1) * armU, hx = ex + Math.sin(a2) * armL, hy = ey + Math.cos(a2) * armL;
       const c = armCol(near);
       if (cos.sleeve && !cos.rolled) {
@@ -131,7 +140,7 @@
         limb(ctx, [[ex, ey], [hx, hy]], AW * .82, near ? SKIN : SKIN_SH, { shadeCol: SKIN_SH });
         limb(ctx, [[sx, sy], [ex, ey]], AW, c, { rim: near }); ctx.save(); ctx.translate(ex, ey); ctx.rotate(-a1); ctx.fillStyle = shadeHex(cos.sleeve, -.08); ctx.strokeStyle = INK; ctx.lineWidth = 2.6; ctx.beginPath(); ctx.roundRect(-AW - 3, -6, AW * 2 + 6, 11, 4); ctx.fill(); ctx.stroke(); ctx.restore();
       } else limb(ctx, [[sx, sy], [ex, ey], [hx, hy]], AW * .85, near ? SKIN : SKIN_SH, { shadeCol: SKIN_SH });
-      mitten(ctx, hx, hy - 2, a2, near, side < 0 ? -1 : 1);
+      const hm = P[side < 0 ? 'handL' : 'handR']; mitten(ctx, hx, hy - 2, a2, near, hm === 'open' && Math.sin(a2) < 0 ? -1 : 1, hm);
       if (o.hold && o.hold[near ? 'near' : 'far']) { ctx.save(); ctx.translate(hx, hy); ctx.rotate(-a2); o.hold[near ? 'near' : 'far'](ctx, t); ctx.restore(); }
     };
     const folded = o.pose === 'sit' || o.pose === 'squat' || o.pose === 'work';
