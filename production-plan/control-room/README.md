@@ -42,3 +42,6 @@ v23: per-act Play/Watch (green) and Feedback (blue) are full-size buttons on the
 v24: channel quick-jump moved to a fixed side rail (left with names on wide screens, right-edge number buttons on phones) plus a Top button; it stays put while scrolling and lights the channel in view.
 
 v25: visual polish (soft colour glows, rounder roomier panels, pill bars) and the channel rail no longer squeezes the page: on very wide screens it sits in the empty left gutter, otherwise a floating Channels button (bottom right) opens it.
+
+## v26 (28 Oct 2026)
+- 3D acts now show a Watch button. The 3D docs give only a whole-video `previewUrl`, no per-act `url`, so acts showed "No render yet". Each started act (not `todo`) now falls back to the video's `previewUrl`. A per-act `url` / `video` still wins when present.
