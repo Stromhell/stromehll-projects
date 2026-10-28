@@ -134,6 +134,22 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,6vw,54px);lin
 .meta div span{display:block;font-size:11px;color:var(--mute);text-transform:uppercase;letter-spacing:.06em}
 .meta div b{font-family:var(--mono);font-weight:500;font-size:15px;font-variant-numeric:tabular-nums}
 .steps:not(:has(.act,.ph)){display:none}
+.acts{border:1px solid var(--line);border-radius:4px;padding:10px 12px;display:grid;gap:8px}
+.acthead{display:flex;justify-content:space-between;gap:10px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+.acthead b{font-weight:500;color:var(--ink)}
+.actlist{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:6px}
+.actlist li{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"n l" "s l";align-items:center;gap:2px 8px;padding:6px 8px;border-radius:3px;background:var(--bg);border-left:3px solid var(--line);font-size:13px}
+.actlist .an{grid-area:n;font-weight:600}
+.actlist .as{grid-area:s;font-size:12px;color:var(--mute);display:flex;align-items:center;gap:5px}
+.actlist .as i{width:7px;height:7px;border-radius:50%;background:var(--slate)}
+.actlist .al{grid-area:l;display:flex;flex-direction:column;align-items:flex-end;gap:3px;font-size:12px;white-space:nowrap}
+.actlist .np{color:var(--mute);font-size:11px}
+.actlist .play{font:inherit;font-size:12px;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:1px 7px;cursor:pointer}
+.actlist .actvid{grid-column:1/-1;width:100%;max-height:260px;margin-top:6px;border-radius:3px;background:#000}
+.actlist li.done{border-left-color:var(--green)} .actlist li.done .as i{background:var(--green)}
+.actlist li.active{border-left-color:var(--amber)} .actlist li.active .as{color:var(--amber)} .actlist li.active .as i{background:var(--amber)}
+@media (max-width:640px){.actlist{grid-template-columns:1fr 1fr}}
+.actlist li.review,.actlist li.fix{border-left-color:var(--violet)} .actlist li.review .as i,.actlist li.fix .as i{background:var(--violet)}
 .steps{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .act{font-family:var(--mono);font-size:11px;min-width:28px;height:22px;display:inline-grid;place-items:center;border-radius:3px;border:1px solid var(--line);color:var(--mute);padding:0 5px}
 .act.done{background:var(--green);border-color:var(--green);color:var(--panel)}
@@ -290,6 +306,16 @@ function live(v, el){ // interpolated percent for a video
   return p;
 }
 let built = false;
+function actUrl(u){ return typeof u==="string" && /^https:\/\/(claude\.ai|drive\.google\.com|docs\.google\.com|[a-z0-9-]+\.claudeusercontent\.com)\//.test(u) ? u : ""; }
+document.addEventListener("click", e => { const b = e.target.closest && e.target.closest("button.play"); if (!b) return; const li = b.closest("li"); const old = li.querySelector("video"); if (old){ old.remove(); b.textContent = "▶ Play"; return; } const vd = document.createElement("video"); vd.src = b.dataset.v; vd.controls = true; vd.autoplay = true; vd.playsInline = true; vd.className = "actvid"; li.appendChild(vd); b.textContent = "■ Close"; });
+function actsBlock(v){
+  const A = Array.isArray(v.acts) ? v.acts : [];
+  if (!A.length) return "";
+  const ST = {done:"Done", active:"Working", review:"Waiting for your OK", fix:"Fixing", todo:"Not started"};
+  const nm = a => a.name ? a.name : (String(a.label).toUpperCase()==="CO" ? "Cold open" : "Act " + a.label);
+  const done = A.filter(a => a.state === "done").length;
+  return `<div class="acts"><div class="acthead"><span>Act by act</span><b>${done} of ${A.length} done</b></div><ol class="actlist">${A.map(a => { const u = actUrl(a.url || a.preview || ""); const vu = actUrl(a.video || ""); const st = ST[a.state] || esc(a.state || "Not started"); return `<li class="${esc(a.state||"todo")}"><span class="an">${esc(nm(a))}</span><span class="as"><i></i>${st}${a.pct!=null&&a.state==="active"?` ${Math.round(a.pct)}%`:""}</span><span class="al">${vu?`<button type="button" class="play" data-v="${esc(vu)}" aria-label="Play ${esc(nm(a))}">▶ Play</button>`:""}${u?`<a href="${esc(u)}" target="_blank" rel="noopener">${vu?"Open":"Watch"} ↗</a>`:(vu?"":`<span class="np">No render yet</span>`)}</span></li>`; }).join("")}</ol></div>`;
+}
 function buildRows(){
   if (!rows().length) { $("vids").innerHTML = `<p class="stage">No videos in production right now. New ones show up here when they start.</p>`; }
   else $("vids").innerHTML = rows().map(v0 => { const v = Object.assign({}, v0, {feedback: fbOf(v0.feedback)}); return `
@@ -306,9 +332,8 @@ function buildRows(){
         <div><span>Done around</span><b data-k="fin"></b></div>
       </div>
       ${(v.previews&&v.previews.length)?`<div class="pv"><span>Previews</span>${v.previews.map(x=>/^https:\/\//.test(x.url)?`<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.label)}</a>`:"").join("")}</div>`:""}
+      ${actsBlock(v)}
       <div class="steps">
-        ${(v.acts||[]).map(a => `<span class="act ${a.state}" title="${a.label==="CO"?"Cold open":"Act "+a.label}">${a.label}</span>`).join("")}
-        <span class="sep"></span>
         ${(v.phases||[]).filter(p=>!["script","acts"].includes(p.key)).map(p => `<span class="ph ${p.state}">${esc(p.name)}${p.state==="active"&&p.pct?` ${p.pct}%`:""}</span>`).join("")}
       </div>
     </article>`; }).join("");
