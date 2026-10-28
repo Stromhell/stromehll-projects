@@ -31,4 +31,4 @@ Pushpam's approval covers scheduling and moving posts. It does not cover deletin
 
 ## Rule 10: December (Pushpam, 28 Oct 2026)
 
-December slots may now be used, but only for new videos that don't fit into the current schedule. Never move a video that is already scheduled into December.
+December slots may now be used, but only for new videos that don't fit into the current schedule. Fill every open slot in November (and any earlier month) first. Never move a video that is already scheduled into December.
