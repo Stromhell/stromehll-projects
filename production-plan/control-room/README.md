@@ -30,3 +30,5 @@ Status flow on each `requests` doc (shown on the act and in the list):
 The producing thread sets understood/working/queued/done itself.
 
 v19: Combine / Create reels / Schedule buttons show the latest request of that kind as three icons (Received, Working or Queued, Done) using the same status field.
+
+v20: act notes use the same icons (inbox Received, bulb Understood, gear Working / clock Queued, tick Done) with the current step named.

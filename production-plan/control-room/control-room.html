@@ -362,15 +362,16 @@ const KIND_TXT = {combine:["Combine acts","Combine all acts into the full video.
 const REQ_ST = {new:"Received", relayed:"Received by the team", understood:"Understood", working:"Working on it now", queued:"Queued for later", done:"Done", declined:"Not done"};
 function stepIdx(r){ const s = r.status||"new"; return s==="done"?3 : (s==="working"||s==="queued")?2 : s==="understood"?1 : 0; }
 function stepper(r){
-  if (r.status === "declined") return `<div class="nst no"><span class="nstp on">Not done</span>${r.reply?`<p class="sum">${esc(r.reply)}</p>`:""}</div>`;
-  const i = stepIdx(r), later = r.status==="queued" || (r.when==="later" && r.status!=="working");
-  const L = ["Received", "Understood", later ? "Queued for later" : (i>=2 ? "Working on it now" : "Now or later"), "Done"];
+  if (r.status === "declined") return `<div class="nst"><span class="bst"><i class="bi no">${BI.no}</i><em>Not done</em></span>${r.reply?`<p class="sum">${esc(r.reply)}</p>`:""}</div>`;
+  const i = stepIdx(r), later = r.status==="queued" || (r.when==="later" && r.status!=="working" && i<3);
+  const it = [["rec","Received"], ["und","Understood"], [later?"wait":"work", later?"Queued for later":(i>=2?"Working on it now":"Now or later")], ["done","Done"]];
   const sub = i===0 ? (r.status==="relayed" ? "The team has it. Waiting for them to confirm." : "Saved. Passing it to the team.") : "";
-  return `<div class="nst">${L.map((l,k) => `<span class="nstp ${(k<i||i===3)?"ok":k===i?"on":""}">${(k<i||i===3)?"✓ ":""}${esc(l)}</span>`).join("")}${r.summary?`<p class="sum"><b>What will change:</b> ${esc(r.summary)}</p>`:""}${sub?`<p class="sum">${sub}</p>`:""}${r.status==="done"&&actUrl(r.url||"")?`<p class="sum"><a href="${esc(actUrl(r.url))}" target="_blank" rel="noopener">See the fix ↗</a></p>`:""}</div>`;
+  return `<div class="nst"><span class="bst" title="${esc(REQ_ST[r.status]||"")}">${it.map(([ic,l],k) => `<i class="bi ${k<i||i===3?"ok":k===i?"on":""}${k===2&&k===i&&!later?" spin":""}" title="${l}" aria-label="${l}${k<i||i===3?" (done)":k===i?" (now)":""}">${BI[ic]}</i>`).join('<b class="bl"></b>')}<em>${esc(it[i][1])}</em></span>${r.summary?`<p class="sum"><b>What will change:</b> ${esc(r.summary)}</p>`:""}${sub?`<p class="sum">${sub}</p>`:""}${r.status==="done"&&actUrl(r.url||"")?`<p class="sum"><a href="${esc(actUrl(r.url))}" target="_blank" rel="noopener">See the fix ↗</a></p>`:""}</div>`;
 }
 const BI = {
   rec: `<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13h4l2 3h4l2-3h4"/><path d="M4 13 6.5 5h11L20 13v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/></svg>`,
   work: `<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M2 12h3M19 12h3M4.9 19.1 7 17M17 7l2.1-2.1"/></svg>`,
+  und: `<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg>`,
   wait: `<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>`,
   done: `<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 2.5 2.5L16 9.5"/></svg>`,
   no: `<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6M15 9l-6 6"/></svg>`};
