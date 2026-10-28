@@ -82,12 +82,14 @@ const towerFlicker = (c, lt) => { c.save(); c.globalCompositeOperation = 'screen
 window.SHOTS = [
   // 1 CU: Jensen in the boardroom; his share bar fills to 3.5%
   { plate: 'boardroom', cam: { z: [1.18, 1.24], x: [1000, 1010], y: [760, 770] }, bed: [['hum_loop', .4], ['city_loop', .25]], inSfx: false,
-    figs: [{ x: 560, y: 1420, s: 2.6, pose: 'stand', costume: 'leather', hair: 'swept', glasses: true, facing: 1, talk: [0, 0] }],
+    live: [(c) => { c.save(); c.globalCompositeOperation = 'screen'; const g = c.createRadialGradient(600, 860, 20, 600, 860, 560); g.addColorStop(0, 'rgba(255,214,160,.32)'); g.addColorStop(1, 'rgba(255,214,160,0)'); c.fillStyle = g; c.fillRect(0, 200, 1300, 1240); c.restore(); }],
+    figs: [{ x: 600, y: 1345, s: 2.35, pose: 'present', costume: 'leather', hair: 'swept', glasses: true, facing: 1, mood: 'happy' }],
     over: [ownBars([{ label: 'JENSEN HUANG', v: 3.5, at: 2.6, c0: '#5aa86a', c1: '#8ad07a' }], { at: 2.2 })],
     sfx: [[0, 'swell', .4], ['three and a half', 'tick', .4]] },
   // 2 the second bar (BlackRock) passes his; it never designed a chip
   { plate: 'boardroom', cam: { z: [1.24, 1.3], x: [1010, 1020], y: [770, 780] }, bed: [['hum_loop', .4], ['city_loop', .25]],
-    figs: [{ x: 560, y: 1420, s: 2.6, pose: 'think', costume: 'leather', hair: 'swept', glasses: true, facing: 1 }],
+    live: [(c) => { c.save(); c.globalCompositeOperation = 'screen'; const g = c.createRadialGradient(600, 860, 20, 600, 860, 560); g.addColorStop(0, 'rgba(255,214,160,.32)'); g.addColorStop(1, 'rgba(255,214,160,0)'); c.fillStyle = g; c.fillRect(0, 200, 1300, 1240); c.restore(); }],
+    figs: [{ x: 600, y: 1345, s: 2.35, pose: 'think', costume: 'leather', hair: 'swept', glasses: true, facing: 1, mood: 'worried' }],
     init: S => { const t8 = A.at(S, 'eight percent', 2.5), tc = A.at(S, 'never designed', 4.6); S.D.over = [ownBars([{ label: 'JENSEN HUANG', v: 3.5, at: -5, c0: '#5aa86a', c1: '#8ad07a' }, { label: 'BLACKROCK', icon: true, v: 8, at: t8 - 1.6, dur: 2.4, c0: '#3a4256', c1: '#e8b44a' }], { at: -1 }), noChip(tc)]; S.D.sfx = [[t8 - 1.5, 'tension', .5], [t8, 'hit', .55], [tc + .5, 'stamp', .55]]; } },
   // 3 tiles: Apple, Microsoft, then the rest of corporate America
   { plate: 'boardroom', cam: { z: [1.3, 1.36], x: [1020, 1030], y: [780, 790] }, bed: [['hum_loop', .35]],

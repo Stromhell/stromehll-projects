@@ -89,7 +89,7 @@ window.SHOTS = [
   // 4 MED: a man wakes with the light and stretches; birds cross
   { plate: 'sav_dawn', cam: { z: [2.1, 2.25], x: [1160, 1170], y: [1110, 1120] }, bed: [['birds_loop', .7]],
     live: [A.smoke(1075, 1270, 1), firePit(1075, 1308, .7), (c, lt) => A.fire(1075, 1302, .4, { glow: 200 })(c, lt), hide(960, 1330, 170, 1), A.birds(820, 900, 5, 60, .7)],
-    figs: [{ x: 1240, y: 1330, s: .85, pose: 'stand', costume: 'hide', facing: -1, hair: 'long', beard: true, anim: (o, lt) => { const r = E.sine(K.seg(lt, .9, 1.9)) * (1 - E.sine(K.seg(lt, 3.4, 4.3))); o.eyesClosed = r > .5 ? .8 : null; if (r > 0) o.arms = (t, P) => ({ shL: K.lerp(P.shL, -155, r), elL: K.lerp(P.elL, -25, r), shR: K.lerp(P.shR, -170, r), elR: K.lerp(P.elR, -20, r) }); } }],
+    figs: [{ x: 1240, y: 1330, s: .85, pose: 'stand', costume: 'hide', facing: -1, hair: 'long', beard: true, anim: (o, lt) => { const r = E.sine(K.seg(lt, .9, 1.9)) * (1 - E.sine(K.seg(lt, 3.4, 4.3))); o.eyesClosed = r > .5 ? .8 : null; if (r > 0) o.arms = (t, P) => ({ shL: K.lerp(P.shL, -150, r), elL: K.lerp(P.elL, 18, r), shR: K.lerp(P.shR, 150, r), elR: K.lerp(P.elR, -18, r) }); } }],
     sfx: [[1.0, 'breath', .7], ['No alarm', 'tick', .25]] },
   // 5 CU: push in; his whole kit pops in on its word
   { plate: 'sav_dawn', cam: { z: [2.3, 3.0], x: [1190, 1215], y: [1140, 1180] }, bed: [['birds_loop', .6]],

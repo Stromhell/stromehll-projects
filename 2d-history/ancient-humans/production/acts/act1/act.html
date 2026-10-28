@@ -1,0 +1,221 @@
+<!doctype html><html><head><meta charset="utf-8"><title>AH act 1 - two skeletons</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig.js"></script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/', INK = '#2b1e16', BONE = '#efe5cc', BONE_SH = '#d3c4a0';
+for (const n of ['levant_map', 'dig_dusk', 'museum', 'sav_dusk', 'sav_dawn']) K.load(n, PL + n + '.jpg');
+// hold the title for a beat after the last line
+{ const T = window.TIMING, L = T.shots[T.shots.length - 1]; L.end += 2.4; T.dur = L.end; }
+
+// ---------- helpers ----------
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+const fade = (lt, a, b) => K.seg(lt, a, b);
+const pulse = (lt, at, n = 3) => { const v = lt - at; if (v < 0 || v > n * .55) return 0; return Math.pow(Math.sin(v / .55 * Math.PI), 2); };
+// one bone: a shaft with knobbed ends
+function bone(c, x1, y1, x2, y2, w, opts = {}) {
+  const a = Math.atan2(y2 - y1, x2 - x1), L = Math.hypot(x2 - x1, y2 - y1); c.save(); c.translate(x1, y1); c.rotate(a);
+  const p = new Path2D(); const k = w * .95; p.moveTo(0, -w * .5); p.bezierCurveTo(L * .3, -w * .32, L * .7, -w * .32, L, -w * .5); p.arc(L, -k * .45, k * .55, Math.PI * .5, -Math.PI * .5, true); p.arc(L, k * .45, k * .55, Math.PI * .5, -Math.PI * .5, true);
+  p.lineTo(L, w * .5); p.bezierCurveTo(L * .7, w * .32, L * .3, w * .32, 0, w * .5); p.arc(0, k * .45, k * .55, -Math.PI * .5, Math.PI * .5, true); p.arc(0, -k * .45, k * .55, -Math.PI * .5, Math.PI * .5, true); p.closePath();
+  c.fillStyle = opts.col || BONE; c.fill(p); c.save(); c.clip(p); c.fillStyle = BONE_SH; c.fillRect(-w, w * .08, L + w * 2, w); c.restore();
+  c.strokeStyle = INK; c.lineWidth = opts.lw || 3; c.lineJoin = 'round'; c.stroke(p);
+  if (opts.worn) { c.strokeStyle = 'rgba(120,80,40,.55)'; c.lineWidth = 1.5; for (let i = 0; i < 4; i++) { const t = .2 + i * .18; c.beginPath(); c.moveTo(L * t, -w * .2); c.lineTo(L * t + 6, w * .15); c.stroke(); } }
+  c.restore();
+}
+const redRing = (c, x, y, r, a) => { if (a <= 0) return; c.save(); c.strokeStyle = `rgba(220,50,40,${a})`; c.lineWidth = 7; c.beginPath(); c.arc(x, y, r * (1 + (1 - a) * .25), 0, 7); c.stroke(); c.fillStyle = `rgba(230,60,40,${a * .25})`; c.fill(); c.restore(); };
+// Upright (or lying) skeleton. x = centre, y = feet. H = total height. o: stock, worn, decay, rot (0..1 fake turn), hi {teeth,spine,knees} 0..1 highlights, out {} gets key points
+function skeleton(c, x, y, H, o = {}) {
+  const U = H / 7.4, st = o.stock ?? 1, sx = Math.cos((o.turn ?? 0) * Math.PI * 2) * .25 + .75, worn = !!o.worn;
+  c.save(); c.translate(x, y); if (o.lie) { c.rotate(-Math.PI / 2); } c.scale(sx, 1);
+  const lw = Math.max(2, U * .045); const bw = U * .2 * st; // bone width
+  const hipY = -U * 3.55, shY = -U * 5.85, neckY = -U * 6.15, headY = -U * 6.75, hw = U * .62 * st, sw = U * .95 * st;
+  const bend = worn ? U * .18 : 0; // farmer's spine bends forward
+  // legs
+  for (const sd of [-1, 1]) { const hx = sd * hw * .55, kx = sd * U * .32, fx = sd * U * .38, ky = -U * 1.85;
+    bone(c, hx, hipY + U * .25, kx, ky, bw * 1.15, { lw, worn }); bone(c, kx, ky + U * .05, fx, -U * .22, bw * .95, { lw, worn }); bone(c, kx + sd * U * .12, ky + U * .1, fx + sd * U * .1, -U * .25, bw * .45, { lw });
+    c.fillStyle = BONE; c.strokeStyle = INK; c.lineWidth = lw; c.beginPath(); c.ellipse(kx, ky, bw * .55, bw * .5, 0, 0, 7); c.fill(); c.stroke();
+    c.beginPath(); c.moveTo(fx - U * .18, -U * .2); c.quadraticCurveTo(fx + sd * U * .05, -U * .3, fx + U * .42, -U * .05); c.lineTo(fx + U * .44, 0); c.lineTo(fx - U * .2, 0); c.closePath(); c.fill(); c.stroke();
+    for (let t = 0; t < 3; t++) { c.beginPath(); c.moveTo(fx + U * (.12 + t * .1), -U * .12); c.lineTo(fx + U * (.18 + t * .1), -U * .02); c.stroke(); }
+    if (o.out) (o.out.knees = o.out.knees || []).push([kx * sx, ky]); }
+  // pelvis (butterfly)
+  c.fillStyle = BONE; c.strokeStyle = INK; c.lineWidth = lw; c.beginPath(); c.moveTo(0, hipY - U * .35); c.bezierCurveTo(-hw * 1.5, hipY - U * .75, -hw * 1.7, hipY + U * .05, -hw * .8, hipY + U * .35); c.quadraticCurveTo(-hw * .3, hipY + U * .15, 0, hipY + U * .3); c.quadraticCurveTo(hw * .3, hipY + U * .15, hw * .8, hipY + U * .35); c.bezierCurveTo(hw * 1.7, hipY + U * .05, hw * 1.5, hipY - U * .75, 0, hipY - U * .35); c.closePath(); c.fill(); c.stroke();
+  c.fillStyle = '#3a2a1c'; for (const sd of [-1, 1]) { c.beginPath(); c.ellipse(sd * hw * .55, hipY, U * .14, U * .2, 0, 0, 7); c.fill(); }
+  // spine: vertebrae from pelvis to neck, curving forward if worn
+  const nV = 14; for (let i = 0; i < nV; i++) { const t = i / (nV - 1), vy = hipY - U * .3 - (hipY - U * .3 - neckY) * t, vx = Math.sin(t * Math.PI) * bend + (worn ? t * t * U * .25 : 0), w = U * (.22 - t * .05) * st, h = U * .15 * (worn && i % 3 === 1 ? .7 : 1);
+    c.fillStyle = worn && i % 3 === 1 ? '#d6c49a' : BONE; c.beginPath(); c.roundRect(vx - w / 2, vy - h / 2, w, h, h * .35); c.fill(); c.stroke(); }
+  const neckX = worn ? U * .25 : 0;
+  // ribcage
+  const rcY = shY + U * .25, rcH = U * 1.45;
+  for (let r = 0; r < 7; r++) { const ry = rcY + r * rcH / 7, rw = sw * (.7 + Math.sin((r + 1) / 8 * Math.PI) * .38); for (const sd of [-1, 1]) { c.strokeStyle = INK; c.lineWidth = U * .085 * st + lw * 1.4; c.lineCap = 'round'; c.beginPath(); c.moveTo(neckX * .5 + sd * U * .08, ry); c.bezierCurveTo(sd * rw * 1.05, ry - U * .08, sd * rw * 1.05, ry + U * .3, sd * rw * .45, ry + U * .42); c.stroke(); c.strokeStyle = BONE; c.lineWidth = U * .085 * st; c.stroke(); } }
+  c.fillStyle = BONE; c.strokeStyle = INK; c.lineWidth = lw; c.beginPath(); c.roundRect(neckX * .5 - U * .08, rcY - U * .05, U * .16, rcH * .75, U * .06); c.fill(); c.stroke();
+  // clavicles + arms
+  for (const sd of [-1, 1]) { const shx = sd * sw * 1.02 + neckX * .5; bone(c, neckX * .5 + sd * U * .1, shY + U * .05, shx, shY, bw * .7, { lw });
+    const ex = sd * (sw * 1.15), ey = shY + U * 1.45, wx = sd * sw * 1.18 + (o.armFwd || 0), wy = shY + U * 2.75;
+    bone(c, shx, shY + U * .05, ex, ey, bw, { lw, worn }); bone(c, ex - sd * bw * .2, ey, wx - sd * bw * .2, wy, bw * .55, { lw }); bone(c, ex + sd * bw * .25, ey, wx + sd * bw * .3, wy, bw * .55, { lw });
+    c.fillStyle = BONE; for (let f = 0; f < 4; f++) { c.beginPath(); c.roundRect(wx - U * .12 + f * U * .06 * sd, wy + U * .05, U * .05, U * (.24 + (f === 1 || f === 2 ? .06 : 0)), U * .03); c.fill(); c.stroke(); } }
+  // neck
+  for (let i = 0; i < 3; i++) { c.beginPath(); c.roundRect(neckX - U * .1, neckY - i * U * .14 - U * .05, U * .2, U * .11, U * .04); c.fill(); c.stroke(); }
+  // skull
+  const kx = neckX + (worn ? U * .1 : 0), ky = headY; c.fillStyle = BONE; c.lineWidth = lw * 1.2;
+  c.beginPath(); c.ellipse(kx, ky - U * .15, U * .62, U * .6, 0, 0, 7); c.fill(); c.stroke();
+  c.save(); c.beginPath(); c.ellipse(kx, ky - U * .15, U * .62, U * .6, 0, 0, 7); c.clip(); c.fillStyle = BONE_SH; c.beginPath(); c.ellipse(kx - U * .45, ky + U * .1, U * .5, U * .7, 0, 0, 7); c.fill(); c.restore();
+  c.beginPath(); c.roundRect(kx - U * .42, ky + U * .2, U * .84, U * .5, U * .14); c.fillStyle = BONE; c.fill(); c.stroke();
+  c.fillStyle = '#2a1a10'; for (const sd of [-1, 1]) { c.beginPath(); c.ellipse(kx + sd * U * .24, ky - U * .02, U * .17, U * .15, 0, 0, 7); c.fill(); }
+  c.beginPath(); c.moveTo(kx, ky + U * .1); c.lineTo(kx - U * .07, ky + U * .25); c.lineTo(kx + U * .07, ky + U * .25); c.closePath(); c.fill();
+  // teeth row
+  const ty = ky + U * .42; for (let i = 0; i < 8; i++) { const tx = kx - U * .36 + i * U * .09; c.fillStyle = '#fbf6e6'; c.beginPath(); c.roundRect(tx, ty - U * .1, U * .08, U * .2, U * .02); c.fill(); c.lineWidth = lw * .6; c.strokeStyle = INK; c.stroke(); if (o.decay && (i === 1 || i === 4 || i === 6)) { c.fillStyle = '#3a2410'; c.beginPath(); c.arc(tx + U * .04, ty - U * .02, U * .03, 0, 7); c.fill(); } }
+  if (o.decay) { c.strokeStyle = 'rgba(80,50,20,.6)'; c.lineWidth = 1.5; c.beginPath(); c.moveTo(kx + U * .2, ky - U * .6); c.lineTo(kx + U * .3, ky - U * .4); c.lineTo(kx + U * .22, ky - U * .3); c.stroke(); }
+  if (o.out) { o.out.teeth = [kx * sx, ty]; o.out.spine = [(neckX * .4) * sx, (hipY + neckY) / 2]; o.out.head = [kx * sx, ky]; o.out.U = U; }
+  c.restore();
+  const hi = o.hi || {}; if (o.out && !o.lie) { if (hi.teeth) redRing(c, x + o.out.teeth[0], y + o.out.teeth[1], U * .5, hi.teeth); if (hi.spine) redRing(c, x + o.out.spine[0], y + o.out.spine[1], U * 1.3, hi.spine); if (hi.knees) for (const k of o.out.knees) redRing(c, x + k[0], y + k[1], U * .45, hi.knees); }
+}
+// leader-line label that draws on (world coords)
+function tag(c, lt, at, txt, ax, ay, lx, ly, opts = {}) { const a = K.seg(lt, at, at + .45); if (a <= 0) return; const out = 1 - K.seg(lt, (opts.until ?? 99) - .3, opts.until ?? 99); c.save(); c.globalAlpha = out;
+  c.strokeStyle = opts.col || '#fff6dc'; c.lineWidth = 4; c.setLineDash([]); c.beginPath(); c.moveTo(ax, ay); c.lineTo(ax + (lx - ax) * a, ay + (ly - ay) * a); c.stroke(); c.fillStyle = opts.col || '#fff6dc'; c.beginPath(); c.arc(ax, ay, 7, 0, 7); c.fill();
+  if (a > .6) { const b = E.back(K.seg(lt, at + .25, at + .6)); c.translate(lx, ly); c.scale(b, b); c.font = K.font(opts.px || 40, 'Oswald'); const w = c.measureText(txt).width + 36; const dx = opts.left ? -w : 0; c.fillStyle = 'rgba(29,23,18,.9)'; c.fillRect(dx, -30, w, 60); c.fillStyle = opts.col || '#e9b54a'; c.fillRect(opts.left ? -6 : dx, -30, 6, 60); c.fillStyle = '#fff6dc'; c.textBaseline = 'middle'; c.fillText(txt, dx + 18, 2); }
+  c.restore(); }
+// swinging hanging tag (world coords)
+function hangTag(c, lt, at, x, y, txt, col, flipAt, txt2, col2) { const a = pop(lt, at, .5); if (a <= 0) return; const sw = Math.sin((lt - at) * 4) * Math.exp(-(lt - at) * .9) * .35; const f = flipAt != null ? K.seg(lt, flipAt, flipAt + .4) : 0, fl = Math.cos(f * Math.PI);
+  c.save(); c.translate(x, y - 300 * (1 - a)); c.strokeStyle = '#3a2a1c'; c.lineWidth = 3; c.beginPath(); c.moveTo(0, -170); c.lineTo(0, 0); c.stroke(); c.rotate(sw); c.scale(Math.abs(fl), 1);
+  const show = f < .5 ? txt : txt2, cc = f < .5 ? col : col2; c.font = K.font(show.length > 2 ? 40 : 76); const w = Math.max(110, c.measureText(show).width + 50), h = show.length > 2 ? 78 : 110;
+  c.fillStyle = 'rgba(20,12,6,.35)'; c.fillRect(-w / 2 + 6, 8, w, h); c.fillStyle = cc; c.fillRect(-w / 2, 0, w, h); c.strokeStyle = INK; c.lineWidth = 5; c.strokeRect(-w / 2, 0, w, h); c.fillStyle = '#3a2a1c'; c.beginPath(); c.arc(0, 12, 6, 0, 7); c.fill();
+  c.fillStyle = cc === '#f6eedc' ? INK : '#fffaf0'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(show, 0, h / 2 + 6); c.restore(); }
+// leather diary, screen coords. pages: (c, side, x, y, w, h) callbacks. turn 0..1 animates a page flip right->left.
+function diary(c, cx, cy, s, left, right, turn = 0, nextRight) { const W2 = 620 * s, H2 = 760 * s; c.save();
+  c.fillStyle = 'rgba(10,6,2,.45)'; c.beginPath(); c.roundRect(cx - W2 - 34 * s + 18, cy - H2 / 2 - 20 * s + 24, W2 * 2 + 68 * s, H2 + 40 * s, 22 * s); c.fill();
+  const lg = c.createLinearGradient(0, cy - H2 / 2, 0, cy + H2 / 2); lg.addColorStop(0, '#6b3b1f'); lg.addColorStop(1, '#4a2612'); c.fillStyle = lg; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.roundRect(cx - W2 - 34 * s, cy - H2 / 2 - 20 * s, W2 * 2 + 68 * s, H2 + 40 * s, 22 * s); c.fill(); c.stroke();
+  c.strokeStyle = 'rgba(230,180,120,.35)'; c.lineWidth = 2; c.setLineDash([8, 7]); c.beginPath(); c.roundRect(cx - W2 - 22 * s, cy - H2 / 2 - 8 * s, W2 * 2 + 44 * s, H2 + 16 * s, 16 * s); c.stroke(); c.setLineDash([]);
+  const page = (x, w, fn, flip) => { c.save(); const pg = c.createLinearGradient(x, 0, x + w, 0); pg.addColorStop(0, flip ? '#e8d9b4' : '#f4e9cc'); pg.addColorStop(1, flip ? '#f4e9cc' : '#e8d9b4'); c.fillStyle = pg; c.fillRect(x, cy - H2 / 2, w, H2); c.beginPath(); c.rect(x, cy - H2 / 2, w, H2); c.clip(); if (fn) fn(c, x, cy - H2 / 2, w, H2); c.restore(); c.strokeStyle = 'rgba(80,50,20,.5)'; c.lineWidth = 2; c.strokeRect(x, cy - H2 / 2, w, H2); };
+  page(cx - W2, W2, left, false); page(cx, W2, turn > .5 && nextRight ? nextRight : right, true);
+  if (turn > 0 && turn < 1) { const k = Math.cos(turn * Math.PI), pw = W2 * Math.abs(k), x0 = k > 0 ? cx : cx - pw; c.fillStyle = k > 0 ? '#efe2c0' : '#f4e9cc'; c.strokeStyle = 'rgba(80,50,20,.6)'; c.lineWidth = 2; c.beginPath(); c.rect(x0, cy - H2 / 2, pw, H2); c.fill(); c.stroke(); const sh = c.createLinearGradient(x0, 0, x0 + pw, 0); sh.addColorStop(0, 'rgba(0,0,0,.18)'); sh.addColorStop(1, 'rgba(0,0,0,0)'); c.fillStyle = sh; c.fillRect(x0, cy - H2 / 2, pw, H2); }
+  const gut = c.createLinearGradient(cx - 30 * s, 0, cx + 30 * s, 0); gut.addColorStop(0, 'rgba(60,30,10,0)'); gut.addColorStop(.5, 'rgba(60,30,10,.35)'); gut.addColorStop(1, 'rgba(60,30,10,0)'); c.fillStyle = gut; c.fillRect(cx - 30 * s, cy - H2 / 2, 60 * s, H2);
+  c.fillStyle = '#7a1e1e'; c.fillRect(cx + W2 * .55, cy + H2 / 2 - 4, 22 * s, 90 * s); c.restore(); }
+const hand = (c, txt, x, y, px, a = 1, col = '#3a2412') => { if (a <= 0) return; c.save(); c.font = `${px}px Caveat, cursive`; c.fillStyle = col; c.textBaseline = 'middle'; const w = c.measureText(txt).width; c.beginPath(); c.rect(x - 4, y - px, (w + 8) * a, px * 2); c.clip(); c.fillText(txt, x, y); c.restore(); };
+// plate drawn into a rect (cover-fit around a focus point)
+const plateIn = (c, name, x, y, w, h, fx, fy, z) => { c.save(); c.beginPath(); c.rect(x, y, w, h); c.clip(); const s2 = z * w / 2560; c.drawImage(K.imgs[name], x + w / 2 - fx * s2, y + h / 2 - fy * s2, 2560 * s2, 1440 * s2); c.restore(); };
+const desk = (c) => { const g = c.createLinearGradient(0, 0, 0, 1080); g.addColorStop(0, '#3b2414'); g.addColorStop(1, '#22140a'); c.fillStyle = g; c.fillRect(0, 0, 1920, 1080); c.strokeStyle = 'rgba(0,0,0,.25)'; c.lineWidth = 2; for (let i = 0; i < 40; i++) { const y = i * 28 + (i * 37 % 11); c.beginPath(); c.moveTo(0, y); c.bezierCurveTo(600, y + 10 * Math.sin(i), 1300, y - 8, 1920, y + 6); c.stroke(); }
+  const v = c.createRadialGradient(960, 540, 200, 960, 540, 1100); v.addColorStop(0, 'rgba(255,200,120,.12)'); v.addColorStop(1, 'rgba(0,0,0,.6)'); c.fillStyle = v; c.fillRect(0, 0, 1920, 1080); };
+// museum: skeleton stands on the table top (y ~ 868)
+const TOP = 868, AX = 1010, BX = 1560;
+const skA = (lt, S, extra = {}) => (c) => skeleton(c, AX, TOP, 560, Object.assign({ stock: 1.12, out: {} }, extra));
+const skB = (lt, S, extra = {}) => (c) => skeleton(c, BX, TOP, 470, Object.assign({ stock: .82, worn: true, decay: true, out: {} }, extra));
+const spot = (x) => (c) => { c.save(); c.globalCompositeOperation = 'screen'; const g = c.createRadialGradient(x, 520, 0, x, 560, 520); g.addColorStop(0, 'rgba(255,236,190,.28)'); g.addColorStop(1, 'rgba(255,236,190,0)'); c.fillStyle = g; c.fillRect(x - 600, 0, 1200, 1100); c.restore(); };
+const museumCam = { z: [1.05, 1.12], x: [1280, 1290], y: [640, 640] };
+
+window.SHOTS = [
+  // 1 parchment map: Levant + Anatolia glow, first farm sites drop in
+  { plate: 'levant_map', cam: { z: [1.0, 1.32], x: [1280, 1330], y: [720, 660] }, inSfx: false,
+    init: S => { const tL = A.at(S, 'Levant', 3.6), tA = A.at(S, 'Anatolia', 4.6), tF = A.at(S, 'earliest farms', 5.6);
+      const glow = (x, y, rx, ry, at) => (c, lt) => { const a = E.out(K.seg(lt, at, at + .6)); if (a <= 0) return; const p = .75 + .25 * Math.sin(lt * 3); c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = `rgba(200,120,40,${.38 * a * p})`; c.beginPath(); c.ellipse(x, y, rx, ry, -.5, 0, 7); c.fill(); c.restore(); c.strokeStyle = `rgba(150,50,20,${.8 * a})`; c.lineWidth = 5; c.setLineDash([16, 10]); c.lineDashOffset = -lt * 30; c.beginPath(); c.ellipse(x, y, rx, ry, -.5, 0, 7); c.stroke(); c.setLineDash([]); };
+      const wheat = (x, y, at) => (c, lt) => { const p = pop(lt, at); if (p <= 0) return; c.save(); c.translate(x, y - (1 - Math.min(1, p)) * 60); c.scale(p, p); c.fillStyle = 'rgba(20,10,4,.35)'; c.beginPath(); c.ellipse(4, 4, 26, 9, 0, 0, 7); c.fill(); c.fillStyle = '#b8442e'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.moveTo(0, 0); c.bezierCurveTo(-30, -40, -24, -78, 0, -80); c.bezierCurveTo(24, -78, 30, -40, 0, 0); c.fill(); c.stroke(); c.strokeStyle = '#f0d070'; c.lineWidth = 4; c.beginPath(); c.moveTo(0, -30); c.lineTo(0, -66); c.stroke(); for (let k = 0; k < 3; k++) { c.beginPath(); c.ellipse(-6, -38 - k * 10, 5, 3, -.6, 0, 7); c.ellipse(6, -38 - k * 10, 5, 3, .6, 0, 7); c.stroke(); } c.restore(); };
+      S.D.live = [glow(1405, 840, 120, 230, tL), glow(1190, 540, 380, 150, tA)];
+      S.D.front = [wheat(1430, 880, tF), wheat(1150, 590, tF + .25), wheat(1520, 600, tF + .5), wheat(1650, 760, tF + .7)];
+      S.D.over = [(c, lt) => K.badge(c, 'THE FIRST CLUE', lt, { at: .4 }), (c, lt) => K.dateTag(c, '~10,000 YEARS AGO', lt, { at: tF })];
+      S.D.sfx = [[.2, 'paper', .5], [tL, 'chime', .35], [tA, 'chime', .35], [tF, 'pop', .6], [tF + .25, 'pop', .5], [tF + .5, 'pop', .5], [tF + .7, 'pop', .5]]; } },
+  // 2 dig site at dusk: brushes reveal two skeletons in the trench
+  { plate: 'dig_dusk', cam: { z: [1.05, 1.55], x: [1280, 1290], y: [900, 1150] }, bed: [['wind_loop', .35], ['night_loop', .25]],
+    init: S => { const tY = A.at(S, 'thousand years apart', 4.2);
+      const lantern = (x, y) => (c, lt) => { const f = .8 + .2 * Math.sin(lt * 11 + x) * Math.sin(lt * 7.3 + y); c.save(); c.globalCompositeOperation = 'screen'; const g = c.createRadialGradient(x, y, 0, x, y, 260); g.addColorStop(0, `rgba(255,190,110,${.35 * f})`); g.addColorStop(1, 'rgba(255,170,90,0)'); c.fillStyle = g; c.fillRect(x - 260, y - 260, 520, 520); c.restore(); };
+      const buried = (x, H, worn, at) => (c, lt) => { c.save(); c.translate(x + H * .5 * .85, 1175); c.scale(.85, .5); skeleton(c, 0, 0, H, { lie: true, stock: worn ? .82 : 1.1, worn, decay: worn }); c.restore();
+        const r = E.sine(K.seg(lt, at, at + 2.6)); c.save(); c.globalAlpha = 1 - r; c.fillStyle = '#7a5434'; c.beginPath(); c.ellipse(x, 1168, H * .5, 46, 0, 0, 7); c.fill(); for (let k = 0; k < 40; k++) { c.fillStyle = k % 2 ? '#8e6640' : '#6a4628'; c.beginPath(); c.arc(x - H * .45 + (k * 53 % (H * .9)), 1140 + (k * 29 % 56), 6 + k % 5, 0, 7); c.fill(); } c.restore();
+        if (r > 0 && r < 1) { const bx = x - H * .45 + r * H * .9, by = 1150 + Math.sin(lt * 18) * 10; c.save(); c.translate(bx, by); c.rotate(-.5 + Math.sin(lt * 18) * .25); c.fillStyle = '#9a6a3a'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-6, -70, 12, 60); c.strokeRect(-6, -70, 12, 60); c.fillStyle = '#3a2a1c'; c.fillRect(-14, -12, 28, 22); c.restore(); } };
+      S.D.live = [buried(1040, 560, false, .3), buried(1520, 470, true, 1.2), A.dust(1000, 1150, 700, 120, 40), lantern(448, 1293), lantern(2105, 1293), lantern(790, 890), lantern(1770, 890)];
+      S.D.over = [(c, lt) => K.card(c, 'A FEW THOUSAND\nYEARS APART', lt, { at: tY, x: 1500, y: 200, px: 56, rot: -3 })];
+      S.D.sfx = [[.3, 'scrape', .5], [1.3, 'scrape', .5], [2.3, 'scrape', .4], [tY, 'pop', .6]]; } },
+  // 3 museum: skeleton A spins in, labels draw on
+  { plate: 'museum', cam: museumCam, bed: ['hum_loop', .25],
+    init: S => { const t1 = A.at(S, 'tall and thick', 1.4), t2 = A.at(S, 'teeth', 3.4), t3 = A.at(S, 'joints', 6.0);
+      S.D.live = [spot(AX), (c, lt) => { skeleton(c, AX, TOP, 560, { stock: 1.12, turn: 1 - E.out(K.seg(lt, 0, 1.2)) }); },
+        (c, lt) => { tag(c, lt, t1, 'TALL & THICK', AX + 120, 520, AX + 330, 380); tag(c, lt, t2, 'TEETH: NO DECAY', AX - 30, 340, AX - 260, 250, { left: true }); tag(c, lt, t3, 'CLEAN JOINTS', AX + 60, 740, AX + 300, 700); }];
+      S.D.over = [(c, lt) => K.card(c, 'SKELETON A', lt, { at: .5, x: 1640, y: 860, px: 58, rot: -4 })];
+      S.D.sfx = [[.1, 'whoosh', .4], [t1, 'pop', .5], [t2, 'pop', .5], [t3, 'pop', .5]]; } },
+  // 4 skeleton B slides in: cavities, worn spine, shorter
+  { plate: 'museum', cam: { z: [1.12, 1.18], x: [1290, 1330], y: [640, 640] }, bed: ['hum_loop', .25],
+    init: S => { const t1 = A.at(S, 'cavities', 2.2), t2 = A.at(S, 'spine', 3.6), t3 = A.at(S, 'shorter life', 8.5);
+      S.D.live = [spot(AX), spot(BX), (c) => skeleton(c, AX, TOP, 560, { stock: 1.12 }), (c, lt) => { const x = BX + (1 - E.out(K.seg(lt, 0, 1.1))) * 900; const o = { stock: .82, worn: true, decay: true, out: {}, hi: { teeth: pulse(lt, t1, 3), spine: pulse(lt, t2, 4), knees: pulse(lt, t2 + 1.6, 3) } }; skeleton(c, x, TOP, 470, o); },
+        (c, lt) => { tag(c, lt, t1, 'CAVITIES', BX + 40, 450, BX + 260, 330); tag(c, lt, t2, 'WORN SPINE', BX + 30, 620, BX + 270, 560); tag(c, lt, t3, 'SHORTER LIFE', BX + 120, 860, BX + 280, 790);
+          const a = E.out(K.seg(lt, t3 - .6, t3)); if (a > 0) { c.save(); c.globalAlpha = a; c.strokeStyle = '#ffd36a'; c.lineWidth = 4; c.setLineDash([14, 10]); c.beginPath(); c.moveTo(AX - 140, TOP - 560); c.lineTo(BX + 140, TOP - 560); c.moveTo(BX - 140, TOP - 470); c.lineTo(BX + 140, TOP - 470); c.stroke(); c.setLineDash([]); c.restore(); } }];
+      S.D.over = [(c, lt) => K.card(c, 'SKELETON B', lt, { at: .7, x: 1620, y: 160, px: 58, rot: 3 })];
+      S.D.sfx = [[.1, 'whoosh', .5], [t1, 'hit', .4], [t2, 'hit', .4], [t2 + 1.6, 'hit', .35], [t3, 'pop', .5]]; } },
+  // 5 two ? tags swing in: which one was the farmer?
+  { plate: 'museum', cam: { z: [1.18, 1.1], x: [1330, 1290], y: [640, 620] }, bed: ['hum_loop', .25],
+    init: S => { const tg = A.at(S, 'Take a guess', 3.2);
+      S.D.live = [spot(AX), spot(BX), (c) => skeleton(c, AX, TOP, 560, { stock: 1.12 }), (c) => skeleton(c, BX, TOP, 470, { stock: .82, worn: true, decay: true }), (c, lt) => { hangTag(c, lt, .3, AX, 160, '?', '#f6eedc'); hangTag(c, lt, .7, BX, 250, '?', '#f6eedc'); }];
+      S.D.over = [(c, lt) => K.card(c, 'WHICH ONE WAS\nTHE FARMER?', lt, { at: tg, x: 960, y: 900, px: 60, rot: -3 })];
+      S.D.sfx = [[.3, 'tick', .5], [.7, 'tick', .5], [tg, 'hit', .5], [tg + .6, 'tick', .3], [tg + 1.2, 'tick', .3]]; } },
+  // 6 visitor walks in and bets on the strong one
+  { plate: 'museum', cam: { z: [1.0, 1.06], x: [1280, 1260], y: [720, 720] }, bed: ['hum_loop', .25],
+    figs: [{ x: 700, y: 1330, s: 1.9, costume: 'shirt', hair: 'short', mood: 'happy', walk: { x0: -150, x1: 700, t0: 0, dur: 2.6 } }],
+    init: S => { const tS = A.at(S, 'strong one', 1.6), tG = A.at(S, 'Stored grain', 3.4), tR = A.at(S, 'roof', 4.0), tT = A.at(S, 'tools', 4.6), tU = A.at(S, 'Surely', 5.2);
+      S.D.figs[0].anim = (o, lt) => { if (lt > 2.6) { o.pose = lt > tS && lt < tG ? 'point' : 'present'; o.facing = 1; o.talk = lt > tS; } };
+      const icon = (x, y, at, kind) => (c, lt) => { const p = pop(lt, at); if (p <= 0) return; c.save(); c.translate(x, y); c.scale(p, p); c.fillStyle = '#fff8e6'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.arc(0, 0, 64, 0, 7); c.fill(); c.stroke(); c.lineWidth = 4;
+        if (kind === 'grain') { c.fillStyle = '#c9a25a'; c.beginPath(); c.moveTo(-30, 34); c.quadraticCurveTo(-40, -10, -16, -24); c.lineTo(16, -24); c.quadraticCurveTo(40, -10, 30, 34); c.closePath(); c.fill(); c.stroke(); c.beginPath(); c.moveTo(-18, -24); c.lineTo(-10, -36); c.lineTo(10, -36); c.lineTo(18, -24); c.stroke(); }
+        else if (kind === 'roof') { c.fillStyle = '#b8442e'; c.beginPath(); c.moveTo(-42, -2); c.lineTo(0, -38); c.lineTo(42, -2); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#e8d2a0'; c.fillRect(-30, -2, 60, 36); c.strokeRect(-30, -2, 60, 36); c.fillStyle = '#5a3a20'; c.fillRect(-8, 10, 16, 24); }
+        else { c.save(); c.rotate(-.6); c.fillStyle = '#8a5a30'; c.fillRect(-5, -36, 10, 72); c.strokeRect(-5, -36, 10, 72); c.fillStyle = '#9aa0a8'; c.beginPath(); c.moveTo(-5, -36); c.lineTo(-30, -30); c.lineTo(-28, -18); c.lineTo(-5, -22); c.closePath(); c.fill(); c.stroke(); c.restore(); }
+        c.restore(); };
+      S.D.live = [spot(AX), spot(BX), (c) => skeleton(c, AX, TOP, 560, { stock: 1.12 }), (c) => skeleton(c, BX, TOP, 470, { stock: .82, worn: true, decay: true }), (c, lt) => { hangTag(c, lt, -1, AX, 160, '?', '#f6eedc'); hangTag(c, lt, -1, BX, 250, '?', '#f6eedc'); }];
+      S.D.front = [icon(330, 420, tG, 'grain'), icon(480, 330, tR, 'roof'), icon(630, 420, tT, 'tools')];
+      S.D.over = [(c, lt) => K.card(c, 'SURELY THE FARMER?', lt, { at: tU, x: 1450, y: 930, px: 56, rot: 3 })];
+      S.D.sfx = [[.2, 'footsteps', .45], [tS, 'pop', .5], [tG, 'pop', .5], [tR, 'pop', .5], [tT, 'pop', .5]]; } },
+  // 7 the tags flip: tall one was the hunter-gatherer
+  { plate: 'museum', cam: { z: [1.06, 1.16], x: [1260, 1300], y: [720, 660] }, bed: ['hum_loop', .25],
+    figs: [{ x: 700, y: 1330, s: 1.9, costume: 'shirt', hair: 'short', mood: 'shocked', pose: 'stand', facing: 1 }],
+    init: S => { const tH = A.at(S, 'hunter-gatherer', 3.4), tF = A.at(S, 'was the farmer', 6.0);
+      S.D.figs[0].anim = (o, lt) => { o.mood = lt < tH ? 'shocked' : 'worried'; if (lt > tH) o.pose = 'shrug'; };
+      S.D.live = [spot(AX), spot(BX), (c) => skeleton(c, AX, TOP, 560, { stock: 1.12 }), (c) => skeleton(c, BX, TOP, 470, { stock: .82, worn: true, decay: true }), (c, lt) => { hangTag(c, lt, -1, AX, 160, '?', '#f6eedc', tH, 'HUNTER-GATHERER', '#5f8a3a'); hangTag(c, lt, -1, BX, 250, '?', '#f6eedc', tF, 'FARMER', '#b8442e'); }];
+      S.D.over = [(c, lt) => K.card(c, "IT'S THE OTHER\nWAY ROUND", lt, { at: .5, x: 1600, y: 780, px: 56, rot: 3 })];
+      S.D.sfx = [[.5, 'hit', .5], [tH, 'stamp', .7], [tF, 'stamp', .7]]; } },
+  // 8 parchment chart: height drops, decay rises
+  { draw: (c, lt) => { desk(c); K.parchment(c, 160, 110, 1600, 800); }, bed: ['hum_loop', .15],
+    init: S => { const tH = A.at(S, 'average height dropped', 4.6), tD = A.at(S, 'tooth decay', 5.6), tJ = A.at(S, 'worn joints', 6.4), tN = A.at(S, 'signs of hunger', 7.2);
+      S.D.over = [(c, lt) => { c.fillStyle = INK; c.font = K.font(52); c.textAlign = 'center'; c.globalAlpha = K.seg(lt, .2, .6); c.fillText('WHERE FARMING TOOK OVER', 960, 200); c.font = '30px Oswald'; c.fillStyle = '#6a4a2a'; c.fillText('STUDY AFTER STUDY', 960, 250); c.globalAlpha = 1;
+        // height panel: two bars, the farmer bar sinks
+        const x0 = 330, base = 820; c.strokeStyle = '#6a4a2a'; c.lineWidth = 4; c.beginPath(); c.moveTo(x0 - 30, base); c.lineTo(x0 + 520, base); c.stroke();
+        const g = E.out(K.seg(lt, .4, 1.4)), d = E.out(K.seg(lt, tH, tH + 1.2)); const bar = (x, h, col, lab) => { c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(x, base - h, 160, h); c.strokeRect(x, base - h, 160, h); c.fillStyle = INK; c.font = '30px Oswald'; c.textAlign = 'center'; c.fillText(lab, x + 80, base + 40); };
+        bar(x0, 420 * g, '#7a9a52', 'BEFORE'); bar(x0 + 260, (420 - 90 * d) * g, '#c26a3a', 'AFTER'); c.fillStyle = INK; c.font = K.font(40); c.fillText('HEIGHT', x0 + 210, 330);
+        if (d > 0) { c.save(); c.globalAlpha = d; c.strokeStyle = '#b8442e'; c.lineWidth = 8; c.beginPath(); c.moveTo(x0 + 340, 360); c.lineTo(x0 + 340, 430 + 40 * d); c.stroke(); c.fillStyle = '#b8442e'; c.beginPath(); c.moveTo(x0 + 322, 430 + 40 * d); c.lineTo(x0 + 358, 430 + 40 * d); c.lineTo(x0 + 340, 462 + 40 * d); c.fill(); c.restore(); }
+        // rising problems
+        const rise = (y, at, txt) => { const a = E.out(K.seg(lt, at, at + .9)); if (a <= 0) return; c.save(); c.globalAlpha = Math.min(1, a * 1.5); c.fillStyle = '#f6eedc'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(1010, y - 40, 440, 80); c.strokeRect(1010, y - 40, 440, 80); c.fillStyle = INK; c.font = K.font(40); c.textAlign = 'left'; c.fillText(txt, 1040, y + 2);
+          c.fillStyle = '#b8442e'; const ah = 50 * a; c.beginPath(); c.moveTo(1500, y + 26); c.lineTo(1500, y + 26 - ah); c.lineTo(1484, y + 26 - ah); c.lineTo(1512, y - 30 - ah * .2); c.lineTo(1540, y + 26 - ah); c.lineTo(1524, y + 26 - ah); c.lineTo(1524, y + 26); c.closePath(); c.fill(); c.strokeStyle = INK; c.lineWidth = 3; c.stroke(); c.restore(); };
+        c.textBaseline = 'middle'; rise(430, tD, 'TOOTH DECAY'); rise(560, tJ, 'WORN JOINTS'); rise(690, tN, 'SIGNS OF HUNGER'); c.textBaseline = 'alphabetic'; c.textAlign = 'left'; },
+        (c, lt) => K.card(c, 'HEIGHT DOWN.\nDECAY UP.', lt, { at: tN + 1.0, x: 1500, y: 960, px: 54, rot: -3 })];
+      S.D.sfx = [[.2, 'paper', .5], [tH, 'whoosh_soft', .5], [tD, 'pop', .5], [tJ, 'pop', .5], [tN, 'pop', .5], [tN + 1.0, 'hit', .4]]; } },
+  // 9 Greece and Turkey: hunter vs farmer back to back, -15 cm
+  { plate: 'levant_map', cam: { z: [1.55, 1.7], x: [820, 860], y: [560, 540] }, sub: 'top',
+    init: S => { const tF = A.at(S, 'fifteen', 3.4), tB = A.at(S, 'took thousands', 5.4);
+      S.D.over = [A.dim(.35), (c, lt) => { const a = E.out(K.seg(lt, .3, 1.0)); c.save(); c.globalAlpha = a; c.fillStyle = 'rgba(246,238,220,.94)'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.roundRect(560, 230, 800, 800, 18); c.fill(); c.stroke();
+        c.strokeStyle = 'rgba(80,50,20,.35)'; c.lineWidth = 2; for (let y = 300; y < 1000; y += 50) { c.beginPath(); c.moveTo(600, y); c.lineTo(1320, y); c.stroke(); }
+        R.figure(c, { x: 800, y: 990, s: 2.25, pose: 'stand', costume: 'hide', hair: 'long', beard: true, mood: 'happy', facing: 1, t: lt, seed: 2 });
+        const sh = E.out(K.seg(lt, tF - .4, tF + .6)); R.figure(c, { x: 1120, y: 990, s: 2.25 - .32 * sh, pose: 'stand', costume: 'farmer', hair: 'short', mood: sh > .5 ? 'sad' : 'neutral', facing: -1, t: lt, seed: 5, lean: 6 * sh });
+        const hA = 990 - 2.25 * 296, hB = 990 - (2.25 - .32 * sh) * 296; c.strokeStyle = '#b8442e'; c.lineWidth = 5; c.setLineDash([12, 8]); c.beginPath(); c.moveTo(620, hA); c.lineTo(1300, hA); c.stroke(); if (sh > 0) { c.beginPath(); c.moveTo(980, hB); c.lineTo(1300, hB); c.stroke(); } c.setLineDash([]);
+        if (sh > .2) K.outlined(c, '-15 CM', 1250, (hA + hB) / 2 - 10, 64, { fill: '#ffcf6b', alpha: Math.min(1, (sh - .2) * 3) }); c.restore(); },
+        (c, lt) => K.badge(c, 'GREECE & TURKEY', lt, { at: .3 }), (c, lt) => K.card(c, 'THOUSANDS OF YEARS\nTO GROW BACK', lt, { at: tB, x: 1640, y: 900, px: 46, rot: 3 })];
+      S.D.sfx = [[.3, 'whoosh_soft', .4], [tF, 'hit', .5], [tB, 'pop', .5]]; } },
+  // 10 bones are a diary: entries write themselves
+  { draw: (c, lt, u, S) => { desk(c); const z = 1 + u * .06; c.save(); c.translate(960, 560); c.scale(z, z); c.translate(-960, -560);
+      diary(c, 960, 560, 1, (c2, x, y, w, h) => { c2.save(); c2.globalAlpha = .9; skeleton(c2, x + w / 2, y + h - 70, h - 170, { stock: 1 }); c2.restore(); hand(c2, 'Fig. 1 - a life, in bone', x + 120, y + h - 34, 34, 1); },
+        (c2, x, y, w, h) => { hand(c2, 'Day 1 of about 12,000', x + 60, y + 90, 46, K.seg(lt, .4, 1.4)); const L = [['how you ate', 'What I ate ........ teeth'], ['moved', 'How I moved ...... joints'], ['worked', 'How hard I worked .. spine'], ['thousands of years', 'Kept for 10,000 years']];
+          L.forEach(([ph, t], i) => hand(c2, t, x + 60, y + 220 + i * 110, 44, K.seg(lt, A.at(S, ph, 2 + i * 1.2), A.at(S, ph, 2 + i * 1.2) + 1.2))); }, 0); c.restore(); },
+    bed: ['hum_loop', .15],
+    init: S => { const tD = A.at(S, 'like a diary', 1.4); S.D.over = [(c, lt) => K.card(c, 'YOUR BONES\nKEEP A DIARY', lt, { at: tD, x: 1650, y: 170, px: 50, rot: 4 })];
+      S.D.sfx = [[.2, 'paper', .6], [tD, 'pop', .5], [A.at(S, 'how you ate', 2), 'paper', .3], [A.at(S, 'worked', 4.5), 'paper', .3]]; } },
+  // 11 diary pages: well-fed hunters, then the worn-down farmer
+  { draw: (c, lt, u, S) => { desk(c); const tT = S.tTurn;
+      const hunterPage = (c2, x, y, w, h) => { plateIn(c2, 'sav_dusk', x + 30, y + 40, w - 60, h - 220, 1150, 1150, 1.7); c2.strokeStyle = INK; c2.lineWidth = 4; c2.strokeRect(x + 30, y + 40, w - 60, h - 220); R.figure(c2, { x: x + w * .45, y: y + h - 200, s: 1.2, pose: 'stand', costume: 'hide', hair: 'long', beard: true, mood: 'happy', t: lt, seed: 2 }); hand(c2, 'Hunter-gatherer: well fed, strong', x + 50, y + h - 120, 38, 1); hand(c2, 'spears only', x + 50, y + h - 66, 34, 1, '#6a4a2a'); };
+      const farmerPage = (c2, x, y, w, h) => { plateIn(c2, 'sav_dawn', x + 30, y + 40, w - 60, h - 220, 1300, 1100, 1.5); c2.save(); c2.globalCompositeOperation = 'saturation'; c2.fillStyle = 'rgba(128,128,128,.85)'; c2.fillRect(x + 30, y + 40, w - 60, h - 220); c2.restore(); c2.strokeStyle = INK; c2.lineWidth = 4; c2.strokeRect(x + 30, y + 40, w - 60, h - 220); R.figure(c2, { x: x + w * .5, y: y + h - 200, s: 1.1, pose: 'work', workSpeed: 5, costume: 'farmer', hair: 'short', mood: 'sad', t: lt, seed: 5 }); hand(c2, 'Farmer: shorter, worn down', x + 50, y + h - 120, 38, 1); hand(c2, 'grain, roof, tools', x + 50, y + h - 66, 34, 1, '#6a4a2a'); };
+      diary(c, 960, 560, 1, hunterPage, (c2, x, y, w, h) => hand(c2, '...turn the page', x + 180, y + h / 2, 44, 1, '#8a6a4a'), K.seg(lt, tT, tT + .9), farmerPage); },
+    bed: ['hum_loop', .15],
+    init: S => { S.tTurn = A.at(S, 'than the farmers', 3.6); S.D.over = [(c, lt) => K.card(c, 'BETTER FED.\nLESS WORN DOWN.', lt, { at: S.tTurn - 1.6, x: 380, y: 1000, px: 46, rot: -3, until: S.tTurn + .2 })];
+      S.D.sfx = [[S.tTurn, 'paper', .6], [S.tTurn - 1.6, 'pop', .4]]; } },
+  // 12 push into the hunter page until the camp fills the frame
+  { draw: (c, lt, u, S) => { desk(c); const p = E.io(K.seg(lt, .6, 4.6)); const z = 1 + p * 2.6, cx = 650, cy = 450;
+      c.save(); c.translate(960 + (cx - 960) * (1 - p), 540 + (cy - 540) * (1 - p)); c.scale(z, z); c.translate(-cx, -cy);
+      diary(c, 960, 560, 1, (c2, x, y, w, h) => { plateIn(c2, 'sav_dawn', x + 30, y + 40, w - 60, h - 220, 1150, 1150, 1.7); }, (c2, x, y, w, h) => hand(c2, 'One ordinary day...', x + 90, y + h / 2, 46, K.seg(lt, .3, 1.5)), 0);
+      c.restore(); const f = E.sine(K.seg(lt, 3.9, 4.7)); if (f > 0) { c.globalAlpha = f; c.drawImage(K.imgs.sav_dawn, 0, 0, 1920, 1080); c.globalAlpha = 1; } },
+    bed: [['hum_loop', .1], ['birds_loop', .3]],
+    init: S => { const tW = A.at(S, 'walk through one', 4.2); S.D.over = [(c, lt) => K.title(c, 'ONE ORDINARY DAY', lt, { at: tW + .2, y: 300, px: 96 })]; S.D.sfx = [[.5, 'paper', .3], [1.0, 'riser', .4], [tW + .2, 'swell', .5]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>
