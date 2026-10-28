@@ -1,0 +1,371 @@
+<title>Production Control Room</title>
+<style>
+/* Release plan: what is in production now, what starts next, and the order videos go live */
+.rel{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:18px;display:grid;gap:18px}
+.rel h2{font-family:var(--display);font-weight:600;font-size:22px;margin:0;letter-spacing:.02em}
+.rel h3{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin:0 0 8px;font-weight:500}
+.relcols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:13px;padding:4px 10px;border-radius:4px;border:1px solid var(--line);background:var(--bg);display:inline-flex;gap:8px;align-items:center;max-width:100%}
+.chip b{font-family:var(--mono);font-weight:500;font-size:11px;color:var(--mute)}
+.ftag{font-family:var(--display);font-weight:700;font-size:13px;letter-spacing:.06em;padding:0 7px;border-radius:3px;color:var(--panel);background:var(--slate);flex:none}
+.ftag.f2d{background:var(--amber)} .ftag.f3d{background:var(--violet)}
+.relist{list-style:none;margin:0;padding:0;display:grid}
+.relist li{display:grid;grid-template-columns:28px 40px minmax(0,1.6fr) minmax(0,1fr) 108px;gap:10px;align-items:baseline;padding:9px 0;border-top:1px solid var(--line);font-size:13.5px}
+.relist li:first-child{border-top:0}
+.relist .n{font-family:var(--mono);color:var(--mute);font-size:12px}
+.relist .t{font-weight:600;min-width:0;overflow-wrap:anywhere}
+.relist .t small{display:block;font-weight:400;color:var(--mute);font-size:12.5px;margin-top:2px}
+.relist .w{font-family:var(--mono);font-size:12.5px;min-width:0}
+.relist .w small{display:block;color:var(--mute);font-size:11.5px}
+.st{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:99px;border:1px solid currentColor;justify-self:start;white-space:nowrap}
+.st.live{color:var(--green)} .st.zernio{color:var(--amber)} .st.proposed{color:var(--violet);border-style:dashed} .st.waiting{color:var(--mute);border-style:dashed}
+.relnote{font-size:12.5px;color:var(--mute);margin:0}
+@media (max-width:640px){.relcols{grid-template-columns:1fr}.relist li{grid-template-columns:24px 36px minmax(0,1fr);row-gap:4px}.relist .w{grid-column:3}.relist .st{grid-column:3}}
+</style>
+
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a control-room sheet. Summary strip, then the running order as a time strip, then one row per video. */
+:root{
+  --bg:#f3f1ec; --panel:#fbfaf7; --ink:#1d1f24; --mute:#6b6a66; --line:#dcd8cf;
+  --track:#e6e2d9; --amber:#d9822b; --amber2:#f0a64f; --violet:#6f56c9; --green:#2f8a5b; --slate:#8a8f99;
+  --display:"Barlow Condensed","Arial Narrow",sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#15161a; --panel:#1d1f24; --ink:#ecebe6; --mute:#9a988f; --line:#2e3037; --track:#2a2c33;
+  --amber:#f0a04a; --amber2:#ffc078; --violet:#a28ff0; --green:#5cc28c; --slate:#7c818c; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#15161a; --panel:#1d1f24; --ink:#ecebe6; --mute:#9a988f; --line:#2e3037; --track:#2a2c33;
+  --amber:#f0a04a; --amber2:#ffc078; --violet:#a28ff0; --green:#5cc28c; --slate:#7c818c; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.45}
+.wrap{max-width:1080px;margin:0 auto;padding-block:28px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:28px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,6vw,54px);line-height:1;margin:6px 0 0;letter-spacing:.01em;text-wrap:balance}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+/* summary */
+.summary{display:grid;grid-template-columns:auto 1fr;gap:20px 32px;align-items:end;padding:22px;background:var(--panel);border:1px solid var(--line);border-radius:6px}
+.big{font-family:var(--display);font-weight:700;font-size:clamp(64px,12vw,104px);line-height:.85}
+.big small{font-size:.4em;color:var(--mute);margin-left:4px}
+.stats{display:flex;flex-wrap:wrap;gap:12px 32px}
+.stat b{display:block;font-family:var(--mono);font-size:22px;font-weight:500;font-variant-numeric:tabular-nums}
+.stat span{font-size:12px;color:var(--mute);text-transform:uppercase;letter-spacing:.06em}
+.summary .bar{grid-column:1/-1}
+.bar{height:14px;background:var(--track);border-radius:3px;overflow:hidden;position:relative}
+.bar i{display:block;height:100%;background:var(--amber);border-radius:3px;transition:width 1s linear;position:relative}
+.bar.live i{background:repeating-linear-gradient(-45deg,var(--amber) 0 12px,var(--amber2) 12px 24px);background-size:34px 34px;animation:roll 1.2s linear infinite}
+@keyframes roll{to{background-position:34px 0}}
+.bar.done i{background:var(--green)}
+.bar.paused i{background:var(--slate)}
+.bar.waiting i{background:var(--violet)}
+.rule{font-size:13px;color:var(--mute);grid-column:1/-1;margin:0}
+/* timeline */
+.tl{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:18px 18px 12px}
+.tl h2,.list h2{font-family:var(--display);font-weight:600;font-size:22px;margin:0 0 12px;letter-spacing:.02em}
+.tlgrid{position:relative}
+.tlrow{display:grid;grid-template-columns:170px 1fr 190px;gap:12px;align-items:center;min-height:34px}
+.tlrow .go{display:grid;font-size:12px;line-height:1.3;min-width:0}
+.tlrow .go b{font-family:var(--mono);font-weight:500;font-size:11.5px}
+.tlrow .go span{color:var(--mute);overflow-wrap:anywhere}
+.seg.queued,.seg.paused{background:var(--slate);opacity:.6}
+.tlrow .nm{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lane{position:relative;height:12px;background:var(--track);border-radius:2px}
+.seg{position:absolute;top:0;bottom:0;border-radius:2px;background:var(--slate)}
+.seg.working{background:var(--amber)} .seg.waiting{background:var(--violet)} .seg.done{background:var(--green)}
+.axis{display:grid;grid-template-columns:170px 1fr 190px;gap:12px;margin-top:6px}
+.ticks{position:relative;height:18px;font-family:var(--mono);font-size:11px;color:var(--mute)}
+.ticks span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+.ticks span:first-child{transform:none}
+.ticks span:last-child{transform:translateX(-100%)}
+.nowline{position:absolute;top:-4px;bottom:-4px;left:0;width:2px;background:var(--ink);opacity:.5}
+/* video rows */
+.list{display:grid;gap:12px}
+.vid{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:18px 20px;display:grid;gap:12px}
+.vid.working{border-color:var(--amber)}
+.top{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline;justify-content:space-between}
+.title{font-family:var(--display);font-weight:600;font-size:26px;line-height:1.1;min-width:0}
+.pill{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:99px;border:1px solid currentColor;white-space:nowrap}
+.pill.working{color:var(--amber)} .pill.paused{color:var(--slate)} .pill.queued{color:var(--mute);border-style:dashed}
+.pill.waiting{color:var(--violet)} .pill.external{color:var(--mute);border-style:dashed} .pill.done{color:var(--green)}
+.fmt{font-family:var(--display);font-weight:700;font-size:15px;letter-spacing:.06em;padding:1px 9px;border-radius:3px;color:var(--panel);background:var(--ink);margin-right:10px;vertical-align:3px}
+.fmt.f3d{background:var(--violet)}
+.fmt.f2d{background:var(--amber)}
+.fmt-none{color:var(--mute)}
+.pill.working::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:currentColor;margin-right:6px;animation:blink 1.4s ease-in-out infinite}
+@keyframes blink{50%{opacity:.25}}
+.stage{color:var(--mute);margin:0;font-size:14px;overflow-wrap:anywhere}
+.barrow{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center}
+.pct{font-family:var(--mono);font-size:20px;font-variant-numeric:tabular-nums;min-width:4.5ch;text-align:right}
+.meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.meta div span{display:block;font-size:11px;color:var(--mute);text-transform:uppercase;letter-spacing:.06em}
+.meta div b{font-family:var(--mono);font-weight:500;font-size:15px;font-variant-numeric:tabular-nums}
+.steps:not(:has(.act,.ph)){display:none}
+.steps{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.act{font-family:var(--mono);font-size:11px;min-width:28px;height:22px;display:inline-grid;place-items:center;border-radius:3px;border:1px solid var(--line);color:var(--mute);padding:0 5px}
+.act.done{background:var(--green);border-color:var(--green);color:var(--panel)}
+.act.active{border-color:var(--amber);color:var(--amber)}
+.sep{width:1px;height:18px;background:var(--line);margin:0 4px}
+.ph{font-size:12px;padding:2px 8px;border-radius:3px;border:1px solid var(--line);color:var(--mute);white-space:nowrap}
+.ph.done{color:var(--green);border-color:var(--green)}
+.ph.active{color:var(--amber);border-color:var(--amber)}
+.ph.waiting{color:var(--violet);border-color:var(--violet)}
+.pv{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.pv span{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);margin-right:4px}
+.pv a{font-size:12.5px;color:var(--ink);text-decoration:none;padding:3px 10px;border-radius:99px;border:1px solid var(--line);background:var(--bg);white-space:nowrap}
+.pv a:hover,.pv a:focus-visible{border-color:var(--amber);color:var(--amber);outline:none}
+.pv a::after{content:" ↗";color:var(--mute)}
+.prev{justify-self:start;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);text-decoration:none;border:1px solid var(--line);border-radius:4px;padding:6px 10px}
+.prev:hover{border-color:var(--amber);color:var(--amber)}
+.foot{font-size:12px;color:var(--mute);display:flex;flex-wrap:wrap;gap:6px 18px}
+@media (max-width:640px){
+  .summary{grid-template-columns:1fr}
+  .meta{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tlrow,.axis{grid-template-columns:112px 1fr}
+  .tlrow{padding:6px 0;border-top:1px solid var(--line);row-gap:4px}
+  .tlrow:first-child{border-top:0}
+  .tlrow .go{grid-column:1/-1}
+  .ticks span:nth-child(3){display:none}
+  .ticks span:nth-child(2),.ticks span:nth-child(4){display:none}
+}
+.notes{display:grid;gap:6px;margin:0;font-size:13.5px}
+.notes div{display:grid;grid-template-columns:96px 1fr;gap:10px;align-items:baseline}
+.notes dt{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.notes dd{margin:0;min-width:0;overflow-wrap:anywhere}
+.notes .fb dt{color:var(--violet)}
+.notes time{font-family:var(--mono);font-size:11px;color:var(--mute);margin-left:8px;white-space:nowrap}
+.feed{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:18px}
+.feed ol{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.feed li{display:grid;grid-template-columns:118px 116px 1fr;gap:12px;padding:9px 0;border-top:1px solid var(--line);font-size:13.5px;align-items:baseline}
+.feed li:first-child{border-top:0}
+.feed .when{font-family:var(--mono);font-size:12px;color:var(--mute);font-variant-numeric:tabular-nums}
+.feed .who{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.feed .feedback .who{color:var(--violet)} .feed .update .who{color:var(--amber)} .feed .rule .who{color:var(--mute)}
+.feed .txt{min-width:0;overflow-wrap:anywhere}
+.feed .txt b{font-weight:600}
+@media (max-width:640px){.feed li{grid-template-columns:1fr;gap:2px}.notes div{grid-template-columns:1fr;gap:0}}
+@media (prefers-reduced-motion:reduce){.bar.live i,.pill.working::before{animation:none}.bar i{transition:none}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">YouTube history videos · live production board</div>
+    <h1>Production Control Room</h1>
+  </header>
+
+  <section class="summary" aria-label="Overall progress">
+    <div class="big num" id="ovPct">0<small>%</small></div>
+    <div class="stats">
+      <div class="stat"><b id="ovLeft">–</b><span id="ovLbl">Until every video is done</span></div>
+      <div class="stat"><b id="ovEta">–</b><span>Expected finish</span></div>
+      <div class="stat"><b id="ovNow">–</b><span>Running now</span></div>
+    </div>
+    <div class="bar live" id="ovBar"><i style="width:0"></i></div>
+    <p class="rule" id="rule"></p>
+  </section>
+
+  <section class="tl" aria-label="Running order">
+    <h2>Running order</h2>
+    <div class="tlgrid" id="tl"></div>
+    <div class="axis"><div></div><div class="ticks" id="ticks"></div></div>
+  </section>
+
+  <section class="rel" aria-label="Running order and release plan">
+    <h2>Running order and release plan</h2>
+    <div class="relcols">
+      <div><h3>In production now</h3><div class="chips" id="relNow"></div></div>
+      <div><h3>Queued to start next</h3><div class="chips" id="relNext"></div></div>
+    </div>
+    <div><h3>Release order (goes live on YouTube in this order)</h3><ol class="relist" id="relList"></ol></div>
+    <p class="relnote" id="relNote"></p>
+  </section>
+  <section class="list" aria-label="Videos">
+    <h2>Videos</h2>
+    <div class="list" id="vids"></div>
+  </section>
+
+  <section class="feed" aria-label="Activity">
+    <h2 style="font-family:var(--display);font-weight:600;font-size:22px;margin:0 0 8px">Feedback and updates</h2>
+    <ol id="feed"></ol>
+  </section>
+
+  <div class="foot">
+    <span id="asof"></span>
+    <span>Bars move every second at the measured pace and snap to real numbers on each update (every ~10 min).</span>
+    <span>Times leave out the wait for your reviews.</span>
+  </div>
+</div>
+
+<script>
+let S = {"asOf": 1793153044.0006406, "slots": 1, "overall": {"pct": 25.6, "finishIn": 101550, "workLeft": 101550, "working": 1, "rate": 0.000733}, "videos": [{"id": "salman", "title": "Salman al-Farsi", "short": "Salman al-Farsi", "status": "working", "stage": "Acts 1-7 done; Acts 8-9 voice + renders running", "startedAt": 1793129580.0, "total": 435, "done": 250.0, "pct": 57.5, "preMin": 50.0, "postMin": 140.0, "approved": false, "phases": [{"key": "script", "name": "Script + storyboard", "min": 45, "frac": 1.0, "state": "done", "pct": 100}, {"key": "acts", "name": "Cold open + 9 acts", "min": 250, "frac": 0.82, "state": "active", "pct": 82}, {"key": "review", "name": "Your review", "min": 0, "frac": 0.0, "state": "todo", "pct": 0}, {"key": "combine", "name": "Combine", "min": 30, "frac": 0.0, "state": "todo", "pct": 0}, {"key": "check", "name": "Check + preview", "min": 10, "frac": 0.0, "state": "todo", "pct": 0}, {"key": "reels", "name": "15 reels", "min": 100, "frac": 0.0, "note": "0/15", "state": "todo", "pct": 0}], "acts": [{"label": "CO", "state": "done"}, {"label": "1", "state": "done"}, {"label": "2", "state": "done"}, {"label": "3", "state": "done"}, {"label": "4", "state": "done"}, {"label": "5", "state": "done"}, {"label": "6", "state": "done"}, {"label": "7", "state": "done"}, {"label": "8", "state": "active"}, {"label": "9", "state": "todo"}], "latest": {"text": "Act 7 re-rendered with subtitle fixes (1:01). Preview: https://claude.ai/artifact/RwWpF6Qv5fkQgJMXhuz31c", "at": 1793151619.8174784}, "feedback": {"text": "Fact-check everything, keep the earlier tone, don't combine acts until you check", "at": 1793129520.0}, "previews": [{"label": "Storyboard", "url": "https://claude.ai/artifact/PAmYGjuovqfafa4jLqV5SV"}, {"label": "Cold open", "url": "https://claude.ai/artifact/EwksoPtPy8CfLAAq47gD8s"}, {"label": "Act 1", "url": "https://claude.ai/artifact/AT5pmVJMmxcspYHD1iA377"}, {"label": "Act 2", "url": "https://claude.ai/artifact/53DEbQtyp8vML6PqzNp53q"}, {"label": "Act 3", "url": "https://claude.ai/artifact/XmeQPNFqdE3GhQt1WyfajJ"}, {"label": "Act 4", "url": "https://claude.ai/artifact/5k82uBQcdDdRiVc1NBCoRJ"}, {"label": "Act 5", "url": "https://claude.ai/artifact/RTyqtDtYLhM6JFhyvVLZnq"}, {"label": "Act 6", "url": "https://claude.ai/artifact/EGjJRu9iMW3w91tDvCDH8R"}, {"label": "Act 7", "url": "https://claude.ai/artifact/RwWpF6Qv5fkQgJMXhuz31c"}], "startIn": 0, "finishIn": 11400, "ownLeft": 11400, "rate": 0.003728}, {"id": "osho", "title": "The Tiger Inside You: Osho on the Ego", "short": "Osho", "status": "paused", "stage": "Paused after cold open; Acts 1-3 scenes built, Act 1 voice done", "startedAt": 1793130540.0, "total": 435, "done": 112.5, "pct": 25.9, "preMin": 172.5, "postMin": 140.0, "approved": false, "phases": [{"key": "script", "name": "Script + storyboard", "min": 45, "frac": 1.0, "state": "done", "pct": 100}, {"key": "acts", "name": "Cold open + 9 acts", "min": 250, "frac": 0.27, "state": "active", "pct": 27}, {"key": "review", "name": "Your review", "min": 0, "frac": 0.0, "state": "todo", "pct": 0}, {"key": "combine", "name": "Combine", "min": 30, "frac": 0.0, "state": "todo", "pct": 0}, {"key": "check", "name": "Check + preview", "min": 10, "frac": 0.0, "state": "todo", "pct": 0}, {"key": "reels", "name": "15 reels", "min": 100, "frac": 0.0, "note": "0/15", "state": "todo", "pct": 0}], "acts": [{"label": "CO", "state": "done"}, {"label": "1", "state": "active"}, {"label": "2", "state": "active"}, {"label": "3", "state": "active"}, {"label": "4", "state": "todo"}, {"label": "5", "state": "todo"}, {"label": "6", "state": "todo"}, {"label": "7", "state": "todo"}, {"label": "8", "state": "todo"}, {"label": "9", "state": "todo"}], "latest": {"text": "Cold open done (52 s); Acts 1-3 scenes built, Act 1 voice done. Paused, waiting in line", "at": 1793133960.0}, "feedback": {"text": "Script approved: go ahead", "at": 1793130540.0}, "previews": [{"label": "Storyboard", "url": "https://claude.ai/artifact/SArgpsve9AdwYBm6Rt94MB"}, {"label": "Cold open", "url": "https://claude.ai/artifact/1ob8xHADutH77vfTwBFuq6"}], "startIn": 11400, "finishIn": 30150, "ownLeft": 18750, "rate": 0}, {"id": "elmencho", "title": "The Rise and Fall of El Mencho", "short": "El Mencho", "status": "paused", "stage": "Cold open done; Act 1 next", "startedAt": 1793130900.0, "total": 410, "done": 75.0, "pct": 18.3, "preMin": 200.0, "postMin": 140.0, "approved": false, "phases": [{"key": "script", "name": "Script + storyboard", "min": 45, "frac": 1.0, "state": "done", "pct": 100}, {"key": "acts", "name": "Cold open + 8 acts", "min": 225, "frac": 0.13333333333333333, "state": "active", "pct": 13}, {"key": "review", "name": "Your review", "min": 0, "frac": 0.0, "state": "todo", "pct": 0}, {"key": "combine", "name": "Combine", "min": 30, "frac": 0.0, "state": "todo", "pct": 0}, {"key": "check", "name": "Check + preview", "min": 10, "frac": 0.0, "state": "todo", "pct": 0}, {"key": "reels", "name": "15 reels", "min": 100, "frac": 0.0, "note": "0/15", "state": "todo", "pct": 0}], "acts": [{"label": "CO", "state": "done"}, {"label": "1", "state": "active"}, {"label": "2", "state": "todo"}, {"label": "3", "state": "todo"}, {"label": "4", "state": "todo"}, {"label": "5", "state": "todo"}, {"label": "6", "state": "todo"}, {"label": "7", "state": "todo"}, {"label": "8", "state": "todo"}], "latest": {"text": "Cold open rendered (48 s, Pushpam's voice); preview https://claude.ai/artifact/X78Kzs5AhAtQ4egYEy4tbZ. Act 1 backgrounds painted, narration text for Acts 1-8 ready. Paused for the 3-thread limit.", "at": 1793137198.6185179}, "feedback": null, "previews": [{"label": "Storyboard", "url": "https://claude.ai/artifact/TkvrHobQv14Y46P6b71U2R"}, {"label": "Cold open", "url": "https://claude.ai/artifact/X78Kzs5AhAtQ4egYEy4tbZ"}], "startIn": 30150, "finishIn": 50550, "ownLeft": 20400, "rate": 0}, {"id": "lego", "title": "How LEGO Got So Big", "short": "LEGO", "status": "paused", "stage": "Cold open done; all narration ready; Act 1 next when resumed", "startedAt": 1793131080.0, "total": 485, "done": 125.00000000000001, "pct": 25.8, "preMin": 275.0, "postMin": 140.0, "approved": false, "phases": [{"key": "script", "name": "Script + storyboard", "min": 45, "frac": 1.0, "state": "done", "pct": 100}, {"key": "acts", "name": "Cold open + 11 acts", "min": 300, "frac": 0.2666666666666667, "state": "active", "pct": 27}, {"key": "review", "name": "Your review", "min": 0, "frac": 0.0, "state": "todo", "pct": 0}, {"key": "combine", "name": "Combine", "min": 30, "frac": 0.0, "state": "todo", "pct": 0}, {"key": "check", "name": "Check + preview", "min": 10, "frac": 0.0, "state": "todo", "pct": 0}, {"key": "reels", "name": "15 reels", "min": 100, "frac": 0.0, "note": "0/15", "state": "todo", "pct": 0}], "acts": [{"label": "CO", "state": "done"}, {"label": "1", "state": "active"}, {"label": "2", "state": "active"}, {"label": "3", "state": "active"}, {"label": "4", "state": "active"}, {"label": "5", "state": "active"}, {"label": "6", "state": "active"}, {"label": "7", "state": "active"}, {"label": "8", "state": "active"}, {"label": "9", "state": "active"}, {"label": "10", "state": "active"}, {"label": "11", "state": "active"}], "latest": {"text": "Narration for all 12 parts (cold open + Acts 1-11) is done in Pushpam's voice, about 14 min total. Still paused until a slot frees.", "at": 1793138800.7054973}, "feedback": {"text": "Script approved: cool, go ahead", "at": 1793131080.0}, "previews": [{"label": "Storyboard", "url": "https://claude.ai/artifact/ViWGEwSgWhXJLfTJgcZCLr"}, {"label": "All previews", "url": "https://claude.ai/artifact/PK1Tw3DqwgxVUBtxSvEdMj"}], "startIn": 50550, "finishIn": 75450, "ownLeft": 24900, "rate": 0}, {"id": "secret", "title": "Secret Service", "short": "Secret Service", "status": "queued", "stage": "Queued: script from your transcript starts when a slot frees", "startedAt": null, "total": 435, "done": 0.0, "pct": 0.0, "preMin": 295.0, "postMin": 140.0, "approved": false, "phases": [{"key": "script", "name": "Script + storyboard", "min": 45, "frac": 0.0, "state": "todo", "pct": 0}, {"key": "acts", "name": "Cold open + 9 acts", "min": 250, "frac": 0.0, "state": "todo", "pct": 0}, {"key": "review", "name": "Your review", "min": 0, "frac": 0.0, "state": "todo", "pct": 0}, {"key": "combine", "name": "Combine", "min": 30, "frac": 0.0, "state": "todo", "pct": 0}, {"key": "check", "name": "Check + preview", "min": 10, "frac": 0.0, "state": "todo", "pct": 0}, {"key": "reels", "name": "15 reels", "min": 100, "frac": 0.0, "note": "0/15", "state": "todo", "pct": 0}], "acts": [{"label": "CO", "state": "todo"}, {"label": "1", "state": "todo"}, {"label": "2", "state": "todo"}, {"label": "3", "state": "todo"}, {"label": "4", "state": "todo"}, {"label": "5", "state": "todo"}, {"label": "6", "state": "todo"}, {"label": "7", "state": "todo"}, {"label": "8", "state": "todo"}, {"label": "9", "state": "todo"}], "latest": null, "feedback": null, "previews": [], "startIn": 75450, "finishIn": 101550, "ownLeft": 26100, "rate": 0}], "log": [{"video": "lego", "kind": "rule", "text": "When fully done (full video, thumbnail, 15 reels, scheduled), close with --status closed and remove from the control room.", "at": 1793152776.425909}, {"video": "salman", "kind": "rule", "text": "Pushpam 28 Oct 01:58: when the video is fully done (full video, thumbnail, 15 reels, scheduled), mark it closed and remove it from the Control Room.", "at": 1793152760.7492175}, {"video": "salman", "kind": "update", "text": "Act 7 re-rendered with subtitle fixes (1:01). Preview: https://claude.ai/artifact/RwWpF6Qv5fkQgJMXhuz31c", "at": 1793151619.8174784}, {"video": "salman", "kind": "update", "text": "Act 7 rendered (1:01). Fixed subtitles overlapping the book and script pages; re-rendering Act 7.", "at": 1793151327.7601323}, {"video": "salman", "kind": "update", "text": "Act 7 rendered: DONE act7 60.590000", "at": 1793151222.7575464}, {"video": "salman", "kind": "update", "text": "Act 6 re-rendered with fixes (1:28). Previews for Acts 5-6 sent.", "at": 1793149951.536864}, {"video": "salman", "kind": "update", "text": "Act 6 rendered (1:28). Fixing: vision labels (Persia/Rome/Yemen) now sit on a plate, AL-KHANDAQ title timed to the word; re-rendering Act 6.", "at": 1793149516.11917}, {"video": "salman", "kind": "update", "text": "Act 6 rendered: DONE act6 87.900000", "at": 1793149408.2058585}, {"video": "salman", "kind": "update", "text": "Act 5 rendered (1:08), checked frames and depiction rules.", "at": 1793147383.351361}, {"video": "salman", "kind": "update", "text": "Act 5 rendered: DONE act5 68.066667", "at": 1793147335.7503383}, {"video": "salman", "kind": "update", "text": "Act 4 rendered (1:33), checked: Prophet never shown, only companions' hands.", "at": 1793145438.1991804}, {"video": "salman", "kind": "update", "text": "Act 4 rendered: DONE act4 93.200000", "at": 1793145401.4021802}, {"video": "salman", "kind": "update", "text": "Act 3 rendered (0:50). Fixed a cut-off 720p preview; renders now encode locally before copying.", "at": 1793142755.8355644}, {"video": "salman", "kind": "update", "text": "Act 3 rendered: DONE act3 49.500000", "at": 1793142666.568815}, {"video": "salman", "kind": "update", "text": "Act 2 rendered (1:33). Preview: https://claude.ai/artifact/53DEbQtyp8vML6PqzNp53q", "at": 1793141448.9372633}, {"video": "salman", "kind": "update", "text": "Act 2 rendered: DONE act2 93.100000", "at": 1793141417.6986814}, {"video": "salman", "kind": "update", "text": "Act 1 rendered (1:24, -16 LUFS, SFX ducked). Fixed the secret-message shot so Salman sits by the door. Preview: https://claude.ai/artifact/AT5pmVJMmxcspYHD1iA377", "at": 1793139055.717511}, {"video": "lego", "kind": "update", "text": "Narration for all 12 parts (cold open + Acts 1-11) is done in Pushpam's voice, about 14 min total. Still paused until a slot frees.", "at": 1793138800.7054973}, {"video": "salman", "kind": "update", "text": "Act 1 rendered: DONE act1 83.900000", "at": 1793138564.120863}, {"video": "salman", "kind": "update", "text": "Resumed after the Hitler video finished. Rendering Act 1; recording voice for Acts 2-9. SFX bus lowered to -10 dB with stronger ducking under the VO.", "at": 1793138097.829589}, {"video": "salman", "kind": "update", "text": "Resumed as the active video (Hitler finished)", "at": 1793138079.180503}, {"video": "salman", "kind": "update", "text": "Paused for the one-thread rule. Cold open delivered; Act 1 voice done, not rendered; Acts 2-9 built and still-checked, voice pending.", "at": 1793137249.099904}, {"video": "elmencho", "kind": "update", "text": "Cold open rendered (48 s, Pushpam's voice); preview https://claude.ai/artifact/X78Kzs5AhAtQ4egYEy4tbZ. Act 1 backgrounds painted, narration text for Acts 1-8 ready. Paused for the 3-thread limit.", "at": 1793137198.6185179}, {"video": "lego", "kind": "update", "text": "Cold open done (0:41, Pushpam's voice, SFX ducked under VO). Paused for the 3-thread rule; narration for Acts 2-11 generating in background.", "at": 1793137188.5842266}, {"video": "all", "kind": "feedback", "text": "Keep this control room updated forever with all feedback and thread updates", "at": 1793137020.0}, {"video": "salman", "kind": "update", "text": "Cold open done; Act 1 voice partly recorded, Acts 2-5 scenes built. Paused under the 1-at-a-time rule, next in line", "at": 1793134260.0}, {"video": "all", "kind": "rule", "text": "Only 1 video in production at a time; when a video waits for your approval, the next one in line starts", "at": 1793134200.0}, {"video": "osho", "kind": "update", "text": "Cold open done (52 s); Acts 1-3 scenes built, Act 1 voice done. Paused, waiting in line", "at": 1793133960.0}, {"video": "elmencho", "kind": "update", "text": "Cold open done (48 s); Act 1 backgrounds painted. Paused, waiting in line", "at": 1793132520.0}, {"video": "lego", "kind": "update", "text": "Cold open done (41 s); narration for later acts generating in the background. Paused, waiting in line", "at": 1793132460.0}, {"video": "all", "kind": "rule", "text": "After every final video: 15 reels from its most viral moments, in your voice, ending with 'watch the full video'", "at": 1793131680.0}, {"video": "lego", "kind": "feedback", "text": "Script approved: cool, go ahead", "at": 1793131080.0}, {"video": "osho", "kind": "feedback", "text": "Script approved: go ahead", "at": 1793130540.0}, {"video": "salman", "kind": "feedback", "text": "Fact-check everything, keep the earlier tone, don't combine acts until you check", "at": 1793129520.0}]};
+let EXT = {}; let TL_T0 = 0, TL_SPAN = 1;
+function rows(){ return S.videos.concat(Object.values(EXT)); }
+function tsec(t){ if (typeof t === "number") return t; const p = Date.parse(t); return isNaN(p) ? null : p/1000; }
+function fmtOf(v){ return String(v.format || (v.external ? "3D" : "2D")).toUpperCase(); }
+const CAP = {"2D": 3, "3D": 2};
+/* Projected production window per video: running ones end at asOf + work left; queued ones take the next free 2D or 3D slot. */
+function plan(){
+  const now = Date.now()/1000, out = {}, free = {"2D": [], "3D": []}, all = rows();
+  for (const v of all){
+    const f = fmtOf(v);
+    if (v.status === "working"){ const t0 = tsec(v.asOf) || S.asOf; const end = Math.max(now + 60, t0 + (v.ownLeft || 0)); out[v.id] = {a: now, b: end}; (free[f] || (free[f] = [])).push(end); }
+    else if (v.status === "waiting" || v.status === "done"){ out[v.id] = {a: now, b: now, ready: true}; }
+  }
+  for (const f in CAP) while (free[f].length < CAP[f]) free[f].push(now);
+  for (const v of all){ if (out[v.id]) continue; const f = fmtOf(v); const q = free[f] || (free[f] = [now]); q.sort((x, y) => x - y); const a = q.shift(); const b = a + (v.ownLeft || 36000); out[v.id] = {a, b}; q.push(b); }
+  return out;
+}
+function relOf(v){
+  try {
+    if (typeof REL === "undefined" || !REL || !REL.rows) return null;
+    const k = s => String(s || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+    const a = k(v.short), b = k(v.title);
+    return REL.rows.find(r => { const t = k(r.title); return (a && (t.includes(a) || a.includes(t))) || (b && (t.includes(b) || b.includes(t))); }) || null;
+  } catch (e) { return null; }
+}
+function elOf(v, now){ return Math.max(0, now - (tsec(v.asOf) || S.asOf)); }
+const $ = id => document.getElementById(id);
+const LABEL = {external:"Other project", working:"Working", paused:"Paused", queued:"Queued", waiting:"Needs your OK", done:"Done"};
+function dur(s){
+  if (s == null) return "–";
+  s = Math.max(0, Math.round(s));
+  const d = Math.floor(s/86400), h = Math.floor(s%86400/3600), m = Math.floor(s%3600/60), sec = s%60;
+  if (d) return `${d}d ${h}h ${String(m).padStart(2,"0")}m`;
+  if (h) return `${h}h ${String(m).padStart(2,"0")}m ${String(sec).padStart(2,"0")}s`;
+  return `${m}m ${String(sec).padStart(2,"0")}s`;
+}
+function clock(t){
+  const d = new Date(t*1000), n = new Date();
+  const time = d.toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"});
+  return d.toDateString() === n.toDateString() ? `${time} today` : `${d.toLocaleDateString([], {weekday:"short"})} ${time}`;
+}
+function safeUrl(u){ return typeof u==="string" && /^https:\/\/claude\.ai\//.test(u) ? u : ""; }
+function fbOf(f){ if (Array.isArray(f)) { const x = f[f.length-1]; return x ? {text: x.note || x.text || "", at: typeof x.at === "number" ? x.at : (Date.parse(x.at)/1000 || null)} : null; } return f; }
+function esc(s){ return String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+function live(v, el){ // interpolated percent for a video
+  const rate = v.rate ?? (v.status === "working" && v.ownLeft ? (100 - v.pct) / v.ownLeft : 0);
+  const p = v.status === "working" ? Math.min(99.5, (v.pct||0) + rate*el) : (v.pct||0);
+  return p;
+}
+let built = false;
+function buildRows(){
+  if (!rows().length) { $("vids").innerHTML = `<p class="stage">No videos in production right now. New ones show up here when they start.</p>`; }
+  else $("vids").innerHTML = rows().map(v0 => { const v = Object.assign({}, v0, {feedback: fbOf(v0.feedback)}); return `
+    <article class="vid ${v.status}" id="v-${v.id}">
+      <div class="top"><div class="title">${v.format?`<span class="fmt f${esc(String(v.format).toLowerCase())}">${esc(v.format)}</span>`:""}${esc(v.title)}</div><span style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill ${v.status}">${LABEL[v.status]||v.status}</span>${v.external&&v.status!=="external"?`<span class="pill queued">Other project</span>`:""}</span></div>
+      <p class="stage">${esc(v.stage)}</p>
+      ${safeUrl(v.previewUrl)?`<a class="prev" href="${esc(safeUrl(v.previewUrl))}" target="_blank" rel="noopener">Open preview ↗</a>`:""}
+      ${(v.latest||v.feedback)?`<dl class="notes">${v.latest?`<div><dt>Latest</dt><dd>${esc(v.latest.text)}<time>${clock(v.latest.at)}</time></dd></div>`:""}${v.feedback?`<div class="fb"><dt>Your feedback</dt><dd>${esc(v.feedback.text)}${v.feedback.at?`<time>${clock(v.feedback.at)}</time>`:""}</dd></div>`:""}</dl>`:""}
+      <div class="barrow"><div class="bar ${v.status==="working"?"live":v.status}"><i></i></div><div class="pct" data-k="pct"></div></div>
+      <div class="meta">
+        <div><span>Elapsed</span><b data-k="el"></b></div>
+        <div><span>Work left</span><b data-k="left"></b></div>
+        <div><span>${v.status==="working"?"Running since":"Starts in"}</span><b data-k="start"></b></div>
+        <div><span>Done around</span><b data-k="fin"></b></div>
+      </div>
+      ${(v.previews&&v.previews.length)?`<div class="pv"><span>Previews</span>${v.previews.map(x=>/^https:\/\//.test(x.url)?`<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.label)}</a>`:"").join("")}</div>`:""}
+      <div class="steps">
+        ${(v.acts||[]).map(a => `<span class="act ${a.state}" title="${a.label==="CO"?"Cold open":"Act "+a.label}">${a.label}</span>`).join("")}
+        <span class="sep"></span>
+        ${(v.phases||[]).filter(p=>!["script","acts"].includes(p.key)).map(p => `<span class="ph ${p.state}">${esc(p.name)}${p.state==="active"&&p.pct?` ${p.pct}%`:""}</span>`).join("")}
+      </div>
+    </article>`; }).join("");
+  // timeline
+  const P = plan(), t0 = Date.now()/1000;
+  const endMax = Math.max(t0 + 3600, ...Object.values(P).map(x => x.b));
+  const span = endMax - t0;
+  TL_T0 = t0; TL_SPAN = span;
+  const order = rows().slice().sort((x, y) => (P[x.id].ready ? -1 : 0) - (P[y.id].ready ? -1 : 0) || P[x.id].a - P[y.id].a || P[x.id].b - P[y.id].b);
+  $("tl").innerHTML = order.map(v => {
+    const w = P[v.id], L = 100*(w.a - t0)/span, W = Math.max(0.8, 100*(w.b - w.a)/span), r = relOf(v), f = fmtOf(v);
+    const go = r ? (r.status === "zernio" ? `Live ${esc(r.et)}` : r.status === "proposed" ? `Planned ${esc(r.et)}` : esc(r.et)) : "Release date not set";
+    const what = w.ready ? "Ready" : v.status === "working" ? `Done ${clock(w.b)}` : `Starts ${clock(w.a)}`;
+    return `<div class="tlrow"><div class="nm"><span class="ftag f${f.toLowerCase()}">${esc(f)}</span> ${esc(v.short||v.title)}</div><div class="lane">${w.ready ? `<div class="seg done" style="left:0;width:1.2%"></div>` : `<div class="seg ${v.status==="paused"?"queued":v.status}" style="left:${L}%;width:${W}%"></div>`}</div><div class="go"><b>${what}</b><span>${go}</span></div></div>`;
+  }).join("");
+  const n = 4, ticks = [];
+  for (let i=0;i<=n;i++) ticks.push(`<span style="left:${100*i/n}%">${i===0?"now":clock(t0 + span*i/n)}</span>`);
+  $("ticks").innerHTML = ticks.join("");
+  document.querySelector("section.tl").style.display = rows().length ? "" : "none";
+  const work = S.videos.filter(v=>v.status==="working").map(v=>v.title);
+  $("rule").textContent = `Rule: up to 3 2D videos and 2 3D videos in production at once. When a video needs your approval, the next one in line starts. Videos go live in the order 3 × 2D, then 1 × 3D.`;
+  $("ovNow").textContent = rows().filter(v=>v.status==="working").map(v=>v.short||v.title).join(", ") || "Nothing";
+  $("asof").textContent = `Last real update ${new Date(S.asOf*1000).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})}`;
+  const names = Object.fromEntries(rows().map(v => [v.id, v.short || v.title])); names.all = "All videos";
+  const KIND = {feedback: "Your feedback", update: "Update", rule: "Rule"};
+  $("feed").innerHTML = (S.log || []).map(e => `<li class="${esc(e.kind)}"><span class="when">${clock(e.at)}</span><span class="who">${KIND[e.kind] || esc(e.kind)}</span><span class="txt"><b>${esc(names[e.video] || e.video)}:</b> ${esc(e.text)}</span></li>`).join("") || `<li><span class="txt">No updates logged yet.</span></li>`;
+  $("ovLbl").textContent = rows().length ? `Until all ${rows().length} video${rows().length===1?"":"s"} are done` : "Nothing in production";
+  built = true;
+}
+function tick(){
+  if (!built) buildRows();
+  const now = Date.now()/1000, el = Math.max(0, now - S.asOf);
+  const R = rows(), P = plan();
+  const op = R.length ? Math.min(100, R.reduce((t, v) => t + live(v, elOf(v, now)), 0) / R.length) : 100;
+  const endAt = Math.max(0, ...Object.values(P).map(x => x.b));
+  $("ovPct").innerHTML = `${op.toFixed(1)}<small>%</small>`;
+  $("ovBar").firstElementChild.style.width = op + "%";
+  $("ovLeft").textContent = endAt > now + 30 ? dur(endAt - now) : "Done";
+  $("ovEta").textContent = endAt > now + 30 ? clock(endAt) : "–";
+  for (const v of rows()){
+    const row = document.getElementById("v-"+v.id); if (!row) continue;
+    const ve = elOf(v, now), p = live(v, ve), q = k => row.querySelector(`[data-k="${k}"]`);
+    row.querySelector(".bar i").style.width = p + "%";
+    q("pct").textContent = p.toFixed(1) + "%";
+    q("el").textContent = v.startedAt ? dur(now - v.startedAt) : "not started";
+    const left = v.status === "working" ? (v.ownLeft||0) - ve : (v.ownLeft||0);
+    q("left").textContent = left > 0 ? dur(left) : (v.ownLeft ? "any minute" : "none");
+    q("start").textContent = v.external ? (v.startedAt ? clock(v.startedAt) : "–") : v.status === "working" ? (v.startedAt ? clock(v.startedAt) : "–")
+      : v.status === "waiting" ? "after your OK" : (v.startIn != null ? dur(v.startIn - el) : "–");
+    q("fin").textContent = v.external ? (v.ownLeft ? clock((v.asOf||S.asOf) + v.ownLeft) : "–") : (v.finishIn != null ? clock(S.asOf + v.finishIn) : "–");
+  }
+}
+tick(); setInterval(tick, 1000); setInterval(() => { built = false; }, 60000);
+
+(async () => {
+  try {
+    const db = await window.claude?.use?.("db");
+    if (!db) return;
+    db.doc("board/current").onSnapshot(snap => {
+      if (!snap.exists) return;
+      const d = snap.data();
+      if (d && d.state && d.state.asOf >= S.asOf){ S = d.state; built = false; tick(); }
+    }, () => {});
+    db.collection("external").onSnapshot(qs => {
+      const next = {};
+      (qs.docs||[]).forEach(d => { const x = d.data(); if (x && x.title) next[d.id] = Object.assign({id: "x-" + d.id, external: true, status: "working", pct: 0}, x, {id: "x-" + d.id, external: true, asOf: tsec(x.asOf) || S.asOf, startedAt: tsec(x.startedAt)}); });
+      EXT = next; built = false; tick();
+    }, () => {});
+  } catch (e) {}
+})();
+</script>
+<script>
+/* Release plan block. Data lives in db doc board/releases (kept by the Production plan thread); this inline copy is the fallback. */
+let REL = {"asOf": "2026-10-28T20:00:00Z", "note": "Release rule: 3 x 2D videos, then 1 x 3D. Full videos at least 2 days apart, 15:00 ET on weekdays and 11:00 ET on weekends. Reels go out only after their full video. Kept by the Production plan thread.", "rows": [{"n": 1, "format": "2D", "title": "Rome", "status": "live", "et": "Published", "ist": ""}, {"n": 2, "format": "2D", "title": "The Great War, Part 1", "status": "live", "et": "Published", "ist": "", "note": "Last reels run until 30 Oct"}, {"n": 3, "format": "2D", "title": "The 30 Years That Made Hitler", "status": "zernio", "et": "Fri 30 Oct, 15:00 ET", "ist": "Sat 31 Oct, 00:30 IST", "note": "Full video and 15 reels scheduled"}, {"n": 4, "format": "3D", "title": "FZ1073: The Co-Pilot of Flight 1073", "status": "zernio", "et": "Mon 2 Nov, 15:00 ET", "ist": "Tue 3 Nov, 01:30 IST", "note": "6 of 15 reels scheduled. Reels 2, 3, 5, 8, 10 and 12 to 15 still missing"}, {"n": 5, "format": "2D", "title": "Salman the Persian", "status": "zernio", "et": "Mon 9 Nov, 15:00 ET", "ist": "Tue 10 Nov, 01:30 IST", "note": "Full video and 15 reels scheduled"}, {"n": 6, "format": "2D", "title": "The Tiger Inside: Osho on the Ego", "status": "zernio", "et": "Thu 12 Nov, 15:00 ET", "ist": "Fri 13 Nov, 01:30 IST", "note": "Full video and 15 reels scheduled"}, {"n": 7, "format": "2D", "title": "Secret Service", "status": "zernio", "et": "Sat 14 Nov, 11:00 ET", "ist": "Sat 14 Nov, 21:30 IST", "note": "Full video and 15 reels scheduled (14 to 21 Nov)"}, {"n": 8, "format": "3D", "title": "Tesla vs Edison", "status": "proposed", "et": "Mon 16 Nov, 15:00 ET", "ist": "Tue 17 Nov, 01:30 IST", "note": "Proposed 3D slot after 3 x 2D. Needs El Mencho moved 1 day and Pushpam's OK. Film combining now"}, {"n": 9, "format": "2D", "title": "The Rise and Fall of El Mencho", "status": "zernio", "et": "Tue 17 Nov, 15:00 ET", "ist": "Wed 18 Nov, 01:30 IST", "note": "On Zernio. Moves to Wed 18 Nov if the Tesla slot is approved"}, {"n": 10, "format": "2D", "title": "The Great War, Part 2", "status": "zernio", "et": "Sat 28 Nov, 11:00 ET", "ist": "Sat 28 Nov, 21:30 IST", "note": "Full video and 10 reels scheduled"}, {"n": 11, "format": "2D", "title": "How LEGO Got So Big", "status": "zernio", "et": "Mon 30 Nov, 15:00 ET", "ist": "Tue 1 Dec, 01:30 IST", "note": "Full video and 15 reels scheduled"}, {"n": 12, "format": "3D", "title": "North Korea", "status": "proposed", "et": "Wed 2 Dec, 15:00 ET", "ist": "Thu 3 Dec, 01:30 IST", "note": "Planned. Booked once the film and reels are finished"}, {"n": 13, "format": "2D", "title": "Ancient Humans", "status": "proposed", "et": "Fri 4 Dec, 15:00 ET", "ist": "Sat 5 Dec, 01:30 IST", "note": "Planned. In production"}, {"n": 14, "format": "2D", "title": "BlackRock", "status": "proposed", "et": "Sun 6 Dec, 11:00 ET", "ist": "Sun 6 Dec, 21:30 IST", "note": "Planned. In production"}, {"n": 15, "format": "2D", "title": "NVIDIA", "status": "proposed", "et": "Tue 8 Dec, 15:00 ET", "ist": "Wed 9 Dec, 01:30 IST", "note": "Planned. In production"}, {"n": 16, "format": "3D", "title": "McDonald's in Africa", "status": "proposed", "et": "Thu 10 Dec, 15:00 ET", "ist": "Fri 11 Dec, 01:30 IST", "note": "Planned. In production"}, {"n": 17, "format": "3D", "title": "Operation Thunderbolt", "status": "waiting", "et": "After 3 more 2D videos", "ist": "", "note": "Script done, queued for a 3D slot. Needs 3 new 2D videos released before it"}, {"n": 18, "format": "3D", "title": "The Ides of March (Caesar)", "status": "waiting", "et": "After 3 more 2D videos", "ist": "", "note": "Script done, queued after Thunderbolt"}]};
+const REL_ST = {live:"Live", zernio:"On Zernio", proposed:"Planned", waiting:"Waiting"};
+function relEsc(s){ return String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function relFmt(f){ const x = String(f||"").toUpperCase(); return x ? `<span class="ftag f${x.toLowerCase()}">${relEsc(x)}</span>` : `<span class="ftag">?</span>`; }
+function relChip(v){ const f = (typeof fmtOf === "function") ? fmtOf(v) : v.format; const tail = v.status === "waiting" ? "finished, being scheduled" : (v.pct != null ? Math.round(v.pct) + "%" : ""); return `<span class="chip">${relFmt(f)}${relEsc(v.short||v.title)}${tail?` <b>${relEsc(tail)}</b>`:""}</span>`; }
+function renderRel(){
+  try {
+    const all = (typeof rows === "function") ? rows() : [];
+    const now = all.filter(v => v.status === "working" || v.status === "waiting");
+    now.sort((x, y) => (x.status === "waiting") - (y.status === "waiting"));
+    const next = all.filter(v => v.status === "queued" || v.status === "paused");
+    document.getElementById("relNow").innerHTML = now.map(relChip).join("") || `<span class="relnote">Nothing running</span>`;
+    document.getElementById("relNext").innerHTML = next.map(relChip).join("") || `<span class="relnote">Nothing queued</span>`;
+    document.getElementById("relList").innerHTML = (REL.rows||[]).map(r => `<li><span class="n">${relEsc(r.n)}</span>${relFmt(r.format)}<span class="t">${relEsc(r.title)}${r.note?`<small>${relEsc(r.note)}</small>`:""}</span><span class="w">${relEsc(r.et)}${r.ist?`<small>${relEsc(r.ist)}</small>`:""}</span><span class="st ${relEsc(r.status)}">${REL_ST[r.status]||relEsc(r.status)}</span></li>`).join("");
+    document.getElementById("relNote").textContent = (REL.note||"") + (REL.asOf ? ` Updated ${new Date(REL.asOf).toLocaleString([], {day:"numeric", month:"short", hour:"2-digit", minute:"2-digit"})}.` : "");
+  } catch (e) {}
+}
+renderRel(); setInterval(renderRel, 5000); built = false;
+(async () => {
+  try {
+    const db = await window.claude?.use?.("db");
+    if (!db) return;
+    db.doc("board/releases").onSnapshot(snap => { if (snap.exists){ const d = snap.data(); if (d && Array.isArray(d.rows)){ REL = d; renderRel(); built = false; } } }, () => {});
+  } catch (e) {}
+})();
+</script>
