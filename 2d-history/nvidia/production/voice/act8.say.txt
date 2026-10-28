@@ -1,0 +1,13 @@
+Nvidia designs its chips, but doesn't make them. Most are manufactured by T S M C in Taiwan.
+
+In twenty twenty, Jensen tried to buy Arm, the British company whose chip designs sit inside almost every smartphone, for forty billion dollars.
+
+The rest of the industry objected. Regulators in America, Britain and Europe opened investigations, and the US Federal Trade Commission sued to block it.
+
+In twenty twenty-two, Nvidia gave up on the deal.
+
+That same year, the US government banned Nvidia from selling its top AI chips, the A one hundred and H one hundred, to China.
+
+Nvidia designed slower versions to fit inside the rules, like the H eight hundred. In twenty twenty-three, Washington tightened the rules and those were blocked too.
+
+Nvidia was no longer just a chip company. It had become part of a technology contest between the world's two biggest powers.

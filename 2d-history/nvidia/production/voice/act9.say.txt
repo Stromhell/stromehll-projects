@@ -1,0 +1,19 @@
+Then, in late twenty twenty-two, ChatGPT launched, and every tech company on Earth wanted to build its own AI.
+
+Training those models takes vast data centres full of G P Us. Nvidia's chips, and its Kooda software, were the standard.
+
+Seventeen years of Kooda meant that most AI code was already written for Nvidia. Switching to a rival chip wasn't just buying new hardware; it meant rewriting software.
+
+Nvidia's value climbed in leaps. One trillion dollars in twenty twenty-three. Three trillion in twenty twenty-four. Four trillion in July twenty twenty-five.
+
+Its newer Blackwell chips were sold out long before the factories could make enough of them.
+
+On the twenty-ninth of October twenty twenty-five, Nvidia became the first company ever worth five trillion dollars.
+
+From a diner booth, a dead-end chip, a favour from Sega, a chip finished with thirty days of cash, and a science project nobody paid for.
+
+Every one of those bets looked mad at the time. Jensen kept making them.
+
+He still runs the company his own way. He has around sixty people reporting directly to him, few one-on-one meetings, and he still talks about the company as if it could die tomorrow.
+
+If you want to see who ends up owning a slice of a company like this, watch our story on BlackRock next.

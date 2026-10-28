@@ -1,0 +1,19 @@
+In twenty twelve, that job arrived. It came from the University of Toronto.
+
+A contest called ImageNet asked computer programs to recognise objects in more than a million photos.
+
+Most teams hand-designed the features the computer should look for. Edges, textures, shapes.
+
+Alex Kri-zhev-ski, Ilya Suts-kever and Geoffrey Hinton did something different. They built a deep neural network and let it learn from the data itself.
+
+Training it took an enormous number of small calculations at once. They ran it on two Nvidia gaming cards, in a bedroom.
+
+The best rival entry got about twenty-six percent of its top answers wrong. Their network, AlexNet, got about fifteen percent wrong.
+
+In a field where progress came in tiny steps, it was a leap. And it ran on Nvidia.
+
+Within a few years, almost every serious AI lab was buying Nvidia chips. The hobby nobody wanted had found its customer.
+
+Jensen moved fast. Nvidia began building whole AI computers, not just cards.
+
+In twenty sixteen he personally delivered the first one to a small non-profit lab in San Francisco called OpenAI. He signed it: to the future of computing and humanity.

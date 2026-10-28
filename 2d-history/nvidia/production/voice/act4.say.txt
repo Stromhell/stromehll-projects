@@ -1,0 +1,11 @@
+Nvidia laid off much of its staff and threw everything at one new chip, built around triangles and DirectX.
+
+To save time they bought an emulator, a machine that let them test the design in software before any real chip existed.
+
+They had roughly a month of payroll left when the chip went to the factory.
+
+It was called the Reeva one twenty-eight, released in nineteen ninety-seven. And this time it worked.
+
+It sold about a million units in its first four months.
+
+For years afterwards, Jensen opened staff meetings with the same line: our company is thirty days from going out of business.

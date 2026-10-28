@@ -24,7 +24,7 @@
 
   // Camera over a 2560x1440 plate: eased push/pan. World coordinates = plate pixels.
   // cam = {z:[z0,z1], x:[cx0,cx1], y:[cy0,cy1]} where cx,cy = plate point at screen centre.
-  K.camAt = (cam, u) => { const e = (cam.ease || E.sine)(u); const z = K.lerp(cam.z?.[0] ?? 1, cam.z?.[1] ?? 1, e), cx = K.lerp(cam.x?.[0] ?? 1280, cam.x?.[1] ?? 1280, e), cy = K.lerp(cam.y?.[0] ?? 720, cam.y?.[1] ?? 720, e); const sc = z * W / 2560; return { sc, tx: W / 2 - cx * sc, ty: H / 2 - cy * sc }; };
+  K.camAt = (cam, u) => { const e = (cam.ease || E.sine)(u); const z = K.lerp(cam.z?.[0] ?? 1, cam.z?.[1] ?? 1, e), cx0 = K.lerp(cam.x?.[0] ?? 1280, cam.x?.[1] ?? 1280, e), cy0 = K.lerp(cam.y?.[0] ?? 720, cam.y?.[1] ?? 720, e), cx = K.clamp(cx0, 1280 / z, 2560 - 1280 / z), cy = K.clamp(cy0, 720 / z, 1440 - 720 / z); const sc = z * W / 2560; return { sc, tx: W / 2 - cx * sc, ty: H / 2 - cy * sc }; };
   K.world = (c, cam, u, par = 1) => { const m = K.camAt(cam, u); const sc = 1 + (m.sc / (W / 2560) - 1) * par; const s2 = sc * W / 2560, cx = (W / 2 - m.tx) / m.sc, cy = (H / 2 - m.ty) / m.sc; c.setTransform(s2, 0, 0, s2, W / 2 - (1280 + (cx - 1280) * par) * s2, H / 2 - (720 + (cy - 720) * par) * s2); };
   K.plate = (c, name, cam, u) => { K.world(c, cam, u); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); };
   K.screen = c => c.setTransform(1, 0, 0, 1, 0, 0);
@@ -36,7 +36,7 @@
     if (opts.track) c.letterSpacing = opts.track + 'px';
     c.strokeStyle = opts.ink || INK; c.lineWidth = px * (opts.ow ?? .16); c.strokeText(txt, x, y); c.fillStyle = opts.fill || '#fffaf0'; c.fillText(txt, x, y); c.restore(); };
   // Title: scales in with small overshoot, holds, fades.
-  K.title = (c, txt, lt, opts = {}) => { const a = K.seg(lt, opts.at ?? 0, (opts.at ?? 0) + .5), out = 1 - K.seg(lt, (opts.until ?? 99) - .4, opts.until ?? 99); const sc = .85 + .15 * E.back(a); c.save(); c.translate(opts.x ?? W / 2, opts.y ?? H / 2); c.scale(sc, sc); c.globalAlpha = a * out; K.outlined(c, txt, 0, 0, opts.px ?? 120, opts); if (opts.sub) K.outlined(c, opts.sub, 0, (opts.px ?? 120) * .78, (opts.px ?? 120) * .32, { fam: 'Oswald', ow: .12 }); c.restore(); };
+  K.title = (c, txt, lt, opts = {}) => { const a = K.seg(lt, opts.at ?? 0, (opts.at ?? 0) + .5), out = 1 - K.seg(lt, (opts.until ?? 99) - .4, opts.until ?? 99); const sc = .85 + .15 * E.back(a); c.save(); c.translate(opts.x ?? W / 2, opts.y ?? H / 2); c.scale(sc, sc); c.globalAlpha = a * out; K.outlined(c, txt, 0, 0, opts.px ?? 120, opts); if (opts.sub) K.outlined(c, opts.sub, 0, (opts.px ?? 120) * (opts.subPx ? 1.05 : .78), opts.subPx ?? (opts.px ?? 120) * .32, Object.assign({ fam: 'Oswald', ow: .12 }, opts.subOpts || {})); c.restore(); };
   // Callout card: off-white paper with ink border, rotated about -4 degrees, pops in on its word.
   K.card = (c, txt, lt, opts = {}) => { const at = opts.at ?? 0, a = K.seg(lt, at, at + .35), out = 1 - K.seg(lt, (opts.until ?? 99) - .3, opts.until ?? 99); if (a <= 0 || out <= 0) return; const px = opts.px ?? 54;
     c.save(); c.font = K.font(px, opts.fam || 'Anton'); const lines = String(txt).split('\n'), w = Math.max(...lines.map(l => c.measureText(l).width)) + px * 1.1, h = lines.length * px * 1.15 + px * .7;

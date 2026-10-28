@@ -1,0 +1,17 @@
+For decades, the normal way to invest was to hand your savings to a fund manager who picked stocks for you.
+
+You paid a yearly fee, often around one percent or more, whether the manager did well or not.
+
+And most managers didn't beat the market. Over fifteen years, around nine in ten large US stock funds did worse than the S&P five hundred index.
+
+So someone asked an obvious question. If the index is so hard to beat, why not just buy the index?
+
+The S&P five hundred is a list of five hundred of the biggest US companies, each with a weight. Bigger companies get a bigger share.
+
+An index fund copies that list exactly. Put in ten thousand dollars, and a program splits it by those weights. No meetings. No stock picking.
+
+If the market rises five percent, you rise five percent. If it falls, everyone falls with you.
+
+Because there's no star manager to pay, the fee can be tiny. BlackRock's main S&P five hundred E T F charges about three hundredths of one percent.
+
+That's the whole product. Cheap, simple, and very hard to argue with.

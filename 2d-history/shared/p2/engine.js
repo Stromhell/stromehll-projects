@@ -4,7 +4,7 @@
   function RNG(seed) { let s = (seed >>> 0) || 1; const r = () => { s ^= s << 13; s >>>= 0; s ^= s >> 17; s ^= s << 5; s >>>= 0; return s / 4294967296; }; r.range = (a, b) => a + (b - a) * r(); r.int = (a, b) => Math.floor(r.range(a, b + 1)); r.pick = a => a[Math.floor(r() * a.length)]; r.gauss = () => (r() + r() + r() + r() - 2) / 2; return r; }
 
   // colour helpers
-  function hex(c) { c = c.replace('#', ''); if (c.length === 3) c = c.split('').map(x => x + x).join(''); return [parseInt(c.slice(0, 2), 16), parseInt(c.slice(2, 4), 16), parseInt(c.slice(4, 6), 16)]; }
+  function hex(c) { if (Array.isArray(c)) return c; c = c.replace('#', ''); if (c.length === 3) c = c.split('').map(x => x + x).join(''); return [parseInt(c.slice(0, 2), 16), parseInt(c.slice(2, 4), 16), parseInt(c.slice(4, 6), 16)]; }
   function rgb(a, al = 1) { return `rgba(${a[0] | 0},${a[1] | 0},${a[2] | 0},${al})`; }
   function mix(a, b, t) { a = typeof a === 'string' ? hex(a) : a; b = typeof b === 'string' ? hex(b) : b; return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t]; }
   function jitter(c, r, amt) { c = typeof c === 'string' ? hex(c) : c; const k = r.gauss() * amt; return [c[0] + k + r.gauss() * amt * .4, c[1] + k + r.gauss() * amt * .4, c[2] + k + r.gauss() * amt * .4]; }

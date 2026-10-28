@@ -1,0 +1,19 @@
+New York, the early nineteen eighties. Larry Fink is a young bond trader at the investment bank First Boston, and he is a star.
+
+His desk helps build a new kind of product out of something very ordinary: home loans.
+
+A bank that lends out a hundred million dollars in mortgages has to wait up to thirty years to get it all back.
+
+So Wall Street buys those loans, pools them, and sells bonds backed by the monthly payments. Investors get the interest; the bank gets its cash back today.
+
+Here is a simplified version of the trick that made it so profitable.
+
+Take a hundred million dollars of home loans paying nine percent. That's about nine million dollars of interest in the first year.
+
+Now cut the pool into three bonds that stand in a queue. When homeowners pay back their loans, bond A is paid first, then B, then C.
+
+A is safest, so it gets the lowest rate, say six percent. B gets seven. C takes the most risk and gets eight.
+
+Add it up and the three bonds pay out about six point seven million. The homeowners still pay nine. The gap, more than two million a year, is the packager's to share out.
+
+Nothing was built. The same payments were just sliced and arranged. Fink's desk made First Boston a fortune doing it.
