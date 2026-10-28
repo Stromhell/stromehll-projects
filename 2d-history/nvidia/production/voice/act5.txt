@@ -1,0 +1,15 @@
+In 1999, Nvidia went public, and launched the GeForce 256.
+
+It marketed the chip with a new name: the GPU, the graphics processing unit.
+
+The GeForce took over 3D calculations that used to fall on the computer's main processor. Games got smoother, lighting got better, worlds got bigger.
+
+By the early 2000s, Nvidia was the leading name in PC graphics. Gamers, game studios and film effects houses all ran on it.
+
+Nvidia also won the deal to supply the graphics chip for Microsoft's first Xbox in 2001.
+
+Nvidia won partly through speed. Jensen pushed the team to ship a new generation of chips roughly every six months, while rivals took a year or more.
+
+Its biggest rival, 3dfx, the maker of the Voodoo cards that gamers had loved, couldn't keep up.
+
+At the end of 2000, Nvidia bought what was left of 3dfx. Five years after the NV1 flop, Nvidia was the company others were trying to catch.

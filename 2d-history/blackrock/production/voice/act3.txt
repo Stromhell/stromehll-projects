@@ -1,0 +1,15 @@
+In 1988, Fink and a small group of partners set up a new firm inside the offices of the private equity company Blackstone.
+
+It was called Blackstone Financial Management. A few years later it took a new name: BlackRock.
+
+The pitch to clients was about protection more than prediction: we will show you what could go wrong with your money before it happens.
+
+To do that, they built software that ran on a single workstation at first. They called it Aladdin.
+
+Aladdin asks 'what if?' across every holding. What if interest rates jump? What if oil collapses? What if borrowers stop paying?
+
+It runs thousands of scenarios and shows how each one would hit a portfolio, loan by loan and bond by bond.
+
+Over time BlackRock began renting Aladdin to other investors: pension funds, insurers, even rival asset managers.
+
+Today it helps watch over trillions of dollars, much of it not BlackRock's own.

@@ -1,0 +1,13 @@
+Nvidia had one lifeline: a contract with Sega to build the graphics chip for its next game console.
+
+But that chip was based on the same curved-surface design, the one the rest of the industry was abandoning.
+
+If they finished it, they'd spend a year building something dead. If they quit, they'd lose their only paying customer.
+
+So Jensen flew to Japan and did something unusual. He told Sega's chief executive, Shoichiro Irimajiri, that Nvidia's approach was wrong, and that Sega should find another partner.
+
+Then he asked for the rest of the money anyway. As an investment, not a payment, because without it Nvidia would go under.
+
+Irimajiri agreed. Jensen has said the only reason was that Irimajiri liked him.
+
+That five million dollars bought Nvidia about six months.

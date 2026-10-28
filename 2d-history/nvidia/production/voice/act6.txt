@@ -1,0 +1,17 @@
+Here's the difference that changed everything. A normal processor is like one very smart worker doing tasks one after another, very fast.
+
+A GPU is like thousands of simple workers, each doing one small calculation at the same time.
+
+For graphics, that's perfect: every pixel can be worked on at once. But lots of other problems look the same. Weather. Chemistry. Physics.
+
+In 2006 Nvidia announced CUDA, software that let scientists program its graphics chips for any kind of calculation.
+
+It was expensive. Every chip had to carry extra hardware for it, and for years, hardly anyone paid for it.
+
+Wall Street didn't like it. Nvidia's share price fell hard after 2008. Jensen kept funding CUDA anyway, and gave it to universities.
+
+In 2008 things got worse. A manufacturing defect in some laptop chips forced Nvidia to set aside about two hundred million dollars, and the financial crisis hit at the same time.
+
+From its 2007 peak, the stock lost more than three quarters of its value. Investors asked why Nvidia was spending so much on a product almost nobody used.
+
+He was betting that somewhere, some researcher would find a job only this kind of chip could do.

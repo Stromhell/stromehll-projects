@@ -1,0 +1,15 @@
+By the early nineties, Jensen and two engineers from Sun Microsystems, Chris Malachowsky and Curtis Priem, shared an idea.
+
+Video games were moving to 3D, and ordinary computer processors couldn't keep up. Someone would build a chip just for graphics.
+
+They founded Nvidia in April 1993, with about forty thousand dollars between them.
+
+Their first chip, the NV1, came out in 1995. It tried to do everything at once: graphics, sound and game controller support on one card.
+
+It also drew 3D shapes in an unusual way, using curved surfaces called quadratic patches.
+
+Then Microsoft released DirectX, the standard most PC games would be built on. And DirectX was built around triangles.
+
+Nvidia had bet the company on the opposite approach. Jensen later said they built the wrong thing with great confidence.
+
+The NV1 sold badly. Money was running out.
