@@ -9,3 +9,5 @@ Writes db doc `board/analytics` on the Control Room. Runs nightly and when Pushp
 4. Read `board/calendar` (for video names) to `calendar.json`, then `python3 -I analytics_build.py posts.raw calendar.json analytics.json` in the folder holding followers.json and daily.json.
 5. ArtifactData `set` board/analytics from analytics.json (read first and pass if_version).
 Never invent numbers; if a call fails, leave the old doc.
+
+Note (28 Oct 2026): scheduled-task runs may start without this repo. The full steps and the build script are now written into the "Control Room request check" task prompt (trig_01Lx8uJDGUGKHpcdeNhkHLyi), and the nightly task points there. Keep the two in sync if this file changes.
