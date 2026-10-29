@@ -1,0 +1,175 @@
+<!doctype html><html><head><meta charset="utf-8"><title>DW act 1 - Below the Surface</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "alium";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../dw_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['iceberg', 'iceberg_deep', 'bedroom', 'office', 'worldmap', 'library', 'kitchen', 'serverhall']) K.load(n, PL + n + '.jpg');
+const SW = 1920, SH = 1080, INK = '#2a1a22', GOLD = '#e8b44a', RED = '#d0201a', GREEN = '#3f9a4a';
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+const plateAt = (c, name, px, py, sx, sy, z) => { const s2 = z * 1920 / 2560; c.setTransform(s2, 0, 0, s2, sx - px * s2, sy - py * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); return s2; };
+const ROSS = { costume: 'shirt', hair: 'swept', hairCol: '#6a4630', seed: 3 };
+// seated figure on an office chair (chair drawn behind, so nothing floats)
+const seated = (o) => (c, lt) => { const out = {}; c.save(); c.globalAlpha = 0; R.figure(c, Object.assign({}, o, { t: lt, out })); c.restore(); const sy = o.y - (o.y - (o.y + 0)) ; const seatY = o.y + (out.seatY ?? -150) * 0 ; const hip = o.y - Math.abs(out.seatY ?? 150);
+  c.save(); c.translate(o.x - (o.facing ?? 1) * 10, 0); c.fillStyle = 'rgba(0,0,0,.35)'; c.beginPath(); c.ellipse(0, o.y + 4, 110, 16, 0, 0, 7); c.fill(); c.strokeStyle = INK; c.lineWidth = 5; c.fillStyle = '#2a2a30';
+  c.beginPath(); c.roundRect(-80 - (o.facing ?? 1) * 30, hip - 10, 160, 30, 10); c.fill(); c.stroke(); c.beginPath(); c.roundRect(-(o.facing ?? 1) * 95 - 18, hip - 210, 36, 210, 12); c.fill(); c.stroke(); c.fillRect(-8, hip + 20, 16, o.y - hip - 40); c.strokeRect(-8, hip + 20, 16, o.y - hip - 40);
+  for (const dx of [-70, 0, 70]) { c.beginPath(); c.moveTo(0, o.y - 22); c.lineTo(dx, o.y - 6); c.stroke(); c.beginPath(); c.arc(dx, o.y - 6, 8, 0, 7); c.fill(); } c.restore();
+  R.figure(c, Object.assign({}, o, { t: lt })); };
+
+
+const USER = { costume: 'shirt', hair: 'short', hairCol: '#2a2020', seed: 11 };
+// blurred, dimmed plate as a diagram backdrop (screen)
+const backdrop = (name, dim = .55, blur = 6) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${1 - dim})`; plateAt(c, name, 1280, 720, 960, 540, 1.05); c.restore(); c.setTransform(1, 0, 0, 1, 0, 0); };
+const label = (c, txt, x, y, a, px = 40, col = '#fff') => { if (a <= 0) return; c.save(); c.globalAlpha = Math.min(1, a); K.outlined(c, txt, x, y, px, { fill: col }); c.restore(); };
+// glowing web tile (world or screen)
+const tile = (c, x, y, txt, a, col = '#7ac8ff', s = 1) => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a * s, a * s); c.shadowColor = col; c.shadowBlur = 24; c.fillStyle = 'rgba(10,20,40,.85)'; c.strokeStyle = col; c.lineWidth = 4; c.beginPath(); c.roundRect(-80, -34, 160, 68, 10); c.fill(); c.stroke(); c.shadowBlur = 0; c.font = '32px Anton'; c.fillStyle = col; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(txt, 0, 2); c.restore(); };
+// padlocked door set into the ice (world)
+const lockDoor = (c, x, y, txt, a, lt) => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.fillStyle = 'rgba(8,24,40,.8)'; c.strokeStyle = '#bfe4ff'; c.lineWidth = 5; c.beginPath(); c.roundRect(-70, -110, 140, 200, [60, 60, 6, 6]); c.fill(); c.stroke();
+  c.fillStyle = '#e8b44a'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.roundRect(-26, -6, 52, 44, 6); c.fill(); c.stroke(); c.strokeStyle = '#c9a040'; c.lineWidth = 8; c.beginPath(); c.arc(0, -8, 16, Math.PI, 0); c.stroke(); c.fillStyle = INK; c.beginPath(); c.arc(0, 14, 6, 0, 7); c.fill();
+  c.font = '30px Anton'; c.textAlign = 'center'; c.fillStyle = '#e8f6ff'; c.fillText(txt, 0, -54); c.restore(); };
+// little boat with a person at a laptop (world), bobbing
+const boat = (c, x, y, lt) => { const b = Math.sin(lt * 1.6) * 5, r = Math.sin(lt * 1.3) * .03; c.save(); c.translate(x, y + b); c.rotate(r);
+  R.figure(c, Object.assign({ x: -10, y: -6, s: .5, pose: 'stand', facing: -1, t: lt, mood: 'neutral' }, USER)); DW.laptop(c, -70, -48, .32, 1, '#2a4a7a', lt);
+  c.fillStyle = '#6a4630'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.moveTo(-120, -40); c.lineTo(110, -40); c.quadraticCurveTo(90, 10, 60, 14); c.lineTo(-90, 14); c.quadraticCurveTo(-118, 0, -120, -40); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#8a5e40'; c.fillRect(-116, -40, 222, 10); c.restore(); };
+// diagram parts (screen)
+const relay = (c, x, y, a, lit, n) => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.fillStyle = '#20242c'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.roundRect(-70, -80, 140, 160, 10); c.fill(); c.stroke(); for (let k = 0; k < 4; k++) { c.fillStyle = '#2e343e'; c.fillRect(-56, -64 + k * 36, 112, 26); c.fillStyle = lit ? '#7affb0' : '#3a6a4a'; c.fillRect(36, -56 + k * 36, 8, 8); }
+  c.font = '28px Anton'; c.fillStyle = '#e8e0f0'; c.textAlign = 'center'; c.fillText('RELAY ' + n, 0, 118); c.restore(); };
+const site = (c, x, y, a) => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.fillStyle = '#f2ece0'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.roundRect(-110, -90, 220, 180, 10); c.fill(); c.stroke(); c.fillStyle = '#c84a3a'; c.fillRect(-110, -90, 220, 30); c.fillStyle = '#bbb'; for (let k = 0; k < 4; k++) c.fillRect(-90, -40 + k * 28, 180 - k * 30, 14); c.font = '28px Anton'; c.fillStyle = '#e8e0f0'; c.textAlign = 'center'; c.fillText('WEBSITE', 0, 128); c.restore(); };
+const RX = [250, 660, 960, 1260, 1660], RY = 560;
+const pathPt = u => { const seg = Math.min(3.999, u * 4), i = Math.floor(seg), f = seg - i; return [RX[i] + (RX[i + 1] - RX[i]) * f, RY - 150 - Math.sin(f * Math.PI) * 60]; };
+const diagramBase = (c, lt, a, lit = -1) => { DW.laptop(c, RX[0], RY + 60, .9, 1, '#2a4a7a', lt); label(c, 'YOU', RX[0], RY + 140, 1, 34); c.save(); c.strokeStyle = 'rgba(190,160,255,.5)'; c.setLineDash([14, 12]); c.lineDashOffset = -lt * 40; c.lineWidth = 5; c.beginPath(); c.moveTo(RX[0] + 120, RY); c.lineTo(RX[4] - 120, RY); c.stroke(); c.restore();
+  for (let k = 1; k <= 3; k++) relay(c, RX[k], RY, a[k - 1], lit >= k, k); site(c, RX[4], RY, a[3]); };
+// wallet + coin chart parts (screen)
+const wallet = (c, x, y, code, a) => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.fillStyle = '#6a4630'; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.roundRect(-130, -90, 260, 180, 22); c.fill(); c.stroke(); c.fillStyle = '#8a5e40'; c.beginPath(); c.roundRect(40, -36, 100, 72, 14); c.fill(); c.stroke(); c.fillStyle = GOLD; c.beginPath(); c.arc(84, 0, 14, 0, 7); c.fill(); c.stroke();
+  c.font = '30px Oswald'; c.fillStyle = '#fff'; c.textAlign = 'center'; c.fillText(code, 0, 140); c.restore(); };
+const bankIcon = (c, x, y, a, crossU) => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.fillStyle = '#d8d0c0'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.moveTo(-100, -40); c.lineTo(0, -100); c.lineTo(100, -40); c.closePath(); c.fill(); c.stroke(); for (let k = -75; k <= 75; k += 50) { c.fillRect(k - 10, -36, 20, 100); c.strokeRect(k - 10, -36, 20, 100); } c.fillRect(-110, 64, 220, 20); c.strokeRect(-110, 64, 220, 20); c.restore(); if (crossU > 0) DW.cross(c, x, y - 10, 150, crossU); };
+const codes = ['1A1zP1eP5QGefi2DMPTfTL5SLmv7Divf', 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83k', '3J98t1WpEZ73CNmQviecrnyiWrnqRhWN', '1BvBMSEYstWetqTFn5Au4m4GFg7xJaNV', 'bc1q9h7garjhd2kk8wz0n4ytq2f6x9e8p', '1Hz96kJKF2HLPGY15JWLB5m9qGNxvt8t', '3FZbgi29cpjq2GjdwV8eyHuJJnkLtktZ', 'bc1qa5wkgaew2dkv56kfvj49j0av5nml4'];
+const scroll = (c, x, y, w, u, lt, hi = -1, hiA = 0) => { const h = 760 * E.out(u); if (h <= 2) return; c.save(); c.fillStyle = 'rgba(0,0,0,.4)'; c.fillRect(x - w / 2 + 14, y + 14, w, h); const g = c.createLinearGradient(x - w / 2, 0, x + w / 2, 0); g.addColorStop(0, '#d8c8a0'); g.addColorStop(.5, '#f2e8cc'); g.addColorStop(1, '#d8c8a0'); c.fillStyle = g; c.fillRect(x - w / 2, y, w, h); c.strokeStyle = INK; c.lineWidth = 4; c.strokeRect(x - w / 2, y, w, h);
+  c.beginPath(); c.rect(x - w / 2, y, w, h); c.clip(); c.font = '26px Oswald'; c.textAlign = 'left'; for (let k = 0; k < 16; k++) { const ly = y + 50 + k * 46 - (lt * 8 % 46); const i = k % codes.length, j = (k + 3) % codes.length; if (k === hi) { c.fillStyle = `rgba(255,214,90,${.55 * hiA})`; c.fillRect(x - w / 2 + 10, ly - 30, w - 20, 42); } c.fillStyle = '#3a2a1a'; c.fillText(codes[i].slice(0, 14) + '…  →  ' + codes[j].slice(0, 14) + '…   ' + (0.1 + (k * 37 % 90) / 10).toFixed(2) + ' BTC', x - w / 2 + 30, ly); } c.restore();
+  c.fillStyle = '#b8a070'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.roundRect(x - w / 2 - 20, y - 26, w + 40, 40, 20); c.fill(); c.stroke(); c.beginPath(); c.roundRect(x - w / 2 - 20, y + h - 14, w + 40, 40, 20); c.fill(); c.stroke(); };
+
+window.SHOTS = [
+  // 1 the night iceberg; a lone user in a little boat near the tip
+  { plate: 'iceberg', cam: { z: [1.0, 1.1], x: [1280, 1320], y: [720, 640], ease: E.io }, bed: [['ocean_loop', .5], ['wind_loop', .2]],
+    live: [(c, lt) => boat(c, 1900, 452, lt)],
+    init: S => { const tG = A.at(S, 'Google', 3.6); S.D.over = [(c, lt) => { const a = pop(lt, tG); if (a <= 0) return; c.save(); c.translate(960, 230); c.scale(a, a); c.fillStyle = '#fff'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.roundRect(-380, -46, 760, 92, 46); c.fill(); c.stroke(); c.font = '40px Oswald'; c.fillStyle = '#333'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('silk road', -320, 2); c.font = '34px Anton'; c.fillStyle = RED; c.textAlign = 'right'; c.fillText('0 RESULTS', 350, 2); c.restore(); }];
+      S.D.sfx = [[.2, 'ocean_loop', .2], [tG, 'typing', .45], [tG + .5, 'pop', .45]]; } },
+  // 2 zoom on the sunlit tip: news, shop and video tiles
+  { plate: 'iceberg', cam: { z: [1.9, 2.3], x: [1280, 1280], y: [340, 330], ease: E.io }, bed: [['ocean_loop', .4]],
+    init: S => { const tT = A.at(S, 'tip', 1.8), tN = A.at(S, 'news', 4.8), tS = A.at(S, 'shops', 5.8), tV = A.at(S, 'videos', 6.6);
+      S.D.live = [(c, lt) => { tile(c, 1150, 300, 'NEWS', pop(lt, tN), '#7ac8ff', .8); tile(c, 1290, 250, 'SHOP', pop(lt, tS), '#ffd27a', .8); tile(c, 1420, 310, 'VIDEO', pop(lt, tV), '#ff8a9a', .8); }];
+      S.D.over = [(c, lt) => K.title(c, 'SURFACE WEB', lt, { at: tT, y: 150, px: 84, fill: '#bfe8ff' })];
+      S.D.sfx = [[tT, 'whoosh_soft', .4], [tN, 'pop', .45], [tS, 'pop', .45], [tV, 'pop', .45]]; } },
+  // 3 underwater: the huge body holds padlocked doors
+  { plate: 'iceberg', cam: { z: [1.35, 1.45], x: [1280, 1280], y: [700, 860], ease: E.io }, bed: [['ocean_loop', .25], ['hum_loop', .3]],
+    init: S => { const tD = A.at(S, 'deep web', 1.4), tE = A.at(S, 'email', 5.2), tB = A.at(S, 'bank accounts', 6), tM = A.at(S, 'medical', 7), tP = A.at(S, 'password', 8.6);
+      S.D.live = [(c, lt) => { lockDoor(c, 1000, 760, 'EMAIL', pop(lt, tE), lt); lockDoor(c, 1290, 900, 'BANK', pop(lt, tB), lt); lockDoor(c, 1580, 760, 'HOSPITAL', pop(lt, tM), lt); }];
+      S.D.over = [(c, lt) => K.title(c, 'DEEP WEB', lt, { at: tD, y: 130, px: 84, fill: '#9fd8ff' }), (c, lt) => K.card(c, 'BEHIND A PASSWORD', lt, { at: tP, x: 960, y: 960, px: 46, rot: -2 })];
+      S.D.sfx = [[tD, 'whoosh', .4], [tE, 'stamp', .35], [tB, 'stamp', .35], [tM, 'stamp', .35], [tP, 'chime', .4]]; } },
+  // 4 a 96% tag drifts in, then a question mark stamps over it
+  { plate: 'iceberg', cam: { z: [1.0, 1.02], x: [1280, 1280], y: [720, 720] }, bed: [['ocean_loop', .3]],
+    init: S => { const t96 = A.at(S, 'ninety-six', 2.4), tN = A.at(S, 'Nobody', 5.6), tF = A.at(S, 'far bigger', 8);
+      S.D.over = [(c, lt) => { const a = K.seg(lt, t96, t96 + .8); if (a <= 0) return; c.save(); c.globalAlpha = a * (lt > tN ? .45 : 1); K.outlined(c, '96%', 960 + 200 * (1 - E.out(a)), 560, 220, { fill: '#bfe8ff' }); c.restore(); },
+        (c, lt) => { const u = K.seg(lt, tN, tN + .3); if (u <= 0) return; c.save(); c.translate(960, 560); c.scale(2 - E.out(u), 2 - E.out(u)); c.globalAlpha = Math.min(1, u * 2); K.outlined(c, '?', 0, 0, 340, { fill: RED }); c.restore(); },
+        (c, lt) => K.card(c, '96%? NOBODY KNOWS', lt, { at: tN + .4, x: 960, y: 170, px: 60, rot: -3 }), (c, lt) => K.card(c, 'FAR BIGGER THAN THE TIP', lt, { at: tF, x: 960, y: 920, px: 48, rot: 2 })];
+      S.D.sfx = [[t96, 'whoosh_soft', .45], [tN, 'stamp', .65], [tF, 'pop', .4]]; } },
+  // 5 the deepest corridor: heavy doors, dim lanterns
+  { plate: 'iceberg_deep', cam: { z: [1.0, 1.35], x: [1280, 1280], y: [720, 700], ease: E.io }, bed: [['drone', .45], ['hum_loop', .2]],
+    live: [DW.glow(1280, 690, 380, '255,180,90', .25)],
+    init: S => { const tD = A.at(S, 'dark web', 3.2), tS = A.at(S, 'special software', 6);
+      S.D.over = [(c, lt) => K.title(c, 'DARK WEB', lt, { at: tD, y: 150, px: 96, fill: '#c8a0ff' }), (c, lt) => K.card(c, 'SPECIAL SOFTWARE ONLY', lt, { at: tS, x: 960, y: 930, px: 48, rot: -2 })];
+      S.D.sfx = [[.3, 'creak', .4], [tD, 'hit', .45], [tS, 'pop', .4]]; } },
+  // 6 a home desk: a glowing thread runs out of the window, a tag rides it: YOU, HOME, CITY
+  { plate: 'bedroom', cam: { z: [1.12, 1.2], x: [1820, 1800], y: [900, 900], ease: E.io }, bed: [['night_loop', .4]],
+    live: [(c) => DW.desk(c, 2130, 1330, 560, 1), seated({ x: 1850, y: 1330, s: 1.55, ...USER, facing: 1, pose: 'sit', anim: null }), (c, lt) => DW.laptop(c, 2160, 1116, 1.25, 1, '#2a4a7a', lt), DW.glow(2150, 980, 600, '120,170,255', .45)],
+    init: S => { const tW = A.at(S, 'website', 1.6), tI = A.at(S, 'IP address', 4.4), tB = A.at(S, 'back to you', 6.4);
+      S.D.live.push((c, lt) => { const u = E.out(K.seg(lt, tW, tW + 1.2)); if (u <= 0) return; const pts = [[2160, 1060], [2000, 760], [1880, 420]]; c.save(); c.strokeStyle = 'rgba(255,220,120,.9)'; c.shadowColor = '#ffd27a'; c.shadowBlur = 20; c.lineWidth = 6; c.beginPath(); c.moveTo(2160, 1060); c.quadraticCurveTo(2050, 700, 2160 - (2160 - 1880) * u, 1060 - (1060 - 420) * u); c.stroke(); c.restore(); });
+      S.D.over = [A.grade('20,30,80', .2), (c, lt) => K.card(c, 'IP ADDRESS', lt, { at: tI, x: 460, y: 220, px: 60, rot: -4 }), (c, lt) => { const a = pop(lt, tB); if (a <= 0) return; c.save(); c.translate(1150, 330); c.rotate(.06); c.scale(a, a); c.fillStyle = '#fff4d8'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.roundRect(-210, -70, 420, 140, 12); c.fill(); c.stroke(); c.font = '40px Anton'; c.fillStyle = INK; c.textAlign = 'center'; c.fillText('YOU · HOME · CITY', 0, 14); c.restore(); }];
+      S.D.sfx = [[.3, 'typing', .4], [tW, 'whoosh_soft', .4], [tI, 'pop', .45], [tB, 'stamp', .45]]; } },
+  // 7 diagram: the glass onion assembles; TOR = THE ONION ROUTER
+  { draw: (c, lt, u, S) => { backdrop('serverhall', .6)(c); DW.onion(c, 960, 600, 1.1, 5 * E.out(K.seg(lt, .3, 2.2)), lt); }, bed: [['hum_loop', .35]],
+    init: S => { const tT = A.at(S, 'Tor', 1.2), tO = A.at(S, 'The Onion Router', 3);
+      S.D.over = [(c, lt) => K.title(c, 'TOR', lt, { at: tT, y: 150, px: 110, fill: '#c8a0ff' }), (c, lt) => K.card(c, 'THE ONION ROUTER', lt, { at: tO, x: 960, y: 950, px: 56, rot: -2 })];
+      S.D.sfx = [[.3, 'riser', .35], [tT, 'chime', .45], [tO, 'pop', .4]]; } },
+  // 8 diagram: three layers wrap the request; it hops through three relays
+  { draw: (c, lt, u, S) => { backdrop('worldmap', .55)(c); const tR = S.tR; diagramBase(c, lt, [pop(lt, tR), pop(lt, tR + .3), pop(lt, tR + .6), pop(lt, tR + .9)]);
+      const w = E.out(K.seg(lt, S.tL, S.tL + 1.2)); if (lt < S.tR + 1) DW.onion(c, RX[0], RY - 150, .45, 3 * w, lt); else { const p = E.io(K.seg(lt, S.tR + 1, S.end - S.start - .3)); const [x, y] = pathPt(p * .75); DW.onion(c, x, y, .45, 3, lt); } },
+    bed: [['hum_loop', .35]],
+    init: S => { S.tL = A.at(S, 'three layers', 1); S.tR = A.at(S, 'relays', 4.4);
+      S.D.over = [(c, lt) => K.card(c, '3 LAYERS · 3 RELAYS', lt, { at: S.tL, x: 960, y: 160, px: 56, rot: -2 })];
+      S.D.sfx = [[S.tL, 'whoosh_soft', .4], [S.tL + .4, 'pop', .35], [S.tL + .8, 'pop', .35], [S.tR, 'pop', .4], [S.tR + .3, 'pop', .4], [S.tR + .6, 'pop', .4], [S.tR + 1, 'whoosh', .35]]; } },
+  // 9 each relay peels one layer; the first knows you, the last knows the site
+  { draw: (c, lt, u, S) => { backdrop('worldmap', .55)(c); const pk = S.peel; const lit = lt > pk[2] ? 3 : lt > pk[1] ? 2 : lt > pk[0] ? 1 : 0; diagramBase(c, lt, [1, 1, 1, 1], lit);
+      const p = E.io(K.seg(lt, 0, S.end - S.start - .4)); const [x, y] = pathPt(.25 + p * .75); const n = 3 - [0, 1, 2].filter(k => lt > pk[k]).length; DW.onion(c, x, y, .45, n, lt);
+      label(c, 'KNOWS YOU', RX[1], RY - 270, pop(lt, S.tF), 40, '#ffd27a'); label(c, 'NOT THE SITE', RX[1], RY - 225, pop(lt, S.tF + .6), 30, '#ffb0a0');
+      label(c, 'KNOWS THE SITE', RX[3], RY - 270, pop(lt, S.tL2), 40, '#7ac8ff'); label(c, 'NOT YOU', RX[3], RY - 225, pop(lt, S.tL2 + .6), 30, '#ffb0a0'); },
+    bed: [['hum_loop', .35]],
+    init: S => { const tP = A.at(S, 'peels', .8); const L = S.end - S.start; S.peel = [Math.max(tP, L * .12), L * .45, L * .78]; S.tF = A.at(S, 'The first knows', 2.6); S.tL2 = A.at(S, 'The last knows', 6.4);
+      S.D.over = [(c, lt) => K.card(c, 'NO ONE SEES BOTH ENDS', lt, { at: L - 2.2, x: 960, y: 940, px: 52, rot: -2 })];
+      S.D.sfx = [[S.peel[0], 'paper_tear', .4], [S.peel[1], 'paper_tear', .4], [S.peel[2], 'paper_tear', .4], [S.tF, 'pop', .4], [S.tL2, 'pop', .4], [L - 2.2, 'chime', .45]]; } },
+  // 10 1990s navy lab: a researcher points at an onion sketch on the whiteboard
+  { plate: 'office', cam: { z: [1.12, 1.18], x: [1280, 1300], y: [820, 820] }, bed: [['office_loop', .35], ['hum_loop', .2]],
+    live: [(c, lt) => { c.save(); c.fillStyle = '#f4f4f0'; c.strokeStyle = '#4a4a50'; c.lineWidth = 10; c.fillRect(1120, 520, 760, 420); c.strokeRect(1120, 520, 760, 420); c.fillStyle = '#4a4a50'; c.fillRect(1140, 940, 720, 14); c.restore(); c.save(); c.strokeStyle = '#2a4a9a'; c.lineWidth = 6; c.lineCap = 'round'; for (let k = 0; k < 3; k++) { const r = 50 + k * 34; c.beginPath(); c.ellipse(1340, 740, r, r * 1.15, 0, 0, 7); c.stroke(); } c.beginPath(); c.moveTo(1340, 600); c.lineTo(1340, 560); c.stroke(); c.font = '44px Caveat'; c.fillStyle = '#2a4a9a'; c.fillText('onion routing', 1500, 660); c.fillText('A → B → C', 1520, 760); c.strokeStyle = RED; c.beginPath(); c.moveTo(1500, 800); c.lineTo(1800, 800); c.stroke(); c.restore(); }],
+    figs: [{ x: 880, y: 1320, s: 1.75, costume: 'shirt', hair: 'bald', hairCol: '#7a6a5a', glasses: true, seed: 6, facing: 1, pose: 'point', mood: 'happy', anim: (o, lt) => { o.talk = lt > 2 && lt < 5; } }],
+    over: [A.grade('150,120,60', .14, 'overlay')],
+    init: S => { const tS = A.at(S, 'surprise', 1), tN = A.at(S, 'Naval Research', 3.6), tG = A.at(S, 'government communications', 5.6);
+      S.D.over = S.D.over.concat([(c, lt) => K.badge(c, 'US NAVAL RESEARCH LAB · 1990s', lt, { at: tN }), (c, lt) => K.card(c, 'THE SURPRISE', lt, { at: tS, x: 420, y: 230, px: 56, rot: -4, until: tG }), (c, lt) => K.card(c, 'TO PROTECT GOVERNMENT\nCOMMUNICATIONS', lt, { at: tG, x: 520, y: 260, px: 44, rot: -3 })]);
+      S.D.sfx = [[tS, 'riser', .3], [tN, 'stamp', .5], [tG, 'pop', .4]]; } },
+  // 11 everyday users in the library: reporter, activist, student. Legal to use; buying illegal goods is not
+  { plate: 'library', cam: { z: [1.05, 1.1], x: [1280, 1280], y: [820, 820] }, bed: [['office_loop', .2], ['birds_loop', .2]],
+    figs: [{ x: 520, y: 1330, s: 1.7, costume: 'office', hair: 'bun', hairCol: '#3a2620', seed: 14, facing: 1, pose: 'present', mood: 'happy' },
+      { x: 1280, y: 1380, s: 1.8, costume: 'leather', hair: 'curly', hairCol: '#1a1414', seed: 8, facing: 1, pose: 'cheer', mood: 'happy' },
+      { x: 2040, y: 1330, s: 1.7, costume: 'school', hair: 'short', hairCol: '#5a3a28', seed: 21, facing: -1, pose: 'think', mood: 'neutral' }],
+    init: S => { const tJ = A.at(S, 'journalists', 1.4), tA = A.at(S, 'activists', 2.2), tO = A.at(S, 'ordinary people', 3), tL = A.at(S, 'legal', 5.4), tB = A.at(S, 'Buying', 8);
+      S.D.over = [(c, lt) => K.card(c, 'REPORTER', lt, { at: tJ, x: 380, y: 300, px: 42, rot: -4 }), (c, lt) => K.card(c, 'ACTIVIST', lt, { at: tA, x: 960, y: 260, px: 42, rot: 3 }), (c, lt) => K.card(c, 'STUDENT', lt, { at: tO, x: 1540, y: 300, px: 42, rot: -3 }),
+        (c, lt) => K.title(c, 'LEGAL TO USE ✓', lt, { at: tL, y: 110, px: 70, fill: '#9be29b', until: tB }), (c, lt) => K.title(c, 'ILLEGAL GOODS ✗', lt, { at: tB, y: 110, px: 70, fill: '#ff8a7a' })];
+      S.D.sfx = [[tJ, 'pop', .35], [tA, 'pop', .35], [tO, 'pop', .35], [tL, 'chime', .45], [tB, 'stamp', .55]]; } },
+  // 12 the onion beside a shopping basket; a credit card slides in and hits a stop sign
+  { draw: (c, lt, u, S) => { backdrop('serverhall', .65)(c); DW.onion(c, 520, 560, .8, 5, lt);
+      c.save(); c.translate(1280, 560); c.strokeStyle = '#fff'; c.lineWidth = 10; c.lineJoin = 'round'; c.beginPath(); c.moveTo(-170, -110); c.lineTo(-130, -110); c.lineTo(-90, 80); c.lineTo(130, 80); c.lineTo(160, -60); c.lineTo(-115, -60); c.stroke(); c.beginPath(); c.arc(-70, 120, 18, 0, 7); c.arc(110, 120, 18, 0, 7); c.stroke(); c.restore();
+      const cu = E.out(K.seg(lt, S.tP, S.tP + .8)); if (cu > 0) { const bx = 1900 - 520 * cu + (lt > S.tP + .8 ? Math.sin((lt - S.tP) * 40) * 6 * Math.exp(-(lt - S.tP - .8) * 4) : 0); c.save(); c.translate(bx, 820); c.rotate(-.08); c.fillStyle = '#2a5a9a'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.roundRect(-150, -90, 300, 180, 16); c.fill(); c.stroke(); c.fillStyle = GOLD; c.fillRect(-110, -36, 60, 44); c.font = '28px Oswald'; c.fillStyle = '#fff'; c.fillText('**** 4092', -40, 60); c.restore(); }
+      const sa = pop(lt, S.tP + .8); if (sa > 0) { c.save(); c.translate(1220, 800); c.scale(sa, sa); c.fillStyle = RED; c.strokeStyle = '#fff'; c.lineWidth = 8; c.beginPath(); for (let k = 0; k < 8; k++) { const a = Math.PI / 8 + k * Math.PI / 4; c.lineTo(Math.cos(a) * 110, Math.sin(a) * 110); } c.closePath(); c.fill(); c.stroke(); c.font = '58px Anton'; c.fillStyle = '#fff'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('STOP', 0, 4); c.restore(); } },
+    bed: [['hum_loop', .35]],
+    init: S => { S.tP = A.at(S, 'How do you pay', 4.2); S.D.over = [(c, lt) => K.title(c, 'HOW DO YOU PAY?', lt, { at: S.tP, y: 150, px: 90, fill: GOLD })]; S.D.sfx = [[.4, 'pop', .3], [S.tP, 'whoosh_soft', .45], [S.tP + .8, 'thud', .55], [S.tP + .85, 'alarm', .25]]; } },
+  // 13 a bank clerk files the card receipt in a drawer with the customer's name
+  { plate: 'kitchen', cam: { z: [1.08, 1.12], x: [1280, 1280], y: [820, 820] }, bed: [['office_loop', .35]],
+    live: [(c, lt, u, S) => { c.save(); c.fillStyle = '#7a7a82'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(1500, 760, 320, 580); c.strokeRect(1500, 760, 320, 580); for (let k = 0; k < 4; k++) { const open = k === 1 ? 120 * E.io(K.seg(lt, S.tK - .6, S.tK)) * (1 - E.io(K.seg(lt, S.tN, S.tN + .5))) : 0; c.fillStyle = '#9a9aa2'; c.fillRect(1520 - open, 780 + k * 140, 280, 120); c.strokeRect(1520 - open, 780 + k * 140, 280, 120); c.fillStyle = '#f4f0e0'; c.fillRect(1600 - open, 800 + k * 140, 120, 34); c.strokeRect(1600 - open, 800 + k * 140, 120, 34); c.fillStyle = '#c0c0c8'; c.fillRect(1630 - open, 860 + k * 140, 60, 14); }
+      c.font = '22px Anton'; c.fillStyle = INK; c.textAlign = 'center'; c.fillText('YOUR NAME', 1660 - (120 * E.io(K.seg(lt, S.tK - .6, S.tK)) * (1 - E.io(K.seg(lt, S.tN, S.tN + .5)))), 960); c.restore();
+      c.fillStyle = 'rgba(0,0,0,.3)'; c.beginPath(); c.ellipse(1660, 1342, 190, 18, 0, 0, 7); c.fill(); }],
+    figs: [{ x: 1140, y: 1340, s: 1.75, costume: 'office', hair: 'swept', hairCol: '#4a3428', glasses: true, seed: 17, facing: 1, pose: 'present', mood: 'neutral', anim: (o, lt, u, S) => { if (lt > S.tK - .8) o.pose = 'reach'; if (lt > S.tN + .4) { o.pose = 'point'; o.facing = -1; o.mood = 'happy'; } }, hold: null }],
+    init: S => { S.tK = A.at(S, 'record', 3.6); S.tN = A.at(S, 'your name', 5.6);
+      S.D.over = [(c, lt) => K.card(c, "CAN'T BUY ILLEGAL\nWITH A CARD", lt, { at: .4, x: 500, y: 240, px: 46, rot: -4 }), (c, lt) => K.card(c, 'YOUR NAME IS ON IT', lt, { at: S.tN, x: 1400, y: 240, px: 52, rot: 3 })];
+      S.D.sfx = [[S.tK - .6, 'scrape', .4], [S.tK, 'paper', .5], [S.tN, 'door_slam', .3]]; } },
+  // 14 a single gold coin spins beside a faceless hooded outline
+  { draw: (c, lt, u, S) => { c.fillStyle = '#0b0a10'; c.fillRect(0, 0, SW, SH); const g = c.createRadialGradient(960, 620, 40, 960, 620, 700); g.addColorStop(0, 'rgba(232,180,74,.22)'); g.addColorStop(1, 'rgba(0,0,0,0)'); c.fillStyle = g; c.fillRect(0, 0, SW, SH);
+      c.fillStyle = '#3a2a20'; c.fillRect(0, 820, SW, 260); c.fillStyle = 'rgba(255,255,255,.06)'; c.fillRect(0, 820, SW, 6);
+      c.save(); c.strokeStyle = 'rgba(220,220,240,.75)'; c.lineWidth = 5; c.setLineDash([4, 0]); c.translate(1380, 820); c.beginPath(); c.moveTo(-170, 0); c.quadraticCurveTo(-180, -260, -110, -330); c.quadraticCurveTo(-120, -470, 0, -500); c.quadraticCurveTo(120, -470, 110, -330); c.quadraticCurveTo(180, -260, 170, 0); c.stroke(); c.beginPath(); c.ellipse(0, -390, 60, 74, 0, 0, 7); c.fillStyle = '#05050a'; c.fill(); c.stroke(); c.restore();
+      const sp = Math.cos(lt * 4.2); c.save(); c.translate(760, 690); c.scale(Math.max(.08, Math.abs(sp)), 1); DW.bigCoin(c, 0, 0, 110, pop(lt, .3, .6)); c.restore(); c.fillStyle = 'rgba(0,0,0,.4)'; c.beginPath(); c.ellipse(760, 818, 110, 14, 0, 0, 7); c.fill(); },
+    bed: [['hum_loop', .3]],
+    init: S => { const tS = A.at(S, 'Satoshi', 1.6), tB = A.at(S, 'Bitcoin', 3.4);
+      S.D.over = [(c, lt) => K.dateTag(c, 'JAN 2009', lt, { at: .3 }), (c, lt) => K.card(c, 'SATOSHI NAKAMOTO?', lt, { at: tS, x: 1400, y: 200, px: 52, rot: 3 }), (c, lt) => K.title(c, 'BITCOIN', lt, { at: tB, x: 640, y: 220, px: 110, fill: GOLD })];
+      S.D.sfx = [[.3, 'coins', .4], [tS, 'tension', .3], [tB, 'chime', .55]]; } },
+  // 15 coins slide between two wallets with no bank in the middle
+  { draw: (c, lt, u, S) => { backdrop('serverhall', .7)(c); wallet(c, 420, 560, 'bc1qxy2k…', pop(lt, .2)); wallet(c, 1500, 560, '3J98t1Wp…', pop(lt, .5)); c.save(); c.strokeStyle = 'rgba(232,180,74,.5)'; c.setLineDash([16, 12]); c.lineWidth = 6; c.beginPath(); c.moveTo(570, 560); c.lineTo(1350, 560); c.stroke(); c.restore();
+      for (let k = 0; k < 4; k++) { const f = ((lt - S.tW) * .45 + k / 4) % 1; if (lt < S.tW) break; DW.coin(c, 600 + f * 720, 540 - Math.sin(f * Math.PI) * 80, 34); }
+      bankIcon(c, 960, 330, pop(lt, S.tB), K.seg(lt, S.tB + .5, S.tB + 1)); },
+    bed: [['hum_loop', .3]],
+    init: S => { S.tW = A.at(S, 'wallet', 1.6); S.tB = A.at(S, 'no bank', 4.4); const tN = A.at(S, 'no name', 6.6);
+      S.D.over = [(c, lt) => K.card(c, 'NO BANK', lt, { at: S.tB + .6, x: 960, y: 900, px: 56, rot: -3 }), (c, lt) => K.card(c, 'NO NAME', lt, { at: tN, x: 1400, y: 900, px: 56, rot: 3 })];
+      S.D.sfx = [[S.tW, 'coins', .45], [S.tB, 'pop', .4], [S.tB + .5, 'stamp', .5], [tN, 'stamp', .5]]; } },
+  // 16 the public ledger scroll unrolls behind the wallets
+  { draw: (c, lt, u, S) => { backdrop('serverhall', .7)(c); scroll(c, 960, 160, 1000, K.seg(lt, S.tP, S.tP + 2), lt); wallet(c, 260, 640, 'bc1qxy2k…', 1); wallet(c, 1660, 640, '3J98t1Wp…', 1); },
+    bed: [['hum_loop', .3], ['paper', 0]],
+    init: S => { S.tP = A.at(S, 'public record', 2.4); const tA = A.at(S, 'anyone', 3.6), tC = A.at(S, 'codes', 7);
+      S.D.over = [(c, lt) => K.title(c, 'PUBLIC LEDGER', lt, { at: S.tP, y: 110, px: 80, fill: GOLD }), (c, lt) => K.card(c, 'CODES, NOT NAMES', lt, { at: tC, x: 960, y: 960, px: 52, rot: -2 })];
+      S.D.sfx = [[.3, 'riser', .25], [S.tP, 'paper', .55], [tA, 'pop', .35], [tC, 'stamp', .45]]; } },
+  // 17 push in on one line of the scroll; it glows
+  { draw: (c, lt, u, S) => { backdrop('serverhall', .75)(c); const z = 1 + .6 * E.io(K.seg(lt, 0, S.end - S.start)); c.save(); c.translate(960, 520); c.scale(z, z); c.translate(-960, -520); scroll(c, 960, 160, 1000, 1, 0, 8, .5 + .5 * Math.sin(lt * 5)); c.restore(); },
+    bed: [['hum_loop', .3]], sfx: [[.2, 'heartbeat', .45]],
+    init: S => { const tM = A.at(S, 'matters later', 1.4); S.D.over = [(c, lt) => K.card(c, 'REMEMBER THIS', lt, { at: tM, x: 1460, y: 220, px: 52, rot: 4 })]; S.D.sfx = [[.2, 'heartbeat', .45], [tM, 'tension', .35]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>

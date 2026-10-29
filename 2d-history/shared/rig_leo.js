@@ -236,6 +236,7 @@
       ctx.save(); ctx.clip(); if (mood === 'happy') { ctx.fillStyle = '#fff'; ctx.fillRect(mx - 14, my - 3, 28, 5); } ctx.fillStyle = '#e07a74'; ctx.beginPath(); ctx.ellipse(mx + 1, my + open * 1.4, 8, 5, 0, 0, 7); ctx.fill(); ctx.restore();
     } else { const mc = { sad: -5, worried: -3, angry: -4, focus: 0 }[mood] ?? 3; ctx.lineWidth = 2.8; ctx.beginPath(); ctx.moveTo(mx - 9, my); ctx.quadraticCurveTo(mx, my + mc, mx + 9, my - (mood === 'worried' ? 2 : 0)); ctx.stroke(); }
     if (mood === 'worried' || mood === 'shocked') { ctx.fillStyle = '#9ed6f2'; ctx.strokeStyle = INK; ctx.lineWidth = 1.8; const sx = X - rx * .2, sy = Y - ry * .2 + ((t * 26) % 10); ctx.beginPath(); ctx.moveTo(sx, sy - 7); ctx.quadraticCurveTo(sx + 5, sy + 2, sx, sy + 4); ctx.quadraticCurveTo(sx - 5, sy + 2, sx, sy - 7); ctx.fill(); ctx.stroke(); }
+    if (o.tash) { ctx.fillStyle = o.tash === true ? sh(L.hairCol, -.05) : o.tash; ctx.strokeStyle = INK; ctx.lineWidth = 2.4; for (const d of [-1, 1]) { ctx.beginPath(); ctx.moveTo(mx + 1, my - 9); ctx.bezierCurveTo(mx + d * 10, my - 15, mx + d * 24, my - 10, mx + d * 30, my - 1); ctx.bezierCurveTo(mx + d * 22, my - 4, mx + d * 10, my - 2, mx + 1, my - 4); ctx.closePath(); ctx.fill(); ctx.stroke(); } }
     if (o.hat) o.hat(ctx, X, Y - ry * .08, (rx + ry) / 2);
     arm(-1, true);
     ctx.restore();

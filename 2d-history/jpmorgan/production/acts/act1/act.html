@@ -1,0 +1,107 @@
+<!doctype html><html><head><meta charset="utf-8"><title>JP act 1 - The Name on the Door</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../jp_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['wallst_1870', 'partners_room', 'bank', 'library', 'court', 'map_northeast', 'chicago']) K.load(n, PL + n + '.jpg');
+const SW = 1920, SH = 1080, INK = '#1d1712', GOLD = '#e8b44a', RED = '#d9483b', GREEN = '#4f9a4a';
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+// cast: young Morgan (1871), older Morgan (1895-1907), Drexel, bankers, depositors
+const MORGAN_Y = { costume: 'suit', hair: 'swept', hairCol: '#3a2a20', tash: true, seed: 3, hat: JK.topHat() };
+const MORGAN = { costume: 'suit80', hair: 'swept', hairCol: '#8a8580', tash: '#d8d4cc', seed: 3 };
+const DREXEL = { costume: 'suit80', hair: 'bald', hairCol: '#b8b4ae', beard: 'grey', seed: 9, hat: JK.topHat('#2a2420') };
+const BANKER = (seed, extra = {}) => Object.assign({ costume: seed % 2 ? 'suit' : 'suit80', hair: seed % 3 ? 'swept' : 'bald', hairCol: ['#3a2a20', '#7a6a5a', '#b0aaa0'][seed % 3], tash: seed % 2 === 0, seed }, extra);
+const DEP = (seed, col) => ({ costume: seed % 3 === 0 ? 'dress' : 'office', hair: 'short', seed, hat: seed % 3 === 0 ? null : JK.bowler(col) });
+// sketch frame pinned on the partners' room wall (screen)
+const sketch = (c, x, y, kind, a, rot) => { if (a <= 0) return; c.save(); c.translate(x, y); c.rotate(rot); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(-140, -96, 290, 210); c.fillStyle = '#efe4c8'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-150, -106, 290, 210); c.strokeRect(-150, -106, 290, 210);
+  c.strokeStyle = '#3a2a1a'; c.lineWidth = 4; c.lineCap = 'round'; c.beginPath();
+  if (kind === 'rail') { c.moveTo(-130, 60); c.lineTo(120, 60); c.moveTo(-130, 72); c.lineTo(120, 72); for (let k = -120; k < 120; k += 24) { c.moveTo(k, 54); c.lineTo(k + 6, 80); } c.stroke(); c.fillStyle = '#3a2a1a'; c.fillRect(-90, -10, 120, 56); c.fillRect(30, -40, 50, 86); c.fillRect(-80, -40, 20, 30); for (const wx of [-70, -20, 50]) { c.beginPath(); c.arc(wx, 52, 14, 0, 7); c.fill(); } c.fillStyle = 'rgba(80,70,60,.4)'; for (let k = 0; k < 4; k++) { c.beginPath(); c.arc(-70 - k * 18, -54 - k * 14, 12 + k * 4, 0, 7); c.fill(); } }
+  else if (kind === 'steel') { c.fillStyle = '#3a2a1a'; c.fillRect(-120, -10, 220, 80); for (const sx of [-90, -40, 10, 60]) c.fillRect(sx, -80, 18, 80); c.fillStyle = '#d9783b'; for (let k = 0; k < 4; k++) c.fillRect(-100 + k * 50, 20, 26, 22); c.fillStyle = 'rgba(80,70,60,.45)'; for (const sx of [-81, -31, 19, 69]) { c.beginPath(); c.arc(sx, -94, 16, 0, 7); c.fill(); } }
+  else { c.fillStyle = '#3a2a1a'; c.fillRect(-110, 40, 220, 30); for (let k = -90; k <= 90; k += 30) c.fillRect(k - 6, -10, 12, 50); c.beginPath(); c.moveTo(-120, -10); c.lineTo(0, -60); c.lineTo(120, -10); c.closePath(); c.fill(); c.beginPath(); c.arc(0, -66, 30, Math.PI, 0); c.fill(); c.fillRect(-4, -110, 8, 20); }
+  c.font = '30px Anton'; c.fillStyle = INK; c.textAlign = 'center'; c.fillText({ rail: 'RAILROADS', steel: 'STEEL', gov: 'US GOVERNMENT' }[kind], -5, 96); c.fillStyle = RED; c.beginPath(); c.arc(-5, -96, 9, 0, 7); c.fill(); c.restore(); };
+// NYC on the map_northeast plate
+const NYC = [1280, 834];
+const pin = (c, x, y, a, lt) => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); const p = .5 + .5 * Math.sin(lt * 5); c.fillStyle = `rgba(200,50,40,${.25 * p})`; c.beginPath(); c.ellipse(0, 0, 40 + 16 * p, 13 + 5 * p, 0, 0, 7); c.fill(); c.fillStyle = '#c83a2a'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.moveTo(0, 0); c.bezierCurveTo(-12, -26, -32, -44, -32, -70); c.arc(0, -70, 32, Math.PI, 0); c.bezierCurveTo(32, -44, 12, -26, 0, 0); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#fff4e8'; c.beginPath(); c.arc(0, -72, 12, 0, 7); c.fill(); c.restore(); };
+// a skyline outline that grows out of the pin (world)
+const skylineGrow = (c, x, y, u) => { if (u <= 0) return; const B = [[-230, 120], [-190, 210], [-150, 160], [-110, 300], [-60, 240], [-20, 420], [30, 330], [70, 260], [110, 380], [160, 220], [200, 170], [230, 110]]; c.save(); c.lineJoin = 'round';
+  c.beginPath(); c.moveTo(x - 260, y); for (const [dx, h] of B) { const hh = h * E.out(u); c.lineTo(x + dx - 18, y - hh); c.lineTo(x + dx + 18, y - hh); } c.lineTo(x + 260, y); c.closePath(); c.fillStyle = 'rgba(40,70,120,.55)'; c.fill(); c.strokeStyle = INK; c.lineWidth = 6; c.stroke();
+  c.fillStyle = 'rgba(255,220,140,.8)'; for (const [dx, h] of B) for (let wy = 20; wy < h * E.out(u) - 20; wy += 34) { c.fillRect(x + dx - 9, y - wy - 14, 7, 10); c.fillRect(x + dx + 3, y - wy - 14, 7, 10); } c.restore(); };
+// the Fed banner over the courthouse frieze (world)
+const fedFrieze = (c) => { c.save(); c.fillStyle = '#e4ddd0'; c.fillRect(1225, 402, 900, 52); c.strokeStyle = 'rgba(120,110,90,.6)'; c.lineWidth = 3; c.strokeRect(1225, 402, 900, 52); c.font = '38px SourceSerif'; c.fillStyle = '#6a6050'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('F E D E R A L   R E S E R V E', 1675, 430); c.restore(); };
+const stamp = (c, txt, x, y, lt, at, px = 120, col = RED) => { const u = K.seg(lt, at, at + .35); if (u <= 0) return; const s = 1 + 1.4 * (1 - E.out(u)); c.save(); c.globalAlpha = Math.min(1, u * 2); c.translate(x, y); c.rotate(-.12); c.scale(s, s); c.font = px + 'px Anton'; const w = c.measureText(txt).width + 60; c.strokeStyle = col; c.lineWidth = 10; c.strokeRect(-w / 2, -px * .7, w, px * 1.3); c.fillStyle = col; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(txt, 0, 4); c.restore(); };
+
+window.SHOTS = [
+  // 1 gas-lit Wall Street 1871: Drexel waits by the door, young Morgan walks up; handshake at arm's length
+  { plate: 'wallst_1870', cam: { z: [1.12, 1.22], x: [1000, 900], y: [820, 840], ease: E.io }, bed: [['city_loop', .25], ['walk_hooves_loop', .2]],
+    live: [A.smoke(300, 300, .8, '200,190,180')],
+    figs: [{ x: 470, y: 1250, s: 1.55, ...DREXEL, facing: 1, pose: 'stand', mood: 'neutral', anim: (o, lt, u, S) => { const t = A.at(S, 'partnership', 7); o.pose = lt > t ? 'reach' : 'stand'; o.mood = lt > t ? 'happy' : 'neutral'; } },
+      { y: 1262, s: 1.6, ...MORGAN_Y, facing: -1, walk: { x0: 1900, x1: 830, t0: .8, dur: 3.6 }, anim: (o, lt, u, S) => { const t = A.at(S, 'partnership', 7); if (lt > 4.4) { o.pose = lt > t ? 'reach' : 'stand'; o.mood = lt > t ? 'happy' : 'neutral'; o.talk = lt > t + .3 && lt < t + 2; } } }],
+    init: S => { const tM = A.at(S, 'John Pierpont Morgan', 3.5), tD = A.at(S, 'Anthony Drexel', 7.5), tP = A.at(S, 'partnership', 7);
+      S.D.over = [(c, lt) => K.dateTag(c, '1871', lt, { at: .4 }), (c, lt) => K.card(c, 'J. PIERPONT MORGAN', lt, { at: tM, x: 1500, y: 420, px: 52, rot: 4, until: tD }), (c, lt) => K.card(c, 'ANTHONY DREXEL', lt, { at: tD, x: 520, y: 250, px: 52, rot: -4 }),
+        (c, lt) => JK.plaque(c, 1010, 160, 'DREXEL, MORGAN & CO.', .9, pop(lt, tP + .6, .5))];
+      S.D.sfx = [[.8, 'footsteps', .45], [tM, 'pop', .4], [tP, 'whoosh_soft', .35], [tD, 'pop', .4], [tP + .6, 'stamp', .5]]; } },
+  // 2 the 1890s partners' room: Morgan (now grey) presents; sketches of what he financed pin up
+  { plate: 'partners_room', cam: { z: [1.06, 1.14], x: [1280, 1260], y: [800, 820] }, bed: [['hum_loop', .3], ['fire_loop', .25]],
+    figs: [{ x: 560, y: 1330, s: 1.85, ...MORGAN, facing: 1, pose: 'present', mood: 'neutral', anim: (o, lt, u, S) => { o.talk = lt > .5 && lt < 2.5; o.pose = lt > A.at(S, 'railroads', 4) ? 'point' : 'present'; } }],
+    init: S => { const tN = A.at(S, 'Company', 2.4), tR = A.at(S, 'railroads', 4.3), tS = A.at(S, 'steel', 5.3), tG = A.at(S, 'government', 6.4);
+      S.D.over = [(c, lt) => K.dateTag(c, '1895', lt, { at: .3 }), (c, lt) => JK.plaque(c, 1180, 150, 'J.P. MORGAN & CO.', .95, pop(lt, tN, .5)),
+        (c, lt) => sketch(c, 900, 520, 'rail', pop(lt, tR), -.05), (c, lt) => sketch(c, 1260, 560, 'steel', pop(lt, tS), .04), (c, lt) => sketch(c, 1620, 520, 'gov', pop(lt, tG), -.03)];
+      S.D.sfx = [[tN, 'stamp', .5], [tR, 'paper', .5], [tS, 'paper', .5], [tG, 'paper', .5], [tG + .1, 'chime', .35]]; } },
+  // 3 Panic of 1907: depositors in bowler hats rush the teller counter, papers fly
+  { plate: 'bank', cam: { z: [1.04, 1.16], x: [1280, 1280], y: [820, 800], ease: E.io }, bed: [['crowd_loop', .55], ['tension', .25]],
+    figs: [{ y: 1240, s: 1.45, ...DEP(1, '#3a2e26'), facing: 1, mood: 'worried', walk: { x0: -200, x1: 640, t0: .2, dur: 2.4 }, anim: (o, lt) => { if (lt > 2.6) o.pose = 'reach'; } },
+      { y: 1240, s: 1.45, ...DEP(3, '#2a2420'), facing: -1, mood: 'shocked', walk: { x0: 2760, x1: 1920, t0: .4, dur: 2.4 }, anim: (o, lt) => { if (lt > 2.8) o.pose = 'reach'; } },
+      { y: 1330, s: 1.65, ...DEP(4, '#4a3a2a'), facing: 1, mood: 'worried', walk: { x0: -300, x1: 980, t0: 1.0, dur: 3 }, anim: (o, lt) => { if (lt > 4) o.pose = 'cheer'; } },
+      { y: 1330, s: 1.65, ...DEP(5, '#1d1a18'), facing: -1, mood: 'angry', walk: { x0: 2860, x1: 1560, t0: 1.3, dur: 3 }, anim: (o, lt) => { if (lt > 4.3) o.pose = 'cheer'; } },
+      { y: 1420, s: 1.85, ...DEP(6, '#2a2420'), facing: 1, mood: 'shocked', walk: { x0: -400, x1: 380, t0: 2.2, dur: 2.6 } },
+      { y: 1420, s: 1.85, ...DEP(7, '#3a2e26'), facing: -1, mood: 'worried', walk: { x0: 2960, x1: 2180, t0: 2.5, dur: 2.6 } }],
+    live: [JK.papers(200, 2400, 16)],
+    init: S => { const tF = A.at(S, 'failing', 3.6), tC = A.at(S, 'central bank', 6.2);
+      S.D.over = [(c, lt) => K.badge(c, 'PANIC OF 1907', lt, { at: .3 }), (c, lt) => K.dateTag(c, '1907', lt, { at: .4 }), (c, lt) => K.card(c, 'BANKS FAILING', lt, { at: tF, x: 1460, y: 230, px: 60, rot: 4 }),
+        (c, lt) => K.card(c, 'NO CENTRAL BANK', lt, { at: tC, x: 520, y: 230, px: 56, rot: -5 })];
+      S.D.sfx = [[.2, 'run_steps', .4], [1.2, 'crowd_cheer', .25], [tF, 'alarm', .3], [tC, 'stamp', .55], [tC + .4, 'paper', .4]]; } },
+  // 4 night in the Morgan Library: bankers on both sides, Morgan by the fire pushes the plan
+  { plate: 'library', cam: { z: [1.05, 1.15], x: [1280, 1280], y: [860, 880] }, bed: [['fire_loop', .5], ['hum_loop', .2]],
+    figs: [{ x: 1290, y: 1190, s: 1.5, ...MORGAN, facing: 1, pose: 'stand', mood: 'neutral', anim: (o, lt, u, S) => { const tP = A.at(S, 'pushed', 4.6); o.pose = lt > tP ? (Math.floor((lt - tP) * 1.2) % 2 ? 'point' : 'present') : 'stand'; o.facing = lt > tP + 2 ? -1 : 1; o.talk = lt > tP; o.mood = lt > tP ? 'angry' : 'neutral'; } },
+      { x: 430, y: 1360, s: 1.85, ...BANKER(1), facing: 1, pose: 'stand', mood: 'worried' }, { x: 760, y: 1300, s: 1.65, ...BANKER(2), facing: 1, pose: 'think', mood: 'worried' },
+      { x: 1820, y: 1300, s: 1.65, ...BANKER(4), facing: -1, pose: 'shrug', mood: 'worried' }, { x: 2140, y: 1360, s: 1.85, ...BANKER(5), facing: -1, pose: 'stand', mood: 'neutral', anim: (o, lt, u, S) => { if (lt > A.at(S, 'agree', 7)) { o.pose = 'cheer'; o.mood = 'happy'; } } }],
+    over: [A.grade('120,60,10', .14, 'overlay')],
+    init: S => { const tL = A.at(S, 'library', 2.6), tA = A.at(S, 'rescue plan', 7.4);
+      S.D.over = S.D.over.concat([(c, lt) => K.badge(c, 'MORGAN LIBRARY · 1907', lt, { at: tL }), (c, lt) => K.card(c, 'RESCUE PLAN', lt, { at: tA, x: 960, y: 220, px: 64, rot: -3 })]);
+      S.D.sfx = [[.3, 'creak', .35], [tL, 'door_slam', .3], [A.at(S, 'pushed', 4.6), 'thud', .4], [tA, 'stamp', .55], [tA + .3, 'paper', .4]]; } },
+  // 5 it worked, but one man held the system; 1913 the Federal Reserve is stamped
+  { plate: 'court', cam: { z: [1.05, 1.18], x: [1380, 1560], y: [760, 700], ease: E.io }, bed: [['city_loop', .3], ['birds_loop', .2]],
+    live: [fedFrieze],
+    figs: [{ x: 2160, y: 1390, s: 1.75, ...MORGAN, hat: JK.topHat(), facing: -1, pose: 'cheer', mood: 'happy', anim: (o, lt, u, S) => { const tB = A.at(S, 'one private banker', 2); o.pose = lt < tB ? 'cheer' : 'shrug'; o.mood = lt < tB ? 'happy' : 'neutral'; } }],
+    init: S => { const tW = A.at(S, 'It worked', .2), tB = A.at(S, 'one private banker', 2), t13 = A.at(S, '1913', 5.2), tF = A.at(S, 'Federal Reserve', 8);
+      S.D.over = [(c, lt) => K.card(c, 'IT WORKED ✓', lt, { at: tW, x: 520, y: 240, px: 58, rot: -4, until: tB + .1 }), (c, lt) => K.card(c, 'ONE PRIVATE BANKER\nHELD THE SYSTEM', lt, { at: tB, x: 560, y: 260, px: 48, rot: -4, until: t13 }),
+        (c, lt) => stamp(c, '1913', 1520, 230, lt, t13, 110), (c, lt) => K.title(c, 'THE FEDERAL RESERVE', lt, { at: tF, y: 900, px: 92, fill: GOLD })];
+      S.D.sfx = [[tW, 'chime', .45], [tB, 'tension', .3], [t13, 'stamp', .7], [tF, 'swell', .35], [tF, 'hit', .4]]; } },
+  // 6 map: a 1799 pin at Manhattan grows into a Chase Manhattan skyline
+  { plate: 'map_northeast', cam: { z: [1.0, 1.55], x: [1280, 1280], y: [720, 760], ease: E.io },
+    bed: [['hum_loop', .25]],
+    init: S => { const t99 = A.at(S, '1799', 3.2), tG = A.at(S, 'grew', 5), tC = A.at(S, 'Chase Manhattan', 8.4);
+      S.D.live = [(c, lt) => { skylineGrow(c, NYC[0], NYC[1], K.seg(lt, tG, tC + .4)); pin(c, NYC[0], NYC[1], pop(lt, t99, .5), lt); if (lt > t99) { c.save(); c.font = '34px Anton'; c.textAlign = 'center'; c.lineWidth = 7; c.strokeStyle = '#f2e6c8'; c.globalAlpha = K.seg(lt, t99, t99 + .4); c.strokeText('THE MANHATTAN COMPANY', NYC[0], NYC[1] + 54); c.fillStyle = INK; c.fillText('THE MANHATTAN COMPANY', NYC[0], NYC[1] + 54); c.restore(); } }];
+      S.D.over = [(c, lt) => K.counter(c, 1799, 1955, lt, { at: tG, dur: Math.max(1.2, tC - tG), x: 330, y: 170, px: 84, fmt: v => String(Math.round(v)) }), (c, lt) => K.card(c, 'CHASE MANHATTAN', lt, { at: tC, x: 1380, y: 330, px: 58, rot: 4 })];
+      S.D.sfx = [[t99, 'pop', .5], [tG, 'riser', .35], [tC, 'chime', .5]]; } },
+  // 7 two old brass plaques slide together and lock into one
+  { plate: 'bank', cam: { z: [1.1, 1.14], x: [1280, 1280], y: [700, 700] }, bed: [['office_loop', .3]],
+    over: [(c) => { c.save(); c.fillStyle = 'rgba(14,10,8,.55)'; c.fillRect(0, 0, SW, SH); c.restore(); }],
+    init: S => { const tM = A.at(S, 'merged', 2.2), tN = A.at(S, 'not yet', 6.5);
+      S.D.over = S.D.over.concat([(c, lt) => { const m = E.io(K.seg(lt, tM, tM + 1.1)); if (m < 1) { c.save(); c.globalAlpha = 1 - K.seg(lt, tM + .9, tM + 1.1); JK.plaque(c, 520 + 330 * m, 470, 'J.P. MORGAN & CO.', .8, pop(lt, .3, .5)); JK.plaque(c, 1400 - 330 * m, 470, 'CHASE MANHATTAN', .8, pop(lt, .8, .5)); c.restore(); }
+          if (lt > tM + .9) JK.plaque(c, 960, 470, 'JPMORGAN CHASE', 1.15 + .15 * (1 - E.back(K.seg(lt, tM + .9, tM + 1.4))), 1); },
+        (c, lt) => K.dateTag(c, '2000', lt, { at: tM }), (c, lt) => K.card(c, 'HUGE. BUT NOT YET No. 1', lt, { at: tN, x: 960, y: 780, px: 58, rot: -3 })]);
+      S.D.sfx = [[.3, 'whoosh_soft', .4], [.8, 'whoosh_soft', .4], [tM, 'scrape', .45], [tM + 1, 'thud', .6], [tM + 1.05, 'chime', .4], [tN, 'pop', .4]]; } },
+  // 8 grey Chicago at night: one office window still lit
+  { plate: 'chicago', cam: { z: [1.3, 1.45], x: [700, 1420], y: [640, 560], ease: E.io }, bed: [['city_loop', .3], ['wind_loop', .25]],
+    live: [(c, lt) => { c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = 'rgba(30,40,90,.55)'; c.fillRect(0, 0, 2560, 1440); c.restore(); const f = .85 + .15 * Math.sin(lt * 7); c.save(); const g = c.createRadialGradient(1428, 520, 4, 1428, 520, 110); g.addColorStop(0, `rgba(255,214,130,${.7 * f})`); g.addColorStop(1, 'rgba(255,214,130,0)'); c.fillStyle = g; c.fillRect(1300, 400, 260, 240); c.fillStyle = '#ffe2a0'; c.fillRect(1416, 506, 24, 30); c.restore(); }],
+    init: S => { const tC = A.at(S, 'Chicago', 5.5), tS = A.at(S, 'struggling', 4.6);
+      S.D.over = [(c, lt) => K.dateTag(c, '2000', lt, { at: .3 }), (c, lt) => K.card(c, 'A STRUGGLING BANK', lt, { at: tS, x: 520, y: 240, px: 56, rot: -4 }), (c, lt) => K.badge(c, 'CHICAGO', lt, { at: tC })];
+      S.D.sfx = [[.3, 'wind_loop', .2], [tS, 'tick', .4], [tC, 'pop', .4]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>

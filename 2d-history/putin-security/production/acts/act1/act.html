@@ -1,0 +1,98 @@
+<!doctype html><html><head><meta charset="utf-8"><title>PU act 1 - A Man of Many Homes</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "alium";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../pu_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['map_russia', 'moscow_road', 'office_a']) K.load(n, PL + n + '.jpg');
+const SW = 1920, SH = 1080, INK = '#1d1712', RED = '#d42a20', GOLD = '#e8b44a';
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+const plateAt = (c, name, px, py, sx, sy, z) => { const s2 = z * 1920 / 2560; c.setTransform(s2, 0, 0, s2, sx - px * s2, sy - py * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); return s2; };
+const P = { novo: PU.xy(37.2, 55.72), mos: PU.xy(37.62, 55.75), valdai: PU.xy(33.3, 57.9), sochi: PU.xy(39.7, 43.6), cape: PU.xy(38.2, 44.4) };
+// small map dot with a label (world); s scales with zoom so text stays readable
+const dot = (c, p, lab, a, s = 1, dx = 0, dy = -40) => { if (a <= 0) return; c.save(); c.globalAlpha *= Math.min(1, a); c.translate(p[0], p[1]); c.scale(s, s); c.fillStyle = '#ffd88a'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.arc(0, 0, 9, 0, 7); c.fill(); c.stroke(); c.font = '26px Anton'; c.textAlign = 'center'; c.lineWidth = 6; c.strokeStyle = '#f2e6c8'; c.strokeText(lab, dx, dy); c.fillStyle = INK; c.fillText(lab, dx, dy); c.restore(); };
+const night = (c) => { c.save(); c.fillStyle = 'rgba(10,16,40,.3)'; c.fillRect(0, 0, 2560, 1440); c.restore(); };
+// drop a pin from above (world)
+const drop = (c, p, at, lt, s = .6) => { const u = K.seg(lt, at, at + .45); if (u <= 0) return; const y = p[1] - 260 * (1 - E.out(u)) * (1 - u); PU.pin(c, p[0], u < 1 ? p[1] - 200 * (1 - u) * (1 - u) : p[1], s, Math.min(1, u * 3), lt); };
+// tiny forest compound icon: fence ring + pines + house (world)
+const compound = (c, x, y, a, s = .5) => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(s * a, s * a); c.strokeStyle = INK; c.lineWidth = 4; c.fillStyle = 'rgba(240,244,250,.85)'; c.beginPath(); c.ellipse(0, 0, 130, 60, 0, 0, 7); c.fill(); c.stroke(); c.setLineDash([8, 6]); c.beginPath(); c.ellipse(0, 0, 118, 52, 0, 0, 7); c.stroke(); c.setLineDash([]);
+  for (const [tx, ty] of [[-90, -10], [-70, 20], [80, -16], [96, 14], [-40, -34], [50, -36]]) { c.fillStyle = '#2f5a3a'; c.beginPath(); c.moveTo(tx, ty - 46); c.lineTo(tx + 18, ty); c.lineTo(tx - 18, ty); c.closePath(); c.fill(); c.stroke(); }
+  c.fillStyle = '#e8e0d0'; c.fillRect(-34, -20, 68, 34); c.strokeRect(-34, -20, 68, 34); c.fillStyle = '#5a6a7a'; c.beginPath(); c.moveTo(-42, -20); c.lineTo(0, -46); c.lineTo(42, -20); c.closePath(); c.fill(); c.stroke(); c.restore(); };
+// inset painting card (screen): wooden house on a frozen lake, chimney smoke
+const lakeHouse = (c, x, y, a, lt) => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(-300 + 14, -200 + 14, 600, 400); c.beginPath(); c.rect(-300, -200, 600, 400); c.save(); c.clip();
+  let g = c.createLinearGradient(0, -200, 0, 40); g.addColorStop(0, '#8aa0c0'); g.addColorStop(1, '#dfe6ee'); c.fillStyle = g; c.fillRect(-300, -200, 600, 260);
+  c.fillStyle = '#4a6a5a'; for (let k = 0; k < 26; k++) { const tx = -300 + k * 24, h = 50 + (k * 37 % 40); c.beginPath(); c.moveTo(tx, 40); c.lineTo(tx + 12, 40 - h); c.lineTo(tx + 24, 40); c.fill(); }
+  g = c.createLinearGradient(0, 40, 0, 200); g.addColorStop(0, '#cfdbe6'); g.addColorStop(1, '#f2f6fa'); c.fillStyle = g; c.fillRect(-300, 40, 600, 160); c.strokeStyle = 'rgba(255,255,255,.8)'; c.lineWidth = 3; for (let k = 0; k < 6; k++) { c.beginPath(); c.moveTo(-260 + k * 90, 90 + k * 14); c.lineTo(-200 + k * 90, 96 + k * 14); c.stroke(); }
+  c.fillStyle = '#7a4a2e'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(-120, -40, 240, 100); c.strokeRect(-120, -40, 240, 100); c.strokeStyle = 'rgba(40,20,10,.5)'; c.lineWidth = 2; for (let yy = -30; yy < 60; yy += 14) { c.beginPath(); c.moveTo(-120, yy); c.lineTo(120, yy); c.stroke(); }
+  c.fillStyle = '#3a4a5a'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.moveTo(-140, -40); c.lineTo(0, -120); c.lineTo(140, -40); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#5a3a2a'; c.fillRect(60, -120, 26, 50); c.strokeRect(60, -120, 26, 50);
+  for (const wx of [-80, 40]) { c.fillStyle = '#ffd88a'; c.fillRect(wx, -10, 40, 34); c.strokeRect(wx, -10, 40, 34); } c.fillStyle = '#3a2418'; c.fillRect(-20, 0, 34, 60);
+  for (let k = 0; k < 7; k++) { const life = (lt * .25 + k / 7) % 1; c.fillStyle = `rgba(235,238,245,${.5 * (1 - life)})`; c.beginPath(); c.arc(73 + Math.sin(life * 6 + k) * 14 + life * 40, -130 - life * 120, 12 + life * 26, 0, 7); c.fill(); }
+  c.restore(); c.strokeStyle = '#f2e6c8'; c.lineWidth = 14; c.strokeRect(-300, -200, 600, 400); c.strokeStyle = INK; c.lineWidth = 4; c.strokeRect(-307, -207, 614, 414); c.restore(); };
+// a palace silhouette on a cliff (inset, screen)
+const palace = (c, x, y, a) => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(-286, -186, 600, 380); c.beginPath(); c.rect(-300, -200, 600, 380); c.save(); c.clip();
+  let g = c.createLinearGradient(0, -200, 0, 180); g.addColorStop(0, '#f2c890'); g.addColorStop(1, '#7ab0c8'); c.fillStyle = g; c.fillRect(-300, -200, 600, 380); c.fillStyle = '#3a6a8a'; c.fillRect(-300, 90, 600, 90);
+  c.fillStyle = '#6a7a4a'; c.beginPath(); c.moveTo(-300, 100); c.lineTo(-300, -10); c.quadraticCurveTo(-60, -40, 140, 0); c.lineTo(220, 100); c.closePath(); c.fill();
+  c.fillStyle = '#efe6d4'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-190, -90, 300, 70); c.strokeRect(-190, -90, 300, 70); c.beginPath(); c.moveTo(-200, -90); c.lineTo(-40, -130); c.lineTo(120, -90); c.closePath(); c.fill(); c.stroke(); for (let k = -170; k < 100; k += 26) { c.fillStyle = '#c8bca4'; c.fillRect(k, -86, 8, 62); }
+  c.restore(); c.strokeStyle = '#f2e6c8'; c.lineWidth = 14; c.strokeRect(-300, -200, 600, 380); c.strokeStyle = INK; c.lineWidth = 4; c.strokeRect(-307, -207, 614, 394); c.restore(); };
+// route through the residences (world)
+const ROUTE = [P.novo, P.valdai, P.novo, P.sochi, P.cape];
+const routeAt = u => { const n = ROUTE.length - 1, s = Math.min(n - 1e-6, u * n), i = Math.floor(s), f = s - i; const [x0, y0] = ROUTE[i], [x1, y1] = ROUTE[i + 1]; return [x0 + (x1 - x0) * f + Math.sin(f * Math.PI) * 40 * (i % 2 ? 1 : -1), y0 + (y1 - y0) * f]; };
+const route = (c, u) => { if (u <= 0) return; c.save(); c.strokeStyle = 'rgba(212,42,32,.85)'; c.lineWidth = 7; c.setLineDash([18, 12]); c.beginPath(); for (let k = 0; k <= 120 * u; k++) { const [x, y] = routeAt(k / 120); k ? c.lineTo(x, y) : c.moveTo(x, y); } c.stroke(); c.restore(); };
+const allDots = (c, a = 1) => { dot(c, P.mos, 'MOSCOW', a, 1, 70, 10); dot(c, P.novo, 'NOVO-OGARYOVO', a, 1, -110, -30); dot(c, P.valdai, 'VALDAI', a, 1, 0, -30); dot(c, P.sochi, 'SOCHI', a, 1, 70, 30); dot(c, P.cape, 'CAPE IDOKOPAS', a, 1, -150, 20); };
+
+window.SHOTS = [
+  // 1 map zooms to Moscow; a pin drops on the forest compound
+  { plate: 'map_russia', cam: { z: [1.0, 2.6], x: [1280, 1120], y: [720, 540], ease: E.io }, bed: [['wind_loop', .3], ['hum_loop', .2]],
+    init: S => { const tN = A.at(S, 'Novo-Ogaryovo', 2.8), tF = A.at(S, 'forest', 5.4);
+      S.D.live = [night, (c, lt) => { dot(c, P.mos, 'MOSCOW', 1, .6, 50, 10); compound(c, P.novo[0] - 10, P.novo[1] + 28, pop(lt, tF), .32); drop(c, P.novo, tN, lt, .38); }];
+      S.D.over = [(c, lt) => K.dateTag(c, 'SINCE 2000', lt, { at: .3 }), (c, lt) => K.card(c, 'NOVO-OGARYOVO', lt, { at: tN + .3, x: 520, y: 230, px: 58, rot: -4 })];
+      S.D.sfx = [[.3, 'whoosh_soft', .4], [tN, 'thud', .45], [tN + .1, 'pop', .4], [tF, 'birds_loop', .2]]; } },
+  // 2 pan to Valdai; an inset of the wooden house on the frozen lake
+  { plate: 'map_russia', cam: { z: [2.6, 2.3], x: [1120, 1000], y: [540, 480], ease: E.io }, bed: [['wind_loop', .35]],
+    init: S => { const tV = A.at(S, 'Valdai', 3.4);
+      S.D.live = [night, (c, lt) => { dot(c, P.mos, 'MOSCOW', 1, .6, 50, 10); PU.pin(c, P.novo[0], P.novo[1], .38, 1, lt); drop(c, P.valdai, tV, lt, .38); }];
+      S.D.over = [(c, lt) => lakeHouse(c, 1400, 470, pop(lt, tV + .2, .5) * .95, lt), (c, lt) => K.card(c, 'VALDAI', lt, { at: tV + .4, x: 1400, y: 760, px: 58, rot: 3 })];
+      S.D.sfx = [[.2, 'whoosh_soft', .35], [tV, 'thud', .45], [tV + .2, 'whoosh', .35], [tV + .5, 'fire_loop', .15]]; } },
+  // 3 slide south to the Black Sea: Sochi and the palace on Cape Idokopas
+  { plate: 'map_russia', cam: { z: [2.0, 2.4], x: [1060, 1200], y: [700, 1020], ease: E.io }, bed: [['ocean_loop', .3]],
+    init: S => { const tS = A.at(S, 'Sochi', 2), tC = A.at(S, 'Cape Idokopas', 5.4), tI = A.at(S, 'investigators', 6.6), tD = A.at(S, 'denies', 9.6);
+      S.D.live = [night, (c, lt) => { dot(c, P.sochi, 'SOCHI', pop(lt, tS), .6, 60, 22); drop(c, P.sochi, tS, lt, .38); dot(c, P.cape, 'CAPE IDOKOPAS', pop(lt, tC), .6, -110, 20); drop(c, P.cape, tC, lt, .38); }];
+      S.D.over = [(c, lt) => palace(c, 520, 420, pop(lt, tC + .2, .5) * .85), (c, lt) => K.card(c, 'INVESTIGATORS\nLINK IT TO HIM', lt, { at: tI, x: 1460, y: 240, px: 46, rot: 3 }), (c, lt) => K.card(c, 'HE DENIES\nOWNING IT', lt, { at: tD, x: 1460, y: 470, px: 46, rot: -3 })];
+      S.D.sfx = [[.2, 'whoosh_soft', .35], [tS, 'thud', .45], [tC, 'thud', .45], [tI, 'paper', .4], [tD, 'stamp', .5]]; } },
+  // 4 a route line snakes between the residences
+  { plate: 'map_russia', cam: { z: [1.35, 1.45], x: [1060, 1080], y: [760, 760] }, bed: [['hum_loop', .3]],
+    init: S => { const tT = A.at(S, 'travel', 5.4);
+      S.D.live = [night, (c, lt) => { allDots(c); route(c, E.io(K.seg(lt, .6, S.end - S.start - .3))); const [x, y] = routeAt(E.io(K.seg(lt, .6, S.end - S.start - .3))); PU.pin(c, x, y, .5, 1, lt); }];
+      S.D.over = [(c, lt) => K.card(c, 'HE HAS TO TRAVEL', lt, { at: tT, x: 1500, y: 220, px: 54, rot: 3 })];
+      S.D.sfx = [[.6, 'whoosh_soft', .35], [tT, 'pop', .4]]; } },
+  // 5 the moving pin pulses like a target
+  { plate: 'map_russia', cam: { z: [1.45, 2.1], x: [1080, 1230], y: [760, 760], ease: E.io }, bed: [['tension', .4], ['heartbeat', .35]],
+    init: S => { const p = routeAt(.62), tE = A.at(S, 'exposed', 3.4);
+      S.D.live = [night, (c, lt) => { allDots(c, .6); route(c, 1); c.save(); c.strokeStyle = RED; for (let k = 0; k < 3; k++) { const f = (lt * .8 + k / 3) % 1; c.globalAlpha = 1 - f; c.lineWidth = 6; c.beginPath(); c.arc(p[0], p[1] - 20, 30 + f * 140, 0, 7); c.stroke(); } c.globalAlpha = 1; c.lineWidth = 4; c.beginPath(); c.moveTo(p[0] - 90, p[1] - 20); c.lineTo(p[0] + 90, p[1] - 20); c.moveTo(p[0], p[1] - 110); c.lineTo(p[0], p[1] + 70); c.stroke(); c.restore(); PU.pin(c, p[0], p[1], .5, 1, lt); }];
+      S.D.over = [A.grade('120,0,0', .18), (c, lt) => K.title(c, 'MOST EXPOSED', lt, { at: tE, y: 170, px: 96, fill: '#ff9a8a' })];
+      S.D.sfx = [[.2, 'heartbeat', .45], [tE, 'hit', .55]]; } },
+  // 6 guards in dark coats around the car; one plain-clothes agent with a newspaper
+  { plate: 'moscow_road', cam: { z: [1.1, 1.16], x: [1280, 1300], y: [880, 880] }, bed: [['rain_loop', .6], ['city_loop', .25]],
+    live: [PU.sleet(220, .3), (c, lt) => PU.limo(c, 1260, 1210, 1.25, lt * .6, 1)],
+    figs: [{ x: 640, y: 1330, s: 1.7, costume: 'suit', hair: 'short', hairCol: '#1a1414', seed: 2, facing: 1, pose: 'stand', mood: 'focus', glasses: true },
+      { x: 960, y: 1390, s: 1.8, costume: 'suit', hair: 'bald', hairCol: '#2a2420', seed: 5, facing: 1, pose: 'stand', mood: 'focus' },
+      { x: 1620, y: 1390, s: 1.8, costume: 'suit', hair: 'short', hairCol: '#2a2420', seed: 9, facing: -1, pose: 'stand', mood: 'focus', glasses: true },
+      { x: 2260, y: 1330, s: 1.7, costume: 'leather', hair: 'short', hairCol: '#4a3428', seed: 13, facing: -1, pose: 'present', mood: 'neutral', hold: { near: (c) => { c.fillStyle = '#efe9da'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-10, -60, 110, 80); c.strokeRect(-10, -60, 110, 80); c.fillStyle = 'rgba(29,23,18,.45)'; for (let k = 0; k < 5; k++) c.fillRect(0, -48 + k * 14, 90, 4); } } }],
+    init: S => { const tU = A.at(S, 'uniformed', 2.4), tP = A.at(S, 'plain-clothes', 4.4);
+      S.D.over = [(c, lt) => K.card(c, 'GUARDED DAY & NIGHT', lt, { at: .4, x: 540, y: 220, px: 50, rot: -4 }), (c, lt) => { const a = pop(lt, tP); if (a <= 0) return; c.save(); c.globalAlpha = Math.min(1, a); c.strokeStyle = GOLD; c.lineWidth = 6; c.setLineDash([12, 10]); c.beginPath(); c.arc(1660, 690, 160, 0, 7); c.stroke(); c.restore(); K.card(c, 'PLAIN-CLOTHES AGENT', lt, { at: tP + .2, x: 1500, y: 240, px: 46, rot: 3 }); }];
+      S.D.sfx = [[.3, 'footsteps', .4], [tU, 'door_slam', .35], [tP, 'paper', .5]]; } },
+  // 7 a wall calendar with every date scribbled out
+  { draw: (c, lt, u, S) => { c.save(); c.filter = 'blur(5px) brightness(.55)'; plateAt(c, 'office_a', 1280, 720, 960, 540, 1.1); c.restore(); c.setTransform(1, 0, 0, 1, 0, 0);
+      const X = 560, Y = 170, CW = 114, CH = 100; c.fillStyle = 'rgba(0,0,0,.4)'; c.fillRect(X + 16, Y + 16, CW * 7 + 20, CH * 5 + 150); c.fillStyle = '#f4efe2'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(X, Y, CW * 7 + 20, CH * 5 + 150); c.strokeRect(X, Y, CW * 7 + 20, CH * 5 + 150); c.fillStyle = RED; c.fillRect(X, Y, CW * 7 + 20, 90); c.font = '54px Anton'; c.fillStyle = '#fff'; c.textAlign = 'center'; c.fillText('SCHEDULE', X + (CW * 7 + 20) / 2, Y + 66);
+      c.font = '34px Oswald'; for (let d = 0; d < 35; d++) { const cx = X + 10 + (d % 7) * CW, cy = Y + 110 + Math.floor(d / 7) * CH; c.strokeStyle = 'rgba(29,23,18,.3)'; c.lineWidth = 2; c.strokeRect(cx, cy, CW, CH); if (d < 31) { c.fillStyle = INK; c.textAlign = 'left'; c.fillText(String(d + 1), cx + 10, cy + 38); }
+        const t0 = S.tS + d * .08, s = K.seg(lt, t0, t0 + .25); if (s > 0 && d < 31) { c.save(); c.strokeStyle = 'rgba(200,30,20,.85)'; c.lineWidth = 6; c.lineCap = 'round'; c.beginPath(); for (let k = 0; k <= 10 * s; k++) { const px = cx + 12 + (k / 10) * (CW - 24), py = cy + 30 + Math.sin(k * 2.4 + d) * 22; k ? c.lineTo(px, py) : c.moveTo(px, py); } c.stroke(); c.restore(); } } },
+    bed: [['office_loop', .25], ['tick', 0]],
+    init: S => { S.tS = A.at(S, 'nobody', 4.6); const tP = A.at(S, 'predict', 6.6);
+      S.D.over = [(c, lt) => K.title(c, 'UNPREDICTABILITY', lt, { at: tP, y: 960, px: 92, fill: GOLD })];
+      S.D.sfx = [[.3, 'paper', .35], [S.tS, 'scrape', .4], [S.tS + 1.2, 'scrape', .35], [tP, 'hit', .55]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>

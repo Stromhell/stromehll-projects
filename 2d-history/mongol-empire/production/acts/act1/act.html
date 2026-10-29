@@ -1,0 +1,130 @@
+<!doctype html><html><head><meta charset="utf-8"><title>MG act 1 - the boy nobody wanted</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "leo";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../mg_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['map_steppe', 'steppe_day', 'ger_inside', 'steppe_night', 'steppe_dusk', 'steppe_open']) K.load(n, PL + n + '.jpg');
+{ const T = window.TIMING, L = T.shots[T.shots.length - 1]; L.end += 1.4; T.dur = L.end; }
+const INK = '#1d1712', RED = '#b8221e', GOLD = '#e8b44a';
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+// cast
+const HOELUN = MG.look('deelRed', { hair: 'long', seed: 2, hairCol: '#1a1410', over: { lashes: true } });
+const YESUGEI = MG.look('deel', { seed: 3, beard: true, hairCol: '#1a1410' });
+const BOY = MG.look('deelKid', { hair: 'short', seed: 6, hairCol: '#1a1410' });
+const KID2 = MG.look('deelGreen', { hair: 'short', seed: 8, hairCol: '#1a1410' });
+const KID3 = MG.look('deelBrown', { hair: 'long', seed: 9, hairCol: '#1a1410', over: { lashes: true } });
+const TEEN = MG.look('deel', { hair: 'long', seed: 6, hairCol: '#1a1410' });
+const BORTE = MG.look('deelGreen', { hair: 'bun', seed: 4, hairCol: '#1a1410', over: { lashes: true, topCol: '#2f7a8a' } });
+const TATAR = MG.look('deelBrown', { seed: 5, beard: true, hairCol: '#2a1a10' }), TATAR2 = MG.look('deelGreen', { seed: 7, hairCol: '#2a1a10' });
+const hatM = MG.furHat(), hatT = MG.furHat('#3a2a1a', '#2f4f6a'), hatK = MG.furHat('#5a4030', '#6a7f9a');
+// wooden cangue around the neck (drawn as a hat hook, below the head)
+const cangue = (c, hx, hy, r) => { c.save(); c.translate(hx, hy + r * 1.25); c.rotate(-.04); const w = r * 4.2, h = r * .5; c.fillStyle = 'rgba(0,0,0,.25)'; c.fillRect(-w / 2 + 6, -h / 2 + 8, w, h); const g = c.createLinearGradient(0, -h / 2, 0, h / 2); g.addColorStop(0, '#a07a4a'); g.addColorStop(1, '#6a4a2a'); c.fillStyle = g; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(-w / 2, -h / 2, w, h); c.strokeRect(-w / 2, -h / 2, w, h); c.strokeStyle = 'rgba(40,20,10,.5)'; c.lineWidth = 2; for (let k = -2; k <= 2; k++) { c.beginPath(); c.moveTo(-w / 2, k * h * .18); c.quadraticCurveTo(0, k * h * .18 + 4, w / 2, k * h * .18); c.stroke(); } c.fillStyle = '#3a2a1a'; for (const x of [-w * .42, w * .42]) { c.beginPath(); c.arc(x, 0, 6, 0, 7); c.fill(); } c.restore(); r = r; };
+const teenHat = (c, hx, hy, r) => { cangue(c, hx, hy, r); };
+// baby bundle in arms (world)
+const baby = (c, x, y, s, lt, fist) => { c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = '#e8dcc0'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.ellipse(0, 0, 58, 34, -.2, 0, 7); c.fill(); c.stroke(); c.fillStyle = '#c84a32'; c.beginPath(); c.ellipse(-8, 4, 40, 26, -.2, 0, 7); c.fill(); c.fillStyle = '#f4c7a1'; c.beginPath(); c.arc(40, -14, 24, 0, 7); c.fill(); c.stroke(); c.fillStyle = INK; c.beginPath(); c.arc(46, -16, 2.5, 0, 7); c.fill();
+  if (fist) { c.fillStyle = '#f4c7a1'; c.beginPath(); c.arc(10, -34, 12, 0, 7); c.fill(); c.stroke(); c.fillStyle = RED; c.beginPath(); c.arc(10, -36, 6, 0, 7); c.fill(); } c.restore(); };
+// river strip across the foreground (world)
+const river = (y0, y1) => (c, lt) => { c.save(); const g = c.createLinearGradient(0, y0, 0, y1); g.addColorStop(0, '#5a86a8'); g.addColorStop(1, '#2e5878'); c.fillStyle = g; c.beginPath(); c.moveTo(0, y0); for (let x = 0; x <= 2560; x += 80) c.lineTo(x, y0 + Math.sin(x * .004) * 18); c.lineTo(2560, y1); c.lineTo(0, y1); c.closePath(); c.fill(); c.strokeStyle = '#3a5a3a'; c.lineWidth = 8; c.beginPath(); for (let x = 0; x <= 2560; x += 80) c.lineTo(x, y0 + Math.sin(x * .004) * 18); c.stroke();
+  c.strokeStyle = 'rgba(255,255,255,.35)'; c.lineWidth = 3; for (let k = 0; k < 30; k++) { const x = ((k * 173 + lt * 40) % 2700) - 70, y = y0 + 40 + (k * 61 % (y1 - y0 - 50)); c.beginPath(); c.moveTo(x, y); c.quadraticCurveTo(x + 30, y - 6, x + 60, y); c.stroke(); } c.restore(); };
+const reeds = (x0, x1, y, h, col = '#3a5a32') => (c, lt) => { c.save(); c.strokeStyle = col; c.lineCap = 'round'; for (let k = 0; k < (x1 - x0) / 14; k++) { const x = x0 + k * 14 + (k * 7 % 9), hh = h * (.6 + (k * 13 % 10) / 25), sw = Math.sin(lt * 1.3 + k * .7) * 10; c.lineWidth = 5; c.beginPath(); c.moveTo(x, y); c.quadraticCurveTo(x + sw * .3, y - hh * .5, x + sw, y - hh); c.stroke(); if (k % 4 === 0) { c.fillStyle = '#5a3a22'; c.beginPath(); c.ellipse(x + sw, y - hh - 10, 6, 16, 0, 0, 7); c.fill(); } } c.restore(); };
+// wool-piled cart
+const woolCart = (c, x, y, s, prod) => { MG.cart(c, x, y, s, false); c.save(); c.translate(x, y); c.scale(s, s); for (let k = 0; k < 26; k++) { const px = -180 + (k * 53 % 330), py = -170 - (k * 37 % 90) + (k > 18 ? -20 : 0); c.fillStyle = k % 3 ? '#f2ead8' : '#ded4bc'; c.strokeStyle = INK; c.lineWidth = 2.5; c.beginPath(); c.arc(px, py + Math.sin(prod * 30 + k) * prod * 4, 38, 0, 7); c.fill(); c.stroke(); } c.restore(); };
+// tribe tags on the steppe map (world coords from the plate)
+const TRIBES = [['Mongols', 1280, 688, '#b8221e'], ['Tatars', 1864, 688, '#2f4f6a'], ['Keraits', 1132, 840, '#7a5a1a'], ['Merkits', 1372, 440, '#4f6a46'], ['Naimans', 640, 588, '#6a3a7a']];
+const blob = (x, y, r, col, a, lt, seed) => (c) => { if (a <= 0) return; c.save(); c.globalAlpha = a * .5; c.globalCompositeOperation = 'multiply'; c.fillStyle = col; c.beginPath(); for (let k = 0; k <= 40; k++) { const an = k / 40 * 6.283, w = 1 + .14 * Math.sin(an * 3 + seed + lt * .6) + .08 * Math.sin(an * 7 + seed); const px = x + Math.cos(an) * r * w * 1.4, py = y + Math.sin(an) * r * w * .8; k ? c.lineTo(px, py) : c.moveTo(px, py); } c.closePath(); c.fill(); c.restore(); };
+
+window.SHOTS = [
+  // 1 MAP: the steppe split between rival tribes; each name inks in; borders flicker as raids move
+  { plate: 'map_steppe', cam: { z: [1.08, 1.18], x: [1280, 1270], y: [700, 680] }, bed: [['wind_loop', .35]], inSfx: false,
+    init: S => { const ts = TRIBES.map(([w], i) => A.at(S, w, 3.2 + i * .9));
+      S.D.live = TRIBES.map(([w, x, y, col], i) => (c, lt) => blob(x, y, 150 + (i === 0 ? 20 : 0), col, E.out(K.seg(lt, ts[i], ts[i] + .5)), lt, i * 2)(c)).concat([(c, lt) => { if (lt < ts[4] + .3) return; c.save(); c.strokeStyle = 'rgba(120,14,12,.75)'; c.lineWidth = 6; c.setLineDash([14, 10]); c.lineDashOffset = -lt * 60; const pairs = [[0, 1], [3, 0], [2, 4], [1, 2]]; pairs.forEach(([a, b], k) => { const u = (lt * .6 + k * .25) % 1, A0 = TRIBES[a], B0 = TRIBES[b]; c.beginPath(); c.moveTo(A0[1], A0[2]); c.quadraticCurveTo((A0[1] + B0[1]) / 2, Math.min(A0[2], B0[2]) - 120, A0[1] + (B0[1] - A0[1]) * u, A0[2] + (B0[2] - A0[2]) * u); c.stroke(); }); c.restore(); }]);
+      S.D.over = [(c, lt) => K.badge(c, 'THE STEPPE · 1100s', lt, { at: .4 }), (c, lt) => K.dateTag(c, '1100s', lt, { at: .7 })];
+      S.D.sfx = ts.map(t => [t, 'pop', .4]).concat([[ts[4] + .3, 'whoosh_soft', .35]]); } },
+  // 2 WIDE: raiders drive off a stolen herd; a second band chases
+  { plate: 'steppe_day', cam: { z: [1.15, 1.2], x: [1280, 1300], y: [900, 900] }, bed: [['cavalry_loop', .5], ['wind_loop', .3]],
+    init: S => { const tA = A.at(S, 'Alliances', 3.2);
+      const herd = (k) => (c, lt) => MG.horse(c, { x: -300 + lt * 420 - k * 260, y: 1180 + (k % 2) * 60, s: .55, gait: 'gallop', t: lt, phase: k * 1.3, col: ['#8a5a32', '#c8a070', '#4a3020'][k], saddle: false });
+      const rider = (k, col, x0, sp, delay) => (c, lt) => MG.horse(c, { x: x0 + (lt - delay) * sp, y: 1310 + k * 40, s: .7, gait: 'gallop', t: lt, phase: k, col: ['#6a4028', '#3a2a1e', '#9a6a3a'][k % 3], rider: MG.archer({ draw: k === 0 ? .6 : 0, sil: null }) });
+      S.D.live = [herd(0), herd(1), herd(2), rider(0, 0, -1150, 430, 0), rider(1, 0, -1550, 430, 0), (c, lt) => { MG.horse(c, { x: -2100 + lt * 430, y: 1400, s: .78, gait: 'gallop', t: lt, col: '#e8dcc0', rider: MG.archer({ draw: .8 }) }); }, A.dust(0, 1150, 2560, 300, 30)];
+      S.D.over = [(c, lt) => K.card(c, 'HORSES · CATTLE · WIVES', lt, { at: A.at(S, 'horses', .6), x: 520, y: 200, px: 48, rot: -4 }), (c, lt) => K.card(c, 'ALLIANCES: UNTIL THE\nNEXT BETRAYAL', lt, { at: tA, x: 1400, y: 220, px: 46, rot: 4 })];
+      S.D.sfx = [[.2, 'neigh', .35], [1.4, 'bowstring', .3], [tA, 'hit', .35]]; } },
+  // 3 MED: inside the ger; Hoelun holds the newborn; the camera settles on his fist
+  { plate: 'ger_inside', cam: { z: [1.1, 1.7], x: [1200, 980], y: [900, 980], ease: E.io }, bed: [['fire_loop', .55]],
+    live: [(c, lt) => A.fire(1280, 1060, .55, { glow: 520 })(c, lt), A.smoke(1280, 1000, .7)],
+    figs: [{ x: 900, y: 1330, s: 1.45, facing: 1, pose: 'carry', look: HOELUN, mood: 'happy', anim: (o, lt, u, S) => { o.eyesClosed = lt > 6 ? .4 : null; } }],
+    init: S => { const tT = A.at(S, 'Temujin', 2.4), tC = A.at(S, 'blood clot', 6.6), tL = A.at(S, 'Legend', 5);
+      S.D.front = [(c, lt) => baby(c, 1010, 1080, 1.0, lt, lt > tC - .3)];
+      S.D.over = [(c, lt) => K.card(c, 'TEMUJIN · c. 1162', lt, { at: tT, x: 1440, y: 220, px: 58, rot: 4 }), (c, lt) => K.card(c, 'LEGEND', lt, { at: tL, x: 1500, y: 380, px: 44, rot: -3 }),
+        (c, lt) => { const a = pop(lt, tC, .5); if (a <= 0) return; c.save(); c.translate(430, 380); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.4)'; c.beginPath(); c.arc(8, 10, 190, 0, 7); c.fill(); c.fillStyle = '#3a2418'; c.beginPath(); c.arc(0, 0, 190, 0, 7); c.fill(); c.strokeStyle = '#e8b44a'; c.lineWidth = 8; c.stroke();
+          c.fillStyle = '#f4c7a1'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.ellipse(0, 30, 95, 80, 0, 0, 7); c.fill(); c.stroke(); for (let k = 0; k < 4; k++) { c.beginPath(); c.ellipse(-60 + k * 40, -30, 24, 34, 0, 0, 7); c.fill(); c.stroke(); } c.fillStyle = RED; c.beginPath(); c.ellipse(0, -60, 34, 22, 0, 0, 7); c.fill(); c.strokeStyle = '#6a0a08'; c.lineWidth = 3; c.stroke(); c.restore(); }];
+      S.D.sfx = [[.3, 'fire_loop', 0], [tT, 'chime', .4], [tC, 'heartbeat', .5]]; } },
+  // 4 MED: Yesugei shares a meal with Tatars by the fire; poisoned
+  { plate: 'steppe_night', cam: { z: [1.35, 1.45], x: [1500, 1500], y: [1050, 1060] }, bed: [['fire_loop', .5], ['night_loop', .4]],
+    live: [(c, lt) => A.fire(1500, 1250, .7, { glow: 600 })(c, lt), A.smoke(1500, 1180, .8)],
+    init: S => { const tP = A.at(S, 'poisoned', 2.4), tT = A.at(S, 'Tatars', 3.2);
+      S.D.figs = [{ x: 1180, y: 1290, s: 1.05, facing: 1, pose: 'sit', low: 40, seat: 'log', look: YESUGEI, hat: hatM, anim: (o, lt) => { o.pose = lt < tP - .4 ? 'present' : 'sit'; o.mood = lt > tP ? 'worried' : 'happy'; o.eyesClosed = lt > tP + 1.2 ? .6 : null; o.lean = lt > tP + .8 ? 10 : 0; } },
+        { x: 1800, y: 1290, s: 1.05, facing: -1, pose: 'sit', low: 40, seat: 'log', look: TATAR, hat: hatT, anim: (o, lt) => { o.mood = lt > tP ? 'angry' : 'happy'; o.talk = lt < tP; } },
+        { x: 2040, y: 1270, s: .98, facing: -1, pose: 'sit', low: 40, seat: 'log', look: TATAR2, hat: hatT, anim: (o, lt) => { o.mood = lt > tP ? 'focus' : 'happy'; } }];
+      S.D.front = [(c, lt) => { const up = lt < tP - .4 ? E.out(K.seg(lt, .4, 1.2)) : 0; c.save(); c.translate(1290, 1135 - up * 40); c.fillStyle = '#8a5a32'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(-16, -18); c.lineTo(16, -18); c.lineTo(12, 14); c.lineTo(-12, 14); c.closePath(); c.fill(); c.stroke(); c.restore(); }];
+      S.D.over = [A.grade('20,30,80', .2), (c, lt) => K.card(c, 'YESUGEI', lt, { at: .4, x: 480, y: 200, px: 52, rot: -4 }), (c, lt) => K.card(c, 'POISONED', lt, { at: tP, x: 520, y: 340, px: 64, rot: 3 }), (c, lt) => K.card(c, 'TATARS', lt, { at: tT, x: 1500, y: 200, px: 52, rot: 4 })];
+      S.D.sfx = [[tP, 'hit', .45], [tP + .3, 'heartbeat', .5]]; } },
+  // 5 WIDE: the clan rides away; one ger and a small family left in the grass
+  { plate: 'steppe_dusk', cam: { z: [1.15, 1.2], x: [1400, 1420], y: [900, 900] }, bed: [['wind_loop', .7], ['walk_hooves_loop', .3]],
+    init: S => { const tA = A.at(S, 'away', 1.6);
+      S.D.live = [(c, lt) => { for (let k = 0; k < 6; k++) { const x = 1500 + k * 170 + lt * 60, sc = .28 - k * .01; if (k % 2) MG.horse(c, { x, y: 900 - k * 4, s: sc, gait: 'walk', t: lt, phase: k, col: '#5a3a22', rider: MG.archer({ draw: 0 }) }); else { MG.horse(c, { x: x + 90, y: 900 - k * 4, s: sc, gait: 'walk', t: lt, phase: k, col: '#7a5a3a', saddle: false }); MG.cart(c, x - 20, 902 - k * 4, sc * .9); } } }];
+      S.D.figs = [{ x: 820, y: 1210, s: 1.15, facing: 1, pose: 'stand', look: HOELUN, mood: 'sad', anim: (o, lt) => { o.pose = lt > tA + 1 ? 'reach' : 'stand'; } },
+        { x: 1040, y: 1215, s: .72, facing: 1, pose: 'stand', look: BOY, hat: hatK, mood: 'worried' }, { x: 1180, y: 1220, s: .62, facing: 1, pose: 'stand', look: KID2, mood: 'sad' }, { x: 600, y: 1225, s: .58, facing: 1, pose: 'stand', look: KID3, mood: 'sad' }];
+      S.D.over = [A.grade('120,60,80', .12), (c, lt) => K.card(c, 'HOELUN + CHILDREN', lt, { at: A.at(S, 'Hoelun', 3.4), x: 460, y: 220, px: 48, rot: -4 }), (c, lt) => K.title(c, 'ABANDONED', lt, { at: A.at(S, 'behind', 4.4), x: 1400, y: 220, px: 96, fill: '#f2c0a0' })];
+      S.D.sfx = [[tA, 'neigh', .2], [A.at(S, 'behind', 4.4), 'hit', .4]]; } },
+  // 6 MED: Hoelun digs roots; a child pulls a fish from the river
+  { plate: 'steppe_open', cam: { z: [1.15, 1.2], x: [1300, 1310], y: [960, 960] }, bed: [['wind_loop', .4], ['birds_loop', .3]],
+    live: [river(1290, 1440)],
+    figs: [{ x: 700, y: 1180, s: 1.15, facing: 1, pose: 'work', look: HOELUN, mood: 'focus', workSpeed: 4 }, { x: 1750, y: 1270, s: .72, facing: 1, pose: 'stand', look: BOY, hat: hatK, mood: 'focus', anim: (o, lt, u, S) => { o.pose = lt > S.tF ? 'cheer' : 'stand'; o.mood = lt > S.tF ? 'happy' : 'focus'; } }],
+    init: S => { S.tF = A.at(S, 'fish', 2.6); const items = [['ROOTS', 'roots'], ['WILD ONIONS', 'onions'], ['MARMOTS', 'marmots'], ['FISH', 'fish']].map(([t, w], i) => [t, A.at(S, w, .8 + i * .6)]);
+      S.D.live.push((c, lt) => { const tug = lt > S.tF ? Math.min(1, (lt - S.tF) * 2) : 0; c.save(); c.strokeStyle = '#5a3a22'; c.lineWidth = 7; c.lineCap = 'round'; c.beginPath(); c.moveTo(1800, 1150); c.lineTo(2020, 1010 - tug * 60); c.stroke(); c.strokeStyle = 'rgba(240,240,240,.8)'; c.lineWidth = 2; const fx = 2060 - tug * 30, fy = 1330 - tug * 250; c.beginPath(); c.moveTo(2020, 1010 - tug * 60); c.lineTo(fx, fy); c.stroke(); if (tug > 0) { c.save(); c.translate(fx, fy + 30); c.rotate(Math.sin(lt * 18) * .4 + 1.5); c.fillStyle = '#9ab0b8'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.ellipse(0, 0, 40, 16, 0, 0, 7); c.fill(); c.stroke(); c.beginPath(); c.moveTo(-36, 0); c.lineTo(-58, -14); c.lineTo(-58, 14); c.closePath(); c.fill(); c.stroke(); c.restore(); } c.restore(); },
+        (c, lt) => { for (let k = 0; k < 5; k++) { const a = pop(lt, items[0][1] + k * .2); if (a <= 0) continue; c.save(); c.translate(860 + k * 34, 1185); c.scale(a, a); c.fillStyle = '#8a6a3a'; c.strokeStyle = INK; c.lineWidth = 2.5; c.beginPath(); c.ellipse(0, 0, 18, 10, .3, 0, 7); c.fill(); c.stroke(); c.restore(); } });
+      S.D.over = [(c, lt) => { items.forEach(([t, at], i) => { const a = pop(lt, at); if (a <= 0) return; K.card(c, t, lt, { at, x: 380 + i * 400, y: 140 + (i % 2) * 40, px: 42, rot: i % 2 ? 3 : -3 }); }); }, (c, lt) => K.card(c, 'HOELUN KEPT THEM ALIVE', lt, { at: A.at(S, 'kept them alive', 4.4), x: 960, y: 330, px: 50, rot: -2 })];
+      S.D.sfx = items.map(([, t]) => [t, 'pop', .4]).concat([[S.tF, 'splash' in {} ? 'splash' : 'whoosh_soft', .4], [.5, 'scrape', .35]]); } },
+  // 7 MED: teen Temujin in a wooden cangue; then night, hiding in the river among the reeds
+  { plate: 'steppe_night', cam: { z: [1.3, 1.35], x: [1300, 1300], y: [1000, 1000] }, bed: [['night_loop', .5]],
+    figs: [{ x: 1300, y: 1240, s: 1.05, facing: 1, pose: 'stand', look: TEEN, hat: teenHat, mood: 'angry', anim: (o, lt, u, S) => { o.pose = lt > S.tE - 1.4 ? 'walk' : 'stand'; } }],
+    init: S => { S.tE = A.at(S, 'escaped', 5); const tC = A.at(S, 'cangue', 3.6);
+      S.D.over = [A.grade('20,30,80', .2), (c, lt) => K.card(c, 'CAPTURED BY A RIVAL CLAN', lt, { at: .5, x: 560, y: 200, px: 46, rot: -4, until: S.tE }), (c, lt) => K.card(c, 'A "CANGUE"', lt, { at: tC, x: 1450, y: 330, px: 54, rot: 4, until: S.tE }),
+        (c, lt) => { const a = E.io(K.seg(lt, S.tE - .3, S.tE + .4)); if (a <= 0) return; c.save(); c.globalAlpha = a; const g = c.createLinearGradient(0, 0, 0, 1080); g.addColorStop(0, '#0b1430'); g.addColorStop(.45, '#16264a'); g.addColorStop(.46, '#1a3050'); g.addColorStop(1, '#08101e'); c.fillStyle = g; c.fillRect(0, 0, 1920, 1080); c.fillStyle = '#f2ead0'; c.beginPath(); c.arc(1500, 180, 56, 0, 7); c.fill(); c.fillStyle = 'rgba(242,234,208,.25)'; for (let k = 0; k < 8; k++) c.fillRect(1440 + Math.sin(lt * 2 + k) * 20, 520 + k * 26, 120 - k * 10, 6);
+          reeds(0, 760, 600, 360, '#1e3a2a')(c, lt); reeds(1180, 1920, 600, 380, '#1e3a2a')(c, lt);
+          c.save(); c.beginPath(); c.rect(0, 0, 1920, 560 + Math.sin(lt * 2) * 4); c.clip(); R.figure(c, { x: 960, y: 1010, s: 2.3, facing: 1, pose: 'stand', t: lt, look: TEEN, mood: 'worried', shadow: false }); c.restore();
+          c.strokeStyle = 'rgba(200,220,255,.35)'; c.lineWidth = 3; for (let k = 0; k < 3; k++) { const r = 120 + ((lt * 60 + k * 60) % 180); c.beginPath(); c.ellipse(960, 562, r, r * .15, 0, 0, 7); c.stroke(); } reeds(560, 820, 1080, 520, '#13281c')(c, lt); reeds(1100, 1360, 1080, 540, '#13281c')(c, lt); c.restore(); K.card(c, 'HIDING IN THE RIVER', lt, { at: S.tE + .6, x: 520, y: 160, px: 46, rot: -3 }); }];
+      S.D.sfx = [[.4, 'creak', .4], [tC, 'thud', .4], [S.tE, 'whoosh_soft', .5], [S.tE + .3, 'ocean_loop', 0], [S.tE + .5, 'breath', .5]]; S.D.bed = [['night_loop', .5], ['ocean_loop', .25]]; } },
+  // 8 CU: hidden in a cart of wool as searchers ride past; a spear prods and moves on
+  { plate: 'steppe_night', cam: { z: [1.35, 1.45], x: [1100, 1120], y: [1050, 1050] }, bed: [['night_loop', .5], ['walk_hooves_loop', .35]],
+    init: S => { const tP = A.at(S, 'hid him', 2.6) + .8, tN = A.at(S, 'never forgot', 5.4);
+      S.D.live = [(c, lt) => { const x = -300 + lt * 260; MG.horse(c, { x, y: 1150, s: .6, gait: 'walk', t: lt, col: '#3a2a1e', rider: MG.archer({ draw: 0, sil: null }) }); }, (c, lt) => woolCart(c, 1000, 1260, .95, K.seg(lt, tP, tP + .4) * (1 - K.seg(lt, tP + .6, tP + 1)))];
+      S.D.front = [(c, lt) => { const u = K.seg(lt, tP - .3, tP + .2) * (1 - K.seg(lt, tP + .7, tP + 1.1)); if (u <= 0) return; c.save(); c.strokeStyle = INK; c.lineWidth = 12; c.lineCap = 'round'; const x = -300 + lt * 260 + 60; c.beginPath(); c.moveTo(x, 880); c.lineTo(x - 40 + 120 * u, 960 + 60 * u); c.stroke(); c.strokeStyle = '#8a6240'; c.lineWidth = 7; c.stroke(); c.restore(); }];
+      S.D.over = [A.grade('20,30,80', .2), (c, lt) => K.card(c, 'HIDDEN IN THE WOOL', lt, { at: A.at(S, 'wool', 2.6), x: 1450, y: 220, px: 50, rot: 4 }), (c, lt) => K.title(c, 'LOYALTY', lt, { at: tN, y: 420, px: 110, fill: GOLD })];
+      S.D.sfx = [[tP, 'thud', .4], [tP + .1, 'heartbeat', .55], [tN, 'chime', .45]]; } },
+  // 9 MED: wedding at the ger; then raiders carry Borte off into the dark
+  { plate: 'steppe_day', cam: { z: [1.35, 1.4], x: [1900, 1910], y: [980, 980] }, bed: [['wind_loop', .3], ['birds_loop', .3]],
+    init: S => { const tK = A.at(S, 'kidnapped', 4.6), tR = A.at(S, 'raiders', 3.6);
+      const gone = lt => lt > tK + .4;
+      S.D.figs = [{ x: 1620, y: 1170, s: .95, facing: 1, pose: 'stand', look: MG.look('deelRed', { hair: 'long', seed: 6, hairCol: '#1a1410' }), hat: hatM, mood: 'happy', anim: (o, lt) => { o.mood = lt > tR ? 'shocked' : 'happy'; o.pose = lt > tK + .6 ? 'reach' : 'stand'; } },
+        { x: 1830, y: 1170, s: .9, facing: -1, pose: 'stand', look: BORTE, mood: 'happy', anim: (o, lt) => { o.x = gone(lt) ? -9999 : 1830; o.mood = lt > tR ? 'shocked' : 'happy'; } }];
+      S.D.live = [(c, lt) => { if (lt < tR) return; for (let k = 0; k < 3; k++) { const x = 2700 - (lt - tR) * 700 - k * 230; MG.horse(c, { x, y: 1100 + k * 20, s: .5, gait: 'gallop', t: lt, phase: k, facing: -1, col: ['#2a1a12', '#4a3020', '#3a2a1e'][k], rider: (cc, ph) => { MG.archer({ draw: 0, sil: '#2a2028' })(cc, ph); if (k === 0 && gone(lt)) { cc.save(); cc.translate(-40, -300); cc.fillStyle = '#2f7a8a'; cc.strokeStyle = INK; cc.lineWidth = 4; cc.beginPath(); cc.ellipse(0, 0, 70, 30, .2, 0, 7); cc.fill(); cc.stroke(); cc.fillStyle = '#f4c7a1'; cc.beginPath(); cc.arc(-70, -10, 26, 0, 7); cc.fill(); cc.stroke(); cc.restore(); } } }); } }];
+      S.D.over = [(c, lt) => A.grade('20,20,60', .45 * K.seg(lt, tR - .3, tR + .5))(c), (c, lt) => K.card(c, 'BORTE', lt, { at: A.at(S, 'Borte', 1), x: 1400, y: 220, px: 58, rot: 4 }), (c, lt) => K.card(c, 'MERKIT RAIDERS', lt, { at: tR, x: 480, y: 220, px: 52, rot: -4 }), (c, lt) => K.title(c, 'KIDNAPPED', lt, { at: tK + .3, y: 400, px: 100, fill: '#f2a0a0' })];
+      S.D.sfx = [[.3, 'chime', .35], [tR, 'cavalry_loop', 0], [tR, 'neigh', .45], [tK, 'hit', .5]]; S.D.bed = [['wind_loop', .3], ['birds_loop', .3]]; } },
+  // 10 MAP: three war bands converge on the Merkit pin; a burst
+  { plate: 'map_steppe', cam: { z: [1.15, 1.3], x: [1290, 1340], y: [660, 600] }, bed: [['war_drums_loop', .35]],
+    init: S => { const tT = A.at(S, 'Toghrul', 2.6), tJ = A.at(S, 'Jamukha', 5), tC = A.at(S, 'crushed', 7.2); const M = [1372, 440];
+      const band = (from, at, col, lab) => (c, lt) => { const u = E.io(K.seg(lt, at, tC)); if (lt < at) return; const x = from[0] + (M[0] - from[0]) * u, y = from[1] + (M[1] - from[1]) * u; c.save(); c.strokeStyle = col; c.lineWidth = 10; c.lineCap = 'round'; c.setLineDash([24, 14]); c.beginPath(); c.moveTo(from[0], from[1]); c.lineTo(x, y); c.stroke(); c.setLineDash([]); c.translate(x, y); c.rotate(Math.atan2(M[1] - from[1], M[0] - from[0])); c.fillStyle = col; c.beginPath(); c.moveTo(26, 0); c.lineTo(-18, -20); c.lineTo(-8, 0); c.lineTo(-18, 20); c.closePath(); c.fill(); c.restore();
+        c.save(); c.font = '34px Anton'; c.textAlign = 'center'; c.lineWidth = 7; c.strokeStyle = '#f2e6c8'; c.strokeText(lab, from[0], from[1] + 60); c.fillStyle = col; c.fillText(lab, from[0], from[1] + 60); c.restore(); };
+      S.D.live = [band([1280, 720], .4, '#b8221e', 'TEMUJIN'), band([1100, 880], tT, '#7a5a1a', 'TOGHRUL · KERAITS'), band([1560, 760], tJ, '#2f4f6a', 'JAMUKHA'),
+        (c, lt) => { const a = pop(lt, 0, .4); MG.ink && c.save(); c.translate(M[0], M[1]); c.scale(a, a); c.fillStyle = '#4f6a46'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.arc(0, 0, 22, 0, 7); c.fill(); c.stroke(); c.restore();
+          const b = K.seg(lt, tC, tC + .8); if (b > 0 && b < 1) { c.save(); c.translate(M[0], M[1]); c.globalAlpha = 1 - b; c.fillStyle = '#ffcf6b'; c.beginPath(); for (let k = 0; k < 16; k++) { const r = k % 2 ? 60 : 200 * E.out(b) + 40, an = k / 16 * 6.283; c.lineTo(Math.cos(an) * r, Math.sin(an) * r); } c.closePath(); c.fill(); c.restore(); } }];
+      S.D.over = [(c, lt) => K.card(c, 'BLOOD-BROTHER', lt, { at: tJ + .4, x: 1500, y: 860, px: 44, rot: 3 }), (c, lt) => K.title(c, 'MERKITS CRUSHED', lt, { at: tC + .2, y: 150, px: 84, fill: GOLD })];
+      S.D.sfx = [[.4, 'drum', .5], [tT, 'drum', .5], [tJ, 'drum', .5], [tC, 'hit', .7], [tC + .1, 'sword_clash', .4]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>
