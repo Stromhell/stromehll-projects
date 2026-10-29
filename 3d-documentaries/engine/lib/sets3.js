@@ -1,5 +1,6 @@
 // Shared realistic sets for Operation Thunderbolt acts 5+: war room, offices, desk phones, city blocks.
 import * as C from '../shots/tb3_common.js';
+import * as S2 from './sets2.js';
 const { THREE, P, real } = C;
 
 export const rnd = s => () => (s = (s * 16807) % 2147483647) / 2147483647;
@@ -122,8 +123,9 @@ export async function holdInterior(k, o = {}) {
   scene.add(real.m(new THREE.CircleGeometry(R, 40), bulk, { pos: [0, cy, -len / 2], cast: false }));
   scene.add(real.box(.8, 1.9, .05, real.std(0x3a3e36, { rough: .6 }), { pos: [-.9, .95, -len / 2 + .03] }));
   const rampM = real.std(0x4a4e44, { rough: .7, metal: .3 });
-  const ramp = real.box(3, 2.6, .08, rampM, { pos: [0, 1.25, len / 2 + .2] }); ramp.rotation.x = -.35; scene.add(ramp);
-  scene.add(real.m(new THREE.CircleGeometry(R, 40), bulk, { pos: [0, cy, len / 2 + .9], rot: [0, P, 0], cast: false }));
+  let ramp = null;
+  if (!o.open) { ramp = real.box(3, 2.6, .08, rampM, { pos: [0, 1.25, len / 2 + .2] }); ramp.rotation.x = -.35; scene.add(ramp);
+  scene.add(real.m(new THREE.CircleGeometry(R, 40), bulk, { pos: [0, cy, len / 2 + .9], rot: [0, P, 0], cast: false })); }
   // lamps along the ceiling
   const col = o.red ? 0xff5a3a : 0xffe0b0;
   for (let z = -len / 2 + 1.5; z < len / 2; z += 3) { scene.add(real.box(.4, .05, .15, real.std(0x222222, { emissive: col, ei: 2 }), { pos: [0, cy + R - .12, z], cast: false })); real.lamp(scene, [0, cy + R - .4, z], { i: o.lampI ?? (o.red ? 5 : 7), dist: 6, color: col }); }
@@ -146,3 +148,33 @@ export async function seatSoldiers(k, spots, ids, o = {}) {
   return ppl;
 }
 export const idleSit = (ppl, t, o = {}) => ppl.forEach((p, i) => p.update(t, { pose: 'sit', seatH: .45, arm: 'lap', mood: o.mood ?? 'stern', look: Math.sin(t * .45 + p.userData.ph) * .25, nod: .15 + Math.sin(t * .3 + i) * .1 }));
+
+// moonlit night with a star dome (same look as the cold open)
+export async function starNight(k, o = {}) {
+  const { scene } = k;
+  await real.env(k, 'kloofendal_48d_partly_cloudy_puresky', { sun: o.moon ?? [-40, 60, -30], sunI: (o.moonI ?? 1.1) * 2.6, sunColor: 0xa8bcff, shadowSize: o.shadowSize ?? 40, bg: 0x03040a, envI: o.envI ?? .3, exposure: 1.1, fx: o.fx });
+  scene.add(new THREE.HemisphereLight(0x5a70a8, 0x141820, o.hemi ?? .9));
+  const stars = real.canvasTex(4096, 2048, (c, w, h) => { c.fillStyle = '#02030a'; c.fillRect(0, 0, w, h); for (let i = 0; i < 4000; i++) { const x = (i * 7919) % w, y = (i * 104729) % (h * .55); const a = .3 + ((i * 31) % 70) / 100; c.fillStyle = `rgba(230,236,255,${a})`; c.fillRect(x, y, (i % 11 === 0) ? 3 : 1.6, (i % 11 === 0) ? 3 : 1.6); } });
+  const sky = new THREE.Mesh(new THREE.SphereGeometry(4000, 48, 24), new THREE.MeshBasicMaterial({ map: stars, side: THREE.BackSide, depthWrite: false, fog: false }));
+  sky.renderOrder = -1; scene.add(sky);
+}
+// black Mercedes + two Land Rovers, optional commando teams inside and working headlights
+export async function convoy(k, o = {}) {
+  const { scene } = k;
+  const cars = [S2.mercedes({ flags: true, lights: o.lights, flagTex: o.flagTex }), S2.landrover({ lights: o.lights }), S2.landrover({ lights: o.lights })];
+  cars.forEach(c => scene.add(c));
+  if (o.lights) cars.forEach(c => { const l = new THREE.SpotLight(0xfff0d0, 120, 60, .45, .5, 1.4); l.position.set(0, .8, 2.3); l.target.position.set(0, 0, 20); l.castShadow = true; c.add(l, l.target); });
+  if (o.crew !== false) for (const [ci, x, z] of [[0, -.4, .2], [0, .4, .2], [0, -.4, -.9], [1, -.4, .5], [1, .4, .5], [2, -.4, .5], [2, .4, .5]]) {
+    const p = await k.real.human({ id: ['tb_yoni', 'tb_cmd1', 'tb_cmd2', 'tb_cmd3'][(ci * 3 + Math.round(x * 5) + 10) % 4], seed: 300 + ci * 10 + z * 10 });
+    k.real.put(scene, p, { pos: [x, .15, z], pose: 'sit', seatH: .45 }); p.userData.driven = true; scene.remove(p); cars[ci].add(p);
+  }
+  return cars;
+}
+export function rifleShape() { const g = new THREE.Group(); const mt = new THREE.MeshStandardMaterial({ color: 0x101010, roughness: .6, metalness: .3 }); g.add(new THREE.Mesh(new THREE.BoxGeometry(.04, .07, .95), mt)); const st = new THREE.Mesh(new THREE.BoxGeometry(.04, .12, .25), mt); st.position.set(0, -.03, -.5); g.add(st); g.traverse(c => { if (c.isMesh) c.castShadow = true; }); return g; }
+// brief white flash sprite + light (muzzle flash seen far away, no detail)
+export function flash(scene, pos, o = {}) {
+  const t = real.canvasTex(128, 128, (c) => { const g = c.createRadialGradient(64, 64, 2, 64, 64, 62); g.addColorStop(0, 'rgba(255,250,230,1)'); g.addColorStop(.3, 'rgba(255,220,150,.6)'); g.addColorStop(1, 'rgba(255,200,120,0)'); c.fillStyle = g; c.fillRect(0, 0, 128, 128); });
+  const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: t, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending })); s.position.set(...pos); s.scale.setScalar(o.size ?? 1); s.visible = false; scene.add(s);
+  const l = new THREE.PointLight(0xffe0b0, 0, o.dist ?? 20, 2); l.position.set(...pos); scene.add(l);
+  return on => { s.visible = !!on; l.intensity = on ? (o.i ?? 60) * on : 0; };
+}
