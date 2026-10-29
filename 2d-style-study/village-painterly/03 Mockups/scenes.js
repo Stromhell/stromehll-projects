@@ -471,6 +471,27 @@
     }
   };
 
+  // Same lineup, everyone facing the camera
+  SC['cast-front'] = {
+    dur: 12,
+    init() { if (!this.bg) this.bg = S.off(W, H, paper); },
+    draw(c, t) {
+      this.init(); c.drawImage(this.bg, 0, 0);
+      const GY = 630, hu = 86;
+      c.save(); c.strokeStyle = 'rgba(90,60,40,.22)'; c.lineWidth = 1; c.setLineDash([6, 6]);
+      for (let i = 0; i <= 7; i++) { c.beginPath(); c.moveTo(40, GY - i * hu); c.lineTo(W - 40, GY - i * hu); c.stroke(); if (i) label(c, i + '', 26, GY - i * hu + hu / 2, 14, 'rgba(90,60,40,.6)', 'center', 'IBM Plex Mono, monospace'); }
+      c.restore();
+      const order = ['boy', 'youth', 'mother', 'father', 'elder'], xs = [150, 380, 640, 900, 1130];
+      order.forEach((n, i) => {
+        const ch = S.CAST[n];
+        S.contact(c, xs[i], GY + 2, 70, .25);
+        S.personFront(c, ch, xs[i], GY, ch.build === 'kid' ? hu * .82 : hu, { blink: S.blinkAt(t, i), smile: [.5, .3, .15, .1, .35][i], look: [Math.sin(t * .4 + i) * .4, 0], time: t }, S.LIGHT.studio, false, t + i * 1.7);
+        label(c, ch.name, xs[i], GY + 34, 22, '#3a2416', 'center', 'Yatra One, serif');
+        label(c, ch.role, xs[i], GY + 60, 15, '#6a4a34');
+      });
+    }
+  };
+
   // Expression sheet: the boy in eight moods
   SC.faces = {
     dur: 8,

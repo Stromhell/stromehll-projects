@@ -202,22 +202,26 @@
     brow(c, nearX - .01 * u, by, ew * 1.25, u, f.raise || 0, f.worry || 0, f.angry || 0, ch.hair === 'elder' ? '#d9d2c8' : hc, 1);
     brow(c, farX + .01 * u, by + .005 * u, ew * .95, u, f.raise || 0, f.worry || 0, f.angry || 0, ch.hair === 'elder' ? '#d9d2c8' : hc, -1);
 
-    // nose: 3/4 view, bridge from between the eyes, rounded tip past the cheek line
+    // nose: 3/4 view. A straight bridge from between the eyes, a neat rounded tip that just breaks the
+    // cheek line, a small nostril wing and one nostril. Shading on the bridge side, a highlight on the tip.
     const nx = fx * 1.3;
-    const nk = kid ? .8 : ch.build === 'woman' ? .7 : .9;
-    c.save(); c.translate(.27 * u + nx, .02 * u); c.scale(nk, nk); c.translate(-(.27 * u + nx), -.02 * u);
-    const nose = new Path2D();
-    const big = kid ? .85 : ch.build === 'woman' ? .82 : 1;
-    nose.moveTo(.28 * u + nx, .02 * u);
-    nose.bezierCurveTo(.32 * u + nx, .08 * u, (.37 + .04 * big) * u + nx, .1 * u, (.4 + .03 * big) * u + nx, .16 * u);
-    nose.bezierCurveTo((.44 + .03 * big) * u + nx, .22 * u, .39 * u + nx, .255 * u, .33 * u + nx, .24 * u);
-    nose.bezierCurveTo(.3 * u + nx, .25 * u, .25 * u + nx, .24 * u, .25 * u + nx, .2 * u);
-    nose.bezierCurveTo(.25 * u + nx, .15 * u, .27 * u + nx, .1 * u, .28 * u + nx, .02 * u);
-    celT(c, nose, sk, Lt, u, { ink: false, swk: .45 });
-    c.save(); c.strokeStyle = INK; c.lineCap = 'round'; c.lineWidth = Math.max(1.2, u * .02);
-    c.beginPath(); c.moveTo(.36 * u + nx, .11 * u); c.bezierCurveTo((.4 + .03 * big) * u + nx, .14 * u, (.44 + .03 * big) * u + nx, .2 * u, .4 * u + nx, .24 * u); c.quadraticCurveTo(.37 * u + nx, .255 * u, .34 * u + nx, .245 * u); c.stroke();
-    c.lineWidth = Math.max(1, u * .014); c.strokeStyle = S.rgba(INK, .7); c.beginPath(); c.moveTo(.29 * u + nx, .215 * u); c.quadraticCurveTo(.27 * u + nx, .24 * u, .3 * u + nx, .25 * u); c.stroke();
-    c.fillStyle = S.rgba('#2a120c', .8); c.beginPath(); c.ellipse(.335 * u + nx, .225 * u, .022 * u, .01 * u, .2, 0, S.TAU); c.fill();
+    const nk = kid ? .82 : ch.build === 'woman' ? .78 : ch.build === 'broad' ? 1 : .92;
+    c.save(); c.translate(.3 * u + nx, .1 * u); c.scale(nk, nk); c.translate(-(.3 * u + nx), -.1 * u);
+    const N = (x, y) => [x * u + nx, y * u];
+    const nose = S.poly([N(.27, -.02), N(.31, .03), N(.36, .1), N(.405, .165), N(.41, .2), N(.385, .228), N(.34, .232), N(.3, .225), N(.265, .2), N(.27, .15), N(.275, .08)]);
+    celT(c, nose, sk, Lt, u, { ink: false, swk: .35, rim: sk.base, vol: false });
+    c.save(); c.lineCap = 'round'; c.lineJoin = 'round';
+    // bridge shadow on the side away from the light
+    c.strokeStyle = S.rgba(sk.shade, .55); c.lineWidth = u * .03; c.beginPath(); c.moveTo(...N(.255, .0)); c.quadraticCurveTo(...N(.26, .1), ...N(.27, .16)); c.stroke();
+    // front edge and tip
+    c.strokeStyle = INK; c.lineWidth = Math.max(1.2, u * .018);
+    c.beginPath(); c.moveTo(...N(.35, .085)); c.lineTo(...N(.395, .15)); c.quadraticCurveTo(...N(.425, .2), ...N(.39, .226)); c.quadraticCurveTo(...N(.365, .238), ...N(.345, .228)); c.stroke();
+    // nostril wing: a short c-curve
+    c.lineWidth = Math.max(1, u * .014); c.strokeStyle = S.rgba(INK, .75);
+    c.beginPath(); c.moveTo(...N(.3, .17)); c.quadraticCurveTo(...N(.275, .2), ...N(.3, .224)); c.stroke();
+    // nostril and tip highlight
+    c.fillStyle = S.rgba('#2a120c', .75); c.beginPath(); c.ellipse(...N(.335, .222), .02 * u, .009 * u, .25, 0, S.TAU); c.fill();
+    c.fillStyle = S.rgba('#fff3e0', .55); c.beginPath(); c.ellipse(...N(.385, .175), .016 * u, .011 * u, -.6, 0, S.TAU); c.fill();
     c.restore(); c.restore();
 
     // mouth
@@ -326,15 +330,39 @@
   const BW = { kid: .74, man: 1, broad: 1.13, woman: .86, elder: .9 };
 
   // hand: palm with four fingers and a thumb, pointing along angle a (relaxed, slightly curled)
+  // Detailed relaxed hand, back of the hand toward us: palm, four separate fingers of different lengths
+  // (middle longest, little shortest) each gently curled with a knuckle crease and nail, and a thumb in front.
+  // Every finger gets its own ink pass, so a thin dark line always separates it from the one behind.
   const hand = (c, p, a, u, sz, sk, Lt, open = 0, fist = 0) => {
-    const d = dir(a), n = [d[1], -d[0]], ang = Math.atan2(d[1], d[0]);
+    const d = dir(a), n = [d[1], -d[0]];
     const H = (x, y) => add(add(p, d, x * sz), n, y * sz);
-    const fl = .32 * (1 - fist * .5);
-    const palm = H(.24, 0), fing = H(.42 + fl * .5, -.02), th = H(.34, .15);
-    const L = [[palm[0], palm[1], sz * .26, sz * .19, ang], [fing[0], fing[1], sz * fl * .62, sz * .16, ang], [th[0], th[1], sz * .17, sz * .085, ang + .45]];
-    lumpCel(c, L, sk, Lt, u, { swk: .25 });
-    c.save(); c.strokeStyle = S.rgba(inkOf(sk), .3); c.lineWidth = Math.max(.8, u * .008); c.lineCap = 'round';
-    for (let i = 1; i < 3; i++) { const y = -.1 + i * .08, q0 = H(.44, y), q1 = H(.42 + fl * 1.05, y * 1.1); c.beginPath(); c.moveTo(q0[0], q0[1]); c.lineTo(q1[0], q1[1]); c.stroke(); }
+    const lw = Math.max(1, u * .014), ink = inkOf(sk);
+    sk = Object.assign({}, sk, { base: S.mix(sk.base, sk.shade, .3) });
+    const curl = .55 - open * .5 + fist * .6;
+    const stroke = (pts, w, col) => { c.strokeStyle = col; c.lineWidth = w; c.lineCap = 'round'; c.lineJoin = 'round'; c.beginPath(); c.moveTo(pts[0][0], pts[0][1]); if (pts.length === 3) c.quadraticCurveTo(pts[1][0], pts[1][1], pts[2][0], pts[2][1]); else c.lineTo(pts[1][0], pts[1][1]); c.stroke(); };
+    c.save();
+    // palm / back of hand
+    const palm = S.poly([H(.02, -.14), H(.02, .1), H(.2, .17), H(.44, .15), H(.48, .02), H(.46, -.15), H(.24, -.18)]);
+    c.lineWidth = lw * 2; c.strokeStyle = ink; c.lineJoin = 'round'; c.stroke(palm);
+    c.fillStyle = sk.base; c.fill(palm);
+    // fingers from the far side (little finger) to the near side (index)
+    const F = [[-.12, .3, .075], [-.04, .38, .085], [.045, .41, .088], [.13, .36, .085]];
+    F.forEach(([y, len, w], i) => {
+      const b = H(.42, y), m = H(.42 + len * .6, y + curl * .02), e = H(.42 + len * (1 - curl * .25), y + curl * len * .4);
+      const fw = w * sz;
+      stroke([b, m, e], fw + lw * 2, ink);
+      stroke([b, m, e], fw, i < 2 ? S.mix(sk.base, sk.shade, .25) : sk.base);
+      // knuckle crease and nail
+      c.strokeStyle = S.rgba(sk.shade, .9); c.lineWidth = lw * .7; c.beginPath(); const k = H(.42 + len * .45, y - w * .3), k2 = H(.42 + len * .45, y + w * .3); c.moveTo(k[0], k[1]); c.lineTo(k2[0], k2[1]); c.stroke();
+      c.fillStyle = S.rgba(S.mix(sk.base, '#ffffff', .35), .8); c.beginPath(); c.arc(e[0] - d[0] * fw * .2, e[1] - d[1] * fw * .2, fw * .28, 0, S.TAU); c.fill();
+    });
+    // back-of-hand tendons and shading on the far side
+    c.strokeStyle = S.rgba(sk.shade, .5); c.lineWidth = lw * .7;
+    for (const y of [-.06, .02, .1]) { const q0 = H(.12, y * .6), q1 = H(.4, y); c.beginPath(); c.moveTo(q0[0], q0[1]); c.lineTo(q1[0], q1[1]); c.stroke(); }
+    // thumb in front, pointing down and slightly forward
+    const t0 = H(.14, .14), t1 = H(.32, .24 + open * .06), t2 = H(.44, .22 - curl * .04 + open * .08);
+    stroke([t0, t1, t2], .1 * sz + lw * 2, ink); stroke([t0, t1, t2], .1 * sz, sk.base);
+    c.fillStyle = S.rgba(S.mix(sk.base, '#ffffff', .35), .8); c.beginPath(); c.arc(t2[0], t2[1], .03 * sz, 0, S.TAU); c.fill();
     c.restore();
   };
   S.hand = (c, p, a, u, sz, pair, Lt, open) => hand(c, p, a, u, sz, tone(pair, Lt), Lt, open);
@@ -574,11 +602,17 @@
       const hc = S.mix(ch.hairCol.base, '#000000', ch.hair === 'elder' ? .1 : .2), by = eyY - (kid ? .12 : .1) * u - (f.squint || 0) * .02 * u;
       brow(c, -ex - .01 * u, by, ew * 1.2, u, f.raise || 0, f.worry || 0, f.angry || 0, ch.hair === 'elder' ? '#d9d2c8' : hc, 1);
       brow(c, ex + .01 * u, by, ew * 1.2, u, f.raise || 0, f.worry || 0, f.angry || 0, ch.hair === 'elder' ? '#d9d2c8' : hc, -1);
-      // nose: a soft shadow on the side away from the light, a rounded tip and two nostrils
-      const ny = (kid ? .2 : .22) * u, nk = kid ? .8 : ch.build === 'woman' ? .75 : 1, sL = Lt.L[0] >= 0 ? -1 : 1;
-      c.save(); c.fillStyle = S.rgba(sk.shade, .55); c.beginPath(); c.moveTo(sL * .015 * u, eyY + .04 * u); c.quadraticCurveTo(sL * .06 * u * nk, ny - .02 * u, sL * .055 * u * nk, ny + .02 * u); c.lineTo(sL * .02 * u, ny + .02 * u); c.closePath(); c.fill();
-      c.strokeStyle = INK; c.lineWidth = Math.max(1.1, u * .018); c.lineCap = 'round'; c.beginPath(); c.moveTo(-.055 * u * nk, ny); c.quadraticCurveTo(0, ny + .05 * u * nk, .055 * u * nk, ny); c.stroke();
-      c.fillStyle = S.rgba('#2a120c', .75); for (const s of [-1, 1]) { c.beginPath(); c.ellipse(s * .028 * u * nk, ny + .012 * u, .016 * u, .009 * u, 0, 0, S.TAU); c.fill(); }
+      // nose, front: soft bridge shadow on the side away from the light, a rounded tip with a highlight,
+      // two small nostril wings and two nostrils
+      const ny = (kid ? .2 : .22) * u, nk = kid ? .8 : ch.build === 'woman' ? .78 : ch.build === 'broad' ? 1.05 : .92, sL = Lt.L[0] >= 0 ? -1 : 1;
+      c.save(); c.lineCap = 'round';
+      c.strokeStyle = S.rgba(sk.shade, .5); c.lineWidth = u * .03; c.beginPath(); c.moveTo(sL * .035 * u, eyY + .02 * u); c.quadraticCurveTo(sL * .045 * u * nk, ny - .06 * u, sL * .05 * u * nk, ny - .02 * u); c.stroke();
+      c.fillStyle = S.rgba(sk.shade, .35); c.beginPath(); c.ellipse(0, ny + .01 * u, .05 * u * nk, .025 * u, 0, 0, S.TAU); c.fill();
+      c.strokeStyle = INK; c.lineWidth = Math.max(1.1, u * .016);
+      for (const s2 of [-1, 1]) { c.beginPath(); c.moveTo(s2 * .045 * u * nk, ny - .035 * u); c.quadraticCurveTo(s2 * .075 * u * nk, ny + .005 * u, s2 * .04 * u * nk, ny + .025 * u); c.stroke(); }
+      c.strokeStyle = S.rgba(INK, .6); c.beginPath(); c.moveTo(-.025 * u * nk, ny + .03 * u); c.quadraticCurveTo(0, ny + .042 * u, .025 * u * nk, ny + .03 * u); c.stroke();
+      c.fillStyle = S.rgba('#2a120c', .75); for (const s2 of [-1, 1]) { c.beginPath(); c.ellipse(s2 * .022 * u * nk, ny + .02 * u, .014 * u, .008 * u, s2 * .3, 0, S.TAU); c.fill(); }
+      c.fillStyle = S.rgba('#fff3e0', .5); c.beginPath(); c.ellipse(-sL * .008 * u, ny - .015 * u, .014 * u, .01 * u, 0, 0, S.TAU); c.fill();
       c.restore();
       // mouth
       const my = (kid ? .34 : .37) * u, mw = .15 * u * (kid ? .9 : 1), sm = f.smile || 0, op = f.open || 0;

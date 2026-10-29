@@ -92,8 +92,12 @@ footer { margin-top: 60px; color: var(--muted); font-size: 14px; }
     <div class="ref main"><img src="refs/ref9.jpg" alt="Young man with a backpack skipping along a path between maize fields"><div><span class="tag">Ref 9 · main look</span><p>Daylight version: big clouds, birds crossing, maize swaying. Gave me the young man Arjun and the walk-to-skip energy.</p><a href="https://pin.it/5Z0VLwUvm">pin.it/5Z0VLwUvm</a></div></div>
   </div>
 
-  <h2>Character sheet</h2>
+  <h2>Character sheet (main look)</h2>
   <p>A new cast built for this look, with its own rig. It keeps the rule from the current 2D rig: knees bend forward only, elbows bend back only, and every joint bends in a soft curve, never a corner.</p>
+  <figure>
+    <div class="screen"><canvas id="cv-cast-front" width="1280" height="720" aria-label="The five characters facing the camera, side by side with head-height guide lines"></canvas><button type="button">Pause</button></div>
+    <figcaption><b>Front view.</b> The main cast facing the camera: detailed four-finger hands and a proper nose in every view.</figcaption>
+  </figure>
   <figure>
     <div class="screen"><canvas id="cv-cast" width="1280" height="720" aria-label="Five characters standing side by side with head-height guide lines"></canvas><button type="button">Pause</button></div>
     <figcaption><b>Cast lineup.</b> Dashed lines are one head tall. All five breathe, shift weight and blink on their own timing, so a crowd never blinks together.</figcaption>
@@ -250,7 +254,7 @@ footer { margin-top: 60px; color: var(--muted); font-size: 14px; }
 <script src="scenes.js"></script>
 <script>
 (function () {
-  const map = { 'cv-run': 'run', 'cv-cast': 'cast', 'cv-faces': 'faces', 'cv-recipe': 'recipe', 'cv-motion': 'motion', 'cv-moon': 'moon', 'cv-fire': 'fire', 'cv-face': 'face' };
+  const map = { 'cv-run': 'run', 'cv-cast-front': 'cast-front', 'cv-cast': 'cast', 'cv-faces': 'faces', 'cv-recipe': 'recipe', 'cv-motion': 'motion', 'cv-moon': 'moon', 'cv-fire': 'fire', 'cv-face': 'face' };
   const start = () => {
     for (const [id, name] of Object.entries(map)) {
       const cv = document.getElementById(id); if (!cv) continue;
