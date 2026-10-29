@@ -8,12 +8,12 @@ const P = Math.PI;
 
 // ---------- geometry helpers ----------
 // tube along z: rings of radius r(z) centred at (0, yc(z)); uv.x = along length, uv.y = around (0 top, .5 bottom)
-function tube(zs, r, yc, seg = 64, sx = 1) {
+function tube(zs, r, yc, seg = 64, sx = 1, a0 = 0, a1 = P * 2) {
   const pos = [], uv = [], idx = [];
   const z0 = zs[0], z1 = zs[zs.length - 1];
   zs.forEach((z, i) => {
     for (let j = 0; j <= seg; j++) {
-      const th = j / seg * P * 2; const rr = r(z);
+      const th = a0 + j / seg * (a1 - a0); const rr = r(z);
       pos.push(Math.sin(th) * rr * sx, yc(z) + Math.cos(th) * rr, z);
       uv.push((z - z0) / (z1 - z0), 1 - j / seg);
     }
@@ -276,10 +276,10 @@ export async function apron(k, o = {}) {
   const jm = new THREE.MeshBasicMaterial({ color: 0x3a3a38, transparent: true, opacity: .35 });
   for (let x = -100; x <= 100; x += 7.5) scene.add(m(new THREE.PlaneGeometry(.06, 200), jm, { rot: [-P / 2, 0, 0], pos: [x, .005, 0], cast: false, receive: false }));
   for (let z = -100; z <= 100; z += 7.5) scene.add(m(new THREE.PlaneGeometry(200, .06), jm, { rot: [-P / 2, 0, 0], pos: [0, .005, z], cast: false, receive: false }));
-  if (o.terminal !== false) await terminal(k, o.terminalPos ?? [0, 0, -62]);
+  if (o.terminal !== false) await terminal(k, o.terminalPos ?? [0, 0, -62], o);
   return { ground };
 }
-async function terminal(k, pos) {
+async function terminal(k, pos, o = {}) {
   const { scene } = k;
   const g = new THREE.Group(); g.position.set(...pos); scene.add(g);
   const wall = await real.pbr('plastered_wall_04', { repeat: [24, 2], color: 0xe6dcc8 });
@@ -294,7 +294,7 @@ async function terminal(k, pos) {
   g.add(m(new THREE.BoxGeometry(len, 3.2, .2), wall, { pos: [0, 1.6, .05] }));
   for (let x = -len / 2 + 6; x < len / 2; x += 12) g.add(m(new THREE.BoxGeometry(2.4, 2.6, .25), glass, { pos: [x, 1.3, .15] })); // ground floor doors
   // sign
-  const sign = real.canvasTex(2048, 256, (c, w, h) => { c.fillStyle = '#e8dfcc'; c.fillRect(0, 0, w, h); c.fillStyle = '#1d3b6e'; c.font = 'bold 150px "Liberation Sans"'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('BEN GURION AIRPORT', w / 2, h / 2 + 6); });
+  const sign = real.canvasTex(2048, 256, (c, w, h) => { c.fillStyle = '#e8dfcc'; c.fillRect(0, 0, w, h); c.fillStyle = '#1d3b6e'; c.font = 'bold 150px "Liberation Sans"'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(o.sign ?? 'BEN GURION AIRPORT', w / 2, h / 2 + 6); });
   g.add(m(new THREE.PlaneGeometry(24, 3), new THREE.MeshStandardMaterial({ map: sign, roughness: .7 }), { pos: [0, 9.3, 1.12] }));
   // control tower
   const tw = new THREE.Group(); tw.position.set(48, 0, -12); g.add(tw);
@@ -328,9 +328,11 @@ export async function cabin(k, o = {}) {
   });
   const wallMat = new THREE.MeshStandardMaterial({ map: wallTex, roughness: .7, side: THREE.BackSide });
   const zs = []; for (let z = -len / 2; z <= len / 2 + 1e-6; z += len / 24) zs.push(z);
-  const walls = m(tube(zs, () => R, () => Y, 72), wallMat, { cast: false }); g.add(walls);
+  const cut = !!o.cutaway;  // cutaway: no roof, so a high camera can look down into the cabin
+  const walls = m(cut ? tube(zs, () => R, () => Y, 48, 1, P / 2 - .25, P * 1.5 + .25) : tube(zs, () => R, () => Y, 72), wallMat, { cast: false }); g.add(walls);
+  if (cut) { const rim = std(0x8a8e92, { rough: .5, metal: .6 }); for (const s of [1, -1]) g.add(m(new THREE.BoxGeometry(.12, .08, len), rim, { pos: [s * R * Math.cos(.25), Y + R * Math.sin(.25), 0] })); }
   // end bulkheads
-  for (const z of [-len / 2, len / 2]) g.add(m(new THREE.CircleGeometry(R, 48), std(0xd8d0c0, { rough: .7 }), { pos: [0, Y, z], rot: [0, z > 0 ? P : 0, 0], cast: false }));
+  if (!cut) for (const z of [-len / 2, len / 2]) g.add(m(new THREE.CircleGeometry(R, 48), std(0xd8d0c0, { rough: .7 }), { pos: [0, Y, z], rot: [0, z > 0 ? P : 0, 0], cast: false }));
   // carpet
   const carpet = await real.pbr('dirty_carpet', { repeat: [3, len / 1.5], color: 0x6a6a8a });
   const fl = m(new THREE.PlaneGeometry(4.6, len), carpet, { rot: [-P / 2, 0, 0], pos: [0, 0, 0] }); g.add(fl);
@@ -352,38 +354,48 @@ export async function cabin(k, o = {}) {
   }
   // overhead bins: side bins over the window seats, centre bins over the middle block
   const binMat = new THREE.MeshPhysicalMaterial({ color: 0xece6d8, roughness: .45, clearcoat: .3 });
-  for (const s of [1, -1]) {
+  if (!cut) for (const s of [1, -1]) {
     const bin = real.rbox(.9, .5, len, .12, binMat, { pos: [s * 1.95, 2.05, 0] }); bin.rotation.z = s * .35; g.add(bin);
     g.add(m(new THREE.BoxGeometry(.04, .03, len), std(0x9a8f7a, { rough: .5, metal: .3 }), { pos: [s * 1.55, 1.82, 0] }));
   }
-  g.add(real.rbox(1.6, .45, len, .12, binMat, { pos: [0, 2.28, 0] }));
+  if (!cut) g.add(real.rbox(1.6, .45, len, .12, binMat, { pos: [0, 2.28, 0] }));
   // drop ceiling between the bins
-  g.add(m(new THREE.CylinderGeometry(3.2, 3.2, len, 48, 1, true, P - .52, 1.04), new THREE.MeshStandardMaterial({ color: 0xeee9de, roughness: .7, side: THREE.BackSide }), { rot: [P / 2, 0, 0], pos: [0, -.5, 0], cast: false }));
+  if (!cut) g.add(m(new THREE.CylinderGeometry(3.2, 3.2, len, 48, 1, true, P - .52, 1.04), new THREE.MeshStandardMaterial({ color: 0xeee9de, roughness: .7, side: THREE.BackSide }), { rot: [P / 2, 0, 0], pos: [0, -.5, 0], cast: false }));
   // ceiling light strips
-  for (const s of [1, -1]) g.add(m(new THREE.BoxGeometry(.08, .03, len), new THREE.MeshBasicMaterial({ color: 0xfff1d8 }), { pos: [s * 1.0, 2.62, 0], cast: false }));
+  if (!cut) for (const s of [1, -1]) g.add(m(new THREE.BoxGeometry(.08, .03, len), new THREE.MeshBasicMaterial({ color: 0xfff1d8 }), { pos: [s * 1.0, 2.62, 0], cast: false }));
   // seats
   const fabric = await real.pbr('fabric_pattern_07', { repeat: [2, 2], color: o.seatColor ?? 0x4a5a8a, noMap: true });
   const cover = std(0xf2efe6, { rough: .8 });
   const arm = std(0x5a5a5e, { rough: .5, metal: .3 });
   const seats = [];
-  const colsX = [-1.95, -1.47, -.33, .15, .63, 1.11 + .0].length ? [-1.98, -1.5, -.72, -.24, .24, .72, 1.5, 1.98] : [];
-  for (let i = 0; i < rows - 1; i++) {
-    const z = -len / 2 + .9 + i * .86;
-    colsX.forEach((x, c) => {
+  const colsX = [-1.98, -1.5, -.72, -.24, .24, .72, 1.5, 1.98];
+  // first class at the front (+z end): 2-2-2, wider leather-look seats, more legroom, behind a curtain
+  const nFirst = o.first ?? 0, fRows = [];
+  const firstMat = nFirst ? await real.pbr('leather_red_03', { repeat: [1, 1], color: 0x8a6a4a, noMap: true, rough: .55 }) : null;
+  const ecoRows = Math.floor((len - nFirst * 1.05 - (nFirst ? .6 : 0) - .4) / .86);
+  const layout = [];
+  for (let i = 0; i < ecoRows; i++) layout.push({ z: -len / 2 + .9 + i * .86, cols: colsX, w: .46, mat: fabric, cls: 'eco' });
+  for (let i = 0; i < nFirst; i++) layout.push({ z: len / 2 - .9 - (nFirst - 1 - i) * 1.05, cols: [-1.8, -1.2, -.32, .32, 1.2, 1.8], w: .56, mat: firstMat, cls: 'first' });
+  if (nFirst) { const cz = len / 2 - .9 - nFirst * 1.05 + .2; const cur = real.canvasTex(64, 256, (c, w, h) => { c.fillStyle = '#2c3a66'; c.fillRect(0, 0, w, h); c.fillStyle = 'rgba(0,0,0,.25)'; for (let x = 0; x < w; x += 8) c.fillRect(x, 0, 3, h); });
+    for (const x of [-1.11, 1.11]) g.add(m(new THREE.PlaneGeometry(.5, 1.9), new THREE.MeshStandardMaterial({ map: cur, roughness: .9, side: THREE.DoubleSide }), { pos: [x + (x > 0 ? .2 : -.2), 1.05, cz], cast: true })); }
+  layout.forEach((rw, i) => {
+    const z = rw.z;
+    rw.cols.forEach((x, c) => {
       const sg = new THREE.Group(); sg.position.set(x, 0, z); g.add(sg);
-      sg.add(real.rbox(.46, .14, .48, .05, fabric, { pos: [0, .44, .02] }));
-      const back = real.rbox(.46, .72, .14, .05, fabric, { pos: [0, .84, -.24] }); back.rotation.x = -.12; sg.add(back);
+      const fabric = rw.mat, W = rw.w;
+      sg.add(real.rbox(W, .14, .48, .05, fabric, { pos: [0, .44, .02] }));
+      const back = real.rbox(W, .72, .14, .05, fabric, { pos: [0, .84, -.24] }); back.rotation.x = -.12; sg.add(back);
       const hd = real.rbox(.36, .16, .02, .01, cover, { pos: [0, 1.12, -.165] }); hd.rotation.x = -.12; sg.add(hd);
       sg.add(m(new THREE.BoxGeometry(.04, .06, .44), arm, { pos: [.25, .62, -.02] }));
       sg.add(m(new THREE.BoxGeometry(.04, .38, .04), arm, { pos: [-.15, .19, .0] }));
       sg.add(m(new THREE.BoxGeometry(.04, .38, .04), arm, { pos: [.15, .19, .0] }));
-      seats.push({ x, z: z + .02, row: i, col: c, group: sg });
+      seats.push({ x, z: z + .02, row: i, col: c, cls: rw.cls, group: sg });
     });
-  }
+  });
   // lights inside
   for (let z = -len / 2 + 1.5; z < len / 2; z += 3) real.lamp(scene, [0, 2.4, z], { i: o.lampI ?? 9, dist: 7, color: 0xffecd2, shadow: false });
   const hemi = new THREE.HemisphereLight(0xfff6ea, 0x4a4038, o.hemi ?? .8); scene.add(hemi);
-  return { group: g, seats, Y, R };
+  return { group: g, seats, Y, R, aisles: nFirst ? [-.76, .76] : [-1.11, 1.11], ecoAisles: [-1.11, 1.11] };
 }
 
 // ---------- A300 flight deck ----------

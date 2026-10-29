@@ -21,6 +21,7 @@ export async function env(k, name, o = {}) {
   hdr.mapping = THREE.EquirectangularReflectionMapping;
   const pm = once('p:' + name, () => { const g = new THREE.PMREMGenerator(renderer); const t = g.fromEquirectangular(hdr).texture; g.dispose(); return t; });
   scene.environment = pm;
+  if (o.fx !== false) scene.userData.fx = o.fx ?? {};
   scene.environmentIntensity = o.envI ?? 1;
   if (o.bg === false) scene.background = null;
   else if (typeof o.bg === 'number') scene.background = new THREE.Color(o.bg);

@@ -1,6 +1,11 @@
 // Core of the 3D documentary engine: renderer, toon look, outlines, sky,
 // easing, camera moves and the final frame finish (grain, vignette, sketch mode).
 import * as THREE from 'three';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
 export const INK = 0x2b1e16;
 export const W = 1920, H = 1080;
@@ -213,6 +218,31 @@ export function createRenderer(canvas, w = W, h = H) {
     renderer, uni,
     render(scene, camera, time) {
       uni.time.value = time;
+      // realistic look: ambient occlusion (contact shadows in corners and under people) + soft glow on bright lights
+      const fx = scene.userData.fx;
+      if (fx) {
+        if (!this.comp) {
+          const comp = new EffectComposer(renderer, new THREE.WebGLRenderTarget(w, h, { samples: 4, type: THREE.HalfFloatType }));
+          comp.renderToScreen = false;
+          const rp = new RenderPass(scene, camera); comp.addPass(rp);
+          const ao = new GTAOPass(scene, camera, w, h); ao.output = GTAOPass.OUTPUT.Default; comp.addPass(ao);
+          const bl = new UnrealBloomPass(new THREE.Vector2(w / 2, h / 2), .22, .5, .92); comp.addPass(bl);
+          comp.addPass(new OutputPass());
+          this.comp = { comp, rp, ao, bl };
+        }
+        const { comp, rp, ao, bl } = this.comp;
+        rp.scene = ao.scene = scene; rp.camera = ao.camera = camera;
+        ao.updateGtaoMaterial({ radius: fx.aoRadius ?? .5, distanceExponent: 1.5, thickness: 1, scale: fx.ao ?? 1, samples: 12 });
+        bl.strength = fx.bloom ?? .22; bl.threshold = fx.bloomThreshold ?? .92;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.outputColorSpace = THREE.LinearSRGBColorSpace; // the finish pass does the sRGB encode
+        comp.render();
+        renderer.outputColorSpace = THREE.SRGBColorSpace;
+        uni.tDiffuse.value = comp.readBuffer.texture; uni.srgbIn = true;
+        renderer.setRenderTarget(null); renderer.toneMapping = THREE.NoToneMapping; renderer.render(fsScene, fsCam);
+        uni.tDiffuse.value = rt.texture;
+        return;
+      }
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
       renderer.setRenderTarget(rt); renderer.render(scene, camera);
       renderer.setRenderTarget(null); renderer.toneMapping = THREE.NoToneMapping; renderer.render(fsScene, fsCam);
