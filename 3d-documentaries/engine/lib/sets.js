@@ -381,7 +381,7 @@ export async function cabin(k, o = {}) {
     });
   }
   // lights inside
-  for (let z = -len / 2 + 1.5; z < len / 2; z += 3) real.lamp(scene, [0, 2.4, z], { i: o.lampI ?? 9, dist: 7, color: 0xffecd2, shadow: Math.abs(z) < 4 });
+  for (let z = -len / 2 + 1.5; z < len / 2; z += 3) real.lamp(scene, [0, 2.4, z], { i: o.lampI ?? 9, dist: 7, color: 0xffecd2, shadow: false });
   const hemi = new THREE.HemisphereLight(0xfff6ea, 0x4a4038, o.hemi ?? .8); scene.add(hemi);
   return { group: g, seats, Y, R };
 }

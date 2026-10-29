@@ -102,7 +102,7 @@ export const shots = {
       p.userData.driven = true; p.userData.ex = ex; ppl.push(p);
       if (ex.paper) { const np = newspaper(real, 'MAARIV'); np.position.set(s.x + .24, .98, s.z + .38); np.rotation.x = -.95; scene.add(np); }
     }
-    const cam = dolly(camera, { pos: [1.1, 1.48, 2.7], look: [2.4, 1.05, .9], fov: 50 }, { pos: [1.1, 1.48, -1.3], look: [2.4, 1.05, -3.1] }, { ease: u => u });
+    const cam = dolly(camera, { pos: [1.0, 1.62, 2.7], look: [2.4, 1.0, .9], fov: 50 }, { pos: [1.0, 1.62, -1.3], look: [2.4, 1.0, -3.1] }, { ease: u => u });
     return (t, u) => {
       cam(u);
       ppl.forEach((p, i) => { const ex = p.userData.ex; p.update(t, { pose: 'sit', seatH: .52, arm: ex.arm ?? 'lap', mood: ex.mood ?? 'calm', look: (ex.look ?? 0) + Math.sin(t * .7 + i) * .08, nod: ex.nod ?? 0, talk: !ex.paper && ex.mood === 'happy' && Math.sin(t * 1.3 + i) > .3 }); });
