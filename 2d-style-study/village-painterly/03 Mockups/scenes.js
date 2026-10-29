@@ -537,7 +537,7 @@
   const sheetBg = S.off(W, H, g => {
     g.fillStyle = '#efe2c6'; g.fillRect(0, 0, W, H);
     S.dabs(g, { x: 0, y: 0, w: W, h: H, n: 520, cols: ['#e6d5b2', '#f6ecd6', '#dcc8a2'], r0: 20, r1: 80, sq: .5, a0: .1, a1: .3, seed: 601 });
-    g.strokeStyle = 'rgba(90,60,40,.25)'; g.lineWidth = 1.5; g.beginPath(); g.moveTo(560, 40); g.lineTo(560, H - 40); g.stroke();
+
   });
   const EXPR = { kid: [['happy', { smile: .8, squint: .25, raise: .2 }], ['surprised', { open: .7, raise: 1 }], ['worried', { worry: 1, smile: -.4, look: [-.4, .3] }]],
     man: [['smile', { smile: .6, squint: .2 }], ['thinking', { look: [.6, -.8], raise: .5, worry: .2 }], ['angry', { angry: 1, smile: -.5, squint: .3 }]],
@@ -547,35 +547,38 @@
     draw(c, t) {
       const ch = S.CAST[name], kid = ch.build === 'kid', fem = ch.build === 'woman';
       c.drawImage(sheetBg, 0, 0);
-      const GY = 650, hu = kid ? 118 : 96;
-      // head ruler
+      const GY = 640, hu = kid ? 90 : 70;
+      // head ruler across the turnaround
       const tall = { kid: 4.5, man: 6.0, broad: 6.0, woman: 5.8, elder: 5.7 }[ch.build];
       c.save(); c.strokeStyle = 'rgba(90,60,40,.25)'; c.setLineDash([5, 6]); c.lineWidth = 1;
-      for (let i = 0; i <= Math.ceil(tall); i++) { const y = GY - i * hu * 1.07; if (y < 30) break; c.beginPath(); c.moveTo(40, y); c.lineTo(530, y); c.stroke(); if (i) S.label(c, String(i), 52, y + hu * .53, 13, 'rgba(90,60,40,.6)', 'center', 'IBM Plex Mono, monospace'); }
+      for (let i = 0; i <= Math.ceil(tall); i++) { const y = GY - i * hu * 1.07; if (y < 30) break; c.beginPath(); c.moveTo(40, y); c.lineTo(790, y); c.stroke(); if (i) S.label(c, String(i), 52, y + hu * .53, 13, 'rgba(90,60,40,.6)', 'center', 'IBM Plex Mono, monospace'); }
       c.restore();
-      // full body, three-quarter both ways
-      const id = S.idle(t, 1), id2 = S.idle(t + 2.3, 4);
-      S.contact(c, 180, GY + 2, 80, .25); S.contact(c, 420, GY + 2, 80, .25);
-      S.person(c, ch, 180, GY, hu, Object.assign({}, id, { face: 1 }), { blink: S.blinkAt(t, 1), smile: .25, time: t, sway: Math.sin(t) * .04 }, S.LIGHT.studio);
-      S.person(c, ch, 425, GY, hu, Object.assign({}, id2, { face: -1 }), { blink: S.blinkAt(t, 3), smile: .25, time: t, sway: Math.sin(t + 1) * .04 }, S.LIGHT.studio);
-      S.label(c, '3/4 right', 180, GY + 30, 14, '#6a4a34'); S.label(c, '3/4 left', 425, GY + 30, 14, '#6a4a34');
+      // turnaround: front, 3/4 right, 3/4 left, back
+      const XS = [150, 335, 520, 705], f0 = s => ({ blink: S.blinkAt(t, s), smile: .25, time: t, sway: Math.sin(t + s) * .04 });
+      XS.forEach(x => S.contact(c, x, GY + 2, 70, .25));
+      S.personFront(c, ch, XS[0], GY, hu, f0(1), S.LIGHT.studio, false, t);
+      S.person(c, ch, XS[1], GY, hu, Object.assign({}, S.idle(t, 1), { face: 1 }), f0(2), S.LIGHT.studio);
+      S.person(c, ch, XS[2], GY, hu, Object.assign({}, S.idle(t + 2.3, 4), { face: -1 }), f0(3), S.LIGHT.studio);
+      S.personFront(c, ch, XS[3], GY, hu, f0(4), S.LIGHT.studio, true, t + 1.3);
+      ['front', '3/4 right', '3/4 left', 'back'].forEach((n, i) => S.label(c, n, XS[i], GY + 34, 14, '#6a4a34'));
+      c.save(); c.strokeStyle = 'rgba(90,60,40,.25)'; c.lineWidth = 1.5; c.beginPath(); c.moveTo(815, 40); c.lineTo(815, 680); c.stroke(); c.restore();
       // name block
-      S.label(c, ch.name, 600, 74, 46, '#3a2416', 'left', 'Yatra One, serif');
-      S.label(c, ch.role + '  /  ' + tall + ' heads tall', 602, 118, 18, '#6a4a34', 'left');
+      S.label(c, ch.name, 845, 74, 42, '#3a2416', 'left', 'Yatra One, serif');
+      S.label(c, ch.role + '  /  ' + tall + ' heads tall', 847, 112, 16, '#6a4a34', 'left');
       // expressions
       const ex = EXPR[kid ? 'kid' : fem ? 'woman' : 'man'];
       ex.forEach(([n, f], i) => {
-        const cx = 680 + i * 190, cy = 270;
+        const cx = 905 + i * 140, cy = 225;
         c.save(); c.translate(cx, cy + Math.sin(t * 1.4 + i) * 2); c.rotate(Math.sin(t * .7 + i) * 2 * D);
-        S.head(c, ch, 150, Object.assign({ blink: S.blinkAt(t, i + 2) * (1 - (f.squint || 0)), time: t, sway: Math.sin(t + i) * .04 }, f), S.LIGHT.studio);
-        c.restore(); S.label(c, n, cx, cy + 150, 15, '#6a4a34');
+        S.head(c, ch, 108, Object.assign({ blink: S.blinkAt(t, i + 2) * (1 - (f.squint || 0)), time: t, sway: Math.sin(t + i) * .04 }, f), S.LIGHT.studio);
+        c.restore(); S.label(c, n, cx, cy + 112, 14, '#6a4a34');
       });
       // palette
-      const pal = [['skin', ch.skin.base], ['skin shadow', ch.skin.shade], ['hair', ch.hairCol.base], ['top', ch.shirt[0]], ['bottom', ch.pants[0]]];
+      const pal = [['skin', ch.skin.base], ['shadow', ch.skin.shade], ['hair', ch.hairCol.base], ['top', ch.shirt[0]], ['bottom', ch.pants[0]]];
       if (ch.dupatta) pal.push(['dupatta', ch.dupatta[0]]); if (ch.bag) pal.push(['bag', ch.bag[0]]); if (ch.shoes) pal.push(['shoes', ch.shoes[0]]);
-      pal.forEach(([n, col], i) => { const x = 600 + i * 82; c.fillStyle = col; c.strokeStyle = 'rgba(60,40,30,.4)'; c.lineWidth = 1; c.beginPath(); c.roundRect(x, 450, 60, 40, 5); c.fill(); c.stroke(); S.label(c, n, x + 30, 506, 12, '#6a4a34'); S.label(c, col, x + 30, 522, 11, 'rgba(90,60,40,.7)', 'center', 'IBM Plex Mono, monospace'); });
+      pal.forEach(([n, col], i) => { const x = 845 + (i % 4) * 100, y = 385 + Math.floor(i / 4) * 78; c.fillStyle = col; c.strokeStyle = 'rgba(60,40,30,.4)'; c.lineWidth = 1; c.beginPath(); c.roundRect(x, y, 70, 30, 5); c.fill(); c.stroke(); S.label(c, n, x + 35, y + 46, 12, '#6a4a34'); S.label(c, col, x + 35, y + 61, 11, 'rgba(90,60,40,.7)', 'center', 'IBM Plex Mono, monospace'); });
       // notes
-      (ch.notes || []).forEach((n, i) => S.label(c, '-  ' + n, 600, 570 + i * 26, 15, '#4a3020', 'left'));
+      (ch.notes || []).forEach((n, i) => S.label(c, '-  ' + n, 845, 570 + i * 24, 13.5, '#4a3020', 'left'));
       S.grain(c, .05);
     }
   });

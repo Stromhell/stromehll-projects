@@ -313,14 +313,14 @@
   // "back" is the side behind the limb (hamstring/calf, triceps), "front" the side in front (quad/shin, biceps).
   const PF = S.prof;
   const ANAT = {
-    legBack: PF([[0, .31], [.14, .28], [.42, .17], [.5, .15], [.6, .2], [.72, .16], [.9, .09], [1, .085]]),
-    legFront: PF([[0, .27], [.22, .27], [.44, .17], [.5, .16], [.62, .14], [.9, .09], [1, .085]]),
-    jeansBack: PF([[0, .33], [.2, .29], [.5, .21], [.8, .19], [1, .19]]),
-    jeansFront: PF([[0, .3], [.25, .27], [.5, .2], [.8, .18], [1, .18]]),
+    legBack: PF([[0, .25], [.3, .2], [.5, .155], [.65, .16], [.9, .11], [1, .1]]),
+    legFront: PF([[0, .24], [.3, .2], [.5, .15], [.7, .13], [.9, .105], [1, .1]]),
+    jeansBack: PF([[0, .26], [.3, .21], [.6, .19], [1, .18]]),
+    jeansFront: PF([[0, .25], [.3, .2], [.6, .18], [1, .17]]),
     salwarBack: PF([[0, .32], [.4, .27], [.85, .24], [1, .13]]),
     salwarFront: PF([[0, .3], [.4, .26], [.85, .23], [1, .12]]),
-    armBack: PF([[0, .19], [.14, .18], [.34, .145], [.52, .1], [.63, .135], [.8, .1], [1, .072]]),
-    armFront: PF([[0, .18], [.18, .15], [.34, .155], [.5, .1], [.62, .12], [.85, .088], [1, .072]]),
+    armBack: PF([[0, .17], [.3, .15], [.5, .125], [.65, .125], [1, .09]]),
+    armFront: PF([[0, .16], [.3, .14], [.5, .115], [.65, .115], [1, .088]]),
   };
   const BW = { kid: .74, man: 1, broad: 1.13, woman: .86, elder: .9 };
 
@@ -330,10 +330,10 @@
     const H = (x, y) => add(add(p, d, x * sz), n, y * sz);
     const fl = .32 * (1 - fist * .5);
     const palm = H(.24, 0), fing = H(.42 + fl * .5, -.02), th = H(.34, .15);
-    const L = [[palm[0], palm[1], sz * .26, sz * .19, ang], [fing[0], fing[1], sz * fl * .62, sz * .16, ang], [th[0], th[1], sz * .16, sz * .07, ang + .3]];
+    const L = [[palm[0], palm[1], sz * .26, sz * .19, ang], [fing[0], fing[1], sz * fl * .62, sz * .16, ang], [th[0], th[1], sz * .17, sz * .085, ang + .45]];
     lumpCel(c, L, sk, Lt, u, { swk: .25 });
-    c.save(); c.strokeStyle = S.rgba(inkOf(sk), .55); c.lineWidth = Math.max(.8, u * .009); c.lineCap = 'round';
-    for (let i = 0; i < 3; i++) { const y = -.1 + i * .08, q0 = H(.44, y), q1 = H(.42 + fl * 1.05, y * 1.1); c.beginPath(); c.moveTo(q0[0], q0[1]); c.lineTo(q1[0], q1[1]); c.stroke(); }
+    c.save(); c.strokeStyle = S.rgba(inkOf(sk), .3); c.lineWidth = Math.max(.8, u * .008); c.lineCap = 'round';
+    for (let i = 1; i < 3; i++) { const y = -.1 + i * .08, q0 = H(.44, y), q1 = H(.42 + fl * 1.05, y * 1.1); c.beginPath(); c.moveTo(q0[0], q0[1]); c.lineTo(q1[0], q1[1]); c.stroke(); }
     c.restore();
   };
   S.hand = (c, p, a, u, sz, pair, Lt, open) => hand(c, p, a, u, sz, tone(pair, Lt), Lt, open);
@@ -344,8 +344,8 @@
     // dn points toward the sole when the foot points forward on flat ground
     const P = (x, y) => add(add(an, d, x * len), dn, y * len);
     const pts = shoe
-      ? [P(-.2, .02), P(-.17, -.17), P(.05, -.17), P(.35, -.1), P(.72, -.02), P(.9, .07), P(.88, .17), P(.4, .2), P(-.18, .2)]
-      : [P(-.17, .02), P(-.12, -.15), P(.08, -.14), P(.38, -.06), P(.7, -.01), P(.86, .06), P(.84, .14), P(.55, .15), P(.2, .1), P(-.14, .15)];
+      ? [P(-.22, .05), P(-.22, -.2), P(0, -.3), P(.25, -.25), P(.55, -.18), P(.8, -.1), P(.93, .05), P(.87, .23), P(.4, .27), P(-.17, .26)]
+      : [P(-.18, .02), P(-.14, -.2), P(.1, -.22), P(.4, -.14), P(.7, -.08), P(.87, .03), P(.84, .17), P(.5, .19), P(.2, .15), P(-.15, .18)];
     celT(c, S.poly(pts), t, Lt, u, { swk: .35 });
     if (shoe) { c.save(); c.strokeStyle = S.rgba(t.shade, .9); c.lineWidth = u * .02; const a = P(-.18, .16), b = P(.86, .14); c.beginPath(); c.moveTo(a[0], a[1]); c.lineTo(b[0], b[1]); c.stroke(); const l0 = P(.1, -.14), l1 = P(.32, -.08); c.lineWidth = u * .012; c.beginPath(); c.moveTo(l0[0], l0[1]); c.lineTo(l1[0], l1[1]); c.stroke(); c.restore(); }
     else { c.save(); c.strokeStyle = S.rgba(t.shade, .8); c.lineWidth = u * .008; for (let i = 0; i < 3; i++) { const a = P(.7 + i * .05, .02), b = P(.72 + i * .05, .1); c.beginPath(); c.moveTo(a[0], a[1]); c.lineTo(b[0], b[1]); c.stroke(); } c.restore(); }
@@ -370,7 +370,7 @@
     const at = (a, b) => [Hc[0] + rt[0] * a + up[0] * b, Hc[1] + rt[1] * a + up[1] * b];
     const W = v => v * u * bw;                       // width scaled by build
     const shN = at(-W(.3), T - .24 * u), shF = at(W(.28), T - .22 * u);
-    const hipN = at(-W(.17), .02 * u), hipF = at(W(.2), .0);
+    const hipN = at(-W(.21), .02 * u), hipF = at(W(.24), .0);
 
     const pantsT = tone(ch.pants, Lt), pantsD = tone(ch.pants, Lt, .35), shirtT = tone(ch.shirt, Lt), shirtD = tone(ch.shirt, Lt, .35);
     const shoesT = ch.shoes && tone(ch.shoes, Lt), shoesD = ch.shoes && tone(ch.shoes, Lt, .35);
@@ -401,7 +401,7 @@
         celT(c, bare, st, Lt, u); // mundu covers this, but the shin shows when the cloth swings
       }
       const fa = l.a2 + (90 + footA) * D;
-      foot(c, an, fa, (kid ? .62 : fem ? .72 : .82) * u, u, ch.shoes ? (far ? shoesD : shoesT) : st, Lt, !!ch.shoes);
+      foot(c, an, fa, (kid ? .5 : fem ? .54 : .6) * u, u, ch.shoes ? (far ? shoesD : shoesT) : st, Lt, !!ch.shoes);
       return { kn, an };
     };
     // fabric folds behind the knee and at the crotch
@@ -509,12 +509,216 @@
 
   // idle and blink helpers
   S.blinkAt = (t, seed = 0) => { const period = 3.1 + (seed % 3) * .7, ph = ((t + seed * 1.3) % period) / period * period; return ph < .16 ? Math.sin(ph / .16 * Math.PI) : 0; };
-  S.idle = (t, seed = 0) => ({ shN: -4 + Math.sin(t * 1.1 + seed) * 1.5, shF: 6 + Math.sin(t * 1.1 + seed + .5) * 1.5, elN: 12 + Math.sin(t * .9 + seed) * 3, elF: 10, bob: Math.sin(t * 1.6 + seed) * .012, tilt: Math.sin(t * .7 + seed) * 2.5, lean: Math.sin(t * .5 + seed) * 1 });
+  S.idle = (t, seed = 0) => ({ shN: -1 + Math.sin(t * 1.1 + seed) * 1, shF: 2 + Math.sin(t * 1.1 + seed + .5) * 1, elN: 6 + Math.sin(t * .9 + seed) * 2, elF: 5, bob: Math.sin(t * 1.6 + seed) * .012, tilt: Math.sin(t * .7 + seed) * 2.5, lean: Math.sin(t * .5 + seed) * 1 });
   // Run cycle, phase p 0..1. Knees bend forward only, elbows back only.
   S.run = (p, k = 1) => {
     const a = p * S.TAU, b = a + Math.PI;
     const thigh = q => 12 + 42 * Math.sin(q) * k;
     const knee = q => 18 + 70 * S.clamp(.5 + .5 * Math.sin(q + 1.6)) * k + 10;
     return { hipN: thigh(a), hipF: thigh(b), kneeN: knee(a), kneeF: knee(b), shN: -38 * Math.sin(a) * k, shF: -38 * Math.sin(b) * k, elN: 72 + 18 * Math.sin(a), elF: 72 + 18 * Math.sin(b), bob: .1 * Math.cos(2 * a) * k + .05, lean: 9 * k, footN: 5 + 20 * Math.sin(a + .5), footF: 5 + 20 * Math.sin(b + .5), tilt: -3 + 2 * Math.cos(2 * a) };
+  };
+
+  // ======================================================================
+  // TURNAROUND: front and back views (the 3/4 views come from S.person)
+  // Built from Pushpam's turnaround refs: limbs are simple tubes with a gentle taper,
+  // arms hang close to the body, the clothes give the silhouette, feet are short and round.
+  // ======================================================================
+  const HF = {
+    // symmetric head, facing the viewer
+    shape: (u, ch) => {
+      const k = ch.build === 'kid', jw = ch.build === 'broad' ? 1.07 : ch.build === 'woman' ? .93 : 1;
+      const X = v => v * u, p = new Path2D();
+      const hw = k ? .44 : .4, cy = k ? .5 : .56, jx = (k ? .3 : .3) * jw, jy = k ? .32 : .34;
+      p.moveTo(0, X(-.54));
+      p.bezierCurveTo(X(hw * .62), X(-.54), X(hw), X(-.36), X(hw), X(-.08));
+      p.bezierCurveTo(X(hw), X(.1), X(jx + .06), X(jy - .04), X(jx), X(jy + .04));
+      p.bezierCurveTo(X(jx * .7), X(cy - .04), X(.12), X(cy), 0, X(cy));
+      p.bezierCurveTo(X(-.12), X(cy), X(-jx * .7), X(cy - .04), X(-jx), X(jy + .04));
+      p.bezierCurveTo(X(-jx - .06), X(jy - .04), X(-hw), X(.1), X(-hw), X(-.08));
+      p.bezierCurveTo(X(-hw), X(-.36), X(-hw * .62), X(-.54), 0, X(-.54));
+      p.closePath(); p.bb = [-hw * u, -.54 * u, hw * u, cy * u]; return p;
+    },
+    cap: { // front hairline caps (x, y in head units); mirrored where symmetric
+      neat: [[-.45, -.02], [-.47, -.3], [-.33, -.58], [-.02, -.66], [.3, -.6], [.47, -.34], [.45, -.02], [.4, -.1], [.36, -.28], [.16, -.34], [-.06, -.28], [-.24, -.3], [-.38, -.24], [-.41, -.08]],
+      swept: [[-.47, 0], [-.5, -.32], [-.36, -.62], [-.02, -.72], [.34, -.64], [.5, -.36], [.47, 0], [.42, -.08], [.38, -.3], [.18, -.36], [.0, -.3], [-.2, -.34], [-.38, -.26], [-.43, -.06]],
+      bun: [[-.44, .02], [-.46, -.3], [-.32, -.56], [0, -.62], [.32, -.56], [.46, -.3], [.44, .02], [.4, -.06], [.36, -.26], [.16, -.34], [0, -.4], [-.16, -.34], [-.36, -.26], [-.4, -.06]],
+    },
+    capBack: {
+      neat: [[-.46, .14], [-.48, -.3], [-.33, -.58], [0, -.66], [.33, -.58], [.48, -.3], [.46, .14], [.3, .3], [0, .34], [-.3, .3]],
+      swept: [[-.48, .14], [-.5, -.32], [-.36, -.62], [0, -.72], [.36, -.62], [.5, -.32], [.48, .14], [.3, .3], [0, .34], [-.3, .3]],
+      bun: [[-.45, .1], [-.47, -.3], [-.32, -.56], [0, -.62], [.32, -.56], [.47, -.3], [.45, .1], [.28, .28], [0, .32], [-.28, .28]],
+    },
+  };
+  const poly = (pts, u, sx = 1) => S.poly(pts.map(q => [q[0] * u * sx, q[1] * u]));
+
+  S.headFront = (c, ch, u, f, Lt, back) => {
+    const sk = tone(ch.skin, Lt), hr = tone(ch.hairCol, Lt), kid = ch.build === 'kid', es = ch.eye || 1;
+    const hp = HF.shape(u, ch);
+    // dupatta hood sits behind the head
+    if (ch.dupatta) { const dt = tone(ch.dupatta, Lt); celT(c, poly([[-.56, .7], [-.58, .0], [-.46, -.5], [0, -.7], [.46, -.5], [.58, 0], [.56, .7], [.3, .62], [-.3, .62]], u), dt, Lt, u, { swk: .9 }); }
+    // ears behind the head outline
+    for (const s of [-1, 1]) { const ex = s * (kid ? .43 : .39) * u; celT(c, S.ell(ex, .06 * u, .075 * u, .12 * u, 0), sk, Lt, u, { swk: .5 }); }
+    celT(c, hp, sk, Lt, u, { soft: Math.max(1, u * .025), over: c2 => {
+      if (back) return;
+      c2.fillStyle = S.rgba('#d0603f', kid ? .22 : .12);
+      for (const s of [-1, 1]) { c2.beginPath(); c2.ellipse(s * .22 * u, .2 * u, .09 * u, .055 * u, 0, 0, S.TAU); c2.fill(); }
+      c2.fillStyle = S.rgba(sk.shade, .4); c2.beginPath(); c2.ellipse(0, .6 * u, .3 * u, .12 * u, 0, 0, S.TAU); c2.fill();
+    } });
+    if (ch.earring && !back) for (const s of [-1, 1]) { c.save(); c.fillStyle = '#e2b24a'; c.strokeStyle = INK; c.lineWidth = 1; c.beginPath(); c.arc(s * .4 * u, .2 * u, .028 * u, 0, S.TAU); c.fill(); c.stroke(); c.restore(); }
+
+    if (!back) {
+      const eyY = (kid ? .05 : .01) * u, ew = (kid ? .15 : .14) * u * es, eh = (kid ? .066 : .058) * u * es, ex = (kid ? .18 : .16) * u;
+      eye(c, -ex, eyY, ew, eh, f, u, true, Lt, sk);
+      eye(c, ex, eyY, ew, eh, f, u, false, Lt, sk);
+      const hc = S.mix(ch.hairCol.base, '#000000', ch.hair === 'elder' ? .1 : .2), by = eyY - (kid ? .12 : .1) * u - (f.squint || 0) * .02 * u;
+      brow(c, -ex - .01 * u, by, ew * 1.2, u, f.raise || 0, f.worry || 0, f.angry || 0, ch.hair === 'elder' ? '#d9d2c8' : hc, 1);
+      brow(c, ex + .01 * u, by, ew * 1.2, u, f.raise || 0, f.worry || 0, f.angry || 0, ch.hair === 'elder' ? '#d9d2c8' : hc, -1);
+      // nose: a soft shadow on the side away from the light, a rounded tip and two nostrils
+      const ny = (kid ? .2 : .22) * u, nk = kid ? .8 : ch.build === 'woman' ? .75 : 1, sL = Lt.L[0] >= 0 ? -1 : 1;
+      c.save(); c.fillStyle = S.rgba(sk.shade, .55); c.beginPath(); c.moveTo(sL * .015 * u, eyY + .04 * u); c.quadraticCurveTo(sL * .06 * u * nk, ny - .02 * u, sL * .055 * u * nk, ny + .02 * u); c.lineTo(sL * .02 * u, ny + .02 * u); c.closePath(); c.fill();
+      c.strokeStyle = INK; c.lineWidth = Math.max(1.1, u * .018); c.lineCap = 'round'; c.beginPath(); c.moveTo(-.055 * u * nk, ny); c.quadraticCurveTo(0, ny + .05 * u * nk, .055 * u * nk, ny); c.stroke();
+      c.fillStyle = S.rgba('#2a120c', .75); for (const s of [-1, 1]) { c.beginPath(); c.ellipse(s * .028 * u * nk, ny + .012 * u, .016 * u, .009 * u, 0, 0, S.TAU); c.fill(); }
+      c.restore();
+      // mouth
+      const my = (kid ? .34 : .37) * u, mw = .15 * u * (kid ? .9 : 1), sm = f.smile || 0, op = f.open || 0;
+      c.save(); c.lineCap = 'round';
+      if (op > .05) {
+        const m = new Path2D(); m.moveTo(-mw / 2, my - sm * .03 * u); m.quadraticCurveTo(0, my - op * .01 * u, mw / 2, my - sm * .03 * u); m.quadraticCurveTo(0, my + op * .16 * u, -mw / 2, my - sm * .03 * u); m.closePath();
+        c.fillStyle = '#5a1d18'; c.fill(m); c.save(); c.clip(m); c.fillStyle = '#f4ece0'; c.fillRect(-mw, my - .1 * u, mw * 2, .1 * u + op * .035 * u); c.restore();
+        c.strokeStyle = INK; c.lineWidth = Math.max(1.2, u * .02); c.stroke(m);
+      } else {
+        c.strokeStyle = INK; c.lineWidth = Math.max(1.2, u * .022); c.beginPath(); c.moveTo(-mw / 2, my - sm * .04 * u); c.quadraticCurveTo(0, my + sm * .05 * u, mw / 2, my - sm * .04 * u); c.stroke();
+        c.strokeStyle = S.rgba(sk.shade, .9); c.lineWidth = u * .016; c.beginPath(); c.moveTo(-mw * .22, my + .05 * u); c.quadraticCurveTo(0, my + .065 * u, mw * .22, my + .05 * u); c.stroke();
+      }
+      c.restore();
+      if (ch.build === 'elder' || ch.build === 'broad') { c.save(); c.strokeStyle = S.rgba(sk.shade, ch.build === 'elder' ? .9 : .5); c.lineWidth = u * .012; c.lineCap = 'round'; c.beginPath(); c.moveTo(-.14 * u, -.2 * u); c.quadraticCurveTo(0, -.23 * u, .14 * u, -.2 * u); c.stroke(); for (const s of [-1, 1]) { c.beginPath(); c.moveTo(s * .09 * u, ny); c.quadraticCurveTo(s * .14 * u, my - .02 * u, s * .12 * u, my + .04 * u); c.stroke(); } c.restore(); }
+      if (f.streak > 0) { c.save(); c.strokeStyle = 'rgba(225,240,248,.75)'; c.lineWidth = u * .012; c.beginPath(); c.moveTo(-ex, eyY + eh * 1.2); c.quadraticCurveTo(-ex - .02 * u, eyY + .2 * u, -ex + .01 * u, eyY + eh + f.streak * .3 * u); c.stroke(); c.restore(); }
+      if (ch.mustache) celT(c, poly([[-.2, .34], [-.14, .27], [0, .26], [.14, .27], [.2, .34], [.12, .32], [0, .31], [-.12, .32]], u), hr, Lt, u, { swk: .4 });
+      if (ch.beard) celT(c, poly([[-.33, .2], [-.2, .36], [0, .3], [.2, .36], [.33, .2], [.3, .42], [.14, .62], [0, .68], [-.14, .62], [-.3, .42]], u), hr, Lt, u, { swk: .6, over: c2 => { c2.strokeStyle = INK; c2.lineWidth = u * .018; c2.beginPath(); c2.moveTo(-.06 * u, my + .02 * u); c2.quadraticCurveTo(0, my + .04 * u, .06 * u, my + .02 * u); c2.stroke(); } });
+      if (ch.glasses) { c.save(); c.strokeStyle = '#4a3020'; c.lineWidth = Math.max(1.2, u * .016); for (const s of [-1, 1]) { c.beginPath(); c.arc(s * ex, eyY, .085 * u, 0, S.TAU); c.stroke(); } c.beginPath(); c.moveTo(-ex + .085 * u, eyY); c.quadraticCurveTo(0, eyY - .03 * u, ex - .085 * u, eyY); c.stroke(); c.restore(); }
+    }
+    // hair
+    if (ch.hair === 'curly') {
+      const r = S.rng(77), L = [];
+      const n = back ? 22 : 15, a0 = back ? -10 : 175, a1 = back ? 370 : 365 - 0;
+      for (let i = 0; i < n; i++) { const a = S.lerp(a0, a1, i / (n - 1)) * D, rr = S.lerp(.1, .14, r()); L.push([Math.cos(a) * .42 * u, (-.1 + Math.sin(a) * .44) * u, rr * u, rr * u * .9, a]); }
+      L.push([0, -.22 * u, .3 * u, .26 * u, 0]);
+      if (back) L.push([0, .05 * u, .38 * u, .3 * u, 0]);
+      c.save(); if (!back) { const hl = new Path2D(); [[-.7, .3], [-.38, .0], [-.3, -.26], [-.1, -.3], [.1, -.32], [.3, -.26], [.38, 0], [.7, .3], [.7, -1.2], [-.7, -1.2]].forEach((q, i) => i ? hl.lineTo(q[0] * u, q[1] * u) : hl.moveTo(q[0] * u, q[1] * u)); hl.closePath(); c.clip(hl); }
+      lumpCel(c, L, hr, Lt, u, { swk: .8 }); c.restore();
+      if (!back) lumpCel(c, [[-.18 * u, -.3 * u, .08 * u, .06 * u, .3], [0, -.33 * u, .08 * u, .06 * u, 0], [.17 * u, -.3 * u, .08 * u, .06 * u, -.3]], hr, Lt, u, { swk: .5 });
+    } else if (ch.hair === 'elder') {
+      for (const s of [-1, 1]) celT(c, poly([[.3, -.2], [.42, -.22], [.47, -.02], [.44, .14], [.36, .12], [.33, -.04]], u, s), hr, Lt, u, { swk: .6 });
+      if (back) celT(c, poly([[-.43, -.04], [-.22, .14], [0, .19], [.22, .14], [.43, -.04], [.4, .2], [.22, .34], [0, .38], [-.22, .34], [-.4, .2]], u), hr, Lt, u, { swk: .5, over: c2 => { c2.strokeStyle = S.rgba(hr.shade, .8); c2.lineWidth = u * .012; for (let k = 0; k < 7; k++) { const x0 = (-.3 + k * .1) * u; c2.beginPath(); c2.moveTo(x0, .2 * u); c2.lineTo(x0 * 1.05, .32 * u); c2.stroke(); } } });
+    } else {
+      const pts = (back ? HF.capBack : HF.cap)[ch.hair];
+      if (pts) celT(c, poly(pts, u), hr, Lt, u, { swk: .8, over: c2 => { c2.strokeStyle = S.rgba(hr.rim, .35); c2.lineWidth = u * .012; c2.lineCap = 'round'; for (let i = 0; i < 5; i++) { const x0 = (-.3 + i * .15) * u; c2.beginPath(); c2.moveTo(x0, -.58 * u); c2.quadraticCurveTo(x0 * 1.1 + .04 * u, -.45 * u, x0 * 1.15, -.32 * u); c2.stroke(); } } });
+      if (ch.hair === 'bun' && back && !ch.dupatta) lumpCel(c, [[0, .02 * u, .17 * u, .15 * u, 0]], hr, Lt, u);
+    }
+    // dupatta crown over the hair, gold edge
+    if (ch.dupatta) {
+      const dt = tone(ch.dupatta, Lt);
+      const crown = back ? [[-.56, .62], [-.58, 0], [-.46, -.5], [0, -.7], [.46, -.5], [.58, 0], [.56, .62], [0, .66]]
+        : [[-.52, .2], [-.52, -.3], [-.36, -.6], [0, -.7], [.36, -.6], [.52, -.3], [.52, .2], [.44, .1], [.42, -.28], [.24, -.46], [0, -.5], [-.24, -.46], [-.42, -.28], [-.44, .1]];
+      celT(c, poly(crown, u), dt, Lt, u, { swk: .7, over: c2 => { if (back) return; c2.strokeStyle = '#d9a640'; c2.lineWidth = u * .03; c2.beginPath(); c2.moveTo(-.46 * u, .1 * u); c2.quadraticCurveTo(-.44 * u, -.44 * u, 0, -.52 * u); c2.quadraticCurveTo(.44 * u, -.44 * u, .46 * u, .1 * u); c2.stroke(); } });
+    }
+  };
+
+  // full figure, front or back. Feet on (x, y), u = head unit.
+  S.personFront = (c, ch, x, y, u, f, Lt0, back = false, t = 0) => {
+    const B = BUILD[ch.build], bw = BW[ch.build], fem = ch.build === 'woman', kid = ch.build === 'kid';
+    const Lt = back ? Object.assign({}, Lt0, { L: [-Lt0.L[0], Lt0.L[1]] }) : Lt0;
+    const sk = tone(ch.skin, Lt), skD = tone(ch.skin, Lt, .3), shirtT = tone(ch.shirt, Lt), pantsT = tone(ch.pants, Lt);
+    const bob = Math.sin(t * 1.6) * .012 * u;
+    const footH = .13 * u, legLen = B.legs * u - footH;
+    const hipY = -legLen - footH + bob, T = B.torso * u, neckY = hipY - T;
+    const shW = B.sh * u * (fem ? .95 : .9), hpW = B.hip * u * (fem ? 1.1 : .95);
+    const SCw = (fn, k) => q => fn(q) * u * k;
+    c.save(); c.translate(x, y);
+
+    // legs
+    const legX = hpW * .5;
+    const legPts = s => { const h = [s * legX, hipY], k = [s * legX * 1.04, hipY + legLen * .5], a = [s * legX * 1.08, -footH]; return S.joint(h, k, a, 30, .2); };
+    const footF = s => { const ax = s * legX * 1.08, len = (kid ? .5 : fem ? .54 : .6) * u, w = (kid ? .2 : .22) * u;
+      const sh = !!ch.shoes, ft = sh ? tone(ch.shoes, Lt) : sk;
+      const pts = back ? [[-w * .8, -footH * .9], [w * .8, -footH * .9], [w, -footH * .2], [w * .9, 0], [-w * .9, 0], [-w, -footH * .2]]
+        : [[-w * .75, -footH * 1.1], [w * .75, -footH * 1.1], [w * 1.05, -footH * .4], [w * 1.15, -footH * .05], [w * .3, len * .08], [-w * .3, len * .08], [-w * 1.15, -footH * .05], [-w * 1.05, -footH * .4]];
+      celT(c, S.poly(pts.map(p => [ax + p[0] + s * w * .15, p[1]])), ft, Lt, u, { swk: .35, over: c2 => { if (sh && !back) { c2.strokeStyle = S.rgba(ft.shade, .9); c2.lineWidth = u * .02; c2.beginPath(); c2.moveTo(ax - w + s * w * .15, -footH * .1); c2.lineTo(ax + w + s * w * .15, -footH * .1); c2.stroke(); } } });
+    };
+    for (const s of [-1, 1]) {
+      const pts = legPts(s), k = bw * (fem ? 1.05 : 1);
+      if (ch.rolled) {
+        const sub = pts.slice(Math.round(pts.length * .55));
+        celT(c, S.tube2(sub, q => ANAT.legBack(.55 + q * .45) * u * k, q => ANAT.legFront(.55 + q * .45) * u * k), sk, Lt, u);
+        const top = pts.slice(0, Math.round(pts.length * .68) + 1);
+        celT(c, S.tube2(top, q => ANAT.jeansBack(q * .68) * u * k * 1.05, q => ANAT.jeansFront(q * .68) * u * k * 1.05), pantsT, Lt, u);
+        const cp = top[top.length - 1]; celT(c, S.ell(cp[0], cp[1], .22 * u * k, .07 * u * k, 0), pantsT, Lt, u, { swk: .3 });
+      } else if (ch.mundu) {
+        celT(c, S.tube2(pts, SCw(ANAT.legBack, k * .9), SCw(ANAT.legFront, k * .9)), sk, Lt, u);
+      } else if (fem) {
+        celT(c, S.tube2(pts, SCw(ANAT.salwarBack, k), SCw(ANAT.salwarFront, k)), pantsT, Lt, u);
+      } else {
+        celT(c, S.tube2(pts, SCw(ANAT.jeansBack, k), SCw(ANAT.jeansFront, k)), pantsT, Lt, u, { over: c2 => { c2.strokeStyle = S.rgba(pantsT.shade, .55); c2.lineWidth = u * .02; c2.beginPath(); const kp = pts[Math.round(pts.length * .5)]; c2.moveTo(kp[0] - .08 * u, kp[1]); c2.quadraticCurveTo(kp[0], kp[1] + .04 * u, kp[0] + .08 * u, kp[1]); c2.stroke(); } });
+      }
+      footF(s);
+    }
+    // mundu: one wrapped cloth from waist to ankle
+    if (ch.mundu) {
+      const hem = -footH - .28 * u, top = hipY - .1 * u;
+      const md = S.poly([[-hpW * 1.08, top], [hpW * 1.08, top], [hpW * 1.22, hipY + legLen * .45], [hpW * 1.2, hem], [0, hem + .04 * u], [-hpW * 1.2, hem], [-hpW * 1.22, hipY + legLen * .45]]);
+      celT(c, md, pantsT, Lt, u, { over: c2 => { c2.strokeStyle = S.rgba(pantsT.shade, .55); c2.lineWidth = u * .022; c2.lineCap = 'round'; for (let i = 0; i < 5; i++) { const x0 = (-.5 + i * .25) * hpW; c2.beginPath(); c2.moveTo(x0 * .8, top + .3 * u); c2.quadraticCurveTo(x0 * 1.05, (top + hem) / 2, x0 * 1.15, hem); c2.stroke(); } c2.strokeStyle = S.rgba('#8a6a3a', .6); c2.lineWidth = u * .03; c2.beginPath(); c2.moveTo(-hpW * 1.2, hem - .05 * u); c2.lineTo(hpW * 1.2, hem - .05 * u); c2.stroke(); if (!back) { c2.strokeStyle = S.rgba(pantsT.shade, .8); c2.beginPath(); c2.moveTo(hpW * .3, top); c2.quadraticCurveTo(hpW * .4, (top + hem) / 2, hpW * .25, hem); c2.stroke(); } } });
+    }
+
+    // arms hang close to the body with a slight outward angle; long sleeve for a kurta
+    const arm = s => {
+      const sh = [s * (shW - .13 * u * bw), neckY + .3 * u], sway = Math.sin(t * .9 + s) * .02 * u;
+      const el = [sh[0] + s * .1 * u + sway, sh[1] + B.up * u], wr = [el[0] + s * .02 * u + sway * 1.5, el[1] + B.fore * u];
+      const pts = S.joint(sh, el, wr, 30, .2), k = bw * (fem ? .9 : 1);
+      celT(c, S.tube2(pts, SCw(ANAT.armBack, k), SCw(ANAT.armFront, k)), sk, Lt, u);
+      if (ch.long) celT(c, S.tube2(pts.slice(0, Math.round(pts.length * .92)), q => (ANAT.armBack(q) + .04) * u * k, q => (ANAT.armFront(q) + .04) * u * k), shirtT, Lt, u);
+      else { const sq = kid ? .28 : .32, top = pts.slice(0, Math.round(pts.length * sq) + 1); celT(c, S.tube2(top, q => (ANAT.armBack(q * sq) + .045) * u * k, q => (ANAT.armFront(q * sq) + .045) * u * k), shirtT, Lt, u); }
+      if (ch.bangles) { c.save(); c.strokeStyle = '#e0b04a'; c.lineWidth = u * .022; for (let i = 0; i < 2; i++) { c.beginPath(); c.ellipse(wr[0], wr[1] - .1 * u + i * .035 * u, .1 * u, .028 * u, 0, 0, S.TAU); c.stroke(); } c.restore(); }
+      c.save(); c.translate(wr[0], wr[1]); c.scale(-s, 1);
+      hand(c, [0, -.02 * u], 0, u, (kid ? .5 : fem ? .54 : .62) * u, sk, Object.assign({}, Lt, { L: [Lt.L[0] * -s, Lt.L[1]] }), 0, 0);
+      c.restore();
+    };
+    for (const s of [-1, 1]) arm(s);
+
+    // neck
+    const nw = (kid ? .15 : fem ? .14 : ch.build === 'broad' ? .19 : .16) * u, headY = neckY - (B.neck + .47) * u;
+    celT(c, S.poly([[-nw, headY + .3 * u], [nw, headY + .3 * u], [nw * 1.1, neckY + .1 * u], [-nw * 1.1, neckY + .1 * u]], false), skD, Lt, u, { swk: .3 });
+
+    // torso: shoulder, chest, waist, hip, hem. Men widest at the shoulder, the mother at the hip.
+    const belly = ch.build === 'broad' ? .06 : 0, waistIn = fem ? .1 : .03, hipOut = fem ? .08 : 0;
+    const hemY = hipY + (ch.long ? 1.3 : kid ? .55 : .32) * u, flare = ch.long ? .22 : kid ? .06 : .03;
+    const half = [[nw * 1.1, neckY - .02 * u], [shW * .78, neckY + .12 * u], [shW, neckY + .32 * u], [shW * .93, neckY + .75 * u], [hpW * (1 - waistIn) + belly * u, hipY - T * .4], [hpW * (1.02 + hipOut) + belly * u, hipY - .05 * u], [hpW * (1.05 + hipOut) + flare * u, hemY]];
+    const torso = [...half, ...half.slice().reverse().map(p => [-p[0], p[1]])];
+    if (!ch.long && !ch.mundu) celT(c, S.poly([[-hpW * 1.02, hipY - .25 * u], [hpW * 1.02, hipY - .25 * u], [hpW * 1.04, hipY + .3 * u], [0, hipY + .34 * u], [-hpW * 1.04, hipY + .3 * u]]), pantsT, Lt, u);
+    celT(c, S.poly(torso), shirtT, Lt, u, { over: c2 => {
+      c2.strokeStyle = S.rgba(shirtT.shade, .5); c2.lineWidth = u * .022; c2.lineCap = 'round';
+      for (const s of [-1, 1]) { c2.beginPath(); c2.moveTo(s * shW * .8, neckY + .7 * u); c2.quadraticCurveTo(s * shW * .55, hipY - T * .45, s * hpW * .7, hipY - T * .25); c2.stroke(); }
+      if (!back) {
+        // collar and placket
+        c2.strokeStyle = S.rgba(inkOf(shirtT), .8); c2.lineWidth = u * .02;
+        c2.beginPath(); c2.moveTo(-nw * 1.3, neckY - .02 * u); c2.lineTo(0, neckY + (fem ? .3 : .22) * u); c2.lineTo(nw * 1.3, neckY - .02 * u); c2.stroke();
+        if (!fem) { c2.strokeStyle = S.rgba(shirtT.shade, .8); c2.beginPath(); c2.moveTo(0, neckY + .22 * u); c2.lineTo(0, hemY - .05 * u); c2.stroke(); c2.fillStyle = S.rgba(inkOf(shirtT), .6); for (let i = 0; i < 4; i++) { c2.beginPath(); c2.arc(.03 * u, neckY + (.4 + i * .4) * u, .022 * u, 0, S.TAU); c2.fill(); } }
+      } else { c2.strokeStyle = S.rgba(shirtT.shade, .7); c2.lineWidth = u * .02; c2.beginPath(); c2.moveTo(-nw * 1.3, neckY + .02 * u); c2.quadraticCurveTo(0, neckY + .08 * u, nw * 1.3, neckY + .02 * u); c2.stroke(); }
+    } });
+    // dupatta over both shoulders, hanging in front (or down the back)
+    if (ch.dupatta) {
+      const dt = tone(ch.dupatta, Lt);
+      if (back) celT(c, S.poly([[-shW * .85, neckY], [shW * .85, neckY], [shW * .9, neckY + 1.6 * u], [0, neckY + 1.75 * u], [-shW * .9, neckY + 1.6 * u]]), dt, Lt, u, { swk: .8 });
+      else for (const s of [-1, 1]) celT(c, S.poly([[s * nw * 1.2, neckY - .05 * u], [s * shW * .95, neckY + .1 * u], [s * shW * .85, neckY + 1.9 * u], [s * shW * .45, neckY + 1.95 * u], [s * shW * .4, neckY + .5 * u]]), dt, Lt, u, { swk: .8, over: c2 => { c2.strokeStyle = '#d9a640'; c2.lineWidth = u * .03; c2.beginPath(); c2.moveTo(s * shW * .42, neckY + .5 * u); c2.lineTo(s * shW * .47, neckY + 1.93 * u); c2.stroke(); } });
+    }
+    if (ch.bag) {
+      const bt = tone(ch.bag, Lt), s = back ? 1 : -1;
+      celT(c, S.tube([[s * -shW * .7, neckY + .08 * u], [0, hipY - T * .45], [s * hpW * 1.05, hipY - .05 * u]], u * .06), bt, Lt, u, { swk: .3 });
+      celT(c, S.poly([[s * hpW * .7, hipY - .25 * u], [s * hpW * 1.45, hipY - .2 * u], [s * hpW * 1.45, hipY + .45 * u], [s * hpW * .75, hipY + .45 * u]]), bt, Lt, u, { swk: .4 });
+    }
+    // head
+    c.save(); c.translate(0, headY + (ch.stoop ? .06 * u : 0)); c.rotate(Math.sin(t * .7) * 1.5 * D);
+    S.headFront(c, ch, u, f, Lt, back);
+    c.restore();
+    c.restore();
   };
 })(window);
