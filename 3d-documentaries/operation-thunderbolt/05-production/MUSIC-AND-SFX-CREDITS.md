@@ -8,7 +8,7 @@ https://creativecommons.org/licenses/by/4.0/
 - "Darkling" (act 2 bed)
 - "Stormfront" (act 0 cold open bed)
 - "Unseen Horrors" (act 3 bed)
-- "Despair and Triumph" (act 4 bed)
+- "Despair and Triumph" (act 4 and act 9 beds)
 - "Dark Fog" (act 5 bed)
 - "Long Note Four" (act 6 bed)
 - "Impact Lento" (act 7 bed)
