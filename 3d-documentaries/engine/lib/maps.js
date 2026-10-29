@@ -44,7 +44,7 @@ export async function parchment(o = {}) {
     const iso = f.properties.iso;
     let fill = o.dark ? '#4a4438' : '#e8dcbc';
     if (o.colors !== false && COLORS[iso] && (hl.size === 0 || hl.has(iso))) fill = o.dark ? shade(COLORS[iso], -.35) : mix(COLORS[iso], '#e8dcbc', .45);
-    if (hl.has(iso)) fill = o.dark ? shade(COLORS[iso] ?? '#c9a45a', -.1) : COLORS[iso] ?? '#c9a45a';
+    if (hl.has(iso)) fill = o.hlColor ?? (o.dark ? shade(COLORS[iso] ?? '#c9a45a', -.1) : COLORS[iso] ?? '#c9a45a');
     draw(f.geometry, fill, null);
   }
   for (const f of REGION.countries) draw(f.geometry, null, o.dark ? '#a89070' : '#6a4a2a', 7);

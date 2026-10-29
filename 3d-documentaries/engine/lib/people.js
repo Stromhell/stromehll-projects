@@ -21,6 +21,11 @@ const OUTFITS = {
   medic:   { top: 0xe8ecea, bot: 0x6b7044, shoe: 0x3a2a1e },
   amin:    { top: 0x6f7a4a, bot: 0x5e683c, shoe: 0x1e1712, medals: true },
   dark:    { top: 0x2a2b33, bot: 0x22232a, shoe: 0x15151a },   // hijacker
+  // Rome
+  toga:    { top: 0xf1ece0, bot: 0xf1ece0, shoe: 0x6a4a2a, dress: true, toga: true },
+  tunic:   { top: 0xb8a27a, bot: 0xb8a27a, shoe: 0x6a4a2a, dress: true },
+  legion:  { top: 0xa8322a, bot: 0xa8322a, shoe: 0x5a3a1e, dress: true, armour: true },
+  stola:   { top: 0x8a5a7a, bot: 0x8a5a7a, shoe: 0x6a4a2a, dress: true, toga: true },
 };
 const SIL = 0x15131a;
 
@@ -50,6 +55,11 @@ export function person(o = {}) {
   if (fit.medals && !sil) {
     for (let i = 0; i < 6; i++) body.add(cyl(.022, .022, .015, [0xd9b13b, 0xb33a2a, 0x2f6fe0][i % 3], { pos: [-.12 + (i % 3) * .045, hipY + .42 - Math.floor(i / 3) * .055, .155], rot: [Math.PI / 2, 0, 0], seg: 10 }));
   }
+  if (fit.toga && !sil) {   // draped sash over the left shoulder, purple border for magistrates
+    const sash = cyl(.215, .215, .14, o.drape ?? new THREE.Color(top).offsetHSL(0, 0, -.06).getHex(), { pos: [0, hipY + .3, 0], rot: [0, 0, .75], scale: [1, 1, .82], seg: 18 }); body.add(sash);
+    if (o.border) { const b = cyl(.222, .222, .035, o.border, { pos: [-.05, hipY + .25, 0], rot: [0, 0, .75], scale: [1, 1, .84], seg: 18 }); body.add(b); body.add(cyl(.305, .305, .04, o.border, { pos: [0, hipY - .3, 0], seg: 18 })); }
+  }
+  if (fit.armour && !sil) { body.add(cyl(.212, .205, .3, 0x9a8a6a, { pos: [0, hipY + .32, 0], scale: [1, 1, .82] })); for (let i = 0; i < 3; i++) body.add(cyl(.214, .214, .025, 0x6a5a3a, { pos: [0, hipY + .22 + i * .08, 0], scale: [1, 1, .83] })); }
   if (o.outfit === 'medic' && !sil) body.add(box(.1, .1, .01, 0xc8302a, { pos: [-.08, hipY + .4, .16] }));
   // belt for uniforms
   if (['olive', 'khaki', 'amin'].includes(o.outfit) && !sil) body.add(cyl(.205, .205, .05, 0x3b2a1a, { pos: [0, hipY + .04, 0], scale: [1, 1, .8] }));
@@ -90,6 +100,9 @@ export function person(o = {}) {
   if (o.hat === 'pilot') { head.add(cyl(.3, .29, .1, sil ? SIL : 0x1e2a44, { pos: [0, .25, 0] })); head.add(box(.22, .02, .12, sil ? SIL : 0x111111, { pos: [0, .2, .22] })); head.add(box(.08, .05, .01, sil ? SIL : 0xd9b13b, { pos: [0, .27, .3] })); }
   if (o.hat === 'peaked') { head.add(cyl(.33, .28, .12, hatCol, { pos: [0, .27, 0] })); head.add(box(.24, .02, .14, sil ? SIL : 0x1a1a14, { pos: [0, .2, .22] })); if (!sil) head.add(box(.09, .06, .01, 0xd9b13b, { pos: [0, .29, .32] })); }
   if (o.hat === 'kippah' && !sil) { const k = sph(.15, 0x22304a, { seg: 16 }); k.scale.set(1, .3, 1); k.position.set(0, .29, -.03); head.add(k); }
+  if (o.hat === 'laurel' && !sil) { const l = new THREE.Mesh(new THREE.TorusGeometry(.26, .035, 6, 24, Math.PI * 1.6), toon(0x5a8a3a)); l.rotation.set(Math.PI / 2 - .25, 0, Math.PI * .7); l.position.set(0, .17, -.02); head.add(l); for (let i = 0; i < 9; i++) { const a = Math.PI * .7 + i * .18 - .1; const lf = sph(.05, 0x6a9a44, { scale: [1, .5, 1.6] }); lf.position.set(Math.cos(a) * .27, .18 + Math.sin(i) * .01, -Math.sin(a) * .27 - .02); head.add(lf); } }
+  if (o.hat === 'crown' && !sil) { head.add(cyl(.25, .25, .1, 0xd9b13b, { pos: [0, .3, 0] })); for (let i = 0; i < 6; i++) { const a = i / 6 * Math.PI * 2; head.add(box(.06, .1, .03, 0xd9b13b, { pos: [Math.cos(a) * .24, .38, Math.sin(a) * .24], rot: [0, -a, 0] })); } }
+  if (o.hat === 'galea') { const h = sph(.33, sil ? SIL : 0x9a8a6a, { seg: 22 }); h.scale.set(1, .7, 1); h.position.y = .1; head.add(h); if (!sil) head.add(box(.06, .16, .4, o.hatColor ?? 0xa8322a, { pos: [0, .38, 0] })); }
   if (o.hat === 'helmet') { const h = sph(.33, hatCol, { seg: 22 }); h.scale.set(1, .7, 1); h.position.y = .1; head.add(h); }
   if (o.hat === 'scarf' && !sil) { const h = sph(.32, o.hatColor ?? 0x9a4a6a, { seg: 22 }); h.scale.set(1.02, .9, 1.02); h.position.set(0, .03, -.05); head.add(h); }
   // limbs: pivot groups so they swing from shoulder / hip
