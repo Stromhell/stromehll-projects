@@ -64,3 +64,9 @@ The 2D and 3D cards now render the same way:
 - Spain parts 1-3 moved to 2D dynamic in board/releases. 2D dynamic cards live in db external/2dd-*.
 - McDonald's in Africa: full video (2 Dec 20:00Z) and 15 reels (2-7 Dec) were scheduled on Zernio by the 3D chat; calendar and release plan updated.
 - The hourly request check now routes 2D dynamic requests to the 2D dynamic thread.
+
+## v30 (29 Oct 2026): production line as a list
+- Each video is one compact row: format tag, title, latest note, progress bar, status, arrow.
+- Rows are sorted in working order: working, waiting on Pushpam, paused, queued, other project, done (then by line 2D, 2D dynamic, 3D, then progress).
+- Click a row to open every detail (stages, notes, preview, acts, feedback, Combine/Reels/Schedule buttons). Click again to close. Open rows are remembered in the browser.
+- Timeline/side-rail jumps to a video open its row.

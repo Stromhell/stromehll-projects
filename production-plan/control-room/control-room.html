@@ -453,6 +453,10 @@ async function sendReq(v, kind, act, actName, text, anchorEl){
   return {ok:true, msg: sent ? "Received. Watch the status below: it moves to Understood once the team reads it." : `Received and saved. The instant link didn't work here (${why}), so it will be picked up at the next hourly check. Watch the status below.`};
 }
 document.addEventListener("click", e => {
+  const jl = e.target.closest && e.target.closest('a[data-j^="v-"], a[href^="#v-"]');
+  if (jl){ const id = (jl.dataset.j || jl.getAttribute("href").slice(1)).slice(2); const art = document.getElementById("v-" + id); if (art && !OPEN.has(id)){ OPEN.add(id); saveOpen(); art.classList.add("open"); const vb = art.querySelector(".vbody"); if (vb) vb.hidden = false; const hb = art.querySelector(".vrow"); if (hb) hb.setAttribute("aria-expanded", "true"); } }
+  const vr = e.target.closest && e.target.closest("button.vrow");
+  if (vr){ const id = vr.dataset.open, art = vr.closest("article"), body = art && art.querySelector(".vbody"); const open = !OPEN.has(id); if (open) OPEN.add(id); else OPEN.delete(id); saveOpen(); vr.setAttribute("aria-expanded", String(open)); if (art) art.classList.toggle("open", open); if (body) body.hidden = !open; return; }
   const fb = e.target.closest && e.target.closest("button.fbbtn");
   if (fb){ const k = fb.dataset.vid+"|"+fb.dataset.act; if (FB_OPEN.has(k)) FB_OPEN.delete(k); else FB_OPEN.add(k); built = false; tick(); setTimeout(() => { const t = document.getElementById("fb-"+k); if (t) t.focus(); }, 0); return; }
   const big = e.target.closest && e.target.closest("button.big");
@@ -507,10 +511,18 @@ function actsBlock(v){
   const done = A.filter(a => a.state === "done").length;
   return `<div class="acts"><div class="acthead"><span>Act by act</span><b>${done} of ${A.length} done</b></div><ol class="actlist">${A.map(a => { const own = actUrl(a.url || a.preview || ""); const u = own || ((a.state && a.state !== "todo") ? mainPreview(v) : ""); const vu = actUrl(a.video || ""); const st = ST[a.state] || esc(a.state || "Not started"); return `<li class="${esc(a.state||"todo")}"><span class="an">${esc(nm(a))}</span><span class="as"><i></i>${st}${a.pct!=null&&a.state==="active"?` ${Math.round(a.pct)}%`:""}</span><span class="al">${vu?`<button type="button" class="play" data-v="${esc(vu)}" aria-label="Play ${esc(nm(a))}">▶ Play</button>`:""}${u?`<a class="watch" href="${esc(u)}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path d="M7 5v14l12-7z" fill="currentColor"/></svg>${vu?"Open":"Watch"}</a>`:(vu?"":`<span class="np">No render yet</span>`)}<button type="button" class="fbbtn" data-vid="${esc(v.id)}" data-act="${esc(a.label)}" aria-expanded="${FB_OPEN.has(v.id+"|"+a.label)}"><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></svg>Feedback</button></span>${(() => { const r = actReq(v.id, a.label); return r ? `<div class="actnote"><p class="nt">Your note: ${esc(r.text||"")}</p>${stepper(r)}</div>` : ""; })()}${FB_OPEN.has(v.id+"|"+a.label)?fbForm(v.id, a.label, nm(a)):""}</li>`; }).join("")}</ol></div>`;
 }
+function fmtOf(v){ return v && v.format ? fmtKey(v.format) : "2D"; }
+const ST_ORDER = {working: 0, waiting: 1, paused: 2, queued: 3, external: 4, done: 5};
+const LINE_ORDER = {"2D": 0, "2DD": 1, "3D": 2};
+let OPEN = new Set(); try { OPEN = new Set(JSON.parse(localStorage.getItem("cr-open") || "[]")); } catch (e) {}
+function saveOpen(){ try { localStorage.setItem("cr-open", JSON.stringify([...OPEN])); } catch (e) {} }
+function sortedRows(){ return rows().slice().sort((x, y) => (ST_ORDER[x.status] ?? 9) - (ST_ORDER[y.status] ?? 9) || (LINE_ORDER[fmtOf(x)] ?? 9) - (LINE_ORDER[fmtOf(y)] ?? 9) || (y.pct || 0) - (x.pct || 0) || String(x.title).localeCompare(String(y.title))); }
 function buildRows(){
   if (!rows().length) { $("vids").innerHTML = `<p class="stage">No videos in production right now. New ones show up here when they start.</p>`; }
-  else $("vids").innerHTML = rows().map(v0 => { const v = Object.assign({}, v0, {feedback: fbOf(v0.feedback)}); return `
-    <article class="vid ${v.status}" id="v-${v.id}">
+  else $("vids").innerHTML = sortedRows().map(v0 => { const v = Object.assign({}, v0, {feedback: fbOf(v0.feedback)}); return `
+    <article class="vid ${v.status} ${OPEN.has(v.id)?"open":""}" id="v-${v.id}">
+      <button type="button" class="vrow" data-open="${esc(v.id)}" aria-expanded="${OPEN.has(v.id)}" aria-controls="vb-${esc(v.id)}"><span class="vf">${(() => { const k = fmtOf(v); return `<span class="fmt f${esc(k.toLowerCase())}">${esc(fmtName(k))}</span>`; })()}</span><span class="vt"><b>${esc(v.title)}</b><small>${esc(v.latest && v.latest.text ? v.latest.text : (v.stage || ""))}</small></span><span class="vprog"><span class="rbar ${v.status}"><i></i></span><b data-k="rpct"></b></span><span class="pill ${v.status}">${LABEL[v.status]||v.status}</span><svg class="chev" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="vbody" id="vb-${esc(v.id)}"${OPEN.has(v.id)?"":" hidden"}>
       <div class="top"><div class="title">${v.format?`<span class="fmt f${esc(fmtKey(v.format).toLowerCase())}">${esc(fmtName(fmtKey(v.format)))}</span>`:""}${esc(v.title)}</div><span style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill ${v.status}">${LABEL[v.status]||v.status}</span>${v.external&&v.status!=="external"?`<span class="pill queued">Other project</span>`:""}</span></div>
       ${railBlock(v)}
       <p class="stage">${esc(v.stage)}</p>
@@ -527,6 +539,7 @@ function buildRows(){
       ${ctlBlock(v)}
       <div class="steps">
         ${(v.phases||[]).filter(p=>!["script","acts"].includes(p.key)).map(p => `<span class="ph ${p.state}">${esc(p.name)}${p.state==="active"&&p.pct?` ${p.pct}%`:""}</span>`).join("")}
+      </div>
       </div>
     </article>`; }).join("");
   // timeline
@@ -571,6 +584,7 @@ function tick(){
     const ve = elOf(v, now), p = live(v, ve), q = k => row.querySelector(`[data-k="${k}"]`);
     row.querySelector(".bar i").style.width = p + "%";
     q("pct").textContent = p.toFixed(1) + "%";
+    { const rb = row.querySelector(".rbar i"); if (rb) rb.style.width = p + "%"; const rp = q("rpct"); if (rp) rp.textContent = Math.floor(p) + "%"; }
     q("el").textContent = v.startedAt ? dur(now - v.startedAt) : "not started";
     const left = v.status === "working" ? (v.ownLeft||0) - ve : (v.ownLeft||0);
     q("left").textContent = left > 0 ? dur(left) : (v.ownLeft ? "any minute" : "none");
@@ -1071,4 +1085,31 @@ button.big{border-radius:12px;min-height:72px;padding:14px 16px}
 .line.f3d .slots i.on{background:var(--violet);border-color:var(--violet)}
 .line small{grid-area:m;color:var(--mute);font-size:12px}
 .line.short b{color:var(--amber)}
+</style>
+<style>
+/* v30 production line as a list */
+#vids{display:grid;gap:8px}
+#vids .vid{padding:0;gap:0;overflow:hidden}
+.vrow{all:unset;box-sizing:border-box;cursor:pointer;display:grid;grid-template-columns:auto minmax(0,1fr) 150px auto 18px;align-items:center;gap:12px;width:100%;padding:12px 16px;color:var(--ink)}
+.vrow:hover{background:color-mix(in srgb,var(--ink) 4%,transparent)}
+.vrow:focus-visible{outline:2px solid var(--amber);outline-offset:-2px}
+.vrow .fmt{margin-right:0;font-size:13px;vertical-align:0}
+.vrow .vt{display:grid;min-width:0}
+.vrow .vt b{font-family:var(--display);font-weight:600;font-size:17px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vrow .vt small{color:var(--mute);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vprog{display:flex;align-items:center;gap:8px}
+.vprog b{font-family:var(--mono);font-size:12px;min-width:34px;text-align:right}
+.rbar{flex:1;height:6px;border-radius:3px;background:var(--track);overflow:hidden}
+.rbar i{display:block;height:100%;width:0;background:var(--slate)}
+.rbar.working i{background:var(--amber)} .rbar.waiting i{background:var(--violet)} .rbar.done i{background:var(--green)}
+.vrow .chev{color:var(--mute);transition:transform .15s}
+.vid.open .vrow .chev{transform:rotate(180deg)}
+.vid.open .vrow{border-bottom:1px solid var(--line)}
+.vbody{display:grid;gap:12px;padding:16px 18px}
+.vbody[hidden]{display:none}
+@media (max-width:640px){
+  .vrow{grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"f t c" "p p s";row-gap:8px;column-gap:10px}
+  .vrow .vf{grid-area:f} .vrow .vt{grid-area:t} .vrow .chev{grid-area:c;justify-self:end} .vprog{grid-area:p} .vrow .pill{grid-area:s;justify-self:end}
+}
+@media (prefers-reduced-motion:reduce){.vrow .chev{transition:none}}
 </style>
