@@ -1,0 +1,108 @@
+<!doctype html><html><head><meta charset="utf-8"><title>ES3 cold open - 23-F</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/vp/engine.js"></script><script src="../../../../shared/vp/cast.js"></script><script src="../../../../shared/vp/scenes.js"></script><script src="../../../../shared/vp/spain.js"></script>
+<script src="../../../../shared/kit.js"></script><script src="../../../../shared/vp.js"></script>
+<script src="../../../../spain-1-al-andalus/production/es1_sets.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act1.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act2.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act3.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act4.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act5.js"></script><script src="../../../../spain-1-al-andalus/production/es1_cast.js"></script>
+
+<script src="../../es3_cast.js"></script><script src="../../es3_sets.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, E = K.E, X = S.SPX, CH = S.SPAIN, C = S.ES3, H1 = S.ES1H, TAU = Math.PI * 2;
+const at = VP.at, seg = K.seg, lerp = K.lerp, pulse = H1.pulse, walk = H1.walk;
+const night = (c, a, col = '30,40,100') => { c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = `rgba(${col},${a})`; c.fillRect(0, 0, 1280, 720); c.restore(); };
+// the running device: a Spanish flag on the wall with a crack through it; size and crack width animate
+const flag = (c, x, y, w, h, crack, lt, o = {}) => { const cols = o.cols || ['#b8202a', '#e8b820', '#b8202a'], bands = o.bands || [.25, .5, .25];
+  c.save(); c.translate(x, y); let yy = -h / 2; bands.forEach((b, i) => { c.fillStyle = cols[i]; c.fillRect(-w / 2, yy, w, b * h + 1); yy += b * h; });
+  S.dabs(c, { x: -w / 2, y: -h / 2, w, h, n: 80, cols: ['#ffffff', '#000000'], r0: 4, r1: 16, a0: .03, a1: .08, seed: 7 });
+  for (let i = 0; i < 4; i++) { const xx = -w / 2 + (i + .5) * w / 4 + Math.sin(lt * .8 + i) * 4; const gr = c.createLinearGradient(xx - 30, 0, xx + 30, 0); gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(.5, 'rgba(0,0,0,.12)'); gr.addColorStop(1, 'rgba(0,0,0,0)'); c.fillStyle = gr; c.fillRect(xx - 30, -h / 2, 60, h); }
+  if (crack > 0) { const pts = []; for (let i = 0; i <= 12; i++) { const r = S.rng(i + 31)(); pts.push([-w * .05 + (r - .5) * w * .12 + i * w * .01, -h / 2 + i * h / 12]); }
+    c.fillStyle = '#120a08'; c.beginPath(); pts.forEach((p, i) => i ? c.lineTo(p[0] - crack * (.6 + .4 * Math.sin(i)), p[1]) : c.moveTo(p[0] - crack, p[1])); for (let i = pts.length - 1; i >= 0; i--) c.lineTo(pts[i][0] + crack * (.6 + .4 * Math.cos(i)), pts[i][1]); c.fill();
+    c.strokeStyle = S.rgba('#ffe0b0', .35); c.lineWidth = 2; c.beginPath(); pts.forEach((p, i) => i ? c.lineTo(p[0] + crack, p[1]) : c.moveTo(p[0] + crack, p[1])); c.stroke(); }
+  c.strokeStyle = S.rgba('#000000', .5); c.lineWidth = 3; c.strokeRect(-w / 2, -h / 2, w, h); c.restore(); };
+const muzzle = (c, x, y, lt, t0) => { const q = seg(lt, t0, t0 + .15); if (q > 0 && q < 1) { VP.glow(c, x, y, 120, '#fff0b0', 1 - q); c.fillStyle = `rgba(255,240,180,${1 - q})`; c.beginPath(); c.moveTo(x, y); for (let k = 0; k < 8; k++) { const a = k / 8 * TAU, r = k % 2 ? 10 : 30; c.lineTo(x + Math.cos(a) * r, y + Math.sin(a) * r); } c.fill(); } };
+{ const T = window.TIMING, L = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length + 1, start: L.end, end: L.end + 4.6, vo_start: L.end, vo_end: L.end, text: '' }); T.dur = L.end + 4.6; }
+// a row of red leather benches with a wooden front, drawn in front of seated deputies
+const bench = (c, y, x0, x1, s = 1) => { X.wood(c, x0, y - 30 * s, x1 - x0, 46 * s, '#5a301c', Math.round(y)); c.fillStyle = '#c8a040'; c.fillRect(x0, y - 30 * s, x1 - x0, 3 * s); c.fillStyle = '#8a1e1e'; c.fillRect(x0, y - 44 * s, x1 - x0, 14 * s); c.fillStyle = S.rgba('#ff9a8a', .25); c.fillRect(x0, y - 44 * s, x1 - x0, 3 * s); };
+const DEP = [C.DEPUTY, C.DEPUTY2, C.DEPUTY3, C.SUAREZ];
+const LT_HALL = (lt) => VP.light('studio', lt, { swing: 4, set: { L: [.4, -1], amb: '#3a2a20', ambA: .2, rim: '#ffe0b0', rimA: .7, tint: '#ffd8a0', tintA: .08 } });
+
+window.SHOTS = [
+  // 0.01 WIDE: the chamber in session; the doors burst open and civil guards rush in
+  { set: 'cortes', cam: (lt, u, Sh) => ({ z: [lerp(1.2, 1.35, E.io(seg(lt, 0, Sh.tB)))], x: [640], y: [440], shake: lt > Sh.tB && lt < Sh.tB + .8 ? 2 : 0 }), bed: [['crowd_loop', .12]],
+    init: Sh => { Sh.tB = at(Sh, 'burst', 2.5); Sh.tV = at(Sh, 'live vote', Sh.dur - 1); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const L = LT_HALL(lt), run = seg(lt, Sh.tB, Sh.tB + 3);
+      for (let r = 0; r < 4; r++) { const y = 420 + r * 70, uu = 22 + r * 3; for (let i = 0; i < 9; i++) { const x = 90 + i * 60 + (i > 4 ? 340 : 0) + (r % 2) * 20, k = r * 9 + i; if (x > 1240) continue; const ch = DEP[k % 4]; VP.figure(c, [x, y], { k: .4, sy: -.2, a: .2, blur: 2 }, cc => S.person(cc, ch, x, y, uu, Object.assign(S.idle(lt, k), { face: x < 640 ? 1 : -1, sitY: -1.0, hideLegs: true, shN: lt > Sh.tV - 1 && lt < Sh.tB && k % 3 === 0 ? 140 : 15, elN: 30 }), { blink: S.blinkAt(lt, k), worry: .8 * run, look: run > 0 ? [-.6, -.2] : [x < 640 ? .6 : -.6, -.3], time: lt }, L)); }
+        bench(c, y + 14, 0, 540, .9 + r * .1); bench(c, y + 14, 740, 1280, .9 + r * .1); }
+      for (let k = 0; k < 4; k++) { const x = lerp(-60 - k * 60, 260 - k * 70 + (k % 2) * 30, E.out(run)), y = 690 - (k % 2) * 14; if (run <= 0) continue; VP.figure(c, [x, y], { k: .5, sy: -.2, a: .3, blur: 2 }, cc => S.person(cc, k ? C.GUARD : C.GUARD2, x, y, 40, Object.assign(run < 1 ? S.run(lt * 1.8 + k) : S.idle(lt, k), { face: 1, shF: 60, elF: 60, holdF: wr => { cc.strokeStyle = '#1a1a1a'; cc.lineWidth = 5; cc.beginPath(); cc.moveTo(wr[0] - 30, wr[1] + 10); cc.lineTo(wr[0] + 60, wr[1] - 20); cc.stroke(); } }), { blink: S.blinkAt(lt, k), angry: .7, look: [.8, -.2], time: lt }, L)); }
+      VP.motes(c, lt, 200, 100, 900, 400, { n: 30, a: .3 });
+    },
+    over: [(c, lt) => K.dateTag(c, 'MADRID · 23 FEB 1981', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'CONGRESS OF DEPUTIES', lt, { at: 1, x: 1520, y: 200, px: 46, rot: 3, until: Sh.tB })],
+    sfx: [[.2, 'crowd_loop', .2], ['burst', 'door_slam', .7], ['burst', 'run_steps', .45], ['live vote', 'tension', .3]] },
+
+  // 0.02 MED: Tejero on the rostrum fires at the ceiling; plaster falls; deputies duck
+  { set: 'cortes', cam: (lt, u, Sh) => ({ z: [1.3], x: [640], y: [270], shake: lt > Sh.tF && lt < Sh.tF + .6 ? 2.5 : .2 }), bed: [['tension', .2]],
+    init: Sh => { Sh.tC = at(Sh, 'climbed', .5); Sh.tF = at(Sh, 'fired', 3); Sh.tD = at(Sh, 'dived', Sh.dur - 2); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const L = LT_HALL(lt), duck = seg(lt, Sh.tF, Sh.tF + .6);
+      VP.figure(c, [600, 236], { k: .4, sy: -.2, a: .3, blur: 2 }, cc => S.person(cc, C.TEJERO, 600, 236, 30, Object.assign(S.idle(lt, 0), { face: 1, shN: lt > Sh.tF - .8 ? 165 : 40, elN: 5, holdN: wr => { cc.fillStyle = '#1a1a1a'; cc.fillRect(wr[0] - 4, wr[1] - 30, 9, 30); cc.fillRect(wr[0] - 4, wr[1] - 8, 16, 7); } }), { blink: S.blinkAt(lt, 0), angry: .9, open: lt > Sh.tF - .3 ? .6 : 0, look: [.3, -.8], time: lt }, L));
+      for (let i = 0; i < 6; i++) { const x = 200 + i * 170 + (i > 2 ? 60 : -60), y = 400; VP.figure(c, [x, y], { k: .4, sy: -.2, a: .25, blur: 2 }, cc => S.person(cc, DEP[i % 4], x, y, 26, Object.assign(S.idle(lt, i + 3), { face: x < 640 ? 1 : -1, sitY: lerp(-1.0, -.1, duck), hideLegs: true, shN: 120 * duck, elN: 100 * duck }), { blink: S.blinkAt(lt, i), worry: .5 + .5 * duck, look: [0, -.6], time: lt }, L)); }
+      bench(c, 420, 0, 520, 1); bench(c, 420, 760, 1280, 1);
+      for (let k = 0; k < 3; k++) muzzle(c, 612, 20, lt, Sh.tF + k * .5);
+      const pd = seg(lt, Sh.tF, Sh.tF + 5); if (pd > 0) for (let k = 0; k < 40; k++) { const r = S.rng(k + 60), y = 40 + pd * 500 * (.5 + r()), x = 560 + r() * 200 + Math.sin(lt * 2 + k) * 10; c.fillStyle = S.rgba('#e8e0d0', .8 * (1 - pd)); c.fillRect(x, y, 3, 3); }
+      VP.motes(c, lt, 300, 0, 700, 500, { n: 30, a: .35 });
+    },
+    over: [(c, lt, u, Sh) => K.card(c, 'LT. COL. ANTONIO TEJERO', lt, { at: Sh.tC + .4, x: 400, y: 880, px: 44, rot: -3 })],
+    sfx: [['climbed', 'footsteps', .3], ['fired', 'hit', .7], ['fired', 'hit', .6], ['dived', 'crowd_cheer', .15]] },
+
+  // 0.03 MED: a family at home freezes in front of a small TV showing the chamber
+  { set: 'living', cam: { z: [1.35, 1.9], x: [560, 330], y: [470, 380], ease: E.io }, bed: [['night_loop', .15], ['hum_loop', .1]],
+    init: Sh => { Sh.tD = at(Sh, 'democracy', 1); Sh.tG = at(Sh, 'one general', 6); Sh.tB = at(Sh, 'bring those days back', Sh.dur - 1); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      night(c, .45, '60,60,110'); const L = { L: [-1, -.2], amb: '#2a2a4a', ambA: .45, rim: '#c8e0ff', rimA: 1, tint: '#a8c8f0', tintA: .2, sw: .3, rw: .06 }, fl = .7 + .3 * S.noise(lt * 8, 2);
+      c.save(); c.beginPath(); c.rect(166, 314, 140, 82); c.clip(); c.fillStyle = '#8a6a4a'; c.fillRect(166, 314, 140, 82); for (let i = 0; i < 12; i++) { c.fillStyle = '#7a1e1e'; c.fillRect(170 + i * 12, 360 + (i % 3) * 8, 8, 6); } c.fillStyle = '#3a4a2a'; c.fillRect(220 + Math.sin(lt * 2) * 10, 340, 10, 20); c.fillStyle = `rgba(200,220,255,${.15 + .1 * Math.sin(lt * 30)})`; c.fillRect(166, 314, 140, 82); for (let y = 314; y < 396; y += 3) { c.fillStyle = 'rgba(0,0,0,.15)'; c.fillRect(166, y, 140, 1); } c.restore();
+      VP.glow(c, 236, 355, 520, '#a8c8ff', .3 * fl);
+      for (const [x, ch, uu, k] of [[700, C.DAD, 38, 0], [800, C.MUM, 36, 1], [890, C.KID, 26, 2]]) VP.figure(c, [x, 590], { k: 1.2, sy: -.2, a: .35, blur: 3 }, cc => S.person(cc, ch, x, 590, uu, Object.assign(S.idle(lt * .3, k), { face: -1, sitY: -.95, hideLegs: k < 2, shN: k === 1 ? 70 : 15, elN: k === 1 ? 110 : 40 }), { blink: S.blinkAt(lt * .5, k), worry: .9, open: .2, look: [-1, -.1], time: lt }, L));
+    },
+    over: [(c, lt, u, Sh) => K.badge(c, 'DEMOCRACY: LESS THAN 4 YEARS OLD', lt, { at: Sh.tD, until: Sh.tG - .3 }), (c, lt, u, Sh) => K.badge(c, '36 YEARS UNDER ONE GENERAL', lt, { at: Sh.tG })],
+    sfx: [['democracy', 'tick', .2], ['one general', 'drone', .3], ['bring those days back', 'heartbeat', .3]] },
+
+  // 0.04 CU: the king in uniform under studio lights, facing the camera
+  { set: 'studio', cam: (lt, u, Sh) => ({ z: [lerp(1.4, 1.9, E.io(seg(lt, Sh.tK, Sh.dur)))], x: [640], y: [lerp(440, 420, E.io(seg(lt, Sh.tK, Sh.dur)))] }), bed: [['hum_loop', .12]],
+    init: Sh => { Sh.tK = at(Sh, 'king', 2.5); Sh.tF = at(Sh, 'fate', Sh.dur - 1.2); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const on = seg(lt, Sh.tK - .6, Sh.tK - .4), L = { L: [.5, -.8], amb: '#2a2030', ambA: .4 - .2 * on, rim: '#fff4e0', rimA: .5 + .5 * on, tint: '#fff0d8', tintA: .1 * on, sw: .3, rw: .05 };
+      night(c, .6 * (1 - on) + .15, '40,40,70');
+      VP.figure(c, [640, 600], { k: .3, sy: -.2, a: .35, blur: 3 }, cc => S.person(cc, C.KING, 640, 600, 50, Object.assign(S.idle(lt * .5, 0), { face: -1, sitY: -1.05, hideLegs: true, shN: 30, elN: 60, shF: 30, elF: 60 }), { blink: S.blinkAt(lt, 0), open: lt > Sh.tK ? .35 * Math.abs(Math.sin(lt * 7)) : 0, look: [-.2, 0], time: lt }, L));
+      X.wood(c, 360, 560, 560, 160, '#4a2a18', 77); c.fillStyle = '#c8a040'; c.fillRect(360, 560, 560, 5); c.fillStyle = '#f0ece0'; c.fillRect(560, 548, 120, 12);
+      if (on > 0) { S.beam(c, 640, -40, 640, 640, 30, 300, '#fff4e0', .18 * on); VP.glow(c, 640, 360, 400, '#fff0d8', .2 * on); }
+    },
+    over: [(c, lt, u, Sh) => K.dateTag(c, '1:14 AM', lt, { at: Sh.tK - .3 }), (c, lt, u, Sh) => K.card(c, 'KING JUAN CARLOS I', lt, { at: Sh.tK + .6, x: 400, y: 200, px: 50, rot: -3 })],
+    sfx: [['night', 'tick', .25], ['king', 'stamp', .35], ['fate', 'swell', .35]] },
+
+  // 0.05 MED: the cracked flag fills the frame; the crack splits wider
+  { set: 'flagwall', cam: { z: [1.05, 1.2], x: [640, 640], y: [360, 360], ease: E.io }, bed: [['drone', .25]],
+    init: Sh => { Sh.tW = at(Sh, 'war', 2); Sh.tG = at(Sh, 'general', Sh.dur - 1.5); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const cr = 2 + 16 * E.out(seg(lt, Sh.tW, Sh.tW + .6)) + 10 * E.out(seg(lt, Sh.tG, Sh.tG + .6));
+      VP.glow(c, 640 + 120 * Math.sin(lt * .4), 200, 600, '#ffd8a0', .15);
+      flag(c, 640, 360, 820, 520, cr, lt);
+      c.save(); c.globalCompositeOperation = 'multiply'; const vg = c.createRadialGradient(640, 360, 200, 640, 360, 800); vg.addColorStop(0, 'rgba(255,255,255,0)'); vg.addColorStop(1, 'rgba(30,20,20,.7)'); c.fillStyle = vg; c.fillRect(0, 0, 1280, 720); c.restore();
+      VP.motes(c, lt, 200, 100, 900, 500, { n: 30, a: .35 });
+    },
+    over: [(c, lt, u, Sh) => K.badge(c, 'HUNDREDS OF THOUSANDS KILLED', lt, { at: Sh.tW + .3 })],
+    sfx: [['war', 'paper_tear', .5], ['general', 'thud', .45]] },
+
+  // 0.06 TITLE: a lone soldier on a hill above a burning town at dusk
+  { set: 'hilltown', cam: { z: [1.0, 1.12], x: [640, 640], y: [360, 380], ease: E.io }, bed: [['wind_loop', .3], ['fire_loop', .15]],
+    draw: (c, lt, u, Sh) => {
+      for (const [x, y] of [[640, 470], [880, 480], [1010, 476]]) { H1.fire(c, x, y, .16, lt, x); H1.smoke(c, x, y - 30, 1, lt + x * .01, '40,30,34'); }
+      c.fillStyle = '#120a0e'; const sx = 300, sy = 560; c.save(); c.translate(sx, sy); c.fillRect(-8, -70, 16, 46); c.beginPath(); c.arc(0, -82, 10, 0, TAU); c.fill(); c.fillRect(-14, -96, 28, 6); c.fillRect(-7, -24, 6, 24); c.fillRect(2, -24, 6, 24); c.strokeStyle = '#120a0e'; c.lineWidth = 3; c.beginPath(); c.moveTo(10, -60); c.lineTo(18, -120); c.stroke(); c.restore();
+      VP.motes(c, lt, 0, 200, 1280, 400, { n: 40, a: .45, col: '#ffb070' });
+    },
+    over: [(c, lt) => { const q = seg(lt, .6, 1.8); if (q <= 0) return; c.save(); c.globalAlpha = q; c.font = '120px Anton'; c.textAlign = 'center'; c.fillStyle = '#f4ead4'; c.shadowColor = 'rgba(0,0,0,.6)'; c.shadowBlur = 20; c.fillText('FRANCO', 960, 470); c.font = '44px Oswald'; c.fillText('SPAIN · 1898–1981', 960, 560); c.restore(); }],
+    sfx: [[.4, 'swell', .4], [1, 'drone', .3]] },
+];
+VP.build(); K.boot();
+</script></body></html>

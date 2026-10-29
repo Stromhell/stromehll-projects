@@ -455,7 +455,7 @@
       const st = far ? skD : sk, sht = far ? shirtD : shirtT, k = bw * (fem ? .9 : 1);
       if (holdFn) holdFn(wr, a2);
       hand(c, add(wr, dir(a2), -.08 * u), a2, u, (kid ? .5 : fem ? .54 : .62) * u, st, Lt, 0, holdFn ? .6 : 0);
-      if (ch.long) {
+      if (ch.long || ch.sleeves) {
         celT(c, S.tube2(pts, q => (ANAT.armBack(q) + .03) * u * k, q => (ANAT.armFront(q) + .03) * u * k), sht, Lt, u);
       } else {
         celT(c, S.tube2(pts, SC(ANAT.armBack, k), SC(ANAT.armFront, k)), st, Lt, u);
@@ -513,6 +513,9 @@
       c.fillStyle = shirtT.base; const col2 = S.poly([v3, at(W(.3), T - .12 * u), at(W(.18), T - .22 * u), v2], false); c.fill(col2); c.stroke(col2);
       c.strokeStyle = S.rgba(inkOf(shirtT), .45); c.beginPath(); c.moveTo(v2[0], v2[1]); const bb = at(W(.16), hemB + .04 * u); c.lineTo(bb[0], bb[1]); c.stroke();
       c.fillStyle = S.rgba(inkOf(shirtT), .5); for (let i = 1; i < 4; i++) { const bp = at(W(.14 + i * .006), T - .32 * u - i * (T * .26)); c.beginPath(); c.arc(bp[0], bp[1], u * .014, 0, S.TAU); c.fill(); }
+      // suit: a white shirt front in the V of the lapels, and a tie (ch.tie = tie colour)
+      if (ch.tie) { const yv = S.lerp(T, hemB, .32), yt = S.lerp(T, hemB, .62), w1 = at(-W(.06), T + .01 * u), w2 = at(W(.13), yv), w3 = at(W(.24), T + .01 * u); c.fillStyle = '#f2efe8'; c.fill(S.poly([w1, w2, w3], false)); c.stroke(S.poly([w1, w2, w3], false));
+        const k0 = at(W(.06), T + .0 * u), k1 = at(W(.16), T + .0 * u), k2 = at(W(.13), T - .07 * u), t1 = at(W(.17), yt - .06 * u), t2 = at(W(.135), yt + .04 * u), t3 = at(W(.1), yt - .06 * u); c.fillStyle = ch.tie; const tp = S.poly([k0, k1, k2, t1, t2, t3, k2], false); c.fill(tp); c.strokeStyle = S.rgba('#000000', .5); c.stroke(tp); }
       c.restore();
     } else {
       c.save(); c.strokeStyle = inkOf(shirtT); c.lineWidth = Math.max(1.1, u * .016); const n0 = at(-W(.1), T + .02 * u), n1 = at(W(.06), T - .22 * u), n2 = at(W(.16), T); c.fillStyle = sk.shade; const nk = S.poly([n0, n1, n2], false); c.fill(nk); c.stroke(nk); c.restore();
