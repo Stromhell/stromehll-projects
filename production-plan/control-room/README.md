@@ -56,3 +56,11 @@ The 2D and 3D cards now render the same way:
 - "Your feedback" was blank when a doc's `feedback` was a list of plain strings, which is what the 2D and 3D threads write. It now shows the latest string.
 - The main preview (`mainPreview`) uses `previewUrl` (3D). If that's missing, it falls back to the `previews` entry labelled all/full/combined, or to "Act(s) preview" (2D). Both "Watch everything so far" and the per-act Watch fallback use it, so 2D acts get Watch buttons too.
 - An act labelled "0" now reads "Cold open", the same as "CO".
+
+## v29 (29 Oct 2026)
+- Three production lines (Pushpam 29 Oct): 2D (4 at once), 2D dynamic (3, Village Painterly style, its own thread) and 3D (2). Always-on: when a video waits for review, the next one in that line starts.
+- New format "2D dynamic" (cyan tag). `fmtKey()` maps any format containing "DYN" to the key 2DD; `fmtName()` shows it as "2D dynamic". Cards, timeline, release list and calendar all use it.
+- Release plan now opens with a "Production lines" strip: in production / target per line, open slots, waiting on Pushpam, queued.
+- Spain parts 1-3 moved to 2D dynamic in board/releases. 2D dynamic cards live in db external/2dd-*.
+- McDonald's in Africa: full video (2 Dec 20:00Z) and 15 reels (2-7 Dec) were scheduled on Zernio by the 3D chat; calendar and release plan updated.
+- The hourly request check now routes 2D dynamic requests to the 2D dynamic thread.

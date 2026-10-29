@@ -282,6 +282,7 @@ button.big.armed{border-color:var(--amber);background:var(--panel)}
 
   <section class="rel" id="s-rel" aria-label="Release plan">
     <h2>Release plan</h2>
+    <h3>Production lines (in production now / always-on target)</h3><div class="lines" id="relLines"></div>
     <div class="relcols">
       <div><h3>In production now</h3><div class="chips" id="relNow"></div></div>
       <div><h3>Queued to start next</h3><div class="chips" id="relNext"></div></div>
@@ -292,7 +293,7 @@ button.big.armed{border-color:var(--amber);background:var(--panel)}
   <section class="cal" id="s-cal" aria-label="Zernio calendar">
     <h2>Zernio calendar</h2>
     <div class="calhead"><button type="button" id="calPrev" aria-label="Previous month">&#8249;</button><span class="mo" id="calMo"></span><button type="button" id="calNext" aria-label="Next month">&#8250;</button><button type="button" id="calToday">Today</button>
-      <span class="calleg"><span><i style="background:var(--amber)"></i>2D full video</span><span><i style="background:var(--violet)"></i>3D full video</span><span><i style="border:1px dashed var(--mute)"></i>Planned, not on Zernio</span><span><i style="background:var(--amber2);border-radius:50%"></i>Reel (YouTube + Instagram)</span></span></div>
+      <span class="calleg"><span><i style="background:var(--amber)"></i>2D full video</span><span><i style="background:var(--cyan)"></i>2D dynamic full video</span><span><i style="background:var(--violet)"></i>3D full video</span><span><i style="border:1px dashed var(--mute)"></i>Planned, not on Zernio</span><span><i style="background:var(--amber2);border-radius:50%"></i>Reel (YouTube + Instagram)</span></span></div>
     <div class="calgrid" id="calGrid"></div>
     <div class="caldet" id="calDet"></div>
     <p class="calnote" id="calNote"></p>
@@ -320,11 +321,14 @@ let S = {"asOf": 1793153044.0006406, "slots": 1, "overall": {"pct": 25.6, "finis
 let EXT = {}; let TL_T0 = 0, TL_SPAN = 1;
 function rows(){ return S.videos.concat(Object.values(EXT)); }
 function tsec(t){ if (typeof t === "number") return t; const p = Date.parse(t); return isNaN(p) ? null : p/1000; }
-function fmtOf(v){ return String(v.format || (v.external ? "3D" : "2D")).toUpperCase(); }
-const CAP = {"2D": 4, "3D": 3};
+function fmtKey(s){ const x = String(s || "").toUpperCase().replace(/\s+/g, " ").trim(); if (!x) return ""; if (x.includes("DYN") || x === "2DD") return "2DD"; if (x.startsWith("3")) return "3D"; if (x.startsWith("2")) return "2D"; return x; }
+const FMT_NAME = {"2D": "2D", "2DD": "2D dynamic", "3D": "3D"};
+function fmtName(k){ return FMT_NAME[k] || k; }
+function fmtOf(v){ return fmtKey(v.format || (v.external ? "3D" : "2D")); }
+const CAP = {"2D": 4, "2DD": 3, "3D": 2};
 /* Projected production window per video: running ones end at asOf + work left; queued ones take the next free 2D or 3D slot. */
 function plan(){
-  const now = Date.now()/1000, out = {}, free = {"2D": [], "3D": []}, all = rows();
+  const now = Date.now()/1000, out = {}, free = {"2D": [], "2DD": [], "3D": []}, all = rows();
   for (const v of all){
     const f = fmtOf(v);
     if (v.status === "working"){ const t0 = tsec(v.asOf) || S.asOf; const end = Math.max(now + 60, t0 + (v.ownLeft || 0)); out[v.id] = {a: now, b: end}; (free[f] || (free[f] = [])).push(end); }
@@ -507,7 +511,7 @@ function buildRows(){
   if (!rows().length) { $("vids").innerHTML = `<p class="stage">No videos in production right now. New ones show up here when they start.</p>`; }
   else $("vids").innerHTML = rows().map(v0 => { const v = Object.assign({}, v0, {feedback: fbOf(v0.feedback)}); return `
     <article class="vid ${v.status}" id="v-${v.id}">
-      <div class="top"><div class="title">${v.format?`<span class="fmt f${esc(String(v.format).toLowerCase())}">${esc(v.format)}</span>`:""}${esc(v.title)}</div><span style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill ${v.status}">${LABEL[v.status]||v.status}</span>${v.external&&v.status!=="external"?`<span class="pill queued">Other project</span>`:""}</span></div>
+      <div class="top"><div class="title">${v.format?`<span class="fmt f${esc(fmtKey(v.format).toLowerCase())}">${esc(fmtName(fmtKey(v.format)))}</span>`:""}${esc(v.title)}</div><span style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill ${v.status}">${LABEL[v.status]||v.status}</span>${v.external&&v.status!=="external"?`<span class="pill queued">Other project</span>`:""}</span></div>
       ${railBlock(v)}
       <p class="stage">${esc(v.stage)}</p>
       ${(v.latest||v.feedback)?`<dl class="notes">${v.latest?`<div><dt>Latest</dt><dd>${esc(v.latest.text)}<time>${clock(v.latest.at)}</time></dd></div>`:""}${v.feedback?`<div class="fb"><dt>Your feedback</dt><dd>${esc(v.feedback.text)}${v.feedback.at?`<time>${clock(v.feedback.at)}</time>`:""}</dd></div>`:""}</dl>`:""}
@@ -535,14 +539,14 @@ function buildRows(){
     const w = P[v.id], L = 100*(w.a - t0)/span, W = Math.max(0.8, 100*(w.b - w.a)/span), r = relOf(v), f = fmtOf(v);
     const go = r ? (r.status === "zernio" ? `Live ${esc(r.et)}` : r.status === "proposed" ? `Planned ${esc(r.et)}` : esc(r.et)) : "Release date not set";
     const what = w.ready ? "Ready" : v.status === "working" ? `Done ${clock(w.b)}` : `Starts ${clock(w.a)}`;
-    return `<div class="tlrow"><div class="nm"><span class="ftag f${f.toLowerCase()}">${esc(f)}</span> ${esc(v.short||v.title)}</div><div class="lane">${w.ready ? `<div class="seg done" style="left:0;width:1.2%"></div>` : `<div class="seg ${v.status==="paused"?"queued":v.status}" style="left:${L}%;width:${W}%"></div>`}</div><div class="go"><b>${what}</b><span>${go}</span></div></div>`;
+    return `<div class="tlrow"><div class="nm"><span class="ftag f${f.toLowerCase()}">${esc(fmtName(f))}</span> ${esc(v.short||v.title)}</div><div class="lane">${w.ready ? `<div class="seg done" style="left:0;width:1.2%"></div>` : `<div class="seg ${v.status==="paused"?"queued":v.status}" style="left:${L}%;width:${W}%"></div>`}</div><div class="go"><b>${what}</b><span>${go}</span></div></div>`;
   }).join("");
   const n = 4, ticks = [];
   for (let i=0;i<=n;i++) ticks.push(`<span style="left:${100*i/n}%">${i===0?"now":clock(t0 + span*i/n)}</span>`);
   $("ticks").innerHTML = ticks.join("");
   document.querySelector("section.tl").style.display = rows().length ? "" : "none";
   const work = S.videos.filter(v=>v.status==="working").map(v=>v.title);
-  $("rule").textContent = `Rule: up to 4 2D videos and 3 3D videos in production at once (2 and 1 when session usage is over 80%). When a video needs your approval, the next one in line starts, and it comes back after your feedback. Videos go live in the order 3 × 2D, then 1 × 3D.`;
+  $("rule").textContent = `Rule: always in production: 4 × 2D, 3 × 2D dynamic and 2 × 3D. When a video waits for your review, the next one in that line starts, and it comes back after your feedback. Videos go live in the order 3 × 2D (2D dynamic counts as 2D), then 1 × 3D.`;
   $("ovNow").textContent = rows().filter(v=>v.status==="working").map(v=>v.short||v.title).join(", ") || "Nothing";
   $("asof").textContent = `Last real update ${new Date(S.asOf*1000).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})}`;
   const names = Object.fromEntries(rows().map(v => [v.id, v.short || v.title])); names.all = "All videos";
@@ -611,7 +615,7 @@ tick(); deskTick(); setInterval(tick, 1000); setInterval(deskTick, 5000); setInt
 let REL = {"asOf": "2026-10-28T21:40:00Z", "note": "Release rule: 3 x 2D videos, then 1 x 3D. Full videos at least 2 days apart, 15:00 ET on weekdays and 11:00 ET on weekends. Reels go out only after their full video. Kept by the Production plan thread.", "rows": [{"n": 1, "format": "2D", "title": "Rome", "status": "live", "et": "Published", "ist": "", "key": "Rome"}, {"n": 2, "format": "2D", "title": "The Great War, Part 1", "status": "live", "et": "Published", "ist": "", "note": "Last reels run until 30 Oct", "key": "Great War 1"}, {"n": 3, "format": "2D", "title": "The 30 Years That Made Hitler", "status": "zernio", "et": "Fri 30 Oct, 15:00 ET", "ist": "Sat 31 Oct, 00:30 IST", "note": "Full video and 15 reels scheduled", "key": "Hitler"}, {"n": 4, "format": "3D", "title": "FZ1073: The Co-Pilot of Flight 1073", "status": "zernio", "et": "Mon 2 Nov, 15:00 ET", "ist": "Tue 3 Nov, 01:30 IST", "note": "6 of 15 reels scheduled. Reels 2, 3, 5, 8, 10 and 12 to 15 still missing", "key": "FZ1073", "reelsTotal": 15}, {"n": 5, "format": "2D", "title": "Salman the Persian", "status": "zernio", "et": "Mon 9 Nov, 15:00 ET", "ist": "Tue 10 Nov, 01:30 IST", "note": "Full video and 15 reels scheduled", "key": "Salman"}, {"n": 6, "format": "2D", "title": "The Tiger Inside: Osho on the Ego", "status": "zernio", "et": "Thu 12 Nov, 15:00 ET", "ist": "Fri 13 Nov, 01:30 IST", "note": "Full video and 15 reels scheduled", "key": "Osho"}, {"n": 7, "format": "2D", "title": "Secret Service", "status": "zernio", "et": "Sat 14 Nov, 11:00 ET", "ist": "Sat 14 Nov, 21:30 IST", "note": "Full video and 15 reels scheduled (14 to 21 Nov)", "key": "Secret Service"}, {"n": 8, "format": "3D", "title": "Tesla vs Edison", "status": "proposed", "et": "Mon 16 Nov, 15:00 ET", "ist": "Tue 17 Nov, 01:30 IST", "note": "Slot approved by Pushpam 28 Oct. Goes on Zernio when the render is ready.", "key": "Tesla vs Edison"}, {"n": 9, "format": "2D", "title": "The Rise and Fall of El Mencho", "status": "zernio", "et": "Wed 18 Nov, 15:00 ET", "ist": "Thu 19 Nov, 01:30 IST", "note": "Moved from 17 Nov for the Tesla slot. 15 reels 19 to 28 Nov.", "key": "El Mencho"}, {"n": 10, "format": "2D", "title": "Ancient Humans", "status": "proposed", "et": "Fri 20 Nov, 15:00 ET", "ist": "Sat 21 Nov, 01:30 IST", "note": "Planned (Nov slots filled first). Booked on Zernio once the film and reels are finished.", "key": "Ancient Humans"}, {"n": 11, "format": "2D", "title": "BlackRock", "status": "proposed", "et": "Sun 22 Nov, 11:00 ET", "ist": "Sun 22 Nov, 21:30 IST", "note": "Planned (Nov slots filled first). Booked on Zernio once the film and reels are finished.", "key": "BlackRock"}, {"n": 12, "format": "3D", "title": "North Korea", "status": "proposed", "et": "Tue 24 Nov, 15:00 ET", "ist": "Wed 25 Nov, 01:30 IST", "note": "Planned (Nov slots filled first). Booked on Zernio once the film and reels are finished.", "key": "North Korea"}, {"n": 13, "format": "2D", "title": "NVIDIA", "status": "proposed", "et": "Thu 26 Nov, 15:00 ET", "ist": "Fri 27 Nov, 01:30 IST", "note": "Planned (Nov slots filled first). Booked on Zernio once the film and reels are finished. Thanksgiving Day in the US.", "key": "NVIDIA"}, {"n": 14, "format": "2D", "title": "The Great War, Part 2", "status": "zernio", "et": "Sat 28 Nov, 11:00 ET", "ist": "Sat 28 Nov, 21:30 IST", "note": "Full video and 10 reels scheduled", "key": "Great War 2"}, {"n": 15, "format": "2D", "title": "How LEGO Got So Big", "status": "zernio", "et": "Mon 30 Nov, 15:00 ET", "ist": "Tue 1 Dec, 01:30 IST", "note": "Full video and 15 reels scheduled", "key": "LEGO"}, {"n": 16, "format": "3D", "title": "McDonald's in Africa", "status": "proposed", "et": "Wed 2 Dec, 15:00 ET", "ist": "Thu 3 Dec, 01:30 IST", "note": "Planned (Nov slots filled first). Booked on Zernio once the film and reels are finished.", "key": "McDonald's in Africa"}, {"format": "2D", "title": "The Entire History of the Mongol Empire", "status": "waiting", "et": "Earliest Fri 4 Dec, 15:00 ET", "ist": "Sat 5 Dec, 01:30 IST", "note": "Batch 2. Next free slot if finished in time", "n": 17}, {"format": "2D", "title": "Why Is JPMorgan So Powerful? (Jamie Dimon)", "status": "waiting", "et": "Earliest Sun 6 Dec, 11:00 ET", "ist": "Sun 6 Dec, 21:30 IST", "note": "Batch 2. Next free slot if finished in time", "n": 18}, {"format": "2D", "title": "Dark Web King (Ross Ulbricht, Silk Road)", "status": "waiting", "et": "Earliest Tue 8 Dec, 15:00 ET", "ist": "Wed 9 Dec, 01:30 IST", "note": "Batch 2. Completes the 3 x 2D block before Thunderbolt", "n": 19}, {"n": 20, "format": "3D", "title": "Operation Thunderbolt", "status": "waiting", "et": "Earliest Thu 10 Dec, 15:00 ET", "ist": "Fri 11 Dec, 01:30 IST", "note": "Script done. 3D slot after Mongols, JPMorgan and Dark Web"}, {"format": "2D", "title": "Spain part 1: Al-Andalus to 1492", "status": "waiting", "et": "Earliest Sat 12 Dec, 11:00 ET", "ist": "Sat 12 Dec, 21:30 IST", "note": "Batch 2", "n": 21}, {"format": "2D", "title": "Spain part 2: The Spanish Empire, 1492 to 1898", "status": "waiting", "et": "Earliest Mon 14 Dec, 15:00 ET", "ist": "Tue 15 Dec, 01:30 IST", "note": "Batch 2", "n": 22}, {"format": "2D", "title": "Spain part 3: The Spanish Civil War and Franco", "status": "waiting", "et": "Earliest Wed 16 Dec, 15:00 ET", "ist": "Thu 17 Dec, 01:30 IST", "note": "Batch 3. Completes the 3 x 2D block before Caesar", "n": 23}, {"n": 24, "format": "3D", "title": "The Ides of March (Caesar)", "status": "waiting", "et": "Earliest Fri 18 Dec, 15:00 ET", "ist": "Sat 19 Dec, 01:30 IST", "note": "Script done. 3D slot after Spain 1, 2 and 3"}, {"format": "2D", "title": "Japan's postwar comeback", "status": "waiting", "et": "Earliest Sun 20 Dec, 11:00 ET", "ist": "Sun 20 Dec, 21:30 IST", "note": "Batch 3", "n": 25}, {"format": "2D", "title": "Why Putin is so hard to kill", "status": "waiting", "et": "Earliest Tue 22 Dec, 15:00 ET", "ist": "Wed 23 Dec, 01:30 IST", "note": "Batch 3. One more 2D needed before Shackleton (Education Trap, if Pushpam confirms it)", "n": 26}, {"format": "3D", "title": "Lost in Antarctica for 497 Days (Shackleton)", "status": "waiting", "et": "After Japan, Putin and one more 2D", "ist": "", "note": "Batch 2. 3D queue is Thunderbolt, Caesar, Shackleton, Bermuda", "n": 27}, {"format": "3D", "title": "The Bermuda Triangle", "status": "waiting", "et": "After 3 more 2D videos following Shackleton", "ist": "", "note": "Batch 3", "n": 28}]};
 const REL_ST = {live:"Live", zernio:"On Zernio", proposed:"Planned", waiting:"Waiting"};
 function relEsc(s){ return String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
-function relFmt(f){ const x = String(f||"").toUpperCase(); return x ? `<span class="ftag f${x.toLowerCase()}">${relEsc(x)}</span>` : `<span class="ftag">?</span>`; }
+function relFmt(f){ const x = fmtKey(f); return x ? `<span class="ftag f${x.toLowerCase()}">${relEsc(fmtName(x))}</span>` : `<span class="ftag">?</span>`; }
 function relChip(v){ const f = (typeof fmtOf === "function") ? fmtOf(v) : v.format; const tail = v.status === "waiting" ? "finished, being scheduled" : (v.pct != null ? Math.round(v.pct) + "%" : ""); return `<span class="chip">${relFmt(f)}${relEsc(v.short||v.title)}${tail?` <b>${relEsc(tail)}</b>`:""}</span>`; }
 function zStats(r){
   try {
@@ -642,6 +646,8 @@ function renderRel(){
     const next = all.filter(v => v.status === "queued" || v.status === "paused");
     document.getElementById("relNow").innerHTML = now.map(relChip).join("") || `<span class="relnote">Nothing running</span>`;
     document.getElementById("relNext").innerHTML = next.map(relChip).join("") || `<span class="relnote">Nothing queued</span>`;
+    const ln = Object.keys(CAP).map(k => { const vs = all.filter(v => fmtOf(v) === k); const on = vs.filter(v => v.status === "working").length, wt = vs.filter(v => v.status === "waiting").length, qd = vs.filter(v => v.status === "queued" || v.status === "paused").length, cap = CAP[k]; const slots = Array.from({length: Math.max(cap, on)}, (_, i) => `<i class="${i < on ? "on" : ""}"></i>`).join(""); const gap = cap - on; return `<div class="line f${k.toLowerCase()} ${on >= cap ? "full" : "short"}"><span class="ftag f${k.toLowerCase()}">${relEsc(fmtName(k))}</span><b>${on} / ${cap}</b><span class="slots" aria-hidden="true">${slots}</span><small>${gap > 0 ? `${gap} slot${gap === 1 ? "" : "s"} open` : "Full"}${wt ? ` · ${wt} waiting on you` : ""}${qd ? ` · ${qd} queued` : ""}</small></div>`; }).join("");
+    document.getElementById("relLines").innerHTML = ln;
     const rows2 = (REL.rows||[]).map(r => Object.assign({}, r, {_z: zStats(r)})).filter(r => !(r._z && r._z.complete));
     document.getElementById("relList").innerHTML = rows2.map(r => `<li><span class="n">${relEsc(r.n)}</span>${relFmt(r.format)}<span class="t">${relEsc(r.title)}${r.note?`<small>${relEsc(r.note)}</small>`:""}${zLine(r._z)}</span><span class="w">${relEsc(r.et)}${r.ist?`<small>${relEsc(r.ist)}</small>`:""}</span><span class="st ${relEsc(r.status)}">${REL_ST[r.status]||relEsc(r.status)}</span></li>`).join("");
     document.getElementById("relNote").textContent = (REL.note||"") + (REL.asOf ? ` Updated ${new Date(REL.asOf).toLocaleString([], {day:"numeric", month:"short", hour:"2-digit", minute:"2-digit"})}.` : "");
@@ -677,8 +683,8 @@ let CAL = {"asOf": "2026-10-28T20:15:00Z", "posts": [{"id": "6adee01299b2dfabd7a
       for (let i = 0; i < cells; i++){
         const dt = new Date(Date.UTC(y, mo-1, 1 - lead + i)); const k = dt.toISOString().slice(0,10); const inM = dt.getUTCMonth() === mo-1;
         const ps = M[k] || []; const fulls = ps.filter(p => p.kind === "full"); const reels = ps.filter(p => p.kind !== "full");
-        const fH = fulls.map(p => `<div class="cfull f${esc(String(p.fmt).toLowerCase())} ${p.st==="planned"?"planned":""} ${p.st==="published"?"pub":""}" title="${esc(p.title)}">${esc(p.v)}</div>`).join("");
-        const rH = reels.length ? `<div class="creels">${reels.map(p => `<i class="f${esc(String(p.fmt).toLowerCase())} ${p.st==="published"?"pub":""}" title="${esc(p.v)}: ${esc(p.title)}"></i>`).join("")}<span>${reels.length} reel${reels.length===1?"":"s"}</span></div>` : "";
+        const fH = fulls.map(p => `<div class="cfull f${esc(fmtKey(p.fmt).toLowerCase())} ${p.st==="planned"?"planned":""} ${p.st==="published"?"pub":""}" title="${esc(p.title)}">${esc(p.v)}</div>`).join("");
+        const rH = reels.length ? `<div class="creels">${reels.map(p => `<i class="f${esc(fmtKey(p.fmt).toLowerCase())} ${p.st==="published"?"pub":""}" title="${esc(p.v)}: ${esc(p.title)}"></i>`).join("")}<span>${reels.length} reel${reels.length===1?"":"s"}</span></div>` : "";
         const lbl = `${dt.getUTCDate()} ${dt.toLocaleString("en-GB",{month:"short",timeZone:"UTC"})}: ${fulls.length} full, ${reels.length} reels`;
         h += `<button type="button" class="cday ${inM?"":"out"} ${k===today?"today":""} ${k===sel?"sel":""}" data-k="${k}" aria-label="${esc(lbl)}" ${inM?"":"tabindex=\"-1\""}><span class="dn">${dt.getUTCDate()}</span>${inM?fH+rH:""}</button>`;
       }
@@ -689,7 +695,7 @@ let CAL = {"asOf": "2026-10-28T20:15:00Z", "posts": [{"id": "6adee01299b2dfabd7a
       if (!sk){ const n = Object.keys(M).filter(k => k.startsWith(cur)).reduce((a,k) => a + M[k].length, 0); det.innerHTML = `<h3>${n} post${n===1?"":"s"} this month. Tap a day to see them.</h3>`; }
       else {
         const ps = M[sk] || []; const d0 = new Date(sk + "T12:00:00Z");
-        det.innerHTML = `<h3>${d0.toLocaleString("en-GB",{weekday:"long",day:"numeric",month:"long",timeZone:"UTC"})} (ET)</h3>` + (ps.length ? `<ul>${ps.map(p => `<li><span class="tm">${tm(p._d)}</span><span class="ftag f${esc(String(p.fmt).toLowerCase())}">${esc(p.fmt)}</span><span class="tt">${esc(p.title)}<small>${esc(p.v)} · ${p.kind==="full"?"Full video":"Reel"}${p.st==="published"?" · posted":p.st==="planned"?" · planned, not on Zernio yet":""}</small></span><span class="pf">${(p.plat||[]).map(x => x==="youtube"?"YouTube":x==="instagram"?"Instagram":esc(x)).join(" + ")}</span></li>`).join("")}</ul>` : `<p class="calnote">Nothing scheduled.</p>`);
+        det.innerHTML = `<h3>${d0.toLocaleString("en-GB",{weekday:"long",day:"numeric",month:"long",timeZone:"UTC"})} (ET)</h3>` + (ps.length ? `<ul>${ps.map(p => `<li><span class="tm">${tm(p._d)}</span><span class="ftag f${esc(fmtKey(p.fmt).toLowerCase())}">${esc(fmtName(fmtKey(p.fmt)))}</span><span class="tt">${esc(p.title)}<small>${esc(p.v)} · ${p.kind==="full"?"Full video":"Reel"}${p.st==="published"?" · posted":p.st==="planned"?" · planned, not on Zernio yet":""}</small></span><span class="pf">${(p.plat||[]).map(x => x==="youtube"?"YouTube":x==="instagram"?"Instagram":esc(x)).join(" + ")}</span></li>`).join("")}</ul>` : `<p class="calnote">Nothing scheduled.</p>`);
       }
       document.getElementById("calNote").textContent = (CAL.note||"") + (CAL.asOf ? ` Updated ${new Date(CAL.asOf).toLocaleString([], {day:"numeric", month:"short", hour:"2-digit", minute:"2-digit"})}.` : "");
     } catch (e) {}
@@ -1051,4 +1057,18 @@ button.big{border-radius:12px;min-height:72px;padding:14px 16px}
 .fullpv .fbbtn:hover,.fullpv .fbbtn[aria-expanded="true"]{background:var(--cyan);color:#071016}
 .fullpv .watch:focus-visible,.fullpv .fbbtn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .fullpv .pv a{max-width:100%;overflow:hidden;text-overflow:ellipsis}
+</style>
+<style>
+.fmt.f2dd,.ftag.f2dd,.cfull.f2dd,.creels i.f2dd{background:var(--cyan)}
+.lines{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:0 0 16px}
+.line{display:grid;grid-template-columns:auto 1fr;grid-template-areas:"t n" "s s" "m m";gap:6px 10px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:6px;background:var(--bg);min-width:0}
+.line .ftag{grid-area:t;justify-self:start}
+.line b{grid-area:n;justify-self:end;font-family:var(--mono);font-size:18px}
+.line .slots{grid-area:s;display:flex;gap:4px}
+.line .slots i{flex:1;height:8px;border-radius:2px;background:var(--track);border:1px solid var(--line)}
+.line.f2d .slots i.on{background:var(--amber);border-color:var(--amber)}
+.line.f2dd .slots i.on{background:var(--cyan);border-color:var(--cyan)}
+.line.f3d .slots i.on{background:var(--violet);border-color:var(--violet)}
+.line small{grid-area:m;color:var(--mute);font-size:12px}
+.line.short b{color:var(--amber)}
 </style>
