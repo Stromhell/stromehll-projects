@@ -185,9 +185,22 @@ async function departures(k) {
 async function security(k) {
   const { real, scene } = k;
   await sky(real, k, { envI: .4 });
-  await C.room(k, { w: 16, d: 12, h: 3.4, floor: 'rubber_tiles', floorColor: null, wallColor: 0xd8d0bc });
+  await C.room(k, { w: 30, d: 12, h: 3.4, floor: 'concrete_floor_worn_001', wallColor: 0xd8d0bc, front: true });
+  // detail pass (QA 29 Oct): terrazzo border, wainscot, signage, queue posts, benches, posters, window light, clock
+  const tz = await real.pbr('rubber_tiles', { repeat: [8, .5], color: 0x9a9284 }); scene.add(real.m(new THREE.PlaneGeometry(16, 1.2), tz, { rot: [-P / 2, 0, 0], pos: [0, .004, .6], cast: false }));
+  const wain = real.std(0x6a5a46, { rough: .55 }); for (const [x, z, ry, len] of [[0, -5.97, 0, 30], [-14.97, 0, P / 2, 12], [14.97, 0, -P / 2, 12]]) scene.add(real.m(new THREE.PlaneGeometry(len, 1.1), wain, { pos: [x, .55, z], rot: [0, ry, 0], cast: false }));
+  const sign = real.canvasTex(1400, 260, (c, w, h) => { c.fillStyle = '#123a6a'; c.fillRect(0, 0, w, h); c.fillStyle = '#ffffff'; c.font = 'bold 92px "Oswald", sans-serif'; c.textAlign = 'center'; c.fillText('ΕΛΕΓΧΟΣ ΑΣΦΑΛΕΙΑΣ', w / 2, 110); c.font = '70px "Oswald", sans-serif'; c.fillText('SECURITY CHECK · GATES 1–6', w / 2, 210); });
+  scene.add(real.m(new THREE.PlaneGeometry(3.6, .67), new THREE.MeshStandardMaterial({ map: sign, emissive: 0xffffff, emissiveMap: sign, emissiveIntensity: .35, roughness: .5 }), { pos: [0, 2.75, -5.95], cast: false }));
+  const poster = (txt, col) => real.canvasTex(400, 600, (c, w, h) => { c.fillStyle = col; c.fillRect(0, 0, w, h); c.fillStyle = 'rgba(255,255,255,.85)'; c.beginPath(); c.arc(w / 2, 230, 120, 0, 7); c.fill(); c.fillStyle = '#fff'; c.font = 'bold 64px "Oswald", sans-serif'; c.textAlign = 'center'; c.fillText(txt, w / 2, 470); c.font = '34px "Oswald", sans-serif'; c.fillText('OLYMPIC AIRWAYS', w / 2, 540); });
+  [['CORFU', '#1f5fa8', -6.5], ['RHODES', '#c8582a', -3.5], ['CRETE', '#2a8a6a', 5.2]].forEach(([t, c, x]) => scene.add(real.m(new THREE.PlaneGeometry(.8, 1.2), new THREE.MeshStandardMaterial({ map: poster(t, c), roughness: .6 }), { pos: [x, 1.85, -5.95], cast: false })));
+  const post = real.std(0xb8b8b0, { metal: .8, rough: .3 }), belt = real.std(0x7a1a1a, { rough: .7 });
+  for (let i = 0; i < 6; i++) { const x = 5.2 + i * .9; for (const z of [-.1, 1.3]) { scene.add(real.m(new THREE.CylinderGeometry(.03, .03, .95, 12), post, { pos: [x, .475, z] })); scene.add(real.m(new THREE.CylinderGeometry(.16, .16, .03, 20), post, { pos: [x, .015, z] })); if (i < 5) scene.add(real.box(.9, .05, .01, belt, { pos: [x + .45, .88, z] })); } }
+  for (const x of [-6.2, -4.4]) { const bench = new THREE.Group(); bench.add(real.rbox(1.5, .06, .45, .02, real.std(0x3a5a7a, { rough: .4 }), { pos: [0, .45, 0] })); bench.add(real.rbox(1.5, .45, .05, .02, real.std(0x3a5a7a, { rough: .4 }), { pos: [0, .7, -.2] })); for (const bx of [-.65, .65]) bench.add(real.box(.05, .45, .4, post, { pos: [bx, .22, 0] })); bench.position.set(x, 0, -5.5); scene.add(bench); }
+  for (const x of [-5, 0, 5]) { scene.add(real.box(2.4, 1.3, .04, real.std(0xcfe4ff, { emissive: 0xcfe4ff, ei: 1.2 }), { pos: [x, 2.0, 5.97], cast: false })); }
+  const win = new THREE.SpotLight(0xfff0d8, 80, 22, .6, .7, 1.2); win.position.set(1, 3.2, 7.5); win.target.position.set(0, 0, -1); win.castShadow = true; scene.add(win, win.target);
+  const clk = await real.prop('wall_clock'); clk.position.set(-1.6, 2.6, -5.9); scene.add(clk);
   scene.add(new THREE.HemisphereLight(0xf4f6ff, 0x504a40, 2.2));
-  C.tubes(k, [-4, 0, 4], [-3, 1, 4], 3.4, { i: 12, shadow: false });
+  C.tubes(k, [-8, -4, 0, 4, 8, 12], [-3, 1, 4], 3.4, { i: 12, shadow: false });
   const key = new THREE.DirectionalLight(0xfff2e0, 1.4); key.position.set(4, 6, 6); key.castShadow = true; Object.assign(key.shadow.camera, { left: -9, right: 9, top: 9, bottom: -9 }); key.shadow.mapSize.set(2048, 2048); key.shadow.radius = 4; scene.add(key);
   const beige = real.std(0xcfc6ae, { rough: .45, metal: .2 }), dark = real.std(0x2a2b2e, { rough: .6 });
   // detector arch on the walkway, its red lamp dead

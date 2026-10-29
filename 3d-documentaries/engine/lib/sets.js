@@ -1,5 +1,6 @@
 // Detailed realistic sets: Airbus A300 (Air France, 1976), its cabin and flight deck, an airport apron.
 // Everything is built in metres. Aircraft axes: nose points +z, right wing +x, up +y.
+import { rng } from './core.js';
 import * as THREE from 'three';
 import * as real from './real.js';
 
@@ -256,7 +257,13 @@ export function tug(o = {}) {
 // apron(k, {hdri, sun, terminal:true}) builds ground, markings, a 1970s terminal and a control tower
 export async function apron(k, o = {}) {
   const { scene } = k;
-  const concrete = await real.pbr('concrete_floor_worn_001', { repeat: [60, 60], rough: .95, noMap: true, color: 0xa9a59c });
+  // apron concrete: 7.5 m slabs with slightly different tones, tyre marks and oil stains (canvas, tiles every 60 m)
+  const slab = real.canvasTex(2048, 2048, (c, w, h) => { const r = rng(7); for (let i = 0; i < 8; i++) for (let j = 0; j < 8; j++) { const v = 160 + Math.floor(r() * 22); c.fillStyle = `rgb(${v},${v - 3},${v - 9})`; c.fillRect(i * 256, j * 256, 256, 256); }
+    for (let n = 0; n < 900; n++) { c.fillStyle = `rgba(60,58,52,${r() * .08})`; c.beginPath(); c.arc(r() * w, r() * h, 2 + r() * 30, 0, 7); c.fill(); }
+    for (let n = 0; n < 14; n++) { c.fillStyle = `rgba(30,28,24,${.12 + r() * .15})`; c.beginPath(); c.ellipse(r() * w, r() * h, 20 + r() * 60, 10 + r() * 30, r() * 3, 0, 7); c.fill(); }
+    c.strokeStyle = 'rgba(40,38,34,.18)'; c.lineWidth = 14; for (let n = 0; n < 6; n++) { c.beginPath(); const y = r() * h; c.moveTo(0, y); c.bezierCurveTo(w * .3, y + r() * 200 - 100, w * .6, y + r() * 200 - 100, w, y + r() * 200 - 100); c.stroke(); } });
+  slab.wrapS = slab.wrapT = THREE.RepeatWrapping; slab.repeat.set(400 / 60, 400 / 60); slab.anisotropy = 8;
+  const concrete = new THREE.MeshStandardMaterial({ map: slab, roughness: .93, metalness: 0 });
   const ground = m(new THREE.PlaneGeometry(400, 400), concrete, { rot: [-P / 2, 0, 0], cast: false }); scene.add(ground);
   const grass = await real.pbr('grass_path_2', { repeat: [200, 40] });
   const gr = m(new THREE.PlaneGeometry(2000, 600), grass, { rot: [-P / 2, 0, 0], pos: [0, -.02, 440], cast: false }); scene.add(gr);
