@@ -340,7 +340,7 @@ window.SHOTS = [
   // 5 the door shuts: too big to live off wild food, no going back
   { plate: 'village', cam: { z: [1.1, 1.16], x: [1280, 1280], y: [820, 820] }, bed: [['wind_loop', .25]],
     init: S => { const tD = A.at(S, 'door shut', .6), tB = A.at(S, 'too big', 2.6), tN = A.at(S, 'no going back', 4.8);
-      S.D.over = [A.dim(.35), (c, lt) => doorShut(c, lt, tD - .1, 960, 520, 720, 420), (c, lt) => K.card(c, 'TOO BIG TO LIVE OFF WILD FOOD', lt, { at: tB, x: 960, y: 110, px: 44, rot: -2 }), (c, lt) => { const a = pop(lt, tN); if (a <= 0) return; c.save(); c.translate(960, 870); c.scale(a, a); K.outlined(c, 'NO GOING BACK', 0, 0, 96, { fill: '#ff8a7a' }); c.restore(); }];
+      S.D.over = [A.dim(.35), (c, lt) => { const a = pop(lt, tD - .1); if (a <= 0) return; c.save(); c.translate(960, 520); c.scale(a, a); c.rotate(-.015); c.shadowColor = 'rgba(0,0,0,.5)'; c.shadowBlur = 30; c.shadowOffsetY = 12; c.fillStyle = '#f2ead6'; c.fillRect(-400, -250, 800, 500); c.restore(); }, (c, lt) => doorShut(c, lt, tD - .1, 960, 520, 720, 420), (c, lt) => K.card(c, 'TOO BIG TO LIVE OFF WILD FOOD', lt, { at: tB, x: 960, y: 110, px: 44, rot: -2 }), (c, lt) => { const a = pop(lt, tN); if (a <= 0) return; c.save(); c.translate(960, 870); c.scale(a, a); K.outlined(c, 'NO GOING BACK', 0, 0, 96, { fill: '#ff8a7a' }); c.restore(); }];
       S.D.sfx = [[tD + .4, 'door_slam', .6], [tB, 'pop', .3], [tN, 'hit', .45]]; } },
   // 6 plough, sow, weed, harvest, grind, store, guard: every season, every year
   { plate: 'farm_fields', cam: { z: [1.15, 1.22], x: [1100, 1140], y: [880, 880] }, bed: [['wind_loop', .25]],

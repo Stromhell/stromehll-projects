@@ -106,11 +106,11 @@ window.SHOTS = [
     init: S => { const m = mapScene(S); S.D.live = [m.live]; S.D.over = [m.over]; } },
   // 7 court: two podiums, right vs left, then pan to the courthouse
   { plate: 'court', cam: { z: [1.45, 1.2], x: [700, 1500], y: [960, 820], ease: E.io }, bed: [['crowd_loop', .35], ['wind_loop', .2]],
-    figs: [{ x: 358, y: 1230, s: 1.55, pose: 'point', costume: 'suit', hair: 'short', facing: 1, talk: [0, 3] }, { x: 870, y: 1230, s: 1.55, pose: 'point', costume: 'suit', hair: 'bald', facing: -1, talk: [3, 6] }],
+    figs: [{ x: 358, y: 1405, s: 2.45, pose: 'point', costume: 'suit', hair: 'short', facing: -1, talk: [0, 3] }, { x: 870, y: 1405, s: 2.45, pose: 'point', costume: 'suit', hair: 'bald', facing: 1, talk: [3, 6] }],
     front: [podiumFront(358), podiumFront(870)],
     init: S => { const tL = A.at(S, 'Critics', 3.2), tC = A.at(S, 'States', 6.5); S.D.cam = { z: [1.45, 1.15], x: [620, 1650], y: [960, 760], ease: t => E.io((t * (S.end - S.start) - (tC - .8)) / 2.4) };
-      S.D.figs[0].talk = [.3, tL - .3]; S.D.figs[1].talk = [tL, tC - .5];
-      S.D.over = [quoteCard('"PUSHING A\nCLIMATE AGENDA"', 'THE RIGHT', 520, 260, .5, tL - .2, -3), quoteCard('"WALL STREET\'S REACH"', 'THE LEFT', 1400, 260, tL + .2, tC - .6, 3), (c, lt) => K.card(c, 'TAKEN TO COURT', lt, { at: tC + 1.2, x: 1300, y: 200, px: 70, rot: -3 })];
+      S.D.figs[0].talk = [.3, tL - .3]; S.D.figs[1].talk = [tL, tC - .5]; S.D.figs[0].anim = (o, lt) => { o.pose = lt > .2 && lt < tL - .1 ? 'present' : 'stand'; }; S.D.figs[1].anim = (o, lt) => { o.pose = lt > tL - .1 && lt < tC - .3 ? 'present' : 'stand'; };
+      S.D.over = [quoteCard('"PUSHING A\nCLIMATE AGENDA"', 'THE RIGHT', 1400, 260, .5, tL - .2, -3), quoteCard('"WALL STREET\'S REACH"', 'THE LEFT', 1400, 260, tL + .2, tC - .6, 3), (c, lt) => K.card(c, 'TAKEN TO COURT', lt, { at: tC + 1.2, x: 1300, y: 200, px: 70, rot: -3 })];
       S.D.sfx = [[.4, 'camera_shutter', .35], [tL + .1, 'camera_shutter', .35], [tC - .6, 'whoosh_soft', .5], [tC + 1.2, 'stamp', .6]]; } },
   // 8 1986: the trading floor, then the screen goes red
   { plate: 'trading', cam: { z: [1.1, 1.3], x: [1280, 1280], y: [720, 760] }, bed: [['trading_loop', .45], ['office_loop', .2]],

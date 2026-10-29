@@ -111,7 +111,7 @@ const weekBoard = (c, x, y, w, h, fillH, perDay = 5, col = GREEN) => { c.save();
 window.SHOTS = [
   // 1 1963, sepia: a Land Rover rolls into the Kalahari and the young researcher steps out with a notebook
   { plate: 'kalahari_camp', cam: { z: [1.08, 1.16], x: [1240, 1300], y: [880, 880] }, bed: [['wind_loop', .45]], inSfx: false,
-    figs: [{ x: 1180, y: 1250, s: 2.0, ...LEE, facing: 1, pose: 'stand', hold: { near: NOTE } }],
+    figs: [{ x: 1180, y: 1250, s: 1.4, ...LEE, facing: 1, pose: 'stand', hold: { near: NOTE } }],
     init: S => { const tD = A.at(S, 'doubt', 6.0), tY = A.at(S, '1963', 3.0), stop = 3.0;
       S.D.figs[0].walk = { x0: 1150, x1: 1520, t0: stop + .9, dur: 2.2 }; S.D.figs[0].anim = (o, lt) => { if (lt < stop + .5) o.x = -999; o.mood = lt > tD ? 'worried' : 'neutral'; if (lt > stop + 3.2) o.pose = 'think'; };
       S.D.live = [(c, lt) => { const u = E.out(K.seg(lt, 0, stop)), x = -500 + 1300 * u, wr = u * 18; landRover(c, x, 1262, 1.05, wr); if (u < 1) for (let i = 0; i < 14; i++) { const p = ((lt * 1.4 + i / 14) % 1); c.fillStyle = `rgba(200,170,120,${.35 * (1 - p)})`; c.beginPath(); c.arc(x - 330 - p * 260, 1240 - p * 60 + Math.sin(i) * 20, 30 + p * 60, 0, 7); c.fill(); } }];
@@ -128,7 +128,7 @@ window.SHOTS = [
   { plate: 'kalahari_camp', cam: { z: [1.05, 1.1], x: [1300, 1340], y: [860, 870] }, bed: [['wind_loop', .3], ['birds_loop', .25]],
     figs: [{ x: 1380, y: 1150, s: 1.6, ...MAN, facing: 1, pose: 'stand', walk: { x0: 1380, x1: 1880, t0: .4, dur: 2.6 } },
       { x: 560, y: 1250, s: 1.85, ...GATH, facing: 1, pose: 'work' }, { x: 1180, y: 1258, s: 1.8, ...GATH2, facing: -1, pose: 'work', phase: 1.3 },
-      { x: 2080, y: 1262, s: 1.95, ...LEE, facing: -1, pose: 'sit', hold: { near: NOTE }, mood: 'neutral' }],
+      { x: 2080, y: 1262, s: 1.95, low: 99, ...LEE, facing: -1, pose: 'sit', hold: { near: NOTE }, mood: 'neutral' }],
     init: S => { const tJ = A.at(S, "Ju/'hoansi", 1.0);
       S.D.figs[1].anim = (o, lt) => { o.talk = Math.sin(lt * 1.3) > .2; }; S.D.figs[2].anim = (o, lt) => { o.talk = Math.sin(lt * 1.3 + 2) > .3; o.mood = 'happy'; };
       S.D.live = [firePit(870, 1290, .6), (c, lt) => A.fire(870, 1284, .36, { glow: 200 })(c, lt), A.smoke(860, 1240, .9), stool(2080, 1262, 1.1), nuts(700, 1250, .8)];
@@ -168,7 +168,7 @@ window.SHOTS = [
           const hA = (hrs % 12) / 12 * Math.PI * 2 - Math.PI / 2, mA = (hrs % 1) * Math.PI * 2 - Math.PI / 2; c.lineCap = 'round'; c.lineWidth = 16; c.beginPath(); c.moveTo(0, 0); c.lineTo(Math.cos(hA) * 130, Math.sin(hA) * 130); c.stroke(); c.lineWidth = 9; c.beginPath(); c.moveTo(0, 0); c.lineTo(Math.cos(mA) * 200, Math.sin(mA) * 200); c.stroke(); c.fillStyle = INK; c.beginPath(); c.arc(0, 0, 14, 0, 7); c.fill();
           c.fillStyle = RED; c.font = font(64); c.textAlign = 'center'; c.fillText(hrs < 24 ? 'MON' : 'TUE', 0, 110); c.restore(); },
         (c, lt) => { hoursClock(lt, .2)(c); const r = K.seg(lt, tT - .2, tT + .4); if (r > 0) { c.save(); c.globalAlpha = r * (.6 + .4 * Math.sin(lt * 8)); c.strokeStyle = RED; c.lineWidth = 12; c.beginPath(); c.arc(170, 170, 120, 0, 7); c.stroke(); c.restore(); } },
-        (c, lt) => K.card(c, 'YOU: 15 HRS BY TUESDAY 3 PM', lt, { at: tT, x: 1100, y: 940, px: 52, rot: -2 })];
+        (c, lt) => K.card(c, 'YOU: 15 HRS BY TUESDAY 3 PM', lt, { at: tT, x: 1460, y: 230, px: 52, rot: -2 })];
       const ticks = []; for (let k = 0; k < 10; k++) ticks.push([.3 + k * .25, 'tick', .25]);
       S.D.sfx = [...ticks, [tT, 'hit', .5]]; } },
   // 8 stacked bars: food, then tools, processing, chores; total climbs to about 40
@@ -180,7 +180,7 @@ window.SHOTS = [
         (c, lt) => K.card(c, 'TO BE FAIR…', lt, { at: .2, x: 420, y: 170, px: 50, rot: -3 })];
       S.D.sfx = [[.2, 'paper', .4], [tF, 'pop', .4], [tT, 'thud', .4], [tN, 'knap', .4], [tCh, 'thud', .4], [t40, 'chime', .5]]; } },
   // 9 split: friends cracking nuts and laughing vs one worker alone at a desk; same clock both sides
-  { draw: (c, lt, u, S) => { A.split((c2, lt2) => { plateAt(c2, 'kalahari_camp', 1240, 1120, 480, 600, 1.7); log(1120, 1300, 200)(c2); log(1380, 1310, 200)(c2); A.figure(c2, { x: 1090, y: 1296, s: 1.0, ...GATH, pose: 'sit', facing: 1, mood: 'happy', talk: Math.sin(lt2 * 2) > 0, hold: { near: hammerstone.near } }, lt2, u, S); A.figure(c2, { x: 1400, y: 1306, s: 1.0, ...GATH2, pose: 'sit', facing: -1, mood: 'happy', talk: Math.sin(lt2 * 2 + 2) > 0 }, lt2, u, S); nuts(1250, 1320, .7)(c2); K.screen(c2); },
+  { draw: (c, lt, u, S) => { A.split((c2, lt2) => { plateAt(c2, 'kalahari_camp', 1240, 1120, 480, 600, 1.7); log(1120, 1300, 200)(c2); log(1380, 1310, 200)(c2); A.figure(c2, { x: 1090, y: 1304, s: 1.0, low: 46, ...GATH, pose: 'sit', facing: 1, mood: 'happy', talk: Math.sin(lt2 * 2) > 0, hold: { near: hammerstone.near } }, lt2, u, S); A.figure(c2, { x: 1400, y: 1314, s: 1.0, low: 46, ...GATH2, pose: 'sit', facing: -1, mood: 'happy', talk: Math.sin(lt2 * 2 + 2) > 0 }, lt2, u, S); nuts(1250, 1320, .7)(c2); K.screen(c2); },
       (c2, lt2) => { plateAt(c2, 'office', 1980, 1000, 1440, 560, 1.6); A.figure(c2, { x: 1860, y: 1180, s: 2.2, pose: 'sit', costume: 'office', facing: 1, hair: 'short', mood: 'neutral', t: lt2 }, lt2, u, S); c2.drawImage(K.imgs.fg_desk, 0, 0, 2560, 1440); K.screen(c2); c2.save(); c2.globalCompositeOperation = 'multiply'; c2.fillStyle = 'rgba(150,175,215,.5)'; c2.fillRect(960, 0, 960, 1080); c2.restore(); }, { at: 0 })(c, lt, u, S); },
     bed: [['wind_loop', .25], ['office_loop', .25]],
     init: S => { const tS = A.at(S, 'completely different', 3.0), t1 = A.at(S, 'No commute', 4.8), t2 = A.at(S, 'no fixed shift', 5.6), t3 = A.at(S, 'no boss', 6.4), tF = A.at(S, 'family and friends', 8.4);
@@ -207,6 +207,8 @@ window.SHOTS = [
       S.D.sfx = [[tM, 'pop', .4], [tO - .8, 'whoosh', .4], [tO, 'chime', .55], [t1, 'pop', .4], [t2, 'pop', .4], [t3, 'pop', .4]]; } },
 ];
 
+// AUTO-LOW: seated figures sit on a low log/stone at their feet (hips on the seat, knees up)
+for (const S of window.SHOTS) for (const f of (S.figs || [])) if (!f.seat && f.low == null && !f.chair) f.low = 44;
 const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; D.sfx = D.sfx || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
 A.build(); K.boot();
 </script></body></html>

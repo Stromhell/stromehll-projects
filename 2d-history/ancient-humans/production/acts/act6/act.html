@@ -179,7 +179,7 @@ const farCamp = (c) => { c.fillStyle = 'rgba(255,214,150,.85)'; for (const [x, w
 // a distant campfire glow on the horizon + dashed link back to ours (world)
 const farFire = (x, y, at, tx, ty) => (c, lt) => { const a = K.seg(lt, at, at + .6); if (a <= 0) return; A.fire(x, y, .18 * a, { glow: 260 })(c, lt); const u = E.out(K.seg(lt, at + .2, at + 1.2)); c.save(); c.strokeStyle = 'rgba(255,214,140,.7)'; c.lineWidth = 4; c.setLineDash([12, 12]); c.lineDashOffset = -lt * 30; c.beginPath(); c.moveTo(tx, ty); c.lineTo(tx + (x - tx) * u, ty + (y - 30 - ty) * u); c.stroke(); c.restore(); };
 const nightBlue = (k = .3) => (c) => { c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = `rgba(40,50,110,${k})`; c.fillRect(0, 0, 1920, 1080); c.restore(); };
-const circleFigs = (mood = 'happy') => [{ x: 740, y: 1300, s: 1.55, ...TELLER, facing: 1, pose: 'sit', mood }, { x: 1000, y: 1250, s: 1.4, ...WOMAN, facing: 1, pose: 'sit', mood }, { x: 1640, y: 1250, s: 1.4, ...HUNTER, facing: -1, pose: 'sit', mood }, { x: 1830, y: 1300, s: 1.55, ...GIRL, facing: -1, pose: 'sit', mood }, { x: 1440, y: 1340, s: 1.0, ...KID1, costume: 'hideBare', facing: -1, pose: 'sit', mood }];
+const circleFigs = (mood = 'happy') => [{ x: 620, y: 1300, s: 1.55, ...TELLER, facing: 1, pose: 'sit', mood }, { x: 950, y: 1250, s: 1.4, ...WOMAN, facing: 1, pose: 'sit', mood }, { x: 1640, y: 1250, s: 1.4, ...HUNTER, facing: -1, pose: 'sit', mood }, { x: 1970, y: 1300, s: 1.55, ...GIRL, facing: -1, pose: 'sit', mood }, { x: 1440, y: 1340, s: 1.0, ...KID1, costume: 'hideBare', facing: -1, pose: 'sit', mood }];
 const fireLayer = (x = 1280, y = 1300, k = 1) => [firePit(x, y, .9 * k), (c, lt) => A.fire(x, y - 6, .6 * k, { glow: 420 })(c, lt), A.smoke(x, y - 60, .8, '150,150,170')];
 
 window.SHOTS = [
@@ -202,10 +202,10 @@ window.SHOTS = [
   // 3 the notes split into two piles: day and firelight
   { plate: 'kalahari_camp', cam: { z: [1.05, 1.08], x: [1280, 1280], y: [760, 760] }, bed: [['wind_loop', .2]],
     init: S => { const tN = A.at(S, 'notes', .8), tS = A.at(S, 'two piles', 3.4), tF = A.at(S, 'firelight', 5.4);
-      S.D.over = [A.dim(.55), (c, lt) => K.card(c, 'DECADES OF NOTES\n+ TAPE RECORDINGS', lt, { at: tN, x: 960, y: 200, px: 44, rot: -2, until: tS }),
+      S.D.over = [A.dim(.55), (c, lt) => { const a = pop(lt, tS - .3); if (a <= 0) return; c.save(); c.globalAlpha = a; for (const px of [560, 1360]) { c.fillStyle = 'rgba(12,14,20,.82)'; c.strokeStyle = '#e8b44a'; c.lineWidth = 6; c.beginPath(); c.roundRect(px - 300, 330, 600, 680, 26); c.fill(); c.stroke(); } c.restore(); }, (c, lt) => K.card(c, 'DECADES OF NOTES\n+ TAPE RECORDINGS', lt, { at: tN, x: 960, y: 200, px: 44, rot: -2 }),
         (c, lt) => { const n = Math.min(14, Math.max(0, Math.floor((lt - tS) * 4))); const a = pop(lt, tS - .3); if (a <= 0) return; c.save(); c.translate(560, 0); c.globalAlpha = a; notePile(c, 0, 820, n, false); c.restore(); c.save(); c.translate(560, 450); c.scale(a, a); sunIcon(c, 1.1); c.restore(); K.card(c, 'TALK BY DAY', lt, { at: tS, x: 560, y: 920, px: 46, rot: -2 }); },
         (c, lt) => { const n = Math.min(14, Math.max(0, Math.floor((lt - tF + .4) * 4))); const a = pop(lt, tF - .6); if (a <= 0) return; c.save(); c.globalAlpha = a; notePile(c, 1360, 820, n, true); c.restore(); c.save(); c.translate(1360, 450); c.scale(a, a); fireIcon(c, lt, 1.4); c.restore(); K.card(c, 'TALK BY FIRELIGHT', lt, { at: tF, x: 1360, y: 920, px: 46, rot: 2, bg: '#ffd9a0' }); },
-        (c, lt) => { for (let k = 0; k < 12; k++) { const t0 = tS + k * .28, left = k % 2 === 0; flySheet(c, lt, t0, 960, 1100, left ? 560 : 1360, 780); } }];
+        (c, lt) => { for (let k = 0; k < 12; k++) { const t0 = tS + k * .28, left = k % 2 === 0; flySheet(c, lt, t0, 960, 260, left ? 560 : 1360, 780); } }];
       S.D.sfx = [[tN, 'paper', .35], [tS, 'whoosh_soft', .3], [tS + .5, 'paper', .3], [tF, 'whoosh_soft', .3], [tF + .3, 'paper', .3]]; } },
   // 4 daytime talk: food, tracks, trade, and complaints about who isn't sharing
   { plate: 'kalahari_camp', cam: { z: [1.12, 1.2], x: [1280, 1280], y: [860, 870] }, bed: [['birds_loop', .3], ['crowd_loop', .12]],
@@ -253,6 +253,8 @@ window.SHOTS = [
       S.D.sfx = [[.3, 'breath', .2], [tC - 1.2, 'swell', .3]]; } },
 ];
 
+// AUTO-LOW: seated figures sit on a low log/stone at their feet (hips on the seat, knees up)
+for (const S of window.SHOTS) for (const f of (S.figs || [])) if (!f.seat && f.low == null && !f.chair) f.low = 44;
 const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; D.sfx = D.sfx || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
 A.build(); K.boot();
 </script></body></html>

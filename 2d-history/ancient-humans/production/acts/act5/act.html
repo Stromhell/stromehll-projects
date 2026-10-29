@@ -158,16 +158,16 @@ window.SHOTS = [
       S.D.sfx = [[tA, 'pop', .35], [.6, 'breath', .2]]; } },
   // 2 MED: talk, kids playing, hair being combed
   { plate: 'camp_shade', cam: { z: [1.35, 1.42], x: [1250, 1290], y: [900, 900] }, bed: [['birds_loop', .35], ['crowd_loop', .12]],
-    figs: [{ x: 880, y: 1236, s: 1.6, ...GATH, facing: 1, pose: 'sit' }, { x: 1010, y: 1220, s: 1.62, ...GATH2, facing: 1, pose: 'stand' },
+    figs: [{ x: 880, y: 1236, s: 1.6, ...GATH, facing: 1, pose: 'sit' }, { x: 1075, y: 1220, s: 1.62, ...GATH2, facing: -1, pose: 'stand' },
       { x: 1520, y: 1236, s: 1.6, ...ELDER, facing: -1, pose: 'sit' },
-      { x: 1200, y: 1340, s: 1.15, ...KID1, facing: 1, pose: 'run' }, { x: 1300, y: 1346, s: 1.1, ...KID2, facing: 1, pose: 'run' }],
+      { x: 2600, y: 1170, s: .9, ...KID1, facing: -1, pose: 'run' }, { x: 2600, y: 1176, s: .86, ...KID2, facing: -1, pose: 'run' }],
     init: S => { const tT = A.at(S, 'talk', .9), tK = A.at(S, 'Kids play', 1.8), tC = A.at(S, 'combs', 3.4);
       S.D.figs[0].anim = (o, lt) => { o.talk = Math.sin(lt * 1.6) > .2; o.mood = 'happy'; o.eyesClosed = lt > tC ? .4 : 0; };
       S.D.figs[1].anim = (o, lt) => { o.pose = lt > tC - .3 ? 'reach' : 'stand'; const r = lt > tC - .3 ? Math.max(0, Math.sin(lt * 3)) : 0; if (r > 0) o.arms = (t, P) => ({ shR: K.lerp(P.shR, 60, r), elR: K.lerp(P.elR, -120, r) }); o.mood = 'happy'; };
       S.D.figs[2].anim = (o, lt) => { o.mood = 'happy'; o.talk = lt > tT + 1.5 && Math.sin(lt * 2) > 0; if (lt > tC + 1) o.mood = 'happy'; };
       // the kids chase each other in a loop across the clearing in front of the adults
-      S.D.figs[3].anim = (o, lt) => { const p = (lt * .12) % 1, x = 1265 + Math.sin(p * Math.PI * 2) * 120; o.x = lt < tK - .4 ? -999 : x; o.facing = Math.cos(p * Math.PI * 2) > 0 ? 1 : -1; o.t = lt * 2.2; };
-      S.D.figs[4].anim = (o, lt) => { const p = (lt * .12 + .09) % 1, x = 1265 + Math.sin(p * Math.PI * 2) * 120; o.x = lt < tK - .4 ? -999 : x; o.facing = Math.cos(p * Math.PI * 2) > 0 ? 1 : -1; o.t = lt * 2.2 + .5; };
+      const kidX = (lt, off) => { const u = lt - (tK - 1.2); const xin = 2500 - u * 520; const loop = 1900 + Math.sin((u - 1.4) * .9) * 170; return (u < 1.4 ? xin : loop) + off; }; S.D.figs[3].anim = (o, lt) => { const u = lt - (tK - 1.2); o.x = kidX(lt, 0); o.facing = u < 1.4 || Math.cos((u - 1.4) * .9) < 0 ? -1 : 1; o.t = lt * 2.2; };
+      S.D.figs[4].anim = (o, lt) => { const u = lt - (tK - 1.2); const f = u < 1.4 || Math.cos((u - 1.4) * .9) < 0 ? -1 : 1; o.x = kidX(lt, f < 0 ? 150 : -150); o.facing = f; o.t = lt * 2.2 + .5; };
       S.D.live = [dapple, log(880, 1242, 150), log(1520, 1242, 150)];
       S.D.over = [warmGrade(.2), (c, lt) => K.card(c, 'NO RUSH', lt, { at: tT + .4, x: 1480, y: 200, px: 52, rot: 3 })];
       S.D.sfx = [[tK, 'run_steps', .3], [tK + .4, 'crowd_cheer', .15], [tC, 'whoosh_soft', .2]]; } },
@@ -251,7 +251,7 @@ window.SHOTS = [
       S.D.sfx = [[tL, 'pop', .35], [tD, 'whoosh_soft', .35], [tD + .2, 'thud', .3]]; } },
   // 13 WIDE: the circle of friends gets three labels: BANK, HOSPITAL, PENSION
   { plate: 'camp_shade', cam: { z: [1.08, 1.0], x: [1280, 1280], y: [820, 780] }, bed: [['birds_loop', .35], ['fire_loop', .2]],
-    figs: [{ x: 700, y: 1236, s: 1.5, ...ELDER, facing: 1, pose: 'sit' }, { x: 960, y: 1252, s: 1.55, ...GATH, facing: 1, pose: 'sit' }, { x: 1600, y: 1252, s: 1.55, ...HUNTER, facing: -1, pose: 'sit' }, { x: 1860, y: 1236, s: 1.5, ...WOMAN, facing: -1, pose: 'sit' }, { x: 1420, y: 1330, s: 1.05, ...KID2, facing: -1, pose: 'sit' }],
+    figs: [{ x: 620, y: 1236, s: 1.5, ...ELDER, facing: 1, pose: 'sit' }, { x: 940, y: 1252, s: 1.55, ...GATH, facing: 1, pose: 'sit' }, { x: 1740, y: 1252, s: 1.55, ...HUNTER, facing: -1, pose: 'sit' }, { x: 2160, y: 1236, s: 1.5, ...WOMAN, facing: -1, pose: 'sit' }, { x: 1420, y: 1330, s: 1.05, ...KID2, facing: -1, pose: 'sit' }],
     init: S => { const tW = A.at(S, 'wasted', 1.6), tI = A.at(S, 'insurance', 3.0), tB = A.at(S, 'bank', 4.8), tH = A.at(S, 'hospital', 5.6), tP = A.at(S, 'pension', 6.4);
       S.D.figs.forEach((f, i) => { f.anim = (o, lt) => { o.mood = 'happy'; o.talk = Math.sin(lt * 1.5 + i * 1.3) > .5; }; });
       S.D.live = [dapple, firePit(1280, 1270, .55), (c, lt) => A.fire(1280, 1264, .32, { glow: 160 })(c, lt), log(700, 1242, 140), log(960, 1258, 140), log(1600, 1258, 140), log(1860, 1242, 140), log(1420, 1336, 110)];
@@ -261,6 +261,8 @@ window.SHOTS = [
       S.D.sfx = [[tW, 'pop', .3], [tI, 'chime', .45], [tB, 'pop', .4], [tH, 'pop', .4], [tP, 'pop', .4], [tP + .6, 'swell', .3]]; } },
 ];
 
+// AUTO-LOW: seated figures sit on a low log/stone at their feet (hips on the seat, knees up)
+for (const S of window.SHOTS) for (const f of (S.figs || [])) if (!f.seat && f.low == null && !f.chair) f.low = 44;
 const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; D.sfx = D.sfx || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
 A.build(); K.boot();
 </script></body></html>
