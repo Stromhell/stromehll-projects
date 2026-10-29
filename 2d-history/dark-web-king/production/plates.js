@@ -43,7 +43,13 @@
       for (let i = 0; i < 40; i++) { ctx.strokeStyle = 'rgba(200,235,255,.15)'; ctx.lineWidth = rr.range(2, 6); const x = cx + rr.gauss() * 300, y = sea + rr.range(40, H - sea); ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + rr.gauss() * 80, y + rr.range(40, 120)); ctx.stroke(); }
       ctx.strokeStyle = 'rgba(200,230,250,.6)'; ctx.lineWidth = 3; ctx.beginPath(); for (let x = 0; x < W; x += 20) ctx.lineTo(x, sea + Math.sin(x * .02) * 4); ctx.stroke();
       ctx.fillStyle = 'rgba(160,200,230,.25)'; for (let k = 0; k < 7; k++) { const x = rr.range(0, W); ctx.fillRect(x, sea - 2, rr.range(60, 200), 3); }
-    } else { const body = [[-200, -20], [W + 200, -20], [W * .9, H * .7], [W * .6, H + 40], [W * .4, H + 40], [W * .1, H * .7]]; ctx.fillStyle = 'rgba(20,50,80,.7)'; poly(ctx, body); ctx.fill(); for (let i = 0; i < 6; i++) glow(ctx, W * (.25 + i * .1), H * (.5 + (i % 2) * .15), 80, '#ffb860', .5); }
+    } else { // a deep ice corridor with heavy doors and dim lanterns
+      const vx = W * .5, vy = H * .48; for (const side of [-1, 1]) { const xo = side < 0 ? 0 : W, xi = vx + side * 220; const pts = [[xo, 0], [xi, vy - 200], [xi, vy + 160], [xo, H]]; paintRegion(ctx, r, pts, side < 0 ? '#16324a' : '#102638', { density: 500, len: [30, 90], w: [6, 16], ang: -.6 * side, angJ: .4, al: .4 });
+        for (let k = 0; k < 3; k++) { const t0 = .15 + k * .26, t1 = t0 + .12, X0 = xo + (xi - xo) * t0, X1 = xo + (xi - xo) * t1, top = t => 0 + t * (vy - 200) + 120 * (1 - t), bot = t => H + t * (vy + 160 - H) - 60 * (1 - t);
+          ctx.fillStyle = '#2a2622'; poly(ctx, [[X0, top(t0) + 80], [X1, top(t1) + 60], [X1, bot(t1)], [X0, bot(t0)]]); ctx.fill(); ctx.strokeStyle = '#5a4e40'; ctx.lineWidth = 6; ctx.stroke(); for (let b = 1; b < 4; b++) { const f = b / 4; ctx.beginPath(); ctx.moveTo(X0, top(t0) + 80 + (bot(t0) - top(t0) - 80) * f); ctx.lineTo(X1, top(t1) + 60 + (bot(t1) - top(t1) - 60) * f); ctx.stroke(); }
+          const lx = X1 + side * -20, ly = top(t1) + 40; ctx.fillStyle = '#ffcc7a'; ctx.beginPath(); ctx.ellipse(lx, ly, 12 * (1 - t0 * .6), 18 * (1 - t0 * .6), 0, 0, 7); ctx.fill(); glow(ctx, lx, ly, 260 * (1 - t0 * .5), '#ffaa50', .4); } }
+      ctx.fillStyle = '#04080e'; ctx.fillRect(vx - 220, vy - 200, 440, 360); glow(ctx, vx, vy, 160, '#ffb860', .25);
+      paintRegion(ctx, r, [[0, H], [vx - 220, vy + 160], [vx + 220, vy + 160], [W, H]], '#0c1a28', { density: 300, ang: 0 }); }
     for (let i = 0; i < 300; i++) { ctx.fillStyle = `rgba(180,220,255,${rr.range(.05, .3)})`; ctx.beginPath(); ctx.arc(rr.range(0, W), rr.range(Math.max(0, sea), H), rr.range(1, 4), 0, 7); ctx.fill(); }
     FIN(ctx, r, W, H, .45, 80000);
   };
@@ -161,7 +167,7 @@
     paintRegion(ctx, r, [[0, H * .62], [W, H * .62], [W, H * .72], [0, H * .72]], '#1a1c2a', { density: 120, ang: 0 }); ctx.fillStyle = o.warm ? 'rgba(255,200,140,.4)' : 'rgba(120,170,255,.45)'; ctx.fillRect(0, H * .62, W, 6);
     { const lx = W * .5; ctx.fillStyle = '#2a2a34'; poly(ctx, [[lx - 80, H * .62], [lx + 80, H * .62], [lx + 60, H * .47], [lx - 60, H * .47]]); ctx.fill(); ctx.fillStyle = '#3a3a48'; ctx.fillRect(lx - 70, H * .46, 140, 16); }
     // crowd silhouettes
-    for (let row = 0; row < 4; row++) for (let x = -40; x < W + 40; x += rr.range(50, 80)) { const y = H * (.78 + row * .07), s = 1 + row * .35; ctx.fillStyle = `rgb(${8 + row * 3},${10 + row * 3},${18 + row * 4})`; ctx.beginPath(); ctx.arc(x, y - 60 * s, 22 * s, 0, 7); ctx.fill(); ctx.beginPath(); ctx.roundRect(x - 34 * s, y - 40 * s, 68 * s, 80 * s, 24 * s); ctx.fill(); ctx.fillStyle = o.warm ? 'rgba(255,190,120,.25)' : 'rgba(120,170,255,.25)'; ctx.fillRect(x - 20 * s, y - 82 * s, 40 * s, 3); }
+    for (let row = 0; row < 4; row++) for (let x = -60 + rr() * 80; x < W + 60; x += rr.range(110, 170) * (1 + row * .35)) { const y = H * (.84 + row * .08), s = 2.2 + row * .8; const rim = o.warm ? 'rgba(255,190,120,.7)' : 'rgba(130,180,255,.7)'; ctx.fillStyle = `rgb(${14 + row * 4},${16 + row * 4},${26 + row * 5})`; ctx.strokeStyle = rim; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(x, y - 60 * s, 22 * s, 0, 7); ctx.fill(); ctx.beginPath(); ctx.arc(x, y - 60 * s, 22 * s, Math.PI * 1.1, Math.PI * 1.9); ctx.stroke(); ctx.beginPath(); ctx.roundRect(x - 34 * s, y - 40 * s, 68 * s, 80 * s, 24 * s); ctx.fill(); ctx.beginPath(); ctx.moveTo(x - 30 * s, y - 30 * s); ctx.quadraticCurveTo(x, y - 44 * s, x + 30 * s, y - 30 * s); ctx.stroke(); if (rr() < .08) { ctx.fillStyle = rim; ctx.fillRect(x + 20 * s, y - 120 * s, 6 * s, 50 * s); } }
     FIN(ctx, r, W, H, .45, 80000);
   };
 })(window);
