@@ -94,6 +94,72 @@
     ENV.pebbles(ctx, r, W, wallBot + 20, H, 180, shade(c.ground, -.3), shade(c.ground, .2));
     P.finish ? P.finish(ctx, r, W, H, { vignette: .25 }) : 0;
   };
+
+  // Inside a ger: curved lattice wall, roof poles to the crown, light shaft, stove, rugs, painted chests.
+  ENV.gerInside = (ctx, r, W, H, o = {}) => {
+    const fire = o.fire ?? true, cx = W * .5, crownY = H * .04, floorY = H * .7, wallTop = H * .36;
+    ctx.fillStyle = '#2a1c12'; ctx.fillRect(0, 0, W, H);
+    // roof: felt underside between poles
+    paintRegion(ctx, r, [[0, wallTop + 40], [cx - 110, crownY + 60], [cx + 110, crownY + 60], [W, wallTop + 40], [W, 0], [0, 0]], '#b89a74', { density: 260, topLight: -.25, botDark: .05, ang: Math.PI / 2 });
+    // poles (uni), painted orange with blue tips
+    for (let k = 0; k <= 34; k++) { const t = k / 34, ex = -W * .1 + t * W * 1.2, ey = wallTop + 40 + Math.sin(t * Math.PI) * 30; const sx = cx + (ex - cx) * .07, sy = crownY + 60;
+      ctx.strokeStyle = 'rgba(30,14,6,.35)'; ctx.lineWidth = 16; ctx.beginPath(); ctx.moveTo(sx, sy + 6); ctx.lineTo(ex, ey + 8); ctx.stroke();
+      const g = ctx.createLinearGradient(sx, sy, ex, ey); g.addColorStop(0, '#d0702e'); g.addColorStop(.85, '#e0883a'); g.addColorStop(.86, '#2f6fa8'); g.addColorStop(1, '#2f6fa8'); ctx.strokeStyle = g; ctx.lineWidth = 11; ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(ex, ey); ctx.stroke(); }
+    // crown wheel (toono) with daylight
+    glow(ctx, cx, crownY + 40, 300, '#fff1c8', .5); ctx.fillStyle = '#fff4d8'; ctx.beginPath(); ctx.ellipse(cx, crownY + 50, 110, 34, 0, 0, 7); ctx.fill(); ctx.strokeStyle = '#c86a28'; ctx.lineWidth = 14; ctx.stroke(); ctx.lineWidth = 6; for (let k = 0; k < 8; k++) { const a = k / 8 * Math.PI * 2; ctx.beginPath(); ctx.moveTo(cx, crownY + 50); ctx.lineTo(cx + Math.cos(a) * 110, crownY + 50 + Math.sin(a) * 34); ctx.stroke(); }
+    if (o.beam !== false) { ctx.save(); ctx.globalCompositeOperation = 'screen'; ctx.filter = 'blur(30px)'; const g = ctx.createLinearGradient(0, crownY, 0, floorY); g.addColorStop(0, 'rgba(255,236,190,.35)'); g.addColorStop(1, 'rgba(255,236,190,.05)'); ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(cx - 100, crownY + 60); ctx.lineTo(cx + 110, crownY + 60); ctx.lineTo(cx + 420, floorY + 60); ctx.lineTo(cx + 40, floorY + 60); ctx.fill(); ctx.restore(); }
+    // lattice wall (khana)
+    const wall = [[0, wallTop + 40], [W, wallTop + 40], [W, floorY], [0, floorY]]; paintRegion(ctx, r, wall, '#e6d2ae', { density: 300, topLight: -.1, botDark: -.25 });
+    ctx.save(); poly(ctx, wall); ctx.clip(); ctx.strokeStyle = 'rgba(150,80,30,.75)'; ctx.lineWidth = 5; for (let x = -800; x < W + 800; x += 70) { ctx.beginPath(); ctx.moveTo(x, wallTop + 40); ctx.lineTo(x + 400, floorY); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x + 400, wallTop + 40); ctx.lineTo(x, floorY); ctx.stroke(); } ctx.restore();
+    // hangings: two embroidered felt panels and a bow on the wall
+    for (const [hx, col] of [[W * .16, '#a3322a'], [W * .8, '#2f5f8a']]) { paintRegion(ctx, r, [[hx - 150, wallTop + 70], [hx + 150, wallTop + 70], [hx + 150, floorY - 40], [hx - 150, floorY - 40]], col, { density: 120 }); ctx.strokeStyle = '#e8c060'; ctx.lineWidth = 6; ctx.strokeRect(hx - 130, wallTop + 90, 260, floorY - wallTop - 150); for (let k = 0; k < 4; k++) { ctx.beginPath(); ctx.arc(hx, wallTop + 170 + k * 90, 26, 0, 7); ctx.stroke(); } }
+    ctx.strokeStyle = '#4a2a14'; ctx.lineWidth = 9; ctx.beginPath(); ctx.arc(W * .62, wallTop + 210, 120, Math.PI * 1.15, Math.PI * 1.85); ctx.stroke(); ctx.strokeStyle = '#d8c8a0'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(W * .62 + Math.cos(Math.PI * 1.15) * 120, wallTop + 210 + Math.sin(Math.PI * 1.15) * 120); ctx.lineTo(W * .62 + Math.cos(Math.PI * 1.85) * 120, wallTop + 210 + Math.sin(Math.PI * 1.85) * 120); ctx.stroke();
+    // painted chests along the back
+    for (const bx of [W * .33, W * .67]) { paintRegion(ctx, r, [[bx - 140, floorY], [bx - 140, floorY - 150], [bx + 140, floorY - 150], [bx + 140, floorY]], '#c8502a', { density: 60 }); ctx.strokeStyle = '#f0c050'; ctx.lineWidth = 5; ctx.strokeRect(bx - 120, floorY - 132, 240, 114); ctx.beginPath(); ctx.arc(bx, floorY - 75, 28, 0, 7); ctx.stroke(); }
+    // floor: felt rugs
+    ENV.texBand(ctx, r, W, Math.round(floorY), H, [[0, [70, 44, 28]], [.5, [110, 70, 44]], [1, [140, 92, 58]]], { sx: .004, persp: 1.1 });
+    for (const [rx, ry, rw, col] of [[W * .5, H * .86, 900, '#8a2a24'], [W * .2, H * .93, 600, '#2a4a6a'], [W * .8, H * .92, 640, '#6a5a2a']]) { ctx.save(); ctx.translate(rx, ry); ctx.scale(1, .28); ctx.fillStyle = col; ctx.beginPath(); ctx.ellipse(0, 0, rw / 2, rw / 2, 0, 0, 7); ctx.fill(); ctx.strokeStyle = '#e8c060'; ctx.lineWidth = 14; ctx.beginPath(); ctx.ellipse(0, 0, rw / 2 - 40, rw / 2 - 40, 0, 0, 7); ctx.stroke(); ctx.restore(); }
+    // stove in the centre with pipe up to the crown
+    const sx = cx, sy = floorY + 120; ctx.fillStyle = '#2a2420'; ctx.fillRect(sx - 18, crownY + 80, 36, sy - crownY - 180); paintRegion(ctx, r, [[sx - 110, sy], [sx - 110, sy - 120], [sx + 110, sy - 120], [sx + 110, sy]], '#3a302a', { density: 40 });
+    if (fire) { glow(ctx, sx, sy - 50, 700, '#ff9a40', .45); ctx.fillStyle = '#ffb050'; ctx.fillRect(sx - 50, sy - 80, 100, 50); }
+    P.kuwahara(ctx, W, H, 3); P.finish ? P.finish(ctx, r, W, H, { vignette: .35 }) : 0;
+  };
+  // The Great Khan's hall at Karakorum: red pillars, throne dais, banners of horse-tail (tug).
+  ENV.khanHall = (ctx, r, W, H, o = {}) => {
+    const room = new ENV.Room(ctx, r, W, H, { RW: 14, RH: 7, zf: 14, hor: .42 });
+    room.shell({ back: '#7a2a20', side: '#6a241c', ceil: '#3a1a14', floor: '#5a3a24', planks: false });
+    // carpet runner to the throne
+    room.quad([[-1.4, .01, 3], [1.4, .01, 3], [1.4, .01, 13.5], [-1.4, .01, 13.5]], '#a0302a', { density: 80 });
+    // dais + throne
+    room.box(-3, 0, 12, 6, .6, 1.8, '#5a3a24'); room.box(-1, .6, 12.6, 2, 1.8, .8, '#c89a3a', { lit: .05 }); room.box(-1.3, 2.2, 12.9, 2.6, .5, .4, '#e0b050');
+    // pillars
+    for (const z of [6.5, 9.5]) for (const x of [-4.4, 3.6]) room.box(x, 0, z, .8, 7, .8, '#b8302a', { vert: true });
+    // banners hanging on the back wall: gold sun, nine white horse-tails
+    for (const bx of [-5, -2.8, 2.8, 5]) { const [x0, y0, w0, h0] = room.backRect(bx - .6, 2.4, bx + .6, 6.4); paintRegion(ctx, r, [[x0, y0], [x0 + w0, y0], [x0 + w0, y0 + h0], [x0 + w0 / 2, y0 + h0 + 30], [x0, y0 + h0]], bx < 0 ? '#2f5f8a' : '#e8c060', { density: 50 }); }
+    const [tx, ty] = room.p(0, 6.6, 13.9); for (let k = -4; k <= 4; k++) { ctx.strokeStyle = 'rgba(240,236,224,.85)'; ctx.lineWidth = 7; ctx.beginPath(); ctx.moveTo(tx + k * 22, ty); ctx.quadraticCurveTo(tx + k * 26, ty + 60, tx + k * 30, ty + 140); ctx.stroke(); }
+    room.lampGlow(0, 3, 12, 900, '#ffcf80', .35); room.lampGlow(-4, 4, 6, 600, '#ffb060', .25); room.lampGlow(4, 4, 6, 600, '#ffb060', .25);
+    P.kuwahara(ctx, W, H, 3); P.finish ? P.finish(ctx, r, W, H, { vignette: .35 }) : 0;
+  };
+  // Japanese coast in a typhoon: black sea, white breakers, pine cliffs, tossing ships.
+  ENV.stormCoast = (ctx, r, W, H, o = {}) => {
+    const hz = H * .44, N = P.Noise(r.int(1, 1e5));
+    M.sky(ctx, r, W, hz + 40, '#151a22', '#4a5664', { strokes: 3200 });
+    ENV.clouds(ctx, r, W, 0, hz * .8, 24, '#6a7684', '#3a4450', '#161c24');
+    ctx.save(); ctx.strokeStyle = 'rgba(200,210,230,.25)'; ctx.lineWidth = 2; for (let i = 0; i < 900; i++) { const x = r.range(0, W), y = r.range(0, H); ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x - 30, y + 90); ctx.stroke(); } ctx.restore();
+    // lightning
+    ctx.strokeStyle = 'rgba(230,240,255,.9)'; ctx.lineWidth = 5; ctx.beginPath(); let lx = W * .7, ly = 0; ctx.moveTo(lx, ly); while (ly < hz) { lx += r.range(-60, 50); ly += r.range(40, 90); ctx.lineTo(lx, ly); } ctx.stroke(); glow(ctx, W * .7, hz * .5, 700, '#c8d8ff', .25);
+    // sea
+    ENV.texBand(ctx, r, W, Math.round(hz), H, [[0, [40, 52, 62]], [.4, [28, 40, 50]], [1, [16, 24, 30]]], { sx: .003, persp: 1.2 });
+    for (let i = 0; i < 9000; i++) { const y = r.range(hz, H), t = (y - hz) / (H - hz), x = r.range(0, W); stroke(ctx, r, x, y, 20 + t * 90, r.gauss() * .1, 2 + t * 8, r() < .25 ? [210, 220, 225] : [60, 76, 88], .18 + (r() < .2 ? .3 : 0)); }
+    for (let k = 0; k < 1400; k++) { const y = hz + Math.pow(r(), .8) * (H - hz), t = (y - hz) / (H - hz), x = r.range(0, W); const crest = Math.sin(x * .004 + y * .03) > .6; if (!crest) continue; stroke(ctx, r, x, y, 30 + t * 120, -.05 + r.gauss() * .08, 3 + t * 10, [225, 232, 236], .35); }
+    // ships: junk silhouettes tossed at angles
+    for (const [fx, fy, sz, ang] of (o.ships ?? [[.3, .52, 1, -.2], [.5, .5, .7, .25], [.62, .55, .9, -.35], [.42, .58, 1.2, .4]])) { ctx.save(); ctx.translate(W * fx, H * fy); ctx.rotate(ang); ctx.scale(sz, sz); ctx.fillStyle = '#14100c'; ctx.beginPath(); ctx.moveTo(-110, 0); ctx.quadraticCurveTo(0, 40, 120, -10); ctx.lineTo(100, -30); ctx.lineTo(-100, -26); ctx.closePath(); ctx.fill(); ctx.fillRect(-6, -160, 8, 140); ctx.fillStyle = '#3a2e22'; ctx.beginPath(); ctx.moveTo(0, -150); ctx.lineTo(70, -60); ctx.lineTo(0, -40); ctx.closePath(); ctx.fill(); ctx.restore(); }
+    // near cliff with wind-bent pines on the right
+    paintRegion(ctx, r, [[W * .72, H], [W * .78, H * .62], [W * .86, H * .56], [W, H * .5], [W, H]], '#2a2a26', { density: 180, ang: Math.PI / 2 });
+    for (const [px, py] of [[W * .84, H * .57], [W * .93, H * .52]]) { ctx.strokeStyle = '#1a140e'; ctx.lineWidth = 16; ctx.beginPath(); ctx.moveTo(px, py); ctx.quadraticCurveTo(px - 60, py - 120, px - 160, py - 170); ctx.stroke(); for (let k = 0; k < 260; k++) { const t = r(); stroke(ctx, r, px - 160 * t + r.gauss() * 40, py - 170 * t - 20 + r.gauss() * 30, 22, Math.PI + r.gauss() * .2, 5, [24, 40, 30], .45); } }
+    for (let k = 0; k < 900; k++) { const x = W * .74 + r.gauss() * 90, y = H * .62 - Math.abs(r.gauss()) * 160; stroke(ctx, r, x, y, 18, -Math.PI / 2 + r.gauss() * .6, 5, [230, 236, 240], .12); }
+    P.kuwahara(ctx, W, H, 3); P.finish ? P.finish(ctx, r, W, H, { vignette: .4 }) : 0;
+  };
   ENV.steppe = (ctx, r, W, H, o = {}) => {
     const c = STP[o.tod || 'day'], hz = H * (o.horizon ?? .58), N = P.Noise(r.int(1, 99999));
     M.sky(ctx, r, W, hz + 40, c.skyTop, c.skyBot, { strokes: 3400 });
@@ -135,5 +201,8 @@ window.PLATES = {
   city_day: (c, r, W, H) => ENV.silkCity(c, r, W, H, { tod: 'day' }),
   city_dusk: (c, r, W, H) => ENV.silkCity(c, r, W, H, { tod: 'dusk', gateOpen: false }),
   city_fire: (c, r, W, H) => ENV.silkCity(c, r, W, H, { tod: 'fire' }),
+  ger_inside: (c, r, W, H) => ENV.gerInside(c, r, W, H),
+  khan_hall: (c, r, W, H) => ENV.khanHall(c, r, W, H),
+  storm_coast: (c, r, W, H) => ENV.stormCoast(c, r, W, H),
   steppe_night: (c, r, W, H) => ENV.steppe(c, r, W, H, { tod: 'night', gers: [[.24, .72, 260, { glow: true }], [.4, .7, 180, { glow: true }]] }),
 };
