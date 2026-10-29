@@ -57,7 +57,7 @@ export async function mapShot(k, cfg) {
   const { scene, camera, meta } = k;
   core.setEnv(k, cfg.dark ? 'dark' : 'day', { noFog: true, shadowSize: 120, sunPos: [30, 90, 40] });
   scene.background = new THREE.Color(cfg.dark ? 0x10141c : 0x3a2c22);
-  const map = await maps.parchment({ center: cfg.center, span: cfg.span, k: cfg.k ?? 4, labels: cfg.labels, highlight: cfg.highlight, faces: cfg.faces, dark: cfg.dark });
+  const map = await maps.parchment({ center: cfg.center, span: cfg.span, k: cfg.k ?? 4, labels: cfg.labels, highlight: cfg.highlight, faces: cfg.faces, dark: cfg.dark, hlColor: cfg.hlColor });
   scene.add(map);
   const dots = (cfg.cities ?? []).map(c => typeof c === 'string' ? map.city(c) : map.city(c[0], c[1]));
   const rib = cfg.route ? maps.ribbon(map, cfg.route, { color: cfg.routeColor ?? 0xd9a42b }) : null; if (rib) scene.add(rib);
