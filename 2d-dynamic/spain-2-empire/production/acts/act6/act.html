@@ -1,0 +1,125 @@
+<!doctype html><html><head><meta charset="utf-8"><title>ES2 act 6 - 1898</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/vp/engine.js"></script><script src="../../../../shared/vp/cast.js"></script><script src="../../../../shared/vp/scenes.js"></script><script src="../../../../shared/vp/spain.js"></script>
+<script src="../../../../shared/kit.js"></script><script src="../../../../shared/vp.js"></script>
+<script src="../../../../spain-1-al-andalus/production/es1_sets.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act1.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act2.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act3.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act4.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act5.js"></script><script src="../../../../spain-1-al-andalus/production/es1_cast.js"></script>
+<script src="../../es2_sets.js"></script><script src="../../es2_cast.js"></script><script src="../../es2_sets_act1.js"></script><script src="../../es2_sets_act2.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, E = K.E, X = S.SPX, CH = S.SPAIN, C = S.ES2, H1 = S.ES1H, H = S.ES2H, TAU = Math.PI * 2;
+const at = VP.at, seg = K.seg, lerp = K.lerp, pulse = H1.pulse, walk = H1.walk;
+const coinCorner = (c, lt, o = {}) => H.coin(c, 150, 150, 62, lt, Object.assign({ shine: .6 }, o));
+const WLL = X.WLL, wp = X.wpoly;
+const BAY = ['#7a4a2e', '#3a2014'], GREY = ['#8a847c', '#4a4440'], CTACK = { cloth: ['#b8282a', '#5a1010'], trim: '#d8b060', reins: 1 };
+const DAY = (lt, o = {}) => VP.light('golden', lt, Object.assign({ swing: 5, set: { L: [-.6, -1] } }, o));
+const mapCandle = (c, lt) => { const f = VP.flicker(lt, 3); c.save(); c.globalCompositeOperation = 'multiply'; const vg = c.createRadialGradient(640, 360, 220, 640, 360, 820); vg.addColorStop(0, 'rgba(255,255,255,0)'); vg.addColorStop(1, `rgba(60,30,10,${.5 - .1 * f})`); c.fillStyle = vg; c.fillRect(0, 0, 1280, 720); c.restore(); VP.glow(c, 500 + 60 * Math.sin(lt * .4), 260, 520, '#ffcf80', .12 + .08 * f); };
+const night = (c, a, col = '30,40,100') => { c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = `rgba(${col},${a})`; c.fillRect(0, 0, 1280, 720); c.restore(); };
+const route = (c, pts, q, col, w = 5) => { const P = pts.map(p => WLL(p[0], p[1])); let tot = 0; const L = []; for (let i = 1; i < P.length; i++) { const d = Math.hypot(P[i][0] - P[i - 1][0], P[i][1] - P[i - 1][1]); L.push(d); tot += d; }
+  let rem = tot * q; c.save(); c.strokeStyle = col; c.lineWidth = w; c.setLineDash([10, 7]); c.lineCap = 'round'; c.beginPath(); c.moveTo(P[0][0], P[0][1]); let end = P[0];
+  for (let i = 1; i < P.length && rem > 0; i++) { const f = Math.min(1, rem / L[i - 1]); end = [lerp(P[i - 1][0], P[i][0], f), lerp(P[i - 1][1], P[i][1], f)]; c.lineTo(end[0], end[1]); rem -= L[i - 1]; } c.stroke(); c.restore(); return end; };
+const rain = (c, lt, a = .35) => { c.save(); c.strokeStyle = `rgba(200,215,255,${a})`; c.lineWidth = 1.4; for (let k = 0; k < 160; k++) { const r = S.rng(k + 700), x = (r() * 1400 + lt * 90) % 1400 - 60, y = (r() * 760 + lt * (700 + r() * 200)) % 760 - 20; c.beginPath(); c.moveTo(x, y); c.lineTo(x - 8, y + 26); c.stroke(); } c.restore(); };
+const puff = (c, x, y, lt, t0) => { const q = seg(lt, t0, t0 + 2.2); if (q <= 0 || q >= 1) return; if (q < .06) VP.glow(c, x, y, 90, '#fff0b0', .9 * (1 - q / .06)); for (let k = 0; k < 6; k++) { const r = S.rng(k + Math.round(x)), rad = (14 + 50 * q) * (.7 + r() * .6), px = x + (r() - .5) * 60 * q + 40 * q, py = y - 30 * q * r(); const g = c.createRadialGradient(px, py, 0, px, py, rad); g.addColorStop(0, `rgba(230,225,215,${.65 * (1 - q)})`); g.addColorStop(1, 'rgba(230,225,215,0)'); c.fillStyle = g; c.beginPath(); c.arc(px, py, rad, 0, TAU); c.fill(); } };
+const stampBox = (c, txt, x, y, q, col = '#b8282a', rot = -.12, px = 48) => { if (q <= 0) return; c.save(); c.translate(x, y); c.rotate(rot); c.scale(1 + 1.4 * (1 - q), 1 + 1.4 * (1 - q)); c.globalAlpha = q; c.font = `${px}px Anton`; const w = c.measureText(txt).width + 40; c.strokeStyle = col; c.lineWidth = 6; c.strokeRect(-w / 2, -px * .8, w, px * 1.5); c.fillStyle = col; c.textAlign = 'center'; c.fillText(txt, 0, px * .32); c.restore(); };
+const steel = (c, x, y, s, lt, k, col = '#5a6068', o = {}) => { const bob = Math.sin(lt * 1.2 + k) * 2 * s; c.save(); c.translate(x, y + bob); if (o.flip) c.scale(-1, 1);
+  c.fillStyle = col; c.beginPath(); c.moveTo(-160 * s, -14 * s); c.lineTo(170 * s, -14 * s); c.lineTo(150 * s, 12 * s); c.lineTo(-150 * s, 12 * s); c.fill(); c.fillStyle = S.mix(col, '#ffffff', .25); c.fillRect(-150 * s, -14 * s, 300 * s, 3 * s);
+  c.fillStyle = S.mix(col, '#000000', .15); c.fillRect(-70 * s, -40 * s, 120 * s, 26 * s); c.fillRect(-120 * s, -26 * s, 30 * s, 12 * s); c.fillRect(90 * s, -26 * s, 30 * s, 12 * s); c.strokeStyle = S.mix(col, '#000000', .3); c.lineWidth = 3 * s; c.beginPath(); c.moveTo(-90 * s, -22 * s); c.lineTo(-140 * s, -26 * s); c.moveTo(120 * s, -22 * s); c.lineTo(160 * s, -26 * s); c.stroke();
+  c.fillStyle = '#d8b040'; for (const dx of [-30, 10]) { c.fillStyle = '#c8b090'; c.fillRect(dx * s, -76 * s, 16 * s, 36 * s); c.fillStyle = '#2a2a2a'; c.fillRect(dx * s, -80 * s, 16 * s, 6 * s); }
+  c.strokeStyle = '#3a3a3a'; c.lineWidth = 2 * s; c.beginPath(); c.moveTo(-50 * s, -40 * s); c.lineTo(-50 * s, -110 * s); c.stroke(); c.restore();
+  if (o.smoke !== false) H1.smoke(c, x + (o.flip ? -8 : 8) * s * 3, y - 80 * s, s * .8, lt + k, '70,70,74'); };
+const flash = (c, lt, t0, a = .5) => { const q = seg(lt, t0, t0 + .35); if (q > 0 && q < 1) { c.fillStyle = `rgba(255,240,210,${a * (1 - q)})`; c.fillRect(0, 0, 1280, 720); } };
+const headline = (c, txt, lt, t0, x, y, rot) => { const q = E.out(seg(lt, t0, t0 + .6)); if (q <= 0) return; c.save(); c.translate(x, y); c.rotate(rot + (1 - q) * 6); c.scale(q * .72, q * .72); c.fillStyle = '#efe8d8'; c.fillRect(-260, -170, 520, 340); c.fillStyle = '#2a2420'; c.font = '26px Oswald'; c.textAlign = 'center'; c.fillText('THE DAILY JOURNAL', 0, -130); c.fillRect(-230, -118, 460, 3); c.font = '62px Anton'; txt.split('\n').forEach((l, i) => c.fillText(l, 0, -50 + i * 70)); c.fillStyle = '#8a8478'; for (let i = 0; i < 5; i++) c.fillRect(-230, 90 + i * 14, 200 + (i % 2) * 20, 6); for (let i = 0; i < 5; i++) c.fillRect(20, 90 + i * 14, 210, 6); c.restore(); };
+
+window.SHOTS = [
+  // 6.01 MAP: the last islands glow; Cuba swells with sugar
+  { set: 'world', cam: { z: [1.0, 1.05], x: [640, 640], y: [360, 360], ease: E.sine }, bed: [['drone', .2]], sub: 'bottom',
+    init: Sh => { Sh.tI = at(Sh, 'islands', 1); Sh.tC = at(Sh, 'cuba', 2); Sh.tP = at(Sh, 'puerto rico', 3); Sh.tF = at(Sh, 'philippines', 4); Sh.tJ = at(Sh, 'jewel', 6); Sh.tW = at(Sh, 'freedom', Sh.dur - 1); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      for (const [lon, lat, t, nm] of [[-79, 21.5, Sh.tC, 'Cuba'], [-66.5, 18.2, Sh.tP, 'Puerto Rico'], [122, 12, Sh.tF, 'Philippines']]) { const q = seg(lt, t - .2, t + .3); if (q <= 0) continue; const p = WLL(lon, lat), big = nm === 'Cuba' ? 1 + .4 * seg(lt, Sh.tJ, Sh.tJ + .8) : 1; VP.glow(c, p[0], p[1], 50 * big, '#ffd060', .6 * q * (.8 + .2 * Math.sin(lt * 3))); c.fillStyle = '#d8a020'; c.beginPath(); c.arc(p[0], p[1], 7 * q * big, 0, TAU); c.fill(); H1.stamp(c, nm, p[0], p[1], lt, t, { px: 18 }); }
+      mapCandle(c, lt);
+    },
+    over: [(c, lt) => coinCorner(c, lt, { shine: .3, chips: 4 }), (c, lt, u, Sh) => K.card(c, 'WHAT WAS LEFT', lt, { at: Sh.tI, x: 380, y: 200, px: 56, rot: -3 }), (c, lt, u, Sh) => K.card(c, 'CUBA: SUGAR', lt, { at: Sh.tJ + .2, x: 1540, y: 200, px: 52, rot: 3 }), (c, lt, u, Sh) => K.badge(c, 'CUBANS WANTED FREEDOM', lt, { at: Sh.tW })],
+    sfx: [['islands', 'paper', .3], ['cuba', 'pop', .3], ['puerto rico', 'pop', .3], ['philippines', 'pop', .3], ['jewel', 'chime', .35]] },
+
+  // 6.02 WIDE: a newsboy waves papers; headlines spin into frame one after another
+  { set: 'square', cam: { z: [1.4, 1.55], x: [640, 660], y: [460, 470], ease: E.sine }, bed: [['crowd_loop', .2], ['city_loop', .1]],
+    init: Sh => { Sh.tR = at(Sh, 'revolt', 1); Sh.tU = at(Sh, 'united states', 2.5); Sh.tN = at(Sh, 'newspapers', 5); Sh.tS = at(Sh, 'sell', Sh.dur - 1.5); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const L = DAY(lt, { swing: 4 }), sh = VP.shadowOf(L, 1.1, .3, .12);
+      VP.figure(c, [560, 660], sh, cc => S.person(cc, Object.assign({}, C.SAILOR, { build: 'kid', headwear: null, shirt: ['#e8e4dc', '#a8a49c'] }), 560, 660, 30, Object.assign(S.idle(lt, 0), { face: 1, shN: 140 + 20 * Math.sin(lt * 5), elN: 20, holdN: wr => { cc.fillStyle = '#efe8d8'; cc.fillRect(wr[0] - 14, wr[1] - 28, 30, 36); cc.fillStyle = '#2a2420'; cc.fillRect(wr[0] - 10, wr[1] - 22, 22, 4); } }), { blink: S.blinkAt(lt, 0), open: .5 * Math.abs(Math.sin(lt * 7)), smile: .4, look: [.8, -.2], time: lt }, L));
+      for (const [x, ch, k] of [[700, S.ES1.TOWNSMAN, 1], [780, C.BANKER, 2], [860, CH.aisha, 3]]) VP.figure(c, [x, 660], sh, cc => S.person(cc, ch, x, 660, 36, Object.assign(S.idle(lt, k), { face: -1, shN: 30, elN: 90 }), { blink: S.blinkAt(lt, k), worry: .4 * seg(lt, Sh.tN, Sh.tN + 1), look: [-.6, .3], time: lt }, L));
+      VP.motes(c, lt, 0, 300, 1280, 400, { n: 25, a: .3 });
+    },
+    over: [(c, lt) => coinCorner(c, lt, { shine: .3, chips: 4 }), (c, lt, u, Sh) => K.dateTag(c, 'CUBA REVOLTS · 1895', lt, { at: Sh.tR }), (c, lt, u, Sh) => K.card(c, 'USA · 90 MILES AWAY', lt, { at: Sh.tU + .2, x: 380, y: 200, px: 48, rot: -3 }),
+      (c, lt, u, Sh) => { headline(c, 'SPANISH\nCRUELTY!', lt, Sh.tN, 1560, 330, .08); headline(c, 'CUBA\nIN FLAMES!', lt, Sh.tN + 1, 1330, 520, -.1); headline(c, 'WAR\nNOW?', lt, Sh.tS - .3, 1600, 700, .05); }],
+    sfx: [['revolt', 'hit', .35], ['united states', 'pop', .3], ['newspapers', 'paper', .4], ['every day', 'paper', .35], ['sell', 'paper', .35]] },
+
+  // 6.03 NIGHT: the USS Maine at anchor in Havana harbour, then the explosion
+  { set: 'harbour', cam: (lt, u, Sh) => ({ z: [1.35], x: [700], y: [430], shake: lt > Sh.tB && lt < Sh.tB + 2 ? 2 : 0 }), bed: [['ocean_loop', .25], ['night_loop', .2]],
+    init: Sh => { Sh.tM = at(Sh, 'maine', 2); Sh.tB = at(Sh, 'blew up', 3.5); Sh.tD = at(Sh, 'died', 6); Sh.tS = at(Sh, 'blamed spain', Sh.dur - 1); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const b = seg(lt, Sh.tB, Sh.tB + 4), sink = seg(lt, Sh.tB + .5, Sh.dur);
+      c.save(); c.beginPath(); c.rect(0, 0, 1280, 478); c.clip(); c.translate(0, sink * 30); c.rotate(-sink * .03); steel(c, 780, 460, .9, lt, 0, '#d8d8d0', { smoke: false }); c.restore();
+      night(c, .75);
+      for (const [x, y] of [[200, 400], [320, 410], [420, 395], [700, 440], [760, 438], [840, 440]]) { if (x > 600 && b > 0) continue; c.fillStyle = '#ffd890'; c.fillRect(x, y, 5, 5); VP.glow(c, x, y, 26, '#ffc060', .35); }
+      if (b > 0) { H1.fire(c, 760, 450, .5 * (1 - b * .5), lt, 3); VP.glow(c, 760, 400, 500 * (1 - b * .6), '#ffa040', .9 * (1 - b * .5)); H1.smoke(c, 760, 380, 1.4, lt, '40,34,34'); }
+      flash(c, lt, Sh.tB, .9);
+    },
+    over: [(c, lt) => coinCorner(c, lt, { shine: .3, chips: 4 }), (c, lt) => K.dateTag(c, 'HAVANA · 15 FEB 1898', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'USS MAINE', lt, { at: Sh.tM + .2, x: 380, y: 200, px: 56, rot: -3 }), (c, lt, u, Sh) => K.card(c, '266 DEAD', lt, { at: Sh.tD + .2, x: 1540, y: 200, px: 60, rot: 3 }), (c, lt, u, Sh) => K.badge(c, 'CAUSE NEVER PROVEN · THE US BLAMED SPAIN', lt, { at: Sh.tS - 1.5 })],
+    sfx: [['maine', 'pop', .3], ['blew up', 'hit', .6], ['blew up', 'fire_loop', .3], ['died', 'drone', .35], ['blamed spain', 'stamp', .4]] },
+
+  // 6.04 WIDE: grey American steel ships fire on wooden Spanish ships in Manila Bay; then Cuba
+  { set: 'ocean', cam: (lt, u, Sh) => ({ z: [1.3], x: [640], y: [430], shake: lt > Sh.tM ? .7 : 0 }), bed: [['ocean_loop', .3], ['fire_loop', .15]],
+    init: Sh => { Sh.tM = at(Sh, 'manila bay', 2); Sh.tO = at(Sh, 'single morning', 4); Sh.tJ = at(Sh, 'july', 6); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      VP.glow(c, 640, 200, 600, '#ffe8c0', .12);
+      for (let k = 0; k < 3; k++) { const x = 300 + k * 140, y = 440 + k * 18, hit = lt > Sh.tM + k * .8; c.save(); c.translate(x, y + (hit ? seg(lt, Sh.tO + k * .6, Sh.dur) * 30 : 0)); c.rotate(hit ? seg(lt, Sh.tO, Sh.dur) * .15 : 0); X.ship(c, 0, 0, .32, '#e8e0d0', true); c.restore(); if (hit) { H1.fire(c, x, y - 20, .14, lt, k); H1.smoke(c, x, y - 60, .7, lt + k, '50,44,44'); } }
+      for (let k = 0; k < 3; k++) { const x = 900 + k * 120, y = 450 + k * 16; steel(c, x, y, .6, lt, k, '#6a7078', { flip: true }); for (let j = 0; j < 4; j++) { const t0 = Sh.tM - .5 + j * 1.3 + k * .4; const q = seg(lt, t0, t0 + .3); if (q > 0 && q < 1) { VP.glow(c, x - 70, y - 14, 60 * (1 - q), '#fff0b0', 1); puff(c, x - 80, y - 14, lt, t0); } } }
+      flash(c, lt, Sh.tM, .3);
+    },
+    over: [(c, lt) => coinCorner(c, lt, { shine: .3, chips: 5 }), (c, lt, u, Sh) => K.card(c, 'MANILA BAY · MAY', lt, { at: Sh.tM + .2, x: 380, y: 200, px: 52, rot: -3 }), (c, lt, u, Sh) => K.badge(c, 'ONE MORNING', lt, { at: Sh.tO, until: Sh.tJ - .3 }), (c, lt, u, Sh) => K.card(c, 'CUBA · JULY', lt, { at: Sh.tJ + .2, x: 1540, y: 200, px: 52, rot: 3 })],
+    sfx: [['manila bay', 'hit', .5], ['single morning', 'hit', .4], ['july', 'hit', .45], ['wiped out', 'thud', .45]] },
+
+  // 6.05 MED: the Treaty of Paris; a pen signs; four names are struck out; $20 million
+  { set: 'study', cam: { z: [1.45, 1.6], x: [640, 660], y: [440, 450], ease: E.sine }, bed: [['drone', .2]],
+    init: Sh => { Sh.tT = at(Sh, 'treaty of paris', 1); Sh.tG = at(Sh, 'gave up', 3.5); Sh.tM = at(Sh, 'twenty million', Sh.dur - 2.5); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const L = { L: [-1, -.6], amb: '#3a3a4a', ambA: .35, rim: '#e0e8f0', rimA: .8, tint: '#c8d0e0', tintA: .08, sw: .3, rw: .05 }, f = VP.flicker(lt, 3);
+      VP.figure(c, [500, 660], { k: .5, sy: -.2, a: .3, blur: 2 }, cc => S.person(cc, Object.assign({}, S.ES1.NOBLE1, { shirt: ['#1e1e24', '#0a0a0e'], hairCol: X.HR.grey }), 500, 660, 42, Object.assign(S.idle(lt, 0), { face: 1, lean: 12, shN: 30, elN: 60 + 10 * Math.sin(lt * 7) * (lt > Sh.tG) }), { blink: S.blinkAt(lt, 0), worry: .6, look: [.5, .8], time: lt }, L));
+      VP.figure(c, [860, 660], { k: -.5, sy: -.2, a: .3, blur: 2 }, cc => S.person(cc, Object.assign({}, C.BANKER, { shirt: ['#2a2a3a', '#14141e'] }), 860, 660, 42, Object.assign(S.idle(lt, 1), { face: -1, shN: 20, elN: 60 }), { blink: S.blinkAt(lt, 1), smile: .3, look: [-.8, .3], time: lt }, L));
+      c.fillStyle = '#4a2a14'; c.fillRect(420, 590, 480, 20); c.fillRect(440, 610, 14, 80); c.fillRect(866, 610, 14, 80); c.fillStyle = '#f0e6d0'; c.fillRect(600, 578, 120, 12);
+      H1.fire(c, 760, 540, .08, lt, 9); c.fillStyle = '#f0e6d0'; c.fillRect(756, 540, 8, 36); VP.glow(c, 760, 520, 240, '#ffc070', .2 + .08 * f);
+    },
+    over: [(c, lt) => coinCorner(c, lt, { shine: .2, chips: 6 }), (c, lt, u, Sh) => K.card(c, 'TREATY OF PARIS', lt, { at: Sh.tT + .2, x: 960, y: 140, px: 52 }), (c, lt) => K.dateTag(c, 'DEC 1898', lt, { at: .6 }),
+      (c, lt, u, Sh) => { ['CUBA', 'PUERTO RICO', 'GUAM', 'PHILIPPINES'].forEach((t, k) => { const q = seg(lt, Sh.tG + k * .5, Sh.tG + k * .5 + .3); if (q <= 0) return; const y = 300 + k * 90; c.save(); c.globalAlpha = q; c.fillStyle = '#f4ead4'; c.fillRect(1400, y - 36, 380, 66); c.font = '42px Anton'; c.fillStyle = '#2a1a10'; c.textAlign = 'center'; c.fillText(t, 1590, y + 12); const s = seg(lt, Sh.tG + k * .5 + .4, Sh.tG + k * .5 + .7); c.strokeStyle = '#b8282a'; c.lineWidth = 7; c.beginPath(); c.moveTo(1410, y - 4); c.lineTo(1410 + 360 * s, y - 4); c.stroke(); c.restore(); }); },
+      (c, lt, u, Sh) => K.card(c, 'US PAYS $20 MILLION', lt, { at: Sh.tM + .2, x: 400, y: 860, px: 48, rot: -3 })],
+    sfx: [['treaty of paris', 'paper', .35], ['gave up', 'scrape', .3], ['guam', 'scrape', .3], ['philippines', 'scrape', .3], ['twenty million', 'coins', .4]] },
+
+  // 6.06 WIDE: sunset sea; the silver coin finally topples and falls flat; EL DESASTRE
+  { set: 'goldsea', cam: { z: [1.15, 1.3], x: [640, 640], y: [400, 390], ease: E.io }, bed: [['ocean_loop', .3], ['drone', .2]],
+    init: Sh => { Sh.tD = at(Sh, 'disaster', 1.5); Sh.tC = at(Sh, 'columbus', 4); Sh.tG = at(Sh, 'gone', Sh.dur - 1); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const q = seg(lt, Sh.tC - .5, Sh.tG + .5); c.save(); c.translate(640 + lt * 4, 470 + q * 40); c.rotate(q * .4); c.beginPath(); c.rect(-300, -400, 600, 400 - q * 40); c.clip(); X.ship(c, 0, 0, .55, '#e8d8c0', true); c.restore();
+      c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = `rgba(80,40,60,${.35 * seg(lt, Sh.tD, Sh.dur)})`; c.fillRect(0, 0, 1280, 720); c.restore();
+      VP.motes(c, lt, 0, 200, 1280, 400, { n: 25, a: .35, col: '#ffd090' });
+    },
+    over: [(c, lt, u, Sh) => { const fq = E.io(seg(lt, Sh.tG - 1, Sh.tG + .3)); if (fq < 1) H.coin(c, lerp(150, 960, fq), lerp(150, 560, fq), lerp(62, 200, fq), lt, { shine: .3, chips: 6 }); else H.coin(c, 960, 560, 200, lt, { shine: .2, chips: 6, fall: seg(lt, Sh.tG + .3, Sh.tG + 1) }); },
+      (c, lt, u, Sh) => K.card(c, 'EL DESASTRE\n"THE DISASTER"', lt, { at: Sh.tD + .2, x: 380, y: 200, px: 50, rot: -3 }), (c, lt, u, Sh) => K.dateTag(c, '1492 → 1898', lt, { at: Sh.tC })],
+    sfx: [['disaster', 'drone', .4], ['columbus', 'chime', .3], ['gone', 'coins', .45], ['gone', 'thud', .4]] },
+
+  // 6.07 WIDE: a Spanish square splits in two, people glaring across a crack; next film card
+  { set: 'square', cam: { z: [1.3, 1.5], x: [640, 640], y: [450, 460], ease: E.io }, bed: [['wind_loop', .2], ['tension', .2]],
+    init: Sh => { Sh.tT = at(Sh, 'turned on itself', 2); Sh.tF = at(Sh, 'forty years', 4); Sh.tC = at(Sh, 'civil wars', Sh.dur - 1.5); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const L = VP.light('golden', lt, { swing: 4 }), sh = VP.shadowOf(L, 1.4, .3, .12), cr = E.out(seg(lt, Sh.tT - .3, Sh.tT + 2)), dk = seg(lt, Sh.tF, Sh.dur);
+      c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = `rgba(110,60,60,${.45 * dk})`; c.fillRect(0, 0, 1280, 720); c.restore();
+      c.strokeStyle = '#1a0e0a'; c.lineWidth = 6; c.beginPath(); c.moveTo(640, 560); for (let i = 1; i <= 8; i++) c.lineTo(640 + (i % 2 ? 14 : -10), 560 + i * 20 * cr); c.stroke();
+      for (const [x, ch, k, f] of [[380, MADRILENO2(), 1, 1], [460, CH.aisha, 2, 1], [540, S.ES1.SOLDIER, 3, 1], [740, S.ES1.TOWNSMAN, 4, -1], [820, C.SAILOR, 5, -1], [900, S.ES1.NOBLE1, 6, -1]]) { const x2 = x + (f > 0 ? -1 : 1) * 40 * cr; VP.figure(c, [x2, 660], sh, cc => S.person(cc, ch, x2, 660, 36, Object.assign(S.idle(lt, k), { face: f, shN: 20, elN: 60 }), { blink: S.blinkAt(lt, k), angry: .3 + .6 * cr, look: [f * .8, 0], time: lt }, L)); }
+      VP.motes(c, lt, 0, 300, 1280, 400, { n: 25, a: .3 });
+    },
+    over: [(c, lt) => coinCorner(c, lt, { shine: .1, chips: 6, fall: 1 }), (c, lt, u, Sh) => K.badge(c, 'WITHIN 40 YEARS', lt, { at: Sh.tF }), (c, lt, u, Sh) => K.card(c, 'NEXT:\nTHE SPANISH CIVIL WAR', lt, { at: Sh.tC + .3, x: 960, y: 200, px: 56, rot: -2 })],
+    sfx: [['turned on itself', 'scrape', .45], ['forty years', 'tension', .3], ['civil wars', 'thud', .45]] },
+];
+function MADRILENO2() { return Object.assign({}, S.ES1.TOWNSMAN, { shirt: ['#e8e4dc', '#a8a49c'], pants: ['#d8a020', '#7a5a0a'] }); }
+VP.build(); K.boot();
+</script></body></html>
