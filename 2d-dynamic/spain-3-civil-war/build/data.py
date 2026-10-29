@@ -179,6 +179,7 @@ S = [
 ACTS = [(t, slug, [s[:4] for s in shots]) for t, slug, shots in S]
 SK = [[(None, s[4]) for s in shots] for _, _, shots in S]
 
+STYLEFRAME_NOTE = 'Guernica on market day, 26 April 1937, minutes before the bombers arrive (Act 4).'
 HOOKS = [("You've never seen this: in 1981 gunmen took Spain's parliament live on TV, and one man in a uniform decided what happened next.", 58), ("You think democracies die slowly. Spain's almost died in one night, on live TV.", 54)]
 
 LAUNCH = dict(

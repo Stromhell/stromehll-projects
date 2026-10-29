@@ -70,6 +70,8 @@ def build(vdir):
 def e(t): return html.escape(t or "")
 
 def render_html(M, stats, rows, d):
+    sf = Path(d.__file__).parent.parent / 'storyboard' / 'styleframe.jpg'
+    STYLEFRAME = (f'<figure style="margin:24px 0 0"><img src="data:image/jpeg;base64,{base64.b64encode(sf.read_bytes()).decode()}" alt="Style frame" style="width:100%;height:auto;border-radius:10px;display:block"><figcaption style="font-size:14px;opacity:.75;margin-top:8px">Style frame in the locked Village Painterly look: {e(getattr(d, "STYLEFRAME_NOTE", ""))}</figcaption></figure>') if sf.exists() else ''
     hooks = getattr(d, "HOOKS", []); L = getattr(d, "LAUNCH", {}); cuts = getattr(d, "CUTS", [])
     acts_html = []
     for i, a in enumerate(rows):
@@ -142,7 +144,7 @@ nav.toc a:hover,nav.toc a:focus-visible{{border-color:var(--red);color:var(--red
 </style>
 <div class="wrap">
 <header><div class="eyebrow">Stromhell · 2D dynamic · Village Painterly · storyboard v1</div><h1>{e(M['title'])}</h1><p class="wt">Recommended title: {e(M['working_title'])}</p>
-<div class="stats"><div><b>{stats['runtime']}</b><span>Est. runtime</span></div><div><b>{stats['acts']}</b><span>Parts</span></div><div><b>{stats['shots']}</b><span>Shots</span></div><div><b>{stats['words']:,}</b><span>Words</span></div></div></header>
+<div class="stats"><div><b>{stats['runtime']}</b><span>Est. runtime</span></div><div><b>{stats['acts']}</b><span>Parts</span></div><div><b>{stats['shots']}</b><span>Shots</span></div><div><b>{stats['words']:,}</b><span>Words</span></div></div></header>{STYLEFRAME}
 <div class="grid2"><section class="panel"><h2>Hook</h2><h3>Top hooks, yt-script score</h3><ul class="hooks">{hook_html}</ul></section>
 <section class="panel"><h2>Look and device</h2><h3>Running device</h3><p>{e(M['device'])}</p><h3>Look</h3><p>{e(M['style'])}</p></section></div>
 <nav class="toc" aria-label="Parts">{toc}<a href="#launch">Launch</a><a href="#facts">Fact log</a></nav>

@@ -215,6 +215,7 @@ S = [
 ACTS = [(t, slug, [s[:4] for s in shots]) for t, slug, shots in S]
 SK = [[(None, s[4]) for s in shots] for _, _, shots in S]
 
+STYLEFRAME_NOTE = 'Boabdil and his mother on the pass above Granada at sunset, the Alhambra and the snowy Sierra Nevada behind (cold open, shot 0.03).'
 HOOKS = [
  ("You've never been told this: 7,000 men crossed a 14 km strait in 711 and took all of Spain in seven years. Here's how they lost it.", 62),
  ("Why did a city with street lamps and 400,000 books, when London was a muddy town, vanish from your history books?", 51),

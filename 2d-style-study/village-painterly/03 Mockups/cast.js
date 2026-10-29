@@ -312,6 +312,8 @@
       c.globalAlpha = .18; c.fillStyle = '#ffffff'; c.beginPath(); c.ellipse(nearX + ew * .2, eyY - eh * .6, ew * .25, eh * .5, -.5, 0, S.TAU); c.fill();
       c.restore();
     }
+    // period headwear (turban, helmet, beret...) drawn over the hair; defined per video
+    if (ch.headwear) ch.headwear(c, u, f, Lt, { celT, tone, front: false });
   };
 
   // ---------------- anatomy ----------------
@@ -659,6 +661,7 @@
         : [[-.52, .2], [-.52, -.3], [-.36, -.6], [0, -.7], [.36, -.6], [.52, -.3], [.52, .2], [.44, .1], [.42, -.28], [.24, -.46], [0, -.5], [-.24, -.46], [-.42, -.28], [-.44, .1]];
       celT(c, poly(crown, u), dt, Lt, u, { swk: .7, over: c2 => { if (back) return; c2.strokeStyle = '#d9a640'; c2.lineWidth = u * .03; c2.beginPath(); c2.moveTo(-.46 * u, .1 * u); c2.quadraticCurveTo(-.44 * u, -.44 * u, 0, -.52 * u); c2.quadraticCurveTo(.44 * u, -.44 * u, .46 * u, .1 * u); c2.stroke(); } });
     }
+    if (ch.headwear) ch.headwear(c, u, f, Lt, { celT, tone, front: true, back });
   };
 
   // full figure, front or back. Feet on (x, y), u = head unit.

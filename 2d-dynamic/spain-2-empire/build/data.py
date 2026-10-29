@@ -191,6 +191,7 @@ S = [
 ACTS = [(t, slug, [s[:4] for s in shots]) for t, slug, shots in S]
 SK = [[(None, s[4]) for s in shots] for _, _, shots in S]
 
+STYLEFRAME_NOTE = 'Potosi: a Spanish mine official and a mita labourer below the red silver mountain (Act 3).'
 HOOKS = [("170 men captured an emperor of 10 million. Then Spain lost it all. Here's how you build and break an empire.", 58), ("You use a currency that started in a Bolivian silver mine. Here's how Spain built it, then lost everything.", 54)]
 
 LAUNCH = dict(
