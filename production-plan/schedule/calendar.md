@@ -56,3 +56,6 @@ Full-video times were checked one by one in Zernio on 28 Oct 2026 at 17:35 UTC. 
 - Ancient Humans full "They Found Food in 15 Hours a Week. Where Did Your Time Go?": Fri 20 Nov 20:00 UTC (15:00 ET), Zernio 6ae3b68e28e18fc94a536878.
 - BlackRock full "The Company That Owns Everything but Makes Nothing": Sun 22 Nov 16:00 UTC (11:00 ET), Zernio 6ae3b69bb2a822e344e4bd4f.
 - Ancient Humans and BlackRock reels: waiting for renders.
+
+## 29 Oct 2026, 21:45 UTC: facts shorts 02-11 booked
+- YouTube + Instagram, cover as IG thumbnail. 30 Oct IST: 08:30 flamingo, 12:30 plane windows, 14:00 Venus, 17:00 woodpecker, 18:00 wrinkly fingers, 19:00 astronaut bones, (20:00 seawater), 21:00 sixty minutes, 22:00 spider web, 23:00 ice floats. 31 Oct 20:00 IST leap year. Next free facts slot: 31 Oct 21:00 IST.
