@@ -42,7 +42,7 @@ def wrap(d, txt, font, maxw):
 def outlined(d, xy, txt, font, fill, sw=8, anchor='mm'):
     d.text(xy, txt, font=font, fill=fill, anchor=anchor, stroke_width=sw, stroke_fill=(18, 13, 10))
 def kicker(d):
-    ls = wrap(d, R['kicker'], fK, 700); y = 300 - (len(ls) - 1) * 56; cx = 455
+    ls = wrap(d, R['kicker'], fK, 660); y = 320 - (len(ls) - 1) * 56; cx = 420
     for l in ls:
         tw = d.textlength(l, font=fK); d.rounded_rectangle([cx - tw / 2 - 30, y - 52, cx + tw / 2 + 30, y + 50], 18, fill=(232, 180, 74), outline=(18, 13, 10), width=6)
         d.text((cx, y), l, font=fK, fill=(18, 13, 10), anchor='mm'); y += 112
@@ -71,7 +71,7 @@ def frame(img16, bgimg, t_local, mode, zoom=1.0):
         canvas.paste(LB, ((W - LB.width) // 2, 560), LB)
         for k, l in enumerate(['WATCH THE FULL VIDEO', 'ON OUR YOUTUBE CHANNEL']): outlined(d, (540, 1110 + k * 100), l, fE, (255, 255, 255) if k else (118, 210, 74))
         return canvas
-    canvas.paste(LS, (880, 225), LS)
+    canvas.paste(LS, (820, 262), LS)
     return canvas
 cmd = ['ffmpeg', '-y', '-loglevel', 'error', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-s', f'{W}x{H}', '-r', str(FPS), '-i', '-', '-i', f'{B}/r{RID}/aud.wav', '-c:v', 'libx264', '-preset', 'medium', '-crf', '20', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '192k', '-shortest', '-movflags', '+faststart', f'{B}/out/{PRE}_Reel_{RID:02d}.mp4']
 os.makedirs(f'{B}/out', exist_ok=True); p = subprocess.Popen(cmd, stdin=subprocess.PIPE)
