@@ -1,0 +1,123 @@
+<!doctype html><html><head><meta charset="utf-8"><title>BR act 5 - the deal</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "alium";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['rain_street', 'boardroom', 'trading', 'skyline', 'office88']) K.load(n, PL + n + '.jpg');
+{ const T = window.TIMING, L = T.shots[T.shots.length - 1]; L.end += 1.6; T.dur = L.end; }
+const SW = 1920, SH = 1080, INK = '#1d1712', CREAM = '#f6efe2', GOLD = '#e8b44a', RED = '#d9483b', GREEN = '#4f8a4a', BLUE = '#3f6aa0';
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+const font = (px, fam = 'Anton') => `${px}px ${fam}, Oswald, sans-serif`;
+const rr = (c, x, y, w, h, r) => { c.beginPath(); c.roundRect(x, y, w, h, r); };
+const FINK = { costume: 'shirtsleeves', hair: 'swept', hairCol: '#4a3220', seed: 7 };
+const DAD = { costume: 'office', hair: 'short', hairCol: '#5a3a22', seed: 12 }, MOM = { costume: 'dress', hair: 'bun', hairCol: '#2a1a12', seed: 13 };
+const coin = (c, x, y, r = 16, a = 1) => { c.save(); c.globalAlpha *= a; c.fillStyle = '#b8862a'; c.beginPath(); c.ellipse(x, y + r * .18, r, r * .72, 0, 0, 7); c.fill(); c.fillStyle = GOLD; c.beginPath(); c.ellipse(x, y, r, r * .72, 0, 0, 7); c.fill(); c.strokeStyle = INK; c.lineWidth = 2.5; c.stroke(); c.fillStyle = '#fff2c0'; c.font = `bold ${r * .9}px Oswald`; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('$', x, y + 1); c.restore(); };
+// colour grade in screen space: warm gold drains to cold blue between t0 and t1
+const grade = (t0, t1, from = 0) => (c, lt) => { const u = Math.max(from, E.io(K.seg(lt, t0, t1))); c.save(); c.globalCompositeOperation = 'soft-light'; c.fillStyle = `rgba(255,190,80,${.45 * (1 - u)})`; c.fillRect(0, 0, SW, SH); c.globalCompositeOperation = 'multiply'; c.fillStyle = `rgba(90,120,190,${.55 * u})`; c.fillRect(0, 0, SW, SH); c.restore(); };
+// red X scribbled over a card area
+const redX = (c, x, y, w, h, u) => { if (u <= 0) return; c.save(); c.strokeStyle = RED; c.lineWidth = 14; c.lineCap = 'round'; const a = Math.min(1, u * 2), b = Math.max(0, u * 2 - 1); c.beginPath(); c.moveTo(x - w / 2, y - h / 2); c.lineTo(x - w / 2 + w * a, y - h / 2 + h * a); c.stroke(); if (b > 0) { c.beginPath(); c.moveTo(x + w / 2, y - h / 2); c.lineTo(x + w / 2 - w * b, y - h / 2 + h * b); c.stroke(); } c.restore(); };
+// a paper loan document (local coords, centred)
+const loanDoc = (c, w = 120, h = 150, title = 'MORTGAGE') => { c.fillStyle = 'rgba(0,0,0,.2)'; c.fillRect(-w / 2 + 6, -h / 2 + 8, w, h); c.fillStyle = '#fbf7ea'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-w / 2, -h / 2, w, h); c.strokeRect(-w / 2, -h / 2, w, h); c.fillStyle = RED; c.font = `bold ${w * .13}px Oswald`; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(title, 0, -h / 2 + h * .14); c.strokeStyle = 'rgba(40,40,60,.45)'; c.lineWidth = 2; for (let k = 0; k < 6; k++) { c.beginPath(); c.moveTo(-w * .38, -h * .18 + k * h * .1); c.lineTo(w * .38, -h * .18 + k * h * .1); c.stroke(); } c.strokeStyle = BLUE; c.beginPath(); c.moveTo(-w * .3, h * .38); c.quadraticCurveTo(-w * .1, h * .28, w * .05, h * .4); c.quadraticCurveTo(w * .15, h * .3, w * .3, h * .36); c.stroke(); };
+// cash bundle (local coords)
+const bundle = (c, s = 1) => { c.save(); c.scale(s, s); c.fillStyle = 'rgba(0,0,0,.25)'; c.fillRect(-46, -14, 96, 34); for (let k = 0; k < 3; k++) { c.fillStyle = '#7aa864'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-50, -18 - k * 9, 100, 30); c.strokeRect(-50, -18 - k * 9, 100, 30); } c.fillStyle = '#c8b86a'; c.fillRect(-10, -36, 20, 30); c.strokeRect(-10, -36, 20, 30); c.restore(); };
+// cardboard office box held in front (hand-local: +y runs along the forearm)
+const BOX = (c) => { c.save(); c.rotate(-1.1); c.translate(-46, 22); c.fillStyle = "rgba(0,0,0,.25)"; c.fillRect(-58, -26, 120, 80); c.fillStyle = '#b8864e'; c.strokeStyle = INK; c.lineWidth = 3.5; c.fillRect(-62, -30, 120, 80); c.strokeRect(-62, -30, 120, 80); c.fillStyle = '#9a6c3a'; c.fillRect(-62, -30, 120, 14); c.strokeRect(-62, -30, 120, 14); c.fillStyle = '#f4f0e4'; c.save(); c.translate(-30, -38); c.rotate(-.2); c.fillRect(-14, -14, 28, 22); c.restore(); c.fillStyle = '#3a6a3a'; c.beginPath(); c.arc(28, -46, 16, 0, 7); c.fill(); c.fillStyle = '#6a4a2a'; c.fillRect(20, -36, 16, 10); c.fillStyle = '#d8c8a0'; c.fillRect(-6, -48, 22, 22); c.strokeStyle = INK; c.lineWidth = 2; c.strokeRect(-6, -48, 22, 22); c.restore(); };
+const boxArms = (o) => { o.arms = (t, P) => ({ shR: 6 + Math.sin(t * 3) * 2, elR: -95 }); };
+// blank notepad in hand
+const PAD = (c) => { c.save(); c.rotate(-.9); c.translate(10, 34); c.fillStyle = 'rgba(0,0,0,.25)'; c.fillRect(-26, -32, 56, 72); c.fillStyle = '#f6efc8'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-30, -36, 56, 72); c.strokeRect(-30, -36, 56, 72); c.fillStyle = '#7a3a2a'; c.fillRect(-30, -36, 56, 10); c.strokeStyle = 'rgba(80,120,170,.4)'; c.lineWidth = 1.5; for (let k = 0; k < 5; k++) { c.beginPath(); c.moveTo(-24, -14 + k * 11); c.lineTo(20, -14 + k * 11); c.stroke(); } c.restore(); };
+// rain streaks in screen space
+const rain = (n = 260, al = .35) => (c, lt) => { c.save(); c.strokeStyle = `rgba(190,205,235,${al})`; c.lineWidth = 2; c.beginPath(); for (let i = 0; i < n; i++) { const sp = 1400 + (i * 97 % 600), x = (i * 733 % SW) + ((lt * 120) % 40), y = ((i * 389 + lt * sp) % (SH + 80)) - 40; c.moveTo(x, y); c.lineTo(x - 8, y + 34); } c.stroke(); c.restore(); };
+// rain splashes on the pavement (world)
+const splashes = (c, lt) => { c.save(); c.strokeStyle = 'rgba(200,215,240,.5)'; c.lineWidth = 2; for (let i = 0; i < 40; i++) { const per = .5 + (i % 5) * .13, p = ((lt + i * .37) % per) / per, x = (i * 613) % 2560, y = 1110 + (i * 211) % 320; c.globalAlpha = 1 - p; c.beginPath(); c.ellipse(x, y, 4 + p * 22, 1.5 + p * 6, 0, 0, 7); c.stroke(); } c.restore(); };
+// mini rate chart panel in screen space
+const rateChart = (c, lt, at, x, y) => { const a = pop(lt, at); if (a <= 0) return; const u = E.out(K.seg(lt, at + .3, at + 1.6)); c.save(); c.translate(x, y); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(-206, -126, 420, 260); c.fillStyle = '#fffaf0'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-210, -130, 420, 260); c.strokeRect(-210, -130, 420, 260); c.fillStyle = INK; c.font = font(38); c.textAlign = 'left'; c.fillText('RATES', -186, -84);
+  c.strokeStyle = 'rgba(40,30,20,.2)'; c.lineWidth = 2; for (let k = 0; k < 4; k++) { c.beginPath(); c.moveTo(-180, -50 + k * 50); c.lineTo(180, -50 + k * 50); c.stroke(); }
+  const pts = [[-170, -40], [-90, -30], [-20, 10], [60, 40], [160, 80]]; c.strokeStyle = RED; c.lineWidth = 8; c.lineJoin = 'round'; c.beginPath(); c.moveTo(...pts[0]); const n = u * (pts.length - 1); for (let k = 1; k <= Math.ceil(n); k++) { const f = Math.min(1, n - k + 1), p = pts[k - 1], q = pts[k]; c.lineTo(p[0] + (q[0] - p[0]) * f, p[1] + (q[1] - p[1]) * f); } c.stroke();
+  c.fillStyle = INK; c.font = font(30, 'Oswald'); c.fillText('9%', -196, -30); if (u > .9) { c.fillStyle = RED; c.fillText('7%', 172, 92); const b = pop(lt, at + 1.6); c.save(); c.translate(150, -70); c.scale(b, b); c.fillStyle = RED; c.beginPath(); c.moveTo(-22, -30); c.lineTo(22, -30); c.lineTo(22, 0); c.lineTo(40, 0); c.lineTo(0, 40); c.lineTo(-40, 0); c.lineTo(-22, 0); c.closePath(); c.fill(); c.strokeStyle = INK; c.lineWidth = 4; c.stroke(); c.restore(); } c.restore(); };
+
+const BANKER1 = { costume: 'suit', hair: 'short', hairCol: '#3a2a1a', seed: 51 }, BANKER2 = { costume: 'suit', hair: 'swept', hairCol: '#1a1210', glasses: true, seed: 53 }, REPORTER = { costume: 'office', hair: 'bun', hairCol: '#5a3220', glasses: true, seed: 55 };
+// red alarm wash over the trading floor (screen)
+const redAlarm = (t0) => (c, lt) => { if (lt < t0) return; const p = .5 + .5 * Math.sin((lt - t0) * 7); c.save(); c.globalCompositeOperation = 'soft-light'; c.fillStyle = `rgba(230,40,30,${.25 + .25 * p})`; c.fillRect(0, 0, SW, SH); c.restore(); };
+// a falling red chart panel (screen)
+const crashChart = (c, lt, at, x, y) => { const a = pop(lt, at); if (a <= 0) return; const u = E.out(K.seg(lt, at + .2, at + 2.2)); c.save(); c.translate(x, y); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.4)'; c.fillRect(-196, -116, 400, 240); c.fillStyle = '#101418'; c.strokeStyle = CREAM; c.lineWidth = 5; c.fillRect(-200, -120, 400, 240); c.strokeRect(-200, -120, 400, 240);
+  const pts = [[-180, -80], [-120, -70], [-70, -85], [-20, -40], [30, -10], [80, 30], [130, 60], [180, 95]]; const n = Math.max(2, Math.ceil(pts.length * u)); c.strokeStyle = RED; c.lineWidth = 8; c.lineJoin = 'round'; c.beginPath(); pts.slice(0, n).forEach(([px, py], i) => i ? c.lineTo(px, py) : c.moveTo(px, py)); c.stroke(); c.restore(); };
+// foreclosure sign on a lawn (world)
+const foreSign = (x, y, at) => (c, lt) => { const a = pop(lt, at); if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.rotate(Math.sin(lt * 2 + x) * .03); c.fillStyle = 'rgba(0,0,0,.25)'; c.beginPath(); c.ellipse(0, 4, 60, 10, 0, 0, 7); c.fill(); c.fillStyle = '#5a3a20'; c.fillRect(-5, -150, 10, 150); c.fillStyle = '#f6efe2'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(-90, -230, 180, 90); c.strokeRect(-90, -230, 180, 90); c.fillStyle = RED; c.font = font(26); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('FORECLOSURE', 0, -185); c.restore(); };
+// pool funnel pouring torn certificates (screen)
+const funnel = (c, lt, at, x, y) => { const a = pop(lt, at); if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.fillStyle = '#8a8f99'; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.moveTo(-170, -160); c.lineTo(170, -160); c.lineTo(36, 10); c.lineTo(36, 70); c.lineTo(-36, 70); c.lineTo(-36, 10); c.closePath(); c.fill(); c.stroke(); c.fillStyle = CREAM; c.font = font(32, 'Oswald'); c.textAlign = 'center'; c.fillText('MORTGAGE POOL', 0, -100);
+  for (let k = 0; k < 9; k++) { const p = ((lt - at) * .7 + k / 9) % 1; c.save(); c.translate(Math.sin(k * 2.1) * 90 * p, 90 + p * 300); c.rotate(p * 3 + k); c.globalAlpha = 1 - p * .6; c.fillStyle = '#f2ecd2'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(-36, -22); c.lineTo(30, -26); c.lineTo(36, 4); c.lineTo(20, 10); c.lineTo(28, 22); c.lineTo(-34, 26); c.closePath(); c.fill(); c.stroke(); c.restore(); } c.restore(); };
+// mountain of identical bond papers (world)
+const paperPile = (x, y, w, h) => (c) => { c.save(); c.translate(x, y); c.fillStyle = 'rgba(0,0,0,.25)'; c.beginPath(); c.ellipse(0, 6, w * .6, 18, 0, 0, 7); c.fill(); for (let k = 0; k < 40; k++) { const t = k / 40, py = -t * h, pw = w * (1 - t * .7); c.save(); c.translate(Math.sin(k * 3.7) * pw * .15, py); c.rotate(Math.sin(k * 1.9) * .12); c.fillStyle = k % 3 ? '#f4eedc' : '#e8e0c8'; c.strokeStyle = 'rgba(40,30,20,.5)'; c.lineWidth = 2; c.fillRect(-pw / 2, -14, pw, 18); c.strokeRect(-pw / 2, -14, pw, 18); c.restore(); } c.restore(); };
+const MAG = (c) => { c.save(); c.rotate(-.8); c.translate(0, 30); c.strokeStyle = INK; c.lineWidth = 6; c.fillStyle = 'rgba(200,230,255,.35)'; c.beginPath(); c.arc(0, 30, 26, 0, 7); c.fill(); c.stroke(); c.fillStyle = '#5a3a20'; c.fillRect(-5, -16, 10, 22); c.restore(); };
+// loan-by-loan breakdown panel (screen)
+const breakdown = (c, lt, at, x, y) => { const a = K.seg(lt, at, at + .5); if (a <= 0) return; c.save(); c.globalAlpha = a; c.translate(x, y); c.fillStyle = 'rgba(8,14,10,.88)'; c.strokeStyle = '#88ff99'; c.lineWidth = 4; c.beginPath(); c.roundRect(-380, -300, 760, 600, 18); c.fill(); c.stroke(); c.fillStyle = '#c8ffd0'; c.font = '26px "IBM Plex Mono", monospace'; c.textAlign = 'left';
+  c.fillText('LOAN #     STATE  PAID?  VALUE', -350, -250); const rows = Math.min(11, Math.floor((lt - at) * 4)); for (let i = 0; i < rows; i++) { const ok = (i * 37) % 10 > 3; c.fillStyle = ok ? '#88ff99' : '#ff7a6a'; c.fillText(`${(48213 + i * 977).toString().padStart(6, '0')}    ${['FL', 'CA', 'NV', 'AZ', 'OH', 'TX'][i % 6]}     ${ok ? 'YES' : 'NO '}    ${ok ? (60 + (i * 13) % 40) + '¢' : (5 + (i * 7) % 20) + '¢'}`, -350, -200 + i * 40); } c.restore(); };
+// ringing phone card (screen)
+const phoneCard = (c, lt, at, x, y) => { const a = pop(lt, at); if (a <= 0) return; const sh = Math.sin(lt * 40) * (Math.sin(lt * 3) > 0 ? 6 : 0); c.save(); c.translate(x + sh, y); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.35)'; c.beginPath(); c.roundRect(-176, -116, 360, 240, 20); c.fill(); c.fillStyle = CREAM; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.roundRect(-180, -120, 360, 240, 20); c.fill(); c.stroke();
+  c.fillStyle = '#2a2a2a'; c.beginPath(); c.roundRect(-110, -20, 220, 90, 14); c.fill(); c.beginPath(); c.moveTo(-130, -40); c.quadraticCurveTo(0, -110, 130, -40); c.lineWidth = 30; c.strokeStyle = '#2a2a2a'; c.stroke(); c.fillStyle = INK; c.font = font(30, 'Oswald'); c.textAlign = 'center'; c.fillText('THE FED IS CALLING', 0, 106); c.strokeStyle = RED; c.lineWidth = 5; for (let k = 0; k < 3; k++) { const rr = 40 + k * 24 + (lt * 40 % 24); c.globalAlpha = .6; c.beginPath(); c.arc(150, -90, rr, -1.2, -.2); c.stroke(); } c.restore(); };
+// clean-up memo (screen)
+const memo = (c, lt, at, x, y, lines) => { const a = pop(lt, at); if (a <= 0) return; c.save(); c.translate(x, y); c.rotate(-.04); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(-256, -176, 520, 360); c.fillStyle = '#fbf8ee'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-260, -180, 520, 360); c.strokeRect(-260, -180, 520, 360); c.fillStyle = INK; c.textAlign = 'left'; c.font = font(30, 'Oswald'); lines.forEach((l, i) => { c.fillStyle = l.startsWith('!') ? RED : INK; c.font = font(i ? 30 : 38, i ? 'Oswald' : 'Anton'); c.fillText(l.replace('!', ''), -226, -120 + i * 56); }); c.restore(); };
+
+const BARC = { costume: 'suit', hair: 'short', hairCol: '#8a8a8a', glasses: true, seed: 71 }, SLUMP1 = { costume: 'suit', hair: 'short', hairCol: '#3a2a1a', seed: 73 }, SLUMP2 = { costume: 'suit', hair: 'swept', hairCol: '#1a1210', seed: 75 };
+// pile of poker chips pushed to the middle (screen)
+const chipPush = (c, lt, at, x, y) => { const u = E.out(K.seg(lt, at, at + 1)); if (u <= 0) return; c.save(); c.translate(x - 500 * (1 - u), y); for (let s = 0; s < 5; s++) for (let k = 0; k < 9 - s; k++) { const cx = (s - 2) * 70 + Math.sin(s * 3) * 6, cy = -k * 16; c.fillStyle = ['#1d4b8f', '#c8402e', GOLD, '#2a2a2a', '#f6efe2'][s]; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.ellipse(cx, cy, 34, 12, 0, 0, 7); c.fill(); c.stroke(); } c.restore(); };
+// the contract sliding across the boardroom table (screen)
+const contract = (c, lt, at, x, y) => { const u = E.out(K.seg(lt, at, at + .8)); if (u <= 0) return; c.save(); c.translate(x, y + 200 * (1 - u)); c.rotate(-.05); c.globalAlpha = Math.min(1, u * 2); c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(-226, -146, 460, 300); c.fillStyle = '#fbf8ee'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-230, -150, 460, 300); c.strokeRect(-230, -150, 460, 300);
+  c.fillStyle = INK; c.textAlign = 'center'; c.font = font(30); c.fillText('SALE AGREEMENT', 0, -104); c.font = font(34, 'Oswald'); c.fillStyle = '#1d4b8f'; c.fillText('BARCLAYS GLOBAL', 0, -50); c.fillText('INVESTORS', 0, -10); c.fillStyle = 'rgba(40,30,20,.4)'; for (let k = 0; k < 3; k++) c.fillRect(-180, 30 + k * 22, 360, 6);
+  const sg = K.seg(lt, at + 1.2, at + 2.2); if (sg > 0) { c.strokeStyle = '#1d3a8f'; c.lineWidth = 4; c.beginPath(); for (let i = 0; i <= 30 * sg; i++) { const t = i / 30; const px = -160 + t * 320, py = 118 + Math.sin(t * 20) * 10 * (1 - t); i ? c.lineTo(px, py) : c.moveTo(px, py); } c.stroke(); } c.restore(); };
+// glowing iShares crate opening (screen)
+const iCrate = (c, lt, at, x, y) => { const a = pop(lt, at); if (a <= 0) return; const op = E.out(K.seg(lt, at + .6, at + 1.4)); c.save(); c.translate(x, y); c.scale(a, a);
+  if (op > 0) { c.save(); c.globalCompositeOperation = 'screen'; const g = c.createRadialGradient(0, -140, 0, 0, -140, 520); g.addColorStop(0, `rgba(255,230,150,${.55 * op})`); g.addColorStop(1, 'rgba(255,230,150,0)'); c.fillStyle = g; c.fillRect(-520, -660, 1040, 1040); c.restore(); }
+  c.fillStyle = '#7a5530'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-220, -140, 440, 260); c.strokeRect(-220, -140, 440, 260); c.strokeStyle = 'rgba(40,25,10,.5)'; c.lineWidth = 4; for (let k = 1; k < 4; k++) { c.beginPath(); c.moveTo(-220, -140 + k * 65); c.lineTo(220, -140 + k * 65); c.stroke(); }
+  c.fillStyle = CREAM; c.font = font(30, 'Oswald'); c.textAlign = 'center'; c.fillText('BGI', 0, 20);
+  c.save(); c.translate(-220, -140); c.rotate(-1.25 * op); c.fillStyle = '#8a6238'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(0, -40, 440, 40); c.strokeRect(0, -40, 440, 40); c.restore();
+  if (op > 0) { c.save(); c.translate(0, -170 - 140 * op); c.globalAlpha = op; c.fillStyle = '#16161a'; c.strokeStyle = GOLD; c.lineWidth = 5; c.beginPath(); c.roundRect(-190, -60, 380, 120, 20); c.fill(); c.stroke(); c.fillStyle = CREAM; c.font = font(70); c.textBaseline = 'middle'; c.fillText('iShares', 0, 4); c.restore(); } c.restore(); };
+// a growing gold tower of money vs a short one (screen)
+const aumBars = (c, lt, at, grow) => { const a = K.seg(lt, at, at + .4); if (a <= 0) return; const g = E.out(K.seg(lt, grow, grow + 1.6)); c.save(); c.globalAlpha = a; const base = 820;
+  const bar = (x, h, col, lab, val) => { c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(x - 96, base - h + 10, 200, h); c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(x - 100, base - h, 200, h); c.strokeRect(x - 100, base - h, 200, h); c.fillStyle = 'rgba(255,255,255,.18)'; for (let y = base - h + 20; y < base; y += 40) c.fillRect(x - 100, y, 200, 6); K.outlined(c, val, x, base - h - 50, 60, { fill: CREAM }); c.fillStyle = CREAM; c.font = font(34, 'Oswald'); c.textAlign = 'center'; c.fillText(lab, x, base + 50); };
+  bar(1180, 170, '#8a8f99', 'BEFORE', '$1.3T'); bar(1560, 170 + 240 * g, GOLD, 'AFTER', g > .9 ? '$3T+' : '$' + (1.3 + 1.7 * g).toFixed(1) + 'T'); c.restore(); };
+
+window.SHOTS = [
+  // 1 2009: Wall Street on its knees, BlackRock pushes all its chips in
+  { plate: 'rain_street', cam: { z: [1.05, 1.15], x: [1280, 1280], y: [780, 800] }, bed: [['rain_loop', .45]], inSfx: false,
+    figs: [{ x: 760, y: 1330, s: 2.0, ...SLUMP1, facing: 1, pose: 'stand', mood: 'worried', lean: 22 }, { x: 1820, y: 1330, s: 2.0, ...SLUMP2, facing: -1, pose: 'stand', mood: 'worried', lean: 26 }],
+    init: S => { const tK = A.at(S, 'knees', 3.3), tB = A.at(S, 'biggest bet', 4.6);
+      S.D.over = [(c) => { c.save(); c.globalCompositeOperation = 'saturation'; c.fillStyle = 'rgba(128,128,128,.55)'; c.fillRect(0, 0, SW, SH); c.restore(); }, (c, lt) => K.dateTag(c, '2009', lt, { at: .3 }),
+        (c, lt) => K.card(c, 'WALL STREET: ON ITS KNEES', lt, { at: tK - .8, x: 620, y: 190, px: 46, rot: -3 }), (c, lt) => chipPush(c, lt, tB - .4, 1000, 720),
+        (c, lt) => { const a = pop(lt, tB); if (a <= 0) return; c.save(); c.translate(1320, 330); c.scale(a, a); K.outlined(c, 'THE BIGGEST BET', 0, 0, 90, { fill: GOLD }); c.restore(); }];
+      S.D.sfx = [[.3, 'thud', .25], [tK - .8, 'pop', .3], [tB - .4, 'coins', .45], [tB, 'hit', .5]]; } },
+  // 2 the boardroom deal with Barclays: $13.5 billion
+  { plate: 'boardroom', cam: { z: [1.08, 1.16], x: [1280, 1280], y: [840, 860] }, bed: [['office_loop', .25]],
+    figs: [{ x: 640, y: 1330, s: 2.0, ...FINK, costume: 'suit', facing: 1, pose: 'stand' }, { x: 1920, y: 1330, s: 2.0, ...BARC, facing: -1, pose: 'stand' }],
+    init: S => { const tB = A.at(S, 'bought', .3), tK = A.at(S, 'British', 2.0), tP = A.at(S, 'thirteen', 3.7);
+      S.D.figs[0].anim = (o, lt) => { o.mood = lt > tP ? 'happy' : 'neutral'; o.pose = lt > tP + .8 ? 'reach' : 'stand'; }; S.D.figs[1].anim = (o, lt) => { o.pose = lt > tP + .8 ? 'reach' : 'stand'; };
+      S.D.over = [(c, lt) => contract(c, lt, tB + .2, 960, 560), (c, lt) => K.card(c, 'FROM BRITISH BANK BARCLAYS', lt, { at: tK, x: 1520, y: 330, px: 38, rot: 3 }),
+        (c, lt) => { if (lt < tP) return; K.counter(c, 0, 13.5, lt, { at: tP, dur: 1.4, x: 960, y: 170, px: 96, pre: '$', post: ' BILLION', fmt: v => v.toFixed(1), fill: GOLD }); }];
+      S.D.sfx = [[tB + .2, 'paper', .45], [tK, 'pop', .3], [tP, 'coins_cascade', .4], [tP + 1.4, 'stamp', .45]]; } },
+  // 3 inside the deal: iShares, the world's biggest ETF maker
+  { plate: 'trading', cam: { z: [1.1, 1.2], x: [1280, 1280], y: [780, 800] }, bed: [['hum_loop', .3]],
+    init: S => { const tI = A.at(S, 'Inside', .2), tS = A.at(S, 'iShares', 1.7), tE = A.at(S, 'exchange-traded', 3.4), tW = A.at(S, 'world', 6.2);
+      S.D.over = [A.dim ? A.dim(.5) : (c) => { c.fillStyle = 'rgba(10,6,4,.5)'; c.fillRect(0, 0, SW, SH); }, (c, lt) => iCrate(c, lt, tI, 960, 760),
+        (c, lt) => K.card(c, 'EXCHANGE-TRADED FUNDS (ETFs)', lt, { at: tE, x: 960, y: 140, px: 44, rot: -2 }), (c, lt) => K.card(c, "WORLD'S BIGGEST ETF MAKER", lt, { at: tW - 1.2, x: 1460, y: 300, px: 38, rot: 3, bg: '#ffe7a8' })];
+      S.D.sfx = [[tI, 'creak', .4], [tS - .3, 'swell', .35], [tS, 'chime', .45], [tE, 'pop', .3], [tW - 1.2, 'pop', .3]]; } },
+  // 4 overnight: $1.3 trillion to more than $3 trillion
+  { plate: 'skyline', cam: { z: [1.05, 1.12], x: [1280, 1280], y: [720, 740] }, bed: [['city_loop', .3]],
+    init: S => { const tO = A.at(S, 'Overnight', .3), tT = A.at(S, 'three trillion', 3.8);
+      S.D.over = [(c) => { c.save(); c.fillStyle = 'rgba(6,10,20,.5)'; c.fillRect(0, 0, SW, SH); c.restore(); }, (c, lt) => { const a = pop(lt, tO); if (a <= 0) return; c.save(); c.translate(520, 260); c.scale(a, a); K.outlined(c, 'OVERNIGHT', 0, 0, 100, { fill: '#a8d8ff' }); c.restore(); }, (c, lt) => aumBars(c, lt, tO + .4, tT - 1.4),
+        (c, lt) => K.card(c, 'MONEY MANAGED', lt, { at: tO + .6, x: 520, y: 420, px: 40, rot: -2 })];
+      S.D.sfx = [[tO, 'whoosh', .4], [tT - 1.4, 'riser', .35], [tT, 'hit', .5]]; } },
+  // 5 so what is an ETF? Fink at the office whiteboard of his 1988 office
+  { plate: 'office88', cam: { z: [1.1, 1.2], x: [1280, 1280], y: [860, 870] }, bed: [['office_loop', .2]],
+    figs: [{ x: 1560, y: 1330, s: 2.1, ...FINK, costume: 'suit', facing: -1, pose: 'think' }],
+    init: S => { const tM = A.at(S, 'mattered', 1.0), tE = A.at(S, 'ETF', 3.4);
+      S.D.figs[0].anim = (o, lt) => { o.pose = lt > tE ? 'point' : 'think'; o.facing = lt > tE ? 1 : -1; };
+      S.D.over = [(c, lt) => { const a = pop(lt, tE - .4); if (a <= 0) return; c.save(); c.translate(560, 600); c.rotate(Math.sin(lt * 2) * .04); c.scale(a, a); K.outlined(c, '?', 0, 0, 380, { fill: GOLD }); c.restore(); },
+        (c, lt) => { const a = pop(lt, tE); if (a <= 0) return; c.save(); c.translate(960, 150); c.scale(a, a); K.outlined(c, 'WHAT IS AN ETF?', 0, 0, 96, { fill: CREAM }); c.restore(); }];
+      S.D.sfx = [[tM, 'tick', .3], [tE - .4, 'pop', .4], [tE, 'hit', .45]]; } },
+];
+
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>

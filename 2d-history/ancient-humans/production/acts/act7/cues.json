@@ -1,0 +1,219 @@
+{
+ "dur": 41.977,
+ "cues": [
+  {
+   "t": 0.3,
+   "name": "breath",
+   "gain": 0.25
+  },
+  {
+   "t": 1.46,
+   "name": "swell",
+   "gain": 0.25
+  },
+  {
+   "t": 3.28,
+   "name": "pop",
+   "gain": 0.35
+  },
+  {
+   "t": 4.975,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 5.15,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 6.83,
+   "name": "paper",
+   "gain": 0.4
+  },
+  {
+   "t": 7.43,
+   "name": "paper",
+   "gain": 0.35
+  },
+  {
+   "t": 8.75,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 9.71,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 10.67,
+   "name": "chime",
+   "gain": 0.35
+  },
+  {
+   "t": 12.205,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 12.758,
+   "name": "breath",
+   "gain": 0.3
+  },
+  {
+   "t": 14.258,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 14.958,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 15.698,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 16.658,
+   "name": "breath",
+   "gain": 0.25
+  },
+  {
+   "t": 17.793,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 18.988,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 20.688,
+   "name": "wind_loop",
+   "gain": 0.2
+  },
+  {
+   "t": 21.708,
+   "name": "pop",
+   "gain": 0.35
+  },
+  {
+   "t": 22.108,
+   "name": "scrape",
+   "gain": 0.3
+  },
+  {
+   "t": 22.988,
+   "name": "chime",
+   "gain": 0.35
+  },
+  {
+   "t": 25.223,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 25.398,
+   "name": "hit",
+   "gain": 0.35
+  },
+  {
+   "t": 29.197,
+   "name": "pop",
+   "gain": 0.35
+  },
+  {
+   "t": 30.097,
+   "name": "pop",
+   "gain": 0.35
+  },
+  {
+   "t": 30.697,
+   "name": "pop",
+   "gain": 0.35
+  },
+  {
+   "t": 32.257,
+   "name": "chime",
+   "gain": 0.3
+  },
+  {
+   "t": 33.412,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 33.512,
+   "name": "tick",
+   "gain": 0.3
+  },
+  {
+   "t": 36.027,
+   "name": "pop",
+   "gain": 0.35
+  },
+  {
+   "t": 36.527,
+   "name": "scrape",
+   "gain": 0.3
+  },
+  {
+   "t": 37.167,
+   "name": "fire_loop",
+   "gain": 0.25
+  },
+  {
+   "t": 37.767,
+   "name": "swell",
+   "gain": 0.3
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 5.675,
+   "name": "night_loop",
+   "gain": 0.45
+  },
+  {
+   "start": 0,
+   "end": 5.675,
+   "name": "fire_loop",
+   "gain": 0.25
+  },
+  {
+   "start": 4.875,
+   "end": 12.905000000000001,
+   "name": "hum_loop",
+   "gain": 0.25
+  },
+  {
+   "start": 12.105,
+   "end": 18.493000000000002,
+   "name": "night_loop",
+   "gain": 0.5
+  },
+  {
+   "start": 17.693,
+   "end": 25.923000000000002,
+   "name": "night_loop",
+   "gain": 0.45
+  },
+  {
+   "start": 25.123,
+   "end": 34.111999999999995,
+   "name": "wind_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 33.312,
+   "end": 42.776999999999994,
+   "name": "night_loop",
+   "gain": 0.45
+  }
+ ]
+}
