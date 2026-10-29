@@ -32,6 +32,7 @@ const MOTHER = Object.assign({}, CH.aisha, { dupatta: ['#6a5a7a', '#342a3e'] });
 const KIDC = Object.assign({}, CH.boabdil, { build: 'kid', beard: false, mustache: false, headwear: null, hair: 'neat', shirt: ['#7a6a4a', '#3a3020'] });
 const MORISCO = Object.assign({}, C.TOWNSMAN, { skin: X.SK.olive, hairCol: X.HR.black, shirt: ['#5a6a4a', '#2a3220'] });
 const NIGHT = { L: [.6, -.8], amb: '#2a2a4a', ambA: .45, rim: '#ffc880', rimA: .9, tint: '#ffa860', tintA: .14, sw: .25, rw: .05 };
+const scroll2 = (cc, a, b, uu, open) => { const x = (a[0] + b[0]) / 2, top = Math.min(a[1], b[1]) - 4, bot = Math.max(Math.max(a[1], b[1]), top + uu * .9) + 4, h = (bot - top) * open; cc.save(); cc.fillStyle = '#f4e8c8'; cc.fillRect(x - uu * .7, top, uu * 1.4, h); cc.fillStyle = 'rgba(80,60,30,.35)'; for (let i = 1; i < 6; i++) if (i / 6 < open) cc.fillRect(x - uu * .5, top + h * i / 6, uu * 1.0, 1.5); cc.fillStyle = '#8a6a3a'; cc.fillRect(x - uu * .85, top - 4, uu * 1.7, 6); cc.fillRect(x - uu * .85, top + h - 2, uu * 1.7, 6); cc.restore(); };
 const scroll = (cc, wr, uu, open) => { cc.save(); cc.translate(wr[0], wr[1] - uu * .3); cc.fillStyle = '#f4e8c8'; cc.fillRect(-uu * .8, -uu * 1.2 * open, uu * 1.6, uu * 1.2 * open + 4); cc.fillStyle = '#8a6a3a'; cc.fillRect(-uu * .9, -uu * 1.2 * open - 4, uu * 1.8, 6); cc.fillRect(-uu * .9, 0, uu * 1.8, 6); cc.restore(); };
 const word = (c, lt, at_, x, y, es, ar) => { const q = E.back(seg(lt, at_, at_ + .5)); if (q <= 0) return; c.save(); c.translate(x, y); c.scale(q, q); c.fillStyle = '#f8f0dc'; c.strokeStyle = '#2a1a10'; c.lineWidth = 4; c.beginPath(); c.roundRect(-230, -60, 460, 120, 14); c.fill(); c.stroke();
   c.textAlign = 'center'; c.font = '54px Anton'; c.fillStyle = '#b8282a'; c.fillText(es, 0, -6); c.font = '30px Oswald'; c.fillStyle = '#2f6b4a'; c.fillText('from ' + ar, 0, 40); c.restore(); };
@@ -42,7 +43,7 @@ window.SHOTS = [
     init: Sh => { Sh.tM = at(Sh, 'three months', 2); Sh.tC = at(Sh, 'convert', 5); Sh.dur = Sh.end - Sh.start; },
     draw: (c, lt, u, Sh) => {
       const L = VP.light('golden', lt, { swing: 4 }), sh = VP.shadowOf(L, 1.4, .3, .12), op = E.out(seg(lt, .3, 1.3));
-      VP.figure(c, [700, 640], sh, cc => S.person(cc, HERALD, 700, 640, 42, Object.assign(S.idle(lt, 0), { face: -1, shN: 80, elN: 40, shF: 70, elF: 40, holdN: wr => scroll(cc, wr, 42, op) }), { blink: S.blinkAt(lt, 0), open: .4 * Math.abs(Math.sin(lt * 9)) * (Math.sin(lt * 1.3) > -.3), look: [-.3, .3], time: lt }, L));
+      VP.figure(c, [700, 640], sh, cc => S.person(cc, HERALD, 700, 640, 42, (() => { let wF = null; return Object.assign(S.idle(lt, 0), { face: -1, shN: 92, elN: 28, shF: 58, elF: 48, holdF: wr => { wF = wr.slice(); }, holdN: wr => scroll2(cc, wF || [wr[0], wr[1] + 40], wr, 42, op) }); })(), { blink: S.blinkAt(lt, 0), open: .4 * Math.abs(Math.sin(lt * 9)) * (Math.sin(lt * 1.3) > -.3), look: [-.3, .3], time: lt }, L));
       for (const [x, ch, uu, k] of [[300, JEW, 42, 1], [360, MOTHER, 38, 2], [410, KIDC, 30, 3]]) VP.figure(c, [x, 650], sh, cc => S.person(cc, ch, x, 650, uu, Object.assign(S.idle(lt, k), { face: 1, shN: 10, elN: 20 }), { blink: S.blinkAt(lt, k), worry: .4 + .5 * seg(lt, Sh.tC, Sh.tC + 1), look: [.9, 0], time: lt }, L));
       for (let k = 0; k < 9; k++) H.tiny(c, 120 + k * 120 + (k % 2) * 30, 560 + (k % 3) * 8, 3.4, ['#7a6a4a', '#5a4a6a', '#8a3a2a'][k % 3], lt, k, { helm: '#3a2a1a', pike: false });
       VP.motes(c, lt, 0, 300, 1280, 400, { n: 30, a: .35 });
@@ -56,8 +57,8 @@ window.SHOTS = [
     draw: (c, lt, u, Sh) => {
       const L = VP.light('golden', lt, { swing: 4 }), sh = VP.shadowOf(L, 1.3, .3, .12);
       for (const [x, s, k] of [[900, 1, 0], [1120, .8, 1]]) { const bob = Math.sin(lt * 1.2 + k) * 3; c.save(); c.translate(0, bob); X.ship(c, x + lt * 4 * (k + 1), 470, s, '#f4ead4', false); c.restore(); }
-      for (let k = 0; k < 7; k++) { const x = ((lt * 22 + k * 110) % 800) - 60, y = 600 + (k % 3) * 22, ch = [JEW, MOTHER, KIDC, C.TOWNSMAN][k % 4], uu = ch === KIDC ? 22 : 30;
-        VP.figure(c, [x, y], sh, cc => S.person(cc, ch, x, y, uu, Object.assign(walk(lt * .9 + k * .3), { face: 1, shF: 30, elF: 70 }), { blink: S.blinkAt(lt, k), worry: .6, time: lt }, L));
+      for (let k = 6; k >= 0; k--) { const stop = 720 - k * 92, x0 = 260 - k * 92 + lt * 45, moving = x0 < stop, x = Math.min(x0, stop), y = 600 + (k % 3) * 22, ch = [JEW, MOTHER, KIDC, C.TOWNSMAN][k % 4], uu = ch === KIDC ? 22 : 30;
+        VP.figure(c, [x, y], sh, cc => S.person(cc, ch, x, y, uu, Object.assign(moving ? walk(lt * .9 + k * .3) : S.idle(lt, k), { face: 1, shF: 30, elF: 70 }), { blink: S.blinkAt(lt, k), worry: .6, time: lt }, L));
         c.fillStyle = '#8a6a44'; c.beginPath(); c.ellipse(x - uu * .6, y - uu * 3.6, uu * .7, uu * .55, 0, 0, TAU); c.fill(); }
       VP.motes(c, lt, 0, 300, 1280, 400, { n: 25, a: .35 });
     },
@@ -89,11 +90,15 @@ window.SHOTS = [
       c.fillStyle = '#4a3a2a'; for (let k = 0; k < 12; k++) c.fillRect(560 + (k % 5) * 30 - 10, 610 - Math.floor(k / 5) * 14, 26, 12);
       H.fire(c, 640, 620, .9 + .9 * burn, lt, 7); H.smoke(c, 640, 480, 1, lt);
       // books flying into the fire
-      for (let k = 0; k < 4; k++) { const ph = (lt * .6 + k * .25) % 1, x = lerp(420, 620, ph), y = 520 - Math.sin(ph * Math.PI) * 120; c.save(); c.translate(x, y); c.rotate(ph * 6); c.fillStyle = '#6a2a1a'; c.fillRect(-12, -9, 24, 18); c.fillStyle = '#f0e0b8'; c.fillRect(-10, -7, 20, 3); c.restore(); }
       VP.glow(c, 640, 560, 520, '#ff9a40', .25 + .1 * f);
       const L = { L: [-1, -.3], amb: '#2a2040', ambA: .45, rim: '#ffb060', rimA: 1, tint: '#ff9050', tintA: .2, sw: .3, rw: .05 };
-      VP.figure(c, [900, 650], { k: .6, sy: -.2, a: .4, blur: 3 }, cc => S.person(cc, CISNEROS, 900, 650, 44, Object.assign(S.idle(lt, 0), { face: -1, shN: 20, elN: 40 }), { blink: S.blinkAt(lt, 0), angry: .5, look: [-.8, .3], time: lt }, L));
-      for (const [x, k] of [[400, 1], [340, 2]]) VP.figure(c, [x, 650], { k: -.6, sy: -.2, a: .4, blur: 3 }, cc => S.person(cc, CASTILIAN, x, 650, 40, Object.assign(walk(lt * .5 + k), { face: 1, shN: 80, elN: 60 }), { blink: S.blinkAt(lt, k), time: lt }, L));
+      VP.figure(c, [1010, 650], { k: .6, sy: -.2, a: .4, blur: 3 }, cc => S.person(cc, CISNEROS, 1010, 650, 44, Object.assign(S.idle(lt, 0), { face: -1, shN: 20, elN: 40 }), { blink: S.blinkAt(lt, 0), angry: .5, look: [-.8, .3], time: lt }, L));
+      // two soldiers stand by the fire and throw books in, one after another
+      const book = (x, y, r) => { c.save(); c.translate(x, y); c.rotate(r); c.fillStyle = '#6a2a1a'; c.fillRect(-12, -9, 24, 18); c.fillStyle = '#f0e0b8'; c.fillRect(-10, -7, 20, 3); c.fillStyle = '#c8962a'; c.fillRect(-12, -9, 4, 18); c.restore(); };
+      c.fillStyle = '#5a3a24'; for (let k = 0; k < 7; k++) { c.save(); c.translate(390 + (k % 4) * 16, 652 - Math.floor(k / 4) * 12); c.rotate((k % 3 - 1) * .15); c.fillRect(-12, -6, 24, 12); c.fillStyle = '#f0e0b8'; c.fillRect(-10, -5, 20, 2); c.fillStyle = '#5a3a24'; c.restore(); }
+      for (const [x, k, off, fc] of [[480, 1, 0, 1], [800, 2, .8, -1]]) { const ph = ((lt + off) % 1.6) / 1.6, sw = ph < .45 ? E.io(ph / .45) : 1 - E.io((ph - .45) / .55), wr = [x + fc * (18 + 20 * sw), 650 - 40 * 3.2 - 40 * sw];
+        VP.figure(c, [x, 650], { k: -.6, sy: -.2, a: .4, blur: 3 }, cc => S.person(cc, CASTILIAN, x, 650, 40, Object.assign(S.idle(lt, k), { face: fc, lean: 10 - 18 * sw + (ph > .8 ? 12 : 0), shN: lerp(20, 165, sw), elN: lerp(60, 10, sw), shF: 25, elF: 40, holdN: ph < .45 ? (w => book(w[0], w[1], -.4)) : null }), { blink: S.blinkAt(lt, k), angry: .3, time: lt }, L));
+        if (ph >= .45) { const q = (ph - .45) / .55, bx = lerp(wr[0], 640, q), by = lerp(wr[1], 600, q) - Math.sin(q * Math.PI) * 90; if (q < .92) book(bx, by, q * 7); } }
     },
     over: [(c, lt) => K.dateTag(c, 'GRANADA · 1499', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'CARDINAL\nCISNEROS', lt, { at: Sh.tC + .2, x: 1540, y: 200, px: 56, rot: 3 }), (c, lt, u, Sh) => K.badge(c, 'THOUSANDS OF ARABIC BOOKS BURNED', lt, { at: Sh.tB })],
     sfx: [['cisneros', 'hit', .4], ['burned', 'whoosh', .45]] },

@@ -57,7 +57,7 @@ window.SHOTS = [
       // heat shimmer and dust
       for (let k = 0; k < 4; k++) { const q = (lt * .3 + k / 4) % 1, x = lerp(300, 1100, q), y = lerp(640, 420, q); H.smoke(c, x, y, .4, lt + k, '216,190,140'); }
       // pairs of captives with a pole and a bell between them, walking up the road
-      for (let p = 0; p < 4; p++) { const q = K.clamp(((lt * .03) + p * .12) % 1), bx = lerp(140, 980, q) , by = lerp(700, 430, Math.pow(q, .8)), s = lerp(1, .45, q), uu = 34 * s, gap = 120 * s;
+      for (let p = 2; p >= 0; p--) { const q = K.clamp(lt * .035 + .52 - p * .26), bx = lerp(-160, 980, q) , by = lerp(740, 430, Math.pow(q, .8)), s = lerp(1.05, .45, q), uu = 34 * s, gap = 120 * s;
         for (const [dx, ph] of [[-gap / 2, 0], [gap / 2, .5]]) VP.figure(c, [bx + dx, by], { k: .5, sy: -.22, a: .3, blur: 2 }, cc => S.person(cc, CAPTIVE, bx + dx, by, uu, Object.assign(walk(lt * .7 + ph + p, .2), { face: 1, lean: 12, stoop: 10, shN: 150, elN: 10 }), { worry: .8, blink: S.blinkAt(lt, p), time: lt }, L));
         const py = by - uu * 6.2, sw = Math.sin(lt * 2 + p) * .08; c.strokeStyle = '#4a2a14'; c.lineWidth = 5 * s; c.beginPath(); c.moveTo(bx - gap * .7, py); c.lineTo(bx + gap * .7, py); c.stroke();
         c.save(); c.translate(bx, py); c.rotate(sw); c.fillStyle = '#9a6a2a'; c.beginPath(); c.moveTo(-6 * s, 0); c.lineTo(-30 * s, 60 * s); c.quadraticCurveTo(0, 70 * s, 30 * s, 60 * s); c.lineTo(6 * s, 0); c.closePath(); c.fill(); c.fillStyle = S.rgba('#ffe0a0', .5); c.fillRect(-28 * s, 50 * s, 10 * s, 10 * s); c.restore(); }
@@ -120,14 +120,14 @@ window.SHOTS = [
     sfx: [['leon', 'pop', .3], ['castile', 'pop', .3], ['navarre', 'pop', .3], ['aragon', 'pop', .3], ['portugal', 'pop', .3], ['captured toledo', 'thud', .55]] },
 
   // 6 MED: veiled Almoravid warriors with tall shields step off their ships; the taifa king realises his mistake
-  { set: 'beach', cam: (lt, u, Sh) => lt < Sh.tO ? { z: [1.35], x: [lerp(560, 760, lt / Sh.tO)], y: [440] } : { z: [2.2], x: [380], y: [420] }, bed: [['ocean_loop', .25], ['wind_loop', .15]],
+  { set: 'beach', cam: (lt, u, Sh) => lt < Sh.tO ? { z: [1.35], x: [lerp(560, 760, lt / Sh.tO)], y: [440] } : { z: [1.9], x: [520], y: [430] }, bed: [['ocean_loop', .25], ['wind_loop', .15]],
     init: Sh => { Sh.tA = at(Sh, 'almoravids', 2); Sh.tC = at(Sh, 'crossed', 4.5); Sh.tO = at(Sh, 'took over', Sh.dur - 2.5); Sh.dur = Sh.end - Sh.start; },
     draw: (c, lt, u, Sh) => {
       const L = VP.light('golden', lt, { set: { L: [.6, -.8] }, swing: 5 });
       for (const [x, y, s, i] of [[500, 530, 1.1, 0], [780, 515, .85, 1], [300, 512, .7, 2]]) H.boat(c, x, y + Math.sin(lt * 1.5 + i) * 3, s, lt, { sailCol: S.rgba('#2a3a5a', .9) });
-      for (let k = 0; k < 9; k++) { const q = seg(lt, .3 + k * .3, 6 + k * .3), x = 300 + q * 420 + k * 34, y = 600 + (k % 3) * 34, uu = 30 + (k % 3) * 4; if (q <= 0) continue;
+      for (let k = 0; k < 6; k++) { const row = Math.floor(k / 3), col = k % 3, fx = 520 + col * 165 + row * 82, q = seg(lt, .2 + k * .28, 5.2 + k * .28), x = lerp(fx - 760, fx, E.out(q)), y = 588 + row * 50, uu = 28 + row * 3;
         VP.figure(c, [x, y], { k: -.3, sy: -.3, a: .35, blur: 2 }, cc => { S.person(cc, ALMORAVID, x, y, uu, Object.assign(q < 1 ? walk(lt * .9 + k) : S.idle(lt, k), { face: 1, shN: 40, elN: 50, holdN: wr => { cc.fillStyle = '#c8a878'; cc.fillRect(wr[0] - uu * .3, wr[1] - uu * 2.2, uu * .9, uu * 3.6); cc.strokeStyle = '#6a4a2a'; cc.lineWidth = 2; cc.strokeRect(wr[0] - uu * .3, wr[1] - uu * 2.2, uu * .9, uu * 3.6); } }), { angry: .5, time: lt }, L); }); }
-      if (lt >= Sh.tO) { const L2 = DAYL(); VP.figure(c, [380, 640], { k: .5, sy: -.22, a: .3, blur: 2 }, cc => S.person(cc, TAIFA, 380, 640, 40, Object.assign(S.idle(lt, 0), { face: 1, lean: -6, shN: 30 + 30 * seg(lt, Sh.tO, Sh.tO + .5), elN: 90 }), { blink: S.blinkAt(lt, 0), worry: 1, open: .4 * seg(lt, Sh.tO + .2, Sh.tO + .6), look: [.9, 0], time: lt }, L2)); }
+      if (lt >= Sh.tO - 1.6) { const L2 = DAYL(), kx = lerp(120, 360, E.out(seg(lt, Sh.tO - 1.6, Sh.tO + .2))); VP.figure(c, [kx, 640], { k: .5, sy: -.22, a: .3, blur: 2 }, cc => S.person(cc, TAIFA, kx, 640, 40, Object.assign(lt < Sh.tO + .2 ? walk(lt) : S.idle(lt, 0), { face: 1, lean: -6, shN: 30 + 30 * seg(lt, Sh.tO, Sh.tO + .5), elN: 90 }), { blink: S.blinkAt(lt, 0), worry: 1, open: .4 * seg(lt, Sh.tO + .2, Sh.tO + .6), look: [.9, 0], time: lt }, L2)); }
     },
     over: [(c, lt, u, Sh) => K.card(c, 'THE ALMORAVIDS', lt, { at: Sh.tA + .2, x: 1520, y: 200, px: 60, rot: 3, until: Sh.tO }), (c, lt, u, Sh) => K.badge(c, 'STRICT BERBER WARRIORS · MOROCCO', lt, { at: Sh.tA + 1, until: Sh.tO }), (c, lt, u, Sh) => K.card(c, 'BIG MISTAKE', lt, { at: Sh.tO + .6, x: 1440, y: 300, px: 70, rot: -4 })],
     sfx: [['almoravids', 'hit', .45], ['crossed', 'whoosh', .4], ['took over', 'thud', .5]] },
