@@ -365,7 +365,7 @@ window.SHOTS = [
       S.D.over = [(c, lt) => K.card(c, 'THE FINISH LINE', lt, { at: tF, x: 700, y: 140, px: 48, rot: -3 }), (c, lt) => K.card(c, '…WHERE WE FINALLY GET OUR TIME BACK', lt, { at: tB, x: 1100, y: 270, px: 38, rot: 2 })];
       S.D.sfx = [[.1, 'run_steps', .35], [tF, 'pop', .35], [tB, 'tick', .35]]; } },
   // 7 in one way, they were already standing on it
-  { plate: 'sav_noon', cam: { z: [1.12, 1.2], x: [1500, 1560], y: [860, 860] }, bed: [['wind_loop', .3]],
+  { plate: 'sav_noon', cam: { z: [1.12, 1.2], x: [1500, 1560], y: [860, 860] }, xfade: 0, bed: [['wind_loop', .3]],
     live: [finishLine(1560, 1250, 'RETIREMENT', 560)],
     figs: [{ x: 1560, y: 1290, s: 1.8, ...HUNTER, facing: -1, pose: 'stand', mood: 'happy' }],
     init: S => { const tA = A.at(S, 'already', .7);
