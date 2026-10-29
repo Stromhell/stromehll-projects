@@ -1,0 +1,147 @@
+<!doctype html><html><head><meta charset="utf-8"><title>NV act 3 - the Sega call</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}canvas{display:block}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['office', 'lab_wb', 'tokyo_room']) K.load(n, PL + n + '.jpg');
+
+{ const T = window.TIMING, L = T.shots[T.shots.length - 1]; L.end += 1.8; T.dur = L.end; }
+const SW = 1920, SH = 1080, INK = '#1d1712', CREAM = '#f6efe2', GOLD = '#e8b44a', RED = '#c8402e', GREEN = '#76b900', TAU = Math.PI * 2;
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+const font = (px, fam = 'Anton') => `${px}px ${fam}, Oswald, sans-serif`;
+const sprite = (name) => (c) => c.drawImage(K.imgs[name], 0, 0, 2560, 1440);
+const mugSteam = (x, y) => (c, lt) => { for (let k = 0; k < 5; k++) { const life = (lt * .5 + k / 5) % 1, sx = x + Math.sin(life * 6 + k) * 10, sy = y - life * 90, rad = 10 + life * 22; const g = c.createRadialGradient(sx, sy, 0, sx, sy, rad); g.addColorStop(0, `rgba(255,255,255,${.25 * (1 - life)})`); g.addColorStop(1, 'rgba(255,255,255,0)'); c.fillStyle = g; c.fillRect(sx - rad, sy - rad, rad * 2, rad * 2); } };
+// the founders (gumball style). Jensen matches act 1's grown-up look
+const JENSEN = { costume: 'shirt', hair: 'swept', hairCol: '#1e1a18', glasses: true, seed: 11 };
+const CHRIS = { costume: 'shirtsleeves', hair: 'curly', hairCol: '#3a2a1e', seed: 4 };
+const CURTIS = { costume: 'office', hair: 'short', hairCol: '#4a3a2a', beard: true, seed: 6 };
+// name tag (screen) with a leader to a point
+const tag = (c, lt, at, x, y, tx, ty, name, sub) => { const p = pop(lt, at); if (p <= 0) return; c.save(); c.globalAlpha = Math.min(1, p); c.strokeStyle = CREAM; c.lineWidth = 3; c.setLineDash([8, 6]); c.beginPath(); c.moveTo(tx, ty); c.lineTo(x, y + 30); c.stroke(); c.setLineDash([]); c.translate(x, y); c.scale(p, p); c.font = font(40); const w = Math.max(c.measureText(name).width, 120) + 40; c.fillStyle = 'rgba(10,8,6,.35)'; c.fillRect(-w / 2 + 6, -30, w, 92); c.fillStyle = CREAM; c.fillRect(-w / 2, -36, w, 92); c.strokeStyle = INK; c.lineWidth = 4; c.strokeRect(-w / 2, -36, w, 92); c.fillStyle = GREEN; c.fillRect(-w / 2, -36, w, 10); c.fillStyle = INK; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(name, 0, 0); c.font = font(22, 'Oswald'); c.fillStyle = '#6a5a48'; c.fillText(sub, 0, 36); c.restore(); };
+// CRT screen helpers: draw inside the plate's screen rect (world coords) with scanlines + glare
+const SCR = [790, 245, 980, 715];
+const screen = (fn) => (c, lt, u, S) => { const [x, y, w, h] = SCR; c.save(); c.beginPath(); c.roundRect(x, y, w, h, 40); c.clip(); c.translate(x, y); fn(c, lt, w, h, S); c.restore();
+  c.save(); c.beginPath(); c.roundRect(x, y, w, h, 40); c.clip(); c.fillStyle = 'rgba(0,0,0,.18)'; for (let yy = y; yy < y + h; yy += 5) c.fillRect(x, yy, w, 2); const g = c.createRadialGradient(x + w * .3, y + h * .2, 0, x + w * .3, y + h * .2, w * .7); g.addColorStop(0, 'rgba(255,255,255,.13)'); g.addColorStop(1, 'rgba(255,255,255,0)'); c.fillStyle = g; c.fillRect(x, y, w, h); const v = c.createRadialGradient(x + w / 2, y + h / 2, h * .35, x + w / 2, y + h / 2, w * .7); v.addColorStop(0, 'rgba(0,0,0,0)'); v.addColorStop(1, 'rgba(0,0,0,.55)'); c.fillStyle = v; c.fillRect(x, y, w, h); c.restore();
+  c.save(); c.globalCompositeOperation = 'screen'; const gl = c.createRadialGradient(x + w / 2, y + h / 2, 0, x + w / 2, y + h / 2, w); gl.addColorStop(0, 'rgba(120,200,170,.12)'); gl.addColorStop(1, 'rgba(120,200,170,0)'); c.fillStyle = gl; c.fillRect(x - 300, y - 300, w + 600, h + 600); c.restore(); };
+// little pixel sprite (screen-local)
+const PIX = ['..XXXX..', '.XXXXXX.', '.XOXXOX.', '.XXXXXX.', '..XXXX..', '.XXXXXX.', 'X.XXXX.X', '..X..X..'];
+const pixHero = (c, x, y, s, ph) => { c.save(); c.translate(x, y); PIX.forEach((row, j) => [...row].forEach((ch, i) => { if (ch === '.') return; let yy = j; if (j === 7 && ph) { if ((i === 2 && ph === 1) || (i === 5 && ph === 2)) yy -= 1; } c.fillStyle = ch === 'O' ? '#101814' : '#f2c84a'; c.fillRect(i * s, yy * s, s, s); })); c.restore(); };
+// a low-poly shaded shape that turns (screen-local), drawn with triangles
+const polyShape = (c, cx, cy, rad, ang, tri = true, col = [120, 220, 160]) => { const pts = []; const N = 8, M = 5; for (let j = 0; j <= M; j++) { const la = -Math.PI / 2 + j / M * Math.PI; for (let i = 0; i < N; i++) { const lo = i / N * TAU + ang; pts.push([Math.cos(la) * Math.cos(lo), Math.sin(la), Math.cos(la) * Math.sin(lo)]); } }
+  const P = (q) => [cx + q[0] * rad, cy + q[1] * rad]; const faces = []; for (let j = 0; j < M; j++) for (let i = 0; i < N; i++) { const a = pts[j * N + i], b = pts[j * N + (i + 1) % N], d = pts[(j + 1) * N + i], e = pts[(j + 1) * N + (i + 1) % N]; faces.push([a, b, e], [a, e, d]); }
+  faces.map(f => ({ f, z: (f[0][2] + f[1][2] + f[2][2]) / 3 })).filter(o => o.z > -.05).sort((p, q) => p.z - q.z).forEach(({ f, z }) => { const n = .45 + .55 * Math.max(0, z * .7 + (f[0][1] + f[1][1] + f[2][1]) / 3 * -.3); c.fillStyle = `rgb(${col.map(v => Math.round(v * n)).join(',')})`; c.beginPath(); f.map(P).forEach(([x, y], k) => k ? c.lineTo(x, y) : c.moveTo(x, y)); c.closePath(); c.fill(); if (tri) { c.strokeStyle = 'rgba(10,30,20,.8)'; c.lineWidth = 2; c.stroke(); } }); };
+// a smooth shape built from curved quad patches (screen-local); 'built' = how many patches are filled so far
+const patchShape = (c, cx, cy, rad, ang, built) => { const N = 6, M = 4; const P = (la, lo) => { const x = Math.cos(la) * Math.cos(lo + ang), y = Math.sin(la), z = Math.cos(la) * Math.sin(lo + ang); return [cx + x * rad, cy + y * rad * .92, z]; };
+  const g = c.createRadialGradient(cx - rad * .35, cy - rad * .4, rad * .1, cx, cy, rad); g.addColorStop(0, '#d8f0a0'); g.addColorStop(.6, '#76b900'); g.addColorStop(1, '#2a4a00'); let n = 0;
+  for (let j = 0; j < M; j++) for (let i = 0; i < N; i++) { const la0 = -Math.PI / 2 + j / M * Math.PI, la1 = la0 + Math.PI / M, lo0 = i / N * TAU, lo1 = lo0 + TAU / N; const mid = P((la0 + la1) / 2, (lo0 + lo1) / 2); if (mid[2] < -.05) continue; n++; const on = K.clamp(built - n + 1);
+    if (on <= 0) continue; c.beginPath(); const steps = 8; for (let k = 0; k <= steps; k++) { const p = P(la0, lo0 + (lo1 - lo0) * k / steps); k ? c.lineTo(p[0], p[1]) : c.moveTo(p[0], p[1]); } for (let k = 0; k <= steps; k++) { const p = P(la0 + (la1 - la0) * k / steps, lo1); c.lineTo(p[0], p[1]); } for (let k = steps; k >= 0; k--) { const p = P(la1, lo0 + (lo1 - lo0) * k / steps); c.lineTo(p[0], p[1]); } for (let k = steps; k >= 0; k--) { const p = P(la0 + (la1 - la0) * k / steps, lo0); c.lineTo(p[0], p[1]); } c.closePath();
+    c.save(); c.globalAlpha = on; c.fillStyle = g; c.fill(); c.strokeStyle = 'rgba(230,255,200,.55)'; c.lineWidth = 2.5; c.stroke(); c.restore(); } };
+// the NV1 board (world coords, centre x,y, width w; turn = rotation about the vertical axis)
+const nv1 = (c, x, y, w, turn, dust = 0) => { const k = Math.cos(turn), h = w * .42; c.save(); c.translate(x, y);
+  c.fillStyle = 'rgba(20,12,4,.35)'; c.beginPath(); c.ellipse(0, h * .55, w * .55 * Math.max(.25, Math.abs(k)), h * .12, 0, 0, 7); c.fill();
+  c.transform(k, Math.sin(turn) * .12, 0, 1, 0, 0); const side = k < 0;
+  c.fillStyle = side ? '#1e4a24' : '#2a7a34'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.moveTo(-w / 2, -h / 2); c.lineTo(w / 2, -h / 2); c.lineTo(w / 2, h / 2); c.lineTo(-w * .1, h / 2); c.lineTo(-w * .1, h / 2 + 22); c.lineTo(-w * .42, h / 2 + 22); c.lineTo(-w * .42, h / 2); c.lineTo(-w / 2, h / 2); c.closePath(); c.fill(); c.stroke();
+  for (let i = 0; i < 14; i++) { c.fillStyle = '#e8c040'; c.fillRect(-w * .41 + i * w * .022, h / 2 + 4, w * .013, 16); }
+  if (!side) { c.strokeStyle = 'rgba(232,192,64,.55)'; c.lineWidth = 2; for (let i = 0; i < 18; i++) { const yy = -h / 2 + 20 + i * h / 20; c.beginPath(); c.moveTo(-w * .46, yy); c.lineTo(-w * .2 + (i % 4) * 30, yy); c.lineTo(-w * .15 + (i % 4) * 30, yy + 14); c.stroke(); }
+    const chip = (cx, cy, cw, chh, label, col = '#2a2a2e') => { c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(cx - cw / 2, cy - chh / 2, cw, chh); c.strokeRect(cx - cw / 2, cy - chh / 2, cw, chh); c.fillStyle = '#c8c8c8'; for (let i = 0; i < 8; i++) { c.fillRect(cx - cw / 2 + 6 + i * (cw - 12) / 8, cy - chh / 2 - 6, 4, 6); c.fillRect(cx - cw / 2 + 6 + i * (cw - 12) / 8, cy + chh / 2, 4, 6); } if (label) { c.fillStyle = '#e8e8e8'; c.font = font(Math.round(chh * .32), 'Oswald'); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(label, cx, cy); } };
+    chip(-w * .05, -h * .04, w * .26, w * .2, 'NV1'); chip(w * .22, -h * .18, w * .1, w * .07, 'AUDIO', '#3a3a40'); for (let i = 0; i < 4; i++) chip(-w * .32 + (i % 2) * w * .1, -h * .22 + Math.floor(i / 2) * h * .3, w * .07, w * .04, '', '#222');
+    for (let i = 0; i < 6; i++) { c.fillStyle = i % 2 ? '#c8402e' : '#3a6ac8'; c.beginPath(); c.arc(w * .14 + i * w * .03, h * .3, 7, 0, 7); c.fill(); }
+    c.fillStyle = '#b8bcc4'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(w * .42, -h * .46, w * .08, h * .92); c.strokeRect(w * .42, -h * .46, w * .08, h * .92); c.fillStyle = '#2a2a2e'; c.fillRect(w * .435, -h * .38, w * .05, h * .18); c.fillRect(w * .435, -h * .05, w * .05, h * .22); c.fillStyle = '#c8a84a'; for (let i = 0; i < 5; i++) c.fillRect(w * .445, -h * .03 + i * h * .04, w * .03, 4); }
+  else { c.fillStyle = 'rgba(232,192,64,.3)'; for (let i = 0; i < 40; i++) c.fillRect(-w * .45 + (i * 37) % (w * .9), -h * .4 + (i * 53) % (h * .8), 4, 4); }
+  if (dust > 0) { c.fillStyle = `rgba(200,190,170,${.55 * dust})`; c.fillRect(-w / 2, -h / 2, w, h); c.fillStyle = `rgba(230,220,200,${.5 * dust})`; for (let i = 0; i < 260; i++) c.fillRect(-w / 2 + (i * 97) % w, -h / 2 + (i * 61) % h, 3, 3); }
+  c.restore(); };
+// label with leader line (world)
+const leader = (c, lt, at, px, py, lx, ly, txt) => { const p = K.seg(lt, at, at + .5); if (p <= 0) return; c.save(); c.strokeStyle = CREAM; c.lineWidth = 4; c.beginPath(); c.moveTo(px, py); c.lineTo(px + (lx - px) * p, py + (ly - py) * p); c.stroke(); c.fillStyle = CREAM; c.beginPath(); c.arc(px, py, 8, 0, 7); c.fill(); c.strokeStyle = INK; c.lineWidth = 3; c.stroke(); if (p > .6) { const a = pop(lt, at + .3); c.translate(lx, ly); c.scale(a, a); c.font = font(46); const w = c.measureText(txt).width + 36; c.fillStyle = 'rgba(10,8,6,.4)'; c.fillRect(-w / 2 + 6, -30, w, 66); c.fillStyle = INK; c.fillRect(-w / 2, -36, w, 66); c.fillStyle = CREAM; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(txt, 0, 0); } c.restore(); };
+// game box with a triangle-mesh cover (world). k = pop scale
+const TITLES = ['ROBO RALLY', 'STAR TANK', 'DUNGEON 3D', 'TURBO KART', 'MECH ARENA', 'SKY ACE', 'CAVE RUN', 'NEON RACE', 'FORT BLAST', 'SUB HUNT', 'GOLF PRO', 'DRAGON KEEP', 'ICE HOCKEY', 'JET WING', 'TOMB QUEST', 'RALLY X'];
+const COVERS = ['#2a3a7a', '#7a2a2a', '#2a5a3a', '#5a2a6a', '#1e1e2a', '#8a5a1a', '#1a5a6a', '#6a1a3a'];
+const gameBox = (c, x, y, k, i, flash = 0) => { if (k <= 0) return; const w = 150, h = 200; c.save(); c.translate(x, y); c.scale(k, k); c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(-w / 2 + 10, -h + 8, w, h); c.fillStyle = COVERS[i % COVERS.length]; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-w / 2, -h, w, h); c.strokeRect(-w / 2, -h, w, h); c.fillStyle = 'rgba(0,0,0,.25)'; c.fillRect(w / 2 - 12, -h, 12, h);
+  c.save(); c.beginPath(); c.rect(-w / 2 + 10, -h + 44, w - 30, h - 74); c.clip(); const sx = -w / 2 + 10, sy = -h + 44, cw = w - 30, ch = h - 74; c.strokeStyle = flash > 0 ? `rgba(255,${200 + 55 * flash},80,1)` : 'rgba(200,255,220,.75)'; c.lineWidth = 1.6 + flash * 1.5; const n = 5; for (let a = 0; a <= n; a++) for (let b = 0; b <= n; b++) { const px = sx + a * cw / n + ((a * 7 + b * 3 + i) % 5 - 2) * 3, py = sy + b * ch / n + ((a * 3 + b * 5 + i) % 5 - 2) * 3; c.beginPath(); c.moveTo(px, py); c.lineTo(px + cw / n, py); c.lineTo(px, py + ch / n); c.closePath(); c.stroke(); } c.restore();
+  c.fillStyle = '#f6efe2'; c.font = font(20, 'Anton'); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(TITLES[i % TITLES.length], -6, -h + 22); c.fillStyle = 'rgba(255,255,255,.75)'; c.font = font(13, 'Oswald'); c.fillText('FOR WINDOWS 95', -6, -14); c.restore(); };
+// shipping/return box (world)
+const crate = (c, x, y, w, h, k, label = 'RETURN') => { if (k <= 0) return; c.save(); c.translate(x, y); c.scale(1, k); c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(-w / 2 + 10, -4, w, 12); c.fillStyle = '#b88a52'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(-w / 2, -h, w, h); c.strokeRect(-w / 2, -h, w, h); c.fillStyle = 'rgba(255,255,255,.15)'; c.fillRect(-w / 2, -h, w, 10); c.fillStyle = '#d8c8a0'; c.fillRect(-10, -h, 20, h); c.save(); c.translate(0, -h / 2); c.rotate(-.06); c.strokeStyle = RED; c.lineWidth = 5; c.strokeRect(-w * .34, -26, w * .68, 52); c.fillStyle = RED; c.font = font(Math.round(w * .13)); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(label, 0, 2); c.restore(); c.restore(); };
+
+window.SHOTS = [
+  // 1 MED: the three founders in the Denny's booth; name tags pop as each is named
+const IRI = { costume: 'suit', hair: 'short', hairCol: '#4a4a4c', glasses: true, seed: 23 };
+const redX = (c, x, y, w, h, u, lw = 14) => { if (u <= 0) return; c.save(); c.strokeStyle = RED; c.lineWidth = lw; c.lineCap = 'round'; const a = Math.min(1, u * 2), b = Math.max(0, u * 2 - 1); c.beginPath(); c.moveTo(x - w / 2, y - h / 2); c.lineTo(x - w / 2 + w * a, y - h / 2 + h * a); c.stroke(); if (b > 0) { c.beginPath(); c.moveTo(x + w / 2, y - h / 2); c.lineTo(x + w / 2 - w * b, y - h / 2 + h * b); c.stroke(); } c.restore(); };
+const darkGrid = (c) => { const g = c.createLinearGradient(0, 0, 0, SH); g.addColorStop(0, '#12161e'); g.addColorStop(1, '#0a0c10'); c.fillStyle = g; c.fillRect(0, 0, SW, SH); c.strokeStyle = 'rgba(118,185,0,.08)'; c.lineWidth = 1; for (let x = 0; x < SW; x += 60) { c.beginPath(); c.moveTo(x, 0); c.lineTo(x, SH); c.stroke(); } for (let y = 0; y < SH; y += 60) { c.beginPath(); c.moveTo(0, y); c.lineTo(SW, y); c.stroke(); } };
+// cash tank (screen) with level 0..1
+const tank = (c, x, y, lv, lt, a = 1, label = 'CASH') => { if (a <= 0) return; const warn = lv < .3 ? .5 + .5 * Math.sin(lt * 12) : 0; c.save(); c.globalAlpha = a; c.translate(x, y); c.fillStyle = 'rgba(0,0,0,.4)'; c.beginPath(); c.roundRect(-150, -300, 312, 610, 30); c.fill(); c.fillStyle = '#1e242e'; c.strokeStyle = CREAM; c.lineWidth = 6; c.beginPath(); c.roundRect(-160, -310, 312, 610, 30); c.fill(); c.stroke(); const hh = 560 * lv; c.fillStyle = lv < .3 ? `rgb(${200 + 55 * warn},60,40)` : GREEN; c.beginPath(); c.roundRect(-136, 276 - hh, 264, hh, 18); c.fill(); c.fillStyle = 'rgba(255,255,255,.2)'; c.fillRect(-120, 276 - hh, 20, hh); c.fillStyle = CREAM; c.font = font(64); c.textAlign = 'center'; c.fillText(label, -4, -340); c.restore(); };
+// rain drips sliding down the Tokyo window (world)
+const windowRain = (c, lt) => { c.save(); c.strokeStyle = 'rgba(200,220,255,.35)'; c.lineWidth = 3; c.lineCap = 'round'; for (let i = 0; i < 46; i++) { const x = 320 + (i * 211) % 1920, sp = 90 + (i * 37) % 120, y = 180 + ((lt * sp + i * 97) % 620); c.beginPath(); c.moveTo(x, y - 40); c.lineTo(x + 2, y); c.stroke(); c.fillStyle = 'rgba(220,235,255,.5)'; c.beginPath(); c.arc(x + 2, y, 4, 0, 7); c.fill(); } c.restore(); };
+// a contract sheet (local, centred)
+const contract = (c, w, h) => { c.fillStyle = 'rgba(0,0,0,.25)'; c.fillRect(-w / 2 + 10, -h / 2 + 12, w, h); c.fillStyle = '#fbf8ee'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(-w / 2, -h / 2, w, h); c.strokeRect(-w / 2, -h / 2, w, h); c.fillStyle = '#1e4aa0'; c.font = font(w * .14); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('SEGA', 0, -h * .34); c.fillStyle = INK; c.font = font(w * .05, 'Oswald'); c.fillText('DEVELOPMENT AGREEMENT', 0, -h * .2); c.strokeStyle = 'rgba(40,40,60,.4)'; c.lineWidth = 2; for (let k = 0; k < 8; k++) { c.beginPath(); c.moveTo(-w * .38, -h * .08 + k * h * .06); c.lineTo(w * .38, -h * .08 + k * h * .06); c.stroke(); } c.strokeStyle = '#1e2a6a'; c.lineWidth = 3; c.beginPath(); c.moveTo(-w * .34, h * .4); c.bezierCurveTo(-w * .2, h * .3, -w * .1, h * .46, 0, h * .38); c.stroke(); c.beginPath(); c.moveTo(w * .08, h * .4); c.bezierCurveTo(w * .2, h * .3, w * .28, h * .46, w * .36, h * .36); c.stroke(); };
+// fork card (screen)
+const choice = (c, lt, at, x, y, head, body, col) => { const a = pop(lt, at); if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.4)'; c.beginPath(); c.roundRect(-296, -116, 600, 240, 20); c.fill(); c.fillStyle = '#1e242e'; c.strokeStyle = col; c.lineWidth = 6; c.beginPath(); c.roundRect(-300, -120, 600, 240, 20); c.fill(); c.stroke(); c.fillStyle = col; c.font = font(58); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(head, 0, -46); c.fillStyle = CREAM; c.font = font(34, 'Oswald'); body.split('\n').forEach((l, i) => c.fillText(l, 0, 24 + i * 44)); c.restore(); };
+
+window.SHOTS = [
+  // 1 the Sega contract slides onto the desk; light warms
+  { plate: 'office', cam: { z: [1.1, 1.2], x: [1300, 1320], y: [760, 780] }, bed: [['office_loop', .3]], inSfx: false,
+    figs: [{ x: 1650, y: 1330, s: 2.3, ...JENSEN, pose: 'stand', facing: -1 }],
+    init: S => { const tL = A.at(S, 'lifeline', 1.2), tS = A.at(S, 'Sega', 2.4), tC = A.at(S, 'game console', 5.0);
+      S.D.figs[0].anim = (o, lt) => { o.pose = lt > tS + .3 ? 'present' : 'stand'; o.mood = lt > tS + .3 ? 'happy' : 'neutral'; };
+      S.D.front = [(c, lt) => { const u = E.out(K.seg(lt, tS - .3, tS + .5)); if (u <= 0) return; c.save(); c.translate(900 - (1 - u) * 900, 1180); c.rotate(-.12 + u * .06); c.transform(1, 0, -.25, .5, 0, 0); contract(c, 520, 640); c.restore(); }];
+      S.D.over = [(c, lt) => { const w = K.seg(lt, tS, tS + 1.2); if (w <= 0) return; c.save(); c.globalCompositeOperation = 'soft-light'; c.fillStyle = `rgba(255,190,90,${.4 * w})`; c.fillRect(0, 0, SW, SH); c.restore(); },
+        (c, lt) => K.card(c, 'ONE LIFELINE', lt, { at: tL, x: 420, y: 170, px: 56, rot: -3 }), (c, lt) => K.card(c, 'THE SEGA CONTRACT', lt, { at: tS + .2, x: 1400, y: 170, px: 52, rot: 3 }), (c, lt) => K.card(c, 'NEXT CONSOLE\'S GRAPHICS CHIP', lt, { at: tC, x: 960, y: 960, px: 40, rot: -1 }), (c, lt) => K.dateTag(c, '1995', lt, { at: .4 })];
+      S.D.sfx = [[tL, 'pop', .4], [tS - .3, 'paper', .55], [tS + .2, 'chime', .45], [tC, 'pop', .4]]; } },
+  // 2 engineers at the whiteboard: the curved model gets crossed out
+  { plate: 'lab_wb', cam: { z: [1.02, 1.08], x: [1280, 1280], y: [740, 760] }, bed: [['office_loop', .3]],
+    figs: [{ x: 360, y: 1330, s: 2.2, ...CHRIS, pose: 'stand', facing: 1 }, { x: 2160, y: 1330, s: 2.2, ...CURTIS, pose: 'stand', facing: -1 }],
+    init: S => { const tC = A.at(S, 'curved-surface', 2.0), tA = A.at(S, 'abandoning', 5.0);
+      S.D.figs[0].anim = (o, lt) => { o.pose = lt > tA ? 'think' : 'point'; o.mood = lt > tA ? 'worried' : 'neutral'; };
+      S.D.figs[1].anim = (o, lt) => { o.pose = lt > tA + .3 ? 'shrug' : 'think'; o.mood = 'worried'; };
+      S.D.live = [(c, lt) => { const a = K.seg(lt, .1, .8); if (a <= 0) return; c.save(); c.globalAlpha = a; c.translate(1000, 540); c.scale(1.2, 1.2); c.strokeStyle = '#2a4ac8'; c.lineWidth = 5; patchShape(c, 0, 0, 170, lt * .5, 1); c.restore(); c.save(); c.globalAlpha = a; c.fillStyle = '#2a4ac8'; c.font = font(56, 'Caveat'); c.textAlign = 'center'; c.fillText('NV2 for SEGA', 1000, 300); c.restore();
+          redX(c, 1000, 540, 520, 480, K.seg(lt, tA, tA + .5), 18);
+          const b = pop(lt, tA - .4); if (b > 0) { c.save(); c.translate(1700, 520); c.scale(b, b); polyShape(c, 0, 0, 150, lt * .7, true); c.restore(); c.fillStyle = '#1a1a1a'; c.font = font(52, 'Caveat'); c.textAlign = 'center'; c.fillText('everyone else: triangles', 1700, 780); } }];
+      S.D.over = [(c, lt) => K.card(c, 'SAME CURVED DESIGN', lt, { at: tC, x: 960, y: 140, px: 52, rot: -2 })];
+      S.D.sfx = [[.1, 'scrape', .3], [tC, 'pop', .4], [tA, 'scrape', .55], [tA + .3, 'tension', .35]]; } },
+  // 3 dark office: two bad doors, the cash tank glowing near empty
+  { plate: 'office', cam: { z: [1.15, 1.3], x: [1500, 1560], y: [780, 800] }, bed: [['drone', .35]],
+    figs: [{ x: 1650, y: 1330, s: 2.3, ...JENSEN, pose: 'think', facing: -1, mood: 'worried' }],
+    init: S => { const tF = A.at(S, 'finished it', .8), tQ = A.at(S, 'If they quit', 3.4);
+      S.D.over = [(c) => { c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = 'rgba(40,50,80,.75)'; c.fillRect(0, 0, SW, SH); c.restore(); },
+        (c, lt) => choice(c, lt, tF, 430, 330, 'FINISH IT', '1 year building\na dead chip', '#e8b44a'), (c, lt) => choice(c, lt, tQ, 430, 720, 'QUIT', 'lose the only\npaying customer', RED),
+        (c, lt) => { const a = K.seg(lt, .2, .8); c.save(); c.translate(1640, 560); c.scale(.6, .6); tank(c, 0, 0, .12, lt, a); c.restore(); }];
+      S.D.sfx = [[.2, 'heartbeat', .4], [tF, 'hit', .45], [tQ, 'hit', .45]]; } },
+  // 4 Tokyo, rain on the glass: Jensen walks in, bows, and tells Sega to find another partner
+  { plate: 'tokyo_room', cam: { z: [1.0, 1.08], x: [1280, 1280], y: [760, 780] }, bed: [['rain_loop', .45], ['hum_loop', .2]],
+    figs: [{ x: 300, y: 1330, s: 2.1, ...JENSEN, facing: 1, pose: 'stand', walk: { x0: 200, x1: 700, t0: .3, dur: 2.0 } }, { x: 1860, y: 1330, s: 2.1, ...IRI, facing: -1, pose: 'stand' }],
+    init: S => { const tU = A.at(S, 'unusual', 2.4), tW = A.at(S, 'approach was wrong', 7.2), tP = A.at(S, 'another partner', 9.4);
+      S.D.figs[0].anim = (o, lt) => { if (lt > 2.3) { o.pose = lt > tW - .5 ? 'present' : 'stand'; o.lean = lt > tU && lt < tU + 1.6 ? 22 * Math.sin(Math.min(1, (lt - tU) / 1.6) * Math.PI) : 0; o.talk = lt > tW - .8 && lt < tP + 1; } o.mood = lt > tW - .5 ? 'worried' : 'neutral'; };
+      S.D.figs[1].anim = (o, lt) => { o.lean = lt > tU + .2 && lt < tU + 1.6 ? 12 * Math.sin(Math.min(1, (lt - tU - .2) / 1.4) * Math.PI) : 0; o.mood = lt > tW ? 'shocked' : 'neutral'; o.pose = lt > tP ? 'think' : 'stand'; };
+      S.D.live = [windowRain];
+      S.D.over = [(c, lt) => K.badge(c, 'TOKYO · SEGA HQ', lt, { at: .3 }), (c, lt) => K.card(c, 'SHOICHIRO IRIMAJIRI\nSEGA CEO', lt, { at: 4.4, x: 1500, y: 200, px: 42, rot: 3, until: tW - .2 }),
+        (c, lt) => K.card(c, '"Our approach is wrong."', lt, { at: tW, x: 600, y: 230, px: 54, rot: -2, fam: 'Caveat' }), (c, lt) => K.card(c, '"Find another partner."', lt, { at: tP, x: 1350, y: 330, px: 54, rot: 2, fam: 'Caveat' })];
+      S.D.sfx = [[.3, 'footsteps', .4], [tU, 'whoosh_soft', .3], [tW, 'hit', .45], [tP, 'pop', .4]]; } },
+  // 5 the $5,000,000 cheque floats between them
+  { plate: 'tokyo_room', cam: { z: [1.15, 1.22], x: [1280, 1280], y: [800, 800] }, bed: [['rain_loop', .4], ['hum_loop', .2]],
+    figs: [{ x: 700, y: 1330, s: 2.1, ...JENSEN, facing: 1, pose: 'present', talk: true }, { x: 1860, y: 1330, s: 2.1, ...IRI, facing: -1, pose: 'think' }],
+    init: S => { const tR = A.at(S, 'rest of the money', 1.4), tI = A.at(S, 'investment', 3.2), tU = A.at(S, 'go under', 5.6);
+      S.D.figs[0].anim = (o, lt) => { o.mood = lt > tU - .3 ? 'worried' : 'neutral'; o.talk = lt < tU + .6; };
+      S.D.live = [windowRain];
+      S.D.front = [(c, lt) => { const a = pop(lt, tR); if (a <= 0) return; c.save(); c.translate(1280, 900 + Math.sin(lt * 2) * 14); c.scale(a, a); c.rotate(Math.sin(lt * 1.2) * .08); c.transform(Math.cos(lt * 1.1) * .25 + .75, 0, 0, 1, 0, 0); c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(-286, -116, 580, 240); c.fillStyle = '#f2ecd2'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-290, -120, 580, 240); c.strokeRect(-290, -120, 580, 240); c.strokeStyle = 'rgba(80,120,80,.4)'; c.lineWidth = 2; for (let k = 0; k < 10; k++) { c.beginPath(); c.moveTo(-280, -110 + k * 24); c.bezierCurveTo(-100, -100 + k * 24, 100, -120 + k * 24, 280, -110 + k * 24); c.stroke(); } c.fillStyle = INK; c.font = font(70); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('$5,000,000', 0, -6); c.font = font(26, 'Oswald'); c.fillText('PAY TO: NVIDIA', -150, -84); c.restore(); }];
+      S.D.over = [(c, lt) => { const a = pop(lt, tI); if (a <= 0) return; c.save(); c.translate(960, 160); c.scale(a, a); c.fillStyle = GREEN; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.roundRect(-330, -44, 660, 88, 16); c.fill(); c.stroke(); c.fillStyle = '#10140a'; c.font = font(50); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('AN INVESTMENT, NOT A PAYMENT', 0, 4); c.restore(); },
+        (c, lt) => K.card(c, 'OR NVIDIA GOES UNDER', lt, { at: tU, x: 960, y: 300, px: 42, rot: -2, bg: RED, col: CREAM })];
+      S.D.sfx = [[tR, 'paper', .5], [tR + .1, 'coins', .3], [tI, 'stamp', .5], [tU, 'heartbeat', .4]]; } },
+  // 6 close on Irimajiri: a slow nod, a faint smile
+  { plate: 'tokyo_room', cam: { z: [1.7, 1.85], x: [1700, 1740], y: [860, 860] }, bed: [['rain_loop', .35]],
+    figs: [{ x: 1860, y: 1330, s: 2.1, ...IRI, facing: -1, pose: 'stand' }, { x: 700, y: 1330, s: 2.1, ...JENSEN, facing: 1, pose: 'stand' }],
+    init: S => { const tA = A.at(S, 'agreed', .7), tL = A.at(S, 'liked him', 5.0);
+      S.D.figs[0].anim = (o, lt) => { o.lean = lt > tA && lt < tA + 1.8 ? 10 * Math.max(0, Math.sin((lt - tA) * 3.4)) : 0; o.mood = lt > tA + .6 ? 'happy' : 'neutral'; };
+      S.D.live = [windowRain];
+      S.D.over = [(c, lt) => K.card(c, 'HE AGREED', lt, { at: tA, x: 520, y: 200, px: 60, rot: -3 }), (c, lt) => K.card(c, '"He liked me."', lt, { at: tL - .4, x: 560, y: 760, px: 58, rot: 2, fam: 'Caveat' }), (c, lt) => K.outlined(c, 'JENSEN, LOOKING BACK (PARAPHRASED)', 560, 880, 26, { fam: 'Oswald', alpha: K.seg(lt, tL, tL + .4) })];
+      S.D.sfx = [[tA, 'chime', .45], [tL - .4, 'paper', .4]]; } },
+  // 7 the cash tank refills: +6 MONTHS, then starts draining again
+  { draw: (c) => darkGrid(c), bed: [['drone', .3]],
+    init: S => { const tF = A.at(S, 'five million', .6), tS = A.at(S, 'six months', 3.0);
+      S.D.over = [(c, lt) => { const up = E.back(K.seg(lt, tF, tF + 1.0)), lv = .12 + .7 * Math.min(1, up) - .05 * Math.max(0, lt - tS - .3); tank(c, 1350, 560, K.clamp(lv, .05, .95), lt, 1); },
+        (c, lt) => { const a = pop(lt, tF); if (a <= 0) return; c.save(); c.translate(600, 420); c.scale(a, a); K.outlined(c, '+$5,000,000', 0, 0, 96, { fill: GREEN }); c.restore(); },
+        (c, lt) => { const a = pop(lt, tS); if (a <= 0) return; c.save(); c.translate(600, 640); c.scale(a, a); K.outlined(c, '≈ 6 MONTHS', 0, 0, 110, { fill: GOLD }); c.restore(); if (lt > tS + .4) { c.fillStyle = 'rgba(246,239,226,.7)'; c.font = font(34, 'Oswald'); c.textAlign = 'center'; c.fillText('THE CLOCK STARTS AGAIN', 600, 760); } }];
+      S.D.sfx = [[tF, 'coins_cascade', .45], [tF + .2, 'swell', .35], [tS, 'chime', .5], [tS + .5, 'tick', .4], [tS + 1.1, 'tick', .4], [tS + 1.7, 'tick', .4]]; } },
+];
+
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; D.sfx = D.sfx || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>
