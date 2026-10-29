@@ -1,0 +1,199 @@
+[
+{
+"id": 1,
+"frame": 677,
+"hx": 920,
+"hy": 420,
+"z": 1.0,
+"lines": [
+"GUESS WHO",
+"LIVED BETTER"
+],
+"hi": 1,
+"acc": "#e8b44a"
+},
+{
+"id": 2,
+"frame": 465,
+"hx": 880,
+"hy": 300,
+"z": 1.2,
+"lines": [
+"FARMING MADE",
+"US SHORTER"
+],
+"hi": 1,
+"acc": "#ff5a4a"
+},
+{
+"id": 3,
+"frame": 916,
+"hx": 900,
+"hy": 420,
+"z": 1.2,
+"lines": [
+"FOOD IN",
+"15 HRS A WEEK"
+],
+"hi": 1,
+"acc": "#76d24a"
+},
+{
+"id": 4,
+"frame": 1089,
+"hx": 960,
+"hy": 350,
+"z": 1.3,
+"lines": [
+"DID THEY WORK",
+"LESS THAN YOU?"
+],
+"hi": 1,
+"acc": "#e8b44a"
+},
+{
+"id": 5,
+"frame": 874,
+"hx": 888,
+"hy": 478,
+"z": 1.3,
+"lines": [
+"THEY HUNTED",
+"BY RUNNING"
+],
+"hi": 1,
+"acc": "#ff5a4a"
+},
+{
+"id": 6,
+"frame": 148,
+"hx": 860,
+"hy": 600,
+"z": 1.0,
+"lines": [
+"THE ORIGINAL",
+"MORNING MEETING"
+],
+"hi": 1,
+"acc": "#4ab8ff"
+},
+{
+"id": 7,
+"frame": 711,
+"hx": 840,
+"hy": 260,
+"z": 1.4,
+"lines": [
+"STONE AGE",
+"JEWELLERY"
+],
+"hi": 1,
+"acc": "#e8b44a"
+},
+{
+"id": 8,
+"frame": 448,
+"hx": 760,
+"hy": 790,
+"z": 1.4,
+"lines": [
+"40,000 YEAR",
+"OLD FLUTE"
+],
+"hi": 1,
+"acc": "#4ab8ff"
+},
+{
+"id": 9,
+"frame": 419,
+"hx": 840,
+"hy": 330,
+"z": 1.0,
+"lines": [
+"FRIENDS WERE",
+"INSURANCE"
+],
+"hi": 1,
+"acc": "#76d24a"
+},
+{
+"id": 10,
+"frame": 1061,
+"hx": 1150,
+"hy": 640,
+"z": 1.25,
+"lines": [
+"BY THE FIRE:",
+"81% STORIES"
+],
+"hi": 1,
+"acc": "#e8b44a"
+},
+{
+"id": 11,
+"frame": 1084,
+"hx": 672,
+"hy": 420,
+"z": 1.5,
+"lines": [
+"AWAKE AT 2AM?",
+"MAYBE NORMAL"
+],
+"hi": 1,
+"acc": "#4ab8ff"
+},
+{
+"id": 12,
+"frame": 379,
+"hx": 408,
+"hy": 430,
+"z": 1.4,
+"dx": 100,
+"lines": [
+"AN UPGRADE?",
+"IT WAS A LOOP"
+],
+"hi": 1,
+"acc": "#ff5a4a"
+},
+{
+"id": 13,
+"frame": 301,
+"hx": 700,
+"hy": 640,
+"z": 1.3,
+"lines": [
+"NO GOING",
+"BACK"
+],
+"hi": 1,
+"acc": "#ff5a4a"
+},
+{
+"id": 14,
+"frame": 95,
+"hx": 936,
+"hy": 680,
+"z": 1.5,
+"lines": [
+"WHO OWNS",
+"YOUR HOURS?"
+],
+"hi": 1,
+"acc": "#e8b44a"
+},
+{
+"id": 15,
+"frame": 972,
+"hx": 888,
+"hy": 576,
+"z": 1.4,
+"dx": -100,
+"lines": [
+"THE FINISH LINE",
+"THEY HAD IT"
+],
+"hi": 0,
+"acc": "#ff5a4a"
+}
+]
