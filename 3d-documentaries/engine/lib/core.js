@@ -203,6 +203,10 @@ void main(){
   gl_FragColor = vec4(col,1.);
 }`;
 
+// render speed (set from the page URL, e.g. page.html?q=fast): fewer AA samples, lighter AO, smaller sun shadow map
+export const Q = (() => { try { const m = /[?&]q=(\w+)/.exec(location.search); return m ? m[1] : 'full'; } catch (e) { return 'full'; } })();
+// 3D render scale (page.html?s=0.75): the 3D image is drawn smaller and upscaled; text overlays stay full 1920x1080
+export const RS = (() => { try { const m = /[?&]s=([\d.]+)/.exec(location.search); return m ? +m[1] : 1; } catch (e) { return 1; } })();
 export function createRenderer(canvas, w = W, h = H) {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, preserveDrawingBuffer: true });
   renderer.setPixelRatio(1); renderer.setSize(w, h, false);
@@ -222,17 +226,17 @@ export function createRenderer(canvas, w = W, h = H) {
       const fx = scene.userData.fx;
       if (fx) {
         if (!this.comp) {
-          const comp = new EffectComposer(renderer, new THREE.WebGLRenderTarget(w, h, { samples: 4, type: THREE.HalfFloatType }));
+          const comp = new EffectComposer(renderer, new THREE.WebGLRenderTarget(w, h, { samples: Q === 'fast' ? 2 : 4, type: THREE.HalfFloatType }));
           comp.renderToScreen = false;
           const rp = new RenderPass(scene, camera); comp.addPass(rp);
-          const ao = new GTAOPass(scene, camera, w, h); ao.output = GTAOPass.OUTPUT.Default; comp.addPass(ao);
+          const ao = Q === 'fast' ? new GTAOPass(scene, camera, w / 2, h / 2) : new GTAOPass(scene, camera, w, h); ao.output = GTAOPass.OUTPUT.Default; comp.addPass(ao);
           const bl = new UnrealBloomPass(new THREE.Vector2(w / 2, h / 2), .22, .5, .92); comp.addPass(bl);
           comp.addPass(new OutputPass());
           this.comp = { comp, rp, ao, bl };
         }
         const { comp, rp, ao, bl } = this.comp;
         rp.scene = ao.scene = scene; rp.camera = ao.camera = camera;
-        ao.updateGtaoMaterial({ radius: fx.aoRadius ?? .5, distanceExponent: 1.5, thickness: 1, scale: fx.ao ?? 1, samples: 12 });
+        ao.updateGtaoMaterial({ radius: fx.aoRadius ?? .5, distanceExponent: 1.5, thickness: 1, scale: fx.ao ?? 1, samples: Q === 'fast' ? 8 : 12 });
         bl.strength = fx.bloom ?? .22; bl.threshold = fx.bloomThreshold ?? .92;
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
         renderer.outputColorSpace = THREE.LinearSRGBColorSpace; // the finish pass does the sRGB encode

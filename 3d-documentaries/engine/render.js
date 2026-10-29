@@ -22,7 +22,7 @@ const has = n => args.includes(n);
   const srv = http.createServer((q, r) => { const u = decodeURIComponent(q.url.split('?')[0]); const f = u.startsWith('/@abs/') ? u.slice(5) : path.join(root, u);
     fs.readFile(f, (e, d) => { if (e) { r.writeHead(404); r.end(); return; } r.writeHead(200, { 'Content-Type': types[path.extname(f)] || 'application/octet-stream' }); r.end(d); }); });
   await new Promise(r => srv.listen(0, '127.0.0.1', r)); const base = `http://127.0.0.1:${srv.address().port}`;
-  await page.goto(base + '/page.html');
+  await page.goto(base + '/page.html?q=' + (process.env.RQ || 'full') + '&s=' + (process.env.RS || '1'));
   await page.waitForFunction(() => window.ready && window.loadShot, null, { timeout: 60000 });
   const absMod = path.resolve(modFile); const modUrl = absMod.startsWith(root) ? base + '/' + path.relative(root, absMod) : base + '/@abs' + absMod;
   const save = (b64, f) => fs.writeFileSync(f, Buffer.from(b64.split(',')[1], 'base64'));

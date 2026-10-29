@@ -11,7 +11,8 @@ import * as real from './real.js';
 const gl = document.getElementById('gl');
 const out = document.getElementById('out'); const ox = out.getContext('2d');
 const ov = document.createElement('canvas'); ov.width = core.W; ov.height = core.H; const vx = ov.getContext('2d');
-const R = core.createRenderer(gl);
+gl.width = Math.round(core.W * core.RS); gl.height = Math.round(core.H * core.RS);
+const R = core.createRenderer(gl, gl.width, gl.height);
 let cur = null;
 
 function projectBoxes(scene, camera) {
@@ -59,7 +60,7 @@ window.frame = (t, fmt = 'jpeg', q = .93) => {
   scene.traverse(o => { if (o.userData.person && o.userData.auto !== false && !o.userData.driven) o.update(t); });
   upd && upd(t, u);
   R.render(scene, camera, t);
-  ox.drawImage(gl, 0, 0);
+  ox.imageSmoothingQuality = 'high'; ox.drawImage(gl, 0, 0, core.W, core.H);
   if (!opts.sketch || opts.sketchUI) {
     if (meta.dateTag && !meta.noTag) ui.dateTag(vx, meta.dateTag, t);
     // overlay column from the script: callout / chip / tally

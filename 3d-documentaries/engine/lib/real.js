@@ -4,7 +4,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
 import * as SkeletonUtils from 'three/addons/utils/SkeletonUtils.js';
-import { rng, clamp, ease } from './core.js';
+import { rng, clamp, ease, Q } from './core.js';
 
 const A = '/assets/';
 const cache = new Map();
@@ -35,7 +35,7 @@ export async function env(k, name, o = {}) {
     sun.position.set(...(o.sun ?? [30, 50, 20])); sun.castShadow = true;
     const s = o.shadowSize ?? 25;
     Object.assign(sun.shadow.camera, { left: -s, right: s, top: s, bottom: -s, near: .5, far: 300 });
-    sun.shadow.mapSize.set(4096, 4096); sun.shadow.bias = -0.0002; sun.shadow.normalBias = .02; sun.shadow.radius = o.shadowSoft ?? 3;
+    sun.shadow.mapSize.set(Q === 'fast' ? 2048 : 4096, Q === 'fast' ? 2048 : 4096); sun.shadow.bias = -0.0002; sun.shadow.normalBias = .02; sun.shadow.radius = o.shadowSoft ?? 3;
     sun.target.position.set(...(o.target ?? [0, 0, 0]));
     scene.add(sun, sun.target);
   }
