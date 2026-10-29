@@ -254,5 +254,37 @@
     0.13
    ]
   }
+ },
+ {
+  "id": "tb_medic",
+  "gender": 1,
+  "age": 0.4,
+  "weight": 0.5,
+  "muscle": 0.5,
+  "height": 0.5,
+  "race": {
+   "caucasian": 1
+  },
+  "skin": "middleage_caucasian_male",
+  "eyes": "blue",
+  "brows": "eyebrow001",
+  "lashes": "eyelashes01",
+  "hair": "short03",
+  "clothes": [
+   "male_elegantsuit01",
+   "shoes03"
+  ],
+  "hairTint": [
+   0.35,
+   0.25,
+   0.18
+  ],
+  "tint": {
+   "male_elegantsuit01": [
+    0.82,
+    0.82,
+    0.78
+   ]
+  }
  }
 ]

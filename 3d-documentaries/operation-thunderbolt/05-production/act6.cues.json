@@ -27,7 +27,7 @@
   ["6.12", 0.3, "/home/user/work/audio/sfx/1251.mp3", 0.4, {"dur": 2.6}],
   ["6.13", 0.2, "/home/user/work/audio/sfx/0572.mp3", 0.35, {"dur": 1.4}],
   ["6.13", 1.2, "/home/user/work/audio/sfx/0758.mp3", 0.15, {"dur": 2}],
-  ["6.14", 0.0, "/home/user/work/audio/sfx/3023.mp3", 0.4, {"dur": 6.4, "rate": 1.4}],
+  ["6.14", 0.0, "/home/user/work/audio/sfx/3023.mp3", 0.4, {"dur": 6.4}],
   ["6.14", 0.0, "/home/user/work/audio/sfx/0426.mp3", 0.2, {"dur": 6.4}],
   ["6.15", 0.0, "/home/user/work/audio/sfx/3005.mp3", 0.35, {"dur": 10, "lp": 4000, "loop": true, "fadeIn": 1}],
   ["6.15", 3.6, "/home/user/work/audio/sfx/0572.mp3", 0.3, {"dur": 1}],

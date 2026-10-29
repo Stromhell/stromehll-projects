@@ -105,3 +105,44 @@ export async function office(k, o = {}) {
   return .76;
 }
 
+
+// C-130 cargo hold seen from inside: metal floor, quilted walls, ribs, webbing seats, dim lamps.
+// holdInterior(k, {len, red, seats:[z0,z1]}) -> {seatSpots:[{x,z,rot}], len}
+export async function holdInterior(k, o = {}) {
+  const { scene } = k; const len = o.len ?? 13, R = 1.95, cy = .95;
+  await real.env(k, 'hangar_interior', { sun: false, bg: 0x050505, envI: .12 });
+  const floor = await real.pbr('metal_plate', { repeat: [2, len / 1.5], color: 0x8a8a84 });
+  scene.add(real.m(new THREE.PlaneGeometry(3.3, len), floor, { rot: [-P / 2, 0, 0], cast: false }));
+  for (const x of [-1, -.35, .35, 1]) scene.add(real.box(.06, .02, len, real.std(0x3a3a38, { metal: .7, rough: .4 }), { pos: [x, .01, 0], cast: false }));
+  const quilt = real.canvasTex(512, 512, (c, W, H) => { c.fillStyle = '#6f7564'; c.fillRect(0, 0, W, H); c.strokeStyle = 'rgba(30,34,26,.55)'; c.lineWidth = 6; for (let i = 0; i <= 4; i++) { c.beginPath(); c.moveTo(i * W / 4, 0); c.lineTo(i * W / 4, H); c.stroke(); c.beginPath(); c.moveTo(0, i * H / 4); c.lineTo(W, i * H / 4); c.stroke(); } c.fillStyle = 'rgba(255,255,255,.05)'; for (let i = 0; i < 16; i++) c.fillRect((i % 4) * W / 4 + 10, Math.floor(i / 4) * H / 4 + 10, W / 4 - 40, 14); }, { repeat: [10, len / 1.2] });
+  const wall = real.m(new THREE.CylinderGeometry(R, R, len, 40, 1, true), new THREE.MeshStandardMaterial({ map: quilt, roughness: .9, side: THREE.BackSide }), { pos: [0, cy, 0], rot: [P / 2, 0, 0], cast: false }); scene.add(wall);
+  const rib = real.std(0x4a4e44, { rough: .6, metal: .3 });
+  for (let z = -len / 2 + .5; z < len / 2; z += 1) scene.add(real.m(new THREE.TorusGeometry(R - .05, .05, 6, 40), rib, { pos: [0, cy, z], cast: false }));
+  const bulk = real.std(0x5a5e52, { rough: .8 });
+  scene.add(real.m(new THREE.CircleGeometry(R, 40), bulk, { pos: [0, cy, -len / 2], cast: false }));
+  scene.add(real.box(.8, 1.9, .05, real.std(0x3a3e36, { rough: .6 }), { pos: [-.9, .95, -len / 2 + .03] }));
+  const rampM = real.std(0x4a4e44, { rough: .7, metal: .3 });
+  const ramp = real.box(3, 2.6, .08, rampM, { pos: [0, 1.25, len / 2 + .2] }); ramp.rotation.x = -.35; scene.add(ramp);
+  scene.add(real.m(new THREE.CircleGeometry(R, 40), bulk, { pos: [0, cy, len / 2 + .9], rot: [0, P, 0], cast: false }));
+  // lamps along the ceiling
+  const col = o.red ? 0xff5a3a : 0xffe0b0;
+  for (let z = -len / 2 + 1.5; z < len / 2; z += 3) { scene.add(real.box(.4, .05, .15, real.std(0x222222, { emissive: col, ei: 2 }), { pos: [0, cy + R - .12, z], cast: false })); real.lamp(scene, [0, cy + R - .4, z], { i: o.lampI ?? (o.red ? 5 : 7), dist: 6, color: col }); }
+  scene.add(new THREE.HemisphereLight(o.red ? 0xff8a6a : 0xfff0d8, 0x101010, o.hemi ?? .35));
+  // red webbing bench seats along the walls
+  const seatSpots = [];
+  const [z0, z1] = Array.isArray(o.seats) ? o.seats : [-len / 2 + .8, len / 2 - 1];
+  const web = real.std(0x8a2a22, { rough: .95 }), tube = real.std(0x8a8a84, { metal: .8, rough: .35 });
+  if (o.seats !== false) for (const s of [-1, 1]) {
+    scene.add(real.box(.42, .04, z1 - z0, web, { pos: [s * 1.3, .45, (z0 + z1) / 2] }));
+    scene.add(real.box(.03, .03, z1 - z0, tube, { pos: [s * 1.1, .44, (z0 + z1) / 2] }));
+    scene.add(real.box(.02, .55, z1 - z0, web, { pos: [s * 1.55, .8, (z0 + z1) / 2] }));
+    for (let z = z0 + .3; z < z1; z += .62) seatSpots.push({ x: s * 1.28, z, rot: -s * P / 2 });
+  }
+  return { seatSpots, len, ramp };
+}
+export async function seatSoldiers(k, spots, ids, o = {}) {
+  const ppl = [];
+  for (let i = 0; i < spots.length; i++) { if (o.every && i % o.every) continue; const s = spots[i]; const p = await k.real.human({ id: ids[i % ids.length], seed: (o.seed ?? 4000) + i }); k.real.put(k.scene, p, { pos: [s.x, 0, s.z], rot: s.rot, pose: 'sit', seatH: .45, arm: 'lap', mood: o.mood ?? 'stern' }); p.userData.driven = true; p.userData.ph = i * 1.3; ppl.push(p); }
+  return ppl;
+}
+export const idleSit = (ppl, t, o = {}) => ppl.forEach((p, i) => p.update(t, { pose: 'sit', seatH: .45, arm: 'lap', mood: o.mood ?? 'stern', look: Math.sin(t * .45 + p.userData.ph) * .25, nod: .15 + Math.sin(t * .3 + i) * .1 }));
