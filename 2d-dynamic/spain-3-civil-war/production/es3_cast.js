@@ -60,6 +60,15 @@
     SOTELO: suit(NAVY, '#2a2a2a', { name: 'Calvo Sotelo', build: 'broad', hairCol: HR.black, skin: SK.fair }),
     POLICE: man({ skin: SK.fair, shirt: NAVY, pants: NAVY, sleeves: true, headwear: X.peaked({ base: '#22283a', shade: '#10141e', rim: '#6a7090' }) }),
     VOTER: Object.assign({}, CH.aisha, { skin: SK.fair, hairCol: HR.brown, hair: 'bun', shirt: ['#5a7a9a', '#2c3c4e'], pants: ['#3a3a44', '#1c1c22'], dupatta: null, headwear: null }),
+    // act 4
+    BRIG: man({ skin: SK.fair, hairCol: { base: '#b8864a', shade: '#6a4a22', rim: '#f0c890' }, shirt: ['#6a5a4a', '#342c22'], pants: ['#3a3a44', '#1c1c22'], sleeves: true, headwear: X.beret({ base: '#1f2530', shade: '#0b0e14', rim: '#6a7080' }) }),
+    BRIG2: man({ skin: SK.olive, hairCol: HR.black, shirt: ['#8a8a7a', '#44443a'], pants: ['#4a3a2a', '#241c14'], sleeves: true, tie: '#5a2a2a' }),
+    BRIG3: man({ skin: SK.fair, hairCol: HR.brown, glasses: true, shirt: ['#e8e4da', '#a8a294'], pants: ['#5a4a3a', '#2a2018'], sleeves: true }),
+    PICASSO: man({ name: 'Picasso', skin: SK.olive, hair: 'elder', hairCol: HR.grey, build: 'broad', shirt: ['#e8e4dc', '#2a2a5a'], pants: ['#3a3a3a', '#1a1a1a'] }),
+    ORWELL: man({ name: 'Orwell', skin: SK.fair, mustache: true, hairCol: HR.brown, shirt: ['#6a6a4a', '#34341e'], pants: ['#6a6a4a', '#34341e'], sleeves: true, headwear: X.forage({ base: '#3a3a2a', shade: '#1a1a12', rim: '#7a7a6a' }) }),
+    BASQUE: man({ skin: SK.fair, hairCol: HR.grey, mustache: true, shirt: ['#e8e4da', '#a8a294'], pants: ['#3a3430', '#1a1614'], headwear: X.beret({ base: '#1f2530', shade: '#0b0e14', rim: '#6a7080' }) }),
+    BASQUEW: Object.assign({}, CH.aisha, { skin: SK.fair, hairCol: HR.brown, hair: 'bun', shirt: ['#2a2a2a', '#0e0e0e'], pants: ['#6a2a24', '#341410'], dupatta: null, headwear: null }),
+    ANARCH: man({ skin: SK.olive, shirt: ['#2a2a2a', '#0e0e0e'], pants: ['#2a4a8a', '#14244a'], sleeves: true, headwear: X.forage({ base: '#c8202a', shade: '#5a1010', rim: '#e88080' }) }),
   };
   S.ES3 = C; S.ES3P = { GREEN, KHAKI, NAVY, man, suit };
 })(window);
