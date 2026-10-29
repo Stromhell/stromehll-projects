@@ -5,9 +5,10 @@ Kevin MacLeod (incompetech.com), licensed under Creative Commons: By Attribution
 https://creativecommons.org/licenses/by/4.0/
 
 - "Lightless Dawn" (act 1 bed)
+- "Darkling" (act 2 bed)
 
 Credit line for the description:
-> Music: "Lightless Dawn" by Kevin MacLeod (incompetech.com). Licensed under Creative Commons: By Attribution 4.0 License. http://creativecommons.org/licenses/by/4.0/
+> Music: "Lightless Dawn", "Darkling" by Kevin MacLeod (incompetech.com). Licensed under Creative Commons: By Attribution 4.0 License. http://creativecommons.org/licenses/by/4.0/
 
 ## Sound effects
 BigSoundBank.com, royalty-free (CC0-like) licence: free for commercial use, no attribution needed.
