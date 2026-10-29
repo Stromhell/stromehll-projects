@@ -59,3 +59,8 @@ Full-video times were checked one by one in Zernio on 28 Oct 2026 at 17:35 UTC. 
 
 ## 29 Oct 2026, 21:45 UTC: facts shorts 02-11 booked
 - YouTube + Instagram, cover as IG thumbnail. 30 Oct IST: 08:30 flamingo, 12:30 plane windows, 14:00 Venus, 17:00 woodpecker, 18:00 wrinkly fingers, 19:00 astronaut bones, (20:00 seawater), 21:00 sixty minutes, 22:00 spider web, 23:00 ice floats. 31 Oct 20:00 IST leap year. Next free facts slot: 31 Oct 21:00 IST.
+
+## Ancient humans dark explainer (booked 29 Oct 2026, standalone, outside the full-video gap)
+- 16:9 (75 s), YouTube only: Sat 31 Oct 14:00 UTC (19:30 IST, 10:00 ET). Zernio 6ae3c0aaa0886c892966c21d. "Why Ancient Humans Were Terrified of the Dark (It Saved Your Life)"
+- 9:16 short (70 s), YouTube Shorts + Instagram: Sun 1 Nov 15:00 UTC (20:30 IST, 10:00 ET). Zernio 6ae3c0ada0886c892966c233. Free slot outside the facts-shorts and reel slots. IG has its own caption.
+- Control Room card external/2d-ancient-dark removed (removal rule).
