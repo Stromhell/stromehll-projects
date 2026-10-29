@@ -312,15 +312,16 @@
   // Half-width profiles in head units, along the limb from root (q=0) to end (q=1).
   // "back" is the side behind the limb (hamstring/calf, triceps), "front" the side in front (quad/shin, biceps).
   const PF = S.prof;
+  // No pinch at the knee or elbow: one smooth taper from root to end, so joints never show.
   const ANAT = {
-    legBack: PF([[0, .25], [.3, .2], [.5, .155], [.65, .16], [.9, .11], [1, .1]]),
-    legFront: PF([[0, .24], [.3, .2], [.5, .15], [.7, .13], [.9, .105], [1, .1]]),
-    jeansBack: PF([[0, .26], [.3, .21], [.6, .19], [1, .18]]),
-    jeansFront: PF([[0, .25], [.3, .2], [.6, .18], [1, .17]]),
-    salwarBack: PF([[0, .32], [.4, .27], [.85, .24], [1, .13]]),
-    salwarFront: PF([[0, .3], [.4, .26], [.85, .23], [1, .12]]),
-    armBack: PF([[0, .17], [.3, .15], [.5, .125], [.65, .125], [1, .09]]),
-    armFront: PF([[0, .16], [.3, .14], [.5, .115], [.65, .115], [1, .088]]),
+    legBack: PF([[0, .2], [1, .1]]),
+    legFront: PF([[0, .19], [1, .1]]),
+    jeansBack: PF([[0, .22], [1, .17]]),
+    jeansFront: PF([[0, .21], [1, .165]]),
+    salwarBack: PF([[0, .27], [.85, .23], [1, .13]]),
+    salwarFront: PF([[0, .26], [.85, .22], [1, .12]]),
+    armBack: PF([[0, .12], [1, .085]]),
+    armFront: PF([[0, .115], [1, .082]]),
   };
   const BW = { kid: .74, man: 1, broad: 1.13, woman: .86, elder: .9 };
 
@@ -380,7 +381,7 @@
 
     const drawLeg = (hp, l, far, footA) => {
       const kn = add(hp, dir(l.a1), thigh), an = add(kn, dir(l.a2), shin);
-      const pts = S.joint(hp, kn, an, 30, .25);
+      const pts = S.joint(hp, kn, an, 30, .7);
       const pt = far ? pantsD : pantsT, st = far ? skD : sk;
       const k = bw * (fem ? 1.05 : 1);
       // bare leg underneath (seen below rolled pants, or for bare legs)
@@ -389,14 +390,14 @@
         celT(c, S.tube2(sub(pts, .55, 1), SC(rescale(ANAT.legBack, .55, 1), k), SC(rescale(ANAT.legFront, .55, 1), k)), st, Lt, u);
         const pq = .68, top = sub(pts, 0, pq);
         celT(c, S.tube2(top, SC(rescale(ANAT.jeansBack, 0, pq), k), SC(rescale(ANAT.jeansFront, 0, pq), k)), pt, Lt, u, {
-          over: c2 => { folds(c2, top, pt, u, pq); }
+          
         });
         const cp = pts[Math.round(pq * (pts.length - 1))];
         celT(c, S.ell(cp[0], cp[1], .22 * u * k, .07 * u * k, -l.a2), pt, Lt, u, { swk: .3 });
       } else if (fem) {
-        celT(c, S.tube2(pts, SC(ANAT.salwarBack, k), SC(ANAT.salwarFront, k)), pt, Lt, u, { over: c2 => folds(c2, pts, pt, u, 1) });
+        celT(c, S.tube2(pts, SC(ANAT.salwarBack, k), SC(ANAT.salwarFront, k)), pt, Lt, u);
       } else if (!ch.mundu) {
-        celT(c, S.tube2(pts, SC(ANAT.jeansBack, k), SC(ANAT.jeansFront, k)), pt, Lt, u, { over: c2 => folds(c2, pts, pt, u, 1) });
+        celT(c, S.tube2(pts, SC(ANAT.jeansBack, k), SC(ANAT.jeansFront, k)), pt, Lt, u);
       } else {
         celT(c, bare, st, Lt, u); // mundu covers this, but the shin shows when the cloth swings
       }
@@ -418,18 +419,18 @@
     const drawArm = (sh, a1d, eld, far, holdFn) => {
       const a1 = a1d * D, a2 = (a1d + Math.max(0, eld)) * D;
       const el = add(sh, dir(a1), B.up * u), wr = add(el, dir(a2), B.fore * u);
-      const pts = S.joint(sh, el, wr, 30, .25);
+      const pts = S.joint(sh, el, wr, 30, .7);
       const st = far ? skD : sk, sht = far ? shirtD : shirtT, k = bw * (fem ? .9 : 1);
+      if (holdFn) holdFn(wr, a2);
+      hand(c, add(wr, dir(a2), -.08 * u), a2, u, (kid ? .5 : fem ? .54 : .62) * u, st, Lt, 0, holdFn ? .6 : 0);
       if (ch.long) {
-        celT(c, S.tube2(pts, q => (ANAT.armBack(q) + .03) * u * k, q => (ANAT.armFront(q) + .03) * u * k), sht, Lt, u, { over: c2 => folds(c2, pts, sht, u * .7, 1) });
+        celT(c, S.tube2(pts, q => (ANAT.armBack(q) + .03) * u * k, q => (ANAT.armFront(q) + .03) * u * k), sht, Lt, u);
       } else {
         celT(c, S.tube2(pts, SC(ANAT.armBack, k), SC(ANAT.armFront, k)), st, Lt, u);
         const sq = kid ? .28 : .32, top = sub(pts, 0, sq);
-        celT(c, S.tube2(top, q => (ANAT.armBack(q * sq) + .035 + .015 * q) * u * k, q => (ANAT.armFront(q * sq) + .035 + .015 * q) * u * k), sht, Lt, u, { over: c2 => folds(c2, top, sht, u * .6, sq) });
+        celT(c, S.tube2(top, q => (ANAT.armBack(q * sq) + .03 + .01 * q) * u * k, q => (ANAT.armFront(q * sq) + .03 + .01 * q) * u * k), sht, Lt, u);
       }
       if (ch.bangles && !far) { c.save(); const bp = add(wr, dir(a2), -B.fore * u * .1); c.translate(bp[0], bp[1]); c.rotate(-a2); c.strokeStyle = '#e0b04a'; c.lineWidth = u * .022; for (let i = 0; i < 2; i++) { c.beginPath(); c.ellipse(0, i * u * .035, .1 * u, u * .028, 0, 0, S.TAU); c.stroke(); } c.restore(); }
-      if (holdFn) holdFn(wr, a2);
-      hand(c, add(wr, dir(a2), -.02 * u), a2, u, (kid ? .5 : fem ? .54 : .62) * u, st, Lt, 0, holdFn ? .6 : 0);
       return { el, wr, a2 };
     };
 
@@ -638,7 +639,7 @@
 
     // legs
     const legX = hpW * .5;
-    const legPts = s => { const h = [s * legX, hipY], k = [s * legX * 1.04, hipY + legLen * .5], a = [s * legX * 1.08, -footH]; return S.joint(h, k, a, 30, .2); };
+    const legPts = s => { const h = [s * legX, hipY], k = [s * legX * 1.04, hipY + legLen * .5], a = [s * legX * 1.08, -footH]; return S.joint(h, k, a, 30, .7); };
     const footF = s => { const ax = s * legX * 1.08, len = (kid ? .5 : fem ? .54 : .6) * u, w = (kid ? .2 : .22) * u;
       const sh = !!ch.shoes, ft = sh ? tone(ch.shoes, Lt) : sk;
       const pts = back ? [[-w * .8, -footH * .9], [w * .8, -footH * .9], [w, -footH * .2], [w * .9, 0], [-w * .9, 0], [-w, -footH * .2]]
@@ -658,7 +659,7 @@
       } else if (fem) {
         celT(c, S.tube2(pts, SCw(ANAT.salwarBack, k), SCw(ANAT.salwarFront, k)), pantsT, Lt, u);
       } else {
-        celT(c, S.tube2(pts, SCw(ANAT.jeansBack, k), SCw(ANAT.jeansFront, k)), pantsT, Lt, u, { over: c2 => { c2.strokeStyle = S.rgba(pantsT.shade, .55); c2.lineWidth = u * .02; c2.beginPath(); const kp = pts[Math.round(pts.length * .5)]; c2.moveTo(kp[0] - .08 * u, kp[1]); c2.quadraticCurveTo(kp[0], kp[1] + .04 * u, kp[0] + .08 * u, kp[1]); c2.stroke(); } });
+        celT(c, S.tube2(pts, SCw(ANAT.jeansBack, k), SCw(ANAT.jeansFront, k)), pantsT, Lt, u);
       }
       footF(s);
     }
@@ -673,14 +674,14 @@
     const arm = s => {
       const sh = [s * (shW - .13 * u * bw), neckY + .3 * u], sway = Math.sin(t * .9 + s) * .02 * u;
       const el = [sh[0] + s * .1 * u + sway, sh[1] + B.up * u], wr = [el[0] + s * .02 * u + sway * 1.5, el[1] + B.fore * u];
-      const pts = S.joint(sh, el, wr, 30, .2), k = bw * (fem ? .9 : 1);
+      const pts = S.joint(sh, el, wr, 30, .7), k = bw * (fem ? .9 : 1);
+      c.save(); c.translate(wr[0], wr[1]); c.scale(-s, 1);
+      hand(c, [0, -.08 * u], 0, u, (kid ? .5 : fem ? .54 : .62) * u, sk, Object.assign({}, Lt, { L: [Lt.L[0] * -s, Lt.L[1]] }), 0, 0);
+      c.restore();
       celT(c, S.tube2(pts, SCw(ANAT.armBack, k), SCw(ANAT.armFront, k)), sk, Lt, u);
       if (ch.long) celT(c, S.tube2(pts.slice(0, Math.round(pts.length * .92)), q => (ANAT.armBack(q) + .04) * u * k, q => (ANAT.armFront(q) + .04) * u * k), shirtT, Lt, u);
-      else { const sq = kid ? .28 : .32, top = pts.slice(0, Math.round(pts.length * sq) + 1); celT(c, S.tube2(top, q => (ANAT.armBack(q * sq) + .045) * u * k, q => (ANAT.armFront(q * sq) + .045) * u * k), shirtT, Lt, u); }
+      else { const sq = kid ? .28 : .32, top = pts.slice(0, Math.round(pts.length * sq) + 1); celT(c, S.tube2(top, q => (ANAT.armBack(q * sq) + .035) * u * k, q => (ANAT.armFront(q * sq) + .035) * u * k), shirtT, Lt, u); }
       if (ch.bangles) { c.save(); c.strokeStyle = '#e0b04a'; c.lineWidth = u * .022; for (let i = 0; i < 2; i++) { c.beginPath(); c.ellipse(wr[0], wr[1] - .1 * u + i * .035 * u, .1 * u, .028 * u, 0, 0, S.TAU); c.stroke(); } c.restore(); }
-      c.save(); c.translate(wr[0], wr[1]); c.scale(-s, 1);
-      hand(c, [0, -.02 * u], 0, u, (kid ? .5 : fem ? .54 : .62) * u, sk, Object.assign({}, Lt, { L: [Lt.L[0] * -s, Lt.L[1]] }), 0, 0);
-      c.restore();
     };
     for (const s of [-1, 1]) arm(s);
 
