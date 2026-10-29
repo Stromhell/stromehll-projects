@@ -60,7 +60,7 @@ function wheel(r, w, mats) {
 // ---------- livery ----------
 const L = { z0: -27.2, z1: 26.4 }; // fuselage extent
 const AF_BLUE = '#0b2a6f', AF_RED = '#d2232a';
-function livery() {
+function livery(plain = false) {
   const W = 8192, H = 2048;
   const zx = z => (z - L.z0) / (L.z1 - L.z0) * W;   // fuselage z -> canvas x
   const ty = th => th / (P * 2) * H;                 // angle from top -> canvas y
@@ -99,11 +99,11 @@ function livery() {
         c.fillStyle = col; c.font = `${font} ${px}px "Liberation Sans", Arial, sans-serif`; c.textAlign = 'center'; c.textBaseline = 'middle';
         c.fillText(s, 0, 0); c.restore();
       };
-      text('AIR FRANCE', 9.5, side > 0 ? P / 2 - .52 : P * 1.5 + .52, 150, AF_BLUE, 'italic bold');
-      text('F-BVGG', -20.5, side > 0 ? P / 2 - .05 : P * 1.5 + .05, 70, '#333');
+      if (!plain) text('AIR FRANCE', 9.5, side > 0 ? P / 2 - .52 : P * 1.5 + .52, 150, AF_BLUE, 'italic bold');
+      if (!plain) text('F-BVGG', -20.5, side > 0 ? P / 2 - .05 : P * 1.5 + .05, 70, '#333');
       // small tricolour flag near the front door
-      c.save(); c.translate(zx(17.5), ty(side > 0 ? P / 2 - .55 : P * 1.5 + .55));
-      [AF_BLUE, '#ffffff', AF_RED].forEach((col, i) => { c.fillStyle = col; c.fillRect((side > 0 ? 1 - i : i - 1) * 18 - 9, -12, 18, 24); }); c.restore();
+      if (!plain) { c.save(); c.translate(zx(17.5), ty(side > 0 ? P / 2 - .55 : P * 1.5 + .55));
+      [AF_BLUE, '#ffffff', AF_RED].forEach((col, i) => { c.fillStyle = col; c.fillRect((side > 0 ? 1 - i : i - 1) * 18 - 9, -12, 18, 24); }); c.restore(); }
     }
     // nose cone radome slightly darker
     c.fillStyle = 'rgba(30,30,30,.12)'; c.fillRect(zx(25.4), 0, W - zx(25.4), H);
@@ -111,9 +111,9 @@ function livery() {
   const rough = canvasTex(1024, 256, (c, w, h) => { c.fillStyle = '#5a5a5a'; c.fillRect(0, 0, w, h); c.fillStyle = '#7a7a7a'; c.fillRect(0, h * .34, w, h * .32); });
   return { diffuse, rough };
 }
-function tailTex() {
+function tailTex(plain = false) {
   return canvasTex(1024, 1024, (c, w, h) => {
-    c.fillStyle = '#f2f2ee'; c.fillRect(0, 0, w, h);
+    c.fillStyle = '#f2f2ee'; c.fillRect(0, 0, w, h); if (plain) return;
     // uv.x = span (root 0 -> tip 1), uv.y = around the airfoil; both faces share the stripes
     // stripes slant back: the span position shifts with the chord position (0 leading edge .. 1 trailing edge)
     for (let y = 0; y < h; y++) {
@@ -127,7 +127,7 @@ function tailTex() {
 // ---------- the aircraft ----------
 export async function a300(o = {}) {
   const g = new THREE.Group(); g.name = 'A300';
-  const liv = livery();
+  const liv = livery(o.plain);
   const paint = new THREE.MeshPhysicalMaterial({ map: liv.diffuse, roughness: .32, metalness: .05, clearcoat: .6, clearcoatRoughness: .15 });
   const white = new THREE.MeshPhysicalMaterial({ color: 0xefefea, roughness: .35, metalness: .05, clearcoat: .5, clearcoatRoughness: .2 });
   const alu = new THREE.MeshStandardMaterial({ color: 0xc4c8cc, roughness: .32, metalness: .85 });
@@ -175,7 +175,7 @@ export async function a300(o = {}) {
     g.add(m(wing(secs, { flip: s < 0 }), white));
   }
   const fin = m(wing([{ x: 0, y: yc(-18) + 1.6, z: -15.4, c: 9.4, t: .1 }, { x: 0, y: yc(-18) + 9.6, z: -22.2, c: 4.0, t: .09 }], { vertical: true }),
-    new THREE.MeshPhysicalMaterial({ map: tailTex(), roughness: .32, clearcoat: .6, clearcoatRoughness: .15 }));
+    new THREE.MeshPhysicalMaterial({ map: tailTex(o.plain), roughness: .32, clearcoat: .6, clearcoatRoughness: .15 }));
   g.add(fin);
   // belly fairing (wing-body)
   g.add(m(new THREE.CapsuleGeometry(1.9, 9, 6, 24), grey, { pos: [0, Y - 2.05, 1.4], rot: [P / 2, 0, 0], scale: [1.15, 1, .55] }));

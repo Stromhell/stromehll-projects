@@ -222,5 +222,37 @@
     0.28
    ]
   }
+ },
+ {
+  "gender": 1,
+  "age": 0.42,
+  "weight": 0.5,
+  "muscle": 0.55,
+  "height": 0.6,
+  "race": {
+   "caucasian": 1
+  },
+  "skin": "young_caucasian_male",
+  "eyes": "brown",
+  "brows": "eyebrow001",
+  "lashes": "eyelashes01",
+  "hair": "short02",
+  "clothes": [
+   "male_casualsuit05",
+   "shoes03"
+  ],
+  "hairTint": [
+   0.16,
+   0.12,
+   0.09
+  ],
+  "id": "tb_shomron",
+  "tint": {
+   "male_casualsuit05": [
+    0.2,
+    0.22,
+    0.13
+   ]
+  }
  }
 ]

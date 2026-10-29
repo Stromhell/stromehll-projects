@@ -124,7 +124,7 @@ export async function runwayNight(k, o = {}) {
   const { scene } = k; const len = o.len ?? 1200;
   const asphalt = await real.pbr('asphalt_02', { repeat: [6, len / 20], color: 0x3a3a3c, noMap: true, rough: .9 });
   scene.add(m(new THREE.PlaneGeometry(45, len), asphalt, { rot: [-P / 2, 0, 0], cast: false }));
-  const grass = await real.pbr('grass_path_2', { repeat: [200, 200] });
+  const grass = await real.pbr('grass_path_2', { repeat: [200, 200], color: o.grass ?? 0xffffff });
   scene.add(m(new THREE.PlaneGeometry(3000, 3000), grass, { rot: [-P / 2, 0, 0], pos: [0, -.03, 0], cast: false }));
   for (let z = -len / 2; z < len / 2; z += 30) scene.add(box(.9, .01, 12, std(0xd8d8d0, { rough: .8 }), { pos: [0, .01, z], cast: false }));
   const lights = [];

@@ -9,9 +9,11 @@ https://creativecommons.org/licenses/by/4.0/
 - "Stormfront" (act 0 cold open bed)
 - "Unseen Horrors" (act 3 bed)
 - "Despair and Triumph" (act 4 bed)
+- "Dark Fog" (act 5 bed)
+- "Long Note Four" (act 6 bed)
 
 Credit line for the description:
-> Music: "Lightless Dawn", "Darkling", "Stormfront", "Unseen Horrors", "Despair and Triumph" by Kevin MacLeod (incompetech.com). Licensed under Creative Commons: By Attribution 4.0 License. http://creativecommons.org/licenses/by/4.0/
+> Music: "Lightless Dawn", "Darkling", "Stormfront", "Unseen Horrors", "Despair and Triumph", "Dark Fog", "Long Note Four" by Kevin MacLeod (incompetech.com). Licensed under Creative Commons: By Attribution 4.0 License. http://creativecommons.org/licenses/by/4.0/
 
 ## Sound effects
 BigSoundBank.com, royalty-free (CC0-like) licence: free for commercial use, no attribution needed.
