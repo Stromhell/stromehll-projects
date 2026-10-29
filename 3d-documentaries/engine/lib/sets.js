@@ -500,3 +500,5 @@ export async function flightDeck(k, o = {}) {
   real.lamp(scene, [0, 1.6, 1.2], { i: 2, dist: 3, color: 0xdfe8ff });
   return { group: g, seats, door };
 }
+
+export { tube, wing, lathe, wheel };
