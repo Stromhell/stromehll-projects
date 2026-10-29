@@ -1,0 +1,200 @@
+[
+{
+"id": 1,
+"frame": 169,
+"hx": 945,
+"hy": 600,
+"z": 1.6,
+"lines": [
+"DISHWASHER",
+"TO $5 TRILLION"
+],
+"hi": 1,
+"acc": "#76d24a"
+},
+{
+"id": 2,
+"frame": 711,
+"hx": 525,
+"hy": 480,
+"z": 1.6,
+"lines": [
+"AGE 9:",
+"TOILET CLEANER"
+],
+"hi": 1,
+"acc": "#ffd23f"
+},
+{
+"id": 3,
+"frame": 199,
+"hx": 945,
+"hy": 390,
+"z": 1.15,
+"lines": [
+"$5 TRILLION",
+"STARTED HERE"
+],
+"hi": 0,
+"acc": "#ff5a4a"
+},
+{
+"id": 4,
+"frame": 743,
+"hx": 1290,
+"hy": 480,
+"z": 1.4,
+"lines": [
+"THE CHIP",
+"NOBODY WANTED"
+],
+"hi": 1,
+"acc": "#ff5a4a"
+},
+{
+"id": 5,
+"frame": 533,
+"hx": 1035,
+"hy": 465,
+"z": 1.6,
+"lines": [
+"FINISH",
+"OR QUIT?"
+],
+"hi": 1,
+"acc": "#ffd23f"
+},
+{
+"id": 6,
+"frame": 648,
+"hx": 1155,
+"hy": 315,
+"z": 1.3,
+"lines": [
+"\"FIRE ME.\"",
+"THEN PAY ME $5M"
+],
+"hi": 1,
+"acc": "#76d24a"
+},
+{
+"id": 7,
+"frame": 123,
+"hx": 1275,
+"hy": 390,
+"z": 1.35,
+"lines": [
+"30 DAYS",
+"FROM BANKRUPT"
+],
+"hi": 1,
+"acc": "#ff5a4a"
+},
+{
+"id": 8,
+"frame": 697,
+"hx": 960,
+"hy": 465,
+"z": 1.3,
+"lines": [
+"HOW NVIDIA",
+"KILLED 3DFX"
+],
+"hi": 1,
+"acc": "#ff5a4a"
+},
+{
+"id": 9,
+"frame": 115,
+"hx": 930,
+"hy": 495,
+"z": 1.5,
+"dx": -120,
+"lines": [
+"CPU VS GPU",
+"IN 60 SECONDS"
+],
+"hi": 0,
+"acc": "#4ab8ff"
+},
+{
+"id": 10,
+"frame": 1091,
+"hx": 1420,
+"hy": 480,
+"z": 1.2,
+"lines": [
+"WALL STREET",
+"HATED THIS"
+],
+"hi": 1,
+"acc": "#ff5a4a"
+},
+{
+"id": 11,
+"frame": 173,
+"hx": 960,
+"hy": 640,
+"z": 1.4,
+"lines": [
+"2 GAMING CARDS",
+"CHANGED AI"
+],
+"hi": 1,
+"acc": "#76d24a"
+},
+{
+"id": 12,
+"frame": 460,
+"hx": 600,
+"hy": 570,
+"z": 1.3,
+"lines": [
+"HE GAVE OPENAI",
+"THIS BOX"
+],
+"hi": 1,
+"acc": "#ffd23f",
+"dx": -60
+},
+{
+"id": 13,
+"frame": 207,
+"hx": 390,
+"hy": 510,
+"z": 1.5,
+"dx": 120,
+"lines": [
+"$40 BILLION",
+"DEAL DIED"
+],
+"hi": 1,
+"acc": "#ff5a4a"
+},
+{
+"id": 14,
+"frame": 109,
+"hx": 840,
+"hy": 400,
+"z": 1.2,
+"lines": [
+"BANNED",
+"IN CHINA"
+],
+"hi": 0,
+"acc": "#ff5a4a"
+},
+{
+"id": 15,
+"frame": 743,
+"hx": 960,
+"hy": 540,
+"z": 1.2,
+"lines": [
+"THE FIRST",
+"$5T COMPANY"
+],
+"hi": 1,
+"acc": "#76d24a"
+}
+]
