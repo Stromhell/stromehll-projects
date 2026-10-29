@@ -83,7 +83,8 @@ window.SHOTS = [
       c.save(); c.globalCompositeOperation = 'soft-light'; c.fillStyle = 'rgba(255,170,110,.35)'; c.fillRect(0, 0, 1280, 720); c.restore();
       const L = VP.light('golden', lt, { swing: 4 }), sh = VP.shadowOf(L, 1.3, .3, .12);
       for (const [k, x0, y, s] of [[0, 820, 470, .8], [1, 960, 455, .65], [2, 1080, 445, .55]]) { const bob = Math.sin(lt * 1.3 + k) * 3, x = x0 + lt * (5 + k); X.ship(c, x, y + bob, s, '#f4ead4', true); const lab = seg(lt, Sh.tN + k * .6, Sh.tN + k * .6 + .3); if (lab > 0) { c.save(); c.globalAlpha = lab; c.font = '22px Oswald'; c.fillStyle = '#2a1a10'; c.textAlign = 'center'; c.fillStyle = '#f4ead4'; c.fillRect(x - 60, y - 140 * s - 34, 120, 28); c.fillStyle = '#2a1a10'; c.fillText(['NIÑA', 'PINTA', 'SANTA MARÍA'][k], x, y - 140 * s - 13); c.restore(); } }
-      for (let k = 0; k < 6; k++) { const x = 200 + k * 70, ch = [C.SAILOR, E1.TOWNSMAN, CH.aisha, C.SAILOR2][k % 4]; VP.figure(c, [x, 600], sh, cc => S.person(cc, ch, x, 600, 26, Object.assign(S.idle(lt, k), { face: 1, shN: 150 + 20 * Math.sin(lt * 6 + k), elN: 20 }), { blink: S.blinkAt(lt, k), smile: .3, time: lt }, L)); }
+      for (let k = 0; k < 6; k++) { const x = 200 + k * 70 + [0, 6, -4, 10, 0, -6][k], y = 600 + [0, 8, -4, 6, -2, 10][k], ch = [C.SAILOR, E1.TOWNSMAN, CH.aisha, C.SAILOR2][k % 4], P = [{ shN: 150 + 20 * Math.sin(lt * 6 + k), elN: 20 }, { shN: 120 + 30 * Math.sin(lt * 4 + k), elN: 60 }, { shN: 40, elN: 130, shF: 30, elF: 120 }, { shN: 165, elN: 5, shF: 165, elF: 5 }, { shN: 10, elN: 20, lean: -4 }, { shN: 140 + 25 * Math.sin(lt * 7), elN: 40, tilt: 6 }][k];
+        VP.figure(c, [x, y], sh, cc => S.person(cc, ch, x, y, 26, Object.assign(S.idle(lt, k), { face: 1 }, P), { blink: S.blinkAt(lt, k), smile: .3, time: lt }, L)); }
       VP.motes(c, lt, 0, 300, 1280, 400, { n: 25, a: .35 });
     },
     over: [(c, lt) => coinCorner(c, lt, { shine: .55 }), (c, lt, u, Sh) => K.dateTag(c, 'PALOS · 3 AUG 1492', lt, { at: Sh.tD }), (c, lt, u, Sh) => K.card(c, '~90 MEN', lt, { at: Sh.dur - 2, x: 1540, y: 860, px: 56, rot: 3 })],
@@ -148,7 +149,9 @@ window.SHOTS = [
       c.fillStyle = '#7a2a2a'; c.beginPath(); c.moveTo(470, 600); c.quadraticCurveTo(560, 580, 860, 596); c.lineTo(870, 670); c.lineTo(460, 670); c.fill(); c.strokeStyle = S.rgba('#ffd090', .3); c.lineWidth = 3; c.beginPath(); c.moveTo(470, 600); c.quadraticCurveTo(560, 580, 860, 596); c.stroke();
       c.fillStyle = '#4a2a14'; c.fillRect(440, 660, 440, 22); c.fillRect(860, 560, 20, 120);
       for (let k = 0; k < 6; k++) { const x = 600 + k * 70, y = 680 + (k % 2) * 10; c.save(); c.translate(x, y); c.rotate((k - 3) * .2); c.fillStyle = '#f0e0b8'; c.fillRect(-40, -24, 80, 48); c.strokeStyle = '#6a4a2a'; c.lineWidth = 1; c.strokeRect(-40, -24, 80, 48); c.fillStyle = '#c8a878'; c.beginPath(); c.ellipse(-8, 0, 12, 16, 0, 0, TAU); c.fill(); c.restore(); }
-      for (let k = 0; k < 4; k++) { const vx = 600, vy = 330; const q = seg(lt, Sh.tF + k * .4, Sh.tF + k * .4 + .3); if (q <= 0) continue; X.ship(c, vx + k * 40 - 60, vy + (k % 2) * 20, .25 * q, '#f4ead4', true); }
+      // four model ships stand on a wall shelf; each lights up as the voyages are counted
+      c.fillStyle = '#4a2a18'; c.fillRect(500, 334, 240, 10); c.fillStyle = '#2a160c'; c.fillRect(520, 344, 8, 18); c.fillRect(712, 344, 8, 18);
+      for (let k = 0; k < 4; k++) { const vx = 600, vy = 336; const q = seg(lt, Sh.tF + k * .4, Sh.tF + k * .4 + .3); if (q > 0) VP.glow(c, vx + k * 44 - 66, vy - 20, 40, '#ffe0a0', .4 * q); X.ship(c, vx + k * 44 - 66, vy, .25, '#f4ead4', true); }
       VP.motes(c, lt, 200, 300, 700, 300, { n: 25, a: .4 });
     },
     over: [(c, lt) => coinCorner(c, lt, { shine: .6 }), (c, lt, u, Sh) => K.card(c, '4 VOYAGES', lt, { at: Sh.tF + .3, x: 1540, y: 200, px: 60, rot: 3 }), (c, lt) => K.dateTag(c, 'VALLADOLID · 1506', lt, { at: 1 }), (c, lt, u, Sh) => K.badge(c, 'STILL SURE IT WAS ASIA', lt, { at: Sh.tA })],

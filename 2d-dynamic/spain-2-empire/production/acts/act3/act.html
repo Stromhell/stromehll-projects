@@ -43,8 +43,13 @@ window.SHOTS = [
       // the mine mouth: a dark timbered arch in the red slope
       const mx = 720, my = 470; c.fillStyle = '#1a0e0a'; c.beginPath(); c.moveTo(mx - 50, my); c.lineTo(mx - 50, my - 70); c.quadraticCurveTo(mx, my - 110, mx + 50, my - 70); c.lineTo(mx + 50, my); c.fill();
       c.fillStyle = '#5a3a20'; c.fillRect(mx - 58, my - 80, 12, 80); c.fillRect(mx + 46, my - 80, 12, 80); c.fillRect(mx - 62, my - 88, 124, 12); VP.glow(c, mx, my - 30, 60, '#ff9a40', .25 + .1 * VP.flicker(lt, 3));
-      for (let k = 0; k < 5; k++) { const p = ((lt * .07 + k * .2) % 1), x = lerp(400, mx, p), y = lerp(660, my, p), a = p > .85 ? (1 - p) / .15 : 1; c.save(); c.globalAlpha = a; VP.figure(c, [x, y], sh, cc => S.person(cc, k % 2 ? MINER2 : C.MINER, x, y, 24 - 6 * p, Object.assign(walk(lt * .8 + k), { face: 1, holdN: null }), { blink: S.blinkAt(lt, k), worry: .5, time: lt }, L)); c.restore(); }
-      for (const [x, ch, k, uu] of [[330, C.NAHUAW, 7, 26], [290, Object.assign({}, C.NAHUA, { build: 'kid' }), 8, 20]]) VP.figure(c, [x, 660], sh, cc => S.person(cc, ch, x, 660, uu, Object.assign(S.idle(lt, k), { face: 1, shN: k === 7 ? 120 + 20 * Math.sin(lt * 4) : 20, elN: 20 }), { blink: S.blinkAt(lt, k), worry: .8, look: [.8, -.1], time: lt }, L));
+      // the miners' road: a dug earth ramp from the village up to the mine, with a dry-stone retaining edge
+      const road = [[60, 676], [420, 660], [mx, my]]; c.lineCap = 'round'; c.lineJoin = 'round';
+      c.strokeStyle = '#6e4630'; c.lineWidth = 30; c.beginPath(); road.forEach(([x, y], i) => i ? c.lineTo(x, y + 6) : c.moveTo(x, y + 6)); c.stroke();
+      c.strokeStyle = '#a5754c'; c.lineWidth = 22; c.beginPath(); road.forEach(([x, y], i) => i ? c.lineTo(x, y) : c.moveTo(x, y)); c.stroke();
+      for (let i = 0; i < 70; i++) { const q = (i * .618) % 1, side = i % 2 ? 1 : -1, x = q < .45 ? lerp(60, 420, q / .45) : lerp(420, mx, (q - .45) / .55), y = (q < .45 ? lerp(676, 660, q / .45) : lerp(660, my, (q - .45) / .55)) + side * (9 + (i * 7) % 6); c.fillStyle = i % 3 ? 'rgba(90,55,35,.55)' : 'rgba(225,190,150,.5)'; c.beginPath(); c.ellipse(x, y, 2 + (i % 4), 1.5 + (i % 3) * .6, 0, 0, 7); c.fill(); }
+      for (let k = 0; k < 5; k++) { const p = ((lt * .07 + k * .2) % 1), q1 = Math.min(1, p / .35), q2 = Math.max(0, (p - .35) / .65), x = p < .35 ? lerp(60, 420, q1) : lerp(420, mx, q2), y = p < .35 ? lerp(676, 660, q1) : lerp(660, my, q2), a = p > .9 ? (1 - p) / .1 : 1; c.save(); c.globalAlpha = a; VP.figure(c, [x, y], sh, cc => S.person(cc, k % 2 ? MINER2 : C.MINER, x, y, 24 - 6 * q2, Object.assign(walk(lt * .8 + k), { face: 1, holdN: null }), { blink: S.blinkAt(lt, k), worry: .5, time: lt }, L)); c.restore(); }
+      for (const [x, ch, k, uu] of [[800, C.NAHUAW, 7, 22], [760, Object.assign({}, C.NAHUA, { build: "kid" }), 8, 17]]) VP.figure(c, [x, 668], sh, cc => S.person(cc, ch, x, 668, uu, Object.assign(S.idle(lt, k), { face: 1, shN: k === 7 ? 120 + 20 * Math.sin(lt * 4) : 20, elN: 20 }), { blink: S.blinkAt(lt, k), worry: .8, look: [.8, -.1], time: lt }, L));
       if (dim > 0) night(c, .4 * dim, '60,40,50');
       VP.motes(c, lt, 300, 450, 600, 200, { n: 20, a: .35, col: '#e8b090' });
     },
@@ -55,13 +60,12 @@ window.SHOTS = [
   { set: 'ocean', cam: { z: [1.05, 1.25], x: [600, 680], y: [400, 410], ease: E.io }, bed: [['ocean_loop', .35], ['wind_loop', .2]],
     init: Sh => { Sh.tM = at(Sh, 'melted', .6); Sh.tC = at(Sh, 'coins', 2); Sh.tF = at(Sh, 'treasure fleets', 4.5); Sh.tP = at(Sh, 'pirates', Sh.dur - 1); Sh.dur = Sh.end - Sh.start; },
     draw: (c, lt, u, Sh) => {
-      const fl = E.out(seg(lt, Sh.tF - 1.5, Sh.tF + 1));
-      for (const [k, x0, y, s] of [[0, 300, 430, .45], [1, 520, 440, .55], [2, 720, 432, .45], [3, 420, 470, .7], [4, 660, 480, .75], [5, 880, 465, .6]]) { if (k > 1 && fl <= (k - 1) * .2) continue; fleetShip(c, x0 + lt * 6 - (1 - fl) * 60, y, s, lt, k); }
+            for (const [k, x0, y, s] of [[0, 470, 428, .42], [1, 800, 434, .46], [2, 180, 430, .42], [3, 330, 482, .68], [4, 640, 490, .72], [5, 960, 478, .64]]) { const sail = k < 2 ? 1 : E.out(seg(lt, Sh.tF - 3.2 + k * .35, Sh.tF + .8 + k * .35)); if (sail <= 0) continue; fleetShip(c, x0 + lt * 6 - (1 - sail) * (x0 + 260), y, s, lt, k); }
       const p = seg(lt, Sh.tP - 1, Sh.tP + 2); if (p > 0) { c.save(); c.globalAlpha = p; fleetShip(c, 1150 - p * 120, 420, .38, lt, 9, '#2a2626', false); c.fillStyle = '#1a1a1a'; c.fillRect(1150 - p * 120 - 4, 420 - 40, 22, 14); c.restore(); }
       VP.glow(c, 640 + 60 * Math.sin(lt * .3), 200, 560, '#ffe8c0', .15);
       c.strokeStyle = 'rgba(40,40,50,.7)'; c.lineWidth = 2; for (let k = 0; k < 3; k++) { const gx = 200 + lt * 20 + k * 40, gy = 180 + k * 14, ff = Math.sin(lt * 7 + k) * 5; c.beginPath(); c.moveTo(gx - 9, gy - ff); c.quadraticCurveTo(gx, gy - 2, gx + 9, gy - ff); c.stroke(); }
     },
-    over: [(c, lt) => coinCorner(c, lt, { shine: .7 }), (c, lt, u, Sh) => { for (let i = 0; i < 5; i++) { const q = seg(lt, Sh.tC + i * .25, Sh.tC + i * .25 + .3); if (q <= 0) continue; const sc = 1 + 1.5 * (1 - E.out(q)); H.coin(c, 560 + i * 200, 790, 56 * sc, lt + i, { shine: .8, spin: 0 }); } }, (c, lt, u, Sh) => K.card(c, 'TREASURE FLEET', lt, { at: Sh.tF + .3, x: 380, y: 200, px: 56, rot: -3 }), (c, lt, u, Sh) => K.card(c, 'PIRATES!', lt, { at: Sh.tP + .3, x: 1560, y: 200, px: 60, rot: 4 })],
+    over: [(c, lt) => coinCorner(c, lt, { shine: .7 }), (c, lt, u, Sh) => K.card(c, 'TREASURE FLEET', lt, { at: Sh.tF + .3, x: 380, y: 200, px: 56, rot: -3 }), (c, lt, u, Sh) => K.card(c, 'PIRATES!', lt, { at: Sh.tP + .3, x: 1560, y: 200, px: 60, rot: 4 })],
     sfx: [['melted', 'fire_loop', .25], ['coins', 'stamp', .4], ['coins', 'coins', .35], ['treasure fleets', 'swell', .35], ['pirates', 'tension', .4]] },
 
   // 3.04 MAP: the Manila galleon route crosses the Pacific; silver goes west, silk and porcelain come back
@@ -98,9 +102,15 @@ window.SHOTS = [
       const L = VP.light('golden', lt, { swing: 5, set: { L: [-.6, -1] } }), sh = VP.shadowOf(L, 1.2, .3, .12);
       // the price board
       const p = E.io(seg(lt, Sh.tP - .5, Sh.tC + 1)), price = Math.round(lerp(1, 4, p) * 10) / 10;
-      c.fillStyle = '#3a2a1a'; c.fillRect(560, 340, 200, 130); c.fillStyle = '#2a3a2a'; c.fillRect(570, 350, 180, 110); c.font = '22px Caveat'; c.fillStyle = '#f0f0e0'; c.textAlign = 'center'; c.fillText('BREAD', 660, 380); c.font = '44px Anton'; c.fillStyle = p > .6 ? '#ff8a6a' : '#f0f0e0'; c.fillText('×' + price.toFixed(1), 660, 435);
+      c.fillStyle = '#4a3220'; c.fillRect(578, 470, 8, 112); c.fillRect(734, 470, 8, 112); c.fillStyle = S.rgba('#3a2418', .3); c.beginPath(); c.ellipse(660, 584, 100, 6, 0, 0, TAU); c.fill(); c.fillStyle = '#3a2a1a'; c.fillRect(560, 340, 200, 130); c.fillStyle = '#2a3a2a'; c.fillRect(570, 350, 180, 110); c.font = '22px Caveat'; c.fillStyle = '#f0f0e0'; c.textAlign = 'center'; c.fillText('BREAD', 660, 380); c.font = '44px Anton'; c.fillStyle = p > .6 ? '#ff8a6a' : '#f0f0e0'; c.fillText('×' + price.toFixed(1), 660, 435);
       c.strokeStyle = '#ff8a6a'; c.lineWidth = 4; c.beginPath(); for (let i = 0; i <= 20; i++) { const x = 580 + i * 8, y = 452 - 40 * Math.pow(i / 20, 1.3) * p; i ? c.lineTo(x, y) : c.moveTo(x, y); } c.stroke();
-      for (let k = 0; k < 14; k++) { const r = S.rng(k + 80), ph = (lt * .8 + r()) % 1, x = 300 + r() * 120, y = 300 + ph * 330; c.fillStyle = S.rgba('#d8dce4', 1 - ph * .3); c.beginPath(); c.ellipse(x, y, 7, 7 * Math.abs(Math.cos(lt * 6 + k)) + 1, 0, 0, TAU); c.fill(); }
+      // an open treasure chest on the cobbles spills silver onto the growing heap
+      c.save(); c.translate(56, 0);
+      c.fillStyle = S.rgba('#3a2418', .3); c.beginPath(); c.ellipse(232, 628, 52, 9, 0, 0, TAU); c.fill();
+      c.fillStyle = '#6a3e1e'; c.fillRect(190, 588, 84, 40); c.fillStyle = '#8a5a2e'; c.fillRect(190, 588, 84, 8); c.fillStyle = '#c8962a'; for (const bx of [196, 262]) c.fillRect(bx, 588, 6, 40); c.fillRect(226, 600, 12, 12);
+      c.fillStyle = '#5a3418'; c.beginPath(); c.moveTo(190, 588); c.lineTo(274, 588); c.lineTo(266, 556); c.quadraticCurveTo(232, 540, 198, 556); c.closePath(); c.fill(); c.fillStyle = '#c8962a'; c.fillRect(196, 556, 6, 32); c.fillRect(262, 556, 6, 32);
+      S.dabs(c, { x: 196, y: 578, w: 72, h: 12, n: 24, cols: ['#e8ecf0', '#9aa0a8'], r0: 3, r1: 6, a0: .8, a1: 1, seed: 83 }); c.restore();
+      for (let k = 0; k < 10; k++) { const r = S.rng(k + 80), ph = (lt * .9 + r()) % 1, x = lerp(318, 350 + r() * 50, ph), y = 584 - Math.sin(ph * Math.PI) * 26 + ph * 52; c.fillStyle = S.rgba('#d8dce4', 1 - ph * .2); c.beginPath(); c.ellipse(x, y, 6, 6 * Math.abs(Math.cos(lt * 6 + k)) + 1, 0, 0, TAU); c.fill(); }
       c.fillStyle = '#9aa0a8'; c.beginPath(); c.ellipse(360, 640, 90, 22, 0, 0, TAU); c.fill(); S.dabs(c, { x: 270, y: 618, w: 180, h: 40, n: 40, cols: ['#d8dce4', '#7a808c'], r0: 4, r1: 9, a0: .6, a1: 1, seed: 81 });
       const shrug = seg(lt, Sh.tB - .5, Sh.tB + .3);
       VP.figure(c, [880, 660], sh, cc => S.person(cc, Object.assign({}, C.BANKER), 880, 660, 40, Object.assign(S.idle(lt, 0), { face: -1, shN: 30 + 60 * shrug, elN: 90 * shrug + 20, shF: 30 + 60 * shrug, elF: 90 * shrug + 20 }), { blink: S.blinkAt(lt, 0), worry: .5 * p, look: [-.8, -.2], time: lt }, L));

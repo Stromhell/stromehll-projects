@@ -214,6 +214,22 @@
     if (o.ties) n.tie = pick(o.ties);
     return Object.assign(n, o.keep || {});
   };
+  // Automatic variety: when the same cast member is drawn more than once in a frame, every repeat gets its own
+  // face, hair and build (named leads are drawn once per frame, so they keep their look). Reset each frame.
+  const seen = new Map(), varied = new WeakMap(); let lastT = null;
+  const person0 = S.person;
+  S.person = (c, ch, x, y, u, pose, f, Lt) => {
+    const t = f && f.time; if (t !== lastT) { seen.clear(); lastT = t; }
+    const n = seen.get(ch) || 0; seen.set(ch, n + 1);
+    if (n > 0 && !ch.noVary) { let m = varied.get(ch); if (!m) varied.set(ch, m = []); ch = m[n] || (m[n] = VP.vary(ch, n * 13 + 5, { builds: ch.build === 'elder' ? ['elder'] : ['man', 'broad', 'man'] })); }
+    return person0(c, ch, x, y, u, pose, f, Lt);
+  };
+  // shadow passes draw the figure an extra time: they must not count as a repeat
+  const keep = fn => (...a) => { const snap = new Map(seen); const r = fn(...a); seen.clear(); snap.forEach((v, k) => seen.set(k, v)); return r; };
+  const fig0 = VP.figure;
+  VP.figure = (c, foot, sh, draw) => { if (!(sh && sh.a > 0)) return fig0(c, foot, sh, draw); let n = 0; const snap = new Map(seen);
+    return fig0(c, foot, sh, cc => { if (n++ === 0) { draw(cc); seen.clear(); snap.forEach((v, k) => seen.set(k, v)); } else draw(cc); }); };
+  VP.wallShadow = keep(VP.wallShadow);
   // VP.sit: a seated pose with both legs drawn and the feet on the floor; y passed to S.person is the floor.
   // v picks the gesture (0..7) so a row of people never shares one pose.
   const LEGS = { man: 2.8, broad: 2.75, woman: 2.65, elder: 2.55, kid: 1.95 };

@@ -63,11 +63,26 @@ window.SHOTS = [
     init: Sh => { Sh.tM = at(Sh, 'madrid', 2); Sh.tE = at(Sh, 'escorial', 4.5); Sh.tD = at(Sh, 'doors', Sh.dur - 2); Sh.dur = Sh.end - Sh.start; },
     draw: (c, lt, u, Sh) => {
       const L = DAY(lt), sh = VP.shadowOf(L, 1.2, .3, .12), b = E.out(seg(lt, Sh.tE - 1.5, Sh.tE + 2)), win = seg(lt, Sh.tD - 1, Sh.tD + 1.5);
-      c.save(); c.beginPath(); c.rect(0, 520 - 260 * b, 1280, 260 * b + 2); c.clip();
-      const x0 = 340, x1 = 940, y = 520; c.fillStyle = '#c8bca0'; c.fillRect(x0, y - 150, x1 - x0, 150); c.fillStyle = '#a89c80'; c.fillRect(x0, y - 150, x1 - x0, 10);
-      for (const tx of [x0, x1 - 50]) { c.fillStyle = '#c0b498'; c.fillRect(tx, y - 210, 50, 210); c.fillStyle = '#3a4048'; c.beginPath(); c.moveTo(tx - 4, y - 210); c.lineTo(tx + 25, y - 260); c.lineTo(tx + 54, y - 210); c.fill(); }
-      c.fillStyle = '#c0b498'; c.fillRect(600, y - 220, 80, 70); c.fillStyle = '#3a4048'; c.beginPath(); c.arc(640, y - 220, 40, Math.PI, 0); c.fill(); c.fillRect(636, y - 280, 8, 24);
-      for (let r = 0; r < 4; r++) for (let i = 0; i < 26; i++) { const x = x0 + 70 + i * 21, yy = y - 130 + r * 30; const on = win > 0 && S.rng(i * 7 + r)() < win; c.fillStyle = on ? '#ffd890' : '#3a3a40'; c.fillRect(x, yy, 7, 12); }
+      c.save(); c.beginPath(); c.rect(0, 520 - 380 * b, 1280, 380 * b + 2); c.clip();
+      const x0 = 340, x1 = 940, y = 520, gran = (x, yy, w, hh, seed) => { const gr = c.createLinearGradient(x, 0, x + w, 0); gr.addColorStop(0, '#d2c8ae'); gr.addColorStop(1, '#b4a88c'); c.fillStyle = gr; c.fillRect(x, yy, w, hh); c.strokeStyle = 'rgba(110,98,78,.35)'; c.lineWidth = 1; for (let r = yy + 9; r < yy + hh; r += 9) { c.beginPath(); c.moveTo(x, r); c.lineTo(x + w, r); c.stroke(); } S.dabs(c, { x, y: yy, w, h: hh, n: Math.floor(w * hh / 260), cols: ['#e0d8c0', '#9a8e74'], r0: 1, r1: 3, a0: .2, a1: .45, seed }); };
+      const spire = (tx, ty, w) => { c.fillStyle = '#3a4250'; c.beginPath(); c.moveTo(tx - w * .55, ty); c.lineTo(tx, ty - w * 1.5); c.lineTo(tx + w * .55, ty); c.fill(); c.fillStyle = 'rgba(255,255,255,.12)'; c.beginPath(); c.moveTo(tx - w * .55, ty); c.lineTo(tx, ty - w * 1.5); c.lineTo(tx - w * .1, ty); c.fill(); c.strokeStyle = '#2a2a2a'; c.lineWidth = 2; c.beginPath(); c.moveTo(tx, ty - w * 1.5); c.lineTo(tx, ty - w * 1.5 - 14); c.stroke(); c.fillStyle = '#c8a040'; c.beginPath(); c.arc(tx, ty - w * 1.5 - 14, 3.5, 0, TAU); c.fill(); };
+      // terrace wall and the long main block with its slate roof
+      gran(x0 - 30, y - 18, x1 - x0 + 60, 18, 41); c.fillStyle = 'rgba(60,50,40,.25)'; c.fillRect(x0 - 30, y - 2, x1 - x0 + 60, 4);
+      gran(x0, y - 150, x1 - x0, 132, 42); c.fillStyle = '#4a5260'; c.beginPath(); c.moveTo(x0 - 4, y - 150); c.lineTo(x0 + 14, y - 172); c.lineTo(x1 - 14, y - 172); c.lineTo(x1 + 4, y - 150); c.fill(); c.strokeStyle = 'rgba(255,255,255,.12)'; for (let k = 0; k < 40; k++) { c.beginPath(); c.moveTo(x0 + 10 + k * 15, y - 151); c.lineTo(x0 + 16 + k * 15, y - 171); c.stroke(); }
+      // the basilica behind: drum, dome, lantern and two bell towers
+      gran(586, y - 236, 108, 70, 43); c.fillStyle = '#4a5260'; c.beginPath(); c.moveTo(580, y - 236); c.lineTo(640, y - 262); c.lineTo(700, y - 236); c.fill();
+      for (const bx of [560, 694]) { gran(bx, y - 268, 26, 100, 44 + bx); for (let r = 0; r < 2; r++) { c.fillStyle = '#2e2a26'; c.fillRect(bx + 8, y - 258 + r * 26, 10, 16); } spire(bx + 13, y - 268, 18); }
+      gran(612, y - 290, 56, 34, 45); c.fillStyle = '#4e5664'; c.beginPath(); c.arc(640, y - 290, 34, Math.PI, 0); c.fill(); c.fillStyle = 'rgba(255,255,255,.14)'; c.beginPath(); c.arc(640, y - 290, 34, Math.PI, Math.PI * 1.35); c.lineTo(640, y - 290); c.fill(); gran(632, y - 340, 16, 20, 46); spire(640, y - 340, 10);
+      // four corner towers with slate spires
+      for (const tx of [x0 - 6, x1 - 44]) { gran(tx, y - 214, 50, 196, 47 + tx); c.fillStyle = '#4a5260'; c.fillRect(tx - 3, y - 218, 56, 6); for (let r = 0; r < 5; r++) { c.fillStyle = '#2e2a26'; c.fillRect(tx + 19, y - 200 + r * 36, 12, 18); } spire(tx + 25, y - 218, 30); }
+      // central portico: columns, pediment and a dark doorway
+      gran(596, y - 150, 88, 132, 48); c.fillStyle = '#e0d6bc'; c.beginPath(); c.moveTo(590, y - 150); c.lineTo(640, y - 178); c.lineTo(690, y - 150); c.fill(); c.strokeStyle = '#9a8e74'; c.lineWidth = 2; c.stroke();
+      for (let k = 0; k < 4; k++) { c.fillStyle = '#e6dcc4'; c.fillRect(602 + k * 22, y - 146, 8, 104); c.fillStyle = 'rgba(80,70,55,.3)'; c.fillRect(607 + k * 22, y - 146, 3, 104); }
+      c.fillStyle = '#2a2420'; c.beginPath(); c.moveTo(626, y - 18); c.lineTo(626, y - 60); c.quadraticCurveTo(640, y - 76, 654, y - 60); c.lineTo(654, y - 18); c.fill();
+      // window grid with stone frames; rows light up at dusk
+      for (let r = 0; r < 4; r++) for (let i = 0; i < 26; i++) { const x = x0 + 62 + i * 21, yy = y - 136 + r * 28; if ((x > 586 && x < 690) || x > x1 - 56) continue; const on = win > 0 && S.rng(i * 7 + r)() < win; c.fillStyle = '#e4dac2'; c.fillRect(x - 2, yy - 2, 11, 16); c.fillStyle = on ? '#ffd890' : '#2e3036'; c.fillRect(x, yy, 7, 12); if (on) { c.fillStyle = 'rgba(255,216,144,.25)'; c.fillRect(x - 4, yy - 4, 15, 20); } }
+      // timber scaffolding and a treadwheel crane while it is going up
+      if (b < 1) { const top = 520 - 260 * b; c.strokeStyle = '#7a5a34'; c.lineWidth = 3; for (let k = 0; k < 7; k++) { const sx = x0 + 20 + k * 96; c.beginPath(); c.moveTo(sx, y); c.lineTo(sx, Math.max(top - 10, y - 230)); c.stroke(); } for (let r = y - 30; r > top - 10; r -= 40) { c.beginPath(); c.moveTo(x0 + 10, r); c.lineTo(x1 - 10, r); c.stroke(); } }
       c.restore();
       VP.figure(c, [240, 640], sh, cc => S.person(cc, KING, 240, 640, 40, Object.assign(S.idle(lt, 0), { face: 1, shN: 60, elN: 20 }), { blink: S.blinkAt(lt, 0), smile: .3, look: [.8, -.3], time: lt }, L));
       if (b < 1) for (let k = 0; k < 8; k++) { const r = S.rng(k + 40); H1.tiny(c, 380 + r() * 520, 540 + r() * 30, 1.4, '#8a6a4a', lt, k, { pike: false, walk: true, helm: '#5a4030' }); }
@@ -134,7 +149,7 @@ window.SHOTS = [
       c.fillStyle = '#4a2a14'; c.fillRect(400, 590, 480, 20); c.fillRect(420, 610, 14, 80); c.fillRect(846, 610, 14, 80);
       for (let k = 0; k < 9; k++) { const r = S.rng(k + 30), x = k < 5 ? 410 + k * 30 : 690 + (k - 5) * 40, hh = 10 + r() * 50; for (let j = 0; j < hh / 4; j++) { c.fillStyle = j % 2 ? '#f0e4c8' : '#e0d0b0'; c.fillRect(x + Math.sin(j + k) * 3, 588 - j * 4, 40, 4); } }
       H1.fire(c, 820, 520, .1, lt, 9); c.fillStyle = '#f0e6d0'; c.fillRect(816, 520, 8, 36); VP.glow(c, 820, 500, 260, '#ffc070', .2 + .08 * f);
-      const w = seg(lt, Sh.tW - 2.5, Sh.dur); if (w > 0) for (let k = 0; k < 12; k++) { const ph = (lt * .6 + k / 12) % 1, x = lerp(80, 1200, ph), y = 300 + Math.sin(ph * Math.PI) * -120; c.fillStyle = S.rgba('#d8dce4', w); c.beginPath(); c.ellipse(x, y, 9, 9 * Math.abs(Math.cos(lt * 5 + k)) + 1, 0, 0, TAU); c.fill(); }
+      const w = seg(lt, Sh.tW - 2.5, Sh.dur); if (w > 0) for (let k = 0; k < 12; k++) { const ph = (lt * .35 + k / 12) % 1, x = lerp(560, 870, ph), y = 584 - (k % 3) * 3; c.fillStyle = S.rgba('#d8dce4', w * Math.min(1, ph * 6, (1 - ph) * 6)); c.beginPath(); c.ellipse(x, y, 9, 3, 0, 0, TAU); c.fill(); }
     },
     over: [(c, lt) => coinCorner(c, lt, { chips: 4, shine: .3 }), (c, lt, u, Sh) => { [Sh.t1, Sh.t2, Sh.t3, Sh.t4].forEach((t, k) => stampBox(c, 'BANKRUPT ' + ['1557', '1560', '1575', '1596'][k], 1520, 230 + k * 130, seg(lt, t, t + .25), '#b8282a', -.1 + (k % 2) * .16, 44)); }, (c, lt, u, Sh) => K.badge(c, 'IN, THEN STRAIGHT OUT TO PAY FOR WARS', lt, { at: Sh.tW - 1 })],
     sfx: [['debts', 'paper', .3], ['1557', 'stamp', .45], ['1560', 'stamp', .45], ['1575', 'stamp', .45], ['1596', 'stamp', .5], ['wars', 'coins', .35]] },
@@ -145,9 +160,11 @@ window.SHOTS = [
     draw: (c, lt, u, Sh) => {
       const f = VP.flicker(lt, 5), L = { L: [-1, -.5], amb: '#2a2040', ambA: .4, rim: '#ffc070', rimA: .9, tint: '#ffa050', tintA: .16, sw: .3, rw: .05 };
       H1.fire(c, 360, 540, .1, lt, 4); c.fillStyle = '#f0e6d0'; c.fillRect(355, 540, 10, 30); VP.glow(c, 360, 520, 420, '#ffb060', .28 + .1 * f);
+      const CERV = Object.assign({}, S.ES1.NOBLE2, { name: 'Cervantes', hairCol: X.HR.grey }); CERV.noVary = true;
+      c.fillStyle = '#3a2010'; c.fillRect(566, 612, 50, 10); c.fillRect(570, 622, 7, 46); c.fillRect(606, 622, 7, 46); c.fillRect(606, 540, 8, 74); c.fillStyle = '#5a3420'; c.fillRect(566, 610, 50, 4);
+      VP.figure(c, [548, 668], { k: .5, sy: -.2, a: .3, blur: 2 }, cc => S.person(cc, CERV, 548, 668, 40, VP.sit(CERV, lt, 0, { pose: { face: -1, lean: 16, shN: 46, elN: 64 + 10 * Math.sin(lt * 8), shF: 30, elF: 50 } }), { blink: S.blinkAt(lt, 0), smile: .3, look: [-.6, .6], time: lt }, L));
       c.fillStyle = '#4a2a14'; c.fillRect(300, 570, 260, 16); c.fillRect(316, 586, 12, 90); c.fillRect(532, 586, 12, 90);
       for (let k = 0; k < 5; k++) { c.fillStyle = k % 2 ? '#f0e4c8' : '#e8dcc0'; c.fillRect(420 + k * 3, 566 - k * 4, 80, 4); } c.fillStyle = '#7a2a1a'; c.fillRect(380, 548, 30, 22);
-      VP.figure(c, [500, 660], { k: .5, sy: -.2, a: .3, blur: 2 }, cc => S.person(cc, Object.assign({}, S.ES1.NOBLE2, { name: 'Cervantes', hairCol: X.HR.grey }), 500, 660, 40, Object.assign(S.idle(lt, 0), { face: -1, lean: 12, shN: 40, elN: 70 + 10 * Math.sin(lt * 8) }), { blink: S.blinkAt(lt, 0), smile: .3, look: [-.6, .6], time: lt }, L));
       const v = seg(lt, Sh.tV - 1, Sh.tV + .5); if (v > 0) { c.save(); c.globalAlpha = v; c.fillStyle = '#3a2a1a'; c.fillRect(740, 300, 300, 340); c.fillStyle = '#2a2420'; c.fillRect(756, 316, 268, 308); VP.glow(c, 900, 470, 120, '#ffe8c0', .35); const LT = { L: [-1, -.5], amb: '#2a2040', ambA: .3, rim: '#ffe0b0', rimA: .8, tint: '#ffc080', tintA: .1, sw: .2 }; c.save(); c.beginPath(); c.rect(756, 316, 268, 308); c.clip(); for (const [x, ch, uu, k] of [[800, S.ES1.NOBLE2, 22, 1], [860, Object.assign({}, CH.aisha, { build: 'kid', skin: X.SK.fair, hairCol: { base: '#e8c880', shade: '#a88840', rim: '#fff0c0' }, shirt: ['#f0ece4', '#b0a898'], pants: ['#f0ece4', '#b0a898'], dupatta: null, long: true }), 17, 2], [910, Object.assign({}, CH.aisha, { skin: X.SK.fair, shirt: ['#e8dcc8', '#a89c88'], pants: ['#e8dcc8', '#a89c88'], dupatta: null }), 21, 3], [975, Object.assign({}, CH.aisha, { skin: X.SK.fair, shirt: ['#3a3030', '#1a1414'], pants: ['#3a3030', '#1a1414'], dupatta: null }), 21, 4]]) S.person(c, ch, x, 600, uu, Object.assign(S.idle(0, k), { face: k > 2 ? -1 : 1 }), { look: [0, 0] }, LT); c.restore(); c.restore(); }
       VP.motes(c, lt, 300, 350, 700, 300, { n: 20, a: .35 });
     },

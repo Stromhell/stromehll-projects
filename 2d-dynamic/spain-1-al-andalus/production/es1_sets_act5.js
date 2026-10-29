@@ -59,12 +59,26 @@
   // ======================== A TOWN SQUARE ========================
   VP.set('square', 1280, 720, (g, w, h) => {
     sky(g, w, h, [[0, '#7aa0d0'], [.5, '#f0e4c8']]);
-    for (let i = 0; i < 6; i++) { const x = i * 220 - 20, hh = 260 + (i % 3) * 40; g.fillStyle = ['#e8d4ac', '#f0dcb8', '#d8c094'][i % 3]; g.fillRect(x, 520 - hh, 220, hh); g.fillStyle = '#b8603a'; g.fillRect(x - 6, 520 - hh - 14, 232, 16);
-      for (let k = 0; k < 3; k++) { g.fillStyle = '#5a3a24'; g.fillRect(x + 30 + k * 60, 520 - hh + 50, 26, 40); g.fillStyle = '#7a4a2a'; g.fillRect(x + 26 + k * 60, 520 - hh + 90, 34, 6); }
-      g.fillStyle = '#3a2418'; g.fill(arch(x + 110, 520, 70, 100)); }
     tower(g, 1100, 300, 50, 160, '#e8d4ac', '#b8986e', '#fff4dc');
-    g.fillStyle = '#c8b090'; g.fillRect(0, 520, w, h - 520);
-    for (let y = 520; y < h; y += 24) for (let x = ((y - 520) / 24 % 2) * 20; x < w; x += 40) { g.fillStyle = S.mix('#d8c098', '#a88a64', S.rng(x + y * 5 + 7)()); g.fillRect(x + 1, y + 1, 38, 22); }
+    for (let i = 0; i < 6; i++) { const x = i * 220 - 20, hh = 260 + (i % 3) * 40, top = 520 - hh, base = ['#e8d4ac', '#f0dcb8', '#d8c094'][i % 3];
+      const gr = g.createLinearGradient(0, top, 0, 520); gr.addColorStop(0, S.mix(base, '#ffffff', .12)); gr.addColorStop(1, S.mix(base, '#8a6a48', .18)); g.fillStyle = gr; g.fillRect(x, top, 220, hh);
+      S.dabs(g, { x, y: top, w: 220, h: hh, n: 260, cols: [S.mix(base, '#ffffff', .25), S.mix(base, '#7a5a3a', .3)], r0: 2, r1: 9, a0: .12, a1: .3, seed: 2601 + i });
+      g.fillStyle = S.rgba('#7a5a3a', .25); g.fillRect(x + 216, top, 4, hh);
+      // cornice and tiled roof edge
+      g.fillStyle = '#e8dcc4'; g.fillRect(x - 4, top - 4, 228, 8); g.fillStyle = '#9a4a2a'; g.fillRect(x - 6, top - 18, 232, 14); for (let k = 0; k < 15; k++) { g.fillStyle = S.mix('#b8603a', '#7a3a1e', S.rng(k + i * 31)()); g.beginPath(); g.ellipse(x - 2 + k * 16, top - 5, 8, 6, 0, 0, Math.PI); g.fill(); }
+      // windows: deep reveals, green shutters, iron balconies with flower pots
+      for (let k = 0; k < 3; k++) { const wx = x + 30 + k * 60, wy = top + 50; g.fillStyle = '#e4d4b4'; g.fillRect(wx - 4, wy - 4, 34, 48); g.fillStyle = '#3a2418'; g.fillRect(wx, wy, 26, 40); g.fillStyle = S.rgba('#a8c0d0', .35); g.fillRect(wx + 3, wy + 3, 9, 16); g.fillRect(wx + 14, wy + 3, 9, 16);
+        g.fillStyle = '#2f6a4a'; g.fillRect(wx - 12, wy, 9, 40); g.fillRect(wx + 29, wy, 9, 40);
+        g.fillStyle = '#7a4a2a'; g.fillRect(wx - 8, wy + 40, 42, 5); g.strokeStyle = '#2a2420'; g.lineWidth = 1.5; g.beginPath(); g.moveTo(wx - 8, wy + 28); g.lineTo(wx + 34, wy + 28); for (let q = 0; q < 8; q++) { g.moveTo(wx - 6 + q * 5.6, wy + 28); g.lineTo(wx - 6 + q * 5.6, wy + 40); } g.stroke();
+        if ((i + k) % 2 === 0) S.dabs(g, { x: wx - 6, y: wy + 20, w: 38, h: 10, n: 12, cols: ['#3a6a2a', '#d8302a', '#e87a4a'], r0: 2, r1: 4, a0: .8, a1: 1, seed: 2610 + i * 3 + k }); }
+      // doorway arch with depth and a lamp
+      g.fillStyle = '#c8b090'; g.fill(arch(x + 104, 520, 82, 108)); g.fillStyle = '#3a2418'; g.fill(arch(x + 110, 520, 70, 100)); g.fillStyle = S.rgba('#c87a3a', .18); g.fillRect(x + 110, 470, 70, 50);
+      g.fillStyle = '#2a2420'; g.fillRect(x + 190, 410, 3, 16); g.fillStyle = '#e8c070'; g.fillRect(x + 185, 424, 13, 14); }
+    // plaza paving in perspective: rows widen toward the viewer, with a shadow where the walls meet the ground
+    g.fillStyle = '#b8a07e'; g.fillRect(0, 520, w, h - 520);
+    let y = 520, rh = 7; while (y < h) { const sw = rh * 2.4, off = ((y * 7) % sw); for (let x = -off; x < w; x += sw) { const r = S.rng(Math.round(x * 3 + y * 17))(); g.fillStyle = S.mix('#dcc6a0', '#a88a64', r); g.beginPath(); g.ellipse(x + sw / 2, y + rh / 2, sw / 2 - 1.2, rh / 2 - .8, 0, 0, TAU); g.fill(); g.fillStyle = S.rgba('#ffffff', .12); g.beginPath(); g.ellipse(x + sw / 2 - sw * .1, y + rh * .35, sw * .25, rh * .15, 0, 0, TAU); g.fill(); } y += rh; rh *= 1.12; }
+    const sg = g.createLinearGradient(0, 518, 0, 548); sg.addColorStop(0, S.rgba('#3a2418', .35)); sg.addColorStop(1, S.rgba('#3a2418', 0)); g.fillStyle = sg; g.fillRect(0, 518, w, 30);
+    S.strokes(g, { x: 0, y: 540, w, h: 180, n: 200, cols: ['#e8d0a8', '#7a5a3a'], l0: 8, l1: 22, ang: 0, jit: .2, w0: 1, w1: 2, a0: .08, a1: .2, seed: 2620 });
   });
 
   // ======================== THE HARBOUR ========================

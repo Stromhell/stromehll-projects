@@ -1,0 +1,1 @@
+0:epic,12:sad,21:calm,30:tension,39:sad,48:epic,57:hope

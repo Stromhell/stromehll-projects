@@ -48,7 +48,7 @@ window.SHOTS = [
     draw: (c, lt, u, Sh) => {
       const L = DAY(lt), sh = VP.shadowOf(L, 1.3, .3, .12), sink = E.io(seg(lt, Sh.tS, Sh.tS + 4));
       for (const [k, x, s] of [[0, 230, .55], [1, 380, .45], [2, 520, .5]]) { const d = sink * (k === 1 ? .6 : 1); c.save(); c.beginPath(); c.rect(x - 200, 0, 400, 426); c.clip(); c.translate(x, 420 + d * 150 * s); c.rotate(d * (k ? .25 : -.2)); X.ship(c, 0, 0, s, '#f4ead4', true); c.restore(); if (d > 0) { for (let j = 0; j < 4; j++) { const ph = (lt * 1.5 + j * .25 + k) % 1; c.strokeStyle = `rgba(255,255,255,${.6 * (1 - ph) * d})`; c.lineWidth = 2; c.beginPath(); c.ellipse(x, 424, 40 * s + ph * 80 * s, 6 + ph * 6, 0, 0, TAU); c.stroke(); } } }
-      const men = [[C.CORTES, 640, 44, 0], [C.CONQ, 740, 38, 1], [C.CONQ2, 820, 38, 2], [C.CONQ, 900, 34, 3], [C.CONQ2, 970, 34, 4], [C.CONQ, 1040, 30, 5]];
+      const men = [[C.CORTES, 600, 44, 0], [C.CONQ, 720, 38, 1], [C.CONQ2, 828, 37, 2], [C.CONQ, 928, 34, 3], [C.CONQ2, 1018, 33, 4], [C.CONQ, 1100, 30, 5]];
       for (const [ch, x, uu, k] of men) VP.figure(c, [x, 640 - k * 6], sh, cc => S.person(cc, ch, x, 640 - k * 6, uu, Object.assign(S.idle(lt, k), { face: k ? -1 : -1, shN: k === 0 && lt > Sh.tS ? 110 : 10, elN: k === 0 ? 10 : 50, holdF: k ? wr => { cc.strokeStyle = '#4a3420'; cc.lineWidth = 3; cc.beginPath(); cc.moveTo(wr[0], wr[1] + 50); cc.lineTo(wr[0] + 4, wr[1] - 120); cc.stroke(); cc.fillStyle = '#c8c8d0'; cc.fillRect(wr[0] + 1, wr[1] - 132, 6, 14); } : null }), { blink: S.blinkAt(lt, k), angry: k === 0 ? .3 : 0, worry: k && lt > Sh.tS ? .5 : 0, look: [-.8, 0], time: lt }, L));
       VP.motes(c, lt, 0, 300, 1280, 400, { n: 25, a: .35 });
     },
@@ -79,7 +79,7 @@ window.SHOTS = [
       const L = DAY(lt), sh = VP.shadowOf(L, 1.3, .3, .12), n = Math.round(lerp(30, 140, E.out(seg(lt, Sh.tT - .5, Sh.tT + 2))));
       VP.clouds(c, lt, { n: 4, y0: 520, y1: 720, a: .25 });
       for (let i = 0; i < n; i++) { const r = S.rng(i + 1000), row = i % 5, x = ((r() * 1500 + lt * 22) % 1500) - 120, y = 560 + row * 12 + r() * 6, s = .9 + row * .12; H1.tiny(c, x, y, s, ['#e8dcc2', '#c8282a', '#d8c8a8'][i % 3], lt, i, { walk: true, skin: '#a86a44', helm: '#2a1a10', shield: i % 4 ? '#c8a040' : '#c8282a', lean: 2 }); }
-      for (const [k, x0] of [[0, 380], [1, 760]]) { const x = x0 + lt * 22, y = 668; VP.figure(c, [x, y], sh, cc => VP.rider(cc, k ? C.CONQ : C.CORTES, x, y, 24, 120, { face: 1, ph: lt * .9 + k, walk: .7, t: lt, col: k ? GREY : BAY, tack: CTACK }, { lean: 2 }, { blink: S.blinkAt(lt, k), look: [.8, 0], time: lt }, L)); }
+      for (const [k, x0] of [[0, 380], [1, 760]]) { const x = x0 + lt * 22, y = 612; VP.figure(c, [x, y], sh, cc => VP.rider(cc, k ? C.CONQ : C.CORTES, x, y, 21, 104, { face: 1, ph: lt * .9 + k, walk: .7, t: lt, col: k ? GREY : BAY, tack: CTACK }, { lean: 2 }, { blink: S.blinkAt(lt, k), look: [.8, 0], time: lt }, L)); }
       for (const [x, k] of [[220, 0], [300, 1], [560, 2], [640, 3], [980, 4]]) { const xx = x + lt * 22, y = 690; VP.figure(c, [xx, y], sh, cc => S.person(cc, C.TLAX, xx, y, 30, Object.assign(walk(lt * .9 + k * .3), { face: 1, holdF: wr => { cc.strokeStyle = '#4a3420'; cc.lineWidth = 3; cc.beginPath(); cc.moveTo(wr[0], wr[1] + 40); cc.lineTo(wr[0] + 6, wr[1] - 90); cc.stroke(); cc.fillStyle = '#2a2a30'; cc.beginPath(); cc.moveTo(wr[0] + 2, wr[1] - 90); cc.lineTo(wr[0] + 6, wr[1] - 108); cc.lineTo(wr[0] + 10, wr[1] - 90); cc.fill(); } }), { blink: S.blinkAt(lt, k), angry: .3, look: [.8, 0], time: lt }, L)); }
       VP.motes(c, lt, 0, 400, 1280, 300, { n: 30, a: .3, col: '#e8d4a0' });
     },
@@ -92,11 +92,11 @@ window.SHOTS = [
     draw: (c, lt, u, Sh) => {
       const L = DAY(lt, { swing: 4 }), sh = VP.shadowOf(L, 1, .3, .12), hq = seg(lt, Sh.tH - .6, Sh.tH + .4);
       c.fillStyle = '#d8c8a0'; c.fillRect(0, 560, 1280, 160); S.dabs(c, { x: 0, y: 560, w: 1280, h: 160, n: 120, cols: ['#e8d8b0', '#b8a880'], r0: 4, r1: 12, a0: .2, a1: .4, seed: 55 }); S.glow(c, 640, 560, 260, '#fff0d0', .1);
+      for (const [x0, k] of [[-70, 5], [-10, 6]]) { const x = lerp(x0, k === 5 ? 700 : 822, E.io(hq)), y = 638 + (k - 5) * 4; VP.figure(c, [x, y], sh, cc => S.person(cc, k === 5 ? C.CONQ : C.CONQ2, x, y, 36, Object.assign(hq > 0 && hq < 1 ? walk(lt) : S.idle(lt, k), { face: 1, shN: 70 * hq, elN: 20 }), { blink: S.blinkAt(lt, k), angry: .5, look: [.8, 0], time: lt }, L)); }
       VP.figure(c, [760, 650], sh, cc => S.person(cc, C.MOCTEZUMA, 760, 650, 38, Object.assign(S.idle(lt, 1), { face: -1, shN: lt < Sh.tH ? 60 + 10 * Math.sin(lt * 2) : 10, elN: 30 }), { blink: S.blinkAt(lt, 1), smile: .4 * (1 - hq), worry: .8 * hq, look: [-.8, 0], time: lt }, L));
-      for (const [x, k] of [[840, 2], [900, 3]]) VP.figure(c, [x, 655], sh, cc => S.person(cc, C.NAHUA, x, 655, 34, Object.assign(S.idle(lt, k), { face: -1 }), { blink: S.blinkAt(lt, k), worry: .6 * hq, look: [-.8, 0], time: lt }, L));
+      for (const [x1, k] of [[884, 2], [954, 3]]) { const x = x1 + 90 * E.io(hq); VP.figure(c, [x, 655], sh, cc => S.person(cc, C.NAHUA, x, 655, 34, Object.assign(hq > 0 && hq < 1 ? walk(lt + k) : S.idle(lt, k), { face: -1 }), { blink: S.blinkAt(lt, k), worry: .6 * hq, look: [-.8, 0], time: lt }, L)); }
       VP.figure(c, [520, 650], sh, cc => S.person(cc, C.CORTES, 520, 650, 38, Object.assign(S.idle(lt, 0), { face: 1, shN: 30, elN: 40 }), { blink: S.blinkAt(lt, 0), smile: .3, angry: .4 * hq, look: [.8, 0], time: lt }, L));
       VP.figure(c, [600, 652], sh, cc => S.person(cc, C.MALINTZIN, 600, 652, 34, Object.assign(S.idle(lt, 4), { face: 1 }), { blink: S.blinkAt(lt, 4), look: [.8, 0], time: lt }, L));
-      for (const [x0, k] of [[440, 5], [460, 6]]) { const x = lerp(x0, x0 + (k === 5 ? 380 : 420), E.io(hq)), y = 650 + (k - 5) * 6; VP.figure(c, [x, y], sh, cc => S.person(cc, k === 5 ? C.CONQ : C.CONQ2, x, y, 36, Object.assign(hq > 0 && hq < 1 ? walk(lt) : S.idle(lt, k), { face: 1, shN: 70 * hq, elN: 20 }), { blink: S.blinkAt(lt, k), angry: .5, look: [.8, 0], time: lt }, L)); }
       VP.motes(c, lt, 400, 400, 500, 300, { n: 18, a: .3 });
     },
     over: [(c, lt) => coinCorner(c, lt, { shine: .5 }), (c, lt, u, Sh) => K.card(c, 'MOCTEZUMA II', lt, { at: Sh.tW, x: 1540, y: 200, px: 56, rot: 3 }), (c, lt, u, Sh) => K.card(c, 'HOSTAGE', lt, { at: Sh.tH + .2, x: 380, y: 860, px: 72, rot: -4 })],
@@ -172,7 +172,7 @@ window.SHOTS = [
       for (const dx of [-80, -30, 30, 80]) { const x = lx + dx, y = ly + 30; VP.figure(c, [x, y], sh, cc => S.person(cc, C.INCA, x, y, 22, Object.assign(walk(lt * .8 + dx * .01), { face: -1, shN: 160, elN: 10 }), { time: lt }, L)); }
       litter(c, lx, ly - 34, .9); S.person(c, C.ATAHUALPA, lx, ly - 40, 24, Object.assign(S.idle(lt, 1), { face: -1, sitY: -.1, hideLegs: true }), { blink: S.blinkAt(lt, 1), worry: .8 * amb, look: [-.8, 0], time: lt }, L);
       for (const x of [60, 180, 300, 420, 860, 980, 1100, 1220]) puff(c, x, 430, lt, Sh.tA + (x % 7) * .06);
-      if (amb > 0) for (const [k, x0] of [[0, 120], [1, 1160]]) { const x = lerp(x0, x0 < 640 ? 420 : 900, E.out(seg(lt, Sh.tA + .2, Sh.tA + 2.5))), y = 690; VP.figure(c, [x, y], sh, cc => VP.rider(cc, k ? C.PIZARRO : C.CONQ, x, y, 26, 130, { face: x0 < 640 ? 1 : -1, ph: lt * 2.4 + k, walk: 1, t: lt, col: k ? BAY : GREY, tack: CTACK }, { lean: 6 }, { angry: .6, time: lt }, L)); }
+      if (amb > 0) for (const [k, x0] of [[0, 120], [1, 1160]]) { const x = lerp(x0, x0 < 640 ? 360 : 1070, E.out(seg(lt, Sh.tA + .2, Sh.tA + 2.5))), y = 690; VP.figure(c, [x, y], sh, cc => VP.rider(cc, k ? C.PIZARRO : C.CONQ, x, y, 26, 130, { face: x0 < 640 ? 1 : -1, ph: lt * 2.4 + k, walk: 1, t: lt, col: k ? BAY : GREY, tack: CTACK }, { lean: 6 }, { angry: .6, time: lt }, L)); }
       VP.motes(c, lt, 0, 300, 1280, 400, { n: 25, a: .35, col: '#f0d8b0' });
     },
     over: [(c, lt) => coinCorner(c, lt, { shine: .5 }), (c, lt) => K.dateTag(c, 'CAJAMARCA · 1532', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, '~170 SPANIARDS', lt, { at: Sh.tH + .2, x: 1540, y: 200, px: 52, rot: 3 }), (c, lt, u, Sh) => K.card(c, 'ATAHUALPA', lt, { at: 2, x: 380, y: 200, px: 56, rot: -3, until: Sh.tA }), (c, lt, u, Sh) => K.badge(c, 'TAKEN PRISONER', lt, { at: Sh.tP })],
