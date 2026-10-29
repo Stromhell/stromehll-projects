@@ -1,0 +1,266 @@
+<!doctype html><html><head><meta charset="utf-8"><title>AH act 5 - beads and a flute</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "leo";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/', INK = '#2b1e16', CREAM = '#f6eedc', GOLD = '#e8b44a', RED = '#c8402e', GREEN = '#3f7a3a';
+for (const n of ['camp_shade', 'cape_map', 'europe_map', 'ice_night']) K.load(n, PL + n + '.jpg');
+{ const T = window.TIMING, L = T.shots[T.shots.length - 1]; L.end += 1.8; T.dur = L.end; }
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+const font = (px, fam = 'Anton') => `${px}px ${fam}, Oswald, sans-serif`;
+const spear = (x, y, k) => (c) => { if (k <= 0) return; c.save(); c.translate(x, y); c.scale(k, k); c.fillStyle = 'rgba(30,18,8,.35)'; c.beginPath(); c.ellipse(-30, 4, 70, 12, 0, 0, 7); c.fill(); c.fillStyle = '#7a5a34'; c.beginPath(); c.ellipse(0, 2, 26, 9, 0, 0, 7); c.fill(); c.rotate(-.12); c.strokeStyle = R.INK; c.lineWidth = 15; c.lineCap = 'round'; c.beginPath(); c.moveTo(0, 0); c.lineTo(0, -470); c.stroke(); c.strokeStyle = '#8a5a32'; c.lineWidth = 9; c.stroke(); c.fillStyle = '#6a6458'; c.strokeStyle = R.INK; c.lineWidth = 3; c.beginPath(); c.moveTo(-17, -460); c.lineTo(0, -540); c.lineTo(17, -460); c.closePath(); c.fill(); c.stroke(); c.strokeStyle = '#c8a878'; c.lineWidth = 4; for (let k2 = 0; k2 < 4; k2++) { c.beginPath(); c.moveTo(-8, -450 + k2 * 7); c.lineTo(8, -446 + k2 * 7); c.stroke(); } c.restore(); };
+const hide = (x, y, w, k, col = '#8b5e3a') => (c) => { if (k <= 0) return; c.save(); c.translate(x, y); c.scale(k, k); c.fillStyle = 'rgba(30,18,8,.3)'; c.beginPath(); c.ellipse(0, 6, w * .55, w * .1, 0, 0, 7); c.fill(); c.fillStyle = col; c.strokeStyle = R.INK; c.lineWidth = 3; c.beginPath(); c.moveTo(-w / 2, 0); c.quadraticCurveTo(-w * .4, -w * .2, -w * .1, -w * .16); c.quadraticCurveTo(w * .2, -w * .26, w * .48, -w * .08); c.quadraticCurveTo(w * .55, 0, w * .4, w * .04); c.quadraticCurveTo(0, w * .1, -w / 2, 0); c.fill(); c.stroke();
+  c.strokeStyle = 'rgba(40,20,8,.35)'; c.lineWidth = 2; for (let j = 0; j < 14; j++) { const hx = -w * .4 + j * w * .06; c.beginPath(); c.moveTo(hx, -w * .1); c.lineTo(hx + 6, -w * .02); c.stroke(); } c.restore(); };
+const firePit = (x, y, k = 1) => (c) => { c.save(); c.translate(x, y); c.scale(k, k); c.fillStyle = 'rgba(20,10,4,.45)'; c.beginPath(); c.ellipse(0, 4, 70, 16, 0, 0, 7); c.fill(); c.fillStyle = '#1a120c'; c.beginPath(); c.ellipse(0, 0, 46, 11, 0, 0, 7); c.fill();
+  c.lineCap = 'round'; for (const [a, b2, col] of [[-.3, .3, '#5a3a22'], [.4, -.2, '#6a4628'], [3, 2.8, '#4a2e18']]) { c.strokeStyle = R.INK; c.lineWidth = 15; c.beginPath(); c.moveTo(Math.cos(a) * -48, -4 + Math.sin(a) * 6); c.lineTo(Math.cos(b2) * 40, -12); c.stroke(); c.strokeStyle = col; c.lineWidth = 10; c.stroke(); }
+  for (let k2 = 0; k2 < 11; k2++) { const an = k2 / 11 * Math.PI * 2; const sx = Math.cos(an) * 62, sy = Math.sin(an) * 15 + 2; c.fillStyle = k2 % 2 ? '#7a7064' : '#8f8678'; c.strokeStyle = R.INK; c.lineWidth = 2.5; c.beginPath(); c.ellipse(sx, sy, 15, 9, 0, 0, 7); c.fill(); c.stroke(); } c.restore(); };
+// the band: hunter (our 'you'), a woman, an elder, a younger man
+const HUNTER = { costume: 'hide', hair: 'long', beard: true, seed: 3 };
+const WOMAN = { costume: 'hideW', hair: 'bun', hairCol: '#2a1a10', seed: 5 };
+const ELDER = { costume: 'hide', hair: 'bald', beard: true, seed: 8 };
+const YOUNG = { costume: 'hideBare', hair: 'curly', seed: 9 };
+const FIRE = [1075, 1308];
+const camp = () => [firePit(FIRE[0], FIRE[1], .7), (c, lt) => A.fire(FIRE[0], FIRE[1] - 6, .42, { glow: 220 })(c, lt), A.smoke(FIRE[0], FIRE[1] - 48, 1)];
+// eating: near hand comes up to the mouth now and then
+const eat = (ph = 0) => (o, lt) => { const r = Math.max(0, Math.sin(lt * 1.6 + ph)); if (r > .2) o.arms = (t, P) => ({ shR: K.lerp(P.shR, 70, r), elR: K.lerp(P.elR, -150, r) }); };
+// skewer of meat / pile of nuts (world)
+const skewer = (x, y, k) => (c) => { if (k <= 0) return; c.save(); c.translate(x, y); c.scale(k, k); c.strokeStyle = '#6a4a2a'; c.lineWidth = 5; c.lineCap = 'round'; c.beginPath(); c.moveTo(-40, 10); c.lineTo(40, -40); c.stroke(); for (let i = 0; i < 3; i++) { c.fillStyle = ['#8a3a22', '#9a4a2a', '#7a321e'][i]; c.strokeStyle = INK; c.lineWidth = 2.5; c.beginPath(); c.ellipse(-16 + i * 20, -2 - i * 12, 15, 11, -.5, 0, 7); c.fill(); c.stroke(); } c.restore(); };
+const nuts = (x, y, k) => (c) => { if (k <= 0) return; c.save(); c.translate(x, y); c.scale(k, k); c.fillStyle = 'rgba(30,18,8,.3)'; c.beginPath(); c.ellipse(0, 4, 50, 10, 0, 0, 7); c.fill(); c.fillStyle = '#9a7a4a'; c.strokeStyle = INK; c.lineWidth = 2.5; c.beginPath(); c.ellipse(0, 0, 46, 12, 0, 0, 7); c.fill(); c.stroke(); for (let i = 0; i < 12; i++) { c.fillStyle = i % 2 ? '#8a5a2a' : '#b07a3a'; c.beginPath(); c.ellipse(-30 + (i % 6) * 12, -6 - Math.floor(i / 6) * 8, 7, 5, 0, 0, 7); c.fill(); c.stroke(); } c.restore(); };
+// speech bubble (world) with an icon drawer
+const bubble = (x, y, at, until, draw, label) => (c, lt) => { const p = pop(lt, at) * (1 - K.seg(lt, until - .3, until)); if (p <= 0) return; c.save(); c.translate(x, y); c.scale(p, p); c.fillStyle = CREAM; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.roundRect(-110, -150, 220, 130, 24); c.fill(); c.stroke(); c.beginPath(); c.moveTo(-20, -22); c.lineTo(-6, 18); c.lineTo(14, -22); c.closePath(); c.fill(); c.stroke(); c.fillStyle = CREAM; c.fillRect(-18, -26, 30, 8);
+  c.save(); c.translate(0, -105); draw(c, lt); c.restore(); c.fillStyle = INK; c.font = font(26, 'Oswald'); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(label, 0, -46); c.restore(); };
+const drop = (c) => { c.fillStyle = '#4a8ac0'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(0, -30); c.bezierCurveTo(-24, 0, -18, 22, 0, 22); c.bezierCurveTo(18, 22, 24, 0, 0, -30); c.fill(); c.stroke(); c.fillStyle = 'rgba(255,255,255,.7)'; c.beginPath(); c.ellipse(-7, 6, 4, 8, -.3, 0, 7); c.fill(); };
+const hooves = (c) => { c.fillStyle = '#5a3a20'; for (const [x, y] of [[-40, 8], [-12, -6], [16, 8], [44, -6]]) { c.beginPath(); c.ellipse(x - 5, y, 5, 9, -.2, 0, 7); c.ellipse(x + 5, y, 5, 9, .2, 0, 7); c.fill(); } };
+// drying rack with meat strips (world)
+const meatRack = (x, y, k, n) => (c, lt) => { if (k <= 0) return; c.save(); c.translate(x, y); c.scale(k, k); c.fillStyle = 'rgba(30,18,8,.3)'; c.beginPath(); c.ellipse(0, 6, 150, 16, 0, 0, 7); c.fill(); c.strokeStyle = INK; c.lineWidth = 12; c.lineCap = 'round'; c.beginPath(); c.moveTo(-120, 0); c.lineTo(-110, -200); c.moveTo(120, 0); c.lineTo(110, -200); c.moveTo(-130, -190); c.lineTo(130, -190); c.stroke(); c.strokeStyle = '#7a5434'; c.lineWidth = 7; c.stroke();
+  for (let i = 0; i < n; i++) { const sx = -95 + i * 32, sw = Math.sin(lt * 1.3 + i) * .05; c.save(); c.translate(sx, -186); c.rotate(sw); c.fillStyle = i % 2 ? '#8a3a22' : '#a04a2a'; c.strokeStyle = INK; c.lineWidth = 2.5; c.beginPath(); c.moveTo(-9, 0); c.lineTo(9, 0); c.lineTo(7, 70 + (i % 3) * 14); c.lineTo(-6, 76 + (i % 3) * 14); c.closePath(); c.fill(); c.stroke(); c.restore(); } c.restore(); };
+// basket held in hand (hand-local)
+const basket = { near: (c) => { c.rotate(0); c.fillStyle = '#b08a4a'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(-34, 14); c.lineTo(34, 14); c.lineTo(26, 60); c.lineTo(-26, 60); c.closePath(); c.fill(); c.stroke(); c.strokeStyle = 'rgba(60,40,20,.5)'; c.lineWidth = 2; for (let k = 0; k < 4; k++) { c.beginPath(); c.moveTo(-30 + k * 3, 24 + k * 10); c.lineTo(30 - k * 3, 24 + k * 10); c.stroke(); } c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.arc(0, 14, 30, Math.PI, 0); c.stroke(); } };
+const hammerstone = { near: (c) => { c.fillStyle = '#8a8478'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.ellipse(0, 16, 16, 12, .3, 0, 7); c.fill(); c.stroke(); } };
+const scraper = { near: (c) => { c.fillStyle = '#6a6458'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(-18, 10); c.lineTo(18, 10); c.lineTo(12, 30); c.lineTo(-12, 30); c.closePath(); c.fill(); c.stroke(); } };
+// stone flakes popping off at a point (world)
+const flakes = (x, y, t0, t1, rate = 1.6) => (c, lt) => { if (lt < t0 || lt > t1 + 1) return; for (let k = 0; k < 10; k++) { const ph = ((lt - t0) * rate + k / 10) % 1; if (lt > t1 && ph < .1) continue; const a = -1.6 + (k % 5 - 2) * .35, d = ph * 90; c.fillStyle = `rgba(200,195,180,${1 - ph})`; c.strokeStyle = `rgba(43,30,22,${1 - ph})`; c.lineWidth = 1.5; c.beginPath(); c.moveTo(x + Math.cos(a) * d, y + Math.sin(a) * d + ph * ph * 60); c.lineTo(x + Math.cos(a) * d + 8, y + Math.sin(a) * d + ph * ph * 60 + 3); c.lineTo(x + Math.cos(a) * d + 2, y + Math.sin(a) * d + ph * ph * 60 + 8); c.closePath(); c.fill(); c.stroke(); } };
+// spear shaft lying on the ground with a stone point (world)
+const shaft = (x, y, k, sharp) => (c) => { c.save(); c.translate(x, y); c.scale(k, k); c.fillStyle = 'rgba(30,18,8,.3)'; c.beginPath(); c.ellipse(0, 4, 200, 10, 0, 0, 7); c.fill(); c.rotate(-.04); c.strokeStyle = INK; c.lineWidth = 12; c.lineCap = 'round'; c.beginPath(); c.moveTo(-200, 0); c.lineTo(170, 0); c.stroke(); c.strokeStyle = '#8a6a3e'; c.lineWidth = 7; c.stroke();
+  c.fillStyle = sharp ? '#b8b0a0' : '#8a8478'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(160, -12); c.lineTo(160 + 40 + sharp * 26, 0); c.lineTo(160, 12); c.closePath(); c.fill(); c.stroke(); if (sharp > .5) { c.strokeStyle = 'rgba(255,255,255,.8)'; c.lineWidth = 2; c.beginPath(); c.moveTo(168, -6); c.lineTo(190 + sharp * 20, -1); c.stroke(); } c.restore(); };
+// screen-space checklist card
+const checklist = (c, lt, x, y, rows) => { const n = rows.filter(r => lt > r[1]).length; if (!n) return; const a = K.seg(lt, rows[0][1], rows[0][1] + .3); c.save(); c.globalAlpha = a; c.translate(x, y); c.rotate(-.03); const w = 470, h = 70 + rows.length * 66; c.fillStyle = 'rgba(20,12,6,.35)'; c.fillRect(10, 12, w, h); c.fillStyle = CREAM; c.fillRect(0, 0, w, h); c.strokeStyle = INK; c.lineWidth = 5; c.strokeRect(0, 0, w, h);
+  rows.forEach(([txt, at], i) => { const yy = 60 + i * 66; c.strokeStyle = INK; c.lineWidth = 3; c.strokeRect(30, yy - 22, 40, 40); c.fillStyle = INK; c.font = font(38, 'Caveat'); c.textBaseline = 'middle'; c.fillText(txt, 90, yy); const p = K.seg(lt, at, at + .3); if (p > 0) { c.strokeStyle = GREEN; c.lineWidth = 8; c.lineCap = 'round'; c.beginPath(); c.moveTo(34, yy); c.lineTo(34 + 14 * Math.min(1, p * 2), yy + 14 * Math.min(1, p * 2)); if (p > .5) c.lineTo(48 + 30 * (p - .5) * 2, yy + 14 - 34 * (p - .5) * 2); c.stroke(); } }); c.restore(); };
+// screen-space sun-arc dial: dawn -> early afternoon
+const sunArc = (c, lt, at, x, y) => { const a = K.seg(lt, at, at + .4); if (a <= 0) return; const u = E.io(K.seg(lt, at + .3, at + 2.6)); c.save(); c.globalAlpha = a; c.translate(x, y); c.fillStyle = 'rgba(20,12,6,.55)'; c.beginPath(); c.roundRect(-300, -230, 600, 340, 20); c.fill(); c.strokeStyle = 'rgba(246,238,220,.6)'; c.lineWidth = 4; c.setLineDash([12, 10]); c.beginPath(); c.arc(0, 20, 220, Math.PI, 0); c.stroke(); c.setLineDash([]);
+  c.fillStyle = 'rgba(246,238,220,.85)'; c.font = font(26, 'Oswald'); c.textAlign = 'center'; c.fillText('DAWN', -220, 50); c.fillText('DUSK', 220, 50); const an = Math.PI + u * Math.PI * .62, sx = Math.cos(an) * 220, sy = 20 + Math.sin(an) * 220; const g = c.createRadialGradient(sx, sy, 0, sx, sy, 70); g.addColorStop(0, 'rgba(255,220,120,.9)'); g.addColorStop(1, 'rgba(255,200,80,0)'); c.fillStyle = g; c.beginPath(); c.arc(sx, sy, 70, 0, 7); c.fill(); c.fillStyle = '#ffd25a'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.arc(sx, sy, 26, 0, 7); c.fill(); c.stroke();
+  if (u > .95) { c.fillStyle = GOLD; c.font = font(34, 'Anton'); c.fillText('EARLY AFTERNOON', 0, 92); } c.restore(); };
+
+// ---------- act 3: the persistence hunt ----------
+const TAU = Math.PI * 2, D2R = Math.PI / 180;
+const plateAt = (c, name, px, py, sx, sy, z) => { const s2 = z * 1920 / 2560; c.setTransform(s2, 0, 0, s2, sx - px * s2, sy - py * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); return s2; };
+const hoursClock = (lt, at) => (c) => { const a = pop(lt, at, .5); if (a <= 0) return; const x = 170, y = 170; c.save(); c.translate(x, y); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.35)'; c.beginPath(); c.arc(6, 8, 110, 0, 7); c.fill(); c.fillStyle = '#f6eedc'; c.beginPath(); c.arc(0, 0, 110, 0, 7); c.fill(); c.strokeStyle = R.INK; c.lineWidth = 7; c.stroke();
+  for (let k = 0; k < 12; k++) { const an = k / 12 * Math.PI * 2; c.lineWidth = k % 3 ? 3 : 6; c.beginPath(); c.moveTo(Math.cos(an) * 84, Math.sin(an) * 84); c.lineTo(Math.cos(an) * 98, Math.sin(an) * 98); c.stroke(); } const sp = (lt - at) * 2.4; c.lineCap = 'round'; c.lineWidth = 9; c.beginPath(); c.moveTo(0, 0); c.lineTo(Math.cos(sp / 12 - 1.57) * 52, Math.sin(sp / 12 - 1.57) * 52); c.stroke(); c.lineWidth = 6; c.strokeStyle = '#b8241c'; c.beginPath(); c.moveTo(0, 0); c.lineTo(Math.cos(sp - 1.57) * 80, Math.sin(sp - 1.57) * 80); c.stroke(); c.fillStyle = R.INK; c.beginPath(); c.arc(0, 0, 9, 0, 7); c.fill(); c.restore(); };
+const parchBg = (c) => { K.parchment(c, 0, 0, 1920, 1080); c.save(); c.globalAlpha = .08; c.strokeStyle = INK; c.lineWidth = 2; for (let i = 0; i < 60; i++) { const x = (i * 337) % 1920, y = (i * 191) % 1080; c.beginPath(); c.moveTo(x, y); c.lineTo(x + 40, y + 3); c.stroke(); } c.restore(); };
+const LEE = { costume: 'shirt', hair: 'short', hairCol: '#5a3a22', glasses: true, seed: 21 };
+const GATH = { costume: 'hideW', hair: 'bun', hairCol: '#1a120c', seed: 15 };
+const GATH2 = { costume: 'hideW', hair: 'curly', hairCol: '#1a120c', seed: 17 };
+const MAN = { costume: 'hide', hair: 'short', hairCol: '#1a120c', seed: 19 };
+// notebook in hand (hand-local, +y along forearm)
+const NOTE = (c) => { c.save(); c.rotate(-.9); c.translate(8, 30); c.fillStyle = 'rgba(0,0,0,.25)'; c.fillRect(-24, -30, 52, 66); c.fillStyle = '#efe6cc'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-28, -34, 52, 66); c.strokeRect(-28, -34, 52, 66); c.fillStyle = '#6a3a24'; c.fillRect(-28, -34, 52, 9); c.strokeStyle = 'rgba(60,40,30,.45)'; c.lineWidth = 1.5; for (let k = 0; k < 5; k++) { c.beginPath(); c.moveTo(-22, -14 + k * 10); c.lineTo(18, -14 + k * 10); c.stroke(); } c.restore(); };
+// gathering bag on the shoulder side
+const BAG = (c) => { c.save(); c.translate(0, 34); c.fillStyle = '#8a6438'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(-26, 0); c.quadraticCurveTo(-30, 50, 0, 56); c.quadraticCurveTo(30, 50, 26, 0); c.closePath(); c.fill(); c.stroke(); c.strokeStyle = 'rgba(40,20,8,.35)'; c.lineWidth = 2; for (let k = 0; k < 4; k++) { c.beginPath(); c.moveTo(-20 + k * 12, 8); c.lineTo(-16 + k * 12, 46); c.stroke(); } c.restore(); };
+// 1960s Land Rover, side view (local: x centre, y = ground)
+const landRover = (c, x, y, s, wr) => { c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = 'rgba(30,18,8,.35)'; c.beginPath(); c.ellipse(0, 4, 300, 22, 0, 0, 7); c.fill();
+  const body = '#7d8a68', dark = '#5b6649', light = '#9aa684'; c.strokeStyle = INK; c.lineWidth = 6; c.lineJoin = 'round';
+  // canvas tilt at the back
+  c.fillStyle = '#c8b48a'; c.beginPath(); c.moveTo(-270, -150); c.lineTo(-270, -300); c.quadraticCurveTo(-260, -320, -230, -322); c.lineTo(-20, -322); c.quadraticCurveTo(0, -320, 4, -300); c.lineTo(4, -150); c.closePath(); c.fill(); c.stroke(); c.strokeStyle = 'rgba(60,40,20,.35)'; c.lineWidth = 3; for (let k = 0; k < 4; k++) { c.beginPath(); c.moveTo(-220 + k * 55, -318); c.lineTo(-220 + k * 55, -152); c.stroke(); } c.strokeStyle = INK; c.lineWidth = 6;
+  // tub + cab
+  c.fillStyle = body; c.beginPath(); c.moveTo(-290, -40); c.lineTo(-290, -160); c.lineTo(20, -160); c.lineTo(40, -290); c.lineTo(150, -290); c.lineTo(160, -170); c.lineTo(290, -160); c.lineTo(300, -40); c.closePath(); c.fill(); c.stroke();
+  c.fillStyle = light; c.fillRect(-286, -158, 300, 16); c.fillStyle = dark; c.fillRect(-286, -60, 584, 20);
+  c.fillStyle = '#a8c0c8'; c.beginPath(); c.moveTo(52, -276); c.lineTo(140, -276); c.lineTo(148, -186); c.lineTo(42, -186); c.closePath(); c.fill(); c.stroke(); c.fillStyle = 'rgba(255,255,255,.4)'; c.beginPath(); c.moveTo(60, -270); c.lineTo(90, -270); c.lineTo(70, -192); c.lineTo(52, -192); c.fill();
+  c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.moveTo(30, -170); c.lineTo(30, -50); c.moveTo(150, -170); c.lineTo(150, -50); c.stroke(); c.fillStyle = INK; c.fillRect(120, -120, 22, 7);
+  // bonnet + spare wheel + grille
+  c.fillStyle = '#2a2a26'; c.beginPath(); c.ellipse(225, -170, 50, 14, 0, 0, 7); c.fill(); c.stroke(); c.fillStyle = '#d8d4c0'; c.beginPath(); c.arc(292, -112, 15, 0, 7); c.fill(); c.lineWidth = 3; c.stroke();
+  // wheels
+  for (const wx of [-190, 200]) { c.fillStyle = '#2a2a26'; c.lineWidth = 6; c.beginPath(); c.arc(wx, -40, 62, 0, 7); c.fill(); c.stroke(); c.fillStyle = '#9aa684'; c.beginPath(); c.arc(wx, -40, 30, 0, 7); c.fill(); c.lineWidth = 3; c.stroke(); c.strokeStyle = '#3a3a34'; c.lineWidth = 4; for (let k = 0; k < 5; k++) { const a = wr + k * 1.2566; c.beginPath(); c.moveTo(wx + Math.cos(a) * 10, -40 + Math.sin(a) * 10); c.lineTo(wx + Math.cos(a) * 26, -40 + Math.sin(a) * 26); c.stroke(); } c.strokeStyle = INK; }
+  c.fillStyle = 'rgba(255,240,210,.18)'; c.fillRect(-286, -158, 584, 30); c.restore(); };
+// sepia grade in screen space
+const sepia = (k = 1) => (c, lt) => { c.save(); c.globalCompositeOperation = 'color'; c.fillStyle = `rgba(150,110,60,${.85 * k})`; c.fillRect(0, 0, 1920, 1080); c.globalCompositeOperation = 'multiply'; const g = c.createRadialGradient(960, 540, 300, 960, 540, 1150); g.addColorStop(0, 'rgba(255,255,255,0)'); g.addColorStop(1, `rgba(90,60,30,${.6 * k})`); c.fillStyle = g; c.fillRect(0, 0, 1920, 1080); c.restore(); c.save(); c.globalAlpha = .07 * k; c.fillStyle = '#fff'; for (let i = 0; i < 40; i++) { const x = (i * 577 + Math.floor(lt * 24) * 131) % 1920; c.fillRect(x, 0, 2, 1080); } c.restore(); };
+// red X
+const redX = (c, x, y, w, h, u) => { if (u <= 0) return; c.save(); c.strokeStyle = RED; c.lineWidth = 12; c.lineCap = 'round'; const a = Math.min(1, u * 2), b = Math.max(0, u * 2 - 1); c.beginPath(); c.moveTo(x - w / 2, y - h / 2); c.lineTo(x - w / 2 + w * a, y - h / 2 + h * a); c.stroke(); if (b > 0) { c.beginPath(); c.moveTo(x + w / 2, y - h / 2); c.lineTo(x + w / 2 - w * b, y - h / 2 + h * b); c.stroke(); } c.restore(); };
+// map pin (world)
+const pin = (x, y, at, col = RED) => (c, lt) => { const a = K.seg(lt, at, at + .35); if (a <= 0) return; const dy = (1 - E.out(a)) * -160, b = E.back(K.seg(lt, at + .3, at + .6)); c.save(); c.translate(x, y + dy); c.fillStyle = 'rgba(30,15,5,.35)'; c.beginPath(); c.ellipse(6, 4, 20 * b, 6 * b, 0, 0, 7); c.fill(); c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.moveTo(0, 0); c.bezierCurveTo(-26, -40, -30, -70, 0, -78); c.bezierCurveTo(30, -70, 26, -40, 0, 0); c.fill(); c.stroke(); c.fillStyle = '#fff2e0'; c.beginPath(); c.arc(0, -56, 9, 0, 7); c.fill(); c.restore(); if (b > 0 && b < 1) { c.save(); c.strokeStyle = `rgba(200,64,46,${1 - b})`; c.lineWidth = 4; c.beginPath(); c.ellipse(x, y, 30 + 70 * b, 10 + 22 * b, 0, 0, 7); c.stroke(); c.restore(); } };
+const mapLabel = (x, y, txt, at, px = 40) => (c, lt) => { const a = K.seg(lt, at, at + .4); if (a <= 0) return; c.save(); c.globalAlpha = a; c.font = font(px, 'Oswald'); c.textAlign = 'center'; c.lineWidth = 8; c.strokeStyle = '#f2e6c8'; c.strokeText(txt, x, y); c.fillStyle = INK; c.fillText(txt, x, y); c.restore(); };
+// stopwatch (screen)
+const stopwatch = (c, x, y, r, lt, t0, a = 1) => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.3)'; c.beginPath(); c.arc(8, 10, r, 0, 7); c.fill(); c.fillStyle = '#c8c4b8'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-r * .18, -r * 1.32, r * .36, r * .3); c.strokeRect(-r * .18, -r * 1.32, r * .36, r * .3); c.beginPath(); c.arc(0, 0, r, 0, 7); c.fill(); c.stroke(); c.fillStyle = '#fbf6e8'; c.beginPath(); c.arc(0, 0, r * .86, 0, 7); c.fill(); c.lineWidth = 3; for (let k = 0; k < 60; k++) { const an = k / 60 * Math.PI * 2, l = k % 5 ? .08 : .16; c.beginPath(); c.moveTo(Math.cos(an) * r * .84, Math.sin(an) * r * .84); c.lineTo(Math.cos(an) * r * (.84 - l), Math.sin(an) * r * (.84 - l)); c.stroke(); }
+  const sec = Math.max(0, lt - t0), an = Math.floor(sec * 4) / 4 * Math.PI * 2 / 6 - Math.PI / 2; c.strokeStyle = RED; c.lineWidth = 6; c.lineCap = 'round'; c.beginPath(); c.moveTo(0, 0); c.lineTo(Math.cos(an) * r * .72, Math.sin(an) * r * .72); c.stroke(); c.fillStyle = INK; c.beginPath(); c.arc(0, 0, 8, 0, 7); c.fill(); c.restore(); };
+// tally marks (screen): n marks written progressively in a row starting at x,y
+const tally = (c, x, y, n, px = 34) => { c.save(); c.strokeStyle = '#2a3a6a'; c.lineWidth = 5; c.lineCap = 'round'; for (let i = 0; i < Math.floor(n); i++) { const g = Math.floor(i / 5), k = i % 5, gx = x + g * px * 4.2; if (k < 4) { const xx = gx + k * px * .7; c.beginPath(); c.moveTo(xx, y - px * .1 + (k % 2) * 3); c.lineTo(xx + 3, y + px * 1.1); c.stroke(); } else { c.beginPath(); c.moveTo(gx - px * .3, y + px * .8); c.lineTo(gx + px * 2.6, y + px * .2); c.stroke(); } } c.restore(); };
+// hanging scale on a tripod (world)
+const scale3 = (x, y, tPour) => (c, lt) => { const sw = lt > tPour ? Math.sin((lt - tPour) * 5) * Math.exp(-(lt - tPour) * 1.4) * .35 : 0; c.save(); c.translate(x, y); c.strokeStyle = INK; c.lineCap = 'round'; for (const [dx, col] of [[-120, '#6a4a2a'], [120, '#6a4a2a'], [30, '#5a3a20']]) { c.lineWidth = 16; c.strokeStyle = INK; c.beginPath(); c.moveTo(dx, 0); c.lineTo(0, -420); c.stroke(); c.lineWidth = 9; c.strokeStyle = col; c.stroke(); } c.fillStyle = 'rgba(30,18,8,.3)'; c.beginPath(); c.ellipse(0, 6, 160, 18, 0, 0, 7); c.fill();
+  c.translate(0, -410); c.rotate(sw); c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(0, 0); c.lineTo(0, 60); c.stroke(); c.fillStyle = '#b8b4a4'; c.lineWidth = 4; c.beginPath(); c.roundRect(-30, 60, 60, 90, 10); c.fill(); c.stroke(); c.fillStyle = '#f4efe0'; c.beginPath(); c.arc(0, 104, 22, 0, 7); c.fill(); c.stroke(); c.strokeStyle = RED; c.lineWidth = 3; const nd = lt > tPour ? Math.min(1, (lt - tPour) * 1.5) : 0; c.beginPath(); c.moveTo(0, 104); c.lineTo(Math.cos(-1.57 + nd * 2.2) * 18, 104 + Math.sin(-1.57 + nd * 2.2) * 18); c.stroke();
+  c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(0, 150); c.lineTo(-50, 200); c.moveTo(0, 150); c.lineTo(50, 200); c.stroke(); c.fillStyle = '#8a6438'; c.beginPath(); c.moveTo(-60, 200); c.quadraticCurveTo(0, 260, 60, 200); c.closePath(); c.fill(); c.stroke();
+  const n = lt > tPour ? Math.min(14, Math.floor((lt - tPour) * 12)) : 0; for (let i = 0; i < n; i++) { c.fillStyle = i % 2 ? '#a8783e' : '#8a5e30'; c.beginPath(); c.ellipse(-36 + (i % 6) * 14, 206 - Math.floor(i / 6) * 10, 9, 7, 0, 0, 7); c.fill(); c.lineWidth = 2; c.stroke(); } c.restore();
+  if (lt > tPour - .2 && lt < tPour + 1.2) { for (let i = 0; i < 6; i++) { const p = ((lt - tPour + .2) * 1.6 + i / 6) % 1; c.fillStyle = '#9a6a34'; c.beginPath(); c.ellipse(x - 70 + i * 6, y - 330 + p * 140, 9, 7, 0, 0, 7); c.fill(); } } };
+// folding stool (world)
+const stool = (x, y, k = 1) => (c) => { c.save(); c.translate(x, y); c.scale(k, k); c.fillStyle = 'rgba(30,18,8,.3)'; c.beginPath(); c.ellipse(0, 4, 60, 10, 0, 0, 7); c.fill(); c.strokeStyle = INK; c.lineWidth = 9; c.beginPath(); c.moveTo(-40, 0); c.lineTo(40, -70); c.moveTo(40, 0); c.lineTo(-40, -70); c.stroke(); c.strokeStyle = '#7a5a34'; c.lineWidth = 5; c.stroke(); c.fillStyle = '#4a5a3a'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-48, -78, 96, 12); c.strokeRect(-48, -78, 96, 12); c.restore(); };
+const log = (x, y, w = 170) => (c) => { c.save(); c.translate(x, y); c.fillStyle = 'rgba(20,10,4,.4)'; c.beginPath(); c.ellipse(0, 6, w * .55, 14, 0, 0, 7); c.fill(); c.fillStyle = '#6a4628'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.roundRect(-w / 2, -46, w, 46, 22); c.fill(); c.stroke(); c.fillStyle = '#c8a070'; c.beginPath(); c.ellipse(w / 2, -23, 14, 23, 0, 0, 7); c.fill(); c.stroke(); c.restore(); };
+// a week board (screen): 7 day columns, hours shaded
+const DAYS = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
+const weekBoard = (c, x, y, w, h, fillH, perDay = 5, col = GREEN) => { c.save(); c.fillStyle = 'rgba(0,0,0,.25)'; c.fillRect(x + 12, y + 14, w, h); c.fillStyle = '#fbf6e8'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(x, y, w, h); c.strokeRect(x, y, w, h); const cw = w / 7; c.font = font(30, 'Oswald'); c.textAlign = 'center';
+  for (let d = 0; d < 7; d++) { const cx = x + d * cw; c.fillStyle = INK; c.fillText(DAYS[d], cx + cw / 2, y + 44); c.strokeStyle = 'rgba(40,30,20,.25)'; c.lineWidth = 2; if (d) { c.beginPath(); c.moveTo(cx, y + 60); c.lineTo(cx, y + h - 10); c.stroke(); } const fh = K.clamp(fillH - d * perDay, 0, perDay) / 24, top = y + 70; if (fh > 0) { c.fillStyle = col; c.globalAlpha = .85; c.fillRect(cx + 10, top, cw - 20, (h - 90) * fh); c.globalAlpha = 1; } }
+  c.strokeStyle = 'rgba(40,30,20,.12)'; for (let k = 1; k < 24; k++) { const yy = y + 70 + (h - 90) * k / 24; c.beginPath(); c.moveTo(x + 6, yy); c.lineTo(x + w - 6, yy); c.stroke(); } c.restore(); };
+
+const KID1 = { costume: 'kid', hair: 'curly', hairCol: '#1a120c', seed: 41 }, KID2 = { costume: 'kid', hair: 'bun', hairCol: '#2a1a10', seed: 43 };
+const GIRL = { costume: 'hideW', hair: 'long', hairCol: '#1a120c', seed: 45 };
+const MUSE = { costume: 'hide', hair: 'long', hairCol: '#3a2618', beard: true, seed: 47 };
+// a strand of pierced shell beads (local, centred); n beads along a sagging string
+const beadStrand = (c, w, n, lt, glowK = 0) => { c.strokeStyle = '#6a4a2a'; c.lineWidth = 4; c.beginPath(); for (let i = 0; i <= 40; i++) { const t = i / 40, x = -w / 2 + w * t, y = Math.sin(t * Math.PI) * w * .16; i ? c.lineTo(x, y) : c.moveTo(x, y); } c.stroke();
+  for (let i = 0; i < n; i++) { const t = (i + .5) / n, x = -w / 2 + w * t, y = Math.sin(t * Math.PI) * w * .16; c.save(); c.translate(x, y); c.rotate(Math.sin(i * 1.7) * .3); const g = c.createRadialGradient(-6, -8, 2, 0, 0, 26); g.addColorStop(0, '#fbf2dc'); g.addColorStop(.6, '#d8c09a'); g.addColorStop(1, '#8a6a46'); c.fillStyle = g; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.ellipse(0, 0, 18, 24, 0, 0, 7); c.fill(); c.stroke();
+    c.strokeStyle = 'rgba(80,50,30,.5)'; c.lineWidth = 2; for (let k = 0; k < 3; k++) { c.beginPath(); c.arc(0, 4, 8 + k * 4, Math.PI * 1.1, Math.PI * 1.9); c.stroke(); } c.fillStyle = '#2a1a10'; c.beginPath(); c.arc(0, -10, 5, 0, 7); c.fill();
+    if (glowK > 0) { c.strokeStyle = `rgba(255,220,120,${glowK * (.5 + .5 * Math.sin(lt * 4 + i))})`; c.lineWidth = 4; c.beginPath(); c.arc(0, -10, 10, 0, 7); c.stroke(); } c.restore(); } };
+// a single big shell with an awl drilling it (screen)
+const drillShell = (c, x, y, s, lt, t0) => { const u = K.seg(lt, t0, t0 + 3); c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = 'rgba(0,0,0,.3)'; c.beginPath(); c.ellipse(10, 120, 150, 26, 0, 0, 7); c.fill();
+  const g = c.createRadialGradient(-40, -50, 10, 0, 0, 160); g.addColorStop(0, '#fff6e4'); g.addColorStop(.55, '#dcc49e'); g.addColorStop(1, '#8a6a46'); c.fillStyle = g; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.ellipse(0, 0, 110, 140, 0, 0, 7); c.fill(); c.stroke();
+  c.strokeStyle = 'rgba(90,60,30,.5)'; c.lineWidth = 4; for (let k = 0; k < 5; k++) { c.beginPath(); c.arc(0, 30, 30 + k * 18, Math.PI * 1.1, Math.PI * 1.9); c.stroke(); }
+  const hole = Math.min(1, u * 1.4); if (hole > 0) { c.fillStyle = '#1a0f08'; c.beginPath(); c.arc(0, -70, 6 + 16 * hole, 0, 7); c.fill(); }
+  const tw = Math.sin(lt * 18) * .25 * (u < 1 ? 1 : 0); c.save(); c.translate(0, -70); c.rotate(-.35 + tw); c.fillStyle = '#6a6a72'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.moveTo(-6, -10); c.lineTo(0, 6); c.lineTo(6, -10); c.lineTo(14, -230); c.lineTo(-14, -230); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#8a6438'; c.fillRect(-26, -330, 52, 110); c.strokeRect(-26, -330, 52, 110); c.restore();
+  if (u > 0 && u < 1) for (let k = 0; k < 8; k++) { const p = ((lt * 2 + k / 8) % 1); c.fillStyle = `rgba(240,225,200,${.8 * (1 - p)})`; c.beginPath(); c.arc(Math.cos(k * 2.3) * 30 * p, -70 + 20 * p + Math.sin(k) * 10, 3, 0, 7); c.fill(); }
+  c.restore(); };
+// the Hohle Fels bone flute (screen); holes light up one by one
+const flute = (c, x, y, len, lt, holes) => { c.save(); c.translate(x, y); c.rotate(-.06 + Math.sin(lt * .8) * .02); c.fillStyle = 'rgba(0,0,0,.35)'; c.beginPath(); c.ellipse(10, 70, len * .52, 20, 0, 0, 7); c.fill();
+  const g = c.createLinearGradient(0, -34, 0, 34); g.addColorStop(0, '#f2e6c8'); g.addColorStop(.5, '#cdb68a'); g.addColorStop(1, '#8a7046'); c.fillStyle = g; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.moveTo(-len / 2, -26); c.quadraticCurveTo(0, -38, len / 2, -30); c.lineTo(len / 2, 30); c.quadraticCurveTo(0, 40, -len / 2, 26); c.closePath(); c.fill(); c.stroke();
+  c.strokeStyle = 'rgba(80,50,30,.45)'; c.lineWidth = 3; for (let k = 0; k < 6; k++) { c.beginPath(); c.moveTo(-len / 2 + 40 + k * 140, -20); c.lineTo(-len / 2 + 120 + k * 140, 14); c.stroke(); }
+  for (let i = 0; i < 5; i++) { const hx = -len * .3 + i * len * .13, on = holes > i ? 1 : 0; c.fillStyle = '#2a1a10'; c.beginPath(); c.ellipse(hx, -4, 12, 9, 0, 0, 7); c.fill(); if (on) { const pul = .6 + .4 * Math.sin(lt * 5 + i); c.fillStyle = `rgba(255,214,120,${.85 * pul})`; c.beginPath(); c.arc(hx, -4, 9, 0, 7); c.fill(); c.save(); c.globalCompositeOperation = 'screen'; const gg = c.createRadialGradient(hx, -4, 2, hx, -4, 60); gg.addColorStop(0, 'rgba(255,200,110,.5)'); gg.addColorStop(1, 'rgba(255,200,110,0)'); c.fillStyle = gg; c.fillRect(hx - 60, -64, 120, 120); c.restore(); } }
+  c.fillStyle = '#e8dcc0'; c.beginPath(); c.ellipse(len / 2, 0, 12, 30, 0, 0, 7); c.fill(); c.stroke(); c.restore(); };
+// floating musical notes (world)
+const notes = (x, y, t0) => (c, lt) => { if (lt < t0) return; for (let k = 0; k < 5; k++) { const p = ((lt - t0) * .45 + k / 5) % 1; c.save(); c.globalAlpha = Math.sin(p * Math.PI) * .85; c.translate(x + p * 260 + Math.sin(p * 9 + k) * 30, y - p * 260); c.fillStyle = '#ffe2a0'; c.strokeStyle = '#ffe2a0'; c.lineWidth = 5; c.beginPath(); c.ellipse(0, 0, 14, 10, -.4, 0, 7); c.fill(); c.beginPath(); c.moveTo(12, -4); c.lineTo(12, -50); c.stroke(); c.restore(); } };
+// breath puffs in cold air (world)
+const breath = (x, y, ph = 0) => (c, lt) => { const p = ((lt * .5 + ph) % 1); c.save(); c.globalAlpha = .45 * Math.sin(p * Math.PI); c.fillStyle = '#e8eef8'; c.beginPath(); c.arc(x + p * 70, y - p * 30, 14 + p * 26, 0, 7); c.fill(); c.restore(); };
+// icon card that gets crossed out (screen)
+const iconCard = (c, lt, at, x, y, label, draw) => { const a = pop(lt, at); if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.35)'; c.beginPath(); c.roundRect(-136, -136, 280, 300, 22); c.fill(); c.fillStyle = CREAM; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.roundRect(-140, -140, 280, 300, 22); c.fill(); c.stroke(); draw(c); c.fillStyle = INK; c.font = font(40); c.textAlign = 'center'; c.fillText(label, 0, 120); c.restore(); redX(c, x, y, 230, 240, K.seg(lt, at + .5, at + 1.0)); };
+const coinIcon = (c) => { for (let k = 0; k < 3; k++) { c.fillStyle = GOLD; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.ellipse(0, 20 - k * 24, 70, 22, 0, 0, 7); c.fill(); c.stroke(); } c.fillStyle = INK; c.font = font(44); c.textAlign = 'center'; c.fillText('$', 0, -30); };
+const badgeIcon = (c) => { c.fillStyle = '#3f6aa0'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); for (let k = 0; k < 10; k++) { const a = -Math.PI / 2 + k * Math.PI / 5, rr = k % 2 ? 40 : 80; c.lineTo(Math.cos(a) * rr, -10 + Math.sin(a) * rr); } c.closePath(); c.fill(); c.stroke(); c.fillStyle = GOLD; c.beginPath(); c.arc(0, -10, 22, 0, 7); c.fill(); };
+const crossIcon = (c) => { c.fillStyle = RED; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.rect(-24, -80, 48, 140); c.rect(-70, -34, 140, 48); c.fill(); c.stroke(); };
+// a bound leg splint (world, at the injured man's shin)
+const splint = (x, y) => (c) => { c.save(); c.translate(x, y); c.fillStyle = '#7a5a36'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(-10, -70, 20, 120); c.strokeRect(-10, -70, 20, 120); c.fillStyle = '#c8a878'; for (let k = 0; k < 4; k++) c.fillRect(-18, -60 + k * 30, 36, 10); c.restore(); };
+// label tag tied to the circle of friends (screen)
+const tag = (c, lt, at, x, y, txt, col) => { const a = pop(lt, at); if (a <= 0) return; c.save(); c.translate(x, y); c.rotate(Math.sin(lt * 1.4 + x) * .04); c.scale(a, a); c.strokeStyle = 'rgba(40,30,20,.6)'; c.lineWidth = 3; c.beginPath(); c.moveTo(0, -60); c.lineTo(0, -200); c.stroke(); c.fillStyle = 'rgba(0,0,0,.35)'; c.beginPath(); c.roundRect(-126, -56, 260, 104, 14); c.fill(); c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.roundRect(-130, -60, 260, 104, 14); c.fill(); c.stroke(); c.fillStyle = CREAM; c.font = font(48); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(txt, 0, -6); c.restore(); };
+const warmGrade = (k = .25) => (c) => { c.save(); c.globalCompositeOperation = 'soft-light'; c.fillStyle = `rgba(255,170,80,${k})`; c.fillRect(0, 0, 1920, 1080); c.restore(); };
+// dappled leaf shadows drifting over the shaded camp (world)
+const dapple = (c, lt) => { c.save(); c.globalCompositeOperation = 'multiply'; for (let i = 0; i < 26; i++) { const x = 700 + (i * 157) % 1200 + Math.sin(lt * .6 + i) * 14, y = 1110 + (i * 71) % 260; c.fillStyle = 'rgba(90,70,40,.18)'; c.beginPath(); c.ellipse(x, y, 60 + (i % 4) * 20, 14 + (i % 3) * 5, 0, 0, 7); c.fill(); } c.restore(); };
+
+window.SHOTS = [
+  // 1 WIDE: afternoon, the camp under the big tree slows down
+  { plate: 'camp_shade', cam: { z: [1.0, 1.08], x: [1280, 1280], y: [800, 820] }, bed: [['birds_loop', .4], ['wind_loop', .2]], inSfx: false,
+    figs: [{ x: 1080, y: 1230, s: 1.5, ...ELDER, facing: 1, pose: 'sit' }, { x: 1460, y: 1236, s: 1.5, ...WOMAN, facing: -1, pose: 'sit' }, { x: 1720, y: 1240, s: 1.55, ...HUNTER, facing: -1, pose: 'lie' }],
+    init: S => { const tA = A.at(S, 'afternoon', 1.2);
+      S.D.figs[0].anim = (o, lt) => { o.talk = Math.sin(lt * 1.4) > .3; o.mood = 'happy'; }; S.D.figs[1].anim = (o, lt) => { o.talk = Math.sin(lt * 1.4 + 2) > .4; o.mood = 'happy'; };
+      S.D.live = [dapple, log(1080, 1236, 150), log(1460, 1242, 150)];
+      S.D.over = [warmGrade(.22), (c, lt) => K.card(c, 'AFTERNOON', lt, { at: tA, x: 1500, y: 180, px: 56, rot: 3 })];
+      S.D.sfx = [[tA, 'pop', .35], [.6, 'breath', .2]]; } },
+  // 2 MED: talk, kids playing, hair being combed
+  { plate: 'camp_shade', cam: { z: [1.35, 1.42], x: [1250, 1290], y: [900, 900] }, bed: [['birds_loop', .35], ['crowd_loop', .12]],
+    figs: [{ x: 880, y: 1236, s: 1.6, ...GATH, facing: 1, pose: 'sit' }, { x: 1010, y: 1220, s: 1.62, ...GATH2, facing: 1, pose: 'stand' },
+      { x: 1520, y: 1236, s: 1.6, ...ELDER, facing: -1, pose: 'sit' },
+      { x: 1200, y: 1340, s: 1.15, ...KID1, facing: 1, pose: 'run' }, { x: 1300, y: 1346, s: 1.1, ...KID2, facing: 1, pose: 'run' }],
+    init: S => { const tT = A.at(S, 'talk', .9), tK = A.at(S, 'Kids play', 1.8), tC = A.at(S, 'combs', 3.4);
+      S.D.figs[0].anim = (o, lt) => { o.talk = Math.sin(lt * 1.6) > .2; o.mood = 'happy'; o.eyesClosed = lt > tC ? .4 : 0; };
+      S.D.figs[1].anim = (o, lt) => { o.pose = lt > tC - .3 ? 'reach' : 'stand'; const r = lt > tC - .3 ? Math.max(0, Math.sin(lt * 3)) : 0; if (r > 0) o.arms = (t, P) => ({ shR: K.lerp(P.shR, 60, r), elR: K.lerp(P.elR, -120, r) }); o.mood = 'happy'; };
+      S.D.figs[2].anim = (o, lt) => { o.mood = 'happy'; o.talk = lt > tT + 1.5 && Math.sin(lt * 2) > 0; if (lt > tC + 1) o.mood = 'happy'; };
+      // the kids chase each other in a loop across the clearing in front of the adults
+      S.D.figs[3].anim = (o, lt) => { const p = (lt * .12) % 1, x = 1265 + Math.sin(p * Math.PI * 2) * 120; o.x = lt < tK - .4 ? -999 : x; o.facing = Math.cos(p * Math.PI * 2) > 0 ? 1 : -1; o.t = lt * 2.2; };
+      S.D.figs[4].anim = (o, lt) => { const p = (lt * .12 + .09) % 1, x = 1265 + Math.sin(p * Math.PI * 2) * 120; o.x = lt < tK - .4 ? -999 : x; o.facing = Math.cos(p * Math.PI * 2) > 0 ? 1 : -1; o.t = lt * 2.2 + .5; };
+      S.D.live = [dapple, log(880, 1242, 150), log(1520, 1242, 150)];
+      S.D.over = [warmGrade(.2), (c, lt) => K.card(c, 'NO RUSH', lt, { at: tT + .4, x: 1480, y: 200, px: 52, rot: 3 })];
+      S.D.sfx = [[tK, 'run_steps', .3], [tK + .4, 'crowd_cheer', .15], [tC, 'whoosh_soft', .2]]; } },
+  // 3 CU: an awl drills a tiny hole in a shell
+  { draw: (c, lt) => { plateAt(c, 'camp_shade', 1280, 1200, 960, 540, 3.0); c.save(); c.fillStyle = 'rgba(40,24,10,.35)'; c.fillRect(0, 0, 1920, 1080); c.restore(); }, bed: [['birds_loop', .25]],
+    init: S => { const tD = A.at(S, 'drilling', .8), tN = A.at(S, 'necklace', 3.6);
+      S.D.over = [warmGrade(.25), (c, lt) => drillShell(c, 820, 600, 1.4, lt, tD), (c, lt) => { const a = K.seg(lt, tN - .3, tN + .4); if (a <= 0) return; c.save(); c.globalAlpha = a; c.translate(1420, 560); beadStrand(c, 520, 6, lt); c.restore(); }, (c, lt) => K.card(c, 'A NECKLACE', lt, { at: tN, x: 1420, y: 300, px: 50, rot: 3 })];
+      S.D.sfx = [[tD, 'scrape', .5], [tD + 1.2, 'scrape', .45], [tN, 'chime', .35]]; } },
+  // 4 MAP: Blombos Cave on the southern Cape coast
+  { plate: 'cape_map', cam: { z: [1.0, 1.5], x: [1280, 1000], y: [720, 900] }, bed: [['ocean_loop', .3]],
+    init: S => { const tB = A.at(S, 'Blombos', 2.4), tY = A.at(S, 'seventy-five thousand', 5.0);
+      S.D.live = [pin(931, 1045, tB), mapLabel(931, 940, 'BLOMBOS CAVE', tB + .3, 44)];
+      S.D.over = [(c, lt) => { const a = pop(lt, tY); if (a <= 0) return; c.save(); c.translate(1380, 230); c.scale(a, a); K.outlined(c, '~75,000 YEARS AGO', 0, 0, 84, { fill: GOLD }); c.restore(); }];
+      S.D.sfx = [[tB, 'pop', .45], [tY, 'chime', .4]]; } },
+  // 5 PROP: the beads, worn smooth where the string rubbed; some came from river mouths far away
+  { draw: (c) => parchBg(c), bed: [['ocean_loop', .15]],
+    init: S => { const tD = A.at(S, 'Dozens', .6), tW = A.at(S, 'worn smooth', 3.4), tR = A.at(S, 'river mouths', 6.2);
+      S.D.over = [(c, lt) => { const a = K.seg(lt, tD - .2, tD + .5); if (a <= 0) return; c.save(); c.globalAlpha = a; c.translate(960, 420); c.scale(1 + lt * .01, 1 + lt * .01); beadStrand(c, 1300, 14, lt, K.seg(lt, tW, tW + .6)); c.restore(); },
+        (c, lt) => K.card(c, 'WORN SMOOTH BY A STRING', lt, { at: tW + .2, x: 560, y: 160, px: 42, rot: -2 }),
+        (c, lt) => { const a = K.seg(lt, tR - .2, tR + .4); if (a <= 0) return; c.save(); c.globalAlpha = a; c.translate(1240, 800); c.strokeStyle = '#3f6aa0'; c.lineWidth = 10; c.lineCap = 'round'; c.beginPath(); c.moveTo(260, 40); c.bezierCurveTo(120, -30, -60, 60, -240, -20); c.stroke(); const u = E.out(K.seg(lt, tR, tR + 1.6)); c.setLineDash([18, 14]); c.strokeStyle = RED; c.lineWidth = 6; c.beginPath(); c.moveTo(-240, -20); c.lineTo(-240 - 360 * u, -20 + 40 * u); c.stroke(); c.setLineDash([]); c.fillStyle = INK; c.font = font(34, 'Oswald'); c.textAlign = 'center'; c.fillText('RIVER MOUTH', 200, 110); if (u > .9) c.fillText('CAVE', -620, 70); c.restore(); },
+        (c, lt) => K.card(c, 'MADE TO BE WORN', lt, { at: tR + 1.6, x: 1400, y: 160, px: 50, rot: 3 })];
+      S.D.sfx = [[tD, 'coins', .2], [tW, 'chime', .35], [tR, 'whoosh_soft', .35], [tR + 1.6, 'pop', .4]]; } },
+  // 6 CU: a young woman ties the necklace on and smiles
+  { plate: 'camp_shade', cam: { z: [1.8, 1.9], x: [1300, 1310], y: [920, 910] }, bed: [['birds_loop', .3]],
+    figs: [{ x: 1300, y: 1250, s: 1.7, ...GIRL, facing: 1, pose: 'stand' }],
+    init: S => { const tG = A.at(S, 'Gathered', .4), tN = A.at(S, 'Not to eat', 2.6), tL = A.at(S, 'look good', 4.2);
+      S.D.figs[0].anim = (o, lt) => { const r = lt < tL ? Math.min(1, lt / .8) : Math.max(0, 1 - (lt - tL) * 2); o.arms = (t, P) => ({ shR: K.lerp(P.shR, 95, r), elR: K.lerp(P.elR, -125, r) }); o.mood = lt > tL - .2 ? 'happy' : 'neutral'; o.eyesClosed = lt > tL + .2 && lt < tL + .7 ? 1 : 0; };
+      S.D.front = [(c, lt) => { const a = K.seg(lt, .2, .6); if (a <= 0) return; const f = S.D.figs[0]; c.save(); c.globalAlpha = a; c.translate(1300, 1250 - 1.7 * 178); c.scale(.3, .22); beadStrand(c, 360, 9, lt); c.restore(); }];
+      S.D.live = [dapple];
+      S.D.over = [warmGrade(.2), (c, lt) => K.card(c, 'GATHERED · CARRIED · DRILLED', lt, { at: tG, x: 960, y: 150, px: 42, rot: -2 }),
+        (c, lt) => { const a = pop(lt, tN); if (a <= 0) return; c.save(); c.translate(420, 520); c.scale(a, a); K.outlined(c, 'NOT FOOD', 0, 0, 70, { fill: CREAM }); c.restore(); redX(c, 420, 520, 360, 90, K.seg(lt, tN + .4, tN + .9)); },
+        (c, lt) => { const a = pop(lt, tL); if (a <= 0) return; c.save(); c.translate(1500, 520); c.scale(a, a); K.outlined(c, 'JUST TO LOOK GOOD', 0, 0, 64, { fill: GOLD }); c.restore(); }];
+      S.D.sfx = [[tG, 'pop', .3], [tN, 'pop', .35], [tN + .4, 'scrape', .3], [tL, 'chime', .45]]; } },
+  // 7 MAP: Hohle Fels in south-west Germany
+  { plate: 'europe_map', cam: { z: [1.0, 1.6], x: [1280, 1264], y: [720, 760] }, bed: [['wind_loop', .3]],
+    init: S => { const tH = A.at(S, 'Germany', 2.6), t8 = A.at(S, '2008', 1.2), tF = A.at(S, 'flute', 4.6);
+      S.D.live = [pin(1264, 752, tH), mapLabel(1264, 650, 'HOHLE FELS', tH + .3, 42)];
+      S.D.over = [(c, lt) => K.dateTag(c, '2008', lt, { at: t8 }), (c, lt) => K.card(c, "A VULTURE'S WING BONE", lt, { at: tF, x: 1420, y: 200, px: 46, rot: 3 })];
+      S.D.sfx = [[t8, 'tick', .35], [tH, 'pop', .45], [tF, 'paper', .35]]; } },
+  // 8 PROP: the flute; its five holes light up one by one
+  { draw: (c) => { const g = c.createRadialGradient(960, 540, 100, 960, 540, 1100); g.addColorStop(0, '#2a2018'); g.addColorStop(1, '#0c0806'); c.fillStyle = g; c.fillRect(0, 0, 1920, 1080); }, bed: [['wind_loop', .2]],
+    init: S => { const tY = A.at(S, 'forty thousand', .8), tH = A.at(S, 'five finger holes', 2.6);
+      S.D.over = [(c, lt) => flute(c, 960, 520, 1300, lt, lt < tH ? 0 : Math.min(5, 1 + (lt - tH) * 3.2)),
+        (c, lt) => { const a = pop(lt, tY); if (a <= 0) return; c.save(); c.translate(960, 220); c.scale(a, a); K.outlined(c, '~40,000 YEARS', 0, 0, 96, { fill: GOLD }); c.restore(); },
+        (c, lt) => { const a = pop(lt, tH + .3); if (a <= 0) return; c.save(); c.translate(960, 800); c.scale(a, a); K.outlined(c, '5 FINGER HOLES', 0, 0, 64, { fill: CREAM }); c.restore(); }];
+      S.D.sfx = [[tY, 'chime', .4], [tH, 'flute', .35], [tH + .4, 'flute', .3]]; } },
+  // 9 Ice Age night: someone plays by the fire, others listen, breath in the cold
+  { plate: 'ice_night', cam: { z: [1.15, 1.24], x: [1300, 1300], y: [880, 900] }, bed: [['wind_loop', .35], ['fire_loop', .4]],
+    figs: [{ x: 1020, y: 1250, s: 1.75, ...MUSE, facing: 1, pose: 'sit' }, { x: 1580, y: 1250, s: 1.7, ...WOMAN, costume: 'hideW', facing: -1, pose: 'sit' }, { x: 1760, y: 1240, s: 1.2, ...KID1, costume: 'hideBare', facing: -1, pose: 'sit' }],
+    init: S => { const tI = A.at(S, 'instrument', 1.6), tL = A.at(S, 'learn to play', 4.0);
+      S.D.figs[0].anim = (o, lt) => { o.arms = (t, P) => ({ shR: 70, elR: -150, shL: 60, elL: -140 }); o.eyesClosed = .6; o.mood = 'happy'; };
+      S.D.figs[1].anim = (o, lt) => { o.mood = 'happy'; o.eyesClosed = lt > tL ? .5 : 0; }; S.D.figs[2].anim = (o) => { o.mood = 'happy'; };
+      S.D.live = [firePit(1300, 1260, .8), (c, lt) => A.fire(1300, 1254, .5, { glow: 300 })(c, lt), A.smoke(1300, 1200, 1), log(1020, 1256, 160), log(1580, 1256, 160), notes(1120, 980, .4), breath(1660, 1040, 0), breath(1760, 1100, .5)];
+      S.D.over = [(c, lt) => K.card(c, 'AN INSTRUMENT', lt, { at: tI, x: 520, y: 180, px: 50, rot: -3 }), (c, lt) => K.card(c, '…AND TIME TO PRACTISE', lt, { at: tL, x: 1380, y: 180, px: 46, rot: 3 })];
+      S.D.sfx = [[.3, 'flute', .3], [2.2, 'flute', .3], [4.2, 'flute', .3]]; } },
+  // 10 WIDE: back at camp, desaturated: no money, no police, no hospital
+  { plate: 'camp_shade', cam: { z: [1.05, 1.1], x: [1280, 1280], y: [820, 820] }, bed: [['wind_loop', .35]],
+    figs: [{ x: 1080, y: 1230, s: 1.5, ...ELDER, facing: 1, pose: 'sit', mood: 'worried' }, { x: 1460, y: 1236, s: 1.5, ...WOMAN, facing: -1, pose: 'sit', mood: 'worried' }],
+    init: S => { const tM = A.at(S, 'No money', 2.6), tP = A.at(S, 'No police', 3.6), tH = A.at(S, 'No hospital', 4.6);
+      S.D.live = [log(1080, 1236, 150), log(1460, 1242, 150)];
+      S.D.over = [(c, lt) => { c.save(); c.globalCompositeOperation = 'saturation'; c.fillStyle = `rgba(128,128,128,${.6 * K.seg(lt, .2, 1.4)})`; c.fillRect(0, 0, 1920, 1080); c.restore(); },
+        (c, lt) => iconCard(c, lt, tM, 480, 470, 'MONEY', coinIcon), (c, lt) => iconCard(c, lt, tP, 960, 470, 'POLICE', badgeIcon), (c, lt) => iconCard(c, lt, tH, 1440, 470, 'HOSPITAL', crossIcon)];
+      S.D.sfx = [[tM, 'pop', .4], [tM + .5, 'scrape', .3], [tP, 'pop', .4], [tP + .5, 'scrape', .3], [tH, 'pop', .4], [tH + .5, 'scrape', .3]]; } },
+  // 11 MED: a man with a bound leg sits; others bring him food
+  { plate: 'camp_shade', cam: { z: [1.3, 1.38], x: [1300, 1320], y: [900, 900] }, bed: [['birds_loop', .3]],
+    figs: [{ x: 1200, y: 1240, s: 1.65, ...HUNTER, facing: 1, pose: 'sit', mood: 'worried' }, { x: 1900, y: 1250, s: 1.65, ...GATH, facing: -1, pose: 'stand', hold: { near: BAG }, walk: { x0: 1900, x1: 1480, t0: 1.6, dur: 2.0 } }],
+    init: S => { const tH = A.at(S, 'hunt fails', 1.0), tB = A.at(S, 'break a leg', 2.0), tO = A.at(S, 'other people', 4.6);
+      S.D.figs[1].anim = (o, lt) => { if (lt > 3.8) { o.pose = 'reach'; o.mood = 'happy'; } };
+      S.D.figs[0].anim = (o, lt) => { if (lt > 3.9) { o.mood = 'happy'; o.pose = 'sit'; } };
+      S.D.live = [log(1200, 1246, 150), splint(1268, 1210), (c, lt) => { const k = K.seg(lt, 3.8, 4.4); if (k > 0) nuts(1340, 1230, .7 * k)(c); }];
+      S.D.over = [(c, lt) => K.card(c, 'HUNT FAILS?', lt, { at: tH, x: 420, y: 200, px: 46, rot: -3, until: tO - .2 }), (c, lt) => K.card(c, 'BROKEN LEG?', lt, { at: tB, x: 960, y: 160, px: 46, rot: 2, until: tO - .2 }),
+        (c, lt) => { const a = pop(lt, tO); if (a <= 0) return; c.save(); c.translate(960, 220); c.scale(a, a); K.outlined(c, 'THE SAFETY NET = PEOPLE', 0, 0, 72, { fill: GOLD }); c.restore(); }];
+      S.D.sfx = [[tH, 'thud', .3], [tB, 'hit', .3], [1.6, 'footsteps', .3], [3.9, 'paper', .25], [tO, 'chime', .45]]; } },
+  // 12 CU: the food handed over, or not
+  { plate: 'camp_shade', cam: { z: [2.2, 2.3], x: [1330, 1340], y: [1020, 1020] }, bed: [['birds_loop', .25]],
+    figs: [{ x: 1200, y: 1240, s: 1.65, ...HUNTER, facing: 1, pose: 'sit' }, { x: 1480, y: 1250, s: 1.65, ...GATH, facing: -1, pose: 'reach' }],
+    init: S => { const tL = A.at(S, 'like you', 1.0), tD = A.at(S, "don't", 2.6);
+      S.D.figs[0].anim = (o, lt) => { o.mood = lt < tD ? 'happy' : 'worried'; }; S.D.figs[1].anim = (o, lt) => { o.pose = lt < tD ? 'reach' : 'stand'; o.facing = lt < tD + .3 ? -1 : 1; };
+      S.D.live = [log(1200, 1246, 150), (c, lt) => { const k = 1 - K.seg(lt, tD, tD + .4); if (k > 0) nuts(1340, 1230, .7 * k)(c); }];
+      S.D.over = [(c, lt) => K.card(c, 'LIKED = FED', lt, { at: tL, x: 520, y: 200, px: 56, rot: -3 }), (c, lt) => K.card(c, 'NOBODY OWES YOU', lt, { at: tD + .2, x: 1400, y: 200, px: 50, rot: 3 })];
+      S.D.sfx = [[tL, 'pop', .35], [tD, 'whoosh_soft', .35], [tD + .2, 'thud', .3]]; } },
+  // 13 WIDE: the circle of friends gets three labels: BANK, HOSPITAL, PENSION
+  { plate: 'camp_shade', cam: { z: [1.08, 1.0], x: [1280, 1280], y: [820, 780] }, bed: [['birds_loop', .35], ['fire_loop', .2]],
+    figs: [{ x: 700, y: 1236, s: 1.5, ...ELDER, facing: 1, pose: 'sit' }, { x: 960, y: 1252, s: 1.55, ...GATH, facing: 1, pose: 'sit' }, { x: 1600, y: 1252, s: 1.55, ...HUNTER, facing: -1, pose: 'sit' }, { x: 1860, y: 1236, s: 1.5, ...WOMAN, facing: -1, pose: 'sit' }, { x: 1420, y: 1330, s: 1.05, ...KID2, facing: -1, pose: 'sit' }],
+    init: S => { const tW = A.at(S, 'wasted', 1.6), tI = A.at(S, 'insurance', 3.0), tB = A.at(S, 'bank', 4.8), tH = A.at(S, 'hospital', 5.6), tP = A.at(S, 'pension', 6.4);
+      S.D.figs.forEach((f, i) => { f.anim = (o, lt) => { o.mood = 'happy'; o.talk = Math.sin(lt * 1.5 + i * 1.3) > .5; }; });
+      S.D.live = [dapple, firePit(1280, 1270, .55), (c, lt) => A.fire(1280, 1264, .32, { glow: 160 })(c, lt), log(700, 1242, 140), log(960, 1258, 140), log(1600, 1258, 140), log(1860, 1242, 140), log(1420, 1336, 110)];
+      S.D.over = [warmGrade(.25), (c, lt) => { const a = K.seg(lt, tI - .2, tI + .6); if (a <= 0) return; c.save(); c.globalAlpha = a * .8; c.strokeStyle = GOLD; c.lineWidth = 8; c.setLineDash([22, 16]); c.lineDashOffset = -lt * 40; c.beginPath(); c.ellipse(960, 780, 640, 160, 0, 0, 7); c.stroke(); c.restore(); },
+        (c, lt) => tag(c, lt, tB, 520, 420, 'BANK', '#3f6aa0'), (c, lt) => tag(c, lt, tH, 960, 360, 'HOSPITAL', RED), (c, lt) => tag(c, lt, tP, 1400, 420, 'PENSION', GREEN),
+        (c, lt) => { const a = pop(lt, tI); if (a <= 0) return; c.save(); c.translate(960, 140); c.scale(a, a); K.outlined(c, 'FRIENDS = INSURANCE', 0, 0, 84, { fill: GOLD }); c.restore(); }];
+      S.D.sfx = [[tW, 'pop', .3], [tI, 'chime', .45], [tB, 'pop', .4], [tH, 'pop', .4], [tP, 'pop', .4], [tP + .6, 'swell', .3]]; } },
+];
+
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; D.sfx = D.sfx || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>

@@ -1,0 +1,128 @@
+<!doctype html><html><head><meta charset="utf-8"><title>NV act 4 - thirty days</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}canvas{display:block}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['office', 'lab_wb', 'chip']) K.load(n, PL + n + '.jpg');
+
+{ const T = window.TIMING, L = T.shots[T.shots.length - 1]; L.end += 1.8; T.dur = L.end; }
+const SW = 1920, SH = 1080, INK = '#1d1712', CREAM = '#f6efe2', GOLD = '#e8b44a', RED = '#c8402e', GREEN = '#76b900', TAU = Math.PI * 2;
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+const font = (px, fam = 'Anton') => `${px}px ${fam}, Oswald, sans-serif`;
+const sprite = (name) => (c) => c.drawImage(K.imgs[name], 0, 0, 2560, 1440);
+const mugSteam = (x, y) => (c, lt) => { for (let k = 0; k < 5; k++) { const life = (lt * .5 + k / 5) % 1, sx = x + Math.sin(life * 6 + k) * 10, sy = y - life * 90, rad = 10 + life * 22; const g = c.createRadialGradient(sx, sy, 0, sx, sy, rad); g.addColorStop(0, `rgba(255,255,255,${.25 * (1 - life)})`); g.addColorStop(1, 'rgba(255,255,255,0)'); c.fillStyle = g; c.fillRect(sx - rad, sy - rad, rad * 2, rad * 2); } };
+// the founders (gumball style). Jensen matches act 1's grown-up look
+const JENSEN = { costume: 'shirt', hair: 'swept', hairCol: '#1e1a18', glasses: true, seed: 11 };
+const CHRIS = { costume: 'shirtsleeves', hair: 'curly', hairCol: '#3a2a1e', seed: 4 };
+const CURTIS = { costume: 'office', hair: 'short', hairCol: '#4a3a2a', beard: true, seed: 6 };
+// name tag (screen) with a leader to a point
+const tag = (c, lt, at, x, y, tx, ty, name, sub) => { const p = pop(lt, at); if (p <= 0) return; c.save(); c.globalAlpha = Math.min(1, p); c.strokeStyle = CREAM; c.lineWidth = 3; c.setLineDash([8, 6]); c.beginPath(); c.moveTo(tx, ty); c.lineTo(x, y + 30); c.stroke(); c.setLineDash([]); c.translate(x, y); c.scale(p, p); c.font = font(40); const w = Math.max(c.measureText(name).width, 120) + 40; c.fillStyle = 'rgba(10,8,6,.35)'; c.fillRect(-w / 2 + 6, -30, w, 92); c.fillStyle = CREAM; c.fillRect(-w / 2, -36, w, 92); c.strokeStyle = INK; c.lineWidth = 4; c.strokeRect(-w / 2, -36, w, 92); c.fillStyle = GREEN; c.fillRect(-w / 2, -36, w, 10); c.fillStyle = INK; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(name, 0, 0); c.font = font(22, 'Oswald'); c.fillStyle = '#6a5a48'; c.fillText(sub, 0, 36); c.restore(); };
+// CRT screen helpers: draw inside the plate's screen rect (world coords) with scanlines + glare
+const SCR = [790, 245, 980, 715];
+const screen = (fn) => (c, lt, u, S) => { const [x, y, w, h] = SCR; c.save(); c.beginPath(); c.roundRect(x, y, w, h, 40); c.clip(); c.translate(x, y); fn(c, lt, w, h, S); c.restore();
+  c.save(); c.beginPath(); c.roundRect(x, y, w, h, 40); c.clip(); c.fillStyle = 'rgba(0,0,0,.18)'; for (let yy = y; yy < y + h; yy += 5) c.fillRect(x, yy, w, 2); const g = c.createRadialGradient(x + w * .3, y + h * .2, 0, x + w * .3, y + h * .2, w * .7); g.addColorStop(0, 'rgba(255,255,255,.13)'); g.addColorStop(1, 'rgba(255,255,255,0)'); c.fillStyle = g; c.fillRect(x, y, w, h); const v = c.createRadialGradient(x + w / 2, y + h / 2, h * .35, x + w / 2, y + h / 2, w * .7); v.addColorStop(0, 'rgba(0,0,0,0)'); v.addColorStop(1, 'rgba(0,0,0,.55)'); c.fillStyle = v; c.fillRect(x, y, w, h); c.restore();
+  c.save(); c.globalCompositeOperation = 'screen'; const gl = c.createRadialGradient(x + w / 2, y + h / 2, 0, x + w / 2, y + h / 2, w); gl.addColorStop(0, 'rgba(120,200,170,.12)'); gl.addColorStop(1, 'rgba(120,200,170,0)'); c.fillStyle = gl; c.fillRect(x - 300, y - 300, w + 600, h + 600); c.restore(); };
+// little pixel sprite (screen-local)
+const PIX = ['..XXXX..', '.XXXXXX.', '.XOXXOX.', '.XXXXXX.', '..XXXX..', '.XXXXXX.', 'X.XXXX.X', '..X..X..'];
+const pixHero = (c, x, y, s, ph) => { c.save(); c.translate(x, y); PIX.forEach((row, j) => [...row].forEach((ch, i) => { if (ch === '.') return; let yy = j; if (j === 7 && ph) { if ((i === 2 && ph === 1) || (i === 5 && ph === 2)) yy -= 1; } c.fillStyle = ch === 'O' ? '#101814' : '#f2c84a'; c.fillRect(i * s, yy * s, s, s); })); c.restore(); };
+// a low-poly shaded shape that turns (screen-local), drawn with triangles
+const polyShape = (c, cx, cy, rad, ang, tri = true, col = [120, 220, 160]) => { const pts = []; const N = 8, M = 5; for (let j = 0; j <= M; j++) { const la = -Math.PI / 2 + j / M * Math.PI; for (let i = 0; i < N; i++) { const lo = i / N * TAU + ang; pts.push([Math.cos(la) * Math.cos(lo), Math.sin(la), Math.cos(la) * Math.sin(lo)]); } }
+  const P = (q) => [cx + q[0] * rad, cy + q[1] * rad]; const faces = []; for (let j = 0; j < M; j++) for (let i = 0; i < N; i++) { const a = pts[j * N + i], b = pts[j * N + (i + 1) % N], d = pts[(j + 1) * N + i], e = pts[(j + 1) * N + (i + 1) % N]; faces.push([a, b, e], [a, e, d]); }
+  faces.map(f => ({ f, z: (f[0][2] + f[1][2] + f[2][2]) / 3 })).filter(o => o.z > -.05).sort((p, q) => p.z - q.z).forEach(({ f, z }) => { const n = .45 + .55 * Math.max(0, z * .7 + (f[0][1] + f[1][1] + f[2][1]) / 3 * -.3); c.fillStyle = `rgb(${col.map(v => Math.round(v * n)).join(',')})`; c.beginPath(); f.map(P).forEach(([x, y], k) => k ? c.lineTo(x, y) : c.moveTo(x, y)); c.closePath(); c.fill(); if (tri) { c.strokeStyle = 'rgba(10,30,20,.8)'; c.lineWidth = 2; c.stroke(); } }); };
+// a smooth shape built from curved quad patches (screen-local); 'built' = how many patches are filled so far
+const patchShape = (c, cx, cy, rad, ang, built) => { const N = 6, M = 4; const P = (la, lo) => { const x = Math.cos(la) * Math.cos(lo + ang), y = Math.sin(la), z = Math.cos(la) * Math.sin(lo + ang); return [cx + x * rad, cy + y * rad * .92, z]; };
+  const g = c.createRadialGradient(cx - rad * .35, cy - rad * .4, rad * .1, cx, cy, rad); g.addColorStop(0, '#d8f0a0'); g.addColorStop(.6, '#76b900'); g.addColorStop(1, '#2a4a00'); let n = 0;
+  for (let j = 0; j < M; j++) for (let i = 0; i < N; i++) { const la0 = -Math.PI / 2 + j / M * Math.PI, la1 = la0 + Math.PI / M, lo0 = i / N * TAU, lo1 = lo0 + TAU / N; const mid = P((la0 + la1) / 2, (lo0 + lo1) / 2); if (mid[2] < -.05) continue; n++; const on = K.clamp(built - n + 1);
+    if (on <= 0) continue; c.beginPath(); const steps = 8; for (let k = 0; k <= steps; k++) { const p = P(la0, lo0 + (lo1 - lo0) * k / steps); k ? c.lineTo(p[0], p[1]) : c.moveTo(p[0], p[1]); } for (let k = 0; k <= steps; k++) { const p = P(la0 + (la1 - la0) * k / steps, lo1); c.lineTo(p[0], p[1]); } for (let k = steps; k >= 0; k--) { const p = P(la1, lo0 + (lo1 - lo0) * k / steps); c.lineTo(p[0], p[1]); } for (let k = steps; k >= 0; k--) { const p = P(la0 + (la1 - la0) * k / steps, lo0); c.lineTo(p[0], p[1]); } c.closePath();
+    c.save(); c.globalAlpha = on; c.fillStyle = g; c.fill(); c.strokeStyle = 'rgba(230,255,200,.55)'; c.lineWidth = 2.5; c.stroke(); c.restore(); } };
+// the NV1 board (world coords, centre x,y, width w; turn = rotation about the vertical axis)
+const nv1 = (c, x, y, w, turn, dust = 0) => { const k = Math.cos(turn), h = w * .42; c.save(); c.translate(x, y);
+  c.fillStyle = 'rgba(20,12,4,.35)'; c.beginPath(); c.ellipse(0, h * .55, w * .55 * Math.max(.25, Math.abs(k)), h * .12, 0, 0, 7); c.fill();
+  c.transform(k, Math.sin(turn) * .12, 0, 1, 0, 0); const side = k < 0;
+  c.fillStyle = side ? '#1e4a24' : '#2a7a34'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.moveTo(-w / 2, -h / 2); c.lineTo(w / 2, -h / 2); c.lineTo(w / 2, h / 2); c.lineTo(-w * .1, h / 2); c.lineTo(-w * .1, h / 2 + 22); c.lineTo(-w * .42, h / 2 + 22); c.lineTo(-w * .42, h / 2); c.lineTo(-w / 2, h / 2); c.closePath(); c.fill(); c.stroke();
+  for (let i = 0; i < 14; i++) { c.fillStyle = '#e8c040'; c.fillRect(-w * .41 + i * w * .022, h / 2 + 4, w * .013, 16); }
+  if (!side) { c.strokeStyle = 'rgba(232,192,64,.55)'; c.lineWidth = 2; for (let i = 0; i < 18; i++) { const yy = -h / 2 + 20 + i * h / 20; c.beginPath(); c.moveTo(-w * .46, yy); c.lineTo(-w * .2 + (i % 4) * 30, yy); c.lineTo(-w * .15 + (i % 4) * 30, yy + 14); c.stroke(); }
+    const chip = (cx, cy, cw, chh, label, col = '#2a2a2e') => { c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(cx - cw / 2, cy - chh / 2, cw, chh); c.strokeRect(cx - cw / 2, cy - chh / 2, cw, chh); c.fillStyle = '#c8c8c8'; for (let i = 0; i < 8; i++) { c.fillRect(cx - cw / 2 + 6 + i * (cw - 12) / 8, cy - chh / 2 - 6, 4, 6); c.fillRect(cx - cw / 2 + 6 + i * (cw - 12) / 8, cy + chh / 2, 4, 6); } if (label) { c.fillStyle = '#e8e8e8'; c.font = font(Math.round(chh * .32), 'Oswald'); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(label, cx, cy); } };
+    chip(-w * .05, -h * .04, w * .26, w * .2, 'NV1'); chip(w * .22, -h * .18, w * .1, w * .07, 'AUDIO', '#3a3a40'); for (let i = 0; i < 4; i++) chip(-w * .32 + (i % 2) * w * .1, -h * .22 + Math.floor(i / 2) * h * .3, w * .07, w * .04, '', '#222');
+    for (let i = 0; i < 6; i++) { c.fillStyle = i % 2 ? '#c8402e' : '#3a6ac8'; c.beginPath(); c.arc(w * .14 + i * w * .03, h * .3, 7, 0, 7); c.fill(); }
+    c.fillStyle = '#b8bcc4'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(w * .42, -h * .46, w * .08, h * .92); c.strokeRect(w * .42, -h * .46, w * .08, h * .92); c.fillStyle = '#2a2a2e'; c.fillRect(w * .435, -h * .38, w * .05, h * .18); c.fillRect(w * .435, -h * .05, w * .05, h * .22); c.fillStyle = '#c8a84a'; for (let i = 0; i < 5; i++) c.fillRect(w * .445, -h * .03 + i * h * .04, w * .03, 4); }
+  else { c.fillStyle = 'rgba(232,192,64,.3)'; for (let i = 0; i < 40; i++) c.fillRect(-w * .45 + (i * 37) % (w * .9), -h * .4 + (i * 53) % (h * .8), 4, 4); }
+  if (dust > 0) { c.fillStyle = `rgba(200,190,170,${.55 * dust})`; c.fillRect(-w / 2, -h / 2, w, h); c.fillStyle = `rgba(230,220,200,${.5 * dust})`; for (let i = 0; i < 260; i++) c.fillRect(-w / 2 + (i * 97) % w, -h / 2 + (i * 61) % h, 3, 3); }
+  c.restore(); };
+// label with leader line (world)
+const leader = (c, lt, at, px, py, lx, ly, txt) => { const p = K.seg(lt, at, at + .5); if (p <= 0) return; c.save(); c.strokeStyle = CREAM; c.lineWidth = 4; c.beginPath(); c.moveTo(px, py); c.lineTo(px + (lx - px) * p, py + (ly - py) * p); c.stroke(); c.fillStyle = CREAM; c.beginPath(); c.arc(px, py, 8, 0, 7); c.fill(); c.strokeStyle = INK; c.lineWidth = 3; c.stroke(); if (p > .6) { const a = pop(lt, at + .3); c.translate(lx, ly); c.scale(a, a); c.font = font(46); const w = c.measureText(txt).width + 36; c.fillStyle = 'rgba(10,8,6,.4)'; c.fillRect(-w / 2 + 6, -30, w, 66); c.fillStyle = INK; c.fillRect(-w / 2, -36, w, 66); c.fillStyle = CREAM; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(txt, 0, 0); } c.restore(); };
+// game box with a triangle-mesh cover (world). k = pop scale
+const TITLES = ['ROBO RALLY', 'STAR TANK', 'DUNGEON 3D', 'TURBO KART', 'MECH ARENA', 'SKY ACE', 'CAVE RUN', 'NEON RACE', 'FORT BLAST', 'SUB HUNT', 'GOLF PRO', 'DRAGON KEEP', 'ICE HOCKEY', 'JET WING', 'TOMB QUEST', 'RALLY X'];
+const COVERS = ['#2a3a7a', '#7a2a2a', '#2a5a3a', '#5a2a6a', '#1e1e2a', '#8a5a1a', '#1a5a6a', '#6a1a3a'];
+const gameBox = (c, x, y, k, i, flash = 0) => { if (k <= 0) return; const w = 150, h = 200; c.save(); c.translate(x, y); c.scale(k, k); c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(-w / 2 + 10, -h + 8, w, h); c.fillStyle = COVERS[i % COVERS.length]; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-w / 2, -h, w, h); c.strokeRect(-w / 2, -h, w, h); c.fillStyle = 'rgba(0,0,0,.25)'; c.fillRect(w / 2 - 12, -h, 12, h);
+  c.save(); c.beginPath(); c.rect(-w / 2 + 10, -h + 44, w - 30, h - 74); c.clip(); const sx = -w / 2 + 10, sy = -h + 44, cw = w - 30, ch = h - 74; c.strokeStyle = flash > 0 ? `rgba(255,${200 + 55 * flash},80,1)` : 'rgba(200,255,220,.75)'; c.lineWidth = 1.6 + flash * 1.5; const n = 5; for (let a = 0; a <= n; a++) for (let b = 0; b <= n; b++) { const px = sx + a * cw / n + ((a * 7 + b * 3 + i) % 5 - 2) * 3, py = sy + b * ch / n + ((a * 3 + b * 5 + i) % 5 - 2) * 3; c.beginPath(); c.moveTo(px, py); c.lineTo(px + cw / n, py); c.lineTo(px, py + ch / n); c.closePath(); c.stroke(); } c.restore();
+  c.fillStyle = '#f6efe2'; c.font = font(20, 'Anton'); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(TITLES[i % TITLES.length], -6, -h + 22); c.fillStyle = 'rgba(255,255,255,.75)'; c.font = font(13, 'Oswald'); c.fillText('FOR WINDOWS 95', -6, -14); c.restore(); };
+// shipping/return box (world)
+const crate = (c, x, y, w, h, k, label = 'RETURN') => { if (k <= 0) return; c.save(); c.translate(x, y); c.scale(1, k); c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(-w / 2 + 10, -4, w, 12); c.fillStyle = '#b88a52'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(-w / 2, -h, w, h); c.strokeRect(-w / 2, -h, w, h); c.fillStyle = 'rgba(255,255,255,.15)'; c.fillRect(-w / 2, -h, w, 10); c.fillStyle = '#d8c8a0'; c.fillRect(-10, -h, 20, h); c.save(); c.translate(0, -h / 2); c.rotate(-.06); c.strokeStyle = RED; c.lineWidth = 5; c.strokeRect(-w * .34, -26, w * .68, 52); c.fillStyle = RED; c.font = font(Math.round(w * .13)); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(label, 0, 2); c.restore(); c.restore(); };
+const darkGrid = (c) => { const g = c.createLinearGradient(0, 0, 0, SH); g.addColorStop(0, '#12161e'); g.addColorStop(1, '#0a0c10'); c.fillStyle = g; c.fillRect(0, 0, SW, SH); c.strokeStyle = 'rgba(118,185,0,.08)'; c.lineWidth = 1; for (let x = 0; x < SW; x += 60) { c.beginPath(); c.moveTo(x, 0); c.lineTo(x, SH); c.stroke(); } for (let y = 0; y < SH; y += 60) { c.beginPath(); c.moveTo(0, y); c.lineTo(SW, y); c.stroke(); } };
+const night = (k = .7) => (c) => { c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = `rgba(40,50,80,${k})`; c.fillRect(0, 0, SW, SH); c.restore(); };
+// an empty office chair (world) that fades out: the laid-off desks
+const chair = (x, y, a) => (c) => { if (a <= 0) return; c.save(); c.globalAlpha = a; c.translate(x, y); c.fillStyle = 'rgba(0,0,0,.3)'; c.beginPath(); c.ellipse(0, 6, 70, 12, 0, 0, 7); c.fill(); c.fillStyle = '#2a2e36'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(-50, -120, 100, 20); c.strokeRect(-50, -120, 100, 20); c.fillRect(-46, -250, 92, 120); c.strokeRect(-46, -250, 92, 120); c.fillRect(-5, -100, 10, 90); c.beginPath(); c.moveTo(-50, 0); c.lineTo(50, 0); c.stroke(); c.restore(); };
+// the emulator: a big humming cabinet with cables (world)
+const emulator = (c, x, y, lt, a) => { if (a <= 0) return; c.save(); c.globalAlpha = a; c.translate(x, y); c.fillStyle = 'rgba(0,0,0,.35)'; c.beginPath(); c.ellipse(0, 8, 330, 26, 0, 0, 7); c.fill();
+  const g = c.createLinearGradient(-300, 0, 300, 0); g.addColorStop(0, '#2a3038'); g.addColorStop(.5, '#4a525e'); g.addColorStop(1, '#22262e'); c.fillStyle = g; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-300, -560, 600, 560); c.strokeRect(-300, -560, 600, 560);
+  for (let r = 0; r < 6; r++) { c.fillStyle = '#1a1e24'; c.fillRect(-270, -530 + r * 86, 540, 66); for (let k = 0; k < 14; k++) { const on = Math.sin(lt * (3 + k * .7) + r * 2 + k) > .2; c.fillStyle = on ? (k % 5 ? '#76b900' : '#ffb84a') : '#2a3a20'; c.fillRect(-250 + k * 36, -506 + r * 86, 14, 10); } }
+  c.fillStyle = '#d8d2c0'; c.fillRect(-120, -600, 240, 40); c.strokeRect(-120, -600, 240, 40); c.fillStyle = INK; c.font = font(28, 'Oswald'); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('EMULATOR', 0, -580);
+  c.strokeStyle = '#1a1a1a'; c.lineWidth = 10; for (let k = 0; k < 5; k++) { c.beginPath(); c.moveTo(300, -80 - k * 70); c.bezierCurveTo(420 + k * 30, -40 - k * 50, 380, 10, 520 + k * 40, 10); c.stroke(); } c.restore(); };
+// a stacked chip box (world-ish, local)
+const chipBox = (c, x, y, s) => { c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = '#76b900'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(-50, -36, 100, 72); c.strokeRect(-50, -36, 100, 72); c.fillStyle = '#10140a'; c.fillRect(-50, -36, 100, 18); c.fillStyle = CREAM; c.font = font(20); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('RIVA 128', 0, -26); c.fillStyle = '#1a1e24'; c.fillRect(-22, -6, 44, 30); c.restore(); };
+
+window.SHOTS = [
+  // 1 a half-empty office at night: layoffs, everything on one chip
+  { plate: 'office', cam: { z: [1.15, 1.25], x: [1280, 1320], y: [780, 790] }, bed: [['hum_loop', .35]], inSfx: false,
+    figs: [{ x: 900, y: 1330, s: 2.2, ...CHRIS, facing: 1, pose: 'think', mood: 'worried' }, { x: 1650, y: 1330, s: 2.3, ...JENSEN, facing: -1, pose: 'think', mood: 'worried' }],
+    init: S => { const tL = A.at(S, 'laid off', .9), tO = A.at(S, 'one new chip', 3.0), tT = A.at(S, 'triangles', 4.6);
+      S.D.figs[1].anim = (o, lt) => { o.pose = lt > tO ? 'point' : 'think'; o.talk = lt > tO - .3 && lt < tT + 1.5; };
+      S.D.live = [...[[380, 0], [620, .15], [2180, .3], [2400, .45]].map(([x, d]) => (c, lt) => chair(x, 1330, 1 - K.seg(lt, tL + d, tL + d + .5))(c))];
+      S.D.over = [night(.65), (c, lt) => K.card(c, 'LAYOFFS', lt, { at: tL, x: 420, y: 180, px: 60, rot: -3 }), (c, lt) => K.card(c, 'ALL-IN ON ONE CHIP', lt, { at: tO, x: 1420, y: 180, px: 50, rot: 3 }), (c, lt) => K.card(c, 'TRIANGLES + DIRECTX', lt, { at: tT, x: 1420, y: 300, px: 40, rot: -2 })];
+      S.D.sfx = [[tL, 'whoosh_soft', .35], [tL + .3, 'creak', .3], [tO, 'pop', .4], [tT, 'pop', .4]]; } },
+  // 2 the lab: an emulator wheeled in, so they can test before any chip exists
+  { plate: 'lab_wb', cam: { z: [1.05, 1.12], x: [1300, 1320], y: [760, 770] }, bed: [['hum_loop', .45]],
+    figs: [{ x: 420, y: 1330, s: 2.2, ...CURTIS, facing: 1, pose: 'present' }],
+    init: S => { const tE = A.at(S, 'emulator', 1.6), tS = A.at(S, 'in software', 4.4);
+      S.D.figs[0].anim = (o, lt) => { o.pose = lt > tE ? 'point' : 'present'; o.talk = lt > tE - .4 && lt < tS + 1; o.mood = lt > tS ? 'happy' : 'neutral'; };
+      S.D.live = [(c, lt) => { const u = E.out(K.seg(lt, tE - .8, tE + .4)); emulator(c, 1500 + (1 - u) * 1100, 1340, lt, K.seg(lt, tE - .8, tE - .5)); }];
+      S.D.over = [(c, lt) => K.card(c, 'TEST IT BEFORE IT EXISTS', lt, { at: tS, x: 960, y: 160, px: 46, rot: -2 })];
+      S.D.sfx = [[tE - .8, 'scrape', .45], [tE + .3, 'thud', .4], [tS, 'typing', .35]]; } },
+  // 3 a month of payroll: the counter reads 30 as the design goes to the factory
+  { draw: (c) => darkGrid(c), bed: [['drone', .35]],
+    init: S => { const tM = A.at(S, 'month', .9), tF = A.at(S, 'factory', 3.0);
+      S.D.over = [(c, lt) => { const a = pop(lt, .2); if (a <= 0) return; const n = Math.max(30, Math.round(30 + 60 * (1 - E.out(K.seg(lt, .2, tM + .6))))); c.save(); c.translate(620, 520); c.scale(a, a); c.fillStyle = '#1e242e'; c.strokeStyle = CREAM; c.lineWidth = 6; c.beginPath(); c.roundRect(-300, -220, 600, 440, 30); c.fill(); c.stroke(); const warn = .5 + .5 * Math.sin(lt * 10); c.fillStyle = `rgb(${200 + 55 * warn},70,50)`; c.font = font(260); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(String(n), 0, -10); c.fillStyle = CREAM; c.font = font(48, 'Oswald'); c.fillText('DAYS OF PAYROLL', 0, 170); c.restore(); },
+        (c, lt) => { const a = pop(lt, tF - .3); if (a <= 0) return; const u = E.io(K.seg(lt, tF, tF + 1.6)); c.save(); c.translate(1480, 520); c.scale(a, a); c.fillStyle = '#2a3038'; c.strokeStyle = CREAM; c.lineWidth = 5; c.fillRect(-180, -60, 360, 200); c.strokeRect(-180, -60, 360, 200); c.beginPath(); c.moveTo(-180, -60); c.lineTo(-180, -140); c.lineTo(-90, -100); c.lineTo(-90, -140); c.lineTo(0, -100); c.lineTo(0, -140); c.lineTo(90, -100); c.lineTo(180, -100); c.lineTo(180, -60); c.closePath(); c.fill(); c.stroke(); c.fillStyle = 'rgba(200,200,220,.4)'; for (let k = 0; k < 4; k++) { c.beginPath(); c.arc(120 + Math.sin(lt * 2 + k) * 10, -180 - k * 40 - (lt * 30 % 40), 20 + k * 8, 0, 7); c.fill(); } c.fillStyle = CREAM; c.font = font(40, 'Oswald'); c.textAlign = 'center'; c.fillText('THE FACTORY', 0, 190); chipBox(c, -520 + 520 * u, 40, 1.1); c.restore(); }];
+      S.D.sfx = [[.2, 'tick', .4], [tM, 'heartbeat', .45], [tF - .3, 'pop', .35], [tF, 'whoosh', .35], [tF + 1.6, 'thud', .35]]; } },
+  // 4 the RIVA 128 lifts off its board; this time it worked
+  { plate: 'chip', cam: { z: [1.3, 1.12], x: [1280, 1280], y: [860, 820] }, bed: [['hum_loop', .4]], inSfx: 'riser',
+    init: S => { const tR = A.at(S, 'RIVA', 1.0), tY = A.at(S, '1997', 2.6), tW = A.at(S, 'worked', 4.6);
+      S.D.live = [(c, lt) => { const p = .5 + .5 * Math.sin(lt * 2.4); c.save(); c.globalCompositeOperation = 'screen'; const g = c.createRadialGradient(1280, 920, 0, 1280, 920, 700); g.addColorStop(0, `rgba(118,185,0,${.2 + .15 * p + .2 * K.seg(lt, tW, tW + .6)})`); g.addColorStop(1, 'rgba(118,185,0,0)'); c.fillStyle = g; c.fillRect(580, 220, 1400, 1400); c.restore(); },
+        (c, lt) => { const a = K.seg(lt, tR - .2, tR + .4); if (a <= 0) return; c.save(); c.globalAlpha = a; c.fillStyle = 'rgba(16,20,10,.75)'; c.font = font(64); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('RIVA 128', 1280, 900); c.restore(); const sw = K.seg(lt, tR + .3, tR + 1.3); if (sw > 0 && sw < 1) { c.save(); c.globalCompositeOperation = 'screen'; c.fillStyle = 'rgba(255,255,255,.35)'; c.beginPath(); const sx = 1100 + sw * 380; c.moveTo(sx, 840); c.lineTo(sx + 60, 840); c.lineTo(sx + 10, 990); c.lineTo(sx - 50, 990); c.fill(); c.restore(); } }];
+      S.D.over = [(c, lt) => K.title(c, 'RIVA 128', lt, { at: tR, y: 200, px: 130, sub: '1997', subPx: 70, subOpts: { fill: GREEN } }),
+        (c, lt) => { const a = pop(lt, tW, .5); if (a <= 0) return; c.save(); c.translate(1460, 820); c.rotate(-.12); c.scale(a, a); c.strokeStyle = GREEN; c.lineWidth = 12; c.strokeRect(-260, -70, 520, 140); c.fillStyle = GREEN; c.font = font(84); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('IT WORKED', 0, 4); c.restore(); }];
+      S.D.sfx = [[tR, 'hit', .6], [tR + .3, 'whoosh_soft', .35], [tY, 'tick', .35], [tW, 'stamp', .55], [tW + .1, 'crowd_cheer', .25]]; } },
+  // 5 a million boxes in four months
+  { draw: (c) => darkGrid(c), bed: [['hum_loop', .3]],
+    init: S => { const tM = A.at(S, 'million', 1.4), tF = A.at(S, 'four months', 2.6);
+      S.D.over = [(c, lt) => { const u = E.out(K.seg(lt, .2, tM + 1)); const N = Math.floor(u * 96); for (let i = 0; i < N; i++) { const col = i % 12, row = Math.floor(i / 12); chipBox(c, 330 + col * 112 + (row % 2) * 20, 860 - row * 76, 1); } },
+        (c, lt) => { const u = E.out(K.seg(lt, .2, tM + .2)); const n = Math.round(1000000 * u); c.save(); c.translate(960, 150); K.outlined(c, n.toLocaleString('en-US'), 0, 0, 120, { fill: GREEN }); c.restore(); },
+        (c, lt) => K.card(c, 'IN 4 MONTHS', lt, { at: tF, x: 1600, y: 300, px: 54, rot: 3 })];
+      S.D.sfx = [[.3, 'coins_cascade', .35], [tM, 'chime', .45], [tF, 'pop', .4]]; } },
+  // 6 the staff meeting line, for years: 30 days from going out of business
+  { plate: 'lab_wb', cam: { z: [1.05, 1.15], x: [1280, 1280], y: [760, 760] }, bed: [['office_loop', .25]],
+    figs: [{ x: 360, y: 1330, s: 2.1, ...CHRIS, facing: 1, pose: 'stand' }, { x: 2200, y: 1330, s: 2.1, ...CURTIS, facing: -1, pose: 'stand' }, { x: 1280, y: 1330, s: 2.3, ...JENSEN, facing: 1, pose: 'present' }],
+    init: S => { const tY = A.at(S, 'For years', .4), tQ = A.at(S, 'our company', 3.4), tB = A.at(S, 'going out of business', 5.4);
+      S.D.figs[2].anim = (o, lt) => { o.talk = lt > tQ - .2; o.pose = lt > tB ? 'point' : 'present'; o.facing = lt > tQ ? -1 : 1; };
+      S.D.figs[0].anim = (o, lt) => { o.mood = lt > tB ? 'worried' : 'neutral'; }; S.D.figs[1].anim = (o, lt) => { o.mood = lt > tB ? 'shocked' : 'neutral'; };
+      S.D.live = [(c, lt) => { const u = K.seg(lt, tQ - .2, tB + 1.2); if (u <= 0) return; const txt = 'OUR COMPANY IS 30 DAYS', txt2 = 'FROM GOING OUT OF BUSINESS'; c.save(); c.fillStyle = '#c8302a'; c.font = '86px Caveat, sans-serif'; c.textAlign = 'center'; const n1 = Math.min(txt.length, Math.floor(u * 2 * txt.length)), n2 = Math.max(0, Math.min(txt2.length, Math.floor((u * 2 - 1) * txt2.length))); c.fillText(txt.slice(0, n1), 1020, 400); c.fillText(txt2.slice(0, n2), 1020, 520); c.restore(); }];
+      S.D.over = [(c, lt) => K.card(c, 'EVERY STAFF MEETING · FOR YEARS', lt, { at: tY, x: 960, y: 940, px: 40, rot: -1, until: tQ + 1 })];
+      S.D.sfx = [[tY, 'pop', .35], [tQ, 'scrape', .25], [tB, 'tension', .35]]; } },
+];
+
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; D.sfx = D.sfx || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>

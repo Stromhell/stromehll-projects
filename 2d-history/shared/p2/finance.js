@@ -210,7 +210,7 @@
       c.fillStyle = '#e8e0d0'; c.fillRect(x - w * .7, ptop + 22, w * 1.4, 22); c.fillStyle = '#cfc6b4'; c.beginPath(); c.ellipse(x - w * .45, ptop + 46, 12, 9, 0, 0, 7); c.ellipse(x + w * .45, ptop + 46, 12, 9, 0, 0, 7); c.fill(); c.fillStyle = '#ddd5c4'; c.fillRect(x - w * .65, pbot - 26, w * 1.3, 26); }
     // entablature, frieze, pediment
     c.fillStyle = '#e6decd'; c.fillRect(px0 - 30, ptop - 30, px1 - px0 + 60, 60); c.fillStyle = '#cfc6b2'; c.fillRect(px0 - 30, ptop + 20, px1 - px0 + 60, 8);
-    c.fillStyle = 'rgba(80,70,50,.55)'; c.font = '600 30px Georgia, serif'; c.textAlign = 'center'; c.letterSpacing = '10px'; c.fillText('UNITED STATES COURTHOUSE', cx, ptop + 10); c.letterSpacing = '0px';
+    c.fillStyle = 'rgba(80,70,50,.55)'; c.font = '600 30px Georgia, serif'; c.textAlign = 'center'; c.letterSpacing = '10px'; c.fillText(o.label ?? 'UNITED STATES COURTHOUSE', cx, ptop + 10); c.letterSpacing = '0px';
     const pd = [[px0 - 50, ptop - 30], [cx, ptop - 190], [px1 + 50, ptop - 30]]; paintRegion(c, r, pd, '#ebe4d4', { density: 200, al: .3 }); c.strokeStyle = '#c4baa6'; c.lineWidth = 10; poly(c, pd); c.stroke();
     const ip = [[px0 + 10, ptop - 42], [cx, ptop - 168], [px1 - 10, ptop - 42]]; c.fillStyle = '#d4ccba'; poly(c, ip); c.fill();
     // relief figures in tympanum (simple carved silhouettes)
