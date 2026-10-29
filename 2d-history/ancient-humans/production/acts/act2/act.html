@@ -1,7 +1,7 @@
 <!doctype html><html><head><meta charset="utf-8"><title>AH act 2 - a day without a clock</title>
 <style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
 <body><canvas id="c" width="1920" height="1080"></canvas>
-<script src="../../../../shared/rig.js"></script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "leo";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
 <script src="timing.js"></script>
 <script>
 const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/', INK = '#2b1e16', CREAM = '#f6eedc', GOLD = '#e8b44a', RED = '#c8402e', GREEN = '#3f7a3a';
@@ -63,10 +63,10 @@ window.SHOTS = [
   // 2 the band around last night's fire, eating leftovers
   { plate: 'sav_dawn', cam: { z: [2.15, 2.25], x: [1090, 1080], y: [1200, 1210] }, bed: [['fire_loop', .5], ['birds_loop', .35]],
     figs: [
-      { x: 850, y: 1338, s: .85, ...HUNTER, pose: 'sit', facing: 1, mood: 'happy', anim: eat(0) },
-      { x: 975, y: 1272, s: .74, ...WOMAN, pose: 'sit', facing: 1, mood: 'happy', talk: true },
-      { x: 1185, y: 1272, s: .74, ...ELDER, pose: 'sit', facing: -1, anim: eat(2) },
-      { x: 1310, y: 1338, s: .85, ...YOUNG, pose: 'sit', facing: -1, mood: 'happy', anim: eat(4) }],
+      { x: 850, y: 1338, s: .85, ...HUNTER, pose: 'sit', seat: 'log', facing: 1, mood: 'happy', anim: eat(0) },
+      { x: 975, y: 1272, s: .74, ...WOMAN, pose: 'sit', seat: 'log', facing: 1, mood: 'happy', talk: true },
+      { x: 1185, y: 1272, s: .74, ...ELDER, pose: 'sit', seat: 'log', facing: -1, anim: eat(2) },
+      { x: 1310, y: 1338, s: .85, ...YOUNG, pose: 'sit', seat: 'log', facing: -1, mood: 'happy', anim: eat(4) }],
     init: S => { const tF = A.at(S, 'still alive', 1.4), tM = A.at(S, 'meat', 3.6), tN = A.at(S, 'nuts', 4.4);
       S.D.live = [firePit(FIRE[0], FIRE[1], .7), (c, lt) => A.fire(FIRE[0], FIRE[1] - 6, .42 * (1 + .3 * Math.exp(-Math.max(0, lt - tF) * 2) * (lt > tF ? 1 : 0)), { glow: 260 })(c, lt), A.smoke(FIRE[0], FIRE[1] - 48, 1)];
       S.D.front = [(c, lt) => skewer(1010, 1352, pop(lt, tM))(c), (c, lt) => skewer(1140, 1356, pop(lt, tM + .2))(c), (c, lt) => nuts(1075, 1395, pop(lt, tN))(c)];
@@ -75,10 +75,10 @@ window.SHOTS = [
   // 3 the morning meeting: water, tracks, and everyone gets a say
   { plate: 'sav_dawn', cam: { z: [1.85, 1.95], x: [1090, 1085], y: [1150, 1160] }, bed: [['fire_loop', .45], ['birds_loop', .35]],
     figs: [
-      { x: 850, y: 1338, s: .85, ...HUNTER, pose: 'sit', facing: 1, talk: true },
-      { x: 975, y: 1272, s: .74, ...WOMAN, pose: 'sit', facing: 1 },
-      { x: 1185, y: 1272, s: .74, ...ELDER, pose: 'sit', facing: -1 },
-      { x: 1310, y: 1338, s: .85, ...YOUNG, pose: 'sit', facing: -1 }],
+      { x: 850, y: 1338, s: .85, ...HUNTER, pose: 'sit', seat: 'log', facing: 1, talk: true },
+      { x: 975, y: 1272, s: .74, ...WOMAN, pose: 'sit', seat: 'log', facing: 1 },
+      { x: 1185, y: 1272, s: .74, ...ELDER, pose: 'sit', seat: 'log', facing: -1 },
+      { x: 1310, y: 1338, s: .85, ...YOUNG, pose: 'sit', seat: 'log', facing: -1 }],
     init: S => { const tW = A.at(S, 'water', 1.4), tT = A.at(S, 'tracks', 3.2), tP = A.at(S, 'whole plan', 4.6), tE = A.at(S, 'everyone has a say', 6);
       const F = S.D.figs; F[1].talk = [tW - .2, tW + 1.4]; F[2].talk = [tT - .4, tT + 1.2];
       F.forEach((f, i) => { f.anim = (o, lt) => { const r = E.out(K.seg(lt, tE + i * .12, tE + i * .12 + .35)); o.mood = lt > tE ? 'happy' : 'neutral'; if (r > 0) o.arms = (t, P) => ({ shR: K.lerp(P.shR, 150, r), elR: K.lerp(P.elR, -12, r) }); }; });

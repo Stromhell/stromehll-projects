@@ -1,0 +1,127 @@
+<!doctype html><html><head><meta charset="utf-8"><title>NV act 1 - the boy at Oneida</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}canvas{display:block}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig.js"></script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['asia_map', 'us_map', 'ky_school', 'dorm_bath', 'dishroom', 'office']) K.load(n, PL + n + '.jpg');
+K.load('fg_sink', PL + 'fg_sink.png');
+{ const T = window.TIMING, L = T.shots[T.shots.length - 1]; L.end += 1.8; T.dur = L.end; }
+const SW = 1920, SH = 1080, INK = '#1d1712', CREAM = '#f6efe2', GOLD = '#e8b44a', RED = '#c8402e', GREEN = '#76b900';
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+const font = (px, fam = 'Anton') => `${px}px ${fam}, Oswald, sans-serif`;
+const sprite = (name) => (c) => c.drawImage(K.imgs[name], 0, 0, 2560, 1440);
+// Jensen as a boy, his brother, Jensen as a teen
+const JK = { costume: 'school', hair: 'short', hairCol: '#1e1a18', seed: 11 };
+const BRO = { costume: 'school', hair: 'swept', hairCol: '#2a221e', seed: 12 };
+// map pin (world coords) with a label that pops
+const pin = (x, y, at, label, opts = {}) => (c, lt) => { const p = pop(lt, at); if (p <= 0) return; c.save(); c.translate(x, y - (1 - Math.min(1, p)) * 50); c.scale(p, p);
+  c.fillStyle = 'rgba(20,10,4,.35)'; c.beginPath(); c.ellipse(4, 4, 18, 7, 0, 0, 7); c.fill(); c.fillStyle = opts.col || RED; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.moveTo(0, 0); c.bezierCurveTo(-24, -34, -24, -66, 0, -66); c.bezierCurveTo(24, -66, 24, -34, 0, 0); c.fill(); c.stroke(); c.fillStyle = CREAM; c.beginPath(); c.arc(0, -46, 8, 0, 7); c.fill(); c.restore();
+  if (!label) return; const a = K.seg(lt, at + .2, at + .5); if (a <= 0) return; c.save(); c.globalAlpha = a; c.font = font(opts.px || 40, 'Oswald'); const w = c.measureText(label).width + 30, lx = x + (opts.dx ?? 30), ly = y + (opts.dy ?? -90);
+  c.fillStyle = 'rgba(246,239,226,.92)'; c.fillRect(lx, ly - 30, w, 54); c.strokeStyle = INK; c.lineWidth = 3; c.strokeRect(lx, ly - 30, w, 54); c.fillStyle = INK; c.textBaseline = 'middle'; c.fillText(label, lx + 15, ly - 2); c.restore(); };
+// dashed travel arc from a to b, drawn on between t0 and t1, with a small plane riding the tip
+const trip = (ax, ay, bx, by, t0, t1, lift = .25, plane = true) => (c, lt) => { const u = E.io(K.seg(lt, t0, t1)); if (u <= 0) return; const mx = (ax + bx) / 2, my = (ay + by) / 2 - Math.hypot(bx - ax, by - ay) * lift;
+  const at = (s) => [(1 - s) * (1 - s) * ax + 2 * (1 - s) * s * mx + s * s * bx, (1 - s) * (1 - s) * ay + 2 * (1 - s) * s * my + s * s * by];
+  c.save(); c.strokeStyle = 'rgba(160,40,30,.85)'; c.lineWidth = 7; c.setLineDash([22, 14]); c.lineCap = 'round'; c.beginPath(); for (let k = 0; k <= 60; k++) { const s = u * k / 60, [x, y] = at(s); k ? c.lineTo(x, y) : c.moveTo(x, y); } c.stroke(); c.restore();
+  if (!plane || u >= 1) return; const [x, y] = at(u), [x2, y2] = at(Math.min(1, u + .01)); c.save(); c.translate(x, y); c.rotate(Math.atan2(y2 - y, x2 - x)); c.fillStyle = CREAM; c.strokeStyle = INK; c.lineWidth = 3.5;
+  c.beginPath(); c.moveTo(42, 0); c.quadraticCurveTo(30, -9, -30, -7); c.lineTo(-40, -22); c.lineTo(-48, -22); c.lineTo(-42, 0); c.lineTo(-48, 22); c.lineTo(-40, 22); c.lineTo(-30, 7); c.quadraticCurveTo(30, 9, 42, 0); c.fill(); c.stroke();
+  c.beginPath(); c.moveTo(6, -6); c.lineTo(-12, -40); c.lineTo(-22, -40); c.lineTo(-14, -6); c.moveTo(6, 6); c.lineTo(-12, 40); c.lineTo(-22, 40); c.lineTo(-14, 6); c.fill(); c.stroke(); c.restore(); };
+// polaroid (screen coords) with a little scene drawn by fn(c, w, h)
+const polaroid = (c, x, y, w, h, rot, a, fn, caption) => { if (a <= 0) return; c.save(); c.translate(x, y); c.rotate(rot); c.scale(a, a); c.fillStyle = 'rgba(10,6,2,.35)'; c.fillRect(-w / 2 + 10, -h / 2 + 14, w, h); c.fillStyle = '#fbf8f0'; c.fillRect(-w / 2, -h / 2, w, h); c.strokeStyle = 'rgba(29,23,18,.6)'; c.lineWidth = 2; c.strokeRect(-w / 2, -h / 2, w, h);
+  const iw = w - 40, ih = h - 120; c.save(); c.beginPath(); c.rect(-iw / 2, -h / 2 + 20, iw, ih); c.clip(); c.translate(-iw / 2, -h / 2 + 20); fn(c, iw, ih); c.restore(); c.strokeStyle = INK; c.lineWidth = 3; c.strokeRect(-iw / 2, -h / 2 + 20, iw, ih);
+  c.fillStyle = INK; c.font = font(46, 'Caveat'); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(caption, 0, h / 2 - 50); c.restore(); };
+// suitcase (local coords, bottom-centre at 0,0)
+const suitcase = (c, x, y, s, col = '#8a4a2a') => { c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = 'rgba(20,12,6,.3)'; c.beginPath(); c.ellipse(4, 2, 56, 9, 0, 0, 7); c.fill(); c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.roundRect(-50, -70, 100, 70, 8); c.fill(); c.stroke(); c.fillStyle = '#c9a25a'; c.fillRect(-36, -70, 10, 70); c.fillRect(26, -70, 10, 70); c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.roundRect(-18, -88, 36, 20, 6); c.stroke(); c.restore(); };
+// bucket with soapy water (world coords)
+const bucket = (x, y, s) => (c, lt) => { c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = 'rgba(20,20,20,.3)'; c.beginPath(); c.ellipse(6, 2, 70, 14, 0, 0, 7); c.fill(); c.fillStyle = '#7a8a9a'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.moveTo(-56, -90); c.lineTo(56, -90); c.lineTo(44, 0); c.lineTo(-44, 0); c.closePath(); c.fill(); c.stroke();
+  c.fillStyle = '#e8f0f4'; c.beginPath(); c.ellipse(0, -90, 56, 13, 0, 0, 7); c.fill(); c.stroke(); for (let k = 0; k < 7; k++) { const bx = -40 + k * 13 + Math.sin(lt * 2 + k) * 4, by = -96 - (k % 3) * 8 - Math.abs(Math.sin(lt * 1.5 + k)) * 6; c.fillStyle = 'rgba(255,255,255,.95)'; c.beginPath(); c.arc(bx, by, 9 + (k % 2) * 4, 0, 7); c.fill(); c.strokeStyle = 'rgba(120,150,170,.6)'; c.lineWidth = 2; c.stroke(); }
+  c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.arc(0, -86, 60, Math.PI * 1.1, Math.PI * 1.9); c.stroke(); c.restore(); };
+// scrub brush in the hand (hand-local coords, +y along the forearm)
+const brush = { near: (c) => { c.fillStyle = '#c8a060'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.roundRect(-30, 6, 60, 22, 6); c.fill(); c.stroke(); c.fillStyle = '#e8d8a0'; for (let k = 0; k < 8; k++) c.fillRect(-26 + k * 7.4, 28, 4, 14); } };
+// sparkles (world) around a point
+const sparkle = (x, y, at, n = 5, rad = 120) => (c, lt) => { if (lt < at) return; for (let k = 0; k < n; k++) { const ph = (lt - at) * 2.2 + k * 1.3, a = Math.max(0, Math.sin(ph)); if (a <= .05) continue; const sx = x + Math.cos(k * 2.4) * rad * (.4 + .6 * ((k * 37) % 10) / 10), sy = y + Math.sin(k * 2.4) * rad * .6, r = 18 * a;
+  c.save(); c.translate(sx, sy); c.fillStyle = `rgba(255,255,240,${a})`; c.beginPath(); for (let i = 0; i < 8; i++) { const rr = i % 2 ? r * .25 : r, an = i * Math.PI / 4; c.lineTo(Math.cos(an) * rr, Math.sin(an) * rr); } c.closePath(); c.fill(); c.restore(); } };
+// glossy brochure card (screen) for the 'prestigious boarding school' the uncle imagined
+const brochure = (c, x, y, a, stampA) => { if (a <= 0) return; c.save(); c.translate(x, y); c.rotate(-.05); c.scale(a, a); const w = 560, h = 640; c.fillStyle = 'rgba(10,6,2,.4)'; c.fillRect(-w / 2 + 12, -h / 2 + 16, w, h); c.fillStyle = '#1f3b5c'; c.fillRect(-w / 2, -h / 2, w, h); c.strokeStyle = '#c9a25a'; c.lineWidth = 6; c.strokeRect(-w / 2 + 14, -h / 2 + 14, w - 28, h - 28);
+  c.fillStyle = '#c9a25a'; c.font = font(30, 'SourceSerif'); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('A FINE BOARDING SCHOOL', 0, -h / 2 + 60);
+  // ivy tower
+  c.fillStyle = '#b7a48a'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-160, -150, 320, 230); c.strokeRect(-160, -150, 320, 230); c.fillRect(-50, -250, 100, 100); c.strokeRect(-50, -250, 100, 100); c.beginPath(); c.moveTo(-64, -250); c.lineTo(0, -320); c.lineTo(64, -250); c.closePath(); c.fillStyle = '#3e3a40'; c.fill(); c.stroke();
+  c.fillStyle = '#3a5a78'; for (let i = 0; i < 4; i++) for (let j = 0; j < 2; j++) { c.beginPath(); c.roundRect(-130 + i * 72, -120 + j * 90, 40, 60, [20, 20, 0, 0]); c.fill(); }
+  c.fillStyle = '#4a7a3a'; for (let k = 0; k < 26; k++) { c.beginPath(); c.arc(-160 + (k * 47) % 320, -150 + ((k * 89) % 230), 14, 0, 7); c.fill(); }
+  c.fillStyle = '#e8dcc0'; c.font = font(44, 'Caveat'); c.fillText('Excellence · Tradition', 0, 150); c.font = font(26, 'Oswald'); c.fillText('(what the uncle pictured)', 0, 210);
+  if (stampA > 0) { c.save(); c.translate(130, 40); c.rotate(.25); c.scale(1 + (1 - stampA) * .6, 1 + (1 - stampA) * .6); c.globalAlpha = stampA; c.strokeStyle = RED; c.lineWidth = 10; c.beginPath(); c.arc(0, 0, 110, 0, 7); c.stroke(); c.fillStyle = RED; c.font = font(170, 'Anton'); c.fillText('?', 0, 6); c.restore(); }
+  c.restore(); };
+
+window.SHOTS = [
+  // 1 parchment map of East Asia: pin on Taiwan 1963, dashed arc to Thailand
+  { plate: 'asia_map', cam: { z: [1.0, 1.18], x: [1280, 1320], y: [720, 740] }, inSfx: false, bed: [['wind_loop', .2]],
+    init: S => { const tT = A.at(S, 'Taiwan', 1.6), tY = A.at(S, '1963', 2.6), tH = A.at(S, 'Thailand', 4.6);
+      S.D.live = [trip(1856, 565, 743, 898, tH - .9, tH + .6, .22), pin(1856, 565, tT, 'TAIWAN', { dx: 40 }), pin(743, 898, tH + .5, 'THAILAND', { dx: -260, dy: -100 })];
+      S.D.over = [(c, lt) => K.badge(c, 'JENSEN HUANG · BORN 1963', lt, { at: .5 }), (c, lt) => K.dateTag(c, '1963', lt, { at: tY })];
+      S.D.sfx = [[.2, 'paper', .5], [tT, 'pop', .6], [tY, 'stamp', .45], [tH - .9, 'whoosh_soft', .4], [tH + .5, 'pop', .6]]; } },
+  // 2 map of the United States: a plane comes in from the Pacific to the uncle's home; the polaroid of two boys
+  { plate: 'us_map', cam: { z: [1.05, 1.15], x: [1280, 1240], y: [700, 700] }, bed: [['wind_loop', .2]],
+    init: S => { const tN = A.at(S, 'nine', .9), tA = A.at(S, 'America', 3.2), tU = A.at(S, 'uncle', 4.4), tE = A.at(S, 'education', 5.6);
+      S.D.live = [trip(-40, 640, 348, 400, tA - 1, tA + .6, .3), pin(348, 400, tA + .5, "UNCLE'S HOME · WASHINGTON STATE", { dx: 40, dy: -90, px: 34 })];
+      S.D.over = [(c, lt, u) => { const a = pop(lt, tN - .2, .55); polaroid(c, 1420, 560, 520, 600, .06, Math.min(1, a), (c2, w, h) => { const g = c2.createLinearGradient(0, 0, 0, h); g.addColorStop(0, '#9cc0dc'); g.addColorStop(1, '#e8eef0'); c2.fillStyle = g; c2.fillRect(0, 0, w, h); c2.fillStyle = '#8a9a7a'; c2.fillRect(0, h * .72, w, h * .28);
+            A.figure(c2, Object.assign({ x: w * .36, y: h * .96, s: .95, pose: 'stand', facing: 1, mood: 'neutral' }, JK), lt, u, S); A.figure(c2, Object.assign({ x: w * .66, y: h * .98, s: 1.08, pose: 'stand', facing: -1, mood: 'happy' }, BRO), lt, u, S); suitcase(c2, w * .5, h * .97, .55); }, 'Jensen (9) + big brother'); },
+        (c, lt) => K.card(c, 'GOAL: A GOOD\nEDUCATION', lt, { at: tE, x: 1430, y: 150, px: 44, rot: 3 })];
+      S.D.sfx = [[tN - .2, 'camera_shutter', .5], [tA - 1, 'whoosh', .4], [tA + .5, 'pop', .6], [tE, 'pop', .5]]; } },
+  // 3 dashed line on to rural Kentucky; the glossy brochure the uncle believed in, stamped with a question mark
+  { plate: 'us_map', cam: { z: [1.15, 1.45], x: [1240, 1500], y: [700, 700], ease: E.io },
+    init: S => { const tK = A.at(S, 'Kentucky', 2.2), tP = A.at(S, 'prestigious', 3.2), tT = A.at(S, 'thought', 2.8);
+      S.D.live = [trip(348, 400, 1716, 736, .2, tK - .1, .18, false), pin(348, 400, -1, ''), pin(1716, 736, tK, 'RURAL KENTUCKY', { dx: 40 })];
+      S.D.over = [(c, lt) => brochure(c, 560, 540, Math.min(1, pop(lt, tP - .3, .5)), K.seg(lt, tP + 1.2, tP + 1.5))];
+      S.D.sfx = [[.2, 'whoosh_soft', .35], [tK, 'pop', .6], [tP - .3, 'paper', .5], [tP + 1.2, 'stamp', .6]]; } },
+  // 4 the real school: red brick in the hills, the sign reads ONEIDA BAPTIST INSTITUTE; tough older boys by the fence
+  { plate: 'ky_school', cam: { z: [1.0, 1.12], x: [1280, 1240], y: [720, 760] }, bed: [['birds_loop', .35], ['wind_loop', .2]],
+    figs: [
+      { x: 1080, y: 1330, s: 1.45, ...JK, pose: 'stand', facing: 1, mood: 'worried', anim: (o, lt) => { o.mood = lt > 2.6 ? 'shocked' : 'worried'; } },
+      { x: 2180, y: 1300, s: 1.9, costume: 'shirt', hair: 'curly', hairCol: '#3a2a1e', seed: 21, pose: 'think', facing: -1, mood: 'neutral' },
+      { x: 1800, y: 1330, s: 2.0, costume: 'farmer', hair: 'short', hairCol: '#6a4a2a', seed: 22, pose: 'shrug', facing: -1, mood: 'neutral', anim: (o, lt) => { o.pose = lt > 3 ? 'point' : 'stand'; } }],
+    init: S => { const tO = A.at(S, 'Oneida', .6), tS = A.at(S, 'strict', 2.4), tR = A.at(S, 'troubled', 3.4);
+      S.D.live = [(c, lt) => suitcase(c, 1190, 1332, 1)];
+      S.D.front = [(c, lt) => { const a = K.seg(lt, tO, tO + .5); if (a <= 0) return; const sx = 768, sy = 1092; c.save(); c.globalAlpha = a; c.fillStyle = '#2f4a3a'; c.font = font(46, 'SourceSerif'); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('ONEIDA BAPTIST', sx, sy - 22); c.fillText('INSTITUTE', sx, sy + 26); c.restore(); }];
+      S.D.over = [(c, lt) => K.badge(c, 'ONEIDA, KENTUCKY', lt, { at: tO + .3 }), (c, lt) => K.card(c, 'STRICT', lt, { at: tS, x: 1500, y: 170, px: 56, rot: -4 }), (c, lt) => K.card(c, 'ALSO TOOK IN\nTROUBLED TEENS', lt, { at: tR, x: 1580, y: 330, px: 44, rot: 3 })];
+      S.D.sfx = [[tO, 'chime', .4], [tS, 'stamp', .55], [tR, 'pop', .55], [tR + .3, 'gate_slam', .25]]; } },
+  // 5 dorm washroom: the youngest boy on his knees with a scrub brush by the open stall
+  { plate: 'dorm_bath', cam: { z: [1.05, 1.18], x: [1220, 1160], y: [780, 820] }, bed: [['hum_loop', .3]],
+    figs: [{ x: 560, y: 1135, s: 1.35, ...JK, pose: 'work', facing: -1, mood: 'neutral', hold: brush, workSpeed: 1.6, sweat: true }],
+    init: S => { const tY = A.at(S, 'youngest', 1), tB = A.at(S, 'bathrooms', 3.8);
+      S.D.front = [bucket(1010, 1170, .9), sparkle(827, 1010, tB + .4, 6, 110)];
+      S.D.over = [(c, lt) => K.badge(c, 'THE YOUNGEST BOY IN THE DORM', lt, { at: tY }), (c, lt) => K.card(c, 'DAILY CHORE:\nCLEAN THE BATHROOMS', lt, { at: tB, x: 1380, y: 210, px: 50, rot: -3 })];
+      S.D.sfx = [[.3, 'scrape', .4], [1.1, 'scrape', .35], [2, 'scrape', .35], [tB, 'pop', .55], [tB + .4, 'chime', .3]]; } },
+  // 6 same room, closer: he stands, brush up, the lesson card
+  { plate: 'dorm_bath', cam: { z: [1.25, 1.42], x: [1000, 1000], y: [820, 840] }, bed: [['hum_loop', .3]], xfade: .5,
+    figs: [{ x: 560, y: 1135, s: 1.35, ...JK, pose: 'stand', facing: 1, mood: 'happy', hold: brush, anim: (o, lt) => { o.pose = lt > .6 ? 'cheer' : 'stand'; if (lt > .6) o.arms = () => ({ shL: -20, elL: -10, shR: 150, elR: -14 }); } }],
+    init: S => { const tC = A.at(S, 'complain', 1.2), tW = A.at(S, 'work in front', 3.2);
+      S.D.front = [bucket(1010, 1170, .9), sparkle(827, 1010, 0, 7, 120), sparkle(1010, 1060, .4, 4, 80)];
+      S.D.over = [(c, lt) => K.card(c, 'NO COMPLAINING', lt, { at: tC, x: 1340, y: 230, px: 64, rot: -4 }), (c, lt) => K.card(c, '"Get on with the work\nin front of you."', lt, { at: tW, x: 1360, y: 470, px: 52, rot: 2, fam: 'Caveat' }), (c, lt) => K.outlined(c, "HIS LESSON, PARAPHRASED", 1360, 600, 26, { fam: 'Oswald', alpha: K.seg(lt, tW + .3, tW + .6) })];
+      S.D.sfx = [[.6, 'whoosh_soft', .3], [tC, 'stamp', .5], [tW, 'paper', .5]]; } },
+  // 7 Oregon: teenage Jensen at the diner dish sink; the job ladder steps up
+  { plate: 'dishroom', cam: { z: [1.12, 1.05], x: [1280, 1280], y: [760, 740] }, bed: [['hum_loop', .35], ['crowd_loop', .2]],
+    figs: [{ x: 1180, y: 1330, s: 2.5, pose: 'work', costume: 'shirt', hair: 'short', hairCol: '#1e1a18', seed: 11, facing: 1, mood: 'happy' }],
+    front: [sprite('fg_sink')],
+    init: S => { const tO = A.at(S, 'Oregon', 1.6), tD = A.at(S, "Denny's", 3.4), tW = A.at(S, 'washing dishes', 4), tT = A.at(S, 'waiting tables', 5.2);
+      const step = (txt, i, at) => (c, lt) => { const p = pop(lt, at); if (p <= 0) return; const x = 1480 + i * 140, y = 860 - i * 170; c.save(); c.translate(x, y); c.scale(p, p); c.fillStyle = 'rgba(20,12,6,.35)'; c.fillRect(-130 + 8, -40 + 10, 260, 80); c.fillStyle = i === 2 ? GOLD : CREAM; c.fillRect(-130, -40, 260, 80); c.strokeStyle = INK; c.lineWidth = 4; c.strokeRect(-130, -40, 260, 80); c.fillStyle = INK; c.font = font(36); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(txt, 0, 2); c.restore();
+        if (i > 0) { c.save(); c.globalAlpha = Math.min(1, p); c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.moveTo(x - 140 + 40, y + 170 - 42); c.lineTo(x - 70, y + 55); c.stroke(); c.restore(); } };
+      S.D.over = [(c, lt) => K.badge(c, 'OREGON · THE FAMILY REUNITED', lt, { at: tO }), (c, lt) => K.card(c, "DENNY'S", lt, { at: tD, x: 340, y: 200, px: 72, rot: -5, bg: '#f3d34a' }), step('DISHWASHER', 0, tW), step('BUSBOY', 1, tW + .9), step('WAITER', 2, tT)];
+      S.D.live = [(c, lt) => { for (let k = 0; k < 14; k++) { const life = (lt * .22 + k / 14) % 1, sx = 1500 + Math.sin(k * 2.3 + life * 4) * 150 + (k - 7) * 20, sy = 1080 - life * 500, rad = 60 + life * 140; const g = c.createRadialGradient(sx, sy, 0, sx, sy, rad); g.addColorStop(0, `rgba(255,255,255,${.14 * Math.sin(life * Math.PI)})`); g.addColorStop(1, 'rgba(255,255,255,0)'); c.fillStyle = g; c.beginPath(); c.arc(sx, sy, rad, 0, 7); c.fill(); } }];
+      S.D.sfx = [[.4, 'scrape', .3], [tD, 'chime', .4], [tW, 'pop', .5], [tW + .9, 'pop', .5], [tT, 'pop', .55], [tT + .4, 'coins', .3]]; } },
+  // 8 the engineer: night office, Jensen grown up beside a timeline that fills school by school
+  { plate: 'office', cam: { z: [1.05, 1.12], x: [1280, 1300], y: [740, 760] }, bed: [['office_loop', .3]], over: [A.dim(.3)],
+    figs: [{ x: 1650, y: 1330, s: 2.3, costume: 'shirt', hair: 'swept', hairCol: '#1e1a18', glasses: true, seed: 11, pose: 'present', facing: -1, mood: 'happy', talk: true }],
+    init: S => { const tO = A.at(S, 'Oregon State', 1.8), tA = A.at(S, 'AMD', 4.4), tL = A.at(S, 'LSI Logic', 5.4), tS = A.at(S, 'Stanford', 7.2), tN = A.at(S, 'at night', 8.6);
+      const rows = [['OREGON STATE', 'B.S. ELECTRICAL ENGINEERING · 1984', tO], ['AMD', 'MICROCHIP DESIGNER', tA], ['LSI LOGIC', 'CHIP DESIGN · CUSTOMER SIDE', tL], ['STANFORD', "MASTER'S DEGREE · NIGHT CLASSES", tS]];
+      S.D.over.push((c, lt) => { const a = K.seg(lt, .2, .6); if (a <= 0) return; c.save(); c.globalAlpha = a; c.fillStyle = 'rgba(8,10,14,.78)'; c.beginPath(); c.roundRect(110, 140, 880, 780, 20); c.fill(); c.strokeStyle = 'rgba(118,185,0,.6)'; c.lineWidth = 3; c.stroke();
+        c.fillStyle = 'rgba(246,239,226,.75)'; c.font = font(30, 'Oswald'); c.fillText('THE MAKING OF AN ENGINEER', 200, 200); c.strokeStyle = 'rgba(118,185,0,.5)'; c.lineWidth = 6; c.beginPath(); c.moveTo(240, 270); c.lineTo(240, 270 + 170 * 3 * E.out(K.seg(lt, tO, tS + .4))); c.stroke(); c.restore();
+        rows.forEach(([h, sub, at], i) => { const p = pop(lt, at); if (p <= 0) return; const y = 280 + i * 170; c.save(); c.translate(240, y); c.fillStyle = GREEN; c.beginPath(); c.arc(0, 0, 18 * Math.min(1.3, p), 0, 7); c.fill(); c.strokeStyle = CREAM; c.lineWidth = 3; c.stroke(); c.restore();
+          c.save(); c.globalAlpha = Math.min(1, p); c.translate(290 + (1 - Math.min(1, p)) * 40, y); c.fillStyle = CREAM; c.font = font(58); c.textBaseline = 'middle'; c.fillText(h, 0, -14); c.fillStyle = 'rgba(246,239,226,.72)'; c.font = font(28, 'Oswald'); c.fillText(sub, 0, 36); c.restore(); });
+        if (lt > tN) { const p = pop(lt, tN); c.save(); c.translate(890, 830); c.scale(p, p); c.fillStyle = '#e8e0c0'; c.beginPath(); c.arc(0, 0, 44, 0, 7); c.fill(); c.fillStyle = 'rgba(8,10,14,1)'; c.beginPath(); c.arc(18, -12, 40, 0, 7); c.fill(); c.restore(); } });
+      S.D.over.push((c, lt) => K.badge(c, 'SILICON VALLEY · 1980s', lt, { at: tA - .3 }));
+      S.D.sfx = [[tO, 'pop', .55], [tA, 'pop', .55], [tL, 'pop', .55], [tS, 'pop', .6], [tN, 'chime', .4], [tA - .3, 'typing', .25]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; D.sfx = D.sfx || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>

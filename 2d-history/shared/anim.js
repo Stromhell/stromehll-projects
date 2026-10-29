@@ -18,10 +18,11 @@
   A.at = (S, phrase, dflt = 0) => { const t = K.W(phrase, S.vo_start - .05); return t == null || t > S.end ? dflt : t - S.start; };
   A.figure = (c, f, lt, u, S) => {
     const make = (tt) => { const o = Object.assign({ t: tt + (f.phase ?? 0), phase: f.phase ?? 0, seed: f.seed ?? 3, shadowAlpha: .3 }, f);
-      if (f.walk) { const w = f.walk, x = R.walkX ? R.walkX(tt, w.x0, w.x1, w.t0 ?? 0, w.dur, f.s) : null; if (x) { o.x = x.x; o.t = x.phase; o.pose = tt >= (w.t0 ?? 0) && tt <= (w.t0 ?? 0) + w.dur ? (w.pose || 'walk') : (f.pose || 'stand'); o.facing = Math.sign(w.x1 - w.x0) || f.facing; } }
+      if (f.walk) { const w = f.walk, x = R.walkX ? R.walkX(tt, w.x0, w.x1, w.t0 ?? 0, w.dur, f.s) : null; if (x) { o.x = x.x; o.t = x.phase; o.walkPhase = x.phase; o.pose = tt >= (w.t0 ?? 0) && tt <= (w.t0 ?? 0) + w.dur ? (w.pose || 'walk') : (f.pose || 'stand'); o.facing = Math.sign(w.x1 - w.x0) || f.facing; } }
       if (f.talk) { const [a, b] = Array.isArray(f.talk) ? f.talk : [0, 99]; o.talk = tt >= a && tt <= b; }
       if (f.anim) f.anim(o, tt, u, S); return o; };
     const o = make(lt);
+    if (!G.RIGSTYLE || G.RIGSTYLE === 'round') { // original round-head path
     // smooth the joints: average the pose over the last ~0.3 s so pose changes ease in instead of snapping
     if (R.poseAngles && o.pose !== 'walk' && o.pose !== 'run' && !f.noSmooth) {
       const N = 7, dt = .045, acc = {}, P0 = R.poseAngles(o, o.t); let ws = 0;
@@ -29,7 +30,55 @@
         if (ok.pose === 'walk' || ok.pose === 'run') continue;
         for (const key in P0) if (typeof P0[key] === 'number' || typeof P[key] === 'number') acc[key] = (acc[key] || 0) + (+P[key] || 0) * w; ws += w; }
       const P = Object.assign({}, P0); for (const key in acc) P[key] = acc[key] / ws; if (!P0.chin) P.chin = acc.chin ? acc.chin / ws : 0; o.P = P; }
-    R.figure(c, o);
+    R.figure(c, o); return; }
+    // Spring-smoothed joints: weight past poses by an underdamped impulse response so a move
+    // starts with a little lag, swings slightly past the target and settles (follow-through).
+    if (R.poseAngles && o.pose !== 'walk' && o.pose !== 'run' && !f.noSmooth) {
+      // two springs: the upper arm, legs and lean follow fast; forearms and hands follow slower, so they drag
+      // behind and overshoot a touch (overlapping action from the reference clips).
+      const N = 22, dt = .04, z = .5, spring = w0 => { const wd = w0 * Math.sqrt(1 - z * z); return tau => Math.exp(-z * w0 * tau) * Math.sin(wd * tau); };
+      const fast = spring(11), slow = spring(7.5), isSlow = key => /^el/.test(key);
+      const accF = {}, accS = {}, P0 = R.poseAngles(o, o.t); let wsF = 0, wsS = 0;
+      for (let k = 0; k <= N; k++) { const tau = (k + .5) * dt, wf = fast(tau), wl = slow(tau); const ok = k ? make(lt - k * dt) : o; if (ok.pose === 'walk' || ok.pose === 'run') continue; const P = k ? R.poseAngles(ok, ok.t) : P0;
+        for (const key in P0) if (typeof P0[key] === 'number' || typeof P[key] === 'number') { const v = +P[key] || 0; accF[key] = (accF[key] || 0) + v * wf; accS[key] = (accS[key] || 0) + v * wl; }
+        wsF += wf; wsS += wl; }
+      if (wsF > .25) { const P = Object.assign({}, P0); let E = 0;
+        for (const key in accF) { P[key] = isSlow(key) && wsS > .25 ? accS[key] / wsS : accF[key] / wsF; if (/^(sh|el|hip|knee)/.test(key)) E += Math.abs(P[key] - (+P0[key] || 0)); }
+        // anticipation: just before a big change, ease a little the opposite way first (wind-up), like the sword swing and the shout
+        const TA = .2, ok2 = make(lt + TA); if (ok2.pose !== 'walk' && ok2.pose !== 'run') { const PF = R.poseAngles(ok2, ok2.t);
+          for (const key in P) { if (!/^(sh|el|hip|knee|lean)/.test(key) || typeof PF[key] !== 'number') continue; const now = +P0[key] || 0, ahead = PF[key] - P[key], lag = Math.abs(now - P[key]);
+            if (Math.abs(ahead) > 12 && lag < 15) { let v = P[key] - ahead * .16 * (1 - lag / 15); if (/^el/.test(key)) v = Math.min(v, 0); P[key] = v; } } }
+        if (!P0.chin) P.chin = Math.max(0, Math.min(1, accF.chin ? accF.chin / wsF : 0)); o.P = P; o.squash = Math.min(.045, E / 1400); }
+    }
+    A.lit(c, o, S);
+  };
+  // Draw a figure so it sits in the set: cast shadow on the floor, ambient colour from the plate,
+  // key light on one side, darker feet. light = { dir: -1 (from the left) | 1, key, amb, shadow }.
+  const OC = document.createElement('canvas'), SC = document.createElement('canvas'), PX = document.createElement('canvas'); PX.width = PX.height = 1;
+  A.lit = (c, o, S) => {
+    const L = Object.assign({ dir: -1, key: 'rgba(255,236,204,.20)', shadow: .32 }, G.LIGHT || {}, (S && S.D && S.D.light) || {});
+    if (S && !S._amb) { try { const px = PX.getContext('2d', { willReadFrequently: true }); px.drawImage(c.canvas, 0, 0, 1, 1); const d = px.getImageData(0, 0, 1, 1).data; S._amb = `rgb(${d[0]},${d[1]},${d[2]})`; } catch (e) { S._amb = 'rgb(90,80,70)'; } }
+    const amb = L.amb || (S && S._amb) || 'rgb(90,80,70)';
+    const M = c.getTransform(), gx = M.a * o.x + M.c * o.y + M.e, gy = M.b * o.x + M.d * o.y + M.f, sc = Math.abs(M.a) * (o.s ?? 1) * .8;
+    if (o.pose === 'lie' || sc < .05) { R.figure(c, o); return; }
+    const w = Math.ceil(560 * sc), h = Math.ceil(620 * sc), left = Math.floor(gx - w / 2), top = Math.floor(gy - h + 40 * sc);
+    if (OC.width < w || OC.height < h) { OC.width = SC.width = Math.max(w, OC.width); OC.height = SC.height = Math.max(h, OC.height); }
+    const oc = OC.getContext('2d'), sx = SC.getContext('2d');
+    oc.setTransform(1, 0, 0, 1, 0, 0); oc.clearRect(0, 0, OC.width, OC.height); oc.setTransform(M.a, M.b, M.c, M.d, M.e - left, M.f - top);
+    R.figure(oc, Object.assign({}, o, { shadow: false }));
+    oc.setTransform(1, 0, 0, 1, 0, 0);
+    // cast shadow from the silhouette
+    sx.setTransform(1, 0, 0, 1, 0, 0); sx.clearRect(0, 0, SC.width, SC.height); sx.drawImage(OC, 0, 0); sx.globalCompositeOperation = 'source-in'; sx.fillStyle = 'rgb(18,12,10)'; sx.fillRect(0, 0, SC.width, SC.height); sx.globalCompositeOperation = 'source-over';
+    c.save(); c.setTransform(1, 0, 0, 1, 0, 0); c.globalAlpha = L.shadow; c.filter = `blur(${Math.max(1, 5 * sc)}px)`;
+    c.translate(gx, gy); c.transform(1, 0, .55 * L.dir, -.26, 0, 0); c.drawImage(SC, 0, 0, w, h, left - gx, top - gy, w, h); c.restore();
+    c.save(); c.setTransform(1, 0, 0, 1, 0, 0); const cg = c.createRadialGradient(gx, gy, 0, gx, gy, 70 * sc); cg.addColorStop(0, 'rgba(18,12,10,.38)'); cg.addColorStop(1, 'rgba(18,12,10,0)'); c.translate(0, gy); c.scale(1, .22); c.translate(0, -gy); c.fillStyle = cg; c.beginPath(); c.arc(gx, gy, 70 * sc, 0, 7); c.fill(); c.restore();
+    // light the figure: ambient wash, key light on the lit side, shade on the far side, darker toward the feet
+    oc.globalCompositeOperation = 'source-atop';
+    oc.globalAlpha = .16; oc.fillStyle = amb; oc.fillRect(0, 0, w, h); oc.globalAlpha = 1;
+    const kx = L.dir < 0 ? 0 : w, lg = oc.createLinearGradient(kx, 0, w - kx, 0); lg.addColorStop(0, L.key); lg.addColorStop(.45, 'rgba(255,236,204,0)'); lg.addColorStop(.62, 'rgba(20,18,40,0)'); lg.addColorStop(1, 'rgba(20,18,40,.16)'); oc.fillStyle = lg; oc.fillRect(0, 0, w, h);
+    const fg = oc.createLinearGradient(0, h - 200 * sc, 0, h - 40 * sc); fg.addColorStop(0, 'rgba(10,8,6,0)'); fg.addColorStop(1, 'rgba(10,8,6,.22)'); oc.fillStyle = fg; oc.fillRect(0, 0, w, h);
+    oc.globalCompositeOperation = 'source-over';
+    c.save(); c.setTransform(1, 0, 0, 1, 0, 0); c.drawImage(OC, 0, 0, w, h, left, top, w, h); c.restore();
   };
   A.build = () => {
     const T = G.TIMING, SH = G.SHOTS; K.setWords(T.words);
