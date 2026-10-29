@@ -53,7 +53,7 @@ export const shots = {
     const { scene, camera } = k;
     await night(k, { moon: [-60, 80, 40], moonI: 1.6, shadowSize: 30 });
     cloudDeck(k, -120);
-    const p = S2.c130(); scene.add(p);
+    const p = S2.c130({ tint: 0xa09684 }); scene.add(p);
     const dur = k.meta.seconds;
     const cam = C.dolly(camera, { pos: [3.2, 7.6, -6], look: [-8, 5.3, 6], fov: 46 }, { pos: [2.6, 7.4, -4.5], look: [-8, 5.2, 6], fov: 42 });
     // the propeller angle is the integral of the spin rate, so spooling down looks continuous in any frame

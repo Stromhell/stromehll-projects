@@ -18,6 +18,12 @@ export function c130(o = {}) {
     const blot = (col, n, s) => { c.fillStyle = col; for (let i = 0; i < n; i++) { c.beginPath(); const x = (i * 733) % 2048, y = (i * 389) % 1024; c.ellipse(x, y, s * (1 + (i % 3) * .4), s * .55, (i % 5) * .6, 0, 7); c.fill(); } };
     blot('#7a6440', 26, 120); blot('#5f6a48', 18, 100);
     c.fillStyle = 'rgba(0,0,0,.08)'; for (let x = 0; x < 2048; x += 64) c.fillRect(x, 0, 2, 1024);
+    // panel seams, rivet rows, exhaust/oil streaks and wear (QA 29 Oct: close-ups looked flat)
+    c.fillStyle = 'rgba(0,0,0,.16)'; for (let y = 0; y < 1024; y += 128) c.fillRect(0, y, 2048, 2);
+    c.fillStyle = 'rgba(0,0,0,.18)'; for (let x = 0; x < 2048; x += 256) c.fillRect(x, 0, 3, 1024);
+    c.fillStyle = 'rgba(20,18,14,.22)'; for (let y = 6; y < 1024; y += 128) for (let x = 4; x < 2048; x += 16) c.fillRect(x, y, 3, 3);
+    for (let i = 0; i < 40; i++) { const x = (i * 557) % 2048, y = (i * 211) % 1024; const gr = c.createLinearGradient(x, y, x + 260, y); gr.addColorStop(0, 'rgba(25,22,18,.25)'); gr.addColorStop(1, 'rgba(25,22,18,0)'); c.fillStyle = gr; c.fillRect(x, y, 260, 10 + (i % 4) * 6); }
+    for (let i = 0; i < 300; i++) { c.fillStyle = `rgba(230,220,190,${.04 + (i % 5) * .02})`; c.fillRect((i * 389) % 2048, (i * 127) % 1024, 6 + i % 20, 2 + i % 4); }
   }, { repeat: [1, 1] });
   const skin = new THREE.MeshStandardMaterial({ map: camo, roughness: .75, metalness: .1, color: o.tint ?? 0xffffff });
   const belly = std(0x8f8a7c, { rough: .7, metal: .15 }), dark = std(0x1a1b1c, { rough: .6, metal: .3 }), glass = std(0x0c1014, { rough: .08, metal: .6 });
