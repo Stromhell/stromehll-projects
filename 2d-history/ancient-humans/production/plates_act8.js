@@ -1,0 +1,41 @@
+// Ancient Humans act 8 plates. Paint: node shared/p2/paint.js ancient-humans/production/plates_act8.js ancient-humans/production/plates all
+const VP = (W, hz) => [W * .5, hz - 300];
+// perspective strip polygon between yT and H for strip i of N
+const strip = (W, H, hz, i, N, spread = 2.4) => { const [vx, vy] = VP(W, hz), k = (y) => (y - vy) / (H - vy); const x0 = W * .5 - W * spread / 2 + i * W * spread / N, x1 = x0 + W * spread / N, yT = hz + 24; return { pts: [[vx + (x0 - vx) * k(yT), yT], [vx + (x1 - vx) * k(yT), yT], [x1, H], [x0, H]], x0, x1, yT, vx, vy, k }; };
+const fields = (c, r, P, W, H, hz, cols, opts = {}) => { const N = opts.n ?? 16; for (let i = 0; i < N; i++) { const s = strip(W, H, hz, i, N), col = cols[i % cols.length], wheat = col === '#d9b25a' || col === '#e0c070';
+    P.paintRegion(c, r, s.pts, col, { density: 900, len: [14, 70], w: [2, 7], ang: -Math.PI / 2, angJ: .5, al: .45, topLight: .15, botDark: -.28, var: 22 });
+    // furrows / rows following the perspective
+    c.strokeStyle = wheat ? 'rgba(120,80,20,.28)' : 'rgba(40,25,10,.32)'; c.lineWidth = 2.5; for (let k2 = 1; k2 < 8; k2++) { const xa = s.x0 + (s.x1 - s.x0) * k2 / 8; c.beginPath(); c.moveTo(s.vx + (xa - s.vx) * s.k(s.yT), s.yT); c.lineTo(xa, H); c.stroke(); }
+    // wheat stalks / shoots, bigger toward the viewer
+    const n = wheat ? 700 : col === '#9ab05a' ? 420 : 120; for (let j = 0; j < n; j++) { const y = s.yT + Math.pow(r(), 1.6) * (H - s.yT), kk = s.k(y), xl = s.vx + (s.x0 - s.vx) * kk, xr = s.vx + (s.x1 - s.vx) * kk, x = xl + r() * (xr - xl), h = 6 + 70 * kk * kk;
+      c.strokeStyle = wheat ? P.rgb(P.jitter('#e8c870', r, 25)) : col === '#9ab05a' ? P.rgb(P.jitter('#6a9a3a', r, 20)) : 'rgba(60,40,20,.5)'; c.lineWidth = 1 + 2.4 * kk; c.beginPath(); c.moveTo(x, y); c.quadraticCurveTo(x + h * .15, y - h * .6, x + h * .1, y - h); c.stroke(); if (wheat && kk > .25) { c.fillStyle = P.rgb(P.jitter('#d4a84a', r, 18)); c.beginPath(); c.ellipse(x + h * .1, y - h, 2 + 3 * kk, 6 + 10 * kk, .15, 0, 7); c.fill(); } } }
+  // field edges: low earth banks
+  c.strokeStyle = 'rgba(70,45,20,.45)'; c.lineWidth = 5; for (let i = 0; i <= N; i++) { const s = strip(W, H, hz, i, N); c.beginPath(); c.moveTo(s.pts[0][0], s.yT); c.lineTo(s.x0, H); c.stroke(); } };
+// a date palm
+const palm = (c, r, P, x, y, s) => { c.save(); c.translate(x, y); c.scale(s, s); c.strokeStyle = '#5a3e24'; c.lineWidth = 16; c.lineCap = 'round'; c.beginPath(); c.moveTo(0, 0); c.quadraticCurveTo(14, -150, -6, -300); c.stroke(); c.strokeStyle = 'rgba(30,20,10,.35)'; c.lineWidth = 3; for (let k = 0; k < 14; k++) { c.beginPath(); c.moveTo(-8, -k * 21); c.lineTo(8, -k * 21 - 6); c.stroke(); }
+  for (let k = 0; k < 11; k++) { const a = -Math.PI / 2 + (k - 5) * .32 + r.range(-.08, .08), L = r.range(120, 170); c.strokeStyle = P.rgb(P.jitter(k % 2 ? '#4a7a32' : '#3a6a2a', r, 15)); c.lineWidth = 10; c.beginPath(); c.moveTo(-6, -300); c.quadraticCurveTo(-6 + Math.cos(a) * L * .6, -300 + Math.sin(a) * L * .6 - 20, -6 + Math.cos(a) * L, -300 + Math.sin(a) * L + 50); c.stroke(); } c.restore(); };
+// a mud-brick house with brick courses, beam ends, shadow and a dark door
+const mudHouse = (c, r, P, x, y, w, h, tone = 0, shadowDir = 1) => { c.fillStyle = 'rgba(40,25,10,.35)'; c.beginPath(); c.moveTo(x + w, y); c.lineTo(x + w + 70 * shadowDir * h / 150, y + 10); c.lineTo(x + 70 * shadowDir * h / 150, y + 10); c.lineTo(x, y); c.fill();
+  const base = ['#c9a46a', '#b8915a', '#d1ad74'][tone % 3]; ENV.box(c, r, x, y - h, w, h, base, { top: .12, bot: -.3, density: 260 }); ENV.box(c, r, x + w, y - h + 8, w * .22, h - 8, P.mix ? P.mix(base, '#5a3e24', .4) : '#8a6a40', { top: -.1, bot: -.4, density: 80 });
+  c.strokeStyle = 'rgba(90,60,30,.35)'; c.lineWidth = 2; for (let yy = y - h + 14; yy < y; yy += 16) { c.beginPath(); c.moveTo(x, yy); c.lineTo(x + w, yy); c.stroke(); const off = ((yy / 16) | 0) % 2 ? 0 : 18; for (let xx = x + off; xx < x + w; xx += 36) { c.beginPath(); c.moveTo(xx, yy); c.lineTo(xx, yy + 16); c.stroke(); } }
+  ENV.box(c, r, x - 8, y - h - 14, w + 16 + w * .22, 16, '#8a6a40', { density: 40 }); c.fillStyle = '#5a3e24'; for (let k = 0; k < 4; k++) c.fillRect(x + 10 + k * (w - 20) / 3, y - h - 4, 10, 10);
+  c.fillStyle = 'rgba(28,16,6,.92)'; c.beginPath(); c.moveTo(x + w * .38, y); c.lineTo(x + w * .38, y - h * .5); c.quadraticCurveTo(x + w * .5, y - h * .62, x + w * .62, y - h * .5); c.lineTo(x + w * .62, y); c.fill(); c.fillRect(x + w * .12, y - h * .78, w * .13, h * .14); };
+window.PLATES = {
+  // Fertile Crescent fields at noon: wheat, ploughed earth, green shoots, palms and a farmhouse
+  farm_fields: (c, r, W, H, P) => { const hz = H * .5; ENV.savanna(c, r, W, H, { tod: 'noon', camp: false, path: false, herd: 0, bushes: 6, clouds: 4, horizon: .5, tufts: 40, trees: [] });
+    fields(c, r, P, W, H, hz, ['#d9b25a', '#8a6a44', '#9ab05a', '#e0c070', '#7a5a3a']); for (const [x, s] of [[180, .9], [330, .7], [2300, .95], [2440, .75], [2150, .55]]) palm(c, r, P, x, hz + 60 + s * 40, s); mudHouse(c, r, P, 1960, hz + 46, 150, 100, 2); },
+  // a mud-brick village scattered over trampled earth, fields behind, late afternoon
+  village: (c, r, W, H, P) => { const hz = H * .5; ENV.savanna(c, r, W, H, { tod: 'dusk', camp: false, path: false, herd: 0, bushes: 4, clouds: 3, horizon: .5, tufts: 30, trees: [] }); fields(c, r, P, W, H, hz, ['#c99a4a', '#7a5a3a', '#a0a050'], { n: 12 });
+    P.paintRegion(c, r, [[0, hz + 140], [W, hz + 120], [W, H], [0, H]], '#9a7a50', { density: 1400, len: [20, 90], w: [3, 9], ang: 0, angJ: .2, al: .4, topLight: .1, botDark: -.3, var: 18 });
+    for (const [x, s] of [[120, .9], [2440, .95], [1240, .6]]) palm(c, r, P, x, hz + 150, s);
+    const hs = []; for (let i = 0; i < 18; i++) { const y = hz + 150 + Math.pow(r(), 1.3) * (H * .42); hs.push([r.range(80, W - 380), y]); } hs.sort((a, b) => a[1] - b[1]); hs.forEach(([x, y], i) => { const sc = .55 + (y - hz) / (H - hz) * .9; mudHouse(c, r, P, x, y, 200 * sc, 150 * sc, i, -1); }); },
+  // an early walled city with a stepped temple, palms and fields in front
+  city: (c, r, W, H, P) => { const hz = H * .62, by = H * .68; ENV.savanna(c, r, W, H, { tod: 'dusk', camp: false, path: false, herd: 0, bushes: 2, clouds: 4, horizon: .62, tufts: 20, trees: [] });
+    for (let s = 0; s < 4; s++) { const w = 900 - s * 190, h = 120, x = W * .5 - w / 2, y = by - 260 - (s + 1) * h; ENV.box(c, r, x, y, w, h + 4, '#c49a62', { top: .2, bot: -.32, density: 300 }); ENV.box(c, r, x + w - 60, y, 60, h + 4, '#8a6a40', { top: -.1, bot: -.4 }); c.strokeStyle = 'rgba(90,60,30,.35)'; c.lineWidth = 2; for (let yy = y + 16; yy < y + h; yy += 18) { c.beginPath(); c.moveTo(x, yy); c.lineTo(x + w, yy); c.stroke(); } }
+    ENV.box(c, r, W * .5 - 60, by - 760, 120, 500, '#a07a48', { top: .15, bot: -.3 }); c.strokeStyle = 'rgba(60,40,20,.45)'; c.lineWidth = 3; for (let yy = by - 750; yy < by - 260; yy += 22) { c.beginPath(); c.moveTo(W * .5 - 60, yy); c.lineTo(W * .5 + 60, yy); c.stroke(); } ENV.box(c, r, W * .5 - 90, by - 830, 180, 80, '#b88c58', {});
+    const hs = []; for (let i = 0; i < 26; i++) hs.push([W * .04 + i * (W * .9 / 26) + r.range(-20, 20), by - 70 + r.range(-30, 10)]); hs.sort((a, b) => a[1] - b[1]); hs.forEach(([x, y], i) => mudHouse(c, r, P, x, y, r.range(120, 200), r.range(100, 180), i));
+    ENV.box(c, r, 0, by - 130, W, 150, '#a8845a', { top: .14, bot: -.32, density: 600 }); c.strokeStyle = 'rgba(80,55,25,.35)'; c.lineWidth = 2; for (let yy = by - 112; yy < by + 20; yy += 18) { c.beginPath(); c.moveTo(0, yy); c.lineTo(W, yy); c.stroke(); } for (let x = 0; x < W; x += 80) ENV.box(c, r, x, by - 172, 46, 46, '#b08a5a', {});
+    for (const tx of [W * .18, W * .82]) { ENV.box(c, r, tx - 80, by - 300, 160, 320, '#b08a5a', { top: .15, bot: -.3 }); for (let k = 0; k < 3; k++) ENV.box(c, r, tx - 80 + k * 60, by - 340, 40, 40, '#b08a5a', {}); c.fillStyle = 'rgba(28,16,6,.85)'; c.fillRect(tx - 12, by - 240, 24, 50); }
+    c.fillStyle = 'rgba(28,16,6,.92)'; c.beginPath(); c.moveTo(W * .5 - 90, by + 20); c.lineTo(W * .5 - 90, by - 50); c.arc(W * .5, by - 50, 90, Math.PI, 0); c.lineTo(W * .5 + 90, by + 20); c.fill();
+    fields(c, r, P, W, H, by + 10, ['#c99a4a', '#7a5a3a', '#a0a050'], { n: 12 }); for (const [x, s] of [[160, 1.1], [420, .8], [2200, 1.0], [2420, .85]]) palm(c, r, P, x, by + 160 + s * 40, s); },
+};
