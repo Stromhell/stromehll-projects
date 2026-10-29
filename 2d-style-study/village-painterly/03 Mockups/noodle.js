@@ -131,19 +131,35 @@
     c.restore();
   };
   // ---------- hand: small mitten with a thumb ----------
-  const hand = (c, h, p, a, open) => {
-    const dx = Math.cos(a), dy = Math.sin(a), nx = -dy, ny = dx;
-    const q = (s, t) => [p[0] + dx * s * h + nx * t * h, p[1] + dy * s * h + ny * t * h];
-    const palm = q(.045, 0), L = [[palm[0], palm[1], h * .062, h * .052, a]];
-    [-.42, -.14, .14, .4].forEach((fa, i) => { const ang = a + fa * .8, len = [.07, .085, .082, .068][i]; const b = [palm[0] + Math.cos(a + fa * .5) * h * .045, palm[1] + Math.sin(a + fa * .5) * h * .045]; L.push([b[0] + Math.cos(ang) * h * len * .55, b[1] + Math.sin(ang) * h * len * .55, h * len * .55, h * .02, ang]); });
-    const th = q(.035, .06), ta = a + 1.25;
-    L.push([th[0] + Math.cos(ta) * h * .025, th[1] + Math.sin(ta) * h * .025, h * .04, h * .021, ta]);
-    lumpCel(c, L, RAJU.skin, h);
+  // open cartoon hand: rounded palm, 3 long splayed fingers and a distinct thumb pointing in toward the body,
+  // rotated to the end tangent of the forearm. Fingers are round-capped strokes: an ink pass, then a skin pass.
+  const hand = (c, h0, p, a, tside = 1, splay = 1) => {
+    const h = h0 * 1.45, lw = Math.max(1.6, h0 * .024), fw = h * .034;
+    const palmC = [p[0] + Math.cos(a) * h * .04, p[1] + Math.sin(a) * h * .04];
+    const segs = [];
+    [-.85, 0, .85].forEach((fa, i) => {
+      const ang = a + fa * .8 * splay, len = [.12, .14, .12][i] * (.75 + .25 * splay);
+      const b = [palmC[0] + Math.cos(ang) * h * .03, palmC[1] + Math.sin(ang) * h * .03];
+      segs.push([b, [b[0] + Math.cos(ang) * h * len, b[1] + Math.sin(ang) * h * len], [b[0] + Math.cos(ang + fa * .25) * h * len * .55, b[1] + Math.sin(ang + fa * .25) * h * len * .55]]);
+    });
+    const ta = a + tside * 1.5, tb = [palmC[0] + Math.cos(ta) * h * .035, palmC[1] + Math.sin(ta) * h * .035], ta2 = ta - tside * .55;
+    segs.push([tb, [tb[0] + Math.cos(ta2) * h * .085, tb[1] + Math.sin(ta2) * h * .085], [tb[0] + Math.cos(ta2 + tside * .2) * h * .045, tb[1] + Math.sin(ta2 + tside * .2) * h * .045]]);
+    const draw = (col, w, grow) => {
+      c.strokeStyle = col; c.fillStyle = col; c.lineCap = 'round'; c.lineWidth = w;
+      for (const [b, e, m] of segs) { c.beginPath(); c.moveTo(b[0], b[1]); c.quadraticCurveTo(m[0], m[1], e[0], e[1]); c.stroke(); }
+      c.beginPath(); c.ellipse(palmC[0], palmC[1], h * .052 + grow, h * .046 + grow, a, 0, TAU); c.fill();
+    };
+    c.save();
+    draw(INK, fw + 2 * lw, lw);
+    draw(RAJU.skin[0], fw, 0);
+    // shade on the side away from the light
+    c.fillStyle = S.rgba(RAJU.skin[1], .55); c.beginPath(); c.ellipse(palmC[0] - h * .015, palmC[1] + h * .015, h * .04, h * .03, a, 0, TAU); c.fill();
+    c.restore();
   };
 
   // ---------- full body ----------
   // pose (all in head units h, y down): legs are in the hip frame, arms in the tilted torso frame.
-  const STAND = { lift: 0, tilt: 0, htilt: 0, legL: [[-.08, .55], [-.08, 1.11]], legR: [[.08, .55], [.08, 1.11]], armL: [[-.24, -.3], [-.25, .06]], armR: [[.24, -.3], [.25, .06]], footL: 0, footR: 0 };
+  const STAND = { splay: .3, lift: 0, tilt: 0, htilt: 0, legL: [[-.08, .55], [-.08, 1.11]], legR: [[.08, .55], [.08, 1.11]], armL: [[-.24, -.3], [-.25, .06]], armR: [[.24, -.3], [.25, .06]], footL: 0, footR: 0 };
   S.noodle = (c, x, ground, h, pose, f, view) => {
     const p = Object.assign({}, STAND, pose), v = Object.assign({ yaw: .3, back: 0, ws: .9, d: 1, sf: .5 }, view);
     const ws = v.ws, k = RAJU;
@@ -162,11 +178,14 @@
     const arm = (A, s) => {
       const r = sh(s), cc = [A[0][0] * ws * H, A[0][1] * H], e = [A[1][0] * ws * H, A[1][1] * H];
       const pts = quad(r, cc, e), last = pts[pts.length - 2], a = Math.atan2(e[1] - last[1], e[0] - last[0]);
-      hand(c, H, e, a, 0);
+      // thumb points in toward the body
+      const n = [-Math.sin(a), Math.cos(a)], toBody = [0 - e[0], -.4 * H - e[1]];
+      hand(c, H, e, a, n[0] * toBody[0] + n[1] * toBody[1] > 0 ? 1 : -1, p.splay);
       cel(c, S.tube(pts, H * .075), k.skin, H, { swk: .4 });
-      const sl = pts.slice(0, 8); cel(c, S.tube(sl, H * .13), k.shirt, H, { swk: .4 });
+      const sl = pts.slice(0, 7); cel(c, S.tube(sl, H * .13), k.shirt, H, { swk: .4 });
     };
-    arm(p.armL, -1);
+    const front = p.front || [];
+    if (!front.includes('L')) arm(p.armL, -1);
     // neck: very thin
     cel(c, S.tube([[0, -.66 * H], [0, -.82 * H]], H * .09), [S.mix(k.skin[0], k.skin[1], .3), k.skin[1]], H, { swk: .3 });
     // torso: narrow loose t-shirt, shoulders narrower than the head, zig-zag trim at the hem
@@ -182,11 +201,13 @@
         c2.fillStyle = '#c99a3a'; c2.strokeStyle = INK; c2.lineWidth = 1; c2.beginPath(); c2.arc(v.yaw * .05 * H, -.5 * H, H * .028, 0, TAU); c2.fill(); c2.stroke();
       }
     } });
-    arm(p.armR, 1);
+    if (!front.includes('R')) arm(p.armR, 1);
     // head
     c.save(); c.translate(0, -1.22 * H); c.rotate(p.htilt * D);
     head(c, H, f, v.yaw, v.back);
     c.restore();
+    if (front.includes('L')) arm(p.armL, -1);
+    if (front.includes('R')) arm(p.armR, 1);
     c.restore();
   };
 
@@ -216,13 +237,21 @@
   };
 
   // six action poses; arms and legs bend in C and S curves, never at a corner
+  // Arms are ~35% longer than standing and always end in open space, never behind the head.
+  // Arm points are in the tilted torso frame (shoulder near y -.64); the head is centred at y -1.22, about .65 wide each side with hair.
   const POSES = [
-    ['Defeated', { lift: -.56, tilt: 16, htilt: 12, legL: [[.42, -.05], [.32, .55]], legR: [[.5, -.02], [.42, .55]], armL: [[-.28, -.25], [-.22, .1]], armR: [[.55, -.05], [.32, -.92]], footL: 0, footR: 0 }, { smile: -.6, worry: 1, lid: .35, look: [0, .6] }, { box: true }],
-    ['Come on!', { legL: [[-.2, .55], [-.27, 1.1]], legR: [[.2, .55], [.27, 1.1]], armL: [[-.42, -.35], [-.66, -.08]], armR: [[.42, -.35], [.66, -.08]], footL: -6, footR: 6 }, { open: 1, raise: 1, smile: -.2 }, { burst: true, view: { yaw: .15, ws: .95, sf: .3 } }],
-    ['Leaping', { lift: .55, tilt: 12, htilt: -8, legL: [[-.15, .7], [-.62, .4]], legR: [[.4, .2], [.35, .78]], armL: [[-.35, -.95], [-.55, -1.38]], armR: [[.35, -.95], [.6, -1.32]], footL: -70, footR: 18 }, { smile: 1, open: .7, happy: 1 }, { lines: true }],
-    ['Swaying', { tilt: -10, htilt: -10, legL: [[-.05, .55], [.02, 1.11]], legR: [[.38, .55], [.08, .95]], armL: [[-.48, -.62], [-.58, -1.05]], armR: [[.45, -.55], [.52, -.98]], footL: 0, footR: -40 }, { smile: 1, open: .5, happy: 1 }, { wave: true }],
-    ['Ready for Action', { lift: -.2, tilt: 20, htilt: -12, legL: [[-.38, .4], [-.62, .91]], legR: [[.4, .25], [.52, .91]], armL: [[-.45, -.3], [-.72, -.05]], armR: [[.48, -.3], [.74, .0]], footL: -12, footR: 8 }, { angry: 1, smile: -.3, squint: .4, look: [.5, 0] }, {}],
-    ['Dancing', { tilt: -8, htilt: 8, legL: [[-.05, .55], [-.05, 1.11]], legR: [[.42, .3], [.86, .22]], armL: [[-.4, -.78], [-.72, -.98]], armR: [[.42, -.78], [.72, -.98]], footL: 0, footR: -85 }, { smile: .8, look: [.4, -.2] }, { notes: true }],
+    // torso folds toward the knees; right elbow rests on the knee, palm cups the cheek (drawn over the face); left arm hangs by the leg
+    ['Defeated', { lift: -.56, tilt: 28, htilt: 14, legL: [[.42, -.05], [.32, .55]], legR: [[.5, -.02], [.42, .55]], armL: [[-.05, -.15], [.36, .28]], armR: [[.78, .5], [.42, -.86]], front: ['R'], footL: 0, footR: 0 }, { smile: -.6, worry: 1, lid: .35, look: [0, .6] }, { box: true }],
+    // leaning in, both arms swept down and back behind the torso line, fingers wide
+    ['Come on!', { tilt: 14, htilt: -6, legL: [[-.2, .55], [-.27, 1.1]], legR: [[.2, .55], [.27, 1.1]], armL: [[-.35, -.2], [-.8, .18]], armR: [[-.15, -.15], [-.6, .32]], footL: -6, footR: 6 }, { open: 1, raise: 1, smile: -.2 }, { burst: true, view: { yaw: .3, ws: .9, sf: .4 } }],
+    // wide V, both hands well past the sides of the head
+    ['Leaping', { lift: .55, tilt: 12, htilt: -8, legL: [[-.15, .7], [-.62, .4]], legR: [[.4, .2], [.35, .78]], armL: [[-.62, -.85], [-1.18, -1.36]], armR: [[.66, -.85], [1.18, -1.32]], footL: -70, footR: 18 }, { smile: 1, open: .7, happy: 1 }, { lines: true }],
+    // left arm sweeps across the chest out to the viewer's left, wrist relaxed down; right arm curves up into open space
+    ['Swaying', { tilt: -10, htilt: -10, legL: [[-.05, .55], [.02, 1.11]], legR: [[.38, .55], [.08, .95]], armL: [[.2, -.2], [-.78, -.18]], armR: [[.7, -.65], [1.0, -1.35]], front: ['L'], footL: 0, footR: -40 }, { smile: 1, open: .5, happy: 1 }, { wave: true }],
+    // sharp lean over the bent front leg; back arm shoots back past the hip, front arm forward and a little down, clear of the knee
+    ['Ready for Action', { lift: -.2, tilt: 32, htilt: -14, legL: [[-.38, .4], [-.62, .91]], legR: [[.4, .25], [.52, .91]], armL: [[-.3, -.1], [-.8, .56]], armR: [[.45, -.85], [.8, -.8]], footL: -12, footR: 8 }, { angry: 1, smile: -.3, squint: .4, look: [.5, 0] }, {}],
+    // arms curve out and up at about 35 degrees, well clear of the cheeks, palms up
+    ['Dancing', { tilt: -8, htilt: 8, legL: [[-.05, .55], [-.05, 1.11]], legR: [[.42, .3], [.86, .22]], armL: [[-.55, -.75], [-1.1, -1.08]], armR: [[.6, -.75], [1.15, -1.08]], footL: 0, footR: -85 }, { smile: .8, look: [.4, -.2] }, { notes: true }],
   ];
   S.SCENES['noodle-poses'] = {
     dur: 12,
@@ -232,7 +261,7 @@
       POSES.forEach(([n, pose, face, fx], i) => {
         const cx = 230 + (i % 3) * 410, G = 360 + Math.floor(i / 3) * 295;
         const s = Math.sin(t * 2 + i), s2 = Math.sin(t * 4 + i);
-        const pz = JSON.parse(JSON.stringify(pose));
+        const pz = JSON.parse(JSON.stringify(pose)); pz.splay = 1;
         // small life in each pose
         if (fx.wave) { pz.armL[1][0] += s * .1; pz.armR[1][0] -= s * .1; pz.tilt += s * 4; }
         if (i === 2) pz.lift += Math.abs(Math.sin(t * 2)) * .12;
