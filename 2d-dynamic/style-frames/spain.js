@@ -98,6 +98,9 @@
     }
   };
 
+  // helpers shared with the act pages (2d-dynamic/shared/vp.js)
+  S.SPX = { P, turban, morion, beret, chullo, SK, HR, crisp, ridge, cypress, tower, town };
+
   // ======================================================================
   // ES1 style frame: the Moor's last sigh. Granada at sunset from a rocky pass.
   // ======================================================================
