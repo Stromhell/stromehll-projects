@@ -1,10 +1,11 @@
 #!/bin/bash
-# Render one act with its voice-over: timing -> video -> mix.  Usage: act_pipeline.sh <act> [out dir]
+# Render one act with its voice-over. Resumable: each shot is its own clip, finished clips are skipped.
+# Usage: act_pipeline.sh <act> [out dir]
 set -e
 A=$1; OUT=${2:-/home/user/work/tb_acts}; VO=/home/user/work/tb_vo/act$A
 J="/mnt/project-files/3d/thunderbolt/TB - Script v1 shots.json"
 ENG=/home/user/stromehll-projects/3d-documentaries/engine
-mkdir -p $OUT
+mkdir -p $OUT/shots
 # 1) timing: each shot lasts its VO clip + 0.35 s lead-in + 0.45 s tail
 python3 - "$VO" "$OUT/act$A.timing.json" <<'E'
 import sys, json, subprocess
@@ -14,9 +15,18 @@ for i, s in enumerate(ids):
     t[s] = {'dur': round(d + .8, 3), 'a': .35, 'b': round(.35 + d, 3), 'vo': d}
 json.dump(t, open(out, 'w'), indent=1)
 E
-# 2) picture
-cd $ENG && node render.js video "$J" shots/tb_act$A.js $OUT/act$A.picture.mp4 $A --fps 30 --crf 23 --timing $OUT/act$A.timing.json
-# 3) voice track laid out on the timeline + a quiet tension bed under it, VO on top
+# 2) picture, shot by shot
+: > $OUT/act$A.list
+for S in $(cat $VO/ids.txt); do
+  C=$OUT/shots/$S.mp4
+  if [ ! -s $C ]; then
+    (cd $ENG && node render.js video "$J" shots/tb_act$A.js $C.tmp.mp4 $S --fps 30 --crf 23 --timing $OUT/act$A.timing.json)
+    mv $C.tmp.mp4 $C
+  fi
+  echo "file '$C'" >> $OUT/act$A.list
+done
+ffmpeg -y -loglevel error -f concat -safe 0 -i $OUT/act$A.list -c copy $OUT/act$A.picture.mp4
+# 3) voice track laid out on the timeline
 python3 - "$VO" "$OUT/act$A.timing.json" "$OUT/act$A.vo.wav" <<'E'
 import sys, json, subprocess
 vo, tj, out = sys.argv[1:4]; t = json.load(open(tj)); ids = open(vo + '/ids.txt').read().split()
@@ -26,6 +36,7 @@ for i, s in enumerate(ids):
 f = ';'.join(flt) + ';' + ''.join(f'[v{i}]' for i in range(len(ids))) + f'amix=inputs={len(ids)}:normalize=0,apad=whole_dur={pos}[o]'
 subprocess.check_call(['ffmpeg', '-y', '-loglevel', 'error', *ins, '-filter_complex', f, '-map', '[o]', '-ac', '2', out])
 E
+# 4) mix: quiet tension bed ducked under the VO
 D=$(ffprobe -v error -show_entries format=duration -of csv=p=0 $OUT/act$A.picture.mp4)
 ffmpeg -y -loglevel error -i $OUT/act$A.picture.mp4 -i $OUT/act$A.vo.wav \
   -f lavfi -t $D -i "anoisesrc=c=brown:a=0.5,lowpass=f=220,volume=0.05" \
