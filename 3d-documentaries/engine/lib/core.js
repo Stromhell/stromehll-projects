@@ -105,7 +105,7 @@ export function textPlane(text, height, o = {}) {
 
 // ---------- environment presets ----------
 export const SKIES = {
-  night:  { top: '#0d1a3c', mid: '#24386a', bot: '#3d4f80', fog: 0x26345e, amb: 0x8a9ad0, ambI: 1.6, sun: 0xb8c8ff, sunI: 1.9, sunPos: [-30, 60, 20], stars: true },
+  night:  { top: '#0d1a3c', mid: '#24386a', bot: '#3d4f80', fog: 0x26345e, amb: 0x8a9ad0, ambI: 2.4, sun: 0xb8c8ff, sunI: 2.7, sunPos: [-30, 60, 20], stars: true },
   dawn:   { top: '#304a7a', mid: '#d98e6c', bot: '#f3c48e', fog: 0xd9a483, amb: 0xffd6b8, ambI: .7, sun: 0xffc48a, sunI: 1.4, sunPos: [80, 18, -40] },
   day:    { top: '#4f8fd0', mid: '#9cc6e8', bot: '#e8dcc0', fog: 0xd8d2bd, amb: 0xfff2dc, ambI: .75, sun: 0xfff1d2, sunI: 1.8, sunPos: [40, 70, 30] },
   dusk:   { top: '#24305e', mid: '#b5546a', bot: '#f0a35e', fog: 0xb07060, amb: 0xffb69a, ambI: .65, sun: 0xff9a5c, sunI: 1.3, sunPos: [-80, 14, -30] },
@@ -206,7 +206,7 @@ export function createRenderer(canvas, w = W, h = H) {
   renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
   const rt = new THREE.WebGLRenderTarget(w, h, { samples: 4, colorSpace: THREE.SRGBColorSpace });
   const fsScene = new THREE.Scene(), fsCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-  const uni = { tDiffuse: { value: rt.texture }, res: { value: new THREE.Vector2(w, h) }, time: { value: 0 }, grain: { value: .13 * .5 }, sketch: { value: 0 }, vig: { value: .9 }, fade: { value: 1 } };
+  const uni = { tDiffuse: { value: rt.texture }, res: { value: new THREE.Vector2(w, h) }, time: { value: 0 }, grain: { value: .02 }, sketch: { value: 0 }, vig: { value: .9 }, fade: { value: 1 } };
   const fsMat = new THREE.ShaderMaterial({ uniforms: uni, vertexShader: 'varying vec2 vUv; void main(){ vUv=uv; gl_Position=vec4(position.xy,0.,1.); }', fragmentShader: finishFrag, depthTest: false });
   fsScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), fsMat));
   return {
