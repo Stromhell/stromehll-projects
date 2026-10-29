@@ -11,7 +11,7 @@ Pushpam's upload on 29 Oct (no note) held 8 transcripts in one file. Only 4 had 
 | 5 | The Man Who Conquered Europe But Never Conquered Himself (Napoleon) | English ("Learn English" channel) | ~3,700 words | 2D dynamic | "keep learning, keep listening" outro |
 | 6 | Why World War 2 Happened, Part 1 (Dhruv Rathee) | English (translated from Hindi) | ~3,400 words | 2D | links to his other videos, part 2 tease |
 | 7 | Who Killed Micromax? | Hindi | ~2,400 words | 2D | none |
-| 8 | Changez Khan in Islam | Hindi/Urdu | ~3,200 words | Skip (fold best parts into Mongol Empire) | "subscribe" |
+| 8 | Changez Khan in Islam | Hindi/Urdu | ~3,200 words | 2D dynamic (Pushpam OK'd 29 Oct as a neutral history video) | "subscribe" |
 
 Voice-over: English for all of them, translated from Hindi where needed (same rule as earlier batches).
 
@@ -27,7 +27,7 @@ Voice-over: English for all of them, translated from Hindi where needed (same ru
 
 ## Queue placement
 - 2D queue, after Putin: Nike, Rothschilds, Micromax, World War 2.
-- 2D dynamic queue, after Education Trap: Suez Canal, then Napoleon.
+- 2D dynamic queue, after Education Trap: Suez Canal, then Napoleon, then Mongols vs the Islamic world.
 - 3D queue, after Bermuda Triangle: Doolittle Raid.
 - Cadence check: Nike, Rothschilds, Micromax then Doolittle is a 2D, 2D, 2D, 3D block.
 
@@ -82,5 +82,10 @@ Voice-over: English for all of them, translated from Hindi where needed (same ru
 - Reels: the 30-day battery phone; Nokia's PCO booth deal; the Karva Chauth ad that sold out stock; Jio's free data killing 3G stock; Chinese brands' chip access.
 - Script fixes: translate from Hindi; check the market-share claims and the "share fell 90% by 2019" line (Micromax was not listed, so say "sales" or "market share"). Rahul Sharma is a living person: keep to public facts.
 
-**8. Changez Khan in Islam (skip)**
+**8. Changez Khan in Islam: now 2D dynamic (Pushpam said yes, 29 Oct 19:17)**
+- Made as a neutral history video in the Village Painterly look, so it does not look like a repeat of the 2D Mongol Empire video. Queued after Napoleon.
+- Hook: "In 1258 the Mongols destroyed Baghdad, the richest city on Earth. Two years later, one army in Egypt did what no one else could."
+- Title: "The Battle That Stopped the Mongols". Thumbnail: Mamluk cavalry charging Mongol horse archers at Ain Jalut. Text: "1260".
+- Reels: the envoy whose killing started the war; the House of Wisdom's books in the Tigris; Baybars, the slave who became sultan; Ain Jalut; the Mongols who later became Muslim.
+- Original (skip) reasoning, kept for reference:
 - If Pushpam wants it anyway: reframe as a neutral 2D or 2D dynamic history of "How the Mongols nearly ended the Islamic world, and the battle that stopped them" (Khwarazm, Baghdad 1258, Ain Jalut 1260), with no prophecy framing and no present-day politics.
