@@ -1,0 +1,33 @@
+First, where was this website? Not anywhere you could find on Google.
+
+Picture the internet as an iceberg. The tip is the part search engines can see: news sites, shops, videos.
+
+Below the water is the deep web. It sounds scary, but it's mostly your own stuff: email, bank accounts, medical records, anything behind a password.
+
+You'll often hear that this hidden part is ninety-six percent of the internet. Nobody can really measure that. But it is far bigger than the tip.
+
+And right at the bottom is a small, dark corner: the dark web. Sites you can only reach with special software.
+
+Normally, every time you visit a website, your connection carries an IP address. It can point back to you.
+
+The software that hides it is called Tor. It stands for The Onion Router.
+
+Your request is wrapped in three layers of encryption, then bounced through three volunteer computers called relays.
+
+Each relay peels off one layer. The first knows who you are, but not where you're going. The last knows where you're going, but not who you are.
+
+And here's the surprise. Tor was first developed at the US Naval Research Laboratory, to protect government communications.
+
+Today it's used by journalists, activists and ordinary people who want privacy. Using Tor is legal in most countries. Buying illegal goods through it is not.
+
+So Tor could hide who you were. But it left one big problem. How do you pay?
+
+You can't buy something illegal with a credit card. The bank keeps a record, and your name is on it.
+
+In January 2009, someone using the name Satoshi Nakamoto launched Bitcoin.
+
+It's digital money that moves from one online wallet to another, with no bank in the middle and no name on the account.
+
+But it isn't invisible. Every payment is written on a public record that anyone can read. The wallets just have codes instead of names.
+
+Remember that. It matters later.

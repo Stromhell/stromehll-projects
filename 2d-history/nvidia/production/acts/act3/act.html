@@ -61,9 +61,6 @@ const gameBox = (c, x, y, k, i, flash = 0) => { if (k <= 0) return; const w = 15
   c.fillStyle = '#f6efe2'; c.font = font(20, 'Anton'); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(TITLES[i % TITLES.length], -6, -h + 22); c.fillStyle = 'rgba(255,255,255,.75)'; c.font = font(13, 'Oswald'); c.fillText('FOR WINDOWS 95', -6, -14); c.restore(); };
 // shipping/return box (world)
 const crate = (c, x, y, w, h, k, label = 'RETURN') => { if (k <= 0) return; c.save(); c.translate(x, y); c.scale(1, k); c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(-w / 2 + 10, -4, w, 12); c.fillStyle = '#b88a52'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(-w / 2, -h, w, h); c.strokeRect(-w / 2, -h, w, h); c.fillStyle = 'rgba(255,255,255,.15)'; c.fillRect(-w / 2, -h, w, 10); c.fillStyle = '#d8c8a0'; c.fillRect(-10, -h, 20, h); c.save(); c.translate(0, -h / 2); c.rotate(-.06); c.strokeStyle = RED; c.lineWidth = 5; c.strokeRect(-w * .34, -26, w * .68, 52); c.fillStyle = RED; c.font = font(Math.round(w * .13)); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(label, 0, 2); c.restore(); c.restore(); };
-
-window.SHOTS = [
-  // 1 MED: the three founders in the Denny's booth; name tags pop as each is named
 const IRI = { costume: 'suit', hair: 'short', hairCol: '#4a4a4c', glasses: true, seed: 23 };
 const redX = (c, x, y, w, h, u, lw = 14) => { if (u <= 0) return; c.save(); c.strokeStyle = RED; c.lineWidth = lw; c.lineCap = 'round'; const a = Math.min(1, u * 2), b = Math.max(0, u * 2 - 1); c.beginPath(); c.moveTo(x - w / 2, y - h / 2); c.lineTo(x - w / 2 + w * a, y - h / 2 + h * a); c.stroke(); if (b > 0) { c.beginPath(); c.moveTo(x + w / 2, y - h / 2); c.lineTo(x + w / 2 - w * b, y - h / 2 + h * b); c.stroke(); } c.restore(); };
 const darkGrid = (c) => { const g = c.createLinearGradient(0, 0, 0, SH); g.addColorStop(0, '#12161e'); g.addColorStop(1, '#0a0c10'); c.fillStyle = g; c.fillRect(0, 0, SW, SH); c.strokeStyle = 'rgba(118,185,0,.08)'; c.lineWidth = 1; for (let x = 0; x < SW; x += 60) { c.beginPath(); c.moveTo(x, 0); c.lineTo(x, SH); c.stroke(); } for (let y = 0; y < SH; y += 60) { c.beginPath(); c.moveTo(0, y); c.lineTo(SW, y); c.stroke(); } };
@@ -92,10 +89,10 @@ window.SHOTS = [
     init: S => { const tC = A.at(S, 'curved-surface', 2.0), tA = A.at(S, 'abandoning', 5.0);
       S.D.figs[0].anim = (o, lt) => { o.pose = lt > tA ? 'think' : 'point'; o.mood = lt > tA ? 'worried' : 'neutral'; };
       S.D.figs[1].anim = (o, lt) => { o.pose = lt > tA + .3 ? 'shrug' : 'think'; o.mood = 'worried'; };
-      S.D.live = [(c, lt) => { const a = K.seg(lt, .1, .8); if (a <= 0) return; c.save(); c.globalAlpha = a; c.translate(1000, 540); c.scale(1.2, 1.2); c.strokeStyle = '#2a4ac8'; c.lineWidth = 5; patchShape(c, 0, 0, 170, lt * .5, 1); c.restore(); c.save(); c.globalAlpha = a; c.fillStyle = '#2a4ac8'; c.font = font(56, 'Caveat'); c.textAlign = 'center'; c.fillText('NV2 for SEGA', 1000, 300); c.restore();
+      S.D.live = [(c, lt) => { const a = K.seg(lt, .1, .8); if (a <= 0) return; c.save(); c.globalAlpha = a; c.translate(1000, 540); c.scale(1.2, 1.2); c.strokeStyle = '#2a4ac8'; c.lineWidth = 5; patchShape(c, 0, 0, 170, lt * .5, Math.min(20, lt * 14)); c.restore(); c.save(); c.globalAlpha = a; c.fillStyle = '#2a4ac8'; c.font = font(56, 'Caveat'); c.textAlign = 'center'; c.fillText('NV2 for SEGA', 1000, 300); c.restore();
           redX(c, 1000, 540, 520, 480, K.seg(lt, tA, tA + .5), 18);
           const b = pop(lt, tA - .4); if (b > 0) { c.save(); c.translate(1700, 520); c.scale(b, b); polyShape(c, 0, 0, 150, lt * .7, true); c.restore(); c.fillStyle = '#1a1a1a'; c.font = font(52, 'Caveat'); c.textAlign = 'center'; c.fillText('everyone else: triangles', 1700, 780); } }];
-      S.D.over = [(c, lt) => K.card(c, 'SAME CURVED DESIGN', lt, { at: tC, x: 960, y: 140, px: 52, rot: -2 })];
+      S.D.over = [(c, lt) => K.card(c, 'SAME CURVED DESIGN', lt, { at: tC, x: 960, y: 820, px: 52, rot: -2 })];
       S.D.sfx = [[.1, 'scrape', .3], [tC, 'pop', .4], [tA, 'scrape', .55], [tA + .3, 'tension', .35]]; } },
   // 3 dark office: two bad doors, the cash tank glowing near empty
   { plate: 'office', cam: { z: [1.15, 1.3], x: [1500, 1560], y: [780, 800] }, bed: [['drone', .35]],

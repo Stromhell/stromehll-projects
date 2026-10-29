@@ -1,0 +1,139 @@
+<!doctype html><html><head><meta charset="utf-8"><title>BR act 3 - the risk machine</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "alium";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['office88', 'boardroom', 'serverhall', 'skyline']) K.load(n, PL + n + '.jpg');
+{ const T = window.TIMING, L = T.shots[T.shots.length - 1]; L.end += 1.6; T.dur = L.end; }
+const SW = 1920, SH = 1080, INK = '#1d1712', CREAM = '#f6efe2', GOLD = '#e8b44a', RED = '#d9483b', GREEN = '#4f8a4a', BLUE = '#3f6aa0';
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+const font = (px, fam = 'Anton') => `${px}px ${fam}, Oswald, sans-serif`;
+const rr = (c, x, y, w, h, r) => { c.beginPath(); c.roundRect(x, y, w, h, r); };
+const FINK = { costume: 'shirtsleeves', hair: 'swept', hairCol: '#4a3220', seed: 7 };
+const DAD = { costume: 'office', hair: 'short', hairCol: '#5a3a22', seed: 12 }, MOM = { costume: 'dress', hair: 'bun', hairCol: '#2a1a12', seed: 13 };
+const coin = (c, x, y, r = 16, a = 1) => { c.save(); c.globalAlpha *= a; c.fillStyle = '#b8862a'; c.beginPath(); c.ellipse(x, y + r * .18, r, r * .72, 0, 0, 7); c.fill(); c.fillStyle = GOLD; c.beginPath(); c.ellipse(x, y, r, r * .72, 0, 0, 7); c.fill(); c.strokeStyle = INK; c.lineWidth = 2.5; c.stroke(); c.fillStyle = '#fff2c0'; c.font = `bold ${r * .9}px Oswald`; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('$', x, y + 1); c.restore(); };
+// colour grade in screen space: warm gold drains to cold blue between t0 and t1
+const grade = (t0, t1, from = 0) => (c, lt) => { const u = Math.max(from, E.io(K.seg(lt, t0, t1))); c.save(); c.globalCompositeOperation = 'soft-light'; c.fillStyle = `rgba(255,190,80,${.45 * (1 - u)})`; c.fillRect(0, 0, SW, SH); c.globalCompositeOperation = 'multiply'; c.fillStyle = `rgba(90,120,190,${.55 * u})`; c.fillRect(0, 0, SW, SH); c.restore(); };
+// red X scribbled over a card area
+const redX = (c, x, y, w, h, u) => { if (u <= 0) return; c.save(); c.strokeStyle = RED; c.lineWidth = 14; c.lineCap = 'round'; const a = Math.min(1, u * 2), b = Math.max(0, u * 2 - 1); c.beginPath(); c.moveTo(x - w / 2, y - h / 2); c.lineTo(x - w / 2 + w * a, y - h / 2 + h * a); c.stroke(); if (b > 0) { c.beginPath(); c.moveTo(x + w / 2, y - h / 2); c.lineTo(x + w / 2 - w * b, y - h / 2 + h * b); c.stroke(); } c.restore(); };
+// a paper loan document (local coords, centred)
+const loanDoc = (c, w = 120, h = 150, title = 'MORTGAGE') => { c.fillStyle = 'rgba(0,0,0,.2)'; c.fillRect(-w / 2 + 6, -h / 2 + 8, w, h); c.fillStyle = '#fbf7ea'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-w / 2, -h / 2, w, h); c.strokeRect(-w / 2, -h / 2, w, h); c.fillStyle = RED; c.font = `bold ${w * .13}px Oswald`; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(title, 0, -h / 2 + h * .14); c.strokeStyle = 'rgba(40,40,60,.45)'; c.lineWidth = 2; for (let k = 0; k < 6; k++) { c.beginPath(); c.moveTo(-w * .38, -h * .18 + k * h * .1); c.lineTo(w * .38, -h * .18 + k * h * .1); c.stroke(); } c.strokeStyle = BLUE; c.beginPath(); c.moveTo(-w * .3, h * .38); c.quadraticCurveTo(-w * .1, h * .28, w * .05, h * .4); c.quadraticCurveTo(w * .15, h * .3, w * .3, h * .36); c.stroke(); };
+// cash bundle (local coords)
+const bundle = (c, s = 1) => { c.save(); c.scale(s, s); c.fillStyle = 'rgba(0,0,0,.25)'; c.fillRect(-46, -14, 96, 34); for (let k = 0; k < 3; k++) { c.fillStyle = '#7aa864'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-50, -18 - k * 9, 100, 30); c.strokeRect(-50, -18 - k * 9, 100, 30); } c.fillStyle = '#c8b86a'; c.fillRect(-10, -36, 20, 30); c.strokeRect(-10, -36, 20, 30); c.restore(); };
+// cardboard office box held in front (hand-local: +y runs along the forearm)
+const BOX = (c) => { c.save(); c.rotate(-1.1); c.translate(-46, 22); c.fillStyle = "rgba(0,0,0,.25)"; c.fillRect(-58, -26, 120, 80); c.fillStyle = '#b8864e'; c.strokeStyle = INK; c.lineWidth = 3.5; c.fillRect(-62, -30, 120, 80); c.strokeRect(-62, -30, 120, 80); c.fillStyle = '#9a6c3a'; c.fillRect(-62, -30, 120, 14); c.strokeRect(-62, -30, 120, 14); c.fillStyle = '#f4f0e4'; c.save(); c.translate(-30, -38); c.rotate(-.2); c.fillRect(-14, -14, 28, 22); c.restore(); c.fillStyle = '#3a6a3a'; c.beginPath(); c.arc(28, -46, 16, 0, 7); c.fill(); c.fillStyle = '#6a4a2a'; c.fillRect(20, -36, 16, 10); c.fillStyle = '#d8c8a0'; c.fillRect(-6, -48, 22, 22); c.strokeStyle = INK; c.lineWidth = 2; c.strokeRect(-6, -48, 22, 22); c.restore(); };
+const boxArms = (o) => { o.arms = (t, P) => ({ shR: 6 + Math.sin(t * 3) * 2, elR: -95 }); };
+// blank notepad in hand
+const PAD = (c) => { c.save(); c.rotate(-.9); c.translate(10, 34); c.fillStyle = 'rgba(0,0,0,.25)'; c.fillRect(-26, -32, 56, 72); c.fillStyle = '#f6efc8'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-30, -36, 56, 72); c.strokeRect(-30, -36, 56, 72); c.fillStyle = '#7a3a2a'; c.fillRect(-30, -36, 56, 10); c.strokeStyle = 'rgba(80,120,170,.4)'; c.lineWidth = 1.5; for (let k = 0; k < 5; k++) { c.beginPath(); c.moveTo(-24, -14 + k * 11); c.lineTo(20, -14 + k * 11); c.stroke(); } c.restore(); };
+// rain streaks in screen space
+const rain = (n = 260, al = .35) => (c, lt) => { c.save(); c.strokeStyle = `rgba(190,205,235,${al})`; c.lineWidth = 2; c.beginPath(); for (let i = 0; i < n; i++) { const sp = 1400 + (i * 97 % 600), x = (i * 733 % SW) + ((lt * 120) % 40), y = ((i * 389 + lt * sp) % (SH + 80)) - 40; c.moveTo(x, y); c.lineTo(x - 8, y + 34); } c.stroke(); c.restore(); };
+// rain splashes on the pavement (world)
+const splashes = (c, lt) => { c.save(); c.strokeStyle = 'rgba(200,215,240,.5)'; c.lineWidth = 2; for (let i = 0; i < 40; i++) { const per = .5 + (i % 5) * .13, p = ((lt + i * .37) % per) / per, x = (i * 613) % 2560, y = 1110 + (i * 211) % 320; c.globalAlpha = 1 - p; c.beginPath(); c.ellipse(x, y, 4 + p * 22, 1.5 + p * 6, 0, 0, 7); c.stroke(); } c.restore(); };
+// mini rate chart panel in screen space
+const rateChart = (c, lt, at, x, y) => { const a = pop(lt, at); if (a <= 0) return; const u = E.out(K.seg(lt, at + .3, at + 1.6)); c.save(); c.translate(x, y); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(-206, -126, 420, 260); c.fillStyle = '#fffaf0'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-210, -130, 420, 260); c.strokeRect(-210, -130, 420, 260); c.fillStyle = INK; c.font = font(38); c.textAlign = 'left'; c.fillText('RATES', -186, -84);
+  c.strokeStyle = 'rgba(40,30,20,.2)'; c.lineWidth = 2; for (let k = 0; k < 4; k++) { c.beginPath(); c.moveTo(-180, -50 + k * 50); c.lineTo(180, -50 + k * 50); c.stroke(); }
+  const pts = [[-170, -40], [-90, -30], [-20, 10], [60, 40], [160, 80]]; c.strokeStyle = RED; c.lineWidth = 8; c.lineJoin = 'round'; c.beginPath(); c.moveTo(...pts[0]); const n = u * (pts.length - 1); for (let k = 1; k <= Math.ceil(n); k++) { const f = Math.min(1, n - k + 1), p = pts[k - 1], q = pts[k]; c.lineTo(p[0] + (q[0] - p[0]) * f, p[1] + (q[1] - p[1]) * f); } c.stroke();
+  c.fillStyle = INK; c.font = font(30, 'Oswald'); c.fillText('9%', -196, -30); if (u > .9) { c.fillStyle = RED; c.fillText('7%', 172, 92); const b = pop(lt, at + 1.6); c.save(); c.translate(150, -70); c.scale(b, b); c.fillStyle = RED; c.beginPath(); c.moveTo(-22, -30); c.lineTo(22, -30); c.lineTo(22, 0); c.lineTo(40, 0); c.lineTo(0, 40); c.lineTo(-40, 0); c.lineTo(-22, 0); c.closePath(); c.fill(); c.strokeStyle = INK; c.lineWidth = 4; c.stroke(); c.restore(); } c.restore(); };
+
+const P1 = { costume: 'suit', hair: 'short', hairCol: '#2a1a12', glasses: true, seed: 31 }, P2 = { costume: 'office', hair: 'bun', hairCol: '#6a3a1a', seed: 33 }, P3 = { costume: 'shirtsleeves', hair: 'curly', hairCol: '#1a1210', seed: 35 };
+const CLIENT = { costume: 'suit', hair: 'short', hairCol: '#8a8a88', seed: 41 };
+// boxes being unpacked: a lid flap that opens (world)
+const flap = (c, x, y, w, u) => { c.save(); c.translate(x, y); c.rotate(-u * 1.2); c.fillStyle = '#c89a62'; c.fillRect(0, -6, w, 12); c.restore(); };
+// risk report sheet (local, centred)
+const report = (c, w, h) => { c.fillStyle = 'rgba(0,0,0,.25)'; c.fillRect(-w / 2 + 8, -h / 2 + 10, w, h); c.fillStyle = '#fbf8ee'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(-w / 2, -h / 2, w, h); c.strokeRect(-w / 2, -h / 2, w, h); c.fillStyle = INK; c.font = font(w * .1); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('RISK REPORT', 0, -h * .38);
+  const bars = [.5, .8, .35, .95, .6]; bars.forEach((b, i) => { c.fillStyle = b > .9 ? RED : b > .7 ? GOLD : GREEN; c.fillRect(-w * .36 + i * w * .15, h * .3 - b * h * .45, w * .1, b * h * .45); }); c.fillStyle = RED; c.font = font(w * .06, 'Oswald'); c.fillText('WHAT COULD GO WRONG', 0, h * .42); };
+// a scenario grid feeding one gauge (screen)
+const darkBg = (c) => { const g = c.createLinearGradient(0, 0, 0, SH); g.addColorStop(0, '#101820'); g.addColorStop(1, '#070a0e'); c.fillStyle = g; c.fillRect(0, 0, SW, SH); c.strokeStyle = 'rgba(120,255,160,.06)'; c.lineWidth = 1; for (let x = 0; x < SW; x += 48) { c.beginPath(); c.moveTo(x, 0); c.lineTo(x, SH); c.stroke(); } for (let y = 0; y < SH; y += 48) { c.beginPath(); c.moveTo(0, y); c.lineTo(SW, y); c.stroke(); } };
+const gauge = (c, x, y, rad, v, lt) => { c.save(); c.translate(x, y); c.lineWidth = 34; c.lineCap = 'butt'; [[GREEN, 0, .5], [GOLD, .5, .75], [RED, .75, 1]].forEach(([col, a, b]) => { c.strokeStyle = col; c.beginPath(); c.arc(0, 0, rad, Math.PI + a * Math.PI, Math.PI + b * Math.PI); c.stroke(); });
+  const ang = Math.PI + K.clamp(v) * Math.PI + Math.sin(lt * 9) * .02; c.strokeStyle = CREAM; c.lineWidth = 10; c.lineCap = 'round'; c.beginPath(); c.moveTo(0, 0); c.lineTo(Math.cos(ang) * rad * .86, Math.sin(ang) * rad * .86); c.stroke(); c.fillStyle = CREAM; c.beginPath(); c.arc(0, 0, 18, 0, 7); c.fill(); c.fillStyle = CREAM; c.font = font(44); c.textAlign = 'center'; c.fillText('PORTFOLIO RISK', 0, 90); c.restore(); };
+// portfolio pie whose slices breathe with a what-if (screen)
+const pie = (c, x, y, rad, d) => { const base = [.3, .25, .2, .15, .1], cols = ['#3f6aa0', '#4f8a4a', '#e8b44a', '#b0603a', '#8a6ab0'], names = ['BONDS', 'STOCKS', 'LOANS', 'OIL', 'CASH']; let tot = 0; const v = base.map((b, i) => Math.max(.02, b + (d[i] || 0))); v.forEach(q => tot += q); let a0 = -Math.PI / 2;
+  v.forEach((q, i) => { const a1 = a0 + q / tot * Math.PI * 2; c.fillStyle = cols[i]; c.beginPath(); c.moveTo(x, y); c.arc(x, y, rad, a0, a1); c.closePath(); c.fill(); c.strokeStyle = '#0c1016'; c.lineWidth = 6; c.stroke(); const am = (a0 + a1) / 2; c.fillStyle = CREAM; c.font = font(30, 'Oswald'); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(names[i], x + Math.cos(am) * rad * .66, y + Math.sin(am) * rad * .66); a0 = a1; }); };
+const whatIf = (c, lt, at, x, y, txt, col) => { const a = pop(lt, at); if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.rotate(Math.sin(lt * 1.3 + x) * .03); c.fillStyle = 'rgba(0,0,0,.4)'; c.beginPath(); c.roundRect(-226, -56, 460, 120, 16); c.fill(); c.fillStyle = '#f6efe2'; c.strokeStyle = col; c.lineWidth = 7; c.beginPath(); c.roundRect(-230, -60, 460, 120, 16); c.fill(); c.stroke(); c.fillStyle = col; c.font = font(26, 'Oswald'); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('WHAT IF', 0, -28); c.fillStyle = INK; c.font = font(40); c.fillText(txt, 0, 14); c.restore(); };
+// a client building tile (screen)
+const tile = (c, x, y, txt, a) => { if (a <= 0) return; c.save(); c.globalAlpha = Math.min(1, a); c.translate(x, y); c.scale(.6 + .4 * Math.min(1, a), .6 + .4 * Math.min(1, a)); c.fillStyle = '#1e2430'; c.strokeStyle = '#88ff99'; c.lineWidth = 4; c.beginPath(); c.roundRect(-150, -46, 300, 92, 14); c.fill(); c.stroke(); c.fillStyle = CREAM; c.font = font(32, 'Oswald'); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(txt, 0, 2); c.restore(); };
+
+window.SHOTS = [
+  // 1 1988: the founders unpack in a borrowed office at Blackstone
+  { plate: 'office88', cam: { z: [1.05, 1.13], x: [1280, 1300], y: [760, 780] }, bed: [['office_loop', .25]], inSfx: false,
+    figs: [{ x: 560, y: 1300, s: 2.15, ...P1, facing: 1, pose: 'carry' }, { x: 900, y: 1300, s: 2.1, ...P2, facing: 1, pose: 'stand' }, { x: 1700, y: 1300, s: 2.2, ...FINK, facing: -1, pose: 'present' }, { x: 2030, y: 1300, s: 2.1, ...P3, facing: -1, pose: 'stand' }],
+    init: S => { const tF = A.at(S, 'Fink', 1.0), tS = A.at(S, 'small group', 2.2), tB = A.at(S, 'Blackstone', 5.4);
+      S.D.figs[0].anim = (o, lt) => { o.pose = lt > tS + .6 ? 'cheer' : 'carry'; o.mood = 'happy'; };
+      S.D.figs[1].anim = (o, lt) => { o.pose = lt > tS ? 'wave' : 'stand'; o.mood = 'happy'; };
+      S.D.figs[2].anim = (o, lt) => { o.talk = lt > tF - .2 && lt < tB + 1; o.mood = 'happy'; };
+      S.D.figs[3].anim = (o, lt) => { o.pose = lt > tB ? 'point' : 'think'; };
+      S.D.over = [(c, lt) => K.card(c, 'LARRY FINK + 7 PARTNERS', lt, { at: tS, x: 960, y: 160, px: 50, rot: -2 }), (c, lt) => K.card(c, 'A DESK INSIDE BLACKSTONE', lt, { at: tB, x: 1300, y: 300, px: 42, rot: 3 }), (c, lt) => K.dateTag(c, '1988 · NEW YORK', lt, { at: .4 })];
+      S.D.sfx = [[.3, 'scrape', .4], [tS, 'paper', .4], [tS + .6, 'pop', .35], [tB, 'pop', .4]]; } },
+  // 2 the name plate: Blackstone Financial Management painted over with BLACKROCK
+  { draw: (c) => { const g = c.createLinearGradient(0, 0, 0, SH); g.addColorStop(0, '#5a3e2a'); g.addColorStop(1, '#2e1e14'); c.fillStyle = g; c.fillRect(0, 0, SW, SH); c.strokeStyle = 'rgba(20,10,6,.4)'; c.lineWidth = 4; for (let x = 0; x < SW; x += 120) { c.beginPath(); c.moveTo(x, 0); c.lineTo(x, SH); c.stroke(); } }, bed: [['office_loop', .2]],
+    init: S => { const tC = A.at(S, 'new name', 4.2), tB = A.at(S, 'BlackRock', 5.4);
+      S.D.over = [(c, lt) => { const z = 1 + lt * .012; c.save(); c.translate(SW / 2, SH / 2 - 20); c.scale(z, z);
+          c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(-596, -146, 1200, 300); { const g = c.createLinearGradient(0, -150, 0, 150); g.addColorStop(0, '#e8c878'); g.addColorStop(.5, '#c89a40'); g.addColorStop(1, '#8a6420'); c.fillStyle = g; } c.fillRect(-600, -150, 1200, 300); c.strokeStyle = '#5a4010'; c.lineWidth = 10; c.strokeRect(-584, -134, 1168, 268);
+          c.fillStyle = '#2a1a0a'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.font = font(64, 'SourceSerif'); c.fillText('BLACKSTONE', 0, -50); c.font = font(46, 'SourceSerif'); c.fillText('FINANCIAL MANAGEMENT', 0, 40);
+          const u = E.io(K.seg(lt, tC - .2, tC + .9)); if (u > 0) { c.save(); c.beginPath(); c.rect(-560, -120, 1120 * u, 240); c.clip(); c.fillStyle = '#16161a'; c.fillRect(-560, -120, 1120, 240); for (let k = 0; k < 14; k++) { c.fillStyle = 'rgba(255,255,255,.04)'; c.fillRect(-560, -120 + k * 18, 1120, 6); } c.restore(); }
+          const b = pop(lt, tB, .5); if (b > 0) { c.save(); c.scale(b, b); c.fillStyle = CREAM; c.font = font(150); c.fillText('BLACKROCK', 0, 8); c.restore(); } c.restore(); },
+        (c, lt) => K.dateTag(c, '1992', lt, { at: tB + .4 })];
+      S.D.sfx = [[.4, 'thud', .3], [tC - .2, 'scrape', .5], [tB, 'stamp', .55], [tB + .1, 'chime', .35]]; } },
+  // 3 the pitch: Fink slides a risk report across the table to a client
+  { plate: 'boardroom', cam: { z: [1.2, 1.28], x: [1280, 1300], y: [780, 790] }, bed: [['hum_loop', .3]],
+    figs: [{ x: 700, y: 1345, s: 2.3, ...FINK, facing: 1, pose: 'present' }, { x: 1900, y: 1345, s: 2.3, ...CLIENT, facing: -1, pose: 'think' }],
+    init: S => { const tP = A.at(S, 'protection', 1.4), tD = A.at(S, 'prediction', 2.6), tW = A.at(S, 'go wrong', 4.6);
+      S.D.figs[0].anim = (o, lt) => { o.talk = lt < tW + 1; o.pose = lt > tW - .6 && lt < tW + .8 ? 'reach' : 'present'; o.mood = 'happy'; };
+      S.D.figs[1].anim = (o, lt) => { o.mood = lt > tW + .8 ? 'happy' : 'neutral'; o.pose = lt > tW + .8 ? 'stand' : 'think'; };
+      S.D.front = [(c, lt) => { const u = E.out(K.seg(lt, tW - .6, tW + .6)); if (u <= 0) return; c.save(); c.translate(900 + u * 380, 1050); c.rotate(-.05 + u * .08); c.transform(1, 0, -.3, .45, 0, 0); report(c, 280, 360); c.restore(); }];
+      S.D.over = [(c, lt) => { const a = pop(lt, tP); if (a <= 0) return; c.save(); c.translate(560, 200); c.scale(a, a); K.outlined(c, 'PROTECTION', 0, 0, 80, { fill: GREEN }); c.restore(); },
+        (c, lt) => { const a = pop(lt, tD); if (a <= 0) return; c.save(); c.translate(1380, 200); c.scale(a, a); c.globalAlpha = .55; K.outlined(c, 'PREDICTION', 0, 0, 70, { fill: '#a8a29a' }); c.restore(); redX(c, 1380, 200, 460, 90, K.seg(lt, tD + .5, tD + 1)); },
+        (c, lt) => K.card(c, 'WE SHOW YOU WHAT COULD GO WRONG', lt, { at: tW + .3, x: 960, y: 360, px: 40, rot: -1 })];
+      S.D.sfx = [[tP, 'pop', .4], [tD, 'pop', .3], [tD + .5, 'scrape', .4], [tW - .5, 'paper', .55]]; } },
+  // 4 Aladdin: one green-screen workstation, then the camera pulls back into a whole server hall
+  { plate: 'serverhall', cam: { z: [1.5, 1.05], x: [1280, 1280], y: [760, 720] }, bed: [['hum_loop', .45]],
+    init: S => { const tA = A.at(S, 'Aladdin', 4.4), tX = 2.4;
+      S.D.over = [(c, lt) => { const f = 1 - E.io(K.seg(lt, tX, tX + 1.2)); if (f <= 0) return; c.save(); c.globalAlpha = f; const g = c.createLinearGradient(0, 0, 0, SH); g.addColorStop(0, '#2a1e16'); g.addColorStop(1, '#120c08'); c.fillStyle = g; c.fillRect(0, 0, SW, SH); c.fillStyle = '#4a3020'; c.fillRect(0, 800, SW, 280);
+          const z = 1 + lt * .05; c.translate(960, 500); c.scale(z, z); c.fillStyle = 'rgba(0,0,0,.4)'; c.fillRect(-290, -230, 600, 520); c.fillStyle = '#d8d0b8'; c.fillRect(-300, -240, 600, 500); c.fillStyle = '#0e1a10'; c.fillRect(-250, -200, 500, 340);
+          c.fillStyle = 'rgba(120,255,140,.85)'; c.font = '26px "IBM Plex Mono", monospace'; c.textAlign = 'left'; const lines = ['> LOAD PORTFOLIO', '> 4,812 BONDS', '> RATE +1%  ...  -2.4%', '> RATE +2%  ...  -5.1%', '> DEFAULTS x2 ... -3.8%', '> RUN ALL ' + '.'.repeat(1 + Math.floor(lt * 3) % 4)]; lines.slice(0, Math.min(lines.length, Math.floor(lt * 3) + 1)).forEach((l, i) => c.fillText(l, -230, -160 + i * 40));
+          c.fillStyle = 'rgba(120,255,140,.08)'; c.fillRect(-250, -200, 500, 340); c.fillStyle = '#c8c0a8'; c.fillRect(-200, 260, 400, 30); c.fillRect(-60, 230, 120, 40); c.restore(); },
+        (c, lt) => { const a = pop(lt, tA, .6); if (a <= 0) return; c.save(); c.translate(960, 520); c.scale(a, a); c.shadowColor = '#88ff99'; c.shadowBlur = 40; K.outlined(c, 'ALADDIN', 0, 0, 170, { fill: '#c8ffd0' }); c.restore(); c.fillStyle = 'rgba(246,239,226,.8)'; c.font = font(30, 'Oswald'); c.textAlign = 'center'; if (lt > tA + .6) c.fillText('ASSET, LIABILITY, DEBT AND DERIVATIVE INVESTMENT NETWORK', 960, 640); }];
+      S.D.sfx = [[.2, 'typing', .45], [tX, 'whoosh', .45], [tX + .4, 'swell', .35], [tA, 'chime', .5]]; } },
+  // 5 what if? three cards hit a portfolio pie
+  { draw: (c) => darkBg(c), bed: [['hum_loop', .3]],
+    init: S => { const tW = A.at(S, 'what if', 1.0), t1 = A.at(S, 'interest rates', 3.0), t2 = A.at(S, 'oil collapses', 5.2), t3 = A.at(S, 'stop paying', 7.4);
+      S.D.over = [(c, lt) => { const d = [0, 0, 0, 0, 0]; const u1 = E.out(K.seg(lt, t1 + .3, t1 + 1)), u2 = E.out(K.seg(lt, t2 + .3, t2 + 1)), u3 = E.out(K.seg(lt, t3 + .3, t3 + 1)); d[0] -= .12 * u1; d[3] -= .1 * u2; d[2] -= .12 * u3; d[4] += .04 * (u1 + u2 + u3); pie(c, 960, 560, 260 + Math.sin(lt * 2) * 4, d); },
+        (c, lt) => { const a = pop(lt, tW); if (a <= 0) return; c.save(); c.translate(960, 140); c.scale(a, a); K.outlined(c, 'WHAT IF?', 0, 0, 96, { fill: GOLD }); c.restore(); },
+        (c, lt) => whatIf(c, lt, t1, 380, 380, 'RATES JUMP?', RED), (c, lt) => whatIf(c, lt, t2, 1540, 380, 'OIL COLLAPSES?', GOLD), (c, lt) => whatIf(c, lt, t3, 960, 960, 'BORROWERS STOP PAYING?', '#8a6ab0')];
+      S.D.sfx = [[tW, 'pop', .45], [t1, 'whoosh_soft', .35], [t1 + .4, 'hit', .4], [t2, 'whoosh_soft', .35], [t2 + .4, 'hit', .4], [t3, 'whoosh_soft', .35], [t3 + .4, 'hit', .45]]; } },
+  // 6 thousands of scenario tiles light up and feed one risk gauge
+  { draw: (c) => darkBg(c), bed: [['hum_loop', .35]],
+    init: S => { const tT = A.at(S, 'thousands', .8), tL = A.at(S, 'loan by loan', 4.4);
+      S.D.over = [(c, lt) => { const N = 30, M = 14; for (let j = 0; j < M; j++) for (let i = 0; i < N; i++) { const k = j * N + i, on = lt - tT - (k % 97) * .025 - j * .02; if (on <= 0) continue; const h = (k * 73) % 100; const col = h > 88 ? RED : h > 70 ? GOLD : '#4fbf6a'; c.globalAlpha = Math.min(1, on * 3) * (.55 + .45 * Math.sin(lt * 6 + k)); c.fillStyle = col; c.fillRect(80 + i * 34, 120 + j * 34, 26, 26); } c.globalAlpha = 1;
+          const n = Math.min(10000, Math.floor(Math.max(0, lt - tT) * 1900)); c.fillStyle = CREAM; c.font = font(56); c.textAlign = 'center'; c.fillText(n.toLocaleString('en-US') + ' SCENARIOS', 590, 880); },
+        (c, lt) => { const v = .3 + .25 * E.out(K.seg(lt, tT + 1, tL)) + Math.sin(lt * 1.7) * .03; gauge(c, 1500, 560, 260, v, lt); },
+        (c, lt) => { const a = K.seg(lt, tT + .5, tT + 1.5); if (a <= 0) return; c.save(); c.globalAlpha = a; c.strokeStyle = 'rgba(136,255,153,.35)'; c.lineWidth = 3; c.setLineDash([12, 14]); c.lineDashOffset = -lt * 60; for (let k = 0; k < 5; k++) { c.beginPath(); c.moveTo(1100, 200 + k * 140); c.quadraticCurveTo(1220, 560, 1300, 560); c.stroke(); } c.restore(); },
+        (c, lt) => K.card(c, 'LOAN BY LOAN · BOND BY BOND', lt, { at: tL, x: 1500, y: 820, px: 38, rot: 2 })];
+      S.D.sfx = [[tT, 'typing', .4], [tT + .5, 'tick', .3], [tT + 1.5, 'tick', .3], [tL, 'pop', .4]]; } },
+  // 7 renting the machine: lines run from the server hall to other investors
+  { plate: 'skyline', cam: { z: [1.05, 1.12], x: [1280, 1280], y: [720, 730] }, bed: [['city_loop', .3]],
+    init: S => { const tR = A.at(S, 'renting', 1.4), tP = A.at(S, 'pension funds', 3.6), tI = A.at(S, 'insurers', 4.6), tV = A.at(S, 'rival', 5.8);
+      const T = [[tP, 330, 300, 'PENSION FUND'], [tI, 1590, 300, 'INSURER'], [tV, 380, 820, 'RIVAL MANAGER'], [tV + .5, 1540, 820, 'BANK']];
+      S.D.over = [(c) => { c.save(); c.fillStyle = 'rgba(6,10,20,.45)'; c.fillRect(0, 0, SW, SH); c.restore(); },
+        (c, lt) => { const a = pop(lt, .3); if (a <= 0) return; c.save(); c.translate(960, 560); c.scale(a, a); c.fillStyle = '#0e1a10'; c.strokeStyle = '#88ff99'; c.lineWidth = 6; c.shadowColor = '#88ff99'; c.shadowBlur = 30; c.beginPath(); c.roundRect(-170, -70, 340, 140, 18); c.fill(); c.stroke(); c.shadowBlur = 0; c.fillStyle = '#c8ffd0'; c.font = font(60); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('ALADDIN', 0, 4); c.restore(); },
+        (c, lt) => { T.forEach(([t, x, y]) => { const u = E.out(K.seg(lt, t - .4, t + .2)); if (u <= 0) return; c.save(); c.strokeStyle = 'rgba(136,255,153,.7)'; c.lineWidth = 5; c.setLineDash([16, 12]); c.lineDashOffset = -lt * 80; c.beginPath(); c.moveTo(960, 560); c.lineTo(960 + (x - 960) * u, 560 + (y - 560) * u); c.stroke(); c.restore(); }); },
+        (c, lt) => T.forEach(([t, x, y, n]) => tile(c, x, y, n, K.seg(lt, t, t + .35) * 1.2)),
+        (c, lt) => K.card(c, 'NOW RENTED OUT', lt, { at: tR, x: 960, y: 140, px: 50, rot: -2 })];
+      S.D.sfx = [[tR, 'pop', .4], [tP, 'chime', .3], [tI, 'chime', .3], [tV, 'chime', .3], [tV + .5, 'chime', .3]]; } },
+  // 8 the hall glows: AUM meter gains a second, see-through stack for what Aladdin watches
+  { plate: 'serverhall', cam: { z: [1.12, 1.24], x: [1280, 1280], y: [740, 740] }, bed: [['hum_loop', .45]],
+    init: S => { const tT = A.at(S, 'trillions', 1.6), tN = A.at(S, 'not BlackRock', 3.4);
+      S.D.over = [(c, lt) => { c.save(); c.globalCompositeOperation = 'screen'; c.fillStyle = `rgba(80,255,140,${.08 + .04 * Math.sin(lt * 3)})`; c.fillRect(0, 0, SW, SH); c.restore(); },
+        (c, lt) => { const a = K.seg(lt, .2, .7); if (a <= 0) return; c.save(); c.globalAlpha = a; c.translate(1500, 900); c.fillStyle = 'rgba(0,0,0,.55)'; c.beginPath(); c.roundRect(-260, -640, 520, 720, 20); c.fill();
+          c.fillStyle = GOLD; c.fillRect(-200, -110, 160, 110); c.fillStyle = CREAM; c.font = font(26, 'Oswald'); c.textAlign = 'center'; c.fillText('OWN', -120, 40);
+          const h = 520 * E.out(K.seg(lt, tT, tT + 1.4)); c.fillStyle = 'rgba(136,255,153,.35)'; c.strokeStyle = '#88ff99'; c.lineWidth = 4; c.fillRect(30, -h, 160, h); c.strokeRect(30, -h, 160, h); c.fillStyle = CREAM; c.fillText('MONITORED', 110, 40); c.restore(); },
+        (c, lt) => { const a = pop(lt, tT); if (a <= 0) return; c.save(); c.translate(640, 300); c.scale(a, a); K.outlined(c, 'TRILLIONS MONITORED', 0, 0, 84, { fill: '#c8ffd0' }); c.restore(); },
+        (c, lt) => K.card(c, 'MOSTLY OTHER PEOPLE\'S MONEY', lt, { at: tN, x: 640, y: 460, px: 42, rot: -2 })];
+      S.D.sfx = [[.2, 'swell', .3], [tT, 'chime', .45], [tN, 'pop', .4]]; } },
+];
+
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>
