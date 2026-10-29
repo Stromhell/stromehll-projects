@@ -1,0 +1,32 @@
+Title: The Company That Owns Everything but Makes Nothing
+
+Backups:
+- How BlackRock Came to Own 8% of Nvidia
+- BlackRock: The $15 Trillion Company You Never Think About
+
+Tags: BlackRock, Larry Fink, BlackRock history, index funds, ETF explained, iShares, Aladdin BlackRock, Big Three Vanguard State Street, how BlackRock got so big, asset management, Wall Street history, 2008 financial crisis, Texas coal lawsuit, who owns Nvidia, finance documentary, animated history
+
+
+Description:
+BlackRock owns about 8% of Nvidia, more than Jensen Huang does, and it has never designed a chip. It has no factory and no product you can hold, yet by mid-2026 it managed $15.3 trillion of other people's money. Here is how a company that makes nothing ended up owning a piece of everything.
+
+It starts in the 1980s with Larry Fink, a young bond trader at First Boston who helped turn home loans into bonds, then lost about $100 million in 1986 when rates fell and homeowners paid back early. He left, co-founded BlackRock inside Blackstone in 1988, and built Aladdin, a risk machine that asks "what if?" across every holding. In 2008 Washington hired BlackRock to value the wreckage. In 2009 it bought Barclays Global Investors and iShares for about $13.5 billion, right as index funds took over investing. That brought the Big Three, shareholder votes, the climate letters, the backlash, and the Texas coal lawsuit.
+
+Chapters
+0:00 Owns more Nvidia than Jensen
+1:00 Turning home loans into bonds
+2:19 The $100 million loss
+3:12 Aladdin
+4:10 2008: Washington calls
+5:09 The $13.5 billion deal
+5:41 What an ETF actually is
+6:46 The Big Three
+7:49 The climate letters
+8:36 The Texas coal case
+9:35 Who keeps watch?
+
+Sources: BlackRock Q2 2026 results; BlackRock and Nvidia shareholder filings; SPIVA scorecards (S&P Dow Jones Indices); Fichtner, Heemskerk & Garcia-Bernardo, "Hidden power of the Big Three?" (Business and Politics, 2017); Texas et al. v. BlackRock et al. (E.D. Tex., filed Nov 2024); Vanguard settlement (Feb 2026); Federal Reserve records on Maiden Lane and the 2020 SMCCF.
+
+The tranche example is simplified: real deals carry servicing fees and costs. The Texas case is presented as allegations, and the firms deny them.
+
+#BlackRock #LarryFink #Finance #History #Documentary
