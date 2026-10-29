@@ -1,0 +1,292 @@
+{
+ "dur": 52.361,
+ "cues": [
+  {
+   "t": 0.3,
+   "name": "swell",
+   "gain": 0.3
+  },
+  {
+   "t": 0.4,
+   "name": "footsteps",
+   "gain": 0.3
+  },
+  {
+   "t": 2.282,
+   "name": "pop",
+   "gain": 0.35
+  },
+  {
+   "t": 4.317,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 4.617,
+   "name": "tick",
+   "gain": 0.25
+  },
+  {
+   "t": 5.592,
+   "name": "pop",
+   "gain": 0.35
+  },
+  {
+   "t": 8.552,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 9.332,
+   "name": "hit",
+   "gain": 0.35
+  },
+  {
+   "t": 10.387,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 10.842,
+   "name": "paper",
+   "gain": 0.35
+  },
+  {
+   "t": 13.942,
+   "name": "whoosh_soft",
+   "gain": 0.3
+  },
+  {
+   "t": 14.442,
+   "name": "paper",
+   "gain": 0.3
+  },
+  {
+   "t": 15.882,
+   "name": "whoosh_soft",
+   "gain": 0.3
+  },
+  {
+   "t": 16.182,
+   "name": "paper",
+   "gain": 0.3
+  },
+  {
+   "t": 17.095,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 18.117,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 19.357,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 20.017,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 21.797,
+   "name": "hit",
+   "gain": 0.3
+  },
+  {
+   "t": 22.997,
+   "name": "pop",
+   "gain": 0.4
+  },
+  {
+   "t": 24.512,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 24.687,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 26.885,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 27.065,
+   "name": "riser",
+   "gain": 0.3
+  },
+  {
+   "t": 28.665,
+   "name": "chime",
+   "gain": 0.4
+  },
+  {
+   "t": 30.7,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 31.693,
+   "name": "swell",
+   "gain": 0.3
+  },
+  {
+   "t": 32.913,
+   "name": "chime",
+   "gain": 0.3
+  },
+  {
+   "t": 34.293,
+   "name": "whoosh_soft",
+   "gain": 0.3
+  },
+  {
+   "t": 35.793,
+   "name": "crowd_cheer",
+   "gain": 0.25
+  },
+  {
+   "t": 38.328,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 38.943,
+   "name": "swell",
+   "gain": 0.25
+  },
+  {
+   "t": 42.583,
+   "name": "pop",
+   "gain": 0.35
+  },
+  {
+   "t": 43.583,
+   "name": "pop",
+   "gain": 0.35
+  },
+  {
+   "t": 44.323,
+   "name": "pop",
+   "gain": 0.35
+  },
+  {
+   "t": 44.723,
+   "name": "chime",
+   "gain": 0.3
+  },
+  {
+   "t": 46.278,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 46.478,
+   "name": "breath",
+   "gain": 0.2
+  },
+  {
+   "t": 47.151,
+   "name": "swell",
+   "gain": 0.3
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 5.0169999999999995,
+   "name": "wind_loop",
+   "gain": 0.25
+  },
+  {
+   "start": 0,
+   "end": 5.0169999999999995,
+   "name": "fire_loop",
+   "gain": 0.3
+  },
+  {
+   "start": 4.217,
+   "end": 11.087000000000002,
+   "name": "birds_loop",
+   "gain": 0.3
+  },
+  {
+   "start": 4.217,
+   "end": 11.087000000000002,
+   "name": "wind_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 10.287,
+   "end": 17.795,
+   "name": "wind_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 16.995,
+   "end": 25.212,
+   "name": "birds_loop",
+   "gain": 0.3
+  },
+  {
+   "start": 16.995,
+   "end": 25.212,
+   "name": "crowd_loop",
+   "gain": 0.12
+  },
+  {
+   "start": 24.412,
+   "end": 31.400000000000002,
+   "name": "night_loop",
+   "gain": 0.4
+  },
+  {
+   "start": 24.412,
+   "end": 31.400000000000002,
+   "name": "fire_loop",
+   "gain": 0.45
+  },
+  {
+   "start": 30.6,
+   "end": 39.028,
+   "name": "night_loop",
+   "gain": 0.35
+  },
+  {
+   "start": 30.6,
+   "end": 39.028,
+   "name": "fire_loop",
+   "gain": 0.5
+  },
+  {
+   "start": 38.228,
+   "end": 46.977999999999994,
+   "name": "night_loop",
+   "gain": 0.4
+  },
+  {
+   "start": 38.228,
+   "end": 46.977999999999994,
+   "name": "fire_loop",
+   "gain": 0.35
+  },
+  {
+   "start": 46.178,
+   "end": 53.160999999999994,
+   "name": "night_loop",
+   "gain": 0.45
+  },
+  {
+   "start": 46.178,
+   "end": 53.160999999999994,
+   "name": "fire_loop",
+   "gain": 0.3
+  }
+ ]
+}
