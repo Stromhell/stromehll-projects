@@ -37,3 +37,9 @@ Full-video times were checked one by one in Zernio on 28 Oct 2026 at 17:35 UTC. 
   - **Proposed fix:** give the next 3D video a full-video day between 20 and 26 Nov, which are all free.
   - Not moved. This needs Pushpam's OK.
 - **Free full-video days:** 19 to 26 Nov, and from 3 Dec on.
+
+## Nightly run 29 Oct 2026 (16:43 UTC)
+- Tesla vs Edison full video had moved back to Fri 20 Nov; put back on the approved slot Mon 16 Nov 15:00 ET (20:00 UTC). Its reel "When Edison Tried to Rename Death" moved from 23 Nov 09:00 ET (clashed with a CJNG reel) to 23 Nov 12:00 ET (17:00 UTC).
+- North Korea (3D) full video + 15 reels found on Zernio (scheduled by the 3D chat): full Tue 24 Nov 15:00 ET. 28 Nov had 7 reels, so two NK reels moved: "The Power-Cut Trick" -> Wed 18 Nov 09:00 ET (14:00 UTC); "12 Years for a K-Drama" -> Mon 23 Nov 19:00 ET (00:00 UTC 24 Nov).
+- McDonald's in Africa (3D) full Wed 2 Dec 15:00 ET + 15 reels 2-7 Dec (scheduled by the 3D chat).
+- No new finished mp4s in Drive (only act renders).
