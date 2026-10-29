@@ -24,20 +24,25 @@
   // yaw: 0 front, .45 three-quarter, 1 side. back: 0 none, 1 three-quarter back, 2 back.
   const head = (c, h, f, yaw, back) => {
     const k = RAJU, X = v => v * h;
-    const shape = new Path2D();
-    shape.moveTo(0, X(-.43));
-    shape.bezierCurveTo(X(.3), X(-.43), X(.48), X(-.28), X(.48), X(-.02));
-    shape.bezierCurveTo(X(.48), X(.2), X(.36), X(.42), 0, X(.42));
-    shape.bezierCurveTo(X(-.36), X(.42), X(-.48), X(.2), X(-.48), X(-.02));
-    shape.bezierCurveTo(X(-.48), X(-.28), X(-.3), X(-.43), 0, X(-.43));
-    shape.closePath(); shape.bb = [X(-.48), X(-.43), X(.48), X(.42)];
+    // pear / bean head: narrow temples, wide chubby lower cheeks. In 3/4 and side the forehead,
+    // upturned nose and cheek are one continuous outline.
+    const HF = [[0, -.46], [.28, -.42], [.38, -.26], [.4, -.1], [.42, .0], [.44, .06], [.49, .17], [.44, .34], [.22, .44], [-.22, .44], [-.44, .34], [-.49, .17], [-.42, -.08], [-.3, -.4]];
+    const H3 = [[.02, -.46], [.3, -.42], [.4, -.26], [.42, -.1], [.5, -.01], [.47, .07], [.53, .18], [.45, .35], [.22, .44], [-.18, .44], [-.42, .33], [-.5, .14], [-.48, -.12], [-.33, -.41]];
+    const HS = [[.06, -.46], [.34, -.4], [.43, -.24], [.45, -.08], [.6, -.03], [.52, .07], [.55, .18], [.45, .35], [.2, .44], [-.16, .43], [-.42, .32], [-.55, .1], [-.53, -.16], [-.34, -.42]];
+    const hp = (yaw <= .45 ? HF.map((q, i) => [S.lerp(q[0], H3[i][0], yaw / .45), S.lerp(q[1], H3[i][1], yaw / .45)]) : H3.map((q, i) => [S.lerp(q[0], HS[i][0], (yaw - .45) / .55), S.lerp(q[1], HS[i][1], (yaw - .45) / .55)]));
+    const shape = P(h, back ? HF : hp);
     const fx = X(.27) * yaw;
-    // ears sit low, level with the cheeks
-    const ears = [];
-    if (back === 2) ears.push(X(-.47), X(.47)); else if (back === 1) ears.push(X(.3)); else { ears.push(X(-.47 + .38 * yaw)); if (yaw < .25) ears.push(X(.47)); }
-    const ear = ex => { const p = S.ell(ex, X(.09), X(.085), X(.1)); cel(c, p, k.skin, h, { swk: .4, over: c2 => { c2.strokeStyle = S.rgba(k.skin[1], 1); c2.lineWidth = X(.02); c2.beginPath(); c2.arc(ex, X(.09), X(.045), -1.2, 1.2, ex > 0 ? false : true); c2.stroke(); } }); };
-    const earsBehind = back === 0 && yaw < .25;
-    if (earsBehind) ears.forEach(ear);
+    // ears sit low, level with the cheeks; in 3/4 and side they hang off the back edge of the jaw
+    const earAt = [];
+    if (back === 2) earAt.push([-.47, 1, true], [.47, -1, true]); else if (back === 1) earAt.push([.36, -1, false]);
+    else if (yaw < .25) earAt.push([-.47, 1, true], [.47, -1, true]);
+    else earAt.push([S.lerp(-.44, -.2, (yaw - .25) / .75), 1, yaw < .7]);
+    const ear = ([ex, dir]) => {
+      const x0 = X(ex), y0 = X(.12), o = -dir; // o: the side that sticks out
+      const p = S.poly([[x0 + o * X(.02), y0 - X(.12)], [x0 + o * X(.1), y0 - X(.08)], [x0 + o * X(.11), y0 + X(.02)], [x0 + o * X(.06), y0 + X(.1)], [x0 - o * X(.03), y0 + X(.08)], [x0 - o * X(.04), y0 - X(.06)]]);
+      cel(c, p, k.skin, h, { swk: .4, over: c2 => { c2.strokeStyle = S.rgba(k.skin[1], 1); c2.lineWidth = X(.02); c2.lineCap = 'round'; c2.beginPath(); c2.moveTo(x0 + o * X(.02), y0 - X(.06)); c2.quadraticCurveTo(x0 + o * X(.08), y0 - X(.04), x0 + o * X(.06), y0 + X(.02)); c2.quadraticCurveTo(x0 + o * X(.03), y0 + X(.05), x0, y0 + X(.04)); c2.stroke(); } });
+    };
+    earAt.filter(e => e[2]).forEach(ear);
     cel(c, shape, k.skin, h, { over: c2 => {
       if (back) return;
       c2.fillStyle = S.rgba(k.blush, .35);
@@ -46,10 +51,9 @@
       c2.fillStyle = S.rgba(k.skin[1], .8);
       cx.forEach((x, i) => { if (i === 1 && yaw > .85) return; for (let j = 0; j < 3; j++) { c2.beginPath(); c2.arc(x - X(.04) + j * X(.035), X(.13 + (j % 2) * .025), X(.01), 0, TAU); c2.fill(); } });
     } });
-    if (!earsBehind) ears.forEach(ear);
+    earAt.filter(e => !e[2]).forEach(ear);
     if (!back) {
       // side-view nose bump
-      if (yaw > .85) cel(c, S.ell(X(.48), X(.05), X(.055), X(.045)), k.skin, h, { swk: .3 });
       // big round eyes that touch
       const er = X(.105), ey = X(-.03), look = f.look || [0, 0];
       const eyes = yaw > .85 ? [[X(.34), .6]] : [[fx - er * (1 - yaw * .3), 1], [fx + er * (1 - yaw * .5), 1 - yaw * .45]];
@@ -76,7 +80,7 @@
       }
       c.restore();
       // tiny nose just below the eye line
-      if (yaw <= .85) { c.save(); c.strokeStyle = S.rgba(INK, .8); c.lineWidth = X(.02); c.lineCap = 'round'; const nx = fx + X(.03) + yaw * X(.12); c.beginPath(); c.arc(nx, X(.08), X(.03), .3, 2.6); c.stroke(); c.restore(); }
+      if (yaw <= .3) { c.save(); c.strokeStyle = S.rgba(INK, .8); c.lineWidth = X(.02); c.lineCap = 'round'; const nx = fx + X(.03); c.beginPath(); c.arc(nx, X(.08), X(.03), .3, 2.6); c.stroke(); c.restore(); } else { c.save(); c.fillStyle = S.rgba('#2a120c', .6); c.beginPath(); c.ellipse(X(S.lerp(.44, .5, yaw)), X(.05), X(.018), X(.01), .3, 0, TAU); c.fill(); c.restore(); }
       // wide mouth
       const mx = fx + yaw * X(.1), my = X(.22), mw = X(.2) * (1 - yaw * .35), sm = f.smile ?? .4, op = f.open || 0;
       c.save(); c.lineCap = 'round'; c.lineJoin = 'round';
@@ -87,45 +91,59 @@
       } else { c.strokeStyle = INK; c.lineWidth = X(.026); c.beginPath(); c.moveTo(mx - mw / 2, my - sm * X(.04)); c.quadraticCurveTo(mx, my + sm * X(.06), mx + mw / 2, my - sm * X(.04)); c.stroke(); }
       c.restore();
     }
-    // hair: big swept mop with an upward flip at the front and two tufts on top
+    // hair: volume well past the skull; a thick bang sweeps across the forehead and hooks up at the tip,
+    // with V-shaped partings over the eyes
+    const strands = (c2, n, x0, x1, y0, y1) => { c2.strokeStyle = S.rgba(k.hair[1], .9); c2.lineWidth = X(.016); c2.lineCap = 'round'; for (let i = 0; i < n; i++) { const xa = X(S.lerp(x0, x1, i / (n - 1))); c2.beginPath(); c2.moveTo(xa - X(.08), X(y0)); c2.quadraticCurveTo(xa + X(.04), X((y0 + y1) / 2 - .04), xa + X(.12), X(y1)); c2.stroke(); } };
     if (back) {
-      cel(c, P(h, [[-.52, .1], [-.55, -.2], [-.42, -.48], [-.1, -.6], [.25, -.56], [.5, -.4], [.56, -.12], [.52, .12], [.3, .22], [0, .25], [-.3, .22]]), k.hair, h, { over: c2 => { c2.strokeStyle = S.rgba(k.hair[1], .9); c2.lineWidth = X(.016); for (let i = 0; i < 6; i++) { const x0 = X(-.3 + i * .12); c2.beginPath(); c2.moveTo(x0 * .6, X(-.5)); c2.quadraticCurveTo(x0, X(-.15), x0 * 1.05, X(.18)); c2.stroke(); } } });
+      cel(c, P(h, [[-.6, .14], [-.66, -.2], [-.54, -.56], [-.14, -.72], [.3, -.67], [.6, -.48], [.67, -.18], [.6, .14], [.34, .25], [0, .29], [-.34, .25]]), k.hair, h, { over: c2 => strands(c2, 7, -.45, .4, -.55, .2) });
     } else {
-      const sh = yaw * .1, hl = .3 * yaw;
-      const pts = [[-.52 - sh, .02], [-.55 - sh, -.25], [-.4 - sh, -.5], [-.1 - sh, -.6], [.22 - sh * .5, -.57], [.47, -.42], [.6, -.24], [.68, -.12],
-        [.46 + hl * .2, -.18], [.3 + hl, -.27], [.08 + hl, -.22], [-.1 + hl * .8, -.27], [-.3 + hl * .4, -.2], [-.42 + hl * .2, -.06]];
-      cel(c, P(h, pts), k.hair, h, { over: c2 => { c2.strokeStyle = S.rgba(k.hair[1], .9); c2.lineWidth = X(.016); c2.lineCap = 'round'; for (let i = 0; i < 4; i++) { c2.beginPath(); c2.moveTo(X(-.35 + i * .2 - sh), X(-.5)); c2.quadraticCurveTo(X(-.2 + i * .22), X(-.38), X(-.05 + i * .2 + hl * .5), X(-.25)); c2.stroke(); } } });
+      const sh = yaw * .12, bf = yaw * .14;
+      const pts = [[-.6 - sh, .08], [-.67 - sh, -.2], [-.55 - sh, -.55], [-.16 - sh, -.72], [.26 - sh * .5, -.7], [.58, -.54], [.66, -.36],
+        [.68 + bf, -.16], [.78 + bf, -.17], [.86 + bf, -.33], [.74 + bf, -.25], [.56 + bf, -.15],
+        [.38 + bf, -.27], [.27 + bf, -.15], [.12 + bf * .8, -.3], [.0 + bf * .6, -.18], [-.14 + bf * .4, -.3], [-.3 + bf * .2, -.2], [-.44, -.26], [-.52 - sh, -.04]];
+      cel(c, P(h, pts), k.hair, h, { over: c2 => strands(c2, 5, -.4 - sh, .45 + bf, -.6, -.25) });
     }
+    if (back) earAt.forEach(ear);
     // tufts
     c.save(); c.strokeStyle = INK; c.fillStyle = k.hair[0]; c.lineWidth = X(.022); c.lineCap = 'round';
-    for (const [x0, a] of [[-.06, -1.9], [.06, -1.2]]) { const t = new Path2D(); t.moveTo(X(x0 - .03), X(-.57)); t.quadraticCurveTo(X(x0) + Math.cos(a) * X(.1), X(-.62) + Math.sin(a) * X(.12), X(x0) + Math.cos(a) * X(.16), X(-.6) + Math.sin(a) * X(.14)); t.quadraticCurveTo(X(x0 + .02), X(-.62), X(x0 + .04), X(-.57)); c.fill(t); c.stroke(t); }
+    for (const [x0, a] of [[-.08, -1.9], [.04, -1.2]]) { const t = new Path2D(); t.moveTo(X(x0 - .03), X(-.69)); t.quadraticCurveTo(X(x0) + Math.cos(a) * X(.1), X(-.74) + Math.sin(a) * X(.12), X(x0) + Math.cos(a) * X(.16), X(-.72) + Math.sin(a) * X(.14)); t.quadraticCurveTo(X(x0 + .02), X(-.74), X(x0 + .04), X(-.69)); c.fill(t); c.stroke(t); }
     c.restore();
   };
 
   // ---------- shoe: chunky flat-soled high-top ----------
-  const SIDE = [[-.1, -.17], [.06, -.17], [.08, -.06], [.3, -.05], [.41, .0], [.41, .07], [-.13, .07], [-.13, -.04]];
-  const FRONT = [[-.11, -.17], [.11, -.17], [.12, -.06], [.15, -.03], [.16, .02], [.15, .07], [-.15, .07], [-.16, -.02]];
+  const SIDE = [[-.11, -.25], [.07, -.25], [.09, -.1], [.22, -.09], [.36, -.05], [.43, .01], [.43, .08], [-.15, .08], [-.16, -.06]];
+  const FRONT = [[-.11, -.25], [.11, -.25], [.13, -.1], [.15, -.07], [.16, -.03], [.17, .02], [.16, .08], [-.16, .08], [-.17, -.04]];
   const shoe = (c, h, x, y, d, f, rot) => {
-    const pts = SIDE.map((p, i) => [S.lerp(FRONT[i][0], p[0], f) * d * h, S.lerp(FRONT[i][1], p[1], f) * h]);
+    const L = (a, b) => [S.lerp(FRONT[a][0], SIDE[a][0], f) * d * h, S.lerp(FRONT[a][1], SIDE[a][1], f) * h];
+    const pts = SIDE.map((_, i) => L(i));
     c.save(); c.translate(x, y); c.rotate(rot * D);
     cel(c, S.poly(pts), RAJU.shoe, h, { swk: .5, over: c2 => {
-      c2.fillStyle = RAJU.sole; c2.fillRect(-h, h * .035, 2 * h, h);
-      c2.strokeStyle = INK; c2.lineWidth = h * .018; c2.beginPath(); c2.moveTo(-h, h * .035); c2.lineTo(h, h * .035); c2.stroke();
-      c2.strokeStyle = S.rgba(RAJU.shoe[1], .9); c2.lineWidth = h * .014; for (let i = 0; i < 3; i++) { c2.beginPath(); c2.moveTo(-.05 * h * d, (-.13 + i * .04) * h); c2.lineTo(.05 * h * d, (-.12 + i * .04) * h); c2.stroke(); }
+      // white sole border
+      c2.fillStyle = RAJU.sole; c2.fillRect(-h, h * .02, 2 * h, h);
+      c2.strokeStyle = INK; c2.lineWidth = h * .018; c2.beginPath(); c2.moveTo(-h, h * .02); c2.lineTo(h, h * .02); c2.stroke();
+      // raised toe box
+      c2.strokeStyle = S.rgba(INK, .7); c2.lineWidth = h * .015; c2.beginPath(); const tx = S.lerp(.02, .26, f) * d * h; c2.moveTo(tx, h * .02); c2.quadraticCurveTo(tx + S.lerp(0, .02, f) * d * h, -.08 * h, tx + S.lerp(.13, .12, f) * d * h * (f > .2 ? 1 : 0) + (f > .2 ? 0 : 0), -.075 * h); if (f <= .2) { c2.moveTo(-.12 * h, -.03 * h); c2.quadraticCurveTo(0, -.09 * h, .12 * h, -.03 * h); } c2.stroke();
+      // eyelets
+      c2.fillStyle = INK; for (let i = 0; i < 4; i++) { const ex = S.lerp(0, .05, f) * d * h, ey = (-.21 + i * .045) * h; c2.beginPath(); c2.arc(ex - .025 * h * (1 - f * .6), ey, h * .009, 0, TAU); c2.fill(); c2.beginPath(); c2.arc(ex + .025 * h * (1 - f * .6), ey, h * .009, 0, TAU); c2.fill(); }
     } });
+    // ankle collar
+    cel(c, S.ell(S.lerp(0, -.02, f) * d * h, -.25 * h, .115 * h, .035 * h), [S.mix(RAJU.shoe[0], RAJU.shoe[1], .35), RAJU.shoe[1]], h, { swk: .2 });
     c.restore();
   };
   // ---------- hand: small mitten with a thumb ----------
   const hand = (c, h, p, a, open) => {
-    const dx = Math.cos(a), dy = Math.sin(a), nx = -dy, ny = dx, r = h * .065;
+    const dx = Math.cos(a), dy = Math.sin(a), nx = -dy, ny = dx;
     const q = (s, t) => [p[0] + dx * s * h + nx * t * h, p[1] + dy * s * h + ny * t * h];
-    const palm = q(.04, 0), fing = q(.1, 0), th = q(.05, .055 + (open || 0) * .02);
-    lumpCel(c, [[palm[0], palm[1], r, r * .9, a], [fing[0], fing[1], r * 1.05, r * .75, a], [th[0], th[1], r * .55, r * .35, a + .9]], RAJU.skin, h);
+    const palm = q(.045, 0), L = [[palm[0], palm[1], h * .062, h * .052, a]];
+    [-.42, -.14, .14, .4].forEach((fa, i) => { const ang = a + fa * .8, len = [.07, .085, .082, .068][i]; const b = [palm[0] + Math.cos(a + fa * .5) * h * .045, palm[1] + Math.sin(a + fa * .5) * h * .045]; L.push([b[0] + Math.cos(ang) * h * len * .55, b[1] + Math.sin(ang) * h * len * .55, h * len * .55, h * .02, ang]); });
+    const th = q(.035, .06), ta = a + 1.25;
+    L.push([th[0] + Math.cos(ta) * h * .025, th[1] + Math.sin(ta) * h * .025, h * .04, h * .021, ta]);
+    lumpCel(c, L, RAJU.skin, h);
   };
 
   // ---------- full body ----------
   // pose (all in head units h, y down): legs are in the hip frame, arms in the tilted torso frame.
-  const STAND = { lift: 0, tilt: 0, htilt: 0, legL: [[-.1, .55], [-.11, 1.11]], legR: [[.1, .55], [.11, 1.11]], armL: [[-.33, -.3], [-.34, .06]], armR: [[.33, -.3], [.34, .06]], footL: 0, footR: 0 };
+  const STAND = { lift: 0, tilt: 0, htilt: 0, legL: [[-.08, .55], [-.08, 1.11]], legR: [[.08, .55], [.08, 1.11]], armL: [[-.24, -.3], [-.25, .06]], armR: [[.24, -.3], [.25, .06]], footL: 0, footR: 0 };
   S.noodle = (c, x, ground, h, pose, f, view) => {
     const p = Object.assign({}, STAND, pose), v = Object.assign({ yaw: .3, back: 0, ws: .9, d: 1, sf: .5 }, view);
     const ws = v.ws, k = RAJU;
@@ -133,14 +151,14 @@
     const H = h;
     // legs: thin parallel noodles, no knees, into big shoes
     const leg = (L, sx, foot) => {
-      const r = [hip[0] + sx * .09 * ws * H, hip[1]], cc = [hip[0] + L[0][0] * ws * H, hip[1] + L[0][1] * H], e = [hip[0] + L[1][0] * ws * H, hip[1] + L[1][1] * H];
+      const r = [hip[0] + sx * .07 * ws * H, hip[1]], cc = [hip[0] + L[0][0] * ws * H, hip[1] + L[0][1] * H], e = [hip[0] + L[1][0] * ws * H, hip[1] + L[1][1] * H];
       const pts = quad(r, cc, e);
       cel(c, S.tube(pts, H * .095), k.pants, H, { swk: .45 });
       shoe(c, H, e[0], e[1], v.d, v.sf, foot);
     };
     leg(p.legL, -1, p.footL); leg(p.legR, 1, p.footR);
     c.save(); c.translate(hip[0], hip[1]); c.rotate(p.tilt * D);
-    const sh = s => [s * .19 * ws * H, -.64 * H];
+    const sh = s => [s * .13 * ws * H, -.64 * H];
     const arm = (A, s) => {
       const r = sh(s), cc = [A[0][0] * ws * H, A[0][1] * H], e = [A[1][0] * ws * H, A[1][1] * H];
       const pts = quad(r, cc, e), last = pts[pts.length - 2], a = Math.atan2(e[1] - last[1], e[0] - last[0]);
@@ -153,12 +171,12 @@
     cel(c, S.tube([[0, -.66 * H], [0, -.82 * H]], H * .09), [S.mix(k.skin[0], k.skin[1], .3), k.skin[1]], H, { swk: .3 });
     // torso: narrow loose t-shirt, shoulders narrower than the head, zig-zag trim at the hem
     const tw = ws;
-    const shirt = P(H, [[-.12 * tw, -.72], [.12 * tw, -.72], [.2 * tw, -.66], [.24 * tw, -.4], [.27 * tw, .02], [.27 * tw, .1], [-.27 * tw, .1], [-.27 * tw, .02], [-.24 * tw, -.4], [-.2 * tw, -.66]]);
+    const shirt = P(H, [[-.08 * tw, -.72], [.08 * tw, -.72], [.13 * tw, -.67], [.15 * tw, -.4], [.19 * tw, .02], [.2 * tw, .1], [-.2 * tw, .1], [-.19 * tw, .02], [-.15 * tw, -.4], [-.13 * tw, -.67]]);
     cel(c, shirt, k.shirt, H, { over: c2 => {
       c2.strokeStyle = k.trim; c2.lineWidth = H * .02; c2.lineJoin = 'round'; c2.beginPath();
-      for (let i = 0; i <= 8; i++) { const xx = (-.26 + i * .065) * tw * H, yy = (i % 2 ? -.02 : .03) * H; i ? c2.lineTo(xx, yy) : c2.moveTo(xx, yy); } c2.stroke();
+      for (let i = 0; i <= 8; i++) { const xx = (-.19 + i * .0475) * tw * H, yy = (i % 2 ? -.02 : .03) * H; i ? c2.lineTo(xx, yy) : c2.moveTo(xx, yy); } c2.stroke();
       if (!v.back) {
-        c2.strokeStyle = S.rgba(INK, .7); c2.lineWidth = H * .016; c2.beginPath(); c2.moveTo(-.09 * tw * H, -.71 * H); c2.quadraticCurveTo(0, -.6 * H, .09 * tw * H, -.71 * H); c2.stroke();
+        c2.strokeStyle = S.rgba(INK, .7); c2.lineWidth = H * .016; c2.beginPath(); c2.moveTo(-.06 * tw * H, -.71 * H); c2.quadraticCurveTo(0, -.62 * H, .06 * tw * H, -.71 * H); c2.stroke();
         // black thread with a small pendant
         c2.strokeStyle = '#2b2226'; c2.lineWidth = H * .008; c2.beginPath(); c2.moveTo(-.07 * tw * H, -.7 * H); c2.quadraticCurveTo(v.yaw * .05 * H, -.5 * H, .07 * tw * H, -.7 * H); c2.stroke();
         c2.fillStyle = '#c99a3a'; c2.strokeStyle = INK; c2.lineWidth = 1; c2.beginPath(); c2.arc(v.yaw * .05 * H, -.5 * H, H * .028, 0, TAU); c2.fill(); c2.stroke();
@@ -190,7 +208,7 @@
       views.forEach(([n, v], i) => {
         const x = 200 + i * 225, b = Math.sin(t * 1.6 + i) * .01;
         dust(c, x, G + 4, 90);
-        const sideArm = v.yaw > .9 ? { armL: [[-.05, -.3], [-.02, .06]], armR: [[.08, -.3], [.06, .06]], legL: [[-.03, .55], [-.04, 1.11]], legR: [[.05, .55], [.06, 1.11]] } : {};
+        const sideArm = v.back ? {} : v.yaw > .9 ? { tilt: 6, htilt: -3, armL: [[.0, -.3], [.06, .06]], armR: [[.06, -.3], [.12, .06]], legL: [[-.04, .55], [-.12, 1.11]], legR: [[.03, .55], [-.06, 1.11]] } : v.yaw > .3 ? { tilt: 4, legL: [[-.08, .55], [-.15, 1.11]], legR: [[.07, .55], [.02, 1.11]] } : {};
         S.noodle(c, x, G, h, Object.assign({ lift: b, htilt: Math.sin(t * .7 + i) * 2 }, sideArm), { blink: S.blinkAt(t, i), smile: .45 }, v);
         S.label(c, n, x, G + 40, 18, '#2c3550');
       });
