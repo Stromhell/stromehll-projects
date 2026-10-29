@@ -50,3 +50,9 @@ Full-video times were checked one by one in Zernio on 28 Oct 2026 at 17:35 UTC. 
 
 ## 29 Oct 2026, 20:30 UTC: facts shorts start
 - Facts short 01 "Stranded at sea: why can't you drink the water?" booked YouTube + Instagram, Fri 30 Oct 14:30 UTC (20:00 IST). Zernio post 6ae3ac0511fb5e81bda6fb6d. Card external/fs-01-seawater removed.
+
+## 29 Oct 2026, 21:15 UTC: NVIDIA reels, Ancient Humans + BlackRock full videos booked
+- NVIDIA 15 reels (YouTube + Instagram, cover as IG thumbnail) in free reel slots: 31 Oct 13:00/20:00, 1 Nov 01:00/14:00/21:00, 2 Nov 02:00/14:00/21:00, 3 Nov 02:00/21:00, 4 Nov 02:00/21:00, 5 Nov 02:00/21:00, 6 Nov 02:00 (UTC).
+- Ancient Humans full "They Found Food in 15 Hours a Week. Where Did Your Time Go?": Fri 20 Nov 20:00 UTC (15:00 ET), Zernio 6ae3b68e28e18fc94a536878.
+- BlackRock full "The Company That Owns Everything but Makes Nothing": Sun 22 Nov 16:00 UTC (11:00 ET), Zernio 6ae3b69bb2a822e344e4bd4f.
+- Ancient Humans and BlackRock reels: waiting for renders.
