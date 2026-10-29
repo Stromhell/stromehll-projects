@@ -234,8 +234,11 @@ window.SHOTS = [
       const seal = seg(lt, Sh.tS + .4, Sh.tS + .8), press = pulse(lt, Sh.tS + .6, .5);
       VP.figure(c, [520, 640], { k: -.5, sy: -.2, a: .35, blur: 2 }, cc => S.person(cc, C.BISHOP, 520, 640, 46, Object.assign(S.idle(lt, 0), { face: 1, shN: 60, elN: 40 + 20 * Math.sin(lt * 6) * (lt < Sh.tS) }), { blink: S.blinkAt(lt, 1), look: [.5, .5], time: lt }, L));
       VP.figure(c, [760, 640], { k: -.5, sy: -.2, a: .35, blur: 2 }, cc => S.person(cc, C.BERBER2, 760, 640, 48, Object.assign(S.idle(lt, 1), { face: -1, shN: 50 + 30 * seal - 20 * press, elN: 30 }), { blink: S.blinkAt(lt, 2), smile: .3 * op, look: [-.5, .5], time: lt }, L));
+      // the signing table in front of them, so they stand behind it
+      c.fillStyle = S.rgba('#2a1a10', .3); c.beginPath(); c.ellipse(650, 690, 230, 10, 0, 0, TAU); c.fill();
+      c.fillStyle = '#5a3420'; c.fillRect(430, 600, 420, 18); c.fillRect(450, 618, 14, 70); c.fillRect(816, 618, 14, 70); c.fillStyle = '#e8d8b0'; c.fillRect(430, 600, 420, 4);
       // parchment, quill line and wax seal on the table
-      c.fillStyle = '#f4e8c8'; c.fillRect(580, 588, 120, 12); const w = seg(lt, .6, Sh.tS); c.strokeStyle = '#2a1a10'; c.lineWidth = 1.2; c.beginPath(); for (let x = 0; x < 100 * w; x += 3) { const y = 592 + Math.sin(x * .9) * 1.5; x ? c.lineTo(584 + x, y) : c.moveTo(584, y); } c.stroke();
+      c.fillStyle = '#f4e8c8'; c.fillRect(580, 590, 120, 10); const w = seg(lt, .6, Sh.tS); c.strokeStyle = '#2a1a10'; c.lineWidth = 1.2; c.beginPath(); for (let x = 0; x < 100 * w; x += 3) { const y = 592 + Math.sin(x * .9) * 1.5; x ? c.lineTo(584 + x, y) : c.moveTo(584, y); } c.stroke();
       if (lt > Sh.tS + .6) { c.fillStyle = '#9a1e1a'; c.beginPath(); c.ellipse(680, 594, 8, 3, 0, 0, TAU); c.fill(); VP.glow(c, 680, 590, 30, '#ff8a6a', .4 * press); }
       // townsfolk walking through once the gate is open
       for (let k = 0; k < 3; k++) { const q = seg(lt, Sh.tO + 1.5 + k * .8, Sh.tO + 6 + k * .8); if (q <= 0 || q >= 1) continue; const x = lerp(640, 300 + k * 40, q), y = 600 + q * 20, uu = 24 + q * 10; S.person(c, k === 1 ? C.TOWNSMAN : C.NOBLE2, x, y, uu, Object.assign(walk(lt + k), { face: -1 }), { time: lt, smile: .3 }, L); }

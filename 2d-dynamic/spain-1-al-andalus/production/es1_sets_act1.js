@@ -178,8 +178,7 @@
     g.lineWidth = 10; g.strokeStyle = '#e0c89a'; g.stroke(arch(640, 580, 216, 292));
     // ground
     g.fillStyle = '#b8966a'; g.fillRect(0, 580, w, 140); S.strokes(g, { x: 0, y: 580, w, h: 140, n: 500, cols: ['#d8b88a', '#7a5a3a'], l0: 6, l1: 18, ang: 0, jit: .2, w0: 1, w1: 2, a0: .2, a1: .5, seed: 381 });
-    // the signing table in front
-    g.fillStyle = '#5a3420'; g.fillRect(430, 600, 420, 18); g.fillRect(450, 618, 14, 70); g.fillRect(816, 618, 14, 70); g.fillStyle = '#e8d8b0'; g.fillRect(430, 600, 420, 4);
+    // the signing table is drawn in the act, in front of the people
   });
 
   // ======================== COVADONGA: misty green mountains and the cave ========================
