@@ -1,0 +1,20 @@
+{"music": {"file": "/home/user/work/audio/music/Despair_and_Triumph.mp3", "gain": 0.26, "ss": 0, "fadeOut": 4},
+ "amb": {"4.1":"room","4.2":"room","4.3":"paper","4.4":"night","4.5":"night","4.6":"air","4.7":"room","4.8":"room","4.9":"air"},
+ "whoosh": ["/home/user/work/audio/sfx/1795.mp3", "/home/user/work/audio/sfx/1796.mp3"],
+ "cues": [
+  ["4.1", 0.4, "/home/user/work/audio/sfx/1251.mp3", 0.35, {"dur": 3}],
+  ["4.1", 2.2, "/home/user/work/audio/sfx/0802.mp3", 0.3, {"dur": 1.2}],
+  ["4.2", 0.3, "/home/user/work/audio/sfx/0376.mp3", 0.35, {"dur": 5}],
+  ["4.2", 4.8, "/home/user/work/audio/sfx/0037.mp3", 0.35, {"dur": 1.2}],
+  ["4.3", 0.2, "/home/user/work/audio/sfx/0243.mp3", 0.4, {"dur": 5, "lp": 300}],
+  ["4.4", 0.0, "/home/user/work/audio/sfx/0426.mp3", 0.2, {"dur": 6.5}],
+  ["4.4", 0.3, "/home/user/work/audio/sfx/0166.mp3", 0.3, {"dur": 4}],
+  ["4.5", 0.2, "/home/user/work/audio/sfx/0189.mp3", 0.45, {"dur": 4.6}],
+  ["4.5", 0.0, "/home/user/work/audio/sfx/0426.mp3", 0.18, {"dur": 4.8}],
+  ["4.6", 0.0, "/home/user/work/audio/sfx/0376.mp3", 0.3, {"dur": 7}],
+  ["4.6", 1.5, "/home/user/work/audio/sfx/3004.mp3", 0.25, {"dur": 5.5, "lp": 4000}],
+  ["4.7", 0.4, "/home/user/work/audio/sfx/3113.mp3", 0.35, {"dur": 5, "lp": 140}],
+  ["4.8", 0.3, "/home/user/work/audio/sfx/0243.mp3", 0.35, {"dur": 5, "lp": 300}],
+  ["4.9", 0.0, "/home/user/work/audio/sfx/3005.mp3", 0.5, {"dur": 6, "lp": 5000, "fadeIn": 1}],
+  ["4.9", 3.6, "/home/user/work/audio/sfx/0572.mp3", 0.4, {"dur": 1.2}]
+ ]}
