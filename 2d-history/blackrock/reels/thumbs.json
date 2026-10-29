@@ -1,0 +1,200 @@
+[
+{
+"id": 1,
+"frame": 92,
+"hx": 555,
+"hy": 495,
+"z": 1.4,
+"lines": [
+"OWNS MORE NVIDIA",
+"THAN JENSEN"
+],
+"hi": 1,
+"acc": "#e8b44a",
+"dx": 0
+},
+{
+"id": 2,
+"frame": 108,
+"hx": 960,
+"hy": 520,
+"z": 1.1,
+"lines": [
+"$15 TRILLION",
+"MAKES NOTHING"
+],
+"hi": 1,
+"acc": "#e8b44a"
+},
+{
+"id": 3,
+"frame": 104,
+"hx": 742,
+"hy": 330,
+"z": 1.3,
+"lines": [
+"YOUR HOME LOAN",
+"IS A BOND"
+],
+"hi": 1,
+"acc": "#4ab8ff"
+},
+{
+"id": 4,
+"frame": 720,
+"hx": 1680,
+"hy": 560,
+"z": 1.5,
+"lines": [
+"THE A-B-C",
+"MONEY TRICK"
+],
+"hi": 1,
+"acc": "#76d24a",
+"dx": -120
+},
+{
+"id": 5,
+"frame": 404,
+"hx": 950,
+"hy": 450,
+"z": 0.9,
+"lines": [
+"THEY PAID EARLY",
+"WALL ST. LOST"
+],
+"hi": 1,
+"acc": "#ff5a4a"
+},
+{
+"id": 6,
+"frame": 300,
+"hx": 1416,
+"hy": 300,
+"z": 1.3,
+"lines": [
+"HE LOST",
+"$100 MILLION"
+],
+"hi": 1,
+"acc": "#ff5a4a"
+},
+{
+"id": 7,
+"frame": 747,
+"hx": 960,
+"hy": 540,
+"z": 1.3,
+"lines": [
+"THE SOFTWARE",
+"WATCHING TRILLIONS"
+],
+"hi": 1,
+"acc": "#76d24a"
+},
+{
+"id": 8,
+"frame": 1086,
+"hx": 720,
+"hy": 495,
+"z": 1.3,
+"dx": 0,
+"lines": [
+"WASHINGTON",
+"CALLED HIM"
+],
+"hi": 1,
+"acc": "#4ab8ff"
+},
+{
+"id": 9,
+"frame": 273,
+"hx": 960,
+"hy": 500,
+"z": 1.0,
+"lines": [
+"$13.5 BILLION",
+"THE BIG BUY"
+],
+"hi": 0,
+"acc": "#e8b44a"
+},
+{
+"id": 10,
+"frame": 541,
+"hx": 960,
+"hy": 552,
+"z": 1.0,
+"lines": [
+"9 IN 10 PROS",
+"LOSE"
+],
+"hi": 1,
+"acc": "#ff5a4a"
+},
+{
+"id": 11,
+"frame": 339,
+"hx": 1300,
+"hy": 560,
+"z": 1.0,
+"lines": [
+"WHAT IS AN ETF?",
+"60 SECONDS"
+],
+"hi": 0,
+"acc": "#4ab8ff"
+},
+{
+"id": 12,
+"frame": 544,
+"hx": 1100,
+"hy": 560,
+"z": 1.0,
+"lines": [
+"TINY FEE",
+"HUGE BUSINESS"
+],
+"hi": 1,
+"acc": "#e8b44a"
+},
+{
+"id": 13,
+"frame": 440,
+"hx": 1000,
+"hy": 560,
+"z": 1.0,
+"lines": [
+"NOBODY CHOSE",
+"NVIDIA"
+],
+"hi": 1,
+"acc": "#76d24a"
+},
+{
+"id": 14,
+"frame": 381,
+"hx": 960,
+"hy": 560,
+"z": 1.0,
+"lines": [
+"THE BIG THREE",
+"QUIET OWNERS"
+],
+"hi": 0,
+"acc": "#e8b44a"
+},
+{
+"id": 15,
+"frame": 1009,
+"hx": 1032,
+"hy": 560,
+"z": 1.3,
+"lines": [
+"TEXAS SUED",
+"BLACKROCK"
+],
+"hi": 1,
+"acc": "#ff5a4a"
+}
+]
