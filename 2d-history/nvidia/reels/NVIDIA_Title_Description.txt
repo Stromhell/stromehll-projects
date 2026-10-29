@@ -1,0 +1,28 @@
+Title (main): He Built the Wrong Chip and Still Built the World's Most Valuable Company
+Backup A (swap after 48 h if CTR is weak): Nvidia Was 30 Days From Dying. Then This Happened
+Backup B: How a Denny's Dishwasher Built a $5 Trillion Company
+
+Thumbnail text: 30 DAYS OF CASH -> $5 TRILLION
+
+Tags: nvidia, jensen huang, nvidia history, how nvidia was built, nvidia story, gpu history, cuda, alexnet, nvidia stock, 5 trillion company, sega nvidia, riva 128, geforce 256, nvidia documentary, ai chips, chip war, tsmc, animated history, business documentary
+
+Description:
+A Denny's dishwasher now runs the first company in history worth $5 trillion. Here is how Jensen Huang built Nvidia: the wrong chip, the Sega favour, 30 days of cash, and the CUDA bet Wall Street hated.
+
+In 1993 three engineers met in a Denny's booth in San Jose with about $40,000 and an idea for a graphics chip. Their first product, the NV1, bet on curved surfaces just as Microsoft's DirectX standardised triangles. Nvidia lost its only big customer, asked Sega to pay it anyway, and shipped the RIVA 128 with roughly a month of payroll left. Then came the GeForce, the GPU, CUDA, AlexNet, the failed $40 billion Arm deal, the US chip bans, ChatGPT and, on 29 October 2025, a $5 trillion valuation.
+
+Chapters
+0:00 The dishwasher and the $5 trillion company
+0:42 The boy at Oneida
+1:33 The wrong chip
+2:27 The Sega call
+3:17 Thirty days
+3:53 The GPU
+4:54 Ten thousand workers: CUDA
+6:10 The Toronto moment: AlexNet
+7:24 The fights: Arm, TSMC and the chip ban
+8:17 Five trillion
+
+Sources: Nvidia company history and annual reports; Jensen Huang interviews (Stanford GSB, Acquired, 60 Minutes); ImageNet 2012 results (Krizhevsky, Sutskever, Hinton); US FTC filing against the Nvidia-Arm deal (2021); US Commerce Department export rules (2022, 2023).
+
+#Nvidia #JensenHuang #History #AI #Documentary
