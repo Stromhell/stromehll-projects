@@ -64,3 +64,20 @@ Full-video times were checked one by one in Zernio on 28 Oct 2026 at 17:35 UTC. 
 - 16:9 (75 s), YouTube only: Sat 31 Oct 14:00 UTC (19:30 IST, 10:00 ET). Zernio 6ae3c0aaa0886c892966c21d. "Why Ancient Humans Were Terrified of the Dark (It Saved Your Life)"
 - 9:16 short (70 s), YouTube Shorts + Instagram: Sun 1 Nov 15:00 UTC (20:30 IST, 10:00 ET). Zernio 6ae3c0ada0886c892966c233. Free slot outside the facts-shorts and reel slots. IG has its own caption.
 - Control Room card external/2d-ancient-dark removed (removal rule).
+
+## BlackRock reels booked (29 Oct 2026, 22:02 UTC), YouTube + Instagram, cover as IG thumbnail
+- R01 2026-10-30 13:00 UTC: This Company Owns More Nvidia Than Jensen Huang #shorts (6ae3c257b2f60cd9b64cc80e)
+- R02 2026-10-30 20:00 UTC: It Manages More Money Than India, Japan and France Produce #shorts (6ae3c259b2f60cd9b64cc819)
+- R03 2026-10-31 01:00 UTC: Wall Street Turned Your Home Loan Into a Bond #shorts (6ae3c25cbc0b10e15d5e3cb4)
+- R04 2026-11-06 21:00 UTC: The A-B-C Trick That Made Money Out of Nothing #shorts (6ae3c25eee7b4934e9f2261e)
+- R05 2026-11-07 02:00 UTC: Why Paying Your Loan Off Early Cost Wall Street Millions #shorts (6ae3c2616aa4d54b637dc062)
+- R06 2026-11-07 21:00 UTC: The Star Trader Who Lost $100 Million #shorts (6ae3c263b2f60cd9b64cc84b)
+- R07 2026-11-08 00:00 UTC: The Software Watching Over Trillions of Dollars #shorts (6ae3c266ee7b4934e9f2267a)
+- R08 2026-11-08 02:00 UTC: In 2008, Washington Called One Firm to Clean Up #shorts (6ae3c269ee7b4934e9f226a0)
+- R09 2026-11-08 17:00 UTC: The $13.5 Billion Deal That Changed Investing #shorts (6ae3c26cee7b4934e9f226b8)
+- R10 2026-11-08 21:00 UTC: 9 in 10 Fund Managers Lose to the Market #shorts (6ae3c26fbc0b10e15d5e3d1e)
+- R11 2026-11-09 00:00 UTC: What Is an ETF? The Simplest Explanation #shorts (6ae3c271ee7b4934e9f226d7)
+- R12 2026-11-09 02:00 UTC: A Tiny Fee on Trillions Is a Huge Business #shorts (6ae3c274bc0b10e15d5e3d31)
+- R13 2026-11-09 14:00 UTC: Nobody at BlackRock Chose to Buy Nvidia #shorts (6ae3c277bc0b10e15d5e3d3d)
+- R14 2026-11-09 17:00 UTC: Meet the Big Three: The Quiet Owners of America #shorts (6ae3c279bc0b10e15d5e3d47)
+- R15 2026-11-10 00:00 UTC: Texas Sued BlackRock Over Coal. Here's Why #shorts (6ae3c27bee7b4934e9f2270d)
