@@ -200,6 +200,42 @@
     return r;
   };
 
+  // ---------- crowd variety and grounded seating (Pushpam's quality rules, 29 Oct) ----------
+  // VP.vary: a copy of a cast member with its own face, hair, build and (optionally) clothes, so no two crowd members match.
+  const VSK = [{ base: '#c08a5e', shade: '#83533a', rim: '#f6c896' }, { base: '#d9a27a', shade: '#9a6248', rim: '#ffd6b0' }, { base: '#a8693f', shade: '#663a24', rim: '#eaa775' }, { base: '#e2b48e', shade: '#a6765a', rim: '#ffe0c0' }, { base: '#b47a50', shade: '#744a30', rim: '#f0b888' }];
+  const VHR = [{ base: '#2a1f24', shade: '#120c10', rim: '#7a7486' }, { base: '#4a2e1e', shade: '#24140c', rim: '#9a7a62' }, { base: '#8c8580', shade: '#55504c', rim: '#d8d2cc' }, { base: '#6a3a1e', shade: '#3a1e0c', rim: '#b07a52' }, { base: '#b8b2aa', shade: '#7a746c', rim: '#f0ece6' }];
+  VP.vary = (ch, seed, o = {}) => {
+    const r = S.rng(seed * 7 + 3), pick = a => a[Math.floor(r() * a.length) % a.length];
+    const n = Object.assign({}, ch, { skin: pick(VSK), hairCol: pick(VHR), mustache: r() < .35, beard: r() < .15, glasses: r() < .3 });
+    if (ch.build !== 'woman' && ch.build !== 'kid') n.build = pick(o.builds || ['man', 'man', 'broad', 'elder']);
+    if (n.hair === 'neat' || !n.hair) n.hair = pick(['neat', 'neat', 'curly']);
+    if (n.build === 'elder') { n.hair = 'elder'; n.hairCol = pick([VHR[2], VHR[4]]); }
+    if (o.suits) { const s2 = pick(o.suits); n.shirt = s2; n.pants = s2; }
+    if (o.ties) n.tie = pick(o.ties);
+    return Object.assign(n, o.keep || {});
+  };
+  // VP.sit: a seated pose with both legs drawn and the feet on the floor; y passed to S.person is the floor.
+  // v picks the gesture (0..7) so a row of people never shares one pose.
+  const LEGS = { man: 2.8, broad: 2.75, woman: 2.65, elder: 2.55, kid: 1.95 };
+  VP.sitY = ch => -(LEGS[ch.build] || 2.8) * .5;
+  VP.sit = (ch, lt, v, o = {}) => {
+    const id = S.idle(lt * (o.speed || 1), v * 1.7), w = Math.sin(lt * 2.2 + v);
+    const P = Object.assign(id, { sitY: VP.sitY(ch) - (o.seat || 0), hipN: 86, kneeN: 86, hipF: 82, kneeF: 80, footN: 0, footF: 0, bob: 0 });
+    switch (((v % 8) + 8) % 8) {
+      case 0: Object.assign(P, { shN: 12, elN: 105, shF: 5, elF: 45, lean: 6 }); break;                         // reading the order paper
+      case 1: Object.assign(P, { shN: 62, elN: 150, shF: 2, elF: 44, lean: 10, hipF: 100, kneeF: 70 }); break; // chin on hand, legs crossed
+      case 2: Object.assign(P, { shN: 2, elN: 50, shF: 0, elF: 46, lean: -4 }); break;                         // hands in lap, sitting back
+      case 3: Object.assign(P, { shN: 22 + 12 * w, elN: 118 + 10 * w, shF: 2, elF: 44, lean: 4 }); break;      // talking with a hand
+      case 4: Object.assign(P, { shN: 8, elN: 20, shF: 8, elF: 20, lean: -8, hipN: 80, kneeN: 70 }); break;    // slumped back, legs out
+      case 5: Object.assign(P, { shN: 16, elN: 36, shF: 14, elF: 40, lean: 26 }); break;                      // elbows on knees
+      case 6: Object.assign(P, { shN: 18, elN: 60, shF: 4, elF: 40, lean: 14, hipF: 96, kneeF: 64 }); break;   // writing on the knee
+      default: Object.assign(P, { shN: 4, elN: 40, shF: 6, elF: 42, tilt: 6 + id.tilt }); break;               // hands on knees, head tilted
+    }
+    return Object.assign(P, o.pose || {});
+  };
+  // a paper held in a hand (for reading poses)
+  VP.paper = (c, wr, s = 1) => { c.save(); c.translate(wr[0], wr[1]); c.rotate(-.25); c.fillStyle = '#f0e8d4'; c.fillRect(-2 * s, -14 * s, 12 * s, 16 * s); c.fillStyle = 'rgba(60,40,20,.35)'; for (let i = 0; i < 4; i++) c.fillRect(0, (-11 + i * 3.5) * s, 8 * s, .8 * s); c.restore(); };
+
   // ---------- shot builder ----------
   // window.SHOTS[i] = { set, cam, draw(c, lt, u, S, cam) in stage coords, over(c, lt, u, S) in screen coords,
   //                     sfx:[[t|phrase, name, gain]], bed, sub, init(S), xfade, inSfx }

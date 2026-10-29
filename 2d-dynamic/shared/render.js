@@ -10,7 +10,7 @@ const fs = require('fs'), path = require('path');
   const open = async () => { const p = await browser.newPage({ viewport: { width: 1920, height: 1080 } }); p.on('console', m => { if (m.type() === 'error' || m.type() === 'warning') console.error('[page]', m.text()); }); p.on('pageerror', e => console.error('[pageerror]', e.message)); await p.goto('file://' + path.resolve(html)); await p.waitForFunction(() => window.KIT_READY === true, null, { timeout: 120000 }); return p; };
   const p0 = await open();
   const info = await p0.evaluate(() => ({ dur: KIT.dur, cues: KIT.cues, beds: window.KIT_BEDS || [] }));
-  fs.writeFileSync(path.join(outDir, '..', 'cues.json'), JSON.stringify(info, null, 1));
+  fs.writeFileSync(path.join(path.dirname(path.resolve(html)), 'cues.json'), JSON.stringify(info, null, 1));
   const FPS = 30, F0 = Math.round((st ? +st : 0) * FPS), F1 = Math.round((en ? +en : info.dur) * FPS);
   const workers = Math.max(1, +nw), pages = [p0]; for (let i = 1; i < workers; i++) pages.push(await open());
   let next = F0, done = 0; const t0 = Date.now();

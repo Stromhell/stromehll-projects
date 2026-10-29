@@ -7,16 +7,45 @@
   // ======================== THE CONGRESS CHAMBER ========================
   VP.set('cortes', 1280, 720, (g, w, h) => {
     g.fillStyle = '#3a2418'; g.fillRect(0, 0, w, h);
-    // panelled back wall with pilasters and a gilded frieze
-    wood(g, 0, 0, w, 330, '#6a3e24', 501);
-    for (let x = 40; x < w; x += 160) { g.fillStyle = '#4a2a18'; g.fillRect(x, 60, 22, 270); g.fillStyle = S.rgba('#ffd8a0', .2); g.fillRect(x, 60, 4, 270); g.strokeStyle = S.rgba('#2a160c', .7); g.lineWidth = 3; g.strokeRect(x + 40, 100, 90, 180); }
-    g.fillStyle = '#c8a040'; g.fillRect(0, 40, w, 18); for (let x = 0; x < w; x += 24) { g.fillStyle = '#8a6a20'; g.fillRect(x + 4, 44, 10, 10); }
-    // the rostrum and president's bench
-    wood(g, 470, 230, 340, 110, '#5a301c', 503); g.fillStyle = '#c8a040'; g.fillRect(470, 230, 340, 8); g.fillStyle = '#7a1a1a'; g.fillRect(560, 180, 160, 50);
-    g.fillStyle = '#4a2a18'; g.fillRect(610, 300, 60, 60); g.fillStyle = '#c8a040'; g.fillRect(606, 296, 68, 6);
-    // the floor of the chamber: carpet and the steps of the tiers (benches are drawn per shot, in front of the deputies)
-    g.fillStyle = '#6a1e1e'; g.fillRect(0, 340, w, h - 340); S.dabs(g, { x: 0, y: 340, w, h: 380, n: 400, cols: ['#7a2a2a', '#4a1212'], r0: 6, r1: 20, a0: .15, a1: .3, seed: 505 });
-    for (let r = 0; r < 5; r++) { const y = 400 + r * 70; g.fillStyle = '#4a2a18'; g.fillRect(0, y - 6, w, 10); }
+    // coffered ceiling band with gilded rosettes
+    g.fillStyle = '#4a2c1a'; g.fillRect(0, 0, w, 40);
+    for (let x = 0; x < w; x += 64) { g.fillStyle = '#3a2012'; g.fillRect(x + 6, 6, 52, 28); g.fillStyle = '#c8a040'; g.beginPath(); g.arc(x + 32, 20, 6, 0, TAU); g.fill(); g.fillStyle = S.rgba('#fff0c0', .35); g.beginPath(); g.arc(x + 30, 18, 2, 0, TAU); g.fill(); }
+    // panelled back wall
+    wood(g, 0, 40, w, 300, '#6a3e24', 501);
+    S.dabs(g, { x: 0, y: 40, w, h: 300, n: 260, cols: ['#7a4a2c', '#4a2814', '#8a5a34'], r0: 6, r1: 22, a0: .08, a1: .2, seed: 509 });
+    // gilded frieze with a running key pattern
+    g.fillStyle = '#c8a040'; g.fillRect(0, 40, w, 20); g.fillStyle = '#8a6a20'; for (let x = 0; x < w; x += 24) { g.fillRect(x + 4, 44, 10, 4); g.fillRect(x + 4, 44, 4, 10); g.fillRect(x + 10, 50, 10, 4); }
+    g.fillStyle = S.rgba('#fff0c0', .4); g.fillRect(0, 40, w, 2);
+    // pilasters with capitals, and between them gilt-framed oil paintings and bronze sconces
+    const paint = (x, y, pw, ph, seed) => {
+      g.fillStyle = '#a8842c'; g.fillRect(x - 6, y - 6, pw + 12, ph + 12); g.fillStyle = '#e0c060'; g.fillRect(x - 6, y - 6, pw + 12, 2); g.fillStyle = '#5a4210'; g.fillRect(x - 6, y + ph + 4, pw + 12, 2);
+      const sk = g.createLinearGradient(0, y, 0, y + ph); sk.addColorStop(0, '#4a4a3a'); sk.addColorStop(.6, '#6a5a3a'); sk.addColorStop(1, '#2a2418'); g.fillStyle = sk; g.fillRect(x, y, pw, ph);
+      S.dabs(g, { x, y, w: pw, h: ph, n: 40, cols: ['#8a7a4a', '#3a3424', '#a08a5a', '#5a2a1a'], r0: 2, r1: 7, a0: .3, a1: .6, seed });
+      g.fillStyle = S.rgba('#1a140c', .6); g.beginPath(); g.moveTo(x, y + ph * .7); for (let i = 0; i <= 6; i++) g.lineTo(x + i * pw / 6, y + ph * (.62 + .1 * Math.sin(i * 1.7 + seed))); g.lineTo(x + pw, y + ph); g.lineTo(x, y + ph); g.fill();
+    };
+    for (let x = 40, i = 0; x < w; x += 160, i++) {
+      g.fillStyle = '#4a2a18'; g.fillRect(x, 70, 22, 270); g.fillStyle = S.rgba('#ffd8a0', .22); g.fillRect(x, 70, 4, 270); g.fillStyle = S.rgba('#1a0c04', .35); g.fillRect(x + 18, 70, 4, 270);
+      g.fillStyle = '#b8902c'; g.fillRect(x - 6, 64, 34, 10); g.fillRect(x - 4, 330, 30, 10);
+      if (x + 40 < 470 || x + 40 > 800) { paint(x + 44, 110, 82, 110, 510 + i); g.strokeStyle = S.rgba('#2a160c', .7); g.lineWidth = 3; g.strokeRect(x + 40, 250, 90, 70); g.strokeStyle = S.rgba('#ffd8a0', .15); g.lineWidth = 1; g.strokeRect(x + 44, 254, 82, 62); }
+      // sconce
+      g.fillStyle = '#8a6a2a'; g.fillRect(x + 6, 150, 10, 24); g.fillStyle = '#ffe8b0'; g.beginPath(); g.ellipse(x + 11, 144, 8, 10, 0, 0, TAU); g.fill(); S.glow(g, x + 11, 146, 70, '#ffd890', .35);
+    }
+    // red velvet drapes and the coat of arms behind the president's bench
+    for (const sx of [455, 825]) { const dg = g.createLinearGradient(sx - 30, 0, sx + 30, 0); dg.addColorStop(0, '#5a0e0e'); dg.addColorStop(.5, '#9a2020'); dg.addColorStop(1, '#4a0a0a'); g.fillStyle = dg; g.beginPath(); g.moveTo(sx - 30, 60); g.lineTo(sx + 30, 60); g.quadraticCurveTo(sx + 20, 200, sx + 34, 330); g.lineTo(sx - 34, 330); g.quadraticCurveTo(sx - 20, 200, sx - 30, 60); g.fill(); for (let k = -2; k <= 2; k++) { g.strokeStyle = S.rgba('#2a0404', .35); g.lineWidth = 2; g.beginPath(); g.moveTo(sx + k * 10, 64); g.quadraticCurveTo(sx + k * 8, 200, sx + k * 12, 328); g.stroke(); } }
+    g.fillStyle = '#7a1a1a'; g.fillRect(500, 64, 280, 120); S.dabs(g, { x: 500, y: 64, w: 280, h: 120, n: 60, cols: ['#9a2a2a', '#5a0e0e'], r0: 4, r1: 12, a0: .2, a1: .4, seed: 530 });
+    g.fillStyle = '#c8a040'; g.beginPath(); g.moveTo(612, 84); g.lineTo(668, 84); g.lineTo(668, 136); g.quadraticCurveTo(640, 166, 612, 136); g.closePath(); g.fill(); g.fillStyle = '#b8202a'; g.fillRect(618, 90, 22, 22); g.fillStyle = '#e8b820'; g.fillRect(640, 90, 22, 22); g.fillStyle = '#e8b820'; g.fillRect(618, 112, 22, 22); g.fillStyle = '#b8202a'; g.fillRect(640, 112, 22, 22);
+    g.fillStyle = '#d8b040'; g.beginPath(); g.moveTo(618, 84); g.lineTo(626, 70); g.lineTo(640, 78); g.lineTo(654, 70); g.lineTo(662, 84); g.fill();
+    // the president's bench (upper) with high-backed chairs, and the speaker's rostrum (lower)
+    for (let k = 0; k < 5; k++) { const cx = 520 + k * 60; g.fillStyle = '#5a1010'; g.beginPath(); g.roundRect(cx, 150, 36, 50, [10, 10, 0, 0]); g.fill(); g.fillStyle = '#c8a040'; g.fillRect(cx + 14, 146, 8, 6); }
+    wood(g, 470, 200, 340, 40, '#5a301c', 502); g.fillStyle = '#7a1a1a'; g.fillRect(470, 200, 340, 8); g.fillStyle = '#c8a040'; g.fillRect(470, 208, 340, 3);
+    wood(g, 490, 236, 300, 104, '#5a301c', 503); g.fillStyle = '#c8a040'; g.fillRect(490, 236, 300, 6);
+    for (let k = 0; k < 5; k++) { g.strokeStyle = S.rgba('#2a160c', .6); g.lineWidth = 2; g.strokeRect(500 + k * 58, 256, 48, 70); g.fillStyle = S.rgba('#ffd8a0', .12); g.fillRect(502 + k * 58, 258, 44, 3); }
+    g.fillStyle = '#4a2a18'; g.fillRect(610, 300, 60, 40); g.fillStyle = '#c8a040'; g.fillRect(606, 296, 68, 6); g.fillStyle = '#222'; g.fillRect(638, 276, 3, 22); g.beginPath(); g.arc(640, 274, 4, 0, TAU); g.fill();
+    // floor of the chamber: patterned red carpet (the tiers and benches are drawn per shot)
+    g.fillStyle = '#6a1e1e'; g.fillRect(0, 340, w, h - 340);
+    S.dabs(g, { x: 0, y: 340, w, h: 380, n: 500, cols: ['#7a2a2a', '#4a1212', '#8a3030'], r0: 5, r1: 18, a0: .12, a1: .28, seed: 505 });
+    for (let y = 360; y < h; y += 40) for (let x = (y / 40 % 2) * 30; x < w; x += 60) { g.fillStyle = S.rgba('#c8a040', .12); g.beginPath(); g.moveTo(x, y - 6); g.lineTo(x + 6, y); g.lineTo(x, y + 6); g.lineTo(x - 6, y); g.fill(); }
+    g.fillStyle = S.rgba('#1a0604', .45); g.fillRect(0, 340, w, 10);
     S.glow(g, 640, 0, 700, '#ffe8c0', .15);
   });
   // ======================== A 1981 LIVING ROOM ========================
@@ -30,7 +59,12 @@
     // patterned rug
     g.fillStyle = '#8a3a2a'; g.beginPath(); g.ellipse(560, 640, 360, 50, 0, 0, TAU); g.fill(); g.strokeStyle = '#d8a040'; g.lineWidth = 4; g.beginPath(); g.ellipse(560, 640, 320, 40, 0, 0, TAU); g.stroke();
     // sideboard with the TV, a lamp
-    wood(g, 120, 400, 260, 130, '#5a3a22', 525); g.fillStyle = '#2a2a2a'; g.fillRect(150, 300, 200, 110); g.fillStyle = '#4a4a4a'; g.fillRect(156, 306, 188, 98); g.fillStyle = '#1a2a2a'; g.fillRect(166, 314, 140, 82); g.fillStyle = '#888'; g.fillRect(318, 320, 14, 14); g.fillRect(318, 344, 14, 14);
+    wood(g, 120, 400, 260, 130, '#5a3a22', 525); g.strokeStyle = S.rgba('#2a1a0c', .7); g.lineWidth = 2; g.strokeRect(132, 420, 112, 100); g.strokeRect(256, 420, 112, 100); g.fillStyle = '#c8a040'; g.beginPath(); g.arc(236, 470, 4, 0, TAU); g.arc(264, 470, 4, 0, TAU); g.fill(); g.fillStyle = S.rgba('#ffd8a0', .18); g.fillRect(120, 400, 260, 3); g.fillStyle = '#3a2414'; g.fillRect(130, 530, 12, 14); g.fillRect(358, 530, 12, 14);
+    // wall clock, framed wedding photo, a shelf with plates, and a potted plant
+    g.fillStyle = '#5a3a22'; g.beginPath(); g.arc(560, 170, 34, 0, TAU); g.fill(); g.fillStyle = '#f0e8d4'; g.beginPath(); g.arc(560, 170, 27, 0, TAU); g.fill(); g.strokeStyle = '#2a1a0c'; g.lineWidth = 3; g.beginPath(); g.moveTo(560, 170); g.lineTo(560, 150); g.moveTo(560, 170); g.lineTo(574, 176); g.stroke();
+    g.fillStyle = '#a8842c'; g.fillRect(660, 140, 90, 110); g.fillStyle = '#c8b898'; g.fillRect(668, 148, 74, 94); g.fillStyle = '#5a4a3a'; g.beginPath(); g.arc(692, 186, 10, 0, TAU); g.arc(718, 184, 10, 0, TAU); g.fill(); g.fillRect(682, 196, 20, 40); g.fillStyle = '#f0ece0'; g.fillRect(708, 194, 22, 42);
+    g.fillStyle = '#5a3a22'; g.fillRect(420, 280, 160, 10); for (let k = 0; k < 4; k++) { g.fillStyle = ['#e8e0c8', '#7a9ac0', '#e8e0c8', '#c06a4a'][k]; g.beginPath(); g.arc(442 + k * 38, 262, 16, 0, TAU); g.fill(); g.strokeStyle = S.rgba('#2a1a0c', .4); g.lineWidth = 2; g.stroke(); }
+    g.fillStyle = '#8a4a2a'; g.beginPath(); g.moveTo(452, 560); g.lineTo(492, 560); g.lineTo(486, 610); g.lineTo(458, 610); g.fill(); for (let k = 0; k < 9; k++) { const a = -Math.PI / 2 + (k - 4) * .28; g.strokeStyle = k % 2 ? '#3a6a2a' : '#4a8a3a'; g.lineWidth = 6; g.beginPath(); g.moveTo(472, 562); g.quadraticCurveTo(472 + Math.cos(a) * 30, 540 + Math.sin(a) * 30, 472 + Math.cos(a) * 60, 560 + Math.sin(a) * 70); g.stroke(); } g.fillStyle = '#2a2a2a'; g.fillRect(150, 300, 200, 110); g.fillStyle = '#4a4a4a'; g.fillRect(156, 306, 188, 98); g.fillStyle = '#1a2a2a'; g.fillRect(166, 314, 140, 82); g.fillStyle = '#888'; g.fillRect(318, 320, 14, 14); g.fillRect(318, 344, 14, 14);
     g.strokeStyle = '#888'; g.lineWidth = 2; g.beginPath(); g.moveTo(250, 300); g.lineTo(210, 250); g.moveTo(250, 300); g.lineTo(290, 250); g.stroke();
     g.fillStyle = '#e8c890'; g.beginPath(); g.moveTo(1150, 380); g.lineTo(1210, 380); g.lineTo(1230, 440); g.lineTo(1130, 440); g.fill(); g.fillStyle = '#4a3020'; g.fillRect(1176, 440, 8, 120); g.fillRect(1150, 556, 60, 8);
     // the sofa
