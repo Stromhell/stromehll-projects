@@ -1,0 +1,549 @@
+[
+{
+"id": "tb_bacos",
+"gender": 1,
+"age": 0.62,
+"weight": 0.55,
+"muscle": 0.5,
+"height": 0.5,
+"race": {
+"caucasian": 1
+},
+"skin": "middleage_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short04",
+"clothes": [
+"male_elegantsuit01",
+"shoes03"
+],
+"hairTint": [
+0.55,
+0.52,
+0.5
+],
+"tint": {
+"male_elegantsuit01": [
+0.13,
+0.15,
+0.24
+]
+}
+},
+{
+"id": "tb_copilot",
+"gender": 1,
+"age": 0.5,
+"weight": 0.5,
+"muscle": 0.5,
+"height": 0.5,
+"race": {
+"caucasian": 1
+},
+"skin": "middleage_caucasian_male",
+"eyes": "blue",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short01",
+"clothes": [
+"male_elegantsuit01",
+"shoes03"
+],
+"hairTint": [
+0.35,
+0.25,
+0.18
+],
+"tint": {
+"male_elegantsuit01": [
+0.13,
+0.15,
+0.24
+]
+}
+},
+{
+"id": "tb_engineer",
+"gender": 1,
+"age": 0.55,
+"weight": 0.6,
+"muscle": 0.5,
+"height": 0.5,
+"race": {
+"caucasian": 1
+},
+"skin": "middleage_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short03",
+"clothes": [
+"male_elegantsuit01",
+"shoes03"
+],
+"hairTint": [
+0.3,
+0.22,
+0.16
+],
+"tint": {
+"male_elegantsuit01": [
+0.13,
+0.15,
+0.24
+]
+}
+},
+{
+"id": "tb_steward",
+"gender": 0,
+"age": 0.4,
+"weight": 0.5,
+"muscle": 0.5,
+"height": 0.55,
+"race": {
+"caucasian": 1
+},
+"skin": "young_caucasian_female",
+"eyes": "brown",
+"brows": "eyebrow010",
+"lashes": "eyelashes02",
+"hair": "ponytail01",
+"clothes": [
+"female_elegantsuit01",
+"shoes03"
+],
+"hairTint": [
+0.5,
+0.38,
+0.22
+],
+"tint": {
+"female_elegantsuit01": [
+0.16,
+0.2,
+0.34
+]
+}
+},
+{
+"id": "tb_pa1",
+"gender": 1,
+"age": 0.7,
+"weight": 0.6,
+"muscle": 0.5,
+"height": 0.5,
+"race": {
+"caucasian": 0.75,
+"asian": 0.1,
+"african": 0.15
+},
+"skin": "old_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short02",
+"clothes": [
+"male_casualsuit03",
+"shoes01"
+],
+"hairTint": [
+0.75,
+0.75,
+0.75
+]
+},
+{
+"id": "tb_pa2",
+"gender": 0,
+"age": 0.7,
+"weight": 0.6,
+"muscle": 0.5,
+"height": 0.5,
+"race": {
+"caucasian": 0.75,
+"asian": 0.1,
+"african": 0.15
+},
+"skin": "old_caucasian_female",
+"eyes": "brown",
+"brows": "eyebrow010",
+"lashes": "eyelashes02",
+"hair": "bob01",
+"clothes": [
+"female_elegantsuit01",
+"shoes03"
+],
+"hairTint": [
+0.7,
+0.68,
+0.66
+],
+"tint": {
+"female_elegantsuit01": [
+0.42,
+0.3,
+0.22
+]
+}
+},
+{
+"id": "tb_pa3",
+"gender": 1,
+"age": 0.42,
+"weight": 0.5,
+"muscle": 0.5,
+"height": 0.5,
+"race": {
+"caucasian": 0.75,
+"asian": 0.1,
+"african": 0.15
+},
+"skin": "young_caucasian_male",
+"eyes": "brownlight",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short01",
+"clothes": [
+"male_casualsuit05",
+"shoes02"
+],
+"hairTint": [
+0.2,
+0.14,
+0.1
+]
+},
+{
+"id": "tb_pa4",
+"gender": 0,
+"age": 0.38,
+"weight": 0.5,
+"muscle": 0.5,
+"height": 0.5,
+"race": {
+"caucasian": 0.75,
+"asian": 0.1,
+"african": 0.15
+},
+"skin": "young_caucasian_female2",
+"eyes": "brown",
+"brows": "eyebrow010",
+"lashes": "eyelashes02",
+"hair": "long01",
+"clothes": [
+"female_elegantsuit01",
+"shoes03"
+],
+"hairTint": [
+0.18,
+0.12,
+0.08
+],
+"tint": {
+"female_elegantsuit01": [
+0.55,
+0.45,
+0.28
+]
+}
+},
+{
+"id": "tb_pa5",
+"gender": 1,
+"age": 0.15,
+"weight": 0.5,
+"muscle": 0.5,
+"height": 0.2,
+"race": {
+"caucasian": 0.75,
+"asian": 0.1,
+"african": 0.15
+},
+"skin": "young_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short03",
+"clothes": [
+"male_casualsuit06",
+"shoes05"
+],
+"hairTint": [
+0.4,
+0.28,
+0.16
+]
+},
+{
+"id": "tb_pa6",
+"gender": 0,
+"age": 0.5,
+"weight": 0.5,
+"muscle": 0.5,
+"height": 0.5,
+"race": {
+"caucasian": 0.6,
+"african": 0.4
+},
+"skin": "middleage_african_female",
+"eyes": "brown",
+"brows": "eyebrow010",
+"lashes": "eyelashes02",
+"hair": "afro01",
+"clothes": [
+"female_elegantsuit01",
+"shoes03"
+],
+"hairTint": [
+0.15,
+0.11,
+0.08
+],
+"tint": {
+"female_elegantsuit01": [
+0.22,
+0.32,
+0.24
+]
+}
+},
+{
+"id": "tb_pa7",
+"gender": 1,
+"age": 0.55,
+"weight": 0.7,
+"muscle": 0.5,
+"height": 0.5,
+"race": {
+"caucasian": 0.75,
+"asian": 0.1,
+"african": 0.15
+},
+"skin": "middleage_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short04",
+"clothes": [
+"male_elegantsuit01",
+"shoes03"
+],
+"hairTint": [
+0.25,
+0.2,
+0.15
+],
+"tint": {
+"male_elegantsuit01": [
+0.5,
+0.44,
+0.33
+]
+}
+},
+{
+"id": "tb_pa8",
+"gender": 1,
+"age": 0.35,
+"weight": 0.5,
+"muscle": 0.5,
+"height": 0.5,
+"race": {
+"caucasian": 0.7,
+"asian": 0.3
+},
+"skin": "young_caucasian_male2",
+"eyes": "green",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short02",
+"clothes": [
+"male_casualsuit03",
+"shoes01"
+],
+"hairTint": [
+0.12,
+0.1,
+0.08
+]
+},
+{
+"id": "tb_pa9",
+"gender": 0,
+"age": 0.25,
+"weight": 0.5,
+"muscle": 0.5,
+"height": 0.5,
+"race": {
+"caucasian": 1
+},
+"skin": "young_caucasian_female",
+"eyes": "blue",
+"brows": "eyebrow010",
+"lashes": "eyelashes02",
+"hair": "braid01",
+"clothes": [
+"female_elegantsuit01",
+"shoes03"
+],
+"hairTint": [
+0.6,
+0.45,
+0.25
+],
+"tint": {
+"female_elegantsuit01": [
+0.36,
+0.42,
+0.52
+]
+}
+},
+{
+"id": "tb_pa10",
+"gender": 1,
+"age": 0.8,
+"weight": 0.45,
+"muscle": 0.5,
+"height": 0.5,
+"race": {
+"caucasian": 0.75,
+"asian": 0.1,
+"african": 0.15
+},
+"skin": "old_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short04",
+"clothes": [
+"male_elegantsuit01",
+"shoes03"
+],
+"hairTint": [
+0.85,
+0.85,
+0.85
+],
+"tint": {
+"male_elegantsuit01": [
+0.3,
+0.28,
+0.25
+]
+}
+},
+{
+"id": "tb_hj1",
+"gender": 1,
+"age": 0.4,
+"weight": 0.45,
+"muscle": 0.5,
+"height": 0.5,
+"race": {
+"caucasian": 1
+},
+"skin": "young_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short01",
+"clothes": [
+"male_casualsuit05",
+"shoes03"
+],
+"hairTint": [
+0.22,
+0.16,
+0.1
+]
+},
+{
+"id": "tb_hj2",
+"gender": 0,
+"age": 0.38,
+"weight": 0.5,
+"muscle": 0.5,
+"height": 0.5,
+"race": {
+"caucasian": 1
+},
+"skin": "young_caucasian_female",
+"eyes": "brown",
+"brows": "eyebrow010",
+"lashes": "eyelashes02",
+"hair": "long01",
+"clothes": [
+"female_elegantsuit01",
+"shoes03"
+],
+"hairTint": [
+0.3,
+0.2,
+0.12
+],
+"tint": {
+"female_elegantsuit01": [
+0.3,
+0.3,
+0.28
+]
+}
+},
+{
+"id": "tb_hj3",
+"gender": 1,
+"age": 0.42,
+"weight": 0.5,
+"muscle": 0.5,
+"height": 0.5,
+"race": {
+"caucasian": 0.6,
+"african": 0.2,
+"asian": 0.2
+},
+"skin": "middleage_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short02",
+"clothes": [
+"male_casualsuit03",
+"shoes03"
+],
+"hairTint": [
+0.1,
+0.08,
+0.06
+]
+},
+{
+"id": "tb_hj4",
+"gender": 1,
+"age": 0.45,
+"weight": 0.6,
+"muscle": 0.5,
+"height": 0.5,
+"race": {
+"caucasian": 0.6,
+"african": 0.25,
+"asian": 0.15
+},
+"skin": "middleage_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short04",
+"clothes": [
+"male_casualsuit05",
+"shoes03"
+],
+"hairTint": [
+0.1,
+0.08,
+0.06
+]
+}
+]

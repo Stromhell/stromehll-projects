@@ -18,7 +18,7 @@ const has = n => args.includes(n);
   page.on('console', m => { if (m.type() === 'error' || process.env.DBG) console.log('[page]', m.text()); });
   page.on('pageerror', e => console.log('[pageerror]', e.message));
   const http = require('http'); const root = path.resolve(__dirname);
-  const types = { '.js': 'text/javascript', '.html': 'text/html', '.json': 'application/json', '.ttf': 'font/ttf', '.png': 'image/png', '.jpg': 'image/jpeg' };
+  const types = { '.js': 'text/javascript', '.html': 'text/html', '.json': 'application/json', '.ttf': 'font/ttf', '.png': 'image/png', '.jpg': 'image/jpeg', '.glb': 'model/gltf-binary', '.gltf': 'model/gltf+json', '.hdr': 'application/octet-stream', '.bin': 'application/octet-stream' };
   const srv = http.createServer((q, r) => { const u = decodeURIComponent(q.url.split('?')[0]); const f = u.startsWith('/@abs/') ? u.slice(5) : path.join(root, u);
     fs.readFile(f, (e, d) => { if (e) { r.writeHead(404); r.end(); return; } r.writeHead(200, { 'Content-Type': types[path.extname(f)] || 'application/octet-stream' }); r.end(d); }); });
   await new Promise(r => srv.listen(0, '127.0.0.1', r)); const base = `http://127.0.0.1:${srv.address().port}`;
@@ -32,7 +32,8 @@ const has = n => args.includes(n);
     for (const s of list) {
       const meta = { ...s, ...(timing[s.id] ? { seconds: timing[s.id].dur, voA: timing[s.id].a, voB: timing[s.id].b } : {}) };
       try {
-        const { dur } = await page.evaluate(([m, me, o]) => window.loadShot(m, me, o), [modUrl, meta, { sketch: has('--sketch') }]);
+        const { dur, hits } = await page.evaluate(([m, me, o]) => window.loadShot(m, me, o), [modUrl, meta, { sketch: has('--sketch'), checkOverlap: true }]);
+        if (hits && hits.length) console.log('OVERLAP', s.id, JSON.stringify(hits.slice(0, 8)));
         for (const a of ats) {
           const t0 = Date.now();
           const img = await page.evaluate(([t, f]) => window.frame(t, f, .9), [dur * a, has('--png') ? 'png' : 'jpeg']);

@@ -6,6 +6,7 @@ import * as people from './people.js';
 import * as props from './props.js';
 import * as maps from './maps.js';
 import * as ui from './ui.js';
+import * as real from './real.js';
 
 const gl = document.getElementById('gl');
 const out = document.getElementById('out'); const ox = out.getContext('2d');
@@ -35,15 +36,17 @@ window.loadShot = async (modPath, meta, opts = {}) => {
   const mod = await import(modPath + '?v=' + Date.now());
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(40, core.W / core.H, .1, 3000);
-  const kit = { THREE, scene, camera, core, people, props, maps, ui, meta, opts, overlay: null };
+  const kit = { THREE, scene, camera, core, people, props, maps, ui, real, meta, opts, overlay: null, renderer: R.renderer };
   const fn = mod.shots[meta.id];
   if (!fn) throw new Error('no shot ' + meta.id);
   const upd = await fn(kit);
+  R.renderer.toneMappingExposure = kit.exposure ?? 1.05;
+  if (opts.checkOverlap) kit.hits = real.overlaps(scene);
   const dur = meta.seconds;
   const chunks = opts.subs === false ? [] : ui.chunk(meta.narration, (meta.voA ?? .15), (meta.voB ?? dur - .25));
   R.uni.sketch.value = opts.sketch ? 1 : 0;
   cur = { scene, camera, upd, kit, dur, chunks, meta, opts };
-  return { dur };
+  return { dur, hits: kit.hits };
 };
 
 window.frame = (t, fmt = 'jpeg', q = .93) => {
