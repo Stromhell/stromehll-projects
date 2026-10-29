@@ -243,6 +243,10 @@ export async function human(o = {}) {
       const mine = (a) => arm === a || (arm === a + 'Both');
       if ((right && arm === 'raise') || arm === 'raiseBoth') { aim(sd + 'Arm', sg * .35, 1, .1); aim(sd + 'ForeArm', sg * .15, 1, 0); aim(sd + 'Hand', 0, 1, 0); continue; }
       if (right && arm === 'point') { aim(sd + 'Arm', sg * .15, .05, 1); aim(sd + 'ForeArm', sg * .05, .08, 1); aim(sd + 'Hand', 0, .05, 1); continue; }
+      // handset to the right ear (left arm rests)
+      if (right && arm === 'phone') { aim(sd + 'Arm', sg * .25, -.55, .75); aim(sd + 'ForeArm', -sg * .55, .85, -.25); aim(sd + 'Hand', -sg * .45, 1, -.35); continue; }
+      // open-palmed shrug
+      if (arm === 'shrug') { aim(sd + 'Arm', sg * .3, -1, .1); aim(sd + 'ForeArm', sg * .6, .2, .8); aim(sd + 'Hand', sg * .75, .15, .65); continue; }
       if (arm === 'hold' || arm === 'desk') { aim(sd + 'Arm', sg * .25, -1, .25); aim(sd + 'ForeArm', -sg * .35, -.1, 1); aim(sd + 'Hand', -sg * .3, -.1, 1); continue; }
       if (arm === 'hug') { aim(sd + 'Arm', sg * .4, -.3, 1); aim(sd + 'ForeArm', -sg * 1, 0, .6); continue; }
       if (sit && (arm === 'lap' || !arm)) { aim(sd + 'Arm', sg * .2, -1, .35); aim(sd + 'ForeArm', -sg * .15, -.25, 1); aim(sd + 'Hand', -sg * .1, -.4, 1); continue; }
