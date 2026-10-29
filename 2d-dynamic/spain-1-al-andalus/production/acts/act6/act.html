@@ -45,7 +45,8 @@ window.SHOTS = [
       const L = VP.light('golden', lt, { swing: 4 }), sh = VP.shadowOf(L, 1.4, .3, .12), op = E.out(seg(lt, .3, 1.3));
       VP.figure(c, [700, 640], sh, cc => S.person(cc, HERALD, 700, 640, 42, (() => { let wF = null; return Object.assign(S.idle(lt, 0), { face: -1, shN: 92, elN: 28, shF: 58, elF: 48, holdF: wr => { wF = wr.slice(); }, holdN: wr => scroll2(cc, wF || [wr[0], wr[1] + 40], wr, 42, op) }); })(), { blink: S.blinkAt(lt, 0), open: .4 * Math.abs(Math.sin(lt * 9)) * (Math.sin(lt * 1.3) > -.3), look: [-.3, .3], time: lt }, L));
       for (const [x, ch, uu, k] of [[300, JEW, 42, 1], [360, MOTHER, 38, 2], [410, KIDC, 30, 3]]) VP.figure(c, [x, 650], sh, cc => S.person(cc, ch, x, 650, uu, Object.assign(S.idle(lt, k), { face: 1, shN: 10, elN: 20 }), { blink: S.blinkAt(lt, k), worry: .4 + .5 * seg(lt, Sh.tC, Sh.tC + 1), look: [.9, 0], time: lt }, L));
-      for (let k = 0; k < 9; k++) H.tiny(c, 120 + k * 120 + (k % 2) * 30, 560 + (k % 3) * 8, 3.4, ['#7a6a4a', '#5a4a6a', '#8a3a2a'][k % 3], lt, k, { helm: '#3a2a1a', pike: false });
+      // townsfolk gathered at the back of the square to hear the decree: full figures, spaced, clear of the herald and the family
+      for (const [x, k] of [[110, 0], [520, 1], [900, 2], [1040, 3], [1180, 4]]) { const y = 575, ch = VP.vary(k % 2 ? C.TOWNSMAN : JEW, 400 + k); VP.figure(c, [x, y], sh, cc => S.person(cc, ch, x, y, 30, Object.assign(S.idle(lt, k + 5), { face: x < 700 ? 1 : -1, shN: 10 + (k % 3) * 25, elN: 20 + (k % 2) * 60 }), { blink: S.blinkAt(lt, k + 5), worry: .3 + .5 * seg(lt, Sh.tC, Sh.tC + 1), look: [x < 700 ? .8 : -.8, 0], time: lt }, L)); }
       VP.motes(c, lt, 0, 300, 1280, 400, { n: 30, a: .35 });
     },
     over: [(c, lt) => K.dateTag(c, 'GRANADA · MARCH 1492', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'THE ALHAMBRA\nDECREE', lt, { at: Sh.tM + .2, x: 1540, y: 200, px: 56, rot: 3 }), (c, lt, u, Sh) => K.card(c, 'CONVERT\nOR LEAVE', lt, { at: Sh.tC + .2, x: 380, y: 200, px: 64, rot: -3 })],
@@ -123,7 +124,9 @@ window.SHOTS = [
     draw: (c, lt, u, Sh) => {
       const L = VP.light('golden', lt, { swing: 4 });
       for (let k = 0; k < 4; k++) { const x = 820 + k * 140 + lt * (6 + k * 2), y = 450 + k * 22, s = .6 + k * .14, bob = Math.sin(lt * 1.3 + k) * 3; X.ship(c, x, y + bob, s, '#f4ead4', true); for (let j = 0; j < 6; j++) H.tiny(c, x - 50 * s + j * 18 * s, y - 28 * s + bob, 1.6 * s, ['#5a6a4a', '#7a5a4a'][j % 2], lt, j, { helm: '#3a2a1a', pike: false }); }
-      for (let k = 0; k < 14; k++) H.tiny(c, 60 + k * 48, 640 + (k % 3) * 18, 3.2, ['#5a6a4a', '#7a5a4a', '#4a4a6a'][k % 3], lt, k, { helm: '#2a1a10', pike: false, walk: true });
+      // Moriscos with bundles queue along the quay toward the ships: full figures, spaced, they shuffle forward and stop
+      { const sh = VP.shadowOf(L, 1.4, .3, .12); for (let k = 0; k < 7; k++) { const adv = Math.min(lt * 14, 110), x = 30 + k * 105 + adv, y = 650 + (k % 2) * 10, moving = lt * 14 < 110, ch = VP.vary([C.TOWNSMAN, JEW, MOTHER][k % 3], 420 + k), uu = k % 3 === 2 ? 26 : 28;
+        VP.figure(c, [x, y], sh, cc => S.person(cc, ch, x, y, uu, Object.assign(moving ? walk(lt * .7 + k) : S.idle(lt, k), { face: 1, shN: 40, elN: 80, holdN: wr => { cc.fillStyle = ['#a88a5a', '#7a6a8a', '#8a5a3a'][k % 3]; cc.beginPath(); cc.ellipse(wr[0] + 4, wr[1] + 6, uu * .4, uu * .3, 0, 0, TAU); cc.fill(); } }), { worry: .6, time: lt }, L)); } }
       VP.motes(c, lt, 0, 300, 1280, 400, { n: 25, a: .35 });
     },
     over: [(c, lt) => K.dateTag(c, '1609 – 1614', lt, { at: .4 }), (c, lt, u, Sh) => { const q = E.out(seg(lt, Sh.tN - .5, Sh.tN + 1.5)); if (q <= 0) return; c.save(); c.globalAlpha = Math.min(1, q * 3); K.outlined(c, '~' + Math.round(300 * q) + ',000', 1500, 220, 110, { fill: '#ffd27a' }); K.outlined(c, 'FORCED OUT', 1500, 300, 44, { fam: 'Oswald' }); c.restore(); }],
@@ -145,7 +148,9 @@ window.SHOTS = [
   { set: 'lions', cam: { z: [1.0, 1.25], x: [640, 640], y: [380, 420], ease: E.io }, bed: [['crowd_loop', .12], ['birds_loop', .15]],
     draw: (c, lt, u, Sh) => {
       VP.light('golden', lt); c.save(); c.globalCompositeOperation = 'soft-light'; c.fillStyle = 'rgba(255,150,90,.35)'; c.fillRect(0, 0, 1280, 720); c.restore();
-      for (let k = 0; k < 10; k++) { const x = 120 + k * 110 + Math.sin(lt * .3 + k) * 20, y = 640 + (k % 3) * 12; H.tiny(c, x, y, 4.4, ['#3a7ab8', '#e8c040', '#c84a4a', '#f4f4f4', '#4a8a4a'][k % 5], lt, k, { helm: ['#2a1a10', '#d8b060'][k % 2], pike: false }); const fl = (lt * .7 + k * .37) % 1; if (fl < .04) VP.glow(c, x + 6, y - 46, 50, '#ffffff', .8); }
+      // visitors today, full size and spaced, some taking photos
+      { const L2 = VP.light('golden', 0, {}), sh = VP.shadowOf(L2, 1.4, .3, .12); for (let k = 0; k < 6; k++) { const x = 110 + k * 210, y = 650 + (k % 2) * 10, ch = VP.vary(k % 2 ? C.TOWNSMAN : MOTHER, 440 + k), photo = k % 2 === 0;
+        VP.figure(c, [x, y], sh, cc => S.person(cc, ch, x, y, 28, Object.assign(S.idle(lt, k), { face: k < 3 ? 1 : -1, shN: photo ? 150 : 20, elN: photo ? 60 : 30, holdN: photo ? (wr => { cc.fillStyle = '#1a1a1a'; cc.fillRect(wr[0] - 5, wr[1] - 9, 10, 16); }) : null }), { smile: .4, look: [k < 3 ? .6 : -.6, -.3], time: lt }, L2)); const fl = (lt * .7 + k * .37) % 1; if (photo && fl < .04) VP.glow(c, x + (k < 3 ? 20 : -20), y - 140, 50, '#ffffff', .8); } }
       VP.motes(c, lt, 0, 200, 1280, 500, { n: 35, a: .4 });
     },
     over: [(c, lt) => K.dateTag(c, 'GRANADA · TODAY', lt, { at: .4 }), (c, lt) => K.card(c, 'THE ALHAMBRA', lt, { at: 1, x: 1540, y: 200, px: 60, rot: 3 })],

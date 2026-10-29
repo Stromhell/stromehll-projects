@@ -49,11 +49,26 @@
     // the plain
     const pl = g.createLinearGradient(0, 330, 0, h); pl.addColorStop(0, '#b8a878'); pl.addColorStop(1, '#8a7a4a'); g.fillStyle = pl; g.fillRect(0, 340, w, h - 340);
     S.strokes(g, { x: 0, y: 340, w, h: 380, n: 900, cols: ['#d8c898', '#6a5a34', '#9a9a5a'], l0: 6, l1: 18, ang: 0, jit: .3, w0: 1, w1: 2, a0: .2, a1: .45, seed: 2027 });
-    // Santa Fe: a neat walled square town of stone with a church in the middle
-    g.fillStyle = '#d8c8a8'; g.beginPath(); g.moveTo(140, 470); g.lineTo(620, 440); g.lineTo(760, 500); g.lineTo(260, 540); g.closePath(); g.fill();
-    for (let i = 0; i < 6; i++) for (let j = 0; j < 4; j++) { const x = 200 + i * 80 + j * 30, y = 470 + j * 16 - i * 4; g.fillStyle = '#e8dcc0'; g.fillRect(x, y - 22, 46, 22); g.fillStyle = '#b8603a'; g.beginPath(); g.moveTo(x - 4, y - 22); g.lineTo(x + 23, y - 34); g.lineTo(x + 50, y - 22); g.fill(); }
-    g.strokeStyle = '#a8946a'; g.lineWidth = 8; g.beginPath(); g.moveTo(140, 470); g.lineTo(620, 440); g.lineTo(760, 500); g.lineTo(260, 540); g.closePath(); g.stroke();
+    // Santa Fe: a new walled town of stone, laid out in a grid, with corner towers, a gate and a church in the middle
+    const wallB = 438, wallF = 520, xl = 170, xr = 730;
+    g.fillStyle = S.rgba('#3a2a14', .25); g.beginPath(); g.ellipse(460, wallF + 6, 300, 16, 0, 0, TAU); g.fill();
+    g.fillStyle = '#d8c8a0'; g.fillRect(xl, wallB, xr - xl, wallF - wallB);
+    // back wall
+    g.fillStyle = '#c8b48a'; g.fillRect(xl, wallB - 26, xr - xl, 26); for (let m = xl; m < xr; m += 16) { g.fillStyle = '#d8c49a'; g.fillRect(m, wallB - 32, 9, 7); }
+    // houses inside the walls, back to front
+    town(g, { x: xl + 20, y: wallB + 4, w: xr - xl - 40, h: wallF - wallB - 20, n: 70, seed: 2031, scale: .62, wall: '#f4e8cc', wall2: '#dcc8a0', shade: '#a8885a', roof: '#c06a44', roof2: '#8a4028', dark: '#3a2418', rim: '#fff4d8', mask: () => true });
+    // the church: nave with a red roof and a square bell tower
+    g.fillStyle = '#efe2c8'; g.fillRect(400, 452, 110, 34); g.fillStyle = '#b84a2a'; g.beginPath(); g.moveTo(396, 452); g.lineTo(455, 434); g.lineTo(514, 452); g.fill(); g.fillStyle = S.rgba('#8a6a48', .45); g.fillRect(480, 452, 30, 34);
+    for (let k = 0; k < 4; k++) { g.fillStyle = '#3a2418'; g.beginPath(); g.arc(416 + k * 22, 468, 5, Math.PI, 0); g.fill(); g.fillRect(411 + k * 22, 468, 10, 8); }
     tower(g, 440, 470, 34, 90, '#efe2c8', '#b8a07a', '#fff4dc'); g.fillStyle = '#c8962a'; g.fillRect(455, 368, 4, 16); g.fillRect(450, 374, 14, 4);
+    // front wall with merlons, block joints and a gate
+    const gf = g.createLinearGradient(0, wallF - 34, 0, wallF); gf.addColorStop(0, '#e0cca2'); gf.addColorStop(1, '#b89a6a'); g.fillStyle = gf; g.fillRect(xl, wallF - 34, xr - xl, 34);
+    g.strokeStyle = S.rgba('#7a5a38', .4); g.lineWidth = 1; for (let row = 0; row < 3; row++) { const yy = wallF - 34 + row * 11; g.beginPath(); g.moveTo(xl, yy); g.lineTo(xr, yy); g.stroke(); for (let b = xl + (row % 2) * 12; b < xr; b += 24) { g.beginPath(); g.moveTo(b, yy); g.lineTo(b, yy + 11); g.stroke(); } }
+    for (let m = xl; m < xr; m += 18) { g.fillStyle = '#e8d6ac'; g.fillRect(m, wallF - 42, 10, 9); g.fillStyle = S.rgba('#7a5a38', .4); g.fillRect(m + 7, wallF - 42, 3, 9); }
+    g.fillStyle = '#3a2418'; g.beginPath(); g.moveTo(436, wallF); g.lineTo(436, wallF - 22); g.arc(450, wallF - 22, 14, Math.PI, 0); g.lineTo(464, wallF); g.fill();
+    // corner towers
+    for (const tx of [xl, xr]) { g.fillStyle = '#e4d0a6'; g.fillRect(tx - 16, wallF - 62, 32, 62); g.fillStyle = S.rgba('#7a5a38', .45); g.fillRect(tx + 4, wallF - 62, 12, 62); for (let m = 0; m < 3; m++) { g.fillStyle = '#ecdcb4'; g.fillRect(tx - 16 + m * 12, wallF - 70, 8, 8); } g.fillStyle = '#3a2418'; g.fillRect(tx - 3, wallF - 50, 6, 10); }
+    for (const tx of [xl + 20, xr - 20]) { g.fillStyle = '#d4c094'; g.fillRect(tx - 12, wallB - 52, 24, 52); }
   });
 
   // ======================== A TOWN SQUARE ========================

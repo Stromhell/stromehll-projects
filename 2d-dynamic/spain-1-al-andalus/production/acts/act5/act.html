@@ -104,7 +104,7 @@ window.SHOTS = [
         return; }
       VP.drawSet(c, 'santafe'); const L = VP.light('golden', lt, { swing: 4 }), q = seg(lt, Sh.tG, Sh.dur + 1);
       // Boabdil rides back toward Granada with Castilian riders; behind, small towns flip red one by one
-      for (const [ch, col, tack, dx, uu] of [[CASTILIAN, BAY, CTACK, -90, 16], [BOABDIL, BLACK, NTACK, 0, 18], [CASTILIAN, BAY, CTACK, 90, 16]]) { const x = lerp(200, 900, q) + dx, y = 620 + dx * .1; VP.figure(c, [x, y], { k: -.4, sy: -.2, a: .3, blur: 2 }, cc => VP.rider(cc, ch, x, y, uu, uu * 5, { face: 1, ph: lt * .8 + dx, walk: .8, t: lt, col, tack }, { lean: 2 }, { time: lt, worry: ch === BOABDIL ? .6 : 0 }, L)); }
+      for (const [ch, col, tack, dx, uu] of [[CASTILIAN, BAY, CTACK, -150, 16], [BOABDIL, BLACK, NTACK, 0, 18], [CASTILIAN, BAY, CTACK, 150, 16]]) { const x = lerp(200, 900, q) + dx, y = 620 - Math.abs(dx) * .12; VP.figure(c, [x, y], { k: -.4, sy: -.2, a: .3, blur: 2 }, cc => VP.rider(cc, ch, x, y, uu, uu * 5, { face: 1, ph: lt * .8 + dx, walk: .8, t: lt, col, tack }, { lean: 2 }, { time: lt, worry: ch === BOABDIL ? .6 : 0 }, L)); }
       for (let k = 0; k < 5; k++) { const x = 820 + k * 90, y = 330 + (k % 2) * 8, fl = seg(lt, Sh.tW + k * .5, Sh.tW + k * .5 + .3); c.fillStyle = fl > 0 ? '#b8282a' : '#2f8a5a'; c.fillRect(x, y - 30, 3, 30); c.fillRect(x + 3, y - 30, 16 * (fl > 0 ? 1 : 1), 10); if (fl > 0 && fl < 1) VP.glow(c, x, y - 20, 30, '#ffb060', .6 * (1 - fl)); }
     },
     over: [(c, lt, u, Sh) => K.card(c, 'CAPTURED', lt, { at: Sh.tC + .2, x: 1540, y: 200, px: 60, rot: 3, until: Sh.tG }), (c, lt, u, Sh) => K.card(c, 'FREED, FOR A PRICE', lt, { at: Sh.tG + .4, x: 1520, y: 200, px: 50, rot: -3 }), (c, lt, u, Sh) => K.badge(c, 'GRANADA IN CIVIL WAR', lt, { at: Sh.tW })],
@@ -116,9 +116,19 @@ window.SHOTS = [
     draw: (c, lt, u, Sh) => {
       const L = VP.light('golden', lt, { swing: 5 }), sh = VP.shadowOf(L, 1.4, .3, .12);
       // tents of the army around the town
-      for (let k = 0; k < 16; k++) { const x = 80 + k * 70 + (k % 2) * 20, y = 580 + (k % 3) * 30; c.fillStyle = k % 3 ? '#e8dcc2' : '#b8282a'; c.beginPath(); c.moveTo(x - 22, y); c.lineTo(x, y - 30); c.lineTo(x + 22, y); c.fill(); c.fillStyle = S.rgba('#5a3a20', .3); c.beginPath(); c.moveTo(x, y - 30); c.lineTo(x + 22, y); c.lineTo(x + 6, y); c.fill(); }
+      for (let k = 0; k < 12; k++) { const x = 70 + k * 100 + (k % 2) * 30, y = 570 + (k % 3) * 26, red = k % 3 === 0, s = .9 + (y - 570) / 120, tw = 34 * s, th = 40 * s;
+        c.fillStyle = S.rgba('#3a2a14', .25); c.beginPath(); c.ellipse(x + 8, y + 2, tw * 1.1, 5 * s, 0, 0, TAU); c.fill();
+        c.fillStyle = red ? '#b8282a' : '#ece2cc'; c.beginPath(); c.moveTo(x - tw, y); c.quadraticCurveTo(x - tw * .3, y - th * .55, x, y - th); c.quadraticCurveTo(x + tw * .3, y - th * .55, x + tw, y); c.fill();
+        c.fillStyle = red ? '#7a1414' : '#b8ac94'; c.beginPath(); c.moveTo(x, y - th); c.quadraticCurveTo(x + tw * .3, y - th * .55, x + tw, y); c.lineTo(x + tw * .25, y); c.fill();
+        if (!red) { c.fillStyle = S.rgba('#b8282a', .8); for (const f of [.35, .7]) c.fillRect(x - tw * (1 - f) , y - th * f - 2 * s, tw * 2 * (1 - f), 3 * s); }
+        c.fillStyle = '#3a2418'; c.beginPath(); c.moveTo(x - 6 * s, y); c.lineTo(x, y - th * .45); c.lineTo(x + 6 * s, y); c.fill();
+        c.strokeStyle = '#4a3a2a'; c.lineWidth = 1.5; c.beginPath(); c.moveTo(x, y - th); c.lineTo(x, y - th - 14 * s); c.stroke(); c.fillStyle = red ? '#e8c040' : '#b8282a'; c.beginPath(); c.moveTo(x, y - th - 14 * s); c.lineTo(x + 12 * s + 2 * Math.sin(lt * 3 + k), y - th - 11 * s); c.lineTo(x, y - th - 8 * s); c.fill();
+        c.strokeStyle = S.rgba('#6a5a40', .6); c.lineWidth = 1; c.beginPath(); c.moveTo(x - tw * .5, y - th * .4); c.lineTo(x - tw * 1.4, y + 2); c.moveTo(x + tw * .5, y - th * .4); c.lineTo(x + tw * 1.4, y + 2); c.stroke(); }
+      // masons at work by the crane: one guides the hanging block, two carry a stone between them
+      for (const [ch, x, k, pose] of [[C.SOLDIER, 560, 0, 'guide'], [C.TOWNSMAN, 690, 1, 'carry'], [VP.vary(C.TOWNSMAN, 301), 740, 2, 'carry']]) { const y = 540; VP.figure(c, [x, y], sh, cc => S.person(cc, VP.vary(ch, 310 + k), x, y, 14, Object.assign(pose === 'carry' ? walk(lt * .6 + k) : S.idle(lt, k), { face: k === 2 ? -1 : 1, shN: pose === 'guide' ? 150 : 50, elN: pose === 'guide' ? 10 : 70 }), { time: lt }, L)); }
+      { const x = 715, y = 524; c.fillStyle = '#d8c8a8'; c.fillRect(x - 12, y - 6, 24, 12); c.fillStyle = S.rgba('#8a7a5a', .6); c.fillRect(x + 4, y - 6, 8, 12); }
       // workers lifting stone blocks with a crane
-      const cr = Math.sin(lt * .8) * .2; c.strokeStyle = '#4a2a14'; c.lineWidth = 4; c.beginPath(); c.moveTo(600, 470); c.lineTo(620, 360); c.lineTo(620 + Math.cos(cr - .4) * 90, 360 + Math.sin(cr - .4) * 90); c.stroke(); const bx = 620 + Math.cos(cr - .4) * 90, by = 360 + Math.sin(cr - .4) * 90 + 40 + 20 * Math.sin(lt); c.beginPath(); c.moveTo(bx, by - 40 - 20 * Math.sin(lt)); c.lineTo(bx, by); c.stroke(); c.fillStyle = '#d8c8a8'; c.fillRect(bx - 12, by, 24, 16);
+      const cr = Math.sin(lt * .8) * .2; c.strokeStyle = '#4a2a14'; c.lineWidth = 4; c.beginPath(); c.moveTo(640, 540); c.lineTo(620, 360); c.stroke(); c.beginPath(); c.moveTo(600, 540); c.lineTo(620, 360); c.lineTo(620 + Math.cos(cr - .4) * 90, 360 + Math.sin(cr - .4) * 90); c.stroke(); const bx = 620 + Math.cos(cr - .4) * 90, by = 360 + Math.sin(cr - .4) * 90 + 40 + 20 * Math.sin(lt); c.beginPath(); c.moveTo(bx, by - 40 - 20 * Math.sin(lt)); c.lineTo(bx, by); c.stroke(); c.fillStyle = '#d8c8a8'; c.fillRect(bx - 12, by, 24, 16);
       // Isabella on her white horse in the foreground
       const x = lerp(240, 420, E.sine(u)), y = 680;
       VP.figure(c, [x, y], sh, cc => { const r = VP.rider(cc, ISABELLA_Q, x, y, 30, 150, { face: 1, ph: lt * .6, walk: .5, t: lt, col: WHITE, tack: CTACK }, { lean: 2, shN: 40, elN: 40 }, { blink: S.blinkAt(lt, 0), smile: .4, look: [.7, -.1], time: lt }, L); VP._m = r.muzzle; });

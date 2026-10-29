@@ -161,11 +161,29 @@
   VP.set('zahra', 1280, 720, (g, w, h) => {
     sky(g, w, h, [[0, '#5a8ac8'], [.5, '#e8e4cc'], [.7, '#f0d4a0']]);
     hill(g, 320, 140, 260, 1631, '#7a8a5a', ['#9aa070', '#5a6a3a', '#b0a878'], w, h);
-    // three terraces climbing the hill, with palaces and gardens
-    for (let t = 0; t < 3; t++) { const y = 330 + t * 110, x0 = 160 - t * 60, x1 = 1120 + t * 60; g.fillStyle = '#e8d4ac'; g.fillRect(x0, y, x1 - x0, 26); g.fillStyle = '#c8b088'; g.fillRect(x0, y + 26, x1 - x0, 84);
-      for (let i = 0; i < 10 + t * 2; i++) { const x = x0 + 40 + i * ((x1 - x0 - 80) / (9 + t * 2)); g.fillStyle = '#3a2418'; g.fill(arch(x, y + 100, 34, 60)); }
-      for (let i = 0; i < 14; i++) cypress(g, x0 + 30 + i * (x1 - x0 - 60) / 13, y, 26 + (i % 3) * 8, '#3a5a2a', '#d8c070');
-      if (t === 0) { g.fillStyle = '#f0dcb4'; g.fillRect(560, 250, 160, 80); dome(g, 640, 250, 46, '#f0dcb4', '#c8a880', '#fff4dc'); for (const x of [570, 710]) minaret(g, x, 330, 16, 110, '#f0dcb4', '#c8a880'); } }
+    // three terraces climbing the hill: dressed-stone retaining walls, arcades of red-and-cream arches, gardens with pools and cypress
+    for (let t = 0; t < 3; t++) { const y = 330 + t * 110, x0 = 160 - t * 60, x1 = 1120 + t * 60, ww = x1 - x0;
+      // garden strip on top of the terrace
+      g.fillStyle = '#7a9a4a'; g.fillRect(x0, y - 6, ww, 10); S.dabs(g, { x: x0, y: y - 10, w: ww, h: 14, n: 120, cols: ['#5a8a3a', '#8aaa5a', '#c84a6a', '#e8d06a'], r0: 2, r1: 5, a0: .5, a1: .9, seed: 1650 + t });
+      // parapet with merlons
+      g.fillStyle = '#f0dcb4'; g.fillRect(x0, y, ww, 26); g.fillStyle = '#c8a880'; g.fillRect(x0, y + 22, ww, 4); for (let m = x0; m < x1; m += 18) { g.fillStyle = '#f4e4c0'; g.fillRect(m, y - 6, 10, 8); }
+      // the arcade wall: warm stone gradient, block joints, plaster texture
+      const gw = g.createLinearGradient(0, y + 26, 0, y + 110); gw.addColorStop(0, '#dcc094'); gw.addColorStop(1, '#b89a70'); g.fillStyle = gw; g.fillRect(x0, y + 26, ww, 84);
+      g.strokeStyle = S.rgba('#8a6a48', .35); g.lineWidth = 1; for (let row = 0; row < 7; row++) { const yy = y + 26 + row * 12; g.beginPath(); g.moveTo(x0, yy); g.lineTo(x1, yy); g.stroke(); for (let b = x0 + (row % 2) * 18; b < x1; b += 36) { g.beginPath(); g.moveTo(b, yy); g.lineTo(b, yy + 12); g.stroke(); } }
+      S.dabs(g, { x: x0, y: y + 26, w: ww, h: 84, n: 300, cols: ['#e8d0a4', '#a88a60'], r0: 3, r1: 10, a0: .1, a1: .25, seed: 1660 + t });
+      const n = 10 + t * 2; for (let i = 0; i < n; i++) { const x = x0 + 40 + i * ((ww - 80) / (n - 1));
+        g.fillStyle = '#2a1a10'; g.fill(arch(x, y + 104, 34, 60)); striped(g, x, y + 104 - 60 + 17, 19, 9, '#f4e8d0', '#b8402a');
+        g.fillStyle = S.rgba('#ffd890', .18); g.fillRect(x - 10, y + 80, 20, 24);
+        g.fillStyle = '#e8d8b8'; g.fillRect(x - 24, y + 44, 5, 60); g.fillStyle = S.rgba('#6a4a2a', .4); g.fillRect(x - 21, y + 44, 2, 60); }
+      g.fillStyle = S.rgba('#3a2412', .3); g.fillRect(x0, y + 104, ww, 6);
+      for (let i = 0; i < 14; i++) cypress(g, x0 + 30 + i * (ww - 60) / 13, y, 26 + (i % 3) * 8, '#3a5a2a', '#d8c070');
+      // a long reflecting pool on the middle terrace
+      if (t === 1) { const pg = g.createLinearGradient(0, y - 6, 0, y + 4); pg.addColorStop(0, '#8ac0d8'); pg.addColorStop(1, '#4a8aa8'); g.fillStyle = pg; g.fillRect(440, y - 5, 400, 8); g.fillStyle = S.rgba('#ffffff', .5); g.fillRect(460, y - 4, 120, 1.5); }
+      if (t === 0) { g.fillStyle = '#f0dcb4'; g.fillRect(560, 250, 160, 80); for (let k = 0; k < 4; k++) { g.fillStyle = '#2a1a10'; g.fill(arch(585 + k * 37, 326, 20, 40)); striped(g, 585 + k * 37, 326 - 40 + 10, 11, 7, '#f4e8d0', '#b8402a'); }
+        g.fillStyle = S.rgba('#8a6a48', .4); g.fillRect(690, 250, 30, 80); dome(g, 640, 250, 46, '#f0dcb4', '#c8a880', '#fff4dc'); for (const x of [570, 710]) minaret(g, x, 330, 16, 110, '#f0dcb4', '#c8a880');
+        S.glow(g, 600, 230, 120, '#fff0c8', .2); } }
+    // the road up to the gate with a few date palms
+    g.fillStyle = '#d8c090'; g.beginPath(); g.moveTo(560, 720); g.lineTo(610, 660); g.lineTo(670, 660); g.lineTo(720, 720); g.fill();
     g.fillStyle = '#9a8a5a'; g.fillRect(0, 660, w, 60);
   });
   // the golden hall with the mercury bowl
