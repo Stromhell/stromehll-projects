@@ -81,3 +81,8 @@ Full-video times were checked one by one in Zernio on 28 Oct 2026 at 17:35 UTC. 
 - R13 2026-11-09 14:00 UTC: Nobody at BlackRock Chose to Buy Nvidia #shorts (6ae3c277bc0b10e15d5e3d3d)
 - R14 2026-11-09 17:00 UTC: Meet the Big Three: The Quiet Owners of America #shorts (6ae3c279bc0b10e15d5e3d47)
 - R15 2026-11-10 00:00 UTC: Texas Sued BlackRock Over Coal. Here's Why #shorts (6ae3c27bee7b4934e9f2270d)
+
+## Spain series (29 Oct 2026, 22:19 UTC)
+- Spain Part 2 full "How Spain Got Rich From a Mistake (and Still Went Broke)": Fri 6 Nov 20:00 UTC (15:00 ET), YouTube. Zernio 6ae3c6755db31e4a3f6f2b5d.
+- Wed 4 Nov 20:00 UTC (15:00 ET) is held for Spain Part 1 (Al-Andalus), which must release first. Part 1 arrives later tonight.
+- Release-order note: with Spain 1+2 the run after FZ1073 (3D, 2 Nov) is five 2D videos (Spain 1, Spain 2, Salman, Osho, Secret Service) before Tesla (3D, 16 Nov). Flagged; nothing moved.
