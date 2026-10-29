@@ -1,0 +1,234 @@
+{
+ "dur": 52.221999999999994,
+ "cues": [
+  {
+   "t": 0.6,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 2.279,
+   "name": "thud",
+   "gain": 0.35
+  },
+  {
+   "t": 4.739,
+   "name": "hit",
+   "gain": 0.4
+  },
+  {
+   "t": 5.539,
+   "name": "pop",
+   "gain": 0.35
+  },
+  {
+   "t": 6.434,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 6.634,
+   "name": "tick",
+   "gain": 0.3
+  },
+  {
+   "t": 8.324,
+   "name": "pop",
+   "gain": 0.35
+  },
+  {
+   "t": 9.924,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 11.344,
+   "name": "coins_cascade",
+   "gain": 0.35
+  },
+  {
+   "t": 12.544,
+   "name": "hit",
+   "gain": 0.4
+  },
+  {
+   "t": 14.339,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 15.131,
+   "name": "hit",
+   "gain": 0.35
+  },
+  {
+   "t": 17.131,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 17.311,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 18.011,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 21.131,
+   "name": "gate_slam",
+   "gain": 0.5
+  },
+  {
+   "t": 21.231,
+   "name": "stamp",
+   "gain": 0.45
+  },
+  {
+   "t": 22.786,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 22.886,
+   "name": "tick",
+   "gain": 0.3
+  },
+  {
+   "t": 24.518,
+   "name": "paper_tear",
+   "gain": 0.5
+  },
+  {
+   "t": 24.618,
+   "name": "stamp",
+   "gain": 0.4
+  },
+  {
+   "t": 26.173,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 26.273,
+   "name": "tick",
+   "gain": 0.3
+  },
+  {
+   "t": 27.748,
+   "name": "gate_slam",
+   "gain": 0.45
+  },
+  {
+   "t": 31.328,
+   "name": "thud",
+   "gain": 0.4
+  },
+  {
+   "t": 31.968,
+   "name": "thud",
+   "gain": 0.4
+  },
+  {
+   "t": 32.148,
+   "name": "pop",
+   "gain": 0.35
+  },
+  {
+   "t": 33.163,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 33.74,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 37.28,
+   "name": "pop",
+   "gain": 0.35
+  },
+  {
+   "t": 38.94,
+   "name": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 39.84,
+   "name": "gate_slam",
+   "gain": 0.45
+  },
+  {
+   "t": 41.32,
+   "name": "stamp",
+   "gain": 0.45
+  },
+  {
+   "t": 42.395,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 43.232,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 45.672,
+   "name": "thud",
+   "gain": 0.4
+  },
+  {
+   "t": 46.872,
+   "name": "hit",
+   "gain": 0.45
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 7.1339999999999995,
+   "name": "wind_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 6.334,
+   "end": 15.039000000000001,
+   "name": "office_loop",
+   "gain": 0.25
+  },
+  {
+   "start": 14.239,
+   "end": 23.486,
+   "name": "hum_loop",
+   "gain": 0.3
+  },
+  {
+   "start": 22.686,
+   "end": 26.873,
+   "name": "office_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 26.073,
+   "end": 33.863,
+   "name": "wind_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 33.063,
+   "end": 43.095,
+   "name": "hum_loop",
+   "gain": 0.3
+  },
+  {
+   "start": 42.295,
+   "end": 53.02199999999999,
+   "name": "hum_loop",
+   "gain": 0.35
+  }
+ ]
+}
