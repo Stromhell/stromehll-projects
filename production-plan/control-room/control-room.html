@@ -321,14 +321,15 @@ let S = {"asOf": 1793153044.0006406, "slots": 1, "overall": {"pct": 25.6, "finis
 let EXT = {}; let TL_T0 = 0, TL_SPAN = 1;
 let FS = {}; let FS_OPEN = new Set();
 function isFS(id, x){ return /^fs-/.test(id) || /^shorts?$/i.test(String(x.format || "").trim()); }
-const FS_ST = {review: "waiting", scheduled: "done", booked: "done", posted: "done", live: "done"};
-function fsItems(){ return Object.values(FS).map(x => Object.assign({}, x, {status: FS_ST[x.status] || x.status || "queued", pct: x.pct || 0})).sort((a, b) => String(a.id).localeCompare(String(b.id))); }
+const FS_ST = {scheduled: 1, booked: 1, posted: 1, live: 1};
+function fsItems(){ return Object.values(FS).filter(x => !FS_ST[x.status]).map(x => Object.assign({}, x, {status: x.status === "review" ? "waiting" : (x.status || "queued"), pct: x.pct || 0})).sort((a, b) => String(a.id).localeCompare(String(b.id))); }
+function fsBooked(){ try { return (typeof CAL !== "undefined" && CAL && Array.isArray(CAL.posts)) ? CAL.posts.filter(p => p.v === "Facts shorts").length : 0; } catch (e) { return 0; } }
 function fsGroup(){
-  const it = fsItems(); if (!it.length) return null;
+  const it = fsItems(); if (!it.length && !fsBooked()) return null;
   const c = k => it.filter(x => x.status === k).length;
-  const st = c("working") ? "working" : c("waiting") ? "waiting" : c("done") === it.length ? "done" : c("paused") ? "paused" : "queued";
-  const pct = it.reduce((t, x) => t + (x.pct || 0), 0) / it.length;
-  const parts = [`${it.length} created`]; if (c("done")) parts.push(`${c("done")} done or booked`); if (c("working")) parts.push(`${c("working")} in progress`); if (c("waiting")) parts.push(`${c("waiting")} need your OK`); if (c("queued")) parts.push(`${c("queued")} queued`);
+  const st = c("working") ? "working" : c("waiting") ? "waiting" : (it.length && c("done") === it.length) ? "done" : !it.length ? "queued" : c("paused") ? "paused" : "queued";
+  const pct = it.length ? it.reduce((t, x) => t + (x.pct || 0), 0) / it.length : 0;
+  const bk = fsBooked(); const parts = [`${it.length} in production`]; if (bk) parts.push(`${bk} booked so far`); if (c("done")) parts.push(`${c("done")} done or booked`); if (c("working")) parts.push(`${c("working")} in progress`); if (c("waiting")) parts.push(`${c("waiting")} need your OK`); if (c("queued")) parts.push(`${c("queued")} queued`);
   return {id: "facts-shorts", group: true, title: "Facts shorts", short: "Facts shorts", format: "Shorts", status: st, pct, items: it, summary: parts.join(" · "), asOf: S.asOf};
 }
 function rows(){ const g = fsGroup(); return S.videos.concat(Object.values(EXT), g ? [g] : []); }
@@ -338,7 +339,7 @@ function fsArticle(v){
   return `<article class="vid ${v.status} fsgroup ${open?"open":""}" id="v-${v.id}">
       <button type="button" class="vrow" data-open="${esc(v.id)}" aria-expanded="${open}" aria-controls="vb-${esc(v.id)}"><span class="vf"><span class="fmt fshorts">Shorts</span></span><span class="vt"><b>${esc(v.title)} <span class="fscount">${v.items.length}</span></b><small>${esc(v.summary)}</small></span><span class="vprog"><span class="rbar ${v.status}"><i></i></span><b data-k="rpct"></b></span><span class="pill ${v.status}">${LABEL[v.status]||v.status}</span><svg class="chev" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <div class="vbody" id="vb-${esc(v.id)}"${open?"":" hidden"}>
-        <p class="stage">Every facts short, in order. Click one to see its steps, notes and files.</p>
+        <p class="stage">Facts shorts still being made, in order. Click one to see its steps, notes and files. A short leaves this list once it is booked on Zernio; booked ones are in the calendar.</p>
         <ol class="fslist">${v.items.map((x, i) => { const pv = (x.previews || []).map(p => ({label: p.label, url: fsUrl(p.url)})).filter(p => p.url); if (!pv.length && fsUrl(x.previewUrl)) pv.push({label: "Preview", url: fsUrl(x.previewUrl)}); return `<li><details class="fsi" data-fs="${esc(x.id)}"${FS_OPEN.has(x.id)?" open":""}><summary><span class="fsn">${String(i+1).padStart(2,"0")}</span><span class="fst"><b>${esc(x.title)}</b><small>${esc(x.stage || "")}</small></span><span class="fsp"><span class="rbar ${x.status}"><i style="width:${Math.max(0, Math.min(100, x.pct||0))}%"></i></span><b>${Math.floor(x.pct||0)}%</b></span><span class="pill ${x.status}">${LABEL[x.status]||esc(x.status)}</span></summary>
           <div class="fsd">${x.latest && x.latest.text ? `<p><span class="k">Latest</span> ${esc(x.latest.text)}${x.latest.at?` <time>${clock(tsec(x.latest.at))}</time>`:""}</p>` : ""}
           ${(x.phases||[]).length ? `<div class="steps">${x.phases.map(p => `<span class="ph ${esc(p.state)}">${esc(p.name)}${p.state==="active"&&p.pct?` ${p.pct}%`:""}</span>`).join("")}</div>` : ""}

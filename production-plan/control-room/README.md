@@ -75,3 +75,8 @@ The 2D and 3D cards now render the same way:
 - Every db doc `external/fs-*` (or format "Short") is grouped into one "Facts shorts" row in the production line, showing how many were created and how many are done/booked, in progress, waiting or queued.
 - Opening it lists each short with its progress; click a short for its latest note, steps, file links (claude.ai or Google Drive) and booking time (`booked` field).
 - Short statuses: working, review (shown as "Needs your OK"), queued, paused, done, scheduled/booked/posted (shown as done). Cards stay after booking so the count keeps growing.
+
+## v32 (29 Oct 2026): booked items leave the pipeline
+- Pushpam's rule: a finished video that is booked on Zernio, or a booked short, is removed from the pipeline. Production plan deletes the `external/*` card after booking.
+- The Facts shorts card lists only shorts still in production and adds "N booked so far" (counted from the calendar). It stays visible while any short is booked even if none are in production.
+- Applied: NVIDIA and facts shorts 01-11 removed.
