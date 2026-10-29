@@ -88,7 +88,10 @@
       P.handL = P.handR = run ? 'fist' : 'relaxed';
       P.bob = Math.cos(4 * Math.PI * (pl - .1)) * (run ? 5 : 2.6); P.lean = run ? 12 : 4;
     } else if (o.pose === 'sit') {
-      P.hipL = 88; P.hipR = 84; P.kneeL = -86; P.kneeR = -90; P.sitDrop = 1; P.shL = 10 + breathe * 2; P.shR = 14 + breathe * 2; P.elL = -62; P.elR = -74; P.bob = 0;
+      P.hipL = 88; P.hipR = 84; P.kneeL = -86; P.kneeR = -90; P.sitDrop = 1;
+      if (o.low != null) { // low seat (log, stone, ground): seat top is o.low world px above the feet, knees come up
+        const h = Math.max(0, o.low / (o.s || 1)), shA = h >= 40 ? 16 : Math.min(75, 16 + (40 - h) * 1.5), cs = Math.max(-.97, Math.min(.35, (h - 70 * Math.cos(shA * Math.PI / 180)) / 72)), hA = Math.acos(cs) * 180 / Math.PI;
+        P.hipL = hA + 3; P.hipR = hA - 3; P.kneeL = shA - hA - 2; P.kneeR = shA - hA + 4; P.lean = -4; } P.shL = 10 + breathe * 2; P.shR = 14 + breathe * 2; P.elL = -62; P.elR = -74; P.bob = 0;
     } else if (o.pose === 'squat' || o.pose === 'work') {
       P.hipL = 75; P.hipR = 50; P.kneeL = -140; P.kneeR = -110; P.lean = 22;
       const w = Math.sin(t * (o.workSpeed ?? 7)); P.shL = 55 + w * 8; P.elL = -40 - w * 10; P.shR = 40 - w * 6; P.elR = -60;
