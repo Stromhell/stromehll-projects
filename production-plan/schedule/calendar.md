@@ -86,3 +86,21 @@ Full-video times were checked one by one in Zernio on 28 Oct 2026 at 17:35 UTC. 
 - Spain Part 2 full "How Spain Got Rich From a Mistake (and Still Went Broke)": Fri 6 Nov 20:00 UTC (15:00 ET), YouTube. Zernio 6ae3c6755db31e4a3f6f2b5d.
 - Wed 4 Nov 20:00 UTC (15:00 ET) is held for Spain Part 1 (Al-Andalus), which must release first. Part 1 arrives later tonight.
 - Release-order note: with Spain 1+2 the run after FZ1073 (3D, 2 Nov) is five 2D videos (Spain 1, Spain 2, Salman, Osho, Secret Service) before Tesla (3D, 16 Nov). Flagged; nothing moved.
+
+## Ancient Humans reels booked (29 Oct 2026, 22:49 UTC), YouTube + Instagram, cover as IG thumbnail
+- R01 2026-11-09 21:00 UTC: Two Skeletons: A Hunter and a Farmer. Who Lived Better? #shorts (6ae3cd4eb3e1c0c0b8dc4e2a)
+- R02 2026-11-10 02:00 UTC: Farming Made Humans Shorter by Up to 15 cm #shorts (6ae3cd51b3e1c0c0b8dc4e42)
+- R03 2026-11-10 14:00 UTC: Hunter-Gatherers Found Food in 15 Hours a Week #shorts (6ae3cd54b3e1c0c0b8dc4e5e)
+- R04 2026-11-10 21:00 UTC: Did Ancient Humans Really Work Less Than You? #shorts (6ae3cd5791249fdc6125071b)
+- R05 2026-11-11 02:00 UTC: Humans Hunted by Running Animals Into Exhaustion #shorts (6ae3cd5ab3e1c0c0b8dc4e80)
+- R06 2026-11-11 14:00 UTC: The Original Morning Meeting, 50,000 Years Ago #shorts (6ae3cd5de9ccadda1e816cf7)
+- R07 2026-11-11 21:00 UTC: People Made Jewellery Long Before Money Existed #shorts (6ae3cd6091249fdc61250729)
+- R08 2026-11-12 02:00 UTC: A 40,000-Year-Old Flute Made From a Vulture's Bone #shorts (6ae3cd62e9ccadda1e816d10)
+- R09 2026-11-12 14:00 UTC: Before Insurance, Your Friends Were Your Safety Net #shorts (6ae3cd65e9ccadda1e816d18)
+- R10 2026-11-12 21:00 UTC: What Did Ancient Humans Talk About Around the Fire? #shorts (6ae3cd68b3e1c0c0b8dc4f0a)
+- R11 2026-11-13 02:00 UTC: Waking Up at 2 AM Might Not Be a Disorder #shorts (6ae3cd6a1c4e88a68480900f)
+- R12 2026-11-13 14:00 UTC: Farming Looked Like an Upgrade. It Was a Loop #shorts (6ae3cd6d1c4e88a684809025)
+- R13 2026-11-13 21:00 UTC: Once Farming Started, There Was No Going Back #shorts (6ae3cd6fb3e1c0c0b8dc4f34)
+- R14 2026-11-14 02:00 UTC: When Did Your Hours Start Belonging to Someone Else? #shorts (6ae3cd711c4e88a68480903d)
+- R15 2026-12-08 02:00 UTC: They Were Already Standing on the Finish Line #shorts (6ae3cd741c4e88a684809067)
+- Reel slots 30 Oct to 7 Dec were full after these, so R15 went to the first free slot, 8 Dec 02:00 UTC (7 Dec 21:00 ET).
