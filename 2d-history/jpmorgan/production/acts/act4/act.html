@@ -1,0 +1,88 @@
+<!doctype html><html><head><meta charset="utf-8"><title>JP act 4 - How a Bank Makes Money</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../jp_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['bank', 'office', 'trading', 'skyline', 'boardroom']) K.load(n, PL + n + '.jpg');
+const SW = 1920, SH = 1080, INK = '#1d1712', GOLD = '#e8b44a', RED = '#d9483b', GREEN = '#4f9a4a';
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+const plateAt = (c, name, px, py, sx, sy, z) => { const s2 = z * 1920 / 2560; c.setTransform(s2, 0, 0, s2, sx - px * s2, sy - py * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); return s2; };
+const backdrop = (name, dim = .5, blur = 6) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${1 - dim})`; plateAt(c, name, 1280, 720, 960, 540, 1.08); c.restore(); c.setTransform(1, 0, 0, 1, 0, 0); };
+const DIMON = { costume: 'suit', hair: 'swept', hairCol: '#3a2a20', seed: 7 }, WEILL = { costume: 'suit80', hair: 'bald', hairCol: '#b8b8b8', glasses: true, seed: 2 };
+const KID = { costume: 'shirt', hair: 'short', hairCol: '#3a2a20', seed: 7 };
+// framed photo with a figure inside (screen)
+const photo = (c, x, y, w, h, a, lt, fig, cap, sepia = true) => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.4)'; c.fillRect(-w / 2 + 12, -h / 2 + 12, w, h); c.fillStyle = '#5a3a22'; c.fillRect(-w / 2, -h / 2, w, h); c.fillStyle = sepia ? '#d8c49a' : '#c8d4dc'; c.fillRect(-w / 2 + 22, -h / 2 + 22, w - 44, h - 90);
+  c.save(); c.beginPath(); c.rect(-w / 2 + 22, -h / 2 + 22, w - 44, h - 90); c.clip(); if (sepia) c.filter = 'sepia(.7)'; R.figure(c, Object.assign({ x: 0, y: h / 2 + 120, s: 1.25, pose: 'stand', facing: 1, t: lt, mood: 'neutral' }, fig)); c.restore();
+  c.font = '30px Anton'; c.fillStyle = '#f2e6c8'; c.textAlign = 'center'; c.fillText(cap, 0, h / 2 - 26); c.restore(); };
+const envelope = (c, x, y, s, rot, txt) => { c.save(); c.translate(x, y); c.rotate(rot); c.scale(s, s); c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(-150, -90, 310, 200); c.fillStyle = '#f4ecd8'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-160, -100, 320, 200); c.strokeRect(-160, -100, 320, 200); c.beginPath(); c.moveTo(-160, -100); c.lineTo(0, 10); c.lineTo(160, -100); c.stroke(); if (txt) { c.font = '34px Anton'; c.fillStyle = INK; c.textAlign = 'center'; c.fillText(txt, 0, 70); } c.restore(); };
+const letter = (c, x, y, rot, a, head, col) => { if (a <= 0) return; c.save(); c.translate(x, y); c.rotate(rot); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(-170, -230, 360, 480); c.fillStyle = '#fbf8f0'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-180, -240, 360, 480); c.strokeRect(-180, -240, 360, 480); c.fillStyle = col; c.fillRect(-180, -240, 360, 70); c.font = '34px Anton'; c.fillStyle = '#fff'; c.textAlign = 'center'; c.fillText(head, 0, -192); c.fillStyle = '#bbb'; for (let k = 0; k < 8; k++) c.fillRect(-140, -130 + k * 36, 280 - (k % 3) * 40, 12); c.font = '34px Caveat'; c.fillStyle = '#2a4a9a'; c.fillText('Offer of employment', 0, 200); c.restore(); };
+const tower = (c, x, base, names, n, lt, at) => { names.forEach((nm, i) => { const u = pop(lt, at[i] ?? 99, .45); if (u <= 0) return; const y = base - i * 112 - 260 * (1 - E.out(K.seg(lt, at[i], at[i] + .35))); c.save(); c.translate(x, y); c.globalAlpha = Math.min(1, u * 2); c.fillStyle = 'rgba(0,0,0,.4)'; c.fillRect(-268, -42, 548, 100); c.fillStyle = i % 2 ? '#2f5a8a' : '#3f6aa0'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-280, -54, 560, 100); c.strokeRect(-280, -54, 560, 100); c.font = '48px Anton'; c.fillStyle = '#fff'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(nm, 0, 0); c.restore(); }); };
+const spot = (c, x, a) => { c.save(); c.globalAlpha = a; const g = c.createRadialGradient(x, 860, 20, x, 860, 420); g.addColorStop(0, 'rgba(255,240,200,.55)'); g.addColorStop(1, 'rgba(255,240,200,0)'); c.fillStyle = g; c.beginPath(); c.moveTo(x - 60, 0); c.lineTo(x + 60, 0); c.lineTo(x + 340, 1000); c.lineTo(x - 340, 1000); c.closePath(); c.fill(); c.restore(); };
+
+// simple bank building icon (screen)
+const bankIcon = (c, x, y, s, a, lab, col = '#d8cdb8') => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(s * a, s * a); c.fillStyle = 'rgba(0,0,0,.35)'; c.beginPath(); c.ellipse(0, 6, 230, 18, 0, 0, 7); c.fill(); c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.moveTo(-220, -260); c.lineTo(0, -380); c.lineTo(220, -260); c.closePath(); c.fill(); c.stroke(); for (let k = -165; k <= 165; k += 66) { c.fillRect(k - 18, -250, 36, 210); c.strokeRect(k - 18, -250, 36, 210); } c.fillRect(-240, -40, 480, 40); c.strokeRect(-240, -40, 480, 40); if (lab) { c.font = '44px Anton'; c.fillStyle = INK; c.textAlign = 'center'; c.fillText(lab, 0, -282); } c.restore(); };
+// a flying coin along a curve from (x0,y0) to (x1,y1), progress u
+const flyCoin = (c, x0, y0, x1, y1, u, r = 26) => { if (u <= 0 || u >= 1) return; const x = x0 + (x1 - x0) * u, y = y0 + (y1 - y0) * u - Math.sin(u * Math.PI) * 120; JK.coin(c, x, y, r, 1); };
+// a stacked balance bar: own capital (gold) on the bottom, borrowed (grey) above; 100 units tall
+const stackBar = (c, x, base, own, g, lab, sub) => { const U = 6.2, W = 230; const H = 100 * U * g; c.save(); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(x - W / 2 + 12, base - H + 12, W, H); const ho = Math.min(H, own * U); c.fillStyle = GOLD; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(x - W / 2, base - ho, W, ho); c.strokeRect(x - W / 2, base - ho, W, ho); if (H > ho) { c.fillStyle = '#8a92a0'; c.fillRect(x - W / 2, base - H, W, H - ho); c.strokeRect(x - W / 2, base - H, W, H - ho); }
+  c.font = '44px Anton'; c.textAlign = 'center'; c.fillStyle = '#fffaf0'; c.fillText(lab, x, base + 56); if (sub && g > .95) { c.font = '34px Anton'; c.fillStyle = '#2a2018'; c.fillText(`$${100 - own} BORROWED`, x, base - H / 2 - 10); c.fillStyle = '#fffaf0'; c.textAlign = 'left'; c.fillText(`$${own} OWN CAPITAL`, x + W / 2 + 24, base - ho / 2 + 12); } c.restore(); };
+const board = (name = 'office', dim = .62) => backdrop(name, dim);
+
+window.SHOTS = [
+  // 1 money flows into the bank from depositors, other banks and investors
+  { draw: (c, lt, u, S) => { board('bank', .55)(c); bankIcon(c, 1340, 960, 1.0, pop(lt, .2, .6), 'BANK');
+      const src = [['YOU', 260, 470, S.t0], ['OTHER BANKS', 620, 470, S.t1], ['INVESTORS', 980, 470, S.t2]]; src.forEach(([n, x, y, t], i) => { const a = pop(lt, t); if (a <= 0) return; c.save(); c.globalAlpha = Math.min(1, a); c.fillStyle = 'rgba(20,14,10,.7)'; c.beginPath(); c.roundRect(x - 150, y - 230, 300, 370, 18); c.fill(); c.fillStyle = '#6a4a30'; c.fillRect(x - 130, y + 52, 260, 18); R.figure(c, { x, y: y + 60, s: .8, costume: i ? 'suit' : 'shirt', hair: ['short', 'swept', 'bald'][i], hairCol: '#3a2a20', seed: 20 + i, pose: 'stand', facing: 1, t: lt, mood: 'neutral' }); c.font = '36px Anton'; c.fillStyle = '#fffaf0'; c.textAlign = 'center'; c.fillText(n, x, y + 110); c.restore(); for (let k = 0; k < 3; k++) flyCoin(c, x, y + 160, 1300, 700, ((lt - t) * .5 + k / 3) % 1 * (lt > t ? 1 : 0)); }); },
+    bed: [['hum_loop', .3]],
+    init: S => { S.t0 = A.at(S, 'deposits', 2); S.t1 = A.at(S, 'other banks', 5); S.t2 = A.at(S, 'investors', 6.4); const tB = A.at(S, 'borrowed money', 1.2), tL = A.at(S, 'loan to the bank', 3.6);
+      S.D.over = [(c, lt) => K.title(c, 'BORROWED MONEY', lt, { at: tB, y: 120, px: 80, fill: GOLD }), (c, lt) => K.card(c, 'YOUR DEPOSIT =\nA LOAN TO THE BANK', lt, { at: tL, x: 1600, y: 380, px: 42, rot: 4 })];
+      S.D.sfx = [[tB, 'hit', .45], [S.t0, 'coins', .4], [S.t1, 'coins', .35], [S.t2, 'coins', .35], [tL, 'pop', .4]]; } },
+  // 2 low rate in, high rate out; the gap glows as profit
+  { draw: (c, lt, u, S) => { board('office', .6)(c); bankIcon(c, 960, 860, .9, 1, 'BANK');
+      const inA = pop(lt, S.tL), outA = pop(lt, S.tH); if (inA > 0) { for (let k = 0; k < 3; k++) flyCoin(c, 200, 600, 780, 640, ((lt * .45) + k / 3) % 1); K.card(c, 'PAYS A LOW RATE', lt, { at: S.tL, x: 330, y: 380, px: 44, rot: -3 }); }
+      if (outA > 0) { [['HOME BUYERS', 1640, 300], ['BUSINESSES', 1700, 560], ['CARD USERS', 1640, 820]].forEach(([n, x, y], i) => { c.save(); c.globalAlpha = Math.min(1, pop(lt, S.tH + i * .3)); c.font = '40px Anton'; c.fillStyle = '#fffaf0'; c.textAlign = 'center'; c.fillText(n, x, y); c.restore(); flyCoin(c, 1140, 640, x - 120, y - 30, ((lt * .45) + i / 3) % 1); }); K.card(c, 'LENDS AT A HIGHER RATE', lt, { at: S.tH, x: 1600, y: 980, px: 40, rot: 3 }); }
+      const g = pop(lt, S.tG, .6); if (g > 0) { c.save(); c.translate(960, 220); c.scale(g, g); c.shadowColor = GOLD; c.shadowBlur = 30; K.outlined(c, 'THE GAP = PROFIT', 0, 0, 84, { fill: GOLD }); c.restore(); } },
+    bed: [['hum_loop', .3]],
+    init: S => { S.tL = A.at(S, 'low rate', 1); S.tH = A.at(S, 'higher rate', 3.4); S.tG = A.at(S, 'gap', 6.6); S.D.sfx = [[S.tL, 'coins', .35], [S.tH, 'coins', .35], [S.tG, 'chime', .5]]; } },
+  // 3 capital is the cushion: a falling "bad loan" block hits the gold cushion first
+  { draw: (c, lt, u, S) => { board('office', .6)(c); const cu = pop(lt, S.tC, .5); stackBar(c, 960, 860, 14, 1, '', false); if (cu > 0) { c.save(); c.globalAlpha = Math.min(1, cu); K.outlined(c, 'CAPITAL', 1290, 880, 56, { fill: GOLD }); c.font = '32px Anton'; c.fillStyle = '#fffaf0'; c.textAlign = 'left'; c.fillText("shareholders' money + kept profits", 1150, 940); c.restore(); }
+      const f = K.seg(lt, S.tB, S.tB + 1); if (f > 0) { const y = 100 + 700 * E.in(Math.min(1, f * 1.4)); c.save(); c.translate(960, y); c.rotate(.15 * (1 - f)); c.fillStyle = RED; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-120, -50, 240, 100); c.strokeRect(-120, -50, 240, 100); c.font = '40px Anton'; c.fillStyle = '#fff'; c.textAlign = 'center'; c.fillText('BAD LOANS', 0, 14); c.restore(); } },
+    bed: [['hum_loop', .3]],
+    init: S => { S.tC = A.at(S, 'capital', 3.6); S.tB = A.at(S, 'first hit', 5.6); const tO = A.at(S, 'own money', .8);
+      S.D.over = [(c, lt) => K.card(c, "THE BANK'S OWN MONEY", lt, { at: tO, x: 480, y: 220, px: 46, rot: -4 }), (c, lt) => K.card(c, 'TAKES THE FIRST HIT', lt, { at: S.tB + .7, x: 480, y: 820, px: 46, rot: 3 })];
+      S.D.sfx = [[tO, 'pop', .4], [S.tC, 'chime', .4], [S.tB, 'whoosh', .4], [S.tB + .7, 'thud', .55]]; } },
+  // 4 two identical banks, $100 of loans each
+  { draw: (c, lt, u, S) => { board('skyline', .55)(c); bankIcon(c, 560, 860, 1, pop(lt, S.tT), 'BANK A', '#cfe0cf'); bankIcon(c, 1360, 860, 1, pop(lt, S.tT + .3), 'BANK B', '#e8cfc8'); const a = pop(lt, S.tH); if (a > 0) { K.card(c, '$100 OF LOANS', lt, { at: S.tH, x: 560, y: 380, px: 44, rot: -2 }); K.card(c, '$100 OF LOANS', lt, { at: S.tH + .2, x: 1360, y: 380, px: 44, rot: 2 }); } },
+    bed: [['hum_loop', .3]],
+    init: S => { S.tT = A.at(S, 'Two banks', 3); S.tH = A.at(S, 'hundred dollars', 4.6); S.D.over = [(c, lt) => K.badge(c, 'SIMPLIFIED EXAMPLE', lt, { at: .4 })]; S.D.sfx = [[.4, 'pop', .35], [S.tT, 'pop', .4], [S.tT + .3, 'pop', .4], [S.tH, 'coins', .35]]; } },
+  // 5 Bank A: 8 own, 92 borrowed
+  { draw: (c, lt, u, S) => { board('skyline', .62)(c); stackBar(c, 760, 820, 8, E.out(K.seg(lt, .4, 1.6)), 'BANK A', true); },
+    bed: [['hum_loop', .3]], init: S => { const tC = A.at(S, 'careful', 1); S.D.over = [(c, lt) => K.card(c, 'CAREFUL', lt, { at: tC, x: 1500, y: 260, px: 70, rot: 4 })]; S.D.sfx = [[.4, 'riser', .3], [tC, 'pop', .45]]; } },
+  // 6 Bank B: 3 own, 97 borrowed
+  { draw: (c, lt, u, S) => { board('skyline', .62)(c); stackBar(c, 760, 820, 3, E.out(K.seg(lt, .4, 1.6)), 'BANK B', true); },
+    bed: [['hum_loop', .3]], init: S => { const tC = A.at(S, 'aggressive', 1); S.D.over = [(c, lt) => K.card(c, 'AGGRESSIVE', lt, { at: tC, x: 1500, y: 260, px: 70, rot: -4 }), A.grade('120,30,20', .08)]; S.D.sfx = [[.4, 'riser', .3], [tC, 'hit', .45]]; } },
+  // 7 a normal year: both get +$1
+  { draw: (c, lt, u, S) => { board('skyline', .62)(c); stackBar(c, 560, 820, 8, 1, 'BANK A'); stackBar(c, 1360, 820, 3, 1, 'BANK B'); const a = pop(lt, S.tP, .5); if (a > 0) for (const x of [560, 1360]) { const y = 200 - 40 * E.out(K.seg(lt, S.tP, S.tP + .6)); JK.coin(c, x, y, 60, Math.min(1, a)); K.outlined(c, '+$1', x + 120, y + 20, 64, { fill: GREEN, alpha: Math.min(1, a) }); } },
+    bed: [['hum_loop', .3]], init: S => { S.tP = A.at(S, 'one dollar', 2); const tN = A.at(S, 'normal year', .8); S.D.over = [(c, lt) => K.badge(c, 'A NORMAL YEAR', lt, { at: tN })]; S.D.sfx = [[tN, 'pop', .35], [S.tP, 'coins', .5]]; } },
+  // 8 return on their own money: 12.5% vs 33%
+  { draw: (c, lt, u, S) => { board('skyline', .66)(c); const eq = (x, t, own, pct, col) => { const a = pop(lt, t, .5); if (a <= 0) return; c.save(); c.globalAlpha = Math.min(1, a); K.outlined(c, '$1', x, 330, 90, { fill: GREEN }); c.fillStyle = '#fffaf0'; c.fillRect(x - 130, 370, 260, 10); K.outlined(c, '$' + own, x, 480, 90, { fill: GOLD }); const v = (parseFloat(pct) * E.out(K.seg(lt, t + .4, t + 1.6))).toFixed(pct.includes('.') ? 1 : 0); K.outlined(c, '= ' + v + '%', x, 700, 130, { fill: col }); c.restore(); };
+      K.outlined(c, 'BANK A', 560, 180, 56, { fill: '#cfe0cf' }); K.outlined(c, 'BANK B', 1360, 180, 56, { fill: '#e8cfc8' }); eq(560, S.tA, 8, '12.5', '#fffaf0'); eq(1360, S.tB, 3, '33', GOLD); },
+    bed: [['hum_loop', .3]], init: S => { S.tA = A.at(S, 'Bank A', .4); S.tB = A.at(S, 'Bank B', 4.4); S.D.over = [(c, lt) => K.card(c, 'RETURN ON ITS OWN MONEY', lt, { at: .3, x: 960, y: 860, px: 44, rot: -2 })]; S.D.sfx = [[S.tA, 'pop', .4], [S.tA + .5, 'tick', .35], [S.tB, 'pop', .4], [S.tB + .5, 'tick', .35], [S.tB + 1.6, 'chime', .45]]; } },
+  // 9 trading floor: Bank B's share price arrow shoots up, bonus bags drop
+  { plate: 'trading', cam: { z: [1.1, 1.2], x: [1280, 1300], y: [760, 760], ease: E.io }, bed: [['trading_loop', .4]],
+    over: [(c, lt, u, S) => { const g = E.out(K.seg(lt, S.tS, S.tS + 2)); c.save(); c.strokeStyle = GREEN; c.lineWidth = 14; c.lineJoin = 'round'; c.shadowColor = 'rgba(0,0,0,.5)'; c.shadowBlur = 10; c.beginPath(); const pts = [[360, 880], [620, 800], [820, 830], [1080, 620], [1300, 560], [1560, 300]]; const n = g * (pts.length - 1); for (let i = 0; i <= Math.floor(n); i++) i ? c.lineTo(...pts[i]) : c.moveTo(...pts[i]); if (n < pts.length - 1) { const i = Math.floor(n), f = n - i; c.lineTo(pts[i][0] + (pts[i + 1][0] - pts[i][0]) * f, pts[i][1] + (pts[i + 1][1] - pts[i][1]) * f); } c.stroke(); c.restore(); if (g > .2) K.outlined(c, 'BANK B SHARES', 560, 760, 52, { fill: '#fffaf0', alpha: Math.min(1, g * 2) });
+      const b = pop(lt, S.tO, .5); if (b > 0) for (let k = 0; k < 3; k++) { const y = 140 + 60 * k + 300 * E.out(K.seg(lt, S.tO + k * .2, S.tO + .6 + k * .2)); c.save(); c.translate(1500 + k * 120, y); c.scale(b, b); c.fillStyle = '#c8a060'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.ellipse(0, 20, 60, 70, 0, 0, 7); c.fill(); c.stroke(); c.font = '40px Anton'; c.fillStyle = INK; c.textAlign = 'center'; c.fillText('$', 0, 36); c.restore(); } }],
+    init: S => { S.tS = A.at(S, 'share price', 4); S.tO = A.at(S, 'bonuses', 6); const tT = A.at(S, 'three times', 2.4);
+      S.D.over.push((c, lt) => K.card(c, 'NEARLY 3x THE RETURN', lt, { at: tT, x: 460, y: 220, px: 50, rot: -4 }), (c, lt) => K.card(c, 'BIGGER BONUSES', lt, { at: S.tO + .4, x: 1620, y: 860, px: 46, rot: 3 }));
+      S.D.sfx = [[tT, 'pop', .4], [S.tS, 'riser', .4], [S.tO, 'coins_cascade', .45]]; } },
+  // 10 the careful bank looks slow; a JPMorgan badge stamps onto Bank A
+  { draw: (c, lt, u, S) => { board('skyline', .55)(c); bankIcon(c, 560, 860, 1, 1, 'BANK A', '#cfe0cf'); bankIcon(c, 1360, 860, 1, 1, 'BANK B', '#e8cfc8'); const sl = pop(lt, .4); if (sl > 0 && lt < S.tJ) K.card(c, 'LOOKS SLOW', lt, { at: .5, x: 560, y: 380, px: 46, rot: -3 });
+      const j = K.seg(lt, S.tJ, S.tJ + .4); if (j > 0) { c.save(); c.translate(560, 560); const s = 1 + 1.5 * (1 - E.out(j)); c.scale(s, s); c.globalAlpha = Math.min(1, j * 2); c.rotate(-.12); c.strokeStyle = '#3f6aa0'; c.lineWidth = 10; c.strokeRect(-210, -60, 420, 120); c.font = '72px Anton'; c.fillStyle = '#3f6aa0'; c.textAlign = 'center'; c.fillText('JPMORGAN', 0, 26); c.restore(); } },
+    bed: [['hum_loop', .3]],
+    init: S => { S.tJ = A.at(S, 'JPMorgan', 4); const tD = A.at(S, 'Dimon', 3.4); S.D.over = [(c, lt) => K.card(c, 'UNDER DIMON', lt, { at: tD, x: 1360, y: 220, px: 50, rot: 4 })]; S.D.sfx = [[.5, 'pop', .35], [tD, 'pop', .4], [S.tJ + .35, 'stamp', .55]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>

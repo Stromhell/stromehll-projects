@@ -1,0 +1,91 @@
+<!doctype html><html><head><meta charset="utf-8"><title>JP act 3 - The Fortress</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../jp_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['chicago', 'office', 'boardroom', 'bank', 'skyline', 'rain_tower']) K.load(n, PL + n + '.jpg');
+const SW = 1920, SH = 1080, INK = '#1d1712', GOLD = '#e8b44a', RED = '#d9483b', GREEN = '#4f9a4a';
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+const plateAt = (c, name, px, py, sx, sy, z) => { const s2 = z * 1920 / 2560; c.setTransform(s2, 0, 0, s2, sx - px * s2, sy - py * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); return s2; };
+const backdrop = (name, dim = .5, blur = 6) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${1 - dim})`; plateAt(c, name, 1280, 720, 960, 540, 1.08); c.restore(); c.setTransform(1, 0, 0, 1, 0, 0); };
+const DIMON = { costume: 'suit', hair: 'swept', hairCol: '#3a2a20', seed: 7 }, WEILL = { costume: 'suit80', hair: 'bald', hairCol: '#b8b8b8', glasses: true, seed: 2 };
+const KID = { costume: 'shirt', hair: 'short', hairCol: '#3a2a20', seed: 7 };
+// framed photo with a figure inside (screen)
+const photo = (c, x, y, w, h, a, lt, fig, cap, sepia = true) => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.4)'; c.fillRect(-w / 2 + 12, -h / 2 + 12, w, h); c.fillStyle = '#5a3a22'; c.fillRect(-w / 2, -h / 2, w, h); c.fillStyle = sepia ? '#d8c49a' : '#c8d4dc'; c.fillRect(-w / 2 + 22, -h / 2 + 22, w - 44, h - 90);
+  c.save(); c.beginPath(); c.rect(-w / 2 + 22, -h / 2 + 22, w - 44, h - 90); c.clip(); if (sepia) c.filter = 'sepia(.7)'; R.figure(c, Object.assign({ x: 0, y: h / 2 + 120, s: 1.25, pose: 'stand', facing: 1, t: lt, mood: 'neutral' }, fig)); c.restore();
+  c.font = '30px Anton'; c.fillStyle = '#f2e6c8'; c.textAlign = 'center'; c.fillText(cap, 0, h / 2 - 26); c.restore(); };
+const envelope = (c, x, y, s, rot, txt) => { c.save(); c.translate(x, y); c.rotate(rot); c.scale(s, s); c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(-150, -90, 310, 200); c.fillStyle = '#f4ecd8'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-160, -100, 320, 200); c.strokeRect(-160, -100, 320, 200); c.beginPath(); c.moveTo(-160, -100); c.lineTo(0, 10); c.lineTo(160, -100); c.stroke(); if (txt) { c.font = '34px Anton'; c.fillStyle = INK; c.textAlign = 'center'; c.fillText(txt, 0, 70); } c.restore(); };
+const letter = (c, x, y, rot, a, head, col) => { if (a <= 0) return; c.save(); c.translate(x, y); c.rotate(rot); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(-170, -230, 360, 480); c.fillStyle = '#fbf8f0'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-180, -240, 360, 480); c.strokeRect(-180, -240, 360, 480); c.fillStyle = col; c.fillRect(-180, -240, 360, 70); c.font = '34px Anton'; c.fillStyle = '#fff'; c.textAlign = 'center'; c.fillText(head, 0, -192); c.fillStyle = '#bbb'; for (let k = 0; k < 8; k++) c.fillRect(-140, -130 + k * 36, 280 - (k % 3) * 40, 12); c.font = '34px Caveat'; c.fillStyle = '#2a4a9a'; c.fillText('Offer of employment', 0, 200); c.restore(); };
+const tower = (c, x, base, names, n, lt, at) => { names.forEach((nm, i) => { const u = pop(lt, at[i] ?? 99, .45); if (u <= 0) return; const y = base - i * 112 - 260 * (1 - E.out(K.seg(lt, at[i], at[i] + .35))); c.save(); c.translate(x, y); c.globalAlpha = Math.min(1, u * 2); c.fillStyle = 'rgba(0,0,0,.4)'; c.fillRect(-268, -42, 548, 100); c.fillStyle = i % 2 ? '#2f5a8a' : '#3f6aa0'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-280, -54, 560, 100); c.strokeRect(-280, -54, 560, 100); c.font = '48px Anton'; c.fillStyle = '#fff'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(nm, 0, 0); c.restore(); }); };
+const spot = (c, x, a) => { c.save(); c.globalAlpha = a; const g = c.createRadialGradient(x, 860, 20, x, 860, 420); g.addColorStop(0, 'rgba(255,240,200,.55)'); g.addColorStop(1, 'rgba(255,240,200,0)'); c.fillStyle = g; c.beginPath(); c.moveTo(x - 60, 0); c.lineTo(x + 60, 0); c.lineTo(x + 340, 1000); c.lineTo(x - 340, 1000); c.closePath(); c.fill(); c.restore(); };
+
+// stack of gold coins for his savings; half slides out
+const coinStack = (c, x, y, n, a, lt) => { for (let k = 0; k < n; k++) JK.coin(c, x, y - k * 22, 70, a); };
+const bar = (c, x, base, h, w, col, lab) => { c.save(); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(x - w / 2 + 10, base - h + 10, w, h); c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(x - w / 2, base - h, w, h); c.strokeRect(x - w / 2, base - h, w, h); c.font = '34px Anton'; c.fillStyle = '#fffaf0'; c.textAlign = 'center'; c.fillText(lab, x, base + 48); c.restore(); };
+const ruleIcon = (c, x, y, kind, a, lt) => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.fillStyle = 'rgba(20,14,10,.78)'; c.strokeStyle = '#e8d8b0'; c.lineWidth = 4; c.beginPath(); c.roundRect(-170, -170, 340, 360, 22); c.fill(); c.stroke(); c.font = '38px Anton'; c.fillStyle = '#e8d8b0'; c.textAlign = 'center';
+  if (kind === 0) { for (let r = 0; r < 4; r++) for (let k = 0; k < 4 - (r % 2); k++) { c.fillStyle = '#b8a48a'; c.strokeStyle = INK; c.lineWidth = 3; const bx = -120 + k * 64 + (r % 2) * 32, by = 40 - r * 40; c.fillRect(bx, by, 60, 36); c.strokeRect(bx, by, 60, 36); } c.fillStyle = '#e8d8b0'; c.fillText('MORE CAPITAL', 0, 150); }
+  if (kind === 1) { for (let k = 0; k < 6; k++) { c.fillStyle = '#5f9a55'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-110 + (k % 3) * 74, 30 - Math.floor(k / 3) * 46, 70, 40); c.strokeRect(-110 + (k % 3) * 74, 30 - Math.floor(k / 3) * 46, 70, 40); c.fillStyle = '#2f5a2a'; c.font = '26px Anton'; c.fillText('$', -75 + (k % 3) * 74, 60 - Math.floor(k / 3) * 46); } c.font = '38px Anton'; c.fillStyle = '#e8d8b0'; c.fillText('CASH READY', 0, 150); }
+  if (kind === 2) { c.fillStyle = '#5a6070'; for (const [dx, dy, r] of [[-50, -40, 60], [20, -70, 70], [80, -30, 55], [0, -10, 70]]) { c.beginPath(); c.arc(dx, dy, r, 0, 7); c.fill(); } c.strokeStyle = '#ffd84a'; c.lineWidth = 8; c.beginPath(); c.moveTo(10, 30); c.lineTo(-20, 80); c.lineTo(15, 80); c.lineTo(-15, 130); c.stroke(); c.fillStyle = '#e8d8b0'; c.fillText('PLAN FOR THE WORST', 0, 172); }
+  c.restore(); };
+
+window.SHOTS = [
+  // 1 Chicago skyline: Bank One's tower, a sagging gauge; CEO badge
+  { plate: 'chicago', cam: { z: [1.2, 1.32], x: [1100, 1420], y: [700, 600], ease: E.io }, bed: [['city_loop', .35], ['wind_loop', .2]],
+    live: [(c, lt) => { c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = 'rgba(30,40,90,.45)'; c.fillRect(0, 0, 2560, 1440); c.restore(); const g = c.createRadialGradient(1428, 520, 4, 1428, 520, 130); g.addColorStop(0, 'rgba(255,214,130,.75)'); g.addColorStop(1, 'rgba(255,214,130,0)'); c.fillStyle = g; c.fillRect(1280, 380, 300, 280); }],
+    init: S => { const tC = A.at(S, 'chief executive', 1.6), tB = A.at(S, 'Bank One', 3), tP = A.at(S, 'poor shape', 5.4);
+      S.D.over = [(c, lt) => K.dateTag(c, 'MARCH 2000', lt, { at: .3 }), (c, lt) => K.card(c, 'CEO · BANK ONE', lt, { at: tB, x: 520, y: 230, px: 58, rot: -4 }), (c, lt) => K.card(c, 'IN POOR SHAPE', lt, { at: tP, x: 1420, y: 860, px: 54, rot: 4 })];
+      S.D.sfx = [[.3, 'pop', .35], [tC, 'chime', .4], [tB, 'pop', .4], [tP, 'thud', .45]]; } },
+  // 2 his own money: a share counter climbs to 2,000,000; half his coin stack slides across
+  { draw: (c, lt, u, S) => { backdrop('office', .55)(c); const n = Math.round(2e6 * E.out(K.seg(lt, S.tS, S.tS + 2.2))); if (lt > S.tS - .2) { K.outlined(c, n.toLocaleString('en-US'), 960, 250, 120, { fill: GOLD }); K.outlined(c, 'BANK ONE SHARES', 960, 330, 48, { fill: '#fffaf0' }); }
+      const a = pop(lt, S.tH - 1.2); const m = E.io(K.seg(lt, S.tH, S.tH + 1)); for (let k = 0; k < 10; k++) { const moved = k >= 5; JK.coin(c, 760 + (moved ? 400 * m : 0), 900 - (k % 5) * 30 - (moved ? 0 : 0), 64, a); }
+      if (m > .5) { K.outlined(c, 'HALF', 760, 640, 60, { fill: '#fffaf0', alpha: (m - .5) * 2 }); K.outlined(c, 'INTO THE BANK', 1160, 640, 52, { fill: GOLD, alpha: (m - .5) * 2 }); } },
+    bed: [['hum_loop', .3]],
+    init: S => { S.tS = A.at(S, 'two million', 1); S.tH = A.at(S, 'half', 6); const tM = A.at(S, 'sixty million', 3.4);
+      S.D.over = [(c, lt) => K.card(c, '≈ $60 MILLION\nHIS OWN MONEY', lt, { at: tM, x: 1520, y: 520, px: 46, rot: 4 })];
+      S.D.sfx = [[S.tS, 'tick', .35], [S.tS + 1, 'tick', .35], [tM, 'coins', .45], [S.tH, 'whoosh_soft', .4], [S.tH + .9, 'coins', .4]]; } },
+  // 3 line by line: the ledger with a red pen striking rows
+  { draw: (c, lt, u, S) => { backdrop('office', .6)(c); const BX = 460, BY = 170, BW = 1000, BH = 760; JK.ledger(c, BX, BY, BW, BH); c.save(); c.font = '44px SourceSerif'; c.fillStyle = '#3a2a1e';
+      const rows = ['Wasteful costs', 'Duplicate systems', 'Bad loans', 'Old computers', 'Extra layers', 'Loose spending']; rows.forEach((r, i) => c.fillText(r, BX + 70, BY + 120 + i * 80));
+      const p = K.seg(lt, .6, S.tR - .3) * rows.length; c.strokeStyle = RED; c.lineWidth = 6; for (let i = 0; i < Math.min(rows.length, Math.floor(p) + 1); i++) { const f = Math.min(1, p - i); if (f <= 0) continue; const y = BY + 110 + i * 80; c.beginPath(); c.moveTo(BX + 60, y); c.lineTo(BX + 60 + (BW - 120) * f, y + 4); c.stroke(); }
+      const k = pop(lt, S.tR); if (k > 0) { c.font = '44px Anton'; c.fillStyle = '#2f6a2a'; c.fillText('RISK CHECKS', BX + 70, BY + 640); c.save(); c.translate(BX + BW - 160, BY + 625); c.scale(k, k); c.strokeStyle = GREEN; c.lineWidth = 12; c.beginPath(); c.moveTo(-30, 0); c.lineTo(-5, 25); c.lineTo(40, -30); c.stroke(); c.restore(); }
+      if (p < rows.length) { const hx = BX + 60 + (BW - 120) * (p % 1), hy = BY + 110 + Math.floor(p) * 80; c.translate(hx, hy); c.rotate(-.6); c.fillStyle = RED; c.fillRect(-8, -110, 16, 110); c.fillStyle = INK; c.beginPath(); c.moveTo(-8, 0); c.lineTo(8, 0); c.lineTo(0, 22); c.closePath(); c.fill(); } c.restore(); },
+    bed: [['office_loop', .3]],
+    init: S => { const tC = A.at(S, 'cut costs', 2.4), tL = A.at(S, 'bad loans', 3.6), tR = A.at(S, 'risk', 5); S.tR = tR;
+      S.D.over = [(c, lt) => K.card(c, 'CUT COSTS', lt, { at: tC, x: 1700, y: 260, px: 46, rot: 4 }), (c, lt) => K.card(c, 'CLEAN UP BAD LOANS', lt, { at: tL, x: 1700, y: 520, px: 40, rot: -3 }), (c, lt) => K.card(c, 'TIGHTER RISK CHECKS', lt, { at: tR, x: 1700, y: 780, px: 40, rot: 3 })];
+      S.D.sfx = [[.6, 'paper', .4], [2, 'paper', .35], [tC, 'pop', .35], [tL, 'pop', .35], [tR, 'pop', .35]]; } },
+  // 4 profit bars climb back to billions
+  { draw: (c, lt, u, S) => { backdrop('skyline', .55)(c); const base = 780, vals = [-.3, .2, .5, .8, 1]; vals.forEach((v, i) => { const g = E.out(K.seg(lt, .4 + i * .5, 1.2 + i * .5)); if (g <= 0) return; const h = Math.abs(v) * 560 * g; c.save(); if (v < 0) { c.fillStyle = RED; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(560 + i * 200 - 70, base, 140, h * .5); c.strokeRect(560 + i * 200 - 70, base, 140, h * .5); c.font = '34px Anton'; c.fillStyle = '#fffaf0'; c.textAlign = 'center'; c.fillText(String(2000 + i), 560 + i * 200, base - 20); c.fillText('LOSS', 560 + i * 200, base + h * .5 + 44); } else bar(c, 560 + i * 200, base, h, 140, GREEN, String(2000 + i)); c.restore(); });
+      c.strokeStyle = '#fffaf0'; c.lineWidth = 4; c.beginPath(); c.moveTo(420, base); c.lineTo(1520, base); c.stroke(); },
+    bed: [['hum_loop', .3]],
+    init: S => { const tB = A.at(S, 'billions', 3); S.D.over = [(c, lt) => K.title(c, 'BILLIONS A YEAR AGAIN', lt, { at: tB, y: 150, px: 78, fill: GOLD })]; S.D.sfx = [[.4, 'tick', .3], [.9, 'tick', .3], [1.4, 'tick', .3], [1.9, 'tick', .3], [2.4, 'tick', .3], [tB, 'chime', .5]]; } },
+  // 5 two brass plaques slide together; $58B price tag
+  { draw: (c, lt, u, S) => { backdrop('bank', .45)(c); const m = E.io(K.seg(lt, S.tM, S.tM + 1.1));
+      if (lt < S.tM + .9) { JK.plaque(c, 520 + 380 * m, 470, 'JPMORGAN CHASE', .85, pop(lt, .3)); JK.plaque(c, 1400 - 380 * m, 470, 'BANK ONE', .85, pop(lt, .7)); } else { JK.plaque(c, 960, 470, 'JPMORGAN CHASE', 1.1 + .15 * (1 - E.back(K.seg(lt, S.tM + .9, S.tM + 1.4))), 1, '+ BANK ONE'); } },
+    bed: [['hum_loop', .3]],
+    init: S => { S.tM = A.at(S, 'agreed to buy', 2); const tP = A.at(S, 'fifty-eight billion', 3.6), tR = A.at(S, 'run the combined', 6.4);
+      S.D.over = [(c, lt) => K.dateTag(c, 'JANUARY 2004', lt, { at: .3 }), (c, lt) => K.card(c, '≈ $58 BILLION', lt, { at: tP, x: 960, y: 780, px: 64, rot: -3 }), (c, lt) => K.card(c, 'DIMON TO RUN IT ONE DAY', lt, { at: tR, x: 960, y: 940, px: 42, rot: 2 })];
+      S.D.sfx = [[.3, 'pop', .35], [.7, 'pop', .35], [S.tM + .9, 'stamp', .5], [tP, 'coins', .4], [tR, 'chime', .4]]; } },
+  // 6 boardroom: Dimon walks to the head of the table; titles stack up
+  { plate: 'boardroom', cam: { z: [1.1, 1.18], x: [1280, 1300], y: [860, 870] }, bed: [['hum_loop', .35]],
+    figs: [{ y: 1340, s: 2.0, ...DIMON, facing: 1, pose: 'stand', mood: 'happy', walk: { x0: 400, x1: 1280, t0: .3, dur: 2.6 }, anim: (o, lt, u, S) => { if (lt > 3.2) { o.facing = 1; o.pose = lt > S.tH ? 'present' : 'stand'; } } }],
+    init: S => { const tP = A.at(S, 'president', .8), tC = A.at(S, 'chief executive', 3.4); S.tH = A.at(S, 'chairman', 6);
+      const stack = (txt, at, i) => (c, lt) => K.card(c, txt, lt, { at, x: 1560, y: 230 + i * 150, px: 44, rot: i % 2 ? 3 : -3 });
+      S.D.over = [stack('2004 · PRESIDENT', tP, 0), stack('31 DEC 2005 · CEO', tC, 1), stack('2006 · CHAIRMAN', S.tH, 2)];
+      S.D.sfx = [[.3, 'footsteps', .35], [tP, 'stamp', .4], [tC, 'stamp', .4], [S.tH, 'stamp', .45]]; } },
+  // 7 three rules light up in turn
+  { draw: (c, lt, u, S) => { backdrop('boardroom', .65)(c); S.at.forEach((t, i) => ruleIcon(c, 480 + i * 480, 560, i, pop(lt, t, .5), lt)); },
+    bed: [['hum_loop', .3]],
+    init: S => { S.at = [A.at(S, 'capital', 1.6), A.at(S, 'cash', 3.4), A.at(S, 'worst year', 5.6)]; S.D.over = [(c, lt) => K.title(c, 'HIS RULE', lt, { at: .3, y: 150, px: 84, fill: GOLD })]; S.D.sfx = [[.3, 'hit', .45]].concat(S.at.map(t => [t, 'pop', .45])); } },
+  // 8 the fortress rises in the rain; title; then a "?" over the bank door
+  { plate: 'rain_tower', cam: { z: [1.08, 1.16], x: [1280, 1280], y: [800, 780], ease: E.io }, bed: [['rain_loop', .45]],
+    live: [JK.rain(220), (c, lt, u, S) => JK.fortress(c, 1280, 1330, 1.2, .3 + .7 * E.out(K.seg(lt, .3, 2.6)), pop(lt, .2, .6))],
+    init: S => { const tF = A.at(S, 'fortress balance sheet', .8), tQ = A.at(S, 'makes money', 5.4);
+      S.D.over = [(c, lt) => K.title(c, 'FORTRESS BALANCE SHEET', lt, { at: tF, y: 150, px: 80, fill: GOLD }), (c, lt) => K.card(c, 'HOW DOES A BANK\nMAKE MONEY?', lt, { at: tQ - .4, x: 960, y: 880, px: 50, rot: -2 })];
+      S.D.sfx = [[.3, 'thud', .35], [tF, 'hit', .5], [tQ - .4, 'riser', .4]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>
