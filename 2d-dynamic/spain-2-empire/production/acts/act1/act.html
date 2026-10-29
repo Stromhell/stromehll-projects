@@ -29,7 +29,7 @@ const globe = (c, x, y, r, lt, rot) => { c.save(); c.translate(x, y); const g = 
 
 window.SHOTS = [
   // 1.01 MAP: Portugal's route curls around Africa toward India; Spain sits idle
-  { set: 'world', cam: { z: [1.6, 1.9], x: [600, 680], y: [400, 430], ease: E.io }, bed: [['drone', .2]], sub: 'bottom',
+  { set: 'world', cam: { z: [1.45, 1.6], x: [700, 760], y: [340, 350], ease: E.io }, bed: [['drone', .2]], sub: 'bottom',
     init: Sh => { Sh.tG = at(Sh, 'granada', 1.5); Sh.tP = at(Sh, 'portugal', 3); Sh.tA = at(Sh, 'asia', Sh.dur - 1.5); Sh.dur = Sh.end - Sh.start; },
     draw: (c, lt, u, Sh) => {
       const es = WLL(-4, 40), pt = WLL(-8.5, 39.5);
@@ -57,7 +57,7 @@ window.SHOTS = [
     sfx: [['columbus', 'pop', .35], ['sail west', 'whoosh_soft', .35]] },
 
   // 1.03 CU: the globe; Columbus's finger covers a short gap, a scholar's hand shows the real distance
-  { set: 'hall', cam: { z: [2.3, 2.6], x: [640, 640], y: [450, 450], ease: E.sine }, bed: [['drone', .15]],
+  { set: 'hall', cam: { z: [1.6, 1.8], x: [640, 640], y: [430, 440], ease: E.sine }, bed: [['drone', .15]],
     init: Sh => { Sh.tR = at(Sh, 'they were right', 2.5); Sh.tS = at(Sh, 'much smaller', 4); Sh.tN = at(Sh, 'portugal said no', 6.5); Sh.tY = at(Sh, 'said yes', Sh.dur - 1.2); Sh.dur = Sh.end - Sh.start; },
     draw: (c, lt, u, Sh) => {
       c.fillStyle = 'rgba(30,20,20,.45)'; c.fillRect(0, 0, 1280, 720);
@@ -67,13 +67,11 @@ window.SHOTS = [
       const s = seg(lt, .6, 2), real = seg(lt, Sh.tR, Sh.tR + 1.5);
       c.strokeStyle = '#ffd27a'; c.lineWidth = 6; c.beginPath(); c.moveTo(gx + 40, gy - 20); c.lineTo(gx + 40 - 50 * s, gy - 20); c.stroke();
       if (real > 0) { c.strokeStyle = '#ff6a5a'; c.lineWidth = 6; c.beginPath(); c.arc(gx, gy, r * .86, -Math.PI * .1, -Math.PI * .1 - 2.2 * real, true); c.stroke(); }
-      // hands
-      c.fillStyle = '#e8b890'; c.beginPath(); c.ellipse(gx + 20 - 30 * s, gy - 60, 16, 40, -.3, 0, TAU); c.fill();
-      if (real > 0) { c.fillStyle = '#c89878'; c.beginPath(); c.ellipse(gx - 160 + 20 * (1 - real), gy + 40, 18, 44, .5, 0, TAU); c.fill(); }
+      c.font = '20px Oswald'; c.textAlign = 'center'; c.fillStyle = '#ffd27a'; c.globalAlpha = s; c.fillText('HIS GUESS', gx + 15, gy - 32); c.globalAlpha = real; c.fillStyle = '#ff8a7a'; c.fillText('THE REAL DISTANCE', gx - 10, gy - r * .55); c.globalAlpha = 1;
       // the No and the Yes stamps
       const no = seg(lt, Sh.tN, Sh.tN + .3), yes = seg(lt, Sh.tY - .3, Sh.tY);
-      if (no > 0) { c.save(); c.translate(260, 220); c.rotate(-.2); c.scale(1 + (1 - no), 1 + (1 - no)); c.globalAlpha = no; c.strokeStyle = '#2f7a3a'; c.lineWidth = 6; c.strokeRect(-110, -40, 220, 80); c.font = '40px Anton'; c.fillStyle = '#2f7a3a'; c.textAlign = 'center'; c.fillText('PORTUGAL: NO', 0, 14); c.restore(); }
-      if (yes > 0) { c.save(); c.translate(1020, 220); c.rotate(.15); c.scale(1 + (1 - yes), 1 + (1 - yes)); c.globalAlpha = yes; c.strokeStyle = '#b8282a'; c.lineWidth = 6; c.strokeRect(-110, -40, 220, 80); c.font = '40px Anton'; c.fillStyle = '#b8282a'; c.textAlign = 'center'; c.fillText('SPAIN: YES', 0, 14); c.restore(); }
+      if (no > 0) { c.save(); c.translate(370, 560); c.rotate(-.15); c.scale(1 + (1 - no), 1 + (1 - no)); c.globalAlpha = no; c.strokeStyle = '#2f7a3a'; c.lineWidth = 6; c.strokeRect(-110, -40, 220, 80); c.font = '40px Anton'; c.fillStyle = '#2f7a3a'; c.textAlign = 'center'; c.fillText('PORTUGAL: NO', 0, 14); c.restore(); }
+      if (yes > 0) { c.save(); c.translate(910, 560); c.rotate(.12); c.scale(1 + (1 - yes), 1 + (1 - yes)); c.globalAlpha = yes; c.strokeStyle = '#b8282a'; c.lineWidth = 6; c.strokeRect(-110, -40, 220, 80); c.font = '40px Anton'; c.fillStyle = '#b8282a'; c.textAlign = 'center'; c.fillText('SPAIN: YES', 0, 14); c.restore(); }
     },
     over: [(c, lt) => coinCorner(c, lt, { shine: .5 }), (c, lt, u, Sh) => K.badge(c, 'HE THOUGHT THE WORLD WAS MUCH SMALLER', lt, { at: Sh.tS, until: Sh.tN })],
     sfx: [['they were right', 'paper', .3], ['portugal said no', 'stamp', .45], ['said yes', 'stamp', .5]] },
@@ -138,18 +136,19 @@ window.SHOTS = [
     sfx: [['tordesillas', 'paper', .4], ['a line', 'scrape', .4], ['everything west', 'pop', .35], ['east for portugal', 'pop', .35]] },
 
   // 1.08 MED: an old Columbus in bed, papers and maps around him
-  { set: 'room', cam: { z: [1.3, 1.6], x: [560, 600], y: [440, 470], ease: E.sine }, bed: [['night_loop', .2]],
+  { set: 'room', cam: { z: [1.35, 1.55], x: [620, 640], y: [470, 490], ease: E.sine }, bed: [['night_loop', .2]],
     init: Sh => { Sh.tF = at(Sh, 'four voyages', 1); Sh.tA = at(Sh, 'asia', Sh.dur - 1.5); Sh.dur = Sh.end - Sh.start; },
     draw: (c, lt, u, Sh) => {
       const f = VP.flicker(lt, 2), L = { L: [-1, -.5], amb: '#2a2040', ambA: .45, rim: '#ffc070', rimA: .9, tint: '#ffa050', tintA: .16, sw: .3, rw: .05 };
       H1.fire(c, 300, 520, .12, lt, 4); c.fillStyle = '#c8b08a'; c.fillRect(294, 520, 12, 30); c.fillStyle = '#4a2a14'; c.fillRect(260, 550, 80, 110); VP.glow(c, 300, 500, 420, '#ffb060', .3 + .1 * f);
-      // the bed
-      c.fillStyle = '#4a2a14'; c.fillRect(380, 520, 30, 160); c.fillStyle = '#e8e0d0'; c.fillRect(400, 560, 440, 70); c.fillStyle = '#7a2a2a'; c.fillRect(520, 556, 320, 80); c.fillStyle = '#5a3a1e'; c.fillRect(380, 630, 480, 20);
-      // his head and shoulders on the pillow
-      c.save(); c.translate(470, 560); c.rotate(-1.3); S.person(c, OLDCOL, 0, 0, 36, Object.assign(S.idle(lt, 0), { face: 1, hideLegs: 1, shN: 30, elN: 60 }), { blink: Math.max(S.blinkAt(lt, 0), .5), worry: .3, look: [.6, 0], time: lt }, L); c.restore();
-      c.fillStyle = '#7a2a2a'; c.fillRect(520, 556, 320, 80); c.fillStyle = S.rgba('#ffd090', .2); c.fillRect(520, 556, 320, 6);
+      // the bed: a carved headboard, Columbus propped up under a heavy blanket
+      c.fillStyle = '#4a2a14'; c.fillRect(420, 440, 24, 240); c.fillRect(436, 440, 10, 12); c.fillStyle = '#5a3420'; c.fillRect(420, 450, 24, 8);
+      c.fillStyle = '#e8e0d0'; c.beginPath(); c.ellipse(500, 520, 60, 30, -.3, 0, TAU); c.fill();
+      VP.figure(c, [540, 615], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, OLDCOL, 540, 615, 44, Object.assign(S.idle(lt, 0), { face: 1, sitY: .55, lean: -8, shN: 20, elN: 70, shF: 15, elF: 60 }), { blink: S.blinkAt(lt, 0), worry: .4, look: [.7, -.2], time: lt }, L));
+      c.fillStyle = '#7a2a2a'; c.beginPath(); c.moveTo(470, 600); c.quadraticCurveTo(560, 580, 860, 596); c.lineTo(870, 670); c.lineTo(460, 670); c.fill(); c.strokeStyle = S.rgba('#ffd090', .3); c.lineWidth = 3; c.beginPath(); c.moveTo(470, 600); c.quadraticCurveTo(560, 580, 860, 596); c.stroke();
+      c.fillStyle = '#4a2a14'; c.fillRect(440, 660, 440, 22); c.fillRect(860, 560, 20, 120);
       for (let k = 0; k < 6; k++) { const x = 600 + k * 70, y = 680 + (k % 2) * 10; c.save(); c.translate(x, y); c.rotate((k - 3) * .2); c.fillStyle = '#f0e0b8'; c.fillRect(-40, -24, 80, 48); c.strokeStyle = '#6a4a2a'; c.lineWidth = 1; c.strokeRect(-40, -24, 80, 48); c.fillStyle = '#c8a878'; c.beginPath(); c.ellipse(-8, 0, 12, 16, 0, 0, TAU); c.fill(); c.restore(); }
-      for (let k = 0; k < 4; k++) { const vx = 760, vy = 280; const q = seg(lt, Sh.tF + k * .4, Sh.tF + k * .4 + .3); if (q <= 0) continue; X.ship(c, vx + k * 40 - 60, vy + (k % 2) * 20, .25 * q, '#f4ead4', true); }
+      for (let k = 0; k < 4; k++) { const vx = 600, vy = 330; const q = seg(lt, Sh.tF + k * .4, Sh.tF + k * .4 + .3); if (q <= 0) continue; X.ship(c, vx + k * 40 - 60, vy + (k % 2) * 20, .25 * q, '#f4ead4', true); }
       VP.motes(c, lt, 200, 300, 700, 300, { n: 25, a: .4 });
     },
     over: [(c, lt) => coinCorner(c, lt, { shine: .6 }), (c, lt, u, Sh) => K.card(c, '4 VOYAGES', lt, { at: Sh.tF + .3, x: 1540, y: 200, px: 60, rot: 3 }), (c, lt) => K.dateTag(c, 'VALLADOLID · 1506', lt, { at: 1 }), (c, lt, u, Sh) => K.badge(c, 'STILL SURE IT WAS ASIA', lt, { at: Sh.tA })],
