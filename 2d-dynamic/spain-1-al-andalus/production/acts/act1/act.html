@@ -1,0 +1,294 @@
+<!doctype html><html><head><meta charset="utf-8"><title>ES1 act 1 - Seven Thousand Men</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/vp/engine.js"></script><script src="../../../../shared/vp/cast.js"></script><script src="../../../../shared/vp/scenes.js"></script><script src="../../../../shared/vp/spain.js"></script>
+<script src="../../../../shared/kit.js"></script><script src="../../../../shared/vp.js"></script><script src="../../es1_sets.js"></script><script src="../../es1_sets_act1.js"></script><script src="../../es1_cast.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, E = K.E, X = S.SPX, CH = S.SPAIN, C = S.ES1, H = S.ES1H, TAU = Math.PI * 2;
+const at = VP.at, seg = K.seg, lerp = K.lerp, pulse = H.pulse, walk = H.walk;
+const BLACK = ['#2c2424', '#0e0a0a'], GREY = ['#a49a90', '#5a524a'], BAY = ['#7a4a2e', '#3a2014'];
+const GOTH_TACK = { cloth: ['#7a1e1a', '#3a0e0a'], trim: '#d8b060', reins: 1 };
+const RODERIC_K = Object.assign({}, C.RODERIC, { headwear: X.crown });
+// a parchment wash clipped to Iberia
+const iberiaWash = (c, col, a, clip) => { c.save(); c.clip(S.poly(X.IBERIA, false)); if (clip) c.clip(clip); c.fillStyle = S.rgba(col, a); c.fillRect(0, 0, 1280, 720); S.dabs(c, { x: 0, y: 0, w: 1280, h: 720, n: 140, cols: [col, '#ffffff', '#3a2412'], r0: 10, r1: 34, sq: .5, a0: .08, a1: .22, seed: 7 }); c.restore(); };
+const candle = (c, lt, x, y, a = .5, i = 0) => { const f = VP.flicker(lt, i); VP.glow(c, x, y - 8, 380, '#ffb860', (.2 + .1 * f) * a); VP.glow(c, x, y - 6, 18, '#fff2c0', .9);
+  c.save(); c.globalCompositeOperation = 'multiply'; const vg = c.createRadialGradient(x, y, 120, x, y, 900); vg.addColorStop(0, 'rgba(255,255,255,0)'); vg.addColorStop(1, `rgba(40,20,10,${.6 - .08 * f})`); c.fillStyle = vg; c.fillRect(-200, -200, 1680, 1120); c.restore(); };
+const torches = (c, lt, pts, dim = 1) => pts.map(([x, y], i) => { const f = VP.flicker(lt, i + 3); H.fire(c, x, y + 4, .35, lt, i); VP.glow(c, x, y + 30, 260, '#ff9a40', (.22 + .1 * f) * dim); return [x, y, f]; });
+const lightFrom = (x, y, px, py, o = {}) => Object.assign({ L: [K.clamp((px - x) / 300, -1.5, 1.5), -1], amb: '#3a2a3a', ambA: .4, rim: '#ffc880', rimA: .9, tint: '#ff9a50', tintA: .14, sw: .3, rw: .05 }, o);
+const sh2 = (px, x, a = .38) => ({ k: K.clamp((x - px) / 160, -2.5, 2.5), sy: -.22, a, blur: 2 });
+const arrow = (c, pts, q, col, w) => { if (q <= 0) return; const n = pts.length - 1, s = q * n, i = Math.min(n - 1, Math.floor(s)), f = s - i; const tip = [lerp(pts[i][0], pts[i + 1][0], f), lerp(pts[i][1], pts[i + 1][1], f)];
+  c.save(); c.strokeStyle = col; c.lineWidth = w; c.lineCap = 'round'; c.lineJoin = 'round'; c.beginPath(); c.moveTo(pts[0][0], pts[0][1]); for (let k = 1; k <= i; k++) c.lineTo(pts[k][0], pts[k][1]); c.lineTo(tip[0], tip[1]); c.stroke();
+  const d = Math.atan2(tip[1] - pts[i][1], tip[0] - pts[i][0]); c.fillStyle = col; c.translate(tip[0], tip[1]); c.rotate(d); c.beginPath(); c.moveTo(w * 1.8, 0); c.lineTo(-w * 1.2, -w * 1.6); c.lineTo(-w * 1.2, w * 1.6); c.fill(); c.restore(); return tip; };
+const mapCandle = (c, lt, x0, y0) => { const f = VP.flicker(lt, 3); VP.glow(c, x0 + 80 * Math.sin(lt * .35), y0 + 30 * Math.sin(lt * .5), 520, '#ffcf80', .14 + .1 * f);
+  c.save(); c.globalCompositeOperation = 'multiply'; const vg = c.createRadialGradient(640, 380, 200, 640, 380, 820); vg.addColorStop(0, 'rgba(255,255,255,0)'); vg.addColorStop(1, `rgba(60,30,10,${.5 - .1 * f})`); c.fillStyle = vg; c.fillRect(0, 0, 1280, 720); c.restore(); };
+const ink = (c, txt, x, y, a, px = 28) => { if (a <= 0) return; c.save(); c.globalAlpha = Math.min(1, a); c.font = `${px}px Caveat`; c.fillStyle = '#3a2412'; c.textAlign = 'center'; c.fillText(txt, x, y); c.restore(); };
+const TOL = X.LL(-4.02, 39.86), COR = X.LL(-4.78, 37.88), SEV = X.LL(-5.98, 37.39), MER = X.LL(-6.34, 38.92), GIB = X.LL(-5.35, 36.14), COV = X.LL(-5.07, 43.31);
+
+window.SHOTS = [
+  // 1 MAP: Iberia around 700. Roman roads fade, an ochre Visigoth wash spreads, a crown drops onto Toledo
+  { set: 'map', cam: { z: [1.05, 1.32], x: [640, 560], y: [380, 330], ease: E.io }, bed: [['drone', .22]], sub: 'bottom',
+    init: Sh => { Sh.tV = at(Sh, 'visigoths', 4); Sh.tR = at(Sh, 'roman', 7); },
+    draw: (c, lt, u, Sh) => {
+      // Roman roads: dashed red lines that fade when the Visigoths arrive
+      const ra = 1 - seg(lt, Sh.tR, Sh.tR + 2) * .8, roads = [[[-9.1, 38.7], [-6.34, 38.92], [-4.02, 39.86], [-3.7, 40.4], [2.17, 41.38]], [[-5.98, 37.39], [-4.78, 37.88], [-1.13, 37.98], [-0.37, 39.47], [2.17, 41.38]], [[-6.34, 38.92], [-5.66, 40.96], [-5.6, 42.6], [-8.4, 43.3]]];
+      c.save(); c.globalAlpha = .75 * ra; c.strokeStyle = '#9a2a1a'; c.lineWidth = 2.5; c.setLineDash([6, 7]); c.lineDashOffset = -lt * 10; for (const r of roads) { c.beginPath(); r.forEach((q, i) => { const [x, y] = X.LL(q[0], q[1]); i ? c.lineTo(x, y) : c.moveTo(x, y); }); c.stroke(); } c.restore();
+      const g = E.io(seg(lt, Sh.tV - .4, Sh.tV + 2.4)); if (g > 0) { const cl = new Path2D(); cl.ellipse(TOL[0], TOL[1], 900 * g, 700 * g, 0, 0, TAU); iberiaWash(c, '#c8862a', .42, cl); }
+      // the crown falls on Toledo and bounces once
+      const d = seg(lt, Sh.tV + 1.2, Sh.tV + 1.9), land = lt > Sh.tV + 1.9, b = land ? Math.abs(Math.sin((lt - Sh.tV - 1.9) * 9)) * Math.exp(-(lt - Sh.tV - 1.9) * 4) : 0;
+      if (d > 0) { const y = land ? TOL[1] - 24 - b * 30 : lerp(-80, TOL[1] - 24, d * d); c.fillStyle = S.rgba('#2a1408', .3 * d); c.beginPath(); c.ellipse(TOL[0], TOL[1] + 4, 26, 6, 0, 0, TAU); c.fill();
+        c.save(); c.translate(TOL[0], y); X.crown(c, 40, {}, S.LIGHT.golden, { tone: (col) => col, celT: (cc, p, t) => { cc.fillStyle = t.base; cc.fill(p); cc.strokeStyle = t.shade; cc.lineWidth = 2; cc.stroke(p); }, front: true }); c.restore();
+        if (land) VP.glow(c, TOL[0], TOL[1] - 40, 70, '#ffe08a', .5 * pulse(lt, Sh.tV + 1.9, 1.2)); }
+      ink(c, 'Toledo', TOL[0] + 4, TOL[1] + 34, seg(lt, Sh.tV + 2, Sh.tV + 2.6));
+      ink(c, 'Atlantic', 170, 400, .7, 24); ink(c, 'Mediterranean', 1000, 560, .7, 24); ink(c, 'AFRICA', 640, 690, .7, 24);
+      mapCandle(c, lt, 360, 220);
+    },
+    over: [(c, lt) => K.dateTag(c, 'AROUND AD 700', lt, { at: .5 }), (c, lt, u, Sh) => K.card(c, 'THE VISIGOTHS', lt, { at: Sh.tV + .2, x: 1540, y: 220, px: 60, rot: -3 })],
+    sfx: [[.2, 'paper', .45], ['visigoths', 'whoosh_soft', .35], [6.2, 'thud', .3]] },
+
+  // 2 WIDE -> MED: Toledo on its rock; cut inside the hall where nobles argue round an empty throne
+  { cam: (lt, u, Sh) => lt < Sh.tK ? { z: [1.02 + .06 * lt / Sh.tK], x: [640], y: [360 - 20 * lt / Sh.tK] } : { z: [1.1 + .25 * E.sine(seg(lt, Sh.tK, Sh.dur))], x: [640], y: [450] },
+    init: Sh => { Sh.tK = at(Sh, 'but the kingdom', 5); Sh.tF = at(Sh, 'fought', Sh.tK + 2); Sh.tM = at(Sh, 'murdered', Sh.tK + 4.5); Sh.dur = Sh.end - Sh.start; },
+    bed: [['wind_loop', .2]],
+    draw: (c, lt, u, Sh) => {
+      if (lt < Sh.tK) { VP.drawSet(c, 'toledo'); VP.light('golden', lt, { swing: 6 });
+        VP.clouds(c, lt, { y0: 40, y1: 260, a: .2, speed: 18, n: 4, seed: 11 });
+        // cloud shadows sliding over the rock
+        c.save(); c.globalCompositeOperation = 'multiply'; for (let k = 0; k < 3; k++) { const x = ((lt * 40 + k * 520) % 1700) - 300; const g = c.createRadialGradient(x, 420, 20, x, 420, 260); g.addColorStop(0, 'rgba(70,60,80,.35)'); g.addColorStop(1, 'rgba(70,60,80,0)'); c.fillStyle = g; c.fillRect(x - 300, 200, 600, 460); } c.restore();
+        VP.glow(c, 1100, 120, 420, '#ffe0a0', .2); VP.rays(c, 1100, 100, lt, { ang: 2.4, spread: .12, n: 7, len: 1100, a: .04 });
+        VP.banner(c, 572, 182, 30, 22, ['#8a1e1a', '#3a0a08'], lt, { Lt: S.LIGHT.golden, ph: 0 }); VP.banner(c, 726, 182, 30, 22, ['#8a1e1a', '#3a0a08'], lt, { Lt: S.LIGHT.golden, ph: 1 });
+        VP.motes(c, lt, 0, 300, 1280, 400, { n: 30, a: .3 }); return; }
+      const lt2 = lt - Sh.tK; VP.drawSet(c, 'hall');
+      c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = S.rgba('#2a2040', .45); c.fillRect(0, 0, 1280, 720); c.restore();
+      const T = torches(c, lt, VP.HALL_TORCHES, lt > Sh.tM ? .7 : 1);
+      const bang = pulse(lt, Sh.tF, .5), shake = bang * 4 * Math.sin(lt * 60);
+      const nob = [[C.NOBLE1, 420, 1, 0], [C.NOBLE2, 560, 1, 1], [C.NOBLE3, 760, -1, 2], [C.RODERIC, 900, -1, 3]];
+      for (const [ch, x, face, i] of nob) { const y = 640, near = T.reduce((b, t) => Math.abs(t[0] - x) < Math.abs(b[0] - x) ? t : b), L = lightFrom(x, y, near[0], near[1]);
+        const talk = (Math.sin(lt * 1.3 + i * 2) > .2) ? .4 * Math.abs(Math.sin(lt * 10 + i)) : 0, angry = .5 + .4 * Math.sin(lt * .7 + i);
+        const fist = i === 2 && lt > Sh.tF - .5 && lt < Sh.tF + 1.4;
+        const pose = Object.assign(S.idle(lt, i), { face, lean: 6 + 4 * Math.sin(lt + i), shN: fist ? 80 - 70 * seg(lt, Sh.tF - .4, Sh.tF) : 30 + 20 * Math.sin(lt * 2 + i), elN: fist ? 30 : 60 + 20 * Math.sin(lt * 1.6 + i) });
+        VP.figure(c, [x, y], sh2(near[0], x), cc => S.person(cc, ch, x, y + shake * (i === 2 ? 0 : .3), 50, pose, { blink: S.blinkAt(lt, i), angry, open: talk, look: [face * .6, .1], time: lt }, L)); }
+      // the table in front of them, with cups; one cup tips over on the bang
+      c.fillStyle = '#4a2a18'; c.fillRect(260, 588 + shake, 760, 26); c.fillStyle = S.rgba('#ffd8a0', .25); c.fillRect(260, 588 + shake, 760, 4); c.fillStyle = '#2a1810'; c.fillRect(290, 614, 16, 90); c.fillRect(974, 614, 16, 90);
+      for (const [x, k] of [[480, 0], [640, 1], [820, 2]]) { const tip = k === 1 ? E.out(seg(lt, Sh.tF, Sh.tF + .4)) : 0; c.save(); c.translate(x, 588 + shake); c.rotate(-tip * 1.4); c.fillStyle = '#c8962a'; c.fillRect(-9, -26, 18, 26); c.fillStyle = S.rgba('#fff0c0', .5); c.fillRect(-9, -26, 4, 26); c.restore();
+        if (tip > .3) { c.fillStyle = S.rgba('#6a0e14', .8); c.beginPath(); c.ellipse(x - 30 - 50 * tip, 590 + shake, 50 * tip, 5, 0, 0, TAU); c.fill(); } }
+      // on 'murdered', a red wash and the empty throne in focus
+      const m = seg(lt, Sh.tM, Sh.tM + .8); if (m > 0) { c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = S.rgba('#8a2020', .35 * m); c.fillRect(0, 0, 1280, 720); c.restore(); VP.glow(c, 640, 380, 140, '#ffcf80', .25 * m); }
+      VP.motes(c, lt, 0, 200, 1280, 500, { n: 40, a: .35 });
+      void lt2;
+    },
+    over: [(c, lt) => K.card(c, 'TOLEDO', lt, { at: .6, x: 300, y: 150, px: 60, rot: -3 }), (c, lt, u, Sh) => K.card(c, 'MOST KINGS\nMURDERED OR\nOVERTHROWN', lt, { at: Sh.tM + .3, x: 1560, y: 230, px: 44, rot: 3 })],
+    sfx: [['but the kingdom', 'whoosh', .4], ['fought', 'thud', .55], ['murdered', 'hit', .45]] },
+
+  // 3 MED: the coronation. A shaft of light through the high window; the bishop lowers the crown onto Roderic, rivals watch from the dark
+  { set: 'church', cam: (lt, u, Sh) => lt < Sh.tN ? { z: [1.25 + .25 * E.sine(K.clamp(lt / Sh.tN))], x: [640], y: [400 - 40 * K.clamp(lt / Sh.tN)] } : { z: [1.6], x: [lerp(640, 300, E.io(seg(lt, Sh.tN, Sh.tN + 2)))], y: [380] },
+    init: Sh => { Sh.tC = at(Sh, 'seized', 1.5); Sh.tN = at(Sh, 'never accepted', 4); }, bed: [['drone', .2]],
+    draw: (c, lt, u, Sh) => {
+      const beam = (a) => { c.save(); c.globalCompositeOperation = 'screen'; const g = c.createLinearGradient(250, 150, 640, 640); g.addColorStop(0, S.rgba('#ffe8b0', .5 * a)); g.addColorStop(1, S.rgba('#ffe8b0', .05 * a)); c.fillStyle = g; c.beginPath(); c.moveTo(225, 110); c.lineTo(275, 110); c.lineTo(760, 660); c.lineTo(520, 660); c.closePath(); c.fill(); c.restore(); };
+      c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = S.rgba('#3a2a4a', .4); c.fillRect(0, 0, 1280, 720); c.restore();
+      beam(.8 + .2 * Math.sin(lt * .6));
+      for (const [x, y, i] of [[560, 456, 0], [720, 456, 1]]) { H.fire(c, x, y, .12, lt, i + 20); c.fillStyle = '#f0e6d0'; c.fillRect(x - 4, y, 8, 30); }
+      const L = { L: [.7, -1], amb: '#2a2040', ambA: .45, rim: '#ffe8b0', rimA: 1, tint: '#ffd080', tintA: .12, sw: .3, rw: .05 };
+      const down = E.io(seg(lt, Sh.tC - .6, Sh.tC + 1.2)), crowned = down >= 1;
+      // rivals in the shadows on the left
+      const Ld = { L: [1, -.6], amb: '#1a1428', ambA: .65, rim: '#ffb070', rimA: .5, tint: '#2a2040', tintA: .2, sw: .2, rw: .04 };
+      for (const [ch, x, i] of [[C.NOBLE1, 150, 0], [C.NOBLE3, 250, 1]]) S.person(c, ch, x, 640, 46, Object.assign(S.idle(lt, i + 4), { face: 1, lean: -2 }), { blink: S.blinkAt(lt, i + 2), angry: .4 + .4 * seg(lt, Sh.tN, Sh.tN + 1), look: [.9, 0], time: lt }, Ld);
+      VP.figure(c, [600, 650], { k: .6, sy: -.2, a: .4, blur: 3 }, cc => S.person(cc, crowned ? RODERIC_K : C.RODERIC, 600, 650, 54, Object.assign(S.idle(lt, 0), { face: 1, tilt: -4 * (1 - down) + 2, lean: 4 * (1 - down) }), { blink: S.blinkAt(lt, 1), smile: crowned ? .5 : 0, look: [.3, crowned ? 0 : -.5], time: lt }, L));
+      VP.figure(c, [720, 650], { k: .6, sy: -.2, a: .4, blur: 3 }, cc => S.person(cc, C.BISHOP, 720, 650, 52, Object.assign(S.idle(lt, 1), { face: -1, shN: 120 - 40 * down, elN: 30, shF: 110 - 40 * down, elF: 30,
+        holdN: crowned ? null : (wr) => { cc.save(); cc.translate(wr[0] - 30, wr[1] - 6); X.crown(cc, 32, {}, L, { tone: col => col, celT: (q, p, t) => { q.fillStyle = t.base; q.fill(p); q.strokeStyle = t.shade; q.lineWidth = 2; q.stroke(p); }, front: true }); cc.restore(); } }), { blink: S.blinkAt(lt, 2), look: [-.6, .2], time: lt }, L));
+      if (crowned) VP.glow(c, 600, 340, 90, '#ffe08a', .4 * pulse(lt, Sh.tC + 1.2, 1.4));
+      // dust in the beam
+      c.save(); c.beginPath(); c.moveTo(225, 110); c.lineTo(275, 110); c.lineTo(760, 660); c.lineTo(520, 660); c.closePath(); c.clip(); VP.motes(c, lt, 200, 100, 600, 560, { n: 70, a: .7 }); c.restore();
+      // the camera lands on the rivals: their faces darken
+      const n = seg(lt, Sh.tN, Sh.tN + 1.5); if (n > 0) { VP.glow(c, 200, 470, 160, '#ff8a40', .12 * n); }
+    },
+    over: [(c, lt, u, Sh) => K.card(c, 'RODERIC', lt, { at: Sh.tC + .3, x: 1520, y: 200, px: 70, rot: 3, until: Sh.tN }), (c, lt, u, Sh) => K.dateTag(c, 'TOLEDO · 710', lt, { at: .4 }),
+      (c, lt, u, Sh) => K.card(c, 'THE OLD KING\'S FAMILY', lt, { at: Sh.tN + .8, x: 1500, y: 860, px: 44, rot: -3 })],
+    sfx: [[.2, 'swell', .3], ['seized', 'chime', .4], ['never accepted', 'whoosh_soft', .35]] },
+
+  // 4 MAP: the Umayyad green pours out of Arabia, along North Africa, all the way to the Atlantic
+  { set: 'mapwide', cam: { z: [1.0, 1.1], x: [700, 520], y: [380, 400], ease: E.io }, bed: [['drone', .22]], sub: 'bottom',
+    init: Sh => { Sh.tD = at(Sh, 'damascus', 2); Sh.tA = at(Sh, 'arabia', Sh.tD + 1); Sh.tN = at(Sh, 'north africa', Sh.tA + 2); Sh.tC = at(Sh, 'century', Sh.dur - 1); },
+    draw: (c, lt, u, Sh) => {
+      const PATH = [[39.8, 21.4], [39.6, 24.5], [38, 30], [36.3, 33.5], [33.5, 31], [31.2, 30], [25, 31.2], [20, 31.5], [13, 32.5], [10.2, 35.5], [5, 36], [-1, 35], [-6, 33.8], [-8, 31]];
+      const q = E.io(seg(lt, Sh.tD + .3, Sh.tC + .3)) * (PATH.length - 1);
+      // green spreads as overlapping brush blots along the path, never over the sea
+      const sea = new Path2D(); sea.rect(0, 0, 1280, 720); for (const L of [X.MED]) sea.addPath(S.poly(L.map(p => X.LW(p[0], p[1])), false));
+      c.save(); c.clip(sea, 'evenodd'); c.fillStyle = S.rgba('#2f7a3a', .45);
+      for (let i = 0; i <= Math.floor(q); i++) { const f = i === Math.floor(q) ? q - i : 1, a = PATH[i], b = PATH[Math.min(PATH.length - 1, i + 1)]; for (let k = 0; k <= 6; k++) { const s = Math.min(f, k / 6), [x, y] = X.LW(lerp(a[0], b[0], s), lerp(a[1], b[1], s)), r = 46 + 10 * Math.sin(i * 3 + k); c.beginPath(); c.arc(x, y, r, 0, TAU); c.fill(); } }
+      c.restore();
+      const [dx, dy] = X.LW(36.3, 33.5); H.stamp(c, 'Damascus', dx, dy, lt, Sh.tD, { dx: 40, dy: -12 });
+      const [mx, my] = X.LW(39.8, 21.4); ink(c, 'ARABIA', mx + 50, my + 30, seg(lt, Sh.tA - .5, Sh.tA + .3), 30);
+      ink(c, 'NORTH AFRICA', X.LW(10, 30)[0], X.LW(10, 30)[1], seg(lt, Sh.tN, Sh.tN + .8), 40);
+      const [ix, iy] = X.LW(-4, 40); ink(c, 'Iberia', ix, iy, .8, 28);
+      // a front line arrow riding ahead of the green
+      const tip = Math.min(PATH.length - 1, q + .3); if (q > 0) { const pts = []; for (let i = 0; i <= Math.ceil(tip); i++) { const p = PATH[Math.min(i, PATH.length - 1)]; pts.push(X.LW(p[0], p[1] - 3.2)); } arrow(c, pts, tip / Math.ceil(tip), S.rgba('#1e5a2a', .85), 5); }
+      mapCandle(c, lt, 900, 250);
+    },
+    over: [(c, lt, u, Sh) => K.card(c, 'THE UMAYYAD\nCALIPHATE', lt, { at: .4, x: 1560, y: 200, px: 54, rot: 3 }), (c, lt, u, Sh) => K.card(c, 'LESS THAN\n100 YEARS', lt, { at: Sh.tC - .2, x: 1540, y: 820, px: 48, rot: -3 })],
+    sfx: [[.1, 'paper', .4], ['damascus', 'thud', .4], ['arabia', 'whoosh_soft', .35], ['century', 'hit', .35]] },
+
+  // 5 MED: Musa's tent. The old governor points at the map, Tariq nods and walks out into the light
+  { set: 'tent', cam: (lt, u, Sh) => lt < Sh.tT ? { z: [1.5], x: [lerp(560, 600, lt / Sh.tT)], y: [420] } : { z: [lerp(1.5, 1.3, E.io(seg(lt, Sh.tT, Sh.tT + 2)))], x: [lerp(600, 820, E.io(seg(lt, Sh.tT, Sh.dur)))], y: [420] },
+    init: Sh => { Sh.tM = at(Sh, 'musa', .8); Sh.tT = at(Sh, 'tariq', 3.5); Sh.tS = at(Sh, 'seven thousand', 6); Sh.tB = at(Sh, 'berbers', Sh.tS + 2); Sh.dur = Sh.end - Sh.start; }, bed: [['wind_loop', .15]],
+    draw: (c, lt, u, Sh) => {
+      // the hanging lamp swings, so every shadow swings with it
+      const th = .22 * Math.sin(lt * 1.4), lx = 600 + 200 * Math.sin(th), ly = -40 + 200 * Math.cos(th), f = VP.flicker(lt, 5);
+      c.strokeStyle = '#2a1a10'; c.lineWidth = 2; c.beginPath(); c.moveTo(600, -40); c.lineTo(lx, ly); c.stroke(); c.fillStyle = '#c8963a'; c.beginPath(); c.moveTo(lx - 14, ly); c.lineTo(lx + 14, ly); c.lineTo(lx + 7, ly + 20); c.lineTo(lx - 7, ly + 20); c.fill();
+      VP.glow(c, lx, ly + 12, 36, '#fff2c0', .9); VP.glow(c, lx, ly + 20, 520, '#ffb860', .3 + .1 * f);
+      const L = lightFrom(0, 0, lx, ly), walkT = seg(lt, Sh.tT + 2, Sh.dur);
+      // the green battle map on the table glows where Musa points
+      VP.glow(c, 520, 552, 60, '#ffe0a0', .3 * pulse(lt, Sh.tT - 1, 3));
+      VP.figure(c, [440, 640], sh2(lx, 440), cc => S.person(cc, C.MUSA, 440, 640, 52, Object.assign(S.idle(lt, 0), { face: 1, lean: 8, shN: lt > Sh.tM ? 70 + 10 * Math.sin(lt * 2) : 20, elN: lt > Sh.tM ? 10 : 40 }), { blink: S.blinkAt(lt, 1), open: lt < Sh.tT + 2 ? .3 * Math.abs(Math.sin(lt * 9)) * (Math.sin(lt * 1.3) > -.2) : 0, look: [.9, .2], time: lt }, L));
+      const tx = lerp(720, 1120, E.io(walkT)), tw = walkT > 0 && walkT < 1, nod = pulse(lt, Sh.tT + .8, .8);
+      VP.figure(c, [tx, 640], sh2(lx, tx), cc => S.person(cc, C.TARIQ, tx, 640, 52, Object.assign(tw ? walk(lt * .9) : S.idle(lt, 2), { face: walkT > .02 ? 1 : -1, tilt: 8 * nod }), { blink: S.blinkAt(lt, 3), look: walkT > .02 ? [1, 0] : [-.8, .3 * nod], time: lt }, L));
+      // daylight through the flap rims him as he leaves
+      if (walkT > .5) VP.glow(c, 1115, 400, 260, '#fff2d0', .3 * walkT);
+      VP.motes(c, lt, 900, 180, 380, 380, { n: 30, a: .5 });
+      c.save(); c.globalCompositeOperation = 'multiply'; const vg = c.createRadialGradient(lx, ly + 200, 160, lx, ly + 200, 900); vg.addColorStop(0, 'rgba(255,255,255,0)'); vg.addColorStop(1, 'rgba(30,14,6,.6)'); c.fillStyle = vg; c.fillRect(0, 0, 1280, 720); c.restore();
+    },
+    over: [(c, lt, u, Sh) => K.badge(c, 'MUSA IBN NUSAYR · GOVERNOR', lt, { at: Sh.tM + .2 }), (c, lt, u, Sh) => K.card(c, 'TARIQ\nIBN ZIYAD', lt, { at: Sh.tT + .3, x: 1520, y: 220, px: 62, rot: 3 }),
+      (c, lt, u, Sh) => K.card(c, '~7,000 MEN', lt, { at: Sh.tS + .3, x: 1500, y: 560, px: 66, rot: -3 }), (c, lt, u, Sh) => K.card(c, 'MOSTLY BERBERS', lt, { at: Sh.tB + .2, x: 1480, y: 760, px: 44, rot: 2 })],
+    sfx: [['musa', 'pop', .35], ['tariq', 'pop', .4], ['seven thousand', 'hit', .5]] },
+
+  // 6 WIDE: dawn at the strait. Boats slide onto the sand under a huge rock; the name changes from JABAL TARIQ to GIBRALTAR
+  { set: 'beach', cam: { z: [1.2, 1.4], x: [700, 760], y: [400, 380], ease: E.io }, bed: [['wind_loop', .2], ['ocean_loop', .3]], sub: 'bottom',
+    init: Sh => { Sh.tJ = at(Sh, 'jabal', 4); Sh.tG = at(Sh, 'gibraltar', Sh.tJ + 3); },
+    draw: (c, lt, u, Sh) => {
+      // the Rock, painted big on the right
+      const L = VP.light('golden', lt, { set: { L: [.6, -.8] }, swing: 5 });
+      c.fillStyle = '#7a6a78'; c.beginPath(); c.moveTo(860, 520); c.bezierCurveTo(900, 300, 1000, 150, 1110, 120); c.bezierCurveTo(1170, 140, 1240, 260, 1290, 330); c.lineTo(1290, 520); c.closePath(); c.fill();
+      c.fillStyle = S.rgba('#ffd8a0', .35); c.beginPath(); c.moveTo(860, 520); c.bezierCurveTo(900, 300, 1000, 150, 1110, 120); c.lineTo(1100, 160); c.bezierCurveTo(1010, 200, 930, 330, 900, 520); c.closePath(); c.fill();
+      S.dabs(c, { x: 860, y: 120, w: 430, h: 400, n: 120, cols: ['#5a4a5a', '#9a8a90', '#6a7a5a'], r0: 6, r1: 18, sq: .5, ang: 1, a0: .2, a1: .45, seed: 601, mask: (x, y) => y > 120 + Math.abs(x - 1110) * .8 });
+      VP.glow(c, 960, 360, 300, '#ffe6b0', .3); VP.rays(c, 960, 350, lt, { ang: 2.2, spread: .15, n: 7, len: 700, a: .05 });
+      for (const [x0, y, s, d] of [[560, 540, 1, 0], [760, 520, .8, .5], [420, 512, .65, 1]]) { const x = lerp(x0 - 260, x0, E.out(seg(lt, d, 4 + d))), bob = Math.sin(lt * 1.6 + d) * 3 * (1 - seg(lt, 3 + d, 4 + d)); H.boat(c, x, y + bob, s, lt); }
+      for (let k = 0; k < 7; k++) { const t0 = 3 + k * .6, q = seg(lt, t0, t0 + 6); if (q <= 0) continue; const x = 420 + q * 520 - (k % 2) * 30, y = 590 + (k % 3) * 34, uu = 28 + (k % 3) * 4;
+        VP.figure(c, [x, y], { k: -.3, sy: -.3, a: .35, blur: 2 }, cc => S.person(cc, k % 2 ? C.BERBER : C.BERBER2, x, y, uu, Object.assign(walk(lt * 1.1 + k), { face: 1 }), { blink: S.blinkAt(lt, k), time: lt }, L)); }
+      VP.motes(c, lt, 0, 300, 1280, 400, { n: 30, a: .35 });
+    },
+    over: [(c, lt) => K.dateTag(c, 'SPRING 711', lt, { at: .5 }), (c, lt, u, Sh) => { const a = seg(lt, Sh.tJ - .2, Sh.tJ + .4); if (a <= 0) return; const m = E.io(seg(lt, Sh.tG - .5, Sh.tG + .3));
+      c.save(); c.globalAlpha = a * (1 - m); K.outlined(c, 'JABAL TARIQ', 1560, 200 - 20 * m, 80, { fill: '#ffd27a' }); K.outlined(c, '"THE MOUNTAIN OF TARIQ"', 1560, 268 - 20 * m, 30, { fam: 'Oswald' }); c.restore();
+      c.save(); c.globalAlpha = m; K.outlined(c, 'GIBRALTAR', 1560, 220 + 20 * (1 - m), 90, { fill: '#fffaf0' }); c.restore(); }],
+    sfx: [[.2, 'whoosh_soft', .2], ['jabal', 'pop', .4], ['gibraltar', 'whoosh_soft', .4]] },
+
+  // 7 CU: dusk. The boats burn behind him; Tariq faces his men, firelight on one side of his face
+  { set: 'beach', cam: { z: [2.0, 2.4], x: [560, 590], y: [420, 400], ease: E.sine }, bed: [['fire_loop', .35], ['ocean_loop', .2]],
+    init: Sh => { Sh.tS = at(Sh, 'the sea is behind', 4); Sh.tE = at(Sh, 'the enemy', Sh.tS + 1.6); Sh.tW = at(Sh, 'no way back', Sh.tE + 2); },
+    draw: (c, lt, u, Sh) => {
+      c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = S.rgba('#4a2a5a', .55); c.fillRect(0, 0, 1280, 720); c.restore();
+      for (const [x, y, s, i] of [[330, 540, 1.5, 0], [820, 520, 1.2, 1]]) { H.boat(c, x, y, s, lt, { sail: false, hull: '#2a1a12' }); H.smoke(c, x + 20, y - 80, s, lt + i * 3); H.fire(c, x, y - 10, s * .9, lt, i + 40); }
+      const fl = VP.flicker(lt, 8), L = { L: [-1, -.4], amb: '#2a2040', ambA: .5, rim: '#ffa050', rimA: 1.2, tint: '#ff7a30', tintA: .18 + .06 * fl, sw: .35, rw: .07 };
+      const talk = lt > Sh.tS - .2 ? .45 * Math.abs(Math.sin(lt * 10)) * (Math.sin(lt * 1.7) > -.3) : 0, point = seg(lt, Sh.tE - .3, Sh.tE + .3) * (1 - seg(lt, Sh.tW, Sh.tW + .5));
+      VP.figure(c, [600, 620], { k: .8, sy: -.2, a: .45 * (.8 + .2 * fl), blur: 3 }, cc => S.person(cc, C.TARIQ, 600, 620, 56, Object.assign(S.idle(lt, 0), { face: 1, shN: 20 + 70 * point, elN: 30 - 20 * point }), { blink: S.blinkAt(lt, 1), angry: .4, open: talk, look: [.8, .05], time: lt, sway: Math.sin(lt * .8) * .02 }, L));
+      // a few of his men in the foreground, backs to us
+      for (const [x, k] of [[860, 0], [960, 1]]) S.person(c, k ? C.BERBER : C.BERBER2, x, 700, 60, Object.assign(S.idle(lt, k + 3), { face: -1 }), { time: lt }, L);
+      VP.glow(c, 520, 460, 520, '#ff8a3a', .18 + .08 * fl);
+    },
+    over: [(c, lt) => K.card(c, '(A LATER LEGEND)', lt, { at: .5, x: 1560, y: 140, px: 40, rot: 3 }), (c, lt, u, Sh) => K.card(c, '"THE SEA IS BEHIND YOU.\nTHE ENEMY IS IN FRONT."', lt, { at: Sh.tE + .3, x: 1400, y: 860, px: 44, rot: -2 })],
+    sfx: [[.1, 'whoosh_soft', .3], ['no way back', 'hit', .5]] },
+
+  // 8 WIDE: the plain at Guadalete. Two armies meet; one wing of Roderic's army turns and leaves. A riderless horse
+  { set: 'plain', cam: (lt, u, Sh) => ({ z: [lerp(1.0, 1.15, u)], x: [640 + 40 * Math.sin(lt * .3)], y: [400], shake: pulse(lt, Sh.tB, 2) * 3 }), bed: [['crowd_loop', .25], ['wind_loop', .15]],
+    init: Sh => { Sh.tB = at(Sh, 'battle', 3); Sh.tT = at(Sh, 'turned on him', 6); Sh.tK = at(Sh, 'killed', 9); Sh.tN = at(Sh, 'never found', Sh.tK + 1.5); },
+    draw: (c, lt, u, Sh) => {
+      const L = VP.light('golden', lt, { swing: 4 }), clash = E.io(seg(lt, .5, Sh.tB + .5)), leave = E.io(seg(lt, Sh.tT - .2, Sh.tT + 4));
+      // Roderic's big army on the right (red), Tariq's on the left (white and blue)
+      for (let i = 0; i < 160; i++) { const r = S.rng(i + 700), wing = r() < .35, x0 = 760 + r() * 460, y = 560 + r() * 140, s = 1.6 + (y - 560) / 70;
+        let x = x0 - 160 * clash; if (wing) x += 600 * leave; H.tiny(c, x, y, s, wing ? '#8a5a2a' : '#9a2a22', lt, i, { helm: '#8a9096', shield: '#c8a040', walk: true, lean: wing ? 8 * leave : 0 }); }
+      for (let i = 0; i < 70; i++) { const r = S.rng(i + 900), x = 80 + r() * 280 + 160 * clash, y = 560 + r() * 140, s = 1.6 + (y - 560) / 70; H.tiny(c, x, y, s, r() < .5 ? '#e8dcc2' : '#2f4a6a', lt, i, { helm: '#e8e0d0', skin: '#a8784a', walk: true }); }
+      // dust where they meet
+      const mx = 560; for (let k = 0; k < 14; k++) { const life = (lt * .3 + k / 14) % 1, x = mx + Math.sin(k * 7) * 140 + life * 40, y = 640 - life * 120, rad = 30 + life * 90; const g = c.createRadialGradient(x, y, 0, x, y, rad); g.addColorStop(0, `rgba(216,184,130,${.4 * (1 - life) * clash})`); g.addColorStop(1, 'rgba(216,184,130,0)'); c.fillStyle = g; c.beginPath(); c.arc(x, y, rad, 0, TAU); c.fill(); }
+      // arrow volleys
+      c.strokeStyle = 'rgba(40,24,16,.7)'; c.lineWidth = 1.4; for (let k = 0; k < 24; k++) { const r = S.rng(k + 1000), ph = (lt * .6 + r()) % 1, x = lerp(300, 900, ph) + r() * 60, y = 600 - Math.sin(ph * Math.PI) * 220 + r() * 40; c.beginPath(); c.moveTo(x, y); c.lineTo(x - 14, y + (ph - .5) * 16); c.stroke(); }
+      // the riderless horse running out of the battle
+      const hq = seg(lt, Sh.tK, Sh.tK + 5); if (hq > 0) { const x = lerp(700, 1300, hq), y = 690; VP.figure(c, [x, y], { k: -.6, sy: -.2, a: .35, blur: 2 }, cc => VP.horse(cc, x, y, 120, { face: 1, ph: lt * 2.2, walk: 1.6, t: lt, col: BLACK, tack: GOTH_TACK }, L)); }
+      const k = seg(lt, Sh.tK, Sh.tK + 1); if (k > 0) { c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = S.rgba('#6a3a3a', .25 * k); c.fillRect(0, 0, 1280, 720); c.restore(); }
+      VP.motes(c, lt, 0, 400, 1280, 320, { n: 40, a: .4 });
+    },
+    over: [(c, lt) => K.dateTag(c, 'GUADALETE · JULY 711', lt, { at: .5 }), (c, lt, u, Sh) => K.card(c, 'PARTS OF HIS\nARMY LEFT', lt, { at: Sh.tT + .4, x: 1540, y: 220, px: 48, rot: 3 }), (c, lt, u, Sh) => K.card(c, 'BODY NEVER FOUND', lt, { at: Sh.tN, x: 1500, y: 860, px: 46, rot: -3 })],
+    sfx: [[.3, 'swell', .3], ['battle', 'hit', .5], ['turned on him', 'whoosh', .4], ['killed', 'thud', .5]] },
+
+  // 9 MAP: the dominoes. Green races north, cities stamp in one by one, the year counter runs 711 -> 718
+  { set: 'map', cam: { z: [1.15, 1.05], x: [560, 640], y: [440, 380], ease: E.io }, bed: [['drone', .25]], sub: 'bottom',
+    init: Sh => { Sh.tT = at(Sh, 'toledo', 2); Sh.tC = at(Sh, 'cordoba', Sh.tT + .8); Sh.tS = at(Sh, 'seville', Sh.tC + .8); Sh.tM = at(Sh, 'merida', Sh.tS + .8); Sh.tY = at(Sh, 'seven years', Sh.tM + 1.5); },
+    draw: (c, lt, u, Sh) => {
+      const g = E.io(seg(lt, .3, Sh.tY + 1.5)), top = lerp(GIB[1] + 20, X.LL(0, 42.6)[1], g), cl = new Path2D(); cl.rect(0, top, 1280, 720);
+      iberiaWash(c, '#2f7a3a', .5, cl); c.save(); c.clip(S.poly(X.IBERIA, false)); c.strokeStyle = S.rgba('#1e5a2a', .9); c.lineWidth = 3; c.beginPath(); for (let x = 0; x <= 1280; x += 20) { const y = top + 8 * Math.sin(x / 40 + lt * 3); x ? c.lineTo(x, y) : c.moveTo(x, y); } c.stroke(); c.restore();
+      H.stamp(c, 'Toledo', TOL[0], TOL[1], lt, Sh.tT); H.stamp(c, 'Córdoba', COR[0], COR[1], lt, Sh.tC, { dx: 40 }); H.stamp(c, 'Seville', SEV[0], SEV[1], lt, Sh.tS, { dx: -30 }); H.stamp(c, 'Mérida', MER[0], MER[1], lt, Sh.tM, { dx: -40 });
+      // the unconquered strip in the far north stays bare and grey
+      c.save(); c.clip(S.poly(X.IBERIA, false)); const nb = new Path2D(); nb.rect(0, 0, 1280, X.LL(0, 42.6)[1]); c.clip(nb); c.fillStyle = S.rgba('#6a6a70', .25 * g); c.fillRect(0, 0, 1280, 720); c.restore();
+      mapCandle(c, lt, 400, 260);
+    },
+    over: [(c, lt, u, Sh) => { const q = seg(lt, .3, Sh.tY + 1.5), y = Math.round(lerp(711, 718, q)); c.save(); c.globalAlpha = seg(lt, .2, .6); K.outlined(c, String(y), 1640, 150, 120, { fill: y === 718 ? '#ffd27a' : '#fffaf0' }); K.outlined(c, 'AD', 1640, 238, 40, { fam: 'Oswald' }); c.restore(); },
+      (c, lt, u, Sh) => K.card(c, '7 YEARS', lt, { at: Sh.tY + .2, x: 1560, y: 460, px: 66, rot: -3 })],
+    sfx: [['toledo', 'thud', .45], ['cordoba', 'thud', .45], ['seville', 'thud', .45], ['merida', 'thud', .45], ['seven years', 'hit', .4]] },
+
+  // 10 MED: a town gate. A bishop and a Muslim commander sign; the seal comes down; the gate opens
+  { set: 'towngate', cam: (lt, u, Sh) => lt < Sh.tO ? { z: [1.7], x: [640], y: [470] } : { z: [lerp(1.7, 1.15, E.io(seg(lt, Sh.tO, Sh.tO + 2.5)))], x: [640], y: [lerp(470, 400, E.io(seg(lt, Sh.tO, Sh.tO + 2.5)))] },
+    init: Sh => { Sh.tS = at(Sh, 'signed', 1.8); Sh.tO = at(Sh, 'churches', 4); Sh.tJ = at(Sh, 'jizya', Sh.dur - 1.5); Sh.dur = Sh.end - Sh.start; }, bed: [['city_loop', .15]],
+    draw: (c, lt, u, Sh) => {
+      const L = VP.light('golden', lt, { swing: 6, set: { L: [.7, -.8] } });
+      // the gate doors swing open, light floods through
+      const op = E.io(seg(lt, Sh.tO, Sh.tO + 2)); c.fillStyle = '#4a2a18'; c.fillRect(540, 300, 100 * (1 - op * .85), 280); c.fillRect(640 + 100 * op * .85, 300, 100 * (1 - op * .85), 280);
+      if (op > 0) { c.save(); c.beginPath(); c.rect(540 + 100 * (1 - op * .85), 300, 200 - 200 * (1 - op * .85), 280); c.clip(); c.fillStyle = '#f0d8a0'; c.fillRect(540, 300, 200, 280); for (let k = 0; k < 5; k++) { const hx = 548 + k * 40, hh = 90 + (k * 37 % 50); c.fillStyle = ['#f4e2bc', '#e8cc9a', '#f0d8b0'][k % 3]; c.fillRect(hx, 580 - hh, 36, hh); c.fillStyle = '#c06a44'; c.beginPath(); c.moveTo(hx - 4, 580 - hh); c.lineTo(hx + 18, 566 - hh); c.lineTo(hx + 40, 580 - hh); c.fill(); c.fillStyle = '#5a3a24'; c.fillRect(hx + 12, 560 - hh * .5, 10, 14); } c.fillStyle = '#d8b88a'; c.fillRect(540, 560, 200, 20); c.restore(); VP.glow(c, 640, 480, 260, '#fff0c0', .25 * op); }
+      const seal = seg(lt, Sh.tS + .4, Sh.tS + .8), press = pulse(lt, Sh.tS + .6, .5);
+      VP.figure(c, [520, 640], { k: -.5, sy: -.2, a: .35, blur: 2 }, cc => S.person(cc, C.BISHOP, 520, 640, 46, Object.assign(S.idle(lt, 0), { face: 1, shN: 60, elN: 40 + 20 * Math.sin(lt * 6) * (lt < Sh.tS) }), { blink: S.blinkAt(lt, 1), look: [.5, .5], time: lt }, L));
+      VP.figure(c, [760, 640], { k: -.5, sy: -.2, a: .35, blur: 2 }, cc => S.person(cc, C.BERBER2, 760, 640, 48, Object.assign(S.idle(lt, 1), { face: -1, shN: 50 + 30 * seal - 20 * press, elN: 30 }), { blink: S.blinkAt(lt, 2), smile: .3 * op, look: [-.5, .5], time: lt }, L));
+      // parchment, quill line and wax seal on the table
+      c.fillStyle = '#f4e8c8'; c.fillRect(580, 588, 120, 12); const w = seg(lt, .6, Sh.tS); c.strokeStyle = '#2a1a10'; c.lineWidth = 1.2; c.beginPath(); for (let x = 0; x < 100 * w; x += 3) { const y = 592 + Math.sin(x * .9) * 1.5; x ? c.lineTo(584 + x, y) : c.moveTo(584, y); } c.stroke();
+      if (lt > Sh.tS + .6) { c.fillStyle = '#9a1e1a'; c.beginPath(); c.ellipse(680, 594, 8, 3, 0, 0, TAU); c.fill(); VP.glow(c, 680, 590, 30, '#ff8a6a', .4 * press); }
+      // townsfolk walking through once the gate is open
+      for (let k = 0; k < 3; k++) { const q = seg(lt, Sh.tO + 1.5 + k * .8, Sh.tO + 6 + k * .8); if (q <= 0 || q >= 1) continue; const x = lerp(640, 300 + k * 40, q), y = 600 + q * 20, uu = 24 + q * 10; S.person(c, k === 1 ? C.TOWNSMAN : C.NOBLE2, x, y, uu, Object.assign(walk(lt + k), { face: -1 }), { time: lt, smile: .3 }, L); }
+      VP.motes(c, lt, 300, 300, 700, 400, { n: 30, a: .4 });
+    },
+    over: [(c, lt, u, Sh) => K.card(c, 'TREATIES,\nNOT SIEGES', lt, { at: Sh.tS - .5, x: 1560, y: 200, px: 50, rot: 3 }), (c, lt, u, Sh) => K.card(c, 'THE JIZYA\n(A TAX)', lt, { at: Sh.tJ + .2, x: 1540, y: 820, px: 56, rot: -3 })],
+    sfx: [['signed', 'paper', .45], [4, 'thud', .3], ['churches', 'swell', .3], ['jizya', 'coins', .5]] },
+
+  // 11 WIDE: Covadonga. Mist in the gorge, Pelayo's small band at the cave; rocks crash down on the attackers below
+  { set: 'covadonga', cam: (lt, u, Sh) => ({ z: [lerp(1.05, 1.35, E.io(u))], x: [lerp(560, 420, E.io(u))], y: [lerp(380, 400, u)], shake: pulse(lt, Sh.tB + .6, 1.6) * 4 }), bed: [['wind_loop', .3]],
+    init: Sh => { Sh.tN = at(Sh, 'mountains', 1); Sh.tB = at(Sh, 'beat', 4); Sh.tA = at(Sh, 'asturias', Sh.dur - 1.5); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const L = { L: [.3, -1], amb: '#3a4a50', ambA: .4, rim: '#e8f0f0', rimA: .7, tint: '#c8d8e0', tintA: .1, sw: .25, rw: .05 };
+      // mist banks drifting through the gorge
+      for (let k = 0; k < 6; k++) { const x = ((lt * (14 + k * 4) + k * 260) % 1600) - 200, y = 300 + k * 50; const g = c.createRadialGradient(x, y, 10, x, y, 260); g.addColorStop(0, 'rgba(225,232,230,.35)'); g.addColorStop(1, 'rgba(225,232,230,0)'); c.fillStyle = g; c.fillRect(x - 300, y - 300, 600, 600); }
+      // Pelayo and his band on the ledge under the cave
+      const raise = seg(lt, Sh.tB - .4, Sh.tB + .2);
+      for (const [ch, x, uu, i] of [[C.PELAYO, 250, 26, 0], [C.SOLDIER, 210, 22, 1], [C.SOLDIER, 290, 22, 2], [C.TOWNSMAN, 320, 20, 3]]) S.person(c, ch, x, 392, uu, Object.assign(S.idle(lt, i), { face: 1, shN: i === 0 ? 30 + 120 * raise : 20, elN: 20 }), { blink: S.blinkAt(lt, i), angry: .5, look: [.6, .6], time: lt }, L);
+      c.fillStyle = '#4a4e44'; c.fillRect(170, 390, 180, 14);
+      // attackers coming up the gorge path
+      for (let i = 0; i < 26; i++) { const r = S.rng(i + 1200), q = (r() * .6 + lt * .02) % 1, x = 520 + r() * 260 + q * 40, y = 700 - q * 120 + r() * 20, s = 2.2 - q; const back = seg(lt, Sh.tB + 1, Sh.tB + 3); H.tiny(c, x + back * 60 * r(), y + back * 50, s, r() < .5 ? '#e8dcc2' : '#2f4a6a', lt, i, { helm: '#e8e0d0', skin: '#a8784a', walk: true }); }
+      // rocks tumbling down from the cliffs
+      for (let k = 0; k < 9; k++) { const r = S.rng(k + 1300), t0 = Sh.tB + .2 + r() * 1.5, q = seg(lt, t0, t0 + 1.2); if (q <= 0 || q >= 1) continue; const x = lerp(380 + r() * 60, 560 + r() * 200, q), y = lerp(380, 690, q * q), rs = 10 + r() * 14;
+        c.save(); c.translate(x, y); c.rotate(q * 8 * (r() - .5)); c.fillStyle = '#5a5a4e'; c.beginPath(); c.moveTo(-rs, 0); c.lineTo(-rs * .4, -rs); c.lineTo(rs * .8, -rs * .6); c.lineTo(rs, rs * .3); c.lineTo(0, rs); c.closePath(); c.fill(); c.fillStyle = S.rgba('#e8f0e0', .3); c.fillRect(-rs * .4, -rs, rs * .6, rs * .3); c.restore();
+        c.fillStyle = S.rgba('#c8c8b8', .3 * (1 - q)); c.beginPath(); c.arc(x - 10, y - 20, 20 + q * 30, 0, TAU); c.fill(); }
+      VP.glow(c, 640, 120, 600, '#f0f4f0', .15);
+    },
+    over: [(c, lt, u, Sh) => K.dateTag(c, 'COVADONGA · c. 722', lt, { at: Sh.tB - .3 }), (c, lt, u, Sh) => K.badge(c, 'PELAYO', lt, { at: Sh.tB - 1.2 }), (c, lt, u, Sh) => K.card(c, 'KINGDOM OF\nASTURIAS', lt, { at: Sh.tA + .2, x: 1540, y: 220, px: 56, rot: 3 })],
+    sfx: [['beat', 'hit', .45], [6, 'thud', .5], ['asturias', 'chime', .35]] },
+
+  // 12 MAP: into France. An arrow pushes north, hits a wall at Tours and bounces back; AL-ANDALUS writes itself across Iberia
+  { set: 'mapfr', cam: { z: [1.05, 1.15], x: [640, 560], y: [350, 380], ease: E.io }, bed: [['drone', .25]], sub: 'bottom',
+    init: Sh => { Sh.tF = at(Sh, 'france', 1); Sh.tT = at(Sh, 'tours', 3.5); Sh.tS = at(Sh, 'settled', Sh.tT + 2); Sh.tA = at(Sh, 'al-andalus', Sh.dur - 2); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const P0 = X.LF(-1.5, 42.6), T = X.LF(0.7, 47.4), push = E.io(seg(lt, Sh.tF - .3, Sh.tT + .2)), back = E.io(seg(lt, Sh.tT + .6, Sh.tS + .4));
+      // green over Iberia below the far north
+      const sea = S.poly(X.EU.map(q => X.LF(q[0], q[1])), false), ibCl = new Path2D(); ibCl.rect(0, X.LF(0, 42.8)[1], 1280, X.LF(0, 36)[1] - X.LF(0, 42.8)[1]);
+      c.save(); c.clip(sea, 'nonzero'); c.clip(ibCl); c.fillStyle = S.rgba('#2f7a3a', .45); c.fillRect(0, 0, 1280, 720); c.restore();
+      // the push north: the arrow's tip follows push, then pulls back after Tours
+      const tipQ = Math.max(0, push - back * .8); const pts = [P0, X.LF(-0.6, 44.5), X.LF(0.2, 46), T];
+      arrow(c, pts, tipQ, S.rgba('#1e5a2a', .9), 7);
+      // the wall at Tours: a line of shields thumps in
+      const w = E.back(seg(lt, Sh.tT - .5, Sh.tT)); if (w > 0) { c.save(); c.translate(T[0], T[1] - 8); c.scale(w, w); for (let k = -3; k <= 3; k++) { c.fillStyle = k % 2 ? '#2a3a6a' : '#8a1e1a'; c.beginPath(); c.arc(k * 16, 0, 9, 0, TAU); c.fill(); c.strokeStyle = '#e8d8a8'; c.lineWidth = 2; c.stroke(); } c.restore(); VP.glow(c, T[0], T[1], 80, '#ffe08a', .4 * pulse(lt, Sh.tT, .8)); }
+      ink(c, 'Tours · 732', T[0] + 90, T[1] - 18, seg(lt, Sh.tT, Sh.tT + .6), 30);
+      ink(c, 'FRANCIA', X.LF(3, 46.5)[0], X.LF(3, 46.5)[1], .7, 28);
+      // the frontier settles: a dotted line along the north of the green
+      const s = seg(lt, Sh.tS, Sh.tS + 1.5); if (s > 0) { c.save(); c.strokeStyle = S.rgba('#6a2a1a', .8); c.lineWidth = 3; c.setLineDash([8, 7]); c.beginPath(); const y = X.LF(0, 42.8)[1]; c.moveTo(X.LF(-9, 42.8)[0], y); c.lineTo(lerp(X.LF(-9, 42.8)[0], X.LF(3.2, 42.8)[0], s), y); c.stroke(); c.restore(); }
+      // AL-ANDALUS written across the green with a brush
+      const a = seg(lt, Sh.tA - .2, Sh.tA + 1.4); if (a > 0) { const [x, y] = X.LF(-4, 39); c.save(); c.font = '64px Caveat'; c.textAlign = 'left'; const txt = 'Al-Andalus', wd = c.measureText(txt).width; c.beginPath(); c.rect(x - wd / 2 - 10, y - 70, (wd + 20) * a, 100); c.clip(); c.fillStyle = '#1e3a14'; c.fillText(txt, x - wd / 2, y); c.restore(); }
+      mapCandle(c, lt, 500, 300);
+    },
+    over: [(c, lt, u, Sh) => K.card(c, 'STOPPED\nNEAR TOURS', lt, { at: Sh.tT + .4, x: 1540, y: 200, px: 52, rot: 3, until: Sh.tA - .3 }), (c, lt, u, Sh) => K.card(c, 'AL-ANDALUS', lt, { at: Sh.tA + 1, x: 1520, y: 860, px: 70, rot: -3 })],
+    sfx: [['france', 'whoosh', .4], ['tours', 'thud', .6], ['al-andalus', 'swell', .45]] },
+];
+VP.build(); K.boot();
+</script></body></html>

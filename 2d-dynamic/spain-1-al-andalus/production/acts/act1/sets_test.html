@@ -1,0 +1,7 @@
+<!doctype html><html><head><meta charset="utf-8"><style>body{margin:0;background:#000}</style></head><body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/vp/engine.js"></script><script src="../../../../shared/vp/cast.js"></script><script src="../../../../shared/vp/scenes.js"></script><script src="../../../../shared/vp/spain.js"></script>
+<script src="../../../../shared/kit.js"></script><script src="../../../../shared/vp.js"></script><script src="../../es1_sets.js"></script><script src="../../es1_sets_act1.js"></script>
+<script>
+const K=KIT; const names=['mapwide','mapfr','toledo','hall','church','tent','plain','towngate','covadonga'];
+window.draw=(i)=>{ const c=K.ctx; c.setTransform(1,0,0,1,0,0); const s=VP.bg(names[i]); c.drawImage(s.img,0,0,1920,1080); };
+</script></body></html>
