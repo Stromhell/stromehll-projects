@@ -43,3 +43,7 @@ Full-video times were checked one by one in Zernio on 28 Oct 2026 at 17:35 UTC. 
 - North Korea (3D) full video + 15 reels found on Zernio (scheduled by the 3D chat): full Tue 24 Nov 15:00 ET. 28 Nov had 7 reels, so two NK reels moved: "The Power-Cut Trick" -> Wed 18 Nov 09:00 ET (14:00 UTC); "12 Years for a K-Drama" -> Mon 23 Nov 19:00 ET (00:00 UTC 24 Nov).
 - McDonald's in Africa (3D) full Wed 2 Dec 15:00 ET + 15 reels 2-7 Dec (scheduled by the 3D chat).
 - No new finished mp4s in Drive (only act renders).
+
+## 29 Oct 2026, 20:00 UTC: NVIDIA full video booked
+- "He Built the Wrong Chip and Still Built the World's Most Valuable Company", YouTube, Thu 26 Nov 2026 20:00 UTC (15:00 ET). Zernio post 6ae3a4416237e348008ee0ea, custom thumbnail, 19 tags. Approved by Pushpam 29 Oct 19:43.
+- 15 NVIDIA reels: waiting for renders from the 2D thread.
