@@ -66,20 +66,20 @@ window.SHOTS = [
   { plate: 'iceberg', cam: { z: [1.35, 1.45], x: [1280, 1280], y: [700, 860], ease: E.io }, bed: [['ocean_loop', .25], ['hum_loop', .3]],
     init: S => { const tD = A.at(S, 'deep web', 1.4), tE = A.at(S, 'email', 5.2), tB = A.at(S, 'bank accounts', 6), tM = A.at(S, 'medical', 7), tP = A.at(S, 'password', 8.6);
       S.D.live = [(c, lt) => { lockDoor(c, 1000, 760, 'EMAIL', pop(lt, tE), lt); lockDoor(c, 1290, 900, 'BANK', pop(lt, tB), lt); lockDoor(c, 1580, 760, 'HOSPITAL', pop(lt, tM), lt); }];
-      S.D.over = [(c, lt) => K.title(c, 'DEEP WEB', lt, { at: tD, y: 130, px: 84, fill: '#9fd8ff' }), (c, lt) => K.card(c, 'BEHIND A PASSWORD', lt, { at: tP, x: 960, y: 960, px: 46, rot: -2 })];
+      S.D.over = [(c, lt) => K.title(c, 'DEEP WEB', lt, { at: tD, y: 130, px: 84, fill: '#9fd8ff' }), (c, lt) => K.card(c, 'BEHIND A PASSWORD', lt, { at: tP, x: 960, y: 800, px: 46, rot: -2 })];
       S.D.sfx = [[tD, 'whoosh', .4], [tE, 'stamp', .35], [tB, 'stamp', .35], [tM, 'stamp', .35], [tP, 'chime', .4]]; } },
   // 4 a 96% tag drifts in, then a question mark stamps over it
   { plate: 'iceberg', cam: { z: [1.0, 1.02], x: [1280, 1280], y: [720, 720] }, bed: [['ocean_loop', .3]],
     init: S => { const t96 = A.at(S, 'ninety-six', 2.4), tN = A.at(S, 'Nobody', 5.6), tF = A.at(S, 'far bigger', 8);
       S.D.over = [(c, lt) => { const a = K.seg(lt, t96, t96 + .8); if (a <= 0) return; c.save(); c.globalAlpha = a * (lt > tN ? .45 : 1); K.outlined(c, '96%', 960 + 200 * (1 - E.out(a)), 560, 220, { fill: '#bfe8ff' }); c.restore(); },
         (c, lt) => { const u = K.seg(lt, tN, tN + .3); if (u <= 0) return; c.save(); c.translate(960, 560); c.scale(2 - E.out(u), 2 - E.out(u)); c.globalAlpha = Math.min(1, u * 2); K.outlined(c, '?', 0, 0, 340, { fill: RED }); c.restore(); },
-        (c, lt) => K.card(c, '96%? NOBODY KNOWS', lt, { at: tN + .4, x: 960, y: 170, px: 60, rot: -3 }), (c, lt) => K.card(c, 'FAR BIGGER THAN THE TIP', lt, { at: tF, x: 960, y: 920, px: 48, rot: 2 })];
+        (c, lt) => K.card(c, '96%? NOBODY KNOWS', lt, { at: tN + .4, x: 960, y: 170, px: 60, rot: -3 }), (c, lt) => K.card(c, 'FAR BIGGER THAN THE TIP', lt, { at: tF, x: 960, y: 800, px: 48, rot: 2 })];
       S.D.sfx = [[t96, 'whoosh_soft', .45], [tN, 'stamp', .65], [tF, 'pop', .4]]; } },
   // 5 the deepest corridor: heavy doors, dim lanterns
   { plate: 'iceberg_deep', cam: { z: [1.0, 1.35], x: [1280, 1280], y: [720, 700], ease: E.io }, bed: [['drone', .45], ['hum_loop', .2]],
     live: [DW.glow(1280, 690, 380, '255,180,90', .25)],
     init: S => { const tD = A.at(S, 'dark web', 3.2), tS = A.at(S, 'special software', 6);
-      S.D.over = [(c, lt) => K.title(c, 'DARK WEB', lt, { at: tD, y: 150, px: 96, fill: '#c8a0ff' }), (c, lt) => K.card(c, 'SPECIAL SOFTWARE ONLY', lt, { at: tS, x: 960, y: 930, px: 48, rot: -2 })];
+      S.D.over = [(c, lt) => K.title(c, 'DARK WEB', lt, { at: tD, y: 150, px: 96, fill: '#c8a0ff' }), (c, lt) => K.card(c, 'SPECIAL SOFTWARE ONLY', lt, { at: tS, x: 960, y: 800, px: 48, rot: -2 })];
       S.D.sfx = [[.3, 'creak', .4], [tD, 'hit', .45], [tS, 'pop', .4]]; } },
   // 6 a home desk: a glowing thread runs out of the window, a tag rides it: YOU, HOME, CITY
   { plate: 'bedroom', cam: { z: [1.12, 1.2], x: [1820, 1800], y: [900, 900], ease: E.io }, bed: [['night_loop', .4]],
@@ -91,7 +91,7 @@ window.SHOTS = [
   // 7 diagram: the glass onion assembles; TOR = THE ONION ROUTER
   { draw: (c, lt, u, S) => { backdrop('serverhall', .6)(c); DW.onion(c, 960, 600, 1.1, 5 * E.out(K.seg(lt, .3, 2.2)), lt); }, bed: [['hum_loop', .35]],
     init: S => { const tT = A.at(S, 'Tor', 1.2), tO = A.at(S, 'The Onion Router', 3);
-      S.D.over = [(c, lt) => K.title(c, 'TOR', lt, { at: tT, y: 150, px: 110, fill: '#c8a0ff' }), (c, lt) => K.card(c, 'THE ONION ROUTER', lt, { at: tO, x: 960, y: 950, px: 56, rot: -2 })];
+      S.D.over = [(c, lt) => K.title(c, 'TOR', lt, { at: tT, y: 150, px: 110, fill: '#c8a0ff' }), (c, lt) => K.card(c, 'THE ONION ROUTER', lt, { at: tO, x: 960, y: 800, px: 56, rot: -2 })];
       S.D.sfx = [[.3, 'riser', .35], [tT, 'chime', .45], [tO, 'pop', .4]]; } },
   // 8 diagram: three layers wrap the request; it hops through three relays
   { draw: (c, lt, u, S) => { backdrop('worldmap', .55)(c); const tR = S.tR; diagramBase(c, lt, [pop(lt, tR), pop(lt, tR + .3), pop(lt, tR + .6), pop(lt, tR + .9)]);
@@ -107,7 +107,7 @@ window.SHOTS = [
       label(c, 'KNOWS THE SITE', RX[3], RY - 270, pop(lt, S.tL2), 40, '#7ac8ff'); label(c, 'NOT YOU', RX[3], RY - 225, pop(lt, S.tL2 + .6), 30, '#ffb0a0'); },
     bed: [['hum_loop', .35]],
     init: S => { const tP = A.at(S, 'peels', .8); const L = S.end - S.start; S.peel = [Math.max(tP, L * .12), L * .45, L * .78]; S.tF = A.at(S, 'The first knows', 2.6); S.tL2 = A.at(S, 'The last knows', 6.4);
-      S.D.over = [(c, lt) => K.card(c, 'NO ONE SEES BOTH ENDS', lt, { at: L - 2.2, x: 960, y: 940, px: 52, rot: -2 })];
+      S.D.over = [(c, lt) => K.card(c, 'NO ONE SEES BOTH ENDS', lt, { at: L - 2.2, x: 960, y: 800, px: 52, rot: -2 })];
       S.D.sfx = [[S.peel[0], 'paper_tear', .4], [S.peel[1], 'paper_tear', .4], [S.peel[2], 'paper_tear', .4], [S.tF, 'pop', .4], [S.tL2, 'pop', .4], [L - 2.2, 'chime', .45]]; } },
   // 10 1990s navy lab: a researcher points at an onion sketch on the whiteboard
   { plate: 'office', cam: { z: [1.12, 1.18], x: [1280, 1300], y: [820, 820] }, bed: [['office_loop', .35], ['hum_loop', .2]],
@@ -115,7 +115,7 @@ window.SHOTS = [
     figs: [{ x: 880, y: 1320, s: 1.75, costume: 'shirt', hair: 'bald', hairCol: '#7a6a5a', glasses: true, seed: 6, facing: 1, pose: 'point', mood: 'happy', anim: (o, lt) => { o.talk = lt > 2 && lt < 5; } }],
     over: [A.grade('150,120,60', .14, 'overlay')],
     init: S => { const tS = A.at(S, 'surprise', 1), tN = A.at(S, 'Naval Research', 3.6), tG = A.at(S, 'government communications', 5.6);
-      S.D.over = S.D.over.concat([(c, lt) => K.badge(c, 'US NAVAL RESEARCH LAB · 1990s', lt, { at: tN }), (c, lt) => K.card(c, 'THE SURPRISE', lt, { at: tS, x: 420, y: 230, px: 56, rot: -4, until: tG }), (c, lt) => K.card(c, 'TO PROTECT GOVERNMENT\nCOMMUNICATIONS', lt, { at: tG, x: 520, y: 260, px: 44, rot: -3 })]);
+      S.D.over = S.D.over.concat([(c, lt) => K.badge(c, 'US NAVAL RESEARCH LAB · 1990s', lt, { at: tN }), (c, lt) => K.card(c, 'THE SURPRISE', lt, { at: tS, x: 420, y: 230, px: 56, rot: -4, until: tG }), (c, lt) => K.card(c, 'TO PROTECT GOVERNMENT\nCOMMUNICATIONS', lt, { at: tG, x: 520, y: 310, px: 44, rot: -3 })]);
       S.D.sfx = [[tS, 'riser', .3], [tN, 'stamp', .5], [tG, 'pop', .4]]; } },
   // 11 everyday users in the library: reporter, activist, student. Legal to use; buying illegal goods is not
   { plate: 'library', cam: { z: [1.05, 1.1], x: [1280, 1280], y: [820, 820] }, bed: [['office_loop', .2], ['birds_loop', .2]],
@@ -157,13 +157,13 @@ window.SHOTS = [
       bankIcon(c, 960, 330, pop(lt, S.tB), K.seg(lt, S.tB + .5, S.tB + 1)); },
     bed: [['hum_loop', .3]],
     init: S => { S.tW = A.at(S, 'wallet', 1.6); S.tB = A.at(S, 'no bank', 4.4); const tN = A.at(S, 'no name', 6.6);
-      S.D.over = [(c, lt) => K.card(c, 'NO BANK', lt, { at: S.tB + .6, x: 960, y: 900, px: 56, rot: -3 }), (c, lt) => K.card(c, 'NO NAME', lt, { at: tN, x: 1400, y: 900, px: 56, rot: 3 })];
+      S.D.over = [(c, lt) => K.card(c, 'NO BANK', lt, { at: S.tB + .6, x: 960, y: 800, px: 56, rot: -3 }), (c, lt) => K.card(c, 'NO NAME', lt, { at: tN, x: 1400, y: 800, px: 56, rot: 3 })];
       S.D.sfx = [[S.tW, 'coins', .45], [S.tB, 'pop', .4], [S.tB + .5, 'stamp', .5], [tN, 'stamp', .5]]; } },
   // 16 the public ledger scroll unrolls behind the wallets
   { draw: (c, lt, u, S) => { backdrop('serverhall', .7)(c); scroll(c, 960, 160, 1000, K.seg(lt, S.tP, S.tP + 2), lt); wallet(c, 260, 640, 'bc1qxy2k…', 1); wallet(c, 1660, 640, '3J98t1Wp…', 1); },
     bed: [['hum_loop', .3], ['paper', 0]],
     init: S => { S.tP = A.at(S, 'public record', 2.4); const tA = A.at(S, 'anyone', 3.6), tC = A.at(S, 'codes', 7);
-      S.D.over = [(c, lt) => K.title(c, 'PUBLIC LEDGER', lt, { at: S.tP, y: 110, px: 80, fill: GOLD }), (c, lt) => K.card(c, 'CODES, NOT NAMES', lt, { at: tC, x: 960, y: 960, px: 52, rot: -2 })];
+      S.D.over = [(c, lt) => K.title(c, 'PUBLIC LEDGER', lt, { at: S.tP, y: 110, px: 80, fill: GOLD }), (c, lt) => K.card(c, 'CODES, NOT NAMES', lt, { at: tC, x: 960, y: 800, px: 52, rot: -2 })];
       S.D.sfx = [[.3, 'riser', .25], [S.tP, 'paper', .55], [tA, 'pop', .35], [tC, 'stamp', .45]]; } },
   // 17 push in on one line of the scroll; it glows
   { draw: (c, lt, u, S) => { backdrop('serverhall', .75)(c); const z = 1 + .6 * E.io(K.seg(lt, 0, S.end - S.start)); c.save(); c.translate(960, 520); c.scale(z, z); c.translate(-960, -520); scroll(c, 960, 160, 1000, 1, 0, 8, .5 + .5 * Math.sin(lt * 5)); c.restore(); },
