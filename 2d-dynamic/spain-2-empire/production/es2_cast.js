@@ -11,6 +11,25 @@
     SAILOR2: Object.assign({}, E1.NOBLE3, { name: 'Sailor', shirt: ['#b8582a', '#5a2410'], pants: ['#6a5a44', '#3a2c1c'] }),
     MINER: CH.miner, OFFICER: CH.officer,
   };
+  // headwear: Aztec quetzal-feather crown, Inca royal fringe, a Tlaxcalan feather band
+  X.feathers = (c, u, f, Lt, k) => { for (let i = 0; i < 9; i++) { const a = -Math.PI / 2 + (i - 4) * .22, L = u * (1.2 + .2 * Math.cos(i)); c.save(); c.translate(0, -.55 * u); c.rotate(a + Math.PI / 2); c.fillStyle = i % 2 ? '#1e8a5a' : '#2aa86a'; c.beginPath(); c.ellipse(0, -L * .55, .13 * u, L * .55, 0, 0, TAU); c.fill(); c.fillStyle = S.rgba('#a8f0c8', .5); c.fillRect(-.01 * u, -L, .02 * u, L * .9); c.restore(); }
+    const g = k.tone({ base: '#e8b84a', shade: '#8a6420', rim: '#fff2c0' }, Lt); k.celT(c, S.poly([[-.62 * u, -.42 * u], [-.6 * u, -.7 * u], [.6 * u, -.7 * u], [.62 * u, -.42 * u]], false), g, Lt, u, { swk: .5 }); c.fillStyle = '#2a6ab0'; c.beginPath(); c.arc(0, -.56 * u, .08 * u, 0, TAU); c.fill(); };
+  X.inca = (c, u, f, Lt, k) => { const g = k.tone({ base: '#c8962a', shade: '#7a5a14', rim: '#ffe0a0' }, Lt); k.celT(c, S.poly([[-.62 * u, -.48 * u], [-.6 * u, -.66 * u], [.6 * u, -.66 * u], [.62 * u, -.48 * u]], false), g, Lt, u, { swk: .5 });
+    c.fillStyle = '#c8202a'; for (let i = 0; i < 9; i++) c.fillRect((-.4 + i * .1) * u, -.48 * u, .07 * u, .32 * u); c.fillStyle = '#1a1a1a'; c.beginPath(); c.moveTo(-.08 * u, -.66 * u); c.lineTo(0, -1.25 * u); c.lineTo(.08 * u, -.66 * u); c.fill(); c.fillStyle = '#f0f0f0'; c.beginPath(); c.moveTo(.1 * u, -.66 * u); c.lineTo(.2 * u, -1.15 * u); c.lineTo(.22 * u, -.66 * u); c.fill(); };
+  X.band = (c, u, f, Lt, k) => { c.fillStyle = '#e8dcc2'; c.fillRect(-.6 * u, -.62 * u, 1.2 * u, .14 * u); for (const [dx, col] of [[-.2, '#c8282a'], [0, '#e8b020'], [.2, '#2a8a4a']]) { c.save(); c.translate(dx * u, -.62 * u); c.rotate(dx * 1.5); c.fillStyle = col; c.beginPath(); c.ellipse(0, -.35 * u, .08 * u, .35 * u, 0, 0, TAU); c.fill(); c.restore(); } };
+  const conq = (shirt, extra = {}) => Object.assign({}, CH.officer, { shirt, pants: ['#3a3430', '#1c1814'] }, extra);
+  Object.assign(C, {
+    CORTES: conq(['#6a6e78', '#34383e'], { name: 'Cortés', beard: true, mustache: true, hairCol: X.HR.black, build: 'man' }),
+    PIZARRO: conq(['#5a4a3a', '#2a2018'], { name: 'Pizarro', beard: true, mustache: true, hairCol: X.HR.grey, build: 'elder' }),
+    CONQ: conq(['#7a7e88', '#3a3e44']), CONQ2: conq(['#8a3a2a', '#4a1a10'], { beard: true }),
+    MALINTZIN: Object.assign({}, CH.aisha, { name: 'Malintzin', skin: X.SK.andean, hairCol: X.HR.black, hair: 'bun', shirt: ['#f0ece0', '#b8b0a0'], pants: ['#2a6a8a', '#14344a'], dupatta: null, headwear: null }),
+    MOCTEZUMA: Object.assign({}, CH.boabdil, { name: 'Moctezuma', skin: X.SK.andean, hairCol: X.HR.black, beard: false, mustache: false, shirt: ['#2a8a7a', '#14443a'], long: true, mundu: false, pants: ['#e8dcc2', '#a89a7c'], headwear: X.feathers }),
+    TLAX: Object.assign({}, CH.miner, { name: 'Tlaxcalan', headwear: X.band, shirt: ['#e8dcc2', '#a89a7c'], pants: ['#c8282a', '#6a1010'], stoop: 0 }),
+    NAHUA: Object.assign({}, CH.miner, { name: 'Nahua', headwear: null, hair: 'neat', shirt: ['#e8e0cc', '#a8a08c'], pants: ['#e8e0cc', '#a8a08c'], stoop: 0 }),
+    NAHUAW: Object.assign({}, CH.aisha, { skin: X.SK.andean, hairCol: X.HR.black, shirt: ['#d8c8a8', '#988868'], pants: ['#b8682a', '#6a3410'], dupatta: null }),
+    ATAHUALPA: Object.assign({}, CH.miner, { name: 'Atahualpa', headwear: X.inca, shirt: ['#c8962a', '#7a5a14'], pants: ['#3a4a8a', '#1a2244'], long: true, stoop: 0, bare: false }),
+    INCA: Object.assign({}, CH.miner, { name: 'Inca', headwear: null, hair: 'neat', shirt: ['#b8282a', '#5a1010'], pants: ['#3a3a3a', '#1a1a1a'], stoop: 0, bare: false }),
+  });
   S.ES2 = C;
   const H = {};
   // the piece of eight: a spinning silver coin. o.shine 0..1, o.chips n, o.fall 0..1 (falls flat and stops)
