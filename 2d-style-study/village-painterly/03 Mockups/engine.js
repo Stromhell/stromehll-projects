@@ -142,6 +142,44 @@
     return p;
   };
   S.limb = (A, B, C, w, k) => S.tube(S.bez(A, B, C, 16, k), w);
+  // smooth profile through keys [[q, v], ...], q in 0..1
+  S.prof = K => q => { if (q <= K[0][0]) return K[0][1]; for (let i = 0; i < K.length - 1; i++) { const [q0, v0] = K[i], [q1, v1] = K[i + 1]; if (q <= q1) { const u = (q - q0) / (q1 - q0), s = u * u * (3 - 2 * u); return v0 + (v1 - v0) * s; } } return K[K.length - 1][1]; };
+  // Two-sided tube: fL(q) is the half width on the left of travel (the back of a limb that hangs down), fR on the right.
+  S.tube2 = (pts, fL, fR) => {
+    const n = pts.length, L = [], R = [];
+    for (let i = 0; i < n; i++) {
+      const a = pts[Math.max(0, i - 1)], b = pts[Math.min(n - 1, i + 1)];
+      let tx = b[0] - a[0], ty = b[1] - a[1]; const l = Math.hypot(tx, ty) || 1; tx /= l; ty /= l;
+      const q = i / (n - 1), nx = -ty, ny = tx;
+      L.push([pts[i][0] + nx * fL(q), pts[i][1] + ny * fL(q)]); R.push([pts[i][0] - nx * fR(q), pts[i][1] - ny * fR(q)]);
+    }
+    const tang = (i, j) => { const tx = pts[j][0] - pts[i][0], ty = pts[j][1] - pts[i][1], l = Math.hypot(tx, ty) || 1; return [tx / l, ty / l]; };
+    const te = tang(n - 2, n - 1), ts = tang(0, 1), we = (fL(1) + fR(1)) / 2, ws = (fL(0) + fR(0)) / 2;
+    const p = new Path2D();
+    p.moveTo(L[0][0], L[0][1]);
+    for (let i = 1; i < n; i++) p.lineTo(L[i][0], L[i][1]);
+    p.bezierCurveTo(L[n - 1][0] + te[0] * we * 1.3, L[n - 1][1] + te[1] * we * 1.3, R[n - 1][0] + te[0] * we * 1.3, R[n - 1][1] + te[1] * we * 1.3, R[n - 1][0], R[n - 1][1]);
+    for (let i = n - 1; i >= 0; i--) p.lineTo(R[i][0], R[i][1]);
+    p.bezierCurveTo(R[0][0] - ts[0] * ws * 1.3, R[0][1] - ts[1] * ws * 1.3, L[0][0] - ts[0] * ws * 1.3, L[0][1] - ts[1] * ws * 1.3, L[0][0], L[0][1]);
+    p.closePath(); p.bb = S.bbOf(L.concat(R));
+    return p;
+  };
+  // polyline through hip/knee/ankle with a soft joint: two straight-ish segments joined by a short curve
+  S.joint = (A, B, C, n = 24, soft = .22) => {
+    const out = [], lAB = Math.hypot(B[0] - A[0], B[1] - A[1]), lBC = Math.hypot(C[0] - B[0], C[1] - B[1]), tot = lAB + lBC;
+    const r = Math.min(lAB, lBC) * soft;
+    const P1 = [B[0] + (A[0] - B[0]) * r / lAB, B[1] + (A[1] - B[1]) * r / lAB], P2 = [B[0] + (C[0] - B[0]) * r / lBC, B[1] + (C[1] - B[1]) * r / lBC];
+    // sample by arc length along A->P1, quad P1-B-P2, P2->C
+    const pt = q => {
+      const d = q * tot;
+      if (d <= lAB - r) { const u = d / lAB; return [A[0] + (B[0] - A[0]) * u, A[1] + (B[1] - A[1]) * u]; }
+      if (d >= lAB + r) { const u = (d - lAB) / lBC; return [B[0] + (C[0] - B[0]) * u, B[1] + (C[1] - B[1]) * u]; }
+      const u = (d - (lAB - r)) / (2 * r); return [(1 - u) * (1 - u) * P1[0] + 2 * u * (1 - u) * B[0] + u * u * P2[0], (1 - u) * (1 - u) * P1[1] + 2 * u * (1 - u) * B[1] + u * u * P2[1]];
+    };
+    for (let i = 0; i <= n; i++) out.push(pt(i / n));
+    out.kq = lAB / tot; // where the joint sits along q
+    return out;
+  };
   S.ell = (x, y, rx, ry, rot = 0) => { const p = new Path2D(); p.ellipse(x, y, Math.abs(rx), Math.abs(ry), rot, 0, S.TAU); const r = Math.max(Math.abs(rx), Math.abs(ry)); p.bb = [x - r, y - r, x + r, y + r]; return p; };
   S.poly = (pts, smooth = true) => {
     const p = new Path2D(), n = pts.length;
