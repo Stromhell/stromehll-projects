@@ -39,9 +39,9 @@ window.SHOTS = [
   { plate: 'trading', cam: { z: [1.05, 1.22], x: [1280, 1290], y: [760, 800] }, bed: [['trading_loop', .45], ['office_loop', .2]], inSfx: false,
     figs: [
       { x: 990, y: 1233, s: 2.3, ...FINK, pose: 'stand', facing: 1, anim: (o, lt) => { o.mood = lt > 4.6 ? 'happy' : 'neutral'; o.pose = lt > 2.2 && lt < 4.6 ? 'present' : 'stand'; o.talk = lt > 2.2 && lt < 4.6; } },
-      { x: 1580, y: 982, s: 1.39, costume: 'shirtsleeves', hair: 'short', seed: 2, facing: -1, anim: (o, lt) => { o.pose = Math.floor(lt / .9) % 2 ? 'point' : 'cheer'; o.talk = true; o.mood = 'shocked'; } },
-      { x: 1960, y: 935, s: 1.22, costume: 'office', hair: 'bald', seed: 3, facing: -1, anim: (o, lt) => { o.pose = Math.floor(lt / 1.1 + .5) % 2 ? 'shrug' : 'point'; o.talk = true; } },
-      { x: 1290, y: 869, s: .98, costume: 'shirtsleeves', hair: 'curly', seed: 4, facing: 1, anim: (o, lt) => { o.pose = Math.floor(lt / .7) % 2 ? 'cheer' : 'stand'; o.talk = true; o.mood = 'happy'; } }],
+      { x: 1580, y: 982, s: 1.39, costume: 'shirtsleeves', hair: 'short', seed: 2, facing: -1, anim: (o, lt) => { o.pose = Math.floor(lt / 2.2) % 2 ? 'point' : 'cheer'; o.talk = true; o.mood = 'shocked'; } },
+      { x: 1960, y: 935, s: 1.22, costume: 'office', hair: 'bald', seed: 3, facing: -1, anim: (o, lt) => { o.pose = Math.floor(lt / 2.6 + .5) % 2 ? 'shrug' : 'point'; o.talk = true; } },
+      { x: 1290, y: 869, s: .98, costume: 'shirtsleeves', hair: 'curly', seed: 4, facing: 1, anim: (o, lt) => { o.pose = Math.floor(lt / 1.9) % 2 ? 'cheer' : 'stand'; o.talk = true; o.mood = 'happy'; } }],
     init: S => { const tF = A.at(S, 'Larry Fink', 2.2), tS = A.at(S, 'star', 6.8);
       S.D.live = [slips(60, 700, 1860, 300, 1300)];
       S.D.over = [(c, lt) => K.badge(c, 'FIRST BOSTON · NEW YORK', lt, { at: .4 }), (c, lt) => K.dateTag(c, 'EARLY 1980s', lt, { at: .8 }), (c, lt) => K.card(c, 'LARRY FINK\nBOND TRADER', lt, { at: tF + .3, x: 470, y: 330, px: 54, rot: -4 }), (c, lt) => { const a = pop(lt, tS); if (a <= 0) return; c.save(); c.translate(760, 240); c.scale(a, a); c.rotate(.15 + lt * .3); c.fillStyle = GOLD; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); for (let k = 0; k < 10; k++) { const rad = k % 2 ? 40 : 95, an = k / 10 * Math.PI * 2 - Math.PI / 2; c.lineTo(Math.cos(an) * rad, Math.sin(an) * rad); } c.closePath(); c.fill(); c.stroke(); c.restore(); }];
@@ -130,7 +130,7 @@ window.SHOTS = [
   { plate: 'trading', cam: { z: [1.2, 1.32], x: [1280, 1280], y: [820, 860] }, bed: [['trading_loop', .4]],
     figs: [
       { x: 990, y: 1233, s: 2.3, ...FINK, facing: 1, mood: 'happy', pose: 'stand', anim: (o, lt) => { o.pose = lt > 5.5 ? 'cheer' : 'stand'; } },
-      { x: 1580, y: 982, s: 1.39, costume: 'shirtsleeves', hair: 'short', seed: 2, facing: -1, mood: 'happy', anim: (o, lt) => { o.pose = Math.floor(lt / .6) % 2 ? 'cheer' : 'stand'; } }],
+      { x: 1580, y: 982, s: 1.39, costume: 'shirtsleeves', hair: 'short', seed: 2, facing: -1, mood: 'happy', anim: (o, lt) => { o.pose = Math.floor(lt / 1.7) % 2 ? 'cheer' : 'stand'; } }],
     init: S => { const tN = A.at(S, 'Nothing was built', .6), tF = A.at(S, 'fortune', 6.4);
       S.D.live = [slips(90, 700, 1860, 300, 1400, true)];
       S.D.over = [(c, lt) => K.card(c, 'NOTHING WAS BUILT', lt, { at: tN, x: 1280, y: 210, px: 60, rot: -4, until: tF - .3 }), (c, lt) => K.title(c, 'A FORTUNE', lt, { at: tF, x: 1280, y: 210, px: 120, fill: GOLD })];

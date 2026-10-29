@@ -70,21 +70,21 @@
     const breathe = Math.sin(t * 2.1 + (o.seed || 0)) * .5 + .5;
     if (o.pose === 'walk' || o.pose === 'run') {
       const run = o.pose === 'run', ph = o.phase ?? (t * (run ? 9 : 5.4)), s = Math.sin(ph), c = Math.cos(ph);
-      const amp = run ? 36 : 24, arm = run ? 50 : 32;
+      const amp = run ? 26 : 15, arm = run ? 50 : 32;
       P.hipL = amp * s; P.hipR = -amp * s;
       P.kneeL = -(Math.max(0, c) * (run ? 70 : 40) + 6); P.kneeR = -(Math.max(0, -c) * (run ? 70 : 40) + 6);
       P.footL = Math.max(0, -s) * 18; P.footR = Math.max(0, s) * 18;
-      P.shL = -arm * s * .9; P.shR = arm * s * .9; P.elL = -16 - Math.max(0, s) * 26; P.elR = -16 - Math.max(0, -s) * 26;
+      P.shL = -arm * s * .45 - 4; P.shR = arm * s * .45 + 4; P.elL = -10 - Math.max(0, s) * 12; P.elR = -10 - Math.max(0, -s) * 12;
       P.bob = -Math.abs(Math.cos(ph)) * (run ? 9 : 5) + (run ? 0 : 3); P.lean = run ? 10 : 3;
     } else if (o.pose === 'sit') {
-      P.hipL = 88; P.hipR = 84; P.kneeL = -86; P.kneeR = -90; P.sitDrop = 1; P.shL = 18 + breathe * 2; P.shR = 38 + breathe * 2; P.elL = -58; P.elR = -55; P.bob = 0;
+      P.hipL = 88; P.hipR = 84; P.kneeL = -86; P.kneeR = -90; P.sitDrop = 1; P.shL = 10 + breathe * 2; P.shR = 14 + breathe * 2; P.elL = -62; P.elR = -74; P.bob = 0;
     } else if (o.pose === 'squat' || o.pose === 'work') {
       P.hipL = 75; P.hipR = 50; P.kneeL = -140; P.kneeR = -110; P.lean = 22;
-      const w = Math.sin(t * (o.workSpeed ?? 7)); P.shL = 55 + w * 14; P.elL = -40 - w * 18; P.shR = 40 - w * 10; P.elR = -60;
+      const w = Math.sin(t * (o.workSpeed ?? 7)); P.shL = 55 + w * 8; P.elL = -40 - w * 10; P.shR = 40 - w * 6; P.elR = -60;
     } else if (o.pose === 'point') { P.shR = 92; P.elR = -4; P.shL = -3; P.elL = -8; P.handR = 'point'; }
     else if (o.pose === 'reach') { P.shR = 75; P.elR = -15; P.shL = 25; P.elL = -40; }
     else if (o.pose === 'carry') { P.shL = 30; P.elL = -75; P.shR = 35; P.elR = -75; }
-    else if (o.pose === 'cheer') { P.shL = -150; P.elL = 12; P.shR = 150; P.elR = -12; P.handL = 'open'; P.handR = 'open'; }
+    else if (o.pose === 'cheer') { P.shL = -142; P.elL = -12; P.shR = 142; P.elR = 12; P.handL = 'open'; P.handR = 'open'; }
     else if (o.pose === 'think') { P.shR = 0; P.elR = 0; P.shL = -3; P.elL = -8; P.chin = 1; }
     else if (o.pose === 'shrug') { P.shL = -30; P.elL = 78; P.shR = 30; P.elR = -78; P.handL = 'open'; P.handR = 'open'; }
     else if (o.pose === 'present') { P.shR = 58; P.elR = -24; P.shL = -3; P.elL = -8; P.handR = 'open'; }
@@ -95,8 +95,9 @@
   }
 
   // Draw one figure. Options: x,y,s,facing,pose,t,costume,mood,hair,hairCol,hat,seed,hold{near,far},talk,glasses,beard,eyesClosed,lean,shadow
+  C.poseAngles = poseAngles;
   C.figure = (ctx, o) => {
-    const t = o.t ?? 0, s = o.s ?? 1, F = o.facing ?? 1, cos = COSTUMES[o.costume] || COSTUMES.shirt, P = poseAngles(o, t);
+    const t = o.t ?? 0, s = o.s ?? 1, F = o.facing ?? 1, cos = COSTUMES[o.costume] || COSTUMES.shirt, P = o.P || poseAngles(o, t);
     const seed = o.seed ?? 1;
     ctx.save(); ctx.translate(o.x, o.y);
     if (o.shadow !== false && o.pose !== 'lie') { ctx.save(); ctx.scale(1, .22); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, 80 * s); g.addColorStop(0, `rgba(25,14,6,${o.shadowAlpha ?? .4})`); g.addColorStop(1, 'rgba(25,14,6,0)'); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(0, 0, 80 * s, 0, 7); ctx.fill(); ctx.restore(); }
@@ -128,7 +129,7 @@
     };
     const arm = (side, near) => {
       const sx = neck.x + side * shW * .84, sy = neck.y + 16; let a1 = P[side < 0 ? 'shL' : 'shR'] * D2R, a2 = a1 - P[side < 0 ? 'elL' : 'elR'] * D2R;
-      if (P.chin && side > 0) { const tx = neck.x + 30, ty = neck.y + 4, dx = tx - sx, dy = ty - sy, d = Math.min(armU + armL - 1, Math.hypot(dx, dy)), base = Math.atan2(dx, dy), k = Math.acos((armU * armU + d * d - armL * armL) / (2 * armU * d)); a1 = base + k; const ex0 = sx + Math.sin(a1) * armU, ey0 = sy + Math.cos(a1) * armU; a2 = Math.atan2(tx - ex0, ty - ey0); }
+      if (P.chin > 0 && side > 0) { const w = Math.min(1, P.chin), tx = neck.x + 30, ty = neck.y + 4, dx = tx - sx, dy = ty - sy, d = Math.min(armU + armL - 1, Math.hypot(dx, dy)), base = Math.atan2(dx, dy), k = Math.acos((armU * armU + d * d - armL * armL) / (2 * armU * d)); const b1 = base + k, ex0 = sx + Math.sin(b1) * armU, ey0 = sy + Math.cos(b1) * armU, b2 = Math.atan2(tx - ex0, ty - ey0); a1 = a1 + (b1 - a1) * w; a2 = a2 + (b2 - a2) * w; }
       const ex = sx + Math.sin(a1) * armU, ey = sy + Math.cos(a1) * armU, hx = ex + Math.sin(a2) * armL, hy = ey + Math.cos(a2) * armL;
       const c = armCol(near);
       if (cos.sleeve && !cos.rolled) {

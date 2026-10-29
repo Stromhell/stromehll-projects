@@ -17,10 +17,18 @@
   // phrase time inside a shot (seconds from shot start), searching only this shot's words
   A.at = (S, phrase, dflt = 0) => { const t = K.W(phrase, S.vo_start - .05); return t == null || t > S.end ? dflt : t - S.start; };
   A.figure = (c, f, lt, u, S) => {
-    const o = Object.assign({ t: lt + (f.phase ?? 0), phase: f.phase ?? 0, seed: f.seed ?? 3, shadowAlpha: .3 }, f);
-    if (f.walk) { const w = f.walk, x = R.walkX ? R.walkX(lt, w.x0, w.x1, w.t0 ?? 0, w.dur, f.s) : null; if (x) { o.x = x.x; o.t = x.phase; o.pose = lt >= (w.t0 ?? 0) && lt <= (w.t0 ?? 0) + w.dur ? (w.pose || 'walk') : (f.pose || 'stand'); o.facing = Math.sign(w.x1 - w.x0) || f.facing; } }
-    if (f.talk) { const [a, b] = Array.isArray(f.talk) ? f.talk : [0, 99]; o.talk = lt >= a && lt <= b; }
-    if (f.anim) f.anim(o, lt, u, S);
+    const make = (tt) => { const o = Object.assign({ t: tt + (f.phase ?? 0), phase: f.phase ?? 0, seed: f.seed ?? 3, shadowAlpha: .3 }, f);
+      if (f.walk) { const w = f.walk, x = R.walkX ? R.walkX(tt, w.x0, w.x1, w.t0 ?? 0, w.dur, f.s) : null; if (x) { o.x = x.x; o.t = x.phase; o.pose = tt >= (w.t0 ?? 0) && tt <= (w.t0 ?? 0) + w.dur ? (w.pose || 'walk') : (f.pose || 'stand'); o.facing = Math.sign(w.x1 - w.x0) || f.facing; } }
+      if (f.talk) { const [a, b] = Array.isArray(f.talk) ? f.talk : [0, 99]; o.talk = tt >= a && tt <= b; }
+      if (f.anim) f.anim(o, tt, u, S); return o; };
+    const o = make(lt);
+    // smooth the joints: average the pose over the last ~0.3 s so pose changes ease in instead of snapping
+    if (R.poseAngles && o.pose !== 'walk' && o.pose !== 'run' && !f.noSmooth) {
+      const N = 7, dt = .045, acc = {}, P0 = R.poseAngles(o, o.t); let ws = 0;
+      for (let k = 0; k <= N; k++) { const ok = k ? make(lt - k * dt) : o, P = k ? R.poseAngles(ok, ok.t) : P0, w = 1 - k / (N + 1) * .6;
+        if (ok.pose === 'walk' || ok.pose === 'run') continue;
+        for (const key in P0) if (typeof P0[key] === 'number' || typeof P[key] === 'number') acc[key] = (acc[key] || 0) + (+P[key] || 0) * w; ws += w; }
+      const P = Object.assign({}, P0); for (const key in acc) P[key] = acc[key] / ws; if (!P0.chin) P.chin = acc.chin ? acc.chin / ws : 0; o.P = P; }
     R.figure(c, o);
   };
   A.build = () => {
