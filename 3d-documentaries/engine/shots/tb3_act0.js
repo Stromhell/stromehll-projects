@@ -107,7 +107,7 @@ export const shots = {
     const dash = new THREE.PointLight(0xffb070, 6, 1.1, 2); dash.position.set(0, 1.3, .55); scene.add(dash);
     const cam = C.dolly(camera, { pos: [.9, 1.55, 3.2], look: [.42, 1.36, .1], fov: 28 }, { pos: [.6, 1.52, 2.6], look: [.42, 1.38, .1], fov: 25 });
     return (t, u) => { cam(u); y.update(t, { pose: 'sit', seatH: .45, arm: 'lap', mood: 'calm', look: Math.sin(t * .4) * .05 }); dr.update(t, { pose: 'sitDesk', arm: 'desk', seatH: .45, mood: 'stern' });
-      const [x, yy] = (() => { const v = new THREE.Vector3(...C.headPos(y, .35)).project(camera); return [(v.x + 1) * 960, (1 - v.y) * 540]; })();
+      const [x, yy] = (() => { camera.updateMatrixWorld(); const v = new THREE.Vector3(...C.headPos(y, .35)).project(camera); return [(v.x + 1) * 960, (1 - v.y) * 540]; })();
       ui.callout(k.overlay, 'YONATAN "YONI" NETANYAHU', 'COMMANDER, 30', Math.min(1500, x + 380), Math.max(220, yy - 20), t, 1.2); };
   },
   // the convoy rolls toward the old terminal, headlights off, tower ahead

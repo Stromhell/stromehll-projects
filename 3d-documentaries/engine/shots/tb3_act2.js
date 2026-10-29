@@ -4,7 +4,7 @@ import * as ui from '../lib/ui.js';
 import { shots as old } from './tb_act2.js';
 const { THREE, sets, P } = C;
 
-const proj = (cam, v) => { const p = new THREE.Vector3(...v).project(cam); return [(p.x + 1) * 960, (1 - p.y) * 540]; };
+const proj = (cam, v) => { cam.updateMatrixWorld(); const p = new THREE.Vector3(...v).project(cam); return [(p.x + 1) * 960, (1 - p.y) * 540]; };
 
 // ---------- the line-up: four hijackers against a height-chart wall, each with its own spotlight ----------
 async function lineup(k) {
