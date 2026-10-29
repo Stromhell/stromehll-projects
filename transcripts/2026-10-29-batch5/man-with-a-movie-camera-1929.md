@@ -1,0 +1,5 @@
+# Man with a Movie Camera (1929)
+
+_Silent film intertitles only. Skipped._
+
+MAN WITH A MOVIE CAMERA A recording on 6 reels of film. Production VUFKU, 1929. Extract from the log book of a movie cameraman. Attention, viewers: The film you are about to see is an attempt at cinematographic diffusion of visual scenes. WITHOUT USE OF INTERTITLES (the film has no intertitles) WITHOUT USE OF A SCREENPLAY (the film has no screenplay) WITHOUT USE OF A THEATER (the film has no sets, actors, etc.) The purpose of this experimental work is to create an absolute and universal cinematographic language completely free of theatrical or literary language. Author and conductor of the experiment: Dziga VERTOV Head cameraman M. KAUFMAN Assistant - editor E. SVILOVA M. GORKI Certificate of marriage Certificate of divorce The director Cultural questionnaire Suggestion box for the wall newspaper A few words about sport... The "Proletarian" movie theater Club Vladimir Ilyich Ulianov at the Odessa train station The father of fascism Lenin Club, 2nd floor
