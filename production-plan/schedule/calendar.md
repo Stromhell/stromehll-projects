@@ -47,3 +47,6 @@ Full-video times were checked one by one in Zernio on 28 Oct 2026 at 17:35 UTC. 
 ## 29 Oct 2026, 20:00 UTC: NVIDIA full video booked
 - "He Built the Wrong Chip and Still Built the World's Most Valuable Company", YouTube, Thu 26 Nov 2026 20:00 UTC (15:00 ET). Zernio post 6ae3a4416237e348008ee0ea, custom thumbnail, 19 tags. Approved by Pushpam 29 Oct 19:43.
 - 15 NVIDIA reels: waiting for renders from the 2D thread.
+
+## 29 Oct 2026, 20:30 UTC: facts shorts start
+- Facts short 01 "Stranded at sea: why can't you drink the water?" booked YouTube + Instagram, Fri 30 Oct 14:30 UTC (20:00 IST). Zernio post 6ae3ac0511fb5e81bda6fb6d. Card external/fs-01-seawater removed.
