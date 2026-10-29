@@ -70,3 +70,8 @@ The 2D and 3D cards now render the same way:
 - Rows are sorted in working order: working, waiting on Pushpam, paused, queued, other project, done (then by line 2D, 2D dynamic, 3D, then progress).
 - Click a row to open every detail (stages, notes, preview, acts, feedback, Combine/Reels/Schedule buttons). Click again to close. Open rows are remembered in the browser.
 - Timeline/side-rail jumps to a video open its row.
+
+## v31 (29 Oct 2026): facts shorts as one card
+- Every db doc `external/fs-*` (or format "Short") is grouped into one "Facts shorts" row in the production line, showing how many were created and how many are done/booked, in progress, waiting or queued.
+- Opening it lists each short with its progress; click a short for its latest note, steps, file links (claude.ai or Google Drive) and booking time (`booked` field).
+- Short statuses: working, review (shown as "Needs your OK"), queued, paused, done, scheduled/booked/posted (shown as done). Cards stay after booking so the count keeps growing.
