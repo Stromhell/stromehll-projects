@@ -1,0 +1,298 @@
+{
+ "dur": 58.324,
+ "cues": [
+  {
+   "t": 0.2,
+   "name": "footsteps",
+   "gain": 0.3
+  },
+  {
+   "t": 3.24,
+   "name": "hit",
+   "gain": 0.4
+  },
+  {
+   "t": 2.775,
+   "name": "scrape",
+   "gain": 0.7
+  },
+  {
+   "t": 4.375,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 4.575,
+   "name": "typing",
+   "gain": 0.45
+  },
+  {
+   "t": 5.875,
+   "name": "pop",
+   "gain": 0.45
+  },
+  {
+   "t": 9.269,
+   "name": "pop",
+   "gain": 0.4
+  },
+  {
+   "t": 10.169,
+   "name": "typing",
+   "gain": 0.45
+  },
+  {
+   "t": 12.004,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 12.304,
+   "name": "whoosh_soft",
+   "gain": 0.25
+  },
+  {
+   "t": 12.854,
+   "name": "whoosh_soft",
+   "gain": 0.25
+  },
+  {
+   "t": 13.404,
+   "name": "whoosh_soft",
+   "gain": 0.25
+  },
+  {
+   "t": 13.954,
+   "name": "whoosh_soft",
+   "gain": 0.25
+  },
+  {
+   "t": 14.504,
+   "name": "whoosh_soft",
+   "gain": 0.25
+  },
+  {
+   "t": 15.054,
+   "name": "whoosh_soft",
+   "gain": 0.25
+  },
+  {
+   "t": 15.604,
+   "name": "whoosh_soft",
+   "gain": 0.25
+  },
+  {
+   "t": 16.154,
+   "name": "whoosh_soft",
+   "gain": 0.25
+  },
+  {
+   "t": 16.081,
+   "name": "pop",
+   "gain": 0.45
+  },
+  {
+   "t": 18.001,
+   "name": "coins",
+   "gain": 0.45
+  },
+  {
+   "t": 19.176,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 19.476,
+   "name": "coins_cascade",
+   "gain": 0.45
+  },
+  {
+   "t": 22.676,
+   "name": "chime",
+   "gain": 0.5
+  },
+  {
+   "t": 24.406,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 25.341,
+   "name": "hit",
+   "gain": 0.45
+  },
+  {
+   "t": 27.601,
+   "name": "pop",
+   "gain": 0.4
+  },
+  {
+   "t": 28.361,
+   "name": "pop",
+   "gain": 0.4
+  },
+  {
+   "t": 28.861,
+   "name": "pop",
+   "gain": 0.4
+  },
+  {
+   "t": 29.461,
+   "name": "pop",
+   "gain": 0.4
+  },
+  {
+   "t": 32.716,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 34.271,
+   "name": "typing",
+   "gain": 0.4
+  },
+  {
+   "t": 35.671,
+   "name": "tick",
+   "gain": 0.7
+  },
+  {
+   "t": 36.271,
+   "name": "tick",
+   "gain": 0.5
+  },
+  {
+   "t": 37.706,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 39.601,
+   "name": "stamp",
+   "gain": 1
+  },
+  {
+   "t": 39.651,
+   "name": "hit",
+   "gain": 0.6
+  },
+  {
+   "t": 43.736,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 43.736,
+   "name": "gate_slam",
+   "gain": 0.5
+  },
+  {
+   "t": 44.036,
+   "name": "footsteps",
+   "gain": 0.4
+  },
+  {
+   "t": 47.608,
+   "name": "hit",
+   "gain": 0.5
+  },
+  {
+   "t": 48.763,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 49.574,
+   "name": "hit",
+   "gain": 0.4
+  },
+  {
+   "t": 51.734,
+   "name": "gate_slam",
+   "gain": 0.9
+  },
+  {
+   "t": 54.024,
+   "name": "whoosh",
+   "gain": 0.5
+  },
+  {
+   "t": 54.424,
+   "name": "hit",
+   "gain": 1
+  },
+  {
+   "t": 54.474,
+   "name": "swell",
+   "gain": 0.4
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 5.075,
+   "name": "rain_loop",
+   "gain": 0.7
+  },
+  {
+   "start": 4.275,
+   "end": 12.704,
+   "name": "night_loop",
+   "gain": 0.5
+  },
+  {
+   "start": 4.275,
+   "end": 12.704,
+   "name": "typing",
+   "gain": 0
+  },
+  {
+   "start": 11.904,
+   "end": 19.876,
+   "name": "hum_loop",
+   "gain": 0.3
+  },
+  {
+   "start": 19.076,
+   "end": 25.106,
+   "name": "office_loop",
+   "gain": 0.3
+  },
+  {
+   "start": 24.306,
+   "end": 33.416,
+   "name": "office_loop",
+   "gain": 0.5
+  },
+  {
+   "start": 32.616,
+   "end": 38.406,
+   "name": "hum_loop",
+   "gain": 0.3
+  },
+  {
+   "start": 37.606,
+   "end": 44.436,
+   "name": "hum_loop",
+   "gain": 0.25
+  },
+  {
+   "start": 43.636,
+   "end": 49.462999999999994,
+   "name": "wind_loop",
+   "gain": 0.5
+  },
+  {
+   "start": 48.663,
+   "end": 54.724,
+   "name": "tension",
+   "gain": 0.35
+  },
+  {
+   "start": 53.924,
+   "end": 59.123999999999995,
+   "name": "drone",
+   "gain": 0.4
+  }
+ ]
+}

@@ -1,0 +1,84 @@
+<!doctype html><html><head><meta charset="utf-8"><title>JP act 0 - cold open</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../jp_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['boardroom', 'newsroom', 'rain_tower', 'skyline']) K.load(n, PL + n + '.jpg');
+const T = window.TIMING; const last = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length + 1, start: last.end, end: last.end + 4.4, vo_start: last.end, vo_end: last.end, text: '' }); T.dur = last.end + 4.4;
+const SW = 1920, SH = 1080, INK = '#1d1712', GOLD = '#e8b44a', RED = '#d9483b', GREEN = '#4f9a4a', BLUE = '#3f6aa0';
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+// ---- the profit chart on a ledger board in the night boardroom ----
+const BX = 150, BY = 90, BW = 1240, BH = 800, BASE = BY + BH - 90, PER = 9.2; // px per $1B
+const board = (c) => { c.save(); c.filter = 'blur(5px) brightness(.6)'; const s2 = 1.1 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 700 * s2); c.drawImage(K.imgs.boardroom, 0, 0, 2560, 1440); c.restore(); K.screen(c);
+  c.fillStyle = '#3a2a1e'; c.strokeStyle = INK; c.lineWidth = 4; for (const lx of [BX + 140, BX + BW - 160]) { c.beginPath(); c.moveTo(lx, BY + BH); c.lineTo(lx + 22, BY + BH); c.lineTo(lx + 40, 1064); c.lineTo(lx + 8, 1064); c.closePath(); c.fill(); c.stroke(); }
+  c.fillStyle = 'rgba(0,0,0,.35)'; c.beginPath(); c.ellipse(BX + BW / 2, 1066, BW * .45, 14, 0, 0, 7); c.fill(); JK.ledger(c, BX, BY, BW, BH);
+  c.fillStyle = INK; c.font = '40px Anton'; c.textAlign = 'left'; c.fillText('NET PROFIT, 2025', BX + 120, BY + 60); c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.moveTo(BX + 100, BASE); c.lineTo(BX + BW - 60, BASE); c.stroke(); };
+// a coin tower that grows to v billions (u 0..1)
+const tower = (c, x, v, u, label, col, opts = {}) => { const h = v * PER * u, n = Math.max(0, Math.floor(h / 13)); for (let k = 0; k < n; k++) JK.coin(c, x, BASE - 10 - k * 13, 46, 1, col); if (u > 0) { c.save(); c.font = '30px Anton'; c.fillStyle = INK; c.textAlign = 'center'; c.fillText(label, x, BASE + 46); if (u > .98 && !opts.noVal) { K.outlined(c, opts.val || ('$' + v.toFixed(1) + 'B'), x, BASE - h - 50, 52, { fill: opts.valCol || '#fffaf0' }); } c.restore(); } };
+const analyst = (pose, extra = {}) => (c, lt) => R.figure(c, Object.assign({ x: 1650, y: 1050, s: 1.9, pose, facing: -1, t: lt, costume: 'shirtsleeves', hair: 'short', seed: 4, mood: 'neutral' }, extra));
+// Dimon look: silver hair, navy suit
+const DIMON = { costume: 'suit', hair: 'swept', hairCol: '#c9c9cf', seed: 7 }, WEILL = { costume: 'suit80', hair: 'bald', hairCol: '#b8b8b8', glasses: true, seed: 2 };
+
+window.SHOTS = [
+  // 1 JPMorgan's coin tower shoots up
+  { draw: (c, lt, u, S) => { board(c); tower(c, BX + 330, 57, E.out(K.seg(lt, .4, 2.6)), 'JPMORGAN', GOLD, { valCol: GOLD }); }, bed: [['office_loop', .3]], inSfx: false,
+    front: [], over: [analyst('present')],
+    init: S => { S.D.sfx = [[.4, 'coins_cascade', .45], [2.6, 'chime', .5]]; } },
+  // 2 two shorter towers rise and stop well short
+  { draw: (c, lt, u, S) => { board(c); tower(c, BX + 330, 57, 1, 'JPMORGAN', GOLD, { valCol: GOLD }); const tB = S.tB, tC = S.tC; tower(c, BX + 660, 30.5, E.out(K.seg(lt, tB, tB + 2)), 'BANK OF AMERICA', '#b8c4d0'); tower(c, BX + 960, 14.3, E.out(K.seg(lt, tC, tC + 1.4)), 'CITIGROUP', '#c8b8a0'); },
+    over: [analyst('point', { mood: 'neutral' })], bed: [['office_loop', .3]],
+    init: S => { S.tB = A.at(S, 'Bank of America', .3); S.tC = A.at(S, 'Citigroup', 4.5); S.D.sfx = [[S.tB, 'coins', .4], [S.tC, 'coins', .35]]; } },
+  // 3 the two rival towers slide together; still short; gold bracket marks the gap
+  { draw: (c, lt, u, S) => { board(c); tower(c, BX + 330, 57, 1, 'JPMORGAN', GOLD, { valCol: GOLD }); const m = E.io(K.seg(lt, S.tM, S.tM + 1.2));
+      if (m < 1) { const xb = BX + 660 + (BX + 810 - (BX + 660)) * m, xc = BX + 960 + (BX + 810 - (BX + 960)) * m; c.save(); c.globalAlpha = 1 - m; tower(c, xb, 30.5, 1, 'BANK OF AMERICA', '#b8c4d0'); tower(c, xc, 14.3, 1, 'CITIGROUP', '#c8b8a0'); c.restore(); }
+      if (m > 0) { c.save(); c.globalAlpha = m; tower(c, BX + 810, 44.8, 1, 'BOFA + CITI', '#b8c4d0', { val: '$44.8B' }); c.restore(); }
+      const g = K.seg(lt, S.tS, S.tS + .6); if (g > 0) { const y0 = BASE - 57 * PER, y1 = BASE - 44.8 * PER, x = BX + 1030; c.save(); c.globalAlpha = g; c.fillStyle = 'rgba(232,180,74,.45)'; c.fillRect(BX + 290, y0, x - BX - 290, y1 - y0); c.strokeStyle = GOLD; c.lineWidth = 7; c.beginPath(); c.moveTo(x - 20, y0); c.lineTo(x, y0); c.lineTo(x, y1); c.lineTo(x - 20, y1); c.stroke(); K.outlined(c, '$12B+ SHORT', x + 10, (y0 + y1) / 2, 50, { fill: GOLD, align: 'left' }); c.restore(); } },
+    over: [analyst('shrug', { mood: 'shocked' })], bed: [['office_loop', .3]],
+    init: S => { S.tM = A.at(S, 'together', .8); S.tS = A.at(S, 'short', 3.6); S.D.sfx = [[S.tM, 'whoosh_soft', .45], [S.tM + 1.1, 'thud', .5], [S.tS, 'chime', .5]]; } },
+  // 4 2008 crash newsroom: red tickers; bankers carry boxes out; one green JPM number blinks
+  { plate: 'newsroom', cam: { z: [1.05, 1.15], x: [1280, 1290], y: [720, 760] }, bed: [['trading_loop', .4], ['tension', .25]],
+    live: [JK.tickerTape(410, 2380, 760, 'down')],
+    figs: [{ ...{ costume: 'office', hair: 'short', seed: 5 }, s: 1.75, y: 1300, walk: { x0: -200, x1: 2800, t0: 0.6, dur: 9 }, mood: 'sad' },
+      { ...{ costume: 'suit', hair: 'curly', seed: 8 }, s: 1.6, y: 1235, walk: { x0: -300, x1: 2800, t0: 3.6, dur: 9.5 }, mood: 'worried' }],
+    front: [(c, lt) => { const w = R.walkX(lt, -200, 2800, .6, 9, 1.75); if (!w.moving) return; JK.box(c, w.x + 46, 1300 - 175 + Math.abs(Math.sin(w.phase)) * -6, 1); }],
+    init: S => { const tL = A.at(S, 'Lehman', 5.5), tC = A.at(S, 'Citigroup lost', 8), tJ = A.at(S, 'JPMorgan still', 3.5);
+      S.D.over = [(c, lt) => K.dateTag(c, '2008', lt, { at: .3 }), (c, lt) => K.badge(c, 'THE GREAT CRASH', lt, { at: .5 }),
+        (c, lt) => JK.tile(c, 1500, 260, 'JPMORGAN', '+$5.6B', GREEN, pop(lt, tJ), lt),
+        (c, lt) => JK.tile(c, 460, 470, 'LEHMAN', 'BANKRUPT', RED, pop(lt, tL), lt), (c, lt) => JK.tile(c, 1500, 470, 'CITIGROUP', '−$27.7B', RED, pop(lt, tC), lt)];
+      S.D.sfx = [[.2, 'tension', .3], [tJ, 'chime', .55], [tL, 'hit', .55], [tC, 'stamp', .5]]; } },
+  // 5 a $2 price tag swings in front of the rain-wet tower
+  { plate: 'rain_tower', cam: { z: [1.05, 1.32], x: [1280, 1280], y: [700, 720], ease: E.io }, bed: [['rain_loop', .8]],
+    live: [JK.rain(220, 2560, 1440)],
+    init: S => { const t2 = A.at(S, 'two dollars', 4.8), tW = A.at(S, 'weekend', 3.4);
+      S.D.over = [(c, lt) => K.badge(c, 'BEAR STEARNS · MARCH 2008', lt, { at: .4 }), (c, lt) => JK.priceTag(c, 1220, lt, t2), (c, lt) => K.card(c, 'ONE WEEKEND', lt, { at: tW, x: 470, y: 760, px: 54, rot: -5, until: t2 + .2 })];
+      S.D.sfx = [[tW, 'tick', .4], [t2, 'whoosh_soft', .5], [t2 + .35, 'stamp', .6]]; } },
+  // 6 1998 conference room: the mentor turns away; young Dimon's eyes widen
+  { plate: 'boardroom', cam: { z: [1.08, 1.16], x: [1280, 1290], y: [860, 880] }, bed: [['hum_loop', .35]],
+    figs: [{ x: 560, y: 1340, s: 2.0, ...DIMON, hairCol: '#4a3a30', facing: 1, pose: 'stand', anim: (o, lt, u, S) => { const t = A.at(S, 'pushed out', 1.4); o.mood = lt > t ? 'shocked' : 'neutral'; o.pose = lt > t + 1.2 ? 'shrug' : 'stand'; } },
+      { x: 2040, y: 1340, s: 2.0, ...WEILL, facing: -1, pose: 'point', mood: 'angry', anim: (o, lt, u, S) => { const t = A.at(S, 'mentor', 2.4); o.facing = lt > t ? 1 : -1; o.pose = lt > t ? 'stand' : 'point'; } }],
+    init: S => { const tM = A.at(S, 'mentor', 2.4), tR = A.at(S, 'retreat', 5.6); S.D.over = [A.grade('120,80,40', .12), (c, lt) => K.dateTag(c, '1998', lt, { at: .3 }), (c, lt) => K.card(c, 'SANDY WEILL\nHIS MENTOR', lt, { at: tM, x: 1520, y: 260, px: 46, rot: 4 }), (c, lt) => K.card(c, 'PUSHED OUT', lt, { at: tR, x: 430, y: 260, px: 56, rot: -5 })];
+      S.D.sfx = [[.4, 'creak', .4], [tM, 'whoosh_soft', .4], [tR, 'door_slam', .5]]; } },
+  // 7 Dimon beside the stone fortress; walls thicken
+  { plate: 'skyline', cam: { z: [1.06, 1.14], x: [1280, 1300], y: [800, 800] }, bed: [['city_loop', .35]],
+    figs: [{ x: 760, y: 1360, s: 2.1, ...DIMON, facing: 1, pose: 'present', mood: 'happy', walk: { x0: -250, x1: 760, t0: 0, dur: 2.2 }, anim: (o, lt, u, S) => { o.talk = lt > 2.2; if (lt > 2.2) o.pose = lt > A.at(S, 'fortress', 7) ? 'point' : 'present'; } }],
+    init: S => { const tN = A.at(S, 'Jamie Dimon', 1), tA = A.at(S, 'keep more money', 4), tF = A.at(S, 'fortress', 7.5);
+      S.D.live = [(c, lt) => JK.fortress(c, 1720, 1330, 1.25, .25 + .75 * E.out(K.seg(lt, tA, tF + .8)), pop(lt, .6, .6))];
+      S.D.over = [(c, lt) => K.card(c, 'JAMIE DIMON', lt, { at: tN, x: 470, y: 230, px: 60, rot: -4 }), (c, lt) => K.title(c, 'FORTRESS BALANCE SHEET', lt, { at: tF, y: 140, px: 76, fill: GOLD }), (c, lt) => JK.meter(c, 1780, 860, .25 + .75 * E.out(K.seg(lt, tA, tF + .8)), K.seg(lt, tA - .4, tA))];
+      S.D.sfx = [[tN, 'pop', .5], [tA, 'scrape', .5], [tA + .8, 'thud', .4], [tF, 'hit', .55]]; } },
+  // 8 boom: thin glass towers shoot up; bust: they crack and fall; the fortress stays
+  { plate: 'skyline', cam: { z: [1.1, 1.0], x: [1280, 1280], y: [800, 760] }, bed: [['city_loop', .35]],
+    init: S => { const tB = A.at(S, 'Then the bust', 4.5), tR = A.at(S, 'rule', 8);
+      S.D.live = [(c, lt) => { JK.fortress(c, 1280, 1330, 1.15, 1, 1); for (const [i, x] of [[0, 330], [1, 720], [2, 1860], [3, 2250]].values()) JK.glassTower(c, x, 1330, i, E.out(K.seg(lt, .3 + i * .25, 2.6 + i * .25)), K.seg(lt, tB + i * .15, tB + 1.6 + i * .15), lt); }];
+      S.D.over = [(c, lt) => K.card(c, 'BOOM: BIG RISKS', lt, { at: .6, x: 480, y: 200, px: 52, rot: -4, until: tB }), (c, lt) => K.card(c, 'BUST', lt, { at: tB, x: 480, y: 200, px: 80, rot: -6 })];
+      S.D.sfx = [[.3, 'riser', .35], [tB, 'hit', .6], [tB + .1, 'paper_tear', .3], [tB + .5, 'thud', .5], [tB + .8, 'thud', .4]]; } },
+  // 9 TITLE over the fortress against a red crashing chart
+  { plate: 'skyline', cam: { z: [1.2, 1.28], x: [1280, 1280], y: [820, 820] }, sub: 'off', inSfx: 'whoosh',
+    live: [(c, lt) => { JK.crashLine(c, lt); JK.fortress(c, 1930, 1330, .85, 1, 1, '#120c10'); }],
+    over: [A.grade('80,10,20', .2), (c, lt) => K.title(c, 'THE FORTRESS', lt, { at: .4, x: 800, y: 420, px: 150, sub: 'BANK', subPx: 170, subOpts: { fill: GOLD } })], sfx: [[.4, 'hit', 1], [.45, 'swell', .4]], bed: [['city_loop', .3]] },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>

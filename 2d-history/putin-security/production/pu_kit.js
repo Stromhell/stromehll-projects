@@ -1,0 +1,40 @@
+// Putin security props shared by every act: red "where is Putin" pin, residences map helpers, limousine, jet, train, seated silhouette, sleet.
+(function (G) {
+  const INK = '#1d1712', K = G.KIT, E = K.E;
+  const PU = G.PU = {};
+  // map_russia projection (view lon 20..60, lat 40..62, desk)
+  PU.xy = (lon, lat) => [150 + (lon - 20) * 56.5, 240 + (62 - lat) * 45.9];
+  PU.RES = [['KREMLIN', 37.62, 55.75, 40, -70], ['NOVO-OGARYOVO', 37.2, 55.72, -200, 40], ['VALDAI', 33.3, 57.9, 0, -60], ['ST PETERSBURG', 30.0, 59.85, 0, -60], ['SOCHI', 39.7, 43.6, 0, 60]];
+  PU.pin = (c, x, y, s = 1, a = 1, lt = 0) => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(s * a, s * a); const p = .5 + .5 * Math.sin(lt * 6);
+    c.fillStyle = `rgba(220,40,30,${.25 * p})`; c.beginPath(); c.ellipse(0, 0, 40 + 20 * p, 14 + 6 * p, 0, 0, 7); c.fill(); c.fillStyle = 'rgba(0,0,0,.35)'; c.beginPath(); c.ellipse(6, 2, 18, 6, 0, 0, 7); c.fill();
+    c.fillStyle = '#d42a20'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.moveTo(0, 0); c.bezierCurveTo(-14, -30, -38, -52, -38, -82); c.arc(0, -82, 38, Math.PI, 0); c.bezierCurveTo(38, -52, 14, -30, 0, 0); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#fff4e8'; c.beginPath(); c.arc(0, -84, 14, 0, 7); c.fill(); c.fillStyle = 'rgba(255,255,255,.35)'; c.beginPath(); c.ellipse(-16, -100, 8, 14, -.5, 0, 7); c.fill(); c.restore(); };
+  PU.dot = (c, x, y, lab, a, dx = 0, dy = -60) => { c.save(); c.globalAlpha *= a; c.fillStyle = '#ffd88a'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.arc(x, y, 11, 0, 7); c.fill(); c.stroke(); c.font = '30px Anton'; c.textAlign = 'center'; c.lineWidth = 6; c.strokeStyle = '#f2e6c8'; c.strokeText(lab, x + dx, y + dy); c.fillStyle = INK; c.fillText(lab, x + dx, y + dy); c.restore(); };
+  // black armoured limousine, side view facing +x; wheel spin from x travel
+  PU.limo = (c, x, y, s = 1, roll = 0, F = 1) => { c.save(); c.translate(x, y); c.scale(s * F, s); c.fillStyle = 'rgba(0,0,0,.4)'; c.beginPath(); c.ellipse(0, 6, 330, 22, 0, 0, 7); c.fill();
+    const body = new Path2D('M-320,-40 L-318,-110 Q-300,-128 -250,-130 L-150,-134 L-90,-200 Q-70,-214 -30,-214 L130,-214 Q160,-212 180,-196 L235,-140 L300,-128 Q326,-120 328,-90 L330,-40 Z');
+    const g = c.createLinearGradient(0, -214, 0, -40); g.addColorStop(0, '#3a3e46'); g.addColorStop(.35, '#16181c'); g.addColorStop(1, '#0a0b0d'); c.fillStyle = g; c.fill(body); c.strokeStyle = INK; c.lineWidth = 5; c.stroke(body);
+    c.fillStyle = '#4a5260'; c.beginPath(); c.moveTo(-80, -194); c.quadraticCurveTo(-64, -204, -36, -204); c.lineTo(40, -204); c.lineTo(40, -142); c.lineTo(-134, -142); c.closePath(); c.fill(); c.beginPath(); c.moveTo(56, -204); c.lineTo(124, -204); c.quadraticCurveTo(150, -202, 168, -186); c.lineTo(212, -142); c.lineTo(56, -142); c.closePath(); c.fill(); c.strokeStyle = INK; c.lineWidth = 4; c.stroke();
+    c.strokeStyle = 'rgba(255,255,255,.35)'; c.lineWidth = 4; c.beginPath(); c.moveTo(-300, -118); c.lineTo(300, -116); c.stroke(); c.fillStyle = '#c8ccd2'; c.fillRect(312, -100, 18, 20); c.fillStyle = '#ffe8a8'; c.beginPath(); c.ellipse(318, -112, 10, 7, 0, 0, 7); c.fill(); c.fillStyle = '#c83a2a'; c.fillRect(-322, -110, 10, 20);
+    // small flags on the front wings
+    c.strokeStyle = '#ccc'; c.lineWidth = 3; c.beginPath(); c.moveTo(250, -136); c.lineTo(250, -176); c.stroke(); ['#fff', '#2a4aa8', '#d42a20'].forEach((col, i) => { c.fillStyle = col; c.fillRect(250, -176 + i * 8, 26, 8); });
+    for (const wx of [-200, 200]) { c.save(); c.translate(wx, -44); c.fillStyle = '#0a0a0a'; c.beginPath(); c.arc(0, 0, 52, 0, 7); c.fill(); c.strokeStyle = INK; c.lineWidth = 4; c.stroke(); c.rotate(roll); c.fillStyle = '#9aa0a8'; c.beginPath(); c.arc(0, 0, 26, 0, 7); c.fill(); c.strokeStyle = '#3a3e46'; c.lineWidth = 5; for (let k = 0; k < 5; k++) { const a = k / 5 * 6.28; c.beginPath(); c.moveTo(0, 0); c.lineTo(Math.cos(a) * 24, Math.sin(a) * 24); c.stroke(); } c.restore(); }
+    c.restore(); };
+  // airliner in side view facing +x (an Il-96 style four-engine jet)
+  PU.jet = (c, x, y, s = 1, F = 1) => { c.save(); c.translate(x, y); c.scale(s * F, s); c.fillStyle = 'rgba(0,0,0,.25)'; c.beginPath(); c.ellipse(0, 70, 420, 18, 0, 0, 7); c.fill();
+    c.strokeStyle = INK; c.lineWidth = 5; c.fillStyle = '#9aa2ac'; c.beginPath(); c.moveTo(-380, -60); c.lineTo(-450, -230); c.lineTo(-400, -230); c.lineTo(-300, -70); c.closePath(); c.fill(); c.stroke();
+    const g = c.createLinearGradient(0, -80, 0, 40); g.addColorStop(0, '#ffffff'); g.addColorStop(.6, '#e4e8ee'); g.addColorStop(1, '#9aa2ac'); c.fillStyle = g; c.beginPath(); c.moveTo(-430, -40); c.quadraticCurveTo(-420, -80, -330, -80); c.lineTo(330, -80); c.quadraticCurveTo(440, -76, 460, -20); c.quadraticCurveTo(450, 30, 360, 34); c.lineTo(-360, 30); c.quadraticCurveTo(-420, 20, -430, -40); c.closePath(); c.fill(); c.stroke();
+    c.fillStyle = '#2a4aa8'; c.fillRect(-420, -14, 860, 12); c.fillStyle = '#d42a20'; c.fillRect(-420, -2, 860, 8); c.fillStyle = '#2a3440'; for (let k = 0; k < 26; k++) { c.beginPath(); c.roundRect(-300 + k * 24, -56, 12, 16, 4); c.fill(); } c.beginPath(); c.moveTo(390, -64); c.lineTo(430, -60); c.lineTo(438, -44); c.lineTo(392, -46); c.closePath(); c.fill();
+    c.fillStyle = '#b8c0c8'; c.beginPath(); c.moveTo(-40, 10); c.lineTo(120, 10); c.lineTo(-120, 60); c.lineTo(-170, 60); c.closePath(); c.fill(); c.stroke(); for (const ex of [-10, 70]) { c.fillStyle = '#c8ccd2'; c.beginPath(); c.roundRect(ex - 50, 34, 90, 30, 12); c.fill(); c.stroke(); c.fillStyle = '#3a3e46'; c.beginPath(); c.ellipse(ex + 40, 49, 6, 13, 0, 0, 7); c.fill(); }
+    c.restore(); };
+  // dark green train (locomotive + n carriages), side view moving +x
+  PU.train = (c, x, y, s = 1, n = 4) => { c.save(); c.translate(x, y); c.scale(s, s); const L = 520;
+    for (let k = 0; k < n; k++) { const x0 = -k * (L + 20) - L; c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(x0, -6, L, 12); const g = c.createLinearGradient(0, -230, 0, -30); g.addColorStop(0, '#3a5a46'); g.addColorStop(1, '#14261c'); c.fillStyle = g; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.roundRect(x0, -230, L, 190, 16); c.fill(); c.stroke();
+      c.fillStyle = '#c9a25a'; c.fillRect(x0, -120, L, 8); c.fillStyle = '#1a2420'; for (let w = 0; w < 7; w++) { c.beginPath(); c.roundRect(x0 + 30 + w * 68, -200, 46, 54, 6); c.fill(); } c.fillStyle = 'rgba(255,220,150,.25)'; c.fillRect(x0 + 30, -200, 46, 54);
+      for (const bx of [x0 + 70, x0 + L - 70]) { c.fillStyle = '#1a1a1a'; c.beginPath(); c.arc(bx - 28, -30, 26, 0, 7); c.arc(bx + 28, -30, 26, 0, 7); c.fill(); } }
+    // locomotive nose
+    c.fillStyle = '#20382a'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.moveTo(0, -40); c.lineTo(0, -240); c.lineTo(120, -240); c.quadraticCurveTo(200, -200, 210, -40); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#2a3440'; c.beginPath(); c.moveTo(110, -220); c.quadraticCurveTo(170, -190, 182, -140); c.lineTo(110, -140); c.closePath(); c.fill(); c.fillStyle = '#ffe8a8'; c.beginPath(); c.arc(190, -80, 12, 0, 7); c.fill(); c.fillStyle = '#c9a25a'; c.fillRect(0, -120, 200, 8);
+    c.fillStyle = '#1a1a1a'; c.beginPath(); c.arc(60, -30, 28, 0, 7); c.arc(140, -30, 28, 0, 7); c.fill(); c.restore(); };
+  // seated silhouette at the far end of a table (world)
+  PU.silhouette = (c, x, y, s = 1, col = '#0e0c10') => { c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = col; c.beginPath(); c.moveTo(-90, 0); c.quadraticCurveTo(-96, -120, -60, -150); c.quadraticCurveTo(0, -172, 60, -150); c.quadraticCurveTo(96, -120, 90, 0); c.closePath(); c.fill(); c.beginPath(); c.ellipse(0, -205, 44, 52, 0, 0, 7); c.fill(); c.fillRect(-16, -162, 32, 20); c.restore(); };
+  PU.sleet = (n = 200, al = .35) => (c, lt) => { c.save(); c.strokeStyle = `rgba(220,228,240,${al})`; c.lineWidth = 2.4; c.beginPath(); for (let k = 0; k < n; k++) { const sp = 900 + (k * 37 % 500), x = (k * 211 + lt * 260) % 2560, y = ((k * 157) + lt * sp) % 1440; c.moveTo(x, y); c.lineTo(x - 18, y + 34); } c.stroke(); c.restore(); };
+})(window);

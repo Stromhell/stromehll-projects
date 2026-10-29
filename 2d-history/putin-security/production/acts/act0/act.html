@@ -1,0 +1,52 @@
+<!doctype html><html><head><meta charset="utf-8"><title>PU act 0 - cold open</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "alium";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../pu_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['map_russia', 'moscow_road', 'airfield', 'birch_rail', 'office_a', 'office_b', 'office_c', 'long_table']) K.load(n, PL + n + '.jpg');
+const T = window.TIMING; const last = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length + 1, start: last.end, end: last.end + 4.4, vo_start: last.end, vo_end: last.end, text: '' }); T.dur = last.end + 4.4;
+const INK = '#1d1712', RED = '#d42a20', GOLD = '#e8b44a';
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+const plateAt = (c, name, px, py, sx, sy, z) => { const s2 = z * 1920 / 2560; c.setTransform(s2, 0, 0, s2, sx - px * s2, sy - py * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); return s2; };
+const RES = PU.RES.map(([n, lo, la, dx, dy]) => { const [x, y] = PU.xy(lo, la); return { n, x, y, dx, dy }; });
+// the hopping pin: index changes every beat
+const hop = (lt, beat = 1.1, t0 = .6) => { if (lt < t0) return { i: 0, a: E.out(K.seg(lt, .2, .6)) }; const k = Math.floor((lt - t0) / beat), f = ((lt - t0) / beat) % 1; return { i: (k * 3 + 1) % RES.length, a: f < .12 ? E.back(f / .12) : f > .9 ? 1 - (f - .9) / .1 : 1 }; };
+const mapLayer = (opts = {}) => (c, lt) => { c.save(); c.fillStyle = 'rgba(10,16,40,.38)'; c.fillRect(0, 0, 2560, 1440); c.restore(); RES.forEach(r => PU.dot(c, r.x, r.y, r.n, 1, r.dx, r.dy)); if (opts.noPin) return; const h = hop(lt, opts.beat); PU.pin(c, RES[h.i].x, RES[h.i].y, 1.1, h.a, lt); };
+
+window.SHOTS = [
+  // 1 map of Russia at night; the WHERE IS PUTIN? pin hops between residences; four planes cross
+  { plate: 'map_russia', cam: { z: [1.05, 1.15], x: [1000, 1000], y: [740, 720] }, bed: [['wind_loop', .3], ['hum_loop', .2]], inSfx: false,
+    init: S => { const tP = A.at(S, 'four identical', 2.4), tO = A.at(S, 'Only one', 4.2);
+      S.D.live = [mapLayer(), (c, lt) => { const u = K.seg(lt, tP, tP + 4.5); if (u <= 0 || u >= 1) return; for (let k = 0; k < 4; k++) { const x = 300 + u * 1900 + k * 40, y = 420 + k * 120; c.save(); c.globalAlpha = k === 2 && lt > tO ? 1 : lt > tO ? .45 : 1; PU.jet(c, x, y, .13); c.restore(); if (k === 2 && lt > tO) { c.save(); c.strokeStyle = RED; c.lineWidth = 6; c.beginPath(); c.arc(x, y, 80, 0, 7); c.stroke(); c.restore(); } } }];
+      S.D.over = [(c, lt) => K.title(c, 'WHERE IS PUTIN?', lt, { at: .4, y: 120, px: 84, fill: '#ffb0a8' }), (c, lt) => K.card(c, 'x4 PLANES', lt, { at: tP, x: 1560, y: 900, px: 54, rot: 4 }), (c, lt) => K.card(c, 'ONLY ONE\nHAS HIM', lt, { at: tO, x: 360, y: 860, px: 48, rot: -4 })];
+      S.D.sfx = [[.3, 'pop', .4], ...[1.7, 2.8, 3.9, 5, 6.1, 7.2].map(t => [t, 'tick', .35]), [tP, 'whoosh', .4], [tO, 'chime', .4]]; } },
+  // 2 split: a black armoured limousine on a sleety highway | four identical jets in the sky
+  { draw: (c, lt, u, S) => A.split((c2, lt2) => { const s2 = plateAt(c2, 'moscow_road', 1280, 1000, 480, 600, 1.0); c2.save(); c2.setTransform(s2, 0, 0, s2, 480 - 1280 * s2, 600 - 1000 * s2); const x = 250 + E.out(K.seg(lt2, 0, 3.2)) * 1050; PU.limo(c2, x, 1300, .95, x / 50); PU.sleet(160)(c2, lt2); c2.restore(); K.screen(c2); },
+      (c2, lt2) => { const s2 = plateAt(c2, 'airfield', 1280, 640, 1440, 560, 1.0); c2.save(); c2.setTransform(s2, 0, 0, s2, 1440 - 1280 * s2, 560 - 640 * s2); for (let k = 0; k < 4; k++) { const t0 = S.tJ + k * .45, p = E.out(K.seg(lt2, t0, t0 + 1.2)); if (p <= 0) continue; PU.jet(c2, 2300 - p * 1150 + Math.sin(lt2 + k) * 6, 230 + k * 135, .27, -1); } c2.restore(); K.screen(c2); }, { at: 0 })(c, lt, u, S),
+    bed: [['rain_loop', .4], ['hum_loop', .2]],
+    init: S => { S.tJ = A.at(S, 'Four identical', 2.4); const tG = A.at(S, 'grenades', 1.6); S.D.over = [(c, lt) => K.card(c, 'GRENADE-PROOF', lt, { at: tG, x: 480, y: 140, px: 52, rot: -4 }), (c, lt) => K.card(c, 'FOUR IDENTICAL', lt, { at: S.tJ, x: 1440, y: 900, px: 52, rot: 3 })];
+      S.D.sfx = [[.1, 'whoosh', .4], [tG, 'hit', .45], ...[0, 1, 2, 3].map(k => [S.tJ + k * .45, 'whoosh_soft', .35])]; } },
+  // 3 split: a dark train races past an empty line | three offices that look the same
+  { draw: (c, lt, u, S) => A.split((c2, lt2) => { const s2 = plateAt(c2, 'birch_rail', 1280, 900, 480, 540, 1.05); c2.save(); c2.setTransform(s2, 0, 0, s2, 480 - 1280 * s2, 540 - 900 * s2); const x = -300 + (lt2 - .1) * 950; c2.save(); c2.filter = 'blur(2px)'; PU.train(c2, x, 1110, .9, 5); c2.restore(); c2.restore(); K.screen(c2); },
+      (c2, lt2) => { ['office_a', 'office_b', 'office_c'].forEach((n, k) => { const a = E.out(K.seg(lt2, .3 + k * .3, .8 + k * .3)); c2.save(); c2.beginPath(); c2.rect(960 + k * 320, 0, 320, 1080); c2.clip(); c2.fillStyle = '#16141a'; c2.fillRect(960 + k * 320, 0, 320, 1080); c2.globalAlpha = a; plateAt(c2, n, 1280, 1040, 1120 + k * 320, 620 + (1 - a) * 60, 1.25); K.screen(c2); c2.restore();
+          c2.save(); c2.globalAlpha = a; c2.fillStyle = 'rgba(20,14,10,.8)'; c2.fillRect(990 + k * 320, 820, 260, 60); c2.fillStyle = '#f2e6c8'; c2.font = '34px Anton'; c2.textAlign = 'center'; c2.fillText('OFFICE ' + (k + 1), 1120 + k * 320, 863); c2.restore(); }); c2.fillStyle = '#16141a'; for (const x of [1280, 1600]) c2.fillRect(x - 4, 0, 8, 1080); }, { at: 0 })(c, lt, u, S),
+    bed: [['wind_loop', .3]],
+    init: S => { S.tO = A.at(S, 'offices', 2.6); const tT = A.at(S, 'no timetable', 1.2), tK = A.at(S, 'hundreds', 4.4); S.D.over = [(c, lt) => K.card(c, 'NO TIMETABLE', lt, { at: tT, x: 480, y: 140, px: 52, rot: -4 }), (c, lt) => K.card(c, '100s OF KM APART', lt, { at: tK, x: 1440, y: 130, px: 50, rot: 3 })];
+      S.D.sfx = [[.2, 'whoosh', .6], [.5, 'run_steps', .25], [.3, 'pop', .3], [.6, 'pop', .3], [.9, 'pop', .3], [S.tO, 'chime', .35]]; } },
+  // 4 silhouette of a man at the far end of the long table, lit by a single lamp; slow push in
+  { plate: 'long_table', cam: { z: [1.05, 1.6], x: [1280, 1290], y: [760, 700], ease: E.io }, bed: [['hum_loop', .3], ['drone', .25]],
+    live: [(c, lt) => { const fl = lt > 3.2 && lt < 3.45 ? .35 : 1; c.save(); c.fillStyle = `rgba(10,8,14,${.45})`; c.fillRect(0, 0, 2560, 1440); c.restore(); PU.silhouette(c, 1280, 726, .62);
+      c.save(); c.globalCompositeOperation = 'screen'; const g = c.createRadialGradient(1360, 690, 0, 1360, 690, 420); g.addColorStop(0, `rgba(255,210,140,${.55 * fl})`); g.addColorStop(1, 'rgba(255,210,140,0)'); c.fillStyle = g; c.fillRect(900, 270, 900, 900); c.restore();
+      c.strokeStyle = INK; c.lineWidth = 4; c.fillStyle = '#2a4a2a'; c.beginPath(); c.moveTo(1360, 712); c.lineTo(1360, 672); c.stroke(); c.beginPath(); c.moveTo(1334, 676); c.lineTo(1386, 676); c.lineTo(1374, 658); c.lineTo(1346, 658); c.closePath(); c.fill(); c.stroke(); c.fillStyle = `rgba(255,230,170,${fl})`; c.fillRect(1338, 676, 44, 4); }],
+    init: S => { const tR = A.at(S, 'Russia works', 2), tM = A.at(S, 'the man at the top', 3.6); S.D.over = [(c, lt) => K.card(c, 'HOW RUSSIA WORKS', lt, { at: tR, x: 460, y: 200, px: 50, rot: -4 }), (c, lt) => K.card(c, 'THE MAN AT THE TOP', lt, { at: tM, x: 1460, y: 200, px: 50, rot: 4 })]; S.D.sfx = [[3.2, 'tick', .3], [tM, 'hit', .4]]; } },
+  // 5 TITLE over the red pin on the map; the pin flickers away
+  { plate: 'map_russia', cam: { z: [1.25, 1.32], x: [1150, 1150], y: [640, 640] }, sub: 'off', inSfx: 'whoosh',
+    live: [mapLayer({ noPin: true }), (c, lt) => { const on = lt < 2.8 || (lt < 3.4 && Math.floor(lt * 12) % 2); if (on) PU.pin(c, RES[0].x, RES[0].y, 1.5, 1, lt); }],
+    over: [A.grade('20,30,80', .2), (c, lt) => K.title(c, 'WHY PUTIN IS', lt, { at: .4, y: 760, px: 130, sub: 'SO HARD TO KILL', subPx: 130, subOpts: { fill: '#ff8a7a' } })], sfx: [[.4, 'hit', 1], [.45, 'swell', .35], [2.8, 'tick', .4]], bed: [['drone', .35]] },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>

@@ -1,0 +1,100 @@
+<!doctype html><html><head><meta charset="utf-8"><title>MG act 0 - cold open</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "leo";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../mg_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['steppe_dawn', 'map_eurasia', 'steppe_open', 'steppe_snow', 'steppe_dusk']) K.load(n, PL + n + '.jpg');
+// title shot after the narration
+const T = window.TIMING; const last = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length + 1, start: last.end, end: last.end + 4.6, vo_start: last.end, vo_end: last.end, text: '' }); T.dur = last.end + 4.6;
+const INK = '#1d1712', RED = '#b8221e', GOLD = '#e8b44a';
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+const pr = MG.proj(), MONG = pr(103, 47), KOREA = pr(127.5, 37.8), HUNG = pr(19, 47.4), EMP = MG.empirePath(pr);
+// draw a plate in screen space with world point (x,y) at screen centre, zoom z
+const plateAt = (c, name, z, x, y, a = 1) => { c.save(); c.globalAlpha = a; const s2 = z * 1920 / 2560; c.setTransform(s2, 0, 0, s2, 960 - x * s2, 540 - y * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); };
+const redDot = (x, y, lt, r = 16) => (c) => { const p = .5 + .5 * Math.sin(lt * 5); c.save(); c.fillStyle = `rgba(184,34,30,${.25 * p})`; c.beginPath(); c.arc(x, y, r * (2.2 + p), 0, 7); c.fill(); c.fillStyle = RED; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.arc(x, y, r, 0, 7); c.fill(); c.stroke(); c.restore(); };
+// pinned paper tag in world space
+const pinTag = (x, y, txt, a, px = 30) => (c) => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.rotate(-.05); c.font = `${px}px Anton`; const w = c.measureText(txt).width + 36; c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(-w / 2 + 6, -px * .9 + 8, w, px * 1.6); c.fillStyle = '#f6eedc'; c.fillRect(-w / 2, -px * .9, w, px * 1.6); c.strokeStyle = INK; c.lineWidth = 3; c.strokeRect(-w / 2, -px * .9, w, px * 1.6); c.fillStyle = RED; c.beginPath(); c.arc(0, -px * .9, 8, 0, 7); c.fill(); c.stroke(); c.fillStyle = INK; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(txt, 0, -px * .1); c.restore(); };
+// arrows on the map: dashed ink line drawn progressively with a head
+const inkArrow = (a, b, u, bend = -120) => (c) => { if (u <= 0) return; const [x0, y0] = a, [x1, y1] = b, mx = (x0 + x1) / 2, my = (y0 + y1) / 2 + bend; const q = (t) => [(1 - t) * (1 - t) * x0 + 2 * (1 - t) * t * mx + t * t * x1, (1 - t) * (1 - t) * y0 + 2 * (1 - t) * t * my + t * t * y1];
+  c.save(); c.strokeStyle = 'rgba(120,14,12,.9)'; c.lineWidth = 9; c.lineCap = 'round'; c.setLineDash([22, 14]); c.beginPath(); for (let k = 0; k <= 40; k++) { const [x, y] = q(k / 40 * u); k ? c.lineTo(x, y) : c.moveTo(x, y); } c.stroke(); c.setLineDash([]);
+  const [hx, hy] = q(u), [px, py] = q(Math.max(0, u - .02)), an = Math.atan2(hy - py, hx - px); c.translate(hx, hy); c.rotate(an); c.fillStyle = 'rgba(120,14,12,.95)'; c.beginPath(); c.moveTo(18, 0); c.lineTo(-16, -16); c.lineTo(-8, 0); c.lineTo(-16, 16); c.closePath(); c.fill(); c.restore(); };
+const dust = (x, y, at, lt, s = 1) => (c) => { const u = K.seg(lt, at, at + 1.2); if (u <= 0 || u >= 1) return; c.save(); for (let k = 0; k < 9; k++) { const a = k / 9 * Math.PI, r = (30 + 90 * E.out(u)) * s; c.fillStyle = `rgba(160,140,100,${.4 * (1 - u)})`; c.beginPath(); c.arc(x + Math.cos(a) * r * 1.6 - 20, y - Math.sin(a) * r * .5, (26 + 30 * u) * s, 0, 7); c.fill(); } c.restore(); };
+// the four enemies, toppled one by one
+const FOES = [
+  { key: 'Chinese', x: 540, look: MG.look('hanRobe', { hair: 'long', beard: true, seed: 2 }), hat: MG.hanHat, label: 'CHINA' },
+  { key: 'Persian', x: 1090, look: MG.look('persian', { beard: true, seed: 5, hairCol: '#2a1a12' }), hat: MG.turban(), label: 'PERSIA' },
+  { key: 'Russian', x: 1640, look: MG.look('rus', { beard: true, seed: 1, hairCol: '#6a4a2a' }), hat: MG.rusHat, label: 'RUS' },
+  { key: 'European', x: 2190, look: MG.look('knight', { seed: 4 }), hat: MG.helm, label: 'EUROPE' }];
+const foeLayer = (f, tHit) => (c, lt) => { const y = 1190, s = 1.45, fall = E.inn(K.seg(lt, tHit + .05, tHit + .6)), bounce = Math.sin(K.seg(lt, tHit + .6, tHit + .9) * Math.PI) * .05;
+  // shadow stays on the ground
+  c.save(); c.fillStyle = 'rgba(20,30,10,.35)'; c.beginPath(); c.ellipse(f.x + fall * 140, y + 6, 70 + fall * 110, 14, 0, 0, 7); c.fill(); c.restore();
+  c.save(); c.translate(f.x, y); c.rotate(fall * 1.5 - bounce); c.translate(-f.x, -y);
+  R.figure(c, { x: f.x, y, s, facing: -1, pose: lt > tHit ? 'shrug' : 'stand', t: lt, look: f.look, hat: f.hat, mood: lt > tHit ? 'shocked' : 'angry', shadow: false });
+  if (lt > tHit - .02) MG.arrow(c, f.x - 30, y - 250, f.x - 30, y - 250, 1, 1.1);
+  c.restore();
+  // incoming arrow
+  const u = K.seg(lt, tHit - .35, tHit); if (u > 0 && u < 1) MG.arrow(c, f.x - 1200, y - 520, f.x - 30, y - 250, u, 1.1);
+  // name plate under each
+  const a = E.out(K.seg(lt, .3 + FOES.indexOf(f) * .15, .8 + FOES.indexOf(f) * .15)); if (a > 0) { c.save(); c.globalAlpha = a; c.font = '44px Anton'; c.textAlign = 'center'; c.lineWidth = 8; c.strokeStyle = INK; c.strokeText(f.label, f.x, y + 80); c.fillStyle = lt > tHit + .5 ? '#d9a0a0' : '#fff'; c.fillText(f.label, f.x, y + 80); if (lt > tHit + .5) { c.strokeStyle = RED; c.lineWidth = 7; c.beginPath(); c.moveTo(f.x - 80, y + 64); c.lineTo(f.x + 80, y + 64); c.stroke(); } c.restore(); }
+  dust(f.x + 260, y, tHit + .55, lt)(c); };
+// MUGHAL -> MONGOL letters on parchment (screen space)
+const word = (S) => { const t0 = .5, tSw = A.at(S, 'Persian word', 4.6), tSt = A.at(S, 'Mongol', 6.4); const A1 = 'MUGHAL', B1 = 'MONGOL';
+  return (c, lt) => { K.screen(c); c.fillStyle = 'rgba(20,12,6,.55)'; c.fillRect(0, 0, 1920, 1080); const a = E.out(K.seg(lt, 0, .5)); c.save(); c.globalAlpha = a; K.parchment(c, 260, 170, 1400, 700, 1); c.restore();
+    c.save(); c.globalAlpha = a; c.fillStyle = '#5a3a1a'; c.font = 'italic 40px SourceSerif'; c.textAlign = 'center'; c.fillText(lt < tSw ? 'the dynasty of India, 1526–1857' : 'Persian: Mughal = “Mongol”', 960, 290); c.restore();
+    for (let i = 0; i < 6; i++) { const x = 960 + (i - 2.5) * 190, y = 560, pi = pop(lt, t0 + i * .12, .4); if (pi <= 0) continue; const sw = K.seg(lt, tSw + i * .12, tSw + i * .12 + .45), same = A1[i] === B1[i];
+      c.save(); c.translate(x, y); c.font = '230px Anton'; c.textAlign = 'center'; c.textBaseline = 'middle';
+      if (same || sw <= 0) { c.scale(pi, pi); c.lineWidth = 10; c.strokeStyle = INK; c.fillStyle = sw > 0 && same ? RED : '#2a1a0e'; c.fillText(A1[i], 0, 0); }
+      else { const f = Math.abs(Math.cos(sw * Math.PI)); c.scale(1, Math.max(.02, f)); c.fillStyle = sw < .5 ? '#2a1a0e' : RED; c.fillText(sw < .5 ? A1[i] : B1[i], 0, 0); }
+      c.restore(); }
+    const ps = K.seg(lt, tSt, tSt + .18); if (ps > 0) { const sc = 1.8 - .8 * E.out(ps); c.save(); c.translate(1380, 780); c.rotate(-.14); c.scale(sc, sc); c.globalAlpha = Math.min(1, ps * 2) * .9; c.strokeStyle = RED; c.lineWidth = 9; c.strokeRect(-250, -58, 500, 116); c.lineWidth = 3; c.strokeRect(-238, -46, 476, 92); c.fillStyle = RED; c.font = '66px Anton'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('SAME WORD', 0, 4); c.restore(); } }; };
+// horse grazing / rider on the dawn steppe
+const BOY = MG.look('deelKid', { hair: 'short', seed: 6, hairCol: '#1a1410' });
+const HERDER = MG.look('deel', { seed: 3, beard: true });
+
+window.SHOTS = [
+  // 1 WIDE: endless steppe at dawn, smoke from the gers, a herder rides past; pull out and the steppe becomes a parchment map
+  { plate: 'steppe_dawn', cam: { z: [1.5, 1.08], x: [1250, 1280], y: [940, 800], ease: E.io }, bed: [['wind_loop', .5], ['walk_hooves_loop', .25]], inSfx: false,
+    live: [A.smoke(760, 845, 1), A.smoke(1172, 868, .9), A.smoke(1584, 886, .7), A.birds(400, 420, 5, 50, 1)],
+    front: [(c, lt) => MG.horse(c, { x: 560 + lt * 70, y: 1210, s: .62, gait: 'walk', t: lt, col: '#8a5a32', rider: MG.archer({ draw: 0 }) }),
+      (c, lt) => R.figure(c, { x: 2190, y: 1170, s: .78, facing: -1, pose: 'carry', t: lt, look: HERDER, hat: MG.furHat() })],
+    init: S => { const tH = A.at(S, 'herders', 1.4), tM = Math.max(tH + 2.5, S.end - S.start - 2.3);
+      S.D.over = [(c, lt) => K.card(c, 'POPULATION\n~1,000,000', lt, { at: tH + .2, x: 430, y: 230, px: 52, rot: -4, until: tM }),
+        (c, lt) => { const a = E.io(K.seg(lt, tM, tM + 1.2)); if (a <= 0) return; const z = 3.2 - 1.6 * E.out(K.seg(lt, tM, S.end - S.start)); plateAt(c, 'map_eurasia', z, 1700, 600, a); K.screen(c); if (a > .6) { const s2 = z * 1920 / 2560; c.save(); c.setTransform(s2, 0, 0, s2, 960 - 1700 * s2, 540 - 600 * s2); redDot(MONG[0], MONG[1], lt, 14)(c); c.restore(); } }];
+      S.D.sfx = [[.2, 'neigh', .25], [tH + .2, 'paper', .5], [tM, 'whoosh_soft', .5], [tM + 1, 'pop', .5]]; } },
+  // 2 MAP: the red ink bleeds out from Mongolia to Korea and Hungary; area counter rolls up
+  { plate: 'map_eurasia', cam: { z: [1.6, 1.02], x: [1700, 1285], y: [600, 740], ease: E.io }, bed: [['wind_loop', .25], ['drone', .3]], inSfx: false,
+    init: S => { const tK = A.at(S, 'Korea', 1.6), tH = A.at(S, 'Hungary', 2.4), tN = A.at(S, 'twenty-four', 3.4), dur = S.end - S.start;
+      S.D.live = [(c, lt) => { const r = 1500 * E.io(K.seg(lt, .3, Math.min(dur - .3, tN + 1.2))); if (r <= 0) return; c.save(); MG.inkClip(c, MONG[0], MONG[1], r, 4); MG.ink(c, EMP, .58); c.restore(); },
+        (c, lt) => inkArrow(MONG, KOREA, E.out(K.seg(lt, tK - .6, tK + .2)), -90)(c), (c, lt) => inkArrow(MONG, HUNG, E.out(K.seg(lt, tH - 1.1, tH + .3)), -260)(c),
+        (c, lt) => redDot(MONG[0], MONG[1], lt, 14)(c),
+        (c, lt) => pinTag(KOREA[0] + 40, KOREA[1] + 110, 'KOREA', pop(lt, tK, .4))(c), (c, lt) => pinTag(HUNG[0], HUNG[1] + 110, 'HUNGARY', pop(lt, tH, .4))(c),
+        (c, lt) => pinTag(MONG[0], MONG[1] - 80, 'POP. ~1,000,000', E.out(K.seg(lt, 0, .3)), 24)(c)];
+      S.D.over = [(c, lt) => { if (lt < tN - .1) return; const a = E.out(K.seg(lt, tN - .1, tN + .3)); c.save(); c.globalAlpha = a; c.fillStyle = 'rgba(20,12,6,.55)'; c.fillRect(560, 70, 800, 150); c.restore(); K.counter(c, 0, 24000000, lt, { at: tN, dur: 1.4, x: 960, y: 145, px: 96, post: ' KM²', alpha: a }); }];
+      S.D.sfx = [[.3, 'swell', .4], [tK, 'pop', .5], [tH, 'pop', .5], [tN, 'tick', .4], [tN + .3, 'tick', .35], [tN + .6, 'tick', .3], [tN + 1.4, 'stamp', .5]]; } },
+  // 3 MED: four enemies in their own armour line up; an arrow knocks each flat in turn
+  { plate: 'steppe_open', cam: { z: [1.12, 1.18], x: [1420, 1420], y: [920, 930] }, bed: [['wind_loop', .45]], inSfx: 'whoosh_soft',
+    init: S => { const hits = FOES.map((f, i) => A.at(S, f.key, .9 + i * 1.1) + .35);
+      S.D.live = FOES.map((f, i) => foeLayer(f, hits[i]));
+      S.D.sfx = hits.flatMap(h => [[h - .45, 'bowstring', .55], [h - .35, 'arrow', .45], [h, 'arrow_hit', .6], [h + .55, 'thud', .55]]); } },
+  // 4 CU: MUGHAL on parchment, letters flip to MONGOL, stamp
+  { plate: 'map_eurasia', cam: { z: [1.9, 2.0], x: [1450, 1460], y: [1000, 1000] }, bed: [['drone', .25]], inSfx: 'paper',
+    init: S => { S.D.over = [word(S)]; const tSw = A.at(S, 'Persian word', 4.6), tSt = A.at(S, 'Mongol', 6.4); S.D.sfx = [[.5, 'pop', .35], [.62, 'pop', .3], [.74, 'pop', .3], [tSw, 'paper', .5], [tSw + .3, 'whoosh_soft', .4], [tSt, 'stamp', .9]]; } },
+  // 5 MED->CU: a small boy alone in the snow beside a broken cart; wind; slow push in on his face
+  { plate: 'steppe_snow', cam: { z: [1.25, 2.3], x: [1180, 1255], y: [1050, 1020], ease: E.io }, bed: [['wind_loop', .9]], inSfx: 'whoosh_soft',
+    live: [MG.snow(140, 160, 0, 2560, 0, 1440, 1.2)],
+    figs: [{ x: 1260, y: 1210, s: .82, facing: -1, pose: 'stand', look: BOY, hat: MG.furHat('#5a4030', '#6a7f9a'), mood: 'sad', anim: (o, lt) => { o.pose = lt > 2.5 ? 'think' : 'stand'; o.mood = lt > 3.5 ? 'worried' : 'sad'; } }],
+    front: [(c) => MG.cart(c, 870, 1220, .85, true), MG.snow(70, 220, 0, 2560, 0, 1440, 2.2), MG.windStreaks(16, .14)],
+    init: S => { const tS = A.at(S, 'starve', 3.8); S.D.over = [A.grade('40,60,110', .18), (c, lt) => K.card(c, 'ABANDONED', lt, { at: tS, x: 1460, y: 250, px: 64, rot: -5 })]; S.D.sfx = [[.4, 'creak', .4], [tS, 'hit', .45]]; } },
+  // 6 TITLE: a horse archer silhouetted on a ridge at dusk; title scales in on a deep drum hit
+  { plate: 'steppe_dusk', cam: { z: [1.25, 1.36], x: [1500, 1500], y: [880, 870] }, sub: 'off', inSfx: 'riser',
+    live: [(c, lt) => { const G0 = 960; c.save(); c.fillStyle = '#2a1a22'; c.beginPath(); c.moveTo(1250, 1440); c.quadraticCurveTo(1700, 1060, 2150, 1030); c.quadraticCurveTo(2450, 1030, 2560, 1120); c.lineTo(2560, 1440); c.closePath(); c.fill(); c.restore();
+      MG.horse(c, { x: 2150, y: 1036, s: .9, facing: -1, gait: 'stand', t: lt, sil: '#1a1016', rider: MG.archer({ sil: '#1a1016', draw: .2 + .7 * E.io(K.seg(lt, .4, 1.6)) }) }); }],
+    over: [A.grade('60,20,40', .2), (c, lt) => K.title(c, 'THE MONGOL', lt, { at: .5, y: 400, px: 150, sub: 'EMPIRE', subPx: 170, subOpts: { fill: '#e8b44a' } })],
+    sfx: [[.5, 'drum', 1], [.55, 'swell', .4], [2.2, 'neigh', .3]], bed: [['wind_loop', .6], ['war_drums_loop', .35]] },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>

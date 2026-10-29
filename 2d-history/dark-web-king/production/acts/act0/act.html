@@ -1,0 +1,96 @@
+<!doctype html><html><head><meta charset="utf-8"><title>DW act 0 - cold open</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "alium";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../dw_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['alley', 'bedroom', 'worldmap', 'office', 'library', 'courtroom', 'prison_gate', 'iceberg']) K.load(n, PL + n + '.jpg');
+const T = window.TIMING; const last = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length + 1, start: last.end, end: last.end + 4.4, vo_start: last.end, vo_end: last.end, text: '' }); T.dur = last.end + 4.4;
+const SW = 1920, SH = 1080, INK = '#2a1a22', GOLD = '#e8b44a', RED = '#d0201a';
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+const plateAt = (c, name, px, py, sx, sy, z) => { const s2 = z * 1920 / 2560; c.setTransform(s2, 0, 0, s2, sx - px * s2, sy - py * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); return s2; };
+const ROSS = { costume: 'shirt', hair: 'swept', hairCol: '#6a4630', seed: 3 };
+// seated figure on an office chair (chair drawn behind, so nothing floats)
+const seated = (o) => (c, lt) => { const out = {}; c.save(); c.globalAlpha = 0; R.figure(c, Object.assign({}, o, { t: lt, out })); c.restore(); const sy = o.y - (o.y - (o.y + 0)) ; const seatY = o.y + (out.seatY ?? -150) * 0 ; const hip = o.y - Math.abs(out.seatY ?? 150);
+  c.save(); c.translate(o.x - (o.facing ?? 1) * 10, 0); c.fillStyle = 'rgba(0,0,0,.35)'; c.beginPath(); c.ellipse(0, o.y + 4, 110, 16, 0, 0, 7); c.fill(); c.strokeStyle = INK; c.lineWidth = 5; c.fillStyle = '#2a2a30';
+  c.beginPath(); c.roundRect(-80 - (o.facing ?? 1) * 30, hip - 10, 160, 30, 10); c.fill(); c.stroke(); c.beginPath(); c.roundRect(-(o.facing ?? 1) * 95 - 18, hip - 210, 36, 210, 12); c.fill(); c.stroke(); c.fillRect(-8, hip + 20, 16, o.y - hip - 40); c.strokeRect(-8, hip + 20, 16, o.y - hip - 40);
+  for (const dx of [-70, 0, 70]) { c.beginPath(); c.moveTo(0, o.y - 22); c.lineTo(dx, o.y - 6); c.stroke(); c.beginPath(); c.arc(dx, o.y - 6, 8, 0, 7); c.fill(); } c.restore();
+  R.figure(c, Object.assign({}, o, { t: lt })); };
+
+window.SHOTS = [
+  // 1 rain-wet alley; a hulking gangster under the lamp; a red pencil cross scratches him out
+  { plate: 'alley', cam: { z: [1.1, 1.22], x: [1650, 1660], y: [820, 840] }, bed: [['rain_loop', .7]], inSfx: false,
+    live: [(c, lt, u, S) => DW.gangster(c, 1720, 1300, 1.1, Math.max(0, Math.sin(K.seg(lt, 1.4, 2.4) * Math.PI))), DW.rain(240), DW.glow(1736, 390, 500, '255,190,110', .35)],
+    init: S => { const tX = Math.max(2.4, S.end - S.start - 1.5); S.D.over = [(c, lt) => DW.cross(c, 1050, 520, 330, K.seg(lt, tX, tX + .7)), (c, lt) => K.card(c, 'GANGSTER?', lt, { at: A.at(S, 'gangster', 2.2), x: 430, y: 240, px: 64, rot: -5 })];
+      S.D.sfx = [[.2, 'footsteps', .3], [A.at(S, 'gangster', 2.2), 'hit', .4], [tX, 'scrape', .7]]; } },
+  // 2 bedroom at 3 a.m.; young Ross types at a desk, lit by the laptop
+  { plate: 'bedroom', cam: { z: [1.18, 1.32], x: [1900, 1950], y: [960, 980], ease: E.io }, bed: [['night_loop', .5], ['typing', .0]],
+    live: [(c) => DW.desk(c, 2130, 1330, 560, 1), seated({ x: 1850, y: 1330, s: 1.55, ...ROSS, facing: 1, pose: 'sit', anim: null }), (c, lt) => DW.laptop(c, 2160, 1116, 1.25, 1, '#2a4a7a', lt), DW.glow(2150, 980, 700, '120,170,255', .55)],
+    over: [A.grade('20,30,80', .22)],
+    init: S => { const tA = A.at(S, 'twenty-six', 1.6), tT = A.at(S, 'Texas', 3.6), tL = A.at(S, 'laptop', 4.6);
+      S.D.over.push((c, lt) => K.card(c, 'AGE 26', lt, { at: tA, x: 420, y: 240, px: 66, rot: -4 }), (c, lt) => K.card(c, 'PHYSICS GRAD · TEXAS', lt, { at: tT, x: 470, y: 400, px: 44, rot: 3 }), (c, lt) => K.badge(c, '3:00 AM', lt, { at: .4 }));
+      S.D.sfx = [[.3, 'typing', .45], [tA, 'pop', .45], [tT, 'pop', .4], [tL, 'typing', .45]]; } },
+  // 3 world map; parcels fly between cities; the glass onion floats in
+  { plate: 'worldmap', cam: { z: [1.05, 1.12], x: [1280, 1300], y: [740, 740] }, bed: [['hum_loop', .3]],
+    init: S => { const ll = (lon, lat) => [160 + (lon + 170) * 6.2222, 272 + (84 - lat) * 6.2222]; const C = { ny: ll(-74, 41), la: ll(-118, 34), tor: ll(-79, 44), lon: ll(0, 51), ams: ll(5, 52), ber: ll(13, 52), par: ll(2, 49), syd: ll(151, -34), mad: ll(-4, 40), mel: ll(145, -38) };
+      const routes = [['ams', 'ny'], ['ber', 'syd'], ['tor', 'lon'], ['la', 'par'], ['ams', 'mel'], ['mad', 'tor'], ['lon', 'la'], ['ny', 'ber']], tW = A.at(S, 'around the world', 2.4), tP = A.at(S, 'hidden from', 4.4), tM = A.at(S, 'digital money', 6);
+      S.D.live = [(c, lt) => { routes.forEach(([a, b], i) => { const t0 = .4 + i * .55, u = K.seg(lt, t0, t0 + 1.6); if (u <= 0) return; const [x0, y0] = C[a], [x1, y1] = C[b], mx = (x0 + x1) / 2, my = Math.min(y0, y1) - 160 - Math.abs(x1 - x0) * .08; const q = t => [(1 - t) * (1 - t) * x0 + 2 * (1 - t) * t * mx + t * t * x1, (1 - t) * (1 - t) * y0 + 2 * (1 - t) * t * my + t * t * y1];
+          c.save(); c.strokeStyle = 'rgba(160,40,30,.7)'; c.lineWidth = 4; c.setLineDash([12, 10]); c.beginPath(); for (let k = 0; k <= 30; k++) { const [x, y] = q(k / 30 * Math.min(1, u)); k ? c.lineTo(x, y) : c.moveTo(x, y); } c.stroke(); c.restore();
+          for (const p of [C[a], C[b]]) { c.fillStyle = '#c8241c'; c.strokeStyle = INK; c.lineWidth = 2; c.beginPath(); c.arc(p[0], p[1], 9, 0, 7); c.fill(); c.stroke(); }
+          if (u < 1) { const [x, y] = q(E.io(u)); DW.parcel(c, x, y, .9, Math.sin(u * 6) * .2); } }); },
+        (c, lt) => { const a = E.out(K.seg(lt, tP - .2, tP + .6)); if (a <= 0) return; c.save(); c.globalAlpha = a; DW.onion(c, 1060, 900, .8 * a, 1 + Math.min(1, K.seg(lt, tM, tM + .5)), lt); c.restore(); }];
+      S.D.over = [(c, lt) => K.card(c, 'HIDDEN: TOR', lt, { at: tP, x: 1500, y: 160, px: 46, rot: -3 }), (c, lt) => K.card(c, 'PAID IN BITCOIN', lt, { at: tM, x: 1500, y: 290, px: 46, rot: 3 }), (c, lt) => DW.meter(c, 1740, 900, 1 + Math.min(1, K.seg(lt, tM, tM + .5)), K.seg(lt, S.end - S.start - 1.2, S.end - S.start - .6), lt)];
+      S.D.sfx = routes.map((r, i) => [.4 + i * .55, 'whoosh_soft', .25]).concat([[tP, 'pop', .45], [tM, 'coins', .45]]); } },
+  // 4 ledger chart: bitcoin coins stack beside a counter to $1.2 billion
+  { draw: (c, lt, u, S) => { c.save(); c.filter = 'blur(6px) brightness(.5)'; plateAt(c, 'office', 1280, 720, 960, 540, 1.1); c.restore(); K.screen(c); K.parchment(c, 200, 110, 1520, 800, 1);
+      c.fillStyle = INK; c.font = '42px Anton'; c.textAlign = 'left'; c.fillText('SILK ROAD SALES, 2011–2013 (FBI ESTIMATE)', 270, 190); c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.moveTo(260, 820); c.lineTo(1660, 820); c.stroke();
+      const n = Math.floor(34 * E.out(K.seg(lt, .4, 3.6))); for (let k = 0; k < n; k++) DW.coin(c, 520, 800 - k * 13, 70); DW.bigCoin(c, 520, 800 - n * 13 - 80, 60, n > 2 ? 1 : 0);
+      K.counter(c, 0, 1.2, lt, { at: .4, dur: 3.2, x: 1150, y: 520, px: 170, pre: '$', post: ' BILLION', fmt: v => v.toFixed(1), fill: GOLD }); c.fillStyle = INK; c.font = '40px Oswald'; c.textAlign = 'center'; c.fillText('in sales, in under three years', 1150, 660); },
+    bed: [['office_loop', .3]], inSfx: 'whoosh_soft', sfx: [[.4, 'coins_cascade', .45], [3.6, 'chime', .5]] },
+  // 5 task-force office: corkboard with a faceless suspect; four agencies; agents turn in sequence
+  { plate: 'office', cam: { z: [1.12, 1.18], x: [1280, 1280], y: [800, 820] }, bed: [['office_loop', .5]],
+    figs: [
+      { x: 330, y: 1390, s: 1.6, costume: 'suit', hair: 'short', seed: 2, facing: 1, pose: 'think', anim: (o, lt, u, S) => { o.facing = lt > S.tt[0] ? 1 : -1; } },
+      { x: 760, y: 1390, s: 1.6, costume: 'office', hair: 'bun', seed: 5, facing: 1, pose: 'stand', anim: (o, lt, u, S) => { o.facing = lt > S.tt[1] ? 1 : -1; o.pose = lt > S.tt[1] ? 'point' : 'stand'; } },
+      { x: 1800, y: 1390, s: 1.6, costume: 'shirtsleeves', hair: 'bald', seed: 7, facing: -1, pose: 'stand', anim: (o, lt, u, S) => { o.facing = lt > S.tt[2] ? -1 : 1; o.pose = lt > S.tt[2] ? 'think' : 'stand'; } },
+      { x: 2230, y: 1390, s: 1.6, costume: 'leather', hair: 'curly', seed: 9, facing: -1, pose: 'stand', anim: (o, lt, u, S) => { o.facing = lt > S.tt[3] ? -1 : 1; o.mood = lt > S.tt[3] ? 'focus' : 'neutral'; } }],
+    init: S => { S.tt = ['FBI', 'DEA', 'IRS', 'Homeland'].map((w, i) => A.at(S, w, 3.6 + i * .8)); const tD = A.at(S, 'Dread Pirate', .8);
+      S.D.live = [(c, lt) => DW.cork(c, 1280, 760, 900, 520, lt, S.tt[0] - .3)];
+      S.D.over = [(c, lt) => K.title(c, 'THE DREAD PIRATE ROBERTS', lt, { at: tD, y: 110, px: 76, fill: '#e8d8f8', until: S.tt[0] }), (c, lt) => K.badge(c, 'TASK FORCE · NEW YORK', lt, { at: S.tt[0] })];
+      S.D.sfx = [[tD, 'hit', .45], ...S.tt.map(t => [t, 'pop', .4])]; } },
+  // 6 split: an old forum post on a dusty screen | the open laptop on a library table
+  { draw: (c, lt, u, S) => A.split((c2, lt2) => { c2.fillStyle = '#16121a'; c2.fillRect(0, 0, 960, 1080); c2.fillStyle = '#2a2a30'; c2.fillRect(90, 160, 780, 620); c2.strokeStyle = '#0a0a0c'; c2.lineWidth = 8; c2.strokeRect(90, 160, 780, 620); c2.fillStyle = '#d8d4c8'; c2.fillRect(120, 190, 720, 560);
+      c2.fillStyle = '#3a5a8a'; c2.fillRect(120, 190, 720, 60); c2.fillStyle = '#fff'; c2.font = '30px Oswald'; c2.textAlign = 'left'; c2.fillText('FORUM · posted 2011', 140, 230); c2.fillStyle = '#2a2a2a'; c2.font = '30px SourceSerif'; ['Has anyone seen', 'this new site?', '...', 'contact me at', '[ real email ]'].forEach((l, k) => c2.fillText(l, 150, 320 + k * 70));
+      if (Math.floor(lt2 * 2) % 2) { c2.fillRect(360, 576, 4, 34); } c2.fillStyle = 'rgba(120,110,90,.18)'; for (let k = 0; k < 90; k++) c2.fillRect(120 + (k * 97 % 720), 190 + (k * 53 % 560), 3, 3); },
+      (c2, lt2) => { plateAt(c2, 'library', 1280, 1000, 1440, 600, 1.35); const s2 = 1.35 * 1920 / 2560; c2.save(); c2.setTransform(s2, 0, 0, s2, 1440 - 1280 * s2, 600 - 1000 * s2); const tr = lt2 > S.tS ? Math.sin(lt2 * 60) * .03 : 0; DW.laptop(c2, 1340, 945, 1.3, .9 + tr, '#2a4a7a', lt2); c2.restore(); K.screen(c2); }, { at: 0 })(c, lt, u, S),
+    bed: [['hum_loop', .3]], init: S => { S.tS = A.at(S, 'one second', 3); S.D.over = [(c, lt) => K.card(c, 'ONE OLD POST', lt, { at: A.at(S, 'forum post', 1.4), x: 480, y: 120, px: 50, rot: -3 }), (c, lt) => K.card(c, '1 SECOND', lt, { at: S.tS, x: 1440, y: 140, px: 70, rot: 4 })]; S.D.sfx = [[A.at(S, 'forum post', 1.4), 'typing', .4], [S.tS, 'tick', .7], [S.tS + .6, 'tick', .5]]; } },
+  // 7 courtroom: judge raises the gavel; Ross in a suit stands, head bowed
+  { plate: 'courtroom', cam: { z: [1.1, 1.2], x: [1400, 1420], y: [860, 860] }, bed: [['hum_loop', .25]],
+    figs: [{ x: 2060, y: 1400, s: 1.55, ...ROSS, costume: 'suit', facing: -1, pose: 'stand', mood: 'sad', eyesClosed: .5 }],
+    init: S => { const tG = A.at(S, 'two life', 2.2);
+      S.D.live = [(c, lt) => { c.save(); c.beginPath(); c.rect(0, 0, 2560, 655); c.clip(); const lift = K.seg(lt, tG - .9, tG - .3), hit = K.seg(lt, tG - .15, tG); R.figure(c, { x: 1280, y: 1000, s: 1.9, costume: 'robe', hair: 'bald', hairCol: '#c8c8c8', glasses: true, seed: 4, facing: -1, pose: lift > 0 && hit < 1 ? 'cheer' : 'present', t: lt, mood: 'focus', look: Object.assign(R.RIG6 ? {} : {}, RIG6.lookFrom({ costume: 'suit', hair: 'bald', glasses: true, seed: 4 }), { topCol: '#1a1820', inner: '#1a1820', tie: null }) }); c.restore();
+        c.save(); c.fillStyle = '#4a2e1c'; c.strokeStyle = INK; c.lineWidth = 4; const gy = 630 - 90 * (lift - hit), gx = 1150; c.translate(gx, gy); c.rotate(-.5 * (lift - hit)); c.fillRect(-10, -6, 90, 12); c.strokeRect(-10, -6, 90, 12); c.fillRect(-34, -22, 44, 44); c.strokeRect(-34, -22, 44, 44); c.restore(); }];
+      S.D.over = [(c, lt) => K.card(c, '2 LIFE SENTENCES\n+ 40 YEARS', lt, { at: tG, x: 1450, y: 260, px: 58, rot: -4 }), (c, lt) => K.dateTag(c, '2015', lt, { at: .3 })];
+      S.D.sfx = [[tG, 'stamp', 1], [tG + .05, 'hit', .6]]; } },
+  // 8 desert prison gate at dusk; Ross, now 40, walks out into orange light
+  { plate: 'prison_gate', cam: { z: [1.15, 1.25], x: [1300, 1300], y: [880, 900] }, bed: [['wind_loop', .5]],
+    figs: [{ y: 1060, s: 1.05, ...ROSS, hairCol: '#5a3e2a', beard: true, facing: -1, walk: { x0: 1460, x1: 860, t0: .3, dur: 3.4 }, anim: (o, lt) => { if (lt > 3.8) { o.facing = 1; o.mood = 'happy'; } } }],
+    init: S => { const tF = A.at(S, 'free man', 2.6), tH = A.at(S, 'How', 3.8); S.D.over = [A.grade('255,140,60', .12, 'screen'), (c, lt) => K.dateTag(c, 'JANUARY 2025', lt, { at: .3 }), (c, lt) => K.card(c, 'FREE', lt, { at: tF, x: 1380, y: 260, px: 80, rot: 4 }), (c, lt) => K.title(c, 'HOW?', lt, { at: tH, x: 480, y: 280, px: 130, fill: GOLD })];
+      S.D.sfx = [[.1, 'gate_slam', .5], [.4, 'footsteps', .4], [tH, 'hit', .5]]; } },
+  // 9 the twist: two agents turn to camera as cell bars slide across them
+  { plate: 'office', cam: { z: [1.3, 1.36], x: [1280, 1280], y: [900, 900] }, bed: [['tension', .35]],
+    figs: [{ x: 960, y: 1340, s: 1.7, costume: 'suit', hair: 'short', seed: 11, facing: 1, pose: 'stand', anim: (o, lt, u, S) => { o.facing = lt > S.tB - .6 ? -1 : 1; o.mood = lt > S.tB ? 'shocked' : 'neutral'; } },
+      { x: 1600, y: 1340, s: 1.7, costume: 'suit80', hair: 'swept', seed: 12, facing: -1, pose: 'stand', anim: (o, lt, u, S) => { o.facing = lt > S.tB - .3 ? 1 : -1; o.mood = lt > S.tB ? 'shocked' : 'neutral'; } }],
+    init: S => { S.tB = A.at(S, 'ended up in prison', 3.6); const tT = A.at(S, 'twist', .8);
+      S.D.over = [A.grade('30,20,50', .3), (c, lt) => K.card(c, 'THE TWIST', lt, { at: tT, x: 400, y: 200, px: 60, rot: -5 }), (c, lt) => DW.bars(c, K.seg(lt, S.tB, S.tB + .5)), (c, lt) => K.card(c, '2 FEDERAL AGENTS\nJAILED', lt, { at: S.tB + .6, x: 1450, y: 220, px: 52, rot: 4 })];
+      S.D.sfx = [[tT, 'hit', .4], [S.tB, 'gate_slam', .9]]; } },
+  // 10 TITLE over the glass onion glowing in the dark sea
+  { plate: 'iceberg', cam: { z: [1.15, 1.25], x: [1280, 1280], y: [820, 820] }, sub: 'off', inSfx: 'whoosh',
+    live: [(c, lt) => DW.onion(c, 1280, 1000, 1.25, 5 * E.out(K.seg(lt, .3, 1.6)), lt)],
+    over: [A.dim(.35), (c, lt) => K.title(c, 'DARK WEB', lt, { at: .5, y: 300, px: 160, sub: 'KING', subPx: 180, subOpts: { fill: '#c8a8ff' } })], sfx: [[.5, 'hit', 1], [.55, 'swell', .4]], bed: [['drone', .4]] },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>
