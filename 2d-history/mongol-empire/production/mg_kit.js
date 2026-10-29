@@ -99,7 +99,7 @@
     leg(100, -190, true, 0, false); leg(-82, -195, false, Math.PI, false);
     c.restore(); c.restore(); };
   // a horse archer silhouette or coloured rider (drawn in horse space, saddle at 10,-300)
-  MG.archer = (o = {}) => (c, ph) => { const col = o.sil || '#3f5f8a', skin = o.sil || '#f1d9b8', hat = o.sil || '#6a4a2e', ink = o.sil ? o.sil : INK, b = Math.sin(ph) * 3;
+  MG.archer = (o = {}) => (c, ph) => { const col = o.sil || o.col || '#3f5f8a', skin = o.sil || '#f1d9b8', hat = o.sil || '#6a4a2e', ink = o.sil ? o.sil : INK, b = Math.sin(ph) * 3;
     c.save(); c.translate(10, -300 + b); c.lineJoin = 'round'; c.lineCap = 'round'; c.strokeStyle = ink; c.lineWidth = 4;
     // leg + boot
     c.fillStyle = col; c.beginPath(); c.moveTo(-26, -6); c.quadraticCurveTo(10, 30, 26, 64); c.lineTo(46, 60); c.quadraticCurveTo(30, 18, 14, -10); c.closePath(); c.fill(); c.stroke(); c.fillStyle = o.sil || '#2a1a10'; c.beginPath(); c.roundRect(24, 54, 34, 18, 6); c.fill(); c.stroke();

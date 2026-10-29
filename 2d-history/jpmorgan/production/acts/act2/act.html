@@ -1,0 +1,109 @@
+<!doctype html><html><head><meta charset="utf-8"><title>JP act 2 - The Boy From Queens</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../jp_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['queens', 'kitchen', 'office_day', 'office', 'boardroom']) K.load(n, PL + n + '.jpg');
+const SW = 1920, SH = 1080, INK = '#1d1712', GOLD = '#e8b44a', RED = '#d9483b', GREEN = '#4f9a4a';
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+const plateAt = (c, name, px, py, sx, sy, z) => { const s2 = z * 1920 / 2560; c.setTransform(s2, 0, 0, s2, sx - px * s2, sy - py * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); return s2; };
+const backdrop = (name, dim = .5, blur = 6) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${1 - dim})`; plateAt(c, name, 1280, 720, 960, 540, 1.08); c.restore(); c.setTransform(1, 0, 0, 1, 0, 0); };
+const DIMON = { costume: 'suit', hair: 'swept', hairCol: '#3a2a20', seed: 7 }, WEILL = { costume: 'suit80', hair: 'bald', hairCol: '#b8b8b8', glasses: true, seed: 2 };
+const KID = { costume: 'shirt', hair: 'short', hairCol: '#3a2a20', seed: 7 };
+// framed photo with a figure inside (screen)
+const photo = (c, x, y, w, h, a, lt, fig, cap, sepia = true) => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.4)'; c.fillRect(-w / 2 + 12, -h / 2 + 12, w, h); c.fillStyle = '#5a3a22'; c.fillRect(-w / 2, -h / 2, w, h); c.fillStyle = sepia ? '#d8c49a' : '#c8d4dc'; c.fillRect(-w / 2 + 22, -h / 2 + 22, w - 44, h - 90);
+  c.save(); c.beginPath(); c.rect(-w / 2 + 22, -h / 2 + 22, w - 44, h - 90); c.clip(); if (sepia) c.filter = 'sepia(.7)'; R.figure(c, Object.assign({ x: 0, y: h / 2 + 120, s: 1.25, pose: 'stand', facing: 1, t: lt, mood: 'neutral' }, fig)); c.restore();
+  c.font = '30px Anton'; c.fillStyle = '#f2e6c8'; c.textAlign = 'center'; c.fillText(cap, 0, h / 2 - 26); c.restore(); };
+const envelope = (c, x, y, s, rot, txt) => { c.save(); c.translate(x, y); c.rotate(rot); c.scale(s, s); c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(-150, -90, 310, 200); c.fillStyle = '#f4ecd8'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-160, -100, 320, 200); c.strokeRect(-160, -100, 320, 200); c.beginPath(); c.moveTo(-160, -100); c.lineTo(0, 10); c.lineTo(160, -100); c.stroke(); if (txt) { c.font = '34px Anton'; c.fillStyle = INK; c.textAlign = 'center'; c.fillText(txt, 0, 70); } c.restore(); };
+const letter = (c, x, y, rot, a, head, col) => { if (a <= 0) return; c.save(); c.translate(x, y); c.rotate(rot); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(-170, -230, 360, 480); c.fillStyle = '#fbf8f0'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-180, -240, 360, 480); c.strokeRect(-180, -240, 360, 480); c.fillStyle = col; c.fillRect(-180, -240, 360, 70); c.font = '34px Anton'; c.fillStyle = '#fff'; c.textAlign = 'center'; c.fillText(head, 0, -192); c.fillStyle = '#bbb'; for (let k = 0; k < 8; k++) c.fillRect(-140, -130 + k * 36, 280 - (k % 3) * 40, 12); c.font = '34px Caveat'; c.fillStyle = '#2a4a9a'; c.fillText('Offer of employment', 0, 200); c.restore(); };
+const tower = (c, x, base, names, n, lt, at) => { names.forEach((nm, i) => { const u = pop(lt, at[i] ?? 99, .45); if (u <= 0) return; const y = base - i * 112 - 260 * (1 - E.out(K.seg(lt, at[i], at[i] + .35))); c.save(); c.translate(x, y); c.globalAlpha = Math.min(1, u * 2); c.fillStyle = 'rgba(0,0,0,.4)'; c.fillRect(-268, -42, 548, 100); c.fillStyle = i % 2 ? '#2f5a8a' : '#3f6aa0'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-280, -54, 560, 100); c.strokeRect(-280, -54, 560, 100); c.font = '48px Anton'; c.fillStyle = '#fff'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(nm, 0, 0); c.restore(); }); };
+const spot = (c, x, a) => { c.save(); c.globalAlpha = a; const g = c.createRadialGradient(x, 860, 20, x, 860, 420); g.addColorStop(0, 'rgba(255,240,200,.55)'); g.addColorStop(1, 'rgba(255,240,200,0)'); c.fillStyle = g; c.beginPath(); c.moveTo(x - 60, 0); c.lineTo(x + 60, 0); c.lineTo(x + 340, 1000); c.lineTo(x - 340, 1000); c.closePath(); c.fill(); c.restore(); };
+
+window.SHOTS = [
+  // 1 sunny 1960s Queens: a kid runs past the brick row houses
+  { plate: 'queens', cam: { z: [1.12, 1.18], x: [1280, 1320], y: [820, 820] }, bed: [['city_loop', .35], ['birds_loop', .3]],
+    figs: [{ y: 1020, s: 1.3, ...KID, facing: 1, pose: 'run', mood: 'happy', walk: { x0: -200, x1: 2900, t0: .4, dur: 6 } }],
+    init: S => { const tJ = A.at(S, 'Jamie Dimon', .2), tQ = A.at(S, 'Queens', 5);
+      S.D.over = [(c, lt) => K.card(c, 'JAMIE DIMON', lt, { at: tJ + .3, x: 480, y: 220, px: 60, rot: -4 }), (c, lt) => K.dateTag(c, 'QUEENS · 1956', lt, { at: tQ })];
+      S.D.sfx = [[.4, 'run_steps', .4], [tJ + .3, 'pop', .4], [tQ, 'pop', .4]]; } },
+  // 2 the family photo wall: grandfather, father; PAPADEMETRIOU shrinks to DIMON
+  { draw: (c, lt, u, S) => { backdrop('kitchen', .35)(c); photo(c, 520, 480, 420, 560, pop(lt, S.tG), lt, { costume: 'suit80', hair: 'bald', hairCol: '#c8c4bc', beard: 'grey', seed: 12 }, 'GRANDFATHER'); photo(c, 1400, 480, 420, 560, pop(lt, S.tF), lt, { costume: 'suit', hair: 'swept', hairCol: '#3a2a20', seed: 7, tash: true }, 'FATHER', false);
+      const n = K.seg(lt, S.tD, S.tD + 1); if (lt > S.tG) { c.save(); const full = 'PAPADEMETRIOU', w = E.io(n); K.outlined(c, full, 960, 900, 92 - 10 * w, { fill: '#fffaf0', alpha: 1 - w }); if (n > 0) K.outlined(c, 'DIMON', 960, 900, 110, { fill: GOLD, alpha: w }); c.restore(); } },
+    bed: [['hum_loop', .3]],
+    init: S => { S.tG = A.at(S, 'grandfather', .6); S.tD = A.at(S, 'to Dimon', 4); S.tF = A.at(S, 'his father', 6.4); const tS = A.at(S, 'stockbrokers', 7.6);
+      S.D.over = [(c, lt) => K.card(c, 'GREEK IMMIGRANT', lt, { at: S.tG + .6, x: 520, y: 140, px: 44, rot: -4 }), (c, lt) => K.card(c, 'BOTH STOCKBROKERS', lt, { at: tS, x: 1400, y: 140, px: 44, rot: 3 })];
+      S.D.sfx = [[S.tG, 'camera_shutter', .45], [S.tD, 'whoosh_soft', .4], [S.tD + 1, 'chime', .45], [S.tF, 'camera_shutter', .45], [tS, 'trading_loop', .25]]; } },
+  // 3 a college desk: the paper goes into an envelope and flies to Sandy Weill's door
+  { draw: (c, lt, u, S) => { backdrop('office_day', .45)(c); c.fillStyle = '#6a4630'; c.fillRect(0, 760, 1920, 320); c.fillStyle = 'rgba(0,0,0,.2)'; c.fillRect(0, 760, 1920, 10);
+      c.save(); c.translate(560, 760); c.fillStyle = '#3a3a40'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.roundRect(-200, -120, 400, 120, 16); c.fill(); c.stroke(); for (let r = 0; r < 3; r++) for (let k = 0; k < 9; k++) { c.fillStyle = '#e8e4da'; c.beginPath(); c.arc(-160 + k * 40, -90 + r * 30, 12, 0, 7); c.fill(); } c.fillStyle = '#2a2a30'; c.fillRect(-220, -170, 440, 40); c.strokeRect(-220, -170, 440, 40); c.restore();
+      const pu = K.seg(lt, .3, S.tP + .4); if (lt < S.tE) { c.save(); c.translate(560, 590 - 160 * pu); c.fillStyle = '#fbf8f0'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(-130, -170 * pu - 20, 260, 170 * pu + 20); c.strokeRect(-130, -170 * pu - 20, 260, 170 * pu + 20); c.font = '26px Anton'; c.fillStyle = INK; c.textAlign = 'center'; if (pu > .6) c.fillText('MERGERS AT SHEARSON', 0, -170 * pu + 20); c.restore(); }
+      const fl = E.io(K.seg(lt, S.tE, S.tW)); if (lt >= S.tE) envelope(c, 560 + (1500 - 560) * fl, 560 - Math.sin(fl * Math.PI) * 260, .7 - .25 * fl, fl * 6.28, fl > .7 ? '' : 'TO: S. WEILL');
+      const da = pop(lt, S.tE + .3); if (da > 0) { c.save(); c.translate(1520, 520); c.scale(da, da); c.fillStyle = '#7a5a3a'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-160, -320, 320, 560); c.strokeRect(-160, -320, 320, 560); c.fillStyle = GOLD; c.fillRect(-120, -260, 240, 60); c.strokeRect(-120, -260, 240, 60); c.font = '36px Anton'; c.fillStyle = INK; c.textAlign = 'center'; c.fillText('SANDY WEILL', 0, -218); c.fillStyle = '#c9a040'; c.beginPath(); c.arc(110, 0, 14, 0, 7); c.fill(); c.restore(); } },
+    bed: [['office_loop', .3]],
+    init: S => { S.tP = A.at(S, 'paper', 1.6); S.tE = A.at(S, 'mother', 5.6); S.tW = A.at(S, 'Sandy Weill', 9.6); const tT = A.at(S, 'Tufts', .4);
+      S.D.over = [(c, lt) => K.badge(c, 'TUFTS UNIVERSITY', lt, { at: tT }), (c, lt) => K.card(c, 'HIS MOTHER SENT IT', lt, { at: S.tE, x: 1000, y: 160, px: 50, rot: -3 })];
+      S.D.sfx = [[.3, 'typing', .5], [S.tE, 'paper', .5], [S.tE + .4, 'whoosh', .45], [S.tW, 'door_slam', .3], [S.tW + .2, 'chime', .45]]; } },
+  // 4 three offer letters fan out; a hand sweeps them aside and picks WEILL
+  { draw: (c, lt, u, S) => { backdrop('office', .5)(c); const sw = E.io(K.seg(lt, S.tT, S.tT + 1));
+      [['GOLDMAN SACHS', '#3a5a8a'], ['MORGAN STANLEY', '#2a3a5a'], ['LEHMAN BROTHERS', '#4a6a3a']].forEach(([h, col], i) => letter(c, 600 + i * 300 + sw * (-700 + i * 50), 560 + sw * 120, (i - 1) * .14 - sw * .5, pop(lt, S.tO[i]) * (1 - .3 * sw), h, col));
+      const wl = pop(lt, S.tT + .6); letter(c, 1440, 540 - 40 * E.out(K.seg(lt, S.tT + 1.2, S.tT + 2)), .05, wl * 1.05, 'SANDY WEILL', '#8a2a22');
+      if (sw > 0 && sw < 1) { c.save(); c.fillStyle = '#f1d4b4'; c.strokeStyle = INK; c.lineWidth = 5; const hx = 1300 - sw * 900; c.beginPath(); c.ellipse(hx, 700, 90, 56, -.2, 0, 7); c.fill(); c.stroke(); c.fillStyle = '#2f3646'; c.fillRect(hx + 60, 670, 600, 80); c.restore(); } },
+    bed: [['office_loop', .3]],
+    init: S => { const tH = A.at(S, 'Harvard', 2.4), tS = A.at(S, 'summer job', .8); S.tO = [A.at(S, 'Goldman', 5.2), A.at(S, 'Morgan Stanley', 6), A.at(S, 'Lehman', 7)]; S.tT = A.at(S, 'to work for Weill', 9);
+      S.D.over = [(c, lt) => K.card(c, 'SUMMER JOB', lt, { at: tS, x: 380, y: 180, px: 50, rot: -4, until: tH }), (c, lt) => K.dateTag(c, 'HARVARD MBA · 1982', lt, { at: tH })];
+      S.D.sfx = [[tS, 'pop', .4], [tH, 'stamp', .45], ...S.tO.map(t => [t, 'paper', .45]), [S.tT, 'whoosh', .45], [S.tT + .6, 'chime', .5]]; } },
+  // 5 split: out of the big American Express lobby | into a dim little office in Baltimore
+  { draw: (c, lt, u, S) => A.split((c2, l2) => { plateAt(c2, 'office_day', 1280, 900, 480, 560, 1.2); for (const [o, x0, t0] of [[WEILL, 1150, .6], [DIMON, 760, 1.0]]) { const w = R.walkX(l2, x0, x0 + 1300, t0, 4, 1.7); R.figure(c2, Object.assign({ x: w.x, y: 1340, s: 1.7, facing: 1, pose: 'carry', t: l2, mood: 'neutral' }, o)); JK.box(c2, w.x + 70, 1340 - 210, 1); } c2.setTransform(1, 0, 0, 1, 0, 0); K.badge(c2, 'AMERICAN EXPRESS', l2, { at: .3 }); },
+      (c2, l2) => { plateAt(c2, 'office', 1100, 900, 1440, 560, 1.25); c2.save(); c2.fillStyle = 'rgba(60,40,20,.35)'; c2.globalCompositeOperation = 'multiply'; c2.fillRect(0, 0, 2560, 1440); c2.restore(); for (const [o, x1, t0] of [[WEILL, 1350, S.tB], [DIMON, 900, S.tB + .4]]) { const w = R.walkX(l2, x1 - 900, x1, t0, 2.4, 1.7); R.figure(c2, Object.assign({ x: w.x, y: 1360, s: 1.7, facing: 1, pose: w.moving ? 'carry' : 'shrug', t: l2, mood: w.moving ? 'neutral' : 'worried' }, o)); if (w.moving) JK.box(c2, w.x + 70, 1360 - 210, 1); }
+        c2.setTransform(1, 0, 0, 1, 0, 0); K.card(c2, 'COMMERCIAL CREDIT\nBALTIMORE', l2, { at: S.tB + .4, x: 1440, y: 200, px: 42, rot: 3 }); }, { at: S.tB - .6 })(c, lt, u, S),
+    bed: [['office_loop', .3]],
+    init: S => { S.tB = A.at(S, 'struggling', 5); const t85 = A.at(S, '1985', 3);
+      S.D.over = [(c, lt) => K.dateTag(c, '1985', lt, { at: t85 })]; S.D.sfx = [[.6, 'footsteps', .4], [t85, 'pop', .35], [S.tB - .6, 'whoosh_soft', .4], [S.tB + 1.6, 'creak', .4]]; } },
+  // 6 company tiles stack into a growing tower; Dimon is CFO at thirty
+  { plate: 'boardroom', cam: { z: [1.1, 1.14], x: [1280, 1280], y: [800, 800] }, bed: [['office_loop', .3]],
+    figs: [{ x: 640, y: 1340, s: 1.9, ...DIMON, facing: 1, pose: 'present', mood: 'happy', anim: (o, lt) => { o.talk = lt > .4 && lt < 2.4; } }],
+    over: [A.grade('20,30,70', .2)],
+    init: S => { const tC = A.at(S, 'chief financial officer', .8), at = [.6, A.at(S, 'Primerica', 4.8), A.at(S, 'Smith Barney', 5.8), A.at(S, 'Travelers', 7)];
+      S.D.over = S.D.over.concat([(c, lt) => tower(c, 1260, 900, ['COMMERCIAL CREDIT', 'PRIMERICA', 'SMITH BARNEY', 'TRAVELERS'], 4, lt, at), (c, lt) => K.card(c, 'CFO AT 30', lt, { at: tC, x: 420, y: 220, px: 60, rot: -4 })]);
+      S.D.sfx = [[tC, 'pop', .4], ...at.map(t => [t + .35, 'thud', .5])]; } },
+  // 7 TRAVELERS and CITICORP crash together into CITIGROUP; Dimon under a spotlight
+  { draw: (c, lt, u, S) => { backdrop('boardroom', .65)(c); const m = E.in ? E.in(K.seg(lt, S.tM, S.tM + .7)) : K.seg(lt, S.tM, S.tM + .7) ** 2; const sh = lt > S.tM + .7 && lt < S.tM + 1 ? Math.sin(lt * 80) * 10 : 0;
+      if (lt < S.tM + .7) { JK.plaque(c, 480 + 380 * m, 420, 'TRAVELERS', .9, pop(lt, .3)); JK.plaque(c, 1440 - 380 * m, 420, 'CITICORP', .9, pop(lt, .7)); } else { c.save(); c.translate(sh, 0); JK.plaque(c, 960, 420, 'CITIGROUP', 1.25 + .2 * (1 - E.back(K.seg(lt, S.tM + .7, S.tM + 1.2))), 1, 'BIGGEST FINANCIAL COMPANY IN THE WORLD'); c.restore(); }
+      if (lt > S.tP - .4) { spot(c, 960, K.seg(lt, S.tP - .4, S.tP + .2)); R.figure(c, Object.assign({ x: 960, y: 1060, s: 1.35, facing: 1, pose: 'cheer', t: lt, mood: 'happy' }, DIMON)); } },
+    bed: [['hum_loop', .3]],
+    init: S => { S.tM = A.at(S, 'merged', 1.4); S.tP = A.at(S, 'president', 7);
+      S.D.over = [(c, lt) => K.dateTag(c, '1998', lt, { at: .3 }), (c, lt) => K.card(c, 'PRESIDENT', lt, { at: S.tP + .2, x: 1460, y: 820, px: 56, rot: 3 })];
+      S.D.sfx = [[S.tM, 'whoosh', .45], [S.tM + .7, 'hit', .65], [S.tM + .75, 'coins_cascade', .3], [S.tP, 'crowd_cheer', .35], [S.tP + .2, 'pop', .4]]; } },
+  // 8 the retreat: Weill asks him to resign; the board nods
+  { plate: 'boardroom', cam: { z: [1.08, 1.16], x: [1280, 1290], y: [860, 880] }, bed: [['hum_loop', .35]],
+    figs: [{ x: 540, y: 1200, s: 1.35, costume: 'suit80', hair: 'bald', hairCol: '#9a948a', seed: 15, facing: 1, pose: 'stand', mood: 'neutral', anim: (o, lt, u, S) => { if (lt > A.at(S, 'board backed', 7)) o.pose = 'cheer'; } },
+      { x: 2040, y: 1200, s: 1.35, costume: 'suit', hair: 'swept', hairCol: '#5a4a3a', seed: 16, facing: -1, pose: 'stand', mood: 'neutral', anim: (o, lt, u, S) => { if (lt > A.at(S, 'board backed', 7) + .2) o.pose = 'cheer'; } },
+      { x: 900, y: 1360, s: 2.0, ...WEILL, facing: 1, pose: 'stand', mood: 'neutral', anim: (o, lt, u, S) => { const t = A.at(S, 'resign', 5.6); o.talk = lt > t - 1 && lt < t + .6; o.pose = lt > t - 1 ? 'point' : 'stand'; o.mood = lt > t - 1 ? 'angry' : 'neutral'; } },
+      { x: 1700, y: 1360, s: 2.0, ...DIMON, facing: -1, pose: 'stand', mood: 'neutral', anim: (o, lt, u, S) => { const t = A.at(S, 'resign', 5.6); o.mood = lt > t ? 'shocked' : 'neutral'; o.pose = lt > t + 1.4 ? 'shrug' : 'stand'; } }],
+    over: [A.grade('160,90,30', .16)],
+    init: S => { const tS = A.at(S, 'gone sour', 1.6), tR = A.at(S, 'resign', 5.6), tB = A.at(S, 'board backed', 7);
+      S.D.over = S.D.over.concat([(c, lt) => K.dateTag(c, 'NOVEMBER 1998', lt, { at: .3 }), (c, lt) => K.card(c, 'GONE SOUR', lt, { at: tS, x: 960, y: 200, px: 56, rot: -3, until: tR }), (c, lt) => K.card(c, '"RESIGN."', lt, { at: tR, x: 960, y: 200, px: 72, rot: 3 }), (c, lt) => K.card(c, 'THE BOARD BACKED WEILL', lt, { at: tB, x: 960, y: 900, px: 46, rot: -2 })]);
+      S.D.sfx = [[.3, 'creak', .4], [tS, 'tension', .3], [tR, 'hit', .55], [tB, 'stamp', .5]]; } },
+  // 9 alone in an empty office: a box on the desk, 16 years flip shut
+  { plate: 'office', cam: { z: [1.2, 1.3], x: [1280, 1280], y: [860, 860], ease: E.io }, bed: [['hum_loop', .35], ['tick', 0]],
+    live: [(c) => { c.save(); c.fillStyle = '#5a4630'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(1260, 1120, 640, 40); c.strokeRect(1260, 1120, 640, 40); c.fillRect(1290, 1160, 30, 200); c.fillRect(1840, 1160, 30, 200); c.restore(); JK.box(c, 1640, 1070, 1.4); }],
+    figs: [{ x: 960, y: 1360, s: 2.0, ...DIMON, facing: 1, pose: 'stand', mood: 'sad' }],
+    init: S => { const t42 = A.at(S, 'forty-two', 1), t16 = A.at(S, 'sixteen years', 2.6), tO = A.at(S, 'Now he was out', 5);
+      S.D.over = [(c, lt) => K.card(c, 'AGE 42', lt, { at: t42, x: 420, y: 220, px: 60, rot: -4 }), (c, lt) => K.counter(c, 1982, 1998, lt, { at: t16, dur: 1.6, x: 1400, y: 200, px: 90, fmt: v => String(Math.round(v)) }), (c, lt) => { const u = K.seg(lt, tO, tO + .3); if (u <= 0) return; c.save(); c.translate(1400, 330); c.rotate(-.1); c.scale(2 - E.out(u), 2 - E.out(u)); c.globalAlpha = Math.min(1, u * 2); c.font = '110px Anton'; c.strokeStyle = RED; c.lineWidth = 10; c.strokeRect(-150, -80, 300, 150); c.fillStyle = RED; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('OUT', 0, 2); c.restore(); }];
+      S.D.sfx = [[t42, 'pop', .4], [t16, 'paper', .45], [tO, 'stamp', .7]]; } },
+  // 10 a year away from banking: reading at the kitchen counter while the seasons change in the window
+  { plate: 'kitchen', cam: { z: [1.08, 1.14], x: [1400, 1420], y: [760, 780] }, bed: [['hum_loop', .2], ['birds_loop', .2]],
+    live: [(c, lt, u, S) => { const p = Math.min(.999, lt / (S.end - S.start)) * 4, i = Math.floor(p), f = p - i; const SEAS = ['#9cc87a', '#e0963a', '#eef2f6', '#b8d890']; c.save(); c.globalAlpha = .75; c.fillStyle = f < .8 ? SEAS[i] : mixC(SEAS[i], SEAS[(i + 1) % 4], (f - .8) / .2); c.fillRect(1838, 270, 520, 170); c.restore();
+      if (i === 2) { c.save(); c.fillStyle = '#fff'; for (let k = 0; k < 30; k++) { const x = 1840 + (k * 53 % 510), y = 160 + ((k * 31 + lt * 80) % 280); c.fillRect(x, y, 5, 5); } c.restore(); } if (i === 1) { c.save(); c.fillStyle = '#c8602a'; for (let k = 0; k < 12; k++) { const x = 1840 + (k * 71 % 510), y = 160 + ((k * 43 + lt * 60) % 280); c.beginPath(); c.ellipse(x, y, 9, 5, k, 0, 7); c.fill(); } c.restore(); } }],
+    figs: [{ x: 1120, y: 1320, s: 1.9, ...DIMON, costume: 'school', facing: 1, pose: 'present', mood: 'focus', hold: { near: (c) => { c.fillStyle = '#efe9da'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-10, -70, 130, 96); c.strokeRect(-10, -70, 130, 96); c.fillStyle = 'rgba(29,23,18,.45)'; for (let k = 0; k < 6; k++) c.fillRect(4, -58 + k * 14, 100, 4); } } }],
+    init: S => { const tY = A.at(S, 'more than a year', 1);
+      S.D.over = [(c, lt) => K.card(c, 'MORE THAN A YEAR\nOUT OF BANKING', lt, { at: tY, x: 480, y: 220, px: 46, rot: -4 })];
+      S.D.sfx = [[tY, 'tick', .4], [2.5, 'paper', .35], [4.5, 'wind_loop', .2]]; } },
+];
+function mixC(a, b, t) { const p = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)); const A1 = p(a), B1 = p(b); return 'rgb(' + A1.map((v, i) => Math.round(v + (B1[i] - v) * t)).join(',') + ')'; }
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>

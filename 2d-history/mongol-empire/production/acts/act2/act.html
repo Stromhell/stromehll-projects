@@ -1,0 +1,146 @@
+<!doctype html><html><head><meta charset="utf-8"><title>MG act 2 - the boy nobody wanted</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "leo";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../mg_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['steppe_day', 'steppe_open', 'ger_inside', 'map_eurasia', 'khan_hall', 'steppe_dusk']) K.load(n, PL + n + '.jpg');
+{ const T = window.TIMING, L = T.shots[T.shots.length - 1]; L.end += 1.4; T.dur = L.end; }
+const INK = '#1d1712', RED = '#b8221e', GOLD = '#e8b44a';
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+// cast
+const HOELUN = MG.look('deelRed', { hair: 'long', seed: 2, hairCol: '#1a1410', over: { lashes: true } });
+const YESUGEI = MG.look('deel', { seed: 3, beard: true, hairCol: '#1a1410' });
+const BOY = MG.look('deelKid', { hair: 'short', seed: 6, hairCol: '#1a1410' });
+const KID2 = MG.look('deelGreen', { hair: 'short', seed: 8, hairCol: '#1a1410' });
+const KID3 = MG.look('deelBrown', { hair: 'long', seed: 9, hairCol: '#1a1410', over: { lashes: true } });
+const TEEN = MG.look('deel', { hair: 'long', seed: 6, hairCol: '#1a1410' });
+const BORTE = MG.look('deelGreen', { hair: 'bun', seed: 4, hairCol: '#1a1410', over: { lashes: true, topCol: '#2f7a8a' } });
+const TATAR = MG.look('deelBrown', { seed: 5, beard: true, hairCol: '#2a1a10' }), TATAR2 = MG.look('deelGreen', { seed: 7, hairCol: '#2a1a10' });
+const hatM = MG.furHat(), hatT = MG.furHat('#3a2a1a', '#2f4f6a'), hatK = MG.furHat('#5a4030', '#6a7f9a');
+// wooden cangue around the neck (drawn as a hat hook, below the head)
+const cangue = (c, hx, hy, r) => { c.save(); c.translate(hx, hy + r * 1.25); c.rotate(-.04); const w = r * 4.2, h = r * .5; c.fillStyle = 'rgba(0,0,0,.25)'; c.fillRect(-w / 2 + 6, -h / 2 + 8, w, h); const g = c.createLinearGradient(0, -h / 2, 0, h / 2); g.addColorStop(0, '#a07a4a'); g.addColorStop(1, '#6a4a2a'); c.fillStyle = g; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(-w / 2, -h / 2, w, h); c.strokeRect(-w / 2, -h / 2, w, h); c.strokeStyle = 'rgba(40,20,10,.5)'; c.lineWidth = 2; for (let k = -2; k <= 2; k++) { c.beginPath(); c.moveTo(-w / 2, k * h * .18); c.quadraticCurveTo(0, k * h * .18 + 4, w / 2, k * h * .18); c.stroke(); } c.fillStyle = '#3a2a1a'; for (const x of [-w * .42, w * .42]) { c.beginPath(); c.arc(x, 0, 6, 0, 7); c.fill(); } c.restore(); r = r; };
+const teenHat = (c, hx, hy, r) => { cangue(c, hx, hy, r); };
+// baby bundle in arms (world)
+const baby = (c, x, y, s, lt, fist) => { c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = '#e8dcc0'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.ellipse(0, 0, 58, 34, -.2, 0, 7); c.fill(); c.stroke(); c.fillStyle = '#c84a32'; c.beginPath(); c.ellipse(-8, 4, 40, 26, -.2, 0, 7); c.fill(); c.fillStyle = '#f4c7a1'; c.beginPath(); c.arc(40, -14, 24, 0, 7); c.fill(); c.stroke(); c.fillStyle = INK; c.beginPath(); c.arc(46, -16, 2.5, 0, 7); c.fill();
+  if (fist) { c.fillStyle = '#f4c7a1'; c.beginPath(); c.arc(10, -34, 12, 0, 7); c.fill(); c.stroke(); c.fillStyle = RED; c.beginPath(); c.arc(10, -36, 6, 0, 7); c.fill(); } c.restore(); };
+// river strip across the foreground (world)
+const river = (y0, y1) => (c, lt) => { c.save(); const g = c.createLinearGradient(0, y0, 0, y1); g.addColorStop(0, '#5a86a8'); g.addColorStop(1, '#2e5878'); c.fillStyle = g; c.beginPath(); c.moveTo(0, y0); for (let x = 0; x <= 2560; x += 80) c.lineTo(x, y0 + Math.sin(x * .004) * 18); c.lineTo(2560, y1); c.lineTo(0, y1); c.closePath(); c.fill(); c.strokeStyle = '#3a5a3a'; c.lineWidth = 8; c.beginPath(); for (let x = 0; x <= 2560; x += 80) c.lineTo(x, y0 + Math.sin(x * .004) * 18); c.stroke();
+  c.strokeStyle = 'rgba(255,255,255,.35)'; c.lineWidth = 3; for (let k = 0; k < 30; k++) { const x = ((k * 173 + lt * 40) % 2700) - 70, y = y0 + 40 + (k * 61 % (y1 - y0 - 50)); c.beginPath(); c.moveTo(x, y); c.quadraticCurveTo(x + 30, y - 6, x + 60, y); c.stroke(); } c.restore(); };
+const reeds = (x0, x1, y, h, col = '#3a5a32') => (c, lt) => { c.save(); c.strokeStyle = col; c.lineCap = 'round'; for (let k = 0; k < (x1 - x0) / 14; k++) { const x = x0 + k * 14 + (k * 7 % 9), hh = h * (.6 + (k * 13 % 10) / 25), sw = Math.sin(lt * 1.3 + k * .7) * 10; c.lineWidth = 5; c.beginPath(); c.moveTo(x, y); c.quadraticCurveTo(x + sw * .3, y - hh * .5, x + sw, y - hh); c.stroke(); if (k % 4 === 0) { c.fillStyle = '#5a3a22'; c.beginPath(); c.ellipse(x + sw, y - hh - 10, 6, 16, 0, 0, 7); c.fill(); } } c.restore(); };
+// wool-piled cart
+const woolCart = (c, x, y, s, prod) => { MG.cart(c, x, y, s, false); c.save(); c.translate(x, y); c.scale(s, s); for (let k = 0; k < 26; k++) { const px = -180 + (k * 53 % 330), py = -170 - (k * 37 % 90) + (k > 18 ? -20 : 0); c.fillStyle = k % 3 ? '#f2ead8' : '#ded4bc'; c.strokeStyle = INK; c.lineWidth = 2.5; c.beginPath(); c.arc(px, py + Math.sin(prod * 30 + k) * prod * 4, 38, 0, 7); c.fill(); c.stroke(); } c.restore(); };
+// tribe tags on the steppe map (world coords from the plate)
+
+const TEMUJIN = MG.look('deelRed', { seed: 6, beard: true, hairCol: '#1a1410', over: { topCol: '#8a2a22' } }), hatG = MG.furHat('#4a3020', '#e8dcc0');
+const SCRIBE = MG.look('persian', { seed: 12, hairCol: '#2a1a10' });
+const pxy = (lon, lat) => [150 + (lon + 12) * 14.125, 240 + (68 - lat) * 16.83];
+// a tall war banner on a pole; fall u 0..1 tips it over (world)
+const banner = (c, x, y, name, col, fall, s = 1) => { c.save(); c.translate(x, y); c.rotate(E.io(fall) * 1.45 * (x < 1280 ? -1 : 1)); c.scale(s, s); c.globalAlpha *= 1 - .4 * fall; c.strokeStyle = '#3a2a1a'; c.lineWidth = 12; c.beginPath(); c.moveTo(0, 0); c.lineTo(0, -560); c.stroke();
+  c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.moveTo(6, -540); c.lineTo(230, -520 + Math.sin(c.lt || 0) * 6); c.lineTo(200, -440); c.lineTo(230, -360); c.lineTo(6, -380); c.closePath(); c.fill(); c.stroke(); c.save(); c.translate(110, -455); c.font = '34px Anton'; c.fillStyle = '#f2e6c8'; c.textAlign = 'center'; c.fillText(name, 0, 12); c.restore(); c.restore(); };
+// nine-tailed white standard (tug), rising from y with u 0..1 (world)
+const tug = (c, x, y, u, lt, s = 1) => { if (u <= 0) return; c.save(); c.translate(x, y + 600 * (1 - E.out(u))); c.scale(s, s); c.strokeStyle = '#3a2a1a'; c.lineWidth = 14; c.beginPath(); c.moveTo(0, 0); c.lineTo(0, -620); c.stroke(); c.fillStyle = GOLD; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(0, -700); c.lineTo(-18, -630); c.lineTo(18, -630); c.closePath(); c.fill(); c.stroke();
+  c.fillStyle = '#d8d0c0'; c.fillRect(-90, -632, 180, 22); for (let k = 0; k < 9; k++) { const tx = -80 + k * 20, sw = Math.sin(lt * 2.4 + k * .7) * 14; c.fillStyle = '#f4f0e8'; c.strokeStyle = 'rgba(29,23,18,.55)'; c.lineWidth = 2; c.beginPath(); c.moveTo(tx - 8, -612); c.quadraticCurveTo(tx + sw, -520, tx + sw * 1.6, -420); c.quadraticCurveTo(tx + 8 + sw, -520, tx + 8, -612); c.closePath(); c.fill(); c.stroke(); } c.restore(); };
+// little soldier token (screen) for the decimal chart
+const token = (c, x, y, r, col = RED) => { c.fillStyle = col; c.beginPath(); c.arc(x, y + r * .9, r * 1.1, Math.PI, 0); c.fill(); c.fillStyle = '#f1d9b8'; c.beginPath(); c.arc(x, y - r * .2, r * .7, 0, 7); c.fill(); c.fillStyle = '#6a4a2e'; c.beginPath(); c.arc(x, y - r * .45, r * .72, Math.PI, 0); c.fill(); };
+const mix = (a, b, t) => { const p = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)); const A1 = p(a), B1 = p(b); return '#' + A1.map((v, i) => Math.round(v + (B1[i] - v) * t).toString(16).padStart(2, '0')).join(''); };
+const flipCard = (c, x, y, front, back, flip, lt, look, hat) => { const f = E.io(flip), sx = Math.abs(Math.cos(f * Math.PI)), showBack = f > .5; c.save(); c.translate(x, y); c.scale(Math.max(.02, sx), 1); c.fillStyle = 'rgba(0,0,0,.4)'; c.fillRect(-250, -320, 520, 680);
+  c.fillStyle = showBack ? '#f2e2b0' : '#e8dcc8'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-260, -340, 520, 680); c.strokeRect(-260, -340, 520, 680); c.strokeStyle = showBack ? GOLD : '#8a7a62'; c.lineWidth = 4; c.strokeRect(-240, -320, 480, 640);
+  c.save(); c.beginPath(); c.rect(-240, -320, 480, 470); c.clip(); c.fillStyle = showBack ? '#b8221e' : '#5a6a7a'; c.fillRect(-240, -320, 480, 470); R.figure(c, { x: 0, y: 380, s: 1.6, look, hat, pose: showBack ? 'point' : 'stand', facing: 1, t: lt, mood: showBack ? 'happy' : 'neutral' }); c.restore();
+  c.font = '54px Anton'; c.fillStyle = INK; c.textAlign = 'center'; c.fillText(showBack ? back[0] : front[0], 0, 222); c.font = '30px Oswald'; c.fillText(showBack ? back[1] : front[1], 0, 278); c.restore(); };
+const ruleIcon = (c, x, y, kind, a, crossU) => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.fillStyle = '#efe2c0'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.arc(0, 0, 120, 0, 7); c.fill(); c.stroke(); c.lineWidth = 5;
+  if (kind === 'sheep') { c.fillStyle = '#fff'; for (let k = 0; k < 7; k++) { c.beginPath(); c.arc(-40 + (k % 4) * 26, -14 + Math.floor(k / 4) * 24, 22, 0, 7); c.fill(); c.stroke(); } c.fillStyle = '#3a2a20'; c.beginPath(); c.ellipse(56, -10, 18, 24, .3, 0, 7); c.fill(); c.fillRect(-40, 30, 8, 40); c.fillRect(30, 30, 8, 40); }
+  else if (kind === 'rope') { c.strokeStyle = '#a07a4a'; c.lineWidth = 12; c.beginPath(); c.arc(-10, -10, 46, 0, 7); c.stroke(); c.beginPath(); c.moveTo(30, 20); c.quadraticCurveTo(60, 60, 30, 80); c.stroke(); }
+  else { c.strokeStyle = '#6a6a72'; c.lineWidth = 12; for (let k = 0; k < 4; k++) { c.beginPath(); c.ellipse(-60 + k * 40, -10 + (k % 2) * 10, 26, 16, k % 2 ? 0 : .5, 0, 7); c.stroke(); } }
+  c.restore(); if (crossU > 0) { c.save(); c.strokeStyle = RED; c.lineWidth = 16; c.lineCap = 'round'; const d = 90; c.beginPath(); c.moveTo(x - d, y - d); c.lineTo(x - d + 2 * d * Math.min(1, crossU * 2), y - d + 2 * d * Math.min(1, crossU * 2)); if (crossU > .5) { const v = (crossU - .5) * 2; c.moveTo(x + d, y - d); c.lineTo(x + d - 2 * d * v, y - d + 2 * d * v); } c.stroke(); c.restore(); } };
+
+window.SHOTS = [
+  // 1 rival banners fall one by one; Temujin's nine-tailed standard rises
+  { plate: 'steppe_day', cam: { z: [1.12, 1.2], x: [1280, 1280], y: [880, 860], ease: E.io }, bed: [['war_drums_loop', .35], ['wind_loop', .3]],
+    init: S => { const tT = A.at(S, 'Tatars', 3.4), tG = A.at(S, 'Toghrul', 4.8), tJ = A.at(S, 'Jamukha', 6.6);
+      S.D.live = [(c, lt) => { banner(c, 520, 1240, 'TATARS', '#2f4f6a', K.seg(lt, tT, tT + .8)); banner(c, 2040, 1240, 'TOGHRUL', '#7a5a1a', K.seg(lt, tG, tG + .8)); banner(c, 860, 1180, 'JAMUKHA', '#4f6a46', K.seg(lt, tJ, tJ + .8), .85); tug(c, 1500, 1200, K.seg(lt, tJ + .4, tJ + 1.6), lt, .9); }];
+      S.D.figs = [{ x: 1700, y: 1320, s: 1.6, look: TEMUJIN, hat: hatG, facing: -1, pose: 'stand', mood: 'focus', walk: { x0: 2800, x1: 1700, t0: .3, dur: 3 }, anim: (o, lt) => { if (lt > tJ + 1.4) { o.pose = 'cheer'; o.mood = 'happy'; } } }];
+      S.D.over = [(c, lt) => K.card(c, '20 YEARS OF WAR', lt, { at: .5, x: 480, y: 210, px: 52, rot: -4 })];
+      S.D.sfx = [[.3, 'war_drums_loop', .2], [tT, 'thud', .55], [tG, 'thud', .55], [tJ, 'thud', .6], [tJ + .5, 'riser', .35], [tJ + 1.6, 'crowd_cheer', .35]]; } },
+  // 2 the great assembly by the Onon: gers, a river, kneeling crowds before the white standard
+  { plate: 'steppe_open', cam: { z: [1.05, 1.18], x: [1280, 1300], y: [880, 900], ease: E.io }, bed: [['crowd_loop', .45], ['wind_loop', .25]],
+    live: [(c) => { for (let k = 0; k < 9; k++) MG.ger(c, 160 + k * 280, 1010 + (k % 2) * 14, .42, { glow: false }); }, river(1080, 1150)],
+    init: S => { const tC = A.at(S, 'Chinggis Khan', 4.6), tG = A.at(S, 'Genghis Khan', 6.6);
+      const crowd = []; for (let r = 0; r < 2; r++) for (let k = 0; k < 8; k++) { const x = 160 + k * 300 + r * 150; if (Math.abs(x - 1280) < 220) continue; crowd.push({ x, y: 1270 + r * 120, s: .9 + r * .2, look: [TEMUJIN, KID2, TATAR, TATAR2, YESUGEI][(k + r) % 5], hat: [hatM, hatT, hatK][(k + r) % 3], facing: x < 1280 ? 1 : -1, pose: 'stand', mood: 'neutral', anim: (o, lt) => { if (lt > tC - .3 + k * .05) { o.pose = 'squat'; o.mood = 'happy'; } } }); }
+      S.D.figs = crowd;
+      S.D.live = [S.D.live[0], S.D.live[1], (c, lt) => { tug(c, 1280, 1200, 1, lt, .8); R.figure(c, { x: 1280, y: 1230, s: 1.15, look: TEMUJIN, hat: hatG, facing: 1, pose: lt > tC ? 'cheer' : 'stand', t: lt, mood: 'happy' }); }];
+      S.D.over = [(c, lt) => K.dateTag(c, 'ONON RIVER · 1206', lt, { at: .4 }), (c, lt) => K.title(c, 'CHINGGIS KHAN', lt, { at: tC, y: 170, px: 100, fill: GOLD, until: tG }), (c, lt) => K.title(c, 'GENGHIS KHAN', lt, { at: tG, y: 170, px: 100, fill: GOLD, sub: 'as it is usually written', subPx: 40 })];
+      S.D.sfx = [[tC - .3, 'crowd_cheer', .45], [tC, 'drum', .6], [tG, 'swell', .35]]; } },
+  // 3 decimal army: 10, 100, 1,000, 10,000 tokens, each layer zooming out
+  { draw: (c, lt, u, S) => { c.fillStyle = '#e8dcc0'; c.fillRect(0, 0, 1920, 1080); K.parchment(c, 60, 60, 1800, 960); const st = S.stg.filter(t => lt > t).length; const zz = st <= 1 ? 1 : E.io(K.seg(lt, S.stg[st - 1], S.stg[st - 1] + 1.2));
+      const n = [0, 10, 100, 1000, 10000][st], prevN = [0, 10, 10, 100, 1000][st]; const cols = st <= 1 ? 10 : st === 2 ? 20 : st === 3 ? 50 : 125; const cell = 1600 / cols; const cell0 = 1600 / ([10, 10, 10, 20, 50][st]); const cc = cell0 + (cell - cell0) * zz; const shown = Math.floor(prevN + (n - prevN) * zz);
+      const rows = Math.ceil(shown / cols); const y0 = 560 - rows * cc / 2; for (let i = 0; i < shown; i++) { const x = 160 + (i % cols) * cc + cc / 2, y = y0 + Math.floor(i / cols) * cc + cc / 2; if (cc > 14) token(c, x, y, cc * .32, (Math.floor(i / 10) % 2) ? '#8a1e1a' : RED); else { c.fillStyle = (Math.floor(i / 100) % 2) ? '#8a1e1a' : RED; c.fillRect(x - cc * .35, y - cc * .35, cc * .7, cc * .7); } } },
+    bed: [['war_drums_loop', .3]],
+    init: S => { S.stg = [A.at(S, 'ten', 6.4), A.at(S, 'a hundred', 7.6), A.at(S, 'a thousand', 8.6), A.at(S, 'ten thousand', 10)]; const tB = A.at(S, 'broke up', 2.6);
+      S.D.over = [(c, lt) => K.card(c, 'OLD TRIBES BROKEN UP', lt, { at: tB, x: 960, y: 540, px: 60, rot: -3, until: S.stg[0] }), (c, lt) => { const st = S.stg.filter(t => lt > t).length; if (!st) return; K.outlined(c, ['10', '100', '1,000', '10,000'][st - 1], 960, 120, 96, { fill: GOLD }); }];
+      S.D.sfx = [[tB, 'paper_tear', .45], ...S.stg.map(t => [t, 'drum', .55])]; } },
+  // 4 riders in different tribal colours line up and turn one colour
+  { plate: 'steppe_day', cam: { z: [1.15, 1.2], x: [1280, 1290], y: [900, 900] }, bed: [['walk_hooves_loop', .4], ['wind_loop', .25]],
+    init: S => { const tL = A.at(S, 'loyalty', 4.4); const COL = ['#2f4f6a', '#7a5a1a', '#4f6a46', '#6a3a7a', '#3f5f8a'];
+      S.D.live = [(c, lt) => { const m = K.seg(lt, tL - .4, tL + 1.4); COL.forEach((col, k) => { const tx = 380 + k * 450, x = Math.min(tx, -300 + (lt - k * .35) * 700); MG.horse(c, { x, y: 1300, s: .7, gait: x < tx ? 'walk' : 'stand', t: lt, phase: k, col: ['#6a4028', '#3a2a1e', '#9a6a3a', '#c8a070', '#4a3020'][k], rider: MG.archer({ col: mix(col, '#b8221e', m) }) }); }); }];
+      S.D.over = [(c, lt) => K.card(c, 'SIDE BY SIDE', lt, { at: .6, x: 480, y: 210, px: 52, rot: -4 }), (c, lt) => K.card(c, 'LOYAL TO THE UNIT\nAND THE KHAN', lt, { at: tL, x: 1420, y: 230, px: 46, rot: 3 })];
+      S.D.sfx = [[.3, 'walk_hooves_loop', .2], [tL, 'swell', .35], [tL + 1.4, 'drum', .45]]; } },
+  // 5 two cards flip: Jebe the enemy archer, Subutai the blacksmith's son
+  { draw: (c, lt, u, S) => { c.save(); c.filter = 'blur(8px) brightness(.45)'; const s2 = 1.1 * 1920 / 2560; c.setTransform(s2, 0, 0, s2, 960 - 1280 * s2, 540 - 720 * s2); c.drawImage(K.imgs.khan_hall, 0, 0, 2560, 1440); c.restore(); c.setTransform(1, 0, 0, 1, 0, 0);
+      const a1 = pop(lt, S.tJ - .3), a2 = pop(lt, S.tS - .3); if (a1 > 0) { c.save(); c.translate(600, 540); c.scale(a1, a1); flipCard(c, 0, 0, ['JEBE', 'once an enemy archer'], ['JEBE', 'general'], K.seg(lt, S.tJ + .8, S.tJ + 1.4), lt, TATAR2, hatT); c.restore(); }
+      if (a2 > 0) { c.save(); c.translate(1320, 540); c.scale(a2, a2); flipCard(c, 0, 0, ['SUBUTAI', "a blacksmith's son"], ['SUBUTAI', 'general'], K.seg(lt, S.tS + .8, S.tS + 1.4), lt, KID2, hatK); c.restore(); } },
+    bed: [['fire_loop', .3]],
+    init: S => { S.tJ = A.at(S, 'Jebe', 4.6); S.tS = A.at(S, 'Subutai', 5.4); const tR = A.at(S, 'results', 1.4);
+      S.D.over = [(c, lt) => K.title(c, 'RESULTS, NOT BIRTH', lt, { at: tR, y: 110, px: 76, fill: GOLD })];
+      S.D.sfx = [[tR, 'hit', .4], [S.tJ, 'whoosh_soft', .4], [S.tJ + 1, 'paper', .45], [S.tS, 'whoosh_soft', .4], [S.tS + 1, 'paper', .45]]; } },
+  // 6 a scribe writes the new vertical script inside the ger
+  { plate: 'ger_inside', cam: { z: [1.15, 1.3], x: [1280, 1360], y: [900, 940], ease: E.io }, bed: [['fire_loop', .35]],
+    figs: [{ x: 1000, y: 1330, s: 1.6, look: SCRIBE, hat: MG.turban(), facing: 1, pose: 'work', mood: 'focus', workSpeed: 3, seat: 'stone' }],
+    init: S => { const tW = A.at(S, 'written down', 5.6), tU = A.at(S, 'Uyghurs', 2.6);
+      S.D.live = [(c, lt) => { c.save(); c.fillStyle = '#5a3a22'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(1180, 1180, 520, 34); c.strokeRect(1180, 1180, 520, 34); c.fillRect(1210, 1214, 26, 120); c.fillRect(1640, 1214, 26, 120); c.fillStyle = '#f2e8cc'; c.fillRect(1240, 1110, 420, 74); c.restore();
+        c.save(); c.translate(1450, 1146); c.scale(1, .32); c.fillStyle = '#f2e8cc'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-200, -380, 400, 600); c.strokeRect(-200, -380, 400, 600); c.restore(); }];
+      S.D.over = [(c, lt) => { const a = pop(lt, tU - .4); if (a <= 0) return; c.save(); c.translate(1460, 520); c.scale(a, a); c.fillStyle = '#f2e8cc'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-170, -300, 340, 600); c.strokeRect(-170, -300, 340, 600); c.strokeStyle = '#2a1a10'; c.lineWidth = 6; c.lineCap = 'round';
+          const u = K.seg(lt, tU, S.end - S.start - .5); for (let col = 0; col < 5; col++) { const x = 120 - col * 60, len = Math.max(0, Math.min(1, u * 5 - col)) * 520; c.beginPath(); c.moveTo(x, -260); c.lineTo(x, -260 + len); c.stroke(); for (let k = 0; k * 40 < len; k++) { c.beginPath(); c.moveTo(x, -250 + k * 40); c.lineTo(x + (k % 2 ? 16 : -14), -238 + k * 40); c.stroke(); } } c.restore(); },
+        (c, lt) => K.card(c, 'UYGHUR SCRIPT', lt, { at: tU, x: 520, y: 220, px: 56, rot: -4 }), (c, lt) => K.card(c, 'LAWS WRITTEN DOWN\nFOR THE FIRST TIME', lt, { at: tW, x: 520, y: 420, px: 42, rot: 3 })];
+      S.D.sfx = [[tU, 'paper', .5], [tU + .3, 'scrape', .25], [tW, 'pop', .4]]; } },
+  // 7 the Yassa scroll: three rules as icons, each crossed out
+  { draw: (c, lt, u, S) => { c.fillStyle = '#2a1e16'; c.fillRect(0, 0, 1920, 1080); const w = 1640 * E.out(K.seg(lt, .2, 1.2)); c.fillStyle = '#efe2c0'; c.fillRect(960 - w / 2, 200, w, 680); c.strokeStyle = INK; c.lineWidth = 6; c.strokeRect(960 - w / 2, 200, w, 680); c.fillStyle = '#b8a070'; for (const sx of [-1, 1]) { c.beginPath(); c.roundRect(960 + sx * w / 2 - 26, 180, 52, 720, 26); c.fill(); c.stroke(); }
+      const L = [['sheep', 'NO STEALING LIVESTOCK', S.t1], ['rope', 'NO KIDNAPPING WOMEN', S.t2], ['chain', 'NO SELLING MONGOLS\nAS SLAVES', S.t3]]; L.forEach(([k, txt, t], i) => { const x = 460 + i * 500; ruleIcon(c, x, 470, k, pop(lt, t - .2), K.seg(lt, t + .4, t + .9)); const a = K.seg(lt, t, t + .4); if (a > 0) { c.save(); c.globalAlpha = a; c.font = '36px Anton'; c.fillStyle = INK; c.textAlign = 'center'; txt.split('\n').forEach((ln, j) => c.fillText(ln, x, 680 + j * 44)); c.restore(); } }); },
+    bed: [['hum_loop', .3], ['fire_loop', .2]],
+    init: S => { S.t1 = A.at(S, 'livestock', 2.6); S.t2 = A.at(S, 'kidnapping', 3.8); S.t3 = A.at(S, 'slaves', 5.2); const tY = A.at(S, 'Yassa', 1);
+      S.D.over = [(c, lt) => K.title(c, 'THE YASSA', lt, { at: tY, y: 110, px: 90, fill: GOLD })];
+      S.D.sfx = [[.2, 'paper', .5], [tY, 'drum', .45], [S.t1 + .4, 'stamp', .45], [S.t2 + .4, 'stamp', .45], [S.t3 + .4, 'stamp', .45]]; } },
+  // 8 the Yam: a messenger pouch passes station to station across the map
+  { plate: 'map_eurasia', cam: { z: [1.5, 1.65], x: [1420, 1300], y: [620, 640], ease: E.io }, bed: [['gallop_loop', .35]],
+    init: S => { const st = [[102.8, 47.2], [96, 46.5], [89, 45.5], [82, 44], [75, 42], [68, 40]].map(([lo, la]) => pxy(lo, la)); const tY = A.at(S, 'Yam', 8), L = S.end - S.start;
+      S.D.live = [(c, lt) => { c.save(); c.strokeStyle = 'rgba(120,30,20,.6)'; c.setLineDash([12, 10]); c.lineWidth = 5; c.beginPath(); st.forEach(([x, y], i) => i ? c.lineTo(x, y) : c.moveTo(x, y)); c.stroke(); c.restore();
+        st.forEach(([x, y], i) => { c.save(); c.translate(x, y); c.fillStyle = '#efe2c0'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(-20, 0); c.lineTo(-20, -24); c.lineTo(0, -40); c.lineTo(20, -24); c.lineTo(20, 0); c.closePath(); c.fill(); c.stroke(); c.restore(); });
+        const p = E.io(K.seg(lt, .6, L - .6)) * (st.length - 1), i = Math.min(st.length - 2, Math.floor(p)), f = p - i; const x = st[i][0] + (st[i + 1][0] - st[i][0]) * f, y = st[i][1] + (st[i + 1][1] - st[i][1]) * f;
+        MG.horse(c, { x, y: y + 6, s: .16, facing: -1, gait: 'gallop', t: lt, phase: i, col: ['#6a4028', '#3a2a1e', '#9a6a3a', '#c8a070', '#4a3020'][i], rider: MG.archer({}) }); }];
+      S.D.over = [(c, lt) => K.counter(c, 0, 600, lt, { at: .6, dur: L - 1.2, x: 1500, y: 160, px: 78, post: ' KM', fill: '#fffaf0' }), (c, lt) => K.title(c, 'THE YAM', lt, { at: tY, y: 940, px: 90, fill: GOLD })];
+      S.D.sfx = [[.6, 'gallop_loop', .2], [tY, 'drum', .5]]; } },
+  // 9 exploded composite bow: wood core, horn belly, sinew back
+  { draw: (c, lt, u, S) => { c.fillStyle = '#e8dcc0'; c.fillRect(0, 0, 1920, 1080); K.parchment(c, 60, 60, 1800, 960); const ex = E.out(K.seg(lt, S.tW - .2, S.tW + 1)) * 110;
+      const arc = (dy, col, w, lab, a, lx) => { c.save(); c.translate(0, dy); c.strokeStyle = INK; c.lineWidth = w + 8; c.lineCap = 'round'; c.beginPath(); c.moveTo(380, 560); c.bezierCurveTo(560, 330, 760, 360, 960, 380); c.bezierCurveTo(1160, 360, 1360, 330, 1540, 560); c.stroke(); c.strokeStyle = col; c.lineWidth = w; c.stroke(); c.restore();
+        if (a > 0) { c.save(); c.globalAlpha = a; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(lx, 380 + dy); c.lineTo(lx + 180, 380 + dy - 120); c.stroke(); c.font = '48px Anton'; c.fillStyle = INK; c.textAlign = 'left'; c.fillText(lab, lx + 190, 380 + dy - 120); c.restore(); } };
+      arc(-ex, '#c8b890', 18, 'SINEW', K.seg(lt, S.tS, S.tS + .4), 1180); arc(0, '#8a5a32', 26, 'WOOD', K.seg(lt, S.tW, S.tW + .4), 1180); arc(ex, '#3a3430', 18, 'HORN', K.seg(lt, S.tH, S.tH + .4), 1180);
+      c.save(); c.strokeStyle = '#d8d0c0'; c.lineWidth = 3; c.beginPath(); c.moveTo(380, 560); c.lineTo(1540, 560); c.stroke(); c.restore();
+      const sp = K.seg(lt, .3, 1.2); if (sp > 0) for (let k = 0; k < 4; k++) MG.horse(c, { x: 260 + k * 150, y: 960, s: .22 * E.out(sp), facing: 1, gait: 'stand', t: lt, col: ['#6a4028', '#3a2a1e', '#9a6a3a', '#c8a070'][k] }); },
+    bed: [['wind_loop', .25]],
+    init: S => { S.tW = A.at(S, 'wood', 5.4); S.tH = A.at(S, 'horn', 6.1); S.tS = A.at(S, 'sinew', 6.8); const tSt = A.at(S, 'stronger', 8);
+      S.D.over = [(c, lt) => K.card(c, 'SEVERAL SPARE HORSES', lt, { at: .5, x: 540, y: 860, px: 44, rot: -3, until: S.tW }), (c, lt) => K.card(c, 'STRONGER THAN\nMOST BOWS', lt, { at: tSt, x: 1500, y: 860, px: 46, rot: 3 })];
+      S.D.sfx = [[.4, 'neigh', .35], [S.tW, 'whoosh_soft', .4], [S.tH, 'pop', .4], [S.tS, 'pop', .4], [tSt, 'bowstring', .55]]; } },
+  // 10 the feigned retreat: Mongols gallop away, the chasers follow, the Mongols shoot back over their shoulders
+  { plate: 'steppe_open', cam: { z: [1.15, 1.2], x: [1300, 1300], y: [960, 960] }, bed: [['cavalry_loop', .55], ['wind_loop', .25]],
+    init: S => { const tF = A.at(S, 'fake retreat', 7.4), tT = A.at(S, 'turn to shoot', 3.6); const L = S.end - S.start;
+      S.D.live = [(c, lt) => { for (let k = 0; k < 3; k++) { const x = 1500 + k * 420 + lt * 60 - 200; MG.horse(c, { x, y: 1240 + (k % 2) * 90, s: .62, facing: 1, gait: 'gallop', t: lt, phase: k * 1.4, col: ['#6a4028', '#3a2a1e', '#9a6a3a'][k], rider: MG.archer({ draw: lt > tT ? .5 + .5 * Math.sin(lt * 3 + k) : 0 }) }); }
+          for (let k = 0; k < 3; k++) { const x = -200 + k * -380 + lt * 120; MG.horse(c, { x, y: 1260 + (k % 2) * 80, s: .66, facing: 1, gait: 'gallop', t: lt, phase: k * .9, col: ['#c8a070', '#e8dcc0', '#7a5a3a'][k], rider: MG.archer({ col: '#5a6a7a' }) }); }
+          if (lt > tT) for (let k = 0; k < 6; k++) { const t0 = tT + k * .45, uu = K.seg(lt, t0, t0 + .6); if (uu > 0 && uu < 1) { const sx = 1500 + (k % 3) * 420 + lt * 60 - 200 - 40, sy = 1000 + (k % 2) * 90, tx = -200 + (k % 3) * -380 + lt * 120 + 120; MG.arrow(c, sx, sy, tx, sy + 60, uu, 1.2); } } }];
+      S.D.over = [(c, lt) => K.card(c, 'TURN AND SHOOT', lt, { at: tT, x: 1420, y: 220, px: 52, rot: 3, until: tF }), (c, lt) => K.title(c, 'THE FEIGNED RETREAT', lt, { at: tF, y: 150, px: 84, fill: GOLD })];
+      S.D.sfx = [[.3, 'gallop_loop', .3], [tT, 'bowstring', .5], [tT + .1, 'arrow', .45], [tT + .55, 'arrow', .4], [tT + 1, 'arrow_hit', .4], [tF, 'drum', .55]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>
