@@ -109,14 +109,13 @@ window.SHOTS = [
       const L = VP.light('golden', lt, { swing: 6, set: { L: [-.7, -.8] } }), sh = VP.shadowOf(L, 1.4, .3, .12);
       VP.clouds(c, lt, { y0: 40, y1: 200, a: .2, speed: 16, n: 4, seed: 21 });
       // the crowd on the far side of the deck
-      for (let k = 0; k < 9; k++) { const x = 120 + k * 120 + (k % 2) * 30, y = 498, ch = [C.TOWNSMAN, C.BERBER, CH.aisha, C.BERBER2, CH.girl][k % 5], cheer = Math.max(0, Math.sin(lt * 3 + k)) * seg(lt, Sh.tE - .5, Sh.tE + .5);
-        S.person(c, ch, x, y, 22, Object.assign(S.idle(lt, k), { face: k % 2 ? -1 : 1, shN: 40 + 120 * cheer, elN: 30 }), { smile: .5, time: lt }, L); }
+      for (let k = 0; k < 9; k++) { const x = 120 + k * 120 + (k % 2) * 30, y = 498, ch = VP.vary([C.TOWNSMAN, C.BERBER, CH.aisha, C.BERBER2, CH.girl][k % 5], k + 140), cheer = Math.max(0, Math.sin(lt * 3 + k)) * seg(lt, Sh.tE - .5, Sh.tE + .5), flagger = k === 3 || k === 6;
+        // two people in the crowd hold the green banners up on poles
+        S.person(c, ch, x, y, 22, Object.assign(S.idle(lt, k), { face: k % 2 ? -1 : 1, shN: flagger ? 150 : 40 + 120 * cheer, elN: flagger ? 15 : 30, holdN: flagger ? wr => { c.strokeStyle = '#4a3020'; c.lineWidth = 2.5; c.beginPath(); c.moveTo(wr[0], wr[1] + 16); c.lineTo(wr[0], wr[1] - 62); c.stroke(); VP.banner(c, wr[0] + 1, wr[1] - 62, 30, 22, ['#2f8a5a', '#15402a'], lt, { Lt: L, ph: k }); } : null }), { smile: .5, time: lt }, L); }
       // the rider and two guards on foot
-      const x = lerp(-80, 1100, E.sine(K.clamp(lt / Sh.dur))), y = 530;
+      const x = lerp(-80, 1500, K.clamp(lt / (Sh.dur - .3))), y = 530; // rides in from the left and out on the right
       VP.figure(c, [x, y], sh, cc => { const r = VP.rider(cc, ABD_OLD, x, y, 22, 110, { face: 1, ph: lt * .8, walk: .8, t: lt, col: BAY, tack: TACK }, { lean: 2, shN: lt > Sh.tE ? 90 : 10, elN: 20 }, { blink: S.blinkAt(lt, 0), smile: .3, time: lt }, L); VP._m = r.muzzle; });
-      for (const off of [-70, 70]) { const gx = x + off, gy = 532; VP.figure(c, [gx, gy], sh, cc => S.person(cc, C.BERBER, gx, gy, 20, Object.assign(walk(lt * 1.1 + off), { face: 1 }), { time: lt }, L)); }
-      // green banners on the bridge
-      VP.banner(c, 640, 470, 70, 46, ['#2f8a5a', '#15402a'], lt, { Lt: L, ph: 0 }); VP.banner(c, 1000, 470, 70, 46, ['#2f8a5a', '#15402a'], lt, { Lt: L, ph: 1 });
+      for (const off of [-125, 118]) { const gx = x + off, gy = 532; VP.figure(c, [gx, gy], sh, cc => S.person(cc, C.BERBER, gx, gy, 20, Object.assign(walk(lt * 1.1 + off), { face: 1 }), { time: lt }, L)); }
       VP.motes(c, lt, 0, 300, 1280, 300, { n: 30, a: .35 });
     },
     over: [(c, lt) => K.dateTag(c, 'CÓRDOBA · 756', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'EMIRATE OF\nCÓRDOBA', lt, { at: Sh.tE + .2, x: 1540, y: 200, px: 58, rot: 3 }), (c, lt, u, Sh) => K.card(c, 'NO MASTER\nIN THE EAST', lt, { at: Sh.tN + .2, x: 1500, y: 860, px: 46, rot: -3 })],

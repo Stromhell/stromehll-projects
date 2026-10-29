@@ -183,18 +183,40 @@
 
   // ======================== COVADONGA: misty green mountains and the cave ========================
   VP.set('covadonga', 1280, 720, (g, w, h) => {
-    sky(g, w, h, [[0, '#8a9aa8'], [.6, '#c8d0cc'], [1, '#a8b0a0']]);
-    const t1 = hill(g, 260, 140, 120, 391, '#6a7a72', ['#8a9a8a', '#4a5a52'], w, h);
-    const fogA = g.createLinearGradient(0, 200, 0, 380); fogA.addColorStop(0, 'rgba(220,228,224,0)'); fogA.addColorStop(1, 'rgba(220,228,224,.6)'); g.fillStyle = fogA; g.fillRect(0, 200, w, 180);
-    hill(g, 380, 120, 100, 393, '#4a6a4a', ['#6a8a5a', '#2e4a32', '#8aa070'], w, h);
-    // the gorge: two dark rock walls with a cave high on the left
-    g.fillStyle = '#4a4e44'; g.beginPath(); g.moveTo(0, h); g.lineTo(0, 200); g.bezierCurveTo(200, 230, 380, 300, 480, 720); g.closePath(); g.fill();
-    g.fillStyle = '#3e4238'; g.beginPath(); g.moveTo(w, h); g.lineTo(w, 220); g.bezierCurveTo(1080, 260, 900, 360, 820, 720); g.closePath(); g.fill();
-    S.dabs(g, { x: 0, y: 200, w: 500, h: 520, n: 500, cols: ['#6a6e60', '#2a2e26', '#5a7a4a', '#8a8e7a'], r0: 8, r1: 24, sq: .5, ang: 1.1, a0: .2, a1: .5, seed: 395, mask: (x, y) => x < 480 - (720 - y) * .5 });
-    S.dabs(g, { x: 800, y: 220, w: 480, h: 500, n: 500, cols: ['#5a5e52', '#22261e', '#4a6a3a', '#7a7e6a'], r0: 8, r1: 24, sq: .5, ang: -1.1, a0: .2, a1: .5, seed: 397, mask: (x, y) => x > 820 + (720 - y) * .5 });
-    g.fillStyle = '#120e0a'; g.beginPath(); g.ellipse(250, 330, 70, 50, 0, 0, TAU); g.fill(); g.fillStyle = S.rgba('#ffd090', .25); g.beginPath(); g.ellipse(250, 344, 30, 20, 0, 0, TAU); g.fill();
-    // the gorge floor path
+    sky(g, w, h, [[0, '#7a8c9c'], [.55, '#c8d0cc'], [1, '#b0b8a8']]);
+    // jagged limestone peaks of the far north, three ranges fading into the mist, snow on the highest
+    const range = (y0, amp, col, lit, snow, seed, step) => { const r = S.rng(seed), pts = [[0, h]]; for (let x = -20; x <= w + 40; x += step) pts.push([x, y0 - amp * (.35 + .65 * Math.abs(Math.sin(x * .011 + seed))) * (.6 + .4 * r())]); pts.push([w, h]);
+      g.fillStyle = col; g.beginPath(); pts.forEach((p, i) => i ? g.lineTo(p[0], p[1]) : g.moveTo(p[0], p[1])); g.closePath(); g.fill();
+      for (let i = 1; i < pts.length - 2; i++) { const [x1, y1] = pts[i], [x2, y2] = pts[i + 1]; if (y1 < y2) { g.fillStyle = lit; g.beginPath(); g.moveTo(x1, y1); g.quadraticCurveTo(x1 + (x2 - x1) * .5, y1 + (y2 - y1) * .4, x2, y2); g.lineTo(x2 - 6, y2 + 18); g.quadraticCurveTo(x1 + (x2 - x1) * .45, y1 + 30, x1 + 3, y1 + 10); g.closePath(); g.fill(); }
+        if (snow && y1 < y0 - amp * .6) { g.fillStyle = 'rgba(240,244,246,.85)'; g.beginPath(); g.moveTo(x1, y1); g.lineTo(x1 + 14, y1 + 22); g.lineTo(x1 + 4, y1 + 16); g.lineTo(x1 - 10, y1 + 26); g.closePath(); g.fill(); } }
+      S.dabs(g, { x: 0, y: y0 - amp, w, h: amp + 80, n: 220, cols: [S.mix(col, '#ffffff', .2), S.mix(col, '#000000', .25)], r0: 3, r1: 10, sq: .4, ang: 1.3, a0: .15, a1: .35, seed: seed + 5, mask: (x, y) => y > y0 - amp * .3 }); };
+    range(250, 150, '#8e98a0', 'rgba(230,236,240,.45)', true, 401, 46);
+    const f1 = g.createLinearGradient(0, 180, 0, 320); f1.addColorStop(0, 'rgba(220,228,226,0)'); f1.addColorStop(1, 'rgba(220,228,226,.55)'); g.fillStyle = f1; g.fillRect(0, 180, w, 140);
+    range(320, 130, '#6e7a78', 'rgba(210,220,220,.35)', true, 403, 38);
+    const f2 = g.createLinearGradient(0, 260, 0, 400); f2.addColorStop(0, 'rgba(220,228,226,0)'); f2.addColorStop(1, 'rgba(220,228,226,.5)'); g.fillStyle = f2; g.fillRect(0, 260, w, 140);
+    // a forested valley floor with a river winding between the walls
+    g.fillStyle = '#4e6448'; g.beginPath(); g.moveTo(0, h); g.lineTo(0, 420); for (let x = 0; x <= w; x += 40) g.lineTo(x, 400 + 14 * Math.sin(x * .02)); g.lineTo(w, h); g.closePath(); g.fill();
+    S.dabs(g, { x: 0, y: 390, w, h: 330, n: 900, cols: ['#3a5236', '#5a7a4a', '#2e4230', '#6e8a58'], r0: 4, r1: 14, sq: .7, a0: .4, a1: .8, seed: 431 });
+    g.strokeStyle = 'rgba(200,220,228,.7)'; g.lineWidth = 6; g.beginPath(); g.moveTo(560, 720); g.bezierCurveTo(600, 600, 720, 520, 660, 440); g.bezierCurveTo(620, 410, 700, 400, 760, 404); g.stroke();
+    const f3 = g.createLinearGradient(0, 380, 0, 470); f3.addColorStop(0, 'rgba(220,228,226,.45)'); f3.addColorStop(1, 'rgba(220,228,226,0)'); g.fillStyle = f3; g.fillRect(0, 380, w, 90);
+    // dark pines on the lower slopes
+    for (let i = 0; i < 70; i++) { const r = S.rng(i + 420), x = r() * w, y = 360 + r() * 50, s = 10 + r() * 12; g.fillStyle = r() < .5 ? '#2e4232' : '#3a5038'; g.beginPath(); g.moveTo(x, y - s * 2.4); g.lineTo(x + s * .7, y); g.lineTo(x - s * .7, y); g.closePath(); g.fill(); }
+    // the gorge: two craggy limestone walls with strata, cracks and moss
+    const wall = (pts, base, seed, flip) => { g.fillStyle = base; g.beginPath(); pts.forEach((p, i) => i ? g.lineTo(p[0], p[1]) : g.moveTo(p[0], p[1])); g.closePath(); g.fill();
+      g.save(); g.clip(); for (let y = 180; y < h; y += 22 + (y % 7)) { g.strokeStyle = 'rgba(30,30,26,.35)'; g.lineWidth = 2; g.beginPath(); for (let x = 0; x <= w; x += 40) { const yy = y + Math.sin(x * .03 + seed) * 6 + (flip ? -1 : 1) * x * .08; x ? g.lineTo(x, yy) : g.moveTo(x, yy); } g.stroke(); }
+      for (let i = 0; i < 40; i++) { const r = S.rng(i + seed), x = r() * w, y = 200 + r() * 520; g.strokeStyle = 'rgba(20,20,16,.5)'; g.lineWidth = 1.5; g.beginPath(); g.moveTo(x, y); g.lineTo(x + (r() - .5) * 20, y + 20 + r() * 30); g.lineTo(x + (r() - .5) * 30, y + 50 + r() * 30); g.stroke(); }
+      S.dabs(g, { x: 0, y: 180, w, h: 540, n: 700, cols: ['#8a8c80', '#3a3c34', '#5a7a44', '#a8a898', '#6a6c60'], r0: 5, r1: 20, sq: .5, ang: flip ? -1.1 : 1.1, a0: .2, a1: .5, seed: seed + 9 });
+      g.fillStyle = 'rgba(255,250,235,.18)'; g.fillRect(0, 0, w, h); g.restore(); };
+    wall([[0, h], [0, 190], [90, 205], [140, 240], [200, 250], [260, 300], [330, 330], [380, 420], [430, 520], [470, 640], [490, 720]], '#5e6056', 395, false);
+    wall([[w, h], [w, 210], [1180, 230], [1110, 280], [1040, 300], [980, 360], [920, 450], [870, 560], [840, 650], [820, 720]], '#4e5048', 397, true);
+    // the cave with its ledge, a waterfall spilling below it
+    g.fillStyle = '#120e0a'; g.beginPath(); g.ellipse(250, 330, 66, 48, 0, Math.PI, 0); g.lineTo(316, 360); g.lineTo(184, 360); g.closePath(); g.fill(); g.fillStyle = S.rgba('#ffd090', .22); g.beginPath(); g.ellipse(250, 350, 34, 16, 0, 0, TAU); g.fill();
+    g.fillStyle = '#6e7064'; g.beginPath(); g.moveTo(150, 392); g.lineTo(360, 392); g.lineTo(372, 404); g.lineTo(340, 420); g.lineTo(170, 418); g.lineTo(140, 404); g.closePath(); g.fill(); g.fillStyle = 'rgba(240,240,220,.35)'; g.fillRect(150, 390, 210, 4);
+    for (let i = 0; i < 14; i++) { const x = 300 + i * 2.2; g.strokeStyle = `rgba(230,240,245,${.35 + .3 * (i % 2)})`; g.lineWidth = 2; g.beginPath(); g.moveTo(x, 418); g.bezierCurveTo(x + 6, 480, x + 2, 560, x + 10, 640); g.stroke(); }
+    g.fillStyle = 'rgba(240,246,250,.5)'; g.beginPath(); g.ellipse(322, 645, 34, 10, 0, 0, TAU); g.fill();
+    // the gorge floor path with boulders and scrub
     g.fillStyle = '#6a6a50'; g.beginPath(); g.moveTo(480, 720); g.bezierCurveTo(560, 600, 700, 560, 820, 720); g.fill();
+    for (let i = 0; i < 12; i++) { const r = S.rng(i + 430), x = 480 + r() * 340, y = 600 + r() * 110, rs = 6 + r() * 12; g.fillStyle = '#5a5a4c'; g.beginPath(); g.ellipse(x, y, rs * 1.3, rs, 0, 0, TAU); g.fill(); g.fillStyle = 'rgba(240,240,220,.3)'; g.beginPath(); g.ellipse(x - rs * .3, y - rs * .4, rs * .6, rs * .3, 0, 0, TAU); g.fill(); }
     for (let i = 0; i < 16; i++) { const r = S.rng(i + 400); S.dabs(g, { x: 480 + r() * 340, y: 560 + r() * 140, w: 30, h: 26, n: 12, cols: ['#3a5a32', '#5a7a42'], r0: 4, r1: 10, sq: .7, a0: .5, a1: .9, seed: i + 410 }); }
   });
 })(window);

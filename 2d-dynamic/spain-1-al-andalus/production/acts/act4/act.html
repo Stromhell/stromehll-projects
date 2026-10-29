@@ -157,12 +157,11 @@ window.SHOTS = [
         return; }
       VP.drawSet(c, 'towngate'); const L = DAYL({ L: [.6, -.8] }), out = seg(lt, Sh.tV - .5, Sh.tJ);
       c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = S.rgba('#5a5a7a', .2 + .2 * seg(lt, Sh.tS - .5, Sh.tS + .5)); c.fillRect(0, 0, 1280, 720); c.restore();
-      c.fillStyle = '#b8966a'; c.fillRect(420, 584, 440, 120); S.strokes(c, { x: 420, y: 584, w: 440, h: 120, n: 120, cols: ['#d8b88a', '#7a5a3a'], l0: 6, l1: 18, ang: 0, jit: .2, w0: 1, w1: 2, a0: .2, a1: .5, seed: 381 });
       c.fillStyle = '#4a2a18'; c.fillRect(540, 300, 30, 280); c.fillRect(710, 300, 30, 280);
+      // two guards in Almohad white watch him go (drawn first: they stand behind his path)
+      for (const gx of [500, 780]) S.person(c, VP.vary(C.BERBER2, gx), gx, 594, 32, Object.assign(S.idle(lt, gx), { face: gx < 640 ? 1 : -1 }), { angry: .6, time: lt }, L);
       const x = lerp(640, 360, out), y = lerp(586, 680, out);
       VP.figure(c, [x, y], { k: -.5, sy: -.22, a: .3, blur: 2 }, cc => S.person(cc, AVERROES, x, y, lerp(34, 44, out), Object.assign(out > 0 && out < 1 ? walk(lt * .6) : S.idle(lt, 0), { face: -1, shN: 50, elN: 70, holdN: wr => { cc.fillStyle = '#7a2a1a'; cc.fillRect(wr[0] - 16, wr[1] - 20, 32, 14); cc.fillStyle = '#2a4a6a'; cc.fillRect(wr[0] - 14, wr[1] - 32, 28, 12); cc.fillStyle = '#2f6b4a'; cc.fillRect(wr[0] - 15, wr[1] - 8, 30, 12); } }), { blink: S.blinkAt(lt, 0), worry: .7, look: [-.5, .3], time: lt }, L));
-      // two guards in Almohad white watch him go
-      for (const gx of [500, 780]) S.person(c, C.BERBER2, gx, 594, 32, Object.assign(S.idle(lt, gx), { face: gx < 640 ? 1 : -1 }), { angry: .6, time: lt }, L);
     },
     over: [(c, lt, u, Sh) => K.card(c, 'THE ALMOHADS', lt, { at: Sh.tA + .2, x: 1520, y: 200, px: 60, rot: 3, until: Sh.tV }), (c, lt, u, Sh) => K.card(c, 'AVERROES · EXILED', lt, { at: Sh.tV + .3, x: 1500, y: 200, px: 50, rot: -3, until: Sh.tJ }), (c, lt, u, Sh) => K.card(c, 'MAIMONIDES · FLED', lt, { at: Sh.tJ + .5, x: 1500, y: 200, px: 50, rot: 3 })],
     sfx: [['almohads', 'hit', .4], ['averroes', 'gate_slam', .4], ['maimonides', 'whoosh_soft', .3]] },

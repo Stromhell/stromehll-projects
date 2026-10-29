@@ -183,9 +183,12 @@ window.SHOTS = [
     draw: (c, lt, u, Sh) => {
       c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = S.rgba('#6a5a7a', .3 + .3 * seg(lt, Sh.tR - 1, Sh.tR + 1)); c.fillRect(0, 0, 1280, 720); c.restore();
       const L = DAYL({ L: [.8, -.6] });
-      S.person(c, TAXMAN, 660, 600, 40, Object.assign(S.idle(lt, 0), { face: -1, sitY: .8, shN: 50, elN: 60 + 10 * Math.sin(lt * 5) }), { blink: S.blinkAt(lt, 0), look: [-.3, .7], time: lt }, L);
+      // the tax collector sits on a stool behind the table, both feet on the ground
+      c.fillStyle = '#3a2210'; c.fillRect(672, 556, 34, 6); c.fillRect(676, 562, 5, 52); c.fillRect(698, 562, 5, 52); S.contact(c, 680, 614, 40, .35);
+      S.person(c, TAXMAN, 680, 614, 36, Object.assign(VP.sit(TAXMAN, lt, 2), { face: -1, sitY: VP.sitY(TAXMAN) * 1.0 - .15, shN: 50, elN: 60 + 10 * Math.sin(lt * 5) }), { blink: S.blinkAt(lt, 0), look: [-.3, .7], time: lt }, L);
       c.fillStyle = '#4a2a14'; c.fillRect(520, 560, 260, 16); c.fillRect(540, 576, 12, 60); c.fillRect(750, 576, 12, 60);
-      for (let k = 0; k < 7; k++) { const t0 = .5 + k * .9, q = seg(lt, t0, t0 + .35); if (lt < t0) continue; const y = q < 1 ? lerp(520, 552 - (k % 4) * 3, q) : 552 - (k % 4) * 3; coin(c, 590 + (k % 3) * 10 + Math.floor(k / 3) * 30, y, 9); }
+      // the potter slides each coin across the table top onto the stacks (never through the air)
+      for (let k = 0; k < 7; k++) { const t0 = .5 + k * .9, q = E.out(seg(lt, t0, t0 + .5)); if (lt < t0) continue; const st = Math.floor(k / 3), h = k % 3, tx = 600 + st * 30, ty = 556 - h * 4; coin(c, lerp(530, tx, q), ty, 9); }
       c.fillStyle = '#5a3a1e'; c.fillRect(700, 528, 60, 32); c.fillStyle = '#c8962a'; c.fillRect(700, 540, 60, 4);
       VP.figure(c, [440, 640], sh2(-.3), cc => S.person(cc, POTTER, 440, 640, 42, Object.assign(S.idle(lt, 2), { face: 1, lean: 6, shN: 40, elN: 80, holdN: wr => { cc.fillStyle = '#4a3a2a'; cc.beginPath(); cc.ellipse(wr[0], wr[1], 12, 6, 0, 0, TAU); cc.fill(); } }), { blink: S.blinkAt(lt, 2), worry: .6, look: [.7, .4], time: lt }, L));
     },

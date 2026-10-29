@@ -94,8 +94,8 @@ window.SHOTS = [
       const Ld = { L: [1, -.6], amb: '#1a1428', ambA: .65, rim: '#ffb070', rimA: .5, tint: '#2a2040', tintA: .2, sw: .2, rw: .04 };
       for (const [ch, x, i] of [[C.NOBLE1, 150, 0], [C.NOBLE3, 250, 1]]) S.person(c, ch, x, 640, 46, Object.assign(S.idle(lt, i + 4), { face: 1, lean: -2 }), { blink: S.blinkAt(lt, i + 2), angry: .4 + .4 * seg(lt, Sh.tN, Sh.tN + 1), look: [.9, 0], time: lt }, Ld);
       VP.figure(c, [600, 650], { k: .6, sy: -.2, a: .4, blur: 3 }, cc => S.person(cc, crowned ? RODERIC_K : C.RODERIC, 600, 650, 54, Object.assign(S.idle(lt, 0), { face: 1, tilt: -4 * (1 - down) + 2, lean: 4 * (1 - down) }), { blink: S.blinkAt(lt, 1), smile: crowned ? .5 : 0, look: [.3, crowned ? 0 : -.5], time: lt }, L));
-      VP.figure(c, [720, 650], { k: .6, sy: -.2, a: .4, blur: 3 }, cc => S.person(cc, C.BISHOP, 720, 650, 52, Object.assign(S.idle(lt, 1), { face: -1, shN: 120 - 40 * down, elN: 30, shF: 110 - 40 * down, elF: 30,
-        holdN: crowned ? null : (wr) => { cc.save(); cc.translate(wr[0] - 30, wr[1] - 6); X.crown(cc, 32, {}, L, { tone: col => col, celT: (q, p, t) => { q.fillStyle = t.base; q.fill(p); q.strokeStyle = t.shade; q.lineWidth = 2; q.stroke(p); }, front: true }); cc.restore(); } }), { blink: S.blinkAt(lt, 2), look: [-.6, .2], time: lt }, L));
+      VP.figure(c, [730, 650], { k: .6, sy: -.2, a: .4, blur: 3 }, cc => S.person(cc, C.BISHOP, 730, 650, 52, Object.assign(S.idle(lt, 1), { face: -1, shN: crowned ? 20 : 142 - 14 * down, elN: crowned ? 20 : 10, shF: crowned ? 15 : 136 - 14 * down, elF: crowned ? 20 : 10,
+        holdN: crowned ? null : (wr) => { cc.save(); cc.translate(wr[0] - 4, wr[1] + 10); X.crown(cc, 32, {}, L, { tone: col => col, celT: (q, p, t) => { q.fillStyle = t.base; q.fill(p); q.strokeStyle = t.shade; q.lineWidth = 2; q.stroke(p); }, front: true }); cc.restore(); } }), { blink: S.blinkAt(lt, 2), look: [-.6, .2], time: lt }, L));
       if (crowned) VP.glow(c, 600, 340, 90, '#ffe08a', .4 * pulse(lt, Sh.tC + 1.2, 1.4));
       // dust in the beam
       c.save(); c.beginPath(); c.moveTo(225, 110); c.lineTo(275, 110); c.lineTo(760, 660); c.lineTo(520, 660); c.closePath(); c.clip(); VP.motes(c, lt, 200, 100, 600, 560, { n: 70, a: .7 }); c.restore();
@@ -162,8 +162,14 @@ window.SHOTS = [
       S.dabs(c, { x: 860, y: 120, w: 430, h: 400, n: 120, cols: ['#5a4a5a', '#9a8a90', '#6a7a5a'], r0: 6, r1: 18, sq: .5, ang: 1, a0: .2, a1: .45, seed: 601, mask: (x, y) => y > 120 + Math.abs(x - 1110) * .8 });
       VP.glow(c, 960, 360, 300, '#ffe6b0', .3); VP.rays(c, 960, 350, lt, { ang: 2.2, spread: .15, n: 7, len: 700, a: .05 });
       for (const [x0, y, s, d] of [[560, 540, 1, 0], [760, 520, .8, .5], [420, 512, .65, 1]]) { const x = lerp(x0 - 260, x0, E.out(seg(lt, d, 4 + d))), bob = Math.sin(lt * 1.6 + d) * 3 * (1 - seg(lt, 3 + d, 4 + d)); H.boat(c, x, y + bob, s, lt); }
-      for (let k = 0; k < 7; k++) { const t0 = 3 + k * .6, q = seg(lt, t0, t0 + 6); if (q <= 0) continue; const x = 420 + q * 520 - (k % 2) * 30, y = 590 + (k % 3) * 34, uu = 28 + (k % 3) * 4;
-        VP.figure(c, [x, y], { k: -.3, sy: -.3, a: .35, blur: 2 }, cc => S.person(cc, k % 2 ? C.BERBER : C.BERBER2, x, y, uu, Object.assign(walk(lt * 1.1 + k), { face: 1 }), { blink: S.blinkAt(lt, k), time: lt }, L)); }
+      // the men climb down from the beached boats and wade out of the sea onto the sand, each to his own spot
+      const BO = [[560, 540, 0], [760, 520, .5], [420, 512, 1]], men = [];
+      for (let k = 0; k < 7; k++) { const t0 = 4.2 + k * .55, q = E.io(seg(lt, t0, t0 + 4.5)), b = BO[k % 3], bx = lerp(b[0] - 260, b[0], E.out(seg(lt, b[2], 4 + b[2]))), sx = bx - 20 + (k >> 1) * 22, sy = b[1] - 16;
+        const ex = 330 + k * 95, ey = 590 + [0, 40, 18, 56, 8, 46, 28][k], x = lerp(sx, ex, q), y = lerp(sy, ey, q); men.push([y, k, x, q]); }
+      men.sort((m1, m2) => m1[0] - m2[0]).forEach(([y, k, x, q]) => { const uu = 24 + (y - 500) * .1, ch = VP.vary(k % 2 ? C.BERBER : C.BERBER2, k + 30, { builds: ['man', 'broad', 'man'] }), wade = K.clamp((548 - y) / 30) * 2.2 * uu;
+        const draw = cc => S.person(cc, ch, x, y, uu, Object.assign(q > 0 && q < 1 ? walk(lt * 1.1 + k) : S.idle(lt, k), { face: 1 }), { blink: S.blinkAt(lt, k), time: lt }, L);
+        if (wade > 0) { c.save(); c.beginPath(); c.rect(0, 0, 1280, y - wade); c.clip(); draw(c); c.restore(); c.strokeStyle = S.rgba('#ffffff', .5); c.lineWidth = 2; c.beginPath(); c.ellipse(x, y - wade, uu * .7 + Math.sin(lt * 3 + k) * 2, 3, 0, 0, TAU); c.stroke(); }
+        else VP.figure(c, [x, y], { k: -.3, sy: -.3, a: .35, blur: 2 }, draw); });
       VP.motes(c, lt, 0, 300, 1280, 400, { n: 30, a: .35 });
     },
     over: [(c, lt) => K.dateTag(c, 'SPRING 711', lt, { at: .5 }), (c, lt, u, Sh) => { const a = seg(lt, Sh.tJ - .2, Sh.tJ + .4); if (a <= 0) return; const m = E.io(seg(lt, Sh.tG - .5, Sh.tG + .3));
@@ -231,9 +237,13 @@ window.SHOTS = [
       // the gate doors swing open, light floods through
       const op = E.io(seg(lt, Sh.tO, Sh.tO + 2)); c.fillStyle = '#4a2a18'; c.fillRect(540, 300, 100 * (1 - op * .85), 280); c.fillRect(640 + 100 * op * .85, 300, 100 * (1 - op * .85), 280);
       if (op > 0) { c.save(); c.beginPath(); c.rect(540 + 100 * (1 - op * .85), 300, 200 - 200 * (1 - op * .85), 280); c.clip(); c.fillStyle = '#f0d8a0'; c.fillRect(540, 300, 200, 280); for (let k = 0; k < 5; k++) { const hx = 548 + k * 40, hh = 90 + (k * 37 % 50); c.fillStyle = ['#f4e2bc', '#e8cc9a', '#f0d8b0'][k % 3]; c.fillRect(hx, 580 - hh, 36, hh); c.fillStyle = '#c06a44'; c.beginPath(); c.moveTo(hx - 4, 580 - hh); c.lineTo(hx + 18, 566 - hh); c.lineTo(hx + 40, 580 - hh); c.fill(); c.fillStyle = '#5a3a24'; c.fillRect(hx + 12, 560 - hh * .5, 10, 14); } c.fillStyle = '#d8b88a'; c.fillRect(540, 560, 200, 20); c.restore(); VP.glow(c, 640, 480, 260, '#fff0c0', .25 * op); }
+      // townsfolk walk out through the open gate and stop behind the table to watch (clipped to the doorway while still inside)
+      for (let k = 0; k < 3; k++) { const q = E.out(seg(lt, Sh.tO + 1.2 + k * .7, Sh.tO + 4.2 + k * .7)); if (q <= 0) continue; const gx = [572, 640, 708][k], x = lerp(640, gx, q), y = lerp(560, [586, 592, 588][k], q), uu = lerp(28, 37, q), ch = VP.vary(k === 1 ? C.TOWNSMAN : C.NOBLE2, k + 90);
+        c.save(); if (q < .45) { c.beginPath(); c.rect(540 + 100 * (1 - op * .85), 0, 200 - 200 * (1 - op * .85), 580); c.clip(); } S.person(c, ch, x, y, uu, Object.assign(q < 1 ? walk(lt + k) : S.idle(lt, k), { face: x < 640 ? -1 : 1 }), { time: lt, smile: .3, blink: S.blinkAt(lt, k + 3) }, L); c.restore(); }
       const seal = seg(lt, Sh.tS + .4, Sh.tS + .8), press = pulse(lt, Sh.tS + .6, .5);
-      VP.figure(c, [520, 640], { k: -.5, sy: -.2, a: .35, blur: 2 }, cc => S.person(cc, C.BISHOP, 520, 640, 46, Object.assign(S.idle(lt, 0), { face: 1, shN: 60, elN: 40 + 20 * Math.sin(lt * 6) * (lt < Sh.tS) }), { blink: S.blinkAt(lt, 1), look: [.5, .5], time: lt }, L));
-      VP.figure(c, [760, 640], { k: -.5, sy: -.2, a: .35, blur: 2 }, cc => S.person(cc, C.BERBER2, 760, 640, 48, Object.assign(S.idle(lt, 1), { face: -1, shN: 50 + 30 * seal - 20 * press, elN: 30 }), { blink: S.blinkAt(lt, 2), smile: .3 * op, look: [-.5, .5], time: lt }, L));
+      const aside = E.io(seg(lt, Sh.tO - .2, Sh.tO + 1.6)), bx = lerp(520, 440, aside), mx = lerp(760, 836, aside), stepB = aside > 0 && aside < 1;
+      VP.figure(c, [bx, 640], { k: -.5, sy: -.2, a: .35, blur: 2 }, cc => S.person(cc, C.BISHOP, bx, 640, 46, Object.assign(stepB ? walk(lt * 1.2) : S.idle(lt, 0), { face: 1, shN: aside > 0 ? 15 : 60, elN: 40 + 20 * Math.sin(lt * 6) * (lt < Sh.tS) }), { blink: S.blinkAt(lt, 1), look: [.5, .5], time: lt }, L));
+      VP.figure(c, [mx, 640], { k: -.5, sy: -.2, a: .35, blur: 2 }, cc => S.person(cc, C.BERBER2, mx, 640, 48, Object.assign(stepB ? walk(lt * 1.2 + 1) : S.idle(lt, 1), { face: stepB ? 1 : -1, shN: aside > 0 ? 15 : 50 + 30 * seal - 20 * press, elN: 30 }), { blink: S.blinkAt(lt, 2), smile: .3 * op, look: [-.5, .5], time: lt }, L));
       // the signing table in front of them, so they stand behind it
       c.fillStyle = S.rgba('#2a1a10', .3); c.beginPath(); c.ellipse(650, 690, 230, 10, 0, 0, TAU); c.fill();
       c.fillStyle = '#5a3420'; c.fillRect(430, 600, 420, 18); c.fillRect(450, 618, 14, 70); c.fillRect(816, 618, 14, 70); c.fillStyle = '#e8d8b0'; c.fillRect(430, 600, 420, 4);
@@ -241,7 +251,6 @@ window.SHOTS = [
       c.fillStyle = '#f4e8c8'; c.fillRect(580, 590, 120, 10); const w = seg(lt, .6, Sh.tS); c.strokeStyle = '#2a1a10'; c.lineWidth = 1.2; c.beginPath(); for (let x = 0; x < 100 * w; x += 3) { const y = 592 + Math.sin(x * .9) * 1.5; x ? c.lineTo(584 + x, y) : c.moveTo(584, y); } c.stroke();
       if (lt > Sh.tS + .6) { c.fillStyle = '#9a1e1a'; c.beginPath(); c.ellipse(680, 594, 8, 3, 0, 0, TAU); c.fill(); VP.glow(c, 680, 590, 30, '#ff8a6a', .4 * press); }
       // townsfolk walking through once the gate is open
-      for (let k = 0; k < 3; k++) { const q = seg(lt, Sh.tO + 1.5 + k * .8, Sh.tO + 6 + k * .8); if (q <= 0 || q >= 1) continue; const x = lerp(640, 300 + k * 40, q), y = 600 + q * 20, uu = 24 + q * 10; S.person(c, k === 1 ? C.TOWNSMAN : C.NOBLE2, x, y, uu, Object.assign(walk(lt + k), { face: -1 }), { time: lt, smile: .3 }, L); }
       VP.motes(c, lt, 300, 300, 700, 400, { n: 30, a: .4 });
     },
     over: [(c, lt, u, Sh) => K.card(c, 'TREATIES,\nNOT SIEGES', lt, { at: Sh.tS - .5, x: 1560, y: 200, px: 50, rot: 3 }), (c, lt, u, Sh) => K.card(c, 'THE JIZYA\n(A TAX)', lt, { at: Sh.tJ + .2, x: 1540, y: 820, px: 56, rot: -3 })],
@@ -256,8 +265,7 @@ window.SHOTS = [
       for (let k = 0; k < 6; k++) { const x = ((lt * (14 + k * 4) + k * 260) % 1600) - 200, y = 300 + k * 50; const g = c.createRadialGradient(x, y, 10, x, y, 260); g.addColorStop(0, 'rgba(225,232,230,.35)'); g.addColorStop(1, 'rgba(225,232,230,0)'); c.fillStyle = g; c.fillRect(x - 300, y - 300, 600, 600); }
       // Pelayo and his band on the ledge under the cave
       const raise = seg(lt, Sh.tB - .4, Sh.tB + .2);
-      for (const [ch, x, uu, i] of [[C.PELAYO, 250, 26, 0], [C.SOLDIER, 210, 22, 1], [C.SOLDIER, 290, 22, 2], [C.TOWNSMAN, 320, 20, 3]]) S.person(c, ch, x, 392, uu, Object.assign(S.idle(lt, i), { face: 1, shN: i === 0 ? 30 + 120 * raise : 20, elN: 20 }), { blink: S.blinkAt(lt, i), angry: .5, look: [.6, .6], time: lt }, L);
-      c.fillStyle = '#4a4e44'; c.fillRect(170, 390, 180, 14);
+      for (const [ch, x, uu, i] of [[C.PELAYO, 250, 24, 0], [VP.vary(C.SOLDIER, 61), 196, 23, 1], [VP.vary(C.SOLDIER, 62), 296, 23, 2], [VP.vary(C.TOWNSMAN, 63), 340, 22, 3]]) S.person(c, ch, x, 394, uu, Object.assign(S.idle(lt, i), { face: 1, shN: i === 0 ? 30 + 120 * raise : 20, elN: 20 }), { blink: S.blinkAt(lt, i), angry: .5, look: [.6, .6], time: lt }, L);
       // attackers coming up the gorge path
       for (let i = 0; i < 26; i++) { const r = S.rng(i + 1200), q = (r() * .6 + lt * .02) % 1, x = 520 + r() * 260 + q * 40, y = 700 - q * 120 + r() * 20, s = 2.2 - q; const back = seg(lt, Sh.tB + 1, Sh.tB + 3); H.tiny(c, x + back * 60 * r(), y + back * 50, s, r() < .5 ? '#e8dcc2' : '#2f4a6a', lt, i, { helm: '#e8e0d0', skin: '#a8784a', walk: true }); }
       // rocks tumbling down from the cliffs
