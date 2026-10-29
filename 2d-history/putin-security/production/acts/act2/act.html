@@ -1,0 +1,86 @@
+<!doctype html><html><head><meta charset="utf-8"><title>PU act 2 - The Fortress on Wheels</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "alium";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../pu_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['moscow_road', 'airfield']) K.load(n, PL + n + '.jpg');
+const SW = 1920, SH = 1080, INK = '#1d1712', RED = '#d42a20', GOLD = '#e8b44a';
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+const plateAt = (c, name, px, py, sx, sy, z) => { const s2 = z * 1920 / 2560; c.setTransform(s2, 0, 0, s2, sx - px * s2, sy - py * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); return s2; };
+const backdrop = (name, dim = .55, blur = 6) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${1 - dim})`; plateAt(c, name, 1280, 720, 960, 540, 1.08); c.restore(); c.setTransform(1, 0, 0, 1, 0, 0); };
+// label with a leader line (screen)
+const callout = (c, x, y, tx, ty, txt, a, col = GOLD) => { if (a <= 0) return; c.save(); c.globalAlpha = Math.min(1, a); c.strokeStyle = col; c.lineWidth = 4; c.beginPath(); c.arc(x, y, 12, 0, 7); c.stroke(); c.beginPath(); c.moveTo(x, y); c.lineTo(tx, ty); c.stroke(); c.restore(); c.save(); c.globalAlpha = Math.min(1, a); K.outlined(c, txt, tx, ty - 26, 40, { fill: col }); c.restore(); };
+// cutaway overlay for the limo at screen centre (limo drawn with PU.limo at (cx, cy) scale s)
+const cutaway = (c, cx, cy, s, u, lt, opts = {}) => { if (u <= 0) return; c.save(); c.translate(cx, cy); c.scale(s, s); c.globalAlpha = u; c.fillStyle = '#5a3a2a'; c.fillRect(-140, -138, 340, 90); c.fillStyle = '#7a4a32'; for (const sx of [-120, 30]) { c.beginPath(); c.roundRect(sx, -132, 90, 70, 12); c.fill(); c.strokeStyle = INK; c.lineWidth = 3; c.stroke(); }
+  c.fillStyle = '#c8a050'; c.fillRect(140, -110, 40, 50); c.fillStyle = 'rgba(200,230,255,.8)'; for (const gx of [146, 162]) c.fillRect(gx, -124, 8, 14);
+  c.strokeStyle = '#8a929c'; c.lineWidth = 10; c.setLineDash([22, 8]); c.beginPath(); c.moveTo(-300, -50); c.lineTo(-298, -112); c.quadraticCurveTo(-290, -122, -250, -124); c.lineTo(-150, -128); c.lineTo(-90, -194); c.lineTo(130, -194); c.lineTo(180, -180); c.lineTo(230, -134); c.lineTo(300, -122); c.lineTo(310, -50); c.stroke(); c.setLineDash([]);
+  if (opts.tank) { c.fillStyle = `rgba(232,180,74,${.5 + .3 * Math.sin(lt * 5)})`; c.beginPath(); c.roundRect(-290, -100, 90, 46, 10); c.fill(); }
+  if (opts.fan) { c.save(); c.translate(-10, -168); c.rotate(lt * 12); c.strokeStyle = '#bfe4ff'; c.lineWidth = 6; for (let k = 0; k < 4; k++) { c.rotate(Math.PI / 2); c.beginPath(); c.moveTo(0, 0); c.quadraticCurveTo(10, -10, 0, -22); c.stroke(); } c.restore(); }
+  if (opts.hatch) { c.strokeStyle = `rgba(120,255,160,${.6 + .4 * Math.sin(lt * 6)})`; c.lineWidth = 5; c.setLineDash([10, 8]); c.strokeRect(-60, -60, 90, 14); c.setLineDash([]); }
+  c.restore(); };
+const speedo = (c, x, y, v, a) => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.fillStyle = '#14161a'; c.strokeStyle = '#c8ccd2'; c.lineWidth = 10; c.beginPath(); c.arc(0, 0, 300, 0, 7); c.fill(); c.stroke();
+  for (let k = 0; k <= 20; k++) { const an = Math.PI * .75 + k / 20 * Math.PI * 1.5; c.strokeStyle = k > 16 ? RED : '#e8e8ea'; c.lineWidth = k % 2 ? 3 : 6; c.beginPath(); c.moveTo(Math.cos(an) * 250, Math.sin(an) * 250); c.lineTo(Math.cos(an) * (k % 2 ? 230 : 210), Math.sin(an) * (k % 2 ? 230 : 210)); c.stroke(); if (k % 4 === 0) { c.font = '30px Oswald'; c.fillStyle = '#e8e8ea'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(String(k * 10), Math.cos(an) * 175, Math.sin(an) * 175); } }
+  const an = Math.PI * .75 + Math.min(1, v / 200) * Math.PI * 1.5; c.strokeStyle = RED; c.lineWidth = 10; c.lineCap = 'round'; c.beginPath(); c.moveTo(-Math.cos(an) * 30, -Math.sin(an) * 30); c.lineTo(Math.cos(an) * 230, Math.sin(an) * 230); c.stroke(); c.fillStyle = '#c8ccd2'; c.beginPath(); c.arc(0, 0, 24, 0, 7); c.fill();
+  c.font = '64px Anton'; c.fillStyle = '#fff'; c.textAlign = 'center'; c.fillText(Math.round(v) + '', 0, 140); c.font = '26px Oswald'; c.fillText('KM/H', 0, 180); c.restore(); };
+const smokeCloud = (x, y, at) => (c, lt) => { const u = lt - at; if (u < 0) return; for (let k = 0; k < 22; k++) { const life = Math.min(1, u / (1.2 + (k % 5) * .3)), r = (60 + k * 9) * (.3 + life), ox = Math.cos(k * 2.3) * 160 * life, oy = -Math.abs(Math.sin(k * 1.7)) * 140 * life; c.fillStyle = `rgba(${170 + k % 3 * 20},${170 + k % 3 * 20},${175 + k % 3 * 20},${.75 * (1 - Math.max(0, u - 2.4) / 2.2)})`; c.beginPath(); c.arc(x + ox, y + oy, r, 0, 7); c.fill(); } if (u < .25) { c.fillStyle = `rgba(255,220,120,${1 - u * 4})`; c.beginPath(); c.arc(x, y - 40, 220 * (u * 4 + .3), 0, 7); c.fill(); } };
+const barrier = (c, x, y, w) => { c.fillStyle = 'rgba(0,0,0,.35)'; c.beginPath(); c.ellipse(x, y + 6, w / 2 + 20, 16, 0, 0, 7); c.fill(); c.fillStyle = '#9a9a96'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.moveTo(x - w / 2, y); c.lineTo(x - w / 2 + 30, y - 190); c.lineTo(x + w / 2 - 30, y - 190); c.lineTo(x + w / 2, y); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#d42a20'; for (let k = 0; k < 4; k++) c.fillRect(x - w / 2 + 50 + k * (w - 100) / 4, y - 150, (w - 100) / 8, 30); };
+const LX = (lt, t0, dur, x0, x1) => x0 + (x1 - x0) * K.seg(lt, t0, t0 + dur);
+
+window.SHOTS = [
+  // 1 the black limousine glides along a grey Moscow highway in sleet
+  { plate: 'moscow_road', cam: { z: [1.12, 1.2], x: [1100, 1400], y: [880, 880], ease: E.io }, bed: [['rain_loop', .55], ['city_loop', .2]],
+    live: [(c, lt, u, S) => { const x = LX(lt, 0, S.end - S.start, -300, 2000); PU.limo(c, x, 1220, 1.3, x / 70, 1); }, PU.sleet(240, .32)],
+    init: S => { const tA = A.at(S, 'Aurus Senat', 2); S.D.over = [(c, lt) => K.card(c, 'AURUS SENAT', lt, { at: tA, x: 480, y: 220, px: 64, rot: -4 })]; S.D.sfx = [[.1, 'whoosh', .4], [tA, 'pop', .4]]; } },
+  // 2 cutaway: plush cabin on top, thick armour in the shell
+  { draw: (c, lt, u, S) => { backdrop('moscow_road', .6)(c); PU.limo(c, 960, 780, 2.3, 0, 1); cutaway(c, 960, 780, 2.3, K.seg(lt, .3, 1.2), lt);
+      callout(c, 960 - 40 * 2.3, 780 - 130 * 2.3, 520, 190, 'LEATHER · SOFT SEATS · BAR', K.seg(lt, S.tL, S.tL + .4)); callout(c, 960 - 290 * 2.3, 780 - 80 * 2.3, 300, 900, 'BUILT LIKE A VAULT', K.seg(lt, S.tV, S.tV + .4), '#ff9a8a'); },
+    bed: [['hum_loop', .3]],
+    init: S => { S.tL = A.at(S, 'leather', 1); S.tV = A.at(S, 'vault', 5.8); S.D.sfx = [[.3, 'whoosh_soft', .4], [S.tL, 'pop', .4], [S.tV, 'door_slam', .45]]; } },
+  // 3 an imagined ambush: figures crouched behind a barrier as the car passes
+  { plate: 'moscow_road', cam: { z: [1.12, 1.16], x: [1280, 1300], y: [900, 900] }, bed: [['rain_loop', .5], ['tension', .35]],
+    live: [(c, lt, u, S) => { const x = LX(lt, 0, S.end - S.start + 2, 2600, 900); PU.limo(c, x, 1150, 1.1, -x / 70, -1); }, PU.sleet(200, .3)],
+    front: [(c) => barrier(c, 520, 1400, 560), (c, lt, u, S) => { if (lt < S.tF) return; for (let k = 0; k < 2; k++) { const f = (lt * 9 + k * .5) % 1; if (f < .35) { c.fillStyle = `rgba(255,230,140,${1 - f * 2.5})`; c.beginPath(); c.arc(640 + k * 220, 1150, 30 + f * 60, 0, 7); c.fill(); } } }],
+    figs: [{ x: 420, y: 1420, s: 1.6, costume: 'leather', hair: 'short', hairCol: '#1a1414', seed: 22, facing: 1, pose: 'squat', mood: 'angry', anim: (o, lt, u, S) => { if (lt > S.tF) o.pose = 'point'; } },
+      { x: 700, y: 1420, s: 1.6, costume: 'leather', hair: 'bald', hairCol: '#1a1414', seed: 23, facing: 1, pose: 'squat', mood: 'angry', anim: (o, lt, u, S) => { if (lt > S.tF + .2) o.pose = 'point'; } }],
+    init: S => { S.tF = A.at(S, 'open fire', 3.4); S.D.over = [(c, lt) => K.card(c, 'IMAGINE AN AMBUSH', lt, { at: .3, x: 1460, y: 220, px: 52, rot: 3 })]; S.D.sfx = [[.3, 'tension', .3], [S.tF, 'hit', .5], [S.tF + .15, 'hit', .45], [S.tF + .3, 'hit', .45]]; } },
+  // 4 rounds flatten against the window glass
+  { draw: (c, lt, u, S) => { backdrop('moscow_road', .7)(c); c.save(); c.fillStyle = '#1a1c22'; c.fillRect(260, 140, 1400, 800); c.strokeStyle = INK; c.lineWidth = 14; c.strokeRect(260, 140, 1400, 800); const g = c.createLinearGradient(300, 180, 1600, 900); g.addColorStop(0, 'rgba(120,140,170,.55)'); g.addColorStop(1, 'rgba(40,50,70,.55)'); c.fillStyle = g; c.fillRect(300, 180, 1320, 720); c.restore();
+      const H = [[620, 420], [1180, 360], [900, 620], [1400, 640], [520, 720], [1060, 480]]; H.forEach(([x, y], i) => { const t0 = .4 + i * .55; if (lt < t0) return; const a = Math.min(1, (lt - t0) * 6); c.save(); c.globalAlpha = a; c.strokeStyle = 'rgba(230,240,255,.85)'; c.lineWidth = 2.5; for (let k = 0; k < 9; k++) { const an = k / 9 * 6.28 + i; c.beginPath(); c.moveTo(x, y); c.lineTo(x + Math.cos(an) * (60 + (k * 37 % 40)), y + Math.sin(an) * (60 + (k * 37 % 40))); c.stroke(); } c.beginPath(); c.arc(x, y, 34, 0, 7); c.stroke(); c.fillStyle = '#8a8070'; c.beginPath(); c.ellipse(x, y, 16, 13, i, 0, 7); c.fill(); c.restore(); }); },
+    bed: [['tension', .3]],
+    init: S => { const tA = A.at(S, 'armour-piercing', 2.8); S.D.over = [(c, lt) => K.card(c, 'EVEN ARMOUR-PIERCING\n(REPORTEDLY)', lt, { at: tA, x: 960, y: 980, px: 42, rot: -2 })]; S.D.sfx = [.4, .95, 1.5, 2.05, 2.6, 3.15].map(t => [t, 'hit', .45]); } },
+  // 5 a grenade under the car; it rolls on out of the smoke
+  { plate: 'moscow_road', cam: { z: [1.12, 1.16], x: [1280, 1280], y: [900, 900] }, bed: [['rain_loop', .45]],
+    init: S => { const tG = A.at(S, 'grenade', .8), tR = A.at(S, 'rolls on', 3.2);
+      S.D.live = [(c, lt) => { const x = LX(lt, 0, S.end - S.start, 300, 2200); PU.limo(c, x, 1220, 1.3, x / 70, 1); }, smokeCloud(1120, 1200, tG + .4), PU.sleet(200, .3)];
+      S.D.over = [(c, lt) => K.card(c, 'NOT A SCRATCH', lt, { at: tR + .4, x: 1460, y: 220, px: 56, rot: 3 })];
+      S.D.sfx = [[tG, 'thud', .45], [tG + .4, 'hit', .9], [tG + .45, 'thud', .7], [tR, 'whoosh', .4]]; } },
+  // 6 diagram: sealed tank and run-flat tyres
+  { draw: (c, lt, u, S) => { backdrop('moscow_road', .6)(c); PU.limo(c, 960, 780, 2.3, 0, 1); cutaway(c, 960, 780, 2.3, .6, lt, { tank: lt > S.tT }); callout(c, 960 - 245 * 2.3, 780 - 77 * 2.3, 420, 220, 'SEALED TANK', K.seg(lt, S.tT, S.tT + .4));
+      for (const wx of [-200, 200]) { if (lt > S.tY) { c.save(); c.strokeStyle = `rgba(120,255,160,${.6 + .4 * Math.sin(lt * 6)})`; c.lineWidth = 6; c.beginPath(); c.arc(960 + wx * 2.3, 780 - 44 * 2.3, 60 * 2.3, 0, 7); c.stroke(); c.restore(); } } callout(c, 960 + 200 * 2.3, 780 - 44 * 2.3 + 140, 1500, 960, 'RUN-FLAT TYRES', K.seg(lt, S.tY, S.tY + .4), '#9be29b'); },
+    bed: [['hum_loop', .3]],
+    init: S => { S.tT = A.at(S, 'fuel tank', .8); S.tY = A.at(S, 'tyres', 3.8); S.D.sfx = [[S.tT, 'pop', .45], [S.tY, 'pop', .45]]; } },
+  // 7 heavy, and still fast: tonnes card and a climbing speedometer
+  { draw: (c, lt, u, S) => { backdrop('moscow_road', .55)(c); speedo(c, 1300, 540, 170 * E.io(K.seg(lt, S.tV, S.tV + 3.4)), pop(lt, S.tV - .4)); },
+    bed: [['hum_loop', .2]],
+    init: S => { const tT = A.at(S, 'six and a half', 1.2); S.tV = A.at(S, 'twin-turbo', 4); const tS = A.at(S, 'depending on the source', 10);
+      S.D.over = [(c, lt) => K.card(c, '~6.5 TONNES', lt, { at: tT, x: 460, y: 300, px: 70, rot: -4 }), (c, lt) => K.card(c, 'TWIN-TURBO V8\n+ HYBRID', lt, { at: S.tV, x: 460, y: 560, px: 46, rot: 3 }), (c, lt) => K.card(c, '160-170 KM/H\n(SOURCES VARY)', lt, { at: tS, x: 460, y: 800, px: 44, rot: -2 })];
+      S.D.sfx = [[tT, 'thud', .5], [S.tV, 'riser', .45], [tS, 'pop', .4]]; } },
+  // 8 the cabin seals and filters the air; an emergency exit glows
+  { draw: (c, lt, u, S) => { backdrop('moscow_road', .6)(c); PU.limo(c, 960, 780, 2.3, 0, 1); cutaway(c, 960, 780, 2.3, .8, lt, { fan: lt > S.tF, hatch: lt > S.tE });
+      const sl = E.out(K.seg(lt, .4, 1.4)); if (sl > 0) { c.save(); c.strokeStyle = `rgba(190,230,255,${.8 * sl})`; c.lineWidth = 8; c.strokeRect(960 - 300 * 2.3, 780 - 200 * 2.3, 620 * 2.3, 160 * 2.3 * sl); c.restore(); }
+      callout(c, 960 - 10 * 2.3, 780 - 168 * 2.3, 1400, 160, 'AIR FILTER', K.seg(lt, S.tF, S.tF + .4), '#bfe4ff'); callout(c, 960 - 15 * 2.3, 780 - 53 * 2.3, 520, 960, 'EMERGENCY EXIT', K.seg(lt, S.tE, S.tE + .4), '#9be29b'); },
+    bed: [['hum_loop', .35]],
+    init: S => { S.tF = A.at(S, 'filter', 2); S.tE = A.at(S, 'emergency exit', 7.6); S.D.over = [(c, lt) => K.card(c, 'SEALED CABIN', lt, { at: .5, x: 460, y: 180, px: 52, rot: -4 })]; S.D.sfx = [[.4, 'door_slam', .4], [S.tF, 'hum_loop', .3], [S.tE, 'chime', .45]]; } },
+  // 9 the car pulls up beside a big four-engine jet on the runway
+  { plate: 'airfield', cam: { z: [1.1, 1.16], x: [1280, 1300], y: [820, 820] }, bed: [['wind_loop', .4]],
+    live: [(c) => PU.jet(c, 1650, 1000, 1.25, -1), (c, lt, u, S) => { const x = 300 + 700 * E.out(K.seg(lt, 0, 3.2)); PU.limo(c, x, 1260, 1.05, x / 70, 1); }],
+    init: S => { const tS = A.at(S, 'shield', 2.4), tA = A.at(S, 'takes to the air', 4.8);
+      S.D.over = [(c, lt) => K.card(c, 'SHORT TRIPS: THE CAR', lt, { at: tS, x: 460, y: 200, px: 46, rot: -4 }), (c, lt) => K.card(c, 'LONG TRIPS: THE JET', lt, { at: tA, x: 1460, y: 200, px: 46, rot: 3 })];
+      S.D.sfx = [[.2, 'whoosh_soft', .35], [3.2, 'creak', .3], [tA, 'riser', .4]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>
