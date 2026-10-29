@@ -1,0 +1,272 @@
+[
+ {
+  "id": 1,
+  "act": 0,
+  "s0": 1,
+  "s1": 3,
+  "hook": "One mountain in Bolivia paid for an entire empire, and its king still went broke four times.",
+  "kicker": "THE MOUNTAIN OF SILVER",
+  "mood": "epic",
+  "title": "This Mountain Paid for an Empire, and the King Still Went Broke",
+  "desc": "Cerro Rico in Potosi produced a huge share of the world's silver for two centuries. Spain's king owned it and still went bankrupt four times. How?\nWatch the full video on our YouTube channel.",
+  "thumb": [
+   "A MOUNTAIN",
+   "OF SILVER"
+  ],
+  "pre": "ES2",
+  "tt": 1.7,
+  "thx": 880
+ },
+ {
+  "id": 2,
+  "act": 1,
+  "s0": 3,
+  "s1": 5,
+  "hook": "The experts told Columbus his maths was wrong. They were right.",
+  "kicker": "COLUMBUS WAS WRONG",
+  "mood": "tense",
+  "title": "Columbus Was Wrong About the World, and It Worked Anyway",
+  "desc": "Columbus thought the world was much smaller than it is. The experts said no, Portugal said no, and Spain said yes. He should have died at sea.\nWatch the full video on our YouTube channel.",
+  "thumb": [
+   "HE WAS",
+   "WRONG"
+  ],
+  "pre": "ES2",
+  "tt": 6.3,
+  "thx": 960
+ },
+ {
+  "id": 3,
+  "act": 1,
+  "s0": 6,
+  "s1": 6,
+  "hook": "Columbus landed in the Bahamas, thought he was in India, and the wrong name stuck for 500 years.",
+  "kicker": "THE WORST GPS IN HISTORY",
+  "mood": "light",
+  "title": "Why Native Americans Were Called 'Indians'",
+  "desc": "In 1492 Columbus reached an island in the Bahamas and was sure he was near India. The name he gave its people stuck for five centuries.\nWatch the full video on our YouTube channel.",
+  "thumb": [
+   "WRONG",
+   "CONTINENT"
+  ],
+  "pre": "ES2",
+  "tt": 5.5,
+  "thx": 1000
+ },
+ {
+  "id": 4,
+  "act": 1,
+  "s0": 7,
+  "s1": 7,
+  "hook": "In 1494 two kingdoms split the entire world in half with one line on a map.",
+  "kicker": "THEY SPLIT THE WORLD",
+  "mood": "epic",
+  "title": "Spain and Portugal Split the World in Half",
+  "desc": "The Treaty of Tordesillas drew a line down the Atlantic. Everything west went to Spain, everything east to Portugal. Nobody asked the people living there.\nWatch the full video on our YouTube channel.",
+  "thumb": [
+   "THE WORLD",
+   "SPLIT IN TWO"
+  ],
+  "pre": "ES2",
+  "tt": 9.3,
+  "thx": 720
+ },
+ {
+  "id": 5,
+  "act": 2,
+  "s0": 2,
+  "s1": 2,
+  "hook": "Cortes landed in Mexico with 500 men, then sank his own ships so nobody could go home.",
+  "kicker": "NO WAY BACK",
+  "mood": "tense",
+  "title": "He Sank His Own Ships So Nobody Could Run",
+  "desc": "In 1519 Hernan Cortes landed in Mexico with about 500 men and scuttled his fleet. From then on it was win or die.\nWatch the full video on our YouTube channel.",
+  "thumb": [
+   "NO WAY",
+   "BACK"
+  ],
+  "pre": "ES2",
+  "tt": 6.1,
+  "thx": 960
+ },
+ {
+  "id": 6,
+  "act": 2,
+  "s0": 3,
+  "s1": 4,
+  "hook": "500 Spaniards did not beat the Aztecs alone. Their secret was an interpreter and tens of thousands of allies.",
+  "kicker": "THE REAL REASON THE AZTECS FELL",
+  "mood": "tense",
+  "title": "How 500 Men Toppled the Aztec Empire",
+  "desc": "Cortes had two weapons the textbooks skip: Malintzin, his interpreter, and tens of thousands of Tlaxcalan allies who hated Aztec rule.\nWatch the full video on our YouTube channel.",
+  "thumb": [
+   "500 MEN",
+   "VS AN EMPIRE"
+  ],
+  "pre": "ES2",
+  "tt": 7.6,
+  "thx": 720
+ },
+ {
+  "id": 7,
+  "act": 2,
+  "s0": 6,
+  "s1": 6,
+  "hook": "The Spanish fled the Aztec capital so loaded with gold that some of them drowned in the canals.",
+  "kicker": "THE SAD NIGHT",
+  "mood": "sad",
+  "title": "They Drowned Because They Carried Too Much Gold",
+  "desc": "In 1520 the Aztec capital rose up. The Spanish fled at night, so weighed down with gold that some sank in the canals. They called it La Noche Triste.\nWatch the full video on our YouTube channel.",
+  "thumb": [
+   "DROWNED",
+   "IN GOLD"
+  ],
+  "pre": "ES2",
+  "tt": 9.3,
+  "thx": 960
+ },
+ {
+  "id": 8,
+  "act": 2,
+  "s0": 7,
+  "s1": 8,
+  "hook": "The deadliest weapon the Spanish brought to Mexico was invisible.",
+  "kicker": "THE INVISIBLE WEAPON",
+  "mood": "sad",
+  "title": "The Invisible Weapon That Destroyed the Aztecs",
+  "desc": "The people of the Americas had never met smallpox. It killed a huge part of Tenochtitlan, including the new emperor, before the final siege.\nWatch the full video on our YouTube channel.",
+  "thumb": [
+   "THE INVISIBLE",
+   "KILLER"
+  ],
+  "pre": "ES2",
+  "tt": 9.5,
+  "thx": 960
+ },
+ {
+  "id": 9,
+  "act": 2,
+  "s0": 10,
+  "s1": 11,
+  "hook": "The Inca emperor filled a room with gold to buy his freedom. They killed him anyway.",
+  "kicker": "A ROOM FULL OF GOLD",
+  "mood": "tense",
+  "title": "He Paid a Room Full of Gold and They Killed Him Anyway",
+  "desc": "In 1532 about 170 Spaniards captured the Inca emperor Atahualpa at Cajamarca. He paid the greatest ransom in history. It did not save him.\nWatch the full video on our YouTube channel.",
+  "thumb": [
+   "A ROOM",
+   "OF GOLD"
+  ],
+  "pre": "ES2",
+  "tt": 17.7,
+  "thx": 720
+ },
+ {
+  "id": 10,
+  "act": 3,
+  "s0": 1,
+  "s1": 2,
+  "hook": "There is a mountain in Bolivia they call the mountain that eats men.",
+  "kicker": "THE MOUNTAIN THAT EATS MEN",
+  "mood": "sad",
+  "title": "The Mountain That Eats Men",
+  "desc": "Potosi's Cerro Rico was full of silver. Under the mita system, Indigenous villages had to send men to work its mines. Many never came home.\nWatch the full video on our YouTube channel.",
+  "thumb": [
+   "THE MOUNTAIN",
+   "THAT EATS MEN"
+  ],
+  "pre": "ES2",
+  "tt": 11.8,
+  "thx": 880
+ },
+ {
+  "id": 11,
+  "act": 3,
+  "s0": 5,
+  "s1": 5,
+  "hook": "The US dollar was copied from an old Spanish coin.",
+  "kicker": "WHERE THE DOLLAR CAME FROM",
+  "mood": "light",
+  "title": "The US Dollar Is a Copy of a Spanish Coin",
+  "desc": "The Spanish piece of eight was spent from China to Europe, one of the first global currencies. The American dollar was based on it.\nWatch the full video on our YouTube channel.",
+  "thumb": [
+   "THE FIRST",
+   "DOLLAR"
+  ],
+  "pre": "ES2",
+  "tt": 5.5,
+  "thx": 960
+ },
+ {
+  "id": 12,
+  "act": 4,
+  "s0": 2,
+  "s1": 3,
+  "hook": "Spain ruled so much land that the sun never set on it, and its king built a palace with thousands of doors.",
+  "kicker": "THE SUN NEVER SET",
+  "mood": "epic",
+  "title": "The Empire Where the Sun Never Set",
+  "desc": "Charles V ruled lands around the globe. His son Philip II built El Escorial, a palace and monastery with thousands of doors and windows.\nWatch the full video on our YouTube channel.",
+  "thumb": [
+   "THE SUN",
+   "NEVER SET"
+  ],
+  "pre": "ES2",
+  "tt": 15.1,
+  "thx": 1000
+ },
+ {
+  "id": 13,
+  "act": 4,
+  "s0": 6,
+  "s1": 7,
+  "hook": "130 ships sailed to invade England. Fire and storms sent maybe half of them home.",
+  "kicker": "THE ARMADA DISASTER",
+  "mood": "tense",
+  "title": "What Really Sank the Spanish Armada",
+  "desc": "In 1588 Philip II sent about 130 ships against England. English fire ships broke the formation and storms did the rest.\nWatch the full video on our YouTube channel.",
+  "thumb": [
+   "130 SHIPS",
+   "GONE"
+  ],
+  "pre": "ES2",
+  "tt": 9.0,
+  "thx": 960
+ },
+ {
+  "id": 14,
+  "act": 5,
+  "s0": 2,
+  "s1": 2,
+  "hook": "Generations of royal cousin marriages ended Spain's greatest dynasty.",
+  "kicker": "THE LAST HABSBURG",
+  "mood": "sad",
+  "title": "How Cousin Marriage Ended Spain's Royal Line",
+  "desc": "The Spanish Habsburgs married cousins for generations to keep power in the family. The last of them, Charles II, was sickly all his life and had no heir.\nWatch the full video on our YouTube channel.",
+  "thumb": [
+   "THE KING",
+   "WITH NO HEIR"
+  ],
+  "pre": "ES2",
+  "tt": 2.3,
+  "thx": 920
+ },
+ {
+  "id": 15,
+  "act": 6,
+  "s0": 3,
+  "s1": 5,
+  "hook": "One ship exploded in Havana, and Spain lost an empire 400 years old in a single year.",
+  "kicker": "ONE EXPLOSION",
+  "mood": "tense",
+  "title": "One Explosion Ended a 400-Year Empire",
+  "desc": "In February 1898 the USS Maine blew up in Havana harbour. Within months Spain had lost Cuba, Puerto Rico, Guam and the Philippines.\nWatch the full video on our YouTube channel.",
+  "thumb": [
+   "ONE BLAST",
+   "EMPIRE GONE"
+  ],
+  "pre": "ES2",
+  "tt": 7.6,
+  "thx": 960
+ }
+]

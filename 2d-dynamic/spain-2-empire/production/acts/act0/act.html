@@ -35,8 +35,10 @@ window.SHOTS = [
       c.save(); c.translate(640, 720); c.rotate(roll); c.translate(-640, -720);
       for (let r = 0; r < 5; r++) for (let k = 0; k < 9 - r; k++) H.bar(c, 420 + k * 46 + r * 23, 640 - r * 12, 1.1);
       VP.glow(c, 600, 600, 260, '#ffffff', .12 + .06 * Math.sin(lt * 2));
-      for (const [k, ch, x0] of [[0, C.SAILOR, 200], [1, C.SAILOR2, 860]]) { const ph = (lt * .12 + k * .5) % 1, x = k ? lerp(1000, 800, ph) : lerp(120, 330, ph);
-        VP.figure(c, [x, 660], sh, cc => S.person(cc, ch, x, 660, 40, Object.assign(walk(lt * .9 + k), { face: k ? -1 : 1, shN: 80, elN: 100, shF: 80, elF: 100 }), { blink: S.blinkAt(lt, k), time: lt }, L)); H.bar(c, x + (k ? -8 : 8), 660 - 40 * 4.1, 1.1); }
+      // two sailors shuttle bars to the stack and walk back for more: carrying both-handed on the way in, empty on the way back
+      for (const [k, ch] of [[0, C.SAILOR], [1, C.SAILOR2]]) { const cyc = (lt * .11 + k * .37) % 1, tri = cyc < .5 ? cyc * 2 : 2 - cyc * 2, inb = cyc < .5, x = k ? lerp(1060, 850, E.io(tri)) : lerp(110, 360, E.io(tri)), stop = Math.abs(tri - 1) < .04;
+        const dir = (k ? -1 : 1) * (inb ? 1 : -1);
+        VP.figure(c, [x, 660], sh, cc => S.person(cc, ch, x, 660, 40, Object.assign(stop ? S.idle(lt, k) : walk(lt * .9 + k), { face: dir, shN: inb ? 38 : 12, elN: inb ? 74 : 30, shF: inb ? 34 : 10, elF: inb ? 78 : 28, holdN: inb ? (wr => H.bar(cc, wr[0] + dir * 6, wr[1] - 6, 1.05)) : null }), { blink: S.blinkAt(lt, k), time: lt }, L)); }
       c.restore();
       VP.motes(c, lt, 0, 300, 1280, 400, { n: 20, a: .3 });
     },
