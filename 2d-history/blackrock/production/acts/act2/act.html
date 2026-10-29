@@ -1,0 +1,135 @@
+<!doctype html><html><head><meta charset="utf-8"><title>BR act 2 - the rates turn</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "alium";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['trading', 'suburb', 'kitchen', 'bank_street', 'bank', 'rain_street', 'boardroom']) K.load(n, PL + n + '.jpg');
+{ const T = window.TIMING, L = T.shots[T.shots.length - 1]; L.end += 1.6; T.dur = L.end; }
+const SW = 1920, SH = 1080, INK = '#1d1712', CREAM = '#f6efe2', GOLD = '#e8b44a', RED = '#d9483b', GREEN = '#4f8a4a', BLUE = '#3f6aa0';
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+const font = (px, fam = 'Anton') => `${px}px ${fam}, Oswald, sans-serif`;
+const rr = (c, x, y, w, h, r) => { c.beginPath(); c.roundRect(x, y, w, h, r); };
+const FINK = { costume: 'shirtsleeves', hair: 'swept', hairCol: '#4a3220', seed: 7 };
+const DAD = { costume: 'office', hair: 'short', hairCol: '#5a3a22', seed: 12 }, MOM = { costume: 'dress', hair: 'bun', hairCol: '#2a1a12', seed: 13 };
+const coin = (c, x, y, r = 16, a = 1) => { c.save(); c.globalAlpha *= a; c.fillStyle = '#b8862a'; c.beginPath(); c.ellipse(x, y + r * .18, r, r * .72, 0, 0, 7); c.fill(); c.fillStyle = GOLD; c.beginPath(); c.ellipse(x, y, r, r * .72, 0, 0, 7); c.fill(); c.strokeStyle = INK; c.lineWidth = 2.5; c.stroke(); c.fillStyle = '#fff2c0'; c.font = `bold ${r * .9}px Oswald`; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('$', x, y + 1); c.restore(); };
+// colour grade in screen space: warm gold drains to cold blue between t0 and t1
+const grade = (t0, t1, from = 0) => (c, lt) => { const u = Math.max(from, E.io(K.seg(lt, t0, t1))); c.save(); c.globalCompositeOperation = 'soft-light'; c.fillStyle = `rgba(255,190,80,${.45 * (1 - u)})`; c.fillRect(0, 0, SW, SH); c.globalCompositeOperation = 'multiply'; c.fillStyle = `rgba(90,120,190,${.55 * u})`; c.fillRect(0, 0, SW, SH); c.restore(); };
+// red X scribbled over a card area
+const redX = (c, x, y, w, h, u) => { if (u <= 0) return; c.save(); c.strokeStyle = RED; c.lineWidth = 14; c.lineCap = 'round'; const a = Math.min(1, u * 2), b = Math.max(0, u * 2 - 1); c.beginPath(); c.moveTo(x - w / 2, y - h / 2); c.lineTo(x - w / 2 + w * a, y - h / 2 + h * a); c.stroke(); if (b > 0) { c.beginPath(); c.moveTo(x + w / 2, y - h / 2); c.lineTo(x + w / 2 - w * b, y - h / 2 + h * b); c.stroke(); } c.restore(); };
+// a paper loan document (local coords, centred)
+const loanDoc = (c, w = 120, h = 150, title = 'MORTGAGE') => { c.fillStyle = 'rgba(0,0,0,.2)'; c.fillRect(-w / 2 + 6, -h / 2 + 8, w, h); c.fillStyle = '#fbf7ea'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-w / 2, -h / 2, w, h); c.strokeRect(-w / 2, -h / 2, w, h); c.fillStyle = RED; c.font = `bold ${w * .13}px Oswald`; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(title, 0, -h / 2 + h * .14); c.strokeStyle = 'rgba(40,40,60,.45)'; c.lineWidth = 2; for (let k = 0; k < 6; k++) { c.beginPath(); c.moveTo(-w * .38, -h * .18 + k * h * .1); c.lineTo(w * .38, -h * .18 + k * h * .1); c.stroke(); } c.strokeStyle = BLUE; c.beginPath(); c.moveTo(-w * .3, h * .38); c.quadraticCurveTo(-w * .1, h * .28, w * .05, h * .4); c.quadraticCurveTo(w * .15, h * .3, w * .3, h * .36); c.stroke(); };
+// cash bundle (local coords)
+const bundle = (c, s = 1) => { c.save(); c.scale(s, s); c.fillStyle = 'rgba(0,0,0,.25)'; c.fillRect(-46, -14, 96, 34); for (let k = 0; k < 3; k++) { c.fillStyle = '#7aa864'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-50, -18 - k * 9, 100, 30); c.strokeRect(-50, -18 - k * 9, 100, 30); } c.fillStyle = '#c8b86a'; c.fillRect(-10, -36, 20, 30); c.strokeRect(-10, -36, 20, 30); c.restore(); };
+// cardboard office box held in front (hand-local: +y runs along the forearm)
+const BOX = (c) => { c.save(); c.rotate(-1.1); c.translate(-46, 22); c.fillStyle = "rgba(0,0,0,.25)"; c.fillRect(-58, -26, 120, 80); c.fillStyle = '#b8864e'; c.strokeStyle = INK; c.lineWidth = 3.5; c.fillRect(-62, -30, 120, 80); c.strokeRect(-62, -30, 120, 80); c.fillStyle = '#9a6c3a'; c.fillRect(-62, -30, 120, 14); c.strokeRect(-62, -30, 120, 14); c.fillStyle = '#f4f0e4'; c.save(); c.translate(-30, -38); c.rotate(-.2); c.fillRect(-14, -14, 28, 22); c.restore(); c.fillStyle = '#3a6a3a'; c.beginPath(); c.arc(28, -46, 16, 0, 7); c.fill(); c.fillStyle = '#6a4a2a'; c.fillRect(20, -36, 16, 10); c.fillStyle = '#d8c8a0'; c.fillRect(-6, -48, 22, 22); c.strokeStyle = INK; c.lineWidth = 2; c.strokeRect(-6, -48, 22, 22); c.restore(); };
+const boxArms = (o) => { o.arms = (t, P) => ({ shR: 6 + Math.sin(t * 3) * 2, elR: -95 }); };
+// blank notepad in hand
+const PAD = (c) => { c.save(); c.rotate(-.9); c.translate(10, 34); c.fillStyle = 'rgba(0,0,0,.25)'; c.fillRect(-26, -32, 56, 72); c.fillStyle = '#f6efc8'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-30, -36, 56, 72); c.strokeRect(-30, -36, 56, 72); c.fillStyle = '#7a3a2a'; c.fillRect(-30, -36, 56, 10); c.strokeStyle = 'rgba(80,120,170,.4)'; c.lineWidth = 1.5; for (let k = 0; k < 5; k++) { c.beginPath(); c.moveTo(-24, -14 + k * 11); c.lineTo(20, -14 + k * 11); c.stroke(); } c.restore(); };
+// rain streaks in screen space
+const rain = (n = 260, al = .35) => (c, lt) => { c.save(); c.strokeStyle = `rgba(190,205,235,${al})`; c.lineWidth = 2; c.beginPath(); for (let i = 0; i < n; i++) { const sp = 1400 + (i * 97 % 600), x = (i * 733 % SW) + ((lt * 120) % 40), y = ((i * 389 + lt * sp) % (SH + 80)) - 40; c.moveTo(x, y); c.lineTo(x - 8, y + 34); } c.stroke(); c.restore(); };
+// rain splashes on the pavement (world)
+const splashes = (c, lt) => { c.save(); c.strokeStyle = 'rgba(200,215,240,.5)'; c.lineWidth = 2; for (let i = 0; i < 40; i++) { const per = .5 + (i % 5) * .13, p = ((lt + i * .37) % per) / per, x = (i * 613) % 2560, y = 1110 + (i * 211) % 320; c.globalAlpha = 1 - p; c.beginPath(); c.ellipse(x, y, 4 + p * 22, 1.5 + p * 6, 0, 0, 7); c.stroke(); } c.restore(); };
+// mini rate chart panel in screen space
+const rateChart = (c, lt, at, x, y) => { const a = pop(lt, at); if (a <= 0) return; const u = E.out(K.seg(lt, at + .3, at + 1.6)); c.save(); c.translate(x, y); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(-206, -126, 420, 260); c.fillStyle = '#fffaf0'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-210, -130, 420, 260); c.strokeRect(-210, -130, 420, 260); c.fillStyle = INK; c.font = font(38); c.textAlign = 'left'; c.fillText('RATES', -186, -84);
+  c.strokeStyle = 'rgba(40,30,20,.2)'; c.lineWidth = 2; for (let k = 0; k < 4; k++) { c.beginPath(); c.moveTo(-180, -50 + k * 50); c.lineTo(180, -50 + k * 50); c.stroke(); }
+  const pts = [[-170, -40], [-90, -30], [-20, 10], [60, 40], [160, 80]]; c.strokeStyle = RED; c.lineWidth = 8; c.lineJoin = 'round'; c.beginPath(); c.moveTo(...pts[0]); const n = u * (pts.length - 1); for (let k = 1; k <= Math.ceil(n); k++) { const f = Math.min(1, n - k + 1), p = pts[k - 1], q = pts[k]; c.lineTo(p[0] + (q[0] - p[0]) * f, p[1] + (q[1] - p[1]) * f); } c.stroke();
+  c.fillStyle = INK; c.font = font(30, 'Oswald'); c.fillText('9%', -196, -30); if (u > .9) { c.fillStyle = RED; c.fillText('7%', 172, 92); const b = pop(lt, at + 1.6); c.save(); c.translate(150, -70); c.scale(b, b); c.fillStyle = RED; c.beginPath(); c.moveTo(-22, -30); c.lineTo(22, -30); c.lineTo(22, 0); c.lineTo(40, 0); c.lineTo(0, 40); c.lineTo(-40, 0); c.lineTo(-22, 0); c.closePath(); c.fill(); c.strokeStyle = INK; c.lineWidth = 4; c.stroke(); c.restore(); } c.restore(); };
+
+window.SHOTS = [
+  // 1 1986: the trading floor's gold light drains to cold blue; Fink's grin fades
+  { plate: 'trading', cam: { z: [1.08, 1.24], x: [1280, 1290], y: [770, 810] }, bed: [['trading_loop', .35], ['office_loop', .2]], inSfx: false,
+    figs: [
+      { x: 990, y: 1233, s: 2.3, ...FINK, pose: 'stand', facing: 1, mood: 'happy' },
+      { x: 1580, y: 982, s: 1.39, costume: 'shirtsleeves', hair: 'short', seed: 2, facing: -1, pose: 'stand' },
+      { x: 1290, y: 869, s: .98, costume: 'shirtsleeves', hair: 'curly', seed: 4, facing: 1, pose: 'stand' }],
+    init: S => { const tY = A.at(S, '1986', 1.0), tW = A.at(S, 'wrong', 2.0);
+      S.D.figs[0].anim = (o, lt) => { o.mood = lt > tW + .2 ? 'worried' : 'happy'; o.pose = lt > tW + .4 ? 'think' : 'stand'; };
+      S.D.figs[1].anim = (o, lt) => { o.pose = lt > tW + .6 ? 'shrug' : (Math.floor(lt / 1.4) % 2 ? 'point' : 'stand'); o.talk = lt < tW; o.mood = lt > tW + .6 ? 'shocked' : 'neutral'; };
+      S.D.figs[2].anim = (o, lt) => { o.pose = lt > tW + .9 ? 'think' : 'cheer'; o.mood = lt > tW + .9 ? 'worried' : 'happy'; };
+      S.D.over = [grade(tW - .4, tW + 1.6), (c, lt) => K.badge(c, 'FIRST BOSTON · NEW YORK', lt, { at: .3 }), (c, lt) => K.dateTag(c, '1986', lt, { at: tY }), (c, lt) => K.title(c, '1986', lt, { at: tY, until: tW + .2, x: 1280, y: 240, px: 150, fill: GOLD })];
+      S.D.sfx = [[tY, 'hit', .45], [tW, 'tension', .45], [tW + .1, 'swell', .3]]; } },
+  // 2 suburb: the fear (people stop paying) gets crossed out; rates fall; cash flies back out of every house
+  { plate: 'suburb', cam: { z: [1.0, 1.07], x: [1280, 1280], y: [730, 760] }, bed: [['birds_loop', .35]],
+    init: S => { const tF = A.at(S, 'stopped paying', 2.6), tO = A.at(S, 'opposite', 5.2), tR = A.at(S, 'Rates fell', 6.4), tE = A.at(S, 'paid back early', 7.8), houses = [256, 768, 1280, 1792, 2304];
+      const cash = (i) => (c, lt) => { const t0 = tE + i * .18, u = K.seg(lt, t0, t0 + 1.5); if (u <= 0 || u >= 1) return; const hx = houses[i], x = hx + 420 * u, y = 860 - 900 * (u * u) - Math.sin(u * Math.PI) * 120; c.save(); c.translate(x, y); c.rotate(Math.sin(u * 7 + i) * .5); bundle(c, 1.3); c.restore(); };
+      S.D.front = houses.map((h, i) => cash(i));
+      S.D.over = [(c, lt) => { K.card(c, 'THE FEAR:\nPEOPLE STOP PAYING', lt, { at: tF - .6, x: 520, y: 220, px: 52, rot: -3 }); redX(c, 520, 220, 520, 190, K.seg(lt, tO, tO + .5)); },
+        (c, lt) => rateChart(c, lt, tR - .2, 1450, 270),
+        (c, lt) => K.card(c, 'PAID BACK EARLY', lt, { at: tE + .3, x: 960, y: 900, px: 60, rot: 2 })];
+      S.D.sfx = [[tF - .6, 'pop', .45], [tO, 'scrape', .5], [tR - .2, 'pop', .45], [tR + .4, 'whoosh_soft', .4], [tE, 'coins', .4], [tE + .5, 'whoosh', .35]]; } },
+  // 3 kitchen: a family over their loan papers; the loan card fills line by line
+  { plate: 'kitchen', cam: { z: [1.12, 1.2], x: [1280, 1300], y: [860, 880] }, bed: [['hum_loop', .35], ['birds_loop', .15]],
+    figs: [{ x: 960, y: 1300, s: 2.1, ...DAD, facing: 1, pose: 'stand' }, { x: 1610, y: 1300, s: 2.0, ...MOM, facing: -1, pose: 'stand' }],
+    init: S => { const t2 = A.at(S, 'two hundred thousand', 1.4), t9 = A.at(S, 'nine percent', 3.0), t16 = A.at(S, 'sixteen hundred', 5.0), t30 = A.at(S, 'thirty years', 6.2);
+      S.D.figs[0].anim = (o, lt) => { o.pose = lt > t2 - .3 && lt < t16 ? 'present' : lt >= t16 ? 'think' : 'stand'; o.mood = lt > t30 ? 'worried' : 'neutral'; };
+      S.D.figs[1].anim = (o, lt) => { o.pose = lt > t16 - .2 ? 'think' : 'stand'; o.mood = lt > t16 ? 'worried' : 'neutral'; };
+      const table = (c, lt) => { const x = 1285, y = 1150; c.save(); c.fillStyle = 'rgba(0,0,0,.28)'; c.beginPath(); c.ellipse(x, y + 250, 470, 34, 0, 0, 7); c.fill(); c.fillStyle = '#6a4228'; c.strokeStyle = INK; c.lineWidth = 5; for (const lx of [-340, 320]) { c.fillRect(x + lx, y + 40, 26, 210); c.strokeRect(x + lx, y + 40, 26, 210); }
+        const g = c.createLinearGradient(0, y - 20, 0, y + 50); g.addColorStop(0, '#a87448'); g.addColorStop(1, '#7a4e2e'); c.fillStyle = g; c.beginPath(); c.moveTo(x - 420, y); c.lineTo(x + 420, y); c.lineTo(x + 440, y + 44); c.lineTo(x - 440, y + 44); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#5a3820'; c.fillRect(x - 440, y + 44, 880, 18); c.strokeRect(x - 440, y + 44, 880, 18);
+        c.save(); c.translate(x - 30, y + 18); c.transform(1, 0, -.3, .42, 0, 0); loanDoc(c, 180, 220); c.restore(); c.save(); c.translate(x + 200, y + 14); c.transform(1, 0, -.2, .42, 0, 0); c.fillStyle = '#e8e4da'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-50, -60, 100, 120); c.strokeRect(-50, -60, 100, 120); c.restore();
+        c.fillStyle = '#f4f0e4'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.roundRect(x - 300, y - 30, 44, 50, 6); c.fill(); c.stroke(); c.beginPath(); c.arc(x - 254, y - 6, 14, -1.2, 1.2); c.stroke(); for (let k = 0; k < 2; k++) { c.strokeStyle = `rgba(255,255,255,${.3 - k * .1})`; c.lineWidth = 4; c.beginPath(); const sx = x - 278 + k * 10, ph = lt * 1.5 + k; c.moveTo(sx, y - 36); c.bezierCurveTo(sx + Math.sin(ph) * 14, y - 70, sx - Math.sin(ph) * 14, y - 100, sx + Math.sin(ph + 1) * 8, y - 130); c.stroke(); } c.restore(); };
+      S.D.front = [table];
+      const card = (c, lt) => { const a = pop(lt, t2 - .2); if (a <= 0) return; c.save(); c.translate(960, 220); c.scale(a, a); c.rotate(-.02); c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(-326, -136, 660, 290); c.fillStyle = '#fffaf0'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-330, -140, 660, 290); c.strokeRect(-330, -140, 660, 290); c.strokeStyle = 'rgba(200,70,60,.45)'; c.lineWidth = 2; c.beginPath(); c.moveTo(-250, -140); c.lineTo(-250, 150); c.stroke();
+        const rows = [['LOAN', '$200,000', t2], ['RATE', '9%', t9], ['PAYMENT', '≈ $1,600 / MONTH', t16], ['TERM', '30 YEARS', t30]]; c.textBaseline = 'middle';
+        rows.forEach(([k, v, at], i) => { const b = K.seg(lt, at, at + .3); if (b <= 0) return; const y = -100 + i * 66; c.globalAlpha = b; c.fillStyle = '#7a6a58'; c.font = font(28, 'Oswald'); c.textAlign = 'left'; c.fillText(k, -230, y); c.fillStyle = i === 1 ? RED : INK; c.font = font(46); c.textAlign = 'right'; c.fillText(v, 300, y); c.globalAlpha = 1; }); c.restore(); };
+      S.D.over = [card];
+      S.D.sfx = [[t2 - .2, 'paper', .5], [t2, 'pop', .4], [t9, 'stamp', .45], [t16, 'coins', .35], [t30, 'tick', .45]]; } },
+  // 4 bank street: the 7% banner pulses; the family walks over, the old loan is stamped PAID, and they walk out
+  { plate: 'bank_street', cam: { z: [1.0, 1.05], x: [1280, 1290], y: [740, 760] }, bed: [['city_loop', .35], ['birds_loop', .15]],
+    figs: [{ x: 600, y: 1170, s: 1.55, ...DAD, facing: 1, pose: 'stand' }, { x: 700, y: 1176, s: 1.5, ...MOM, facing: 1, pose: 'stand' }],
+    init: S => { const t7 = A.at(S, 'seven percent', 1.0), tN = A.at(S, 'new loan', 2.4), tP = A.at(S, 'pay off', 3.6), tW = A.at(S, 'walk out', 4.6);
+      const walker = (x0, dx) => (o, lt) => { const w1 = K.seg(lt, tN - .5, tP - .1), w2 = K.seg(lt, tW - .3, tW + 2.5), x = x0 + (1800 - x0 + dx) * E.io(w1) + 900 * w2; o.x = x; o.t = lt; const moving = (w1 > 0 && w1 < 1) || (w2 > 0 && w2 < 1); o.pose = moving ? 'walk' : (lt > t7 - .2 && lt < tN - .5 && dx === 0 ? 'point' : 'stand'); o.facing = 1; o.mood = lt > t7 ? 'happy' : 'neutral'; };
+      S.D.figs[0].anim = walker(600, 0); S.D.figs[1].anim = walker(700, 110);
+      S.D.live = [(c, lt) => { const p = K.seg(lt, t7 - .1, t7 + .3) * (1 - K.seg(lt, tP, tP + .6)); if (p <= 0) return; c.save(); c.globalCompositeOperation = 'screen'; const r = 260 + Math.sin(lt * 8) * 30, g = c.createRadialGradient(1920, 800, 20, 1920, 800, r); g.addColorStop(0, `rgba(255,220,140,${.5 * p})`); g.addColorStop(1, 'rgba(255,220,140,0)'); c.fillStyle = g; c.fillRect(1500, 500, 840, 600); c.restore(); }];
+      S.D.over = [(c, lt) => { const a = pop(lt, tP - .5); if (a <= 0) return; const out = 1 - K.seg(lt, tW + .6, tW + 1); if (out <= 0) return; c.save(); c.globalAlpha = out; c.translate(330, 290); c.scale(a * 1.6, a * 1.6); c.rotate(-.06); loanDoc(c, 150, 190, 'OLD LOAN · 9%'); const s = K.seg(lt, tP, tP + .25); if (s > 0) { c.save(); c.rotate(-.35); c.scale(2 - s, 2 - s); c.globalAlpha *= s; c.strokeStyle = RED; c.lineWidth = 6; c.strokeRect(-70, -26, 140, 52); c.fillStyle = RED; c.font = font(42); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('PAID', 0, 2); c.restore(); } c.restore(); },
+        (c, lt) => K.card(c, 'SWAP 9% FOR 7%', lt, { at: tN, x: 1480, y: 140, px: 50, rot: 3, until: tW + 1.4 })];
+      S.D.sfx = [[t7, 'chime', .45], [tN - .5, 'footsteps', .45], [tP, 'stamp', .6], [tW - .3, 'footsteps', .4], [tW + .4, 'door_slam', .25]]; } },
+  // 5 bank hall: the 30-year calendar of interest burns away from the far end
+  { plate: 'bank', cam: { z: [1.08, 1.16], x: [1280, 1300], y: [830, 850] }, bed: [['hum_loop', .3]],
+    init: S => { const tT = A.at(S, 'thirty years', 1.2), tD = A.at(S, 'disappears', 3.4), x0 = 380, y0 = 1110, L = 1900;
+      const burnX = (lt) => x0 + L * (1 - E.io(K.seg(lt, tT + .5, tD + .8)));
+      const cal = (c, lt) => { const u = E.out(K.seg(lt, 0, .9)); if (u <= 0) return; const bx = Math.min(burnX(lt), x0 + L * u), sl = (t) => 30 * t; c.save();
+        c.fillStyle = 'rgba(0,0,0,.2)'; c.beginPath(); c.moveTo(x0, y0 + 10); c.lineTo(bx, y0 + 10 + sl((bx - x0) / L)); c.lineTo(bx, y0 + 150); c.lineTo(x0, y0 + 110); c.fill();
+        c.fillStyle = '#fbf7ea'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.moveTo(x0, y0); c.lineTo(bx, y0 + sl((bx - x0) / L)); c.lineTo(bx, y0 + 100 + 40 * (bx - x0) / L); c.lineTo(x0, y0 + 100); c.closePath(); c.fill(); c.stroke();
+        for (let k = 0; k <= 30; k++) { const t = k / 30, xx = x0 + L * t; if (xx > bx) break; const top = y0 + 30 * t, bot = y0 + 100 + 40 * t; c.strokeStyle = 'rgba(40,30,20,.35)'; c.lineWidth = 2; c.beginPath(); c.moveTo(xx, top); c.lineTo(xx, bot); c.stroke(); if (k % 5 === 0) { c.fillStyle = INK; c.font = `bold ${20 + t * 10}px Oswald`; c.textAlign = 'left'; c.fillText(String(1986 + k), xx + 6, (top + bot) / 2 + 8); } if (k < 30 && lt > tT && xx + L / 30 < bx) coin(c, xx + L / 60, top - 40 - Math.sin(lt * 3 + k) * 4, 14, K.seg(lt, tT + k * .015, tT + k * .015 + .3)); }
+        // charred edge and flames at the burn front
+        if (bx < x0 + L - 2) { const t = (bx - x0) / L, top = y0 + 30 * t, bot = y0 + 100 + 40 * t; c.fillStyle = '#2a1a10'; c.beginPath(); for (let k = 0; k <= 10; k++) { const yy = top + (bot - top) * k / 10; c.lineTo(bx + Math.sin(k * 2.3 + lt * 9) * 8, yy); } c.lineTo(bx - 24, bot); c.lineTo(bx - 24, top); c.closePath(); c.fill();
+          for (let i = 0; i < 18; i++) { const ph = (lt * 2.2 + i * .37) % 1, fx = bx + Math.sin(i * 3.1) * 14, fy = top + (bot - top) * ((i * .29) % 1); c.fillStyle = `rgba(255,${150 + (i % 3) * 40},40,${(1 - ph) * .9})`; c.beginPath(); c.ellipse(fx + Math.sin(lt * 6 + i) * 6, fy - ph * 90, 12 * (1 - ph) + 4, 22 * (1 - ph) + 6, 0, 0, 7); c.fill(); }
+          c.save(); c.globalCompositeOperation = 'screen'; const g = c.createRadialGradient(bx, (top + bot) / 2, 10, bx, (top + bot) / 2, 260); g.addColorStop(0, 'rgba(255,170,60,.55)'); g.addColorStop(1, 'rgba(255,170,60,0)'); c.fillStyle = g; c.fillRect(bx - 300, top - 300, 600, 600); c.restore();
+          for (let i = 0; i < 14; i++) { const ph = (lt * .6 + i * .21) % 1, ax = bx + 30 + i * 30 + ph * 60, ay = (top + bot) / 2 - ph * 260; c.fillStyle = `rgba(60,50,45,${(1 - ph) * .6})`; c.fillRect(ax, ay, 8, 5); } }
+        c.restore(); };
+      S.D.live = [cal];
+      S.D.over = [(c, lt) => K.card(c, '30 YEARS OF 9% INTEREST', lt, { at: tT - .2, x: 960, y: 170, px: 56, rot: -2, until: tD + .1 }), (c, lt) => K.title(c, 'GONE', lt, { at: tD + .1, x: 960, y: 200, px: 140, fill: RED })];
+      S.D.sfx = [[.1, 'paper_tear', .35], [tT, 'coins', .35], [tT + .5, 'fire_loop', .3], [tD, 'whoosh', .45], [tD + .1, 'hit', .5]]; } },
+  // 6 the desk bet wrong: cold floor, Fink frozen, then -$100,000,000 slams full screen and shakes
+  { plate: 'trading', cam: { z: [1.24, 1.34], x: [1180, 1170], y: [840, 870] }, bed: [['office_loop', .25]],
+    figs: [{ x: 990, y: 1233, s: 2.3, ...FINK, facing: 1, pose: 'think', mood: 'worried' }],
+    init: S => { const tB = A.at(S, 'wrong way', 1.2), tL = A.at(S, 'lost', 3.4), tM = A.at(S, 'hundred million', 4.0);
+      S.D.figs[0].anim = (o, lt) => { o.pose = lt > tL ? 'shrug' : 'think'; o.mood = lt > tL - .2 ? 'shocked' : 'worried'; o.lean = lt > tL ? -6 : 0; };
+      S.D.over = [grade(0, 1, 1), (c, lt) => { K.card(c, 'THE BET:\nRATES STAY HIGH', lt, { at: tB - .3, x: 1350, y: 250, px: 54, rot: 3, until: tL + .2 }); redX(c, 1350, 250, 480, 180, K.seg(lt, tB + 1.0, tB + 1.5)); },
+        (c, lt) => { const a = K.seg(lt, tL, tL + .15); if (a <= 0) return; const sh = Math.max(0, 1 - (lt - tL) / 1.2), dx = Math.sin(lt * 70) * 26 * sh, dy = Math.cos(lt * 55) * 18 * sh; c.save(); c.globalAlpha = a; c.fillStyle = 'rgba(120,16,16,.86)'; c.fillRect(0, 0, SW, SH); c.translate(dx, dy); const sc = 1 + .5 * (1 - E.out(K.seg(lt, tL, tL + .35))); c.translate(SW / 2, SH / 2); c.scale(sc, sc); K.outlined(c, '-$100,000,000', 0, -10, 190, { fill: '#ffefe6' }); c.globalAlpha = K.seg(lt, tM, tM + .4) * a; c.fillStyle = '#ffd8c8'; c.font = font(46, 'Oswald'); c.textAlign = 'center'; c.fillText('LOST BY FINK’S DESK', 0, 140); c.restore(); }];
+      S.D.sfx = [[tB - .3, 'pop', .4], [tB + 1.0, 'scrape', .45], [tL, 'hit', .7], [tL + .05, 'heartbeat', .45], [tM, 'tension', .4]]; } },
+  // 7 1988, rainy night: Fink walks out of First Boston carrying a box
+  { plate: 'rain_street', cam: { z: [1.06, 1.12], x: [1300, 1420], y: [780, 800] }, bed: [['rain_loop', .55], ['city_loop', .15]],
+    figs: [{ x: 1280, y: 1150, s: 1.9, ...FINK, facing: 1, pose: 'stand', mood: 'worried', hold: { near: BOX }, walk: { x0: 1280, x1: 2050, t0: .4, dur: 5.2 }, anim: (o) => { boxArms(o); } }],
+    init: S => { const tS = A.at(S, 'star', .6), tM = A.at(S, 'hundred million', 2.0), tY = A.at(S, 'Within two years', 3.0), tF = A.at(S, 'First Boston', 4.6);
+      S.D.live = [splashes];
+      S.D.over = [rain(), (c, lt) => { K.card(c, 'STAR TRADER', lt, { at: tS - .2, x: 520, y: 210, px: 54, rot: -3, until: tM + 1.2 }); c.save(); c.globalAlpha = 1 - K.seg(lt, tM + .9, tM + 1.2); redX(c, 520, 210, 420, 120, K.seg(lt, tM - .4, tM)); c.restore(); }, (c, lt) => K.card(c, 'THE MAN WHO\nLOST $100M', lt, { at: tM + .2, x: 1420, y: 230, px: 52, rot: 3 }),
+        (c, lt) => K.dateTag(c, '1988', lt, { at: tY }), (c, lt) => K.badge(c, 'LEAVES FIRST BOSTON', lt, { at: tF })];
+      S.D.sfx = [[.3, 'door_slam', .3], [.5, 'footsteps', .35], [tS, 'pop', .4], [tM - .4, 'scrape', .45], [tY, 'tick', .4], [tF, 'thud', .4]]; } },
+  // 8 dim office: Fink alone with a blank notepad; BRILLIANT AT MAKING MONEY, then RISK?
+  { plate: 'boardroom', cam: { z: [1.26, 1.34], x: [1000, 1020], y: [770, 790] }, bed: [['hum_loop', .35], ['rain_loop', .2]],
+    live: [(c) => { c.save(); c.globalCompositeOperation = 'screen'; const g = c.createRadialGradient(620, 880, 20, 620, 880, 520); g.addColorStop(0, 'rgba(255,214,160,.32)'); g.addColorStop(1, 'rgba(255,214,160,0)'); c.fillStyle = g; c.fillRect(0, 200, 1300, 1240); c.restore(); }],
+    figs: [{ x: 600, y: 1345, s: 2.35, ...FINK, facing: 1, pose: 'think', mood: 'worried', hold: { near: PAD } }],
+    init: S => { const tL = A.at(S, 'lesson', 1.6), tB = A.at(S, 'brilliant', 3.4), tN = A.at(S, 'no real idea', 5.4), tR = A.at(S, 'risk', 7.2);
+      S.D.figs[0].anim = (o, lt) => { o.pose = lt > tB - .2 && lt < tN ? 'present' : 'think'; o.mood = lt > tN ? 'worried' : 'neutral'; o.talk = lt > tL - .4 && lt < tR + .6; if (o.pose === 'present') o.hold = null; };
+      S.D.over = [(c) => { c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = 'rgba(70,80,120,.45)'; c.fillRect(0, 0, SW, SH); c.restore(); },
+        (c, lt) => K.card(c, 'THE LESSON', lt, { at: tL - .2, x: 1380, y: 170, px: 50, rot: -2 }),
+        (c, lt) => { const a = pop(lt, tB); if (a <= 0) return; c.save(); c.translate(1380, 400); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(-296, -86, 600, 180); c.fillStyle = '#fffaf0'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-300, -90, 600, 180); c.strokeRect(-300, -90, 600, 180); c.fillStyle = INK; c.font = font(46); c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('MAKING MONEY', -240, -28); c.fillStyle = GREEN; c.font = font(40, 'Oswald'); c.fillText('BRILLIANT', -240, 38); c.strokeStyle = GREEN; c.lineWidth = 12; c.lineCap = 'round'; const u = K.seg(lt, tB + .3, tB + .7); if (u > 0) { c.beginPath(); c.moveTo(170, 0); c.lineTo(170 + 30 * Math.min(1, u * 2), 30 * Math.min(1, u * 2)); if (u > .5) c.lineTo(200 + 60 * (u - .5) * 2, 30 - 80 * (u - .5) * 2); c.stroke(); } c.restore(); },
+        (c, lt) => { const a = pop(lt, tN); if (a <= 0) return; c.save(); c.translate(1380, 690); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(-296, -86, 600, 180); c.fillStyle = '#fffaf0'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-300, -90, 600, 180); c.strokeRect(-300, -90, 600, 180); c.fillStyle = INK; c.font = font(46); c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('RISK CARRIED', -240, -28); c.fillStyle = RED; c.font = font(40, 'Oswald'); c.fillText('NO REAL IDEA', -240, 38); const q = pop(lt, tR); if (q > 0) { c.save(); c.translate(200, 0); c.scale(q, q); c.rotate(Math.sin(lt * 4) * .1); K.outlined(c, '?', 0, 0, 150, { fill: RED }); c.restore(); } c.restore(); }];
+      S.D.sfx = [[tL - .2, 'pop', .4], [tB, 'chime', .45], [tN, 'tension', .45], [tR, 'hit', .5]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>

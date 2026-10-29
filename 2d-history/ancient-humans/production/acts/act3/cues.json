@@ -1,0 +1,348 @@
+{
+ "dur": 58.22,
+ "cues": [
+  {
+   "t": 1.52,
+   "name": "pop",
+   "gain": 0.5
+  },
+  {
+   "t": 1.82,
+   "name": "tick",
+   "gain": 0.4
+  },
+  {
+   "t": 3.32,
+   "name": "stamp",
+   "gain": 0.55
+  },
+  {
+   "t": 0.2,
+   "name": "footsteps",
+   "gain": 0.4
+  },
+  {
+   "t": 4.506,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 4.606,
+   "name": "run_steps",
+   "gain": 0.3
+  },
+  {
+   "t": 6.806,
+   "name": "pop",
+   "gain": 0.5
+  },
+  {
+   "t": 8.461,
+   "name": "stamp",
+   "gain": 0.55
+  },
+  {
+   "t": 10.201,
+   "name": "whoosh",
+   "gain": 0.6
+  },
+  {
+   "t": 10.301,
+   "name": "thud",
+   "gain": 0.35
+  },
+  {
+   "t": 12.461,
+   "name": "pop",
+   "gain": 0.5
+  },
+  {
+   "t": 13.475,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 14.27,
+   "name": "scrape",
+   "gain": 0.3
+  },
+  {
+   "t": 15.01,
+   "name": "run_steps",
+   "gain": 0.3
+  },
+  {
+   "t": 15.59,
+   "name": "tick",
+   "gain": 0.45
+  },
+  {
+   "t": 16.69,
+   "name": "riser",
+   "gain": 0.25
+  },
+  {
+   "t": 16.69,
+   "name": "pop",
+   "gain": 0.5
+  },
+  {
+   "t": 17.785,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 17.885,
+   "name": "pop",
+   "gain": 0.5
+  },
+  {
+   "t": 18.38,
+   "name": "chime",
+   "gain": 0.3
+  },
+  {
+   "t": 20.6,
+   "name": "pop",
+   "gain": 0.5
+  },
+  {
+   "t": 22.02,
+   "name": "breath",
+   "gain": 0.5
+  },
+  {
+   "t": 22.6,
+   "name": "run_steps",
+   "gain": 0.3
+  },
+  {
+   "t": 23.1,
+   "name": "tension",
+   "gain": 0.35
+  },
+  {
+   "t": 25.58,
+   "name": "stamp",
+   "gain": 0.6
+  },
+  {
+   "t": 25.68,
+   "name": "heartbeat",
+   "gain": 0.4
+  },
+  {
+   "t": 26.765,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 26.865,
+   "name": "footsteps",
+   "gain": 0.35
+  },
+  {
+   "t": 27.972,
+   "name": "breath",
+   "gain": 0.45
+  },
+  {
+   "t": 28.732,
+   "name": "pop",
+   "gain": 0.5
+  },
+  {
+   "t": 30.712,
+   "name": "tension",
+   "gain": 0.3
+  },
+  {
+   "t": 32.087,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 32.087,
+   "name": "heartbeat",
+   "gain": 0.4
+  },
+  {
+   "t": 33.587,
+   "name": "breath",
+   "gain": 0.4
+  },
+  {
+   "t": 33.24,
+   "name": "pop",
+   "gain": 0.45
+  },
+  {
+   "t": 35.88,
+   "name": "swell",
+   "gain": 0.45
+  },
+  {
+   "t": 36.915,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 37.45,
+   "name": "pop",
+   "gain": 0.5
+  },
+  {
+   "t": 39.13,
+   "name": "stamp",
+   "gain": 0.5
+  },
+  {
+   "t": 41.57,
+   "name": "pop",
+   "gain": 0.55
+  },
+  {
+   "t": 41.87,
+   "name": "pop",
+   "gain": 0.55
+  },
+  {
+   "t": 42.59,
+   "name": "pop",
+   "gain": 0.55
+  },
+  {
+   "t": 43.49,
+   "name": "pop",
+   "gain": 0.55
+  },
+  {
+   "t": 45.345,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 45.545,
+   "name": "footsteps",
+   "gain": 0.4
+  },
+  {
+   "t": 46,
+   "name": "riser",
+   "gain": 0.25
+  },
+  {
+   "t": 47.82,
+   "name": "pop",
+   "gain": 0.5
+  },
+  {
+   "t": 51,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 51,
+   "name": "crowd_cheer",
+   "gain": 0.3
+  },
+  {
+   "t": 51.64,
+   "name": "pop",
+   "gain": 0.5
+  },
+  {
+   "t": 52.04,
+   "name": "chime",
+   "gain": 0.35
+  },
+  {
+   "t": 52.895,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 52.995,
+   "name": "pop",
+   "gain": 0.5
+  },
+  {
+   "t": 54.33,
+   "name": "chime",
+   "gain": 0.45
+  },
+  {
+   "t": 54.53,
+   "name": "swell",
+   "gain": 0.3
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 5.2059999999999995,
+   "name": "wind_loop",
+   "gain": 0.4
+  },
+  {
+   "start": 0,
+   "end": 5.2059999999999995,
+   "name": "birds_loop",
+   "gain": 0.35
+  },
+  {
+   "start": 4.406,
+   "end": 14.175,
+   "name": "wind_loop",
+   "gain": 0.45
+  },
+  {
+   "start": 13.375,
+   "end": 18.485,
+   "name": "wind_loop",
+   "gain": 0.5
+  },
+  {
+   "start": 17.685,
+   "end": 27.465,
+   "name": "wind_loop",
+   "gain": 0.25
+  },
+  {
+   "start": 26.665,
+   "end": 32.787,
+   "name": "wind_loop",
+   "gain": 0.5
+  },
+  {
+   "start": 31.987,
+   "end": 37.614999999999995,
+   "name": "wind_loop",
+   "gain": 0.35
+  },
+  {
+   "start": 36.815,
+   "end": 46.044999999999995,
+   "name": "wind_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 45.245,
+   "end": 53.595,
+   "name": "fire_loop",
+   "gain": 0.4
+  },
+  {
+   "start": 45.245,
+   "end": 53.595,
+   "name": "wind_loop",
+   "gain": 0.25
+  },
+  {
+   "start": 52.795,
+   "end": 59.019999999999996,
+   "name": "fire_loop",
+   "gain": 0.5
+  }
+ ]
+}
