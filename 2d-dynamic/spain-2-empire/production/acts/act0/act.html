@@ -1,0 +1,85 @@
+<!doctype html><html><head><meta charset="utf-8"><title>ES2 act 0 - cold open</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/vp/engine.js"></script><script src="../../../../shared/vp/cast.js"></script><script src="../../../../shared/vp/scenes.js"></script><script src="../../../../shared/vp/spain.js"></script>
+<script src="../../../../shared/kit.js"></script><script src="../../../../shared/vp.js"></script>
+<script src="../../../../spain-1-al-andalus/production/es1_sets.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act1.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act2.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act3.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act4.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act5.js"></script><script src="../../../../spain-1-al-andalus/production/es1_cast.js"></script>
+<script src="../../es2_sets.js"></script><script src="../../es2_cast.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, E = K.E, X = S.SPX, CH = S.SPAIN, C = S.ES2, H1 = S.ES1H, H = S.ES2H, TAU = Math.PI * 2;
+const at = VP.at, seg = K.seg, lerp = K.lerp, pulse = H1.pulse, walk = H1.walk;
+// the title card has no narration: give it its own shot after the last line
+{ const T = window.TIMING, L = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length + 1, start: L.end, end: L.end + 4.6, vo_start: L.end, vo_end: L.end, text: '' }); T.dur = L.end + 4.6; }
+const coinCorner = (c, lt, o = {}) => H.coin(c, 150, 150, 62, lt, Object.assign({ shine: .6 }, o));
+
+window.SHOTS = [
+  // 1 WIDE: Cerro Rico at sunrise; tiny miners file up the paths, smelter smoke drifts
+  { set: 'potosi', cam: { z: [1.05, 1.35], x: [600, 540], y: [380, 340], ease: E.io }, bed: [['wind_loop', .25]],
+    init: Sh => { Sh.tR = at(Sh, 'red mountain', 2.5); Sh.tS = at(Sh, 'silver', Sh.dur - 2); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const L = VP.light('golden', lt, { swing: 6 }); VP.glow(c, 900, 120, 500, '#ffd8a0', .25); VP.rays(c, 1000, 60, lt, { ang: 2.4, spread: .5, n: 9, len: 1000, a: .05, w1: 120 });
+      for (let k = 0; k < 14; k++) { const ph = (lt * .02 + k / 14) % 1, side = k % 2 ? 1 : -1, y = 500 - ph * 300, x = 520 + side * (y - 150) * .7 * (1 - ph * .3); H1.tiny(c, x, y, 1.2, '#6a3a24', lt, k, { helm: '#3a2414', pike: false, walk: true, sk: 2 }); }
+      for (let i = 0; i < 3; i++) H1.smoke(c, 300 + i * 220, 480, .7, lt + i * 3, '120,110,104');
+      const sv = seg(lt, Sh.tS - .3, Sh.tS + .8); if (sv > 0) for (let i = 0; i < 26; i++) { const r = S.rng(i + 700), y = 200 + r() * 290, x = 520 + (r() - .5) * (y - 140) * 1.5, tw = .5 + .5 * Math.sin(lt * 6 + i * 2); VP.glow(c, x, y, 10, '#ffffff', .8 * sv * tw); }
+      VP.motes(c, lt, 0, 200, 1280, 400, { n: 30, a: .35 });
+    },
+    over: [(c, lt) => K.dateTag(c, 'POTOSÍ · BOLIVIA', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'CERRO RICO\n"THE RICH HILL"', lt, { at: Sh.tR + .2, x: 1540, y: 200, px: 54, rot: 3 })],
+    sfx: [[.3, 'swell', .3], ['red mountain', 'drone', .3], ['silver', 'chime', .45]] },
+
+  // 2 MED: silver bars stacked on a galleon's deck; sailors haul more; the coin flips into the corner
+  { set: 'deck', cam: { z: [1.2, 1.45], x: [560, 620], y: [430, 450], ease: E.io, shake: .6 }, bed: [['ocean_loop', .3], ['creak', .15]],
+    init: Sh => { Sh.tA = at(Sh, 'armies', 1.5); Sh.tN = at(Sh, 'never set', Sh.dur - 2); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const L = VP.light('golden', lt, { swing: 6 }), sh = VP.shadowOf(L, 1.3, .3, .12), roll = Math.sin(lt * .9) * .012;
+      c.save(); c.translate(640, 720); c.rotate(roll); c.translate(-640, -720);
+      for (let r = 0; r < 5; r++) for (let k = 0; k < 9 - r; k++) H.bar(c, 420 + k * 46 + r * 23, 640 - r * 12, 1.1);
+      VP.glow(c, 600, 600, 260, '#ffffff', .12 + .06 * Math.sin(lt * 2));
+      for (const [k, ch, x0] of [[0, C.SAILOR, 200], [1, C.SAILOR2, 860]]) { const ph = (lt * .12 + k * .5) % 1, x = k ? lerp(1000, 800, ph) : lerp(120, 330, ph);
+        VP.figure(c, [x, 660], sh, cc => S.person(cc, ch, x, 660, 40, Object.assign(walk(lt * .9 + k), { face: k ? -1 : 1, shN: 80, elN: 100, shF: 80, elF: 100 }), { blink: S.blinkAt(lt, k), time: lt }, L)); H.bar(c, x + (k ? -8 : 8), 660 - 40 * 4.1, 1.1); }
+      c.restore();
+      VP.motes(c, lt, 0, 300, 1280, 400, { n: 20, a: .3 });
+    },
+    over: [(c, lt, u, Sh) => { const q = E.back(seg(lt, Sh.tA - .5, Sh.tA + .2)); if (q <= 0) return; c.save(); c.translate(150, 150); c.scale(q, q); c.translate(-150, -150); coinCorner(c, lt); c.restore(); }, (c, lt, u, Sh) => K.card(c, '"THE SUN\nNEVER SETS"', lt, { at: Sh.tN, x: 1540, y: 200, px: 56, rot: 3 })],
+    sfx: [['armies', 'coins', .45], ['three continents', 'whoosh_soft', .3], ['never set', 'chime', .45]] },
+
+  // 3 MED: Philip II at a desk piled with unpaid bills; a banker waits at the door; four red stamps
+  { set: 'study', cam: { z: [1.35, 1.6], x: [640, 680], y: [420, 430], ease: E.sine }, bed: [['drone', .2]],
+    init: Sh => { Sh.tB = at(Sh, 'bankrupt', 2); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const L = { L: [-1, -.6], amb: '#3a3a4a', ambA: .35, rim: '#e0e8f0', rimA: .8, tint: '#c8d0e0', tintA: .08, sw: .3, rw: .05 };
+      VP.figure(c, [1080, 600], { k: -.5, sy: -.2, a: .3, blur: 2 }, cc => S.person(cc, C.BANKER, 1080, 600, 40, Object.assign(S.idle(lt, 1), { face: -1, shN: 30, elN: 90, shF: 20, elF: 40 }), { blink: S.blinkAt(lt, 1), look: [-.8, 0], time: lt }, L));
+      VP.figure(c, [620, 660], { k: .5, sy: -.2, a: .35, blur: 2 }, cc => S.person(cc, C.PHILIP, 620, 660, 46, Object.assign(S.idle(lt, 0), { face: 1, lean: 10, shN: 25, elN: 55, shF: 15, elF: 50 }), { blink: S.blinkAt(lt, 0), worry: .5 + .4 * seg(lt, Sh.tB, Sh.tB + 1), look: [.3, .8], time: lt }, L));
+      c.fillStyle = '#4a2a14'; c.fillRect(400, 590, 480, 20); c.fillRect(420, 610, 14, 80); c.fillRect(846, 610, 14, 80); c.fillStyle = S.rgba('#ffe0b0', .25); c.fillRect(400, 590, 480, 3);
+      for (let k = 0; k < 9; k++) { const r = S.rng(k + 30), x = k < 5 ? 410 + k * 30 : 690 + (k - 5) * 40, hh = 10 + r() * 50; for (let j = 0; j < hh / 4; j++) { c.fillStyle = j % 2 ? '#f0e4c8' : '#e0d0b0'; c.fillRect(x + Math.sin(j + k) * 3, 588 - j * 4, 40, 4); } }
+      const f = VP.flicker(lt, 3); H1.fire(c, 820, 520, .1, lt, 9); c.fillStyle = '#f0e6d0'; c.fillRect(816, 520, 8, 36); VP.glow(c, 820, 500, 260, '#ffc070', .2 + .08 * f);
+    },
+    over: [(c, lt) => coinCorner(c, lt, { chips: 0 }), (c, lt) => K.dateTag(c, 'PHILIP II · KING OF SPAIN', lt, { at: .4 }),
+      (c, lt, u, Sh) => { for (let k = 0; k < 4; k++) { const q = seg(lt, Sh.tB + .3 + k * .35, Sh.tB + .5 + k * .35); if (q <= 0) continue; c.save(); c.translate(1150 + (k % 2) * 300, 230 + Math.floor(k / 2) * 150); c.rotate(-.15 + k * .08); c.scale(1 + 1.4 * (1 - q), 1 + 1.4 * (1 - q)); c.globalAlpha = q; c.strokeStyle = '#b8282a'; c.lineWidth = 6; c.strokeRect(-130, -45, 260, 90); c.font = '52px Anton'; c.fillStyle = '#b8282a'; c.textAlign = 'center'; c.fillText('BANKRUPT', 0, 18); c.restore(); } }],
+    sfx: [['bankrupt', 'stamp', .5]] },
+
+  // 4 WIDE: one small ship alone on the empty ocean; a dotted line heads for 'INDIA?'
+  { set: 'ocean', cam: { z: [1.0, 1.25], x: [640, 620], y: [380, 400], ease: E.io }, bed: [['ocean_loop', .35], ['wind_loop', .2]],
+    init: Sh => { Sh.tL = at(Sh, 'got lost', 2); Sh.tI = at(Sh, 'india', Sh.dur - 1.5); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const L = VP.light('golden', lt, { swing: 4 }), bob = Math.sin(lt * 1.3) * 4, x = 560 + lt * 6;
+      c.save(); c.translate(x, 470 + bob); c.rotate(Math.sin(lt * 1.1) * .04); X.ship(c, 0, 0, .9, '#f4ead4', true); c.restore();
+      c.fillStyle = S.rgba('#ffffff', .4); c.fillRect(x - 100, 486 + bob, 60, 3);
+      VP.motes(c, lt, 0, 200, 1280, 300, { n: 15, a: .3 });
+      // gulls
+      c.strokeStyle = 'rgba(40,40,50,.7)'; c.lineWidth = 2; for (let k = 0; k < 3; k++) { const gx = 300 + lt * 20 + k * 40, gy = 200 + k * 14, fl = Math.sin(lt * 7 + k) * 5; c.beginPath(); c.moveTo(gx - 9, gy - fl); c.quadraticCurveTo(gx, gy - 2, gx + 9, gy - fl); c.stroke(); }
+    },
+    over: [(c, lt) => coinCorner(c, lt), (c, lt, u, Sh) => { const q = seg(lt, Sh.tI - .8, Sh.tI + .8); if (q <= 0) return; c.save(); c.strokeStyle = '#ffd27a'; c.lineWidth = 6; c.setLineDash([16, 12]); c.beginPath(); c.moveTo(1000, 700); c.lineTo(1000 + 600 * q, 700 - 140 * q); c.stroke(); c.restore(); }, (c, lt, u, Sh) => K.card(c, 'INDIA?', lt, { at: Sh.tI + .3, x: 1640, y: 520, px: 64, rot: 4 })],
+    sfx: [['got lost', 'whoosh_soft', .3], ['india', 'pop', .4]] },
+
+  // 5 TITLE: a galleon sails into a gold sunset. THE SPANISH EMPIRE · 1492–1898
+  { set: 'goldsea', cam: { z: [1.15, 1.0], x: [700, 640], y: [400, 380], ease: E.io }, bed: [['ocean_loop', .3]],
+    draw: (c, lt) => {
+      VP.rays(c, 900, 440, lt, { ang: Math.PI, spread: .9, n: 12, len: 1000, a: .06, w1: 140 });
+      const bob = Math.sin(lt * 1.3) * 4; X.ship(c, 380 + lt * 14, 660 + bob, 1.1, '#f4ead4', true);
+    },
+    over: [(c, lt) => coinCorner(c, lt, { shine: .9 }), (c, lt) => { const q = E.out(seg(lt, .3, 1.3)); c.save(); c.globalAlpha = q; c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(0, 0, 1920, 1080); K.outlined(c, 'THE SPANISH EMPIRE', 960, 500 + 30 * (1 - q), 150, { fill: '#ffd27a' }); K.outlined(c, '1492 – 1898', 960, 600, 60, { fam: 'Oswald' }); c.restore(); }],
+    sfx: [[.2, 'swell', .5], [1, 'hit', .45]] },
+];
+VP.build(); K.boot();
+</script></body></html>
