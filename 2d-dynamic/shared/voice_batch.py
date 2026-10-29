@@ -24,7 +24,7 @@ def respell(t):
     for a, b in WORDS: t = re.sub(a, b, t)
     t = re.sub(r"\b(1[89]\d0)s\b", lambda m: year(int(m.group(1)))[:-1] + 'ies' if year(int(m.group(1))).endswith('y') else year(int(m.group(1))) + 's', t)
     t = re.sub(r"\b2000s\b", 'two thousands', t)
-    t = re.sub(r"\b(1[89]\d\d|20[0-4]\d)\b", lambda m: year(int(m.group(1))), t)
+    t = re.sub(r"\b(1[0-9]\d\d|20[0-4]\d)\b", lambda m: year(int(m.group(1))), t)
     return t
 os.chdir(os.path.dirname(os.path.abspath(__file__)) + '/..'); vids = [os.path.abspath(v) for v in sys.argv[1:]]
 acts = {v: sorted(glob.glob(f'{v}/production/voice/act*.txt'), key=lambda p: int(re.search(r'act(\d+)', p).group(1))) for v in vids}

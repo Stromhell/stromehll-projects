@@ -42,10 +42,10 @@ window.SHOTS = [
     sfx: [[.2, 'paper', .4], ['emirate of granada', 'chime', .45]] },
 
   // 2 WIDE: the Alhambra under the snowy Sierra Nevada; a cut into the Court of the Lions, the fountain running
-  { cam: (lt, u, Sh) => lt < Sh.tB ? { z: [1.05 + .15 * lt / Sh.tB], x: [lerp(560, 700, E.io(lt / Sh.tB))], y: [650] } : { z: [lerp(1.1, 1.3, seg(lt, Sh.tB, Sh.dur))], x: [640], y: [420] }, bed: [['wind_loop', .2], ['birds_loop', .2]],
+  { set: 'dawn', cam: { z: [1.85, 1.45], x: [420, 600], y: [800, 790], ease: E.io }, bed: [['wind_loop', .2], ['birds_loop', .2]],
     init: Sh => { Sh.tT = at(Sh, 'tribute', 3); Sh.tB = at(Sh, 'built the alhambra', Sh.dur - 2.5); Sh.dur = Sh.end - Sh.start; },
     draw: (c, lt, u, Sh) => {
-      if (lt < Sh.tB) { VP.drawSet(c, 'dawn'); VP.light('golden', lt); VP.glow(c, 250, 600, 420, '#ffcf90', .3); VP.rays(c, 250, 590, lt, { ang: .35, spread: .1, n: 9, len: 1300, a: .05, w1: 160 });
+      if (true) { VP.light('golden', lt); VP.glow(c, 250, 600, 420, '#ffcf90', .3); VP.rays(c, 250, 590, lt, { ang: .35, spread: .1, n: 9, len: 1300, a: .05, w1: 160 });
         VP.banner(c, 330, 722, 34, 26, ['#2f8a5a', '#15402a'], lt, { Lt: S.LIGHT.golden, ph: 0 }); VP.banner(c, 470, 862, 44, 32, ['#2f8a5a', '#15402a'], lt, { Lt: S.LIGHT.golden, ph: 2 });
         // a tribute caravan of mules heading out with chests
         const q = seg(lt, Sh.tT - 1, Sh.tB); for (let k = 0; k < 5; k++) { const x = lerp(480, 1100, K.clamp(q * 1.3 - k * .08)), y = 1040 + k * 6; H.tiny(c, x, y, 2.6, '#c8962a', lt, k, { helm: '#e8dcc2', walk: true, pike: false }); c.fillStyle = '#5a3a1e'; c.fillRect(x - 6, y - 22, 12, 8); }
