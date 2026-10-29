@@ -1,0 +1,159 @@
+<!doctype html><html><head><meta charset="utf-8"><title>ES2 act 1 - The Wrong Ocean</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/vp/engine.js"></script><script src="../../../../shared/vp/cast.js"></script><script src="../../../../shared/vp/scenes.js"></script><script src="../../../../shared/vp/spain.js"></script>
+<script src="../../../../shared/kit.js"></script><script src="../../../../shared/vp.js"></script>
+<script src="../../../../spain-1-al-andalus/production/es1_sets.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act1.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act2.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act3.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act4.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act5.js"></script><script src="../../../../spain-1-al-andalus/production/es1_cast.js"></script>
+<script src="../../es2_sets.js"></script><script src="../../es2_cast.js"></script><script src="../../es2_sets_act1.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, E = K.E, X = S.SPX, CH = S.SPAIN, C = S.ES2, H1 = S.ES1H, H = S.ES2H, TAU = Math.PI * 2;
+const at = VP.at, seg = K.seg, lerp = K.lerp, pulse = H1.pulse, walk = H1.walk;
+const coinCorner = (c, lt, o = {}) => H.coin(c, 150, 150, 62, lt, Object.assign({ shine: .6 }, o));
+const E1 = S.ES1;
+const ISABELLA = Object.assign({}, CH.aisha, { name: 'Isabella', skin: X.SK.fair, hairCol: { base: '#b87a3a', shade: '#6a3e14', rim: '#f0c080' }, shirt: ['#7a1e2a', '#3a0a10'], pants: ['#7a1e2a', '#3a0a10'], dupatta: null, headwear: X.crown });
+const FERDINAND = Object.assign({}, E1.RODERIC, { name: 'Ferdinand', beard: false, mustache: false, hairCol: { base: '#4a2e1a', shade: '#22140a', rim: '#9a7a5a' }, shirt: ['#d8b020', '#7a5a0a'], pants: ['#2a2a4a', '#14142a'], headwear: X.crown });
+const SCHOLAR = Object.assign({}, E1.BISHOP, { headwear: null, hair: 'elder', shirt: ['#2a2a3a', '#14141e'], pants: ['#2a2a3a', '#14141e'] });
+const SCHOLAR2 = Object.assign({}, E1.NOBLE2, { shirt: ['#4a2a4a', '#241424'] });
+const TAINO = Object.assign({}, CH.miner, { name: 'Taino', headwear: null, hair: 'neat', shirt: ['#a86a44', '#6a3e24'], pants: ['#c8a070', '#8a6a40'], bare: true, stoop: 0 });
+const OLDCOL = Object.assign({}, C.COLUMBUS, { build: 'elder', hairCol: { base: '#f0f0f0', shade: '#a8a8a8', rim: '#ffffff' }, shirt: ['#e8e0d0', '#a8a090'] });
+const WLL = X.WLL, wp = X.wpoly;
+const DAYL = { L: [-.6, -1], amb: '#5a4a6a', ambA: .25, rim: '#fff0d0', rimA: .8, tint: '#ffd8a0', tintA: .1, sw: .3, rw: .05 };
+const route = (c, pts, q, col, w = 5) => { const P = pts.map(p => WLL(p[0], p[1])); let tot = 0; const L = []; for (let i = 1; i < P.length; i++) { const d = Math.hypot(P[i][0] - P[i - 1][0], P[i][1] - P[i - 1][1]); L.push(d); tot += d; }
+  let rem = tot * q; c.save(); c.strokeStyle = col; c.lineWidth = w; c.setLineDash([10, 7]); c.lineCap = 'round'; c.beginPath(); c.moveTo(P[0][0], P[0][1]); let end = P[0];
+  for (let i = 1; i < P.length && rem > 0; i++) { const f = Math.min(1, rem / L[i - 1]); end = [lerp(P[i - 1][0], P[i][0], f), lerp(P[i - 1][1], P[i][1], f)]; c.lineTo(end[0], end[1]); rem -= L[i - 1]; } c.stroke(); c.restore(); return end; };
+const mapCandle = (c, lt) => { const f = VP.flicker(lt, 3); c.save(); c.globalCompositeOperation = 'multiply'; const vg = c.createRadialGradient(640, 360, 220, 640, 360, 820); vg.addColorStop(0, 'rgba(255,255,255,0)'); vg.addColorStop(1, `rgba(60,30,10,${.5 - .1 * f})`); c.fillStyle = vg; c.fillRect(0, 0, 1280, 720); c.restore(); VP.glow(c, 500 + 60 * Math.sin(lt * .4), 260, 520, '#ffcf80', .12 + .08 * f); };
+const globe = (c, x, y, r, lt, rot) => { c.save(); c.translate(x, y); const g = c.createRadialGradient(-r * .3, -r * .3, r * .1, 0, 0, r); g.addColorStop(0, '#9ac8d8'); g.addColorStop(1, '#3a6a88'); c.fillStyle = g; c.beginPath(); c.arc(0, 0, r, 0, TAU); c.fill();
+  c.save(); c.clip(); c.fillStyle = '#d8c090'; for (let k = 0; k < 5; k++) { const ph = ((rot + k * 1.3) % TAU) - Math.PI, cx = Math.sin(ph) * r * .8; if (Math.cos(ph) < 0) continue; c.beginPath(); c.ellipse(cx, (k % 2 ? -.2 : .25) * r, r * .22 * Math.cos(ph), r * .3, 0, 0, TAU); c.fill(); } c.restore();
+  c.strokeStyle = '#5a3a1a'; c.lineWidth = 4; c.beginPath(); c.arc(0, 0, r + 6, -2.4, .9); c.stroke(); c.fillStyle = '#5a3a1a'; c.fillRect(-6, r + 4, 12, 50); c.fillRect(-40, r + 50, 80, 10); c.restore(); };
+
+window.SHOTS = [
+  // 1.01 MAP: Portugal's route curls around Africa toward India; Spain sits idle
+  { set: 'world', cam: { z: [1.6, 1.9], x: [600, 680], y: [400, 430], ease: E.io }, bed: [['drone', .2]], sub: 'bottom',
+    init: Sh => { Sh.tG = at(Sh, 'granada', 1.5); Sh.tP = at(Sh, 'portugal', 3); Sh.tA = at(Sh, 'asia', Sh.dur - 1.5); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const es = WLL(-4, 40), pt = WLL(-8.5, 39.5);
+      VP.glow(c, es[0], es[1], 30, '#ff6050', .5 * pulse(lt, Sh.tG, 1.5) + .2); H1.stamp(c, 'Spain', es[0] + 10, es[1] - 4, lt, Sh.tG, { px: 18 });
+      const end = route(c, [[-9, 38.7], [-17, 28], [-17, 14], [-8, 4], [8, 2], [12, -15], [18, -35], [28, -36], [40, -20], [45, -2], [55, 12], [73, 15]], seg(lt, Sh.tP, Sh.tA + .5), '#2f7a3a');
+      if (lt > Sh.tP) { c.fillStyle = '#2f7a3a'; c.beginPath(); c.arc(end[0], end[1], 5, 0, TAU); c.fill(); }
+      H1.stamp(c, 'India', WLL(78, 20)[0], WLL(78, 20)[1], lt, Sh.tA, { px: 18 });
+      mapCandle(c, lt);
+    },
+    over: [(c, lt) => coinCorner(c, lt, { shine: .5 }), (c, lt, u, Sh) => K.card(c, "PORTUGAL'S ROUTE", lt, { at: Sh.tP + .3, x: 1500, y: 860, px: 50, rot: -3 }), (c, lt) => K.dateTag(c, '1492', lt, { at: .4 })],
+    sfx: [[.2, 'paper', .4], ['portugal', 'whoosh_soft', .35], ['spices', 'coins', .3]] },
+
+  // 1.02 MED: Columbus in a court hall pointing at a globe; advisers shake their heads
+  { set: 'hall', cam: { z: [1.45, 1.65], x: [620, 660], y: [430, 440], ease: E.sine }, bed: [['drone', .15]],
+    init: Sh => { Sh.tC = at(Sh, 'columbus', .8); Sh.tW = at(Sh, 'sail west', 3.5); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const L = { L: [.8, -.7], amb: '#3a2a3a', ambA: .3, rim: '#ffe0b0', rimA: .9, tint: '#ffc880', tintA: .12, sw: .3, rw: .05 }, f = VP.flicker(lt, 2);
+      VP.glow(c, 640, 300, 600, '#ffc070', .15 + .06 * f);
+      globe(c, 640, 470, 70, lt, lt * .5);
+      VP.figure(c, [500, 650], { k: -.5, sy: -.2, a: .35, blur: 2 }, cc => S.person(cc, C.COLUMBUS, 500, 650, 46, Object.assign(S.idle(lt, 0), { face: 1, lean: 6, shN: 100 + 10 * Math.sin(lt * 2), elN: 10, shF: 30, elF: 40 }), { blink: S.blinkAt(lt, 0), smile: .4, open: .4 * Math.abs(Math.sin(lt * 8)) * (lt > Sh.tW), look: [.8, -.2], time: lt }, L));
+      for (const [x, ch, k] of [[790, SCHOLAR, 1], [900, SCHOLAR2, 2]]) { const nod = Math.sin(lt * 5 + k) * 6 * seg(lt, Sh.tW, Sh.tW + .5); VP.figure(c, [x, 650], { k: .5, sy: -.2, a: .35, blur: 2 }, cc => S.person(cc, ch, x, 650, 42, Object.assign(S.idle(lt, k), { face: -1, tilt: nod, shN: 20, elN: 90, shF: 20, elF: 90 }), { blink: S.blinkAt(lt, k), angry: .3, look: [-.8, 0], time: lt }, L)); }
+      VP.motes(c, lt, 300, 200, 700, 400, { n: 30, a: .4 });
+    },
+    over: [(c, lt) => coinCorner(c, lt, { shine: .5 }), (c, lt, u, Sh) => K.card(c, 'CHRISTOPHER\nCOLUMBUS · GENOA', lt, { at: Sh.tC + .2, x: 380, y: 200, px: 48, rot: -3 }), (c, lt, u, Sh) => K.card(c, 'SAIL WEST?', lt, { at: Sh.tW + .3, x: 1540, y: 200, px: 60, rot: 3 })],
+    sfx: [['columbus', 'pop', .35], ['sail west', 'whoosh_soft', .35]] },
+
+  // 1.03 CU: the globe; Columbus's finger covers a short gap, a scholar's hand shows the real distance
+  { set: 'hall', cam: { z: [2.3, 2.6], x: [640, 640], y: [450, 450], ease: E.sine }, bed: [['drone', .15]],
+    init: Sh => { Sh.tR = at(Sh, 'they were right', 2.5); Sh.tS = at(Sh, 'much smaller', 4); Sh.tN = at(Sh, 'portugal said no', 6.5); Sh.tY = at(Sh, 'said yes', Sh.dur - 1.2); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      c.fillStyle = 'rgba(30,20,20,.45)'; c.fillRect(0, 0, 1280, 720);
+      const gx = 640, gy = 450, r = 140; c.save(); c.translate(gx, gy); const g = c.createRadialGradient(-40, -40, 10, 0, 0, r); g.addColorStop(0, '#9ac8d8'); g.addColorStop(1, '#3a6a88'); c.fillStyle = g; c.beginPath(); c.arc(0, 0, r, 0, TAU); c.fill();
+      c.fillStyle = '#d8c090'; c.beginPath(); c.ellipse(80, -10, 40, 70, 0, 0, TAU); c.fill(); c.beginPath(); c.ellipse(-110, 0, 22, 60, 0, 0, TAU); c.fill(); c.restore();
+      // Columbus's short gap vs the real one
+      const s = seg(lt, .6, 2), real = seg(lt, Sh.tR, Sh.tR + 1.5);
+      c.strokeStyle = '#ffd27a'; c.lineWidth = 6; c.beginPath(); c.moveTo(gx + 40, gy - 20); c.lineTo(gx + 40 - 50 * s, gy - 20); c.stroke();
+      if (real > 0) { c.strokeStyle = '#ff6a5a'; c.lineWidth = 6; c.beginPath(); c.arc(gx, gy, r * .86, -Math.PI * .1, -Math.PI * .1 - 2.2 * real, true); c.stroke(); }
+      // hands
+      c.fillStyle = '#e8b890'; c.beginPath(); c.ellipse(gx + 20 - 30 * s, gy - 60, 16, 40, -.3, 0, TAU); c.fill();
+      if (real > 0) { c.fillStyle = '#c89878'; c.beginPath(); c.ellipse(gx - 160 + 20 * (1 - real), gy + 40, 18, 44, .5, 0, TAU); c.fill(); }
+      // the No and the Yes stamps
+      const no = seg(lt, Sh.tN, Sh.tN + .3), yes = seg(lt, Sh.tY - .3, Sh.tY);
+      if (no > 0) { c.save(); c.translate(260, 220); c.rotate(-.2); c.scale(1 + (1 - no), 1 + (1 - no)); c.globalAlpha = no; c.strokeStyle = '#2f7a3a'; c.lineWidth = 6; c.strokeRect(-110, -40, 220, 80); c.font = '40px Anton'; c.fillStyle = '#2f7a3a'; c.textAlign = 'center'; c.fillText('PORTUGAL: NO', 0, 14); c.restore(); }
+      if (yes > 0) { c.save(); c.translate(1020, 220); c.rotate(.15); c.scale(1 + (1 - yes), 1 + (1 - yes)); c.globalAlpha = yes; c.strokeStyle = '#b8282a'; c.lineWidth = 6; c.strokeRect(-110, -40, 220, 80); c.font = '40px Anton'; c.fillStyle = '#b8282a'; c.textAlign = 'center'; c.fillText('SPAIN: YES', 0, 14); c.restore(); }
+    },
+    over: [(c, lt) => coinCorner(c, lt, { shine: .5 }), (c, lt, u, Sh) => K.badge(c, 'HE THOUGHT THE WORLD WAS MUCH SMALLER', lt, { at: Sh.tS, until: Sh.tN })],
+    sfx: [['they were right', 'paper', .3], ['portugal said no', 'stamp', .45], ['said yes', 'stamp', .5]] },
+
+  // 1.04 WIDE: three ships leave Palos harbour at dawn; families wave from the quay
+  { set: 'harbour', cam: { z: [1.15, 1.35], x: [560, 720], y: [420, 430], ease: E.io }, bed: [['ocean_loop', .3], ['crowd_loop', .1]],
+    init: Sh => { Sh.tD = at(Sh, 'third of august', 1); Sh.tN = at(Sh, 'nina', 4); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      c.save(); c.globalCompositeOperation = 'soft-light'; c.fillStyle = 'rgba(255,170,110,.35)'; c.fillRect(0, 0, 1280, 720); c.restore();
+      const L = VP.light('golden', lt, { swing: 4 }), sh = VP.shadowOf(L, 1.3, .3, .12);
+      for (const [k, x0, y, s] of [[0, 820, 470, .8], [1, 960, 455, .65], [2, 1080, 445, .55]]) { const bob = Math.sin(lt * 1.3 + k) * 3, x = x0 + lt * (5 + k); X.ship(c, x, y + bob, s, '#f4ead4', true); const lab = seg(lt, Sh.tN + k * .6, Sh.tN + k * .6 + .3); if (lab > 0) { c.save(); c.globalAlpha = lab; c.font = '22px Oswald'; c.fillStyle = '#2a1a10'; c.textAlign = 'center'; c.fillStyle = '#f4ead4'; c.fillRect(x - 60, y - 140 * s - 34, 120, 28); c.fillStyle = '#2a1a10'; c.fillText(['NIÑA', 'PINTA', 'SANTA MARÍA'][k], x, y - 140 * s - 13); c.restore(); } }
+      for (let k = 0; k < 6; k++) { const x = 200 + k * 70, ch = [C.SAILOR, E1.TOWNSMAN, CH.aisha, C.SAILOR2][k % 4]; VP.figure(c, [x, 600], sh, cc => S.person(cc, ch, x, 600, 26, Object.assign(S.idle(lt, k), { face: 1, shN: 150 + 20 * Math.sin(lt * 6 + k), elN: 20 }), { blink: S.blinkAt(lt, k), smile: .3, time: lt }, L)); }
+      VP.motes(c, lt, 0, 300, 1280, 400, { n: 25, a: .35 });
+    },
+    over: [(c, lt) => coinCorner(c, lt, { shine: .55 }), (c, lt, u, Sh) => K.dateTag(c, 'PALOS · 3 AUG 1492', lt, { at: Sh.tD }), (c, lt, u, Sh) => K.card(c, '~90 MEN', lt, { at: Sh.dur - 2, x: 1540, y: 860, px: 56, rot: 3 })],
+    sfx: [['third of august', 'swell', .35], ['nina', 'pop', .3], ['pinta', 'pop', .3], ['santa maria', 'pop', .3]] },
+
+  // 1.05 MED: night on deck, sailors argue with Columbus; dawn, a lookout points: land!
+  { set: 'deck', cam: (lt, u, Sh) => lt < Sh.tL ? { z: [1.5], x: [600], y: [440], shake: .8 } : { z: [lerp(1.5, 1.2, E.io(seg(lt, Sh.tL, Sh.tL + 1.5)))], x: [760], y: [380] }, bed: [['ocean_loop', .3], ['wind_loop', .2]],
+    init: Sh => { Sh.tM = at(Sh, 'mutiny', 2.5); Sh.tL = at(Sh, 'lookout', 4.5); Sh.tO = at(Sh, 'twelfth of october', Sh.dur - 1.5); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const day = seg(lt, Sh.tL - .5, Sh.tL + 1.5), talk = k => .45 * Math.abs(Math.sin(lt * 10 + k)) * (Math.sin(lt * 1.7 + k * 2) > 0);
+      c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = `rgba(40,50,110,${.7 * (1 - day)})`; c.fillRect(0, 0, 1280, 720); c.restore();
+      if (day > 0) { c.save(); c.globalCompositeOperation = 'screen'; c.fillStyle = `rgba(255,190,120,${.25 * day})`; c.fillRect(0, 0, 1280, 440); c.restore(); }
+      const L = day < .5 ? { L: [-1, -.4], amb: '#2a2a5a', ambA: .5, rim: '#ffb060', rimA: 1, tint: '#ff9a50', tintA: .18, sw: .3, rw: .05 } : DAYL;
+      if (day < 1) { H1.fire(c, 640, 560, .1, lt, 3); VP.glow(c, 640, 540, 300, '#ffa040', .3 * (1 - day)); }
+      VP.figure(c, [560, 660], { k: .5, sy: -.2, a: .3, blur: 2 }, cc => S.person(cc, C.COLUMBUS, 560, 660, 44, Object.assign(S.idle(lt, 0), { face: 1, shN: 40, elN: 40 }), { blink: S.blinkAt(lt, 0), worry: .5 * (1 - day), smile: .6 * day, open: talk(0) * (1 - day), look: day > .5 ? [.6, -.6] : [.8, 0], time: lt }, L));
+      for (const [x, ch, k] of [[760, C.SAILOR, 1], [880, C.SAILOR2, 2]]) VP.figure(c, [x, 660], { k: .5, sy: -.2, a: .3, blur: 2 }, cc => S.person(cc, ch, x, 660, 42, Object.assign(S.idle(lt, k), { face: -1, shN: 60 + 30 * Math.sin(lt * 3 + k) * (1 - day), elN: 50 }), { blink: S.blinkAt(lt, k), angry: .8 * (1 - day), smile: .6 * day, open: talk(k), look: day > .5 ? [.6, -.6] : [-.8, 0], time: lt }, L));
+      if (day > 0) { const lx = 1025, ly = 120; c.fillStyle = '#5a321a'; c.fillRect(lx - 40, ly, 80, 16); S.person(c, C.SAILOR, lx, ly, 18, Object.assign(S.idle(lt, 5), { face: 1, shN: 100 + 40 * day, elN: 0 }), { open: .4, smile: .5, time: lt }, L); }
+      if (day > .6) { c.fillStyle = S.rgba('#2f6a3a', .8 * day); c.beginPath(); c.ellipse(1240, 392, 140, 14, 0, Math.PI, 0); c.fill(); }
+      VP.motes(c, lt, 300, 300, 600, 300, { n: 20, a: .35 });
+    },
+    over: [(c, lt) => coinCorner(c, lt, { shine: .55 }), (c, lt, u, Sh) => K.card(c, 'MUTINY?', lt, { at: Sh.tM + .2, x: 380, y: 200, px: 60, rot: -3, until: Sh.tL }), (c, lt, u, Sh) => K.card(c, 'LAND!', lt, { at: Sh.tL + .6, x: 1540, y: 200, px: 72, rot: 3 }), (c, lt, u, Sh) => K.dateTag(c, '12 OCT 1492', lt, { at: Sh.tO })],
+    sfx: [['mutiny', 'tension', .35], ['lookout', 'riser', .35], ['saw land', 'crowd_cheer', .35]] },
+
+  // 1.06 WIDE: Columbus wades ashore with a flag; Taino people watch from the treeline
+  { set: 'caribbean', cam: { z: [1.15, 1.4], x: [560, 680], y: [430, 450], ease: E.io }, bed: [['ocean_loop', .3], ['birds_loop', .2]],
+    init: Sh => { Sh.tI = at(Sh, 'indians', 5); Sh.tS = at(Sh, 'five hundred years', Sh.dur - 1.5); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const L = VP.light('golden', lt, { swing: 4, set: { L: [-.5, -1] } }), sh = VP.shadowOf(L, 1.3, .3, .12), q = E.out(seg(lt, 0, 4));
+      X.ship(c, 260 + lt * 2, 420, .5, '#f4ead4', true);
+      const cx = lerp(380, 560, q), cy = lerp(560, 620, q);
+      VP.figure(c, [cx, cy], sh, cc => S.person(cc, C.COLUMBUS, cx, cy, 40, Object.assign(q < 1 ? walk(lt * .7) : S.idle(lt, 0), { face: 1, shF: 120, elF: 10, holdF: wr => { cc.strokeStyle = '#4a2a14'; cc.lineWidth = 4; cc.beginPath(); cc.moveTo(wr[0], wr[1] + 60); cc.lineTo(wr[0], wr[1] - 140); cc.stroke(); VP.banner(cc, wr[0], wr[1] - 140, 60, 42, ['#f4ead4', '#a8a090'], lt, { Lt: L, ph: 1 }); cc.fillStyle = '#2f7a3a'; cc.fillRect(wr[0] + 26, wr[1] - 136, 6, 38); } }), { blink: S.blinkAt(lt, 0), smile: .5, look: [.8, 0], time: lt }, L));
+      c.fillStyle = S.rgba('#ffffff', .5); c.beginPath(); c.ellipse(cx, cy, 30, 5, 0, 0, TAU); c.fill();
+      for (const [x, k] of [[900, 1], [980, 2], [1060, 3]]) VP.figure(c, [x, 600], sh, cc => S.person(cc, TAINO, x, 600, 36, Object.assign(S.idle(lt, k), { face: -1, shN: 20, elN: 30 }), { blink: S.blinkAt(lt, k), worry: .3, look: [-.8, 0], time: lt }, L));
+      VP.motes(c, lt, 0, 300, 1280, 400, { n: 25, a: .35 });
+    },
+    over: [(c, lt) => coinCorner(c, lt, { shine: .6 }), (c, lt) => K.dateTag(c, 'THE BAHAMAS · 1492', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, '"INDIANS"', lt, { at: Sh.tI + .2, x: 1540, y: 200, px: 64, rot: 3 })],
+    sfx: [['indians', 'pop', .4], ['five hundred years', 'chime', .35]] },
+
+  // 1.07 MAP: a ruler draws the Tordesillas line down the Atlantic; colours split the world
+  { set: 'world', cam: { z: [1.05, 1.15], x: [600, 620], y: [360, 360], ease: E.io }, bed: [['drone', .2]], sub: 'bottom',
+    init: Sh => { Sh.tT = at(Sh, 'tordesillas', 3); Sh.tL = at(Sh, 'a line', 5.5); Sh.tW = at(Sh, 'everything west', 8); Sh.tE = at(Sh, 'east for portugal', Sh.dur - 1); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const lx = WLL(-46, 0)[0], d = E.io(seg(lt, Sh.tL - .5, Sh.tL + 1)), w = seg(lt, Sh.tW, Sh.tW + 1), e = seg(lt, Sh.tE - .8, Sh.tE + .2);
+      c.save(); c.globalAlpha = .28 * w; c.fillStyle = '#d8a020'; c.fillRect(0, 0, lx, 720); c.globalAlpha = .28 * e; c.fillStyle = '#2f7a3a'; c.fillRect(lx, 0, 1280 - lx, 720); c.restore();
+      c.strokeStyle = '#b8282a'; c.lineWidth = 5; c.beginPath(); c.moveTo(lx, 30); c.lineTo(lx, 30 + 660 * d); c.stroke();
+      if (d > 0 && d < 1) { c.fillStyle = '#c8a070'; c.fillRect(lx + 4, 30 + 660 * d - 200, 26, 220); c.strokeStyle = '#6a4a2a'; c.lineWidth = 1; for (let k = 0; k < 20; k++) { c.beginPath(); c.moveTo(lx + 4, 30 + 660 * d - 200 + k * 11); c.lineTo(lx + 12, 30 + 660 * d - 200 + k * 11); c.stroke(); } }
+      mapCandle(c, lt);
+    },
+    over: [(c, lt) => coinCorner(c, lt, { shine: .6 }), (c, lt, u, Sh) => K.card(c, 'TREATY OF\nTORDESILLAS · 1494', lt, { at: Sh.tT + .2, x: 1540, y: 200, px: 46, rot: 3 }), (c, lt, u, Sh) => K.card(c, 'SPAIN', lt, { at: Sh.tW + .2, x: 380, y: 880, px: 60, rot: -3 }), (c, lt, u, Sh) => K.card(c, 'PORTUGAL', lt, { at: Sh.tE, x: 1300, y: 880, px: 60, rot: 3 })],
+    sfx: [['tordesillas', 'paper', .4], ['a line', 'scrape', .4], ['everything west', 'pop', .35], ['east for portugal', 'pop', .35]] },
+
+  // 1.08 MED: an old Columbus in bed, papers and maps around him
+  { set: 'room', cam: { z: [1.3, 1.6], x: [560, 600], y: [440, 470], ease: E.sine }, bed: [['night_loop', .2]],
+    init: Sh => { Sh.tF = at(Sh, 'four voyages', 1); Sh.tA = at(Sh, 'asia', Sh.dur - 1.5); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const f = VP.flicker(lt, 2), L = { L: [-1, -.5], amb: '#2a2040', ambA: .45, rim: '#ffc070', rimA: .9, tint: '#ffa050', tintA: .16, sw: .3, rw: .05 };
+      H1.fire(c, 300, 520, .12, lt, 4); c.fillStyle = '#c8b08a'; c.fillRect(294, 520, 12, 30); c.fillStyle = '#4a2a14'; c.fillRect(260, 550, 80, 110); VP.glow(c, 300, 500, 420, '#ffb060', .3 + .1 * f);
+      // the bed
+      c.fillStyle = '#4a2a14'; c.fillRect(380, 520, 30, 160); c.fillStyle = '#e8e0d0'; c.fillRect(400, 560, 440, 70); c.fillStyle = '#7a2a2a'; c.fillRect(520, 556, 320, 80); c.fillStyle = '#5a3a1e'; c.fillRect(380, 630, 480, 20);
+      // his head and shoulders on the pillow
+      c.save(); c.translate(470, 560); c.rotate(-1.3); S.person(c, OLDCOL, 0, 0, 36, Object.assign(S.idle(lt, 0), { face: 1, hideLegs: 1, shN: 30, elN: 60 }), { blink: Math.max(S.blinkAt(lt, 0), .5), worry: .3, look: [.6, 0], time: lt }, L); c.restore();
+      c.fillStyle = '#7a2a2a'; c.fillRect(520, 556, 320, 80); c.fillStyle = S.rgba('#ffd090', .2); c.fillRect(520, 556, 320, 6);
+      for (let k = 0; k < 6; k++) { const x = 600 + k * 70, y = 680 + (k % 2) * 10; c.save(); c.translate(x, y); c.rotate((k - 3) * .2); c.fillStyle = '#f0e0b8'; c.fillRect(-40, -24, 80, 48); c.strokeStyle = '#6a4a2a'; c.lineWidth = 1; c.strokeRect(-40, -24, 80, 48); c.fillStyle = '#c8a878'; c.beginPath(); c.ellipse(-8, 0, 12, 16, 0, 0, TAU); c.fill(); c.restore(); }
+      for (let k = 0; k < 4; k++) { const vx = 760, vy = 280; const q = seg(lt, Sh.tF + k * .4, Sh.tF + k * .4 + .3); if (q <= 0) continue; X.ship(c, vx + k * 40 - 60, vy + (k % 2) * 20, .25 * q, '#f4ead4', true); }
+      VP.motes(c, lt, 200, 300, 700, 300, { n: 25, a: .4 });
+    },
+    over: [(c, lt) => coinCorner(c, lt, { shine: .6 }), (c, lt, u, Sh) => K.card(c, '4 VOYAGES', lt, { at: Sh.tF + .3, x: 1540, y: 200, px: 60, rot: 3 }), (c, lt) => K.dateTag(c, 'VALLADOLID · 1506', lt, { at: 1 }), (c, lt, u, Sh) => K.badge(c, 'STILL SURE IT WAS ASIA', lt, { at: Sh.tA })],
+    sfx: [['four voyages', 'pop', .3], ['died', 'drone', .3], ['asia', 'chime', .3]] },
+];
+VP.build(); K.boot();
+</script></body></html>
