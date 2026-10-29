@@ -206,8 +206,10 @@
     // cheek line, a small nostril wing and one nostril. Shading on the bridge side, a highlight on the tip.
     const nx = fx * 1.3;
     const nk = kid ? .82 : ch.build === 'woman' ? .78 : ch.build === 'broad' ? 1 : .92;
-    c.save(); c.translate(.3 * u + nx, .1 * u); c.scale(nk, nk); c.translate(-(.3 * u + nx), -.1 * u);
-    const N = (x, y) => [x * u + nx, y * u];
+    // the nose sits a little lower so its bridge starts below the eye line and never covers the far eye
+    const ndy = .07 * u;
+    c.save(); c.translate(.3 * u + nx, .1 * u + ndy); c.scale(nk, nk); c.translate(-(.3 * u + nx), -.1 * u - ndy);
+    const N = (x, y) => [x * u + nx, y * u + ndy];
     const nose = S.poly([N(.27, -.02), N(.31, .03), N(.36, .1), N(.405, .165), N(.41, .2), N(.385, .228), N(.34, .232), N(.3, .225), N(.265, .2), N(.27, .15), N(.275, .08)]);
     celT(c, nose, sk, Lt, u, { ink: false, swk: .35, rim: sk.base, vol: false });
     c.save(); c.lineCap = 'round'; c.lineJoin = 'round';
@@ -604,9 +606,9 @@
       brow(c, ex + .01 * u, by, ew * 1.2, u, f.raise || 0, f.worry || 0, f.angry || 0, ch.hair === 'elder' ? '#d9d2c8' : hc, -1);
       // nose, front: soft bridge shadow on the side away from the light, a rounded tip with a highlight,
       // two small nostril wings and two nostrils
-      const ny = (kid ? .2 : .22) * u, nk = kid ? .8 : ch.build === 'woman' ? .78 : ch.build === 'broad' ? 1.05 : .92, sL = Lt.L[0] >= 0 ? -1 : 1;
+      const ny = (kid ? .24 : .26) * u, nk = kid ? .8 : ch.build === 'woman' ? .78 : ch.build === 'broad' ? 1.05 : .92, sL = Lt.L[0] >= 0 ? -1 : 1;
       c.save(); c.lineCap = 'round';
-      c.strokeStyle = S.rgba(sk.shade, .5); c.lineWidth = u * .03; c.beginPath(); c.moveTo(sL * .035 * u, eyY + .02 * u); c.quadraticCurveTo(sL * .045 * u * nk, ny - .06 * u, sL * .05 * u * nk, ny - .02 * u); c.stroke();
+      c.strokeStyle = S.rgba(sk.shade, .5); c.lineWidth = u * .03; c.beginPath(); c.moveTo(sL * .035 * u, eyY + .07 * u); c.quadraticCurveTo(sL * .045 * u * nk, ny - .06 * u, sL * .05 * u * nk, ny - .02 * u); c.stroke();
       c.fillStyle = S.rgba(sk.shade, .35); c.beginPath(); c.ellipse(0, ny + .01 * u, .05 * u * nk, .025 * u, 0, 0, S.TAU); c.fill();
       c.strokeStyle = INK; c.lineWidth = Math.max(1.1, u * .016);
       for (const s2 of [-1, 1]) { c.beginPath(); c.moveTo(s2 * .045 * u * nk, ny - .035 * u); c.quadraticCurveTo(s2 * .075 * u * nk, ny + .005 * u, s2 * .04 * u * nk, ny + .025 * u); c.stroke(); }
