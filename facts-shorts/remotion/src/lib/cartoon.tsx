@@ -39,6 +39,7 @@ export type GuyProps = {
   cup?: 'L' | 'R' | null; cupFull?: boolean; cupTilt?: number;
   look?: [number, number]; // pupil offset
   xray?: number; xrayChildren?: React.ReactNode; cupChildren?: React.ReactNode;
+  stand?: boolean; stepL?: number; stepR?: number; handChildren?: React.ReactNode; // handChildren drawn at handR
 };
 
 const SHOULDER_L: [number, number] = [-34, -188];
@@ -147,13 +148,26 @@ export const Guy: React.FC<GuyProps> = (p) => {
     <g transform={`scale(${sx} ${sy * breathe}) rotate(${lean})`}>
       {/* contact shadow */}
       <ellipse cx={0} cy={4} rx={150} ry={18} fill="rgba(40,30,20,0.22)" />
-      {/* crossed legs */}
+      {p.stand ? (
+        <g>
+          <path d={`M -34 -120 Q ${-38 + (p.stepL ?? 0)} -50 ${-40 + (p.stepL ?? 0) * 2} 0`} stroke={INK} strokeWidth={40} fill="none" strokeLinecap="round" />
+          <path d={`M -34 -120 Q ${-38 + (p.stepL ?? 0)} -50 ${-40 + (p.stepL ?? 0) * 2} 0`} stroke="#fff" strokeWidth={24} fill="none" strokeLinecap="round" />
+          <path d={`M 34 -120 Q ${38 + (p.stepR ?? 0)} -50 ${40 + (p.stepR ?? 0) * 2} 0`} stroke={INK} strokeWidth={40} fill="none" strokeLinecap="round" />
+          <path d={`M 34 -120 Q ${38 + (p.stepR ?? 0)} -50 ${40 + (p.stepR ?? 0) * 2} 0`} stroke="#fff" strokeWidth={24} fill="none" strokeLinecap="round" />
+          <ellipse cx={-50 + (p.stepL ?? 0) * 2} cy={2} rx={36} ry={20} fill="#fff" stroke={INK} strokeWidth={LW} />
+          <ellipse cx={54 + (p.stepR ?? 0) * 2} cy={2} rx={36} ry={20} fill="#fff" stroke={INK} strokeWidth={LW} />
+        </g>
+      ) : (
+        <g>
       <g stroke={INK} strokeWidth={LW} strokeLinejoin="round">
         <ellipse cx={-52} cy={-46} rx={92} ry={44} fill="#fff" transform="rotate(-6 -52 -46)" />
         <ellipse cx={58} cy={-44} rx={96} ry={44} fill="#fff" transform="rotate(7 58 -44)" />
         <ellipse cx={-4} cy={-28} rx={46} ry={26} fill="#fff" />
       </g>
       <path d="M -120 -40 Q -60 -10 -10 -30" stroke="#E4E7EB" strokeWidth={10} fill="none" strokeLinecap="round" />
+        </g>
+      )}
+      <g transform={p.stand ? 'translate(0 -60)' : undefined}>
       {/* body */}
       <path d="M -66 -64 C -86 -150 -58 -212 4 -218 C 66 -212 90 -150 70 -64 Q 2 -46 -66 -64 Z" fill="#fff" stroke={INK} strokeWidth={LW} strokeLinejoin="round" />
       <path d="M -54 -80 C -70 -150 -50 -196 -18 -208" stroke="#E4E7EB" strokeWidth={16} fill="none" strokeLinecap="round" />
@@ -169,8 +183,10 @@ export const Guy: React.FC<GuyProps> = (p) => {
         <g transform={`translate(${cupHand[0] + 8} ${cupHand[1] + 10})`}><TinCup full={p.cupFull} tilt={p.cupTilt ?? 0} s={0.9} />{p.cupChildren}</g>
       )}
       <Hand h={p.handL} flip />
+      {p.handChildren && <g transform={`translate(${p.handR[0]} ${p.handR[1]})`}>{p.handChildren}</g>}
       <Hand h={p.handR} />
       {p.xray ? <g>{p.xrayChildren}</g> : null}
+      </g>
     </g>
   );
 };

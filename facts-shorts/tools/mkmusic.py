@@ -5,7 +5,8 @@ SR = 48000
 out, secs = sys.argv[1], float(sys.argv[2]); bpm = float(sys.argv[3]) if len(sys.argv) > 3 else 104
 rng = np.random.default_rng(int(sys.argv[4]) if len(sys.argv) > 4 else 7)
 beat = 60 / bpm; N = int(secs * SR); mix = np.zeros(N)
-def f(m): return 440 * 2 ** ((m - 69) / 12)
+TR = (int(sys.argv[4]) if len(sys.argv) > 4 else 0) % 5 - 2
+def f(m): return 440 * 2 ** ((m + TR - 69) / 12)
 def pluck(freq, dur, amp, bright=0.5):
     n = int(dur * SR); p = max(2, int(SR / freq)); buf = rng.uniform(-1, 1, p); y = np.zeros(n)
     for i in range(n):

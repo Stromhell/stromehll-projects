@@ -2,3 +2,4 @@ node_modules/
 build/
 tb/
 out/
+build_*/
