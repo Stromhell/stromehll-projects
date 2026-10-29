@@ -1,0 +1,204 @@
+# Endurance (Shackleton): Script v1
+
+3D narrated documentary · English voice-over (Pushpam's cloned voice) · Source: Pushpam's Hindi transcript "Lost in Antarctica for 497 Days", translated and fact-checked · 29 Oct 2026
+
+**Runtime (estimate):** 11:27 · **Narration:** 1594 words at 150 wpm · **Shots:** 83 · **Average shot:** 8.3 s · **Map shots:** 7 (8%)
+
+## Hook options
+
+Scored out of 100 on curiosity, specificity, stakes and speed to the point. These are my scores.
+
+| # | Formula | Hook | Score |
+|---|---|---|---|
+| 1 | The Ritual | "Every morning for four months, one man told 21 starving men: pack your things, the Boss may come today." | **87 (winner, used in Act 0)** |
+| 2 | The Number | "28 men. Lost at the bottom of the world for almost two years. Zero dead." | 85 (Short: the count) |
+| 3 | The Impossible | "Nobody had ever crossed this island's mountains. Three starving men did it in 36 hours, with screws in their boots." | 84 (Short: the crossing) |
+| 4 | The Stowaway | "A teenager stowed away on a polar ship. The captain told him he'd be the first one eaten." | 80 (Short: Blackborow) |
+| 5 | The Wreck | "In 2022 they found his ship three kilometres down. The name was still on the back." | 82 (Short: the wreck) |
+
+## What changed from the transcript
+
+- **Translated:** Hindi source rewritten as English VO in short sentences.
+- **Dropped:** the Edaria / Dinaz masterclass sponsor read, both Flight 571 plugs and the "comment how long you'd survive" ask.
+- **Facts fixed:** Endurance reached South Georgia on 5 Nov 1914 and sailed on 5 Dec 1914 (the transcript opens with 4 Nov). Beset on 19 Jan 1915. The James Caird carried six men (Shackleton plus five), took 16 days, not three weeks. Blackborow lost the toes of his left foot, not his leg. The ship sank on 21 Nov 1915 and was found in March 2022 at about 3,008 m.
+- **Added:** Amundsen reached the Pole in 1911 (why Shackleton chose the crossing). Screws in the boots, the rope slide and the Stromness whistle on the crossing. The Ross Sea party lost three men, so "everyone came home" is only true of the Endurance party; the script says so.
+- **Not used (could not confirm):** Shackleton lying about food stocks; the Tom McLeod quote; Rickinson's heart attack (reported in some accounts only); the bird-cursing scene.
+- **Softened:** the dogs and puppies are put down off screen (empty kennels only); the sea leopard and the surgery are implied.
+
+## Style
+
+- **House style:** the 3D cartoon documentary world, white ice and black sea, a small warm-lit wooden ship.
+- **Palette:** ice white #eef3f6, deep sea #1d2b3a, canvas tan #c9b28a, lantern amber #f0b04a, rescue red #b8402e for maps and tallies. Grade cools through Acts 2-5 and warms in Act 7.
+- **Recurring cast:** Shackleton (pipe, cap), Frank Wild, Frank Worsley, Tom Crean, Frank Hurley, Perce Blackborow, Ernest Holness, Harry McNish, the station manager. Generic house-style figures in parkas with name callouts.
+- **Act badge emblems:** compass, ice, boat, mountain.
+
+## Your earlier feedback, built in from the start
+
+| Your note | How this film handles it |
+|---|---|
+| No overlaps | Camps and boats laid out on a grid; crew lines spaced; boat crews seated in fixed slots |
+| Natural motion | Hauling, rowing and climbing use walk cycles and weight shifts; boats pitch with the sea |
+| Official India map | No India in frame; the shared map module keeps India point-of-view borders |
+| More SFX, under the VO | At least two SFX per shot (wind, ice, timber, sea), ducked under the voice |
+| Dynamic subtitles clear of characters | Word-by-word subtitles that move bands to stay clear |
+| Violence implied | No animal killing on screen; the surgery shows faces only |
+| No comedy | The stowaway line is told straight as history; no gag cards |
+
+## Shot table
+
+
+
+### Act 0: COLD OPEN (AUGUST 1916) · 0:44 · 5 shots
+
+| Shot | Time | Sec | Type | Narration | On screen | Motion | SFX | Date tag | Title / overlay |
+|---|---|---|---|---|---|---|---|---|---|
+| 0.1 | 0:00 | 7.8 | SCENE | August 1916. A bare rock at the edge of Antarctica. Twenty-two men are living under two upturned boats. | Two wooden boats flipped upside down on a black stone beach, smoke from a chimney hole, glacier behind, snow blowing | slow crane down from the glacier to the hut | howling wind, waves on shingle | AUGUST 1916 | callout: ELEPHANT ISLAND |
+| 0.2 | 0:07 | 7.4 | SCENE | Every morning, one man climbs the hill and looks out to sea. His name is Frank Wild. | Frank Wild in a ragged parka climbs a snowy ridge and shades his eyes | tracking behind him up the slope | boots crunching snow, wind |  | callout: FRANK WILD / SECOND IN COMMAND |
+| 0.3 | 0:15 | 8.2 | SCENE | And every morning he tells the others the same thing. Pack your things, boys. The Boss may come today. | Wild at the hut doorway, men in sleeping bags looking up, thin and bearded | push in on Wild | crackling blubber stove |  | quote card: "Lash up and stow, boys. The Boss may come today." |
+| 0.4 | 0:23 | 9.0 | SCENE | The Boss is Ernest Shackleton. He left in a small open boat four months ago. Nobody knows if he is alive. | A tiny lifeboat vanishing into grey waves, seen from the beach | slow pull back from the horizon | distant surf, gull cry |  | callout: ERNEST SHACKLETON / "THE BOSS" |
+| 0.5 | 0:32 | 11.8 | SCENE | This is the story of how twenty-eight men were lost at the bottom of the world for almost two years. And how every one of them came home. | The full crew of 28 lined up on the ice beside their ship, then the image freezes and cracks like ice | slow lateral dolly along the line | ice crack, low drone |  | tally: 28 MEN · 0 LOST |
+
+### Act 1: THE PLAN (1914) · 1:21 · 10 shots
+
+| Shot | Time | Sec | Type | Narration | On screen | Motion | SFX | Date tag | Title / overlay |
+|---|---|---|---|---|---|---|---|---|---|
+| 1.1 | 0:00 | 7.0 | SCENE | In 1914, the South Pole had already been reached. Roald Amundsen got there first in 1911. | A flag on a snowy pole with a small tent, a sled track leading away | slow orbit around the flag | wind, flag flapping | DECEMBER 1911 |  |
+| 1.2 | 0:07 | 8.6 | SCENE | So Ernest Shackleton chose a bigger goal. To walk across the whole of Antarctica, from one sea to the other. | Shackleton at a desk with a big map, finger tracing a line across the continent | over-the-shoulder push in | pencil scratch, clock tick |  |  |
+| 1.3 | 0:15 | 12.2 | MAP | The plan was to land on the coast of the Weddell Sea, march to the South Pole, and carry on to the Ross Sea. About 2,900 kilometres on foot. | Antarctica map; dotted route from Vahsel Bay over the Pole to the Ross Sea; distance counter | map tilt and follow the route line | pen scratch on map, wind |  | label: 2,900 KM |
+| 1.4 | 0:27 | 6.2 | SCENE | His ship was called Endurance. A three-masted wooden ship, built to push through ice. | Endurance under sail in a grey sea, name on the stern | low angle tracking alongside the hull | creaking timber, sails snapping |  | callout: ENDURANCE |
+| 1.5 | 0:34 | 6.2 | SCENE | On board were twenty-seven men chosen by Shackleton. And one he had turned down. | The crew on deck; one young man climbing out of a locker, everyone turning to stare | push in on the locker | thud, surprised murmur |  |  |
+| 1.6 | 0:40 | 11.8 | SCENE | Perce Blackborow, nineteen years old, had stowed away. Shackleton was furious. He told him that if they ran out of food, he would be the first one eaten. | Shackleton facing Blackborow on deck, stern, crew watching | slow push in between the two | wind, waves on the hull |  | callout: PERCE BLACKBOROW / STOWAWAY |
+| 1.7 | 0:52 | 5.8 | SCENE | Then he signed him on as a steward. The crew was now twenty-eight. | Blackborow handed an apron and a pot, a tally on screen ticks up | slow pull back | pot clank, tally tick |  | tally: CREW 28 |
+| 1.8 | 0:57 | 9.0 | MAP | In November 1914, Endurance reached South Georgia, a whaling island in the South Atlantic. The last human settlement on their route. | Map of the South Atlantic, Endurance icon arriving at South Georgia, label Grytviken | map push in to the island | seabirds, ship horn | NOVEMBER 1914 | label: GRYTVIKEN |
+| 1.9 | 1:06 | 8.6 | SCENE | The whalers there gave a warning. The ice in the Weddell Sea was worse that year than anyone could remember. | Whalers at a dock with a lantern, pointing south; Shackleton listening | over-the-shoulder from a whaler | dock creak, gulls |  |  |
+| 1.10 | 1:15 | 6.2 | SCENE | Shackleton waited a month. Then, on the fifth of December 1914, he sailed anyway. | Endurance leaving the harbour, snowy peaks behind | wide crane up as the ship leaves | anchor chain, horn | 5 DECEMBER 1914 |  |
+
+### Act 2: TRAPPED (1915) · 1:32 · 12 shots
+
+| Shot | Time | Sec | Type | Narration | On screen | Motion | SFX | Date tag | Title / overlay |
+|---|---|---|---|---|---|---|---|---|---|
+| 2.1 | 0:00 | 5.0 | SCENE | At first the ship pushed through. Then the ice got thicker. | Endurance's bow breaking plates of pack ice | low angle at the bow | ice grinding on wood |  |  |
+| 2.2 | 0:05 | 8.2 | SCENE | On the nineteenth of January 1915, a day's sail from land, the ice closed around Endurance. It was stuck. | The ship frozen in a white plain, sails furled | slow crane up to a wide top view | ice groaning, wind dies | 19 JANUARY 1915 |  |
+| 2.3 | 0:13 | 9.0 | SCENE | The crew went out with picks, saws and chisels and tried to cut a channel. It did not move an inch. | Men hacking at the ice beside the hull, chips flying, the ship unmoved | lateral dolly along the workers | picks on ice, grunts |  |  |
+| 2.4 | 0:22 | 9.8 | MAP | And now the ice itself began to drift. Taking the ship with it, away from the coast where they had planned to land. | Weddell Sea map; ship icon drifting in a slow arc away from Vahsel Bay | map follow the drift line | slow wind, ticking clock |  | label: DRIFT |
+| 2.5 | 0:32 | 5.0 | SCENE | Then winter came. In Antarctica that means months without the sun. | The sun dips below the horizon and does not return; stars come out over the ship | time-lapse locked shot | wind rising, low drone | MAY 1915 |  |
+| 2.6 | 0:37 | 7.8 | SCENE | They lived on board. They played football on the ice, held dog races, and kept each other going. | Men kicking a ball on the ice by lantern light; dog teams racing | tracking along the game | muffled cheers, dogs barking |  |  |
+| 2.7 | 0:44 | 4.2 | SCENE | The ship's photographer, Frank Hurley, took pictures of everything. | Hurley behind a box camera on a tripod, flash powder goes off | push in on the camera | flash pop, shutter click |  | callout: FRANK HURLEY / PHOTOGRAPHER |
+| 2.8 | 0:49 | 8.6 | SCENE | But the ice was not still. It was pressing in from both sides, and the wooden hull began to groan. | Ice ridges rising against the hull, timber flexing | slow push in on the hull | deep timber groans, ice cracking |  |  |
+| 2.9 | 0:57 | 6.6 | SCENE | On the twenty-fourth of October 1915, the ice broke through. Water poured into the ship. | Inside the hold, water spraying through a split plank | handheld shake inside the hold | crack, rushing water | 24 OCTOBER 1915 |  |
+| 2.10 | 1:04 | 9.0 | SCENE | For three days the men pumped, in turns, around the clock. The water rose faster than they could pump it out. | Men at a hand pump in the dark, water around their knees | slow orbit around the pump | pump strokes, water sloshing |  |  |
+| 2.11 | 1:13 | 5.0 | SCENE | On the twenty-seventh of October, Shackleton gave the order. Abandon ship. | Shackleton on deck, lantern raised; men climbing down to the ice with crates | crane down from the mast | wind, shout lost in the wind | 27 OCTOBER 1915 |  |
+| 2.12 | 1:18 | 13.8 | SCENE | They had been trapped for nine months. Now they were camped on floating ice, with no radio, no way to call for help, and nobody in the world who knew where they were. | Tents on the white ice, the broken ship behind them, tiny under a huge sky | slow pull back into a very wide shot | wind, silence |  | tally: TRAPPED 9 MONTHS |
+
+### Act 3: ON THE ICE (1915) · 1:40 · 13 shots
+
+| Shot | Time | Sec | Type | Narration | On screen | Motion | SFX | Date tag | Title / overlay |
+|---|---|---|---|---|---|---|---|---|---|
+| 3.1 | 0:00 | 5.8 | SCENE | They had three lifeboats, sledges, some tents and food for a few weeks. | The three lifeboats on sledges, supplies stacked, men taking stock | top-down slow push in | wood knocks, cloth flapping |  |  |
+| 3.2 | 0:05 | 7.8 | SCENE | Shackleton told every man to keep only two pounds of personal things. Everything else stayed on the ice. | Men emptying bags into a pile in the snow | slow push in on the pile | items dropping in snow |  | callout: 2 LB EACH |
+| 3.3 | 0:13 | 7.4 | SCENE | He went first. He threw away gold coins, and a Bible after tearing out a few pages. | Shackleton dropping coins and a book into the snow | close push in on his hands | coins clink, page tear |  |  |
+| 3.4 | 0:21 | 9.8 | SCENE | Hurley had to smash many of his glass negatives. He kept around a hundred and fifty. Those are the photos we have today. | Hurley choosing between glass plates, setting some aside, the rest left behind | slow orbit around him | glass clinks |  |  |
+| 3.5 | 0:30 | 7.4 | SCENE | They tried to drag the boats across the ice towards land. Each boat weighed about a tonne. | Men in harness hauling a boat on a sledge through deep soft snow | tracking alongside the haulers | heavy breathing, wood creaking |  |  |
+| 3.6 | 0:38 | 6.6 | SCENE | After three hours of hauling, they had moved about one mile. Shackleton stopped the march. | The men look back; the ship still visible close behind them | pull back over their shoulders | wind, a long exhale |  |  |
+| 3.7 | 0:44 | 5.8 | SCENE | They set up camp on a big floe and named it Ocean Camp. | Tents and a lookout tower on the floe, a sign reading OCEAN CAMP | crane down onto the camp | hammer taps, wind |  | callout: OCEAN CAMP |
+| 3.8 | 0:50 | 7.8 | SCENE | On the twenty-first of November 1915, the men watched Endurance finally sink. Shackleton said only: She's gone, boys. | Far off, the ship's stern lifts and slides under the ice; the men stand silent | slow push in past the men to the ship | deep groan, then silence | 21 NOVEMBER 1915 |  |
+| 3.9 | 0:58 | 9.0 | SCENE | In late December they tried another march, and gave up again after a week. The new camp was called Patience Camp. | A new set of tents, a sign reading PATIENCE CAMP, men sitting waiting | slow lateral dolly | wind, quiet voices | DECEMBER 1915 | callout: PATIENCE CAMP |
+| 3.10 | 1:07 | 7.8 | SCENE | Food was rationed hard. They hunted seals and penguins, and later had to put down the sledge dogs. | Men by a blubber stove, a seal carcass shown only as a dark shape, empty dog kennels | slow push in on the empty kennels | crackling stove, wind |  |  |
+| 3.11 | 1:15 | 9.0 | SCENE | One day a sea leopard chased a man across the ice. Frank Wild shot it. It fed the camp for days. | The sea leopard's dark shape lunging from a crack, men running; then a calm aftermath | fast whip pan, then hold | splash, running feet, a distant crack |  |  |
+| 3.12 | 1:24 | 7.0 | SCENE | To drink, they packed snow into tins and held them against their bodies to melt it. | A man holding a tin inside his coat, a few drops of water | close push in | wind, drip |  |  |
+| 3.13 | 1:31 | 9.4 | SCENE | And Shackleton made sure every man had a job. He knew that the real danger was not only cold. It was despair. | Men working: mending, cooking, keeping watch | slow orbit around the camp | work sounds, low music |  |  |
+
+### Act 4: TO THE BOATS (1916) · 1:30 · 10 shots
+
+| Shot | Time | Sec | Type | Narration | On screen | Motion | SFX | Date tag | Title / overlay |
+|---|---|---|---|---|---|---|---|---|---|
+| 4.1 | 0:00 | 9.8 | MAP | For months the floe drifted north. They hoped it would carry them to Paulet Island, where emergency stores had been left years before. | Peninsula map; drift line passing Paulet Island, off to the side | map push in on Paulet Island | ticking clock, wind |  | label: PAULET ISLAND |
+| 4.2 | 0:09 | 6.2 | SCENE | On the twenty-third of March 1916, through the fog, they saw land. Joinville Island. | Mountains appearing through fog beyond the ice | slow push in through fog | wind, a distant shout | 23 MARCH 1916 |  |
+| 4.3 | 0:16 | 7.8 | MAP | But it was out of reach, across broken ice. They were drifting past it, towards the open ocean. | Map: drift line slides past Joinville and Paulet towards open water | map pull back | low drone |  |  |
+| 4.4 | 0:23 | 8.6 | SCENE | The floe was breaking up around them. On the ninth of April 1916, Shackleton ordered everyone into the three boats. | Three boats launched into a lead of black water between floes | crane down onto the launch | splash, oars | 9 APRIL 1916 |  |
+| 4.5 | 0:32 | 11.8 | SCENE | That night, the floe they camped on split in two, right under a tent. A sailor named Ernest Holness fell into the sea, still in his sleeping bag. | A crack opening under a tent at night, a figure dropping into the black water | slow push in, cut to black water | crack, splash |  |  |
+| 4.6 | 0:44 | 9.0 | SCENE | Shackleton reached down and pulled him out. Then the crack opened wider and Shackleton was left alone on the other piece. | Shackleton alone on a small floe drifting into the dark, the others on the far side | wide, slow pull back | ice grinding, wind |  |  |
+| 4.7 | 0:53 | 11.0 | SCENE | The men pushed out a boat and brought him back. Then Shackleton made Holness walk all night, so he would not freeze in his wet clothes. | Holness walking in circles by lantern light, steam rising from his clothes | slow orbit around Holness | footsteps, wind |  |  |
+| 4.8 | 1:04 | 8.2 | SCENE | For almost a week they rowed and sailed between the floes, soaked and freezing, with almost nothing to drink. | The three boats in a grey sea between ice, men hunched over oars | low tracking alongside the boats | waves slapping, oars |  |  |
+| 4.9 | 1:12 | 10.2 | SCENE | On the fifteenth of April 1916, they landed on Elephant Island. It was the first solid ground they had stood on for 497 days. | A boat grinding onto a stone beach; men stumbling ashore, one kneeling and touching the stones | low angle on the beach as they step out | shingle crunch, waves | 15 APRIL 1916 | tally: 497 DAYS |
+| 4.10 | 1:22 | 7.4 | SCENE | But nobody would ever look for them here. Elephant Island was empty, far from any shipping route. | Wide view of the island: black cliffs, glaciers, nothing else | slow pull back to a very wide shot | wind, surf |  |  |
+
+### Act 5: THE JAMES CAIRD (1916) · 1:20 · 10 shots
+
+| Shot | Time | Sec | Type | Narration | On screen | Motion | SFX | Date tag | Title / overlay |
+|---|---|---|---|---|---|---|---|---|---|
+| 5.1 | 0:00 | 7.8 | MAP | The nearest people were at the whaling stations on South Georgia. 1,300 kilometres away, across the Southern Ocean. | Map: dotted line from Elephant Island to South Georgia, distance counter | map follow the line | wind, pen scratch |  | label: 1,300 KM |
+| 5.2 | 0:07 | 7.4 | SCENE | Shackleton decided to go for help in the biggest lifeboat, the James Caird, about seven metres long. | The James Caird on the beach, men raising its sides and fitting a canvas deck | slow orbit around the boat | hammering, canvas flaps |  | callout: JAMES CAIRD |
+| 5.3 | 0:15 | 10.2 | SCENE | He took five men with him. Frank Worsley to navigate, Tom Crean, the carpenter Harry McNish, and two sailors, Timothy McCarthy and John Vincent. | Six men lined up by the boat, name callouts one by one | lateral dolly along the line | wind, waves |  | callouts: WORSLEY · CREAN · McNISH · McCARTHY · VINCENT |
+| 5.4 | 0:25 | 6.2 | SCENE | On the twenty-fourth of April 1916, they pushed off. Twenty-two men watched them go. | The boat leaving the beach, men on the shore waving | crane up from the shore to the open sea | cheers carried away by wind | 24 APRIL 1916 |  |
+| 5.5 | 0:31 | 7.0 | SCENE | They sailed through one of the roughest seas on Earth, in waves as tall as buildings. | The tiny boat climbing a huge grey wave | low angle as the wave rises | roaring sea, wind |  |  |
+| 5.6 | 0:38 | 8.6 | SCENE | They took turns, four hours at the helm, four hours trying to sleep in a soaking space under the canvas. | Two men at the tiller in spray; others curled under the deck | cutaway section of the boat | waves on canvas, creaking |  |  |
+| 5.7 | 0:47 | 8.6 | SCENE | Worsley found their way with a sextant, catching the sun when it showed for a few seconds through the clouds. | Worsley bracing in the boat, sextant raised to a pale sun | push in on the sextant | wind, a click |  |  |
+| 5.8 | 0:55 | 9.8 | SCENE | Ice formed on the boat and made it top-heavy. They had to crawl out and chip it off before it rolled them over. | Men on the icy canvas chipping ice with axes, the boat leaning | orbit around the boat | axe on ice, wind |  |  |
+| 5.9 | 1:05 | 7.8 | SCENE | After sixteen days, they saw South Georgia. Then a hurricane hit, and nearly threw them onto the rocks. | Cliffs through storm spray; the boat pitching close to the rocks | handheld shake, wide | storm roar, thunder |  |  |
+| 5.10 | 1:13 | 7.0 | SCENE | On the tenth of May 1916, they landed in King Haakon Bay. They had made it. | The boat grinding onto a small beach in a cove, men collapsing on the stones | low angle at the waterline | waves calm, heavy breathing | 10 MAY 1916 |  |
+
+### Act 6: THE CROSSING (1916) · 1:39 · 11 shots
+
+| Shot | Time | Sec | Type | Narration | On screen | Motion | SFX | Date tag | Title / overlay |
+|---|---|---|---|---|---|---|---|---|---|
+| 6.1 | 0:00 | 10.2 | MAP | But they had landed on the wrong side of the island. The whaling station at Stromness was on the other side, across the mountains. | South Georgia map; landing point and Stromness on opposite coasts, mountains between | map tilt over the mountains | wind |  | label: STROMNESS |
+| 6.2 | 0:10 | 7.4 | SCENE | The boat was too damaged to sail around. Nobody had ever crossed the island's mountains on foot. | The battered James Caird on the beach; jagged snowy peaks behind | slow tilt up from the boat to the peaks | wind, timber creak |  |  |
+| 6.3 | 0:17 | 10.6 | SCENE | They rested and ate for nine days. Then, on the nineteenth of May, Shackleton, Worsley and Crean set off. Three men stayed with the boat. | Three men walking away from the cove at night with a rope and an adze | wide crane up | boots in snow | 19 MAY 1916 |  |
+| 6.4 | 0:28 | 9.8 | SCENE | McNish had pulled screws from the boat and fixed them into their boots for grip. They carried no tents and no sleeping bags. | Close on boots with screws poking out of the soles | close push in | screwdriver squeak, snow crunch |  |  |
+| 6.5 | 0:38 | 8.6 | SCENE | Again and again they climbed a ridge, found a sheer drop on the other side, and had to turn back. | Three tiny figures on a ridge edge, a cliff below them | slow crane past them to the drop | wind gust |  |  |
+| 6.6 | 0:46 | 12.6 | SCENE | Night was falling on a high ridge. If they stayed, they would freeze. So they coiled the rope into sledges, sat down, and slid down the mountain in the dark. | The three men sitting in a line on a coiled rope sliding down a long snow slope | tracking alongside the slide | rushing wind, snow hiss |  |  |
+| 6.7 | 0:59 | 8.2 | SCENE | At seven in the morning, they heard a steam whistle. The whalers at Stromness were being called to work. | The three men stopping on a ridge, a faint whistle ring graphic | push in on their faces | distant steam whistle |  |  |
+| 6.8 | 1:07 | 10.2 | SCENE | On the twentieth of May 1916, after thirty-six hours of walking, three men with black faces and long beards walked into the whaling station. | Three ragged men walking past whale-oil tanks; workers staring | tracking behind them | machinery hum, footsteps | 20 MAY 1916 | tally: 36 HOURS |
+| 6.9 | 1:17 | 7.0 | SCENE | The station manager knew Shackleton well. He did not recognise him. Then Shackleton said his name. | The manager at his door staring at the three strangers; recognition on his face | slow push in on the manager | door creak, silence |  |  |
+| 6.10 | 1:24 | 7.4 | SCENE | Nobody crossed South Georgia on foot again until 1955, and those were trained mountaineers with full equipment. | The island's mountains from above, a dotted route over them | slow aerial pass | wind |  | label: NEXT CROSSING: 1955 |
+| 6.11 | 1:32 | 7.8 | SCENE | That night, a whaling boat went round to King Haakon Bay and picked up the other three men. | A small steam boat entering the cove, three men waving on the beach | wide pull back | engine chug, waves |  |  |
+
+### Act 7: THE BOSS COMES (1916) · 1:38 · 12 shots
+
+| Shot | Time | Sec | Type | Narration | On screen | Motion | SFX | Date tag | Title / overlay |
+|---|---|---|---|---|---|---|---|---|---|
+| 7.1 | 0:00 | 6.2 | SCENE | Now Shackleton had to get back to Elephant Island. Twenty-two men were still waiting. | Shackleton on a ship's bridge looking south, worried | push in on his face | engine hum, wind |  |  |
+| 7.2 | 0:06 | 7.0 | SCENE | He tried three times, in three different ships. Each time, the pack ice turned him back. | Three ship icons approaching a wall of ice and turning away one after another | top-down slow push in | ice grinding, horn |  | tally: ATTEMPTS 3 |
+| 7.3 | 0:13 | 8.2 | SCENE | On Elephant Island, the men lived under the two upturned boats. Wild kept them busy and kept them believing. | Inside the dark boat-hut, men crowded around a blubber stove | slow orbit inside the hut | crackling stove, wind outside |  |  |
+| 7.4 | 0:21 | 11.0 | SCENE | Blackborow, the stowaway, had frostbite in his feet. The two surgeons had to remove the toes of his left foot, by the light of the stove. | The hut interior, two surgeons by the stove, Blackborow lying under blankets; only their faces shown | slow push in on the surgeons' faces | stove crackle, quiet voices | JUNE 1916 |  |
+| 7.5 | 0:32 | 6.6 | SCENE | Weeks turned into months. Some of the men started to believe the Boss was dead. | Snow piling around the hut, a tally of days scratched on a board | time-lapse locked shot | wind, scratching |  |  |
+| 7.6 | 0:39 | 6.2 | SCENE | Wild began planning to sail one of the last boats to Deception Island himself. | Wild studying a hand-drawn map by the stove | push in on the map | paper rustle |  |  |
+| 7.7 | 0:45 | 9.0 | SCENE | Then, on the thirtieth of August 1916, a ship came round the point. A small Chilean steam tug called the Yelcho. | A small steamer appears through the haze off the island; the men run out of the hut | wide, slow push in on the ship | distant ship horn, shouts | 30 AUGUST 1916 | callout: YELCHO |
+| 7.8 | 0:54 | 8.6 | SCENE | Shackleton stood in the boat as it came in, counting the figures on the beach. Two, five, seven. All twenty-two. | Shackleton standing in a rowing boat, the men on the shore; a counter ticks to 22 | over Shackleton's shoulder to the beach | oars, cheering |  | tally: 22 OF 22 |
+| 7.9 | 1:02 | 4.2 | SCENE | In under an hour, every man was on board. | The men climbing aboard the Yelcho, the boat-hut left behind on the empty beach | crane up as the ship leaves | ship horn, waves |  |  |
+| 7.10 | 1:07 | 11.4 | SCENE | All twenty-eight men of the Endurance came home. On the other side of Antarctica, the expedition's Ross Sea party was not so lucky. Three of them died. | The 28 lined up again, warm light; then a small memorial card for the Ross Sea party | slow lateral dolly, then hold on the card | soft drone |  | card: ROSS SEA PARTY · 3 DIED |
+| 7.11 | 1:18 | 9.4 | SCENE | In 2022, explorers found Endurance three kilometres down on the floor of the Weddell Sea. Its name is still on the stern. | A deep-sea robot's light sweeps over a wooden stern; the name ENDURANCE in gold letters | slow push in through dark water | sonar ping, deep hum | MARCH 2022 | label: 3,008 M |
+| 7.12 | 1:27 | 11.0 | SCENE | Shackleton failed to cross Antarctica. But he brought every one of his men home alive. Today he is buried on South Georgia, where the journey began. | A grave with a granite headstone on a green hillside above the bay; end title | slow crane up from the grave to the bay | wind, a single bell |  | title: ENDURANCE |
+
+## Sources
+
+- Ernest Shackleton, *South* (1919)
+- Frank Worsley, *Shackleton's Boat Journey* (1940)
+- Alfred Lansing, *Endurance: Shackleton's Incredible Voyage* (1959)
+- Caroline Alexander, *The Endurance* (1998)
+- Falklands Maritime Heritage Trust, *Endurance22* wreck find (March 2022)
+
+## Fact-check table
+
+| Claim in transcript | What the script says | Basis |
+|---|---|---|
+| Endurance at South Georgia "4/5 Nov 1914" | Arrived 5 Nov, sailed 5 Dec 1914 | Shackleton, *South* |
+| 28 aboard, one a stowaway | Same (Perce Blackborow); "first to be eaten" told straight | Lansing; Alexander |
+| Plan: Weddell Sea to Pole to Ross Sea, ~2,900 km | Same | Expedition plan |
+| Beset 18 Jan 1915 | 19 Jan 1915 | *South* |
+| Hull breached 24 Oct, abandoned 27 Oct 1915 | Same | *South* |
+| Two-pound limit; gold coins and Bible left | Same (pages torn out of the Bible kept) | *South*; Lansing |
+| Hurley kept ~150 negatives | "around a hundred and fifty" | Accounts vary (about 120-150 plates) |
+| Ship sank 21 Nov 1915 | Same | *South* |
+| Sea leopard gave ~1,000 lb of meat | "fed the camp for days" | Lansing (Orde-Lees chased, Wild shot it) |
+| Joinville Island sighted 23 March 1916 | Same | *South* |
+| Holness fell into the sea when the floe split | Same; Shackleton pulled him out and was briefly cut off | Lansing |
+| Elephant Island 15 April 1916, 497 days | Same | *South* |
+| James Caird left 24 April with "five people" | Shackleton plus five men named | *South* |
+| Three weeks at sea | 16 days, landed 10 May 1916 | Worsley |
+| Crossing: 36 hours, Stromness 20 May 1916; next crossing 1955 | Same | *South*; Duncan Carse survey 1955 |
+| Three failed rescue attempts, Yelcho on 30 Aug 1916 | Same | *South* |
+| Blackborow's leg amputated | Toes of his left foot amputated | Macklin and McIlroy's records |
+| All 22 alive | Same; Ross Sea party lost three men (added) | *South* |
+| Wreck found 2022, ~10,000 ft | March 2022, about 3,008 m | Endurance22 |
