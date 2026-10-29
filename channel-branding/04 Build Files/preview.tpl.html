@@ -1,0 +1,78 @@
+<title>Stormi Brand Kit</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Patrick+Hand&family=Nunito+Sans:wght@400;600;800&display=swap">
+<style>
+/* Layout: a single review column; each brand option is one sheet (banner, profile picture, watermark in use). */
+:root{
+  --bg:#F3EBDD; --panel:#FFFBF3; --ink:#2B1E16; --muted:#6E5C4C; --line:#E0D2BC; --accent:#E8A317; --chip:#2B1E16; --chipfg:#FFF6E4;
+  --display:'Anton','Impact','Arial Narrow',sans-serif; --hand:'Patrick Hand','Comic Sans MS',cursive; --body:'Nunito Sans',system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#17120E;--panel:#221B15;--ink:#F4E9D8;--muted:#B9A690;--line:#3A2F25;--accent:#FFC93C;--chip:#F4E9D8;--chipfg:#17120E;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#17120E;--panel:#221B15;--ink:#F4E9D8;--muted:#B9A690;--line:#3A2F25;--accent:#FFC93C;--chip:#F4E9D8;--chipfg:#17120E;color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+.wrap{max-width:1180px;margin:0 auto;padding-block:40px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:48px}
+header h1{font-family:var(--display);font-weight:400;font-size:clamp(40px,7vw,76px);line-height:1;margin:0;letter-spacing:.01em;text-wrap:balance}
+header p{max-width:65ch;color:var(--muted);margin:14px 0 0}
+.how{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.how span{font-family:var(--hand);font-size:18px;border:2px solid var(--ink);border-radius:999px;padding:2px 14px}
+.opt{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:clamp(16px,3vw,32px);display:grid;gap:24px}
+.opt-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px}
+.letter{font-family:var(--display);font-size:22px;background:var(--chip);color:var(--chipfg);border-radius:6px;padding:0 12px;letter-spacing:.06em}
+.opt-head h2{font-family:var(--display);font-weight:400;font-size:clamp(28px,4vw,40px);margin:0;line-height:1.1}
+.opt-head{max-width:76ch}
+.opt-head p{flex:0 0 100%;margin:0;color:var(--muted)}
+.label{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+.banner{position:relative;max-width:100%;border-radius:8px;overflow:hidden;line-height:0}
+.banner img{width:100%;display:block}
+.zone{position:absolute;pointer-events:none;opacity:0;transition:opacity .2s}
+.show-zones .zone{opacity:1}
+.zone.desk{left:0;right:0;top:35.28%;height:29.44%;border-block:3px dashed rgba(255,255,255,.95);box-shadow:0 0 0 9999px rgba(0,0,0,.45)}
+.zone.safe{left:19.8%;width:60.4%;top:35.28%;height:29.44%;outline:3px solid #FFC93C}
+.zone b{position:absolute;font:800 11px var(--body);letter-spacing:.1em;color:#fff;background:rgba(0,0,0,.6);padding:2px 6px;line-height:1.4}
+.zone.desk b{left:6px;top:6px}.zone.safe b{right:6px;bottom:6px;background:#FFC93C;color:#2B1E16}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;align-items:start}
+.row > div{min-width:0}
+.avatars{display:flex;align-items:flex-end;gap:18px;flex-wrap:wrap}
+.avatars img{border-radius:50%;display:block}
+.avatars figure{margin:0;display:grid;gap:4px;justify-items:center;font-size:12px;color:var(--muted)}
+.player{position:relative;border-radius:8px;overflow:hidden;line-height:0;max-width:100%}
+.player img.f{width:100%;display:block}
+.player img.wm{position:absolute;right:3%;bottom:6%;width:9%;opacity:.9}
+.player .bar{position:absolute;left:0;right:0;bottom:0;height:5px;background:rgba(255,255,255,.35)}
+.player .bar i{display:block;height:100%;width:38%;background:#E0302E}
+.wm-tiles{display:flex;gap:10px;margin-top:10px}
+.wm-tiles div{width:76px;height:76px;border-radius:8px;display:grid;place-items:center;border:1px solid var(--line)}
+.wm-tiles img{width:60px;height:60px}
+.channel{display:flex;gap:14px;align-items:center;margin-top:12px}
+.channel img{width:72px;height:72px;border-radius:50%}
+.channel strong{font-family:var(--display);font-weight:400;font-size:24px;letter-spacing:.02em;display:block;line-height:1.1}
+.channel span{font-size:13px;color:var(--muted)}
+.toggle{justify-self:start;font:700 14px var(--body);color:var(--ink);background:transparent;border:2px solid var(--ink);border-radius:999px;padding:6px 16px;cursor:pointer}
+.toggle:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.toggle[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.specs{font-size:13px;color:var(--muted);margin:0}
+footer{color:var(--muted);font-size:14px;max-width:70ch}
+footer code{font-size:13px}
+@media (prefers-reduced-motion:reduce){.zone{transition:none}}
+</style>
+
+<div class="wrap">
+<header>
+  <h1>Stormi Explain Everything</h1>
+  <p>Three brand directions for the channel. Each one has a profile picture (800×800), a banner (2560×1440, all text inside YouTube's 1546×423 safe area) and a 150×150 transparent watermark. Pick one, or mix parts, and tell me what to change.</p>
+  <div class="how"><span>Reply "A", "B" or "C"</span><span>or "A profile + C banner"</span></div>
+</header>
+
+<button class="toggle" id="zones" aria-pressed="false">Show what phones and desktops crop</button>
+
+%%OPTIONS%%
+
+<footer>
+  <p>Full-size files are in the GitHub repo and on Drive under <code>AI/Channel Branding</code>. The mascot follows the channel's comic history style: round white head, ^ ^ eyes, big grin, dark-brown outlines, plus a storm-cloud tuft and bolt for the "Stormi" name. The watermark preview frame is your own Rome narrator test image.</p>
+</footer>
+</div>
+
+<script>
+const b=document.getElementById('zones');
+b.addEventListener('click',()=>{const on=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',on);document.body.classList.toggle('show-zones',on);b.textContent=on?'Hide crop guides':'Show what phones and desktops crop';});
+</script>
