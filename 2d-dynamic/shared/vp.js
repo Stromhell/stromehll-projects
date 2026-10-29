@@ -216,10 +216,12 @@
   };
   // Automatic variety: when the same cast member is drawn more than once in a frame, every repeat gets its own
   // face, hair and build (named leads are drawn once per frame, so they keep their look). Reset each frame.
-  const seen = new Map(), varied = new WeakMap(); let lastT = null;
+  const seen = new Map(), varied = new WeakMap();
+  // repeats are counted per drawn frame (reset by the shot builder), so a person's look never flips between frames
+  VP.resetVariety = () => seen.clear();
   const person0 = S.person;
   S.person = (c, ch, x, y, u, pose, f, Lt) => {
-    const t = f && f.time; if (t !== lastT) { seen.clear(); lastT = t; }
+    
     const n = seen.get(ch) || 0; seen.set(ch, n + 1);
     if (n > 0 && !ch.noVary) { let m = varied.get(ch); if (!m) varied.set(ch, m = []); ch = m[n] || (m[n] = VP.vary(ch, n * 13 + 5, { builds: ch.build === 'elder' ? ['elder'] : ['man', 'broad', 'man'] })); }
     return person0(c, ch, x, y, u, pose, f, Lt);
@@ -265,6 +267,7 @@
         const set = Dd.set ? VP.sets[Dd.set] : null;
         const cam = typeof Dd.cam === 'function' ? VP.cam(c, Dd.cam(lt, u, Sh), 0, set?.w ?? SW, set?.h ?? SH, lt) : VP.cam(c, Dd.cam || {}, Dd.camU ? Dd.camU(lt, u, Sh) : u, set?.w ?? SW, set?.h ?? SH, lt);
         if (Dd.set) VP.drawSet(c, Dd.set);
+        VP.resetVariety();
         if (Dd.draw) { c.save(); Dd.draw(c, lt, u, Sh, cam); c.restore(); }
         K.screen(c);
         for (const L of Dd.over || []) { c.save(); L(c, lt, u, Sh); c.restore(); }
