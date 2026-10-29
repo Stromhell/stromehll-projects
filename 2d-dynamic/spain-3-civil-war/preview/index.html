@@ -1,0 +1,74 @@
+<title>Spanish Civil War Preview</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Oswald:wght@500&display=swap">
+<style>
+/* Layout: one column of act reels, each a framed screen over a tricolour band, republican red, yellow and purple */
+:root { --bg:#f2ebdd; --card:#fbf6ec; --fg:#2b1f17; --mute:#77634f; --line:#e0d2bb; --accent:#a8432c; --green:#6a2a7a; --chip:#ece1cd;
+  --display:Anton, Impact, 'Arial Narrow', sans-serif; --body:'Source Serif 4', Georgia, serif; --label:Oswald, 'Arial Narrow', sans-serif }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#15110d; --card:#1f1913; --fg:#efe5d6; --mute:#a99682; --line:#352a20; --accent:#e07b5c; --green:#c89ad8; --chip:#2a221a; color-scheme:dark } }
+:root[data-theme="dark"] { --bg:#15110d; --card:#1f1913; --fg:#efe5d6; --mute:#a99682; --line:#352a20; --accent:#e07b5c; --green:#c89ad8; --chip:#2a221a; color-scheme:dark }
+body { background:var(--bg); color:var(--fg); font:16px/1.55 var(--body); padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); padding-block:32px 64px }
+.wrap { max-width:980px; margin:0 auto; display:grid; gap:28px }
+header { display:grid; gap:8px }
+.kicker { font:500 12px var(--label); letter-spacing:.16em; text-transform:uppercase; color:var(--green) }
+h1 { font-family:var(--display); font-weight:400; font-size:clamp(34px,6vw,58px); line-height:1.02; margin:0; text-wrap:balance }
+h1 span { color:var(--accent) }
+.sub { color:var(--mute); max-width:64ch; margin:0 }
+.tiles { height:10px; border-radius:2px; background:linear-gradient(180deg, #b8202a 0 33%, #e8b820 33% 66%, #6a2a7a 66%) }
+.act { background:var(--card); border:1px solid var(--line); border-radius:12px; overflow:hidden }
+.act video { display:block; width:100%; max-width:100%; aspect-ratio:16/9; background:#000 }
+.meta { padding:16px 20px 20px; display:grid; gap:10px; min-width:0 }
+.meta h2 { margin:0; font:400 24px var(--display); letter-spacing:.01em }
+.meta h2 small { font:500 14px var(--label); color:var(--mute); margin-left:8px; letter-spacing:.06em }
+.meta ul { margin:0; padding-left:18px } .meta li { margin:3px 0 }
+.chips { display:flex; flex-wrap:wrap; gap:8px } .chip { background:var(--chip); border-radius:99px; padding:3px 10px; font:500 12.5px var(--label); letter-spacing:.04em; color:var(--mute) }
+.todo { display:grid; gap:8px } .todo h3 { margin:0; font:500 13px var(--label); letter-spacing:.14em; text-transform:uppercase; color:var(--mute) }
+.list { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:8px }
+.list div { border:1px dashed var(--line); border-radius:10px; padding:10px 12px; color:var(--mute); font-size:15px }
+</style>
+<div class="wrap">
+  <header>
+    <div class="kicker">2D dynamic · Village Painterly · Spain part 3</div>
+    <h1>How Spain tore itself apart, <span>and came back</span></h1>
+    <p class="sub">Each act lands here as it renders. Acts stay separate until you say combine; music goes on at the combine step.</p>
+    <div class="tiles" aria-hidden="true"></div>
+  </header>
+
+  <section class="act">
+    <video controls preload="metadata" poster="act0.jpg" src="act0.mp4"></video>
+    <div class="meta">
+      <h2>Cold open <small>0:43 · 6 shots</small></h2>
+      <ul>
+        <li>Madrid, 23 February 1981: the Congress in session, then the doors burst open and Civil Guards rush in</li>
+        <li>Lt. Col. Antonio Tejero climbs the rostrum and fires at the ceiling; the deputies dive under their benches</li>
+        <li>A family watches it live on TV at home: democracy less than 4 years old, after 36 years under one general</li>
+        <li>1:14 AM: King Juan Carlos, in army uniform, appears on TV under the studio lights</li>
+        <li>The cracked Spanish flag splits wider: the device that runs behind every act</li>
+        <li>Title: FRANCO · SPAIN 1898–1981, a lone soldier above a burning town</li>
+      </ul>
+      <div class="chips"><span class="chip">New 20th-century cast + 8 sets</span><span class="chip">Cracked-flag device</span><span class="chip">Moving light + cast shadows</span><span class="chip">Pushpam voice</span><span class="chip">No music yet</span></div>
+    </div>
+  </section>
+
+  <section class="act">
+    <video controls preload="metadata" poster="act1.jpg" src="act1.mp4"></video>
+    <div class="meta">
+      <h2>Act 1 · The Disaster Years <small>0:49 · 5 shots</small></h2>
+      <ul>
+        <li>After 1898: a landowner rides past labourers bent over the fields; landowners and Church against the workers</li>
+        <li>Annual, Morocco, 1921: the outpost burns, the flag falls and the soldiers run; thousands dead in days</li>
+        <li>Primo de Rivera takes power in 1923 beside King Alfonso XIII as the crowd cheers, then the balcony empties</li>
+        <li>14 April 1931: crowds wave the tricolour; that night the king's car slips away</li>
+        <li>The flag on the wall wipes to red, yellow and purple, and the crack is still there: the Second Republic</li>
+      </ul>
+      <div class="chips"><span class="chip">Pushpam voice</span><span class="chip">Day to night lighting</span><span class="chip">Crowd scenes</span></div>
+    </div>
+  </section>
+
+  <section class="todo">
+    <h3>Coming next</h3>
+    <div class="list">
+      <div>Act 2 · The Republic</div><div>Act 3 · The Coup</div><div>Act 4 · The World's Rehearsal</div><div>Act 5 · Franco's Spain</div><div>Act 6 · The King's Gamble</div>
+    </div>
+  </section>
+</div>

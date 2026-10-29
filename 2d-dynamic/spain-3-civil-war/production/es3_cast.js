@@ -46,6 +46,20 @@
     ALFONSO: man({ name: 'Alfonso XIII', skin: SK.fair, mustache: true, hairCol: HR.brown, shirt: ['#2a2a4a', '#14142a'], pants: ['#2a2a4a', '#14142a'], sleeves: true, tie: '#d8b040' }),
     WORKER: man({ skin: SK.olive, shirt: ['#3a4a6a', '#1c2434'], pants: ['#3a4a6a', '#1c2434'], sleeves: true }),
     WOMAN: Object.assign({}, CH.aisha, { skin: SK.olive, hairCol: HR.black, shirt: ['#3a3a3a', '#1a1a1a'], pants: ['#3a3a3a', '#1a1a1a'], dupatta: null, headwear: null }),
+    // act 2 onward
+    AZANA: suit(['#5a5a5e', '#2c2c30'], '#3a2a3a', { name: 'Azaña', hair: 'elder', hairCol: HR.grey, glasses: true, build: 'broad', skin: SK.fair }),
+    PRIEST: man({ shirt: ['#1e1e24', '#0a0a0e'], pants: ['#1e1e24', '#0a0a0e'], long: true, sleeves: true, hairCol: HR.grey, hair: 'elder', skin: SK.fair }),
+    OFFICER: man({ skin: SK.fair, mustache: true, build: 'broad', shirt: KHAKI, pants: KHAKI, sleeves: true, headwear: X.peaked({ base: '#8a7a4a', shade: '#4a4022', rim: '#d8c890' }) }),
+    FRANCO: man({ name: 'Franco', mustache: true, build: 'broad', hairCol: HR.black, skin: SK.fair, shirt: KHAKI, pants: KHAKI, sleeves: true, headwear: X.peaked({ base: '#8a7a4a', shade: '#4a4022', rim: '#d8c890' }) }),
+    FALANGIST: man({ skin: SK.fair, shirt: ['#2a3a6a', '#141c34'], pants: ['#2a2a2a', '#121212'], sleeves: true, hairCol: HR.black }),
+    FALANGIST2: man({ skin: SK.olive, shirt: ['#2a3a6a', '#141c34'], pants: ['#3a3430', '#1a1614'], sleeves: true, hairCol: HR.brown }),
+    MINER: man({ skin: SK.olive, mustache: true, shirt: ['#5a5040', '#2a2418'], pants: ['#3a3430', '#1a1614'], sleeves: true, headwear: X.beret({ base: '#2a2a2a', shade: '#0e0e0e', rim: '#6a6a6a' }) }),
+    MINER2: man({ skin: SK.olive, shirt: ['#6a5a44', '#342c20'], pants: ['#3a3430', '#1a1614'], sleeves: true, hairCol: HR.black }),
+    MILITIA: man({ skin: SK.olive, shirt: ['#2a4a8a', '#14244a'], pants: ['#2a4a8a', '#14244a'], sleeves: true, headwear: X.forage({ base: '#2a2a2a', shade: '#0e0e0e', rim: '#7a7a7a' }) }),
+    MILITIAW: Object.assign({}, CH.aisha, { skin: SK.olive, hairCol: HR.black, hair: 'bun', shirt: ['#2a4a8a', '#14244a'], pants: ['#2a4a8a', '#14244a'], dupatta: null, headwear: null }),
+    SOTELO: suit(NAVY, '#2a2a2a', { name: 'Calvo Sotelo', build: 'broad', hairCol: HR.black, skin: SK.fair }),
+    POLICE: man({ skin: SK.fair, shirt: NAVY, pants: NAVY, sleeves: true, headwear: X.peaked({ base: '#22283a', shade: '#10141e', rim: '#6a7090' }) }),
+    VOTER: Object.assign({}, CH.aisha, { skin: SK.fair, hairCol: HR.brown, hair: 'bun', shirt: ['#5a7a9a', '#2c3c4e'], pants: ['#3a3a44', '#1c1c22'], dupatta: null, headwear: null }),
   };
   S.ES3 = C; S.ES3P = { GREEN, KHAKI, NAVY, man, suit };
 })(window);
