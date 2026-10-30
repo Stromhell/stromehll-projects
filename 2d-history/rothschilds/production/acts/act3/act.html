@@ -16,7 +16,7 @@ window.SHOTS = [
   // 3.01 Nathan in London: porters carry chests of gold up the gangway at a foggy dock
   { plate: 'dock_fog', cam: { z: [1.04, 1.1], x: [1280, 1300], y: [840, 840] }, bed: [['ocean_loop', .25]],
     figs: [{ x: 2080, y: 1250, s: 1.7, ...RS.NATHAN, facing: -1, pose: 'point', mood: 'focus', anim: (o, lt) => { o.pose = lt % 4 < 2 ? 'point' : 'present'; } },
-      ...[0, 1, 2].map(i => ({ x: 900, y: 1340 + i * 18, s: 1.75, costume: 'farmer', hair: 'short', seed: 60 + i, facing: -1, walk: { x0: 1820, x1: -300, t0: .3 + i * 1.4, dur: 8 }, arms: CARRY, hold: { near: smallChest } }))],
+      ...[0, 1, 2].map(i => ({ x: 900, y: 1340 + i * 18, s: 1.75, costume: 'farmer', hair: 'short', seed: 60 + i, facing: -1, walk: { x0: 1820 - i * 320, x1: -580 - i * 320, t0: .3, dur: 9 }, arms: CARRY, hold: { near: smallChest } }))],
     init: S => { const tS = A.at(S, 'star', 1.6), tG = A.at(S, 'gold', 5);
       S.D.over = [(c, lt) => K.badge(c, 'NATHAN ROTHSCHILD · LONDON', lt, { at: .4 }), (c, lt) => K.card(c, 'GOLD TO PAY BRITISH ARMIES', lt, { at: tG, x: 960, y: 200, px: 46, rot: -2 }), (c, lt) => K.card(c, 'ON THE CONTINENT', lt, { at: tG + .8, x: 1380, y: 290, px: 40, rot: 3 })];
       S.D.sfx = [[.3, 'footsteps', .3], [tG, 'coins', .35], [tG + 2, 'creak', .3]]; } },
