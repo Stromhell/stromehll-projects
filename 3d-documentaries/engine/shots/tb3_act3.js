@@ -68,7 +68,7 @@ export const shots = {
     scene.add(real.m(new THREE.PlaneGeometry(30, 30), real.std(0x141210, { rough: .9 }), { rot: [-P / 2, 0, 0], cast: false }));
     const cam = C.orbit(camera, [0, 1.4, 0], 3.6, 1.55, -.35, .35, 38, [0, 1.45, 0]);
     return (t, u) => { cam(u); a.update(t, { mood: 'smug', look: Math.sin(t * .3) * .1, talk: false });
-      papers.forEach((pl, i) => { const ang = t * .45 + i * P / 2, r = 1.55, y = 1.05 + i * .22 + Math.sin(t * .8 + i) * .05; pl.position.set(Math.sin(ang) * r, y, Math.cos(ang) * r); pl.lookAt(camera.position); pl.rotateZ(Math.sin(t + i) * .08); }); };
+      papers.forEach((pl, i) => { const ang = t * .45 + i * P / 2, r = 1.55, y = 1.05 + i * .22 + Math.sin(t * .8 + i) * .05; pl.position.set(Math.sin(ang) * r, y, -.35 - Math.abs(Math.cos(ang)) * 1.1); /* papers sweep behind and beside Amin, never in front of him */ pl.lookAt(camera.position); pl.rotateZ(Math.sin(t + i) * .08); }); };
   },
   '3.3': old['3.3'],
   '3.4': old['3.4'],
