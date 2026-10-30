@@ -27,7 +27,7 @@ async function lineup(k) {
   }
   return { ppl, xs };
 }
-const labelAt = (k, p, a, b, t, start) => { const [x, y] = proj(k.camera, C.headPos(p, .34)); ui.callout(k.overlay, a, b, x, y, t, start); };
+const labelAt = (k, p, a, b, t, start) => { let [x, y] = proj(k.camera, C.headPos(p, .34)); x = Math.max(300, Math.min(1625, x)); ui.callout(k.overlay, a, b, x, y, t, start); };
 
 // ---------- a fuel bowser ----------
 function bowser() {
@@ -49,7 +49,49 @@ async function benghazi(k, o = {}) {
   const jet = await sets.a300(); scene.add(jet);
   return { jet };
 }
-function stairsAt(jet, scene) { const d = jet.userData.doorL1; const st = sets.airstair(d.y + .02); st.position.set(d.x + .7 + 5.75, 0, d.z); scene.add(st); return st; }
+
+// QA: stairs truck read blocky (flat window, flat disc wheels). Local detail pass added on top of sets.airstair.
+function detailStairsTruck(st) {
+  const real = C.real, m = real.m;
+  const dk = real.std(0x1b1d1f, { rough: .6, metal: .3 }), rub = real.std(0x0e0e0f, { rough: .95 }), alu = real.std(0xb9bcc0, { rough: .3, metal: .85 }), body = real.std(0xe8e4d8, { rough: .5 });
+  const bolt = real.std(0x9a9da0, { rough: .35, metal: .8 }), red = real.std(0x8a1414, { rough: .4, emissive: 0x401010, ei: .4 }), amber = real.std(0xffb030, { rough: .3, emissive: 0xffa020, ei: .5 });
+  const g = new THREE.Group(); st.add(g);
+  for (const sx of [-1, 1]) {
+    for (const z of [2.6, -2.6]) {
+      // wheel arch: half-shell + raised lip over the wheel, thick tyre ring, hub with bolts
+      g.add(m(new THREE.CylinderGeometry(.55, .55, .02, 28), dk, { pos: [sx * 1.156, .42, z], rot: [0, 0, P / 2] }));
+      g.add(m(new THREE.TorusGeometry(.56, .035, 8, 28, P), alu, { pos: [sx * 1.15, .42, z], rot: [0, P / 2, 0] }));
+      g.add(m(new THREE.TorusGeometry(.33, .1, 12, 32), rub, { pos: [sx * 1.0, .42, z], rot: [0, P / 2, 0] }));
+      g.add(m(new THREE.CylinderGeometry(.4, .4, .3, 32), rub, { pos: [sx * 1.0, .42, z], rot: [0, 0, P / 2] }));
+      g.add(m(new THREE.CylinderGeometry(.2, .2, .03, 24), bolt, { pos: [sx * 1.165, .42, z], rot: [0, 0, P / 2] }));
+      g.add(m(new THREE.CylinderGeometry(.07, .07, .05, 16), alu, { pos: [sx * 1.18, .42, z], rot: [0, 0, P / 2] }));
+      for (let i = 0; i < 6; i++) { const a = i * P / 3; g.add(m(new THREE.CylinderGeometry(.018, .018, .04, 8), alu, { pos: [sx * 1.18, .42 + Math.sin(a) * .13, z + Math.cos(a) * .13], rot: [0, 0, P / 2] })); }
+    }
+    // mudflap + door seams / handle on the cab, mirrors on arms
+    g.add(m(new THREE.BoxGeometry(.03, .22, .35), rub, { pos: [sx * 1.13, .3, 1.9] }));
+    g.add(m(new THREE.BoxGeometry(.012, 1.3, .015), dk, { pos: [sx * 1.108, 1.5, 3.5] }));
+    g.add(m(new THREE.BoxGeometry(.012, .015, 1.15), dk, { pos: [sx * 1.108, 1.0, 2.9] }));
+    g.add(m(new THREE.BoxGeometry(.03, .04, .14), alu, { pos: [sx * 1.12, 1.6, 2.5] }));
+    g.add(m(new THREE.BoxGeometry(.3, .02, .02), dk, { pos: [sx * 1.25, 2.1, 3.55] }));
+    g.add(real.rbox(.05, .26, .16, .02, dk, { pos: [sx * 1.4, 2.1, 3.55] }));
+    // side window frame
+    for (const [w, h, d, y, z] of [[.03, .035, 1.2, 2.17, 3.0], [.03, .035, 1.2, 1.63, 3.0], [.03, .6, .035, 1.9, 3.58], [.03, .6, .035, 1.9, 2.42]]) g.add(m(new THREE.BoxGeometry(w, h, d), dk, { pos: [sx * 1.11, y, z] }));
+    // front/rear lights, front indicators
+    g.add(real.rbox(.3, .14, .05, .02, amber, { pos: [sx * .98, .62, 3.96] }));
+    g.add(real.rbox(.16, .2, .05, .02, red, { pos: [sx * 1.02, .9, -3.66] }));
+  }
+  // windscreen frame + wiper + grille + bumper lip, roof beacon
+  for (const [w, h, y, x] of [[2.1, .05, 2.27, 0], [2.1, .05, 1.43, 0], [.05, .88, 1.85, -1.03], [.05, .88, 1.85, 1.03], [.05, .88, 1.85, 0]]) g.add(m(new THREE.BoxGeometry(w, h, .05), dk, { pos: [x, y, 3.92] }));
+  g.add(m(new THREE.BoxGeometry(.6, .02, .02), dk, { pos: [-.4, 1.5, 3.95], rot: [0, 0, .12] }));
+  g.add(real.rbox(1.0, .34, .06, .03, dk, { pos: [0, .95, 3.94] }));
+  for (let i = 0; i < 5; i++) g.add(m(new THREE.BoxGeometry(.9, .015, .02), alu, { pos: [0, .84 + i * .06, 3.98] }));
+  g.add(real.rbox(2.3, .12, .12, .04, alu, { pos: [0, .5, 4.02] }));
+  g.add(m(new THREE.CylinderGeometry(.08, .1, .1, 12), amber, { pos: [.7, 2.41, 3.0] }));
+  // slightly bevelled cab roof cap
+  g.add(real.rbox(2.2, .1, 1.9, .04, body, { pos: [0, 2.36, 3.0] }));
+  g.traverse(c => { if (c.isMesh) { c.castShadow = true; c.receiveShadow = true; } });
+}
+function stairsAt(jet, scene) { const d = jet.userData.doorL1; const st = sets.airstair(d.y + .02); st.position.set(d.x + .7 + 5.75, 0, d.z); detailStairsTruck(st); scene.add(st); return st; }
 
 // heading dial drawn on a canvas, shared by 2.11
 function headingDial() {
@@ -102,7 +144,7 @@ export const shots = {
     const cam = C.dolly(camera, { pos: [-1.6, 1.6, 4.4], look: [-1.6, 1.3, 0], fov: 40 }, { pos: [1.6, 1.6, 4.2], look: [1.6, 1.3, 0], fov: 40 });
     return (t, u) => { cam(u);
       ppl.forEach((p, i) => { p.update(t, { mood: 'stern', look: Math.sin(t * .3 + i) * .05 }); p.userData.key.intensity = i >= 2 ? 140 * C.ease(C.seg(t, .6, 1.4)) : 140 * (1 - C.ease(C.seg(t, .2, 1.0))); });
-      labelAt(k, ppl[2], 'WILFRIED BÖSE', 'GERMAN · REVOLUTIONARY CELLS', t, 1.8); labelAt(k, ppl[3], 'BRIGITTE KUHLMANN', 'GERMAN · REVOLUTIONARY CELLS', t, 2.4); };
+      labelAt(k, ppl[2], 'WILFRIED BÖSE', 'REVOLUTIONARY CELLS', t, 1.8); labelAt(k, ppl[3], 'BRIGITTE KUHLMANN', 'REVOLUTIONARY CELLS', t, 2.4); };
   },
   '2.4': old['2.4'],
   '2.5': old['2.5'],
@@ -115,6 +157,8 @@ export const shots = {
     const tw = new THREE.Group(); tw.position.set(-2.6, 0, 40); scene.add(tw);
     tw.add(real.m(new THREE.CylinderGeometry(.9, 1.2, 9, 12), real.std(0x6a6458, { rough: .9 }), { pos: [0, 4.5, 0] }));
     tw.add(real.m(new THREE.CylinderGeometry(2.0, 1.6, 1.8, 12), real.std(0x3a3a38, { rough: .4, metal: .3 }), { pos: [0, 9.9, 0] }));
+    // QA: grey hair showed through the front of the cap -> seat the cap higher/forward, a touch larger
+    { const hb = cpt.parts.bones.Head; const cap = hb && hb.children.find(c => c.isGroup && c.children.length >= 5); if (cap) { const sc = cpt.parts.obj.scale.x; cap.position.y += .004 / sc; cap.position.z += .03 / sc; cap.rotation.x = .12; cap.scale.multiplyScalar(1.1); } }
     // headset mic on the captain
     const mic = new THREE.Mesh(new THREE.CapsuleGeometry(.012, .05, 4, 8), real.std(0x111111)); C.attach(cpt, mic, 'Head', [.06, -.08, .1], [0, 0, P / 2.5]);
     const cam = C.dolly(camera, { pos: [1.15, 1.45, .95], look: [.4, 1.25, .1], fov: 46 }, { pos: [1.0, 1.42, .8], look: [.45, 1.3, .12], fov: 40 });
@@ -131,12 +175,12 @@ export const shots = {
     const bx = d.x + 9, bz = d.z - 1;
     const ppl = [];
     const put = async (id, seed, pos, rot, o = {}) => { const p = await real.human({ id, seed }); real.put(scene, p, { pos, rot, mood: o.mood ?? 'calm' }); p.userData.driven = true; p.userData.o = o; ppl.push(p); return p; };
-    await put(C.HJ.bose, 81, [bx, 0, bz], -P / 2 + .2, { talk: true });
-    await put(C.HJ.kuhlmann, 82, [bx + .2, 0, bz + 1.1], -P / 2 - .3);
+    await put(C.HJ.bose, 81, [bx + .3, 0, bz], -P / 2 + .2, { talk: true });
+    await put(C.HJ.kuhlmann, 82, [bx + .5, 0, bz + 1.1], -P / 2 - .3);
     await put('tb_pa7', 220, [bx + 1.5, 0, bz + .2], P / 2 + .2, { talk: true, mood: 'happy' });
     await put('tb_pa10', 221, [bx + 1.6, 0, bz + 1.2], P / 2 - .2, { mood: 'calm' });
     // a caterer carries trays up the stairs
-    const cat = await put('tb_pa8', 222, [d.x + 12.5, 0, d.z + 1.6], -P / 2, { walk: true });
+    const cat = await put('tb_pa8', 222, [d.x + 12.5, 0, d.z + 3.0], -P / 2, { walk: true });
     const tray = new THREE.Group(); for (let i = 0; i < 3; i++) tray.add(real.box(.45, .05, .32, real.std(0xd8d8d0, { rough: .4 }), { pos: [0, i * .06, 0] }));
     C.attach(cat, tray, 'RightHand', [0, -.05, .15]);
     const truck = new THREE.Group(); { // catering truck: cab, box body, windows, stripe, lamps, wheels
@@ -150,7 +194,7 @@ export const shots = {
     const cam = C.orbit(camera, [bx + .8, 1.2, bz + .6], 6.5, 2.0, .45, .9, 38, [bx + .2, 1.6, bz + .4]);
     return (t, u) => { cam(u);
       ppl.forEach((p, i) => {
-        if (p === cat) { const w = C.seg(t, 0, 5.5); p.position.x = d.x + 12.5 - w * 3.9; p.update(t, { pose: w < 1 ? 'walk' : 'idle', dist: w * 3.9, arm: 'hold' }); return; }
+        if (p === cat) { const w = C.seg(t, 0, 5.5); p.position.x = d.x + 12.5 - w * 3.4; p.position.z = d.z + 3.0; p.update(t, { pose: w < 1 ? 'walk' : 'idle', dist: w * 3.4, arm: 'hold' }); return; }
         p.update(t, { mood: p.userData.o.mood ?? 'calm', talk: p.userData.o.talk && Math.sin(t * 1.3 + i) > 0, look: Math.sin(t * .5 + i) * .15, arm: i === 2 && t > 2 && t < 3.5 ? 'point' : null });
       }); };
   },
@@ -177,6 +221,14 @@ export const shots = {
   '2.10': async k => {
     const { real, scene, camera } = k;
     const { jet } = await benghazi(k, { hdri: 'industrial_sunset_puresky', sun: [-60, 12, -40], sunI: 3.2, sunColor: 0xffb070, envI: .8, fog: 0xc8906a });
+    // QA: apron ended in a hard edge against the sky -> huge desert plane under it + exponential haze, no AO halos
+    scene.add(real.m(new THREE.PlaneGeometry(12000, 12000), real.std(0xa89c8c, { rough: 1 }), { rot: [-P / 2, 0, 0], pos: [0, -.04, 0], cast: false }));
+    scene.fog = new THREE.FogExp2(0xbdb6b2, .004);
+    { const cv = document.createElement('canvas'); cv.width = cv.height = 512; const cx = cv.getContext('2d'); const gr = cx.createRadialGradient(256, 256, 0, 256, 256, 256);
+      gr.addColorStop(0, 'rgba(196,202,210,0)'); gr.addColorStop(.015, 'rgba(196,202,210,0)'); gr.addColorStop(.07, 'rgba(196,202,210,.65)'); gr.addColorStop(.16, 'rgba(196,202,210,1)'); gr.addColorStop(1, 'rgba(196,202,210,1)'); cx.fillStyle = gr; cx.fillRect(0, 0, 512, 512);
+      const tx = new THREE.CanvasTexture(cv); tx.colorSpace = THREE.SRGBColorSpace;
+      const hz = new THREE.Mesh(new THREE.PlaneGeometry(12000, 12000), new THREE.MeshBasicMaterial({ map: tx, transparent: true, depthWrite: false, fog: false })); hz.rotation.x = -P / 2; hz.position.y = .06; hz.renderOrder = 2; hz.castShadow = false; scene.add(hz); }
+    scene.userData.fx = scene.userData.fx || {}; scene.userData.fx.ao = 0;
     const tr = bowser(); tr.position.set(12, 0, 2); tr.rotation.y = P * .9; scene.add(tr);
     const cam = C.dolly(camera, { pos: [30, 3, 42], look: [4, 3, 6], fov: 38 }, { pos: [36, 3.5, 30], look: [2, 5, 26], fov: 42 });
     const dur = k.meta.seconds;
@@ -208,11 +260,11 @@ export const shots = {
   // night over Africa: reading lights go off one by one
   '2.13': async k => {
     const { real, scene, camera } = k;
-    await real.env(k, 'kloofendal_48d_partly_cloudy_puresky', { sun: false, bg: 0x05060a, envI: .05 });
-    const cb = await sets.cabin(k, { len: 12, lampI: .4, hemi: .08, sky: 0x0a1020 });
+    await real.env(k, 'kloofendal_48d_partly_cloudy_puresky', { sun: false, bg: 0x05060a, envI: .1 });
+    const cb = await sets.cabin(k, { len: 12, lampI: .8, hemi: .16, sky: 0x0a1020 });
     const pax = await C.fillCabin(k, cb, { mood: 'sad', skip: s => (s.row * 3 + s.col) % 5 === 0 });
-    const lights = pax.filter((p, i) => i % 3 === 0).map((p, i) => { const s = p.userData.seat; const l = new THREE.SpotLight(0xffe2a8, 6, 3, .35, .6, 1.5); l.position.set(s.x, 2.0, s.z + .2); l.target.position.set(s.x, .9, s.z + .1); scene.add(l, l.target); l.userData.off = 1 + i * .45; return l; });
-    const cam = C.dolly(camera, { pos: [-1.11, 1.95, 5.8], look: [-.6, 1.0, -4], fov: 46 }, { pos: [-1.11, 1.9, 4], look: [-.6, 1.0, -5], fov: 46 }, { ease: u => u });
-    return (t, u) => { cam(u); C.idleSeated(pax, t, {}); lights.forEach(l => l.intensity = 6 * (1 - C.seg(t, l.userData.off, l.userData.off + .15))); };
+    const lights = pax.filter((p, i) => i % 3 === 0).map((p, i) => { const s = p.userData.seat; const l = new THREE.SpotLight(0xffe2a8, 9, 3, .35, .6, 1.5); l.position.set(s.x, 2.0, s.z + .2); l.target.position.set(s.x, .9, s.z + .1); scene.add(l, l.target); l.userData.off = 1 + i * .45; return l; });
+    const cam = C.dolly(camera, { pos: [-.6, 1.65, 5.8], look: [-.6, 1.0, -4], fov: 46 }, { pos: [-.6, 1.6, 4], look: [-.6, 1.0, -5], fov: 46 }, { ease: u => u });
+    return (t, u) => { cam(u); C.idleSeated(pax, t, {}); lights.forEach(l => l.intensity = 9 * (1 - C.seg(t, l.userData.off, l.userData.off + .15))); };
   },
 };

@@ -22,10 +22,13 @@ export const shots = {
   '2.3': async k => { k.calloutPos = [1340, 250]; return cardRow(k, [sil('WILFRIED BÖSE', 'REVOLUTIONARY CELLS'), sil('BRIGITTE KUHLMANN', 'REVOLUTIONARY CELLS')], { w: 3.4 }); },
   // map with prison icons; Israel glows brightest
   '2.4': async k => mapShot(k, {
-    center: [24, 30], span: [52, 40], k: 3, labels: [['ISRAEL', 36.5, 30.5], ['FRANCE', 2.5, 46.5], ['W. GERMANY', 9.5, 51], ['SWITZ.', 8.2, 46.6], ['KENYA', 38, 0.5]],
+    center: [24, 30], span: [52, 40], k: 3, labels: [['ISRAEL', 37.2, 29.4], ['FRANCE', 2.5, 46.5], ['W. GERMANY', 9.5, 51], ['KENYA', 38, 0.5]],  // SWITZERLAND drawn smaller in extra()
     highlight: ['ISR'],
     extra: async (k, map) => {
-      const spots = [[35, 31.6, 1.6], [2.3, 47.5, 1], [9.5, 50.2, 1], [8.2, 47, .8], [37.5, -.8, .8]];
+      const spots = [[35, 32.8, 1.1], [2.3, 48.4, .9], [9.5, 52.2, .9], [8.2, 48.2, .8], [37.5, 2.4, .8]];
+      { const cv = document.createElement('canvas'); cv.width = 1024; cv.height = 256; const cx = cv.getContext('2d'); cx.textAlign = 'center'; cx.textBaseline = 'middle'; cx.font = '120px "Anton"'; cx.fillStyle = 'rgba(43,30,22,.72)'; cx.fillText('SWITZERLAND', 512, 128);
+        const tx = new THREE.CanvasTexture(cv); tx.colorSpace = THREE.SRGBColorSpace; tx.anisotropy = 16; const pl = new THREE.Mesh(new THREE.PlaneGeometry(20, 5), new THREE.MeshBasicMaterial({ map: tx, transparent: true, depthWrite: false }));
+        pl.rotation.x = -P / 2; pl.position.copy(map.proj(9.8, 45.9, .15)); pl.userData.noOutline = true; k.scene.add(pl); }
       const locks = spots.map(([lo, la, s], i) => { const g = new THREE.Group(); g.add(core.box(1.6, 1.3, .5, 0x5a5a5a, { pos: [0, .7, 0] })); const sh = new THREE.Mesh(new THREE.TorusGeometry(.5, .14, 8, 20, P), core.toon(0x9a9a9a)); sh.position.y = 1.35; g.add(sh); core.outline(g, .05); g.position.copy(map.proj(lo, la, .3)); g.base = s * 1.5; k.scene.add(g); return g; });
       const glow = new THREE.PointLight(0xffd070, 0, 30); glow.position.copy(map.proj(35, 31.6, 4)); k.scene.add(glow);
       return (t) => { locks.forEach((l, i) => popIn(l, t, .4 + i * .45, l.base)); glow.intensity = core.ease(core.seg(t, 3, 4)) * 300; };
