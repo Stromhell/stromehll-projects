@@ -78,7 +78,7 @@
       g.fillStyle = S.rgba('#000000', .3); g.fillRect(x - 2, 456, 154, 8);
     }
     // posters pasted on the walls, a little torn
-    for (const [x, y, c1, tx] of [[175, 340, '#c83a2a', 'VOTAD'], [455, 330, '#2a3a8a', 'C.E.D.A.'], [745, 350, '#c83a2a', 'F.P.'], [1080, 336, '#e8d8b0', 'C.N.T.']]) { g.save(); g.translate(x + 30, y + 40); g.rotate((x % 7 - 3) * .01); g.fillStyle = c1; g.fillRect(-30, -40, 60, 80); g.fillStyle = S.rgba('#ffffff', .85); g.font = 'bold 12px Georgia'; g.textAlign = 'center'; g.fillText(tx, 0, -18); g.fillRect(-20, 12, 40, 4); g.fillRect(-16, 20, 32, 3); g.fillStyle = S.rgba('#000000', .15); g.beginPath(); g.moveTo(18, 40); g.lineTo(30, 26); g.lineTo(30, 40); g.fill(); g.restore(); }
+    for (const [x, y, c1, tx] of [[175, 340, '#d8b048', 'TEATRO'], [455, 330, '#2a5a7a', 'CINE'], [745, 350, '#b8402a', 'CORRIDA'], [1080, 336, '#e8d8b0', 'ANÍS']]) { g.save(); g.translate(x + 30, y + 40); g.rotate((x % 7 - 3) * .01); g.fillStyle = c1; g.fillRect(-30, -40, 60, 80); g.fillStyle = S.rgba('#ffffff', .85); g.font = 'bold 12px Georgia'; g.textAlign = 'center'; g.fillText(tx, 0, -18); g.fillRect(-20, 12, 40, 4); g.fillRect(-16, 20, 32, 3); g.fillStyle = S.rgba('#000000', .15); g.beginPath(); g.moveTo(18, 40); g.lineTo(30, 26); g.lineTo(30, 40); g.fill(); g.restore(); }
     // overhead tram and telephone wires
     g.strokeStyle = S.rgba('#1a1a1a', .55); g.lineWidth = 1.2; for (const [y0, y1] of [[150, 175], [190, 200]]) { g.beginPath(); g.moveTo(0, y0); g.quadraticCurveTo(640, y1 + 30, w, y0); g.stroke(); }
     // pavement with kerbstones, cobbled road with tram rails
