@@ -10,7 +10,7 @@ ffmpeg -v error -y -i "$V" -vf "fps=1,scale=480:270,drawtext=text='%{pts\:hms}':
 if [ -n "$WATCH_PY" ] && [ -f "$WATCH_PY" ]; then
   out=$(timeout 300 python3 "$WATCH_PY" "$V" --engine local --question "glitches, overlaps, gliding walkers, props through people, text over subtitles, blocky scenes" 2>&1) || true
   wd=$(echo "$out" | grep -oE "/tmp/watch-[a-z0-9_]+" | head -1)
-  [ -n "$wd" ] && i=0 && for f in $wd/frames/*.jpg; do i=$((i+1)); ffmpeg -v error -y -i "$f" -vf "scale=480:270,drawtext=text='scene $i':x=6:y=6:fontsize=16:fontcolor=cyan:box=1:boxcolor=black@0.6" $S/$TAG/s%04d.jpg; done 2>/dev/null
+  [ -n "$wd" ] && i=0 && for f in $wd/frames/*.jpg; do i=$((i+1)); ffmpeg -v error -y -i "$f" -vf "scale=480:270,drawtext=text='watch $i':x=6:y=6:fontsize=16:fontcolor=cyan:box=1:boxcolor=black@0.6" $S/$TAG/s%04d.jpg; done 2>/dev/null
 fi
 # 3) tile 16 per sheet
 ls $S/$TAG/*.jpg | split -l 16 - $S/$TAG/list_

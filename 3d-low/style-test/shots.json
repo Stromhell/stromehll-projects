@@ -1,6 +1,6 @@
 {"acts": [{"act": 0, "name": "STYLE TEST", "period": "2026", "shots": [
  {"id": "T1", "type": "SCENE", "narration": "Every film on this line starts the same way. A cold open, a hook in the first ten seconds, and a world that feels real.", "seconds": 8, "overlay": "", "dateTag": "30 OCT 2026 · 21:40", "badge": "ACT 0 · COLD OPEN", "fadeIn": true},
  {"id": "T2", "type": "SCENE", "narration": "He turns the chair before he stands. The door opens fully before he walks through it. Cause, then effect, every time.", "seconds": 10, "overlay": "callout: THE DIRECTOR / his account, not verified", "dateTag": "07:05 GST", "badge": "ACT 1 · THE OFFICE"},
- {"id": "T3", "type": "MAP", "narration": "Maps are drawn from real borders. India always shows its official boundary, with all of Jammu and Kashmir and Ladakh.", "seconds": 8, "overlay": "tally: 2,140 KM", "dateTag": "30 SEPTEMBER 2026", "badge": "ACT 1 · THE ROUTE"},
+ {"id": "T3", "type": "MAP", "narration": "Maps are drawn from real borders. India always shows its official boundary, with all of Jammu and Kashmir and Ladakh.", "seconds": 8, "overlay": "tally: 2,200 KM", "dateTag": "30 SEPTEMBER 2026", "badge": "ACT 1 · THE ROUTE"},
  {"id": "T4", "type": "DATA", "narration": "One hundred and eighty people were on board. Every number on screen is checked against a source.", "seconds": 6, "overlay": "chip: airline statement", "dateTag": "", "badge": "ACT 1 · THE NUMBERS", "fadeOut": true}
 ]}]}

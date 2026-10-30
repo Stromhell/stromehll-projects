@@ -93,7 +93,7 @@ export function slam(x, text, t, start = .2, o = {}) {
 // dynamic subtitles: phrase chunks, placed top or bottom away from characters.
 export function subtitles(x, chunks, t, avoid = []) {
   const c = chunks.find(c => t >= c.a && t < c.b); if (!c) return;
-  const size = 46;
+  const size = 52;
   x.save(); x.font = `600 ${size}px "Oswald"`;
   const w = x.measureText(c.text).width;
   // candidate positions: bottom centre, top centre, bottom left, bottom right
@@ -104,7 +104,7 @@ export function subtitles(x, chunks, t, avoid = []) {
   for (const p of cands) { const h = hit(box(...p)); if (h < bh - 1) { bh = h; best = p; } }
   const a = clamp((t - c.a) / .12) * clamp((c.b - t) / .12);
   x.globalAlpha = a; x.textAlign = 'center'; x.textBaseline = 'middle';
-  x.lineJoin = 'round'; x.lineWidth = 10; x.strokeStyle = 'rgba(20,14,10,.92)';
+  x.lineJoin = 'round'; x.lineWidth = 12; x.strokeStyle = 'rgba(20,14,10,.95)';
   x.strokeText(c.text, best[0], best[1]); x.fillStyle = '#fff'; x.fillText(c.text, best[0], best[1]);
   x.restore();
 }
