@@ -1,0 +1,153 @@
+{
+ "dur": 38.071,
+ "cues": [
+  {
+   "t": 0.3,
+   "name": "paper",
+   "gain": 0.25
+  },
+  {
+   "t": 1.444,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 4.264,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 5.819,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 7.974,
+   "name": "coins",
+   "gain": 0.3
+  },
+  {
+   "t": 9.574,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 10.274,
+   "name": "footsteps",
+   "gain": 0.3
+  },
+  {
+   "t": 13.674,
+   "name": "crowd_cheer",
+   "gain": 0.25
+  },
+  {
+   "t": 15.089,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 15.289,
+   "name": "typing",
+   "gain": 0.35
+  },
+  {
+   "t": 17.724,
+   "name": "paper",
+   "gain": 0.3
+  },
+  {
+   "t": 19.204,
+   "name": "typing",
+   "gain": 0.35
+  },
+  {
+   "t": 21.559,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 21.659,
+   "name": "door_slam",
+   "gain": 0.25
+  },
+  {
+   "t": 21.859,
+   "name": "footsteps",
+   "gain": 0.3
+  },
+  {
+   "t": 27.934,
+   "name": "hit",
+   "gain": 0.4
+  },
+  {
+   "t": 28.134,
+   "name": "crowd_cheer",
+   "gain": 0.25
+  },
+  {
+   "t": 29.429,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 29.729,
+   "name": "thud",
+   "gain": 0.25
+  },
+  {
+   "t": 29.929,
+   "name": "thud",
+   "gain": 0.25
+  },
+  {
+   "t": 30.329,
+   "name": "pop",
+   "gain": 0.2
+  },
+  {
+   "t": 34.744,
+   "name": "pop",
+   "gain": 0.3
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 6.519,
+   "name": "city_loop",
+   "gain": 0.15
+  },
+  {
+   "start": 0,
+   "end": 6.519,
+   "name": "birds_loop",
+   "gain": 0.12
+  },
+  {
+   "start": 5.719,
+   "end": 15.789000000000001,
+   "name": "city_loop",
+   "gain": 0.15
+  },
+  {
+   "start": 14.989,
+   "end": 22.259,
+   "name": "night_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 21.459,
+   "end": 30.129,
+   "name": "city_loop",
+   "gain": 0.15
+  },
+  {
+   "start": 29.329,
+   "end": 38.870999999999995,
+   "name": "office_loop",
+   "gain": 0.2
+  }
+ ]
+}

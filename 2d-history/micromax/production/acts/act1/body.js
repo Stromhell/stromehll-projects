@@ -29,7 +29,7 @@ window.SHOTS = [
     figs: [{ x: 700, y: 1330, s: 1.85, ...MX.RAHUL, facing: 1, pose: 'present', mood: 'happy', walk: { x0: -300, x1: 700, t0: .2, dur: 2.4 } },
       ...[0, 1, 2].map(i => ({ x: 1150 + i * 420, y: 1330, s: 1.85, ...MX.FRIEND(i), facing: -1, mood: 'happy', walk: { x0: 2900 + i * 200, x1: 1150 + i * 420, t0: .5 + i * .5, dur: 2.6 }, anim: (o, lt, u, S) => { if (lt > S.tM) o.pose = 'cheer'; } }))],
     init: S => { const tN = A.at(S, 'Vikas', 2); S.tM = A.at(S, 'Micromax', 7);
-      S.D.over = [(c, lt) => K.dateTag(c, '2000', lt, { at: .3 }), (c, lt) => K.card(c, 'VIKAS JAIN · RAJESH AGARWAL · SUMEET KUMAR', lt, { at: tN, x: 1300, y: 640, px: 34, rot: -2, until: S.tM }),
+      S.D.over = [(c, lt) => K.dateTag(c, '2000', lt, { at: .3 }), (c, lt) => K.card(c, 'VIKAS JAIN · RAJESH AGARWAL · SUMEET KUMAR', lt, { at: tN, x: 960, y: 190, px: 34, rot: -2, until: S.tM }),
         (c, lt) => { const a = pop(lt, S.tM, .5); if (a <= 0) return; c.save(); c.translate(960, 160); c.rotate(-.02); c.scale(a, a); c.fillStyle = '#f4e8c8'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-380, -70, 760, 140); c.strokeRect(-380, -70, 760, 140); c.font = '86px Caveat'; c.fillStyle = OR; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('Micromax', 0, -4); c.font = '28px Oswald'; c.fillStyle = INK; c.fillText('INFORMATICS · EST. 2000', 0, 48); c.restore(); }];
       S.D.sfx = [[.2, 'door_slam', .25], [.4, 'footsteps', .3], [S.tM, 'hit', .4], [S.tM + .2, 'crowd_cheer', .25]]; } },
   // 1.05 an IT business: keyboards and CDs stacked on the counter
