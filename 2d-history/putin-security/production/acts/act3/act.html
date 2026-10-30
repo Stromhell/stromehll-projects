@@ -1,0 +1,98 @@
+<!doctype html><html><head><meta charset="utf-8"><title>PU act 3 - The Flying Kremlin</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "alium";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../pu_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['airfield', 'jet_cabin', 'map_russia', 'birch_rail']) K.load(n, PL + n + '.jpg'); K.load('library', '../../../../dark-web-king/production/plates/library.jpg');
+const SW = 1920, SH = 1080, INK = '#1d1712', RED = '#d42a20', GOLD = '#e8b44a';
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+const plateAt = (c, name, px, py, sx, sy, z) => { const s2 = z * 1920 / 2560; c.setTransform(s2, 0, 0, s2, sx - px * s2, sy - py * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); return s2; };
+const backdrop = (name, dim = .55, blur = 6) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${1 - dim})`; plateAt(c, name, 1280, 720, 960, 540, 1.08); c.restore(); c.setTransform(1, 0, 0, 1, 0, 0); };
+// label with a leader line (screen)
+const callout = (c, x, y, tx, ty, txt, a, col = GOLD) => { if (a <= 0) return; c.save(); c.globalAlpha = Math.min(1, a); c.strokeStyle = col; c.lineWidth = 4; c.beginPath(); c.arc(x, y, 12, 0, 7); c.stroke(); c.beginPath(); c.moveTo(x, y); c.lineTo(tx, ty); c.stroke(); c.restore(); c.save(); c.globalAlpha = Math.min(1, a); K.outlined(c, txt, tx, ty - 26, 40, { fill: col }); c.restore(); };
+// top-down jet floor plan (screen), rooms pop in by time
+const floorPlan = (c, x, y, s, rooms, lt) => { c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = 'rgba(0,0,0,.35)'; c.beginPath(); c.ellipse(10, 14, 800, 120, 0, 0, 7); c.fill();
+  c.fillStyle = '#e8ecf0'; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.moveTo(-800, 0); c.quadraticCurveTo(-790, -110, -640, -110); c.lineTo(640, -110); c.quadraticCurveTo(820, -100, 860, 0); c.quadraticCurveTo(820, 100, 640, 110); c.lineTo(-640, 110); c.quadraticCurveTo(-790, 110, -800, 0); c.closePath(); c.fill(); c.stroke();
+  c.fillStyle = '#c8ccd2'; for (const d of [-1, 1]) { c.beginPath(); c.moveTo(-60, d * 110); c.lineTo(160, d * 110); c.lineTo(-180, d * 520); c.lineTo(-300, d * 520); c.closePath(); c.fill(); c.stroke(); for (const e of [0, 1]) { c.fillStyle = '#9aa2ac'; c.fillRect(-60 - e * 120, d * (200 + e * 140) - 20, 90, 40); c.strokeRect(-60 - e * 120, d * (200 + e * 140) - 20, 90, 40); c.fillStyle = '#c8ccd2'; } c.beginPath(); c.moveTo(-660, d * 100); c.lineTo(-580, d * 100); c.lineTo(-720, d * 240); c.lineTo(-780, d * 240); c.closePath(); c.fill(); c.stroke(); }
+  rooms.forEach(([n, x0, w, col, at, star]) => { const a = pop(lt, at); if (a <= 0) return; c.save(); c.globalAlpha = Math.min(1, a); c.fillStyle = col; c.fillRect(x0, -90, w, 180); c.strokeStyle = INK; c.lineWidth = 4; c.strokeRect(x0, -90, w, 180); c.font = '40px Anton'; c.fillStyle = INK; c.textAlign = 'center'; c.fillText(n + (star ? '*' : ''), x0 + w / 2, 14); c.restore(); });
+  c.restore(); };
+const fighter = (c, x, y, s, F = 1) => { c.save(); c.translate(x, y); c.scale(s * F, s); c.fillStyle = '#7a848e'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.moveTo(-160, -6); c.lineTo(140, -12); c.lineTo(190, 0); c.lineTo(140, 12); c.lineTo(-160, 10); c.closePath(); c.fill(); c.stroke(); c.beginPath(); c.moveTo(-20, 0); c.lineTo(-90, 60); c.lineTo(-120, 60); c.lineTo(-80, 0); c.closePath(); c.fill(); c.stroke(); c.beginPath(); c.moveTo(-140, -6); c.lineTo(-170, -60); c.lineTo(-140, -60); c.lineTo(-100, -8); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#2a3440'; c.beginPath(); c.ellipse(90, -12, 30, 8, 0, 0, 7); c.fill(); c.restore(); };
+const sky = (c, lt) => { const g = c.createLinearGradient(0, 0, 0, 1080); g.addColorStop(0, '#5a7aa8'); g.addColorStop(1, '#b8c8dc'); c.fillStyle = g; c.fillRect(0, 0, 1920, 1080); c.fillStyle = 'rgba(255,255,255,.75)'; for (let k = 0; k < 9; k++) { const x = ((k * 377 - lt * 260) % 2400 + 2400) % 2400 - 240, y = 140 + (k * 211) % 760; c.beginPath(); c.ellipse(x, y, 160, 40, 0, 0, 7); c.ellipse(x + 90, y - 20, 110, 40, 0, 0, 7); c.fill(); } };
+const medBag = (c, x, y, a) => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(-100, -50, 220, 150); c.fillStyle = '#f2f0ea'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.roundRect(-110, -60, 220, 150, 16); c.fill(); c.stroke(); c.beginPath(); c.moveTo(-40, -60); c.quadraticCurveTo(0, -110, 40, -60); c.stroke(); c.fillStyle = RED; c.fillRect(-14, -36, 28, 92); c.fillRect(-46, -4, 92, 28); c.restore(); };
+const jetIcon = (c, x, y, a, s = .6) => { c.save(); c.translate(x, y); c.rotate(a); c.scale(s, s); c.fillStyle = '#f2f4f6'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(40, 0); c.lineTo(-30, -5); c.lineTo(-40, -30); c.lineTo(-48, -30); c.lineTo(-44, -4); c.lineTo(-50, 0); c.lineTo(-44, 4); c.lineTo(-48, 30); c.lineTo(-40, 30); c.lineTo(-30, 5); c.closePath(); c.fill(); c.stroke(); c.beginPath(); c.moveTo(10, -3); c.lineTo(-8, -42); c.lineTo(-18, -42); c.lineTo(-10, -3); c.moveTo(10, 3); c.lineTo(-8, 42); c.lineTo(-18, 42); c.lineTo(-10, 3); c.fill(); c.stroke(); c.restore(); };
+const MOW = PU.xy(37.62, 55.75);
+const ROUTES = [[[37.62, 55.75], [30.3, 59.9]], [[37.62, 55.75], [39.7, 43.6]], [[37.62, 55.75], [49.1, 55.8]], [[37.62, 55.75], [24, 54.5]]].map(r => r.map(([a, b]) => PU.xy(a, b)));
+const along = (r, u) => [r[0][0] + (r[1][0] - r[0][0]) * u, r[0][1] + (r[1][1] - r[0][1]) * u - Math.sin(u * Math.PI) * 80];
+
+window.SHOTS = [
+  // 1 the Il-96 on the apron; callouts on its four engines
+  { plate: 'airfield', cam: { z: [1.1, 1.18], x: [1280, 1320], y: [820, 820], ease: E.io }, bed: [['wind_loop', .45]],
+    live: [(c) => PU.jet(c, 1300, 1010, 1.6, -1)],
+    over: [(c, lt, u, S) => { callout(c, 930, 770, 520, 560, 'FOUR ENGINES', pop(lt, S.tF)); }],
+    init: S => { S.tF = A.at(S, 'four-engine', 3.6); const tI = A.at(S, 'Ilyushin', 1.6), tS = A.at(S, 'Soviet', 6);
+      S.D.over.push((c, lt) => K.card(c, 'ILYUSHIN IL-96', lt, { at: tI, x: 1440, y: 200, px: 62, rot: 3 }), (c, lt) => K.card(c, 'DESIGNED IN THE\nLATE SOVIET YEARS', lt, { at: tS, x: 1440, y: 380, px: 42, rot: -2 }));
+      S.D.sfx = [[.3, 'wind_loop', .2], [tI, 'pop', .4], [S.tF, 'pop', .4], [tS, 'pop', .35]]; } },
+  // 2 old by today's standards: a stamp, and a row of modern twin-engine jets leaving
+  { draw: (c, lt, u, S) => { backdrop('airfield', .45, 5)(c); for (let k = 0; k < 3; k++) { const x = 1300 + k * 300 + 900 * E.inn(K.seg(lt, S.tR + k * .3, S.tR + 2 + k * .3)); c.save(); c.globalAlpha = .9; jetIcon(c, x, 260 + k * 110, 0, 1.2); c.restore(); }
+      PU.jet(c, 760, 760, 1.1, 1); const st = K.seg(lt, S.tO, S.tO + .35); if (st > 0) { c.save(); c.translate(760, 640); c.rotate(-.18); c.scale(1 + (1 - E.out(st)) * 1.5, 1 + (1 - E.out(st)) * 1.5); c.globalAlpha = Math.min(1, st * 2); c.strokeStyle = RED; c.lineWidth = 10; c.strokeRect(-140, -56, 280, 112); c.font = '80px Anton'; c.fillStyle = RED; c.textAlign = 'center'; c.fillText('OLD', 0, 28); c.restore(); } },
+    bed: [['wind_loop', .35]],
+    init: S => { S.tO = A.at(S, 'old', 1.2); S.tR = A.at(S, 'replaced', 2.6); const tK = A.at(S, 'its own', 5.6);
+      S.D.over = [(c, lt) => K.card(c, 'MOST AIRLINES MOVED\nTO TWO ENGINES', lt, { at: S.tR, x: 1460, y: 820, px: 40, rot: 3 }), (c, lt) => K.card(c, 'RUSSIA KEEPS\nFLYING ITS OWN', lt, { at: tK, x: 460, y: 220, px: 46, rot: -3 })];
+      S.D.sfx = [[S.tO + .2, 'stamp', .5], [S.tR, 'whoosh', .4], [tK, 'pop', .4]]; } },
+  // 3 THE FLYING KREMLIN: floor plan with rooms
+  { draw: (c, lt, u, S) => { backdrop('jet_cabin', .55, 6)(c); floorPlan(c, 980, 610, .72, S.rooms, lt); },
+    bed: [['hum_loop', .35]],
+    init: S => { const tB = A.at(S, 'bedroom', 3.4), tM = A.at(S, 'meeting room', 4.4), tD = A.at(S, 'dining', 5.4), tG = A.at(S, 'gym', 6.8); const tF = A.at(S, 'Flying Kremlin', 1.6);
+      S.rooms = [['BEDROOM', -560, 300, '#d8c8e8', tB], ['MEETING', -250, 320, '#c8dce8', tM], ['DINING', 80, 280, '#e8dcc0', tD], ['GYM', 370, 220, '#cfe0cf', tG, true]];
+      S.D.over = [(c, lt) => K.title(c, 'THE FLYING KREMLIN', lt, { at: tF, y: 150, px: 92, fill: GOLD }), (c, lt) => { const a = pop(lt, tG + .3); if (a <= 0) return; c.save(); c.globalAlpha = Math.min(1, a); K.outlined(c, '* REPORTEDLY', 1500, 930, 40, { fill: '#fffaf0' }); c.restore(); }];
+      S.D.sfx = [[tF, 'hit', .5], [tB, 'pop', .4], [tM, 'pop', .4], [tD, 'pop', .4], [tG, 'pop', .4]]; } },
+  // 4 reported systems: comms, missile defence, escape
+  { draw: (c, lt, u, S) => { backdrop('jet_cabin', .62, 7)(c); PU.jet(c, 960, 640, 1.25, 1); S.cx.forEach(([x, y, tx, ty, lab, t]) => callout(c, x, y, tx, ty, lab, pop(lt, t))); },
+    bed: [['hum_loop', .35]],
+    init: S => { const tC = A.at(S, 'communications', 2), tM = A.at(S, 'missiles', 3.6), tE = A.at(S, 'escape', 5);
+      S.cx = [[1160, 560, 1380, 260, 'SECURE COMMS', tC], [760, 680, 380, 300, 'MISSILE DEFENCES', tM], [700, 600, 520, 900, 'ESCAPE OPTION', tE]];
+      S.D.over = [(c, lt) => K.badge(c, 'REPORTED', lt, { at: .3 })]; S.D.sfx = [[tC, 'pop', .4], [tM, 'pop', .4], [tE, 'pop', .4]]; } },
+  // 5 in the air with two fighter escorts
+  { draw: (c, lt, u, S) => { sky(c, lt); const b = Math.sin(lt * 1.2) * 8; PU.jet(c, 960, 560 + b, .9, 1); const f = E.out(K.seg(lt, S.tF - .4, S.tF + 1.4)); if (f > 0) { fighter(c, -300 + 1000 * f, 330 + Math.sin(lt * 1.5) * 10, .9); fighter(c, -500 + 1200 * f, 820 + Math.sin(lt * 1.3 + 1) * 10, .9); } },
+    bed: [['wind_loop', .5]],
+    init: S => { S.tF = A.at(S, 'fighter', 2); const tA = A.at(S, 'abroad', 1); S.D.over = [(c, lt) => K.card(c, 'FIGHTER ESCORT', lt, { at: S.tF + .6, x: 1500, y: 220, px: 56, rot: 3 }), (c, lt) => K.badge(c, 'FLYING ABROAD', lt, { at: tA })]; S.D.sfx = [[S.tF, 'whoosh', .5], [S.tF + .4, 'riser', .35]]; } },
+  // 6 a team of doctors: medical bags line the aisle
+  { draw: (c, lt, u, S) => { backdrop('jet_cabin', .4, 3)(c); [560, 960, 1360].forEach((x, i) => medBag(c, x, 640, pop(lt, S.tD + i * .3))); },
+    bed: [['hum_loop', .35]],
+    init: S => { S.tD = A.at(S, 'doctors', 3); const tI = A.at(S, 'Intelligence reports', .6);
+      S.D.over = [(c, lt) => K.badge(c, 'INTELLIGENCE REPORTS', lt, { at: tI }), (c, lt) => K.card(c, 'PERSONAL DOCTORS\nTRAVEL WITH HIM', lt, { at: S.tD + .3, x: 960, y: 260, px: 52, rot: -2 })];
+      S.D.sfx = [[tI, 'pop', .35], [S.tD, 'pop', .4], [S.tD + .3, 'pop', .4], [S.tD + .6, 'pop', .4]]; } },
+  // 7 four identical planes take off from Moscow on four routes
+  { plate: 'map_russia', cam: { z: [1.12, 1.2], x: [1050, 1050], y: [720, 720] }, bed: [['wind_loop', .3], ['hum_loop', .2]],
+    live: [(c) => { c.save(); c.fillStyle = 'rgba(10,16,40,.3)'; c.fillRect(0, 0, 2560, 1440); c.restore(); PU.dot(c, MOW[0], MOW[1], 'MOSCOW', 1); },
+      (c, lt, u, S) => { const show = pop(lt, S.tF); if (show > 0 && lt < S.tO) for (let k = 0; k < 4; k++) { c.save(); c.globalAlpha = Math.min(1, show); PU.jet(c, 760 + k * 230, 660 + (k % 2) * 40, .22, 1); c.restore(); }
+        if (lt > S.tO) ROUTES.forEach((r, k) => { const uu = E.io(K.seg(lt, S.tO + k * .2, S.tO + 3 + k * .2)); c.save(); c.strokeStyle = 'rgba(255,230,170,.8)'; c.setLineDash([14, 10]); c.lineWidth = 5; c.beginPath(); for (let q = 0; q <= 20; q++) { const [x, y] = along(r, uu * q / 20); q ? c.lineTo(x, y) : c.moveTo(x, y); } c.stroke(); c.restore(); const [x, y] = along(r, uu), [x2, y2] = along(r, Math.min(1, uu + .01)); jetIcon(c, x, y, Math.atan2(y2 - y, x2 - x), 1); }); }],
+    init: S => { S.tF = A.at(S, 'four', 2); S.tO = A.at(S, 'take off', 5.4);
+      S.D.over = [(c, lt) => K.card(c, '4 NEAR-IDENTICAL PLANES', lt, { at: S.tF, x: 1400, y: 200, px: 50, rot: 3 }), (c, lt) => K.title(c, 'WHICH ONE?', lt, { at: S.tO + 2, y: 940, px: 84, fill: GOLD })];
+      S.D.sfx = [[S.tF, 'pop', .4], [S.tO, 'whoosh', .45], [S.tO + .4, 'whoosh_soft', .35], [S.tO + 2, 'hit', .45]]; } },
+  // 8 a flight-tracking screen: every plane leaves a trail
+  { draw: (c, lt, u, S) => { backdrop('library', .6, 6)(c); c.save(); c.fillStyle = '#0e1620'; c.strokeStyle = '#c8ccd2'; c.lineWidth = 12; c.beginPath(); c.roundRect(360, 150, 1200, 720, 22); c.fill(); c.stroke(); c.beginPath(); c.rect(372, 162, 1176, 696); c.clip(); c.globalAlpha = .55; plateAt(c, 'map_russia', 1100, 700, 960, 510, .62); c.setTransform(1, 0, 0, 1, 0, 0); c.globalAlpha = 1; c.fillStyle = 'rgba(8,20,40,.45)'; c.fillRect(372, 162, 1176, 696);
+      for (let k = 0; k < 14; k++) { const ang = k * 2.1, sp = 30 + (k % 4) * 12; const x0 = 420 + (k * 173) % 1100, y0 = 220 + (k * 97) % 600; const x = x0 + Math.cos(ang) * sp * lt, y = y0 + Math.sin(ang) * sp * lt * .6; c.strokeStyle = 'rgba(255,210,90,.6)'; c.lineWidth = 3; c.setLineDash([6, 6]); c.beginPath(); c.moveTo(x0, y0); c.lineTo(x, y); c.stroke(); c.setLineDash([]); jetIcon(c, x, y, Math.atan2(Math.sin(ang) * .6, Math.cos(ang)), .45); } c.restore();
+      c.fillStyle = '#c8ccd2'; c.fillRect(900, 870, 120, 80); c.fillRect(780, 940, 360, 20); },
+    bed: [['hum_loop', .35]],
+    init: S => { const tW = A.at(S, 'weakness', 1.2), tE = A.at(S, 'easy to follow', 2.6); S.D.over = [(c, lt) => K.card(c, 'THE WEAKNESS', lt, { at: tW, x: 1640, y: 300, px: 50, rot: 4 }), (c, lt) => K.title(c, 'PLANES ARE EASY TO FOLLOW', lt, { at: tE, y: 110, px: 64, fill: GOLD })]; S.D.sfx = [[tW, 'hit', .4], [tE, 'typing', .35]]; } },
+  // 9 the journalist in exile at his laptop (stylised)
+  { plate: 'library', cam: { z: [1.12, 1.18], x: [1280, 1300], y: [880, 880] }, bed: [['office_loop', .3]],
+    figs: [{ x: 540, y: 1330, s: 1.8, costume: 'shirt', hair: 'short', hairCol: '#4a3a2a', seed: 17, beard: true, facing: 1, pose: 'present', mood: 'focus', anim: (o, lt) => { o.talk = Math.sin(lt * 2) > 0; } }],
+    init: S => { const tN = A.at(S, 'Ilya', 1.6), tD = A.at(S, 'Dossier Center', 4), tE = A.at(S, 'exile', 5), tF = A.at(S, 'flight-tracking', 7.4);
+      S.D.over = [(c, lt) => K.card(c, 'ILYA ROZHDESTVENSKY\nINVESTIGATIVE JOURNALIST', lt, { at: tN, x: 1480, y: 200, px: 40, rot: 3 }), (c, lt) => K.badge(c, 'DOSSIER CENTER · IN EXILE', lt, { at: tD }), (c, lt) => K.card(c, 'PUBLIC FLIGHT-TRACKING\nSITES LOG PLANES ALL DAY', lt, { at: tF, x: 1480, y: 760, px: 40, rot: -3 })];
+      S.D.sfx = [[tN, 'pop', .4], [tD, 'pop', .35], [tF, 'typing', .4]]; } },
+  // 10 four target rings on four planes; then the train through the birches
+  { draw: (c, lt, u, S) => { if (lt < S.tT) { c.save(); plateAt(c, 'map_russia', 1050, 720, 960, 540, 1.1); c.setTransform(1, 0, 0, 1, 0, 0); c.fillStyle = 'rgba(10,16,40,.4)'; c.fillRect(0, 0, 1920, 1080); c.restore(); [[520, 380], [820, 620], [1240, 420], [1480, 700]].forEach(([x, y], k) => { jetIcon(c, x, y, -.3 + k * .4, 1.1); const a = pop(lt, S.tA + k * .25); if (a > 0) { c.save(); c.strokeStyle = RED; c.lineWidth = 6; c.globalAlpha = Math.min(1, a); c.beginPath(); c.arc(x, y, 70 / a, 0, 7); c.stroke(); c.beginPath(); c.moveTo(x - 90, y); c.lineTo(x + 90, y); c.moveTo(x, y - 90); c.lineTo(x, y + 90); c.stroke(); c.restore(); } }); }
+      else { const s2 = plateAt(c, 'birch_rail', 1280, 900, 960, 560, 1.08); c.save(); c.setTransform(s2, 0, 0, s2, 960 - 1280 * s2, 560 - 900 * s2); PU.train(c, -400 + (lt - S.tT) * 520, 1110, .9, 5); c.restore(); c.setTransform(1, 0, 0, 1, 0, 0); } },
+    bed: [['wind_loop', .3]],
+    init: S => { S.tA = A.at(S, 'all four', 3); S.tT = A.at(S, 'train', 6.6) - .5; const tI = A.at(S, 'In theory', .4);
+      S.D.over = [(c, lt) => K.card(c, 'IN THEORY', lt, { at: tI, x: 400, y: 160, px: 56, rot: -4, until: S.tT }), (c, lt) => K.card(c, 'ALL FOUR AT ONCE', lt, { at: S.tA, x: 1460, y: 160, px: 50, rot: 3, until: S.tT }), (c, lt) => K.title(c, 'THE TRAIN', lt, { at: S.tT + .5, y: 150, px: 100, fill: GOLD })];
+      S.D.sfx = [[tI, 'pop', .4], [S.tA, 'alarm', .3], [S.tT, 'whoosh', .45], [S.tT + .3, 'drone', .3]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>
