@@ -1,0 +1,114 @@
+<!doctype html><html><head><meta charset="utf-8"><title>RS act 1 - the street</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "leo";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../rs_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['judengasse', 'judengasse_shield', 'judengasse_night', 'partners_room', 'palace_gate', 'exchange_amsterdam', 'map_europe', 'mansion', 'customs_night']) K.load(n, PL + n + '.jpg');
+const SW = 1920, SH = 1080, INK = RS.INK, pop = RS.pop;
+const backdrop = (name, b = .5, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const CARRY = () => ({ shL: 30, elL: -75, shR: 35, elR: -75 });
+const bale = (c) => { c.save(); c.fillStyle = '#c8b080'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.roundRect(-40, -70, 90, 60, 10); c.fill(); c.stroke(); c.beginPath(); c.moveTo(-40, -40); c.lineTo(50, -40); c.moveTo(5, -70); c.lineTo(5, -10); c.stroke(); c.restore(); };
+const tray = (c) => { c.save(); c.fillStyle = '#3a2a5a'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-10, -26, 90, 24); c.strokeRect(-10, -26, 90, 24); for (let k = 0; k < 4; k++) RS.coin(c, 4 + k * 20, -18, 8, k * .5); c.restore(); };
+// the street gates closing (world space; gate opening at plate 1210-1350 x, 858-1008 y)
+const gateDoors = (u) => (c) => { const gx = 1280, hz = 1008; c.save(); c.fillStyle = '#2a1e16'; c.strokeStyle = INK; c.lineWidth = 3; for (const s of [-1, 1]) { const w = 70 * u; c.fillRect(s < 0 ? gx - 70 : gx + 70 - w, hz - 160, w, 160); c.strokeRect(s < 0 ? gx - 70 : gx + 70 - w, hz - 160, w, 160); } c.restore(); };
+
+window.SHOTS = [
+  // 1.01 Frankfurt 1744: the walled street; people hurry home; the gates swing shut at dusk
+  { plate: 'judengasse', cam: { z: [1.02, 1.14], x: [1280, 1280], y: [820, 800] }, bed: [['city_loop', .15], ['wind_loop', .15]],
+    figs: [{ x: 1080, y: 1250, s: 1.25, costume: 'dress', hair: 'bun', seed: 5, facing: 1, walk: { x0: 760, x1: 1180, t0: .2, dur: 5.5 } },
+      { x: 1500, y: 1320, s: 1.55, costume: 'suit', hair: 'short', beard: true, seed: 14, hat: RS.kippah('#2a2a3a'), facing: -1, walk: { x0: 1900, x1: 1420, t0: .6, dur: 5.2 } },
+      { x: 1700, y: 1180, s: 1.0, costume: 'kid', hair: 'short', seed: 9, facing: -1, walk: { x0: 1820, x1: 1520, t0: 1, dur: 4 } }],
+    live: [(c, lt, u, S) => gateDoors(E.io(K.seg(lt, S.tL, S.tL + 1.2)))(c)],
+    init: S => { S.tL = A.at(S, 'locked', 6);
+      S.D.over = [(c, lt) => K.dateTag(c, 'FRANKFURT · 1744', lt, { at: .4 }), (c, lt) => K.card(c, 'THE JUDENGASSE', lt, { at: 1.2, x: 420, y: 220, px: 52, rot: -3 }), (c, lt) => K.card(c, 'LOCKED AT NIGHT AND ON SUNDAYS', lt, { at: S.tL, x: 1400, y: 220, px: 42, rot: 3 })];
+      S.D.sfx = [[.3, 'footsteps', .3], [S.tL, 'creak', .35], [S.tL + 1.2, 'gate_slam', .45]]; } },
+  // 1.02 the list of banned trades; a coin scale tips toward money-lending
+  { draw: (c, lt, u, S) => { backdrop('judengasse', .35, 10)(c); const a = pop(lt, .2, .5); if (a <= 0) return; c.save(); c.translate(620, 540); c.scale(a, a); c.rotate(-.03);
+      c.fillStyle = RS.PAPER; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-300, -380, 600, 760); c.strokeRect(-300, -380, 600, 760); c.fillStyle = INK; c.font = '54px Anton'; c.textAlign = 'center'; c.fillText('TRADES AND GUILDS', 0, -300);
+      const rows = ['CARPENTER', 'BAKER', 'FARMER', 'TAILOR', 'MERCHANT GUILD', 'MONEY-LENDING', 'DEALING']; rows.forEach((t, i) => { const at = S.tR + i * .35, ok = i >= 5; if (lt < at) return; c.fillStyle = INK; c.font = '42px Oswald'; c.textAlign = 'left'; c.fillText(t, -240, -200 + i * 82);
+        if (lt > at + .2) { c.lineWidth = 7; if (ok) { c.strokeStyle = '#2e7a3a'; c.beginPath(); c.moveTo(180, -214 + i * 82); c.lineTo(200, -194 + i * 82); c.lineTo(240, -240 + i * 82); c.stroke(); } else { c.strokeStyle = '#c8281e'; c.beginPath(); c.moveTo(170, -236 + i * 82); c.lineTo(230, -190 + i * 82); c.moveTo(230, -236 + i * 82); c.lineTo(170, -190 + i * 82); c.stroke(); } } }); c.restore();
+      const tilt = -.22 * E.out(K.seg(lt, S.tS, S.tS + 1)); RS.scale(c, 1380, 860, 1.1, tilt, { load: [(c, x, y) => { for (let k = 0; k < 5; k++) RS.coin(c, x - 40 + k * 20, y - 10 - (k % 2) * 14, 16, k); }, (c, x, y) => { c.fillStyle = '#8a7a5a'; c.fillRect(x - 30, y - 30, 60, 30); }] }); },
+    bed: [['hum_loop', .25]],
+    init: S => { S.tR = A.at(S, 'shut out', .8); S.tS = A.at(S, 'Money', 3.6);
+      S.D.over = [(c, lt) => K.card(c, 'ONE OF THE FEW WAYS TO EARN A LIVING', lt, { at: S.tS + .6, x: 1380, y: 180, px: 40, rot: 2 })];
+      S.D.sfx = [0, 1, 2, 3, 4].map(i => [S.tR + i * .35 + .2, 'stamp', .25]).concat([[S.tS, 'coins', .4]]); } },
+  // 1.03 the red shield sign on the family house; inset: a baby in a cradle
+  { plate: 'judengasse_shield', cam: { z: [1.6, 1.8], x: [2280, 2330], y: [420, 390] }, bed: [['wind_loop', .2]],
+    live: [(c, lt) => { const sw = Math.sin(lt * 1.7) * .04; c.save(); c.translate(2130, 470); c.rotate(sw); c.restore(); }],
+    init: S => { const tB = A.at(S, 'born', 1.5), tS = A.at(S, 'red shield', 5);
+      S.D.over = [(c, lt) => K.badge(c, 'MAYER AMSCHEL ROTHSCHILD · b. 1744', lt, { at: tB }), (c, lt) => K.card(c, 'ZUM ROTEN SCHILD', lt, { at: tS, x: 520, y: 260, px: 56, rot: -3 }), (c, lt) => K.card(c, '= "AT THE RED SHIELD"', lt, { at: tS + .6, x: 520, y: 350, px: 40, rot: 2 }),
+        (c, lt) => { const a = pop(lt, tB + .3, .5); if (a <= 0) return; c.save(); c.translate(1480, 720); c.scale(a, a); c.fillStyle = '#f2e8d2'; c.strokeStyle = INK; c.lineWidth = 8; c.beginPath(); c.arc(0, 0, 220, 0, 7); c.fill(); c.stroke(); c.save(); c.beginPath(); c.arc(0, 0, 212, 0, 7); c.clip(); c.fillStyle = '#5a3a26'; c.fillRect(-220, -220, 440, 440); RS.glow(c, -60, -80, 260, '#ffc070', .4);
+          c.fillStyle = '#7a4a26'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.moveTo(-130, 40); c.quadraticCurveTo(0, 150, 130, 40); c.closePath(); c.fill(); c.stroke(); c.beginPath(); c.moveTo(-110, 110); c.quadraticCurveTo(0, 170, 110, 110); c.stroke(); c.fillStyle = '#f0e6d0'; c.beginPath(); c.ellipse(10, 40, 100, 24, 0, Math.PI, 0); c.fill(); c.stroke();
+          c.fillStyle = '#f2c8a0'; c.beginPath(); c.arc(-60, 20, 30, 0, 7); c.fill(); c.stroke(); c.fillStyle = INK; c.beginPath(); c.arc(-68, 16, 3, 0, 7); c.arc(-52, 16, 3, 0, 7); c.fill(); c.restore(); c.restore(); }];
+      S.D.sfx = [[tB, 'pop', .3], [tS, 'creak', .3], [tS + .6, 'paper', .25]]; } },
+  // 1.04 Hanover: the teenager at a high counting desk beside the old banker; coins counted, quill scratches
+  { plate: 'partners_room', cam: { z: [1.06, 1.14], x: [1280, 1300], y: [840, 840] }, bed: [['hum_loop', .25], ['fire_loop', .12]],
+    figs: [{ x: 1120, y: 1180, s: 1.55, ...RS.TEEN, facing: 1, pose: 'present', mood: 'focus', hold: { near: (c) => RS.quill(c, 0, 0, .35, -.3) } },
+      { x: 1480, y: 1180, s: 1.75, ...RS.OPPENHEIMER, facing: -1, pose: 'point', mood: 'neutral', anim: (o, lt) => { o.pose = lt % 5 < 2.5 ? 'point' : 'present'; } }],
+    live: [(c, lt) => { for (let k = 0; k < 8; k++) { const at = 1 + k * .5, a = K.seg(lt, at, at + .3); if (a <= 0) continue; RS.coin(c, 1180 + k * 26, 900 - a * 0 - (k % 2) * 6, 16, lt * 2 + k); } RS.ledger(c, 1320, 905, .5, { u: K.seg(lt, .5, 6) }); }],
+    init: S => { const tH = A.at(S, 'Hanover', 1.4), tC = A.at(S, 'courts', 6);
+      S.D.over = [(c, lt) => K.dateTag(c, 'HANOVER', lt, { at: tH }), (c, lt) => K.card(c, 'AGE 13: TRAINEE BANKER', lt, { at: .5, x: 420, y: 220, px: 46, rot: -3 }), (c, lt) => K.card(c, 'HOW MONEY MOVES BETWEEN COURTS', lt, { at: tC, x: 1440, y: 220, px: 40, rot: 2 })];
+      S.D.sfx = [[.6, 'paper', .25], [1.4, 'coins', .3], [3.4, 'coins', .25], [tC, 'chime', .3]]; } },
+  // 1.05 back in Frankfurt: Mayer walks up to a nobleman at his gates and shows him a tray of old coins
+  { plate: 'palace_gate', cam: { z: [1.08, 1.16], x: [1280, 1280], y: [880, 880] }, bed: [['birds_loop', .2]],
+    figs: [{ x: 1180, y: 1300, s: 1.9, ...RS.MAYER, facing: 1, walk: { x0: 500, x1: 1180, t0: .2, dur: 3 }, hold: { near: tray }, anim: (o, lt) => { if (lt > 3.2) o.pose = 'present'; } },
+      { x: 1600, y: 1300, s: 1.95, ...RS.NOBLE, facing: -1, pose: 'think', mood: 'neutral', anim: (o, lt, u, S) => { o.mood = lt > S.tN ? 'happy' : 'neutral'; o.pose = lt > S.tN ? 'present' : 'think'; } }],
+    init: S => { const tC = A.at(S, 'rare coins', 1.4); S.tN = A.at(S, 'nobles', 4);
+      S.D.over = [(c, lt) => K.card(c, 'RARE COINS AND MEDALS', lt, { at: tC, x: 520, y: 220, px: 46, rot: -3 }), (c, lt) => K.card(c, 'CLIENTS: GERMAN NOBLES', lt, { at: S.tN, x: 1440, y: 220, px: 44, rot: 3 })];
+      S.D.sfx = [[.3, 'footsteps', .3], [3.4, 'coins', .35], [S.tN, 'chime', .35]]; } },
+  // 1.06 an exchange courtyard full of traders, then a copy of The Wealth of Nations slaps onto the desk
+  { plate: 'exchange_amsterdam', cam: { z: [1.04, 1.12], x: [1280, 1280], y: [820, 820] }, bed: [['crowd_loop', .2]],
+    figs: [0, 1, 2, 3, 4, 5].map(i => ({ x: 300 + i * 380, y: 1260 + (i % 2) * 70, s: 1.6 + (i % 2) * .15, ...RS.TRADER(i), facing: i % 2 ? -1 : 1, pose: ['point', 'present', 'shrug', 'think', 'present', 'point'][i], mood: 'neutral', walk: i === 2 ? { x0: 700, x1: 1060, t0: 1, dur: 3 } : undefined })),
+    init: S => { const tA = A.at(S, 'Amsterdam', 2.6), tY = A.at(S, '1776', 7.2), tG = A.at(S, 'grow', 9.4);
+      S.D.over = [(c, lt) => K.card(c, 'AMSTERDAM · LONDON: BANKS AND EXCHANGES', lt, { at: tA, x: 960, y: 200, px: 42, rot: -2, until: tY }),
+        (c, lt) => { const a = pop(lt, tY, .4); if (a <= 0) return; c.save(); c.translate(960, 560); c.scale(a, a); c.rotate(-.05); c.fillStyle = 'rgba(0,0,0,.4)'; c.fillRect(-250, -310, 520, 640); c.fillStyle = '#6a2a22'; c.strokeStyle = INK; c.lineWidth = 7; c.fillRect(-260, -320, 520, 640); c.strokeRect(-260, -320, 520, 640); c.strokeStyle = RS.GOLD; c.lineWidth = 4; c.strokeRect(-230, -290, 460, 580);
+          c.fillStyle = RS.GOLD; c.font = '50px SourceSerif'; c.textAlign = 'center'; c.fillText('AN INQUIRY INTO', 0, -170); c.fillText('THE WEALTH', 0, -90); c.fillText('OF NATIONS', 0, -20); c.font = '34px SourceSerif'; c.fillText('ADAM SMITH', 0, 120); c.fillText('1776', 0, 190); c.restore(); },
+        (c, lt) => K.card(c, 'WEALTH CAN GROW', lt, { at: tG, x: 1500, y: 300, px: 52, rot: 4 }), (c, lt) => K.card(c, 'NOT JUST BE GRABBED', lt, { at: tG + .7, x: 1500, y: 390, px: 40, rot: -2 })];
+      S.D.sfx = [[tA, 'paper', .25], [tY, 'thud', .5], [tG, 'chime', .35]]; } },
+  // 1.07 growth needs capital: a single coin rolls across the map and settles on Frankfurt
+  { plate: 'map_europe', cam: { z: [1.12, 1.2], x: [1100, 1200], y: [740, 720] }, bed: [['hum_loop', .3]],
+    live: [(c, lt, u, S) => { const F = RS.EU(...RS.CITY.Frankfurt), u2 = E.out(K.seg(lt, .4, 3.2)), x = 400 + (F[0] - 400) * u2, y = F[1] - Math.abs(Math.sin(u2 * 9)) * 60 * (1 - u2); c.save(); c.translate(x, y); c.rotate(u2 * 14); RS.coin(c, 0, 0, 44, 0); c.restore(); if (u2 > .98) K.outlined(c, 'FRANKFURT', F[0], F[1] + 80, 44, { fill: '#fff4dc' }); }],
+    init: S => { const tL = A.at(S, 'lend', 2.6);
+      S.D.over = [(c, lt) => K.title(c, 'GROWTH NEEDS CAPITAL', lt, { at: .3, y: 130, px: 80 }), (c, lt) => K.card(c, 'SOMEBODY HAS TO LEND IT', lt, { at: tL, x: 1400, y: 900, px: 44, rot: -3 })];
+      S.D.sfx = [[.4, 'scrape', .3], [3.2, 'coins', .4], [tL, 'pop', .3]]; } },
+  // 1.08 Hesse-Kassel: the prince in uniform; chests creak open full of gold; Mayer beside him with his ledger
+  { plate: 'mansion', cam: { z: [1.06, 1.14], x: [1280, 1280], y: [860, 860] }, bed: [['hum_loop', .25]],
+    figs: [{ x: 1480, y: 1320, s: 2.0, ...RS.PRINCE, facing: -1, pose: 'present', mood: 'happy' },
+      { x: 700, y: 1330, s: 1.95, ...RS.MAYER, facing: 1, pose: 'present', mood: 'focus', walk: { x0: 300, x1: 700, t0: 2.4, dur: 2 }, hold: { near: (c) => { c.save(); c.scale(.4, .4); RS.ledger(c, 60, -40, 1, { rot: -.2 }); c.restore(); } } }],
+    front: [(c, lt) => { RS.chest(c, 1900, 1400, .9, { open: lt > 1 }); RS.chest(c, 2200, 1420, 1.0, { open: lt > 1.4 }); }],
+    init: S => { const tW = A.at(S, 'richest', 2.4), tM = A.at(S, 'manage', 5);
+      S.D.over = [(c, lt) => K.badge(c, 'PRINCE WILLIAM OF HESSE-KASSEL', lt, { at: .4 }), (c, lt) => K.card(c, 'ONE OF EUROPE\'S RICHEST RULERS', lt, { at: tW, x: 1400, y: 220, px: 42, rot: 3 }), (c, lt) => K.card(c, 'MAYER MANAGES HIS MONEY', lt, { at: tM, x: 520, y: 260, px: 44, rot: -3 })];
+      S.D.sfx = [[1, 'creak', .4], [1.4, 'coins_cascade', .35], [tM, 'paper', .3]]; } },
+  // 1.09 the wars: armies march across the map; coins stream toward the front lines
+  { plate: 'map_europe', cam: { z: [1.04, 1.1], x: [1280, 1260], y: [760, 760] }, bed: [['war_drums_loop', .25]],
+    live: [(c, lt, u, S) => { const P = RS.EU(2.35, 48.85), V = RS.EU(16.37, 48.2), L = RS.EU(-0.12, 51.5), F = RS.EU(8.68, 50.11);
+      RS.arrow(c, P[0], P[1], F[0] - 40, F[1] + 20, E.out(K.seg(lt, S.tR, S.tR + 1.6)), { col: '#2a4a9a', bend: .1, w: 22 });
+      RS.arrow(c, V[0], V[1], F[0] + 40, F[1] + 30, E.out(K.seg(lt, S.tR + .5, S.tR + 2)), { col: '#c8281e', bend: -.1, w: 22 });
+      if (lt > S.tR + 2) { for (let k = 0; k < 10; k++) { const ph = ((lt - S.tR - 2) * .5 + k / 10) % 1; RS.coin(c, L[0] + (F[0] - L[0]) * ph, L[1] + (F[1] - L[1]) * ph - Math.sin(ph * Math.PI) * 120, 18, lt * 3 + k); } }
+      if (lt > S.tR + 1.8) { c.save(); c.translate(F[0], F[1] + 20); c.rotate(Math.sin(lt * 9) * .1); K.outlined(c, '⚔', 0, 0, 90, { fill: '#fff' }); c.restore(); } }],
+    init: S => { S.tR = A.at(S, 'revolution', 1); const tA = A.at(S, 'Armies', 5.2), tG = A.at(S, 'Governments', 6.6);
+      S.D.over = [(c, lt) => K.dateTag(c, '1792-1815', lt, { at: S.tR }), (c, lt) => K.card(c, 'ARMIES NEED MONEY', lt, { at: tA, x: 1500, y: 200, px: 50, rot: 3 }), (c, lt) => K.card(c, 'GOVERNMENTS NEED LOANS', lt, { at: tG, x: 1500, y: 300, px: 44, rot: -2 })];
+      S.D.sfx = [[S.tR, 'war_drums_loop', .2], [S.tR + 1.8, 'sword_clash', .4], [tA, 'stamp', .35], [tG, 'stamp', .35], [S.tR + 2.2, 'coins', .3]]; } },
+  // 1.10 1806: the prince's carriage leaves at night; Mayer hurries home with the ledgers to hide them
+  { plate: 'judengasse_night', cam: { z: [1.04, 1.12], x: [1280, 1280], y: [820, 820] }, bed: [['night_loop', .25], ['walk_hooves_loop', .15]],
+    live: [(c, lt) => { const u = K.seg(lt, .3, 4.5), s = 1 - u * .7, x = 1280, y = 1300 - u * 300; if (u >= 1) return; c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = '#100c0a'; c.beginPath(); c.roundRect(-130, -230, 260, 170, 20); c.fill(); c.fillStyle = 'rgba(255,200,120,.5)'; c.fillRect(-80, -200, 160, 60);
+      for (const wx of [-100, 100]) { c.strokeStyle = '#100c0a'; c.lineWidth = 10; c.beginPath(); c.arc(wx, -40, 50, 0, 7); c.stroke(); } c.fillStyle = '#100c0a'; for (const hx of [-60, 60]) { c.beginPath(); c.ellipse(hx, -340 + Math.sin(lt * 10 + hx) * 4, 40, 70, 0, 0, 7); c.fill(); } c.restore(); }],
+    figs: [{ x: 1700, y: 1330, s: 1.8, ...RS.MAYER_OLD, facing: 1, walk: { x0: 900, x1: 1700, t0: 4.6, dur: 3.2 }, arms: CARRY, hold: { near: (c) => { c.save(); c.scale(.32, .32); RS.ledger(c, 40, -60, 1); c.restore(); } } }],
+    init: S => { const tN = A.at(S, 'Napoleon', 1.6), tK = A.at(S, 'kept', 4.8);
+      S.D.over = [(c, lt) => K.dateTag(c, '1806', lt, { at: .4 }), (c, lt) => K.card(c, 'NAPOLEON ARRIVES: THE PRINCE FLEES', lt, { at: tN, x: 960, y: 200, px: 44, rot: -2 }), (c, lt) => K.card(c, 'THE FAMILY KEEPS HIS MONEY WORKING', lt, { at: tK, x: 960, y: 300, px: 40, rot: 2 })];
+      S.D.sfx = [[.3, 'walk_hooves_loop', .3], [tK, 'footsteps', .3], [tK + 3.4, 'creak', .4]]; } },
+  // 1.11 the blockade: bales and barrels slip past a customs post at night
+  { plate: 'customs_night', cam: { z: [1.04, 1.12], x: [1280, 1300], y: [840, 840] }, bed: [['ocean_loop', .25], ['night_loop', .15]],
+    figs: [0, 1, 2].map(i => ({ x: 900, y: 1330 + i * 20, s: 1.75, costume: 'farmer', hair: 'short', seed: 50 + i, hat: RS.tricorn('#2a2420'), facing: 1, walk: { x0: -200 - i * 320, x1: 2700, t0: .5 + i * .7, dur: 9 }, arms: CARRY, hold: { near: bale } })),
+    live: [(c, lt) => { const a = Math.sin(lt * 2.2) * .25; c.save(); c.translate(2340, 990); c.rotate(a); c.strokeStyle = '#16120e'; c.lineWidth = 4; c.beginPath(); c.moveTo(0, 0); c.lineTo(0, 70); c.stroke(); c.fillStyle = '#ffd890'; c.fillRect(-16, 70, 32, 40); RS.glow(c, 0, 90, 200, '#ffc070', .5); c.restore(); }],
+    init: S => { const tB = A.at(S, 'blockade', .8), tS = A.at(S, 'Smuggling', 4);
+      S.D.over = [(c, lt) => K.card(c, 'THE BLOCKADE: NO BRITISH GOODS', lt, { at: tB, x: 520, y: 220, px: 42, rot: -3 }), (c, lt) => K.card(c, 'SMUGGLING: A BOOMING BUSINESS', lt, { at: tS, x: 1440, y: 220, px: 42, rot: 3 }), (c, lt) => K.card(c, 'THE ROTHSCHILDS WERE IN IT', lt, { at: tS + 2.2, x: 1440, y: 320, px: 40, rot: -2 })];
+      S.D.sfx = [[.5, 'footsteps', .3], [tB, 'creak', .3], [tS, 'paper', .25]]; } },
+];
+
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>
