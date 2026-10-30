@@ -1,0 +1,43 @@
+<!doctype html><html><head><meta charset="utf-8"><title>NK act 9 - The Feeling</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../nk_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['skyline', 'kitchen', 'track_rain', 'track_trials', 'arena']) K.load(n, PL + n + '.jpg');
+const SW = 1920, SH = 1080, INK = NK.INK, OR = NK.ORANGE, TE = NK.TEAL;
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+const BOWERMAN = { costume: 'shirt', hair: 'short', hairCol: '#5a4a3a', seed: 3, hat: NK.cap('#2a5a3a') };
+const KNIGHT = { costume: 'school', hair: 'short', hairCol: '#c89a5a', seed: 6 };
+const KID = { costume: 'school', hair: 'curly', hairCol: '#2a1a10', seed: 83 };
+const backdrop = (name, b = .6, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const billboard = (c, x, y, w, h, a, col, line, k, lt) => { if (a <= 0) return; c.save(); c.translate(x, y); c.globalAlpha = Math.min(1, a); c.fillStyle = '#2a2a2e'; c.fillRect(-8, h / 2, 16, 200); c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-w / 2, -h / 2, w, h); c.strokeRect(-w / 2, -h / 2, w, h); R.figure(c, { x: -w / 2 + 90, y: h / 2 - 14, s: .62, costume: ['shirt', 'dress', 'school', 'shirtsleeves', 'shirt', 'dress'][k], hair: ['short', 'long', 'curly', 'bald', 'swept', 'bun'][k], seed: 190 + k, pose: ['run', 'cheer', 'point', 'run', 'cheer', 'present'][k], t: lt * 2, mood: 'happy', facing: 1 }); c.fillStyle = '#fff'; c.font = '34px Anton'; c.textAlign = 'center'; line.split('\n').forEach((l, i) => c.fillText(l, 50, -10 + i * 40)); c.restore(); };
+
+window.SHOTS = [
+  // 1 a wall of other brands' ads, all athletes and slogans, lighting up one by one
+  { draw: (c, lt, u, S) => { backdrop('skyline', .35, 5)(c); const ads = [['#3a6ab0', 'BE\nUNSTOPPABLE'], ['#b03a5a', 'FEEL\nTHE RUSH'], ['#3a9a6a', 'MOVE\nLIKE YOU MEAN IT'], ['#a07a2a', 'NO\nLIMITS'], ['#6a3ab0', 'FIND\nYOUR FIRE'], ['#2a8ab0', 'RUN\nYOUR WORLD']]; ads.forEach(([col, l], k) => billboard(c, 380 + (k % 3) * 580, 250 + Math.floor(k / 3) * 380, 500, 260, pop(lt, .3 + k * .9, .3), col, l, k, lt)); },
+    bed: [['city_loop', .3]],
+    init: S => { const tL = A.at(S, 'lifestyle', 3); const tO = A.at(S, 'Oregon', 7);
+      S.D.over = [(c, lt) => K.card(c, 'A LIFESTYLE, NOT A FEATURE LIST', lt, { at: tL, x: 960, y: 870, px: 40, rot: -1, until: tO }), (c, lt) => K.card(c, 'ALL OWE SOMETHING TO OREGON', lt, { at: tO, x: 960, y: 870, px: 40, rot: 1 })];
+      S.D.sfx = [0, 1, 2, 3, 4, 5].map(k => [.3 + k * .9, 'hum_loop', .1]).concat([[.3, 'pop', .3], [1.2, 'pop', .3], [2.1, 'pop', .3], [3, 'pop', .3], [3.9, 'pop', .3], [4.8, 'pop', .3], [tO, 'chime', .35]]); } },
+  // 2 the coach, the runner with his car trunk, and the waffle iron, together; one last sizzle
+  { plate: 'track_rain', cam: { z: [1.1, 1.18], x: [1280, 1280], y: [880, 880] }, bed: [['rain_loop', .35]],
+    live: [(c, lt) => NK.car(c, 2100, 1290, 1.05, { trunk: 1, col: '#4a6a8a' }), (c, lt, u, S) => { c.save(); c.fillStyle = '#6a4a2e'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(1040, 1110, 300, 30); c.strokeRect(1040, 1110, 300, 30); c.fillRect(1060, 1140, 20, 220); c.fillRect(1300, 1140, 20, 220); c.strokeRect(1060, 1140, 20, 220); c.strokeRect(1300, 1140, 20, 220); c.restore(); NK.waffle(c, 1190, 1060, .9, { t: lt, state: lt > S.tW ? 'hot' : 'sealed' }); }],
+    figs: [{ x: 700, y: 1370, s: 1.9, ...BOWERMAN, facing: 1, pose: 'stand', mood: 'happy', hold: NK.holdWatch, anim: (o, lt, u, S) => { o.pose = lt > S.tC && lt < S.tC + 2 ? 'present' : 'stand'; } },
+      { x: 1520, y: 1380, s: 1.85, ...KNIGHT, facing: -1, pose: 'stand', mood: 'happy', hold: { near: (c) => NK.shoe(c, 6, -6, .3, { col: '#f4f0e6', accent: '#c83a2a', mark: 'tiger' }) }, anim: (o, lt, u, S) => { o.pose = lt > S.tR && lt < S.tR + 2 ? 'present' : 'stand'; } }],
+    init: S => { S.tC = A.at(S, 'coach', 1.4); S.tR = A.at(S, 'car trunk', 3.6); S.tW = A.at(S, 'waffle iron', 6.6);
+      S.D.over = [(c, lt) => K.card(c, 'A COACH WHO HATED HEAVY SHOES', lt, { at: S.tC, x: 520, y: 200, px: 36, rot: -3 }), (c, lt) => K.card(c, 'A RUNNER WITH A CAR TRUNK', lt, { at: S.tR, x: 1420, y: 200, px: 36, rot: 3 }), (c, lt) => K.card(c, 'A WAFFLE IRON THAT NEVER\nMADE WAFFLES AGAIN', lt, { at: S.tW, x: 960, y: 420, px: 36, rot: -2 })];
+      S.D.sfx = [[S.tC, 'pop', .3], [S.tR, 'creak', .35], [S.tW, 'fire_loop', .3], [S.tW + .2, 'swell', .3]]; } },
+  // 3 a kid laces up at the start line; a deep breath; end title
+  { plate: 'track_trials', cam: { z: [1.15, 1.3], x: [1280, 1180], y: [880, 920], ease: E.io }, bed: [['crowd_loop', .3]],
+    figs: [{ x: 1080, y: 1390, s: 2.1, ...KID, facing: 1, pose: 'squat', mood: 'neutral', anim: (o, lt, u, S) => { o.pose = lt > S.tQ ? 'stand' : 'squat'; o.mood = lt > S.tQ ? 'happy' : 'neutral'; } }],
+    front: [(c, lt, u, S) => { if (lt < S.tQ) { const p = Math.sin(lt * 6); c.save(); c.strokeStyle = '#f4f0e6'; c.lineWidth = 4; c.beginPath(); c.moveTo(1150, 1370); c.quadraticCurveTo(1170, 1340 - p * 14, 1190, 1372); c.stroke(); c.restore(); } }],
+    init: S => { S.tQ = A.at(S, 'question', 1); const tF = A.at(S, 'that way again', 3.4); S.tE = S.end - S.start - 2.6;
+      S.D.over = [(c, lt) => K.card(c, 'CAN NIKE MAKE YOU FEEL THAT WAY AGAIN?', lt, { at: tF - .6, x: 960, y: 200, px: 42, rot: -1, until: S.tE }), (c, lt) => { const a = K.seg(lt, S.tE, S.tE + .6); if (a <= 0) return; c.save(); c.fillStyle = `rgba(14,12,10,${.85 * a})`; c.fillRect(0, 0, SW, SH); c.restore(); NK.swoosh(c, 960, 680, 300 * E.out(a), OR); K.title(c, 'HOW A WAFFLE IRON', lt, { at: S.tE + .3, y: 300, px: 100 }); K.title(c, 'BUILT NIKE', lt, { at: S.tE + .5, y: 450, px: 140, fill: '#fff4e0' }); NK.swoosh(c, 960, 680, 1, OR, 0); }];
+      S.D.sfx = [[.2, 'scrape', .3], [S.tQ, 'swell', .3], [tF, 'heartbeat', .3], [S.tE, 'whoosh', .5]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>

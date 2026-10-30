@@ -1,0 +1,73 @@
+<!doctype html><html><head><meta charset="utf-8"><title>NK act 8 - Lost Its Way, and the Comeback</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../nk_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['office_day', 'office', 'shoe_shop', 'kitchen', 'trading', 'campus', 'track_trials', 'skyline']) K.load(n, PL + n + '.jpg');
+const SW = 1920, SH = 1080, INK = NK.INK, OR = NK.ORANGE, TE = NK.TEAL;
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+const DONAHOE = { costume: 'suit', hair: 'swept', hairCol: '#8a8a8a', seed: 160, glasses: true };
+const HILL = { costume: 'office', hair: 'short', hairCol: '#2a1a10', seed: 161 };
+const backdrop = (name, b = .6, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const phone = (c, x, y, s) => { c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = '#1a1a1e'; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.roundRect(-110, -200, 220, 400, 28); c.fill(); c.stroke(); c.fillStyle = '#f4f0e6'; c.fillRect(-92, -170, 184, 330); NK.swoosh(c, 0, -60, 110, OR); c.fillStyle = INK; c.font = '30px Anton'; c.textAlign = 'center'; c.fillText('NIKE APP', 0, 40); c.fillStyle = OR; c.beginPath(); c.roundRect(-70, 80, 140, 50, 12); c.fill(); c.fillStyle = '#fff'; c.font = '26px Anton'; c.fillText('BUY', 0, 115); c.restore(); };
+const shopFront = (c, x, y, s, shut, name) => { c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = '#c8b898'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-140, -260, 280, 260); c.strokeRect(-140, -260, 280, 260); c.fillStyle = '#2a4a6a'; c.fillRect(-140, -300, 280, 50); c.strokeRect(-140, -300, 280, 50); c.fillStyle = '#fff'; c.font = '28px Anton'; c.textAlign = 'center'; c.fillText(name, 0, -265); c.fillStyle = '#9ac8e8'; c.fillRect(-110, -220, 220, 200); c.strokeRect(-110, -220, 220, 200); c.fillStyle = '#7a7a80'; const h = 200 * shut; c.fillRect(-110, -220, 220, h); for (let k = 0; k < h; k += 14) { c.strokeStyle = 'rgba(0,0,0,.35)'; c.lineWidth = 2; c.beginPath(); c.moveTo(-110, -220 + k); c.lineTo(110, -220 + k); c.stroke(); } c.strokeStyle = INK; c.lineWidth = 6; c.strokeRect(-110, -220, 220, 200); if (shut > .95) { c.fillStyle = '#c83a2a'; c.font = '30px Anton'; c.fillText('NO NIKE', 0, -110); } c.restore(); };
+
+window.SHOTS = [
+  // 1 2020: Donahoe bets on the app; old partner shops shut their doors one by one
+  { draw: (c, lt, u, S) => { backdrop('skyline', .5, 6)(c); phone(c, 330, 520, 1.1 + .3 * E.out(K.seg(lt, S.tA, S.tA + 2))); ['SHOE BARN', 'SPORT CITY', 'RUN DEPOT', 'MALL KICKS'].forEach((n, k) => shopFront(c, 900 + k * 290, 960, .9, E.out(K.seg(lt, S.tS + k * .7, S.tS + k * .7 + .4)), n)); R.figure(c, { x: 640, y: 1060, s: 1.25, ...DONAHOE, facing: 1, pose: lt > S.tA ? 'point' : 'stand', t: lt, mood: 'happy' }); },
+    bed: [['city_loop', .3]],
+    init: S => { const tD = A.at(S, 'Donahoe', 2.4); S.tA = A.at(S, 'own apps', 6); S.tS = A.at(S, 'drop many', 9);
+      S.D.over = [(c, lt) => K.dateTag(c, '2020', lt, { at: .3 }), (c, lt) => K.card(c, 'NEW CEO: JOHN DONAHOE (EX-eBAY)', lt, { at: tD, x: 1300, y: 150, px: 38, rot: 2 }), (c, lt) => K.title(c, 'DIRECT TO CONSUMER', lt, { at: S.tA + .4, x: 1300, y: 330, px: 70, fill: '#ffe0c0' })];
+      S.D.sfx = [[tD, 'pop', .35], [S.tA, 'whoosh', .4]].concat([0, 1, 2, 3].map(k => [S.tS + k * .7, 'door_slam', .4])); } },
+  // 2 rival shoes fill the shelves; the same retro box stamps out again and again
+  { plate: 'shoe_shop', cam: { z: [1.1, 1.14], x: [1280, 1280], y: [820, 820] }, bed: [['hum_loop', .25]],
+    front: [(c, lt, u, S) => { const cols = ['#3a8ac8', '#e8c040', '#5ab05a', '#c84ab0', '#e86a3a', '#2ac0b0']; for (let k = 0; k < 6; k++) { const a = pop(lt, S.tR + k * .25); if (a > 0) NK.shoe(c, 520 + k * 300, 1240, 1.05 * a, { col: cols[k], accent: '#f4f0e6', mark: 'stripes' }); } }],
+    init: S => { S.tR = A.at(S, 'other brands', 3); const tO = A.at(S, 'old favourites', 7);
+      S.D.over = [(c, lt) => K.card(c, 'RIVALS FILL THE GAP', lt, { at: S.tR, x: 470, y: 200, px: 44, rot: -3 }), (c, lt) => { if (lt < tO) return; c.save(); c.fillStyle = 'rgba(10,8,6,.55)'; c.fillRect(0, 0, SW, SH); c.restore(); for (let k = 0; k < 8; k++) { const a = pop(lt, tO + k * .3, .25); if (a > 0) NK.box(c, 300 + (k % 4) * 440, 420 + Math.floor(k / 4) * 300, .9 * a, { col: OR, label: 'RETRO', swoosh: true }); } }, (c, lt) => K.card(c, 'RE-RELEASE · RE-RELEASE · RE-RELEASE', lt, { at: tO + 1, x: 960, y: 960, px: 40, rot: -1 })];
+      S.D.sfx = [[S.tR, 'pop', .35], [S.tR + .5, 'pop', .3], [tO, 'stamp', .4], [tO + .6, 'stamp', .35], [tO + 1.2, 'stamp', .35], [tO + 1.8, 'stamp', .35]]; } },
+  // 3 the waffle iron, cold and dusty on a shelf; a cobweb shimmers
+  { draw: (c, lt, u, S) => { backdrop('kitchen', .4, 8)(c); c.save(); c.fillStyle = '#6a4a2e'; c.strokeStyle = INK; c.lineWidth = 7; c.fillRect(380, 820, 1160, 36); c.strokeRect(380, 820, 1160, 36); c.restore(); NK.waffle(c, 960, 740, 1.4, { t: lt, state: 'cold' });
+      c.save(); c.fillStyle = 'rgba(220,210,190,.35)'; for (let k = 0; k < 60; k++) { const x = 760 + (k * 53) % 420, y = 610 + (k * 31) % 140 + ((lt * 12 + k * 7) % 30); c.beginPath(); c.arc(x, y, 2.5, 0, 7); c.fill(); } c.strokeStyle = `rgba(240,240,240,${.4 + .3 * Math.sin(lt * 3)})`; c.lineWidth = 2; const cx = 1200, cy = 620; for (let k = 0; k < 7; k++) { const a = Math.PI * .5 + k * Math.PI / 12; c.beginPath(); c.moveTo(cx, cy); c.lineTo(cx + Math.cos(a) * 220, cy + Math.sin(a) * 220 - 220); c.stroke(); } for (let r = 40; r < 220; r += 40) { c.beginPath(); for (let k = 0; k < 7; k++) { const a = Math.PI * .5 + k * Math.PI / 12; const p = [cx + Math.cos(a) * r, cy + Math.sin(a) * r - r]; k ? c.lineTo(...p) : c.moveTo(...p); } c.stroke(); } c.restore(); },
+    bed: [['hum_loop', .2]],
+    init: S => { const tW = A.at(S, 'waffle iron', .8), tG = A.at(S, 'greatest hits', 6.5);
+      S.D.over = [(c, lt) => K.card(c, 'REMEMBER THIS?', lt, { at: tW, x: 470, y: 230, px: 52, rot: -4 }), (c, lt) => K.card(c, 'NOW: MOSTLY GREATEST HITS', lt, { at: tG, x: 1440, y: 230, px: 42, rot: 3 })];
+      S.D.sfx = [[tW, 'chime', .3], [tG, 'creak', .35]]; } },
+  // 4 the stock line slides down; two new running brands jog past
+  { draw: (c, lt, u, S) => { backdrop('trading', .45, 6)(c); const pts = [[0, .2], [.15, .3], [.3, .55], [.42, .82], [.5, .9], [.6, .7], [.72, .55], [.85, .42], [1, .38]]; c.save(); c.translate(260, 180); const W = 1400, H = 560; c.strokeStyle = 'rgba(255,255,255,.35)'; c.lineWidth = 2; c.strokeRect(0, 0, W, H); const u2 = K.seg(lt, .4, S.tF + 1); const n = Math.max(2, Math.ceil(pts.length * u2)); c.strokeStyle = '#ff6a40'; c.lineWidth = 10; c.lineJoin = 'round'; c.beginPath(); pts.slice(0, n).forEach(([x, y], i) => { const p = [x * W, H - y * H]; i ? c.lineTo(...p) : c.moveTo(...p); }); c.stroke(); c.fillStyle = '#f4f0e6'; c.font = '30px Oswald'; c.fillText('NIKE SHARE PRICE (SHAPE ONLY)', 10, -16); c.restore();
+      for (let k = 0; k < 2; k++) { const w = R.walkX(lt, -300 - k * 260, 2300, S.tB, 4, 1.3); R.figure(c, { x: w.x, y: 1030 - k * 20, s: 1.3, costume: k ? 'shirtsleeves' : 'shirt', look: Object.assign(RIG6.lookFrom({ costume: 'shirt', hair: k ? 'long' : 'short', seed: 170 + k }), { topCol: k ? '#2ac0b0' : '#e8c040' }), pose: 'run', t: w.phase, facing: 1, mood: 'happy' }); } },
+    bed: [['trading_loop', .3]],
+    init: S => { S.tB = A.at(S, 'On and Hoka', 2); S.tF = A.at(S, 'more than half', 7);
+      S.D.over = [(c, lt) => K.card(c, 'NEW RUNNING BRANDS: ON, HOKA', lt, { at: S.tB + .3, x: 1500, y: 110, px: 36, rot: 2 }), (c, lt) => K.title(c, '-50%+ FROM PEAK', lt, { at: S.tF, x: 960, y: 860, px: 80, fill: '#ffd0c0' })];
+      S.D.sfx = [[.4, 'whoosh_soft', .35], [S.tB, 'run_steps', .4], [S.tF, 'thud', .5]]; } },
+  // 5 October 2024: Elliott Hill walks back through the campus gates; his 1988 intern badge
+  { plate: 'campus', cam: { z: [1.1, 1.16], x: [1280, 1280], y: [860, 860] }, bed: [['birds_loop', .35]],
+    figs: [{ ...HILL, s: 1.9, y: 1400, mood: 'happy', walk: { x0: -200, x1: 760, t0: .4, dur: 3.6 } }],
+    over: [], init: S => { const tH = A.at(S, 'Elliott Hill', 2); const tI = A.at(S, 'intern', 4.5);
+      S.D.over = [(c, lt) => K.dateTag(c, 'OCT 2024', lt, { at: .3 }), (c, lt) => K.title(c, 'ELLIOTT HILL', lt, { at: tH, x: 1340, y: 160, px: 80, fill: '#ffe8c8', sub: 'BACK AS CEO' }), (c, lt) => { const a = pop(lt, tI); if (a <= 0) return; c.save(); c.translate(1500, 560); c.rotate(.08); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(-150, -180, 320, 380); c.fillStyle = '#f4f0e6'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-160, -190, 320, 380); c.strokeRect(-160, -190, 320, 380); c.fillStyle = OR; c.fillRect(-160, -190, 320, 70); NK.swoosh(c, 0, -155, 80, '#fff'); c.fillStyle = '#c8b8a0'; c.fillRect(-70, -100, 140, 150); c.strokeRect(-70, -100, 140, 150); c.fillStyle = INK; c.font = '40px Anton'; c.textAlign = 'center'; c.fillText('INTERN', 0, 110); c.font = '34px Oswald'; c.fillText('1988', 0, 160); c.restore(); }, (c, lt) => K.card(c, '30+ YEARS AT NIKE', lt, { at: tI + 1.6, x: 1500, y: 880, px: 40, rot: -2 })];
+      S.D.sfx = [[.4, 'footsteps', .4], [tH, 'chime', .4], [tI, 'pop', .4]]; } },
+  // 6 Hill shakes hands with a small running-shop owner; the shop bell rings
+  { plate: 'shoe_shop', cam: { z: [1.12, 1.16], x: [1280, 1280], y: [860, 860] }, bed: [['hum_loop', .25]],
+    figs: [{ ...HILL, x: 1060, y: 1370, s: 1.9, facing: 1, mood: 'happy', pose: 'stand', anim: (o, lt, u, S) => { o.pose = lt > S.tS ? 'reach' : 'stand'; } }, { costume: 'shirtsleeves', hair: 'curly', hairCol: '#6a3a1a', seed: 162, x: 1500, y: 1370, s: 1.85, facing: -1, mood: 'happy', pose: 'stand', anim: (o, lt, u, S) => { o.pose = lt > S.tS ? 'reach' : 'stand'; } }],
+    init: S => { const tA = A.at(S, 'athletes', 1.6); S.tS = A.at(S, 'make peace', 6);
+      S.D.over = [(c, lt) => K.card(c, 'FOCUS ON ATHLETES AGAIN', lt, { at: tA, x: 470, y: 200, px: 42, rot: -3 }), (c, lt) => K.card(c, 'RUNNING · FOOTBALL · BASKETBALL', lt, { at: tA + 1.6, x: 470, y: 310, px: 34, rot: 2 }), (c, lt) => K.card(c, 'BACK INTO THE SHOPS', lt, { at: S.tS + .4, x: 1460, y: 200, px: 44, rot: 3 })];
+      S.D.sfx = [[tA, 'pop', .35], [S.tS, 'chime', .45], [S.tS + .3, 'hit', .2]]; } },
+  // 7 bar chart: China and Converse down in red; running, football, basketball up in green
+  { draw: (c, lt, u, S) => { backdrop('office_day', .4, 10)(c); const base = 640; c.save(); c.strokeStyle = 'rgba(255,255,255,.6)'; c.lineWidth = 4; c.beginPath(); c.moveTo(260, base); c.lineTo(1660, base); c.stroke(); c.restore();
+      const B = [['CHINA', -1, S.tD], ['CONVERSE', -1, S.tD + .4], ['RUNNING', 1, S.tG], ['FOOTBALL', 1, S.tG + .4], ['BASKETBALL', 1, S.tG + .8]]; B.forEach(([n, d, at], k) => { const x = 420 + k * 270, h = 220 * E.out(K.seg(lt, at, at + 1)) * (k < 2 ? 1 : .8 + k * .05); c.save(); c.fillStyle = d < 0 ? '#c83a2a' : '#4f9a4a'; c.strokeStyle = INK; c.lineWidth = 6; if (h > 1) { c.fillRect(x - 80, d < 0 ? base : base - h, 160, h); c.strokeRect(x - 80, d < 0 ? base : base - h, 160, h); } c.restore(); K.outlined(c, n, x, d < 0 ? base - 40 : base + 50, 34, { fill: '#fff' }); }); },
+    bed: [['office_loop', .2]],
+    init: S => { const tR = A.at(S, '46 billion', 3.4); S.tD = A.at(S, 'China', 6.5); S.tG = A.at(S, 'growing again', 12);
+      S.D.over = [(c, lt) => K.title(c, '~$46B · MIXED', lt, { at: tR, y: 170, px: 84, fill: '#ffe8c8' }), (c, lt) => NK.revenue(c, 46e9, K.seg(lt, tR, tR + .4))];
+      S.D.sfx = [[tR, 'coins', .35], [S.tD, 'thud', .35], [S.tD + .4, 'thud', .3], [S.tG, 'riser', .35], [S.tG + 1, 'chime', .35]]; } },
+  // 8 Onitsuka became ASICS: two brands side by side at the start line
+  { plate: 'track_trials', cam: { z: [1.1, 1.14], x: [1280, 1300], y: [860, 860] }, bed: [['crowd_loop', .4]],
+    figs: [0, 1].map(k => ({ costume: 'shirt', look: Object.assign(RIG6.lookFrom({ costume: 'shirt', hair: k ? 'swept' : 'short', seed: 180 + k, hairCol: k ? '#1a1410' : '#c89a5a' }), { topCol: k ? '#2a4aa8' : OR }), s: 1.75, y: 1360 - k * 50, mood: 'happy', anim: (o, lt, u, S) => { const w = R.walkX(lt, 560 + k * 340, 3400, S.tG, 4.4, o.s); o.x = w.x; o.t = w.phase; o.pose = lt < S.tG ? 'squat' : 'run'; o.facing = 1; } })),
+    init: S => { const tA = A.at(S, 'ASICS', 3); const tR = A.at(S, 'rivals', 10); S.tG = tR - .2;
+      S.D.over = [(c, lt) => K.card(c, 'ONITSUKA → ASICS', lt, { at: tA, x: 470, y: 230, px: 52, rot: -3 }), (c, lt) => K.card(c, 'WINNING BACK SERIOUS RUNNERS', lt, { at: tA + 2.4, x: 470, y: 340, px: 36, rot: 2 }), (c, lt) => K.card(c, 'FIRST SUPPLIER → RIVAL', lt, { at: tR, x: 1460, y: 230, px: 46, rot: 3 })];
+      S.D.sfx = [[tA, 'pop', .4], [S.tG, 'hit', .55], [S.tG + .1, 'run_steps', .45], [S.tG + .3, 'crowd_cheer', .35]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>
