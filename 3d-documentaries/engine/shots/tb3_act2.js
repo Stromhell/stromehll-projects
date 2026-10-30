@@ -139,7 +139,14 @@ export const shots = {
     const cat = await put('tb_pa8', 222, [d.x + 12.5, 0, d.z + 1.6], -P / 2, { walk: true });
     const tray = new THREE.Group(); for (let i = 0; i < 3; i++) tray.add(real.box(.45, .05, .32, real.std(0xd8d8d0, { rough: .4 }), { pos: [0, i * .06, 0] }));
     C.attach(cat, tray, 'RightHand', [0, -.05, .15]);
-    const truck = new THREE.Group(); const van = real.rbox(2.2, 2.2, 4.5, .15, real.std(0xece8dc, { rough: .5 })); van.position.y = 1.4; truck.add(van); truck.position.set(d.x + 15, 0, d.z + 5); scene.add(truck);
+    const truck = new THREE.Group(); { // catering truck: cab, box body, windows, stripe, lamps, wheels
+      const wh = real.std(0xece8dc, { rough: .5 }), gl = real.std(0x0c1014, { rough: .08, metal: .6 }), dk = real.std(0x1a1a1a, { rough: .8 }), ch = real.std(0xbfc3c6, { metal: .9, rough: .25 });
+      truck.add(real.rbox(2.2, 2.0, 3.2, .1, wh, { pos: [0, 1.75, -.6] })); truck.add(real.rbox(2.1, 1.25, 1.4, .12, wh, { pos: [0, 1.2, 1.75] }));
+      truck.add(real.box(1.8, .5, .04, gl, { pos: [0, 1.55, 2.46] })); for (const sx of [1, -1]) { truck.add(real.box(.04, .45, .8, gl, { pos: [sx * 1.06, 1.55, 1.75] })); truck.add(real.box(.03, .18, 3.2, real.std(0x1d3a8a, { rough: .5 }), { pos: [sx * 1.105, 1.3, -.6] })); truck.add(real.box(.25, .15, .04, real.std(0xfff4d0, { emissive: 0xfff4d0, ei: 1 }), { pos: [sx * .72, .95, 2.46] })); }
+      truck.add(real.box(2.24, .16, .12, ch, { pos: [0, .55, 2.5] })); truck.add(real.box(.9, .28, .04, dk, { pos: [0, .95, 2.46] }));
+      const wm = { tyre: real.std(0x111111, { rough: .9 }), hub: real.std(0xcfcfcf, { metal: .7, rough: .3 }), metal: ch };
+      for (const [x, z] of [[-.95, 1.6], [.95, 1.6], [-.95, -1.4], [.95, -1.4]]) { const w = sets.wheel(.4, .28, wm); w.position.set(x, .4, z); truck.add(w); }
+      truck.traverse(c => { if (c.isMesh) c.castShadow = true; }); } truck.position.set(d.x + 15, 0, d.z + 5); scene.add(truck);
     const cam = C.orbit(camera, [bx + .8, 1.2, bz + .6], 6.5, 2.0, .45, .9, 38, [bx + .2, 1.6, bz + .4]);
     return (t, u) => { cam(u);
       ppl.forEach((p, i) => {
