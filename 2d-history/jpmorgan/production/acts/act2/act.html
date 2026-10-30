@@ -47,7 +47,7 @@ window.SHOTS = [
       S.D.over = [(c, lt) => K.badge(c, 'TUFTS UNIVERSITY', lt, { at: tT }), (c, lt) => K.card(c, 'HIS MOTHER SENT IT', lt, { at: S.tE, x: 1000, y: 160, px: 50, rot: -3 })];
       S.D.sfx = [[.3, 'typing', .5], [S.tE, 'paper', .5], [S.tE + .4, 'whoosh', .45], [S.tW, 'door_slam', .3], [S.tW + .2, 'chime', .45]]; } },
   // 4 three offer letters fan out; a hand sweeps them aside and picks WEILL
-  { draw: (c, lt, u, S) => { backdrop('office', .5)(c); const sw = E.io(K.seg(lt, S.tT, S.tT + 1));
+  { draw: (c, lt, u, S) => { backdrop('office', .5)(c); const sw = E.io(K.seg(lt, S.tT, S.tT + 1)); { const fa = 1 - K.seg(lt, S.tO[0] - .8, S.tO[0] - .2); if (fa > 0) { c.save(); c.globalAlpha = fa; c.setTransform(.8, 0, 0, .8, 0, 0); R.figure(c, Object.assign({ x: 900, y: 1290, s: 1.7, facing: 1, pose: 'present', t: lt, mood: 'happy' }, WEILL)); R.figure(c, Object.assign({ x: 1480, y: 1290, s: 1.7, facing: -1, pose: 'stand', t: lt, mood: 'happy' }, DIMON)); c.restore(); } }
       [['GOLDMAN SACHS', '#3a5a8a'], ['MORGAN STANLEY', '#2a3a5a'], ['LEHMAN BROTHERS', '#4a6a3a']].forEach(([h, col], i) => letter(c, 600 + i * 300 + sw * (-700 + i * 50), 560 + sw * 120, (i - 1) * .14 - sw * .5, pop(lt, S.tO[i]) * (1 - .3 * sw), h, col));
       const wl = pop(lt, S.tT + .6); letter(c, 1440, 540 - 40 * E.out(K.seg(lt, S.tT + 1.2, S.tT + 2)), .05, wl * 1.05, 'SANDY WEILL', '#8a2a22');
       if (sw > 0 && sw < 1) { c.save(); c.fillStyle = '#f1d4b4'; c.strokeStyle = INK; c.lineWidth = 5; const hx = 1300 - sw * 900; c.beginPath(); c.ellipse(hx, 700, 90, 56, -.2, 0, 7); c.fill(); c.stroke(); c.fillStyle = '#2f3646'; c.fillRect(hx + 60, 670, 600, 80); c.restore(); } },
@@ -56,9 +56,10 @@ window.SHOTS = [
       S.D.over = [(c, lt) => K.card(c, 'SUMMER JOB', lt, { at: tS, x: 380, y: 180, px: 50, rot: -4, until: tH }), (c, lt) => K.dateTag(c, 'HARVARD MBA · 1982', lt, { at: tH })];
       S.D.sfx = [[tS, 'pop', .4], [tH, 'stamp', .45], ...S.tO.map(t => [t, 'paper', .45]), [S.tT, 'whoosh', .45], [S.tT + .6, 'chime', .5]]; } },
   // 5 split: out of the big American Express lobby | into a dim little office in Baltimore
-  { draw: (c, lt, u, S) => A.split((c2, l2) => { plateAt(c2, 'office_day', 1280, 900, 480, 560, 1.2); for (const [o, x0, t0] of [[WEILL, 1150, .6], [DIMON, 760, 1.0]]) { const w = R.walkX(l2, x0, x0 + 1300, t0, 4, 1.7); R.figure(c2, Object.assign({ x: w.x, y: 1340, s: 1.7, facing: 1, pose: 'carry', t: l2, mood: 'neutral' }, o)); JK.box(c2, w.x + 70, 1340 - 210, 1); } c2.setTransform(1, 0, 0, 1, 0, 0); K.badge(c2, 'AMERICAN EXPRESS', l2, { at: .3 }); },
+  { draw: (c, lt, u, S) => { const amex = (c2, l2, sx = 480) => { plateAt(c2, 'office_day', 1280, 900, sx, 560, 1.2); for (const [o, x0, t0] of [[WEILL, 1150, .6], [DIMON, 760, 1.0]]) { const w = R.walkX(l2, x0, x0 + 1300, t0, 4, 1.7); R.figure(c2, Object.assign({ x: w.x, y: 1340, s: 1.7, facing: 1, pose: 'carry', t: l2, mood: 'neutral' }, o)); JK.box(c2, w.x + 70, 1340 - 210, 1); } c2.setTransform(1, 0, 0, 1, 0, 0); K.badge(c2, 'AMERICAN EXPRESS', l2, { at: .3 }); };
+      if (lt < S.tB - .6) { amex(c, lt, 960); return; } return A.split(amex,
       (c2, l2) => { plateAt(c2, 'office', 1100, 900, 1440, 560, 1.25); c2.save(); c2.fillStyle = 'rgba(60,40,20,.35)'; c2.globalCompositeOperation = 'multiply'; c2.fillRect(0, 0, 2560, 1440); c2.restore(); for (const [o, x1, t0] of [[WEILL, 1350, S.tB], [DIMON, 900, S.tB + .4]]) { const w = R.walkX(l2, x1 - 900, x1, t0, 2.4, 1.7); R.figure(c2, Object.assign({ x: w.x, y: 1360, s: 1.7, facing: 1, pose: w.moving ? 'carry' : 'shrug', t: l2, mood: w.moving ? 'neutral' : 'worried' }, o)); if (w.moving) JK.box(c2, w.x + 70, 1360 - 210, 1); }
-        c2.setTransform(1, 0, 0, 1, 0, 0); K.card(c2, 'COMMERCIAL CREDIT\nBALTIMORE', l2, { at: S.tB + .4, x: 1440, y: 200, px: 42, rot: 3 }); }, { at: S.tB - .6 })(c, lt, u, S),
+        c2.setTransform(1, 0, 0, 1, 0, 0); K.card(c2, 'COMMERCIAL CREDIT\nBALTIMORE', l2, { at: S.tB + .4, x: 1440, y: 200, px: 42, rot: 3 }); }, { at: S.tB - .6 })(c, lt, u, S); },
     bed: [['office_loop', .3]],
     init: S => { S.tB = A.at(S, 'struggling', 5); const t85 = A.at(S, '1985', 3);
       S.D.over = [(c, lt) => K.dateTag(c, '1985', lt, { at: t85 })]; S.D.sfx = [[.6, 'footsteps', .4], [t85, 'pop', .35], [S.tB - .6, 'whoosh_soft', .4], [S.tB + 1.6, 'creak', .4]]; } },
