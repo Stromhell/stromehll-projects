@@ -95,6 +95,7 @@ export const BananaBerry: React.FC = () => {
               <ellipse rx={110} ry={90} fill="#E9F7C9" />
               {[[-50, -20], [0, 20], [50, -20], [-20, -50], [30, 40]].map(([x, y], i) => <ellipse key={i} cx={x} cy={y} rx={10} ry={16} fill={INK} transform={`scale(${pop(t, T.seeds + i * 0.08, 12, 6)})`} />)}
             </g>
+            {t < T.flower - 0.1 && <Label x={540} y={620} size={72} s={pop(t, T.botanist, 12, 6)} color="#fff">TO A BOTANIST…</Label>}
             <Sticker t={t} t0={T.flower} x={540} y={600} text="1 FLOWER · 1 OVARY" size={72} fill="#2C7BE5" />
             <Label x={700} y={1620} size={68} s={pop(t, T.seeds, 12, 6)}>SEEDS INSIDE</Label>
           </g>
@@ -122,7 +123,7 @@ export const BananaBerry: React.FC = () => {
               <g transform={`translate(600 1180) scale(${pop(t, T.dots - 0.2, 10, 6) * 1.2})`}><Strawberry t={t} seedPop={0.6 * prog(t, T.fruits, T.fruits + 0.4)} /></g>
             </Layer>
             <Sticker t={t} t0={T.many} t1={T.dots - 0.1} x={540} y={600} text="MANY OVARIES" size={86} fill="#E5414A" />
-            <Label x={540} y={620} size={70} s={pop(t, T.fruits, 12, 6)} color="#FFE45C">EACH DOT = TINY FRUIT</Label>
+            <Label x={540} y={620} size={58} s={pop(t, T.fruits, 12, 6)} color="#FFE45C">EACH DOT = TINY FRUIT</Label>
             <Sticker t={t} t0={T.seed} x={540} y={1720} text="+ 1 SEED EACH" size={78} fill="#4CC38A" />
           </g>
         )}

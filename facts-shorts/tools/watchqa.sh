@@ -1,4 +1,4 @@
-# watchqa.sh VIDEO OUT.png : /watch (claude-video, local engine) scene frames of a render, tiled into one QA sheet
+# watchqa.sh VIDEO OUT.png : /watch (claude-video, local engine) scene frames tiled into OUT.png, plus a 2-fps sheet OUT-2fps.png. Read both; fix every issue, re-render, re-check until clean.
 set -e; R=/home/user/stromehll-projects; V=$(realpath "$1"); O=$(realpath -m "$2"); W=$(mktemp -d)
 python3 $R/.claude/skills/watch/scripts/watch.py "$V" --engine local --detail balanced --max-frames 30 --resolution 300 --no-whisper --out-dir $W > $W/report.md 2>&1
 python3 - "$W" "$O" <<'PY'
@@ -13,3 +13,5 @@ for i, (im, t) in enumerate(ims):
 s.save(O); print(len(ims), 'frames ->', O)
 PY
 rm -rf $W
+# second sheet: 2 frames per second, catches short pop-ins/clipping that scene frames miss
+ffmpeg -v error -i "$V" -vf "fps=2,scale=180:-1,drawtext=text='%{pts\:hms}':x=4:y=4:fontsize=14:fontcolor=red,tile=12x4" -frames:v 1 -y "${O%.png}-2fps.png" && echo "2fps sheet -> ${O%.png}-2fps.png"

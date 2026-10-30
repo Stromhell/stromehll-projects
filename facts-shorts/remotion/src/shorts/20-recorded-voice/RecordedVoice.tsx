@@ -80,7 +80,7 @@ export const RecordedVoice: React.FC = () => {
           <g>
             <g transform="translate(560 1200) scale(1.35)"><Head t={t} xray={1} /></g>
             {[0, 1, 2].map((i) => <path key={i} transform={`translate(0 ${i * 50})`} d={Array.from({length: 40}).map((_, j) => `${j === 0 ? 'M' : 'L'} ${300 + j * 13} ${1140 + (40 + 30 * prog(t, T.deeper, T.deeper + 0.5)) * Math.sin(j * 0.35 - t * 6 + i)}`).join(' ')} stroke="#6B4FD8" strokeWidth={14} fill="none" strokeLinecap="round" opacity={prog(t, T.low, T.low + 0.4)} />)}
-            <Label x={540} y={620} size={65} s={pop(t, T.low, 12, 6)} color="#fff">BONES LOVE LOW NOTES</Label>
+            <Label x={540} y={620} size={56} s={pop(t, T.low, 12, 6)} color="#fff">BONES LOVE LOW NOTES</Label>
             <Sticker t={t} t0={T.deeper} x={540} y={1720} text="DEEPER INSIDE YOUR HEAD" size={52} fill="#6B4FD8" />
           </g>
         )}

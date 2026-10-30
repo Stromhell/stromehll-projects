@@ -85,7 +85,7 @@ export const GreatWall: React.FC = () => {
               </g>
             </Layer>
             <Sticker t={t} t0={T.few} x={540} y={620} text="ONLY A FEW METRES WIDE" size={61} fill="#2C7BE5" />
-            <Label x={540} y={1760} size={76} s={pop(t, T.road, 12, 6)} color="#FFE45C">AS WIDE AS A ROAD</Label>
+            <Label x={540} y={1760} size={62} s={pop(t, T.road, 12, 6)} color="#FFE45C">AS WIDE AS A ROAD</Label>
           </g>
         )}
         {scene === 'orbit' && (
