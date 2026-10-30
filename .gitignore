@@ -3,3 +3,6 @@ __pycache__/
 *.pyc
 **/acts/*/*.mp4
 **/acts/*/mix.wav
+.queued
+wt.log
+snap.log
