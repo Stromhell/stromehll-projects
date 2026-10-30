@@ -2,7 +2,8 @@
 # when an act's narration is complete and its act.html exists, build timing and queue the render (once)
 cd /home/user/stromehll-projects/2d-history
 while true; do
-  for v in mongol-empire jpmorgan dark-web-king putin-security; do
+  . shared/pipeline.conf
+  for v in $ACTIVE; do
     for t in $v/production/voice/act*.txt; do
       case $t in *.say.txt) continue;; esac
       n=$(basename $t .txt | sed 's/act//'); a=$v/production/acts/act$n
