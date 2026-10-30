@@ -495,14 +495,14 @@ export async function flightDeck(k, o = {}) {
     const yk = m(new THREE.TorusGeometry(.14, .022, 8, 20, P), dark, { pos: [x, .88, wsz - 1.12], rot: [0, 0, P] }); g.add(yk);
   }
   // crew seats: sheepskin covers typical of the period
-  const seatMat = await real.pbr('leather_red_03', { color: 0x4a3c30, noMap: true, repeat: [1, 1] });
+  const seatMat = std(0x4a3c30, { rough: .55 }); /* plain leather: the textured one showed blocky shadow-map squares in close-ups (2.11) */
   const fleece = std(0xcfc3a8, { rough: 1 });
   const seats = [];
   for (const [x, z, ry] of [[.55, .1, 0], [-.55, .1, 0], [-1.05, -1.0, -P / 2 + .3]]) {
     const s = new THREE.Group(); s.position.set(x, 0, z); s.rotation.y = ry; g.add(s);
     s.add(m(new THREE.CylinderGeometry(.06, .1, .35, 10), dark, { pos: [0, .17, 0] }));
     s.add(real.rbox(.52, .12, .5, .05, fleece, { pos: [0, .45, 0] }));
-    const bk = real.rbox(.5, .78, .12, .05, seatMat, { pos: [0, .9, -.28] }); bk.rotation.x = -.15; s.add(bk);
+    const bk = real.rbox(.5, .78, .12, .05, seatMat, { pos: [0, .9, -.28], receive: false }); bk.rotation.x = -.15; s.add(bk);
     s.add(m(new THREE.BoxGeometry(.06, .06, .4), dark, { pos: [.3, .66, -.02] })); s.add(m(new THREE.BoxGeometry(.06, .06, .4), dark, { pos: [-.3, .66, -.02] }));
     seats.push({ x, z, ry, group: s });
   }

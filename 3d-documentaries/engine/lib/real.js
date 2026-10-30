@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
 import * as SkeletonUtils from 'three/addons/utils/SkeletonUtils.js';
+import { mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
 import { rng, clamp, ease, Q } from './core.js';
 
 const A = '/assets/';
@@ -75,8 +76,11 @@ export function rbox(w, h, d, r, mat, o) {
   const s = new THREE.Shape(); const x = -w / 2, y = -h / 2;
   s.moveTo(x + r, y); s.lineTo(x + w - r, y); s.quadraticCurveTo(x + w, y, x + w, y + r); s.lineTo(x + w, y + h - r); s.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
   s.lineTo(x + r, y + h); s.quadraticCurveTo(x, y + h, x, y + h - r); s.lineTo(x, y + r); s.quadraticCurveTo(x, y, x + r, y);
-  const g = new THREE.ExtrudeGeometry(s, { depth: d - r * 2 > 0 ? d - r * 2 : .001, bevelEnabled: true, bevelThickness: Math.min(r, d / 2), bevelSize: r * .6, bevelSegments: 3, curveSegments: 6 });
-  g.center(); return m(g, mat, o);
+  const g = new THREE.ExtrudeGeometry(s, { depth: d - r * 2 > 0 ? d - r * 2 : .001, bevelEnabled: true, bevelThickness: Math.min(r, d / 2), bevelSize: r * .6, bevelSegments: 4, curveSegments: 10 });
+  g.center();
+  /* smooth the rounded edges: flat per-face normals showed as a grid of squares in close-ups */
+  g.deleteAttribute('normal'); const sg = mergeVertices(g, 1e-4); sg.computeVertexNormals();
+  return m(sg, mat, o);
 }
 // canvas texture helper (signs, livery, gauges)
 export function canvasTex(w, h, draw, o = {}) {
