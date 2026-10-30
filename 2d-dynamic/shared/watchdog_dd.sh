@@ -11,7 +11,7 @@ log "started"
 while true; do
   date -u +%s > $S/watchdog.alive
   if [ ! -f $S/ALL_DONE ] && ! pgrep -x -f "bash $W/shared/pipeline_dd.sh" >/dev/null; then
-    log "pipeline not running, (re)starting"; (cd $W && setsid nohup bash $W/shared/pipeline_dd.sh >> /tmp/claude-0/pipeline_dd.log 2>&1 &)
+    log "pipeline not running, (re)starting"; pkill -f "shared/combine.py"; pkill -f "shared/render.js"; pkill -f "build_reel_dd.py"; for o in $(ps -eo pid,ppid,comm | awk '$3=="ffmpeg" && $2==1 {print $1}'); do kill $o; done; (cd $W && setsid nohup bash $W/shared/pipeline_dd.sh >> /tmp/claude-0/pipeline_dd.log 2>&1 &)
   fi
   if ! pgrep -x -f "bash $W/shared/voice_dd.sh" >/dev/null; then
     for v in $(cat $S/voice_queue 2>/dev/null); do [ -f $S/voice_$v ] || { log "voice for $v not running, (re)starting"; (cd $W && setsid nohup bash $W/shared/voice_dd.sh >/dev/null 2>&1 &); break; }; done
