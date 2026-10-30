@@ -1,0 +1,175 @@
+<!doctype html><html><head><meta charset="utf-8"><title>JP act 6 - Two Dollars a Share</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../jp_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['bank', 'trading', 'newsroom', 'skyline', 'boardroom', 'dawn_tower', 'rain_tower', 'office']) K.load(n, PL + n + '.jpg');
+const SW = 1920, SH = 1080, INK = '#1d1712', GOLD = '#e8b44a', RED = '#d9483b', GREEN = '#4f9a4a';
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+const plateAt = (c, name, px, py, sx, sy, z) => { const s2 = z * 1920 / 2560; c.setTransform(s2, 0, 0, s2, sx - px * s2, sy - py * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); return s2; };
+const backdrop = (name, dim = .5, blur = 6) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${1 - dim})`; plateAt(c, name, 1280, 720, 960, 540, 1.08); c.restore(); c.setTransform(1, 0, 0, 1, 0, 0); };
+const DIMON = { costume: 'suit', hair: 'swept', hairCol: '#3a2a20', seed: 7 }, WEILL = { costume: 'suit80', hair: 'bald', hairCol: '#b8b8b8', glasses: true, seed: 2 };
+const KID = { costume: 'shirt', hair: 'short', hairCol: '#3a2a20', seed: 7 };
+// framed photo with a figure inside (screen)
+const photo = (c, x, y, w, h, a, lt, fig, cap, sepia = true) => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.4)'; c.fillRect(-w / 2 + 12, -h / 2 + 12, w, h); c.fillStyle = '#5a3a22'; c.fillRect(-w / 2, -h / 2, w, h); c.fillStyle = sepia ? '#d8c49a' : '#c8d4dc'; c.fillRect(-w / 2 + 22, -h / 2 + 22, w - 44, h - 90);
+  c.save(); c.beginPath(); c.rect(-w / 2 + 22, -h / 2 + 22, w - 44, h - 90); c.clip(); if (sepia) c.filter = 'sepia(.7)'; R.figure(c, Object.assign({ x: 0, y: h / 2 + 120, s: 1.25, pose: 'stand', facing: 1, t: lt, mood: 'neutral' }, fig)); c.restore();
+  c.font = '30px Anton'; c.fillStyle = '#f2e6c8'; c.textAlign = 'center'; c.fillText(cap, 0, h / 2 - 26); c.restore(); };
+const envelope = (c, x, y, s, rot, txt) => { c.save(); c.translate(x, y); c.rotate(rot); c.scale(s, s); c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(-150, -90, 310, 200); c.fillStyle = '#f4ecd8'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-160, -100, 320, 200); c.strokeRect(-160, -100, 320, 200); c.beginPath(); c.moveTo(-160, -100); c.lineTo(0, 10); c.lineTo(160, -100); c.stroke(); if (txt) { c.font = '34px Anton'; c.fillStyle = INK; c.textAlign = 'center'; c.fillText(txt, 0, 70); } c.restore(); };
+const letter = (c, x, y, rot, a, head, col) => { if (a <= 0) return; c.save(); c.translate(x, y); c.rotate(rot); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(-170, -230, 360, 480); c.fillStyle = '#fbf8f0'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-180, -240, 360, 480); c.strokeRect(-180, -240, 360, 480); c.fillStyle = col; c.fillRect(-180, -240, 360, 70); c.font = '34px Anton'; c.fillStyle = '#fff'; c.textAlign = 'center'; c.fillText(head, 0, -192); c.fillStyle = '#bbb'; for (let k = 0; k < 8; k++) c.fillRect(-140, -130 + k * 36, 280 - (k % 3) * 40, 12); c.font = '34px Caveat'; c.fillStyle = '#2a4a9a'; c.fillText('Offer of employment', 0, 200); c.restore(); };
+const tower = (c, x, base, names, n, lt, at) => { names.forEach((nm, i) => { const u = pop(lt, at[i] ?? 99, .45); if (u <= 0) return; const y = base - i * 112 - 260 * (1 - E.out(K.seg(lt, at[i], at[i] + .35))); c.save(); c.translate(x, y); c.globalAlpha = Math.min(1, u * 2); c.fillStyle = 'rgba(0,0,0,.4)'; c.fillRect(-268, -42, 548, 100); c.fillStyle = i % 2 ? '#2f5a8a' : '#3f6aa0'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-280, -54, 560, 100); c.strokeRect(-280, -54, 560, 100); c.font = '48px Anton'; c.fillStyle = '#fff'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(nm, 0, 0); c.restore(); }); };
+const spot = (c, x, a) => { c.save(); c.globalAlpha = a; const g = c.createRadialGradient(x, 860, 20, x, 860, 420); g.addColorStop(0, 'rgba(255,240,200,.55)'); g.addColorStop(1, 'rgba(255,240,200,0)'); c.fillStyle = g; c.beginPath(); c.moveTo(x - 60, 0); c.lineTo(x + 60, 0); c.lineTo(x + 340, 1000); c.lineTo(x - 340, 1000); c.closePath(); c.fill(); c.restore(); };
+
+// simple bank building icon (screen)
+const bankIcon = (c, x, y, s, a, lab, col = '#d8cdb8') => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(s * a, s * a); c.fillStyle = 'rgba(0,0,0,.35)'; c.beginPath(); c.ellipse(0, 6, 230, 18, 0, 0, 7); c.fill(); c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.moveTo(-220, -260); c.lineTo(0, -380); c.lineTo(220, -260); c.closePath(); c.fill(); c.stroke(); for (let k = -165; k <= 165; k += 66) { c.fillRect(k - 18, -250, 36, 210); c.strokeRect(k - 18, -250, 36, 210); } c.fillRect(-240, -40, 480, 40); c.strokeRect(-240, -40, 480, 40); if (lab) { c.font = '44px Anton'; c.fillStyle = INK; c.textAlign = 'center'; c.fillText(lab, 0, -282); } c.restore(); };
+// a flying coin along a curve from (x0,y0) to (x1,y1), progress u
+const flyCoin = (c, x0, y0, x1, y1, u, r = 26) => { if (u <= 0 || u >= 1) return; const x = x0 + (x1 - x0) * u, y = y0 + (y1 - y0) * u - Math.sin(u * Math.PI) * 120; JK.coin(c, x, y, r, 1); };
+// a stacked balance bar: own capital (gold) on the bottom, borrowed (grey) above; 100 units tall
+const stackBar = (c, x, base, own, g, lab, sub) => { const U = 6.2, W = 230; const H = 100 * U * g; c.save(); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(x - W / 2 + 12, base - H + 12, W, H); const ho = Math.min(H, own * U); c.fillStyle = GOLD; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(x - W / 2, base - ho, W, ho); c.strokeRect(x - W / 2, base - ho, W, ho); if (H > ho) { c.fillStyle = '#8a92a0'; c.fillRect(x - W / 2, base - H, W, H - ho); c.strokeRect(x - W / 2, base - H, W, H - ho); }
+  c.font = '44px Anton'; c.textAlign = 'center'; c.fillStyle = '#fffaf0'; c.fillText(lab, x, base + 56); if (sub && g > .95) { c.font = '34px Anton'; c.fillStyle = '#2a2018'; c.fillText(`$${100 - own} BORROWED`, x, base - H / 2 - 10); c.fillStyle = '#fffaf0'; c.textAlign = 'left'; c.fillText(`$${own} OWN CAPITAL`, x + W / 2 + 24, base - ho / 2 + 12); } c.restore(); };
+const board = (name = 'office', dim = .62) => backdrop(name, dim);
+
+const BURRY = { costume: 'suit', hair: 'short', hairCol: '#4a3a2a', glasses: true, seed: 12 }, DANCER = { costume: 'dress', hair: 'long', hairCol: '#2a1a14', seed: 21 }, EXEC = { costume: 'shirt', hair: 'short', hairCol: '#6a4a2a', seed: 15 };
+const HOUSES = [240, 760, 1260, 1780, 2260];
+const sign = (c, x, y, a, txt = 'SOLD') => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(1, Math.min(1, a)); c.strokeStyle = '#5a3a20'; c.lineWidth = 8; c.beginPath(); c.moveTo(0, 0); c.lineTo(0, -120); c.stroke(); c.fillStyle = '#fbf8f0'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(-70, -170, 140, 64); c.strokeRect(-70, -170, 140, 64); c.font = '40px Anton'; c.fillStyle = RED; c.textAlign = 'center'; c.fillText(txt, 0, -122); c.restore(); };
+const miniHouse = (c, x, y, s, a, col = '#e8dcc0', lab) => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(s * a, s * a); c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-60, -70, 120, 70); c.strokeRect(-60, -70, 120, 70); c.fillStyle = '#7a3a2a'; c.beginPath(); c.moveTo(-76, -68); c.lineTo(0, -130); c.lineTo(76, -68); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#4a5a6a'; c.fillRect(-14, -40, 28, 40); if (lab) { c.font = '30px Anton'; c.fillStyle = '#fffaf0'; c.textAlign = 'center'; c.fillText(lab, 0, 50); } c.restore(); };
+const chart = (c, x, y, w, h, pts, u, col, lab) => { c.save(); c.fillStyle = 'rgba(251,248,240,.95)'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(x, y, w, h); c.strokeRect(x, y, w, h); c.strokeStyle = '#d8d0c0'; c.lineWidth = 2; for (let k = 1; k < 5; k++) { c.beginPath(); c.moveTo(x + 20, y + k * h / 5); c.lineTo(x + w - 20, y + k * h / 5); c.stroke(); } c.strokeStyle = col; c.lineWidth = 9; c.lineJoin = 'round'; c.beginPath(); const n = pts.length - 1, m = u * n; for (let i = 0; i <= Math.min(n, Math.floor(m) + 1); i++) { const f = Math.min(1, m - (i - 1)); let px = x + 40 + (w - 80) * i / n, py = y + h - 30 - (h - 60) * pts[i]; if (i > 0 && f < 1) { const qx = x + 40 + (w - 80) * (i - 1) / n, qy = y + h - 30 - (h - 60) * pts[i - 1]; px = qx + (px - qx) * f; py = qy + (py - qy) * f; } i ? c.lineTo(px, py) : c.moveTo(px, py); if (f < 1) break; } c.stroke(); c.font = '34px Anton'; c.fillStyle = INK; c.textAlign = 'left'; c.fillText(lab, x + 30, y + 46); c.restore(); };
+// capital block: 1 dollar = 56px; own capital, loss eaten from the top, red below zero
+const capBlock = (c, x, zero, own, loss, lab) => { const U = 56, W = 260; c.save(); c.strokeStyle = '#fffaf0'; c.lineWidth = 4; c.setLineDash([14, 10]); c.beginPath(); c.moveTo(x - 220, zero); c.lineTo(x + 220, zero); c.stroke(); c.setLineDash([]); const left = own - loss; const hk = Math.max(0, left) * U; c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(x - W / 2 + 12, zero - own * U + 12, W, own * U); c.fillStyle = GOLD; c.strokeStyle = INK; c.lineWidth = 5; if (hk > 0) { c.fillRect(x - W / 2, zero - hk, W, hk); c.strokeRect(x - W / 2, zero - hk, W, hk); }
+  const eaten = Math.min(own, loss) * U; if (eaten > 0) { c.save(); c.setLineDash([10, 8]); c.strokeStyle = 'rgba(255,250,240,.5)'; c.strokeRect(x - W / 2, zero - own * U, W, eaten); c.restore(); }
+  if (left < 0) { c.fillStyle = RED; c.fillRect(x - W / 2, zero, W, -left * U); c.strokeRect(x - W / 2, zero, W, -left * U); } c.font = '48px Anton'; c.textAlign = 'center'; c.fillStyle = '#fffaf0'; c.fillText(lab, x, zero - own * U - 30); c.font = '60px Anton'; c.fillStyle = left < 0 ? '#ffd8d0' : '#2a2018'; c.fillText((left < 0 ? '−$' : '$') + Math.abs(Math.round(left * 10) / 10), x, left < 0 ? zero - left * U + 80 : zero - Math.max(hk, 70) / 2 + 22); c.restore(); };
+const ratioBars = (c, rows, lt) => { rows.forEach(([n, r, at, col], i) => { const a = pop(lt, at); if (a <= 0) return; const y = 260 + i * 170, w = 36 * r * E.out(Math.min(1, a)); c.save(); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(472, y - 40 + 10, w, 90); c.fillStyle = '#8a92a0'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(460, y - 40, w, 90); c.strokeRect(460, y - 40, w, 90); c.fillStyle = GOLD; c.fillRect(460, y - 40, 36, 90); c.strokeRect(460, y - 40, 36, 90); c.font = '48px Anton'; c.fillStyle = '#fffaf0'; c.textAlign = 'right'; c.fillText(n, 430, y + 18); c.textAlign = 'left'; c.fillStyle = col; c.fillText(r + ' : 1', 480 + w, y + 18); c.restore(); }); };
+const savanna = (c, x0, w, lt) => { c.save(); c.beginPath(); c.rect(x0, 0, w, 1080); c.clip(); const g = c.createLinearGradient(0, 0, 0, 700); g.addColorStop(0, '#f0b060'); g.addColorStop(1, '#f8dca0'); c.fillStyle = g; c.fillRect(x0, 0, w, 700); c.fillStyle = 'rgba(255,240,200,.8)'; c.beginPath(); c.arc(x0 + w * .7, 420, 90, 0, 7); c.fill(); c.fillStyle = '#c8a050'; c.fillRect(x0, 680, w, 400); c.fillStyle = '#b08a40'; for (let k = 0; k < 30; k++) c.fillRect(x0 + (k * 97) % w, 700 + (k * 61) % 360, 30, 6);
+  [[.25, 640, 1], [.82, 660, .8]].forEach(([fx, y, s]) => { const x = x0 + w * fx; c.fillStyle = '#4a3420'; c.fillRect(x - 8 * s, y - 180 * s, 16 * s, 180 * s); c.fillStyle = '#4a6a2a'; c.beginPath(); c.ellipse(x, y - 190 * s, 150 * s, 40 * s, 0, 0, 7); c.fill(); }); c.restore(); };
+
+// speech bubble (screen); tail points down-left or down-right
+const bubble = (c, x, y, txt, a, dir = 1, px = 40) => { if (a <= 0) return; c.save(); c.translate(x, y); const s = Math.min(1, a); c.scale(s, s); c.font = px + 'px Anton'; const lines = txt.split('\n'), w = Math.max(...lines.map(l => c.measureText(l).width)) + 60, h = lines.length * px * 1.15 + 40;
+  c.fillStyle = 'rgba(0,0,0,.3)'; c.beginPath(); c.roundRect(-w / 2 + 8, -h / 2 + 10, w, h, 26); c.fill(); c.fillStyle = '#fffaf0'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.roundRect(-w / 2, -h / 2, w, h, 26); c.fill(); c.stroke();
+  c.beginPath(); c.moveTo(-30 * dir, h / 2 - 3); c.lineTo(-70 * dir, h / 2 + 50); c.lineTo(10 * dir, h / 2 - 3); c.closePath(); c.fill(); c.stroke(); c.fillRect(-34 * dir - (dir > 0 ? 0 : -0), h / 2 - 8, 44 * dir, 8);
+  c.fillStyle = INK; c.textAlign = 'center'; c.textBaseline = 'middle'; lines.forEach((l, i) => c.fillText(l, 0, -h / 2 + 20 + px * .58 + i * px * 1.15)); c.restore(); };
+// a price tag with any price (screen), swings in from the top
+const tagAt = (c, x, lt, at, price, sub = 'PER SHARE', col = RED) => { const u = K.seg(lt, at, at + .7); if (u <= 0) return; const t = lt - at, sw = Math.sin(t * 3.4) * Math.exp(-t * .7) * .5, L = 260 + 140 * E.out(u);
+  c.save(); c.translate(x, -40); c.rotate(sw); c.strokeStyle = '#e8e0cc'; c.lineWidth = 3; c.beginPath(); c.moveTo(0, 0); c.lineTo(0, L); c.stroke(); c.translate(0, L); c.rotate(-.1);
+  c.fillStyle = 'rgba(0,0,0,.35)'; c.beginPath(); c.moveTo(-150, 30); c.lineTo(0, -20); c.lineTo(170, 30); c.lineTo(170, 290); c.lineTo(-150, 290); c.closePath(); c.fill();
+  c.fillStyle = '#f4e8c8'; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.moveTo(-160, 20); c.lineTo(0, -30); c.lineTo(160, 20); c.lineTo(160, 280); c.lineTo(-160, 280); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#2a2a2a'; c.beginPath(); c.arc(0, 4, 12, 0, 7); c.fill();
+  c.fillStyle = col; c.font = (price.length > 2 ? 160 : 190) + 'px Anton'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(price, 0, 150); c.fillStyle = INK; c.font = '34px Oswald'; c.fillText(sub, 0, 252); c.restore(); };
+// a stack of glowing mortgage crates (screen)
+const crates = (c, x, y, a, lt) => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); const g = .5 + .5 * Math.sin(lt * 4); c.shadowColor = `rgba(150,255,120,${.35 + .25 * g})`; c.shadowBlur = 40;
+  const rows = [[-300, 0], [-100, 0], [100, 0], [300, 0], [-200, -170], [0, -170], [200, -170], [-100, -340], [100, -340]]; for (const [cx, cy] of rows) { c.fillStyle = '#7a5a34'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(cx - 95, cy - 160, 190, 160); c.strokeRect(cx - 95, cy - 160, 190, 160); c.shadowBlur = 0; c.strokeStyle = 'rgba(40,24,10,.6)'; c.lineWidth = 4; c.beginPath(); c.moveTo(cx - 95, cy - 160); c.lineTo(cx + 95, cy); c.moveTo(cx + 95, cy - 160); c.lineTo(cx - 95, cy); c.stroke(); c.fillStyle = '#e8dcc0'; c.fillRect(cx - 60, cy - 105, 120, 50); c.strokeStyle = INK; c.lineWidth = 3; c.strokeRect(cx - 60, cy - 105, 120, 50); c.fillStyle = INK; c.font = '30px Anton'; c.textAlign = 'center'; c.fillText('MBS', cx, cy - 68); c.shadowBlur = 40; }
+  c.restore(); };
+// a tall tower silhouette with lit windows (world); g grows 0..1
+const madison = (c, x, base, g, lit) => { if (g <= 0) return; const H = 1150 * g, w = 300; c.save(); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(x - w / 2 + 20, base - H + 10, w, H); const gr = c.createLinearGradient(x - w / 2, 0, x + w / 2, 0); gr.addColorStop(0, '#4a5262'); gr.addColorStop(.5, '#8a96aa'); gr.addColorStop(1, '#3a4252'); c.fillStyle = gr; c.strokeStyle = INK; c.lineWidth = 6;
+  c.beginPath(); c.moveTo(x - w / 2, base); c.lineTo(x - w / 2, base - H + 160); c.lineTo(x - w / 3, base - H + 80); c.lineTo(x, base - H); c.lineTo(x + w / 3, base - H + 80); c.lineTo(x + w / 2, base - H + 160); c.lineTo(x + w / 2, base); c.closePath(); c.fill(); c.stroke();
+  for (let r = 0; r * 26 < H - 190; r++) for (let k = 0; k < 6; k++) { const wx = x - w / 2 + 26 + k * 44, wy = base - 40 - r * 26; c.fillStyle = ((r * 7 + k * 3) % 5 < 3 && lit) ? 'rgba(255,220,140,.9)' : 'rgba(30,36,48,.85)'; c.fillRect(wx, wy, 26, 14); } c.restore(); };
+// a two-pan balance (screen); tilt -1..1
+const scale2 = (c, x, y, tilt, lab1, lab2, a) => { if (a <= 0) return; c.save(); c.globalAlpha = Math.min(1, a); c.translate(x, y); c.fillStyle = '#c9a040'; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.moveTo(-90, 360); c.lineTo(90, 360); c.lineTo(20, 300); c.lineTo(20, -10); c.lineTo(-20, -10); c.lineTo(-20, 300); c.closePath(); c.fill(); c.stroke();
+  c.save(); c.rotate(tilt * .18); c.fillRect(-520, -30, 1040, 26); c.strokeRect(-520, -30, 1040, 26); c.restore();
+  for (const [sx, lab] of [[-1, lab1], [1, lab2]]) { const px = sx * 480 * Math.cos(tilt * .18), py = sx * 480 * Math.sin(tilt * .18); c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.moveTo(px, py - 18); c.lineTo(px - 160, py + 170); c.moveTo(px, py - 18); c.lineTo(px + 160, py + 170); c.stroke(); c.fillStyle = '#e8c870'; c.lineWidth = 6; c.beginPath(); c.ellipse(px, py + 180, 190, 34, 0, 0, 7); c.fill(); c.stroke();
+    c.fillStyle = '#f4ecd8'; c.fillRect(px - 170, py + 40, 340, 120); c.strokeRect(px - 170, py + 40, 340, 120); c.fillStyle = INK; c.font = '40px Anton'; c.textAlign = 'center'; lab.split('\n').forEach((l, i) => c.fillText(l, px, py + 92 + i * 46)); }
+  c.restore(); };
+const TRADER = { costume: 'shirt', hair: 'short', hairCol: '#2a2018', seed: 31 }, TRADER2 = { costume: 'suit', hair: 'swept', hairCol: '#6a4a2a', seed: 44 }, STAFF = { costume: 'suit', hair: 'long', hairCol: '#3a2418', seed: 52 };
+
+window.SHOTS = [
+  // 1 Bear Stearns, since 1923; $170 a share in January 2007
+  { plate: 'bank', cam: { z: [1.08, 1.15], x: [1280, 1290], y: [700, 690], ease: E.io }, bed: [['city_loop', .25]],
+    init: S => { const tB = A.at(S, 'Bear Stearns', .3), t23 = A.at(S, '1923', 1.6), tP = A.at(S, 'hundred and seventy', 4);
+      S.D.over = [(c, lt) => JK.plaque(c, 960, 196, 'BEAR STEARNS', 1.75, pop(lt, tB), 'WALL STREET · SINCE ' + (lt > t23 ? '1923' : '')), (c, lt) => K.dateTag(c, 'JANUARY 2007', lt, { at: tP - .8 }), (c, lt) => tagAt(c, 1520, lt, tP, '$170', 'A SHARE', GREEN)];
+      S.D.sfx = [[tB, 'pop', .4], [t23, 'stamp', .35], [tP, 'chime', .4]]; } },
+  // 2 overnight loans rolled over day after day
+  { draw: (c, lt, u, S) => { board('trading', .64)(c); bankIcon(c, 470, 820, .9, pop(lt, .3), 'BEAR'); bankIcon(c, 1450, 820, .9, pop(lt, S.tL), 'LENDERS', '#c8d0d8');
+      if (lt > S.tO) { const P = 1.6, k = Math.floor((lt - S.tO) / P), f = ((lt - S.tO) % P) / P; for (let j = 0; j < 4; j++) flyCoin(c, 1450, 560, 470, 560, f * 2 - j * .12, 24); for (let j = 0; j < 4; j++) flyCoin(c, 470, 640, 1450, 640, f * 2 - 1 - j * .12, 24);
+        const sun = (k % 2) === 0; c.save(); c.translate(960, 230); c.fillStyle = sun ? '#ffd060' : '#e8e8f0'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.arc(0, 0, 50, 0, 7); c.fill(); c.stroke(); if (!sun) { c.fillStyle = 'rgba(30,30,50,.9)'; c.beginPath(); c.arc(22, -12, 44, 0, 7); c.fill(); } c.restore();
+        c.font = '40px Anton'; c.fillStyle = '#fffaf0'; c.textAlign = 'center'; c.fillText('DAY ' + (k + 1), 960, 330); } },
+    bed: [['trading_loop', .25]],
+    init: S => { S.tL = A.at(S, 'short-term loans', 1.2); S.tO = A.at(S, 'overnight', 2.6); const tR = A.at(S, 'rolled over', 4.2);
+      S.D.over = [(c, lt) => K.badge(c, 'SHORT-TERM LOANS', lt, { at: S.tL }), (c, lt) => K.card(c, 'BORROWED OVERNIGHT\nAGAINST ITS BONDS', lt, { at: S.tO, x: 960, y: 520, px: 40, rot: -2, until: tR + .2 }), (c, lt) => K.card(c, 'ROLLED OVER\nDAY AFTER DAY', lt, { at: tR + .2, x: 960, y: 520, px: 44, rot: 2 })];
+      S.D.sfx = [[.3, 'pop', .35], [S.tL, 'pop', .35], [S.tO, 'coins', .35], [tR, 'coins', .3], [tR + 1.6, 'coins', .25]]; } },
+  // 3 trust, then rumors on the trading floor
+  { plate: 'trading', cam: { z: [1.1, 1.18], x: [1280, 1300], y: [880, 900], ease: E.io }, bed: [['trading_loop', .3]],
+    figs: [{ x: 820, y: 1360, s: 1.7, ...TRADER, facing: 1, pose: 'stand', mood: 'neutral', anim: (o, lt, u, S) => { o.talk = lt > S.tR && lt < S.tR + 2.4; if (lt > S.tR) o.mood = 'worried'; } },
+      { x: 1360, y: 1360, s: 1.7, ...TRADER2, facing: -1, pose: 'stand', mood: 'neutral', anim: (o, lt, u, S) => { if (lt > S.tR + 1.2) { o.mood = 'shocked'; o.pose = 'shrug'; } } },
+      { x: 1900, y: 1360, s: 1.7, ...STAFF, facing: -1, pose: 'stand', mood: 'neutral', walk: { x0: 2700, x1: 1900, t0: .3, dur: 2 }, anim: (o, lt, u, S) => { if (lt > S.tR + 2) { o.mood = 'worried'; o.pose = 'think'; } } }],
+    init: S => { const tT = A.at(S, 'trust', 1); S.tR = A.at(S, 'rumors', 3);
+      S.D.over = [(c, lt) => K.card(c, 'ONLY WORKS WHILE\nLENDERS TRUST YOU', lt, { at: tT, x: 960, y: 200, px: 46, rot: -2, until: S.tR }), (c, lt) => K.dateTag(c, 'MARCH 2008', lt, { at: S.tR - .6 }),
+        (c, lt) => bubble(c, 560, 260, 'BEAR IS RUNNING\nOUT OF CASH?', pop(lt, S.tR), 1), (c, lt) => bubble(c, 1380, 300, 'I HEARD...', pop(lt, S.tR + 1.2), -1), (c, lt) => bubble(c, 1640, 160, 'PULL OUR MONEY?', pop(lt, S.tR + 2), -1, 34)];
+      S.D.sfx = [[tT, 'pop', .35], [S.tR, 'pop', .35], [S.tR + 1.2, 'pop', .3], [S.tR + 2, 'pop', .3]]; } },
+  // 4 the run: money flies out of Bear
+  { draw: (c, lt, u, S) => { board('newsroom', .64)(c); bankIcon(c, 960, 880, 1.05, 1, 'BEAR');
+      const out = (t0, n, dir) => { for (let j = 0; j < n; j++) { const f = K.seg(lt, t0 + j * .18, t0 + j * .18 + 1.2); flyCoin(c, 960, 560, 960 + dir * (500 + (j % 4) * 120), 260 + (j % 3) * 120, f, 26); } };
+      out(S.tP, 8, -1); out(S.tC, 10, 1); if (lt > S.tT) { const s = K.seg(lt, S.tT, S.tT + .8); c.save(); c.translate(960, 880); c.rotate(Math.sin(lt * 30) * .01 * s); c.restore(); } },
+    bed: [['crowd_loop', .2], ['tension', .2]],
+    init: S => { S.tP = A.at(S, 'pulled back', .6); S.tC = A.at(S, 'Clients', 2); S.tT = A.at(S, 'themselves true', 3.6);
+      S.D.over = [(c, lt) => K.card(c, 'LENDERS PULL BACK', lt, { at: S.tP, x: 430, y: 200, px: 42, rot: -3 }), (c, lt) => K.card(c, 'CLIENTS PULL OUT', lt, { at: S.tC, x: 1490, y: 200, px: 42, rot: 3 }), (c, lt) => K.title(c, 'THE RUMORS MADE THEMSELVES TRUE', lt, { at: S.tT, y: 420, px: 66, fill: GOLD })];
+      S.D.sfx = [[S.tP, 'coins', .4], [S.tC, 'coins_cascade', .35], [S.tT, 'stamp', .45]]; } },
+  // 5 SEC: cash cushion $18B on March 10 to $2B three days later
+  { draw: (c, lt, u, S) => { board('newsroom', .7)(c); const g = E.io(K.seg(lt, S.t2, S.t2 + 1.6)), v = 18 - 16 * g, base = 860, U = 30;
+      const a = pop(lt, S.t18); if (a > 0) { c.save(); c.globalAlpha = Math.min(1, a); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(812, base - v * U + 12, 320, v * U); c.fillStyle = g > .9 ? RED : GREEN; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(800, base - v * U, 320, v * U); c.strokeRect(800, base - v * U, 320, v * U); c.restore();
+        K.outlined(c, '$' + Math.round(v) + 'B', 960, base - v * U - 60, 90, { fill: '#fffaf0' }); c.save(); c.font = '40px Anton'; c.fillStyle = '#fffaf0'; c.textAlign = 'center'; c.fillText(g > .5 ? 'MARCH 13' : 'MARCH 10', 960, base + 56); c.restore(); }
+      if (g > 0) { c.save(); c.strokeStyle = 'rgba(255,250,240,.6)'; c.setLineDash([12, 10]); c.lineWidth = 4; c.strokeRect(800, base - 18 * U, 320, 18 * U); c.restore(); } },
+    bed: [['tension', .3]],
+    init: S => { const tS = A.at(S, 'SEC', .4); S.t18 = A.at(S, 'eighteen billion', 2); S.t2 = A.at(S, 'two billion', 4.2);
+      S.D.over = [(c, lt) => K.badge(c, 'BEAR STEARNS CASH · PER THE SEC CHAIRMAN', lt, { at: tS }), (c, lt) => K.card(c, 'IN 3 DAYS', lt, { at: S.t2 + 1, x: 1500, y: 520, px: 60, rot: 4 })];
+      S.D.sfx = [[tS, 'pop', .3], [S.t18, 'pop', .4], [S.t2, 'whoosh', .45], [S.t2 + 1.5, 'thud', .45]]; } },
+  // 6 dominoes; the Fed wants a buyer before Monday; turns to JPMorgan
+  { draw: (c, lt, u, S) => { board('boardroom', .64)(c); const xs = [300, 560, 820, 1080], labs = ['BEAR', 'BANKS', 'FUNDS', 'BANKS'];
+      xs.forEach((x, i) => { const f = E.inn(K.seg(lt, S.tD + i * .35, S.tD + i * .35 + .5)); c.save(); c.translate(x + 60, 900); c.rotate(f * 1.2); c.translate(-60, 0); c.fillStyle = i ? '#c8d0d8' : '#d8cdb8'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-55, -330, 110, 330); c.strokeRect(-55, -330, 110, 330); c.save(); c.translate(0, -165); c.rotate(-Math.PI / 2); c.font = '44px Anton'; c.fillStyle = INK; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(labs[i], 0, 0); c.restore(); c.restore(); });
+      const a = pop(lt, S.tF); if (a > 0) bankIcon(c, 1250, 480, .75, a, 'THE FED', '#d8e0e8'); JK.fortress(c, 1700, 900, .5, 1, pop(lt, S.tJ)); if (lt > S.tJ) K.outlined(c, 'JPMORGAN', 1700, 940, 44, { fill: GOLD }); },
+    bed: [['tension', .3]],
+    init: S => { S.tD = A.at(S, 'dragged down', 2); S.tF = A.at(S, 'Federal Reserve', 3.4); S.tJ = A.at(S, 'JPMorgan', 6.4); const tM = A.at(S, 'Monday', 5.2);
+      S.D.over = [(c, lt) => K.card(c, 'FIND A BUYER\nBEFORE MONDAY', lt, { at: tM, x: 600, y: 220, px: 44, rot: 3 })];
+      S.D.sfx = [0, 1, 2, 3].map(i => [S.tD + i * .35 + .45, 'thud', .35]).concat([[S.tF, 'pop', .35], [tM, 'tick', .4], [S.tJ, 'chime', .4]]); } },
+  // 7 Sunday March 16: $2 a share
+  { plate: 'dawn_tower', cam: { z: [1.06, 1.14], x: [1280, 1280], y: [720, 700], ease: E.io }, bed: [['city_loop', .2]],
+    init: S => { const tS = A.at(S, 'Sunday', .3), t2 = A.at(S, 'two dollars', 3), tM = A.at(S, 'thirty-six million', 5);
+      S.D.over = [(c, lt) => K.dateTag(c, 'SUNDAY, MARCH 16, 2008', lt, { at: tS }), (c, lt) => JK.priceTag(c, 960, lt, t2), (c, lt) => K.card(c, '≈ $236 MILLION', lt, { at: tM, x: 1480, y: 760, px: 52, rot: 3 })];
+      S.D.sfx = [[tS, 'pop', .3], [t2, 'swell', .4], [t2 + .4, 'hit', .4], [tM, 'stamp', .4]]; } },
+  // 8 furious shareholders and staff; raised to $10 a share
+  { plate: 'office', cam: { z: [1.1, 1.16], x: [1280, 1280], y: [900, 910], ease: E.io }, bed: [['crowd_loop', .25]],
+    figs: [{ x: 560, y: 1360, s: 1.6, ...STAFF, facing: 1, pose: 'stand', mood: 'neutral', walk: { x0: -200, x1: 560, t0: .2, dur: 1.8 }, anim: (o, lt, u, S) => { if (lt > S.tF) { o.mood = 'shocked'; o.pose = 'point'; o.talk = lt < S.tF + 2; } } },
+      { x: 960, y: 1360, s: 1.6, ...TRADER, facing: 1, pose: 'stand', mood: 'neutral', walk: { x0: -400, x1: 960, t0: .5, dur: 2.2 }, anim: (o, lt, u, S) => { if (lt > S.tF + .3) { o.mood = 'worried'; o.pose = 'shrug'; } } },
+      { x: 1360, y: 1360, s: 1.6, ...TRADER2, facing: 1, pose: 'stand', mood: 'neutral', walk: { x0: -600, x1: 1360, t0: .8, dur: 2.4 }, anim: (o, lt, u, S) => { if (lt > S.tF + .6) { o.mood = 'shocked'; } } }],
+    init: S => { S.tF = A.at(S, 'furious', 2.6); const tW = A.at(S, 'week later', 4.2), t10 = A.at(S, 'ten dollars', 5.6), tB = A.at(S, 'one point two', 7);
+      S.D.over = [(c, lt) => K.card(c, "SHAREHOLDERS\n(MANY WERE BEAR'S OWN STAFF)", lt, { at: S.tF, x: 600, y: 180, px: 38, rot: -2, until: tW }), (c, lt) => K.dateTag(c, 'A WEEK LATER', lt, { at: tW }), (c, lt) => tagAt(c, 1520, lt, t10, '$10'), (c, lt) => K.card(c, '≈ $1.2 BILLION IN TOTAL', lt, { at: tB, x: 760, y: 200, px: 46, rot: -3 })];
+      S.D.sfx = [[S.tF, 'crowd_cheer', .2], [tW, 'pop', .3], [t10, 'swell', .4], [t10 + .4, 'hit', .35], [tB, 'stamp', .4]]; } },
+  // 9 what it got: businesses, traders and bankers, 45-storey tower on Madison Avenue
+  { draw: (c, lt, u, S) => { board('skyline', .5)(c); madison(c, 1480, 1040, E.out(K.seg(lt, S.tT, S.tT + 1.4)), true);
+      const items = [['BEAR\'S BUSINESSES', S.tB, 230], ['TRADERS & BANKERS', S.tP, 420]]; items.forEach(([t, at, y]) => { const a = pop(lt, at); if (a > 0) { c.save(); c.translate(560, y); c.scale(a, a); c.fillStyle = '#f4ecd8'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-300, -60, 600, 120); c.strokeRect(-300, -60, 600, 120); c.fillStyle = GREEN; c.font = '60px Anton'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('✓', -240, 4); c.fillStyle = INK; c.font = '48px Anton'; c.fillText(t, 30, 4); c.restore(); } });
+      if (lt > S.tT + 1.2) { c.save(); c.globalAlpha = Math.min(1, (lt - S.tT - 1.2) * 2); c.font = '44px Anton'; c.fillStyle = '#fffaf0'; c.strokeStyle = INK; c.lineWidth = 8; c.textAlign = 'center'; c.font = '60px Anton'; c.strokeText('45 STOREYS', 1000, 640); c.fillText('45 STOREYS', 1000, 640); c.font = '44px Anton'; c.strokeText('MADISON AVENUE', 1000, 710); c.fillText('MADISON AVENUE', 1000, 710); c.restore(); } },
+    bed: [['city_loop', .25]],
+    init: S => { S.tB = A.at(S, 'businesses', .8); S.tP = A.at(S, 'traders', 2); S.tT = A.at(S, 'tower', 3.6);
+      S.D.over = [(c, lt) => K.badge(c, 'WHAT JPMORGAN GOT', lt, { at: .3 })]; S.D.sfx = [[S.tB, 'pop', .35], [S.tP, 'pop', .35], [S.tT, 'riser', .35], [S.tT + 1.3, 'chime', .35]]; } },
+  // 10 the building alone ≈ $1.2B, roughly the price of the whole firm
+  { draw: (c, lt, u, S) => { board('skyline', .66)(c); const tilt = -1 + E.io(K.seg(lt, S.tE, S.tE + 1.4)); scale2(c, 960, 400, tilt, 'THE BUILDING\n≈ $1.2B', 'THE WHOLE FIRM\n≈ $1.2B', pop(lt, S.tA)); },
+    bed: [['tension', .15]],
+    init: S => { S.tA = A.at(S, 'building alone', 1.4); S.tE = A.at(S, 'ended up paying', 3.6); const tP = A.at(S, 'Press', .2);
+      S.D.over = [(c, lt) => K.badge(c, 'PRESS ESTIMATES AT THE TIME', lt, { at: tP })]; S.D.sfx = [[S.tA, 'pop', .35], [S.tE, 'creak', .4], [S.tE + 1.4, 'chime', .4]]; } },
+  // 11 the risky part: $30B of mortgage-linked assets JPMorgan did not want
+  { draw: (c, lt, u, S) => { board('rain_tower', .62)(c); crates(c, 760, 900, pop(lt, S.tR, .6), lt); JK.fortress(c, 1600, 1000, .55, 1, pop(lt, S.tN));
+      if (lt > S.tR + .8) K.outlined(c, '$30 BILLION', 760, 290, 90, { fill: '#c8ff9a' }); },
+    bed: [['rain_loop', .2], ['tension', .2]],
+    init: S => { S.tR = A.at(S, 'risky part', .4); S.tN = A.at(S, 'did not want', 3.4);
+      S.D.over = [(c, lt) => K.card(c, 'MORTGAGE-LINKED ASSETS', lt, { at: S.tR + 1.6, x: 760, y: 380, px: 40, rot: -2 }), (c, lt) => bubble(c, 1600, 240, 'NOT ON\nOUR BOOKS', pop(lt, S.tN + .3), -1, 46)];
+      S.D.sfx = [[S.tR, 'hum_loop', .2], [S.tR + .8, 'thud', .4], [S.tN, 'pop', .35]]; } },
+  // 12 Maiden Lane: Fed lends $29B, JPMorgan $1B and takes the first losses
+  { draw: (c, lt, u, S) => { board('boardroom', .66)(c); const a = pop(lt, S.tM); if (a > 0) { c.save(); c.globalAlpha = Math.min(1, a); c.fillStyle = 'rgba(20,16,12,.7)'; c.strokeStyle = '#e8d8b0'; c.lineWidth = 5; c.fillRect(460, 160, 1000, 740); c.strokeRect(460, 160, 1000, 740); c.restore(); K.outlined(c, 'MAIDEN LANE', 960, 220, 64, { fill: GOLD }); }
+      const U = 20, base = 860, gF = E.out(K.seg(lt, S.tF, S.tF + 1.2)), gJ = pop(lt, S.tJ);
+      if (gF > 0) { c.save(); c.fillStyle = '#c8d0d8'; c.strokeStyle = INK; c.lineWidth = 5; const h = 29 * U * gF; c.fillRect(540, base - U - h, 440, h); c.strokeRect(540, base - U - h, 440, h); c.restore(); if (gF > .6) { c.save(); c.font = '52px Anton'; c.fillStyle = '#2a2018'; c.textAlign = 'center'; c.fillText('FED LOAN', 760, base - U - 320); c.fillText('$29B', 760, base - U - 250); c.restore(); } }
+      if (gJ > 0) { c.save(); c.globalAlpha = Math.min(1, gJ); c.fillStyle = GOLD; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(540, base - U, 440, U); c.strokeRect(540, base - U, 440, U); c.font = '38px Anton'; c.fillStyle = '#fffaf0'; c.textAlign = 'left'; c.fillText('← JPMORGAN · $1B', 1000, base - 2); c.restore(); }
+      const fl = pop(lt, S.tL); if (fl > 0) { c.save(); c.globalAlpha = Math.min(1, fl); c.fillStyle = RED; c.font = '36px Anton'; c.textAlign = 'left'; c.fillText('TAKES THE FIRST LOSSES', 1000, base - 52); c.restore(); } },
+    bed: [['office_loop', .2]],
+    init: S => { S.tM = A.at(S, 'Maiden Lane', 1.6); S.tF = A.at(S, 'twenty-nine', 3); S.tJ = A.at(S, 'lent one billion', 4.6); S.tL = A.at(S, 'first losses', 6);
+      S.D.over = [(c, lt) => K.badge(c, 'SET UP BY THE NEW YORK FED', lt, { at: .4 }), (c, lt) => K.card(c, '$30B OF BEAR ASSETS\nGO IN HERE', lt, { at: S.tM + .8, x: 250, y: 300, px: 36, rot: -4 })];
+      S.D.sfx = [[S.tM, 'stamp', .4], [S.tF, 'whoosh', .35], [S.tJ, 'pop', .4], [S.tL, 'thud', .4]]; } },
+  // 13 loss capped at $1B; big names fall, the careful bank buys
+  { draw: (c, lt, u, S) => { const sh = K.seg(lt, S.tW - .3, S.tW + .3); if (lt < S.tW) { board('boardroom', .7)(c); const a = pop(lt, S.tC); if (a > 0) { c.save(); c.globalAlpha = Math.min(1, a); c.fillStyle = '#f4ecd8'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(560, 300, 800, 420); c.strokeRect(560, 300, 800, 420); c.fillStyle = INK; c.font = '48px Anton'; c.textAlign = 'center'; c.fillText("JPMORGAN'S MAX LOSS", 960, 390); c.fillStyle = RED; c.font = '150px Anton'; c.fillText('$1B', 960, 580); c.strokeStyle = RED; c.lineWidth = 8; c.setLineDash([16, 10]); c.beginPath(); c.moveTo(600, 640); c.lineTo(1320, 640); c.stroke(); c.restore(); } return; }
+      c.fillStyle = '#1c2230'; c.fillRect(0, 0, 1920, 1080); backdrop('skyline', .6, 4)(c); const tl = lt - S.tW; JK.fortress(c, 960, 1060, .8, 1, 1); [[0, 240], [1, 520], [2, 1400], [3, 1680]].forEach(([i, x]) => JK.glassTower(c, x, 1060, i, 1, K.seg(tl, .2 + i * .3, 1.8 + i * .3), lt)); },
+    bed: [['tension', .25]],
+    init: S => { S.tC = A.at(S, 'capped', 1.4); S.tW = A.at(S, 'big names', 4.6); const tB = A.at(S, 'careful bank', 6.8);
+      S.D.over = [(c, lt) => K.title(c, 'THE CAREFUL BANK WAS BUYING', lt, { at: tB, y: 150, px: 72, fill: GOLD })];
+      S.D.sfx = [[S.tC, 'stamp', .45], [S.tW, 'whoosh', .4], [S.tW + .6, 'thud', .4], [S.tW + 1.2, 'thud', .35], [tB, 'chime', .45]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>
