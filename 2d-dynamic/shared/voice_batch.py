@@ -36,6 +36,20 @@ for i in range(max(len(x) for x in acts.values())):
         n = len([p for p in open(src).read().split('\n\n') if p.strip()])
         if len(glob.glob(f'{out}/vo-*.wav')) >= n: continue
         say = src[:-4] + '.say.txt'; open(say, 'w').write(respell(open(src).read()))
+        # resume: keep the clips that already exist (a restart mid-act used to redo the whole act)
+        paras = [p for p in open(say).read().split('\n\n') if p.strip()]; k = 0
+        while k < n and os.path.exists(f'{out}/vo-{k+1:02d}.wav'):
+            try:
+                import wave; wave.open(f'{out}/vo-{k+1:02d}.wav').getnframes(); k += 1
+            except Exception: os.remove(f'{out}/vo-{k+1:02d}.wav'); break
+        for j in range(k + 1, n + 1):
+            if os.path.exists(f'{out}/vo-{j:02d}.wav'): os.remove(f'{out}/vo-{j:02d}.wav')
+        target, sayf = out, say
+        if k:
+            target = f'{out}/rest'; os.makedirs(target, exist_ok=True); sayf = say[:-8] + '.rest.txt'; open(sayf, 'w').write('\n\n'.join(paras[k:]) + '\n')
         t0 = time.time()
-        r = subprocess.run([PY, SPEAK, '--file', say, '--scenes', '--energy', '0.45', '--pace', '0.42', '--pause', '0.4', '--out', f'{out}/vo.wav'], capture_output=True, text=True, cwd='/tmp')
+        r = subprocess.run([PY, SPEAK, '--file', sayf, '--scenes', '--energy', '0.45', '--pace', '0.42', '--pause', '0.4', '--out', f'{target}/vo.wav'], capture_output=True, text=True, cwd='/tmp')
+        if k:
+            for i in range(1, n - k + 1):
+                if os.path.exists(f'{target}/vo-{i:02d}.wav'): os.replace(f'{target}/vo-{i:02d}.wav', f'{out}/vo-{k+i:02d}.wav')
         print(v, os.path.basename(src), 'rc', r.returncode, f'{time.time()-t0:.0f}s', (r.stdout + r.stderr)[-300:].replace('\n', ' | '), flush=True)
