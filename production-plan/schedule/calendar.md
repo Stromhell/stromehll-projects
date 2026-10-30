@@ -121,19 +121,23 @@ Fill order from 31 Oct after 11 Leap Year (31 Oct 20:00 IST). 31 Oct is now full
 | 16 | A banana is a berry. A strawberry is NOT | Sat 31 Oct 23:00 | 2026-10-31 17:30 | `6ae4271788429f8c25a52091` |
 | 21 | Can you see the Great Wall from space? Astronauts say NO | Sun 1 Nov 20:00 | 2026-11-01 14:30 | `6ae4272209f261790d6ccd72` |
 
-## Spain Part 1 reels R01-11 booked (30 Oct 2026, 05:40 UTC), YouTube + Instagram, cover as IG thumbnail
-November reel slots are full, so these take the first free slots from 8 Dec (story order kept). R12-15 still to come.
+## Spain Part 1 reels R01-15 (booked 30 Oct 2026 05:40-05:43 UTC, moved 05:47 UTC), YouTube + Instagram, cover as IG thumbnail
+First booked 8-11 Dec (every reel slot to 7 Dec full). Pushpam picked "Raise to 7 reels a day" (2D dynamic thread card, 30 Oct 05:42 UTC), so all 15 moved to the two new daily reel slots, 08:00 and 10:00 ET, 4-11 Nov, story order. Card external/2dd-spain-1 removed.
 
 | # | Reel | US Eastern | IST | UTC | Zernio post |
 |---|---|---|---|---|---|
-| R01 | Spain's Last Muslim King Cried Leaving This Palace | Tue 8 Dec 09:00 | Tue 8 Dec 19:30 | 2026-12-08 14:00 | `6ae42d9731418a0c9177a84b` |
-| R02 | How Muslims Ruled Spain for 781 Years | Tue 8 Dec 16:00 | Wed 9 Dec 02:30 | 2026-12-08 21:00 | `6ae42d99be9a108220443c8d` |
-| R03 | Gibraltar Is Named After a Muslim General | Tue 8 Dec 21:00 | Wed 9 Dec 07:30 | 2026-12-09 02:00 | `6ae42d9bbe9a108220443ca3` |
-| R04 | He Burned His Own Boats So His Army Couldn't Run | Wed 9 Dec 09:00 | Wed 9 Dec 19:30 | 2026-12-09 14:00 | `6ae42d9e31418a0c9177a87f` |
-| R05 | The Tiny Valley That Created Spain | Wed 9 Dec 16:00 | Thu 10 Dec 02:30 | 2026-12-09 21:00 | `6ae42da2be9a108220443cdb` |
-| R06 | He Swam Across a River to Escape a Massacre | Wed 9 Dec 19:00 | Thu 10 Dec 05:30 | 2026-12-10 00:00 | `6ae42da431418a0c9177a895` |
-| R07 | From Runaway Prince to Ruler of Spain | Wed 9 Dec 21:00 | Thu 10 Dec 07:30 | 2026-12-10 02:00 | `6ae42da6be9a108220443cf8` |
-| R08 | This City Had Street Lights When London Had Mud | Thu 10 Dec 09:00 | Thu 10 Dec 19:30 | 2026-12-10 14:00 | `6ae42da9be9a108220443d0f` |
-| R09 | This Man Flew 600 Years Before Leonardo da Vinci | Thu 10 Dec 12:00 | Thu 10 Dec 22:30 | 2026-12-10 17:00 | `6ae42dabbe9a108220443d4c` |
-| R10 | Muslims, Christians and Jews Lived Together, But Not as Equals | Thu 10 Dec 16:00 | Fri 11 Dec 02:30 | 2026-12-10 21:00 | `6ae42dad31418a0c9177a8ac` |
-| R11 | He Stole a Cathedral's Bells and Made Prisoners Carry Them | Thu 10 Dec 19:00 | Fri 11 Dec 05:30 | 2026-12-11 00:00 | `6ae42db031418a0c9177a8b8` |
+| R01 | Spain's Last Muslim King Cried Leaving This Palace | Wed 4 Nov 08:00 | Wed 4 Nov 18:30 | 2026-11-04 13:00 | `6ae42d9731418a0c9177a84b` |
+| R02 | How Muslims Ruled Spain for 781 Years | Wed 4 Nov 10:00 | Wed 4 Nov 20:30 | 2026-11-04 15:00 | `6ae42d99be9a108220443c8d` |
+| R03 | Gibraltar Is Named After a Muslim General | Thu 5 Nov 08:00 | Thu 5 Nov 18:30 | 2026-11-05 13:00 | `6ae42d9bbe9a108220443ca3` |
+| R04 | He Burned His Own Boats So His Army Couldn't Run | Thu 5 Nov 10:00 | Thu 5 Nov 20:30 | 2026-11-05 15:00 | `6ae42d9e31418a0c9177a87f` |
+| R05 | The Tiny Valley That Created Spain | Fri 6 Nov 08:00 | Fri 6 Nov 18:30 | 2026-11-06 13:00 | `6ae42da2be9a108220443cdb` |
+| R06 | He Swam Across a River to Escape a Massacre | Fri 6 Nov 10:00 | Fri 6 Nov 20:30 | 2026-11-06 15:00 | `6ae42da431418a0c9177a895` |
+| R07 | From Runaway Prince to Ruler of Spain | Sat 7 Nov 08:00 | Sat 7 Nov 18:30 | 2026-11-07 13:00 | `6ae42da6be9a108220443cf8` |
+| R08 | This City Had Street Lights When London Had Mud | Sat 7 Nov 10:00 | Sat 7 Nov 20:30 | 2026-11-07 15:00 | `6ae42da9be9a108220443d0f` |
+| R09 | This Man Flew 600 Years Before Leonardo da Vinci | Sun 8 Nov 08:00 | Sun 8 Nov 18:30 | 2026-11-08 13:00 | `6ae42dabbe9a108220443d4c` |
+| R10 | Muslims, Christians and Jews Lived Together, But Not as Equals | Sun 8 Nov 10:00 | Sun 8 Nov 20:30 | 2026-11-08 15:00 | `6ae42dad31418a0c9177a8ac` |
+| R11 | He Stole a Cathedral's Bells and Made Prisoners Carry Them | Mon 9 Nov 08:00 | Mon 9 Nov 18:30 | 2026-11-09 13:00 | `6ae42db031418a0c9177a8b8` |
+| R12 | The Mistake That Destroyed Muslim Spain | Mon 9 Nov 10:00 | Mon 9 Nov 20:30 | 2026-11-09 15:00 | `6ae42e4de9824375a0270aeb` |
+| R13 | The Secret Wedding That Ended Muslim Spain | Tue 10 Nov 08:00 | Tue 10 Nov 18:30 | 2026-11-10 13:00 | `6ae42e50e9824375a0270afd` |
+| R14 | They Built a Whole City Just to Win One Siege | Tue 10 Nov 10:00 | Tue 10 Nov 20:30 | 2026-11-10 15:00 | `6ae42e548d38baa4cffc223b` |
+| R15 | You Speak Arabic Every Time You Speak Spanish | Wed 11 Nov 08:00 | Wed 11 Nov 18:30 | 2026-11-11 13:00 | `6ae42e578d38baa4cffc2259` |

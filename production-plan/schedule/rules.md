@@ -6,6 +6,7 @@
 4. Reels go to **YouTube and Instagram**. Full combined videos go to **YouTube only**.
 5. Every post goes out at the **ideal US audience time**.
 6. ~~Reels only after the full video is live.~~ Changed 28 Oct 2026 by Pushpam: reels **may go out before** their full video. Keep the other reel rules (max 5 a day, slot order, YouTube + Instagram).
+   - **Raised 30 Oct 2026 by Pushpam: max 7 reels a day.** Two new daily reel slots, 08:00 and 10:00 ET (Indian evening, 18:30 and 20:30 IST in winter), used after the original five are full or to keep a video's reels next to its release. They don't clash with facts-shorts, full-video or the other reel slots. First use: Spain Part 1 reels, 4-11 Nov.
 7. **Release order:** 3 x 2D history videos before each 3D video (2D, 2D, 2D, 3D, then repeat). Breaks are flagged, and posts aren't moved for this rule without Pushpam's OK.
 8. **Production Control Room:** every card is clearly marked 2D or 3D, and a card comes off once its full video is scheduled on Zernio (Pushpam 28 Oct 22:44Z; reels no longer hold a card). The production threads own the board, and the nightly run flags any card that needs removing or labelling. Control Room: https://claude.ai/artifact/EbHs3wuQ4PB1FS5Y1BvvxN
    - **Removal rule (Pushpam 29 Oct 21:47Z):** once a video is finished and booked on Zernio, or a short is booked, this thread deletes its card from the Control Room pipeline right away. A video still having reels built stays until that work is done and its reels are booked. Each facts short leaves the Facts shorts card once booked; the card itself shows how many are booked so far. Booked posts stay visible in the Control Room calendar. Applied 29 Oct to NVIDIA and facts shorts 01-11.
@@ -20,7 +21,7 @@ Pushpam's approval covers scheduling and moving posts. It does not cover deletin
 | Post type | Slots |
 |---|---|
 | Full video | 15:00 on weekdays, 11:00 on Sat and Sun |
-| Reels | 12:00 and 19:00 first, then 09:00, 16:00 and 21:00 |
+| Reels | 12:00 and 19:00 first, then 09:00, 16:00 and 21:00; extra 08:00 and 10:00 (max 7 a day, from 30 Oct) |
 
 - Zernio takes UTC. Eastern is UTC-4 until Sun 1 Nov 2026 and UTC-5 from then on.
 - IST is 9 h 30 m ahead of Eastern until 1 Nov, and 10 h 30 m ahead after.
