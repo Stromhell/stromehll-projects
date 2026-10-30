@@ -1,0 +1,82 @@
+<!doctype html><html><head><meta charset="utf-8"><title>NK act 5 - Air Jordan and Just Do It</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../nk_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['office_day', 'boardroom', 'suburb', 'arena', 'factory', 'office']) K.load(n, PL + n + '.jpg');
+const SW = 1920, SH = 1080, INK = NK.INK, OR = NK.ORANGE, TE = NK.TEAL;
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+const ROOKIE = { costume: 'shirt', hair: 'bald', seed: 90 }; ROOKIE.look = Object.assign(RIG6.lookFrom(ROOKIE), { topCol: '#c8102e', legs: '#1a1414', shoes: '#c8102e', belt: null });
+const MOM = { costume: 'dress', hair: 'bun', hairCol: '#2a1a10', seed: 91 };
+const KNIGHT = { costume: 'suit', hair: 'short', hairCol: '#c89a5a', seed: 6 };
+const backdrop = (name, b = .6, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const bars = (c, lt, nk, rb, lbl) => { c.save(); const base = 860; c.strokeStyle = 'rgba(255,255,255,.5)'; c.lineWidth = 3; c.beginPath(); c.moveTo(420, base); c.lineTo(1500, base); c.stroke(); [[nk, OR, 'NIKE', 700], [rb, '#2a4aa8', 'REEBOK', 1180]].forEach(([h, col, name, x]) => { c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(x - 110 + 10, base - h + 10, 220, h); c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(x - 110, base - h, 220, h); c.strokeRect(x - 110, base - h, 220, h); K.outlined(c, name, x, base + 50, 44, { fill: '#fff' }); }); if (lbl) K.outlined(c, lbl, 960, 110, 50, { fill: '#ffe8c8' }); c.restore(); };
+const chip = (c, x, y, col) => { c.save(); c.translate(x, y); c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.ellipse(0, 0, 46, 16, 0, 0, 7); c.fill(); c.stroke(); c.strokeStyle = '#fff'; c.setLineDash([8, 8]); c.lineWidth = 3; c.beginPath(); c.ellipse(0, 0, 34, 11, 0, 0, 7); c.stroke(); c.restore(); };
+const ball = (c, x, y, r) => { c.save(); c.translate(x, y); c.fillStyle = '#e07a2a'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.arc(0, 0, r, 0, 7); c.fill(); c.stroke(); c.lineWidth = 3; c.beginPath(); c.moveTo(-r, 0); c.lineTo(r, 0); c.moveTo(0, -r); c.lineTo(0, r); c.stroke(); c.beginPath(); c.arc(-r * 1.25, 0, r * .9, -.8, .8); c.stroke(); c.beginPath(); c.arc(r * 1.25, 0, r * .9, Math.PI - .8, Math.PI + .8); c.stroke(); c.restore(); };
+const ajShoe = (c, x, y, s) => NK.shoe(c, x, y, s, { col: '#c8102e', accent: '#111', mark: 'swoosh', high: true });
+
+window.SHOTS = [
+  // 1 1984: Reebok's bar shoots past Nike's
+  { draw: (c, lt, u, S) => { backdrop('office_day', .4, 10)(c); const g = E.out(K.seg(lt, .4, 3)); bars(c, lt, 340 + 20 * g, 260 + 330 * g, 'U.S. SHOE SALES (ILLUSTRATIVE)'); },
+    bed: [['office_loop', .2]],
+    init: S => { const tA = A.at(S, 'aerobics', 3.5); S.D.over = [(c, lt) => K.dateTag(c, '1984', lt, { at: .3 }), (c, lt) => K.card(c, 'THE AEROBICS CRAZE', lt, { at: tA, x: 1560, y: 330, px: 42, rot: 3 })];
+      S.D.sfx = [[.4, 'riser', .4], [tA, 'pop', .4]]; } },
+  // 2 all in: the basketball budget pushed onto one card
+  { draw: (c, lt, u, S) => { backdrop('boardroom', .4, 8)(c); c.save(); c.fillStyle = '#1f5a3a'; c.strokeStyle = INK; c.lineWidth = 10; c.beginPath(); c.ellipse(960, 760, 900, 300, 0, 0, 7); c.fill(); c.stroke(); c.restore();
+      c.save(); c.translate(960, 640); c.rotate(-.05); c.fillStyle = '#fbf8ef'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-110, -150, 220, 300); c.strokeRect(-110, -150, 220, 300); ball(c, 0, -20, 60); c.font = '30px Anton'; c.fillStyle = INK; c.textAlign = 'center'; c.fillText('ROOKIE', 0, 110); c.restore();
+      const cols = ['#c83a2a', '#2a4aa8', '#e8b44a', '#2a2a2a']; for (let k = 0; k < 14; k++) { const p = E.io(K.seg(lt, S.tA + k * .08, S.tA + .8 + k * .08)), x0 = 300 + (k % 7) * 60, y0 = 860 + Math.floor(k / 7) * 40, x1 = 760 + (k % 4) * 40, y1 = 830 - Math.floor(k / 4) * 18; chip(c, x0 + (x1 - x0) * p, y0 + (y1 - y0) * p, cols[k % 4]); }
+      R.figure(c, { x: 1600, y: 1080, s: 1.5, costume: 'shirtsleeves', hair: 'swept', hairCol: '#2a2a2a', seed: 92, glasses: true, pose: 'point', facing: -1, t: lt, mood: 'happy', talk: lt > S.tV && lt < S.tV + 3 }); },
+    bed: [['hum_loop', .25]],
+    init: S => { S.tA = A.at(S, 'one rookie', 2.4); const tJ = A.at(S, 'Michael Jordan', 4); S.tV = A.at(S, 'Sonny Vaccaro', 7);
+      S.D.over = [(c, lt) => K.title(c, 'ALL IN', lt, { at: S.tA + .9, y: 170, px: 110, fill: '#ffe0c0' }), (c, lt) => K.card(c, 'MICHAEL JORDAN', lt, { at: tJ, x: 420, y: 330, px: 48, rot: -3 }), (c, lt) => K.card(c, 'PUSH: SONNY VACCARO', lt, { at: S.tV, x: 1500, y: 330, px: 40, rot: 3 })];
+      S.D.sfx = [[S.tA, 'coins_cascade', .4], [S.tA + .9, 'thud', .45], [tJ, 'pop', .4], [S.tV, 'pop', .35]]; } },
+  // 3 he wanted Adidas; his mother points him through the door
+  { plate: 'suburb', cam: { z: [1.12, 1.18], x: [1280, 1280], y: [860, 860] }, bed: [['birds_loop', .3]],
+    live: [(c, lt, u, S) => { const o = E.out(K.seg(lt, S.tD, S.tD + .8)); c.save(); c.translate(1700, 1360); c.fillStyle = '#3a2a1a'; c.strokeStyle = INK; c.lineWidth = 8; c.fillRect(-150, -560, 300, 560); c.strokeRect(-150, -560, 300, 560); c.fillStyle = '#f8e8b0'; c.fillRect(-140, -550, 280, 550); c.fillStyle = '#7a4a2a'; c.fillRect(-140, -550, 280 * (1 - o * .85), 550); c.strokeRect(-140, -550, 280 * (1 - o * .85), 550); c.restore(); }],
+    figs: [{ x: 1080, y: 1370, s: 2.0, ...ROOKIE, facing: -1, pose: 'stand', mood: 'neutral', mood: 'grumpy', anim: (o, lt, u, S) => { if (lt > S.tD + .6) { const w = R.walkX(lt, 1080, 1700, S.tD + .6, 2.4, o.s); o.x = w.x; o.t = w.phase; o.pose = w.moving ? 'walk' : 'stand'; o.facing = 1; o.mood = 'happy'; } } },
+      { x: 700, y: 1370, s: 1.85, ...MOM, facing: 1, pose: 'stand', mood: 'happy', anim: (o, lt, u, S) => { o.pose = lt > S.tM ? 'point' : 'stand'; o.talk = lt > S.tM && lt < S.tM + 2.5; } }],
+    init: S => { const tA = A.at(S, 'Adidas', 2); S.tM = A.at(S, 'Deloris', 4.5); S.tD = A.at(S, 'the meeting', 6.6);
+      S.D.over = [(c, lt) => K.card(c, 'HE WANTED ADIDAS', lt, { at: tA, x: 470, y: 230, px: 48, rot: -3 }), (c, lt) => K.card(c, 'HIS MOTHER, DELORIS', lt, { at: S.tM, x: 470, y: 340, px: 40, rot: 2 }), (c, lt) => K.card(c, 'TAKE THE MEETING', lt, { at: S.tD, x: 1500, y: 230, px: 46, rot: 3 })];
+      S.D.sfx = [[tA, 'pop', .35], [S.tM, 'pop', .3], [S.tD, 'creak', .45], [S.tD + .7, 'footsteps', .35]]; } },
+  // 4 the contract: $500K a year for five years, plus a royalty (circled)
+  { draw: (c, lt, u, S) => { backdrop('office', .45, 10)(c); NK.paper(c, 960, 560, 900, 820, -.015);
+      const L = ['ENDORSEMENT AGREEMENT', '', 'TERM ............. 5 YEARS', 'FEE ............... ~$500,000 / YEAR', '', 'ROYALTY ... A CUT OF EVERY', '            SHOE WITH HIS NAME'], u2 = K.seg(lt, .4, S.tR); L.forEach((l, i) => NK.typed(c, l, 560, 260 + i * 70, i === 0 ? 46 : 36, u2 * L.length - i, i >= 5 ? '#c83a2a' : INK));
+      const ci = K.seg(lt, S.tR + .2, S.tR + 1.2); if (ci > 0) { c.save(); c.strokeStyle = '#c83a2a'; c.lineWidth = 7; c.beginPath(); c.ellipse(860, 640, 360, 90, -.03, -Math.PI / 2, -Math.PI / 2 + ci * Math.PI * 2.05); c.stroke(); c.restore(); }
+      const sg = K.seg(lt, S.tS, S.tS + 1.2); if (sg > 0) { c.save(); c.strokeStyle = '#1f3a8a'; c.lineWidth = 5; c.beginPath(); for (let i = 0; i <= 40 * sg; i++) { const x = 900 + i * 9, y = 860 + Math.sin(i * .7) * 18 - i * .8; i ? c.lineTo(x, y) : c.moveTo(x, y); } c.stroke(); c.restore(); } },
+    bed: [['office_loop', .2]],
+    init: S => { const tF = A.at(S, '500,000', 1.6); S.tR = A.at(S, 'a cut', 6.4); S.tS = S.tR + 2.2;
+      S.D.over = [(c, lt) => K.card(c, '$500K / YEAR + ROYALTY', lt, { at: S.tR + 1, x: 1560, y: 200, px: 42, rot: 3 }), (c, lt) => K.card(c, 'UNUSUAL FOR THE TIME', lt, { at: S.tR + 1.6, x: 1560, y: 310, px: 36, rot: -2 })];
+      S.D.sfx = [[.4, 'typing', .4], [tF, 'coins', .35], [S.tR + .2, 'scrape', .35], [S.tS, 'paper', .35], [S.tR + 1, 'chime', .4]]; } },
+  // 5 the BANNED ad, then a MYTH stamp: a warning, yes; a fine every game, no evidence
+  { draw: (c, lt, u, S) => { backdrop('arena', .45, 6)(c); const a = pop(lt, .2); c.save(); c.translate(820, 540); c.rotate(-.02); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.4)'; c.fillRect(-290, -390, 600, 800); c.fillStyle = '#121212'; c.strokeStyle = '#f4f0e6'; c.lineWidth = 8; c.fillRect(-300, -400, 600, 800); c.strokeRect(-300, -400, 600, 800); ajShoe(c, 40, -10, 1.25); const fl = Math.sin(lt * 6) > 0 || lt > S.tB + 2 ? 1 : .55; c.globalAlpha = fl; K.outlined(c, 'BANNED', 0, -260, 110, { fill: '#c8102e' }); c.globalAlpha = 1; c.fillStyle = '#f4f0e6'; c.font = '34px Oswald'; c.textAlign = 'center'; c.fillText('(SAYS THE AD)', 0, 300); c.restore();
+      const st = pop(lt, S.tM, .3); if (st > 0) { c.save(); c.translate(980, 640); c.rotate(-.2); c.scale(1.8 - .8 * st, 1.8 - .8 * st); c.globalAlpha = st; c.strokeStyle = '#e8b44a'; c.lineWidth = 12; c.strokeRect(-260, -90, 520, 180); K.outlined(c, 'MYTH?', 0, 0, 120, { fill: '#e8b44a' }); c.restore(); } },
+    bed: [['crowd_loop', .2]],
+    init: S => { S.tB = A.at(S, 'fined', 2); const tW = A.at(S, 'warning', 6.6); const tAd = A.at(S, 'banned shoe', 9.6); S.tM = A.at(S, 'No solid', 13);
+      S.D.over = [(c, lt) => K.card(c, 'MYTH: "$5,000 FINE EVERY GAME"', lt, { at: S.tB, x: 1520, y: 200, px: 36, rot: 3, until: S.tM + 3 }), (c, lt) => K.card(c, 'FACT: THE NBA SENT A WARNING', lt, { at: tW, x: 1520, y: 310, px: 36, rot: -2 }), (c, lt) => K.card(c, 'FACT: NIKE MADE IT AN AD', lt, { at: tAd, x: 1520, y: 420, px: 36, rot: 2 }), (c, lt) => K.card(c, 'NO SOLID EVIDENCE', lt, { at: S.tM + .5, x: 1520, y: 880, px: 44, rot: -3, fill: '#ffe0b0' }), (c, lt) => K.badge(c, 'MYTH CHECK', lt, { at: .3 })];
+      S.D.sfx = [[.2, 'drum', .45], [S.tB, 'alarm', .2], [tW, 'paper', .35], [tAd, 'pop', .4], [S.tM, 'stamp', .6]]; } },
+  // 6 the counter jumps past $100M; boxes stream out
+  { plate: 'factory', cam: { z: [1.1, 1.14], x: [1280, 1280], y: [860, 860] }, bed: [['hum_loop', .3]],
+    live: [(c, lt, u, S) => { if (lt < S.tS) return; for (let k = 0; k < 12; k++) { const p = ((lt - S.tS) * .5 + k / 12) % 1; NK.box(c, -200 + p * 3000, 1300 - Math.sin(p * Math.PI) * 140 - (k % 3) * 60, .8, { col: '#c8102e', label: 'AIR JORDAN', swoosh: true }); } }],
+    init: S => { const tH = A.at(S, 'few million', 2.4); S.tS = A.at(S, '100 million', 6);
+      S.D.over = [(c, lt) => K.card(c, 'HOPE: A FEW MILLION', lt, { at: tH, x: 470, y: 230, px: 44, rot: -3 }), (c, lt) => K.counter(c, 0, 100, lt, { at: S.tS - .6, dur: 1.4, x: 960, y: 520, px: 150, pre: '$', post: 'M+' }), (c, lt) => K.card(c, 'IN YEAR ONE', lt, { at: S.tS + 1, x: 960, y: 700, px: 52, rot: 2 })];
+      S.D.sfx = [[tH, 'pop', .35], [S.tS - .6, 'riser', .4], [S.tS + .8, 'coins_cascade', .5], [S.tS + .8, 'crowd_cheer', .3]]; } },
+  // 7 1988: a typewriter clacks out JUST DO IT; a shadowy prison wall behind
+  { draw: (c, lt, u, S) => { c.fillStyle = '#16161a'; c.fillRect(0, 0, SW, SH); const w = K.seg(lt, S.tG, S.tG + 1.4); if (w > 0) { c.save(); c.globalAlpha = .7 * w; c.fillStyle = '#2a2a30'; for (let r = 0; r < 12; r++) for (let k = -1; k < 12; k++) { c.fillRect(k * 180 + (r % 2) * 90, r * 90, 172, 82); } c.fillStyle = '#0a0a0c'; for (let k = 0; k < 8; k++) c.fillRect(1180 + k * 70, 120, 22, 560); c.restore(); }
+      NK.paper(c, 760, 520, 820, 360, -.01); NK.typed(c, 'JUST DO IT.', 430, 560, 110, K.seg(lt, S.tJ, S.tJ + 1.6), INK);
+      c.save(); c.fillStyle = '#3a3a40'; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.roundRect(360, 720, 800, 260, 20); c.fill(); c.stroke(); c.fillStyle = '#d8d0c0'; for (let r = 0; r < 3; r++) for (let k = 0; k < 10; k++) { const press = Math.sin(lt * 18 + k * 3 + r) > .85 && lt > S.tJ && lt < S.tJ + 1.6 ? 6 : 0; c.beginPath(); c.arc(430 + k * 72 + r * 18, 790 + r * 60 + press, 22, 0, 7); c.fill(); c.stroke(); } c.restore(); },
+    bed: [['hum_loop', .2]],
+    init: S => { const tW = A.at(S, 'Wieden', 1.4); S.tJ = A.at(S, 'Just Do It', 4); S.tG = A.at(S, 'Gary Gilmore', 8);
+      S.D.over = [(c, lt) => K.dateTag(c, '1988', lt, { at: .3 }), (c, lt) => K.card(c, 'AGENCY: WIEDEN+KENNEDY', lt, { at: tW, x: 1500, y: 200, px: 40, rot: 3 }), (c, lt) => K.card(c, 'ADAPTED FROM A CONDEMNED\nMAN\'S LAST WORDS', lt, { at: S.tG + .6, x: 1500, y: 860, px: 36, rot: -2 })];
+      S.D.sfx = [[S.tJ, 'typing', .55], [S.tJ + 1.6, 'chime', .3], [S.tG, 'tension', .45]]; } },
+  // 8 early 1990s: Nike's bar overtakes and keeps climbing
+  { draw: (c, lt, u, S) => { backdrop('office_day', .4, 10)(c); const g = E.out(K.seg(lt, .3, 3)); bars(c, lt, 360 + 240 * g, 590 - 40 * g, 'U.S. SHOE SALES (ILLUSTRATIVE)'); NK.swoosh(c, 700, 860 - (360 + 240 * g) - 60, 160 * K.seg(lt, 2.4, 3), '#fff'); },
+    bed: [['office_loop', .2]],
+    init: S => { S.D.over = [(c, lt) => K.dateTag(c, 'EARLY 1990s', lt, { at: .3 }), (c, lt) => K.card(c, 'NIKE PASSES REEBOK AGAIN', lt, { at: 2.6, x: 1560, y: 330, px: 40, rot: 3 })];
+      S.D.sfx = [[.3, 'riser', .45], [2.6, 'crowd_cheer', .35]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>
