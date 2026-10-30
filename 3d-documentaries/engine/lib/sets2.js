@@ -111,16 +111,46 @@ export function mercedes(o = {}) {
 }
 // Land Rover Series (olive)
 export function landrover(o = {}) {
+  // Series-style Land Rover: flat wings, mesh grille, framed windscreen, canvas tilt on hoops (same 1.7 x 4.1 m footprint as before)
   const g = new THREE.Group(); const paint = std(o.color ?? 0x4a5236, { rough: .7, metal: .15 }), glass = std(0x0c1014, { rough: .1, metal: .5 }), canvas = std(0x6a6448, { rough: .95 });
-  g.add(box(1.68, .7, 4.1, paint, { pos: [0, .9, 0] }));
-  g.add(box(1.6, .8, 1.0, paint, { pos: [0, 1.5, .55] }));
-  g.add(box(1.5, .5, .04, glass, { pos: [0, 1.65, 1.07] }));
-  g.add(box(1.68, .9, 2.0, canvas, { pos: [0, 1.6, -1.05] }));
-  g.add(box(1.4, .5, .06, std(0x222222), { pos: [0, .9, 2.06] }));
-  for (const x of [-.6, .6]) g.add(m(new THREE.CircleGeometry(.1, 16), std(0xffffff, { emissive: 0xfff2d0, ei: o.lights ? 3 : 0 }), { pos: [x, .95, 2.095] }));
+  const dark = std(0x1c1e1a, { rough: .8 }), steel = std(0x9a9c98, { rough: .35, metal: .8 }), seam = std(0x2c3222, { rough: .9 });
+  g.add(rbox(1.66, .62, 4.0, .06, paint, { pos: [0, .9, 0] }));                       // body tub
+  g.add(box(1.7, .06, 4.06, dark, { pos: [0, .57, 0] }));                                // sill / chassis line
+  g.add(rbox(1.0, .18, 1.25, .05, paint, { pos: [0, 1.24, 1.38] }));                    // bonnet, raised centre
+  for (const x of [-.7, .7]) {
+    g.add(rbox(.32, .1, 1.3, .03, paint, { pos: [x, 1.2, 1.36] }));                      // flat-topped front wings
+    g.add(m(new THREE.CylinderGeometry(.47, .47, .3, 20, 1, true, 0, Math.PI), seam, { pos: [x * 1.04, .42, 1.3], rot: [0, 0, Math.PI / 2] })); // wheel arches
+    g.add(m(new THREE.CylinderGeometry(.47, .47, .3, 20, 1, true, 0, Math.PI), seam, { pos: [x * 1.04, .42, -1.3], rot: [0, 0, Math.PI / 2] }));
+    g.add(box(.012, .5, .9, seam, { pos: [x * 1.19, 1.0, .25] }));                       // door seam panel
+    g.add(box(.02, .03, .12, steel, { pos: [x * 1.195, 1.05, .1] }));                     // door handle
+    g.add(box(.03, .12, .08, dark, { pos: [x * 1.05, 1.62, .98] }));                      // mirror arm
+    g.add(box(.03, .1, .14, glass, { pos: [x * 1.09, 1.7, .98] }));                       // mirror
+    g.add(box(.12, .1, .03, std(0x8a1a12, { emissive: 0x400000, ei: .4 }), { pos: [x * .95, .98, -2.02] })); // tail lamps
+  }
+  // grille panel with vertical slats and recessed round headlamps
+  g.add(box(1.5, .5, .05, dark, { pos: [0, .95, 2.02] }));
+  for (let i = -5; i <= 5; i++) g.add(box(.02, .34, .03, steel, { pos: [i * .045, .95, 2.05] }));
+  for (const x of [-.6, .6]) {
+    g.add(m(new THREE.CylinderGeometry(.11, .11, .06, 18), steel, { pos: [x, .95, 2.04], rot: [Math.PI / 2, 0, 0] }));
+    g.add(m(new THREE.CircleGeometry(.09, 18), std(0xffffff, { emissive: 0xfff2d0, ei: o.lights ? 3 : 0, rough: .2 }), { pos: [x, .95, 2.075] }));
+  }
+  g.add(box(1.75, .1, .12, dark, { pos: [0, .55, 2.08] }));                             // front bumper
+  g.add(box(1.6, .08, .1, dark, { pos: [0, .55, -2.05] }));                              // rear bumper
+  // windscreen: frame + glass, slightly raked
+  const ws = new THREE.Group(); ws.position.set(0, 1.55, .78); ws.rotation.x = -.12; g.add(ws);
+  ws.add(box(1.6, .06, .05, paint, { pos: [0, .3, 0] })); ws.add(box(1.6, .06, .05, paint, { pos: [0, -.27, 0] }));
+  for (const x of [-.78, 0, .78]) ws.add(box(.05, .6, .05, paint, { pos: [x, 0, 0] }));
+  ws.add(box(1.52, .5, .02, glass, { pos: [0, 0, 0] }));
+  // cab roof + canvas tilt with hoop ribs
+  g.add(rbox(1.66, .06, .75, .02, canvas, { pos: [0, 1.88, .42] }));
+  g.add(rbox(1.68, .88, 2.0, .08, canvas, { pos: [0, 1.62, -1.02] }));
+  for (const z of [-1.9, -1.35, -.75, -.15]) g.add(box(1.7, .9, .03, seam, { pos: [0, 1.62, z] }));
+  for (const x of [-.84, .84]) g.add(box(.012, .3, .5, glass, { pos: [x, 1.75, -.35] })); // side windows in tilt
+  // jerrycan on the tailgate
+  g.add(rbox(.2, .45, .32, .03, paint, { pos: [.5, 1.0, -2.12] }));
   const wm = wheelMats(); wm.hub = std(0x4a5236, { rough: .7 });
   for (const [x, z] of [[-.75, 1.3], [.75, 1.3], [-.75, -1.3], [.75, -1.3]]) { const w = wheel(.42, .26, wm); w.position.set(x, .42, z); g.add(w); }
-  const sp = wheel(.42, .26, wm); sp.position.set(0, 1.2, 1.25); sp.rotation.set(P / 2, 0, 0); g.add(sp);
+  const sp = wheel(.38, .24, wm); sp.position.set(0, 1.42, 1.38); sp.rotation.set(P / 2, 0, 0); g.add(sp); // spare on the bonnet
   return shadowAll(g);
 }
 
