@@ -43,7 +43,7 @@ window.SHOTS = [
       R.figure(c, { x: 380, y: 1060, s: 1.55, ...KNIGHT, costume: 'office', glasses: true, facing: 1, pose: lt > S.tJ ? 'shrug' : 'think', t: lt, mood: lt > S.tJ ? 'happy' : 'neutral' }); },
     bed: [['office_loop', .3]],
     init: S => { S.tP = A.at(S, '1,300', 1.2); S.tD = A.at(S, '8,000', 2.6); S.tJ = A.at(S, 'day job', 4.4);
-      S.D.over = [(c, lt) => NK.revenue(c, 8000, K.seg(lt, S.tD, S.tD + .4)), (c, lt) => K.card(c, 'DAY JOB: ACCOUNTANT', lt, { at: S.tJ, x: 1180, y: 960, px: 46, rot: -2 })];
+      S.D.over = [(c, lt) => NK.revenue(c, 8000, K.seg(lt, S.tD, S.tD + .4)), (c, lt) => K.card(c, 'DAY JOB: ACCOUNTANT', lt, { at: S.tJ, x: 1560, y: 520, px: 46, rot: -2 })];
       S.D.sfx = [[S.tP, 'typing', .25], [S.tD, 'coins', .4], [S.tJ, 'stamp', .45]]; } },
   // 4 Jeff Johnson's letters to customers; the first store in Santa Monica
   { plate: 'shoe_shop', cam: { z: [1.12, 1.2], x: [1280, 1250], y: [860, 860] }, bed: [['hum_loop', .3]],
@@ -65,7 +65,7 @@ window.SHOTS = [
         NK.shoe(c, 1340, 860, 1.4 * a, { col: '#f4f0e6', accent: OR, mark: 'swoosh', sole: 'waffle' }); } },
     bed: [['hum_loop', .3]],
     init: S => { S.tO = A.at(S, 'waffle iron', 1.6); S.tG = A.at(S, 'grid', 4.2); const tW = A.at(S, 'grip without', 7);
-      S.D.over = [(c, lt) => K.dateTag(c, '1971', lt, { at: .3 }), (c, lt) => K.title(c, 'THE WAFFLE SOLE', lt, { at: S.tG + .6, x: 1340, y: 220, px: 84, fill: '#ffe8c8' }), (c, lt) => K.card(c, 'GRIP WITHOUT WEIGHT', lt, { at: tW, x: 1340, y: 990, px: 46, rot: -2 })];
+      S.D.over = [(c, lt) => K.dateTag(c, '1971', lt, { at: .3 }), (c, lt) => K.title(c, 'THE WAFFLE SOLE', lt, { at: S.tG + .6, x: 1340, y: 220, px: 84, fill: '#ffe8c8' }), (c, lt) => K.card(c, 'GRIP WITHOUT WEIGHT', lt, { at: tW, x: 1340, y: 330, px: 46, rot: -2 })];
       S.D.sfx = [[S.tO, 'creak', .5], [S.tO + .6, 'paper_tear', .35], [S.tG, 'pop', .5], [tW, 'chime', .45]]; } },
   // 7 the receipt: 1 WAFFLE IRON
   { draw: (c, lt, u, S) => { backdrop('kitchen', .45, 10)(c); const a = E.out(K.seg(lt, .1, .7)); c.save(); c.translate(960, 560 + (1 - a) * 500); c.rotate(-.03); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(-250, -380, 520, 780); c.fillStyle = '#fbf8ef'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.moveTo(-260, -390); for (let x = -260; x <= 260; x += 26) c.lineTo(x, -390 + (x / 26 % 2 ? 10 : 0)); c.lineTo(260, 390); for (let x = 260; x >= -260; x -= 26) c.lineTo(x, 390 + (x / 26 % 2 ? -10 : 0)); c.closePath(); c.fill(); c.stroke();
