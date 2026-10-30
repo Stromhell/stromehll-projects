@@ -12,6 +12,7 @@
   };
   VP.set('jp_chart', 1280, 720, board('PASSENGER CARS BUILT · 1950', true));
   VP.set('jp_board', 1280, 720, board('WHERE THE MONEY CAME FROM', false));
+  VP.set('jp_gdp', 1280, 720, board('SIZE OF ECONOMY · 1968', false));
   // a wide American highway in the 1950s: desert, poles, a billboard, mesas
   VP.set('jp_highway', 1280, 720, (g, w, h) => {
     sky(g, w, h, [[0, '#4a8ad0'], [.55, '#a8d0ec'], [.62, '#f0d8b0'], [1, '#d8a870']]);
