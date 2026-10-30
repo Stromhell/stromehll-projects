@@ -37,7 +37,7 @@ done < <(find "$SHARED/" -path "$SHARED/uploads" -prune -o -type f -name '*.log'
     ! -name 'hourly-clean.log' -mmin +60 -size +1k -print 2>/dev/null)
 
 # 4. Refresh the Graphify code map so threads query a current, compact map
-[ $DRY = 0 ] && "$TOOLS/graphify/gq" rebuild >/dev/null 2>&1
+[ $DRY = 0 ] && bash "$TOOLS/graphify/gq" rebuild >/dev/null 2>&1
 
 msg="$(date -u +%FT%TZ) removed=$removed gzipped=$zipped dry=$DRY"
 echo "$msg"

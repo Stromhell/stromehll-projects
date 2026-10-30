@@ -1,34 +1,78 @@
 #!/usr/bin/env bash
-# gq: ask the pipeline code map a question, rebuilding it first if any code changed.
+# gq: ask the pipeline code map a question. Builds the map once, then reuses it;
+# rebuilds only when the set of pipeline code files actually changed.
 #
 #   tools/graphify/gq "where is the walk cycle defined"     # query (default)
 #   tools/graphify/gq explain VP                              # any graphify subcommand
 #   tools/graphify/gq path build_reel_dd.py kit.js
 #   tools/graphify/gq rebuild                                 # force a rebuild
-set -euo pipefail
-HERE="$(cd "$(dirname "$0")" && pwd)"
+#
+# Works from any checkout or from /mnt/project-files/tools/graphify (scripts are
+# always run through bash, so a missing +x bit or a noexec mount doesn't matter).
+set -uo pipefail
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SRC="${GQ_SRC:-/mnt/project-files}"
 OUT="${GQ_OUT:-$HOME/.graphify/stormi-pipeline}"
 G="$OUT/graphify-out/graph.json"
+STAMP="$OUT/.gq_stamp"
+BUILDLOG="$OUT/build.log"
+SNAPSHOT="$HERE/snapshot/graph.json"
 
-command -v graphify >/dev/null || pip install -q graphifyy
+command -v graphify >/dev/null || pip install -q graphifyy >/dev/null 2>&1 || {
+    echo "[gq] could not install graphifyy (pip install graphifyy)" >&2; exit 1; }
+mkdir -p "$OUT"
 
-stale() {
-    [ ! -f "$G" ] && return 0
-    # any pipeline code file newer than the graph?
-    [ -n "$(find "$SRC/" -path "$SRC/uploads" -prune -o -type f \
-        \( -name '*.js' -o -name '*.py' -o -name '*.sh' \) -newer "$G" -print -quit 2>/dev/null)" ]
+fingerprint() {  # names + sizes + mtimes of every pipeline code file
+    find "$SRC/" -path "$SRC/uploads" -prune -o -path '*/__pycache__' -prune -o -type f \
+        \( -name '*.js' -o -name '*.py' -o -name '*.sh' \) -printf '%P %s %T@\n' 2>/dev/null |
+        sort | md5sum | cut -d' ' -f1
 }
 
-if [ "${1:-}" = "rebuild" ] || stale; then
-    echo "[gq] code changed, rebuilding map (~40 s)..." >&2
-    "$HERE/build_pipeline_graph.sh" "$SRC" "$OUT" >/dev/null 2>&1
-    [ "${1:-}" = "rebuild" ] && { echo "[gq] rebuilt: $G"; exit 0; }
+build() {
+    echo "[gq] building the code map (~40 s, once)..." >&2
+    if GRAPHIFY_FORCE=1 bash "$HERE/build_pipeline_graph.sh" "$SRC" "$OUT" >"$BUILDLOG" 2>&1 \
+        && [ -s "$G" ]; then
+        echo "$1" > "$STAMP"
+    else
+        echo "[gq] build failed; last lines of $BUILDLOG:" >&2
+        tail -5 "$BUILDLOG" >&2
+    fi
+}
+
+# Scanning the network folder takes ~10 s, so trust a map checked in the last
+# GQ_MAX_AGE minutes (default 15) without rescanning. The hourly job rebuilds anyway.
+if [ "${1:-}" != "rebuild" ] && [ -s "$G" ] && [ -n "$(find "$STAMP" -mmin -"${GQ_MAX_AGE:-15}" 2>/dev/null)" ]; then
+    now="$(cat "$STAMP")"
+else
+    now=$(fingerprint)
+    [ -s "$G" ] && [ "$(cat "$STAMP" 2>/dev/null)" = "$now" ] && touch "$STAMP"
+fi
+if [ "${1:-}" = "rebuild" ] || [ ! -s "$G" ] || [ "$(cat "$STAMP" 2>/dev/null)" != "$now" ]; then
+    # one build at a time per machine; others wait, then reuse its result
+    exec 9>"$OUT/.gq_lock"
+    flock 9
+    if [ "${1:-}" = "rebuild" ] || [ ! -s "$G" ] || [ "$(cat "$STAMP" 2>/dev/null)" != "$now" ]; then
+        build "$now"
+    fi
+    flock -u 9
+    [ "${1:-}" = "rebuild" ] && { [ -s "$G" ] && echo "[gq] map ready: $G"; exit 0; }
+fi
+
+if [ ! -s "$G" ]; then
+    if [ -s "$SNAPSHOT" ]; then
+        echo "[gq] using the saved snapshot map (may be slightly out of date)" >&2
+        G="$SNAPSHOT"
+    else
+        echo "[gq] no map available; see $BUILDLOG" >&2; exit 1
+    fi
 fi
 
 case "${1:-}" in
     explain|path|affected|god-nodes|query)
-        cmd="$1"; shift; exec graphify "$cmd" "$@" --graph "$G" ;;
-    "") exec graphify god-nodes --graph "$G" --top 15 ;;
-    *)  exec graphify query "$*" --graph "$G" --budget "${GQ_BUDGET:-1500}" ;;
+        cmd="$1"; shift; graphify "$cmd" "$@" --graph "$G" ;;
+    "") graphify god-nodes --graph "$G" --top 15 ;;
+    *)  graphify query "$*" --graph "$G" --budget "${GQ_BUDGET:-1500}" ;;
 esac
+rc=$?
+[ $rc = 4 ] && echo "[gq] no match; try other words, or: gq explain <name>" >&2
+exit $rc
