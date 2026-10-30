@@ -1,0 +1,77 @@
+<!doctype html><html><head><meta charset="utf-8"><title>NK act 2 - Shoes From a Car Trunk</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../nk_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['workshop', 'track_rain', 'kitchen', 'shoe_shop', 'park', 'office']) K.load(n, PL + n + '.jpg');
+const SW = 1920, SH = 1080, INK = NK.INK, OR = NK.ORANGE, TE = NK.TEAL;
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+const BOWERMAN = { costume: 'shirt', hair: 'short', hairCol: '#5a4a3a', seed: 3, hat: NK.cap('#2a5a3a') };
+const KNIGHT = { costume: 'suit', hair: 'short', hairCol: '#c89a5a', seed: 6 };
+const JOHNSON = { costume: 'shirtsleeves', hair: 'curly', hairCol: '#3a2a1a', seed: 14, beard: true };
+const backdrop = (name, b = .6, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const bill = (c, x, y, s, a, rot = 0) => { if (a <= 0) return; c.save(); c.translate(x, y); c.rotate(rot); c.scale(s * a, s * a); c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(-150, -60, 310, 130); c.fillStyle = '#cfe0b8'; c.strokeStyle = '#2a4a2a'; c.lineWidth = 5; c.fillRect(-160, -70, 310, 130); c.strokeRect(-160, -70, 310, 130); c.strokeRect(-146, -56, 282, 102); c.fillStyle = '#2a4a2a'; c.font = '64px Anton'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('$500', -5, -2); c.restore(); };
+const rain = (n = 140) => (c, lt) => { c.save(); c.strokeStyle = 'rgba(210,220,235,.3)'; c.lineWidth = 2; c.beginPath(); for (let k = 0; k < n; k++) { const sp = 1300 + (k * 37 % 500), x = (k * 211 + lt * 90) % 2560, y = ((k * 157) + lt * sp) % 1440; c.moveTo(x, y); c.lineTo(x - 8, y + 40); } c.stroke(); c.restore(); };
+const letter = (c, x, y, s, rot, lines) => { c.save(); c.translate(x, y); c.rotate(rot); c.scale(s, s); c.fillStyle = 'rgba(0,0,0,.25)'; c.fillRect(-110, -70, 230, 150); c.fillStyle = '#fbf6e8'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-120, -80, 230, 150); c.strokeRect(-120, -80, 230, 150); c.fillStyle = '#2a3a6a'; c.font = '30px Caveat'; c.textAlign = 'left'; lines.forEach((l, i) => c.fillText(l, -104, -42 + i * 36)); c.restore(); };
+
+window.SHOTS = [
+  // 1 1964: Knight and Bowerman each slap $500 on the bench; Blue Ribbon Sports is real
+  { plate: 'workshop', cam: { z: [1.16, 1.22], x: [1280, 1280], y: [860, 860] }, bed: [['hum_loop', .3]],
+    figs: [{ x: 780, y: 1340, s: 2.0, ...KNIGHT, facing: 1, pose: 'stand', mood: 'happy', anim: (o, lt, u, S) => { o.pose = lt > S.t1 - .3 && lt < S.t1 + .6 ? 'reach' : 'stand'; } },
+      { x: 1800, y: 1340, s: 2.0, ...BOWERMAN, facing: -1, pose: 'stand', mood: 'happy', anim: (o, lt, u, S) => { o.pose = lt > S.t2 - .3 && lt < S.t2 + .6 ? 'reach' : 'stand'; } }],
+    live: [(c, lt, u, S) => { bill(c, 1150, 1020, .9, pop(lt, S.t1, .3), -.08); bill(c, 1430, 1030, .9, pop(lt, S.t2, .3), .07); }],
+    init: S => { S.t1 = A.at(S, '500 dollars', 1.6); S.t2 = S.t1 + .5; const tB = A.at(S, 'Blue Ribbon', 3.8);
+      S.D.over = [(c, lt) => K.dateTag(c, '1964', lt, { at: .3 }), (c, lt) => K.title(c, 'BLUE RIBBON SPORTS', lt, { at: tB, y: 170, px: 84, fill: '#cfe0ff' })];
+      S.D.sfx = [[S.t1, 'thud', .5], [S.t2, 'thud', .5], [tB, 'stamp', .5]]; } },
+  // 2 selling from the car trunk at a rainy track meet; runners queue
+  { plate: 'track_rain', cam: { z: [1.12, 1.16], x: [1280, 1300], y: [880, 880] }, bed: [['rain_loop', .5], ['crowd_loop', .15]],
+    live: [rain(120), (c, lt) => NK.car(c, 1560, 1290, 1.1, { trunk: E.out(K.seg(lt, .3, 1.2)), col: '#4a6a8a' })],
+    figs: [{ x: 980, y: 1350, s: 1.9, ...KNIGHT, facing: 1, pose: 'present', mood: 'happy', talk: true, hold: { near: (c) => NK.shoe(c, 6, -6, .3, { col: '#f4f0e6', accent: '#c83a2a', mark: 'tiger' }) } },
+      { costume: 'shirt', hair: 'short', seed: 31, s: 1.8, y: 1360, walk: { x0: -200, x1: 720, t0: .4, dur: 3 }, mood: 'happy', facing: 1 },
+      { costume: 'shirtsleeves', hair: 'curly', seed: 32, s: 1.75, y: 1380, walk: { x0: -500, x1: 480, t0: 1.2, dur: 3 }, mood: 'neutral', facing: 1 },
+      { costume: 'school', hair: 'short', seed: 33, s: 1.78, y: 1370, walk: { x0: -700, x1: 250, t0: 2.2, dur: 3 }, mood: 'happy', facing: 1 }],
+    init: S => { const tT = A.at(S, 'trunk', 1.6), tP = A.at(S, 'Pacific Northwest', 4); S.D.over = [(c, lt) => K.card(c, 'THE SHOP: A CAR TRUNK', lt, { at: tT, x: 1470, y: 230, px: 48, rot: 3 }), (c, lt) => K.card(c, 'TRACK MEETS ACROSS\nTHE PACIFIC NORTHWEST', lt, { at: tP, x: 470, y: 230, px: 40, rot: -3 })];
+      S.D.sfx = [[.3, 'creak', .4], [tT, 'pop', .4], [tP, 'run_steps', .3]]; } },
+  // 3 first year: 1,300 pairs, $8,000; he keeps the day job as an accountant
+  { draw: (c, lt, u, S) => { backdrop('office', .5, 9)(c); NK.paper(c, 1180, 560, 980, 700, .01);
+      c.save(); c.fillStyle = INK; c.font = '48px Anton'; c.textAlign = 'left'; c.fillText('BLUE RIBBON SPORTS · YEAR ONE', 740, 300); c.strokeStyle = 'rgba(80,120,170,.4)'; c.lineWidth = 2; for (let y = 350; y < 880; y += 56) { c.beginPath(); c.moveTo(700, y); c.lineTo(1660, y); c.stroke(); } c.restore();
+      NK.chalk(c, 'Pairs sold ......... about 1,300', 740, 430, 56, K.seg(lt, S.tP, S.tP + 1)); NK.chalk(c, 'Sales ................ about $8,000', 740, 540, 56, K.seg(lt, S.tD, S.tD + 1));
+      c.save(); c.font = '56px Caveat'; c.fillStyle = '#2a3a6a'; c.textAlign = 'left'; const n = Math.ceil(30 * K.seg(lt, S.tP, S.tP + 1)), m = Math.ceil(33 * K.seg(lt, S.tD, S.tD + 1)); c.fillText('Pairs sold ......... about 1,300'.slice(0, n), 740, 430); c.fillText('Sales ................ about $8,000'.slice(0, m), 740, 540); c.restore();
+      R.figure(c, { x: 380, y: 1060, s: 1.55, ...KNIGHT, costume: 'office', glasses: true, facing: 1, pose: lt > S.tJ ? 'shrug' : 'think', t: lt, mood: lt > S.tJ ? 'happy' : 'neutral' }); },
+    bed: [['office_loop', .3]],
+    init: S => { S.tP = A.at(S, '1,300', 1.2); S.tD = A.at(S, '8,000', 2.6); S.tJ = A.at(S, 'day job', 4.4);
+      S.D.over = [(c, lt) => NK.revenue(c, 8000, K.seg(lt, S.tD, S.tD + .4)), (c, lt) => K.card(c, 'DAY JOB: ACCOUNTANT', lt, { at: S.tJ, x: 1180, y: 960, px: 46, rot: -2 })];
+      S.D.sfx = [[S.tP, 'typing', .25], [S.tD, 'coins', .4], [S.tJ, 'stamp', .45]]; } },
+  // 4 Jeff Johnson's letters to customers; the first store in Santa Monica
+  { plate: 'shoe_shop', cam: { z: [1.12, 1.2], x: [1280, 1250], y: [860, 860] }, bed: [['hum_loop', .3]],
+    figs: [{ x: 1500, y: 1360, s: 2.0, ...JOHNSON, facing: -1, pose: 'think', mood: 'happy', talk: false, anim: (o, lt, u, S) => { o.pose = lt > S.tS ? 'present' : 'think'; } }],
+    live: [(c, lt, u, S) => { const L = [['Dear Bob,', 'saw your 4:12 mile!', '— Jeff'], ['Happy birthday', 'Linda! Size 7', 'is in.'], ['Dear Tom,', 'how are the', 'Tigers fitting?'], ['Dear Mike,', 'new PR at', 'Hayward?']]; L.forEach((l, k) => { const a = pop(lt, S.tL + k * .7); if (a > 0) letter(c, 620 + k * 230, 1000 - (k % 2) * 90, .95 * a, (k % 2 ? .08 : -.07), l); }); }],
+    init: S => { const tJ = A.at(S, 'Jeff Johnson', 1.4); S.tL = A.at(S, 'personal letters', 2.8); S.tS = A.at(S, 'Santa Monica', 8);
+      S.D.over = [(c, lt) => K.card(c, 'JEFF JOHNSON\nFIRST FULL-TIME EMPLOYEE', lt, { at: tJ, x: 1480, y: 230, px: 40, rot: 3 }), (c, lt) => K.card(c, 'FIRST STORE: SANTA MONICA', lt, { at: S.tS, x: 470, y: 230, px: 44, rot: -4 })];
+      S.D.sfx = [[tJ, 'pop', .4], [S.tL, 'paper', .4], [S.tL + 1.4, 'paper', .35], [S.tS, 'chime', .45]]; } },
+  // 5 Bowerman's little book "Jogging"; the park fills with joggers
+  { plate: 'park', cam: { z: [1.1, 1.15], x: [1280, 1280], y: [800, 800] }, bed: [['birds_loop', .4]],
+    figs: [0, 1, 2, 3, 4, 5].map(k => ({ costume: ['shirt', 'shirtsleeves', 'school', 'dress', 'shirt', 'office'][k], hair: ['short', 'long', 'curly', 'bun', 'bald', 'swept'][k], seed: 40 + k, s: 1.25 + (k % 3) * .2, y: 1100 + (k % 3) * 110, mood: 'happy', walk: { x0: -300 - k * 120, x1: 2900, t0: 0, dur: 7 + k * .6, pose: 'run' } })).map((f, k) => Object.assign(f, { anim: (o, lt, u, S) => { const w = R.walkX(lt, f.walk.x0, f.walk.x1, S.tB + k * .5, f.walk.dur, f.s); o.x = w.x; o.t = w.phase; o.pose = 'run'; o.facing = 1; } })),
+    init: S => { S.tB = A.at(S, 'Jogging', 2); const tR = A.at(S, 'running boom', 4.4), tC = A.at(S, 'making customers', 7.5);
+      S.D.over = [(c, lt) => { const a = pop(lt, S.tB - .2); if (a <= 0) return; c.save(); c.translate(1600, 330); c.rotate(.06); c.scale(.78 * a, .78 * a); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(-150, -190, 320, 400); c.fillStyle = '#f2c230'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-160, -200, 320, 400); c.strokeRect(-160, -200, 320, 400); K.outlined(c, 'JOGGING', 0, -80, 70, { fill: '#fff' }); c.fillStyle = INK; c.font = '30px Oswald'; c.textAlign = 'center'; c.fillText('W. J. Bowerman', 0, 0); R.figure(c, { x: 0, y: 170, s: .55, costume: 'shirt', hair: 'short', seed: 3, pose: 'run', t: lt * 9, facing: 1, mood: 'happy' }); c.restore(); },
+        (c, lt) => K.card(c, 'THE RUNNING BOOM', lt, { at: tR, x: 470, y: 230, px: 52, rot: -4 }), (c, lt) => K.card(c, 'MAKING CUSTOMERS', lt, { at: tC, x: 470, y: 340, px: 44, rot: 3 })];
+      S.D.sfx = [[S.tB, 'pop', .45], [tR, 'run_steps', .4], [tC, 'coins', .4]]; } },
+  // 6 the ruined waffle iron; peel it open to reveal the waffle sole: grip without weight
+  { draw: (c, lt, u, S) => { backdrop('kitchen', .55, 8)(c); const o = E.io(K.seg(lt, S.tO, S.tO + 1.2)); NK.waffle(c, 620, 760, 1.5, { t: lt, state: 'sealed', lid: o });
+      const a = K.seg(lt, S.tG - .2, S.tG + .6); if (a > 0) { c.save(); c.globalAlpha = a; c.translate(1340, 560); c.scale(.8 + .2 * E.back(a), .8 + .2 * E.back(a)); c.fillStyle = '#e8e0cc'; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.ellipse(0, 0, 330, 130, 0, 0, 7); c.fill(); c.stroke(); c.save(); c.clip(); c.fillStyle = '#c8bca0'; for (let i = -9; i <= 9; i++) for (let j = -4; j <= 4; j++) { c.fillRect(i * 36 - 12, j * 32 - 10, 24, 20); } c.restore(); c.restore();
+        NK.shoe(c, 1340, 860, 1.4 * a, { col: '#f4f0e6', accent: OR, mark: 'swoosh', sole: 'waffle' }); } },
+    bed: [['hum_loop', .3]],
+    init: S => { S.tO = A.at(S, 'waffle iron', 1.6); S.tG = A.at(S, 'grid', 4.2); const tW = A.at(S, 'grip without', 7);
+      S.D.over = [(c, lt) => K.dateTag(c, '1971', lt, { at: .3 }), (c, lt) => K.title(c, 'THE WAFFLE SOLE', lt, { at: S.tG + .6, x: 1340, y: 220, px: 84, fill: '#ffe8c8' }), (c, lt) => K.card(c, 'GRIP WITHOUT WEIGHT', lt, { at: tW, x: 1340, y: 990, px: 46, rot: -2 })];
+      S.D.sfx = [[S.tO, 'creak', .5], [S.tO + .6, 'paper_tear', .35], [S.tG, 'pop', .5], [tW, 'chime', .45]]; } },
+  // 7 the receipt: 1 WAFFLE IRON
+  { draw: (c, lt, u, S) => { backdrop('kitchen', .45, 10)(c); const a = E.out(K.seg(lt, .1, .7)); c.save(); c.translate(960, 560 + (1 - a) * 500); c.rotate(-.03); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(-250, -380, 520, 780); c.fillStyle = '#fbf8ef'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.moveTo(-260, -390); for (let x = -260; x <= 260; x += 26) c.lineTo(x, -390 + (x / 26 % 2 ? 10 : 0)); c.lineTo(260, 390); for (let x = 260; x >= -260; x -= 26) c.lineTo(x, 390 + (x / 26 % 2 ? -10 : 0)); c.closePath(); c.fill(); c.stroke();
+      const L = ['EUGENE HARDWARE', '', '1971', '', '1  WAFFLE IRON', '', 'TOTAL'], u2 = K.seg(lt, .6, 2.4); L.forEach((l, i) => NK.typed(c, l, -200, -290 + i * 70, i === 4 ? 46 : 36, u2 * L.length - i, i === 4 ? '#c83a2a' : INK)); c.restore(); },
+    bed: [['hum_loop', .25]], over: [(c, lt) => K.card(c, '(A NEW ONE)', lt, { at: 2.4, x: 1460, y: 460, px: 50, rot: 6 })], sfx: [[.1, 'paper', .5], [.6, 'typing', .45], [2.4, 'chime', .4]] },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>
