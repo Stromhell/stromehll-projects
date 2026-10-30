@@ -20,8 +20,12 @@ E
 for S in $(cat $VO/ids.txt); do
   C=$OUT/shots/$S.mp4
   if [ ! -s $C ]; then
-    (cd $ENG && node render.js video "$J" shots/${MOD}_act$A.js $C.tmp.mp4 $S --fps $FPS --crf 21 --timing $OUT/act$A.timing.json)
-    mv $C.tmp.mp4 $C
+    # retry once if the render dies (watchdog kills stalled renders); never keep a partial file
+    for try in 1 2; do
+      (cd $ENG && node render.js video "$J" shots/${MOD}_act$A.js $C.tmp.mp4 $S --fps $FPS --crf 21 --timing $OUT/act$A.timing.json) && { mv $C.tmp.mp4 $C; break; }
+      echo "shot $S render failed (try $try)"; rm -f $C.tmp.mp4
+    done
+    [ -s $C ] || { echo "shot $S failed twice, stopping act $A"; exit 1; }
   fi
   echo "file '$C'" >> $OUT/act$A.list
 done
