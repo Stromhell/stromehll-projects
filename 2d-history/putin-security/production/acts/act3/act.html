@@ -43,17 +43,17 @@ window.SHOTS = [
       S.D.over = [(c, lt) => K.card(c, 'MOST AIRLINES MOVED\nTO TWO ENGINES', lt, { at: S.tR, x: 1460, y: 820, px: 40, rot: 3 }), (c, lt) => K.card(c, 'RUSSIA KEEPS\nFLYING ITS OWN', lt, { at: tK, x: 460, y: 220, px: 46, rot: -3 })];
       S.D.sfx = [[S.tO + .2, 'stamp', .5], [S.tR, 'whoosh', .4], [tK, 'pop', .4]]; } },
   // 3 THE FLYING KREMLIN: floor plan with rooms
-  { draw: (c, lt, u, S) => { backdrop('jet_cabin', .55, 6)(c); floorPlan(c, 980, 610, .72, S.rooms, lt); },
+  { draw: (c, lt, u, S) => { backdrop('jet_cabin', .55, 6)(c); floorPlan(c, 980, 570, .6, S.rooms, lt); },
     bed: [['hum_loop', .35]],
     init: S => { const tB = A.at(S, 'bedroom', 3.4), tM = A.at(S, 'meeting room', 4.4), tD = A.at(S, 'dining', 5.4), tG = A.at(S, 'gym', 6.8); const tF = A.at(S, 'Flying Kremlin', 1.6);
       S.rooms = [['BEDROOM', -560, 300, '#d8c8e8', tB], ['MEETING', -250, 320, '#c8dce8', tM], ['DINING', 80, 280, '#e8dcc0', tD], ['GYM', 370, 220, '#cfe0cf', tG, true]];
-      S.D.over = [(c, lt) => K.title(c, 'THE FLYING KREMLIN', lt, { at: tF, y: 150, px: 92, fill: GOLD }), (c, lt) => { const a = pop(lt, tG + .3); if (a <= 0) return; c.save(); c.globalAlpha = Math.min(1, a); K.outlined(c, '* REPORTEDLY', 1500, 930, 40, { fill: '#fffaf0' }); c.restore(); }];
+      S.D.over = [(c, lt) => K.title(c, 'THE FLYING KREMLIN', lt, { at: tF, y: 150, px: 92, fill: GOLD }), (c, lt) => { const a = pop(lt, tG + .3); if (a <= 0) return; c.save(); c.globalAlpha = Math.min(1, a); K.outlined(c, '* REPORTEDLY', 1560, 840, 40, { fill: '#fffaf0' }); c.restore(); }];
       S.D.sfx = [[tF, 'hit', .5], [tB, 'pop', .4], [tM, 'pop', .4], [tD, 'pop', .4], [tG, 'pop', .4]]; } },
   // 4 reported systems: comms, missile defence, escape
   { draw: (c, lt, u, S) => { backdrop('jet_cabin', .62, 7)(c); PU.jet(c, 960, 640, 1.25, 1); S.cx.forEach(([x, y, tx, ty, lab, t]) => callout(c, x, y, tx, ty, lab, pop(lt, t))); },
     bed: [['hum_loop', .35]],
     init: S => { const tC = A.at(S, 'communications', 2), tM = A.at(S, 'missiles', 3.6), tE = A.at(S, 'escape', 5);
-      S.cx = [[1160, 560, 1380, 260, 'SECURE COMMS', tC], [760, 680, 380, 300, 'MISSILE DEFENCES', tM], [700, 600, 520, 900, 'ESCAPE OPTION', tE]];
+      S.cx = [[1160, 560, 1380, 260, 'SECURE COMMS', tC], [760, 680, 380, 300, 'MISSILE DEFENCES', tM], [700, 600, 520, 830, 'ESCAPE OPTION', tE]];
       S.D.over = [(c, lt) => K.badge(c, 'REPORTED', lt, { at: .3 })]; S.D.sfx = [[tC, 'pop', .4], [tM, 'pop', .4], [tE, 'pop', .4]]; } },
   // 5 in the air with two fighter escorts
   { draw: (c, lt, u, S) => { sky(c, lt); const b = Math.sin(lt * 1.2) * 8; PU.jet(c, 960, 560 + b, .9, 1); const f = E.out(K.seg(lt, S.tF - .4, S.tF + 1.4)); if (f > 0) { fighter(c, -300 + 1000 * f, 330 + Math.sin(lt * 1.5) * 10, .9); fighter(c, -500 + 1200 * f, 820 + Math.sin(lt * 1.3 + 1) * 10, .9); } },
