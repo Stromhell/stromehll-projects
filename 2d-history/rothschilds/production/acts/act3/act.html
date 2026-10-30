@@ -16,7 +16,7 @@ window.SHOTS = [
   // 3.01 Nathan in London: porters carry chests of gold up the gangway at a foggy dock
   { plate: 'dock_fog', cam: { z: [1.04, 1.1], x: [1280, 1300], y: [840, 840] }, bed: [['ocean_loop', .25]],
     figs: [{ x: 2080, y: 1250, s: 1.7, ...RS.NATHAN, facing: -1, pose: 'point', mood: 'focus', anim: (o, lt) => { o.pose = lt % 4 < 2 ? 'point' : 'present'; } },
-      ...[0, 1, 2].map(i => ({ x: 900, y: 1340 + i * 18, s: 1.75, costume: 'farmer', hair: 'short', seed: 60 + i, facing: -1, walk: { x0: 1800 + i * 300, x1: -300, t0: .3 + i * 1.1, dur: 8 }, arms: CARRY, hold: { near: smallChest } }))],
+      ...[0, 1, 2].map(i => ({ x: 900, y: 1340 + i * 18, s: 1.75, costume: 'farmer', hair: 'short', seed: 60 + i, facing: -1, walk: { x0: 1820, x1: -300, t0: .3 + i * 1.4, dur: 8 }, arms: CARRY, hold: { near: smallChest } }))],
     init: S => { const tS = A.at(S, 'star', 1.6), tG = A.at(S, 'gold', 5);
       S.D.over = [(c, lt) => K.badge(c, 'NATHAN ROTHSCHILD · LONDON', lt, { at: .4 }), (c, lt) => K.card(c, 'GOLD TO PAY BRITISH ARMIES', lt, { at: tG, x: 960, y: 200, px: 46, rot: -2 }), (c, lt) => K.card(c, 'ON THE CONTINENT', lt, { at: tG + .8, x: 1380, y: 290, px: 40, rot: 3 })];
       S.D.sfx = [[.3, 'footsteps', .3], [tG, 'coins', .35], [tG + 2, 'creak', .3]]; } },
@@ -30,8 +30,8 @@ window.SHOTS = [
       S.D.sfx = [[.5, 'thud', .6], [1.6, 'thud', .5], [3.0, 'thud', .55], [S.tB + 1.2, 'hit', .4]]; } },
   // 3.03 LEGEND: Nathan leans on his pillar in the Stock Exchange; traders panic around him
   { plate: 'exchange_london', cam: { z: [1.05, 1.12], x: [1280, 1280], y: [820, 820] }, bed: [['trading_loop', .25], ['crowd_loop', .2]],
-    figs: [{ x: 1320, y: 1300, s: 1.95, ...RS.NATHAN, facing: 1, pose: 'think', mood: 'neutral', anim: (o, lt, u, S) => { o.mood = lt > S.tB ? 'happy' : 'neutral'; o.pose = lt > S.tB ? 'present' : 'think'; } },
-      ...[0, 1, 2, 3].map(i => ({ x: 400, y: 1300 + i * 30, s: 1.75, ...RS.TRADER(i), facing: i % 2 ? -1 : 1, mood: 'shocked', walk: { x0: i % 2 ? 2700 : -200, x1: i % 2 ? -200 : 2700, t0: 1 + i * 1.5, dur: 5.5, pose: 'run' } }))],
+    figs: [{ x: 2200, y: 1300, s: 1.95, ...RS.NATHAN, facing: -1, pose: 'think', mood: 'neutral', anim: (o, lt, u, S) => { o.mood = lt > S.tB ? 'happy' : 'neutral'; o.pose = lt > S.tB ? 'present' : 'think'; } },
+      ...[0, 1, 2, 3].map(i => ({ x: 1750 - i * 250, y: 1300 + i * 30, s: 1.75, ...RS.TRADER(i), facing: 1, pose: 'shrug', mood: 'shocked', walk: { x0: -250, x1: 1750 - i * 250, t0: 1 + i * 1.2, dur: (2000 - i * 250) / 380, pose: 'run' } }))],
     init: S => { const tC = A.at(S, 'courier', 1.6), tP = A.at(S, 'panic', 4); S.tB = A.at(S, 'cheap', 6.4);
       S.D.over = [(c, lt) => RS.tag(c, 'LEGEND', lt, .3), (c, lt) => K.card(c, 'NEWS FIRST, BY COURIER?', lt, { at: tC, x: 520, y: 220, px: 42, rot: -3 }), (c, lt) => K.card(c, 'FAKE SELLING, REAL PANIC?', lt, { at: tP, x: 1420, y: 220, px: 42, rot: 3 }), (c, lt) => K.card(c, 'BUY CHEAP, MAKE A FORTUNE?', lt, { at: S.tB, x: 1420, y: 320, px: 40, rot: -2 })];
       S.D.sfx = [[tC, 'gallop_loop', .2], [tP, 'crowd_cheer', .25], [tP + .2, 'run_steps', .3], [S.tB, 'coins', .3]]; } },
