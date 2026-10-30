@@ -42,7 +42,7 @@ window.SHOTS = [
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tH = at(Sh, 'Herodotus', 5); Sh.tD = at(Sh, 'died', Sh.dur - 1.5); },
     draw: (c, lt, u, Sh) => { const L = HEAT(lt);
       // chain of diggers along the ramp at x 260..440 (floor 470 -> top 302)
-      const chain = [[220, 520, C.DIG], [300, 470, C.DIG2], [352, 400, C.DIG3], [404, 330, C.DIG]];
+      const chain = [[205, 545, C.DIG], [322, 414, C.DIG2], [440, 302, C.DIG3]];
       chain.forEach(([x, y, ch], i) => { const ph = (lt * .8 + i * .25) % 1, up = Math.sin(ph * TAU) > 0; S.contact(c, x, y, 16, .35);
         VP.figure(c, [x, y], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, ch, x, y, 30, Object.assign(S.idle(lt, i), { face: 1, shN: up ? 150 : 70, elN: up ? 20 : 60, shF: up ? 140 : 60, elF: up ? 30 : 70, holdN: up ? wr => basket(cc, wr[0] + 4, wr[1] + 8, .8) : null }), { blink: S.blinkAt(lt, i), worry: .6, look: [.5, -.5], time: lt }, L)); });
       // diggers on the floor swinging copper picks
