@@ -92,6 +92,22 @@
   RS.paper = (c, x, y, s = 1, o = {}) => { c.save(); c.translate(x, y); c.rotate(o.rot ?? 0); c.scale(s, s); c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(-150, -196, 316, 420); c.fillStyle = '#e8e0cc'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(-158, -210, 316, 420); c.strokeRect(-158, -210, 316, 420);
     c.fillStyle = '#2a2420'; c.fillRect(-130, -190, 260, 26); c.save(); c.filter = 'blur(9px)'; for (let k = 0; k < 12; k++) { c.fillStyle = `rgba(30,24,20,${.25 + (k % 3) * .15})`; c.beginPath(); c.ellipse(-80 + (k * 53) % 170, -90 + (k * 37) % 150, 30 + k % 4 * 10, 20 + k % 3 * 12, k, 0, 7); c.fill(); } c.restore();
     c.fillStyle = 'rgba(40,30,20,.35)'; for (let k = 0; k < 7; k++) c.fillRect(-130, 90 + k * 16, 240 - (k % 3) * 40, 6); c.restore(); };
+
+  // a cartoon horse (or zebra) seen side-on, facing right; t drives the leg cycle (gait 'trot' | 'gallop' | 'stand')
+  RS.horse = (c, x, y, s = 1, t = 0, o = {}) => { const col = o.col || '#6a4428', dark = shade(col, -.35), gait = o.gait || 'trot', sp = gait === 'gallop' ? 11 : 7, bob = gait === 'stand' ? 0 : Math.abs(Math.sin(t * sp)) * 8;
+    c.save(); c.translate(x, y); c.scale(s * (o.facing ?? 1), s); c.fillStyle = 'rgba(0,0,0,.28)'; c.beginPath(); c.ellipse(0, 0, 150, 16, 0, 0, 7); c.fill();
+    const leg = (hx, hy, ph, front) => { const a = gait === 'stand' ? 0 : Math.sin(t * sp + ph) * (gait === 'gallop' ? .7 : .45), k = gait === 'stand' ? 0 : Math.max(0, -Math.sin(t * sp + ph)) * .9;
+      c.save(); c.translate(hx, hy); c.rotate(a); c.strokeStyle = INK; c.lineWidth = 22; c.lineCap = 'round'; c.beginPath(); c.moveTo(0, 0); c.lineTo(0, 62); c.stroke(); c.strokeStyle = front ? col : dark; c.lineWidth = 16; c.stroke();
+      c.translate(0, 62); c.rotate(front ? -k : k); c.strokeStyle = INK; c.lineWidth = 16; c.beginPath(); c.moveTo(0, 0); c.lineTo(0, 58); c.stroke(); c.strokeStyle = front ? col : dark; c.lineWidth = 10; c.stroke(); c.fillStyle = '#2a1e16'; c.fillRect(-9, 54, 18, 12); c.restore(); };
+    leg(-80, -110 - bob, Math.PI, false); leg(70, -110 - bob, 0, false);
+    c.translate(0, -bob); c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.ellipse(0, -150, 120, 54, 0, 0, 7); c.fill(); c.stroke();
+    if (o.stripes) { c.save(); c.beginPath(); c.ellipse(0, -150, 117, 51, 0, 0, 7); c.clip(); c.strokeStyle = '#1a1614'; c.lineWidth = 12; for (let k = -6; k <= 6; k++) { c.beginPath(); c.moveTo(k * 22, -210); c.quadraticCurveTo(k * 22 + 10, -150, k * 22 - 4, -96); c.stroke(); } c.restore(); }
+    c.beginPath(); c.moveTo(90, -180); c.quadraticCurveTo(130, -250, 150, -280); c.lineTo(190, -250); c.quadraticCurveTo(160, -200, 130, -130); c.closePath(); c.fill(); c.stroke();
+    c.beginPath(); c.ellipse(178, -268, 46, 26, .5, 0, 7); c.fill(); c.stroke(); c.fillStyle = INK; c.beginPath(); c.arc(170, -282, 5, 0, 7); c.fill(); c.fillStyle = col; c.beginPath(); c.moveTo(150, -296); c.lineTo(156, -326); c.lineTo(166, -298); c.fill(); c.stroke();
+    c.fillStyle = o.stripes ? '#1a1614' : dark; c.beginPath(); c.moveTo(150, -290); c.quadraticCurveTo(110, -250, 96, -190); c.lineTo(110, -186); c.quadraticCurveTo(124, -240, 160, -284); c.fill();
+    c.strokeStyle = o.stripes ? '#1a1614' : dark; c.lineWidth = 14; c.lineCap = 'round'; c.beginPath(); c.moveTo(-118, -160); c.quadraticCurveTo(-150, -120 + Math.sin(t * sp) * 10, -140, -80); c.stroke();
+    c.restore(); leg2(); function leg2() { c.save(); c.translate(x, y); c.scale(s * (o.facing ?? 1), s); leg(-70, -110 - bob, Math.PI * .5, true); leg(80, -110 - bob, Math.PI * 1.5, true); c.restore(); }
+    return { saddleX: x - 10 * s * (o.facing ?? 1), saddleY: y - (200 + bob) * s }; };
   function glow(c, x, y, r, col, al) { const g = c.createRadialGradient(x, y, 0, x, y, r); const n = parseInt(col.slice(1), 16); g.addColorStop(0, `rgba(${n >> 16},${n >> 8 & 255},${n & 255},${al})`); g.addColorStop(1, `rgba(${n >> 16},${n >> 8 & 255},${n & 255},0)`); c.fillStyle = g; c.fillRect(x - r, y - r, r * 2, r * 2); }
   function shade(hex, f) { const n = parseInt(hex.slice(1), 16); const m = v => Math.max(0, Math.min(255, Math.round(f < 0 ? v * (1 + f) : v + (255 - v) * f))); return `rgb(${m(n >> 16)},${m(n >> 8 & 255)},${m(n & 255)})`; }
   RS.glow = glow; RS.shade = shade;

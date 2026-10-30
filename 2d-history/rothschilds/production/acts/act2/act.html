@@ -1,0 +1,88 @@
+<!doctype html><html><head><meta charset="utf-8"><title>RS act 2 - five arrows</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "leo";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../rs_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['judengasse_shield', 'map_europe', 'partners_room', 'vineyard', 'judengasse_night']) K.load(n, PL + n + '.jpg');
+const SW = 1920, SH = 1080, INK = RS.INK, pop = RS.pop;
+const backdrop = (name, b = .5, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const bag = (c) => { c.save(); c.fillStyle = '#5a3a22'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.roundRect(-30, 0, 70, 50, 8); c.fill(); c.stroke(); c.beginPath(); c.arc(5, 0, 14, Math.PI, 0); c.stroke(); c.restore(); };
+const NAMES = RS.BROTHERS.map(b => b[0]);
+
+window.SHOTS = [
+  // 2.01 the five sons walk in one by one and line up, each with a travelling bag
+  { plate: 'judengasse_shield', cam: { z: [1.08, 1.14], x: [1280, 1280], y: [880, 880] }, bed: [['city_loop', .15]],
+    figs: [0, 1, 2, 3, 4].map(i => ({ x: 470 + i * 390, y: 1330, s: 1.8, ...RS.bro(i, false), facing: 1, walk: { x0: -300, x1: 470 + i * 390, t0: .2 + i * .5, dur: 2.6 + i * .3 }, hold: { near: bag },
+      anim: (o, lt, u, S) => { if (lt > .2 + i * .5 + 2.6 + i * .3) { o.pose = 'present'; o.facing = 1; o.mood = 'happy'; } } })),
+    init: S => { const tC = A.at(S, 'clever', 1.6), tE = A.at(S, 'Europe', 3.4);
+      S.D.over = [(c, lt) => K.card(c, '5 BROTHERS', lt, { at: .4, x: 960, y: 200, px: 62, rot: -2 }), (c, lt) => K.card(c, 'SENT ACROSS EUROPE', lt, { at: tE, x: 1460, y: 300, px: 44, rot: 3 })];
+      S.D.sfx = [[.3, 'footsteps', .35], [tE, 'whoosh_soft', .3]]; } },
+  // 2.02 the five-arrow map: each brother's name lands on his city
+  { plate: 'map_europe', cam: { z: [1.0, 1.08], x: [1280, 1240], y: [760, 740] }, bed: [['hum_loop', .3]],
+    live: [(c, lt, u, S) => { const F = RS.EU(...RS.CITY.Frankfurt); RS.BROTHERS.forEach(([n, city], i) => { const P = RS.EU(...RS.CITY[city]), at = S.tt[i]; if (lt < at) return;
+      if (city !== 'Frankfurt') RS.arrow(c, F[0], F[1], P[0], P[1], E.out(K.seg(lt, at, at + .8)), { bend: { London: .22, Paris: -.08, Vienna: -.14, Naples: .14 }[city] });
+      if (lt > at + (city === 'Frankfurt' ? 0 : .8)) RS.dot(c, P[0], P[1], lt, at + (city === 'Frankfurt' ? 0 : .8), n.toUpperCase(), { px: 44, dy: city === 'Paris' ? 60 : -54, dx: city === 'London' ? -60 : 0 }); }); }],
+    init: S => { S.tt = NAMES.map((n, i) => A.at(S, n, .4 + i * 1.3));
+      S.D.over = [(c, lt) => K.title(c, 'FIVE CAPITALS', lt, { at: S.tt[4] + 1, y: 130, px: 80 })];
+      S.D.sfx = S.tt.map(t => [t, 'whoosh_soft', .35]).concat(S.tt.map(t => [t + .8, 'pop', .3])); } },
+  // 2.03 one arrow alone snaps; the bundle of five holds. CONCORDIA
+  { draw: (c, lt, u, S) => { backdrop('map_europe', .35, 10)(c); const tS = S.tS, tB = S.tB;
+      // single arrow, snaps in the middle
+      c.save(); c.translate(560, 560); const br = K.seg(lt, tS + .4, tS + .7); for (const side of [-1, 1]) { c.save(); c.rotate(-Math.PI / 2 + side * br * .5); c.translate(0, 0); c.strokeStyle = INK; c.lineWidth = 16; c.lineCap = 'round'; c.beginPath(); if (side < 0) { c.moveTo(0, 0); c.lineTo(0, -220); } else { c.moveTo(0, 0); c.lineTo(0, 200); } c.stroke(); c.strokeStyle = RS.GOLD; c.lineWidth = 10; c.stroke(); c.restore(); }
+      if (lt > tS) { c.fillStyle = '#e8d8b8'; c.strokeStyle = INK; c.lineWidth = 6; for (const hx of [-90, 90]) { c.beginPath(); c.arc(hx, 0, 50, 0, 7); c.fill(); c.stroke(); } } c.restore();
+      if (lt > tS + .7) K.outlined(c, 'SNAP', 560, 320, 80, { fill: '#ffd0c0' });
+      // the bundle with ribbon: hands strain but it holds
+      const a = pop(lt, tB, .5); if (a > 0) { const shake = lt > tB + .6 ? Math.sin(lt * 30) * 4 * (1 - K.seg(lt, tB + 1.8, tB + 2.2)) : 0; c.save(); c.translate(1380 + shake, 640); c.scale(a, a); c.rotate(Math.PI / 2); RS.arrows(c, 0, 0, 1.3, { spread: .15 }); c.restore();
+        if (lt > tB + 2.2) K.outlined(c, 'HOLDS', 1380, 330, 80, { fill: '#d8f0c0' }); } },
+    bed: [['hum_loop', .25]],
+    init: S => { S.tS = A.at(S, 'snap', 2.4); S.tB = A.at(S, 'bundled', 4.2);
+      S.D.over = [(c, lt) => K.card(c, 'THE FAMILY CREST', lt, { at: .4, x: 960, y: 130, px: 52, rot: -2 }), (c, lt) => K.card(c, 'CONCORDIA = UNITY', lt, { at: S.tB + 2.4, x: 960, y: 940, px: 46, rot: 2 })];
+      S.D.sfx = [[S.tS + .45, 'hit', .45], [S.tB, 'whoosh', .3], [S.tB + .6, 'creak', .35], [S.tB + 2.2, 'chime', .4]]; } },
+  // 2.04 a courier gallops along a country road with letters sealed with the five-arrow wax seal
+  { plate: 'vineyard', cam: { z: [1.04, 1.1], x: [1280, 1300], y: [860, 860] }, bed: [['wind_loop', .2], ['gallop_loop', .3]],
+    live: [(c, lt) => { const x = -300 + lt * 330, y = 1340; const sd = RS.horse(c, x, y, 1.7, lt, { gait: 'gallop', col: '#5a3a24' });
+      R.figure(c, { x: sd.saddleX - 10, y: sd.saddleY + 110, s: 1.5, ...RS.MESSENGER, facing: 1, pose: 'sit', mood: 'focus', t: lt, arms: () => ({ shR: 60, elR: -60, shL: 50, elL: -60 }) });
+      c.save(); c.translate(sd.saddleX - 80, sd.saddleY + 40); c.fillStyle = '#5a3a22'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.roundRect(-40, 0, 80, 70, 8); c.fill(); c.stroke(); c.restore(); }],
+    init: S => { const tL = A.at(S, 'letter', 2.4), tF = A.at(S, 'faster', 5.2);
+      S.D.over = [(c, lt) => K.card(c, 'PRIVATE COURIERS', lt, { at: tL, x: 520, y: 220, px: 50, rot: -3 }), (c, lt) => K.card(c, 'FASTER AND SAFER THAN ALMOST ANYONE', lt, { at: tF, x: 1400, y: 220, px: 40, rot: 3 }),
+        (c, lt) => { const a = pop(lt, .4, .45), out = 1 - K.seg(lt, tL - .3, tL); if (a <= 0 || out <= 0) return; c.save(); c.globalAlpha = out; c.translate(1500, 760); c.scale(a * 1.6, a * 1.6); RS.letter(c, 0, 0, 1, { rot: .08 }); c.restore(); }];
+      S.D.sfx = [[.4, 'stamp', .4], [.6, 'neigh', .3], [tF, 'whoosh', .3]]; } },
+  // 2.05 a letter written in Yiddish in Hebrew letters; quill scratches, it is folded and sealed
+  { draw: (c, lt, u, S) => { backdrop('partners_room', .45, 9)(c); const a = pop(lt, .2, .5); if (a <= 0) return; const sealed = lt > S.tF; c.save(); c.translate(900, 560); c.scale(a * 3.4, a * 3.4); RS.letter(c, 0, 0, 1, { open: !sealed, hebrew: true, rot: -.04 }); c.restore();
+      if (!sealed) { const qx = 1250 - ((lt * 160) % 520), qy = 450 + Math.floor((lt * 160) / 520) % 4 * 94; RS.quill(c, qx, qy, 1.1, .3); } },
+    bed: [['hum_loop', .25]],
+    init: S => { const tY = A.at(S, 'Yiddish', 2.2); S.tF = A.at(S, 'few outsiders', 5.4);
+      S.D.over = [(c, lt) => K.card(c, 'YIDDISH IN HEBREW LETTERS', lt, { at: tY, x: 1480, y: 200, px: 44, rot: 3 }), (c, lt) => K.card(c, 'FEW OUTSIDERS COULD READ IT', lt, { at: S.tF, x: 1480, y: 860, px: 42, rot: -2 })];
+      S.D.sfx = [[.4, 'paper', .3], [1.2, 'scrape', .2], [S.tF, 'paper', .35], [S.tF + .3, 'stamp', .4]]; } },
+  // 2.06 five desks joined on the map; letters zip along the lines between the cities
+  { plate: 'map_europe', cam: { z: [1.04, 1.1], x: [1280, 1260], y: [760, 750] }, bed: [['hum_loop', .3]],
+    live: [(c, lt, u, S) => { const C = RS.BROTHERS.map(b => RS.EU(...RS.CITY[b[1]])); const pairs = [[0, 1], [0, 2], [0, 3], [0, 4], [2, 4], [1, 3], [4, 1]];
+      pairs.forEach(([i, j], k) => RS.goldLine(c, C[i][0], C[i][1], C[j][0], C[j][1], E.out(K.seg(lt, .3 + k * .2, 1.2 + k * .2)), { bend: .08, w: 5 }));
+      if (lt > 1.6) pairs.forEach(([i, j], k) => { const ph = ((lt - 1.6) * .45 + k * .37) % 1, a = k % 2 ? ph : 1 - ph, bend = .08, x0 = C[i][0], y0 = C[i][1], x1 = C[j][0], y1 = C[j][1], mx = (x0 + x1) / 2 - (y1 - y0) * bend, my = (y0 + y1) / 2 + (x1 - x0) * bend;
+        const x = (1 - a) * (1 - a) * x0 + 2 * (1 - a) * a * mx + a * a * x1, y = (1 - a) * (1 - a) * y0 + 2 * (1 - a) * a * my + a * a * y1; RS.letter(c, x, y, .3, { rot: .1 }); });
+      C.forEach((p, i) => RS.dot(c, p[0], p[1], lt, .2, '', { r: 22 }));
+      if (lt > S.tT) { const L = C[2]; c.save(); c.translate(L[0], L[1] - 120); const b = Math.sin(lt * 8) * 6; K.outlined(c, '!', 0, b, 110, { fill: '#ffd060' }); c.restore(); } }],
+    init: S => { S.tT = A.at(S, 'trouble', 1.4); const tD = A.at(S, 'days', 3.4), tW = A.at(S, 'fortune', 5.6);
+      S.D.over = [(c, lt) => K.card(c, 'THE OTHERS KNEW WITHIN DAYS', lt, { at: tD, x: 1460, y: 180, px: 42, rot: 3 }), (c, lt) => K.title(c, 'INFORMATION = A FORTUNE', lt, { at: tW, y: 1000, px: 64 })];
+      S.D.sfx = [[.3, 'whoosh_soft', .3], [S.tT, 'alarm', .2], [tD, 'paper', .3], [tW, 'coins', .4]]; } },
+  // 2.07 1812: Mayer on his deathbed, the sons gathered; the will on the table; a candle gutters
+  {
+    draw: (c, lt, u, S) => { backdrop('partners_room', .32, 7)(c); c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = 'rgba(40,40,90,.45)'; c.fillRect(0, 0, SW, SH); c.restore();
+      [0, 1, 2, 3, 4].forEach(i => R.figure(c, { x: 540 + i * 225, y: 820 - (i % 2) * 20, s: 1.1, ...RS.bro(i, false), facing: i < 2 ? 1 : -1, pose: 'present', mood: 'sad', t: lt + i }));
+      c.fillStyle = '#4a2c1a'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(400, 760, 900, 120); c.strokeRect(400, 760, 900, 120); c.fillRect(380, 600, 50, 340); c.strokeRect(380, 600, 50, 340); c.fillRect(1270, 680, 50, 260); c.strokeRect(1270, 680, 50, 260);
+      c.fillStyle = '#f0e8d8'; c.beginPath(); c.roundRect(430, 720, 840, 70, 20); c.fill(); c.stroke(); c.beginPath(); c.ellipse(500, 712, 70, 34, 0, 0, 7); c.fill(); c.stroke();
+      R.figure(c, { x: 760, y: 742, s: 1.0, ...RS.MAYER_OLD, hat: null, facing: 1, pose: 'lie', mood: 'neutral', t: lt });
+      c.fillStyle = '#d8c8a8'; c.beginPath(); c.roundRect(620, 700, 640, 70, 26); c.fill(); c.stroke();
+      c.fillStyle = '#3a2416'; c.fillRect(1520, 780, 260, 20); c.fillRect(1540, 800, 16, 140); c.fillRect(1744, 800, 16, 140); RS.candle(c, 1720, 780, .55, lt);
+      const a = pop(lt, S.tW, .4); if (a > 0) { c.save(); c.translate(1600, 760); c.scale(a, a); c.fillStyle = RS.PAPER; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-60, -20, 110, 20); c.strokeRect(-60, -20, 110, 20); c.restore(); } },
+    bed: [['night_loop', .2]],
+    init: S => { S.tW = A.at(S, 'will', 2.2); const tU = A.at(S, 'united', 3.4);
+      S.D.over = [(c, lt) => K.dateTag(c, '1812', lt, { at: .4 }), (c, lt) => K.card(c, 'THE WILL: STAY UNITED', lt, { at: tU, x: 1440, y: 200, px: 48, rot: 3 }), (c, lt) => K.card(c, 'KEEP IT IN THE FAMILY', lt, { at: tU + 1, x: 1440, y: 300, px: 42, rot: -2 })];
+      S.D.sfx = [[.3, 'breath', .2], [S.tW, 'paper', .3], [tU, 'chime', .3]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>

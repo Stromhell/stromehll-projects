@@ -1,0 +1,68 @@
+<!doctype html><html><head><meta charset="utf-8"><title>RS act 3 - Waterloo</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "leo";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../rs_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['dock_fog', 'battlefield', 'exchange_london', 'library', 'mansion', 'partners_room']) K.load(n, PL + n + '.jpg');
+const SW = 1920, SH = 1080, INK = RS.INK, pop = RS.pop;
+const backdrop = (name, b = .5, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const CARRY = () => ({ shL: 30, elL: -75, shR: 35, elR: -75 });
+const smallChest = (c) => { c.save(); c.scale(.32, .32); RS.chest(c, 40, -20, 1, {}); c.restore(); };
+
+window.SHOTS = [
+  // 3.01 Nathan in London: porters carry chests of gold up the gangway at a foggy dock
+  { plate: 'dock_fog', cam: { z: [1.04, 1.1], x: [1280, 1300], y: [840, 840] }, bed: [['ocean_loop', .25]],
+    figs: [{ x: 2050, y: 1330, s: 1.9, ...RS.NATHAN, facing: -1, pose: 'point', mood: 'focus', anim: (o, lt) => { o.pose = lt % 4 < 2 ? 'point' : 'present'; } },
+      ...[0, 1, 2].map(i => ({ x: 900, y: 1340 + i * 18, s: 1.75, costume: 'farmer', hair: 'short', seed: 60 + i, facing: -1, walk: { x0: 1800 + i * 300, x1: -300, t0: .3 + i * 1.1, dur: 8 }, arms: CARRY, hold: { near: smallChest } }))],
+    init: S => { const tS = A.at(S, 'star', 1.6), tG = A.at(S, 'gold', 5);
+      S.D.over = [(c, lt) => K.badge(c, 'NATHAN ROTHSCHILD · LONDON', lt, { at: .4 }), (c, lt) => K.card(c, 'GOLD TO PAY BRITISH ARMIES', lt, { at: tG, x: 960, y: 200, px: 46, rot: -2 }), (c, lt) => K.card(c, 'ON THE CONTINENT', lt, { at: tG + .8, x: 1380, y: 290, px: 40, rot: 3 })];
+      S.D.sfx = [[.3, 'footsteps', .3], [tG, 'coins', .35], [tG + 2, 'creak', .3]]; } },
+  // 3.02 Waterloo 1815: cannon flashes, smoke drifts, a French eagle standard topples
+  { plate: 'battlefield', cam: { z: [1.04, 1.12], x: [1280, 1320], y: [800, 800] }, bed: [['wind_loop', .2]],
+    live: [(c, lt, u, S) => { for (const [x, y, at] of [[440, 1110, .5], [740, 1060, 1.6], [470, 1110, 3.0]]) { const f = 1 - K.seg(lt, at, at + .35); if (lt > at && f > 0) { RS.glow(c, x, y, 260, '#ffd070', .8 * f); } }
+      const fall = E.inn(K.seg(lt, S.tB + .3, S.tB + 1.3)); c.save(); c.translate(1700, 1250); c.rotate(fall * 1.35); c.fillStyle = '#3a2a1a'; c.fillRect(-7, -460, 14, 460); c.fillStyle = '#1f3f9a'; c.fillRect(7, -440, 70, 170); c.fillStyle = '#f2f0ea'; c.fillRect(77, -440, 70, 170); c.fillStyle = '#c8281e'; c.fillRect(147, -440, 70, 170);
+      c.fillStyle = RS.GOLD; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.moveTo(0, -470); c.lineTo(-44, -520); c.lineTo(-20, -500); c.lineTo(0, -560); c.lineTo(20, -500); c.lineTo(44, -520); c.closePath(); c.fill(); c.stroke(); c.restore(); }],
+    init: S => { S.tB = A.at(S, 'beaten', 2.4);
+      S.D.over = [(c, lt) => K.dateTag(c, 'WATERLOO · JUNE 1815', lt, { at: .4 }), (c, lt) => K.card(c, 'NAPOLEON IS BEATEN', lt, { at: S.tB, x: 960, y: 200, px: 56, rot: -2 })];
+      S.D.sfx = [[.5, 'thud', .6], [1.6, 'thud', .5], [3.0, 'thud', .55], [S.tB + 1.2, 'hit', .4]]; } },
+  // 3.03 LEGEND: Nathan leans on his pillar in the Stock Exchange; traders panic around him
+  { plate: 'exchange_london', cam: { z: [1.05, 1.12], x: [1280, 1280], y: [820, 820] }, bed: [['trading_loop', .25], ['crowd_loop', .2]],
+    figs: [{ x: 1320, y: 1300, s: 1.95, ...RS.NATHAN, facing: 1, pose: 'think', mood: 'neutral', anim: (o, lt, u, S) => { o.mood = lt > S.tB ? 'happy' : 'neutral'; o.pose = lt > S.tB ? 'present' : 'think'; } },
+      ...[0, 1, 2, 3].map(i => ({ x: 400, y: 1330 + (i % 2) * 50, s: 1.75, ...RS.TRADER(i), facing: i % 2 ? -1 : 1, mood: 'shocked', walk: { x0: i % 2 ? 2700 : -200, x1: i % 2 ? -200 : 2700, t0: 1 + i * .8, dur: 5.5, pose: 'run' } }))],
+    init: S => { const tC = A.at(S, 'courier', 1.6), tP = A.at(S, 'panic', 4); S.tB = A.at(S, 'cheap', 6.4);
+      S.D.over = [(c, lt) => RS.tag(c, 'LEGEND', lt, .3), (c, lt) => K.card(c, 'NEWS FIRST, BY COURIER?', lt, { at: tC, x: 520, y: 220, px: 42, rot: -3 }), (c, lt) => K.card(c, 'FAKE SELLING, REAL PANIC?', lt, { at: tP, x: 1420, y: 220, px: 42, rot: 3 }), (c, lt) => K.card(c, 'BUY CHEAP, MAKE A FORTUNE?', lt, { at: S.tB, x: 1420, y: 320, px: 40, rot: -2 })];
+      S.D.sfx = [[tC, 'gallop_loop', .2], [tP, 'crowd_cheer', .25], [tP + .2, 'run_steps', .3], [S.tB, 'coins', .3]]; } },
+  // 3.04 the story in a pamphlet (blurred); a red MYTH stamp; a history book with the real account
+  { draw: (c, lt, u, S) => { backdrop('library', .4, 9)(c); const a = pop(lt, .2, .5); if (a > 0) { c.save(); c.translate(620, 560); c.scale(a * 1.6, a * 1.6); RS.paper(c, 0, 0, 1, { rot: -.05 }); c.restore(); }
+      RS.stamp(c, 'MYTH', 620, 560, lt, S.tM, { px: 120 });
+      const b = pop(lt, S.tH, .5); if (b > 0) { c.save(); c.translate(1340, 580); c.scale(b, b); c.rotate(.04); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(-300, -250, 620, 520); c.fillStyle = '#2a4a3a'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-310, -260, 620, 520); c.strokeRect(-310, -260, 620, 520);
+        for (const sx of [-1, 1]) { c.fillStyle = RS.PAPER; c.fillRect(sx < 0 ? -296 : 4, -246, 292, 492); c.strokeRect(sx < 0 ? -296 : 4, -246, 292, 492); } c.fillStyle = INK; c.font = '30px Anton'; c.textAlign = 'center'; c.fillText('WHAT HISTORIANS FOUND', -150, -190);
+        c.font = '24px SourceSerif'; c.textAlign = 'left'; ['He did get', 'early news.', '', 'No good evidence', 'of a great', 'swindle.'].forEach((t, i) => c.fillText(t, -270, -130 + i * 40)); c.fillStyle = 'rgba(40,30,20,.35)'; for (let k = 0; k < 11; k++) c.fillRect(30, -200 + k * 38, 240 - (k % 3) * 50, 8); c.restore(); } },
+    bed: [['hum_loop', .25]],
+    init: S => { S.tM = A.at(S, 'myth', 1.6); const tA = A.at(S, 'antisemitic', 4); S.tH = A.at(S, 'early news', 6.2); const tE = A.at(S, 'evidence', 8);
+      S.D.over = [(c, lt) => K.card(c, 'SPREAD LATER BY PAMPHLETS', lt, { at: tA - .6, x: 620, y: 140, px: 40, rot: -3 }), (c, lt) => K.card(c, 'SOME OPENLY ANTISEMITIC', lt, { at: tA, x: 620, y: 960, px: 40, rot: 2 }), (c, lt) => RS.tag(c, 'FACT', lt, S.tH, { x: 1680, y: 260 })];
+      S.D.sfx = [[.3, 'paper', .3], [S.tM, 'stamp', .6], [S.tH, 'thud', .4], [tE, 'chime', .3]]; } },
+  // 3.05 the real money: ledgers stack up while a line of bond prices climbs steadily
+  { draw: (c, lt, u, S) => { backdrop('partners_room', .4, 8)(c); for (let k = 0; k < 6; k++) { const at = .4 + k * .7, a = E.out(K.seg(lt, at, at + .4)); if (a <= 0) continue; c.save(); c.translate(460, 900 - k * 70 - (1 - a) * 300); c.globalAlpha = a; c.fillStyle = ['#5a2a1e', '#2a3a5a', '#3a4a2a', '#5a4a1e', '#4a2a3a', '#2a2a2a'][k]; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-200, -60, 400, 60); c.strokeRect(-200, -60, 400, 60); c.fillStyle = RS.PAPER; c.fillRect(-190, -50, 12, 40); c.restore(); }
+      c.save(); c.translate(820, 240); c.fillStyle = RS.PAPER; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(0, 0, 900, 640); c.strokeRect(0, 0, 900, 640); c.strokeStyle = 'rgba(40,30,20,.25)'; c.lineWidth = 2; for (let k = 1; k < 6; k++) { c.beginPath(); c.moveTo(40, k * 100); c.lineTo(870, k * 100); c.stroke(); }
+      c.fillStyle = INK; c.font = '34px Anton'; c.textAlign = 'left'; c.fillText('GOVERNMENT BONDS AFTER THE WAR', 40, 56); c.font = '24px Oswald'; c.fillText('1815', 40, 620); c.textAlign = 'right'; c.fillText('1830s', 870, 620);
+      const u2 = E.io(K.seg(lt, S.tR, S.tR + 4)); c.strokeStyle = '#2e7a3a'; c.lineWidth = 9; c.lineCap = 'round'; c.beginPath(); for (let k = 0; k <= 40 * u2; k++) { const x = 60 + k * 20, y = 540 - k * 9.5 - Math.sin(k * .9) * 14; k ? c.lineTo(x, y) : c.moveTo(x, y); } c.stroke(); c.restore(); },
+    bed: [['hum_loop', .25]],
+    init: S => { S.tR = A.at(S, 'slowly', 1.6); const tL = A.at(S, 'lending', 3);
+      S.D.over = [(c, lt) => K.card(c, 'THE REAL MONEY: SLOW AND STEADY', lt, { at: .4, x: 960, y: 150, px: 46, rot: -2 }), (c, lt) => K.card(c, 'LOANS TO GOVERNMENTS', lt, { at: tL, x: 1480, y: 960, px: 40, rot: 2 })];
+      S.D.sfx = [0, 1, 2, 3, 4, 5].map(k => [.4 + k * .7, 'thud', .3]).concat([[S.tR, 'riser', .25]]); } },
+  // 3.06 1822: the five brothers bow before the Austrian emperor; a coat of arms with five arrows
+  { plate: 'mansion', cam: { z: [1.06, 1.12], x: [1280, 1280], y: [860, 860] }, bed: [['hum_loop', .25]],
+    figs: [{ x: 1980, y: 1320, s: 2.0, ...RS.P({ costume: 'suit', topCol: '#f2f0ea', hair: 'swept', hairCol: '#e8e4dc', seed: 70 }), facing: -1, pose: 'present', mood: 'neutral', hat: (c, X, Y, r) => { c.fillStyle = RS.GOLD; c.strokeStyle = INK; c.lineWidth = 2.5; c.beginPath(); c.moveTo(X - r * .7, Y - r * .7); for (let k = 0; k <= 4; k++) c.lineTo(X - r * .7 + k * r * .35, Y - r * (k % 2 ? 1.0 : 1.4)); c.lineTo(X + r * .7, Y - r * .7); c.closePath(); c.fill(); c.stroke(); } },
+      ...[0, 1, 2, 3, 4].map(i => ({ x: 360 + i * 300, y: 1330, s: 1.8, ...RS.bro(i, false), facing: 1, pose: 'present', mood: 'happy', anim: (o, lt, u, S) => { o.pose = lt > S.tB && lt < S.tB + 1.6 ? 'think' : 'present'; } }))],
+    init: S => { S.tB = A.at(S, 'barons', 2); const tN = A.at(S, 'nobility', 5);
+      S.D.over = [(c, lt) => K.dateTag(c, '1822', lt, { at: .4 }), (c, lt) => K.card(c, 'ALL FIVE MADE BARONS', lt, { at: S.tB, x: 520, y: 220, px: 50, rot: -3 }), (c, lt) => K.card(c, 'FROM THE GHETTO TO NOBILITY', lt, { at: tN, x: 1400, y: 220, px: 42, rot: 3 }),
+        (c, lt) => { const a = pop(lt, tN + .4, .5); if (a > 0) RS.crest(c, 960, 540, .55 * a, { glow: .3 }); }];
+      S.D.sfx = [[S.tB, 'sword_clash', .25], [S.tB + .5, 'sword_clash', .2], [tN + .4, 'stamp', .5], [tN + .5, 'swell', .35]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>
