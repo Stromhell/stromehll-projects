@@ -99,7 +99,7 @@ export const Honey: React.FC = () => {
               })}
             </Layer>
             <Label x={540} y={620} size={84} s={pop(t, T.water, 12, 6)} color="#fff">ALMOST NO WATER</Label>
-            <Sticker t={t} t0={T.die} x={540} y={820} text="GERMS DRY OUT" size={80} fill="#6E5A2E" rot={4} />
+            <Sticker t={t} t0={T.die} x={540} y={1760} text="GERMS DRY OUT" size={80} fill="#6E5A2E" rot={4} />
           </g>
         )}
         {scene === 'acid' && (

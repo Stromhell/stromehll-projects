@@ -72,12 +72,12 @@ export const BananaBerry: React.FC = () => {
         {Array.from({length: 16}).map((_, i) => <circle key={i} cx={(i * 211) % W} cy={(i * 373) % H} r={30 + (i % 4) * 14} fill="#D3EFBF" />)}
         {scene === 'intro' && (
           <g>
-            <g transform={`translate(330 1080) scale(${pop(t, T.banana, 10, 6)})`}><Banana t={t} s={1.1} /></g>
-            <g transform={`translate(330 780)`}><Check ok s={pop(t, T.banana + 0.6, 12, 6)} /></g>
+            <g transform={`translate(280 1080) scale(${pop(t, T.banana, 10, 6)})`}><Banana t={t} s={1.0} /></g>
+            <g transform={`translate(290 790)`}><Check ok s={pop(t, T.banana + 0.6, 12, 6)} /></g>
             <g transform={`translate(790 1180) scale(${pop(t, T.strawberry, 10, 6)})`}><Strawberry t={t} sad={t > T.not} /></g>
             <g transform={`translate(790 880)`}><Check ok={false} s={pop(t, T.not, 12, 6)} /></g>
-            <Label x={330} y={1480} size={80} s={pop(t, T.banana + 0.6, 12, 6)} color="#FFD84D">BERRY</Label>
-            <Label x={790} y={1480} size={74} s={pop(t, T.not, 12, 6)} color="#FF8A8A">NOT A BERRY</Label>
+            <Label x={300} y={1480} size={70} s={pop(t, T.banana + 0.6, 12, 6)} color="#FFD84D">BERRY</Label>
+            <Label x={780} y={1480} size={60} s={pop(t, T.not, 12, 6)} color="#FF8A8A">NOT A BERRY</Label>
             <Label x={540} y={620} size={84} s={pop(t, 0.25, 12, 6)} color="#fff">WAIT, WHAT?</Label>
           </g>
         )}

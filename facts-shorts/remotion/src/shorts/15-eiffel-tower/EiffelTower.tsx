@@ -70,7 +70,7 @@ export const EiffelTower: React.FC = () => {
         )}
         {scene === 'atoms' && (
           <g>
-            <Layer cam={keys(t, [[T.iron - 0.25, 540, 1050, 1.25], [T.heats + 1, 540, 1050, 1]])}>
+            <Layer cam={[540, 1050, 1.05]}>
               <rect x={170} y={800} width={lerp(740, 860, heat)} height={500} rx={40} fill={`rgb(${lerp(200, 255, heat)},${lerp(206, 140, heat)},${lerp(214, 80, heat)})`} stroke={INK} strokeWidth={LW} opacity={0.5} />
               {Array.from({length: 15}).map((_, i) => {
                 const c = i % 5, r = Math.floor(i / 5);
@@ -103,8 +103,8 @@ export const EiffelTower: React.FC = () => {
             <rect x={0} y={1640} width={W} height={280} fill="#7CB860" stroke={INK} strokeWidth={LW} />
             <g transform="translate(470 1640)"><Tower t={t} s={0.95} grow={1 + 0.08 * prog(t, T.hottest, T.fifteen + 0.3)} face="hot" /></g>
             <g transform="translate(860 1640)">
-              <rect x={-40} y={-1060} width={80} height={1060} fill="#FFE45C" stroke={INK} strokeWidth={7} />
-              {Array.from({length: 22}).map((_, i) => <path key={i} d={`M -40 ${-i * 48} L ${i % 5 === 0 ? 0 : -16} ${-i * 48}`} stroke={INK} strokeWidth={5} />)}
+              <rect x={-40} y={-900} width={80} height={900} fill="#FFE45C" stroke={INK} strokeWidth={7} />
+              {Array.from({length: 19}).map((_, i) => <path key={i} d={`M -40 ${-i * 48} L ${i % 5 === 0 ? 0 : -16} ${-i * 48}`} stroke={INK} strokeWidth={5} />)}
             </g>
             <Sticker t={t} t0={T.fifteen} x={540} y={620} text="+15 CM TALLER" size={88} fill="#E5414A" />
           </g>

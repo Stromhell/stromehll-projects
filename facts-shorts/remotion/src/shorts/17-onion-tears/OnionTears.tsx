@@ -83,7 +83,7 @@ export const OnionTears: React.FC = () => {
                 })}
               </g>
               <g transform={`translate(540 ${lerp(-200, 1300, prog(t, T.knife - 0.25, T.knife + 0.1)) - 1500 * prog(t, T.knife + 0.5, T.knife + 0.9)})`}><Knife /></g>
-              <g transform="translate(540 760)"><GasPuff t={t} k={prog(t, T.gas - 0.1, T.gas + 0.5)} s={1.2} /></g>
+              <g transform="translate(540 850)"><GasPuff t={t} k={prog(t, T.gas - 0.1, T.gas + 0.5)} s={1.2} /></g>
             </Layer>
             <Sticker t={t} t0={T.apart} t1={T.knife} x={540} y={1500} text="KEPT APART" size={84} fill="#2C7BE5" />
             <Sticker t={t} t0={T.gas} x={540} y={1500} text="IRRITATING GAS" size={80} fill="#6E9A3C" />
@@ -101,7 +101,7 @@ export const OnionTears: React.FC = () => {
               <ellipse rx={220} ry={110} fill="#fff" stroke={INK} strokeWidth={LW} />
               <circle cx={10 * Math.sin(t * 5)} r={70} fill="#5A8F3C" stroke={INK} strokeWidth={6} /><circle cx={10 * Math.sin(t * 5)} r={34} fill={INK} />
             </g>
-            <Label x={540} y={1760} size={70} s={pop(t, T.eyes, 12, 6)} color="#fff">STRAIGHT TO YOUR EYES</Label>
+            <Label x={540} y={1760} size={58} s={pop(t, T.eyes, 12, 6)} color="#fff">STRAIGHT TO YOUR EYES</Label>
           </g>
         )}
         {scene === 'tears' && (
@@ -129,7 +129,7 @@ export const OnionTears: React.FC = () => {
               <rect x={-200} y={-380} width={400} height={700} rx={40} fill="#EAF4FB" stroke={INK} strokeWidth={LW} />
               <path d="M -200 -120 L 200 -120" stroke={INK} strokeWidth={8} />
               <rect x={150} y={-320} width={20} height={140} rx={8} fill="#9AA5B1" /><rect x={150} y={-60} width={20} height={200} rx={8} fill="#9AA5B1" />
-              <g transform={`translate(0 120) scale(${pop(t, T.chill, 12, 6) * 0.55})`}><Onion t={t} cold mood="calm" /></g>
+              <g transform={`translate(0 120) scale(${pop(t, T.chill, 12, 6) * 0.8})`}><Onion t={t} cold mood="calm" /></g>
             </g>
             <g transform="translate(780 1400)"><Onion t={t} s={0.55} cut={1} cold /></g>
             <g transform="translate(780 1100)"><GasPuff t={t} k={0.25} s={0.6} /></g>

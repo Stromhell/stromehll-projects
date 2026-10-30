@@ -47,7 +47,7 @@ export const LightningSun: React.FC = () => {
               <g transform={`translate(300 1050) scale(${pop(t, 0.15, 10, 6)})`}><Bolt t={t} s={1.1} /></g>
               <g transform={`translate(800 1080) scale(${pop(t, T.sun - 0.1, 10, 6) * 0.9})`}><Sun t={t} mood="smug" /></g>
               <Label x={540} y={1100} size={110} s={pop(t, T.hotter, 12, 6)} color="#FF8A3D">&gt;</Label>
-              <Label x={540} y={620} size={76} s={pop(t, T.hotter, 12, 6)} color="#FFE45C">HOTTER THAN THE SUN</Label>
+              <Label x={540} y={620} size={68} s={pop(t, T.hotter, 12, 6)} color="#FFE45C">HOTTER THAN THE SUN</Label>
               <Sticker t={t} t0={T.sun} x={800} y={1420} text="SURFACE" size={70} fill="#FF8A3D" rot={4} />
             </g>
           )}

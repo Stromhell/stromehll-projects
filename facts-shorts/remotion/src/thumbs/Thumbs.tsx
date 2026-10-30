@@ -50,7 +50,7 @@ export const THUMBS: Th[] = [
   {id: '13bluesky', C: BlueSky, t: T13.long + 0.7, l1: 'WHY IS THE', l2: 'SKY BLUE?', tag: 'SUNLIGHT IS WHITE', bg: '#3D8CF0', bg2: '#1F5FB8', tagFill: '#E5414A', srcY: 560},
   {id: '14honey', C: Honey, t: T14.years + 0.7, l1: 'HONEY NEVER', l2: 'GOES BAD', tag: 'FOR YEARS', bg: '#FFC93D', bg2: '#E59A1F', tagFill: '#2C7BE5', srcY: 700},
   {id: '15eiffeltower', C: EiffelTower, t: T15.fifteen + 0.7, l1: 'EIFFEL TOWER', l2: 'GROWS?!', tag: '+15 CM IN SUMMER', bg: '#FF8A3D', bg2: '#D9481F', tagFill: '#2C7BE5', srcY: 600},
-  {id: '16bananaberry', C: BananaBerry, t: T16.not + 0.7, l1: 'BANANA = BERRY', l2: "STRAWBERRY ISN'T", tag: 'BOTANY IS WEIRD', bg: '#4CC38A', bg2: '#22955F', tagFill: '#E5414A', srcY: 640},
+  {id: '16bananaberry', C: BananaBerry, t: T16.not + 0.45, l1: 'BANANA = BERRY', l2: "STRAWBERRY ISN'T", tag: 'BOTANY IS WEIRD', bg: '#4CC38A', bg2: '#22955F', tagFill: '#E5414A', srcY: 640},
   {id: '17oniontears', C: OnionTears, t: T17.flood + 0.5, l1: 'WHY ONIONS', l2: 'MAKE YOU CRY', tag: '+ THE FIX', bg: '#B07AD8', bg2: '#7A4AA8', tagFill: '#2C7BE5', srcY: 660},
   {id: '18deadsea', C: DeadSea, t: T18.why + 0.5, l1: "YOU CAN'T", l2: 'SINK HERE', tag: 'DEAD SEA', bg: '#4FB3C8', bg2: '#2A7F95', tagFill: '#E5414A', srcY: 760},
   {id: '19lightningsun', C: LightningSun, t: T19.thunder + 0.45, l1: 'HOTTER THAN', l2: 'THE SUN?!', tag: '30,000°C', bg: '#2B3A6A', bg2: '#141A44', tagFill: '#E5414A', srcY: 620},

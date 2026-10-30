@@ -84,7 +84,7 @@ export const GreatWall: React.FC = () => {
                 <path d="M -260 50 L -260 110 M 260 50 L 260 110" stroke="#fff" strokeWidth={10} opacity={prog(t, T.few, T.few + 0.3)} />
               </g>
             </Layer>
-            <Sticker t={t} t0={T.few} x={540} y={620} text="ONLY A FEW METRES WIDE" size={62} fill="#2C7BE5" />
+            <Sticker t={t} t0={T.few} x={540} y={620} text="ONLY A FEW METRES WIDE" size={61} fill="#2C7BE5" />
             <Label x={540} y={1760} size={76} s={pop(t, T.road, 12, 6)} color="#FFE45C">AS WIDE AS A ROAD</Label>
           </g>
         )}
@@ -107,7 +107,7 @@ export const GreatWall: React.FC = () => {
             <g transform="translate(320 1460)" opacity={pop(t, T.stone, 12, 6)}><rect x={-110} y={-110} width={220} height={220} rx={20} fill="#C9A86A" stroke={INK} strokeWidth={LW} /><Label x={0} y={180} size={56}>WALL</Label></g>
             <g transform="translate(760 1460)" opacity={pop(t, T.colour - 0.3, 12, 6)}><rect x={-110} y={-110} width={220} height={220} rx={20} fill="#C2A46E" stroke={INK} strokeWidth={LW} /><Label x={0} y={180} size={56}>LAND</Label></g>
             <Label x={540} y={1470} size={110} s={pop(t, T.colour, 12, 6)} color="#fff">=</Label>
-            <Label x={540} y={620} size={76} s={pop(t, T.colour + 0.2, 12, 6)} color="#fff">SAME COLOUR AS LAND</Label>
+            <Label x={540} y={620} size={68} s={pop(t, T.colour + 0.2, 12, 6)} color="#fff">SAME COLOUR AS LAND</Label>
           </g>
         )}
       </svg>

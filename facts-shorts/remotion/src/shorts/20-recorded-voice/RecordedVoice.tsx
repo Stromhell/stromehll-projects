@@ -55,7 +55,7 @@ export const RecordedVoice: React.FC = () => {
           <g>
             <g transform="translate(400 1650)"><Guy t={t} expr={t > T.weird ? 'yuck' : 'hope'} handL={[-120, -180]} handR={[190, -330]} look={[12, -4]} stand handChildren={<g><rect x={-40} y={-80} width={90} height={160} rx={16} fill="#2B3A4A" stroke={INK} strokeWidth={6} /><rect x={-28} y={-64} width={66} height={110} rx={6} fill="#7FD3FF" /></g>} /></g>
             <g transform="translate(640 1260)"><Arcs t={t} col="#6B4FD8" dir={-30} /></g>
-            <Label x={540} y={620} size={80} s={pop(t, 0.25, 12, 6)} color="#fff">IS THAT MY VOICE?</Label>
+            <Label x={540} y={620} size={76} s={pop(t, 0.25, 12, 6)} color="#fff">IS THAT MY VOICE?</Label>
             <Sticker t={t} t0={T.weird} x={540} y={830} text="WEIRD!" size={96} fill="#E5414A" />
           </g>
         )}
@@ -71,7 +71,7 @@ export const RecordedVoice: React.FC = () => {
               {t > T.skull && Array.from({length: 4}).map((_, i) => <circle key={i} cx={560} cy={1000} r={260 + i * 30 + 10 * Math.sin(t * 30 + i)} fill="none" stroke="#E5414A" strokeWidth={5} opacity={0.4} />)}
               </g>
             </Layer>
-            <Label x={540} y={620} size={82} s={pop(t, T.two, 12, 6)} color="#FFE45C">YOU HEAR IT TWICE</Label>
+            <Label x={540} y={620} size={76} s={pop(t, T.two, 12, 6)} color="#FFE45C">YOU HEAR IT TWICE</Label>
             <Sticker t={t} t0={T.air} x={300} y={1720} text="1. AIR" size={80} fill="#2C7BE5" />
             <Sticker t={t} t0={T.bones} x={760} y={1720} text="2. BONES" size={80} fill="#E5414A" rot={4} />
           </g>
@@ -80,8 +80,8 @@ export const RecordedVoice: React.FC = () => {
           <g>
             <g transform="translate(560 1200) scale(1.35)"><Head t={t} xray={1} /></g>
             {[0, 1, 2].map((i) => <path key={i} transform={`translate(0 ${i * 50})`} d={Array.from({length: 40}).map((_, j) => `${j === 0 ? 'M' : 'L'} ${300 + j * 13} ${1140 + (40 + 30 * prog(t, T.deeper, T.deeper + 0.5)) * Math.sin(j * 0.35 - t * 6 + i)}`).join(' ')} stroke="#6B4FD8" strokeWidth={14} fill="none" strokeLinecap="round" opacity={prog(t, T.low, T.low + 0.4)} />)}
-            <Label x={540} y={620} size={72} s={pop(t, T.low, 12, 6)} color="#fff">BONES LOVE LOW NOTES</Label>
-            <Sticker t={t} t0={T.deeper} x={540} y={1720} text="DEEPER INSIDE YOUR HEAD" size={60} fill="#6B4FD8" />
+            <Label x={540} y={620} size={65} s={pop(t, T.low, 12, 6)} color="#fff">BONES LOVE LOW NOTES</Label>
+            <Sticker t={t} t0={T.deeper} x={540} y={1720} text="DEEPER INSIDE YOUR HEAD" size={59} fill="#6B4FD8" />
           </g>
         )}
         {scene === 'mic' && (
@@ -105,7 +105,7 @@ export const RecordedVoice: React.FC = () => {
               <path d="M -80 100 L -40 170 L 0 100 Z" fill="#fff" stroke={INK} strokeWidth={LW} strokeLinejoin="round" />
               <path d={Array.from({length: 40}).map((_, j) => `${j === 0 ? 'M' : 'L'} ${-240 + j * 12} ${-10 + 26 * Math.sin(j * 1.1 - t * 10)}`).join(' ')} stroke="#3D8CF0" strokeWidth={10} fill="none" strokeLinecap="round" />
             </g>
-            <Label x={540} y={620} size={66} s={pop(t, T.everyone, 12, 6)} color="#FFE45C">HOW EVERYONE HEARS YOU</Label>
+            <Label x={540} y={620} size={59} s={pop(t, T.everyone, 12, 6)} color="#FFE45C">HOW EVERYONE HEARS YOU</Label>
           </g>
         )}
       </svg>

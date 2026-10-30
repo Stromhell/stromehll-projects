@@ -63,8 +63,8 @@ export const EndCard: React.FC<{t: number; card: number}> = ({t, card}) => {
         <g transform={`translate(540 800) rotate(${a * 10})`}>
           {Array.from({length: 16}).map((_, i) => <path key={i} transform={`rotate(${i * 22.5})`} d="M 0 0 L 90 -1600 L -90 -1600 Z" fill="#3D8CF0" />)}
         </g>
-        <Label x={540} y={1330} size={70} s={pop(t, card + 0.45, 10, 6)}>WATCH FULL VIDEOS</Label>
-        <Label x={540} y={1420} size={60} s={pop(t, card + 0.55, 10, 6)}>ON OUR YOUTUBE CHANNEL</Label>
+        <Label x={540} y={1330} size={66} s={pop(t, card + 0.45, 10, 6)}>WATCH FULL VIDEOS</Label>
+        <Label x={540} y={1420} size={54} s={pop(t, card + 0.55, 10, 6)}>ON OUR YOUTUBE CHANNEL</Label>
         <Label x={540} y={1560} size={54} s={pop(t, card + 0.7, 10, 6)} rot={-3} color="#FFE45C">STORMI EXPLAIN EVERYTHING</Label>
       </g>
       <foreignObject x={0} y={0} width={W} height={H} clipPath="url(#iris)">

@@ -61,7 +61,7 @@ export const DeadSea: React.FC = () => {
             {water(1060, '#4FB3C8')}
             <g transform={`translate(500 ${1080 + 8 * Math.sin(t * 2)}) scale(1.2)`}><Floater t={t} /></g>
             {[[180, 1300], [700, 1450], [400, 1650], [900, 1250]].map(([x, y], i) => <g key={i} transform={`translate(${x} ${y}) rotate(${10 * i})`}><SaltCube s={0.3} face={false} /></g>)}
-            <Label x={540} y={620} size={80} s={pop(t, T.float, 12, 6)} color="#fff">NO EFFORT FLOATING</Label>
+            <Label x={540} y={620} size={72} s={pop(t, T.float, 12, 6)} color="#fff">NO EFFORT FLOATING</Label>
             <Sticker t={t} t0={T.why} x={540} y={1760} text="WHY?" size={96} fill="#E5414A" />
           </g>
         )}
@@ -94,7 +94,7 @@ export const DeadSea: React.FC = () => {
                 </g>
               );
             })()}
-            <Label x={540} y={620} size={70} s={pop(t, T.heavier, 12, 6)} color="#fff">SALTY WATER = HEAVIER</Label>
+            <Label x={540} y={620} size={62} s={pop(t, T.heavier, 12, 6)} color="#fff">SALTY WATER = HEAVIER</Label>
             <Label x={540} y={1760} size={70} s={pop(t, T.heavier + 0.8, 12, 6)} color="#FFE45C">THAN YOUR BODY</Label>
           </g>
         )}
@@ -108,10 +108,10 @@ export const DeadSea: React.FC = () => {
                 const k = rise > 0 && rise < 1 ? 1 : 0;
                 return <g key={i} opacity={k} transform={`translate(${520 + i * 200} ${1420 - 120 * rise})`}><path d="M 0 80 L 0 -60" stroke="#fff" strokeWidth={22} strokeLinecap="round" /><path d="M -40 -30 L 0 -80 L 40 -30" stroke="#fff" strokeWidth={22} fill="none" strokeLinecap="round" strokeLinejoin="round" /></g>;
               })}
-              {t > T.cork && <g transform={`translate(880 ${1030 + bob * 1.2}) rotate(${10 * Math.sin(t * 4)})`}><rect x={-34} y={-60} width={68} height={110} rx={18} fill="#C9935A" stroke={INK} strokeWidth={7} /><circle cx={-12} cy={-20} r={6} fill={INK} /><circle cx={12} cy={-20} r={6} fill={INK} /></g>}
+              {t > T.cork && <g transform={`translate(970 ${1030 + bob * 1.2}) rotate(${10 * Math.sin(t * 4)})`}><rect x={-34} y={-60} width={68} height={110} rx={18} fill="#C9935A" stroke={INK} strokeWidth={7} /><circle cx={-12} cy={-20} r={6} fill={INK} /><circle cx={12} cy={-20} r={6} fill={INK} /></g>}
             </Layer>
-            <Sticker t={t} t0={T.weighs} t1={T.cork - 0.1} x={540} y={620} text="PUSHED-ASIDE WATER WEIGHS MORE" size={48} fill="#2C7BE5" />
-            <Label x={540} y={620} size={90} s={pop(t, T.cork, 12, 6)} color="#FFE45C">BOB LIKE A CORK</Label>
+            <Sticker t={t} t0={T.weighs} t1={T.cork - 0.1} x={540} y={620} text="PUSHED-ASIDE WATER WEIGHS MORE" size={46} fill="#2C7BE5" />
+            <Label x={540} y={620} size={86} s={pop(t, T.cork, 12, 6)} color="#FFE45C">BOB LIKE A CORK</Label>
           </g>
         )}
         {scene === 'eyes' && (
@@ -126,7 +126,7 @@ export const DeadSea: React.FC = () => {
               </g>
               <path d="M -184 -114 L 184 254" stroke="#E5414A" strokeWidth={44} strokeLinecap="round" transform={`scale(${pop(t, T.never + 0.3, 12, 6)})`} />
             </g>
-            <Label x={540} y={620} size={74} s={pop(t, T.never, 12, 6)} color="#fff">NEVER IN YOUR EYES!</Label>
+            <Label x={540} y={620} size={68} s={pop(t, T.never, 12, 6)} color="#fff">NEVER IN YOUR EYES!</Label>
           </g>
         )}
       </svg>
