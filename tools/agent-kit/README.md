@@ -86,6 +86,24 @@ claude-plugins-official (frontend-design, hookify, code-review), GitHub MCP.
 | headroom | Not possible here: works as a proxy between Claude Code and the API, which the cloud session controls. rtk does the same job for command output. |
 | caveman | Already active on the account. Use `/caveman` for terse status notes. |
 
+## Head-to-head tests (Pushpam asked 30 Oct 22:30: install the most efficient)
+
+**Harness: superpowers wins (kept).** These are the tokens each one loads into every session before any work starts. The count covers skill, command and agent descriptions plus anything its hooks inject.
+| Harness | Always-loaded | Hooks |
+|---|---|---|
+| superpowers | ~1.5k tokens (15 skills ~730 + intro skill ~800) | SessionStart only |
+| gstack | ~1.8k tokens (63 skills) + a compiled browser to build | none, but 63 slash skills |
+| oh-my-claudecode | ~2.9k tokens (48 skills, 21 commands, 19 agents) | 11 hook events, runs on every prompt and tool call |
+| ECC | ~35k tokens (314 skills, 98 commands, 71 agents) | 8 hook events |
+
+**Code map: Graphify wins (kept).** All three ran on the same copy of the pipeline code (210 files), asked the same questions:
+| Question | Graphify | codegraph | 
+|---|---|---|
+| walk cycle | right files (human rig + cast walk), 8.0k chars | horse legs in vp.js only, 10.1k chars |
+| reel end card / logo | build_reel_dd.py, render.js, kit.js, thumb_dd.py, 5.1k chars | build_reel_dd.py, thumb_dd.py, 12.9k chars |
+| narration timing | voice_batch.py, gen.py (right), 12.6k chars | rig_v1.js, vp.js (wrong), 18.8k chars |
+codegraph indexes faster (5 s vs ~70 s) and pastes the source inline, but missed 2 of 3 questions and used more tokens. Serena is an MCP server with ~30 tools (around 8-10k tokens of tool definitions per session). It looks things up by exact symbol name, not by plain questions, and its language servers can't see scene code that is inline in act.html. It also duplicates Read, Edit and Grep and brings its own memory system.
+
 ## Model-routing tools
 
 Pushpam OK'd these on 30 Oct 22:28 (the Opus 5.5 rule is temporary). They are installed but stay idle until a key or login is added, so sessions still run on Opus 5.5 by default.
