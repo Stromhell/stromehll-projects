@@ -33,3 +33,16 @@ https://claude.ai/artifact/5f2eT3jUT2VXbGGMe3kD7x. Full guide: `tools/graphify/R
 `tools/housekeeping/hourly_clean.sh` runs every hour. It clears rebuildable caches (`__pycache__`,
 pip cache), gzips logs older than 1 hour, and refreshes the Graphify map. It never deletes renders,
 media, uploads, scripts or memory. Log: `/mnt/project-files/housekeeping/hourly-clean.log`.
+
+## Working style (from andrej-karpathy-skills)
+
+1. Think first: state assumptions; if a request has two readings, say which you took.
+2. Simplest fix: no extra features, options or abstractions nobody asked for.
+3. Surgical edits: touch only what the task needs; match existing style; leave unrelated code alone.
+4. Verify against a goal: define "done" (e.g. clean /watch check) and loop until it is met.
+
+## Agent kit (token savers, full list in `tools/agent-kit/README.md`)
+
+- Long jobs (renders, fix loops, reels): use the `pipeline-task-notes` skill so progress lives on disk.
+- Handoffs or "read this whole build": `tools/agent-kit/pack <folder>` gives one compressed file.
+- Harness is superpowers (account plugin). Do not add other harnesses, model routers or memory plugins.
