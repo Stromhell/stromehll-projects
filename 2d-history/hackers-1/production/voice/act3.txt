@@ -1,0 +1,11 @@
+July 2020. His new plan: forget hacking stars one by one. Get inside Twitter itself, and take any account he wants.
+
+He tells a few people online that he works at Twitter. A small crew forms on Discord.
+
+Using LinkedIn, he finds Twitter employees and phones them, pretending to be the internal help desk. Most hang up. A few report him.
+
+But one employee believes him, and signs in on a fake login page. Graham uses those details, and the code from the employee's phone, to get onto Twitter's network.
+
+That account can't reach the controls he wants. So he reads through internal messages until he finds login details for someone with far more access.
+
+Now Graham can change the email and password on almost any Twitter account in the world.

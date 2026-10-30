@@ -1,0 +1,180 @@
+{
+ "dur": 35.615,
+ "cues": [
+  {
+   "t": 0.1,
+   "name": "chime",
+   "gain": 0.4
+  },
+  {
+   "t": 0.5,
+   "name": "run_steps",
+   "gain": 0.35
+  },
+  {
+   "t": 5.422,
+   "name": "paper",
+   "gain": 0.3
+  },
+  {
+   "t": 8.662,
+   "name": "coins",
+   "gain": 0.35
+  },
+  {
+   "t": 10.062,
+   "name": "stamp",
+   "gain": 0.4
+  },
+  {
+   "t": 11.514,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 12.489,
+   "name": "paper",
+   "gain": 0.35
+  },
+  {
+   "t": 16.009,
+   "name": "footsteps",
+   "gain": 0.35
+  },
+  {
+   "t": 18.209,
+   "name": "door_slam",
+   "gain": 0.4
+  },
+  {
+   "t": 17.784,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 20.284,
+   "name": "paper",
+   "gain": 0.25
+  },
+  {
+   "t": 22.284,
+   "name": "pop",
+   "gain": 0.25
+  },
+  {
+   "t": 23.299,
+   "name": "chime",
+   "gain": 0.4
+  },
+  {
+   "t": 23.799,
+   "name": "coins",
+   "gain": 0.35
+  },
+  {
+   "t": 24.374,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 24.549,
+   "name": "whoosh_soft",
+   "gain": 0.3
+  },
+  {
+   "t": 24.999,
+   "name": "whoosh_soft",
+   "gain": 0.3
+  },
+  {
+   "t": 25.449,
+   "name": "whoosh_soft",
+   "gain": 0.3
+  },
+  {
+   "t": 25.899,
+   "name": "whoosh_soft",
+   "gain": 0.3
+  },
+  {
+   "t": 26.349,
+   "name": "whoosh_soft",
+   "gain": 0.3
+  },
+  {
+   "t": 28.825,
+   "name": "hit",
+   "gain": 0.5
+  },
+  {
+   "t": 31.315,
+   "name": "whoosh",
+   "gain": 0.5
+  },
+  {
+   "t": 31.515,
+   "name": "stamp",
+   "gain": 0.7
+  },
+  {
+   "t": 32.215,
+   "name": "hit",
+   "gain": 0.8
+  },
+  {
+   "t": 32.315,
+   "name": "swell",
+   "gain": 0.4
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 12.214,
+   "name": "city_loop",
+   "gain": 0.18
+  },
+  {
+   "start": 0,
+   "end": 12.214,
+   "name": "wind_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 11.414,
+   "end": 18.484,
+   "name": "hum_loop",
+   "gain": 0.25
+  },
+  {
+   "start": 11.414,
+   "end": 18.484,
+   "name": "fire_loop",
+   "gain": 0.15
+  },
+  {
+   "start": 17.684,
+   "end": 25.074,
+   "name": "fire_loop",
+   "gain": 0.22
+  },
+  {
+   "start": 17.684,
+   "end": 25.074,
+   "name": "hum_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 24.274,
+   "end": 32.015,
+   "name": "hum_loop",
+   "gain": 0.3
+  },
+  {
+   "start": 31.215,
+   "end": 36.415,
+   "name": "hum_loop",
+   "gain": 0.2
+  }
+ ]
+}
