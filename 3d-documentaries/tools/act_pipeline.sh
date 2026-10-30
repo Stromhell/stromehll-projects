@@ -44,4 +44,10 @@ E
 #    Cue sheet: $OUT/act$A.cues.json
 python3 $(dirname $0)/sound_mix.py $VO/ids.txt $OUT/act$A.timing.json $OUT/act$A.vo.wav $OUT/act$A.cues.json $OUT/act$A.mix.wav
 ffmpeg -y -loglevel error -i $OUT/act$A.picture.mp4 -i $OUT/act$A.mix.wav -map 0:v -map 1:a -c:v copy -c:a aac -b:a 192k -shortest $OUT/act$A.mp4
+# 5) damage check: the whole act must decode cleanly, else rebuild it from the shot files once
+chk() { [ -s $OUT/act$A.mp4 ] && [ -z "$(ffmpeg -v error -i $OUT/act$A.mp4 -f null - 2>&1 | head -3)" ]; }
+if ! chk; then echo "act $A failed damage check, rebuilding"; rm -f $OUT/act$A.mp4
+  ffmpeg -y -loglevel error -f concat -safe 0 -i $OUT/act$A.list -c copy $OUT/act$A.picture.mp4
+  ffmpeg -y -loglevel error -i $OUT/act$A.picture.mp4 -i $OUT/act$A.mix.wav -map 0:v -map 1:a -c:v copy -c:a aac -b:a 192k -shortest $OUT/act$A.mp4
+  chk || { echo "act $A still damaged"; mv $OUT/act$A.mp4 $OUT/act$A.damaged.mp4; exit 1; }; fi
 echo "act $A done $(date -u +%H:%M)" >> $OUT/progress.txt
