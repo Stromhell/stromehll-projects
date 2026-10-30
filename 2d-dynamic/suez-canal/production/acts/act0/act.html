@@ -1,0 +1,82 @@
+<!doctype html><html><head><meta charset="utf-8"><title>SZ cold open - the ditch</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/vp/engine.js"></script><script src="../../../../shared/vp/cast.js"></script><script src="../../../../shared/vp/scenes.js"></script><script src="../../../../shared/vp/spain.js"></script>
+<script src="../../../../shared/kit.js"></script><script src="../../../../shared/vp.js"></script>
+<script src="../../../../spain-1-al-andalus/production/es1_sets.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act1.js"></script><script src="../../../../spain-1-al-andalus/production/es1_cast.js"></script>
+<script src="../../../../spain-3-civil-war/production/es3_cast.js"></script>
+<script src="../../../../japan-comeback/production/jp_cast.js"></script><script src="../../../../japan-comeback/production/jp_sets.js"></script>
+<script src="../../sz_sets.js"></script><script src="../../sz_cast.js"></script><script src="../../sz_props.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, E = K.E, Z = S.SZ, C = S.SZC, H1 = S.ES1H, TAU = Math.PI * 2;
+const at = VP.at, seg = K.seg, lerp = K.lerp;
+{ const T = window.TIMING, L = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length + 1, start: L.end, end: L.end + 4.8, vo_start: L.end, vo_end: L.end, text: '' }); T.dur = L.end + 4.8; }
+const SUN = lt => VP.light('studio', lt, { swing: 3, set: { L: [.6, -.9], amb: '#6a5a4a', ambA: .2, rim: '#fff0d0', rimA: .8, tint: '#ffe8c0', tintA: .08 } });
+const DUSK = lt => VP.light('studio', lt, { swing: 3, set: { L: [-.7, -.6], amb: '#4a3a5a', ambA: .3, rim: '#ffc890', rimA: .9, tint: '#ffb070', tintA: .14 } });
+const shimmer = (c, lt, y0, y1) => { for (let k = 0; k < 18; k++) { const r = S.rng(k + 50), y = y0 + r() * (y1 - y0); c.fillStyle = S.rgba('#fff4dc', .05); c.fillRect(0, y + Math.sin(lt * 3 + k) * 2, 1280, 2); } };
+// route on the parchment map: the long way round Africa, and the Suez shortcut
+const LONG = [[4, 51.8], [-6, 47], [-11, 40], [-18, 28], [-19, 16], [-12, 5], [4, 0], [10, -14], [14, -30], [19, -37.5], [28, -36], [38, -26], [44, -14], [52, 0], [56, 12], [62, 17], [72, 15], [80, 6], [95, 4], [104, 1.3]];
+const SHORT = [[4, 51.8], [-6, 47], [-11, 40], [-8, 36.4], [4, 37.6], [16, 35], [28, 33.4], [32.4, 31.4], [32.5, 30], [33, 28], [38, 21], [43, 13], [52, 12.4], [62, 15], [72, 15], [80, 6], [95, 4], [104, 1.3]];
+const path = (c, pts, q, col, wdt, dash) => { const P = pts.map(p => Z.ll(...p)); let len = 0; const seglen = P.slice(1).map((p, i) => { const d = Math.hypot(p[0] - P[i][0], p[1] - P[i][1]); len += d; return d; });
+  let rem = len * q; c.save(); c.strokeStyle = col; c.lineWidth = wdt; c.lineCap = 'round'; c.setLineDash(dash || []); c.beginPath(); c.moveTo(...P[0]); let tip = P[0];
+  for (let i = 0; i < seglen.length && rem > 0; i++) { const f = Math.min(1, rem / seglen[i]); tip = [lerp(P[i][0], P[i + 1][0], f), lerp(P[i][1], P[i + 1][1], f)]; c.lineTo(...tip); rem -= seglen[i]; } c.stroke(); c.restore(); return tip; };
+
+window.SHOTS = [
+  // 0.01 WIDE: the Ever Given wedged across the canal; a tiny digger at its bow; ships queued to the horizon. Slow pull back.
+  { set: 'sz_canal', cam: { z: [2.0, 1.0], x: [1060, 640], y: [620, 380], ease: E.io }, bed: [['wind_loop', .25], ['hum_loop', .08]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tS = at(Sh, 'six days', 4); Sh.tB = at(Sh, 'ten billion', 6); },
+    draw: (c, lt, u, Sh) => {
+      const L = SUN(lt);
+      // queue of ships far up the channel
+      for (let k = 0; k < 6; k++) S.szSmallShip(c, 40 + k * 42, 372 + k * 1.6, .32 - k * .02, ['#3a5a7a', '#7a3a3a', '#3a6a4a'][k % 3]);
+      // the wedged ship: stern on the far bank, bow dug into the near bank
+      S.szShip(c, 700, 500, .92, .42, {});
+      // sand heap at the bow + the digger nibbling at it
+      c.fillStyle = '#c89a62'; c.beginPath(); c.ellipse(1010, 664, 90, 26, 0, Math.PI, TAU); c.fill(); c.fillStyle = S.rgba('#f0d098', .5); c.beginPath(); c.ellipse(990, 652, 50, 10, 0, Math.PI, TAU); c.fill();
+      S.szDigger(c, 1110, 690, .7, -1, lt);
+      for (let k = 0; k < 8; k++) { const q = (lt * .7 + k / 8) % 1; c.fillStyle = S.rgba('#d8b07a', .5 * (1 - q)); c.beginPath(); c.arc(1050 + q * 40, 660 - q * 30, 3 + q * 8, 0, TAU); c.fill(); }
+      // two canal workers walk in along the near bank and stop to stare
+      for (const [x0, x1, ch, k] of [[1320, 1190, C.EGMAN, 0], [1380, 1236, C.EGMAN2, 1]]) { const p = seg(lt, .6 + k * .5, 4 + k * .5), x = lerp(x0, x1, E.out(p)); S.contact(c, x, 706, 16, .35);
+        VP.figure(c, [x, 706], { k: .6, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, ch, x, 706, 30, Object.assign(p < 1 ? H1.walk(lt * 1.2 + k) : S.idle(lt, k), { face: -1 }, p >= 1 && k === 0 ? { shN: 150, elN: 10 } : {}), { blink: S.blinkAt(lt, k), look: [-.8, -.4], worry: .5, time: lt }, L)); }
+      shimmer(c, lt, 300, 360);
+    },
+    over: [(c, lt) => K.dateTag(c, 'EVER GIVEN · MARCH 2021', lt, { at: .4 }), (c, lt, u, Sh) => K.badge(c, '6 DAYS STUCK', lt, { at: Sh.tS }), (c, lt, u, Sh) => K.card(c, '~$10 BILLION OF TRADE A DAY', lt, { at: Sh.tB, x: 960, y: 200, px: 54, rot: -2 })],
+    sfx: [[.2, 'wind_loop', .25], [.6, 'creak', .4], ['six days', 'thud', .35], ['ten billion', 'coins', .45]] },
+
+  // 0.02 MED: the parchment map; the long way round Africa draws in red, then the gold shortcut snaps through Suez
+  { set: 'sz_map', cam: (lt, u, Sh) => ({ z: [lerp(1.0, 1.08, E.io(seg(lt, 0, Sh.dur)))], x: [700], y: [380] }), bed: [['drone', .2]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tC = at(Sh, 'Suez Canal', 1.2); Sh.tE = at(Sh, 'eight thousand', 3.4); Sh.tA = at(Sh, 'Africa', 5); },
+    draw: (c, lt, u, Sh) => {
+      const ql = E.io(seg(lt, .3, Sh.tA + .6)), tl = path(c, LONG, ql, '#b82a1a', 4, [10, 7]);
+      if (ql > 0 && ql < 1) S.szSmallShip(c, tl[0], tl[1] - 4, .28, '#7a3a3a');
+      const qs = E.out(seg(lt, Sh.tE - .2, Sh.tE + 1.1)); if (qs > 0) { c.save(); c.shadowColor = '#ffd060'; c.shadowBlur = 14; const ts = path(c, SHORT, qs, '#e8b020', 6); c.restore(); if (qs < 1) VP.glow(c, ts[0], ts[1], 30, '#ffd060', .7); }
+      const [sx, sy] = Z.ll(32.5, 30.3), pq = .5 + .5 * Math.sin(lt * 4); VP.glow(c, sx, sy, 26 + 8 * pq, '#ffd060', seg(lt, Sh.tC - .2, Sh.tC + .4) * .8);
+      c.save(); c.globalAlpha = seg(lt, Sh.tC, Sh.tC + .5); c.font = '30px Caveat'; c.fillStyle = '#5a1a0a'; c.fillText('Suez', sx + 12, sy - 8); c.restore();
+    },
+    over: [(c, lt, u, Sh) => K.badge(c, 'THE SUEZ CANAL', lt, { at: Sh.tC }), (c, lt, u, Sh) => K.card(c, '~8,000 KM SAVED', lt, { at: Sh.tE + .8, x: 1420, y: 820, px: 60, rot: -3 })],
+    sfx: [[.3, 'paper', .4], ['Suez Canal', 'pop', .35], ['eight thousand', 'whoosh', .5], ['Africa', 'tick', .25]] },
+
+  // 0.03 MED: eight portraits flip in like cards, one per ruler; the Frenchman in the top hat lands last
+  { set: 'sz_dunes', cam: { z: [1.0, 1.05], x: [640], y: [360], ease: E.io }, bed: [['wind_loop', .15], ['drone', .15]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; const W = ['Pharaohs', 'Persian', 'Greek', 'Roman', 'caliphs', 'sultans', 'Napoleon', 'Frenchman']; Sh.tk = W.map((w, i) => at(Sh, w, .4 + i * 1.1)); Sh.tY = at(Sh, 'three thousand', Sh.dur - 4); },
+    draw: (c, lt, u, Sh) => {
+      c.fillStyle = S.rgba('#2a1a0a', .25); c.fillRect(0, 0, 1280, 720);
+      const L = SUN(lt), P = [[C.NECHO, 'PHARAOH'], [C.DARIUS, 'PERSIAN KING'], [C.GREEK2, 'GREEK KING'], [C.ROMAN, 'ROMAN EMPEROR'], [C.ARAB, 'CALIPH'], [C.SULTAN, 'SULTAN'], [C.NAPOLEON, 'NAPOLEON'], [C.LESSEPS_H, 'THE FRENCHMAN']];
+      const BG = [['#e0b070', '#9a6a30'], ['#8a6aa0', '#4a3a6a'], ['#9ab8d0', '#4a6a8a'], ['#c86a4a', '#7a2a1a'], ['#7aa070', '#3a5a3a'], ['#c8505a', '#6a1a2a'], ['#6a8ac8', '#2a3a6a'], ['#d8c8a0', '#7a6a4a']];
+      P.forEach(([ch, lab], i) => { const t0 = Sh.tk[i], q = seg(lt, t0 - .5, t0 - .1), f = seg(lt, t0 - .1, t0 + .3); if (q <= 0) return; const x = 92 + i * 156, y = lerp(900, 310 + (i % 2) * 24, E.out(q));
+        S.szCard(c, x, y, 140, 210, ch, lab, L, lt, i, f < .5 ? -(1 - f * 2) : (f - .5) * 2, BG[i]); });
+      // last line: every card dims except the Frenchman's
+      const d = seg(lt, Sh.tY - .2, Sh.tY + .6); if (d > 0) { c.fillStyle = S.rgba('#000', .45 * d); c.fillRect(0, 160, 1080, 420); VP.glow(c, 1184, 310, 120, '#ffe0a0', .4 * d); }
+    },
+    over: [(c, lt, u, Sh) => K.card(c, '3,000 YEARS', lt, { at: Sh.tY + .2, x: 820, y: 900, px: 64, rot: -2 })],
+    sfx: [[.3, 'wind_loop', .2], ...['Pharaohs', 'Persian', 'Greek', 'Roman', 'caliphs', 'sultans', 'Napoleon'].map(w => [w, 'whoosh_soft', .4]), ['Frenchman', 'stamp', .45], ['three thousand', 'thud', .35]] },
+
+  // 0.04 TITLE: the granite stone half-buried, sand streaming off its face at dusk
+  { set: 'sz_dunes', cam: { z: [1.25, 1.4], x: [640, 640], y: [470, 480], ease: E.io }, bed: [['wind_loop', .3]],
+    draw: (c, lt) => { const L = DUSK(lt); c.fillStyle = S.rgba('#6a2a1a', .25); c.fillRect(0, 0, 1280, 720); VP.glow(c, 640, 420, 320, '#ffb070', .3); S.szStone(c, 640, 640, 1.5, .45, lt, { blow: 1 }); },
+    over: [(c, lt) => { const q = seg(lt, 1.2, 2.2); if (q <= 0) return; c.save(); c.globalAlpha = q; c.font = '92px Anton'; c.textAlign = 'center'; c.fillStyle = '#f4ead4'; c.shadowColor = 'rgba(0,0,0,.7)'; c.shadowBlur = 20; c.fillText('THE DITCH EVERY EMPIRE WANTED', 960, 160); c.font = '40px Oswald'; c.fillText('THE SUEZ CANAL · 3,000 YEARS IN THE MAKING', 960, 1010); c.restore(); }],
+    sfx: [[.2, 'wind_loop', .3], [1.2, 'swell', .4]] },
+];
+VP.build(); K.boot();
+</script></body></html>
