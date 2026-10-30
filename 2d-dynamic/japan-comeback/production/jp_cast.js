@@ -37,6 +37,9 @@
     // the occupation
     MACARTHUR: man({ name: 'MacArthur', skin: { base: '#e8b494', shade: '#a8705a', rim: '#ffdcc0' }, hairCol: GRY, shirt: KHAKI, pants: KHAKI, sleeves: true, glasses: true, headwear: X.peaked ? X.peaked({ base: '#8a7a4a', shade: '#4a4022', rim: '#d8c890' }) : null, build: 'broad' }),
     GI: man({ skin: { base: '#e8b494', shade: '#a8705a', rim: '#ffdcc0' }, hairCol: { base: '#6a4a2a', shade: '#2e1e10', rim: '#c09a70' }, shirt: ['#5a5a3a', '#2c2c1c'], pants: ['#5a5a3a', '#2c2c1c'], sleeves: true }),
+    HIROHITO: man({ name: 'Hirohito', shirt: ['#1a1a20', '#08080c'], pants: ['#3a3a40', '#1a1a1e'], sleeves: true, tie: '#5a5a5a', glasses: true, mustache: true, build: 'man' }),
+    FARMER: man({ skin: JSK2, shirt: ['#5a6a5a', '#2c342c'], pants: ['#4a4a3a', '#24241c'], sleeves: true, headwear: X.tenugui({ base: '#d8d0c0', shade: '#908878', rim: '#ffffff' }) }),
+    OLDFARMER: Object.assign(man({ skin: JSK2, hairCol: GRY, shirt: ['#6a5a40', '#34281c'], pants: ['#4a4a3a', '#24241c'], sleeves: true }), { build: 'elder', hair: 'elder' }),
     // workers and bosses
     WORKER: man({ shirt: ['#5a6a7a', '#2c343e'], pants: ['#5a6a7a', '#2c343e'], sleeves: true, headwear: X.tenugui({ base: '#e8e4d8', shade: '#a09a8a', rim: '#ffffff' }) }),
     WORKER2: man({ skin: JSK2, shirt: ['#7a6a4a', '#3e3424'], pants: ['#4a4a40', '#24241e'], sleeves: true, build: 'broad' }),
