@@ -54,8 +54,9 @@ export const LightningSun: React.FC = () => {
           {scene === 'thermo' && (
             <g>
               <g transform="translate(300 1560)"><Thermo t={t} k={pop(t, T.five - 0.3, 12, 6) * 0.85} level={0.18 * prog(t, T.five, T.five + 0.8)} col="#FF8A3D" lab="SUN" val="5,500°C" /></g>
-              <g transform="translate(780 1560)"><Thermo t={t} k={pop(t, T.thirty - 0.3, 12, 6) * 0.85} level={prog(t, T.thirty, T.thirty + 0.9)} col="#FFE45C" lab="BOLT" val="30,000°C" /></g>
+              <g transform="translate(780 1560)"><Thermo t={t} k={pop(t, T.five + 1.4, 12, 6) * 0.85} level={prog(t, T.thirty, T.thirty + 0.9)} col="#FFE45C" lab="BOLT" val="30,000°C" /></g>
               <g transform={`translate(780 ${1560 - 760 * prog(t, T.thirty, T.thirty + 0.9) * 0.85 - 40})`} opacity={prog(t, T.thirty + 0.6, T.thirty + 0.9)}>{[0, 1, 2].map((i) => <path key={i} d={`M ${-60 + i * 60} -60 q -16 -30 0 -60`} stroke="#FF6A3D" strokeWidth={12} fill="none" strokeLinecap="round" />)}</g>
+              {t < T.thirty && <Sticker t={t} t0={T.five + 2.2} x={540} y={570} text="WHY?" size={90} fill="#2C7BE5" />}
               <Sticker t={t} t0={T.fraction} x={540} y={570} text="IN A SPLIT SECOND" size={70} fill="#E5414A" />
             </g>
           )}
@@ -68,21 +69,21 @@ export const LightningSun: React.FC = () => {
               })}
               {Array.from({length: 14}).map((_, i) => {
                 const a = (i / 14) * Math.PI * 2; const k = prog(t, T.blasts, T.shock + 0.6);
-                const r = 230 + 290 * k;
+                const r = 230 + 200 * k;
                 return <g key={i} transform={`translate(${540 + Math.cos(a) * r} ${980 + Math.sin(a) * r * 1.1})`}><circle r={30} fill="#BFE6FF" stroke={INK} strokeWidth={6} /><circle cx={-8} cy={-4} r={5} fill={INK} /><circle cx={8} cy={-4} r={5} fill={INK} /><ellipse cx={0} cy={12} rx={6} ry={8} fill={INK} /></g>;
               })}
-              <Sticker t={t} t0={T.shock} x={540} y={620} text="SHOCK WAVE" size={92} fill="#2C7BE5" />
+              <Sticker t={t} t0={T.shock} x={540} y={1700} text="SHOCK WAVE" size={92} fill="#2C7BE5" />
             </g>
           )}
           {scene === 'boom' && (
             <g>
-              <g transform="translate(540 1640)"><Guy t={t} expr="worried" handL={[-130, -390]} handR={[130, -390]} bendL={40} bendR={40} look={[0, -6]} stand sy={1 - 0.06 * pop(t, T.thunder, 14, 5)} /></g>
+              <g transform="translate(540 1640)"><Guy t={t} expr="worried" handL={[-95, -330]} handR={[95, -330]} bendL={0.3} bendR={0.3} look={[0, -6]} stand sx={1.2} sy={1.2 * (1 - 0.06 * pop(t, T.thunder, 14, 5))} /></g>
               <path d="M 0 1640 L 1080 1640 L 1080 1920 L 0 1920 Z" fill="#3E5A3A" stroke={INK} strokeWidth={LW} />
-              <g transform={`translate(540 900) rotate(-6) scale(${pop(t, T.thunder, 12, 5) * 1.05})`}>
+              <g transform={`translate(540 760) rotate(-6) scale(${pop(t, T.thunder, 12, 5) * 1.05})`}>
                 <path d="M -420 -20 L -300 -170 L -240 -60 L -100 -220 L -40 -90 L 100 -230 L 160 -80 L 320 -190 L 300 -40 L 430 -20 L 320 60 L 400 200 L 220 120 L 160 240 L 40 120 L -80 230 L -140 110 L -320 200 L -280 60 Z" fill="#FFE45C" stroke={INK} strokeWidth={LW} strokeLinejoin="round" />
                 <Label x={0} y={50} size={170} color="#E5414A">BOOM!</Label>
               </g>
-              <Sticker t={t} t0={T.thunder + 0.4} x={540} y={1330} text="= THUNDER" size={84} fill="#2C7BE5" />
+              <Sticker t={t} t0={T.thunder + 0.4} x={540} y={1790} text="= THUNDER" size={84} fill="#2C7BE5" />
             </g>
           )}
           {scene === 'jump' && (

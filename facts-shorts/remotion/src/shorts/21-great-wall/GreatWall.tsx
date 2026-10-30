@@ -35,10 +35,10 @@ const wallPath = 'M -100 1300 C 100 1150 200 1350 380 1200 S 620 1050 760 1180 S
 
 export const GreatWall: React.FC = () => {
   const t = useCurrentFrame() / FPS;
-  const scene = t < T.astronauts - 0.25 ? 'intro' : t < T.few - 0.25 ? 'long' : t < T.orbit - 0.25 ? 'road' : t < T.stone - 0.25 ? 'orbit' : 'blend';
+  const scene = t < T.long - 0.3 ? 'intro' : t < T.few - 0.25 ? 'long' : t < T.orbit - 0.25 ? 'road' : t < T.stone - 0.25 ? 'orbit' : 'blend';
   const cues: Cue[] = [
     {f: 'whoosh', at: 0.15, db: -24}, {f: 'pop', at: T.space, db: -20},
-    {f: 'whoosh', at: T.astronauts - 0.25, db: -24}, {f: 'blegh', at: T.not, db: -22},
+    {f: 'blegh', at: T.not, db: -22},
     {f: 'whoosh', at: T.long - 0.2, db: -24}, {f: 'rise', at: T.long, db: -24},
     {f: 'whoosh', at: T.few - 0.25, db: -24}, {f: 'pop', at: T.few + 0.2, db: -20}, {f: 'boing', at: T.road, db: -20},
     {f: 'whoosh', at: T.orbit - 0.25, db: -22}, {f: 'tick', at: T.hundreds, db: -20}, {f: 'sad', at: T.thin, db: -22},
@@ -107,7 +107,7 @@ export const GreatWall: React.FC = () => {
             <g transform="translate(320 1460)" opacity={pop(t, T.stone, 12, 6)}><rect x={-110} y={-110} width={220} height={220} rx={20} fill="#C9A86A" stroke={INK} strokeWidth={LW} /><Label x={0} y={180} size={56}>WALL</Label></g>
             <g transform="translate(760 1460)" opacity={pop(t, T.colour - 0.3, 12, 6)}><rect x={-110} y={-110} width={220} height={220} rx={20} fill="#C2A46E" stroke={INK} strokeWidth={LW} /><Label x={0} y={180} size={56}>LAND</Label></g>
             <Label x={540} y={1470} size={110} s={pop(t, T.colour, 12, 6)} color="#fff">=</Label>
-            <Label x={540} y={620} size={68} s={pop(t, T.colour + 0.2, 12, 6)} color="#fff">SAME COLOUR AS LAND</Label>
+            <Label x={540} y={620} size={58} s={pop(t, T.colour + 0.2, 12, 6)} color="#fff">SAME COLOUR AS LAND</Label>
           </g>
         )}
       </svg>

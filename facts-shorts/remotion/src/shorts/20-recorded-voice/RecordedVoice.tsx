@@ -81,7 +81,7 @@ export const RecordedVoice: React.FC = () => {
             <g transform="translate(560 1200) scale(1.35)"><Head t={t} xray={1} /></g>
             {[0, 1, 2].map((i) => <path key={i} transform={`translate(0 ${i * 50})`} d={Array.from({length: 40}).map((_, j) => `${j === 0 ? 'M' : 'L'} ${300 + j * 13} ${1140 + (40 + 30 * prog(t, T.deeper, T.deeper + 0.5)) * Math.sin(j * 0.35 - t * 6 + i)}`).join(' ')} stroke="#6B4FD8" strokeWidth={14} fill="none" strokeLinecap="round" opacity={prog(t, T.low, T.low + 0.4)} />)}
             <Label x={540} y={620} size={65} s={pop(t, T.low, 12, 6)} color="#fff">BONES LOVE LOW NOTES</Label>
-            <Sticker t={t} t0={T.deeper} x={540} y={1720} text="DEEPER INSIDE YOUR HEAD" size={59} fill="#6B4FD8" />
+            <Sticker t={t} t0={T.deeper} x={540} y={1720} text="DEEPER INSIDE YOUR HEAD" size={52} fill="#6B4FD8" />
           </g>
         )}
         {scene === 'mic' && (
@@ -92,7 +92,7 @@ export const RecordedVoice: React.FC = () => {
             <path d="M 600 1500 L 780 1500" stroke="#E5414A" strokeWidth={16} strokeLinecap="round" opacity={prog(t, T.air2, T.air2 + 0.3)} />
             <g transform="translate(700 1560)" opacity={prog(t, T.air2, T.air2 + 0.3)}><path d="M -40 -40 L 40 40 M 40 -40 L -40 40" stroke="#E5414A" strokeWidth={16} strokeLinecap="round" /></g>
             <Sticker t={t} t0={T.microphone} x={540} y={620} text="MIC = AIR ONLY" size={86} fill="#2C7BE5" />
-            <Label x={540} y={1760} size={66} s={pop(t, T.air2 + 0.2, 12, 6)} color="#FF8A8A">NO BONE BASS</Label>
+            <Sticker t={t} t0={T.air2 + 0.2} x={540} y={1760} text="NO BONE BASS" size={66} fill="#E5414A" />
           </g>
         )}
         {scene === 'others' && (
@@ -105,7 +105,8 @@ export const RecordedVoice: React.FC = () => {
               <path d="M -80 100 L -40 170 L 0 100 Z" fill="#fff" stroke={INK} strokeWidth={LW} strokeLinejoin="round" />
               <path d={Array.from({length: 40}).map((_, j) => `${j === 0 ? 'M' : 'L'} ${-240 + j * 12} ${-10 + 26 * Math.sin(j * 1.1 - t * 10)}`).join(' ')} stroke="#3D8CF0" strokeWidth={10} fill="none" strokeLinecap="round" />
             </g>
-            <Label x={540} y={620} size={59} s={pop(t, T.everyone, 12, 6)} color="#FFE45C">HOW EVERYONE HEARS YOU</Label>
+            {t < T.everyone ? <Label x={540} y={620} size={72} s={pop(t, T.thinner, 12, 6)} color="#fff">THINNER</Label>
+              : <Label x={540} y={620} size={59} s={pop(t, T.everyone, 12, 6)} color="#FFE45C">HOW EVERYONE HEARS YOU</Label>}
           </g>
         )}
       </svg>

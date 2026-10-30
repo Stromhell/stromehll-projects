@@ -53,7 +53,7 @@ export const THUMBS: Th[] = [
   {id: '16bananaberry', C: BananaBerry, t: T16.not + 0.45, l1: 'BANANA = BERRY', l2: "STRAWBERRY ISN'T", tag: 'BOTANY IS WEIRD', bg: '#4CC38A', bg2: '#22955F', tagFill: '#E5414A', srcY: 640},
   {id: '17oniontears', C: OnionTears, t: T17.flood + 0.5, l1: 'WHY ONIONS', l2: 'MAKE YOU CRY', tag: '+ THE FIX', bg: '#B07AD8', bg2: '#7A4AA8', tagFill: '#2C7BE5', srcY: 660},
   {id: '18deadsea', C: DeadSea, t: T18.why + 0.5, l1: "YOU CAN'T", l2: 'SINK HERE', tag: 'DEAD SEA', bg: '#4FB3C8', bg2: '#2A7F95', tagFill: '#E5414A', srcY: 760},
-  {id: '19lightningsun', C: LightningSun, t: T19.thunder + 0.45, l1: 'HOTTER THAN', l2: 'THE SUN?!', tag: '30,000°C', bg: '#2B3A6A', bg2: '#141A44', tagFill: '#E5414A', srcY: 620},
+  {id: '19lightningsun', C: LightningSun, t: T19.sun + 0.8, l1: 'HOTTER THAN', l2: 'THE SUN?!', tag: '30,000°C', bg: '#2B3A6A', bg2: '#141A44', tagFill: '#E5414A', srcY: 680, s: 1.4, dx: -40},
   {id: '20recordedvoice', C: RecordedVoice, t: T20.skull + 0.6, l1: 'WHY YOUR VOICE', l2: 'SOUNDS WEIRD', tag: 'ON RECORDINGS', bg: '#7A5CC8', bg2: '#4B3596', tagFill: '#E5414A', srcY: 640},
   {id: '21greatwall', C: GreatWall, t: T21.not + 0.5, l1: 'GREAT WALL', l2: 'FROM SPACE?', tag: 'ASTRONAUTS SAY NO', bg: '#2B3A6A', bg2: '#141A44', tagFill: '#E5414A', srcY: 700},
 ];
