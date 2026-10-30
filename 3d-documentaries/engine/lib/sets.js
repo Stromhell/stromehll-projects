@@ -55,7 +55,7 @@ function wheel(r, w, mats) {
   const tyre = m(new THREE.TorusGeometry(r - w * .35, w * .42, 14, 32), mats.tyre); tyre.scale.z = 1.25; g.add(tyre);
   const hub = m(new THREE.CylinderGeometry(r * .55, r * .55, w * .9, 24), mats.hub, { rot: [P / 2, 0, 0] }); g.add(hub);
   const cap = m(new THREE.CylinderGeometry(r * .2, r * .25, w * 1.0, 12), mats.metal, { rot: [P / 2, 0, 0] }); g.add(cap);
-  g.rotation.y = P / 2; return g;
+  g.rotation.y = P / 2; g.userData.wheelR = r; return g;
 }
 
 // ---------- livery ----------
@@ -225,10 +225,8 @@ export function airstair(h = 4.0, o = {}) {
   g.add(m(new THREE.BoxGeometry(2.4, .25, .2), dark, { pos: [0, .55, 3.98] }));
   for (const x of [-.8, .8]) g.add(m(new THREE.CylinderGeometry(.11, .11, .05, 16), std(0xfff3d0, { emissive: 0xfff0c0, ei: .6 }), { pos: [x, .95, 3.93], rot: [P / 2, 0, 0] }));
   g.add(m(new THREE.BoxGeometry(2.25, .06, 1.85), dark, { pos: [0, 2.33, 3.0] }));
-  for (const [x, z] of [[-1, 2.6], [1, 2.6], [-1, -2.6], [1, -2.6]]) {
-    g.add(m(new THREE.CylinderGeometry(.42, .42, .3, 24), tyre, { pos: [x, .42, z], rot: [0, 0, P / 2] }));
-    g.add(m(new THREE.CylinderGeometry(.22, .22, .02, 20), rail, { pos: [x * 1.16, .42, z], rot: [0, 0, P / 2] }));
-  }
+  const wm = { tyre, hub: std(0x8a8c90, { rough: .4, metal: .6 }), metal: rail };
+  for (const [x, z] of [[-1, 2.6], [1, 2.6], [-1, -2.6], [1, -2.6]]) { const w = wheel(.42, .3, wm); w.position.set(x, .42, z); g.add(w); }
   const st = new THREE.Group(); st.position.set(-.2, 1.1, 0); g.add(st);
   const n = Math.round(h / .19);
   for (let i = 0; i < n; i++) st.add(m(new THREE.BoxGeometry(1.3, .05, .3), std(0x6a6c70, { rough: .7, metal: .4 }), { pos: [-i * len / n, (i + 1) * (h - 1.1) / n, 0] }));

@@ -382,14 +382,14 @@ Object.assign(shots, {
     scene.add(real.box(2.2, 2.4, 2.4, new THREE.MeshStandardMaterial({ color: 0xe8e2d4, roughness: .8, side: THREE.BackSide }), { pos: [-.1, 1.2, -3.1], cast: false }));
     const gl = new THREE.PointLight(0xfff4e0, 30, 6, 2); gl.position.set(-.1, 2.0, -3.4); scene.add(gl);
     const fe = await real.human({ id: C.CREW.engineer, seed: 42 }); real.put(scene, fe, { pos: [-.15, 0, -1.35], rot: P, mood: 'surprised' });
-    const h = await real.human({ id: C.HJ.bose, seed: 81 }); real.put(scene, h, { pos: [-.12, 0, -2.75], rot: 0, mood: 'stern' });
+    const h = await real.human({ id: C.HJ.bose, seed: 81 }); real.put(scene, h, { pos: [.32, 0, -3.0], rot: -.25, mood: 'stern' });
     C.attach(h, C.pistolShape(), 'RightHand', [0, -.08, .05], [P / 2, 0, 0]);
     [fe, h].forEach(p => p.userData.driven = true);
     const cam = C.dolly(camera, { pos: [.6, 1.55, .6], look: [-.15, 1.4, -2.2], fov: 50 }, { pos: [.35, 1.55, -.2], look: [-.13, 1.45, -2.4], fov: 44 }, { ease: u => 1 - (1 - Math.min(1, u * 2.2)) ** 3 });
     return (t, u) => {
       cam(u);
-      fd.door.setOpen(C.ease(C.seg(t, .2, .9)));
-      fe.update(t, { pose: 'idle', mood: 'surprised', arm: t > 1.1 ? 'raiseBoth' : null });
+      fd.door.setOpen(-C.ease(C.seg(t, .2, .9)));
+      fe.update(t, { pose: 'idle', mood: 'surprised', arm: t > 1.1 ? 'handsUp' : null });
       h.update(t, { pose: 'idle', mood: 'stern', arm: t > .7 ? 'point' : null });
     };
   },

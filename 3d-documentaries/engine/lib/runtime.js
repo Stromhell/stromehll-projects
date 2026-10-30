@@ -59,6 +59,12 @@ window.frame = (t, fmt = 'jpeg', q = .93) => {
   R.uni.fade.value = (meta.fadeIn ? core.clamp(t / .6) : 1) * (meta.fadeOut ? core.clamp((dur - t) / .8) : 1) * (meta.black ? 0 : 1);
   scene.traverse(o => { if (o.userData.person && o.userData.auto !== false && !o.userData.driven) o.update(t); });
   upd && upd(t, u);
+  // wheels roll with their vehicle: spin each wheel by the distance its hub moved along the vehicle's heading
+  scene.updateMatrixWorld();
+  scene.traverse(o => { if (!o.userData.wheelR || o.rotation.x !== 0) return;
+    const p = new THREE.Vector3().setFromMatrixPosition(o.matrixWorld), prev = o.userData.prevPos;
+    if (prev && t > (o.userData.prevT ?? -1)) { const fwd = new THREE.Vector3(0, 0, 1).transformDirection(o.parent.matrixWorld); o.rotation.z += p.clone().sub(prev).dot(fwd) / o.userData.wheelR; }
+    o.userData.prevPos = p; o.userData.prevT = t; });
   R.render(scene, camera, t);
   ox.imageSmoothingQuality = 'high'; ox.drawImage(gl, 0, 0, core.W, core.H);
   if (!opts.sketch || opts.sketchUI) {

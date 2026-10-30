@@ -241,6 +241,7 @@ export async function human(o = {}) {
     for (const [sd, sg] of [['Left', 1], ['Right', -1]]) {
       const right = sg < 0;
       const mine = (a) => arm === a || (arm === a + 'Both');
+      if (arm === 'handsUp') { aim(sd + 'Arm', sg * .9, .3, .15); aim(sd + 'ForeArm', sg * .12, 1, .08); aim(sd + 'Hand', sg * .05, 1, 0); continue; }
       if ((right && arm === 'raise') || arm === 'raiseBoth') { aim(sd + 'Arm', sg * .35, 1, .1); aim(sd + 'ForeArm', sg * .15, 1, 0); aim(sd + 'Hand', 0, 1, 0); continue; }
       if (right && arm === 'point') { aim(sd + 'Arm', sg * .15, .05, 1); aim(sd + 'ForeArm', sg * .05, .08, 1); aim(sd + 'Hand', 0, .05, 1); continue; }
       // handset to the right ear (left arm rests)

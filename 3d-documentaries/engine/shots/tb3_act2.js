@@ -195,7 +195,7 @@ export const shots = {
     const cb = await sets.cabin(k, { len: 10, lampI: 4, hemi: .6 });
     const pax = await C.fillCabin(k, cb, { mood: 'worried', skip: s => (s.row + s.col) % 5 === 0 });
     const over = {}; pax.forEach((p, i) => over[p.uuid] = { mood: 'worried', look: i % 2 ? .4 : -.3, arm: i % 4 === 0 ? 'cover' : 'lap' });
-    const cam = C.dolly(camera, { pos: [1.11, 1.25, 4.4], look: [1.4, 1.0, 1.5], fov: 44 }, { pos: [1.11, 1.22, 2.6], look: [1.6, 1.0, 0], fov: 40 });
+    const cam = C.dolly(camera, { pos: [1.11, 1.62, 4.4], look: [1.5, 1.0, 1.2], fov: 46 }, { pos: [1.11, 1.6, 3.0], look: [1.7, 1.0, -.2], fov: 42 });
     return (t, u) => { cam(u); C.idleSeated(pax, t, over); };
   },
   // night over Africa: reading lights go off one by one
