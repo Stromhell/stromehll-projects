@@ -1,0 +1,112 @@
+<!doctype html><html><head><meta charset="utf-8"><title>SZ act 2 - the canal that kept dying</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/vp/engine.js"></script><script src="../../../../shared/vp/cast.js"></script><script src="../../../../shared/vp/scenes.js"></script><script src="../../../../shared/vp/spain.js"></script>
+<script src="../../../../shared/kit.js"></script><script src="../../../../shared/vp.js"></script>
+<script src="../../../../spain-1-al-andalus/production/es1_sets.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act1.js"></script><script src="../../../../spain-1-al-andalus/production/es1_cast.js"></script>
+<script src="../../../../spain-3-civil-war/production/es3_cast.js"></script>
+<script src="../../../../japan-comeback/production/jp_cast.js"></script><script src="../../../../japan-comeback/production/jp_sets.js"></script>
+<script src="../../sz_sets.js"></script><script src="../../sz_cast.js"></script><script src="../../sz_props.js"></script><script src="../../sz_sets2.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, E = K.E, Z = S.SZ, C = S.SZC, H1 = S.ES1H, TAU = Math.PI * 2;
+const at = VP.at, seg = K.seg, lerp = K.lerp;
+{ const T = window.TIMING, L = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length + 1, start: L.end, end: L.end + 4.8, vo_start: L.end, vo_end: L.end, text: '' }); T.dur = L.end + 4.8; }
+const SUN = lt => VP.light('studio', lt, { swing: 3, set: { L: [.6, -.9], amb: '#6a5a4a', ambA: .2, rim: '#fff0d0', rimA: .8, tint: '#ffe8c0', tintA: .08 } });
+const DUSK = lt => VP.light('studio', lt, { swing: 3, set: { L: [-.7, -.6], amb: '#4a3a5a', ambA: .3, rim: '#ffc890', rimA: .9, tint: '#ffb070', tintA: .14 } });
+const shimmer = (c, lt, y0, y1) => { for (let k = 0; k < 18; k++) { const r = S.rng(k + 50), y = y0 + r() * (y1 - y0); c.fillStyle = S.rgba('#fff4dc', .05); c.fillRect(0, y + Math.sin(lt * 3 + k) * 2, 1280, 2); } };
+// route on the parchment map: the long way round Africa, and the Suez shortcut
+const LONG = [[4, 51.8], [-6, 47], [-11, 40], [-18, 28], [-19, 16], [-12, 5], [4, 0], [10, -14], [14, -30], [19, -37.5], [28, -36], [38, -26], [44, -14], [52, 0], [56, 12], [62, 17], [72, 15], [80, 6], [95, 4], [104, 1.3]];
+const HEAT = lt => VP.light('studio', lt, { swing: 2, set: { L: [.2, -1], amb: '#7a5a3a', ambA: .15, rim: '#fff4d8', rimA: .9, tint: '#ffe8b0', tintA: .1 } });
+const CANDLE = lt => VP.light('studio', lt, { swing: 6, set: { L: [.7, -.5], amb: '#2a1a14', ambA: .35, rim: '#ffd090', rimA: .9, tint: '#ffc070', tintA: .12 } });
+const crew = (c, list, lt, L, y, uu, look = [0, 0]) => list.forEach(([x, ch, k, pose, yy, u2]) => { const Y = yy ?? y, U = u2 ?? uu; S.contact(c, x, Y, U * .5, .35); VP.figure(c, [x, Y], { k: .6, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, ch, x, Y, U, typeof pose === 'function' ? pose(cc) : pose, { blink: S.blinkAt(lt, k), look, time: lt }, L)); });
+const gate = (c, x, q) => { c.fillStyle = 'rgba(0,0,0,.25)'; c.fillRect(x - 40, 394, 80, 150);
+  const y = lerp(230, 394, q); c.fillStyle = '#7a5030'; c.fillRect(x - 34, y, 68, 150); c.strokeStyle = '#4a2e18'; c.lineWidth = 3; for (let k = 1; k < 6; k++) { c.beginPath(); c.moveTo(x - 34, y + k * 25); c.lineTo(x + 34, y + k * 25); c.stroke(); } c.strokeRect(x - 34, y, 68, 150);
+  c.fillStyle = '#5a3a1e'; c.fillRect(x - 46, 200, 12, 360); c.fillRect(x + 34, 200, 12, 360); c.fillRect(x - 54, 192, 108, 14);
+  c.strokeStyle = '#8a6a3a'; c.lineWidth = 2; c.beginPath(); c.moveTo(x, 206); c.lineTo(x, y); c.stroke();
+  if (q > 0 && q < 1) for (let k = 0; k < 8; k++) { c.fillStyle = S.rgba('#ffffff', .5); c.beginPath(); c.arc(x - 30 + k * 8, 394 + Math.sin(k + q * 20) * 4, 3, 0, TAU); c.fill(); } };
+const sickle = (c, x, y, a) => { c.save(); c.translate(x, y); c.rotate(a); c.strokeStyle = '#5a3a1e'; c.lineWidth = 3; c.beginPath(); c.moveTo(0, 0); c.lineTo(0, -14); c.stroke(); c.strokeStyle = '#b8b0a0'; c.lineWidth = 3; c.beginPath(); c.arc(8, -16, 10, Math.PI, TAU * .9); c.stroke(); c.restore(); };
+const wheat = (c, lt, y0, y1, seed) => { for (let k = 0; k < 140; k++) { const r = S.rng(seed + k), x = r() * 1280, y = y0 + r() * (y1 - y0), sw = Math.sin(lt * 1.5 + x * .01) * 4; c.strokeStyle = S.rgba('#c8a040', .8); c.lineWidth = 2; c.beginPath(); c.moveTo(x, y); c.quadraticCurveTo(x + sw * .5, y - 14, x + sw, y - 26); c.stroke(); c.fillStyle = '#e0b850'; c.beginPath(); c.ellipse(x + sw, y - 30, 3, 7, sw * .05, 0, TAU); c.fill(); } };
+const rock = (c, x, y, r, seed) => { c.fillStyle = '#7a6a5a'; c.beginPath(); for (let k = 0; k < 7; k++) { const a = k / 7 * TAU, rr = r * (.75 + .25 * S.rng(seed + k)()); c.lineTo(x + Math.cos(a) * rr, y + Math.sin(a) * rr * .8); } c.fill(); c.fillStyle = S.rgba('#ffffff', .18); c.beginPath(); c.arc(x - r * .3, y - r * .3, r * .3, 0, TAU); c.fill(); };
+
+window.SHOTS = [
+  // 2.01 MED: Greek engineers at a wooden gate across the canal: river water green on one side, sea water blue on the other
+  { set: 'sz_oldcanal', cam: { z: [1.0, 1.15], x: [640, 640], y: [400, 440], ease: E.io }, bed: [['water_loop', .25]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tP = at(Sh, 'Ptolemy', 3); Sh.tG = at(Sh, 'gate', 7); },
+    draw: (c, lt, u, Sh) => { const L = HEAT(lt), q = E.io(seg(lt, Sh.tG, Sh.tG + 1.4));
+      c.fillStyle = S.rgba('#4a9a5a', .35); c.fillRect(0, 394, 640, 150); c.fillStyle = S.rgba('#2a5aa8', .3); c.fillRect(640, 394, 640, 150);
+      gate(c, 640, q);
+      c.save(); c.font = '26px Caveat'; c.fillStyle = S.rgba('#1a3a1a', .8 * seg(lt, Sh.tG + 1.2, Sh.tG + 1.8)); c.fillText('fresh Nile water', 170, 430); c.fillStyle = S.rgba('#0a1a4a', .8 * seg(lt, Sh.tG + 1.2, Sh.tG + 1.8)); c.fillText('salty sea water', 960, 430); c.restore();
+      crew(c, [[520, C.GREEK, 0, Object.assign(S.idle(lt, 0), { face: 1, shN: 120 * seg(lt, Sh.tG - .4, Sh.tG), elN: 30 })], [770, C.GREEK2, 1, Object.assign(S.idle(lt, 1), { face: -1, shN: 40, elN: 80, holdN: null })], [880, C.ROWER, 2, Object.assign(S.idle(lt, 2), { face: -1, shN: 30, elN: 40 })]], lt, L, 650, 38, [.3, -.2]); },
+    over: [(c, lt) => K.dateTag(c, 'PTOLEMY II · ~270 BC', lt, { at: .4 }), (c, lt, u, Sh) => K.badge(c, 'A GATE BETWEEN SALT AND FRESH', lt, { at: Sh.tG + .4 })],
+    sfx: [[.2, 'water_loop', .25], ['gate', 'creak', .45], ['fresh', 'thud', .3]] },
+
+  // 2.02 MED: wheat along the Nile; farmers harvest with sickles; a grain barge drifts past
+  { set: 'sz_delta', cam: { z: [1.05, 1.0], x: [600, 680], y: [420, 400], ease: E.io }, bed: [['birds_loop', .25], ['wind_loop', .1]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tL = at(Sh, 'first canal lock', 1.5); Sh.tF = at(Sh, 'fed the whole', Sh.dur - 2); },
+    draw: (c, lt, u, Sh) => { const L = HEAT(lt);
+      S.szBarge(c, lerp(-200, 1400, seg(lt, 0, Sh.dur + 4)), 412, .5, 1, lt, { canopy: false, cargo: 1, sail: '#e8dcc0' });
+      wheat(c, lt, 470, 560, 3100);
+      [[260, C.FELLAH, 0], [520, C.FELLAH2, 1], [800, C.FELLAH3, 2], [1040, C.EGWOMAN, 3]].forEach(([x, ch, k]) => { const sw = Math.sin(lt * 2.6 + k * 1.3); S.contact(c, x, 620, 18, .35);
+        VP.figure(c, [x, 620], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, ch, x, 620, 34, Object.assign(S.idle(lt, k), { face: k % 2 ? -1 : 1, lean: .25, shN: 80 + 50 * sw, elN: 30, holdN: k === 3 ? null : wr => sickle(cc, wr[0], wr[1], .8 * sw) }), { blink: S.blinkAt(lt, k), smile: .5, look: [k % 2 ? -.4 : .4, .5], time: lt }, L)); });
+      wheat(c, lt, 600, 720, 3300); },
+    over: [(c, lt, u, Sh) => K.card(c, 'THE FIRST CANAL LOCK?', lt, { at: Sh.tL, x: 960, y: 190, px: 56, rot: -2 }), (c, lt, u, Sh) => K.badge(c, 'THE NILE FEEDS EGYPT', lt, { at: Sh.tF })],
+    sfx: [[.3, 'birds_loop', .25], [1.0, 'swish', .2], [2.6, 'swish', .2], [4.2, 'swish', .2]] },
+
+  // 2.03 MED: a Roman grain barge with a red sail; a centurion on the bank; Darius's stone half-uncovered behind
+  { set: 'sz_oldcanal', cam: { z: [1.0, 1.08], x: [640, 700], y: [400, 420], ease: E.io }, bed: [['water_loop', .25], ['wind_loop', .1]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tT = at(Sh, 'Trajan', 2.4); Sh.tB = at(Sh, 'bread', Sh.dur - 1.2); },
+    draw: (c, lt, u, Sh) => { const L = HEAT(lt);
+      const bx = lerp(-260, 900, E.io(seg(lt, .2, Sh.dur))); const dy = S.szBarge(c, bx, 476, .85, 1, lt, { canopy: false, cargo: 1, sail: '#b8302a', hull: '#5a3a20', band: '#d8b040' });
+      VP.figure(c, [bx - 120, dy], { k: .3, sy: -.15, a: .25, blur: 3 }, cc => S.person(cc, C.ROWER, bx - 120, dy, 32, Object.assign(S.idle(lt, 4), { face: 1, shN: 60 + 30 * Math.sin(lt * 2), elN: 50 }), { blink: S.blinkAt(lt, 4), look: [.5, 0], time: lt }, L));
+      S.szStone(c, 170, 650, .7, .45, lt, {});
+      crew(c, [[880, C.ROMAN, 0, Object.assign(S.idle(lt, 0), { face: -1, shN: 30, elN: 60 })]], lt, L, 660, 40, [-.6, -.2]); },
+    over: [(c, lt) => K.dateTag(c, 'TRAJAN · ~100 AD', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'ROME ATE EGYPTIAN BREAD', lt, { at: Sh.tB - .3, x: 700, y: 200, px: 56, rot: -2 })],
+    sfx: [[.2, 'water_loop', .25], ['Trajan', 'horn', .3], ['bread', 'pop', .3]] },
+
+  // 2.04 MED: workers in turbans clear sand (641); wipe; soldiers tip rocks into the channel (767)
+  { set: 'sz_trench', cam: { z: [1.0], x: [640], y: [380] }, bed: [['dig_loop', .25], ['wind_loop', .12]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tA = at(Sh, 'Amr', 2.6); Sh.tW = at(Sh, 'hundred and thirty', Sh.dur * .5); Sh.tK = at(Sh, 'blocked', Sh.tW + 2); },
+    draw: (c, lt, u, Sh) => { const L = HEAT(lt), wq = seg(lt, Sh.tW - .3, Sh.tW + .5);
+      [[400, C.ARAB, 0], [600, C.ARAB2, 1], [800, C.FELLAH, 2]].forEach(([x, ch, k]) => { const sw = Math.abs(Math.sin(lt * 2.2 + k)); S.contact(c, x, 580, 16, .35);
+        VP.figure(c, [x, 580], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, ch, x, 580, 32, Object.assign(S.idle(lt, k), { face: k % 2 ? -1 : 1, shN: 60 + 100 * sw, elN: 30, holdN: wr => { cc.strokeStyle = '#5a3a1e'; cc.lineWidth = 3; cc.beginPath(); cc.moveTo(wr[0], wr[1]); cc.lineTo(wr[0] + 20, wr[1] + 30); cc.stroke(); cc.fillStyle = '#7a6a5a'; cc.fillRect(wr[0] + 14, wr[1] + 28, 16, 10); } }), { blink: S.blinkAt(lt, k), worry: .4, look: [.3, .5], time: lt }, L)); });
+      if (wq > 0) { c.save(); c.beginPath(); c.rect(1280 * (1 - wq), 0, 1280, 720); c.clip(); VP.drawSet(c, 'sz_oldcanal');
+        const n = Math.floor(seg(lt, Sh.tK - .5, Sh.dur) * 9); for (let k = 0; k < n; k++) rock(c, 300 + k * 80, 480 + (k % 3) * 18, 26, 900 + k);
+        [[420, C.SOLD, 3], [700, C.SOLD, 4], [960, C.ARAB, 5]].forEach(([x, ch, k]) => { const tip = Math.max(0, Math.sin(lt * 1.8 + k)); S.contact(c, x, 640, 16, .35);
+          VP.figure(c, [x, 640], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, ch, x, 640, 36, Object.assign(S.idle(lt, k), { face: -1, lean: .2 * tip, shN: 90 + 60 * tip, elN: 40, shF: 90 + 60 * tip, elF: 40, holdN: wr => rock(cc, wr[0] - 8, wr[1] - 6, 16, 700 + k) }), { blink: S.blinkAt(lt, k), look: [-.5, .5], time: lt }, L));
+          if (tip > .97) for (let j = 0; j < 6; j++) { c.fillStyle = S.rgba('#e8f4ff', .6); c.beginPath(); c.arc(x - 60 + j * 8, 520 - j * 3, 4, 0, TAU); c.fill(); } });
+        c.restore(); c.fillStyle = '#e8dcc0'; c.fillRect(1280 * (1 - wq) - 3, 0, 6, 720); } },
+    over: [(c, lt, u, Sh) => K.badge(c, 'AMR IBN AL-AS · ~641', lt, { at: Sh.tA, until: Sh.tW }), (c, lt, u, Sh) => K.badge(c, 'BLOCKED ON PURPOSE · 767', lt, { at: Sh.tK }), (c, lt, u, Sh) => K.card(c, '641 → 767', lt, { at: Sh.tW + .6, x: 960, y: 190, px: 60, rot: 2 })],
+    sfx: [[.2, 'dig_loop', .25], ['hundred and thirty', 'whoosh', .5], ['blocked', 'splash', .5], ['rebels', 'thud', .3]] },
+
+  // 2.05 MED: the empty desert; only the stone's tip shows; a camel caravan passes; long slow push
+  { set: 'sz_dunes', cam: { z: [1.0, 1.2], x: [640, 700], y: [400, 460], ease: E.io }, bed: [['wind_loop', .4]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tF = at(Sh, 'forgotten', Sh.dur - 1.4); },
+    draw: (c, lt, u, Sh) => { const L = HEAT(lt);
+      S.szStone(c, 900, 600, .7, .88, lt, { blow: 1 });
+      for (let k = 0; k < 3; k++) { const x = lerp(-150 - k * 230, 1400 - k * 230, seg(lt, 0, Sh.dur + 2)); S.szCamel(c, x, 548 - k * 2, .85, 1, lt * .9 + k * .3, ['#b8884e', '#a87a44', '#c09458'][k]); }
+      const wx = lerp(20, 1700, seg(lt, 0, Sh.dur + 2)); VP.figure(c, [wx, 552], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, C.ARAB2, wx, 552, 24, Object.assign(H1.walk(lt * 1.1), { face: 1 }), { blink: S.blinkAt(lt, 7), look: [.6, 0], time: lt }, L));
+      for (let k = 0; k < 60; k++) { const r = S.rng(k + 300), x = (r() * 1400 + lt * 120 * (.5 + r())) % 1400 - 60; c.fillStyle = S.rgba('#e8c890', .35); c.fillRect(x, 420 + r() * 300, 3, 1.5); } },
+    over: [(c, lt) => K.badge(c, '~1,000 YEARS', lt, { at: 1 }), (c, lt, u, Sh) => K.card(c, 'EVEN THE ROUTE WAS FORGOTTEN', lt, { at: Sh.tF - .2, x: 960, y: 200, px: 50, rot: -2 })],
+    sfx: [[.2, 'wind_loop', .4], [1.5, 'camel_bell', .25]] },
+
+  // 2.06 MED: Ottoman map room; Sokollu Mehmed Pasha leans over a map with a quill; the sultan shakes his head; the map rolls up
+  { set: 'sz_maproom', cam: (lt, u, Sh) => ({ z: [lerp(1.0, 1.12, E.io(seg(lt, Sh.tI, Sh.dur)))], x: [640], y: [lerp(380, 430, E.io(seg(lt, Sh.tI, Sh.dur)))] }), bed: [['fire_loop', .12], ['drone', .15]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tP = at(Sh, 'Portugal', 1.5); Sh.tI = at(Sh, 'Istanbul', 5); Sh.tS = at(Sh, 'shelved', Sh.dur - 3); },
+    draw: (c, lt, u, Sh) => {
+      if (lt < Sh.tI) { VP.drawSet(c, 'sz_map'); const L = HEAT(lt), q = E.io(seg(lt, Sh.tP - .3, Sh.tI - .3));
+        const P = [[-9, 38.7], [-18, 28], [-19, 14], [-10, 4], [8, -10], [14, -30], [19, -36], [32, -30], [42, -14], [52, 0], [62, 14], [73, 15]].map(p => Z.ll(...p)); c.save(); c.strokeStyle = '#2a5a2a'; c.lineWidth = 5; c.setLineDash([10, 7]); c.beginPath(); P.forEach((p, i) => { const f = i / (P.length - 1); if (f <= q) i ? c.lineTo(...p) : c.moveTo(...p); }); c.stroke(); c.restore();
+        const i = Math.min(P.length - 1, Math.floor(q * (P.length - 1))); S.szReedBoat(c, P[i][0], P[i][1], .25, 1, lt); return; }
+      const L = CANDLE(lt), rl = seg(lt, Sh.tS, Sh.tS + .6);
+      // low table with the map
+      c.fillStyle = 'rgba(20,10,5,.35)'; c.beginPath(); c.ellipse(640, 600, 230, 20, 0, 0, TAU); c.fill(); c.fillStyle = '#6a4224'; c.fillRect(440, 520, 400, 24); c.fillRect(456, 544, 16, 56); c.fillRect(808, 544, 16, 56);
+      c.save(); c.translate(640, 518); const mw = 360 * (1 - rl * .92); c.fillStyle = '#e8d8b0'; c.fillRect(-180, -8, mw, 10); if (rl < 1) { c.fillStyle = '#5a7aa0'; c.fillRect(-150, -6, Math.max(0, mw - 70), 4); c.strokeStyle = '#8a2a1a'; c.lineWidth = 2; c.beginPath(); c.moveTo(-40, -4); c.lineTo(Math.min(40, mw - 180), -4); c.stroke(); } c.fillStyle = '#c8b488'; c.beginPath(); c.arc(-180 + mw, -4, 8 + rl * 8, 0, TAU); c.fill(); c.restore();
+      for (const x of [470, 810]) { c.fillStyle = '#f0e8d0'; c.fillRect(x - 5, 486, 10, 34); VP.glow(c, x, 480, 60 + 6 * Math.sin(lt * 11 + x), '#ffc060', .6); c.fillStyle = '#ffe080'; c.beginPath(); c.ellipse(x, 480 + Math.sin(lt * 13 + x) , 4, 9, 0, 0, TAU); c.fill(); }
+      const shake = lt > Sh.tS - 1.6 && lt < Sh.tS ? Math.sin(lt * 14) * .5 : 0;
+      crew(c, [[360, C.VIZIER, 0, Object.assign(S.idle(lt, 0), { face: 1, lean: .2, shN: 100, elN: 40, holdN: cc => null })], [930, C.SULTAN, 1, Object.assign(S.idle(lt, 1), { face: -1, shN: 30, elN: 60, headTurn: shake })]], lt, L, 640, 44, [0, .3]);
+      VP.motes(c, lt, 300, 200, 700, 300, { n: 12 }); },
+    over: [(c, lt, u, Sh) => K.badge(c, 'PORTUGAL TAKES THE SPICE ROUTE', lt, { at: Sh.tP, until: Sh.tI }), (c, lt, u, Sh) => K.dateTag(c, 'SOKOLLU MEHMED PASHA · 1568', lt, { at: Sh.tI + .4 }), (c, lt, u, Sh) => K.card(c, 'SHELVED', lt, { at: Sh.tS + .5, x: 960, y: 200, px: 70, rot: -3 })],
+    sfx: [[.3, 'paper', .3], ['Istanbul', 'whoosh_soft', .4], ['shelved', 'paper', .5], ['too many wars', 'drum', .35]] },
+];
+VP.build(); K.boot();
+</script></body></html>

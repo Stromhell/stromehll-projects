@@ -94,3 +94,18 @@
     if (o.cargo) for (let k = 0; k < 8; k++) { c.fillStyle = k % 2 ? '#d8c08a' : '#c8ac78'; c.beginPath(); c.ellipse(-140 + k * 22 + (k > 3 ? 40 : 0), -34, 14, 11, 0, 0, TAU); c.fill(); c.strokeStyle = '#8a7048'; c.lineWidth = 1; c.stroke(); }
     c.restore(); return y + bob - 24 * s; };
 })();
+(() => {
+  const TAU = Math.PI * 2, R = S.rgba;
+  // walking camel, faces +x. y = ground. ph = walk phase
+  S.szCamel = (c, x, y, s, dir = 1, ph = 0, col = '#b8884e') => { c.save(); c.translate(x, y); c.scale(s * dir, s);
+    c.fillStyle = 'rgba(40,24,10,.3)'; c.beginPath(); c.ellipse(0, 2, 70, 7, 0, 0, TAU); c.fill();
+    const leg = (lx, a, sh) => { c.save(); c.translate(lx, -70); c.rotate(a); c.strokeStyle = sh; c.lineWidth = 9; c.lineCap = 'round'; c.beginPath(); c.moveTo(0, 0); c.lineTo(0, 36); c.lineTo(Math.sin(a) * -4, 68); c.stroke(); c.restore(); };
+    const dark = '#8a6034'; leg(-40, .3 * Math.sin(ph * TAU + Math.PI), dark); leg(36, .3 * Math.sin(ph * TAU), dark);
+    c.fillStyle = col; c.beginPath(); c.ellipse(-4, -84, 62, 26, 0, 0, TAU); c.fill(); c.beginPath(); c.ellipse(-8, -108, 30, 22, 0, Math.PI, TAU); c.fill();
+    c.beginPath(); c.moveTo(48, -92); c.quadraticCurveTo(80, -100, 78, -140); c.lineTo(94, -140); c.quadraticCurveTo(96, -96, 58, -74); c.fill();
+    c.beginPath(); c.ellipse(96, -142, 18, 10, .2, 0, TAU); c.fill(); c.fillStyle = '#2a1a0a'; c.beginPath(); c.arc(98, -146, 2.4, 0, TAU); c.fill();
+    c.strokeStyle = col; c.lineWidth = 4; c.beginPath(); c.moveTo(-64, -88); c.quadraticCurveTo(-76, -70, -70, -56); c.stroke();
+    leg(-30, .3 * Math.sin(ph * TAU), col); leg(46, .3 * Math.sin(ph * TAU + Math.PI), col);
+    c.fillStyle = '#8a2a2a'; c.fillRect(-40, -118, 60, 10); c.fillStyle = '#d8a850'; c.fillRect(-40, -110, 60, 4);
+    c.restore(); };
+})();
