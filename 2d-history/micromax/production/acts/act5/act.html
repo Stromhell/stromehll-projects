@@ -18,7 +18,7 @@ const rivalDots = (c2) => RIVALS.forEach(([, col], k) => { c2.fillStyle = col; c
 window.SHOTS = [
   // 5.01 suspect 1: rival banners unroll over the orange Micromax ones
   { plate: 'market', cam: { z: [1.04, 1.1], x: [1280, 1280], y: [800, 800] }, bed: [['crowd_loop', .25]],
-    figs: [0, 1, 2].map(i => ({ x: 0, y: 1300 + i * 30, s: 1.7 + i * .05, ...MX.SHOPKEEPER(i + 1), facing: i % 2 ? -1 : 1, mood: 'neutral', walk: { x0: i % 2 ? 2800 : -300, x1: i % 2 ? -300 : 2800, t0: i * 1.6, dur: 10 } })),
+    figs: [0, 1, 2].map(i => ({ x: 0, y: 1300 + i * 30, s: 1.7 + i * .05, ...MX.SHOPKEEPER(i + 1), facing: i % 2 ? -1 : 1, mood: 'neutral', walk: { x0: -300, x1: 2800, t0: i * 2.6, dur: 10 } })).map(f => ({ ...f, facing: 1 })),
     over: [(c, lt, u, S) => { [0, 1, 2].forEach(k => { MX.banner(c, 460 + k * 500, 140, 360, OR, 'MICROMAX', { px: 44 }); }); RIVALS.forEach(([t, col], k) => { const at = k === 0 ? S.tX : S.tO + (k - 1) * .5, a = E.out(K.seg(lt, at, at + .6)); if (a <= 0) return; c.save(); c.beginPath(); c.rect(460 + k * 500 - 200, 60, 400, 220 * a); c.clip(); MX.banner(c, 460 + k * 500, 140, 380, col, t, { px: 46 }); c.restore(); }); }],
     init: S => { S.tX = A.at(S, 'Xiaomi', 3.2); S.tO = A.at(S, 'Oppo', 6.4); const tS = A.at(S, 'Suspect', .2), tF = A.at(S, 'flash', 4.4);
       S.D.over.push((c, lt) => K.card(c, 'SUSPECT 1: CHINESE BRANDS', lt, { at: tS + .3, x: 960, y: 420, px: 50, rot: -2 }), (c, lt) => K.dateTag(c, '2014', lt, { at: S.tX }), (c, lt) => K.card(c, 'FLASH SALES ONLINE', lt, { at: tF, x: 520, y: 560, px: 38, rot: 3 }), (c, lt) => K.card(c, 'SHOPS + BILLBOARDS EVERYWHERE', lt, { at: S.tO + 1.2, x: 1440, y: 560, px: 38, rot: -3 }));
@@ -43,7 +43,8 @@ window.SHOTS = [
   // 5.04 suspect 2: the Jio launch stage, blue lights, a spotlit SIM
   { plate: 'stage_blue', cam: { z: [1.04, 1.12], x: [1280, 1280], y: [760, 740] }, bed: [['crowd_loop', .35]],
     live: [(c, lt) => { for (let k = 0; k < 3; k++) { const a = Math.sin(lt * 1.3 + k * 2) * .35; c.save(); c.translate(500 + k * 780, 0); c.rotate(a); const g = c.createLinearGradient(0, 0, 0, 1200); g.addColorStop(0, 'rgba(120,170,255,.35)'); g.addColorStop(1, 'rgba(120,170,255,0)'); c.fillStyle = g; c.beginPath(); c.moveTo(-20, 0); c.lineTo(20, 0); c.lineTo(260, 1200); c.lineTo(-260, 1200); c.fill(); c.restore(); } }],
-    front: [(c, lt, u, S) => { const a = pop(lt, S.tJ, .6); if (a > 0) { MX.glow(c, 1280, 640, 420, '#9ac0ff', .4 * a); MX.sim(c, 1280, 640, 2.2 * a, BLUE, { label: 'JIO 4G' }); } }],
+    front: [(c, lt, u, S) => { for (let r = 0; r < 2; r++) for (let k = 0; k < 15; k++) { const x = 60 + k * 175 + (r ? 88 : 0) + Math.sin(k * 3.1) * 30, y = 1330 + r * 70 + Math.sin(lt * 4 + k + r) * 6; c.fillStyle = r ? '#0a1430' : '#14204a'; c.beginPath(); c.arc(x, y - 60, 46, 0, 7); c.fill(); c.beginPath(); c.ellipse(x, y + 60, 90, 80, 0, 0, 7); c.fill(); if ((k + r) % 3 === 0 && (x < 700 || x > 1860)) { c.fillStyle = '#cfe0ff'; c.fillRect(x + 50, y - 150 + Math.sin(lt * 3 + k) * 8, 30, 52); } }
+      const a = pop(lt, S.tJ, .6); if (a > 0) { MX.glow(c, 1280, 640, 420, '#9ac0ff', .4 * a); MX.sim(c, 1280, 640, 2.2 * a, BLUE, { label: 'JIO 4G' }); } }],
     init: S => { const tS = A.at(S, 'Suspect', .2); S.tJ = A.at(S, 'Reliance Jio', 3.4); const tF = A.at(S, 'free', 5.2);
       S.D.over = [(c, lt) => K.card(c, 'SUSPECT 2: JIO', lt, { at: tS + .3, x: 520, y: 160, px: 50, rot: -3 }), (c, lt) => K.dateTag(c, '5 SEP 2016', lt, { at: tS + 1.2 }), (c, lt) => K.card(c, 'FREE CALLS · FREE 4G DATA', lt, { at: tF, x: 1420, y: 180, px: 42, rot: 3 })];
       S.D.sfx = [[tS + .3, 'tension', .3], [S.tJ, 'hit', .45], [S.tJ + .2, 'crowd_cheer', .4], [tF, 'crowd_cheer', .3]]; } },
@@ -76,12 +77,12 @@ window.SHOTS = [
       const a = pop(lt, S.tS, .6); if (a <= 0) return; c.save(); c.translate(1280, 700); c.scale(a, a); c.fillStyle = '#8a6a3a'; c.strokeStyle = INK; c.lineWidth = 8; c.beginPath(); c.ellipse(0, 0, 230, 300, 0, 0, 7); c.fill(); c.stroke(); const g = c.createLinearGradient(-200, -280, 200, 280); g.addColorStop(0, '#dfe8ee'); g.addColorStop(1, '#9ab0bc'); c.fillStyle = g; c.beginPath(); c.ellipse(0, 0, 200, 270, 0, 0, 7); c.fill();
       c.fillStyle = OR; c.beginPath(); c.arc(0, -20, 90, 0, 7); c.fill(); MX.label(c, 'MMX', 0, -16, 60, '#fff'); MX.label(c, 'SUSPECT 3?', 0, 170, 40, INK); const sh = (lt * .5) % 1; c.save(); c.beginPath(); c.ellipse(0, 0, 200, 270, 0, 0, 7); c.clip(); c.fillStyle = 'rgba(255,255,255,.5)'; c.rotate(.5); c.fillRect(-400 + sh * 800, -400, 60, 800); c.restore(); c.restore(); }],
     init: S => { S.tS = A.at(S, 'Micromax itself', 1.8); const tW = A.at(S, 'slow', 3.6), tT = A.at(S, 'tablets', 5.2), tL = A.at(S, 'low prices', 7.2);
-      S.D.over = [(c, lt) => K.card(c, 'SLOW TO SWITCH', lt, { at: tW, x: 520, y: 200, px: 40, rot: -3 }), (c, lt) => K.card(c, 'SPREAD ACROSS TABLETS + TVs', lt, { at: tT, x: 1400, y: 200, px: 38, rot: 3 }), (c, lt) => K.card(c, 'CHEAP PRICES, NO OWN TECH', lt, { at: tL, x: 960, y: 960, px: 42, rot: -2 })];
+      S.D.over = [(c, lt) => K.card(c, 'SLOW TO SWITCH', lt, { at: tW, x: 520, y: 200, px: 40, rot: -3 }), (c, lt) => K.card(c, 'SPREAD ACROSS TABLETS + TVs', lt, { at: tT, x: 1400, y: 200, px: 38, rot: 3 }), (c, lt) => K.card(c, 'CHEAP PRICES, NO OWN TECH', lt, { at: tL, x: 960, y: 820, px: 42, rot: -2 })];
       S.D.sfx = [[S.tS, 'hit', .4], [S.tS + .2, 'chime', .25], [tW, 'pop', .3], [tT, 'pop', .3], [tL, 'pop', .3]]; } },
   // 5.09 the chai-stall chart: the orange bar drains to a sliver
   { plate: 'chai_stall', cam: { z: [1.06, 1.1], x: [1280, 1280], y: [660, 660] }, bed: [['city_loop', .2]],
     live: [(c, lt, u, S) => { const u2 = E.io(K.seg(lt, S.tF, S.tF + 4)); MX.chart(c, 790, 330, 980, 580, [{ key: 'micromax', name: 'MICROMAX', v: 17 - 15.5 * u2 }, { key: 'xiaomi', name: 'CHINESE BRANDS', v: 10 + 9 * u2 }, { key: 'samsung', name: 'SAMSUNG', v: 15 }], { values: false, year: u2 > .5 ? '2019' : '2014', max: 20 }); }],
-    figs: [{ x: 420, y: 1300, s: 1.8, ...MX.SHOPKEEPER(1), facing: 1, pose: 'point', mood: 'neutral', anim: (o, lt, u, S) => { if (lt > S.tF + 3) { o.pose = 'think'; o.mood = 'sad'; } } }],
+    figs: [{ x: 600, y: 1300, s: 1.8, ...MX.SHOPKEEPER(1), facing: 1, pose: 'point', mood: 'neutral', anim: (o, lt, u, S) => { if (lt > S.tF + 3) { o.pose = 'think'; o.mood = 'sad'; } } }],
     init: S => { S.tF = A.at(S, 'collapsed', 2.4);
       S.D.over = [(c, lt) => K.card(c, 'THE FALL WAS FAST', lt, { at: .4, x: 1600, y: 200, px: 40, rot: 3 }), (c, lt) => K.title(c, '#1 → ~1–2%', lt, { at: S.tF + 4, y: 110, px: 70 })];
       S.D.sfx = [[S.tF, 'drone', .3], [S.tF + 4, 'hit', .4]]; } },
