@@ -1,0 +1,71 @@
+<title>Operation Thunderbolt Acts</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a night-apron screening desk. One player on top, the act roll (0–9) below as a flight-strip list. */
+:root{
+  --bg:#f3f1ec; --panel:#fffdf8; --ink:#1d1f22; --muted:#5f625f; --line:#d9d4c8;
+  --accent:#b8860b; --ok:#2f7a4a; --wait:#8a8a80;
+  --display:"Oswald","Arial Narrow",sans-serif; --body:"Source Serif 4",Georgia,serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1214;--panel:#171b1e;--ink:#e9e6df;--muted:#9a9d98;--line:#2a3034;--accent:#e0b040;--ok:#5fbf82;--wait:#6d716d;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1214;--panel:#171b1e;--ink:#e9e6df;--muted:#9a9d98;--line:#2a3034;--accent:#e0b040;--ok:#5fbf82;--wait:#6d716d;color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--body)}
+.wrap{max-width:980px;margin:0 auto;padding-block:28px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:22px}
+.eyebrow{font:500 12px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+h1{font:600 clamp(30px,6vw,48px)/1.05 var(--display);letter-spacing:.02em;text-transform:uppercase;margin:4px 0 6px;text-wrap:balance}
+.sub{color:var(--muted);max-width:62ch;margin:0}
+.player{background:#000;border-radius:6px;overflow:hidden;aspect-ratio:16/9;max-width:100%}
+.player video{width:100%;height:100%;display:block}
+.now{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:baseline}
+.now h2{font:600 22px var(--display);text-transform:uppercase;margin:0;letter-spacing:.03em}
+.now p{margin:0;color:var(--muted);flex-basis:100%;max-width:65ch}
+.roll{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.roll li{display:grid;grid-template-columns:3.2em 1fr auto;gap:14px;align-items:center;padding:12px 4px;border-bottom:1px solid var(--line)}
+.roll .n{font:500 15px var(--mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.roll .t{min-width:0}
+.roll .t b{font:600 17px var(--display);letter-spacing:.02em;text-transform:uppercase;display:block}
+.roll .t span{color:var(--muted);font-size:14px}
+.st{font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:4px 9px;border-radius:3px;border:1px solid currentColor;white-space:nowrap}
+.st.ready{color:var(--ok)} .st.wait{color:var(--wait)}
+button.play{all:unset;cursor:pointer;display:contents}
+li.ready{cursor:pointer} li.ready:hover b,li.ready:focus-visible b{color:var(--accent)}
+li.on{background:color-mix(in srgb,var(--accent) 10%,transparent)}
+li:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.foot{color:var(--muted);font-size:14px;max-width:65ch}
+.foot a{color:var(--accent)}
+</style>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">3D documentary · Entebbe, 4 July 1976 · 10 acts</div>
+    <h1>Operation Thunderbolt</h1>
+    <p class="sub">Every act of the film in one place, in order. Acts appear here as soon as they finish rendering and pass the quality check. When all ten are in and you're happy, say "combine" and they become one video.</p>
+  </header>
+  <div class="player"><video id="v" controls playsinline preload="metadata"></video></div>
+  <div class="now"><h2 id="nt"></h2><span class="st ready" id="nd"></span><p id="np"></p></div>
+  <ul class="roll" id="roll"></ul>
+  <p class="foot">Web copies here are 720p. Full 1080p files are in Drive under AI / Operation Thunderbolt / 05 Production. Storyboard: <a href="https://claude.ai/artifact/Jus4qEv2ZdvEpMi6BBqHWB">154 shots</a>.</p>
+</div>
+<script>
+const ACTS=[
+ {n:0,t:"Cold open",d:"Four Hercules, lights off, over Africa.",f:null},
+ {n:1,t:"The hijack",d:"Athens security, Flight 139 boards, the takeover. Security hall and apron rebuilt with more detail after the quality check.",f:"act1.mp4",len:"1:59"},
+ {n:2,t:"Benghazi",d:"Refuelling in Libya and the woman who talked her way off.",f:null},
+ {n:3,t:"Entebbe",d:"Landing in Uganda and Idi Amin's welcome.",f:null},
+ {n:4,t:"The selection",d:"Passports read aloud, the captain refuses to leave.",f:null},
+ {n:5,t:"Release",d:"Non-Israeli hostages freed and debriefed in Paris.",f:null},
+ {n:6,t:"The plans",d:"Rescue options, the old terminal blueprints, rehearsals.",f:null},
+ {n:7,t:"The flight",d:"Four C-130s under the radar down the Red Sea.",f:null},
+ {n:8,t:"The raid",d:"The fake Mercedes, the terminal, Yoni falls.",f:null},
+ {n:9,t:"Aftermath",d:"MiGs destroyed, home to Ben Gurion, Dora Bloch, Operation Yonatan.",f:null}
+];
+const v=document.getElementById('v'),roll=document.getElementById('roll');
+function pick(a){v.src=a.f;document.getElementById('nt').textContent=`Act ${a.n} · ${a.t}`;document.getElementById('nd').textContent=a.len;document.getElementById('np').textContent=a.d;
+ [...roll.children].forEach(li=>li.classList.toggle('on',+li.dataset.n===a.n));}
+ACTS.forEach(a=>{const li=document.createElement('li');li.dataset.n=a.n;const ready=!!a.f;li.className=ready?'ready':'';
+ li.innerHTML=`<span class="n">${String(a.n).padStart(2,'0')}</span><span class="t"><b>${a.t}</b><span>${a.d}</span></span><span class="st ${ready?'ready':'wait'}">${ready?'Ready · '+a.len:'Rendering'}</span>`;
+ if(ready){li.tabIndex=0;li.onclick=()=>{pick(a);v.play().catch(()=>{})};li.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();li.click()}}}
+ roll.appendChild(li)});
+pick(ACTS.find(a=>a.f));
+</script>
