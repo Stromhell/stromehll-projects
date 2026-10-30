@@ -1,0 +1,19 @@
+A bank runs mostly on borrowed money. Your deposits are really a loan to the bank. It also borrows from other banks and investors.
+
+It pays a low rate on that money and lends it out at a higher rate to home buyers, businesses and card users. The gap between the two is its main profit.
+
+A bank also has its own money: what shareholders put in plus the profits it has kept. That is its capital, the cushion that takes the first hit if loans go bad.
+
+Here is a simplified example. Two banks, each with a hundred dollars of loans.
+
+Bank A is careful. Eight dollars of its money is its own capital, and ninety-two is borrowed.
+
+Bank B is aggressive. Only three dollars is its own. Ninety-seven is borrowed.
+
+In a normal year, both earn one dollar of profit.
+
+For Bank A, that is one dollar on eight of its own: a twelve and a half percent return. For Bank B, one dollar on three: thirty-three percent.
+
+Same loans, same profit, but Bank B's shareholders earn nearly three times as much. Its share price climbs. Its bosses get bigger bonuses.
+
+In good years, the careful bank looks slow. Under Dimon, JPMorgan was much closer to Bank A.
