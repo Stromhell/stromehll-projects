@@ -1,0 +1,9 @@
+For him it's a challenge, not a heist. He breaks in to prove a system isn't as secure as it thinks. Sometimes he emails the admin afterwards to point out the hole.
+
+Summer 1999. He gets into NASA's Marshall Space Flight Center in Alabama, onto 13 computers.
+
+He downloads software NASA valued at 1.7 million dollars, part of the space station's environment controls. He later said the code was poor, and he only wanted to study it.
+
+Having the code didn't let him control the station. But NASA shut its systems down for three weeks to check them.
+
+Weeks later he gets into a server of a Pentagon agency that deals with weapons threats, and reads thousands of staff emails.

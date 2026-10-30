@@ -1,0 +1,9 @@
+In the mid-1980s he tries to go straight, and gets a programming job at a phone company. After nine days, a background check gets him fired.
+
+This is the era of the movie WarGames, about a teen who nearly starts a nuclear war with a computer. Hackers become a national fear.
+
+By night Kevin and his friend Lenny go after DEC, then the second biggest computer maker in the world. Their goal: the secret source code of its operating system.
+
+Once again, a phone call does most of the work: Kevin poses as a DEC employee and talks a staff member into letting them in.
+
+They copy the code bit by bit and end up with around 30 tapes of it. Not to sell it. Just to have it.
