@@ -52,6 +52,16 @@
    "gain": 0.25
   },
   {
+   "t": 37.702,
+   "name": "heartbeat",
+   "gain": 0.25
+  },
+  {
+   "t": 40.202,
+   "name": "heartbeat",
+   "gain": 0.25
+  },
+  {
    "t": 45.636,
    "name": "swell",
    "gain": 0.3

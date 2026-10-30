@@ -1,0 +1,66 @@
+<!doctype html><html><head><meta charset="utf-8"><title>RS act 6 - the target</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "leo";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../rs_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['library', 'exchange_amsterdam', 'dresden_night', 'mansion', 'dark', 'map_europe']) K.load(n, PL + n + '.jpg');
+const SW = 1920, SH = 1080, INK = RS.INK, pop = RS.pop;
+const backdrop = (name, b = .5, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const CARRY = () => ({ shL: 30, elL: -75, shR: 35, elR: -75 });
+const painting = (c) => { c.save(); c.scale(.42, .42); c.fillStyle = '#b8902c'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-20, -130, 200, 150); c.strokeRect(-20, -130, 200, 150); c.fillStyle = '#4a6a5a'; c.fillRect(0, -112, 160, 114); c.fillStyle = '#c8a070'; c.beginPath(); c.arc(80, -64, 26, 0, 7); c.fill(); c.restore(); };
+// plain dark-grey uniform, no insignia
+const OFFICER = i => RS.P({ costume: 'suit', topCol: '#3a3c40', hair: 'short', hairCol: '#2a2420', seed: 140 + i });
+const LOUIS = RS.P({ costume: 'suit', topCol: '#2a2a34', hair: 'short', hairCol: '#3a2a20', seed: 150 });
+
+window.SHOTS = [
+  // 6.01 newspapers and pamphlets pile up, blurred; the name becomes a symbol
+  { draw: (c, lt, u, S) => { backdrop('library', .38, 9)(c); [[520, 560, -.08, .2], [960, 520, .04, .7], [1400, 570, .09, 1.2]].forEach(([x, y, r, at]) => { const a = pop(lt, at, .45); if (a > 0) RS.paper(c, x, y, a * 1.3, { rot: r }); }); },
+    bed: [['tension', .2]],
+    init: S => { const tS = A.at(S, 'symbol', 4);
+      S.D.over = [(c, lt) => K.dateTag(c, 'LATE 1800s', lt, { at: .4 }), (c, lt) => K.card(c, 'ANTISEMITIC PAMPHLETS (BLURRED)', lt, { at: 1.4, x: 960, y: 150, px: 40, rot: -2 }), (c, lt) => K.card(c, 'A FAMILY NAME TURNED INTO A SYMBOL', lt, { at: tS, x: 960, y: 880, px: 40, rot: 2 })];
+      S.D.sfx = [[.2, 'paper', .35], [.7, 'paper', .35], [1.2, 'paper', .35], [tS, 'drone', .25]]; } },
+  // 6.02 FALSE: stamp over the myths; true vs false ledger
+  { draw: (c, lt, u, S) => { backdrop('library', .38, 9)(c); RS.paper(c, 960, 520, 1.3, { rot: .04 }); RS.stamp(c, 'FALSE', 960, 520, lt, S.tF, { px: 150 }); },
+    bed: [['hum_loop', .2]],
+    init: S => { S.tF = A.at(S, 'false', 1.4); const tR = A.at(S, 'rich', 4.6), tS = A.at(S, 'secretly', 6.6);
+      S.D.over = [(c, lt) => K.card(c, 'RICH AND POWERFUL: TRUE', lt, { at: tR, x: 420, y: 300, px: 40, rot: -3 }), (c, lt) => K.card(c, 'SECRETLY RAN EUROPE: FALSE', lt, { at: tS, x: 1500, y: 300, px: 40, rot: 3 })];
+      S.D.sfx = [[S.tF, 'stamp', .6], [tR, 'pop', .3], [tS, 'pop', .3]]; } },
+  // 6.03 Vienna 1931: a crowd at the doors of the Creditanstalt, CLOSED sign
+  { plate: 'exchange_amsterdam', cam: { z: [1.04, 1.12], x: [1280, 1280], y: [820, 830] }, bed: [['crowd_loop', .3], ['city_loop', .15]],
+    figs: [0, 1, 2, 3, 4, 5].map(i => ({ x: 520 + i * 300, y: 1300 + (i % 2) * 40, s: 1.75, ...RS.P({ costume: ['office', 'dress', 'suit', 'shirt', 'woman', 'suit'][i], topCol: ['#5a4a3a', '#6a3a4a', '#3a3a44', '#7a6a4a', '#4a5a6a', '#2a3a2a'][i], hair: i % 2 ? 'long' : 'short', seed: 160 + i }), facing: i < 3 ? 1 : -1, mood: i % 2 ? 'shocked' : 'angry', walk: { x0: i < 3 ? -300 - i * 200 : 2800 + i * 120, x1: 520 + i * 300, t0: .2 + i * .35, dur: 2.6 }, anim: (o, lt) => { if (lt > 3.6 + i * .35) o.pose = (Math.floor(lt * 1.5 + i) % 2) ? 'point' : 'shrug'; } }))],
+    init: S => { const tC = A.at(S, 'collapsed', 2.4), tP = A.at(S, 'panic', 7);
+      S.D.over = [(c, lt) => K.dateTag(c, 'VIENNA · 1931', lt, { at: .4 }), (c, lt) => K.badge(c, 'CREDITANSTALT', lt, { at: .6 }), (c, lt) => { const a = pop(lt, tC, .4); if (a <= 0) return; c.save(); c.translate(960, 420); c.rotate(-.04); c.scale(a, a); c.fillStyle = '#8a2a22'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-170, -50, 340, 100); c.strokeRect(-170, -50, 340, 100); c.fillStyle = '#f2e8d2'; c.font = '64px Anton'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('CLOSED', 0, 4); c.restore(); },
+        (c, lt) => K.card(c, 'AUSTRIA\'S BIGGEST BANK COLLAPSES', lt, { at: tC + .5, x: 520, y: 200, px: 40, rot: -3 }), (c, lt) => K.card(c, 'PANIC SPREADS ACROSS EUROPE', lt, { at: tP, x: 1420, y: 220, px: 40, rot: 3 })];
+      S.D.sfx = [[.3, 'run_steps', .3], [tC, 'door_slam', .45], [tC + .3, 'crowd_cheer', .2], [tP, 'alarm', .2]]; } },
+  // 6.04 propaganda film reel, then Vienna 1938 at night: Baron Louis led away by two plain-uniformed men
+  { plate: 'dresden_night', cam: { z: [1.04, 1.1], x: [1280, 1260], y: [840, 840] }, bed: [['night_loop', .25], ['drone', .15]],
+    figs: [{ x: 1280, y: 1330, s: 1.85, ...LOUIS, facing: 1, pose: 'shrug', mood: 'sad' },
+      { x: 1040, y: 1340, s: 1.85, ...OFFICER(0), facing: 1, mood: 'angry', walk: { x0: -300, x1: 1040, t0: 0, dur: 3 } },
+      { x: 1520, y: 1340, s: 1.85, ...OFFICER(1), facing: -1, mood: 'angry', walk: { x0: 2800, x1: 1520, t0: 0, dur: 3 } }],
+    init: S => { const tF = A.at(S, 'film', 2.2), tA = A.at(S, 'arrested', 6.4), tY = A.at(S, 'year', 8.4);
+      S.D.figs[1].walk.t0 = tA - 3; S.D.figs[2].walk.t0 = tA - 3;
+      S.D.over = [(c, lt) => { const a = pop(lt, tF, .4) * (1 - K.seg(lt, tF + 2.6, tF + 3)); if (a <= 0) return; c.save(); c.translate(960, 440); c.scale(a, a); c.fillStyle = '#1a1a1a'; c.strokeStyle = '#d8d0c0'; c.lineWidth = 6; c.beginPath(); c.arc(0, 0, 130, 0, 7); c.fill(); c.stroke(); for (let k = 0; k < 5; k++) { const ang = k / 5 * Math.PI * 2 + lt; c.beginPath(); c.arc(Math.cos(ang) * 70, Math.sin(ang) * 70, 26, 0, 7); c.stroke(); } c.restore(); K.card(c, '1940 · PROPAGANDA FILM', lt, { at: tF + .2, x: 960, y: 640, px: 40, rot: -2, until: tF + 3 }); },
+        (c, lt) => K.dateTag(c, 'VIENNA · 1938', lt, { at: tA - 2 }), (c, lt) => K.badge(c, 'BARON LOUIS ROTHSCHILD', lt, { at: tA - 1 }), (c, lt) => K.card(c, 'ARRESTED', lt, { at: tA, x: 520, y: 220, px: 50, rot: -3 }), (c, lt) => K.card(c, 'HELD FOR ABOUT A YEAR', lt, { at: tY, x: 1400, y: 240, px: 40, rot: 3 })];
+      S.D.sfx = [[tF, 'tick', .3], [tA - 3, 'footsteps', .35], [tA, 'gate_slam', .45]]; } },
+  // 6.05 workers carry paintings out of the mansion; SEIZED
+  { plate: 'mansion', cam: { z: [1.04, 1.1], x: [1280, 1280], y: [840, 840] }, bed: [['hum_loop', .2]],
+    figs: [0, 1, 2].map(i => ({ x: 900, y: 1320 + i * 20, s: 1.75, ...RS.P({ costume: 'farmer', topCol: '#5a5048', hair: 'short', seed: 170 + i }), facing: 1, mood: 'neutral', walk: { x0: 600 - i * 380, x1: 2900, t0: .4 + i * 1.3, dur: 8 }, arms: CARRY, hold: { near: painting } })),
+    init: S => { const tH = A.at(S, 'handed', 1.6), tS = A.at(S, 'seized', 7);
+      S.D.over = [(c, lt) => K.card(c, 'FREED ONLY AFTER HANDING OVER AUSTRIAN HOLDINGS', lt, { at: tH, x: 960, y: 180, px: 38, rot: -2 }), (c, lt) => K.card(c, 'BANKS · HOMES · ART', lt, { at: tS - .8, x: 1380, y: 300, px: 40, rot: 3 }), (c, lt) => RS.stamp(c, 'SEIZED', 960, 520, lt, tS, { px: 120 })];
+      S.D.sfx = [[.4, 'footsteps', .3], [tH, 'paper', .3], [tS, 'stamp', .55]]; } },
+  // 6.06 escape arrows on a map, then a single candle for those who died
+  { draw: (c, lt, u, S) => { const fade = K.seg(lt, S.tE - .6, S.tE + .4); backdrop('map_europe', .55 * (1 - fade) + .05, 3)(c);
+      if (fade < 1) { c.save(); c.globalAlpha = 1 - fade; const o = [1060, 520]; [[560, 360, 'BRITAIN', .3], [120, 420, 'USA', 1], [900, 640, 'SWITZERLAND', 1.7]].forEach(([x, y, l, at]) => { const u2 = K.seg(lt, at, at + 1); if (u2 > 0) { RS.arrow(c, o[0], o[1], x, y, u2, { bend: -.2, col: '#c8a040', w: 10 }); RS.dot(c, x, y, lt, at + .8, l, { px: 34 }); } }); c.restore(); }
+      if (fade > 0) { c.save(); c.globalAlpha = fade; c.fillStyle = 'rgba(0,0,0,.5)'; c.fillRect(0, 0, SW, SH); RS.candle(c, 960, 760, 1.2, lt); c.restore(); } },
+    bed: [['wind_loop', .15]],
+    init: S => { S.tE = A.at(S, 'Elisabeth', 5);
+      S.D.over = [(c, lt) => K.card(c, 'MANY ESCAPED', lt, { at: .4, x: 1500, y: 180, px: 44, rot: 3, until: S.tE - .5 }), (c, lt) => K.card(c, 'ELISABETH DE ROTHSCHILD · DIED IN RAVENSBRÜCK, 1945', lt, { at: S.tE + .6, x: 960, y: 200, px: 36, rot: -1 })];
+      S.D.sfx = [[.3, 'whoosh_soft', .3], [1, 'whoosh_soft', .3], [1.7, 'whoosh_soft', .3], [S.tE, 'chime', .25]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>
