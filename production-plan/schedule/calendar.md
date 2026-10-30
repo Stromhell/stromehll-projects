@@ -84,6 +84,7 @@ Full-video times were checked one by one in Zernio on 28 Oct 2026 at 17:35 UTC. 
 
 ## Spain series (29 Oct 2026, 22:19 UTC)
 - Spain Part 2 full "How Spain Got Rich From a Mistake (and Still Went Broke)": Fri 6 Nov 20:00 UTC (15:00 ET), YouTube. Zernio 6ae3c6755db31e4a3f6f2b5d.
+  - 30 Oct 07:37 UTC: video swapped for the final Spain2_Empire_FULL.mp4 (7:59, 601 MB, Drive 1-Xw7-saNajbZjTo_OhuH5PDGPOWFKSM4) after the act 2 re-render. Time, title, description, tags and thumbnail unchanged. Act starts match the existing chapter list.
 - Spain Part 1 full "How Muslims Ruled Spain for 781 Years (and Lost It All)": Wed 4 Nov 20:00 UTC (15:00 ET), YouTube. Zernio 6ae4266509f261790d6cc9ee (booked 30 Oct 05:08 UTC into the held slot; one copy checked). Card stays until its reels are booked.
 - Release-order note: with Spain 1+2 the run after FZ1073 (3D, 2 Nov) is five 2D videos (Spain 1, Spain 2, Salman, Osho, Secret Service) before Tesla (3D, 16 Nov). Flagged; nothing moved.
 
