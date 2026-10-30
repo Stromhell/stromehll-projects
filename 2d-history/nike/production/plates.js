@@ -73,7 +73,16 @@
     for (let j = 0; j < 3; j++) { R.box(-5.9, .5 + j * .75, 2.6, .5, .06, 3.6, '#5a3a22', { density: 20 }); for (let k = 0; k < 6; k++) { const [px, py] = R.p(-5.6, .56 + j * .75, 2.9 + k * .55), s = R.s(2.9 + k * .55); ctx.fillStyle = k % 2 ? '#f0e8d8' : '#e8d8b8'; ctx.beginPath(); ctx.moveTo(px - .2 * s, py); ctx.quadraticCurveTo(px - .15 * s, py - .2 * s, px + .05 * s, py - .2 * s); ctx.lineTo(px + .25 * s, py - .05 * s); ctx.lineTo(px + .25 * s, py); ctx.closePath(); ctx.fill(); ctx.strokeStyle = '#2a2a2a'; ctx.lineWidth = 2; ctx.stroke(); ctx.strokeStyle = '#c83a2a'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(px - .1 * s, py - .05 * s); ctx.lineTo(px + .05 * s, py - .15 * s); ctx.lineTo(px + .15 * s, py - .05 * s); ctx.stroke(); } }
     // low lacquer meeting table and floor cushions
     R.box(-2.2, 0, 4.2, 4.4, .42, 1.6, '#3a1a14', { density: 60, lit: .05 }); R.box(-2.25, .42, 4.15, 4.5, .05, 1.7, '#5a2a1e', { density: 30 });
-    for (const x of [-1.8, -.2, 1.4]) { const [px, py] = R.p(x + .3, .47, 4.9), s = R.s(4.9); ctx.fillStyle = '#f4efe2'; ctx.fillRect(px - .1 * s, py - .02 * s, .22 * s, .02 * s); ctx.fillStyle = '#e8e0c8'; ctx.beginPath(); ctx.ellipse(px + .2 * s, py - .06 * s, .05 * s, .06 * s, 0, 0, 7); ctx.fill(); }
+    for (const x of [-1.8, -.2, 1.4]) { const [px, py] = R.p(x + .3, .47, 4.9), s = R.s(4.9);
+      // papers lying flat (a thin slab with a soft shadow) and a teacup on a saucer, both resting on the table top
+      ctx.fillStyle = 'rgba(20,8,4,.35)'; ctx.beginPath(); ctx.ellipse(px + .01 * s, py + .004 * s, .15 * s, .012 * s, 0, 0, 7); ctx.fill();
+      ctx.fillStyle = '#f4efe2'; ctx.fillRect(px - .12 * s, py - .012 * s, .25 * s, .012 * s); ctx.strokeStyle = '#8a7a60'; ctx.lineWidth = 2; ctx.strokeRect(px - .12 * s, py - .012 * s, .25 * s, .012 * s);
+      const cx = px + .26 * s; ctx.fillStyle = 'rgba(20,8,4,.4)'; ctx.beginPath(); ctx.ellipse(cx, py + .004 * s, .08 * s, .014 * s, 0, 0, 7); ctx.fill();
+      ctx.fillStyle = '#ece4d0'; ctx.beginPath(); ctx.ellipse(cx, py - .006 * s, .075 * s, .012 * s, 0, 0, 7); ctx.fill(); ctx.strokeStyle = '#6a5a44'; ctx.lineWidth = 2; ctx.stroke();
+      ctx.fillStyle = '#f2ead8'; ctx.beginPath(); ctx.moveTo(cx - .045 * s, py - .085 * s); ctx.lineTo(cx + .045 * s, py - .085 * s); ctx.quadraticCurveTo(cx + .04 * s, py - .015 * s, cx + .025 * s, py - .012 * s); ctx.lineTo(cx - .025 * s, py - .012 * s); ctx.quadraticCurveTo(cx - .04 * s, py - .015 * s, cx - .045 * s, py - .085 * s); ctx.closePath(); ctx.fill(); ctx.stroke();
+      ctx.strokeStyle = '#2a5a7a'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(cx - .043 * s, py - .07 * s); ctx.lineTo(cx + .043 * s, py - .07 * s); ctx.stroke();
+      ctx.strokeStyle = '#6a5a44'; ctx.lineWidth = 3; ctx.beginPath(); ctx.ellipse(cx + .055 * s, py - .05 * s, .016 * s, .022 * s, 0, -1.4, 1.4); ctx.stroke();
+      ctx.fillStyle = '#6a4a22'; ctx.beginPath(); ctx.ellipse(cx, py - .085 * s, .045 * s, .007 * s, 0, 0, 7); ctx.fill(); }
     // calligraphy scroll and a company sign
     { const [sx, sy] = R.p(-.4, 3.0, 7.45); ctx.fillStyle = '#f8f4e8'; ctx.fillRect(sx - 60, sy, 120, 300); ctx.strokeStyle = '#3a2a1a'; ctx.lineWidth = 6; ctx.strokeRect(sx - 60, sy, 120, 300); ctx.fillStyle = '#1a1a1a'; ctx.font = '70px SourceSerif, serif'; ctx.textAlign = 'center'; ctx.fillText('虎', sx, sy + 110); ctx.fillText('道', sx, sy + 210); }
     PR.plant(ctx, r, ...R.p(4.6, 0, 6.6), R.s(6.6) * .9);
