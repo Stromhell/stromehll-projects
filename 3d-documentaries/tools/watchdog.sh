@@ -12,7 +12,7 @@ while true; do
       if [ -n "$pid" ]; then log "shot $s stalled ${age}s, killing render $pid"; kill $pid; fi; fi
   done
   missing=""; for a in 5 6 7 8 9; do [ -f $W/act$a.mp4 ] || missing="$missing $a"; done
-  if [ -n "$missing" ] && ! pgrep -f "render_queue.sh" >/dev/null; then
+  if [ -n "$missing" ] && ! pgrep -f "render_queue.sh|chain[0-9]*.sh" >/dev/null; then
     log "queue not running, restarting for:$missing"; nohup bash $T/render_queue.sh $W 4$missing >> $W/queue.log 2>&1 &
   fi
   free=$(df -BG --output=avail $W | tail -1 | tr -dc 0-9)
