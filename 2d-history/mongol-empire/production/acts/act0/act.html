@@ -58,7 +58,7 @@ window.SHOTS = [
   // 1 WIDE: endless steppe at dawn, smoke from the gers, a herder rides past; pull out and the steppe becomes a parchment map
   { plate: 'steppe_dawn', cam: { z: [1.5, 1.08], x: [1250, 1280], y: [940, 800], ease: E.io }, bed: [['wind_loop', .5], ['walk_hooves_loop', .25]], inSfx: false,
     live: [A.smoke(760, 845, 1), A.smoke(1172, 868, .9), A.smoke(1584, 886, .7), A.birds(400, 420, 5, 50, 1)],
-    front: [(c, lt) => MG.horse(c, { x: 560 + lt * 70, y: 1210, s: .62, gait: 'walk', t: lt, col: '#8a5a32', rider: MG.archer({ draw: 0 }) }),
+    front: [(c, lt) => MG.horse(c, { x: 560 + lt * 70, dist: lt * 70, y: 1210, s: .62, gait: 'walk', t: lt, col: '#8a5a32', rider: MG.archer({ draw: 0 }) }),
       (c, lt) => R.figure(c, { x: 2190, y: 1170, s: .78, facing: -1, pose: 'carry', t: lt, look: HERDER, hat: MG.furHat() })],
     init: S => { const tH = A.at(S, 'herders', 1.4), tM = Math.max(tH + 2.5, S.end - S.start - 2.3);
       S.D.over = [(c, lt) => K.card(c, 'POPULATION\n~1,000,000', lt, { at: tH + .2, x: 430, y: 230, px: 52, rot: -4, until: tM }),

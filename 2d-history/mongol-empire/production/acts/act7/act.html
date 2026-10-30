@@ -127,7 +127,7 @@ window.SHOTS = [
       S.D.sfx = [[1, 'run_steps', .35], [S.tM, 'crowd_cheer', .35]]; } },
   // 9 the Mongols ride back to the steppe, small against the sky
   { plate: 'steppe_dusk', cam: { z: [1.05, 1.0], x: [1280, 1280], y: [760, 760], ease: E.io }, bed: [['wind_loop', .35]],
-    live: [(c, lt) => { for (let k = 0; k < 6; k++) { const d = Math.min(1, lt / 9); const x = 900 + k * 120 + d * 900, y = 1040 - d * 60 + (k % 2) * 30, s = .32 - d * .14 + (k % 2) * .02; MG.horse(c, { x, y, s, facing: 1, gait: 'walk', t: lt, phase: k, sil: 'rgba(30,20,30,.85)', rider: MG.archer({ sil: 'rgba(30,20,30,.85)', draw: 0 }) }); } }],
+    live: [(c, lt) => { for (let k = 0; k < 6; k++) { const d = Math.min(1, lt / 9); const x = 900 + k * 120 + d * 900, y = 1040 - d * 60 + (k % 2) * 30, s = .32 - d * .14 + (k % 2) * .02; MG.horse(c, { x, dist: d * 900 * .32 / s, y, s, facing: 1, gait: 'walk', t: lt, phase: k, sil: 'rgba(30,20,30,.85)', rider: MG.archer({ sil: 'rgba(30,20,30,.85)', draw: 0 }) }); } }],
     init: S => { const tY = A.at(S, 'hundred and sixty', 3); S.D.over = [(c, lt) => K.card(c, 'BACK TO THE STEPPE', lt, { at: .5, x: 520, y: 200, px: 50, rot: -3 }), (c, lt) => K.card(c, '~160 YEARS AFTER\nGENGHIS WAS CROWNED', lt, { at: tY, x: 1440, y: 200, px: 42, rot: 3 })]; S.D.sfx = [[.4, 'walk_hooves_loop', .3]]; } },
 ];
 const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };

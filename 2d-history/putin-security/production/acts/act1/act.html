@@ -90,7 +90,7 @@ window.SHOTS = [
         const t0 = S.tS + d * .08, s = K.seg(lt, t0, t0 + .25); if (s > 0 && d < 31) { c.save(); c.strokeStyle = 'rgba(200,30,20,.85)'; c.lineWidth = 6; c.lineCap = 'round'; c.beginPath(); for (let k = 0; k <= 10 * s; k++) { const px = cx + 12 + (k / 10) * (CW - 24), py = cy + 30 + Math.sin(k * 2.4 + d) * 22; k ? c.lineTo(px, py) : c.moveTo(px, py); } c.stroke(); c.restore(); } } },
     bed: [['office_loop', .25], ['tick', 0]],
     init: S => { S.tS = A.at(S, 'nobody', 4.6); const tP = A.at(S, 'predict', 6.6);
-      S.D.over = [(c, lt) => K.title(c, 'UNPREDICTABILITY', lt, { at: tP, y: 960, px: 92, fill: GOLD })];
+      S.D.over = [(c, lt) => K.title(c, 'UNPREDICTABILITY', lt, { at: tP, y: 62, px: 78, fill: GOLD })];
       S.D.sfx = [[.3, 'paper', .35], [S.tS, 'scrape', .4], [S.tS + 1.2, 'scrape', .35], [tP, 'hit', .55]]; } },
 ];
 const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };

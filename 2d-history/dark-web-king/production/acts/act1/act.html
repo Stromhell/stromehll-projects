@@ -166,7 +166,7 @@ window.SHOTS = [
       S.D.over = [(c, lt) => K.title(c, 'PUBLIC LEDGER', lt, { at: S.tP, y: 110, px: 80, fill: GOLD }), (c, lt) => K.card(c, 'CODES, NOT NAMES', lt, { at: tC, x: 960, y: 800, px: 52, rot: -2 })];
       S.D.sfx = [[.3, 'riser', .25], [S.tP, 'paper', .55], [tA, 'pop', .35], [tC, 'stamp', .45]]; } },
   // 17 push in on one line of the scroll; it glows
-  { draw: (c, lt, u, S) => { backdrop('serverhall', .75)(c); const z = 1 + .6 * E.io(K.seg(lt, 0, S.end - S.start)); c.save(); c.translate(960, 520); c.scale(z, z); c.translate(-960, -520); scroll(c, 960, 160, 1000, 1, 0, 8, .5 + .5 * Math.sin(lt * 5)); c.restore(); },
+  { draw: (c, lt, u, S) => { backdrop('serverhall', .75)(c); const z = 1 + .6 * E.io(K.seg(lt, 0, S.end - S.start)); c.save(); c.beginPath(); c.rect(0, 0, 1920, 900); c.clip(); c.translate(960, 480); c.scale(z, z); c.translate(-960, -520); scroll(c, 960, 160, 1000, 1, 0, 8, .5 + .5 * Math.sin(lt * 5)); c.restore(); const gd = c.createLinearGradient(0, 820, 0, 900); gd.addColorStop(0, 'rgba(10,10,16,0)'); gd.addColorStop(1, 'rgba(10,10,16,.95)'); c.fillStyle = gd; c.fillRect(0, 820, 1920, 80); },
     bed: [['hum_loop', .3]], sfx: [[.2, 'heartbeat', .45]],
     init: S => { const tM = A.at(S, 'matters later', 1.4); S.D.over = [(c, lt) => K.card(c, 'REMEMBER THIS', lt, { at: tM, x: 1460, y: 220, px: 52, rot: 4 })]; S.D.sfx = [[.2, 'heartbeat', .45], [tM, 'tension', .35]]; } },
 ];

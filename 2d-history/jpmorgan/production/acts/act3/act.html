@@ -41,7 +41,7 @@ window.SHOTS = [
   // 2 his own money: a share counter climbs to 2,000,000; half his coin stack slides across
   { draw: (c, lt, u, S) => { backdrop('office', .55)(c); const n = Math.round(2e6 * E.out(K.seg(lt, S.tS, S.tS + 2.2))); if (lt > S.tS - .2) { K.outlined(c, n.toLocaleString('en-US'), 960, 250, 120, { fill: GOLD }); K.outlined(c, 'BANK ONE SHARES', 960, 330, 48, { fill: '#fffaf0' }); }
       const a = pop(lt, S.tH - 1.2); const m = E.io(K.seg(lt, S.tH, S.tH + 1)); for (let k = 0; k < 10; k++) { const moved = k >= 5; JK.coin(c, 760 + (moved ? 400 * m : 0), 900 - (k % 5) * 30 - (moved ? 0 : 0), 64, a); }
-      if (m > .5) { K.outlined(c, 'HALF', 760, 640, 60, { fill: '#fffaf0', alpha: (m - .5) * 2 }); K.outlined(c, 'INTO THE BANK', 1160, 640, 52, { fill: GOLD, alpha: (m - .5) * 2 }); } },
+      R.figure(c, { x: 330, y: 1010, s: 1.45, ...DIMON, facing: 1, pose: lt > S.tH - 1.2 ? 'present' : 'think', talk: true, t: lt, mood: 'focus' }); if (m > .5) { K.outlined(c, 'HALF', 760, 640, 60, { fill: '#fffaf0', alpha: (m - .5) * 2 }); K.outlined(c, 'INTO THE BANK', 1160, 640, 52, { fill: GOLD, alpha: (m - .5) * 2 }); } },
     bed: [['hum_loop', .3]],
     init: S => { S.tS = A.at(S, 'two million', 1); S.tH = A.at(S, 'half', 6); const tM = A.at(S, 'sixty million', 3.4);
       S.D.over = [(c, lt) => K.card(c, '≈ $60 MILLION\nHIS OWN MONEY', lt, { at: tM, x: 1520, y: 520, px: 46, rot: 4 })];
@@ -62,7 +62,7 @@ window.SHOTS = [
     bed: [['hum_loop', .3]],
     init: S => { const tB = A.at(S, 'billions', 3); S.D.over = [(c, lt) => K.title(c, 'BILLIONS A YEAR AGAIN', lt, { at: tB, y: 150, px: 78, fill: GOLD })]; S.D.sfx = [[.4, 'tick', .3], [.9, 'tick', .3], [1.4, 'tick', .3], [1.9, 'tick', .3], [2.4, 'tick', .3], [tB, 'chime', .5]]; } },
   // 5 two brass plaques slide together; $58B price tag
-  { draw: (c, lt, u, S) => { backdrop('bank', .45)(c); const m = E.io(K.seg(lt, S.tM, S.tM + 1.1));
+  { draw: (c, lt, u, S) => { backdrop('bank', .45)(c); JK.plaque(c, 960, 170, 'NEW YORK', 1.15, 1); const m = E.io(K.seg(lt, S.tM, S.tM + 1.1));
       if (lt < S.tM + .9) { JK.plaque(c, 520 + 380 * m, 470, 'JPMORGAN CHASE', .85, pop(lt, .3)); JK.plaque(c, 1400 - 380 * m, 470, 'BANK ONE', .85, pop(lt, .7)); } else { JK.plaque(c, 960, 470, 'JPMORGAN CHASE', 1.1 + .15 * (1 - E.back(K.seg(lt, S.tM + .9, S.tM + 1.4))), 1, '+ BANK ONE'); } },
     bed: [['hum_loop', .3]],
     init: S => { S.tM = A.at(S, 'agreed to buy', 2); const tP = A.at(S, 'fifty-eight billion', 3.6), tR = A.at(S, 'run the combined', 6.4);
@@ -76,7 +76,7 @@ window.SHOTS = [
       S.D.over = [stack('2004 · PRESIDENT', tP, 0), stack('31 DEC 2005 · CEO', tC, 1), stack('2006 · CHAIRMAN', S.tH, 2)];
       S.D.sfx = [[.3, 'footsteps', .35], [tP, 'stamp', .4], [tC, 'stamp', .4], [S.tH, 'stamp', .45]]; } },
   // 7 three rules light up in turn
-  { draw: (c, lt, u, S) => { backdrop('boardroom', .65)(c); S.at.forEach((t, i) => ruleIcon(c, 480 + i * 480, 560, i, pop(lt, t, .5), lt)); },
+  { draw: (c, lt, u, S) => { backdrop('boardroom', .65)(c); S.at.forEach((t, i) => ruleIcon(c, 420 + i * 440, 560, i, pop(lt, t, .5), lt)); R.figure(c, { x: 1730, y: 1010, s: 1.4, ...DIMON, facing: -1, pose: lt > S.at[0] ? 'present' : 'stand', talk: true, t: lt, mood: 'focus' }); },
     bed: [['hum_loop', .3]],
     init: S => { S.at = [A.at(S, 'capital', 1.6), A.at(S, 'cash', 3.4), A.at(S, 'worst year', 5.6)]; S.D.over = [(c, lt) => K.title(c, 'HIS RULE', lt, { at: .3, y: 150, px: 84, fill: GOLD })]; S.D.sfx = [[.3, 'hit', .45]].concat(S.at.map(t => [t, 'pop', .45])); } },
   // 8 the fortress rises in the rain; title; then a "?" over the bank door

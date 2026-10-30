@@ -50,7 +50,7 @@ window.SHOTS = [
   { draw: (c, lt, u, S) => { backdrop('moscow_road', .7)(c); c.save(); c.fillStyle = '#1a1c22'; c.fillRect(260, 140, 1400, 800); c.strokeStyle = INK; c.lineWidth = 14; c.strokeRect(260, 140, 1400, 800); const g = c.createLinearGradient(300, 180, 1600, 900); g.addColorStop(0, 'rgba(120,140,170,.55)'); g.addColorStop(1, 'rgba(40,50,70,.55)'); c.fillStyle = g; c.fillRect(300, 180, 1320, 720); c.restore();
       const H = [[620, 420], [1180, 360], [900, 620], [1400, 640], [520, 720], [1060, 480]]; H.forEach(([x, y], i) => { const t0 = .4 + i * .55; if (lt < t0) return; const a = Math.min(1, (lt - t0) * 6); c.save(); c.globalAlpha = a; c.strokeStyle = 'rgba(230,240,255,.85)'; c.lineWidth = 2.5; for (let k = 0; k < 9; k++) { const an = k / 9 * 6.28 + i; c.beginPath(); c.moveTo(x, y); c.lineTo(x + Math.cos(an) * (60 + (k * 37 % 40)), y + Math.sin(an) * (60 + (k * 37 % 40))); c.stroke(); } c.beginPath(); c.arc(x, y, 34, 0, 7); c.stroke(); c.fillStyle = '#8a8070'; c.beginPath(); c.ellipse(x, y, 16, 13, i, 0, 7); c.fill(); c.restore(); }); },
     bed: [['tension', .3]],
-    init: S => { const tA = A.at(S, 'armour-piercing', 2.8); S.D.over = [(c, lt) => K.card(c, 'EVEN ARMOUR-PIERCING\n(REPORTEDLY)', lt, { at: tA, x: 960, y: 980, px: 42, rot: -2 })]; S.D.sfx = [.4, .95, 1.5, 2.05, 2.6, 3.15].map(t => [t, 'hit', .45]); } },
+    init: S => { const tA = A.at(S, 'armour-piercing', 2.8); S.D.over = [(c, lt) => K.card(c, 'EVEN ARMOUR-PIERCING\n(REPORTEDLY)', lt, { at: tA, x: 960, y: 820, px: 42, rot: -2 })]; S.D.sfx = [.4, .95, 1.5, 2.05, 2.6, 3.15].map(t => [t, 'hit', .45]); } },
   // 5 a grenade under the car; it rolls on out of the smoke
   { plate: 'moscow_road', cam: { z: [1.12, 1.16], x: [1280, 1280], y: [900, 900] }, bed: [['rain_loop', .45]],
     init: S => { const tG = A.at(S, 'grenade', .8), tR = A.at(S, 'rolls on', 3.2);
@@ -76,7 +76,7 @@ window.SHOTS = [
     init: S => { S.tF = A.at(S, 'filter', 2); S.tE = A.at(S, 'emergency exit', 7.6); S.D.over = [(c, lt) => K.card(c, 'SEALED CABIN', lt, { at: .5, x: 460, y: 180, px: 52, rot: -4 })]; S.D.sfx = [[.4, 'door_slam', .4], [S.tF, 'hum_loop', .3], [S.tE, 'chime', .45]]; } },
   // 9 the car pulls up beside a big four-engine jet on the runway
   { plate: 'airfield', cam: { z: [1.1, 1.16], x: [1280, 1300], y: [820, 820] }, bed: [['wind_loop', .4]],
-    live: [(c) => PU.jet(c, 1650, 1000, 1.25, -1), (c, lt, u, S) => { const x = 300 + 700 * E.out(K.seg(lt, 0, 3.2)); PU.limo(c, x, 1260, 1.05, x / 70, 1); }],
+    live: [(c) => PU.jet(c, 1950, 990, 1.2, -1), (c, lt, u, S) => { const x = 250 + 450 * E.out(K.seg(lt, 0, 3.2)); PU.limo(c, x, 1260, 1.05, x / 70, 1); }],
     init: S => { const tS = A.at(S, 'shield', 2.4), tA = A.at(S, 'takes to the air', 4.8);
       S.D.over = [(c, lt) => K.card(c, 'SHORT TRIPS: THE CAR', lt, { at: tS, x: 460, y: 200, px: 46, rot: -4 }), (c, lt) => K.card(c, 'LONG TRIPS: THE JET', lt, { at: tA, x: 1460, y: 200, px: 46, rot: 3 })];
       S.D.sfx = [[.2, 'whoosh_soft', .35], [3.2, 'creak', .3], [tA, 'riser', .4]]; } },

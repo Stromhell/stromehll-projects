@@ -84,7 +84,7 @@ window.SHOTS = [
   // 4 riders in different tribal colours line up and turn one colour
   { plate: 'steppe_day', cam: { z: [1.15, 1.2], x: [1280, 1290], y: [900, 900] }, bed: [['walk_hooves_loop', .4], ['wind_loop', .25]],
     init: S => { const tL = A.at(S, 'loyalty', 4.4); const COL = ['#2f4f6a', '#7a5a1a', '#4f6a46', '#6a3a7a', '#3f5f8a'];
-      S.D.live = [(c, lt) => { const m = K.seg(lt, tL - .4, tL + 1.4); COL.forEach((col, k) => { const tx = 380 + k * 450, x = Math.min(tx, -300 + (lt - k * .35) * 700); MG.horse(c, { x, y: 1300, s: .7, gait: x < tx ? 'walk' : 'stand', t: lt, phase: k, col: ['#6a4028', '#3a2a1e', '#9a6a3a', '#c8a070', '#4a3020'][k], rider: MG.archer({ col: mix(col, '#b8221e', m) }) }); }); }];
+      S.D.live = [(c, lt) => { const m = K.seg(lt, tL - .4, tL + 1.4); COL.forEach((col, k) => { const tx = 380 + k * 450, x = Math.min(tx, -300 + (lt - k * .35) * 700); MG.horse(c, { x, dist: x, y: 1300, s: .7, gait: x < tx ? 'walk' : 'stand', t: lt, phase: k, col: ['#6a4028', '#3a2a1e', '#9a6a3a', '#c8a070', '#4a3020'][k], rider: MG.archer({ col: mix(col, '#b8221e', m) }) }); }); }];
       S.D.over = [(c, lt) => K.card(c, 'SIDE BY SIDE', lt, { at: .6, x: 480, y: 210, px: 52, rot: -4 }), (c, lt) => K.card(c, 'LOYAL TO THE UNIT\nAND THE KHAN', lt, { at: tL, x: 1420, y: 230, px: 46, rot: 3 })];
       S.D.sfx = [[.3, 'walk_hooves_loop', .2], [tL, 'swell', .35], [tL + 1.4, 'drum', .45]]; } },
   // 5 two cards flip: Jebe the enemy archer, Subutai the blacksmith's son
@@ -135,8 +135,8 @@ window.SHOTS = [
   // 10 the feigned retreat: Mongols gallop away, the chasers follow, the Mongols shoot back over their shoulders
   { plate: 'steppe_open', cam: { z: [1.15, 1.2], x: [1300, 1300], y: [960, 960] }, bed: [['cavalry_loop', .55], ['wind_loop', .25]],
     init: S => { const tF = A.at(S, 'fake retreat', 7.4), tT = A.at(S, 'turn to shoot', 3.6); const L = S.end - S.start;
-      S.D.live = [(c, lt) => { for (let k = 0; k < 3; k++) { const x = 1500 + k * 420 + lt * 60 - 200; MG.horse(c, { x, y: 1240 + (k % 2) * 90, s: .62, facing: 1, gait: 'gallop', t: lt, phase: k * 1.4, col: ['#6a4028', '#3a2a1e', '#9a6a3a'][k], rider: MG.archer({ draw: lt > tT ? .5 + .5 * Math.sin(lt * 3 + k) : 0 }) }); }
-          for (let k = 0; k < 3; k++) { const x = -200 + k * -380 + lt * 120; MG.horse(c, { x, y: 1260 + (k % 2) * 80, s: .66, facing: 1, gait: 'gallop', t: lt, phase: k * .9, col: ['#c8a070', '#e8dcc0', '#7a5a3a'][k], rider: MG.archer({ col: '#5a6a7a' }) }); }
+      S.D.live = [(c, lt) => { for (let k = 0; k < 3; k++) { const x = 1500 + k * 420 + lt * 60 - 200; MG.horse(c, { x, dist: x, y: 1240 + (k % 2) * 90, s: .62, facing: 1, gait: 'gallop', t: lt, phase: k * 1.4, col: ['#6a4028', '#3a2a1e', '#9a6a3a'][k], rider: MG.archer({ draw: lt > tT ? .5 + .5 * Math.sin(lt * 3 + k) : 0 }) }); }
+          for (let k = 0; k < 3; k++) { const x = -200 + k * -380 + lt * 120; MG.horse(c, { x, dist: x, y: 1260 + (k % 2) * 80, s: .66, facing: 1, gait: 'gallop', t: lt, phase: k * .9, col: ['#c8a070', '#e8dcc0', '#7a5a3a'][k], rider: MG.archer({ col: '#5a6a7a' }) }); }
           if (lt > tT) for (let k = 0; k < 6; k++) { const t0 = tT + k * .45, uu = K.seg(lt, t0, t0 + .6); if (uu > 0 && uu < 1) { const sx = 1500 + (k % 3) * 420 + lt * 60 - 200 - 40, sy = 1000 + (k % 2) * 90, tx = -200 + (k % 3) * -380 + lt * 120 + 120; MG.arrow(c, sx, sy, tx, sy + 60, uu, 1.2); } } }];
       S.D.over = [(c, lt) => K.card(c, 'TURN AND SHOOT', lt, { at: tT, x: 1420, y: 220, px: 52, rot: 3, until: tF }), (c, lt) => K.title(c, 'THE FEIGNED RETREAT', lt, { at: tF, y: 150, px: 84, fill: GOLD })];
       S.D.sfx = [[.3, 'gallop_loop', .3], [tT, 'bowstring', .5], [tT + .1, 'arrow', .45], [tT + .55, 'arrow', .4], [tT + 1, 'arrow_hit', .4], [tF, 'drum', .55]]; } },

@@ -47,7 +47,7 @@
   // ---- horse (side view, faces +x at facing 1). o: x,y (ground), s, facing, t, gait 'stand'|'walk'|'gallop'|'graze', col, mane, speed, rider(c) drawn in horse space at saddle, sil (silhouette colour) ----
   MG.horse = (c, o) => { const s = o.s ?? 1, F = o.facing ?? 1, t = o.t ?? 0, gait = o.gait || 'stand', sil = o.sil;
     const col = sil || o.col || '#7a4a2a', dark = sil || shade(col, -.32), light = sil || shade(col, .22), mane = sil || o.mane || '#2a1a10', hoof = sil || '#2a2420';
-    const sp = o.speed ?? (gait === 'gallop' ? 9 : gait === 'walk' ? 4.2 : 0), ph = t * sp + (o.phase || 0);
+    const sp = o.speed ?? (gait === 'gallop' ? 9 : gait === 'walk' ? 4.2 : 0), ph = (o.dist != null && sp ? o.dist / (s * (gait === 'gallop' ? 74 : 36)) : t * sp) + (o.phase || 0);
     const bob = gait === 'gallop' ? -Math.abs(Math.sin(ph)) * 16 : gait === 'walk' ? -Math.abs(Math.sin(ph)) * 4 : Math.sin(t * 1.3) * 1.5;
     const pitch = gait === 'gallop' ? Math.sin(ph) * .05 : 0;
     c.save(); c.translate(o.x, o.y); c.scale(s * F, s);

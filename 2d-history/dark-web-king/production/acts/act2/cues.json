@@ -1,0 +1,295 @@
+{
+ "dur": 57.645,
+ "cues": [
+  {
+   "t": 0.3,
+   "name": "run_steps",
+   "gain": 0.4
+  },
+  {
+   "t": 0.3,
+   "name": "pop",
+   "gain": 0.35
+  },
+  {
+   "t": 2.215,
+   "name": "pop",
+   "gain": 0.35
+  },
+  {
+   "t": 5.07,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 5.27,
+   "name": "scrape",
+   "gain": 0.3
+  },
+  {
+   "t": 5.644,
+   "name": "pop",
+   "gain": 0.4
+  },
+  {
+   "t": 6.704,
+   "name": "pop",
+   "gain": 0.35
+  },
+  {
+   "t": 9.784,
+   "name": "chime",
+   "gain": 0.45
+  },
+  {
+   "t": 11.032,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 11.232,
+   "name": "hum_loop",
+   "gain": 0.2
+  },
+  {
+   "t": 13.407,
+   "name": "pop",
+   "gain": 0.4
+  },
+  {
+   "t": 14.567,
+   "name": "chime",
+   "gain": 0.4
+  },
+  {
+   "t": 15.742,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 16.697,
+   "name": "door_slam",
+   "gain": 0.25
+  },
+  {
+   "t": 16.797,
+   "name": "paper",
+   "gain": 0.4
+  },
+  {
+   "t": 18.657,
+   "name": "swell",
+   "gain": 0.4
+  },
+  {
+   "t": 18.857,
+   "name": "paper",
+   "gain": 0.4
+  },
+  {
+   "t": 19.692,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 20.507,
+   "name": "hit",
+   "gain": 0.45
+  },
+  {
+   "t": 22.007,
+   "name": "whoosh_soft",
+   "gain": 0.4
+  },
+  {
+   "t": 20.907,
+   "name": "crowd_cheer",
+   "gain": 0.25
+  },
+  {
+   "t": 26.964,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 27.264,
+   "name": "scrape",
+   "gain": 0.4
+  },
+  {
+   "t": 28.464,
+   "name": "scrape",
+   "gain": 0.35
+  },
+  {
+   "t": 30.153,
+   "name": "pop",
+   "gain": 0.4
+  },
+  {
+   "t": 32.073,
+   "name": "thud",
+   "gain": 0.4
+  },
+  {
+   "t": 33.488,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 34.383,
+   "name": "riser",
+   "gain": 0.4
+  },
+  {
+   "t": 35.383,
+   "name": "chime",
+   "gain": 0.5
+  },
+  {
+   "t": 38.263,
+   "name": "pop",
+   "gain": 0.4
+  },
+  {
+   "t": 39.763,
+   "name": "coins",
+   "gain": 0.4
+  },
+  {
+   "t": 40.638,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 41.832,
+   "name": "typing",
+   "gain": 0.4
+  },
+  {
+   "t": 43.372,
+   "name": "paper",
+   "gain": 0.5
+  },
+  {
+   "t": 49.107,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 49.307,
+   "name": "typing",
+   "gain": 0.45
+  },
+  {
+   "t": 51.002,
+   "name": "stamp",
+   "gain": 0.4
+  },
+  {
+   "t": 51.102,
+   "name": "swell",
+   "gain": 0.5
+  },
+  {
+   "t": 52.242,
+   "name": "chime",
+   "gain": 0.4
+  },
+  {
+   "t": 55.762,
+   "name": "whoosh",
+   "gain": 0.5
+  },
+  {
+   "t": 55.962,
+   "name": "hit",
+   "gain": 0.7
+  },
+  {
+   "t": 56.012,
+   "name": "swell",
+   "gain": 0.4
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 5.77,
+   "name": "birds_loop",
+   "gain": 0.4
+  },
+  {
+   "start": 0,
+   "end": 5.77,
+   "name": "city_loop",
+   "gain": 0.15
+  },
+  {
+   "start": 4.97,
+   "end": 11.732000000000001,
+   "name": "office_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 10.932,
+   "end": 16.442,
+   "name": "hum_loop",
+   "gain": 0.35
+  },
+  {
+   "start": 15.642,
+   "end": 20.392,
+   "name": "hum_loop",
+   "gain": 0.3
+  },
+  {
+   "start": 19.592,
+   "end": 27.664,
+   "name": "crowd_loop",
+   "gain": 0.3
+  },
+  {
+   "start": 19.592,
+   "end": 27.664,
+   "name": "hum_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 26.864,
+   "end": 34.187999999999995,
+   "name": "hum_loop",
+   "gain": 0.3
+  },
+  {
+   "start": 33.388,
+   "end": 41.337999999999994,
+   "name": "hum_loop",
+   "gain": 0.3
+  },
+  {
+   "start": 40.538,
+   "end": 49.806999999999995,
+   "name": "night_loop",
+   "gain": 0.45
+  },
+  {
+   "start": 40.538,
+   "end": 49.806999999999995,
+   "name": "wind_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 49.007,
+   "end": 56.461999999999996,
+   "name": "night_loop",
+   "gain": 0.45
+  },
+  {
+   "start": 55.662,
+   "end": 58.445,
+   "name": "hum_loop",
+   "gain": 0.3
+  }
+ ]
+}

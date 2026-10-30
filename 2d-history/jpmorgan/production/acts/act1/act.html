@@ -91,7 +91,7 @@ window.SHOTS = [
   { plate: 'bank', cam: { z: [1.1, 1.14], x: [1280, 1280], y: [700, 700] }, bed: [['office_loop', .3]],
     over: [(c) => { c.save(); c.fillStyle = 'rgba(14,10,8,.55)'; c.fillRect(0, 0, SW, SH); c.restore(); }],
     init: S => { const tM = A.at(S, 'merged', 2.2), tN = A.at(S, 'not yet', 6.5);
-      S.D.over = S.D.over.concat([(c, lt) => { const m = E.io(K.seg(lt, tM, tM + 1.1)); if (m < 1) { c.save(); c.globalAlpha = 1 - K.seg(lt, tM + .9, tM + 1.1); JK.plaque(c, 520 + 330 * m, 470, 'J.P. MORGAN & CO.', .8, pop(lt, .3, .5)); JK.plaque(c, 1400 - 330 * m, 470, 'CHASE MANHATTAN', .8, pop(lt, .8, .5)); c.restore(); }
+      S.D.over = S.D.over.concat([(c, lt) => JK.plaque(c, 960, 178, 'NEW YORK', 1.15, 1), (c, lt) => { const m = E.io(K.seg(lt, tM, tM + 1.1)); if (m < 1) { c.save(); c.globalAlpha = 1 - K.seg(lt, tM + .9, tM + 1.1); JK.plaque(c, 520 + 330 * m, 470, 'J.P. MORGAN & CO.', .8, pop(lt, .3, .5)); JK.plaque(c, 1400 - 330 * m, 470, 'CHASE MANHATTAN', .8, pop(lt, .8, .5)); c.restore(); }
           if (lt > tM + .9) JK.plaque(c, 960, 470, 'JPMORGAN CHASE', 1.15 + .15 * (1 - E.back(K.seg(lt, tM + .9, tM + 1.4))), 1); },
         (c, lt) => K.dateTag(c, '2000', lt, { at: tM }), (c, lt) => K.card(c, 'HUGE. BUT NOT YET No. 1', lt, { at: tN, x: 960, y: 780, px: 58, rot: -3 })]);
       S.D.sfx = [[.3, 'whoosh_soft', .4], [.8, 'whoosh_soft', .4], [tM, 'scrape', .45], [tM + 1, 'thud', .6], [tM + 1.05, 'chime', .4], [tN, 'pop', .4]]; } },
