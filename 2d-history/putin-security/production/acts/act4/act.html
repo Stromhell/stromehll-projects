@@ -1,0 +1,77 @@
+<!doctype html><html><head><meta charset="utf-8"><title>PU act 4 - The Ghost Train</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "alium";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../pu_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['birch_rail', 'jet_cabin', 'map_russia', 'office_a']) K.load(n, PL + n + '.jpg'); K.load('library', '../../../../dark-web-king/production/plates/library.jpg');
+const SW = 1920, SH = 1080, INK = '#1d1712', RED = '#d42a20', GOLD = '#e8b44a';
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+const plateAt = (c, name, px, py, sx, sy, z) => { const s2 = z * 1920 / 2560; c.setTransform(s2, 0, 0, s2, sx - px * s2, sy - py * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); return s2; };
+const backdrop = (name, dim = .55, blur = 6) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${1 - dim})`; plateAt(c, name, 1280, 720, 960, 540, 1.08); c.restore(); c.setTransform(1, 0, 0, 1, 0, 0); };
+// label with a leader line (screen)
+const callout = (c, x, y, tx, ty, txt, a, col = GOLD) => { if (a <= 0) return; c.save(); c.globalAlpha = Math.min(1, a); c.strokeStyle = col; c.lineWidth = 4; c.beginPath(); c.arc(x, y, 12, 0, 7); c.stroke(); c.beginPath(); c.moveTo(x, y); c.lineTo(tx, ty); c.stroke(); c.restore(); c.save(); c.globalAlpha = Math.min(1, a); K.outlined(c, txt, tx, ty - 26, 40, { fill: col }); c.restore(); };
+const GREY = { top: '#9aa0a6', bot: '#5a6068', stripe: '#c8302a', nose: '#7a8088' };
+// carriage cut into rooms (screen), rooms pop by time
+const carPlan = (c, x, y, w, rooms, lt) => { c.save(); c.translate(x, y); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(-w / 2 + 12, -110, w, 240); c.fillStyle = '#d8dce0'; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.roundRect(-w / 2, -120, w, 240, 20); c.fill(); c.stroke(); c.fillStyle = '#c8302a'; c.fillRect(-w / 2, 20, w, 10);
+  let x0 = -w / 2 + 20; const each = (w - 40) / rooms.length; rooms.forEach(([n, col, at, star]) => { const a = pop(lt, at); if (a > 0) { c.save(); c.globalAlpha = Math.min(1, a); c.fillStyle = col; c.fillRect(x0, -100, each - 12, 200); c.strokeStyle = INK; c.lineWidth = 4; c.strokeRect(x0, -100, each - 12, 200); c.font = '36px Anton'; c.fillStyle = INK; c.textAlign = 'center'; n.split('\n').forEach((t, i, arr) => c.fillText(t, x0 + each / 2 - 6, 12 + (i - (arr.length - 1) / 2) * 40)); if (star) { c.font = '28px Anton'; c.fillText('*', x0 + each - 30, -70); } c.restore(); } x0 += each; }); c.restore(); };
+const docPage = (c, x, y, rot, a, title) => { if (a <= 0) return; c.save(); c.translate(x, y); c.rotate(rot); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.4)'; c.fillRect(-200, -260, 420, 540); c.fillStyle = '#f4f0e6'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(-210, -270, 420, 540); c.strokeRect(-210, -270, 420, 540); c.font = '30px Anton'; c.fillStyle = INK; c.textAlign = 'center'; c.fillText(title, 0, -220); c.strokeStyle = '#3a4a6a'; c.lineWidth = 3; c.strokeRect(-160, -170, 320, 150); for (let k = 0; k < 4; k++) { c.beginPath(); c.moveTo(-160 + k * 80, -170); c.lineTo(-160 + k * 80, -20); c.stroke(); } c.fillStyle = 'rgba(42,26,34,.3)'; for (let k = 0; k < 7; k++) c.fillRect(-160, 20 + k * 30, 320 - (k % 3) * 40, 10); c.restore(); };
+const axles = (c, x, y, n, a, lab) => { if (a <= 0) return; c.save(); c.translate(x, y); c.globalAlpha = Math.min(1, a); c.fillStyle = '#9aa0a6'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.roundRect(-360, -170, 720, 140, 14); c.fill(); c.stroke(); const pos = n === 4 ? [-260, -180, 180, 260] : [-290, -220, -150, 150, 220, 290]; pos.forEach(px => { c.fillStyle = '#1a1a1a'; c.beginPath(); c.arc(px, -10, 30, 0, 7); c.fill(); c.fillStyle = '#8a9098'; c.beginPath(); c.arc(px, -10, 10, 0, 7); c.fill(); }); c.strokeStyle = '#6a5a4a'; c.lineWidth = 8; c.beginPath(); c.moveTo(-420, 22); c.lineTo(420, 22); c.stroke(); K.outlined(c, lab, 0, 100, 48, { fill: n === 6 ? GOLD : '#fffaf0' }); c.restore(); };
+const board = (c, rows, a, lt, hiddenAt) => { c.save(); c.globalAlpha = Math.min(1, a); c.fillStyle = '#10141a'; c.strokeStyle = '#c8ccd2'; c.lineWidth = 8; c.beginPath(); c.roundRect(360, 170, 1200, 640, 18); c.fill(); c.stroke(); c.font = '40px Anton'; c.fillStyle = '#ffd04a'; c.textAlign = 'left'; c.fillText('DEPARTURES', 400, 236); rows.forEach(([t, dest], i) => { const y = 310 + i * 80; c.font = '44px Oswald'; c.fillStyle = '#ffd04a'; c.fillText(t, 400, y); c.fillText(dest, 600, y); }); const y = 310 + rows.length * 80; if (lt > hiddenAt) { c.fillStyle = 'rgba(255,208,74,.25)'; c.fillRect(392, y - 46, 1136, 64); c.font = '44px Oswald'; c.fillStyle = '#ffd04a'; c.fillText('--:--', 400, y); c.fillText('(NOT LISTED)', 600, y); } c.restore(); };
+const PVT = [['BOCHAROV RUCHEY · SOCHI', 39.75, 43.55, 0, 70], ['NOVO-OGARYOVO', 37.2, 55.72, -200, 40], ['VALDAI', 33.3, 57.9, 0, -60]].map(([n, lo, la, dx, dy]) => { const [x, y] = PU.xy(lo, la); return { n, x, y, dx, dy }; });
+
+window.SHOTS = [
+  // 1 an ordinary-looking grey train rolls through the birches
+  { plate: 'birch_rail', cam: { z: [1.08, 1.14], x: [1280, 1300], y: [880, 880] }, bed: [['wind_loop', .3], ['drone', .15]],
+    live: [(c, lt) => PU.train(c, -200 + lt * 300, 1110, .9, 6, GREY)],
+    init: S => { const tG = A.at(S, 'Grey carriages', 3.4); S.D.over = [(c, lt) => K.card(c, 'GREY CARRIAGES\nRED STRIPES', lt, { at: tG, x: 460, y: 220, px: 46, rot: -4 }), (c, lt) => K.card(c, 'LOOKS ORDINARY', lt, { at: 1, x: 1460, y: 220, px: 50, rot: 3 })];
+      S.D.sfx = [[.3, 'drone', .3], [1, 'pop', .35], [tG, 'pop', .4]]; } },
+  // 2 look closer: several engines and a comms dome on the roof
+  { draw: (c, lt, u, S) => { backdrop('birch_rail', .45, 5)(c); const d = 30 * lt; PU.train(c, 1470 + d, 820, .7, 5, Object.assign({ locos: 2, dome: 2 }, GREY)); callout(c, 1288 + d, 680, 1400, 260, 'SEVERAL DIESEL ENGINES', pop(lt, S.tE)); callout(c, 532 + d, 600, 420, 300, 'COMMS DOME', pop(lt, S.tD)); },
+    bed: [['wind_loop', .3]],
+    init: S => { S.tE = A.at(S, 'diesel', 2.4); S.tD = A.at(S, 'dome', 4.6); const tL = A.at(S, 'Look closer', .4); S.D.over = [(c, lt) => K.title(c, 'LOOK CLOSER', lt, { at: tL, y: 120, px: 80, fill: GOLD })]; S.D.sfx = [[tL, 'whoosh_soft', .4], [S.tE, 'pop', .4], [S.tD, 'pop', .4]]; } },
+  // 3 official photos show a meeting room; everything else is dark
+  { draw: (c, lt, u, S) => { c.fillStyle = '#0c0c10'; c.fillRect(0, 0, 1920, 1080); const a = pop(lt, S.tM); if (a > 0) { c.save(); c.translate(560, 520); c.rotate(-.04); c.scale(a, a); c.fillStyle = '#fbf8f0'; c.fillRect(-380, -250, 760, 520); c.save(); c.beginPath(); c.rect(-350, -220, 700, 420); c.clip(); plateAt(c, 'jet_cabin', 1280, 800, 560 - 0, 470, .45); c.restore(); c.setTransform(1, 0, 0, 1, 0, 0); c.restore(); K.outlined(c, 'MEETING ROOM', 560, 860, 52, { fill: '#fffaf0' }); }
+      for (let k = 0; k < 3; k++) { const b = pop(lt, S.tN + k * .3); if (b <= 0) continue; c.save(); c.translate(1260 + k * 200, 520); c.scale(b, b); c.fillStyle = '#1e1e26'; c.strokeStyle = '#4a4a5a'; c.lineWidth = 4; c.fillRect(-90, -200, 180, 400); c.strokeRect(-90, -200, 180, 400); K.outlined(c, '?', 0, 30, 110, { fill: '#6a6a7a' }); c.restore(); } },
+    bed: [['hum_loop', .3]],
+    init: S => { S.tM = A.at(S, 'meeting room', 2.6); S.tN = A.at(S, 'nobody outside', 4.6); S.D.over = [(c, lt) => K.badge(c, 'OFFICIAL KREMLIN PHOTOS', lt, { at: .4 })]; S.D.sfx = [[.4, 'camera_shutter', .45], [S.tM, 'pop', .4], [S.tN, 'tension', .3]]; } },
+  // 4 the leaked documents from a carriage builder
+  { draw: (c, lt, u, S) => { backdrop('library', .65)(c); docPage(c, 640, 560, -.08, pop(lt, S.tL), 'CARRIAGE SPEC'); docPage(c, 960, 540, .02, pop(lt, S.tL + .3), 'FLOOR PLAN'); docPage(c, 1280, 560, .09, pop(lt, S.tL + .6), 'ARMOUR'); const st = K.seg(lt, S.tL + 1.2, S.tL + 1.5); if (st > 0) { c.save(); c.translate(960, 560); c.rotate(-.2); c.scale(1 + 1.2 * (1 - E.out(st)), 1 + 1.2 * (1 - E.out(st))); c.globalAlpha = Math.min(1, st * 2); c.strokeStyle = RED; c.lineWidth = 10; c.strokeRect(-200, -60, 400, 120); c.font = '86px Anton'; c.fillStyle = RED; c.textAlign = 'center'; c.fillText('LEAKED', 0, 30); c.restore(); } },
+    bed: [['hum_loop', .3]],
+    init: S => { S.tL = A.at(S, 'documents', 2.4); const tD = A.at(S, 'Dossier Center', 1.2), tC = A.at(S, 'railway carriages', 5.6); S.D.over = [(c, lt) => K.badge(c, 'DOSSIER CENTER', lt, { at: tD }), (c, lt) => K.card(c, 'FROM A COMPANY THAT\nBUILDS RAILWAY CARRIAGES', lt, { at: tC, x: 960, y: 900 - 40, px: 40, rot: -2 })]; S.D.sfx = [[S.tL, 'paper', .45], [S.tL + .3, 'paper', .4], [S.tL + .6, 'paper', .4], [S.tL + 1.3, 'stamp', .55]]; } },
+  // 5 armoured and heavy: six axles instead of four
+  { draw: (c, lt, u, S) => { backdrop('birch_rail', .6, 6)(c); axles(c, 960, 380, 4, pop(lt, S.t4), 'USUAL: 4 AXLES'); axles(c, 960, 760, 6, pop(lt, S.t6), 'THESE: 6 AXLES'); },
+    bed: [['hum_loop', .3]],
+    init: S => { S.t4 = A.at(S, 'six axles', 4); S.t6 = S.t4 + .7; const tA = A.at(S, 'armoured', 1.4); S.D.over = [(c, lt) => K.card(c, 'ARMOURED', lt, { at: tA, x: 360, y: 160, px: 56, rot: -4 }), (c, lt) => K.badge(c, 'ACCORDING TO THE FILES', lt, { at: .3 })]; S.D.sfx = [[tA, 'thud', .45], [S.t6, 'pop', .4], [S.t4, 'pop', .4]]; } },
+  // 6 the carriages: sleeping, office, restaurant
+  { draw: (c, lt, u, S) => { backdrop('birch_rail', .62, 6)(c); carPlan(c, 960, 540, 1500, S.rooms, lt); },
+    bed: [['hum_loop', .3]],
+    init: S => { S.rooms = [['SLEEPING\nCAR', '#d8c8e8', A.at(S, 'sleeping', .8)], ['OFFICE\nCAR', '#c8dce8', A.at(S, 'office', 1.8)], ['RESTAURANT\nCAR', '#e8dcc0', A.at(S, 'restaurant', 2.8)]]; S.D.sfx = S.rooms.map(r => [r[2], 'pop', .4]); } },
+  // 7 gym, salon, spa; the Kremlin denies
+  { draw: (c, lt, u, S) => { backdrop('birch_rail', .62, 6)(c); carPlan(c, 960, 480, 1500, S.rooms, lt); },
+    bed: [['hum_loop', .3]],
+    init: S => { S.rooms = [['GYM', '#cfe0cf', A.at(S, 'gym', 1)], ['BEAUTY SALON\n+ MASSAGE', '#f0d0dc', A.at(S, 'beauty salon', 2.4)], ['SPA + TURKISH\nSTEAM BATH', '#c8e4e8', A.at(S, 'Turkish', 4.4)]]; const tK = A.at(S, 'denies', 6.6);
+      S.D.over = [(c, lt) => K.badge(c, 'THE LEAKS ALSO DESCRIBE', lt, { at: .3 }), (c, lt) => K.card(c, 'KREMLIN: HE HAS NEVER\nUSED CARRIAGES LIKE THESE', lt, { at: tK, x: 960, y: 820, px: 42, rot: -2 })]; S.D.sfx = S.rooms.map(r => [r[2], 'pop', .4]).concat([[tK, 'stamp', .45]]); } },
+  // 8 a departures board: the train is not listed
+  { draw: (c, lt, u, S) => { backdrop('office_a', .7, 8)(c); board(c, [['08:15', 'ST PETERSBURG'], ['09:40', 'KAZAN'], ['10:05', 'SOCHI'], ['11:30', 'NIZHNY NOVGOROD'], ['12:10', 'VOLGOGRAD']], 1, lt, S.tN); },
+    bed: [['hum_loop', .3]],
+    init: S => { S.tN = A.at(S, 'timetables', 2); const tI = A.at(S, 'inside Russian Railways', 4.4), tP = A.at(S, 'ordinary passenger', 6.2); S.D.over = [(c, lt) => K.card(c, 'RAILWAY INSIDERS: YES', lt, { at: tI, x: 1560, y: 900, px: 40, rot: 3 }), (c, lt) => K.card(c, 'PASSENGERS: NEVER', lt, { at: tP, x: 380, y: 900, px: 40, rot: -3 })]; S.D.sfx = [[S.tN, 'tick', .45], [tI, 'pop', .4], [tP, 'pop', .4]]; } },
+  // 9 straight through a station without stopping
+  { draw: (c, lt, u, S) => { const s2 = plateAt(c, 'birch_rail', 1280, 900, 960, 560, 1.08); c.save(); c.setTransform(s2, 0, 0, s2, 960 - 1280 * s2, 560 - 900 * s2); c.fillStyle = '#8a8a86'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(0, 1140, 2560, 70); c.strokeRect(-10, 1140, 2580, 70); c.fillStyle = '#5a6a7a'; c.fillRect(1100, 760, 30, 380); c.fillStyle = '#2a4aa8'; c.fillRect(980, 700, 270, 80); c.font = '50px Anton'; c.fillStyle = '#fff'; c.textAlign = 'center'; c.fillText('STATION', 1115, 758); c.save(); c.filter = 'blur(3px)'; PU.train(c, -600 + (lt - .4) * 1600, 1110, .9, 6, GREY); c.restore(); c.restore(); c.setTransform(1, 0, 0, 1, 0, 0);
+      for (let k = 0; k < 10; k++) { c.save(); c.strokeStyle = 'rgba(255,255,255,.35)'; c.lineWidth = 3; const y = 300 + k * 40, x = ((k * 300 + lt * 2400) % 2400) - 300; c.beginPath(); c.moveTo(x, y); c.lineTo(x + 200, y); c.stroke(); c.restore(); } },
+    bed: [['wind_loop', .5]],
+    init: S => { S.D.over = [(c, lt) => K.card(c, 'NO STOPS', lt, { at: .8, x: 1500, y: 200, px: 64, rot: 3 })]; S.D.sfx = [[.3, 'whoosh', .6], [.8, 'pop', .4], [1.2, 'drone', .3]]; } },
+  // 10 private stations near three homes
+  { plate: 'map_russia', cam: { z: [1.1, 1.2], x: [1000, 1000], y: [800, 860], ease: E.io }, bed: [['wind_loop', .3], ['hum_loop', .2]],
+    live: [(c, lt, u, S) => { c.save(); c.fillStyle = 'rgba(10,16,40,.3)'; c.fillRect(0, 0, 2560, 1440); c.restore(); PVT.forEach((p, i) => { const a = pop(lt, S.at[i]); if (a <= 0) return; c.save(); c.globalAlpha = Math.min(1, a); c.fillStyle = '#2a4aa8'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.roundRect(p.x - 26, p.y - 26, 52, 52, 8); c.fill(); c.stroke(); c.font = '36px Anton'; c.fillStyle = '#fff'; c.textAlign = 'center'; c.fillText('Ж', p.x, p.y + 13); c.restore(); PU.dot(c, p.x, p.y, p.n, Math.min(1, a), p.dx, p.dy); }); }],
+    init: S => { S.at = [A.at(S, 'Bocharov', 4), A.at(S, 'Novo-Ogaryovo', 6), A.at(S, 'Valdai', 8)]; const tP = A.at(S, 'private stations', 2); S.D.over = [(c, lt) => K.card(c, 'PRIVATE STATIONS\nNEAR HIS HOMES', lt, { at: tP, x: 1500, y: 200, px: 46, rot: 3 })]; S.D.sfx = [[tP, 'pop', .4]].concat(S.at.map(t => [t, 'pop', .45])); } },
+  // 11 the pin hops between homes: which one is he in?
+  { plate: 'map_russia', cam: { z: [1.1, 1.14], x: [1000, 1000], y: [820, 820] }, bed: [['tension', .3]],
+    live: [(c, lt) => { c.save(); c.fillStyle = 'rgba(10,16,40,.3)'; c.fillRect(0, 0, 2560, 1440); c.restore(); PVT.forEach(p => PU.dot(c, p.x, p.y, p.n, 1, p.dx, p.dy)); const i = Math.floor(lt * 1.4) % 3, f = (lt * 1.4) % 1; PU.pin(c, PVT[i].x, PVT[i].y - 10, 1.1, Math.min(1, f * 4) * Math.min(1, (1 - f) * 4), lt); }],
+    init: S => { const tW = A.at(S, 'which home', 2.4); S.D.over = [(c, lt) => K.card(c, 'WHICH HOME\nIS HE IN?', lt, { at: tW, x: 1500, y: 520, px: 60, rot: 3 })]; S.D.sfx = [[.3, 'pop', .3], [1, 'pop', .3], [1.7, 'pop', .3], [tW, 'hit', .45]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>
