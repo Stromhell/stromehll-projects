@@ -163,3 +163,6 @@ YouTube Shorts + Instagram Reels, in story order, in the 08:00 and 10:00 ET reel
 | R13 | Tue 17 Nov 10:00 | 17 Nov 15:00 | 130 Ships Sailed to Invade England. Here's What Sank Them | 6ae44e1c545add6c2de96eb9 |
 | R14 | Wed 18 Nov 08:00 | 18 Nov 13:00 | Cousin Marriage Destroyed Spain's Royal Family | 6ae44e1e545add6c2de96ee5 |
 | R15 | Wed 18 Nov 10:00 | 18 Nov 15:00 | One Explosion Ended a 400-Year Empire in Months | 6ae44e21545add6c2de96ef9 |
+
+## Japan comeback full video (booked 30 Oct 2026, 12:52 UTC)
+- "From Eating Rats to Bullet Trains: How Japan Rebuilt Itself" (2D dynamic, 6:36): Fri 4 Dec 20:00 UTC (15:00 ET), YouTube. Zernio 6ae4932261d52f62a84528c7. Pushpam asked to schedule it 30 Oct 12:45 UTC. November full-video slots are all taken (2-day spacing), so it takes the first December slot, two days after McDonald's (3D, 2 Dec). Drive video 1-S9P08tL0zDvVZTvFiNWkbvxgwaPqjud, thumbnail 1cnit8Ch-6Kn-YSifNOGZfrPCcQtXEAHw. 15 reels to follow.
