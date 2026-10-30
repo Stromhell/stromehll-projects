@@ -13,18 +13,34 @@ async function hostages(k, h, every = 2, mood = 'worried') {
 }
 const idle = (ppl, t, o = {}) => ppl.forEach((p, i) => p.update(t, { pose: 'sit', seatH: .16, arm: i % 3 ? 'lap' : 'hug', mood: o.mood ?? 'worried', look: (o.look ?? 0) + Math.sin(t * .3 + i) * .15, nod: o.nod ?? .2 }));
 function passport(color) { const g = new THREE.Group(); g.add(C.real.box(.09, .012, .125, C.real.std(color, { rough: .7 }))); g.add(C.real.box(.085, .013, .118, C.real.std(0xe8e2d0, { rough: .9 }), { pos: [.003, 0, 0] })); return g; }
-// a Ugandan ambulance (generic white van with a red cross)
+// a Ugandan ambulance: 1970s van with a lower cab, windows, stripe, lamps, bumpers and rolling wheels
 function ambulance() {
-  const g = new THREE.Group(); const r = C.real; const white = r.std(0xe8e6de, { rough: .5 }), glass = r.std(0x0c1014, { rough: .1, metal: .5 });
-  g.add(r.rbox(2.0, 1.9, 4.8, .15, white, { pos: [0, 1.35, 0] }));
-  g.add(r.box(1.8, .6, .05, glass, { pos: [0, 1.9, 2.41] }));
+  const g = new THREE.Group(); const r = C.real; const white = r.std(0xe8e6de, { rough: .45 }), glass = r.std(0x0c1014, { rough: .08, metal: .6 });
+  const red = r.std(0xb02a20, { rough: .5 }), chrome = r.std(0xbfc3c6, { metal: .9, rough: .25 }), dark = r.std(0x1a1a1a, { rough: .8 });
+  g.add(r.rbox(2.0, 1.75, 3.3, .12, white, { pos: [0, 1.45, -.75] }));           // patient box
+  g.add(r.rbox(1.96, 1.05, 1.5, .14, white, { pos: [0, 1.12, 1.65] }));          // cab lower
+  g.add(r.rbox(1.9, .62, 1.0, .1, white, { pos: [0, 1.9, 1.35] }));              // cab roof
+  g.add(r.box(1.7, .5, .04, glass, { pos: [0, 1.88, 1.87], rot: [-.25, 0, 0] })); // windscreen
+  for (const sx of [1, -1]) {
+    g.add(r.box(.04, .45, .8, glass, { pos: [sx * .96, 1.9, 1.35] }));            // cab side window
+    g.add(r.box(.04, .4, .9, glass, { pos: [sx * 1.01, 1.85, -.2] }));            // box side window
+    g.add(r.box(.03, .14, 4.7, red, { pos: [sx * 1.015, 1.08, -.05] }));          // red stripe
+    g.add(r.box(.02, 1.0, .02, dark, { pos: [sx * 1.0, 1.15, .88] }));            // door seam
+    g.add(r.box(.12, .1, .18, chrome, { pos: [sx * 1.08, 1.75, 2.0] }));          // mirror
+    g.add(r.box(.3, .18, .04, r.std(0xfff4d0, { emissive: 0xfff4d0, ei: 1.5 }), { pos: [sx * .66, .95, 2.41] })); // headlamp
+    g.add(r.box(.15, .2, .05, r.std(0xff2020, { emissive: 0xff2020, ei: 2.5 }), { pos: [sx * .82, .8, -2.42] })); // tail lamp
+  }
+  g.add(r.box(1.0, .3, .04, dark, { pos: [0, .95, 2.41] }));                     // grille
+  for (let i = 0; i < 4; i++) g.add(r.box(.96, .02, .045, chrome, { pos: [0, .84 + i * .07, 2.42] }));
+  for (const z of [2.45, -2.45]) g.add(r.box(2.04, .16, .12, chrome, { pos: [0, .55, z] })); // bumpers
+  g.add(r.box(.02, 1.5, .02, dark, { pos: [0, 1.4, -2.41] }));                   // rear door seam
   const cross = r.canvasTex(256, 256, c => { c.fillStyle = '#e8e6de'; c.fillRect(0, 0, 256, 256); c.fillStyle = '#c0392b'; c.fillRect(98, 40, 60, 176); c.fillRect(40, 98, 176, 60); });
-  for (const s of [1, -1]) g.add(r.m(new THREE.PlaneGeometry(.8, .8), new THREE.MeshStandardMaterial({ map: cross, roughness: .6 }), { pos: [s * 1.01, 1.5, -.6], rot: [0, s * P / 2, 0], cast: false }));
-  g.add(r.m(new THREE.PlaneGeometry(.8, .8), new THREE.MeshStandardMaterial({ map: cross, roughness: .6 }), { pos: [0, 1.6, -2.41], rot: [0, P, 0], cast: false }));
-  for (const x of [-.8, .8]) g.add(r.box(.15, .2, .05, r.std(0xff2020, { emissive: 0xff2020, ei: 2.5 }), { pos: [x, .8, -2.42] }));
-  g.add(r.box(.5, .12, .25, r.std(0x3070ff, { emissive: 0x3070ff, ei: 2 }), { pos: [0, 2.35, 1.6] }));
-  const wm = { tyre: r.std(0x111111, { rough: .9 }), hub: r.std(0x999999, { metal: .7, rough: .3 }), metal: r.std(0x999999, { metal: .7 }) };
-  for (const [x, z] of [[-.9, 1.6], [.9, 1.6], [-.9, -1.5], [.9, -1.5]]) { const w = new THREE.Mesh(new THREE.CylinderGeometry(.38, .38, .25, 20), wm.tyre); w.rotation.z = P / 2; w.position.set(x, .38, z); g.add(w); }
+  for (const s of [1, -1]) g.add(r.m(new THREE.PlaneGeometry(.8, .8), new THREE.MeshStandardMaterial({ map: cross, roughness: .6 }), { pos: [s * 1.012, 1.62, -1.2], rot: [0, s * P / 2, 0], cast: false }));
+  g.add(r.m(new THREE.PlaneGeometry(.7, .7), new THREE.MeshStandardMaterial({ map: cross, roughness: .6 }), { pos: [.5, 1.7, -2.41], rot: [0, P, 0], cast: false }));
+  g.add(r.box(.5, .12, .25, r.std(0x3070ff, { emissive: 0x3070ff, ei: 2 }), { pos: [0, 2.27, 1.2] }));
+  const wm = { tyre: r.std(0x111111, { rough: .9 }), hub: r.std(0xcfcfcf, { metal: .7, rough: .3 }), metal: chrome };
+  for (const [x, z] of [[-.88, 1.55], [.88, 1.55], [-.88, -1.55], [.88, -1.55]]) { const w = sets.wheel(.38, .26, wm); w.position.set(x, .38, z); g.add(w);
+    g.add(r.box(.06, .3, .95, dark, { pos: [Math.sign(x) * 1.0, .78, z] })); }      // wheel arch shadow
   g.traverse(c => { if (c.isMesh) c.castShadow = true; });
   return g;
 }
@@ -85,12 +101,12 @@ export const shots = {
     const amb = ambulance(); amb.position.set(6.8, 0, 2); amb.rotation.y = P / 2; scene.add(amb);
     const flood = new THREE.SpotLight(0xfff0d0, 200, 40, .6, .5, 1.3); flood.position.set(-4, 7, 6); flood.target.position.set(3, 0, 2); flood.castShadow = true; scene.add(flood, flood.target);
     const d = await real.human({ id: 'tb_pa2', seed: 1300 }); real.put(scene, d, { pos: [-2, 0, 2.3], rot: P / 2, mood: 'sad' }); d.userData.driven = true;
-    const s1 = await real.human({ id: 'tb_ug1', seed: 1301 }); real.put(scene, s1, { pos: [-2.2, 0, 3.05], rot: P / 2 }); s1.userData.driven = true;
+    const s1 = await real.human({ id: 'tb_ug1', seed: 1301 }); real.put(scene, s1, { pos: [-2.8, 0, 1.6], rot: P / 2 }); s1.userData.driven = true;
     const s2 = await real.human({ id: 'tb_ug3', seed: 1302 }); real.put(scene, s2, { pos: [3.6, 0, .4], rot: -P / 2 - .3 }); s2.userData.driven = true;
     const cam = C.dolly(camera, { pos: [-1, 1.7, 9], look: [1.2, 1.2, 2], fov: 40 }, { pos: [.2, 1.6, 7], look: [1.6, 1.2, 2], fov: 38 });
     return (t, u) => { cam(u);
-      const w = C.ease(C.seg(t, .2, 4.0)); d.position.x = -2 + w * 2.1; s1.position.x = -2.2 + w * 1.9;
-      d.update(t, { pose: w < 1 ? 'walk' : 'idle', dist: w * 2.6 * .7, mood: 'sad', arm: 'cover' }); s1.update(t, { pose: w < 1 ? 'walk' : 'idle', dist: w * 2.4 * .7, arm: 'hug' }); s2.update(t, { look: -.4 });
+      const w = C.ease(C.seg(t, .2, 4.0)); d.position.x = -2 + w * 2.1; s1.position.x = d.position.x - .8; /* soldier walks a step behind her, never through her */
+      d.update(t, { pose: w < 1 ? 'walk' : 'idle', dist: w * 2.6 * .7, mood: 'sad' }); s1.update(t, { pose: w < 1 ? 'walk' : 'idle', dist: w * 2.6 * .7 }); s2.update(t, { look: -.4 });
       k.anchor = C.headPos(d, .35); };
   },
   // the ambulance drives off into the dark
