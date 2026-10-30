@@ -12,8 +12,8 @@ reels(){ v=$1; shift; for id in "$@"; do ls $v/reels/out/*_Reel_$(printf %02d $i
   python3 shared/reels/build_reel_dd.py $v $id 2>&1 | grep -E "REEL|Error|Traceback" | while read l; do log "$l"; done; done
   python3 shared/reels/thumb_dd.py $v "$@" | tail -1; for t in 1 2 3 4 5; do mkdir -p $M/$v/reels/out && cp $v/reels/out/* $M/$v/reels/out/ && return 0; sleep 20; done; return 1; }
 
-step es2_combine combine spain-2-empire Spain2_Empire_FULL
 step es1_reels reels spain-1-al-andalus 3 4 5 8 9 10 11 12 13 14 15
+step es2_combine combine spain-2-empire Spain2_Empire_FULL
 step es2_reels reels spain-2-empire $(seq 1 15)
 for a in 2 3 4 5 6; do step es3_act$a render spain-3-civil-war $a; done
 ls $S/es2_combine $S/es1_reels $S/es2_reels $S/es3_act{2,3,4,5,6} >/dev/null 2>&1 && { touch $S/ALL_DONE; log "PIPELINE ALL DONE"; }
