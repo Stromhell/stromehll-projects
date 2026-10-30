@@ -83,7 +83,15 @@
     c.save(); c.translate(0, -70); c.scale(1, Math.cos(open * 1.4)); c.fillStyle = '#3a2a4a'; c.fillRect(-84, -50, 168, 50); c.strokeRect(-84, -50, 168, 50); c.restore();
     if (open > .3) { c.fillStyle = '#f0f0f0'; c.fillRect(-60, -70, 120, 20); c.strokeStyle = '#e8b44a'; c.lineWidth = 10; c.beginPath(); c.ellipse(0, -90, 30, 26, 0, 0, 7); c.stroke(); NK.swoosh(c, 0, -118, 18, '#e8b44a'); c.fillStyle = '#d0f0ff'; c.beginPath(); c.arc(16, -122, 7, 0, 7); c.fill(); } c.restore(); };
   // ---- gavel striking at u (0..1 lift)
-  NK.gavel = (c, x, y, s = 1, lift = 0) => { c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = '#5a3a22'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.ellipse(0, 0, 110, 22, 0, 0, 7); c.fill(); c.stroke(); c.save(); c.translate(120, -30); c.rotate(-lift * .9); c.fillRect(-150, -10, 150, 16); c.strokeRect(-150, -10, 150, 16); c.fillRect(-190, -40, 70, 76); c.strokeRect(-190, -40, 70, 76); c.restore(); c.restore(); };
+  NK.gavel = (c, x, y, s = 1, lift = 0) => { c.save(); c.translate(x, y); c.scale(s, s); c.strokeStyle = INK; c.lineWidth = 5;
+    c.fillStyle = 'rgba(0,0,0,.28)'; c.beginPath(); c.ellipse(6, 26, 120, 18, 0, 0, 7); c.fill();
+    c.fillStyle = '#3e2414'; c.beginPath(); c.moveTo(-100, 0); c.lineTo(-100, 22); c.ellipse(0, 22, 100, 20, 0, Math.PI, 0, true); c.lineTo(100, 0); c.closePath(); c.fill(); c.stroke();
+    c.fillStyle = '#6e4428'; c.beginPath(); c.ellipse(0, 0, 100, 20, 0, 0, 7); c.fill(); c.stroke(); c.fillStyle = 'rgba(255,230,190,.25)'; c.beginPath(); c.ellipse(-20, -4, 50, 7, 0, 0, 7); c.fill();
+    c.save(); c.translate(150, -70); c.rotate(-lift * .8);
+    c.fillStyle = '#7a4a26'; c.beginPath(); c.moveTo(0, -7); c.lineTo(-150, -11); c.lineTo(-150, 11); c.lineTo(0, 7); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#4a2c16'; c.beginPath(); c.arc(0, 0, 10, 0, 7); c.fill(); c.stroke();
+    c.translate(-160, 0); c.fillStyle = '#8a5530'; c.beginPath(); c.roundRect(-38, -52, 76, 104, 16); c.fill(); c.stroke();
+    c.fillStyle = '#d8b04a'; c.fillRect(-38, -40, 76, 10); c.strokeRect(-38, -40, 76, 10); c.fillRect(-38, 30, 76, 10); c.strokeRect(-38, 30, 76, 10);
+    c.fillStyle = 'rgba(255,235,200,.3)'; c.fillRect(-28, -24, 12, 48); c.restore(); c.restore(); };
   // ---- simple line chart; pts in 0..1 space, drawn to u
   NK.line = (c, x, y, w, h, pts, u, col = ORANGE, lw = 10) => { const n = Math.max(2, Math.floor(pts.length * Math.min(1, u))); c.save(); c.strokeStyle = col; c.lineWidth = lw; c.lineJoin = 'round'; c.lineCap = 'round'; c.beginPath(); pts.slice(0, n).forEach(([px, py], i) => { const X = x + px * w, Y = y + h - py * h; i ? c.lineTo(X, Y) : c.moveTo(X, Y); }); c.stroke(); c.restore(); };
   // ---- typewriter page typing text (screen)

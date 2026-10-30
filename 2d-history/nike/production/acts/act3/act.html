@@ -35,7 +35,7 @@ window.SHOTS = [
       R.figure(c, { x: 1660, y: 1010, s: 1.65, ...DAVIDSON, facing: -1, pose: 'present', t: lt, mood: 'happy' });
       c.save(); c.fillStyle = '#8a6a44'; c.strokeStyle = INK; c.lineWidth = 7; c.beginPath(); c.moveTo(1080, 800); c.lineTo(1500, 740); c.lineTo(1520, 790); c.lineTo(1100, 850); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#fbf8ef'; c.beginPath(); c.moveTo(1140, 800); c.lineTo(1420, 760); c.lineTo(1430, 778); c.lineTo(1150, 818); c.closePath(); c.fill(); c.fillStyle = '#5a4026'; c.fillRect(1120, 840, 22, 240); c.fillRect(1460, 785, 22, 300); c.strokeRect(1120, 840, 22, 240); c.strokeRect(1460, 785, 22, 300); c.restore(); },
     bed: [['office_loop', .2]],
-    init: S => { const tD = A.at(S, 'Carolyn Davidson', 3); S.tS = A.at(S, 'design student', 4.5); const tM = A.at(S, 'motion', 8.5);
+    init: S => { const tD = A.at(S, 'Carolyn Davidson', 3); S.tS = Math.min(.4, A.at(S, 'design student', 4.5)); const tM = A.at(S, 'motion', 8.5);
       S.D.over = [(c, lt) => K.title(c, 'CAROLYN DAVIDSON', lt, { at: tD, x: 1400, y: 150, px: 72, fill: '#ffe8c8', sub: 'DESIGN STUDENT · PORTLAND STATE' }), (c, lt) => K.card(c, 'BRIEF: "MOTION"', lt, { at: tM, x: 520, y: 760, px: 44, rot: -3 })];
       S.D.sfx = [[tD, 'pop', .4], [S.tS, 'scrape', .3], [S.tS + 1.8, 'paper', .35], [tM, 'whoosh_soft', .4]]; } },
   // 3 the swoosh on paper with a swinging $35 tag
@@ -43,7 +43,7 @@ window.SHOTS = [
       const a = pop(lt, S.tP); if (a > 0) { const sw = Math.sin(lt * 3) * .25 * Math.exp(-(lt - S.tP) * .3); c.save(); c.translate(1380, 300); c.rotate(sw); c.scale(a, a); c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(0, 0); c.lineTo(0, 90); c.stroke(); c.fillStyle = '#f2c230'; c.lineWidth = 5; c.beginPath(); c.moveTo(-90, 90); c.lineTo(90, 90); c.lineTo(90, 230); c.lineTo(-90, 230); c.closePath(); c.fill(); c.stroke(); K.outlined(c, '$35', 0, 162, 76, { fill: '#fff' }); c.restore(); } },
     bed: [['office_loop', .25]],
     init: S => { const tH = A.at(S, 'two dollars', 1.2); S.tP = A.at(S, '35 dollars', 3); const tV = A.at(S, 'grow on him', 7);
-      S.D.over = [(c, lt) => K.card(c, '$2 AN HOUR', lt, { at: tH, x: 420, y: 230, px: 46, rot: -4 }), (c, lt) => K.card(c, '"MAYBE IT WILL GROW ON ME"', lt, { at: tV, x: 900, y: 960, px: 42, rot: 2 })];
+      S.D.over = [(c, lt) => K.card(c, '$2 AN HOUR', lt, { at: tH, x: 420, y: 230, px: 46, rot: -4 }), (c, lt) => K.card(c, '"MAYBE IT WILL GROW ON ME"', lt, { at: tV, x: 1560, y: 880, px: 42, rot: 2 })];
       S.D.sfx = [[.2, 'whoosh', .4], [tH, 'coins', .3], [S.tP, 'chime', .45], [tV, 'pop', .35]]; } },
   // 4 whiteboard: DIMENSION 6? and a row of unimpressed faces
   { plate: 'boardroom', cam: { z: [1.1, 1.14], x: [1280, 1280], y: [840, 840] }, bed: [['hum_loop', .25]],
@@ -73,7 +73,7 @@ window.SHOTS = [
       S.D.sfx = [[S.tR, 'creak', .35], [S.tR + .5, 'chime', .5], [S.tS, 'paper', .45]]; } },
   // 7 Eugene 1972: runners at the line; a waffle print left in the cinder
   { plate: 'track_trials', cam: { z: [1.1, 1.16], x: [1280, 1280], y: [860, 860] }, bed: [['crowd_loop', .4]],
-    figs: [0, 1, 2, 3].map(k => ({ costume: ['shirt', 'shirtsleeves', 'shirt', 'school'][k], hair: ['short', 'curly', 'swept', 'short'][k], hairCol: ['#c89a5a', '#2a1a10', '#6a4a2a', '#1a1410'][k], seed: 70 + k, s: 1.7 - k * .08, y: 1380 - k * 40, mood: 'happy', anim: (o, lt, u, S) => { const w = R.walkX(lt, 500 + k * 60, 3200, S.tG, 4.2 - k * .2, o.s); o.x = w.x; o.t = w.phase; o.pose = lt < S.tG ? 'squat' : 'run'; o.facing = 1; } })),
+    figs: [0, 1, 2, 3].map(k => ({ costume: ['shirt', 'shirtsleeves', 'shirt', 'school'][k], hair: ['short', 'curly', 'swept', 'short'][k], hairCol: ['#c89a5a', '#2a1a10', '#6a4a2a', '#1a1410'][k], seed: 70 + k, s: 1.7 - k * .08, y: 1400 - k * 55, mood: 'happy', anim: (o, lt, u, S) => { const w = R.walkX(lt, 260 + k * 330, 3400 + k * 330, S.tG, 4.4, o.s); o.x = w.x; o.t = w.phase; o.pose = lt < S.tG ? 'squat' : 'run'; o.facing = 1; } })),
     front: [(c, lt, u, S) => { const a = K.seg(lt, S.tG + .6, S.tG + 1.2); if (a <= 0) return; c.save(); c.globalAlpha = a * .8; c.translate(900, 1330); c.fillStyle = 'rgba(60,30,20,.55)'; c.beginPath(); c.ellipse(0, 0, 120, 40, -.05, 0, 7); c.fill(); c.fillStyle = 'rgba(30,15,10,.5)'; for (let i = -4; i <= 4; i++) for (let j = -1; j <= 1; j++) c.fillRect(i * 24 - 8, j * 22 - 7, 16, 14); c.restore(); }],
     init: S => { S.tG = A.at(S, 'trials', 3); const tM = A.at(S, 'Moon Shoe', 7);
       S.D.over = [(c, lt) => K.dateTag(c, 'EUGENE · 1972', lt, { at: .3 }), (c, lt) => K.card(c, 'FIRST NIKE SHOES', lt, { at: 1, x: 470, y: 230, px: 48, rot: -3 }), (c, lt) => K.card(c, 'THE MOON SHOE', lt, { at: tM, x: 1450, y: 230, px: 48, rot: 3 })];
@@ -90,8 +90,8 @@ window.SHOTS = [
       R.figure(c, { x: 420, y: 1000, s: 1.6, ...KNIGHT, facing: 1, pose: w ? 'cheer' : 'stand', mood: w ? 'happy' : 'worried', t: lt });
       R.figure(c, { x: 1560, y: 1000, s: 1.6, ...ONITSUKA, facing: -1, pose: 'stand', mood: w ? 'sad' : 'neutral', t: lt });
       c.save(); c.fillStyle = '#6a4228'; c.strokeStyle = INK; c.lineWidth = 8; c.fillRect(-10, 800, SW + 20, 300); c.strokeRect(-10, 800, SW + 20, 300); c.fillStyle = '#7e5232'; c.fillRect(-10, 790, SW + 20, 30); c.strokeRect(-10, 790, SW + 20, 30); c.restore();
-      const hit = K.seg(lt, S.tW - .4, S.tW); NK.gavel(c, 980, 770, 1.6, hit < 1 ? Math.sin(hit * Math.PI) : 0);
-      const fl = 1 - K.seg(lt, S.tW, S.tW + .3); if (fl < 1 && fl > 0) { c.save(); c.globalAlpha = fl; c.strokeStyle = '#fff'; c.lineWidth = 6; for (let k = 0; k < 6; k++) { const an = -Math.PI * (k + .5) / 6; c.beginPath(); c.moveTo(870 + Math.cos(an) * 90, 760 + Math.sin(an) * 60); c.lineTo(870 + Math.cos(an) * 150, 760 + Math.sin(an) * 100); c.stroke(); } c.restore(); } },
+      const hit = K.seg(lt, S.tW - .4, S.tW); c.save(); c.fillStyle = '#5a361e'; c.strokeStyle = INK; c.lineWidth = 8; c.fillRect(700, 640, 560, 480); c.strokeRect(700, 640, 560, 480); c.fillStyle = '#74482a'; c.fillRect(680, 620, 600, 34); c.strokeRect(680, 620, 600, 34); c.lineWidth = 5; c.strokeStyle = 'rgba(30,15,5,.6)'; for (let k = 0; k < 3; k++) c.strokeRect(740 + k * 170, 700, 140, 300); c.fillStyle = '#d8b04a'; c.beginPath(); c.arc(980, 740, 34, 0, 7); c.fill(); c.strokeStyle = INK; c.stroke(); c.restore(); NK.gavel(c, 980, 600, 1.5, hit < 1 ? Math.sin(hit * Math.PI) : 0);
+      const fl = 1 - K.seg(lt, S.tW, S.tW + .3); if (fl < 1 && fl > 0) { c.save(); c.globalAlpha = fl; c.strokeStyle = '#fff'; c.lineWidth = 6; for (let k = 0; k < 6; k++) { const an = -Math.PI * (k + .5) / 6; c.beginPath(); c.moveTo(780 + Math.cos(an) * 90, 590 + Math.sin(an) * 60); c.lineTo(780 + Math.cos(an) * 150, 590 + Math.sin(an) * 100); c.stroke(); } c.restore(); } },
     bed: [['hum_loop', .3]],
     init: S => { S.tW = A.at(S, 'won', 3.2); S.D.over = [(c, lt) => K.title(c, '1974 · WON', lt, { at: S.tW, y: 200, px: 110, fill: '#d8ffd0' })];
       S.D.sfx = [[S.tW, 'hit', .6], [S.tW + .1, 'crowd_cheer', .3]]; } },
