@@ -191,3 +191,25 @@ YouTube + Instagram, 08:00/10:00 ET slots, after Japan's 15.
 | 13 | Wed 02 Dec 15:00Z | 10:00 | How Spain Went From Hunger to Tourist Boom | 6ae4aebdf91e0c091815fbc7 |
 | 14 | Thu 03 Dec 13:00Z | 08:00 | The Bomb That Threw a Car Over a Church | 6ae4aec1f91e0c091815fbde |
 | 15 | Thu 03 Dec 15:00Z | 10:00 | Franco's Chosen King Destroyed His Dictatorship | 6ae4aec7f91e0c091815fc0f |
+
+## Japan comeback reels R01-15 (booked 30 Oct)
+
+YouTube + Instagram, 08:00/10:00 ET slots, before the 4 Dec full video.
+
+| # | UTC | ET | Title | Zernio post |
+|---|---|---|---|---|
+| 01 | Thu 19 Nov 13:00Z | 08:00 | When Japan's Newspapers Taught People to Eat Rats | 6ae4c6ec5266d40fb64e4ce4 |
+| 02 | Thu 19 Nov 15:00Z | 10:00 | The 'Bamboo-Shoot Life' That Kept Japan Alive | 6ae4c6ee5266d40fb64e4cea |
+| 03 | Fri 20 Nov 13:00Z | 08:00 | The Photo That Shocked Japan | 6ae4c6f10a915190bd39768c |
+| 04 | Fri 20 Nov 15:00Z | 10:00 | The Country That Gave Up War in Its Constitution | 6ae4c6f35266d40fb64e4d0d |
+| 05 | Sat 21 Nov 13:00Z | 08:00 | How the Korean War Saved Japan's Economy | 6ae4c6f65266d40fb64e4d22 |
+| 06 | Sat 21 Nov 15:00Z | 10:00 | Toyota Almost Died in 1950 | 6ae4c70b50cecd2c81e577bf |
+| 07 | Sun 22 Nov 13:00Z | 08:00 | The Toyota America Laughed At | 6ae4c70e50cecd2c81e577cf |
+| 08 | Sun 22 Nov 15:00Z | 10:00 | The Rule That Made Toyota Unbeatable | 6ae4c71150cecd2c81e577ee |
+| 09 | Mon 23 Nov 13:00Z | 08:00 | Sony's First Product Was a Terrible Rice Cooker | 6ae4c71460739d6b6fdf6d47 |
+| 10 | Mon 23 Nov 15:00Z | 10:00 | Why Sony Said No to 100,000 Radios | 6ae4c71760739d6b6fdf6d66 |
+| 11 | Tue 24 Nov 13:00Z | 08:00 | Honda Started With an Engine on a Bicycle | 6ae4c72c50cecd2c81e578e2 |
+| 12 | Tue 24 Nov 15:00Z | 10:00 | The Village Kids Who Built Japan | 6ae4c72f50cecd2c81e57915 |
+| 13 | Wed 25 Nov 13:00Z | 08:00 | Japan's Economic Miracle Was Built on Savings | 6ae4c73350cecd2c81e57944 |
+| 14 | Wed 25 Nov 15:00Z | 10:00 | The Torchbearer Born the Day Hiroshima Was Bombed | 6ae4c73560739d6b6fdf6dc3 |
+| 15 | Thu 26 Nov 13:00Z | 08:00 | Fall Seven Times, Stand Up Eight | 6ae4c73860739d6b6fdf6dcd |
