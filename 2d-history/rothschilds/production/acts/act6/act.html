@@ -5,7 +5,6 @@
 <script src="../../rs_kit.js"></script>
 <script src="timing.js"></script>
 <script>
-<script>
 const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
 for (const n of ['library', 'exchange_amsterdam', 'dresden_night', 'mansion', 'dark', 'map_europe']) K.load(n, PL + n + '.jpg');
 const SW = 1920, SH = 1080, INK = RS.INK, pop = RS.pop;
@@ -31,7 +30,7 @@ window.SHOTS = [
       S.D.sfx = [[S.tF, 'stamp', .6], [tR, 'pop', .3], [tS, 'pop', .3]]; } },
   // 6.03 Vienna 1931: a crowd at the doors of the Creditanstalt, CLOSED sign
   { plate: 'exchange_amsterdam', cam: { z: [1.04, 1.12], x: [1280, 1280], y: [820, 830] }, bed: [['crowd_loop', .3], ['city_loop', .15]],
-    figs: [0, 1, 2, 3, 4, 5].map(i => ({ x: 520 + i * 300, y: 1300 + (i % 2) * 40, s: 1.75, ...RS.P({ costume: ['office', 'dress', 'suit', 'shirt', 'woman', 'suit'][i], topCol: ['#5a4a3a', '#6a3a4a', '#3a3a44', '#7a6a4a', '#4a5a6a', '#2a3a2a'][i], hair: i % 2 ? 'long' : 'short', seed: 160 + i }), facing: i < 3 ? 1 : -1, mood: i % 2 ? 'shocked' : 'angry', walk: { x0: i < 3 ? -300 - i * 200 : 2800 + i * 120, x1: 520 + i * 300, t0: .2 + i * .35, dur: 2.6 }, anim: (o, lt) => { if (lt > 3.6 + i * .35) o.pose = (Math.floor(lt * 1.5 + i) % 2) ? 'point' : 'shrug'; } }))],
+    figs: [0, 1, 2, 3, 4, 5].map(i => ({ x: 520 + i * 300, y: 1300 + (i % 2) * 40, s: 1.75, ...RS.P({ costume: ['office', 'dress', 'suit', 'shirt', 'woman', 'suit'][i], topCol: ['#5a4a3a', '#6a3a4a', '#3a3a44', '#7a6a4a', '#4a5a6a', '#2a3a2a'][i], hair: i % 2 ? 'long' : 'short', seed: 160 + i }), facing: i < 3 ? 1 : -1, mood: i % 2 ? 'shocked' : 'angry', walk: { x0: i < 3 ? -300 - i * 200 : 2800 + i * 120, x1: 520 + i * 300, t0: .2 + i * .35, dur: 2.6 }, anim: (o, lt) => { if (lt > 3.6 + i * .35) o.pose = (Math.floor(lt * 1.5 + i) % 2) ? 'point' : 'shrug'; } })),
     init: S => { const tC = A.at(S, 'collapsed', 2.4), tP = A.at(S, 'panic', 7);
       S.D.over = [(c, lt) => K.dateTag(c, 'VIENNA · 1931', lt, { at: .4 }), (c, lt) => K.badge(c, 'CREDITANSTALT', lt, { at: .6 }), (c, lt) => { const a = pop(lt, tC, .4); if (a <= 0) return; c.save(); c.translate(960, 420); c.rotate(-.04); c.scale(a, a); c.fillStyle = '#8a2a22'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-170, -50, 340, 100); c.strokeRect(-170, -50, 340, 100); c.fillStyle = '#f2e8d2'; c.font = '64px Anton'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('CLOSED', 0, 4); c.restore(); },
         (c, lt) => K.card(c, 'AUSTRIA\'S BIGGEST BANK COLLAPSES', lt, { at: tC + .5, x: 520, y: 200, px: 40, rot: -3 }), (c, lt) => K.card(c, 'PANIC SPREADS ACROSS EUROPE', lt, { at: tP, x: 1420, y: 220, px: 40, rot: 3 })];
