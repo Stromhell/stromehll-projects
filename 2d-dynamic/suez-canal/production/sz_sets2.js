@@ -48,4 +48,30 @@
     S.dabs(g, { x: 0, y: 0, w, h: 500, n: 120, cols: ['#c8c4b8', '#9a9a9a'], r0: 30, r1: 90, a0: .05, a1: .12, seed: 2450 });
     grain(g, w, h, 2460, .05);
   });
+
+  // ===== workers' camp at night: tents, lanterns on poles, stars, the trench's spoil heaps dark behind
+  VP.set('sz_nightcamp', 1280, 720, (g, w, h) => {
+    sky(g, w, h, [[0, '#0e1630'], [.55, '#2a3050'], [1, '#3a3040']]);
+    for (let k = 0; k < 160; k++) { const r = S.rng(2500 + k); g.fillStyle = S.rgba('#ffffff', .3 + r() * .6); g.fillRect(r() * w, r() * 330, 1.5, 1.5); }
+    g.fillStyle = '#e8e8d0'; g.beginPath(); g.arc(1080, 110, 26, 0, TAU); g.fill(); S.glow(g, 1080, 110, 120, '#c8d0ff', .25);
+    ridge(g, w, h, 360, 30, 220, 2503, '#2a2430'); ridge(g, w, h, 410, 20, 180, 2505, '#3a3040');
+    g.fillStyle = '#4a3a34'; g.fillRect(0, 430, w, 290); S.dabs(g, { x: 0, y: 430, w, h: 290, n: 260, cols: ['#2a2024', '#6a5448'], r0: 3, r1: 14, sq: .4, a0: .2, a1: .4, seed: 2507 });
+    for (const [x, y, s] of [[110, 470, .9], [330, 455, .7], [870, 455, .75], [1110, 475, 1]]) { g.fillStyle = '#8a8070'; g.beginPath(); g.moveTo(x - 90 * s, y); g.lineTo(x, y - 100 * s); g.lineTo(x + 90 * s, y); g.fill(); g.fillStyle = '#6a6054'; g.beginPath(); g.moveTo(x, y - 100 * s); g.lineTo(x + 90 * s, y); g.lineTo(x + 24 * s, y); g.fill(); g.fillStyle = '#1a1414'; g.beginPath(); g.moveTo(x - 16 * s, y); g.lineTo(x, y - 46 * s); g.lineTo(x + 16 * s, y); g.fill(); }
+    // the big tent in the middle where the doctor works: open flap, warm light inside
+    g.fillStyle = '#9a8e78'; g.beginPath(); g.moveTo(400, 600); g.lineTo(620, 380); g.lineTo(860, 600); g.fill(); g.fillStyle = '#7a705e'; g.beginPath(); g.moveTo(620, 380); g.lineTo(860, 600); g.lineTo(700, 600); g.fill();
+    g.fillStyle = '#ffd890'; g.beginPath(); g.moveTo(560, 600); g.lineTo(620, 450); g.lineTo(690, 600); g.fill(); S.glow(g, 625, 560, 200, '#ffb860', .45);
+    grain(g, w, h, 2509, .05);
+  });
+
+  // ===== the sultan's palace (Istanbul, 1864): marble columns, red drapes, a writing desk, the Bosphorus
+  VP.set('sz_palace', 1280, 720, (g, w, h) => {
+    sky(g, w, h, [[0, '#e8dcc8'], [1, '#c8b494']]);
+    g.fillStyle = '#8ab0c8'; g.fillRect(380, 90, 520, 300); const gr = g.createLinearGradient(0, 90, 0, 390); gr.addColorStop(0, '#a8c8e0'); gr.addColorStop(1, '#6a9ab8'); g.fillStyle = gr; g.fillRect(380, 90, 520, 300);
+    g.fillStyle = '#7a8a9a'; g.beginPath(); g.moveTo(380, 300); for (let x = 380; x <= 900; x += 20) g.lineTo(x, 290 - Math.sin(x * .03) * 10); g.lineTo(900, 330); g.lineTo(380, 330); g.fill(); g.fillStyle = '#9aa0aa'; g.fillRect(620, 220, 14, 80); g.beginPath(); g.arc(660, 300, 40, Math.PI, TAU); g.fill();
+    for (const x of [380, 640, 900]) { g.fillStyle = '#e8e0d4'; g.fillRect(x - 26, 60, 52, 420); g.fillStyle = S.rgba('#a89880', .4); g.fillRect(x + 8, 60, 18, 420); g.fillStyle = '#d8ccb8'; g.fillRect(x - 36, 50, 72, 20); g.fillRect(x - 36, 470, 72, 16); }
+    for (const [x, d] of [[200, 1], [1080, -1]]) { g.fillStyle = '#8a1a24'; g.beginPath(); g.moveTo(x - 140 * d, 0); g.lineTo(x + 100 * d, 0); g.quadraticCurveTo(x + 40 * d, 300, x + 60 * d, 500); g.lineTo(x - 140 * d, 500); g.fill(); g.fillStyle = S.rgba('#c8303a', .5); for (let k = 0; k < 5; k++) g.fillRect(x - 120 * d + k * 30 * d, 0, 8 * d, 500); g.fillStyle = '#d8a850'; g.fillRect(x - 140 * d, 20, 240 * d, 14); }
+    g.fillStyle = '#7a5434'; g.fillRect(0, 480, w, 240); for (let k = 0; k < 10; k++) { g.fillStyle = S.rgba(k % 2 ? '#5a3a24' : '#8a6040', .5); g.fillRect(0, 480 + k * 24, w, 12); }
+    g.fillStyle = '#8a2a2a'; g.fillRect(220, 560, 840, 160); g.strokeStyle = '#d8a850'; g.lineWidth = 6; g.strokeRect(236, 572, 808, 140);
+    grain(g, w, h, 2610, .04);
+  });
 })(window);
