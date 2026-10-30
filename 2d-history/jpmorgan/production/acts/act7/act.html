@@ -87,7 +87,7 @@ window.SHOTS = [
       S.D.over = [(c, lt) => K.badge(c, 'SIX MONTHS AFTER BEAR', lt, { at: tS }), (c, lt) => K.dateTag(c, 'SEPTEMBER 15, 2008', lt, { at: tD }), (c, lt) => K.title(c, 'LEHMAN FILES FOR BANKRUPTCY', lt, { at: S.tL + .4, y: 200, px: 72, fill: GOLD })];
       S.D.sfx = [[tS, 'whoosh', .3], [tD, 'pop', .3], [S.tL, 'hit', .45], [S.tL + .3, 'thud', .4]]; } },
   // 2 Merrill Lynch sells itself to Bank of America; the government rescues AIG
-  { draw: (c, lt, u, S) => { board('trading', .64)(c); const m = E.io(K.seg(lt, S.tS, S.tS + 1.2)); if (m < 1) bankIcon(c, 260 + 360 * m, 820, .7 * (1 - m), pop(lt, S.tM), 'MERRILL', '#d8d0c0'); bankIcon(c, 620, 820, .8, pop(lt, S.tB), 'BANK OF AMERICA', '#c8d0e0');
+  { draw: (c, lt, u, S) => { board('trading', .64)(c); const m = E.io(K.seg(lt, S.tS, S.tS + 1.2)); if (m < 1) bankIcon(c, 260 + 360 * m, 820, .7 * (1 - m), pop(lt, .3), 'MERRILL', '#d8d0c0'); bankIcon(c, 620, 820, .8, pop(lt, .5), 'BANK OF AMERICA', '#c8d0e0');
       bankIcon(c, 1460, 820, .8, pop(lt, S.tA), 'AIG', '#e0d0c0'); ring(c, 1460, 560, .9, pop(lt, S.tA + .8)); c.save(); c.strokeStyle = 'rgba(255,250,240,.4)'; c.lineWidth = 4; c.setLineDash([12, 10]); c.beginPath(); c.moveTo(960, 300); c.lineTo(960, 900); c.stroke(); c.restore(); },
     bed: [['trading_loop', .25]],
     init: S => { S.tM = A.at(S, 'Merrill Lynch', 1); S.tB = A.at(S, 'Bank of America', 2.4); S.tS = S.tB + .4; S.tA = A.at(S, 'AIG', 5); const tW = A.at(S, 'weekend', .3);
@@ -95,7 +95,7 @@ window.SHOTS = [
       S.D.sfx = [[S.tM, 'pop', .35], [S.tB, 'pop', .35], [S.tS, 'whoosh', .35], [S.tA, 'pop', .35], [S.tA + .8, 'swell', .35]]; } },
   // 3 savers run on Washington Mutual
   { plate: 'bank', cam: { z: [1.08, 1.12], x: [1280, 1290], y: [760, 760], ease: E.io }, bed: [['crowd_loop', .3]],
-    figs: SAVER.map((lk, k) => ({ y: 1350, s: 1.5, ...lk, facing: 1, pose: 'carry', mood: 'worried', walk: { x0: 700 + k * 260, x1: 3000, t0: .6 + k * 1.1, dur: 4 } })),
+    figs: SAVER.map((lk, k) => ({ y: 1350, s: 1.5, ...lk, facing: 1, pose: 'carry', mood: 'worried', walk: { x0: 700 - k * 260, x1: 3000, t0: .6 + k * 1.1, dur: 4 } })),
     init: S => { const tW = A.at(S, 'Washington Mutual', 2.4), tR = A.at(S, 'risky home loans', 5), tB = A.at(S, 'billions', 1.4);
       S.D.over = [(c, lt) => JK.plaque(c, 960, 160, 'WASHINGTON MUTUAL', 1.4, pop(lt, .2), "AMERICA'S BIGGEST SAVINGS AND LOAN"), (c, lt) => K.card(c, 'BILLIONS PULLED OUT', lt, { at: tB, x: 420, y: 420, px: 44, rot: -3 }), (c, lt) => K.card(c, 'HUGE NUMBERS OF\nRISKY HOME LOANS', lt, { at: tR, x: 1500, y: 420, px: 42, rot: 3 })];
       S.D.sfx = [[.6, 'run_steps', .3], [tB, 'coins', .35], [tW, 'pop', .3], [tR, 'stamp', .4]]; } },
