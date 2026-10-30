@@ -84,7 +84,7 @@ Full-video times were checked one by one in Zernio on 28 Oct 2026 at 17:35 UTC. 
 
 ## Spain series (29 Oct 2026, 22:19 UTC)
 - Spain Part 2 full "How Spain Got Rich From a Mistake (and Still Went Broke)": Fri 6 Nov 20:00 UTC (15:00 ET), YouTube. Zernio 6ae3c6755db31e4a3f6f2b5d.
-- Wed 4 Nov 20:00 UTC (15:00 ET) is held for Spain Part 1 (Al-Andalus), which must release first. Part 1 arrives later tonight.
+- Spain Part 1 full "How Muslims Ruled Spain for 781 Years (and Lost It All)": Wed 4 Nov 20:00 UTC (15:00 ET), YouTube. Zernio 6ae4266509f261790d6cc9ee (booked 30 Oct 05:08 UTC into the held slot; one copy checked). Card stays until its reels are booked.
 - Release-order note: with Spain 1+2 the run after FZ1073 (3D, 2 Nov) is five 2D videos (Spain 1, Spain 2, Salman, Osho, Secret Service) before Tesla (3D, 16 Nov). Flagged; nothing moved.
 
 ## Ancient Humans reels booked (29 Oct 2026, 22:49 UTC), YouTube + Instagram, cover as IG thumbnail
@@ -104,3 +104,19 @@ Full-video times were checked one by one in Zernio on 28 Oct 2026 at 17:35 UTC. 
 - R14 2026-11-14 02:00 UTC: When Did Your Hours Start Belonging to Someone Else? #shorts (6ae3cd711c4e88a68480903d)
 - R15 2026-12-08 02:00 UTC: They Were Already Standing on the Finish Line #shorts (6ae3cd741c4e88a684809067)
 - Reel slots 30 Oct to 7 Dec were full after these, so R15 went to the first free slot, 8 Dec 02:00 UTC (7 Dec 21:00 ET).
+
+## 30 Oct 2026, 05:12 UTC: facts shorts 12-21 booked (YouTube + Instagram, cover as IG thumbnail)
+Fill order from 31 Oct after 11 Leap Year (31 Oct 20:00 IST). 31 Oct is now full; next free fs slot is 1 Nov 21:00 IST. Cards external/fs-12..21 deleted.
+
+| # | Short | IST | UTC | Zernio post |
+|---|---|---|---|---|
+| 20 | Why your voice sounds WEIRD on recordings | Sat 31 Oct 08:30 | 2026-10-31 03:00 | `6ae4272009f261790d6ccd68` |
+| 17 | Why onions make you CRY (and the trick to stop it) | Sat 31 Oct 12:30 | 2026-10-31 07:00 | `6ae4271988944f24a80c1973` |
+| 19 | Lightning is HOTTER than the Sun | Sat 31 Oct 14:00 | 2026-10-31 08:30 | `6ae4271e09f261790d6ccd45` |
+| 18 | Why you CAN'T sink in the Dead Sea | Sat 31 Oct 17:00 | 2026-10-31 11:30 | `6ae4271b88944f24a80c198e` |
+| 15 | The Eiffel Tower GROWS every summer | Sat 31 Oct 18:00 | 2026-10-31 12:30 | `6ae4271499f07ab3c1ef3684` |
+| 13 | Sunlight is white… so why is the sky BLUE? | Sat 31 Oct 19:00 | 2026-10-31 13:30 | `6ae4270f88944f24a80c192b` |
+| 12 | Why an octopus has THREE hearts (and blue blood) | Sat 31 Oct 21:00 | 2026-10-31 15:30 | `6ae4270c88429f8c25a52052` |
+| 14 | Why honey basically NEVER goes bad | Sat 31 Oct 22:00 | 2026-10-31 16:30 | `6ae4271288944f24a80c193e` |
+| 16 | A banana is a berry. A strawberry is NOT | Sat 31 Oct 23:00 | 2026-10-31 17:30 | `6ae4271788429f8c25a52091` |
+| 21 | Can you see the Great Wall from space? Astronauts say NO | Sun 1 Nov 20:00 | 2026-11-01 14:30 | `6ae4272209f261790d6ccd72` |
