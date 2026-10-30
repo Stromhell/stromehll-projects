@@ -23,6 +23,8 @@ Interactive map: https://claude.ai/artifact/5f2eT3jUT2VXbGGMe3kD7x
 
 ## How a production thread uses it
 
+Easiest: `tools/graphify/gq "your question"` (installs, rebuilds when code changed, then queries). Also `gq explain X`, `gq path A B`, `gq affected X`. The raw commands below do the same by hand.
+
 ```bash
 pip install -q graphifyy                       # once per container
 tools/graphify/build_pipeline_graph.sh         # ~40 s; writes ~/.graphify/stormi-pipeline/graphify-out/

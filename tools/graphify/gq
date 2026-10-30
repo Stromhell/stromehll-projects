@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# gq: ask the pipeline code map a question, rebuilding it first if any code changed.
+#
+#   tools/graphify/gq "where is the walk cycle defined"     # query (default)
+#   tools/graphify/gq explain VP                              # any graphify subcommand
+#   tools/graphify/gq path build_reel_dd.py kit.js
+#   tools/graphify/gq rebuild                                 # force a rebuild
+set -euo pipefail
+HERE="$(cd "$(dirname "$0")" && pwd)"
+SRC="${GQ_SRC:-/mnt/project-files}"
+OUT="${GQ_OUT:-$HOME/.graphify/stormi-pipeline}"
+G="$OUT/graphify-out/graph.json"
+
+command -v graphify >/dev/null || pip install -q graphifyy
+
+stale() {
+    [ ! -f "$G" ] && return 0
+    # any pipeline code file newer than the graph?
+    [ -n "$(find "$SRC/" -path "$SRC/uploads" -prune -o -type f \
+        \( -name '*.js' -o -name '*.py' -o -name '*.sh' \) -newer "$G" -print -quit 2>/dev/null)" ]
+}
+
+if [ "${1:-}" = "rebuild" ] || stale; then
+    echo "[gq] code changed, rebuilding map (~40 s)..." >&2
+    "$HERE/build_pipeline_graph.sh" "$SRC" "$OUT" >/dev/null 2>&1
+    [ "${1:-}" = "rebuild" ] && { echo "[gq] rebuilt: $G"; exit 0; }
+fi
+
+case "${1:-}" in
+    explain|path|affected|god-nodes|query)
+        cmd="$1"; shift; exec graphify "$cmd" "$@" --graph "$G" ;;
+    "") exec graphify god-nodes --graph "$G" --top 15 ;;
+    *)  exec graphify query "$*" --graph "$G" --budget "${GQ_BUDGET:-1500}" ;;
+esac
