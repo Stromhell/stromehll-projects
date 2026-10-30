@@ -7,7 +7,8 @@ log(){ echo "$(date -u +%H:%M) $*" | tee -a $S/events.log; }
 back(){ for t in 1 2 3 4 5; do mkdir -p "$(dirname $M/$1)" 2>/dev/null; cp "$W/$1" "$M/$1" && return 0; sleep 20; done; log "COPYFAIL $1"; }
 step(){ [ -f $S/$1 ] && return 0; n=$1; shift; if "$@"; then touch $S/$n; log "DONE $n"; else log "FAIL $n"; return 1; fi; }
 render(){ for try in 1 2 3; do cd $W && bash shared/render_act.sh $1 $2 6 && { back $1/production/acts/act$2/act$2.mp4; return 0; }; log "retry $1 act$2 ($try)"; sleep 10; done; return 1; }
-combine(){ mkdir -p $1/final && python3 shared/combine.py $1 $1/final/$2.mp4 && back $1/final/$2.mp4 && back $1/final/$2_chapters.json; }
+# write to a .part file, decode-check it, then move into place, so a restart mid-write never leaves a broken final
+combine(){ mkdir -p $1/final && python3 shared/combine.py $1 $1/final/$2.part.mp4 && [ -z "$(ffmpeg -v error -i $1/final/$2.part.mp4 -f null - 2>&1 | head -1)" ] && mv $1/final/$2.part.mp4 $1/final/$2.mp4 && { [ -f $1/final/$2.part_chapters.json ] && mv $1/final/$2.part_chapters.json $1/final/$2_chapters.json; true; } && back $1/final/$2.mp4 && back $1/final/$2_chapters.json; }
 reels(){ v=$1; shift; for id in "$@"; do ls $v/reels/out/*_Reel_$(printf %02d $id).mp4 >/dev/null 2>&1 && continue
   python3 shared/reels/build_reel_dd.py $v $id 2>&1 | grep -E "REEL|Error|Traceback" | while read l; do log "$l"; done; done
   python3 shared/reels/thumb_dd.py $v "$@" | tail -1; for t in 1 2 3 4 5; do mkdir -p $M/$v/reels/out && cp $v/reels/out/* $M/$v/reels/out/ && return 0; sleep 20; done; return 1; }
