@@ -104,8 +104,8 @@ window.SHOTS = [
       S.D.over = [(c, lt) => K.card(c, 'LENDERS PULL BACK', lt, { at: S.tP, x: 430, y: 200, px: 42, rot: -3 }), (c, lt) => K.card(c, 'CLIENTS PULL OUT', lt, { at: S.tC, x: 1490, y: 200, px: 42, rot: 3 }), (c, lt) => K.title(c, 'THE RUMORS MADE THEMSELVES TRUE', lt, { at: S.tT, y: 420, px: 66, fill: GOLD })];
       S.D.sfx = [[S.tP, 'coins', .4], [S.tC, 'coins_cascade', .35], [S.tT, 'stamp', .45]]; } },
   // 5 SEC: cash cushion $18B on March 10 to $2B three days later
-  { draw: (c, lt, u, S) => { board('newsroom', .7)(c); const g = E.io(K.seg(lt, S.t2, S.t2 + 1.6)), v = 18 - 16 * g, base = 860, U = 30;
-      const a = pop(lt, S.t18); if (a > 0) { c.save(); c.globalAlpha = Math.min(1, a); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(812, base - v * U + 12, 320, v * U); c.fillStyle = g > .9 ? RED : GREEN; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(800, base - v * U, 320, v * U); c.strokeRect(800, base - v * U, 320, v * U); c.restore();
+  { draw: (c, lt, u, S) => { board('newsroom', .7)(c); const g = E.io(K.seg(lt, S.t2, S.t2 + 1.6)), v = 18 * E.out(K.seg(lt, .4, S.t18 + .2)) - 16 * g, base = 860, U = 30;
+      const a = pop(lt, .4); if (a > 0) { c.save(); c.globalAlpha = Math.min(1, a); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(812, base - v * U + 12, 320, v * U); c.fillStyle = g > .9 ? RED : GREEN; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(800, base - v * U, 320, v * U); c.strokeRect(800, base - v * U, 320, v * U); c.restore();
         K.outlined(c, '$' + Math.round(v) + 'B', 960, base - v * U - 60, 90, { fill: '#fffaf0' }); c.save(); c.font = '40px Anton'; c.fillStyle = '#fffaf0'; c.textAlign = 'center'; c.fillText(g > .5 ? 'MARCH 13' : 'MARCH 10', 960, base + 56); c.restore(); }
       if (g > 0) { c.save(); c.strokeStyle = 'rgba(255,250,240,.6)'; c.setLineDash([12, 10]); c.lineWidth = 4; c.strokeRect(800, base - 18 * U, 320, 18 * U); c.restore(); } },
     bed: [['tension', .3]],
@@ -159,7 +159,7 @@ window.SHOTS = [
       if (gJ > 0) { c.save(); c.globalAlpha = Math.min(1, gJ); c.fillStyle = GOLD; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(540, base - U, 440, U); c.strokeRect(540, base - U, 440, U); c.font = '38px Anton'; c.fillStyle = '#fffaf0'; c.textAlign = 'left'; c.fillText('← JPMORGAN · $1B', 1000, base - 2); c.restore(); }
       const fl = pop(lt, S.tL); if (fl > 0) { c.save(); c.globalAlpha = Math.min(1, fl); c.fillStyle = RED; c.font = '36px Anton'; c.textAlign = 'left'; c.fillText('TAKES THE FIRST LOSSES', 1000, base - 52); c.restore(); } },
     bed: [['office_loop', .2]],
-    init: S => { S.tM = A.at(S, 'Maiden Lane', 1.6); S.tF = A.at(S, 'twenty-nine', 3); S.tJ = A.at(S, 'lent one billion', 4.6); S.tL = A.at(S, 'first losses', 6);
+    init: S => { S.tM = .5; S.tF = A.at(S, 'twenty-nine', 3); S.tJ = A.at(S, 'lent one billion', 4.6); S.tL = A.at(S, 'first losses', 6);
       S.D.over = [(c, lt) => K.badge(c, 'SET UP BY THE NEW YORK FED', lt, { at: .4 }), (c, lt) => K.card(c, '$30B OF BEAR ASSETS\nGO IN HERE', lt, { at: S.tM + .8, x: 250, y: 300, px: 36, rot: -4 })];
       S.D.sfx = [[S.tM, 'stamp', .4], [S.tF, 'whoosh', .35], [S.tJ, 'pop', .4], [S.tL, 'thud', .4]]; } },
   // 13 loss capped at $1B; big names fall, the careful bank buys
