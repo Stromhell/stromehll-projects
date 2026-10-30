@@ -120,3 +120,20 @@ Fill order from 31 Oct after 11 Leap Year (31 Oct 20:00 IST). 31 Oct is now full
 | 14 | Why honey basically NEVER goes bad | Sat 31 Oct 22:00 | 2026-10-31 16:30 | `6ae4271288944f24a80c193e` |
 | 16 | A banana is a berry. A strawberry is NOT | Sat 31 Oct 23:00 | 2026-10-31 17:30 | `6ae4271788429f8c25a52091` |
 | 21 | Can you see the Great Wall from space? Astronauts say NO | Sun 1 Nov 20:00 | 2026-11-01 14:30 | `6ae4272209f261790d6ccd72` |
+
+## Spain Part 1 reels R01-11 booked (30 Oct 2026, 05:40 UTC), YouTube + Instagram, cover as IG thumbnail
+November reel slots are full, so these take the first free slots from 8 Dec (story order kept). R12-15 still to come.
+
+| # | Reel | US Eastern | IST | UTC | Zernio post |
+|---|---|---|---|---|---|
+| R01 | Spain's Last Muslim King Cried Leaving This Palace | Tue 8 Dec 09:00 | Tue 8 Dec 19:30 | 2026-12-08 14:00 | `6ae42d9731418a0c9177a84b` |
+| R02 | How Muslims Ruled Spain for 781 Years | Tue 8 Dec 16:00 | Wed 9 Dec 02:30 | 2026-12-08 21:00 | `6ae42d99be9a108220443c8d` |
+| R03 | Gibraltar Is Named After a Muslim General | Tue 8 Dec 21:00 | Wed 9 Dec 07:30 | 2026-12-09 02:00 | `6ae42d9bbe9a108220443ca3` |
+| R04 | He Burned His Own Boats So His Army Couldn't Run | Wed 9 Dec 09:00 | Wed 9 Dec 19:30 | 2026-12-09 14:00 | `6ae42d9e31418a0c9177a87f` |
+| R05 | The Tiny Valley That Created Spain | Wed 9 Dec 16:00 | Thu 10 Dec 02:30 | 2026-12-09 21:00 | `6ae42da2be9a108220443cdb` |
+| R06 | He Swam Across a River to Escape a Massacre | Wed 9 Dec 19:00 | Thu 10 Dec 05:30 | 2026-12-10 00:00 | `6ae42da431418a0c9177a895` |
+| R07 | From Runaway Prince to Ruler of Spain | Wed 9 Dec 21:00 | Thu 10 Dec 07:30 | 2026-12-10 02:00 | `6ae42da6be9a108220443cf8` |
+| R08 | This City Had Street Lights When London Had Mud | Thu 10 Dec 09:00 | Thu 10 Dec 19:30 | 2026-12-10 14:00 | `6ae42da9be9a108220443d0f` |
+| R09 | This Man Flew 600 Years Before Leonardo da Vinci | Thu 10 Dec 12:00 | Thu 10 Dec 22:30 | 2026-12-10 17:00 | `6ae42dabbe9a108220443d4c` |
+| R10 | Muslims, Christians and Jews Lived Together, But Not as Equals | Thu 10 Dec 16:00 | Fri 11 Dec 02:30 | 2026-12-10 21:00 | `6ae42dad31418a0c9177a8ac` |
+| R11 | He Stole a Cathedral's Bells and Made Prisoners Carry Them | Thu 10 Dec 19:00 | Fri 11 Dec 05:30 | 2026-12-11 00:00 | `6ae42db031418a0c9177a8b8` |
