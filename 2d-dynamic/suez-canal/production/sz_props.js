@@ -109,3 +109,40 @@
     c.fillStyle = '#8a2a2a'; c.fillRect(-40, -118, 60, 10); c.fillStyle = '#d8a850'; c.fillRect(-40, -110, 60, 4);
     c.restore(); };
 })();
+(() => {
+  const TAU = Math.PI * 2, R = S.rgba;
+  // steam dredger: floating hull, tall frame with a bucket chain, long chute to the bank, smoking chimney. y = waterline
+  S.szDredger = (c, x, y, s, lt = 0, o = {}) => { c.save(); c.translate(x, y); c.scale(s, s);
+    c.fillStyle = R('#0a1a2a', .35); c.beginPath(); c.ellipse(0, 6, 170, 10, 0, 0, TAU); c.fill();
+    c.fillStyle = '#3a3a40'; c.beginPath(); c.moveTo(-160, -30); c.lineTo(160, -30); c.lineTo(140, 6); c.lineTo(-140, 6); c.fill(); c.fillStyle = '#7a2a20'; c.fillRect(-150, -6, 290, 6);
+    c.fillStyle = '#5a4a3a'; c.fillRect(-90, -90, 110, 60); c.fillStyle = '#2a2a2a'; c.fillRect(-60, -170, 22, 80);
+    // smoke
+    for (let k = 0; k < 10; k++) { const q = (lt * .25 + k / 10) % 1; c.fillStyle = R('#2a2a2e', .5 * (1 - q)); c.beginPath(); c.arc(-50 - q * 120 + Math.sin(k + lt) * 8, -180 - q * 160, 14 + q * 40, 0, TAU); c.fill(); }
+    // ladder frame and bucket chain
+    c.strokeStyle = '#2a2420'; c.lineWidth = 7; c.beginPath(); c.moveTo(40, -30); c.lineTo(150, -200); c.moveTo(70, -30); c.lineTo(170, -190); c.stroke();
+    c.strokeStyle = '#4a3a30'; c.lineWidth = 3; c.beginPath(); c.moveTo(-10, 40); c.lineTo(160, -200); c.stroke();
+    for (let k = 0; k < 12; k++) { const q = (lt * .3 + k / 12) % 1, bx = lerp(-10, 160, q), by = lerp(40, -200, q); c.fillStyle = q > .3 ? '#6a4a30' : '#4a4a50'; c.save(); c.translate(bx, by); c.rotate(-.95); c.fillRect(-9, -7, 18, 14); if (q > .3) { c.fillStyle = '#8a6a44'; c.fillRect(-8, -9, 16, 4); } c.restore(); }
+    // chute to the side, mud pouring off its end
+    const cx = o.chute ?? -1; c.strokeStyle = '#3a3030'; c.lineWidth = 10; c.beginPath(); c.moveTo(150, -190); c.lineTo(150 + cx * 260, -90); c.stroke();
+    for (let k = 0; k < 8; k++) { const q = (lt * 1.2 + k / 8) % 1; c.fillStyle = R('#6a4a30', .8 * (1 - q)); c.beginPath(); c.arc(150 + cx * 262 + Math.sin(k) * 4, -90 + q * 80, 6 + q * 5, 0, TAU); c.fill(); }
+    if (o.night) { S.glow(c, -30, -50, 70 + 8 * Math.sin(lt * 9), '#ff8030', .7); c.fillStyle = '#ffb050'; c.fillRect(-40, -60, 22, 16); }
+    c.restore(); };
+  const lerp = (a, b, t) => a + (b - a) * t;
+  // 1869 steam yacht with flags and a funnel; dir faces +x
+  S.szYacht = (c, x, y, s, dir = 1, lt = 0, o = {}) => { c.save(); c.translate(x, y + Math.sin(lt * 1.3) * 1.5); c.scale(s * dir, s);
+    c.fillStyle = R('#0a1a2a', .3); c.beginPath(); c.ellipse(0, 6, 180, 9, 0, 0, TAU); c.fill();
+    c.fillStyle = o.hull || '#1e1e24'; c.beginPath(); c.moveTo(-170, -40); c.lineTo(170, -40); c.quadraticCurveTo(200, -40, 210, -60); c.lineTo(190, 2); c.lineTo(-150, 4); c.quadraticCurveTo(-175, -10, -170, -40); c.fill();
+    c.fillStyle = '#d8b050'; c.fillRect(-168, -40, 360, 5); c.fillStyle = '#f0ece0'; c.fillRect(-90, -78, 170, 38); c.fillStyle = '#3a4a5a'; for (let k = 0; k < 7; k++) c.fillRect(-80 + k * 23, -70, 12, 12);
+    c.fillStyle = o.funnel || '#c8a040'; c.fillRect(-12, -140, 26, 62); c.fillStyle = '#1e1e1e'; c.fillRect(-12, -146, 26, 10);
+    for (let k = 0; k < 6; k++) { const q = (lt * .3 + k / 6) % 1; c.fillStyle = R('#c8c4c0', .5 * (1 - q)); c.beginPath(); c.arc(-q * 90, -160 - q * 80, 10 + q * 26, 0, TAU); c.fill(); }
+    c.strokeStyle = '#3a2a1e'; c.lineWidth = 4; for (const mx of [-130, 130]) { c.beginPath(); c.moveTo(mx, -40); c.lineTo(mx, -210); c.stroke(); }
+    c.strokeStyle = R('#3a2a1e', .7); c.lineWidth = 1.5; c.beginPath(); c.moveTo(-130, -210); c.lineTo(130, -210); c.moveTo(-130, -210); c.lineTo(-170, -40); c.moveTo(130, -210); c.lineTo(200, -50); c.stroke();
+    const fl = o.flags || ['#c82a2a', '#f0e8d8', '#2a4a9a', '#e8b030', '#3a8a4a', '#c82a2a', '#2a4a9a', '#f0e8d8'];
+    fl.forEach((col, k) => { const t = k / (fl.length - 1), fx = lerp(-170, 200, t), fy = k < fl.length / 2 ? lerp(-40, -210, t * 2) : lerp(-210, -50, (t - .5) * 2); c.fillStyle = col; c.beginPath(); c.moveTo(fx, fy); c.lineTo(fx + 12 + Math.sin(lt * 5 + k) * 3, fy + 10); c.lineTo(fx, fy + 16); c.fill(); });
+    if (o.pennant) { c.fillStyle = o.pennant; c.beginPath(); c.moveTo(130, -210); c.lineTo(190 + Math.sin(lt * 4) * 6, -200); c.lineTo(130, -190); c.fill(); }
+    c.restore(); };
+  // firework bursts. seed picks colours/positions
+  S.szFireworks = (c, lt, n = 5, area = [100, 60, 1080, 300]) => { for (let k = 0; k < n; k++) { const r = S.rng(5100 + k), per = 2.2 + r() * 1.2, q = ((lt + r() * per) % per) / per, cx = area[0] + r() * area[2], cy = area[1] + r() * area[3], col = ['#ffd060', '#ff6a8a', '#7ad0ff', '#a0ff90', '#ffffff'][k % 5];
+    if (q < .25) { const up = q / .25; c.fillStyle = R('#fff0c0', .8); c.fillRect(cx, 720 - (720 - cy) * up, 3, 10); continue; }
+    const b = (q - .25) / .75; S.glow(c, cx, cy, 160 * b, col, .35 * (1 - b)); for (let j = 0; j < 22; j++) { const a = j / 22 * TAU, rr = 120 * Math.sqrt(b); c.fillStyle = R(col, 1 - b); c.beginPath(); c.arc(cx + Math.cos(a) * rr, cy + Math.sin(a) * rr + b * b * 40, 3, 0, TAU); c.fill(); } } };
+})();
