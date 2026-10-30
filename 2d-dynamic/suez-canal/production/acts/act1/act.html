@@ -64,7 +64,7 @@ window.SHOTS = [
       if (lt >= Sh.tS) { VP.drawSet(c, 'sz_trench'); const L = HEAT(lt), q = lt - Sh.tS;
         [[480, C.DIG, 0], [640, C.DIG2, 1], [800, C.DIG3, 2]].forEach(([x, ch, k]) => { const f = seg(q, k * .3, k * .3 + .4); S.contact(c, x, 580, 16, .35);
           VP.figure(c, [x, 580], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, ch, x, 580, 32, Object.assign(S.idle(lt, k), { face: k % 2 ? -1 : 1, shN: 40, elN: 40 }), { blink: S.blinkAt(lt, k), worry: .4, look: [0, -.6], time: lt }, L));
-          pick(c, x + 26, lerp(540, 590, E.in(f)), lerp(-.4, -1.5, f)); });
+          pick(c, x + 26, lerp(540, 590, E.inn(f)), lerp(-.4, -1.5, f)); });
         return; }
       const L = PRIEST_L(lt); for (const x of [200, 1080]) VP.glow(c, x, 330, 100 + 12 * Math.sin(lt * 9 + x), '#ffa040', .35);
       const r = seg(lt, Sh.tI, Sh.tI + .6);
