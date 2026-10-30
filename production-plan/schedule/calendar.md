@@ -166,3 +166,6 @@ YouTube Shorts + Instagram Reels, in story order, in the 08:00 and 10:00 ET reel
 
 ## Japan comeback full video (booked 30 Oct 2026, 12:52 UTC)
 - "From Eating Rats to Bullet Trains: How Japan Rebuilt Itself" (2D dynamic, 6:36): Fri 4 Dec 20:00 UTC (15:00 ET), YouTube. Zernio 6ae4932261d52f62a84528c7. Pushpam asked to schedule it 30 Oct 12:45 UTC. November full-video slots are all taken (2-day spacing), so it takes the first December slot, two days after McDonald's (3D, 2 Dec). Drive video 1-S9P08tL0zDvVZTvFiNWkbvxgwaPqjud, thumbnail 1cnit8Ch-6Kn-YSifNOGZfrPCcQtXEAHw. 15 reels to follow.
+
+## Spain Part 3 full video (booked 30 Oct 2026, 13:33 UTC)
+- "How One General Took Spain, and Why a King Gave It Back" (2D dynamic, 7:51): Sun 6 Dec 16:00 UTC (11:00 ET, weekend slot), YouTube. Zernio 6ae49caf6598097ae775aba4. Two days after Japan (4 Dec). Drive video 18u6gbGigZ3CcLyV19_TqKSqiaexXU5cH, thumbnail 12CQkpt64vEuRJK8huVPEPEBFXhW2vAqF. 15 reels to follow.
