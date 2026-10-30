@@ -35,7 +35,7 @@ window.SHOTS = [
       desk(c, 640, 520, 420); letters(c, 560, 516, n); letters(c, 720, 516, Math.max(0, n - 8));
       const wk = seg(lt, Sh.tB - .5, Sh.tB + 2); crew(c, [[lerp(1360, 930, E.out(wk)), C.CLERK, 1, Object.assign(wk < 1 ? H1.walk(lt * 1.1) : S.idle(lt, 1), { face: -1, shN: 80, elN: 20, holdN: wr => { c.fillStyle = '#efe2c0'; c.fillRect(wr[0] - 20, wr[1] - 6, 30, 10); } })]], lt, L, 650, 42, [-.6, 0]);
       const st = seg(lt, Sh.tS, Sh.tS + .5); if (st > 0) { c.save(); c.translate(820, 300); c.rotate(.1); c.globalAlpha = st; c.fillStyle = '#efe2c0'; c.fillRect(-90, -50, 180, 100); c.fillStyle = '#3a1a0a'; c.font = '22px Caveat'; c.textAlign = 'center'; c.fillText('176,602 shares', 0, -10); c.fillText('Suez Canal Co.', 0, 20); c.restore(); } },
-    over: [(c, lt) => K.dateTag(c, '1875', lt, { at: .4 }), (c, lt, u, Sh) => K.badge(c, 'BORROWED MONEY', lt, { at: Sh.tB }), (c, lt, u, Sh) => K.card(c, 'FOR SALE: EGYPT\'S SHARES', lt, { at: Sh.tS + .3, x: 1400, y: 900, px: 50, rot: -2 })],
+    over: [(c, lt) => K.dateTag(c, '1875', lt, { at: .4, y: 100 }), (c, lt, u, Sh) => K.badge(c, 'BORROWED MONEY', lt, { at: Sh.tB }), (c, lt, u, Sh) => K.card(c, 'FOR SALE: EGYPT\'S SHARES', lt, { at: Sh.tS + .3, x: 1450, y: 215, px: 50, rot: -2 })],
     sfx: [[.2, 'clock_loop', .2], ['borrowed', 'paper', .3], ['broke', 'drum', .35], ['sold', 'stamp', .45]] },
 
   // 6.02 MED: London; Disraeli signs; a banker thumps a heavy chest on the desk; a telegram zips out of the window
@@ -56,13 +56,13 @@ window.SHOTS = [
   { set: 'sz_oldcanal', cam: { z: [1.0, 1.05], x: [640], y: [380], ease: E.io }, bed: [['drum_loop', .3], ['march', .3]],
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tN = at(Sh, 'no longer', Sh.dur - 2.6); },
     draw: (c, lt, u, Sh) => { const L = HEAT(lt);
-      [[900, C.FELLAH, 0], [1080, C.EGWOMAN, 1]].forEach(([x, ch, k]) => { const st = seg(lt, 1 + k * .4, 2.4 + k * .4), y = lerp(670, 600, E.io(st)); crew(c, [[x + 30 * st, ch, k + 5, Object.assign(st > 0 && st < 1 ? H1.walk(lt * 1.1 + k) : S.idle(lt, k), { face: st < 1 && st > 0 ? 1 : -1, shN: 30, elN: 60 })]], lt, L, y, lerp(34, 30, st), [-.6, 0]); });
-      for (let k = 0; k < 5; k++) { const x = lerp(-120 - k * 110, 1500 - k * 110, seg(lt, 0, Sh.dur + 2)); crew(c, [[x, C.REDCOAT, k, Object.assign(H1.walk(lt * 1.3), { face: 1, shF: 160, elF: 10, holdF: wr => { c.strokeStyle = '#3a2a1a'; c.lineWidth = 3; c.beginPath(); c.moveTo(wr[0], wr[1] + 30); c.lineTo(wr[0], wr[1] - 60); c.stroke(); } })]], lt, L, 680, 34, [.6, 0]); } },
-    over: [(c, lt) => K.dateTag(c, '1882 · BRITAIN OCCUPIES EGYPT', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'DUG BY EGYPT. RUN BY BRITAIN.', lt, { at: Sh.tN + .2, x: 960, y: 190, px: 52, rot: -2 })],
+      [[900, C.FELLAH, 0], [1080, C.EGWOMAN, 1]].forEach(([x, ch, k]) => { const st = seg(lt, 1 + k * .4, 2.4 + k * .4), y = lerp(620, 600, E.io(st)); crew(c, [[x + 30 * st, ch, k + 5, Object.assign(st > 0 && st < 1 ? H1.walk(lt * 1.1 + k) : S.idle(lt, k), { face: st < 1 && st > 0 ? 1 : -1, shN: 30, elN: 60 })]], lt, L, y, lerp(34, 30, st), [-.6, 0]); });
+      for (let k = 0; k < 5; k++) { const sp = seg(lt, 0, Sh.dur - 2), x = lerp(-120 - k * 110, 780 - k * 110, sp); crew(c, [[x, C.REDCOAT, k, Object.assign(sp < 1 ? H1.walk(lt * 1.3) : S.idle(lt, k + 3), { face: 1, shF: 160, elF: 10, holdF: wr => { c.strokeStyle = '#3a2a1a'; c.lineWidth = 3; c.beginPath(); c.moveTo(wr[0], wr[1] + 30); c.lineTo(wr[0], wr[1] - 60); c.stroke(); } })]], lt, L, 615, 34, [.6, 0]); } },
+    over: [(c, lt) => K.dateTag(c, '1882 · BRITAIN OCCUPIES EGYPT', lt, { at: .4, y: 100 }), (c, lt, u, Sh) => K.card(c, 'DUG BY EGYPT. RUN BY BRITAIN.', lt, { at: Sh.tN + .2, x: 960, y: 190, px: 52, rot: -2 })],
     sfx: [[.2, 'march', .35], [.4, 'drum_loop', .3]] },
 
   // 6.04 MED: Nasser at a microphone before a huge crowd; cut: warships off the coast turn back
-  { set: 'sz_cairo', cam: (lt, u, Sh) => ({ z: [lt < Sh.tI ? lerp(1.0, 1.1, seg(lt, 0, Sh.tI)) : 1.0], x: [640], y: [lt < Sh.tI ? 380 : 360] }), bed: [['crowd_loop', .4]],
+  { set: 'sz_cairo', xfade: 0, cam: (lt, u, Sh) => ({ z: [lt < Sh.tI ? lerp(1.0, 1.1, seg(lt, 0, Sh.tI)) : 1.0], x: [640], y: [lt < Sh.tI ? 380 : 360] }), bed: [['crowd_loop', .4]],
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tT = at(Sh, 'took the canal', 3); Sh.tI = at(Sh, 'invaded', 6); Sh.tP = at(Sh, 'pulled out', Sh.dur - 1.6); },
     draw: (c, lt, u, Sh) => {
       if (lt >= Sh.tI) { sea(c); const L = GREYL(lt), turn = seg(lt, Sh.tP - 1.2, Sh.tP + .4);
@@ -73,17 +73,17 @@ window.SHOTS = [
       c.fillStyle = '#2a2a2a'; c.fillRect(616, 270, 4, 40); c.beginPath(); c.arc(618, 268, 6, 0, TAU); c.fill(); c.fillRect(664, 270, 4, 40); c.beginPath(); c.arc(666, 268, 6, 0, TAU); c.fill();
       // crowd: rows of people from the back to the front
       const CR = [C.EGMAN, C.EGMAN2, C.EGWOMAN, C.FELLAH, C.FELLAH2, C.FELLAH3];
-      for (let r = 0; r < 2; r++) for (let k = 0; k < 8; k++) { const x = 80 + k * 160 + (r % 2) * 80, y = 580 + r * 90, ch = CR[(k + r * 2) % 6], up = cheer && Math.sin(lt * 5 + k + r) > 0; VP.figure(c, [x, y], { k: .4, sy: -.2, a: .25, blur: 2 }, cc => S.person(cc, ch, x, y, 28 + r * 5, Object.assign(S.idle(lt, k + r), { face: -1, shN: up ? 160 : 40, elN: 20, shF: up ? 150 : 30, elF: 30 }), { blink: S.blinkAt(lt, k), smile: cheer ? 1 : 0, look: [0, -.8], time: lt }, L)); } },
-    over: [(c, lt) => K.dateTag(c, 'NASSER · 26 JULY 1956', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'NATIONALISED', lt, { at: Sh.tT + .3, x: 960, y: 170, px: 64, rot: -3, until: Sh.tI }), (c, lt, u, Sh) => K.badge(c, 'BRITAIN · FRANCE · ISRAEL INVADE', lt, { at: Sh.tI + .2 }), (c, lt, u, Sh) => K.card(c, 'USA + USSR: GET OUT', lt, { at: Sh.tP - .8, x: 960, y: 180, px: 56, rot: 2 })],
+      for (let r = 0; r < 2; r++) for (let k = 0; k < 8 - (1 - r); k++) { const x = 110 + k * 151.4 + (1 - r) * 75.7, y = 555 + r * 60, ch = CR[(k + r * 2) % 6], up = cheer && Math.sin(lt * 5 + k + r) > 0; VP.figure(c, [x, y], { k: .4, sy: -.2, a: .25, blur: 2 }, cc => S.person(cc, ch, x, y, 28 + r * 5, Object.assign(S.idle(lt, k + r), { face: -1, shN: up ? 160 : 40, elN: 20, shF: up ? 150 : 30, elF: 30 }), { blink: S.blinkAt(lt, k), smile: cheer ? 1 : 0, look: [0, -.8], time: lt }, L)); } },
+    over: [(c, lt) => K.dateTag(c, 'NASSER · 26 JULY 1956', lt, { at: .4, y: 100 }), (c, lt, u, Sh) => K.card(c, 'NATIONALISED', lt, { at: Sh.tT + .3, x: 960, y: 170, px: 64, rot: -3, until: Sh.tI }), (c, lt, u, Sh) => K.badge(c, 'BRITAIN · FRANCE · ISRAEL INVADE', lt, { at: Sh.tI + .2 }), (c, lt, u, Sh) => K.card(c, 'USA + USSR: GET OUT', lt, { at: Sh.tP - .8, x: 960, y: 180, px: 56, rot: 2 })],
     sfx: [[.2, 'crowd_loop', .4], ['took the canal', 'cheer', .55], ['invaded', 'horn', .45], ['pulled out', 'whoosh', .4]] },
 
   // 6.05 MED: a modern container ship glides past desert banks; a pilot boat; a camel on the dune blinks
-  { set: 'sz_canal', cam: { z: [1.0, 1.05], x: [640], y: [380], ease: E.io }, bed: [['hum_loop', .25], ['wind_loop', .15]],
+  { set: 'sz_canal', xfade: 0, cam: { z: [1.0, 1.05], x: [640], y: [380], ease: E.io }, bed: [['hum_loop', .25], ['wind_loop', .15]],
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tO = at(Sh, 'one in eight', 2.5); Sh.tB = at(Sh, 'billions', Sh.dur - 2); },
     draw: (c, lt, u, Sh) => { const L = HEAT(lt), q = seg(lt, 0, Sh.dur + 2), sx = lerp(1700, -500, q);
       S.szShip(c, sx, 412 + (sx / 1280) * 110, .62, .09, { name: 'MAERSK' });
       const px = sx - 520; c.save(); c.translate(px, 430 + (px / 1280) * 115); c.fillStyle = '#e8e0d0'; c.beginPath(); c.moveTo(-30, -10); c.lineTo(34, -10); c.lineTo(26, 4); c.lineTo(-26, 4); c.fill(); c.fillStyle = '#c82a2a'; c.fillRect(-10, -24, 20, 14); c.restore();
-      S.szCamel(c, 1000, 690, .9, -1, 0, '#b8884e'); const bl = (lt % 3.2) < .15; if (bl) { c.fillStyle = '#b8884e'; c.fillRect(1000 - 98 * .9 - 4, 690 - 146 * .9 - 4, 8, 8); } },
+      S.szCamel(c, 1000, 615, .9, -1, 0, '#b8884e'); const bl = (lt % 3.2) < .15; if (bl) { c.fillStyle = '#b8884e'; c.fillRect(1000 - 98 * .9 - 4, 615 - 146 * .9 - 4, 8, 8); } },
     over: [(c, lt, u, Sh) => K.card(c, '~12% OF WORLD TRADE', lt, { at: Sh.tO + .3, x: 960, y: 190, px: 58, rot: -2 }), (c, lt, u, Sh) => K.badge(c, 'BILLIONS OF DOLLARS A YEAR FOR EGYPT', lt, { at: Sh.tB })],
     sfx: [[.2, 'hum_loop', .25], [.6, 'horn', .35], ['billions', 'coins', .35]] },
 
@@ -92,11 +92,15 @@ window.SHOTS = [
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tS = at(Sh, 'one ship stuck', Sh.dur - 3); },
     draw: (c, lt, u, Sh) => { const L = DUSK(lt); c.fillStyle = S.rgba('#a04020', .32); c.fillRect(0, 0, 1280, 720); VP.glow(c, 1040, 160, 360, '#ffa060', .35);
       const q = seg(lt, 0, Sh.dur), sx = lerp(1700, -400, q); S.szShip(c, sx, 410 + (sx / 1280) * 110, .7, .09, {});
-      S.szStone(c, 250, 650, .8, .05, lt, {});
-      const sh = 1 - Math.min(1, Math.abs(sx - 600) / 500); c.fillStyle = S.rgba('#1a0a10', .45 * sh); c.fillRect(0, 560, 1280, 160);
-      const f = seg(lt, Sh.dur - 1.6, Sh.dur); c.fillStyle = S.rgba('#000000', f); c.fillRect(0, 0, 1280, 720); },
+      S.szStone(c, 250, 630, .8, .05, lt, {});
+      const sh = 1 - Math.min(1, Math.abs(sx - 600) / 500); c.fillStyle = S.rgba('#1a0a10', .45 * sh); c.fillRect(0, 560, 1280, 160); },
     over: [(c, lt, u, Sh) => K.card(c, '3,000 YEARS · ONE DITCH', lt, { at: 2, x: 960, y: 170, px: 56, rot: -2, until: Sh.tS }), (c, lt, u, Sh) => K.card(c, 'ONE SHIP CAN STOP THE WORLD', lt, { at: Sh.tS + .3, x: 960, y: 170, px: 54, rot: 2, until: Sh.dur - .8 })],
     sfx: [[.2, 'wind_loop', .3], [1.5, 'horn', .3], ['stuck sideways', 'thud', .35], [-2, 'swell', .4]] },
 ];
+{ const S6 = window.SHOTS[5], T6 = window.TIMING.shots[5], off = T6.end - T6.start;
+  window.SHOTS.push({ set: S6.set, cam: { z: [1.0], x: [640], y: [380] }, bed: S6.bed, inSfx: false,
+    init: Sh => { Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => S6.draw(c, lt + off, u, T6),
+    over: [(c, lt, u, Sh) => { const f = seg(lt, Sh.dur - 1, Sh.dur); c.fillStyle = S.rgba('#000000', f); c.fillRect(0, 0, 1920, 1080); }] }); }
 VP.build(); K.boot();
 </script></body></html>
