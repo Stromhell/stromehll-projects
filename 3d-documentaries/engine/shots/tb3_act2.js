@@ -136,14 +136,14 @@ export const shots = {
     await put('tb_pa7', 220, [bx + 1.5, 0, bz + .2], P / 2 + .2, { talk: true, mood: 'happy' });
     await put('tb_pa10', 221, [bx + 1.6, 0, bz + 1.2], P / 2 - .2, { mood: 'calm' });
     // a caterer carries trays up the stairs
-    const cat = await put('tb_pa8', 222, [d.x + 12.5, 0, d.z + .1], -P / 2, { walk: true });
+    const cat = await put('tb_pa8', 222, [d.x + 12.5, 0, d.z + 1.6], -P / 2, { walk: true });
     const tray = new THREE.Group(); for (let i = 0; i < 3; i++) tray.add(real.box(.45, .05, .32, real.std(0xd8d8d0, { rough: .4 }), { pos: [0, i * .06, 0] }));
     C.attach(cat, tray, 'RightHand', [0, -.05, .15]);
     const truck = new THREE.Group(); const van = real.rbox(2.2, 2.2, 4.5, .15, real.std(0xece8dc, { rough: .5 })); van.position.y = 1.4; truck.add(van); truck.position.set(d.x + 15, 0, d.z + 5); scene.add(truck);
-    const cam = C.orbit(camera, [bx + .8, 1.2, bz + .6], 6.5, 2.0, -0.2, .35, 38, [bx + .2, 1.6, bz + .4]);
+    const cam = C.orbit(camera, [bx + .8, 1.2, bz + .6], 6.5, 2.0, .45, .9, 38, [bx + .2, 1.6, bz + .4]);
     return (t, u) => { cam(u);
       ppl.forEach((p, i) => {
-        if (p === cat) { const w = C.seg(t, 0, 5.5); p.position.x = d.x + 12.5 - w * 5.2; p.update(t, { pose: 'walk', dist: w * 5.2, arm: 'hold' }); return; }
+        if (p === cat) { const w = C.seg(t, 0, 5.5); p.position.x = d.x + 12.5 - w * 3.9; p.update(t, { pose: w < 1 ? 'walk' : 'idle', dist: w * 3.9, arm: 'hold' }); return; }
         p.update(t, { mood: p.userData.o.mood ?? 'calm', talk: p.userData.o.talk && Math.sin(t * 1.3 + i) > 0, look: Math.sin(t * .5 + i) * .15, arm: i === 2 && t > 2 && t < 3.5 ? 'point' : null });
       }); };
   },

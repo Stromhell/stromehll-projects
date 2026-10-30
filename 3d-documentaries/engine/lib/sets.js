@@ -164,7 +164,7 @@ export async function a300(o = {}) {
     const core = m(lathe([[.0, 4.2], [.62, 4.5], [.64, 6.1], [.45, 6.9], [.0, 7.2]]), grey, { rot: [-P / 2, 0, 0] }); nac.add(core);
     // fan face: spinner + blades
     nac.add(m(new THREE.ConeGeometry(.36, .7, 24), dark, { pos: [0, 0, -.45], rot: [-P / 2, 0, 0] }));
-    for (let i = 0; i < 38; i++) { const b = m(new THREE.BoxGeometry(.06, .82, .22), dark, { rot: [0, .5, i / 38 * P * 2] }); b.position.set(Math.sin(i / 38 * P * 2) * -.6, Math.cos(i / 38 * P * 2) * .6, -.75); b.rotation.set(0, .5, -i / 38 * P * 2); nac.add(b); }
+    for (let i = 0; i < 38; i++) { const b = m(new THREE.BoxGeometry(.06, .82, .22), dark, { rot: [0, .5, i / 38 * P * 2] }); b.position.set(Math.sin(i / 38 * P * 2) * -.6, Math.cos(i / 38 * P * 2) * .6, -.75); b.rotation.order = 'ZYX'; b.rotation.set(0, .5, i / 38 * P * 2); nac.add(b); }
     nac.add(m(new THREE.CircleGeometry(1.0, 40), new THREE.MeshStandardMaterial({ color: 0x0b0b0c, roughness: 1 }), { pos: [0, 0, -1.1], rot: [0, P, 0] }));
     // pylon
     const py = m(wing([{ x: 0, y: 0, z: 0, c: 6.4, t: .14 }, { x: 0, y: 1.6, z: -1.2, c: 5.4, t: .14 }], { vertical: false, n: 10 }), white);
@@ -213,7 +213,22 @@ export function airstair(h = 4.0, o = {}) {
   g.add(m(new THREE.BoxGeometry(2.3, .7, 7.2), body, { pos: [0, .75, 0] }));
   g.add(m(new THREE.BoxGeometry(2.2, 1.5, 1.8), body, { pos: [0, 1.55, 3.0] }));
   g.add(m(new THREE.BoxGeometry(2.0, .8, .05), std(0x1a2028, { rough: .1, metal: .2 }), { pos: [0, 1.85, 3.91] }));
-  for (const [x, z] of [[-1, 2.6], [1, 2.6], [-1, -2.6], [1, -2.6]]) g.add(m(new THREE.CylinderGeometry(.42, .42, .3, 20), tyre, { pos: [x, .42, z], rot: [0, 0, P / 2] }));
+  // detail pass: dark chassis rail, cab side windows, door seams, a livery stripe, bumper, lights, mudguards and hubs
+  const dark = std(0x2b2e31, { rough: .7, metal: .3 }), glass = std(0x1a2028, { rough: .1, metal: .2 }), stripe = std(o.stripe ?? 0x1f3f8a, { rough: .5 });
+  g.add(m(new THREE.BoxGeometry(2.36, .22, 7.3), dark, { pos: [0, .38, 0] }));
+  for (const x of [-1.11, 1.11]) {
+    g.add(m(new THREE.BoxGeometry(.04, .55, 1.1), glass, { pos: [x, 1.9, 3.0] }));
+    g.add(m(new THREE.BoxGeometry(.03, 1.3, .03), dark, { pos: [x * 1.005, 1.5, 2.35] }));
+    g.add(m(new THREE.BoxGeometry(.03, .18, 7.0), stripe, { pos: [x * 1.04, .95, 0] }));
+    for (const z of [2.6, -2.6]) g.add(m(new THREE.BoxGeometry(.25, .12, 1.15), dark, { pos: [x * .95, .93, z] }));
+  }
+  g.add(m(new THREE.BoxGeometry(2.4, .25, .2), dark, { pos: [0, .55, 3.98] }));
+  for (const x of [-.8, .8]) g.add(m(new THREE.CylinderGeometry(.11, .11, .05, 16), std(0xfff3d0, { emissive: 0xfff0c0, ei: .6 }), { pos: [x, .95, 3.93], rot: [P / 2, 0, 0] }));
+  g.add(m(new THREE.BoxGeometry(2.25, .06, 1.85), dark, { pos: [0, 2.33, 3.0] }));
+  for (const [x, z] of [[-1, 2.6], [1, 2.6], [-1, -2.6], [1, -2.6]]) {
+    g.add(m(new THREE.CylinderGeometry(.42, .42, .3, 24), tyre, { pos: [x, .42, z], rot: [0, 0, P / 2] }));
+    g.add(m(new THREE.CylinderGeometry(.22, .22, .02, 20), rail, { pos: [x * 1.16, .42, z], rot: [0, 0, P / 2] }));
+  }
   const st = new THREE.Group(); st.position.set(-.2, 1.1, 0); g.add(st);
   const n = Math.round(h / .19);
   for (let i = 0; i < n; i++) st.add(m(new THREE.BoxGeometry(1.3, .05, .3), std(0x6a6c70, { rough: .7, metal: .4 }), { pos: [-i * len / n, (i + 1) * (h - 1.1) / n, 0] }));
