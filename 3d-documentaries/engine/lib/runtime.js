@@ -2,6 +2,7 @@
 // and hands back a JPEG. Driven by render.js through Playwright.
 import * as THREE from 'three';
 import * as core from './core.js';
+import { dressCrew } from './uniforms.js';
 import * as people from './people.js';
 import * as props from './props.js';
 import * as maps from './maps.js';
@@ -37,7 +38,9 @@ window.loadShot = async (modPath, meta, opts = {}) => {
   const mod = await import(modPath + '?v=' + Date.now());
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(40, core.W / core.H, .1, 3000);
-  const kit = { THREE, scene, camera, core, people, props, maps, ui, real, meta, opts, overlay: null, renderer: R.renderer };
+  // people from the cast get their costume extras (airline crew uniforms) wherever they appear
+  const realK = { ...real, human: async (o = {}) => { const p = await real.human(o); dressCrew(p, o.id); return p; } };
+  const kit = { THREE, scene, camera, core, people, props, maps, ui, real: realK, meta, opts, overlay: null, renderer: R.renderer };
   const fn = mod.shots[meta.id];
   if (!fn) throw new Error('no shot ' + meta.id);
   const upd = await fn(kit);

@@ -363,7 +363,7 @@ Object.assign(shots, {
     real.put(scene, fo, { pos: [-.55, 0, .12], rot: 0, pose: 'sitDesk', arm: 'desk', seatH: .5, mood: 'worried' });
     real.put(scene, fe, { pos: [-1.05, 0, -1.0], rot: -P / 2 + .3, pose: 'sit', seatH: .5 });
     [cpt, fo, fe].forEach(p => p.userData.driven = true);
-    const cam = C.dolly(camera, { pos: [.85, 1.55, .55], look: [-.4, 1.2, -1.6], fov: 50 }, { pos: [.75, 1.5, .35], look: [-.4, 1.25, -1.9], fov: 46 });
+    const cam = C.dolly(camera, { pos: [1.0, 1.78, .6], look: [-.4, 1.15, -1.6], fov: 50 }, { pos: [.9, 1.72, .4], look: [-.4, 1.2, -1.9], fov: 46 });
     return (t, u) => {
       cam(u);
       cpt.update(t, { pose: 'sitDesk', arm: t > 1.2 && t < 2.6 ? 'point' : 'desk', seatH: .5, look: -1.2 * C.ease(C.seg(t, .3, 1.0)), mood: 'worried' });
