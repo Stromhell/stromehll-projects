@@ -3,7 +3,11 @@
 import sys, json, os, time, glob
 B, O = sys.argv[1], sys.argv[2]; note = sys.argv[3] if len(sys.argv) > 3 else ''
 R = os.path.dirname(os.path.abspath(__file__)) + '/../remotion'
-QA = os.environ.get('QA_DIR', '')
+QA = os.environ.get('QA_DIR', '') or f'{B}/qa'
+def wd(B, sid):  # last 2 watchdog events for this short (or batch-wide), for the card's activity log
+    try: L = [l.strip() for l in open(f'{B}/watchdog.log') if sid in l or 'disk' in l or 'watchdog' in l]
+    except OSError: return []
+    return L[-2:]
 os.makedirs(O, exist_ok=True); P = json.load(open(f'{B}/posts.json')); now = int(time.time())
 vers = json.load(open(f'{O}/versions.json')) if os.path.exists(f'{O}/versions.json') else {}
 done = lambda *f: all(os.path.exists(x) for x in f)
@@ -25,7 +29,7 @@ for sid, p in P.items():
     doc = {'format': 'Short', 'short': p['name'], 'title': p['title'], 'status': 'review' if pct == 100 else 'working', 'pct': pct,
            'stage': stage + (' ' + note if note else ''), 'asOf': now, 'batch': os.path.basename(B.rstrip('/')),
            'phases': [{'key': k, 'name': n, 'pct': c, 'state': s} for k, n, c, s in ph], 'previews': [],
-           'latest': {'at': now, 'text': stage}}
+           'latest': {'at': now, 'text': stage + (' Watchdog: ' + wd(B, sid)[-1] if wd(B, sid) else '')}, 'watchdog': wd(B, sid)}
     did = f'fs-{sid}'; json.dump(doc, open(f'{O}/{did}.json', 'w'), indent=1)
     w = {'op': 'set', 'collection': 'external', 'doc_id': did, 'file_path': f'{O}/{did}.json'}
     if did in vers: w['if_version'] = vers[did]
