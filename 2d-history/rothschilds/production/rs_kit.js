@@ -44,8 +44,8 @@
     c.fillStyle = '#5a2a1e'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-182, -110, 364, 214); c.strokeRect(-182, -110, 364, 214);
     for (const sx of [-1, 1]) { c.fillStyle = PAPER; c.beginPath(); c.moveTo(0, -96); c.quadraticCurveTo(sx * 80, -110, sx * 170, -98); c.lineTo(sx * 170, 92); c.quadraticCurveTo(sx * 80, 82, 0, 94); c.closePath(); c.fill(); c.stroke(); }
     const n = o.lines ?? 9, u = o.u ?? 1; c.lineWidth = 2; for (let k = 0; k < n; k++) for (const sx of [-1, 1]) { const ww = 130 * Math.min(1, Math.max(0, u * n * 2 - (k * 2 + (sx > 0)))); if (ww <= 0) continue; c.strokeStyle = 'rgba(40,30,20,.6)'; c.beginPath(); c.moveTo(sx > 0 ? 18 : -150, -70 + k * 17); c.lineTo((sx > 0 ? 18 : -150) + ww * (k % 3 ? 1 : .7), -70 + k * 17); c.stroke(); c.fillStyle = 'rgba(160,40,30,.8)'; if (ww > 120) c.fillRect(sx > 0 ? 130 : -22, -76 + k * 17, 18, 8); }
-    if (o.strike) { c.strokeStyle = RED; c.lineWidth = 6; c.beginPath(); c.moveTo(-160, -30); c.lineTo(-160 + 320 * o.strike, -30); c.stroke(); }
-    if (o.word) { c.fillStyle = INK; c.font = '26px SourceSerif'; c.textAlign = 'center'; c.fillText(o.word, -84, -24); }
+    if (o.strike) { c.strokeStyle = RED; c.lineWidth = 6; c.beginPath(); c.moveTo(-150, -44); c.lineTo(-150 + 132 * o.strike, -44); c.stroke(); }
+    if (o.word) { c.fillStyle = INK; c.font = '19px SourceSerif'; c.textAlign = 'center'; c.fillText(o.word, -84, -38); }
     c.restore(); };
   RS.letter = (c, x, y, s = 1, o = {}) => { c.save(); c.translate(x, y); c.scale(s, s); c.rotate(o.rot ?? 0); c.fillStyle = 'rgba(0,0,0,.28)'; c.fillRect(-100, -66, 210, 140); c.fillStyle = PAPER; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(-106, -72, 212, 140); c.strokeRect(-106, -72, 212, 140);
     if (o.open) { c.fillStyle = 'rgba(40,30,60,.75)'; c.font = '22px SourceSerif'; c.textAlign = 'right'; const lines = o.hebrew ? ['ובכתב יד מהיר', 'שלום לאחי', 'הכסף בדרך', 'בעזרת השם'] : ['My dear brother,', 'the bills are', 'accepted. Send', 'word by return.']; lines.forEach((t, i) => { c.textAlign = o.hebrew ? 'right' : 'left'; c.fillText(t, o.hebrew ? 90 : -90, -36 + i * 28); }); }

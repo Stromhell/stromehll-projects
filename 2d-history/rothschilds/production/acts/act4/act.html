@@ -1,0 +1,122 @@
+<!doctype html><html><head><meta charset="utf-8"><title>RS act 4 - lenders to the world</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "leo";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../rs_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['map_europe', 'map_world', 'station', 'palace_gate', 'sea', 'partners_room', 'quay', 'westminster', 'vineyard', 'mansion', 'exchange_amsterdam']) K.load(n, PL + n + '.jpg');
+const SW = 1920, SH = 1080, INK = RS.INK, pop = RS.pop;
+const backdrop = (name, b = .5, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const CARRY = () => ({ shL: 30, elL: -75, shR: 35, elR: -75 });
+const sack = (c) => { c.save(); c.fillStyle = '#d8c090'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.ellipse(10, -40, 42, 34, 0, 0, 7); c.fill(); c.stroke(); c.beginPath(); c.moveTo(-6, -72); c.lineTo(26, -72); c.stroke(); c.restore(); };
+// a sailing ship seen side-on, bobbing; facing 1 = sailing right
+const ship = (c, x, y, s, t, facing = 1, o = {}) => { c.save(); c.translate(x, y + Math.sin(t * 2) * 6 * s); c.rotate(Math.sin(t * 1.6) * .03); c.scale(s * facing, s);
+  c.fillStyle = o.hull || '#4a3020'; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.moveTo(-220, -60); c.lineTo(240, -70); c.lineTo(190, 0); c.lineTo(-190, 0); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#c8a040'; c.fillRect(-180, -48, 380, 8);
+  c.strokeStyle = INK; c.lineWidth = 7; for (const mx of [-90, 60]) { c.beginPath(); c.moveTo(mx, -60); c.lineTo(mx, -380); c.stroke(); }
+  c.fillStyle = '#f2ead8'; c.lineWidth = 4; for (const [mx, h] of [[-90, 300], [60, 320]]) { c.beginPath(); c.moveTo(mx - 90, -360); c.quadraticCurveTo(mx + 30, -360 + h / 2, mx - 90, -380 + h); c.lineTo(mx + 80, -380 + h); c.quadraticCurveTo(mx + 120, -360 + h / 2, mx + 80, -360); c.closePath(); c.fill(); c.stroke(); }
+  c.fillStyle = o.flag || '#c8281e'; c.fillRect(60, -410, 60, 30); c.strokeRect(60, -410, 60, 30);
+  c.strokeStyle = 'rgba(255,255,255,.5)'; c.lineWidth = 4; c.beginPath(); c.moveTo(-200, 6); c.quadraticCurveTo(-260, 10, -300, 4); c.stroke(); c.restore(); };
+const contract = (c, x, y, s, sign = 0, title = 'LOAN') => { c.save(); c.translate(x, y); c.scale(s, s); c.rotate(-.04); c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(-150, -196, 316, 410); c.fillStyle = RS.PAPER; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-158, -210, 316, 410); c.strokeRect(-158, -210, 316, 410);
+  c.fillStyle = INK; c.font = '40px Anton'; c.textAlign = 'center'; c.fillText(title, 0, -150); c.fillStyle = 'rgba(40,30,20,.4)'; for (let k = 0; k < 8; k++) c.fillRect(-120, -110 + k * 26, 240 - (k % 3) * 40, 8);
+  c.strokeStyle = '#2a2a6a'; c.lineWidth = 4; c.beginPath(); for (let k = 0; k <= 30 * sign; k++) { const xx = -110 + k * 7, yy = 150 + Math.sin(k * .9) * 12; k ? c.lineTo(xx, yy) : c.moveTo(xx, yy); } c.stroke(); RS.arrows(c, 100, 150, .12, { col: '#a8281e', ribbon: false }); c.restore(); };
+
+window.SHOTS = [
+  // 4.01 gold lines run from the five arrows to capital after capital; one heads out across the Atlantic to Brazil
+  { plate: 'map_europe', cam: { z: [1.0, 1.06], x: [1280, 1240], y: [760, 750] }, bed: [['hum_loop', .3]],
+    live: [(c, lt, u, S) => { const F = RS.EU(...RS.CITY.Frankfurt); const tg = [['London', 'BRITAIN'], ['Paris', 'FRANCE'], ['Vienna', 'AUSTRIA'], ['Berlin', 'PRUSSIA'], ['Brussels', 'BELGIUM']];
+      tg.forEach(([city, lab], i) => { const P = RS.EU(...RS.CITY[city]), at = S.tt[i]; RS.goldLine(c, F[0], F[1], P[0], P[1], E.out(K.seg(lt, at, at + .7)), { bend: .12 }); if (lt > at + .6) RS.dot(c, P[0], P[1], lt, at + .6, lab, { px: 40, dy: city === 'Brussels' ? 60 : -52 }); });
+      const L = RS.EU(...RS.CITY.London), at = S.tt[5]; RS.goldLine(c, L[0], L[1], 140, 1200, E.out(K.seg(lt, at, at + 1)), { bend: -.2, dash: [18, 12] }); if (lt > at + 1) RS.dot(c, 200, 1140, lt, at + 1, 'BRAZIL →', { px: 44, dy: -60 });
+      RS.arrows(c, F[0], F[1] + 40, .35, {}); }],
+    init: S => { S.tt = ['Britain', 'France', 'Austria', 'Prussia', 'Belgium', 'Brazil'].map((w, i) => A.at(S, w, 3 + i * 1)); const tF = A.at(S, 'first call', 2);
+      S.D.over = [(c, lt) => K.card(c, 'NEED A BIG LOAN? THE FIRST CALL', lt, { at: tF, x: 960, y: 140, px: 44, rot: -2 })];
+      S.D.sfx = S.tt.map(t => [t, 'whoosh_soft', .3]).concat([[tF, 'phone_ring', 0], [tF, 'chime', .3]]); } },
+  // 4.02 James on the platform as a steam train pulls out of a Paris station
+  { plate: 'station', cam: { z: [1.04, 1.12], x: [1280, 1280], y: [820, 820] }, bed: [['city_loop', .2]],
+    figs: [{ x: 1900, y: 1330, s: 1.9, ...RS.JAMES, facing: -1, pose: 'present', mood: 'happy', anim: (o, lt) => { o.pose = lt > 3 ? 'point' : 'present'; } },
+      ...[0, 1].map(i => ({ x: 600, y: 1330 + i * 30, s: 1.75, ...RS.TRADER(i + 2), facing: 1, walk: { x0: -200 - i * 260, x1: 2700, t0: .6 + i * .8, dur: 9 } }))],
+    init: S => { const tR = A.at(S, 'railways', 2.2), tT = A.at(S, 'Trains', 4);
+      S.D.over = [(c, lt) => K.badge(c, 'JAMES DE ROTHSCHILD · PARIS', lt, { at: .4 }), (c, lt) => K.card(c, 'EARLY FRENCH RAILWAYS', lt, { at: tR, x: 520, y: 240, px: 46, rot: -3 }), (c, lt) => K.card(c, 'PAID FOR BY HIS BANK', lt, { at: tT + .6, x: 1420, y: 240, px: 44, rot: 3 })];
+      S.D.sfx = [[.3, 'chime', .25], [tR, 'whoosh', .35], [tT, 'footsteps', .3]]; } },
+  // 4.03 Belgium 1830: a new flag goes up; a loan is signed
+  { plate: 'palace_gate', cam: { z: [1.04, 1.1], x: [1280, 1280], y: [840, 840] }, bed: [['wind_loop', .2], ['birds_loop', .15]],
+    live: [(c, lt, u, S) => RS.flag(c, 2120, 1400, 1.2, ['#1a1a1a', '#f2c81e', '#d8281e'], E.out(K.seg(lt, .4, 3)), lt)],
+    init: S => { const tN = A.at(S, 'money to exist', 4.4), tL = A.at(S, 'lent', 6.4);
+      S.D.over = [(c, lt) => K.dateTag(c, 'BELGIUM · 1830', lt, { at: .4 }), (c, lt) => K.card(c, 'A NEW COUNTRY NEEDS MONEY', lt, { at: tN, x: 560, y: 220, px: 46, rot: -3 }), (c, lt) => { const a = pop(lt, tL, .45); if (a > 0) contract(c, 620, 620, a * 1.05, K.seg(lt, tL + .4, tL + 1.6), 'BELGIUM LOAN'); }, (c, lt) => K.card(c, 'PARIS + LONDON HOUSES', lt, { at: tL + 1, x: 620, y: 960 - 120, px: 38, rot: 2 })];
+      S.D.sfx = [[.5, 'wind_loop', .2], [1.6, 'whoosh_soft', .3], [tL, 'paper', .35], [tL + .5, 'scrape', .25]]; } },
+  // 4.04 Brazil 1825: a ship sails from Rio to Lisbon carrying a chest of money
+  { plate: 'sea', cam: { z: [1.04, 1.1], x: [1280, 1300], y: [800, 800] }, bed: [['ocean_loop', .3]],
+    live: [(c, lt) => { const x = 300 + lt * 140; ship(c, x, 1060, 1.1, lt, 1, { flag: '#2e8a3a' }); c.save(); c.translate(x + 30, 1000 + Math.sin(lt * 2) * 6); c.scale(.4, .4); RS.chest(c, 0, 0, 1, {}); c.restore(); }],
+    init: S => { const tP = A.at(S, 'pay Portugal', 3.4), tR = A.at(S, 'recognised', 6);
+      S.D.over = [(c, lt) => K.dateTag(c, 'BRAZIL · 1825', lt, { at: .4 }), (c, lt) => K.card(c, 'RIO → LISBON', lt, { at: .8, x: 520, y: 220, px: 50, rot: -3 }), (c, lt) => K.card(c, 'BRAZIL PAYS PORTUGAL OFF', lt, { at: tP, x: 1420, y: 220, px: 44, rot: 3 }), (c, lt) => K.card(c, 'INDEPENDENCE RECOGNISED', lt, { at: tR, x: 1420, y: 320, px: 40, rot: -2 })];
+      S.D.sfx = [[.4, 'creak', .3], [tP, 'coins', .35], [tR, 'chime', .35]]; } },
+  // 4.05 1835: a ledger page; a line struck through COMPENSATION; the freed people, who got nothing, in the margin
+  { draw: (c, lt, u, S) => { backdrop('partners_room', .35, 9)(c); const a = pop(lt, .2, .5); if (a <= 0) return; c.save(); c.translate(820, 560); c.scale(a * 2.2, a * 2.2); RS.ledger(c, 0, 0, 1, { word: 'COMPENSATION', strike: E.out(K.seg(lt, S.tS, S.tS + .8)) }); c.restore();
+      const b = K.seg(lt, S.tN, S.tN + .8); if (b > 0) { c.save(); c.globalAlpha = b; c.fillStyle = 'rgba(242,232,210,.95)'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(1300, 300, 420, 520); c.strokeRect(1300, 300, 420, 520); c.restore();
+        [0, 1, 2, 3].forEach(i => R.figure(c, { x: 1400 + (i % 2) * 200, y: 520 + Math.floor(i / 2) * 260, s: .7, costume: ['farmer', 'dress', 'farmer', 'kid'][i], hair: ['short', 'bun', 'short', 'short'][i], seed: 80 + i, skin: ['#7a4a2e', '#5a3820', '#8a5a3a', '#6a4028'][i], hairCol: '#1a1410', facing: 1, pose: 'present', mood: 'sad', t: lt + i })); } },
+    bed: [['drone', .2]],
+    init: S => { S.tS = A.at(S, 'slave-owners', 4); S.tN = A.at(S, 'nothing', 6.4); const tM = A.at(S, '15 million', 2.2);
+      S.D.over = [(c, lt) => K.dateTag(c, '1835 LOAN', lt, { at: .4 }), (c, lt) => lt > tM && K.counter(c, 0, 15, lt, { at: tM, dur: 1.2, x: 820, y: 200, px: 90, pre: '£', post: ' MILLION' }), (c, lt) => K.card(c, 'PAID TO SLAVE-OWNERS', lt, { at: S.tS, x: 820, y: 940 - 60, px: 42, rot: -2 }), (c, lt) => K.card(c, 'THE ENSLAVED GOT NOTHING', lt, { at: S.tN, x: 1510, y: 250, px: 40, rot: 2 })];
+      S.D.sfx = [[tM, 'coins', .3], [S.tS, 'scrape', .35], [S.tN, 'thud', .3]]; } },
+  // 4.06 Ireland 1847: a relief ship's grain sacks are carried ashore on a quay
+  { plate: 'quay', cam: { z: [1.04, 1.1], x: [1280, 1300], y: [840, 840] }, bed: [['ocean_loop', .25], ['wind_loop', .15]],
+    figs: [0, 1, 2].map(i => ({ x: 900, y: 1330 + i * 20, s: 1.75, costume: 'farmer', hair: 'short', seed: 90 + i, facing: -1, walk: { x0: 2400 + i * 340, x1: -300, t0: .3 + i * 1, dur: 9 }, arms: CARRY, hold: { near: sack } })),
+    init: S => { const tB = A.at(S, 'Relief', 2.4), tF = A.at(S, 'Famine', 5);
+      S.D.over = [(c, lt) => K.dateTag(c, 'IRELAND · 1847', lt, { at: .4 }), (c, lt) => K.card(c, 'BRITISH RELIEF ASSOCIATION', lt, { at: tB, x: 960, y: 200, px: 46, rot: -2 }), (c, lt) => K.card(c, 'CO-FOUNDED BY LIONEL', lt, { at: tB + .8, x: 1420, y: 290, px: 40, rot: 3 }), (c, lt) => K.card(c, 'THE GREAT FAMINE', lt, { at: tF, x: 520, y: 290, px: 44, rot: -3 })];
+      S.D.sfx = [[.3, 'footsteps', .3], [tB, 'paper', .25], [tF, 'drone', .2]]; } },
+  // 4.07 Lionel is refused at the doors of the Commons, again and again, then in 1858 walks in
+  { plate: 'westminster', cam: { z: [1.12, 1.18], x: [1280, 1280], y: [900, 880] }, bed: [['city_loop', .15], ['wind_loop', .15]],
+    figs: [{ x: 1280, y: 1230, s: 1.7, ...RS.LIONEL, facing: 1, pose: 'present', mood: 'neutral',
+      anim: (o, lt, u, S) => { const cyc = [S.t1, S.t1 + 1.6, S.t1 + 3.2]; let x = 1000; for (const t0 of cyc) { if (lt > t0 && lt < t0 + 1.4) { const w = R.walkX(lt, 1000, 1200, t0, .7, 1.7), b = R.walkX(lt, 1200, 1000, t0 + .8, .6, 1.7); const ww = lt < t0 + .8 ? w : b; x = ww.x; o.t = ww.phase; o.pose = ww.moving ? 'walk' : 'shrug'; o.facing = lt < t0 + .8 ? 1 : -1; o.mood = lt > t0 + .7 ? 'sad' : 'neutral'; } }
+        if (lt > S.tIn) { const w = R.walkX(lt, 1000, 1290, S.tIn, 1.6, 1.7); x = w.x; o.t = w.phase; o.pose = w.moving ? 'walk' : 'present'; o.facing = 1; o.mood = 'happy'; } else if (lt > S.t1 + 4.6) { o.pose = 'think'; o.facing = 1; }
+        o.x = x; o.scaleK = 1; } }],
+    init: S => { S.t1 = A.at(S, 'fought', 1); S.tIn = A.at(S, '1858', 5.6); const tO = A.at(S, 'oath', 3.4);
+      S.D.over = [(c, lt) => K.card(c, 'NO CHRISTIAN OATH, NO SEAT', lt, { at: tO, x: 560, y: 220, px: 44, rot: -3 }), ...[0, 1, 2].map(k => (c, lt) => RS.stamp(c, 'REFUSED', 520 + k * 440, 560, lt, S.t1 + .7 + k * 1.6, { px: 64, rot: -.15 + k * .1, al: lt > S.tIn ? .2 : .85 })),
+        (c, lt) => K.card(c, '11 YEARS', lt, { at: S.t1 + 4.6, x: 1460, y: 220, px: 60, rot: 3, until: S.tIn }), (c, lt) => K.dateTag(c, '1858', lt, { at: S.tIn }), (c, lt) => K.card(c, 'FIRST PRACTISING JEWISH MP', lt, { at: S.tIn + .8, x: 1400, y: 220, px: 44, rot: 3 })];
+      S.D.sfx = [0, 1, 2].map(k => [S.t1 + .7 + k * 1.6, 'door_slam', .35]).concat([[S.tIn, 'creak', .35], [S.tIn + .8, 'crowd_cheer', .2]]); } },
+  // 4.08 Crimea 1854: warships off the coast, cannon smoke over the water; £16 million through Lionel's bank
+  { plate: 'sea', cam: { z: [1.06, 1.12], x: [1280, 1260], y: [800, 800] }, bed: [['ocean_loop', .3]],
+    live: [(c, lt) => { ship(c, 800, 1040, .9, lt, 1, { flag: '#c8281e' }); ship(c, 1500, 1010, .65, lt + 1, 1, { flag: '#c8281e' }); for (const [x, at] of [[900, 1.2], [1560, 2.4], [880, 3.8]]) { if (lt > at) { const f = 1 - K.seg(lt, at, at + .3); if (f > 0) RS.glow(c, x + 200, 960, 160, '#ffd070', .8 * f); ENV_smoke(c, x + 200, 960, lt - at); } } }],
+    init: S => { const tM = A.at(S, '16 million', 3);
+      S.D.over = [(c, lt) => K.dateTag(c, 'CRIMEA · 1854', lt, { at: .4 }), (c, lt) => lt > tM && K.counter(c, 0, 16, lt, { at: tM, dur: 1.2, x: 960, y: 220, px: 100, pre: '£', post: ' MILLION' }), (c, lt) => K.card(c, 'BORROWED TO FIGHT RUSSIA', lt, { at: tM + 1.4, x: 960, y: 340, px: 42, rot: 2 })];
+      S.D.sfx = [[1.2, 'thud', .5], [2.4, 'thud', .4], [3.8, 'thud', .45], [tM, 'coins', .35]]; } },
+  // 4.09 Vienna: a train crosses a river bridge; coins drop into the emperor's empty treasury chest
+  { plate: 'vineyard', cam: { z: [1.04, 1.1], x: [1280, 1280], y: [800, 800] }, bed: [['wind_loop', .2]],
+    live: [(c, lt) => { const by = 860; c.fillStyle = '#6a8aa8'; c.fillRect(0, by + 10, 2560, 60); c.strokeStyle = INK; c.fillStyle = '#7a6a5a'; c.lineWidth = 5; c.fillRect(0, by - 20, 2560, 26); c.strokeRect(-10, by - 20, 2580, 26); for (let k = 0; k < 9; k++) { c.beginPath(); c.moveTo(k * 320, by + 70); c.lineTo(k * 320, by + 6); c.arc(k * 320 + 160, by + 6, 160, Math.PI, 0); c.lineTo(k * 320 + 320, by + 70); c.stroke(); }
+      const tx = -700 + lt * 380; for (let k = 0; k < 5; k++) { const x = tx - k * 230; c.fillStyle = k ? '#5a2a22' : '#1e2224'; c.beginPath(); c.roundRect(x - 100, by - 130, 210, 110, 10); c.fill(); c.stroke(); for (const wx of [-60, 60]) { c.fillStyle = '#16120e'; c.beginPath(); c.arc(x + wx, by - 20, 22, 0, 7); c.fill(); } if (k) { c.fillStyle = 'rgba(255,220,150,.7)'; for (let w = 0; w < 3; w++) c.fillRect(x - 80 + w * 60, by - 110, 40, 30); } }
+      c.fillStyle = '#1e2224'; c.fillRect(tx + 40, by - 190, 30, 60); for (let k = 0; k < 6; k++) { c.fillStyle = `rgba(230,226,220,${.5 - k * .07})`; c.beginPath(); c.arc(tx + 55 - k * 70, by - 220 - k * 20, 30 + k * 12, 0, 7); c.fill(); } }],
+    init: S => { const tE = A.at(S, 'Habsburg', 4.4);
+      S.D.over = [(c, lt) => K.badge(c, 'SALOMON ROTHSCHILD · VIENNA', lt, { at: .4 }), (c, lt) => K.card(c, 'AUSTRIA\'S FIRST BIG RAILWAY', lt, { at: 1.2, x: 520, y: 220, px: 44, rot: -3 }),
+        (c, lt) => { const a = pop(lt, tE, .45); if (a <= 0) return; c.save(); c.translate(1500, 820); c.scale(a, a); RS.chest(c, 0, 0, 1.1, { open: true, empty: lt < tE + 1.2 }); c.restore(); for (let k = 0; k < 8; k++) { const at = tE + .6 + k * .15, y = -60 + (lt - at) * 900; if (lt > at && y < 700) RS.coin(c, 1460 + (k % 4) * 26, y, 22, lt * 5 + k); } },
+        (c, lt) => K.card(c, 'PROPPING UP THE HABSBURG EMPIRE', lt, { at: tE + .4, x: 1440, y: 300, px: 40, rot: 3 })];
+      S.D.sfx = [[.4, 'chime', .25], [1, 'whoosh', .35], [tE + .6, 'coins_cascade', .4]]; } },
+  // 4.10 1871: French gold counted onto German scales; five billion francs
+  { draw: (c, lt, u, S) => { backdrop('mansion', .4, 8)(c); const n = Math.floor(K.seg(lt, .8, 5) * 14), tilt = .22 - .22 * K.seg(lt, .8, 5);
+      R.figure(c, { x: 360, y: 980, s: 1.5, ...RS.P({ costume: 'suit', topCol: '#2a3a7a', hair: 'short', seed: 101 }), facing: 1, pose: 'present', mood: 'worried', t: lt });
+      R.figure(c, { x: 1560, y: 980, s: 1.5, ...RS.P({ costume: 'suit', topCol: '#3a3a3a', hair: 'swept', seed: 102 }), facing: -1, pose: 'think', mood: 'neutral', t: lt, hat: (c2, X, Y, r) => { c2.fillStyle = '#2a2a2a'; c2.strokeStyle = INK; c2.lineWidth = 2.4; c2.beginPath(); c2.ellipse(X, Y - r * .7, r * .9, r * .5, 0, Math.PI, 0); c2.fill(); c2.stroke(); c2.fillStyle = RS.GOLD; c2.fillRect(X - 3, Y - r * 1.6, 6, r * .5); } });
+      RS.scale(c, 960, 900, 1.3, tilt, { load: [(c2, x, y) => { for (let k = 0; k < n; k++) RS.coin(c2, x - 50 + (k % 5) * 25, y - 10 - Math.floor(k / 5) * 16, 16, k); }, (c2, x, y) => { c2.fillStyle = '#6a6a6a'; c2.strokeStyle = INK; c2.lineWidth = 3; c2.fillRect(x - 40, y - 50, 80, 50); c2.strokeRect(x - 40, y - 50, 80, 50); }] }); },
+    bed: [['hum_loop', .25]],
+    init: S => { const tB = A.at(S, 'five billion', 3), tE = A.at(S, 'early', 6);
+      S.D.over = [(c, lt) => K.dateTag(c, '1871', lt, { at: .4 }), (c, lt) => lt > tB && K.counter(c, 0, 5, lt, { at: tB, dur: 1.2, x: 960, y: 160, px: 100, post: ' BILLION FRANCS' }), (c, lt) => K.card(c, 'FRANCE PAYS GERMANY', lt, { at: 1, x: 420, y: 330, px: 42, rot: -3 }), (c, lt) => K.card(c, 'PAID OFF EARLY', lt, { at: tE, x: 1500, y: 330, px: 46, rot: 3 })];
+      S.D.sfx = [[1, 'coins', .3], [2.4, 'coins', .3], [tB, 'riser', .25], [tE, 'chime', .35]]; } },
+  // 4.11 Naples: the bank's sign is lowered and taken down; dust
+  { plate: 'exchange_amsterdam', cam: { z: [1.08, 1.14], x: [1280, 1280], y: [800, 800] }, bed: [['city_loop', .15]],
+    live: [(c, lt, u, S) => { const d = E.io(K.seg(lt, S.tD, S.tD + 2.4)), y = 620 + d * 520, rot = d * .25; c.save(); c.strokeStyle = '#3a2a1a'; c.lineWidth = 3; c.beginPath(); c.moveTo(1100, 0); c.lineTo(1120, y - 40); c.moveTo(1460, 0); c.lineTo(1440, y - 40); c.stroke(); c.translate(1280, y); c.rotate(rot);
+      c.fillStyle = '#1e3a2a'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-220, -60, 440, 120); c.strokeRect(-220, -60, 440, 120); c.strokeStyle = RS.GOLD; c.lineWidth = 3; c.strokeRect(-206, -46, 412, 92); c.fillStyle = RS.GOLD; c.font = '40px SourceSerif'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('C. M. DE ROTHSCHILD', 0, -12); c.font = '26px SourceSerif'; c.fillText('NAPOLI', 0, 28); c.restore();
+      if (d >= 1) { for (let k = 0; k < 20; k++) { const life = lt - S.tD - 2.4, x = 1280 + (k - 10) * 30 + life * (k - 10) * 20, yy = 1160 - life * 60 - (k % 4) * 10; if (life < 2) { c.fillStyle = `rgba(200,190,170,${.4 * (1 - life / 2)})`; c.beginPath(); c.arc(x, yy, 14 + life * 20, 0, 7); c.fill(); } } } }],
+    init: S => { S.tD = A.at(S, 'faded', 1.2); const tI = A.at(S, '1861', 3.4);
+      S.D.over = [(c, lt) => K.card(c, 'NOT EVERYTHING WORKED', lt, { at: .4, x: 560, y: 220, px: 46, rot: -3 }), (c, lt) => K.dateTag(c, 'NAPLES', lt, { at: .6 }), (c, lt) => K.card(c, 'ITALY UNIFIES · 1861', lt, { at: tI, x: 1440, y: 220, px: 42, rot: 3 }), (c, lt) => K.card(c, 'THE BRANCH CLOSES', lt, { at: tI + 2, x: 1440, y: 320, px: 40, rot: -2 })];
+      S.D.sfx = [[S.tD, 'creak', .35], [S.tD + 2.4, 'thud', .45]]; } },
+  // 4.12 1875: a gold line runs from London to Suez; a ship sails through the canal
+  { plate: 'map_world', cam: { z: [1.5, 1.7], x: [1660, 1700], y: [560, 600] }, bed: [['hum_loop', .3]],
+    live: [(c, lt, u, S) => { const L = RS.WD(...RS.CITY.London), Z = RS.WD(...RS.CITY.Suez); RS.goldLine(c, L[0], L[1], Z[0], Z[1], E.out(K.seg(lt, .5, 2.4)), { bend: -.15, w: 9 }); RS.dot(c, L[0], L[1], lt, .3, 'LONDON', { px: 30, dy: -40, r: 14 }); if (lt > 2.4) RS.dot(c, Z[0], Z[1], lt, 2.4, 'SUEZ', { px: 34, dy: -44, r: 16 });
+      if (lt > 2.6) { const u2 = K.seg(lt, 2.6, 7); c.save(); c.translate(Z[0] - 20 + u2 * 30, Z[1] - 60 + u2 * 120); c.scale(.12, .12); ship(c, 0, 0, 1, lt, 1); c.restore(); } }],
+    init: S => { const tY = A.at(S, 'Seven years', 4.4);
+      S.D.over = [(c, lt) => K.dateTag(c, 'SUEZ · 1875', lt, { at: .4 }), (c, lt) => K.card(c, 'THE LOAN THAT OPENED OUR STORY', lt, { at: 1, x: 620, y: 860, px: 42, rot: -3 }), (c, lt) => K.card(c, '1882: BRITAIN CONTROLS EGYPT', lt, { at: tY, x: 1360, y: 200, px: 42, rot: 2 })];
+      S.D.sfx = [[.5, 'whoosh_soft', .35], [2.4, 'pop', .3], [tY, 'stamp', .4]]; } },
+];
+function ENV_smoke(c, x, y, life) { if (life > 3) return; for (let k = 0; k < 6; k++) { c.fillStyle = `rgba(220,214,204,${.35 * (1 - life / 3)})`; c.beginPath(); c.arc(x + k * 20 + life * 40, y - k * 18 - life * 50, 30 + k * 6 + life * 20, 0, 7); c.fill(); } }
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>
