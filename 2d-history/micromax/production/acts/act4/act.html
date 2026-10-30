@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><title>MX act 4 - cheap loud and everywhere</title>
+<!doctype html><html><head><meta charset="utf-8"><title>MX act 4 - cheap, loud and everywhere</title>
 <style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
 <body><canvas id="c" width="1920" height="1080"></canvas>
 <script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
@@ -43,9 +43,9 @@ window.SHOTS = [
   // 4.04 smartphones: Micromax, Lava and Karbonn banners; a teenager shows off a Canvas
   { plate: 'market', cam: { z: [1.04, 1.1], x: [1280, 1300], y: [820, 820] }, bed: [['crowd_loop', .25]],
     figs: [{ x: 1100, y: 1330, s: 1.85, ...MX.P({ costume: 'school', hair: 'swept', hairCol: '#1a1410', seed: 70 }), facing: 1, pose: 'present', mood: 'happy', arms: () => ({ shR: 80, elR: -40 }), hold: { near: heldCanvas } },
-      { x: 1600, y: 1330, s: 1.8, ...MX.P({ costume: 'shirt', topCol: '#d8a040', hair: 'short', hairCol: '#1a1410', seed: 71 }), facing: -1, pose: 'stand', mood: 'shocked', anim: (o, lt) => { if (lt > 3) { o.pose = 'cheer'; o.mood = 'happy'; } } }],
+      { x: 1820, y: 1330, s: 1.8, ...MX.P({ costume: 'shirt', topCol: '#d8a040', hair: 'short', hairCol: '#1a1410', seed: 71 }), facing: -1, pose: 'stand', mood: 'shocked', anim: (o, lt) => { if (lt > 3) { o.pose = 'cheer'; o.mood = 'happy'; } } }],
     init: S => { const tS = A.at(S, 'smartphones', .8), tC = A.at(S, 'Canvas', 6.4);
-      S.D.over = [(c, lt) => [['MICROMAX', OR], ['LAVA', MX.COL.lava], ['KARBONN', MX.COL.karbonn]].forEach(([t, col], k) => { const a = pop(lt, tS + .6 + k * .4); if (a > 0) MX.banner(c, 460 + k * 500, 140, 360 * a, col, t, { px: 44 }); }), (c, lt) => K.card(c, 'CHEAP ANDROID PHONES', lt, { at: tS + 2, x: 960, y: 480, px: 42, rot: -2 }), (c, lt) => K.title(c, 'CANVAS', lt, { at: tC, y: 600, px: 90 })];
+      S.D.over = [(c, lt) => [['MICROMAX', OR], ['LAVA', MX.COL.lava], ['KARBONN', MX.COL.karbonn]].forEach(([t, col], k) => { const a = pop(lt, tS + .6 + k * .4); if (a > 0) MX.banner(c, 460 + k * 500, 140, 360 * a, col, t, { px: 44 }); }), (c, lt) => K.card(c, 'CHEAP ANDROID PHONES', lt, { at: tS + 2, x: 960, y: 480, px: 42, rot: -2 }), (c, lt) => K.title(c, 'CANVAS', lt, { at: tC, x: 1700, y: 760, px: 90 })];
       S.D.sfx = [[tS + .6, 'whoosh_soft', .3], [tS + 1, 'whoosh_soft', .3], [tS + 1.4, 'whoosh_soft', .3], [tC, 'hit', .4]]; } },
   // 4.05 a Canvas with spec labels and a price tag
   { draw: (c, lt, u, S) => { backdrop('market', .4, 8)(c); c.save(); MX.glow(c, 960, 560, 500, '#e8661a', .25); c.restore(); const a = E.back(K.seg(lt, .2, .8)); if (a > 0) canvas(c, 960, 900, 2.2 * a);
@@ -74,12 +74,12 @@ window.SHOTS = [
   // 4.08 the chai-stall chart: Micromax's orange bar passes Samsung and Nokia
   { plate: 'chai_stall', cam: { z: [1.06, 1.1], x: [1280, 1280], y: [660, 660] }, bed: [['city_loop', .2]],
     live: [(c, lt, u, S) => { const u2 = E.io(K.seg(lt, S.tP - 1, S.tP + 1)); MX.chart(c, 790, 330, 980, 580, [{ key: 'micromax', name: 'MICROMAX', v: 8 + 9 * u2 }, { key: 'samsung', name: 'SAMSUNG', v: 15 - .5 * u2 }, { key: 'nokia', name: 'NOKIA', v: 16 - 6 * u2 }], { values: false, year: '2014', max: 20 }); }],
-    figs: [{ x: 420, y: 1300, s: 1.8, ...MX.SHOPKEEPER(1), facing: 1, pose: 'point', mood: 'happy', anim: (o, lt, u, S) => { if (lt > S.tP + 1) o.pose = 'cheer'; } }],
+    figs: [{ x: 640, y: 1300, s: 1.8, ...MX.SHOPKEEPER(1), facing: 1, pose: 'point', mood: 'happy', anim: (o, lt, u, S) => { if (lt > S.tP + 1) o.pose = 'cheer'; } }],
     init: S => { S.tP = A.at(S, 'ahead of Samsung', 4); const tJ = A.at(S, 'Hugh Jackman', 8.4);
       S.D.over = [(c, lt) => K.title(c, '#1 IN INDIA · 2014', lt, { at: S.tP + 1, y: 110, px: 70 }), (c, lt) => K.card(c, 'COUNTERPOINT · ONE QUARTER', lt, { at: S.tP + 1.6, x: 1600, y: 900, px: 32, rot: 2 }), (c, lt) => K.card(c, 'A HOLLYWOOD FACE · THE ASIA CUP', lt, { at: tJ, x: 1500, y: 260, px: 34, rot: 3 })];
       S.D.sfx = [[S.tP - 1, 'riser', .3], [S.tP + 1, 'hit', .45], [S.tP + 1.2, 'crowd_cheer', .3]]; } },
   // 4.09 the little booth phone next to a towering Canvas
-  { draw: (c, lt, u, S) => { backdrop('warehouse', .35, 10)(c); const a = pop(lt, .2); if (a > 0) MX.phone(c, 560, 940, .9 * a, { kind: 'booth' }); const b = E.out(K.seg(lt, .8, 2.4)); if (b > 0) canvas(c, 1180, 980, .6 + 1.35 * b); },
+  { draw: (c, lt, u, S) => { backdrop('warehouse', .35, 10)(c); const a = pop(lt, .2); if (a > 0) MX.phone(c, 560, 860, .9 * a, { kind: 'booth' }); const b = E.out(K.seg(lt, .8, 2.4)); if (b > 0) canvas(c, 1180, 820, .6 + 1.15 * b); },
     bed: [['swell', .25]],
     init: S => { S.D.over = [(c, lt) => K.card(c, 'ONCE: BOOTH PHONES FOR NOKIA', lt, { at: .3, x: 560, y: 260, px: 38, rot: -3 }), (c, lt) => K.card(c, 'NOW: OUTSELLING NOKIA IN INDIA', lt, { at: 2.6, x: 1660, y: 560, px: 38, rot: 3 })]; S.D.sfx = [[.2, 'pop', .3], [.8, 'riser', .3], [2.4, 'hit', .45]]; } },
 ];
