@@ -70,7 +70,7 @@ window.SHOTS = [
   // 5.09 the chai-stall chart: the orange bar drains to a sliver
   { plate: 'chai_stall', cam: { z: [1.06, 1.1], x: [1280, 1280], y: [660, 660] }, bed: [['city_loop', .2]],
     live: [(c, lt, u, S) => { const u2 = E.io(K.seg(lt, S.tF, S.tF + 4)); MX.chart(c, 790, 330, 980, 580, [{ key: 'micromax', name: 'MICROMAX', v: 17 - 15.5 * u2 }, { key: 'xiaomi', name: 'CHINESE BRANDS', v: 10 + 9 * u2 }, { key: 'samsung', name: 'SAMSUNG', v: 15 }], { values: false, year: u2 > .5 ? '2019' : '2014', max: 20 }); }],
-    figs: [{ x: 600, y: 1300, s: 1.8, ...MX.SHOPKEEPER(1), facing: 1, pose: 'point', mood: 'neutral', anim: (o, lt, u, S) => { if (lt > S.tF + 3) { o.pose = 'think'; o.mood = 'sad'; } } }],
+    figs: [{ x: 600, y: 1480, s: 1.8, ...MX.SHOPKEEPER(1), facing: 1, pose: 'point', mood: 'neutral', anim: (o, lt, u, S) => { if (lt > S.tF + 3) { o.pose = 'think'; o.mood = 'sad'; } } }],
     init: S => { S.tF = A.at(S, 'collapsed', 2.4);
       S.D.over = [(c, lt) => K.card(c, 'THE FALL WAS FAST', lt, { at: .4, x: 1600, y: 200, px: 40, rot: 3 }), (c, lt) => K.title(c, '#1 → ~1–2%', lt, { at: S.tF + 4, y: 110, px: 70 })];
       S.D.sfx = [[S.tF, 'drone', .3], [S.tF + 4, 'hit', .4]]; } },

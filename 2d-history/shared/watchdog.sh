@@ -4,7 +4,7 @@
 # (format "HH:MM WATCHDOG <video|all> <what happened>"), which the thread relays to the Control Room cards.
 # Start once per machine boot:  nohup bash 2d-history/shared/watchdog.sh >/dev/null 2>&1 &
 R=/home/user/stromehll-projects/2d-history; T=/tmp/claude-0; mkdir -p $T; cd $R
-CONF=shared/pipeline.conf   # ACTIVE (4 in production) + QUEUE (approved, waiting); the watchdog promotes from QUEUE when a slot frees
+CONF=shared/pipeline.conf   # SLOTS (2 in production) + ACTIVE + QUEUE (approved, waiting); the watchdog promotes from QUEUE when a slot frees
 VOICE_STALL_MIN=60; RENDER_STALL_MIN=15; DISK_MIN_GB=12
 LOG=$T/watchdog.log; log(){ echo "$(date +%H:%M) WATCHDOG $1" >> $LOG; }
 [ -f $T/watchdog.pid ] && kill -0 $(cat $T/watchdog.pid) 2>/dev/null && { echo "already running"; exit 0; }
@@ -27,12 +27,16 @@ while true; do
   # 2. the queue loops
   alive pipeline_rq.sh || alive /tmp/claude-0/rq.sh || { nohup bash shared/pipeline_rq.sh >/dev/null 2>&1 & log "all render queue was down, restarted"; }
   alive pipeline_autoq.sh || alive /tmp/claude-0/autoq.sh || { nohup bash shared/pipeline_autoq.sh >/dev/null 2>&1 & log "all auto-queue was down, restarted"; }
-  # 3. slots: when an ACTIVE video is fully rendered (waiting on Pushpam), promote the next QUEUE video so 4 stay in production
-  . $CONF
-  for v in $ACTIVE; do if finished $v; then set -- $QUEUE; nx=$1
-    if [ -n "$nx" ]; then shift; ACTIVE=$(echo " $ACTIVE " | sed "s/ $v / $nx /;s/^ //;s/ $//"); QUEUE="$*"
-      printf '# 2D production slots. The watchdog reads this every minute and rewrites it when it promotes a video.\n# ACTIVE = the 4 videos in production. QUEUE = approved videos waiting, in start order.\nACTIVE="%s"\nQUEUE="%s"\n' "$ACTIVE" "$QUEUE" > $CONF
-      echo "$v" >> $T/pipeline_review.txt; log "$nx AUTOSTART: $v is fully rendered and waiting on review, so $nx moved into production (act pages next)"; fi; fi; done
+  # 3. slots (Pushpam 30 Oct 17:47: 2 x 2D in production at once). When an ACTIVE video is fully rendered
+  #    (waiting on Pushpam) it leaves ACTIVE; the next QUEUE video moves up only while fewer than SLOTS remain.
+  . $CONF; SLOTS=${SLOTS:-2}
+  for v in $ACTIVE; do if finished $v; then
+    ACTIVE=$(echo " $ACTIVE " | sed "s/ $v / /;s/^ *//;s/ *$//"); echo "$v" >> $T/pipeline_review.txt; msg="$v is fully rendered and waiting on review"
+    set -- $QUEUE; nx=$1
+    if [ -n "$nx" ] && [ $(echo $ACTIVE | wc -w) -lt $SLOTS ]; then shift; ACTIVE="$ACTIVE $nx"; ACTIVE=${ACTIVE# }; QUEUE="$*"; log "$nx AUTOSTART: $msg, so $nx moved into production (act pages next)"
+    else log "$v done: $msg; slot not refilled (${SLOTS} x 2D cap)"; fi
+    printf '# 2D production slots. The watchdog reads this every minute and rewrites it when it promotes a video.\n# SLOTS = how many 2D videos are in production at once. ACTIVE = in production. QUEUE = approved, waiting, in start order.\nSLOTS=%s\nACTIVE="%s"\nQUEUE="%s"\n' "$SLOTS" "$ACTIVE" "$QUEUE" > $CONF
+  fi; done
   # 4. narration: ACTIVE first; when ACTIVE has nothing left, pre-record the next QUEUE video so voice never sits idle
   p=$(voice_pending $ACTIVE); pv=$ACTIVE
   [ -z "$p" ] && { p=$(voice_pending $QUEUE); pv=$(echo $QUEUE | cut -d' ' -f1); }
