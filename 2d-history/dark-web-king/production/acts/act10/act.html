@@ -122,6 +122,7 @@ const frame = (c, x, y, s) => { c.save(); c.translate(x, y); c.scale(s, s); c.fi
 const conveyor = (c, x, y, w, lt) => { c.save(); c.fillStyle = '#4a4a52'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.roundRect(x - w / 2, y, w, 40, 20); c.fill(); c.stroke(); c.fillStyle = '#2a2a30'; for (let k = 0; k < 8; k++) { c.beginPath(); c.arc(x - w / 2 + 30 + k * (w - 60) / 7, y + 20, 12, 0, 7); c.fill(); } c.restore(); const px = x - w / 2 + 60 + ((lt * 90) % (w - 120)); parcel(c, px, y - 40, 1); };
 const desk = (c, x, y, w) => { c.save(); c.fillStyle = '#5a3e2a'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(x - w / 2, y, w, 26); c.strokeRect(x - w / 2, y, w, 26); c.fillRect(x - w / 2 + 20, y + 26, 20, 140); c.fillRect(x + w / 2 - 40, y + 26, 20, 140); c.restore(); };
 
+const MX_glow = (c, x, y, r) => { const g = c.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, 'rgba(255,214,90,.35)'); g.addColorStop(1, 'rgba(255,214,90,0)'); c.fillStyle = g; c.fillRect(x - r, y - r, 2 * r, 2 * r); };
 window.SHOTS = [
   // 1 kitchen table of letters; Lyn on the phone campaigning
   { plate: 'kitchen', cam: { z: [1.12, 1.18], x: [1280, 1300], y: [800, 800] },
@@ -185,9 +186,9 @@ window.SHOTS = [
     init: S => { S.tX = A.at(S, 'closed', 2); const tB = A.at(S, 'billion', 4.2);
       S.D.over = [(c, lt) => K.dateTag(c, '2022', lt, { at: .3 }), (c, lt) => K.card(c, '≈ $5.2B\nIN CRYPTO', lt, { at: tB, x: 1760, y: 420, px: 38, rot: 3 })]; S.D.sfx = [[.3, 'whoosh', .35], [S.tX, 'stamp', .5]]; } },
   // 12 the mask passes from hand to hand between faceless figures at laptops
-  { draw: (c, lt, u, S) => { backdrop('office', .85, 10)(c); const X = [380, 960, 1540]; X.forEach((x, i) => { silo(c, x, 560, .9, 1, '#2a2232'); desk(c, x, 760, 420); laptop(c, x, 760, .6, 1, 1); }); const p = Math.min(2, lt / Math.max(1, S.dur) * 2.4); const i0 = Math.floor(p), f = E.io(p - i0); const mx = X[Math.min(2, i0)] + (i0 < 2 ? (X[i0 + 1] - X[i0]) * f : 0); pirate(c, mx, 470 - Math.sin(f * Math.PI) * 80 * (i0 < 2 ? 1 : 0), .45, 1); },
+  { draw: (c, lt, u, S) => { backdrop('office', .85, 10)(c); const X = [380, 960, 1540]; X.forEach((x, i) => { silo(c, x, 560, .9, 1, '#2a2232'); desk(c, x, 760, 420); laptop(c, x, 760, .6, 1, 1); }); const p = Math.min(2, lt / Math.max(1, S.dur) * 2.4); const i0 = Math.floor(p), f = E.io(p - i0); const mx = X[Math.min(2, i0)] + (i0 < 2 ? (X[i0 + 1] - X[i0]) * f : 0); const my = 285 - Math.sin(f * Math.PI) * 40 * (i0 < 2 ? 1 : 0); MX_glow(c, mx, my + 40, 170); pirate(c, mx, my, .45, 1); c.save(); c.strokeStyle = 'rgba(255,214,90,.5)'; c.setLineDash([10, 12]); c.lineWidth = 4; c.beginPath(); c.moveTo(mx, my + 120); c.lineTo(mx, 440); c.stroke(); c.restore(); },
     bed: [['drone', .3]],
-    init: S => { S.dur = S.end - S.start; S.D.over = [(c, lt) => K.card(c, 'CATCH ONE,\nANOTHER TAKES HIS PLACE', lt, { at: A.at(S, 'Catch one', 2), x: 960, y: 170, px: 46, rot: -2 })]; S.D.sfx = [[.4, 'whoosh_soft', .3], [2.4, 'whoosh_soft', .3]]; } },
+    init: S => { S.dur = S.end - S.start; S.D.over = [(c, lt) => K.card(c, 'CATCH ONE,\nANOTHER TAKES HIS PLACE', lt, { at: A.at(S, 'Catch one', 2), x: 960, y: 80, px: 36, rot: -2 })]; S.D.sfx = [[.4, 'whoosh_soft', .3], [2.4, 'whoosh_soft', .3]]; } },
   // 13 a supporter holds a candle: warm
   { draw: (c, lt, u, S) => { backdrop('court_ext', .78, 8)(c); fig(c, { x: 960, y: 980, s: 1.5, costume: 'shirt', hair: 'long', hairCol: '#6a4630', seed: 74, facing: 1, mood: 'neutral' }, lt); candle(c, 1090, 760, 1, lt, 1); },
     bed: [['drone', .25]],

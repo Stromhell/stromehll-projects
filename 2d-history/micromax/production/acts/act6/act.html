@@ -1,0 +1,54 @@
+<!doctype html><html><head><meta charset="utf-8"><title>MX act 6 - the verdict</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../mx_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+const SW = 1920, SH = 1080, INK = MX.INK, OR = MX.OR, BLUE = MX.BLUE, pop = MX.pop;
+const backdrop = (name, b = .5, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const CARRY = () => ({ shL: 30, elL: -75, shR: 35, elR: -75 });
+const endTitle = (secs) => { const T = window.TIMING; const last = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length, start: last.end, end: last.end + secs, vo_start: last.end, vo_end: last.end, text: '' }); T.dur = last.end + secs; };
+for (const n of ['stage_orange', 'factory', 'corkboard', 'office', 'chai_stall']) K.load(n, PL + n + '.jpg');
+endTitle(4.2);
+const rivalDots = (c2) => [MX.COL.xiaomi, MX.COL.oppo, MX.COL.vivo].forEach((col, k) => { c2.fillStyle = col; c2.beginPath(); c2.arc(-60 + k * 60, 0, 34, 0, 7); c2.fill(); });
+const cracked = (c, x, y, s) => { MX.phone(c, x, y, s, { kind: 'canvas', col: OR, logo: 'MICROMAX', logoCol: '#fff' }); c.save(); c.translate(x, y - 160 * s); c.strokeStyle = '#f8f8f8'; c.lineWidth = 4; c.beginPath(); c.moveTo(-50 * s, -100 * s); c.lineTo(-10 * s, -30 * s); c.lineTo(-40 * s, 20 * s); c.lineTo(10 * s, 70 * s); c.moveTo(-10 * s, -30 * s); c.lineTo(50 * s, -60 * s); c.stroke(); c.restore(); };
+
+window.SHOTS = [
+  // 6.01 the 2020 'In' launch: spotlights, a small polite crowd
+  { plate: 'stage_orange', cam: { z: [1.04, 1.1], x: [1280, 1280], y: [760, 760] }, bed: [['crowd_loop', .15]],
+    live: [(c, lt) => { for (let k = 0; k < 2; k++) { const a = Math.sin(lt * 1.1 + k * 3) * .3; c.save(); c.translate(800 + k * 960, 0); c.rotate(a); const g = c.createLinearGradient(0, 0, 0, 1200); g.addColorStop(0, 'rgba(255,210,150,.3)'); g.addColorStop(1, 'rgba(255,210,150,0)'); c.fillStyle = g; c.beginPath(); c.moveTo(-20, 0); c.lineTo(20, 0); c.lineTo(240, 1200); c.lineTo(-240, 1200); c.fill(); c.restore(); } }],
+    front: [(c, lt, u, S) => { const a = pop(lt, S.tI, .6); if (a > 0) { MX.glow(c, 1280, 620, 380, '#ffd090', .35 * a); MX.phone(c, 1280, 900, 1.5 * a, { kind: 'smart', col: '#1a1a1e', logo: 'in', logoCol: '#fff', screen: (c2, w, h) => { const g = c2.createLinearGradient(0, 0, w, h); g.addColorStop(0, '#ff9a3a'); g.addColorStop(1, '#2a8a5a'); c2.fillStyle = g; c2.fillRect(0, 0, w, h); MX.label(c2, 'in', w / 2, h / 2, 120, '#fff'); } }); } }],
+    figs: [0, 1, 2].map(i => ({ x: 300 + i * 220, y: 1380, s: 1.7, ...MX.SHOPKEEPER(i), facing: 1, pose: 'stand', mood: 'neutral', anim: (o, lt, u, S) => { if (lt > S.tI + .5) { o.pose = Math.floor(lt * 3 + i) % 2 ? 'cheer' : 'stand'; o.mood = 'happy'; } } })),
+    init: S => { const tB = A.at(S, 'border', 1); S.tI = A.at(S, 'In', 4.4); const tH = A.at(S, 'headlines', 7.6);
+      S.D.over = [(c, lt) => K.dateTag(c, '2020', lt, { at: .3 }), (c, lt) => K.card(c, 'AFTER THE INDIA–CHINA BORDER CLASH', lt, { at: tB, x: 560, y: 330, px: 36, rot: -2 }), (c, lt) => K.title(c, 'MICROMAX IN', lt, { at: S.tI + .3, y: 130, px: 80 }), (c, lt) => K.card(c, 'HEADLINES, NOT MARKET SHARE', lt, { at: tH, x: 1400, y: 330, px: 38, rot: 3 })];
+      S.D.sfx = [[S.tI, 'hit', .4], [S.tI + .4, 'crowd_cheer', .15], [tH, 'pop', .3]]; } },
+  // 6.02 four founders walk out of the factory gate in different directions
+  { plate: 'factory', cam: { z: [1.04, 1.1], x: [1280, 1280], y: [800, 800] }, bed: [['wind_loop', .2]],
+    figs: [0, 1, 2, 3].map(i => ({ x: 1280, y: 1340 + (i % 2) * 30, s: 1.8, ...(i === 0 ? MX.RAHUL_SUIT : MX.P({ costume: 'suit', topCol: ['#3a3a44', '#4a3a2a', '#2a3a4a'][i - 1], hair: i % 2 ? 'short' : 'swept', hairCol: '#1a1410', seed: 20 + i })), mood: 'neutral', walk: { x0: 1180 + i * 70, x1: i % 2 ? 2900 : -350, t0: .6 + i * .5, dur: 7 } })),
+    init: S => { const tM = A.at(S, 'moved on', .6), tK = A.at(S, 'kept going', 4), tG = A.at(S, 'gone', 7.6);
+      S.D.over = [(c, lt) => K.card(c, 'THE FOUNDERS MOVED ON', lt, { at: tM, x: 640, y: 160, px: 42, rot: -2 }), (c, lt) => K.card(c, 'OTHER BUSINESSES KEPT GOING', lt, { at: tK, x: 1400, y: 160, px: 38, rot: 3 }), (c, lt) => K.title(c, 'THE MICROMAX THAT BEAT SAMSUNG: GONE', lt, { at: tG, y: 860, px: 56 })];
+      S.D.sfx = [[tM, 'footsteps', .3], [tK, 'pop', .3], [tG, 'door_slam', .4]]; } },
+  // 6.03 the verdict: string pulls tight between all three suspects
+  { plate: 'corkboard', cam: { z: [1.04, 1.12], x: [1280, 1280], y: [720, 700] }, bed: [['tension', .25]],
+    live: [(c, lt, u, S) => { const ph = [[640, 640, 'CHINESE RIVALS', rivalDots, -.06, S.tC], [1280, 520, 'JIO', (c2) => MX.sim(c2, 0, 0, .9, BLUE, { label: '4G' }), .03, S.tJ], [1920, 640, 'NO OWN TECH', (c2) => { c2.fillStyle = OR; c2.beginPath(); c2.arc(0, 0, 60, 0, 7); c2.fill(); MX.label(c2, 'MMX', 0, 2, 36, '#fff'); }, .06, S.tT]];
+      ph.forEach(([x, y, l, d, r, at]) => { MX.photo(c, x, y, 1.15, l, d, { rot: r }); const a = pop(lt, at); if (a > 0) { c.save(); c.translate(x + 60, y - 60); c.rotate(-.25); c.scale(a, a); c.strokeStyle = MX.RED; c.lineWidth = 8; c.beginPath(); c.arc(0, 0, 150, 0, 7); c.stroke(); c.restore(); } });
+      MX.string(c, [[640, 500], [1280, 380], [1920, 500], [640, 500]], K.seg(lt, S.tT + .6, S.tT + 1.8)); }],
+    init: S => { const tW = A.at(S, 'who killed', .2); S.tJ = A.at(S, 'Jio', 2); S.tC = A.at(S, 'Chinese', 3.8); S.tT = A.at(S, "technology", 6.8);
+      S.D.over = [(c, lt) => K.title(c, 'VERDICT', lt, { at: tW + .2, y: 140, px: 90 }), (c, lt) => K.card(c, 'JIO PULLED THE TRIGGER', lt, { at: S.tJ + .3, x: 1280, y: 800, px: 40, rot: -2 })];
+      S.D.sfx = [[tW, 'hit', .4], [S.tJ, 'stamp', .4], [S.tC, 'stamp', .4], [S.tT, 'stamp', .4], [S.tT + .6, 'riser', .3], [S.tT + 1.8, 'hit', .45]]; } },
+  // 6.04 a young founder at a desk holds a chip; push in on the chip
+  { plate: 'office', cam: { z: [1.04, 1.22], x: [1280, 1400], y: [820, 760] }, bed: [['swell', .2]],
+    figs: [{ x: 1280, y: 1340, s: 2, ...MX.P({ costume: 'shirt', topCol: '#e8dcc0', hair: 'long', hairCol: '#1a1410', seed: 33 }), facing: 1, pose: 'present', mood: 'happy', arms: () => ({ shR: 80, elR: -40 }), hold: { near: (c) => MX.chip(c, 20, 20, .5, 'OWN') } }],
+    init: S => { const tC = A.at(S, 'cheap', 3.4), tO = A.at(S, 'Owning', 6);
+      S.D.over = [(c, lt) => K.card(c, 'CHEAP GETS YOU IN THE DOOR', lt, { at: tC, x: 560, y: 200, px: 42, rot: -3 }), (c, lt) => K.card(c, 'OWNING THE TECH KEEPS YOU IN THE ROOM', lt, { at: tO, x: 1360, y: 340, px: 40, rot: 2 })];
+      S.D.sfx = [[tC, 'pop', .3], [tO, 'chime', .35]]; } },
+  // 6.05 end card
+  { draw: (c, lt) => { backdrop('chai_stall', .3, 10)(c); MX.glow(c, 960, 520, 520, '#e8661a', .3); cracked(c, 960, 800, 1.4 * E.back(K.seg(lt, .1, .7))); },
+    sub: 'off', bed: [['drone', .2]],
+    over: [(c, lt) => K.title(c, 'WHO KILLED MICROMAX?', lt, { at: .6, y: 150, px: 110 })], sfx: [[.2, 'phone_ring', .3], [.6, 'hit', .5]] },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>

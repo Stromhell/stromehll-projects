@@ -1,0 +1,12 @@
+<!doctype html><html><head><meta charset="utf-8"><title>MX act N</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../mx_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+const SW = 1920, SH = 1080, INK = MX.INK, OR = MX.OR, BLUE = MX.BLUE, pop = MX.pop;
+const backdrop = (name, b = .5, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const CARRY = () => ({ shL: 30, elL: -75, shR: 35, elR: -75 });
+const endTitle = (secs) => { const T = window.TIMING; const last = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length, start: last.end, end: last.end + secs, vo_start: last.end, vo_end: last.end, text: '' }); T.dur = last.end + secs; };

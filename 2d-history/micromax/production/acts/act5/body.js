@@ -1,0 +1,80 @@
+for (const n of ['market', 'phone_shop', 'factory', 'stage_blue', 'warehouse_dust', 'warehouse', 'corkboard', 'chai_stall', 'market_rivals']) K.load(n, PL + n + '.jpg');
+const RIVALS = [['XIAOMI', MX.COL.xiaomi], ['OPPO', MX.COL.oppo], ['VIVO', MX.COL.vivo]];
+const smart = (col, logo) => (c) => { c.save(); c.scale(.3, .3); MX.phone(c, 30, 60, 1, { kind: 'smart', col: '#1a1a1e', logo, logoCol: col }); c.restore(); };
+const rivalDots = (c2) => RIVALS.forEach(([, col], k) => { c2.fillStyle = col; c2.beginPath(); c2.arc(-60 + k * 60, 0, 34, 0, 7); c2.fill(); });
+
+window.SHOTS = [
+  // 5.01 suspect 1: rival banners unroll over the orange Micromax ones
+  { plate: 'market', cam: { z: [1.04, 1.1], x: [1280, 1280], y: [800, 800] }, bed: [['crowd_loop', .25]],
+    figs: [0, 1, 2].map(i => ({ x: 0, y: 1300 + i * 30, s: 1.7 + i * .05, ...MX.SHOPKEEPER(i + 1), facing: i % 2 ? -1 : 1, mood: 'neutral', walk: { x0: i % 2 ? 2800 : -300, x1: i % 2 ? -300 : 2800, t0: i * 1.6, dur: 10 } })),
+    over: [(c, lt, u, S) => { [0, 1, 2].forEach(k => { MX.banner(c, 460 + k * 500, 140, 360, OR, 'MICROMAX', { px: 44 }); }); RIVALS.forEach(([t, col], k) => { const at = k === 0 ? S.tX : S.tO + (k - 1) * .5, a = E.out(K.seg(lt, at, at + .6)); if (a <= 0) return; c.save(); c.beginPath(); c.rect(460 + k * 500 - 200, 60, 400, 220 * a); c.clip(); MX.banner(c, 460 + k * 500, 140, 380, col, t, { px: 46 }); c.restore(); }); }],
+    init: S => { S.tX = A.at(S, 'Xiaomi', 3.2); S.tO = A.at(S, 'Oppo', 6.4); const tS = A.at(S, 'Suspect', .2), tF = A.at(S, 'flash', 4.4);
+      S.D.over.push((c, lt) => K.card(c, 'SUSPECT 1: CHINESE BRANDS', lt, { at: tS + .3, x: 960, y: 420, px: 50, rot: -2 }), (c, lt) => K.dateTag(c, '2014', lt, { at: S.tX }), (c, lt) => K.card(c, 'FLASH SALES ONLINE', lt, { at: tF, x: 520, y: 560, px: 38, rot: 3 }), (c, lt) => K.card(c, 'SHOPS + BILLBOARDS EVERYWHERE', lt, { at: S.tO + 1.2, x: 1440, y: 560, px: 38, rot: -3 }));
+      S.D.sfx = [[tS + .3, 'tension', .3], [S.tX, 'whoosh', .35], [S.tO, 'whoosh', .35], [S.tO + .5, 'whoosh', .35]]; } },
+  // 5.02 a promoter in a branded shirt pitches; the shopkeeper counts commission; a selfie flash
+  { plate: 'phone_shop', cam: { z: [1.04, 1.1], x: [1280, 1280], y: [820, 820] }, bed: [['crowd_loop', .2]],
+    figs: [{ x: 900, y: 1330, s: 1.9, ...MX.P({ costume: 'shirt', topCol: MX.COL.oppo, hair: 'swept', hairCol: '#1a1410', seed: 80 }), facing: 1, pose: 'present', mood: 'happy', talk: true, arms: () => ({ shR: 80, elR: -40 }), hold: { near: smart(MX.COL.oppo, 'NEW') } },
+      { x: 1700, y: 1330, s: 1.9, ...MX.SHOPKEEPER(2), facing: -1, pose: 'stand', mood: 'neutral', anim: (o, lt, u, S) => { if (lt > S.tM) { o.mood = 'happy'; o.pose = 'present'; o.arms = () => ({ shR: 80, elR: -40 }); o.hold = { near: (c) => MX.cash(c, 20, 20, .5) }; } } }],
+    live: [(c, lt, u, S) => { const f = K.seg(lt, S.tC, S.tC + .4); if (f > 0 && f < 1) { c.fillStyle = `rgba(255,255,255,${.7 * (1 - f)})`; c.fillRect(0, 0, 2560, 1440); } }],
+    init: S => { const tA = A.at(S, 'ads', .8); S.tM = A.at(S, 'margins', 2.6); const tP = A.at(S, 'promoter', 4); S.tC = A.at(S, 'cameras', 6.4);
+      S.D.over = [(c, lt) => K.card(c, 'HUGE AD BUDGETS', lt, { at: tA, x: 480, y: 160, px: 40, rot: -3 }), (c, lt) => K.card(c, 'FAT MARGINS FOR SHOPKEEPERS', lt, { at: S.tM, x: 1440, y: 160, px: 40, rot: 3 }), (c, lt) => K.card(c, 'PROMOTERS IN EVERY STORE', lt, { at: tP, x: 480, y: 300, px: 38, rot: 2 }), (c, lt) => K.card(c, 'BETTER CAMERA · SAME PRICE', lt, { at: S.tC + .3, x: 1440, y: 300, px: 40, rot: -2 })];
+      S.D.sfx = [[tA, 'pop', .3], [S.tM, 'coins', .35], [tP, 'pop', .3], [S.tC, 'camera_shutter', .45]]; } },
+  // 5.03 one factory, two stickers: the same phone gets MICROMAX and the factory's own brand
+  { plate: 'factory', cam: { z: [1.04, 1.1], x: [1280, 1280], y: [780, 780] }, bed: [['factory_loop', .25]],
+    live: [(c, lt, u, S) => { for (let k = 0; k < 6; k++) { const x = ((lt * 120 + k * 380) % 2400) + 80; MX.phone(c, x, 900, .55, { kind: 'smart', col: '#1a1a1e' }); }
+      const a = pop(lt, S.tB), b = pop(lt, S.tB + .7); MX.phone(c, 900, 1180, 1.1, { kind: 'smart', col: '#1a1a1e', logo: a > .5 ? 'MICROMAX' : '', logoCol: OR }); MX.phone(c, 1660, 1180, 1.1, { kind: 'smart', col: '#1a1a1e', logo: b > .5 ? 'OWN BRAND' : '', logoCol: MX.COL.xiaomi });
+      if (a > 0) { c.save(); c.translate(900, 860); c.scale(a, a); c.fillStyle = OR; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.arc(0, 0, 50, 0, 7); c.fill(); c.stroke(); MX.label(c, 'MMX', 0, 2, 28, '#fff'); c.restore(); }
+      if (b > 0) { c.save(); c.translate(1660, 860); c.scale(b, b); c.fillStyle = MX.COL.xiaomi; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.arc(0, 0, 50, 0, 7); c.fill(); c.stroke(); MX.label(c, 'OWN', 0, 2, 28, '#fff'); c.restore(); } }],
+    init: S => { const tO = A.at(S, 'own phones', .8), tD = A.at(S, 'chipmakers', 3); S.tB = A.at(S, 'bought designs', 6.6); const tR = A.at(S, 'rivals', 11);
+      S.D.over = [(c, lt) => K.card(c, 'THEY BUILT THEIR OWN PHONES', lt, { at: tO, x: 520, y: 160, px: 40, rot: -2 }), (c, lt) => K.card(c, 'DEEP POCKETS · CHIP DEALS', lt, { at: tD, x: 1420, y: 160, px: 40, rot: 3 }), (c, lt) => K.card(c, 'SAME FACTORY. TWO BRANDS.', lt, { at: tR - .6, x: 1280 * .75, y: 330, px: 46, rot: -2 })];
+      S.D.sfx = [[tO, 'pop', .3], [tD, 'pop', .3], [S.tB, 'stamp', .4], [S.tB + .7, 'stamp', .4], [tR, 'tension', .3]]; } },
+  // 5.04 suspect 2: the Jio launch stage, blue lights, a spotlit SIM
+  { plate: 'stage_blue', cam: { z: [1.04, 1.12], x: [1280, 1280], y: [760, 740] }, bed: [['crowd_loop', .35]],
+    live: [(c, lt) => { for (let k = 0; k < 3; k++) { const a = Math.sin(lt * 1.3 + k * 2) * .35; c.save(); c.translate(500 + k * 780, 0); c.rotate(a); const g = c.createLinearGradient(0, 0, 0, 1200); g.addColorStop(0, 'rgba(120,170,255,.35)'); g.addColorStop(1, 'rgba(120,170,255,0)'); c.fillStyle = g; c.beginPath(); c.moveTo(-20, 0); c.lineTo(20, 0); c.lineTo(260, 1200); c.lineTo(-260, 1200); c.fill(); c.restore(); } }],
+    front: [(c, lt, u, S) => { const a = pop(lt, S.tJ, .6); if (a > 0) { MX.glow(c, 1280, 640, 420, '#9ac0ff', .4 * a); MX.sim(c, 1280, 640, 2.2 * a, BLUE, { label: 'JIO 4G' }); } }],
+    init: S => { const tS = A.at(S, 'Suspect', .2); S.tJ = A.at(S, 'Reliance Jio', 3.4); const tF = A.at(S, 'free', 5.2);
+      S.D.over = [(c, lt) => K.card(c, 'SUSPECT 2: JIO', lt, { at: tS + .3, x: 520, y: 160, px: 50, rot: -3 }), (c, lt) => K.dateTag(c, '5 SEP 2016', lt, { at: tS + 1.2 }), (c, lt) => K.card(c, 'FREE CALLS · FREE 4G DATA', lt, { at: tF, x: 1420, y: 180, px: 42, rot: 3 })];
+      S.D.sfx = [[tS + .3, 'tension', .3], [S.tJ, 'hit', .45], [S.tJ + .2, 'crowd_cheer', .4], [tF, 'crowd_cheer', .3]]; } },
+  // 5.05 a warehouse full of 3G boxes; dust puffs off
+  { plate: 'warehouse_dust', cam: { z: [1.04, 1.1], x: [1280, 1280], y: [800, 800] }, bed: [['wind_loop', .2]],
+    front: [(c, lt, u, S) => { MX.boxStack(c, 760, 1180, 4, 4, 1.2, { label: '3G' }); MX.boxStack(c, 1700, 1180, 4, 3, 1.2, { label: '3G' }); const t = K.seg(lt, S.tW, S.tW + 2.2); if (t > 0 && t < 1) for (let k = 0; k < 14; k++) { const ang = k / 14 * 6.28, r = 60 + t * 260; c.fillStyle = `rgba(220,205,180,${.5 * (1 - t)})`; c.beginPath(); c.arc(1200 + Math.cos(ang) * r * 1.6, 820 + Math.sin(ang) * r * .5, 40 + t * 40, 0, 7); c.fill(); } }],
+    init: S => { const t4 = A.at(S, '4G', .6); S.tW = A.at(S, 'warehouses', 2.4);
+      S.D.over = [(c, lt) => K.card(c, 'INDIA WANTS 4G', lt, { at: t4, x: 560, y: 160, px: 46, rot: -3 }), (c, lt) => K.title(c, '3G STOCK', lt, { at: S.tW + .4, y: 300, px: 90 })];
+      S.D.sfx = [[t4, 'pop', .3], [S.tW, 'thud', .4], [S.tW + .1, 'wind_loop', .2]]; } },
+  // 5.06 the shopkeeper slashes price tags with a red pen
+  { plate: 'phone_shop', cam: { z: [1.06, 1.12], x: [1280, 1280], y: [820, 820] }, bed: [['hum_loop', .2]],
+    figs: [{ x: 1950, y: 1330, s: 1.9, ...MX.SHOPKEEPER(0), facing: -1, pose: 'point', mood: 'tired' }],
+    front: [(c, lt) => { for (let k = 0; k < 4; k++) { const x = 420 + k * 330; MX.phone(c, x, 846, .5, { kind: 'candy', col: '#2a2a30', screen: (c2, w, h) => { c2.fillStyle = '#8ab0a0'; c2.fillRect(0, 0, w, h); MX.label(c2, '3G', w / 2, h / 2, 60, INK); } }); MX.tag(c, x + 40, 620, '₹' + (5999 - k * 500), 1); const s = K.seg(lt, .8 + k * .9, 1.1 + k * .9); if (s > 0) { c.strokeStyle = MX.RED; c.lineWidth = 9; c.lineCap = 'round'; c.beginPath(); c.moveTo(x - 50, 650); c.lineTo(x - 50 + 180 * s, 590); c.stroke(); } } }],
+    init: S => { const tC = A.at(S, 'cost', 2.6);
+      S.D.over = [(c, lt) => K.title(c, 'SALE', lt, { at: .4, y: 150, px: 100 }), (c, lt) => K.card(c, "MONEY MICROMAX COULDN'T SPARE", lt, { at: tC, x: 960, y: 300, px: 40, rot: 2 })];
+      S.D.sfx = [[.8, 'scrape', .3], [1.7, 'scrape', .3], [2.6, 'scrape', .3], [3.5, 'scrape', .3], [tC, 'coins', .25]]; } },
+  // 5.07 the chip queue: a big brand gets served; Micromax waits at the back
+  { plate: 'warehouse', cam: { z: [1.04, 1.1], x: [1280, 1280], y: [800, 800] }, bed: [['office_loop', .2]],
+    figs: [{ x: 600, y: 1330, s: 1.9, ...MX.P({ costume: 'suit', topCol: '#3a3a44', hair: 'short', hairCol: '#2a2420', seed: 90 }), facing: 1, pose: 'present', mood: 'neutral', hold: { near: (c) => MX.box(c, 30, 30, .6, { label: 'CHIPS' }) } },
+      { x: 1200, y: 1330, s: 1.9, ...MX.P({ costume: 'shirt', topCol: MX.COL.xiaomi, hair: 'short', hairCol: '#1a1410', seed: 91 }), facing: -1, pose: 'stand', mood: 'happy', anim: (o, lt, u, S) => { if (lt > S.tH) o.pose = 'cheer'; } },
+      { x: 1560, y: 1330, s: 1.85, ...MX.P({ costume: 'shirt', topCol: MX.COL.vivo, hair: 'swept', hairCol: '#1a1410', seed: 92 }), facing: -1, pose: 'stand', mood: 'neutral' },
+      { x: 2080, y: 1330, s: 1.85, ...MX.RAHUL_SUIT, facing: -1, pose: 'think', mood: 'tired', anim: (o, lt) => { o.facing = Math.floor(lt / 2.4) % 2 ? 1 : -1; } }],
+    front: [(c, lt, u, S) => { const a = pop(lt, S.tM); if (a > 0) { c.save(); c.translate(2160, 640); c.scale(a, a); c.fillStyle = '#f4f0e4'; c.strokeStyle = INK; c.lineWidth = 5; for (const [bx, by, r] of [[-110, 150, 14], [-80, 110, 22]]) { c.beginPath(); c.arc(bx, by, r, 0, 7); c.fill(); c.stroke(); } c.beginPath(); c.ellipse(0, 0, 130, 90, 0, 0, 7); c.fill(); c.stroke(); MX.chip(c, -30, 0, .8, '4G'); MX.label(c, '?', 70, 4, 70, MX.RED); c.restore(); } }],
+    init: S => { const t4 = A.at(S, '4G phones', .8); S.tH = A.at(S, 'ready', 2.6); S.tM = A.at(S, 'struggled', 5.4);
+      S.D.over = [(c, lt) => K.card(c, 'RIVALS: 4G PHONES READY', lt, { at: t4, x: 560, y: 160, px: 40, rot: -3 }), (c, lt) => K.card(c, 'MICROMAX: BACK OF THE CHIP QUEUE', lt, { at: S.tM + .4, x: 1400, y: 300, px: 38, rot: 3 })];
+      S.D.sfx = [[t4, 'pop', .3], [S.tH, 'coins', .3], [S.tM, 'tension', .3]]; } },
+  // 5.08 suspect 3: a mirror on the crime board reflects the Micromax logo
+  { plate: 'corkboard', cam: { z: [1.04, 1.14], x: [1280, 1280], y: [720, 700] }, bed: [['tension', .25]],
+    live: [(c, lt, u, S) => { MX.photo(c, 520, 560, 1, 'SUSPECT 1', rivalDots, { rot: -.06 }); MX.photo(c, 2040, 560, 1, 'SUSPECT 2', (c2) => MX.sim(c2, 0, 0, .9, BLUE, { label: '4G' }), { rot: .05 });
+      const a = pop(lt, S.tS, .6); if (a <= 0) return; c.save(); c.translate(1280, 700); c.scale(a, a); c.fillStyle = '#8a6a3a'; c.strokeStyle = INK; c.lineWidth = 8; c.beginPath(); c.ellipse(0, 0, 230, 300, 0, 0, 7); c.fill(); c.stroke(); const g = c.createLinearGradient(-200, -280, 200, 280); g.addColorStop(0, '#dfe8ee'); g.addColorStop(1, '#9ab0bc'); c.fillStyle = g; c.beginPath(); c.ellipse(0, 0, 200, 270, 0, 0, 7); c.fill();
+      c.fillStyle = OR; c.beginPath(); c.arc(0, -20, 90, 0, 7); c.fill(); MX.label(c, 'MMX', 0, -16, 60, '#fff'); MX.label(c, 'SUSPECT 3?', 0, 170, 40, INK); const sh = (lt * .5) % 1; c.save(); c.beginPath(); c.ellipse(0, 0, 200, 270, 0, 0, 7); c.clip(); c.fillStyle = 'rgba(255,255,255,.5)'; c.rotate(.5); c.fillRect(-400 + sh * 800, -400, 60, 800); c.restore(); c.restore(); }],
+    init: S => { S.tS = A.at(S, 'Micromax itself', 1.8); const tW = A.at(S, 'slow', 3.6), tT = A.at(S, 'tablets', 5.2), tL = A.at(S, 'low prices', 7.2);
+      S.D.over = [(c, lt) => K.card(c, 'SLOW TO SWITCH', lt, { at: tW, x: 520, y: 200, px: 40, rot: -3 }), (c, lt) => K.card(c, 'SPREAD ACROSS TABLETS + TVs', lt, { at: tT, x: 1400, y: 200, px: 38, rot: 3 }), (c, lt) => K.card(c, 'CHEAP PRICES, NO OWN TECH', lt, { at: tL, x: 960, y: 960, px: 42, rot: -2 })];
+      S.D.sfx = [[S.tS, 'hit', .4], [S.tS + .2, 'chime', .25], [tW, 'pop', .3], [tT, 'pop', .3], [tL, 'pop', .3]]; } },
+  // 5.09 the chai-stall chart: the orange bar drains to a sliver
+  { plate: 'chai_stall', cam: { z: [1.06, 1.1], x: [1280, 1280], y: [660, 660] }, bed: [['city_loop', .2]],
+    live: [(c, lt, u, S) => { const u2 = E.io(K.seg(lt, S.tF, S.tF + 4)); MX.chart(c, 790, 330, 980, 580, [{ key: 'micromax', name: 'MICROMAX', v: 17 - 15.5 * u2 }, { key: 'xiaomi', name: 'CHINESE BRANDS', v: 10 + 9 * u2 }, { key: 'samsung', name: 'SAMSUNG', v: 15 }], { values: false, year: u2 > .5 ? '2019' : '2014', max: 20 }); }],
+    figs: [{ x: 420, y: 1300, s: 1.8, ...MX.SHOPKEEPER(1), facing: 1, pose: 'point', mood: 'neutral', anim: (o, lt, u, S) => { if (lt > S.tF + 3) { o.pose = 'think'; o.mood = 'sad'; } } }],
+    init: S => { S.tF = A.at(S, 'collapsed', 2.4);
+      S.D.over = [(c, lt) => K.card(c, 'THE FALL WAS FAST', lt, { at: .4, x: 1600, y: 200, px: 40, rot: 3 }), (c, lt) => K.title(c, '#1 → ~1–2%', lt, { at: S.tF + 4, y: 110, px: 70 })];
+      S.D.sfx = [[S.tF, 'drone', .3], [S.tF + 4, 'hit', .4]]; } },
+  // 5.10 Lava, Karbonn and Intex banners shrink away as rival banners take their spots
+  { plate: 'market_rivals', cam: { z: [1.04, 1.1], x: [1280, 1280], y: [800, 800] }, bed: [['crowd_loop', .2]],
+    over: [(c, lt) => { [['LAVA', MX.COL.lava], ['KARBONN', MX.COL.karbonn], ['INTEX', MX.COL.intex]].forEach(([t, col], k) => { const sq = E.io(K.seg(lt, 2 + k * .6, 3.2 + k * .6)); if (sq < 1) { c.save(); c.globalAlpha = 1 - sq; MX.banner(c, 460 + k * 500 + (k - 1) * 120 * sq, 300 + sq * 260, 380 * (1 - .5 * sq), col, t, { px: 46 * (1 - .4 * sq), rot: sq * (k - 1) * .25 }); c.restore(); } const r = E.back(K.seg(lt, 2.3 + k * .6, 2.8 + k * .6)); if (r > 0) { const [rt, rc] = RIVALS[k]; c.save(); c.beginPath(); c.rect(460 + k * 500 - 210, 220, 420, 180 * Math.min(1, r)); c.clip(); MX.banner(c, 460 + k * 500, 300, 400, rc, rt, { px: 48 }); c.restore(); } }); }],
+    init: S => { S.D.over.push((c, lt) => K.card(c, 'NOT ALONE', lt, { at: .4, x: 960, y: 640, px: 50, rot: -2 }), (c, lt) => K.card(c, 'LAVA · KARBONN · INTEX SQUEEZED', lt, { at: 3.4, x: 960, y: 780, px: 40, rot: 2 })); S.D.sfx = [[2, 'scrape', .3], [2.6, 'scrape', .3], [3.2, 'scrape', .3], [2.3, 'whoosh_soft', .3], [2.9, 'whoosh_soft', .3], [3.5, 'whoosh_soft', .3]]; } },
+];

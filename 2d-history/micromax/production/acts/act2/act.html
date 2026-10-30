@@ -1,0 +1,86 @@
+<!doctype html><html><head><meta charset="utf-8"><title>MX act 2 - the PCO booth business</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../mx_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+const SW = 1920, SH = 1080, INK = MX.INK, OR = MX.OR, BLUE = MX.BLUE, pop = MX.pop;
+const backdrop = (name, b = .5, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const CARRY = () => ({ shL: 30, elL: -75, shR: 35, elR: -75 });
+const endTitle = (secs) => { const T = window.TIMING; const last = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length, start: last.end, end: last.end + secs, vo_start: last.end, vo_end: last.end, text: '' }); T.dur = last.end + secs; };
+for (const n of ['pco_road', 'map_india', 'warehouse', 'boardroom', 'chai_stall', 'phone_shop']) K.load(n, PL + n + '.jpg');
+const IN = (lon, lat) => [150 + (lon - 62) * (2260 / 40), 240 + (37 - lat) * (1010 / 32)];
+const CITY = { Delhi: [77.2, 28.6], Mumbai: [72.88, 19.08], Kolkata: [88.36, 22.57], Chennai: [80.27, 13.08], Patna: [85.1, 25.6], Lucknow: [80.95, 26.85], Jaipur: [75.8, 26.9], Ahmedabad: [72.6, 23.0], Hyderabad: [78.5, 17.4], Bengaluru: [77.6, 12.97], Bhopal: [77.4, 23.25], Pune: [73.85, 18.5], Nagpur: [79.1, 21.15], Guwahati: [91.7, 26.1], Indore: [75.85, 22.7] };
+const boothIcon = (c, x, y, s) => { c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = '#f0c020'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(-22, -60, 44, 60); c.strokeRect(-22, -60, 44, 60); c.fillStyle = '#c8281e'; c.fillRect(-18, -54, 36, 10); c.fillStyle = '#3a3a3a'; c.fillRect(-12, -36, 24, 20); c.restore(); };
+const car = (c, x, y, s, col = '#f4f2ec') => { c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = 'rgba(0,0,0,.3)'; c.beginPath(); c.ellipse(0, 6, 300, 26, 0, 0, 7); c.fill(); c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.moveTo(-280, -40); c.lineTo(-270, -120); c.lineTo(-150, -130); c.lineTo(-90, -230); c.lineTo(130, -230); c.lineTo(210, -130); c.lineTo(280, -110); c.lineTo(290, -40); c.closePath(); c.fill(); c.stroke();
+  c.fillStyle = '#9ac4e0'; c.beginPath(); c.moveTo(-70, -210); c.lineTo(10, -210); c.lineTo(10, -140); c.lineTo(-120, -140); c.closePath(); c.fill(); c.stroke(); c.beginPath(); c.moveTo(30, -210); c.lineTo(120, -210); c.lineTo(180, -140); c.lineTo(30, -140); c.closePath(); c.fill(); c.stroke();
+  for (const wx of [-170, 170]) { c.fillStyle = '#1a1a1a'; c.beginPath(); c.arc(wx, -30, 56, 0, 7); c.fill(); c.fillStyle = '#c8c8c8'; c.beginPath(); c.arc(wx, -30, 24, 0, 7); c.fill(); } c.fillStyle = '#ffe080'; c.fillRect(250, -100, 30, 22); c.fillStyle = '#c8281e'; c.beginPath(); c.moveTo(-60, -230); c.lineTo(60, -230); c.lineTo(0, -270); c.closePath(); c.fill(); c.restore(); };
+const samplePhone = (c) => { c.save(); c.scale(.32, .32); MX.phone(c, 30, 40, 1, { kind: 'booth', antenna: false }); c.restore(); };
+
+window.SHOTS = [
+  // 2.01 a yellow PCO booth on a dusty road; a queue waits; one man is on the phone
+  { plate: 'pco_road', cam: { z: [1.06, 1.14], x: [1400, 1420], y: [860, 860] }, bed: [['birds_loop', .2], ['wind_loop', .12]],
+    figs: [{ x: 1330, y: 1290, s: 1.7, ...MX.VILLAGER(0), facing: -1, pose: 'think', mood: 'happy', anim: (o, lt) => { o.talk = Math.floor(lt * 3) % 2 === 0; } },
+      ...[1, 2, 3].map(i => ({ x: 1520 + i * 210, y: 1300 + (i % 2) * 20, s: 1.72, ...MX.VILLAGER(i), facing: -1, mood: i === 2 ? 'sad' : 'neutral', walk: { x0: 2900 + i * 160, x1: 1520 + i * 210, t0: .2 + i * .5, dur: 2.6 }, anim: (o, lt) => { if (lt > 5 + i) o.pose = 'shrug'; } }))],
+    init: S => { const tL = A.at(S, 'luxury', 2.4), tB = A.at(S, 'booths', 6);
+      S.D.over = [(c, lt) => K.dateTag(c, 'AROUND 2000', lt, { at: .3 }), (c, lt) => K.card(c, 'A MOBILE PHONE = A LUXURY', lt, { at: tL, x: 520, y: 220, px: 44, rot: -3 }), (c, lt) => K.card(c, 'CALLS FROM THE BOOTH', lt, { at: tB, x: 560, y: 340, px: 40, rot: 2 })];
+      S.D.sfx = [[.3, 'footsteps', .25], [tB, 'phone_ring', .2]]; } },
+  // 2.02 the pole: a repairman on a ladder in a tangle of wires
+  { plate: 'pco_road', cam: { z: [1.5, 1.6], x: [2080, 2080], y: [760, 740] }, bed: [['wind_loop', .2]],
+    live: [(c, lt) => { c.strokeStyle = '#6a4a2a'; c.lineWidth = 12; c.lineCap = 'round'; c.beginPath(); c.moveTo(1980, 1250); c.lineTo(2250, 600); c.moveTo(2060, 1260); c.lineTo(2300, 640); c.stroke(); c.lineWidth = 8; for (let k = 1; k < 10; k++) { const t = k / 10; c.beginPath(); c.moveTo(1980 + 270 * t, 1250 - 650 * t); c.lineTo(2060 + 240 * t, 1260 - 620 * t); c.stroke(); }
+      const sp = Math.sin(lt * 9) > .85; if (sp) { c.fillStyle = '#fff6a0'; for (let k = 0; k < 6; k++) { c.beginPath(); c.arc(2250 + Math.cos(k) * 30, 420 + Math.sin(k * 2) * 30, 6, 0, 7); c.fill(); } } }],
+    figs: [{ x: 2150, y: 892, s: 1.5, ...MX.P({ costume: 'farmer', topCol: '#4a6a8a', hair: 'short', seed: 40 }), facing: 1, pose: 'reach', mood: 'angry', anim: (o, lt) => { o.pose = Math.floor(lt * 1.2) % 2 ? 'reach' : 'shrug'; } }],
+    init: S => { const tE = A.at(S, 'expensive', 1.6), tM = A.at(S, 'messy', 2.8), tR = A.at(S, 'repairs', 4);
+      S.D.over = [(c, lt) => K.card(c, 'EXPENSIVE', lt, { at: tE, x: 420, y: 260, px: 48, rot: -4 }), (c, lt) => K.card(c, 'MESSY WIRING', lt, { at: tM, x: 460, y: 400, px: 48, rot: 3 }), (c, lt) => K.card(c, 'CONSTANT REPAIRS', lt, { at: tR, x: 440, y: 540, px: 48, rot: -2 })];
+      S.D.sfx = [[.4, 'creak', .3], [tE, 'pop', .3], [tM, 'pop', .3], [tR, 'thud', .3], [2, 'hum_loop', .2]]; } },
+  // 2.03 close-up: a booth phone; a SIM slides in, an antenna goes up
+  { draw: (c, lt, u, S) => { backdrop('phone_shop', .45, 8)(c); const ant = K.seg(lt, S.tA, S.tA + .8); c.save(); MX.glow(c, 860, 640, 500, '#e8661a', .2); c.restore();
+      MX.phone(c, 860, 800, 2.2, { kind: 'booth', antenna: ant > 0 }); if (ant > 0 && ant < 1) { c.fillStyle = '#000'; }
+      const sx = 1560 - 520 * E.io(K.seg(lt, S.tS, S.tS + 1)); if (lt < S.tS + 1.1) MX.sim(c, sx, 560, 1.1, '#e8e0d0', { rot: .1 }); if (lt > S.tS + 1) { c.fillStyle = '#2a8a3a'; c.beginPath(); c.arc(1080, 610, 14, 0, 7); c.fill(); MX.glow(c, 1080, 610, 60, '#60ff80', .5); } },
+    bed: [['hum_loop', .2]],
+    init: S => { S.tS = A.at(S, 'SIM', 2.4); S.tA = A.at(S, 'antenna', 5.2); const tR = A.at(S, 'ready', 7.4);
+      S.D.over = [(c, lt) => K.card(c, "MICROMAX'S IDEA", lt, { at: .4, x: 480, y: 160, px: 44, rot: -3 }), (c, lt) => K.card(c, 'SIM + ANTENNA = BOOTH', lt, { at: tR, x: 1380, y: 220, px: 50, rot: 3 })];
+      S.D.sfx = [[S.tS, 'whoosh_soft', .3], [S.tS + 1, 'pop', .4], [S.tA, 'scrape', .3], [tR, 'chime', .35]]; } },
+  // 2.04 map of India: booth icons spread city to city; coins tick up for the operator
+  { plate: 'map_india', cam: { z: [1.08, 1.14], x: [1280, 1290], y: [760, 760] }, bed: [['hum_loop', .2]],
+    live: [(c, lt, u, S) => { Object.entries(CITY).forEach(([n, ll], k) => { const [x, y] = IN(...ll), at = S.tO + k * .35, a = pop(lt, at); if (a > 0) boothIcon(c, x, y, a * 1.3); }); }],
+    init: S => { S.tO = A.at(S, 'operators', 1.8); const tA = A.at(S, 'Airtel', 3.4), tM = A.at(S, 'minute', 6.6);
+      S.D.over = [(c, lt) => K.card(c, 'SOLD THROUGH TELECOM OPERATORS', lt, { at: S.tO, x: 520, y: 150, px: 38, rot: -2 }), (c, lt) => K.card(c, 'AIRTEL FIRST, THEN OTHERS', lt, { at: tA, x: 520, y: 260, px: 38, rot: 2 }), (c, lt) => K.card(c, 'EVERY MINUTE = MONEY FOR THE OPERATOR', lt, { at: tM, x: 1360, y: 880, px: 36, rot: -2 }), (c, lt) => { if (lt > tM) for (let k = 0; k < 6; k++) { const t = (lt - tM + k * .3) % 1.8; c.fillStyle = '#e0b04a'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.arc(1700 + k * 30, 740 - t * 200, 18, 0, 7); c.fill(); c.stroke(); } }];
+      S.D.sfx = [[S.tO, 'pop', .25], [S.tO + 1, 'pop', .25], [S.tO + 2, 'pop', .25], [tM, 'coins_cascade', .3]]; } },
+  // 2.05 one fat order from Nokia; revenue counter
+  { draw: (c, lt, u, S) => { backdrop('boardroom', .4, 8)(c); const a = pop(lt, .3); if (a > 0) { c.save(); c.translate(760, 560); c.rotate(-.04); c.scale(a, a); c.fillStyle = MX.PAPER; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-320, -380, 640, 720); c.strokeRect(-320, -380, 640, 720); MX.label(c, 'PURCHASE ORDER', 0, -310, 50); MX.label(c, 'CUSTOMER: NOKIA', 0, -240, 36, '#2a4aa8'); c.fillStyle = 'rgba(40,30,20,.35)'; for (let k = 0; k < 9; k++) c.fillRect(-250, -170 + k * 50, 500 - (k % 3) * 60, 14); MX.label(c, 'ITEM: WIRELESS BOOTH PHONES', 0, 300, 28); c.restore(); } },
+    bed: [['office_loop', .2]],
+    init: S => { const tR = A.at(S, 'Revenue', 5.6);
+      S.D.over = [(c, lt) => K.card(c, 'ONE BIG CUSTOMER', lt, { at: .8, x: 1440, y: 220, px: 48, rot: 3 }), (c, lt) => K.counter(c, 0, 23, lt, { at: tR, dur: 1.4, x: 1440, y: 540, px: 110, pre: '₹', post: ' CRORE' })];
+      S.D.sfx = [[.3, 'paper', .35], [.8, 'pop', .3], [tR, 'coins', .35], [tR + 1.4, 'stamp', .4]]; } },
+  // 2.06 the phone rings: Nokia is out; Rahul's face falls in a warehouse full of boxes
+  { plate: 'warehouse', cam: { z: [1.06, 1.16], x: [1280, 1280], y: [820, 840] }, bed: [['hum_loop', .2]],
+    figs: [{ x: 1280, y: 1330, s: 1.95, ...MX.RAHUL, facing: 1, pose: 'think', mood: 'happy', anim: (o, lt, u, S) => { if (lt > S.tO) { o.mood = 'shocked'; o.pose = 'shrug'; } if (lt > S.tO + 2.5) o.mood = 'sad'; } }],
+    init: S => { const tC = A.at(S, 'called', 1.6); S.tO = A.at(S, 'getting out', 3.4); const tF = A.at(S, 'factory full', 6);
+      S.D.over = [(c, lt) => RS_ring(c, lt, tC), (c, lt) => K.card(c, 'NOKIA IS LEAVING THE BOOTH BUSINESS', lt, { at: S.tO, x: 540, y: 200, px: 36, rot: -3 }), (c, lt) => K.card(c, 'ONE BUYER.', lt, { at: tF, x: 1460, y: 260, px: 54, rot: 3 }), (c, lt) => K.card(c, 'ZERO BUYERS.', lt, { at: tF + 1, x: 1480, y: 380, px: 54, rot: -2 })];
+      S.D.sfx = [[tC, 'phone_ring', .4], [S.tO, 'tension', .3], [tF + 1, 'thud', .4]]; } },
+  // 2.07 Rahul walks into a telecom boardroom with a sample under his arm
+  { plate: 'boardroom', cam: { z: [1.04, 1.1], x: [1280, 1260], y: [820, 820] }, bed: [['office_loop', .2]],
+    figs: [{ x: 1050, y: 1330, s: 1.9, ...MX.RAHUL_SUIT, facing: 1, pose: 'present', mood: 'focus', walk: { x0: -300, x1: 1050, t0: .2, dur: 2.6 }, hold: { near: samplePhone } },
+      { x: 1900, y: 1330, s: 1.9, ...MX.P({ costume: 'suit', topCol: '#3a3a44', hair: 'short', hairCol: '#2a2420', seed: 50, glasses: true }), facing: -1, pose: 'think', mood: 'neutral', anim: (o, lt) => { if (lt > 3) { o.pose = 'present'; o.mood = 'happy'; } } }],
+    init: S => { S.D.over = [(c, lt) => K.card(c, 'STRAIGHT TO THE PHONE COMPANIES', lt, { at: .6, x: 960, y: 160, px: 42, rot: -2 })]; S.D.sfx = [[.2, 'footsteps', .35], [3, 'pop', .25]]; } },
+  // 2.08 the chai-stall board: a revenue bar shoots up past 100 crore
+  { plate: 'chai_stall', cam: { z: [1.04, 1.08], x: [1280, 1280], y: [700, 700] }, bed: [['city_loop', .2]],
+    figs: [{ x: 600, y: 1300, s: 1.8, ...MX.SHOPKEEPER(1), facing: 1, pose: 'point', mood: 'happy' }],
+    init: S => { const tC = A.at(S, 'climbed', .6);
+      S.D.over = [(c, lt) => { const u = E.out(K.seg(lt, tC, tC + 2.2)); c.save(); c.fillStyle = MX.PAPER; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(760, 260, 760, 470); c.strokeRect(760, 260, 760, 470); MX.label(c, 'MICROMAX REVENUE', 1140, 300, 34); [[2002, 23], [2004, 60 * u], [2006, 105 * u]].forEach(([yr, v], k) => { const h = 300 * v / 110, x = 880 + k * 220; c.fillStyle = OR; c.fillRect(x, 690 - h, 140, h); c.strokeStyle = INK; c.lineWidth = 3; c.strokeRect(x, 690 - h, 140, h); MX.label(c, '₹' + Math.round(v) + ' CR', x + 70, 670 - h, 26); }); c.restore(); }, (c, lt) => K.card(c, '₹100 CRORE+', lt, { at: tC + 2.2, x: 1700, y: 240, px: 56, rot: 4 })];
+      S.D.sfx = [[tC, 'riser', .3], [tC + 2.2, 'coins_cascade', .3]]; } },
+  // 2.09 a new car outside; his parents wave
+  { plate: 'pco_road', cam: { z: [1.06, 1.12], x: [900, 920], y: [860, 860] }, bed: [['birds_loop', .2]],
+    front: [(c, lt) => { const x = 1650 - 900 * E.out(K.seg(lt, 0, 1.8)); car(c, Math.max(x, 750), 1330, 1.25); }],
+    figs: [{ x: 1300, y: 1340, s: 1.85, ...MX.FATHER, facing: -1, pose: 'wave', mood: 'happy', anim: (o, lt) => { o.pose = lt > 1.8 ? (Math.floor(lt * 2) % 2 ? 'wave' : 'cheer') : 'stand'; } }, { x: 1550, y: 1340, s: 1.8, ...MX.MOTHER, facing: -1, pose: 'cheer', mood: 'happy', anim: (o, lt) => { o.pose = lt > 2 ? 'cheer' : 'stand'; } }],
+    init: S => { const tP = A.at(S, 'parents', 2.6);
+      S.D.over = [(c, lt) => K.card(c, 'A NEW CAR', lt, { at: 1.6, x: 520, y: 220, px: 50, rot: -3 }), (c, lt) => K.card(c, 'THIS COMPUTER BUSINESS MIGHT ACTUALLY WORK', lt, { at: tP + .6, x: 1100, y: 340, px: 34, rot: 2 })];
+      S.D.sfx = [[0, 'whoosh', .3], [1.8, 'pop', .2], [2, 'crowd_cheer', .25]]; } },
+];
+function RS_ring(c, lt, at) { const a = pop(lt, at, .3); if (a <= 0 || lt > at + 2.6) return; c.save(); c.translate(1520 + Math.sin(lt * 40) * 6, 600); c.scale(a, a); MX.phone(c, 0, 0, .9, { kind: 'candy', col: '#2a2a2e', screen: (c2, w, h) => { c2.fillStyle = '#c8e0c0'; c2.fillRect(0, 0, w, h); MX.label(c2, 'NOKIA', w / 2, h / 2, 22, '#2a4aa8'); } }); c.strokeStyle = INK; c.lineWidth = 5; for (let k = 1; k <= 3; k++) { c.beginPath(); c.arc(0, -120, 70 + k * 26, -.6, .6); c.stroke(); c.beginPath(); c.arc(0, -120, 70 + k * 26, Math.PI - .6, Math.PI + .6); c.stroke(); } c.restore(); }
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>
