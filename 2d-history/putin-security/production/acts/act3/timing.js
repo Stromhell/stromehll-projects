@@ -1,1 +1,927 @@
-window.TIMING={"dur": 67.16, "shots": [{"i": 1, "start": 0.3, "vo_start": 0.6, "vo_end": 6.255, "text": "His long-range jet is an Ilyushin Il-96, a four-engine airliner designed in the late Soviet years.", "end": 6.755}, {"i": 2, "start": 6.755, "vo_start": 7.055, "vo_end": 13.445, "text": "By today's standards it is old. Most airlines replaced four-engine jets years ago. Russia keeps flying its own.", "end": 13.945}, {"i": 3, "start": 13.945, "vo_start": 14.245, "vo_end": 21.37, "text": "The presidential version, nicknamed the Flying Kremlin, has a bedroom, a meeting room, a dining area and, reportedly, a gym.", "end": 21.87}, {"i": 4, "start": 21.87, "vo_start": 22.17, "vo_end": 27.855, "text": "Reports also describe a secure communications system, defences against missiles, and an escape option.", "end": 28.355}, {"i": 5, "start": 28.355, "vo_start": 28.655, "vo_end": 31.625, "text": "When he flies abroad, fighter jets can escort him.", "end": 32.125}, {"i": 6, "start": 32.125, "vo_start": 32.425, "vo_end": 36.7, "text": "Intelligence reports even say a team of personal doctors travels with him.", "end": 37.2}, {"i": 7, "start": 37.2, "vo_start": 37.5, "vo_end": 44.805, "text": "And the jet is said to be one of four near-identical planes. When he travels, the others take off too, on different routes.", "end": 45.305}, {"i": 8, "start": 45.305, "vo_start": 45.605, "vo_end": 48.74, "text": "The trick has a weakness. Planes are easy to follow.", "end": 49.24}, {"i": 9, "start": 49.24, "vo_start": 49.54, "vo_end": 58.99, "text": "Russian investigative journalist Ilya Rozhdestvensky of the Dossier Center, who works from exile, points out that public flight-tracking sites log aircraft all day long.", "end": 59.49}, {"i": 10, "start": 59.49, "vo_start": 59.79, "vo_end": 66.66, "text": "In theory, a powerful enough enemy could go after all four at once. Which may be why Putin often prefers the train.", "end": 67.16}], "words": [{"w": "His", "s": 0.6, "e": 0.815}, {"w": "long-range", "s": 0.855, "e": 1.385}, {"w": "jet", "s": 1.425, "e": 1.64}, {"w": "is", "s": 1.68, "e": 1.85}, {"w": "an", "s": 1.89, "e": 2.06}, {"w": "Ilyushin", "s": 2.1, "e": 2.54}, {"w": "Il-96,", "s": 2.58, "e": 2.93}, {"w": "a", "s": 2.97, "e": 3.095}, {"w": "four-engine", "s": 3.135, "e": 3.71}, {"w": "airliner", "s": 3.75, "e": 4.19}, {"w": "designed", "s": 4.23, "e": 4.67}, {"w": "in", "s": 4.71, "e": 4.88}, {"w": "the", "s": 4.92, "e": 5.135}, {"w": "late", "s": 5.175, "e": 5.435}, {"w": "Soviet", "s": 5.475, "e": 5.825}, {"w": "years.", "s": 5.865, "e": 6.215}, {"w": "By", "s": 7.055, "e": 7.225}, {"w": "today's", "s": 7.265, "e": 7.66}, {"w": "standards", "s": 7.7, "e": 8.185}, {"w": "it", "s": 8.225, "e": 8.395}, {"w": "is", "s": 8.435, "e": 8.605}, {"w": "old.", "s": 8.645, "e": 8.905}, {"w": "Most", "s": 8.945, "e": 9.205}, {"w": "airlines", "s": 9.245, "e": 9.685}, {"w": "replaced", "s": 9.725, "e": 10.165}, {"w": "four-engine", "s": 10.205, "e": 10.78}, {"w": "jets", "s": 10.82, "e": 11.08}, {"w": "years", "s": 11.12, "e": 11.425}, {"w": "ago.", "s": 11.465, "e": 11.725}, {"w": "Russia", "s": 11.765, "e": 12.115}, {"w": "keeps", "s": 12.155, "e": 12.46}, {"w": "flying", "s": 12.5, "e": 12.85}, {"w": "its", "s": 12.89, "e": 13.105}, {"w": "own.", "s": 13.145, "e": 13.405}, {"w": "The", "s": 14.245, "e": 14.46}, {"w": "presidential", "s": 14.5, "e": 15.12}, {"w": "version,", "s": 15.16, "e": 15.6}, {"w": "nicknamed", "s": 15.64, "e": 16.125}, {"w": "the", "s": 16.165, "e": 16.38}, {"w": "Flying", "s": 16.42, "e": 16.77}, {"w": "Kremlin,", "s": 16.81, "e": 17.25}, {"w": "has", "s": 17.29, "e": 17.505}, {"w": "a", "s": 17.545, "e": 17.67}, {"w": "bedroom,", "s": 17.71, "e": 18.15}, {"w": "a", "s": 18.19, "e": 18.315}, {"w": "meeting", "s": 18.355, "e": 18.75}, {"w": "room,", "s": 18.79, "e": 19.095}, {"w": "a", "s": 19.135, "e": 19.26}, {"w": "dining", "s": 19.3, "e": 19.65}, {"w": "area", "s": 19.69, "e": 19.95}, {"w": "and,", "s": 19.99, "e": 20.25}, {"w": "reportedly,", "s": 20.29, "e": 20.865}, {"w": "a", "s": 20.905, "e": 21.03}, {"w": "gym.", "s": 21.07, "e": 21.33}, {"w": "Reports", "s": 22.17, "e": 22.565}, {"w": "also", "s": 22.605, "e": 22.865}, {"w": "describe", "s": 22.905, "e": 23.345}, {"w": "a", "s": 23.385, "e": 23.51}, {"w": "secure", "s": 23.55, "e": 23.9}, {"w": "communications", "s": 23.94, "e": 24.65}, {"w": "system,", "s": 24.69, "e": 25.085}, {"w": "defences", "s": 25.125, "e": 25.565}, {"w": "against", "s": 25.605, "e": 26.0}, {"w": "missiles,", "s": 26.04, "e": 26.525}, {"w": "and", "s": 26.565, "e": 26.78}, {"w": "an", "s": 26.82, "e": 26.99}, {"w": "escape", "s": 27.03, "e": 27.38}, {"w": "option.", "s": 27.42, "e": 27.815}, {"w": "When", "s": 28.655, "e": 28.915}, {"w": "he", "s": 28.955, "e": 29.125}, {"w": "flies", "s": 29.165, "e": 29.47}, {"w": "abroad,", "s": 29.51, "e": 29.905}, {"w": "fighter", "s": 29.945, "e": 30.34}, {"w": "jets", "s": 30.38, "e": 30.64}, {"w": "can", "s": 30.68, "e": 30.895}, {"w": "escort", "s": 30.935, "e": 31.285}, {"w": "him.", "s": 31.325, "e": 31.585}, {"w": "Intelligence", "s": 32.425, "e": 33.045}, {"w": "reports", "s": 33.085, "e": 33.48}, {"w": "even", "s": 33.52, "e": 33.78}, {"w": "say", "s": 33.82, "e": 34.035}, {"w": "a", "s": 34.075, "e": 34.2}, {"w": "team", "s": 34.24, "e": 34.5}, {"w": "of", "s": 34.54, "e": 34.71}, {"w": "personal", "s": 34.75, "e": 35.19}, {"w": "doctors", "s": 35.23, "e": 35.625}, {"w": "travels", "s": 35.665, "e": 36.06}, {"w": "with", "s": 36.1, "e": 36.36}, {"w": "him.", "s": 36.4, "e": 36.66}, {"w": "And", "s": 37.5, "e": 37.715}, {"w": "the", "s": 37.755, "e": 37.97}, {"w": "jet", "s": 38.01, "e": 38.225}, {"w": "is", "s": 38.265, "e": 38.435}, {"w": "said", "s": 38.475, "e": 38.735}, {"w": "to", "s": 38.775, "e": 38.945}, {"w": "be", "s": 38.985, "e": 39.155}, {"w": "one", "s": 39.195, "e": 39.41}, {"w": "of", "s": 39.45, "e": 39.62}, {"w": "four", "s": 39.66, "e": 39.92}, {"w": "near-identical", "s": 39.96, "e": 40.67}, {"w": "planes.", "s": 40.71, "e": 41.105}, {"w": "When", "s": 41.145, "e": 41.405}, {"w": "he", "s": 41.445, "e": 41.615}, {"w": "travels,", "s": 41.655, "e": 42.095}, {"w": "the", "s": 42.135, "e": 42.35}, {"w": "others", "s": 42.39, "e": 42.74}, {"w": "take", "s": 42.78, "e": 43.04}, {"w": "off", "s": 43.08, "e": 43.295}, {"w": "too,", "s": 43.335, "e": 43.595}, {"w": "on", "s": 43.635, "e": 43.805}, {"w": "different", "s": 43.845, "e": 44.33}, {"w": "routes.", "s": 44.37, "e": 44.765}, {"w": "The", "s": 45.605, "e": 45.82}, {"w": "trick", "s": 45.86, "e": 46.165}, {"w": "has", "s": 46.205, "e": 46.42}, {"w": "a", "s": 46.46, "e": 46.585}, {"w": "weakness.", "s": 46.625, "e": 47.11}, {"w": "Planes", "s": 47.15, "e": 47.5}, {"w": "are", "s": 47.54, "e": 47.755}, {"w": "easy", "s": 47.795, "e": 48.055}, {"w": "to", "s": 48.095, "e": 48.265}, {"w": "follow.", "s": 48.305, "e": 48.7}, {"w": "Russian", "s": 49.54, "e": 49.935}, {"w": "investigative", "s": 49.975, "e": 50.64}, {"w": "journalist", "s": 50.68, "e": 51.21}, {"w": "Ilya", "s": 51.25, "e": 51.51}, {"w": "Rozhdestvensky", "s": 51.55, "e": 52.26}, {"w": "of", "s": 52.3, "e": 52.47}, {"w": "the", "s": 52.51, "e": 52.725}, {"w": "Dossier", "s": 52.765, "e": 53.16}, {"w": "Center,", "s": 53.2, "e": 53.595}, {"w": "who", "s": 53.635, "e": 53.85}, {"w": "works", "s": 53.89, "e": 54.195}, {"w": "from", "s": 54.235, "e": 54.495}, {"w": "exile,", "s": 54.535, "e": 54.885}, {"w": "points", "s": 54.925, "e": 55.275}, {"w": "out", "s": 55.315, "e": 55.53}, {"w": "that", "s": 55.57, "e": 55.83}, {"w": "public", "s": 55.87, "e": 56.22}, {"w": "flight-tracking", "s": 56.26, "e": 57.015}, {"w": "sites", "s": 57.055, "e": 57.36}, {"w": "log", "s": 57.4, "e": 57.615}, {"w": "aircraft", "s": 57.655, "e": 58.095}, {"w": "all", "s": 58.135, "e": 58.35}, {"w": "day", "s": 58.39, "e": 58.605}, {"w": "long.", "s": 58.645, "e": 58.95}, {"w": "In", "s": 59.79, "e": 59.96}, {"w": "theory,", "s": 60.0, "e": 60.395}, {"w": "a", "s": 60.435, "e": 60.56}, {"w": "powerful", "s": 60.6, "e": 61.04}, {"w": "enough", "s": 61.08, "e": 61.43}, {"w": "enemy", "s": 61.47, "e": 61.775}, {"w": "could", "s": 61.815, "e": 62.12}, {"w": "go", "s": 62.16, "e": 62.33}, {"w": "after", "s": 62.37, "e": 62.675}, {"w": "all", "s": 62.715, "e": 62.93}, {"w": "four", "s": 62.97, "e": 63.23}, {"w": "at", "s": 63.27, "e": 63.44}, {"w": "once.", "s": 63.48, "e": 63.785}, {"w": "Which", "s": 63.825, "e": 64.13}, {"w": "may", "s": 64.17, "e": 64.385}, {"w": "be", "s": 64.425, "e": 64.595}, {"w": "why", "s": 64.635, "e": 64.85}, {"w": "Putin", "s": 64.89, "e": 65.195}, {"w": "often", "s": 65.235, "e": 65.54}, {"w": "prefers", "s": 65.58, "e": 65.975}, {"w": "the", "s": 66.015, "e": 66.23}, {"w": "train.", "s": 66.27, "e": 66.62}]}
+window.TIMING={
+"dur": 65.154,
+"shots": [
+{
+"i": 1,
+"start": 0.0,
+"vo_start": 0.6,
+"vo_end": 6.76,
+"text": "His long-range jet is an Ilyushin Il-96, a four-engine airliner designed in the late Soviet years.",
+"end": 7.035
+},
+{
+"i": 2,
+"start": 7.035,
+"vo_start": 7.31,
+"vo_end": 14.39,
+"text": "By today's standards it is old. Most airlines replaced four-engine jets years ago. Russia keeps flying its own.",
+"end": 14.665
+},
+{
+"i": 3,
+"start": 14.665,
+"vo_start": 14.94,
+"vo_end": 21.858,
+"text": "The presidential version, nicknamed the Flying Kremlin, has a bedroom, a meeting room, a dining area and, reportedly, a gym.",
+"end": 22.133
+},
+{
+"i": 4,
+"start": 22.133,
+"vo_start": 22.408,
+"vo_end": 28.388,
+"text": "Reports also describe a secure communications system, defences against missiles, and an escape option.",
+"end": 28.663
+},
+{
+"i": 5,
+"start": 28.663,
+"vo_start": 28.938,
+"vo_end": 31.418,
+"text": "When he flies abroad, fighter jets can escort him.",
+"end": 31.693
+},
+{
+"i": 6,
+"start": 31.693,
+"vo_start": 31.968,
+"vo_end": 36.007,
+"text": "Intelligence reports even say a team of personal doctors travels with him.",
+"end": 36.282
+},
+{
+"i": 7,
+"start": 36.282,
+"vo_start": 36.557,
+"vo_end": 44.077,
+"text": "And the jet is said to be one of four near-identical planes. When he travels, the others take off too, on different routes.",
+"end": 44.352
+},
+{
+"i": 8,
+"start": 44.352,
+"vo_start": 44.627,
+"vo_end": 48.005,
+"text": "The trick has a weakness. Planes are easy to follow.",
+"end": 48.28
+},
+{
+"i": 9,
+"start": 48.28,
+"vo_start": 48.555,
+"vo_end": 56.995,
+"text": "Russian investigative journalist Ilya Rozhdestvensky of the Dossier Center, who works from exile, points out that public flight-tracking sites log aircraft all day long.",
+"end": 57.27
+},
+{
+"i": 10,
+"start": 57.27,
+"vo_start": 57.545,
+"vo_end": 64.204,
+"text": "In theory, a powerful enough enemy could go after all four at once. Which may be why Putin often prefers the train.",
+"end": 65.154
+}
+],
+"words": [
+{
+"w": "His",
+"s": 0.6,
+"e": 1.113
+},
+{
+"w": "long-range",
+"s": 0.913,
+"e": 1.333
+},
+{
+"w": "jet",
+"s": 1.113,
+"e": 1.633
+},
+{
+"w": "is",
+"s": 1.333,
+"e": 1.913
+},
+{
+"w": "an",
+"s": 1.633,
+"e": 2.073
+},
+{
+"w": "Ilyushin",
+"s": 1.913,
+"e": 2.613
+},
+{
+"w": "Il-96,",
+"s": 2.453,
+"e": 2.993
+},
+{
+"w": "a",
+"s": 2.613,
+"e": 3.753
+},
+{
+"w": "four-engine",
+"s": 3.733,
+"e": 4.153
+},
+{
+"w": "airliner",
+"s": 3.953,
+"e": 4.593
+},
+{
+"w": "designed",
+"s": 4.153,
+"e": 5.333
+},
+{
+"w": "in",
+"s": 4.593,
+"e": 5.593
+},
+{
+"w": "the",
+"s": 5.333,
+"e": 5.693
+},
+{
+"w": "late",
+"s": 5.593,
+"e": 5.833
+},
+{
+"w": "Soviet",
+"s": 5.693,
+"e": 6.213
+},
+{
+"w": "years.",
+"s": 5.833,
+"e": 6.493
+},
+{
+"w": "By",
+"s": 7.31,
+"e": 7.75
+},
+{
+"w": "today's",
+"s": 7.49,
+"e": 8.07
+},
+{
+"w": "standards",
+"s": 7.75,
+"e": 8.07
+},
+{
+"w": "it",
+"s": 7.75,
+"e": 8.37
+},
+{
+"w": "is",
+"s": 8.35,
+"e": 8.51
+},
+{
+"w": "old.",
+"s": 8.37,
+"e": 8.83
+},
+{
+"w": "Most",
+"s": 8.51,
+"e": 9.63
+},
+{
+"w": "airlines",
+"s": 9.39,
+"e": 9.97
+},
+{
+"w": "replaced",
+"s": 9.63,
+"e": 10.39
+},
+{
+"w": "four-engine",
+"s": 9.97,
+"e": 10.99
+},
+{
+"w": "jets",
+"s": 10.75,
+"e": 11.25
+},
+{
+"w": "years",
+"s": 10.99,
+"e": 11.53
+},
+{
+"w": "ago.",
+"s": 11.25,
+"e": 11.87
+},
+{
+"w": "Russia",
+"s": 11.53,
+"e": 12.91
+},
+{
+"w": "keeps",
+"s": 12.71,
+"e": 13.21
+},
+{
+"w": "flying",
+"s": 12.91,
+"e": 13.55
+},
+{
+"w": "its",
+"s": 13.21,
+"e": 13.79
+},
+{
+"w": "own.",
+"s": 13.55,
+"e": 13.99
+},
+{
+"w": "The",
+"s": 14.94,
+"e": 15.298
+},
+{
+"w": "presidential",
+"s": 15.298,
+"e": 15.658
+},
+{
+"w": "version,",
+"s": 15.658,
+"e": 16.198
+},
+{
+"w": "nicknamed",
+"s": 16.438,
+"e": 16.678
+},
+{
+"w": "the",
+"s": 16.678,
+"e": 16.898
+},
+{
+"w": "Flying",
+"s": 16.898,
+"e": 17.138
+},
+{
+"w": "Kremlin,",
+"s": 17.138,
+"e": 17.438
+},
+{
+"w": "has",
+"s": 17.638,
+"e": 17.838
+},
+{
+"w": "a",
+"s": 17.838,
+"e": 17.998
+},
+{
+"w": "bedroom,",
+"s": 17.998,
+"e": 18.238
+},
+{
+"w": "a",
+"s": 18.598,
+"e": 18.648
+},
+{
+"w": "meeting",
+"s": 18.618,
+"e": 18.798
+},
+{
+"w": "room,",
+"s": 18.798,
+"e": 19.098
+},
+{
+"w": "a",
+"s": 19.418,
+"e": 19.468
+},
+{
+"w": "dining",
+"s": 19.418,
+"e": 19.638
+},
+{
+"w": "area",
+"s": 19.638,
+"e": 19.978
+},
+{
+"w": "and,",
+"s": 19.978,
+"e": 20.398
+},
+{
+"w": "reportedly,",
+"s": 20.558,
+"e": 20.958
+},
+{
+"w": "a",
+"s": 21.318,
+"e": 21.368
+},
+{
+"w": "gym.",
+"s": 21.338,
+"e": 21.498
+},
+{
+"w": "Reports",
+"s": 22.408,
+"e": 22.808
+},
+{
+"w": "also",
+"s": 22.408,
+"e": 23.128
+},
+{
+"w": "describe",
+"s": 22.808,
+"e": 23.488
+},
+{
+"w": "a",
+"s": 23.128,
+"e": 23.728
+},
+{
+"w": "secure",
+"s": 23.488,
+"e": 23.988
+},
+{
+"w": "communications",
+"s": 23.728,
+"e": 25.088
+},
+{
+"w": "system,",
+"s": 24.488,
+"e": 25.088
+},
+{
+"w": "defences",
+"s": 24.488,
+"e": 25.888
+},
+{
+"w": "against",
+"s": 25.668,
+"e": 26.288
+},
+{
+"w": "missiles,",
+"s": 25.888,
+"e": 27.388
+},
+{
+"w": "and",
+"s": 26.748,
+"e": 27.508
+},
+{
+"w": "an",
+"s": 27.388,
+"e": 27.788
+},
+{
+"w": "escape",
+"s": 27.508,
+"e": 28.108
+},
+{
+"w": "option.",
+"s": 27.788,
+"e": 28.108
+},
+{
+"w": "When",
+"s": 28.938,
+"e": 29.118
+},
+{
+"w": "he",
+"s": 28.938,
+"e": 29.258
+},
+{
+"w": "flies",
+"s": 29.118,
+"e": 29.478
+},
+{
+"w": "abroad,",
+"s": 29.258,
+"e": 29.878
+},
+{
+"w": "fighter",
+"s": 29.478,
+"e": 30.178
+},
+{
+"w": "jets",
+"s": 30.038,
+"e": 30.418
+},
+{
+"w": "can",
+"s": 30.178,
+"e": 30.598
+},
+{
+"w": "escort",
+"s": 30.418,
+"e": 30.978
+},
+{
+"w": "him.",
+"s": 30.598,
+"e": 31.238
+},
+{
+"w": "Intelligence",
+"s": 31.968,
+"e": 32.567
+},
+{
+"w": "reports",
+"s": 32.567,
+"e": 32.927
+},
+{
+"w": "even",
+"s": 32.927,
+"e": 33.247
+},
+{
+"w": "say",
+"s": 33.247,
+"e": 33.547
+},
+{
+"w": "a",
+"s": 33.547,
+"e": 33.707
+},
+{
+"w": "team",
+"s": 33.707,
+"e": 33.947
+},
+{
+"w": "of",
+"s": 33.947,
+"e": 34.107
+},
+{
+"w": "personal",
+"s": 34.107,
+"e": 34.447
+},
+{
+"w": "doctors",
+"s": 34.447,
+"e": 34.887
+},
+{
+"w": "travels",
+"s": 34.887,
+"e": 35.267
+},
+{
+"w": "with",
+"s": 35.267,
+"e": 35.567
+},
+{
+"w": "him.",
+"s": 35.567,
+"e": 35.727
+},
+{
+"w": "And",
+"s": 36.557,
+"e": 36.717
+},
+{
+"w": "the",
+"s": 36.557,
+"e": 36.817
+},
+{
+"w": "jet",
+"s": 36.717,
+"e": 36.997
+},
+{
+"w": "is",
+"s": 36.817,
+"e": 37.197
+},
+{
+"w": "said",
+"s": 36.997,
+"e": 37.357
+},
+{
+"w": "to",
+"s": 37.197,
+"e": 37.537
+},
+{
+"w": "be",
+"s": 37.357,
+"e": 37.637
+},
+{
+"w": "one",
+"s": 37.537,
+"e": 37.817
+},
+{
+"w": "of",
+"s": 37.637,
+"e": 37.937
+},
+{
+"w": "four",
+"s": 37.817,
+"e": 38.277
+},
+{
+"w": "near-identical",
+"s": 37.937,
+"e": 39.397
+},
+{
+"w": "planes.",
+"s": 38.877,
+"e": 39.857
+},
+{
+"w": "When",
+"s": 39.397,
+"e": 40.897
+},
+{
+"w": "he",
+"s": 40.697,
+"e": 41.077
+},
+{
+"w": "travels,",
+"s": 40.897,
+"e": 41.437
+},
+{
+"w": "the",
+"s": 41.077,
+"e": 41.977
+},
+{
+"w": "others",
+"s": 41.937,
+"e": 42.197
+},
+{
+"w": "take",
+"s": 41.977,
+"e": 42.457
+},
+{
+"w": "off",
+"s": 42.197,
+"e": 42.677
+},
+{
+"w": "too,",
+"s": 42.457,
+"e": 43.217
+},
+{
+"w": "on",
+"s": 42.917,
+"e": 43.457
+},
+{
+"w": "different",
+"s": 43.217,
+"e": 43.777
+},
+{
+"w": "routes.",
+"s": 43.457,
+"e": 43.777
+},
+{
+"w": "The",
+"s": 44.627,
+"e": 44.885
+},
+{
+"w": "trick",
+"s": 44.885,
+"e": 45.105
+},
+{
+"w": "has",
+"s": 45.105,
+"e": 45.385
+},
+{
+"w": "a",
+"s": 45.385,
+"e": 45.485
+},
+{
+"w": "weakness.",
+"s": 45.485,
+"e": 45.825
+},
+{
+"w": "Planes",
+"s": 46.825,
+"e": 46.885
+},
+{
+"w": "are",
+"s": 46.885,
+"e": 47.105
+},
+{
+"w": "easy",
+"s": 47.105,
+"e": 47.265
+},
+{
+"w": "to",
+"s": 47.265,
+"e": 47.485
+},
+{
+"w": "follow.",
+"s": 47.485,
+"e": 47.745
+},
+{
+"w": "Russian",
+"s": 48.555,
+"e": 49.495
+},
+{
+"w": "investigative",
+"s": 48.935,
+"e": 50.035
+},
+{
+"w": "journalist",
+"s": 49.495,
+"e": 50.435
+},
+{
+"w": "Ilya",
+"s": 50.035,
+"e": 50.755
+},
+{
+"w": "Rozhdestvensky",
+"s": 50.435,
+"e": 51.275
+},
+{
+"w": "of",
+"s": 51.175,
+"e": 51.395
+},
+{
+"w": "the",
+"s": 51.275,
+"e": 51.715
+},
+{
+"w": "Dossier",
+"s": 51.395,
+"e": 51.715
+},
+{
+"w": "Center,",
+"s": 51.395,
+"e": 52.035
+},
+{
+"w": "who",
+"s": 51.715,
+"e": 52.335
+},
+{
+"w": "works",
+"s": 52.255,
+"e": 52.535
+},
+{
+"w": "from",
+"s": 52.335,
+"e": 52.755
+},
+{
+"w": "exile,",
+"s": 52.535,
+"e": 53.115
+},
+{
+"w": "points",
+"s": 52.755,
+"e": 53.555
+},
+{
+"w": "out",
+"s": 53.395,
+"e": 53.795
+},
+{
+"w": "that",
+"s": 53.555,
+"e": 53.955
+},
+{
+"w": "public",
+"s": 53.795,
+"e": 54.255
+},
+{
+"w": "flight-tracking",
+"s": 53.955,
+"e": 54.895
+},
+{
+"w": "sites",
+"s": 54.535,
+"e": 55.275
+},
+{
+"w": "log",
+"s": 54.895,
+"e": 55.575
+},
+{
+"w": "aircraft",
+"s": 55.275,
+"e": 55.935
+},
+{
+"w": "all",
+"s": 55.575,
+"e": 56.255
+},
+{
+"w": "day",
+"s": 55.935,
+"e": 56.415
+},
+{
+"w": "long.",
+"s": 56.255,
+"e": 56.655
+},
+{
+"w": "In",
+"s": 57.545,
+"e": 57.784
+},
+{
+"w": "theory,",
+"s": 57.784,
+"e": 58.024
+},
+{
+"w": "a",
+"s": 58.324,
+"e": 58.424
+},
+{
+"w": "powerful",
+"s": 58.424,
+"e": 58.664
+},
+{
+"w": "enough",
+"s": 58.664,
+"e": 58.984
+},
+{
+"w": "enemy",
+"s": 58.984,
+"e": 59.264
+},
+{
+"w": "could",
+"s": 59.264,
+"e": 59.524
+},
+{
+"w": "go",
+"s": 59.524,
+"e": 59.684
+},
+{
+"w": "after",
+"s": 59.684,
+"e": 59.904
+},
+{
+"w": "all",
+"s": 59.904,
+"e": 60.104
+},
+{
+"w": "four",
+"s": 60.104,
+"e": 60.344
+},
+{
+"w": "at",
+"s": 60.344,
+"e": 60.484
+},
+{
+"w": "once.",
+"s": 60.484,
+"e": 61.024
+},
+{
+"w": "Which",
+"s": 61.504,
+"e": 61.804
+},
+{
+"w": "may",
+"s": 61.804,
+"e": 62.084
+},
+{
+"w": "be",
+"s": 62.084,
+"e": 62.224
+},
+{
+"w": "why",
+"s": 62.224,
+"e": 62.504
+},
+{
+"w": "Putin",
+"s": 62.504,
+"e": 62.844
+},
+{
+"w": "often",
+"s": 62.844,
+"e": 63.164
+},
+{
+"w": "prefers",
+"s": 63.164,
+"e": 63.544
+},
+{
+"w": "the",
+"s": 63.544,
+"e": 63.744
+},
+{
+"w": "train.",
+"s": 63.744,
+"e": 63.964
+}
+]
+}
