@@ -28,19 +28,30 @@ window.SHOTS = [
     init: S => { S.tt = NAMES.map((n, i) => A.at(S, n, .4 + i * 1.3));
       S.D.over = [(c, lt) => K.title(c, 'FIVE CAPITALS', lt, { at: S.tt[4] + 1, y: 130, px: 80 })];
       S.D.sfx = S.tt.map(t => [t, 'whoosh_soft', .35]).concat(S.tt.map(t => [t + .8, 'pop', .3])); } },
-  // 2.03 one arrow alone snaps; the bundle of five holds. CONCORDIA
-  { draw: (c, lt, u, S) => { backdrop('map_europe', .35, 10)(c); const tS = S.tS, tB = S.tB;
-      // single arrow, snaps in the middle
-      c.save(); c.translate(560, 560); const br = K.seg(lt, tS + .4, tS + .7); for (const side of [-1, 1]) { c.save(); c.rotate(-Math.PI / 2 + side * br * .5); c.translate(0, 0); c.strokeStyle = INK; c.lineWidth = 16; c.lineCap = 'round'; c.beginPath(); if (side < 0) { c.moveTo(0, 0); c.lineTo(0, -220); } else { c.moveTo(0, 0); c.lineTo(0, 200); } c.stroke(); c.strokeStyle = RS.GOLD; c.lineWidth = 10; c.stroke(); c.restore(); }
-      if (lt > tS) { c.fillStyle = '#e8d8b8'; c.strokeStyle = INK; c.lineWidth = 6; for (const hx of [-90, 90]) { c.beginPath(); c.arc(hx, 0, 50, 0, 7); c.fill(); c.stroke(); } } c.restore();
-      if (lt > tS + .7) K.outlined(c, 'SNAP', 560, 320, 80, { fill: '#ffd0c0' });
-      // the bundle with ribbon: hands strain but it holds
-      const a = pop(lt, tB, .5); if (a > 0) { const shake = lt > tB + .6 ? Math.sin(lt * 30) * 4 * (1 - K.seg(lt, tB + 1.8, tB + 2.2)) : 0; c.save(); c.translate(1380 + shake, 640); c.scale(a, a); c.rotate(Math.PI / 2); RS.arrows(c, 0, 0, 1.3, { spread: .15 }); c.restore();
-        if (lt > tB + 2.2) K.outlined(c, 'HOLDS', 1380, 330, 80, { fill: '#d8f0c0' }); } },
+  // 2.03 the five-arrow crest appears big; then one arrow alone snaps while the bundle holds. CONCORDIA
+  { draw: (c, lt, u, S) => { backdrop('map_europe', .35, 10)(c); const tSep = S.tSep, tS = S.tS, tB = S.tB;
+      // the crest: five arrows tied with a ribbon inside a gold medallion, centre stage, then it slides right
+      const a = pop(lt, .3, .5), mv = E.io(K.seg(lt, tSep - .3, tSep + .5)), cx = 960 + 420 * mv, cy = 600 + 30 * mv, sc = 2.1 - .5 * mv;
+      if (a > 0) { const shake = lt > tB ? Math.sin(lt * 30) * 5 * (1 - K.seg(lt, tB + .7, tB + 1.0)) : 0;
+        c.save(); c.translate(cx + shake, cy); c.scale(a, a);
+        c.fillStyle = 'rgba(20,12,6,.45)'; c.beginPath(); c.ellipse(10, 250 * sc / 2.1, 200 * sc / 2.1, 26, 0, 0, 7); c.fill();
+        c.fillStyle = '#3a2614'; c.strokeStyle = RS.GOLD; c.lineWidth = 14; c.beginPath(); c.arc(0, 0, 210 * sc / 2.1, 0, 7); c.fill(); c.stroke();
+        c.strokeStyle = 'rgba(255,230,160,.35)'; c.lineWidth = 4; c.beginPath(); c.arc(0, 0, 186 * sc / 2.1, 0, 7); c.stroke();
+        c.translate(0, 18 * sc); RS.arrows(c, 0, 0, sc * .5, { spread: .38 }); c.restore();
+        if (lt > tB + .7) K.outlined(c, 'HOLDS', cx, cy - 290, 80, { fill: '#d8f0c0' }); }
+      // the single arrow slides in on the left, bends, then cracks in two
+      const s1 = E.out(K.seg(lt, tSep, tSep + .6)); if (s1 > 0) { const br = K.seg(lt, tS + .3, tS + .6), bend = K.seg(lt, tS - .2, tS + .3) * .12;
+        c.save(); c.translate(560 - 300 * (1 - s1), 600); c.globalAlpha = s1;
+        for (const side of [-1, 1]) { c.save(); c.rotate(side * (bend + br * .55)); c.strokeStyle = INK; c.lineWidth = 18; c.lineCap = 'round'; c.beginPath(); c.moveTo(0, 0); c.lineTo(side * 230, 0); c.stroke(); c.strokeStyle = RS.GOLD; c.lineWidth = 11; c.stroke();
+          if (side > 0) { c.fillStyle = RS.GOLD; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.moveTo(250, 0); c.lineTo(215, -22); c.lineTo(215, 22); c.closePath(); c.fill(); c.stroke(); }
+          else { c.fillStyle = '#c8202a'; for (const d of [-1, 1]) { c.beginPath(); c.moveTo(-230, 0); c.lineTo(-200, d * 26); c.lineTo(-170, d * 26); c.lineTo(-195, 0); c.closePath(); c.fill(); } }
+          c.restore(); }
+        if (br > 0 && br < 1) { c.strokeStyle = '#fff4c0'; c.lineWidth = 6; for (let k = 0; k < 8; k++) { const an = k * Math.PI / 4, r0 = 20, r1 = 20 + 70 * br; c.beginPath(); c.moveTo(Math.cos(an) * r0, Math.sin(an) * r0); c.lineTo(Math.cos(an) * r1, Math.sin(an) * r1); c.stroke(); } }
+        c.restore(); if (lt > tS + .6) K.outlined(c, 'SNAP', 560, 400, 80, { fill: '#ffd0c0' }); } },
     bed: [['hum_loop', .25]],
-    init: S => { S.tS = A.at(S, 'snap', 2.4); S.tB = A.at(S, 'bundled', 4.2);
-      S.D.over = [(c, lt) => K.card(c, 'THE FAMILY CREST', lt, { at: .4, x: 960, y: 130, px: 52, rot: -2 }), (c, lt) => K.card(c, 'CONCORDIA = UNITY', lt, { at: S.tB + 2.4, x: 960, y: 940, px: 46, rot: 2 })];
-      S.D.sfx = [[S.tS + .45, 'hit', .45], [S.tB, 'whoosh', .3], [S.tB + .6, 'creak', .35], [S.tB + 2.2, 'chime', .4]]; } },
+    init: S => { S.tSep = A.at(S, 'separate', 3.2); S.tS = A.at(S, 'snap', 4.6); S.tB = A.at(S, 'bundled', 5.6);
+      S.D.over = [(c, lt) => K.card(c, 'THE FAMILY CREST: FIVE ARROWS', lt, { at: .5, x: 960, y: 130, px: 52, rot: -2 }), (c, lt) => K.card(c, 'CONCORDIA = UNITY', lt, { at: S.tB + .9, x: 960, y: 870, px: 44, rot: 2 })];
+      S.D.sfx = [[.3, 'chime', .3], [S.tSep, 'whoosh_soft', .3], [S.tS + .3, 'hit', .45], [S.tB, 'creak', .35], [S.tB + .7, 'chime', .4]]; } },
   // 2.04 a courier gallops along a country road with letters sealed with the five-arrow wax seal
   { plate: 'vineyard', cam: { z: [1.04, 1.1], x: [1280, 1300], y: [860, 860] }, bed: [['wind_loop', .2], ['gallop_loop', .3]],
     live: [(c, lt) => { const x = -300 + lt * 330, y = 1340; const sd = RS.horse(c, x, y, 1.7, lt, { gait: 'gallop', col: '#5a3a24' });
