@@ -1,0 +1,127 @@
+{
+ "dur": 22.529,
+ "cues": [
+  {
+   "t": 0.3,
+   "name": "phone_ring",
+   "gain": 0.2
+  },
+  {
+   "t": 2.5,
+   "name": "pop",
+   "gain": 0.35
+  },
+  {
+   "t": 6.22,
+   "name": "whoosh",
+   "gain": 0.35
+  },
+  {
+   "t": 6.42,
+   "name": "crowd_cheer",
+   "gain": 0.25
+  },
+  {
+   "t": 7.735,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 7.835,
+   "name": "pop",
+   "gain": 0.35
+  },
+  {
+   "t": 11.429,
+   "name": "crowd_cheer",
+   "gain": 0.35
+  },
+  {
+   "t": 12.029,
+   "name": "hit",
+   "gain": 0.35
+  },
+  {
+   "t": 12.404,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 13.079,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 13.579,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 14.079,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 16.059,
+   "name": "hit",
+   "gain": 0.5
+  },
+  {
+   "t": 16.159,
+   "name": "tension",
+   "gain": 0.3
+  },
+  {
+   "t": 18.429,
+   "name": "whoosh",
+   "gain": 0.5
+  },
+  {
+   "t": 18.629,
+   "name": "scrape",
+   "gain": 0.5
+  },
+  {
+   "t": 19.129,
+   "name": "hit",
+   "gain": 0.7
+  },
+  {
+   "t": 19.229,
+   "name": "swell",
+   "gain": 0.4
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 8.435,
+   "name": "crowd_loop",
+   "gain": 0.3
+  },
+  {
+   "start": 0,
+   "end": 8.435,
+   "name": "city_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 7.635,
+   "end": 13.104000000000001,
+   "name": "crowd_loop",
+   "gain": 0.3
+  },
+  {
+   "start": 12.304,
+   "end": 19.129,
+   "name": "tension",
+   "gain": 0.25
+  },
+  {
+   "start": 18.329,
+   "end": 23.329,
+   "name": "drone",
+   "gain": 0.25
+  }
+ ]
+}

@@ -1,0 +1,62 @@
+<!doctype html><html><head><meta charset="utf-8"><title>MX act 1 - the treaty everyone hated</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "leo";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../../../shared/p2/world50.js"></script><script src="../../ww_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+const SW = 1920, SH = 1080, INK = WW.INK, RED = WW.RED, pop = WW.pop, COL = WW.COL;
+const backdrop = (name, b = .5, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const CARRY = () => ({ shL: 30, elL: -75, shR: 35, elR: -75 });
+const endTitle = (secs) => { const T = window.TIMING; const last = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length, start: last.end, end: last.end + secs, vo_start: last.end, vo_end: last.end, text: '' }); T.dur = last.end + secs; };
+for (const n of ['mirror_hall', 'long_table', 'plain']) K.load(n, PL + n + '.jpg');
+const LEADERS = [0, 1, 2, 3].map(i => ({ x: [700, 1100, 1500, 1900][i], y: 1300, s: 1.6, ...WW.DIPLOMAT(i), facing: i < 2 ? 1 : -1, mood: 'focus', walk: { x0: [700, 1100, 1500, 1900][i] + (i < 2 ? -1500 : 1500), x1: [700, 1100, 1500, 1900][i], t0: .1, dur: 3.2 } }));
+const GERMANY = (c, x, y, s, mood, lt) => { const [gx, gy] = WW.xy(10.4, 51.2); c.save(); c.translate(x, y); c.scale(s, s); c.translate(-gx, -gy); WW.path(c, 'Germany'); c.fillStyle = WW.COL.germany; c.fill(); c.strokeStyle = INK; c.lineWidth = 6 / s; c.stroke(); c.restore(); WW.face(c, x, y, s * 1.6, mood, { lt }); };
+
+window.SHOTS = [
+  // 1.01 Versailles 1919: the winners walk into the hall of mirrors
+  { plate: 'mirror_hall', cam: { z: [1.02, 1.1], x: [1280, 1280], y: [800, 780] }, bed: [['crowd_loop', .14], ['hum_loop', .1]],
+    figs: LEADERS,
+    init: S => { S.D.over = [(c, lt) => K.dateTag(c, '1919', lt, { at: .3 }), (c, lt) => K.card(c, 'VERSAILLES · 1919', lt, { at: .6, x: 960, y: 120, px: 46, rot: -2 })];
+      S.D.sfx = [[.1, 'footsteps', .3], [.6, 'pop', .3], [A.at(S, 'peace', 5), 'chime', .3]]; } },
+  // 1.02 the treaty page; Article 231 circled in red
+  { draw: (c, lt, u, S) => { backdrop('long_table', .5, 7)(c); const a = pop(lt, .1, .5); if (a > 0) WW.doc(c, 960, 560, 1.4 * a, { title: 'TREATY OF VERSAILLES', circle: 2, circleU: K.seg(lt, S.tA, S.tA + .8) });
+    },
+    bed: [['tension', .22]],
+    init: S => { S.tA = A.at(S, 'Article', 1.2); const tG = A.at(S, 'war guilt', 5.6);
+      S.D.over = [(c, lt) => K.card(c, 'ARTICLE 231', lt, { at: S.tA, x: 420, y: 200, px: 50, rot: -3 }), (c, lt) => WW.stamp(c, 1420, 820, pop(lt, tG, .35) * .9, 'WAR GUILT CLAUSE')];
+      S.D.sfx = [[.1, 'paper', .35], [S.tA, 'scrape', .3], [tG, 'stamp', .4]]; } },
+  // 1.03 the bill: a giant invoice unrolls toward a small grey Germany
+  { draw: (c, lt, u, S) => { backdrop('mirror_hall', .5, 7)(c); const r = E.io(K.seg(lt, S.tB - .3, S.tB + 2.2));
+      c.save(); c.fillStyle = 'rgba(0,0,0,.25)'; c.fillRect(150, 780, 1250 * r, 30); c.fillStyle = WW.PAPER; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(140, 640, 1250 * r, 150); c.strokeRect(140, 640, 1250 * r, 150);
+      c.fillStyle = 'rgba(40,30,20,.5)'; for (let k = 0; k < 20; k++) if (k * 62 < 1250 * r - 40) { c.fillRect(170 + k * 62, 670, 40, 8); c.fillRect(170 + k * 62, 700, 28, 8); c.fillRect(170 + k * 62, 740, 46, 8); }
+      c.fillStyle = '#d8c8a8'; c.beginPath(); c.ellipse(140 + 1250 * r, 715, 30, 78, 0, 0, 7); c.fill(); c.stroke(); c.restore();
+      GERMANY(c, 1620, 600, 1.0, lt > S.tB + 1.6 ? 'shocked' : 'worried', lt);
+    },
+    bed: [['tension', .2]],
+    init: S => { S.tB = A.at(S, '1921', 3.6); const t1 = A.at(S, '132', 5.2), t2 = A.at(S, '33', 7.6);
+      S.D.over = [(c, lt) => K.card(c, 'FRANCE + BRITAIN: GERMANY MUST PAY', lt, { at: .3, x: 760, y: 150, px: 42, rot: -2 }), (c, lt) => K.dateTag(c, '1921', lt, { at: S.tB }), (c, lt) => K.title(c, '132 BILLION GOLD MARKS', lt, { at: t1, y: 850, px: 76 }), (c, lt) => K.card(c, '≈ $33 BILLION THEN', lt, { at: t2, x: 1500, y: 300, px: 44, rot: 3 })];
+      S.D.sfx = [[.2, 'pop', .3], [S.tB - .3, 'paper', .4], [S.tB + .4, 'scrape', .25], [t1, 'coins_cascade', .3], [t2, 'pop', .3]]; } },
+  // 1.04 a desk calendar flips from 1921 all the way to 2010
+  { draw: (c, lt, u, S) => { backdrop('long_table', .45, 8)(c); const k = E.io(K.seg(lt, .4, S.dur - 1.6)), yr = Math.round(1921 + 89 * k), flip = (lt * 14) % 1;
+      c.save(); c.translate(960, 560); c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(-250, -150, 520, 400); c.fillStyle = '#8a2a22'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-260, -260, 520, 110); c.strokeRect(-260, -260, 520, 110); c.fillStyle = WW.PAPER; c.fillRect(-260, -150, 520, 380); c.strokeRect(-260, -150, 520, 380);
+      for (const rx of [-160, 160]) { c.fillStyle = '#3a3a3a'; c.beginPath(); c.arc(rx, -260, 18, 0, 7); c.fill(); }
+      WW.label(c, String(yr), 0, 40, 190, yr === 2010 ? RED : INK); WW.label(c, 'YEAR', 0, -205, 44, '#f4e8d0');
+      if (k > 0 && k < 1) { c.fillStyle = 'rgba(242,232,210,.9)'; c.beginPath(); c.moveTo(-260, -150); c.lineTo(260, -150); c.lineTo(260 - flip * 40, -150 - 260 * flip); c.lineTo(-260 + flip * 40, -150 - 260 * flip); c.closePath(); c.fill(); c.stroke(); } c.restore(); },
+    bed: [['tension', .15]],
+    init: S => { S.dur = S.end - S.start; const tF = S.dur - 1.4;
+      S.D.over = [(c, lt) => WW.stamp(c, 1420, 300, pop(lt, tF, .35), 'FINAL PAYMENT: 2010', RED, .1)];
+      S.D.sfx = [...Array.from({ length: 10 }, (_, k) => [.4 + k * (S.dur - 2) / 10, 'paper', .18]), [tF, 'stamp', .45]]; } },
+  // 1.05 a tiny army: soldiers march in; planes and ships crossed out
+  { plate: 'plain', cam: { z: [1.05, 1.12], x: [1280, 1280], y: [820, 800] }, bed: [['wind_loop', .18]],
+    figs: [0, 1, 2, 3, 4].map(i => ({ x: 760 + i * 240, y: 1290, s: 1.5, ...WW.SOLDIER(i, 'de'), facing: 1, mood: 'worried', walk: { x0: 760 + i * 240 - 2200, x1: 760 + i * 240, t0: .1, dur: 3.6 } })),
+    init: S => { const tN = A.at(S, 'air force', 2.4), tV = A.at(S, 'navy', 3.6);
+      S.D.over = [(c, lt) => K.card(c, '100,000 MEN', lt, { at: .4, x: 960, y: 120, px: 54, rot: -2 }),
+        (c, lt) => { const a = pop(lt, tN, .4); if (a > 0) { c.save(); c.translate(380, 330); c.scale(a, a); WW.plane(c, 0, 0, .9, 1, '#6a6c70', lt); c.strokeStyle = RED; c.lineWidth = 16; c.lineCap = 'round'; c.beginPath(); c.moveTo(-190, -110); c.lineTo(190, 110); c.moveTo(190, -110); c.lineTo(-190, 110); c.stroke(); c.restore(); K.card(c, 'NO AIR FORCE', lt, { at: tN + .2, x: 380, y: 500, px: 36, rot: 3 }); } },
+        (c, lt) => { const a = pop(lt, tV, .4); if (a > 0) { c.save(); c.translate(1540, 330); c.scale(a * .7, a * .7); WW.boat(c, 0, 0, 1, 'ship', lt); c.strokeStyle = RED; c.lineWidth = 22; c.lineCap = 'round'; c.beginPath(); c.moveTo(-300, -170); c.lineTo(300, 90); c.moveTo(300, -170); c.lineTo(-300, 90); c.stroke(); c.restore(); K.card(c, 'ALMOST NO NAVY', lt, { at: tV + .2, x: 1540, y: 500, px: 36, rot: -3 }); } }];
+      S.D.sfx = [[.1, 'footsteps', .3], [.4, 'pop', .3], [tN, 'scrape', .35], [tV, 'scrape', .35]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>

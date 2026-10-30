@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><title>MX act 0 - cold open</title>
+<!doctype html><html><head><meta charset="utf-8"><title>MX act 0 - who killed micromax</title>
 <style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
 <body><canvas id="c" width="1920" height="1080"></canvas>
 <script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
@@ -35,7 +35,7 @@ window.SHOTS = [
   // 0.03 the crime board: three suspects
   { plate: 'corkboard', cam: { z: [1.02, 1.1], x: [1280, 1280], y: [720, 700] }, bed: [['tension', .25]],
     init: S => { const tF = A.at(S, 'Five years', .4), tW = A.at(S, 'Who killed', 3.6);
-      S.D.over = [(c, lt) => { const ph = [[440, 520, 'SUSPECT 1', (c2) => MX.sim(c2, 0, 0, .9, BLUE, { label: '4G' }), -.06], [960, 470, 'SUSPECT 2', (c2) => { ['#ff7a00', '#1a8a5a', '#3a6ae8'].forEach((col, k) => { c2.fillStyle = col; c2.beginPath(); c2.arc(-60 + k * 60, 0, 34, 0, 7); c2.fill(); }); }, .03], [1480, 520, 'SUSPECT 3', (c2) => MX.label(c2, '?', 0, 0, 150, '#f4f0e4'), .07]];
+      S.D.over = [(c, lt) => { const ph = [[440, 520, 'SUSPECT 1', (c2) => { ['#ff7a00', '#1a8a5a', '#3a6ae8'].forEach((col, k) => { c2.fillStyle = col; c2.beginPath(); c2.arc(-60 + k * 60, 0, 34, 0, 7); c2.fill(); }); }, -.06], [960, 470, 'SUSPECT 2', (c2) => MX.sim(c2, 0, 0, .9, BLUE, { label: '4G' }), .03], [1480, 520, 'SUSPECT 3', (c2) => MX.label(c2, '?', 0, 0, 150, '#f4f0e4'), .07]];
           ph.forEach(([x, y, l, d, r], k) => { const a = pop(lt, tF + .5 + k * .5); if (a > 0) MX.photo(c, x, y, a * 1.15, l, d, { rot: r }); }); MX.string(c, [[440, 380], [960, 330], [1480, 380]], K.seg(lt, tW - .6, tW + .6)); },
         (c, lt) => K.card(c, 'FIVE YEARS LATER: ALMOST NO MARKET LEFT', lt, { at: tF, x: 960, y: 120, px: 40, rot: -2 }), (c, lt) => K.title(c, 'WHO KILLED MICROMAX?', lt, { at: tW, y: 900, px: 90 })];
       S.D.sfx = [[tF + .5, 'pop', .3], [tF + 1, 'pop', .3], [tF + 1.5, 'pop', .3], [tW, 'hit', .5], [tW + .1, 'tension', .3]]; } },

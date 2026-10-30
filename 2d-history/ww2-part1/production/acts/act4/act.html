@@ -1,0 +1,66 @@
+<!doctype html><html><head><meta charset="utf-8"><title>MX act 4 - austria and the paper peace</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "leo";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../../../shared/p2/world50.js"></script><script src="../../ww_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+const SW = 1920, SH = 1080, INK = WW.INK, RED = WW.RED, pop = WW.pop, COL = WW.COL;
+const backdrop = (name, b = .5, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const CARRY = () => ({ shL: 30, elL: -75, shR: 35, elR: -75 });
+const endTitle = (secs) => { const T = window.TIMING; const last = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length, start: last.end, end: last.end + secs, vo_start: last.end, vo_end: last.end, text: '' }); T.dur = last.end + secs; };
+for (const n of ['partners_room', 'map_europe', 'mirror_hall', 'airfield']) K.load(n, PL + n + '.jpg');
+const B38 = { germany: WW.COL.germany, uk: WW.COL.uk, france: WW.COL.france, italy: WW.COL.italy, ussr: WW.COL.ussr, poland: WW.COL.poland, czech: '#c8a050' };
+const glowEdge = (c, g, lt) => { c.save(); c.globalAlpha = .55 + .35 * Math.sin(lt * 5); c.strokeStyle = '#ffe080'; c.lineWidth = 22; c.lineJoin = 'round'; c.shadowColor = '#ffd040'; c.shadowBlur = 30; for (const n of WW.G[g]) { WW.path(c, n); c.stroke(); } c.restore(); };
+const BALLOT = (c, x, y, s) => { c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = '#a87a4a'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-150, -120, 300, 220); c.strokeRect(-150, -120, 300, 220); c.fillStyle = INK; c.fillRect(-70, -128, 140, 16); c.fillStyle = WW.PAPER; c.save(); c.translate(10, -150); c.rotate(.1); c.fillRect(-50, -60, 100, 70); c.strokeRect(-50, -60, 100, 70); c.restore(); WW.label(c, 'VOTE', 0, 10, 54, '#f4e8d0'); c.restore(); };
+const CHAIR = (c, x, y) => { c.save(); c.fillStyle = '#8a2a22'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(x - 70, y - 330, 140, 190); c.strokeRect(x - 70, y - 330, 140, 190); c.fillStyle = '#6a4a2e'; c.fillRect(x - 90, y - 150, 180, 30); c.strokeRect(x - 90, y - 150, 180, 30); for (const lx of [x - 84, x + 66]) { c.fillRect(lx, y - 120, 18, 120); c.strokeRect(lx, y - 120, 18, 120); } c.restore(); };
+
+window.SHOTS = [
+  // 4.01 Feb 1938: a looming silhouette bullies Austria's small chancellor
+  { plate: 'partners_room', cam: { z: [1.04, 1.12], x: [1280, 1280], y: [800, 780] }, bed: [['drone', .2], ['tension', .15]],
+    live: [(c, lt) => WW.silhouette(c, 900, 1360, 1.35, { arm: .25 + .2 * Math.abs(Math.sin(lt * 2.4)), talk: true, lt })],
+    figs: [{ x: 1720, y: 1360, s: 1.45, ...WW.SCHUSCHNIGG, facing: -1, mood: 'worried', walk: { x0: 2900, x1: 1720, t0: .1, dur: 2.4 } }],
+    init: S => { const tB = A.at(S, 'bullied', 4.2);
+      S.D.over = [(c, lt) => K.dateTag(c, 'FEB 1938', lt, { at: .2 }), (c, lt) => K.card(c, "AUSTRIA'S CHANCELLOR", lt, { at: 1.4, x: 1460, y: 160, px: 42, rot: 2 }), (c, lt) => K.card(c, 'PUT NAZIS IN YOUR GOVERNMENT', lt, { at: tB, x: 620, y: 220, px: 40, rot: -3 })];
+      S.D.sfx = [[.1, 'footsteps', .3], [.4, 'door_slam', .3], [tB, 'hit', .4]]; } },
+  // 4.02 a vote is called; troops cross first; Austria turns grey
+  { plate: 'map_europe', cam: { z: [1.5, 1.7], x: [1180, 1240], y: [820, 820] }, bed: [['war_drums_loop', .22]],
+    init: S => { const tT = A.at(S, 'troops', 3.6), t13 = A.at(S, '13', 6.4);
+      S.D.live = [(c, lt) => { WW.map(c, B38); WW.flip(c, 'austria', '#d8b070', WW.COL.taken, K.seg(lt, t13, t13 + .6)); WW.faceOn(c, 'germany', 'smug', 1.1, lt); WW.faceOn(c, 'austria', lt > tT ? 'shocked' : 'worried', .9, lt);
+        WW.arrow(c, [[11.5, 49.5], [13, 48.4], [15.8, 47.9]], K.seg(lt, tT, tT + 1.4), '#3a3c40', 26); }];
+      S.D.over = [(c, lt) => { const a = pop(lt, .3, .45) * (1 - K.seg(lt, tT - .4, tT)); if (a > 0) { BALLOT(c, 420, 720, a); K.card(c, 'INDEPENDENCE?', lt, { at: .5, x: 420, y: 470, px: 38, rot: -3 }); } },
+        (c, lt) => K.title(c, 'AUSTRIA · 13 MARCH 1938', lt, { at: t13, y: 140, px: 70 })];
+      S.D.sfx = [[.3, 'paper', .3], [tT, 'footsteps', .35], [t13, 'stamp', .45]]; } },
+  // 4.03 next: the Sudetenland edge of Czechoslovakia glows
+  { plate: 'map_europe', cam: { z: [1.5, 1.75], x: [1300, 1360], y: [760, 760] }, bed: [['tension', .25]],
+    init: S => { const t3 = A.at(S, 'three million', 3.8), tD = A.at(S, 'demanded', 6);
+      S.D.live = [(c, lt) => { WW.map(c, Object.assign({}, B38, { austria: WW.COL.taken })); if (lt > .6) glowEdge(c, 'czech', lt); WW.faceOn(c, 'germany', lt > tD ? 'angry' : 'smug', 1.1, lt); WW.faceOn(c, 'czech', 'worried', .9, lt); }];
+      S.D.over = [(c, lt) => K.title(c, 'SUDETENLAND', lt, { at: .5, y: 140, px: 84 }), (c, lt) => K.card(c, '~3,000,000 GERMAN SPEAKERS', lt, { at: t3, x: 1400, y: 300, px: 40, rot: 2 }), (c, lt) => { const a = pop(lt, tD, .4); if (a > 0) WW.tag(c, 560, 860, 'GIVE IT TO ME', a, -.06); }];
+      S.D.sfx = [[.5, 'hit', .35], [t3, 'pop', .3], [tD, 'thud', .4]]; } },
+  // 4.04 Munich, Sept 1938: the deal is made; Czechoslovakia's chair is empty
+  { plate: 'mirror_hall', cam: { z: [1.02, 1.08], x: [1280, 1280], y: [800, 790] }, bed: [['hum_loop', .12], ['tension', .15]],
+    live: [(c, lt) => { WW.silhouette(c, 900, 1300, 1.05, { talk: true, lt, arm: .15 }); WW.silhouette(c, 1240, 1300, 1.0, { lt, arm: .05, col: '#26222a' }); CHAIR(c, 2140, 1300); }],
+    figs: [{ x: 380, y: 1300, s: 1.6, ...WW.CHAMBERLAIN_BARE, facing: 1, mood: 'focus' }, { x: 1620, y: 1300, s: 1.6, ...WW.DIPLOMAT(3), facing: -1, mood: 'worried' }],
+    init: S => { const tC = A.at(S, 'Czechoslovakia', 6.2);
+      S.D.over = [(c, lt) => K.dateTag(c, 'MUNICH · SEPT 1938', lt, { at: .2 }), (c, lt) => { ['CHAMBERLAIN (UK)', 'HITLER', 'MUSSOLINI (ITALY)', 'DALADIER (FRANCE)'].forEach((n, k) => K.card(c, n, lt, { at: .6 + k * .4, x: [300, 690, 960, 1240][k], y: [300, 230, 300, 230][k], px: 28, rot: k % 2 ? 2 : -2 })); },
+        (c, lt) => { const a = pop(lt, tC, .4); if (a > 0) { K.card(c, 'CZECHOSLOVAKIA', lt, { at: tC, x: 1650, y: 520, px: 36, rot: -4 }); K.card(c, 'NOT EVEN IN THE ROOM', lt, { at: tC + .5, x: 1650, y: 600, px: 30, rot: 3 }); } }];
+      S.D.sfx = [[.6, 'pop', .25], [1, 'pop', .25], [1.4, 'pop', .25], [1.8, 'pop', .25], [tC, 'thud', .4]]; } },
+  // 4.05 Chamberlain at the airfield, waving the paper: 'peace for our time'; the deal clock starts
+  { plate: 'airfield', cam: { z: [1.2, 1.3], x: [1280, 1280], y: [880, 860] }, bed: [['wind_loop', .2], ['crowd_loop', .15]],
+    figs: [{ x: 1180, y: 1330, s: 1.8, ...WW.CHAMBERLAIN, facing: 1, mood: 'happy', walk: { x0: 2900, x1: 1180, t0: .1, dur: 3 }, anim: (o, lt, u, S) => { if (lt > S.tW) o.pose = 'wave'; }, hold: { near: WW.paper } }],
+    init: S => { S.tW = A.at(S, 'waving', 4.6); const tP = A.at(S, 'for our', 7.0) - .4;
+      S.D.over = [(c, lt) => K.card(c, 'SUDETENLAND HANDED OVER', lt, { at: .4, x: 620, y: 140, px: 40, rot: -2 }), (c, lt) => K.title(c, "'PEACE FOR OUR TIME'", lt, { at: tP, y: 860, px: 80 }),
+        (c, lt) => { const a = pop(lt, tP + .4, .4); if (a > 0) { WW.clock(c, 1690, 230, a * .9, lt - tP); K.card(c, 'DEAL CLOCK', lt, { at: tP + .5, x: 1690, y: 360, px: 30, rot: 3 }); } }];
+      S.D.sfx = [[.1, 'drone', .25], [.5, 'footsteps', .3], [S.tW, 'paper', .35], [tP, 'crowd_cheer', .3], [tP + .4, 'tick', .3], [tP + 1.4, 'tick', .3], [tP + 2.4, 'tick', .3]]; } },
+  // 4.06 March 1939: the paper tears; the rest of Czechoslovakia turns grey
+  { plate: 'map_europe', cam: { z: [1.45, 1.6], x: [1300, 1340], y: [760, 760] }, bed: [['war_drums_loop', .25]],
+    init: S => { const tM = A.at(S, 'troops', 2.4), tW = A.at(S, 'worthless', 5.4);
+      S.D.live = [(c, lt) => { WW.map(c, Object.assign({}, B38, { austria: WW.COL.taken })); WW.flip(c, 'czech', '#c8a050', WW.COL.taken, K.seg(lt, tM, tM + .7)); WW.faceOn(c, 'germany', 'smug', 1.1, lt); WW.faceOn(c, 'czech', lt > tM ? 'shocked' : 'worried', .9, lt); }];
+      S.D.over = [(c, lt) => K.dateTag(c, 'MARCH 1939', lt, { at: .2 }), (c, lt) => { const a = pop(lt, .2, .4) * (1 - K.seg(lt, tM - .3, tM + .2)); if (a > 0) WW.doc(c, 480, 560, .8 * a, { title: 'MUNICH DEAL', tear: E.out(K.seg(lt, .9, 1.8)), sig: 1 }); },
+        (c, lt) => WW.stamp(c, 1400, 860, pop(lt, tW, .35) * .9, 'WORTHLESS')];
+      S.D.sfx = [[.9, 'paper_tear', .45], [tM, 'stamp', .4], [tW, 'stamp', .45]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>
