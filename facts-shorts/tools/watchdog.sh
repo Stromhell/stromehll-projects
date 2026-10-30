@@ -5,6 +5,7 @@
 #  - kills and restarts the voice job if its speak.log has not moved for 25 min
 #  - renders ids listed in BATCH/render_queue.txt (one per line) one at a time, restarting a render
 #    whose log has not moved for 15 min, and retrying a failed render once
+#  - checks every finished render for damage (duration >= 10 s, clean full decode) before accepting it
 #  - clears throwaway bundles (remotion/build*, remotion/tb) when free disk is under 12 GB
 #  - chains steps so nothing waits: a freshly voiced short with a line in BATCH/keys.txt gets its timings
 #    (tools/tim.sh), and a finished render gets its watch-skill QA sheet (BATCH/qa/ID.png)
@@ -65,8 +66,15 @@ while true; do
   elif [ -s "$Q" ]; then
     id=$(head -1 $Q)
     if [ -n "$rpid" ]; then  # a render just finished
+      mp=$F/remotion/out/$id-1080p.mp4
       if grep -q "out/$id-1080p.mp4" $F/remotion/out/$id-render.log 2>/dev/null; then
-        log "rendered $id"; sed -i 1d $Q; rm -f /tmp/facts-render.pid; continue
+        # damage check before accepting: sane duration and a clean full decode
+        dur=$(ffprobe -v error -show_entries format=duration -of csv=p=0 $mp 2>/dev/null)
+        errs=$(ffmpeg -v error -i $mp -f null - 2>&1 | head -3)
+        if [ -n "$dur" ] && [ "${dur%.*}" -ge 10 ] && [ -z "$errs" ]; then
+          log "rendered $id (${dur}s, decode clean)"; sed -i 1d $Q; rm -f /tmp/facts-render.pid; continue
+        fi
+        log "FAILED damage check $id (dur=$dur ${errs:0:120})"; rm -f $mp
       fi
       tries[$id]=$(( ${tries[$id]:-0} + 1 ))
       if [ ${tries[$id]} -ge 2 ]; then log "FAILED render $id twice, dropped from queue"; sed -i 1d $Q; rm -f /tmp/facts-render.pid; continue; fi
