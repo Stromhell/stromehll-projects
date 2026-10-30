@@ -15,5 +15,23 @@ reels(){ v=$1; shift; for id in "$@"; do ls $v/reels/out/*_Reel_$(printf %02d $i
 step es1_reels reels spain-1-al-andalus 3 4 5 8 9 10 11 12 13 14 15
 step es2_combine combine spain-2-empire Spain2_Empire_FULL
 step es2_reels reels spain-2-empire $(seq 1 15)
-for a in 2 3 4 5 6; do step es3_act$a render spain-3-civil-war $a; done
-ls $S/es2_combine $S/es1_reels $S/es2_reels $S/es3_act{2,3,4,5,6} >/dev/null 2>&1 && { touch $S/ALL_DONE; log "PIPELINE ALL DONE"; }
+# From here on the pipeline never ends: it renders any act marked ready, and joins any
+# video whose acts are all rendered and that has Pushpam's OK to combine.
+#   mark an act ready:   touch VIDEO/production/acts/actN/READY   (after its page is final)
+#   OK to combine:       touch .state/combine_ok_VIDEO
+while true; do
+  did=0
+  for r in $(ls -tr */production/acts/act*/READY 2>/dev/null); do
+    d=$(dirname $r); v=${d%%/*}; a=${d##*/act}; mp4=$d/act$a.mp4
+    [ -f $mp4 ] && [ $mp4 -nt $r ] && continue
+    log "START render $v act$a"; if render $v $a; then log "DONE render $v act$a"; else log "FAIL render $v act$a"; touch $mp4; fi; did=1; break
+  done
+  [ $did = 1 ] && continue
+  for ok in $(ls $S/combine_ok_* 2>/dev/null); do v=${ok##*combine_ok_}; [ -f $S/combined_$v ] && continue
+    n=$(ls -d $v/production/acts/act*/ | wc -l); m=$(ls $v/production/acts/act*/act*.mp4 2>/dev/null | wc -l)
+    [ $n = $m ] || continue
+    name=$(python3 -c "import json;print(json.load(open('$v/build/storyboard.json'))['meta']['prefix'])" 2>/dev/null || echo $v)_FULL
+    log "START combine $v"; combine $v $name && { touch $S/combined_$v; log "DONE combine $v -> $v/final/$name.mp4"; }; did=1
+  done
+  [ $did = 1 ] || sleep 60
+done

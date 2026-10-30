@@ -13,6 +13,9 @@ while true; do
   if [ ! -f $S/ALL_DONE ] && ! pgrep -x -f "bash $W/shared/pipeline_dd.sh" >/dev/null; then
     log "pipeline not running, (re)starting"; (cd $W && setsid nohup bash $W/shared/pipeline_dd.sh >> /tmp/claude-0/pipeline_dd.log 2>&1 &)
   fi
+  if ! pgrep -x -f "bash $W/shared/voice_dd.sh" >/dev/null; then
+    for v in $(cat $S/voice_queue 2>/dev/null); do [ -f $S/voice_$v ] || { log "voice for $v not running, (re)starting"; (cd $W && setsid nohup bash $W/shared/voice_dd.sh >/dev/null 2>&1 &); break; }; done
+  fi
   F=$(ls -dt /tmp/claude-0/frames/*/act* 2>/dev/null | head -1)
   if [ -n "$F" ] && pgrep -f "shared/render.js" >/dev/null; then
     n=$(ls "$F" | wc -l); if [ "$n" = "$(cat $S/lastn 2>/dev/null)" ]; then
