@@ -37,7 +37,7 @@ window.SHOTS = [
       S.D.sfx = [[.3, 'chime', .3], [S.tB - .4, 'riser', .35], [S.tB, 'coins_cascade', .45], [S.tB + 1.2, 'chime', .4]]; } },
   // 3 a Nike box with a big question mark; factories behind with other names on them
   { plate: 'factory', cam: { z: [1.08, 1.16], x: [1280, 1280], y: [820, 800] }, bed: [['hum_loop', .35]],
-    live: [(c, lt, u, S) => { NK.box(c, 1280, 1280, 2.1, { col: OR, swoosh: true }); const a = pop(lt, S.tQ, .5), bob = Math.sin(lt * 4) * 10; if (a > 0) { c.save(); c.translate(1280, 860 + bob); c.scale(a, a); K.outlined(c, '?', 0, 0, { px: 300, fill: '#fff' }); c.restore(); } }],
+    live: [(c, lt, u, S) => { NK.box(c, 1280, 1280, 2.1, { col: OR, swoosh: true }); const a = pop(lt, S.tQ, .5), bob = Math.sin(lt * 4) * 10; if (a > 0) { c.save(); c.translate(1280, 860 + bob); c.scale(a, a); K.outlined(c, '?', 0, 0, 300, { fill: '#fff' }); c.restore(); } }],
     init: S => { S.tQ = A.at(S, 'strange', 1.2); const tF = A.at(S, 'factories', 3.6);
       S.D.over = [A.grade('30,40,30', .12), (c, lt) => K.card(c, 'FACTORY: NOT NIKE', lt, { at: tF, x: 420, y: 250, px: 44, rot: -4 }), (c, lt) => K.card(c, 'FACTORY: NOT NIKE', lt, { at: tF + .4, x: 1500, y: 250, px: 44, rot: 3 }), (c, lt) => K.title(c, 'WHO MAKES THEM?', lt, { at: tF + 1, y: 110, px: 64 })];
       S.D.sfx = [[S.tQ, 'pop', .45], [tF, 'stamp', .4], [tF + .4, 'stamp', .4]]; } },

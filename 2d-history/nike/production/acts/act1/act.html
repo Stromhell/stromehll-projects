@@ -1,0 +1,97 @@
+<!doctype html><html><head><meta charset="utf-8"><title>NK act 1 - The Coach and the Runner</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../nk_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['track_rain', 'workshop', 'worldmap', 'kobe_office', 'office_day']) K.load(n, PL + n + '.jpg');
+const SW = 1920, SH = 1080, INK = NK.INK, OR = NK.ORANGE, TE = NK.TEAL;
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+const BOWERMAN = { costume: 'shirt', hair: 'short', hairCol: '#5a4a3a', seed: 3, hat: NK.cap('#2a5a3a') };
+const KNIGHT = { costume: 'school', hair: 'short', hairCol: '#c89a5a', seed: 6 };
+const KNIGHT_SUIT = { costume: 'suit', hair: 'short', hairCol: '#c89a5a', seed: 6 };
+const EXEC = (seed, hairCol = '#1a1410') => ({ costume: 'suit', hair: 'short', hairCol, seed, glasses: seed % 2 === 0 });
+const backdrop = (name, b = .6, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const rain = (n = 180) => (c, lt) => { c.save(); c.strokeStyle = 'rgba(210,220,235,.35)'; c.lineWidth = 2; c.beginPath(); for (let k = 0; k < n; k++) { const sp = 1300 + (k * 37 % 500), x = (k * 211 + lt * 90) % 2560, y = ((k * 157) + lt * sp) % 1440; c.moveTo(x, y); c.lineTo(x - 8, y + 40); } c.stroke(); c.restore(); };
+const ll = (lon, lat) => [160 + (lon + 170) * 6.2222, 272 + (84 - lat) * 6.2222];
+// a simple 4-engine prop/jet airliner icon (screen or world), facing left
+const plane = (c, x, y, s, rot = 0) => { c.save(); c.translate(x, y); c.rotate(rot); c.scale(s, s); c.fillStyle = '#f4f2ec'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.ellipse(0, 0, 90, 16, 0, 0, 7); c.fill(); c.stroke(); c.beginPath(); c.moveTo(10, 0); c.lineTo(40, -70); c.lineTo(60, -70); c.lineTo(45, 0); c.lineTo(60, 70); c.lineTo(40, 70); c.closePath(); c.fill(); c.stroke(); c.beginPath(); c.moveTo(70, 0); c.lineTo(88, -30); c.lineTo(96, -30); c.lineTo(92, 0); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#c83a2a'; c.fillRect(-60, -4, 110, 5); c.restore(); };
+
+window.SHOTS = [
+  // 1 rainy cinder track: Bowerman with a stopwatch; runners splash past
+  { plate: 'track_rain', cam: { z: [1.12, 1.2], x: [1280, 1320], y: [880, 880] }, bed: [['rain_loop', .7]],
+    live: [rain(200)],
+    figs: [{ x: 1900, y: 1300, s: 1.95, ...BOWERMAN, facing: -1, pose: 'stand', mood: 'neutral', hold: NK.holdWatch, arms: (t, P) => ({ shR: 80, elR: -60 }), anim: (o, lt, u, S) => { o.mood = lt > S.tH ? 'angry' : 'neutral'; o.talk = lt > S.tH && lt < S.tH + 2.5; } },
+      { costume: 'shirt', hair: 'short', seed: 11, s: 1.75, y: 1360, walk: { x0: -200, x1: 2800, t0: .4, dur: 4.2, pose: 'run' }, mood: 'worried' },
+      { costume: 'shirtsleeves', hair: 'curly', seed: 12, s: 1.7, y: 1390, walk: { x0: -500, x1: 2800, t0: .9, dur: 4.4, pose: 'run' }, mood: 'sad' }],
+    init: S => { S.tH = A.at(S, 'heavy shoes', 5.5); const tB = A.at(S, 'Bill Bowerman', 2);
+      S.D.over = [(c, lt) => K.dateTag(c, 'OREGON · 1950s', lt, { at: .3 }), (c, lt) => K.card(c, 'BILL BOWERMAN\nTRACK COACH', lt, { at: tB, x: 1540, y: 240, px: 46, rot: 3 }), (c, lt) => K.card(c, 'HATED HEAVY SHOES', lt, { at: S.tH, x: 440, y: 240, px: 50, rot: -4 })];
+      S.D.sfx = [[.4, 'run_steps', .4], [.9, 'run_steps', .35], [tB, 'pop', .4], [S.tH, 'thud', .4]]; } },
+  // 2 chalkboard maths: one ounce off a shoe = hundreds of pounds less lifted per mile
+  { draw: (c, lt, u, S) => { backdrop('workshop', .5, 9)(c); NK.chalkboard(c, 260, 120, 1400, 640);
+      NK.shoe(c, 520, 380, 1.15, { col: '#efe8d8', accent: '#9a9a9a' }); NK.chalk(c, '− 1 oz', 760, 330, 90, K.seg(lt, S.t1, S.t1 + .6));
+      NK.chalk(c, '× 1 mile of strides', 420, 520, 70, K.seg(lt, S.tM, S.tM + .8));
+      const w = K.seg(lt, S.tP, S.tP + .8); if (w > 0) { for (let k = 0; k < 6; k++) { const x = 1150 + (k % 3) * 120, y = 470 - Math.floor(k / 3) * 90; c.save(); c.globalAlpha = Math.min(1, w * 6 - k * .6); c.strokeStyle = '#f4f2ea'; c.lineWidth = 6; c.strokeRect(x - 46, y - 30, 92, 60); c.font = '34px Caveat'; c.fillStyle = '#f4f2ea'; c.textAlign = 'center'; c.fillText('LB', x, y + 10); c.restore(); }
+        const x = K.seg(lt, S.tL, S.tL + .4); if (x > 0) { c.save(); c.strokeStyle = '#ff7a5a'; c.lineWidth = 12; c.lineCap = 'round'; c.beginPath(); c.moveTo(1060, 320); c.lineTo(1060 + 420 * x, 320 + 220 * x); c.moveTo(1480, 320); c.lineTo(1480 - 420 * x, 320 + 220 * x); c.stroke(); c.restore(); } }
+      NK.chalk(c, '= HUNDREDS OF POUNDS LESS', 960, 680, 66, K.seg(lt, S.tL, S.tL + 1), 'center'); },
+    bed: [['hum_loop', .3]],
+    init: S => { S.t1 = A.at(S, 'one ounce', 1.2); S.tM = A.at(S, 'mile', 3); S.tP = A.at(S, 'hundreds', 4.6); S.tL = A.at(S, 'less', 5.6);
+      S.D.over = [(c, lt) => K.badge(c, "BOWERMAN'S MATHS", lt, { at: .3 })]; S.D.sfx = [[S.t1, 'scrape', .3], [S.tM, 'scrape', .3], [S.tP, 'thud', .35], [S.tL, 'scrape', .4]]; } },
+  // 3 the workshop: Bowerman rebuilds shoes at the bench; a runner hops across in a lopsided shoe
+  { plate: 'workshop', cam: { z: [1.14, 1.2], x: [1240, 1300], y: [860, 860] }, bed: [['hum_loop', .35]],
+    figs: [{ x: 1180, y: 1330, s: 1.95, ...BOWERMAN, facing: 1, pose: 'think', mood: 'happy', hold: { near: (c, t) => NK.shoe(c, 10, -10, .32, { col: '#e8e0d0', accent: OR, sole: 'waffle', facing: 1 }) }, arms: (t, P) => ({ shR: 70 + Math.sin(t * 3) * 10, elR: -50 }) },
+      { costume: 'shirt', hair: 'short', seed: 11, s: 1.8, y: 1400, facing: 1, mood: 'worried', anim: (o, lt, u, S) => { const w = R.walkX(lt, -260, 760, S.tT, 3.4, 1.8); o.x = w.x; o.t = w.phase; o.pose = w.moving ? 'walk' : 'shrug'; o.y = 1400 - Math.abs(Math.sin(w.phase)) * (w.moving ? 26 : 0); o.mood = lt > S.tT + 3.4 ? 'shocked' : 'worried'; } }],
+    front: [(c, lt, u, S) => { if (lt < S.tR) return; const a = pop(lt, S.tR); for (let k = 0; k < 3; k++) NK.shoe(c, 1880 + k * 150, 1405, .55 * a, { col: ['#e8e0d0', '#c8a070', '#f4f0e6'][k], accent: OR, sole: k === 2 ? 'waffle' : 'flat', facing: -1 }); }],
+    init: S => { S.tR = A.at(S, 'rebuilt', 2.4); S.tT = A.at(S, 'test subjects', 5);
+      S.D.over = [(c, lt) => K.card(c, 'TEST SUBJECTS', lt, { at: S.tT, x: 1500, y: 230, px: 54, rot: 4 }), (c, lt) => K.card(c, 'LIKED IT OR NOT', lt, { at: S.tT + 1.6, x: 1500, y: 340, px: 40, rot: -2 })];
+      S.D.sfx = [[.3, 'scrape', .3], [S.tR, 'thud', .3], [S.tT, 'footsteps', .45], [S.tT + 1.6, 'pop', .4]]; } },
+  // 4 the runner Phil Knight with a notebook, nodding at the coach
+  { plate: 'track_rain', cam: { z: [1.25, 1.3], x: [1180, 1200], y: [900, 900] }, bed: [['rain_loop', .5]],
+    live: [rain(140)],
+    figs: [{ x: 900, y: 1340, s: 2.0, ...KNIGHT, facing: 1, pose: 'think', mood: 'neutral', anim: (o, lt, u, S) => { o.pose = lt > S.tL ? 'think' : 'stand'; o.mood = lt > S.tL ? 'happy' : 'neutral'; o.lean = lt > S.tL ? 4 * Math.sin(lt * 5) : 0; } },
+      { x: 1520, y: 1340, s: 2.05, ...BOWERMAN, facing: -1, pose: 'point', mood: 'neutral', talk: true }],
+    init: S => { const tK = A.at(S, 'Phil Knight', 2.4), tG = A.at(S, 'not great', 4.4); S.tL = A.at(S, 'listened', 6);
+      S.D.over = [(c, lt) => K.card(c, 'PHIL KNIGHT', lt, { at: tK, x: 520, y: 230, px: 60, rot: -4 }), (c, lt) => K.card(c, 'GOOD, NOT GREAT', lt, { at: tG, x: 520, y: 340, px: 40, rot: 2, until: S.tL }), (c, lt) => K.card(c, 'BUT HE LISTENED', lt, { at: S.tL, x: 520, y: 340, px: 44, rot: 2 })];
+      S.D.sfx = [[tK, 'pop', .45], [tG, 'tick', .35], [S.tL, 'chime', .4]]; } },
+  // 5 the Stanford paper: CAMERAS / SHOES, Japan beating Germany
+  { draw: (c, lt, u, S) => { backdrop('office_day', .55, 9)(c); NK.paper(c, 960, 520, 1180, 780, -.012);
+      c.save(); c.fillStyle = INK; c.font = '40px SourceSerif, serif'; c.textAlign = 'center'; c.fillText('Stanford Graduate School of Business, 1962', 960, 200); c.font = 'italic 30px SourceSerif, serif'; c.fillText('P. Knight — "Can Japanese sports shoes do to German sports shoes', 960, 250); c.fillText('what Japanese cameras did to German cameras?"', 960, 290); c.restore();
+      c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(960, 330); c.lineTo(960, 870); c.stroke();
+      const col = (x, title, a, b, at) => { const k = K.seg(lt, at, at + .5); if (k <= 0) return; c.save(); c.globalAlpha = k; K.outlined(c, title, x, 380, 60); c.fillStyle = INK; c.font = '44px Anton'; c.textAlign = 'center'; c.fillText(a, x, 520); c.fillText(b, x, 760);
+        const ar = K.seg(lt, at + .8, at + 1.4); if (ar > 0) { c.strokeStyle = '#c83a2a'; c.lineWidth = 10; c.lineCap = 'round'; c.beginPath(); c.moveTo(x, 715); c.lineTo(x, 715 - 140 * ar); c.stroke(); c.beginPath(); c.moveTo(x - 24, 715 - 140 * ar + 30); c.lineTo(x, 715 - 140 * ar); c.lineTo(x + 24, 715 - 140 * ar + 30); c.stroke(); } c.restore(); };
+      col(670, 'CAMERAS', 'GERMANY', 'JAPAN', S.tC); col(1250, 'SHOES', 'GERMANY (ADIDAS)', 'JAPAN?', S.tS); },
+    bed: [['office_loop', .25]],
+    init: S => { S.tC = A.at(S, 'cameras', 6.5); S.tS = A.at(S, 'Japanese running shoes', 3); S.D.over = [(c, lt) => K.dateTag(c, '1962', lt, { at: .3 })]; S.D.sfx = [[.3, 'paper', .4], [S.tS, 'pop', .4], [S.tC, 'pop', .4], [S.tC + .8, 'whoosh_soft', .3]]; } },
+  // 6 a plane over the Pacific to Kobe; Onitsuka makes the Tiger
+  { plate: 'worldmap', cam: { z: [1.15, 1.35], x: [1280, 1500], y: [620, 600], ease: E.io }, bed: [['wind_loop', .3]],
+    live: [(c, lt, u, S) => { const P0 = ll(-122.7, 45.5), P1 = ll(-170, 47), P2 = ll(190, 42), P3 = ll(135.2, 34.7), f = K.seg(lt, S.tF, S.tF + 3.2);
+      const pin = (p, a, col) => { if (a <= 0) return; c.save(); c.translate(p[0], p[1]); c.scale(a, a); c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.arc(0, -34, 16, 0, 7); c.moveTo(-10, -26); c.lineTo(0, 0); c.lineTo(10, -26); c.fill(); c.stroke(); c.restore(); };
+      pin(P0, pop(lt, .3), '#1f5aa8'); c.save(); c.strokeStyle = 'rgba(160,40,30,.8)'; c.lineWidth = 5; c.setLineDash([14, 10]);
+      const a = Math.min(1, f * 2), b = Math.max(0, f * 2 - 1); c.beginPath(); c.moveTo(...P0); c.lineTo(P0[0] + (P1[0] - P0[0]) * a, P0[1] + (P1[1] - P0[1]) * a); c.stroke(); if (b > 0) { c.beginPath(); c.moveTo(...P2); c.lineTo(P2[0] + (P3[0] - P2[0]) * b, P2[1] + (P3[1] - P2[1]) * b); c.stroke(); } c.restore();
+      if (f > 0 && f < 1) { const p = f < .5 ? [P0[0] + (P1[0] - P0[0]) * a, P0[1] + (P1[1] - P0[1]) * a] : [P2[0] + (P3[0] - P2[0]) * b, P2[1] + (P3[1] - P2[1]) * b]; plane(c, p[0], p[1] - 10, .55, f < .5 ? .02 : .05); }
+      pin(P3, pop(lt, S.tF + 3.2), '#c83a2a'); if (lt > S.tF + 3.4) { NK.shoe(c, P3[0] - 40, P3[1] + 210, .8 * pop(lt, S.tT), { col: '#f4f0e6', accent: '#c83a2a', mark: 'tiger' }); } }],
+    init: S => { S.tF = A.at(S, 'flew to Japan', 2); S.tT = A.at(S, 'Tiger', 6);
+      S.D.over = [(c, lt) => K.card(c, 'AGE 24', lt, { at: A.at(S, '24', 1.4), x: 420, y: 230, px: 56, rot: -4 }), (c, lt) => K.card(c, 'KOBE, JAPAN', lt, { at: S.tF + 3.2, x: 1500, y: 230, px: 52, rot: 3 }), (c, lt) => K.card(c, 'ONITSUKA: TIGER SHOES', lt, { at: S.tT - .3, x: 1500, y: 340, px: 40, rot: -2 })];
+      S.D.sfx = [[.3, 'pop', .35], [S.tF, 'whoosh', .4], [S.tF + 3.2, 'pop', .45], [S.tT, 'chime', .4]]; } },
+  // 7 Kobe office: which company? Knight sweats; a blue ribbon pops in a thought bubble
+  { plate: 'kobe_office', cam: { z: [1.12, 1.22], x: [1280, 1200], y: [860, 860] }, bed: [['hum_loop', .3]],
+    figs: [{ x: 700, y: 1360, s: 2.0, ...KNIGHT_SUIT, facing: 1, pose: 'stand', mood: 'worried', anim: (o, lt, u, S) => { o.sweat = lt > S.tQ && lt < S.tB; o.mood = lt > S.tB ? 'happy' : 'worried'; o.pose = lt > S.tB + .3 ? 'present' : (lt > S.tN ? 'shrug' : 'stand'); o.talk = lt > S.tB; } },
+      { x: 1640, y: 1350, s: 1.95, ...EXEC(21), facing: -1, pose: 'stand', mood: 'neutral', anim: (o, lt, u, S) => { o.talk = lt > S.tQ - .2 && lt < S.tQ + 1.6; o.mood = lt > S.tB + .5 ? 'happy' : 'neutral'; } },
+      { x: 1960, y: 1350, s: 1.9, ...EXEC(22, '#2a2420'), facing: -1, pose: 'think', mood: 'neutral', anim: (o, lt, u, S) => { o.mood = lt > S.tB + .7 ? 'happy' : 'neutral'; } }],
+    init: S => { S.tQ = A.at(S, 'which company', .8); S.tN = A.at(S, "didn't have one", 3); S.tB = A.at(S, 'Blue Ribbon', 5.4);
+      S.D.over = [(c, lt) => K.card(c, '"WHICH COMPANY?"', lt, { at: S.tQ, x: 1420, y: 220, px: 50, rot: 3, until: S.tB }), (c, lt) => { const a = pop(lt, S.tB - .6, .5); if (a <= 0) return; c.save(); c.translate(560, 260); c.scale(a, a); c.fillStyle = '#fff'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.ellipse(0, 0, 260, 140, 0, 0, 7); c.fill(); c.stroke(); for (const [dx, dy, r] of [[-90, 170, 22], [-60, 220, 14]]) { c.beginPath(); c.arc(dx, dy, r, 0, 7); c.fill(); c.stroke(); }
+        c.fillStyle = '#1f5aa8'; c.beginPath(); c.arc(-130, -10, 52, 0, 7); c.fill(); c.stroke(); c.beginPath(); c.moveTo(-150, 30); c.lineTo(-170, 110); c.lineTo(-140, 95); c.lineTo(-125, 120); c.lineTo(-110, 32); c.fill(); c.stroke(); c.fillStyle = INK; c.font = '48px Anton'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('BLUE RIBBON', -60, -24); c.font = '36px Oswald'; c.fillText('SPORTS', -60, 30); c.restore(); }, (c, lt) => K.card(c, 'MADE UP ON THE SPOT', lt, { at: S.tB + 1, x: 1420, y: 220, px: 46, rot: -3 })];
+      S.D.sfx = [[S.tQ, 'tick', .35], [S.tN, 'heartbeat', .35], [S.tB - .6, 'pop', .5], [S.tB + 1, 'chime', .4]]; } },
+  // 8 handshake across the low table; a box of Tigers slides over
+  { plate: 'kobe_office', cam: { z: [1.2, 1.28], x: [1280, 1280], y: [880, 880] }, bed: [['hum_loop', .3]],
+    figs: [{ x: 880, y: 1380, s: 2.05, ...KNIGHT_SUIT, facing: 1, pose: 'reach', mood: 'happy' }, { x: 1680, y: 1380, s: 2.0, ...EXEC(21), facing: -1, pose: 'reach', mood: 'happy' }],
+    live: [(c, lt, u, S) => { const x = 1600 - 420 * E.io(K.seg(lt, S.tS, S.tS + 1.2)); NK.box(c, x, 1040, .8, { col: '#e8d8b8', label: 'TIGER' }); }],
+    init: S => { S.tS = A.at(S, 'sell Tigers', 2.6); const tW = A.at(S, 'western', 4);
+      S.D.over = [(c, lt) => K.card(c, 'IT WORKED', lt, { at: .2, x: 470, y: 220, px: 64, rot: -4 }), (c, lt) => K.card(c, 'RIGHTS: WESTERN US', lt, { at: tW, x: 1440, y: 300, px: 44, rot: 3 })];
+      S.D.sfx = [[.2, 'hit', .5], [S.tS, 'scrape', .4], [tW, 'stamp', .45]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>
