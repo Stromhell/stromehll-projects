@@ -1,0 +1,185 @@
+{
+ "dur": 55.492,
+ "cues": [
+  {
+   "t": 0.2,
+   "name": "paper",
+   "gain": 0.35
+  },
+  {
+   "t": 0.7,
+   "name": "paper",
+   "gain": 0.35
+  },
+  {
+   "t": 1.2,
+   "name": "paper",
+   "gain": 0.35
+  },
+  {
+   "t": 7.66,
+   "name": "drone",
+   "gain": 0.25
+  },
+  {
+   "t": 10.375,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 11.371,
+   "name": "stamp",
+   "gain": 0.6
+  },
+  {
+   "t": 14.531,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 16.771,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 18.386,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 18.586,
+   "name": "run_steps",
+   "gain": 0.3
+  },
+  {
+   "t": 21.301,
+   "name": "door_slam",
+   "gain": 0.45
+  },
+  {
+   "t": 21.601,
+   "name": "crowd_cheer",
+   "gain": 0.2
+  },
+  {
+   "t": 27.261,
+   "name": "alarm",
+   "gain": 0.2
+  },
+  {
+   "t": 29.416,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 32.73,
+   "name": "tick",
+   "gain": 0.3
+  },
+  {
+   "t": 34.21,
+   "name": "footsteps",
+   "gain": 0.35
+  },
+  {
+   "t": 37.21,
+   "name": "gate_slam",
+   "gain": 0.45
+  },
+  {
+   "t": 39.285,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 39.585,
+   "name": "footsteps",
+   "gain": 0.3
+  },
+  {
+   "t": 41.037,
+   "name": "paper",
+   "gain": 0.3
+  },
+  {
+   "t": 46.317,
+   "name": "stamp",
+   "gain": 0.55
+  },
+  {
+   "t": 47.192,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 47.392,
+   "name": "whoosh_soft",
+   "gain": 0.3
+  },
+  {
+   "t": 48.092,
+   "name": "whoosh_soft",
+   "gain": 0.3
+  },
+  {
+   "t": 48.792,
+   "name": "whoosh_soft",
+   "gain": 0.3
+  },
+  {
+   "t": 52.162,
+   "name": "chime",
+   "gain": 0.25
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 11.075000000000001,
+   "name": "tension",
+   "gain": 0.2
+  },
+  {
+   "start": 10.275,
+   "end": 19.086000000000002,
+   "name": "hum_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 18.286,
+   "end": 30.116,
+   "name": "crowd_loop",
+   "gain": 0.3
+  },
+  {
+   "start": 18.286,
+   "end": 30.116,
+   "name": "city_loop",
+   "gain": 0.15
+  },
+  {
+   "start": 29.316,
+   "end": 39.985,
+   "name": "night_loop",
+   "gain": 0.25
+  },
+  {
+   "start": 29.316,
+   "end": 39.985,
+   "name": "drone",
+   "gain": 0.15
+  },
+  {
+   "start": 39.185,
+   "end": 47.891999999999996,
+   "name": "hum_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 47.092,
+   "end": 56.291999999999994,
+   "name": "wind_loop",
+   "gain": 0.15
+  }
+ ]
+}

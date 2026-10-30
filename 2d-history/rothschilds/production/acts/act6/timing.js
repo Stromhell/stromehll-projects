@@ -1,1 +1,765 @@
-window.TIMING={"dur": 78.085, "shots": [{"i": 0, "start": 0, "vo_start": 0.3, "vo_end": 14.25, "text": "A Jewish family this visible became a target. Through the late 1800s, antisemitic writers turned the Rothschild name into a symbol of imagined Jewish control of the world.", "end": 14.65}, {"i": 1, "start": 14.65, "vo_start": 14.95, "vo_end": 25.3, "text": "Those myths were false then and they are false now. The family was rich and powerful. It did not secretly run Europe.", "end": 25.7}, {"i": 2, "start": 25.7, "vo_start": 26.0, "vo_end": 39.125, "text": "In 1931, Austria's biggest bank, the Creditanstalt, collapsed. The Vienna Rothschilds were its leading shareholders. The crash spread banking panic across Europe.", "end": 39.525}, {"i": 3, "start": 39.525, "vo_start": 39.825, "vo_end": 53.95, "text": "The Nazis used the name in their propaganda, including a 1940 film. When Germany took Austria in 1938, Baron Louis Rothschild was arrested and held for about a year.", "end": 54.35}, {"i": 4, "start": 54.35, "vo_start": 54.65, "vo_end": 66.42, "text": "He was released only after the family handed over their Austrian holdings. Across occupied Europe, Rothschild banks, homes and art were seized.", "end": 66.82}, {"i": 5, "start": 66.82, "vo_start": 67.12, "vo_end": 77.385, "text": "Many family members escaped to Britain, the US or Switzerland. Some, like Elisabeth de Rothschild, died in the camps.", "end": 78.085}], "words": [{"w": "A", "s": 0.3, "e": 0.525}, {"w": "Jewish", "s": 0.585, "e": 1.035}, {"w": "family", "s": 1.095, "e": 1.545}, {"w": "this", "s": 1.605, "e": 1.965}, {"w": "visible", "s": 2.025, "e": 2.52}, {"w": "became", "s": 2.58, "e": 3.03}, {"w": "a", "s": 3.09, "e": 3.315}, {"w": "target", "s": 3.375, "e": 3.87}, {"w": "Through", "s": 4.18, "e": 4.675}, {"w": "the", "s": 4.735, "e": 5.05}, {"w": "late", "s": 5.11, "e": 5.47}, {"w": "1800s", "s": 5.53, "e": 5.98}, {"w": "antisemitic", "s": 6.29, "e": 6.965}, {"w": "writers", "s": 7.025, "e": 7.52}, {"w": "turned", "s": 7.58, "e": 8.03}, {"w": "the", "s": 8.09, "e": 8.405}, {"w": "Rothschild", "s": 8.465, "e": 9.095}, {"w": "name", "s": 9.155, "e": 9.515}, {"w": "into", "s": 9.575, "e": 9.935}, {"w": "a", "s": 9.995, "e": 10.22}, {"w": "symbol", "s": 10.28, "e": 10.73}, {"w": "of", "s": 10.79, "e": 11.06}, {"w": "imagined", "s": 11.12, "e": 11.66}, {"w": "Jewish", "s": 11.72, "e": 12.17}, {"w": "control", "s": 12.23, "e": 12.725}, {"w": "of", "s": 12.785, "e": 13.055}, {"w": "the", "s": 13.115, "e": 13.43}, {"w": "world", "s": 13.49, "e": 13.94}, {"w": "Those", "s": 14.95, "e": 15.355}, {"w": "myths", "s": 15.415, "e": 15.82}, {"w": "were", "s": 15.88, "e": 16.24}, {"w": "false", "s": 16.3, "e": 16.705}, {"w": "then", "s": 16.765, "e": 17.125}, {"w": "and", "s": 17.185, "e": 17.5}, {"w": "they", "s": 17.56, "e": 17.92}, {"w": "are", "s": 17.98, "e": 18.295}, {"w": "false", "s": 18.355, "e": 18.76}, {"w": "now", "s": 18.82, "e": 19.18}, {"w": "The", "s": 19.49, "e": 19.805}, {"w": "family", "s": 19.865, "e": 20.315}, {"w": "was", "s": 20.375, "e": 20.69}, {"w": "rich", "s": 20.75, "e": 21.11}, {"w": "and", "s": 21.17, "e": 21.485}, {"w": "powerful", "s": 21.545, "e": 22.13}, {"w": "It", "s": 22.44, "e": 22.71}, {"w": "did", "s": 22.77, "e": 23.085}, {"w": "not", "s": 23.145, "e": 23.46}, {"w": "secretly", "s": 23.52, "e": 24.06}, {"w": "run", "s": 24.12, "e": 24.435}, {"w": "Europe", "s": 24.495, "e": 24.99}, {"w": "In", "s": 26.0, "e": 26.27}, {"w": "1931", "s": 26.33, "e": 26.735}, {"w": "Austria's", "s": 27.045, "e": 27.63}, {"w": "biggest", "s": 27.69, "e": 28.185}, {"w": "bank", "s": 28.245, "e": 28.65}, {"w": "the", "s": 28.96, "e": 29.275}, {"w": "Creditanstalt", "s": 29.335, "e": 30.145}, {"w": "collapsed", "s": 30.455, "e": 31.085}, {"w": "The", "s": 31.395, "e": 31.71}, {"w": "Vienna", "s": 31.77, "e": 32.22}, {"w": "Rothschilds", "s": 32.28, "e": 32.955}, {"w": "were", "s": 33.015, "e": 33.375}, {"w": "its", "s": 33.435, "e": 33.75}, {"w": "leading", "s": 33.81, "e": 34.305}, {"w": "shareholders", "s": 34.365, "e": 35.13}, {"w": "The", "s": 35.44, "e": 35.755}, {"w": "crash", "s": 35.815, "e": 36.22}, {"w": "spread", "s": 36.28, "e": 36.73}, {"w": "banking", "s": 36.79, "e": 37.285}, {"w": "panic", "s": 37.345, "e": 37.75}, {"w": "across", "s": 37.81, "e": 38.26}, {"w": "Europe", "s": 38.32, "e": 38.815}, {"w": "The", "s": 39.825, "e": 40.14}, {"w": "Nazis", "s": 40.2, "e": 40.605}, {"w": "used", "s": 40.665, "e": 41.025}, {"w": "the", "s": 41.085, "e": 41.4}, {"w": "name", "s": 41.46, "e": 41.82}, {"w": "in", "s": 41.88, "e": 42.15}, {"w": "their", "s": 42.21, "e": 42.615}, {"w": "propaganda", "s": 42.675, "e": 43.35}, {"w": "including", "s": 43.66, "e": 44.245}, {"w": "a", "s": 44.305, "e": 44.53}, {"w": "1940", "s": 44.59, "e": 44.95}, {"w": "film", "s": 45.01, "e": 45.415}, {"w": "When", "s": 45.725, "e": 46.085}, {"w": "Germany", "s": 46.145, "e": 46.64}, {"w": "took", "s": 46.7, "e": 47.06}, {"w": "Austria", "s": 47.12, "e": 47.615}, {"w": "in", "s": 47.675, "e": 47.945}, {"w": "1938", "s": 48.005, "e": 48.41}, {"w": "Baron", "s": 48.72, "e": 49.125}, {"w": "Louis", "s": 49.185, "e": 49.59}, {"w": "Rothschild", "s": 49.65, "e": 50.28}, {"w": "was", "s": 50.34, "e": 50.655}, {"w": "arrested", "s": 50.715, "e": 51.255}, {"w": "and", "s": 51.315, "e": 51.63}, {"w": "held", "s": 51.69, "e": 52.05}, {"w": "for", "s": 52.11, "e": 52.425}, {"w": "about", "s": 52.485, "e": 52.89}, {"w": "a", "s": 52.95, "e": 53.175}, {"w": "year", "s": 53.235, "e": 53.64}, {"w": "He", "s": 54.65, "e": 54.92}, {"w": "was", "s": 54.98, "e": 55.295}, {"w": "released", "s": 55.355, "e": 55.895}, {"w": "only", "s": 55.955, "e": 56.315}, {"w": "after", "s": 56.375, "e": 56.78}, {"w": "the", "s": 56.84, "e": 57.155}, {"w": "family", "s": 57.215, "e": 57.665}, {"w": "handed", "s": 57.725, "e": 58.175}, {"w": "over", "s": 58.235, "e": 58.595}, {"w": "their", "s": 58.655, "e": 59.06}, {"w": "Austrian", "s": 59.12, "e": 59.66}, {"w": "holdings", "s": 59.72, "e": 60.305}, {"w": "Across", "s": 60.615, "e": 61.065}, {"w": "occupied", "s": 61.125, "e": 61.665}, {"w": "Europe", "s": 61.725, "e": 62.22}, {"w": "Rothschild", "s": 62.53, "e": 63.16}, {"w": "banks", "s": 63.22, "e": 63.67}, {"w": "homes", "s": 63.98, "e": 64.385}, {"w": "and", "s": 64.445, "e": 64.76}, {"w": "art", "s": 64.82, "e": 65.135}, {"w": "were", "s": 65.195, "e": 65.555}, {"w": "seized", "s": 65.615, "e": 66.11}, {"w": "Many", "s": 67.12, "e": 67.48}, {"w": "family", "s": 67.54, "e": 67.99}, {"w": "members", "s": 68.05, "e": 68.545}, {"w": "escaped", "s": 68.605, "e": 69.1}, {"w": "to", "s": 69.16, "e": 69.43}, {"w": "Britain", "s": 69.49, "e": 70.03}, {"w": "the", "s": 70.34, "e": 70.655}, {"w": "US", "s": 70.715, "e": 70.985}, {"w": "or", "s": 71.045, "e": 71.315}, {"w": "Switzerland", "s": 71.375, "e": 72.095}, {"w": "Some", "s": 72.405, "e": 72.81}, {"w": "like", "s": 73.12, "e": 73.48}, {"w": "Elisabeth", "s": 73.54, "e": 74.125}, {"w": "de", "s": 74.185, "e": 74.455}, {"w": "Rothschild", "s": 74.515, "e": 75.19}, {"w": "died", "s": 75.5, "e": 75.86}, {"w": "in", "s": 75.92, "e": 76.19}, {"w": "the", "s": 76.25, "e": 76.565}, {"w": "camps", "s": 76.625, "e": 77.075}]}
+window.TIMING={
+"dur": 55.492,
+"shots": [
+{
+"i": 1,
+"start": 0.0,
+"vo_start": 0.6,
+"vo_end": 10.0,
+"text": "A Jewish family this visible became a target. Through the late 1800s, antisemitic writers turned the Rothschild name into a symbol of imagined Jewish control of the world.",
+"end": 10.275
+},
+{
+"i": 2,
+"start": 10.275,
+"vo_start": 10.55,
+"vo_end": 18.011,
+"text": "Those myths were false then and they are false now. The family was rich and powerful. It did not secretly run Europe.",
+"end": 18.286
+},
+{
+"i": 3,
+"start": 18.286,
+"vo_start": 18.561,
+"vo_end": 29.041,
+"text": "In 1931, Austria's biggest bank, the Creditanstalt, collapsed. The Vienna Rothschilds were its leading shareholders. The crash spread banking panic across Europe.",
+"end": 29.316
+},
+{
+"i": 4,
+"start": 29.316,
+"vo_start": 29.591,
+"vo_end": 38.91,
+"text": "The Nazis used the name in their propaganda, including a 1940 film. When Germany took Austria in 1938, Baron Louis Rothschild was arrested and held for about a year.",
+"end": 39.185
+},
+{
+"i": 5,
+"start": 39.185,
+"vo_start": 39.46,
+"vo_end": 46.817,
+"text": "He was released only after the family handed over their Austrian holdings. Across occupied Europe, Rothschild banks, homes and art were seized.",
+"end": 47.092
+},
+{
+"i": 6,
+"start": 47.092,
+"vo_start": 47.367,
+"vo_end": 54.542,
+"text": "Many family members escaped to Britain, the US or Switzerland. Some, like Elisabeth de Rothschild, died in the camps.",
+"end": 55.492
+}
+],
+"words": [
+{
+"w": "A",
+"s": 0.6,
+"e": 1.0
+},
+{
+"w": "Jewish",
+"s": 0.8,
+"e": 1.32
+},
+{
+"w": "family",
+"s": 1.0,
+"e": 1.32
+},
+{
+"w": "this",
+"s": 1.0,
+"e": 1.76
+},
+{
+"w": "visible",
+"s": 1.58,
+"e": 2.08
+},
+{
+"w": "became",
+"s": 1.76,
+"e": 2.38
+},
+{
+"w": "a",
+"s": 2.08,
+"e": 2.54
+},
+{
+"w": "target.",
+"s": 2.38,
+"e": 2.86
+},
+{
+"w": "Through",
+"s": 2.54,
+"e": 3.72
+},
+{
+"w": "the",
+"s": 3.64,
+"e": 4.02
+},
+{
+"w": "late",
+"s": 3.86,
+"e": 5.18
+},
+{
+"w": "1800s,",
+"s": 4.02,
+"e": 5.36
+},
+{
+"w": "antisemitic",
+"s": 5.2,
+"e": 5.62
+},
+{
+"w": "writers",
+"s": 5.36,
+"e": 6.06
+},
+{
+"w": "turned",
+"s": 5.62,
+"e": 6.5
+},
+{
+"w": "the",
+"s": 6.06,
+"e": 6.68
+},
+{
+"w": "Rothschild",
+"s": 6.5,
+"e": 6.92
+},
+{
+"w": "name",
+"s": 6.68,
+"e": 7.34
+},
+{
+"w": "into",
+"s": 6.92,
+"e": 7.66
+},
+{
+"w": "a",
+"s": 7.34,
+"e": 7.8
+},
+{
+"w": "symbol",
+"s": 7.66,
+"e": 8.02
+},
+{
+"w": "of",
+"s": 7.8,
+"e": 8.26
+},
+{
+"w": "imagined",
+"s": 8.02,
+"e": 8.64
+},
+{
+"w": "Jewish",
+"s": 8.26,
+"e": 8.98
+},
+{
+"w": "control",
+"s": 8.64,
+"e": 9.3
+},
+{
+"w": "of",
+"s": 8.98,
+"e": 9.5
+},
+{
+"w": "the",
+"s": 9.3,
+"e": 9.56
+},
+{
+"w": "world.",
+"s": 9.5,
+"e": 9.76
+},
+{
+"w": "Those",
+"s": 10.55,
+"e": 10.891
+},
+{
+"w": "myths",
+"s": 10.891,
+"e": 11.111
+},
+{
+"w": "were",
+"s": 11.111,
+"e": 11.371
+},
+{
+"w": "false",
+"s": 11.371,
+"e": 11.651
+},
+{
+"w": "then",
+"s": 11.651,
+"e": 11.931
+},
+{
+"w": "and",
+"s": 11.931,
+"e": 12.271
+},
+{
+"w": "they",
+"s": 12.271,
+"e": 12.371
+},
+{
+"w": "are",
+"s": 12.371,
+"e": 12.471
+},
+{
+"w": "false",
+"s": 12.471,
+"e": 12.691
+},
+{
+"w": "now.",
+"s": 12.691,
+"e": 13.271
+},
+{
+"w": "The",
+"s": 13.991,
+"e": 14.041
+},
+{
+"w": "family",
+"s": 14.031,
+"e": 14.231
+},
+{
+"w": "was",
+"s": 14.231,
+"e": 14.531
+},
+{
+"w": "rich",
+"s": 14.531,
+"e": 14.731
+},
+{
+"w": "and",
+"s": 14.731,
+"e": 15.011
+},
+{
+"w": "powerful.",
+"s": 15.011,
+"e": 15.391
+},
+{
+"w": "It",
+"s": 16.171,
+"e": 16.431
+},
+{
+"w": "did",
+"s": 16.431,
+"e": 16.571
+},
+{
+"w": "not",
+"s": 16.571,
+"e": 16.771
+},
+{
+"w": "secretly",
+"s": 16.771,
+"e": 17.171
+},
+{
+"w": "run",
+"s": 17.171,
+"e": 17.511
+},
+{
+"w": "Europe.",
+"s": 17.511,
+"e": 17.791
+},
+{
+"w": "In",
+"s": 18.561,
+"e": 19.201
+},
+{
+"w": "1931,",
+"s": 18.701,
+"e": 19.921
+},
+{
+"w": "Austria's",
+"s": 19.201,
+"e": 20.081
+},
+{
+"w": "biggest",
+"s": 19.921,
+"e": 20.481
+},
+{
+"w": "bank,",
+"s": 20.081,
+"e": 20.881
+},
+{
+"w": "the",
+"s": 20.841,
+"e": 21.101
+},
+{
+"w": "Creditanstalt,",
+"s": 20.881,
+"e": 21.681
+},
+{
+"w": "collapsed.",
+"s": 21.301,
+"e": 22.341
+},
+{
+"w": "The",
+"s": 21.961,
+"e": 23.341
+},
+{
+"w": "Vienna",
+"s": 23.301,
+"e": 23.561
+},
+{
+"w": "Rothschilds",
+"s": 23.341,
+"e": 24.301
+},
+{
+"w": "were",
+"s": 23.561,
+"e": 24.481
+},
+{
+"w": "its",
+"s": 24.301,
+"e": 24.621
+},
+{
+"w": "leading",
+"s": 24.481,
+"e": 24.921
+},
+{
+"w": "shareholders.",
+"s": 24.621,
+"e": 25.401
+},
+{
+"w": "The",
+"s": 24.921,
+"e": 26.641
+},
+{
+"w": "crash",
+"s": 26.581,
+"e": 26.921
+},
+{
+"w": "spread",
+"s": 26.641,
+"e": 27.261
+},
+{
+"w": "banking",
+"s": 26.921,
+"e": 27.761
+},
+{
+"w": "panic",
+"s": 27.261,
+"e": 28.141
+},
+{
+"w": "across",
+"s": 27.761,
+"e": 28.461
+},
+{
+"w": "Europe.",
+"s": 28.141,
+"e": 28.781
+},
+{
+"w": "The",
+"s": 29.591,
+"e": 29.77
+},
+{
+"w": "Nazis",
+"s": 29.591,
+"e": 30.03
+},
+{
+"w": "used",
+"s": 29.77,
+"e": 30.33
+},
+{
+"w": "the",
+"s": 30.03,
+"e": 30.53
+},
+{
+"w": "name",
+"s": 30.33,
+"e": 30.67
+},
+{
+"w": "in",
+"s": 30.53,
+"e": 30.83
+},
+{
+"w": "their",
+"s": 30.67,
+"e": 31.35
+},
+{
+"w": "propaganda,",
+"s": 30.93,
+"e": 32.01
+},
+{
+"w": "including",
+"s": 31.79,
+"e": 32.23
+},
+{
+"w": "a",
+"s": 32.01,
+"e": 32.73
+},
+{
+"w": "1940",
+"s": 32.23,
+"e": 33.11
+},
+{
+"w": "film.",
+"s": 32.73,
+"e": 33.87
+},
+{
+"w": "When",
+"s": 33.73,
+"e": 34.13
+},
+{
+"w": "Germany",
+"s": 33.87,
+"e": 34.37
+},
+{
+"w": "took",
+"s": 34.13,
+"e": 34.77
+},
+{
+"w": "Austria",
+"s": 34.37,
+"e": 35.03
+},
+{
+"w": "in",
+"s": 34.77,
+"e": 35.71
+},
+{
+"w": "1938,",
+"s": 35.03,
+"e": 36.21
+},
+{
+"w": "Baron",
+"s": 36.15,
+"e": 36.47
+},
+{
+"w": "Louis",
+"s": 36.21,
+"e": 36.89
+},
+{
+"w": "Rothschild",
+"s": 36.47,
+"e": 37.21
+},
+{
+"w": "was",
+"s": 36.89,
+"e": 37.57
+},
+{
+"w": "arrested",
+"s": 37.21,
+"e": 37.87
+},
+{
+"w": "and",
+"s": 37.57,
+"e": 38.05
+},
+{
+"w": "held",
+"s": 37.87,
+"e": 38.25
+},
+{
+"w": "for",
+"s": 38.05,
+"e": 38.39
+},
+{
+"w": "about",
+"s": 38.25,
+"e": 38.55
+},
+{
+"w": "a",
+"s": 38.39,
+"e": 38.73
+},
+{
+"w": "year.",
+"s": 38.55,
+"e": 38.73
+},
+{
+"w": "He",
+"s": 39.46,
+"e": 39.637
+},
+{
+"w": "was",
+"s": 39.637,
+"e": 39.757
+},
+{
+"w": "released",
+"s": 39.757,
+"e": 40.057
+},
+{
+"w": "only",
+"s": 40.057,
+"e": 40.397
+},
+{
+"w": "after",
+"s": 40.397,
+"e": 40.617
+},
+{
+"w": "the",
+"s": 40.617,
+"e": 40.777
+},
+{
+"w": "family",
+"s": 40.777,
+"e": 41.037
+},
+{
+"w": "handed",
+"s": 41.037,
+"e": 41.397
+},
+{
+"w": "over",
+"s": 41.397,
+"e": 41.697
+},
+{
+"w": "their",
+"s": 41.697,
+"e": 41.897
+},
+{
+"w": "Austrian",
+"s": 41.897,
+"e": 42.257
+},
+{
+"w": "holdings.",
+"s": 42.257,
+"e": 42.657
+},
+{
+"w": "Across",
+"s": 43.477,
+"e": 43.737
+},
+{
+"w": "occupied",
+"s": 43.737,
+"e": 44.157
+},
+{
+"w": "Europe,",
+"s": 44.157,
+"e": 44.477
+},
+{
+"w": "Rothschild",
+"s": 44.777,
+"e": 44.917
+},
+{
+"w": "banks,",
+"s": 44.917,
+"e": 45.397
+},
+{
+"w": "homes",
+"s": 45.637,
+"e": 45.797
+},
+{
+"w": "and",
+"s": 45.797,
+"e": 45.997
+},
+{
+"w": "art",
+"s": 45.997,
+"e": 46.177
+},
+{
+"w": "were",
+"s": 46.177,
+"e": 46.317
+},
+{
+"w": "seized.",
+"s": 46.317,
+"e": 46.557
+},
+{
+"w": "Many",
+"s": 47.367,
+"e": 47.722
+},
+{
+"w": "family",
+"s": 47.367,
+"e": 47.982
+},
+{
+"w": "members",
+"s": 47.722,
+"e": 48.402
+},
+{
+"w": "escaped",
+"s": 47.982,
+"e": 48.762
+},
+{
+"w": "to",
+"s": 48.402,
+"e": 49.222
+},
+{
+"w": "Britain,",
+"s": 48.762,
+"e": 49.582
+},
+{
+"w": "the",
+"s": 49.562,
+"e": 49.842
+},
+{
+"w": "US",
+"s": 49.582,
+"e": 50.182
+},
+{
+"w": "or",
+"s": 49.842,
+"e": 50.542
+},
+{
+"w": "Switzerland.",
+"s": 50.182,
+"e": 51.742
+},
+{
+"w": "Some,",
+"s": 51.482,
+"e": 52.162
+},
+{
+"w": "like",
+"s": 52.062,
+"e": 52.582
+},
+{
+"w": "Elisabeth",
+"s": 52.162,
+"e": 52.802
+},
+{
+"w": "de",
+"s": 52.582,
+"e": 53.102
+},
+{
+"w": "Rothschild,",
+"s": 52.802,
+"e": 53.702
+},
+{
+"w": "died",
+"s": 53.462,
+"e": 53.882
+},
+{
+"w": "in",
+"s": 53.702,
+"e": 54.002
+},
+{
+"w": "the",
+"s": 53.882,
+"e": 54.282
+},
+{
+"w": "camps.",
+"s": 54.002,
+"e": 54.282
+}
+]
+}
