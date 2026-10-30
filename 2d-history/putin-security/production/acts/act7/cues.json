@@ -1,0 +1,88 @@
+{
+ "dur": 17.785,
+ "cues": [
+  {
+   "t": 2.06,
+   "name": "pop",
+   "gain": 0.4
+  },
+  {
+   "t": 3.58,
+   "name": "pop",
+   "gain": 0.4
+  },
+  {
+   "t": 4.34,
+   "name": "pop",
+   "gain": 0.4
+  },
+  {
+   "t": 6.9,
+   "name": "pop",
+   "gain": 0.4
+  },
+  {
+   "t": 7.94,
+   "name": "pop",
+   "gain": 0.4
+  },
+  {
+   "t": 9.095,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 9.595,
+   "name": "swell",
+   "gain": 0.35
+  },
+  {
+   "t": 12.224,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 15.555,
+   "name": "hit",
+   "gain": 0.4
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 9.795,
+   "name": "hum_loop",
+   "gain": 0.3
+  },
+  {
+   "start": 0,
+   "end": 9.795,
+   "name": "swell",
+   "gain": 0.2
+  },
+  {
+   "start": 8.995,
+   "end": 12.924000000000001,
+   "name": "hum_loop",
+   "gain": 0.3
+  },
+  {
+   "start": 8.995,
+   "end": 12.924000000000001,
+   "name": "drone",
+   "gain": 0.2
+  },
+  {
+   "start": 12.124,
+   "end": 18.585,
+   "name": "heartbeat",
+   "gain": 0.3
+  },
+  {
+   "start": 12.124,
+   "end": 18.585,
+   "name": "drone",
+   "gain": 0.2
+  }
+ ]
+}

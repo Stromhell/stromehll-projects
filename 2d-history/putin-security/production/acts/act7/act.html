@@ -29,7 +29,7 @@ window.SHOTS = [
   { draw: (c, lt, u, S) => { backdrop('office_a', .78, 10)(c); const T = [['ARMOURED CAR', 'moscow_road', S.at[0], cc => PU.limo(cc, 0, 60, .3, 0, 1)], ['FOUR LOOKALIKE PLANES', 'airfield', S.at[1], cc => { for (let k = 0; k < 4; k++) PU.jet(cc, -90 + k * 60, 20 + k * 12, .12, -1); }], ['NO-TIMETABLE TRAIN', 'birch_rail', S.at[2], cc => PU.train(cc, 140, 70, .18, 3, { top: '#9aa0a6', bot: '#5a6068', stripe: '#c8302a', nose: '#7a8088' })], ['THREE COPIED OFFICES', 'office_a', S.at[3], cc => {}], ['A DECOY OR TWO', 'airfield', S.at[4], cc => { PU.silhouette(cc, -40, 70, .4, '#0e0c10'); PU.silhouette(cc, 40, 70, .4, '#3a3a48'); }]];
       T.forEach(([lab, pl, at, d], i) => recapTile(c, i < 3 ? 420 + i * 540 : 690 + (i - 3) * 540, i < 3 ? 260 : 640, pop(lt, at), lab, pl, d)); },
     bed: [['hum_loop', .3], ['swell', .2]],
-    init: S => { S.at = [A.at(S, 'armoured car', 1.4), A.at(S, 'planes', 2.4), A.at(S, 'train', 3.4), A.at(S, 'office', 4.4), A.at(S, 'decoy', 5.4)]; S.D.over = [(c, lt) => K.badge(c, 'THE SYSTEM', lt, { at: .3 })]; S.D.sfx = S.at.map(t => [t, 'pop', .4]); } },
+    init: S => { S.at = [.3, A.at(S, 'planes', 2.4), A.at(S, 'train', 3.4), A.at(S, 'office', 4.4), A.at(S, 'decoy', 5.4)]; S.D.over = [(c, lt) => K.badge(c, 'THE SYSTEM', lt, { at: .3 })]; S.D.sfx = S.at.map(t => [t, 'pop', .4]); } },
   // 2 one of the most protected lives on earth
   { plate: 'long_table', cam: { z: [1.05, 1.5], x: [1280, 1290], y: [760, 700], ease: E.io }, bed: [['hum_loop', .3], ['drone', .2]],
     live: [(c) => PU.silhouette(c, 1290, 726, .3)],

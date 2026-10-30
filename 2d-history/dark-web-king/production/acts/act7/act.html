@@ -160,10 +160,10 @@ window.SHOTS = [
         (c, lt) => lt >= S.tN && K.dateTag(c, '2 OCTOBER 2013', lt, { at: S.tN })];
       S.D.sfx = [[tH, 'door_slam', .35], [tH + .3, 'stamp', .4], [S.tN, 'whoosh', .35], [S.tN + .5, 'stamp', .45]]; } },
   // 12 on the laptop: his journal, business records, about 144,000 bitcoins
-  { draw: (c, lt, u, S) => { backdrop('serverhall', .65)(c); folder(c, 420, 400, pop(lt, S.tJ), 'JOURNAL', '#5a3a6a'); folder(c, 420, 680, pop(lt, S.tR), 'RECORDS', '#2f5a6a'); if (lt > S.tB) { DW.bigCoin(c, 1300, 420, 150, pop(lt, S.tB)); K.counter(c, 0, 144000, lt, { at: S.tB + .2, dur: 1.6, x: 1300, y: 720, px: 96, post: ' BTC' }); } },
+  { draw: (c, lt, u, S) => { backdrop('serverhall', .65)(c); folder(c, 420, 400, pop(lt, S.tJ), 'JOURNAL', '#5a3a6a'); folder(c, 420, 680, pop(lt, S.tR), 'RECORDS', '#2f5a6a'); if (lt > S.tB) { DW.bigCoin(c, 1300, 420, 150, pop(lt, S.tB)); K.counter(c, 0, 144000, lt, { at: S.tB + .1, dur: 1.0, x: 1300, y: 720, px: 96, post: ' BTC' }); } },
     bed: [['hum_loop', .25]],
-    init: S => { S.tJ = A.at(S, 'journal', 1.4); S.tR = A.at(S, 'records', 2.4); S.tB = A.at(S, 'bitcoins', 3.8);
-      S.D.over = [(c, lt) => K.badge(c, 'FOUND ON THE LAPTOP', lt, { at: .3 }), (c, lt) => K.card(c, 'ABOUT', lt, { at: S.tB + .2, x: 1050, y: 620, px: 34, rot: -4 })];
+    init: S => { S.tJ = A.at(S, 'journal', 1.4); S.tR = A.at(S, 'records', 2.4); S.tB = A.at(S, 'about', 3.2);
+      S.D.over = [(c, lt) => K.badge(c, 'FOUND ON THE LAPTOP', lt, { at: .3 }), (c, lt) => K.card(c, 'ABOUT', lt, { at: S.tB + .1, x: 1300, y: 612, px: 30, rot: -3 })];
       S.D.sfx = [[S.tJ, 'pop', .35], [S.tR, 'pop', .35], [S.tB, 'coins_cascade', .35]]; } },
 ];
 const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
