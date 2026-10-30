@@ -87,7 +87,7 @@
     c.fillStyle = 'rgba(0,0,0,.28)'; c.beginPath(); c.ellipse(6, 26, 120, 18, 0, 0, 7); c.fill();
     c.fillStyle = '#3e2414'; c.beginPath(); c.moveTo(-100, 0); c.lineTo(-100, 22); c.ellipse(0, 22, 100, 20, 0, Math.PI, 0, true); c.lineTo(100, 0); c.closePath(); c.fill(); c.stroke();
     c.fillStyle = '#6e4428'; c.beginPath(); c.ellipse(0, 0, 100, 20, 0, 0, 7); c.fill(); c.stroke(); c.fillStyle = 'rgba(255,230,190,.25)'; c.beginPath(); c.ellipse(-20, -4, 50, 7, 0, 0, 7); c.fill();
-    c.save(); c.translate(150, -70); c.rotate(-lift * .8);
+    c.save(); c.translate(150, -70); c.rotate(lift * .8);
     c.fillStyle = '#7a4a26'; c.beginPath(); c.moveTo(0, -7); c.lineTo(-150, -11); c.lineTo(-150, 11); c.lineTo(0, 7); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#4a2c16'; c.beginPath(); c.arc(0, 0, 10, 0, 7); c.fill(); c.stroke();
     c.translate(-160, 0); c.fillStyle = '#8a5530'; c.beginPath(); c.roundRect(-38, -52, 76, 104, 16); c.fill(); c.stroke();
     c.fillStyle = '#d8b04a'; c.fillRect(-38, -40, 76, 10); c.strokeRect(-38, -40, 76, 10); c.fillRect(-38, 30, 76, 10); c.strokeRect(-38, 30, 76, 10);
