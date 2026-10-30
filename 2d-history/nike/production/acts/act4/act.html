@@ -1,0 +1,80 @@
+<!doctype html><html><head><meta charset="utf-8"><title>NK act 4 - Air, and a Brand Without Factories</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../nk_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['track_trials', 'workshop', 'office_day', 'trading', 'worldmap', 'shoe_shop', 'campus']) K.load(n, PL + n + '.jpg');
+const SW = 1920, SH = 1080, INK = NK.INK, OR = NK.ORANGE, TE = NK.TEAL;
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+const KNIGHT = { costume: 'suit', hair: 'short', hairCol: '#c89a5a', seed: 6 };
+const PRE = { costume: 'shirt', hair: 'curly', hairCol: '#8a5a2a', seed: 80 };
+const RUDY = { costume: 'office', hair: 'bald', hairCol: '#9a9a9a', seed: 81, glasses: true };
+const HATFIELD = { costume: 'shirtsleeves', hair: 'swept', hairCol: '#4a3a2a', seed: 82, glasses: true };
+const KID = { costume: 'school', hair: 'curly', hairCol: '#2a1a10', seed: 83 };
+const ll = (lon, lat) => [160 + (lon + 170) * 6.2222, 272 + (84 - lat) * 6.2222];
+const backdrop = (name, b = .6, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const airShoe = (c, x, y, s, glow, win) => { NK.shoe(c, x, y, s, { col: '#f4f0e6', accent: OR, mark: 'swoosh', air: true, window: win }); if (glow > 0) { c.save(); c.globalAlpha = glow * (.6 + .3 * Math.sin(glow * 20)); const gx = x - 90 * s, gy = y - 30 * s; const g = c.createRadialGradient(gx, gy, 0, gx, gy, 70 * s); g.addColorStop(0, 'rgba(140,220,255,.9)'); g.addColorStop(1, 'rgba(140,220,255,0)'); c.fillStyle = g; c.beginPath(); c.arc(gx, gy, 70 * s, 0, 7); c.fill(); c.restore(); } };
+
+window.SHOTS = [
+  // 1 Prefontaine leads the pack; the crowd fades to a quiet memorial plaque
+  { plate: 'track_trials', cam: { z: [1.1, 1.16], x: [1280, 1320], y: [860, 860] }, bed: [['crowd_loop', .45]],
+    figs: [{ ...PRE, s: 1.8, y: 1380, mood: 'happy', anim: (o, lt) => { const w = R.walkX(lt, -200, 3000, .2, 6.5, o.s); o.x = w.x; o.t = w.phase; o.pose = 'run'; o.facing = 1; } }].concat([0, 1, 2].map(k => ({ costume: ['shirtsleeves', 'school', 'shirt'][k], hair: ['short', 'swept', 'bald'][k], seed: 84 + k, s: 1.72 - k * .05, y: 1350 - k * 30, mood: 'worried', anim: (o, lt) => { const w = R.walkX(lt, -600 - k * 260, 2600 - k * 260, .2, 6.5, o.s); o.x = w.x; o.t = w.phase; o.pose = 'run'; o.facing = 1; } }))),
+    over: [], init: S => { S.tD = A.at(S, 'car crash', 7); const tH = A.at(S, 'honours', 11.5);
+      S.D.over = [(c, lt) => K.card(c, 'FEARLESS FRONT-RUNNER', lt, { at: 1.2, x: 470, y: 230, px: 46, rot: -3, until: S.tD }), (c, lt) => { const a = K.seg(lt, S.tD - .4, S.tD + .8); if (a <= 0) return; c.save(); c.fillStyle = `rgba(10,10,14,${.82 * a})`; c.fillRect(0, 0, SW, SH); c.globalAlpha = a; c.translate(960, 520); c.fillStyle = 'rgba(0,0,0,.4)'; c.fillRect(-370, -170, 760, 360); c.fillStyle = '#9a7a3a'; c.strokeStyle = '#3a2a10'; c.lineWidth = 8; c.fillRect(-380, -180, 760, 360); c.strokeRect(-380, -180, 760, 360); c.strokeRect(-350, -150, 700, 300); c.fillStyle = '#2a1a08'; c.textAlign = 'center'; c.font = '64px Anton'; c.fillText('STEVE PREFONTAINE', 0, -30); c.font = '48px Oswald'; c.fillText('1951 – 1975', 0, 50); c.restore(); },
+        (c, lt) => K.card(c, "HONOURED AT NIKE'S HQ", lt, { at: tH, x: 960, y: 860, px: 42, rot: -2 })];
+      S.D.sfx = [[.2, 'run_steps', .5], [1.2, 'crowd_cheer', .4], [S.tD - .2, 'swell', .3]]; } },
+  // 2 aerospace engineer Frank Rudy unrolls a blueprint: air inside the sole
+  { draw: (c, lt, u, S) => { backdrop('workshop', .5, 9)(c); const b = E.out(K.seg(lt, S.tB, S.tB + 1)); c.save(); c.translate(1150, 520); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(-420 * b + 14, -270, 840 * b, 560); c.fillStyle = '#1f4f8a'; c.fillRect(-420 * b, -280, 840 * b, 560); c.strokeStyle = '#d8ecff'; c.lineWidth = 4; c.strokeRect(-420 * b, -280, 840 * b, 560);
+      if (b > .95) { c.lineWidth = 3; c.setLineDash([12, 8]); c.beginPath(); c.moveTo(-330, 60); c.quadraticCurveTo(-340, -80, -150, -110); c.lineTo(220, -60); c.quadraticCurveTo(340, -30, 330, 60); c.closePath(); c.stroke(); c.setLineDash([]); c.beginPath(); c.moveTo(-340, 60); c.lineTo(340, 60); c.lineTo(340, 140); c.lineTo(-340, 140); c.closePath(); c.stroke(); const gl = .5 + .5 * Math.sin(lt * 4); c.fillStyle = `rgba(160,230,255,${.3 + .4 * gl * K.seg(lt, S.tA, S.tA + .5)})`; c.beginPath(); c.roundRect(-220, 74, 440, 52, 24); c.fill(); c.stroke(); c.font = '30px Oswald'; c.fillStyle = '#d8ecff'; c.textAlign = 'center'; c.fillText('PRESSURISED AIR', 0, 190); c.fillText('SOLE · CROSS-SECTION', 0, -220); } c.restore();
+      R.figure(c, { x: 1700, y: 1020, s: 1.6, ...RUDY, facing: -1, pose: 'present', t: lt, mood: 'happy', talk: lt > S.tB && lt < S.tB + 4 }); },
+    bed: [['hum_loop', .3]],
+    init: S => { const tR = A.at(S, 'Frank Rudy', 3); S.tB = tR - .2; S.tA = A.at(S, 'pressurised air', 8); const tT = A.at(S, 'turned down', 6);
+      S.D.over = [(c, lt) => K.card(c, 'FRANK RUDY · AEROSPACE ENGINEER', lt, { at: tR, x: 600, y: 900, px: 40, rot: -2 }), (c, lt) => K.card(c, 'OTHERS SAID NO', lt, { at: tT, x: 400, y: 160, px: 44, rot: -4, fill: '#ffd0c0' })];
+      S.D.sfx = [[S.tB, 'paper', .45], [tT, 'stamp', .35], [S.tA, 'hum_loop', .2], [S.tA, 'riser', .3]]; } },
+  // 3 the shoe with a glowing air pocket; NIKE AIR stamps on
+  { draw: (c, lt, u, S) => { backdrop('office_day', .45, 10)(c); const g = K.seg(lt, S.tL, S.tL + 1); airShoe(c, 960, 600, 2.4 * E.back(K.seg(lt, .1, .7)), g, false);
+      const st = pop(lt, S.tL + .5, .3); if (st > 0) { c.save(); c.translate(1380, 380); c.rotate(-.12); c.scale(1.6 - .6 * st, 1.6 - .6 * st); c.globalAlpha = st; c.strokeStyle = '#c83a2a'; c.lineWidth = 8; c.strokeRect(-200, -60, 400, 120); K.outlined(c, 'NIKE AIR', 0, 0, 74, { fill: '#c83a2a' }); c.restore(); } },
+    bed: [['hum_loop', .25]],
+    init: S => { S.tL = A.at(S, 'air-cushioned', 3); const tV = A.at(S, 'most valuable', 7);
+      S.D.over = [(c, lt) => K.dateTag(c, '1978', lt, { at: .3 }), (c, lt) => K.card(c, 'NIKE SAID YES', lt, { at: .4, x: 420, y: 200, px: 50, rot: -4 }), (c, lt) => K.card(c, 'ONE OF FOOTWEAR\'S BIGGEST NAMES', lt, { at: tV, x: 960, y: 860, px: 42, rot: 2 })];
+      S.D.sfx = [[.4, 'pop', .4], [S.tL, 'whoosh_soft', .4], [S.tL + .2, 'hum_loop', .2], [S.tL + .5, 'stamp', .55], [tV, 'chime', .35]]; } },
+  // 4 1980 IPO: the ticker scrolls; Knight's jaw drops
+  { plate: 'trading', cam: { z: [1.12, 1.2], x: [1280, 1280], y: [860, 860] }, bed: [['trading_loop', .4]],
+    figs: [{ x: 1280, y: 1360, s: 2.0, ...KNIGHT, facing: 1, pose: 'stand', mood: 'neutral', anim: (o, lt, u, S) => { const w = lt > S.tR; o.mood = w ? 'surprised' : 'neutral'; o.pose = w ? 'shrug' : 'stand'; o.sweat = w; } }],
+    init: S => { const tP = A.at(S, 'public', 1.6); S.tR = A.at(S, 'very rich', 5);
+      S.D.over = [(c, lt) => { const a = K.seg(lt, .2, .6); if (a <= 0) return; c.save(); c.globalAlpha = a; c.fillStyle = '#0c0f0c'; c.fillRect(0, 60, SW, 90); c.strokeStyle = '#e8b44a'; c.lineWidth = 4; c.strokeRect(-4, 60, SW + 8, 90); c.font = '52px "Courier New", monospace'; c.fillStyle = '#7ef08a'; const txt = 'NKE  NEW LISTING ▲   NKE  NEW LISTING ▲   NKE  NEW LISTING ▲   '; const w = c.measureText(txt).width; const x = -((lt * 260) % w); c.fillText(txt + txt, x, 124); c.restore(); }, (c, lt) => K.card(c, 'IPO · 1980', lt, { at: tP, x: 400, y: 620, px: 64, rot: -4 }), (c, lt) => K.card(c, 'THE ACCOUNTANT WITH A TRUNK FULL OF SHOES', lt, { at: S.tR - 1.6, x: 960, y: 930, px: 38, rot: -2 })];
+      S.D.sfx = [[.2, 'trading_loop', .2], [tP, 'chime', .5], [S.tR, 'coins_cascade', .45]]; } },
+  // 5 1987: a designer cuts a window in the sole; light shines through: Air Max
+  { draw: (c, lt, u, S) => { backdrop('workshop', .5, 9)(c); const cut = K.seg(lt, S.tC, S.tC + 1.4); airShoe(c, 860, 620, 2.3, cut, cut > .98);
+      if (cut > 0 && cut < 1) { const kx = 860 - 110 + cut * 300; c.save(); c.translate(kx, 700); c.rotate(-.6); c.fillStyle = '#c8c8cc'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.moveTo(0, 0); c.lineTo(30, -16); c.lineTo(30, 0); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#e8b44a'; c.fillRect(30, -10, 110, 22); c.strokeRect(30, -10, 110, 22); c.restore(); }
+      R.figure(c, { x: 1600, y: 1020, s: 1.6, ...HATFIELD, facing: -1, pose: lt > S.tC + 1.4 ? 'present' : 'think', t: lt, mood: 'happy' }); },
+    bed: [['hum_loop', .25]],
+    init: S => { const tH = A.at(S, 'Tinker Hatfield', 2); const tA = A.at(S, 'architect', 4); S.tC = A.at(S, 'cut a window', 6.5); const tM = A.at(S, 'Air Max', 10);
+      S.D.over = [(c, lt) => K.dateTag(c, '1987', lt, { at: .3 }), (c, lt) => K.card(c, 'TINKER HATFIELD', lt, { at: tH, x: 1560, y: 200, px: 48, rot: 3 }), (c, lt) => K.card(c, 'TRAINED AS AN ARCHITECT', lt, { at: tA, x: 1560, y: 310, px: 36, rot: -2 }), (c, lt) => K.title(c, 'AIR MAX', lt, { at: tM, x: 860, y: 230, px: 110, fill: '#ffe0c0' })];
+      S.D.sfx = [[S.tC, 'scrape', .4], [S.tC + 1.4, 'chime', .45], [tM, 'stamp', .5]]; } },
+  // 6 map: designs fly from Oregon to contract factories in Asia; Vietnam lights up
+  { plate: 'worldmap', cam: { z: [1.1, 1.3], x: [1280, 1600], y: [640, 640], ease: E.io }, bed: [['wind_loop', .3]],
+    live: [(c, lt, u, S) => { const P0 = ll(-122.7, 45.5); const T = [[106, 16, 'VIETNAM', '#c83a2a'], [113, 30, 'CHINA', '#e8a040'], [110, -7, 'INDONESIA', '#e8a040']];
+      const pin = (p, a, col) => { if (a <= 0) return; c.save(); c.translate(p[0], p[1]); c.scale(a, a); c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.arc(0, -34, 16, 0, 7); c.moveTo(-10, -26); c.lineTo(0, 0); c.lineTo(10, -26); c.fill(); c.stroke(); c.restore(); };
+      pin(P0, pop(lt, .3), '#1f5aa8');
+      T.forEach((t, k) => { const f = K.seg(lt, S.tF + k * .5, S.tF + k * .5 + 2.2), P1 = ll(-170, 45.5 - k * 3), P2 = ll(190, 40 - k * 6), P3 = ll(t[0], t[1]); const a = Math.min(1, f * 2), b = Math.max(0, f * 2 - 1);
+        c.save(); c.strokeStyle = 'rgba(200,58,42,.85)'; c.lineWidth = 6; c.setLineDash([16, 10]); c.lineDashOffset = -lt * 30; if (a > 0) { c.beginPath(); c.moveTo(...P0); c.lineTo(P0[0] + (P1[0] - P0[0]) * a, P0[1] + (P1[1] - P0[1]) * a); c.stroke(); } if (b > 0) { c.beginPath(); c.moveTo(...P2); c.lineTo(P2[0] + (P3[0] - P2[0]) * b, P2[1] + (P3[1] - P2[1]) * b); c.stroke(); } c.restore();
+        if (f >= 1) { pin(P3, pop(lt, S.tF + k * .5 + 2.2), t[3]); if (k === 0) { const h = K.seg(lt, S.tV, S.tV + .6); if (h > 0) { c.save(); c.globalAlpha = .45 * h * (.7 + .3 * Math.sin(lt * 5)); c.fillStyle = '#ff6a40'; c.beginPath(); c.arc(P3[0], P3[1] - 10, 70, 0, 7); c.fill(); c.restore(); } } } }); }],
+    init: S => { const tD = A.at(S, 'designs shoes', 2.4); S.tF = A.at(S, 'contract factories', 4.6); S.tV = A.at(S, 'Vietnam', 10);
+      S.D.over = [(c, lt) => K.card(c, 'NIKE: DESIGN + MARKETING', lt, { at: tD, x: 420, y: 230, px: 42, rot: -3 }), (c, lt) => K.card(c, 'CONTRACT FACTORIES (NOT NIKE)', lt, { at: S.tF + .4, x: 420, y: 340, px: 38, rot: 2 }), (c, lt) => K.title(c, '~50% FROM VIETNAM', lt, { at: S.tV, x: 1300, y: 940, px: 80, fill: '#ffd0b8' })];
+      S.D.sfx = [[.3, 'pop', .35], [tD, 'paper', .35], [S.tF, 'whoosh', .45], [S.tF + 1, 'whoosh_soft', .35], [S.tV, 'chime', .45]]; } },
+  // 7 a kid at the shop window; a thought bubble of himself winning a race
+  { plate: 'shoe_shop', cam: { z: [1.12, 1.22], x: [1280, 1240], y: [860, 840], ease: E.io }, bed: [['city_loop', .2]],
+    figs: [{ x: 900, y: 1380, s: 1.7, ...KID, facing: 1, pose: 'stand', mood: 'happy', anim: (o, lt, u, S) => { o.pose = lt > S.tB ? 'think' : 'stand'; } }],
+    front: [(c, lt) => NK.shoe(c, 1560, 1040, 1.3, { col: '#f4f0e6', accent: OR, mark: 'swoosh', air: true, window: true })],
+    init: S => { S.tB = A.at(S, 'your head', 2.6); const tC = A.at(S, 'copy a shoe', 6.5), tF = A.at(S, 'feeling', 9.5);
+      S.D.over = [(c, lt, u) => { const a = E.out(K.seg(lt, S.tB, S.tB + .8)); if (a <= 0) return; c.save(); c.globalAlpha = a; c.fillStyle = 'rgba(250,246,236,.96)'; c.strokeStyle = INK; c.lineWidth = 5; for (const [bx, by, r] of [[640, 640, 14], [700, 560, 22]]) { c.beginPath(); c.arc(bx, by, r, 0, 7); c.fill(); c.stroke(); } c.beginPath(); c.ellipse(900, 330, 380, 200, 0, 0, 7); c.fill(); c.stroke(); c.save(); c.beginPath(); c.ellipse(900, 330, 370, 190, 0, 0, 7); c.clip(); c.fillStyle = '#b8543a'; c.fillRect(500, 380, 800, 200); c.fillStyle = '#fff'; c.fillRect(1100, 300, 8, 240); R.figure(c, { x: 820 + Math.min(1, (lt - S.tB) / 3) * 200, y: 470, s: .8, ...KID, pose: lt > S.tB + 3 ? 'cheer' : 'run', t: lt * 1.4, mood: 'happy', facing: 1 }); c.restore(); c.restore(); },
+        (c, lt) => K.card(c, 'ANYONE CAN COPY A SHOE', lt, { at: tC, x: 1500, y: 200, px: 42, rot: 3 }), (c, lt) => K.card(c, 'NOT A FEELING', lt, { at: tF, x: 1500, y: 310, px: 52, rot: -3, fill: '#ffe0c0' })];
+      S.D.sfx = [[S.tB, 'whoosh_soft', .4], [S.tB + 1, 'run_steps', .3], [S.tB + 3, 'crowd_cheer', .4], [tF, 'chime', .45]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>
