@@ -40,6 +40,10 @@
     HIROHITO: man({ name: 'Hirohito', shirt: ['#1a1a20', '#08080c'], pants: ['#3a3a40', '#1a1a1e'], sleeves: true, tie: '#5a5a5a', glasses: true, mustache: true, build: 'man' }),
     FARMER: man({ skin: JSK2, shirt: ['#5a6a5a', '#2c342c'], pants: ['#4a4a3a', '#24241c'], sleeves: true, headwear: X.tenugui({ base: '#d8d0c0', shade: '#908878', rim: '#ffffff' }) }),
     OLDFARMER: Object.assign(man({ skin: JSK2, hairCol: GRY, shirt: ['#6a5a40', '#34281c'], pants: ['#4a4a3a', '#24241c'], sleeves: true }), { build: 'elder', hair: 'elder' }),
+    DODGE: suit(['#3a3a44', '#1a1a22'], '#7a2a2a', { name: 'Dodge', skin: { base: '#e8b494', shade: '#a8705a', rim: '#ffdcc0' }, hairCol: GRY, glasses: true, build: 'broad' }),
+    TOYODA: suit(['#2a2a30', '#121216'], '#3a3a5a', { name: 'Kiichiro Toyoda', glasses: true, mustache: true }),
+    YOSHIDA: suit(['#1a1a20', '#08080c'], '#5a5a5a', { name: 'Yoshida', hairCol: GRY, glasses: true, build: 'broad' }),
+    INDIAN: suit(['#e8e4d8', '#a8a498'], '#2a3a5a', { skin: { base: '#b07850', shade: '#704428', rim: '#e8b088' }, hairCol: BLK, mustache: true }),
     // workers and bosses
     WORKER: man({ shirt: ['#5a6a7a', '#2c343e'], pants: ['#5a6a7a', '#2c343e'], sleeves: true, headwear: X.tenugui({ base: '#e8e4d8', shade: '#a09a8a', rim: '#ffffff' }) }),
     WORKER2: man({ skin: JSK2, shirt: ['#7a6a4a', '#3e3424'], pants: ['#4a4a40', '#24241e'], sleeves: true, build: 'broad' }),
