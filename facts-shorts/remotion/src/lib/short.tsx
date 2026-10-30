@@ -65,7 +65,7 @@ export const EndCard: React.FC<{t: number; card: number}> = ({t, card}) => {
         </g>
         <Label x={540} y={1330} size={70} s={pop(t, card + 0.45, 10, 6)}>WATCH FULL VIDEOS</Label>
         <Label x={540} y={1420} size={60} s={pop(t, card + 0.55, 10, 6)}>ON OUR YOUTUBE CHANNEL</Label>
-        <Label x={540} y={1560} size={60} s={pop(t, card + 0.7, 10, 6)} rot={-3} color="#FFE45C">STORMI EXPLAIN EVERYTHING</Label>
+        <Label x={540} y={1560} size={54} s={pop(t, card + 0.7, 10, 6)} rot={-3} color="#FFE45C">STORMI EXPLAIN EVERYTHING</Label>
       </g>
       <foreignObject x={0} y={0} width={W} height={H} clipPath="url(#iris)">
         <div style={{position: 'absolute', left: 540 - 330, top: 800 - 330, width: 660, height: 660, transform: `scale(${lk})`}}>

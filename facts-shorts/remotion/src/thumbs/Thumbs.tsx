@@ -12,6 +12,26 @@ import {SixtyMinutes} from '../shorts/08-sixty-minutes/SixtyMinutes';
 import {SpiderWeb} from '../shorts/09-spider-web/SpiderWeb';
 import {IceFloats} from '../shorts/10-ice-floats/IceFloats';
 import {LeapYear} from '../shorts/11-leap-year/LeapYear';
+import {OctopusHearts} from '../shorts/12-octopus-hearts/OctopusHearts';
+import {T as T12} from '../shorts/12-octopus-hearts/timing';
+import {BlueSky} from '../shorts/13-blue-sky/BlueSky';
+import {T as T13} from '../shorts/13-blue-sky/timing';
+import {Honey} from '../shorts/14-honey/Honey';
+import {T as T14} from '../shorts/14-honey/timing';
+import {EiffelTower} from '../shorts/15-eiffel-tower/EiffelTower';
+import {T as T15} from '../shorts/15-eiffel-tower/timing';
+import {BananaBerry} from '../shorts/16-banana-berry/BananaBerry';
+import {T as T16} from '../shorts/16-banana-berry/timing';
+import {OnionTears} from '../shorts/17-onion-tears/OnionTears';
+import {T as T17} from '../shorts/17-onion-tears/timing';
+import {DeadSea} from '../shorts/18-dead-sea/DeadSea';
+import {T as T18} from '../shorts/18-dead-sea/timing';
+import {LightningSun} from '../shorts/19-lightning-sun/LightningSun';
+import {T as T19} from '../shorts/19-lightning-sun/timing';
+import {RecordedVoice} from '../shorts/20-recorded-voice/RecordedVoice';
+import {T as T20} from '../shorts/20-recorded-voice/timing';
+import {GreatWall} from '../shorts/21-great-wall/GreatWall';
+import {T as T21} from '../shorts/21-great-wall/timing';
 
 // Shorts cover = a frozen hero frame of the short itself + a loud headline band on top.
 type Th = {id: string; C: React.FC; t: number; l1: string; l2: string; tag: string; bg: string; bg2: string; tagFill: string; srcY?: number; s?: number; dx?: number};
@@ -26,6 +46,16 @@ export const THUMBS: Th[] = [
   {id: '09spiderweb', C: SpiderWeb, t: 3.4, l1: "WHY DON'T", l2: 'SPIDERS STICK?', tag: 'SECRET LEGS', bg: '#2B3A4A', bg2: '#141A44', tagFill: '#4CC38A', srcY: 360},
   {id: '10icefloats', C: IceFloats, t: 6.4, l1: 'ICE SHOULD', l2: 'SINK!', tag: 'WATER IS WEIRD', bg: '#7FD0FF', bg2: '#2C7BE5', tagFill: '#FF8A5B', srcY: 560},
   {id: '11leapyear', C: LeapYear, t: 1.6, l1: 'WHY FEB 29', l2: 'EXISTS', tag: '365¼ DAYS', bg: '#E5414A', bg2: '#A8222B', tagFill: '#2C7BE5', srcY: 500},
+  {id: '12octopushearts', C: OctopusHearts, t: T12.gills + 0.7, l1: 'THREE HEARTS', l2: 'BLUE BLOOD?!', tag: 'OCTOPUS SECRET', bg: '#7A5CC8', bg2: '#4B3596', tagFill: '#E5414A', srcY: 560},
+  {id: '13bluesky', C: BlueSky, t: T13.long + 0.7, l1: 'WHY IS THE', l2: 'SKY BLUE?', tag: 'SUNLIGHT IS WHITE', bg: '#3D8CF0', bg2: '#1F5FB8', tagFill: '#E5414A', srcY: 560},
+  {id: '14honey', C: Honey, t: T14.years + 0.7, l1: 'HONEY NEVER', l2: 'GOES BAD', tag: 'FOR YEARS', bg: '#FFC93D', bg2: '#E59A1F', tagFill: '#2C7BE5', srcY: 700},
+  {id: '15eiffeltower', C: EiffelTower, t: T15.fifteen + 0.7, l1: 'EIFFEL TOWER', l2: 'GROWS?!', tag: '+15 CM IN SUMMER', bg: '#FF8A3D', bg2: '#D9481F', tagFill: '#2C7BE5', srcY: 600},
+  {id: '16bananaberry', C: BananaBerry, t: T16.not + 0.7, l1: 'BANANA = BERRY', l2: "STRAWBERRY ISN'T", tag: 'BOTANY IS WEIRD', bg: '#4CC38A', bg2: '#22955F', tagFill: '#E5414A', srcY: 640},
+  {id: '17oniontears', C: OnionTears, t: T17.flood + 0.5, l1: 'WHY ONIONS', l2: 'MAKE YOU CRY', tag: '+ THE FIX', bg: '#B07AD8', bg2: '#7A4AA8', tagFill: '#2C7BE5', srcY: 660},
+  {id: '18deadsea', C: DeadSea, t: T18.why + 0.5, l1: "YOU CAN'T", l2: 'SINK HERE', tag: 'DEAD SEA', bg: '#4FB3C8', bg2: '#2A7F95', tagFill: '#E5414A', srcY: 760},
+  {id: '19lightningsun', C: LightningSun, t: T19.thunder + 0.45, l1: 'HOTTER THAN', l2: 'THE SUN?!', tag: '30,000°C', bg: '#2B3A6A', bg2: '#141A44', tagFill: '#E5414A', srcY: 620},
+  {id: '20recordedvoice', C: RecordedVoice, t: T20.skull + 0.6, l1: 'WHY YOUR VOICE', l2: 'SOUNDS WEIRD', tag: 'ON RECORDINGS', bg: '#7A5CC8', bg2: '#4B3596', tagFill: '#E5414A', srcY: 640},
+  {id: '21greatwall', C: GreatWall, t: T21.not + 0.5, l1: 'GREAT WALL', l2: 'FROM SPACE?', tag: 'ASTRONAUTS SAY NO', bg: '#2B3A6A', bg2: '#141A44', tagFill: '#E5414A', srcY: 700},
 ];
 
 const Txt: React.FC<{x: number; y: number; size: number; color?: string; rot?: number; children: React.ReactNode}> = ({x, y, size, color = '#fff', rot = 0, children}) => (

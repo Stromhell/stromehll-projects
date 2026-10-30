@@ -1,0 +1,10 @@
+12-octopus-hearts 1 three=three blue=blue why=Why gills=gills bigger=bigger copper=copper turns=turns less=less extra=extra finale=Three:2
+13-blue-sky 2 why=why white=white:2 every=every tiny=tiny short=short long=long reaches=reaches sunset=sunset crosses=crosses reds=reds
+14-honey 3 rots=rots years=years water=water germs=germs die=die acidic=acidic enzyme=enzyme peroxide=peroxide sealed=sealed never=never
+15-eiffel-tower 4 taller=taller how=How iron=iron heats=heats metre=meter fraction=fraction three=300 hottest=hottest fifteen=15 winter2=winter:2
+16-banana-berry 0 banana=banana strawberry=strawberry not=not botanist=botanist flower=flower ovary=ovary seeds=seeds banana2=Bananas grapes=grapes tomatoes=tomatoes watermelons=watermelons many=many dots=dots fruits=fruits seed=seed
+17-onion-tears 1 cry=cry sulfur=sulfur enzyme=enzyme apart=apart knife=knife mix=mix gas=gas floats=floats eyes=eyes nerves=Nerves sting=sting flood=flood chill=chill less=less
+18-dead-sea 2 float=float why=Why ten=ten saltier=saltier heavier=heavier get=get weighs=weighs shoves=shoves cork=cork never=never
+19-lightning-sun 3 hotter=hotter sun=Sun five=five thirty=thirty fraction=fraction blasts=blasts shock=shock thunder=thunder every=Every jumping=jumping
+20-recorded-voice 4 weird=weird two=two air=air bones=bones skull=skull low=low deeper=deeper microphone=microphone air2=air:2 thinner=thinner everyone=everyone
+21-great-wall 0 space=space astronauts=Astronauts not=not long=long few=few road=road orbit=orbit hundreds=hundreds thin=thin stone=stone colour=colour
