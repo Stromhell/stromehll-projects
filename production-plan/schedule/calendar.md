@@ -169,3 +169,25 @@ YouTube Shorts + Instagram Reels, in story order, in the 08:00 and 10:00 ET reel
 
 ## Spain Part 3 full video (booked 30 Oct 2026, 13:33 UTC)
 - "How One General Took Spain, and Why a King Gave It Back" (2D dynamic, 7:51): Sun 6 Dec 16:00 UTC (11:00 ET, weekend slot), YouTube. Zernio 6ae49caf6598097ae775aba4. Two days after Japan (4 Dec). Drive video 18u6gbGigZ3CcLyV19_TqKSqiaexXU5cH, thumbnail 12CQkpt64vEuRJK8huVPEPEBFXhW2vAqF. 15 reels to follow.
+
+## Spain Part 3 reels R01-15 (booked 30 Oct)
+
+YouTube + Instagram, 08:00/10:00 ET slots, after Japan's 15.
+
+| # | UTC | ET | Title | Zernio post |
+|---|---|---|---|---|
+| 01 | Thu 26 Nov 15:00Z | 10:00 | Gunmen Stormed Spain's Parliament Live on TV | 6ae4ae1af91e0c091815f555 |
+| 02 | Fri 27 Nov 13:00Z | 08:00 | The 1 A.M. Speech That Saved Spain | 6ae4ae20f91e0c091815f577 |
+| 03 | Fri 27 Nov 15:00Z | 10:00 | The Army Disaster That Broke a Monarchy | 6ae4ae24f91e0c091815f5a7 |
+| 04 | Sat 28 Nov 13:00Z | 08:00 | Why Spain's Flag Once Had a Purple Stripe | 6ae4ae2af91e0c091815f5e5 |
+| 05 | Sat 28 Nov 15:00Z | 10:00 | The Secret Flight That Started Franco's War | 6ae4ae2ff91e0c091815f625 |
+| 06 | Sun 29 Nov 13:00Z | 08:00 | The Airlift That Won Franco the War | 6ae4ae490e42a7b17720285a |
+| 07 | Sun 29 Nov 15:00Z | 10:00 | Guernica: The Town Bombed on Market Day | 6ae4ae4df91e0c091815f749 |
+| 08 | Mon 30 Nov 13:00Z | 08:00 | The Painting Picasso Made in Weeks | 6ae4ae540e42a7b177202874 |
+| 09 | Mon 30 Nov 15:00Z | 10:00 | George Orwell Was Shot Through the Throat in Spain | 6ae4ae5af91e0c091815f7cb |
+| 10 | Tue 01 Dec 13:00Z | 08:00 | When Franco's Enemies Fought Each Other | 6ae4ae5ca97604eefdc003f6 |
+| 11 | Tue 01 Dec 15:00Z | 10:00 | Hitler Would Rather Lose His Teeth Than Meet Franco Again | 6ae4aeb20e42a7b1772028c6 |
+| 12 | Wed 02 Dec 13:00Z | 08:00 | Spain's Secret Army on the Eastern Front | 6ae4aeb6f91e0c091815fb74 |
+| 13 | Wed 02 Dec 15:00Z | 10:00 | How Spain Went From Hunger to Tourist Boom | 6ae4aebdf91e0c091815fbc7 |
+| 14 | Thu 03 Dec 13:00Z | 08:00 | The Bomb That Threw a Car Over a Church | 6ae4aec1f91e0c091815fbde |
+| 15 | Thu 03 Dec 15:00Z | 10:00 | Franco's Chosen King Destroyed His Dictatorship | 6ae4aec7f91e0c091815fc0f |
