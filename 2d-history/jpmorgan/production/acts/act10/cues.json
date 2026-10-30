@@ -1,0 +1,172 @@
+{
+ "dur": 74.029,
+ "cues": [
+  {
+   "t": 2.44,
+   "name": "coins_cascade",
+   "gain": 0.35
+  },
+  {
+   "t": 6.96,
+   "name": "coins",
+   "gain": 0.35
+  },
+  {
+   "t": 8.735,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 8.935,
+   "name": "riser",
+   "gain": 0.35
+  },
+  {
+   "t": 13.358,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 13.758,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 18.186,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 18.386,
+   "name": "tick",
+   "gain": 0.3
+  },
+  {
+   "t": 27.616,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 35.013,
+   "name": "scrape",
+   "gain": 0.35
+  },
+  {
+   "t": 36.025,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 36.225,
+   "name": "paper",
+   "gain": 0.4
+  },
+  {
+   "t": 44.015,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 44.215,
+   "name": "paper",
+   "gain": 0.4
+  },
+  {
+   "t": 45.915,
+   "name": "thud",
+   "gain": 0.3
+  },
+  {
+   "t": 51.605,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 51.805,
+   "name": "paper",
+   "gain": 0.4
+  },
+  {
+   "t": 58.835,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 61.67,
+   "name": "whoosh_soft",
+   "gain": 0.4
+  },
+  {
+   "t": 62.745,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 65.899,
+   "name": "creak",
+   "gain": 0.35
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 9.435,
+   "name": "hum_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 8.635,
+   "end": 14.058,
+   "name": "riser",
+   "gain": 0.3
+  },
+  {
+   "start": 13.258,
+   "end": 18.886,
+   "name": "office_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 18.086,
+   "end": 28.316,
+   "name": "office_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 27.516,
+   "end": 36.724999999999994,
+   "name": "hum_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 35.925,
+   "end": 44.714999999999996,
+   "name": "drone",
+   "gain": 0.2
+  },
+  {
+   "start": 43.915,
+   "end": 52.305,
+   "name": "rain_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 51.505,
+   "end": 59.535,
+   "name": "drone",
+   "gain": 0.2
+  },
+  {
+   "start": 58.735,
+   "end": 63.445,
+   "name": "birds_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 62.645,
+   "end": 74.829,
+   "name": "wind_loop",
+   "gain": 0.3
+  }
+ ]
+}
