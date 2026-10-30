@@ -2,14 +2,16 @@
 (function (G) {
   const S = G.S, VP = G.VP, J = S.JPX, TAU = Math.PI * 2, { sky, ridge, wood, tin, grain } = J;
   // graph-paper board on an office wall
-  VP.set('jp_chart', 1280, 720, (g, w, h) => {
+  const board = (title, axes) => (g, w, h) => {
     sky(g, w, h, [[0, '#5a4a3a'], [1, '#3a2c20']]); wood(g, 0, 0, w, h, '#4a3424', 801);
     g.fillStyle = '#f4f0e0'; g.fillRect(90, 50, 1100, 580); g.strokeStyle = S.rgba('#7ab0c8', .45); g.lineWidth = 1; for (let x = 90; x <= 1190; x += 22) { g.beginPath(); g.moveTo(x, 50); g.lineTo(x, 630); g.stroke(); } for (let y = 50; y <= 630; y += 22) { g.beginPath(); g.moveTo(90, y); g.lineTo(1190, y); g.stroke(); }
-    g.strokeStyle = '#3a3a3a'; g.lineWidth = 3; g.beginPath(); g.moveTo(160, 90); g.lineTo(160, 560); g.lineTo(1140, 560); g.stroke();
+    if (axes) { g.strokeStyle = '#3a3a3a'; g.lineWidth = 3; g.beginPath(); g.moveTo(160, 90); g.lineTo(160, 560); g.lineTo(1140, 560); g.stroke(); }
     g.fillStyle = '#3a2a1a'; g.fillRect(80, 40, 1120, 12); g.fillRect(80, 628, 1120, 12); S.dabs(g, { x: 90, y: 50, w: 1100, h: 580, n: 120, cols: ['#d8d0b8', '#ffffff'], r0: 10, r1: 40, a0: .05, a1: .15, seed: 803 });
-    g.font = '30px Caveat'; g.fillStyle = '#2a2a2a'; g.fillText('PASSENGER CARS BUILT · 1950', 560, 90);
+    if (title) { g.font = '30px Caveat'; g.fillStyle = '#2a2a2a'; g.fillText(title, 560, 90); }
     grain(g, w, h, 805, .04);
-  });
+  };
+  VP.set('jp_chart', 1280, 720, board('PASSENGER CARS BUILT · 1950', true));
+  VP.set('jp_board', 1280, 720, board('WHERE THE MONEY CAME FROM', false));
   // a wide American highway in the 1950s: desert, poles, a billboard, mesas
   VP.set('jp_highway', 1280, 720, (g, w, h) => {
     sky(g, w, h, [[0, '#4a8ad0'], [.55, '#a8d0ec'], [.62, '#f0d8b0'], [1, '#d8a870']]);

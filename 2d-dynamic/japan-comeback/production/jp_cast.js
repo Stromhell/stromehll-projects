@@ -48,6 +48,10 @@
     MORITA: suit(['#3a4250', '#1a2028'], '#7a2a2a', { name: 'Morita', hair: 'swept' }),
     HONDA: man({ name: 'Honda', shirt: ['#5a6a7a', '#2a343e'], pants: ['#5a6a7a', '#2a343e'], sleeves: true, headwear: X.peaked ? X.peaked({ base: '#e8e4d8', shade: '#9a9488', rim: '#ffffff' }) : null }),
     BUYER: suit(['#6a5a4a', '#342a20'], '#c8a040', { skin: { base: '#e8b494', shade: '#a8705a', rim: '#ffdcc0' }, hairCol: { base: '#8a6a3a', shade: '#4a3418', rim: '#d8b880' }, build: 'broad' }),
+    IKEDA: suit(['#4a4a52', '#22222a'], '#7a2a2a', { name: 'Ikeda', hairCol: GRY, glasses: true, build: 'broad' }),
+    SCHOOLGIRL: woman({ name: 'Hana', shirt: ['#1e2a4a', '#0e1428'], pants: ['#1e2a4a', '#0e1428'], hair: 'bun' }),
+    SCHOOLGIRL2: woman({ shirt: ['#1e2a4a', '#0e1428'], pants: ['#1e2a4a', '#0e1428'] }),
+    TEEN: man({ name: 'Kenji', shirt: ['#1e2028', '#0a0a10'], pants: ['#1e2028', '#0a0a10'], sleeves: true, build: 'man' }),
     // workers and bosses
     WORKER: man({ shirt: ['#5a6a7a', '#2c343e'], pants: ['#5a6a7a', '#2c343e'], sleeves: true, headwear: X.tenugui({ base: '#e8e4d8', shade: '#a09a8a', rim: '#ffffff' }) }),
     WORKER2: man({ skin: JSK2, shirt: ['#7a6a4a', '#3e3424'], pants: ['#4a4a40', '#24241e'], sleeves: true, build: 'broad' }),
