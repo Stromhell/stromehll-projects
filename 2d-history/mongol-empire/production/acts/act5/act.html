@@ -1,0 +1,121 @@
+<!doctype html><html><head><meta charset="utf-8"><title>MG act 5 - Baghdad</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "leo";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../mg_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['map_eurasia', 'map_europe', 'city_day', 'city_dusk', 'city_fire', 'steppe_dusk', 'steppe_open', 'khan_hall']) K.load(n, PL + n + '.jpg');
+{ const T = window.TIMING, L = T.shots[T.shots.length - 1]; L.end += 1.4; T.dur = L.end; }
+const INK = '#1d1712', RED = '#b8221e', GOLD = '#e8b44a';
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+// cast
+const MOURN = [MG.look('deel', { seed: 31, hairCol: '#1a1410', beard: true }), MG.look('deelBrown', { seed: 32, hairCol: '#1a1410' }), MG.look('deelGreen', { seed: 33, hairCol: '#1a1410' })];
+const OGEDEI = MG.look('deelRed', { seed: 40, beard: true, hairCol: '#1a1410', over: { topCol: '#8a2a5a' } });
+const KN = [0, 1, 2, 3].map(k => MG.look('knight', { seed: 50 + k, beard: k % 2 === 0, hairCol: '#5a3a1a' }));
+const hatM = MG.furHat(), hatG = MG.furHat('#3a2a1e', '#e0b040');
+const EP = MG.proj(), EUP = MG.proj({ lon0: 8, lon1: 52, lat0: 40, lat1: 60 });
+const pin = (c, x, y, lab, a, col = RED) => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.3)'; c.beginPath(); c.ellipse(4, 4, 18, 7, 0, 0, 7); c.fill(); c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(0, 0); c.bezierCurveTo(-26, -40, -22, -70, 0, -70); c.bezierCurveTo(22, -70, 26, -40, 0, 0); c.fill(); c.stroke(); c.fillStyle = '#efe2c0'; c.beginPath(); c.arc(0, -48, 9, 0, 7); c.fill(); if (lab) { c.font = '44px Anton'; c.textAlign = 'center'; c.lineWidth = 8; c.strokeStyle = '#efe2c0'; c.strokeText(lab, 0, -88); c.fillStyle = INK; c.fillText(lab, 0, -88); } c.restore(); };
+// a red campaign line drawn along points (world), progress u
+const route = (c, pts, u, w = 12, col = 'rgba(178,34,30,.88)') => { if (u <= 0) return; const L = []; let tot = 0; for (let i = 1; i < pts.length; i++) { const d = Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]); L.push(d); tot += d; } let rem = tot * Math.min(1, u); c.save(); c.strokeStyle = col; c.lineWidth = w; c.lineCap = 'round'; c.lineJoin = 'round'; c.beginPath(); c.moveTo(...pts[0]); let end = pts[0]; for (let i = 1; i < pts.length && rem > 0; i++) { const f = Math.min(1, rem / L[i - 1]); end = [pts[i - 1][0] + (pts[i][0] - pts[i - 1][0]) * f, pts[i - 1][1] + (pts[i][1] - pts[i - 1][1]) * f]; c.lineTo(...end); rem -= L[i - 1]; } c.stroke(); const a = Math.atan2(end[1] - (pts[Math.max(0, pts.length - 2)][1]), end[0] - pts[Math.max(0, pts.length - 2)][0]); c.restore(); return end; };
+const head = (c, x, y, ang, s = 1) => { c.save(); c.translate(x, y); c.rotate(ang); c.scale(s, s); c.fillStyle = 'rgba(178,34,30,.95)'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(34, 0); c.lineTo(-14, -26); c.lineTo(-4, 0); c.lineTo(-14, 26); c.closePath(); c.fill(); c.stroke(); c.restore(); };
+const wagon = (c, x, y, ang) => { c.save(); c.translate(x, y); c.rotate(ang); c.fillStyle = '#8a6038'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-34, -14, 68, 28); c.strokeRect(-34, -14, 68, 28); c.fillStyle = '#3a2a1e'; c.fillRect(-26, -20, 10, 6); c.fillRect(16, -20, 10, 6); c.fillRect(-26, 14, 10, 6); c.fillRect(16, 14, 10, 6); c.restore(); };
+const parch = (c) => { c.save(); c.filter = 'blur(5px) brightness(.8)'; const s2 = 1.1 * 1920 / 2560; c.setTransform(s2, 0, 0, s2, 960 - 1280 * s2, 540 - 720 * s2); c.drawImage(K.imgs.map_europe, 0, 0, 2560, 1440); c.restore(); c.setTransform(1, 0, 0, 1, 0, 0); };
+
+// act 5 cast
+const HULAGU = MG.look('deelRed', { seed: 61, beard: true, hairCol: '#1a1410', over: { topCol: '#7a2a2a' } });
+const CALIPH = MG.look('persian', { seed: 62, beard: true, hairCol: '#3a2a1a', over: { topCol: '#2a2a2a', inner: '#e8c060' } });
+const SCH = [MG.look('persian', { seed: 63, beard: true, hairCol: '#5a5a5a' }), MG.look('persian', { seed: 64, hairCol: '#2a1a10' }), MG.look('persian', { seed: 65, beard: true, hairCol: '#2a1a10', over: { topCol: '#3a5a7a' } })];
+const hatH = MG.furHat('#3a2a1e', '#c84a32'), turbG = MG.turban('#e8c060'), turbW = MG.turban('#f2ead8');
+const B = EP(44.4, 33.3), KK = EP(102.8, 47.2), AJ = EP(35.3, 32.5), CA = EP(31.2, 30.0), DM = EP(36.3, 33.5), AL = EP(37.2, 36.2);
+// a book (world), spinning as it falls
+const book = (c, x, y, rot, s, col) => { c.save(); c.translate(x, y); c.rotate(rot); c.scale(s, s); c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-30, -40, 60, 80); c.strokeRect(-30, -40, 60, 80); c.fillStyle = '#efe2c0'; c.fillRect(22, -36, 6, 72); c.strokeStyle = '#d8b060'; c.lineWidth = 2; c.strokeRect(-22, -30, 40, 60); c.restore(); };
+const BOOKCOL = ['#7a2a2a', '#2a4a6a', '#4a6a3a', '#6a4a2a', '#5a2a5a', '#8a6a2a'];
+// a library hall facade with shelves (world)
+const library = (c, x, base, s = 1) => { c.save(); c.translate(x, base); c.scale(s, s); c.fillStyle = 'rgba(0,0,0,.3)'; c.beginPath(); c.ellipse(0, 6, 420, 28, 0, 0, 7); c.fill(); c.fillStyle = '#e2cfa4'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-400, -560, 800, 560); c.strokeRect(-400, -560, 800, 560);
+  c.fillStyle = '#3a8a8a'; c.beginPath(); c.arc(0, -560, 230, Math.PI, 0); c.fill(); c.stroke(); c.fillStyle = '#e8b44a'; c.beginPath(); c.moveTo(0, -830); c.lineTo(-8, -790); c.lineTo(8, -790); c.closePath(); c.fill();
+  for (const ax of [-250, 0, 250]) { c.fillStyle = '#3a2418'; c.beginPath(); c.moveTo(ax - 95, 0); c.lineTo(ax - 95, -300); c.quadraticCurveTo(ax, -440, ax + 95, -300); c.lineTo(ax + 95, 0); c.closePath(); c.fill(); c.stroke(); for (let r = 0; r < 4; r++) { c.fillStyle = '#6a4a2a'; c.fillRect(ax - 80, -60 - r * 70, 160, 8); for (let k = 0; k < 9; k++) { c.fillStyle = BOOKCOL[(k + r * 3) % 6]; c.fillRect(ax - 76 + k * 17, -60 - r * 70 - 46, 14, 46); } } }
+  c.strokeStyle = 'rgba(40,90,90,.8)'; c.lineWidth = 10; c.strokeRect(-380, -540, 760, 30); c.restore(); };
+// round walled city plan (screen), with the Tigris
+const cityPlan = (c, cx, cy, r) => { c.save(); c.strokeStyle = 'rgba(47,106,138,.85)'; c.lineWidth = 44; c.lineCap = 'round'; c.beginPath(); c.moveTo(cx + r + 120, -40); c.bezierCurveTo(cx + r + 40, cy - 200, cx + r + 200, cy + 200, cx + r + 80, 1120); c.stroke(); K.outlined(c, 'TIGRIS', cx + r + 250, cy + 320, 36, { fill: '#2f6a8a' });
+  c.fillStyle = '#d8c49a'; c.strokeStyle = INK; c.lineWidth = 8; c.beginPath(); c.arc(cx, cy, r, 0, 7); c.fill(); c.stroke(); c.lineWidth = 4; c.beginPath(); c.arc(cx, cy, r - 40, 0, 7); c.stroke(); for (let k = 0; k < 4; k++) { const a = k * Math.PI / 2 + Math.PI / 4; c.fillStyle = '#8a6a3a'; c.fillRect(cx + Math.cos(a) * r - 20, cy + Math.sin(a) * r - 20, 40, 40); }
+  c.fillStyle = '#3a8a8a'; c.beginPath(); c.arc(cx, cy, 40, Math.PI, 0); c.fill(); c.stroke(); c.restore(); };
+const parchE = (c, dim = .8) => { c.save(); c.filter = `blur(12px) brightness(${dim})`; const s2 = 2.2 * 1920 / 2560; c.setTransform(s2, 0, 0, s2, 960 - B[0] * s2, 540 - B[1] * s2); c.drawImage(K.imgs.map_eurasia, 0, 0, 2560, 1440); c.restore(); c.setTransform(1, 0, 0, 1, 0, 0); };
+const cross = (c, x, y, s, a) => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(s * a, s * a); c.strokeStyle = INK; c.lineWidth = 16; c.lineCap = 'round'; c.beginPath(); c.moveTo(-30, -30); c.lineTo(30, 30); c.moveTo(30, -30); c.lineTo(-30, 30); c.stroke(); c.strokeStyle = RED; c.lineWidth = 9; c.stroke(); c.restore(); };
+const smoke = (x0, x1, y) => (c, lt) => { c.save(); for (let k = 0; k < 9; k++) { const life = (lt * .12 + k / 9) % 1, x = x0 + (x1 - x0) * (k / 8) + Math.sin(k * 3 + lt * .5) * 40, yy = y - life * 700, r = 60 + life * 200; const gg = c.createRadialGradient(x, yy, 0, x, yy, r); gg.addColorStop(0, `rgba(40,30,28,${.38 * (1 - life)})`); gg.addColorStop(1, 'rgba(40,30,28,0)'); c.fillStyle = gg; c.beginPath(); c.arc(x, yy, r, 0, 7); c.fill(); } c.restore(); };
+
+window.SHOTS = [
+  // 1 Mongke sends Hulagu west: route from Karakorum to Persia and Baghdad
+  { plate: 'map_eurasia', cam: { z: [1.15, 1.55], x: [1300, 1200], y: [700, 720], ease: E.io }, bed: [['war_drums_loop', .3]],
+    live: [(c, lt, u, S) => { pin(c, KK[0], KK[1], 'KARAKORUM', pop(lt, .4), '#3f5f8a'); const P = [KK, EP(88, 44), EP(70, 39), EP(58, 36), EP(50, 34.5), B]; const e = route(c, P, E.io(K.seg(lt, S.tH, S.tH + 3.2)), 14); if (e && lt < S.tH + 3.2) head(c, e[0], e[1], Math.PI * 1.05, 1.3); pin(c, B[0], B[1], 'BAGHDAD', pop(lt, S.tH + 3)); }],
+    init: S => { const tM = A.at(S, 'Mongke', .6); S.tH = A.at(S, 'Hulagu', 2);
+      S.D.over = [(c, lt) => K.dateTag(c, '1250s', lt, { at: .3 }), (c, lt) => K.card(c, 'MONGKE · NEW GREAT KHAN', lt, { at: tM, x: 1460, y: 760, px: 44, rot: 3 }), (c, lt) => K.card(c, 'HIS BROTHER HULAGU\nHEADS WEST', lt, { at: S.tH, x: 480, y: 220, px: 44, rot: -3 })];
+      S.D.sfx = [[.4, 'pop', .35], [tM, 'drum', .4], [S.tH, 'whoosh', .4], [S.tH + 3, 'hit', .4]]; } },
+  // 2 Baghdad: seat of the Abbasid caliphs, libraries and scholars
+  { plate: 'city_day', cam: { z: [1.1, 1.16], x: [1280, 1300], y: [900, 900], ease: E.io }, bed: [['crowd_loop', .2], ['birds_loop', .2]],
+    live: [(c) => library(c, 1840, 1300, .95)],
+    figs: SCH.map((lk, k) => ({ x: 380 + k * 330, y: 1330, s: 1.5, look: lk, hat: k === 1 ? turbG : turbW, facing: k === 2 ? -1 : 1, pose: k === 1 ? 'present' : 'stand', mood: 'happy', walk: k === 2 ? { x0: -300, x1: 1040, t0: .6, dur: 2.6 } : undefined, anim: (o, lt, u, S) => { o.talk = k === 1 && lt > S.tL && lt < S.tL + 2; } })),
+    init: S => { const tA = A.at(S, 'Abbasid', 1.4); S.tL = A.at(S, 'libraries', 3.6);
+      S.D.over = [(c, lt) => K.title(c, 'BAGHDAD', lt, { at: .3, y: 120, px: 90, fill: GOLD }), (c, lt) => K.card(c, 'SEAT OF THE ABBASID\nCALIPHS · 500 YEARS', lt, { at: tA, x: 480, y: 270, px: 42, rot: -3 }), (c, lt) => K.card(c, 'FAMOUS LIBRARIES', lt, { at: S.tL, x: 1440, y: 250, px: 46, rot: 3 })];
+      S.D.sfx = [[.3, 'drum', .35], [tA, 'pop', .35], [S.tL, 'paper', .4]]; } },
+  // 3 Hulagu demands surrender; the caliph refuses; his army is too small
+  { plate: 'khan_hall', cam: { z: [1.1, 1.14], x: [1280, 1280], y: [900, 900] }, bed: [['tension', .25]],
+    figs: [{ x: 640, y: 1330, s: 1.7, look: HULAGU, hat: hatH, facing: 1, pose: 'point', mood: 'angry', anim: (o, lt, u, S) => { o.talk = lt > S.tD && lt < S.tD + 1.6; } },
+      { x: 1920, y: 1330, s: 1.7, look: CALIPH, hat: turbG, facing: -1, pose: 'stand', mood: 'focus', anim: (o, lt, u, S) => { if (lt > S.tR) { o.pose = 'present'; o.mood = 'angry'; o.talk = lt < S.tR + 1.2; } if (lt > S.tS) o.mood = 'shocked'; } }],
+    init: S => { S.tD = A.at(S, 'demanded', .6); S.tR = A.at(S, 'refused', 3); S.tS = A.at(S, 'too small', 4.4); const tC = A.at(S, 'al-Mustasim', 1.8);
+      S.D.over = [(c, lt) => K.card(c, 'SURRENDER', lt, { at: S.tD + .3, x: 560, y: 230, px: 58, rot: -3 }), (c, lt) => K.card(c, 'CALIPH AL-MUSTASIM', lt, { at: tC, x: 1420, y: 180, px: 42, rot: 2 }), (c, lt) => K.card(c, 'NO', lt, { at: S.tR, x: 1420, y: 330, px: 70, rot: 4 }),
+        (c, lt) => K.card(c, 'HIS ARMY: TOO SMALL TO FIGHT', lt, { at: S.tS, x: 960, y: 520, px: 46, rot: -2 })];
+      S.D.sfx = [[S.tD, 'drum', .4], [tC, 'pop', .3], [S.tR, 'stamp', .4], [S.tS, 'tension', .3]]; } },
+  // 4 January 1258: the city is surrounded; it surrenders on 10 February
+  { draw: (c, lt, u, S) => { parchE(c, .75); cityPlan(c, 860, 560, 220); const sr = E.out(K.seg(lt, S.tS, S.tS + 2)); for (let k = 0; k < 40; k++) { const a = k / 40 * Math.PI * 2, r = 620 - 300 * sr; c.fillStyle = 'rgba(178,34,30,.9)'; c.strokeStyle = INK; c.lineWidth = 2; c.beginPath(); c.arc(860 + Math.cos(a) * r, 560 + Math.sin(a) * r * .8, 13, 0, 7); c.fill(); c.stroke(); }
+      const f = pop(lt, S.tF); if (f > 0) { c.save(); c.translate(860, 520); c.scale(f, f); c.strokeStyle = '#5a3a20'; c.lineWidth = 7; c.beginPath(); c.moveTo(0, 40); c.lineTo(0, -160); c.stroke(); c.fillStyle = '#fbf6ea'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(0, -160); c.quadraticCurveTo(50, -170 + 8 * Math.sin(lt * 5), 110, -150); c.lineTo(110, -90); c.quadraticCurveTo(50, -100 + 8 * Math.sin(lt * 5 + 1), 0, -100); c.closePath(); c.fill(); c.stroke(); c.restore(); } },
+    bed: [['war_drums_loop', .3], ['wind_loop', .2]],
+    init: S => { S.tS = A.at(S, 'surrounded', 1.6); S.tF = A.at(S, 'surrendered', 4.4); const tJ = A.at(S, 'January', .4), tT = A.at(S, 'tenth', 3.4);
+      S.D.over = [(c, lt) => K.dateTag(c, lt < tT ? 'JANUARY 1258' : '10 FEBRUARY 1258', lt, { at: tJ }), (c, lt) => K.card(c, 'SURRENDERS', lt, { at: S.tF + .3, x: 1560, y: 200, px: 56, rot: 3 })];
+      S.D.sfx = [[tJ, 'pop', .3], [S.tS, 'drum', .45], [S.tS + 1, 'war_drums_loop', .25], [S.tF, 'swell', .4]]; } },
+  // 5 the sack: about a week; nobody knows how many died
+  { plate: 'city_fire', cam: { z: [1.12, 1.2], x: [1280, 1280], y: [800, 780], ease: E.io }, bed: [['fire_loop', .35], ['wind_loop', .2]],
+    live: [smoke(300, 2300, 1000)],
+    init: S => { const tW = A.at(S, 'about a week', .8), tE = A.at(S, 'Estimates', 2.4), tN = A.at(S, 'Nobody knows', 5.4);
+      S.D.over = [(c, lt) => K.card(c, 'THE SACK: ABOUT A WEEK', lt, { at: tW, x: 480, y: 200, px: 46, rot: -3 }), (c, lt) => K.card(c, 'THE DEAD: TENS OF THOUSANDS\n...OR MANY TIMES THAT', lt, { at: tE, x: 1300, y: 380, px: 44, rot: 2 }),
+        (c, lt) => K.title(c, 'NOBODY KNOWS THE TRUE NUMBER', lt, { at: tN, y: 700, px: 64, fill: '#fffaf0' })];
+      S.D.sfx = [[tW, 'drum', .4], [tE, 'pop', .35], [tN, 'tension', .35]]; } },
+  // 6 books thrown into the Tigris; the river runs dark with ink
+  { plate: 'city_dusk', cam: { z: [1.1, 1.18], x: [1280, 1280], y: [980, 1020], ease: E.io }, bed: [['ocean_loop', .25], ['wind_loop', .2]],
+    live: [(c, lt, u, S) => { const ink = E.io(K.seg(lt, S.tI, S.tI + 3)); c.save(); const g = c.createLinearGradient(0, 1200, 0, 1440); g.addColorStop(0, `rgb(${70 - 50 * ink},${130 - 105 * ink},${160 - 120 * ink})`); g.addColorStop(1, `rgb(${40 - 30 * ink},${90 - 75 * ink},${120 - 95 * ink})`); c.fillStyle = g; c.beginPath(); c.moveTo(0, 1210); for (let x = 0; x <= 2560; x += 80) c.lineTo(x, 1210 + Math.sin(x * .01 + lt * 2) * 8); c.lineTo(2560, 1440); c.lineTo(0, 1440); c.closePath(); c.fill(); c.restore();
+      for (let k = 0; k < 16; k++) { const t0 = S.tB + k * .4, f = K.seg(lt, t0, t0 + 1.1); if (f <= 0) continue; const x0 = 300 + (k * 157) % 1900, y = 700 + 520 * E.inn(Math.min(1, f)); if (f < 1) book(c, x0 + f * 80, y, f * 6 + k, 1, BOOKCOL[k % 6]); else { const dr = (lt - t0 - 1.1) * 40; book(c, x0 + 80 + dr, 1250 + (k % 3) * 50 + Math.sin(lt * 2 + k) * 6, .4 + k * .2, .9, BOOKCOL[k % 6]); } }
+      if (ink > 0) { c.save(); c.globalAlpha = ink * .6; c.fillStyle = '#0a0a14'; for (let k = 0; k < 10; k++) { c.beginPath(); c.ellipse(200 + k * 240 + Math.sin(lt + k) * 30, 1300 + (k % 3) * 40, 160 * ink, 30 * ink, 0, 0, 7); c.fill(); } c.restore(); } }],
+    init: S => { S.tB = A.at(S, 'books', 1.2); S.tI = A.at(S, 'ink', 3.4); const tC = A.at(S, 'Chroniclers', .3);
+      S.D.over = [(c, lt) => K.badge(c, 'AS CHRONICLERS TELL IT', lt, { at: tC }), (c, lt) => K.card(c, 'THE TIGRIS RAN\nDARK WITH INK', lt, { at: S.tI + .6, x: 1440, y: 220, px: 50, rot: 3 })];
+      S.D.sfx = [[S.tB, 'paper', .35], [S.tB + .9, 'whoosh_soft', .3], [S.tB + 1.6, 'paper', .3], [S.tI, 'swell', .35]]; } },
+  // 7 the caliph is put to death; one story: rolled in a carpet (shown only as the carpet and dust)
+  { plate: 'city_dusk', cam: { z: [1.12, 1.18], x: [1280, 1260], y: [940, 940], ease: E.io }, bed: [['wind_loop', .35], ['drone', .2]],
+    live: [(c, lt, u, S) => { const a = pop(lt, S.tC); if (a > 0) { c.save(); c.translate(1280, 1150); c.scale(a * .85, a * .85); c.fillStyle = 'rgba(0,0,0,.35)'; c.beginPath(); c.ellipse(0, 40, 420, 30, 0, 0, 7); c.fill(); c.fillStyle = '#8a2a22'; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.roundRect(-400, -70, 800, 140, 70); c.fill(); c.stroke(); c.strokeStyle = '#e8b44a'; c.lineWidth = 6; for (let k = -320; k <= 320; k += 80) { c.beginPath(); c.moveTo(k, -66); c.quadraticCurveTo(k + 20, 0, k, 66); c.stroke(); } c.fillStyle = '#c84a32'; c.beginPath(); c.ellipse(400, 0, 30, 68, 0, 0, 7); c.fill(); c.stroke(); c.strokeStyle = '#e8b44a'; c.lineWidth = 4; c.beginPath(); c.ellipse(400, 0, 18, 44, 0, 0, 7); c.stroke(); c.restore(); }
+      if (lt > S.tH) { for (let k = 0; k < 5; k++) { const x = 2700 - ((lt - S.tH) * 900 + k * 260); MG.horse(c, { x, y: 1000, s: .3, facing: -1, gait: 'gallop', t: lt, phase: k, sil: 'rgba(30,20,30,.75)' }); } c.save(); for (let k = 0; k < 8; k++) { const dx = 300 + k * 300, dy = 1040 - (k % 2) * 20, dr = 90 + (k % 3) * 30, dg = c.createRadialGradient(dx, dy, 0, dx, dy, dr); dg.addColorStop(0, `rgba(180,150,110,${.3 * K.seg(lt, S.tH, S.tH + 1)})`); dg.addColorStop(1, 'rgba(180,150,110,0)'); c.fillStyle = dg; c.beginPath(); c.arc(dx, dy, dr, 0, 7); c.fill(); } c.restore(); } }],
+    init: S => { S.tC = A.at(S, 'carpet', 2.4); S.tH = A.at(S, 'horses', 3.6); const tP = A.at(S, 'put to death', .6), tB = A.at(S, 'royal blood', 5.6);
+      S.D.over = [(c, lt) => K.card(c, 'THE CALIPH IS EXECUTED', lt, { at: tP, x: 960, y: 180, px: 50, rot: -2 }), (c, lt) => K.badge(c, 'ONE STORY', lt, { at: S.tC - .6 }), (c, lt) => K.card(c, 'NO ROYAL BLOOD\nTO BE SPILLED', lt, { at: tB, x: 1440, y: 420, px: 46, rot: 3 })];
+      S.D.sfx = [[tP, 'drum', .45], [S.tC, 'thud', .35], [S.tH, 'gallop_loop', .35], [tB, 'tension', .3]]; } },
+  // 8 on toward Syria and Egypt; 1260 Mongke dies, Hulagu takes most of the army back east
+  { plate: 'map_eurasia', cam: { z: [1.9, 1.5], x: [860, 1150], y: [820, 740], ease: E.io }, bed: [['war_drums_loop', .3]],
+    live: [(c, lt, u, S) => { pin(c, B[0], B[1], 'BAGHDAD', 1); const P = [B, EP(40, 35.5), AL, DM, EP(34, 31)]; const e = route(c, P, E.io(K.seg(lt, .3, S.tD - .2)), 12); if (e && lt < S.tD - .2) head(c, e[0], e[1], Math.PI * .85, 1.1); if (lt > S.tD - .4) { c.save(); c.font = '26px Anton'; c.textAlign = 'center'; c.fillStyle = '#3a2a1a'; c.fillText('SYRIA', DM[0] + 40, DM[1] - 50); c.fillText('EGYPT', CA[0] - 10, CA[1] + 40); c.restore(); }
+      pin(c, KK[0], KK[1], 'KARAKORUM', pop(lt, S.tD - .6), '#3f5f8a'); cross(c, KK[0], KK[1] - 40, .9, pop(lt, S.tD)); const R2 = [DM, B, EP(60, 37), EP(80, 42), KK]; const e2 = route(c, R2, E.io(K.seg(lt, S.tB, S.tB + 2.6)), 10, 'rgba(63,95,138,.9)'); if (e2 && lt < S.tB + 2.6) head(c, e2[0], e2[1], -.2, 1); }],
+    init: S => { S.tD = A.at(S, 'Mongke died', 3); S.tB = A.at(S, 'back east', 5); const tY = A.at(S, '1260', 2.6);
+      S.D.over = [(c, lt) => K.dateTag(c, '1260', lt, { at: tY }), (c, lt) => K.card(c, 'MONGKE DIES', lt, { at: S.tD, x: 1440, y: 640, px: 50, rot: 3 }), (c, lt) => K.card(c, 'HULAGU TAKES MOST\nOF THE ARMY HOME', lt, { at: S.tB, x: 480, y: 220, px: 42, rot: -3 })];
+      S.D.sfx = [[.3, 'whoosh', .35], [S.tD, 'drum', .5], [S.tB, 'whoosh_soft', .4]]; } },
+  // 9 Ain Jalut, September 1260: the Mamluks of Egypt win
+  { plate: 'steppe_open', cam: { z: [1.12, 1.16], x: [1280, 1280], y: [930, 930] }, bed: [['gallop_loop', .3], ['war_drums_loop', .3]],
+    live: [(c, lt, u, S) => { const meet = Math.min(1, K.seg(lt, .3, S.tW)), back = K.seg(lt, S.tW + .4, S.tW + 3); for (let r = 0; r < 2; r++) for (let k = 0; k < 4; k++) { const xm = 150 + k * 170 + meet * 480 - back * 1300, xe = 2400 - k * 170 - meet * 480 + back * 300; MG.horse(c, { x: xm, y: 1250 + r * 110, s: .36 + r * .08, facing: back > 0 ? -1 : 1, gait: 'gallop', t: lt, phase: k + r, col: ['#6a4028', '#3a2a1e', '#9a6a3a', '#4a3020'][k], rider: MG.archer({ col: '#8a2a22' }) }); MG.horse(c, { x: xe, y: 1250 + r * 110, s: .36 + r * .08, facing: -1, gait: 'gallop', t: lt, phase: k * 1.3 + r, col: ['#d8c8a8', '#8a6a4a', '#c8a070', '#5a4030'][k], rider: MG.archer({ col: '#d8a030' }) }); } }],
+    init: S => { const tA = A.at(S, 'Ain Jalut', 1.2), tM = A.at(S, 'Mamluks', .6); S.tW = A.at(S, 'Mamluks won', 5);
+      S.D.over = [(c, lt) => K.dateTag(c, 'AIN JALUT · SEPT 1260', lt, { at: tA }), (c, lt) => K.badge(c, "IN TODAY'S ISRAEL", lt, { at: tA + .6 }), (c, lt) => K.card(c, 'MAMLUKS OF EGYPT', lt, { at: tM, x: 1500, y: 260, px: 46, rot: 3 }), (c, lt) => K.card(c, 'MONGOLS', lt, { at: tM + .5, x: 420, y: 300, px: 46, rot: -3 }), (c, lt) => K.title(c, 'THE MAMLUKS WIN', lt, { at: S.tW, y: 540, px: 84, fill: GOLD })];
+      S.D.sfx = [[tM, 'drum', .4], [S.tW - .3, 'sword_clash', .45], [S.tW, 'crowd_cheer', .3], [S.tW + .5, 'drum', .45]]; } },
+  // 10 one of the first big field defeats; the push into Africa ends there
+  { plate: 'map_eurasia', cam: { z: [1.9, 2.1], x: [820, 820], y: [860, 860], ease: E.io }, bed: [['wind_loop', .25], ['drone', .2]],
+    live: [(c, lt, u, S) => { const P = [B, AL, DM, AJ]; route(c, P, 1, 12); pin(c, AJ[0], AJ[1], 'AIN JALUT', 1); const st = K.seg(lt, S.tA, S.tA + .8); if (st > 0) { c.save(); c.globalAlpha = Math.min(1, st * 1.4); c.strokeStyle = INK; c.lineWidth = 10; c.setLineDash([22, 14]); c.beginPath(); c.moveTo(AJ[0] - 120, AJ[1] - 60); c.lineTo(AJ[0] + 30, AJ[1] + 150); c.stroke(); c.restore(); c.save(); c.font = '44px Anton'; c.textAlign = 'center'; c.fillStyle = '#6a4a2a'; c.fillText('AFRICA', AJ[0] - 190, AJ[1] + 70); c.restore(); } }],
+    init: S => { S.tA = A.at(S, 'Africa', 3.6); const tF = A.at(S, 'first big battles', 1);
+      S.D.over = [(c, lt) => K.card(c, 'ONE OF THEIR FIRST BIG\nDEFEATS IN THE FIELD', lt, { at: tF, x: 1400, y: 220, px: 44, rot: 3 }), (c, lt) => K.card(c, 'THE PUSH INTO\nAFRICA ENDS HERE', lt, { at: S.tA + .4, x: 1450, y: 600, px: 46, rot: -3 })];
+      S.D.sfx = [[tF, 'stamp', .4], [S.tA, 'thud', .45], [S.tA + .4, 'pop', .35]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>
