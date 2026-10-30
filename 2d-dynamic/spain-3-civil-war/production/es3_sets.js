@@ -110,13 +110,39 @@
   // ======================== A DESERT OUTPOST IN MOROCCO ========================
   VP.set('outpost', 1280, 720, (g, w, h) => {
     sky(g, w, h, [[0, '#7aa0c8'], [.5, '#f0dcb0'], [.62, '#f4d8a8']]);
-    hill(g, 380, 90, 200, 571, '#b88a5a', ['#c89a6a', '#9a6a3a'], w, h);
+    S.dabs(g, { x: 0, y: 40, w, h: 160, n: 50, cols: ['#ffffff', '#f8e8d0'], r0: 30, r1: 80, sq: .3, a0: .12, a1: .3, seed: 570 });
+    // Rif mountains, hazy, with rock strokes
+    const m1 = x => 330 - 110 * S.fbm(x / 260, 571);
+    g.fillStyle = '#c0946a'; g.beginPath(); g.moveTo(0, h); for (let x = 0; x <= w; x += 6) g.lineTo(x, m1(x)); g.lineTo(w, h); g.fill();
+    S.strokes(g, { x: 0, y: 210, w, h: 230, n: 600, cols: ['#d8aa7a', '#a8784a', '#e8c090'], l0: 10, l1: 34, ang: .9, jit: .6, w0: 1, w1: 2.5, a0: .2, a1: .45, seed: 572, mask: (px, py) => py > m1(px) + 3 });
+    const hz = g.createLinearGradient(0, 220, 0, 420); hz.addColorStop(0, 'rgba(244,216,168,.1)'); hz.addColorStop(1, 'rgba(244,216,168,.6)'); g.fillStyle = hz; g.fillRect(0, 220, w, 200);
     hill(g, 440, 60, 300, 573, '#d8aa70', ['#e8ba80', '#b88a50'], w, h);
-    // mud-brick fort with a flagpole
-    g.fillStyle = '#c89a6a'; g.fillRect(760, 300, 300, 140); g.fillStyle = '#a87a4a'; g.fillRect(760, 300, 300, 10); for (let x = 760; x < 1060; x += 24) g.fillRect(x, 288, 12, 14);
-    g.fillStyle = '#c89a6a'; g.fillRect(730, 260, 60, 180); g.fillRect(1030, 260, 60, 180); g.fillStyle = '#3a2418'; g.fillRect(880, 370, 60, 70);
+    // kasbah: tapered rammed-earth walls, crenellations, corner towers, arched gate, slit windows
+    const wallC = '#c89a6a', shd = '#9a6a42', lit = '#e8bc88';
+    const tw = (x, y0, tw0, th) => { g.fillStyle = wallC; g.beginPath(); g.moveTo(x, 440); g.lineTo(x + 6, y0); g.lineTo(x + tw0 - 6, y0); g.lineTo(x + tw0, 440); g.fill(); g.fillStyle = shd; g.beginPath(); g.moveTo(x + tw0 * .6, 440); g.lineTo(x + tw0 * .62, y0); g.lineTo(x + tw0 - 6, y0); g.lineTo(x + tw0, 440); g.fill(); g.fillStyle = S.rgba(lit, .5); g.fillRect(x + 6, y0, 5, 440 - y0); for (let k = 0; k < 4; k++) { g.fillStyle = k > 1 ? shd : wallC; g.fillRect(x + 4 + k * (tw0 - 8) / 4, y0 - 14, (tw0 - 8) / 8, 14); } g.fillStyle = '#3a2418'; for (let r = 0; r < 3; r++) g.fillRect(x + tw0 / 2 - 3, y0 + 30 + r * 44, 6, 16); g.strokeStyle = S.rgba('#7a5232', .45); g.lineWidth = 1; for (let yy = y0 + 20; yy < 440; yy += 18) { g.beginPath(); g.moveTo(x + 6, yy); g.lineTo(x + tw0 - 6, yy); g.stroke(); } };
+    g.fillStyle = wallC; g.fillRect(760, 300, 300, 140); g.fillStyle = shd; g.fillRect(760, 300, 300, 8);
+    S.dabs(g, { x: 760, y: 300, w: 300, h: 140, n: 160, cols: [lit, shd, '#b88a5a'], r0: 4, r1: 14, a0: .15, a1: .35, seed: 574 });
+    g.strokeStyle = S.rgba('#7a5232', .4); g.lineWidth = 1; for (let yy = 318; yy < 440; yy += 18) { g.beginPath(); g.moveTo(760, yy); g.lineTo(1060, yy); g.stroke(); }
+    for (let x = 764; x < 1056; x += 24) { g.fillStyle = wallC; g.fillRect(x, 286, 12, 16); g.fillStyle = S.rgba('#000000', .15); g.fillRect(x + 8, 286, 4, 16); }
+    // geometric frieze and gate
+    g.fillStyle = shd; for (let x = 790; x < 1040; x += 20) { g.beginPath(); g.moveTo(x, 330); g.lineTo(x + 10, 320); g.lineTo(x + 20, 330); g.lineTo(x + 10, 340); g.fill(); }
+    g.fillStyle = '#7a5232'; g.beginPath(); g.moveTo(870, 440); g.lineTo(870, 378); g.arc(910, 378, 40, Math.PI, TAU); g.lineTo(950, 440); g.fill();
+    g.fillStyle = '#4a2a16'; g.beginPath(); g.moveTo(878, 440); g.lineTo(878, 380); g.arc(910, 380, 32, Math.PI, TAU); g.lineTo(942, 440); g.fill();
+    g.strokeStyle = '#2a1608'; g.lineWidth = 2; for (let k = 0; k < 6; k++) { g.beginPath(); g.moveTo(882 + k * 11, 360); g.lineTo(882 + k * 11, 440); g.stroke(); } g.fillStyle = '#c8a040'; for (let r = 0; r < 4; r++) for (let k = 0; k < 4; k++) { g.beginPath(); g.arc(886 + k * 16, 384 + r * 14, 1.6, 0, TAU); g.fill(); }
+    for (const wx of [800, 1010]) { g.fillStyle = '#3a2418'; g.fillRect(wx, 360, 12, 22); g.beginPath(); g.arc(wx + 6, 360, 6, Math.PI, TAU); g.fill(); }
+    tw(730, 260, 60, 180); tw(1030, 260, 60, 180);
+    // army tents and a parked lorry outside the walls
+    for (const [tx, ty, s] of [[560, 452, 1], [640, 446, .8], [1120, 452, 1.1]]) { g.fillStyle = '#8a8a5a'; g.beginPath(); g.moveTo(tx - 50 * s, ty); g.lineTo(tx, ty - 46 * s); g.lineTo(tx + 50 * s, ty); g.fill(); g.fillStyle = '#6a6a42'; g.beginPath(); g.moveTo(tx, ty - 46 * s); g.lineTo(tx + 50 * s, ty); g.lineTo(tx + 14 * s, ty); g.fill(); g.fillStyle = '#3a3420'; g.beginPath(); g.moveTo(tx - 8 * s, ty); g.lineTo(tx, ty - 26 * s); g.lineTo(tx + 8 * s, ty); g.fill(); g.strokeStyle = '#4a3a24'; g.lineWidth = 1; g.beginPath(); g.moveTo(tx, ty - 46 * s); g.lineTo(tx, ty - 56 * s); g.moveTo(tx - 50 * s, ty); g.lineTo(tx - 64 * s, ty + 6); g.moveTo(tx + 50 * s, ty); g.lineTo(tx + 64 * s, ty + 6); g.stroke(); }
+    // palms
+    const palm = (x, y, ht) => { g.strokeStyle = '#6a4a2a'; g.lineWidth = 7; g.beginPath(); g.moveTo(x, y); g.quadraticCurveTo(x + 14, y - ht * .5, x + 6, y - ht); g.stroke(); g.strokeStyle = '#4a3218'; g.lineWidth = 1.5; for (let k = 0; k < 10; k++) { const yy = y - k * ht / 10; g.beginPath(); g.moveTo(x - 3 + k * .9, yy); g.lineTo(x + 6 + k * .9, yy - 3); g.stroke(); }
+      for (let k = 0; k < 9; k++) { const a = -Math.PI / 2 + (k - 4) * .38, L2 = 56 + (k % 2) * 14; g.strokeStyle = k % 2 ? '#3a6a2a' : '#4a7a32'; g.lineWidth = 5; g.beginPath(); g.moveTo(x + 6, y - ht); g.quadraticCurveTo(x + 6 + Math.cos(a) * L2 * .6, y - ht + Math.sin(a) * L2 * .6 - 10, x + 6 + Math.cos(a) * L2, y - ht + Math.sin(a) * L2 + 18); g.stroke(); } };
+    palm(690, 446, 120); palm(1150, 452, 140); palm(250, 470, 150);
+    // desert floor with ripples, scrub and stones
     const fg = g.createLinearGradient(0, 440, 0, h); fg.addColorStop(0, '#e8c088'); fg.addColorStop(1, '#c89858'); g.fillStyle = fg; g.fillRect(0, 440, w, h - 440);
-    S.strokes(g, { x: 0, y: 440, w, h: 280, n: 900, cols: ['#f0d098', '#a87a4a'], l0: 20, l1: 60, ang: .05, jit: .1, w0: 1, w1: 2.5, a0: .2, a1: .45, seed: 575 });
+    S.strokes(g, { x: 0, y: 440, w, h: 280, n: 1400, cols: ['#f0d098', '#a87a4a', '#d8a868'], l0: 20, l1: 70, ang: .05, jit: .12, w0: 1, w1: 2.5, a0: .2, a1: .5, seed: 575, bend: .6 });
+    for (let i = 0; i < 26; i++) { const r = S.rng(i + 577), x = r() * w, y = 460 + r() * 250, s = .5 + (y - 440) / 280; if (r() < .5) { S.dabs(g, { x: x - 14 * s, y: y - 12 * s, w: 28 * s, h: 14 * s, n: 12, cols: ['#7a7a3a', '#5a5a2a', '#9a8a4a'], r0: 3 * s, r1: 6 * s, a0: .7, a1: 1, seed: i * 7 }); } else { g.fillStyle = '#9a7a5a'; g.beginPath(); g.ellipse(x, y, 9 * s, 5 * s, 0, 0, TAU); g.fill(); g.fillStyle = S.rgba('#ffffff', .2); g.beginPath(); g.ellipse(x - 2 * s, y - 2 * s, 4 * s, 2 * s, 0, 0, TAU); g.fill(); } }
+    // windsock on a pole for the airstrip
+    g.strokeStyle = '#3a3a3a'; g.lineWidth = 3; g.beginPath(); g.moveTo(120, 470); g.lineTo(120, 380); g.stroke(); for (let k = 0; k < 4; k++) { g.fillStyle = k % 2 ? '#f0f0f0' : '#d8502a'; g.beginPath(); g.moveTo(122 + k * 14, 382 + k * 2); g.lineTo(136 + k * 14, 384 + k * 2.5); g.lineTo(136 + k * 14, 396 - k * 1.5); g.lineTo(122 + k * 14, 398 - k * 1.2); g.fill(); }
   });
   // ======================== A MADRID BALCONY OVER A SQUARE ========================
   VP.set('plaza', 1280, 720, (g, w, h) => {

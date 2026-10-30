@@ -170,6 +170,14 @@
     land([[0, 0], [1280, 0], [1280, 150], [1000, 190], [820, 170], [760, 230], [700, 240], [660, 180], [420, 200], [200, 170], [0, 210]], '#8a8a5a', 663);
     g.fillStyle = '#7a7a6a'; g.beginPath(); g.moveTo(690, 236); g.lineTo(720, 196); g.lineTo(760, 228); g.fill();
     land([[0, 720], [0, 560], [300, 520], [520, 560], [640, 520], [780, 540], [1000, 500], [1280, 540], [1280, 720]], '#a8885a', 665);
-    for (let i = 0; i < 14; i++) { const r = S.rng(i + 667); g.fillStyle = S.rgba('#f0f4f4', .5); g.fillRect(r() * w, 240 + r() * 260, 30 + r() * 40, 2); }
+    // wave crests, coastal foam, relief strokes, the Rock's shadow and white coastal towns
+    for (let i = 0; i < 120; i++) { const r = S.rng(i + 667), x = r() * w, y = 240 + r() * 270, l = 10 + r() * 22; g.strokeStyle = S.rgba('#e8f4f8', .25 + r() * .35); g.lineWidth = 1.5; g.beginPath(); g.moveTo(x - l, y + 3); g.quadraticCurveTo(x, y - 4, x + l, y + 3); g.stroke(); }
+    const foam = (pts) => { g.strokeStyle = S.rgba('#ffffff', .55); g.lineWidth = 3; g.setLineDash([10, 7]); g.beginPath(); pts.forEach(([x, y], i) => i ? g.lineTo(x, y + 9) : g.moveTo(x, y + 9)); g.stroke(); g.setLineDash([]); };
+    foam([[0, 210], [200, 170], [420, 200], [660, 180], [700, 240], [760, 230], [820, 170], [1000, 190], [1280, 150]]);
+    foam([[0, 542], [300, 502], [520, 542], [640, 502], [780, 522], [1000, 482], [1280, 522]].map(([x, y]) => [x, y + 0]));
+    S.strokes(g, { x: 0, y: 0, w, h: 240, n: 500, cols: ['#6a6a40', '#b8a878', '#5a6a3a'], l0: 8, l1: 24, ang: .8, jit: .7, w0: 1, w1: 2.5, a0: .2, a1: .45, seed: 669, mask: (px, py) => py < 150 + Math.sin(px / 140) * 20 });
+    S.strokes(g, { x: 0, y: 560, w, h: 160, n: 400, cols: ['#8a6a3a', '#c8a878', '#7a7a4a'], l0: 8, l1: 24, ang: -.8, jit: .7, w0: 1, w1: 2.5, a0: .2, a1: .45, seed: 671 });
+    g.fillStyle = S.rgba('#000000', .25); g.beginPath(); g.moveTo(720, 196); g.lineTo(760, 228); g.lineTo(735, 232); g.fill(); g.fillStyle = S.rgba('#ffffff', .25); g.beginPath(); g.moveTo(690, 236); g.lineTo(720, 196); g.lineTo(712, 232); g.fill();
+    for (const [tx, ty, n, sd] of [[610, 175, 26, 673], [300, 172, 18, 675], [1040, 160, 22, 677], [690, 560, 24, 679], [330, 545, 26, 681], [1120, 535, 18, 683]]) { S.dabs(g, { x: tx - 40, y: ty - 18, w: 80, h: 30, n, cols: ['#f8f4ec', '#e8dcc8', '#c87a5a'], r0: 2, r1: 4.5, sq: .9, a0: .8, a1: 1, seed: sd }); }
   });
 })(window);
