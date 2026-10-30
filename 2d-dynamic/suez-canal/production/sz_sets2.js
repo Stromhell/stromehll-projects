@@ -74,4 +74,27 @@
     g.fillStyle = '#8a2a2a'; g.fillRect(220, 560, 840, 160); g.strokeStyle = '#d8a850'; g.lineWidth = 6; g.strokeRect(236, 572, 808, 140);
     grain(g, w, h, 2610, .04);
   });
+
+  // ===== wood-panelled study (Ismail's office / Disraeli's office): bookcases, a window, a big desk
+  VP.set('sz_office', 1280, 720, (g, w, h) => {
+    sky(g, w, h, [[0, '#4a2e1c'], [1, '#6a4428']]);
+    for (let k = 0; k < 8; k++) { g.fillStyle = S.rgba(k % 2 ? '#5a3a22' : '#6a4630', 1); g.fillRect(k * 160, 0, 156, 500); g.strokeStyle = S.rgba('#2a1a10', .6); g.lineWidth = 3; g.strokeRect(k * 160 + 14, 30, 128, 200); g.strokeRect(k * 160 + 14, 260, 128, 210); }
+    for (const x of [40, 1000]) { g.fillStyle = '#3a2416'; g.fillRect(x, 40, 240, 440); for (let r = 0; r < 6; r++) { g.fillStyle = '#2a180e'; g.fillRect(x + 10, 60 + r * 70, 220, 8); for (let b = 0; b < 14; b++) { const rr = S.rng(2700 + x + r * 20 + b)(); g.fillStyle = ['#7a2a2a', '#2a4a3a', '#8a6a3a', '#2a3a5a', '#5a2a4a'][(rr * 5) | 0]; const bh = 40 + rr * 18; g.fillRect(x + 14 + b * 15, 68 + r * 70 - bh + 50, 12, bh); } } }
+    g.fillStyle = '#c8d0d8'; g.fillRect(500, 60, 280, 300); const gr = g.createLinearGradient(0, 60, 0, 360); gr.addColorStop(0, '#a8b8c8'); gr.addColorStop(1, '#d8d4c8'); g.fillStyle = gr; g.fillRect(510, 70, 260, 280); g.fillStyle = '#4a2e1c'; g.fillRect(636, 70, 8, 280); g.fillRect(510, 206, 260, 8);
+    for (const [x, d] of [[500, -1], [780, 1]]) { g.fillStyle = '#6a1a1a'; g.fillRect(x + (d < 0 ? -60 : 0), 40, 60, 360); }
+    S.glow(g, 640, 200, 360, '#fff0d0', .25);
+    g.fillStyle = '#4a2a18'; g.fillRect(0, 500, w, 220); g.fillStyle = '#6a2020'; g.fillRect(160, 560, 960, 160); g.strokeStyle = '#c8a050'; g.lineWidth = 5; g.strokeRect(176, 572, 928, 136);
+    grain(g, w, h, 2710, .05);
+  });
+
+  // ===== Cairo square, 1956: buildings, flags, a balcony with microphones (crowd drawn per shot)
+  VP.set('sz_cairo', 1280, 720, (g, w, h) => {
+    sky(g, w, h, [[0, '#7aa8d0'], [.6, '#e8dcc0'], [1, '#c8a878']]);
+    for (let b = 0; b < 6; b++) { const x = b * 220 - 30, top = 120 + (b % 3) * 30; g.fillStyle = ['#d8c49c', '#c8b08a', '#e0ccaa'][b % 3]; g.fillRect(x, top, 220, 500 - top);
+      for (let r = 0; r < 4; r++) for (let k = 0; k < 4; k++) { g.fillStyle = '#4a5a6a'; g.fillRect(x + 20 + k * 50, top + 30 + r * 80, 26, 44); g.fillStyle = '#e8dcc0'; g.fillRect(x + 16 + k * 50, top + 74 + r * 80, 34, 5); } }
+    g.fillStyle = '#e8dcc0'; g.fillRect(500, 260, 280, 30); g.fillStyle = '#b8a07a'; for (let k = 0; k < 12; k++) g.fillRect(504 + k * 23, 290, 6, 40); g.fillRect(500, 326, 280, 8);
+    for (const x of [460, 820]) { g.strokeStyle = '#3a3a3a'; g.lineWidth = 4; g.beginPath(); g.moveTo(x, 330); g.lineTo(x, 150); g.stroke(); g.fillStyle = '#1e7a3a'; g.fillRect(x + 2, 150, 80, 48); g.fillStyle = '#f4f4f4'; g.beginPath(); g.arc(x + 40, 174, 13, 0, TAU); g.fill(); g.fillStyle = '#1e7a3a'; g.beginPath(); g.arc(x + 45, 172, 11, 0, TAU); g.fill(); g.fillStyle = '#f4f4f4'; for (let k = 0; k < 3; k++) { g.beginPath(); g.arc(x + 50 + (k === 1 ? 5 : 0), 166 + k * 7, 2.4, 0, TAU); g.fill(); } }
+    g.fillStyle = '#9a8a6a'; g.fillRect(0, 500, w, 220); S.dabs(g, { x: 0, y: 500, w, h: 220, n: 200, cols: ['#7a6a4a', '#b8a888'], r0: 3, r1: 12, sq: .4, a0: .2, a1: .4, seed: 2810 });
+    grain(g, w, h, 2820, .04);
+  });
 })(window);
