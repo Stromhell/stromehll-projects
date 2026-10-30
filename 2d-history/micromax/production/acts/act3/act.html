@@ -34,7 +34,7 @@ window.SHOTS = [
     figs: [{ x: 620, y: 1330, s: 1.9, ...MX.RAHUL, facing: 1, pose: 'point', mood: 'happy' },
       ...[0, 1, 2].map(i => ({ x: 1250 + i * 400, y: 1330, s: 1.85, ...MX.FRIEND(i), facing: -1, pose: 'think', mood: 'worried', anim: (o, lt, u, S) => { if (lt > S.tM) { o.pose = 'shrug'; o.mood = i === 1 ? 'shocked' : 'worried'; } } }))],
     init: S => { const tO = A.at(S, 'own phone', 2.4); S.tM = A.at(S, 'mad', 4.4); const tN = A.at(S, 'Nokia', 6.6);
-      S.D.over = [(c, lt) => K.card(c, "MICROMAX'S OWN PHONE", lt, { at: tO, x: 560, y: 200, px: 46, rot: -3 }), (c, lt) => K.card(c, 'THEY THOUGHT HE WAS MAD', lt, { at: S.tM, x: 1460, y: 240, px: 42, rot: 3 }), (c, lt) => { const a = pop(lt, tN, .5); if (a > 0) { c.save(); c.translate(1300, 520); c.scale(a, a); c.fillStyle = '#2a4aa8'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-300, -80, 600, 160); c.strokeRect(-300, -80, 600, 160); MX.label(c, 'NOKIA', 0, 6, 110, '#fff'); c.restore(); } }];
+      S.D.over = [(c, lt) => K.card(c, "MICROMAX'S OWN PHONE", lt, { at: tO, x: 560, y: 200, px: 46, rot: -3 }), (c, lt) => K.card(c, 'THEY THOUGHT HE WAS MAD', lt, { at: S.tM, x: 1460, y: 240, px: 42, rot: 3 }), (c, lt) => { const a = pop(lt, tN, .5); if (a > 0) { c.save(); c.translate(1300, 380); c.scale(a, a); c.fillStyle = '#2a4aa8'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-300, -80, 600, 160); c.strokeRect(-300, -80, 600, 160); MX.label(c, 'NOKIA', 0, 6, 110, '#fff'); c.restore(); } }];
       S.D.sfx = [[tO, 'pop', .3], [S.tM, 'hit', .3], [tN, 'thud', .45]]; } },
   // 3.04 2008: the Micromax X1i, a 30-day standby battery
   { draw: (c, lt, u, S) => { backdrop('chai_stall', .45, 8)(c); c.save(); MX.glow(c, 760, 560, 500, '#e8661a', .25); c.restore(); const a = E.back(K.seg(lt, .3, .9)); if (a > 0) X1I(c, 760, 900, 2.6 * a, lt, Math.min(1, K.seg(lt, S.tB, S.tB + 1.4))); },
@@ -54,15 +54,15 @@ window.SHOTS = [
     figs: [...[0, 1, 2].map(i => ({ x: 560 + i * 640, y: 1310, s: 1.8, ...MX.SHOPKEEPER(i + 1), facing: 1, pose: 'stand', mood: 'neutral', anim: (o, lt) => { if (lt > 1 + i * 1.2) { o.pose = 'shrug'; o.mood = 'angry'; o.facing = Math.floor(lt * 4) % 2 ? 1 : -1; } if (lt > 1.8 + i * 1.2) o.facing = 1; } })),
       { x: 2200, y: 1350, s: 1.9, ...MX.RAHUL, facing: -1, pose: 'present', mood: 'worried', walk: { x0: 2900, x1: 2200, t0: 0, dur: 1.6 } }],
     init: S => { const tN = A.at(S, 'Nokia', 3);
-      S.D.over = [(c, lt) => K.card(c, 'DISTRIBUTORS: NO', lt, { at: .6, x: 960, y: 560, px: 50, rot: -3 }), (c, lt) => K.card(c, '"CUSTOMERS ONLY ASK FOR NOKIA"', lt, { at: tN, x: 960, y: 680, px: 40, rot: 2 })];
+      S.D.over = [(c, lt) => K.card(c, 'DISTRIBUTORS: NO', lt, { at: .6, x: 960, y: 120, px: 50, rot: -3 }), (c, lt) => K.card(c, '"CUSTOMERS ONLY ASK FOR NOKIA"', lt, { at: tN, x: 960, y: 230, px: 40, rot: 2 })];
       S.D.sfx = [[1, 'pop', .25], [2.2, 'pop', .25], [3.4, 'pop', .25]]; } },
   // 3.07 one old distributor tries; the shelf empties fast; SOLD OUT
   { plate: 'phone_shop', cam: { z: [1.04, 1.1], x: [1280, 1280], y: [820, 820] }, bed: [['crowd_loop', .25]],
     figs: [{ x: 1280, y: 1330, s: 1.9, ...MX.SHOPKEEPER(0), facing: 1, pose: 'present', mood: 'happy', hair: 'short', hairCol: '#c8c8c8' },
-      ...[0, 1, 2, 3].map(i => ({ x: 600, y: 1360, s: 1.8, ...MX.VILLAGER(i + 2), facing: 1, mood: 'happy', walk: { x0: -300 - i * 500, x1: 2900, t0: 2 + i * .8, dur: 5 } }))],
+      ...[0, 1, 2, 3].map(i => ({ x: 1040 - i * 240, y: 1360, s: 1.8, ...MX.VILLAGER(i + 2), facing: 1, pose: 'stand', mood: 'happy', walk: { x0: -300, x1: 1040 - i * 240, t0: 1 + i * .9, dur: (1340 - i * 240) / 330 } }))],
     front: [(c, lt, u, S) => { const left = Math.max(0, 10 - Math.floor(K.seg(lt, S.tS - 2.4, S.tS) * 10)); for (let k = 0; k < left; k++) MX.box(c, 1700 + (k % 5) * 124, 846 - Math.floor(k / 5) * 82, 1, { label: 'X1i' }); }],
     init: S => { S.tS = A.at(S, 'sold out', 5.6);
-      S.D.over = [(c, lt) => K.card(c, 'ONE OLD DISTRIBUTOR SAYS YES', lt, { at: .5, x: 560, y: 200, px: 40, rot: -3 }), (c, lt) => RS_stamp(c, 'SOLD OUT', 1380, 420, lt, S.tS), (c, lt) => K.card(c, 'IN ABOUT 10 DAYS', lt, { at: S.tS + .6, x: 1400, y: 620, px: 46, rot: 3 })];
+      S.D.over = [(c, lt) => K.card(c, 'ONE OLD DISTRIBUTOR SAYS YES', lt, { at: .5, x: 560, y: 200, px: 40, rot: -3 }), (c, lt) => RS_stamp(c, 'SOLD OUT', 1380, 420, lt, S.tS), (c, lt) => K.card(c, 'IN ABOUT 10 DAYS', lt, { at: S.tS + .6, x: 1400, y: 270, px: 46, rot: 3 })];
       S.D.sfx = [[2, 'coins', .25], [3, 'coins', .25], [4, 'coins', .25], [S.tS, 'stamp', .55], [S.tS + .2, 'crowd_cheer', .25]]; } },
   // 3.08 the lesson on a whiteboard: PROBLEM > BRAND
   { draw: (c, lt, u, S) => { backdrop('office', .5, 8)(c); c.save(); c.fillStyle = '#f8f8f4'; c.strokeStyle = '#5a5a5a'; c.lineWidth = 10; c.fillRect(560, 160, 1100, 620); c.strokeRect(560, 160, 1100, 620); c.fillStyle = '#8a8a8a'; c.fillRect(560, 780, 1100, 18);
