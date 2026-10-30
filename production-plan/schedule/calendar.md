@@ -213,3 +213,10 @@ YouTube + Instagram, 08:00/10:00 ET slots, before the 4 Dec full video.
 | 13 | Wed 25 Nov 13:00Z | 08:00 | Japan's Economic Miracle Was Built on Savings | 6ae4c73350cecd2c81e57944 |
 | 14 | Wed 25 Nov 15:00Z | 10:00 | The Torchbearer Born the Day Hiroshima Was Bombed | 6ae4c73560739d6b6fdf6dc3 |
 | 15 | Thu 26 Nov 13:00Z | 08:00 | Fall Seven Times, Stand Up Eight | 6ae4c73860739d6b6fdf6dcd |
+
+## Nightly check 30 Oct 2026 (16:45 UTC)
+
+- YouTube refused uploads today with "uploadLimitExceeded". Two posts published on Instagram only: Great War 1 reel (6adee04335010d86d1405021, 16:00Z) and a facts short (6ae3bd48e1e7bea05e472a1a, 16:30Z).
+- To protect the Hitler full video (19:00Z today), the facts short "Ice SHOULD sink" (6ae3bd4be1e7bea05e472a3b) moved from 30 Oct 17:30Z to Sun 1 Nov 15:30Z (21:00 IST).
+- Upcoming YouTube load: 15 uploads on 30 Oct, 16 on 31 Oct (10 facts shorts + reels + Ancient humans dark explainer), then 5 to 8 a day.
+- Ancient humans dark explainer (31 Oct 10:00 ET) is 1 day after Hitler; flagged, not moved.
