@@ -173,20 +173,40 @@ export async function runwayNight(k, o = {}) {
 // entebbeOld(k, {pos, lit:[indexes], wall}) -> {group, windows[]}
 export function entebbeOld(k, o = {}) {
   const g = new THREE.Group(); g.position.set(...(o.pos ?? [0, 0, 0])); g.rotation.y = o.rotY ?? 0; k.scene.add(g);
-  const wall = std(o.wall ?? 0xb8ae98, { rough: .9 }), trim = std(0x8a826e, { rough: .85 }), dark = std(0x0a0a0c, { rough: .4, metal: .3 });
+  // weathered stucco: blotchy grime, rain streaks and panel joints, so close shots don't read as flat boxes
+  const stucco = canvasTex(1024, 512, (c, w, h) => { c.fillStyle = '#fbf8f1'; c.fillRect(0, 0, w, h);
+    for (let i = 0; i < 900; i++) { const x = (i * 613) % w, y = (i * 271) % h, r = 2 + (i % 7) * 3; c.fillStyle = `rgba(${90 + (i % 5) * 10},${84 + (i % 4) * 8},70,${.03 + (i % 3) * .015})`; c.beginPath(); c.arc(x, y, r, 0, 7); c.fill(); }
+    for (let i = 0; i < 60; i++) { const x = (i * 337) % w; const g = c.createLinearGradient(0, 0, 0, h); g.addColorStop(0, 'rgba(60,54,44,.14)'); g.addColorStop(1, 'rgba(60,54,44,0)'); c.fillStyle = g; c.fillRect(x, 0, 3 + (i % 4) * 3, h * (.3 + (i % 5) * .12)); }
+    c.strokeStyle = 'rgba(70,64,52,.35)'; c.lineWidth = 2; for (let x = 0; x <= w; x += 128) { c.beginPath(); c.moveTo(x, 0); c.lineTo(x, h); c.stroke(); } c.beginPath(); c.moveTo(0, h / 2); c.lineTo(w, h / 2); c.stroke(); }, { repeat: [10, 2] });
+  const wall = new THREE.MeshStandardMaterial({ map: stucco, color: o.wall ?? 0xb8ae98, roughness: .92 }), trim = std(0x8a826e, { rough: .85 }), dark = std(0x0a0a0c, { rough: .4, metal: .3 });
   const W = 70, D = 16;
   g.add(box(W, 7.2, D, wall, { pos: [0, 3.6, 0] }));
   g.add(box(W + .6, .5, D + .6, trim, { pos: [0, 7.4, 0] }));
   g.add(box(W, .3, 3, trim, { pos: [0, 3.6, D / 2 + 1.5] }));                       // canopy along the apron side
   for (let x = -W / 2 + 3; x <= W / 2 - 3; x += 6) g.add(box(.35, 3.6, .35, trim, { pos: [x, 1.8, D / 2 + 2.8] }));
-  const windows = [];
+  const windows = [], mul0 = std(0x2c2a26, { metal: .5, rough: .5 });
   for (let row = 0; row < 2; row++) for (let x = -W / 2 + 2.5; x < W / 2 - 2; x += 3) {
     const lit = (o.lit ?? []).includes(windows.length) || (o.litRow === row);
     const mat = lit ? std(0xffc070, { emissive: 0xffb050, ei: 2.2 }) : dark;
-    const w = box(2.0, row ? 1.5 : 2.2, .08, mat, { pos: [x, row ? 5.4 : 1.7, D / 2 + .05], cast: false }); g.add(w); windows.push(w);
+    const wh = row ? 1.5 : 2.2, wy = row ? 5.4 : 1.7;
+    const w = box(2.0, wh, .08, mat, { pos: [x, wy, D / 2 + .05], cast: false }); g.add(w); windows.push(w);
+    // window surround: frame, centre mullion, transom and a projecting concrete sill
+    g.add(box(2.24, .12, .16, trim, { pos: [x, wy + wh / 2 + .06, D / 2 + .08] }), box(2.4, .1, .32, trim, { pos: [x, wy - wh / 2 - .05, D / 2 + .16] }));
+    for (const sx of [-1.06, 1.06]) g.add(box(.12, wh + .1, .16, trim, { pos: [x + sx, wy, D / 2 + .08] }));
+    g.add(box(.06, wh, .1, mul0, { pos: [x, wy, D / 2 + .1], cast: false }), box(2.0, .05, .1, mul0, { pos: [x, wy + wh * .22, D / 2 + .1], cast: false }));
   }
+  // facade rhythm: floor band, plinth, pilasters, parapet coping, canopy fascia, rooftop plant
+  g.add(box(W + .2, .35, .3, trim, { pos: [0, 4.15, D / 2 + .12] }), box(W + .1, .6, D + .1, std(0x6e675a, { rough: .95 }), { pos: [0, .3, 0] }));
+  for (let x = -W / 2 + 1; x <= W / 2 - 1; x += 6) g.add(box(.5, 7.2, .25, trim, { pos: [x, 3.6, D / 2 + .12] }));
+  g.add(box(W + .8, .9, .25, trim, { pos: [0, 8.05, D / 2 + .3] }), box(W + .8, .9, .25, trim, { pos: [0, 8.05, -D / 2 - .3] }));
+  g.add(box(W, .6, .12, std(0x5c564a, { rough: .8 }), { pos: [0, 3.45, D / 2 + 3] }));
+  for (let x = -W / 2 + 8; x < W / 2 - 12; x += 13) { g.add(box(2.4, 1.2, 1.6, std(0x8c8c86, { metal: .4, rough: .5 }), { pos: [x, 8.2, -3] })); g.add(m(new THREE.CylinderGeometry(.7, .7, .2, 20), std(0x3a3a3a, { metal: .5 }), { pos: [x, 8.85, -3] })); }
+  g.add(m(new THREE.CylinderGeometry(1.1, 1.1, 2.2, 20), std(0x9a9488, { rough: .7 }), { pos: [-W / 2 + 4, 8.9, 3] }));
   // control tower block at the east end
   g.add(box(6, 6, 6, wall, { pos: [W / 2 - 4, 10.2, -2] }));
+  // tower shaft detail: corner piers, stair-window slits, floor bands
+  for (const [cx, cz] of [[-3, -3], [3, -3], [-3, 3], [3, 3]]) g.add(box(.45, 6, .45, trim, { pos: [W / 2 - 4 + cx, 10.2, -2 + cz] }));
+  for (const yy of [8.6, 10.4, 12.2]) { g.add(box(.7, 1.1, .06, dark, { pos: [W / 2 - 4, yy, 1.03], cast: false }), box(.06, 1.1, .7, dark, { pos: [W / 2 - 1 + .03, yy, -2], cast: false })); g.add(box(6.2, .14, 6.2, trim, { pos: [W / 2 - 4, yy + .9, -2] })); }
   g.add(box(7, 2.4, 7, std(0x1a2028, { rough: .1, metal: .5 }), { pos: [W / 2 - 4, 14.4, -2] }));
   g.add(box(7.6, .4, 7.6, trim, { pos: [W / 2 - 4, 15.8, -2] }));
   // tower detail: cab mullions, warm glow inside, balcony rail, roof antennas, a beacon, a painted name band

@@ -23,6 +23,10 @@ function stretcher() { const g = new THREE.Group(); const tube = real.std(0x9a9a
 async function c130Line(k, o = {}) {
   const { scene } = k;
   const ground = await real.pbr('concrete_floor_worn_001', { repeat: [60, 60], color: o.groundColor ?? 0xb0aca0 }); scene.add(real.m(new THREE.PlaneGeometry(400, 400), ground, { rot: [-P / 2, 0, 0], cast: false }));
+  // far ground out to the horizon, so a high camera never sees the slab's edge against the sky
+  scene.add(real.m(new THREE.PlaneGeometry(9000, 9000), real.std(o.groundColor ?? 0xb0aca0, { rough: .95 }), { pos: [0, -.03, 0], rot: [-P / 2, 0, 0], cast: false }));
+  scene.fog = new THREE.FogExp2(o.fog ?? 0xc4ccd8, o.fogD ?? .005);
+  if (scene.userData.fx) scene.userData.fx.ao = 0; // GTAO draws pale halos round the propellers against the far ground in these wide shots // far ground melts into the horizon haze instead of ending in a hard edge
   return [0, 1, 2, 3].map(i => { const p = S2.c130(); p.position.set(-54 + i * 36, 0, 0); scene.add(p); return p; });
 }
 
@@ -84,10 +88,18 @@ export const shots = {
     const { real, scene, camera } = k;
     await real.env(k, 'hangar_interior', { sun: [10, 30, 20], sunI: 1.4, shadowSize: 15, envI: .6 });
     const floor = await real.pbr('concrete_floor_worn_001', { repeat: [10, 10] }); scene.add(real.m(new THREE.PlaneGeometry(40, 40), floor, { rot: [-P / 2, 0, 0], cast: false }));
-    const pump = () => { const g = new THREE.Group(); g.add(real.rbox(.7, .5, .45, .05, real.std(0xb8302a, { rough: .5 }), { pos: [0, .3, 0] })); g.add(real.box(.8, .05, .55, real.std(0x333333, { metal: .7 }), { pos: [0, .04, 0] })); g.add(real.m(new THREE.CylinderGeometry(.08, .08, .3, 16), real.std(0x777777, { metal: .8, rough: .3 }), { pos: [.2, .65, 0] }));
-      g.add(real.m(new THREE.TorusGeometry(.32, .04, 8, 28), real.std(0x111111, { rough: .7 }), { pos: [-.65, .05, 0], rot: [-P / 2, 0, 0] })); g.add(real.m(new THREE.TorusGeometry(.24, .04, 8, 28), real.std(0x111111, { rough: .7 }), { pos: [-.65, .13, 0], rot: [-P / 2, 0, 0] })); return g; };
+    const pump = () => { const g = new THREE.Group(); const red = real.std(0xb8302a, { rough: .45 }), steel = real.std(0x8a8a86, { metal: .8, rough: .35 }), blk = real.std(0x151515, { rough: .6 });
+      g.add(real.rbox(.7, .5, .45, .05, red, { pos: [0, .3, 0] }));
+      // tubular carry frame, louvred engine cover, fuel cap, gauge, pull-start and a data plate, so it reads as a field fuel pump
+      for (const [x, z] of [[-.38, -.25], [.38, -.25], [-.38, .25], [.38, .25]]) g.add(real.m(new THREE.CylinderGeometry(.018, .018, .62, 8), steel, { pos: [x, .36, z] }));
+      for (const z of [-.25, .25]) g.add(real.m(new THREE.CylinderGeometry(.018, .018, .78, 8), steel, { pos: [0, .67, z], rot: [0, 0, P / 2] }));
+      for (let i = 0; i < 5; i++) g.add(real.box(.4, .025, .02, blk, { pos: [-.08, .2 + i * .045, .235], cast: false }));
+      g.add(real.m(new THREE.CylinderGeometry(.05, .05, .04, 16), blk, { pos: [-.2, .57, 0] }));
+      g.add(real.m(new THREE.CylinderGeometry(.045, .045, .02, 20), real.std(0xe8e4d8, { rough: .4 }), { pos: [.24, .4, .232], rot: [P / 2, 0, 0] }));
+      g.add(real.m(new THREE.TorusGeometry(.04, .012, 6, 16), blk, { pos: [.3, .2, .235] }), real.box(.14, .07, .01, real.std(0xd8d0b0, { metal: .5 }), { pos: [.18, .22, .236], cast: false })); g.add(real.box(.8, .05, .55, real.std(0x333333, { metal: .7 }), { pos: [0, .04, 0] })); g.add(real.m(new THREE.CylinderGeometry(.08, .08, .3, 16), real.std(0x777777, { metal: .8, rough: .3 }), { pos: [.2, .65, 0] }));
+      g.add(real.m(new THREE.TorusGeometry(.32, .04, 8, 28), real.std(0x111111, { rough: .7 }), { pos: [.75, .05, -.45], rot: [-P / 2, 0, 0] })); g.add(real.m(new THREE.TorusGeometry(.24, .04, 8, 28), real.std(0x111111, { rough: .7 }), { pos: [.75, .13, -.45], rot: [-P / 2, 0, 0] })); return g; };
     const ppl = [];
-    for (let i = 0; i < 10; i++) { const x = -4.4 + (i % 5) * 2.2, z = -1 - Math.floor(i / 5) * 2.4; const p = await real.human({ id: CMD[i % CMD.length], seed: 4400 + i }); real.put(scene, p, { pos: [x, 0, z], rot: .1, mood: 'stern' }); p.userData.driven = true; ppl.push(p); const pm = pump(); pm.position.set(x + .75, 0, z + .4); scene.add(pm); }
+    for (let i = 0; i < 10; i++) { const x = -4.4 + (i % 5) * 2.2 + (i >= 5 ? 1.1 : 0), z = -1 - Math.floor(i / 5) * 2.4; const p = await real.human({ id: CMD[i % CMD.length], seed: 4400 + i }); real.put(scene, p, { pos: [x, 0, z], rot: .1, mood: 'stern' }); p.userData.driven = true; ppl.push(p); const pm = pump(); pm.position.set(x + .75, 0, z + .4); scene.add(pm); }
     const cam = C.dolly(camera, { pos: [0, 2.2, 8], look: [0, 1.1, -2], fov: 42 }, { pos: [0, 1.9, 6.2], look: [0, 1.15, -2], fov: 40 });
     return (t, u) => { cam(u); ppl.forEach((p, i) => p.update(t, { mood: 'stern', arm: i % 3 === 0 ? 'hug' : null, look: Math.sin(t * .4 + i) * .2 })); };
   },
@@ -120,9 +132,9 @@ export const shots = {
   // each plane has its own job: four numbered Hercules at dusk
   '7.12': async k => {
     const { scene, camera } = k; k.noAutoOverlay = true;
-    await real.env(k, 'industrial_sunset_puresky', { sun: [-80, 8, -40], sunI: 2.2, sunColor: 0xff9a60, shadowSize: 90, envI: .6 });
-    const ps = await c130Line(k, { groundColor: 0x8a867c });
-    const cam = C.dolly(camera, { pos: [0, 40, 95], look: [0, 3, 0], fov: 46 }, { pos: [0, 34, 85], look: [0, 3, 0], fov: 46 });
+    await real.env(k, 'industrial_sunset_puresky', { sun: [-80, 14, -40], sunI: 3, sunColor: 0xff9a60, shadowSize: 90, envI: .6 });
+    const ps = await c130Line(k, { groundColor: 0x8a867c, fog: 0x9cb4d8, fogD: .0045 });
+    const cam = C.dolly(camera, { pos: [0, 24, 100], look: [0, 6, 0], fov: 46 }, { pos: [0, 20, 90], look: [0, 6, 0], fov: 46 });
     return (t, u) => { cam(u); ps.forEach((p, i) => { const a = C.seg(t, .2 + i * .4, .4 + i * .4); if (a <= 0) return; const [x, y] = proj(camera, [p.position.x, 16, p.position.z]); const o = k.overlay;
       o.save(); o.translate(x, y); o.scale(1, Math.max(.05, a)); o.fillStyle = '#e8b321'; o.strokeStyle = '#1d1712'; o.lineWidth = 6; o.beginPath(); o.arc(0, 0, 54, 0, P * 2); o.fill(); o.stroke(); o.fillStyle = '#1d1712'; o.font = '64px "Anton"'; o.textAlign = 'center'; o.textBaseline = 'middle'; o.fillText(String(i + 1), 0, 4); o.restore(); }); };
   },

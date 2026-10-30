@@ -28,7 +28,7 @@ export const shots = {
   },
   // dark map of Uganda, slow counter; no bodies shown
   '3.3': async k => mapShot(k, {
-    dark: true, center: [32.4, 1.5], span: [12, 10], k: 10, labels: [['UGANDA', 32.3, 1.6], ['KENYA', 37, 1], ['TANZANIA', 33, -2.8], ['S. SUDAN', 31, 4.5], ['DR CONGO', 28.6, 1]],
+    dark: false, center: [32.4, 1.5], span: [12, 10], k: 10, labels: [['UGANDA', 32.3, 1.6], ['KENYA', 37, 1], ['TANZANIA', 33, -2.8], ['S. SUDAN', 31, 4.5], ['DR CONGO', 28.6, 1]],
     highlight: ['UGA'],
     extra: async k => t => ui.tally(k.overlay, '', 'TENS OF THOUSANDS KILLED · 1971-79', 960, 980, t, 1.5),
   }),
