@@ -9,7 +9,7 @@ const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
 for (const n of ['office_day', 'boardroom', 'suburb', 'arena', 'factory', 'office']) K.load(n, PL + n + '.jpg');
 const SW = 1920, SH = 1080, INK = NK.INK, OR = NK.ORANGE, TE = NK.TEAL;
 const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
-const ROOKIE = { costume: 'shirt', hair: 'bald', seed: 90 }; ROOKIE.look = Object.assign(RIG6.lookFrom(ROOKIE), { topCol: '#c8102e', legs: '#1a1414', shoes: '#c8102e', belt: null });
+const ROOKIE = { costume: 'shirt', hair: 'bald', seed: 90 }; ROOKIE.look = Object.assign(RIG6.lookFrom(ROOKIE), { hairCol: RIG6.lookFrom(ROOKIE).skin, topCol: '#c8102e', legs: '#1a1414', shoes: '#c8102e', belt: null });
 const MOM = { costume: 'dress', hair: 'bun', hairCol: '#2a1a10', seed: 91 };
 const KNIGHT = { costume: 'suit', hair: 'short', hairCol: '#c89a5a', seed: 6 };
 const backdrop = (name, b = .6, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
@@ -26,7 +26,8 @@ window.SHOTS = [
       S.D.sfx = [[.4, 'riser', .4], [tA, 'pop', .4]]; } },
   // 2 all in: the basketball budget pushed onto one card
   { draw: (c, lt, u, S) => { backdrop('boardroom', .4, 8)(c); c.save(); c.fillStyle = '#1f5a3a'; c.strokeStyle = INK; c.lineWidth = 10; c.beginPath(); c.ellipse(960, 760, 900, 300, 0, 0, 7); c.fill(); c.stroke(); c.restore();
-      c.save(); c.translate(960, 640); c.rotate(-.05); c.fillStyle = '#fbf8ef'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-110, -150, 220, 300); c.strokeRect(-110, -150, 220, 300); ball(c, 0, -20, 60); c.font = '30px Anton'; c.fillStyle = INK; c.textAlign = 'center'; c.fillText('ROOKIE', 0, 110); c.restore();
+      c.save(); c.fillStyle = 'rgba(0,0,0,.35)'; c.beginPath(); c.ellipse(965, 800, 150, 16, 0, 0, 7); c.fill(); c.strokeStyle = INK; c.lineWidth = 6; c.fillStyle = '#7a4a2a'; c.beginPath(); c.moveTo(900, 640); c.lineTo(860, 790); c.moveTo(1020, 640); c.lineTo(1060, 790); c.stroke(); c.fillRect(835, 782, 250, 20); c.strokeRect(835, 782, 250, 20); c.restore();
+      c.save(); c.translate(960, 632); c.rotate(-.05); c.fillStyle = '#fbf8ef'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-110, -150, 220, 300); c.strokeRect(-110, -150, 220, 300); ball(c, 0, -20, 60); c.font = '30px Anton'; c.fillStyle = INK; c.textAlign = 'center'; c.fillText('ROOKIE', 0, 110); c.restore();
       const cols = ['#c83a2a', '#2a4aa8', '#e8b44a', '#2a2a2a']; for (let k = 0; k < 14; k++) { const p = E.io(K.seg(lt, S.tA + k * .08, S.tA + .8 + k * .08)), x0 = 300 + (k % 7) * 60, y0 = 860 + Math.floor(k / 7) * 40, x1 = 760 + (k % 4) * 40, y1 = 830 - Math.floor(k / 4) * 18; chip(c, x0 + (x1 - x0) * p, y0 + (y1 - y0) * p, cols[k % 4]); }
       R.figure(c, { x: 1600, y: 1080, s: 1.5, costume: 'shirtsleeves', hair: 'swept', hairCol: '#2a2a2a', seed: 92, glasses: true, pose: 'point', facing: -1, t: lt, mood: 'happy', talk: lt > S.tV && lt < S.tV + 3 }); },
     bed: [['hum_loop', .25]],
@@ -35,10 +36,10 @@ window.SHOTS = [
       S.D.sfx = [[S.tA, 'coins_cascade', .4], [S.tA + .9, 'thud', .45], [tJ, 'pop', .4], [S.tV, 'pop', .35]]; } },
   // 3 he wanted Adidas; his mother points him through the door
   { plate: 'suburb', cam: { z: [1.12, 1.18], x: [1280, 1280], y: [860, 860] }, bed: [['birds_loop', .3]],
-    live: [(c, lt, u, S) => { const o = E.out(K.seg(lt, S.tD, S.tD + .8)); c.save(); c.translate(1700, 1360); c.fillStyle = '#3a2a1a'; c.strokeStyle = INK; c.lineWidth = 8; c.fillRect(-150, -560, 300, 560); c.strokeRect(-150, -560, 300, 560); c.fillStyle = '#f8e8b0'; c.fillRect(-140, -550, 280, 550); c.fillStyle = '#7a4a2a'; c.fillRect(-140, -550, 280 * (1 - o * .85), 550); c.strokeRect(-140, -550, 280 * (1 - o * .85), 550); c.restore(); }],
-    figs: [{ x: 1080, y: 1370, s: 2.0, ...ROOKIE, facing: -1, pose: 'stand', mood: 'neutral', mood: 'grumpy', anim: (o, lt, u, S) => { if (lt > S.tD + .6) { const w = R.walkX(lt, 1080, 1700, S.tD + .6, 2.4, o.s); o.x = w.x; o.t = w.phase; o.pose = w.moving ? 'walk' : 'stand'; o.facing = 1; o.mood = 'happy'; } } },
+    live: [],
+    figs: [{ x: 1080, y: 1370, s: 2.0, ...ROOKIE, facing: -1, pose: 'stand', mood: 'neutral', mood: 'grumpy', anim: (o, lt, u, S) => { if (lt > S.wT) { const w = R.walkX(lt, 1080, 2250, S.wT, S.wD, o.s); o.x = w.x; o.t = w.phase; o.pose = w.moving ? 'walk' : 'stand'; o.facing = 1; o.mood = 'happy'; } } },
       { x: 700, y: 1370, s: 1.85, ...MOM, facing: 1, pose: 'stand', mood: 'happy', anim: (o, lt, u, S) => { o.pose = lt > S.tM ? 'point' : 'stand'; o.talk = lt > S.tM && lt < S.tM + 2.5; } }],
-    init: S => { const tA = A.at(S, 'Adidas', 2); S.tM = A.at(S, 'Deloris', 4.5); S.tD = A.at(S, 'the meeting', 6.6);
+    init: S => { const tA = A.at(S, 'Adidas', 2); S.tM = A.at(S, 'Deloris', 4.5); S.tD = A.at(S, 'the meeting', 6.6); { const D = S.end - S.start - .5; S.wD = 2.4; S.wT = Math.min(S.tD + .6, D - S.wD); S.wD = D - S.wT; }
       S.D.over = [(c, lt) => K.card(c, 'HE WANTED ADIDAS', lt, { at: tA, x: 470, y: 230, px: 48, rot: -3 }), (c, lt) => K.card(c, 'HIS MOTHER, DELORIS', lt, { at: S.tM, x: 470, y: 340, px: 40, rot: 2 }), (c, lt) => K.card(c, 'TAKE THE MEETING', lt, { at: S.tD, x: 1500, y: 230, px: 46, rot: 3 })];
       S.D.sfx = [[tA, 'pop', .35], [S.tM, 'pop', .3], [S.tD, 'creak', .45], [S.tD + .7, 'footsteps', .35]]; } },
   // 4 the contract: $500K a year for five years, plus a royalty (circled)
@@ -61,10 +62,12 @@ window.SHOTS = [
   { plate: 'factory', cam: { z: [1.1, 1.14], x: [1280, 1280], y: [860, 860] }, bed: [['hum_loop', .3]],
     live: [(c, lt, u, S) => { if (lt < S.tS) return; for (let k = 0; k < 12; k++) { const p = ((lt - S.tS) * .5 + k / 12) % 1; NK.box(c, -200 + p * 3000, 1300 - Math.sin(p * Math.PI) * 140 - (k % 3) * 60, .8, { col: '#c8102e', label: 'AIR JORDAN', swoosh: true }); } }],
     init: S => { const tH = A.at(S, 'few million', 2.4); S.tS = A.at(S, '100 million', 6);
-      S.D.over = [(c, lt) => K.card(c, 'HOPE: A FEW MILLION', lt, { at: tH, x: 470, y: 230, px: 44, rot: -3 }), (c, lt) => K.counter(c, 0, 100, lt, { at: S.tS - .6, dur: 1.4, x: 960, y: 520, px: 150, pre: '$', post: 'M+' }), (c, lt) => K.card(c, 'IN YEAR ONE', lt, { at: S.tS + 1, x: 960, y: 700, px: 52, rot: 2 })];
+      S.D.over = [(c, lt) => K.card(c, 'HOPE: A FEW MILLION', lt, { at: tH, x: 470, y: 230, px: 44, rot: -3 }), (c, lt) => K.counter(c, 1, 100, lt, { at: S.tS - .6, dur: 1.4, x: 960, y: 520, px: 150, pre: '$', post: 'M+' }), (c, lt) => K.card(c, 'IN YEAR ONE', lt, { at: S.tS + 1, x: 1480, y: 470, px: 52, rot: 2 })];
       S.D.sfx = [[tH, 'pop', .35], [S.tS - .6, 'riser', .4], [S.tS + .8, 'coins_cascade', .5], [S.tS + .8, 'crowd_cheer', .3]]; } },
   // 7 1988: a typewriter clacks out JUST DO IT; a shadowy prison wall behind
-  { draw: (c, lt, u, S) => { c.fillStyle = '#16161a'; c.fillRect(0, 0, SW, SH); const w = K.seg(lt, S.tG, S.tG + 1.4); if (w > 0) { c.save(); c.globalAlpha = .7 * w; c.fillStyle = '#2a2a30'; for (let r = 0; r < 12; r++) for (let k = -1; k < 12; k++) { c.fillRect(k * 180 + (r % 2) * 90, r * 90, 172, 82); } c.fillStyle = '#0a0a0c'; for (let k = 0; k < 8; k++) c.fillRect(1180 + k * 70, 120, 22, 560); c.restore(); }
+  { draw: (c, lt, u, S) => { c.fillStyle = '#16161a'; c.fillRect(0, 0, SW, SH); const w = K.seg(lt, S.tG, S.tG + 1.4); c.save(); c.globalAlpha = .75; c.fillStyle = '#34343c'; for (let r = 0; r < 12; r++) for (let k = -1; k < 12; k++) { c.fillRect(k * 180 + (r % 2) * 90, r * 90, 172, 82); } c.restore();
+      const sp = c.createRadialGradient(760, 600, 160, 760, 600, 1150); sp.addColorStop(0, 'rgba(255,225,170,.16)'); sp.addColorStop(.5, 'rgba(0,0,0,.35)'); sp.addColorStop(1, 'rgba(0,0,0,.8)'); c.fillStyle = sp; c.fillRect(0, 0, SW, SH);
+      if (w > 0) { c.save(); c.globalAlpha = .9 * w; c.fillStyle = '#0a0a0c'; for (let k = 0; k < 8; k++) c.fillRect(1180 + k * 70, 120, 22, 560); c.restore(); }
       NK.paper(c, 760, 520, 820, 360, -.01); NK.typed(c, 'JUST DO IT.', 430, 560, 110, K.seg(lt, S.tJ, S.tJ + 1.6), INK);
       c.save(); c.fillStyle = '#3a3a40'; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.roundRect(360, 720, 800, 260, 20); c.fill(); c.stroke(); c.fillStyle = '#d8d0c0'; for (let r = 0; r < 3; r++) for (let k = 0; k < 10; k++) { const press = Math.sin(lt * 18 + k * 3 + r) > .85 && lt > S.tJ && lt < S.tJ + 1.6 ? 6 : 0; c.beginPath(); c.arc(430 + k * 72 + r * 18, 790 + r * 60 + press, 22, 0, 7); c.fill(); c.stroke(); } c.restore(); },
     bed: [['hum_loop', .2]],

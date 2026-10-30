@@ -27,9 +27,9 @@ while true; do
   # 2. the queue loops
   alive pipeline_rq.sh || alive /tmp/claude-0/rq.sh || { nohup bash shared/pipeline_rq.sh >/dev/null 2>&1 & log "all render queue was down, restarted"; }
   alive pipeline_autoq.sh || alive /tmp/claude-0/autoq.sh || { nohup bash shared/pipeline_autoq.sh >/dev/null 2>&1 & log "all auto-queue was down, restarted"; }
-  # 3. slots (Pushpam 30 Oct 17:47: 2 x 2D in production at once). When an ACTIVE video is fully rendered
+  # 3. slots (Pushpam 30 Oct 17:47: 1 x 2D in production at once (edited 17:54)). When an ACTIVE video is fully rendered
   #    (waiting on Pushpam) it leaves ACTIVE; the next QUEUE video moves up only while fewer than SLOTS remain.
-  . $CONF; SLOTS=${SLOTS:-2}
+  . $CONF; SLOTS=${SLOTS:-1}
   for v in $ACTIVE; do if finished $v; then
     ACTIVE=$(echo " $ACTIVE " | sed "s/ $v / /;s/^ *//;s/ *$//"); echo "$v" >> $T/pipeline_review.txt; msg="$v is fully rendered and waiting on review"
     set -- $QUEUE; nx=$1
