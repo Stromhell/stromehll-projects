@@ -1,0 +1,56 @@
+<!doctype html><html><head><meta charset="utf-8"><title>RS act 7 - today</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "leo";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../rs_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['map_world', 'map_europe', 'office_day', 'partners_room', 'judengasse']) K.load(n, PL + n + '.jpg');
+const T = window.TIMING; const last = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length, start: last.end, end: last.end + 4.6, vo_start: last.end, vo_end: last.end, text: '' }); T.dur = last.end + 4.6;
+const SW = 1920, SH = 1080, INK = RS.INK, pop = RS.pop, GOLD = RS.GOLD;
+const backdrop = (name, b = .5, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const W = (n) => RS.WD(...RS.CITY[n]), EU = (n) => RS.EU(...RS.CITY[n]);
+const bottle = (c, x, y, s) => { c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = '#2a1a22'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.moveTo(-40, 0); c.lineTo(-40, -200); c.quadraticCurveTo(-40, -250, -14, -270); c.lineTo(-14, -340); c.lineTo(14, -340); c.lineTo(14, -270); c.quadraticCurveTo(40, -250, 40, -200); c.lineTo(40, 0); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#f2e8d2'; c.fillRect(-36, -160, 72, 90); c.strokeRect(-36, -160, 72, 90); RS.arrows(c, 0, -112, .07, { col: '#8a2a1e', ribbon: false }); c.fillStyle = '#8a2a2a'; c.fillRect(-16, -350, 32, 30); c.restore(); };
+
+window.SHOTS = [
+  // 7.01 after the war: the money moves to New York; 1981 the Paris bank is nationalised
+  { plate: 'map_world', cam: { z: [1.15, 1.25], x: [1200, 1180], y: [620, 600] }, bed: [['hum_loop', .25]],
+    live: [(c, lt, u, S) => { const ny = W('NewYork'); [['London', S.tN], ['Paris', S.tN + .4]].forEach(([n, at]) => { const p = W(n); RS.goldLine(c, p[0], p[1], ny[0], ny[1], E.out(K.seg(lt, at, at + 1.2)), { bend: .18, w: 8 }); RS.dot(c, p[0], p[1], lt, .4, n.toUpperCase(), { px: 30 }); });
+      const g = pop(lt, S.tN + 1); if (g > 0) { RS.glow(c, ny[0], ny[1], 260 * g, '#ffd070', .5); } RS.dot(c, ny[0], ny[1], lt, S.tN + 1, 'NEW YORK', { px: 40, r: 26 }); }],
+    init: S => { S.tN = A.at(S, 'New York', 2.4); const t81 = A.at(S, '1981', 6.4);
+      S.D.over = [(c, lt) => K.dateTag(c, 'AFTER 1945', lt, { at: .4, until: t81 - .2 }), (c, lt) => K.card(c, 'THE NEW CENTRE OF MONEY', lt, { at: S.tN + 1.2, x: 560, y: 220, px: 42, rot: -3 }), (c, lt) => K.dateTag(c, 'PARIS · 1981', lt, { at: t81 }), (c, lt) => K.card(c, 'SOCIALIST GOVERNMENT', lt, { at: t81 + .3, x: 1420, y: 560, px: 38, rot: 3 }), (c, lt) => RS.stamp(c, 'NATIONALISED', 1380, 400, lt, t81 + 1.2, { px: 80 })];
+      S.D.sfx = [[S.tN, 'whoosh', .35], [S.tN + 1, 'chime', .3], [t81 + 1.2, 'stamp', .55]]; } },
+  // 7.02 today: an advisory bank office in Paris and London, a wine bottle on the desk; not on the rich lists
+  { plate: 'office_day', cam: { z: [1.04, 1.1], x: [1280, 1280], y: [840, 840] }, bed: [['office_loop', .25]],
+    figs: [{ x: 900, y: 1330, s: 1.85, ...RS.P({ costume: 'suit', topCol: '#2a3446', hair: 'short', hairCol: '#5a4030', seed: 180 }), facing: 1, pose: 'present', mood: 'happy', walk: { x0: 200, x1: 900, t0: .3, dur: 2.2 } },
+      { x: 1700, y: 1330, s: 1.85, ...RS.P({ costume: 'woman', topCol: '#4a2a3a', hair: 'long', hairCol: '#2a1e16', seed: 181 }), facing: -1, pose: 'think', mood: 'neutral' }],
+    front: [(c, lt) => { const a = pop(lt, .8, .45); if (a > 0) { c.save(); c.translate(1300, 1180); c.scale(a, a); c.fillStyle = '#5a3e2a'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-170, 0, 340, 24); c.strokeRect(-170, 0, 340, 24); c.fillStyle = '#4a3222'; c.fillRect(-150, 24, 300, 130); c.strokeRect(-150, 24, 300, 130); bottle(c, -60, 0, .5); c.restore(); } }],
+    init: S => { const tR = A.at(S, 'Rothschild', .6), tV = A.at(S, 'vineyards', 4.6), tL = A.at(S, 'richest', 7.6);
+      S.D.over = [(c, lt) => K.badge(c, 'ROTHSCHILD & CO · TODAY', lt, { at: tR }), (c, lt) => K.card(c, 'INDEPENDENT ADVISORY BANK · PARIS · LONDON', lt, { at: tR + .6, x: 760, y: 200, px: 38, rot: -2 }), (c, lt) => K.card(c, 'STILL OWNS FAMOUS VINEYARDS', lt, { at: tV, x: 1500, y: 320, px: 38, rot: 3 }),
+        (c, lt) => { const a = pop(lt, tL, .45); if (a <= 0) return; c.save(); c.translate(300, 540); c.rotate(-.04); c.scale(a * .9, a * .9); c.fillStyle = RS.PAPER; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-190, -170, 380, 340); c.strokeRect(-190, -170, 380, 340); c.fillStyle = INK; c.font = '34px Anton'; c.textAlign = 'center'; c.fillText("WORLD'S RICHEST", 0, -120); c.fillStyle = 'rgba(40,30,20,.35)'; for (let k = 0; k < 6; k++) c.fillRect(-140, -84 + k * 40, 280 - (k % 3) * 30, 12); c.restore(); RS.stamp(c, 'NO ROTHSCHILD', 300, 580, lt, tL + .8, { px: 54 }); }];
+      S.D.sfx = [[.3, 'footsteps', .3], [tV, 'pop', .3], [tL, 'paper', .3], [tL + .8, 'stamp', .5]]; } },
+  // 7.03 one fortune cut into ever more slices; a phone screaming TRILLIONS gets stamped
+  { draw: (c, lt, u, S) => { backdrop('partners_room', .4, 8)(c); const n = Math.min(40, 1 + Math.floor(K.seg(lt, .5, 4) * 39)), r = 230, cx = 620, cy = 540;
+      for (let k = 0; k < n; k++) { c.fillStyle = ['#e0b04a', '#c8962e', '#b07a24', '#d8a840'][k % 4]; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(cx, cy); c.arc(cx, cy, r, k / n * Math.PI * 2 - Math.PI / 2, (k + 1) / n * Math.PI * 2 - Math.PI / 2); c.closePath(); c.fill(); c.stroke(); }
+      const a = pop(lt, S.tT, .45); if (a > 0) { c.save(); c.translate(1380, 560); c.rotate(.05 + Math.sin(lt * 20) * .01 * (lt < S.tT + 1 ? 1 : 0)); c.scale(a, a); c.fillStyle = '#1a1a1a'; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.roundRect(-150, -280, 300, 560, 36); c.fill(); c.stroke(); c.fillStyle = '#f2f0ea'; c.fillRect(-126, -240, 252, 480); c.fillStyle = '#c8281e'; c.font = '54px Anton'; c.textAlign = 'center'; c.fillText('TRILLIONS!!', 0, -150); c.fillStyle = 'rgba(40,30,20,.35)'; for (let k = 0; k < 7; k++) c.fillRect(-100, -100 + k * 40, 200 - (k % 2) * 50, 12); c.restore(); }
+      RS.stamp(c, 'FANTASY', 1380, 560, lt, S.tT + 1.3, { px: 90 }); },
+    bed: [['hum_loop', .2]],
+    init: S => { S.tT = A.at(S, 'trillions', 4.2);
+      S.D.over = [(c, lt) => K.card(c, 'SPLIT AMONG MANY HEIRS', lt, { at: .6, x: 620, y: 200, px: 42, rot: -3, until: S.tT + 1.8 }), (c, lt) => K.card(c, 'OVER TWO CENTURIES', lt, { at: 1.8, x: 620, y: 880, px: 36, rot: 2 }), (c, lt) => K.title(c, 'TRILLIONS? NO.', lt, { at: S.tT + 2, y: 160, px: 90 })];
+      S.D.sfx = [[.5, 'paper_tear', .3], [S.tT, 'phone_ring', .3], [S.tT + 1.3, 'stamp', .6]]; } },
+  // 7.04 recap: the locked street, then five arrows from Frankfurt to five capitals
+  { plate: 'map_europe', cam: { z: [1.1, 1.2], x: [1300, 1300], y: [700, 680] }, bed: [['swell', .2], ['hum_loop', .2]],
+    live: [(c, lt, u, S) => { const f = EU('Frankfurt'); RS.glow(c, f[0], f[1], 200, '#ffd070', .5 * pop(lt, .4)); RS.dot(c, f[0], f[1], lt, .4, 'FRANKFURT', { px: 34, r: 24 });
+      ['London', 'Paris', 'Vienna', 'Naples'].forEach((n, i) => { const p = EU(n), at = S.tS + i * .5; RS.arrow(c, f[0], f[1], p[0], p[1], E.out(K.seg(lt, at, at + .9)), { bend: .15, col: GOLD, w: 12 }); RS.dot(c, p[0], p[1], lt, at + .8, n.toUpperCase(), { px: 32 }); }); }],
+    init: S => { const tB = A.at(S, 'boy', 2), tLk = A.at(S, 'locked', 3); S.tS = A.at(S, 'five sons', 5.6); const tR = A.at(S, 'railways', 9);
+      S.D.over = [(c, lt) => K.card(c, "WHAT'S REAL IS ENOUGH", lt, { at: .4, x: 960, y: 140, px: 44, rot: -2 }), (c, lt) => K.card(c, 'A BOY FROM A LOCKED STREET', lt, { at: tB, x: 520, y: 880, px: 38, rot: -3, until: S.tS + 1 }), (c, lt) => K.card(c, 'FIVE SONS · FIVE CAPITALS', lt, { at: S.tS + 1, x: 520, y: 880, px: 40, rot: 2 }), (c, lt) => K.card(c, 'RAILWAYS · WARS · CANALS', lt, { at: tR, x: 1640, y: 860, px: 40, rot: -2 })];
+      S.D.sfx = [[.4, 'chime', .3], [tLk, 'gate_slam', .35], [S.tS, 'whoosh', .3], [S.tS + .5, 'whoosh', .3], [S.tS + 1, 'whoosh', .3], [S.tS + 1.5, 'whoosh', .3], [tR, 'pop', .3]]; } },
+  // 7.05 end card: wax seal with the five arrows, THE ROTHSCHILDS
+  { draw: (c, lt) => { backdrop('map_europe', .3, 10)(c); const a = E.back(K.seg(lt, .2, .8)); if (a > 0) { c.save(); c.translate(960, 520); c.scale(a, a); RS.glow(c, 0, 0, 420, '#ffd070', .35); c.fillStyle = '#9a2a22'; c.strokeStyle = '#5a1410'; c.lineWidth = 10; c.beginPath(); for (let k = 0; k <= 40; k++) { const ang = k / 40 * Math.PI * 2, r = 230 + Math.sin(k * 2.7) * 14; c.lineTo(Math.cos(ang) * r, Math.sin(ang) * r); } c.closePath(); c.fill(); c.stroke(); c.strokeStyle = 'rgba(255,200,180,.35)'; c.lineWidth = 6; c.beginPath(); c.arc(0, 0, 180, 0, 7); c.stroke(); RS.arrows(c, 0, 10, .9, { col: '#e0b04a', ribbon: false, spread: E.out(K.seg(lt, .6, 1.4)) }); c.restore(); } },
+    sub: 'off', inSfx: 'whoosh',
+    over: [(c, lt) => K.title(c, 'THE ROTHSCHILDS', lt, { at: 1.0, y: 940, px: 120 })], sfx: [[.3, 'stamp', .7], [1.0, 'hit', .6], [1.1, 'swell', .4]] },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>
