@@ -499,7 +499,7 @@ Object.assign(shots, {
       papers.forEach((p, i) => {
         const s = C.ease(C.seg(t, .2 + i * .9, 1.0 + i * .9));
         p.rotation.set(-P / 2, 0, (1 - s) * 5 + (i - 1) * .12);
-        p.position.set((i - 1) * .1 * s + (1 - s) * (i - 1) * .6, .785 + i * .004 + (1 - s) * .9, (1 - s) * -.3);
+        p.position.set((i - 1) * .1 * s + (1 - s) * (i - 1) * .4, .785 + i * .004 + (1 - s) * .3, (1 - s) * -.15); /* drop from just above the desk so the paper stays in the lamp light */
         p.visible = t > .2 + i * .9;
       });
     };
