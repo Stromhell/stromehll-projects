@@ -88,7 +88,7 @@ window.SHOTS = [
       c.fillStyle = '#1e2224'; c.fillRect(tx + 40, by - 190, 30, 60); for (let k = 0; k < 6; k++) { c.fillStyle = `rgba(230,226,220,${.5 - k * .07})`; c.beginPath(); c.arc(tx + 55 - k * 70, by - 220 - k * 20, 30 + k * 12, 0, 7); c.fill(); } }],
     init: S => { const tE = A.at(S, 'Habsburg', 4.4);
       S.D.over = [(c, lt) => K.badge(c, 'SALOMON ROTHSCHILD · VIENNA', lt, { at: .4 }), (c, lt) => K.card(c, 'AUSTRIA\'S FIRST BIG RAILWAY', lt, { at: 1.2, x: 520, y: 220, px: 44, rot: -3 }),
-        (c, lt) => { const a = pop(lt, tE, .45); if (a <= 0) return; c.save(); c.translate(1500, 820); c.scale(a, a); RS.chest(c, 0, 0, 1.1, { open: true, empty: lt < tE + 1.2 }); c.restore(); for (let k = 0; k < 8; k++) { const at = tE + .6 + k * .15, y = -60 + (lt - at) * 900; if (lt > at && y < 700) RS.coin(c, 1460 + (k % 4) * 26, y, 22, lt * 5 + k); } },
+        (c, lt) => { const a = pop(lt, tE, .45); if (a <= 0) return; c.save(); c.translate(1680, 930); c.scale(a, a); RS.chest(c, 0, 0, .95, { open: true, empty: lt < tE + 1.2 }); c.restore(); for (let k = 0; k < 8; k++) { const at = tE + .6 + k * .15, y = -60 + (lt - at) * 900; if (lt > at && y < 840) RS.coin(c, 1645 + (k % 4) * 24, y, 20, lt * 5 + k); } },
         (c, lt) => K.card(c, 'PROPPING UP THE HABSBURG EMPIRE', lt, { at: tE + .4, x: 1440, y: 300, px: 40, rot: 3 })];
       S.D.sfx = [[.4, 'chime', .25], [1, 'whoosh', .35], [tE + .6, 'coins_cascade', .4]]; } },
   // 4.10 1871: French gold counted onto German scales; five billion francs
