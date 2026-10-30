@@ -1,0 +1,61 @@
+for (const n of ['map_europe', 'ardennes', 'dunkirk', 'sea', 'station']) K.load(n, PL + n + '.jpg');
+const B = { germany: WW.COL.germany, austria: WW.COL.taken, czech: WW.COL.taken, poland: WW.COL.taken, denmark: WW.COL.taken, norway: WW.COL.taken, uk: WW.COL.uk, france: WW.COL.france, belgium: '#e0b860', netherlands: '#e8a050', luxembourg: '#d8c070', italy: WW.COL.italy, ussr: WW.COL.ussr, finland: WW.COL.finland, swiss: WW.COL.neutral, spain: WW.COL.neutral };
+const ALLIED = '#3e66a0';
+const letter = (c, L, lon, lat, a) => { if (a <= 0) return; const [x, y] = WW.xy(lon, lat); c.save(); c.translate(x, y); c.scale(a * .6, a * .6); c.fillStyle = '#f4e8d0'; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.arc(0, 0, 46, 0, 7); c.fill(); c.stroke(); WW.label(c, L, 0, 4, 60, INK); c.restore(); };
+const WALL = (c) => { const P = [[8.2, 49.2], [7.6, 48.6], [7.6, 47.7]].map(p => WW.xy(...p)); c.save(); c.strokeStyle = '#8a8a86'; c.lineWidth = 26; c.lineCap = 'round'; c.beginPath(); P.forEach((p, i) => i ? c.lineTo(...p) : c.moveTo(...p)); c.stroke(); c.strokeStyle = INK; c.lineWidth = 4; c.stroke(); c.restore(); };
+const TRUCK = (c, x, y, s, rot = 0) => { c.save(); c.translate(x, y); c.rotate(rot); c.scale(s, s); c.fillStyle = 'rgba(0,0,0,.25)'; c.beginPath(); c.ellipse(0, 6, 180, 16, 0, 0, 7); c.fill(); c.strokeStyle = INK; c.lineWidth = 5; c.fillStyle = '#5a6248'; c.fillRect(-170, -150, 220, 120); c.strokeRect(-170, -150, 220, 120); c.fillRect(50, -120, 110, 90); c.strokeRect(50, -120, 110, 90); c.fillStyle = '#9ab0b8'; c.fillRect(80, -108, 60, 40); c.strokeRect(80, -108, 60, 40); c.fillStyle = '#2a2a2a'; for (const wx of [-110, 100]) { c.beginPath(); c.arc(wx, -24, 30, 0, 7); c.fill(); c.stroke(); } c.restore(); };
+
+window.SHOTS = [
+  // 7.01 10 May 1940: three grey army groups, A, B and C
+  { plate: 'map_europe', cam: { z: [2.1, 2.25], x: [900, 900], y: [760, 760] }, bed: [['war_drums_loop', .3]],
+    init: S => { S.D.live = [(c, lt) => { WW.map(c, B); WW.faceOn(c, 'germany', 'angry', 1, lt); WW.faceOn(c, 'france', 'worried', 1.1, lt);
+        const g = [['B', [[7, 52.3], [5.6, 52], [4.6, 51.2]], 1.2], ['A', [[7.2, 50.2], [6, 49.9], [4.9, 49.7]], 2], ['C', [[9.2, 49], [8.6, 48.7]], 2.8]]; g.forEach(([L, p, t]) => { WW.arrow(c, p, K.seg(lt, t, t + 1), '#3a3c40', 18); letter(c, L, p[0][0] + .5, p[0][1] + .1, pop(lt, t, .35)); }); }];
+      S.D.over = [(c, lt) => K.title(c, '10 MAY 1940', lt, { at: .2, y: 140, px: 80 }), (c, lt) => K.card(c, '~3,000,000 SOLDIERS', lt, { at: A.at(S, 'three million', 4.8), x: 480, y: 860, px: 42, rot: -2 })];
+      S.D.sfx = [[.2, 'hit', .4], [1.2, 'whoosh', .35], [2, 'whoosh', .35], [2.8, 'whoosh', .35]]; } },
+  // 7.02 Group B pulls the Allies north; Group C stares at the Maginot Line
+  { plate: 'map_europe', cam: { z: [2.2, 2.3], x: [860, 870], y: [780, 780] }, bed: [['war_drums_loop', .25]],
+    init: S => { const tC = A.at(S, 'Group C', 4.6);
+      S.D.live = [(c, lt) => { WW.map(c, Object.assign({}, B, { netherlands: WW.COL.taken })); WALL(c); WW.arrow(c, [[7, 52.3], [5.6, 52], [4.6, 51.2]], 1, '#3a3c40', 26); letter(c, 'B', 7.5, 52.4, 1);
+        WW.arrow(c, [[2.5, 49], [3.2, 50.2], [4, 50.9]], K.seg(lt, 1.2, 2.4), ALLIED, 18); WW.arrow(c, [[1, 49.3], [2, 50.4], [3, 51]], K.seg(lt, 1.6, 2.8), ALLIED, 18);
+        WW.arrow(c, [[9.2, 49], [8.7, 48.75]], 1, '#3a3c40', 18); letter(c, 'C', 9.7, 49.1, 1); if (lt > tC) { const [x, y] = WW.xy(8.9, 48.4); WW.face(c, x, y, .8, 'smug', { lt }); } }];
+      S.D.over = [(c, lt) => K.card(c, 'BEST ALLIED TROOPS RUSH NORTH', lt, { at: 1.4, x: 600, y: 160, px: 40, rot: -2 }), (c, lt) => K.card(c, 'C JUST WAITS AT THE WALL', lt, { at: tC, x: 1400, y: 860, px: 40, rot: 2 })];
+      S.D.sfx = [[1.2, 'whoosh', .3], [1.6, 'whoosh', .3], [tC, 'thud', .3]]; } },
+  // 7.03 Group A: a long column of tanks through the dark Ardennes forest
+  { plate: 'ardennes', cam: { z: [1.05, 1.12], x: [1280, 1320], y: [820, 810] }, bed: [['drone', .25], ['wind_loop', .15]],
+    live: [(c, lt) => { c.save(); c.globalAlpha = .25; c.fillStyle = '#c8ccc8'; c.fillRect(0, 960, 2560, 110); c.restore(); for (let k = 0; k < 6; k++) { const x = ((k * 580 + lt * 260) % 3480) - 600; WW.tank(c, x, 1240, 1.0, 1, '#4a4c48', lt); }  }],
+    init: S => { const tT = A.at(S, 'thought', 5.2);
+      S.D.over = [(c, lt) => K.title(c, 'THE ARDENNES', lt, { at: A.at(S, 'Ardennes', 2.2), y: 140, px: 84 }), (c, lt) => K.card(c, "FRENCH GENERALS: 'TANKS CAN'T GET THROUGH'", lt, { at: tT, x: 960, y: 290, px: 36, rot: -2 })];
+      S.D.sfx = [[.1, 'scrape', .3], [A.at(S, 'Ardennes', 2.2), 'hit', .4], [tT, 'pop', .3]]; } },
+  // 7.04 Sedan, 13 May: a grey arrow slices across France to the sea; the north is cut off
+  { plate: 'map_europe', cam: { z: [2.1, 2.2], x: [800, 800], y: [780, 780] }, bed: [['war_drums_loop', .3]],
+    init: S => { const tR = A.at(S, 'raced', 2.4), tX = A.at(S, 'cut off', 4.8);
+      S.D.live = [(c, lt) => { WW.map(c, Object.assign({}, B, { netherlands: WW.COL.taken, belgium: WW.COL.taken, luxembourg: WW.COL.taken })); WW.arrow(c, [[5.5, 49.9], [4, 49.9], [2.8, 50], [1.6, 50.15]], K.seg(lt, tR, tR + 1.6), '#3a3c40', 22);
+        if (lt > tX) { const [x, y] = WW.xy(2.8, 50.9); c.save(); c.globalAlpha = .5 + .3 * Math.sin(lt * 6); c.strokeStyle = RED; c.lineWidth = 12; c.setLineDash([24, 14]); c.beginPath(); c.ellipse(x, y, 140, 70, 0, 0, 7); c.stroke(); c.restore(); } }];
+      S.D.over = [(c, lt) => K.dateTag(c, 'SEDAN · 13 MAY', lt, { at: .2 }), (c, lt) => K.card(c, 'BREAKTHROUGH', lt, { at: .4, x: 1400, y: 300, px: 44, rot: 2 }), (c, lt) => K.card(c, 'ALLIES IN THE NORTH: CUT OFF', lt, { at: tX, x: 520, y: 160, px: 40, rot: -2 })];
+      S.D.sfx = [[.4, 'hit', .4], [tR, 'whoosh', .45], [tX, 'thud', .4]]; } },
+  // 7.05 Dunkirk: soldiers trapped on the beach, the sea at their backs
+  { plate: 'dunkirk', cam: { z: [1.04, 1.12], x: [1280, 1300], y: [820, 800] }, bed: [['ocean_loop', .25], ['fire_loop', .1]],
+    figs: [0, 1, 2, 3, 4, 5].map(i => ({ x: 260 + i * 400 + (i % 2) * 60, y: 1260 + (i % 2) * 90, s: 1.4 + (i % 2) * .1, ...WW.SOLDIER(i, 'uk'), facing: i % 3 ? -1 : 1, mood: i % 2 ? 'worried' : 'shocked' })),
+    init: S => { S.D.over = [(c, lt) => K.title(c, 'DUNKIRK', lt, { at: .3, y: 140, px: 90 }), (c, lt) => K.card(c, 'HUNDREDS OF THOUSANDS TRAPPED', lt, { at: 1.4, x: 960, y: 290, px: 40, rot: -2 })];
+      S.D.sfx = [[.3, 'hit', .4], [1.4, 'pop', .3], [2.4, 'drone', .2]]; } },
+  // 7.06 Operation Dynamo: everything that floats crosses the Channel; fighters overhead
+  { plate: 'sea', cam: { z: [1.02, 1.08], x: [1280, 1300], y: [760, 750] }, bed: [['ocean_loop', .3]],
+    live: [(c, lt) => { [['ship', 1040, .55, 70], ['little', 1150, .7, 110], ['little', 1250, .8, 90], ['ship', 1330, .7, 60], ['little', 1380, .9, 120]].forEach(([k, y, s, v], i) => { const x = 2800 - ((lt * v + i * 520) % 3400); WW.boat(c, x, y, s, k, lt, k === 'ship' ? '#5a6068' : ['#e8e0d0', '#c8d8e8', '#f0d8b0'][i % 3]); });
+      for (let k = 0; k < 2; k++) { const t = (lt * .2 + k * .5) % 1; WW.plane(c, 2800 - t * 3400, 330 + k * 120, .5, -1, '#5a6a5a', lt); } }],
+    init: S => { S.D.over = [(c, lt) => K.dateTag(c, '26 MAY 1940', lt, { at: .2 }), (c, lt) => K.title(c, 'OPERATION DYNAMO', lt, { at: .4, y: 140, px: 84 }), (c, lt) => { ['NAVY SHIPS', 'FERRIES', 'FISHING BOATS', 'PLEASURE YACHTS'].forEach((n, k) => K.card(c, n, lt, { at: A.at(S, ['navy', 'ferries', 'fishing', 'yachts'][k], 2 + k * .8), x: 360 + k * 400, y: 290 + (k % 2) * 60, px: 32, rot: k % 2 ? 2 : -2 })); }, (c, lt) => K.card(c, 'FIGHTERS OVERHEAD', lt, { at: A.at(S, 'Fighter', 6.4), x: 1500, y: 470, px: 34, rot: 3 })];
+      S.D.sfx = [[.4, 'hit', .35], [A.at(S, 'navy', 2), 'pop', .25], [A.at(S, 'ferries', 2.8), 'pop', .25], [A.at(S, 'fishing', 3.6), 'pop', .25], [A.at(S, 'yachts', 4.4), 'pop', .25], [A.at(S, 'Fighter', 6.4), 'drone', .35]]; } },
+  // 7.07 338,000 rescued; tanks and guns left on the sand
+  { plate: 'dunkirk', cam: { z: [1.1, 1.18], x: [1280, 1260], y: [860, 850] }, bed: [['ocean_loop', .25]],
+    live: [(c, lt) => { TRUCK(c, 620, 1280, 1.2, .04); WW.tank(c, 1500, 1330, .9, -1, '#5a6248', 0); TRUCK(c, 2100, 1250, 1.0, -.05); c.save(); c.globalAlpha = .4; c.fillStyle = '#3a3a3a'; for (let k = 0; k < 3; k++) { const t = (lt * .3 + k / 3) % 1; c.beginPath(); c.arc(1500 + t * 60, 1160 - t * 300, 30 + t * 60, 0, 7); c.fill(); } c.restore(); }],
+    init: S => { const tL = A.at(S, 'left almost', 3.8);
+      S.D.over = [(c, lt) => { const v = Math.round(338000 * E.io(K.seg(lt, .3, 2.6))); K.title(c, v.toLocaleString('en-US') + ' RESCUED', lt, { at: .3, y: 150, px: 84 }); }, (c, lt) => K.dateTag(c, 'BY 4 JUNE', lt, { at: .3 }), (c, lt) => K.card(c, 'TANKS AND GUNS LEFT BEHIND', lt, { at: tL, x: 960, y: 300, px: 40, rot: -2 })];
+      S.D.sfx = [[.3, 'riser', .3], [2.6, 'crowd_cheer', .3], [tL, 'thud', .35]]; } },
+  // 7.08 Italy joins Hitler (map); France signs an armistice in a railway carriage
+  { plate: 'map_europe', cam: { z: [1.3, 1.4], x: [1000, 1020], y: [820, 820] }, bed: [['war_drums_loop', .25]],
+    init: S => { const tI = A.at(S, 'declared war', 2.6); S.tF = A.at(S, '22 June', 4.8);
+      S.D.live = [(c, lt) => { WW.map(c, Object.assign({}, B, { netherlands: WW.COL.taken, belgium: WW.COL.taken, luxembourg: WW.COL.taken })); WW.flip(c, 'italy', WW.COL.italy, WW.COL.taken, K.seg(lt, tI, tI + .6)); WW.flip(c, 'france', WW.COL.france, WW.COL.taken, K.seg(lt, S.tF + 1.4, S.tF + 2)); WW.faceOn(c, 'france', lt > S.tF + 1.4 ? 'sad' : 'worried', 1.1, lt); }];
+      S.D.over = [(c, lt) => K.card(c, 'MUSSOLINI JOINS HITLER', lt, { at: .4, x: 560, y: 160, px: 40, rot: -2 }), (c, lt) => K.dateTag(c, lt < S.tF ? '10 JUNE 1940' : '22 JUNE 1940', lt, { at: tI }),
+        (c, lt) => { const a = pop(lt, S.tF, .4) * (1 - K.seg(lt, S.tF + 1.2, S.tF + 1.5)); if (a <= 0) return; c.save(); c.fillStyle = 'rgba(12,10,8,.5)'; c.fillRect(0, 0, 1920, 1080); c.translate(960, 560); c.scale(a, a); c.fillStyle = '#3a4a3a'; c.strokeStyle = INK; c.lineWidth = 8; c.beginPath(); c.roundRect(-520, -200, 1040, 330, 30); c.fill(); c.stroke(); c.fillStyle = '#e8d8a0'; for (let k = 0; k < 6; k++) { c.fillRect(-460 + k * 160, -150, 110, 110); c.strokeRect(-460 + k * 160, -150, 110, 110); } c.fillStyle = '#2a2a2a'; for (const wx of [-380, -260, 260, 380]) { c.beginPath(); c.arc(wx, 150, 44, 0, 7); c.fill(); c.stroke(); } c.restore(); K.card(c, 'THE RAILWAY CARRIAGE: FRANCE SIGNS', lt, { at: S.tF + .2, x: 960, y: 220, px: 36, rot: -2 }); },
+        (c, lt) => K.title(c, 'FRANCE FALLS · 22 JUNE 1940', lt, { at: S.tF + 1.5, y: 860, px: 66 })];
+      S.D.sfx = [[.4, 'pop', .3], [tI, 'stamp', .4], [S.tF, 'creak', .3], [S.tF + .6, 'scrape', .3], [S.tF + 1.5, 'hit', .45]]; } },
+];
