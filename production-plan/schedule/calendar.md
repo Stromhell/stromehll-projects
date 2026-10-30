@@ -142,3 +142,24 @@ First booked 8-11 Dec (every reel slot to 7 Dec full). Pushpam picked "Raise to 
 | R13 | The Secret Wedding That Ended Muslim Spain | Tue 10 Nov 08:00 | Tue 10 Nov 18:30 | 2026-11-10 13:00 | `6ae42e50e9824375a0270afd` |
 | R14 | They Built a Whole City Just to Win One Siege | Tue 10 Nov 10:00 | Tue 10 Nov 20:30 | 2026-11-10 15:00 | `6ae42e548d38baa4cffc223b` |
 | R15 | You Speak Arabic Every Time You Speak Spanish | Wed 11 Nov 08:00 | Wed 11 Nov 18:30 | 2026-11-11 13:00 | `6ae42e578d38baa4cffc2259` |
+
+## Spain Part 2 reels R01-15 (booked 30 Oct 2026, 07:58 UTC)
+YouTube Shorts + Instagram Reels, in story order, in the 08:00 and 10:00 ET reel slots after Spain 1's reels. Covers as Instagram thumbnails. Spain 2 card removed from the Control Room.
+
+| Reel | ET | UTC | Title | Zernio post |
+|---|---|---|---|---|
+| R01 | Wed 11 Nov 10:00 | 11 Nov 15:00 | This Mountain Made Spain Rich. The King Still Went Broke 4 Times | 6ae44dd6aa0f87ddc98129ed |
+| R02 | Thu 12 Nov 08:00 | 12 Nov 13:00 | Columbus Got the Math Wrong. That Mistake Changed the World | 6ae44ddbaa0f87ddc9812a24 |
+| R03 | Thu 12 Nov 10:00 | 12 Nov 15:00 | The 500-Year-Old Mistake in the Word 'Indians' | 6ae44dddaa0f87ddc9812a30 |
+| R04 | Fri 13 Nov 08:00 | 13 Nov 13:00 | 2 Kings Split the Entire World With One Line | 6ae44ddfaa0f87ddc9812a3e |
+| R05 | Fri 13 Nov 10:00 | 13 Nov 15:00 | He Burned the Escape Route So His Men Couldn't Run | 6ae44de1545add6c2de96d04 |
+| R06 | Sat 14 Nov 08:00 | 14 Nov 13:00 | How 500 Men Took Down an Empire of Millions | 6ae44df7545add6c2de96da3 |
+| R07 | Sat 14 Nov 10:00 | 14 Nov 15:00 | They Drowned Because They Wouldn't Drop the Gold | 6ae44df9db61c9266050f6d2 |
+| R08 | Sun 15 Nov 08:00 | 15 Nov 13:00 | The Invisible Killer That Did What 500 Soldiers Couldn't | 6ae44dfc545add6c2de96dbb |
+| R09 | Sun 15 Nov 10:00 | 15 Nov 15:00 | He Filled a Room With Gold. They Killed Him Anyway | 6ae44dfe545add6c2de96dce |
+| R10 | Mon 16 Nov 08:00 | 16 Nov 13:00 | Locals Called It 'The Mountain That Eats Men' | 6ae44e01545add6c2de96df3 |
+| R11 | Mon 16 Nov 10:00 | 16 Nov 15:00 | Your Dollar Is Secretly a Spanish Coin | 6ae44e17db61c9266050f716 |
+| R12 | Tue 17 Nov 08:00 | 17 Nov 13:00 | The Empire So Big the Sun Never Set on It | 6ae44e19545add6c2de96ea9 |
+| R13 | Tue 17 Nov 10:00 | 17 Nov 15:00 | 130 Ships Sailed to Invade England. Here's What Sank Them | 6ae44e1c545add6c2de96eb9 |
+| R14 | Wed 18 Nov 08:00 | 18 Nov 13:00 | Cousin Marriage Destroyed Spain's Royal Family | 6ae44e1e545add6c2de96ee5 |
+| R15 | Wed 18 Nov 10:00 | 18 Nov 15:00 | One Explosion Ended a 400-Year Empire in Months | 6ae44e21545add6c2de96ef9 |
