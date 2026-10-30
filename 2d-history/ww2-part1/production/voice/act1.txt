@@ -1,0 +1,9 @@
+1919. World War One is over, and the winners meet at Versailles, near Paris, to write the peace.
+
+One line, Article 231, put the blame for the war's losses on Germany. Germans called it the war guilt clause.
+
+France and Britain wanted Germany to pay. In 1921 the bill was set at 132 billion gold marks, about 33 billion dollars at the time.
+
+Germany didn't finish paying off the last of those debts until 2010.
+
+The army was cut to 100,000 men. No air force. Almost no navy.
