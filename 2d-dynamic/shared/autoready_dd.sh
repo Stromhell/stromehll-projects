@@ -12,7 +12,7 @@ while true; do
       t=$v/production/voice/act$n.txt; [ -f $t ] || continue
       need=$(python3 -c "print(len([p for p in open('$t').read().split(chr(10)*2) if p.strip()]))"); have=$(ls $v/production/voice/act$n/vo-*.wav 2>/dev/null | wc -l)
       [ $have -ge $need ] || continue
-      if python3 shared/wt.py $v $n >> /tmp/claude-0/autoready.log 2>&1 && ! grep -q '"fake": true' $d/timing.js; then touch $d/READY; log "$v act $n: real timing built, READY"; else log "$v act $n: wt.py failed"; fi
+      if python3 shared/wt.py $v $n >> /tmp/claude-0/autoready.log 2>&1 && [ -s $d/timing.json ] && { echo "window.TIMING = $(cat $d/timing.json);" > $d/timing.js; ! grep -q '"fake": true' $d/timing.js; }; then touch $d/READY; log "$v act $n: real timing built, READY"; else log "$v act $n: wt.py failed"; fi
     done
   done
   sleep 60
