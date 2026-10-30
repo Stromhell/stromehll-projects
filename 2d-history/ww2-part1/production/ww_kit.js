@@ -85,9 +85,9 @@
     c.fillStyle = 'rgba(255,255,255,.14)'; c.beginPath(); c.ellipse(X - rad * .4, Y - rad * 1.2, rad * .2, rad * .34, -.4, 0, 7); c.fill(); c.restore(); };
   const hat = (col = '#2a2420', kind = 'homburg') => (c, X, Y, rad) => { c.save(); c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 2.6; c.beginPath(); c.ellipse(X, Y - rad * .62, rad * (kind === 'cap' ? .9 : 1.25), rad * .2, 0, 0, 7); c.fill(); c.stroke(); c.beginPath(); if (kind === 'cap') { c.ellipse(X, Y - rad * .9, rad * .95, rad * .4, 0, Math.PI, 0); c.lineTo(X + rad * 1.4, Y - rad * .7); } else { c.moveTo(X - rad * .75, Y - rad * .66); c.lineTo(X - rad * .7, Y - rad * 1.45); c.quadraticCurveTo(X, Y - rad * 1.25, X + rad * .7, Y - rad * 1.45); c.lineTo(X + rad * .75, Y - rad * .66); } c.closePath(); c.fill(); c.stroke(); c.restore(); };
   WW.helmet = helmet; WW.hat = hat;
-  WW.P = p => { if (!p.topCol || !G.RIG6) return p; const look = Object.assign(G.RIG6.lookFrom(p), { topCol: p.topCol }); if (p.costume === 'suit') look.legs = p.legs || shade(p.topCol, -.2); return Object.assign({}, p, { look }); };
+  WW.P = p => { if (!p.topCol || !G.RIG6) return p; const look = Object.assign(G.RIG6.lookFrom(p), { topCol: p.topCol }); if (p.costume === 'suit') look.legs = p.legs || shade(p.topCol, -.2); if (p.tie !== undefined) look.tie = p.tie; if (p.inner) look.inner = p.inner; return Object.assign({}, p, { look }); };
   const UNI = { de: '#4e524e', uk: '#7a6e48', fr: '#5a6a84', pl: '#6a7058', fi: '#e0e4e8' };
-  WW.SOLDIER = (i, kind = 'de') => WW.P({ costume: 'suit', topCol: UNI[kind], hair: 'short', hairCol: ['#2a2420', '#5a3a22', '#8a6a3a'][i % 3], seed: 200 + i + kind.length * 7, hat: helmet(kind) });
+  WW.SOLDIER = (i, kind = 'de') => WW.P({ costume: 'suit', topCol: UNI[kind], hair: 'short', hairCol: ['#2a2420', '#5a3a22', '#8a6a3a'][i % 3], seed: 200 + i + kind.length * 7, hat: helmet(kind), tie: shade(UNI[kind], -.25), inner: shade(UNI[kind], .12) });
   WW.CHAMBERLAIN = WW.P({ costume: 'suit', topCol: '#2a2a30', hair: 'short', hairCol: '#c8c4bc', seed: 51, hat: hat('#1a1a1c') });
   WW.CHAMBERLAIN_BARE = WW.P({ costume: 'suit', topCol: '#2a2a30', hair: 'short', hairCol: '#c8c4bc', seed: 51 });
   WW.CHURCHILL = WW.P({ costume: 'suit', topCol: '#22262e', hair: 'swept', hairCol: '#d8c8b0', seed: 53 });
