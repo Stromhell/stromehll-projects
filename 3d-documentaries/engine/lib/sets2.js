@@ -158,7 +158,17 @@ export function entebbeOld(k, o = {}) {
   g.add(box(6, 6, 6, wall, { pos: [W / 2 - 4, 10.2, -2] }));
   g.add(box(7, 2.4, 7, std(0x1a2028, { rough: .1, metal: .5 }), { pos: [W / 2 - 4, 14.4, -2] }));
   g.add(box(7.6, .4, 7.6, trim, { pos: [W / 2 - 4, 15.8, -2] }));
-  if (o.towerLit) { const tl = new THREE.PointLight(0xffd8a0, 30, 20, 2); tl.position.set(W / 2 - 4, 14.4, -2); g.add(tl); }
+  // tower detail: cab mullions, warm glow inside, balcony rail, roof antennas, a beacon, a painted name band
+  const tx = W / 2 - 4, tz = -2, mul = std(0x2a2a2a, { metal: .6, rough: .4 });
+  for (let i = 0; i < 4; i++) for (let j = -3; j <= 3; j++) { const a = i * P / 2; const ox = Math.sin(a) * 3.52, oz = Math.cos(a) * 3.52; const px = ox + Math.cos(a) * j, pz = oz - Math.sin(a) * j; g.add(box(.08, 2.4, .08, mul, { pos: [tx + px, 14.4, tz + pz] })); }
+  if (o.towerLit) { g.add(box(6.6, 1.6, 6.6, std(0xffd090, { emissive: 0xffc070, ei: 1.2 }), { pos: [tx, 14.2, tz], cast: false })); const tl = new THREE.PointLight(0xffd8a0, 60, 26, 2); tl.position.set(tx, 14.4, tz + 5); g.add(tl); }
+  g.add(box(7.4, .12, 7.4, trim, { pos: [tx, 13.15, tz] }));
+  for (let i = 0; i < 4; i++) { const a = i * P / 2; g.add(box(i % 2 ? .05 : 7.6, .05, i % 2 ? 7.6 : .05, mul, { pos: [tx + Math.sin(a) * 3.8, 14.1, tz + Math.cos(a) * 3.8] })); }
+  g.add(m(new THREE.CylinderGeometry(.04, .06, 4, 6), mul, { pos: [tx + 2, 18, tz - 2] })); g.add(m(new THREE.CylinderGeometry(.03, .03, 2.6, 6), mul, { pos: [tx - 2.4, 17.3, tz + 1.5] }));
+  g.add(m(new THREE.SphereGeometry(.18, 12, 8), std(0xff3020, { emissive: 0xff3020, ei: 3 }), { pos: [tx + 2, 20.1, tz - 2], cast: false }));
+  g.add(box(6.02, .7, .02, std(0x1d3f6a), { pos: [tx, 8.2, tz + 3.02], cast: false }));
+  const nm = real.canvasTex(1024, 128, c => { c.fillStyle = '#1d3f6a'; c.fillRect(0, 0, 1024, 128); c.fillStyle = '#f0e8d0'; c.font = 'bold 84px Oswald, sans-serif'; c.textAlign = 'center'; c.fillText('ENTEBBE', 512, 96); });
+  g.add(m(new THREE.PlaneGeometry(6, .7), new THREE.MeshStandardMaterial({ map: nm, roughness: .8 }), { pos: [tx, 8.2, tz + 3.04], cast: false }));
   return { group: shadowAll(g), windows, W, D };
 }
 
@@ -183,8 +193,38 @@ export async function hall(k, o = {}) {
     mt.add(rbox(.85, .14, 1.9, .05, mm, { pos: [0, .07, 0] })); mt.add(box(.86, .02, .2, stripe, { pos: [0, .145, -.6] }));
     mats.push({ x, z, rot: mt.rotation.y });
   }
-  // dim bulbs
-  for (let x = -w / 2 + 4; x < w / 2; x += 8) real.lamp(scene, [x, h - .4, 0], { i: o.lampI ?? 5, dist: 12, color: 0xffd8a0, shadow: false });
+  // detail pass: wainscot band, skirting, column bases, posters, a wall clock, luggage and blankets, bulbs with shades
+  const wains = std(0x6e6450, { rough: .8 }), skirt = std(0x3a3328, { rough: .7 });
+  for (const [x, z, ry, len, nx, nz] of [[0, -d / 2, 0, w, 0, 1], [-w / 2, 0, P / 2, d, 1, 0], [w / 2, 0, -P / 2, d, -1, 0]]) {
+    const at = e => [x + nx * e, 0, z + nz * e];
+    const pl = (hh, y, mat, e) => { const q = at(e); g.add(m(new THREE.PlaneGeometry(len, hh), mat, { pos: [q[0], y, q[2]], rot: [0, ry, 0], cast: false })); };
+    pl(1.2, .6, wains, .02); pl(.06, 1.21, std(0x2e2820), .03); pl(.14, .07, skirt, .035);
+  }
+  for (let x = -w / 2 + 4; x < w / 2; x += 4) for (const z of [-d / 6, d / 6]) { g.add(box(.6, .3, .6, std(0x7a705c, { rough: .85 }), { pos: [x, .15, z] })); g.add(box(.55, .12, .55, std(0x9a907a, { rough: .85 }), { pos: [x, h - .06, z] })); }
+  const posters = [['EAST AFRICAN AIRWAYS', 'FLY THE SUPER VC10', '#1d4f8a'], ['UGANDA', 'PEARL OF AFRICA', '#2a6a3a'], ['NO SMOKING', 'TAFADHALI USIVUTE SIGARA', '#8a2a1e']];
+  posters.forEach(([a, b, col], i) => {
+    const tex = canvasTex(512, 720, c => { c.fillStyle = '#efe6d0'; c.fillRect(0, 0, 512, 720); c.fillStyle = col; c.fillRect(24, 24, 464, 440); c.fillStyle = '#efe6d0'; c.beginPath(); c.arc(256, 250, 120, 0, 7); c.fill();
+      c.fillStyle = col; c.font = 'bold 50px Oswald, sans-serif'; c.textAlign = 'center'; c.fillText(a, 256, 560, 470); c.font = '30px Oswald, sans-serif'; c.fillStyle = '#3a2e22'; c.fillText(b, 256, 620, 470);
+      c.fillStyle = 'rgba(90,70,40,.18)'; for (let k = 0; k < 40; k++) c.fillRect((k * 97) % 512, (k * 151) % 720, 30, 4); });
+    g.add(m(new THREE.PlaneGeometry(.9, 1.27), new THREE.MeshStandardMaterial({ map: tex, roughness: .9 }), { pos: [-w / 2 + 5 + i * 7.5, 2.1, -d / 2 + .03], cast: false }));
+  });
+  const clock = new THREE.Group(); clock.position.set(w / 2 - 6, h - 1.9, -d / 2 + .06); g.add(clock);
+  clock.add(m(new THREE.CylinderGeometry(.32, .32, .06, 32), std(0xf2ecdc, { rough: .5 }), { rot: [P / 2, 0, 0] }));
+  clock.add(m(new THREE.TorusGeometry(.32, .03, 8, 32), std(0x2a2620, { metal: .5, rough: .4 })));
+  clock.add(box(.02, .2, .01, std(0x111111), { pos: [.05, .07, .04], rot: [0, 0, -.6] })); clock.add(box(.015, .27, .01, std(0x111111), { pos: [-.09, .07, .045], rot: [0, 0, .9] }));
+  const bagCols = [0x5a3a22, 0x23324a, 0x6a2a24, 0x3a3a36, 0x7a6a4a];
+  const blanket = [0x8a3a2a, 0x3a5a7a, 0x6a6a3a, 0x7a5a8a];
+  mats.forEach((mt, i) => {
+    if (i % 3 === 0) { const b = rbox(.55, .38, .2, .03, std(bagCols[i % 5], { rough: .6 }), { pos: [mt.x + .62, .19, mt.z + (i % 2 ? .5 : -.5)], rot: [0, .3 * ((i % 4) - 1.5), 0] }); g.add(b); g.add(box(.14, .03, .03, std(0x1a1a1a), { pos: [mt.x + .62, .4, mt.z + (i % 2 ? .5 : -.5)] })); }
+    if (i % 4 === 1) g.add(rbox(.8, .03, .9, .01, std(blanket[i % 4], { rough: 1 }), { pos: [mt.x, .155, mt.z + .35], rot: [0, mt.rot, 0] }));
+  });
+  for (let x = -w / 2 + 4; x < w / 2; x += 8) {
+    g.add(m(new THREE.CylinderGeometry(.01, .01, .4, 6), std(0x222222), { pos: [x, h - .2, 0] }));
+    g.add(m(new THREE.ConeGeometry(.28, .2, 20, 1, true), std(0x3a4a3a, { rough: .6, metal: .3, mat: { side: THREE.DoubleSide } }), { pos: [x, h - .45, 0] }));
+    g.add(m(new THREE.SphereGeometry(.07, 12, 8), std(0xfff0c8, { emissive: 0xffe0a0, ei: 4 }), { pos: [x, h - .52, 0], cast: false }));
+  }
+  // dim bulbs (the middle one casts shadows so people and columns throw moving shadows)
+  for (let x = -w / 2 + 4; x < w / 2; x += 8) real.lamp(scene, [x, h - .6, 0], { i: (o.lampI ?? 5) * 1.6, dist: 12, color: 0xffd8a0, shadow: Math.abs(x) < 4.1 });
   scene.add(new THREE.HemisphereLight(0xfff0d8, 0x40382c, o.hemi ?? .5));
   return { group: g, mats, w, d, h };
 }

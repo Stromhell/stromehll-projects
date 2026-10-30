@@ -45,7 +45,31 @@ export const shots = {
     const cam = C.dolly(camera, { pos: [0, 1.1, 4.6], look: [0, 1.55, 0], fov: 34 }, { pos: [0, 1.2, 3.3], look: [0, 1.62, 0], fov: 32 });
     return (t, u) => { cam(u); a.update(t, { mood: 'smug', look: Math.sin(t * .3) * .08 }); const [x, y] = proj(camera, C.headPos(a, .4)); ui.callout(k.overlay, 'IDI AMIN', 'PRESIDENT OF UGANDA', Math.min(1500, x + 420), Math.max(240, y + 60), t, .9); };
   },
-  '3.2': old['3.2'],
+  // the real-look Amin, newspaper front pages from 1972-76 circling him
+  '3.2': async k => {
+    const { real, scene, camera } = k;
+    await real.env(k, 'brown_photostudio_02', { sun: false, bg: 0x070606, envI: .18 });
+    const a = await real.human({ id: 'tb_amin', seed: 801 }); real.put(scene, a, { pos: [0, 0, 0], mood: 'smug' }); a.userData.driven = true;
+    C.attach(a, S2.cap(0x3a4428), 'Head', [0, .2, -.01]);
+    const gold = real.std(0xd4a640, { metal: 1, rough: .25 }), rib = [0xc0392b, 0x2a6a3a, 0xe8b321, 0x1f4fa8];
+    for (let i = 0; i < 8; i++) { const md = new THREE.Group(); md.add(real.box(.035, .02, .006, real.std(rib[i % 4]), { pos: [0, .02, 0] })); md.add(real.m(new THREE.CylinderGeometry(.013, .013, .005, 12), gold, { pos: [0, -.008, 0], rot: [P / 2, 0, 0] })); C.attach(a, md, 'Spine2', [-.12 + (i % 4) * .042, .06 - Math.floor(i / 4) * .06, .13]); }
+    const heads = [['THE DAILY NEWS', 'AMIN EXPELS UGANDA\'S ASIANS', '90 DAYS TO LEAVE', 'AUG 1972'], ['WORLD TRIBUNE', 'UGANDA BREAKS WITH ISRAEL', 'Advisers ordered out', 'MAR 1972'],
+      ['THE EVENING POST', 'BRITAIN CUTS AID TO UGANDA', 'Relations at new low', 'DEC 1972'], ['AFRICA HERALD', 'AMIN NAMED PRESIDENT FOR LIFE', 'Kampala parade', 'JUNE 1976']];
+    const papers = heads.map(([mast, h1, h2, dt], i) => {
+      const tex = real.canvasTex(800, 1040, c => { c.fillStyle = '#ece4d0'; c.fillRect(0, 0, 800, 1040); c.fillStyle = '#1a1612'; c.font = 'bold 64px "Times New Roman", serif'; c.textAlign = 'center'; c.fillText(mast, 400, 90);
+        c.fillRect(40, 110, 720, 4); c.font = '22px serif'; c.fillText(dt + '  ·  PRICE 10 CENTS', 400, 140); c.fillRect(40, 155, 720, 2);
+        c.font = 'bold 76px Anton, Oswald, sans-serif'; const words = h1.split(' '); let line = '', y = 250; for (const w of words) { if ((line + w).length > 14) { c.fillText(line.trim(), 400, y); y += 84; line = ''; } line += w + ' '; } c.fillText(line.trim(), 400, y);
+        c.font = 'italic 34px serif'; c.fillText(h2, 400, y + 60); c.fillStyle = '#8a8274'; c.fillRect(60, y + 100, 330, 300);
+        c.fillStyle = '#3a342c'; for (let r = 0; r < 26; r++) { c.fillRect(420, y + 100 + r * 12, 320, 4); if (y + 420 + r * 12 < 1000) c.fillRect(60, y + 420 + r * 12, 680, 4); }
+        c.fillStyle = 'rgba(120,100,60,.15)'; for (let q = 0; q < 60; q++) c.fillRect((q * 131) % 800, (q * 293) % 1040, 40, 3); });
+      const pl = real.m(new THREE.PlaneGeometry(.62, .8), new THREE.MeshStandardMaterial({ map: tex, roughness: .85, side: THREE.DoubleSide }), { cast: true }); scene.add(pl); return pl; });
+    const key = new THREE.SpotLight(0xffe2c0, 70, 10, .5, .5, 1.3); key.position.set(1.6, 3.2, 2.4); key.target.position.set(0, 1.4, 0); key.castShadow = true; scene.add(key, key.target);
+    const rim = new THREE.SpotLight(0x8aa0ff, 60, 8, .4, .6, 1.2); rim.position.set(-1.5, 3, -2); rim.target.position.set(0, 1.5, 0); scene.add(rim, rim.target);
+    scene.add(real.m(new THREE.PlaneGeometry(30, 30), real.std(0x141210, { rough: .9 }), { rot: [-P / 2, 0, 0], cast: false }));
+    const cam = C.orbit(camera, [0, 1.4, 0], 3.6, 1.55, -.35, .35, 38, [0, 1.45, 0]);
+    return (t, u) => { cam(u); a.update(t, { mood: 'smug', look: Math.sin(t * .3) * .1, talk: false });
+      papers.forEach((pl, i) => { const ang = t * .45 + i * P / 2, r = 1.55, y = 1.05 + i * .22 + Math.sin(t * .8 + i) * .05; pl.position.set(Math.sin(ang) * r, y, Math.cos(ang) * r); pl.lookAt(camera.position); pl.rotateZ(Math.sin(t + i) * .08); }); };
+  },
   '3.3': old['3.3'],
   '3.4': old['3.4'],
   // 03:15, Flight 139 touches down at Entebbe with its landing lights on
@@ -64,9 +88,12 @@ export const shots = {
   // the control tower, one window lit; nobody argues
   '3.6': async k => {
     const { real, scene, camera } = k;
-    await night(k, { moonI: 1.3 });
+    await night(k, { moonI: 2.4, hemi: 1.3 });
     await S2.runwayNight(k, { lit: true });
-    const t0 = S2.entebbeOld(k, { pos: [0, 0, 0], lit: [], towerLit: true, wall: 0xd0c8b4 });
+    const t0 = S2.entebbeOld(k, { pos: [0, 0, 0], lit: [...Array(48).keys()].filter(i => i % 4 === 1), towerLit: true, wall: 0xd0c8b4 });
+    // apron floodlight washing the tower face, sodium lamps along the terminal
+    flood(scene, [t0.W / 2 + 14, 14, 24], [t0.W / 2 - 4, 10, 0], 520);
+    for (const x of [-20, 0, 20]) { const l = new THREE.PointLight(0xffb060, 40, 18, 2); l.position.set(x, 5, 12); scene.add(l); }
     // a figure at the tower glass
     const p = await real.human({ id: 'tb_ug2', seed: 830 }); real.put(scene, p, { pos: [t0.W / 2 - 4, 13.2, 1.2], rot: 0 }); p.userData.driven = true;
     const cam = C.dolly(camera, { pos: [20, 2, 40], look: [31, 12, -2], fov: 40 }, { pos: [26, 3, 26], look: [31, 13.5, -2], fov: 34 });
@@ -105,7 +132,7 @@ export const shots = {
   // dawn: the passengers walk in a line from the jet to the old terminal, guarded on both sides
   '3.11': async k => {
     const { real, scene, camera } = k;
-    await real.env(k, 'kiara_1_dawn', { sun: [-80, 14, 40], sunI: 2.6, sunColor: 0xffb880, shadowSize: 60, envI: .7, fog: [0x9a8a90, 120, 900] });
+    await real.env(k, 'industrial_sunset_puresky', { sun: [-80, 14, 40], sunI: 2.6, sunColor: 0xffb880, shadowSize: 60, envI: .7, fog: [0xc8a088, 160, 1100] });
     await sets.apron(k, { terminal: false });
     S2.entebbeOld(k, { pos: [0, 0, -70], wall: 0xc8bca4 });
     const jet = await sets.a300(); jet.position.set(28, 0, 40); jet.rotation.y = -P / 2 - .3; scene.add(jet);

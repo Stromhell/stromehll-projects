@@ -120,8 +120,14 @@ async function airportMap(k, glowOld) {
   x.strokeStyle = '#6a4a2a'; x.lineWidth = 8; x.stroke();
   x.fillStyle = '#6a6458'; x.save(); x.translate(1500, 800); x.rotate(-.35); x.fillRect(-1100, -60, 2200, 120); x.restore();
   x.save(); x.translate(1300, 900); x.rotate(.5); x.fillRect(-500, -45, 1000, 90); x.restore();
+  // detail: grass fields, taxiways, apron pads, a tree line along the shore, faint survey grid
+  x.fillStyle = 'rgba(120,150,90,.25)'; for (let i = 0; i < 26; i++) { x.save(); x.translate((i * 487) % 3000, 120 + (i * 211) % 1100); x.rotate((i % 5) * .3); x.fillRect(-120, -60, 240, 120); x.restore(); }
+  x.strokeStyle = 'rgba(80,60,40,.12)'; x.lineWidth = 2; for (let g = 0; g < 3000; g += 150) { x.beginPath(); x.moveTo(g, 0); x.lineTo(g, 1300); x.stroke(); } for (let g = 0; g < 1300; g += 150) { x.beginPath(); x.moveTo(0, g); x.lineTo(3000, g); x.stroke(); }
+  x.fillStyle = '#4e6a3e'; for (let i = 0; i < 90; i++) { const tx = i * 34, ty = 1290 - Math.sin(i * .21) * 40 - (i % 3) * 10; x.beginPath(); x.arc(tx, ty, 14 + (i % 4) * 3, 0, 7); x.fill(); }
+  x.fillStyle = '#8a8478'; x.fillRect(380, 1000, 260, 120); x.fillRect(2160, 330, 300, 140);
+  x.strokeStyle = '#7a7468'; x.lineWidth = 40; x.beginPath(); x.moveTo(640, 1060); x.lineTo(1000, 1000); x.stroke(); x.beginPath(); x.moveTo(2160, 400); x.lineTo(1900, 520); x.stroke();
   x.fillStyle = '#2b1e16'; x.font = '110px Anton'; x.textAlign = 'center';
-  x.fillText('LAKE VICTORIA', 1500, 1700); x.font = '80px Anton'; x.fillText('RUNWAY', 2200, 520);
+  x.fillText('LAKE VICTORIA', 1500, 1480); x.font = '80px Anton'; x.fillText('RUNWAY', 2200, 520);
   const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace;
   const plane = new THREE.Mesh(new THREE.PlaneGeometry(150, 100), new THREE.MeshToonMaterial({ map: tex })); plane.rotation.x = -P / 2; plane.userData.noOutline = true; k.scene.add(plane);
   const nt = core.box(18, 3, 6, 0xd8d0c0, { pos: [28, 1.5, -22] }); k.scene.add(nt);
