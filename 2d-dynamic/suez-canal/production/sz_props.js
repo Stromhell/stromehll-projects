@@ -5,7 +5,7 @@
   S.szStone = (c, x, y, s, bury = 0, lt = 0, o = {}) => {
     const H = 210, W = 130; c.save(); c.translate(x, y); c.scale(s, s);
     c.fillStyle = 'rgba(40,24,10,.35)'; c.beginPath(); c.ellipse(26, 2, W * .9, 16, 0, 0, TAU); c.fill();
-    c.save(); c.beginPath(); c.rect(-W, -H - 40, W * 2 + 60, H + 40 - 1); c.clip(); c.translate(0, bury * H * .8); c.rotate(o.tilt || 0);
+    c.save(); if (bury > 0) { c.beginPath(); c.rect(-W, -H - 40, W * 2 + 60, H + 40 - 1); c.clip(); } c.translate(0, bury * H * .8); if (o.tilt) { const px = o.tilt < 0 ? -W / 2 : W / 2; c.translate(px, 0); c.rotate(o.tilt); c.translate(-px, 0); }
     const g = c.createLinearGradient(-W / 2, 0, W / 2, 0); g.addColorStop(0, '#5a5658'); g.addColorStop(.45, '#8a8486'); g.addColorStop(1, '#3e3a3c');
     c.fillStyle = g; c.beginPath(); c.moveTo(-W / 2, 0); c.lineTo(-W / 2 + 6, -H + 30); c.quadraticCurveTo(0, -H - 14, W / 2 - 6, -H + 30); c.lineTo(W / 2, 0); c.fill();
     c.fillStyle = '#2e2a2c'; c.beginPath(); c.moveTo(W / 2, 0); c.lineTo(W / 2 - 6, -H + 30); c.lineTo(W / 2 + 14, -H + 40); c.lineTo(W / 2 + 16, 4); c.fill();
@@ -71,4 +71,26 @@
     c.strokeStyle = '#6a4a28'; c.lineWidth = 2; c.strokeRect(-w / 2 + 8, -h / 2 + 8, w - 16, h - 46);
     c.fillStyle = '#3a2410'; c.font = `${Math.round(w * .13)}px Oswald`; c.textAlign = 'center'; c.fillText(label, 0, h / 2 - 14);
     c.restore(); };
+})();
+// ancient boats. y = waterline. faces +x (dir -1 flips)
+(() => {
+  const TAU = Math.PI * 2, R = S.rgba;
+  S.szReedBoat = (c, x, y, s, dir = 1, lt = 0) => { c.save(); c.translate(x, y + Math.sin(lt * 1.6) * 1.5); c.scale(s * dir, s);
+    c.fillStyle = R('#0a2030', .25); c.beginPath(); c.ellipse(0, 4, 80, 6, 0, 0, TAU); c.fill();
+    c.fillStyle = '#c8a050'; c.beginPath(); c.moveTo(-86, -30); c.quadraticCurveTo(-60, 4, 0, 4); c.quadraticCurveTo(60, 4, 86, -34); c.quadraticCurveTo(50, -10, 0, -10); c.quadraticCurveTo(-50, -10, -86, -30); c.fill();
+    c.strokeStyle = '#8a6a2a'; c.lineWidth = 2; for (let k = -4; k <= 4; k++) { c.beginPath(); c.moveTo(k * 16 - 4, -9); c.lineTo(k * 16 + 4, 3); c.stroke(); }
+    c.strokeStyle = '#5a3a1e'; c.lineWidth = 3; c.beginPath(); c.moveTo(0, -10); c.lineTo(0, -110); c.stroke();
+    c.fillStyle = '#ece0c0'; c.beginPath(); c.moveTo(-36, -104); c.lineTo(36, -104); c.quadraticCurveTo(42 + Math.sin(lt * 2) * 4, -60, 34, -22); c.lineTo(-34, -22); c.quadraticCurveTo(-28, -60, -36, -104); c.fill();
+    c.strokeStyle = '#5a3a1e'; c.lineWidth = 2; c.beginPath(); c.moveTo(-40, -104); c.lineTo(40, -104); c.stroke(); c.restore(); };
+  // flat royal barge with a canopy; deck at y - 22*s. Returns deck y for standing figures
+  S.szBarge = (c, x, y, s, dir = 1, lt = 0, o = {}) => { const bob = Math.sin(lt * 1.3) * 1.5; c.save(); c.translate(x, y + bob); c.scale(s * dir, s);
+    c.fillStyle = R('#0a2030', .3); c.beginPath(); c.ellipse(0, 6, 190, 10, 0, 0, TAU); c.fill();
+    c.fillStyle = o.hull || '#7a4a26'; c.beginPath(); c.moveTo(-200, -40); c.quadraticCurveTo(-170, 6, -100, 6); c.lineTo(120, 6); c.quadraticCurveTo(190, 2, 210, -50); c.lineTo(180, -24); c.lineTo(-170, -24); c.closePath(); c.fill();
+    c.fillStyle = o.band || '#c8a040'; c.fillRect(-170, -24, 350, 6); c.fillStyle = R('#000', .2); c.fillRect(-150, -10, 290, 3);
+    // oars
+    c.strokeStyle = '#5a3a1e'; c.lineWidth = 3; for (let k = 0; k < 7; k++) { const a = Math.sin(lt * 2.2 + k * .3) * .25; c.save(); c.translate(-120 + k * 40, -14); c.rotate(.9 + a); c.beginPath(); c.moveTo(0, 0); c.lineTo(0, 50); c.stroke(); c.restore(); }
+    if (o.canopy !== false) { c.strokeStyle = '#5a3a1e'; c.lineWidth = 4; for (const px of [-90, 10]) { c.beginPath(); c.moveTo(px, -24); c.lineTo(px, -150); c.stroke(); } c.fillStyle = o.cloth || '#8a3a6a'; c.beginPath(); c.moveTo(-104, -150); c.lineTo(24, -150); c.lineTo(18, -132); c.lineTo(-98, -132); c.fill(); for (let k = 0; k < 8; k++) { c.fillStyle = k % 2 ? '#e8c860' : (o.cloth || '#8a3a6a'); c.beginPath(); c.moveTo(-98 + k * 15, -132); c.lineTo(-91 + k * 15, -122); c.lineTo(-84 + k * 15, -132); c.fill(); } }
+    if (o.sail) { c.strokeStyle = '#5a3a1e'; c.lineWidth = 5; c.beginPath(); c.moveTo(80, -24); c.lineTo(80, -230); c.stroke(); c.fillStyle = o.sail; c.beginPath(); c.moveTo(20, -220); c.lineTo(140, -220); c.quadraticCurveTo(150 + Math.sin(lt * 1.5) * 6, -150, 140, -80); c.lineTo(20, -80); c.quadraticCurveTo(30, -150, 20, -220); c.fill(); c.fillStyle = R('#fff', .2); c.fillRect(24, -216, 8, 132); }
+    if (o.cargo) for (let k = 0; k < 8; k++) { c.fillStyle = k % 2 ? '#d8c08a' : '#c8ac78'; c.beginPath(); c.ellipse(-140 + k * 22 + (k > 3 ? 40 : 0), -34, 14, 11, 0, 0, TAU); c.fill(); c.strokeStyle = '#8a7048'; c.lineWidth = 1; c.stroke(); }
+    c.restore(); return y + bob - 24 * s; };
 })();

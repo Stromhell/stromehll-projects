@@ -1,0 +1,118 @@
+<!doctype html><html><head><meta charset="utf-8"><title>SZ act 1 - pharaohs and persians</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/vp/engine.js"></script><script src="../../../../shared/vp/cast.js"></script><script src="../../../../shared/vp/scenes.js"></script><script src="../../../../shared/vp/spain.js"></script>
+<script src="../../../../shared/kit.js"></script><script src="../../../../shared/vp.js"></script>
+<script src="../../../../spain-1-al-andalus/production/es1_sets.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act1.js"></script><script src="../../../../spain-1-al-andalus/production/es1_cast.js"></script>
+<script src="../../../../spain-3-civil-war/production/es3_cast.js"></script>
+<script src="../../../../japan-comeback/production/jp_cast.js"></script><script src="../../../../japan-comeback/production/jp_sets.js"></script>
+<script src="../../sz_sets.js"></script><script src="../../sz_cast.js"></script><script src="../../sz_props.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, E = K.E, Z = S.SZ, C = S.SZC, H1 = S.ES1H, TAU = Math.PI * 2;
+const at = VP.at, seg = K.seg, lerp = K.lerp;
+{ const T = window.TIMING, L = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length + 1, start: L.end, end: L.end + 4.8, vo_start: L.end, vo_end: L.end, text: '' }); T.dur = L.end + 4.8; }
+const SUN = lt => VP.light('studio', lt, { swing: 3, set: { L: [.6, -.9], amb: '#6a5a4a', ambA: .2, rim: '#fff0d0', rimA: .8, tint: '#ffe8c0', tintA: .08 } });
+const DUSK = lt => VP.light('studio', lt, { swing: 3, set: { L: [-.7, -.6], amb: '#4a3a5a', ambA: .3, rim: '#ffc890', rimA: .9, tint: '#ffb070', tintA: .14 } });
+const shimmer = (c, lt, y0, y1) => { for (let k = 0; k < 18; k++) { const r = S.rng(k + 50), y = y0 + r() * (y1 - y0); c.fillStyle = S.rgba('#fff4dc', .05); c.fillRect(0, y + Math.sin(lt * 3 + k) * 2, 1280, 2); } };
+// route on the parchment map: the long way round Africa, and the Suez shortcut
+const LONG = [[4, 51.8], [-6, 47], [-11, 40], [-18, 28], [-19, 16], [-12, 5], [4, 0], [10, -14], [14, -30], [19, -37.5], [28, -36], [38, -26], [44, -14], [52, 0], [56, 12], [62, 17], [72, 15], [80, 6], [95, 4], [104, 1.3]];
+const PRIEST_L = lt => VP.light('studio', lt, { swing: 6, set: { L: [-.8, -.4], amb: '#2a1a10', ambA: .45, rim: '#ffa040', rimA: 1, tint: '#ff9a40', tintA: .16 } });
+const HEAT = lt => VP.light('studio', lt, { swing: 2, set: { L: [.2, -1], amb: '#7a5a3a', ambA: .15, rim: '#fff4d8', rimA: .9, tint: '#ffe8b0', tintA: .1 } });
+const basket = (c, x, y, s = 1, full = 1) => { c.fillStyle = '#a8864a'; c.beginPath(); c.moveTo(x - 14 * s, y - 16 * s); c.lineTo(x + 14 * s, y - 16 * s); c.lineTo(x + 10 * s, y); c.lineTo(x - 10 * s, y); c.fill(); c.strokeStyle = S.rgba('#5a3a1e', .6); c.lineWidth = 1; for (let k = 1; k < 4; k++) { c.beginPath(); c.moveTo(x - 13 * s, y - k * 4 * s); c.lineTo(x + 13 * s, y - k * 4 * s); c.stroke(); } if (full) { c.fillStyle = '#d8b07a'; c.beginPath(); c.ellipse(x, y - 16 * s, 13 * s, 5 * s, 0, Math.PI, TAU); c.fill(); } };
+const pick = (c, x, y, a) => { c.save(); c.translate(x, y); c.rotate(a); c.strokeStyle = '#5a3a1e'; c.lineWidth = 3; c.beginPath(); c.moveTo(0, 0); c.lineTo(0, -34); c.stroke(); c.strokeStyle = '#b86a3a'; c.lineWidth = 5; c.beginPath(); c.moveTo(-12, -34); c.quadraticCurveTo(0, -40, 14, -32); c.stroke(); c.restore(); };
+const dotted = (c, pts, q, col = '#8a2a1a') => { c.save(); c.setLineDash([12, 9]); c.strokeStyle = col; c.lineWidth = 5; c.lineCap = 'round'; c.beginPath(); const n = Math.max(1, Math.floor(q * (pts.length - 1) * 20)); for (let i = 0; i <= n; i++) { const f = i / ((pts.length - 1) * 20), j = Math.min(pts.length - 2, Math.floor(f * (pts.length - 1))), t = f * (pts.length - 1) - j; const x = lerp(pts[j][0], pts[j + 1][0], t), y = lerp(pts[j][1], pts[j + 1][1], t); i ? c.lineTo(x, y) : c.moveTo(x, y); } c.stroke(); c.restore(); };
+const crew = (c, list, lt, L, y, uu, look = [0, 0]) => list.forEach(([x, ch, k, pose]) => { S.contact(c, x, y, uu * .5, .35); VP.figure(c, [x, y], { k: .6, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, ch, x, y, uu, pose, { blink: S.blinkAt(lt, k), look, time: lt }, L)); });
+
+window.SHOTS = [
+  // 1.01 WIDE: the delta; a dotted canal line draws east from the river; a reed boat sails the Nile
+  { set: 'sz_delta', cam: { z: [1.0, 1.12], x: [640, 760], y: [380, 380], ease: E.io }, bed: [['birds_loop', .2], ['water_loop', .15]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tM = at(Sh, 'Mediterranean', 4); Sh.tE = at(Sh, 'east', 7); },
+    draw: (c, lt, u, Sh) => { const L = HEAT(lt);
+      S.szReedBoat(c, lerp(-80, 560, seg(lt, 0, Sh.dur)), 404, .7, 1, lt);
+      dotted(c, [[640, 404], [800, 360], [980, 336], [1280, 318]], E.io(seg(lt, Sh.tE - 1.5, Sh.tE + 1.5)));
+      const q = seg(lt, Sh.tE + 1.2, Sh.tE + 1.8); if (q > 0) { c.save(); c.globalAlpha = q; c.font = '30px Caveat'; c.fillStyle = '#5a1a0a'; c.fillText('to the Red Sea →', 1050, 300); c.restore(); }
+      crew(c, [[250, C.FELLAH2, 0, Object.assign(S.idle(lt, 0), { face: 1, shN: 150, elN: 20 })], [400, C.DIG3, 1, Object.assign(S.idle(lt, 1), { face: -1, shN: 30, elN: 70 })]], lt, L, 660, 34, [.6, -.3]);
+      VP.motes(c, lt, 0, 300, 1280, 300, { n: 20 }); },
+    over: [(c, lt) => K.dateTag(c, 'EGYPT · ~600 BC', lt, { at: .4 }), (c, lt, u, Sh) => K.badge(c, 'PHARAOH NECHO II', lt, { at: 1.2 })],
+    sfx: [[.2, 'birds_loop', .2], ['idea', 'pop', .3], ['east', 'whoosh_soft', .4]] },
+
+  // 1.02 MED: the trench; baskets pass hand to hand up the ramp; an overseer with a staff; a basket drops and rolls
+  { set: 'sz_trench', cam: { z: [1.12, 1.04], x: [560, 640], y: [430, 400], ease: E.io }, bed: [['wind_loop', .15], ['dig_loop', .3]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tH = at(Sh, 'Herodotus', 5); Sh.tD = at(Sh, 'died', Sh.dur - 1.5); },
+    draw: (c, lt, u, Sh) => { const L = HEAT(lt);
+      // chain of diggers along the ramp at x 260..440 (floor 470 -> top 302)
+      const chain = [[220, 520, C.DIG], [300, 470, C.DIG2], [352, 400, C.DIG3], [404, 330, C.DIG]];
+      chain.forEach(([x, y, ch], i) => { const ph = (lt * .8 + i * .25) % 1, up = Math.sin(ph * TAU) > 0; S.contact(c, x, y, 16, .35);
+        VP.figure(c, [x, y], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, ch, x, y, 30, Object.assign(S.idle(lt, i), { face: 1, shN: up ? 150 : 70, elN: up ? 20 : 60, shF: up ? 140 : 60, elF: up ? 30 : 70, holdN: up ? wr => basket(cc, wr[0] + 4, wr[1] + 8, .8) : null }), { blink: S.blinkAt(lt, i), worry: .6, look: [.5, -.5], time: lt }, L)); });
+      // diggers on the floor swinging copper picks
+      [[560, C.DIG2, 4], [700, C.DIG3, 5], [820, C.DIG, 6]].forEach(([x, ch, k]) => { const sw = Math.abs(Math.sin(lt * 2.4 + k)); S.contact(c, x, 580, 16, .35);
+        VP.figure(c, [x, 580], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, ch, x, 580, 32, Object.assign(S.idle(lt, k), { face: k % 2 ? 1 : -1, shN: 60 + 110 * sw, elN: 30, holdN: wr => pick(cc, wr[0], wr[1], -1.2 + sw * 1.6) }), { blink: S.blinkAt(lt, k), worry: .5, look: [.3, .4], time: lt }, L));
+        if (sw > .95) for (let j = 0; j < 4; j++) { c.fillStyle = S.rgba('#d8b07a', .6); c.beginPath(); c.arc(x + 30 + j * 6, 570 - j * 4, 3, 0, TAU); c.fill(); } });
+      // overseer on the top bank with a staff
+      S.contact(c, 1010, 300, 16, .35); VP.figure(c, [1010, 300], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, C.OVERSEER, 1010, 300, 30, Object.assign(S.idle(lt, 9), { face: -1, shN: 30, elN: 40, holdN: wr => { cc.strokeStyle = '#5a3a1e'; cc.lineWidth = 4; cc.beginPath(); cc.moveTo(wr[0], wr[1] - 60); cc.lineTo(wr[0], wr[1] + 50); cc.stroke(); } }), { blink: S.blinkAt(lt, 9), look: [-.7, .4], time: lt }, L));
+      // a dropped basket rolls down the ramp
+      const rb = seg(lt, Sh.tH, Sh.tH + 1.8); if (rb > 0) { const bx = lerp(400, 230, E.out(rb)), by = lerp(330, 560, E.out(rb)); c.save(); c.translate(bx, by); c.rotate(rb * 9); basket(c, 0, 8, .8, 0); c.restore(); for (let j = 0; j < 10; j++) { const f = Math.max(0, rb - j * .04); c.fillStyle = S.rgba('#d8b07a', .5 * (1 - rb)); c.beginPath(); c.arc(lerp(400, 230, f) + j * 4, lerp(330, 560, f), 3, 0, TAU); c.fill(); } }
+      for (let k = 0; k < 14; k++) { const r = S.rng(k + 80), y = 230 + r() * 80; c.fillStyle = S.rgba('#fff8e0', .06); c.fillRect(0, y + Math.sin(lt * 3 + k) * 2, 1280, 2); } },
+    over: [(c, lt, u, Sh) => K.badge(c, 'COPPER TOOLS · REED BASKETS', lt, { at: .8, until: Sh.tH - .2 }), (c, lt, u, Sh) => K.card(c, '~120,000 DEAD (HERODOTUS)', lt, { at: Sh.tD - .3, x: 1300, y: 900, px: 54, rot: -2 })],
+    sfx: [[.2, 'dig_loop', .3], [1.4, 'pick', .3], [3.1, 'pick', .25], ['Herodotus', 'thud', .3], ['died', 'drum', .4]] },
+
+  // 1.03 MED: torchlit temple; a priest whispers to Necho; he raises a hand; cut: picks fall into the sand one by one
+  { set: 'sz_temple', cam: (lt, u, Sh) => lt < Sh.tS ? { z: [lerp(1.0, 1.18, E.io(seg(lt, 0, Sh.tS)))], x: [640], y: [460] } : { z: [1.0], x: [640], y: [420] }, bed: [['fire_loop', .2], ['drone', .2]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tI = at(Sh, 'invaders', 3.5); Sh.tS = at(Sh, 'stopped', Sh.dur - 1.6); },
+    draw: (c, lt, u, Sh) => {
+      if (lt >= Sh.tS) { VP.drawSet(c, 'sz_trench'); const L = HEAT(lt), q = lt - Sh.tS;
+        [[480, C.DIG, 0], [640, C.DIG2, 1], [800, C.DIG3, 2]].forEach(([x, ch, k]) => { const f = seg(q, k * .3, k * .3 + .4); S.contact(c, x, 580, 16, .35);
+          VP.figure(c, [x, 580], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, ch, x, 580, 32, Object.assign(S.idle(lt, k), { face: k % 2 ? -1 : 1, shN: 40, elN: 40 }), { blink: S.blinkAt(lt, k), worry: .4, look: [0, -.6], time: lt }, L));
+          pick(c, x + 26, lerp(540, 590, E.in(f)), lerp(-.4, -1.5, f)); });
+        return; }
+      const L = PRIEST_L(lt); for (const x of [200, 1080]) VP.glow(c, x, 330, 100 + 12 * Math.sin(lt * 9 + x), '#ffa040', .35);
+      const r = seg(lt, Sh.tI, Sh.tI + .6);
+      crew(c, [[560, C.NECHO, 0, Object.assign(S.idle(lt, 0), { face: 1, shN: 20 + 140 * r, elN: 20 + 40 * r })], [700, C.PRIEST, 1, Object.assign(S.idle(lt, 1), { face: -1, shN: 60, elN: 100, lean: .15 })]], lt, L, 640, 42, [0, 0]);
+      VP.motes(c, lt, 400, 200, 500, 400, { n: 14 }); },
+    over: [(c, lt, u, Sh) => K.badge(c, 'THE ORACLE', lt, { at: .4, until: Sh.tS })],
+    sfx: [[.2, 'fire_loop', .2], [.6, 'whisper', .3], ['invaders', 'drum', .35], ['stopped', 'thud', .3]] },
+
+  // 1.04 MED: water fills the canal; Darius glides on his royal barge, a Persian ship with a striped sail follows
+  { set: 'sz_oldcanal', cam: { z: [1.08, 1.0], x: [560, 640], y: [420, 380], ease: E.io }, bed: [['water_loop', .25], ['birds_loop', .12]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tD = at(Sh, 'Darius', 2); Sh.tF = at(Sh, 'finished', 4); },
+    draw: (c, lt, u, Sh) => { const L = HEAT(lt);
+      const bx = lerp(-160, 820, E.io(seg(lt, .2, Sh.dur))); const dy = S.szBarge(c, bx, 476, .9, 1, lt, { cloth: '#6a2a7a', band: '#e8c050' });
+      [[bx - 44, C.DARIUS, 0, 40, 1, { shN: 40 + 70 * seg(lt, Sh.tF, Sh.tF + .6), elN: 40 }], [bx + 80, C.PERSIAN, 1, 36, -1, { shN: 20, elN: 50 }]].forEach(([x, ch, k, uu, f, p]) => VP.figure(c, [x, dy], { k: .3, sy: -.15, a: .25, blur: 3 }, cc => S.person(cc, ch, x, dy, uu, Object.assign(S.idle(lt, k), { face: f }, p), { blink: S.blinkAt(lt, k), look: [f * .5, 0], time: lt }, L)));
+      S.szBarge(c, lerp(-700, 280, E.io(seg(lt, 1.5, Sh.dur))), 470, .62, 1, lt + 1, { canopy: false, sail: '#e8dcc0', hull: '#6a4024', band: '#4a6a9a' });
+      for (let k = 0; k < 10; k++) { const q = (lt * .5 + k / 10) % 1; c.strokeStyle = S.rgba('#ffffff', .4 * (1 - q)); c.lineWidth = 2; c.beginPath(); c.moveTo(bx - 180 - q * 120, 482 + k % 3 * 6); c.lineTo(bx - 150 - q * 120, 482 + k % 3 * 6); c.stroke(); } },
+    over: [(c, lt) => K.dateTag(c, 'DARIUS I · ~500 BC', lt, { at: .4 }), (c, lt, u, Sh) => K.badge(c, 'NILE → RED SEA: OPEN', lt, { at: Sh.dur - 3 })],
+    sfx: [[.2, 'water_loop', .25], ['Darius', 'horn', .35], ['finished', 'swell', .35]] },
+
+  // 1.05 CU: the granite stone hauled upright by rope teams; ropes creak; it settles with a puff of dust
+  { set: 'sz_dunes', cam: (lt, u, Sh) => ({ z: [lerp(1.0, 1.2, E.io(seg(lt, Sh.tU, Sh.dur)))], x: [640], y: [lerp(400, 460, E.io(seg(lt, Sh.tU, Sh.dur)))] }), bed: [['wind_loop', .2]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tU = at(Sh, 'One says', 5.5); Sh.tQ = at(Sh, 'I ordered', 6.5); Sh.tA = at(Sh, 'as I desired', Sh.dur - 1.5); },
+    draw: (c, lt, u, Sh) => { const L = HEAT(lt), q = E.io(seg(lt, .3, Sh.tU - .5)), tilt = lerp(-1.35, 0, q), X = 400, Y = 640;
+      // ropes from the stone's top to the haulers
+      const top = [X - 58 + 58 * Math.cos(tilt) + 189 * Math.sin(tilt), Y + 58 * Math.sin(tilt) - 189 * Math.cos(tilt)];
+      const team = [[1060, C.PERSIAN], [945, C.DIG], [830, C.DIG2], [715, C.DIG3]];
+      c.strokeStyle = '#8a6a3a'; c.lineWidth = 3; c.beginPath(); c.moveTo(top[0], top[1]); c.lineTo(team[3][0] - 20, Y - 100); c.lineTo(team[0][0] + 10, Y - 96); c.stroke();
+      team.forEach(([x, ch], i) => { const pull = q < 1 ? 1 : 0; S.contact(c, x, Y + 10, 16, .35); VP.figure(c, [x, Y + 10], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, ch, x, Y + 10, 32, Object.assign(pull ? H1.walk(lt * .35 + i * .2) : S.idle(lt, i), { face: -1, lean: 0, shN: 70, elN: 20, shF: 80, elF: 20 }), { blink: S.blinkAt(lt, i), worry: pull ? .5 : 0, smile: pull ? 0 : .5, look: [-.6, -.2], time: lt }, L)); });
+      S.szStone(c, X, Y, .9, 0, lt, { tilt });
+      const d = seg(lt, Sh.tU - .5, Sh.tU + .6); if (d > 0 && d < 1) for (let k = 0; k < 14; k++) { c.fillStyle = S.rgba('#e0c08a', .6 * (1 - d)); c.beginPath(); c.arc(X + (k - 7) * 14 * (1 + d), Y - d * 30 - (k % 3) * 6, 6 + d * 12, 0, TAU); c.fill(); } },
+    over: [(c, lt, u, Sh) => K.card(c, '"…SHIPS WENT FROM EGYPT TO PERSIA,', lt, { at: Sh.tQ, x: 760, y: 170, px: 44, rot: -1, until: Sh.tA }), (c, lt, u, Sh) => K.card(c, 'AS I DESIRED"', lt, { at: Sh.tA, x: 960, y: 170, px: 64, rot: 2 })],
+    sfx: [[.3, 'creak', .4], [2.2, 'creak', .35], ['One says', 'thud', .45], ['as I desired', 'stamp', .4]] },
+
+  // 1.06 MED: time-lapse; days flicker, dunes crawl into the canal, the stone's base disappears under sand
+  { set: 'sz_oldcanal', cam: { z: [1.0, 1.06], x: [640], y: [380], ease: E.io }, bed: [['wind_loop', .35]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tD = at(Sh, 'dug out', Sh.dur - 3); },
+    draw: (c, lt, u, Sh) => { const q = E.io(seg(lt, .3, Sh.tD)), L = HEAT(lt);
+      // sand fills the water band from the top down
+      const sy = lerp(394, 520, q); c.fillStyle = '#d0a46c'; c.beginPath(); c.moveTo(0, 380); for (let x = 0; x <= 1280; x += 40) c.lineTo(x, sy + Math.sin(x * .02 + q * 4) * 12); c.lineTo(1280, 380); c.fill();
+      c.fillStyle = S.rgba('#f0d098', .4); c.beginPath(); for (let x = 0; x <= 1280; x += 40) c.lineTo(x, sy - 4 + Math.sin(x * .02 + q * 4) * 12); c.lineTo(1280, sy - 20); c.lineTo(0, sy - 20); c.fill();
+      S.szStone(c, 1010, 610, .55, Math.min(.9, q * 1.1), lt, { blow: 1 });
+      // day / night flicker for the time-lapse
+      const n = (Math.sin(lt * 5) + 1) / 2 * Math.min(1, lt / 1.5) * (1 - seg(lt, Sh.tD - .5, Sh.tD)); c.fillStyle = S.rgba('#1a2040', .35 * n); c.fillRect(0, 0, 1280, 720);
+      // at "dug out": a digging crew walks in and starts again
+      const w = seg(lt, Sh.tD, Sh.tD + 2.2); if (w > 0) [[C.DIG, 0], [C.DIG2, 1]].forEach(([ch, k]) => { const x = lerp(-60 - k * 70, 300 - k * 90, E.out(w)); S.contact(c, x, 640, 16, .35); VP.figure(c, [x, 640], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, ch, x, 640, 32, Object.assign(w < 1 ? H1.walk(lt * 1.1 + k) : S.idle(lt, k), { face: 1, holdN: wr => pick(cc, wr[0], wr[1], .3) }), { blink: S.blinkAt(lt, k), worry: .6, look: [.6, -.2], time: lt }, L)); });
+      for (let k = 0; k < 60; k++) { const r = S.rng(k + 200), x = (r() * 1400 + lt * 160 * (.5 + r())) % 1400 - 60; c.fillStyle = S.rgba('#e8c890', .4); c.fillRect(x, 300 + r() * 300, 3, 1.5); } },
+    over: [(c, lt, u, Sh) => K.badge(c, 'SAND + NILE MUD', lt, { at: 1.2 }), (c, lt, u, Sh) => K.card(c, 'DIG. AGAIN. AND AGAIN.', lt, { at: Sh.tD + .2, x: 1300, y: 860, px: 52, rot: -2 })],
+    sfx: [[.2, 'wind_loop', .35], ['dug out', 'pick', .35]] },
+];
+VP.build(); K.boot();
+</script></body></html>
