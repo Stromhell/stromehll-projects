@@ -1,0 +1,125 @@
+<!doctype html><html><head><meta charset="utf-8"><title>MG act 6 - Kublai Khan</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "leo";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../mg_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['map_eurasia', 'map_japan', 'khan_hall', 'storm_coast', 'steppe_dusk']) K.load(n, PL + n + '.jpg');
+{ const T = window.TIMING, L = T.shots[T.shots.length - 1]; L.end += 1.4; T.dur = L.end; }
+const INK = '#1d1712', RED = '#b8221e', GOLD = '#e8b44a';
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+// cast
+const MOURN = [MG.look('deel', { seed: 31, hairCol: '#1a1410', beard: true }), MG.look('deelBrown', { seed: 32, hairCol: '#1a1410' }), MG.look('deelGreen', { seed: 33, hairCol: '#1a1410' })];
+const OGEDEI = MG.look('deelRed', { seed: 40, beard: true, hairCol: '#1a1410', over: { topCol: '#8a2a5a' } });
+const KN = [0, 1, 2, 3].map(k => MG.look('knight', { seed: 50 + k, beard: k % 2 === 0, hairCol: '#5a3a1a' }));
+const hatM = MG.furHat(), hatG = MG.furHat('#3a2a1e', '#e0b040');
+const EP = MG.proj(), EUP = MG.proj({ lon0: 8, lon1: 52, lat0: 40, lat1: 60 });
+const pin = (c, x, y, lab, a, col = RED) => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.3)'; c.beginPath(); c.ellipse(4, 4, 18, 7, 0, 0, 7); c.fill(); c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(0, 0); c.bezierCurveTo(-26, -40, -22, -70, 0, -70); c.bezierCurveTo(22, -70, 26, -40, 0, 0); c.fill(); c.stroke(); c.fillStyle = '#efe2c0'; c.beginPath(); c.arc(0, -48, 9, 0, 7); c.fill(); if (lab) { c.font = '44px Anton'; c.textAlign = 'center'; c.lineWidth = 8; c.strokeStyle = '#efe2c0'; c.strokeText(lab, 0, -88); c.fillStyle = INK; c.fillText(lab, 0, -88); } c.restore(); };
+// a red campaign line drawn along points (world), progress u
+const route = (c, pts, u, w = 12, col = 'rgba(178,34,30,.88)') => { if (u <= 0) return; const L = []; let tot = 0; for (let i = 1; i < pts.length; i++) { const d = Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]); L.push(d); tot += d; } let rem = tot * Math.min(1, u); c.save(); c.strokeStyle = col; c.lineWidth = w; c.lineCap = 'round'; c.lineJoin = 'round'; c.beginPath(); c.moveTo(...pts[0]); let end = pts[0]; for (let i = 1; i < pts.length && rem > 0; i++) { const f = Math.min(1, rem / L[i - 1]); end = [pts[i - 1][0] + (pts[i][0] - pts[i - 1][0]) * f, pts[i - 1][1] + (pts[i][1] - pts[i - 1][1]) * f]; c.lineTo(...end); rem -= L[i - 1]; } c.stroke(); const a = Math.atan2(end[1] - (pts[Math.max(0, pts.length - 2)][1]), end[0] - pts[Math.max(0, pts.length - 2)][0]); c.restore(); return end; };
+const head = (c, x, y, ang, s = 1) => { c.save(); c.translate(x, y); c.rotate(ang); c.scale(s, s); c.fillStyle = 'rgba(178,34,30,.95)'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(34, 0); c.lineTo(-14, -26); c.lineTo(-4, 0); c.lineTo(-14, 26); c.closePath(); c.fill(); c.stroke(); c.restore(); };
+const wagon = (c, x, y, ang) => { c.save(); c.translate(x, y); c.rotate(ang); c.fillStyle = '#8a6038'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-34, -14, 68, 28); c.strokeRect(-34, -14, 68, 28); c.fillStyle = '#3a2a1e'; c.fillRect(-26, -20, 10, 6); c.fillRect(16, -20, 10, 6); c.fillRect(-26, 14, 10, 6); c.fillRect(16, 14, 10, 6); c.restore(); };
+const parch = (c) => { c.save(); c.filter = 'blur(5px) brightness(.8)'; const s2 = 1.1 * 1920 / 2560; c.setTransform(s2, 0, 0, s2, 960 - 1280 * s2, 540 - 720 * s2); c.drawImage(K.imgs.map_europe, 0, 0, 2560, 1440); c.restore(); c.setTransform(1, 0, 0, 1, 0, 0); };
+
+// act 5 cast
+const HULAGU = MG.look('deelRed', { seed: 61, beard: true, hairCol: '#1a1410', over: { topCol: '#7a2a2a' } });
+const CALIPH = MG.look('persian', { seed: 62, beard: true, hairCol: '#3a2a1a', over: { topCol: '#2a2a2a', inner: '#e8c060' } });
+const SCH = [MG.look('persian', { seed: 63, beard: true, hairCol: '#5a5a5a' }), MG.look('persian', { seed: 64, hairCol: '#2a1a10' }), MG.look('persian', { seed: 65, beard: true, hairCol: '#2a1a10', over: { topCol: '#3a5a7a' } })];
+const hatH = MG.furHat('#3a2a1e', '#c84a32'), turbG = MG.turban('#e8c060'), turbW = MG.turban('#f2ead8');
+const B = EP(44.4, 33.3), KK = EP(102.8, 47.2), AJ = EP(35.3, 32.5), CA = EP(31.2, 30.0), DM = EP(36.3, 33.5), AL = EP(37.2, 36.2);
+// a book (world), spinning as it falls
+const book = (c, x, y, rot, s, col) => { c.save(); c.translate(x, y); c.rotate(rot); c.scale(s, s); c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-30, -40, 60, 80); c.strokeRect(-30, -40, 60, 80); c.fillStyle = '#efe2c0'; c.fillRect(22, -36, 6, 72); c.strokeStyle = '#d8b060'; c.lineWidth = 2; c.strokeRect(-22, -30, 40, 60); c.restore(); };
+const BOOKCOL = ['#7a2a2a', '#2a4a6a', '#4a6a3a', '#6a4a2a', '#5a2a5a', '#8a6a2a'];
+// a library hall facade with shelves (world)
+const library = (c, x, base, s = 1) => { c.save(); c.translate(x, base); c.scale(s, s); c.fillStyle = 'rgba(0,0,0,.3)'; c.beginPath(); c.ellipse(0, 6, 420, 28, 0, 0, 7); c.fill(); c.fillStyle = '#e2cfa4'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-400, -560, 800, 560); c.strokeRect(-400, -560, 800, 560);
+  c.fillStyle = '#3a8a8a'; c.beginPath(); c.arc(0, -560, 230, Math.PI, 0); c.fill(); c.stroke(); c.fillStyle = '#e8b44a'; c.beginPath(); c.moveTo(0, -830); c.lineTo(-8, -790); c.lineTo(8, -790); c.closePath(); c.fill();
+  for (const ax of [-250, 0, 250]) { c.fillStyle = '#3a2418'; c.beginPath(); c.moveTo(ax - 95, 0); c.lineTo(ax - 95, -300); c.quadraticCurveTo(ax, -440, ax + 95, -300); c.lineTo(ax + 95, 0); c.closePath(); c.fill(); c.stroke(); for (let r = 0; r < 4; r++) { c.fillStyle = '#6a4a2a'; c.fillRect(ax - 80, -60 - r * 70, 160, 8); for (let k = 0; k < 9; k++) { c.fillStyle = BOOKCOL[(k + r * 3) % 6]; c.fillRect(ax - 76 + k * 17, -60 - r * 70 - 46, 14, 46); } } }
+  c.strokeStyle = 'rgba(40,90,90,.8)'; c.lineWidth = 10; c.strokeRect(-380, -540, 760, 30); c.restore(); };
+// round walled city plan (screen), with the Tigris
+const cityPlan = (c, cx, cy, r) => { c.save(); c.strokeStyle = 'rgba(47,106,138,.85)'; c.lineWidth = 44; c.lineCap = 'round'; c.beginPath(); c.moveTo(cx + r + 120, -40); c.bezierCurveTo(cx + r + 40, cy - 200, cx + r + 200, cy + 200, cx + r + 80, 1120); c.stroke(); K.outlined(c, 'TIGRIS', cx + r + 250, cy + 320, 36, { fill: '#2f6a8a' });
+  c.fillStyle = '#d8c49a'; c.strokeStyle = INK; c.lineWidth = 8; c.beginPath(); c.arc(cx, cy, r, 0, 7); c.fill(); c.stroke(); c.lineWidth = 4; c.beginPath(); c.arc(cx, cy, r - 40, 0, 7); c.stroke(); for (let k = 0; k < 4; k++) { const a = k * Math.PI / 2 + Math.PI / 4; c.fillStyle = '#8a6a3a'; c.fillRect(cx + Math.cos(a) * r - 20, cy + Math.sin(a) * r - 20, 40, 40); }
+  c.fillStyle = '#3a8a8a'; c.beginPath(); c.arc(cx, cy, 40, Math.PI, 0); c.fill(); c.stroke(); c.restore(); };
+const parchE = (c, dim = .8) => { c.save(); c.filter = `blur(12px) brightness(${dim})`; const s2 = 2.2 * 1920 / 2560; c.setTransform(s2, 0, 0, s2, 960 - B[0] * s2, 540 - B[1] * s2); c.drawImage(K.imgs.map_eurasia, 0, 0, 2560, 1440); c.restore(); c.setTransform(1, 0, 0, 1, 0, 0); };
+const cross = (c, x, y, s, a) => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(s * a, s * a); c.strokeStyle = INK; c.lineWidth = 16; c.lineCap = 'round'; c.beginPath(); c.moveTo(-30, -30); c.lineTo(30, 30); c.moveTo(30, -30); c.lineTo(-30, 30); c.stroke(); c.strokeStyle = RED; c.lineWidth = 9; c.stroke(); c.restore(); };
+const smoke = (x0, x1, y) => (c, lt) => { c.save(); for (let k = 0; k < 9; k++) { const life = (lt * .12 + k / 9) % 1, x = x0 + (x1 - x0) * (k / 8) + Math.sin(k * 3 + lt * .5) * 40, yy = y - life * 700, r = 60 + life * 200; const gg = c.createRadialGradient(x, yy, 0, x, yy, r); gg.addColorStop(0, `rgba(40,30,28,${.38 * (1 - life)})`); gg.addColorStop(1, 'rgba(40,30,28,0)'); c.fillStyle = gg; c.beginPath(); c.arc(x, yy, r, 0, 7); c.fill(); } c.restore(); };
+
+// act 6
+const KUBLAI = MG.look('deelRed', { seed: 70, beard: true, hairCol: '#1a1410', over: { topCol: '#c89a2a' } });
+const POLO = MG.look('rus', { seed: 71, beard: true, hairCol: '#6a4a2a', over: { topCol: '#7a2a3a' } });
+const COURT = [MG.look('persian', { seed: 72, beard: true, hairCol: '#2a1a10' }), MG.look('hanRobe', { seed: 73, hair: 'long', beard: true })];
+const JP = (lon, lat) => [110 + (lon - 118) * 97.5, 200 + (42 - lat) * 77.86];
+const BJ = EP(116.4, 39.9);
+// a Chinese-style junk with battened sails (world); tilt and sink 0..1
+const junk = (c, x, y, s, lt, ph = 0, tilt = 0, sink = 0) => { const b = Math.sin(lt * 1.6 + ph) * 6, r = Math.sin(lt * 1.2 + ph) * .04 + tilt; c.save(); c.translate(x, y + b + sink * 160 * s); c.rotate(r); c.scale(s, s); c.fillStyle = '#5a3a20'; c.strokeStyle = INK; c.lineWidth = 5;
+  c.beginPath(); c.moveTo(-170, -40); c.lineTo(170, -60); c.lineTo(130, 20); c.lineTo(-140, 20); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#3a2414'; c.fillRect(-150, -36, 300, 10);
+  for (const [mx, h] of [[-60, 230], [60, 260]]) { c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.moveTo(mx, -40); c.lineTo(mx, -40 - h); c.stroke(); c.fillStyle = '#c8a070'; c.lineWidth = 4; c.beginPath(); c.moveTo(mx - 6, -50 - h * .1); c.lineTo(mx - 6 - h * .42, -40 - h * .3); c.lineTo(mx - 6 - h * .38, -40 - h * .95); c.lineTo(mx - 6, -40 - h); c.closePath(); c.fill(); c.stroke(); c.strokeStyle = 'rgba(60,40,20,.7)'; c.lineWidth = 3; for (let k = 1; k < 6; k++) { const t = k / 6; c.beginPath(); c.moveTo(mx - 6, -40 - h * (.1 + .9 * t)); c.lineTo(mx - 6 - h * (.42 - .04 * t), -40 - h * (.3 + .65 * t)); c.stroke(); } }
+  c.restore(); };
+const waves = (y, amp = 14, col = 'rgba(40,60,80,.85)') => (c, lt) => { c.save(); c.fillStyle = col; c.beginPath(); c.moveTo(0, y); for (let x = 0; x <= 2560; x += 40) c.lineTo(x, y + Math.sin(x * .012 + lt * 2.4) * amp + Math.sin(x * .03 - lt * 3) * amp * .4); c.lineTo(2560, 1440); c.lineTo(0, 1440); c.closePath(); c.fill(); c.strokeStyle = 'rgba(255,255,255,.55)'; c.lineWidth = 4; c.beginPath(); for (let x = 0; x <= 2560; x += 40) c.lineTo(x, y + Math.sin(x * .012 + lt * 2.4) * amp + Math.sin(x * .03 - lt * 3) * amp * .4); c.stroke(); c.restore(); };
+const swirl = (c, x, y, r, lt, a) => { if (a <= 0) return; c.save(); c.translate(x, y); c.rotate(-lt * 2); c.globalAlpha = Math.min(1, a); c.strokeStyle = 'rgba(40,60,90,.85)'; c.lineWidth = 10; c.lineCap = 'round'; for (let k = 0; k < 3; k++) { c.beginPath(); for (let t = 0; t < 1; t += .05) { const an = t * 5 + k * 2.09, rr = r * t; t ? c.lineTo(Math.cos(an) * rr, Math.sin(an) * rr) : c.moveTo(0, 0); } c.stroke(); } c.restore(); };
+const shipIcon = (c, x, y, s, a) => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(s * a, s * a); c.fillStyle = '#5a3a20'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(-26, -6); c.lineTo(26, -8); c.lineTo(18, 6); c.lineTo(-20, 6); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#c8a070'; c.beginPath(); c.moveTo(0, -8); c.lineTo(-14, -14); c.lineTo(-12, -40); c.lineTo(0, -42); c.closePath(); c.fill(); c.stroke(); c.restore(); };
+const wall = (c, x0, x1, y) => { c.save(); c.fillStyle = '#8c8170'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(x0, y - 90, x1 - x0, 90); c.strokeRect(x0, y - 90, x1 - x0, 90); c.strokeStyle = 'rgba(40,30,24,.5)'; c.lineWidth = 3; for (let r = 0; r < 3; r++) for (let k = 0; k < (x1 - x0) / 70; k++) { c.strokeRect(x0 + k * 70 + (r % 2) * 35, y - 90 + r * 30, 70, 30); } c.restore(); };
+const banner = (c, x, y, col, lt, ph = 0) => { c.save(); c.strokeStyle = '#3a2414'; c.lineWidth = 7; c.beginPath(); c.moveTo(x, y); c.lineTo(x, y - 320); c.stroke(); c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(x, y - 315); c.lineTo(x + 60 + Math.sin(lt * 4 + ph) * 6, y - 310); c.lineTo(x + 56 + Math.sin(lt * 4 + ph + 1) * 6, y - 150); c.lineTo(x, y - 155); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#f2ead8'; c.beginPath(); c.arc(x + 30, y - 260, 16, 0, 7); c.fill(); c.restore(); };
+
+window.SHOTS = [
+  // 1 Kublai becomes Great Khan in 1260 after a four-year war with his brother
+  { plate: 'khan_hall', cam: { z: [1.08, 1.16], x: [1280, 1280], y: [900, 880], ease: E.io }, bed: [['drone', .2], ['crowd_loop', .15]],
+    figs: [{ x: 1280, y: 1330, s: 1.9, look: KUBLAI, hat: hatG, facing: 1, pose: 'proud', mood: 'happy' }],
+    init: S => { const tK = A.at(S, 'Kublai', 1.2), tG = A.at(S, 'Great Khan', 2.4), tB = A.at(S, 'brother', 5);
+      S.D.over = [(c, lt) => K.card(c, 'KUBLAI · GRANDSON OF GENGHIS', lt, { at: tK, x: 520, y: 220, px: 42, rot: -3 }), (c, lt) => K.dateTag(c, '1260', lt, { at: tG }), (c, lt) => K.card(c, 'GREAT KHAN', lt, { at: tG, x: 1440, y: 220, px: 52, rot: 3 }), (c, lt) => K.card(c, 'AFTER 4 YEARS OF WAR\nWITH HIS OWN BROTHER', lt, { at: tB, x: 1440, y: 440, px: 40, rot: -2 })];
+      S.D.sfx = [[tK, 'drum', .4], [tG, 'crowd_cheer', .25], [tB, 'sword_clash', .35]]; } },
+  // 2 1271: the Yuan dynasty; a capital at Khanbaliq (Beijing)
+  { plate: 'map_eurasia', cam: { z: [1.3, 1.9], x: [1500, BJ[0]], y: [740, BJ[1] + 60], ease: E.io }, bed: [['war_drums_loop', .2]],
+    live: [(c, lt, u, S) => { pin(c, BJ[0], BJ[1], 'KHANBALIQ', pop(lt, S.tC), GOLD); if (lt > S.tC + .8) { c.save(); c.font = '30px Anton'; c.textAlign = 'center'; c.lineWidth = 6; c.strokeStyle = '#efe2c0'; c.strokeText('(TODAY BEIJING)', BJ[0], BJ[1] + 46); c.fillStyle = INK; c.fillText('(TODAY BEIJING)', BJ[0], BJ[1] + 46); c.restore(); } }],
+    init: S => { const tY = A.at(S, 'Yuan', 2.4); S.tC = A.at(S, 'Khanbaliq', 4.8); const t71 = A.at(S, '1271', .3);
+      S.D.over = [(c, lt) => K.dateTag(c, '1271', lt, { at: t71 }), (c, lt) => K.title(c, 'THE YUAN DYNASTY', lt, { at: tY, y: 140, px: 84, fill: GOLD }), (c, lt) => K.card(c, 'A CHINESE-STYLE DYNASTY', lt, { at: tY + .6, x: 480, y: 290, px: 40, rot: -3 })];
+      S.D.sfx = [[t71, 'pop', .3], [tY, 'drum', .45], [S.tC, 'hit', .4]]; } },
+  // 3 1279: the Song defeated; all of China under the Mongols
+  { plate: 'map_eurasia', cam: { z: [1.7, 1.7], x: [BJ[0] - 40, BJ[0] - 40], y: [BJ[1] + 200, BJ[1] + 200] }, bed: [['war_drums_loop', .3]],
+    live: [(c, lt, u, S) => { const g = E.out(K.seg(lt, .3, 1.2)), g2 = E.io(K.seg(lt, S.tS, S.tS + 2)); const [nx, ny] = EP(112, 38), [sx, sy] = EP(113, 27); c.save(); MG.inkClip(c, nx, ny, 210 * g, 4); c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = 'rgba(178,34,30,.5)'; c.fill(); c.restore(); c.restore();
+      if (lt < S.tS + 1.4) { c.save(); MG.inkClip(c, sx, sy, 190, 6); c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = `rgba(46,110,90,${.45 * (1 - K.seg(lt, S.tS + .6, S.tS + 1.4))})`; c.fill(); c.restore(); c.restore(); K.outlined(c, 'SONG', sx, sy, 48, { fill: '#2e6e5a', alpha: 1 - K.seg(lt, S.tS + .6, S.tS + 1.4) }); }
+      if (g2 > 0) { c.save(); MG.inkClip(c, sx, sy, 200 * g2, 6); c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = 'rgba(178,34,30,.5)'; c.fill(); c.restore(); c.restore(); } K.outlined(c, 'YUAN', nx, ny, 48, { fill: '#8a1a16' }); }],
+    init: S => { S.tS = A.at(S, 'Song', 1.6); const t79 = A.at(S, '1279', .3), tA = A.at(S, 'all of China', 3.6);
+      S.D.over = [(c, lt) => K.dateTag(c, '1279', lt, { at: t79 }), (c, lt) => K.card(c, 'ALL OF CHINA RULED\nBY MONGOLS, FOR THE FIRST TIME', lt, { at: tA, x: 1400, y: 220, px: 40, rot: 3 })];
+      S.D.sfx = [[t79, 'pop', .3], [S.tS, 'drum', .5], [S.tS + .8, 'hit', .4], [tA, 'stamp', .4]]; } },
+  // 4 foreign visitors at court; Marco Polo claimed 17 years in his service
+  { plate: 'khan_hall', cam: { z: [1.1, 1.14], x: [1280, 1280], y: [900, 900] }, bed: [['crowd_loop', .2]],
+    figs: [{ x: 1900, y: 1330, s: 1.8, look: KUBLAI, hat: hatG, facing: -1, pose: 'stand', mood: 'happy' },
+      { x: 420, y: 1330, s: 1.6, look: COURT[0], hat: MG.turban('#f2ead8'), facing: 1, pose: 'present', mood: 'happy', walk: { x0: -300, x1: 420, t0: .3, dur: 2 } },
+      { x: 1180, y: 1330, s: 1.7, look: POLO, facing: 1, pose: 'stand', mood: 'happy', walk: { x0: -300, x1: 1180, t0: 1.2, dur: 3 }, anim: (o, lt, u, S) => { if (lt > S.tC) { o.pose = 'present'; o.talk = lt < S.tC + 2; } } }],
+    init: S => { const tF = A.at(S, 'Foreign visitors', .3), tM = A.at(S, 'Marco Polo', 2.2); S.tC = A.at(S, 'claimed', 3.4);
+      S.D.over = [(c, lt) => K.card(c, 'VISITORS FROM FAR AWAY', lt, { at: tF, x: 520, y: 200, px: 42, rot: -3 }), (c, lt) => K.card(c, 'MARCO POLO · VENICE', lt, { at: tM, x: 1000, y: 360, px: 44, rot: 2 }), (c, lt) => K.card(c, "CLAIMED: 17 YEARS\nIN KUBLAI'S SERVICE", lt, { at: S.tC + .4, x: 1500, y: 200, px: 40, rot: 3 })];
+      S.D.sfx = [[.3, 'footsteps', .3], [tM, 'pop', .35], [S.tC + .4, 'paper', .35]]; } },
+  // 5 1274: the first fleet to Japan lands, fights, pulls back; a storm wrecks many ships
+  { plate: 'map_japan', cam: { z: [1.15, 1.25], x: [1180, 1120], y: [760, 800], ease: E.io }, bed: [['ocean_loop', .3]],
+    live: [(c, lt, u, S) => { const K0 = JP(128.6, 35.2), H = JP(130.4, 33.6); pin(c, H[0], H[1], 'HAKATA', pop(lt, .4)); const go = E.io(K.seg(lt, S.tF, S.tF + 2)), back = E.io(K.seg(lt, S.tP, S.tP + 1.6));
+      for (let k = 0; k < 7; k++) { const f = go - back, x = K0[0] + (H[0] - K0[0] - 90) * f + (k % 3) * 46 - 46, y = K0[1] + (H[1] - K0[1]) * f + Math.floor(k / 3) * 44 - 40; const lost = lt > S.tS + .3 + k * .15 && k % 2 === 0; if (go > 0 && !lost) shipIcon(c, x, y, 1.3, 1); }
+      swirl(c, (K0[0] + H[0]) / 2 + 40, (K0[1] + H[1]) / 2, 150, lt, K.seg(lt, S.tS, S.tS + .6)); }],
+    init: S => { S.tF = A.at(S, 'fleet', 2); S.tP = A.at(S, 'pulled back', 4.4); S.tS = A.at(S, 'storm', 5.6); const t74 = A.at(S, '1274', 1.2);
+      S.D.over = [(c, lt) => K.dateTag(c, '1274', lt, { at: t74 }), (c, lt) => K.card(c, 'KUBLAI WANTS JAPAN', lt, { at: .3, x: 1450, y: 200, px: 44, rot: 3 }), (c, lt) => K.card(c, 'LANDS · FIGHTS · PULLS BACK', lt, { at: S.tP - 1.2, x: 1450, y: 760, px: 40, rot: -2 }), (c, lt) => K.card(c, 'A STORM WRECKS MANY SHIPS', lt, { at: S.tS + .4, x: 600, y: 760, px: 40, rot: 2 })];
+      S.D.sfx = [[S.tF, 'whoosh', .35], [S.tP, 'whoosh_soft', .35], [S.tS, 'wind_loop', .35], [S.tS + .4, 'thud', .35]]; } },
+  // 6 1281: an even bigger invasion; held on the beaches for weeks
+  { plate: 'storm_coast', cam: { z: [1.08, 1.12], x: [1280, 1280], y: [820, 820], ease: E.io }, bed: [['ocean_loop', .35], ['war_drums_loop', .25]],
+    live: [(c, lt, u, S) => { const n = Math.floor(4 + 7 * K.seg(lt, .3, S.tB + 1)); for (let k = 0; k < n; k++) { const row = k % 2; junk(c, 1400 + Math.floor(k / 2) * 220 + row * 110, 990 + row * 50, .42 + row * .08, lt, k); } waves(1070, 8, 'rgba(50,72,92,.7)')(c, lt);
+      c.save(); c.fillStyle = '#c8b48a'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.moveTo(0, 1180); c.quadraticCurveTo(700, 1120, 1300, 1240); c.lineTo(1300, 1440); c.lineTo(0, 1440); c.closePath(); c.fill(); c.stroke(); c.restore(); if (lt > S.tH) { wall(c, 120, 1100, 1250); for (const [x, col, ph] of [[220, '#c8302a', 0], [560, '#f2ead8', 1], [900, '#c8302a', 2]]) banner(c, x, 1170, col, lt, ph); } }],
+    init: S => { const t81 = A.at(S, '1281', .3); S.tB = A.at(S, 'bigger invasion', 1.4); const tN = A.at(S, 'hundred thousand', 3.4); S.tH = A.at(S, 'held them', 5);
+      S.D.over = [(c, lt) => K.dateTag(c, '1281', lt, { at: t81 }), (c, lt) => K.card(c, '100,000+ MEN\n(TRADITIONAL COUNT)', lt, { at: tN, x: 1500, y: 200, px: 42, rot: 3 }), (c, lt) => K.card(c, 'HELD ON THE\nBEACHES FOR WEEKS', lt, { at: S.tH + .4, x: 480, y: 260, px: 44, rot: -3 })];
+      S.D.sfx = [[t81, 'pop', .3], [S.tB, 'war_drums_loop', .3], [tN, 'pop', .35], [S.tH, 'scrape', .4], [S.tH + .6, 'sword_clash', .3]]; } },
+  // 7 the typhoon wrecks the fleet: kamikaze, the divine wind
+  { plate: 'storm_coast', cam: { z: [1.1, 1.18], x: [1400, 1440], y: [840, 860], ease: E.io }, bed: [['rain_loop', .45], ['wind_loop', .45], ['ocean_loop', .4]],
+    live: [(c, lt, u, S) => { const st = K.seg(lt, S.tT, S.tT + 1); for (let k = 0; k < 12; k++) { const sink = K.seg(lt, S.tT + .6 + k * .3, S.tT + 2.4 + k * .3) * (k % 3 ? 1 : .3); junk(c, 900 + (k % 6) * 260 + Math.floor(k / 6) * 120, 1000 + Math.floor(k / 6) * 90, .5 + Math.floor(k / 6) * .1, lt * (1 + 2 * st), k, st * Math.sin(lt * 3 + k) * .3 + sink * (k % 2 ? .6 : -.5), sink); } waves(1020, 10 + 40 * st, 'rgba(30,46,64,.85)')(c, lt); }, MG.windStreaks(30, .25)],
+    over: [A.grade('20,30,60', .25)],
+    init: S => { S.tT = A.at(S, 'typhoon', .6); const tK = A.at(S, 'kamikaze', 3.8);
+      S.D.over = [(c, lt) => K.title(c, 'KAMIKAZE', lt, { at: tK, y: 200, px: 110, fill: '#f2ead8' }), (c, lt) => K.card(c, '"THE DIVINE WIND"', lt, { at: tK + .8, x: 960, y: 340, px: 44, rot: -2 })];
+      S.D.sfx = [[S.tT, 'swell', .45], [S.tT + .8, 'thud', .45], [S.tT + 1.8, 'scrape', .4], [tK, 'drum', .5]]; } },
+  // 8 failures in Vietnam and Java: limits at sea and in the jungle
+  { plate: 'map_eurasia', cam: { z: [1.6, 1.7], x: [1520, 1520], y: [1120, 1140], ease: E.io }, bed: [['wind_loop', .25], ['drone', .2]],
+    live: [(c, lt, u, S) => { const V = EP(105.8, 21); pin(c, V[0], V[1], 'DAI VIET', pop(lt, S.tV)); cross(c, V[0], V[1] - 40, .8, pop(lt, S.tV + .6)); const J = EP(110, 8.5); const a = pop(lt, S.tJ); if (a > 0) { c.save(); c.translate(J[0], J[1] - 30); c.scale(a, a); c.fillStyle = RED; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.moveTo(-30, -40); c.lineTo(30, -40); c.lineTo(30, 10); c.lineTo(55, 10); c.lineTo(0, 60); c.lineTo(-55, 10); c.lineTo(-30, 10); c.closePath(); c.fill(); c.stroke(); c.font = '40px Anton'; c.textAlign = 'center'; c.lineWidth = 8; c.strokeStyle = '#efe2c0'; c.strokeText('JAVA', 0, -60); c.fillStyle = INK; c.fillText('JAVA', 0, -60); c.restore(); cross(c, J[0] + 80, J[1] - 40, .7, pop(lt, S.tJ + .5)); } }],
+    init: S => { S.tV = A.at(S, 'Vietnam', 1); S.tJ = A.at(S, 'Java', 1.8); const tL = A.at(S, 'limits', 3);
+      S.D.over = [(c, lt) => K.card(c, 'LIMITS: THE SEA\nAND THE TROPICAL JUNGLE', lt, { at: tL, x: 520, y: 260, px: 44, rot: -3 })];
+      S.D.sfx = [[S.tV, 'pop', .35], [S.tV + .6, 'thud', .4], [S.tJ, 'pop', .35], [S.tJ + .5, 'thud', .4], [tL, 'tension', .3]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>
