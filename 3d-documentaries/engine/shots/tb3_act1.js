@@ -202,15 +202,28 @@ async function security(k) {
   scene.add(new THREE.HemisphereLight(0xf4f6ff, 0x504a40, 2.2));
   C.tubes(k, [-8, -4, 0, 4, 8, 12], [-3, 1, 4], 3.4, { i: 12, shadow: false });
   const key = new THREE.DirectionalLight(0xfff2e0, 1.4); key.position.set(4, 6, 6); key.castShadow = true; Object.assign(key.shadow.camera, { left: -9, right: 9, top: 9, bottom: -9 }); key.shadow.mapSize.set(2048, 2048); key.shadow.radius = 4; scene.add(key);
-  const beige = real.std(0xcfc6ae, { rough: .45, metal: .2 }), dark = real.std(0x2a2b2e, { rough: .6 });
+  const beige = real.std(0xcfc6ae, { rough: .45, metal: .2 }), dark = real.std(0x2a2b2e, { rough: .6 }), grey = real.std(0x55585c, { rough: .5, metal: .3 });
   // detector arch on the walkway, its red lamp dead
   const arch = new THREE.Group(); arch.position.set(3, 0, .6); scene.add(arch);
-  for (const z of [-.5, .5]) arch.add(real.rbox(.14, 2.1, .5, .03, beige, { pos: [0, 1.05, z] }));
-  arch.add(real.rbox(.5, .16, 1.14, .03, beige, { pos: [0, 2.15, 0] }));
+  // slim panel posts with a darker inner face, a grey header with the maker plate and a row of indicator lamps (QA Fable 30 Oct: was plain cream slabs)
+  for (const z of [-.64, .64]) { arch.add(real.rbox(.1, 2.05, .42, .02, beige, { pos: [0, 1.03, z] })); arch.add(real.box(.08, 1.9, .02, grey, { pos: [0, 1.0, z - Math.sign(z) * .215] })); arch.add(real.box(.11, .08, .43, grey, { pos: [0, .04, z] })); for (let i = 0; i < 6; i++) arch.add(real.box(.105, .012, .3, dark, { pos: [0, .4 + i * .25, z], cast: false })); }
+  arch.add(real.rbox(.42, .2, 1.72, .03, grey, { pos: [0, 2.15, 0] }));
+  for (let i = 0; i < 5; i++) arch.add(real.m(new THREE.SphereGeometry(.018, 10, 8), real.std(i < 3 ? 0x2a5a2a : 0x5a2a1a, { emissive: i < 3 ? 0x40ff60 : 0x401008, ei: i < 3 ? 1.5 : .3 }), { pos: [.215, 2.15, -.2 + i * .1], cast: false }));
+  arch.add(real.box(.01, .08, .3, real.std(0xc8c0a0, { metal: .6, rough: .3 }), { pos: [.215, 2.2, .3], cast: false }));
   arch.add(real.m(new THREE.SphereGeometry(.06, 12, 8), real.std(0x3a0e0e, { rough: .3 }), { pos: [0, 2.28, 0] }));
   // X-ray machine with belt and rubber curtains
   const xr = new THREE.Group(); xr.position.set(-1.6, 0, -.6); scene.add(xr);
   xr.add(real.box(4.4, .72, .8, beige, { pos: [0, .36, 0] }));
+  // X-ray detail: dark kick plinth, side rails, steel rollers on the in/out tables, grey hood band, control panel with lamps, warning label
+  xr.add(real.box(4.42, .1, .82, real.std(0x2a2b2e, { rough: .7 }), { pos: [0, .05, 0] }));
+  for (const z of [-.33, .33]) xr.add(real.box(4.4, .06, .06, real.std(0x9a9a96, { metal: .8, rough: .3 }), { pos: [0, .76, z] }));
+  for (let x = -2.1; x <= 2.1; x += .14) { if (Math.abs(x) < .72) continue; xr.add(real.m(new THREE.CylinderGeometry(.025, .025, .6, 10), real.std(0xb0b0aa, { metal: .85, rough: .25 }), { pos: [x, .745, 0], rot: [P / 2, 0, 0] })); }
+  xr.add(real.box(1.42, .22, .97, grey, { pos: [0, 1.62, 0] }), real.box(1.42, .05, .97, grey, { pos: [0, .9, 0] }));
+  xr.add(real.box(.5, .4, .9, real.std(0x050505, { rough: .9 }), { pos: [-.5, .98, 0], cast: false }));
+  const cp = real.rbox(.36, .08, .28, .02, grey, { pos: [1.5, .82, .48] }); cp.rotation.x = -.35; xr.add(cp);
+  for (let i = 0; i < 4; i++) xr.add(real.m(new THREE.CylinderGeometry(.018, .018, .02, 12), real.std([0x30c040, 0xd02020, 0xe0b020, 0x2060d0][i], { emissive: [0x30c040, 0xd02020, 0xe0b020, 0x2060d0][i], ei: .6 }), { pos: [1.38 + i * .08, .87, .5], cast: false }));
+  const lab = real.canvasTex(256, 128, c => { c.fillStyle = '#e8c020'; c.fillRect(0, 0, 256, 128); c.fillStyle = '#111'; c.font = 'bold 30px Oswald, sans-serif'; c.textAlign = 'center'; c.fillText('X-RAY · ΑΚΤΙΝΕΣ', 128, 56); c.font = '22px Oswald, sans-serif'; c.fillText('KEEP HANDS CLEAR', 128, 98); });
+  xr.add(real.m(new THREE.PlaneGeometry(.44, .22), new THREE.MeshStandardMaterial({ map: lab, roughness: .6 }), { pos: [.3, 1.3, .48], cast: false }));
   xr.add(real.box(4.4, .02, .62, real.std(0x151515, { rough: .9 }), { pos: [0, .73, 0] }));
   xr.add(real.rbox(1.4, 1.15, .95, .06, beige, { pos: [0, 1.3, 0] }));
   for (const x of [-.71, .71]) xr.add(real.box(.02, .5, .6, real.std(0x101010, { rough: 1 }), { pos: [x, .98, 0] }));
@@ -273,7 +286,7 @@ Object.assign(shots, {
   '1.6': async k => {
     const { real, camera } = k;
     const s = await security(k);
-    const cam = C.dolly(camera, { pos: [6.5, 1.8, 4.5], look: [1.6, .9, -1.2], fov: 44 }, { pos: [4.4, 1.5, -.3], look: [1.4, .95, -1.7], fov: 40 });
+    const cam = C.dolly(camera, { pos: [6.5, 1.8, 4.5], look: [1.6, .9, -1.2], fov: 44 }, { pos: [5.6, 1.5, -1.1], look: [1.4, .95, -1.7], fov: 40 });
     return (t, u) => { cam(u); s.cop.update(t, { look: Math.sin(t * .8) * .3, mood: 'happy', talk: Math.sin(t * 2) > 0 }); s.pal.update(t, { mood: 'happy' }); };
   },
   '1.7': async k => {
@@ -325,6 +338,7 @@ Object.assign(shots, {
     const cb = await sets.cabin(k, { len: 12, first: 4, lampI: 5, hemi: .7 });
     // strong light from the galley at the front turns the standing pair into silhouettes
     const back = new THREE.PointLight(0xfff0d8, 40, 12, 2); back.position.set(0, 1.9, 5.7); scene.add(back);
+    const fill = new THREE.PointLight(0xdfe6ff, 6, 9, 2); fill.position.set(0, 2.0, -2.5); scene.add(fill); // soft front fill so curtains and the standing pair keep some shape
     const first = cb.seats.filter(s => s.cls === 'first');
     const pax = await C.fillCabin(k, cb, { skip: s => s.cls === 'first' ? (s.col === 2 || s.col === 3) : ((s.row + s.col) % 4 === 0) });
     const mk = async (id, seat, side) => { const p = await real.human({ id, seed: 80 + side }); real.put(scene, p, { pos: [seat.x, 0, seat.z], pose: 'sit', seatH: .52 }); p.userData.driven = true; p.userData.seat = seat; p.userData.side = side;
@@ -379,8 +393,14 @@ Object.assign(shots, {
     await sky(real, k, { envI: .5 });
     const fd = await sets.flightDeck(k, { sky: 0xbfd8f0, dayI: 1.2 });
     // bright galley behind the door
-    scene.add(real.box(2.2, 2.4, 2.4, new THREE.MeshStandardMaterial({ color: 0xe8e2d4, roughness: .8, side: THREE.BackSide }), { pos: [-.1, 1.2, -3.1], cast: false }));
-    const gl = new THREE.PointLight(0xfff4e0, 30, 6, 2); gl.position.set(-.1, 2.0, -3.4); scene.add(gl);
+    const gp = real.canvasTex(512, 512, (c, w, h) => { c.fillStyle = '#b8b4aa'; c.fillRect(0, 0, w, h); c.strokeStyle = 'rgba(0,0,0,.25)'; c.lineWidth = 3; for (let x = 0; x < w; x += 128) for (let y = 0; y < h; y += 170) c.strokeRect(x + 4, y + 4, 120, 162); });
+    scene.add(real.box(2.2, 2.4, 2.4, new THREE.MeshStandardMaterial({ map: gp, roughness: .8, side: THREE.BackSide }), { pos: [-.1, 1.2, -3.1], cast: false }));
+    const gl = new THREE.PointLight(0xfff4e0, 16, 6, 2); gl.position.set(-.1, 2.0, -3.4); scene.add(gl);
+    // galley fittings: steel carts in their bays, ovens, a worktop (QA Fable 30 Oct: was a blown-out white box)
+    const steel = real.std(0x9a9c9e, { metal: .8, rough: .35 });
+    for (const x of [-.75, -.3]) { scene.add(real.rbox(.4, .95, .7, .02, steel, { pos: [x, .48, -4.0] })); scene.add(real.box(.3, .03, .02, real.std(0x222222), { pos: [x, .85, -3.64], cast: false })); }
+    scene.add(real.box(1.0, .05, .6, real.std(0x6a6e72, { rough: .4, metal: .4 }), { pos: [.45, .95, -4.0] }));
+    for (const y of [1.45, 1.85]) scene.add(real.rbox(.9, .32, .5, .02, steel, { pos: [.45, y, -4.05] }));
     const fe = await real.human({ id: C.CREW.engineer, seed: 42 }); real.put(scene, fe, { pos: [-.15, 0, -1.35], rot: P, mood: 'surprised' });
     const h = await real.human({ id: C.HJ.bose, seed: 81 }); real.put(scene, h, { pos: [.32, 0, -3.0], rot: -.25, mood: 'stern' });
     C.attach(h, C.pistolShape(), 'RightHand', [0, -.08, .05], [P / 2, 0, 0]);
@@ -477,7 +497,7 @@ Object.assign(shots, {
     const cam = C.dolly(camera, { pos: [-.05, 1.45, .88], look: [-.55, 1.22, .12], fov: 52 }, { pos: [-.18, 1.42, .78], look: [-.56, 1.25, .12], fov: 48 });
     return (t, u) => {
       cam(u);
-      b.update(t, { pose: 'sit', seatH: .5, arm: 'hold', mood: 'stern', look: .3, talk: t > .8 });
+      b.update(t, { pose: 'sit', seatH: .5, arm: 'phone', mood: 'stern', look: .3, talk: t > .8 });
       cpt.update(t, { pose: 'sitDesk', arm: 'desk', seatH: .5, mood: 'worried', look: -.35 });
       if (t > .8) C.waveform(k.overlay, t, 1380, 250, 340, true);
     };

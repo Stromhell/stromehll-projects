@@ -345,6 +345,10 @@ export async function cabin(k, o = {}) {
     c.fillStyle = '#e9e3d6'; c.fillRect(0, 0, w, h);
     c.strokeStyle = 'rgba(0,0,0,.08)'; c.lineWidth = 3;
     for (let x = 0; x < w; x += w / len * 1.6) { c.beginPath(); c.moveTo(x, 0); c.lineTo(x, h); c.stroke(); }
+    // QA Fable 30 Oct: flat wall read as untextured in close-ups. Faint grain, a dado seam under the windows and the bin line above them.
+    for (let i = 0; i < 6000; i++) { c.fillStyle = `rgba(${i % 2 ? 255 : 0},${i % 2 ? 250 : 0},${i % 2 ? 240 : 0},.035)`; c.fillRect((i * 1913) % w, (i * 677) % h, 2 + i % 3, 2 + (i >> 2) % 3); }
+    c.strokeStyle = 'rgba(0,0,0,.12)'; c.lineWidth = 4; for (const y of [h * .36, h * .64, h * .3]) { c.beginPath(); c.moveTo(0, y); c.lineTo(w, y); c.stroke(); }
+    c.fillStyle = 'rgba(120,110,95,.10)'; c.fillRect(0, h * .64, w, h * .05);
   });
   const wallMat = new THREE.MeshStandardMaterial({ map: wallTex, roughness: .7, side: THREE.BackSide });
   const zs = []; for (let z = -len / 2; z <= len / 2 + 1e-6; z += len / 24) zs.push(z);
@@ -397,7 +401,10 @@ export async function cabin(k, o = {}) {
   for (let i = 0; i < ecoRows; i++) layout.push({ z: -len / 2 + .9 + i * .86, cols: colsX, w: .46, mat: fabric, cls: 'eco' });
   for (let i = 0; i < nFirst; i++) layout.push({ z: len / 2 - .9 - (nFirst - 1 - i) * 1.05, cols: [-1.8, -1.2, -.32, .32, 1.2, 1.8], w: .56, mat: firstMat, cls: 'first' });
   if (nFirst) { const cz = len / 2 - .9 - nFirst * 1.05 + .2; const cur = real.canvasTex(64, 256, (c, w, h) => { c.fillStyle = '#2c3a66'; c.fillRect(0, 0, w, h); c.fillStyle = 'rgba(0,0,0,.25)'; for (let x = 0; x < w; x += 8) c.fillRect(x, 0, 3, h); });
-    for (const x of [-1.11, 1.11]) g.add(m(new THREE.PlaneGeometry(.5, 1.9), new THREE.MeshStandardMaterial({ map: cur, roughness: .9, side: THREE.DoubleSide }), { pos: [x + (x > 0 ? .2 : -.2), 1.05, cz], cast: true })); }
+    // pleated curtains on a ceiling rail (QA Fable 30 Oct: flat planes read as black slabs when backlit)
+    for (const x of [-1.11, 1.11]) { const cg = new THREE.PlaneGeometry(.5, 1.9, 24, 1); const pa = cg.attributes.position; for (let i = 0; i < pa.count; i++) pa.setZ(i, Math.sin(pa.getX(i) * 75) * .025); cg.computeVertexNormals();
+      g.add(m(cg, new THREE.MeshStandardMaterial({ color: 0x3a4a80, roughness: .85, side: THREE.DoubleSide }), { pos: [x + (x > 0 ? .2 : -.2), 1.05, cz], cast: true }));
+      g.add(m(new THREE.CylinderGeometry(.012, .012, .6, 8), std(0xb0b0a8, { metal: .8, rough: .3 }), { pos: [x + (x > 0 ? .2 : -.2), 2.02, cz], rot: [0, 0, P / 2] })); } }
   layout.forEach((rw, i) => {
     const z = rw.z;
     rw.cols.forEach((x, c) => {
@@ -506,6 +513,11 @@ export async function flightDeck(k, o = {}) {
     s.add(m(new THREE.BoxGeometry(.06, .06, .4), dark, { pos: [.3, .66, -.02] })); s.add(m(new THREE.BoxGeometry(.06, .06, .4), dark, { pos: [-.3, .66, -.02] }));
     seats.push({ x, z, ry, group: s });
   }
+  // rear bulkhead with the door opening, so the door no longer floats in black (QA Fable 30 Oct)
+  { const sh = new THREE.Shape(); sh.absarc(0, 1.1, 2.4, 0, P * 2, false); const hole = new THREE.Path(); hole.moveTo(-.52, 0); hole.lineTo(.32, 0); hole.lineTo(.32, 1.98); hole.lineTo(-.52, 1.98); hole.lineTo(-.52, 0); sh.holes.push(hole);
+    const bm = new THREE.MeshStandardMaterial({ map: lin, color: 0xa8acb0, roughness: .8, side: THREE.DoubleSide }); g.add(m(new THREE.ShapeGeometry(sh, 48), bm, { pos: [0, 0, -1.93], cast: false }));
+    for (const [w, h, x, y] of [[.06, 2.02, -.55, 1.0], [.06, 2.02, .35, 1.0], [.9, .06, -.1, 2.0]]) g.add(real.box(w, h, .08, std(0x4a4e52, { rough: .5, metal: .3 }), { pos: [x, y, -1.92] }));
+    g.add(real.rbox(.5, .35, .03, .01, std(0x2a2d31, { rough: .5 }), { pos: [1.0, 1.5, -1.9] })); g.add(real.rbox(.3, .5, .03, .01, std(0x2a2d31, { rough: .5 }), { pos: [-1.2, 1.3, -1.9] })); }
   // cockpit door behind
   const door = new THREE.Group(); door.position.set(-.5, 0, -1.9); g.add(door);
   const leaf = real.rbox(.8, 1.95, .05, .02, std(0x6a6e72, { rough: .6 }), { pos: [.4, .98, 0] }); door.add(leaf);
