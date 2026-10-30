@@ -86,16 +86,16 @@ const NOW = [[640, 'GIBRALTAR · 711'], [0, '']];
 
 window.SHOTS = [
   // 6.01 MED: a hospital room with drawn curtains; then Juan Carlos is sworn in
-  { set: 'hospital', cam: { z: [1.2, 1.35], x: [640, 640], y: [420, 430], ease: E.io }, bed: [['hum_loop', .12]],
-    init: Sh => { Sh.tD = at(Sh, 'died', 2.5); Sh.tK = at(Sh, 'became king', Sh.dur - 2); Sh.dur = Sh.end - Sh.start; },
+  { set: 'hospital', cam: (lt, u, Sh) => { const k = E.io(seg(lt, Sh.tK - 1.2, Sh.tK - .2)); return { z: [lerp(lerp(1.2, 1.3, E.io(seg(lt, 0, Sh.tK))), 1.8, k)], x: [640], y: [lerp(420, 270, k)] }; }, bed: [['hum_loop', .12]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tD = at(Sh, 'died', 2.5); Sh.tK = at(Sh, 'became king', Sh.dur - 2); },
     draw: (c, lt, u, Sh) => {
       const L = VP.light('door', lt, { swing: 2 }), cq = seg(lt, Sh.tD - .5, Sh.tD + 1.5), kq = seg(lt, Sh.tK - 1.2, Sh.tK - .2);
       for (const [x0, dir] of [[820, 1], [1080, -1]]) { c.fillStyle = '#8a7a5a'; c.fillRect(Math.min(x0 + 130 * dir, x0 + 130 * dir + dir * 0), 70, 0, 0); }
       c.fillStyle = '#7a6a4a'; c.fillRect(950 - 130 * cq, 70, 260 * cq, 280);
       c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = `rgba(40,40,60,${.5 * cq})`; c.fillRect(0, 0, 1280, 720); c.restore();
-      if (kq > 0) { c.save(); c.globalAlpha = kq; VP.drawSet(c, 'cortes'); const LH = LT_HALL(lt); VP.figure(c, [640, 342], { k: .4, sy: -.2, a: .25, blur: 2 }, cc => S.person(cc, C.KING, 640, 342, 40, Object.assign(S.idle(lt, 3), { face: 1, shN: 150, elN: 10 }), { blink: S.blinkAt(lt, 3), look: [.2, -.2], time: lt }, LH)); c.restore(); }
+      if (kq > 0) { c.save(); c.globalAlpha = kq; VP.drawSet(c, 'cortes'); const LH = LT_HALL(lt); VP.figure(c, [640, 342], { k: .4, sy: -.2, a: .25, blur: 2 }, cc => S.person(cc, C.KING, 640, 342, 40, Object.assign(S.idle(lt, 3), { face: 1, shN: 95, elN: 75 }), { blink: S.blinkAt(lt, 3), look: [.2, -.2], time: lt }, LH)); c.restore(); }
     },
-    over: [(c, lt, u, Sh) => goldFlag(c, lt, 0, 28), (c, lt, u, Sh) => K.dateTag(c, '20 NOV 1975', lt, { at: Sh.tD }), (c, lt, u, Sh) => K.card(c, 'KING JUAN CARLOS I', lt, { at: Sh.tK + .2, x: 1420, y: 200, px: 46, rot: 3 })],
+    over: [(c, lt, u, Sh) => goldFlag(c, lt, 0, 28), (c, lt, u, Sh) => K.dateTag(c, '20 NOV 1975', lt, { at: Sh.tD, until: Sh.tK - 1.2 }), (c, lt, u, Sh) => K.dateTag(c, '22 NOV 1975', lt, { at: Sh.tK }), (c, lt, u, Sh) => K.card(c, 'KING JUAN CARLOS I', lt, { at: Sh.tK + .2, x: 1420, y: 200, px: 46, rot: 3 })],
     sfx: [['franco', 'heartbeat', .3], ['died', 'drone', .4], ['became king', 'crowd_cheer', .3]] },
 
   // 6.02 MED: Juan Carlos and Suárez in a quiet office at night, papers between them, lamp warming
