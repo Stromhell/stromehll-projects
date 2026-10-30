@@ -1,0 +1,486 @@
+{
+ "meta": {
+  "slug": "mongols-ain-jalut",
+  "prefix": "MJ",
+  "title": "The Battle That Stopped the Mongols",
+  "working_title": "The Battle That Stopped the Mongols",
+  "device": "The envoy's paiza: the golden Mongol tablet that every Mongol messenger wore as a passport. It hangs on the envoy killed at Otrar in 1218, which starts the war; it hangs on the envoys whom Sultan Qutuz executes in Cairo in 1260; and the last shot is a paiza lying in the grass at Ain Jalut. Envoys start and end the story. A map of Asia returns in every act: Mongol grey spreads west, then stops at a line in 1260.",
+  "style": "2D dynamic, locked Village Painterly look: 6-head characters from the village-cast rig in 13th-century dress (Mongol deel coats, fur hats and lamellar armour; Khwarazmian silks and turbans; Abbasid court robes; Mamluk mail, helmets and yellow banners). Highly detailed painted backgrounds with warm light and dynamic cast shadows: steppe grass under huge skies, the walled caravan city of Otrar, blue-tiled Samarkand, Baghdad on the Tigris with the House of Wisdom, Cairo's Bab Zuweila gate, the green valley of Ain Jalut below Mount Gilboa. Moving cameras, 3 to 5 parallax layers, characters act in every shot. Massacres are shown through empty streets, smoke and the map, never gore. Neutral narration: no prophecy framing, no modern politics. SFX under the VO; music at combine.",
+  "source": "'Changez Khan in Islam' (Pushpam upload, batch 4, Hindi/Urdu). The source frames the story as a fulfilled prophecy and adds modern political comparisons; Pushpam OK'd it 29 Oct as a neutral history video. Rewritten from standard histories in English; only the history kept."
+ },
+ "stats": {
+  "shots": 36,
+  "words": 772,
+  "runtime": "5:22",
+  "acts": 7
+ },
+ "acts": [
+  {
+   "name": "Cold open",
+   "folder": "act0-coldopen",
+   "shots": [
+    {
+     "id": "0.01",
+     "type": "WIDE",
+     "sec": 11.7,
+     "vo": "By 1260, the Mongols had built the largest land empire the world had ever seen. China, Persia, Russia, Baghdad: every army that stood in their way had been destroyed.",
+     "visual": "The map of Asia: grey Mongol colour floods from the steppe across China, Persia, Russia and down to Syria.",
+     "onscreen": "1206 \u2192 1260",
+     "anim": "The grey spreads in pulses like a tide.",
+     "img": ""
+    },
+    {
+     "id": "0.02",
+     "type": "MED",
+     "sec": 8.3,
+     "vo": "That summer, a Mongol embassy rode into Cairo with a letter for the sultan of Egypt: surrender, or be destroyed.",
+     "visual": "Mongol envoys in fur hats ride through Cairo's gate; a golden tablet hangs from one rider's neck.",
+     "onscreen": "CAIRO \u00b7 1260",
+     "anim": "Hooves on stone; the golden tablet swings and glints.",
+     "img": ""
+    },
+    {
+     "id": "0.03",
+     "type": "MED",
+     "sec": 9.4,
+     "vo": "The sultan had the envoys executed. A few weeks later, his army met the Mongols at a place called the Spring of Goliath.",
+     "visual": "The great gate of Cairo at dusk; then a green valley with a spring under a mountain.",
+     "onscreen": "AIN JALUT",
+     "anim": "Dusk falls on the gate; match cut to the valley at dawn.",
+     "img": ""
+    },
+    {
+     "id": "0.04",
+     "type": "TITLE",
+     "sec": 4.0,
+     "vo": "",
+     "visual": "Title over a Mongol paiza, a golden tablet, lying in the grass beside the spring.",
+     "onscreen": "THE BATTLE THAT STOPPED THE MONGOLS",
+     "anim": "Grass sways around the tablet; title fades up.",
+     "img": ""
+    }
+   ],
+   "sec": 33.4,
+   "words": 72
+  },
+  {
+   "name": "Act 1: The Envoy",
+   "folder": "act1-otrar-khwarazm",
+   "shots": [
+    {
+     "id": "1.01",
+     "type": "WIDE",
+     "sec": 7.2,
+     "vo": "In 1206, a steppe chief named Tem\u00fcjin united the Mongol tribes and took the title Genghis Khan.",
+     "visual": "A huge gathering on the grassland: felt tents, horses, banners of horse hair; a man raised on a white felt.",
+     "onscreen": "MONGOLIA \u00b7 1206",
+     "anim": "Riders circle; the banners stream in the wind.",
+     "img": ""
+    },
+    {
+     "id": "1.02",
+     "type": "MED",
+     "sec": 10.6,
+     "vo": "West of him lay the Khwarazmian Empire, rich Muslim cities on the Silk Road. Genghis sent a trade caravan of about four hundred and fifty merchants.",
+     "visual": "A long camel caravan crosses a desert toward a walled city; merchants with bales of silk and furs.",
+     "onscreen": "1218",
+     "anim": "Camels sway past; the walls of Otrar rise ahead.",
+     "img": ""
+    },
+    {
+     "id": "1.03",
+     "type": "MED",
+     "sec": 6.8,
+     "vo": "At the border city of Otrar, the governor accused them of spying, and had them killed.",
+     "visual": "Otrar's gate closing; the governor in silk pointing; the caravan's bales scattered in the square.",
+     "onscreen": "OTRAR",
+     "anim": "The gate slams; a dropped bale rolls.",
+     "img": ""
+    },
+    {
+     "id": "1.04",
+     "type": "MED",
+     "sec": 8.7,
+     "vo": "Genghis sent envoys to the shah to demand justice. The shah executed the lead envoy and sent the others back humiliated.",
+     "visual": "The shah's throne room; a Mongol envoy wearing a golden tablet stands before the throne; guards step forward.",
+     "onscreen": "SHAH MUHAMMAD II",
+     "anim": "Guards close in; the golden tablet falls to the floor.",
+     "img": ""
+    },
+    {
+     "id": "1.05",
+     "type": "WIDE",
+     "sec": 9.1,
+     "vo": "To the Mongols, killing an envoy was the worst crime there was. In 1219, Genghis Khan rode west with his whole army.",
+     "visual": "Endless Mongol cavalry crossing a mountain pass, each rider with spare horses.",
+     "onscreen": "1219",
+     "anim": "Thunder of hooves; dust fills the pass.",
+     "img": ""
+    }
+   ],
+   "sec": 42.4,
+   "words": 102
+  },
+  {
+   "name": "Act 2: The Storm",
+   "folder": "act2-conquest",
+   "shots": [
+    {
+     "id": "2.01",
+     "type": "MED",
+     "sec": 6.4,
+     "vo": "Bukhara fell. Then Samarkand. Then Urgench, and Nishapur. Cities that refused to surrender were emptied.",
+     "visual": "The map: city names light up and go dark one after another along the Silk Road.",
+     "onscreen": "1220\u20131221",
+     "anim": "Each city flickers out.",
+     "img": ""
+    },
+    {
+     "id": "2.02",
+     "type": "MED",
+     "sec": 7.2,
+     "vo": "The shah ran west and died on a small island in the Caspian Sea, a hunted man.",
+     "visual": "A lonely island hut by a grey sea; a sick man in a fine robe under a blanket.",
+     "onscreen": "",
+     "anim": "Waves; a candle gutters.",
+     "img": ""
+    },
+    {
+     "id": "2.03",
+     "type": "MED",
+     "sec": 6.4,
+     "vo": "Genghis died in 1227, but his sons and grandsons kept going: China, Russia, Poland, Hungary.",
+     "visual": "A funeral procession on the steppe; then the map grey spreading into Europe.",
+     "onscreen": "1227",
+     "anim": "The procession passes; the map grey keeps moving.",
+     "img": ""
+    },
+    {
+     "id": "2.04",
+     "type": "MED",
+     "sec": 9.4,
+     "vo": "In 1253, the Great Khan M\u00f6ngke sent his brother Hulagu west with orders to bring Persia and the lands beyond under Mongol rule.",
+     "visual": "Hulagu in armour receives a golden tablet from his brother in a grand tent.",
+     "onscreen": "HULAGU \u00b7 1253",
+     "anim": "The tablet passes from hand to hand.",
+     "img": ""
+    }
+   ],
+   "sec": 29.400000000000002,
+   "words": 70
+  },
+  {
+   "name": "Act 3: Baghdad",
+   "folder": "act3-baghdad-1258",
+   "shots": [
+    {
+     "id": "3.01",
+     "type": "WIDE",
+     "sec": 10.6,
+     "vo": "Baghdad had been the capital of the Abbasid caliphs for five hundred years: a city of scholars, markets and libraries, including the famous House of Wisdom.",
+     "visual": "Baghdad on the Tigris at sunset: domes, minarets, boats; scholars carrying books into a great library.",
+     "onscreen": "BAGHDAD",
+     "anim": "Boats glide; birds circle the domes.",
+     "img": ""
+    },
+    {
+     "id": "3.02",
+     "type": "MED",
+     "sec": 9.8,
+     "vo": "But the caliphate's power was long gone. The caliph al-Musta'sim had a weak army and believed the Muslim world would rise to defend him.",
+     "visual": "The caliph on a cushioned throne waving away a worried general holding a map.",
+     "onscreen": "CALIPH AL-MUSTA'SIM",
+     "anim": "The general bows and leaves; the caliph returns to his book.",
+     "img": ""
+    },
+    {
+     "id": "3.03",
+     "type": "WIDE",
+     "sec": 7.9,
+     "vo": "In January 1258, Hulagu's army, with Chinese siege engineers, surrounded the city. On the tenth of February, Baghdad surrendered.",
+     "visual": "Siege engines on the riverbank; stones flying over the walls; then a white flag over the gate.",
+     "onscreen": "10 FEB 1258",
+     "anim": "Catapult arms swing; smoke rises; the flag lifts.",
+     "img": ""
+    },
+    {
+     "id": "3.04",
+     "type": "MED",
+     "sec": 9.1,
+     "vo": "For about a week, the city was sacked. Estimates of the dead range from tens of thousands to many hundreds of thousands.",
+     "visual": "Empty streets full of smoke; a dropped child's toy; doors hanging open.",
+     "onscreen": "",
+     "anim": "Smoke drifts down an empty street.",
+     "img": ""
+    },
+    {
+     "id": "3.05",
+     "type": "MED",
+     "sec": 7.9,
+     "vo": "The libraries were looted. Later writers said the Tigris ran black with ink from the books thrown into it.",
+     "visual": "Pages and books floating on the dark river; the ink spreading in the water.",
+     "onscreen": "",
+     "anim": "Ink swirls through the water.",
+     "img": ""
+    },
+    {
+     "id": "3.06",
+     "type": "MED",
+     "sec": 12.4,
+     "vo": "The caliph was killed, according to the accounts, rolled in a carpet and trampled by horses, because the Mongols did not spill royal blood. The Abbasid caliphate in Baghdad was over.",
+     "visual": "A rolled carpet on the ground; horses' hooves in the dust beyond; the empty throne.",
+     "onscreen": "THE END OF THE ABBASIDS IN BAGHDAD",
+     "anim": "Dust rises; slow push to the empty throne.",
+     "img": ""
+    }
+   ],
+   "sec": 57.7,
+   "words": 141
+  },
+  {
+   "name": "Act 4: The Slave Sultans",
+   "folder": "act4-mamluks",
+   "shots": [
+    {
+     "id": "4.01",
+     "type": "MED",
+     "sec": 8.3,
+     "vo": "In early 1260, the Mongols took Aleppo, and Damascus surrendered. Only one great power was left in the region: Egypt.",
+     "visual": "The map: grey sweeps into Syria; only Egypt stays gold.",
+     "onscreen": "SYRIA \u00b7 1260",
+     "anim": "Grey flows south and stops at the Sinai.",
+     "img": ""
+    },
+    {
+     "id": "4.02",
+     "type": "MED",
+     "sec": 9.4,
+     "vo": "Egypt was ruled by the Mamluks: soldiers who had been bought as boys, often from the Turkic steppe, trained for war, and freed.",
+     "visual": "A slave market; a boy in a fur cap being sold; then young recruits training with bows on horseback.",
+     "onscreen": "THE MAMLUKS",
+     "anim": "The boy looks up; match cut to a recruit loosing an arrow.",
+     "img": ""
+    },
+    {
+     "id": "4.03",
+     "type": "MED",
+     "sec": 9.8,
+     "vo": "Many had been sold because the Mongols had overrun their homelands. One of them was a Kipchak Turk with one blue-white eye, named Baybars.",
+     "visual": "A tall young officer with a pale clouded eye checks a horse's saddle among Mamluk soldiers.",
+     "onscreen": "BAYBARS",
+     "anim": "He tightens a strap and turns toward camera.",
+     "img": ""
+    },
+    {
+     "id": "4.04",
+     "type": "MED",
+     "sec": 10.9,
+     "vo": "Their new sultan, Qutuz, had been a slave too. He read Hulagu's letter. Then he had the Mongol envoys executed and their heads hung on Cairo's gate.",
+     "visual": "Qutuz reading a scroll; then the great gate of Cairo, Bab Zuweila, in shadow, a golden tablet hanging on a hook.",
+     "onscreen": "SULTAN QUTUZ",
+     "anim": "The scroll curls; slow push up the gate.",
+     "img": ""
+    },
+    {
+     "id": "4.05",
+     "type": "MED",
+     "sec": 3.0,
+     "vo": "There was no going back now.",
+     "visual": "Qutuz on the palace steps watching his army assemble in a sandy square.",
+     "onscreen": "",
+     "anim": "Banners rise one by one.",
+     "img": ""
+    },
+    {
+     "id": "4.06",
+     "type": "MED",
+     "sec": 12.8,
+     "vo": "Then luck turned. Far away in China, the Great Khan M\u00f6ngke had died. Hulagu took most of his army back east, leaving his general Kitbuqa with perhaps ten to twenty thousand men.",
+     "visual": "A messenger galloping into Hulagu's camp; Hulagu turning his army east; Kitbuqa watching them leave.",
+     "onscreen": "KITBUQA",
+     "anim": "The army flows away to the east; Kitbuqa stays.",
+     "img": ""
+    }
+   ],
+   "sec": 54.2,
+   "words": 132
+  },
+  {
+   "name": "Act 5: Ain Jalut",
+   "folder": "act5-battle",
+   "shots": [
+    {
+     "id": "5.01",
+     "type": "WIDE",
+     "sec": 12.1,
+     "vo": "In the summer of 1260, Qutuz marched north out of Egypt. On the third of September, the two armies met in a valley in Galilee, at the Spring of Goliath.",
+     "visual": "A green valley under a mountain; the Mamluk army in mail and yellow banners in the hills; Mongol riders on the valley floor.",
+     "onscreen": "AIN JALUT \u00b7 3 SEPT 1260",
+     "anim": "Morning mist lifts off the spring.",
+     "img": ""
+    },
+    {
+     "id": "5.02",
+     "type": "MED",
+     "sec": 5.3,
+     "vo": "Baybars led the vanguard. He attacked, then turned and pretended to run.",
+     "visual": "Baybars' riders charge, loose arrows, then wheel their horses and gallop back toward the hills.",
+     "onscreen": "",
+     "anim": "Riders wheel; dust plumes.",
+     "img": ""
+    },
+    {
+     "id": "5.03",
+     "type": "MED",
+     "sec": 8.7,
+     "vo": "It was the Mongols' own favourite trick. Kitbuqa's army chased them into the hills, where the main Mamluk army was hiding.",
+     "visual": "The battle map: grey arrow follows a gold arrow into a ring of hidden gold blocks that close around it.",
+     "onscreen": "",
+     "anim": "The gold ring snaps shut.",
+     "img": ""
+    },
+    {
+     "id": "5.04",
+     "type": "MED",
+     "sec": 9.1,
+     "vo": "The Mongols almost broke through. Qutuz threw off his helmet so his men could see him, and charged, shouting 'O Islam!'",
+     "visual": "Qutuz on horseback pulling off his helmet in the middle of the fight; his soldiers turning back to follow him.",
+     "onscreen": "\"O ISLAM!\"",
+     "anim": "The helmet falls; the line surges forward.",
+     "img": ""
+    },
+    {
+     "id": "5.05",
+     "type": "MED",
+     "sec": 4.5,
+     "vo": "Kitbuqa was captured and killed. The Mongol army was destroyed.",
+     "visual": "Mongol banners falling in the grass; a golden tablet lying by the spring.",
+     "onscreen": "",
+     "anim": "A banner topples; dust settles on the tablet.",
+     "img": ""
+    },
+    {
+     "id": "5.06",
+     "type": "WIDE",
+     "sec": 10.9,
+     "vo": "It was the first time a major Mongol army had been beaten in open battle and the defeat had stuck. The Mongol advance toward Egypt stopped here.",
+     "visual": "The map: the grey tide halts at a bright line through Syria and pulls back.",
+     "onscreen": "",
+     "anim": "Grey recoils from the line.",
+     "img": ""
+    }
+   ],
+   "sec": 50.6,
+   "words": 122
+  },
+  {
+   "name": "Act 6: After",
+   "folder": "act6-aftermath",
+   "shots": [
+    {
+     "id": "6.01",
+     "type": "MED",
+     "sec": 8.7,
+     "vo": "Qutuz did not enjoy it for long. On the way home, Baybars and other officers killed him, and Baybars became sultan.",
+     "visual": "A hunting party in the desert; officers close around Qutuz; then Baybars crowned in Cairo.",
+     "onscreen": "OCTOBER 1260",
+     "anim": "A shadow falls across Qutuz; wipe to the crown.",
+     "img": ""
+    },
+    {
+     "id": "6.02",
+     "type": "MED",
+     "sec": 10.9,
+     "vo": "Baybars ruled for seventeen years and made Mamluk Egypt the strongest power in the Middle East. The Mamluks would beat the Mongols in Syria again and again.",
+     "visual": "Baybars on horseback reviewing ranks of Mamluk cavalry; castles being built; the map stays gold.",
+     "onscreen": "SULTAN BAYBARS",
+     "anim": "Cavalry ranks pass; banners snap.",
+     "img": ""
+    },
+    {
+     "id": "6.03",
+     "type": "MED",
+     "sec": 12.1,
+     "vo": "Meanwhile, the Mongol Empire was splitting apart. Berke, the khan of the Golden Horde, had become a Muslim. He allied with Egypt and went to war with his cousin Hulagu.",
+     "visual": "Two Mongol armies facing each other across a frozen river; Berke in a turban over his fur hat.",
+     "onscreen": "MONGOL VS MONGOL \u00b7 1262",
+     "anim": "Ice cracks; horns blow on both sides.",
+     "img": ""
+    },
+    {
+     "id": "6.04",
+     "type": "MED",
+     "sec": 9.4,
+     "vo": "Within a few generations, the Mongol rulers of Persia had become Muslims too. In 1295, Hulagu's great-grandson Ghazan converted, and his court followed.",
+     "visual": "A Persian court: Ghazan Khan in rich robes; scholars and courtiers bowing; new tiled buildings rising.",
+     "onscreen": "GHAZAN KHAN \u00b7 1295",
+     "anim": "Tiles slide into place on a dome.",
+     "img": ""
+    },
+    {
+     "id": "6.05",
+     "type": "WIDE",
+     "sec": 12.8,
+     "vo": "The empire that destroyed Baghdad ended up adopting the faith of the people it had conquered. And the slaves the Mongols sold away from the steppe were the ones who stopped them.",
+     "visual": "Ain Jalut today-like valley at sunset; a golden tablet in the grass by the spring.",
+     "onscreen": "",
+     "anim": "Slow push to the tablet; fade out.",
+     "img": ""
+    }
+   ],
+   "sec": 53.9,
+   "words": 133
+  }
+ ],
+ "hooks": [
+  [
+   "In 1258 the Mongols destroyed Baghdad, the richest city on Earth. Two years later, an army of former slaves did what no one else could.",
+   57
+  ],
+  [
+   "The Mongols had never lost a war. Then a sultan executed their envoys and dared them to come.",
+   53
+  ]
+ ],
+ "launch": {
+  "titles": [
+   "The Battle That Stopped the Mongols",
+   "How Former Slaves Stopped the Mongol Empire",
+   "Ain Jalut 1260: The Day the Mongols Lost"
+  ],
+  "thumb": "Mamluk cavalry in mail with yellow banners charging Mongol horse archers in a green valley, dust and arrows, painterly style. Text: 1260.",
+  "reels": [
+   "The envoy whose death started a war",
+   "Otrar: the caravan massacre",
+   "The shah who died on an island",
+   "Baghdad's last caliph",
+   "The river that ran black with ink",
+   "Slave soldiers who ruled Egypt",
+   "Baybars, the sultan with one blue eye",
+   "Qutuz killed the envoys",
+   "The death that saved Egypt",
+   "The Mongols' own trick used against them",
+   "O Islam: the helmet moment",
+   "The first defeat that stuck",
+   "Baybars kills his own sultan",
+   "Mongol against Mongol",
+   "The conquerors who converted"
+  ]
+ },
+ "fixes": [
+  "Source frames the war as a fulfilled hadith prophecy (Gog and Magog) and adds a modern Palestine comparison and one-sided lines about Christians. All removed per Pushpam's OK for a neutral history video; the script follows standard histories (Juvayni, Rashid al-Din, Ibn al-Athir as summarised by modern historians).",
+  "Otrar 1218: the caravan is usually given as about 450 merchants; governor Inalchuq (Ghayir Khan). Shah Muhammad II killed the lead envoy (some accounts: one beheaded, two had beards shaved).",
+  "Shah Muhammad II died in 1220/21 on an island in the Caspian (Abaskun).",
+  "Baghdad siege began late Jan 1258; city surrendered 10 Feb 1258; caliph al-Musta'sim killed ~20 Feb. Death toll estimates vary widely (90,000 to 800,000+ in later sources); script gives a range.",
+  "The 'Tigris ran black with ink' is a later chroniclers' image; the script attributes it.",
+  "M\u00f6ngke died Aug 1259; news led Hulagu to withdraw most of his army in 1260; Kitbuqa (a Nestorian Christian) left with an estimated 10,000-20,000 troops.",
+  "Qutuz executed Hulagu's envoys and displayed their heads at Bab Zuweila, Cairo (1260).",
+  "Ain Jalut: 3 Sept 1260, Jezreel Valley, Galilee. Baybars led the vanguard; feigned retreat; Qutuz's 'Wa Islamah!' cry from Mamluk chronicles. Kitbuqa killed.",
+  "Ain Jalut is often called the first major Mongol defeat; earlier Mongol setbacks existed (e.g. Parwan 1221, Volga Bulgaria 1223), so the script says 'the first time ... the defeat had stuck' toward the west.",
+  "Qutuz was assassinated 24 Oct 1260 by emirs including Baybars; Baybars ruled 1260-1277.",
+  "Berke (Golden Horde) converted to Islam and fought Hulagu from 1262; Ghazan of the Ilkhanate converted in 1295."
+ ],
+ "cuts": [
+  "Cut the prophecy framing, the Umayyad/Abbasid background lecture, and modern political comparisons. Kept only the history from Otrar (1218) to Ghazan (1295)."
+ ]
+}
