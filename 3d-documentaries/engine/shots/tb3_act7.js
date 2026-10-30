@@ -24,11 +24,48 @@ async function c130Line(k, o = {}) {
   const { scene } = k;
   const ground = await real.pbr('concrete_floor_worn_001', { repeat: [60, 60], color: o.groundColor ?? 0xb0aca0 }); scene.add(real.m(new THREE.PlaneGeometry(400, 400), ground, { rot: [-P / 2, 0, 0], cast: false }));
   // far ground out to the horizon, so a high camera never sees the slab's edge against the sky
-  scene.add(real.m(new THREE.PlaneGeometry(9000, 9000), real.std(o.groundColor ?? 0xb0aca0, { rough: .95 }), { pos: [0, -.03, 0], rot: [-P / 2, 0, 0], cast: false }));
+  const farG = o.flatFar ? real.std(o.groundColor ?? 0xb0aca0, { rough: .95 }) : await real.pbr('concrete_floor_worn_001', { repeat: [500, 500], color: o.groundColor ?? 0xb0aca0 }); scene.add(real.m(new THREE.PlaneGeometry(9000, 9000), farG, { pos: [0, -.03, 0], rot: [-P / 2, 0, 0], cast: false }));
   scene.fog = new THREE.FogExp2(o.fog ?? 0xc4ccd8, o.fogD ?? .005);
+  hazeBand(scene, { color: o.fog ?? 0xc4ccd8 });
   if (scene.userData.fx) scene.userData.fx.ao = 0; // GTAO draws pale halos round the propellers against the far ground in these wide shots // far ground melts into the horizon haze instead of ending in a hard edge
   return [0, 1, 2, 3].map(i => { const p = S2.c130(); p.position.set(-54 + i * 36, 0, 0); scene.add(p); return p; });
 }
+
+// ground haze: a big open cylinder whose gradient (fog colour at the bottom, clear ~25% up) hides the seam between the unfogged HDRI sky and the fogged ground
+function hazeBand(scene, { color = 0xc4ccd8, r = 1500, h = 400, clear = .25, y = 0, op = 1 } = {}) {
+  const css = '#' + new THREE.Color(color).getHexString();
+  const tex = real.canvasTex(8, 256, (c, W, H) => { const g = c.createLinearGradient(0, H, 0, 0); g.addColorStop(0, css); g.addColorStop(.35 * clear, css); g.addColorStop(clear, css + '00'); g.addColorStop(1, css + '00'); c.fillStyle = g; c.fillRect(0, 0, W, H); });
+  const m = new THREE.MeshBasicMaterial({ map: tex, transparent: true, side: THREE.BackSide, depthWrite: false, fog: false, opacity: op });
+  const band = real.m(new THREE.CylinderGeometry(r, r, h, 64, 1, true), m, { pos: [0, y + h / 2, 0], cast: false }); band.renderOrder = -1; scene.add(band); return band;
+}
+// seated soldiers with hands resting on the knees (local version of idleSit: re-aims the forearms after the lib pose)
+const CHILD = { Arm: 'ForeArm', ForeArm: 'Hand' };
+function aimBone(p, name, x, y, z) {
+  const bones = p.parts.bones, base = name.replace(/^(Left|Right)/, ''), b0 = bones[name], c0 = bones[name.slice(0, name.length - base.length) + CHILD[base]];
+  if (!b0 || !c0) return;
+  const vA = new THREE.Vector3(), vB = new THREE.Vector3(), rq = new THREE.Quaternion(), dq = new THREE.Quaternion(), wq = new THREE.Quaternion(), pq = new THREE.Quaternion();
+  b0.updateWorldMatrix(true, true); b0.getWorldPosition(vA); c0.getWorldPosition(vB);
+  const cur = vB.sub(vA).normalize(); p.getWorldQuaternion(rq);
+  const want = new THREE.Vector3(x, y, z).normalize().applyQuaternion(rq);
+  dq.setFromUnitVectors(cur, want); b0.getWorldQuaternion(wq); b0.parent.getWorldQuaternion(pq);
+  b0.quaternion.copy(pq.invert().multiply(dq.multiply(wq))); b0.updateWorldMatrix(false, true);
+}
+const kneeIdle = (ppl, t, o = {}) => ppl.forEach((p, i) => {
+  p.update(t, { pose: 'sit', seatH: .45, arm: 'lap', mood: o.mood ?? 'stern', look: Math.sin(t * .45 + p.userData.ph) * .25, nod: .15 + Math.sin(t * .3 + i) * .1 });
+  for (const [sd, sg] of [['Left', 1], ['Right', -1]]) { aimBone(p, sd + 'Arm', sg * .12, -1, .12); aimBone(p, sd + 'ForeArm', -sg * .08, -.42, 1); }
+});
+// a red-webbing bench with a faintly lit strip so the seated soldiers visibly sit on something; seats at ~.9 m pitch from z0 (far) towards z1
+function benchSeats(scene, z0, z1, pitch = .9) {
+  const web = real.std(0x4a3226, { rough: .95, emissive: 0x301008, ei: .6 }), spots = [];
+  for (const s of [-1, 1]) {
+    scene.add(real.box(.5, .08, z1 - z0 + .5, web, { pos: [s * 1.3, .41, (z0 + z1) / 2], cast: false }));
+    scene.add(real.box(.04, .04, z1 - z0 + .5, real.std(0x9a9a94, { metal: .8, rough: .35 }), { pos: [s * 1.06, .38, (z0 + z1) / 2], cast: false }));
+    const l = new THREE.PointLight(0xff8a60, 3, 3, 1.5); l.position.set(s * .9, .3, (z0 + z1) / 2); scene.add(l);
+    for (let z = z0; z <= z1 + .01; z += pitch) spots.push({ x: s * 1.3, z, rot: -s * P / 2 });
+  }
+  return spots;
+}
+const mapDown = (inner, dzK, pull) => async k => { const f = await inner(k); return (t, u) => { f(t, u); const c = k.camera; c.position.multiplyScalar(pull); c.position.z += c.position.y * dzK; }; };
 
 export const shots = {
   // at Entebbe the hijackers relax upstairs, playing cards
@@ -76,18 +113,22 @@ export const shots = {
     const { real, scene, camera } = k;
     const h = await holdInterior(k, { seats: false, len: 15 });
     const cars = [S2.landrover(), S2.landrover(), S2.mercedes({})]; cars.forEach((c, i) => { c.position.set(0, 0, -4.8 + i * 4.8); scene.add(c); });
+    for (const z of [-4.8, 0, 4.8]) { const l = new THREE.PointLight(0xffe0b0, 6, 7, 1.6); l.position.set(0, 1.5, z - 1.2); scene.add(l); }
     const ppl = [];
-    for (let i = 0; i < 6; i++) { const p = await real.human({ id: CMD[i], seed: 4300 + i }); real.put(scene, p, { pos: [(i % 2 ? 1 : -1) * 1.35, 0, -5 + Math.floor(i / 2) * 4.2], rot: (i % 2 ? -1 : 1) * P / 2, mood: 'stern' }); p.userData.driven = true; ppl.push(p); }
+    for (let i = 0; i < 6; i++) { const p = await real.human({ id: CMD[i], seed: 4300 + i }); real.put(scene, p, { pos: [(i % 2 ? 1.5 : -1.7), 0, -5 + Math.floor(i / 2) * 4.2], rot: (i % 2 ? -1 : 1) * P / 2, mood: 'stern' }); p.userData.driven = true; ppl.push(p); }
     const cam = C.dolly(camera, { pos: [.5, 2.6, 7.1], look: [0, .5, -4], fov: 54 }, { pos: [-.5, 2.55, 6.2], look: [0, .6, -5], fov: 54 });
     return (t, u) => { cam(u); ppl.forEach((p, i) => p.update(t, { mood: 'stern', look: Math.sin(t * .5 + i) * .2, arm: i === 2 ? 'hug' : null })); };
   },
-  '7.5': old['7.5'],
-  '7.6': old['7.6'],
+  '7.5': mapDown(old['7.5'], .2, 1.06),
+  '7.6': mapDown(old['7.6'], .2, 1.06),
   // the fuel team: ten soldiers with portable pumps and hoses
   '7.7': async k => {
     const { real, scene, camera } = k;
     await real.env(k, 'hangar_interior', { sun: [10, 30, 20], sunI: 1.4, shadowSize: 15, envI: .6 });
-    const floor = await real.pbr('concrete_floor_worn_001', { repeat: [10, 10] }); scene.add(real.m(new THREE.PlaneGeometry(40, 40), floor, { rot: [-P / 2, 0, 0], cast: false }));
+    const floor = await real.pbr('concrete_floor_worn_001', { repeat: [30, 30] }); scene.add(real.m(new THREE.PlaneGeometry(120, 120), floor, { rot: [-P / 2, 0, 0], cast: false }));
+    // soften the join between the photographic backdrop and the 3D floor: dark gradient band ringing the floor edge
+    { const dk = real.canvasTex(8, 256, (c, W, H) => { const g = c.createLinearGradient(0, H, 0, 0); g.addColorStop(0, 'rgba(14,12,10,1)'); g.addColorStop(.25, 'rgba(14,12,10,.85)'); g.addColorStop(.7, 'rgba(14,12,10,0)'); c.fillStyle = g; c.fillRect(0, 0, W, H); });
+      const band = real.m(new THREE.CylinderGeometry(18, 18, 7, 48, 1, true), new THREE.MeshBasicMaterial({ map: dk, transparent: true, side: THREE.BackSide, depthWrite: false, fog: false }), { pos: [0, 3.5, 0], cast: false }); band.renderOrder = -1; scene.add(band); }
     const pump = () => { const g = new THREE.Group(); const red = real.std(0xb8302a, { rough: .45 }), steel = real.std(0x8a8a86, { metal: .8, rough: .35 }), blk = real.std(0x151515, { rough: .6 });
       g.add(real.rbox(.7, .5, .45, .05, red, { pos: [0, .3, 0] }));
       // tubular carry frame, louvred engine cover, fuel cap, gauge, pull-start and a data plate, so it reads as a field fuel pump
@@ -99,9 +140,9 @@ export const shots = {
       g.add(real.m(new THREE.TorusGeometry(.04, .012, 6, 16), blk, { pos: [.3, .2, .235] }), real.box(.14, .07, .01, real.std(0xd8d0b0, { metal: .5 }), { pos: [.18, .22, .236], cast: false })); g.add(real.box(.8, .05, .55, real.std(0x333333, { metal: .7 }), { pos: [0, .04, 0] })); g.add(real.m(new THREE.CylinderGeometry(.08, .08, .3, 16), real.std(0x777777, { metal: .8, rough: .3 }), { pos: [.2, .65, 0] }));
       g.add(real.m(new THREE.TorusGeometry(.32, .04, 8, 28), real.std(0x111111, { rough: .7 }), { pos: [.75, .05, -.45], rot: [-P / 2, 0, 0] })); g.add(real.m(new THREE.TorusGeometry(.24, .04, 8, 28), real.std(0x111111, { rough: .7 }), { pos: [.75, .13, -.45], rot: [-P / 2, 0, 0] })); return g; };
     const ppl = [];
-    for (let i = 0; i < 10; i++) { const x = -4.4 + (i % 5) * 2.2 + (i >= 5 ? 1.1 : 0), z = -1 - Math.floor(i / 5) * 2.4; const p = await real.human({ id: CMD[i % CMD.length], seed: 4400 + i }); real.put(scene, p, { pos: [x, 0, z], rot: .1, mood: 'stern' }); p.userData.driven = true; ppl.push(p); const pm = pump(); pm.position.set(x + .75, 0, z + .4); scene.add(pm); }
+    for (let i = 0; i < 10; i++) { const x = i < 5 ? -4.4 + i * 2.2 : -3.3 + (i - 5) * 2.0, z = -1 - Math.floor(i / 5) * 2.4; const p = await real.human({ id: CMD[i % CMD.length], seed: 4400 + i }); real.put(scene, p, { pos: [x, 0, z], rot: .1, mood: 'stern' }); p.userData.driven = true; ppl.push(p); const pm = pump(); pm.position.set(x + .75, 0, z + .4); scene.add(pm); }
     const cam = C.dolly(camera, { pos: [0, 2.2, 8], look: [0, 1.1, -2], fov: 42 }, { pos: [0, 1.9, 6.2], look: [0, 1.15, -2], fov: 40 });
-    return (t, u) => { cam(u); ppl.forEach((p, i) => p.update(t, { mood: 'stern', arm: i % 3 === 0 ? 'hug' : null, look: Math.sin(t * .4 + i) * .2 })); };
+    return (t, u) => { cam(u); ppl.forEach((p, i) => p.update(t, { mood: 'stern', arm: null, look: Math.sin(t * .4 + i) * .2 })); };
   },
   // Sharm el-Sheikh: the four planes take off one by one over the sea
   '7.8': async k => {
@@ -112,7 +153,7 @@ export const shots = {
     scene.add(real.m(new THREE.PlaneGeometry(4000, 3000), real.std(0x1a3a52, { rough: .08, metal: .6 }), { pos: [0, -.4, 1800], rot: [-P / 2, 0, 0], cast: false }));
     const ps = [0, 1, 2, 3].map(() => { const p = S2.c130(); scene.add(p); return p; });
     return (t, u) => { ps.forEach((p, i) => { const tt = Math.max(0, t - i * 1.4); const v = 8 + tt * 14; const z = -160 + tt * (8 + tt * 7); const y = Math.max(0, (z + 30) * .12); p.position.set(0, y, z); p.rotation.x = -Math.min(.14, Math.max(0, (z + 30) * .004)); p.userData.setProps(t, [18, 18, 18, 18]); p.visible = true; });
-      camera.position.set(-38, 2, 50); camera.fov = 44; camera.updateProjectionMatrix(); const lp = ps[0].position; camera.lookAt(lp.x * .6, 4 + lp.y * .7, Math.min(60, lp.z) * .7 - 10); };
+      camera.position.set(-38, 2, 50); camera.fov = 44; camera.updateProjectionMatrix(); const lp = ps[0].position; const f = C.ease(C.seg(t, 3.2, 5.4)); const o0 = [lp.x * .6, 4 + lp.y * .7, Math.min(60, lp.z) * .7 - 10]; camera.lookAt(C.lerp(o0[0], lp.x, f), C.lerp(o0[1], lp.y + 3, f), C.lerp(o0[2], lp.z, f)); };
   },
   // two Boeing 707s high above: the flying hospital and the flying command post
   '7.9': async k => {
@@ -133,7 +174,7 @@ export const shots = {
   '7.12': async k => {
     const { scene, camera } = k; k.noAutoOverlay = true;
     await real.env(k, 'industrial_sunset_puresky', { sun: [-80, 14, -40], sunI: 3, sunColor: 0xff9a60, shadowSize: 90, envI: .6 });
-    const ps = await c130Line(k, { groundColor: 0x8a867c, fog: 0x9cb4d8, fogD: .0045 });
+    const ps = await c130Line(k, { groundColor: 0x8a867c, fog: 0x9cb4d8, fogD: .0045, flatFar: true });
     const cam = C.dolly(camera, { pos: [0, 24, 100], look: [0, 6, 0], fov: 46 }, { pos: [0, 20, 90], look: [0, 6, 0], fov: 46 });
     return (t, u) => { cam(u); ps.forEach((p, i) => { const a = C.seg(t, .2 + i * .4, .4 + i * .4); if (a <= 0) return; const [x, y] = proj(camera, [p.position.x, 16, p.position.z]); const o = k.overlay;
       o.save(); o.translate(x, y); o.scale(1, Math.max(.05, a)); o.fillStyle = '#e8b321'; o.strokeStyle = '#1d1712'; o.lineWidth = 6; o.beginPath(); o.arc(0, 0, 54, 0, P * 2); o.fill(); o.stroke(); o.fillStyle = '#1d1712'; o.font = '64px "Anton"'; o.textAlign = 'center'; o.textBaseline = 'middle'; o.fillText(String(i + 1), 0, 4); o.restore(); }); };
@@ -169,20 +210,20 @@ export const shots = {
   // plane two: the team to take the new terminal and hold off the army
   '7.15': async k => {
     const { real, scene, camera } = k;
-    const h = await holdInterior(k, { len: 14, red: true });
-    const ppl = await seatSoldiers(k, h.seatSpots, CMD, { seed: 4600, every: 1 });
+    const h = await holdInterior(k, { len: 14, red: true, seats: false });
+    const ppl = await seatSoldiers(k, benchSeats(scene, -4.4, .6, .9), CMD, { seed: 4600 });
     const b = briefBoard('NEW TERMINAL'); b.position.set(0, 0, -5.2); scene.add(b);
     const cam = C.dolly(camera, { pos: [-.4, 1.7, 5.5], look: [0, 1.1, -5], fov: 50 }, { pos: [.4, 1.7, 2.5], look: [0, 1.2, -5.2], fov: 46 });
-    return (t, u) => { cam(u); idleSit(ppl, t); };
+    return (t, u) => { cam(u); kneeIdle(ppl, t); };
   },
   // plane three: the team for Uganda's fighter jets
   '7.16': async k => {
     const { real, scene, camera } = k;
-    const h = await holdInterior(k, { len: 14, red: true });
-    const ppl = await seatSoldiers(k, h.seatSpots, CMD, { seed: 4700 });
+    const h = await holdInterior(k, { len: 14, red: true, seats: false });
+    const ppl = await seatSoldiers(k, benchSeats(scene, -4.4, -2.8, .8), CMD, { seed: 4700 });
     const b = briefBoard('MiG LINE'); b.position.set(0, 0, -5.2); scene.add(b);
-    const cam = C.dolly(camera, { pos: [0, 1.75, 1.5], look: [0, 1.3, -5.2], fov: 46 }, { pos: [0, 1.5, -2.8], look: [0, 1.3, -5.2], fov: 42 });
-    return (t, u) => { cam(u); idleSit(ppl, t); };
+    const cam = C.dolly(camera, { pos: [0, 1.75, 1.5], look: [0, 1.3, -5.2], fov: 46 }, { pos: [0, 1.5, -1.3], look: [0, 1.3, -5.2], fov: 42 });
+    return (t, u) => { cam(u); kneeIdle(ppl, t); };
   },
   // plane four: stretchers and doctors for the hostages
   '7.17': async k => {
