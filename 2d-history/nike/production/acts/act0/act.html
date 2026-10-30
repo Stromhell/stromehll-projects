@@ -1,0 +1,62 @@
+<!doctype html><html><head><meta charset="utf-8"><title>NK act 0 - cold open</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../nk_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+for (const n of ['kitchen', 'factory', 'campus', 'track_rain', 'arena']) K.load(n, PL + n + '.jpg');
+const T = window.TIMING; const last = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length, start: last.end, end: last.end + 4.2, vo_start: last.end, vo_end: last.end, text: '' }); T.dur = last.end + 4.2;
+const SW = 1920, SH = 1080, INK = NK.INK, OR = NK.ORANGE, TE = NK.TEAL;
+const HAND = { x: 0, y: 0, on: false }, JUG = { show: false, tilt: 0, pour: 0 };
+const pop = (lt, at, d = .45) => E.back(K.seg(lt, at, at + d));
+const BOWERMAN = { costume: 'shirt', hair: 'short', hairCol: '#9a9a9a', seed: 3, hat: NK.cap('#2a5a3a') };
+// blurred plate as a backdrop for screen-space shots
+const backdrop = (name, b = .6, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+// a framed panel that slaps down (screen)
+const panel = (c, x, y, w, h, a, rot, fill) => { if (a <= 0) return; c.save(); c.translate(x, y); c.rotate(rot); c.scale(.6 + .4 * a, .6 + .4 * a); c.globalAlpha = Math.min(1, a * 1.5); c.fillStyle = 'rgba(0,0,0,.4)'; c.fillRect(-w / 2 + 12, -h / 2 + 14, w, h); c.fillStyle = '#f6efe0'; c.fillRect(-w / 2, -h / 2, w, h); c.strokeStyle = INK; c.lineWidth = 6; c.strokeRect(-w / 2, -h / 2, w, h); fill(c, w, h); c.restore(); };
+
+window.SHOTS = [
+  // 1 kitchen: Bowerman pours rubber into the waffle iron; the lid slams; it seals shut with a puff of smoke
+  { plate: 'kitchen', cam: { z: [1.2, 1.32], x: [1180, 1240], y: [820, 800] }, bed: [['hum_loop', .3]],
+    figs: [{ x: 900, y: 1430, s: 2.75, ...BOWERMAN, facing: 1, pose: 'reach', mood: 'happy', walk: { x0: 300, x1: 900, t0: 0, dur: 1.8 }, arms: (t, P) => JUG.show ? { shR: 120, elR: -30 } : {}, hold: { near: (c, t) => { const m = c.getTransform(); HAND.x = m.e; HAND.y = m.f; HAND.on = true; if (!JUG.show) return; c.save(); c.rotate(-.5 - .6 * JUG.tilt); c.fillStyle = '#e8e4dc'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.roundRect(-18, -60, 50, 70, 8); c.fill(); c.stroke(); c.fillStyle = '#c8b890'; c.fillRect(-14, -54, 42, 14); c.restore(); if (JUG.pour > 0) { const m = c.getTransform(), sc = Math.hypot(m.a, m.b), rot = Math.atan2(m.b, m.a) - .5 - .6 * JUG.tilt, px = -16, py = -58, X = m.e + sc * (px * Math.cos(rot) - py * Math.sin(rot)), Y = m.f + sc * (px * Math.sin(rot) + py * Math.cos(rot)); c.save(); c.setTransform(1, 0, 0, 1, X, Y); c.strokeStyle = '#efe6cc'; c.lineCap = 'round'; c.lineWidth = sc * (7 + Math.sin(t * 9) * 1.5); c.beginPath(); c.moveTo(0, 0); c.quadraticCurveTo(-sc * 3, sc * 12, -sc * 2, sc * 24 * JUG.pour); c.stroke(); c.restore(); } } }, anim: (o, lt, u, S) => { if (lt > 1.8) { o.pose = lt < S.tS ? 'reach' : 'shrug'; o.mood = lt < S.tS ? 'happy' : 'shocked'; } } }],
+    init: S => { S.tP = A.at(S, 'poured', 1.6); S.tS = A.at(S, 'glued', 4.2); S.tN = A.at(S, 'never', 6);
+      S.D.live = [(c, lt) => { const lid = lt < S.tP - .4 ? E.out(K.seg(lt, .2, .9)) : lt < S.tS ? 1 : 1 - E.inn(K.seg(lt, S.tS, S.tS + .25)); NK.waffle(c, 1160, 880, 1.15, { t: lt, state: lt > S.tS ? 'sealed' : 'hot', lid });
+        JUG.show = lt > 1.8 && lt < S.tS + .6; JUG.tilt = K.seg(lt, S.tP - .4, S.tP) * (1 - K.seg(lt, S.tS - .3, S.tS)); JUG.pour = lt > S.tP && lt < S.tS - .3 ? Math.min(1, (lt - S.tP) * 3) : 0; }];
+      S.D.over = [(c, lt) => K.dateTag(c, '1971', lt, { at: .3 }), (c, lt) => K.card(c, 'LIQUID RUBBER', lt, { at: S.tP, x: 1500, y: 230, px: 48, rot: 3, until: S.tS }), (c, lt) => K.card(c, 'GLUED SHUT', lt, { at: S.tS + .2, x: 1480, y: 230, px: 62, rot: -4 })];
+      S.D.sfx = [[.4, 'footsteps', .3], [S.tP, 'pop', .3], [S.tS, 'door_slam', .45], [S.tS + .15, 'whoosh_soft', .35], [S.tN, 'thud', .3]]; } },
+  // 2 the ruined iron on a pedestal under a spotlight; the counter spins up to $46 billion, coins rain
+  { draw: (c, lt, u, S) => { backdrop('campus_dusk' in K.imgs ? 'campus' : 'campus', .35, 10)(c); c.save(); c.globalCompositeOperation = 'screen'; const g = c.createLinearGradient(0, 0, 0, SH); g.addColorStop(0, 'rgba(255,240,210,.25)'); g.addColorStop(1, 'rgba(255,240,210,0)'); c.fillStyle = g; c.beginPath(); c.moveTo(560, 0); c.lineTo(760, 0); c.lineTo(980, 1080); c.lineTo(340, 1080); c.fill(); c.restore();
+      c.fillStyle = '#e8e0d0'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(470, 760, 360, 320); c.strokeRect(470, 760, 360, 320); c.fillStyle = '#d0c8b8'; c.fillRect(440, 740, 420, 30); c.strokeRect(440, 740, 420, 30);
+      NK.waffle(c, 650, 740, .95, { t: lt, state: 'sealed', lid: 0 });
+      for (let k = 0; k < 26; k++) { const st = S.tB + (k % 9) * .12, life = lt - st; if (life < 0) continue; const x = 1000 + ((k * 137) % 820), y = -60 + life * 700 + (k % 4) * 40; if (y > 1120) continue; c.save(); c.translate(x, y); c.rotate(life * 4 + k); c.scale(1, Math.abs(Math.cos(life * 5 + k))); c.fillStyle = '#e8b44a'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.arc(0, 0, 26, 0, 7); c.fill(); c.stroke(); c.restore(); } },
+    bed: [['hum_loop', .25]],
+    init: S => { S.tB = A.at(S, '46 billion', 3.8);
+      S.D.over = [(c, lt) => lt > S.tB - .4 && K.counter(c, 0, 46, lt, { at: S.tB - .4, dur: 1.6, x: 1380, y: 470, px: 150, pre: '~$', post: ' BILLION' }), (c, lt) => K.card(c, 'SALES A YEAR', lt, { at: S.tB + 1.2, x: 1380, y: 620, px: 50, rot: -3 }), (c, lt) => NK.revenue(c, 46e9 * E.out(K.seg(lt, S.tB - .4, S.tB + 1.2)), K.seg(lt, S.tB - .6, S.tB - .2))];
+      S.D.sfx = [[.3, 'chime', .3], [S.tB - .4, 'riser', .35], [S.tB, 'coins_cascade', .45], [S.tB + 1.2, 'chime', .4]]; } },
+  // 3 a Nike box with a big question mark; factories behind with other names on them
+  { plate: 'factory', cam: { z: [1.08, 1.16], x: [1280, 1280], y: [820, 800] }, bed: [['hum_loop', .35]],
+    live: [(c, lt, u, S) => { NK.box(c, 1280, 1280, 2.1, { col: OR, swoosh: true }); const a = pop(lt, S.tQ, .5), bob = Math.sin(lt * 4) * 10; if (a > 0) { c.save(); c.translate(1280, 860 + bob); c.scale(a, a); K.outlined(c, '?', 0, 0, { px: 300, fill: '#fff' }); c.restore(); } }],
+    init: S => { S.tQ = A.at(S, 'strange', 1.2); const tF = A.at(S, 'factories', 3.6);
+      S.D.over = [A.grade('30,40,30', .12), (c, lt) => K.card(c, 'FACTORY: NOT NIKE', lt, { at: tF, x: 420, y: 250, px: 44, rot: -4 }), (c, lt) => K.card(c, 'FACTORY: NOT NIKE', lt, { at: tF + .4, x: 1500, y: 250, px: 44, rot: 3 }), (c, lt) => K.title(c, 'WHO MAKES THEM?', lt, { at: tF + 1, y: 110, px: 64 })];
+      S.D.sfx = [[S.tQ, 'pop', .45], [tF, 'stamp', .4], [tF + .4, 'stamp', .4]]; } },
+  // 4 four panels slap down: a business card, a $35 swoosh, a young player, a typed slogan
+  { draw: (c, lt, u, S) => { backdrop('arena', .45, 9)(c); const [t1, t2, t3, t4] = S.tt;
+      panel(c, 330, 470, 380, 260, pop(lt, t1, .35), -.06, (c, w, h) => { c.fillStyle = '#1f3a7a'; c.font = '44px Anton'; c.textAlign = 'center'; c.fillText('BLUE RIBBON', 0, -20); c.fillStyle = INK; c.font = '30px Oswald'; c.fillText('SPORTS', 0, 28); c.fillStyle = '#2a5ac8'; c.fillRect(-w / 2 + 30, 60, w - 60, 12); });
+      panel(c, 770, 470, 380, 260, pop(lt, t2, .35), .05, (c, w, h) => { NK.swoosh(c, -10, 0, 120, INK); c.save(); c.translate(110, -70); c.rotate(.3); c.fillStyle = '#f4e0a0'; c.fillRect(-50, -26, 100, 52); c.strokeStyle = INK; c.lineWidth = 3; c.strokeRect(-50, -26, 100, 52); c.fillStyle = '#c83a2a'; c.font = '40px Anton'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('$35', 0, 2); c.restore(); });
+      panel(c, 1210, 470, 380, 260, pop(lt, t3, .35), -.04, (c, w, h) => { c.fillStyle = '#c83a2a'; c.fillRect(-w / 2 + 6, -h / 2 + 6, w - 12, h - 12); c.save(); c.beginPath(); c.rect(-w / 2 + 6, -h / 2 + 6, w - 12, h - 12); c.clip(); R.figure(c, { x: 0, y: 260, s: 1.05, costume: 'kid', hair: 'short', seed: 9, pose: 'think', facing: 1, t: lt, mood: 'neutral', hairCol: '#1a1410' }); c.restore(); });
+      panel(c, 1640, 470, 380, 260, pop(lt, t4, .35), .06, (c, w, h) => { NK.typed(c, 'JUST DO IT.', -150, 0, 46, K.seg(lt, t4 + .3, t4 + 1.4)); }); },
+    bed: [['crowd_loop', .2]],
+    init: S => { S.tt = [A.at(S, 'company name', 1.2), A.at(S, '35', 2.6), A.at(S, 'basketball', 4.2), A.at(S, 'slogan', 6.4)];
+      S.D.over = [(c, lt) => K.card(c, 'A VERY DARK ORIGIN', lt, { at: S.tt[3] + .9, x: 1560, y: 760, px: 42, rot: 4 })];
+      S.D.sfx = S.tt.map(t => [t, 'stamp', .45]).concat([[S.tt[3] + .3, 'typing', .4]]); } },
+  // 5 TITLE over the swoosh
+  { draw: (c, lt) => { c.fillStyle = '#16120e'; c.fillRect(0, 0, SW, SH); const g = c.createRadialGradient(960, 540, 0, 960, 540, 900); g.addColorStop(0, 'rgba(242,106,42,.45)'); g.addColorStop(1, 'rgba(242,106,42,0)'); c.fillStyle = g; c.fillRect(0, 0, SW, SH);
+      NK.swoosh(c, 960, 560, 520 * E.out(K.seg(lt, 0, .8)) + 1, 'rgba(242,106,42,.85)'); NK.waffle(c, 1580, 1000, .55, { t: lt, state: 'hot' }); },
+    sub: 'off', inSfx: 'whoosh', bed: [['hum_loop', .2]],
+    over: [(c, lt) => K.title(c, 'HOW A WAFFLE IRON', lt, { at: .4, y: 430, px: 120 }), (c, lt) => K.title(c, 'BUILT NIKE', lt, { at: .7, y: 590, px: 170, fill: '#fff4e0' })], sfx: [[.4, 'hit', .9], [.5, 'swell', .4]] },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>
