@@ -1,0 +1,120 @@
+{
+ "dur": 39.959,
+ "cues": [
+  {
+   "t": 0.2,
+   "name": "hum_loop",
+   "gain": 0.2
+  },
+  {
+   "t": 5.24,
+   "name": "paper",
+   "gain": 0.3
+  },
+  {
+   "t": 5.82,
+   "name": "tick",
+   "gain": 0.3
+  },
+  {
+   "t": 9.76,
+   "name": "tension",
+   "gain": 0.4
+  },
+  {
+   "t": 10.775,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 10.875,
+   "name": "paper",
+   "gain": 0.45
+  },
+  {
+   "t": 17.53,
+   "name": "crowd_loop",
+   "gain": 0.45
+  },
+  {
+   "t": 17.73,
+   "name": "crowd_cheer",
+   "gain": 0.3
+  },
+  {
+   "t": 19.845,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 20.045,
+   "name": "alarm",
+   "gain": 0.1
+  },
+  {
+   "t": 21.44,
+   "name": "paper",
+   "gain": 0.3
+  },
+  {
+   "t": 26.86,
+   "name": "stamp",
+   "gain": 0.35
+  },
+  {
+   "t": 28.26,
+   "name": "stamp",
+   "gain": 0.3
+  },
+  {
+   "t": 29.66,
+   "name": "stamp",
+   "gain": 0.3
+  },
+  {
+   "t": 30.08,
+   "name": "paper_tear",
+   "gain": 0.3
+  },
+  {
+   "t": 31.555,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 31.73,
+   "name": "creak",
+   "gain": 0.35
+  },
+  {
+   "t": 33.989,
+   "name": "creak",
+   "gain": 0.35
+  },
+  {
+   "t": 38.029,
+   "name": "pop",
+   "gain": 0.35
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 11.475000000000001,
+   "name": "hum_loop",
+   "gain": 0.45
+  },
+  {
+   "start": 19.745,
+   "end": 32.254999999999995,
+   "name": "hum_loop",
+   "gain": 0.25
+  },
+  {
+   "start": 31.455,
+   "end": 40.759,
+   "name": "hum_loop",
+   "gain": 0.2
+  }
+ ]
+}

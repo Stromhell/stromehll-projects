@@ -35,7 +35,7 @@ while true; do
     set -- $QUEUE; nx=$1
     if [ -n "$nx" ] && [ $(echo $ACTIVE | wc -w) -lt $SLOTS ]; then shift; ACTIVE="$ACTIVE $nx"; ACTIVE=${ACTIVE# }; QUEUE="$*"; log "$nx AUTOSTART: $msg, so $nx moved into production (act pages next)"
     else log "$v done: $msg; slot not refilled (${SLOTS} x 2D cap)"; fi
-    printf '# 2D production slots. The watchdog reads this every minute and rewrites it when it promotes a video.\n# SLOTS = how many 2D videos are in production at once. ACTIVE = in production. QUEUE = approved, waiting, in start order.\nSLOTS=%s\nACTIVE="%s"\nQUEUE="%s"\n' "$SLOTS" "$ACTIVE" "$QUEUE" > $CONF
+    printf '# 2D production slots. The watchdog reads this every minute and rewrites it when it promotes a video.\n# SLOTS = how many 2D videos are in production at once. ACTIVE = in production. QUEUE = approved, waiting, in start order.\nSLOTS=%s\nACTIVE="%s"\nQUEUE="%s"\nPAUSED="%s"\n' "$SLOTS" "$ACTIVE" "$QUEUE" "$PAUSED" > $CONF
   fi; done
   # 4. narration: ACTIVE first; when ACTIVE has nothing left, pre-record the next QUEUE video so voice never sits idle
   p=$(voice_pending $ACTIVE); pv=$ACTIVE

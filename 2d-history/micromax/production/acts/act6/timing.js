@@ -1,1 +1,529 @@
-window.TIMING={"dur": 53.075, "shots": [{"i": 0, "start": 0, "vo_start": 0.3, "vo_end": 13.79, "text": "In 2020, after the India-China border clash, Micromax tried a comeback with a new 'In' brand pitched as Indian. It got headlines, but not the market back.", "end": 14.19}, {"i": 1, "start": 14.19, "vo_start": 14.49, "vo_end": 27.005, "text": "The founders moved on. The companies around them, including electronics manufacturing businesses, kept going, but the Micromax that beat Samsung was gone.", "end": 27.405}, {"i": 2, "start": 27.405, "vo_start": 27.705, "vo_end": 41.235, "text": "So who killed Micromax? Jio pulled the trigger, Chinese rivals were already waiting, and a business built on other people's technology had nothing to fight back with.", "end": 41.635}, {"i": 3, "start": 41.635, "vo_start": 41.935, "vo_end": 52.375, "text": "It's a lesson for every Indian start-up: being cheap gets you in the door. Owning the technology keeps you in the room.", "end": 53.075}], "words": [{"w": "In", "s": 0.3, "e": 0.57}, {"w": "2020", "s": 0.63, "e": 1.035}, {"w": "after", "s": 1.345, "e": 1.75}, {"w": "the", "s": 1.81, "e": 2.125}, {"w": "IndiaChina", "s": 2.185, "e": 2.86}, {"w": "border", "s": 2.92, "e": 3.37}, {"w": "clash", "s": 3.43, "e": 3.88}, {"w": "Micromax", "s": 4.19, "e": 4.73}, {"w": "tried", "s": 4.79, "e": 5.195}, {"w": "a", "s": 5.255, "e": 5.48}, {"w": "comeback", "s": 5.54, "e": 6.08}, {"w": "with", "s": 6.14, "e": 6.5}, {"w": "a", "s": 6.56, "e": 6.785}, {"w": "new", "s": 6.845, "e": 7.16}, {"w": "'In'", "s": 7.22, "e": 7.58}, {"w": "brand", "s": 7.64, "e": 8.045}, {"w": "pitched", "s": 8.105, "e": 8.6}, {"w": "as", "s": 8.66, "e": 8.93}, {"w": "Indian", "s": 8.99, "e": 9.485}, {"w": "It", "s": 9.795, "e": 10.065}, {"w": "got", "s": 10.125, "e": 10.44}, {"w": "headlines", "s": 10.5, "e": 11.13}, {"w": "but", "s": 11.44, "e": 11.755}, {"w": "not", "s": 11.815, "e": 12.13}, {"w": "the", "s": 12.19, "e": 12.505}, {"w": "market", "s": 12.565, "e": 13.015}, {"w": "back", "s": 13.075, "e": 13.48}, {"w": "The", "s": 14.49, "e": 14.805}, {"w": "founders", "s": 14.865, "e": 15.405}, {"w": "moved", "s": 15.465, "e": 15.87}, {"w": "on", "s": 15.93, "e": 16.245}, {"w": "The", "s": 16.555, "e": 16.87}, {"w": "companies", "s": 16.93, "e": 17.515}, {"w": "around", "s": 17.575, "e": 18.025}, {"w": "them", "s": 18.085, "e": 18.49}, {"w": "including", "s": 18.8, "e": 19.385}, {"w": "electronics", "s": 19.445, "e": 20.12}, {"w": "manufacturing", "s": 20.18, "e": 20.945}, {"w": "businesses", "s": 21.005, "e": 21.68}, {"w": "kept", "s": 21.99, "e": 22.35}, {"w": "going", "s": 22.41, "e": 22.86}, {"w": "but", "s": 23.17, "e": 23.485}, {"w": "the", "s": 23.545, "e": 23.86}, {"w": "Micromax", "s": 23.92, "e": 24.46}, {"w": "that", "s": 24.52, "e": 24.88}, {"w": "beat", "s": 24.94, "e": 25.3}, {"w": "Samsung", "s": 25.36, "e": 25.855}, {"w": "was", "s": 25.915, "e": 26.23}, {"w": "gone", "s": 26.29, "e": 26.695}, {"w": "So", "s": 27.705, "e": 27.975}, {"w": "who", "s": 28.035, "e": 28.35}, {"w": "killed", "s": 28.41, "e": 28.86}, {"w": "Micromax", "s": 28.92, "e": 29.505}, {"w": "Jio", "s": 29.565, "e": 29.88}, {"w": "pulled", "s": 29.94, "e": 30.39}, {"w": "the", "s": 30.45, "e": 30.765}, {"w": "trigger", "s": 30.825, "e": 31.365}, {"w": "Chinese", "s": 31.675, "e": 32.17}, {"w": "rivals", "s": 32.23, "e": 32.68}, {"w": "were", "s": 32.74, "e": 33.1}, {"w": "already", "s": 33.16, "e": 33.655}, {"w": "waiting", "s": 33.715, "e": 34.255}, {"w": "and", "s": 34.565, "e": 34.88}, {"w": "a", "s": 34.94, "e": 35.165}, {"w": "business", "s": 35.225, "e": 35.765}, {"w": "built", "s": 35.825, "e": 36.23}, {"w": "on", "s": 36.29, "e": 36.56}, {"w": "other", "s": 36.62, "e": 37.025}, {"w": "people's", "s": 37.085, "e": 37.625}, {"w": "technology", "s": 37.685, "e": 38.315}, {"w": "had", "s": 38.375, "e": 38.69}, {"w": "nothing", "s": 38.75, "e": 39.245}, {"w": "to", "s": 39.305, "e": 39.575}, {"w": "fight", "s": 39.635, "e": 40.04}, {"w": "back", "s": 40.1, "e": 40.46}, {"w": "with", "s": 40.52, "e": 40.925}, {"w": "It's", "s": 41.935, "e": 42.295}, {"w": "a", "s": 42.355, "e": 42.58}, {"w": "lesson", "s": 42.64, "e": 43.09}, {"w": "for", "s": 43.15, "e": 43.465}, {"w": "every", "s": 43.525, "e": 43.93}, {"w": "Indian", "s": 43.99, "e": 44.44}, {"w": "startup", "s": 44.5, "e": 45.085}, {"w": "being", "s": 45.395, "e": 45.8}, {"w": "cheap", "s": 45.86, "e": 46.265}, {"w": "gets", "s": 46.325, "e": 46.685}, {"w": "you", "s": 46.745, "e": 47.06}, {"w": "in", "s": 47.12, "e": 47.39}, {"w": "the", "s": 47.45, "e": 47.765}, {"w": "door", "s": 47.825, "e": 48.23}, {"w": "Owning", "s": 48.54, "e": 48.99}, {"w": "the", "s": 49.05, "e": 49.365}, {"w": "technology", "s": 49.425, "e": 50.055}, {"w": "keeps", "s": 50.115, "e": 50.52}, {"w": "you", "s": 50.58, "e": 50.895}, {"w": "in", "s": 50.955, "e": 51.225}, {"w": "the", "s": 51.285, "e": 51.6}, {"w": "room", "s": 51.66, "e": 52.065}]}
+window.TIMING={
+"dur": 35.66,
+"shots": [
+{
+"i": 1,
+"start": 0.0,
+"vo_start": 0.6,
+"vo_end": 9.479,
+"text": "In 2020, after the India-China border clash, Micromax tried a comeback with a new 'In' brand pitched as Indian. It got headlines, but not the market back.",
+"end": 9.754
+},
+{
+"i": 2,
+"start": 9.754,
+"vo_start": 10.029,
+"vo_end": 19.611,
+"text": "The founders moved on. The companies around them, including electronics manufacturing businesses, kept going, but the Micromax that beat Samsung was gone.",
+"end": 19.886
+},
+{
+"i": 3,
+"start": 19.886,
+"vo_start": 20.161,
+"vo_end": 28.2,
+"text": "So who killed Micromax? Jio pulled the trigger, Chinese rivals were already waiting, and a business built on other people's technology had nothing to fight back with.",
+"end": 28.475
+},
+{
+"i": 4,
+"start": 28.475,
+"vo_start": 28.75,
+"vo_end": 34.71,
+"text": "It's a lesson for every Indian start-up: being cheap gets you in the door. Owning the technology keeps you in the room.",
+"end": 35.66
+}
+],
+"words": [
+{
+"w": "In",
+"s": 0.6,
+"e": 0.779
+},
+{
+"w": "2020,",
+"s": 0.6,
+"e": 1.219
+},
+{
+"w": "after",
+"s": 0.779,
+"e": 1.679
+},
+{
+"w": "the",
+"s": 1.499,
+"e": 1.819
+},
+{
+"w": "India-China",
+"s": 1.679,
+"e": 2.319
+},
+{
+"w": "border",
+"s": 2.079,
+"e": 2.579
+},
+{
+"w": "clash,",
+"s": 2.319,
+"e": 3.019
+},
+{
+"w": "Micromax",
+"s": 2.579,
+"e": 3.719
+},
+{
+"w": "tried",
+"s": 3.339,
+"e": 4.019
+},
+{
+"w": "a",
+"s": 3.719,
+"e": 4.159
+},
+{
+"w": "comeback",
+"s": 4.019,
+"e": 4.439
+},
+{
+"w": "with",
+"s": 4.159,
+"e": 4.719
+},
+{
+"w": "a",
+"s": 4.439,
+"e": 4.859
+},
+{
+"w": "new",
+"s": 4.719,
+"e": 5.039
+},
+{
+"w": "'In'",
+"s": 4.859,
+"e": 5.619
+},
+{
+"w": "brand",
+"s": 5.299,
+"e": 5.959
+},
+{
+"w": "pitched",
+"s": 5.619,
+"e": 6.199
+},
+{
+"w": "as",
+"s": 5.959,
+"e": 6.519
+},
+{
+"w": "Indian.",
+"s": 6.199,
+"e": 7.339
+},
+{
+"w": "It",
+"s": 7.099,
+"e": 7.559
+},
+{
+"w": "got",
+"s": 7.339,
+"e": 7.939
+},
+{
+"w": "headlines,",
+"s": 7.559,
+"e": 8.399
+},
+{
+"w": "but",
+"s": 8.259,
+"e": 8.619
+},
+{
+"w": "not",
+"s": 8.399,
+"e": 8.779
+},
+{
+"w": "the",
+"s": 8.619,
+"e": 9.039
+},
+{
+"w": "market",
+"s": 8.779,
+"e": 9.299
+},
+{
+"w": "back.",
+"s": 9.039,
+"e": 9.299
+},
+{
+"w": "The",
+"s": 10.029,
+"e": 10.251
+},
+{
+"w": "founders",
+"s": 10.251,
+"e": 10.631
+},
+{
+"w": "moved",
+"s": 10.631,
+"e": 10.951
+},
+{
+"w": "on.",
+"s": 10.951,
+"e": 11.491
+},
+{
+"w": "The",
+"s": 12.151,
+"e": 12.251
+},
+{
+"w": "companies",
+"s": 12.251,
+"e": 12.591
+},
+{
+"w": "around",
+"s": 12.591,
+"e": 12.911
+},
+{
+"w": "them,",
+"s": 12.911,
+"e": 13.271
+},
+{
+"w": "including",
+"s": 13.471,
+"e": 13.851
+},
+{
+"w": "electronics",
+"s": 13.851,
+"e": 14.391
+},
+{
+"w": "manufacturing",
+"s": 14.391,
+"e": 14.931
+},
+{
+"w": "businesses,",
+"s": 14.931,
+"e": 15.591
+},
+{
+"w": "kept",
+"s": 15.891,
+"e": 16.211
+},
+{
+"w": "going,",
+"s": 16.211,
+"e": 16.611
+},
+{
+"w": "but",
+"s": 17.071,
+"e": 17.251
+},
+{
+"w": "the",
+"s": 17.251,
+"e": 17.371
+},
+{
+"w": "Micromax",
+"s": 17.371,
+"e": 17.871
+},
+{
+"w": "that",
+"s": 17.871,
+"e": 18.091
+},
+{
+"w": "beat",
+"s": 18.091,
+"e": 18.291
+},
+{
+"w": "Samsung",
+"s": 18.291,
+"e": 18.651
+},
+{
+"w": "was",
+"s": 18.651,
+"e": 19.031
+},
+{
+"w": "gone.",
+"s": 19.031,
+"e": 19.271
+},
+{
+"w": "So",
+"s": 20.161,
+"e": 20.36
+},
+{
+"w": "who",
+"s": 20.161,
+"e": 20.5
+},
+{
+"w": "killed",
+"s": 20.36,
+"e": 20.7
+},
+{
+"w": "Micromax?",
+"s": 20.5,
+"e": 21.3
+},
+{
+"w": "Jio",
+"s": 20.7,
+"e": 22.58
+},
+{
+"w": "pulled",
+"s": 22.14,
+"e": 22.62
+},
+{
+"w": "the",
+"s": 22.58,
+"e": 22.84
+},
+{
+"w": "trigger,",
+"s": 22.62,
+"e": 23.34
+},
+{
+"w": "Chinese",
+"s": 23.16,
+"e": 23.34
+},
+{
+"w": "rivals",
+"s": 23.16,
+"e": 23.62
+},
+{
+"w": "were",
+"s": 23.34,
+"e": 23.82
+},
+{
+"w": "already",
+"s": 23.62,
+"e": 24.08
+},
+{
+"w": "waiting,",
+"s": 23.82,
+"e": 25.14
+},
+{
+"w": "and",
+"s": 24.92,
+"e": 25.26
+},
+{
+"w": "a",
+"s": 25.14,
+"e": 25.46
+},
+{
+"w": "business",
+"s": 25.26,
+"e": 25.72
+},
+{
+"w": "built",
+"s": 25.46,
+"e": 25.9
+},
+{
+"w": "on",
+"s": 25.72,
+"e": 26.02
+},
+{
+"w": "other",
+"s": 25.9,
+"e": 26.02
+},
+{
+"w": "people's",
+"s": 25.9,
+"e": 26.36
+},
+{
+"w": "technology",
+"s": 26.02,
+"e": 26.72
+},
+{
+"w": "had",
+"s": 26.36,
+"e": 26.98
+},
+{
+"w": "nothing",
+"s": 26.72,
+"e": 27.16
+},
+{
+"w": "to",
+"s": 26.98,
+"e": 27.38
+},
+{
+"w": "fight",
+"s": 27.16,
+"e": 27.56
+},
+{
+"w": "back",
+"s": 27.38,
+"e": 27.78
+},
+{
+"w": "with.",
+"s": 27.56,
+"e": 28.02
+},
+{
+"w": "It's",
+"s": 28.75,
+"e": 29.23
+},
+{
+"w": "a",
+"s": 28.75,
+"e": 29.33
+},
+{
+"w": "lesson",
+"s": 29.23,
+"e": 29.53
+},
+{
+"w": "for",
+"s": 29.33,
+"e": 29.77
+},
+{
+"w": "every",
+"s": 29.53,
+"e": 30.09
+},
+{
+"w": "Indian",
+"s": 29.77,
+"e": 30.41
+},
+{
+"w": "start-up:",
+"s": 30.09,
+"e": 31.25
+},
+{
+"w": "being",
+"s": 31.17,
+"e": 31.53
+},
+{
+"w": "cheap",
+"s": 31.25,
+"e": 31.79
+},
+{
+"w": "gets",
+"s": 31.53,
+"e": 31.99
+},
+{
+"w": "you",
+"s": 31.79,
+"e": 32.09
+},
+{
+"w": "in",
+"s": 31.99,
+"e": 32.21
+},
+{
+"w": "the",
+"s": 32.09,
+"e": 32.45
+},
+{
+"w": "door.",
+"s": 32.21,
+"e": 33.33
+},
+{
+"w": "Owning",
+"s": 33.11,
+"e": 33.41
+},
+{
+"w": "the",
+"s": 33.33,
+"e": 33.73
+},
+{
+"w": "technology",
+"s": 33.41,
+"e": 33.99
+},
+{
+"w": "keeps",
+"s": 33.73,
+"e": 34.21
+},
+{
+"w": "you",
+"s": 33.99,
+"e": 34.29
+},
+{
+"w": "in",
+"s": 34.21,
+"e": 34.39
+},
+{
+"w": "the",
+"s": 34.29,
+"e": 34.53
+},
+{
+"w": "room.",
+"s": 34.39,
+"e": 34.53
+}
+]
+}

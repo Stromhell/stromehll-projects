@@ -1,1 +1,524 @@
-window.TIMING={"dur": 53.42, "shots": [{"i": 0, "start": 0, "vo_start": 0.3, "vo_end": 13.49, "text": "Then the same machine that made Nike cool turned the world against it. Reporters found low wages, punishing hours and, in some supplier factories, children.", "end": 13.89}, {"i": 1, "start": 13.89, "vo_start": 14.19, "vo_end": 25.305, "text": "In 1996, a magazine printed a photo of a boy in Pakistan stitching footballs with the swoosh. Campus protests followed across America.", "end": 25.705}, {"i": 2, "start": 25.705, "vo_start": 26.005, "vo_end": 41.835, "text": "In 1998, Knight admitted the Nike name had become linked with slave wages, forced overtime and abuse. Nike raised minimum ages, allowed independent audits and later published its supplier list.", "end": 42.235}, {"i": 3, "start": 42.235, "vo_start": 42.535, "vo_end": 52.72, "text": "Critics said it wasn't enough. Supporters said Nike changed faster than most of the industry. That argument still goes on.", "end": 53.42}], "words": [{"w": "Then", "s": 0.3, "e": 0.66}, {"w": "the", "s": 0.72, "e": 1.035}, {"w": "same", "s": 1.095, "e": 1.455}, {"w": "machine", "s": 1.515, "e": 2.01}, {"w": "that", "s": 2.07, "e": 2.43}, {"w": "made", "s": 2.49, "e": 2.85}, {"w": "Nike", "s": 2.91, "e": 3.27}, {"w": "cool", "s": 3.33, "e": 3.69}, {"w": "turned", "s": 3.75, "e": 4.2}, {"w": "the", "s": 4.26, "e": 4.575}, {"w": "world", "s": 4.635, "e": 5.04}, {"w": "against", "s": 5.1, "e": 5.595}, {"w": "it", "s": 5.655, "e": 5.97}, {"w": "Reporters", "s": 6.28, "e": 6.865}, {"w": "found", "s": 6.925, "e": 7.33}, {"w": "low", "s": 7.39, "e": 7.705}, {"w": "wages", "s": 7.765, "e": 8.215}, {"w": "punishing", "s": 8.525, "e": 9.11}, {"w": "hours", "s": 9.17, "e": 9.575}, {"w": "and", "s": 9.635, "e": 9.995}, {"w": "in", "s": 10.305, "e": 10.575}, {"w": "some", "s": 10.635, "e": 10.995}, {"w": "supplier", "s": 11.055, "e": 11.595}, {"w": "factories", "s": 11.655, "e": 12.285}, {"w": "children", "s": 12.595, "e": 13.18}, {"w": "In", "s": 14.19, "e": 14.46}, {"w": "1996", "s": 14.52, "e": 14.925}, {"w": "a", "s": 15.235, "e": 15.46}, {"w": "magazine", "s": 15.52, "e": 16.06}, {"w": "printed", "s": 16.12, "e": 16.615}, {"w": "a", "s": 16.675, "e": 16.9}, {"w": "photo", "s": 16.96, "e": 17.365}, {"w": "of", "s": 17.425, "e": 17.695}, {"w": "a", "s": 17.755, "e": 17.98}, {"w": "boy", "s": 18.04, "e": 18.355}, {"w": "in", "s": 18.415, "e": 18.685}, {"w": "Pakistan", "s": 18.745, "e": 19.285}, {"w": "stitching", "s": 19.345, "e": 19.93}, {"w": "footballs", "s": 19.99, "e": 20.575}, {"w": "with", "s": 20.635, "e": 20.995}, {"w": "the", "s": 21.055, "e": 21.37}, {"w": "swoosh", "s": 21.43, "e": 21.925}, {"w": "Campus", "s": 22.235, "e": 22.685}, {"w": "protests", "s": 22.745, "e": 23.285}, {"w": "followed", "s": 23.345, "e": 23.885}, {"w": "across", "s": 23.945, "e": 24.395}, {"w": "America", "s": 24.455, "e": 24.995}, {"w": "In", "s": 26.005, "e": 26.275}, {"w": "1998", "s": 26.335, "e": 26.74}, {"w": "Knight", "s": 27.05, "e": 27.5}, {"w": "admitted", "s": 27.56, "e": 28.1}, {"w": "the", "s": 28.16, "e": 28.475}, {"w": "Nike", "s": 28.535, "e": 28.895}, {"w": "name", "s": 28.955, "e": 29.315}, {"w": "had", "s": 29.375, "e": 29.69}, {"w": "become", "s": 29.75, "e": 30.2}, {"w": "linked", "s": 30.26, "e": 30.71}, {"w": "with", "s": 30.77, "e": 31.13}, {"w": "slave", "s": 31.19, "e": 31.595}, {"w": "wages", "s": 31.655, "e": 32.105}, {"w": "forced", "s": 32.415, "e": 32.865}, {"w": "overtime", "s": 32.925, "e": 33.465}, {"w": "and", "s": 33.525, "e": 33.84}, {"w": "abuse", "s": 33.9, "e": 34.35}, {"w": "Nike", "s": 34.66, "e": 35.02}, {"w": "raised", "s": 35.08, "e": 35.53}, {"w": "minimum", "s": 35.59, "e": 36.085}, {"w": "ages", "s": 36.145, "e": 36.55}, {"w": "allowed", "s": 36.86, "e": 37.355}, {"w": "independent", "s": 37.415, "e": 38.09}, {"w": "audits", "s": 38.15, "e": 38.6}, {"w": "and", "s": 38.66, "e": 38.975}, {"w": "later", "s": 39.035, "e": 39.44}, {"w": "published", "s": 39.5, "e": 40.085}, {"w": "its", "s": 40.145, "e": 40.46}, {"w": "supplier", "s": 40.52, "e": 41.06}, {"w": "list", "s": 41.12, "e": 41.525}, {"w": "Critics", "s": 42.535, "e": 43.03}, {"w": "said", "s": 43.09, "e": 43.45}, {"w": "it", "s": 43.51, "e": 43.78}, {"w": "wasn't", "s": 43.84, "e": 44.29}, {"w": "enough", "s": 44.35, "e": 44.845}, {"w": "Supporters", "s": 45.155, "e": 45.785}, {"w": "said", "s": 45.845, "e": 46.205}, {"w": "Nike", "s": 46.265, "e": 46.625}, {"w": "changed", "s": 46.685, "e": 47.18}, {"w": "faster", "s": 47.24, "e": 47.69}, {"w": "than", "s": 47.75, "e": 48.11}, {"w": "most", "s": 48.17, "e": 48.53}, {"w": "of", "s": 48.59, "e": 48.86}, {"w": "the", "s": 48.92, "e": 49.235}, {"w": "industry", "s": 49.295, "e": 49.88}, {"w": "That", "s": 50.19, "e": 50.55}, {"w": "argument", "s": 50.61, "e": 51.15}, {"w": "still", "s": 51.21, "e": 51.615}, {"w": "goes", "s": 51.675, "e": 52.035}, {"w": "on", "s": 52.095, "e": 52.41}]}
+window.TIMING={
+"dur": 39.959,
+"shots": [
+{
+"i": 1,
+"start": 0.0,
+"vo_start": 0.6,
+"vo_end": 10.4,
+"text": "Then the same machine that made Nike cool turned the world against it. Reporters found low wages, punishing hours and, in some supplier factories, children.",
+"end": 10.675
+},
+{
+"i": 2,
+"start": 10.675,
+"vo_start": 10.95,
+"vo_end": 19.47,
+"text": "In 1996, a magazine printed a photo of a boy in Pakistan stitching footballs with the swoosh. Campus protests followed across America.",
+"end": 19.745
+},
+{
+"i": 3,
+"start": 19.745,
+"vo_start": 20.02,
+"vo_end": 31.18,
+"text": "In 1998, Knight admitted the Nike name had become linked with slave wages, forced overtime and abuse. Nike raised minimum ages, allowed independent audits and later published its supplier list.",
+"end": 31.455
+},
+{
+"i": 4,
+"start": 31.455,
+"vo_start": 31.73,
+"vo_end": 39.009,
+"text": "Critics said it wasn't enough. Supporters said Nike changed faster than most of the industry. That argument still goes on.",
+"end": 39.959
+}
+],
+"words": [
+{
+"w": "Then",
+"s": 0.6,
+"e": 0.92
+},
+{
+"w": "the",
+"s": 0.6,
+"e": 1.06
+},
+{
+"w": "same",
+"s": 0.92,
+"e": 1.28
+},
+{
+"w": "machine",
+"s": 1.06,
+"e": 1.58
+},
+{
+"w": "that",
+"s": 1.28,
+"e": 1.8
+},
+{
+"w": "made",
+"s": 1.58,
+"e": 2.06
+},
+{
+"w": "Nike",
+"s": 1.8,
+"e": 2.38
+},
+{
+"w": "cool",
+"s": 2.06,
+"e": 2.68
+},
+{
+"w": "turned",
+"s": 2.38,
+"e": 3.18
+},
+{
+"w": "the",
+"s": 2.68,
+"e": 3.34
+},
+{
+"w": "world",
+"s": 3.18,
+"e": 3.52
+},
+{
+"w": "against",
+"s": 3.34,
+"e": 3.76
+},
+{
+"w": "it.",
+"s": 3.52,
+"e": 4.44
+},
+{
+"w": "Reporters",
+"s": 3.76,
+"e": 5.24
+},
+{
+"w": "found",
+"s": 4.96,
+"e": 5.56
+},
+{
+"w": "low",
+"s": 5.24,
+"e": 5.82
+},
+{
+"w": "wages,",
+"s": 5.56,
+"e": 6.18
+},
+{
+"w": "punishing",
+"s": 5.82,
+"e": 6.78
+},
+{
+"w": "hours",
+"s": 6.56,
+"e": 7.16
+},
+{
+"w": "and,",
+"s": 6.78,
+"e": 8.16
+},
+{
+"w": "in",
+"s": 7.72,
+"e": 8.38
+},
+{
+"w": "some",
+"s": 8.16,
+"e": 8.76
+},
+{
+"w": "supplier",
+"s": 8.38,
+"e": 9.26
+},
+{
+"w": "factories,",
+"s": 8.76,
+"e": 9.9
+},
+{
+"w": "children.",
+"s": 9.76,
+"e": 9.9
+},
+{
+"w": "In",
+"s": 10.95,
+"e": 11.11
+},
+{
+"w": "1996,",
+"s": 10.95,
+"e": 11.71
+},
+{
+"w": "a",
+"s": 11.11,
+"e": 12.35
+},
+{
+"w": "magazine",
+"s": 12.29,
+"e": 12.73
+},
+{
+"w": "printed",
+"s": 12.35,
+"e": 13.05
+},
+{
+"w": "a",
+"s": 12.73,
+"e": 13.29
+},
+{
+"w": "photo",
+"s": 13.05,
+"e": 13.53
+},
+{
+"w": "of",
+"s": 13.29,
+"e": 13.95
+},
+{
+"w": "a",
+"s": 13.53,
+"e": 14.07
+},
+{
+"w": "boy",
+"s": 13.95,
+"e": 14.27
+},
+{
+"w": "in",
+"s": 14.07,
+"e": 14.97
+},
+{
+"w": "Pakistan",
+"s": 14.27,
+"e": 14.97
+},
+{
+"w": "stitching",
+"s": 14.97,
+"e": 15.41
+},
+{
+"w": "footballs",
+"s": 14.97,
+"e": 16.13
+},
+{
+"w": "with",
+"s": 15.41,
+"e": 16.23
+},
+{
+"w": "the",
+"s": 16.13,
+"e": 16.79
+},
+{
+"w": "swoosh.",
+"s": 16.37,
+"e": 17.75
+},
+{
+"w": "Campus",
+"s": 17.53,
+"e": 18.11
+},
+{
+"w": "protests",
+"s": 17.75,
+"e": 18.49
+},
+{
+"w": "followed",
+"s": 18.11,
+"e": 18.81
+},
+{
+"w": "across",
+"s": 18.49,
+"e": 19.13
+},
+{
+"w": "America.",
+"s": 18.81,
+"e": 19.13
+},
+{
+"w": "In",
+"s": 20.02,
+"e": 20.82
+},
+{
+"w": "1998,",
+"s": 20.2,
+"e": 21.44
+},
+{
+"w": "Knight",
+"s": 21.32,
+"e": 21.82
+},
+{
+"w": "admitted",
+"s": 21.44,
+"e": 22.06
+},
+{
+"w": "the",
+"s": 21.82,
+"e": 22.3
+},
+{
+"w": "Nike",
+"s": 22.06,
+"e": 22.6
+},
+{
+"w": "name",
+"s": 22.3,
+"e": 22.84
+},
+{
+"w": "had",
+"s": 22.6,
+"e": 23.12
+},
+{
+"w": "become",
+"s": 22.84,
+"e": 23.38
+},
+{
+"w": "linked",
+"s": 23.12,
+"e": 23.62
+},
+{
+"w": "with",
+"s": 23.38,
+"e": 23.9
+},
+{
+"w": "slave",
+"s": 23.62,
+"e": 24.28
+},
+{
+"w": "wages,",
+"s": 23.9,
+"e": 25.08
+},
+{
+"w": "forced",
+"s": 24.74,
+"e": 25.44
+},
+{
+"w": "overtime",
+"s": 25.08,
+"e": 25.66
+},
+{
+"w": "and",
+"s": 25.44,
+"e": 25.94
+},
+{
+"w": "abuse.",
+"s": 25.66,
+"e": 26.86
+},
+{
+"w": "Nike",
+"s": 26.7,
+"e": 27.1
+},
+{
+"w": "raised",
+"s": 26.86,
+"e": 27.36
+},
+{
+"w": "minimum",
+"s": 27.1,
+"e": 27.72
+},
+{
+"w": "ages,",
+"s": 27.36,
+"e": 27.72
+},
+{
+"w": "allowed",
+"s": 27.36,
+"e": 28.3
+},
+{
+"w": "independent",
+"s": 28.02,
+"e": 28.72
+},
+{
+"w": "audits",
+"s": 28.3,
+"e": 29.08
+},
+{
+"w": "and",
+"s": 28.72,
+"e": 29.48
+},
+{
+"w": "later",
+"s": 29.08,
+"e": 29.74
+},
+{
+"w": "published",
+"s": 29.48,
+"e": 30.08
+},
+{
+"w": "its",
+"s": 29.74,
+"e": 30.3
+},
+{
+"w": "supplier",
+"s": 30.08,
+"e": 30.64
+},
+{
+"w": "list.",
+"s": 30.3,
+"e": 30.92
+},
+{
+"w": "Critics",
+"s": 31.73,
+"e": 32.049
+},
+{
+"w": "said",
+"s": 32.049,
+"e": 32.289
+},
+{
+"w": "it",
+"s": 32.289,
+"e": 32.389
+},
+{
+"w": "wasn't",
+"s": 32.389,
+"e": 32.729
+},
+{
+"w": "enough.",
+"s": 32.729,
+"e": 33.049
+},
+{
+"w": "Supporters",
+"s": 33.989,
+"e": 34.039
+},
+{
+"w": "said",
+"s": 33.989,
+"e": 34.429
+},
+{
+"w": "Nike",
+"s": 34.429,
+"e": 34.749
+},
+{
+"w": "changed",
+"s": 34.749,
+"e": 35.129
+},
+{
+"w": "faster",
+"s": 35.129,
+"e": 35.429
+},
+{
+"w": "than",
+"s": 35.429,
+"e": 35.769
+},
+{
+"w": "most",
+"s": 35.769,
+"e": 36.009
+},
+{
+"w": "of",
+"s": 36.009,
+"e": 36.209
+},
+{
+"w": "the",
+"s": 36.209,
+"e": 36.289
+},
+{
+"w": "industry.",
+"s": 36.289,
+"e": 36.709
+},
+{
+"w": "That",
+"s": 37.489,
+"e": 37.669
+},
+{
+"w": "argument",
+"s": 37.669,
+"e": 38.029
+},
+{
+"w": "still",
+"s": 38.029,
+"e": 38.349
+},
+{
+"w": "goes",
+"s": 38.349,
+"e": 38.609
+},
+{
+"w": "on.",
+"s": 38.609,
+"e": 38.849
+}
+]
+}
