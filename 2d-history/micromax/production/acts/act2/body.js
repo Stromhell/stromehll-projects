@@ -10,8 +10,8 @@ const samplePhone = (c) => { c.save(); c.scale(.32, .32); MX.phone(c, 30, 40, 1,
 window.SHOTS = [
   // 2.01 a yellow PCO booth on a dusty road; a queue waits; one man is on the phone
   { plate: 'pco_road', cam: { z: [1.06, 1.14], x: [1400, 1420], y: [860, 860] }, bed: [['birds_loop', .2], ['wind_loop', .12]],
-    figs: [{ x: 1330, y: 1290, s: 1.7, ...MX.VILLAGER(0), facing: -1, pose: 'think', mood: 'happy', anim: (o, lt) => { o.talk = Math.floor(lt * 3) % 2 === 0; } },
-      ...[1, 2, 3].map(i => ({ x: 1520 + i * 210, y: 1300 + (i % 2) * 20, s: 1.72, ...MX.VILLAGER(i), facing: -1, mood: i === 2 ? 'sad' : 'neutral', walk: { x0: 2900 + i * 160, x1: 1520 + i * 210, t0: .2 + i * .5, dur: 2.6 }, anim: (o, lt) => { if (lt > 5 + i) o.pose = 'shrug'; } }))],
+    figs: [{ x: 1600, y: 1300, s: 1.7, ...MX.VILLAGER(0), facing: -1, pose: 'think', mood: 'happy', anim: (o, lt) => { o.talk = Math.floor(lt * 3) % 2 === 0; } },
+      ...[1, 2, 3].map(i => ({ x: 1650 + i * 210, y: 1300 + (i % 2) * 20, s: 1.72, ...MX.VILLAGER(i), facing: -1, mood: i === 2 ? 'sad' : 'neutral', walk: { x0: 2950 + i * 160, x1: 1650 + i * 210, t0: .2 + i * .5, dur: 2.6 }, anim: (o, lt) => { if (lt > 5 + i) o.pose = 'shrug'; } }))],
     init: S => { const tL = A.at(S, 'luxury', 2.4), tB = A.at(S, 'booths', 6);
       S.D.over = [(c, lt) => K.dateTag(c, 'AROUND 2000', lt, { at: .3 }), (c, lt) => K.card(c, 'A MOBILE PHONE = A LUXURY', lt, { at: tL, x: 520, y: 220, px: 44, rot: -3 }), (c, lt) => K.card(c, 'CALLS FROM THE BOOTH', lt, { at: tB, x: 560, y: 340, px: 40, rot: 2 })];
       S.D.sfx = [[.3, 'footsteps', .25], [tB, 'phone_ring', .2]]; } },
@@ -21,7 +21,7 @@ window.SHOTS = [
       const sp = Math.sin(lt * 9) > .85; if (sp) { c.fillStyle = '#fff6a0'; for (let k = 0; k < 6; k++) { c.beginPath(); c.arc(2250 + Math.cos(k) * 30, 420 + Math.sin(k * 2) * 30, 6, 0, 7); c.fill(); } } }],
     figs: [{ x: 2150, y: 892, s: 1.5, ...MX.P({ costume: 'farmer', topCol: '#4a6a8a', hair: 'short', seed: 40 }), facing: 1, pose: 'reach', mood: 'angry', anim: (o, lt) => { o.pose = Math.floor(lt * 1.2) % 2 ? 'reach' : 'shrug'; } }],
     init: S => { const tE = A.at(S, 'expensive', 1.6), tM = A.at(S, 'messy', 2.8), tR = A.at(S, 'repairs', 4);
-      S.D.over = [(c, lt) => K.card(c, 'EXPENSIVE', lt, { at: tE, x: 420, y: 260, px: 48, rot: -4 }), (c, lt) => K.card(c, 'MESSY WIRING', lt, { at: tM, x: 460, y: 400, px: 48, rot: 3 }), (c, lt) => K.card(c, 'CONSTANT REPAIRS', lt, { at: tR, x: 440, y: 540, px: 48, rot: -2 })];
+      S.D.over = [(c, lt) => K.card(c, 'EXPENSIVE', lt, { at: tE, x: 900, y: 200, px: 48, rot: -4 }), (c, lt) => K.card(c, 'MESSY WIRING', lt, { at: tM, x: 920, y: 320, px: 48, rot: 3 }), (c, lt) => K.card(c, 'CONSTANT REPAIRS', lt, { at: tR, x: 900, y: 440, px: 48, rot: -2 })];
       S.D.sfx = [[.4, 'creak', .3], [tE, 'pop', .3], [tM, 'pop', .3], [tR, 'thud', .3], [2, 'hum_loop', .2]]; } },
   // 2.03 close-up: a booth phone; a SIM slides in, an antenna goes up
   { draw: (c, lt, u, S) => { backdrop('phone_shop', .45, 8)(c); const ant = K.seg(lt, S.tA, S.tA + .8); c.save(); MX.glow(c, 860, 640, 500, '#e8661a', .2); c.restore();
@@ -63,7 +63,7 @@ window.SHOTS = [
   // 2.09 a new car outside; his parents wave
   { plate: 'pco_road', cam: { z: [1.06, 1.12], x: [900, 920], y: [860, 860] }, bed: [['birds_loop', .2]],
     front: [(c, lt) => { const x = 1650 - 900 * E.out(K.seg(lt, 0, 1.8)); car(c, Math.max(x, 750), 1330, 1.25); }],
-    figs: [{ x: 1300, y: 1340, s: 1.85, ...MX.FATHER, facing: -1, pose: 'wave', mood: 'happy', anim: (o, lt) => { o.pose = lt > 1.8 ? (Math.floor(lt * 2) % 2 ? 'wave' : 'cheer') : 'stand'; } }, { x: 1550, y: 1340, s: 1.8, ...MX.MOTHER, facing: -1, pose: 'cheer', mood: 'happy', anim: (o, lt) => { o.pose = lt > 2 ? 'cheer' : 'stand'; } }],
+    figs: [{ x: 1740, y: 1340, s: 1.85, ...MX.FATHER, facing: -1, pose: 'wave', mood: 'happy', anim: (o, lt) => { o.pose = lt > 1.8 ? (Math.floor(lt * 2) % 2 ? 'wave' : 'cheer') : 'stand'; } }, { x: 1990, y: 1340, s: 1.8, ...MX.MOTHER, facing: -1, pose: 'cheer', mood: 'happy', anim: (o, lt) => { o.pose = lt > 2 ? 'cheer' : 'stand'; } }],
     init: S => { const tP = A.at(S, 'parents', 2.6);
       S.D.over = [(c, lt) => K.card(c, 'A NEW CAR', lt, { at: 1.6, x: 520, y: 220, px: 50, rot: -3 }), (c, lt) => K.card(c, 'THIS COMPUTER BUSINESS MIGHT ACTUALLY WORK', lt, { at: tP + .6, x: 1100, y: 340, px: 34, rot: 2 })];
       S.D.sfx = [[0, 'whoosh', .3], [1.8, 'pop', .2], [2, 'crowd_cheer', .25]]; } },
