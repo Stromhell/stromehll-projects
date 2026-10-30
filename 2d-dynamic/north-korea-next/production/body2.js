@@ -1,0 +1,67 @@
+const horse = (c, x, y, h, lt, L, o = {}) => VP.figure(c, [x, y], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => VP.horse(cc, x, y, h, Object.assign({ face: 1, ph: 0, walk: 0, t: lt, col: WHITEH, tack: { cloth: ['#a82a22', '#5a1410'], trim: '#c8a040' } }, o), L));
+const sit = (c, ch, x, y, uu, lt, k, L, o = {}, f = {}) => fig(c, ch, x, y, uu, Object.assign(VP.sit(ch, lt * .2, k, { seat: .4 }), o), lt, k, L, f);
+
+window.SHOTS = [
+  // 2.01 MED: a banquet hall; the girl sits at the centre of the top table between her parents; generals stand behind
+  { set: 'nk_banquet', cam: { z: [1.08, 1.16], x: [640, 640], y: [420, 430], ease: E.io }, bed: [['waltz', .12], ['crowd_loop', .1]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tG = at(Sh, 'generals', Sh.dur - 2.5); },
+    draw: (c, lt, u, Sh) => { const L = CANDLE(lt);
+      [C.GEN1, C.GEN2, C.GEN3, C.GEN4, C.GEN2, C.GEN1, C.GEN3].forEach((ch, k) => fig(c, ch, 260 + k * 126, 520, 27, pose(lt * .3, k + 3, { face: k < 3 ? 1 : -1, shN: 4, elN: 6 }), lt, k + 3, L, { look: [0, .2] }));
+      sit(c, C.KIM, 500, 606, 34, lt, 0, L, { face: 1, shN: 30, elN: 70 }, { look: [.6, .2], smile: 1 });
+      sit(c, C.GIRLB, 640, 606, 25, lt, 1, L, { face: 1, shN: 30, elN: 70 }, { look: [0, 0], smile: 1 });
+      sit(c, C.RSJ, 780, 606, 32, lt, 2, L, { face: -1, shN: 30, elN: 70 }, { look: [-.6, .2], smile: 1 });
+      c.fillStyle = '#f4f0e8'; c.fillRect(300, 560, 680, 100); c.fillStyle = '#d8d0c0'; c.fillRect(300, 640, 680, 20); c.fillStyle = '#c8a040'; c.fillRect(300, 560, 680, 6);
+      [380, 470, 560, 720, 810, 900].forEach(x => S.ecGlass(c, x, 556, 1, .5, '#e8c060')); },
+    over: [(c, lt) => K.dateTag(c, 'FEB 2023 · ARMY ANNIVERSARY', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'CENTRE OF THE TOP TABLE', lt, { at: Sh.tG, x: 1400, y: 150, px: 44, rot: 2 })],
+    sfx: [[.1, 'waltz', .12], [.2, 'crowd_loop', .1], [2, 'chime', .2], ['generals', 'march', .2]] },
+
+  // 2.02 WIDE: Kim Il Sung Square at night; columns march, a missile truck rolls by, then a white horse is led past
+  { set: 'nk_square', cam: { z: [1.05, 1.1], x: [640, 640], y: [400, 400], ease: E.io }, bed: [['march_loop', .25], ['crowd_loop', .15]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tH = at(Sh, 'horse', Sh.dur * .4); },
+    draw: (c, lt, u, Sh) => { const L = NIGHT(lt);
+      if (lt < Sh.tH) { for (let r = 0; r < 2; r++) for (let k = 0; k < 9; k++) { const x = ((lt * 60 + k * 150) % 1500) - 120; fig(c, C.SOLD, x, 560 + r * 40, 22 + r * 3, walk(lt * 1.2, k, { face: 1, shN: 20 }), lt, k, L, { look: [.6, 0] }); }
+        S.nkParadeTruck(c, lerp(-300, 1600, seg(lt, 1, Sh.tH)), 660, .8, 1); }
+      else { const x = lerp(-150, 1400, seg(lt, Sh.tH, Sh.dur + 1)); horse(c, x, 650, 180, lt, L, { walk: 1, ph: lt * 1.4 }); fig(c, C.SOLD, x + 130, 664, 32, walk(lt * 1.2, 0, { face: 1, shN: -50, elN: 10 }), lt, 0, L, { look: [-.5, 0] }); VP.glow(c, x, 560, 200, '#e8f0ff', .25); } },
+    over: [(c, lt) => K.dateTag(c, 'KIM IL SUNG SQUARE · 8 FEB 2023', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, '"MOST LOVED BY THE BELOVED CHILD"', lt, { at: Sh.tH + 2, x: 1240, y: 150, px: 38, rot: 2 })],
+    sfx: [[.1, 'march_loop', .25], [.2, 'crowd_loop', .15], [2, 'engine_loop', .2], ['horse', 'hooves', .35], ['horse', 'cheer', .2]] },
+
+  // 2.03 MED: a propaganda painting comes alive; a rider on a white horse gallops through snow on the sacred mountain
+  { set: 'nk_snow', cam: { z: [1.1, 1.0], x: [640, 640], y: [400, 380], ease: E.io }, bed: [['hooves_loop', .3], ['wind_loop', .2]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tP = at(Sh, 'Paektu', Sh.dur - 2.4); },
+    draw: (c, lt, u, Sh) => { const L = SUN(lt), x = lerp(100, 1180, seg(lt, 0, Sh.dur));
+      for (let k = 0; k < 10; k++) { const p = ((lt * 2 + k * .1) % 1); c.fillStyle = S.rgba('#ffffff', .7 * (1 - p)); c.beginPath(); c.arc(x - 60 - p * 80 - k * 4, 640 - p * 40, 6 + p * 14, 0, TAU); c.fill(); }
+      ride(c, C.KIMY, x, 650, 30, WHITEH, lt, lt * 3, 2, L, { shN: 40, elN: 60 }, { look: [.6, -.2] }, 1); S.nkSnow(c, lt, 60, .6);
+      const q = 1 - seg(lt, 0, 2.5); if (q > 0) { c.save(); c.globalAlpha = q; c.lineWidth = 60; c.strokeStyle = '#c8a040'; c.strokeRect(30, 30, 1220, 660); c.fillStyle = S.rgba('#f0d8a0', .35); c.fillRect(0, 0, 1280, 720); c.restore(); } },
+    over: [(c, lt, u, Sh) => K.card(c, 'MOUNT PAEKTU · SACRED MOUNTAIN', lt, { at: Sh.tP, x: 1350, y: 150, px: 40, rot: 2 })],
+    sfx: [[.1, 'hooves_loop', .3], [.2, 'wind_loop', .2], [.4, 'swell', .3]] },
+
+  // 2.04 MED: a launch site at night; the girl in a black leather coat stands in front; her father just behind; a rocket rises
+  { set: 'nk_sat', cam: { z: [1.15, 1.25], x: [600, 620], y: [440, 430], ease: E.io }, bed: [['wind_loop', .15]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tL = at(Sh, 'launch', 3); Sh.tB = at(Sh, 'background', Sh.dur - 1.8); },
+    draw: (c, lt, u, Sh) => { const L = FIRE(lt), q = seg(lt, Sh.tL, Sh.dur + 2), lift = E.inn(q) * .6;
+      S.nkRocket(c, 895, 470, .9, lift, lt); if (q > 0) { S.nkSmoke(c, 895, 470, Math.min(1, q * 3), lt); VP.glow(c, 895, 470 - lift * 810, 260, '#ffb050', .5); }
+      fig(c, C.KIML, 520, 664, 36, pose(lt, 0, { face: 1, shN: 10, elN: 20 }), lt, 0, L, { look: [.5, -.7], smile: 1 });
+      fig(c, C.GIRLL, 590, 680, 26, pose(lt, 1, { face: 1, shN: 10, elN: 20 }), lt, 1, L, { look: [.5, -.7] }); },
+    over: [(c, lt) => K.dateTag(c, 'SPY SATELLITE · NOV 2023', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'HE STANDS BEHIND HER', lt, { at: Sh.tB, x: 1400, y: 150, px: 46, rot: 2 })],
+    sfx: [[.1, 'wind_loop', .15], ['launch', 'riser', .35], ['launch', 'engine_loop', .3], ['launch', 'cannon', .4]] },
+
+  // 2.05 MED: a briefing screen; bars of TV appearances grow year by year, small missile and tank icons pop on them
+  { set: 'nk_brief', cam: { z: [1.12, 1.2], x: [640, 640], y: [280, 280], ease: E.io }, bed: [['office_loop', .15]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tM = at(Sh, 'military', Sh.dur - 2); },
+    draw: (c, lt, u, Sh) => { c.strokeStyle = S.rgba('#e8e4dc', .6); c.lineWidth = 2; c.beginPath(); c.moveTo(360, 400); c.lineTo(930, 400); c.stroke();
+      [['2022', .12], ['2023', .4], ['2024', .95], ['2025', .8]].forEach(([y, v], k) => { const q = E.out(seg(lt, 1 + k * .8, 2 + k * .8)), x = 400 + k * 140, hgt = 280 * v * q; c.fillStyle = k === 2 ? '#e8c040' : '#8ab0d8'; c.fillRect(x, 400 - hgt, 90, hgt); c.fillStyle = '#e8e4dc'; c.font = '26px Oswald'; c.textAlign = 'center'; c.fillText(y, x + 45, 430);
+        if (lt > Sh.tM && k >= 2) { const m = Math.floor(hgt * .55); c.fillStyle = S.rgba('#c8402a', .75); c.fillRect(x, 400 - m, 90, m); } c.textAlign = 'left'; }); },
+    over: [(c, lt) => K.card(c, 'DAYS ON STATE TV · NIKKEI ASIA', lt, { at: .4, x: 960, y: 70, px: 38, rot: -1 }), (c, lt, u, Sh) => K.card(c, 'OVER HALF: MILITARY', lt, { at: Sh.tM, x: 1500, y: 300, px: 42, rot: 2 })],
+    sfx: [[.1, 'office_loop', .15], [1, 'pop', .25], [1.8, 'pop', .25], [2.6, 'pop', .3], [3.4, 'pop', .25], ['military', 'drum', .3]] },
+
+  // 2.06 WIDE: Beijing; father and daughter walk past their green train; then three leaders stand before the red gate
+  { set: 'nk_beijing', cam: { z: [1.05, 1.1], x: [640, 660], y: [420, 420], ease: E.io }, bed: [['crowd_loop', .15], ['march_loop', .1]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tS = at(Sh, 'stood', Sh.dur * .5); },
+    draw: (c, lt, u, Sh) => { const L = SUN(lt);
+      if (lt < Sh.tS) { S.nkTrain(c, 640, 600, 1, 0); const w = seg(lt, 0, Sh.tS); fig(c, C.KIM, lerp(-80, 760, w), 680, 36, walk(lt, 0, { face: 1 }), lt, 0, L, { look: [.6, 0] }); fig(c, C.GIRLB, lerp(-30, 810, w), 684, 25, walk(lt + .2, 1, { face: 1 }), lt, 1, L, { look: [.6, -.2] }); return; }
+      [[C.PUTIN, 470, 1], [C.XI, 640, 1], [C.KIM, 810, -1]].forEach(([ch, x, f], k) => fig(c, ch, x, 660, 35, pose(lt, k, { face: f, shN: 20, elN: 40 }), lt, k, L, { look: [f * .3, 0] })); },
+    over: [(c, lt) => K.dateTag(c, 'BEIJING · SEPT 2025', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'XI · KIM · PUTIN', lt, { at: Sh.tS + .3, x: 1400, y: 150, px: 46, rot: 2 })],
+    sfx: [[.1, 'crowd_loop', .15], [.2, 'steam', .3], [.5, 'footsteps', .3], ['stood', 'march_loop', .15], ['stood', 'camera_shutter', .3]] },
+];
+VP.build(); K.boot();
+</script></body></html>
