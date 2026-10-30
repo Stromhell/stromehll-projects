@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# pack: squeeze a folder of build code into ONE compressed markdown file (repomix).
+# Use for handoffs and "read this whole video's build" moments instead of opening
+# files one by one. Code is reduced to signatures/structure (~5x fewer tokens).
+#   tools/agent-kit/pack <folder> [out.md]
+# Default include = code only (js, py, sh, html, json); media is never read.
+set -euo pipefail
+DIR="${1:?usage: pack <folder> [out.md]}"
+OUT="${2:-${TMPDIR:-/tmp}/pack-$(basename "$DIR").md}"
+INC="${PACK_INCLUDE:-**/*.js,**/*.py,**/*.sh,**/*.html,**/*.json}"
+cd "$DIR"
+npx -y repomix@1 --compress --style markdown --no-file-summary \
+  --include "$INC" --ignore "**/node_modules/**,**/*.min.js,**/timing.json" \
+  -o "$OUT" >/dev/null
+echo "$OUT ($(wc -c <"$OUT") bytes, ~$(( $(wc -c <"$OUT") / 4 )) tokens)"
