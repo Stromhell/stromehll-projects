@@ -86,7 +86,7 @@ window.SHOTS = [
       S.szFireworks(c, lt, 6, [100, 40, 1080, 220]);
       const oq = seg(lt, Sh.tO - .3, Sh.tO + .6); if (oq > 0) { c.save(); c.globalAlpha = oq; c.fillStyle = '#e8dcc0'; c.fillRect(940, 300, 260, 140); c.beginPath(); c.arc(1070, 300, 70, Math.PI, TAU); c.fill(); for (let k = 0; k < 6; k++) { c.fillStyle = '#ffd890'; c.fillRect(956 + k * 40, 340, 18, 50); } VP.glow(c, 1070, 360, 220, '#ffd890', .4); c.restore(); }
       [[420, C.GUEST, 0], [520, C.GUESTW, 1], [700, C.ISMAIL, 2], [820, C.GUESTW, 3]].forEach(([x, ch, k]) => { S.contact(c, x, 660, 18, .4); VP.figure(c, [x, 660], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, ch, x, 660, 34, Object.assign(S.idle(lt, k), { face: k < 2 ? 1 : -1, shN: k === 2 ? 130 : 50, elN: 40, holdN: k === 2 ? null : wr => { cc.fillStyle = S.rgba('#f0e8c0', .8); cc.fillRect(wr[0] - 3, wr[1] - 14, 6, 12); } }), { blink: S.blinkAt(lt, k), smile: 1, look: [0, -.6], time: lt }, L)); }); },
-    over: [(c, lt, u, Sh) => K.card(c, 'ISMAIL\'S PARTY', lt, { at: .8, x: 600, y: 940, px: 52, rot: -2 }), (c, lt, u, Sh) => K.badge(c, 'NEW CAIRO OPERA HOUSE · 1869', lt, { at: Sh.tO + .3 })],
+    over: [(c, lt, u, Sh) => K.card(c, 'ISMAIL\'S PARTY', lt, { at: .8, x: 600, y: 840, px: 52, rot: -2 }), (c, lt, u, Sh) => K.badge(c, 'NEW CAIRO OPERA HOUSE · 1869', lt, { at: Sh.tO + .3 })],
     sfx: [[.4, 'firework', .45], [1.9, 'firework', .4], [3.3, 'firework', .4], ['expensive', 'coins', .3], ['opera house', 'swell', .35]] },
 ];
 VP.build(); K.boot();

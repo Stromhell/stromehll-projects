@@ -67,7 +67,7 @@ window.SHOTS = [
       if (q < .5) { c.strokeStyle = '#8a2a1a'; c.lineWidth = 2; c.setLineDash([6, 5]); c.beginPath(); c.moveTo(0, yM); c.lineTo(0, yR); c.stroke(); c.setLineDash([]); c.fillStyle = '#8a2a1a'; c.fillText('10 m?', 36, (yM + yR) / 2); }
       done();
       const st = seg(lt, Sh.tW - .1, Sh.tW + .25); if (st > 0) { c.save(); c.translate(640, 230); c.rotate(-.12); const sc = lerp(2.4, 1, E.out(st)); c.scale(sc, sc); c.globalAlpha = Math.min(1, st * 2); c.strokeStyle = '#c82020'; c.lineWidth = 7; c.strokeRect(-150, -46, 300, 92); c.fillStyle = '#c82020'; c.font = '72px Anton'; c.textAlign = 'center'; c.fillText('WRONG', 0, 26); c.restore(); } },
-    over: [(c, lt, u, Sh) => K.card(c, '1847: SAME LEVEL', lt, { at: Sh.tS - .2, x: 960, y: 960, px: 60, rot: -2 })],
+    over: [(c, lt, u, Sh) => K.card(c, '1847: SAME LEVEL', lt, { at: Sh.tS - .2, x: 960, y: 840, px: 60, rot: -2 })],
     sfx: [['wrong', 'stamp', .6], ['1847', 'paper', .35], ['same height', 'chime', .4]] },
 
   // 3.04 MED: flashback (sepia): young de Lesseps laughing with young Said; horses grazing behind
@@ -94,7 +94,7 @@ window.SHOTS = [
       const done = paper(c, 640, 380, 420, 300, -.03); c.font = '34px Caveat'; c.fillStyle = '#2a1a0a'; c.textAlign = 'center'; c.fillText('Firman of Concession', 0, -100); c.font = '20px Caveat'; for (let k = 0; k < 5; k++) c.fillText('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~', 0, -60 + k * 24);
       const sq = seg(lt, Sh.tW + .5, Sh.tW + .9); c.save(); c.translate(120, 100); c.scale(lerp(2, 1, sq), lerp(2, 1, sq)); c.globalAlpha = sq; c.fillStyle = '#a82020'; c.beginPath(); c.arc(0, 0, 28, 0, TAU); c.fill(); c.fillStyle = '#d84040'; c.beginPath(); c.arc(-6, -6, 10, 0, TAU); c.fill(); c.restore();
       c.strokeStyle = '#1a1a3a'; c.lineWidth = 2; c.beginPath(); const sg = seg(lt, Sh.tW, Sh.tW + .6); for (let k = 0; k <= 30 * sg; k++) c.lineTo(-160 + k * 6, 100 + Math.sin(k * .9) * 8); c.stroke(); done(); },
-    over: [(c, lt) => K.dateTag(c, '1854', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'THE RIGHT TO BUILD', lt, { at: Sh.tW + .8, x: 960, y: 940, px: 60, rot: -2 })],
+    over: [(c, lt) => K.dateTag(c, '1854', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'THE RIGHT TO BUILD', lt, { at: Sh.tW + .8, x: 1500, y: 170, px: 60, rot: -2 })],
     sfx: [['rode', 'hooves', .5], ['walked away', 'paper', .45], ['canal', 'stamp', .45]] },
 
   // 3.06 MED: London; Palmerston at a window frowning; a newsboy waves a paper: FRAUD
