@@ -1,1 +1,801 @@
-window.TIMING={"dur": 56.98, "shots": [{"i": 1, "start": 0.3, "vo_start": 0.6, "vo_end": 8.37, "text": "Since the full-scale invasion of Ukraine, Putin has held many meetings by video, from what is presented as his office at Novo-Ogaryovo.", "end": 8.87}, {"i": 2, "start": 8.87, "vo_start": 9.17, "vo_end": 13.385, "text": "Russians know that room by sight: the desk, the wood panels, the flags.", "end": 13.885}, {"i": 3, "start": 13.885, "vo_start": 14.185, "vo_end": 19.99, "text": "But journalists comparing the footage spotted something odd. The door handles sit at different heights.", "end": 20.49}, {"i": 4, "start": 20.49, "vo_start": 20.79, "vo_end": 26.82, "text": "The thermostat moves around. The wall panels line up differently. The vents and TV stands do not match.", "end": 27.32}, {"i": 5, "start": 27.32, "vo_start": 27.62, "vo_end": 34.415, "text": "The likely answer: near-copies of the office have been built at other residences, reportedly including Valdai and Sochi.", "end": 34.915}, {"i": 6, "start": 34.915, "vo_start": 35.215, "vo_end": 43.6, "text": "Rozhdestvensky's reading is that the copies let him record a statement that appears to come from Novo-Ogaryovo while he is somewhere else entirely.", "end": 44.1}, {"i": 7, "start": 44.1, "vo_start": 44.4, "vo_end": 48.465, "text": "If almost nobody knows where he is, it is very hard to target him.", "end": 48.965}, {"i": 8, "start": 48.965, "vo_start": 49.265, "vo_end": 56.48, "text": "Reports also say that since the war began he has stayed away from his Sochi summer house out of fear of Ukrainian drones.", "end": 56.98}], "words": [{"w": "Since", "s": 0.6, "e": 0.905}, {"w": "the", "s": 0.945, "e": 1.16}, {"w": "full-scale", "s": 1.2, "e": 1.73}, {"w": "invasion", "s": 1.77, "e": 2.21}, {"w": "of", "s": 2.25, "e": 2.42}, {"w": "Ukraine,", "s": 2.46, "e": 2.9}, {"w": "Putin", "s": 2.94, "e": 3.245}, {"w": "has", "s": 3.285, "e": 3.5}, {"w": "held", "s": 3.54, "e": 3.8}, {"w": "many", "s": 3.84, "e": 4.1}, {"w": "meetings", "s": 4.14, "e": 4.58}, {"w": "by", "s": 4.62, "e": 4.79}, {"w": "video,", "s": 4.83, "e": 5.18}, {"w": "from", "s": 5.22, "e": 5.48}, {"w": "what", "s": 5.52, "e": 5.78}, {"w": "is", "s": 5.82, "e": 5.99}, {"w": "presented", "s": 6.03, "e": 6.515}, {"w": "as", "s": 6.555, "e": 6.725}, {"w": "his", "s": 6.765, "e": 6.98}, {"w": "office", "s": 7.02, "e": 7.37}, {"w": "at", "s": 7.41, "e": 7.58}, {"w": "Novo-Ogaryovo.", "s": 7.62, "e": 8.33}, {"w": "Russians", "s": 9.17, "e": 9.61}, {"w": "know", "s": 9.65, "e": 9.91}, {"w": "that", "s": 9.95, "e": 10.21}, {"w": "room", "s": 10.25, "e": 10.51}, {"w": "by", "s": 10.55, "e": 10.72}, {"w": "sight:", "s": 10.76, "e": 11.11}, {"w": "the", "s": 11.15, "e": 11.365}, {"w": "desk,", "s": 11.405, "e": 11.71}, {"w": "the", "s": 11.75, "e": 11.965}, {"w": "wood", "s": 12.005, "e": 12.265}, {"w": "panels,", "s": 12.305, "e": 12.7}, {"w": "the", "s": 12.74, "e": 12.955}, {"w": "flags.", "s": 12.995, "e": 13.345}, {"w": "But", "s": 14.185, "e": 14.4}, {"w": "journalists", "s": 14.44, "e": 15.015}, {"w": "comparing", "s": 15.055, "e": 15.54}, {"w": "the", "s": 15.58, "e": 15.795}, {"w": "footage", "s": 15.835, "e": 16.23}, {"w": "spotted", "s": 16.27, "e": 16.665}, {"w": "something", "s": 16.705, "e": 17.19}, {"w": "odd.", "s": 17.23, "e": 17.49}, {"w": "The", "s": 17.53, "e": 17.745}, {"w": "door", "s": 17.785, "e": 18.045}, {"w": "handles", "s": 18.085, "e": 18.48}, {"w": "sit", "s": 18.52, "e": 18.735}, {"w": "at", "s": 18.775, "e": 18.945}, {"w": "different", "s": 18.985, "e": 19.47}, {"w": "heights.", "s": 19.51, "e": 19.95}, {"w": "The", "s": 20.79, "e": 21.005}, {"w": "thermostat", "s": 21.045, "e": 21.575}, {"w": "moves", "s": 21.615, "e": 21.92}, {"w": "around.", "s": 21.96, "e": 22.355}, {"w": "The", "s": 22.395, "e": 22.61}, {"w": "wall", "s": 22.65, "e": 22.91}, {"w": "panels", "s": 22.95, "e": 23.3}, {"w": "line", "s": 23.34, "e": 23.6}, {"w": "up", "s": 23.64, "e": 23.81}, {"w": "differently.", "s": 23.85, "e": 24.47}, {"w": "The", "s": 24.51, "e": 24.725}, {"w": "vents", "s": 24.765, "e": 25.07}, {"w": "and", "s": 25.11, "e": 25.325}, {"w": "TV", "s": 25.365, "e": 25.535}, {"w": "stands", "s": 25.575, "e": 25.925}, {"w": "do", "s": 25.965, "e": 26.135}, {"w": "not", "s": 26.175, "e": 26.39}, {"w": "match.", "s": 26.43, "e": 26.78}, {"w": "The", "s": 27.62, "e": 27.835}, {"w": "likely", "s": 27.875, "e": 28.225}, {"w": "answer:", "s": 28.265, "e": 28.66}, {"w": "near-copies", "s": 28.7, "e": 29.275}, {"w": "of", "s": 29.315, "e": 29.485}, {"w": "the", "s": 29.525, "e": 29.74}, {"w": "office", "s": 29.78, "e": 30.13}, {"w": "have", "s": 30.17, "e": 30.43}, {"w": "been", "s": 30.47, "e": 30.73}, {"w": "built", "s": 30.77, "e": 31.075}, {"w": "at", "s": 31.115, "e": 31.285}, {"w": "other", "s": 31.325, "e": 31.63}, {"w": "residences,", "s": 31.67, "e": 32.245}, {"w": "reportedly", "s": 32.285, "e": 32.815}, {"w": "including", "s": 32.855, "e": 33.34}, {"w": "Valdai", "s": 33.38, "e": 33.73}, {"w": "and", "s": 33.77, "e": 33.985}, {"w": "Sochi.", "s": 34.025, "e": 34.375}, {"w": "Rozhdestvensky's", "s": 35.215, "e": 36.015}, {"w": "reading", "s": 36.055, "e": 36.45}, {"w": "is", "s": 36.49, "e": 36.66}, {"w": "that", "s": 36.7, "e": 36.96}, {"w": "the", "s": 37.0, "e": 37.215}, {"w": "copies", "s": 37.255, "e": 37.605}, {"w": "let", "s": 37.645, "e": 37.86}, {"w": "him", "s": 37.9, "e": 38.115}, {"w": "record", "s": 38.155, "e": 38.505}, {"w": "a", "s": 38.545, "e": 38.67}, {"w": "statement", "s": 38.71, "e": 39.195}, {"w": "that", "s": 39.235, "e": 39.495}, {"w": "appears", "s": 39.535, "e": 39.93}, {"w": "to", "s": 39.97, "e": 40.14}, {"w": "come", "s": 40.18, "e": 40.44}, {"w": "from", "s": 40.48, "e": 40.74}, {"w": "Novo-Ogaryovo", "s": 40.78, "e": 41.445}, {"w": "while", "s": 41.485, "e": 41.79}, {"w": "he", "s": 41.83, "e": 42.0}, {"w": "is", "s": 42.04, "e": 42.21}, {"w": "somewhere", "s": 42.25, "e": 42.735}, {"w": "else", "s": 42.775, "e": 43.035}, {"w": "entirely.", "s": 43.075, "e": 43.56}, {"w": "If", "s": 44.4, "e": 44.57}, {"w": "almost", "s": 44.61, "e": 44.96}, {"w": "nobody", "s": 45.0, "e": 45.35}, {"w": "knows", "s": 45.39, "e": 45.695}, {"w": "where", "s": 45.735, "e": 46.04}, {"w": "he", "s": 46.08, "e": 46.25}, {"w": "is,", "s": 46.29, "e": 46.505}, {"w": "it", "s": 46.545, "e": 46.715}, {"w": "is", "s": 46.755, "e": 46.925}, {"w": "very", "s": 46.965, "e": 47.225}, {"w": "hard", "s": 47.265, "e": 47.525}, {"w": "to", "s": 47.565, "e": 47.735}, {"w": "target", "s": 47.775, "e": 48.125}, {"w": "him.", "s": 48.165, "e": 48.425}, {"w": "Reports", "s": 49.265, "e": 49.66}, {"w": "also", "s": 49.7, "e": 49.96}, {"w": "say", "s": 50.0, "e": 50.215}, {"w": "that", "s": 50.255, "e": 50.515}, {"w": "since", "s": 50.555, "e": 50.86}, {"w": "the", "s": 50.9, "e": 51.115}, {"w": "war", "s": 51.155, "e": 51.37}, {"w": "began", "s": 51.41, "e": 51.715}, {"w": "he", "s": 51.755, "e": 51.925}, {"w": "has", "s": 51.965, "e": 52.18}, {"w": "stayed", "s": 52.22, "e": 52.57}, {"w": "away", "s": 52.61, "e": 52.87}, {"w": "from", "s": 52.91, "e": 53.17}, {"w": "his", "s": 53.21, "e": 53.425}, {"w": "Sochi", "s": 53.465, "e": 53.77}, {"w": "summer", "s": 53.81, "e": 54.16}, {"w": "house", "s": 54.2, "e": 54.505}, {"w": "out", "s": 54.545, "e": 54.76}, {"w": "of", "s": 54.8, "e": 54.97}, {"w": "fear", "s": 55.01, "e": 55.27}, {"w": "of", "s": 55.31, "e": 55.48}, {"w": "Ukrainian", "s": 55.52, "e": 56.005}, {"w": "drones.", "s": 56.045, "e": 56.44}]}
+window.TIMING={
+"dur": 52.241,
+"shots": [
+{
+"i": 1,
+"start": 0.0,
+"vo_start": 0.6,
+"vo_end": 8.462,
+"text": "Since the full-scale invasion of Ukraine, Putin has held many meetings by video, from what is presented as his office at Novo-Ogaryovo.",
+"end": 8.737
+},
+{
+"i": 2,
+"start": 8.737,
+"vo_start": 9.012,
+"vo_end": 13.154,
+"text": "Russians know that room by sight: the desk, the wood panels, the flags.",
+"end": 13.429
+},
+{
+"i": 3,
+"start": 13.429,
+"vo_start": 13.704,
+"vo_end": 19.544,
+"text": "But journalists comparing the footage spotted something odd. The door handles sit at different heights.",
+"end": 19.819
+},
+{
+"i": 4,
+"start": 19.819,
+"vo_start": 20.094,
+"vo_end": 26.756,
+"text": "The thermostat moves around. The wall panels line up differently. The vents and TV stands do not match.",
+"end": 27.031
+},
+{
+"i": 5,
+"start": 27.031,
+"vo_start": 27.306,
+"vo_end": 33.06,
+"text": "The likely answer: near-copies of the office have been built at other residences, reportedly including Valdai and Sochi.",
+"end": 33.335
+},
+{
+"i": 6,
+"start": 33.335,
+"vo_start": 33.61,
+"vo_end": 40.41,
+"text": "Rozhdestvensky's reading is that the copies let him record a statement that appears to come from Novo-Ogaryovo while he is somewhere else entirely.",
+"end": 40.685
+},
+{
+"i": 7,
+"start": 40.685,
+"vo_start": 40.96,
+"vo_end": 44.36,
+"text": "If almost nobody knows where he is, it is very hard to target him.",
+"end": 44.635
+},
+{
+"i": 8,
+"start": 44.635,
+"vo_start": 44.91,
+"vo_end": 51.291,
+"text": "Reports also say that since the war began he has stayed away from his Sochi summer house out of fear of Ukrainian drones.",
+"end": 52.241
+}
+],
+"words": [
+{
+"w": "Since",
+"s": 0.6,
+"e": 1.12
+},
+{
+"w": "the",
+"s": 1.12,
+"e": 1.24
+},
+{
+"w": "full-scale",
+"s": 1.24,
+"e": 1.64
+},
+{
+"w": "invasion",
+"s": 1.44,
+"e": 1.96
+},
+{
+"w": "of",
+"s": 1.64,
+"e": 2.18
+},
+{
+"w": "Ukraine,",
+"s": 1.96,
+"e": 2.5
+},
+{
+"w": "Putin",
+"s": 2.18,
+"e": 3.02
+},
+{
+"w": "has",
+"s": 2.98,
+"e": 3.24
+},
+{
+"w": "held",
+"s": 3.02,
+"e": 3.5
+},
+{
+"w": "many",
+"s": 3.24,
+"e": 3.74
+},
+{
+"w": "meetings",
+"s": 3.5,
+"e": 4.06
+},
+{
+"w": "by",
+"s": 3.74,
+"e": 4.28
+},
+{
+"w": "video,",
+"s": 4.06,
+"e": 4.66
+},
+{
+"w": "from",
+"s": 4.66,
+"e": 5.14
+},
+{
+"w": "what",
+"s": 5.14,
+"e": 5.28
+},
+{
+"w": "is",
+"s": 5.28,
+"e": 5.4
+},
+{
+"w": "presented",
+"s": 5.4,
+"e": 5.68
+},
+{
+"w": "as",
+"s": 5.68,
+"e": 6.0
+},
+{
+"w": "his",
+"s": 6.0,
+"e": 6.16
+},
+{
+"w": "office",
+"s": 6.16,
+"e": 6.48
+},
+{
+"w": "at",
+"s": 6.48,
+"e": 6.82
+},
+{
+"w": "Novo-Ogaryovo.",
+"s": 6.82,
+"e": 8.14
+},
+{
+"w": "Russians",
+"s": 9.012,
+"e": 9.443
+},
+{
+"w": "know",
+"s": 9.443,
+"e": 9.743
+},
+{
+"w": "that",
+"s": 9.743,
+"e": 9.943
+},
+{
+"w": "room",
+"s": 9.943,
+"e": 10.103
+},
+{
+"w": "by",
+"s": 10.103,
+"e": 10.283
+},
+{
+"w": "sight:",
+"s": 10.283,
+"e": 10.603
+},
+{
+"w": "the",
+"s": 10.923,
+"e": 10.973
+},
+{
+"w": "desk,",
+"s": 10.963,
+"e": 11.183
+},
+{
+"w": "the",
+"s": 11.503,
+"e": 11.553
+},
+{
+"w": "wood",
+"s": 11.503,
+"e": 11.683
+},
+{
+"w": "panels,",
+"s": 11.683,
+"e": 12.003
+},
+{
+"w": "the",
+"s": 12.363,
+"e": 12.413
+},
+{
+"w": "flags.",
+"s": 12.403,
+"e": 12.683
+},
+{
+"w": "But",
+"s": 13.704,
+"e": 13.964
+},
+{
+"w": "journalists",
+"s": 13.704,
+"e": 14.764
+},
+{
+"w": "comparing",
+"s": 14.424,
+"e": 15.044
+},
+{
+"w": "the",
+"s": 14.764,
+"e": 15.464
+},
+{
+"w": "footage",
+"s": 15.044,
+"e": 16.144
+},
+{
+"w": "spotted",
+"s": 15.464,
+"e": 16.584
+},
+{
+"w": "something",
+"s": 16.144,
+"e": 16.944
+},
+{
+"w": "odd.",
+"s": 16.584,
+"e": 17.804
+},
+{
+"w": "The",
+"s": 17.724,
+"e": 17.984
+},
+{
+"w": "door",
+"s": 17.804,
+"e": 18.284
+},
+{
+"w": "handles",
+"s": 17.984,
+"e": 18.544
+},
+{
+"w": "sit",
+"s": 18.284,
+"e": 18.684
+},
+{
+"w": "at",
+"s": 18.544,
+"e": 18.864
+},
+{
+"w": "different",
+"s": 18.684,
+"e": 19.224
+},
+{
+"w": "heights.",
+"s": 18.864,
+"e": 19.224
+},
+{
+"w": "The",
+"s": 20.094,
+"e": 20.316
+},
+{
+"w": "thermostat",
+"s": 20.316,
+"e": 20.796
+},
+{
+"w": "moves",
+"s": 20.796,
+"e": 21.036
+},
+{
+"w": "around.",
+"s": 21.036,
+"e": 21.356
+},
+{
+"w": "The",
+"s": 22.336,
+"e": 22.386
+},
+{
+"w": "wall",
+"s": 22.356,
+"e": 22.576
+},
+{
+"w": "panels",
+"s": 22.576,
+"e": 22.896
+},
+{
+"w": "line",
+"s": 22.896,
+"e": 23.176
+},
+{
+"w": "up",
+"s": 23.176,
+"e": 23.336
+},
+{
+"w": "differently.",
+"s": 23.336,
+"e": 23.696
+},
+{
+"w": "The",
+"s": 24.536,
+"e": 24.656
+},
+{
+"w": "vents",
+"s": 24.656,
+"e": 24.876
+},
+{
+"w": "and",
+"s": 24.876,
+"e": 25.096
+},
+{
+"w": "TV",
+"s": 25.096,
+"e": 25.296
+},
+{
+"w": "stands",
+"s": 25.296,
+"e": 25.656
+},
+{
+"w": "do",
+"s": 25.656,
+"e": 25.876
+},
+{
+"w": "not",
+"s": 25.876,
+"e": 26.056
+},
+{
+"w": "match.",
+"s": 26.056,
+"e": 26.376
+},
+{
+"w": "The",
+"s": 27.306,
+"e": 27.68
+},
+{
+"w": "likely",
+"s": 27.46,
+"e": 28.02
+},
+{
+"w": "answer:",
+"s": 27.68,
+"e": 28.5
+},
+{
+"w": "near-copies",
+"s": 28.38,
+"e": 28.96
+},
+{
+"w": "of",
+"s": 28.82,
+"e": 29.06
+},
+{
+"w": "the",
+"s": 28.96,
+"e": 29.3
+},
+{
+"w": "office",
+"s": 29.06,
+"e": 29.52
+},
+{
+"w": "have",
+"s": 29.3,
+"e": 29.66
+},
+{
+"w": "been",
+"s": 29.52,
+"e": 29.88
+},
+{
+"w": "built",
+"s": 29.66,
+"e": 30.02
+},
+{
+"w": "at",
+"s": 29.88,
+"e": 30.2
+},
+{
+"w": "other",
+"s": 30.02,
+"e": 30.66
+},
+{
+"w": "residences,",
+"s": 30.2,
+"e": 31.48
+},
+{
+"w": "reportedly",
+"s": 31.2,
+"e": 31.9
+},
+{
+"w": "including",
+"s": 31.48,
+"e": 32.12
+},
+{
+"w": "Valdai",
+"s": 31.9,
+"e": 32.36
+},
+{
+"w": "and",
+"s": 32.12,
+"e": 32.52
+},
+{
+"w": "Sochi.",
+"s": 32.36,
+"e": 32.74
+},
+{
+"w": "Rozhdestvensky's",
+"s": 33.61,
+"e": 34.57
+},
+{
+"w": "reading",
+"s": 34.57,
+"e": 34.71
+},
+{
+"w": "is",
+"s": 34.71,
+"e": 34.93
+},
+{
+"w": "that",
+"s": 34.93,
+"e": 35.05
+},
+{
+"w": "the",
+"s": 35.05,
+"e": 35.19
+},
+{
+"w": "copies",
+"s": 35.19,
+"e": 35.45
+},
+{
+"w": "let",
+"s": 35.45,
+"e": 35.71
+},
+{
+"w": "him",
+"s": 35.71,
+"e": 35.83
+},
+{
+"w": "record",
+"s": 35.83,
+"e": 36.13
+},
+{
+"w": "a",
+"s": 36.13,
+"e": 36.29
+},
+{
+"w": "statement",
+"s": 36.29,
+"e": 36.59
+},
+{
+"w": "that",
+"s": 36.59,
+"e": 36.79
+},
+{
+"w": "appears",
+"s": 36.79,
+"e": 37.05
+},
+{
+"w": "to",
+"s": 37.05,
+"e": 37.27
+},
+{
+"w": "come",
+"s": 37.27,
+"e": 37.43
+},
+{
+"w": "from",
+"s": 37.43,
+"e": 37.61
+},
+{
+"w": "Novo-Ogaryovo",
+"s": 37.61,
+"e": 38.55
+},
+{
+"w": "while",
+"s": 38.55,
+"e": 39.09
+},
+{
+"w": "he",
+"s": 39.09,
+"e": 39.23
+},
+{
+"w": "is",
+"s": 39.23,
+"e": 39.29
+},
+{
+"w": "somewhere",
+"s": 39.29,
+"e": 39.55
+},
+{
+"w": "else",
+"s": 39.55,
+"e": 39.81
+},
+{
+"w": "entirely.",
+"s": 39.81,
+"e": 40.11
+},
+{
+"w": "If",
+"s": 40.96,
+"e": 41.14
+},
+{
+"w": "almost",
+"s": 41.14,
+"e": 41.4
+},
+{
+"w": "nobody",
+"s": 41.4,
+"e": 41.7
+},
+{
+"w": "knows",
+"s": 41.7,
+"e": 41.98
+},
+{
+"w": "where",
+"s": 41.98,
+"e": 42.26
+},
+{
+"w": "he",
+"s": 42.26,
+"e": 42.46
+},
+{
+"w": "is,",
+"s": 42.46,
+"e": 42.68
+},
+{
+"w": "it",
+"s": 42.84,
+"e": 43.0
+},
+{
+"w": "is",
+"s": 43.0,
+"e": 43.14
+},
+{
+"w": "very",
+"s": 43.14,
+"e": 43.34
+},
+{
+"w": "hard",
+"s": 43.34,
+"e": 43.58
+},
+{
+"w": "to",
+"s": 43.58,
+"e": 43.74
+},
+{
+"w": "target",
+"s": 43.74,
+"e": 43.96
+},
+{
+"w": "him.",
+"s": 43.96,
+"e": 44.22
+},
+{
+"w": "Reports",
+"s": 44.91,
+"e": 45.747
+},
+{
+"w": "also",
+"s": 45.287,
+"e": 46.007
+},
+{
+"w": "say",
+"s": 45.747,
+"e": 46.307
+},
+{
+"w": "that",
+"s": 46.007,
+"e": 46.527
+},
+{
+"w": "since",
+"s": 46.307,
+"e": 46.707
+},
+{
+"w": "the",
+"s": 46.527,
+"e": 46.887
+},
+{
+"w": "war",
+"s": 46.707,
+"e": 47.287
+},
+{
+"w": "began",
+"s": 46.887,
+"e": 47.287
+},
+{
+"w": "he",
+"s": 46.887,
+"e": 47.527
+},
+{
+"w": "has",
+"s": 47.427,
+"e": 47.667
+},
+{
+"w": "stayed",
+"s": 47.527,
+"e": 47.907
+},
+{
+"w": "away",
+"s": 47.667,
+"e": 48.147
+},
+{
+"w": "from",
+"s": 47.907,
+"e": 48.387
+},
+{
+"w": "his",
+"s": 48.147,
+"e": 48.527
+},
+{
+"w": "Sochi",
+"s": 48.387,
+"e": 48.787
+},
+{
+"w": "summer",
+"s": 48.527,
+"e": 49.087
+},
+{
+"w": "house",
+"s": 48.787,
+"e": 49.367
+},
+{
+"w": "out",
+"s": 49.087,
+"e": 49.627
+},
+{
+"w": "of",
+"s": 49.367,
+"e": 49.807
+},
+{
+"w": "fear",
+"s": 49.627,
+"e": 49.987
+},
+{
+"w": "of",
+"s": 49.807,
+"e": 50.167
+},
+{
+"w": "Ukrainian",
+"s": 49.987,
+"e": 50.507
+},
+{
+"w": "drones.",
+"s": 50.167,
+"e": 50.907
+}
+]
+}
