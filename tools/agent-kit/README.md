@@ -66,13 +66,13 @@ claude-plugins-official (frontend-design, hookify, code-review), GitHub MCP.
 |---|---|
 | multica | Needs Pushpam: a self-hosted agent board with its own accounts/server. |
 | firecrawl | Needs Pushpam: needs a Firecrawl API key. Useful for research on scripts. |
-| cc-switch | Not installed: desktop app to switch model providers. Breaks the Opus 5.5 rule. |
+| cc-switch | Desktop app only (Windows/macOS/Linux GUI), so it can't run in cloud sessions. Install on Pushpam's computer from github.com/farion1231/cc-switch/releases. |
 | context7 | Not installed: library docs lookup. Our pipeline uses few libraries; can be added keyless later if a line needs it. |
 | vibe-kanban | Needs Pushpam: a local desktop/web app that runs agents on his machine. |
 | github-mcp-server | Already active (GitHub connector). |
 | playwright-mcp | Not installed: Playwright is preinstalled and the render scripts drive it directly; the MCP would add ~25 tool definitions to every session. |
 | serena | Merged into Graphify (code navigation); its language servers add weight for little gain on our JS/Python. |
-| claude-code-router | Not installed: routes Claude Code to other models. Breaks the Opus 5.5 rule. |
+| claude-code-router | Installable on demand: `tools/agent-kit/install-extras.sh router`, then `ccr code`. Needs at least one provider key in `~/.claude-code-router/config.json` before it can route. |
 | awesome-mcp-servers | Reference list only. |
 
 ### Token savers
@@ -80,13 +80,19 @@ claude-plugins-official (frontend-design, hookify, code-review), GitHub MCP.
 |---|---|
 | system-prompts-and-models-of-ai-tools | Not installed: a collection of leaked third-party prompts, not a tool. |
 | claude-code-best-practice | Reference reading. Its main tips (short CLAUDE.md, skills on demand, plan files, hooks for automation) are what this kit follows. |
-| codex-plugin-cc | Not installed: hands work to OpenAI Codex; needs an OpenAI account and breaks the Opus 5.5 rule. |
+| codex-plugin-cc | Installed: enabled as a project plugin in `.claude/settings.json` (`/codex:review`, `/codex:rescue`, `/codex:setup`). Review gate stays off. Needs the Codex CLI (`install-extras.sh codex`) plus `codex login` with a ChatGPT account or OpenAI key. |
 | claude-hud | Not installed: a terminal status line; cloud/web sessions never show it. |
 | rtk | Installed (open-source edition, built from source because release downloads are blocked here). Hook live. |
 | headroom | Not possible here: works as a proxy between Claude Code and the API, which the cloud session controls. rtk does the same job for command output. |
 | caveman | Already active on the account. Use `/caveman` for terse status notes. |
 
+## Model-routing tools
+
+Pushpam OK'd these on 30 Oct 22:28 (the Opus 5.5 rule is temporary). They are installed but stay idle until a key or login is added, so sessions still run on Opus 5.5 by default.
+
 ## Files
+
+- `install-extras.sh router|codex`: on-demand installs for claude-code-router and the Codex CLI.
 
 - `session-start.sh`: copies the rtk binary from `/mnt/project-files/tools/agent-kit/bin/rtk` into `~/.local/bin`. No downloads.
 - `rtk-rewrite.sh`: the rtk hook (vendored, never auto-approves, has an off switch).
