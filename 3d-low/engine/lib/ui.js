@@ -42,8 +42,8 @@ export function callout(x, line1, line2, px, py, t, start = .4) {
   const s = pop(t, start, .3); if (s <= 0) return;
   x.save(); x.translate(px, py); x.scale(s, s);
   x.font = '44px "Anton"'; const w1 = x.measureText(line1).width;
-  x.font = '30px "Oswald"'; const w2 = line2 ? x.measureText(line2).width : 0;
-  const w = Math.max(w1, w2) + 48, h = line2 ? 112 : 72;
+  x.font = '600 38px "Oswald"'; const w2 = line2 ? x.measureText(line2).width : 0;
+  const w = Math.max(w1, w2) + 48, h = line2 ? 122 : 72;
   used.push([px - w / 2, py - h, px + w / 2, py + 20]);
   x.fillStyle = '#fbf6ea'; x.strokeStyle = '#2b1e16'; x.lineWidth = 5;
   roundRect(x, -w / 2, -h, w, h, 8); x.fill(); x.stroke();
@@ -52,7 +52,7 @@ export function callout(x, line1, line2, px, py, t, start = .4) {
   x.fillRect(-14, -8, 28, 8);
   x.textAlign = 'center'; x.textBaseline = 'middle';
   x.fillStyle = '#2b1e16'; x.font = '44px "Anton"'; x.fillText(line1, 0, line2 ? -h + 38 : -h / 2);
-  if (line2) { x.fillStyle = '#c0392b'; x.font = '600 30px "Oswald"'; x.fillText(line2, 0, -h + 84); }
+  if (line2) { x.fillStyle = '#c0392b'; x.font = '600 38px "Oswald"'; x.fillText(line2, 0, -h + 90); }
   x.restore();
 }
 
@@ -60,9 +60,9 @@ export function callout(x, line1, line2, px, py, t, start = .4) {
 export function chip(x, text, px, py, t, start = .5, color = '#c0392b') {
   const s = pop(t, start, .26); if (s <= 0) return;
   x.save(); x.translate(px, py); x.scale(s, s);
-  x.font = '600 30px "Oswald"'; const w = x.measureText(text).width + 36;
+  x.font = '600 40px "Oswald"'; const w = x.measureText(text).width + 44;
   used.push([px - w / 2, py - 24, px + w / 2, py + 24]);
-  x.fillStyle = color; roundRect(x, -w / 2, -24, w, 48, 24); x.fill();
+  x.fillStyle = color; roundRect(x, -w / 2, -30, w, 60, 30); x.fill();
   x.fillStyle = '#fff'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(text, 0, 1);
   x.restore();
 }

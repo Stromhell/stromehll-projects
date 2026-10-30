@@ -36,12 +36,19 @@ export function office(k, o = {}) {
   // lit corridor behind the doorway so nobody walks into a black void
   const cor = new THREE.Group();
   const cfl = new THREE.Mesh(new THREE.PlaneGeometry(4, 5), toon(0x9a8a70)); cfl.rotation.x = -P / 2; cfl.position.set(doorX, 0, -d / 2 - 2.5); cfl.receiveShadow = true; cfl.userData.noOutline = true; cor.add(cfl);
-  const cwall = new THREE.Mesh(new THREE.BoxGeometry(4, h, .12), toon(0xc8b898)); cwall.position.set(doorX, h / 2, -d / 2 - 5); cwall.receiveShadow = true; cor.add(cwall);
+  for (let z = 0; z < 5; z += .5) cor.add(box(4, .004, .03, 0x7a6a54, { pos: [doorX, .004, -d / 2 - z], noOutline: true, cast: false }));   // floor tile lines give depth
+  const runner = new THREE.Mesh(new THREE.PlaneGeometry(1.1, 5), toon(0x7a3a2e)); runner.rotation.x = -P / 2; runner.position.set(doorX, .006, -d / 2 - 2.5); runner.userData.noOutline = true; cor.add(runner);
+  const cwall = new THREE.Mesh(new THREE.BoxGeometry(4, h, .12), toon(0xb8a888)); cwall.position.set(doorX, h / 2, -d / 2 - 5); cwall.receiveShadow = true; cor.add(cwall);
+  for (const sx of [-1, 1]) { const sw = new THREE.Mesh(new THREE.BoxGeometry(.12, h, 5), toon(0xd2c4a4)); sw.position.set(doorX + sx * 2, h / 2, -d / 2 - 2.5); sw.receiveShadow = true; cor.add(sw);
+    const sc = new THREE.Mesh(new THREE.SphereGeometry(.1, 10, 8), new THREE.MeshBasicMaterial({ color: 0xffe0a0 })); sc.position.set(doorX + sx * 1.9, 2.0, -d / 2 - 2.5); sc.userData.noOutline = true; cor.add(sc); }
+  const cceil = new THREE.Mesh(new THREE.BoxGeometry(4.2, .12, 5), toon(0xe0d4bc)); cceil.position.set(doorX, h + .06, -d / 2 - 2.5); cor.add(cceil);
   for (let i = 0; i < 2; i++) { const pic = outline(group(box(.6, .45, .04, 0x4a3a2a), box(.5, .36, .02, [0x8aa0c8, 0xa88a5a][i], { pos: [0, 0, .03], noOutline: true })), .01); pic.position.set(doorX - .9 + i * 1.8, 1.7, -d / 2 - 4.9); cor.add(pic); }
   const cl = new THREE.PointLight(0xffe0b0, 14, 9); cl.position.set(doorX, 2.6, -d / 2 - 2.2); cor.add(cl);
   const dl = new THREE.PointLight(0xffe6c4, 10, 6); dl.position.set(doorX, 2.4, -d / 2 + 1.0); cor.add(dl);   // doorway light so a figure in the door is lit and outlined
   g.add(cor);
   // side walls (the camera side stays open), window on the left wall
+  const ceil = new THREE.Mesh(new THREE.BoxGeometry(w + .3, .12, d + .3), toon(0xe8dcc4)); ceil.position.set(0, h + .06, 0); g.add(ceil);
+  g.add(box(w, .14, .1, 0x6a5a44, { pos: [0, h - .07, -d / 2 + .1], noOutline: true }));
   const wl = new THREE.Mesh(new THREE.BoxGeometry(.12, h, d), wallM); wl.position.set(-w / 2, h / 2, 0); wl.receiveShadow = true; g.add(solid(wl, 'left wall'));
   const wr = new THREE.Mesh(new THREE.BoxGeometry(.12, h, d), wallM); wr.position.set(w / 2, h / 2, 0); wr.receiveShadow = true; g.add(solid(wr, 'right wall'));
   const win = group(box(.16, 1.5, 2.2, 0xf4efe2, { pos: [-w / 2, 1.7, -.6], noOutline: true, cast: false }), box(.18, 1.6, .08, 0x5a4a34, { pos: [-w / 2, 1.7, -.6] }), box(.18, .08, 2.3, 0x5a4a34, { pos: [-w / 2, 1.7, -.6] }));
@@ -75,11 +82,11 @@ export function office(k, o = {}) {
   shelf.position.set(w / 2 - .22, 0, -1.2); g.add(solid(outline(shelf, .012), 'bookshelf'));
   // picture frames and a clock on the back wall
   const pic = outline(group(box(.9, .6, .04, 0x4a3a2a, { pos: [0, 0, 0] }), box(.78, .48, .02, 0x8aa0c8, { pos: [0, 0, .03], noOutline: true })), .01); pic.position.set(-1.6, 1.9, -d / 2 + .08); g.add(pic);
-  const clk = props.clock(); clk.set(7, 5); clk.position.set(-.2, 2.05, -d / 2 + .1); g.add(clk);
+  const clk = props.clock(); clk.set(7, 5); clk.position.set(.55, 2.2, -d / 2 + .1); g.add(clk);
   // rug and plant
   const rug = new THREE.Mesh(new THREE.CircleGeometry(1.3, 32), toon(o.rug ?? 0x7a4a3a)); rug.rotation.x = -P / 2; rug.position.set(1.4, .006, .4); rug.receiveShadow = true; rug.userData.noOutline = true; g.add(rug);
   const rugRing = new THREE.Mesh(new THREE.RingGeometry(1.05, 1.18, 32), toon(0xc9a96a)); rugRing.rotation.x = -P / 2; rugRing.position.set(1.4, .009, .4); rugRing.userData.noOutline = true; g.add(rugRing);
-  const plant = outline(group(cyl(.2, .16, .35, 0xb5651d, { pos: [0, .18, 0] }), sph(.38, 0x3f7a3a, { pos: [0, .7, 0], scale: [1, 1.2, 1] }), sph(.26, 0x4f8f44, { pos: [.2, .9, .1] }), sph(.22, 0x366a30, { pos: [-.2, .85, -.1] })), .015); plant.position.set(w / 2 - .6, 0, d / 2 - .8); g.add(solid(plant, 'plant'));
+  const plant = outline(group(cyl(.2, .16, .35, 0xb5651d, { pos: [0, .18, 0] }), sph(.38, 0x3f7a3a, { pos: [0, .7, 0], scale: [1, 1.2, 1] }), sph(.26, 0x4f8f44, { pos: [.2, .9, .1] }), sph(.22, 0x366a30, { pos: [-.2, .85, -.1] })), .015); plant.position.set(-w / 2 + .6, 0, -d / 2 + .6); g.add(solid(plant, 'plant'));
   scene.add(g);
   const lanes = { enter: [[doorX, -d / 2 - 1.2], [doorX, -d / 2 + .6], [.6, -.2]], toDesk: [[.6, -.2], [-1.0, -.35]] };
   return { group: g, door, desk, chair, chair2, lanes, w, d, h, floorY: 0 };
@@ -93,8 +100,8 @@ export function apron(k, o = {}) {
   const g = new THREE.Group();
   // asphalt with a canvas texture: speckle, tyre marks, panel joints
   const ac = document.createElement('canvas'); ac.width = ac.height = 2048; const ax = ac.getContext('2d'); const ar = rng(21);
-  ax.fillStyle = '#3a3c40'; ax.fillRect(0, 0, 2048, 2048);
-  for (let i = 0; i < 40000; i++) { const v = 45 + Math.floor(ar() * 30); ax.fillStyle = `rgb(${v},${v + 2},${v + 6})`; ax.fillRect(ar() * 2048, ar() * 2048, 2 + ar() * 3, 2 + ar() * 3); }
+  ax.fillStyle = '#4a4d54'; ax.fillRect(0, 0, 2048, 2048);
+  for (let i = 0; i < 40000; i++) { const v = 58 + Math.floor(ar() * 34); ax.fillStyle = `rgb(${v},${v + 2},${v + 6})`; ax.fillRect(ar() * 2048, ar() * 2048, 2 + ar() * 3, 2 + ar() * 3); }
   ax.strokeStyle = 'rgba(0,0,0,.35)'; ax.lineWidth = 3; for (let i = 0; i <= 8; i++) { ax.beginPath(); ax.moveTo(i * 256, 0); ax.lineTo(i * 256, 2048); ax.stroke(); ax.beginPath(); ax.moveTo(0, i * 256); ax.lineTo(2048, i * 256); ax.stroke(); }
   ax.strokeStyle = 'rgba(0,0,0,.18)'; ax.lineWidth = 18; for (let i = 0; i < 12; i++) { ax.beginPath(); ax.moveTo(ar() * 2048, ar() * 2048); ax.bezierCurveTo(ar() * 2048, ar() * 2048, ar() * 2048, ar() * 2048, ar() * 2048, ar() * 2048); ax.stroke(); }
   const atex = new THREE.CanvasTexture(ac); atex.wrapS = atex.wrapT = THREE.RepeatWrapping; atex.repeat.set(14, 14); atex.colorSpace = THREE.SRGBColorSpace; atex.anisotropy = 8;
@@ -108,6 +115,9 @@ export function apron(k, o = {}) {
   // apron markings
   for (let i = -4; i <= 4; i++) g.add(box(.35, .01, 60, 0xd8c060, { pos: [i * 14, .01, 0], noOutline: true, cast: false }));
   g.add(box(140, .01, .35, 0xd8c060, { pos: [0, .01, -30], noOutline: true, cast: false }));
+  for (let i = -3; i <= 3; i++) { g.add(box(10, .012, .25, 0xf2f2ee, { pos: [i * 14 + 7, .012, 14], noOutline: true, cast: false })); g.add(box(.25, .012, 16, 0xf2f2ee, { pos: [i * 14 + 2, .012, 6], noOutline: true, cast: false }));
+    const num = textPlane('A' + (12 + i), 2.2, { size: 120, color: '#f2f2ee', stroke: '#4a4d54', strokeW: 4 }); num.rotation.x = -P / 2; num.position.set(i * 14 + 7, .02, 11); g.add(num); }
+  for (let z = -26; z < 60; z += 6) g.add(box(.3, .012, 3, 0x6ac04a, { pos: [-30, .012, z], noOutline: true, cast: false }));   // green taxi centreline lights
   const term = props.terminal({ len: 90 }); term.position.set(0, 0, -70); g.add(solid(term, 'terminal'));
   const tw = props.tower(); tw.position.set(-55, 0, -60); g.add(solid(tw, 'tower'));
   for (let i = -3; i <= 3; i++) {
@@ -134,6 +144,7 @@ export function stage(k, o = {}) {
   // warm key spot on the subject, cool rim behind it, a soft pool of light on the floor
   const key = new THREE.SpotLight(0xffe2b8, 60, 30, .6, .5, 1); key.position.set(4, 7, 7); key.castShadow = true; g.add(key);
   const rim = new THREE.SpotLight(0x8aa0e0, 25, 40, .9, .5, 1); rim.position.set(-6, 8, -6); g.add(rim);
+  const back = new THREE.Mesh(new THREE.PlaneGeometry(60, 20), toon(0x2e2622)); back.position.set(0, 10, -6); back.receiveShadow = true; back.userData.noOutline = true; g.add(back);
   const pool = new THREE.Mesh(new THREE.CircleGeometry(4.5, 48), new THREE.MeshBasicMaterial({ color: 0x5a4a3c })); pool.rotation.x = -P / 2; pool.position.y = .005; pool.userData.noOutline = true; g.add(pool);
   scene.add(g);
   return { group: g, floorY: 0 };

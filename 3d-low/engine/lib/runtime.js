@@ -67,7 +67,9 @@ window.frame = (t, fmt = 'jpeg', q = .93) => {
   const u = core.clamp(t / dur);
   vx.clearRect(0, 0, core.W, core.H); ui.used.length = 0;
   kit.overlay = vx;
-  R.uni.fade.value = (meta.fadeIn ? core.clamp(t / .6) : 1) * (meta.fadeOut ? core.clamp((dur - t) / .8) : 1) * (meta.black ? 0 : 1);
+  // fades apply to the whole frame (3D and overlays) so nothing greys out on its own
+  const fade = (meta.fadeIn ? core.clamp(t / .6) : 1) * (meta.fadeOut ? core.clamp((dur - t) / .8) : 1) * (meta.black ? 0 : 1);
+  R.uni.fade.value = 1;
   scene.traverse(o => { if (o.userData.person && o.userData.auto !== false && !o.userData.driven) o.update(t); });
   upd && upd(t, u);
   scene.updateMatrixWorld();
@@ -95,5 +97,6 @@ window.frame = (t, fmt = 'jpeg', q = .93) => {
     if (!opts.sketch && chunks.length) ui.subtitles(vx, chunks, t, [...projectBoxes(scene, camera), ...ui.used.map(b => [b[0] - 20, b[1] - 20, b[2] + 20, b[3] + 20]).flatMap(b => [b, b, b, b, b])]);
   }
   ox.drawImage(ov, 0, 0);
+  if (fade < 1) { ox.save(); ox.globalAlpha = 1 - fade; ox.fillStyle = '#000'; ox.fillRect(0, 0, core.W, core.H); ox.restore(); }
   return out.toDataURL('image/' + fmt, q);
 };
