@@ -220,3 +220,16 @@ YouTube + Instagram, 08:00/10:00 ET slots, before the 4 Dec full video.
 - To protect the Hitler full video (19:00Z today), the facts short "Ice SHOULD sink" (6ae3bd4be1e7bea05e472a3b) moved from 30 Oct 17:30Z to Sun 1 Nov 15:30Z (21:00 IST).
 - Upcoming YouTube load: 15 uploads on 30 Oct, 16 on 31 Oct (10 facts shorts + reels + Ancient humans dark explainer), then 5 to 8 a day.
 - Ancient humans dark explainer (31 Oct 10:00 ET) is 1 day after Hitler; flagged, not moved.
+
+## Facts shorts cut to 3 a day (Pushpam, 30 Oct 16:50 UTC)
+
+Facts shorts now post 3 a day on YouTube + Instagram, at 19:00, 20:00 and 21:00 IST (13:30, 14:30, 15:30 UTC), to stay under YouTube's daily upload limit. The 12 booked shorts were moved, keeping their order:
+
+| Date | 19:00 IST | 20:00 IST | 21:00 IST |
+|---|---|---|---|
+| Sat 31 Oct | Ice floats | Voice on recordings | Onions make you cry |
+| Sun 1 Nov | Lightning hotter than the Sun | Dead Sea | Eiffel Tower grows |
+| Mon 2 Nov | Blue sky | February 29 | Octopus three hearts |
+| Tue 3 Nov | Honey never spoils | Banana is a berry | Great Wall from space |
+
+Next free facts slot: Wed 4 Nov 19:00 IST (13:30 UTC).
