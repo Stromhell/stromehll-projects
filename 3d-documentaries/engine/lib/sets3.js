@@ -81,15 +81,33 @@ export const talkAll = (ppl, t, o = {}) => ppl.forEach((p, i) => p.update(t, { p
 
 // night city block: lit and dark windows
 export function block(w, h, d, seed, o = {}) {
+  // office block: painted facade (framed windows, sills, weathering) plus real ledges, pilasters, parapet and roof plant
   const r = rnd(seed); const cols = Math.round(w / 2.4), rows = Math.round(h / 3.2);
-  const day = o.day;
-  const draw = (lit) => real.canvasTex(cols * 32, rows * 32, (c, W, H) => {
-    c.fillStyle = lit ? '#000' : (o.wall ?? (day ? '#cfc6b0' : '#5a5650')); c.fillRect(0, 0, W, H);
-    for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) { const on = !day && r() < (o.litP ?? .35); c.fillStyle = lit ? (on ? '#ffc874' : '#000') : (day ? '#2a3440' : (on ? '#ffd890' : '#14181e')); c.fillRect(x * 32 + 8, y * 32 + 7, 16, 18); }
+  const day = o.day; const wall = o.wall ?? (day ? '#cfc6b0' : '#5a5650');
+  const draw = (lit) => real.canvasTex(cols * 64, rows * 64, (c, W, H) => {
+    c.fillStyle = lit ? '#000' : wall; c.fillRect(0, 0, W, H);
+    if (!lit) { for (let i = 0; i < cols * rows * 3; i++) { c.fillStyle = `rgba(0,0,0,${.03 + r() * .05})`; c.fillRect(r() * W, r() * H, 4 + r() * 30, 20 + r() * 60); } }
+    for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) {
+      const on = !day && r() < (o.litP ?? .35), X = x * 64 + 14, Y = y * 64 + 12;
+      if (lit) { c.fillStyle = on ? '#ffc874' : '#000'; c.fillRect(X + 2, Y + 2, 32, 36); continue; }
+      c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(X - 2, Y - 2, 40, 44);                       // reveal shadow
+      if (day) { const g = c.createLinearGradient(0, Y, 0, Y + 40); g.addColorStop(0, '#6f8598'); g.addColorStop(1, '#1e2833'); c.fillStyle = g; }
+      else c.fillStyle = on ? '#ffd890' : '#14181e';
+      c.fillRect(X, Y, 36, 40);
+      c.fillStyle = day ? '#e8e2d2' : '#2a2824'; c.fillRect(X + 17, Y, 2, 40); c.fillRect(X, Y + 18, 36, 2); // mullions
+      c.fillStyle = day ? 'rgba(255,255,255,.55)' : 'rgba(255,255,255,.12)'; c.fillRect(X - 3, Y + 41, 42, 4);   // sill
+    }
   });
-  const map = draw(false); const seed2 = seed; const em = (r2 => { return draw(true); })(seed2);
+  const map = draw(false), em = draw(true);
   const mat = new THREE.MeshStandardMaterial({ map, roughness: .85, emissive: day ? 0x000000 : 0xffffff, emissiveMap: day ? null : em, emissiveIntensity: day ? 0 : 1.6 });
-  const g = real.box(w, h, d, mat, { pos: [0, h / 2, 0] });
+  const g = new THREE.Group(); g.add(real.box(w, h, d, mat, { pos: [0, h / 2, 0] }));
+  const trim = real.std(day ? 0xe4dccb : 0x4a463f, { rough: .7 }), dark = real.std(0x3a3c3e, { rough: .6, metal: .3 });
+  const fh = h / rows;
+  for (let y = 1; y < rows; y++) for (const z of [d / 2 + .1, -d / 2 - .1]) g.add(real.box(w + .3, .14, .2, trim, { pos: [0, y * fh, z] }));          // floor ledges
+  for (let x = 0; x <= cols; x += 2) for (const z of [d / 2 + .06, -d / 2 - .06]) g.add(real.box(.35, h, .12, trim, { pos: [-w / 2 + x * (w / cols), h / 2, z] })); // pilasters
+  g.add(real.box(w + .4, .5, d + .4, trim, { pos: [0, h + .25, 0] }));                                                          // parapet
+  for (let i = 0; i < 3; i++) g.add(real.box(2 + r() * 2, 1.2 + r(), 2 + r() * 2, dark, { pos: [(r() - .5) * w * .6, h + 1, (r() - .5) * d * .5] })); // roof plant
+  g.add(real.box(w, .6, d + .2, real.std(day ? 0x8a8478 : 0x2a2824, { rough: .9 }), { pos: [0, .3, 0] }));                                                // plinth
   return g;
 }
 export async function night(k) {

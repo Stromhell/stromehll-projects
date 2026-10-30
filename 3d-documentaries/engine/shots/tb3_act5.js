@@ -162,7 +162,15 @@ export const shots = {
     await real.env(k, 'qwantani_puresky', { sun: [50, 55, 35], sunI: 3.6, sunColor: 0xfff0d8, shadowSize: 30, envI: 1 });
     const ground = await real.pbr('concrete_floor_worn_001', { repeat: [30, 30] }); scene.add(real.m(new THREE.PlaneGeometry(160, 160), ground, { rot: [-P / 2, 0, 0], cast: false }));
     const gb = block(30, 16, 10, 9, { day: true }); gb.position.set(0, 0, -17); scene.add(gb);
-    scene.add(real.box(4, 3, .3, real.std(0x101418, { rough: .2, metal: .4 }), { pos: [0, 1.5, -11.9] }));
+    { // entrance: glass double doors in a bronze frame under a concrete canopy with a name band
+      const gl = real.std(0x2a3a48, { rough: .05, metal: .7 }), fr = real.std(0x5a4630, { metal: .6, rough: .35 }), cn = real.std(0xd8d0bc, { rough: .7 });
+      scene.add(real.box(4, 3, .12, gl, { pos: [0, 1.5, -11.95] }));
+      for (const x of [-2, -1, 0, 1, 2]) scene.add(real.box(.1, 3, .18, fr, { pos: [x, 1.5, -11.9] }));
+      scene.add(real.box(4.2, .14, .2, fr, { pos: [0, 3, -11.9] })); scene.add(real.box(4.2, .1, .2, fr, { pos: [0, 2.2, -11.9] }));
+      for (const x of [-.12, .12]) scene.add(real.box(.04, .6, .06, real.std(0xc8b070, { metal: .9, rough: .25 }), { pos: [x, 1.2, -11.82] }));
+      scene.add(real.box(6, .3, 2.2, cn, { pos: [0, 3.6, -11] })); for (const x of [-2.8, 2.8]) scene.add(real.box(.25, 3.5, .25, cn, { pos: [x, 1.75, -10.1] }));
+      const name = real.canvasTex(1024, 96, (c, W, H) => { c.fillStyle = '#d8d0bc'; c.fillRect(0, 0, W, H); c.fillStyle = '#3a3226'; c.font = 'bold 54px "Oswald", sans-serif'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('GOVERNMENT OFFICES', W / 2, H / 2 + 2); });
+      scene.add(real.m(new THREE.PlaneGeometry(5.6, .28), new THREE.MeshStandardMaterial({ map: name, roughness: .7 }), { pos: [0, 3.6, -9.89], cast: false })); }
     for (let i = 0; i < 3; i++) scene.add(real.box(8 - i, .16, 1.2 - i * .3, real.std(0xbab2a0, { rough: .8 }), { pos: [0, .08 + i * .16, -11.4 + i * .25] }));
     const signs = ['BRING THEM HOME', 'SAVE OUR FAMILIES', 'DO SOMETHING NOW', 'LET MY FATHER LIVE'];
     const placard = (txt) => { const t = real.canvasTex(640, 400, (c, W, H) => { c.fillStyle = '#f4efe2'; c.fillRect(0, 0, W, H); c.strokeStyle = '#1d1712'; c.lineWidth = 10; c.strokeRect(10, 10, W - 20, H - 20); c.fillStyle = '#b5281e'; c.font = 'bold 74px "Oswald", sans-serif'; c.textAlign = 'center'; const w = txt.split(' '); const l1 = w.slice(0, Math.ceil(w.length / 2)).join(' '), l2 = w.slice(Math.ceil(w.length / 2)).join(' '); c.fillText(l1, W / 2, 175); c.fillText(l2, W / 2, 285); });
