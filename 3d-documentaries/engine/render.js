@@ -55,7 +55,7 @@ const has = n => args.includes(n);
         const buf = Buffer.from(img.split(',')[1], 'base64');
         if (!ff.stdin.write(buf)) await new Promise(r => ff.stdin.once('drain', r));
         n++;
-        if (n % 60 === 0) { const el = (Date.now() - T) / 1000; fs.writeFileSync(outp + '.progress.json', JSON.stringify({ shot: s.id, frames: n, fps: +(n / el).toFixed(2), at: new Date().toISOString() })); }
+        if (n % 10 === 0) { const el = (Date.now() - T) / 1000; fs.writeFileSync(outp + '.progress.json', JSON.stringify({ shot: s.id, frames: n, fps: +(n / el).toFixed(2), at: new Date().toISOString() })); }
       }
       console.log('shot', s.id, frames, 'frames', ((Date.now() - T) / 1000).toFixed(0) + 's');
     }
