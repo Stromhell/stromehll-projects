@@ -51,13 +51,16 @@
     { const gx = W / 2; ctx.fillStyle = night ? '#2a2630' : '#5a4a42'; ctx.fillRect(gx - 170, hz - 300, 340, 300); ctx.fillStyle = night ? '#141016' : '#2a1e18'; ctx.beginPath(); ctx.moveTo(gx - 70, hz); ctx.lineTo(gx - 70, hz - 150); ctx.quadraticCurveTo(gx, hz - 220, gx + 70, hz - 150); ctx.lineTo(gx + 70, hz); ctx.fill();
       ctx.strokeStyle = night ? '#4a4450' : '#3a2a20'; ctx.lineWidth = 6; for (let k = -2; k <= 2; k++) { ctx.beginPath(); ctx.moveTo(gx + k * 26, hz); ctx.lineTo(gx + k * 26, hz - 170); ctx.stroke(); } ctx.fillStyle = night ? '#2a2630' : '#5a4a42'; ctx.beginPath(); ctx.moveTo(gx - 190, hz - 300); ctx.lineTo(gx, hz - 380); ctx.lineTo(gx + 190, hz - 300); ctx.fill(); }
     const cols = ['#9a7e62', '#8a6e58', '#a88a6a', '#7e6650', '#96785e', '#8e7260'];
-    // receding houses each side (back to front)
-    const rows = [[.62, 8], [.78, 6], [1, 4]];
-    for (const [sc, n] of rows) { const hh = 640 * sc, ww = 170 * sc; for (let i = 0; i < n; i++) { const off = (W / 2 - 190) - (i + 1) * ww * .98 + (1 - sc) * 520; timberHouse(ctx, r, off, hz + (sc - .62) * 260, ww, hh + r.range(-40, 60) * sc, cols[(i + n) % 6], { lean: r.range(-.03, .03), lit: night ? .55 : .35, floors: 4 });
-      timberHouse(ctx, r, W - off - ww, hz + (sc - .62) * 260, ww, hh + r.range(-40, 60) * sc, cols[(i + 3) % 6], { lean: r.range(-.03, .03), lit: night ? .55 : .35, floors: 4, shield: o.shield && sc === 1 && i === 0 }); } }
-    cobbles(ctx, r, W, H, hz + 99, night ? '#2e2c34' : '#4a4038', night ? '#44404a' : '#6a5a4a', night ? 'rgba(180,190,240,.08)' : 'rgba(255,200,140,.12)');
+    cobbles(ctx, r, W, H, hz + 2, night ? '#2e2c34' : '#4a4038', night ? '#44404a' : '#6a5a4a', night ? 'rgba(180,190,240,.08)' : 'rgba(255,200,140,.12)');
     // a gutter down the middle and a couple of lanterns on brackets
-    ctx.fillStyle = 'rgba(20,16,12,.5)'; ctx.beginPath(); ctx.moveTo(W / 2 - 6, hz + 99); ctx.lineTo(W / 2 + 6, hz + 99); ctx.lineTo(W / 2 + 40, H); ctx.lineTo(W / 2 - 40, H); ctx.fill();
+    ctx.fillStyle = 'rgba(20,16,12,.5)'; ctx.beginPath(); ctx.moveTo(W / 2 - 6, hz + 2); ctx.lineTo(W / 2 + 6, hz + 2); ctx.lineTo(W / 2 + 40, H); ctx.lineTo(W / 2 - 40, H); ctx.fill();
+    // houses line both sides in one-point perspective, far to near (each house is an affine slice of the street wall)
+    const VX = W / 2, zs = [6, 5.1, 4.3, 3.6, 3.0, 2.5, 2.1, 1.75, 1.45, 1.2, 1.0, .86, .72];
+    for (let i = 0; i < zs.length - 1; i++) { const z1 = zs[i], z0 = zs[i + 1], zm = (z0 + z1) / 2, lw = 200;
+      for (const side of [-1, 1]) { const X = side * 1010, xa = VX + X / z0, xb = VX + X / z1, ya = hz + (H - hz) / z0, yb = hz + (H - hz) / z1;
+        ctx.save(); ctx.transform((xb - xa) / lw, (yb - ya) / lw, 0, 1 / zm, xa, ya);
+        timberHouse(ctx, r, 0, 0, lw, r.range(1380, 1600), cols[(i * 2 + (side > 0 ? 3 : 0)) % 6], { lean: 0, lit: night ? .55 : .35, floors: 6, shield: o.shield && side > 0 && i === zs.length - 4 });
+        ctx.restore(); ctx.fillStyle = 'rgba(20,12,8,.25)'; ctx.fillRect(Math.min(xa, xb), Math.min(ya, yb) - 1000 / zm, 3, 1000 / zm); } }
     for (const [lx, ly, s] of [[W * .27, H * .42, 1], [W * .73, H * .42, 1], [W * .4, H * .52, .6], [W * .6, H * .52, .6]]) { ctx.fillStyle = '#1a1612'; ctx.fillRect(lx - (lx < W / 2 ? 0 : 60 * s), ly - 4 * s, 60 * s, 8 * s); ctx.fillStyle = '#ffe0a0'; ctx.fillRect(lx - 14 * s, ly, 28 * s, 34 * s); glow(ctx, lx, ly + 17 * s, 260 * s, '#ffc070', night ? .55 : .3); }
     if (night) { ctx.fillStyle = 'rgba(10,14,40,.28)'; ctx.fillRect(0, 0, W, H); }
     FIN(ctx, r, W, H, .48);
