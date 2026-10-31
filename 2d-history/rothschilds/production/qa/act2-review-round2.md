@@ -51,3 +51,6 @@ Content rules: pass. Decode: `ffmpeg -v error -i act2.mp4 -f null -` reports no 
 0 high, 0 medium.
 
 RESULT: CLEAN
+
+## Round 3 quick verify (07:28, after 07:26 render)
+2.05 letter now lies on the writing desk, then folds and seals; map dissolve and deathbed unchanged. RESULT: CLEAN.
