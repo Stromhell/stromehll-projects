@@ -174,6 +174,15 @@ All times UTC (Zernio takes UTC). From 1 Nov 2026 to 14 Mar 2027: UK = UTC, US E
 Rules: full videos ≥ 2 days apart; never more than 1 full video per day; keep a reel and a full video at least 30 min apart; respect the YouTube daily upload limit (count full + reels + shorts on the YouTube account per day, stay under it, move the lowest-priority item to the next day if needed).
 **Existing bookings:** Pushpam asked (31 Oct) for all existing scheduled posts to move to these times. Production plan re-slots every future post to the nearest new slot **on the same date** (never to a different day unless the daily limit forces it), and logs every move.
 
+### 13.2 Thread handover and close-out (Pushpam 31 Oct 06:34, "after videos are done and scheduled, create a detailed handover doc and /clear")
+Once a video's full video, reels, IG parts, titles and thumbnails are **booked in Zernio**, the owning thread:
+1. Writes `<video folder>/05 Production/HANDOVER.md` from the template `system/handover-template.md` (repo + Drive, same folder): final files + links, bookings, what was done, **what the next video can reuse** (sets, cast, build commands, QA fixes, gotchas), open items, cleanup done.
+2. Removes the video's Control Room card (the calendar keeps the bookings).
+3. Deletes scratch, render caches and temp clones from its container.
+4. Resolves itself. The thread is finished; it is never reused for another video.
+Every **next video starts as a NEW thread** that reads only (a) this rulebook, (b) the previous video's HANDOVER.md for its line, (c) its own script + storyboard. It does not read old thread history. This is the cloud version of `/clear`.
+Long-lived job threads (Production plan, Facts shorts, Script Room, watchdog host) do the same once their history gets large: write `system/handovers/<job>-<date>.md`, hand the job to a fresh thread, resolve.
+
 ---
 
 ## 14. Skills: what we have, what to add
@@ -200,6 +209,7 @@ Anything still missing gets written as our own skill with `skill-creator`, store
 - **Credits:** ElevenLabs only for the 16:9 long-video thumbnail. Voice, music, SFX, reel thumbs, frames: in-house/free.
 - **Branding:** Stormi logo + end cards on every reel/short/IG part.
 - **Stop/pause:** a Pushpam stop halts every stage; booked Zernio posts stay booked.
+- **Handover:** booked video → HANDOVER.md + card removed + scratch cleared + thread resolved; next video = new thread (section 13.2). No MCPs or plugins beyond the ones the stage needs (Pushpam's token audit thread trims the unused ones).
 
 ## 16. Decisions (Pushpam, 31 Oct 00:28)
 1. Default split 4/3/2/1: approved.
@@ -209,6 +219,7 @@ Anything still missing gets written as our own skill with `skill-creator`, store
 5. Scheduling: UK + US prime time, existing bookings re-timed (section 13.1).
 6. Control Room rebuilt around these stages (Pushpam 31 Oct 00:30).
 7. Watchdog checks every line follows this system (Pushpam 31 Oct 00:30, section 17).
+8. Handover + fresh thread per video, unused MCPs/plugins removed (Pushpam 31 Oct 06:34, section 13.2).
 
 ## 17. System watchdog (see also section 18)
 A scheduled audit (every 2 hours) wakes the system thread, which checks every production thread and the Control Room against this rulebook and fixes or flags what is off. It checks:
@@ -219,9 +230,11 @@ A scheduled audit (every 2 hours) wakes the system thread, which checks every pr
 - **Files:** latest outputs committed to GitHub and present on Drive AI.
 - **Credits/model:** no ElevenLabs use outside 16:9 thumbnails.
 - **Schedule:** Zernio posts sit on section 13.1 slots; YouTube daily limit not exceeded.
+- **Handover:** every video whose bookings are all in the calendar has `05 Production/HANDOVER.md` (repo + Drive), no Control Room card left, and its thread resolved; a new video never runs in an old video's thread.
 Result: a short report on the Control Room ("System check" panel) and, for each problem, a message to the owning thread with the fix. Pushpam is told only about problems a thread can't fix itself. Never restarts a stopped line, never deletes or moves posts itself (it asks Production plan).
 
 ## 18. Change log
+- v1.3, 31 Oct 06:40: section 13.2 thread handover + close-out (HANDOVER.md, card removal, scratch cleanup, fresh thread per video), watchdog check for it, handover rule in section 15.
 - v1.0, 31 Oct 00:00: draft from Pushpam's 13-point brief.
 - v1.1, 31 Oct 00:30: approved; live config, UK/US slots, installed skills, Control Room v33, watchdog.
 - v1.2, 31 Oct 00:40: merged the useful parts of Pushpam's Gemini draft: word-level VO timing map (stage 3), FG/MG/BG layers in storyboards (stage 2), anticipation/follow-through + secondary motion + AO/rim light (stage 4), exact mix targets −14 LUFS VO / score −22 to −26 dB / SFX −12 to −18 dB + J/L cuts (stage 5), audio checks in the checkup (stage 6), seam/colour/loudness pass on the master (stage 7), subject-centred 9:16 reframe (stage 10), release manifest JSON (stage 13). Not adopted: "3D low = dioramas/low shader" wording (our 3D low is the toon house look, routing table in 1.3 stands); the Gemini numbering is the same 13 stages as ours.
