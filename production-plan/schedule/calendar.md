@@ -239,3 +239,7 @@ Next free facts slot: Wed 4 Nov 19:00 IST (13:30 UTC).
 - The Hitler full video (6ae14e34fe631a0abf51fe43) failed at 19:00 UTC on 30 Oct: YouTube "uploadLimitExceeded". It is rebooked to Tue 8 Dec, 15:00 ET (20:00 UTC), the next free full-video slot. That day has only 3 other YouTube uploads.
 - The BlackRock reel at 20:00 UTC on 30 Oct went out on Instagram only (YouTube refused it for the same reason). Not retried, to avoid adding uploads.
 - Waiting videos shift one slot: Thunderbolt 10 Dec, Mongols 12 Dec, JPMorgan 14 Dec, Dark Web 16 Dec, Caesar 18 Dec, Putin 20 Dec.
+
+## Re-timed to UK + US prime time (31 Oct 2026, 00:50 UTC)
+
+Pushpam asked (31 Oct 00:28) for every booked post to move to UK + US prime-time slots. 282 of 286 future posts moved, each on its own UTC date; 4 were already on a new slot. Full move log: `retime-2026-10-31.md`. New slots (UTC): full video 19:00 weekdays, 16:00 weekends; reels 19:30, 00:30, 12:00, 22:00, 17:00, 03:00, 07:30; facts shorts 18:00, 21:00, 01:30. Busiest day has 9 YouTube uploads.
