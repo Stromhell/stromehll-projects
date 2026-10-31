@@ -8,15 +8,24 @@
 const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
 for (const n of ['judengasse_shield', 'map_europe', 'partners_room', 'vineyard', 'judengasse_night']) K.load(n, PL + n + '.jpg');
 const SW = 1920, SH = 1080, INK = RS.INK, pop = RS.pop;
-const backdrop = (name, b = .5, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+// slow camera push for hand-drawn shots (no still frames): zoom about the frame centre
+const push = (c, u, amt = .05) => { const z = 1 + amt * E.io(u); c.translate(SW / 2, SH / 2); c.scale(z, z); c.translate(-SW / 2, -SH / 2); return z; };
+const backdrop = (name, b = .5, blur = 8, z = 1) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * z * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
 const bag = (c) => { c.save(); c.fillStyle = '#5a3a22'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.roundRect(-30, 0, 70, 50, 8); c.fill(); c.stroke(); c.beginPath(); c.arc(5, 0, 14, Math.PI, 0); c.stroke(); c.restore(); };
 const NAMES = RS.BROTHERS.map(b => b[0]);
+// the will: a rolled-open sheet held at its top edge by the hand (hand at origin)
+const willDoc = (c) => { c.save(); c.rotate(-.12); c.fillStyle = RS.PAPER; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.roundRect(-8, -14, 56, 76, 4); c.fill(); c.stroke(); c.fillStyle = '#e8d8b0'; c.beginPath(); c.roundRect(-12, -18, 64, 10, 5); c.fill(); c.stroke(); c.strokeStyle = 'rgba(60,40,20,.55)'; c.lineWidth = 2; for (let y = 4; y < 54; y += 9) { c.beginPath(); c.moveTo(0, y); c.lineTo(38, y); c.stroke(); } c.fillStyle = '#b02020'; c.beginPath(); c.arc(30, 52, 6, 0, 7); c.fill(); c.restore(); };
+// the brother who goes farthest (rightmost) leads; one speed and a 0.6 s lag keep ~370 px between walkers, so no overlaps
+const WALK1 = [0, 1, 2, 3, 4].map(i => ({ x0: -300, x1: 700 + i * 290, t0: .1 + (4 - i) * .6, dur: (1000 + i * 290) / 620 }));
 
 window.SHOTS = [
   // 2.01 the five sons walk in one by one and line up, each with a travelling bag
-  { plate: 'judengasse_shield', cam: { z: [1.08, 1.14], x: [1280, 1280], y: [880, 880] }, bed: [['city_loop', .15]],
-    figs: [0, 1, 2, 3, 4].map(i => ({ x: 470 + i * 390, y: 1330, s: 1.8, ...RS.bro(i, false), facing: 1, walk: { x0: -300, x1: 470 + i * 390, t0: .2 + i * .5, dur: 2.6 + i * .3 }, hold: { near: bag },
-      anim: (o, lt, u, S) => { if (lt > .2 + i * .5 + 2.6 + i * .3) { o.pose = 'present'; o.facing = 1; o.mood = 'happy'; } } })),
+  // walk line y=1315 sits on the painted cobbles (street spans x 522-2010 there, i.e. the full visible width at this zoom);
+  // camera framed so feet land at screen y ~917-921, above the bottom subtitle band; contact shadows drawn under each pair of feet
+  { plate: 'judengasse_shield', cam: { z: [1.3, 1.34], x: [1280, 1280], y: [1022, 1034] }, bed: [['city_loop', .15]],
+    live: [(c, lt) => WALK1.forEach(w => { const x = R.walkX(lt, w.x0, w.x1, w.t0, w.dur, 1.6).x; c.save(); c.translate(x, 1317); c.scale(1, .2); const g = c.createRadialGradient(0, 0, 0, 0, 0, 98); g.addColorStop(0, 'rgba(15,10,8,.55)'); g.addColorStop(.6, 'rgba(15,10,8,.25)'); g.addColorStop(1, 'rgba(15,10,8,0)'); c.fillStyle = g; c.beginPath(); c.arc(0, 0, 98, 0, 7); c.fill(); c.restore(); })],
+    figs: [0, 1, 2, 3, 4].map(i => ({ x: WALK1[i].x1, y: 1315, s: 1.6, ...RS.bro(i, false), facing: 1, walk: WALK1[i], hold: { near: bag },
+      anim: (o, lt, u, S) => { if (lt > WALK1[i].t0 + WALK1[i].dur) { o.pose = ['present', 'wave', 'stand', 'present', 'wave'][i]; o.facing = i < 2 ? 1 : -1; o.mood = 'happy'; } } })),
     init: S => { const tC = A.at(S, 'clever', 1.6), tE = A.at(S, 'Europe', 3.4);
       S.D.over = [(c, lt) => K.card(c, '5 BROTHERS', lt, { at: .4, x: 960, y: 200, px: 62, rot: -2 }), (c, lt) => K.card(c, 'SENT ACROSS EUROPE', lt, { at: tE, x: 1460, y: 300, px: 44, rot: 3 })];
       S.D.sfx = [[.3, 'footsteps', .35], [tE, 'whoosh_soft', .3]]; } },
@@ -29,12 +38,12 @@ window.SHOTS = [
       S.D.over = [(c, lt) => K.title(c, 'FIVE CAPITALS', lt, { at: S.tt[4] + 1, y: 130, px: 80 })];
       S.D.sfx = S.tt.map(t => [t, 'whoosh_soft', .35]).concat(S.tt.map(t => [t + .8, 'pop', .3])); } },
   // 2.03 the five-arrow crest appears big; then one arrow alone snaps while the bundle holds. CONCORDIA
-  { draw: (c, lt, u, S) => { backdrop('map_europe', .35, 10)(c); const tSep = S.tSep, tS = S.tS, tB = S.tB;
+  { draw: (c, lt, u, S) => { backdrop('map_europe', .35, 10, 1 + .03 * E.io(u))(c); push(c, u, .04); const tSep = S.tSep, tS = S.tS, tB = S.tB;
       // the crest: five arrows tied with a ribbon inside a gold medallion, centre stage, then it slides right
       const a = pop(lt, .3, .5), mv = E.io(K.seg(lt, tSep - .3, tSep + .5)), cx = 960 + 420 * mv, cy = 600 + 30 * mv, sc = 2.1 - .5 * mv;
       if (a > 0) { const shake = lt > tB ? Math.sin(lt * 30) * 5 * (1 - K.seg(lt, tB + .7, tB + 1.0)) : 0;
-        c.save(); c.translate(cx + shake, cy); c.scale(a, a);
-        c.fillStyle = 'rgba(20,12,6,.45)'; c.beginPath(); c.ellipse(10, 250 * sc / 2.1, 200 * sc / 2.1, 26, 0, 0, 7); c.fill();
+        const fl = Math.sin(lt * 1.6) * 8, rk = Math.sin(lt * 1.1) * .025; c.save(); c.translate(cx + shake, cy + fl); c.rotate(rk); c.scale(a, a);
+        c.fillStyle = 'rgba(20,12,6,.45)'; c.beginPath(); c.ellipse(10, 250 * sc / 2.1 - fl, 200 * sc / 2.1, 26, 0, 0, 7); c.fill();
         c.fillStyle = '#3a2614'; c.strokeStyle = RS.GOLD; c.lineWidth = 14; c.beginPath(); c.arc(0, 0, 210 * sc / 2.1, 0, 7); c.fill(); c.stroke();
         c.strokeStyle = 'rgba(255,230,160,.35)'; c.lineWidth = 4; c.beginPath(); c.arc(0, 0, 186 * sc / 2.1, 0, 7); c.stroke();
         c.translate(0, 18 * sc); RS.arrows(c, 0, 0, sc * .5, { spread: .38 }); c.restore();
@@ -62,7 +71,7 @@ window.SHOTS = [
         (c, lt) => { const a = pop(lt, .4, .45), out = 1 - K.seg(lt, tL - .3, tL); if (a <= 0 || out <= 0) return; c.save(); c.globalAlpha = out; c.translate(1500, 760); c.scale(a * 1.6, a * 1.6); RS.letter(c, 0, 0, 1, { rot: .08 }); c.restore(); }];
       S.D.sfx = [[.4, 'stamp', .4], [.6, 'neigh', .3], [tF, 'whoosh', .3]]; } },
   // 2.05 a letter written in Yiddish in Hebrew letters; quill scratches, it is folded and sealed
-  { draw: (c, lt, u, S) => { backdrop('partners_room', .45, 9)(c); const a = pop(lt, .2, .5); if (a <= 0) return; const sealed = lt > S.tF; c.save(); c.translate(900, 560); c.scale(a * 3.4, a * 3.4); RS.letter(c, 0, 0, 1, { open: !sealed, hebrew: true, rot: -.04 }); c.restore();
+  { draw: (c, lt, u, S) => { backdrop('partners_room', .45, 9, 1 + .03 * E.io(u))(c); push(c, u, .04); const a = pop(lt, .2, .5); if (a <= 0) return; const sealed = lt > S.tF; c.save(); c.translate(900, 560); c.scale(a * 3.4, a * 3.4); RS.letter(c, 0, 0, 1, { open: !sealed, hebrew: true, rot: -.04 }); c.restore();
       if (!sealed) { const qx = 1250 - ((lt * 160) % 520), qy = 450 + Math.floor((lt * 160) / 520) % 4 * 94; RS.quill(c, qx, qy, 1.1, .3); } },
     bed: [['hum_loop', .25]],
     init: S => { const tY = A.at(S, 'Yiddish', 2.2); S.tF = A.at(S, 'few outsiders', 5.4);
@@ -81,16 +90,28 @@ window.SHOTS = [
       S.D.sfx = [[.3, 'whoosh_soft', .3], [S.tT, 'alarm', .2], [tD, 'paper', .3], [tW, 'coins', .4]]; } },
   // 2.07 1812: Mayer on his deathbed, the sons gathered; the will on the table; a candle gutters
   {
-    draw: (c, lt, u, S) => { backdrop('partners_room', .32, 7)(c); c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = 'rgba(40,40,90,.45)'; c.fillRect(0, 0, SW, SH); c.restore();
-      [0, 1, 2, 3, 4].forEach(i => R.figure(c, { x: 540 + i * 225, y: 820 - (i % 2) * 20, s: 1.1, ...RS.bro(i, false), facing: i < 2 ? 1 : -1, pose: 'present', mood: 'sad', t: lt + i }));
+    draw: (c, lt, u, S) => { backdrop('partners_room', .32, 7, 1 + .025 * E.io(u))(c); push(c, u, .035);
+      // wooden floor so the bed, table and the standing son all rest on something (was: legs ending in mid-air)
+      c.fillStyle = '#2e1d12'; c.fillRect(-60, 868, SW + 120, 300); c.strokeStyle = 'rgba(0,0,0,.35)'; c.lineWidth = 3; for (let y = 900, k = 0; y < 1140; y += 34 + k * 6, k++) { c.beginPath(); c.moveTo(-60, y); c.lineTo(SW + 60, y); c.stroke(); }
+      c.strokeStyle = 'rgba(0,0,0,.22)'; for (let k = 0; k < 12; k++) { const y0 = 900 + (k % 5) * 40; c.beginPath(); c.moveTo(80 + k * 167 + (k % 3) * 40, y0); c.lineTo(80 + k * 167 + (k % 3) * 40, y0 + 34); c.stroke(); }
+      c.fillStyle = '#1c120b'; c.fillRect(-60, 852, SW + 120, 18); c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.moveTo(-60, 870); c.lineTo(SW + 60, 870); c.stroke();
+      c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = 'rgba(40,40,90,.45)'; c.fillRect(-60, -60, SW + 120, SH + 120); c.restore();
+      // four sons behind the bed (feet hidden by the bed frame), each a different pose, turned toward their father's head
+      [[0, 600, 'reach'], [1, 800, 'think'], [2, 990, 'stand'], [3, 1170, 'think']].forEach(([i, x, pose], k) => R.figure(c, { x, y: 822 - (k % 2) * 14, s: 1.1, ...RS.bro(i, false), facing: -1, pose, mood: 'sad', t: lt + i * .7 }));
+      c.fillStyle = 'rgba(10,6,4,.5)'; for (const [x0, x1] of [[360, 450], [1250, 1340], [1390, 1426], [1534, 1570]]) { c.beginPath(); c.ellipse((x0 + x1) / 2, 942, (x1 - x0) / 2 + 14, 9, 0, 0, 7); c.fill(); }
+      c.fillStyle = 'rgba(10,6,4,.35)'; c.beginPath(); c.ellipse(850, 944, 470, 16, 0, 0, 7); c.fill();
       c.fillStyle = '#4a2c1a'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(400, 760, 900, 120); c.strokeRect(400, 760, 900, 120); c.fillRect(380, 600, 50, 340); c.strokeRect(380, 600, 50, 340); c.fillRect(1270, 680, 50, 260); c.strokeRect(1270, 680, 50, 260);
       c.fillStyle = '#f0e8d8'; c.beginPath(); c.roundRect(430, 720, 840, 70, 20); c.fill(); c.stroke(); c.beginPath(); c.ellipse(500, 712, 70, 34, 0, 0, 7); c.fill(); c.stroke();
       R.figure(c, { x: 760, y: 742, s: 1.0, ...RS.MAYER_OLD, hat: null, facing: 1, pose: 'lie', mood: 'neutral', t: lt });
-      c.fillStyle = '#d8c8a8'; c.beginPath(); c.roundRect(620, 700, 640, 70, 26); c.fill(); c.stroke();
-      c.fillStyle = '#3a2416'; c.fillRect(1520, 780, 260, 20); c.fillRect(1540, 800, 16, 140); c.fillRect(1744, 800, 16, 140); RS.candle(c, 1720, 780, .55, lt);
-      const a = pop(lt, S.tW, .4); if (a > 0) { c.save(); c.translate(1600, 760); c.scale(a, a); c.fillStyle = RS.PAPER; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-60, -20, 110, 20); c.strokeRect(-60, -20, 110, 20); c.restore(); } },
+      const br = Math.sin(lt * 1.3) * 3; c.fillStyle = '#d8c8a8'; c.beginPath(); c.roundRect(620, 700 - br, 640, 70 + br, 26); c.fill(); c.stroke();
+      c.fillStyle = '#3a2416'; c.fillRect(1380, 780, 200, 20); c.fillRect(1400, 800, 16, 140); c.fillRect(1544, 800, 16, 140); RS.candle(c, 1420, 780, .55, lt);
+      // the fifth son stands on the floor right of the bedside table holding the will; he lifts it to show it on "will" (smoothed pose change)
+      A.figure(c, S.willSon, lt, u, S); },
     bed: [['night_loop', .2]],
-    init: S => { S.tW = A.at(S, 'will', 2.2); const tU = A.at(S, 'united', 3.4);
+    init: S => { S.tW = A.at(S, 'will', 2.2);
+      S.willSon = { x: 1730, y: 940, s: 1.12, ...RS.bro(4, false), facing: -1, pose: 'stand', mood: 'sad', hold: { near: willDoc },
+        anim: (o, lt) => { if (lt > S.tW - .3) o.pose = 'present'; } };
+      const tU = A.at(S, 'united', 3.4);
       S.D.over = [(c, lt) => K.dateTag(c, '1812', lt, { at: .4 }), (c, lt) => K.card(c, 'THE WILL: STAY UNITED', lt, { at: tU, x: 1440, y: 200, px: 48, rot: 3 }), (c, lt) => K.card(c, 'KEEP IT IN THE FAMILY', lt, { at: tU + 1, x: 1440, y: 300, px: 42, rot: -2 })];
       S.D.sfx = [[.3, 'breath', .2], [S.tW, 'paper', .3], [tU, 'chime', .3]]; } },
 ];
