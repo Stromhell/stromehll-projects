@@ -12,6 +12,89 @@ const backdrop = (name, b = .5, blur = 8) => (c) => { c.save(); c.filter = `blur
 const CARRY = () => ({ shL: 30, elL: -75, shR: 35, elR: -75 });
 const smallChest = (c) => { c.save(); c.scale(.32, .32); RS.chest(c, 40, -20, 1, {}); c.restore(); };
 
+// act-local copies: detailed galloping horse (from act 2's courier steed) and a side-on ship (from act 4), ship gains a furled-sail option for moored ships
+const cavHorse = (c, x, y, s, t, col = '#5a3a24', cloth = '#7a1e1e') => {
+  const dark = RS.shade(col, -.35), lite = RS.shade(col, .25), p = t * 11, bob = Math.abs(Math.sin(p)) * 8;
+  c.save(); c.translate(x, y); c.scale(s, s);
+  c.fillStyle = 'rgba(20,14,8,.34)'; c.beginPath(); c.ellipse(0, 0, 165, 17, 0, 0, 7); c.fill();
+  const leg = (hx, hy, ph, near) => { const a = Math.sin(p + ph) * .7, k = Math.max(0, -Math.sin(p + ph)) * .9, fc = near ? col : dark;
+    c.save(); c.translate(hx, hy - bob); c.rotate(a);
+    c.fillStyle = fc; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.moveTo(-15, 0); c.lineTo(15, 0); c.lineTo(9, 64); c.lineTo(-9, 64); c.closePath(); c.fill(); c.stroke();
+    c.beginPath(); c.arc(0, 64, 10, 0, 7); c.fill(); c.stroke();
+    c.translate(0, 64); c.rotate(near ? -k : k); c.beginPath(); c.moveTo(-8, 0); c.lineTo(8, 0); c.lineTo(6, 50); c.lineTo(-6, 50); c.closePath(); c.fill(); c.stroke();
+    c.fillStyle = RS.shade(fc, -.2); c.beginPath(); c.arc(0, 50, 8, 0, 7); c.fill(); c.stroke();
+    c.fillStyle = '#1e1610'; c.beginPath(); c.moveTo(-9, 54); c.lineTo(9, 54); c.lineTo(12, 68); c.lineTo(-12, 68); c.closePath(); c.fill(); c.stroke();
+    c.strokeStyle = 'rgba(255,255,255,.25)'; c.lineWidth = 2; c.beginPath(); c.moveTo(-6, 58); c.lineTo(6, 58); c.stroke(); c.restore(); };
+  leg(-82, -118, Math.PI, false); leg(72, -118, 0, false);
+  c.translate(0, -bob);
+  // tail (behind the body), several strands swinging
+  for (let k = 0; k < 5; k++) { const sw = Math.sin(t * 9 + k * .5) * 14; c.strokeStyle = k % 2 ? '#2a1a10' : '#3a2418'; c.lineWidth = 12 - k; c.lineCap = 'round';
+    c.beginPath(); c.moveTo(-120, -175); c.bezierCurveTo(-160, -175 + k * 4, -200 + sw, -140 + k * 6, -215 + sw * 1.5, -95 + k * 8); c.stroke(); }
+  // body silhouette
+  c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.moveTo(-122, -178); c.bezierCurveTo(-80, -212, 30, -208, 80, -198); c.bezierCurveTo(110, -190, 130, -160, 118, -128);
+  c.quadraticCurveTo(60, -96, 0, -100); c.quadraticCurveTo(-80, -98, -118, -116); c.bezierCurveTo(-150, -132, -150, -165, -122, -178); c.closePath(); c.fill();
+  c.save(); c.clip(); const g = c.createLinearGradient(0, -210, 0, -96); g.addColorStop(0, lite); g.addColorStop(.45, col); g.addColorStop(1, dark); c.fillStyle = g; c.fillRect(-160, -220, 300, 130);
+  c.strokeStyle = 'rgba(0,0,0,.18)'; c.lineWidth = 4; c.beginPath(); c.arc(-80, -150, 40, -.6, 1.6); c.stroke(); c.beginPath(); c.arc(78, -148, 34, 1.4, 3.6); c.stroke(); c.restore(); c.stroke();
+  // neck and head
+  c.fillStyle = col; c.beginPath(); c.moveTo(62, -196); c.quadraticCurveTo(105, -262, 140, -290); c.lineTo(170, -270); c.quadraticCurveTo(150, -200, 122, -140); c.closePath(); c.fill(); c.stroke();
+  c.beginPath(); c.moveTo(134, -294); c.quadraticCurveTo(168, -314, 196, -284); c.lineTo(224, -248); c.quadraticCurveTo(230, -228, 206, -226); c.lineTo(168, -236); c.quadraticCurveTo(138, -252, 134, -294); c.closePath(); c.fill(); c.stroke();
+  c.fillStyle = dark; c.beginPath(); c.ellipse(214, -236, 6, 4, .4, 0, 7); c.fill();
+  c.fillStyle = INK; c.beginPath(); c.arc(170, -280, 6, 0, 7); c.fill(); c.fillStyle = '#fff'; c.beginPath(); c.arc(172, -282, 2, 0, 7); c.fill();
+  c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.moveTo(146, -300); c.lineTo(152, -330); c.lineTo(162, -302); c.closePath(); c.fill(); c.stroke();
+  // mane flowing back along the neck
+  for (let k = 0; k < 7; k++) { const u2 = k / 6, mx = 145 - 78 * u2, my = -298 + 96 * u2, fl = Math.sin(t * 12 + k) * 6; c.fillStyle = k % 2 ? '#24160e' : '#33200f';
+    c.beginPath(); c.moveTo(mx + 8, my - 4); c.quadraticCurveTo(mx - 18, my - 10 + fl, mx - 30, my + 6 + fl); c.quadraticCurveTo(mx - 10, my + 4, mx - 2, my + 12); c.closePath(); c.fill(); }
+  // bridle: headstall, browband, noseband, bit ring
+  c.strokeStyle = '#2a1408'; c.lineWidth = 5; c.beginPath(); c.moveTo(150, -300); c.lineTo(186, -244); c.stroke(); c.beginPath(); c.moveTo(144, -292); c.lineTo(166, -296); c.stroke();
+  c.beginPath(); c.moveTo(196, -260); c.quadraticCurveTo(210, -262, 222, -252); c.stroke(); c.beginPath(); c.moveTo(186, -244); c.lineTo(206, -232); c.stroke();
+  c.strokeStyle = '#d8b860'; c.lineWidth = 3; c.beginPath(); c.arc(206, -232, 6, 0, 7); c.stroke();
+  // saddle-cloth, saddle, girth, stirrup
+  c.fillStyle = cloth; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.roundRect(-62, -212, 104, 66, 10); c.fill(); c.stroke(); c.strokeStyle = RS.GOLD; c.lineWidth = 3; c.beginPath(); c.roundRect(-55, -205, 90, 52, 7); c.stroke();
+  c.fillStyle = '#4a2a14'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.moveTo(-50, -206); c.quadraticCurveTo(-56, -232, -40, -230); c.quadraticCurveTo(-10, -212, 18, -214); c.quadraticCurveTo(34, -238, 40, -214); c.quadraticCurveTo(0, -198, -50, -206); c.closePath(); c.fill(); c.stroke();
+  c.strokeStyle = '#2a1408'; c.lineWidth = 6; c.beginPath(); c.moveTo(0, -150); c.lineTo(6, -104); c.stroke(); c.lineWidth = 3; c.beginPath(); c.moveTo(-4, -205); c.lineTo(36, -146); c.stroke();
+  c.strokeStyle = '#9a9a9a'; c.lineWidth = 4; c.beginPath(); c.moveTo(24, -146); c.lineTo(48, -146); c.lineTo(44, -136); c.lineTo(28, -136); c.closePath(); c.stroke();
+  // saddlebag on the rump
+  c.save(); c.translate(-95, -178);
+  c.fillStyle = '#5a3a22'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.roundRect(-30, -6, 62, 58, 8); c.fill(); c.stroke(); c.fillStyle = '#4a2c18'; c.beginPath(); c.roundRect(-32, -8, 66, 22, 6); c.fill(); c.stroke();
+  c.fillStyle = '#d8b860'; c.fillRect(-3, 8, 6, 10); c.restore();
+  c.restore();
+  // near legs in front of the body
+  c.save(); c.translate(x, y); c.scale(s, s); leg(-72, -118, Math.PI * .5, true); leg(82, -118, Math.PI * 1.5, true); c.restore();
+  return { saddleX: x - 10 * s, saddleY: y - (200 + bob) * s, bitX: x + 206 * s, bitY: y - (232 + bob) * s };
+};
+
+const dockShip = (c, x, y, s, t, facing = 1, o = {}) => { c.save(); c.translate(x, y + Math.sin(t * 2) * 6 * s); c.rotate(Math.sin(t * 1.6) * .03); c.scale(s * facing, s);
+  const hullC = o.hull || '#4a3020';
+  // wake and bow wave
+  c.fillStyle = 'rgba(255,255,255,.35)'; c.beginPath(); c.ellipse(0, 4, 260, 12, 0, 0, 7); c.fill();
+  c.strokeStyle = 'rgba(255,255,255,.6)'; c.lineWidth = 4; for (let k = 0; k < 3; k++) { const ph = (t * 1.4 + k / 3) % 1; c.globalAlpha = 1 - ph; c.beginPath(); c.moveTo(-200 - ph * 160, 6 + k * 3); c.quadraticCurveTo(-260 - ph * 160, 10, -320 - ph * 200, 4 + k * 4); c.stroke(); } c.globalAlpha = 1;
+  c.beginPath(); c.moveTo(210, -4); c.quadraticCurveTo(250, -14, 270, 4); c.stroke();
+  // rigging behind the sails: stays from mast tops to bow/stern, shrouds
+  c.strokeStyle = 'rgba(30,22,16,.75)'; c.lineWidth = 2; c.beginPath(); c.moveTo(-90, -380); c.lineTo(-215, -100); c.moveTo(60, -390); c.lineTo(330, -128); c.moveTo(-90, -380); c.lineTo(60, -330); for (const mx of [-90, 60]) for (let k = -3; k <= 3; k++) { if (!k) continue; c.moveTo(mx, -330); c.lineTo(mx + k * 14, -66); } c.stroke();
+  // hull with stern castle
+  const hg = c.createLinearGradient(0, -90, 0, 0); hg.addColorStop(0, RS.shade ? RS.shade(hullC, .18) : hullC); hg.addColorStop(1, RS.shade ? RS.shade(hullC, -.35) : hullC);
+  c.fillStyle = hg; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.moveTo(-235, -105); c.lineTo(-150, -100); c.lineTo(-150, -64); c.lineTo(240, -70); c.lineTo(190, 0); c.lineTo(-190, 0); c.quadraticCurveTo(-225, -40, -235, -105); c.closePath(); c.fill(); c.stroke();
+  c.strokeStyle = 'rgba(20,12,8,.45)'; c.lineWidth = 2; for (const py of [-16, -28, -56]) { c.beginPath(); c.moveTo(-205, py); c.lineTo(220 - (py + 70) * .6, py - 2); c.stroke(); }
+  c.fillStyle = '#c8a040'; c.fillRect(-200, -48, 400, 8); c.fillStyle = '#e0c060'; c.fillRect(-228, -98, 76, 5);
+  // gunports
+  for (let k = 0; k < 8; k++) { const gx = -150 + k * 44; c.fillStyle = '#1a120c'; c.fillRect(gx, -40, 20, 16); c.strokeStyle = '#c8a040'; c.lineWidth = 2; c.strokeRect(gx, -40, 20, 16); if (o.guns) { c.fillStyle = '#2a2a2a'; c.fillRect(gx + 4, -34, 14, 5); } }
+  // stern windows + lantern
+  c.fillStyle = 'rgba(255,214,140,.8)'; for (let k = 0; k < 3; k++) c.fillRect(-222 + k * 22, -90, 14, 12); c.fillStyle = '#c8a040'; c.beginPath(); c.arc(-238, -114, 8, 0, 7); c.fill();
+  // bowsprit and jib
+  c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.moveTo(225, -68); c.lineTo(335, -130); c.stroke();
+  if (!o.furled) { c.fillStyle = '#ece2cc'; c.lineWidth = 3; c.beginPath(); c.moveTo(60, -330); c.lineTo(320, -126); c.quadraticCurveTo(200, -110 + Math.sin(t * 2) * 6, 70, -90); c.closePath(); c.fill(); c.stroke(); }
+  // masts, yards, crow's nest
+  c.strokeStyle = INK; c.lineWidth = 7; for (const mx of [-90, 60]) { c.beginPath(); c.moveTo(mx, -60); c.lineTo(mx, -390); c.stroke(); }
+  // sails with shading and seams
+  if (o.furled) { for (const mx of [-90, 60]) for (const [yy, w] of [[-362, 95], [-262, 80], [-170, 66]]) { c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.moveTo(mx - w - 8, yy); c.lineTo(mx + w + 8, yy); c.stroke(); const fg = c.createLinearGradient(0, yy - 4, 0, yy + 16); fg.addColorStop(0, '#f2eadb'); fg.addColorStop(1, '#bfb298'); c.fillStyle = fg; c.lineWidth = 3; c.beginPath(); c.moveTo(mx - w, yy); for (let k = 0; k <= 6; k++) c.quadraticCurveTo(mx - w + (k - .5) * w / 3, yy + 18, mx - w + k * w / 3, yy + 4); c.lineTo(mx + w, yy); c.closePath(); c.fill(); c.stroke(); c.strokeStyle = 'rgba(60,40,20,.6)'; c.lineWidth = 2; for (let k = 1; k < 6; k++) { c.beginPath(); c.moveTo(mx - w + k * w / 3, yy - 2); c.lineTo(mx - w + k * w / 3 + 4, yy + 12); c.stroke(); } } } else
+  for (const [mx, h] of [[-90, 300], [60, 320]]) { const sg = c.createLinearGradient(mx - 90, 0, mx + 100, 0); sg.addColorStop(0, '#f6efe0'); sg.addColorStop(1, '#d8ccb2'); c.fillStyle = sg; c.strokeStyle = INK; c.lineWidth = 4; const bulge = 30 + Math.sin(t * 1.3 + mx) * 6;
+    c.beginPath(); c.moveTo(mx - 90, -360); c.quadraticCurveTo(mx + bulge, -360 + h / 2, mx - 90, -380 + h); c.lineTo(mx + 80, -380 + h); c.quadraticCurveTo(mx + 90 + bulge, -360 + h / 2, mx + 80, -360); c.closePath(); c.fill(); c.stroke();
+    c.strokeStyle = 'rgba(120,100,70,.35)'; c.lineWidth = 2; for (let k = 1; k < 4; k++) { const sx = mx - 90 + k * 42; c.beginPath(); c.moveTo(sx, -358); c.quadraticCurveTo(sx + bulge * .9, -360 + h / 2, sx, -382 + h); c.stroke(); }
+    c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.moveTo(mx - 100, -362); c.lineTo(mx + 90, -362); c.stroke(); }
+  c.fillStyle = '#4a3020'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-106, -330, 32, 14); c.strokeRect(-106, -330, 32, 14);
+  c.fillStyle = o.flag || '#c8281e'; c.lineWidth = 3; c.beginPath(); c.moveTo(62, -420); for (let k = 0; k <= 6; k++) c.lineTo(62 + k * 10, -420 + Math.sin(t * 5 + k) * 3); c.lineTo(122, -390 + Math.sin(t * 5 + 6) * 3); for (let k = 6; k >= 0; k--) c.lineTo(62 + k * 10, -390 + Math.sin(t * 5 + k) * 3); c.closePath(); c.fill(); c.stroke();
+  c.restore(); };
+
 // ---- 3.02 Waterloo: a painted battlefield (world coords 2560x1440). Static ground/sky cached once; everything else animates.
 const WL = (() => {
   const rnd = k => { const x = Math.sin(k * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
@@ -91,7 +174,7 @@ const WL = (() => {
     wheel(c, 2330, 1110, 62, .3); wheel(c, 2050, 1252, 58, -.2, 3);
     // foreground debris: broken wheel half sunk, drum, shako, muskets, cannonballs
     c.save(); c.translate(2010, 1392); c.scale(1, .55); wheel(c, 0, 0, 92, .2, 11); c.restore(); c.fillStyle = 'rgba(40,28,18,.8)'; ell(c, 2010, 1420, 110, 16); c.fill();
-    c.save(); c.translate(1620, 1408); c.rotate(-.35); c.fillStyle = 'rgba(10,6,4,.4)'; ell(c, 0, 26, 70, 12); c.fill(); c.fillStyle = '#b02a1e'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-52, -30, 104, 56); c.strokeRect(-52, -30, 104, 56); c.fillStyle = '#e9e1d0'; ell(c, 52, -2, 12, 28); c.fill(); c.stroke(); c.strokeStyle = '#e9e1d0'; c.lineWidth = 3; c.beginPath(); for (let k = 0; k < 5; k++) { c.moveTo(-50 + k * 25, -28); c.lineTo(-38 + k * 25, 24); } c.stroke(); c.restore();
+    c.save(); c.translate(1440, 1408); c.rotate(-.35); c.fillStyle = 'rgba(10,6,4,.4)'; ell(c, 0, 26, 70, 12); c.fill(); c.fillStyle = '#b02a1e'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-52, -30, 104, 56); c.strokeRect(-52, -30, 104, 56); c.fillStyle = '#e9e1d0'; ell(c, 52, -2, 12, 28); c.fill(); c.stroke(); c.strokeStyle = '#e9e1d0'; c.lineWidth = 3; c.beginPath(); for (let k = 0; k < 5; k++) { c.moveTo(-50 + k * 25, -28); c.lineTo(-38 + k * 25, 24); } c.stroke(); c.restore();
     c.save(); c.translate(1010, 1418); c.rotate(.5); c.fillStyle = '#1a1614'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.roundRect(-22, -30, 44, 40, 4); c.fill(); c.stroke(); c.fillStyle = '#c8281e'; c.fillRect(-4, -46, 8, 16); c.restore();
     for (const [x, y, r] of [[1180, 1400, -.1], [1240, 1388, .25]]) { c.save(); c.translate(x, y); c.rotate(r); c.strokeStyle = INK; c.lineWidth = 9; c.beginPath(); c.moveTo(-90, 0); c.lineTo(80, 0); c.stroke(); c.strokeStyle = '#6a4628'; c.lineWidth = 5; c.stroke(); c.restore(); }
     const ball = (x, y, r) => { c.fillStyle = 'rgba(10,6,4,.35)'; ell(c, x + 4, y + r * .8, r * 1.1, r * .3); c.fill(); const bg = c.createRadialGradient(x - r * .4, y - r * .4, 1, x, y, r); bg.addColorStop(0, '#6a6a72'); bg.addColorStop(1, '#1e1e22'); c.fillStyle = bg; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.arc(x, y, r, 0, 7); c.fill(); c.stroke(); };
@@ -126,7 +209,7 @@ const WL = (() => {
     for (let r = 0; r < 2; r++) for (let f = 0; f < 56; f++) { const x = 190 + f * 15.5 + r * 7, y = 860 + r * 12; soldier(c, x, y + Math.sin(lt * 1.5 + f * .4) * .8, .48 + r * .03, '#b8241c', '#4a4c56'); const ph = (lt * .55 + f * .018 + r * .3) % 1; if (ph < .04) { RS.glow(c, x + 9, y - 66, 26, '#ffd27a', .9); } if (ph < .5) blob(c, x + 12 + ph * 60, y - 60 - ph * 30, 10 + ph * 50, '220,212,200', .35 * (1 - ph * 2)); }
     flag(c, 420, 846, .34, lt, union); flag(c, 820, 846, .34, lt + 1, colours);
     // British cavalry gallops in from the left and chases across the middle distance
-    for (let k = 0; k < 5; k++) { const x = -180 - k * 210 + lt * 270, y = 950 + (k % 2) * 26; if (x < -120 || x > 2700) continue; const sd = RS.horse(c, x, y, .3, lt + k * .37, { gait: 'gallop', col: ['#6a4428', '#3a2a22', '#8a6040', '#4a3020', '#7a5a3a'][k] }); c.save(); c.translate(sd.saddleX, sd.saddleY + 8); c.scale(.62, .62); c.fillStyle = '#b8241c'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.roundRect(-16, -60, 32, 46, 7); c.fill(); c.stroke(); c.fillStyle = '#f4f1ea'; c.beginPath(); c.arc(0, -76, 15, 0, 7); c.fill(); c.stroke(); c.fillStyle = '#2a2a30'; c.beginPath(); c.arc(0, -84, 14, Math.PI, 0); c.fill(); c.stroke(); c.strokeStyle = '#d8dce0'; c.lineWidth = 4; c.beginPath(); c.moveTo(14, -52); c.lineTo(52, -110 + Math.sin(lt * 9 + k) * 10); c.stroke(); c.restore(); }
+    for (let k = 0; k < 5; k++) { const x = -180 - k * 210 + lt * 270, y = 950 + (k % 2) * 26; if (x < -120 || x > 2700) continue; const sd = cavHorse(c, x, y, .3, lt + k * .37, ['#6a4428', '#3a2a22', '#8a6040', '#4a3020', '#7a5a3a'][k], '#1e2c6a'); c.save(); c.translate(sd.saddleX, sd.saddleY + 8); c.scale(.62, .62); c.strokeStyle = INK; c.lineWidth = 4; c.fillStyle = '#e8e4da'; c.beginPath(); c.moveTo(-8, -18); c.lineTo(12, -18); c.lineTo(22, 30); c.lineTo(6, 32); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#1a1410'; c.beginPath(); c.roundRect(4, 26, 26, 30, 4); c.fill(); c.stroke(); c.fillStyle = '#b8241c'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.roundRect(-16, -60, 32, 46, 7); c.fill(); c.stroke(); c.fillStyle = '#f4f1ea'; c.beginPath(); c.arc(0, -76, 15, 0, 7); c.fill(); c.stroke(); c.fillStyle = '#2a2a30'; c.beginPath(); c.arc(0, -84, 14, Math.PI, 0); c.fill(); c.stroke(); c.strokeStyle = '#d8dce0'; c.lineWidth = 4; c.beginPath(); c.moveTo(14, -52); c.lineTo(52, -110 + Math.sin(lt * 9 + k) * 10); c.stroke(); c.restore(); }
     // low smoke band drifting across the middle distance
     for (let k = 0; k < 14; k++) { const x = ((k * 230 + lt * 22) % 3100) - 270, y = 930 + Math.sin(k * 2.3) * 40; blob(c, x, y, 150 + (k % 4) * 40, '205,196,184', .2); } };
   const impacts = (c, lt) => { // shot landing among the French: dirt fountains + smoke
@@ -164,8 +247,9 @@ let DESK = null; const deskTop = (c, lt) => { if (!DESK) { DESK = document.creat
 const push = (c, u, f) => { c.save(); c.translate(SW / 2, SH / 2); const z = 1 + .045 * E.io(u); c.scale(z, z); c.translate(-SW / 2, -SH / 2); f(); c.restore(); };
 const onDesk = (c, f) => { c.save(); c.shadowColor = 'rgba(0,0,0,.5)'; c.shadowBlur = 28; c.shadowOffsetX = 10; c.shadowOffsetY = 16; f(); c.restore(); };
 window.SHOTS = [
-  // 3.01 Nathan in London: porters carry chests of gold up the gangway at a foggy dock
+  // 3.01 Nathan in London: porters carry chests of gold along a foggy quay past moored ships
   { plate: 'dock_fog', cam: { z: [1.04, 1.1], x: [1280, 1300], y: [840, 840] }, bed: [['ocean_loop', .25]],
+    live: [(c, lt) => { dockShip(c, 1700, 906, .6, lt + 1.1, 1, { furled: true, flag: '#c8281e' }); RS.glow(c, 1730, 760, 420, '#c2c4c4', .55); dockShip(c, 790, 990, 1.15, lt, 1, { furled: true, flag: '#c8281e' }); RS.glow(c, 800, 760, 620, '#c4c6c8', .22); A.mist(980, 60, .18, 14)(c, lt); }],
     figs: [{ x: 2080, y: 1250, s: 1.7, ...RS.NATHAN, facing: -1, pose: 'point', mood: 'focus', anim: (o, lt) => { o.pose = lt % 4 < 2 ? 'point' : 'present'; } },
       ...[0, 1, 2].map(i => ({ x: 900, y: 1340 + i * 18, s: 1.75, costume: 'farmer', hair: 'short', seed: 60 + i, facing: -1, walk: { x0: 1820 - i * 320, x1: -580 - i * 320, t0: .3, dur: 9 }, arms: CARRY, hold: { near: smallChest } }))],
     init: S => { const tS = A.at(S, 'star', 1.6), tG = A.at(S, 'gold', 5);
@@ -179,11 +263,11 @@ window.SHOTS = [
         anim: (o, lt) => { const nx = WL.FA.find(f => f > lt - .55); const d = nx === undefined ? 9 : nx - lt; o.pose = d > 0 && d < .8 ? 'reach' : d <= 0 ? 'shrug' : 'present'; o.mood = d <= 0 ? 'shocked' : 'focus'; } },
       { x: 1236, y: 1098, s: 1.0, ...RS.P({ costume: 'suit', topCol: '#26305a', hair: 'swept', seed: 83 }), hat: WL.shako(), facing: 1, pose: 'work', mood: 'focus', hold: { near: WL.grunt.rammer },
         anim: (o, lt) => { o.pose = (lt + .4) % 2.4 < 1.5 ? 'work' : 'present'; } },
-      { x: 1510, y: 1352, s: 1.5, ...RS.P({ costume: 'suit', topCol: '#a8221a', hair: 'swept', hairCol: '#3a2a1e', seed: 85 }), hat: WL.bicorne, facing: 1, pose: 'point', mood: 'focus',
+      { x: 1730, y: 1352, s: 1.5, ...RS.P({ costume: 'suit', topCol: '#a8221a', hair: 'swept', hairCol: '#3a2a1e', seed: 85 }), hat: WL.bicorne, facing: 1, pose: 'point', mood: 'focus',
         anim: (o, lt, u, S) => { o.pose = lt > S.tB + .5 ? 'cheer' : 'point'; o.mood = lt > S.tB + .5 ? 'happy' : 'focus'; o.talk = lt > .6 && lt < 2; } }],
     live: [WL.sky, WL.farmFire, WL.troops, WL.impacts, WL.guns,
-      (c, lt, u, S) => { const fall = E.inn(K.seg(lt, S.tB + .3, S.tB + 1.3)); c.fillStyle = 'rgba(10,6,4,.4)'; c.beginPath(); c.ellipse(1830 + fall * 120, 1254, 50 + fall * 160, 12, 0, 0, 7); c.fill(); c.fillStyle = '#3a2a1a'; c.beginPath(); c.ellipse(1830, 1252, 42, 13, 0, 0, 7); c.fill();
-        c.save(); c.translate(1830, 1250); c.rotate(fall * 1.35); c.strokeStyle = INK; c.lineWidth = 4; c.fillStyle = '#3a2a1a'; c.fillRect(-7, -460, 14, 460); c.strokeRect(-7, -460, 14, 460);
+      (c, lt, u, S) => { const fall = E.inn(K.seg(lt, S.tB - .15, S.tB + .6)); c.fillStyle = 'rgba(10,6,4,.4)'; c.beginPath(); c.ellipse(1995 + fall * 120, 1254, 50 + fall * 160, 12, 0, 0, 7); c.fill(); c.fillStyle = '#3a2a1a'; c.beginPath(); c.ellipse(1995, 1252, 42, 13, 0, 0, 7); c.fill();
+        c.save(); c.translate(1995, 1250); c.rotate(fall * 1.05); c.strokeStyle = INK; c.lineWidth = 4; c.fillStyle = '#3a2a1a'; c.fillRect(-7, -460, 14, 460); c.strokeRect(-7, -460, 14, 460);
         const w = (k) => Math.sin(lt * 5 - k * .05) * 10 * (k / 210) * (1 - fall * .8); for (let i = 0; i < 21; i++) { const x0 = 7 + i * 10; c.save(); c.beginPath(); c.rect(x0 - .5, -470, 11, 220); c.clip(); c.translate(0, w(i * 10)); c.fillStyle = '#1f3f9a'; c.fillRect(7, -440, 70, 170); c.fillStyle = '#f2f0ea'; c.fillRect(77, -440, 70, 170); c.fillStyle = '#c8281e'; c.fillRect(147, -440, 70, 170); c.fillStyle = `rgba(0,0,0,${.1 + .1 * Math.sin(lt * 5 - i * .5)})`; c.fillRect(x0, -440, 10, 170); c.restore(); }
         c.strokeRect(7, -440, 210, 170);
         c.fillStyle = RS.GOLD; c.beginPath(); c.moveTo(0, -470); c.lineTo(-44, -520); c.lineTo(-20, -500); c.lineTo(0, -560); c.lineTo(20, -500); c.lineTo(44, -520); c.closePath(); c.fill(); c.stroke(); c.restore(); }],
@@ -199,7 +283,7 @@ window.SHOTS = [
       S.D.over = [(c, lt) => RS.tag(c, 'LEGEND', lt, .3), (c, lt) => K.card(c, 'NEWS FIRST, BY COURIER?', lt, { at: tC, x: 520, y: 220, px: 42, rot: -3 }), (c, lt) => K.card(c, 'FAKE SELLING, REAL PANIC?', lt, { at: tP, x: 1420, y: 220, px: 42, rot: 3 }), (c, lt) => K.card(c, 'BUY CHEAP, MAKE A FORTUNE?', lt, { at: S.tB, x: 1420, y: 320, px: 40, rot: -2 })];
       S.D.sfx = [[tC, 'gallop_loop', .2], [tP, 'crowd_cheer', .25], [tP + .2, 'run_steps', .3], [S.tB, 'coins', .3]]; } },
   // 3.04 the story in a pamphlet (blurred); a red MYTH stamp; a history book with the real account
-  { draw: (c, lt, u, S) => { deskTop(c, lt); push(c, u, () => { RS.quill(c, 952, 950, .7, .25); for (const [x, y] of [[200, 930], [250, 960], [190, 990]]) onDesk(c, () => RS.coin(c, x, y, 24, 0)); A.dust(0, 0, SW, SH, 30)(c, lt); const a = E.out(K.seg(lt, .1, .7)); if (a > 0) { c.save(); c.translate(620 - (1 - a) * 120, 560 + (1 - a) * 700); c.rotate((1 - a) * -.2); c.scale(1.6, 1.6); RS.paper(c, 0, 0, 1, { rot: -.05 }); c.restore(); }
+  { draw: (c, lt, u, S) => { deskTop(c, lt); push(c, u, () => { onDesk(c, () => RS.quill(c, 900, 905, .7, .9)); for (const [x, y] of [[200, 930], [250, 960], [190, 990]]) onDesk(c, () => RS.coin(c, x, y, 24, 0)); A.dust(0, 0, SW, SH, 30)(c, lt); const a = E.out(K.seg(lt, .1, .7)); if (a > 0) { c.save(); c.translate(620 - (1 - a) * 120, 560 + (1 - a) * 700); c.rotate((1 - a) * -.2); c.scale(1.6, 1.6); RS.paper(c, 0, 0, 1, { rot: -.05 }); c.restore(); }
       RS.stamp(c, 'MYTH', 620, 560, lt, S.tM, { px: 120 });
       const b = E.out(K.seg(lt, S.tH - .2, S.tH + .4)); if (b > 0) { c.save(); c.translate(1340 + (1 - b) * 800, 580); c.rotate(.04 + (1 - b) * .15); c.shadowColor = 'rgba(0,0,0,.5)'; c.shadowBlur = 30; c.shadowOffsetY = 16; c.fillStyle = '#2a4a3a'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-310, -260, 620, 520); c.shadowColor = 'transparent'; c.strokeRect(-310, -260, 620, 520);
         for (const sx of [-1, 1]) { c.fillStyle = RS.PAPER; c.fillRect(sx < 0 ? -296 : 4, -246, 292, 492); c.strokeRect(sx < 0 ? -296 : 4, -246, 292, 492); } c.fillStyle = INK; c.font = '30px Anton'; c.textAlign = 'center'; c.fillText('WHAT HISTORIANS FOUND', -150, -190);
