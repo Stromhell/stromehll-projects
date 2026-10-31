@@ -70,8 +70,12 @@
     c.fillStyle = 'rgba(20,14,10,.55)'; c.fillRect(W / 2 - w / 2 - 28, y - 40, w + 56, 80);
     let x = W / 2 - w / 2; c.textAlign = 'left'; for (const wd of sub.words) { const ww = c.measureText(wd.w + ' ').width; c.fillStyle = t >= wd.s ? '#fffaf0' : 'rgba(255,250,240,.55)'; c.fillText(wd.w, x, y + 2); x += ww; } c.restore(); };
   // Find time of a phrase in the VO words (first word match after `after`), for timing cards to speech.
-  K.W = (phrase, after = 0) => { const p = phrase.toLowerCase().replace(/[^a-z0-9' ]/g, '').split(/\s+/).filter(Boolean); const norm = s => s.toLowerCase().replace(/[^a-z0-9']/g, '');
-    for (let i = 0; i < K.words.length; i++) { if (K.words[i].s < after) continue; let ok = true; for (let j = 0; j < p.length; j++) if (!K.words[i + j] || norm(K.words[i + j].w) !== p[j]) { ok = false; break; } if (ok) return K.words[i].s; } console.warn('W miss', phrase); return null; };
+  // The exact match runs first; only when it misses, a looser pass strips quotes and punctuation
+  // (straight or curly, e.g. 'trillions' or what’s), so phrases that already matched never move.
+  const findW = (p, after, norm) => { for (let i = 0; i < K.words.length; i++) { if (K.words[i].s < after) continue; let ok = true; for (let j = 0; j < p.length; j++) if (!K.words[i + j] || norm(K.words[i + j].w) !== p[j]) { ok = false; break; } if (ok) return K.words[i].s; } return null; };
+  const loose = s => s.toLowerCase().replace(/[\u2018\u2019\u02bc`]/g, "'").replace(/[^a-z0-9' ]/g, '').split(/\s+/).map(w => w.replace(/^'+|'+$/g, '')).filter(Boolean);
+  K.W = (phrase, after = 0) => { const p = phrase.toLowerCase().replace(/[^a-z0-9' ]/g, '').split(/\s+/).filter(Boolean), t = findW(p, after, s => s.toLowerCase().replace(/[^a-z0-9']/g, ''));
+    if (t != null) return t; const t2 = findW(loose(phrase), after, s => loose(s).join('')); if (t2 == null) console.warn('W miss', phrase); return t2; };
 
   // ---------- post: grain + vignette ----------
   const grains = []; for (let g = 0; g < 6; g++) { const gc = document.createElement('canvas'); gc.width = 480; gc.height = 270; const gx = gc.getContext('2d'), id = gx.createImageData(480, 270); for (let i = 0; i < id.data.length; i += 4) { const v = Math.random() * 255; id.data[i] = id.data[i + 1] = id.data[i + 2] = v; id.data[i + 3] = 34; } gx.putImageData(id, 0, 0); grains.push(gc); }

@@ -1,0 +1,157 @@
+{
+ "dur": 43.715,
+ "cues": [
+  {
+   "t": 3.96,
+   "name": "whoosh",
+   "gain": 0.35
+  },
+  {
+   "t": 4.96,
+   "name": "chime",
+   "gain": 0.3
+  },
+  {
+   "t": 8.96,
+   "name": "stamp",
+   "gain": 0.55
+  },
+  {
+   "t": 11.775,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 11.975,
+   "name": "footsteps",
+   "gain": 0.3
+  },
+  {
+   "t": 16.956,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 21.296,
+   "name": "paper",
+   "gain": 0.3
+  },
+  {
+   "t": 22.096,
+   "name": "stamp",
+   "gain": 0.5
+  },
+  {
+   "t": 22.891,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 23.291,
+   "name": "paper_tear",
+   "gain": 0.3
+  },
+  {
+   "t": 26.991,
+   "name": "phone_ring",
+   "gain": 0.3
+  },
+  {
+   "t": 28.291,
+   "name": "stamp",
+   "gain": 0.6
+  },
+  {
+   "t": 29.51,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 29.81,
+   "name": "chime",
+   "gain": 0.3
+  },
+  {
+   "t": 31.585,
+   "name": "gate_slam",
+   "gain": 0.35
+  },
+  {
+   "t": 32.825,
+   "name": "whoosh",
+   "gain": 0.3
+  },
+  {
+   "t": 33.325,
+   "name": "whoosh",
+   "gain": 0.3
+  },
+  {
+   "t": 33.825,
+   "name": "whoosh",
+   "gain": 0.3
+  },
+  {
+   "t": 34.325,
+   "name": "whoosh",
+   "gain": 0.3
+  },
+  {
+   "t": 35.605,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 39.215,
+   "name": "whoosh",
+   "gain": 0.5
+  },
+  {
+   "t": 39.415,
+   "name": "stamp",
+   "gain": 0.7
+  },
+  {
+   "t": 40.115,
+   "name": "hit",
+   "gain": 0.6
+  },
+  {
+   "t": 40.215,
+   "name": "swell",
+   "gain": 0.4
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 12.475000000000001,
+   "name": "hum_loop",
+   "gain": 0.25
+  },
+  {
+   "start": 11.675,
+   "end": 23.591,
+   "name": "office_loop",
+   "gain": 0.25
+  },
+  {
+   "start": 22.791,
+   "end": 30.21,
+   "name": "hum_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 29.41,
+   "end": 39.915,
+   "name": "swell",
+   "gain": 0.2
+  },
+  {
+   "start": 29.41,
+   "end": 39.915,
+   "name": "hum_loop",
+   "gain": 0.2
+  }
+ ]
+}
