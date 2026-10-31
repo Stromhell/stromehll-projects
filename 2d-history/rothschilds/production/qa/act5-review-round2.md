@@ -63,3 +63,6 @@ What I looked at:
 0 high, 1 medium.
 
 RESULT: FIXING
+
+## Round 3 quick verify (07:42, after 07:41 render)
+Zebra road raised to y 1230: hooves now land about y 920, on the drive and clear of the subtitle box at 52-62 s. RESULT: CLEAN (low notes left as optional).
