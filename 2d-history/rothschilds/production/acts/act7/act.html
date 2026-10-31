@@ -16,8 +16,8 @@ const bottle = (c, x, y, s) => { c.save(); c.translate(x, y); c.scale(s, s); c.f
 
 // channel lockup for the end card: Stormi mascot (shared/brand/stormi-watermark.png) + wordmark, bottom-right, slides in
 const channelMark = (c, lt) => { const a = E.out(K.seg(lt, 1.6, 2.2)); if (a <= 0) return; c.save(); c.globalAlpha = .85 * a; c.translate(240 * (1 - a), 0);
-  const im = K.imgs.stormi; if (im && im.complete && im.naturalWidth) c.drawImage(im, 1736, 918, 124, 124);
-  K.outlined(c, 'STORMI', 1722, 958, 44, { align: 'right', ow: .2 }); c.save(); c.translate(1722, 1003); c.transform(1, 0, -.18, 1, 0, 0); c.font = K.font(24); const w = c.measureText('EXPLAIN EVERYTHING').width + 22; c.fillStyle = '#f2c230'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-w, -17, w, 34); c.strokeRect(-w, -17, w, 34); c.fillStyle = INK; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('EXPLAIN EVERYTHING', -11, 1); c.restore(); c.restore(); };
+  const im = K.imgs.stormi; if (im && im.complete && im.naturalWidth) c.drawImage(im, 1706, 888, 124, 124);
+  K.outlined(c, 'STORMI', 1692, 920, 44, { align: 'right', ow: .2 }); c.save(); c.translate(1692, 972); c.transform(1, 0, -.18, 1, 0, 0); c.font = K.font(30); const w = c.measureText('EXPLAIN EVERYTHING').width + 24; c.fillStyle = '#f2c230'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-w, -21, w, 42); c.strokeRect(-w, -21, w, 42); c.fillStyle = INK; c.textAlign = 'right'; c.textBaseline = 'middle'; c.fillText('EXPLAIN EVERYTHING', -12, 1); c.restore(); c.restore(); };
 window.SHOTS = [
   // 7.01 after the war: the money moves to New York; 1981 the Paris bank is nationalised
   { plate: 'map_world', cam: { z: [1.15, 1.25], x: [1200, 1180], y: [620, 600] }, bed: [['hum_loop', .25]],
@@ -49,14 +49,17 @@ window.SHOTS = [
     live: [(c, lt, u, S) => { const f = EU('Frankfurt'); RS.glow(c, f[0], f[1], 200, '#ffd070', .5 * pop(lt, .4)); RS.dot(c, f[0], f[1], lt, .4, 'FRANKFURT', { px: 34, r: 24 });
       ['London', 'Paris', 'Vienna', 'Naples'].forEach((n, i) => { const p = EU(n), at = S.tS + i * .5; RS.arrow(c, f[0], f[1], p[0], p[1], E.out(K.seg(lt, at, at + .9)), { bend: .15, col: GOLD, w: 12 }); RS.dot(c, p[0], p[1], lt, at + .8, n.toUpperCase(), { px: 32 }); }); }],
     init: S => { const tB = A.at(S, 'boy', 2), tLk = A.at(S, 'locked', 3); S.tS = A.at(S, 'five sons', 5.6); const tR = A.at(S, 'railways', 9);
-      S.D.over = [(c, lt) => K.card(c, "WHAT'S REAL IS ENOUGH", lt, { at: .4, x: 960, y: 140, px: 44, rot: -2 }), (c, lt) => K.card(c, 'A BOY FROM A LOCKED STREET', lt, { at: tB, x: 520, y: 880, px: 38, rot: -3, until: S.tS + 1 }), (c, lt) => K.card(c, 'FIVE SONS · FIVE CAPITALS', lt, { at: S.tS + 1, x: 520, y: 880, px: 40, rot: 2 }), (c, lt) => K.card(c, 'RAILWAYS · WARS · CANALS', lt, { at: tR, x: 1560, y: 700, px: 40, rot: -2 })];
+      S.D.over = [(c, lt) => K.card(c, "WHAT'S REAL IS ENOUGH", lt, { at: .85, x: 960, y: 140, px: 44, rot: -2 }), (c, lt) => K.card(c, 'A BOY FROM A LOCKED STREET', lt, { at: tB, x: 520, y: 880, px: 38, rot: -3, until: S.tS + 1 }), (c, lt) => K.card(c, 'FIVE SONS · FIVE CAPITALS', lt, { at: S.tS + 1, x: 520, y: 880, px: 40, rot: 2 }), (c, lt) => K.card(c, 'RAILWAYS · WARS · CANALS', lt, { at: tR, x: 1560, y: 700, px: 40, rot: -2 })];
       S.D.sfx = [[.4, 'chime', .3], [tLk, 'gate_slam', .35], [S.tS, 'whoosh', .3], [S.tS + .5, 'whoosh', .3], [S.tS + 1, 'whoosh', .3], [S.tS + 1.5, 'whoosh', .3], [tR, 'pop', .3]]; } },
   // 7.05 end card: wax seal with the five arrows, THE ROTHSCHILDS
   { draw: (c, lt, u) => { const z = 1 + .02 * E.sine(u); backdrop('map_europe', .3, 10)(c); c.setTransform(z, 0, 0, z, 960 - 960 * z, 540 - 540 * z); const a = E.back(K.seg(lt, .2, .8)); if (a > 0) { c.save(); c.translate(960, 520); c.scale(a, a); RS.glow(c, 0, 0, 420, '#ffd070', .35); c.fillStyle = '#9a2a22'; c.strokeStyle = '#5a1410'; c.lineWidth = 10; c.beginPath(); for (let k = 0; k <= 40; k++) { const ang = k / 40 * Math.PI * 2, r = 230 + Math.sin(k * 2.7) * 14; c.lineTo(Math.cos(ang) * r, Math.sin(ang) * r); } c.closePath(); c.fill(); c.stroke(); c.strokeStyle = 'rgba(255,200,180,.35)'; c.lineWidth = 6; c.beginPath(); c.arc(0, 0, 180, 0, 7); c.stroke(); RS.arrows(c, 0, 10, .9, { col: '#e0b04a', ribbon: false, spread: E.out(K.seg(lt, .6, 1.4)) }); c.restore(); } },
-    sub: 'off', inSfx: 'whoosh', bed: [['swell', .25], ['hum_loop', .15]],
+    sub: 'off', inSfx: 'whoosh', bed: [['hum_loop', 4]],
     over: [(c, lt, u) => { const z = 1 + .02 * E.sine(u); c.setTransform(z, 0, 0, z, 960 - 960 * z, 540 - 540 * z); K.title(c, 'THE ROTHSCHILDS', lt, { at: 1.0, y: 940, px: 120 }); }, channelMark],
     sfx: [[.3, 'stamp', .7], [1.0, 'hit', .6], [1.1, 'swell', .4]] },
 ];
 const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
-A.build(); K.boot();
+A.build();
+// the end-card bed runs to the last frame (the mixer fades its last 0.8 s) instead of ending past the cut
+for (const b of window.KIT_BEDS) if (Math.abs(b.start - last.end) < 1e-6) b.end = T.dur;
+K.boot();
 </script></body></html>
