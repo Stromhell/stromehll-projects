@@ -1,0 +1,218 @@
+{
+ "dur": 56.568,
+ "cues": [
+  {
+   "t": 0.2,
+   "name": "engine_loop",
+   "gain": 0.3
+  },
+  {
+   "t": 0.8,
+   "name": "steam",
+   "gain": 0.35
+  },
+  {
+   "t": 2.279,
+   "name": "clank",
+   "gain": 0.4
+  },
+  {
+   "t": 6.779,
+   "name": "splash",
+   "gain": 0.3
+  },
+  {
+   "t": 8.414,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 8.514,
+   "name": "engine_loop",
+   "gain": 0.35
+  },
+  {
+   "t": 8.914,
+   "name": "fire_loop",
+   "gain": 0.2
+  },
+  {
+   "t": 11.566,
+   "name": "clank",
+   "gain": 0.4
+  },
+  {
+   "t": 13.466,
+   "name": "steam",
+   "gain": 0.35
+  },
+  {
+   "t": 16.981,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 17.181,
+   "name": "brush",
+   "gain": 0.3
+  },
+  {
+   "t": 18.281,
+   "name": "brush",
+   "gain": 0.3
+  },
+  {
+   "t": 16.881,
+   "name": "chime",
+   "gain": 0.45
+  },
+  {
+   "t": 23.969,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 24.269,
+   "name": "creak",
+   "gain": 0.4
+  },
+  {
+   "t": 26.523,
+   "name": "splash",
+   "gain": 0.7
+  },
+  {
+   "t": 27.603,
+   "name": "water_loop",
+   "gain": 0.35
+  },
+  {
+   "t": 30.018,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 30.118,
+   "name": "crowd_loop",
+   "gain": 0.3
+  },
+  {
+   "t": 30.418,
+   "name": "horn",
+   "gain": 0.45
+  },
+  {
+   "t": 35.393,
+   "name": "cheer",
+   "gain": 0.45
+  },
+  {
+   "t": 38.633,
+   "name": "horn",
+   "gain": 0.35
+  },
+  {
+   "t": 41.488,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 41.788,
+   "name": "firework",
+   "gain": 0.45
+  },
+  {
+   "t": 43.288,
+   "name": "firework",
+   "gain": 0.4
+  },
+  {
+   "t": 44.688,
+   "name": "firework",
+   "gain": 0.4
+  },
+  {
+   "t": 44.018,
+   "name": "coins",
+   "gain": 0.3
+  },
+  {
+   "t": 49.958,
+   "name": "swell",
+   "gain": 0.35
+  },
+  {
+   "t": 51.868,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 9.114,
+   "name": "engine_loop",
+   "gain": 0.3
+  },
+  {
+   "start": 0,
+   "end": 9.114,
+   "name": "water_loop",
+   "gain": 0.15
+  },
+  {
+   "start": 8.314,
+   "end": 17.681,
+   "name": "engine_loop",
+   "gain": 0.35
+  },
+  {
+   "start": 8.314,
+   "end": 17.681,
+   "name": "fire_loop",
+   "gain": 0.15
+  },
+  {
+   "start": 16.881,
+   "end": 24.669,
+   "name": "wind_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 16.881,
+   "end": 24.669,
+   "name": "swell",
+   "gain": 0.1
+  },
+  {
+   "start": 23.869,
+   "end": 30.718,
+   "name": "wind_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 29.918,
+   "end": 42.187999999999995,
+   "name": "crowd_loop",
+   "gain": 0.3
+  },
+  {
+   "start": 29.918,
+   "end": 42.187999999999995,
+   "name": "water_loop",
+   "gain": 0.15
+  },
+  {
+   "start": 41.388,
+   "end": 52.568,
+   "name": "crowd_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 41.388,
+   "end": 52.568,
+   "name": "waltz",
+   "gain": 0.2
+  }
+ ]
+}
