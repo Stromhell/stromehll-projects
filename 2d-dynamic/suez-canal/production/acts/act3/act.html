@@ -34,7 +34,7 @@ window.SHOTS = [
       ride(c, C.NAPOLEON, hx, 640, 30, WHITE, TACK, lt, lt * .8, w, L, { shN: lt > Sh.tB ? 100 : 20, elN: 30 }, { look: [.8, -.2] });
       [[280, C.FRSOLD, 0], [400, C.FRSOLD, 1], [940, C.FRSOLD, 2], [1080, C.FRSOLD, 4]].forEach(([x, ch, k]) => { const xx = x + (k > 1 ? 0 : lerp(-300, 0, E.out(seg(lt, k * .4, 3 + k * .4)))), wk = k <= 1 && lt < 3 + k * .4; S.contact(c, xx, 650 - (k % 2) * 30, 16, .35);
         VP.figure(c, [xx, 650 - (k % 2) * 30], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, ch, xx, 650 - (k % 2) * 30, 30, Object.assign(wk ? H1.walk(lt * 1.2 + k) : S.idle(lt, k), { face: k > 1 ? -1 : 1, shF: 160, elF: 10, holdF: wr => { cc.strokeStyle = '#4a3a2a'; cc.lineWidth = 3; cc.beginPath(); cc.moveTo(wr[0], wr[1] + 30); cc.lineTo(wr[0], wr[1] - 70); cc.stroke(); cc.strokeStyle = '#c8c8d0'; cc.lineWidth = 2; cc.beginPath(); cc.moveTo(wr[0], wr[1] - 70); cc.lineTo(wr[0], wr[1] - 90); cc.stroke(); } }), { blink: S.blinkAt(lt, k), look: [.4, 0], time: lt }, L)); }); },
-    over: [(c, lt) => K.dateTag(c, 'NAPOLEON · EGYPT · 1798', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'HURT BRITAIN\'S TRADE WITH INDIA', lt, { at: Sh.tB + .3, x: 960, y: 190, px: 50, rot: -2 })],
+    over: [(c, lt) => K.dateTag(c, 'NAPOLEON · EGYPT · 1798', lt, { at: .4, y: 100 }), (c, lt, u, Sh) => K.card(c, 'HURT BRITAIN\'S TRADE WITH INDIA', lt, { at: Sh.tB + .3, x: 960, y: 190, px: 50, rot: -2 })],
     sfx: [[.2, 'wind_loop', .25], [.4, 'hooves', .45], [.6, 'drum_loop', .2], ['Britain', 'drum', .35]] },
 
   // 3.02 MED: surveyors with a brass level and a pole; Le Pere shows Napoleon a drawing: a wave floods Egypt
