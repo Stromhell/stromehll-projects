@@ -24,8 +24,15 @@ const deskFront = (c) => { c.save(); c.beginPath(); DESK.forEach(([x, y], i) => 
   // desk-top clutter sitting on the top surface (bottoms on the desk, soft shadows): papers, inkwell, quill, lamp base
   c.save(); c.fillStyle = 'rgba(0,0,0,.3)'; c.beginPath(); c.ellipse(1010, 900, 90, 10, 0, 0, 7); c.fill(); c.fillStyle = '#efe4c8'; c.strokeStyle = INK; c.lineWidth = 2.5;
   c.beginPath(); c.moveTo(930, 900); c.lineTo(1080, 900); c.lineTo(1066, 880); c.lineTo(944, 880); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#e4d6b4'; c.beginPath(); c.moveTo(950, 894); c.lineTo(1090, 896); c.lineTo(1078, 876); c.lineTo(962, 875); c.closePath(); c.fill(); c.stroke();
-  c.fillStyle = 'rgba(0,0,0,.3)'; c.beginPath(); c.ellipse(1530, 902, 34, 7, 0, 0, 7); c.fill(); c.fillStyle = '#1e1a22'; c.beginPath(); c.roundRect(1508, 870, 44, 32, 6); c.fill(); c.stroke(); c.fillStyle = '#c8a040'; c.fillRect(1518, 862, 24, 10); c.strokeRect(1518, 862, 24, 10);
-  c.strokeStyle = '#f4f0e6'; c.lineWidth = 4; c.beginPath(); c.moveTo(1532, 864); c.quadraticCurveTo(1556, 820, 1590, 800); c.stroke(); c.restore(); };
+  c.fillStyle = 'rgba(0,0,0,.3)'; c.beginPath(); c.ellipse(1430, 902, 34, 7, 0, 0, 7); c.fill(); c.fillStyle = '#1e1a22'; c.beginPath(); c.roundRect(1408, 870, 44, 32, 6); c.fill(); c.stroke(); c.fillStyle = '#c8a040'; c.fillRect(1418, 862, 24, 10); c.strokeRect(1418, 862, 24, 10);
+  c.strokeStyle = '#f4f0e6'; c.lineWidth = 4; c.beginPath(); c.moveTo(1432, 864); c.quadraticCurveTo(1450, 826, 1478, 806); c.stroke();
+  // cover the white sliver at the back right edge of the desk top with the shelf's own brown
+  c.fillStyle = 'rgb(100,78,50)'; c.fillRect(1658, 862, 32, 6);
+  // the green desk lamp, whole: brass base on the desk top, solid stem, shade over the painted one
+  c.lineWidth = 2.5; c.strokeStyle = INK; c.fillStyle = 'rgba(0,0,0,.32)'; c.beginPath(); c.ellipse(1576, 904, 44, 7, 0, 0, 7); c.fill();
+  c.fillStyle = '#b08a3a'; c.beginPath(); c.ellipse(1572, 896, 36, 9, 0, 0, 7); c.fill(); c.stroke(); c.fillRect(1566, 776, 12, 118); c.strokeRect(1566, 776, 12, 118);
+  c.fillStyle = '#3c9a5a'; c.beginPath(); c.moveTo(1512, 784); c.quadraticCurveTo(1520, 756, 1572, 754); c.quadraticCurveTo(1624, 756, 1632, 784); c.closePath(); c.fill(); c.stroke();
+  c.fillStyle = 'rgba(255,230,150,.55)'; c.beginPath(); c.ellipse(1572, 786, 56, 5, 0, 0, 7); c.fill(); c.restore(); };
 // a few coin stacks and a banknote bundle resting ON the mansion desk top (y = DT), each with a contact shadow
 const DT = 1420 - 256 * .95;
 const quill = (c) => { c.save(); c.strokeStyle = '#f4f0e6'; c.lineWidth = 5; c.lineCap = 'round'; c.beginPath(); c.moveTo(0, 14); c.quadraticCurveTo(8, -20, 26, -44); c.stroke(); c.strokeStyle = INK; c.lineWidth = 2; c.beginPath(); c.moveTo(0, 14); c.lineTo(2, 22); c.stroke(); c.restore(); };
@@ -36,18 +43,49 @@ const moneyOnDesk = (c) => { const stack = (x, n) => { c.fillStyle = 'rgba(0,0,0
   for (let k = 0; k < 3; k++) { c.beginPath(); c.rect(1830 + k * 3, DT - 14 - k * 13, 96, 13); c.fill(); c.stroke(); } c.fillStyle = '#c8402e'; c.fillRect(1872, DT - 53, 12, 52); c.strokeRect(1872, DT - 53, 12, 52);
   stack(1786, 6); stack(1818, 9); stack(1800, 3); c.restore(); };
 
+// messenger: the telegram lives in the FRONT hand (side -1, drawn over the body). Running: that arm holds a steady carry
+// (elbow bent, no swing). Arriving: angles blend over 0.3 s from the run into a presenting pose with the same hand.
+const messengerArm = (o, lt) => { const tE = 4.6, ph = R.walkX(Math.min(lt, tE), 260, 1150, .4, 4.2, 1.9).phase;
+  const Pr = R.poseAngles(Object.assign({}, o, { pose: 'run', t: ph }), ph); Pr.shL = 26 + Math.sin(lt * 9) * 2; Pr.elL = -80; Pr.handL = 'relaxed';
+  const Ps = R.poseAngles(Object.assign({}, o, { pose: 'stand', t: lt }), lt); Ps.shL = 58 + Math.sin(lt * 1.6) * 3; Ps.elL = -24 - Math.sin(lt * 1.1) * 4; Ps.handL = 'open';
+  const k = E.io((lt - tE) / .3), P = {}; for (const key of new Set([...Object.keys(Pr), ...Object.keys(Ps)])) { const a = Pr[key], b = Ps[key]; P[key] = typeof a === 'number' || typeof b === 'number' ? (+a || 0) * (1 - k) + (+b || 0) * k : (k < .5 ? a : b); }
+  o.P = P; o.pose = k < .5 ? 'run' : 'present'; if (k >= .5) o.t = lt; if (lt > tE) idle(o, lt, 2 * k); };
+// Westminster centre block (world 1020-1540 x 686-1024): Gothic facade painted over the flat plate block
+const facade = (c, lt) => { c.save(); const L = 1020, Rr = 1540, T = 686, B = 1024, ax0 = 1190, ax1 = 1370, line = 'rgba(38,32,26,.55)';
+  c.fillStyle = 'rgba(40,34,28,.28)'; for (let y = T + 26; y < B; y += 26) c.fillRect(L, y, Rr - L, 2); // stone courses
+  c.fillStyle = 'rgba(40,34,28,.16)'; for (let y = T; y < B; y += 26) for (let x = L + ((y / 26) % 2) * 30; x < Rr; x += 60) c.fillRect(x, y, 2, 26);
+  // crenellated parapet
+  c.fillStyle = '#7a7064'; c.strokeStyle = line; c.lineWidth = 2.5; c.fillRect(L - 8, T - 18, Rr - L + 16, 20); c.strokeRect(L - 8, T - 18, Rr - L + 16, 20);
+  for (let x = L - 8; x < Rr; x += 36) { c.fillRect(x, T - 34, 20, 16); c.strokeRect(x, T - 34, 20, 16); }
+  // buttresses with pinnacles
+  for (const bx of [L, 1170, 1390, Rr - 26]) { c.fillStyle = '#7c7266'; c.fillRect(bx, T - 18, 26, B - T + 18); c.strokeRect(bx, T - 18, 26, B - T + 18);
+    for (const y of [800, 920]) { c.beginPath(); c.moveTo(bx - 4, y); c.lineTo(bx + 30, y); c.lineTo(bx + 26, y - 14); c.lineTo(bx, y - 14); c.closePath(); c.fill(); c.stroke(); }
+    c.beginPath(); c.moveTo(bx + 1, T - 18); c.lineTo(bx + 13, T - 92); c.lineTo(bx + 25, T - 18); c.closePath(); c.fill(); c.stroke();
+    c.fillStyle = '#6a6156'; for (let k = 0; k < 4; k++) { const y = T - 30 - k * 16, w = 12 - k * 2.6; c.beginPath(); c.moveTo(bx + 13 - w, y); c.lineTo(bx + 13 - w - 4, y - 5); c.stroke(); c.beginPath(); c.moveTo(bx + 13 + w, y); c.lineTo(bx + 13 + w + 4, y - 5); c.stroke(); } }
+  // lancet windows in the side bays, two tiers, a few lit through the fog
+  const lancet = (x, y, w, h, lit) => { c.beginPath(); c.moveTo(x, y + h); c.lineTo(x, y + w * .6); c.quadraticCurveTo(x, y, x + w / 2, y - w * .3); c.quadraticCurveTo(x + w, y, x + w, y + w * .6); c.lineTo(x + w, y + h); c.closePath();
+    const fl = .85 + .15 * Math.sin(lt * 3 + x); c.fillStyle = lit ? `rgba(255,${196 + 20 * fl | 0},120,${.75 * fl})` : '#3a3530'; c.fill(); c.strokeStyle = line; c.lineWidth = 3; c.stroke();
+    c.lineWidth = 1.6; c.beginPath(); c.moveTo(x + w / 2, y - w * .2); c.lineTo(x + w / 2, y + h); c.moveTo(x, y + h * .55); c.lineTo(x + w, y + h * .55); c.stroke(); };
+  [[1056, 0], [1106, 1], [1416, 1], [1466, 0]].forEach(([x, i], j) => { lancet(x, 740, 34, 90, (j + i) % 2 === 0); lancet(x, 880, 34, 100, j === 1 || j === 2); });
+  // moulded pointed arch round the door, with a band of quatrefoils above
+  c.strokeStyle = '#5e564c'; c.lineWidth = 10; c.beginPath(); c.moveTo(ax0 - 6, B); c.lineTo(ax0 - 6, 820); c.quadraticCurveTo(ax0 - 6, 770, (ax0 + ax1) / 2, 752); c.quadraticCurveTo(ax1 + 6, 770, ax1 + 6, 820); c.lineTo(ax1 + 6, B); c.stroke();
+  c.strokeStyle = line; c.lineWidth = 2.5; c.stroke();
+  for (let k = 0; k < 5; k++) { const qx = 1214 + k * 33, qy = 716; c.beginPath(); for (let a = 0; a < 4; a++) c.arc(qx + Math.cos(a * Math.PI / 2) * 6, qy + Math.sin(a * Math.PI / 2) * 6, 6, 0, 7); c.strokeStyle = line; c.lineWidth = 1.8; c.stroke(); }
+  const g = c.createRadialGradient(1280, 960, 0, 1280, 960, 160); g.addColorStop(0, 'rgba(255,190,110,.22)'); g.addColorStop(1, 'rgba(255,190,110,0)'); c.fillStyle = g; c.fillRect(1120, 800, 320, 224);
+  c.restore(); };
+
 window.SHOTS = [
   // 1 fog over Westminster; a messenger runs across the square to the steps with a telegram
   { plate: 'westminster', cam: { z: [1.02, 1.1], x: [1280, 1300], y: [800, 790] }, bed: [['city_loop', .18], ['wind_loop', .2]],
-    figs: [{ x: 1150, y: 1330, s: 1.9, ...RS.MESSENGER, facing: 1, pose: 'run', mood: 'worried', walk: { x0: 260, x1: 1150, t0: .4, dur: 4.2, pose: 'run' }, hold: { near: telegram }, anim: (o, lt, u, S) => { if (lt > 4.6) { o.pose = lt > S.tM + 1.2 && lt < S.tM + 3.6 ? 'shrug' : 'present'; idle(o, lt, 2); } } }],
-    live: [fogDrift(820, 1100, .14)], front: [fogDrift(1200, 1420, .1)],
+    figs: [{ x: 1150, y: 1330, s: 1.9, ...RS.MESSENGER, facing: 1, pose: 'run', mood: 'worried', walk: { x0: 260, x1: 1150, t0: .4, dur: 4.2, pose: 'run' }, hold: { far: telegram }, noSmooth: true, anim: messengerArm }],
+    live: [facade, fogDrift(820, 1100, .14)], front: [fogDrift(1200, 1420, .1)],
     init: S => { const tS = A.at(S, 'Suez', 3.4), tM = S.tM = A.at(S, 'four million', 8);
       S.D.over = [(c, lt) => K.dateTag(c, 'LONDON · 1875', lt, { at: .4 }), (c, lt) => K.card(c, 'SUEZ CANAL: SHORTCUT TO INDIA', lt, { at: tS, x: 1360, y: 230, px: 46, rot: 3 }),
         (c, lt) => lt > tM - .2 && K.counter(c, 0, 4000000, lt, { at: tM - .2, dur: 1.4, x: 960, y: 420, px: 120, pre: '£' }), (c, lt) => K.card(c, 'FAST', lt, { at: tM + 1.4, x: 1420, y: 520, px: 64, rot: -5 })];
       S.D.sfx = [[.1, 'chime', .4], [.5, 'run_steps', .35], [tS, 'paper', .3], [tM, 'coins', .35], [tM + 1.4, 'stamp', .4]]; } },
   // 2 Disraeli at his desk; he writes, puts the pen down; his secretary takes the note and hurries out
   { plate: 'partners_room', cam: { z: [1.06, 1.12], x: [1280, 1300], y: [820, 830] }, bed: [['hum_loop', .25], ['fire_loop', .15]],
-    figs: [{ x: 1280, y: 1150, s: 1.75, ...RS.DISRAELI, facing: 1, pose: 'think', mood: 'focus', shadow: false, hold: { near: quill },
+    figs: [{ x: 1280, y: 1080, s: 1.75, ...RS.DISRAELI, facing: 1, pose: 'think', mood: 'focus', shadow: false, hold: { near: quill },
         anim: (o, lt, u, S) => { o.pose = lt < S.tP ? 'think' : 'point'; o.facing = lt < S.tP ? 1 : -1; if (lt > S.tP) o.hold = null; o.talk = lt > S.tP && lt < S.tO + 1; idle(o, lt, 1.4); } },
       { x: 520, y: 1415, s: 2.0, ...RS.SECRETARY, facing: 1, pose: 'present', mood: 'worried', walk: { x0: 520, x1: 520, t0: 0, dur: .1 }, hold: { near: telegram },
         anim: (o, lt, u, S) => { idle(o, lt, 1.6); if (lt > S.tO) { const w = R.walkX(lt, 520, -300, S.tO, 2.2, 2.0); o.x = w.x; o.facing = -1; o.pose = w.moving ? 'walk' : 'present'; o.t = w.phase; } } }],
@@ -76,7 +114,7 @@ window.SHOTS = [
       S.D.sfx = [0, 1, 2, 3, 4].map(i => [S.tA + i * .45, 'whoosh_soft', .3]).concat([[tH, 'hit', .5]]); } },
   // 5 TITLE over the five-arrow crest, stamped in like a wax seal
   { draw: (c, lt) => { c.save(); c.filter = 'blur(10px) brightness(.35)'; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs.map_europe, 0, 0, 2560, 1440); c.restore(); K.screen(c);
-      const a = E.back(K.seg(lt, .2, .8)); if (a > 0) RS.crest(c, 960, 560, .9 * (1.5 - .5 * a), { glow: .4 * a, spread: E.out(K.seg(lt, .5, 1.3)) }); },
+      const a = E.back(K.seg(lt, .2, .8)); if (a > 0) RS.crest(c, 960, 560, .9 * (1.5 - .5 * a) * (1 + .08 * E.io(K.seg(lt, 1.2, 4.4))), { glow: .4 * a, spread: E.out(K.seg(lt, .5, 1.3)) }); },
     sub: 'off', inSfx: 'whoosh', bed: [['hum_loop', .2]],
     over: [(c, lt) => K.title(c, 'THE ROTHSCHILDS', lt, { at: 1.0, y: 150, px: 130 }), (c, lt) => K.title(c, 'RICHER THAN KINGS', lt, { at: 1.5, y: 960, px: 80, fill: '#ffe2a0' })], sfx: [[.3, 'stamp', .7], [1.0, 'hit', .8], [1.1, 'swell', .4]] },
 ];
