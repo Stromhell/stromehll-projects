@@ -73,7 +73,7 @@ def frame(img16, bgimg, t_local, mode, zoom=1.0):
         return canvas
     canvas.paste(LS, (820, 262), LS)
     return canvas
-cmd = ['ffmpeg', '-y', '-loglevel', 'error', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-s', f'{W}x{H}', '-r', str(FPS), '-i', '-', '-i', f'{B}/r{RID}/aud.wav', '-c:v', 'libx264', '-preset', 'medium', '-crf', '20', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '192k', '-shortest', '-movflags', '+faststart', f'{B}/out/{PRE}_Reel_{RID:02d}.mp4']
+cmd = ['ffmpeg', '-y', '-loglevel', 'error', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-s', f'{W}x{H}', '-r', str(FPS), '-i', '-', '-i', f'{B}/r{RID}/aud.wav', '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '20', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '192k', '-shortest', '-movflags', '+faststart', f'{B}/out/{PRE}_Reel_{RID:02d}.mp4']
 os.makedirs(f'{B}/out', exist_ok=True); p = subprocess.Popen(cmd, stdin=subprocess.PIPE)
 small = lambda im: im.resize((240, 135)).filter(ImageFilter.GaussianBlur(6)).crop((50, 0, 190, 135))
 first = Image.open(f'{B}/r{RID}/frames/' + frames[0]).convert('RGB'); last = Image.open(f'{B}/r{RID}/frames/' + frames[-1]).convert('RGB')
