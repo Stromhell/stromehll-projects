@@ -19,7 +19,7 @@ finished(){ local v=$1 t n; ls $v/production/voice/act*.txt >/dev/null 2>&1 || r
 while true; do
   # 1. disk: clear throwaway frames of acts whose MP4 exists (Pushpam OK 30 Oct), never the one rendering now
   free=$(df --output=avail -BG / | tail -1 | tr -dc 0-9)
-  if [ "$free" -lt $DISK_MIN_GB ]; then cur=$(tail -1 $T/rq.log 2>/dev/null | awk '/ start /{print $3"/production/acts/act"$4}')
+  if [ "$free" -lt $DISK_MIN_GB ]; then cur=$(grep " start " $T/rq.log 2>/dev/null | tail -1 | awk '{print $3"/production/acts/act"$4}');
     n=0; for f in */production/acts/act*/frames; do [ -d "$f" ] || continue; d=${f%/frames}; [ "$d" = "$cur" ] && continue; ls $d/act*.mp4 >/dev/null 2>&1 && { rm -rf "$f"; n=$((n+1)); }; done
     now=$(df --output=avail -BG / | tail -1 | tr -dc 0-9)
     [ $n -gt 0 ] && log "all disk low (${free}G free): cleared $n old render frame folders, now ${now}G free"
