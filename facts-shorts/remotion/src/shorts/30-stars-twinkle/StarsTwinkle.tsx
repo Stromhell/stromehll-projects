@@ -238,7 +238,7 @@ export const StarsTwinkle: React.FC = () => {
                 </g>
                 <g transform={`translate(${sx} ${sy}) scale(${0.75 * lerp(1, 0.12, shrink)})`}><StarChar t={t} flick={0.6} mood="smile" /></g>
                 {shrink > 0.5 && (
-                  <g transform={`translate(${sx} ${sy}) rotate(${t * 40}) scale(${pop(t, T.point, 12, 6)})`}>
+                  <g transform={`translate(${sx} ${sy}) rotate(${t * 40}) scale(${pop(t, T.point, 12, 6) * (1 - prog(t, T.point + 1.8, T.point + 2.1))})`}>
                     <circle r={56} fill="none" stroke="#FFE45C" strokeWidth={7} strokeDasharray="16 12" />
                   </g>
                 )}
