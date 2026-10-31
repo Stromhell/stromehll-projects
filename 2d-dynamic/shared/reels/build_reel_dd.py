@@ -85,6 +85,9 @@ p = subprocess.Popen(['ffmpeg', '-y', '-loglevel', 'error', '-f', 'rawvideo', '-
 FS = 1920 * 1080 * 3; nCF = int((t1 - t0) * FPS); frames = []
 first = None; last = None; k = 0
 buf = rd.stdout.read(FS); first = Image.frombytes('RGB', (1920, 1080), buf)
+if R['s0'] != min(SHOTS):  # mid-act start: the first frame is still the crossfade from the previous shot, so take the hook frame 1 s in
+    hb = subprocess.run(['ffmpeg', '-loglevel', 'error', '-ss', str(t0 + 1.0), '-i', f'{A}/act{R["act"]}.mp4', '-frames:v', '1', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-'], capture_output=True).stdout
+    if len(hb) == FS: first = Image.frombytes('RGB', (1920, 1080), hb)
 for j in range(int(hd * FPS)): p.stdin.write(frame(first, 0, 'hook', 1 + .06 * j / (hd * FPS)).tobytes())
 while buf and len(buf) == FS and k < nCF:
     im = Image.frombytes('RGB', (1920, 1080), buf); last = im; p.stdin.write(frame(im, k / FPS, 'clip').tobytes()); k += 1; buf = rd.stdout.read(FS)
