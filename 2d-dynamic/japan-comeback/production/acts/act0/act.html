@@ -1,0 +1,108 @@
+<!doctype html><html><head><meta charset="utf-8"><title>JP cold open - 1945</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/vp/engine.js"></script><script src="../../../../shared/vp/cast.js"></script><script src="../../../../shared/vp/scenes.js"></script><script src="../../../../shared/vp/spain.js"></script>
+<script src="../../../../shared/kit.js"></script><script src="../../../../shared/vp.js"></script>
+<script src="../../../../spain-1-al-andalus/production/es1_sets.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act1.js"></script><script src="../../../../spain-1-al-andalus/production/es1_cast.js"></script>
+<script src="../../../../spain-3-civil-war/production/es3_cast.js"></script>
+<script src="../../jp_cast.js"></script><script src="../../jp_sets.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, E = K.E, J = S.JP, JX = S.JPX, H1 = S.ES1H, TAU = Math.PI * 2;
+const at = VP.at, seg = K.seg, lerp = K.lerp;
+{ const T = window.TIMING, L = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length + 1, start: L.end, end: L.end + 4.6, vo_start: L.end, vo_end: L.end, text: '' }); T.dur = L.end + 4.6; }
+const GREY = lt => VP.light('studio', lt, { swing: 3, set: { L: [.6, -.9], amb: '#4a4a52', ambA: .35, rim: '#e0d8d0', rimA: .5, tint: '#c8c4c0', tintA: .12 } });
+const SUN = lt => VP.light('studio', lt, { swing: 3, set: { L: [-.6, -.9], amb: '#5a6a8a', ambA: .2, rim: '#fff4dc', rimA: .8, tint: '#fff0d0', tintA: .06 } });
+const WARM = lt => VP.light('studio', lt, { swing: 3, set: { L: [.5, -.8], amb: '#3a2a20', ambA: .25, rim: '#ffe0b0', rimA: .8, tint: '#ffd8a0', tintA: .1 } });
+const ash = (c, lt, n = 60) => { for (let k = 0; k < n; k++) { const r = S.rng(k + 3), x = (r() * 1400 + lt * (12 + r() * 20)) % 1400 - 60, y = (r() * 800 + lt * (18 + r() * 14)) % 800 - 40; c.fillStyle = S.rgba(k % 3 ? '#d8d0c8' : '#3a3434', .55); c.beginPath(); c.ellipse(x + Math.sin(lt * 2 + k) * 6, y, 2.2, 1.4, lt + k, 0, TAU); c.fill(); } };
+// bullet train (0 series): white body, blue window band and skirt, round nose
+const shinkansen = (c, x, y, s, cars = 6) => { c.save(); c.translate(x, y); c.scale(s, s);
+  for (let i = 0; i < cars; i++) { const cx = -i * 200; c.fillStyle = '#f4f2ec'; c.beginPath(); if (i === 0) { c.moveTo(cx - 196, -60); c.lineTo(cx - 30, -60); c.quadraticCurveTo(cx + 40, -56, cx + 60, -14); c.lineTo(cx + 60, 0); c.lineTo(cx - 196, 0); } else c.rect(cx - 196, -60, 194, 60); c.fill();
+    c.fillStyle = '#1e4aa0'; c.fillRect(cx - 196, -12, i === 0 ? 250 : 194, 10); c.fillRect(cx - 196, -40, i === 0 ? 170 : 194, 12);
+    c.fillStyle = '#20283a'; for (let k = 0; k < 9; k++) c.fillRect(cx - 186 + k * 20, -38, 14, 8);
+    c.fillStyle = S.rgba('#ffffff', .6); c.fillRect(cx - 196, -58, i === 0 ? 220 : 194, 3); c.fillStyle = '#2a2a2e'; c.fillRect(cx - 190, 0, 182, 5); }
+  c.fillStyle = '#1e4aa0'; c.beginPath(); c.ellipse(40, -30, 14, 10, -.3, 0, TAU); c.fill(); c.fillStyle = '#fff8d0'; c.beginPath(); c.arc(54, -10, 4, 0, TAU); c.fill(); c.restore(); };
+const radio = (c, x, y, s, lt) => { c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = 'rgba(0,0,0,.3)'; c.beginPath(); c.ellipse(0, 4, 110, 14, 0, 0, TAU); c.fill();
+  c.fillStyle = '#c83a2a'; c.beginPath(); c.roundRect(-90, -150, 180, 150, 14); c.fill(); c.fillStyle = '#e85a44'; c.fillRect(-90, -150, 180, 8);
+  c.fillStyle = '#e8e0cc'; c.beginPath(); c.roundRect(-74, -136, 90, 120, 8); c.fill(); c.fillStyle = '#9a8e78'; for (let r = 0; r < 9; r++) for (let k = 0; k < 6; k++) { c.beginPath(); c.arc(-62 + k * 14, -122 + r * 13, 3, 0, TAU); c.fill(); }
+  c.fillStyle = '#f4e8c0'; c.beginPath(); c.arc(50, -110, 22, 0, TAU); c.fill(); c.strokeStyle = '#6a4a2a'; c.lineWidth = 2; c.stroke(); c.save(); c.translate(50, -110); c.rotate(lt * .4); c.beginPath(); c.moveTo(0, 0); c.lineTo(0, -18); c.stroke(); c.restore();
+  c.fillStyle = '#d8b040'; c.font = 'bold 13px Oswald'; c.textAlign = 'center'; c.fillText('TR-55', 50, -60); c.fillStyle = '#2a2a2a'; c.beginPath(); c.arc(50, -34, 12, 0, TAU); c.fill(); c.restore();
+  for (let k = 0; k < 4; k++) { const q = ((lt * .5 + k / 4) % 1); c.fillStyle = S.rgba('#ffe8b0', .7 * (1 - q)); c.font = `${28 * s}px Anton`; c.fillText('♪', x + 120 * s + q * 140 * s, y - 120 * s - q * 120 * s + Math.sin(q * 6 + k) * 10); } };
+const bankbook = (c, x, y, s, n) => { c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(-120, 6, 250, 12);
+  c.fillStyle = '#2a5a3a'; c.fillRect(-124, -6, 248, 12); c.fillStyle = '#f4ecd8'; c.fillRect(-120, -170, 118, 166); c.fillRect(2, -170, 118, 166); c.strokeStyle = '#8a7a5a'; c.lineWidth = 1;
+  for (let r = 0; r < 9; r++) { c.beginPath(); c.moveTo(-112, -150 + r * 17); c.lineTo(-10, -150 + r * 17); c.moveTo(10, -150 + r * 17); c.lineTo(112, -150 + r * 17); c.stroke(); }
+  c.fillStyle = '#1a2a6a'; c.font = '13px Caveat'; for (let r = 0; r < Math.min(n, 16); r++) { const col = r < 8 ? -100 : 20, row = r % 8; c.fillText('¥ ' + (100 + r * 50), col, -136 + row * 17); }
+  c.fillStyle = '#c82020'; c.beginPath(); c.arc(90, -40, 14, 0, TAU); c.fill(); c.fillStyle = '#fff'; c.font = 'bold 10px Oswald'; c.textAlign = 'center'; c.fillText('郵便', 90, -36); c.restore(); };
+const coin = (c, x, y, s) => { c.fillStyle = '#c8a040'; c.beginPath(); c.ellipse(x, y, 13 * s, 13 * s, 0, 0, TAU); c.fill(); c.strokeStyle = '#8a6a20'; c.lineWidth = 2; c.stroke(); c.fillStyle = S.rgba('#fff4c0', .7); c.beginPath(); c.arc(x - 4 * s, y - 4 * s, 3 * s, 0, TAU); c.fill(); };
+
+window.SHOTS = [
+  // 0.01 WIDE: burnt Tokyo; the mother reads the paper by the shack, her two thin children beside her
+  { set: 'jp_burnt', cam: { z: [1.05, 1.5], x: [640, 330], y: [360, 470], ease: E.io }, bed: [['wind_loop', .3]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tA = at(Sh, 'acorns', 3); Sh.tR = at(Sh, 'rats', 5.5); },
+    draw: (c, lt, u, Sh) => {
+      const L = GREY(lt);
+      H1.smoke(c, 429, 560, .6, lt, '120,110,104');
+      JX.wood(c, 222, 560, 62, 56, '#6a5038', 11); c.fillStyle = S.rgba('#ffe0b0', .2); c.fillRect(222, 560, 62, 3); S.contact(c, 253, 616, 44, .4);
+      VP.figure(c, [250, 616], { k: .6, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, J.MOTHER, 250, 616, 40, Object.assign(VP.sit(J.MOTHER, lt * .4, 1), { face: 1, shN: 70, elN: 80, shF: 60, elF: 90, holdN: wr => { cc.save(); cc.translate(wr[0] + 6, wr[1] - 8); cc.rotate(-.15 + .03 * Math.sin(lt * 3)); cc.fillStyle = '#e8e0cc'; cc.fillRect(-4, -36, 48, 40); cc.fillStyle = '#3a3430'; for (let k = 0; k < 6; k++) cc.fillRect(0, -30 + k * 6, k ? 40 : 30, k ? 2 : 4); cc.restore(); } }), { blink: S.blinkAt(lt, 0), worry: .7, look: [.6, .3], time: lt }, L));
+      for (const [x, ch, uu, k] of [[352, J.SON, 30, 1], [392, J.DAUGHTER, 27, 2]]) { S.contact(c, x, 620, 18, .35); VP.figure(c, [x, 620], { k: .6, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, ch, x, 620, uu, Object.assign(S.idle(lt, k), { face: -1, shN: 10, elN: 30 }), { blink: S.blinkAt(lt, k), worry: .8, look: [-.8, .1], time: lt }, L)); }
+      ash(c, lt, 70);
+    },
+    over: [(c, lt) => K.dateTag(c, 'TOKYO · 1945', lt, { at: .4 }), (c, lt, u, Sh) => K.badge(c, 'ACORNS · SAWDUST · RATS', lt, { at: Sh.tA })],
+    sfx: [[.2, 'wind_loop', .25], [.8, 'paper', .4], ['rats', 'thud', .3]] },
+
+  // 0.02 MED: the map: 66 city dots ignite one after another; then MacArthur's photo slides in
+  { set: 'jp_map', cam: (lt, u, Sh) => ({ z: [lerp(1.0, 1.12, E.io(seg(lt, 0, Sh.tG)))], x: [640], y: [380] }), bed: [['drone', .25], ['fire_loop', .12]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tN = at(Sh, 'nine million', 3.5); Sh.tG = at(Sh, 'American general', 5.5); Sh.tF = at(Sh, 'fourth-rate', Sh.dur - 2); },
+    draw: (c, lt, u, Sh) => {
+      const n = Math.floor(66 * E.out(seg(lt, .2, Sh.tN)));
+      JX.CITIES.forEach((p, i) => { if (i >= n) return; const age = lt - (.2 + (i / 66) * (Sh.tN - .2)); VP.glow(c, p[0], p[1], 40 + 10 * Math.sin(lt * 6 + i), '#ff7a30', .5); c.fillStyle = '#c82010'; c.beginPath(); c.arc(p[0], p[1], 5 + 3 * Math.max(0, 1 - age * 3), 0, TAU); c.fill(); if (p[2] && i < 8) { c.font = '18px Caveat'; c.fillStyle = '#3a1a10'; c.fillText(p[2], p[0] + 10, p[1] - 6); } });
+      // MacArthur's photo: a framed snapshot of him stepping off the plane, pipe in mouth
+      const q = E.out(seg(lt, Sh.tG - .2, Sh.tG + .6)); if (q > 0) { c.save(); c.translate(lerp(1500, 1000, q), 300); c.rotate(.06); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(-178, -158, 372, 340); c.fillStyle = '#f4ecd8'; c.fillRect(-186, -170, 372, 340);
+        c.save(); c.beginPath(); c.rect(-170, -154, 340, 280); c.clip(); const sk = c.createLinearGradient(0, -154, 0, 126); sk.addColorStop(0, '#9ab0c0'); sk.addColorStop(1, '#d8d4c8'); c.fillStyle = sk; c.fillRect(-170, -154, 340, 280);
+        c.fillStyle = '#a8a8a8'; c.beginPath(); c.moveTo(-170, 20); c.lineTo(60, -40); c.lineTo(170, -30); c.lineTo(170, 40); c.lineTo(-170, 60); c.fill(); c.fillStyle = '#2a2a2e'; c.fillRect(20, -70, 70, 120); c.fillStyle = '#6a6a6a'; for (let k = 0; k < 5; k++) c.fillRect(-20 + k * 4, 20 + k * 18, 80, 6); c.fillStyle = '#7a7a70'; c.fillRect(-170, 100, 340, 30);
+        const L = SUN(lt), st = seg(lt, Sh.tG + .3, Sh.tG + 2.6), fx = lerp(40, -30, st), fy = lerp(30, 104, st);
+        S.person(c, J.MACARTHUR, fx, fy, 26, Object.assign(st < 1 && st > 0 ? H1.walk(lt * 1.1) : S.idle(lt, 0), { face: -1, holdN: wr => { c.strokeStyle = '#6a4a2a'; c.lineWidth = 3; c.beginPath(); c.moveTo(wr[0], wr[1]); c.lineTo(wr[0] - 4, wr[1] - 10); c.stroke(); } }), { blink: S.blinkAt(lt, 0), look: [-.4, -.1], time: lt }, L);
+        c.fillStyle = S.rgba('#c8b890', .25); c.fillRect(-170, -154, 340, 280); c.restore();
+        c.font = '22px Caveat'; c.fillStyle = '#3a2a1a'; c.textAlign = 'center'; c.fillText('Atsugi airfield · 30 Aug 1945', 0, 156); c.restore(); }
+    },
+    over: [(c, lt, u, Sh) => K.counter ? K.badge(c, Math.floor(66 * E.out(seg(lt, .2, Sh.tN))) + ' CITIES BURNED', lt, { at: .4, until: Sh.tG }) : null, (c, lt, u, Sh) => K.badge(c, '~9,000,000 HOMELESS', lt, { at: Sh.tN, until: Sh.tG + .2 }), (c, lt, u, Sh) => K.card(c, 'GEN. DOUGLAS MACARTHUR', lt, { at: Sh.tG + .8, x: 1460, y: 840, px: 44, rot: -3 }), (c, lt, u, Sh) => K.card(c, '"FOURTH-RATE NATION"', lt, { at: Sh.tF, x: 520, y: 900, px: 50, rot: 2 })],
+    sfx: [[.3, 'drone', .3], [.5, 'fire_loop', .2], ['nine million', 'thud', .35], ['American general', 'camera_shutter', .5], ['fourth-rate', 'stamp', .45]] },
+
+  // 0.03 MED: match cut from the shack to the bullet train passing Fuji
+  { set: 'jp_fuji', cam: (lt, u, Sh) => ({ z: [lerp(1.0, 1.08, E.io(seg(lt, Sh.tW, Sh.dur)))], x: [640], y: [360], shake: lt > Sh.tW && lt < Sh.tW + .5 ? 3 : 0 }), bed: [['wind_loop', .12], ['birds_loop', .15]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tW = 1.1; Sh.tT = at(Sh, 'trains', 3.5); Sh.tR = at(Sh, 'radios', Sh.dur - 3); },
+    draw: (c, lt, u, Sh) => {
+      // the train flashes past twice: once at the cut, then again slower when "trains" is said
+      const p1 = seg(lt, Sh.tW, Sh.tW + 1.2), p2 = seg(lt, Sh.tT - .5, Sh.tT + 3.4);
+      if (p1 > 0 && p1 < 1) shinkansen(c, lerp(-300, 2700, p1), 588, 1, 6);
+      if (p2 > 0 && p2 < 1) shinkansen(c, lerp(-200, 2600, E.io(p2)), 588, 1, 7);
+      if (p1 > 0 && p1 < 1) { c.fillStyle = S.rgba('#ffffff', .25 * (1 - p1)); for (let k = 0; k < 12; k++) c.fillRect(0, 300 + k * 30, 1280, 2); }
+      if (lt < Sh.tW) { VP.drawSet(c, 'jp_burnt'); const m = seg(lt, Sh.tW - .3, Sh.tW); c.fillStyle = `rgba(255,255,255,${m})`; c.fillRect(0, 0, 1280, 720); }
+    },
+    over: [(c, lt, u, Sh) => K.badge(c, '1945 → 1968', lt, { at: Sh.tW + .3, until: Sh.tT - .3 }), (c, lt, u, Sh) => K.badge(c, "3RD-LARGEST ECONOMY ON EARTH", lt, { at: Sh.tW + 1.6, until: Sh.tT - .3 }), (c, lt, u, Sh) => K.card(c, '210 KM/H', lt, { at: Sh.tT + .4, x: 1500, y: 300, px: 60, rot: -3 }), (c, lt, u, Sh) => K.card(c, 'RADIOS · CARS', lt, { at: Sh.tR, x: 420, y: 300, px: 50, rot: 3 })],
+    sfx: [[.9, 'whoosh', .8], ['trains', 'whoosh', .6], ['radios', 'pop', .3]] },
+
+  // 0.04 MED: the question, then three hard cuts: truck factory, a tiny radio, a family's post office bank book
+  { set: 'jp_factory', cam: (lt, u, Sh) => ({ z: [1.0 + .04 * (lt % 4) / 4], x: [640], y: [360] }), bed: [['hum_loop', .15]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tO = at(Sh, 'no oil', .8); Sh.tC = at(Sh, 'no colonies', 1.6); Sh.tA = at(Sh, 'no army', 2.4); Sh.tW = at(Sh, 'war next door', 7); Sh.tS = at(Sh, 'stubborn founders', 8.5); Sh.tM = at(Sh, 'ordinary families', 10); },
+    draw: (c, lt, u, Sh) => {
+      if (lt < Sh.tS) { const L = WARM(lt);
+        for (const [x, ch, k, pose] of [[250, J.WORKER, 0, 'hammer'], [610, J.WORKER2, 1, 'carry'], [960, J.WORKER, 2, 'look']]) { S.contact(c, x, 640, 30, .35); VP.figure(c, [x, 640], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, ch, x, 640, 40, Object.assign(S.idle(lt, k), pose === 'hammer' ? { face: 1, shN: 120 + 50 * Math.abs(Math.sin(lt * 5)), elN: 40 } : pose === 'carry' ? { face: -1, shN: 80, elN: 70, shF: 80, elF: 70, holdN: wr => { JX.wood(cc, wr[0] - 40, wr[1] - 10, 80, 18, '#7a5a3a', 7); } } : { face: -1, shN: 30, elN: 90 }), { blink: S.blinkAt(lt, k), look: [pose === 'look' ? -.6 : .5, .2], time: lt }, L)); }
+        for (let k = 0; k < 14; k++) { const q = (lt * 2 + k / 14) % 1; c.fillStyle = S.rgba('#ffd060', 1 - q); c.fillRect(300 + q * 60 * Math.cos(k), 560 - q * 70, 3, 3); }
+      } else if (lt < Sh.tM) { VP.drawSet(c, 'jp_desk'); radio(c, 640, 560, 1.4 + .1 * seg(lt, Sh.tS, Sh.tM), lt); }
+      else { VP.drawSet(c, 'jp_desk'); const L = WARM(lt), q = lt - Sh.tM; bankbook(c, 640, 540, 1.3, 6 + Math.floor(q * 3));
+        for (let k = 0; k < 5; k++) { const t = q - k * .45; if (t < 0) continue; coin(c, 520 + k * 40, Math.min(560, 200 + t * 700), 1); }
+        for (const [x, ch, uu, k] of [[190, J.MOTHER64, 58, 0], [1030, J.SON, 44, 1], [1140, J.DAUGHTER, 40, 2]]) VP.figure(c, [x, 712], { k: .5, sy: -.2, a: .25, blur: 3 }, cc => S.person(cc, ch, x, 712, uu, Object.assign(S.idle(lt, k), { face: x < 640 ? 1 : -1, shN: 40, elN: 60 }), { blink: S.blinkAt(lt, k), smile: .7, look: [x < 640 ? .7 : -.7, .4], time: lt }, L)); }
+    },
+    over: [(c, lt, u, Sh) => K.badge(c, 'NO OIL', lt, { at: Sh.tO, until: Sh.tW }), (c, lt, u, Sh) => K.card(c, 'NO COLONIES', lt, { at: Sh.tC, x: 960, y: 260, px: 46, rot: -2, until: Sh.tW }), (c, lt, u, Sh) => K.card(c, 'NO ARMY', lt, { at: Sh.tA, x: 1500, y: 340, px: 46, rot: 3, until: Sh.tW }),
+      (c, lt, u, Sh) => K.card(c, 'A WAR NEXT DOOR', lt, { at: Sh.tW, x: 960, y: 200, px: 52, rot: -2, until: Sh.tS }), (c, lt, u, Sh) => K.card(c, 'STUBBORN FOUNDERS', lt, { at: Sh.tS + .1, x: 960, y: 200, px: 52, rot: 2, until: Sh.tM }), (c, lt, u, Sh) => K.card(c, 'ORDINARY FAMILIES', lt, { at: Sh.tM + .1, x: 960, y: 200, px: 52, rot: -2 })],
+    sfx: [['no oil', 'tick', .3], ['no colonies', 'tick', .3], ['no army', 'tick', .3], ['war next door', 'hit', .4], ['stubborn founders', 'whoosh_soft', .5], ['ordinary families', 'coins', .5]] },
+
+  // 0.05 TITLE: the daruma on the shelf tips over and rocks back upright
+  { set: 'jp_shelf', cam: { z: [1.15, 1.3], x: [640, 640], y: [420, 430], ease: E.io }, bed: [['hum_loop', .1]],
+    draw: (c, lt) => { VP.glow(c, 640, 420, 300, '#ffd8a0', .25); S.daruma(c, 640, 504, 2.5, S.darumaTilt(lt, .3)); },
+    over: [(c, lt) => { const q = seg(lt, 1.3, 2.3); if (q <= 0) return; c.save(); c.globalAlpha = q; c.font = '84px Anton'; c.textAlign = 'center'; c.fillStyle = '#f4ead4'; c.shadowColor = 'rgba(0,0,0,.7)'; c.shadowBlur = 20; c.fillText('FALL SEVEN TIMES, STAND UP EIGHT', 960, 150); c.font = '40px Oswald'; c.fillText("JAPAN'S COMEBACK · 1945–1964", 960, 1000); c.restore(); }],
+    sfx: [[.3, 'thud', .4], [.6, 'creak', .3], [1.3, 'swell', .4]] },
+];
+VP.build(); K.boot();
+</script></body></html>

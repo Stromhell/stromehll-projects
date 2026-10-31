@@ -1,0 +1,162 @@
+<!doctype html><html><head><meta charset="utf-8"><title>ES3 act 2 - The Republic</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/vp/engine.js"></script><script src="../../../../shared/vp/cast.js"></script><script src="../../../../shared/vp/scenes.js"></script><script src="../../../../shared/vp/spain.js"></script>
+<script src="../../../../shared/kit.js"></script><script src="../../../../shared/vp.js"></script>
+<script src="../../../../spain-1-al-andalus/production/es1_sets.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act1.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act2.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act3.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act4.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act5.js"></script><script src="../../../../spain-1-al-andalus/production/es1_cast.js"></script>
+
+<script src="../../es3_cast.js"></script><script src="../../es3_sets.js"></script><script src="../../es3_sets_act2.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, E = K.E, X = S.SPX, CH = S.SPAIN, C = S.ES3, H1 = S.ES1H, TAU = Math.PI * 2;
+const at = VP.at, seg = K.seg, lerp = K.lerp, pulse = H1.pulse, walk = H1.walk;
+const night = (c, a, col = '30,40,100') => { c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = `rgba(${col},${a})`; c.fillRect(0, 0, 1280, 720); c.restore(); };
+// the running device: a Spanish flag on the wall with a crack through it; size and crack width animate
+const flag = (c, x, y, w, h, crack, lt, o = {}) => { const cols = o.cols || ['#b8202a', '#e8b820', '#b8202a'], bands = o.bands || [.25, .5, .25];
+  c.save(); c.translate(x, y); let yy = -h / 2; bands.forEach((b, i) => { c.fillStyle = cols[i]; c.fillRect(-w / 2, yy, w, b * h + 1); yy += b * h; });
+  S.dabs(c, { x: -w / 2, y: -h / 2, w, h, n: 80, cols: ['#ffffff', '#000000'], r0: 4, r1: 16, a0: .03, a1: .08, seed: 7 });
+  for (let i = 0; i < 4; i++) { const xx = -w / 2 + (i + .5) * w / 4 + Math.sin(lt * .8 + i) * 4; const gr = c.createLinearGradient(xx - 30, 0, xx + 30, 0); gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(.5, 'rgba(0,0,0,.12)'); gr.addColorStop(1, 'rgba(0,0,0,0)'); c.fillStyle = gr; c.fillRect(xx - 30, -h / 2, 60, h); }
+  if (crack > 0) { const pts = []; for (let i = 0; i <= 12; i++) { const r = S.rng(i + 31)(); pts.push([-w * .05 + (r - .5) * w * .12 + i * w * .01, -h / 2 + i * h / 12]); }
+    c.fillStyle = '#120a08'; c.beginPath(); pts.forEach((p, i) => i ? c.lineTo(p[0] - crack * (.6 + .4 * Math.sin(i)), p[1]) : c.moveTo(p[0] - crack, p[1])); for (let i = pts.length - 1; i >= 0; i--) c.lineTo(pts[i][0] + crack * (.6 + .4 * Math.cos(i)), pts[i][1]); c.fill();
+    c.strokeStyle = S.rgba('#ffe0b0', .35); c.lineWidth = 2; c.beginPath(); pts.forEach((p, i) => i ? c.lineTo(p[0] + crack, p[1]) : c.moveTo(p[0] + crack, p[1])); c.stroke(); }
+  c.strokeStyle = S.rgba('#000000', .5); c.lineWidth = 3; c.strokeRect(-w / 2, -h / 2, w, h); c.restore(); };
+const muzzle = (c, x, y, lt, t0) => { const q = seg(lt, t0, t0 + .15); if (q > 0 && q < 1) { VP.glow(c, x, y, 120, '#fff0b0', 1 - q); c.fillStyle = `rgba(255,240,180,${1 - q})`; c.beginPath(); c.moveTo(x, y); for (let k = 0; k < 8; k++) { const a = k / 8 * TAU, r = k % 2 ? 10 : 30; c.lineTo(x + Math.cos(a) * r, y + Math.sin(a) * r); } c.fill(); } };
+// a row of red leather benches with a wooden front, drawn in front of seated deputies
+const bench = (c, y, x0, x1, s = 1) => { X.wood(c, x0, y - 30 * s, x1 - x0, 46 * s, '#5a301c', Math.round(y)); c.fillStyle = '#c8a040'; c.fillRect(x0, y - 30 * s, x1 - x0, 3 * s); c.fillStyle = '#8a1e1e'; c.fillRect(x0, y - 44 * s, x1 - x0, 14 * s); c.fillStyle = S.rgba('#ff9a8a', .25); c.fillRect(x0, y - 44 * s, x1 - x0, 3 * s); };
+const DEP = [C.DEPUTY, C.DEPUTY2, C.DEPUTY3, C.SUAREZ];
+const LT_HALL = (lt) => VP.light('studio', lt, { swing: 4, set: { L: [.4, -1], amb: '#3a2a20', ambA: .2, rim: '#ffe0b0', rimA: .7, tint: '#ffd8a0', tintA: .08 } });
+
+
+const coinFlag = (c, lt, cr, o = {}) => { c.save(); c.translate(150, 120); c.scale(.16, .16); flag(c, 0, 0, 820, 520, cr, lt, o); c.restore(); };
+const REP = { cols: ['#b8202a', '#e8b820', '#6a2a7a'], bands: [1 / 3, 1 / 3, 1 / 3] };
+const car = (c, x, y, s, lt, lights) => { c.fillStyle = '#1a1a20'; c.beginPath(); c.moveTo(x - 80 * s, y - 10 * s); c.lineTo(x - 70 * s, y - 40 * s); c.lineTo(x - 10 * s, y - 60 * s); c.lineTo(x + 50 * s, y - 60 * s); c.lineTo(x + 70 * s, y - 34 * s); c.lineTo(x + 90 * s, y - 30 * s); c.lineTo(x + 90 * s, y - 10 * s); c.fill(); c.fillStyle = '#3a4a5a'; c.fillRect(x - 5 * s, y - 54 * s, 50 * s, 20 * s);
+  for (const dx of [-50, 60]) { c.fillStyle = '#0a0a0a'; c.beginPath(); c.arc(x + dx * s, y - 6 * s, 14 * s, 0, TAU); c.fill(); c.fillStyle = '#5a5a5a'; c.beginPath(); c.arc(x + dx * s, y - 6 * s, 5 * s, 0, TAU); c.fill(); }
+  if (lights) { c.fillStyle = '#ff3a2a'; c.fillRect(x - 82 * s, y - 30 * s, 6 * s, 8 * s); VP.glow(c, x - 80 * s, y - 26 * s, 50 * s, '#ff3a2a', .7); } };
+
+const FRONT = [C.WORKER, C.WOMAN, C.LABOURER, C.WORKER, C.LABOURER2, C.WOMAN, C.WORKER, C.LABOURER];
+const frontRow = (c, lt, L, y, u, o = {}) => { FRONT.forEach((ch, k) => { const d = o.d || 0, x0 = 110 + k * 150 + (k % 2) * 20, x = x0 + (x0 < 640 ? -1 : 1) * 1000 * d * d; if (x < -100 || x > 1380) return; const up = o.cheer ? (Math.sin(lt * 4 + k * 1.7) > 0 ? 1 : 0) : 0, fl = o.flags && k % 2 === 0;
+  VP.figure(c, [x, y], { k: .3, sy: -.25, a: .3, blur: 2 }, cc => S.person(cc, ch, x, y, u, Object.assign(S.idle(lt, k), { face: k % 2 ? -1 : 1, shN: fl ? 150 + 10 * Math.sin(lt * 3 + k) : 30 + 120 * up, elN: fl ? 10 : 20, holdN: fl ? wr => { cc.strokeStyle = '#3a2a1a'; cc.lineWidth = 2.4; cc.beginPath(); cc.moveTo(wr[0], wr[1] + 14); cc.lineTo(wr[0], wr[1] - 70); cc.stroke(); for (let b = 0; b < 3; b++) { cc.fillStyle = ['#b8202a', '#e8b820', '#6a2a7a'][b]; cc.beginPath(); for (let j = 0; j <= 8; j++) { const fx = wr[0] + 1 + j * 6, fy = wr[1] - 70 + b * 10 + Math.sin(lt * 5 + k + j * .7) * 3 * j / 8; j ? cc.lineTo(fx, fy) : cc.moveTo(fx, fy); } for (let j = 8; j >= 0; j--) { const fx = wr[0] + 1 + j * 6, fy = wr[1] - 60 + b * 10 + Math.sin(lt * 5 + k + j * .7) * 3 * j / 8; cc.lineTo(fx, fy); } cc.fill(); } } : null }), { blink: S.blinkAt(lt, k), smile: .5, look: [k % 2 ? -.2 : .2, -.6], time: lt }, L)); }); };
+
+
+const paper = (cc, wr, w = 34, h = 24, rot = -.2) => { cc.save(); cc.translate(wr[0], wr[1]); cc.rotate(rot); cc.fillStyle = '#f0e8d4'; cc.fillRect(-4, -h, w, h); cc.fillStyle = S.rgba('#3a3a3a', .5); for (let k = 0; k < 4; k++) cc.fillRect(0, -h + 5 + k * 5, w - 10, 1.5); cc.restore(); };
+const truck = (c, x, y, s, lt, on) => {
+  c.fillStyle = 'rgba(0,0,0,.35)'; c.beginPath(); c.ellipse(x - 10 * s, y + 4 * s, 150 * s, 12 * s, 0, 0, TAU); c.fill();
+  // canvas-covered cargo bed with ribs
+  const bg = c.createLinearGradient(0, y - 120 * s, 0, y - 20 * s); bg.addColorStop(0, '#4a5240'); bg.addColorStop(1, '#2a3024'); c.fillStyle = bg;
+  c.beginPath(); c.moveTo(x - 140 * s, y - 30 * s); c.lineTo(x - 140 * s, y - 100 * s); c.quadraticCurveTo(x - 140 * s, y - 122 * s, x - 118 * s, y - 122 * s); c.lineTo(x + 6 * s, y - 122 * s); c.quadraticCurveTo(x + 24 * s, y - 122 * s, x + 24 * s, y - 100 * s); c.lineTo(x + 24 * s, y - 30 * s); c.fill();
+  c.strokeStyle = 'rgba(0,0,0,.35)'; c.lineWidth = 2 * s; for (let k = 0; k < 5; k++) { const rx = x - 112 * s + k * 30 * s; c.beginPath(); c.moveTo(rx, y - 120 * s); c.lineTo(rx, y - 34 * s); c.stroke(); }
+  c.strokeStyle = 'rgba(200,210,180,.2)'; c.lineWidth = 1.2 * s; for (let k = 0; k < 4; k++) { c.beginPath(); c.moveTo(x - 136 * s, y - 112 * s + k * 18 * s); c.quadraticCurveTo(x - 60 * s, y - 106 * s + k * 18 * s, x + 20 * s, y - 112 * s + k * 18 * s); c.stroke(); }
+  c.fillStyle = '#1e2218'; c.fillRect(x - 144 * s, y - 34 * s, 172 * s, 12 * s);
+  // cab with rounded roof, door, window and long bonnet with grille
+  const cg = c.createLinearGradient(0, y - 96 * s, 0, y - 20 * s); cg.addColorStop(0, '#2e3a4a'); cg.addColorStop(1, '#161c26'); c.fillStyle = cg;
+  c.beginPath(); c.moveTo(x + 26 * s, y - 22 * s); c.lineTo(x + 26 * s, y - 84 * s); c.quadraticCurveTo(x + 28 * s, y - 96 * s, x + 42 * s, y - 96 * s); c.lineTo(x + 70 * s, y - 96 * s); c.quadraticCurveTo(x + 80 * s, y - 94 * s, x + 84 * s, y - 64 * s); c.lineTo(x + 136 * s, y - 60 * s); c.quadraticCurveTo(x + 146 * s, y - 58 * s, x + 146 * s, y - 46 * s); c.lineTo(x + 146 * s, y - 22 * s); c.fill();
+  const wg = c.createLinearGradient(x + 34 * s, y - 90 * s, x + 76 * s, y - 64 * s); wg.addColorStop(0, '#8aa0b8'); wg.addColorStop(.6, '#3a4a5c'); wg.addColorStop(1, '#2a3444'); c.fillStyle = wg; c.beginPath(); c.moveTo(x + 36 * s, y - 66 * s); c.lineTo(x + 36 * s, y - 84 * s); c.quadraticCurveTo(x + 38 * s, y - 90 * s, x + 46 * s, y - 90 * s); c.lineTo(x + 68 * s, y - 90 * s); c.lineTo(x + 76 * s, y - 66 * s); c.fill();
+  c.strokeStyle = 'rgba(0,0,0,.5)'; c.lineWidth = 1.5 * s; c.strokeRect(x + 32 * s, y - 64 * s, 40 * s, 40 * s); c.fillStyle = '#c8b070'; c.fillRect(x + 62 * s, y - 50 * s, 6 * s, 2 * s);
+  c.fillStyle = '#e8d8a0'; c.font = `bold ${9 * s}px Georgia`; c.textAlign = 'center'; c.fillText('GUARDIA DE ASALTO', x - 58 * s, y - 64 * s);
+  c.strokeStyle = 'rgba(160,180,200,.35)'; c.lineWidth = 1 * s; for (let k = 0; k < 5; k++) { c.beginPath(); c.moveTo(x + 90 * s + k * 9 * s, y - 60 * s); c.lineTo(x + 90 * s + k * 9 * s, y - 30 * s); c.stroke(); }
+  c.fillStyle = '#9aa0a8'; c.fillRect(x + 140 * s, y - 56 * s, 7 * s, 30 * s); c.strokeStyle = '#4a5058'; for (let k = 0; k < 6; k++) { c.beginPath(); c.moveTo(x + 140 * s, y - 52 * s + k * 5 * s); c.lineTo(x + 147 * s, y - 52 * s + k * 5 * s); c.stroke(); }
+  c.fillStyle = '#d8d0b0'; c.beginPath(); c.arc(x + 138 * s, y - 64 * s, 7 * s, 0, TAU); c.fill(); c.fillStyle = '#1a1a1a'; c.fillRect(x + 20 * s, y - 24 * s, 130 * s, 5 * s);
+  // fenders and spoked wheels
+  for (const dx of [-90, 108]) { c.fillStyle = '#10141a'; c.beginPath(); c.arc(x + dx * s, y - 14 * s, 28 * s, Math.PI, TAU); c.fill(); c.fillStyle = '#0a0a0a'; c.beginPath(); c.arc(x + dx * s, y - 8 * s, 20 * s, 0, TAU); c.fill(); c.fillStyle = '#3a3a3a'; c.beginPath(); c.arc(x + dx * s, y - 8 * s, 12 * s, 0, TAU); c.fill();
+    c.strokeStyle = '#7a7a7a'; c.lineWidth = 1.5 * s; const rot = x * .05; for (let k = 0; k < 8; k++) { const a = rot + k / 8 * TAU; c.beginPath(); c.moveTo(x + dx * s, y - 8 * s); c.lineTo(x + dx * s + Math.cos(a) * 11 * s, y - 8 * s + Math.sin(a) * 11 * s); c.stroke(); } c.fillStyle = '#9a9a9a'; c.beginPath(); c.arc(x + dx * s, y - 8 * s, 3.5 * s, 0, TAU); c.fill(); }
+  if (on) { c.save(); c.globalCompositeOperation = 'lighter'; const g = c.createLinearGradient(x + 140 * s, 0, x + 520 * s, 0); g.addColorStop(0, 'rgba(255,240,190,.5)'); g.addColorStop(1, 'rgba(255,240,190,0)'); c.fillStyle = g; c.beginPath(); c.moveTo(x + 140 * s, y - 70 * s); c.lineTo(x + 560 * s, y - 120 * s); c.lineTo(x + 560 * s, y + 20 * s); c.lineTo(x + 140 * s, y - 58 * s); c.fill(); c.restore(); VP.glow(c, x + 140 * s, y - 64 * s, 34 * s, '#fff0c0', .9); } };
+const dyn = (cc, wr, lt, k) => { cc.save(); cc.translate(wr[0], wr[1]); cc.rotate(-.5); cc.fillStyle = '#b8302a'; cc.fillRect(-3, -18, 7, 22); cc.strokeStyle = '#3a2a1a'; cc.lineWidth = 1.2; cc.beginPath(); cc.moveTo(0, -18); cc.quadraticCurveTo(4, -26, 2, -30); cc.stroke(); cc.restore(); };
+
+window.SHOTS = [
+  // 2.01 MED: the new Cortes votes the constitution; a woman casts her first ballot in the foreground
+  { set: 'cortes', cam: { z: [1.25, 1.35], x: [640, 680], y: [440, 450], ease: E.io }, bed: [['crowd_loop', .12]],
+    init: Sh => { Sh.tC = at(Sh, 'constitution', 2); Sh.tS = at(Sh, 'separated', 4); Sh.tW = at(Sh, 'women', 6); Sh.tL = at(Sh, 'land', Sh.dur - 2); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const L = LT_HALL(lt), vote = seg(lt, Sh.tC, Sh.tC + .8) * (1 - seg(lt, Sh.tC + 3, Sh.tC + 3.8));
+      for (let r = 0; r < 4; r++) { const y = 420 + r * 70, uu = 22 + r * 3; for (let i = 0; i < 9; i++) { const x = 90 + i * 60 + (i > 4 ? 340 : 0) + (r % 2) * 20, k = r * 9 + i; if (x > 1240) continue; const up = vote * (k % 5 ? 1 : 0) * seg(lt, Sh.tC + (k % 7) * .08, Sh.tC + .4 + (k % 7) * .08); VP.figure(c, [x, y], { k: .4, sy: -.2, a: .2, blur: 2 }, cc => S.person(cc, DEP[k % 4], x, y, uu, Object.assign(S.idle(lt, k), { face: x < 640 ? 1 : -1, sitY: -1.0, hideLegs: true, shN: 15 + 150 * up, elN: 30 - 20 * up }), { blink: S.blinkAt(lt, k), smile: .3 * up, look: [x < 640 ? .6 : -.6, -.3], time: lt }, L)); }
+        bench(c, y + 14, 0, 540, .9 + r * .1); bench(c, y + 14, 740, 1280, .9 + r * .1); }
+      const wq = E.out(seg(lt, Sh.tW - .4, Sh.tW + .6));
+      if (wq > 0) { const bx = 1010, by = 700, drop = seg(lt, Sh.tW + .8, Sh.tW + 1.4);
+        c.save(); c.globalAlpha = wq; X.wood(c, bx - 50, by - 110, 100, 110, '#6a4024', 77); c.fillStyle = S.rgba('#c8e0f0', .55); c.fillRect(bx - 40, by - 100, 80, 60); c.fillStyle = '#1a1a1a'; c.fillRect(bx - 22, by - 114, 44, 6);
+        if (drop > 0 && drop < 1) { c.fillStyle = '#f4ecd8'; c.fillRect(bx - 10, by - 150 + 40 * drop, 20, 14); }
+        VP.figure(c, [900, 712], { k: .4, sy: -.2, a: .3, blur: 2 }, cc => S.person(cc, C.VOTER, 900, 712, 44, Object.assign(S.idle(lt, 3), { face: 1, shN: 70 - 20 * drop, elN: 30, holdN: drop < .1 ? wr => { cc.fillStyle = '#f4ecd8'; cc.fillRect(wr[0] - 4, wr[1] - 16, 20, 14); } : null }), { blink: S.blinkAt(lt, 4), smile: .4 + .4 * drop, look: [.6, .2], time: lt }, L)); c.restore(); }
+      VP.motes(c, lt, 200, 100, 900, 400, { n: 30, a: .3 });
+    },
+    over: [(c, lt) => coinFlag(c, lt, 8, REP), (c, lt, u, Sh) => K.card(c, '1931 CONSTITUTION', lt, { at: Sh.tC + .2, x: 960, y: 160, px: 54 }), (c, lt, u, Sh) => K.card(c, 'CHURCH ≠ STATE', lt, { at: Sh.tS + .2, x: 360, y: 300, px: 40, rot: -3 }), (c, lt, u, Sh) => K.card(c, 'WOMEN VOTE', lt, { at: Sh.tW + .2, x: 360, y: 420, px: 40, rot: 2 }), (c, lt, u, Sh) => K.card(c, 'LAND FOR FARMERS', lt, { at: Sh.tL + .2, x: 360, y: 540, px: 40, rot: -2 })],
+    sfx: [['constitution', 'crowd_cheer', .25], ['separated', 'stamp', .35], ['women', 'paper', .4], ['land', 'stamp', .35]] },
+
+  // 2.02 MED: Azaña signs law after law; an officer reads the news, angry; a priest at the window
+  { set: 'office', cam: { z: [1.15, 1.25], x: [640, 640], y: [400, 410], ease: E.io }, bed: [['office_loop', .12]],
+    init: Sh => { Sh.tA = at(Sh, 'army', 3); Sh.tR = at(Sh, 'religious', 5); Sh.tK = at(Sh, 'catalonia', Sh.dur - 1.5); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const L = VP.light('golden', lt, { swing: 4, set: { L: [-.6, -.8] } }), sh = VP.shadowOf(L, 1, .3, .1);
+      VP.rays(c, 1010, 120, lt, { n: 5, len: 800, spread: .12, a: .08, ang: 2.4 });
+      const sign = [Sh.tA, Sh.tR, Sh.tK].reduce((m, t) => m + pulse(lt, t - .2, .6), 0);
+      VP.figure(c, [640, 600], sh, cc => S.person(cc, C.AZANA, 640, 600, 40, Object.assign(S.idle(lt, 1), { face: 1, sitY: -1.0, hideLegs: true, shN: 60 + 30 * sign, elN: 70 - 40 * sign, shF: 40, elF: 80 }), { blink: S.blinkAt(lt, 1), look: [.2, .6], time: lt }, L));
+      X.wood(c, 420, 560, 440, 120, '#5a301c', 88); c.fillStyle = '#2a4a2a'; c.fillRect(430, 556, 420, 10); c.fillStyle = S.rgba('#ffe0b0', .3); c.fillRect(420, 566, 440, 3);
+      [Sh.tA, Sh.tR, Sh.tK].forEach((t, k) => { const q = seg(lt, t, t + .3); if (q <= 0) return; c.save(); c.translate(520 + k * 120, 548); c.rotate(-.06 + k * .05); c.fillStyle = '#f2ead6'; c.fillRect(-40, -14, 80, 22); c.fillStyle = S.rgba('#a82020', q); c.font = 'bold 9px Oswald'; c.textAlign = 'center'; c.fillText('APPROVED', 0, 0); c.restore(); });
+      const oq = E.out(seg(lt, Sh.tA - .2, Sh.tA + .6)); if (oq > 0) { const x = lerp(1340, 1080, oq); VP.figure(c, [x, 680], sh, cc => S.person(cc, C.OFFICER, x, 680, 44, Object.assign(S.idle(lt, 4), { face: -1, shN: 35, elN: 100, shF: 35, elF: 100, holdN: wr => paper(cc, wr, 60, 40, .1) }), { blink: S.blinkAt(lt, 5), angry: .8 * seg(lt, Sh.tA + .6, Sh.tA + 1.2), look: [-.2, .5], time: lt }, L)); }
+      const pq = E.out(seg(lt, Sh.tR - .2, Sh.tR + .6)); if (pq > 0) { const x = lerp(-80, 220, pq); VP.figure(c, [x, 690], sh, cc => S.person(cc, C.PRIEST, x, 690, 44, Object.assign(S.idle(lt, 6), { face: 1, shN: 20, elN: 60, shF: 20, elF: 60 }), { blink: S.blinkAt(lt, 7), worry: .7, look: [.6, -.1], time: lt }, L)); }
+      VP.motes(c, lt, 800, 60, 400, 500, { n: 30, a: .35 });
+    },
+    over: [(c, lt) => coinFlag(c, lt, 8, REP), (c, lt, u, Sh) => K.card(c, 'MANUEL AZAÑA', lt, { at: .8, x: 1520, y: 180, px: 50, rot: 3, until: Sh.tK }), (c, lt, u, Sh) => K.card(c, 'FEWER OFFICERS', lt, { at: Sh.tA + .3, x: 1540, y: 340, px: 40, rot: -2 }), (c, lt, u, Sh) => K.card(c, 'RELIGIOUS SCHOOLS SHUT', lt, { at: Sh.tR + .3, x: 400, y: 340, px: 40, rot: 2 }), (c, lt, u, Sh) => K.card(c, 'CATALONIA SELF-RULE', lt, { at: Sh.tK + .3, x: 960, y: 160, px: 46 })],
+    sfx: [['army', 'stamp', .5], ['army', 'paper', .3], ['religious', 'stamp', .5], ['catalonia', 'stamp', .5]] },
+
+  // 2.03 MED: a church burns at night; then a street fight between workers and blue shirts
+  { set: 'parish', cam: (lt, u, Sh) => ({ z: [lerp(1.1, 1.35, E.io(seg(lt, 0, Sh.dur)))], x: [640], y: [lerp(380, 450, E.io(seg(lt, 0, Sh.dur)))], shake: lt > Sh.tS ? 1.2 : .2 }), bed: [['fire_loop', .3], ['night_loop', .1]],
+    init: Sh => { Sh.tL = at(Sh, 'left', 1); Sh.tB = at(Sh, 'burned', 6); Sh.tS = at(Sh, 'strikes', Sh.dur - 3); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const f = VP.flicker(lt, 3), L = VP.light('fire', lt, { swing: 2, set: { L: [.2, -1], amb: '#1a1a3a', ambA: .3, rim: '#ffa050', rimA: .9, tint: '#ff8a40', tintA: .12 + .05 * f } }), sh = VP.shadowOf(L, 1.1, .3, .12), burn = .5 + .5 * seg(lt, Sh.tB - 1, Sh.tB + 1);
+      VP.glow(c, 640, 380, 520, '#ff7a30', (.25 + .1 * f) * burn);
+      H1.fire(c, 640, 520, 1.6 * burn, lt, 1); H1.fire(c, 500, 400, .9 * burn, lt, 2); H1.fire(c, 760, 400, .9 * burn, lt, 3); H1.fire(c, 640, 300, .7 * burn, lt, 4);
+      H1.smoke(c, 640, 220, 1.6, lt, '40,30,30'); H1.smoke(c, 880, 120, 1.2, lt + 3, '40,30,30');
+      const fight = seg(lt, Sh.tS - .6, Sh.tS);
+      const flee = seg(lt, Sh.tS - 1.6, Sh.tS + .6); if (flee < 1) { for (let k = 0; k < 5; k++) { const x0 = [120, 300, 880, 1040, 1180][k], out = x0 < 640 ? -1 : 1, x = x0 + out * 900 * flee * flee, y = 690 - (k % 2) * 16; if (x < -120 || x > 1400) continue; VP.figure(c, [x, y], sh, cc => S.person(cc, [C.WOMAN, C.WORKER, C.LABOURER2, C.PRIEST, C.WORKER][k], x, y, 34, Object.assign(flee > 0 ? walk(lt * 2.2 + k) : S.idle(lt, k), { face: flee > 0 ? out : (k < 2 ? 1 : -1), shN: k === 3 && !flee ? 90 : 20, elN: 60 }), { blink: S.blinkAt(lt, k), worry: .8, look: [k < 2 ? .5 : -.5, -.5], time: lt }, L)); } }
+      const rin = E.out(seg(lt, Sh.tS - 1.2, Sh.tS + .3)); if (rin > 0) { c.save(); for (let k = 0; k < 6; k++) { const left = k % 2 === 0, x = 300 + Math.floor(k / 2) * 280 + (left ? 0 : 120) + (left ? -1 : 1) * 900 * (1 - rin), y = 690 - (k % 3) * 12, sw = Math.sin(lt * 7 + k * 1.3); VP.figure(c, [x, y], sh, cc => S.person(cc, left ? [C.WORKER, C.MILITIA, C.MINER2][k / 2] : [C.FALANGIST, C.FALANGIST2, C.FALANGIST][(k - 1) / 2], x, y, 36, Object.assign(rin < 1 ? walk(lt * 2.2 + k) : S.idle(lt, k), { face: left ? 1 : -1, lean: 8 + 6 * sw, shN: 90 + 40 * sw, elN: 20 + 40 * Math.max(0, -sw), shF: 60, elF: 100 }), { blink: S.blinkAt(lt, k), angry: 1, look: [left ? .8 : -.8, 0], time: lt }, L)); } c.restore(); }
+      VP.motes(c, lt, 300, 100, 700, 500, { n: 50, a: .5, col: '#ffb070' });
+    },
+    over: [(c, lt) => coinFlag(c, lt, 10, REP), (c, lt, u, Sh) => K.card(c, 'TOO SLOW', lt, { at: Sh.tL + .2, x: 360, y: 200, px: 46, rot: -3, until: Sh.tS }), (c, lt, u, Sh) => K.card(c, 'AN ATTACK ON SPAIN', lt, { at: Sh.tL + 2.4, x: 1540, y: 200, px: 42, rot: 3, until: Sh.tS })],
+    sfx: [[.1, 'fire_loop', .3], ['burned', 'whoosh', .4], ['strikes', 'hit', .5], ['strikes', 'run_steps', .4], ['normal', 'hit', .4]] },
+
+  // 2.04 WIDE: Asturias 1934: miners rise up; troops march up the valley; Franco studies a map
+  { set: 'asturias', cam: (lt, u, Sh) => ({ z: [lerp(1.15, 1.3, E.io(seg(lt, 0, Sh.dur)))], x: [lerp(560, 720, E.io(seg(lt, 0, Sh.dur)))], y: [420] }), bed: [['wind_loop', .2]],
+    init: Sh => { Sh.tR = at(Sh, 'right', 1); Sh.tM = at(Sh, 'miners', 3); Sh.tA = at(Sh, 'army', 7); Sh.tF = at(Sh, 'franco', Sh.dur - 2); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const L = VP.light('studio', lt, { swing: 5, set: { L: [-.5, -1] } }), sh = VP.shadowOf(L, 1.1, .3, .12);
+      VP.clouds(c, lt, { y0: 440, n: 4, a: .25 });
+      const mq = E.out(seg(lt, Sh.tM - 2, Sh.tM + .4)), march = seg(lt, Sh.tA - .5, Sh.dur);
+      for (let i = 0; i < 8; i++) { if (march <= 0) continue; const x = lerp(1360 + i * 72, 860 + i * 58, E.out(march)), y = 590 + (i % 2) * 8; if (x > 1340) continue; VP.figure(c, [x, y], sh, cc => S.person(cc, i % 3 ? C.SOLDIER : C.SOLDIER2 || C.SOLDIER, x, y, 22, Object.assign(walk(lt * 1.4 + i * .4), { face: -1, shF: 40, elF: 70, holdF: wr => { cc.strokeStyle = '#3a2a1a'; cc.lineWidth = 3; cc.beginPath(); cc.moveTo(wr[0] + 7, wr[1] + 20); cc.lineTo(wr[0] - 14, wr[1] - 42); cc.stroke(); } }), { blink: S.blinkAt(lt, i + 11), look: [-.8, 0], time: lt }, L)); }
+      for (let k = 0; k < 5; k++) { const x = 140 + k * 110 - 60 * march - 760 * (1 - mq), y = 660 - (k % 2) * 14; if (x < -80) continue; c.save(); VP.figure(c, [x, y], sh, cc => S.person(cc, k % 2 ? C.MINER2 : C.MINER, x, y, 36, Object.assign(mq < 1 ? walk(lt * 1.6 + k) : S.idle(lt, k), { face: 1, shN: k % 2 ? 150 + 10 * Math.sin(lt * 3 + k) : 40, elN: 20, holdN: k % 2 ? null : wr => dyn(cc, wr, lt, k), shF: k % 2 ? 30 : 140 + 12 * Math.sin(lt * 3 + k), elF: 20 }), { blink: S.blinkAt(lt, k), angry: .6, look: [.7, -.2], time: lt }, L)); c.restore(); }
+            for (let k = 0; k < 3; k++) { if (march <= 0) continue; const x = lerp(1400 + k * 90, 880 + k * 88, E.out(march)), y = 690 - k * 6; VP.figure(c, [x, y], sh, cc => S.person(cc, C.SOLDIER, x, y, 34, Object.assign(walk(lt * 1.4 + k * .3), { face: -1, shF: 40, elF: 70, holdF: wr => { cc.strokeStyle = '#3a2a1a'; cc.lineWidth = 4; cc.beginPath(); cc.moveTo(wr[0] + 10, wr[1] + 30); cc.lineTo(wr[0] - 20, wr[1] - 60); cc.stroke(); } }), { blink: S.blinkAt(lt, k + 5), look: [-.8, 0], time: lt }, L)); }
+      const fq = E.out(seg(lt, Sh.tF - 1.4, Sh.tF + .2)); if (fq > 0) { const fx = lerp(1440, 1190, fq); c.save(); VP.figure(c, [fx, 700], sh, cc => S.person(cc, C.FRANCO, fx, 700, 44, Object.assign(fq < 1 ? walk(lt * 1.3) : S.idle(lt, 9), { face: -1, shN: 60, elN: 70, shF: 60, elF: 70, holdN: wr => paper(cc, wr, 70, 48, .05) }), { blink: S.blinkAt(lt, 9), look: [-.2, .6], time: lt }, L)); c.restore(); }
+      VP.motes(c, lt, 0, 300, 1280, 400, { n: 30, a: .25 });
+    },
+    over: [(c, lt) => coinFlag(c, lt, 10, REP), (c, lt, u, Sh) => K.card(c, 'RIGHT WINS · 1933', lt, { at: Sh.tR + .2, x: 400, y: 180, px: 44, rot: -3, until: Sh.tM }), (c, lt, u, Sh) => K.dateTag(c, 'ASTURIAS · 1934', lt, { at: Sh.tM }), (c, lt, u, Sh) => K.card(c, 'FRANCISCO FRANCO', lt, { at: Sh.tF + .3, x: 1500, y: 200, px: 50, rot: 3 })],
+    sfx: [['right', 'stamp', .3], ['miners', 'crowd_cheer', .3], ['revolution', 'thud', .4], ['army', 'footsteps', .45], ['franco', 'drone', .35]] },
+
+  // 2.05 WIDE: a Madrid street celebrates the Popular Front; night falls and the posters are torn
+  { set: 'mstreet', cam: (lt, u, Sh) => ({ z: [1.2], x: [lerp(560, 760, E.io(seg(lt, 0, Sh.dur)))], y: [lerp(420, 460, E.io(seg(lt, 0, Sh.dur)))] }), bed: [['crowd_loop', .25]],
+    init: Sh => { Sh.tP = at(Sh, 'popular', 2); Sh.tK = at(Sh, 'killings', Sh.dur - 2.5); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const nt = seg(lt, Sh.tK - 1.2, Sh.tK), L = VP.light(nt > .5 ? 'moon' : 'golden', lt, { swing: 4 }), sh = VP.shadowOf(L, 1, .3, .1);
+      for (const [x, y, c1, tx] of [[175, 340, '#c83a2a', 'VOTAD'], [455, 330, '#2a3a8a', 'C.E.D.A.'], [745, 350, '#c83a2a', 'F.P.'], [1080, 336, '#e8d8b0', 'C.N.T.']]) { c.save(); c.translate(x + 30, y + 40); c.rotate((x % 7 - 3) * .01); c.fillStyle = c1; c.fillRect(-31, -41, 62, 82); c.fillStyle = 'rgba(255,255,255,.85)'; c.font = 'bold 12px Georgia'; c.textAlign = 'center'; c.fillText(tx, 0, -18); c.fillRect(-20, 12, 40, 4); c.fillRect(-16, 20, 32, 3); c.restore(); }
+      const dsp = seg(lt, Sh.tK - 2.2, Sh.tK + .8); if (dsp < 1) { const BK = [C.WOMAN, C.LABOURER, C.WORKER, C.LABOURER2]; for (const [ry, uu, off] of [[598, 20, 40], [632, 23, 100]]) for (let i = 0; i < 11; i++) { const x0 = off + i * 118 + (i % 2) * 14, out = x0 < 640 ? -1 : 1, x = x0 + out * 1000 * dsp * dsp, k = i + ry; if (x < -80 || x > 1360) continue; const up = Math.sin(lt * 4 + k * 1.3) > 0 && !dsp ? 1 : 0, fl = i % 3 === 0; VP.figure(c, [x, ry], sh, cc => S.person(cc, BK[k % 4], x, ry, uu, Object.assign(dsp > 0 ? walk(lt * 2 + i) : S.idle(lt, k), { face: dsp > 0 ? out : (i % 2 ? -1 : 1), shN: fl ? 150 : 30 + 120 * up, elN: 20, holdN: fl ? wr => { cc.strokeStyle = '#3a2a1a'; cc.lineWidth = 2; cc.beginPath(); cc.moveTo(wr[0], wr[1] + 10); cc.lineTo(wr[0], wr[1] - 56); cc.stroke(); for (let b = 0; b < 3; b++) { cc.fillStyle = ['#b8202a', '#e8b820', '#6a2a7a'][b]; cc.fillRect(wr[0] + 1, wr[1] - 56 + b * 8 + Math.sin(lt * 5 + k) * 1.5, 34, 8); } } : null }), { blink: S.blinkAt(lt, k), smile: .5, look: [0, -.5], time: lt }, L)); } frontRow(c, lt, L, 700, 26, { cheer: !dsp, d: dsp }); }
+      if (nt > 0) { night(c, .82 * nt); for (const x of [150, 640, 1130]) { VP.glow(c, x, 360, 160, '#ffd890', .6 * nt); c.save(); c.globalCompositeOperation = 'lighter'; c.fillStyle = `rgba(255,220,150,${.08 * nt})`; c.beginPath(); c.moveTo(x - 10, 370); c.lineTo(x - 90, 700); c.lineTo(x + 90, 700); c.lineTo(x + 10, 370); c.fill(); c.restore(); }
+        for (const [x, y] of [[175, 340], [455, 330], [745, 350], [1080, 336]]) { const tq = seg(lt, Sh.tK + (x % 7) * .1, Sh.tK + 1 + (x % 7) * .1); c.fillStyle = '#5a5448'; c.fillRect(x, y, 60, 80 * tq); c.save(); c.translate(x + 60, y + 80 * tq); c.rotate(.4 + .1 * Math.sin(lt * 3 + x)); c.fillStyle = S.rgba('#a8988a', nt); c.fillRect(-30, 0, 30, 20); c.restore(); }
+        for (const [a, b, ch, yy, sp] of [[1360, 860, C.WOMAN, 640, 1.5], [-80, 420, C.LABOURER, 610, 1.3]]) { const q = seg(lt, Sh.tK - .2, Sh.dur + 1), px = lerp(a, b, q), fc = b > a ? 1 : -1; VP.figure(c, [px, yy], sh, cc => S.person(cc, ch, px, yy, 26, Object.assign(walk(lt * sp), { face: fc }), { blink: S.blinkAt(lt, 7), worry: .7, look: [fc * .8, 0], time: lt }, L)); }
+        const wq = seg(lt, Sh.tK, Sh.dur), x = lerp(300, 1000, wq); VP.figure(c, [x, 690], sh, cc => S.person(cc, C.WORKER, x, 690, 30, Object.assign(walk(lt * 1.2), { face: 1 }), { blink: S.blinkAt(lt, 2), worry: .6, look: [.8, 0], time: lt }, L)); }
+    },
+    over: [(c, lt) => coinFlag(c, lt, 12, REP), (c, lt, u, Sh) => K.dateTag(c, 'FEBRUARY 1936', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'POPULAR FRONT WINS', lt, { at: Sh.tP + .3, x: 960, y: 170, px: 52, until: Sh.tK - .5 }), (c, lt, u, Sh) => K.badge(c, 'KILLINGS ON BOTH SIDES', lt, { at: Sh.tK + .4 })],
+    sfx: [['popular', 'crowd_cheer', .45], ['killings', 'paper_tear', .5], ['killings', 'night_loop', .25], ['sides', 'drone', .3]] },
+
+  // 2.06 CU: a police truck outside Calvo Sotelo's door at night; the door opens; cut to black
+  { set: 'mstreet', cam: (lt, u, Sh) => ({ z: [lerp(1.4, 1.7, E.io(seg(lt, 0, Sh.tS)))], x: [640], y: [lerp(470, 500, E.io(seg(lt, 0, Sh.dur)))] }), bed: [['night_loop', .25], ['tension', .15]],
+    init: Sh => { Sh.tP = at(Sh, 'police', 2); Sh.tS = at(Sh, 'shot', 6); Sh.tF = at(Sh, 'four days', Sh.dur - 2.5); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      night(c, .85); const L = VP.light('moon', lt, { swing: 2 }), sh = VP.shadowOf(L, 1, .3, .1);
+      const dq = seg(lt, Sh.tP + 1.5, Sh.tP + 2.5); c.fillStyle = '#1a140e'; c.fillRect(600, 430, 80, 120); c.fillStyle = `rgba(255,214,140,${dq})`; c.fillRect(600, 430, 80 * dq, 120); if (dq > 0) { VP.glow(c, 640, 500, 160, '#ffc070', .5 * dq); c.save(); c.globalCompositeOperation = 'lighter'; c.fillStyle = `rgba(255,200,120,${.18 * dq})`; c.beginPath(); c.moveTo(600, 550); c.lineTo(680, 550); c.lineTo(760, 720); c.lineTo(520, 720); c.fill(); c.restore(); }
+      for (const x of [150, 1130]) VP.glow(c, x, 360, 140, '#ffd890', .5);
+      const tq = E.out(seg(lt, Sh.tP - 1, Sh.tP + 1)); truck(c, lerp(-200, 430, tq), 640, 1, lt, true);
+      for (let k = 0; k < 3; k++) { const wq = seg(lt, Sh.tP + .8 + k * .2, Sh.tP + 2.6 + k * .2); if (wq <= 0) continue; const x = lerp(470, 470 + k * 82, E.io(wq)), y = 640 + k * 10; VP.figure(c, [x, y], sh, cc => S.person(cc, C.POLICE, x, y, 36, Object.assign(wq < 1 ? walk(lt * 1.4 + k) : S.idle(lt, k), { face: 1 }), { blink: S.blinkAt(lt, k), look: [.8, -.1], time: lt }, L)); }
+      const bq = seg(lt, Sh.tS - .2, Sh.tS + .3); if (bq > 0) { c.fillStyle = `rgba(0,0,0,${bq})`; c.fillRect(0, 0, 1280, 720); }
+    },
+    over: [(c, lt, u, Sh) => { if (lt < Sh.tS) coinFlag(c, lt, 12, REP); }, (c, lt, u, Sh) => { if (lt < Sh.tS) K.dateTag(c, 'MADRID · 13 JULY 1936', lt, { at: .4 }); }, (c, lt, u, Sh) => K.card(c, 'JOSÉ CALVO SOTELO', lt, { at: 1, x: 1500, y: 200, px: 48, rot: 3, until: Sh.tS - .2 }), (c, lt, u, Sh) => K.card(c, '17 JULY 1936', lt, { at: Sh.tF + .3, x: 960, y: 480, px: 72 })],
+    sfx: [['police', 'creak', .3], ['police', 'footsteps', .35], ['home', 'door_slam', .4], ['shot', 'hit', .6], ['four days', 'drone', .4], ['moved', 'thud', .5]] },
+];
+VP.build(); K.boot();
+</script></body></html>

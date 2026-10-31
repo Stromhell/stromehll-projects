@@ -1,0 +1,38 @@
+#!/bin/bash
+# 2D dynamic pipeline. Every step leaves a marker in .state/ when done, so a restart
+# (by the watchdog, or after a machine reboot) skips finished work and carries on.
+W=/home/user/w2d; M=/mnt/project-files/2d-dynamic; S=$W/.state; L=/tmp/claude-0/pipeline_dd.log
+mkdir -p $S; cd $W
+log(){ echo "$(date -u +%H:%M) $*" | tee -a $S/events.log; }
+back(){ for t in 1 2 3 4 5; do mkdir -p "$(dirname $M/$1)" 2>/dev/null; cp "$W/$1" "$M/$1" && return 0; sleep 20; done; log "COPYFAIL $1"; }
+step(){ [ -f $S/$1 ] && return 0; n=$1; shift; if "$@"; then touch $S/$n; log "DONE $n"; else log "FAIL $n"; return 1; fi; }
+render(){ for try in 1 2 3; do cd $W && bash shared/render_act.sh $1 $2 6 && { back $1/production/acts/act$2/act$2.mp4; return 0; }; log "retry $1 act$2 ($try)"; sleep 10; done; return 1; }
+# write to a .part file, decode-check it, then move into place, so a restart mid-write never leaves a broken final
+combine(){ mkdir -p $1/final && python3 shared/combine.py $1 $1/final/$2.part.mp4 && [ -z "$(ffmpeg -v error -i $1/final/$2.part.mp4 -f null - 2>&1 | head -1)" ] && mv $1/final/$2.part.mp4 $1/final/$2.mp4 && { [ -f $1/final/$2.part_chapters.json ] && mv $1/final/$2.part_chapters.json $1/final/$2_chapters.json; true; } && back $1/final/$2.mp4 && back $1/final/$2_chapters.json; }
+reels(){ v=$1; shift; for id in "$@"; do ls $v/reels/out/*_Reel_$(printf %02d $id).mp4 >/dev/null 2>&1 && continue
+  python3 shared/reels/build_reel_dd.py $v $id 2>&1 | grep -E "REEL|Error|Traceback" | while read l; do log "$l"; done; done
+  python3 shared/reels/thumb_dd.py $v "$@" | tail -1; for t in 1 2 3 4 5; do mkdir -p $M/$v/reels/out && cp $v/reels/out/* $M/$v/reels/out/ && return 0; sleep 20; done; return 1; }
+
+step es1_reels reels spain-1-al-andalus 3 4 5 8 9 10 11 12 13 14 15
+step es2_combine combine spain-2-empire Spain2_Empire_FULL
+step es2_reels reels spain-2-empire $(seq 1 15)
+# From here on the pipeline never ends: it renders any act marked ready, and joins any
+# video whose acts are all rendered and that has Pushpam's OK to combine.
+#   mark an act ready:   touch VIDEO/production/acts/actN/READY   (after its page is final)
+#   OK to combine:       touch .state/combine_ok_VIDEO
+while true; do
+  did=0
+  for r in $(ls -tr */production/acts/act*/READY 2>/dev/null); do
+    d=$(dirname $r); v=${d%%/*}; a=${d##*/act}; mp4=$d/act$a.mp4
+    [ -f $mp4 ] && [ $mp4 -nt $r ] && continue
+    log "START render $v act$a"; if render $v $a; then log "DONE render $v act$a"; else log "FAIL render $v act$a"; touch $mp4; fi; did=1; break
+  done
+  [ $did = 1 ] && continue
+  for ok in $(ls $S/combine_ok_* 2>/dev/null); do v=${ok##*combine_ok_}; [ -f $S/combined_$v ] && continue
+    n=$(ls -d $v/production/acts/act*/ | wc -l); m=$(ls $v/production/acts/act*/act*.mp4 2>/dev/null | wc -l)
+    [ $n = $m ] || continue
+    name=$(python3 -c "import json;print(json.load(open('$v/build/storyboard.json'))['meta']['prefix'])" 2>/dev/null || echo $v)_FULL
+    log "START combine $v"; combine $v $name && { touch $S/combined_$v; log "DONE combine $v -> $v/final/$name.mp4"; }; did=1
+  done
+  [ $did = 1 ] || sleep 60
+done

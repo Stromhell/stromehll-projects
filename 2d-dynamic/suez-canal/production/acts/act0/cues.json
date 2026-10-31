@@ -1,0 +1,158 @@
+{
+ "dur": 34.601,
+ "cues": [
+  {
+   "t": 0.2,
+   "name": "wind_loop",
+   "gain": 0.25
+  },
+  {
+   "t": 0.6,
+   "name": "creak",
+   "gain": 0.4
+  },
+  {
+   "t": 4.838,
+   "name": "thud",
+   "gain": 0.35
+  },
+  {
+   "t": 7.178,
+   "name": "coins",
+   "gain": 0.45
+  },
+  {
+   "t": 10.651,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 10.851,
+   "name": "paper",
+   "gain": 0.4
+  },
+  {
+   "t": 11.486,
+   "name": "pop",
+   "gain": 0.35
+  },
+  {
+   "t": 14.166,
+   "name": "whoosh",
+   "gain": 0.5
+  },
+  {
+   "t": 16.346,
+   "name": "tick",
+   "gain": 0.25
+  },
+  {
+   "t": 17.521,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 17.721,
+   "name": "wind_loop",
+   "gain": 0.2
+  },
+  {
+   "t": 17.696,
+   "name": "whoosh_soft",
+   "gain": 0.4
+  },
+  {
+   "t": 18.771,
+   "name": "whoosh_soft",
+   "gain": 0.4
+  },
+  {
+   "t": 20.031,
+   "name": "whoosh_soft",
+   "gain": 0.4
+  },
+  {
+   "t": 20.651,
+   "name": "whoosh_soft",
+   "gain": 0.4
+  },
+  {
+   "t": 21.531,
+   "name": "whoosh_soft",
+   "gain": 0.4
+  },
+  {
+   "t": 22.291,
+   "name": "whoosh_soft",
+   "gain": 0.4
+  },
+  {
+   "t": 22.791,
+   "name": "whoosh_soft",
+   "gain": 0.4
+  },
+  {
+   "t": 27.411,
+   "name": "stamp",
+   "gain": 0.45
+  },
+  {
+   "t": 25.251,
+   "name": "thud",
+   "gain": 0.35
+  },
+  {
+   "t": 29.901,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 30.001,
+   "name": "wind_loop",
+   "gain": 0.3
+  },
+  {
+   "t": 31.001,
+   "name": "swell",
+   "gain": 0.4
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 11.351,
+   "name": "wind_loop",
+   "gain": 0.25
+  },
+  {
+   "start": 0,
+   "end": 11.351,
+   "name": "hum_loop",
+   "gain": 0.08
+  },
+  {
+   "start": 10.551,
+   "end": 18.221,
+   "name": "drone",
+   "gain": 0.2
+  },
+  {
+   "start": 17.421,
+   "end": 30.601,
+   "name": "wind_loop",
+   "gain": 0.15
+  },
+  {
+   "start": 17.421,
+   "end": 30.601,
+   "name": "drone",
+   "gain": 0.15
+  },
+  {
+   "start": 29.801,
+   "end": 35.400999999999996,
+   "name": "wind_loop",
+   "gain": 0.3
+  }
+ ]
+}

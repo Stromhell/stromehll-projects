@@ -1,0 +1,521 @@
+{
+ "meta": {
+  "slug": "suez-canal",
+  "prefix": "SZ",
+  "title": "3,000 Years, 6 Empires, 1 Ditch: The Suez Canal Story",
+  "working_title": "The Ditch Every Empire Wanted",
+  "device": "Darius's granite stone. Every act passes the same patch of desert where Darius of Persia set up a carved stone around 500 BC. We see it raised, buried by sand, half-uncovered by Roman barges, buried again, and finally dug out by de Lesseps' workers in 1866, as it really was. A parchment map of the Mediterranean, Red Sea and the long route round Africa returns in every act.",
+  "style": "2D dynamic, locked Village Painterly look: 6-head characters from the village-cast rig in the dress of each era (pharaonic linen, Persian robes, Roman tunics, Ottoman kaftans, French uniforms of 1798, 1860s frock coats, Egyptian galabiyas). Highly detailed painted desert backgrounds with warm light and dynamic cast shadows: Nile delta fields, a reed-basket trench under a white sun, Darius's stone, Roman wooden lock gates, an Ottoman palace map room, Napoleon's surveyors with brass instruments, a cholera camp at night, steam dredgers puffing black smoke, the 1869 opening with fireworks, a modern container ship. Moving cameras, 3 to 5 parallax layers, characters acting in every shot, match-cut transitions. Death is shown through empty tools and graves, never gore. SFX under the VO; no music until combine.",
+  "source": "'How a 3,000-Year-Old Obsession Built the Suez Canal' (Pushpam upload, batch 4), fact-checked and expanded; several claims in the source were wrong and are fixed (see list)."
+ },
+ "stats": {
+  "shots": 39,
+  "words": 973,
+  "runtime": "6:39",
+  "acts": 7
+ },
+ "acts": [
+  {
+   "name": "Cold open",
+   "folder": "act0-coldopen",
+   "shots": [
+    {
+     "id": "0.01",
+     "type": "WIDE",
+     "sec": 12.1,
+     "vo": "In March 2021, one ship got stuck sideways in a ditch in the Egyptian desert. For six days, it blocked around ten billion dollars of world trade every single day.",
+     "visual": "A giant container ship wedged diagonally across a narrow canal; a tiny yellow digger at its bow; a queue of ships to the horizon.",
+     "onscreen": "EVER GIVEN \u00b7 MARCH 2021",
+     "anim": "Slow pull back from the tiny digger to the endless queue of ships.",
+     "img": ""
+    },
+    {
+     "id": "0.02",
+     "type": "MED",
+     "sec": 7.5,
+     "vo": "That ditch is the Suez Canal. It saves ships a trip of around eight thousand kilometres round Africa.",
+     "visual": "The parchment map: a ship's path goes round Africa, then a bright short line cuts straight through Suez.",
+     "onscreen": "~8,000 KM SAVED",
+     "anim": "The long route draws itself in red; the shortcut snaps in gold.",
+     "img": ""
+    },
+    {
+     "id": "0.03",
+     "type": "MED",
+     "sec": 11.7,
+     "vo": "Pharaohs tried to dig it. Persian kings, Greek kings, Roman emperors, caliphs, sultans and Napoleon all wanted it. It took three thousand years and one stubborn Frenchman to finish.",
+     "visual": "Quick portraits slide past in a row: a pharaoh, a Persian king, a Roman emperor, an Ottoman sultan, Napoleon, a man in a top hat.",
+     "onscreen": "",
+     "anim": "Each portrait flips in like a card.",
+     "img": ""
+    },
+    {
+     "id": "0.04",
+     "type": "TITLE",
+     "sec": 4.0,
+     "vo": "",
+     "visual": "Title over a carved granite stone half-buried in the sand, wind blowing grains off its face.",
+     "onscreen": "THE DITCH EVERY EMPIRE WANTED",
+     "anim": "Sand streams off the stone; the title fades up.",
+     "img": ""
+    }
+   ],
+   "sec": 35.3,
+   "words": 77
+  },
+  {
+   "name": "Act 1: Pharaohs and Persians",
+   "folder": "act1-necho-darius",
+   "shots": [
+    {
+     "id": "1.01",
+     "type": "WIDE",
+     "sec": 11.7,
+     "vo": "Around 600 BC, Pharaoh Necho the Second had an idea. Ships could sail from the Mediterranean up the Nile, then along a new canal east to the Red Sea.",
+     "visual": "The Nile delta from above, green fields and palms; a dotted line runs from the river east across the desert.",
+     "onscreen": "EGYPT \u00b7 ~600 BC",
+     "anim": "The dotted line draws itself; a reed boat sails along the Nile.",
+     "img": ""
+    },
+    {
+     "id": "1.02",
+     "type": "MED",
+     "sec": 11.3,
+     "vo": "Thousands of farmers dug with copper tools and reed baskets under the desert sun. The Greek historian Herodotus wrote that a hundred and twenty thousand of them died.",
+     "visual": "Lines of workers passing baskets of sand up a trench wall; an overseer with a staff; water jars almost empty.",
+     "onscreen": "~120,000 DEAD (HERODOTUS)",
+     "anim": "Baskets pass hand to hand; heat shimmer; a dropped basket rolls.",
+     "img": ""
+    },
+    {
+     "id": "1.03",
+     "type": "MED",
+     "sec": 7.2,
+     "vo": "Then an oracle warned Necho that the canal would only help foreign invaders. He stopped the work.",
+     "visual": "A priest in a dark temple whispers to the pharaoh; the pharaoh raises a hand and the workers drop their tools.",
+     "onscreen": "",
+     "anim": "Torchlight flickers; tools fall in the sand one by one.",
+     "img": ""
+    },
+    {
+     "id": "1.04",
+     "type": "MED",
+     "sec": 10.6,
+     "vo": "About a hundred years later, the Persian king Darius, who now ruled Egypt, finished it. His ships could sail from the Nile to the Red Sea.",
+     "visual": "Darius in a tall crown on a barge; the canal full of water; a Persian ship sails past.",
+     "onscreen": "DARIUS I \u00b7 ~500 BC",
+     "anim": "Water rushes into the trench; the barge glides.",
+     "img": ""
+    },
+    {
+     "id": "1.05",
+     "type": "CU",
+     "sec": 13.2,
+     "vo": "To make sure nobody forgot, he set up giant carved stones along the bank. One says: I ordered this canal to be dug, and ships went from Egypt to Persia, as I desired.",
+     "visual": "The granite stone being raised by ropes; carved wedge-shaped writing and a winged sun on its face.",
+     "onscreen": "\"AS I DESIRED\"",
+     "anim": "Ropes creak; the stone settles upright; dust puffs.",
+     "img": ""
+    },
+    {
+     "id": "1.06",
+     "type": "MED",
+     "sec": 10.2,
+     "vo": "But the desert never stops moving. Wind-blown sand and river mud slowly filled the channel, and it had to be dug out again and again.",
+     "visual": "Time-lapse: sand drifts creep into the canal; the stone's base disappears under a dune.",
+     "onscreen": "",
+     "anim": "Dunes crawl in; the waterline shrinks.",
+     "img": ""
+    }
+   ],
+   "sec": 64.2,
+   "words": 158
+  },
+  {
+   "name": "Act 2: The Canal That Kept Dying",
+   "folder": "act2-ptolemy-to-ottoman",
+   "shots": [
+    {
+     "id": "2.01",
+     "type": "MED",
+     "sec": 13.6,
+     "vo": "After Alexander the Great, Greek kings ruled Egypt. Around 270 BC, Ptolemy the Second reopened the canal, and his engineers added a gate that stopped salty sea water flowing into the Nile's fresh water.",
+     "visual": "Greek engineers in chitons stand by a wooden gate across the canal; one side blue sea water, the other side green river water.",
+     "onscreen": "PTOLEMY II \u00b7 ~270 BC",
+     "anim": "The gate swings shut; the two colours stay apart.",
+     "img": ""
+    },
+    {
+     "id": "2.02",
+     "type": "MED",
+     "sec": 9.1,
+     "vo": "Some historians call it the first canal lock in history. It protected the farms of the Nile, which fed the whole country.",
+     "visual": "Wheat fields along the Nile, farmers harvesting; a barge loaded with grain sacks.",
+     "onscreen": "",
+     "anim": "Wheat sways; the barge drifts past.",
+     "img": ""
+    },
+    {
+     "id": "2.03",
+     "type": "MED",
+     "sec": 9.4,
+     "vo": "Rome took Egypt and kept the canal going. Under Emperor Trajan, barges full of Egyptian grain sailed along it. Rome ate Egyptian bread.",
+     "visual": "A Roman barge with a red sail and grain sacks; a centurion on the bank; Darius's stone half-uncovered behind.",
+     "onscreen": "TRAJAN \u00b7 ~100 AD",
+     "anim": "The sail fills; the half-buried stone passes behind.",
+     "img": ""
+    },
+    {
+     "id": "2.04",
+     "type": "MED",
+     "sec": 16.2,
+     "vo": "When Rome weakened, nobody paid to clear the sand. The Arab general Amr ibn al-As reopened the canal around 640, but about a hundred and thirty years later a caliph had it blocked on purpose, to cut off rebels in Arabia.",
+     "visual": "Workers in turbans clearing sand; then soldiers tipping rocks and earth into the channel.",
+     "onscreen": "641 \u2192 767",
+     "anim": "Two scenes, wipe between them; the last rocks splash in.",
+     "img": ""
+    },
+    {
+     "id": "2.05",
+     "type": "MED",
+     "sec": 6.0,
+     "vo": "For the next thousand years, the canal was gone. Even its route was forgotten.",
+     "visual": "The empty desert; the stone completely buried; only a camel caravan passes.",
+     "onscreen": "",
+     "anim": "Long slow push over the dunes.",
+     "img": ""
+    },
+    {
+     "id": "2.06",
+     "type": "MED",
+     "sec": 15.1,
+     "vo": "In the 1500s, Portugal's ships went round Africa and took the spice trade. In Istanbul, the Ottoman grand vizier Sokollu Mehmed Pasha planned a canal to fight back. The plan was shelved. The empire had too many wars.",
+     "visual": "An Ottoman map room: the grand vizier leans over a map with a quill; the sultan shakes his head; the map is rolled up.",
+     "onscreen": "SOKOLLU MEHMED PASHA \u00b7 1568",
+     "anim": "Candles flicker; the map rolls up with a snap.",
+     "img": ""
+    }
+   ],
+   "sec": 69.4,
+   "words": 172
+  },
+  {
+   "name": "Act 3: Napoleon's Mistake",
+   "folder": "act3-napoleon-lesseps",
+   "shots": [
+    {
+     "id": "3.01",
+     "type": "MED",
+     "sec": 6.4,
+     "vo": "In 1798, Napoleon invaded Egypt. He wanted a canal to hurt Britain's trade with India.",
+     "visual": "French soldiers in blue coats in the desert; Napoleon on horseback looking at the sand.",
+     "onscreen": "NAPOLEON \u00b7 1798",
+     "anim": "Dust rises behind the horse; banners flap.",
+     "img": ""
+    },
+    {
+     "id": "3.02",
+     "type": "MED",
+     "sec": 14.3,
+     "vo": "His chief engineer, Jacques-Marie Le P\u00e8re, measured the land and came back with terrible news. The Red Sea, he said, was about ten metres higher than the Mediterranean. A canal would flood the whole Nile delta.",
+     "visual": "Surveyors with brass levels and a long pole in the heat; Le P\u00e8re shows Napoleon a drawing of a wave crashing over Egypt.",
+     "onscreen": "\"10 METRES HIGHER\"",
+     "anim": "The drawing's wave animates and floods the little map.",
+     "img": ""
+    },
+    {
+     "id": "3.03",
+     "type": "CU",
+     "sec": 8.7,
+     "vo": "He was wrong. The measurements had errors. In 1847 new surveys proved the two seas were almost exactly the same height.",
+     "visual": "Two water levels on a chart line up perfectly; a red stamp: WRONG.",
+     "onscreen": "1847: SAME LEVEL",
+     "anim": "The two lines slide together; the stamp lands.",
+     "img": ""
+    },
+    {
+     "id": "3.04",
+     "type": "MED",
+     "sec": 11.3,
+     "vo": "Now enter Ferdinand de Lesseps: not an engineer, but a retired French diplomat. As a young man in Egypt, he had been friends with the ruler's son, Said.",
+     "visual": "De Lesseps in a frock coat with a moustache, laughing with young Said; horses in the background.",
+     "onscreen": "FERDINAND DE LESSEPS",
+     "anim": "Flashback tint; Said laughs and claps de Lesseps on the back.",
+     "img": ""
+    },
+    {
+     "id": "3.05",
+     "type": "MED",
+     "sec": 10.9,
+     "vo": "In 1854 Said became ruler of Egypt. De Lesseps rushed back, rode across the desert with him, and walked away with the right to build the canal.",
+     "visual": "A tent in the desert; Said signs a scroll; de Lesseps bows.",
+     "onscreen": "1854",
+     "anim": "The quill scratches; the scroll is rolled and sealed.",
+     "img": ""
+    },
+    {
+     "id": "3.06",
+     "type": "MED",
+     "sec": 10.6,
+     "vo": "Britain hated the idea of a French-run shortcut to India. Its prime minister, Lord Palmerston, called the plan impossible. British newspapers called de Lesseps a fraud.",
+     "visual": "London: newspaper sellers waving papers with cartoons of de Lesseps; Palmerston scowling.",
+     "onscreen": "\"IMPOSSIBLE\"",
+     "anim": "Papers flap; a cartoon of a man digging with a spoon.",
+     "img": ""
+    }
+   ],
+   "sec": 62.2,
+   "words": 153
+  },
+  {
+   "name": "Act 4: Dug by Hand",
+   "folder": "act4-corvee",
+   "shots": [
+    {
+     "id": "4.01",
+     "type": "WIDE",
+     "sec": 11.3,
+     "vo": "Digging began in April 1859. At first, there were almost no machines. The work was done by Egyptian farmers, forced to come, around twenty thousand at a time.",
+     "visual": "A huge trench with long lines of Egyptian workers in galabiyas carrying baskets; overseers on horseback.",
+     "onscreen": "25 APRIL 1859",
+     "anim": "Camera cranes up to reveal the line stretching to the horizon.",
+     "img": ""
+    },
+    {
+     "id": "4.02",
+     "type": "MED",
+     "sec": 10.9,
+     "vo": "They dug with picks, carried sand in baskets on their backs, and fresh water came by camel, or by boat along a new canal from the Nile.",
+     "visual": "Close on a worker's hands on a pick; camels with water skins; a man drinking from a jar.",
+     "onscreen": "",
+     "anim": "Picks rise and fall; camels plod past.",
+     "img": ""
+    },
+    {
+     "id": "4.03",
+     "type": "MED",
+     "sec": 11.7,
+     "vo": "In 1865 cholera swept through the camps. Thousands died. Nobody knows the total death toll of the whole project. Estimates run from several thousand to over a hundred thousand.",
+     "visual": "A camp of tents at night; lanterns; a doctor kneeling; empty sandals outside a tent.",
+     "onscreen": "CHOLERA \u00b7 1865",
+     "anim": "Lanterns sway; wind pulls at the tent flaps.",
+     "img": ""
+    },
+    {
+     "id": "4.04",
+     "type": "MED",
+     "sec": 7.5,
+     "vo": "Meanwhile, Britain pushed the Ottoman sultan, Egypt's overlord, to ban the forced labour. In 1864 it was stopped.",
+     "visual": "The Ottoman sultan's palace: a British ambassador presses a paper; the sultan signs.",
+     "onscreen": "1864: FORCED LABOUR BANNED",
+     "anim": "The pen signs; a seal stamps down.",
+     "img": ""
+    },
+    {
+     "id": "4.05",
+     "type": "MED",
+     "sec": 8.3,
+     "vo": "Overnight the work camps emptied. Half-dug trenches, no workers, money running out. Many in Europe thought the canal was dead.",
+     "visual": "The trench empty; abandoned baskets and picks; de Lesseps alone on a dune at sunset.",
+     "onscreen": "",
+     "anim": "Wind blows sand back into the trench.",
+     "img": ""
+    }
+   ],
+   "sec": 49.7,
+   "words": 122
+  },
+  {
+   "name": "Act 5: The Iron Monsters",
+   "folder": "act5-dredgers-opening",
+   "shots": [
+    {
+     "id": "5.01",
+     "type": "WIDE",
+     "sec": 7.5,
+     "vo": "So the French builders turned to machines. Giant steam dredgers, excavators and long conveyor chutes arrived from Europe.",
+     "visual": "A huge dredger in the channel: a chain of iron buckets scoops mud and drops it down a long chute; black smoke pours from its chimney.",
+     "onscreen": "STEAM DREDGERS",
+     "anim": "The bucket chain loops; the chute spills; smoke drifts.",
+     "img": ""
+    },
+    {
+     "id": "5.02",
+     "type": "MED",
+     "sec": 10.9,
+     "vo": "They burned coal day and night and moved more earth than whole armies of men. In the last years, most of the digging was done by machine.",
+     "visual": "Several machines at night with glowing fireboxes along the canal; sparks; reflections in the water.",
+     "onscreen": "",
+     "anim": "Pistons pump; firelight flickers.",
+     "img": ""
+    },
+    {
+     "id": "5.03",
+     "type": "CU",
+     "sec": 8.7,
+     "vo": "In 1866, the workers dug something out of the sand: one of Darius's stones, buried for more than two thousand years.",
+     "visual": "Workers with shovels brushing sand off the granite stone; the carved winged sun appears again.",
+     "onscreen": "DARIUS'S STONE \u00b7 FOUND 1866",
+     "anim": "Sand slides off the stone; the carving catches the light.",
+     "img": ""
+    },
+    {
+     "id": "5.04",
+     "type": "MED",
+     "sec": 7.5,
+     "vo": "In August 1869, the Mediterranean water finally flowed into the Bitter Lakes, and on to the Red Sea.",
+     "visual": "The last earth dam breaks; sea water rushes through and fills the dry lake basin.",
+     "onscreen": "AUGUST 1869",
+     "anim": "Water bursts through; the camera follows the wave.",
+     "img": ""
+    },
+    {
+     "id": "5.05",
+     "type": "WIDE",
+     "sec": 11.7,
+     "vo": "On the seventeenth of November 1869, the canal opened. France's Empress Eugenie led a parade of ships on her yacht, the Aigle. Kings and princes came from across Europe.",
+     "visual": "Decorated ships in a line on the canal; flags; Empress Eugenie on deck waving; crowds on the banks.",
+     "onscreen": "17 NOV 1869",
+     "anim": "Ship horns; flags snap in the wind; slow tracking shot.",
+     "img": ""
+    },
+    {
+     "id": "5.06",
+     "type": "MED",
+     "sec": 9.8,
+     "vo": "Egypt's ruler Ismail threw one of the most expensive parties in history: fireworks, banquets, thousands of guests. Cairo even got a new opera house.",
+     "visual": "Night: fireworks over the canal; a banquet tent full of guests; a new opera house glowing.",
+     "onscreen": "",
+     "anim": "Fireworks burst and light the faces.",
+     "img": ""
+    }
+   ],
+   "sec": 56.1,
+   "words": 137
+  },
+  {
+   "name": "Act 6: Who Owns the Ditch?",
+   "folder": "act6-debt-nasser-today",
+   "shots": [
+    {
+     "id": "6.01",
+     "type": "MED",
+     "sec": 11.7,
+     "vo": "But Egypt had paid for much of the canal and its party with borrowed money. By 1875, Ismail was nearly broke. He sold Egypt's shares in the canal company.",
+     "visual": "Ismail at a desk piled with bills and letters from banks; a clerk hands him one more.",
+     "onscreen": "1875",
+     "anim": "The pile of letters grows; Ismail rubs his temples.",
+     "img": ""
+    },
+    {
+     "id": "6.02",
+     "type": "MED",
+     "sec": 8.7,
+     "vo": "The buyer was Britain. Prime Minister Benjamin Disraeli bought them in days, with four million pounds borrowed from the Rothschild bank.",
+     "visual": "Disraeli in London signing; a banker hands over a heavy chest; a telegram flies.",
+     "onscreen": "\u00a34,000,000 \u00b7 ROTHSCHILD LOAN",
+     "anim": "The chest thumps on the desk; the telegram zips out the window.",
+     "img": ""
+    },
+    {
+     "id": "6.03",
+     "type": "MED",
+     "sec": 7.2,
+     "vo": "Seven years later, British troops occupied Egypt. The country that dug the canal no longer controlled it.",
+     "visual": "British redcoats marching along the canal bank past Egyptian farmers.",
+     "onscreen": "1882",
+     "anim": "Boots tramp; farmers step aside.",
+     "img": ""
+    },
+    {
+     "id": "6.04",
+     "type": "MED",
+     "sec": 11.3,
+     "vo": "In 1956, Egypt's president Gamal Abdel Nasser took the canal over. Britain, France and Israel invaded, but under pressure from America and the Soviet Union, they pulled out.",
+     "visual": "Nasser at a microphone before a huge crowd; then warships off the coast turning back.",
+     "onscreen": "NASSER \u00b7 1956",
+     "anim": "The crowd roars; the ships slowly turn.",
+     "img": ""
+    },
+    {
+     "id": "6.05",
+     "type": "MED",
+     "sec": 9.8,
+     "vo": "Today around one in eight of all the world's traded goods passes through the canal, and it earns Egypt billions of dollars a year.",
+     "visual": "A modern container ship gliding past desert banks; a pilot boat; a camel watching from the dune.",
+     "onscreen": "~12% OF WORLD TRADE",
+     "anim": "Huge hull slides past; the camel blinks.",
+     "img": ""
+    },
+    {
+     "id": "6.06",
+     "type": "WIDE",
+     "sec": 13.9,
+     "vo": "Pharaohs, kings, emperors and sultans all tried. The desert beat most of them. In the end it took steam, debt and one stubborn diplomat. And even now, one ship stuck sideways can stop the world.",
+     "visual": "The granite stone on the canal bank today, a giant ship passing behind it at sunset.",
+     "onscreen": "",
+     "anim": "The ship's shadow slides over the stone; fade out.",
+     "img": ""
+    }
+   ],
+   "sec": 62.6,
+   "words": 154
+  }
+ ],
+ "hooks": [
+  [
+   "You've never been told this: it took 3,000 years, 6 empires and one man who wasn't even an engineer to dig a ditch through Egypt.",
+   55
+  ],
+  [
+   "In 2021 one stuck ship blocked $10 billion of trade a day. The ditch it was stuck in took 3,000 years to dig.",
+   53
+  ]
+ ],
+ "launch": {
+  "titles": [
+   "3,000 Years, 6 Empires, 1 Ditch: The Suez Canal Story",
+   "Why It Took 3,000 Years to Dig the Suez Canal",
+   "The Ditch Every Empire Wanted (and Almost No One Could Dig)"
+  ],
+  "thumb": "Split desert scene in the painterly style: on the left an ancient pharaoh's workers with reed baskets, on the right a huge steam dredger puffing black smoke; a modern container ship stuck sideways across the middle. Text: 3,000 YEARS.",
+  "reels": [
+   "One stuck ship blocked $10 billion a day",
+   "120,000 died digging for a pharaoh",
+   "The oracle that stopped the canal",
+   "Darius carved his ego in granite",
+   "The first canal lock in history",
+   "Rome ate Egyptian bread",
+   "The caliph who blocked the canal on purpose",
+   "Napoleon's 10-metre mistake",
+   "The diplomat who wasn't an engineer",
+   "Britain called him a fraud",
+   "The cholera summer of 1865",
+   "Darius's stone found after 2,000 years",
+   "The most expensive party in history",
+   "How Britain bought the canal in days",
+   "Nasser takes the canal"
+  ]
+ },
+ "fixes": [
+  "Source says Darius's canal was 'so narrow two warships could not pass'. Herodotus says the opposite: wide enough for two triremes to row side by side. Removed; the script says it silted up instead.",
+  "Source credits Romans with the first locks. The lock (a gate keeping salt water out of the Nile) is credited to Ptolemy II, around 270 BC. Script fixed; Trajan's reopening kept.",
+  "Necho II's attempt: c. 610-595 BC. The 120,000 dead figure and the oracle are from Herodotus (Histories 2.158); script attributes both to him.",
+  "Darius I's Suez stelae (e.g. the Chalouf stela) are real; the quoted line follows the standard translation. The Chalouf stela was found in 1866 during the canal works (Charles de Lesseps).",
+  "Added the Arab period: Amr ibn al-As reopened the canal c. 641; Abbasid caliph al-Mansur had it filled in c. 767 to cut supplies to rebels in Medina.",
+  "Ottoman plan by Grand Vizier Sokollu Mehmed Pasha dated 1568; it was abandoned (wars, cost).",
+  "Napoleon's engineer Jacques-Marie Le P\u00e8re (1798-99) estimated the Red Sea about 30 feet (~10 m) higher; disproved by surveys in 1847 (Soci\u00e9t\u00e9 d'\u00c9tudes, Bourdaloue and others).",
+  "De Lesseps' concession from Said Pasha: 30 Nov 1854; work started 25 April 1859. Palmerston opposed it.",
+  "Forced labour (corv\u00e9e): about 20,000 workers at a time on rotation; source's 'hundreds of thousands at once' changed. Total deaths are disputed (from several thousand to an often-cited but contested 120,000); script gives the range.",
+  "Cholera epidemic in 1865. Forced labour ended in 1864 after British pressure on the Ottoman sultan and Napoleon III's arbitration.",
+  "Steam dredgers and elevators by Borel, Lavalley & Cie did most of the excavation in the final years.",
+  "Mediterranean water reached the Bitter Lakes in August 1869; opening ceremony 17 Nov 1869 with Empress Eug\u00e9nie on L'Aigle. Cairo's Khedivial Opera House opened in 1869 (Aida premiered there in 1871).",
+  "1875: Khedive Ismail sold Egypt's 44% stake; Disraeli bought it with a \u00a34 million loan from N M Rothschild & Sons. British occupation from 1882.",
+  "1956: Nasser nationalised the canal on 26 July; Suez Crisis; British, French and Israeli forces withdrew under US and Soviet pressure.",
+  "Ever Given blocked the canal 23-29 March 2021; Lloyd's List estimated about $9.6 billion of trade held up per day. Script says 'around ten billion'.",
+  "About 12% of global trade passes through Suez (pre-2024 figure); route round the Cape of Good Hope adds roughly 7,000-9,000 km depending on the trip. Script says 'around eight thousand'."
+ ],
+ "cuts": [
+  "Source's 'fortune-teller panicked the pharaoh' kept as Herodotus' oracle. Dropped the comment-bait closing question. Added the Arab period and the Darius stone rediscovery for a stronger through-line."
+ ]
+}

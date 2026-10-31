@@ -1,0 +1,218 @@
+<!doctype html><html><head><meta charset="utf-8"><title>ES2 act 2 - Gods and Guns</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/vp/engine.js"></script><script src="../../../../shared/vp/cast.js"></script><script src="../../../../shared/vp/scenes.js"></script><script src="../../../../shared/vp/spain.js"></script>
+<script src="../../../../shared/kit.js"></script><script src="../../../../shared/vp.js"></script>
+<script src="../../../../spain-1-al-andalus/production/es1_sets.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act1.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act2.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act3.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act4.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act5.js"></script><script src="../../../../spain-1-al-andalus/production/es1_cast.js"></script>
+<script src="../../es2_sets.js"></script><script src="../../es2_cast.js"></script><script src="../../es2_sets_act1.js"></script><script src="../../es2_sets_act2.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, E = K.E, X = S.SPX, CH = S.SPAIN, C = S.ES2, H1 = S.ES1H, H = S.ES2H, TAU = Math.PI * 2;
+const at = VP.at, seg = K.seg, lerp = K.lerp, pulse = H1.pulse, walk = H1.walk;
+const coinCorner = (c, lt, o = {}) => H.coin(c, 150, 150, 62, lt, Object.assign({ shine: .6 }, o));
+const WLL = X.WLL, wp = X.wpoly;
+const BAY = ['#7a4a2e', '#3a2014'], GREY = ['#8a847c', '#4a4440'], CTACK = { cloth: ['#b8282a', '#5a1010'], trim: '#d8b060', reins: 1 };
+const DAY = (lt, o = {}) => VP.light('golden', lt, Object.assign({ swing: 5, set: { L: [-.6, -1] } }, o));
+const mapCandle = (c, lt) => { const f = VP.flicker(lt, 3); c.save(); c.globalCompositeOperation = 'multiply'; const vg = c.createRadialGradient(640, 360, 220, 640, 360, 820); vg.addColorStop(0, 'rgba(255,255,255,0)'); vg.addColorStop(1, `rgba(60,30,10,${.5 - .1 * f})`); c.fillStyle = vg; c.fillRect(0, 0, 1280, 720); c.restore(); VP.glow(c, 500 + 60 * Math.sin(lt * .4), 260, 520, '#ffcf80', .12 + .08 * f); };
+const night = (c, a, col = '30,40,100') => { c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = `rgba(${col},${a})`; c.fillRect(0, 0, 1280, 720); c.restore(); };
+const rain = (c, lt, a = .35) => { c.save(); c.strokeStyle = `rgba(200,215,255,${a})`; c.lineWidth = 1.4; for (let k = 0; k < 160; k++) { const r = S.rng(k + 700), x = (r() * 1400 + lt * 90) % 1400 - 60, y = (r() * 760 + lt * (700 + r() * 200)) % 760 - 20; c.beginPath(); c.moveTo(x, y); c.lineTo(x - 8, y + 26); c.stroke(); } c.restore(); };
+const canoe = (c, x, y, s, t, k) => { const bob = Math.sin(t * 1.5 + k) * 1.5 * s; c.fillStyle = '#5a3a20'; c.beginPath(); c.moveTo(x - 30 * s, y + bob); c.quadraticCurveTo(x, y + 8 * s + bob, x + 30 * s, y + bob); c.lineTo(x + 26 * s, y + 4 * s + bob); c.lineTo(x - 26 * s, y + 4 * s + bob); c.fill(); c.fillStyle = '#e8dcc2'; c.fillRect(x - 3 * s, y - 12 * s + bob, 6 * s, 12 * s); c.fillStyle = '#a86a44'; c.beginPath(); c.arc(x, y - 15 * s + bob, 3 * s, 0, TAU); c.fill(); c.strokeStyle = '#3a2410'; c.lineWidth = 1.2 * s; c.beginPath(); c.moveTo(x + 4 * s, y - 10 * s + bob); c.lineTo(x + 14 * s + Math.sin(t * 2 + k) * 4 * s, y + 6 * s + bob); c.stroke(); };
+// gold heap filling a room up to level y (top), from x0 to x1
+const heap = (c, x0, x1, base, top, lt, col = ['#f0c040', '#a87a14', '#fff0a0'], seed = 0) => { if (top >= base) return; c.save(); c.beginPath(); c.moveTo(x0, base); for (let x = x0; x <= x1; x += 20) c.lineTo(x, top + 14 * Math.sin(x * .05 + seed) + 10 * Math.sin(x * .13 + seed)); c.lineTo(x1, base); c.closePath(); c.fillStyle = col[1]; c.fill(); c.clip();
+  for (let k = 0; k < 260; k++) { const r = S.rng(k + 800 + seed), x = x0 + r() * (x1 - x0), y = top + r() * (base - top + 20); c.fillStyle = r() < .5 ? col[0] : S.mix(col[0], col[1], .5); c.beginPath(); c.ellipse(x, y, 9 + r() * 8, 5 + r() * 3, r() * 3, 0, TAU); c.fill(); }
+  for (let k = 0; k < 30; k++) { const r = S.rng(k + 900 + seed), x = x0 + r() * (x1 - x0), y = top + r() * 60, tw = Math.max(0, Math.sin(lt * 3 + k * 1.7)); c.fillStyle = S.rgba(col[2], .8 * tw); c.beginPath(); c.arc(x, y, 2 + 3 * tw, 0, TAU); c.fill(); } c.restore(); };
+const cathedral = (c, x, y, q, L) => { if (q <= 0) return; c.save(); c.beginPath(); c.rect(x - 200, y - 260 * q, 400, 260 * q + 4); c.clip(); const wall = '#e8dcc6', sh = '#a89a80';
+  for (const dx of [-110, 110]) { c.fillStyle = wall; c.fillRect(x + dx - 34, y - 220, 68, 220); c.fillStyle = sh; c.fillRect(x + dx + 10, y - 220, 24, 220); c.fillStyle = '#5a4a3a'; c.fillRect(x + dx - 10, y - 190, 20, 30); c.fillStyle = wall; c.beginPath(); c.moveTo(x + dx - 30, y - 220); c.quadraticCurveTo(x + dx, y - 270, x + dx + 30, y - 220); c.fill(); c.fillStyle = '#d8b040'; c.fillRect(x + dx - 2, y - 270, 4, 18); c.fillRect(x + dx - 7, y - 264, 14, 4); }
+  c.fillStyle = wall; c.fillRect(x - 76, y - 160, 152, 160); c.fillStyle = sh; c.fillRect(x + 30, y - 160, 46, 160); c.fillStyle = wall; c.beginPath(); c.moveTo(x - 80, y - 160); c.lineTo(x, y - 200); c.lineTo(x + 80, y - 160); c.fill();
+  c.fillStyle = '#3a2a1a'; c.beginPath(); c.moveTo(x - 22, y); c.lineTo(x - 22, y - 50); c.arc(x, y - 50, 22, Math.PI, 0); c.lineTo(x + 22, y); c.fill(); c.fillStyle = '#3a2a1a'; c.beginPath(); c.arc(x, y - 110, 14, 0, TAU); c.fill();
+  c.fillStyle = S.rgba(L.rim || '#ffe0a0', .35); c.fillRect(x - 76, y - 160, 6, 160); c.fillRect(x - 144, y - 220, 5, 220); c.restore(); };
+const litter = (c, x, y, s) => { c.fillStyle = '#c8962a'; c.fillRect(x - 70 * s, y - 8 * s, 140 * s, 14 * s); c.fillStyle = '#7a5a14'; c.fillRect(x - 70 * s, y + 4 * s, 140 * s, 4 * s); c.strokeStyle = '#5a3a14'; c.lineWidth = 5 * s; c.beginPath(); c.moveTo(x - 110 * s, y + 2 * s); c.lineTo(x + 110 * s, y + 2 * s); c.stroke(); c.fillStyle = '#e8b84a'; for (const dx of [-60, 60]) c.fillRect(x + dx * s - 2 * s, y - 70 * s, 4 * s, 62 * s); c.fillStyle = S.rgba('#c8202a', .9); c.beginPath(); c.moveTo(x - 66 * s, y - 70 * s); c.quadraticCurveTo(x, y - 90 * s, x + 66 * s, y - 70 * s); c.lineTo(x + 66 * s, y - 62 * s); c.lineTo(x - 66 * s, y - 62 * s); c.fill(); };
+const puff = (c, x, y, lt, t0) => { const q = seg(lt, t0, t0 + 2.2); if (q <= 0 || q >= 1) return; if (q < .06) VP.glow(c, x, y, 90, '#fff0b0', .9 * (1 - q / .06)); for (let k = 0; k < 6; k++) { const r = S.rng(k + Math.round(x)), rad = (14 + 50 * q) * (.7 + r() * .6), px = x + (r() - .5) * 60 * q + 40 * q, py = y - 30 * q * r(); const g = c.createRadialGradient(px, py, 0, px, py, rad); g.addColorStop(0, `rgba(230,225,215,${.65 * (1 - q)})`); g.addColorStop(1, 'rgba(230,225,215,0)'); c.fillStyle = g; c.beginPath(); c.arc(px, py, rad, 0, TAU); c.fill(); } };
+
+window.SHOTS = [
+  // 2.01 WIDE: Tenochtitlan on its lake under the volcanoes; canoes cross, cloud shadows drift
+  { set: 'tenoch', cam: { z: [1.05, 1.35], x: [640, 640], y: [380, 420], ease: E.io }, bed: [['birds_loop', .2], ['ocean_loop', .12]],
+    init: Sh => { Sh.tA = at(Sh, 'aztec', 3); Sh.tP = at(Sh, 'two hundred thousand', 6); Sh.tL = at(Sh, 'lake', Sh.dur - 1); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      VP.clouds(c, lt, { n: 4, y0: 360, y1: 700, a: .25 }); VP.glow(c, 640 + 80 * Math.sin(lt * .3), 240, 520, '#fff0c8', .16);
+      for (let k = 0; k < 9; k++) { const r = S.rng(k + 600), dir = r() < .5 ? 1 : -1, x = ((r() * 1400 + dir * lt * (10 + r() * 14)) % 1400 + 1400) % 1400 - 60, y = 500 + r() * 150; canoe(c, x, y, .8 + (y - 500) / 160, lt, k); }
+      for (let k = 0; k < 12; k++) { const r = S.rng(k + 640), x = 380 + r() * 520, y = 395 + r() * 60; c.fillStyle = S.rgba('#a8b8c8', .25); const ph = (lt * .2 + r()) % 1; c.beginPath(); c.arc(x + ph * 20, y - ph * 70, 6 + ph * 18, 0, TAU); c.fill(); }
+      VP.motes(c, lt, 0, 200, 1280, 400, { n: 25, a: .3 });
+    },
+    over: [(c, lt) => coinCorner(c, lt, { shine: .5 }), (c, lt, u, Sh) => K.card(c, 'TENOCHTITLAN', lt, { at: Sh.tA + .3, x: 380, y: 200, px: 60, rot: -3 }), (c, lt, u, Sh) => K.card(c, '~200,000 PEOPLE', lt, { at: Sh.tP + .2, x: 1540, y: 200, px: 52, rot: 3 }), (c, lt) => K.dateTag(c, 'CENTRAL MEXICO', lt, { at: .5 })],
+    sfx: [[.2, 'swell', .3], ['aztec', 'pop', .3], ['two hundred thousand', 'pop', .35]] },
+
+  // 2.02 WIDE: Cortes on the beach with his men; behind them his own ships sink
+  { set: 'caribbean', cam: { z: [1.2, 1.45], x: [600, 700], y: [430, 440], ease: E.io }, bed: [['ocean_loop', .3], ['wind_loop', .1]],
+    init: Sh => { Sh.tF = at(Sh, 'five hundred', 3); Sh.tS = at(Sh, 'sank', 5.5); Sh.tB = at(Sh, 'go back', Sh.dur - 1); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const L = DAY(lt), sh = VP.shadowOf(L, 1.3, .3, .12), sink = E.io(seg(lt, Sh.tS, Sh.tS + 4));
+      for (const [k, x, s] of [[0, 230, .55], [1, 380, .45], [2, 520, .5]]) { const d = sink * (k === 1 ? .6 : 1); c.save(); c.beginPath(); c.rect(x - 200, 0, 400, 426); c.clip(); c.translate(x, 420 + d * 150 * s); c.rotate(d * (k ? .25 : -.2)); X.ship(c, 0, 0, s, '#f4ead4', true); c.restore(); if (d > 0) { for (let j = 0; j < 4; j++) { const ph = (lt * 1.5 + j * .25 + k) % 1; c.strokeStyle = `rgba(255,255,255,${.6 * (1 - ph) * d})`; c.lineWidth = 2; c.beginPath(); c.ellipse(x, 424, 40 * s + ph * 80 * s, 6 + ph * 6, 0, 0, TAU); c.stroke(); } } }
+      const men = [[C.CORTES, 600, 44, 0], [C.CONQ, 720, 38, 1], [C.CONQ2, 828, 37, 2], [C.CONQ, 928, 34, 3], [C.CONQ2, 1018, 33, 4], [C.CONQ, 1100, 30, 5]];
+      for (const [ch, x, uu, k] of men) VP.figure(c, [x, 640 - k * 6], sh, cc => S.person(cc, ch, x, 640 - k * 6, uu, Object.assign(S.idle(lt, k), { face: k ? -1 : -1, shN: k === 0 && lt > Sh.tS ? 110 : 10, elN: k === 0 ? 10 : 50, holdF: k ? wr => { cc.strokeStyle = '#4a3420'; cc.lineWidth = 3; cc.beginPath(); cc.moveTo(wr[0], wr[1] + 50); cc.lineTo(wr[0] + 4, wr[1] - 120); cc.stroke(); cc.fillStyle = '#c8c8d0'; cc.fillRect(wr[0] + 1, wr[1] - 132, 6, 14); } : null }), { blink: S.blinkAt(lt, k), angry: k === 0 ? .3 : 0, worry: k && lt > Sh.tS ? .5 : 0, look: [-.8, 0], time: lt }, L));
+      VP.motes(c, lt, 0, 300, 1280, 400, { n: 25, a: .35 });
+    },
+    over: [(c, lt) => coinCorner(c, lt, { shine: .55 }), (c, lt) => K.dateTag(c, 'MEXICO · 1519', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'HERNÁN CORTÉS', lt, { at: 1.2, x: 1540, y: 200, px: 52, rot: 3 }), (c, lt, u, Sh) => K.card(c, '~500 MEN', lt, { at: Sh.tF + .2, x: 1540, y: 860, px: 56, rot: -3 }), (c, lt, u, Sh) => K.badge(c, 'NO WAY BACK', lt, { at: Sh.tB })],
+    sfx: [['five hundred', 'pop', .3], ['sank', 'creak', .45], ['sank', 'whoosh', .3], ['go back', 'thud', .4]] },
+
+  // 2.03 MED: Malintzin stands between Cortes and Nahua envoys and translates; words pass through her
+  { set: 'valley', cam: { z: [1.55, 1.75], x: [640, 640], y: [470, 480], ease: E.sine }, bed: [['wind_loop', .15]],
+    init: Sh => { Sh.tW = at(Sh, 'secret weapon', 1); Sh.tN = at(Sh, 'malintzin', 3); Sh.tM = at(Sh, 'maya', 5); Sh.tS = at(Sh, 'spanish', 6.5); Sh.tI = at(Sh, 'interpreter', Sh.dur - 2); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const L = DAY(lt, { swing: 6 }), sh = VP.shadowOf(L, 1.2, .3, .12), talk = (k, on) => on ? .45 * Math.abs(Math.sin(lt * 10 + k)) * (Math.sin(lt * 1.7 + k) > -.3) : 0;
+      VP.clouds(c, lt, { n: 3, y0: 500, y1: 720, a: .2 });
+      VP.figure(c, [470, 650], sh, cc => S.person(cc, C.CORTES, 470, 650, 44, Object.assign(S.idle(lt, 0), { face: 1, shN: 15, elN: 60 }), { blink: S.blinkAt(lt, 0), look: [.8, 0], time: lt }, L));
+      const turn = Math.sin(lt * .9) > 0 ? 1 : -1;
+      VP.figure(c, [640, 650], sh, cc => S.person(cc, C.MALINTZIN, 640, 650, 40, Object.assign(S.idle(lt, 1), { face: turn, shN: 40 + 30 * Math.abs(Math.sin(lt * 2)), elN: 60 }), { blink: S.blinkAt(lt, 1), smile: .3, open: talk(1, lt > Sh.tN), look: [turn * .8, 0], time: lt }, L));
+      for (const [x, k] of [[810, 2], [900, 3]]) VP.figure(c, [x, 650], sh, cc => S.person(cc, C.NAHUA, x, 650, 40, Object.assign(S.idle(lt, k), { face: -1, shN: 20, elN: 50 }), { blink: S.blinkAt(lt, k), open: talk(k, k === 2 && Math.sin(lt * .9) < 0), look: [-.8, 0], time: lt }, L));
+      // words flowing through her: three languages
+      for (const [i, w, tt, col] of [[0, 'NAHUATL', Sh.tN + .5, '#2a8a5a'], [1, 'MAYA', Sh.tM, '#c8682a'], [2, 'SPANISH', Sh.tS, '#b8282a']]) { const q = seg(lt, tt, tt + .4); if (q <= 0) continue; const x = 520 + i * 120, y = 392 - 6 * Math.sin(lt * 2 + i); c.save(); c.globalAlpha = q; c.fillStyle = '#f4ead4'; c.beginPath(); c.roundRect(x - 56, y - 20, 112, 36, 10); c.fill(); c.strokeStyle = col; c.lineWidth = 3; c.stroke(); c.font = '20px Oswald'; c.textAlign = 'center'; c.fillStyle = col; c.fillText(w, x, y + 6); c.restore(); }
+      VP.motes(c, lt, 300, 300, 700, 300, { n: 20, a: .35 });
+    },
+    over: [(c, lt) => coinCorner(c, lt, { shine: .5 }), (c, lt, u, Sh) => K.card(c, 'MALINTZIN', lt, { at: Sh.tN + .2, x: 380, y: 200, px: 60, rot: -3 }), (c, lt, u, Sh) => K.badge(c, 'INTERPRETER AND ADVISER', lt, { at: Sh.tI })],
+    sfx: [['secret weapon', 'riser', .3], ['malintzin', 'pop', .3], ['maya', 'pop', .3], ['spanish', 'pop', .3], ['interpreter', 'chime', .3]] },
+
+  // 2.04 WIDE: a column of Tlaxcalan warriors marches beside a few Spanish horsemen
+  { set: 'valley', cam: { z: [1.1, 1.3], x: [560, 720], y: [440, 450], ease: E.io }, bed: [['wind_loop', .15], ['crowd_loop', .12]],
+    init: Sh => { Sh.tH = at(Sh, 'hated', 2.5); Sh.tT = at(Sh, 'tens of thousands', 5); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const L = DAY(lt), sh = VP.shadowOf(L, 1.3, .3, .12);
+      VP.clouds(c, lt, { n: 4, y0: 520, y1: 720, a: .25 });
+      // Tlaxcalan allies march in spaced ranks; the rear ranks stream in from the left as the numbers grow (no wrap, no pop-in)
+      for (let rank = 0; rank < 3; rank++) { const y = 556 + rank * 18, uu = 11 + rank * 1.6, gap = 52 + rank * 6, sp = rank === 0 ? 22 + 60 * seg(lt, Sh.tT - 1, Sh.tT + 3) : 22; for (let i = 0; i < 26; i++) { const x = -1300 + i * gap + rank * 26 + lt * 22 + (rank === 0 ? 700 * E.out(seg(lt, Sh.tT - 1, Sh.tT + 3)) : 0); if (x < -40 || x > 1320) continue; const ch = VP.vary(C.TLAX, 500 + rank * 30 + i); S.person(c, ch, x, y, uu, Object.assign(walk(lt * .9 + i * .3 + rank), { face: 1, shN: 40, elN: 50, holdN: wr => { c.strokeStyle = '#4a3420'; c.lineWidth = 1.5; c.beginPath(); c.moveTo(wr[0], wr[1] + uu * 2); c.lineTo(wr[0] + 3, wr[1] - uu * 4.5); c.stroke(); } }), { time: lt }, L); } }
+      for (const [k, x0] of [[0, 380], [1, 760]]) { const x = x0 + lt * 22, y = 612; VP.figure(c, [x, y], sh, cc => VP.rider(cc, k ? C.CONQ : C.CORTES, x, y, 21, 104, { face: 1, ph: lt * .9 + k, walk: .7, t: lt, col: k ? GREY : BAY, tack: CTACK }, { lean: 2 }, { blink: S.blinkAt(lt, k), look: [.8, 0], time: lt }, L)); }
+      for (const [x, k] of [[100, 0], [220, 1], [540, 2], [620, 3], [1000, 4]]) { const xx = x + lt * 22, y = 690; VP.figure(c, [xx, y], sh, cc => S.person(cc, C.TLAX, xx, y, 30, Object.assign(walk(lt * .9 + k * .3), { face: 1, holdF: wr => { cc.strokeStyle = '#4a3420'; cc.lineWidth = 3; cc.beginPath(); cc.moveTo(wr[0], wr[1] + 40); cc.lineTo(wr[0] + 6, wr[1] - 90); cc.stroke(); cc.fillStyle = '#2a2a30'; cc.beginPath(); cc.moveTo(wr[0] + 2, wr[1] - 90); cc.lineTo(wr[0] + 6, wr[1] - 108); cc.lineTo(wr[0] + 10, wr[1] - 90); cc.fill(); } }), { blink: S.blinkAt(lt, k), angry: .3, look: [.8, 0], time: lt }, L)); }
+      VP.motes(c, lt, 0, 400, 1280, 300, { n: 30, a: .3, col: '#e8d4a0' });
+    },
+    over: [(c, lt) => coinCorner(c, lt, { shine: .55 }), (c, lt, u, Sh) => K.card(c, 'TLAXCALA', lt, { at: Sh.tH, x: 380, y: 200, px: 60, rot: -3 }), (c, lt, u, Sh) => K.card(c, 'TENS OF THOUSANDS', lt, { at: Sh.tT + .2, x: 1500, y: 200, px: 50, rot: 3 })],
+    sfx: [['hated', 'tension', .3], ['tens of thousands', 'crowd_cheer', .3], [.5, 'footsteps', .25]] },
+
+  // 2.05 MED: Moctezuma in his feather crown greets Cortes; then guards close in: hostage
+  { set: 'tenoch', cam: (lt, u, Sh) => ({ z: [lerp(2.1, 2.5, E.io(seg(lt, Sh.tH - 1, Sh.tH + 1)))], x: [640], y: [560] }), bed: [['crowd_loop', .12]],
+    init: Sh => { Sh.tW = at(Sh, 'welcomed', 1); Sh.tH = at(Sh, 'hostage', Sh.dur - 1.5); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const L = DAY(lt, { swing: 4 }), sh = VP.shadowOf(L, 1, .3, .12), hq = seg(lt, Sh.tH - .6, Sh.tH + .4);
+      c.fillStyle = '#d8c8a0'; c.fillRect(0, 560, 1280, 160); S.dabs(c, { x: 0, y: 560, w: 1280, h: 160, n: 120, cols: ['#e8d8b0', '#b8a880'], r0: 4, r1: 12, a0: .2, a1: .4, seed: 55 }); S.glow(c, 640, 560, 260, '#fff0d0', .1);
+      for (const [x0, k] of [[-70, 5], [-10, 6]]) { const x = lerp(x0, k === 5 ? 700 : 822, E.io(hq)), y = 638 + (k - 5) * 4; VP.figure(c, [x, y], sh, cc => S.person(cc, k === 5 ? C.CONQ : C.CONQ2, x, y, 36, Object.assign(hq > 0 && hq < 1 ? walk(lt) : S.idle(lt, k), { face: 1, shN: 70 * hq, elN: 20 }), { blink: S.blinkAt(lt, k), angry: .5, look: [.8, 0], time: lt }, L)); }
+      VP.figure(c, [760, 650], sh, cc => S.person(cc, C.MOCTEZUMA, 760, 650, 38, Object.assign(S.idle(lt, 1), { face: -1, shN: lt < Sh.tH ? 60 + 10 * Math.sin(lt * 2) : 10, elN: 30 }), { blink: S.blinkAt(lt, 1), smile: .4 * (1 - hq), worry: .8 * hq, look: [-.8, 0], time: lt }, L));
+      for (const [x1, k] of [[884, 2], [954, 3]]) { const x = x1 + 90 * E.io(hq); VP.figure(c, [x, 655], sh, cc => S.person(cc, C.NAHUA, x, 655, 34, Object.assign(hq > 0 && hq < 1 ? walk(lt + k) : S.idle(lt, k), { face: -1 }), { blink: S.blinkAt(lt, k), worry: .6 * hq, look: [-.8, 0], time: lt }, L)); }
+      VP.figure(c, [520, 650], sh, cc => S.person(cc, C.CORTES, 520, 650, 38, Object.assign(S.idle(lt, 0), { face: 1, shN: 30, elN: 40 }), { blink: S.blinkAt(lt, 0), smile: .3, angry: .4 * hq, look: [.8, 0], time: lt }, L));
+      VP.figure(c, [600, 652], sh, cc => S.person(cc, C.MALINTZIN, 600, 652, 34, Object.assign(S.idle(lt, 4), { face: 1 }), { blink: S.blinkAt(lt, 4), look: [.8, 0], time: lt }, L));
+      VP.motes(c, lt, 400, 400, 500, 300, { n: 18, a: .3 });
+    },
+    over: [(c, lt) => coinCorner(c, lt, { shine: .5 }), (c, lt, u, Sh) => K.card(c, 'MOCTEZUMA II', lt, { at: Sh.tW, x: 1540, y: 200, px: 56, rot: 3 }), (c, lt, u, Sh) => K.card(c, 'HOSTAGE', lt, { at: Sh.tH + .2, x: 380, y: 860, px: 72, rot: -4 })],
+    sfx: [['welcomed', 'flute', .3], ['hostage', 'gate_slam', .45]] },
+
+  // 2.06 NIGHT: rain on the causeway; the Spanish flee loaded with gold, some fall into the canal
+  { set: 'tenoch', cam: { z: [1.9, 2.1], x: [420, 520], y: [470, 480], ease: E.sine, shake: .5 }, bed: [['rain_loop', .35], ['crowd_loop', .12]],
+    init: Sh => { Sh.tK = at(Sh, 'killed', 1.5); Sh.tF = at(Sh, 'fled', 4); Sh.tD = at(Sh, 'drowned', 6.5); Sh.tN = at(Sh, 'sad night', Sh.dur - 1.5); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      night(c, .72); const f = VP.flicker(lt, 4);
+      for (const [x, y] of [[300, 430], [560, 420], [720, 440]]) { H1.fire(c, x, y, .12, lt, x); VP.glow(c, x, y - 20, 200, '#ff8a3a', .3 + .1 * f); }
+      const run = seg(lt, Sh.tF - 1, Sh.dur);
+      for (let i = 0; i < 16; i++) { const r = S.rng(i + 1100), x = 640 - ((r() * 400 + lt * 40) % 520), y = 458 + r() * 10, s = 1.2; const fall = lt > Sh.tD && i % 5 === 0; const yy = fall ? y + Math.min(30, (lt - Sh.tD) * 20) : y; if (run <= 0 && i > 6) continue;
+        H1.tiny(c, x, yy, s, ['#7a7e88', '#8a3a2a'][i % 2], lt, i, { walk: true, helm: '#a8a8b0', pike: false, skin: '#d0a080' }); c.fillStyle = '#d8a830'; c.beginPath(); c.arc(x - 4 * s, yy - 8 * s, 3 * s, 0, TAU); c.fill(); if (fall) { const ph = (lt * 2 + i) % 1; c.strokeStyle = `rgba(200,220,255,${.6 * (1 - ph)})`; c.lineWidth = 1.5; c.beginPath(); c.ellipse(x, y + 24, 8 + ph * 18, 3 + ph * 4, 0, 0, TAU); c.stroke(); } }
+      rain(c, lt, .4);
+      if (Math.sin(lt * 1.3) > .985) { c.fillStyle = 'rgba(220,230,255,.35)'; c.fillRect(0, 0, 1280, 720); }
+    },
+    over: [(c, lt) => coinCorner(c, lt, { shine: .3 }), (c, lt) => K.dateTag(c, '30 JUNE 1520', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'LA NOCHE TRISTE\nTHE SAD NIGHT', lt, { at: Sh.tN, x: 1500, y: 200, px: 50, rot: 3 })],
+    sfx: [['killed', 'drone', .35], ['fled', 'run_steps', .35], ['drowned', 'whoosh', .3], ['sad night', 'tension', .35]] },
+
+  // 2.07 INT: smallpox; a family by lamplight nursing a sick man on a mat
+  { set: 'room', cam: { z: [1.45, 1.65], x: [620, 640], y: [480, 500], ease: E.sine }, bed: [['night_loop', .2], ['heartbeat', .15]],
+    init: Sh => { Sh.tS = at(Sh, 'smallpox', 1.5); Sh.tN = at(Sh, 'never met', 4); Sh.tE = at(Sh, 'emperor', Sh.dur - 1.2); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const f = VP.flicker(lt, 6), L = { L: [-1, -.4], amb: '#2a2040', ambA: .45, rim: '#ffb060', rimA: .9, tint: '#ff9a50', tintA: .18, sw: .34, rw: .05 };
+      night(c, .35, '60,40,80');
+      H1.fire(c, 330, 560, .1, lt, 6); VP.glow(c, 330, 540, 420, '#ffb060', .28 + .12 * f);
+      c.fillStyle = '#b89868'; c.beginPath(); c.ellipse(540, 650, 160, 26, 0, 0, TAU); c.fill(); S.dabs(c, { x: 390, y: 630, w: 300, h: 40, n: 60, cols: ['#d8b888', '#8a6a40'], r0: 3, r1: 8, a0: .3, a1: .5, seed: 71 });
+      VP.figure(c, [620, 640], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => { cc.save(); cc.translate(620, 640); cc.rotate(-Math.PI / 2 + .05); cc.translate(-620, -640); S.person(cc, C.NAHUA, 620, 640, 34, Object.assign(S.idle(lt, 1), { face: 1, shN: 10, elN: 10 }), { blink: 1, worry: .9, time: lt }, L); cc.restore(); });
+      for (let k = 0; k < 14; k++) { const r = S.rng(k + 1200); c.fillStyle = S.rgba('#b8282a', .55); c.beginPath(); c.arc(480 + r() * 110, 620 + r() * 30, 2.5, 0, TAU); c.fill(); }
+      VP.figure(c, [680, 655], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, C.NAHUAW, 680, 655, 36, Object.assign(S.idle(lt, 2), { face: -1, sitY: -.45, hideLegs: true, lean: 22, shN: 35 + 8 * Math.sin(lt * 1.5), elN: 60 }), { blink: S.blinkAt(lt, 2), worry: .9, look: [-.8, .4], time: lt }, L));
+      VP.figure(c, [790, 650], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, Object.assign({}, C.NAHUA, { build: 'kid' }), 790, 650, 26, Object.assign(S.idle(lt, 3), { face: -1 }), { blink: S.blinkAt(lt, 3), worry: .8, look: [-.8, .2], time: lt }, L));
+      VP.motes(c, lt, 300, 350, 600, 300, { n: 20, a: .35 });
+    },
+    over: [(c, lt) => coinCorner(c, lt, { shine: .35 }), (c, lt, u, Sh) => K.card(c, 'SMALLPOX', lt, { at: Sh.tS + .2, x: 380, y: 200, px: 64, rot: -3 }), (c, lt, u, Sh) => K.badge(c, 'NO IMMUNITY', lt, { at: Sh.tN, until: Sh.tE - .3 }), (c, lt, u, Sh) => K.badge(c, 'EVEN THE NEW EMPEROR DIED', lt, { at: Sh.tE })],
+    sfx: [['smallpox', 'drone', .35], ['never met', 'heartbeat', .3], ['emperor', 'thud', .35]] },
+
+  // 2.08 WIDE: the city burns and falls; then a cathedral rises on the ruins
+  { set: 'tenoch', cam: { z: [1.25, 1.55], x: [640, 640], y: [400, 420], ease: E.io }, bed: [['fire_loop', .25], ['wind_loop', .15]],
+    init: Sh => { Sh.tM = at(Sh, 'three months', 2.5); Sh.tF = at(Sh, 'fell', 4.5); Sh.tC = at(Sh, 'mexico city', Sh.dur - 1.5); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const burn = seg(lt, 0, Sh.tC), after = seg(lt, Sh.tC - 1, Sh.tC + 1.5);
+      c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = `rgba(150,80,60,${.5 * (1 - after)})`; c.fillRect(0, 0, 1280, 720); c.restore();
+      for (const [x, y, s] of [[470, 430, .12], [600, 420, .14], [700, 440, .12], [820, 440, .13], [540, 455, .1]]) { if (after < 1) { c.save(); c.globalAlpha = 1 - after; H1.fire(c, x, y, s, lt, x); c.restore(); } H1.smoke(c, x, y - 30, .6, lt + x * .01, '50,40,40'); }
+      if (after < 1) for (let k = 0; k < 8; k++) { const r = S.rng(k + 1300), tt = Sh.tM + r() * 3; puff(c, 380 + r() * 520, 430 + r() * 30, lt, tt); }
+      if (after > 0) { c.save(); c.globalAlpha = after; c.fillStyle = '#c8b890'; c.beginPath(); c.ellipse(640, 440, 300, 60, 0, 0, TAU); c.fill(); c.restore(); c.save(); c.translate(640, 455); c.scale(.6, .6); cathedral(c, 0, 0, E.out(seg(lt, Sh.tC - .5, Sh.tC + 2)), { rim: '#ffe0a0' }); c.restore(); }
+      VP.motes(c, lt, 300, 250, 700, 300, { n: 30, a: .4, col: '#ffb070' });
+    },
+    over: [(c, lt) => coinCorner(c, lt, { shine: .45 }), (c, lt, u, Sh) => K.card(c, '~3-MONTH SIEGE', lt, { at: Sh.tM, x: 380, y: 200, px: 52, rot: -3 }), (c, lt, u, Sh) => K.dateTag(c, '13 AUG 1521', lt, { at: Sh.tF }), (c, lt, u, Sh) => K.card(c, 'MEXICO CITY', lt, { at: Sh.tC + .4, x: 1540, y: 200, px: 60, rot: 3 })],
+    sfx: [['three months', 'tension', .3], ['fell', 'thud', .45], ['mexico city', 'chime', .35]] },
+
+  // 2.09 WIDE: the Andes; Pizarro's small party rides up the Inca road; the empire splits between two brothers
+  { set: 'andes', cam: { z: [1.15, 1.4], x: [560, 640], y: [450, 430], ease: E.io }, bed: [['wind_loop', .25], ['flute', .15]],
+    init: Sh => { Sh.tP = at(Sh, 'pizarro', 2); Sh.tI = at(Sh, 'inca empire', 4.5); Sh.tW = at(Sh, 'civil war', Sh.dur - 3); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const L = DAY(lt, { swing: 6 }), sh = VP.shadowOf(L, 1.2, .3, .12);
+      VP.clouds(c, lt, { n: 5, y0: 300, y1: 720, a: .3, speed: 20 });
+      const q = seg(lt, 0, Sh.dur), path = [[200, 720], [520, 620], [300, 560], [640, 470]]; const segi = Math.min(2, Math.floor(q * 3)), f = q * 3 - segi, a = path[segi], b = path[segi + 1];
+      for (let k = 0; k < 3; k++) { const ff = Math.max(0, f - k * .08), x = lerp(a[0], b[0], ff), y = lerp(a[1], b[1], ff), uu = 14 - segi * 2.5, face = b[0] > a[0] ? 1 : -1; VP.figure(c, [x, y], sh, cc => VP.rider(cc, k ? C.CONQ : C.PIZARRO, x, y, uu, uu * 5, { face, ph: lt + k, walk: .7, t: lt, col: k ? GREY : BAY, tack: CTACK }, { lean: 2 }, { time: lt }, L)); }
+      for (let k = 0; k < 6; k++) { const r = S.rng(k + 1400), x = 820 + r() * 400, y = 560 + r() * 100; H1.tiny(c, x, y, 1.3, '#b8282a', lt, k, { pike: false, skin: '#a86a44', helm: '#1a1a1a' }); }
+      VP.glow(c, 900, 200, 500, '#fff4d8', .15);
+    },
+    over: [(c, lt) => coinCorner(c, lt, { shine: .55 }), (c, lt, u, Sh) => K.card(c, 'FRANCISCO PIZARRO', lt, { at: Sh.tP, x: 380, y: 200, px: 52, rot: -3 }), (c, lt, u, Sh) => K.card(c, 'INCA EMPIRE', lt, { at: Sh.tI, x: 1540, y: 200, px: 60, rot: 3 }), (c, lt, u, Sh) => K.badge(c, 'HUÁSCAR  vs  ATAHUALPA', lt, { at: Sh.tW + .3 })],
+    sfx: [['pizarro', 'pop', .3], ['inca empire', 'swell', .3], ['civil war', 'hit', .35]] },
+
+  // 2.10 WIDE: Cajamarca's square; Atahualpa arrives on his litter, then guns fire from the doorways
+  { set: 'cajamarca', cam: (lt, u, Sh) => ({ z: [lerp(1.2, 1.5, E.io(seg(lt, 0, Sh.tA)))], x: [640], y: [480], shake: lt > Sh.tA && lt < Sh.tA + 1.5 ? 1.4 : 0 }), bed: [['crowd_loop', .15]],
+    init: Sh => { Sh.tH = at(Sh, 'hundred and seventy', 3); Sh.tA = at(Sh, 'ambushed', 5); Sh.tP = at(Sh, 'prisoner', Sh.dur - 1); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const L = VP.light('golden', lt, { swing: 3 }), sh = VP.shadowOf(L, 1.4, .3, .12), amb = seg(lt, Sh.tA, Sh.tA + .4), arrive = E.out(seg(lt, 0, Sh.tA - .5));
+      const lx = lerp(1000, 760, arrive), ly = 600;
+      // Inca nobles and attendants stand in two spaced rows behind the litter; at the ambush they run off to the sides, never through each other
+      const CROWD = [120, 230, 340, 450, 560, 1130, 1240]; for (let i = 0; i < CROWD.length; i++) { const row = i % 2, x0 = CROWD[i], y = 520 + row * 34, side = x0 < 640 ? -1 : 1, run = seg(lt, Sh.tA + .1 + (i % 4) * .06, Sh.tA + 1.5), x = x0 + side * 900 * run * run; if (x < -80 || x > 1360) continue; VP.figure(c, [x, y], sh, cc => S.person(cc, C.INCA, x, y, 18 + row * 2, Object.assign(run > 0 ? walk(lt * 1.6 + i) : S.idle(lt, i), { face: run > 0 ? side : (x0 < lx ? 1 : -1), shN: run > 0 ? 150 : 20, elN: run > 0 ? 40 : 20 }), { worry: amb, time: lt }, L)); }
+      for (const dx of [-80, -30, 30, 80]) { const x = lx + dx, y = ly + 30; VP.figure(c, [x, y], sh, cc => S.person(cc, C.INCA, x, y, 22, Object.assign(walk(lt * .8 + dx * .01), { face: -1, shN: 160, elN: 10 }), { time: lt }, L)); }
+      litter(c, lx, ly - 34, .9); S.person(c, C.ATAHUALPA, lx, ly - 40, 24, Object.assign(S.idle(lt, 1), { face: -1, sitY: -.1, hideLegs: true }), { blink: S.blinkAt(lt, 1), worry: .8 * amb, look: [-.8, 0], time: lt }, L);
+      for (const x of [60, 180, 300, 420, 860, 980, 1100, 1220]) puff(c, x, 430, lt, Sh.tA + (x % 7) * .06);
+      if (amb > 0) for (const [k, x0] of [[0, 120], [1, 1160]]) { const x = lerp(x0 < 640 ? -150 : 1430, x0 < 640 ? 360 : 1070, E.out(seg(lt, Sh.tA + 1.2, Sh.tA + 3.4))), y = 690; VP.figure(c, [x, y], sh, cc => VP.rider(cc, k ? C.PIZARRO : C.CONQ, x, y, 26, 130, { face: x0 < 640 ? 1 : -1, ph: lt * 2.4 + k, walk: 1, t: lt, col: k ? BAY : GREY, tack: CTACK }, { lean: 6 }, { angry: .6, time: lt }, L)); }
+      VP.motes(c, lt, 0, 300, 1280, 400, { n: 25, a: .35, col: '#f0d8b0' });
+    },
+    over: [(c, lt) => coinCorner(c, lt, { shine: .5 }), (c, lt) => K.dateTag(c, 'CAJAMARCA · 1532', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, '~170 SPANIARDS', lt, { at: Sh.tH + .2, x: 1540, y: 200, px: 52, rot: 3 }), (c, lt, u, Sh) => K.card(c, 'ATAHUALPA', lt, { at: 2, x: 380, y: 200, px: 56, rot: -3, until: Sh.tA }), (c, lt, u, Sh) => K.badge(c, 'TAKEN PRISONER', lt, { at: Sh.tP })],
+    sfx: [['hundred and seventy', 'pop', .3], ['ambushed', 'hit', .55], ['ambushed', 'crowd_cheer', .2], ['prisoner', 'gate_slam', .4]] },
+
+  // 2.11 INT: the ransom room fills with gold up to the red line, then the deal is broken
+  { set: 'ransom', cam: { z: [1.2, 1.35], x: [640, 640], y: [400, 390], ease: E.sine }, bed: [['drone', .2]],
+    init: Sh => { Sh.tD = at(Sh, 'deal', 1); Sh.tG = at(Sh, 'gold', 2.5); Sh.tS = at(Sh, 'silver', 4.5); Sh.tT = at(Sh, 'treasure came', 6.5); Sh.tK = at(Sh, 'anyway', Sh.dur - .8); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const f = VP.flicker(lt, 8), dark = seg(lt, Sh.tK - .6, Sh.tK + .6), L = { L: [1, -.6], amb: '#3a2a20', ambA: .3, rim: '#ffd890', rimA: .9, tint: '#ffc060', tintA: .14, sw: .3, rw: .05 };
+      for (const x of [240, 1040]) { VP.glow(c, x, 300, 200, '#ff9a40', .35 + .15 * f); H1.fire(c, x, 330, .06, lt, x); }
+      const g = E.io(seg(lt, Sh.tG, Sh.tT + .8)); heap(c, 0, 1280, 640, lerp(640, 230, g), lt);
+      const s = E.io(seg(lt, Sh.tS, Sh.tT + .8)); if (s > 0) { c.save(); c.globalAlpha = .85; heap(c, 960, 1280, 640, lerp(640, 470, s), lt, ['#d8dce4', '#7a808c', '#ffffff'], 5); c.restore(); }
+      VP.glow(c, 640, 420, 500, '#ffd060', .25 * g);
+      VP.figure(c, [420, 680], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, C.ATAHUALPA, 420, 680, 46, Object.assign(S.idle(lt, 1), { face: 1, shF: lt < Sh.tG ? 150 : 40, elF: 10, shN: 20, elN: 40 }), { blink: S.blinkAt(lt, 1), worry: .9 * dark, look: [.7, -.4], time: lt }, L));
+      VP.figure(c, [880, 680], { k: -.5, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, C.PIZARRO, 880, 680, 44, Object.assign(S.idle(lt, 0), { face: -1, shN: 20, elN: 40 }), { blink: S.blinkAt(lt, 0), smile: .4 * g * (1 - dark), angry: .5 * dark, look: [-.8, 0], time: lt }, L));
+      if (dark > 0) { night(c, .55 * dark, '60,20,20'); }
+      VP.motes(c, lt, 200, 150, 900, 450, { n: 30, a: .45, col: '#ffe090' });
+    },
+    over: [(c, lt) => coinCorner(c, lt, { shine: .9 }), (c, lt, u, Sh) => K.card(c, 'ONE ROOM OF GOLD', lt, { at: Sh.tG + .2, x: 380, y: 200, px: 52, rot: -3 }), (c, lt, u, Sh) => K.card(c, 'TWO OF SILVER', lt, { at: Sh.tS + .2, x: 1540, y: 200, px: 52, rot: 3 }), (c, lt, u, Sh) => K.badge(c, 'THEY KILLED HIM ANYWAY · 1533', lt, { at: Sh.tK })],
+    sfx: [['deal', 'paper', .3], ['gold', 'coins_cascade', .45], ['silver', 'coins', .4], ['treasure came', 'chime', .35], ['anyway', 'thud', .5]] },
+
+  // 2.12 MAP: two viceroyalties spread across the Americas; then the cost in people
+  { set: 'world', cam: { z: [1.5, 1.7], x: [380, 400], y: [400, 420], ease: E.io }, bed: [['drone', .2]], sub: 'bottom',
+    init: Sh => { Sh.tV = at(Sh, 'viceroyalties', 2.5); Sh.tN = at(Sh, 'new spain', 4); Sh.tP = at(Sh, 'lima', 6); Sh.tD = at(Sh, 'died', Sh.dur - 2.5); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const ns = E.io(seg(lt, Sh.tN - .3, Sh.tN + 1.2)), pe = E.io(seg(lt, Sh.tP - 1.2, Sh.tP + .6));
+      const NS = [[-117, 33], [-104, 32], [-97, 27], [-90, 21], [-83, 15], [-83, 9], [-78, 8], [-88, 13], [-95, 16], [-105, 20], [-110, 24], [-117, 33]].map(p => WLL(p[0], p[1]));
+      const PE = [[-80, 8], [-72, 11], [-67, 1], [-63, -10], [-58, -22], [-62, -36], [-71, -40], [-73, -30], [-71, -18], [-77, -12], [-81, -5], [-80, 8]].map(p => WLL(p[0], p[1]));
+      const fill = (P, q, col) => { if (q <= 0) return; c.save(); c.globalAlpha = .45 * q; c.fillStyle = col; c.beginPath(); P.forEach((p, i) => i ? c.lineTo(p[0], p[1]) : c.moveTo(p[0], p[1])); c.fill(); c.globalAlpha = q; c.strokeStyle = col; c.lineWidth = 2.5; c.stroke(); c.restore(); };
+      fill(NS, ns, '#d8a020'); fill(PE, pe, '#c8682a');
+      const mx = WLL(-99, 19.4), li = WLL(-77, -12);
+      H1.stamp(c, 'Mexico City', mx[0], mx[1], lt, Sh.tN + .3, { px: 20 }); H1.stamp(c, 'Lima', li[0], li[1], lt, Sh.tP, { px: 20 });
+      const dd = seg(lt, Sh.tD - .5, Sh.tD + 1.5); if (dd > 0) { c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = `rgba(90,60,60,${.45 * dd})`; c.fillRect(0, 0, 1280, 720); c.restore(); }
+      mapCandle(c, lt);
+    },
+    over: [(c, lt) => coinCorner(c, lt, { shine: .6 }), (c, lt) => K.dateTag(c, '1540s', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'NEW SPAIN', lt, { at: Sh.tN + .2, x: 380, y: 200, px: 56, rot: -3 }), (c, lt, u, Sh) => K.card(c, 'PERU', lt, { at: Sh.tP + .2, x: 1540, y: 860, px: 60, rot: 3 }), (c, lt, u, Sh) => K.badge(c, 'MOST OF THE PEOPLE DIED · MAINLY DISEASE', lt, { at: Sh.tD })],
+    sfx: [['viceroyalties', 'paper', .35], ['new spain', 'pop', .35], ['lima', 'pop', .35], ['died', 'drone', .35]] },
+];
+VP.build(); K.boot();
+</script></body></html>

@@ -1,0 +1,386 @@
+{
+ "meta": {
+  "slug": "eli-cohen-2",
+  "prefix": "EC2",
+  "title": "Why Syria Hanged Eli Cohen in Public",
+  "working_title": "Why Syria Hanged Eli Cohen in Public (Eli Cohen, Part 2)",
+  "device": "The radio key from Part 1. It opens Part 2 under the Damascus window, is tapping when the door is broken down, lies on the table as evidence at the trial, and the last shot is the empty tea tin on a windowsill. A wristwatch (returned to his family in 2018) bookends the act about his legacy.",
+  "style": "2D dynamic, locked Village Painterly look, same cast and sets as Part 1 (Eli with thin moustache, Nadia, Damascus officers, Amin al-Hafiz) plus new sets: the Golan bunkers and eucalyptus trees, the Jordan headwaters works, a radio-detection van, the embassy street, a military courtroom, Marjeh Square at dawn, the Tel Aviv flat. Moving cameras, 3 to 5 parallax layers, characters act in every shot. Torture and the execution are shown only through shadows, a closed door, an empty square and a crowd's faces, never the body. Neutral tone on Israel and Syria. Morse tapping motif; SFX under VO; music at combine.",
+  "source": "'Israeli Spy Who Almost Became Syria's President' (Pushpam upload, batch 5, Hindi). Translated, rewritten in our own words and fact-checked. Part 2: the Golan to the hanging and after."
+ },
+ "stats": {
+  "shots": 27,
+  "words": 567,
+  "runtime": "3:58",
+  "acts": 6
+ },
+ "acts": [
+  {
+   "name": "Cold open",
+   "folder": "act0-coldopen",
+   "shots": [
+    {
+     "id": "0.01",
+     "type": "MED",
+     "sec": 7.2,
+     "vo": "Damascus, January 1965. Before dawn, a man sits by his bedroom window, tapping a message to Israel.",
+     "visual": "A dark bedroom; Eli at the window with the radio key; the army HQ across the street; a van parked below with its lights off.",
+     "onscreen": "DAMASCUS \u00b7 24 JAN 1965",
+     "anim": "Morse tapping; the van's antenna slowly turns.",
+     "img": ""
+    },
+    {
+     "id": "0.02",
+     "type": "MED",
+     "sec": 4.2,
+     "vo": "The door bursts open. Syrian intelligence officers rush in.",
+     "visual": "The door slams open; flashlights; Eli's hand frozen over the key.",
+     "onscreen": "",
+     "anim": "Flashlight beams sweep the room.",
+     "img": ""
+    },
+    {
+     "id": "0.03",
+     "type": "MED",
+     "sec": 10.2,
+     "vo": "For three years, Kamel Amin Thaabet had been one of the best-connected men in Syria. Four months later, he was hanged in a public square.",
+     "visual": "Quick images: a party toast; a jeep on the Golan; an empty square at dawn with a wooden frame in silhouette.",
+     "onscreen": "",
+     "anim": "Cards slide in; the last one holds.",
+     "img": ""
+    },
+    {
+     "id": "0.04",
+     "type": "TITLE",
+     "sec": 4.0,
+     "vo": "",
+     "visual": "Title over the open tea tin and the radio key on the floor among scattered papers.",
+     "onscreen": "WHY SYRIA HANGED ELI COHEN",
+     "anim": "Papers settle; title fades up.",
+     "img": ""
+    }
+   ],
+   "sec": 25.6,
+   "words": 51
+  },
+  {
+   "name": "Act 1: The Golan",
+   "folder": "act1-golan",
+   "shots": [
+    {
+     "id": "1.01",
+     "type": "WIDE",
+     "sec": 9.8,
+     "vo": "After the 1963 coup, Eli's friends were running the country. Officers took him up to the Golan Heights, the hills above Israel's northern farms.",
+     "visual": "An army jeep climbing a rocky road on the Golan; below, the Sea of Galilee and green fields.",
+     "onscreen": "THE GOLAN HEIGHTS",
+     "anim": "The jeep bounces; dust trails behind.",
+     "img": ""
+    },
+    {
+     "id": "1.02",
+     "type": "MED",
+     "sec": 6.0,
+     "vo": "He saw bunkers, gun positions and trenches. He remembered everything, and sent it home.",
+     "visual": "A concrete bunker; an officer proudly pointing out guns; Eli nodding, eyes moving across the positions.",
+     "onscreen": "",
+     "anim": "The camera follows his eyes from gun to gun.",
+     "img": ""
+    },
+    {
+     "id": "1.03",
+     "type": "MED",
+     "sec": 10.2,
+     "vo": "The most famous story: he told the officers their soldiers were baking in the sun, and suggested planting eucalyptus trees beside each position for shade.",
+     "visual": "Soldiers sweating at a bunker; Eli pointing at the bare ground; then rows of young eucalyptus trees beside each position.",
+     "onscreen": "THE EUCALYPTUS TREES",
+     "anim": "Trees grow up beside the bunkers in a time-lapse.",
+     "img": ""
+    },
+    {
+     "id": "1.04",
+     "type": "MED",
+     "sec": 10.6,
+     "vo": "The story goes that in 1967, Israeli soldiers used those trees to find the bunkers. Historians still debate how much is true, but the legend stuck.",
+     "visual": "The Golan from above: green tree clumps mark each bunker like pins on a map.",
+     "onscreen": "LEGEND?",
+     "anim": "Pins drop onto each tree clump.",
+     "img": ""
+    },
+    {
+     "id": "1.05",
+     "type": "MED",
+     "sec": 13.2,
+     "vo": "He also reported on Syria's plan to divert the headwaters of the Jordan River, which would have cut Israel's water supply. The work sites came under Israeli attack in the years that followed.",
+     "visual": "Bulldozers digging a canal at a river's source; then the map with the Jordan River and the diversion line.",
+     "onscreen": "JORDAN HEADWATERS",
+     "anim": "The diversion line draws; a red X marks it.",
+     "img": ""
+    }
+   ],
+   "sec": 49.8,
+   "words": 122
+  },
+  {
+   "name": "Act 2: Too Close",
+   "folder": "act2-too-close",
+   "shots": [
+    {
+     "id": "2.01",
+     "type": "MED",
+     "sec": 10.6,
+     "vo": "By 1964 he was a regular at the top. Rumours later said he was even considered for deputy defence minister. There is no proof of that.",
+     "visual": "A ministry office; Eli chatting with ministers over coffee; a nameplate on an empty desk.",
+     "onscreen": "RUMOUR",
+     "anim": "Steam rises from cups; the empty chair.",
+     "img": ""
+    },
+    {
+     "id": "2.02",
+     "type": "MED",
+     "sec": 8.3,
+     "vo": "But he was transmitting too often, sometimes every day, at the same hours. His handlers warned him to slow down.",
+     "visual": "A calendar on the wall with marks every day; the radio key; a clock showing the same hour.",
+     "onscreen": "",
+     "anim": "Calendar pages flip; the clock hands stay put.",
+     "img": ""
+    },
+    {
+     "id": "2.03",
+     "type": "MED",
+     "sec": 9.8,
+     "vo": "In November 1964 he made his last visit home. He told Nadia he was tired. He had a newborn son he had barely held.",
+     "visual": "The Tel Aviv kitchen; Eli holding a baby; Nadia watching him with worry.",
+     "onscreen": "NOVEMBER 1964",
+     "anim": "The baby grabs his finger.",
+     "img": ""
+    },
+    {
+     "id": "2.04",
+     "type": "MED",
+     "sec": 4.5,
+     "vo": "His handlers asked him to go back one more time.",
+     "visual": "An airport gate; Eli turning to wave; his suitcase with the hidden pocket.",
+     "onscreen": "",
+     "anim": "He turns away through the gate.",
+     "img": ""
+    }
+   ],
+   "sec": 33.2,
+   "words": 80
+  },
+  {
+   "name": "Act 3: Caught",
+   "folder": "act3-caught",
+   "shots": [
+    {
+     "id": "3.01",
+     "type": "MED",
+     "sec": 7.2,
+     "vo": "Near his apartment was the Indian embassy. Its staff complained that their radio messages kept getting jammed.",
+     "visual": "An embassy office: a radio operator with headphones wincing at static; a diplomat writing a complaint.",
+     "onscreen": "INDIAN EMBASSY",
+     "anim": "Static crackles; the pen scratches.",
+     "img": ""
+    },
+    {
+     "id": "3.02",
+     "type": "MED",
+     "sec": 6.8,
+     "vo": "Syrian counter-intelligence, using new Soviet direction-finding equipment, began hunting for a secret transmitter in the area.",
+     "visual": "A van with an antenna creeping through night streets; inside, technicians watching a needle swing.",
+     "onscreen": "",
+     "anim": "The needle swings toward one building.",
+     "img": ""
+    },
+    {
+     "id": "3.03",
+     "type": "MED",
+     "sec": 7.2,
+     "vo": "They switched off the power to the neighbourhood, block by block, waiting for the signal to stop.",
+     "visual": "The city lights going dark section by section; the needle dropping when one block goes dark.",
+     "onscreen": "",
+     "anim": "Lights click off in sequence; the needle drops.",
+     "img": ""
+    },
+    {
+     "id": "3.04",
+     "type": "MED",
+     "sec": 6.8,
+     "vo": "On the morning of the twenty-fourth of January 1965, they broke in while he was transmitting.",
+     "visual": "The same door from the cold open bursting open; officers seizing Eli at the window.",
+     "onscreen": "24 JAN 1965",
+     "anim": "Door crashes; papers fly.",
+     "img": ""
+    },
+    {
+     "id": "3.05",
+     "type": "MED",
+     "sec": 7.9,
+     "vo": "The man they had toasted at parties was an Israeli spy. For Syria's new rulers, it was a humiliation.",
+     "visual": "Amin al-Hafiz reading a report in his office, then throwing it across the desk.",
+     "onscreen": "",
+     "anim": "The report flutters to the floor.",
+     "img": ""
+    }
+   ],
+   "sec": 35.9,
+   "words": 85
+  },
+  {
+   "name": "Act 4: The Trial",
+   "folder": "act4-trial",
+   "shots": [
+    {
+     "id": "4.01",
+     "type": "MED",
+     "sec": 12.4,
+     "vo": "He was interrogated for weeks. Under guard, he was made to send messages to Israel. Then Syria sent a message of its own, telling Israel its agent was in Syrian hands.",
+     "visual": "A shadowed corridor with a closed door; then a Syrian officer at the radio key tapping a message.",
+     "onscreen": "",
+     "anim": "A light under the door flickers; tapping.",
+     "img": ""
+    },
+    {
+     "id": "4.02",
+     "type": "MED",
+     "sec": 4.5,
+     "vo": "A military court tried him quickly. The verdict was death.",
+     "visual": "A military courtroom; officers at a long table; Eli standing; the radio key on the evidence table.",
+     "onscreen": "",
+     "anim": "The gavel falls.",
+     "img": ""
+    },
+    {
+     "id": "4.03",
+     "type": "MED",
+     "sec": 10.6,
+     "vo": "Israel asked for mercy. So did governments and figures around the world, including the Pope. Israel reportedly offered prisoners, money and medicine in exchange. Syria refused.",
+     "visual": "Telegrams and letters landing on a desk in Damascus, stamped REFUSED one after another.",
+     "onscreen": "",
+     "anim": "Stamps thump down.",
+     "img": ""
+    },
+    {
+     "id": "4.04",
+     "type": "CU",
+     "sec": 10.6,
+     "vo": "On his last night, he wrote to Nadia. He asked her not to spend her life mourning, to look after the children, and to marry again.",
+     "visual": "A dim cell; Eli writing by a small lamp; the words on paper in Arabic script.",
+     "onscreen": "\"MY DEAR NADIA\"",
+     "anim": "The pen moves; the lamp flickers.",
+     "img": ""
+    }
+   ],
+   "sec": 38.1,
+   "words": 93
+  },
+  {
+   "name": "Act 5: Marjeh Square",
+   "folder": "act5-execution-legacy",
+   "shots": [
+    {
+     "id": "5.01",
+     "type": "WIDE",
+     "sec": 12.1,
+     "vo": "Before dawn on the eighteenth of May 1965, he was hanged in Marjeh Square in central Damascus. His body was left in public for hours, and the event was broadcast.",
+     "visual": "Marjeh Square at dawn: a silent crowd with their backs to the camera; the scene beyond them out of focus.",
+     "onscreen": "MARJEH SQUARE \u00b7 18 MAY 1965",
+     "anim": "Slow push over the crowd's shoulders; no detail beyond.",
+     "img": ""
+    },
+    {
+     "id": "5.02",
+     "type": "MED",
+     "sec": 8.3,
+     "vo": "Syria never returned his body. His family says the grave was moved several times so it could never be found.",
+     "visual": "An unmarked patch of ground; then the same ground at night with lanterns and shovels.",
+     "onscreen": "",
+     "anim": "Lanterns bob; then darkness.",
+     "img": ""
+    },
+    {
+     "id": "5.03",
+     "type": "MED",
+     "sec": 11.3,
+     "vo": "Two years later, in the 1967 war, Israel captured the Golan Heights. How much his reports helped is still debated, but in Israel he became a national hero.",
+     "visual": "The Golan map turning to Israeli control in 1967; then a street sign with his name.",
+     "onscreen": "1967",
+     "anim": "The map colour shifts; the street sign appears.",
+     "img": ""
+    },
+    {
+     "id": "5.04",
+     "type": "MED",
+     "sec": 10.2,
+     "vo": "In 2018, Israel's intelligence service recovered his wristwatch. In 2025, it said it had brought back thousands of documents and belongings from his Syrian file.",
+     "visual": "A wristwatch in a velvet box handed to an elderly woman; then archive boxes with letters and keys.",
+     "onscreen": "2018 \u00b7 2025",
+     "anim": "The box opens; the watch ticks.",
+     "img": ""
+    },
+    {
+     "id": "5.05",
+     "type": "WIDE",
+     "sec": 13.2,
+     "vo": "Nadia Cohen spent her life asking for his remains. For one country he was a hero; for the other, a traitor who had fooled them all. Either way, nobody had fooled them better.",
+     "visual": "The tea tin, empty, on a windowsill; Damascus rooftops at sunset beyond.",
+     "onscreen": "",
+     "anim": "Slow push to the tin; fade out.",
+     "img": ""
+    }
+   ],
+   "sec": 55.1,
+   "words": 136
+  }
+ ],
+ "hooks": [
+  [
+   "They switched off Damascus block by block until his radio went silent. Then they broke down his door.",
+   56
+  ],
+  [
+   "He toured Syria's secret bunkers on the Golan. Four months after he was caught, he was hanged in public.",
+   53
+  ]
+ ],
+ "launch": {
+  "titles": [
+   "Why Syria Hanged Eli Cohen in Public",
+   "How Syria Caught Israel's Greatest Spy (Part 2)",
+   "The Spy Who Planted Trees on the Golan"
+  ],
+  "thumb": "A man in a 1960s suit at a dark window tapping a radio key, a van with an antenna in the street below, red searchlight beam. Painterly style. Text: CAUGHT.",
+  "reels": [
+   "The eucalyptus trees on the Golan",
+   "The water plan he exposed",
+   "The deputy minister rumour",
+   "He transmitted too often",
+   "His last visit home",
+   "The Indian embassy's radio complaint",
+   "Blackout, block by block",
+   "Caught mid-message",
+   "Syria's message to Israel",
+   "Even the Pope asked for mercy",
+   "His last letter to Nadia",
+   "Marjeh Square, 1965",
+   "The grave that kept moving",
+   "The wristwatch came home",
+   "Hero or traitor?"
+  ]
+ },
+ "fixes": [
+  "Eucalyptus trees: widely told but not confirmed in official records; script calls it 'the most famous story' and 'legend'.",
+  "Deputy defence minister: rumour only; source's 'almost became president' dropped.",
+  "Capture: 24 Jan 1965 by Syrian counter-intelligence (Col. Ahmad Suwaydani's service is often named) using Soviet direction-finding equipment; the Indian embassy's radio interference complaints are commonly cited as a trigger. Power-cut search method is from multiple accounts.",
+  "Clemency appeals came from many governments and figures including Pope Paul VI. Israel's offers of exchange are reported, not officially detailed: script says 'reportedly'.",
+  "Hanged 18 May 1965 in Marjeh Square, Damascus; body displayed for hours; broadcast on Syrian TV.",
+  "Remains never returned. Family and Israeli reports say the burial site was moved; source's 'three times' kept as 'several times'.",
+  "Wristwatch recovered by Mossad in 2018. In May 2025 Israel announced it had obtained about 2,500 documents, photos and belongings from Syria's Eli Cohen archive.",
+  "Contribution to 1967 Golan capture is debated by historians; script says so.",
+  "Source claim that the bin Laden family's company held a Golan contract and Eli 'reached' it: unverified, dropped. Girlfriends/hidden camera claims dropped (unsourced)."
+ ],
+ "cuts": [
+  "Sponsor reads cut. Execution shown only through the crowd and empty square."
+ ]
+}

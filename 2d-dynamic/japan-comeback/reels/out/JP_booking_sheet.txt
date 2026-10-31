@@ -1,0 +1,16 @@
+Japan comeback reels booking sheet. Columns: # | title | Drive video id | Drive thumb id. Descriptions: JP_Reels_Titles_Descriptions.txt (Drive 1pBFZuE8_fNCZrMSN5KTYPsceVpjJTU1g)
+01. "When Japan's Newspapers Taught People to Eat Rats" | video 12ZxbM3i0Pn-DOCyeB8maUuTFb_fg0R7r | thumb 16Yfi3f47cMJdz1W3l_UugXcHDQ0-ZeCZ
+02. "The 'Bamboo-Shoot Life' That Kept Japan Alive" | video 1M1CEEcDkQ7bJt3-6uLoK40b82FIj0J3B | thumb 1Yz3ARRlqRejiXVwCf0wl8aZgGHFNg6sq
+03. "The Photo That Shocked Japan" | video 1YEyxpOzM48ys__Gncg_3yVZzzlf68B1G | thumb 1op_5bFB6vFbHUfQjbEyhaZNUZE4tuykG
+04. "The Country That Gave Up War in Its Constitution" | video 15IBp002697uexZLfvs-laYxw7kx96fJN | thumb 1gCkybmUiB3JiBaCbSh7PAHue58eNSac3
+05. "How the Korean War Saved Japan's Economy" | video 1KnFnW4807rIcyF4uEw5n7qPhgCaQASzq | thumb 1XsmBWaeZkYN2bi3KHYy9AZbK6MjEhHWJ
+06. "Toyota Almost Died in 1950" | video 1PcbxR43BuvTNvSPXusjOhLkM7WEJMDOH | thumb 13qD_PRh4Iq2jAb73EQ7LPcYhSjezE0Ce
+07. "The Toyota America Laughed At" | video 1B8ns_c6IBrYFw_OISajvLgEPry1Lr0wt | thumb 1ErOOD5Rfn_P8RSX_246rrt9BDuY-jrfk
+08. "The Rule That Made Toyota Unbeatable" | video 1hZ4sMC_OwqIjFU4LdOp1KxM6cQW5y8LV | thumb 1zCfRPINyOA_GNbj772Q_9Gduml8G7GLw
+09. "Sony's First Product Was a Terrible Rice Cooker" | video 12JIv5Ik5fTYBDBkZoX8zxwkCg04yydp8 | thumb 13tfkSKUnaeMm_LOUdBwW8N2PgxSOizAj
+10. "Why Sony Said No to 100,000 Radios" | video 1G9yXpD_HNBUreXub8ffLbrTWpNIV_gVw | thumb 1wCm7-vNWKxKBbJr4QYIpiI9SsNioe2kG
+11. "Honda Started With an Engine on a Bicycle" | video 1vepgAJdKxAvzQSpp6s02ViSgJ3vRcspJ | thumb 1nFyqrBvn6n5WXX-vYG9leWT-ml9Ce3Lb
+12. "The Village Kids Who Built Japan" | video 1IkBNhMwQR_5N48u4Iv38rLuVevuOCoTU | thumb 1UengJq3X6r-ESz8WHBxfdhGDoL3ow0mO
+13. "Japan's Economic Miracle Was Built on Savings" | video 1nDvvNLJQwuNHp8HXDiEgP04EvmdHZS3l | thumb 1pzez72DGhJ60CV99AVgv_mK80anbpX2s
+14. "The Torchbearer Born the Day Hiroshima Was Bombed" | video 1ne0z6YSHwG8UXaknXvmGsobMl5ok2sdu | thumb 1wAb81YcwX6R5MZyobJmBJ0Os1BMGw_Sb
+15. "Fall Seven Times, Stand Up Eight" | video 1Or5ELmDQE7yOOgaJGDXKjraJRGUnkHeB | thumb 1LRQkiG_pc6vJKXVJIOdnFFiihJ9wEHqn

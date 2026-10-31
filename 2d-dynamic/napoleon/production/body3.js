@@ -1,0 +1,91 @@
+const scope = cc => wr => { cc.save(); cc.translate(wr[0], wr[1]); cc.rotate(-.15); cc.fillStyle = '#2a2a2a'; cc.fillRect(-4, -6, 46, 10); cc.fillStyle = '#c8a040'; cc.fillRect(36, -7, 10, 12); cc.fillRect(-6, -5, 6, 8); cc.restore(); };
+const cart = (c, x, y, s, lt, load = '#c8b898', mv = 0) => { c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = S.rgba('#000000', .25); c.beginPath(); c.ellipse(0, 4, 80, 8, 0, 0, TAU); c.fill();
+  c.fillStyle = '#6a4a2a'; c.fillRect(-70, -60, 130, 34); c.fillStyle = load; c.beginPath(); c.ellipse(-6, -62, 62, 22, 0, Math.PI, TAU); c.fill(); c.strokeStyle = S.rgba('#5a4a3a', .5); c.lineWidth = 2; for (let k = -2; k <= 2; k++) { c.beginPath(); c.moveTo(-6 + k * 22, -84); c.lineTo(-6 + k * 22, -60); c.stroke(); }
+  c.strokeStyle = '#3a2410'; c.lineWidth = 5; c.beginPath(); c.arc(-30, -20, 22, 0, TAU); c.stroke(); c.lineWidth = 2; for (let k = 0; k < 6; k++) { const a = k / 6 * TAU + mv; c.beginPath(); c.moveTo(-30, -20); c.lineTo(-30 + Math.cos(a) * 22, -20 + Math.sin(a) * 22); c.stroke(); } c.lineWidth = 4; c.beginPath(); c.moveTo(60, -40); c.lineTo(120, -30); c.stroke(); c.restore(); };
+const BRO = (name, hair) => Object.assign({}, C.MARSHAL2, { name, hairCol: hair, headwear: S.SPX.laurel });
+const BROS = [[BRO('Joseph', S.SPX.HR.brown), 'JOSEPH', PL.naples], [BRO('Louis', S.SPX.HR.black), 'LOUIS', PL.holland], [BRO('Jerome', S.SPX.HR.brown), 'JÉRÔME', PL.westphalia]];
+const EMP = [[PL.paris, 150], [PL.holland, 90], [PL.westphalia, 110], [PL.naples, 100], [[560, 450], 110], [PL.vienna, 70]];
+const hill = (c, x, y, w, h, col) => { c.fillStyle = col; c.beginPath(); c.ellipse(x, y, w, h, 0, 0, TAU); c.fill(); c.strokeStyle = S.rgba('#5a3a1a', .5); c.lineWidth = 2; for (let k = 1; k < 4; k++) { c.beginPath(); c.ellipse(x, y, w * (1 - k * .22), h * (1 - k * .22), 0, 0, TAU); c.stroke(); } };
+const block = (c, x, y, col, a = 1) => { c.save(); c.globalAlpha = a; c.fillStyle = col; c.fillRect(x - 22, y - 8, 44, 16); c.strokeStyle = S.rgba('#000000', .4); c.strokeRect(x - 22, y - 8, 44, 16); c.restore(); };
+
+window.SHOTS = [
+  // 3.01 WIDE: Austerlitz at dawn; enemy columns on the heights; Napoleon on a smaller hill with a telescope
+  { set: 'np_frost', cam: { z: [1.0, 1.08], x: [640, 600], y: [400, 420], ease: E.io }, bed: [['wind_loop', .25], ['drum_loop', .15]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tM = at(Sh, 'more men', 5.5); },
+    draw: (c, lt, u, Sh) => { const L = DAWN(lt);
+      for (let r = 0; r < 3; r++) for (let k = 0; k < 9; k++) { const x = 760 + k * 50 + r * 20 + Math.sin(lt * .5) * 4, y = 330 + r * 22 - k * 3; c.fillStyle = r % 2 ? '#2a4a2a' : '#e8e8e8'; c.fillRect(x - 3, y - 18, 6, 18); c.fillStyle = '#1e1e24'; c.fillRect(x - 3, y - 22, 6, 5); c.strokeStyle = '#8a8a90'; c.lineWidth = 1; c.beginPath(); c.moveTo(x + 2, y - 18); c.lineTo(x + 4, y - 30); c.stroke(); }
+      S.npFlag(c, 980, 300, .4, lt, ['#f4f0e8', '#d8b040', '#1e1e1e'], false);
+      fig(c, C.MARSHAL, 140, 500, 34, pose(lt, 1, { face: 1, shN: 20, elN: 60 }), lt, 1, L, { look: [.6, -.2] });
+      fig(c, C.NAP, 250, 488, 36, pose(lt, 0, { face: 1, shN: 100, elN: 150, holdN: scope(c) }), lt, 0, L, { look: [1, -.2] });
+      VP.motes(c, lt, 0, 300, 1280, 300, { n: 12 }); },
+    over: [(c, lt) => K.dateTag(c, 'AUSTERLITZ · 2 DEC 1805', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'OUTNUMBERED · BELOW THE HEIGHTS', lt, { at: Sh.tM, x: 1240, y: 150, px: 46, rot: -2 })],
+    sfx: [[.2, 'wind_loop', .25], [.3, 'drum_loop', .15], ['more men', 'drum', .4]] },
+
+  // 3.02 MED: the battle map; enemy arrows go down to the weak French right; a big blue arrow drives up the middle and splits them
+  { set: 'np_parch', cam: { z: [1.0, 1.04], x: [640, 640], y: [360, 360], ease: E.io }, bed: [['drone', .15]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tW = at(Sh, 'weak', 2); Sh.tD = at(Sh, 'came down', 4.5); Sh.tU = at(Sh, 'middle', 8.5); Sh.tC = at(Sh, 'cut', Sh.dur - 1.5); },
+    draw: (c, lt, u, Sh) => { const down = seg(lt, Sh.tD, Sh.tD + 2.5), up = seg(lt, Sh.tU, Sh.tU + 2.2);
+      hill(c, 700, 300, 260, 110, '#c8a878'); hill(c, 260, 330, 90, 50, '#c8a878'); S.npLabel(c, 'PRATZEN HEIGHTS', 700, 230, 1, 30);
+      c.strokeStyle = S.rgba('#4a7ab0', .7); c.lineWidth = 8; c.beginPath(); c.moveTo(980, 640); c.quadraticCurveTo(940, 480, 1020, 360); c.stroke();
+      // enemy columns: start on the heights, swing south to the French right
+      for (let k = 0; k < 5; k++) { const x = lerp(560 + k * 70, 860 + k * 40, E.io(down) * (k > 1 ? 1 : .2)), y = lerp(290, 520 + (k % 2) * 30, E.io(down) * (k > 1 ? 1 : .2)); block(c, x, y, '#b82a22'); }
+      // French: strong centre (hidden in fog), thin right
+      for (let k = 0; k < 4; k++) block(c, 300 + k * 60 + E.io(up) * 260, 520 - E.io(up) * 230, '#2a4aa0');
+      for (let k = 0; k < 2; k++) block(c, 900 + k * 60, 600, '#2a4aa0', .9);
+      if (lt > Sh.tW && lt < Sh.tD + 1) S.npLabel(c, 'WEAK ON PURPOSE', 1080, 560, seg(lt, Sh.tW, Sh.tW + .4), 30, '#2a4aa0');
+      if (down > 0) for (let k = 2; k < 5; k++) S.npArrow(c, [600 + k * 70, 330], [860 + k * 40, 470], E.io(down), '#b82a22', 14);
+      S.npArrow(c, [420, 560], [680, 310], E.io(up), '#2a4aa0', 34);
+      const cut = seg(lt, Sh.tC, Sh.tC + .5); if (cut > 0) { c.save(); c.globalAlpha = cut; c.strokeStyle = '#2a4aa0'; c.lineWidth = 10; c.setLineDash([18, 12]); c.beginPath(); c.moveTo(690, 140); c.lineTo(700, 560); c.stroke(); c.restore(); S.npLabel(c, 'SPLIT IN TWO', 840, 140, cut, 38, '#2a4aa0'); } },
+    over: [],
+    sfx: [[.2, 'drone', .15], ['weak', 'tick', .3], ['came down', 'whoosh', .4], ['middle', 'drum', .45], ['cut', 'hit', .5]] },
+
+  // 3.03 MED: the map of Europe filling with blue; three brothers in crowns appear over their kingdoms
+  { set: 'np_parch', cam: { z: [1.0, 1.06], x: [640, 620], y: [360, 380], ease: E.io }, bed: [['drone', .15]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tF = at(Sh, 'famous', 1); Sh.tH = at(Sh, 'Holy Roman', 3.5); Sh.tB = at(Sh, 'brothers', 6.5); },
+    draw: (c, lt, u, Sh) => { const q = seg(lt, Sh.tF, Sh.tB);
+      S.npEurope(c, { fill: cc => { cc.beginPath(); EMP.forEach(([p, r], i) => { const f = E.out(seg(q, i * .12, i * .12 + .4)); if (f > 0) { cc.moveTo(p[0] + r * f, p[1]); cc.arc(p[0], p[1], r * f, 0, TAU); } }); cc.fillStyle = S.rgba('#3a5ab8', .6); cc.fill(); } });
+      const h = seg(lt, Sh.tH, Sh.tH + .5); if (h > 0) { S.npLabel(c, 'HOLY ROMAN EMPIRE', 560, 400, h, 30); const x2 = seg(lt, Sh.tH + .8, Sh.tH + 1.3); if (x2 > 0) { c.strokeStyle = '#b82a22'; c.lineWidth = 6; c.beginPath(); c.moveTo(440, 392); c.lineTo(440 + 240 * x2, 392); c.stroke(); } }
+      BROS.forEach(([ch, nm, p], k) => { const a = seg(lt, Sh.tB + k * .7, Sh.tB + k * .7 + .5); if (a <= 0) return; const L = SUN(lt); c.save(); c.globalAlpha = a; c.strokeStyle = '#3a2410'; c.lineWidth = 2; c.beginPath(); c.moveTo(p[0], p[1]); c.lineTo(p[0] + 60 + k * 40, p[1] - 150 + k * 30); c.stroke(); c.restore();
+        S.szCard(c, p[0] + 60 + k * 40, p[1] - 150 + k * 30, 170, 210, ch, nm, L, lt, k, a, ['#f0e4c4', '#c8b088']); }); },
+    over: [(c, lt, u, Sh) => K.badge(c, 'KINGS OF NAPLES · HOLLAND · WESTPHALIA', lt, { at: Sh.tB + 1.5 })],
+    sfx: [[.2, 'drone', .15], ['famous', 'whoosh', .35], ['Holy Roman', 'scrape', .35], ['brothers', 'pop', .3], ['Holland', 'pop', .3], ['Westphalia', 'pop', .3]] },
+
+  // 3.04 MED: a French port with a CLOSED warehouse; at night smugglers row crates ashore; a British ship sails past
+  { set: 'harbour', cam: { z: [1.0, 1.06], x: [640, 660], y: [380, 390], ease: E.io }, bed: [['ocean_loop', .3]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tB = at(Sh, 'banned', 4); Sh.tS = at(Sh, 'Smuggling', 7.5); Sh.tK = at(Sh, 'kept', Sh.dur - 2.5); },
+    draw: (c, lt, u, Sh) => { const night = seg(lt, Sh.tS - .6, Sh.tS), L = night > .5 ? NIGHT(lt) : SUN(lt);
+      c.fillStyle = '#c8b090'; c.fillRect(150, 470, 300, 170); c.fillStyle = '#8a3a2a'; c.beginPath(); c.moveTo(130, 474); c.lineTo(300, 410); c.lineTo(470, 474); c.fill(); c.fillStyle = '#4a3020'; c.fillRect(250, 540, 100, 100);
+      const b = seg(lt, Sh.tB, Sh.tB + .4); if (b > 0) { c.save(); c.translate(300, 520); c.rotate(-.06); c.scale(.6 + .4 * E.out(b), .6 + .4 * E.out(b)); c.fillStyle = '#f0e4c4'; c.fillRect(-90, -24, 180, 48); c.strokeStyle = '#3a2410'; c.lineWidth = 3; c.strokeRect(-90, -24, 180, 48); c.fillStyle = '#b82a22'; c.font = '34px Anton'; c.textAlign = 'center'; c.fillText('CLOSED', 0, 12); c.restore(); }
+      if (night < 1) fig(c, C.FR, 520, 650, 34, pose(lt, 1, { face: -1, holdN: musket(c, -1.4) }), lt, 1, L, { look: [-.5, 0] });
+      if (night > 0) { c.fillStyle = S.rgba('#0a1030', .6 * night); c.fillRect(0, 0, 1280, 720);
+        const bx = lerp(1400, 960, E.out(seg(lt, Sh.tS, Sh.tS + 4))); H1.boat(c, bx, 500, .6, lt, { sail: false, hull: '#3a2a1e' });
+        for (let k = 0; k < 3; k++) { c.fillStyle = '#8a6a3a'; c.fillRect(bx - 26 + k * 17, 480, 15, 12); }
+        fig(c, C.SMUG, bx - 30, 500, 18, pose(lt, 3, { face: -1, shN: 60 + 30 * Math.sin(lt * 3), elN: 60, sitY: VP.sitY(C.SMUG) }), lt, 3, L, { look: [-.5, 0] });
+        fig(c, C.SMUG, bx + 34, 500, 18, pose(lt, 4, { face: -1, shN: 70 + 30 * Math.sin(lt * 3 + 1), elN: 50, sitY: VP.sitY(C.SMUG) }), lt, 4, L, { look: [-.5, 0] });
+        if (lt > Sh.tK - 1) S.npShip(c, lerp(1500, 900, seg(lt, Sh.tK - 1, Sh.dur + 2)), 440, .4, -1, lt, { flag: 'uk' }); } },
+    over: [(c, lt) => K.dateTag(c, 'THE CONTINENTAL SYSTEM · 1806', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'NO TRADE WITH BRITAIN', lt, { at: Sh.tB + .4, until: Sh.tS, x: 1320, y: 150, px: 52, rot: -2 })],
+    sfx: [[.2, 'ocean_loop', .3], ['banned', 'stamp', .5], ['Smuggling', 'splash', .3], ['kept', 'creak', .3]] },
+
+  // 3.05 MED: a Spanish mountain road; villagers with muskets on the rocks above a French supply column; smoke from an ambush
+  { set: 'pass', cam: { z: [1.0, 1.08], x: [640, 640], y: [400, 420], ease: E.io }, bed: [['wind_loop', .25]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tJ = at(Sh, 'Joseph', 2); Sh.tG = at(Sh, 'guerrilla', 6.5); Sh.tA = at(Sh, 'Ambushes', 9); },
+    draw: (c, lt, u, Sh) => { const L = SUN(lt), hit = lt > Sh.tA;
+      [[150, 400, C.GUERR, 1], [260, 380, C.GUERR2, 1], [1060, 390, C.GUERR, -1], [1150, 410, C.GUERR2, -1]].forEach(([x, y, ch, f], k) => { c.fillStyle = '#7a7060'; c.beginPath(); c.ellipse(x, y + 10, 60, 22, 0, 0, TAU); c.fill(); fig(c, ch, x, y, 22, pose(lt, k, { face: f, shN: 80, elN: 10, holdN: musket(c, .3) }), lt, k, L, { look: [f * .6, .5] }); if (hit) { const t = (lt - Sh.tA + k * .4) % 1.6; if (t < .2) VP.glow(c, x + f * 50, y - 20, 30, '#ffd080', .8); S.npSmoke(c, lt, x + f * 30, y - 60, 120, 40, .25, k * 5); } });
+      const mv = hit ? 0 : 1, cx = 640 + (hit ? 0 : (lt - Sh.tA) * 30);
+      [C.FR, C.FR2, C.FR].forEach((ch, k) => { const x = cx - 220 + k * 120; fig(c, ch, x, 600 + (k % 2) * 12, 32, hit ? pose(lt, k, { face: k % 2 ? 1 : -1, shN: 60, elN: 60, holdN: musket(c, -1.0) }) : walk(lt, k, { face: 1, holdN: musket(c, -1.3) }), lt, k + 4, L, { worry: hit ? 1 : 0, look: [0, -.6] }); });
+      cart(c, cx + 180, 620, .9, lt, '#c8b898', hit ? 0 : lt * 2); },
+    over: [(c, lt) => K.dateTag(c, 'SPAIN · 1808', lt, { at: .4 }), (c, lt, u, Sh) => K.badge(c, 'KING JOSEPH BONAPARTE', lt, { at: Sh.tJ, until: Sh.tG }), (c, lt, u, Sh) => K.card(c, 'GUERRILLA = "LITTLE WAR"', lt, { at: Sh.tG, x: 1320, y: 150, px: 52, rot: -2 })],
+    sfx: [[.2, 'wind_loop', .25], [.5, 'march_loop', .25], ['Ambushes', 'musket', .5], ['hills', 'musket', .45], ['year', 'musket', .4]] },
+
+  // 3.06 MED: Napoleon at the map table jabbing at Spain; an aide hands him another casualty list
+  { set: 'sz_office', cam: { z: [1.05, 1.15], x: [640, 640], y: [420, 440], ease: E.io }, bed: [['clock_loop', .2]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tU = at(Sh, 'ulcer', 1.5); Sh.tD = at(Sh, 'drained', 4); },
+    draw: (c, lt, u, Sh) => { const L = SUN(lt), jab = Math.max(0, Math.sin(lt * 6)) * (lt < Sh.tD ? 1 : 0);
+      fig(c, C.NAP, 520, 640, 42, pose(lt, 0, { face: 1, shN: 60 + 20 * jab, elN: 40 - 30 * jab, lean: 12 }), lt, 0, L, { look: [.5, .6], worry: .4 });
+      c.fillStyle = '#5a3a24'; c.fillRect(560, 560, 300, 20); c.fillRect(580, 578, 14, 70); c.fillRect(830, 578, 14, 70); c.fillStyle = '#e8d8b0'; c.fillRect(580, 548, 260, 14); c.fillStyle = '#c8a878'; c.beginPath(); c.ellipse(650, 554, 40, 5, 0, 0, TAU); c.fill(); c.fillStyle = '#b82a22'; c.beginPath(); c.arc(650, 553, 5, 0, TAU); c.fill();
+      const w = seg(lt, Sh.tD - 1.2, Sh.tD + .6); fig(c, C.AIDE, lerp(1360, 960, E.out(w)), 650, 40, w < 1 ? walk(lt, 2, { face: -1 }) : pose(lt, 2, { face: -1, shN: 80, elN: 10, holdN: wr => { c.fillStyle = '#f0e8d0'; c.fillRect(wr[0] - 24, wr[1] - 16, 26, 34); c.strokeStyle = S.rgba('#5a4a3a', .6); for (let k = 0; k < 5; k++) { c.beginPath(); c.moveTo(wr[0] - 20, wr[1] - 10 + k * 6); c.lineTo(wr[0] - 2, wr[1] - 10 + k * 6); c.stroke(); } } }), lt, 2, L, { look: [-.6, 0] }); },
+    over: [(c, lt, u, Sh) => K.card(c, '"THE SPANISH ULCER"', lt, { at: Sh.tU, x: 1320, y: 150, px: 56, rot: -2 }), (c, lt, u, Sh) => K.badge(c, 'SIX YEARS OF WAR', lt, { at: Sh.tD })],
+    sfx: [[.2, 'clock_loop', .2], ['ulcer', 'thud', .4], ['drained', 'paper', .3]] },
+];
+VP.build(); K.boot();
+</script></body></html>

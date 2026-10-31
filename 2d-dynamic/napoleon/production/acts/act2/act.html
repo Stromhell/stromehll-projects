@@ -1,0 +1,96 @@
+<!doctype html><html><head><meta charset="utf-8"><title>NP act 2</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/vp/engine.js"></script><script src="../../../../shared/vp/cast.js"></script><script src="../../../../shared/vp/scenes.js"></script><script src="../../../../shared/vp/spain.js"></script>
+<script src="../../../../shared/kit.js"></script><script src="../../../../shared/vp.js"></script>
+<script src="../../../../spain-1-al-andalus/production/es1_sets.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act1.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act4.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act5.js"></script><script src="../../../../spain-1-al-andalus/production/es1_cast.js"></script>
+<script src="../../../../spain-2-empire/production/es2_sets.js"></script><script src="../../../../spain-2-empire/production/es2_sets_act2.js"></script>
+<script src="../../../../spain-3-civil-war/production/es3_sets.js"></script><script src="../../../../spain-3-civil-war/production/es3_sets_act4b.js"></script><script src="../../../../spain-3-civil-war/production/es3_sets_act5b.js"></script><script src="../../../../spain-3-civil-war/production/es3_cast.js"></script>
+<script src="../../../../japan-comeback/production/jp_cast.js"></script><script src="../../../../japan-comeback/production/jp_sets.js"></script>
+<script src="../../../../suez-canal/production/sz_sets.js"></script><script src="../../../../suez-canal/production/sz_sets2.js"></script><script src="../../../../suez-canal/production/sz_cast.js"></script><script src="../../../../suez-canal/production/sz_props.js"></script>
+<script src="../../np_sets.js"></script><script src="../../np_cast.js"></script><script src="../../np_props.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, E = K.E, C = S.NPC, SZC = S.SZC, H1 = S.ES1H, PL = S.npPlaces, TAU = Math.PI * 2;
+const at = VP.at, seg = K.seg, lerp = K.lerp;
+const SUN = lt => VP.light('studio', lt, { swing: 3, set: { L: [.6, -.9], amb: '#6a5a4a', ambA: .2, rim: '#fff0d0', rimA: .8, tint: '#ffe8c0', tintA: .08 } });
+const DUSK = lt => VP.light('studio', lt, { swing: 3, set: { L: [-.7, -.6], amb: '#4a3a5a', ambA: .3, rim: '#ffc890', rimA: .9, tint: '#ffb070', tintA: .14 } });
+const DAWN = lt => VP.light('studio', lt, { swing: 3, set: { L: [.7, -.5], amb: '#5a5a7a', ambA: .25, rim: '#ffd0a0', rimA: .9, tint: '#ffc8a0', tintA: .1 } });
+const COLD = lt => VP.light('studio', lt, { swing: 2, set: { L: [.3, -.9], amb: '#6a7a8a', ambA: .3, rim: '#e8f0ff', rimA: .7, tint: '#c8d8f0', tintA: .12 } });
+const GREY = lt => VP.light('studio', lt, { swing: 2, set: { L: [.4, -.9], amb: '#5a5a5a', ambA: .3, rim: '#f0f0f0', rimA: .6, tint: '#d0d0c8', tintA: .1 } });
+const NIGHT = lt => VP.light('studio', lt, { swing: 2, set: { L: [-.6, -.7], amb: '#2a3050', ambA: .45, rim: '#a8b8e8', rimA: .8, tint: '#4a5a9a', tintA: .2 } });
+const CANDLE = lt => VP.light('studio', lt, { swing: 6, set: { L: [-.8, -.4], amb: '#2a1a10', ambA: .45, rim: '#ffb050', rimA: 1, tint: '#ff9a40', tintA: .16 } });
+const FIRE = lt => VP.light('studio', lt, { swing: 8, set: { L: [.8, -.3], amb: '#3a1a10', ambA: .4, rim: '#ff8a30', rimA: 1, tint: '#ff7a30', tintA: .2 } });
+const fig = (c, ch, x, y, uu, pose, lt, k, L, f = {}) => { S.contact(c, x, y, uu * .5, .35); VP.figure(c, [x, y], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, ch, x, y, uu, pose, Object.assign({ blink: S.blinkAt(lt, k), time: lt }, f), L)); };
+const pose = (lt, k, o) => Object.assign(S.idle(lt, k), o);
+const walk = (lt, k, o) => Object.assign(H1.walk(lt * 1.1 + k), o);
+const musket = (cc, a = -1.2) => wr => S.npMusket(cc, wr[0], wr[1], a, .9);
+const ride = (c, ch, x, y, uu, col, lt, ph, wk, L, po = {}, f = {}, face = 1) => VP.figure(c, [x, y], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => VP.rider(cc, ch, x, y, uu, uu * 5, { face, ph, walk: wk, t: lt, col, tack: { cloth: ['#1e3a7a', '#0e1c3e'], trim: '#d8b040' } }, Object.assign({ lean: 2 }, po), Object.assign({ blink: S.blinkAt(lt, 3), time: lt }, f), L));
+const WHITEH = ['#e8e4dc', '#a8a49c'], BAY = ['#6a3a1e', '#3a1e0e'], GREYH = ['#8a8a8a', '#4a4a4a'];
+const pyramids = (c, lt) => { [[860, 470, 210, '#d8b070'], [1060, 480, 150, '#d0a868'], [700, 486, 110, '#c89e60']].forEach(([x, y, r, col]) => { c.fillStyle = col; c.beginPath(); c.moveTo(x - r, y); c.lineTo(x, y - r * .9); c.lineTo(x + r, y); c.fill(); c.fillStyle = S.rgba('#6a4a2a', .35); c.beginPath(); c.moveTo(x, y - r * .9); c.lineTo(x + r, y); c.lineTo(x + r * .2, y); c.fill(); c.strokeStyle = S.rgba('#8a6a3a', .25); c.lineWidth = 1; for (let k = 1; k < 10; k++) { const yy = y - k * r * .09; c.beginPath(); c.moveTo(x - r * (1 - k * .1), yy); c.lineTo(x + r * (1 - k * .1), yy); c.stroke(); } }); };
+const rod = cc => wr => { cc.strokeStyle = '#d8c8a0'; cc.lineWidth = 3; cc.beginPath(); cc.moveTo(wr[0], wr[1] - 70); cc.lineTo(wr[0], wr[1] + 40); cc.stroke(); for (let k = 0; k < 6; k++) { cc.fillStyle = k % 2 ? '#c82a2a' : '#f4f0e8'; cc.fillRect(wr[0] - 2, wr[1] - 70 + k * 18, 4, 18); } };
+const NAPL = Object.assign({}, C.NAPEMP, { headwear: S.SPX.laurel || null });
+
+window.SHOTS = [
+  // 2.01 WIDE: ragged French soldiers on an Alpine road; Bonaparte on horseback points down to the green plains of Italy
+  { set: 'valley', cam: { z: [1.0, 1.08], x: [640, 600], y: [400, 410], ease: E.io }, bed: [['wind_loop', .25], ['march_loop', .3]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tB = at(Sh, 'beat', 5.5); },
+    draw: (c, lt, u, Sh) => { const L = SUN(lt);
+      [C.FRRAG, C.FRRAG, C.FR2, C.FRRAG].forEach((ch, i) => { const x = ((lt * 34 + i * 190) % 1100) - 120, y = 640 + (i % 2) * 18; fig(c, ch, x, y, 34, walk(lt, i, { face: 1, holdN: musket(c, -1.3) }), lt, i, L, { look: [.4, 0], worry: .4 }); });
+      ride(c, C.NAPY, 1040, 620, 32, GREYH, lt, 0, 0, L, { shN: 100, elN: 6 }, { look: [-.7, .2] }, -1); },
+    over: [(c, lt) => K.dateTag(c, 'ITALY · 1796', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'VICTORY AFTER VICTORY', lt, { at: Sh.tB, x: 1320, y: 150, px: 54, rot: -2 })],
+    sfx: [[.2, 'wind_loop', .25], [.3, 'march_loop', .3], [1.5, 'hooves', .3], ['beat', 'drum', .4]] },
+
+  // 2.02 MED: before the Pyramids, scholars measure with rods; then the French fleet burns in the bay at night
+  { set: 'sz_dunes', cam: (lt, u, Sh) => lt < Sh.tR ? { z: [lerp(1.0, 1.06, seg(lt, 0, Sh.tR))], x: [640], y: [400] } : { z: [lerp(1.0, 1.08, seg(lt, Sh.tR, Sh.dur))], x: [640], y: [400] }, bed: [['wind_loop', .3]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tS = at(Sh, 'scientists', 4); Sh.tR = at(Sh, 'British', 6.5); Sh.tT = at(Sh, 'trapped', Sh.dur - 1.2); },
+    draw: (c, lt, u, Sh) => {
+      if (lt < Sh.tR) { const L = SUN(lt); pyramids(c, lt);
+        fig(c, C.SCHOLAR, 380, 620, 36, pose(lt, 1, { face: 1, shN: 40, elN: 60, holdN: rod(c) }), lt, 1, L, { look: [.6, -.2] });
+        fig(c, C.SCHOLAR, 540, 640, 36, pose(lt, 2, { face: -1, shN: 60, elN: 100, holdN: wr => { c.fillStyle = '#f0e8d0'; c.fillRect(wr[0] - 14, wr[1] - 20, 28, 22); } }), lt, 2, L, { look: [-.4, .5] });
+        fig(c, C.FR, 760, 650, 36, pose(lt, 3, { face: -1, holdN: musket(c, -1.4) }), lt, 3, L, { look: [-.5, 0] });
+        fig(c, C.NAP, 200, 650, 38, pose(lt, 0, { face: 1, shN: 30, elN: 90 }), lt, 0, L, { look: [.7, -.3] }); return; }
+      VP.drawSet(c, 'np_bay'); const L = NIGHT(lt), b = seg(lt, Sh.tR, Sh.tR + 3);
+      S.npShip(c, 520, 470, .55, 1, lt, { burn: b, flag: 'fr', sails: 1 - b * .6 }); S.npShip(c, 860, 500, .65, -1, lt, { burn: Math.max(0, b - .2), flag: 'fr', sails: 1 - b * .6 }); S.npShip(c, 1140, 440, .4, -1, lt, { flag: 'uk' });
+      S.npSmoke(c, lt, 400, 320, 700, 120, .3 * b, 3); },
+    over: [(c, lt) => K.dateTag(c, 'EGYPT · 1798', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, '150+ SCIENTISTS', lt, { at: Sh.tS, until: Sh.tR, x: 1340, y: 150, px: 54, rot: -2 }), (c, lt, u, Sh) => K.card(c, 'FLEET DESTROYED · ARMY TRAPPED', lt, { at: Sh.tT - .4, x: 1250, y: 150, px: 48, rot: 2 })],
+    sfx: [[.2, 'wind_loop', .3], ['scientists', 'paper', .3], ['British', 'cannon', .6], ['destroyed', 'cannon', .5], ['destroyed', 'fire_loop', .3], ['trapped', 'thud', .4]] },
+
+  // 2.03 MED: a small ship slips away at night; then Paris crowds cheering
+  { set: 'ocean', cam: (lt, u, Sh) => ({ z: [1.0], x: [640], y: [380] }), bed: [['ocean_loop', .35]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tT = at(Sh, 'triumph', 4.5); },
+    draw: (c, lt, u, Sh) => {
+      if (lt < Sh.tT - .3) { c.fillStyle = S.rgba('#0a1030', .7); c.fillRect(0, 0, 1280, 720); VP.glow(c, 1050, 120, 120, '#e8e8ff', .4); c.fillStyle = '#f0ecd8'; c.beginPath(); c.arc(1050, 120, 24, 0, TAU); c.fill();
+        c.fillStyle = '#0e1220'; c.beginPath(); c.moveTo(0, 410); c.quadraticCurveTo(200, 370, 420, 405); c.lineTo(420, 420); c.lineTo(0, 420); c.fill();
+        S.npShip(c, lerp(380, 900, seg(lt, 0, Sh.tT)), 520, .7, 1, lt, { flag: 'fr', hull: '#2a2420' });
+        const L = NIGHT(lt); fig(c, C.NAP, lerp(380, 900, seg(lt, 0, Sh.tT)) - 60, 500, 18, pose(lt, 0, { face: -1 }), lt, 0, L, { look: [-.8, 0] }); return; }
+      VP.drawSet(c, 'np_paris'); const L = SUN(lt);
+      [[C.SANS, 160, 0], [C.SANSW, 300, 1], [C.SANS2, 440, 2], [C.COURTIER, 840, 3], [C.SANSW, 980, 4], [C.SANS, 1120, 5]].forEach(([ch, x, k]) => { const j = Math.abs(Math.sin(lt * 5 + k)); fig(c, ch, x, 640 + (k % 2) * 14, 36, pose(lt, k, { face: x < 640 ? 1 : -1, shN: 150 + 20 * j, elN: 20, shF: 140, elF: 20, bob: .03 * j }), lt, k, L, { smile: 1, look: [0, -.4] }); }); },
+    over: [(c, lt, u, Sh) => K.card(c, 'A "TRIUMPH"', lt, { at: Sh.tT, x: 1340, y: 150, px: 60, rot: -2 })],
+    sfx: [[.2, 'ocean_loop', .35], [.5, 'creak', .3], ['triumph', 'crowd_cheer', .5]] },
+
+  // 2.04 MED: the government hall; soldiers with bayonets push in; politicians scramble out
+  { set: 'cortes', cam: { z: [1.0, 1.05], x: [640, 640], y: [380, 390], ease: E.io }, bed: [['crowd_loop', .3]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tP = at(Sh, 'power', 1.5); Sh.tT = at(Sh, 'thirty', 4.5); },
+    draw: (c, lt, u, Sh) => { const L = SUN(lt), w = seg(lt, Sh.tP - .5, Sh.tP + 2);
+      [[C.POL, 0], [C.POL2, 1], [C.POL, 2]].forEach(([ch, k]) => { const x = lerp(700 + k * 120, 1500 + k * 120, E.inn(w)); fig(c, ch, x, 640 + k * 10, 38, w > 0 ? Object.assign(H1.walk(lt * 2.4 + k), { face: 1, shN: 150, elN: 30 }) : pose(lt, k, { face: -1, shN: 40, elN: 80 }), lt, k, L, { worry: 1, look: [-.6, 0] }); });
+      [C.FR, C.FR2, C.FR].forEach((ch, k) => { const x = lerp(-120 - k * 120, 340 - k * 110, E.out(w)); fig(c, ch, x, 650 + (k % 2) * 12, 38, w < 1 ? walk(lt, k, { face: 1, holdN: musket(c, -.2) }) : pose(lt, k, { face: 1, holdN: musket(c, -.2) }), lt, k + 3, L, { look: [.6, 0] }); });
+      if (lt > Sh.tT - .6) fig(c, C.NAP, lerp(200, 560, E.out(seg(lt, Sh.tT - .6, Sh.tT + 1))), 660, 40, lt < Sh.tT + 1 ? walk(lt, 6, { face: 1 }) : pose(lt, 6, { face: 1, shN: 20, elN: 100 }), lt, 6, L, { look: [.4, -.1] }); },
+    over: [(c, lt) => K.dateTag(c, 'NOVEMBER 1799', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'RULER OF FRANCE AT 30', lt, { at: Sh.tT, x: 1320, y: 150, px: 54, rot: -2 })],
+    sfx: [[.2, 'crowd_loop', .3], ['seized', 'door_slam', .45], ['soldiers', 'march', .4], ['thirty', 'drum', .4]] },
+
+  // 2.05 CU: Notre-Dame full of candles; the Pope seated; Napoleon lifts the golden laurel crown over his own head
+  { set: 'np_notredame', cam: (lt, u, Sh) => ({ z: [lerp(1.0, 1.35, E.io(seg(lt, Sh.tT - 1, Sh.dur)))], x: [640], y: [lerp(400, 440, E.io(seg(lt, Sh.tT - 1, Sh.dur)))] }), bed: [['drone', .2], ['crowd_loop', .1]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tP = at(Sh, 'Pope', 3.5); Sh.tT = at(Sh, 'took', 6); Sh.tH = at(Sh, 'head', Sh.dur - 1); },
+    draw: (c, lt, u, Sh) => { const L = CANDLE(lt), up = seg(lt, Sh.tT, Sh.tH), on = lt > Sh.tH;
+      for (const x of [380, 900]) for (let k = 0; k < 3; k++) { c.fillStyle = '#e8e0cc'; c.fillRect(x + k * 24, 400, 6, 40); c.fillStyle = '#ffd070'; c.beginPath(); c.ellipse(x + 3 + k * 24, 394 + Math.sin(lt * 9 + k), 3, 7, 0, 0, TAU); c.fill(); VP.glow(c, x + 3 + k * 24, 396, 50, '#ffb050', .35); }
+      c.fillStyle = '#d8b040'; c.fillRect(404, 470, 10, 130); c.fillRect(470, 540, 8, 60); c.fillStyle = '#8a1a24'; c.fillRect(406, 476, 14, 70); c.fillRect(404, 542, 78, 10);
+      fig(c, C.POPE, 440, 600, 38, Object.assign(VP.sit(C.POPE, lt * .3, 2, { seat: .2 }), { face: 1 }), lt, 1, L, { look: [.7, -.2] });
+      fig(c, C.JOSEPHINE, 830, 610, 36, pose(lt, 2, { face: -1, shN: 30, elN: 90, shF: 30, elF: 90 }), lt, 2, L, { look: [-.6, -.2] });
+      const ch = on ? NAPL : C.NAPEMP; fig(c, ch, 640, 620, 42, pose(lt, 0, { face: 1, shN: on ? 10 : 20 + 150 * E.io(up), elN: on ? 10 : 20 - 10 * up, shF: on ? 10 : 20 + 150 * E.io(up), elF: on ? 10 : 20, holdN: !on && up > 0 ? wr => { c.save(); c.translate(wr[0] + 6, wr[1]); S.SPX.laurel(c, 40, 0, L, { front: true }); c.restore(); } : null }), lt, 0, L, { look: [0, up > .3 ? -1 : 0] });
+      c.fillStyle = '#5a3a24'; c.fillRect(548, 540, 24, 70); c.fillStyle = '#8a1a24'; c.beginPath(); c.ellipse(560, 538, 26, 8, 0, 0, TAU); c.fill(); if (lt < Sh.tT) { c.save(); c.translate(560, 560); S.SPX.laurel(c, 40, 0, L, {}); c.restore(); } },
+    over: [(c, lt) => K.dateTag(c, 'NOTRE-DAME · 2 DEC 1804', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'HE CROWNED HIMSELF', lt, { at: Sh.tH, x: 1320, y: 150, px: 56, rot: -2 })],
+    sfx: [[.2, 'drone', .2], ['Pope', 'bell', .35], ['took', 'swell', .4], ['head', 'crowd_cheer', .3]] },
+];
+VP.build(); K.boot();
+</script></body></html>

@@ -1,0 +1,123 @@
+<!doctype html><html><head><meta charset="utf-8"><title>JP act 1 - Year Zero</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/vp/engine.js"></script><script src="../../../../shared/vp/cast.js"></script><script src="../../../../shared/vp/scenes.js"></script><script src="../../../../shared/vp/spain.js"></script>
+<script src="../../../../shared/kit.js"></script><script src="../../../../shared/vp.js"></script>
+<script src="../../../../spain-1-al-andalus/production/es1_sets.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act1.js"></script><script src="../../../../spain-1-al-andalus/production/es1_cast.js"></script>
+<script src="../../../../spain-3-civil-war/production/es3_cast.js"></script>
+<script src="../../jp_cast.js"></script><script src="../../jp_sets.js"></script><script src="../../jp_sets_act1.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, E = K.E, J = S.JP, JX = S.JPX, H1 = S.ES1H, TAU = Math.PI * 2;
+const at = VP.at, seg = K.seg, lerp = K.lerp;
+const GREY = lt => VP.light('studio', lt, { swing: 3, set: { L: [.6, -.9], amb: '#4a4a52', ambA: .35, rim: '#e0d8d0', rimA: .5, tint: '#c8c4c0', tintA: .12 } });
+const DUSK = lt => VP.light('studio', lt, { swing: 3, set: { L: [-.8, -.4], amb: '#3a2a3a', ambA: .4, rim: '#ffa060', rimA: .9, tint: '#ff9a60', tintA: .12 } });
+const BULB = lt => VP.light('studio', lt, { swing: 6, set: { L: [.2, -1], amb: '#2a2018', ambA: .45, rim: '#ffd890', rimA: .9, tint: '#ffc870', tintA: .14 } });
+const DAY = lt => VP.light('studio', lt, { swing: 3, set: { L: [.7, -.8], amb: '#6a7a8a', ambA: .18, rim: '#fff8e8', rimA: .7, tint: '#fff4e0', tintA: .05 } });
+const night = (c, a, col) => { c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = `rgba(${col},${a})`; c.fillRect(0, 0, 1280, 720); c.restore(); };
+const fig = (c, ch, x, y, uu, pose, face, L, k = 0) => { S.contact(c, x, y, uu * .9, .35); VP.figure(c, [x, y], { k: .6, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, ch, x, y, uu, pose, Object.assign({ blink: S.blinkAt(face.time || 0, k) }, face), L)); };
+const hold = (fn) => fn;
+
+window.SHOTS = [
+  // 1.01 WIDE: the burnt city at dusk; a distant siren; then the map flashes on Hiroshima and Nagasaki
+  { set: 'jp_burnt', cam: (lt, u, Sh) => ({ z: [1.05], x: [lerp(560, 760, E.io(seg(lt, 0, Sh.tA)))], y: [340] }), bed: [['wind_loop', .3]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tH = at(Sh, 'half of Tokyo', 3); Sh.tA = at(Sh, 'atomic bombs', 7); Sh.tN = at(Sh, 'Nagasaki', Sh.dur - 1); },
+    draw: (c, lt, u, Sh) => {
+      night(c, .5, '255,150,110'); VP.glow(c, 1100, 420, 500, '#ff7a40', .35);
+      for (const [x, y] of [[520, 430], [800, 440], [1180, 436]]) H1.smoke(c, x, y, 1.2, lt + x * .01, '60,50,52');
+      const L = DUSK(lt); fig(c, J.MOTHER, 560, 640, 42, Object.assign(S.idle(lt, 0), { face: 1, shN: 20, elN: 40 }), { worry: .9, look: [.7, -.2], time: lt }, L, 0);
+      fig(c, J.SON, 620, 646, 30, Object.assign(S.idle(lt, 1), { face: 1, shF: 60, elF: 30 }), { worry: .9, look: [.7, -.2], time: lt }, L, 1);
+      if (lt > Sh.tA - .3) { VP.drawSet(c, 'jp_map'); const P = [JX.JL(132.45, 34.4), JX.JL(129.87, 32.75)];
+        P.forEach((p, i) => { const t0 = i ? Sh.tN : Sh.tA + .2, q = seg(lt, t0, t0 + 1.5); if (q <= 0) return; VP.glow(c, p[0], p[1], 40 + 220 * E.out(q), '#fff4d0', 1 - .6 * q); c.strokeStyle = S.rgba('#c82010', 1 - q * .3); c.lineWidth = 3; c.beginPath(); c.arc(p[0], p[1], 10 + 50 * E.out(q), 0, TAU); c.stroke(); c.fillStyle = '#7a1a10'; c.beginPath(); c.arc(p[0], p[1], 7, 0, TAU); c.fill(); c.font = '22px Caveat'; c.fillStyle = '#2a1a10'; c.fillText(i ? 'Nagasaki · 9 Aug' : 'Hiroshima · 6 Aug', p[0] + 14, p[1] + (i ? 26 : -12)); }); }
+      else JX && VP.motes(c, lt, 0, 200, 1280, 400, { n: 40, a: .5, col: '#ffb070' });
+    },
+    over: [(c, lt) => K.dateTag(c, 'AUGUST 1945', lt, { at: .4 }), (c, lt, u, Sh) => K.badge(c, '~50% OF TOKYO BURNED', lt, { at: Sh.tH, until: Sh.tA - .3 })],
+    sfx: [[.3, 'alarm', .15], ['half of Tokyo', 'fire_loop', .2], ['atomic bombs', 'thud', .55], ['Nagasaki', 'thud', .5]] },
+
+  // 1.02 MED: the ration queue; a tiny scoop of rice poured into a bowl, a child's eyes follow it
+  { set: 'jp_ration', cam: (lt, u, Sh) => ({ z: [lerp(1.15, 1.55, E.io(seg(lt, 0, Sh.dur)))], x: [lerp(640, 690, E.io(seg(lt, 0, Sh.dur)))], y: [lerp(400, 400, 0)] }), bed: [['city_loop', .1]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tF = at(Sh, 'fraction', 1); Sh.tR = at(Sh, 'rationed', 3.5); },
+    draw: (c, lt, u, Sh) => {
+      const L = GREY(lt);
+      // the clerk behind the window
+      fig(c, J.SALARY2, 700, 470, 30, Object.assign(S.idle(lt, 3), { face: -1, shN: 70, elN: 80, holdN: wr => { c.fillStyle = '#c8c0b0'; c.beginPath(); c.ellipse(wr[0] - 8, wr[1], 12, 6, 0, 0, TAU); c.fill(); } }), { look: [-.6, .3], time: lt }, L, 3);
+      // the queue: varied people of the same scale, each standing on the street
+      const Q = [[J.MOTHER, 560, 42], [J.ELDER, 460, 40], [J.SELLER, 370, 41], [J.WORKER2, 280, 43], [J.MOTHER64, 190, 41], [J.ELDER, 100, 40]];
+      Q.forEach(([ch, x, uu], k) => fig(c, ch, x, 600 + (k % 2) * 6, uu, Object.assign(S.idle(lt, k + 4), { face: 1, shN: k === 0 ? 70 : 20, elN: k === 0 ? 60 : 40, holdN: k === 0 ? wr => { c.fillStyle = '#e8e0cc'; c.beginPath(); c.ellipse(wr[0] + 8, wr[1] - 4, 16, 7, 0, 0, TAU); c.fill(); c.fillStyle = '#6a4a2a'; c.fillRect(wr[0] - 8, wr[1] - 4, 32, 6); } : null }), { worry: .6, look: [.7, -.1], time: lt }, L, k + 4));
+      fig(c, J.DAUGHTER, 620, 606, 30, Object.assign(S.idle(lt, 9), { face: 1 }), { worry: .5, look: [-.5, -.3], open: .2, time: lt }, L, 9);
+      // rice grains fall slowly from the scoop to the bowl
+      const q = seg(lt, Sh.tR - .5, Sh.tR + 3); if (q > 0 && q < 1) for (let k = 0; k < 18; k++) { const r = S.rng(k + 11), t = (q * 2 + r()) % 1; c.fillStyle = '#f4f0e4'; c.beginPath(); c.ellipse(608 + (r() - .5) * 10, 470 + t * 70, 1.6, 3, .3, 0, TAU); c.fill(); }
+    },
+    over: [(c, lt, u, Sh) => K.badge(c, 'FACTORIES: A FRACTION OF PRE-WAR OUTPUT', lt, { at: Sh.tF, until: Sh.tR - .2 }), (c, lt, u, Sh) => K.card(c, 'RATION: NOT ENOUGH TO LIVE ON', lt, { at: Sh.tR + .5, x: 1400, y: 260, px: 44, rot: -2 })],
+    sfx: [['fraction', 'tick', .3], ['rationed', 'scrape', .3], ['not enough', 'heartbeat', .3]] },
+
+  // 1.03 MED: the black market under the rail bridge; the mother trades her kimono for rice
+  { set: 'jp_market', cam: (lt, u, Sh) => ({ z: [1.2], x: [lerp(520, 700, E.io(seg(lt, 0, Sh.dur)))], y: [400], shake: (lt % 6) < 1.4 ? 1.5 : 0 }), bed: [['crowd_loop', .15]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tP = at(Sh, 'many times', 3); Sh.tS = at(Sh, 'sold their clothes', 5.5); Sh.tB = at(Sh, 'bamboo-shoot life', 8.5); },
+    draw: (c, lt, u, Sh) => {
+      const L = BULB(lt), give = E.io(seg(lt, Sh.tS, Sh.tS + 2.5));
+      // shoppers and sellers along the stalls
+      [[J.SELLER, 260, 42, 1, 1], [J.WORKER2, 380, 44, -1, 2], [J.ELDER, 960, 40, 1, 3], [J.GI, 1100, 46, -1, 4]].forEach(([ch, x, uu, f, k]) => fig(c, ch, x, 560, uu, Object.assign(S.idle(lt, k), { face: f, shN: 30 + 20 * Math.sin(lt + k), elN: 50 }), { look: [f * .6, .1], time: lt }, L, k));
+      // the trade: the mother hands a folded kimono to the dealer, who passes a small bag of rice
+      const kimono = wr => { c.save(); c.translate(wr[0], wr[1]); c.fillStyle = '#3a4a8a'; c.fillRect(-18, -10, 36, 22); c.fillStyle = '#e8c040'; for (let k = 0; k < 4; k++) { c.beginPath(); c.arc(-10 + k * 7, -2 + (k % 2) * 6, 2.5, 0, TAU); c.fill(); } c.fillStyle = '#c83a3a'; c.fillRect(-18, 4, 36, 4); c.restore(); };
+      const bag = wr => { c.fillStyle = '#d8c8a0'; c.beginPath(); c.moveTo(wr[0] - 10, wr[1] + 14); c.lineTo(wr[0] - 7, wr[1] - 6); c.lineTo(wr[0] + 7, wr[1] - 6); c.lineTo(wr[0] + 10, wr[1] + 14); c.fill(); c.strokeStyle = '#6a4a2a'; c.lineWidth = 2; c.beginPath(); c.moveTo(wr[0] - 7, wr[1] - 4); c.lineTo(wr[0] + 7, wr[1] - 4); c.stroke(); };
+      fig(c, J.MOTHER, 600, 600, 44, Object.assign(S.idle(lt, 0), { face: 1, shN: 60 + 30 * give, elN: 70 - 40 * give, holdN: give < .55 ? kimono : bag }), { worry: .8, look: [.8, .1], time: lt }, L, 0);
+      fig(c, J.WORKER, 730, 600, 46, Object.assign(S.idle(lt, 5), { face: -1, shN: 60 + 30 * give, elN: 60 - 30 * give, holdN: give >= .55 ? kimono : bag }), { look: [-.8, .1], smile: .3, time: lt }, L, 5);
+      // a train rumbles overhead: dust drops from the girders
+      if ((lt % 6) < 1.4) for (let k = 0; k < 20; k++) { const r = S.rng(k + 7), q = (lt % 6) / 1.4; c.fillStyle = S.rgba('#c8b8a0', .6 * (1 - q)); c.fillRect(200 + r() * 900, 150 + q * 300 * r(), 2, 2); }
+      // the bamboo shoot peels layer by layer in the corner on the last line
+      const b = seg(lt, Sh.tB, Sh.tB + 3); if (b > 0) { c.save(); c.translate(1120, 420); c.fillStyle = '#f4ead4'; c.beginPath(); c.roundRect(-70, -150, 140, 190, 12); c.fill(); for (let k = 0; k < 4; k++) { const off = E.out(seg(b, k * .2, k * .2 + .3)); c.fillStyle = ['#8a6a3a', '#a8884a', '#c8a860', '#e0d090'][k]; c.save(); c.rotate(-off * .6 * (k % 2 ? 1 : -1)); c.beginPath(); c.moveTo(-30 + k * 6, 20); c.quadraticCurveTo(-28 + k * 6, -80, 0, -120 + k * 12); c.quadraticCurveTo(28 - k * 6, -80, 30 - k * 6, 20); c.fill(); c.restore(); } c.restore(); }
+    },
+    over: [(c, lt, u, Sh) => K.badge(c, 'RICE: MANY TIMES THE OFFICIAL PRICE', lt, { at: Sh.tP, until: Sh.tB - .2 }), (c, lt, u, Sh) => K.card(c, 'THE BAMBOO-SHOOT LIFE', lt, { at: Sh.tB + .3, x: 760, y: 220, px: 48, rot: -2 })],
+    sfx: [[.1, 'whoosh', .3], [.2, 'crowd_loop', .2], [6.1, 'whoosh', .25], ['sold their clothes', 'paper', .3], ['bamboo-shoot life', 'pop', .3]] },
+
+  // 1.04 MED: Hirohito visits MacArthur; the tall general relaxed, the small emperor stiff; a camera flash freezes it into a newspaper photo
+  { set: 'jp_embassy', cam: (lt, u, Sh) => ({ z: [lerp(1.2, 1.45, E.io(seg(lt, 0, Sh.tP)))], x: [620], y: [380] }), bed: [['hum_loop', .1]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tD = at(Sh, 'divine', 3.5); Sh.tP = at(Sh, 'The photo', 7); },
+    draw: (c, lt, u, Sh) => {
+      const L = DAY(lt), wk = seg(lt, .2, 3.2);
+      fig(c, J.MACARTHUR, 700, 640, 58, Object.assign(S.idle(lt * .5, 0), { face: -1, shN: -20, elN: 110, shF: -20, elF: 110 }), { look: [-.3, .1], time: lt }, L, 0);
+      const hx = lerp(380, 560, E.out(wk)); fig(c, J.HIROHITO, hx, 640, 48, Object.assign(wk < 1 ? H1.walk(lt * 1.1) : S.idle(lt * .3, 1), { face: 1, shN: 4, elN: 4, shF: 4, elF: 4 }), { look: [0, 0], time: lt }, L, 1);
+      if (lt > Sh.tP) { const f = seg(lt, Sh.tP, Sh.tP + .4); c.fillStyle = `rgba(255,255,255,${1 - f})`; c.fillRect(0, 0, 1280, 720);
+        const q = seg(lt, Sh.tP + .3, Sh.tP + 1.5); if (q > 0) { c.save(); c.globalCompositeOperation = 'saturation'; c.fillStyle = `rgba(128,128,128,${q})`; c.fillRect(0, 0, 1280, 720); c.restore(); c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = `rgba(230,220,200,${q})`; c.fillRect(0, 0, 1280, 720); c.restore();
+          c.strokeStyle = S.rgba('#f4ecd8', q); c.lineWidth = 30; c.strokeRect(15, 15, 1250, 690); c.fillStyle = S.rgba('#1a1a1a', q); c.font = 'bold 34px Oswald'; c.textAlign = 'center'; c.fillText('朝日新聞 · 29 SEPT 1945', 640, 60); } }
+    },
+    over: [(c, lt) => K.dateTag(c, '27 SEPT 1945', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'EMPEROR HIROHITO', lt, { at: 1, x: 560, y: 260, px: 42, rot: -3, until: Sh.tP }), (c, lt, u, Sh) => K.badge(c, 'TAUGHT TO SEE HIM AS DIVINE', lt, { at: Sh.tD, until: Sh.tP }), (c, lt, u, Sh) => K.card(c, 'THE PHOTO THAT SHOCKED A NATION', lt, { at: Sh.tP + 1.4, x: 960, y: 150, px: 46, rot: 2 })],
+    sfx: [[.3, 'footsteps', .3], ['The photo', 'camera_shutter', .7], ['shocked', 'thud', .35]] },
+
+  // 1.05 MED: the constitution on the desk, Article 9 highlighted; a soldier's helmet swings on a nail
+  { set: 'jp_desk', cam: { z: [1.05, 1.25], x: [640, 600], y: [380, 400], ease: E.io }, bed: [['hum_loop', .1]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tC = at(Sh, 'constitution', 2); Sh.tA = at(Sh, 'Article 9', 5); Sh.tW = at(Sh, 'no army', Sh.dur - 1.5); },
+    draw: (c, lt, u, Sh) => {
+      // the helmet on a nail on the screen post
+      c.fillStyle = '#5a5a5a'; c.fillRect(1018, 120, 6, 6); c.save(); c.translate(1021, 126); c.rotate(.12 * Math.sin(lt * 1.6) * Math.exp(-lt * .05)); c.strokeStyle = '#3a3020'; c.lineWidth = 2; c.beginPath(); c.moveTo(0, 0); c.lineTo(-20, 40); c.moveTo(0, 0); c.lineTo(20, 40); c.stroke();
+      c.fillStyle = '#5a5a3a'; c.beginPath(); c.ellipse(0, 70, 54, 36, 0, Math.PI, 0); c.fill(); c.fillStyle = '#4a4a2e'; c.fillRect(-60, 66, 120, 10); c.fillStyle = '#e8c030'; c.beginPath(); for (let i = 0; i < 10; i++) { const a = i / 10 * TAU - Math.PI / 2, r = i % 2 ? 4 : 10; c.lineTo(Math.cos(a) * r, 52 + Math.sin(a) * r); } c.fill(); c.fillStyle = S.rgba('#ffffff', .2); c.beginPath(); c.ellipse(-20, 48, 14, 8, -.4, 0, TAU); c.fill(); c.restore();
+      // the open constitution
+      c.save(); c.translate(560, 560); c.rotate(-.04); c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(-300, 16, 610, 16); c.fillStyle = '#f4ecd8'; c.fillRect(-300, -200, 296, 216); c.fillRect(4, -200, 296, 216); c.fillStyle = '#5a3a20'; c.fillRect(-4, -200, 8, 216);
+      c.fillStyle = '#1a1a1a'; c.font = 'bold 22px Oswald'; c.textAlign = 'center'; c.fillText('日本国憲法', -150, -166); c.font = '16px Oswald'; c.fillText('CONSTITUTION OF JAPAN · 1947', -150, -140);
+      for (let r = 0; r < 8; r++) { c.fillStyle = S.rgba('#3a3a3a', .6); c.fillRect(-270, -110 + r * 14, 240 - (r % 3) * 30, 3); }
+      const hl = seg(lt, Sh.tA, Sh.tA + .8); c.fillStyle = S.rgba('#ffe040', .55 * hl); c.fillRect(30, -150, 250 * hl, 92);
+      c.fillStyle = '#1a1a1a'; c.font = 'bold 20px Oswald'; c.textAlign = 'left'; c.fillText('ARTICLE 9', 40, -124); c.font = '15px Oswald'; ['...the Japanese people forever', 'renounce war as a sovereign right...', 'land, sea, and air forces', 'will never be maintained.'].forEach((l, i) => c.fillText(l, 40, -100 + i * 18)); c.restore();
+    },
+    over: [(c, lt, u, Sh) => K.dateTag(c, 'IN FORCE 3 MAY 1947', lt, { at: Sh.tC }), (c, lt, u, Sh) => K.card(c, 'ARTICLE 9: NO WAR, NO ARMY', lt, { at: Sh.tA + .6, x: 1400, y: 300, px: 48, rot: -2 })],
+    sfx: [['constitution', 'paper', .4], ['Article 9', 'stamp', .4], ['no army', 'creak', .3]] },
+
+  // 1.06 MED: the terraced village; the farmers' committee around a map at a low table; the old farmer's hands tremble on his new deed
+  { set: 'jp_village', cam: (lt, u, Sh) => ({ z: [lerp(1.0, 1.35, E.io(seg(lt, 0, Sh.dur)))], x: [lerp(640, 600, E.io(seg(lt, 0, Sh.dur)))], y: [lerp(360, 520, E.io(seg(lt, 0, Sh.dur)))] }), bed: [['birds_loop', .25], ['wind_loop', .1]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tL = at(Sh, 'absentee landlords', 2.5); Sh.tS = at(Sh, 'sold it cheaply', 4.5); Sh.tC = at(Sh, 'committees', 7.5); },
+    draw: (c, lt, u, Sh) => {
+      for (let k = 0; k < 10; k++) { const r = S.rng(k + 31), x = r() * 1280, y = 340 + r() * 280; c.fillStyle = S.rgba('#ffffff', .4 + .4 * Math.sin(lt * 3 + k)); c.fillRect(x, y, 6, 1.5); }
+      const L = DAY(lt);
+      // a low table with the land map; farmers kneel/sit around it on the bank
+      JX.wood(c, 470, 640, 340, 18, '#6a4a2a', 31); c.fillStyle = '#4a3020'; c.fillRect(490, 658, 10, 30); c.fillRect(780, 658, 10, 30);
+      c.fillStyle = '#f0e4c4'; c.fillRect(520, 626, 240, 16); c.strokeStyle = '#6a5a3a'; c.lineWidth = 1; for (let k = 0; k < 6; k++) { c.beginPath(); c.moveTo(530 + k * 40, 627); c.lineTo(540 + k * 36, 641); c.stroke(); }
+      [[J.FARMER, 420, 1], [J.FARMER, 860, -1], [J.SELLER, 930, -1]].forEach(([ch, x, f], k) => fig(c, ch, x, 700, 44, Object.assign(VP.sit(ch, lt * .4, k + 2), { face: f }), { look: [f * .6, .4], time: lt }, L, k + 2));
+      const tr = .03 * Math.sin(lt * 18), deed = wr => { c.save(); c.translate(wr[0], wr[1] - 10); c.rotate(-.1 + tr); c.fillStyle = '#f8f0dc'; c.fillRect(-26, -34, 52, 40); c.fillStyle = '#c82020'; c.beginPath(); c.arc(14, -6, 7, 0, TAU); c.fill(); c.fillStyle = '#2a2a2a'; for (let k = 0; k < 4; k++) c.fillRect(-20, -26 + k * 7, 26, 2); c.restore(); };
+      const up = seg(lt, Sh.tS, Sh.tS + 1.5);
+      fig(c, J.OLDFARMER, 640, 700, 46, Object.assign(S.idle(lt * .3, 0), { face: 1, shN: 40 + 40 * up, elN: 70, shF: 40 + 40 * up, elF: 70, holdN: up > .2 ? deed : null }), { smile: .6 * up, worry: .4 * (1 - up), look: [.2, .5], time: lt }, L, 0);
+    },
+    over: [(c, lt) => K.dateTag(c, 'LAND REFORM · 1946', lt, { at: .4 }), (c, lt, u, Sh) => K.badge(c, 'FROM ABSENTEE LANDLORDS', lt, { at: Sh.tL, until: Sh.tC }), (c, lt, u, Sh) => K.card(c, "THE FARMERS' OWN COMMITTEES", lt, { at: Sh.tC + .3, x: 1380, y: 220, px: 44, rot: 2 })],
+    sfx: [[.3, 'birds_loop', .2], ['sold it cheaply', 'stamp', .4], ['committees', 'paper', .3]] },
+];
+VP.build(); K.boot();
+</script></body></html>

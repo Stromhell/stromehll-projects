@@ -1,0 +1,16 @@
+Spain 3 reels booking sheet. Columns: # | title | Drive video id | Drive thumb id. Descriptions: ES3_Reels_Titles_Descriptions.txt (Drive 1dmtoq6Vf4mOOeVEUs2BdJnmJpSLwu0Nj)
+01. "Gunmen Stormed Spain's Parliament Live on TV" | video 1dmGdQ1AV2w0MXv674pPufR_yjKK5FVES | thumb 1SjK6WgVPwITDtCJboNgxaypkN-W1npsV
+02. "The 1 A.M. Speech That Saved Spain" | video 1AJXvPGBflxbcVPFTr35qjggniHwLQ4or | thumb 1LCZfKRT--Oh9kwAE4WnNXrenjPFDPm8g
+03. "The Army Disaster That Broke a Monarchy" | video 1KiJECpxwIzku6h78c89FD_n1FvV_TiOo | thumb 1QMFOn46-wMdbyqx4g1Yy0E_bmGXFwOJM
+04. "Why Spain's Flag Once Had a Purple Stripe" | video 1aXZinLFDVAKSblO0JcHXbsaZYquf4tuW | thumb 1rxVnJn96dpil5FQUh5yZBDm9Ux6gl7Sb
+05. "The Secret Flight That Started Franco's War" | video 1B6gSSKCxxdGttQ7wzhhJVXBEUMWHRtvB | thumb 1doLOq-H4KRm4ERJ44WNpMTSBIHpLl_i7
+06. "The Airlift That Won Franco the War" | video 1oqWiI2PCFDaLK8FImJUpdoU0alGB4vW3 | thumb 1hBskKBhuFgVXLSgAB2KlVXh54KUyGvll
+07. "Guernica: The Town Bombed on Market Day" | video 1GcTdxdf-Crnh5rISWiL8koxCZtmacPNA | thumb 1cQiLAO297kfSGJbFzLdLhZ7DojzHUFhv
+08. "The Painting Picasso Made in Weeks" | video 1UdySdiYndLnU4cUOn5nt2zbgPKxlbCX9 | thumb 1T8rYHxxdxPtLSFqE_2vce2HzjDK63xlv
+09. "George Orwell Was Shot Through the Throat in Spain" | video 1aovmYPRLu-D8aQDRd4Z7FQ1oKNXSHth5 | thumb 1JaU-O94vBKJFtGrIj_-Q8mkESQxeY4aL
+10. "When Franco's Enemies Fought Each Other" | video 1aG20ck4n3wJc3ToSHM6Ouoa5hmjYVcku | thumb 12ol37e7pTtRLmktQTq5lABbV_im6kIsa
+11. "Hitler Would Rather Lose His Teeth Than Meet Franco Again" | video 1fFwU60colw2G4rTBjnwPLfSk3mv70XcP | thumb 1afTvGHMuvZsLku1tx732AEQ0Foj27ace
+12. "Spain's Secret Army on the Eastern Front" | video 1KP4gXGpcKLuM-U3MMWbzuwDuKwhK1Cjj | thumb 1jIasGl1II06vKIjOO009MQjItvMT9hiv
+13. "How Spain Went From Hunger to Tourist Boom" | video 1KxHR3b5zkT4LZmU9MPM0_g-IsiCo839a | thumb 1-5Uc_dHIPhPFanoL8IjW6GPPdrPDlFEP
+14. "The Bomb That Threw a Car Over a Church" | video 1kkz2npKqA8SOmX5lvGOkG9P7_Tcc6RMu | thumb 1GVKDqz8dRhBHVcnkOp8lH2pT5arNBOPg
+15. "Franco's Chosen King Destroyed His Dictatorship" | video 1F3kK6guagCj7ABi9eN3aadkEBelq9cQi | thumb 14rp2nZTXcZZMlY-x3xEBLdyduily_BJG
