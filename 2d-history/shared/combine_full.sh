@@ -5,7 +5,7 @@
 # Usage: combine_full.sh VIDEO_DIR   ->  VIDEO_DIR/production/full/<video>_full.mp4
 set -e; V=${1%/}; N=$(basename $V); D=$V/production/full; W=$D/tmp; mkdir -p $W; L=$D/list.txt; A=$W/alist.txt; : > $L; : > $A; i=0
 for f in $(ls $V/production/acts/act*/act*.mp4 | sort -V); do
-  echo "file '$(realpath $f)'" >> $L
+  ffmpeg -y -loglevel error -i $f -an -c:v copy $W/v$i.mp4; echo "file '$(realpath $W/v$i.mp4)'" >> $L
   fr=$(ffprobe -v error -select_streams v:0 -count_packets -show_entries stream=nb_read_packets -of csv=p=0 $f); dur=$(python3 -c "print($fr/30)")
   ffmpeg -y -loglevel error -i $f -vn -af "aresample=48000,apad,atrim=0:$dur,afade=t=in:d=0.06,afade=t=out:st=$(python3 -c "print(max(0,$dur-0.2))"):d=0.2" -ac 1 -c:a pcm_s16le $W/a$i.wav
   echo "file '$(realpath $W/a$i.wav)'" >> $A; echo "act $i: $fr frames = ${dur}s"; i=$((i+1)); done
