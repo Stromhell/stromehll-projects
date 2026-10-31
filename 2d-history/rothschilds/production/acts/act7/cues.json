@@ -155,15 +155,9 @@
   },
   {
    "start": 39.715,
-   "end": 46.515,
-   "name": "swell",
-   "gain": 0.25
-  },
-  {
-   "start": 39.715,
-   "end": 46.515,
+   "end": 45.715,
    "name": "hum_loop",
-   "gain": 0.15
+   "gain": 4
   }
  ]
 }
