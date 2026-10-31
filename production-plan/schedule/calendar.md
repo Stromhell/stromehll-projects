@@ -243,3 +243,29 @@ Next free facts slot: Wed 4 Nov 19:00 IST (13:30 UTC).
 ## Re-timed to UK + US prime time (31 Oct 2026, 00:50 UTC)
 
 Pushpam asked (31 Oct 00:28) for every booked post to move to UK + US prime-time slots. 282 of 286 future posts moved, each on its own UTC date; 4 were already on a new slot. Full move log: `retime-2026-10-31.md`. New slots (UTC): full video 19:00 weekdays, 16:00 weekends; reels 19:30, 00:30, 12:00, 22:00, 17:00, 03:00, 07:30; facts shorts 18:00, 21:00, 01:30. Busiest day has 9 YouTube uploads.
+
+## Suez Canal booked (31 Oct 2026, 06:30 UTC)
+
+2D dynamic. Pushpam approved the full video 31 Oct 04:57. All times UTC.
+
+| What | When (UTC) | Post id |
+|---|---|---|
+| full  | 2026-12-12 16:00 | 6ae5851eb6a87971b597a49b |
+| reel 1 | 2026-11-01 03:00 | 6ae585360d57ececf76bce67 |
+| reel 2 | 2026-11-03 03:00 | 6ae58539a9051b426aeb8ce9 |
+| reel 3 | 2026-12-04 03:00 | 6ae5853bb6c9206d73af4d48 |
+| reel 4 | 2026-12-04 07:30 | 6ae5853db6c9206d73af4d58 |
+| reel 5 | 2026-12-05 03:00 | 6ae5853fb6c9206d73af4d6d |
+| reel 6 | 2026-12-05 07:30 | 6ae58541a9051b426aeb8d0c |
+| reel 7 | 2026-12-06 03:00 | 6ae5855ea9051b426aeb8d43 |
+| reel 8 | 2026-12-06 07:30 | 6ae58560b6c9206d73af4e04 |
+| reel 9 | 2026-12-07 03:00 | 6ae58562b6c9206d73af4e0e |
+| reel 10 | 2026-12-07 07:30 | 6ae58564a9051b426aeb8d51 |
+| reel 11 | 2026-12-08 03:00 | 6ae585670d57ececf76bcef7 |
+| reel 12 | 2026-12-08 07:30 | 6ae585698678b098ecd834db |
+| reel 13 | 2026-12-08 17:00 | 6ae5858068129aa1e8a47ada |
+| reel 14 | 2026-12-08 22:00 | 6ae585821a6d50aaf7232362 |
+| reel 15 | 2026-12-09 12:00 | 6ae585841a6d50aaf723237c |
+| ig_part 1 | 2026-12-13 20:30 | 6ae585871a6d50aaf723238e |
+| ig_part 2 | 2026-12-14 20:30 | 6ae585891a6d50aaf723239b |
+| ig_part 3 | 2026-12-15 20:30 | 6ae5858d1a6d50aaf72323b4 |
