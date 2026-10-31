@@ -1,7 +1,8 @@
 #!/bin/bash
 # usage: qa.sh VIDEO.mp4 TAG -> runs /watch (local engine), tiles its frames into 4x4 sheets, prints sheet paths
+echo "RULES: read /home/user/stromehll-projects/2d-history/shared/qa_rules.md and check every item on every sheet"
 S=${QA_DIR:-/tmp/qa}; mkdir -p $S; W=${WATCH_PY:-$S/cv/.claude/skills/watch/scripts/watch.py}
-out=$(timeout 300 python3 $W "$1" --engine local --question "glitches, overlaps, floating props, gliding walkers, labels over subtitles or faces, blocky scenes" 2>&1)
+out=$(timeout 300 python3 $W "$1" --engine local --question "glitches, overlaps, floating props, gliding walkers, labels over subtitles or faces, blocky scenes, characters standing on desks or tables or flying, sitting on air, walking above buildings or rooftops, money or papers floating above tables, props not held in hands, abrupt prop snaps, frozen still frames, vehicles passing through arches or buildings, animals overlapping, low-detail backgrounds or vehicles" 2>&1)
 wd=$(echo "$out" | grep -oE "/tmp/watch-[a-z0-9_]+" | head -1)
 n=$(ls $wd/frames/*.jpg | wc -l); rm -f $S/qa_$2_*.jpg
 ls $wd/frames/*.jpg | split -l 16 - $S/qa_list_$2_
