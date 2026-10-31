@@ -10,6 +10,25 @@ for (const n of ['judengasse', 'judengasse_shield', 'judengasse_night', 'partner
 const SW = 1920, SH = 1080, INK = RS.INK, pop = RS.pop;
 const backdrop = (name, b = .5, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
 const CARRY = () => ({ shL: 30, elL: -75, shR: 35, elR: -75 });
+const D2R = Math.PI / 180, mix = (a, b, k) => a + (b - a) * k;
+// a ledger held like a book in the front hand. b = 0 closed (spine in the hand, clutched to the chest), 1 open in both hands.
+// The leaf swings open round the spine, so the change takes the 0.35 s blend instead of a snap. u = how much is written.
+const drawBook = (c, a2, b, u = 1) => { c.save(); c.rotate(a2 * D2R - .06); c.translate(4, 12 - b * 16); const W = 58, H = 76; c.strokeStyle = INK; c.lineWidth = 3; c.lineJoin = 'round';
+  const page = (x0) => { c.fillStyle = RS.PAPER; c.fillRect(x0, -H / 2, W, H); c.strokeRect(x0, -H / 2, W, H); c.strokeStyle = 'rgba(60,40,24,.55)'; c.lineWidth = 1.6; for (let k = 0; k < 7; k++) { const w = (W - 16) * Math.max(0, Math.min(1, u * 8 - k)); if (w > 0) { c.beginPath(); c.moveTo(x0 + 8, -H / 2 + 12 + k * 9); c.lineTo(x0 + 8 + w, -H / 2 + 12 + k * 9); c.stroke(); } } c.strokeStyle = INK; c.lineWidth = 3; };
+  const cover = (x0) => { c.fillStyle = '#5a2a1e'; c.fillRect(x0, -H / 2 - 3, W + 3, H + 6); c.strokeRect(x0, -H / 2 - 3, W + 3, H + 6); c.strokeStyle = RS.GOLD; c.lineWidth = 2; c.strokeRect(x0 + 8, -H / 2 + 6, W - 13, H - 12); c.strokeStyle = INK; c.lineWidth = 3; };
+  c.fillStyle = '#5a2a1e'; c.fillRect(-W - 3, -H / 2 - 3, W + 3, H + 6); c.strokeRect(-W - 3, -H / 2 - 3, W + 3, H + 6); // back board
+  if (b > .02) page(-W); else { c.fillStyle = '#efe4c8'; c.fillRect(-W, H / 2 - 2, W - 2, 5); }
+  const k = -Math.cos(b * Math.PI); c.save(); c.scale(Math.abs(k) < .02 ? .02 * Math.sign(k || 1) : k, 1); if (k < 0) cover(0); else page(0); c.restore();
+  c.fillStyle = '#3a1a12'; c.fillRect(-4, -H / 2 - 4, 8, H + 8); c.strokeRect(-4, -H / 2 - 4, 8, H + 8); c.restore(); };
+// pose + prop for a figure carrying a ledger: clutched closed under the chest while walking, then (open) eased into both hands
+const CLUTCH = { shL: 18, elL: -122 }, OPEN = { shL: 30, elL: -92, shR: 42, elR: -88 };
+const holdBook = (cfg = {}) => (o, lt, u, S) => { const ta = typeof cfg.ta === 'function' ? cfg.ta(S) : (cfg.ta ?? 1e9), b = E.io(K.seg(lt, ta, ta + .35));
+  const A0 = { shL: mix(CLUTCH.shL, OPEN.shL, b), elL: mix(CLUTCH.elL, OPEN.elL, b) }; if (o.pose !== 'walk' && b > 0) { A0.shR = mix(4, OPEN.shR, b); A0.elR = mix(-10, OPEN.elR, b); }
+  o.arms = () => A0; const a2 = A0.shL - A0.elL, w = cfg.write ? K.seg(lt, cfg.write(S)[0], cfg.write(S)[1]) : 1; o.hold = { far: (c) => drawBook(c, a2, b, w) }; };
+// never a still frame: every standing figure breathes, sways its weight and drifts its arms a little
+const idle = (f) => { const a0 = f.anim; f.anim = (o, lt, u, S) => { if (a0) a0(o, lt, u, S); if (o.pose === 'walk' || o.pose === 'run' || o.pose === 'lie') return;
+  const ph = (f.seed || 1) * 1.37 + f.x * .003, br = Math.sin(lt * 1.9 + ph), sw = Math.sin(lt * .8 + ph * .7), ar0 = o.arms;
+  o.arms = (t, P) => { const Q = Object.assign({}, P, ar0 ? ar0(t, P) : {}); return Object.assign({}, ar0 ? ar0(t, P) : {}, { shL: Q.shL + br * 2, shR: Q.shR - br * 2 + sw * 2.5, elL: Q.elL + sw * 2, elR: Q.elR - br * 2.5, hipL: Q.hipL + sw * 1.2, hipR: Q.hipR + sw * 1.2, bob: (Q.bob || 0) + br * 3, lean: (Q.lean || 0) + sw * 2.2 }); }; }; };
 const bale = (c) => { c.save(); c.fillStyle = '#c8b080'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.roundRect(-40, -70, 90, 60, 10); c.fill(); c.stroke(); c.beginPath(); c.moveTo(-40, -40); c.lineTo(50, -40); c.moveTo(5, -70); c.lineTo(5, -10); c.stroke(); c.restore(); };
 const tray = (c) => { c.save(); c.fillStyle = '#3a2a5a'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-10, -26, 90, 24); c.strokeRect(-10, -26, 90, 24); for (let k = 0; k < 4; k++) RS.coin(c, 4 + k * 20, -18, 8, k * .5); c.restore(); };
 // the street gates closing (world space; gate opening at plate 1210-1350 x, 858-1008 y)
@@ -20,17 +39,17 @@ window.SHOTS = [
   { plate: 'judengasse', cam: { z: [1.02, 1.14], x: [1280, 1280], y: [820, 800] }, bed: [['city_loop', .15], ['wind_loop', .15]],
     figs: [{ x: 1080, y: 1250, s: 1.25, costume: 'dress', hair: 'bun', seed: 5, facing: 1, walk: { x0: 760, x1: 1180, t0: .2, dur: 5.5 } },
       { x: 1500, y: 1320, s: 1.55, costume: 'suit', hair: 'short', beard: true, seed: 14, hat: RS.kippah('#2a2a3a'), facing: -1, walk: { x0: 1900, x1: 1420, t0: .6, dur: 5.2 } },
-      { x: 1700, y: 1180, s: 1.0, costume: 'kid', hair: 'short', seed: 9, facing: -1, walk: { x0: 1820, x1: 1520, t0: 1, dur: 4 } }],
+      { x: 1700, y: 1180, s: 1.0, costume: 'kid', hair: 'short', seed: 9, facing: -1, walk: { x0: 1860, x1: 1660, t0: 1, dur: 4 } }],
     live: [(c, lt, u, S) => gateDoors(E.io(K.seg(lt, S.tL, S.tL + 1.2)))(c)],
     init: S => { S.tL = A.at(S, 'locked', 6);
       S.D.over = [(c, lt) => K.dateTag(c, 'FRANKFURT · 1744', lt, { at: .4 }), (c, lt) => K.card(c, 'THE JUDENGASSE', lt, { at: 1.2, x: 420, y: 220, px: 52, rot: -3 }), (c, lt) => K.card(c, 'LOCKED AT NIGHT AND ON SUNDAYS', lt, { at: S.tL, x: 1400, y: 220, px: 42, rot: 3 })];
       S.D.sfx = [[.3, 'footsteps', .3], [S.tL, 'creak', .35], [S.tL + 1.2, 'gate_slam', .45]]; } },
   // 1.02 the list of banned trades; a coin scale tips toward money-lending
-  { draw: (c, lt, u, S) => { backdrop('judengasse', .35, 10)(c); const a = pop(lt, .2, .5); if (a <= 0) return; c.save(); c.translate(620, 540); c.scale(a, a); c.rotate(-.03);
+  { draw: (c, lt, u, S) => { backdrop('judengasse', .35, 10)(c); const zz = 1 + lt * .006; c.setTransform(zz, 0, 0, zz, 960 * (1 - zz), 540 * (1 - zz)); const a = pop(lt, .2, .5); if (a <= 0) { K.screen(c); return; } c.save(); c.translate(620, 540); c.scale(a, a); c.rotate(-.03);
       c.fillStyle = RS.PAPER; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-300, -380, 600, 760); c.strokeRect(-300, -380, 600, 760); c.fillStyle = INK; c.font = '54px Anton'; c.textAlign = 'center'; c.fillText('TRADES AND GUILDS', 0, -300);
       const rows = ['CARPENTER', 'BAKER', 'FARMER', 'TAILOR', 'MERCHANT GUILD', 'MONEY-LENDING', 'DEALING']; rows.forEach((t, i) => { const at = S.tR + i * .35, ok = i >= 5; if (lt < at) return; c.fillStyle = INK; c.font = '42px Oswald'; c.textAlign = 'left'; c.fillText(t, -240, -200 + i * 82);
         if (lt > at + .2) { c.lineWidth = 7; if (ok) { c.strokeStyle = '#2e7a3a'; c.beginPath(); c.moveTo(180, -214 + i * 82); c.lineTo(200, -194 + i * 82); c.lineTo(240, -240 + i * 82); c.stroke(); } else { c.strokeStyle = '#c8281e'; c.beginPath(); c.moveTo(170, -236 + i * 82); c.lineTo(230, -190 + i * 82); c.moveTo(230, -236 + i * 82); c.lineTo(170, -190 + i * 82); c.stroke(); } } }); c.restore();
-      const tilt = -.22 * E.out(K.seg(lt, S.tS, S.tS + 1)); RS.scale(c, 1380, 860, 1.1, tilt, { load: [(c, x, y) => { for (let k = 0; k < 5; k++) RS.coin(c, x - 40 + k * 20, y - 10 - (k % 2) * 14, 16, k); }, (c, x, y) => { c.fillStyle = '#8a7a5a'; c.fillRect(x - 30, y - 30, 60, 30); }] }); },
+      c.setTransform(zz, 0, 0, zz, 960 * (1 - zz), 540 * (1 - zz)); const tilt = -.22 * E.out(K.seg(lt, S.tS, S.tS + 1)) + Math.sin(lt * 1.6) * .012; RS.scale(c, 1380, 860, 1.1, tilt, { load: [(c, x, y) => { for (let k = 0; k < 5; k++) RS.coin(c, x - 40 + k * 20, y - 10 - (k % 2) * 14, 16, k); }, (c, x, y) => { c.fillStyle = '#8a7a5a'; c.fillRect(x - 30, y - 30, 60, 30); }] }); K.screen(c); },
     bed: [['hum_loop', .25]],
     init: S => { S.tR = A.at(S, 'shut out', .8); S.tS = A.at(S, 'Money', 3.6);
       S.D.over = [(c, lt) => K.card(c, 'ONE OF THE FEW WAYS TO EARN A LIVING', lt, { at: S.tS + .6, x: 1380, y: 180, px: 40, rot: 2 })];
@@ -40,28 +59,34 @@ window.SHOTS = [
     live: [(c, lt) => { const sw = Math.sin(lt * 1.7) * .04; c.save(); c.translate(2130, 470); c.rotate(sw); c.restore(); }],
     init: S => { const tB = A.at(S, 'born', 1.5), tS = A.at(S, 'red shield', 5);
       S.D.over = [(c, lt) => K.badge(c, 'MAYER AMSCHEL ROTHSCHILD · b. 1744', lt, { at: tB }), (c, lt) => K.card(c, 'ZUM ROTEN SCHILD', lt, { at: tS, x: 520, y: 260, px: 56, rot: -3 }), (c, lt) => K.card(c, '= "AT THE RED SHIELD"', lt, { at: tS + .6, x: 520, y: 350, px: 40, rot: 2 }),
-        (c, lt) => { const a = pop(lt, tB + .3, .5); if (a <= 0) return; c.save(); c.translate(1480, 720); c.scale(a, a); c.fillStyle = '#f2e8d2'; c.strokeStyle = INK; c.lineWidth = 8; c.beginPath(); c.arc(0, 0, 220, 0, 7); c.fill(); c.stroke(); c.save(); c.beginPath(); c.arc(0, 0, 212, 0, 7); c.clip(); c.fillStyle = '#5a3a26'; c.fillRect(-220, -220, 440, 440); RS.glow(c, -60, -80, 260, '#ffc070', .4);
+        (c, lt) => { const a = pop(lt, tB + .3, .5); if (a <= 0) return; c.save(); c.translate(1480, 720); c.scale(a, a); c.rotate(Math.sin(lt * 1.5) * .025); c.fillStyle = '#f2e8d2'; c.strokeStyle = INK; c.lineWidth = 8; c.beginPath(); c.arc(0, 0, 220, 0, 7); c.fill(); c.stroke(); c.save(); c.beginPath(); c.arc(0, 0, 212, 0, 7); c.clip(); c.fillStyle = '#5a3a26'; c.fillRect(-220, -220, 440, 440); RS.glow(c, -60, -80, 260, '#ffc070', .4);
           c.fillStyle = '#7a4a26'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.moveTo(-130, 40); c.quadraticCurveTo(0, 150, 130, 40); c.closePath(); c.fill(); c.stroke(); c.beginPath(); c.moveTo(-110, 110); c.quadraticCurveTo(0, 170, 110, 110); c.stroke(); c.fillStyle = '#f0e6d0'; c.beginPath(); c.ellipse(10, 40, 100, 24, 0, Math.PI, 0); c.fill(); c.stroke();
           c.fillStyle = '#f2c8a0'; c.beginPath(); c.arc(-60, 20, 30, 0, 7); c.fill(); c.stroke(); c.fillStyle = INK; c.beginPath(); c.arc(-68, 16, 3, 0, 7); c.arc(-52, 16, 3, 0, 7); c.fill(); c.restore(); c.restore(); }];
       S.D.sfx = [[tB, 'pop', .3], [tS, 'creak', .3], [tS + .6, 'paper', .25]]; } },
   // 1.04 Hanover: the teenager at a high counting desk beside the old banker; coins counted, quill scratches
   { plate: 'partners_room', cam: { z: [1.06, 1.14], x: [1280, 1300], y: [840, 840] }, bed: [['hum_loop', .25], ['fire_loop', .12]],
-    figs: [{ x: 1120, y: 1180, s: 1.55, ...RS.TEEN, facing: 1, pose: 'present', mood: 'focus', hold: { near: (c) => RS.quill(c, 0, 0, .35, -.3) } },
-      { x: 1480, y: 1180, s: 1.75, ...RS.OPPENHEIMER, facing: -1, pose: 'point', mood: 'neutral', anim: (o, lt) => { o.pose = lt % 5 < 2.5 ? 'point' : 'present'; } }],
-    live: [(c, lt) => { for (let k = 0; k < 8; k++) { const at = 1 + k * .5, a = K.seg(lt, at, at + .3); if (a <= 0) continue; RS.coin(c, 1180 + k * 26, 900 - a * 0 - (k % 2) * 6, 16, lt * 2 + k); } RS.ledger(c, 1320, 905, .5, { u: K.seg(lt, .5, 6) }); }],
+    figs: [{ x: 1120, y: 1100, s: 1.55, ...RS.TEEN, facing: 1, pose: 'present', mood: 'focus', hold: { near: (c) => RS.quill(c, 0, 0, .35, -.3) } },
+      { x: 1480, y: 1100, s: 1.75, ...RS.OPPENHEIMER, facing: -1, pose: 'point', mood: 'neutral', anim: (o, lt) => { o.pose = lt % 5 < 2.5 ? 'point' : 'present'; } }],
+    // front: the plate's own desk (top slab + front panel, plate px) drawn again over the figures, then their soft shadow
+    // on the desk top where their bodies meet it, then the coins and ledger resting on the slab
+    front: [(c, lt) => { c.save(); c.beginPath(); c.moveTo(898, 866); c.lineTo(1664, 866); c.lineTo(1742, 918); c.lineTo(1742, 937); c.lineTo(1719, 937); c.lineTo(1719, 1243); c.lineTo(844, 1243); c.lineTo(844, 937); c.lineTo(818, 937); c.lineTo(818, 918); c.closePath(); c.clip(); c.drawImage(K.imgs.partners_room, 0, 0, 2560, 1440);
+        for (const fx of [1120, 1490]) { const g = c.createRadialGradient(fx, 868, 0, fx, 868, 90); g.addColorStop(0, 'rgba(15,8,4,.45)'); g.addColorStop(1, 'rgba(15,8,4,0)'); c.fillStyle = g; c.save(); c.translate(0, 868); c.scale(1, .25); c.translate(0, -868); c.fillRect(fx - 90, 780, 180, 180); c.restore(); } c.restore();
+      for (let k = 0; k < 8; k++) { const at = 1 + k * .5, a = E.out(K.seg(lt, at, at + .3)); if (a <= 0) continue; RS.coin(c, 1150 + k * 22, 906 - (1 - a) * 30 - (k % 2) * 5, 14, lt * 2 + k); }
+      RS.ledger(c, 1410, 898, .34, { u: K.seg(lt, .5, 6) }); }],
     init: S => { const tH = A.at(S, 'Hanover', 1.4), tC = A.at(S, 'courts', 6);
       S.D.over = [(c, lt) => K.dateTag(c, 'HANOVER', lt, { at: tH }), (c, lt) => K.card(c, 'AGE 13: TRAINEE BANKER', lt, { at: .5, x: 420, y: 220, px: 46, rot: -3 }), (c, lt) => K.card(c, 'HOW MONEY MOVES BETWEEN COURTS', lt, { at: tC, x: 1440, y: 220, px: 40, rot: 2 })];
       S.D.sfx = [[.6, 'paper', .25], [1.4, 'coins', .3], [3.4, 'coins', .25], [tC, 'chime', .3]]; } },
   // 1.05 back in Frankfurt: Mayer walks up to a nobleman at his gates and shows him a tray of old coins
   { plate: 'palace_gate', cam: { z: [1.08, 1.16], x: [1280, 1280], y: [880, 880] }, bed: [['birds_loop', .2]],
-    figs: [{ x: 1180, y: 1300, s: 1.9, ...RS.MAYER, facing: 1, walk: { x0: 500, x1: 1180, t0: .2, dur: 3 }, hold: { near: tray }, anim: (o, lt) => { if (lt > 3.2) o.pose = 'present'; } },
+    figs: [{ x: 1180, y: 1300, s: 1.9, ...RS.MAYER, facing: 1, walk: { x0: 500, x1: 1180, t0: .2, dur: 3 }, anim: (o, lt) => { const k = o.pose === 'walk' ? 0 : E.io(K.seg(lt, 3.2, 3.55)), A0 = { shR: mix(30, 58, k), elR: mix(-70, -24, k) }; if (k > 0) A0.handR = 'open'; o.arms = () => A0;
+      const a2 = A0.shR - A0.elR; o.hold = { near: (c) => { c.save(); c.rotate(a2 * D2R); tray(c); c.restore(); } }; } },
       { x: 1600, y: 1300, s: 1.95, ...RS.NOBLE, facing: -1, pose: 'think', mood: 'neutral', anim: (o, lt, u, S) => { o.mood = lt > S.tN ? 'happy' : 'neutral'; o.pose = lt > S.tN ? 'present' : 'think'; } }],
     init: S => { const tC = A.at(S, 'rare coins', 1.4); S.tN = A.at(S, 'nobles', 4);
       S.D.over = [(c, lt) => K.card(c, 'RARE COINS AND MEDALS', lt, { at: tC, x: 520, y: 220, px: 46, rot: -3 }), (c, lt) => K.card(c, 'CLIENTS: GERMAN NOBLES', lt, { at: S.tN, x: 1440, y: 220, px: 44, rot: 3 })];
       S.D.sfx = [[.3, 'footsteps', .3], [3.4, 'coins', .35], [S.tN, 'chime', .35]]; } },
   // 1.06 an exchange courtyard full of traders, then a copy of The Wealth of Nations slaps onto the desk
   { plate: 'exchange_amsterdam', cam: { z: [1.04, 1.12], x: [1280, 1280], y: [820, 820] }, bed: [['crowd_loop', .2]],
-    figs: [0, 1, 2, 3, 4, 5].map(i => ({ x: 300 + i * 380, y: 1260 + (i % 2) * 70, s: 1.6 + (i % 2) * .15, ...RS.TRADER(i), facing: i % 2 ? -1 : 1, pose: ['point', 'present', 'shrug', 'think', 'present', 'point'][i], mood: 'neutral', walk: i === 2 ? { x0: 700, x1: 1060, t0: 1, dur: 3 } : undefined })),
+    figs: [0, 1, 2, 3, 4, 5].map(i => ({ x: 300 + i * 380, y: 1335 + (i % 2) * 45, s: 1.6 + (i % 2) * .15, ...RS.TRADER(i), facing: i % 2 ? -1 : 1, pose: ['point', 'present', 'shrug', 'think', 'present', 'point'][i], mood: 'neutral', walk: i === 2 ? { x0: 700, x1: 1060, t0: 1, dur: 3 } : undefined })),
     init: S => { const tA = A.at(S, 'Amsterdam', 2.6), tY = A.at(S, '1776', 7.2), tG = A.at(S, 'grow', 9.4);
       S.D.over = [(c, lt) => K.card(c, 'AMSTERDAM · LONDON: BANKS AND EXCHANGES', lt, { at: tA, x: 960, y: 200, px: 42, rot: -2, until: tY }),
         (c, lt) => { const a = pop(lt, tY, .4); if (a <= 0) return; c.save(); c.translate(960, 560); c.scale(a, a); c.rotate(-.05); c.fillStyle = 'rgba(0,0,0,.4)'; c.fillRect(-250, -310, 520, 640); c.fillStyle = '#6a2a22'; c.strokeStyle = INK; c.lineWidth = 7; c.fillRect(-260, -320, 520, 640); c.strokeRect(-260, -320, 520, 640); c.strokeStyle = RS.GOLD; c.lineWidth = 4; c.strokeRect(-230, -290, 460, 580);
@@ -77,9 +102,9 @@ window.SHOTS = [
   // 1.08 Hesse-Kassel: the prince in uniform; chests creak open full of gold; Mayer beside him with his ledger
   { plate: 'mansion', cam: { z: [1.06, 1.14], x: [1280, 1280], y: [860, 860] }, bed: [['hum_loop', .25]],
     figs: [{ x: 1480, y: 1320, s: 2.0, ...RS.PRINCE, facing: -1, pose: 'present', mood: 'happy' },
-      { x: 700, y: 1330, s: 1.95, ...RS.MAYER, facing: 1, pose: 'present', mood: 'focus', walk: { x0: 300, x1: 700, t0: 2.4, dur: 2 }, hold: { near: (c) => { c.save(); c.scale(.4, .4); RS.ledger(c, 60, -40, 1, { rot: -.2 }); c.restore(); } } }],
+      { x: 700, y: 1330, s: 1.95, ...RS.MAYER, facing: 1, pose: 'stand', mood: 'focus', walk: { x0: 300, x1: 700, t0: .3, dur: 2.2 }, anim: holdBook({ ta: 2.55, write: S => [3, S.tM + 2] }) }],
     front: [(c, lt) => { RS.chest(c, 1900, 1400, .9, { open: lt > 1 }); RS.chest(c, 2200, 1420, 1.0, { open: lt > 1.4 }); }],
-    init: S => { const tW = A.at(S, 'richest', 2.4), tM = A.at(S, 'manage', 5);
+    init: S => { const tW = A.at(S, 'richest', 2.4), tM = S.tM = A.at(S, 'manage', 5);
       S.D.over = [(c, lt) => K.badge(c, 'PRINCE WILLIAM OF HESSE-KASSEL', lt, { at: .4 }), (c, lt) => K.card(c, 'ONE OF EUROPE\'S RICHEST RULERS', lt, { at: tW, x: 1400, y: 220, px: 42, rot: 3 }), (c, lt) => K.card(c, 'MAYER MANAGES HIS MONEY', lt, { at: tM, x: 520, y: 260, px: 44, rot: -3 })];
       S.D.sfx = [[1, 'creak', .4], [1.4, 'coins_cascade', .35], [tM, 'paper', .3]]; } },
   // 1.09 the wars: armies march across the map; coins stream toward the front lines
@@ -96,7 +121,7 @@ window.SHOTS = [
   { plate: 'judengasse_night', cam: { z: [1.04, 1.12], x: [1280, 1280], y: [820, 820] }, bed: [['night_loop', .25], ['walk_hooves_loop', .15]],
     live: [(c, lt) => { const u = K.seg(lt, .3, 4.5), s = 1 - u * .7, x = 1280, y = 1300 - u * 300; if (u >= 1) return; c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = '#100c0a'; c.beginPath(); c.roundRect(-130, -230, 260, 170, 20); c.fill(); c.fillStyle = 'rgba(255,200,120,.5)'; c.fillRect(-80, -200, 160, 60);
       for (const wx of [-100, 100]) { c.strokeStyle = '#100c0a'; c.lineWidth = 10; c.beginPath(); c.arc(wx, -40, 50, 0, 7); c.stroke(); } c.fillStyle = '#100c0a'; for (const hx of [-60, 60]) { c.beginPath(); c.ellipse(hx, -340 + Math.sin(lt * 10 + hx) * 4, 40, 70, 0, 0, 7); c.fill(); } c.restore(); }],
-    figs: [{ x: 1700, y: 1330, s: 1.8, ...RS.MAYER_OLD, facing: 1, walk: { x0: 900, x1: 1700, t0: 4.6, dur: 3.2 }, arms: CARRY, hold: { near: (c) => { c.save(); c.scale(.32, .32); RS.ledger(c, 40, -60, 1); c.restore(); } } }],
+    figs: [{ x: 1700, y: 1330, s: 1.8, ...RS.MAYER_OLD, facing: 1, walk: { x0: 900, x1: 1700, t0: 4.6, dur: 3.2 }, anim: holdBook() }],
     init: S => { const tN = A.at(S, 'Napoleon', 1.6), tK = A.at(S, 'kept', 4.8);
       S.D.over = [(c, lt) => K.dateTag(c, '1806', lt, { at: .4 }), (c, lt) => K.card(c, 'NAPOLEON ARRIVES: THE PRINCE FLEES', lt, { at: tN, x: 960, y: 200, px: 44, rot: -2 }), (c, lt) => K.card(c, 'THE FAMILY KEEPS HIS MONEY WORKING', lt, { at: tK, x: 960, y: 300, px: 40, rot: 2 })];
       S.D.sfx = [[.3, 'walk_hooves_loop', .3], [tK, 'footsteps', .3], [tK + 3.4, 'creak', .4]]; } },
@@ -109,6 +134,6 @@ window.SHOTS = [
       S.D.sfx = [[.5, 'footsteps', .3], [tB, 'creak', .3], [tS, 'paper', .25]]; } },
 ];
 
-const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; (D.figs || []).forEach(idle); S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
 A.build(); K.boot();
 </script></body></html>
