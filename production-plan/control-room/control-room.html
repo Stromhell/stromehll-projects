@@ -1,3 +1,4 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Production Control Room</title>
 <style>
 /* Release plan: what is in production now, what starts next, and the order videos go live */
@@ -239,10 +240,56 @@ button.big.armed{border-color:var(--amber);background:var(--panel)}
 .feed .txt b{font-weight:600}
 @media (max-width:640px){.feed li{grid-template-columns:1fr;gap:2px}.notes div{grid-template-columns:1fr;gap:0}}
 @media (prefers-reduced-motion:reduce){.bar.live i,.pill.working::before{animation:none}.bar i{transition:none}}
+/* Production system section + 13-stage rail */
+section.sys{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:18px;display:grid;gap:14px}
+section.sys h2{font-family:var(--display);font-weight:600;font-size:22px;margin:0;letter-spacing:.02em}
+section.sys h3{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin:0 0 8px;font-weight:500}
+.syshead{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline;justify-content:space-between}
+.syshead p{margin:0;color:var(--mute);font-size:13.5px;max-width:70ch;flex-basis:100%}
+.syshead a{font-family:var(--mono);font-size:12px;color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:5px 10px;text-decoration:none;white-space:nowrap}
+.syshead a:hover{border-color:var(--amber);color:var(--amber)}
+.flow{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
+.flow li{border:1px solid var(--line);border-radius:4px;padding:7px 9px;background:var(--bg);font-size:12.5px;line-height:1.3;min-width:0}
+.flow li b{display:block;font-family:var(--mono);font-size:11px;color:var(--mute);font-weight:500}
+.flow li small{color:var(--mute)}
+.flow li.gate{border-color:var(--red)} .flow li.gate b{color:var(--red)}
+.flow li.loop{border-color:var(--amber)} .flow li.loop b{color:var(--amber)}
+.syscols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+.wd{border:1px solid var(--line);border-radius:6px;padding:12px;background:var(--bg);display:grid;gap:8px}
+.wd .wdh{display:flex;justify-content:space-between;gap:10px;align-items:baseline;flex-wrap:wrap}
+.wd .wdh b{font-family:var(--display);font-size:20px;font-weight:600}
+.wd .wdh b.ok{color:var(--green)} .wd .wdh b.bad{color:var(--red)} .wd .wdh b.unk{color:var(--mute)}
+.wd .wdh span{font-family:var(--mono);font-size:11.5px;color:var(--mute)}
+.wd ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.wd li{font-size:13px;border-left:3px solid var(--red);padding:4px 8px;background:var(--panel);overflow-wrap:anywhere}
+.wd li.fixed{border-left-color:var(--green);opacity:.75} .wd li.sent{border-left-color:var(--amber)}
+.wd li small{display:block;color:var(--mute);font-size:12px}
+.sysrules{margin:0;padding-left:18px;font-size:13px;display:grid;gap:3px}
+.ftag.f3dl,.fmt.f3dl{background:var(--red)}
+.line.f3dl .slots i.on{background:var(--red);border-color:var(--red)}
+.line.f3d .slots i.on{background:var(--violet);border-color:var(--violet)}
+.line.off{opacity:.55}
+.line small{grid-area:m;font-size:12px;color:var(--mute)}
+.sysrail{display:grid;gap:6px}
+.sysrailhead{display:flex;justify-content:space-between;gap:10px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+.sysrailhead b{font-weight:500;color:var(--ink)}
+.rail.sys{grid-template-columns:repeat(13,minmax(0,1fr))}
+.rail.sys li{grid-template-columns:1fr;grid-template-areas:"i" "b" "s" "e";justify-items:start;padding:6px 6px 8px;gap:2px;border-top:0}
+.rail.sys li:nth-child(3){border-left:1px solid var(--line)}
+.rail.sys li:first-child{border-left:0}
+.rail.sys li b{font-size:10.5px;letter-spacing:.04em}
+.rail.sys li span{font-size:11px;color:var(--ink);white-space:normal;line-height:1.15;grid-area:s}
+.rail.sys li em{grid-area:e;font-style:normal;font-size:10.5px;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.rail.sys li.done em{color:var(--green)} .rail.sys li.active em{color:var(--amber)} .rail.sys li.review em{color:var(--red)}
+.rail.sys li.cur{background:var(--panel2)}
+.rail.sys li.skip{opacity:.4}
+.sysnote{margin:0;font-size:12.5px;color:var(--mute)}
+@media (max-width:900px){.rail.sys{grid-template-columns:repeat(7,minmax(0,1fr))}.rail.sys li:nth-child(n+8){border-top:1px solid var(--line)}.rail.sys li:nth-child(8){border-left:0}}
+@media (max-width:640px){.syscols{grid-template-columns:1fr}.rail.sys{grid-template-columns:repeat(4,minmax(0,1fr))}.rail.sys li{border-top:1px solid var(--line);border-left:1px solid var(--line)}.rail.sys li:nth-child(4n+1){border-left:0}.rail.sys li:nth-child(-n+4){border-top:0}}
 </style>
 
 <button type="button" class="railfab" id="railFab" aria-expanded="false" aria-controls="siderail"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="lbl">Channels</span></button>
-<nav class="siderail" id="siderail" aria-label="Channels"><a href="#s-top" data-j="s-top" title="Top"><b>↑</b><span>Top</span></a><a href="#s-line" data-j="s-line" title="Production line"><b>01</b><span>Production line</span></a><a href="#s-order" data-j="s-order" title="Running order"><b>02</b><span>Running order</span></a><a href="#s-rel" data-j="s-rel" title="Release plan"><b>03</b><span>Release plan</span></a><a href="#s-cal" data-j="s-cal" title="Calendar"><b>04</b><span>Calendar</span></a><a href="#s-an" data-j="s-an" title="Analytics"><b>05</b><span>Analytics</span></a><a href="#s-log" data-j="s-log" title="Activity log"><b>06</b><span>Activity log</span></a></nav>
+<nav class="siderail" id="siderail" aria-label="Channels"><a href="#s-top" data-j="s-top" title="Top"><b>↑</b><span>Top</span></a><a href="#s-sys" data-j="s-sys" title="Production system"><b>00</b><span>System</span></a><a href="#s-line" data-j="s-line" title="Production line"><b>01</b><span>Production line</span></a><a href="#s-order" data-j="s-order" title="Running order"><b>02</b><span>Running order</span></a><a href="#s-rel" data-j="s-rel" title="Release plan"><b>03</b><span>Release plan</span></a><a href="#s-cal" data-j="s-cal" title="Calendar"><b>04</b><span>Calendar</span></a><a href="#s-an" data-j="s-an" title="Analytics"><b>05</b><span>Analytics</span></a><a href="#s-log" data-j="s-log" title="Activity log"><b>06</b><span>Activity log</span></a></nav>
 <div class="wrap" id="s-top">
   <header class="desk">
     <div class="brand"><span class="lamp" aria-hidden="true"></span><div><div class="eyebrow">Stromhell studio · production pipeline</div><h1>Production Control Room</h1></div></div>
@@ -254,7 +301,7 @@ button.big.armed{border-color:var(--amber);background:var(--panel)}
       <div class="m green"><b class="num" id="mLive">–</b><span>Full videos on Zernio</span></div>
     </div>
     <nav class="jump" aria-label="Jump to a channel">
-      <a href="#s-line" data-j="s-line"><b>01</b>Production line</a><a href="#s-order" data-j="s-order"><b>02</b>Running order</a><a href="#s-rel" data-j="s-rel"><b>03</b>Release plan</a><a href="#s-cal" data-j="s-cal"><b>04</b>Calendar</a><a href="#s-an" data-j="s-an"><b>05</b>Analytics</a><a href="#s-log" data-j="s-log"><b>06</b>Activity log</a>
+      <a href="#s-sys" data-j="s-sys"><b>00</b>System</a><a href="#s-line" data-j="s-line"><b>01</b>Production line</a><a href="#s-order" data-j="s-order"><b>02</b>Running order</a><a href="#s-rel" data-j="s-rel"><b>03</b>Release plan</a><a href="#s-cal" data-j="s-cal"><b>04</b>Calendar</a><a href="#s-an" data-j="s-an"><b>05</b>Analytics</a><a href="#s-log" data-j="s-log"><b>06</b>Activity log</a>
     </nav>
   </header>
 
@@ -267,6 +314,16 @@ button.big.armed{border-color:var(--amber);background:var(--panel)}
     </div>
     <div class="bar live" id="ovBar"><i style="width:0"></i></div>
     <p class="rule" id="rule"></p>
+  </section>
+
+  <section class="sys" id="s-sys" aria-label="Production system">
+    <div class="syshead"><h2>Production system</h2><a href="https://github.com/Stromhell/stromehll-projects/blob/claude/project-thread-dy0qkh/system/stormi-production-system-v1.md" target="_blank" rel="noopener">Rulebook ↗</a>
+      <p>Every video follows these 13 stages. Your only gate is stage 9, the full-video review. Each video card below shows which stage it is at.</p></div>
+    <ol class="flow" id="sysFlow"></ol>
+    <div class="syscols">
+      <div><h3>Live per line (set by you)</h3><div class="lines" id="sysLines"></div><h3>Standing rules</h3><ol class="sysrules" id="sysRules"></ol></div>
+      <div><h3>Watchdog: is everything following the system?</h3><div class="wd" id="sysWd"></div></div>
+    </div>
   </section>
 
   <section class="list" id="s-line" aria-label="Videos">
@@ -349,14 +406,15 @@ function fsArticle(v){
     </article>`;
 }
 function tsec(t){ if (typeof t === "number") return t; const p = Date.parse(t); return isNaN(p) ? null : p/1000; }
-function fmtKey(s){ const x = String(s || "").toUpperCase().replace(/\s+/g, " ").trim(); if (!x) return ""; if (x.includes("DYN") || x === "2DD") return "2DD"; if (x.startsWith("3")) return "3D"; if (x.startsWith("2")) return "2D"; return x; }
-const FMT_NAME = {"2D": "2D", "2DD": "2D dynamic", "3D": "3D"};
+function fmtKey(s){ const x = String(s || "").toUpperCase().replace(/\s+/g, " ").trim(); if (!x) return ""; if (x.includes("DYN") || x === "2DD") return "2DD"; if (x.includes("LOW") || x === "3DL") return "3DL"; if (x.startsWith("3")) return "3D"; if (x.startsWith("2")) return "2D"; return x; }
+const FMT_NAME = {"2D": "2D", "2DD": "2D dynamic", "3DL": "3D low", "3D": "3D"};
 function fmtName(k){ return FMT_NAME[k] || k; }
 function fmtOf(v){ return fmtKey(v.format || (v.external ? "3D" : "2D")); }
-const CAP = {"2D": 4, "2DD": 3, "3D": 2};
+/* Live videos per line, set by Pushpam (system rulebook 1.4). Overridden by db doc board/system.caps. */
+let CAP = {"2D": 1, "2DD": 0, "3DL": 0, "3D": 0};
 /* Projected production window per video: running ones end at asOf + work left; queued ones take the next free 2D or 3D slot. */
 function plan(){
-  const now = Date.now()/1000, out = {}, free = {"2D": [], "2DD": [], "3D": []}, all = rows();
+  const now = Date.now()/1000, out = {}, free = {"2D": [], "2DD": [], "3DL": [], "3D": []}, all = rows();
   for (const v of all){
     const f = fmtOf(v);
     if (v.status === "working"){ const t0 = tsec(v.asOf) || S.asOf; const end = Math.max(now + 60, t0 + (v.ownLeft || 0)); out[v.id] = {a: now, b: end}; (free[f] || (free[f] = [])).push(end); }
@@ -433,14 +491,27 @@ function bst(vid, kind){
   const cur = i>=3 ? 2 : i>=2 ? 1 : 0;
   return `<span class="bst" title="${esc(r.summary||REQ_ST[r.status]||"")}">${it.map(([ic,l],k) => `<i class="bi ${k<cur||cur===2?"ok":k===cur?"on":""}${k===1&&k===cur&&!later?" spin":""}" aria-label="${l}${k<cur||cur===2?" (done)":k===cur?" (now)":""}">${BI[ic]}</i>`).join('<b class="bl"></b>')}<em>${esc(it[cur][1])}</em></span>`;
 }
-function railBlock(v){
+/* System rail: the 13 stages of the Stormi production system (rulebook system/stormi-production-system-v1.md).
+   Threads write v.sys = {states:{script:"done",...}, note:"", checkup:{act:"2",round:3,result:"clean"|"fixing"}} on their card.
+   Without v.sys the rail is worked out from the acts list and the older requests. */
+const SYS_STAGES = [["script","Script"],["storyboard","Storyboard"],["voice","Narration"],["acts","Acts"],["sound","SFX + music"],["checkup","Checkup"],["combine","Combine"],["preview","Preview"],["review","Your review"],["reels","Reels + IG parts"],["titles","Titles"],["thumbs","Thumbnails"],["schedule","Scheduled"]];
+function sysStates(v){
   const A = Array.isArray(v.acts) ? v.acts : [];
   const st = k => { const r = REQS.filter(x => x.video===v.id && x.kind===k).sort((a,b)=>(b.at||0)-(a.at||0))[0]; if (!r) return "todo"; const i = stepIdx(r); return r.status==="declined" ? "todo" : i>=3 ? "done" : i>=2 ? "active" : "rec"; };
   const ad = A.filter(a => a.state==="done").length;
-  const as = !A.length ? "todo" : ad===A.length ? "done" : A.some(a => a.state==="review"||a.state==="fix") ? "review" : A.some(a => a.state==="active") ? "active" : "todo";
-  const S2 = [["Acts", as, A.length ? `${ad}/${A.length}` : ""], ["Combine", st("combine"), ""], ["Reels", st("reels"), ""], ["Schedule", st("schedule"), ""]];
-  const W = {todo:"Not started", rec:"Requested", active:"Working", review:"Needs your OK", done:"Done"};
-  return `<ol class="rail" aria-label="Pipeline stage">${S2.map(([n,s,x]) => `<li class="${s}" title="${n}: ${W[s]}"><i></i><b>${n}</b><span>${x||W[s]}</span></li>`).join("")}</ol>`;
+  const as = !A.length ? "todo" : ad===A.length ? "done" : A.some(a => ["active","done","review","fix"].includes(a.state)) ? "active" : "todo";
+  const d = {script: A.length ? "done" : "todo", storyboard: A.length ? "done" : "todo", voice: as, acts: as, sound: as, checkup: as, combine: st("combine"), preview: st("combine")==="done" ? "done" : "todo", review: v.status==="waiting" ? "review" : (v.approved ? "done" : "todo"), reels: st("reels"), titles: "todo", thumbs: "todo", schedule: st("schedule")};
+  const x = (v.sys && v.sys.states) || {};
+  for (const k in x) d[k] = x[k];
+  return {d, ad, n: A.length};
+}
+function railBlock(v){
+  const {d, ad, n} = sysStates(v);
+  const W = {todo:"Not started", rec:"Requested", active:"Working", review:"Needs your OK", done:"Done", skip:"Not needed"};
+  const ck = v.sys && v.sys.checkup;
+  const extra = {acts: n ? `${ad}/${n}` : "", checkup: ck ? `Act ${ck.act} · round ${ck.round||1} · ${ck.result||""}` : ""};
+  const cur = SYS_STAGES.findIndex(([k]) => d[k] !== "done" && d[k] !== "skip");
+  return `<div class="sysrail"><div class="sysrailhead"><span>System stage</span><b>${cur < 0 ? "All 13 stages done" : `${cur+1} of 13 · ${SYS_STAGES[cur][1]}`}</b></div><ol class="rail sys" aria-label="System stages">${SYS_STAGES.map(([k,nm],i) => `<li class="${esc(d[k]||"todo")}${i===cur?" cur":""}" title="${i+1}. ${nm}: ${W[d[k]]||d[k]}"><i></i><b>${i+1}</b><span>${esc(nm)}</span><em>${esc(extra[k] || W[d[k]] || "")}</em></li>`).join("")}</ol>${v.sys && v.sys.note ? `<p class="sysnote">${esc(v.sys.note)}</p>` : ""}</div>`;
 }
 function actReq(vid, act){ return REQS.filter(r => r.video===vid && r.kind==="feedback" && String(r.act)===String(act)).sort((a,b)=>(b.at||0)-(a.at||0))[0]; }
 function reqsFor(vid){ return REQS.filter(r => r.video === vid).sort((a,b) => (b.at||0)-(a.at||0)).slice(0,4); }
@@ -1173,3 +1244,56 @@ button.big{border-radius:12px;min-height:72px;padding:14px 16px}
   .fsn{grid-area:n} .fst{grid-area:t} .fsi summary .pill{grid-area:s} .fsp{grid-area:p}
 }
 </style>
+
+<script>
+/* Production system panel. Data: db doc board/system {caps, rules[], asOf} and
+   board/watchdog {asOf, checked, note, issues:[{line, video, problem, fix, owner, status: open|sent|fixed}]},
+   both written by the system thread. */
+let SYSD = {caps: null, rules: [
+  "Live now: 1 × 2D only. 2D dynamic, 3D low and 3D render nothing.",
+  "Script share per 10: 4 × 2D, 3 × 2D dynamic, 2 × 3D low, 1 × 3D. 3D only when realism is the hook.",
+  "3D low takes nothing until you set it up.",
+  "Storyboard done → production starts, no approval wait.",
+  "Every act: checkup with /watch + peek + 1 fps sheets; fix and re-check until clean, then the next act.",
+  "Nothing is combined, shown or scheduled before a clean checkup.",
+  "After your approval: 15 reels + Instagram parts under 3 min, titles, thumbnails.",
+  "ElevenLabs only for the 16:9 YouTube thumbnail. Voice, music, SFX and reel thumbnails in-house.",
+  "Posting times (UTC, UK + US prime): full 19:00 weekdays / 16:00 weekends; reels 19:30, 00:30, 12:00, 22:00, 17:00, 03:00, 07:30; shorts 18:00, 21:00, 01:30; IG parts 20:30.",
+  "Opus 5.5 at medium; Graphify before grepping; every file to GitHub + Drive AI."
+]};
+let WD = null;
+const FLOW = [["Script Room","Viral script + line choice"],["Storyboard","Sketch per shot, no wait"],["Narration","Your cloned voice"],["Acts","Built + rendered one by one"],["SFX + music","Mixed under the voice"],["Checkup","Watch + peek, fix until clean","loop"],["Combine","Full video + full checkup"],["Previews","Act by act, then full"],["Your review","Notes → fix → show again","gate"],["Reels + IG parts","15 reels, IG parts under 3 min"],["Titles","Viral titles + descriptions"],["Thumbnails","Exaggerated; 16:9 via ElevenLabs"],["Scheduled","Production plan, UK/US prime"]];
+function sysEsc(t){ return String(t == null ? "" : t).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function renderSys(){
+  try {
+    if (SYSD.caps) { for (const k in SYSD.caps) CAP[k] = SYSD.caps[k]; }
+    document.getElementById("sysFlow").innerHTML = FLOW.map(([n,d,c],i) => `<li class="${c||""}"><b>${String(i+1).padStart(2,"0")}${c==="gate"?" · you":c==="loop"?" · loop":""}</b>${sysEsc(n)}<br><small>${sysEsc(d)}</small></li>`).join("");
+    const all = (typeof rows === "function") ? rows() : [];
+    document.getElementById("sysLines").innerHTML = Object.keys(CAP).map(k => {
+      const on = all.filter(v => fmtOf(v) === k && v.status === "working").length, cap = CAP[k], over = on > cap;
+      const slots = Array.from({length: Math.max(cap, on, 1)}, (_, i) => `<i class="${i < on ? "on" : ""}"></i>`).join("");
+      const msg = cap === 0 ? (on ? `Should be off: ${on} running` : "Off") : over ? "Over the limit" : on < cap ? `${cap - on} free` : "Full";
+      return `<div class="line f${k.toLowerCase()} ${cap === 0 ? "off" : ""}"><span class="ftag f${k.toLowerCase()}">${sysEsc(fmtName(k))}</span><b style="${over ? "color:var(--red)" : ""}">${on} / ${cap}</b><span class="slots" aria-hidden="true">${slots}</span><small>${msg}</small></div>`;
+    }).join("");
+    document.getElementById("sysRules").innerHTML = (SYSD.rules || []).map(r => `<li>${sysEsc(r)}</li>`).join("");
+    const box = document.getElementById("sysWd"), w = WD;
+    if (!w) { box.innerHTML = `<div class="wdh"><b class="unk">Waiting for the first check</b><span>Runs every 2 hours</span></div>`; return; }
+    const issues = w.issues || [], open = issues.filter(i => i.status !== "fixed");
+    const when = w.asOf ? new Date(w.asOf).toLocaleString([], {day:"numeric", month:"short", hour:"2-digit", minute:"2-digit"}) : "";
+    box.innerHTML = `<div class="wdh"><b class="${open.length ? "bad" : "ok"}">${open.length ? `${open.length} issue${open.length === 1 ? "" : "s"}` : "All on system"}</b><span>Last check ${sysEsc(when)}${w.checked ? " · " + sysEsc(w.checked) : ""}</span></div>` +
+      (issues.length ? `<ul>${issues.slice(0, 14).map(i => `<li class="${sysEsc(i.status || "open")}"><b>${sysEsc(i.video || i.line || "")}</b> ${sysEsc(i.problem)}<small>${i.fix ? "Fix: " + sysEsc(i.fix) : ""}${i.owner ? " · " + sysEsc(i.owner) : ""}${i.status ? " · " + sysEsc(i.status) : ""}</small></li>`).join("")}</ul>` : `<p class="relnote">No problems found.</p>`) +
+      (w.note ? `<p class="relnote">${sysEsc(w.note)}</p>` : "");
+  } catch (e) {}
+}
+renderSys();
+(async () => {
+  try {
+    const db = await window.claude?.use?.("db");
+    if (!db) return;
+    db.doc("board/system").onSnapshot(s => { if (s.exists) { SYSD = Object.assign({}, SYSD, s.data() || {}); renderSys(); try { built = false; tick(); renderRel(); } catch (e) {} } }, () => {});
+    db.doc("board/watchdog").onSnapshot(s => { if (s.exists) { WD = s.data(); renderSys(); } }, () => {});
+  } catch (e) {}
+})();
+setInterval(renderSys, 30000);
+</script>
+</body></html>
