@@ -1,0 +1,26 @@
+05:02:09 watchdog start for /home/user/stromehll-projects/facts-shorts/batch-2026-10-31
+05:02:09 restart voice job (not running)
+05:13:10 voiced 22-sharks-trees
+05:13:16 timed 22-sharks-trees
+05:16:17 voiced 23-moon-face
+05:16:20 timed 23-moon-face
+05:18:21 render 22-sharks-trees started
+05:21:26 rendered 22-sharks-trees (23.296000s, decode clean)
+05:21:41 qa sheet ready 22-sharks-trees
+05:21:42 render 23-moon-face started
+05:23:45 rendered 23-moon-face (22.080000s, decode clean)
+05:23:57 qa sheet ready 23-moon-face
+05:23:57 render 22-sharks-trees started
+05:24:57 voiced 24-cat-feet
+05:24:57 FAILED timing 24-cat-feet: word not found: righting#1 in How do cats almost always land on their feet? It's called the writhing reflex. As a cat falls, its inner ear tells it which weighs up. It twists its front half first then its back half thanks to a super bendy spine and no fixed collar bone. Then it arches its back and spreads its legs like a tiny parachute. Kittens have it mastered by 7 weeks old.
+05:26:03 rendered 22-sharks-trees (23.296000s, decode clean)
+05:26:19 qa sheet ready 22-sharks-trees
+05:26:19 render 24-cat-feet started
+05:28:24 rendered 24-cat-feet (24.362667s, decode clean)
+05:28:40 qa sheet ready 24-cat-feet
+05:28:40 render 22-sharks-trees started
+05:30:45 rendered 22-sharks-trees (23.296000s, decode clean)
+05:31:00 qa sheet ready 22-sharks-trees
+05:31:00 render 24-cat-feet started
+05:33:05 rendered 24-cat-feet (24.362667s, decode clean)
+05:33:21 qa sheet ready 24-cat-feet

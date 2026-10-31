@@ -1,0 +1,10 @@
+22-sharks-trees 1 older=older swimming=swimming trees=trees:2 gap=gap survived=survived extinction=extinction dinosaurs=dinosaurs first=first:3 still=still
+23-moon-face 2 one=one spin=spin trip=trip gravity=gravity egg=egg slowing=slowing tidal=tidal face=face hidden=hidden
+24-cat-feet 3 righting=writhing falls=falls ear=ear twists=twists spine=spine collarbone=collar arches=arches parachute=parachute kittens=Kittens
+25-popcorn 4 pop=pop water=water heat=Heat pressure=pressure ten=ten bursts=bursts starch=starch foam=foam fluffy=fluffy
+26-liberty-green 0 green=green shiny=shiny penny=penny copper=copper rain=rain patina=patina protects=protects cleans=cleans
+27-big-ben 1 tower=tower bell=bell weighs=weighs london=London clock=Clock renamed=renamed queen=Queen bongs=bongs
+28-bubbles-round 2 round=round skin=skin shrink=shrink pulls=pulls least=least sphere=sphere cube=cube square=square ball=ball
+29-everest-mauna-kea 3 highest=highest tallest=tallest peak=peak hawaii=Hawaii underwater=underwater base=base beats=beats
+30-stars-twinkle 4 twinkle=twinkle far=far point=point air=air flickers=flickers planets=Planets discs=discs steady=steady space=space
+31-goosebumps 0 goosebumps=goosebumps muscle=muscle cold=cold ancestors=ancestors warm=warm bigger=bigger lost=lost bumps=bumps

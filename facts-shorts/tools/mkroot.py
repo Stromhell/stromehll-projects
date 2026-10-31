@@ -1,7 +1,7 @@
 # Register every short that has a timing.ts (plus Seawater) in src/Root.tsx.
 import os, re
 root = os.path.dirname(os.path.abspath(__file__)) + '/../remotion/src'
-shorts = sorted(d for d in os.listdir(f'{root}/shorts') if os.path.exists(f'{root}/shorts/{d}/timing.ts'))
+shorts = sorted(d for d in os.listdir(f'{root}/shorts') if os.path.exists(f'{root}/shorts/{d}/timing.ts') and any(f.endswith('.tsx') and not f.startswith('Thumb') for f in os.listdir(f'{root}/shorts/{d}')))
 imp, comp = [], []
 for d in shorts:
     tsx = [f for f in os.listdir(f'{root}/shorts/{d}') if f.endswith('.tsx') and not f.startswith('Thumb')][0][:-4]

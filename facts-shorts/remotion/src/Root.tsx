@@ -43,6 +43,26 @@ import {RecordedVoice as C20RecordedVoice} from './shorts/20-recorded-voice/Reco
 import {T as T20RecordedVoice} from './shorts/20-recorded-voice/timing';
 import {GreatWall as C21GreatWall} from './shorts/21-great-wall/GreatWall';
 import {T as T21GreatWall} from './shorts/21-great-wall/timing';
+import {SharksTrees as C22SharksTrees} from './shorts/22-sharks-trees/SharksTrees';
+import {T as T22SharksTrees} from './shorts/22-sharks-trees/timing';
+import {MoonFace as C23MoonFace} from './shorts/23-moon-face/MoonFace';
+import {T as T23MoonFace} from './shorts/23-moon-face/timing';
+import {CatFeet as C24CatFeet} from './shorts/24-cat-feet/CatFeet';
+import {T as T24CatFeet} from './shorts/24-cat-feet/timing';
+import {Popcorn as C25Popcorn} from './shorts/25-popcorn/Popcorn';
+import {T as T25Popcorn} from './shorts/25-popcorn/timing';
+import {LibertyGreen as C26LibertyGreen} from './shorts/26-liberty-green/LibertyGreen';
+import {T as T26LibertyGreen} from './shorts/26-liberty-green/timing';
+import {BigBen as C27BigBen} from './shorts/27-big-ben/BigBen';
+import {T as T27BigBen} from './shorts/27-big-ben/timing';
+import {BubblesRound as C28BubblesRound} from './shorts/28-bubbles-round/BubblesRound';
+import {T as T28BubblesRound} from './shorts/28-bubbles-round/timing';
+import {EverestMaunaKea as C29EverestMaunaKea} from './shorts/29-everest-mauna-kea/EverestMaunaKea';
+import {T as T29EverestMaunaKea} from './shorts/29-everest-mauna-kea/timing';
+import {StarsTwinkle as C30StarsTwinkle} from './shorts/30-stars-twinkle/StarsTwinkle';
+import {T as T30StarsTwinkle} from './shorts/30-stars-twinkle/timing';
+import {Goosebumps as C31Goosebumps} from './shorts/31-goosebumps/Goosebumps';
+import {T as T31Goosebumps} from './shorts/31-goosebumps/timing';
 import {THUMBS, ShortThumb} from './thumbs/Thumbs';
 export const RemotionRoot: React.FC = () => (
   <>
@@ -69,6 +89,16 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="S19lightningsun" component={C19LightningSun} width={1080} height={1920} fps={60} durationInFrames={Math.round(T19LightningSun.end * 60)} />
     <Composition id="S20recordedvoice" component={C20RecordedVoice} width={1080} height={1920} fps={60} durationInFrames={Math.round(T20RecordedVoice.end * 60)} />
     <Composition id="S21greatwall" component={C21GreatWall} width={1080} height={1920} fps={60} durationInFrames={Math.round(T21GreatWall.end * 60)} />
+    <Composition id="S22sharkstrees" component={C22SharksTrees} width={1080} height={1920} fps={60} durationInFrames={Math.round(T22SharksTrees.end * 60)} />
+    <Composition id="S23moonface" component={C23MoonFace} width={1080} height={1920} fps={60} durationInFrames={Math.round(T23MoonFace.end * 60)} />
+    <Composition id="S24catfeet" component={C24CatFeet} width={1080} height={1920} fps={60} durationInFrames={Math.round(T24CatFeet.end * 60)} />
+    <Composition id="S25popcorn" component={C25Popcorn} width={1080} height={1920} fps={60} durationInFrames={Math.round(T25Popcorn.end * 60)} />
+    <Composition id="S26libertygreen" component={C26LibertyGreen} width={1080} height={1920} fps={60} durationInFrames={Math.round(T26LibertyGreen.end * 60)} />
+    <Composition id="S27bigben" component={C27BigBen} width={1080} height={1920} fps={60} durationInFrames={Math.round(T27BigBen.end * 60)} />
+    <Composition id="S28bubblesround" component={C28BubblesRound} width={1080} height={1920} fps={60} durationInFrames={Math.round(T28BubblesRound.end * 60)} />
+    <Composition id="S29everestmaunakea" component={C29EverestMaunaKea} width={1080} height={1920} fps={60} durationInFrames={Math.round(T29EverestMaunaKea.end * 60)} />
+    <Composition id="S30starstwinkle" component={C30StarsTwinkle} width={1080} height={1920} fps={60} durationInFrames={Math.round(T30StarsTwinkle.end * 60)} />
+    <Composition id="S31goosebumps" component={C31Goosebumps} width={1080} height={1920} fps={60} durationInFrames={Math.round(T31Goosebumps.end * 60)} />
     {THUMBS.map((th) => <Composition key={th.id} id={`Th${th.id}`} component={ShortThumb} defaultProps={{id: th.id}} width={1080} height={1920} fps={60} durationInFrames={1800} />)}
   </>
 );
