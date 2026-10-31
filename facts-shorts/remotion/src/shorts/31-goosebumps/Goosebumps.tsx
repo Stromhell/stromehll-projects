@@ -219,7 +219,7 @@ const SnowGround: React.FC<{y: number}> = ({y}) => (
 
 export const Goosebumps: React.FC = () => {
   const t = useCurrentFrame() / FPS;
-  const swPull = T.cold + 1.1, swBumps = T.lost + 3.6;
+  const swPull = T.cold + 1.1, swBumps = Math.min(T.lost + 3.6, T.lost + 1.9);
   const scene = t < T.muscle - 0.25 ? 'arm' : t < T.cold - 0.25 ? 'skin' : t < swPull ? 'cold' : t < T.ancestors - 0.25 ? 'pull'
     : t < T.bigger - 0.25 ? 'ancestor' : t < T.lost - 0.25 ? 'bigger' : t < swBumps ? 'lost' : 'bumps';
   const cues: Cue[] = [
@@ -242,7 +242,7 @@ export const Goosebumps: React.FC = () => {
           return (
             <g>
               <Layer cam={keys(t, [[0, 540, 960, 1], [T.muscle - 0.85, 540, 960, 1], [T.muscle - 0.25, 470, 1210, 2.6]])}>
-                <g transform={`translate(${lerp(-900, 0, prog(t, 0.1, 0.7))} 0) rotate(${-6 + 1.5 * Math.sin(t * 1.2)} 540 1200)`}><Arm t={t} up={up} /></g>
+                <g transform={`translate(${lerp(-300, 0, prog(t, 0, 0.5))} 0) rotate(${-6 + 1.5 * Math.sin(t * 1.2)} 540 1200)`}><Arm t={t} up={up} /></g>
                 {mx < 1300 && (
                   <g transform={`translate(${mx} 1210)`}>
                     <path d="M 100 100 L 230 230" stroke={INK} strokeWidth={56} strokeLinecap="round" /><path d="M 100 100 L 230 230" stroke="#7A4E2C" strokeWidth={38} strokeLinecap="round" />
@@ -322,16 +322,16 @@ export const Goosebumps: React.FC = () => {
         })()}
 
         {scene === 'bigger' && (() => {
-          const grow = lerp(0.72, 1.3, pop(t, T.bigger - 0.1, 10, 6));
+          const grow = lerp(0.68, 1.15, pop(t, T.bigger - 0.1, 10, 6));
           const flee = prog(t, T.bigger + 0.8, T.bigger + 1.8);
           return (
             <g>
               <SnowGround y={1750} />
               <Snowfall t={t} n={16} />
-              <g transform={`translate(${lerp(900, 1500, flee)} ${1640 - 30 * Math.abs(Math.sin(t * 11)) * (flee > 0 ? 1 : 0)}) scale(${flee > 0 ? -0.8 : 0.8} 0.8)`}>
+              <g transform={`translate(${lerp(860, 1500, flee)} ${1640 - 30 * Math.abs(Math.sin(t * 11)) * (flee > 0 ? 1 : 0)}) scale(${flee > 0 ? -0.65 : 0.65} 0.65)`}>
                 <Wolf t={t} scared={t > T.bigger + 0.6} run={flee} />
               </g>
-              <g transform={`translate(360 ${1750 - 230 * grow}) scale(${grow})`}>
+              <g transform={`translate(320 ${1750 - 230 * grow}) scale(${grow})`}>
                 <Furry t={t} fluff={1} mood="roar" />
               </g>
               <Label x={540} y={640} size={84} s={pop(t, T.bigger, 12, 6)} color="#FFE45C">LOOK BIGGER!</Label>
@@ -390,7 +390,7 @@ export const Goosebumps: React.FC = () => {
                 <circle r={190} fill="none" stroke={INK} strokeWidth={LW} />
               </g>
               <Label x={540} y={640} size={64} s={pop(t, swBumps + 0.2, 12, 6)} color="#fff">THAT'S ALL WE GOT</Label>
-              <Label x={760} y={1560} size={58} s={pop(t, T.bumps - 0.5, 12, 6)} color="#FFE45C">LITTLE BUMPS</Label>
+              <Label x={760} y={1560} size={58} s={pop(t, swBumps + 0.9, 12, 6)} color="#FFE45C">LITTLE BUMPS</Label>
             </g>
           );
         })()}

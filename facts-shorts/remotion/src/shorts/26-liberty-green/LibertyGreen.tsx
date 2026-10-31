@@ -187,7 +187,7 @@ export const LibertyGreen: React.FC = () => {
           <g>
             <Layer cam={keys(t, [[sShiny, 540, 960, 1.08], [T.penny - 0.4, 540, 960, 1], [sWeather, 560, 980, 1.02]])}>
               <Backdrop t={t} top="#FFC98A" bot="#FFF0D6" />
-              <g transform={`translate(340 1700) scale(0.72) rotate(${1.2 * Math.sin(t * 1.3)} 0 -300)`}>
+              <g transform={`translate(${lerp(540, 340, prog(t, T.penny - 0.9, T.penny - 0.3))} 1700) scale(0.72) rotate(${1.2 * Math.sin(t * 1.3)} 0 -300)`}>
                 <Lady t={t} g={0} shine={prog(t, T.shiny - 0.2, T.shiny + 0.3)} mood="proud" />
               </g>
               <g transform={`translate(${lerp(1400, 790, prog(t, T.penny - 0.6, T.penny + 0.05))} ${1150 + 10 * Math.sin(t * 2.4)}) rotate(${-lerp(360, 0, prog(t, T.penny - 0.6, T.penny + 0.05)) + 5 * Math.sin(t * 2)})`}>
@@ -242,7 +242,7 @@ export const LibertyGreen: React.FC = () => {
           <g>
             <rect width={W} height={H} fill="#FFF3DC" />
             {Array.from({length: 7}).map((_, i) => <circle key={i} cx={(i * 263) % W} cy={300 + (i * 389) % 1500} r={90} fill="#FBE6C2" />)}
-            <Layer cam={keys(t, [[sShield, 540, 1200, 0.6], [sShield + 0.5, 540, 1200, 1], [sClean, 540, 1220, 1.04]])}>
+            <Layer cam={keys(t, [[sShield, 540, 1080, 0.6], [sShield + 0.5, 540, 1080, 1], [sClean, 540, 1100, 1.04]])}>
               {/* raindrops bouncing off the green layer */}
               {Array.from({length: 8}).map((_, i) => {
                 const x = 190 + i * 100; if (x > 430 && x < 650) return null;
@@ -268,7 +268,7 @@ export const LibertyGreen: React.FC = () => {
                 <path d="M -34 0 L -8 28 L 40 -30" stroke={INK} strokeWidth={14} fill="none" strokeLinecap="round" strokeLinejoin="round" />
               </g>
             </Layer>
-            <Label x={540} y={620} size={66} s={pop(t, sShield + 0.1, 12, 6)} color={VER}>THAT GREEN LAYER</Label>
+            <Label x={540} y={520} size={66} s={pop(t, sShield + 0.1, 12, 6)} color={VER}>THAT GREEN LAYER</Label>
             <Sticker t={t} t0={T.protects} x={540} y={1740} text="PROTECTS THE METAL" size={58} fill="#2C7BE5" rot={-3} />
           </g>
         )}
@@ -294,7 +294,7 @@ export const LibertyGreen: React.FC = () => {
                 </g>
               </Layer>
               <Sticker t={t} t0={T.cleans} x={540} y={640} text="DON'T CLEAN IT!" size={70} fill="#E5414A" />
-              <Label x={540} y={1775} size={70} s={pop(t, T.cleans + 0.6, 12, 6)} color={VER_L}>LEAVE IT GREEN!</Label>
+              <Label x={540} y={1775} size={70} s={pop(t, T.cleans, 12, 6)} color={VER_L}>LEAVE IT GREEN!</Label>
             </g>
           );
         })()}

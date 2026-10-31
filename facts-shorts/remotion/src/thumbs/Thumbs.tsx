@@ -32,6 +32,26 @@ import {RecordedVoice} from '../shorts/20-recorded-voice/RecordedVoice';
 import {T as T20} from '../shorts/20-recorded-voice/timing';
 import {GreatWall} from '../shorts/21-great-wall/GreatWall';
 import {T as T21} from '../shorts/21-great-wall/timing';
+import {SharksTrees} from '../shorts/22-sharks-trees/SharksTrees';
+import {T as T22} from '../shorts/22-sharks-trees/timing';
+import {MoonFace} from '../shorts/23-moon-face/MoonFace';
+import {T as T23} from '../shorts/23-moon-face/timing';
+import {CatFeet} from '../shorts/24-cat-feet/CatFeet';
+import {T as T24} from '../shorts/24-cat-feet/timing';
+import {Popcorn} from '../shorts/25-popcorn/Popcorn';
+import {T as T25} from '../shorts/25-popcorn/timing';
+import {LibertyGreen} from '../shorts/26-liberty-green/LibertyGreen';
+import {T as T26} from '../shorts/26-liberty-green/timing';
+import {BigBen} from '../shorts/27-big-ben/BigBen';
+import {T as T27} from '../shorts/27-big-ben/timing';
+import {BubblesRound} from '../shorts/28-bubbles-round/BubblesRound';
+import {T as T28} from '../shorts/28-bubbles-round/timing';
+import {EverestMaunaKea} from '../shorts/29-everest-mauna-kea/EverestMaunaKea';
+import {T as T29} from '../shorts/29-everest-mauna-kea/timing';
+import {StarsTwinkle} from '../shorts/30-stars-twinkle/StarsTwinkle';
+import {T as T30} from '../shorts/30-stars-twinkle/timing';
+import {Goosebumps} from '../shorts/31-goosebumps/Goosebumps';
+import {T as T31} from '../shorts/31-goosebumps/timing';
 
 // Shorts cover = a frozen hero frame of the short itself + a loud headline band on top.
 type Th = {id: string; C: React.FC; t: number; l1: string; l2: string; tag: string; bg: string; bg2: string; tagFill: string; srcY?: number; s?: number; dx?: number};
@@ -56,6 +76,16 @@ export const THUMBS: Th[] = [
   {id: '19lightningsun', C: LightningSun, t: T19.sun + 0.8, l1: 'HOTTER THAN', l2: 'THE SUN?!', tag: '30,000°C', bg: '#2B3A6A', bg2: '#141A44', tagFill: '#E5414A', srcY: 680, s: 1.4, dx: -40},
   {id: '20recordedvoice', C: RecordedVoice, t: T20.skull + 0.6, l1: 'WHY YOUR VOICE', l2: 'SOUNDS WEIRD', tag: 'ON RECORDINGS', bg: '#7A5CC8', bg2: '#4B3596', tagFill: '#E5414A', srcY: 640},
   {id: '21greatwall', C: GreatWall, t: T21.not + 0.5, l1: 'GREAT WALL', l2: 'FROM SPACE?', tag: 'ASTRONAUTS SAY NO', bg: '#2B3A6A', bg2: '#141A44', tagFill: '#E5414A', srcY: 700},
+  {id: '22sharkstrees', C: SharksTrees, t: T22.first + 0.6, l1: 'SHARKS ARE', l2: 'OLDER THAN TREES', tag: '450 MILLION YEARS', bg: '#3D8CF0', bg2: '#1F5FB8', tagFill: '#E5414A', srcY: 700},
+  {id: '23moonface', C: MoonFace, t: T23.tidal + 0.6, l1: 'WHY WE NEVER', l2: 'SEE THE FAR SIDE', tag: 'TIDAL LOCKING', bg: '#2B3A6A', bg2: '#141A44', tagFill: '#7A5CC8', srcY: 600},
+  {id: '24catfeet', C: CatFeet, t: T24.twists + 0.8, l1: 'HOW CATS', l2: 'ALWAYS LAND', tag: 'RIGHTING REFLEX', bg: '#FF8A3D', bg2: '#D9481F', tagFill: '#2C7BE5', srcY: 600},
+  {id: '25popcorn', C: Popcorn, t: T25.bursts + 0.4, l1: 'WHY POPCORN', l2: 'POPS!', tag: '10x PRESSURE', bg: '#FFC93D', bg2: '#E59A1F', tagFill: '#E5414A', srcY: 620},
+  {id: '26libertygreen', C: LibertyGreen, t: T26.penny + 0.8, l1: 'LIBERTY WAS', l2: 'NOT GREEN?!', tag: 'SHINY COPPER', bg: '#4CC38A', bg2: '#22955F', tagFill: '#E5414A', srcY: 600},
+  {id: '27bigben', C: BigBen, t: T27.bell - 0.12, l1: 'BIG BEN IS', l2: 'NOT THE TOWER', tag: "IT'S THE BELL", bg: '#E5414A', bg2: '#A8222B', tagFill: '#2C7BE5', srcY: 560},
+  {id: '28bubblesround', C: BubblesRound, t: T28.sphere + 0.8, l1: 'WHY BUBBLES', l2: 'ARE ROUND', tag: 'SPHERE WINS', bg: '#FF7AA8', bg2: '#E5417A', tagFill: '#2C7BE5', srcY: 640},
+  {id: '29everestmaunakea', C: EverestMaunaKea, t: T29.beats + 0.6, l1: 'EVEREST IS', l2: 'NOT THE TALLEST', tag: '10,000+ M', bg: '#3D8CF0', bg2: '#1F5FB8', tagFill: '#E5414A', srcY: 700},
+  {id: '30starstwinkle', C: StarsTwinkle, t: T30.flickers + 0.5, l1: 'WHY STARS', l2: 'TWINKLE', tag: "BUT PLANETS DON'T", bg: '#2B3A6A', bg2: '#141A44', tagFill: '#E5414A', srcY: 560},
+  {id: '31goosebumps', C: Goosebumps, t: T31.bigger + 0.5, l1: 'WHY WE GET', l2: 'GOOSEBUMPS', tag: 'FURRY ANCESTORS', bg: '#7A5CC8', bg2: '#4B3596', tagFill: '#E5414A', srcY: 680},
 ];
 
 const Txt: React.FC<{x: number; y: number; size: number; color?: string; rot?: number; children: React.ReactNode}> = ({x, y, size, color = '#fff', rot = 0, children}) => (

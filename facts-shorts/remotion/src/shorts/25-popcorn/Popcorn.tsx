@@ -149,7 +149,7 @@ export const Popcorn: React.FC = () => {
   const steamT = lerp(T.heat, T.pressure, 0.6);
   const coolsT = lerp(T.foam, T.fluffy, 0.7);
   const kernelT = lerp(T.fluffy, T.vend, 0.6);
-  const insideT = lerp(T.fluffy, T.vend, 0.8);
+  const insideT = lerp(T.fluffy, T.vend, 0.45);
   const scene = t < T.water - 0.25 ? 'intro' : t < T.heat - 0.25 ? 'inside' : t < T.bursts - 0.25 ? 'cook' : t < T.fluffy - 0.25 ? 'burst' : 'fluffy';
   const cues: Cue[] = [
     {f: 'whoosh', at: 0.15, db: -24}, {f: 'pop', at: T.pop, db: -18},
@@ -183,7 +183,7 @@ export const Popcorn: React.FC = () => {
                   <g transform={`translate(${540 + 260 * jump} ${1280 - 900 * jump + 700 * jump * jump}) rotate(${jump * 300}) scale(${0.4 * pop(t, T.pop, 14, 6)})`}><Puff t={t} /></g>
                 )}
               </Layer>
-              <Label x={540} y={640} size={54} s={pop(t, 0.4, 12, 6)} color="#fff">WHY DOES POPCORN POP?</Label>
+              <Label x={540} y={640} size={62} s={pop(t, 0.4, 12, 6)} color="#fff">WHY DOES POPCORN POP?</Label>
               {jump > 0 && <Label x={300} y={1000} size={90} s={pop(t, T.pop, 12, 6) * (1 - prog(t, T.pop + 1.6, T.pop + 1.9))} rot={-8} color="#FFE45C">POP!</Label>}
             </g>
           );

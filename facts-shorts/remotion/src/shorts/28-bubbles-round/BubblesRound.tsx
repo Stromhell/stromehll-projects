@@ -149,7 +149,7 @@ const Sky: React.FC<{t: number}> = ({t}) => (
   <g>
     <defs><linearGradient id="sky28" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#7FCBFF" /><stop offset="1" stopColor="#D8F2FF" /></linearGradient></defs>
     <rect x={-400} y={-400} width={W + 800} height={H + 800} fill="url(#sky28)" />
-    {[0, 1].map((i) => <g key={i} transform={`translate(${((t * 25 + i * 560) % 1400) - 200} ${560 + i * 170})`}><Cloud s={0.8 - i * 0.15} /></g>)}
+    {[0, 1].map((i) => <g key={i} transform={`translate(${((t * 25 + i * 560) % 1400) - 200} ${840 + i * 150})`}><Cloud s={0.8 - i * 0.15} /></g>)}
     <path d="M -400 1720 L 1480 1720 L 1480 2400 L -400 2400 Z" fill="#7CC960" stroke={INK} strokeWidth={LW} />
     {[120, 700, 860, 980].map((x, i) => (
       <g key={i} transform={`translate(${x} 1790) rotate(${6 * Math.sin(t * 2 + i)})`}>
@@ -179,7 +179,8 @@ export const BubblesRound: React.FC = () => {
   const wrapsT = lerp(T.pulls, T.least, 4 / 10), insideT = lerp(T.pulls, T.least, 7 / 10);
   const airT = lerp(T.least, T.sphere, 5 / 17), smallT = lerp(T.least, T.sphere, 13 / 17);
   const pyrT = lerp(T.cube, T.square, 3 / 15), moreT = lerp(T.cube, T.square, 6 / 15), medalT = lerp(T.cube, T.square, 7 / 15);
-  const soT = lerp(T.cube, T.square, 8 / 15), blowT = lerp(T.cube, T.square, 12 / 15), stillT = lerp(T.square, T.ball, 0.5);
+  const ballT = Math.min(T.ball, T.square + 1.1);
+  const soT = lerp(T.cube, T.square, 8 / 15), blowT = lerp(T.cube, T.square, 12 / 15), stillT = lerp(T.square, ballT, 0.5);
   const scene = t < T.skin - 0.25 ? 'blow' : t < T.pulls - 0.25 ? 'skin' : t < T.least - 0.25 ? 'pull' : t < airT - 0.25 ? 'least'
     : t < T.sphere - 0.25 ? 'same' : t < soT - 0.25 ? 'contest' : 'wand';
   const cues: Cue[] = [
@@ -187,7 +188,7 @@ export const BubblesRound: React.FC = () => {
     {f: 'whoosh', at: T.skin - 0.25, db: -24}, {f: 'squeeze', at: T.skin, db: -22}, {f: 'wobble', at: T.shrink, db: -22},
     {f: 'whoosh', at: T.pulls - 0.25, db: -24}, {f: 'whoosh', at: T.least - 0.25, db: -24}, {f: 'ding', at: T.least + 1.1, db: -20},
     {f: 'whoosh', at: airT - 0.25, db: -24}, {f: 'tick', at: T.cube, db: -20}, {f: 'clink', at: medalT, db: -18},
-    {f: 'whoosh', at: soT - 0.25, db: -24}, {f: 'wobble', at: T.square + 0.3, db: -22}, {f: 'pop', at: T.ball - 0.1, db: -18},
+    {f: 'whoosh', at: soT - 0.25, db: -24}, {f: 'wobble', at: T.square + 0.3, db: -22}, {f: 'pop', at: ballT - 0.1, db: -18},
   ];
 
   // ---------------------------------------------------------------- scene: blowing bubbles
@@ -217,7 +218,7 @@ export const BubblesRound: React.FC = () => {
           })}
           {t > heroT0 && <g transform={`translate(${hx} ${hy})`}><Bub id="b28hero" t={t} r={hr} wob={0.05 * (1 - fly) + 0.015} mood={fly > 0.3 ? 'happy' : 'oo'} look={[-6, 0]} /></g>}
         </Layer>
-        <Label x={540} y={640} size={84} s={pk(t, T.round)} color="#fff">WHY SO ROUND?</Label>
+        <Label x={540} y={640} size={84} s={pk(t, T.round) * (1 - prog(t, T.skin - 0.95, T.skin - 0.7))} color="#fff">WHY SO ROUND?</Label>
       </g>
     );
   };
@@ -412,14 +413,14 @@ export const BubblesRound: React.FC = () => {
     const blowing = t > blowT - 0.1 && t < T.square + 0.3;
     const g = prog(t, blowT, T.square + 0.2, (u) => u);
     const fly = prog(t, T.square + 0.2, T.square + 1.2);
-    const u = prog(t, T.square + 0.3, T.ball - 0.05);
+    const u = prog(t, T.square + 0.3, ballT - 0.05);
     const br = lerp(lerp(8, 70, g), 180, fly);
     const bx = lerp(RING[0] + 55 + br * 0.9, 720, fly), by = lerp(RING[1], 1060, fly) + 10 * Math.sin(t * 2.2) * fly;
     const n = lerp(10, 2, u);
     const wob = u < 1 ? 0.05 * Math.sin(u * Math.PI) : 0;
-    const round = pop(t, T.ball - 0.1, 10, 6);
+    const round = pop(t, ballT - 0.1, 10, 6);
     const expr: Expr = blowing ? 'hot' : t > stillT ? 'happy' : t > T.square + 0.3 ? 'worried' : 'hope';
-    const bmood: Mood = t > T.ball - 0.15 ? 'grin' : t > T.square + 0.3 ? 'strain' : 'oo';
+    const bmood: Mood = t > ballT - 0.15 ? 'grin' : t > T.square + 0.3 ? 'strain' : 'oo';
     return (
       <g>
         <Sky t={t} />
@@ -447,8 +448,9 @@ export const BubblesRound: React.FC = () => {
             ))}
           </g>
         )}
-        <Label x={540} y={640} size={86} s={pk(t, T.square)} color="#FFE45C">SQUARE WAND</Label>
-        <Sticker t={t} t0={stillT} x={800} y={1560} text="STILL A BALL" size={60} fill="#E5414A" rot={4} />
+        {t > soT && t < T.square && <Label x={540} y={640} size={64} s={pk(t, soT + 0.2)} color="#fff">WHAT ABOUT A SQUARE?</Label>}
+        {t < ballT && <Label x={540} y={640} size={86} s={pk(t, T.square)} color="#FFE45C">SQUARE WAND</Label>}
+        <Sticker t={t} t0={ballT} x={540} y={640} text="STILL A BALL!" size={60} fill="#E5414A" rot={4} />
       </g>
     );
   };

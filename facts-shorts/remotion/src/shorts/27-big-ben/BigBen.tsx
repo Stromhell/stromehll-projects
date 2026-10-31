@@ -189,15 +189,15 @@ export const BigBen: React.FC = () => {
                 <rect x={-600} y={1790} width={2300} height={600} fill="#8CCB62" stroke={INK} strokeWidth={LW} />
                 <g transform="translate(540 1800) scale(0.6)"><Tower t={t} /></g>
               </Layer>
-              <Label x={540} y={620} size={110} s={pop(t, 0.5, 12, 6) * fade} color="#fff">BIG BEN?</Label>
-              {fade > 0 && <path d="M 250 590 L 830 560" stroke="#E5414A" strokeWidth={22} strokeLinecap="round" pathLength={1} strokeDasharray={`${prog(t, T.tower - 0.05, T.tower + 0.2)} 1`} opacity={t > T.tower - 0.05 ? fade : 0} />}
+              <Label x={540} y={520} size={110} s={pop(t, 0.5, 12, 6) * fade} color="#fff">BIG BEN?</Label>
+              {fade > 0 && <path d="M 250 490 L 830 460" stroke="#E5414A" strokeWidth={22} strokeLinecap="round" pathLength={1} strokeDasharray={`${prog(t, T.tower - 0.05, T.tower + 0.2)} 1`} opacity={t > T.tower - 0.05 ? fade : 0} />}
               <Sticker t={t} t0={T.tower} t1={T.tower + 0.9} x={540} y={1690} text="NOT THE TOWER!" size={76} fill="#E5414A" />
             </g>
           );
         })()}
         {scene === 'bell' && (
           <g>
-            <Layer cam={keys(t, [[sBell, 540, 1000, 1.5], [T.bell, 540, 1080, 1], [sWeigh, 540, 1090, 0.96]])}>
+            <Layer cam={keys(t, [[sBell, 540, 900, 1.5], [T.bell, 540, 930, 1], [sWeigh, 540, 940, 0.96]])}>
               <Belfry t={t} />
               <g transform={`translate(540 760) rotate(${2 * Math.sin(t * 1.6)}) scale(1.45)`}>
                 <Bell t={t} mood={t < T.bell - 0.2 ? 'sleep' : 'happy'} tag={pop(t, T.bell, 10, 6)} tagSwing={18 * Math.exp(-3 * Math.max(0, t - T.bell)) * Math.sin((t - T.bell) * 9)} />
@@ -220,13 +220,13 @@ export const BigBen: React.FC = () => {
                 <rect x={170} y={1540} width={600} height={34} rx={10} fill="#C9D3DD" stroke={INK} strokeWidth={LW} />
               </g>
               <rect x={210} y={1570} width={520} height={74} rx={12} fill="#7F8C99" stroke={INK} strokeWidth={LW} />
-              <rect x={840} y={1160} width={44} height={480} fill="#7F8C99" stroke={INK} strokeWidth={LW} />
-              <path d="M 730 1600 L 850 1600" stroke={INK} strokeWidth={22} /><path d="M 730 1600 L 850 1600" stroke="#7F8C99" strokeWidth={10} />
-              <g transform={`translate(862 1040) rotate(${t > T.weighs + 0.9 ? 2 * Math.sin(t * 5) : 0})`}>
+              <rect x={790} y={1160} width={44} height={480} fill="#7F8C99" stroke={INK} strokeWidth={LW} />
+              <path d="M 730 1600 L 800 1600" stroke={INK} strokeWidth={22} /><path d="M 730 1600 L 800 1600" stroke="#7F8C99" strokeWidth={10} />
+              <g transform={`translate(812 1040) rotate(${t > T.weighs + 0.9 ? 2 * Math.sin(t * 5) : 0})`}>
                 <circle r={150} fill="#fff" stroke={INK} strokeWidth={LW} />
                 <path d="M 104 -60 A 120 120 0 0 1 112 44" stroke="#E5414A" strokeWidth={26} fill="none" />
                 {Array.from({length: 9}).map((_, i) => <path key={i} transform={`rotate(${-120 + i * 27.5})`} d="M 0 -128 L 0 -106" stroke={INK} strokeWidth={6} strokeLinecap="round" />)}
-                <Label x={0} y={70} size={34} color="#fff">TONNES</Label>
+                <Label x={0} y={70} size={34} color="#E5414A">TONNES</Label>
                 <g transform={`rotate(${needle})`}><path d="M -8 10 L 0 -118 L 8 10 Z" fill="#E5414A" stroke={INK} strokeWidth={5} strokeLinejoin="round" /></g>
                 <circle r={14} fill={INK} />
               </g>
@@ -279,8 +279,8 @@ export const BigBen: React.FC = () => {
                 <rect x={-350} y={-62} width={700} height={114} rx={12} fill="none" stroke={GOLD} strokeWidth={6} />
                 <g transform={`scale(${t < T.clock ? 1 : pop(t, T.clock, 12, 6)})`}><Label x={0} y={24} size={66} color={GOLD}>{txt}</Label></g>
               </g>
-              {t < T.renamed ? <Label x={540} y={620} size={76} s={pop(t, sName + 0.1, 12, 6)} color="#fff">AND THE TOWER?</Label>
-                : <Label x={540} y={620} size={70} s={pop(t, T.renamed, 12, 6)} color="#FFE45C">RENAMED IN 2012</Label>}
+              {t < T.renamed ? <Label x={540} y={500} size={76} s={pop(t, sName + 0.85, 12, 6)} color="#fff">AND THE TOWER?</Label>
+                : <Label x={540} y={500} size={70} s={pop(t, T.renamed, 12, 6)} color="#FFE45C">RENAMED IN 2012</Label>}
             </g>
           );
         })()}

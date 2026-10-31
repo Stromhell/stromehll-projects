@@ -243,7 +243,7 @@ export const StarsTwinkle: React.FC = () => {
                   </g>
                 )}
               </Layer>
-              <Label x={540} y={640} size={80} s={pop(t, T.far, 12, 6)} color="#FFE45C">SO FAR AWAY</Label>
+              <Label x={540} y={640} size={80} s={pop(t, T.far, 12, 6) * (1 - prog(t, T.point + 1.8, T.point + 2.1))} color="#FFE45C">SO FAR AWAY</Label>
               <Sticker t={t} t0={T.point} t1={T.point + 1.6} x={620} y={1500} text="ONE TINY POINT" size={64} fill="#2C7BE5" />
             </g>
           );
@@ -294,7 +294,7 @@ export const StarsTwinkle: React.FC = () => {
                 <Guy t={t} expr={steady ? 'happy' : 'hope'} handL={[-110, -170]} handR={steady ? [150, -420] : [120, -170]} bendR={0.2} look={[10, -12]} stand blink={t % 2.4 < 0.12} />
               </g>
               <Label x={540} y={640} size={62} s={pop(t, T.planets + 0.9, 12, 6)} color="#FFB36B">PLANETS ARE CLOSER</Label>
-              <Label x={850} y={1070} size={56} s={pop(t, T.discs + 0.1, 12, 6)} color="#FFE45C">TINY DISC</Label>
+              <Label x={820} y={1210} size={56} s={pop(t, T.discs + 0.1, 12, 6)} color="#FFE45C">TINY DISC</Label>
               <Sticker t={t} t0={T.steady} x={790} y={1660} text="STEADY" size={80} fill="#2E9E5B" rot={4} />
             </g>
           );

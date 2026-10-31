@@ -24,3 +24,69 @@
 05:31:00 render 24-cat-feet started
 05:33:05 rendered 24-cat-feet (24.362667s, decode clean)
 05:33:21 qa sheet ready 24-cat-feet
+05:35:21 voiced 25-popcorn
+05:35:21 FAILED timing 25-popcorn: word not found: ten#1 in Why does popcorn pop? Every kernel has a tiny drop of water inside, sealed in by a tough shell. Heat turns that water into steam and the pressure builds and builds up to about 10 times normal air pressure. Finally the shell bursts. The soft starch pops out into a foam and sets as it cools. That fluffy white piece is the kernel turned inside out.
+05:36:21 render 25-popcorn started
+05:38:26 rendered 25-popcorn (22.933333s, decode clean)
+05:38:42 qa sheet ready 25-popcorn
+05:39:42 voiced 26-liberty-green
+05:39:46 timed 26-liberty-green
+05:39:46 render 25-popcorn started
+05:41:51 rendered 25-popcorn (22.933333s, decode clean)
+05:42:07 qa sheet ready 25-popcorn
+05:42:07 render 26-liberty-green started
+05:44:12 rendered 26-liberty-green (22.016000s, decode clean)
+05:44:27 qa sheet ready 26-liberty-green
+05:45:27 render 26-liberty-green started
+05:47:31 rendered 26-liberty-green (22.016000s, decode clean)
+05:47:45 qa sheet ready 26-liberty-green
+05:48:45 voiced 27-big-ben
+05:48:45 FAILED timing 27-big-ben: word not found: Queen#1 in Big Bend isn't the name of the tower, it's the name of the giant bell inside it. The bell weighs over 13 tons and has hung out over London since 1859. The tower itself was simply called the clock tower and in 2012 it was renamed the Elizabeth Tower for the Queen's Diamond Jubilee. So when you hear those bones, that's Big Bend.
+05:50:46 render 27-big-ben started
+05:52:46 voiced 28-bubbles-round
+05:52:46 FAILED timing 28-bubbles-round: word not found: round#1 in Why art bubbles around? A soap film acts like a stretchy skin that's always trying to shrink. It pulls inward until it wraps the air inside using the least skin possible. And for any amount of air, the shape with the smallest surface is a sphere. A cube or a pyramid would need more film. So even if you blow through a square wand, you still get a ball.
+05:52:50 rendered 27-big-ben (21.674667s, decode clean)
+05:53:08 qa sheet ready 27-big-ben
+05:54:08 render 27-big-ben started
+05:56:13 rendered 27-big-ben (21.674667s, decode clean)
+05:56:27 qa sheet ready 27-big-ben
+05:56:27 render 28-bubbles-round started
+05:59:32 rendered 28-bubbles-round (22.570667s, decode clean)
+05:59:48 qa sheet ready 28-bubbles-round
+05:59:48 render 27-big-ben started
+06:01:48 voiced 29-everest-mauna-kea
+06:01:53 timed 29-everest-mauna-kea
+06:01:56 rendered 27-big-ben (21.674667s, decode clean)
+06:02:15 qa sheet ready 27-big-ben
+06:02:15 render 28-bubbles-round started
+06:05:20 rendered 28-bubbles-round (22.570667s, decode clean)
+06:05:36 qa sheet ready 28-bubbles-round
+06:05:36 render 29-everest-mauna-kea started
+06:07:41 rendered 29-everest-mauna-kea (23.509333s, decode clean)
+06:07:55 qa sheet ready 29-everest-mauna-kea
+06:07:55 render 27-big-ben started
+06:10:00 rendered 27-big-ben (21.674667s, decode clean)
+06:10:15 qa sheet ready 27-big-ben
+06:10:15 render 28-bubbles-round started
+06:13:15 voiced 30-stars-twinkle
+06:13:15 FAILED timing 30-stars-twinkle: word not found: twinkle#1 in Why do stars sprinkle but planets don't? Stars are so far away that their light reaches us as a single tiny point. As it passes through our moving wobbly air, that thin beam gets bent this way and that so the star flickers. Planets are much closer so they look like tiny disks. They are wobbles average out and they shine steady. Up in space stars don't mingle at one.
+06:13:20 rendered 28-bubbles-round (22.570667s, decode clean)
+06:13:35 qa sheet ready 28-bubbles-round
+06:13:35 render 29-everest-mauna-kea started
+06:15:40 rendered 29-everest-mauna-kea (23.509333s, decode clean)
+06:15:54 qa sheet ready 29-everest-mauna-kea
+06:17:54 restart voice job (not running)
+06:17:54 voiced 31-goosebumps
+06:17:57 timed 31-goosebumps
+06:19:58 render 31-goosebumps started
+06:22:02 rendered 31-goosebumps (20.352000s, decode clean)
+06:22:15 qa sheet ready 31-goosebumps
+06:23:15 voiced 30-stars-twinkle
+06:23:18 timed 30-stars-twinkle
+06:23:18 render 31-goosebumps started
+06:25:22 rendered 31-goosebumps (20.352000s, decode clean)
+06:25:31 qa sheet ready 31-goosebumps
+06:25:31 render 30-stars-twinkle started
+06:27:35 rendered 30-stars-twinkle (23.210667s, decode clean)
+06:27:45 qa sheet ready 30-stars-twinkle
+06:27:45 all voiced, render queue empty: watchdog exit

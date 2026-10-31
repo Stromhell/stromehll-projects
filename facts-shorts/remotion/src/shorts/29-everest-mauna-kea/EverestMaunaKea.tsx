@@ -145,7 +145,7 @@ export const EverestMaunaKea: React.FC = () => {
   ];
 
   const cam = keys(t, [
-    [0, EX, 640, 1.2], [T.highest, EX, 420, 1], [T.peak - 0.25, EX, 420, 1], [T.hawaii - 0.3, EX - 20, 440, 0.97],
+    [0, EX, 640, 1.2], [T.highest, EX, 420, 1], [T.tallest - 0.1, EX, 380, 1.1], [T.peak - 0.25, EX, 420, 1], [T.hawaii - 0.3, EX - 20, 440, 0.97],
     [T.hawaii - 0.25, EX - 20, 440, 0.97], [T.hawaii + 0.6, MX, 789, 1], [butT, MX, 800, 1.02], [T.underwater - 0.25, MX, 900, 1],
     [T.underwater + 0.5, MX, 1019, 1], [T.beats, MX, 1019, 1],
   ]);
@@ -202,7 +202,7 @@ export const EverestMaunaKea: React.FC = () => {
       <g>
         <defs><linearGradient id="sky29b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#7FCBFF" /><stop offset="1" stopColor="#E0F4FF" /></linearGradient></defs>
         <rect width={W} height={H} fill="url(#sky29b)" />
-        <g transform={`translate(${((t * 20) % 400) - 100} 560)`}><Cloud s={0.9} /></g>
+        <g transform={`translate(${((t * 20) % 400) - 100} 400)`}><Cloud s={0.9} /></g>
         <g transform={`translate(${lerp(-400, 280, inE)} ${BASE})`}><Everest t={t} mood={t > T.beats + 0.2 ? 'sad' : 'worried'} sx={0.5} sy={k} droop={prog(t, T.beats + 0.2, T.beats + 0.8)} /></g>
         <g transform={`translate(${mx} ${mkSea})`}><MaunaKea t={t} mood="grin" id="mk29b" sx={0.5} sy={k} /></g>
         <path d={wavePath(t, mkSea, 10, 90, 2.2, mx - 170, mx + 500)} fill="#2E6FD1" opacity={0.32} />
