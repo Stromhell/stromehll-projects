@@ -69,7 +69,7 @@ A script goes **up** a line only when the format adds a real viral edge:
 Hard rules carried over: a 3D freeze or queue cap set by Pushpam beats this table; unstarted scripts may be moved down a line to rebalance; already-rendered work never moves.
 
 ### 1.4 Concurrency (Pushpam sets, threads obey)
-Pushpam states in the thread how many videos of each line run live. **FULL STOP (Pushpam 31 Oct 10:43): "stop creating all the video for now until Thu 12.30 pm" = no video creation on any line, including reels, IG parts and shorts, until Thu 5 Nov 12:30. Booked Zernio posts stay booked. After the stop: 1 × 2D only (Pushpam 31 Oct 00:28). 2D dynamic 0, 3D low 0, 3D 0.** Other lines keep queues and may prep scripts/storyboards/narration but render nothing. A video waiting on Pushpam's review does not count. When a slot opens the next queued script starts on its own (auto-advance) **unless Pushpam has a stop in place**, as now.
+Pushpam states in the thread how many videos of each line run live. **FULL STOP (Pushpam 31 Oct 10:43): "stop creating all the video for now until Thu 12.30 pm" = no video creation on any line, including reels, IG parts and shorts, until Thu 5 Nov 12:30 Pushpam's local time (timezone not on record, so nothing restarts until Pushpam says go). Booked Zernio posts stay booked. After the stop: 1 × 2D only (Pushpam 31 Oct 00:28). 2D dynamic 0, 3D low 0, 3D 0.** Other lines keep queues and may prep scripts/storyboards/narration but render nothing. A video waiting on Pushpam's review does not count. When a slot opens the next queued script starts on its own (auto-advance) **unless Pushpam has a stop in place**, as now.
 
 Cadence on the calendar stays **3 × 2D-type videos before each 1 × 3D-type video**.
 
@@ -220,7 +220,7 @@ Anything still missing gets written as our own skill with `skill-creator`, store
 6. Control Room rebuilt around these stages (Pushpam 31 Oct 00:30).
 7. Watchdog checks every line follows this system (Pushpam 31 Oct 00:30, section 17).
 8. Handover + fresh thread per video, unused MCPs/plugins removed (Pushpam 31 Oct 06:34, section 13.2).
-9. Full stop on all video creation until Thu 5 Nov 12:30 (Pushpam 31 Oct 10:43). Watchdog restarts nothing before then.
+9. Full stop on all video creation until Thu 5 Nov 12:30 Pushpam's local time (Pushpam 31 Oct 10:43). Watchdog restarts nothing until Pushpam says go.
 
 ## 17. System watchdog (see also section 18)
 A scheduled audit (every 2 hours) wakes the system thread, which checks every production thread and the Control Room against this rulebook and fixes or flags what is off. It checks:
