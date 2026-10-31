@@ -13,7 +13,7 @@ alive(){ pgrep -f "$1" >/dev/null; }
 mins_since(){ [ -e "$1" ] || { echo 9999; return; }; echo $(( ( $(date +%s) - $(stat -c %Y "$1") ) / 60 )); }
 voice_pending(){ for v in $*; do for t in $v/production/voice/act*.txt; do case $t in *.say.txt) continue;; esac; [ -f "$t" ] || continue
   need=$(awk 'BEGIN{RS=""}{c++}END{print c}' $t); have=$(ls ${t%.txt}/vo-*.wav 2>/dev/null | wc -l); [ "$have" -lt "$need" ] && { echo "$v $(basename $t .txt)"; return; }; done; done; }
-start_voice(){ nohup python3 shared/voice_batch.py $* >> $T/voice_prod1.log 2>&1 & }
+start_voice(){ touch $T/voice_prod1.log; nohup python3 shared/voice_batch.py $* >> $T/voice_prod1.log 2>&1 & }
 # a video is finished (rendered, waiting on Pushpam) when every act that has a script also has its MP4
 finished(){ local v=$1 t n; ls $v/production/voice/act*.txt >/dev/null 2>&1 || return 1; for t in $v/production/voice/act*.txt; do case $t in *.say.txt) continue;; esac; n=$(basename $t .txt | sed s/act//); [ -s $v/production/acts/act$n/act$n.mp4 ] || return 1; done; return 0; }
 while true; do
