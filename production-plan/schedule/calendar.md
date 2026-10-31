@@ -269,3 +269,20 @@ Pushpam asked (31 Oct 00:28) for every booked post to move to UK + US prime-time
 | ig_part 1 | 2026-12-13 20:30 | 6ae585871a6d50aaf723238e |
 | ig_part 2 | 2026-12-14 20:30 | 6ae585891a6d50aaf723239b |
 | ig_part 3 | 2026-12-15 20:30 | 6ae5858d1a6d50aaf72323b4 |
+
+## Facts shorts batch 3 booked (31 Oct 2026, 06:55 UTC)
+
+Shorts 22-31, YouTube + Instagram, facts slots 18:00 / 21:00 UTC, kept under 9 YouTube uploads a day.
+
+| Short | When (UTC) | Post id |
+|---|---|---|
+| 22-sharks-trees | 2026-11-04 18:00 | 6ae58cc28b39df037ed746b7 |
+| 23-moon-face | 2026-11-05 18:00 | 6ae58cc4155d657ccaa5a6a8 |
+| 24-cat-feet | 2026-11-05 21:00 | 6ae58cc78b39df037ed746d0 |
+| 25-popcorn | 2026-11-06 18:00 | 6ae58cca8b39df037ed746ec |
+| 26-liberty-green | 2026-11-07 18:00 | 6ae58ccc155d657ccaa5a6b7 |
+| 27-big-ben | 2026-11-07 21:00 | 6ae58ce28b39df037ed747a4 |
+| 28-bubbles-round | 2026-11-08 18:00 | 6ae58ce48b39df037ed747bf |
+| 29-everest-mauna-kea | 2026-11-08 21:00 | 6ae58ce750ce9ceaf82fb3da |
+| 30-stars-twinkle | 2026-11-09 18:00 | 6ae58ce98b39df037ed747f2 |
+| 31-goosebumps | 2026-11-10 18:00 | 6ae58cec8b39df037ed7480b |
