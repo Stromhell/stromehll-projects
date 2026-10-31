@@ -12,7 +12,7 @@ const SW = 1920, SH = 1080, INK = RS.INK, pop = RS.pop;
 const backdrop = (name, b = .5, blur = 8, z = 1, dx = 0, dy = 0) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560 * z; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2 + dx, SH / 2 - 720 * s2 + dy); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
 const zoomT = (c, z, dx = 0, dy = 0) => c.setTransform(z, 0, 0, z, SW / 2 - SW / 2 * z + dx, SH / 2 - SH / 2 * z + dy);
 // corner tags slide in (never just fade), and the date tag sits above the subtitle band
-const dateTag = (c, txt, lt, at, until = 99) => { const v = E.inn(K.seg(lt, until, until + .4)); if (v >= 1) return; c.translate(220 * (1 - E.out(K.seg(lt, at, at + .45))) + 520 * v, -70); K.dateTag(c, txt, lt, { at }); };
+const dateTag = (c, txt, lt, at, until = 99, dy = -70) => { const v = E.inn(K.seg(lt, until, until + .4)); if (v >= 1) return; c.translate(220 * (1 - E.out(K.seg(lt, at, at + .45))) + 520 * v, dy); K.dateTag(c, txt, lt, { at }); };
 const badge = (c, txt, lt, at) => { c.translate(-220 * (1 - E.out(K.seg(lt, at, at + .45))), 0); K.badge(c, txt, lt, { at }); };
 const CARRY = () => ({ shL: 30, elL: -75, shR: 35, elR: -75 });
 const painting = (c) => { c.save(); c.scale(.42, .42); c.fillStyle = '#b8902c'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-20, -130, 200, 150); c.strokeRect(-20, -130, 200, 150); c.fillStyle = '#4a6a5a'; c.fillRect(0, -112, 160, 114); c.fillStyle = '#c8a070'; c.beginPath(); c.arc(80, -64, 26, 0, 7); c.fill(); c.restore(); };
@@ -39,7 +39,7 @@ const homburg = (c, X, Y, rad) => { c.save(); const hipY = (OUTB.hipY ?? -190) /
   c.fillStyle = '#3a3230'; c.fillRect(X - rad * .73, Y - rad * .96, rad * 1.46, rad * .2); c.fillStyle = 'rgba(255,255,255,.1)'; c.fillRect(X - rad * .5, Y - rad * 1.38, rad * .14, rad * .5); c.restore(); };
 const UNIFORM = i => { const p = RS.P({ costume: 'suit', topCol: '#5a6450', hair: 'short', hairCol: ['#2a2420', '#4a3424'][i], seed: 140 + i }); p.look = Object.assign({}, p.look, { tie: '#3e4636', inner: '#b4b09c', legs: '#4c5444', shoes: '#191714', sole: '#2a2420' }); p.hat = cap(); return p; };
 const BARON = (() => { const p = RS.P({ costume: 'suit', topCol: '#24232a', hair: 'short', hairCol: '#3a2a20', seed: 150 }); p.look = Object.assign({}, p.look, { legs: '#2c2b32', tie: '#5a1e1e', inner: '#e8e4dc' }); p.hat = homburg; return p; })();
-const FAMILY = RS.P({ costume: 'suit', topCol: '#3a2e2a', hair: 'swept', hairCol: '#3a2a1e', beard: true, seed: 52 });
+const FAMILY = RS.P({ costume: 'suit', topCol: '#3a2e2a', hair: 'swept', hairCol: '#3a2a1e', seed: 52 });
 // crowd gesture: raised fist (far arm, small shake) or a shrug; swings stay under 30 degrees so no arm reaches a neighbour
 const crowdArms = (i, lt) => { const k = Math.floor((lt + i * .7) / 1.7) % 2; if ((i + k) % 2) return { shR: 140 + Math.sin(lt * 9 + i) * 8, elR: -30, handR: 'fist' }; const b = Math.sin(lt * 5 + i) * 4; return { shL: -12 + b, elL: -96, shR: 22 - b, elR: -82, handL: 'open', handR: 'open' }; };
 // map projection for the backdrop transform (plate px -> screen)
@@ -52,7 +52,7 @@ window.SHOTS = [
     figs: [{ x: 700, y: 1175, s: 2.3, ...FAMILY, facing: 1, mood: 'worried', walk: { x0: -300, x1: 700, t0: 0, dur: 2.1 },
       anim: (o, lt, u, S) => { const read = lt < S.tT || (lt > S.tT + 2.4 && lt < S.tS); const shake = Math.max(K.seg(lt, S.tT + .1, S.tT + .3) * (1 - K.seg(lt, S.tT + 1.6, S.tT + 1.9)), K.seg(lt, S.tS + .1, S.tS + .3) * (1 - K.seg(lt, S.tS + 1.6, S.tS + 1.9)));
         o.arms = () => read ? { shL: 72, elL: -76, shR: 58, elR: -70, handL: 'relaxed' } : { shL: 24, elL: -34, shR: 6, elR: -12 };
-        o.hold = { near: pamphlet(read ? 0 : -.5) }; o.lean = Math.sin(lt * 15) * 6 * shake; o.eyesClosed = shake > .5 ? 1 : undefined; o.mood = lt > S.tS ? 'angry' : lt > S.tT ? 'sad' : 'worried'; } }],
+        o.hold = { near: pamphlet(read ? 0 : -.5) }; o.lean = Math.sin(lt * 15) * 6 * shake; o.eyesClosed = shake > .5 ? 1 : undefined; o.mood = shake > .2 ? 'sad' : 'worried'; } }],
     init: S => { S.tT = A.at(S, 'a target', 2.1); S.tS = A.at(S, 'symbol', 7); const tS = S.tS;
       S.D.over = [(c, lt) => K.card(c, 'ANTISEMITIC PROPAGANDA · LATE 1800s', lt, { at: 1.4, x: 1310, y: 150, px: 40, rot: -2 }), (c, lt) => K.card(c, 'A FAMILY NAME TURNED INTO A SYMBOL', lt, { at: tS, x: 1310, y: 850, px: 40, rot: 2 })];
       S.D.sfx = [[.1, 'footsteps', .25], [.6, 'paper', .35], [1.1, 'paper', .35], [1.6, 'paper', .35], [S.tT, 'paper', .3], [tS, 'drone', .25]]; } },
@@ -78,10 +78,10 @@ window.SHOTS = [
       c.strokeStyle = '#3a2a1a'; c.lineWidth = 3; c.beginPath(); c.moveTo(-74, 46); c.lineTo(0, 0); c.lineTo(74, 46); c.stroke();
       c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(-92, 52, 192, 74); c.fillStyle = '#8a2a22'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-96, 46, 192, 74); c.strokeRect(-96, 46, 192, 74);
       c.fillStyle = '#f2e8d2'; c.font = '50px Anton'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('CLOSED', 0, 86); c.restore(); }],
-    figs: [0, 1, 2, 3, 4, 5].map(i => ({ x: [430, 710, 990, 1570, 1850, 2130][i], y: 1160 + (i % 2) * 25, s: 1.6, ...RS.P({ costume: ['office', 'dress', 'suit', 'shirt', 'woman', 'suit'][i], topCol: ['#5a4a3a', '#6a3a4a', '#3a3a44', '#7a6a4a', '#4a5a6a', '#2a3a2a'][i], hair: i % 2 ? 'long' : 'short', seed: 160 + i }), facing: i < 3 ? 1 : -1, mood: i % 2 ? 'shocked' : 'angry',
+    figs: [0, 1, 2, 3, 4, 5].map(i => ({ x: [430, 710, 990, 1570, 1850, 2130][i], y: 1145 + (i % 2) * 22, s: 1.6, ...RS.P({ costume: ['office', 'dress', 'suit', 'shirt', 'woman', 'suit'][i], topCol: ['#5a4a3a', '#6a3a4a', '#3a3a44', '#7a6a4a', '#4a5a6a', '#2a3a2a'][i], hair: i % 2 ? 'long' : 'short', seed: 160 + i }), facing: i < 3 ? 1 : -1, mood: i % 2 ? 'shocked' : 'angry',
       walk: { x0: [430, 710, 990, 1570, 1850, 2130][i] + (i < 3 ? -1300 : 1300), x1: [430, 710, 990, 1570, 1850, 2130][i], t0: i < 3 ? .2 : .5, dur: 3.2 }, anim: (o, lt) => { if (lt > 3.9 + i * .2) o.arms = () => crowdArms(i, lt); } })),
     init: S => { const tC = S.tC = A.at(S, 'collapsed', 2.7), tP = A.at(S, 'panic', 8.7);
-      S.D.over = [(c, lt) => dateTag(c, 'CREDITANSTALT · 1931', lt, .4), (c, lt) => badge(c, 'VIENNA', lt, .6),
+      S.D.over = [(c, lt) => dateTag(c, 'CREDITANSTALT · 1931', lt, .4, 99, -52), (c, lt) => badge(c, 'VIENNA', lt, .6),
         (c, lt) => K.card(c, 'AUSTRIA\'S BIGGEST BANK COLLAPSES', lt, { at: tC + .5, x: 520, y: 200, px: 40, rot: -3 }), (c, lt) => K.card(c, 'PANIC SPREADS ACROSS EUROPE', lt, { at: tP, x: 1420, y: 220, px: 40, rot: 3 })];
       S.D.sfx = [[.3, 'run_steps', .3], [tC, 'door_slam', .45], [tC + .4, 'tick', .25], [tC + .3, 'crowd_cheer', .2], [tP, 'alarm', .2]]; } },
   // 6.04 propaganda film reel (upper left), then Vienna 1938 at night: two plain-uniformed men take Baron Louis by the arms and lead him away
@@ -92,11 +92,11 @@ window.SHOTS = [
         anim: (o, lt, u, S) => { walkPath(o, lt, S.pL, 1.6); if (lt > S.tG - .2) o.arms = () => ({ shL: 62, elL: -12, handL: 'fist' }); } },
       { x: 1425, y: 1181, s: 1.6, ...UNIFORM(1), facing: -1, mood: 'angry',
         anim: (o, lt, u, S) => { walkPath(o, lt, S.pR, 1.6); if (lt > S.tG + .05) o.arms = () => ({ shL: -62, elL: -4, handL: 'fist' }); } }],
-    front: [(c, lt, u, S) => { const a = pop(lt, S.tB, .45); if (a <= 0) return; const bx = pathX(lt, S.pB, 1.6), ty = 560 - (1 - Math.min(1, a)) * 50;
-      c.save(); c.strokeStyle = '#f6eedc'; c.lineWidth = 4; c.beginPath(); c.moveTo(bx, ty + 30); c.lineTo(bx + 6, 648); c.stroke(); c.fillStyle = '#f6eedc'; c.beginPath(); c.arc(bx + 6, 650, 6, 0, 7); c.fill();
+    front: [(c, lt, u, S) => { const a = pop(lt, S.tB, .45), fo = 1 - K.seg(lt, S.tO, S.tO + .3); if (a <= 0 || fo <= 0) return; const bx = pathX(lt, S.pB, 1.6), ty = 560 - (1 - Math.min(1, a)) * 50;
+      c.save(); c.globalAlpha = fo; c.strokeStyle = '#f6eedc'; c.lineWidth = 4; c.beginPath(); c.moveTo(bx, ty + 30); c.lineTo(bx + 6, 648); c.stroke(); c.fillStyle = '#f6eedc'; c.beginPath(); c.arc(bx + 6, 650, 6, 0, 7); c.fill();
       c.translate(bx, ty); c.rotate(-.03); c.scale(a, a); c.font = K.font(40); const w = c.measureText('BARON LOUIS ROTHSCHILD').width + 44;
       c.fillStyle = 'rgba(20,12,6,.35)'; c.fillRect(-w / 2 + 7, -26, w, 60); c.fillStyle = '#f6eedc'; c.fillRect(-w / 2, -32, w, 60); c.strokeStyle = INK; c.lineWidth = 5; c.strokeRect(-w / 2, -32, w, 60); c.fillStyle = INK; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('BARON LOUIS ROTHSCHILD', 0, 0); c.restore(); }],
-    init: S => { const tF = A.at(S, 'film', 3.4), tA = A.at(S, 'arrested', 7.9), tY = A.at(S, 'year', 9.2); S.tB = A.at(S, 'Baron', 6.8); S.tG = 5.75; const tW = 6.2, dW = 4.05, D = 1700;
+    init: S => { const tF = A.at(S, 'film', 3.4), tA = A.at(S, 'arrested', 7.9), tY = A.at(S, 'year', 9.2); S.tB = A.at(S, 'Baron', 6.8); S.tO = 37.7 - S.start; S.tG = 5.75; const tW = 6.2, dW = 4.05, D = 1700;
       S.pB = [{ x0: 1250, x1: 1250 + D, t0: tW, dur: dW }];
       S.pL = [{ x0: -300, x1: 1090, t0: 1.9, dur: 3.5 }, { x0: 1090, x1: 1090 + D, t0: tW, dur: dW }];
       S.pR = [{ x0: 2800, x1: 1425, t0: 1.9, dur: 3.5, faceAfter: [S.tG, 1] }, { x0: 1425, x1: 1425 + D, t0: tW, dur: dW }];
@@ -114,8 +114,8 @@ window.SHOTS = [
     draw: (c, lt, u, S) => { const fade = K.seg(lt, S.tC - .1, S.tC + .8); backdrop('map_europe', .55 * (1 - fade) + .05, 3)(c);
       if (fade < 1) { c.save(); c.globalAlpha = 1 - fade;
         // the plate's own "Europa 1800" cartouche is covered by a blank panel, and an EUROPE · 1940 card lands on it
-        c.fillStyle = 'rgb(78,70,56)'; c.fillRect(1430, 764, 364, 100); K.card(c, 'EUROPE · 1940', lt, { at: .15, x: 1611, y: 814, px: 52, rot: 0 });
-        const o = mapXY(16.37, 48.2); RS.dot(c, o[0], o[1], lt, .1, null, { r: 14, col: '#e8d8b0' });
+        c.fillStyle = 'rgb(78,70,56)'; c.fillRect(1430, 764, 364, 100); K.card(c, 'EUROPE · 1940', lt, { at: .81, x: 1611, y: 814, px: 52, rot: 0 });
+        const o = mapXY(16.37, 48.2); RS.dot(c, o[0], o[1], lt, .81, null, { r: 14, col: '#e8d8b0' });
         for (const [x, y, l, at, bend, dy] of S.dest) { const u2 = K.seg(lt, at, at + 1); if (u2 <= 0) continue; RS.arrow(c, o[0], o[1], x, y, u2, { bend, col: '#c8a040', w: 10 });
           if (l === 'USA') { const a = E.out(K.seg(lt, at + .8, at + 1.25)); if (a > 0) { c.save(); c.translate(-200 * (1 - a), 0); c.fillStyle = '#f6eedc'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.moveTo(8, y); c.lineTo(46, y - 40); c.lineTo(190, y - 40); c.lineTo(190, y + 40); c.lineTo(46, y + 40); c.closePath(); c.fill(); c.stroke(); c.fillStyle = INK; c.font = K.font(46); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('USA', 116, y + 2); c.restore(); } }
           else RS.dot(c, x, y, lt, at + .8, l, { px: 34, dy }); }
@@ -127,7 +127,7 @@ window.SHOTS = [
     init: S => { S.tE = A.at(S, 'Elisabeth', 5); S.tC = A.at(S, 'Some', 4.4);
       const london = mapXY(-.12, 51.5), swiss = mapXY(8.2, 46.8);
       S.dest = [[london[0], london[1], 'BRITAIN', A.at(S, 'Britain', 1.6) - .5, .2, -50], [200, 640, 'USA', A.at(S, 'US', 2.5) - .5, -.25, 0], [swiss[0], swiss[1], 'SWITZERLAND', A.at(S, 'Switzerland', 3.1) - .5, -.15, -50]];
-      S.D.over = [(c, lt) => K.card(c, 'MANY ESCAPED', lt, { at: .4, x: 1500, y: 180, px: 44, rot: 3, until: S.tC - .2 }), (c, lt) => K.card(c, 'ELISABETH DE ROTHSCHILD · DIED IN RAVENSBRÜCK, 1945', lt, { at: S.tE + .6, x: 960, y: 200, px: 36, rot: -1 })];
+      S.D.over = [(c, lt) => K.card(c, 'MANY ESCAPED', lt, { at: .85, x: 1500, y: 180, px: 44, rot: 3, until: S.tC - .2 }), (c, lt) => K.card(c, 'ELISABETH DE ROTHSCHILD · DIED IN RAVENSBRÜCK, 1945', lt, { at: S.tE + .6, x: 960, y: 200, px: 36, rot: -1 })];
       S.D.sfx = S.dest.map(d => [d[3], 'whoosh_soft', .3]).concat([[S.tE, 'chime', .25]]); } },
 ];
 const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
