@@ -252,7 +252,7 @@ window.SHOTS = [
         c.save(); c.translate(2440, 1292); c.fillStyle = 'rgba(30,20,10,.3)'; c.beginPath(); c.ellipse(0, 4, 80, 10, 0, 0, 7); c.fill(); c.fillStyle = '#e8e0cc'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-60, -300, 120, 300); c.strokeRect(-60, -300, 120, 300);
         c.fillStyle = '#1a1820'; c.fillRect(-38, -250, 76, 250); c.fillStyle = '#9a2a2a'; for (let k = 0; k < 5; k++) c.fillRect(-60, -300 + k * 60, 12, 30); c.beginPath(); c.moveTo(-74, -300); c.lineTo(0, -360); c.lineTo(74, -300); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#d8a840'; c.beginPath(); c.arc(0, -318, 9, 0, 7); c.fill(); c.restore(); },
       // the team: three zebras in single file (no overlaps), harnessed to the carriage; hoof dust while moving
-      (c, lt, u, S) => { const T = TEAM, d = TEAM.dist(lt), amp = TEAM.speed(lt), cx = T.x0 + d, y = 1342, ph = d / 26;
+      (c, lt, u, S) => { const T = TEAM, d = TEAM.dist(lt), amp = TEAM.speed(lt), cx = T.x0 + d, y = 1230, ph = d / 26;
         for (let k = 0; k < T.n; k++) for (let i = 0; i < 5; i++) { const age = (lt * 1.6 + i / 5 + k * .37) % 1, tb = lt - age * .6, a2 = TEAM.speed(tb); if (a2 <= .05 || tb < 0) continue; const px = T.x0 + TEAM.dist(tb) + T.lead + k * T.gap - 60 - i * 14, r = 14 + age * 30; c.fillStyle = `rgba(200,180,140,${.32 * (1 - age) * a2})`; c.beginPath(); c.ellipse(px, y - 8 - age * 24, r * 1.4, r * .7, 0, 0, 7); c.fill(); }
         const car = carriage(c, cx, y, T.cs, d);
         const Z = []; for (let k = 0; k < T.n; k++) Z.push(zebra(c, cx + T.lead + k * T.gap, y, T.zs, ph + k * .9, amp, { idle: lt + k }));
