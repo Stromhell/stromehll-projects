@@ -3,7 +3,7 @@ import * as C from './tb3_common.js';
 import * as ui from '../lib/ui.js';
 import * as S2 from '../lib/sets2.js';
 import { shots as old } from './tb_act3.js';
-const { THREE, sets, P } = C;
+const { THREE, sets, P, real } = C;
 
 const proj = (cam, v) => { cam.updateMatrixWorld(); const p = new THREE.Vector3(...v).project(cam); return [(p.x + 1) * 960, (1 - p.y) * 540]; };
 const UG = ['tb_ug1', 'tb_ug2', 'tb_ug3'];
@@ -23,6 +23,21 @@ async function night(k, o = {}) {
 function flood(scene, pos, target, i = 400) { const s = new THREE.SpotLight(0xfff2d8, i, 120, .5, .5, 1.3); s.position.set(...pos); s.target.position.set(...target); s.castShadow = true; s.shadow.mapSize.set(2048, 2048); s.shadow.radius = 4; scene.add(s, s.target);
   const pole = C.real.m(new THREE.CylinderGeometry(.12, .16, pos[1], 8), C.real.std(0x3a3a3a)); pole.position.set(pos[0], pos[1] / 2, pos[2]); scene.add(pole);
   const head = C.real.m(new THREE.BoxGeometry(1.2, .6, .4), C.real.std(0xffffff, { emissive: 0xfff2d8, ei: 3 })); head.position.set(...pos); head.lookAt(...target); scene.add(head); return s; }
+// ground haze: open cylinder with a vertical gradient (fog colour at the bottom, clear ~22% up) that hides the seam between the unfogged HDRI sky and the fogged ground (same pattern as act 7's C-130 line)
+function hazeBand(scene, { color = 0xc4ccd8, r = 1500, h = 400, clear = .25, y = 0, op = 1 } = {}) {
+  const css = '#' + new THREE.Color(color).getHexString();
+  const tex = real.canvasTex(8, 256, (c, W, H) => { const g = c.createLinearGradient(0, H, 0, 0); g.addColorStop(0, css); g.addColorStop(.35 * clear, css); g.addColorStop(clear, css + '00'); g.addColorStop(1, css + '00'); c.fillStyle = g; c.fillRect(0, 0, W, H); });
+  const mt = new THREE.MeshBasicMaterial({ map: tex, transparent: true, side: THREE.BackSide, depthWrite: false, fog: false, opacity: op });
+  const band = real.m(new THREE.CylinderGeometry(r, r, h, 64, 1, true), mt, { pos: [0, y + h / 2, 0], cast: false }); band.renderOrder = -1; scene.add(band); return band;
+}
+// distant treeline: a long alpha-cut plane of overlapping canopy blobs, fogged like the ground
+function treeline(scene, { z = -300, w = 1800, h = 10, color = 0x3e5236 } = {}) {
+  const tex = real.canvasTex(2048, 128, (c, W, H) => { c.clearRect(0, 0, W, H); const css = '#' + new THREE.Color(color).getHexString(); c.fillStyle = css;
+    for (let i = 0; i < 420; i++) { const x = (i * 157.3) % W, r = 14 + ((i * 37) % 23), y = H - 20 - ((i * 53) % 46); c.beginPath(); c.arc(x, y, r, 0, 7); c.fill(); }
+    c.fillRect(0, H - 26, W, 26); });
+  const mt = new THREE.MeshStandardMaterial({ map: tex, transparent: true, alphaTest: .5, roughness: 1, side: THREE.DoubleSide });
+  const pl = real.m(new THREE.PlaneGeometry(w, h), mt, { pos: [0, h / 2 - .4, z], cast: false }); scene.add(pl); return pl;
+}
 async function hostagesOnMats(k, h, every = 2) {
   const ppl = [];
   for (let i = 0; i < h.mats.length; i += every) { const mt = h.mats[i]; const p = await k.real.human({ id: C.PAX[(i * 3) % 10], seed: 700 + i }); k.real.put(k.scene, p, { pos: [mt.x, 0, mt.z], rot: mt.z > 0 ? P : 0, pose: 'sit', seatH: .16, arm: i % 3 ? 'lap' : 'hug', mood: 'worried' }); p.userData.driven = true; ppl.push(p); }
@@ -96,6 +111,14 @@ export const shots = {
     for (const x of [-20, 0, 20]) { const l = new THREE.PointLight(0xffb060, 40, 18, 2); l.position.set(x, 5, 12); scene.add(l); }
     // a figure at the tower glass
     const p = await real.human({ id: 'tb_ug2', seed: 830 }); real.put(scene, p, { pos: [t0.W / 2 - 4, 13.2, 1.2], rot: 0 }); p.userData.driven = true;
+    // the lib beacon sits on a hairline mast that vanishes at night: a proper lattice mast from the cab roof up to the lamp, with a base plate and a cage round the beacon
+    { const bx = t0.W / 2 - 4 + 2, bz = -2 - 2, gal = real.std(0x9a9a94, { metal: .6, rough: .45 });
+      scene.add(real.m(new THREE.CylinderGeometry(.09, .13, 4.1, 8), gal, { pos: [bx, 18.05, bz] }));
+      scene.add(real.m(new THREE.CylinderGeometry(.5, .6, .14, 12), gal, { pos: [bx, 16.07, bz] }));
+      for (let i = 0; i < 3; i++) { const a = i * P * 2 / 3; const st = real.m(new THREE.CylinderGeometry(.025, .025, 2.2, 6), gal, { pos: [bx + Math.sin(a) * .28, 17.05, bz + Math.cos(a) * .28] }); st.rotation.x = Math.cos(a) * .26; st.rotation.z = -Math.sin(a) * .26; scene.add(st); }
+      scene.add(real.m(new THREE.TorusGeometry(.26, .02, 6, 20), gal, { pos: [bx, 20.1, bz], rot: [P / 2, 0, 0], cast: false }));
+      scene.add(real.m(new THREE.CylinderGeometry(.12, .16, .12, 10), gal, { pos: [bx, 19.9, bz], cast: false }));
+      const bl = new THREE.PointLight(0xff3020, 6, 5, 2); bl.position.set(bx, 20.1, bz); scene.add(bl); }
     const cam = C.dolly(camera, { pos: [20, 2, 40], look: [31, 12, -2], fov: 40 }, { pos: [26, 3, 26], look: [31, 13.5, -2], fov: 34 });
     return (t, u) => { cam(u); p.update(t, { look: Math.sin(t * .4) * .3 }); };
   },
@@ -105,7 +128,8 @@ export const shots = {
     await night(k, { moonI: 1.0 });
     await sets.apron(k, { sign: 'ENTEBBE' });
     const jet = await sets.a300(); scene.add(jet);
-    flood(scene, [30, 16, 40], [0, 2, 10]); flood(scene, [-30, 16, 30], [0, 2, 5], 300);
+    // floodlight poles stand wide of the crane path (camera runs (46,70)->(34,52) looking at the nose), so no mast ever crosses the fuselage
+    flood(scene, [60, 16, 24], [0, 2, 10]); flood(scene, [-46, 16, 36], [0, 2, 5], 300);
     const ring = []; let i = 0;
     for (let a = 0; a < P * 2; a += P / 8) { const x = Math.sin(a) * 16, z = 4 + Math.cos(a) * 30; if (Math.abs(x) < 7 && Math.abs(z - 4) < 26) continue; ring.push(await soldier(k, i, [x, 0, z], a + P)); i++; }
     const lr1 = S2.landrover(); lr1.position.set(18, 0, 26); lr1.rotation.y = -2.4; scene.add(lr1);
@@ -122,18 +146,27 @@ export const shots = {
     await S2.hall(k, { lampI: 8, hemi: .4 });
     const four = [], three = [];
     for (const [i, id] of [C.HJ.bose, C.HJ.kuhlmann, C.HJ.hj3, C.HJ.hj4].entries()) { const p = await real.human({ id, seed: 840 + i }); real.put(scene, p, { pos: [-3 + i * 1.2, 0, 1.2], rot: P, mood: 'stern' }); p.userData.driven = true; four.push(p); }
-    for (const [i, id] of ['tb_pa3', 'tb_pa8', 'tb_cmd2'].entries()) { const p = await real.human({ id, seed: 850 + i }); real.put(scene, p, { pos: [2.2 + i * 1.3, 0, -4.5], rot: P * .9, mood: 'stern' }); p.userData.driven = true; three.push(p); }
-    const key = new THREE.SpotLight(0xffe0b0, 0, 12, .5, .6, 1.3); key.position.set(4, 4, 0); key.target.position.set(3.5, 1, -2); scene.add(key, key.target);
+    // the three new men come down the centre aisle (between the mattress rows, z -2.1..2.1) out of the dark east end of the hall
+    const X0 = 7.6, X1 = 2.2, ZS = [-.6, -1.0, -1.4];
+    for (const [i, id] of ['tb_pa3', 'tb_pa8', 'tb_cmd2'].entries()) { const p = await real.human({ id, seed: 850 + i }); real.put(scene, p, { pos: [X0 + i * 1.3, 0, ZS[i]], rot: P / 2, mood: 'stern' }); p.userData.driven = true; three.push(p); }
+    const key = new THREE.SpotLight(0xffe0b0, 0, 12, .5, .6, 1.3); key.position.set(4, 4, 0); key.target.position.set(3.5, 1, -1); scene.add(key, key.target);
+    k.ownTally = true;
     const cam = C.dolly(camera, { pos: [0, 1.7, 7.5], look: [1, 1.3, -2], fov: 44 }, { pos: [1.2, 1.6, 6], look: [2.8, 1.3, -2], fov: 40 });
     return (t, u) => { cam(u); four.forEach((p, i) => p.update(t, { mood: 'stern', look: .4 }));
-      three.forEach((p, i) => { const w = C.seg(t, .8 + i * .3, 3.2 + i * .3); p.position.z = -4.5 + w * 3.2; p.update(t, { pose: w > 0 && w < 1 ? 'walk' : 'idle', dist: w * 3.2, mood: 'stern' }); });
-      key.intensity = 80 * C.ease(C.seg(t, .6, 1.6)); };
+      three.forEach((p, i) => { const w = C.seg(t, .8 + i * .3, 3.4 + i * .3), D = X0 - X1; p.position.x = X0 + i * 1.3 - w * D; p.rotation.y = P / 2 + C.ease(C.seg(t, 3.3 + i * .3, 3.9 + i * .3)) * (P * .85 - P / 2);
+        p.update(t, { pose: w > 0 && w < 1 ? 'walk' : 'idle', dist: w * D, mood: 'stern' }); });
+      key.intensity = 80 * C.ease(C.seg(t, .6, 1.6));
+      const n = 4 + [0, 1, 2].filter(i => t > 3.0 + i * .45).length; ui.tally(k.overlay, 'HIJACKERS', n, 960, 120, t, .3); };
   },
   // dawn: the passengers walk in a line from the jet to the old terminal, guarded on both sides
   '3.11': async k => {
     const { real, scene, camera } = k;
     await real.env(k, 'industrial_sunset_puresky', { sun: [-80, 14, 40], sunI: 2.6, sunColor: 0xffb880, shadowSize: 60, envI: .7, fog: [0xc8a088, 160, 1100] });
     await sets.apron(k, { terminal: false });
+    // far ground out to the horizon, a haze band over the seam with the sky and a low treeline behind the terminal (the apron's fogged edge used to show as a bare tan strip)
+    scene.add(real.m(new THREE.PlaneGeometry(9000, 9000), real.std(0x8a8464, { rough: .95 }), { pos: [0, -1, 0], rot: [-P / 2, 0, 0], cast: false }));
+    hazeBand(scene, { color: 0xc8a088, clear: .22 });
+    treeline(scene, { z: -300, w: 1800 }); treeline(scene, { z: -520, w: 2600, h: 14, color: 0x4a5a44 });
     S2.entebbeOld(k, { pos: [0, 0, -70], wall: 0xc8bca4 });
     const jet = await sets.a300(); jet.position.set(28, 0, 40); jet.rotation.y = -P / 2 - .3; scene.add(jet);
     const line = [];

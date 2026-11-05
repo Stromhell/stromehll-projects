@@ -39,7 +39,9 @@ export const shots = {
     il.position.set(-2.6, 0, 0); k.scene.add(il);
     const ug = props.flag(['#111111', '#f4c400', '#d21f1f', '#111111', '#f4c400', '#d21f1f'], { draw: x => { x.fillStyle = '#fff'; x.beginPath(); x.arc(120, 80, 24, 0, P * 2); x.fill(); } });
     ug.position.set(1.4, 0, 0); k.scene.add(ug);
-    const halves = [-1, 1].map(s => { const r = core.box(1.4, .12, .05, 0xd9a42b, { pos: [s * .9 - .2, 2.0, .2] }); k.scene.add(r); return r; });
+    for (const f of [il, ug]) f.traverse(c => { if (c.isMesh) c.castShadow = false; }); // the pole shadows drew pale streaks across the floor
+    // torn ribbon: two halves with a ragged zig-zag tear on the inner end, a sin curl across the width, loose threads at the tear; no shadows (they drew streaks on the floor)
+    const halves = [-1, 1].map(s => { const r = tornRibbon(s); r.position.set(s * .9 - .2, 2.0, .2); k.scene.add(r); return r; });
     const cam = core.camMove(k.camera, { from: [0, 2.2, 6], to: [0, 2.1, 5], look: [-.3, 2.1, 0], fov: 40 });
     return (t, u) => { cam(u, t); il.wave(t); ug.wave(t + 1); const s = core.easeOut(core.seg(t, 1.4, 2.4)); halves[0].position.x = -1.1 - s * .4; halves[0].rotation.z = -s * .5; halves[1].position.x = .7 + s * .4; halves[1].rotation.z = s * .5; halves[0].position.y = halves[1].position.y = 2 - s * .4; };
   },
@@ -111,6 +113,24 @@ export const shots = {
   '3.15': async k => cardRow(k, [{ text: 'DEMANDS\n53 PRISONERS\n40 IN ISRAEL', size: 84 }, { text: '$5,000,000\nDEADLINE\n1 JULY', size: 84, color: '#a02a1e' }], { w: 4, h: 4, gap: 1.2 }),
 };
 
+// one half of a torn ribbon: side -1 = left piece (tear on its +x end), +1 = right piece (tear on its -x end)
+function tornRibbon(side) {
+  const L = .72, H = .075, sh = new THREE.Shape(); const seed = side < 0 ? 3 : 7;
+  const jx = i => ((Math.sin(i * 12.9898 + seed) * 43758.5453) % 1 + 1) % 1;
+  sh.moveTo(-L * side, -H); sh.lineTo((L - .16) * side, -H);
+  const n = 9; for (let i = 0; i <= n; i++) { const y = -H + (i / n) * 2 * H; const x = L - .16 + (i % 2 ? .16 : .02) + jx(i) * .05 - (i === 0 || i === n ? .06 : 0); sh.lineTo(x * side, y); }
+  sh.lineTo(-L * side, H); sh.closePath();
+  const geo = new THREE.ShapeGeometry(sh, 2); const pos = geo.attributes.position;
+  for (let i = 0; i < pos.count; i++) { const x = pos.getX(i), y = pos.getY(i); pos.setZ(i, Math.sin(x * 5.5 + side) * .03 + Math.sin(y * 30) * .012); }
+  geo.computeVertexNormals();
+  const g = new THREE.Group(); const mat = core.toon(0xd9a42b, { mat: { side: THREE.DoubleSide } });
+  const m = new THREE.Mesh(geo, mat); m.castShadow = false; m.receiveShadow = false; m.userData.noOutline = true; g.add(m);
+  // a back layer slightly offset gives the ribbon a little thickness
+  const m2 = m.clone(); m2.material = core.toon(0xb8861e, { mat: { side: THREE.DoubleSide } }); m2.position.z = -.012; g.add(m2);
+  // loose threads hanging from the tear
+  for (let i = 0; i < 4; i++) { const th = new THREE.Mesh(new THREE.BoxGeometry(.004, .09 + i * .02, .004), mat); th.position.set((L - .02 + i * .025) * side, -H + .02 + i * .03, .005); th.rotation.z = side * (.4 + i * .25); th.castShadow = false; th.userData.noOutline = true; g.add(th); }
+  return g;
+}
 async function airportMap(k, glowOld) {
   core.setEnv(k, 'day', { noFog: true, shadowSize: 80, sunPos: [30, 90, 40] });
   k.scene.background = new THREE.Color(0x3a2c22);
@@ -127,7 +147,7 @@ async function airportMap(k, glowOld) {
   x.fillStyle = '#8a8478'; x.fillRect(380, 1000, 260, 120); x.fillRect(2160, 330, 300, 140);
   x.strokeStyle = '#7a7468'; x.lineWidth = 40; x.beginPath(); x.moveTo(640, 1060); x.lineTo(1000, 1000); x.stroke(); x.beginPath(); x.moveTo(2160, 400); x.lineTo(1900, 520); x.stroke();
   x.fillStyle = '#2b1e16'; x.font = '110px Anton'; x.textAlign = 'center';
-  x.fillText('LAKE VICTORIA', 1500, 1480); x.font = '80px Anton'; x.fillText('RUNWAY', 2200, 520);
+  if (!glowOld) x.fillText('LAKE VICTORIA', 1500, 1480); x.font = '66px Anton'; x.save(); x.translate(770, 1075); x.rotate(-.35); x.fillText('RUNWAY', 0, 28); x.restore(); // on the south-west leg of the runway, clear of the terminal blocks
   const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace;
   const plane = new THREE.Mesh(new THREE.PlaneGeometry(150, 100), new THREE.MeshToonMaterial({ map: tex })); plane.rotation.x = -P / 2; plane.userData.noOutline = true; k.scene.add(plane);
   const nt = core.box(18, 3, 6, 0xd8d0c0, { pos: [28, 1.5, -22] }); k.scene.add(nt);
@@ -135,6 +155,10 @@ async function airportMap(k, glowOld) {
   const tw = core.cyl(1, 1.2, 6, 0xc8bca0, { pos: [-20, 3, -10] }); k.scene.add(tw);
   const lab = (s, pos) => { const p = core.textPlane(s, 4, { size: 90, color: '#fff', stroke: '#2b1e16', strokeW: 16 }); p.position.set(...pos); p.rotation.x = -P / 2 + .6; k.scene.add(p); return p; };
   const l1 = lab('NEW TERMINAL', [28, 7, -22]), l2 = lab('OLD TERMINAL', [-30, 7, -2]);
+  // on the push-in (3.9) the lake name is a plane too, so it can fade out with NEW TERMINAL instead of being cut by the frame edge
+  const l3 = glowOld ? lab('LAKE VICTORIA', [0, 6, 24]) : null; if (l3) l3.scale.setScalar(1.3);
   const cam = core.camMove(k.camera, glowOld ? { from: [-10, 70, 50], to: [-26, 34, 26], look: [-24, 0, -6], lookTo: [-30, 0, -4], fov: 40 } : { from: [0, 100, 70], to: [0, 86, 58], look: [0, 0, 0], fov: 42 });
-  return (t, u) => { cam(u, t); popIn(l1, t, .5); popIn(l2, t, glowOld ? .2 : 1.4); if (glowOld) ot.material.emissiveIntensity = .4 + .3 * Math.sin(t * 3); };
+  return (t, u) => { cam(u, t); popIn(l2, t, glowOld ? .2 : 1.4);
+    if (glowOld) { const f = 1 - core.easeOut(core.seg(u, 0, .06)); l1.visible = false; popIn(l3, t, 0, f * 1.3); ot.material.emissiveIntensity = .4 + .3 * Math.sin(t * 3); } // the push-in would crop NEW TERMINAL and LAKE VICTORIA at the frame edge: the first stays off, the second fades out as the move starts
+    else popIn(l1, t, .5); };
 }
