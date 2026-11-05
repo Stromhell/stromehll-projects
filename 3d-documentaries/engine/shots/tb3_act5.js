@@ -7,6 +7,35 @@ const { THREE, sets, P, real } = C;
 
 const proj = (cam, v) => { cam.updateMatrixWorld(); const p = new THREE.Vector3(...v).project(cam); return [(p.x + 1) * 960, (1 - p.y) * 540]; };
 import { rnd, WOOD, BLACK, chair, rotary, handsetShape, papers, wallMap, warRoom, CABINET, seatPeople, talkAll, block, night, office } from '../lib/sets3.js';
+import { mapShot, props, popIn, core } from './tb_common.js';
+
+// ---- local helpers (lib stays untouched) ----
+// typed A4 sheet: heading bar, lines of text, a red stamp mark
+const sheetTex = seed => real.canvasTex(256, 362, (c, W, H) => { const r = rnd(seed); c.fillStyle = '#f1ece0'; c.fillRect(0, 0, W, H);
+  c.fillStyle = '#2a2622'; c.fillRect(30, 28, 90 + r() * 40, 7); c.fillStyle = '#8a1e14'; c.fillRect(W - 84, 26, 54, 9);
+  c.fillStyle = 'rgba(40,36,32,.5)'; for (let y = 58; y < H - 28; y += 12) c.fillRect(30, y, 60 + r() * 140, 3); });
+// whole sheets laid flat on a table at (x, z, yaw); replaces the lib's random A4 scatter, which reads as confetti from the camera distance
+function sheets(scene, list, y) { list.forEach(([x, z, ry], i) => scene.add(real.m(new THREE.PlaneGeometry(.21, .297), new THREE.MeshStandardMaterial({ map: sheetTex(31 + i), roughness: .9 }), { pos: [x, y + .002 + i * .0004, z], rot: [-P / 2, 0, ry ?? 0], cast: false }))); }
+// a yellow legal pad with ruled lines
+function legalPad(scene, x, z, y, ry = 0) { const g = new THREE.Group(); g.position.set(x, y, z); g.rotation.y = ry; scene.add(g);
+  g.add(real.box(.215, .012, .3, real.std(0xe8d35a, { rough: .9 }), { pos: [0, .006, 0], cast: false }));
+  const tx = real.canvasTex(128, 180, (c, W, H) => { c.fillStyle = '#f0dc62'; c.fillRect(0, 0, W, H); c.strokeStyle = 'rgba(80,100,160,.5)'; c.lineWidth = 1; for (let y = 24; y < H; y += 8) { c.beginPath(); c.moveTo(6, y); c.lineTo(W - 6, y); c.stroke(); } c.strokeStyle = 'rgba(190,60,60,.6)'; c.beginPath(); c.moveTo(22, 0); c.lineTo(22, H); c.stroke(); c.fillStyle = '#3a3630'; c.fillRect(0, 0, W, 10); });
+  g.add(real.m(new THREE.PlaneGeometry(.215, .3), new THREE.MeshStandardMaterial({ map: tx, roughness: .9 }), { pos: [0, .0125, 0], rot: [-P / 2, 0, 0], cast: false })); }
+// strip the lib war room's paper scatter (18 random A4 boxes) and its notepad prop, then lay out a few whole documents mid-table, clear of the foreground heads
+function tidyTable(scene) {
+  const kill = []; scene.traverse(o => { if (o.isMesh && o.geometry?.parameters?.width === .21 && o.geometry.parameters.depth === .297) kill.push(o); });
+  scene.children.filter(o => o.isGroup && Math.abs(o.position.x - 1.4) < 1e-6 && Math.abs(o.position.z + .35) < 1e-6).forEach(o => kill.push(o));
+  kill.forEach(o => o.parent && o.parent.remove(o));
+  sheets(scene, [[-.95, .12, .35], [-.15, -.1, -.2], [.85, -.3, .15], [1.1, .32, -.45], [2.75, .18, .3]], .795);
+  legalPad(scene, 1.45, -.35, .795, -.2);
+}
+// ground haze: open cylinder with a gradient (fog colour at the bottom, clear part-way up) that hides the seam between the unfogged HDRI sky and the fogged ground (same trick as act 7's c130Line)
+function hazeBand(scene, { color = 0xc4ccd8, r = 400, h = 120, clear = .3, y = 0, op = 1 } = {}) {
+  const css = '#' + new THREE.Color(color).getHexString();
+  const tex = real.canvasTex(8, 256, (c, W, H) => { const g = c.createLinearGradient(0, H, 0, 0); g.addColorStop(0, css); g.addColorStop(.35 * clear, css); g.addColorStop(clear, css + '00'); g.addColorStop(1, css + '00'); c.fillStyle = g; c.fillRect(0, 0, W, H); });
+  const m = new THREE.MeshBasicMaterial({ map: tex, transparent: true, side: THREE.BackSide, depthWrite: false, fog: false, opacity: op });
+  const band = real.m(new THREE.CylinderGeometry(r, r, h, 64, 1, true), m, { pos: [0, y + h / 2, 0], cast: false }); band.renderOrder = -1; scene.add(band); return band;
+}
 
 export const shots = {
   // night in Tel Aviv: crane down the lit government building to one window
@@ -24,7 +53,7 @@ export const shots = {
   // the war room: generals, pilots and intelligence officers around a long table
   '5.2': async k => {
     const { real, scene, camera } = k;
-    const w = await warRoom(k);
+    const w = await warRoom(k); tidyTable(scene);
     const ppl = await seatPeople(k, w.seats, CABINET);
     const st = await real.human({ id: 'tb_gen2', seed: 2101 }); real.put(scene, st, { pos: [-1.1, 0, -3.6], rot: .25, arm: 'point', mood: 'stern' }); st.userData.driven = true;
     const st2 = await real.human({ id: 'tb_yoni', seed: 2102 }); real.put(scene, st2, { pos: [1.4, 0, -3.5], rot: -.4, mood: 'stern' }); st2.userData.driven = true;
@@ -38,18 +67,20 @@ export const shots = {
     await C.room(k, { w: 9, d: 7, h: 3.2, floor: 'dirty_carpet', wallColor: 0xd0c6aa });
     C.tubes(k, [-1.5, 1.5], [0], 3.2, { i: 6 });
     scene.add(new THREE.HemisphereLight(0xfff0d8, 0x2a2420, .5));
-    scene.add(real.box(4.8, 2.2, .05, real.std(0xa8865a, { rough: .95 }), { pos: [0, 1.8, -3.47] }));
+    // cork board at human scale (1.3 m tall, eye height), with a dark frame
+    scene.add(real.box(3.1, 1.4, .03, real.std(0x3a2a1c, { rough: .7 }), { pos: [0, 1.65, -3.485] }));
+    scene.add(real.box(3.0, 1.3, .05, real.std(0xa8865a, { rough: .95 }), { pos: [0, 1.65, -3.47] }));
     const items = [['ENTEBBE', 0], ['OLD TERMINAL', 1], ['TOWER', 2], ['RUNWAY', 3], ['DOORS', 4], ['GUARDS', 5]];
     const pins = items.map(([s, i]) => {
       const tx = real.canvasTex(400, 300, (c, W, H) => { c.fillStyle = '#efe9da'; c.fillRect(0, 0, W, H); c.fillStyle = i % 2 ? '#8a8478' : '#6a7078'; c.fillRect(20, 20, W - 40, H - 90);
         c.strokeStyle = '#2b2620'; c.lineWidth = 5; if (i === 1) { c.strokeRect(60, 60, 280, 110); for (let x = 90; x < 330; x += 50) c.strokeRect(x, 90, 25, 40); } else if (i === 2) { c.strokeRect(170, 40, 60, 140); c.strokeRect(150, 30, 100, 40); } else if (i === 3) { c.beginPath(); c.moveTo(30, 180); c.lineTo(370, 60); c.stroke(); } else if (i === 4) { c.strokeRect(150, 50, 100, 130); } else if (i === 5) { for (let g = 0; g < 4; g++) { c.beginPath(); c.arc(80 + g * 80, 90, 18, 0, P * 2); c.stroke(); c.strokeRect(65 + g * 80, 110, 30, 60); } } else { c.beginPath(); c.ellipse(200, 120, 120, 60, 0, 0, P * 2); c.stroke(); }
         c.fillStyle = '#1d1712'; c.font = 'bold 44px "Oswald", sans-serif'; c.textAlign = 'center'; c.fillText(s, W / 2, H - 22); });
-      const c = real.m(new THREE.PlaneGeometry(.8, .6), new THREE.MeshStandardMaterial({ map: tx, roughness: .9 }), { pos: [-1.6 + (i % 3) * 1.6, 2.3 - Math.floor(i / 3) * .95, -3.43], rot: [0, 0, (i % 2 ? .05 : -.04)] });
-      const pin = real.m(new THREE.SphereGeometry(.025, 10, 8), real.std(0xc0392b, { rough: .3 }), { pos: [0, .26, .02] }); c.add(pin);
+      const c = real.m(new THREE.PlaneGeometry(.7, .525), new THREE.MeshStandardMaterial({ map: tx, roughness: .9 }), { pos: [-.95 + (i % 3) * .95, 1.95 - Math.floor(i / 3) * .62, -3.43], rot: [0, 0, (i % 2 ? .05 : -.04)] });
+      const pin = real.m(new THREE.SphereGeometry(.02, 10, 8), real.std(0xc0392b, { rough: .3 }), { pos: [0, .23, .02] }); c.add(pin);
       scene.add(c); c.visible = false; return c;
     });
-    const a = await real.human({ id: 'tb_ana', seed: 2201 }); real.put(scene, a, { pos: [1.55, 0, -2.85], rot: P + .55, mood: 'stern' }); a.userData.driven = true;
-    const cam = C.dolly(camera, { pos: [-.8, 1.8, 3.4], look: [.4, 1.7, -3.2], fov: 46 }, { pos: [-.4, 1.8, 1.9], look: [.4, 1.75, -3.3], fov: 44 });
+    const a = await real.human({ id: 'tb_ana', seed: 2201 }); real.put(scene, a, { pos: [1.3, 0, -2.95], rot: P + .55, mood: 'stern' }); a.userData.driven = true;
+    const cam = C.dolly(camera, { pos: [-.5, 1.6, 2.4], look: [.3, 1.6, -3.3], fov: 42 }, { pos: [-.1, 1.6, 1.0], look: [.3, 1.62, -3.3], fov: 40 });
     return (t, u) => { cam(u); pins.forEach((c, i) => { const s = C.ease(C.seg(t, .4 + i * .7, .7 + i * .7)); c.visible = s > 0; c.scale.setScalar(.6 + .4 * s); });
       a.update(t, { arm: (t % 1.4) < .7 ? 'raise' : 'point', mood: 'stern', look: -.5 }); };
   },
@@ -81,20 +112,46 @@ export const shots = {
       h.update(t, { pose: 'sitDesk', arm: 'desk', seatH: .48, mood: 'calm', nod: .45, talk: Math.sin(t * 1.3) > .2 });
       ag.update(t, { pose: 'sitDesk', arm: 'desk', seatH: .48, mood: 'stern', nod: .4 + Math.sin(t * .6) * .1, talk: Math.sin(t * 1.3) < -.6 }); };
   },
-  '5.6': old['5.6'],
+  // phones connect between Washington and Cairo. Washington is off the map: its phone sits in the Atlantic with a label and an arrow pointing off the west edge; Cairo's phone sits south-west of the city, clear of the ISRAEL label
+  '5.6': async k => mapShot(k, {
+    center: [8, 34], span: [70, 36], k: 2.6, labels: [['EGYPT', 29.5, 26.5], ['ISRAEL', 35.6, 31.2]], highlight: ['EGY', 'ISR'],
+    cities: [['WASHINGTON', { label: false }], ['CAIRO', { label: false }]], route: [[-12, 40], [5, 42], [20, 37], [27.0, 28.6]], routeColor: 0x7aa0d8, plane: false,
+    extra: async (k, map) => {
+      const ph = [map.proj(-12, 40, 2), map.proj(27.0, 28.6, 2)].map(p => { const f = props.phone({ color: 0x2a2a2a }); f.scale.setScalar(12); f.position.copy(p); k.scene.add(f); return f; });
+      const INK = 0x2b1e16, txt = (s, h, lon, lat, dx, dz) => { const p = map.proj(lon, lat); const t = core.textPlane(s, h, { size: 80, color: '#fff', stroke: '#2b1e16', strokeW: 16 }); t.position.set(p.x + dx, .4, p.z + dz); t.rotation.x = -Math.PI / 2 + .5; k.scene.add(t); return t; };
+      // the lib's city labels are ~9 px tall at this map scale, so both are drawn here at a readable size
+      const lab = txt('WASHINGTON', 4.2, -12, 40, -4.5, 5.4), cai = txt('CAIRO', 2.8, 31.24, 30.04, 1.0, 2.4);
+      const w = map.proj(-12, 40); const arrow = new THREE.Group(); arrow.position.set(w.x - 2.4, .2, w.z); k.scene.add(arrow);   // shaft + head pointing west, off the map edge
+      arrow.add(core.box(7, .16, .5, INK, { pos: [-3.5, 0, 0] })); arrow.add(core.mesh(new THREE.ConeGeometry(.9, 2.0, 12), INK, { pos: [-7.8, 0, 0], rot: [0, 0, Math.PI / 2] }));
+      const tag = [lab, arrow, cai];
+      return t => { ph.forEach((f, i) => { popIn(f, t, .3 + i * 1.6, 12); f.rotation.z = Math.sin(t * 20) * .05 * (t % 1 < .5 ? 1 : 0); }); tag.forEach(o => { const s = core.pop(t, .45, .3); o.scale.setScalar(Math.max(.001, s)); }); }; },
+  }),
   // the PLO envoy knocks at the terminal door; it stays shut
   '5.7': async k => {
     const { real, scene, camera } = k;
     await real.env(k, 'kloofendal_48d_partly_cloudy_puresky', { sun: [-40, 55, 50], sunI: 4, sunColor: 0xfff0d8, shadowSize: 30, envI: 1, fog: [0xd8dde2, 80, 600] });
     await sets.apron(k, { terminal: false });
     S2.entebbeOld(k, { pos: [0, 0, -8], wall: 0xc8bca4 });
-    const door = new THREE.Group(); door.position.set(.5, 0, .09); scene.add(door);
-    door.add(real.box(2.3, 2.95, .08, real.std(0x5a4a3a, { rough: .6 }), { pos: [0, 1.47, 0] }));
-    door.add(real.box(.02, 2.85, .1, real.std(0x2a2018), { pos: [0, 1.47, 0] }));
-    for (const x of [-.12, .12]) door.add(real.box(.03, .25, .05, real.std(0xb0a070, { metal: .8, rough: .3 }), { pos: [x, 1.1, .06] }));
-    const e = await real.human({ id: 'tb_envoy', seed: 2401 }); real.put(scene, e, { pos: [.8, 0, 1.25], rot: P, mood: 'worried' }); e.userData.driven = true;
-    const g = await real.human({ id: 'tb_ug2', seed: 2402 }); real.put(scene, g, { pos: [-3.2, 0, 2.4], rot: P / 2 + .3, mood: 'stern' }); g.userData.driven = true; C.attach(g, S2.cap(0x3a4428), 'Head', [0, .15, .01]);
-    const cam = C.dolly(camera, { pos: [3.6, 1.7, 7.5], look: [.5, 1.5, .5], fov: 40 }, { pos: [2.7, 1.65, 5.2], look: [.5, 1.5, .3], fov: 38 });
+    // the entrance, built in the window bay at x=-0.5 the envoy faces: a projecting portal (jambs + lintel, 0.6 m deep) swallows the lib's window, frame and sill;
+    // two panelled leaves with brass pulls and kick plates, a transom light above, a concrete threshold and step in front
+    const jamb = real.std(0x9a9282, { rough: .85 }), leafM = real.std(0x5a4332, { rough: .55 }), panelM = real.std(0x4a3628, { rough: .6 }), brass = real.std(0xb0a070, { metal: .8, rough: .3 });
+    const door = new THREE.Group(); door.position.set(-.5, 0, 0); scene.add(door);
+    for (const sx of [-1, 1]) door.add(real.box(.36, 3.2, .6, jamb, { pos: [sx * 1.18, 1.6, .3] }));
+    door.add(real.box(2.72, .4, .6, jamb, { pos: [0, 3.0, .3] }));
+    door.add(real.box(2.0, .3, .5, real.std(0x1a1c20, { rough: .3, metal: .3 }), { pos: [0, 2.65, .3], cast: false }));
+    door.add(real.box(2.0, .12, .55, jamb, { pos: [0, 2.46, .3] }));
+    for (const sx of [-1, 1]) { const lx = sx * .5;
+      door.add(real.box(.98, 2.28, .06, leafM, { pos: [lx, 1.26, .42] }));
+      for (const py of [.8, 1.8]) door.add(real.box(.62, .7, .02, panelM, { pos: [lx, py, .455] }));
+      door.add(real.box(.98, .2, .01, brass, { pos: [lx, .23, .452] }));
+      door.add(real.box(.03, .45, .05, brass, { pos: [lx - sx * .36, 1.15, .48] })); }
+    door.add(real.box(.02, 2.28, .07, real.std(0x2a2018), { pos: [0, 1.26, .425] }));
+    door.add(real.box(2.0, .12, .2, jamb, { pos: [0, .06, .5] }));
+    door.add(real.box(2.9, .12, .7, real.std(0xb0aa9c, { rough: .9 }), { pos: [0, .06, .95] }));
+    const e = await real.human({ id: 'tb_envoy', seed: 2401 }); real.put(scene, e, { pos: [-.5, 0, 1.5], rot: P, mood: 'worried' }); e.userData.driven = true;
+    // a Ugandan soldier watches from the right of the doorway, well inside the frame
+    const g = await real.human({ id: 'tb_ug2', seed: 2402 }); real.put(scene, g, { pos: [1.55, 0, 1.0], rot: -P / 2 - .35, mood: 'stern' }); g.userData.driven = true; C.attach(g, S2.cap(0x3a4428), 'Head', [0, .15, .01]);
+    const cam = C.dolly(camera, { pos: [3.4, 1.7, 7.2], look: [-.3, 1.5, .6], fov: 40 }, { pos: [2.5, 1.7, 5.4], look: [-.3, 1.4, .4], fov: 40 });
     return (t, u) => { cam(u); const knock = t > .6 && t < 2.6 && (t % .5) < .25; e.update(t, { arm: t > .6 && t < 2.6 ? 'raise' : null, mood: 'worried', look: t > 3.8 ? .5 : 0, nod: knock ? .1 : 0 }); g.update(t, { mood: 'stern', look: -.2 }); };
   },
   // Baruch Bar-Lev on the phone to Amin
@@ -159,9 +216,12 @@ export const shots = {
   // families protest outside government offices; some push through the doors
   '5.11': async k => {
     const { real, scene, camera } = k;
-    await real.env(k, 'qwantani_puresky', { sun: [50, 55, 35], sunI: 3.6, sunColor: 0xfff0d8, shadowSize: 30, envI: 1 });
-    const ground = await real.pbr('concrete_floor_worn_001', { repeat: [30, 30] }); scene.add(real.m(new THREE.PlaneGeometry(160, 160), ground, { rot: [-P / 2, 0, 0], cast: false }));
+    await real.env(k, 'qwantani_puresky', { sun: [50, 55, 35], sunI: 3.6, sunColor: 0xfff0d8, shadowSize: 30, envI: 1, fog: [0xc8d2e0, 40, 260] });
+    // ground out to the horizon, fogged, with a haze band so the slab never ends in a hard line against the sky; a backdrop of office blocks fills the upper left
+    const ground = await real.pbr('concrete_floor_worn_001', { repeat: [220, 220] }); scene.add(real.m(new THREE.PlaneGeometry(1200, 1200), ground, { rot: [-P / 2, 0, 0], cast: false }));
+    hazeBand(scene, { color: 0xc8d2e0, r: 420, h: 140, clear: .3 });
     const gb = block(30, 16, 10, 9, { day: true }); gb.position.set(0, 0, -17); scene.add(gb);
+    for (const [w, h, d, s, x, z] of [[26, 20, 12, 21, -36, -26], [22, 13, 12, 22, -62, -16], [30, 24, 14, 23, -52, -52], [24, 18, 12, 24, 42, -34], [28, 15, 12, 25, -14, -70], [34, 22, 14, 26, 24, -78]]) { const b = block(w, h, d, s, { day: true }); b.position.set(x, 0, z); scene.add(b); }
     { // entrance: glass double doors in a bronze frame under a concrete canopy with a name band
       const gl = real.std(0x2a3a48, { rough: .05, metal: .7 }), fr = real.std(0x5a4630, { metal: .6, rough: .35 }), cn = real.std(0xd8d0bc, { rough: .7 });
       scene.add(real.box(4, 3, .12, gl, { pos: [0, 1.5, -11.95] }));
@@ -210,8 +270,10 @@ export const shots = {
     const cam = C.dolly(camera, { pos: [-.4, 1.3, 3.1], look: [-.08, .86, -1.1], fov: 40 }, { pos: [-.12, .95, .5], look: [-.08, .86, -1.1], fov: 40 });
     return (t, u) => { cam(u); v.update(t, { pose: 'sit', seatH: .45, arm: 'lap', mood: 'worried', look: -.05, nod: .1 });
       const g = cx.createLinearGradient(0, 0, 0, 480); g.addColorStop(0, '#5a6a7a'); g.addColorStop(1, '#2a3038'); cx.fillStyle = g; cx.fillRect(0, 0, 640, 480);
-      for (let i = 0; i < 5; i++) { const x = 70 + i * 125; cx.fillStyle = '#e4dccb'; cx.beginPath(); cx.arc(x, 230, 34, 0, P * 2); cx.fill(); cx.fillStyle = ['#3a3a40', '#6a4a3a', '#2a3a4a', '#5a5040', '#4a3a3a'][i]; cx.fillRect(x - 52, 266, 104, 214); cx.fillStyle = '#2a2018'; cx.beginPath(); cx.arc(x, 214, 34, P, 0); cx.fill(); }
-      cx.fillStyle = '#f4efe2'; cx.fillRect(150, 70, 340, 120); cx.fillStyle = '#b5281e'; cx.font = 'bold 50px "Oswald", sans-serif'; cx.textAlign = 'center'; cx.fillText('BRING THEM', 320, 122); cx.fillText('HOME', 320, 176);
+      // figures lower in the card, the placard held above them on a stick so both lines stay clear of the heads
+      for (let i = 0; i < 5; i++) { const x = 70 + i * 125; cx.fillStyle = '#e4dccb'; cx.beginPath(); cx.arc(x, 268, 34, 0, P * 2); cx.fill(); cx.fillStyle = ['#3a3a40', '#6a4a3a', '#2a3a4a', '#5a5040', '#4a3a3a'][i]; cx.fillRect(x - 52, 304, 104, 180); cx.fillStyle = '#2a2018'; cx.beginPath(); cx.arc(x, 252, 34, P, 0); cx.fill(); }
+      cx.fillStyle = '#8a6a44'; cx.fillRect(315, 150, 10, 90);
+      cx.fillStyle = '#f4efe2'; cx.fillRect(150, 40, 340, 120); cx.strokeStyle = '#1d1712'; cx.lineWidth = 4; cx.strokeRect(152, 42, 336, 116); cx.fillStyle = '#b5281e'; cx.font = 'bold 50px "Oswald", sans-serif'; cx.textAlign = 'center'; cx.fillText('BRING THEM', 320, 92); cx.fillText('HOME', 320, 146);
       cx.fillStyle = 'rgba(10,20,40,.85)'; cx.fillRect(0, 395, 640, 60); cx.fillStyle = '#fff'; cx.font = 'bold 30px "Oswald", sans-serif'; cx.textAlign = 'left'; cx.fillText("HOSTAGES' FAMILIES · JERUSALEM", 20, 436);
       for (let i = 0; i < 1400; i++) { cx.fillStyle = `rgba(255,255,255,${Math.random() * .12})`; cx.fillRect(Math.random() * 640, Math.random() * 480, 2, 2); }
       for (let y = 0; y < 480; y += 4) { cx.fillStyle = 'rgba(0,0,0,.12)'; cx.fillRect(0, y, 640, 1); }
@@ -220,7 +282,7 @@ export const shots = {
   // Rabin at the head of the table
   '5.13': async k => {
     const { real, scene, camera } = k;
-    const w = await warRoom(k);
+    const w = await warRoom(k); tidyTable(scene);
     const ppl = await seatPeople(k, w.seats, CABINET);
     const r = await real.human({ id: 'tb_rabin', seed: 2801 }); real.put(scene, r, { pos: [3.75, 0, 0], rot: -P / 2, mood: 'stern' }); r.userData.driven = true;
     const key = new THREE.SpotLight(0xffe0b0, 50, 8, .45, .6, 1.3); key.position.set(1.8, 2.9, 1.6); key.target.position.set(3.75, 1.5, 0); key.castShadow = true; scene.add(key, key.target);

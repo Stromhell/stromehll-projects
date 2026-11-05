@@ -102,7 +102,7 @@ export function subtitles(x, chunks, t, avoid = []) {
   const hit = b => avoid.reduce((s, a) => s + Math.max(0, Math.min(b[2], a[2]) - Math.max(b[0], a[0])) * Math.max(0, Math.min(b[3], a[3]) - Math.max(b[1], a[1])), 0);
   let best = cands[0], bh = Infinity;
   for (const p of cands) { const h = hit(box(...p)); if (h < bh - 1) { bh = h; best = p; } }
-  const a = clamp((t - c.a) / .12) * clamp((c.b - t) / .12);
+  const a = clamp((t - c.a) / .03) * clamp((c.b - t) / .03); // near hard cut: a slow fade ghosted captions over bright shots
   x.globalAlpha = a; x.textAlign = 'center'; x.textBaseline = 'middle';
   x.lineJoin = 'round'; x.lineWidth = 10; x.strokeStyle = 'rgba(20,14,10,.92)';
   x.strokeText(c.text, best[0], best[1]); x.fillStyle = '#fff'; x.fillText(c.text, best[0], best[1]);
