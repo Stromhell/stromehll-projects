@@ -18,8 +18,8 @@
 - Big files to the project folder: split -b 40M -d, gzip part00, add an md5 file.
 
 ## 4. Open items
-- Drive upload of the Nike launch folder: waiting on a working Drive token (new token gives 401 unauthorized_client). The Drive sync thread owns it.
-- After that upload, delete /mnt/project-files/2d-history/nike/launch/full_parts/ (needs Pushpam's OK).
+- Drive: done 5 Nov 21:32 UTC (long form history video / Nike (2D) / Launch, 45 files + nike_full.mp4, md5 matched).
+- Delete /mnt/project-files/2d-history/nike/launch/full_parts/ (needs Pushpam's OK).
 
 ## 5. Cleanup done
 - Reel frames, IG act frames, cover scratch and act_nosub.html deleted: yes
