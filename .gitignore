@@ -6,3 +6,4 @@ __pycache__/
 .queued
 wt.log
 snap.log
+2d-history/*/production/acts/*/mix_plus.wav

@@ -1,0 +1,140 @@
+{
+ "dur": 18.727,
+ "cues": [
+  {
+   "t": 0.3,
+   "name": "hum_loop",
+   "gain": 0.1
+  },
+  {
+   "t": 1.2,
+   "name": "hum_loop",
+   "gain": 0.1
+  },
+  {
+   "t": 2.1,
+   "name": "hum_loop",
+   "gain": 0.1
+  },
+  {
+   "t": 3,
+   "name": "hum_loop",
+   "gain": 0.1
+  },
+  {
+   "t": 3.9,
+   "name": "hum_loop",
+   "gain": 0.1
+  },
+  {
+   "t": 4.8,
+   "name": "hum_loop",
+   "gain": 0.1
+  },
+  {
+   "t": 0.3,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 1.2,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 2.1,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 3,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 3.9,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 4.8,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 5.719,
+   "name": "chime",
+   "gain": 0.35
+  },
+  {
+   "t": 6.614,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 7.607,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 10.227,
+   "name": "creak",
+   "gain": 0.35
+  },
+  {
+   "t": 12.007,
+   "name": "fire_loop",
+   "gain": 0.3
+  },
+  {
+   "t": 12.207,
+   "name": "swell",
+   "gain": 0.3
+  },
+  {
+   "t": 14.762,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 14.862,
+   "name": "scrape",
+   "gain": 0.3
+  },
+  {
+   "t": 15.177,
+   "name": "swell",
+   "gain": 0.3
+  },
+  {
+   "t": 17.057,
+   "name": "heartbeat",
+   "gain": 0.3
+  },
+  {
+   "t": 16.127,
+   "name": "whoosh",
+   "gain": 0.5
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 7.314,
+   "name": "city_loop",
+   "gain": 0.3
+  },
+  {
+   "start": 6.514,
+   "end": 15.462000000000002,
+   "name": "rain_loop",
+   "gain": 0.35
+  },
+  {
+   "start": 14.662,
+   "end": 19.527,
+   "name": "crowd_loop",
+   "gain": 0.3
+  }
+ ]
+}
