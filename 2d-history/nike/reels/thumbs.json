@@ -1,0 +1,197 @@
+[
+ {
+  "id": 1,
+  "frame": 228,
+  "hx": 1300,
+  "hy": 600,
+  "z": 1.0,
+  "lines": [
+   "THE WAFFLE",
+   "IRON"
+  ],
+  "hi": 1,
+  "acc": "#ff8a3a"
+ },
+ {
+  "id": 2,
+  "frame": 391,
+  "hx": 525,
+  "hy": 600,
+  "z": 1.0,
+  "lines": [
+   "THE MADE-UP",
+   "COMPANY"
+  ],
+  "hi": 1,
+  "acc": "#ff8a3a"
+ },
+ {
+  "id": 3,
+  "frame": 363,
+  "hx": 900,
+  "hy": 600,
+  "z": 1.0,
+  "lines": [
+   "SOLD FROM A",
+   "CAR TRUNK"
+  ],
+  "hi": 1,
+  "acc": "#ff8a3a"
+ },
+ {
+  "id": 4,
+  "frame": 285,
+  "hx": 1450,
+  "hy": 600,
+  "z": 1.0,
+  "lines": [
+   "THE LOGO COST",
+   "$35"
+  ],
+  "hi": 1,
+  "acc": "#ff8a3a"
+ },
+ {
+  "id": 5,
+  "frame": 279,
+  "hx": 1100,
+  "hy": 600,
+  "z": 1.0,
+  "lines": [
+   "ALMOST CALLED",
+   "DIMENSION SIX"
+  ],
+  "hi": 1,
+  "acc": "#ff8a3a"
+ },
+ {
+  "id": 6,
+  "frame": 256,
+  "hx": 750,
+  "hy": 600,
+  "z": 1.0,
+  "lines": [
+   "SAVED BY",
+   "JAPAN"
+  ],
+  "hi": 1,
+  "acc": "#ff8a3a"
+ },
+ {
+  "id": 7,
+  "frame": 316,
+  "hx": 930,
+  "hy": 600,
+  "z": 1.0,
+  "lines": [
+   "AIR IN",
+   "A SHOE"
+  ],
+  "hi": 1,
+  "acc": "#ff8a3a"
+ },
+ {
+  "id": 8,
+  "frame": 349,
+  "hx": 900,
+  "hy": 600,
+  "z": 1.0,
+  "lines": [
+   "NO",
+   "FACTORIES"
+  ],
+  "hi": 1,
+  "acc": "#ff8a3a"
+ },
+ {
+  "id": 9,
+  "frame": 453,
+  "hx": 1290,
+  "hy": 600,
+  "z": 1.0,
+  "lines": [
+   "JORDAN WANTED",
+   "ADIDAS"
+  ],
+  "hi": 1,
+  "acc": "#ff8a3a"
+ },
+ {
+  "id": 10,
+  "frame": 398,
+  "hx": 900,
+  "hy": 600,
+  "z": 1.0,
+  "lines": [
+   "BANNED?",
+   "MYTH CHECK"
+  ],
+  "hi": 1,
+  "acc": "#e05a3a"
+ },
+ {
+  "id": 11,
+  "frame": 297,
+  "hx": 750,
+  "hy": 600,
+  "z": 1.0,
+  "lines": [
+   "JUST DO IT",
+   "DARK ORIGIN"
+  ],
+  "hi": 1,
+  "acc": "#ff8a3a"
+ },
+ {
+  "id": 12,
+  "frame": 566,
+  "hx": 955,
+  "hy": 600,
+  "z": 1.0,
+  "lines": [
+   "THE SWEATSHOP",
+   "SCANDAL"
+  ],
+  "hi": 1,
+  "acc": "#e05a3a"
+ },
+ {
+  "id": 13,
+  "frame": 90,
+  "hx": 760,
+  "hy": 600,
+  "z": 1.0,
+  "lines": [
+   "THEY BROKE",
+   "THE RULES"
+  ],
+  "hi": 1,
+  "acc": "#ff8a3a"
+ },
+ {
+  "id": 14,
+  "frame": 633,
+  "hx": 940,
+  "hy": 600,
+  "z": 1.0,
+  "lines": [
+   "HOW NIKE",
+   "STUMBLED"
+  ],
+  "hi": 1,
+  "acc": "#e05a3a"
+ },
+ {
+  "id": 15,
+  "frame": 300,
+  "hx": 860,
+  "hy": 600,
+  "z": 1.0,
+  "lines": [
+   "THE INTERN",
+   "CAME BACK"
+  ],
+  "hi": 1,
+  "acc": "#ff8a3a"
+ }
+]

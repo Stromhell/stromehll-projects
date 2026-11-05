@@ -1,0 +1,247 @@
+{
+ "video": "Nike (2D)",
+ "prefix": "NK",
+ "status": "ready to book (Pushpam OK 5 Nov 20:23 UTC)",
+ "made": "2026-11-05",
+ "notes": [
+  "Full video is split in full_parts/: gunzip part00.gz, then cat NK_full.part00 NK_full.part0[1-9] NK_full.part1* > nike_full.mp4 and check NK_full.md5.",
+  "IG parts post on 4 consecutive days in order; each ends with 'watch part N+1 on this page', the last with the YouTube card.",
+  "Not on Drive yet; the 'Sync missed files to Drive' thread is uploading."
+ ],
+ "full_video": {
+  "file": "/mnt/project-files/2d-history/nike/launch/full_parts/ (join to nike_full.mp4)",
+  "seconds": 532.7,
+  "title": "How a Waffle Iron Built Nike",
+  "title_description_file": "/mnt/project-files/2d-history/nike/launch/Nike_Title_Description.txt",
+  "thumbnail": "/mnt/project-files/2d-history/nike/launch/Nike_Thumbnail_v1.jpg",
+  "platform": "YouTube"
+ },
+ "reels": [
+  {
+   "order": 1,
+   "file": "/mnt/project-files/2d-history/nike/launch/reels/NK_Reel_01.mp4",
+   "cover": "/mnt/project-files/2d-history/nike/launch/reel_covers/NK_Reel_01_thumb.jpg",
+   "seconds": 21.7,
+   "title": "The Waffle Iron That Started Nike",
+   "caption": "In 1971 Bill Bowerman poured rubber into his wife's waffle iron. It never made waffles again, but its grid became Nike's waffle sole.\nWatch the full video on our YouTube channel.\n#Nike #History #Business #Animation #HistoryReels",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 2,
+   "file": "/mnt/project-files/2d-history/nike/launch/reels/NK_Reel_02.mp4",
+   "cover": "/mnt/project-files/2d-history/nike/launch/reel_covers/NK_Reel_02_thumb.jpg",
+   "seconds": 29.7,
+   "title": "He Made Up a Company on the Spot",
+   "caption": "Phil Knight walked into Onitsuka in Kobe with no company. Asked who he represented, he invented Blue Ribbon Sports.\nWatch the full video on our YouTube channel.\n#Nike #History #Business #Animation #HistoryReels",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 3,
+   "file": "/mnt/project-files/2d-history/nike/launch/reels/NK_Reel_03.mp4",
+   "cover": "/mnt/project-files/2d-history/nike/launch/reel_covers/NK_Reel_03_thumb.jpg",
+   "seconds": 26.7,
+   "title": "Nike Started in a Car Trunk",
+   "caption": "$500 each from Knight and Bowerman, then shoes sold from a car trunk at track meets: about 1,300 pairs in year one.\nWatch the full video on our YouTube channel.\n#Nike #History #Business #Animation #HistoryReels",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 4,
+   "file": "/mnt/project-files/2d-history/nike/launch/reels/NK_Reel_04.mp4",
+   "cover": "/mnt/project-files/2d-history/nike/launch/reel_covers/NK_Reel_04_thumb.jpg",
+   "seconds": 21.3,
+   "title": "The Nike Swoosh Cost $35",
+   "caption": "Design student Carolyn Davidson charged $2 an hour. Knight didn't love it. Years later he gave her a gold swoosh ring and shares.\nWatch the full video on our YouTube channel.\n#Nike #History #Business #Animation #HistoryReels",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 5,
+   "file": "/mnt/project-files/2d-history/nike/launch/reels/NK_Reel_05.mp4",
+   "cover": "/mnt/project-files/2d-history/nike/launch/reel_covers/NK_Reel_05_thumb.jpg",
+   "seconds": 21.5,
+   "title": "Nike Was Almost Called Dimension Six",
+   "caption": "Knight wanted 'Dimension Six'. Nobody else did. Then Jeff Johnson said a word came to him in a dream: Nike.\nWatch the full video on our YouTube channel.\n#Nike #History #Business #Animation #HistoryReels",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 6,
+   "file": "/mnt/project-files/2d-history/nike/launch/reels/NK_Reel_06.mp4",
+   "cover": "/mnt/project-files/2d-history/nike/launch/reel_covers/NK_Reel_06_thumb.jpg",
+   "seconds": 21.9,
+   "title": "The Japanese Company That Saved Nike",
+   "caption": "American banks kept saying no. Trading company Nissho Iwai kept Nike afloat, and in 1974 it won the Onitsuka case.\nWatch the full video on our YouTube channel.\n#Nike #History #Business #Animation #HistoryReels",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 7,
+   "file": "/mnt/project-files/2d-history/nike/launch/reels/NK_Reel_07.mp4",
+   "cover": "/mnt/project-files/2d-history/nike/launch/reel_covers/NK_Reel_07_thumb.jpg",
+   "seconds": 26.3,
+   "title": "Everyone Said No to Air in a Shoe",
+   "caption": "Aerospace engineer Frank Rudy pitched air pockets in the sole. Others turned him down. Nike said yes in 1978.\nWatch the full video on our YouTube channel.\n#Nike #History #Business #Animation #HistoryReels",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 8,
+   "file": "/mnt/project-files/2d-history/nike/launch/reels/NK_Reel_08.mp4",
+   "cover": "/mnt/project-files/2d-history/nike/launch/reel_covers/NK_Reel_08_thumb.jpg",
+   "seconds": 26.9,
+   "title": "Nike Barely Makes Its Own Shoes",
+   "caption": "Nike designs; contract factories, mostly in Asia, make the shoes. What it really sells is the feeling of the swoosh.\nWatch the full video on our YouTube channel.\n#Nike #History #Business #Animation #HistoryReels",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 9,
+   "file": "/mnt/project-files/2d-history/nike/launch/reels/NK_Reel_09.mp4",
+   "cover": "/mnt/project-files/2d-history/nike/launch/reel_covers/NK_Reel_09_thumb.jpg",
+   "seconds": 31.8,
+   "title": "Michael Jordan Wanted Adidas",
+   "caption": "In 1984 Nike bet its basketball budget on one rookie. Jordan wanted Adidas, but his mother got him into the Nike meeting.\nWatch the full video on our YouTube channel.\n#Nike #History #Business #Animation #HistoryReels",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 10,
+   "file": "/mnt/project-files/2d-history/nike/launch/reels/NK_Reel_10.mp4",
+   "cover": "/mnt/project-files/2d-history/nike/launch/reel_covers/NK_Reel_10_thumb.jpg",
+   "seconds": 29.4,
+   "title": "Was Air Jordan Really Banned?",
+   "caption": "The league did warn about the red-and-black shoe and Nike made a 'banned' ad. A fine every game? No solid evidence.\nWatch the full video on our YouTube channel.\n#Nike #History #Business #Animation #HistoryReels",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 11,
+   "file": "/mnt/project-files/2d-history/nike/launch/reels/NK_Reel_11.mp4",
+   "cover": "/mnt/project-files/2d-history/nike/launch/reel_covers/NK_Reel_11_thumb.jpg",
+   "seconds": 22.0,
+   "title": "The Dark Origin of Just Do It",
+   "caption": "In 1988 Wieden+Kennedy wrote 'Just Do It'. Dan Wieden said he adapted it from the last words of Gary Gilmore.\nWatch the full video on our YouTube channel.\n#Nike #History #Business #Animation #HistoryReels",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 12,
+   "file": "/mnt/project-files/2d-history/nike/launch/reels/NK_Reel_12.mp4",
+   "cover": "/mnt/project-files/2d-history/nike/launch/reel_covers/NK_Reel_12_thumb.jpg",
+   "seconds": 37.0,
+   "title": "The Sweatshop Scandal That Hit Nike",
+   "caption": "Low wages, punishing hours and child labour in supplier factories. In 1998 Knight admitted the damage, and Nike changed its rules.\nWatch the full video on our YouTube channel.\n#Nike #History #Business #Animation #HistoryReels",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 13,
+   "file": "/mnt/project-files/2d-history/nike/launch/reels/NK_Reel_13.mp4",
+   "cover": "/mnt/project-files/2d-history/nike/launch/reel_covers/NK_Reel_13_thumb.jpg",
+   "seconds": 33.1,
+   "title": "The Shoes That Changed Running's Rules",
+   "caption": "Vaporfly shoes helped break so many records that officials wrote new rules. Then came Kaepernick and Kipchoge's 1:59:40.\nWatch the full video on our YouTube channel.\n#Nike #History #Business #Animation #HistoryReels",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 14,
+   "file": "/mnt/project-files/2d-history/nike/launch/reels/NK_Reel_14.mp4",
+   "cover": "/mnt/project-files/2d-history/nike/launch/reel_covers/NK_Reel_14_thumb.jpg",
+   "seconds": 41.3,
+   "title": "How Nike Lost the Runners",
+   "caption": "A direct-to-consumer bet, rivals on the shelves Nike left, On and Hoka winning runners, and a share price down more than half.\nWatch the full video on our YouTube channel.\n#Nike #History #Business #Animation #HistoryReels",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 15,
+   "file": "/mnt/project-files/2d-history/nike/launch/reels/NK_Reel_15.mp4",
+   "cover": "/mnt/project-files/2d-history/nike/launch/reel_covers/NK_Reel_15_thumb.jpg",
+   "seconds": 24.5,
+   "title": "The Intern Who Came Back as CEO",
+   "caption": "Elliott Hill joined Nike as an intern in 1988. In October 2024 he came back to run it, with a plan to win athletes back.\nWatch the full video on our YouTube channel.\n#Nike #History #Business #Animation #HistoryReels",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  }
+ ],
+ "ig_parts": [
+  {
+   "order": 1,
+   "file": "/mnt/project-files/2d-history/nike/launch/ig_parts/NK_Part_01.mp4",
+   "cover": "/mnt/project-files/2d-history/nike/launch/ig_covers/NK_Part_01_thumb.jpg",
+   "seconds": 147.7,
+   "title": "How a Waffle Iron Built Nike, Part 1 of 4: The Coach and the Runner",
+   "caption": "A ruined waffle iron, a coach who hated heavy shoes, a runner who invented a company on the spot, and shoes sold from a car trunk.\nPart 2 is on this page tomorrow.\n#Nike #History #Business #Animation",
+   "platforms": [
+    "Instagram"
+   ]
+  },
+  {
+   "order": 2,
+   "file": "/mnt/project-files/2d-history/nike/launch/ig_parts/NK_Part_02.mp4",
+   "cover": "/mnt/project-files/2d-history/nike/launch/ig_covers/NK_Part_02_thumb.jpg",
+   "seconds": 138.0,
+   "title": "How a Waffle Iron Built Nike, Part 2 of 4: The Swoosh and the Air",
+   "caption": "A $35 logo, a name from a dream, a Japanese lifeline, and the air sole everyone else turned down.\nPart 3 is on this page tomorrow.\n#Nike #History #Business #Animation",
+   "platforms": [
+    "Instagram"
+   ]
+  },
+  {
+   "order": 3,
+   "file": "/mnt/project-files/2d-history/nike/launch/ig_parts/NK_Part_03.mp4",
+   "cover": "/mnt/project-files/2d-history/nike/launch/ig_covers/NK_Part_03_thumb.jpg",
+   "seconds": 113.9,
+   "title": "How a Waffle Iron Built Nike, Part 3 of 4: Jordan and the Scandal",
+   "caption": "Michael Jordan wanted Adidas, the 'banned' shoe myth, Just Do It's dark origin, and the sweatshop scandal.\nPart 4 is on this page tomorrow.\n#Nike #History #Business #Animation",
+   "platforms": [
+    "Instagram"
+   ]
+  },
+  {
+   "order": 4,
+   "file": "/mnt/project-files/2d-history/nike/launch/ig_parts/NK_Part_04.mp4",
+   "cover": "/mnt/project-files/2d-history/nike/launch/ig_covers/NK_Part_04_thumb.jpg",
+   "seconds": 146.2,
+   "title": "How a Waffle Iron Built Nike, Part 4 of 4: The Stumble",
+   "caption": "LeBron, Vaporfly, Kaepernick, Kipchoge, then the stumble that brought an old intern back as CEO.\nWatch the full video on our YouTube channel.\n#Nike #History #Business #Animation",
+   "platforms": [
+    "Instagram"
+   ]
+  }
+ ]
+}
