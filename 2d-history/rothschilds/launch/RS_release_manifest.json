@@ -1,0 +1,236 @@
+{
+ "video": "Rothschilds (2D)",
+ "prefix": "RS",
+ "status": "ready to book",
+ "made": "2026-11-05",
+ "notes": [
+  "Google Drive token expired: the newest reels, part 3 and covers for reels 3 and 8 are NOT on Drive. Use the files in the project folder paths below.",
+  "Reels on Drive from 31 Oct are old versions; do not use them.",
+  "Order matters for IG parts: Part 1, 2, 3 on consecutive days, each ends with 'watch part N+1 on this page'."
+ ],
+ "full_video": {
+  "file": "/mnt/project-files/2d-history/rothschilds/launch/rothschilds_full.mp4",
+  "drive": "https://drive.google.com/file/d/14Rnk0tVryCgnVugOKBJlHzC2bjf-7XFt/view",
+  "title": "How One Family Became Richer Than Kings",
+  "title_description_file": "2d-history/rothschilds/launch/Rothschilds_Title_Description.txt",
+  "thumbnail": "/mnt/project-files/2d-history/rothschilds/launch/Rothschilds_Thumbnail_v1.jpg",
+  "platform": "YouTube"
+ },
+ "reels": [
+  {
+   "order": 1,
+   "file": "/mnt/project-files/2d-history/rothschilds/launch/reels/RS_Reel_01.mp4",
+   "cover": "/mnt/project-files/2d-history/rothschilds/launch/reel_covers/RS_Reel_01_thumb.jpg",
+   "seconds": 39.7,
+   "title": "Britain Needed £4 Million by Monday",
+   "caption": "1875: Britain had days to buy into the Suez Canal and Parliament wasn't sitting. Disraeli sent his secretary to one man, Lionel de Rothschild.\nWatch the full video on our YouTube channel.\n#Rothschilds #History #Banking #Animation #HistoryReels",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 2,
+   "file": "/mnt/project-files/2d-history/rothschilds/launch/reels/RS_Reel_02.mp4",
+   "cover": "/mnt/project-files/2d-history/rothschilds/launch/reel_covers/RS_Reel_02_thumb.jpg",
+   "seconds": 30.8,
+   "title": "Locked In One Street Every Night",
+   "caption": "Frankfurt, 1744. Jewish families were forced onto one walled street, the Judengasse, and locked in at night. The Rothschild story starts here.\nWatch the full video on our YouTube channel.\n#Rothschilds #History #Banking #Animation #HistoryReels",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 3,
+   "file": "/mnt/project-files/2d-history/rothschilds/launch/reels/RS_Reel_03.mp4",
+   "cover": "/mnt/project-files/2d-history/rothschilds/launch/reel_covers/RS_Reel_03_thumb.jpg",
+   "seconds": 39.8,
+   "title": "Banking in Napoleon's Wartime Europe",
+   "caption": "Napoleon's wars changed this family's fortunes. When the French arrived, Prince William fled, and Mayer Rothschild kept the prince's money safe and working.\nWatch the full video on our YouTube channel.\n#Rothschilds #History #Banking #Animation #HistoryReels",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 4,
+   "file": "/mnt/project-files/2d-history/rothschilds/launch/reels/RS_Reel_04.mp4",
+   "cover": "/mnt/project-files/2d-history/rothschilds/launch/reel_covers/RS_Reel_04_thumb.jpg",
+   "seconds": 31.7,
+   "title": "Five Sons, Five Capitals",
+   "caption": "Mayer Rothschild sent his sons to Frankfurt, Vienna, London, Naples and Paris. The family crest became five arrows tied together.\nWatch the full video on our YouTube channel.\n#Rothschilds #History #Banking #Animation #HistoryReels",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 5,
+   "file": "/mnt/project-files/2d-history/rothschilds/launch/reels/RS_Reel_05.mp4",
+   "cover": "/mnt/project-files/2d-history/rothschilds/launch/reel_covers/RS_Reel_05_thumb.jpg",
+   "seconds": 27.4,
+   "title": "The Letters Most of Europe Couldn't Read",
+   "caption": "The five brothers wrote constantly, sometimes in Yiddish written in Hebrew letters. News reached the others within days, and that was worth a fortune.\nWatch the full video on our YouTube channel.\n#Rothschilds #History #Banking #Animation #HistoryReels",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 6,
+   "file": "/mnt/project-files/2d-history/rothschilds/launch/reels/RS_Reel_06.mp4",
+   "cover": "/mnt/project-files/2d-history/rothschilds/launch/reel_covers/RS_Reel_06_thumb.jpg",
+   "seconds": 32.2,
+   "title": "The Waterloo Rothschild Story Is a Myth",
+   "caption": "The famous tale says Nathan faked a panic after Waterloo and bought bonds cheap. Historians call it a myth, spread later by pamphlets, some openly antisemitic.\nWatch the full video on our YouTube channel.\n#Rothschilds #History #Banking #Animation #HistoryReels",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 7,
+   "file": "/mnt/project-files/2d-history/rothschilds/launch/reels/RS_Reel_07.mp4",
+   "cover": "/mnt/project-files/2d-history/rothschilds/launch/reel_covers/RS_Reel_07_thumb.jpg",
+   "seconds": 22.0,
+   "title": "From the Ghetto to Barons",
+   "caption": "After 1815 the real money came slowly, from lending to governments. In 1822 the Austrian emperor made all five brothers barons.\nWatch the full video on our YouTube channel.\n#Rothschilds #History #Banking #Animation #HistoryReels",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 8,
+   "file": "/mnt/project-files/2d-history/rothschilds/launch/reels/RS_Reel_08.mp4",
+   "cover": "/mnt/project-files/2d-history/rothschilds/launch/reel_covers/RS_Reel_08_thumb.jpg",
+   "seconds": 21.2,
+   "title": "When Belgium Needed a Loan to Survive",
+   "caption": "When Belgium broke away in 1830, the new country needed money to get going, and Rothschild loans helped. Brazil borrowed too when it split from Portugal.\nWatch the full video on our YouTube channel.\n#Rothschilds #History #Banking #Animation #HistoryReels",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 9,
+   "file": "/mnt/project-files/2d-history/rothschilds/launch/reels/RS_Reel_09.mp4",
+   "cover": "/mnt/project-files/2d-history/rothschilds/launch/reel_covers/RS_Reel_09_thumb.jpg",
+   "seconds": 18.8,
+   "title": "Britain Paid Slave-Owners £15 Million in 1835",
+   "caption": "When Britain abolished slavery, it borrowed £15 million to compensate slave-owners, much of it through Nathan Rothschild's bank. The freed people got nothing.\nWatch the full video on our YouTube channel.\n#Rothschilds #History #Banking #Animation #HistoryReels",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 10,
+   "file": "/mnt/project-files/2d-history/rothschilds/launch/reels/RS_Reel_10.mp4",
+   "cover": "/mnt/project-files/2d-history/rothschilds/launch/reel_covers/RS_Reel_10_thumb.jpg",
+   "seconds": 14.4,
+   "title": "He Refused One Oath for 11 Years",
+   "caption": "Lionel de Rothschild would not swear a Christian oath, so he couldn't take his seat. In 1858 he became the first practising Jewish MP.\nWatch the full video on our YouTube channel.\n#Rothschilds #History #Banking #Animation #HistoryReels",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 11,
+   "file": "/mnt/project-files/2d-history/rothschilds/launch/reels/RS_Reel_11.mp4",
+   "cover": "/mnt/project-files/2d-history/rothschilds/launch/reel_covers/RS_Reel_11_thumb.jpg",
+   "seconds": 23.2,
+   "title": "When Empires Went Broke, They Called One Family",
+   "caption": "Austria's first big railway, the Habsburg finances, France's 5 billion franc payment to Germany: the Rothschilds raised the loans.\nWatch the full video on our YouTube channel.\n#Rothschilds #History #Banking #Animation #HistoryReels",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 12,
+   "file": "/mnt/project-files/2d-history/rothschilds/launch/reels/RS_Reel_12.mp4",
+   "cover": "/mnt/project-files/2d-history/rothschilds/launch/reel_covers/RS_Reel_12_thumb.jpg",
+   "seconds": 29.9,
+   "title": "The Worst-Timed Wine Purchase in History",
+   "caption": "The Rothschilds bought Mouton and Lafite just before a tiny insect, phylloxera, wiped out most of France's vineyards.\nWatch the full video on our YouTube channel.\n#Rothschilds #History #Banking #Animation #HistoryReels",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 13,
+   "file": "/mnt/project-files/2d-history/rothschilds/launch/reels/RS_Reel_13.mp4",
+   "cover": "/mnt/project-files/2d-history/rothschilds/launch/reel_covers/RS_Reel_13_thumb.jpg",
+   "seconds": 33.9,
+   "title": "Diamonds, Oil, Then Shell",
+   "caption": "They helped finance De Beers in 1888, took on Rockefeller in Baku oil, then sold out to Royal Dutch Shell for shares in 1911.\nWatch the full video on our YouTube channel.\n#Rothschilds #History #Banking #Animation #HistoryReels",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 14,
+   "file": "/mnt/project-files/2d-history/rothschilds/launch/reels/RS_Reel_14.mp4",
+   "cover": "/mnt/project-files/2d-history/rothschilds/launch/reel_covers/RS_Reel_14_thumb.jpg",
+   "seconds": 19.4,
+   "title": "He Drove Zebras to Buckingham Palace",
+   "caption": "Walter Rothschild filled a museum with hundreds of thousands of specimens, rode a giant tortoise, and drove a zebra carriage to the palace.\nWatch the full video on our YouTube channel.\n#Rothschilds #History #Banking #Animation #HistoryReels",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 15,
+   "file": "/mnt/project-files/2d-history/rothschilds/launch/reels/RS_Reel_15.mp4",
+   "cover": "/mnt/project-files/2d-history/rothschilds/launch/reel_covers/RS_Reel_15_thumb.jpg",
+   "seconds": 26.7,
+   "title": "Are the Rothschilds Worth Trillions?",
+   "caption": "No. The fortune was split among many heirs over two centuries. Today Rothschild & Co is an advisory bank, plus famous vineyards.\nWatch the full video on our YouTube channel.\n#Rothschilds #History #Banking #Animation #HistoryReels",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  }
+ ],
+ "ig_parts": [
+  {
+   "order": 1,
+   "file": "/mnt/project-files/2d-history/rothschilds/launch/ig_parts/RS_Part_01.mp4",
+   "cover": "/mnt/project-files/2d-history/rothschilds/launch/ig_covers/RS_Part_01_thumb.jpg",
+   "seconds": 178.4,
+   "title": "The Rothschilds, Part 1 of 3: From a Locked Street",
+   "caption": "Britain needed £4 million overnight in 1875, and one family had it. Part 1: the walled Judengasse in Frankfurt, Mayer Amschel Rothschild, and the five sons he sent across Europe.\nPart 2 is on this page tomorrow.\n#Rothschilds #History #Banking #Animation",
+   "platforms": [
+    "Instagram"
+   ]
+  },
+  {
+   "order": 2,
+   "file": "/mnt/project-files/2d-history/rothschilds/launch/ig_parts/RS_Part_02.mp4",
+   "cover": "/mnt/project-files/2d-history/rothschilds/launch/ig_covers/RS_Part_02_thumb.jpg",
+   "seconds": 152.6,
+   "title": "The Rothschilds, Part 2 of 3: Waterloo and the Loans",
+   "caption": "Part 2: the Waterloo story historians call a myth, then the loans of the 1800s, from railways and Belgium to the 1835 slavery compensation, the Crimean War and Suez.\nPart 3 is on this page tomorrow.\n#Rothschilds #History #Banking #Animation",
+   "platforms": [
+    "Instagram"
+   ]
+  },
+  {
+   "order": 3,
+   "file": "/mnt/project-files/2d-history/rothschilds/launch/ig_parts/RS_Part_03.mp4",
+   "cover": "/mnt/project-files/2d-history/rothschilds/launch/ig_covers/RS_Part_03_thumb.jpg",
+   "seconds": 167.2,
+   "title": "The Rothschilds, Part 3 of 3: Wine, Zebras and Myths",
+   "caption": "Part 3: vineyards, diamonds and Baku oil, Walter Rothschild's zebras, the antisemitic myths, what the Nazis seized, and why 'trillions' is fantasy.\nWatch the full video on our YouTube channel.\n#Rothschilds #History #Banking #Animation",
+   "platforms": [
+    "Instagram"
+   ]
+  }
+ ]
+}

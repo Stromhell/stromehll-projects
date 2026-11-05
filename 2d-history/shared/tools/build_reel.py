@@ -42,7 +42,7 @@ def wrap(d, txt, font, maxw):
 def outlined(d, xy, txt, font, fill, sw=8, anchor='mm'):
     d.text(xy, txt, font=font, fill=fill, anchor=anchor, stroke_width=sw, stroke_fill=(18, 13, 10))
 def kicker(d):
-    ls = wrap(d, R['kicker'], fK, 660); y = 320 - (len(ls) - 1) * 56; cx = 420
+    ls = wrap(d, R['kicker'], fK, 660); y = 340 - (len(ls) - 1) * 46; cx = 420
     for l in ls:
         tw = d.textlength(l, font=fK); d.rounded_rectangle([cx - tw / 2 - 30, y - 52, cx + tw / 2 + 30, y + 50], 18, fill=(232, 180, 74), outline=(18, 13, 10), width=6)
         d.text((cx, y), l, font=fK, fill=(18, 13, 10), anchor='mm'); y += 112
@@ -55,7 +55,7 @@ def frame(img16, bgimg, t_local, mode, zoom=1.0):
         ls = wrap(d, R['hook'].upper(), fH, 960); y = 1420 - (len(ls) - 1) * 50
         for l in ls: outlined(d, (540, y), l, fH, (255, 255, 255)); y += 100
     elif mode == 'clip':
-        cur = [i for i, w in enumerate(words) if w['s'] <= t_local < words[min(i + 1, len(words) - 1)]['s'] or (w['s'] <= t_local <= w['e'])]
+        cur = [i for i, w in enumerate(words) if w['s'] <= t_local]
         if cur:
             i = cur[-1]; g0 = i // 3 * 3; grp = words[g0:g0 + 3]
             if t_local <= grp[-1]['e'] + .6:
@@ -76,9 +76,11 @@ def frame(img16, bgimg, t_local, mode, zoom=1.0):
 cmd = ['ffmpeg', '-y', '-loglevel', 'error', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-s', f'{W}x{H}', '-r', str(FPS), '-i', '-', '-i', f'{B}/r{RID}/aud.wav', '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '20', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '192k', '-shortest', '-movflags', '+faststart', f'{B}/out/{PRE}_Reel_{RID:02d}.mp4']
 os.makedirs(f'{B}/out', exist_ok=True); p = subprocess.Popen(cmd, stdin=subprocess.PIPE)
 small = lambda im: im.resize((240, 135)).filter(ImageFilter.GaussianBlur(6)).crop((50, 0, 190, 135))
-first = Image.open(f'{B}/r{RID}/frames/' + frames[0]).convert('RGB'); last = Image.open(f'{B}/r{RID}/frames/' + frames[-1]).convert('RGB')
+H0 = int(.8 * FPS) if t0 > 0 else 0  # mid-act clips open on the previous shot's dissolve: hold the first clean frame
+first = Image.open(f'{B}/r{RID}/frames/' + frames[min(H0, len(frames) - 1)]).convert('RGB'); last = Image.open(f'{B}/r{RID}/frames/' + frames[-1]).convert('RGB')
 for k in range(int(hd * FPS)): p.stdin.write(frame(first, small(first), 0, 'hook', 1 + .06 * k / (hd * FPS)).tobytes())
 for k, fn in enumerate(frames[:int((t1 - t0) * FPS)]):
+    if k < H0: fn = frames[H0]
     im = Image.open(f'{B}/r{RID}/frames/' + fn).convert('RGB'); p.stdin.write(frame(im, small(im), k / FPS, 'clip').tobytes())
 for k in range(int(cd * FPS)): p.stdin.write(frame(last, small(last), 0, 'end').tobytes())
 p.stdin.close(); p.wait(); print('REEL', RID, f'{N / SR:.1f}s')
