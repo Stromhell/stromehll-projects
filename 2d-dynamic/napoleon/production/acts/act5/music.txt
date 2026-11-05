@@ -1,0 +1,1 @@
+0.0:tension,20.1:sad,25.3:hope,45.9:epic,57.3:tension

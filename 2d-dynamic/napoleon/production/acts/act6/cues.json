@@ -1,0 +1,213 @@
+{
+ "dur": 50.435,
+ "cues": [
+  {
+   "t": 0.2,
+   "name": "ocean_loop",
+   "gain": 0.4
+  },
+  {
+   "t": 0.3,
+   "name": "wind_loop",
+   "gain": 0.25
+  },
+  {
+   "t": 1.5,
+   "name": "creak",
+   "gain": 0.3
+  },
+  {
+   "t": 2.678,
+   "name": "swell",
+   "gain": 0.3
+  },
+  {
+   "t": 8.121,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 8.221,
+   "name": "wind_loop",
+   "gain": 0.25
+  },
+  {
+   "t": 8.321,
+   "name": "birds_loop",
+   "gain": 0.1
+  },
+  {
+   "t": 9.221,
+   "name": "dig_loop",
+   "gain": 0.3
+  },
+  {
+   "t": 11.056,
+   "name": "paper",
+   "gain": 0.25
+  },
+  {
+   "t": 14.311,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 14.411,
+   "name": "clock_loop",
+   "gain": 0.2
+  },
+  {
+   "t": 14.511,
+   "name": "ocean_loop",
+   "gain": 0.12
+  },
+  {
+   "t": 14.486,
+   "name": "bell",
+   "gain": 0.3
+  },
+  {
+   "t": 19.686,
+   "name": "breath",
+   "gain": 0.3
+  },
+  {
+   "t": 23.741,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 23.841,
+   "name": "drone",
+   "gain": 0.15
+  },
+  {
+   "t": 26.213,
+   "name": "paper",
+   "gain": 0.4
+  },
+  {
+   "t": 28.433,
+   "name": "whoosh_soft",
+   "gain": 0.3
+  },
+  {
+   "t": 31.173,
+   "name": "chime",
+   "gain": 0.3
+  },
+  {
+   "t": 33.208,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 33.308,
+   "name": "wind_loop",
+   "gain": 0.35
+  },
+  {
+   "t": 33.408,
+   "name": "drone",
+   "gain": 0.2
+  },
+  {
+   "t": 35.676,
+   "name": "thud",
+   "gain": 0.4
+  },
+  {
+   "t": 39.591,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 39.691,
+   "name": "ocean_loop",
+   "gain": 0.25
+  },
+  {
+   "t": 39.791,
+   "name": "wind_loop",
+   "gain": 0.2
+  },
+  {
+   "t": 44.245,
+   "name": "drum",
+   "gain": 0.3
+  },
+  {
+   "t": 48.265,
+   "name": "swell",
+   "gain": 0.4
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 8.821000000000002,
+   "name": "ocean_loop",
+   "gain": 0.4
+  },
+  {
+   "start": 0,
+   "end": 8.821000000000002,
+   "name": "wind_loop",
+   "gain": 0.25
+  },
+  {
+   "start": 8.021,
+   "end": 15.011000000000001,
+   "name": "wind_loop",
+   "gain": 0.25
+  },
+  {
+   "start": 8.021,
+   "end": 15.011000000000001,
+   "name": "birds_loop",
+   "gain": 0.1
+  },
+  {
+   "start": 14.211,
+   "end": 24.441,
+   "name": "clock_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 14.211,
+   "end": 24.441,
+   "name": "ocean_loop",
+   "gain": 0.12
+  },
+  {
+   "start": 23.641,
+   "end": 33.907999999999994,
+   "name": "drone",
+   "gain": 0.15
+  },
+  {
+   "start": 33.108,
+   "end": 40.291,
+   "name": "wind_loop",
+   "gain": 0.35
+  },
+  {
+   "start": 33.108,
+   "end": 40.291,
+   "name": "drone",
+   "gain": 0.2
+  },
+  {
+   "start": 39.491,
+   "end": 51.235,
+   "name": "ocean_loop",
+   "gain": 0.25
+  },
+  {
+   "start": 39.491,
+   "end": 51.235,
+   "name": "wind_loop",
+   "gain": 0.2
+  }
+ ]
+}

@@ -44,6 +44,9 @@ window.SHOTS = [
         S.npLabel(c, 'LEIPZIG', LEIP[0], LEIP[1] + 40, seg(lt, Sh.tJ, Sh.tJ + .5), 30, '#b82a22'); return; }
       VP.drawSet(c, 'plain'); const L = DUSK(lt), f = k => { const t = lt - Sh.tL - k * .5; return t < 0 ? -1 : t % 1.8; };
       c.fillStyle = '#6a5a5a'; for (let k = 0; k < 12; k++) c.fillRect(480 + k * 30, 300 - (k % 3) * 14, 26, 40 + (k % 3) * 14); c.fillRect(620, 220, 16, 120); c.beginPath(); c.moveTo(614, 222); c.lineTo(628, 186); c.lineTo(642, 222); c.fill();
+      // QA r1: half a million men - massed ranks on both sides and advancing lines (was two lone soldiers)
+      [[60, 430, '#2a3a8a', 1], [740, 430, '#3a5a3a', -1], [120, 470, '#2a3a8a', 1], [700, 470, '#e8e4da', -1]].forEach(([x0, y0, col, d], b) => { for (let r = 0; r < 3; r++) for (let k = 0; k < 16; k++) { const x = x0 + k * 26 + r * 9 + Math.sin(lt * 2 + k + b) * 1.2, y = y0 + r * 9, sc = .8 + (y0 - 430) / 100;
+        c.fillStyle = col; c.fillRect(x - 3 * sc, y - 14 * sc, 6 * sc, 12 * sc); c.fillStyle = '#e8d8c0'; c.beginPath(); c.arc(x, y - 17 * sc, 2.6 * sc, 0, TAU); c.fill(); c.fillStyle = '#1e1e24'; c.fillRect(x - 3 * sc, y - 22 * sc, 6 * sc, 3 * sc); c.strokeStyle = '#3a3a3a'; c.lineWidth = 1; c.beginPath(); c.moveTo(x + 3 * sc * d, y - 8 * sc); c.lineTo(x + 3 * sc * d, y - 26 * sc); c.stroke(); } });
       S.npSmoke(c, lt, 0, 280, 1280, 160, .45, 21);
       for (let k = 0; k < 4; k++) S.npCannon(c, 150 + k * 300, 560 + (k % 2) * 40, .9, k < 2 ? 1 : -1, f(k));
       fig(c, C.FR, 300, 620, 30, pose(lt, 1, { face: 1, holdN: musket(c, -.2) }), lt, 1, L, { look: [.6, 0] }); fig(c, C.RUS, 980, 620, 30, pose(lt, 2, { face: -1, holdN: musket(c, -.2) }), lt, 2, L, { look: [-.6, 0] }); },
@@ -54,7 +57,7 @@ window.SHOTS = [
   { set: 'sz_palace', cam: { z: [1.08, 1.18], x: [600, 620], y: [430, 440], ease: E.io }, bed: [['clock_loop', .25]],
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tR = at(Sh, 'refusing', 3.5); Sh.tG = at(Sh, 'gave up', 6); },
     draw: (c, lt, u, Sh) => { const L = GREY(lt), w = seg(lt, Sh.tG, Sh.tG + 1);
-      c.fillStyle = '#4a3020'; c.fillRect(300, 470, 74, 10); c.fillRect(306, 480, 8, 160); c.fillRect(362, 480, 8, 160); c.fillRect(300, 380, 10, 100);
+      S.contact(c, 337, 652, 50, .35); c.fillStyle = '#4a3020'; c.fillRect(296, 584, 82, 10); c.fillRect(302, 594, 8, 58); c.fillRect(364, 594, 8, 58); c.fillRect(296, 474, 10, 120); c.fillRect(296, 474, 24, 8); c.fillStyle = '#7a1e24'; c.fillRect(306, 486, 10, 96);
       fig(c, C.NAP, 350, 650, 40, Object.assign(VP.sit(C.NAP, lt * .3, 6, { seat: .1 }), { face: 1, shN: 50 + 10 * w, elN: 70, holdN: wr => { c.strokeStyle = '#f0f0f0'; c.lineWidth = 2; c.beginPath(); c.moveTo(wr[0], wr[1]); c.lineTo(wr[0] + 10, wr[1] - 22); c.stroke(); } }), lt, 0, L, { look: [.5, .7], worry: .8 });
       c.fillStyle = '#5a3a24'; c.fillRect(400, 560, 240, 16); c.fillRect(414, 574, 12, 80); c.fillRect(612, 574, 12, 80); c.fillStyle = '#f0e8d0'; c.fillRect(430, 550, 70, 10);
       fig(c, C.MARSHAL, 900, 640, 40, pose(lt, 1, { face: 1, shN: -4, elN: 20 }), lt, 1, L, { look: [.8, 0] }); fig(c, C.MARSHAL2, 1020, 650, 40, pose(lt, 2, { face: 1, shN: -6, elN: 110, shF: -6, elF: 110 }), lt, 2, L, { look: [.8, .2] }); },
@@ -75,9 +78,9 @@ window.SHOTS = [
   { set: 'parley', cam: (lt, u, Sh) => ({ z: [lerp(1.0, 1.25, E.io(seg(lt, Sh.tW, Sh.dur)))], x: [lerp(640, 700, E.io(seg(lt, Sh.tW, Sh.dur)))], y: [lerp(400, 450, E.io(seg(lt, Sh.tW, Sh.dur)))] }), bed: [['wind_loop', .2], ['tension', .25]],
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tB = at(Sh, 'blocked', 5); Sh.tW = at(Sh, 'walked', 8); Sh.tO = at(Sh, 'opened', 10); Sh.tH = at(Sh, 'here I am', Sh.dur - 1.5); },
     draw: (c, lt, u, Sh) => { const L = SUN(lt), aim = seg(lt, Sh.tB - .5, Sh.tB + .3), o = E.io(seg(lt, Sh.tO, Sh.tO + .8));
-      [ROYAL, ROYAL2, ROYAL, ROYAL2, ROYAL].forEach((ch, k) => fig(c, ch, 880 + k * 88, 600 + (k % 2) * 16, 34, pose(lt, k, { face: -1, shN: lerp(10, 85, aim), elN: lerp(30, 0, aim), shF: lerp(10, 80, aim), elF: lerp(20, 10, aim), holdN: musket(c, lerp(-1.3, 0, aim)) }), lt, k, L, { look: [-.6, 0], worry: o }));
+      [ROYAL, ROYAL2, ROYAL, ROYAL2, ROYAL].forEach((ch, k) => fig(c, ch, 930 + k * 80, 600 + (k % 2) * 16, 34, pose(lt, k, { face: -1, shN: lerp(10, 85, aim), elN: lerp(30, 0, aim), shF: lerp(10, 80, aim), elF: lerp(20, 10, aim), holdN: musket(c, lerp(-1.3, 0, aim)) }), lt, k, L, { look: [-.6, 0], worry: o }));
       [C.FR, C.GUARD, C.FR2].forEach((ch, k) => fig(c, ch, 80 + k * 70, 590 + (k % 2) * 14, 28, pose(lt, k + 5, { face: 1, holdN: musket(c, -1.3) }), lt, k + 5, L, { look: [.6, 0] }));
-      const w = seg(lt, Sh.tW - .5, Sh.tO); fig(c, C.NAPG, lerp(330, 640, E.io(w)), 620, 38, w > 0 && w < 1 ? walk(lt, 0, { face: 1 }) : pose(lt, 0, { face: 1, shN: lerp(-6, 45, o), elN: lerp(110, 10, o), shF: lerp(-6, -35, o), elF: lerp(110, 10, o) }), lt, 0, L, { look: [.7, 0] }); },
+      const w = seg(lt, Sh.tW - .5, Sh.tO); fig(c, C.NAPG, lerp(330, 580, E.io(w)), 620, 38, w > 0 && w < 1 ? walk(lt, 0, { face: 1 }) : pose(lt, 0, { face: 1, shN: lerp(-6, 45, o), elN: lerp(110, 10, o), shF: lerp(-6, -35, o), elF: lerp(110, 10, o) }), lt, 0, L, { look: [.7, 0] }); },
     over: [(c, lt) => K.dateTag(c, 'LAFFREY · 7 MARCH 1815', lt, { at: .4, y: 100 }), (c, lt, u, Sh) => K.badge(c, 'ABOUT 1,000 MEN', lt, { at: 2, until: Sh.tB }), (c, lt, u, Sh) => K.card(c, '"IF ANY OF YOU WANTS TO KILL HIS EMPEROR, HERE I AM."', lt, { at: Sh.tO + 1.2, x: 900, y: 250, px: 40, rot: -1 })],
     sfx: [[.2, 'wind_loop', .2], [.3, 'tension', .25], ['blocked', 'clank', .4], ['walked', 'footsteps', .35], ['opened', 'heartbeat', .5], ['here I am', 'heartbeat', .5]] },
 
