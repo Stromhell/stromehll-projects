@@ -5,6 +5,19 @@ const CIV = ['civil1', 'civil2', 'civil3', 'civil4', 'dress1', 'dress2', 'suit',
 const HAIR = [0x2b1e16, 0x5a3a22, 0x9a9a9a, 0x8a6a3a];
 const civ = (i, o = {}) => people.person({ outfit: CIV[i % 8], seed: 2100 + i, hair: HAIR[i % 4], mood: 'worried', ...o });
 
+// clock face with one clean rim: the face disc sits inside a torus that stands proud of it, ticks and hands float just in front
+function clockFace() {
+  const g = new THREE.Group();
+  g.add(core.cyl(.5, .5, .06, 0xf2eee4, { rot: [P / 2, 0, 0], seg: 48, noOutline: true }));
+  g.add(core.mesh(new THREE.TorusGeometry(.53, .045, 10, 48), 0x3a2a1a, { pos: [0, 0, .02], noOutline: true }));
+  for (let i = 0; i < 12; i++) { const a = i / 12 * P * 2; const tk = core.box(i % 3 ? .025 : .045, i % 3 ? .06 : .1, .01, core.INK, { noOutline: true }); tk.position.set(Math.sin(a) * .42, Math.cos(a) * .42, .035); tk.rotation.z = -a; g.add(tk); }
+  const hh = core.box(.05, .26, .02, core.INK, { noOutline: true }); hh.geometry.translate(0, .13, 0); hh.position.z = .045; g.add(hh);
+  const mh = core.box(.035, .4, .02, core.INK, { noOutline: true }); mh.geometry.translate(0, .2, 0); mh.position.z = .06; g.add(mh);
+  g.add(core.cyl(.03, .03, .02, core.INK, { rot: [P / 2, 0, 0], pos: [0, 0, .07], seg: 12, noOutline: true }));
+  g.set = (h, m) => { hh.rotation.z = -(h % 12 + m / 60) / 12 * P * 2; mh.rotation.z = -m / 60 * P * 2; };
+  return g;
+}
+
 export const shots = {
   // wide of the airport with distant flashes
   '9.1': async k => {
@@ -41,20 +54,21 @@ export const shots = {
   // memorial card with numbers
   '9.5': async k => {
     core.setEnv(k, 'interior', { noFog: true }); k.scene.background = new THREE.Color(0x15120e);
-    const c = props.card('', { h: 3.4, cw: 1200, ch: 1000, size: 80, bg: '#e8dcbc', draw: (x) => { x.fillStyle = '#2b1e16'; x.textAlign = 'center'; x.font = '90px Anton'; x.fillText('ENTEBBE · 4 JULY 1976', 600, 190); x.textAlign = 'center'; x.font = '64px Oswald'; [['HOSTAGES RESCUED', '102'], ['UGANDAN SOLDIERS KILLED', '~45'], ['COMMANDOS WOUNDED', '5'], ['COMMANDOS KILLED', '1']].forEach(([a, b], i) => { x.textAlign = 'left'; x.fillText(a, 120, 340 + i * 120); x.textAlign = 'right'; x.fillText(b, 1080, 340 + i * 120); }); } });
-    c.position.set(0, 1.7, 0); k.scene.add(c);
-    const cam = core.camMove(k.camera, { from: [0, 1.7, 7], to: [0, 1.7, 5.6], look: [0, 1.7, 0], fov: 40 });
+    const c = props.card('', { h: 3.0, cw: 1200, ch: 1000, size: 80, bg: '#e8dcbc', draw: (x) => { x.fillStyle = '#2b1e16'; x.textAlign = 'center'; x.font = '90px Anton'; x.fillText('ENTEBBE · 4 JULY 1976', 600, 190); x.textAlign = 'center'; x.font = '64px Oswald'; [['HOSTAGES RESCUED', '102'], ['UGANDAN SOLDIERS KILLED', '~45'], ['COMMANDOS WOUNDED', '5'], ['COMMANDOS KILLED', '1']].forEach(([a, b], i) => { x.textAlign = 'left'; x.fillText(a, 120, 340 + i * 120); x.textAlign = 'right'; x.fillText(b, 1080, 340 + i * 120); }); } });
+    c.position.set(0, 1.85, 0); k.scene.add(c);
+    // push-in capped at z 6.3 and the look point held below the card centre: the card bottom stays above ~y 840 px, clear of the burned-in captions
+    const cam = core.camMove(k.camera, { from: [0, 1.6, 7.4], to: [0, 1.6, 6.3], look: [0, 1.6, 0], fov: 40 });
     return (t, u) => cam(u, t);
   },
   // two clocks: 90 MIN and 30 MIN
   '9.6': async k => {
     core.setEnv(k, 'interior', { noFog: true }); k.scene.background = new THREE.Color(0x1d1712);
-    const cl = [[-1.6, 90, 'ON THE GROUND: ~90 MIN'], [1.6, 30, 'THE ASSAULT: ~30 MIN']].map(([x, m, s]) => { const g = new THREE.Group(); const c = props.clock(); c.scale.setScalar(2); g.add(c); const l = core.textPlane(s, .4, { size: 90, color: '#fff', stroke: '#2b1e16', strokeW: 14 }); l.position.y = -1.5; g.add(l); g.position.set(x, .3, 0); k.scene.add(g); g.c = c; g.m = m; return g; });
+    const cl = [[-1.6, 90, 'ON THE GROUND: ~90 MIN'], [1.6, 30, 'THE ASSAULT: ~30 MIN']].map(([x, m, s]) => { const g = new THREE.Group(); const c = clockFace(); c.scale.setScalar(2); g.add(c); const l = core.textPlane(s, .4, { size: 90, color: '#fff', stroke: '#2b1e16', strokeW: 14 }); l.position.y = -1.5; g.add(l); g.position.set(x, .3, 0); k.scene.add(g); g.c = c; g.m = m; return g; });
     const cam = core.camMove(k.camera, { from: [0, .3, 6.4], to: [0, .3, 5.6], look: [0, 0, 0], fov: 42 });
     return (t, u) => { cam(u, t); cl.forEach((g, i) => { popIn(g, t, .3 + i * 1.6); const m = core.ease(core.seg(t, .5 + i * 1.6, 2 + i * 1.6)) * g.m; g.c.set(m / 60, m % 60); }); };
   },
-  // map: Entebbe → Nairobi → Israel
-  '9.7': async k => mapShot(k, { center: [35, 14], span: [26, 32], labels: [['EGYPT', 30, 26], ['SUDAN', 30.5, 15], ['ETHIOPIA', 39.5, 8.5], ['KENYA', 38, .5], ['UGANDA', 32.3, 1.6], ['ISRAEL', 35.2, 31.5]], highlight: ['ISR', 'KEN', 'UGA'], cities: ['ENTEBBE', 'NAIROBI', 'TEL AVIV'], route: [[32.44, .05], [36.82, -1.29], [39, 4], [41.5, 12], [38.5, 19], [35.5, 25], [34.8, 32]], plane: true }),
+  // map: Entebbe → Nairobi → Israel (plane reaches lat 34 so Israel and the Tel Aviv pin sit on the paper; ETHIOPIA moved west of the route ribbon)
+  '9.7': async k => mapShot(k, { center: [35, 16], span: [26, 36], labels: [['EGYPT', 30, 26], ['SUDAN', 30.5, 15], ['ETHIOPIA', 37.6, 8.2], ['KENYA', 38, .5], ['UGANDA', 32.3, 1.6], ['ISRAEL', 38.3, 31.6]], highlight: ['ISR', 'KEN', 'UGA'], cities: ['ENTEBBE', 'NAIROBI', 'TEL AVIV'], route: [[32.44, .05], [36.82, -1.29], [39, 4], [41.5, 12], [38.5, 19], [35.5, 25], [34.8, 32]], plane: true }),
   // plane lands in the morning sun, crowd waiting
   '9.8': async k => {
     airstrip(k, { env: 'dawn', terminal: true });
@@ -82,7 +96,7 @@ export const shots = {
     return (t, u) => { cam(u, t); const hit = t > 3 && t < 3.3; a.state.arm = t > 2.6 && t < 3.4 ? 'raise' : 'folded'; tb.position.y = hit ? -.03 : 0; };
   },
   // dark map of Uganda and Kenya
-  '9.11': async k => mapShot(k, { center: [34.5, 1], span: [10, 9], dark: true, labels: [['UGANDA', 32.3, 1.6], ['KENYA', 37.8, .4], ['LAKE VICTORIA', 33, -1]], highlight: ['UGA', 'KEN'], cities: ['KAMPALA', 'NAIROBI'] }),
+  '9.11': async k => mapShot(k, { center: [34.5, .3], span: [10, 9], dark: true, labels: [['UGANDA', 32.3, 1.6], ['KENYA', 37.8, .4], ['LAKE VICTORIA', 33, -.6]], highlight: ['UGA', 'KEN'], cities: ['KAMPALA', 'NAIROBI'] }),
   // empty hospital bed, curtain drawn
   '9.12': async k => {
     interior(k, { w: 6, d: 5, h: 3, wall: 0xd8dcd4, floor: 0x9a9a90, lampI: 14, bg: 0x15120e, window: 0x9ab8d0 });
