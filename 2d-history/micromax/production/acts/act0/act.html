@@ -20,7 +20,7 @@ window.SHOTS = [
   { plate: 'market', cam: { z: [1.04, 1.12], x: [1280, 1300], y: [820, 800] }, bed: [['crowd_loop', .3], ['city_loop', .2]],
     figs: crowd,
     init: S => { const tO = A.at(S, 'outsold', 2), tM = A.at(S, 'Micromax', 5);
-      S.D.over = [(c, lt) => K.dateTag(c, '2014', lt, { at: .3 }), (c, lt) => K.card(c, 'OUTSOLD SAMSUNG IN INDIA', lt, { at: tO, x: 560, y: 560, px: 46, rot: -3 }), (c, lt) => { const a = pop(lt, tM, .5); if (a > 0) MX.banner(c, 1380, 470, 380 * a, OR, 'MICROMAX', { px: 56 }); }];
+      S.D.over = [(c, lt) => K.dateTag(c, '2014', lt, { at: .3 }), (c, lt) => K.card(c, 'OUTSOLD SAMSUNG IN INDIA', lt, { at: tO, x: 560, y: 430, px: 46, rot: -3 }), (c, lt) => { const a = pop(lt, tM, .5); if (a > 0) MX.banner(c, 1380, 400, 380 * a, OR, 'MICROMAX', { px: 56 }); }];
       S.D.sfx = [[.3, 'phone_ring', .2], [tO, 'pop', .35], [tM, 'whoosh', .35], [tM + .2, 'crowd_cheer', .25]]; } },
   // 0.02 a billboard with a star in a suit holding the phone (silhouette, no likeness); a cricket boundary board
   { draw: (c, lt, u, S) => { backdrop('market', .55, 6)(c);
