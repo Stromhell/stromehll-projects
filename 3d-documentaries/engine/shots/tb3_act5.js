@@ -37,6 +37,18 @@ function hazeBand(scene, { color = 0xc4ccd8, r = 400, h = 120, clear = .3, y = 0
   const band = real.m(new THREE.CylinderGeometry(r, r, h, 64, 1, true), m, { pos: [0, y + h / 2, 0], cast: false }); band.renderOrder = -1; scene.add(band); return band;
 }
 
+// handset held in the right hand (attached at the palm, measured in Head space after the 'phone' pose), with a coiled-look cord to the desk base (QA act5r3 #1-3; same approach as act 8)
+function heldHandset(k, p, opts, anchor, floorY = 0) {
+  const { real, scene } = k;
+  p.update(0, opts); p.updateMatrixWorld(true);
+  const palm = p.parts.bones.Head.worldToLocal((p.parts.bones.RightHandMiddle1 || p.parts.bones.RightHand).getWorldPosition(new THREE.Vector3())).multiplyScalar(p.parts.obj.scale.x);
+  const hs = C.attach(p, handsetShape(new THREE.MeshStandardMaterial({ color: 0x141414, roughness: .7, metalness: 0, envMapIntensity: .2 })), 'Head', [palm.x - .015, palm.y - .035, palm.z + .005], [-.5, 0, 0]);
+  const cord = new THREE.Mesh(new THREE.BufferGeometry(), real.std(0x111111, { rough: .6 })); cord.castShadow = true; scene.add(cord);
+  const end = new THREE.Vector3(), A = new THREE.Vector3(...anchor), mid = new THREE.Vector3();
+  return { hs, cord, tick() { scene.updateMatrixWorld(); hs.localToWorld(end.set(0, -.09, .015)); mid.copy(end).lerp(A, .5); mid.y = Math.max(floorY, Math.min(end.y, A.y) - .2);
+    cord.visible = hs.visible; cord.geometry.dispose(); cord.geometry = new THREE.TubeGeometry(new THREE.CatmullRomCurve3([end.clone(), mid.clone(), A.clone()]), 24, .006, 6, false); } };
+}
+
 export const shots = {
   // night in Tel Aviv: crane down the lit government building to one window
   '5.1': async k => {
@@ -161,11 +173,11 @@ export const shots = {
     const lamp = new THREE.SpotLight(0xffd8a8, 45, 7, .55, .6, 1.4); lamp.position.set(.8, 2.7, 1.2); lamp.target.position.set(0, 1.1, -.4); lamp.castShadow = true; scene.add(lamp, lamp.target);
     const ph = rotary(); ph.g.position.set(.45, top, .05); ph.g.rotation.y = P; scene.add(ph.g); ph.handset.visible = false;
     const b = await real.human({ id: 'tb_barlev', seed: 2501 }); real.put(scene, b, { pos: [0, 0, -.75], rot: 0, pose: 'sitDesk', arm: 'phone', seatH: .48, mood: 'calm' }); b.userData.driven = true;
-    C.attach(b, handsetShape(), 'Head', [-.095, -.01, .05], [-.5, 0, 0]);
+    const H = heldHandset(k, b, { pose: 'sitDesk', arm: 'phone', seatH: .48, mood: 'calm' }, [.45, top + .05, .14], top + .03);
     const ch = chair(); ch.position.set(0, 0, -.85); scene.add(ch);
     papers(scene, 4, -.6, .2, -.2, .2, top + .002, 11);
     const cam = C.dolly(camera, { pos: [1.5, 1.45, 2.3], look: [0, 1.25, -.6], fov: 40 }, { pos: [1.0, 1.45, 1.6], look: [0, 1.3, -.65], fov: 36 });
-    return (t, u) => { cam(u); b.update(t, { pose: 'sitDesk', arm: 'phone', seatH: .48, mood: 'calm', talk: Math.sin(t * 1.5) > -.2, look: -.2, nod: .2 }); k.anchor = C.headPos(b, .4); };
+    return (t, u) => { cam(u); b.update(t, { pose: 'sitDesk', arm: 'phone', seatH: .48, mood: 'calm', talk: Math.sin(t * 1.5) > -.2, look: -.2, nod: .2 }); H.tick(); k.anchor = C.headPos(b, .4); };
   },
   // "you might win the Nobel Peace Prize": a gold medal turns in a thought bubble
   '5.9': async k => {
@@ -174,11 +186,11 @@ export const shots = {
     const lamp = new THREE.SpotLight(0xffd8a8, 45, 7, .55, .6, 1.4); lamp.position.set(.8, 2.7, 1.2); lamp.target.position.set(0, 1.1, -.4); lamp.castShadow = true; scene.add(lamp, lamp.target);
     const ph = rotary(); ph.g.position.set(.45, top, .05); ph.g.rotation.y = P; scene.add(ph.g); ph.handset.visible = false;
     const b = await real.human({ id: 'tb_barlev', seed: 2501 }); real.put(scene, b, { pos: [0, 0, -.75], rot: 0, pose: 'sitDesk', arm: 'phone', seatH: .48, mood: 'happy' }); b.userData.driven = true;
-    C.attach(b, handsetShape(), 'Head', [-.095, -.01, .05], [-.5, 0, 0]);
+    const H = heldHandset(k, b, { pose: 'sitDesk', arm: 'phone', seatH: .48, mood: 'happy' }, [.45, top + .05, .14], top + .03);
     const ch = chair(); ch.position.set(0, 0, -.85); scene.add(ch);
     k.chipPos = [960, 940];
     const cam = C.dolly(camera, { pos: [-1.2, 1.5, 2.4], look: [.2, 1.5, -.6], fov: 42 }, { pos: [-.9, 1.5, 1.9], look: [.2, 1.55, -.6], fov: 40 });
-    return (t, u) => { cam(u); b.update(t, { pose: 'sitDesk', arm: 'phone', seatH: .48, mood: 'happy', talk: Math.sin(t * 1.5) > -.2, look: .2 });
+    return (t, u) => { cam(u); b.update(t, { pose: 'sitDesk', arm: 'phone', seatH: .48, mood: 'happy', talk: Math.sin(t * 1.5) > -.2, look: .2 }); H.tick();
       const s = C.ease(C.seg(t, .5, 1.1)); if (s <= 0) return;
       const o = k.overlay; const [hx, hy] = proj(camera, C.headPos(b, .3)); const bx = Math.min(1500, hx + 380), by = Math.max(280, hy - 160);
       o.save(); o.globalAlpha = s; o.fillStyle = 'rgba(250,246,236,.95)'; o.strokeStyle = '#1d1712'; o.lineWidth = 5;
@@ -207,11 +219,11 @@ export const shots = {
     const base = flagGeo.attributes.position.array.slice();
     const a = await real.human({ id: 'tb_amin', seed: 801 }); real.put(scene, a, { pos: [0, 0, -.9], rot: 0, arm: 'phone', mood: 'smug' }); a.userData.driven = true;
     C.attach(a, S2.cap(0x3a4428), 'Head', [0, .15, .01]);
-    const hs = handsetShape(); C.attach(a, hs, 'Head', [-.095, -.01, .05], [-.5, 0, 0]);
+    const H = heldHandset(k, a, { arm: 'phone', mood: 'smug' }, [.5, .81, .34]);
     const cam = C.dolly(camera, { pos: [1.6, 1.75, 2.8], look: [0, 1.6, -.9], fov: 38 }, { pos: [1.1, 1.75, 2.2], look: [0, 1.65, -.9], fov: 36 });
     return (t, u) => { cam(u);
       const pa = flagGeo.attributes.position; for (let i = 0; i < pa.count; i++) { const x = base[i * 3]; pa.array[i * 3 + 2] = Math.sin(x * 4 + t * 3) * .05 * (x + .65); } pa.needsUpdate = true;
-      const sh = t > 2 && t < 4.2; hs.visible = !sh; a.update(t, { arm: sh ? 'shrug' : 'phone', mood: 'smug', talk: Math.sin(t * 1.6) > -.1, look: sh ? 0 : .15, nod: sh ? .05 : .15 }); };
+      a.update(t, { arm: 'phone', mood: 'smug', talk: Math.sin(t * 1.6) > -.1, look: .15, nod: Math.sin(t * .9) > .3 ? .05 : .15 }); H.tick(); };   // handset stays at the ear all shot (no shrug: it would drop the held prop)
   },
   // families protest outside government offices; some push through the doors
   '5.11': async k => {
