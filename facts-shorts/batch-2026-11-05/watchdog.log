@@ -1,0 +1,42 @@
+20:33:56 watchdog start for /home/user/stromehll-projects/facts-shorts/batch-2026-11-05
+20:33:56 restart voice job (not running)
+20:45:56 voiced 32-wombat-cubes
+20:45:56 FAILED timing 32-wombat-cubes: word not found: hundred#1 in wombats poop cubes. It's the only animal known to do it. Scientists found the secret is inside the gut. The last part of a wombats intestine has stiff and stretchy sections that squeeze the poop into corners as it dries. A wombat can drop up to 100 cubes a night and it stacks them on rocks and logs to market's territory.
+20:47:57 render 32-wombat-cubes started
+20:48:57 voiced 33-oxford-aztecs
+20:48:57 FAILED timing 33-oxford-aztecs: word not found: ninety#1 in Oxford University is older than the Aztec Empire. Teaching at Oxford had started by 1096. The Aztecs didn't found their great city, Tenochtitlán, until around 1325, more than 200 years later, so students were already arguing in Oxford's halls long before the first Aztec temple went up, and Oxford is still teaching today.
+20:50:00 rendered 32-wombat-cubes (21.781333s, decode clean)
+20:50:09 qa sheet ready 32-wombat-cubes
+20:50:09 render 33-oxford-aztecs started
+20:52:09 voiced 34-taller-morning
+20:52:11 timed 34-taller-morning
+20:52:17 qa sheet ready 32-wombat-cubes
+20:52:19 rendered 33-oxford-aztecs (21.376000s, decode clean)
+20:52:24 qa sheet ready 33-oxford-aztecs
+20:52:24 render 32-wombat-cubes started
+20:53:26 rendered 32-wombat-cubes (21.781333s, decode clean)
+20:53:32 qa sheet ready 32-wombat-cubes
+20:53:38 qa sheet ready 33-oxford-aztecs
+20:53:38 render 34-taller-morning started
+20:54:45 qa sheet ready 32-wombat-cubes
+20:54:47 rendered 34-taller-morning (20.544000s, decode clean)
+20:54:53 qa sheet ready 34-taller-morning
+20:54:53 render 33-oxford-aztecs started
+20:55:58 qa sheet ready 34-taller-morning
+20:56:00 rendered 33-oxford-aztecs (21.376000s, decode clean)
+20:56:06 qa sheet ready 33-oxford-aztecs
+20:56:06 render 32-wombat-cubes started
+20:57:12 qa sheet ready 33-oxford-aztecs
+20:57:14 rendered 32-wombat-cubes (21.781333s, decode clean)
+20:57:21 qa sheet ready 32-wombat-cubes
+20:57:21 render 34-taller-morning started
+20:58:23 rendered 34-taller-morning (20.544000s, decode clean)
+20:58:29 qa sheet ready 34-taller-morning
+20:58:29 render 33-oxford-aztecs started
+20:59:35 qa sheet ready 34-taller-morning
+20:59:37 rendered 33-oxford-aztecs (21.376000s, decode clean)
+20:59:43 qa sheet ready 33-oxford-aztecs
+20:59:43 render 34-taller-morning started
+21:00:45 rendered 34-taller-morning (20.544000s, decode clean)
+21:00:51 qa sheet ready 34-taller-morning
+21:00:51 all voiced, render queue empty: watchdog exit

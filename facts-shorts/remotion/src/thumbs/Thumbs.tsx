@@ -52,6 +52,12 @@ import {StarsTwinkle} from '../shorts/30-stars-twinkle/StarsTwinkle';
 import {T as T30} from '../shorts/30-stars-twinkle/timing';
 import {Goosebumps} from '../shorts/31-goosebumps/Goosebumps';
 import {T as T31} from '../shorts/31-goosebumps/timing';
+import {WombatCubes} from '../shorts/32-wombat-cubes/WombatCubes';
+import {T as T32} from '../shorts/32-wombat-cubes/timing';
+import {OxfordAztecs} from '../shorts/33-oxford-aztecs/OxfordAztecs';
+import {T as T33} from '../shorts/33-oxford-aztecs/timing';
+import {TallerMorning} from '../shorts/34-taller-morning/TallerMorning';
+import {T as T34} from '../shorts/34-taller-morning/timing';
 
 // Shorts cover = a frozen hero frame of the short itself + a loud headline band on top.
 type Th = {id: string; C: React.FC; t: number; l1: string; l2: string; tag: string; bg: string; bg2: string; tagFill: string; srcY?: number; s?: number; dx?: number};
@@ -86,6 +92,9 @@ export const THUMBS: Th[] = [
   {id: '29everestmaunakea', C: EverestMaunaKea, t: T29.beats + 0.6, l1: 'EVEREST IS', l2: 'NOT THE TALLEST', tag: '10,000+ M', bg: '#3D8CF0', bg2: '#1F5FB8', tagFill: '#E5414A', srcY: 700},
   {id: '30starstwinkle', C: StarsTwinkle, t: T30.flickers + 0.5, l1: 'WHY STARS', l2: 'TWINKLE', tag: "BUT PLANETS DON'T", bg: '#2B3A6A', bg2: '#141A44', tagFill: '#E5414A', srcY: 560},
   {id: '31goosebumps', C: Goosebumps, t: T31.bigger + 0.5, l1: 'WHY WE GET', l2: 'GOOSEBUMPS', tag: 'FURRY ANCESTORS', bg: '#7A5CC8', bg2: '#4B3596', tagFill: '#E5414A', srcY: 680},
+  {id: '32wombatcubes', C: WombatCubes, t: T32.cubes + 0.7, l1: 'THIS ANIMAL', l2: 'POOPS CUBES', tag: 'WOMBATS!', bg: '#8BC34A', bg2: '#5E9E2A', tagFill: '#7A4A26', srcY: 760},
+  {id: '33oxfordaztecs', C: OxfordAztecs, t: 2.6, l1: 'OXFORD IS OLDER', l2: 'THAN THE AZTECS', tag: '1096 vs 1325', bg: '#E5414A', bg2: '#A8222B', tagFill: '#2C7BE5', srcY: 600},
+  {id: '34tallermorning', C: TallerMorning, t: 2.2, l1: "YOU'RE TALLER", l2: 'IN THE MORNING', tag: 'BY ABOUT 1 CM', bg: '#3D8CF0', bg2: '#1F5FB8', tagFill: '#E5414A', srcY: 620},
 ];
 
 const Txt: React.FC<{x: number; y: number; size: number; color?: string; rot?: number; children: React.ReactNode}> = ({x, y, size, color = '#fff', rot = 0, children}) => (

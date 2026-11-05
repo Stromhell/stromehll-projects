@@ -63,6 +63,12 @@ import {StarsTwinkle as C30StarsTwinkle} from './shorts/30-stars-twinkle/StarsTw
 import {T as T30StarsTwinkle} from './shorts/30-stars-twinkle/timing';
 import {Goosebumps as C31Goosebumps} from './shorts/31-goosebumps/Goosebumps';
 import {T as T31Goosebumps} from './shorts/31-goosebumps/timing';
+import {WombatCubes as C32WombatCubes} from './shorts/32-wombat-cubes/WombatCubes';
+import {T as T32WombatCubes} from './shorts/32-wombat-cubes/timing';
+import {OxfordAztecs as C33OxfordAztecs} from './shorts/33-oxford-aztecs/OxfordAztecs';
+import {T as T33OxfordAztecs} from './shorts/33-oxford-aztecs/timing';
+import {TallerMorning as C34TallerMorning} from './shorts/34-taller-morning/TallerMorning';
+import {T as T34TallerMorning} from './shorts/34-taller-morning/timing';
 import {THUMBS, ShortThumb} from './thumbs/Thumbs';
 export const RemotionRoot: React.FC = () => (
   <>
@@ -99,6 +105,9 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="S29everestmaunakea" component={C29EverestMaunaKea} width={1080} height={1920} fps={60} durationInFrames={Math.round(T29EverestMaunaKea.end * 60)} />
     <Composition id="S30starstwinkle" component={C30StarsTwinkle} width={1080} height={1920} fps={60} durationInFrames={Math.round(T30StarsTwinkle.end * 60)} />
     <Composition id="S31goosebumps" component={C31Goosebumps} width={1080} height={1920} fps={60} durationInFrames={Math.round(T31Goosebumps.end * 60)} />
+    <Composition id="S32wombatcubes" component={C32WombatCubes} width={1080} height={1920} fps={60} durationInFrames={Math.round(T32WombatCubes.end * 60)} />
+    <Composition id="S33oxfordaztecs" component={C33OxfordAztecs} width={1080} height={1920} fps={60} durationInFrames={Math.round(T33OxfordAztecs.end * 60)} />
+    <Composition id="S34tallermorning" component={C34TallerMorning} width={1080} height={1920} fps={60} durationInFrames={Math.round(T34TallerMorning.end * 60)} />
     {THUMBS.map((th) => <Composition key={th.id} id={`Th${th.id}`} component={ShortThumb} defaultProps={{id: th.id}} width={1080} height={1920} fps={60} durationInFrames={1800} />)}
   </>
 );
