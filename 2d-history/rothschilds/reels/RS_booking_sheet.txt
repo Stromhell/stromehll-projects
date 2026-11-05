@@ -4,7 +4,7 @@ Drive token expired: use project-folder files, not the old Drive reels.
 
 FULL VIDEO (YouTube): How One Family Became Richer Than Kings
   file: /mnt/project-files/2d-history/rothschilds/launch/rothschilds_full.mp4
-  thumbnail: /mnt/project-files/2d-history/rothschilds/launch/Rothschilds_Thumbnail_v1.jpg
+  thumbnail: /mnt/project-files/2d-history/rothschilds/launch/Rothschilds_Thumbnail_v2.jpg
   title/description/chapters: 2d-history/rothschilds/launch/Rothschilds_Title_Description.txt
 
 REELS (Instagram Reels + YouTube Shorts), in order:

@@ -44,7 +44,7 @@ window.SHOTS = [
       S.D.sfx = [[.4, 'whoosh_soft', .35], [S.tB, 'run_steps', .4], [S.tF, 'thud', .5]]; } },
   // 5 October 2024: Elliott Hill walks back through the campus gates; his 1988 intern badge
   { plate: 'campus', cam: { z: [1.1, 1.16], x: [1280, 1280], y: [860, 860] }, bed: [['birds_loop', .35]],
-    figs: [{ ...HILL, s: 1.9, y: 1400, mood: 'happy', walk: { x0: -200, x1: 760, t0: .4, dur: 3.6 } }],
+    figs: [{ ...HILL, s: 1.9, y: 1400, mood: 'happy', walk: { x0: -200, x1: 520, t0: .4, dur: 3.6 } }],
     over: [], init: S => { const tH = A.at(S, 'Elliott Hill', 2); const tI = A.at(S, 'intern', 4.5);
       S.D.over = [(c, lt) => K.dateTag(c, 'OCT 2024', lt, { at: .3 }), (c, lt) => K.title(c, 'ELLIOTT HILL', lt, { at: tH, x: 1340, y: 160, px: 80, fill: '#ffe8c8', sub: 'BACK AS CEO' }), (c, lt) => { const a = pop(lt, tI); if (a <= 0) return; c.save(); c.translate(1500, 560); c.rotate(.08); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(-150, -180, 320, 380); c.fillStyle = '#f4f0e6'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-160, -190, 320, 380); c.strokeRect(-160, -190, 320, 380); c.fillStyle = OR; c.fillRect(-160, -190, 320, 70); NK.swoosh(c, 0, -155, 80, '#fff'); c.fillStyle = '#c8b8a0'; c.fillRect(-70, -100, 140, 150); c.strokeRect(-70, -100, 140, 150); c.fillStyle = INK; c.font = '40px Anton'; c.textAlign = 'center'; c.fillText('INTERN', 0, 110); c.font = '34px Oswald'; c.fillText('1988', 0, 160); c.restore(); }, (c, lt) => K.card(c, '30+ YEARS AT NIKE', lt, { at: tI + 1.6, x: 1500, y: 880, px: 40, rot: -2 })];
       S.D.sfx = [[.4, 'footsteps', .4], [tH, 'chime', .4], [tI, 'pop', .4]]; } },

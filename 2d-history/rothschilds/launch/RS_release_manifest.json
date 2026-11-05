@@ -6,15 +6,17 @@
  "notes": [
   "Google Drive token expired: the newest reels, part 3 and covers for reels 3 and 8 are NOT on Drive. Use the files in the project folder paths below.",
   "Reels on Drive from 31 Oct are old versions; do not use them.",
-  "Order matters for IG parts: Part 1, 2, 3 on consecutive days, each ends with 'watch part N+1 on this page'."
+  "Order matters for IG parts: Part 1, 2, 3 on consecutive days, each ends with 'watch part N+1 on this page'.",
+  "5 Nov 19:30: all 15 reel covers re-made with THE ROTHSCHILDS on top (same file names); swap them into the booked posts."
  ],
  "full_video": {
   "file": "/mnt/project-files/2d-history/rothschilds/launch/rothschilds_full.mp4",
   "drive": "https://drive.google.com/file/d/14Rnk0tVryCgnVugOKBJlHzC2bjf-7XFt/view",
   "title": "How One Family Became Richer Than Kings",
   "title_description_file": "2d-history/rothschilds/launch/Rothschilds_Title_Description.txt",
-  "thumbnail": "/mnt/project-files/2d-history/rothschilds/launch/Rothschilds_Thumbnail_v1.jpg",
-  "platform": "YouTube"
+  "thumbnail": "/mnt/project-files/2d-history/rothschilds/launch/Rothschilds_Thumbnail_v2.jpg",
+  "platform": "YouTube",
+  "thumbnail_note": "v2 made with ElevenLabs (Pushpam 5 Nov); replaces v1"
  },
  "reels": [
   {

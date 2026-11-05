@@ -42,5 +42,10 @@ for s in json.load(open(SPEC)):
         else:
             d.text((W // 2 + 8, y + 10), line, font=f, fill=(0, 0, 0), anchor='mt', stroke_width=14, stroke_fill=(0, 0, 0))
             d.text((W // 2, y), line, font=f, fill=(255, 255, 255), anchor='mt', stroke_width=12, stroke_fill=(15, 12, 10)); y += hgt + 30
+    if s.get('tag') or os.environ.get('TAG'):
+        tg = s.get('tag') or os.environ['TAG']; ft = fit(d, tg, 760, 104)
+        tw = d.textlength(tg, font=ft); bx = Image.new('RGBA', (int(tw + 80), 150), (12, 10, 8, 215)); im.paste(bx, (int(W / 2 - tw / 2 - 40), 118), bx); d = ImageDraw.Draw(im)
+        d.text((W // 2 + 6, 140 + 8), tg, font=ft, fill=(0, 0, 0), anchor='mt', stroke_width=12, stroke_fill=(0, 0, 0))
+        d.text((W // 2, 140), tg, font=ft, fill=(255, 214, 64), anchor='mt', stroke_width=10, stroke_fill=(15, 12, 10))
     im.paste(LS, (820, 262), LS)
     im.save(f'{OUT}/{PRE}_Reel_{s["id"]:02d}_thumb.jpg', quality=92); print('THUMB', s['id'])
