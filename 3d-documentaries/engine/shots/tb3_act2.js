@@ -50,48 +50,130 @@ async function benghazi(k, o = {}) {
   return { jet };
 }
 
-// QA: stairs truck read blocky (flat window, flat disc wheels). Local detail pass added on top of sets.airstair.
-function detailStairsTruck(st) {
-  const real = C.real, m = real.m;
-  const dk = real.std(0x1b1d1f, { rough: .6, metal: .3 }), rub = real.std(0x0e0e0f, { rough: .95 }), alu = real.std(0xb9bcc0, { rough: .3, metal: .85 }), body = real.std(0xe8e4d8, { rough: .5 });
-  const bolt = real.std(0x9a9da0, { rough: .35, metal: .8 }), red = real.std(0x8a1414, { rough: .4, emissive: 0x401010, ei: .4 }), amber = real.std(0xffb030, { rough: .3, emissive: 0xffa020, ei: .5 });
-  const g = new THREE.Group(); st.add(g);
-  for (const sx of [-1, 1]) {
-    for (const z of [2.6, -2.6]) {
-      // wheel arch: half-shell + raised lip over the wheel, thick tyre ring, hub with bolts
-      g.add(m(new THREE.CylinderGeometry(.55, .55, .02, 28), dk, { pos: [sx * 1.156, .42, z], rot: [0, 0, P / 2] }));
-      g.add(m(new THREE.TorusGeometry(.56, .035, 8, 28, P), alu, { pos: [sx * 1.15, .42, z], rot: [0, P / 2, 0] }));
-      g.add(m(new THREE.TorusGeometry(.33, .1, 12, 32), rub, { pos: [sx * 1.0, .42, z], rot: [0, P / 2, 0] }));
-      g.add(m(new THREE.CylinderGeometry(.4, .4, .3, 32), rub, { pos: [sx * 1.0, .42, z], rot: [0, 0, P / 2] }));
-      g.add(m(new THREE.CylinderGeometry(.2, .2, .03, 24), bolt, { pos: [sx * 1.165, .42, z], rot: [0, 0, P / 2] }));
-      g.add(m(new THREE.CylinderGeometry(.07, .07, .05, 16), alu, { pos: [sx * 1.18, .42, z], rot: [0, 0, P / 2] }));
-      for (let i = 0; i < 6; i++) { const a = i * P / 3; g.add(m(new THREE.CylinderGeometry(.018, .018, .04, 8), alu, { pos: [sx * 1.18, .42 + Math.sin(a) * .13, z + Math.cos(a) * .13], rot: [0, 0, P / 2] })); }
-    }
-    // mudflap + door seams / handle on the cab, mirrors on arms
-    g.add(m(new THREE.BoxGeometry(.03, .22, .35), rub, { pos: [sx * 1.13, .3, 1.9] }));
-    g.add(m(new THREE.BoxGeometry(.012, 1.3, .015), dk, { pos: [sx * 1.108, 1.5, 3.5] }));
-    g.add(m(new THREE.BoxGeometry(.012, .015, 1.15), dk, { pos: [sx * 1.108, 1.0, 2.9] }));
-    g.add(m(new THREE.BoxGeometry(.03, .04, .14), alu, { pos: [sx * 1.12, 1.6, 2.5] }));
-    g.add(m(new THREE.BoxGeometry(.3, .02, .02), dk, { pos: [sx * 1.25, 2.1, 3.55] }));
-    g.add(real.rbox(.05, .26, .16, .02, dk, { pos: [sx * 1.4, 2.1, 3.55] }));
-    // side window frame
-    for (const [w, h, d, y, z] of [[.03, .035, 1.2, 2.17, 3.0], [.03, .035, 1.2, 1.63, 3.0], [.03, .6, .035, 1.9, 3.58], [.03, .6, .035, 1.9, 2.42]]) g.add(m(new THREE.BoxGeometry(w, h, d), dk, { pos: [sx * 1.11, y, z] }));
-    // front/rear lights, front indicators
-    g.add(real.rbox(.3, .14, .05, .02, amber, { pos: [sx * .98, .62, 3.96] }));
-    g.add(real.rbox(.16, .2, .05, .02, red, { pos: [sx * 1.02, .9, -3.66] }));
-  }
-  // windscreen frame + wiper + grille + bumper lip, roof beacon
-  for (const [w, h, y, x] of [[2.1, .05, 2.27, 0], [2.1, .05, 1.43, 0], [.05, .88, 1.85, -1.03], [.05, .88, 1.85, 1.03], [.05, .88, 1.85, 0]]) g.add(m(new THREE.BoxGeometry(w, h, .05), dk, { pos: [x, y, 3.92] }));
-  g.add(m(new THREE.BoxGeometry(.6, .02, .02), dk, { pos: [-.4, 1.5, 3.95], rot: [0, 0, .12] }));
-  g.add(real.rbox(1.0, .34, .06, .03, dk, { pos: [0, .95, 3.94] }));
-  for (let i = 0; i < 5; i++) g.add(m(new THREE.BoxGeometry(.9, .015, .02), alu, { pos: [0, .84 + i * .06, 3.98] }));
-  g.add(real.rbox(2.3, .12, .12, .04, alu, { pos: [0, .5, 4.02] }));
-  g.add(m(new THREE.CylinderGeometry(.08, .1, .1, 12), amber, { pos: [.7, 2.41, 3.0] }));
-  // slightly bevelled cab roof cap
-  g.add(real.rbox(2.2, .1, 1.9, .04, body, { pos: [0, 2.36, 3.0] }));
-  g.traverse(c => { if (c.isMesh) { c.castShadow = true; c.receiveShadow = true; } });
+// QA r2: the stock airstair read as a flat white box with black window slabs. A full shot-local stair truck instead, modelled
+// like act 4's ambulance: bevelled cab with see-through tinted glass (seats, dash, wheel inside), framed screen, wipers, grille slats,
+// chrome-ringed headlamps, bumper, door seams and handles, mirrors, beacon; a panelled chassis with a checker-plate deck, hatches,
+// stabiliser jacks, treaded tyres on dished hubs under arch lips; the stair itself with nosed treads, boxed stringers, posts and rails,
+// and a railed top platform. Same local frame and userData.top as sets.airstair so the walking paths are unchanged.
+function roadWheel(rad, w, mats) {
+  const g = new THREE.Group(); const m = C.real.m;
+  g.add(m(new THREE.CylinderGeometry(rad - .015, rad - .015, w, 36), mats.tyre, { rot: [0, 0, P / 2] }));
+  g.add(m(new THREE.TorusGeometry(rad - w * .32, w * .3, 10, 36), mats.tyre, { rot: [0, P / 2, 0] }));
+  for (let i = 0; i < 22; i++) { const a = i / 22 * P * 2; g.add(m(new THREE.BoxGeometry(w * .82, .032, .055), mats.tread, { pos: [0, Math.cos(a) * (rad - .012), Math.sin(a) * (rad - .012)], rot: [a, 0, 0] })); }
+  g.add(m(new THREE.CylinderGeometry(rad * .56, rad * .56, w * .96, 28), mats.hub, { rot: [0, 0, P / 2] }));
+  g.add(m(new THREE.CylinderGeometry(rad * .36, rad * .42, w * 1.02, 24), mats.hub, { rot: [0, 0, P / 2] }));
+  g.add(m(new THREE.CylinderGeometry(rad * .14, rad * .14, w * 1.1, 16), mats.metal, { rot: [0, 0, P / 2] }));
+  for (let i = 0; i < 5; i++) { const a = i / 5 * P * 2; g.add(m(new THREE.CylinderGeometry(.014, .014, w * 1.06, 8), mats.metal, { pos: [0, Math.cos(a) * rad * .26, Math.sin(a) * rad * .26], rot: [0, 0, P / 2] })); }
+  return g;
 }
-function stairsAt(jet, scene) { const d = jet.userData.doorL1; const st = sets.airstair(d.y + .02); st.position.set(d.x + .7 + 5.75, 0, d.z); detailStairsTruck(st); scene.add(st); return st; }
+async function stairTruck(h = 4.0) {
+  const g = new THREE.Group(); const r = C.real, m = r.m;
+  const grime = r.canvasTex(64, 256, (c, w, hh) => { const gr = c.createLinearGradient(0, 0, 0, hh); gr.addColorStop(0, '#f2efe6'); gr.addColorStop(.6, '#e4e0d4'); gr.addColorStop(1, '#a8a296'); c.fillStyle = gr; c.fillRect(0, 0, w, hh); });
+  const white = r.std(0xffffff, { rough: .42, mat: { map: grime } }), frame = r.std(0x26292c, { rough: .6, metal: .3 }), dark = r.std(0x18191b, { rough: .8 });
+  const chrome = r.std(0xc4c8cb, { metal: .9, rough: .22 }), rub = r.std(0x0e0e0f, { rough: .95 }), stripe = r.std(0x1f3f8a, { rough: .5 });
+  const glass = new THREE.MeshPhysicalMaterial({ color: 0x2c3c4a, roughness: .04, metalness: .35, transparent: true, opacity: .78, envMapIntensity: 2.2, clearcoat: 1 });
+  const seat = r.std(0x2a2a2e, { rough: .85 }), grey = r.std(0x6a6c70, { rough: .7, metal: .4 }), seam = r.std(0x3a3a38, { rough: .6 });
+  const plate = await r.pbr('metal_plate', { repeat: [2, 6], color: 0x8a8d92, metal: .85, rough: .45, noMap: true });
+  const tread = await r.pbr('rubber_tiles', { repeat: [.4, 3], color: 0x3a3c40, noMap: true, rough: .9 });
+  const len = h / Math.tan(38 * P / 180);
+  // ---- chassis: dark frame rail, panelled white body, checker-plate deck, side skirts with hatches, stripe ----
+  g.add(r.box(2.2, .26, 7.3, frame, { pos: [0, .42, 0] }));
+  g.add(r.rbox(2.3, .5, 6.0, .06, white, { pos: [0, .8, -.6] }));
+  g.add(m(new THREE.BoxGeometry(2.2, .04, 5.9), plate, { pos: [0, 1.07, -.6] }));
+  for (const sx of [1, -1]) {
+    g.add(r.box(.03, .14, 5.9, stripe, { pos: [sx * 1.155, .9, -.6] }));
+    for (const z of [-3.0, -1.8, -.4, .8]) g.add(r.box(.03, .46, .02, seam, { pos: [sx * 1.16, .8, z] }));
+    // hatch with recessed outline and latch
+    for (const [hh, d, y, z] of [[.02, .9, 1.0, -1.1], [.02, .9, .62, -1.1], [.4, .02, .81, -.66], [.4, .02, .81, -1.54]]) g.add(r.box(.03, hh, d, seam, { pos: [sx * 1.16, y, z] }));
+    g.add(r.box(.03, .05, .12, chrome, { pos: [sx * 1.165, .8, -.75] }));
+    // deck edge rail and kick plate
+    g.add(r.box(.05, .06, 5.9, chrome, { pos: [sx * 1.13, 1.1, -.6] }));
+    // stabiliser jacks at the rear corners
+    g.add(m(new THREE.CylinderGeometry(.07, .07, .7, 12), chrome, { pos: [sx * .95, .4, -3.45] }));
+    g.add(m(new THREE.CylinderGeometry(.18, .2, .05, 16), dark, { pos: [sx * .95, .03, -3.45] }));
+    g.add(r.box(.2, .3, .2, frame, { pos: [sx * .95, .7, -3.45] }));
+    // wheel arches: dark well, chrome lip, mudflap
+    for (const z of [2.6, -2.6]) {
+      g.add(m(new THREE.CircleGeometry(.57, 28, 0, P), dark, { pos: [sx * 1.158, .45, z], rot: [0, sx * P / 2, 0], cast: false }));
+      g.add(m(new THREE.TorusGeometry(.57, .03, 8, 28, P), chrome, { pos: [sx * 1.16, .45, z], rot: [0, P / 2, 0] }));
+      g.add(r.box(.03, .26, .34, rub, { pos: [sx * 1.08, .27, z - .72] }));
+    }
+    // rear lamps and reflectors
+    g.add(r.rbox(.22, .12, .05, .02, r.std(0xff2020, { emissive: 0xff2020, ei: 1.2 }), { pos: [sx * .85, .82, -3.62] }));
+    g.add(r.rbox(.22, .08, .05, .02, r.std(0xff9a20, { emissive: 0xff8a10, ei: .6 }), { pos: [sx * .85, .68, -3.62] }));
+  }
+  // hazard-striped rear bumper
+  const haz = r.canvasTex(256, 32, (c, w, hh) => { c.fillStyle = '#e8b321'; c.fillRect(0, 0, w, hh); c.fillStyle = '#151515'; for (let x = -32; x < w; x += 32) { c.beginPath(); c.moveTo(x, hh); c.lineTo(x + 16, 0); c.lineTo(x + 32, 0); c.lineTo(x + 16, hh); c.fill(); } });
+  g.add(r.box(2.3, .16, .1, new THREE.MeshStandardMaterial({ map: haz, roughness: .6 }), { pos: [0, .5, -3.66] }));
+  // ---- cab ----
+  g.add(r.rbox(2.24, .9, 1.8, .1, white, { pos: [0, 1.4, 3.0] }));                        // lower body
+  for (const sx of [1, -1]) for (const z of [2.12, 3.88]) g.add(r.box(.12, .84, .12, white, { pos: [sx * 1.04, 2.24, z] })); // pillars
+  g.add(r.box(.1, .78, .1, white, { pos: [1.04, 2.24, 3.0] })); g.add(r.box(.1, .78, .1, white, { pos: [-1.04, 2.24, 3.0] })); // B-pillars
+  g.add(r.rbox(2.26, .14, 1.9, .05, white, { pos: [0, 2.68, 3.0] }));                      // roof
+  g.add(r.rbox(2.0, .05, 1.6, .02, frame, { pos: [0, 2.77, 3.0] }));                       // roof rail
+  g.add(r.box(1.98, .74, .03, glass, { pos: [0, 2.24, 3.89] }));                            // windscreen
+  g.add(r.box(1.98, .74, .03, glass, { pos: [0, 2.24, 2.11] }));                            // rear screen
+  for (const sx of [1, -1]) for (const z of [2.56, 3.44]) g.add(r.box(.03, .74, .8, glass, { pos: [sx * 1.04, 2.24, z] }));
+  for (const [w, hh, y] of [[2.1, .06, 2.62], [2.1, .07, 1.86]]) { g.add(r.box(w, hh, .05, frame, { pos: [0, y, 3.9] })); g.add(r.box(w, hh, .05, frame, { pos: [0, y, 2.1] })); }
+  for (const sx of [1, -1]) for (const y of [2.62, 1.86]) g.add(r.box(.05, .06, 1.8, frame, { pos: [sx * 1.06, y, 3.0] }));
+  for (const zz of [3.905, 2.095]) { for (const x of [-.99, .99]) g.add(r.box(.04, .74, .03, rub, { pos: [x, 2.24, zz] })); for (const y of [2.6, 1.88]) g.add(r.box(1.98, .035, .03, rub, { pos: [0, y, zz] })); }
+  for (const sx of [1, -1]) for (const z of [2.56, 3.44]) { for (const dz of [-.4, .4]) g.add(r.box(.035, .74, .03, rub, { pos: [sx * 1.055, 2.24, z + dz] })); for (const y of [2.6, 1.88]) g.add(r.box(.035, .03, .8, rub, { pos: [sx * 1.055, y, z] })); }
+  g.add(r.box(2.2, .02, .02, seam, { pos: [0, 1.62, 3.91] }));   // bonnet crease
+  // interior: dash, wheel, two seats with headrests
+  g.add(r.box(1.9, .25, .4, dark, { pos: [0, 1.95, 3.6] }));
+  g.add(m(new THREE.TorusGeometry(.18, .025, 8, 24), dark, { pos: [.45, 2.1, 3.35], rot: [-.9, 0, 0] }));
+  for (const x of [-.45, .45]) { g.add(r.rbox(.5, .62, .12, .04, seat, { pos: [x, 2.1, 2.7], rot: [-.12, 0, 0] })); g.add(r.rbox(.28, .18, .1, .04, seat, { pos: [x, 2.5, 2.65] })); }
+  // wipers, grille with slats, headlamps, indicators, bumper, plate
+  for (const x of [-.45, .4]) g.add(r.box(.62, .018, .02, dark, { pos: [x, 1.95, 3.93], rot: [0, 0, .28] }));
+  g.add(r.rbox(1.1, .4, .05, .03, dark, { pos: [0, 1.42, 3.91] }));
+  for (let i = 0; i < 5; i++) g.add(r.box(1.0, .022, .045, chrome, { pos: [0, 1.27 + i * .075, 3.94] }));
+  for (const sx of [1, -1]) {
+    g.add(m(new THREE.CylinderGeometry(.16, .16, .05, 24), chrome, { pos: [sx * .78, 1.42, 3.91], rot: [P / 2, 0, 0] }));
+    g.add(m(new THREE.CircleGeometry(.125, 24), r.std(0xfff4d0, { emissive: 0xfff4d0, ei: .9 }), { pos: [sx * .78, 1.42, 3.94], cast: false }));
+    g.add(r.rbox(.2, .1, .04, .02, r.std(0xff9a20, { emissive: 0xff8a10, ei: .5 }), { pos: [sx * .78, 1.15, 3.91] }));
+    // door seams, handle, step, mirror on an arm
+    g.add(r.box(.012, 1.5, .012, seam, { pos: [sx * 1.122, 1.75, 2.22] })); g.add(r.box(.012, 1.5, .012, seam, { pos: [sx * 1.122, 1.75, 3.78] }));
+    g.add(r.box(.012, .012, 1.55, seam, { pos: [sx * 1.122, 1.0, 3.0] }));
+    g.add(r.box(.03, .04, .16, chrome, { pos: [sx * 1.13, 1.7, 2.45] }));
+    g.add(r.box(.3, .05, .5, frame, { pos: [sx * 1.05, .62, 3.0] }));
+    g.add(r.box(.32, .025, .025, frame, { pos: [sx * 1.25, 2.3, 3.85] })); g.add(r.rbox(.06, .3, .18, .02, frame, { pos: [sx * 1.42, 2.3, 3.85] }));
+    g.add(r.box(.02, .24, .13, glass, { pos: [sx * 1.39, 2.3, 3.85] }));
+  }
+  g.add(r.rbox(2.36, .18, .16, .05, chrome, { pos: [0, .9, 3.98] }));
+  g.add(r.box(.5, .12, .01, r.std(0xf0ecd8, { rough: .6 }), { pos: [0, 1.05, 3.93] }));
+  g.add(m(new THREE.CylinderGeometry(.09, .11, .06, 14), chrome, { pos: [0, 2.8, 3.0] }));
+  g.add(m(new THREE.SphereGeometry(.1, 14, 8, 0, P * 2, 0, P / 2), r.std(0xffa020, { emissive: 0xff9010, ei: 1.2, rough: .2 }), { pos: [0, 2.83, 3.0] }));
+  // wheels
+  const wm = { tyre: r.std(0x161616, { rough: .9 }), tread: r.std(0x0c0c0c, { rough: .95 }), hub: r.std(0xb0b4b8, { metal: .75, rough: .3 }), metal: chrome };
+  for (const [x, z] of [[-1.0, 2.6], [1.0, 2.6], [-1.0, -2.6], [1.0, -2.6]]) { const w = roadWheel(.45, .32, wm); w.position.set(x, .45, z); g.add(w); }
+  // ---- the stair: climbs toward -x from the deck ----
+  const st = new THREE.Group(); st.position.set(-.2, 1.1, 0); g.add(st);
+  const n = Math.round(h / .19), rise = h - 1.1, ang = Math.atan2(rise, len), L2 = Math.hypot(len, rise);
+  for (let i = 0; i < n; i++) {
+    const x = -i * len / n, y = (i + 1) * rise / n;
+    st.add(m(new THREE.BoxGeometry(.3, .05, 1.3), tread, { pos: [x, y, 0] }));
+    st.add(r.box(.04, .06, 1.3, chrome, { pos: [x + .15, y + .005, 0] }));          // nosing
+    st.add(r.box(.012, .19, 1.26, grey, { pos: [x + .14, y - .1, 0] }));            // riser
+  }
+  for (const z of [-.68, .68]) {
+    st.add(r.rbox(L2 + .3, .34, .08, .03, white, { pos: [-len / 2, rise / 2 - .05, z], rot: [0, 0, -ang] }));
+    st.add(r.box(L2, .03, .1, stripe, { pos: [-len / 2, rise / 2 - .05, z * 1.07], rot: [0, 0, -ang] }));
+    st.add(m(new THREE.CylinderGeometry(.03, .03, L2, 10), chrome, { pos: [-len / 2, rise / 2 + .95, z], rot: [0, 0, P / 2 - ang] }));
+    st.add(m(new THREE.CylinderGeometry(.02, .02, L2, 8), chrome, { pos: [-len / 2, rise / 2 + .5, z], rot: [0, 0, P / 2 - ang] }));
+    for (let i = 0; i <= 6; i++) st.add(m(new THREE.CylinderGeometry(.024, .024, .95, 8), chrome, { pos: [-i * len / 6, i * rise / 6 + .48, z] }));
+  }
+  // under-stair support struts down to the deck
+  for (const z of [-.5, .5]) st.add(r.box(.1, rise * .55, .1, frame, { pos: [-len * .55, rise * .27, z] }));
+  // top platform with plate, toe board and a rail on the open sides
+  st.add(m(new THREE.BoxGeometry(1.4, .08, 1.5), plate, { pos: [-len - .6, rise, 0] }));
+  st.add(r.box(1.4, .14, .04, white, { pos: [-len - .6, rise - .1, .75] })); st.add(r.box(1.4, .14, .04, white, { pos: [-len - .6, rise - .1, -.75] }));
+  for (const z of [-.75, .75]) { st.add(m(new THREE.CylinderGeometry(.03, .03, 1.4, 10), chrome, { pos: [-len - .6, rise + .95, z], rot: [0, 0, P / 2] })); for (const x of [-len - .05, -len - 1.25]) st.add(m(new THREE.CylinderGeometry(.024, .024, .95, 8), chrome, { pos: [x, rise + .48, z] })); }
+  st.add(m(new THREE.CylinderGeometry(.1, .1, rise + 1.1, 12), frame, { pos: [-len - .6, (rise - 1.1) / 2, 0] }));   // telescopic leg under the platform
+  g.userData.top = new THREE.Vector3(-.2 - len - .6, h, 0);
+  g.traverse(c => { if (c.isMesh) { c.castShadow = true; c.receiveShadow = true; } });
+  return g;
+}
+async function stairsAt(jet, scene) { const d = jet.userData.doorL1; const st = await stairTruck(d.y + .02); st.position.set(d.x + .7 + 5.75, 0, d.z); scene.add(st); return st; }
 
 // heading dial drawn on a canvas, shared by 2.11
 function headingDial() {
@@ -124,8 +206,9 @@ export const shots = {
   '2.1': async k => {
     const { camera } = k; k.noAutoOverlay = true;
     const { ppl } = await lineup(k);
-    const cam = C.dolly(camera, { pos: [0, 1.6, 9], look: [0, 1.2, 0], fov: 40 }, { pos: [0, 1.55, 6.5], look: [0, 1.25, 0], fov: 40 });
-    return (t, u) => { cam(u); ppl.forEach((p, i) => { p.update(t, { mood: 'stern', look: Math.sin(t * .3 + i) * .05 }); p.userData.key.intensity = 10; });
+    // QA r2: figures were tiny and near black -> camera ~40% closer, keys lifted so faces and clothes read (still low-key)
+    const cam = C.dolly(camera, { pos: [0, 1.5, 5.9], look: [0, 1.2, 0], fov: 40 }, { pos: [0, 1.48, 5.05], look: [0, 1.25, 0], fov: 40 });
+    return (t, u) => { cam(u); ppl.forEach((p, i) => { p.update(t, { mood: 'stern', look: Math.sin(t * .3 + i) * .05 }); p.userData.key.intensity = 75; });
       const o = k.overlay; ppl.forEach((p, i) => { const [x, y] = proj(camera, C.headPos(p, .5)); o.save(); o.globalAlpha = C.ease(C.seg(t, .8 + i * .35, 1.2 + i * .35)); o.fillStyle = '#e8b321'; o.font = '88px "Anton"'; o.textAlign = 'center'; o.fillText('?', x, y); o.restore(); }); };
   },
   // the two Palestinians step into the light
@@ -144,10 +227,73 @@ export const shots = {
     const cam = C.dolly(camera, { pos: [-1.6, 1.6, 4.4], look: [-1.6, 1.3, 0], fov: 40 }, { pos: [1.6, 1.6, 4.2], look: [1.6, 1.3, 0], fov: 40 });
     return (t, u) => { cam(u);
       ppl.forEach((p, i) => { p.update(t, { mood: 'stern', look: Math.sin(t * .3 + i) * .05 }); p.userData.key.intensity = i >= 2 ? 140 * C.ease(C.seg(t, .6, 1.4)) : 140 * (1 - C.ease(C.seg(t, .2, 1.0))); });
-      labelAt(k, ppl[2], 'WILFRIED BÖSE', 'REVOLUTIONARY CELLS', t, 1.8); labelAt(k, ppl[3], 'BRIGITTE KUHLMANN', 'REVOLUTIONARY CELLS', t, 2.4); };
+      // QA r2: the two labels overlapped while the pan was still moving -> both follow their heads but are kept a fixed minimum
+      // screen distance apart (pushed apart around their midpoint, clamped to frame), and Kuhlmann's pops in later
+      let [xb, yb] = proj(camera, C.headPos(ppl[2], .34)), [xk, yk] = proj(camera, C.headPos(ppl[3], .34)); const GAP = 470;
+      if (xk - xb < GAP) { const mid = (xb + xk) / 2; xb = mid - GAP / 2; xk = mid + GAP / 2; }
+      xk = Math.min(1660, Math.max(xk, 260 + GAP)); xb = Math.max(260, Math.min(xb, xk - GAP));
+      ui.callout(k.overlay, 'WILFRIED BÖSE', 'REVOLUTIONARY CELLS', xb, yb, t, 1.8); ui.callout(k.overlay, 'BRIGITTE KUHLMANN', 'REVOLUTIONARY CELLS', xk, yk, t, 3.0); };
   },
-  '2.4': old['2.4'],
-  '2.5': old['2.5'],
+  // QA r2: black corners past the map edge -> same shot, camera pulled in along its view ray each frame so the map fills the frame
+  '2.4': async k => {
+    const f = await old['2.4'](k); const cam = k.camera, dir = new THREE.Vector3();
+    return (t, u) => { f(t, u); cam.getWorldDirection(dir); if (dir.y < -.05) { const d = -cam.position.y / dir.y; cam.position.addScaledVector(dir, d * .3); cam.updateMatrixWorld(); } };
+  },
+  // QA r2: pans floated with no strings, low detail, the plane was a white blob -> a brass balance scale on a wooden base:
+  // turned column with collars, bevelled beam with end hooks, three link chains per pan to a lathed dish, normal-mapped brass,
+  // the engine's A300 as a desk model on one pan and steel padlocks on the other
+  '2.5': async k => {
+    const { real, scene, camera } = k;
+    await real.env(k, 'brown_photostudio_02', { sun: false, bg: 0x070504, envI: .55 });
+    const brass = await real.pbr('metal_plate', { repeat: [2, 2], color: 0xc8963c, metal: 1, rough: .32, noMap: true, normal: .35 });
+    const brassD = await real.pbr('metal_plate', { repeat: [1, 1], color: 0x9a6e2a, metal: 1, rough: .4, noMap: true, normal: .5 });
+    const wood = real.std(0x2a160c, { rough: .55, mat: { map: real.canvasTex(512, 512, (c, w, h) => { c.fillStyle = '#7a4a2a'; c.fillRect(0, 0, w, h); for (let i = 0; i < 90; i++) { c.strokeStyle = `rgba(${40 + (i * 13) % 30},${20 + (i * 7) % 15},8,${.2 + (i % 5) * .08})`; c.lineWidth = 1 + (i % 4); c.beginPath(); const y = (i * 37) % h; c.moveTo(0, y); c.bezierCurveTo(w * .3, y + 8, w * .6, y - 10, w, y + 4); c.stroke(); } }) } });
+    wood.color.set(0xffffff);
+    const lathe = (pts, mat, o) => real.m(new THREE.LatheGeometry(pts.map(([r, y]) => new THREE.Vector2(r, y)), 48), mat, o);
+    // table and backdrop
+    scene.add(real.m(new THREE.BoxGeometry(7, .08, 3.5), wood, { pos: [0, -.04, 0] }));
+    scene.add(real.m(new THREE.PlaneGeometry(14, 8), real.std(0x1a120c, { rough: .95 }), { pos: [0, 3, -2.5], cast: false }));
+    // base: stepped wooden plinth with a brass foot
+    scene.add(real.rbox(1.5, .14, .9, .04, wood, { pos: [0, .07, 0] })); scene.add(real.rbox(1.2, .1, .7, .03, wood, { pos: [0, .19, 0] }));
+    scene.add(lathe([[0, 0], [.32, 0], [.32, .04], [.26, .08], [.2, .1], [.12, .16], [.1, .2], [0, .2]], brass, { pos: [0, .24, 0] }));
+    // column with collars and a finial
+    scene.add(lathe([[0, 0], [.07, 0], [.06, .1], [.045, .2], [.04, 1.6], [.06, 1.62], [.06, 1.66], [.04, 1.7], [.04, 1.85], [0, 1.85]], brass, { pos: [0, .44, 0] }));
+    for (const y of [.62, 1.2]) scene.add(real.m(new THREE.TorusGeometry(.05, .014, 10, 24), brassD, { pos: [0, y, 0], rot: [P / 2, 0, 0] }));
+    scene.add(lathe([[0, 0], [.05, .02], [.07, .08], [.05, .14], [.015, .22], [0, .26]], brass, { pos: [0, 2.32, 0] }));
+    // beam pivots at y=2.25
+    const beam = new THREE.Group(); beam.position.set(0, 2.25, 0); scene.add(beam);
+    beam.add(real.rbox(3.7, .09, .1, .03, brass, {})); beam.add(real.rbox(1.0, .16, .12, .04, brass, {}));
+    beam.add(real.m(new THREE.CylinderGeometry(.075, .075, .2, 24), brassD, { rot: [P / 2, 0, 0] }));
+    beam.add(real.m(new THREE.ConeGeometry(.03, .35, 12), brass, { pos: [0, .25, 0] }));
+    for (const s of [1, -1]) { beam.add(real.m(new THREE.SphereGeometry(.065, 20, 14), brass, { pos: [s * 1.85, 0, 0] })); for (let i = 1; i < 4; i++) beam.add(real.m(new THREE.TorusGeometry(.055, .008, 6, 20), brassD, { pos: [s * (1.85 - i * .38), 0, 0], rot: [0, P / 2, 0] })); }
+    // pans hang from hooks at the beam ends; three chains each from the hook ring to the rim
+    const chainLink = new THREE.TorusGeometry(.016, .0045, 6, 12);
+    const chain = (g, a, b) => { const A = new THREE.Vector3(...a), B = new THREE.Vector3(...b), n = Math.round(A.distanceTo(B) / .026); const q = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), B.clone().sub(A).normalize());
+      for (let i = 0; i <= n; i++) { const lk = new THREE.Mesh(chainLink, brassD); lk.position.lerpVectors(A, B, i / n); lk.quaternion.copy(q); lk.rotateY(i % 2 ? P / 2 : 0); lk.rotateX(P / 2); lk.castShadow = true; g.add(lk); } };
+    const DROP = 1.05, RIM = .6;
+    const pans = [-1.85, 1.85].map(x => { const p = new THREE.Group(); p.position.set(x, 0, 0); beam.add(p);
+      p.add(real.m(new THREE.TorusGeometry(.045, .012, 8, 20), brassD, { pos: [0, -.08, 0] }));
+      p.add(real.m(new THREE.CylinderGeometry(.012, .012, .1, 8), brassD, { pos: [0, -.03, 0] }));
+      for (let i = 0; i < 3; i++) { const a = i / 3 * P * 2 + P / 6; chain(p, [0, -.12, 0], [Math.cos(a) * RIM, -DROP + .04, Math.sin(a) * RIM]); }
+      p.add(lathe([[0, 0], [.4, .015], [.56, .06], [.64, .12], [.66, .14], [.64, .145], [.55, .085], [.4, .04], [0, .028]], brass, { pos: [0, -DROP - .06, 0] }));
+      p.add(real.m(new THREE.TorusGeometry(.65, .012, 8, 48), brassD, { pos: [0, -DROP + .08, 0], rot: [P / 2, 0, 0] }));
+      return p; });
+    // the airliner (engine A300) as a desk model, ~0.62 m long
+    const jet = await sets.a300(); jet.scale.setScalar(.0165); jet.rotation.y = -P / 2 + .5; jet.position.set(0, -DROP - .02, 0); pans[0].add(jet);
+    // padlocks: steel body, chrome shackle, keyhole
+    const steel = real.std(0x5a5c60, { metal: .85, rough: .35 }), shk = real.std(0xc8ccd0, { metal: .95, rough: .2 }), key = real.std(0x101010);
+    for (let i = 0; i < 5; i++) { const l = new THREE.Group();
+      l.add(real.rbox(.22, .18, .09, .025, steel, { pos: [0, .09, 0] })); l.add(real.m(new THREE.TorusGeometry(.068, .016, 10, 20, P), shk, { pos: [0, .18, 0] }));
+      for (const sx of [1, -1]) l.add(real.m(new THREE.CylinderGeometry(.016, .016, .04, 10), shk, { pos: [sx * .068, .18, 0] }));
+      l.add(real.m(new THREE.CylinderGeometry(.012, .012, .01, 10), key, { pos: [0, .08, .047], rot: [P / 2, 0, 0] }));
+      l.position.set(-.28 + (i % 3) * .28, -DROP - .02 + Math.floor(i / 3) * .2, (i % 2) * .08 - .04 - Math.floor(i / 3) * .05); l.rotation.y = (i - 2) * .15; pans[1].add(l); }
+    // lights: warm key from the front left, cool rim, a soft top fill
+    const key1 = new THREE.SpotLight(0xffe2b8, 160, 14, .5, .6, 1.4); key1.position.set(-2.5, 4.2, 4); key1.target.position.set(0, 1.4, 0); key1.castShadow = true; key1.shadow.mapSize.set(2048, 2048); key1.shadow.radius = 4;
+    const rim = new THREE.SpotLight(0x9fb4ff, 90, 12, .5, .6, 1.3); rim.position.set(2.5, 3.5, -2.2); rim.target.position.set(0, 1.6, 0);
+    scene.add(key1, key1.target, rim, rim.target, new THREE.HemisphereLight(0xffe8d0, 0x201810, .5));
+    const cam = C.dolly(camera, { pos: [0, 1.95, 5.6], look: [0, 1.45, 0], fov: 40 }, { pos: [.3, 1.85, 4.6], look: [0, 1.4, 0], fov: 40 });
+    return (t, u) => { cam(u); const a = Math.sin(t * .8) * .05 + C.ease(C.seg(t, 1, 5)) * .12; beam.rotation.z = a; pans.forEach(p => p.rotation.z = -a + Math.sin(t * 1.3) * .01); };
+  },
   '2.6': old['2.6'],
   // "Land here or crash" — Bacos on the radio, the Benina tower through the windscreen
   '2.7': async k => {
@@ -171,7 +317,7 @@ export const shots = {
   '2.8': async k => {
     const { real, scene, camera } = k;
     const { jet } = await benghazi(k);
-    const st = stairsAt(jet, scene); const d = jet.userData.doorL1;
+    const st = await stairsAt(jet, scene); const d = jet.userData.doorL1;
     const bx = d.x + 9, bz = d.z - 1;
     const ppl = [];
     const put = async (id, seed, pos, rot, o = {}) => { const p = await real.human({ id, seed }); real.put(scene, p, { pos, rot, mood: o.mood ?? 'calm' }); p.userData.driven = true; p.userData.o = o; ppl.push(p); return p; };
@@ -202,7 +348,7 @@ export const shots = {
   '2.9': async k => {
     const { real, scene, camera } = k; k.noAutoOverlay = true;
     const { jet } = await benghazi(k);
-    stairsAt(jet, scene);
+    await stairsAt(jet, scene);
     const d = jet.userData.doorL1;
     const sx0 = d.x + .9, sx1 = d.x + 6.1, y0 = d.y;     // top of the stairs, then the truck deck, then the ground (stairs descend toward +x)
     const w = await real.human({ id: 'tb_pa9', seed: 230 }); real.put(scene, w, { pos: [sx0, y0, d.z], rot: P / 2, mood: 'worried' }); w.userData.driven = true;
@@ -228,6 +374,23 @@ export const shots = {
       gr.addColorStop(0, 'rgba(196,202,210,0)'); gr.addColorStop(.015, 'rgba(196,202,210,0)'); gr.addColorStop(.07, 'rgba(196,202,210,.65)'); gr.addColorStop(.16, 'rgba(196,202,210,1)'); gr.addColorStop(1, 'rgba(196,202,210,1)'); cx.fillStyle = gr; cx.fillRect(0, 0, 512, 512);
       const tx = new THREE.CanvasTexture(cv); tx.colorSpace = THREE.SRGBColorSpace;
       const hz = new THREE.Mesh(new THREE.PlaneGeometry(12000, 12000), new THREE.MeshBasicMaterial({ map: tx, transparent: true, depthWrite: false, fog: false })); hz.rotation.x = -P / 2; hz.position.y = .06; hz.renderOrder = 2; hz.castShadow = false; scene.add(hz); }
+    // QA r2: tarmac still met the sky in a hard line -> a far ring of low airfield buildings, hangars and masts, a scrub/palm
+    // treeline behind them and a haze band over the seam, all in the fog colour family
+    { const rnd = i => { const x = Math.sin(i * 127.1 + 3.7) * 43758.5453; return x - Math.floor(x); };
+      const bm = [0x6a5e54, 0x7a6c60, 0x5c544e].map(c => real.std(c, { rough: .95 }));
+      for (let i = 0; i < 70; i++) { const a = i / 70 * P * 2 + rnd(i) * .05, r = 260 + rnd(i + 9) * 160, w = 12 + rnd(i + 3) * 40, h = 4 + rnd(i + 5) * 10, d = 10 + rnd(i + 7) * 20;
+        const b = real.box(w, h, d, bm[i % 3], { pos: [Math.cos(a) * r, h / 2, Math.sin(a) * r], cast: false }); b.rotation.y = -a; scene.add(b);
+        if (i % 5 === 0) { const hg = real.m(new THREE.CylinderGeometry(14, 14, w + 10, 20, 1, false, 0, P), bm[(i + 1) % 3], { pos: [Math.cos(a) * (r + 30), 0, Math.sin(a) * (r + 30)], rot: [0, -a, P / 2], cast: false }); hg.rotation.set(P / 2, 0, 0); hg.rotation.z = -a; scene.add(hg); }
+        if (i % 9 === 0) scene.add(real.m(new THREE.CylinderGeometry(.6, .9, 30, 8), bm[2], { pos: [Math.cos(a) * (r - 20), 15, Math.sin(a) * (r - 20)], cast: false })); }
+      const tl = real.canvasTex(2048, 128, (c, W, H) => { c.clearRect(0, 0, W, H); c.fillStyle = '#4a4636';
+        for (let i = 0; i < 380; i++) { const x = (i * 157.3) % W, r = 8 + ((i * 37) % 16), y = H - 18 - ((i * 53) % 30); c.beginPath(); c.arc(x, y, r, 0, 7); c.fill(); }
+        for (let i = 0; i < 40; i++) { const x = (i * 263.7) % W; c.fillRect(x, 30, 4, H - 30); for (let f = 0; f < 6; f++) { c.beginPath(); c.ellipse(x + Math.cos(f) * 14, 30 + Math.sin(f) * 4, 18, 4, f, 0, 7); c.fill(); } }
+        c.fillRect(0, H - 22, W, 22); });
+      const tm = new THREE.MeshStandardMaterial({ map: tl, transparent: true, alphaTest: .5, roughness: 1, side: THREE.DoubleSide });
+      for (let i = 0; i < 12; i++) { const a = i / 12 * P * 2, r = 520; const pl = real.m(new THREE.PlaneGeometry(2 * r * Math.tan(P / 12) + 20, 22), tm, { pos: [Math.cos(a) * r, 10.6, Math.sin(a) * r], cast: false }); pl.rotation.y = -a - P / 2; scene.add(pl); }
+      const css = '#' + new THREE.Color(0x8c8680).getHexString();
+      const ht = real.canvasTex(8, 256, (c, W, H) => { const g = c.createLinearGradient(0, H, 0, 0); g.addColorStop(0, css); g.addColorStop(.06, css); g.addColorStop(.22, css + '00'); g.addColorStop(1, css + '00'); c.fillStyle = g; c.fillRect(0, 0, W, H); });
+      const band = real.m(new THREE.CylinderGeometry(1500, 1500, 400, 64, 1, true), new THREE.MeshBasicMaterial({ map: ht, transparent: true, side: THREE.BackSide, depthWrite: false, fog: false }), { pos: [0, 200, 0], cast: false }); band.renderOrder = -1; scene.add(band); }
     scene.userData.fx = scene.userData.fx || {}; scene.userData.fx.ao = 0;
     const tr = bowser(); tr.position.set(12, 0, 2); tr.rotation.y = P * .9; scene.add(tr);
     const cam = C.dolly(camera, { pos: [30, 3, 42], look: [4, 3, 6], fov: 38 }, { pos: [36, 3.5, 30], look: [2, 5, 26], fov: 42 });
@@ -261,10 +424,12 @@ export const shots = {
   '2.13': async k => {
     const { real, scene, camera } = k;
     await real.env(k, 'kloofendal_48d_partly_cloudy_puresky', { sun: false, bg: 0x05060a, envI: .1 });
-    const cb = await sets.cabin(k, { len: 12, lampI: .8, hemi: .16, sky: 0x0a1020 });
-    const pax = await C.fillCabin(k, cb, { mood: 'sad', skip: s => (s.row * 3 + s.col) % 5 === 0 });
-    const lights = pax.filter((p, i) => i % 3 === 0).map((p, i) => { const s = p.userData.seat; const l = new THREE.SpotLight(0xffe2a8, 9, 3, .35, .6, 1.5); l.position.set(s.x, 2.0, s.z + .2); l.target.position.set(s.x, .9, s.z + .1); scene.add(l, l.target); l.userData.off = 1 + i * .45; return l; });
-    const cam = C.dolly(camera, { pos: [-.6, 1.65, 5.8], look: [-.6, 1.0, -4], fov: 46 }, { pos: [-.6, 1.6, 4], look: [-.6, 1.0, -5], fov: 46 }, { ease: u => u });
-    return (t, u) => { cam(u); C.idleSeated(pax, t, {}); lights.forEach(l => l.intensity = 9 * (1 - C.seg(t, l.userData.off, l.userData.off + .15))); };
+    // QA r2: too dark, a blown-out head right at the lens -> more cabin fill, softer reading lights aimed at laps (not crowns),
+    // camera low in the aisle at the front, the three nearest rows left empty so no head comes near the lens; faces lit from in front so no head comes near the lens
+    const cb = await sets.cabin(k, { len: 12, lampI: 2.2, hemi: .42, sky: 0x0a1020 });
+    const pax = await C.fillCabin(k, cb, { mood: 'sad', skip: s => s.row >= 10 || (s.row * 3 + s.col) % 5 === 0 });
+    const lights = pax.filter((p, i) => i % 3 === 0).map((p, i) => { const s = p.userData.seat; const l = new THREE.SpotLight(0xffe2a8, 3.5, 3, .4, .7, 1.5); l.position.set(s.x, 2.15, s.z + .45); l.target.position.set(s.x, .8, s.z + .05); scene.add(l, l.target); l.userData.off = 1 + i * .45; return l; });
+    const cam = C.dolly(camera, { pos: [-1.08, 1.74, 5.7], look: [-.8, 1.2, -4], fov: 44 }, { pos: [-1.08, 1.72, 5.2], look: [-.75, 1.15, -5], fov: 44 }, { ease: u => u });
+    return (t, u) => { cam(u); C.idleSeated(pax, t, {}); lights.forEach(l => l.intensity = 3.5 * (1 - C.seg(t, l.userData.off, l.userData.off + .15))); };
   },
 };
