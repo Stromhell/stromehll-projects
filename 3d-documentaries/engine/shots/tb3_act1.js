@@ -64,7 +64,7 @@ export const shots = {
     crew.forEach((p, i) => { p.rotation.y = Math.atan2(dir.x, dir.y); });
     const cam = dolly(camera, { pos: [62, 70, 95], look: [2, 3, 6], fov: 38 }, { pos: [23, 2.0, 47], look: [10, 3.2, 22], fov: 42 }, { ease: u => 1 - (1 - u) ** 2.4 });
     return (t, u) => {
-      cam(u);
+      cam(u); capTop(); // QA act1r2: caption pinned to the top band (it jumped top→bottom mid-shot)
       crew.forEach((p, i) => {
         const dist = t * 1.35; const [x0, z0] = start[i];
         p.position.set(x0 + dir.x * dist, 0, z0 + dir.y * dist);
@@ -119,7 +119,8 @@ export const shots = {
     real.put(scene, fo, { pos: [-.55, 0, .12], rot: 0, pose: 'sitDesk', arm: 'desk', seatH: .5 });
     real.put(scene, fe, { pos: [-1.05, 0, -1.0], rot: -P / 2 + .3, pose: 'sit', arm: 'desk', seatH: .5 });
     [cpt, fo, fe].forEach(p => p.userData.driven = true);
-    cpt.update(0); k.anchor = headPos(cpt); k.anchor[1] += .32;
+    cpt.update(0); k.noAutoOverlay = true; // QA act1r2: own callout, clamped to a 5% safe margin and shown only while the narration names Bacos
+    const V = new THREE.Vector3();
     const cam = dolly(camera, { pos: [-.05, 1.66, -1.55], look: [.15, 1.25, 1.3], fov: 56 }, { pos: [-.05, 1.5, .7], look: [.55, 1.28, .1], fov: 44 });
     return (t, u) => {
       cam(u);
@@ -127,7 +128,12 @@ export const shots = {
       cpt.update(t, { pose: 'sitDesk', arm: 'desk', seatH: .5, look: t < 2 ? 0 : -.35 * seg(t, 2, 2.6), mood: 'calm' });
       fo.update(t, { pose: 'sitDesk', arm: t > 3 && t < 4.6 ? 'raise' : 'desk', seatH: .5, look: t > 2.4 ? .3 : 0 });
       fe.update(t, { pose: 'sit', arm: 'desk', seatH: .5, nod: t > 4.2 ? .4 : 0 });
-      k.anchor = headPos(cpt); k.anchor[1] += .32;
+      tick(k); const a = seg(t, .5, .8) * (1 - seg(t, 2.0, 2.3));
+      if (a > 0) {
+        V.fromArray(headPos(cpt)); V.y += .32; V.project(camera);
+        const px = Math.min(1824 - 230, Math.max(96 + 230, (V.x + 1) * 960)), py = Math.min(1026 - 20, Math.max(54 + 112, (1 - V.y) * 540));
+        const o = k.overlay; o.save(); o.globalAlpha = a; ui.callout(o, 'MICHEL BACOS', 'CAPTAIN, AIR FRANCE', px, py, t, .5); o.restore();
+      }
     };
   },
 };
@@ -138,6 +144,54 @@ import * as ui from '../lib/ui.js';
 import { shots as old } from './tb_act1.js';
 
 const sky = (real, k, o = {}) => real.env(k, 'kloofendal_48d_partly_cloudy_puresky', { sun: false, bg: o.bg ?? 0x101010, envI: o.envI ?? .45 });
+// steer the auto caption to one band for the whole shot (act 8 pattern): capTop blocks the bottom band so the caption goes to the top, capBottom the reverse
+const capTop = () => ui.used.push([0, 840, 1920, 1080]);
+const capBottom = () => ui.used.push([0, 0, 1920, 260]);
+// a frame that draws nothing on the 2D overlay comes back with the previous frame's overlay (act 8 pattern); one invisible draw per frame keeps it clean
+const tick = k => { const o = k.overlay; if (!o) return; o.save(); o.setTransform(1, 0, 0, 1, 0, 0); o.globalAlpha = .004; o.fillStyle = '#000'; o.fillRect(0, 0, 2, 2); o.restore(); };
+// QA act1r2: the overhead cutaways floated in a black void. Give the cabin the lower half of its fuselage (aluminium skin, frames standing proud at
+// the cut and at both open ends, a cut lip along the rim) and a dark blue-grey gradient backdrop with a soft glow under the hull
+function hullShell(k, len) {
+  const { real, scene } = k;
+  const R = 2.64, Y = 1.35, Ro = 2.9, rimA = .25, top = Y + R * Math.sin(rimA);
+  const th = Math.acos(-(top - Y) / Ro); // lower arc of the outer skin up to the rim height
+  const g = new THREE.Group(); scene.add(g);
+  const skin = new THREE.MeshStandardMaterial({ color: 0xb4b8bc, metalness: .55, roughness: .45, side: THREE.DoubleSide });
+  const frameM = real.std(0x7a7f86, { metal: .6, rough: .45 }), lip = real.std(0x5d6268, { metal: .5, rough: .5 });
+  g.add(real.m(new THREE.CylinderGeometry(Ro, Ro, len, 64, 1, true, -th, 2 * th), skin, { rot: [P / 2, 0, 0], pos: [0, Y, 0], cast: false }));
+  // cut lip: a flat strip joining the inner wall rim to the outer skin, both sides
+  for (const s of [1, -1]) g.add(real.box(Ro - R + .06, .05, len, lip, { pos: [s * (R + Ro) / 2 * Math.cos(rimA), top + .02, 0], cast: false }));
+  // underfloor: cargo-hold floor beam and a darker belly
+  g.add(real.box(2 * R * .98, .12, len, frameM, { pos: [0, -.08, 0], cast: false }));
+  // frames: ribs every 0.55 m around the lower arc; they run on past both open ends of the cabin as a bare skeleton
+  const ribs = Math.round((len + 3.3) / .55);
+  for (let i = 0; i <= ribs; i++) {
+    const z = -len / 2 - 1.65 + i * .55, bare = Math.abs(z) > len / 2;
+    const tor = new THREE.TorusGeometry(bare ? Ro - .05 : Ro + .03, bare ? .06 : .035, 6, 48, 2 * th);
+    g.add(real.m(tor, frameM, { pos: [0, Y, z], rot: [0, 0, -P / 2 - th], cast: false }));
+  }
+  // stringers along the bare ends so the ribs read as one structure
+  for (let a = -th + .2; a < th; a += .45) for (const s of [1, -1]) g.add(real.box(.05, .05, 1.65, frameM, { pos: [Math.sin(a) * (Ro - .05), Y - Math.cos(a) * (Ro - .05), s * (len / 2 + .82)], cast: false }));
+  // backdrop: inside-out sphere, deep navy overhead fading to near-black below, plus a soft blue glow under the hull
+  const bg = real.canvasTex(8, 512, (c, W, H) => { const gr = c.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, '#2a3446'); gr.addColorStop(.45, '#161c28'); gr.addColorStop(.6, '#0b0e14'); gr.addColorStop(1, '#040507'); c.fillStyle = gr; c.fillRect(0, 0, W, H); });
+  scene.add(real.m(new THREE.SphereGeometry(300, 32, 16), new THREE.MeshBasicMaterial({ map: bg, side: THREE.BackSide, fog: false, depthWrite: false }), { cast: false, receive: false }));
+  const glow = real.canvasTex(256, 256, (c, W, H) => { const gr = c.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, W / 2); gr.addColorStop(0, 'rgba(70,92,128,.55)'); gr.addColorStop(1, 'rgba(70,92,128,0)'); c.fillStyle = gr; c.fillRect(0, 0, W, H); });
+  scene.add(real.m(new THREE.PlaneGeometry(len * 2.6, len * 2.6), new THREE.MeshBasicMaterial({ map: glow, transparent: true, depthWrite: false, fog: false }), { rot: [-P / 2, 0, 0], pos: [0, -4, 0], cast: false, receive: false }));
+  return g;
+}
+// an OFF / ON counter that fades in at full size (QA act1r2: ui.tally popped in from a tiny scale)
+function tallyFade(x, label, value, px, py, t, start = .3) {
+  const a = Math.min(1, Math.max(0, (t - start) / .3)); if (a <= 0) return;
+  const e = a * a * (3 - 2 * a);
+  x.save(); x.globalAlpha = e; x.translate(px, py); const s = .92 + .08 * e; x.scale(s, s);
+  const text = `${label}${label ? ' ' : ''}${value}`;
+  x.font = '52px "Anton"'; const w = x.measureText(text).width + 56;
+  ui.used.push([px - w / 2, py - 42, px + w / 2, py + 42]);
+  x.fillStyle = 'rgba(29,23,18,.9)'; x.beginPath(); x.roundRect(-w / 2, -42, w, 84, 10); x.fill();
+  x.strokeStyle = '#e8b321'; x.lineWidth = 4; x.stroke();
+  x.fillStyle = '#f4ead3'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(text, 0, 3);
+  x.restore();
+}
 
 // departure hall with a split-flap board; the AF 139 row flips into place
 async function departures(k) {
@@ -260,7 +314,7 @@ Object.assign(shots, {
       walker.position.x = -7 + t * 1.3; walker.update(t, { pose: 'walk', dist: t * 1.3 });
     };
   },
-  '1.3': old['1.3'],
+  '1.3': async k => { const f = await old['1.3'](k); return (t, u) => { f(t, u); capTop(); }; }, // QA act1r2: caption at the top, clear of the EGYPT label
   '1.5': async k => {
     const { real, scene, camera } = k;
     await real.env(k, 'kloofendal_48d_partly_cloudy_puresky', { sun: [-40, 45, 60], sunI: 4.0, sunColor: 0xfff2dc, shadowSize: 45, envI: .9, fog: [0xd2dbe2, 120, 900] });
@@ -279,8 +333,8 @@ Object.assign(shots, {
       cam(u);
       off.forEach((p, i) => { p.position.x = 12 + i * 1.1 + t * 1.1; p.position.z = 22 + (i % 2) * .9 + t * .35; p.update(t, { pose: 'walk', dist: t * 1.15 + i }); });
       on.forEach((p, i) => { p.position.x = 26 - i * 1.2 - t * 1.0; p.position.z = 31 + (i % 2) * .8 - t * .6; p.update(t, { pose: 'walk', dist: t * 1.15 + i }); });
-      ui.tally(k.overlay, 'OFF', Math.round(38 * C.ease(C.seg(t, 2.6, 4.6))), 600, 150, t, 2.2);
-      ui.tally(k.overlay, 'ON', Math.round(58 * C.ease(C.seg(t, 4.2, 6.4))), 1320, 150, t, 3.8);
+      tallyFade(k.overlay, 'OFF', Math.round(38 * C.ease(C.seg(t, 2.6, 4.6))), 600, 150, t, 2.2);
+      tallyFade(k.overlay, 'ON', Math.round(58 * C.ease(C.seg(t, 4.2, 6.4))), 1320, 150, t, 3.8);
     };
   },
   '1.6': async k => {
@@ -312,6 +366,7 @@ Object.assign(shots, {
     const { real, scene, camera } = k;
     await sky(real, k, { envI: .5 });
     const cb = await sets.cabin(k, { len: 24, first: 3, cutaway: true, lampI: 7, hemi: 1.4 });
+    hullShell(k, 24);
     const hjSeats = { first: [[2, 1], [2, 4]], eco: [[9, 6], [12, 1]] };
     const isHj = s => (s.cls === 'first' && s.row === cb.seats.filter(x => x.cls === 'eco').reduce((m, x) => Math.max(m, x.row), 0) + 3 && false);
     const special = [];
@@ -327,7 +382,7 @@ Object.assign(shots, {
     }
     const cam = C.dolly(camera, { pos: [6, 12, -14], look: [0, 0, 2], fov: 42 }, { pos: [4.5, 6.5, 4], look: [0, .6, 2], fov: 44 });
     return (t, u) => {
-      cam(u); C.idleSeated(pax, t);
+      cam(u); tick(k); C.idleSeated(pax, t);
       special.forEach((p, i) => { p.update(t, { pose: 'sit', seatH: .52, arm: 'lap', mood: 'calm', look: Math.sin(t * .4 + i) * .1 }); p.userData.spot.intensity = 60 * C.ease(C.seg(t, i < 2 ? 1.2 : 3.2, i < 2 ? 2 : 4)); });
     };
   },
@@ -345,7 +400,7 @@ Object.assign(shots, {
       C.attach(p, C.pistolShape(), 'RightHand', [0, -.08, .05], [P / 2, 0, 0]); C.attach(p, C.grenadeShape(), 'LeftHand', [0, -.07, .04]); return p; };
     const s1 = first.find(s => s.col === 2 && s.z > 2) ?? first[2], s2 = first.find(s => s.col === 3 && s.z > 2) ?? first[3];
     const a = await mk(C.HJ.bose, s1, -1), b = await mk(C.HJ.kuhlmann, s2, 1);
-    const cam = C.dolly(camera, { pos: [.0, 1.55, -4.5], look: [0, 1.3, 5], fov: 46 }, { pos: [0, 1.5, -.6], look: [0, 1.35, 5], fov: 42 }, { ease: u => u });
+    const cam = C.dolly(camera, { pos: [0, 1.55, .35], look: [0, 1.3, 5], fov: 50 }, { pos: [0, 1.5, 1.2], look: [0, 1.35, 5], fov: 44 }, { ease: u => u }); // QA act1r2: z=-4.5 sat inside the middle seat block (black frame)
     return (t, u) => {
       cam(u); C.idleSeated(pax, t);
       [a, b].forEach(p => {
@@ -466,6 +521,7 @@ Object.assign(shots, {
     const { real, scene, camera } = k;
     await sky(real, k, { envI: .5 });
     const cb = await sets.cabin(k, { len: 24, first: 3, cutaway: true, lampI: 7, hemi: 1.4 });
+    hullShell(k, 24);
     const pax = await C.fillCabin(k, cb, { skip: s => ((s.row * 5 + s.col * 3) % 6 === 2) });
     const hj = [];
     for (const [id, x] of [[C.HJ.hj3, -1.11], [C.HJ.hj4, 1.11]]) { const p = await real.human({ id, seed: 90 + hj.length }); real.put(scene, p, { pos: [x, 0, -10.6], rot: 0, mood: 'stern' }); C.attach(p, C.pistolShape(), 'RightHand', [0, -.08, .05], [P / 2, 0, 0]); p.userData.driven = true; hj.push(p);
@@ -481,6 +537,7 @@ Object.assign(shots, {
       C.idleSeated(pax, t, over);
       hj.forEach((p, i) => { p.position.z = -10.6 + C.seg(t, .4, dur) * 6.5; p.update(t, { pose: C.seg(t, .4, dur) < 1 ? 'walk' : 'idle', dist: t * .9 + i, arm: 'point', mood: 'stern' }); p.userData.spot.position.set(p.position.x, 6.5, p.position.z); p.userData.spot.target.position.set(p.position.x, .9, p.position.z); });
       C.stopwatch(k.overlay, t, 180, 1660, 300, 180 / Math.max(1, dur - .4));
+      capBottom(); // QA act1r2: one caption band for the whole shot (a top ghost showed under the bottom caption)
     };
   },
   '1.18': async k => {
@@ -515,12 +572,12 @@ Object.assign(shots, {
     papers.forEach(p => { p.scale.setScalar(1.25); scene.add(p); });
     const cam = C.dolly(camera, { pos: [0, 1.95, 1.05], look: [0, .78, 0], fov: 46 }, { pos: [0, 1.7, .78], look: [0, .78, 0], fov: 42 });
     return (t, u) => {
-      cam(u);
+      cam(u); tick(k);
       papers.forEach((p, i) => {
-        const s = C.ease(C.seg(t, .2 + i * .9, 1.0 + i * .9));
+        const s = C.ease(C.seg(t, -.45 + i * .75, .35 + i * .75)); // QA act1r2: the first paper is already mid-fall at t=0
         p.rotation.set(-P / 2, 0, (1 - s) * 5 + (i - 1) * .12);
         p.position.set((i - 1) * .1 * s + (1 - s) * (i - 1) * .4, .785 + i * .004 + (1 - s) * .3, (1 - s) * -.15); /* drop from just above the desk so the paper stays in the lamp light */
-        p.visible = t > .2 + i * .9;
+        p.visible = t > -.45 + i * .75;
       });
     };
   },
