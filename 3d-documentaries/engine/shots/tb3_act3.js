@@ -6,9 +6,53 @@ import { shots as old } from './tb_act3.js';
 const { THREE, sets, P, real } = C;
 
 const proj = (cam, v) => { cam.updateMatrixWorld(); const p = new THREE.Vector3(...v).project(cam); return [(p.x + 1) * 960, (1 - p.y) * 540]; };
+const CAP_OFF = [0, .115, .025], CAP_ROT = [0, 0, 0];
+// QA: the airport map read as flat untextured blocks -> paper grain, terrain mottling and fold creases over the map canvas, bevelled terminal blocks
+function mapTexture(k, upd) {
+  let rnd = 4242; const R = () => (rnd = (rnd * 16807) % 2147483647) / 2147483647;
+  k.scene.traverse(o => {
+    if (!o.isMesh) return; const gp = o.geometry.parameters || {};
+    if (o.geometry.type === 'PlaneGeometry' && gp.width === 150 && o.material.map?.image) {
+      const src = o.material.map.image, W = src.width, H = src.height, c = document.createElement('canvas'); c.width = W; c.height = H; const x = c.getContext('2d');
+      x.drawImage(src, 0, 0);
+      // terrain mottling (soft light/dark patches) on everything above the shoreline
+      x.save(); x.beginPath(); x.rect(0, 0, W, 1300); x.clip();
+      for (let i = 0; i < 160; i++) { const cx = R() * W, cy = R() * 1300, r = 60 + R() * 220, g = x.createRadialGradient(cx, cy, 0, cx, cy, r), d = R() < .5;
+        g.addColorStop(0, d ? 'rgba(90,70,40,.10)' : 'rgba(255,248,225,.10)'); g.addColorStop(1, 'rgba(0,0,0,0)'); x.fillStyle = g; x.fillRect(cx - r, cy - r, r * 2, r * 2); }
+      x.restore();
+      // ripples on the lake
+      x.strokeStyle = 'rgba(255,255,255,.18)'; x.lineWidth = 3; for (let i = 0; i < 70; i++) { const cx = R() * W, cy = 1420 + R() * 560; x.beginPath(); x.arc(cx, cy, 30 + R() * 30, P * 1.15, P * 1.85); x.stroke(); }
+      // paper fibres and grain
+      for (let i = 0; i < 26000; i++) { const v = R() < .5 ? 0 : 255; x.fillStyle = `rgba(${v},${v},${v},${.035 + R() * .05})`; x.fillRect(R() * W, R() * H, 1 + R() * 3, 1 + R() * 2); }
+      x.strokeStyle = 'rgba(110,90,60,.08)'; x.lineWidth = 1.5; for (let i = 0; i < 900; i++) { const fx = R() * W, fy = R() * H, a = R() * P * 2, l = 6 + R() * 18; x.beginPath(); x.moveTo(fx, fy); x.lineTo(fx + Math.cos(a) * l, fy + Math.sin(a) * l); x.stroke(); }
+      // two fold creases and an aged vignette at the sheet edges
+      [[W / 3, 0, W / 3 + 10, H], [0, H / 2, W, H / 2 - 8]].forEach(([a, b, c2, d]) => { x.strokeStyle = 'rgba(70,55,35,.16)'; x.lineWidth = 5; x.beginPath(); x.moveTo(a, b); x.lineTo(c2, d); x.stroke(); x.strokeStyle = 'rgba(255,250,235,.22)'; x.lineWidth = 3; x.beginPath(); x.moveTo(a + 5, b + 5); x.lineTo(c2 + 5, d + 5); x.stroke(); });
+      const vg = x.createRadialGradient(W / 2, H / 2, H * .45, W / 2, H / 2, W * .62); vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(90,60,25,.32)'); x.fillStyle = vg; x.fillRect(0, 0, W, H);
+      const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 8; o.material.map = tex; o.material.needsUpdate = true;
+    }
+    if (o.geometry.type === 'BoxGeometry' && gp.height === 3 && gp.width >= 16) { // terminal blocks: rounded/bevelled edges + a darker roof slab
+      const geo = real.rbox(gp.width, gp.height, gp.depth, .45, o.material).geometry; o.geometry.dispose(); o.geometry = geo;
+      const roof = new THREE.Mesh(real.rbox(gp.width - 1.6, .35, gp.depth - 1.6, .15, o.material).geometry, o.material); // stepped roof in the block's own colour (keeps the old terminal's glow)
+      roof.position.y = gp.height / 2 + .1; roof.castShadow = true; o.add(roof);
+      const win = new THREE.Mesh(new THREE.PlaneGeometry(gp.width - 2, .5), new THREE.MeshStandardMaterial({ color: 0x3a4450, roughness: .4 })); win.position.set(0, .3, gp.depth / 2 + .02); o.add(win);
+    }
+  });
+  return upd;
+}
 const UG = ['tb_ug1', 'tb_ug2', 'tb_ug3'];
 // rifles are only ever dark shapes, carried slung or held low
 function rifleShape() { const g = new THREE.Group(); const mt = new THREE.MeshStandardMaterial({ color: 0x101010, roughness: .6, metalness: .3 }); g.add(new THREE.Mesh(new THREE.BoxGeometry(.04, .07, .95), mt)); const st = new THREE.Mesh(new THREE.BoxGeometry(.04, .12, .25), mt); st.position.set(0, -.03, -.5); g.add(st); g.traverse(c => { if (c.isMesh) c.castShadow = true; }); return g; }
+// Amin's peaked service cap, built here (closed crown + top, cloth band, black visor); group origin = bottom of the band, seated on the skull
+function aminCap(color = 0x3a4428) {
+  const g = new THREE.Group(), cloth = new THREE.MeshStandardMaterial({ color, roughness: .85 }), band = new THREE.MeshStandardMaterial({ color: 0x23291a, roughness: .7 }), vis = new THREE.MeshStandardMaterial({ color: 0x0c0c0c, roughness: .3, metalness: .2 });
+  const add = (geo, mt, pos, rot, sc) => { const m = new THREE.Mesh(geo, mt); if (pos) m.position.set(...pos); if (rot) m.rotation.set(...rot); if (sc) m.scale.set(...sc); m.castShadow = true; g.add(m); return m; };
+  add(new THREE.CylinderGeometry(.103, .1, .05, 28), band, [0, .025, 0], null, [1.05, 1, 1.22]);           // band (closed)
+  add(new THREE.CylinderGeometry(.122, .104, .045, 28), cloth, [0, .072, -.006], [-.08, 0, 0], [1.05, 1, 1.22]); // flared crown wall
+  add(new THREE.CylinderGeometry(.122, .122, .008, 28), cloth, [0, .096, -.008], [-.08, 0, 0], [1.05, 1, 1.22]); // crown top
+  add(new THREE.CircleGeometry(.11, 24, 0, Math.PI), vis, [0, .006, .1], [Math.PI / 2 + .25, 0, 0], [1.05, .62, 1]).material.side = THREE.DoubleSide; // peak, angled down
+  add(new THREE.SphereGeometry(.014, 10, 8), new THREE.MeshStandardMaterial({ color: 0xd4a640, metalness: 1, roughness: .3 }), [0, .045, .128]); // badge
+  return g;
+}
 async function soldier(k, i, pos, rot, o = {}) {
   const p = await k.real.human({ id: UG[i % 3], seed: 600 + i }); k.real.put(k.scene, p, { pos, rot, mood: o.mood ?? 'stern' }); p.userData.driven = true;
   C.attach(p, S2.cap(0x4a4630, i % 2 === 0), 'Head', [0, .14, .01]);
@@ -51,7 +95,7 @@ export const shots = {
     const { real, scene, camera } = k; k.noAutoOverlay = true;
     await real.env(k, 'brown_photostudio_02', { sun: false, bg: 0x060505, envI: .1 });
     const a = await real.human({ id: 'tb_amin', seed: 801 }); real.put(scene, a, { pos: [0, 0, 0], mood: 'smug' }); a.userData.driven = true;
-    C.attach(a, S2.cap(0x3a4428), 'Head', [0, .15, .01]);
+    C.attach(a, aminCap(), 'Head', CAP_OFF, CAP_ROT);
     const gold = real.std(0xd4a640, { metal: 1, rough: .25 }), rib = [0xc0392b, 0x2a6a3a, 0xe8b321, 0x1f4fa8];
     for (let i = 0; i < 8; i++) { const md = new THREE.Group(); md.add(real.box(.035, .02, .006, real.std(rib[i % 4]), { pos: [0, .02, 0] })); md.add(real.m(new THREE.CylinderGeometry(.013, .013, .005, 12), gold, { pos: [0, -.008, 0], rot: [P / 2, 0, 0] })); C.attach(a, md, 'Spine2', [-.12 + (i % 4) * .042, .06 - Math.floor(i / 4) * .06, .13]); }
     const under = new THREE.SpotLight(0xffd8a8, 40, 8, .45, .6, 1.3); under.position.set(0, .2, 1.6); under.target.position.set(0, 1.6, 0); under.castShadow = true; scene.add(under, under.target);
@@ -65,7 +109,7 @@ export const shots = {
     const { real, scene, camera } = k;
     await real.env(k, 'brown_photostudio_02', { sun: false, bg: 0x070606, envI: .18 });
     const a = await real.human({ id: 'tb_amin', seed: 801 }); real.put(scene, a, { pos: [0, 0, 0], mood: 'smug' }); a.userData.driven = true;
-    C.attach(a, S2.cap(0x3a4428), 'Head', [0, .2, -.01]);
+    C.attach(a, aminCap(), 'Head', CAP_OFF, CAP_ROT);
     const gold = real.std(0xd4a640, { metal: 1, rough: .25 }), rib = [0xc0392b, 0x2a6a3a, 0xe8b321, 0x1f4fa8];
     for (let i = 0; i < 8; i++) { const md = new THREE.Group(); md.add(real.box(.035, .02, .006, real.std(rib[i % 4]), { pos: [0, .02, 0] })); md.add(real.m(new THREE.CylinderGeometry(.013, .013, .005, 12), gold, { pos: [0, -.008, 0], rot: [P / 2, 0, 0] })); C.attach(a, md, 'Spine2', [-.12 + (i % 4) * .042, .06 - Math.floor(i / 4) * .06, .13]); }
     const heads = [['THE DAILY NEWS', 'AMIN EXPELS UGANDA\'S ASIANS', '90 DAYS TO LEAVE', 'AUG 1972'], ['WORLD TRIBUNE', 'UGANDA BREAKS WITH ISRAEL', 'Advisers ordered out', 'MAR 1972'],
@@ -137,13 +181,16 @@ export const shots = {
     const cam = C.dolly(camera, { pos: [46, 26, 70], look: [0, 2, 6], fov: 40 }, { pos: [34, 9, 52], look: [0, 2, 8], fov: 42 });
     return (t, u) => { cam(u); ring.forEach((p, j) => p.update(t, { look: Math.sin(t * .4 + j) * .2 })); };
   },
-  '3.8': old['3.8'],
-  '3.9': old['3.9'],
+  '3.8': async k => mapTexture(k, await old['3.8'](k)),
+  '3.9': async k => mapTexture(k, await old['3.9'](k)),
   // in the old terminal, three more men step out of the shadows
   '3.10': async k => {
     const { real, scene, camera } = k;
     await real.env(k, 'small_empty_room_1', { sun: false, bg: 0x05060a, envI: .1 });
-    await S2.hall(k, { lampI: 8, hemi: .4 });
+    await S2.hall(k, { lampI: 11, hemi: .6 });
+    // QA: the hijackers read as dark shapes on dark pillars -> a soft warm fill from the camera side and a cool rim from behind the group
+    const fill = new THREE.SpotLight(0xffe6c8, 55, 16, .7, .8, 1.2); fill.position.set(-.5, 3.2, 7); fill.target.position.set(-1.2, 1.2, 1.2); scene.add(fill, fill.target);
+    const rimL = new THREE.SpotLight(0xa8b8ff, 70, 12, .6, .7, 1.2); rimL.position.set(-1.5, 3.6, -3.5); rimL.target.position.set(-1.2, 1.3, 1.2); scene.add(rimL, rimL.target);
     const four = [], three = [];
     for (const [i, id] of [C.HJ.bose, C.HJ.kuhlmann, C.HJ.hj3, C.HJ.hj4].entries()) { const p = await real.human({ id, seed: 840 + i }); real.put(scene, p, { pos: [-3 + i * 1.2, 0, 1.2], rot: P, mood: 'stern' }); p.userData.driven = true; four.push(p); }
     // the three new men come down the centre aisle (between the mattress rows, z -2.1..2.1) out of the dark east end of the hall
@@ -199,7 +246,7 @@ export const shots = {
     const h = await S2.hall(k, { lampI: 14, hemi: .9 });
     const ppl = await hostagesOnMats(k, h, 3);
     const a = await real.human({ id: 'tb_amin', seed: 801 }); real.put(scene, a, { pos: [-h.w / 2 + 2.2, 0, 0], rot: P / 2, mood: 'happy' }); a.userData.driven = true;
-    C.attach(a, S2.cap(0x3a4428), 'Head', [0, .15, .01]);
+    C.attach(a, aminCap(), 'Head', CAP_OFF, CAP_ROT);
     const g = await soldier(k, 2, [-h.w / 2 + 1.4, 0, 1.4], P / 2);
     const sp = new THREE.SpotLight(0xffe0b0, 60, 8, .35, .6, 1.3); sp.position.set(-h.w / 2 + 4.5, 3.8, 1.5); sp.target.position.set(-h.w / 2 + 2.2, 1.4, 0); scene.add(sp, sp.target);
     const cam = C.dolly(camera, { pos: [-4.5, 1.5, 1.6], look: [-h.w / 2 + 2.2, 1.55, 0], fov: 40 }, { pos: [-6, 1.55, 1.2], look: [-h.w / 2 + 2.2, 1.6, 0], fov: 38 });
@@ -210,6 +257,7 @@ export const shots = {
         o.fillStyle = '#fbf6ea'; o.strokeStyle = '#2b1e16'; o.lineWidth = 5; o.beginPath(); o.roundRect(-230, -60, 460, 110, 30); o.fill(); o.stroke();
         o.beginPath(); o.moveTo(-200, 40); o.lineTo(-260, 90); o.lineTo(-150, 48); o.fill(); o.fillStyle = '#2b1e16'; o.font = '46px "Anton"'; o.textAlign = 'center'; o.textBaseline = 'middle'; o.fillText('"I AM HERE TO HELP"', 0, -5); o.restore(); } };
   },
-  '3.14': old['3.14'],
+  // QA: 3.14 opened on ~1 s of near black (empty dark wall, card edge-on until ~.65 s); run the card slam .35 s ahead so the card is already turning on frame 0
+  '3.14': async k => { const upd = await old['3.14'](k); return (t, u) => upd(t + .35, u); },
   '3.15': old['3.15'],
 };
