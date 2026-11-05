@@ -56,14 +56,14 @@ window.SHOTS = [
     draw: (c, lt, u, Sh) => { const night = seg(lt, Sh.tS - .6, Sh.tS), L = night > .5 ? NIGHT(lt) : SUN(lt);
       c.fillStyle = '#c8b090'; c.fillRect(150, 470, 300, 170); c.fillStyle = '#8a3a2a'; c.beginPath(); c.moveTo(130, 474); c.lineTo(300, 410); c.lineTo(470, 474); c.fill(); c.fillStyle = '#4a3020'; c.fillRect(250, 540, 100, 100);
       const b = seg(lt, Sh.tB, Sh.tB + .4); if (b > 0) { c.save(); c.translate(300, 520); c.rotate(-.06); c.scale(.6 + .4 * E.out(b), .6 + .4 * E.out(b)); c.fillStyle = '#f0e4c4'; c.fillRect(-90, -24, 180, 48); c.strokeStyle = '#3a2410'; c.lineWidth = 3; c.strokeRect(-90, -24, 180, 48); c.fillStyle = '#b82a22'; c.font = '34px Anton'; c.textAlign = 'center'; c.fillText('CLOSED', 0, 12); c.restore(); }
-      if (night < 1) fig(c, C.FR, 520, 650, 34, pose(lt, 1, { face: -1, holdN: musket(c, -1.4) }), lt, 1, L, { look: [-.5, 0] });
+      { const g = seg(lt, Sh.tS - 3.2, Sh.tS - .7), gx = lerp(520, -90, E.inn(g)); if (g < 1) fig(c, C.FR, gx, 650, 34, g > 0 ? Object.assign(H1.walk(lt * 1.6), { face: -1, holdN: musket(c, -1.4) }) : pose(lt, 1, { face: -1, holdN: musket(c, -1.4) }), lt, 1, L, { look: [-.5, 0] }); }
       if (night > 0) { c.fillStyle = S.rgba('#0a1030', .6 * night); c.fillRect(0, 0, 1280, 720);
         const bx = lerp(1400, 960, E.out(seg(lt, Sh.tS, Sh.tS + 4))); H1.boat(c, bx, 500, .6, lt, { sail: false, hull: '#3a2a1e' });
         for (let k = 0; k < 3; k++) { c.fillStyle = '#8a6a3a'; c.fillRect(bx - 26 + k * 17, 480, 15, 12); }
         fig(c, C.SMUG, bx - 30, 500, 18, pose(lt, 3, { face: -1, shN: 60 + 30 * Math.sin(lt * 3), elN: 60, sitY: VP.sitY(C.SMUG) }), lt, 3, L, { look: [-.5, 0] });
         fig(c, C.SMUG, bx + 34, 500, 18, pose(lt, 4, { face: -1, shN: 70 + 30 * Math.sin(lt * 3 + 1), elN: 50, sitY: VP.sitY(C.SMUG) }), lt, 4, L, { look: [-.5, 0] });
         if (lt > Sh.tK - 1) S.npShip(c, lerp(1500, 900, seg(lt, Sh.tK - 1, Sh.dur + 2)), 440, .4, -1, lt, { flag: 'uk' }); } },
-    over: [(c, lt) => K.dateTag(c, 'THE CONTINENTAL SYSTEM · 1806', lt, { at: .4, y: 100 }), (c, lt, u, Sh) => K.card(c, 'NO TRADE WITH BRITAIN', lt, { at: Sh.tB + .4, until: Sh.tS, x: 960, y: 150, px: 52, rot: -2 })],
+    over: [(c, lt) => K.dateTag(c, 'THE CONTINENTAL SYSTEM · 1806', lt, { at: .4, y: 100 }), (c, lt, u, Sh) => K.card(c, 'NO TRADE WITH BRITAIN', lt, { at: Sh.tB + .4, until: Sh.tS, x: 760, y: 250, px: 52, rot: -2 })],
     sfx: [[.2, 'ocean_loop', .3], ['banned', 'stamp', .5], ['Smuggling', 'splash', .3], ['kept', 'creak', .3]] },
 
   // 3.05 MED: a Spanish mountain road; villagers with muskets on the rocks above a French supply column; smoke from an ambush

@@ -48,7 +48,7 @@ window.SHOTS = [
       [ROYAL, ROYAL2, ROYAL, ROYAL2, ROYAL].forEach((ch, k) => fig(c, ch, 880 + k * 88, 600 + (k % 2) * 16, 34, pose(lt, k, { face: -1, shN: lerp(10, 85, aim), elN: lerp(30, 0, aim), shF: lerp(10, 80, aim), elF: lerp(20, 10, aim), holdN: musket(c, lerp(-1.3, 0, aim)) }), lt, k, L, { look: [-.6, 0], worry: o }));
       [C.FR, C.GUARD, C.FR2].forEach((ch, k) => fig(c, ch, 80 + k * 70, 590 + (k % 2) * 14, 28, pose(lt, k + 5, { face: 1, holdN: musket(c, -1.3) }), lt, k + 5, L, { look: [.6, 0] }));
       const w = seg(lt, Sh.tW - .5, Sh.tO); fig(c, C.NAPG, lerp(330, 640, E.io(w)), 620, 38, w > 0 && w < 1 ? walk(lt, 0, { face: 1 }) : pose(lt, 0, { face: 1, shN: lerp(-6, 45, o), elN: lerp(110, 10, o), shF: lerp(-6, -35, o), elF: lerp(110, 10, o) }), lt, 0, L, { look: [.7, 0] }); },
-    over: [(c, lt) => K.dateTag(c, 'LAFFREY · 7 MARCH 1815', lt, { at: .4, y: 100 }), (c, lt, u, Sh) => K.badge(c, 'ABOUT 1,000 MEN', lt, { at: 2, until: Sh.tB }), (c, lt, u, Sh) => K.card(c, '"IF ANY OF YOU WANTS TO KILL HIS EMPEROR, HERE I AM."', lt, { at: Sh.tO + 1.2, x: 960, y: 150, px: 40, rot: -1 })],
+    over: [(c, lt) => K.dateTag(c, 'LAFFREY · 7 MARCH 1815', lt, { at: .4, y: 100 }), (c, lt, u, Sh) => K.badge(c, 'ABOUT 1,000 MEN', lt, { at: 2, until: Sh.tB }), (c, lt, u, Sh) => K.card(c, '"IF ANY OF YOU WANTS TO KILL HIS EMPEROR, HERE I AM."', lt, { at: Sh.tO + 1.2, x: 900, y: 250, px: 40, rot: -1 })],
     sfx: [[.2, 'wind_loop', .2], [.3, 'tension', .25], ['blocked', 'clank', .4], ['walked', 'footsteps', .35], ['opened', 'heartbeat', .5], ['here I am', 'heartbeat', .5]] },
 
   // 5.05 MED: nobody fires; soldiers throw their caps in the air and run to him; then the Paris crowds
@@ -57,7 +57,7 @@ window.SHOTS = [
     draw: (c, lt, u, Sh) => {
       if (lt < Sh.tP) { const L = SUN(lt), r = seg(lt, Sh.tC, Sh.tC + 2);
         fig(c, C.NAPG, 700, 620, 38, pose(lt, 0, { face: 1, shN: 60, elN: 20, shF: 60, elF: 20 }), lt, 0, L, { look: [.7, 0], smile: 1 });
-        [ROYAL, ROYAL2, ROYAL, ROYAL2].forEach((ch, k) => { const x = lerp(900 + k * 80, 790 + k * 70, E.out(r)), up = r > 0; fig(c, ch, x, 600 + (k % 2) * 16, 34, up && r < 1 ? Object.assign(H1.walk(lt * 2 + k), { face: -1, shN: 160, elN: 10 }) : pose(lt, k, { face: -1, shN: up ? 150 : 10, elN: 10 }), lt, k, L, { look: [-.6, -.3], smile: up ? 1 : 0 });
+        [ROYAL, ROYAL2, ROYAL, ROYAL2].forEach((ch, k) => { const x = lerp(960 + k * 90, 840 + k * 88, E.out(r)), up = r > 0; fig(c, ch, x, 600 + (k % 2) * 16, 34, up && r < 1 ? Object.assign(H1.walk(lt * 2 + k), { face: -1, shN: 160, elN: 10 }) : pose(lt, k, { face: -1, shN: up ? 150 : 10, elN: 10 }), lt, k, L, { look: [-.6, -.3], smile: up ? 1 : 0 });
           const hq = seg(lt, Sh.tC + k * .15, Sh.tC + k * .15 + 1.6); if (hq > 0 && hq < 1) { c.save(); c.translate(x, 520 - Math.sin(hq * Math.PI) * 160); c.rotate(hq * 8); c.fillStyle = '#1e1e24'; c.fillRect(-10, -12, 20, 24); c.restore(); } }); return; }
       VP.drawSet(c, 'np_paris'); const L = SUN(lt);
       [[C.SANS, 160, 0], [C.SANSW, 290, 1], [C.FR, 420, 2], [C.SANS2, 860, 3], [C.SANSW, 990, 4], [C.FR2, 1120, 5]].forEach(([ch, x, k]) => { const j = Math.abs(Math.sin(lt * 5 + k)); fig(c, ch, x, 640 + (k % 2) * 14, 36, pose(lt, k, { face: x < 640 ? 1 : -1, shN: 150 + 20 * j, elN: 20, bob: .03 * j }), lt, k, L, { smile: 1, look: [0, -.4] }); }); },

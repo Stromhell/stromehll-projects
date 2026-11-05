@@ -1,0 +1,1 @@
+0.0:calm,8.6:sad,16.4:hope,24.8:epic,34.0:tension

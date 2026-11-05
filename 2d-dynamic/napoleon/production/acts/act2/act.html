@@ -74,6 +74,9 @@ window.SHOTS = [
   { set: 'cortes', cam: { z: [1.28, 1.36], x: [640, 640], y: [470, 480], ease: E.io }, bed: [['crowd_loop', .3]],
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tP = at(Sh, 'power', 1.5); Sh.tT = at(Sh, 'thirty', 4.5); },
     draw: (c, lt, u, Sh) => { const L = SUN(lt), w = seg(lt, Sh.tP - .5, Sh.tP + 2);
+      // QA r2: brass candelabrum on the rostrum hides the set's modern microphone (1799)
+      { const x = 640, y = 302; c.fillStyle = '#b08a3a'; c.fillRect(x - 22, y - 6, 44, 6); c.fillRect(x - 3, y - 50, 6, 46); c.strokeStyle = '#b08a3a'; c.lineWidth = 4; c.beginPath(); c.moveTo(x - 24, y - 48); c.quadraticCurveTo(x, y - 30, x + 24, y - 48); c.stroke();
+        [-24, 0, 24].forEach((dx, k) => { c.fillStyle = '#efe6d0'; c.fillRect(x + dx - 3, y - 70 + (dx ? 0 : -6), 6, 22); c.fillStyle = '#ffd070'; c.beginPath(); c.ellipse(x + dx, y - 76 + (dx ? 0 : -6) + Math.sin(lt * 9 + k), 3, 6, 0, 0, TAU); c.fill(); VP.glow(c, x + dx, y - 76, 40, '#ffb050', .35); }); }
       [[C.POL, 0], [C.POL2, 1], [C.POL, 2]].forEach(([ch, k]) => { const x = lerp(700 + k * 120, 1500 + k * 120, E.inn(w)); fig(c, ch, x, 640 + k * 10, 38, w > 0 ? Object.assign(H1.walk(lt * 2.4 + k), { face: 1, shN: 150, elN: 30 }) : pose(lt, k, { face: -1, shN: 40, elN: 80 }), lt, k, L, { worry: 1, look: [-.6, 0] }); });
       [C.FR, C.FR2, C.FR].forEach((ch, k) => { const x = lerp(-120 - k * 120, 340 - k * 110, E.out(w)); fig(c, ch, x, 650 + (k % 2) * 12, 38, w < 1 ? walk(lt, k, { face: 1, holdN: musket(c, -.2) }) : pose(lt, k, { face: 1, holdN: musket(c, -.2) }), lt, k + 3, L, { look: [.6, 0] }); });
       if (lt > Sh.tT - .6) fig(c, C.NAP, lerp(200, 560, E.out(seg(lt, Sh.tT - .6, Sh.tT + 1))), 660, 40, lt < Sh.tT + 1 ? walk(lt, 6, { face: 1 }) : pose(lt, 6, { face: 1, shN: 20, elN: 100 }), lt, 6, L, { look: [.4, -.1] }); },

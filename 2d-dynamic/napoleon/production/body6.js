@@ -28,7 +28,7 @@ window.SHOTS = [
       fig(c, C.SERVANT, 300, 640, 40, pose(lt, 1, { face: 1, shN: -4, elN: 110, shF: -4, elF: 110, lean: 8 }), lt, 1, L, { look: [.6, .6], worry: 1 });
       fig(c, C.MAID, 860, 650, 38, pose(lt, 2, { face: -1, shN: 20, elN: 130, shF: 20, elF: 130, lean: 8 }), lt, 2, L, { look: [-.7, .6], worry: 1 });
       fig(c, C.BRITOFF, 1060, 650, 38, pose(lt, 3, { face: -1, shN: -4, elN: 20 }), lt, 3, L, { look: [-.7, .3] }); },
-    over: [(c, lt, u, Sh) => K.dateTag(c, '5 MAY 1821 · AGED 51', lt, { at: Sh.tD, y: 100 }), (c, lt, u, Sh) => K.card(c, '"FRANCE, THE ARMY, JOSEPHINE"', lt, { at: Sh.tL + 1, x: 1180, y: 150, px: 46, rot: -2 })],
+    over: [(c, lt, u, Sh) => K.dateTag(c, '5 MAY 1821 · AGED 51', lt, { at: Sh.tD, y: 100 }), (c, lt, u, Sh) => K.card(c, '"FRANCE, THE ARMY, JOSEPHINE"', lt, { at: Sh.tL + 1, x: 860, y: 250, px: 46, rot: -2 })],
     sfx: [[.2, 'clock_loop', .2], [.3, 'ocean_loop', .12], ['died', 'bell', .3], ['last words', 'breath', .3]] },
 
   // 6.04 MED: the CODE CIVIL; its pages fly off onto a world map, landing on country after country
