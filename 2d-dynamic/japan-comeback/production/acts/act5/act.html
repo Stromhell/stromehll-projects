@@ -1,0 +1,127 @@
+<!doctype html><html><head><meta charset="utf-8"><title>JP act 5 - 1964</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/vp/engine.js"></script><script src="../../../../shared/vp/cast.js"></script><script src="../../../../shared/vp/scenes.js"></script><script src="../../../../shared/vp/spain.js"></script>
+<script src="../../../../shared/kit.js"></script><script src="../../../../shared/vp.js"></script>
+<script src="../../../../spain-1-al-andalus/production/es1_sets.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act1.js"></script><script src="../../../../spain-1-al-andalus/production/es1_cast.js"></script>
+<script src="../../../../spain-3-civil-war/production/es3_cast.js"></script>
+<script src="../../jp_cast.js"></script><script src="../../jp_sets.js"></script><script src="../../jp_sets_act1.js"></script><script src="../../jp_sets_act2.js"></script><script src="../../jp_sets_act3.js"></script><script src="../../jp_sets_act4.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, E = K.E, J = S.JP, JX = S.JPX, H1 = S.ES1H, TAU = Math.PI * 2;
+const at = VP.at, seg = K.seg, lerp = K.lerp;
+const GREY = lt => VP.light('studio', lt, { swing: 3, set: { L: [.6, -.9], amb: '#4a4a52', ambA: .35, rim: '#e0d8d0', rimA: .5, tint: '#c8c4c0', tintA: .12 } });
+const DUSK = lt => VP.light('studio', lt, { swing: 3, set: { L: [-.8, -.4], amb: '#3a2a3a', ambA: .4, rim: '#ffa060', rimA: .9, tint: '#ff9a60', tintA: .12 } });
+const BULB = lt => VP.light('studio', lt, { swing: 6, set: { L: [.2, -1], amb: '#2a2018', ambA: .45, rim: '#ffd890', rimA: .9, tint: '#ffc870', tintA: .14 } });
+const DAY = lt => VP.light('studio', lt, { swing: 3, set: { L: [.7, -.8], amb: '#6a7a8a', ambA: .18, rim: '#fff8e8', rimA: .7, tint: '#fff4e0', tintA: .05 } });
+const night = (c, a, col) => { c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = `rgba(${col},${a})`; c.fillRect(0, 0, 1280, 720); c.restore(); };
+const fig = (c, ch, x, y, uu, pose, face, L, k = 0) => { S.contact(c, x, y, uu * .9, .35); VP.figure(c, [x, y], { k: .6, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, ch, x, y, uu, pose, Object.assign({ blink: S.blinkAt(face.time || 0, k) }, face), L)); };
+const hold = (fn) => fn;
+const WARM = lt => VP.light('studio', lt, { swing: 3, set: { L: [.5, -.8], amb: '#3a2a20', ambA: .25, rim: '#ffe0b0', rimA: .8, tint: '#ffd8a0', tintA: .1 } });
+const NITE = lt => VP.light('studio', lt, { swing: 3, set: { L: [.3, -1], amb: '#1a2238', ambA: .5, rim: '#ffd890', rimA: .9, tint: '#ffc870', tintA: .12 } });
+const AS = JX.ASIA, AL = JX.AL;
+const shinkansen = (c, x, y, s, cars = 6) => { c.save(); c.translate(x, y); c.scale(s, s);
+  for (let i = 0; i < cars; i++) { const cx = -i * 200; c.fillStyle = '#f4f2ec'; c.beginPath(); if (i === 0) { c.moveTo(cx - 196, -60); c.lineTo(cx - 30, -60); c.quadraticCurveTo(cx + 40, -56, cx + 60, -14); c.lineTo(cx + 60, 0); c.lineTo(cx - 196, 0); } else c.rect(cx - 196, -60, 194, 60); c.fill();
+    c.fillStyle = '#1e4aa0'; c.fillRect(cx - 196, -12, i === 0 ? 250 : 194, 10); c.fillRect(cx - 196, -40, i === 0 ? 170 : 194, 12);
+    c.fillStyle = '#20283a'; for (let k = 0; k < 9; k++) c.fillRect(cx - 186 + k * 20, -38, 14, 8);
+    c.fillStyle = S.rgba('#ffffff', .6); c.fillRect(cx - 196, -58, i === 0 ? 220 : 194, 3); c.fillStyle = '#2a2a2e'; c.fillRect(cx - 190, 0, 182, 5); }
+  c.fillStyle = '#1e4aa0'; c.beginPath(); c.ellipse(40, -30, 14, 10, -.3, 0, TAU); c.fill(); c.fillStyle = '#fff8d0'; c.beginPath(); c.arc(54, -10, 4, 0, TAU); c.fill(); c.restore(); };
+const RUNNER = Object.assign({}, J.TEEN, { name: 'Sakai', shirt: ['#f4f4f0', '#c0c0b8'], pants: ['#f4f4f0', '#c0c0b8'], sleeves: false });
+const FLAGS = ['#c82020', '#1e4aa0', '#2a8a3a', '#e8c020', '#f4f4f0', '#8a2a8a'];
+const flagOn = (col, k) => wr => { c0.strokeStyle = '#5a4a3a'; c0.lineWidth = 2; c0.beginPath(); c0.moveTo(wr[0], wr[1] + 6); c0.lineTo(wr[0], wr[1] - 60); c0.stroke(); c0.fillStyle = col; c0.fillRect(wr[0], wr[1] - 60, 30, 20); if (col === '#f4f4f0') { c0.fillStyle = '#c82020'; c0.beginPath(); c0.arc(wr[0] + 15, wr[1] - 50, 5, 0, TAU); c0.fill(); } };
+let c0 = null;
+const bar = (c, x, y, w, h, col, label) => { c.fillStyle = col; c.fillRect(x, y - h, w, h); c.fillStyle = S.rgba('#ffffff', .25); c.fillRect(x, y - h, 6, h); c.fillStyle = '#2a2a2a'; c.font = 'bold 22px Oswald'; c.textAlign = 'center'; c.fillText(label, x + w / 2, y + 30); c.textAlign = 'left'; };
+
+window.SHOTS = [
+  // 5.01 Tokyo station, 1 October 1964: the bullet train glides out; the crowd waves flags
+  { set: 'jp_platform', cam: { z: [1.0, 1.08], x: [640, 680], y: [380, 380], ease: E.io }, bed: [['crowd_loop', .12]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tL = at(Sh, 'left Tokyo', 4); },
+    draw: (c, lt, u, Sh) => {
+      c0 = c; c.fillStyle = '#f4ecd8'; c.fillRect(520, 150, 240, 50); c.strokeStyle = '#2a2a2a'; c.lineWidth = 3; c.strokeRect(520, 150, 240, 50); c.fillStyle = '#1a1a1a'; c.font = 'bold 26px Oswald'; c.textAlign = 'center'; c.fillText('東京 · TOKYO', 640, 186); c.textAlign = 'left';
+      c.fillStyle = '#9ab86a'; c.save(); c.globalAlpha = .0; c.restore();
+      const q = E.io(seg(lt, Sh.tL - 2.5, Sh.dur + 2)); shinkansen(c, lerp(1250, 3200, q), 474, 2.2, 8);
+      const L = DAY(lt); [[J.SALARY, 180], [J.HANA, 300], [J.SCHOOLGIRL2, 420], [J.SALARY2, 560], [J.FATHER_W, 700], [J.MOTHER64, 830], [J.TEEN, 960], [J.STUDENT, 1090]].forEach(([ch, x], k) => fig(c, ch, x, 650 + (k % 2) * 14, 40, Object.assign(S.idle(lt * .3, k), { face: -1, shN: 150, elN: 30 + 25 * Math.sin(lt * 6 + k), holdN: flagOn('#f4f4f0', k) }), { smile: .8, look: [-.7, -.3], time: lt }, L, k));
+    },
+    over: [(c, lt) => K.dateTag(c, 'SHINKANSEN · 1 OCT 1964', lt, { at: .3 }), (c, lt, u, Sh) => K.badge(c, 'UP TO 210 KM/H', lt, { at: Sh.tL + 1.5 })],
+    sfx: [[.2, 'crowd_cheer', .25], ['left Tokyo', 'whoosh', .45], ['two hundred', 'riser', .3]] },
+
+  // 5.02 the stadium: team flags march round the track
+  { set: 'jp_stadium', cam: { z: [1.0, 1.06], x: [640, 640], y: [380, 380], ease: E.io }, bed: [['crowd_loop', .2]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      c0 = c; const L = DAY(lt); for (let k = 0; k < 9; k++) { const x = lerp(-200, 1500, ((lt * .06 + k / 9) % 1)); const ch = [J.SALARY, J.STUDENT, J.HANA, J.SALARY2][k % 4]; fig(c, ch, x, 600 + (k % 3) * 8, 36, Object.assign(H1.walk(lt + k * .3), { face: 1, holdN: flagOn(FLAGS[k % 6], k) }), { smile: .5, look: [.8, 0], time: lt }, L, k); }
+      for (let k = 0; k < 5; k++) VP.glow(c, 200 + k * 220, 160 + 40 * Math.sin(lt + k), 30, '#ffffff', .15);
+    },
+    over: [(c, lt) => K.dateTag(c, 'TOKYO 1964', lt, { at: .3 }), (c, lt) => K.card(c, 'FIRST OLYMPICS IN ASIA', lt, { at: 1.2, x: 960, y: 200, px: 48, rot: -2 })],
+    sfx: [[.2, 'crowd_cheer', .4], [1.5, 'swell', .3]] },
+
+  // 5.03 Yoshinori Sakai carries the flame up the stadium steps
+  { set: 'jp_stadium', cam: (lt, u, Sh) => { const q = Math.min(1, lt / (Sh.dur - .6)); return { z: [1.35], x: [lerp(440, 1010, q)], y: [lerp(632, 342, q) - 110] }; }, bed: [['crowd_loop', .15]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tB = at(Sh, 'born', 4); Sh.tH = at(Sh, 'bomb fell', Sh.dur - 1.5); },
+    draw: (c, lt, u, Sh) => {
+      c.fillStyle = '#d8d0c0'; c.beginPath(); c.moveTo(380, 640); c.lineTo(1000, 340); c.lineTo(1100, 340); c.lineTo(480, 640); c.fill(); for (let k = 0; k <= 22; k++) { const x = 380 + k * 28.2, y = 640 - k * 13.6; c.fillStyle = S.rgba('#8a8478', .7); c.fillRect(x, y - 2, 100, 3); }
+      c.fillStyle = '#5a5a60'; c.beginPath(); c.moveTo(1010, 340); c.lineTo(1090, 340); c.lineTo(1070, 310); c.lineTo(1030, 310); c.fill(); if (lt > Sh.dur - .8) H1.fire(c, 1050, 308, 2, lt);
+      const q = Math.min(1, lt / (Sh.dur - .6)), x = lerp(440, 1010, q), y = lerp(632, 342, q); const L = DAY(lt);
+      fig(c, RUNNER, x, y, 40, Object.assign(H1.walk(lt * 1.3), { face: 1, shN: 150, elN: 20, holdN: wr => { c.fillStyle = '#c8a040'; c.beginPath(); c.moveTo(wr[0] - 4, wr[1]); c.lineTo(wr[0] + 4, wr[1]); c.lineTo(wr[0] + 7, wr[1] - 26); c.lineTo(wr[0] - 7, wr[1] - 26); c.fill(); H1.fire(c, wr[0], wr[1] - 28, .8, lt); } }), { look: [.6, -.4], smile: .3, time: lt }, L, 0);
+    },
+    over: [(c, lt) => K.card(c, 'YOSHINORI SAKAI · 19', lt, { at: .6, x: 420, y: 200, px: 44, rot: -3 }), (c, lt, u, Sh) => K.badge(c, 'BORN HIROSHIMA · 6 AUG 1945', lt, { at: Sh.tB })],
+    sfx: [[.2, 'crowd_loop', .2], [.5, 'run_steps', .3], ['born', 'heartbeat', .35], ['bomb fell', 'drone', .3]] },
+
+  // 5.04 Hiroshima rebuilt: the Peace Park in bloom, the domed ruin behind
+  { set: 'jp_hiroshima', cam: { z: [1.05, 1.12], x: [640, 700], y: [380, 370], ease: E.io }, bed: [['birds_loop', .15]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tP = at(Sh, 'population', 3.5); },
+    draw: (c, lt, u, Sh) => {
+      const L = DAY(lt); [[J.MOTHER64, 300, 1], [J.SON, 380, 1], [J.SALARY, 1000, -1], [J.HANA, 880, -1]].forEach(([ch, x0, d], k) => { const x = x0 + d * lt * 20; fig(c, ch, x, 650 + k * 6, ch === J.SON ? 32 : 40, Object.assign(H1.walk(lt * .8 + k * .4), { face: d }), { smile: .4, look: [d * .8, 0], time: lt }, L, k); });
+      for (let k = 0; k < 14; k++) { const r = S.rng(k + 77); c.fillStyle = '#f4c8d0'; c.beginPath(); c.ellipse((r() * 1280 + lt * 30) % 1280, (r() * 400 + lt * 40 * (0.5 + r())) % 400 + 300, 4, 2, lt + k, 0, TAU); c.fill(); }
+    },
+    over: [(c, lt) => K.dateTag(c, 'HIROSHIMA · LATE 1950s', lt, { at: .3 }), (c, lt, u, Sh) => K.badge(c, 'POPULATION BACK TO PRE-WAR', lt, { at: Sh.tP })],
+    sfx: [[.2, 'birds_loop', .15], ['population', 'chime', .3]] },
+
+  // 5.05 the bar race: Japan's economy rises past West Germany into third place
+  { set: 'jp_gdp', cam: { z: [1.0, 1.05], x: [640, 640], y: [360, 350], ease: E.io }, bed: [['drone', .15]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tP = at(Sh, 'passed', 1); Sh.t3 = at(Sh, 'third-largest', 3.5); },
+    draw: (c, lt, u, Sh) => {
+      c.strokeStyle = '#3a3a3a'; c.lineWidth = 3; c.beginPath(); c.moveTo(160, 560); c.lineTo(1140, 560); c.stroke();
+      const j = E.io(seg(lt, .3, Sh.tP + 1.5)); bar(c, 220, 560, 150, 420, '#3a5aa0', 'USA'); bar(c, 440, 560, 150, 200, '#b02020', 'USSR'); bar(c, 660, 560, 150, lerp(90, 170, j), '#e8e0d0', 'JAPAN'); bar(c, 880, 560, 150, 150, '#4a4a4a', 'W. GERMANY');
+      c.fillStyle = '#c82020'; c.beginPath(); c.arc(735, 560 - lerp(90, 170, j) + 40, 16, 0, TAU); c.fill();
+      if (lt > Sh.t3) { c.fillStyle = '#c82020'; c.font = 'bold 60px Anton'; c.textAlign = 'center'; c.fillText('#3', 735, 560 - 170 - 20); c.textAlign = 'left'; }
+    },
+    over: [(c, lt) => K.dateTag(c, 'GDP · 1968', lt, { at: .3 }), (c, lt, u, Sh) => K.badge(c, '#3 IN THE WORLD', lt, { at: Sh.t3 + .3 })],
+    sfx: [['passed', 'whoosh', .4], ['third-largest', 'chime', .45]] },
+
+  // 5.06 export cars on the docks; a memory-chip wafer; an American professor with "Japan as Number One"
+  { set: 'jp_port', cam: { z: [1.05, 1.1], x: [640, 660], y: [380, 380], ease: E.io }, bed: [['ocean_loop', .12]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tC = at(Sh, 'memory chips', 5); Sh.tB = at(Sh, 'business schools', 8.5); },
+    draw: (c, lt, u, Sh) => {
+      if (lt < Sh.tC - 1) { const cols = ['#c82020', '#e8e0c8', '#2a4a8a', '#3a8a5a', '#e8c040']; for (let r = 0; r < 4; r++) for (let k = 0; k < 7; k++) { const x = 120 + k * 160 + (r % 2) * 40, y = 450 + r * 70; c.save(); c.translate(x, y); c.fillStyle = 'rgba(0,0,0,.25)'; c.fillRect(-60, 0, 120, 6); c.fillStyle = cols[(r * 3 + k) % 5]; c.beginPath(); c.moveTo(-60, 0); c.lineTo(-60, -22); c.lineTo(-30, -26); c.lineTo(-18, -44); c.lineTo(26, -44); c.lineTo(40, -24); c.lineTo(60, -20); c.lineTo(60, 0); c.fill(); c.fillStyle = '#a8c8d8'; c.fillRect(-14, -40, 34, 13); c.fillStyle = '#141414'; c.beginPath(); c.arc(-36, 0, 10, 0, TAU); c.arc(36, 0, 10, 0, TAU); c.fill(); c.restore(); } }
+      else if (lt < Sh.tB - .3) { c.fillStyle = '#0e1220'; c.fillRect(0, 0, 1280, 720); VP.glow(c, 640, 360, 400, '#8ab0ff', .35); c.save(); c.translate(640, 360); c.rotate(lt * .1); c.fillStyle = '#b8c0d0'; c.beginPath(); c.arc(0, 0, 230, 0, TAU); c.fill(); c.beginPath(); c.arc(0, 0, 230, 0, TAU); c.clip(); for (let x = -240; x < 240; x += 26) for (let y = -240; y < 240; y += 26) { c.fillStyle = (Math.abs(x * 7 + y * 3) % 5) ? '#7a8ab8' : '#c8a0e0'; c.fillRect(x + 2, y + 2, 22, 22); } c.restore(); VP.glow(c, 560, 280, 120, '#ffffff', .3); }
+      else { VP.drawSet(c, 'jp_embassy'); const L = DAY(lt); fig(c, J.BUYER, 640, 660, 48, Object.assign(S.idle(lt * .3, 0), { face: 1, shN: 70, elN: 60, holdN: wr => { c.save(); c.translate(wr[0] + 6, wr[1] - 20); c.rotate(-.1); c.fillStyle = '#c82020'; c.fillRect(0, 0, 60, 80); c.fillStyle = '#f4ecd8'; c.font = 'bold 10px Oswald'; c.fillText('JAPAN AS', 6, 28); c.fillText('NUMBER', 6, 42); c.fillText('ONE', 6, 56); c.restore(); } }), { look: [.5, -.1], smile: .4, open: .3 + .2 * Math.sin(lt * 9), time: lt }, L, 0); }
+    },
+    over: [(c, lt, u, Sh) => K.badge(c, '1980: MORE CARS THAN AMERICA', lt, { at: .5, until: Sh.tC - 1 }), (c, lt, u, Sh) => K.badge(c, 'LATE 1980s: MOST MEMORY CHIPS', lt, { at: Sh.tC - .8, until: Sh.tB - .3 }), (c, lt, u, Sh) => K.card(c, '"JAPAN AS NUMBER ONE" · 1979', lt, { at: Sh.tB, x: 1380, y: 220, px: 40, rot: 2 })],
+    sfx: [[.2, 'ocean_loop', .12], ['memory chips', 'hum_loop', .2], ['business schools', 'paper', .35]] },
+
+  // 5.07 the family, older now, round the low table; the daruma on the shelf, upright
+  { set: 'jp_home', cam: { z: [1.15, 1.25], x: [700, 760], y: [400, 390], ease: E.io }, bed: [['night_loop', .08]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tF = at(Sh, 'Fall seven', 3); },
+    draw: (c, lt, u, Sh) => {
+      S.daruma(c, 950, 208, .9, S.darumaTilt(lt, Sh.tF - .8)); const L = WARM(lt);
+      [[J.MOTHER64, 470, 1], [J.FATHER_W, 600, 1], [J.HANA, 860, -1], [J.TEEN, 990, -1]].forEach(([ch, x, d], k) => fig(c, ch, x, 694, 42, Object.assign(VP.sit(ch, lt * .3, k), { face: d, shN: 30, elN: 60 }), { smile: .6, look: [d * .6, .1], time: lt }, L, k));
+      c.fillStyle = 'rgba(0,0,0,.25)'; c.beginPath(); c.ellipse(730, 668, 260, 12, 0, 0, TAU); c.fill(); JX.wood(c, 500, 600, 460, 22, '#5a3a20', 51); c.fillStyle = '#3a2414'; c.fillRect(516, 622, 14, 44); c.fillRect(930, 622, 14, 44);
+      for (let k = 0; k < 4; k++) { c.fillStyle = '#e8e0d0'; c.beginPath(); c.ellipse(580 + k * 100, 596, 16, 6, 0, 0, TAU); c.fill(); }
+    },
+    over: [(c, lt, u, Sh) => K.card(c, '七転び八起き', lt, { at: .8, x: 420, y: 200, px: 56, rot: -3 }), (c, lt, u, Sh) => K.badge(c, 'FALL SEVEN TIMES, STAND UP EIGHT', lt, { at: Sh.tF })],
+    sfx: [['saying', 'chime', .3], ['Fall seven', 'thud', .25], ['stand up', 'swell', .35]] },
+
+  // 5.08 pull back from the family's window to the lit city; the bullet train crosses the bridge
+  { set: 'jp_window', cam: (lt, u, Sh) => ({ z: [lerp(1.6, 1.0, E.io(seg(lt, 0, Sh.dur * .7)))], x: [640], y: [lerp(420, 360, E.io(seg(lt, 0, Sh.dur * .7)))] }), bed: [['night_loop', .15]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tM = at(Sh, 'millions of people', 6.5); },
+    draw: (c, lt, u, Sh) => {
+      const q = ((lt * .12) % 1.4); shinkansen(c, lerp(-400, 1900, q / 1.4), 498, .8, 8);
+      const f = 1 - E.io(seg(lt, 1, 5)); if (f > 0) { c.save(); c.globalAlpha = f; c.fillStyle = '#2a1a10'; c.fillRect(0, 0, 1280, 120); c.fillRect(0, 620, 1280, 100); c.fillRect(0, 0, 220, 720); c.fillRect(1060, 0, 220, 720); c.fillRect(630, 0, 20, 720); c.restore(); }
+      for (let k = 0; k < 30; k++) { const r = S.rng(k + 501); if (r() > .5 && Math.sin(lt * 2 + k) > .6) VP.glow(c, r() * 1280, 200 + r() * 260, 12, '#ffe8a0', .5); }
+    },
+    over: [(c, lt, u, Sh) => K.card(c, 'ONE DAY AT A TIME', lt, { at: Sh.tM + 1.5, x: 640, y: 160, px: 56, rot: -2 })],
+    sfx: [[.3, 'night_loop', .15], [2, 'whoosh_soft', .3], ['millions of people', 'swell', .4], ['one day at a time', 'chime', .45]] },
+];
+VP.build(); K.boot();
+</script></body></html>

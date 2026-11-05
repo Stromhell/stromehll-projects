@@ -1,0 +1,174 @@
+{
+ "dur": 38.099,
+ "cues": [
+  {
+   "t": 0.2,
+   "name": "wind_loop",
+   "gain": 0.25
+  },
+  {
+   "t": 0.3,
+   "name": "march_loop",
+   "gain": 0.3
+  },
+  {
+   "t": 1.5,
+   "name": "hooves",
+   "gain": 0.3
+  },
+  {
+   "t": 5.818,
+   "name": "drum",
+   "gain": 0.4
+  },
+  {
+   "t": 8.453,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 8.553,
+   "name": "wind_loop",
+   "gain": 0.3
+  },
+  {
+   "t": 12.124,
+   "name": "paper",
+   "gain": 0.3
+  },
+  {
+   "t": 13.884,
+   "name": "cannon",
+   "gain": 0.6
+  },
+  {
+   "t": 14.344,
+   "name": "cannon",
+   "gain": 0.5
+  },
+  {
+   "t": 14.344,
+   "name": "fire_loop",
+   "gain": 0.3
+  },
+  {
+   "t": 16.324,
+   "name": "thud",
+   "gain": 0.4
+  },
+  {
+   "t": 17.199,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 17.299,
+   "name": "ocean_loop",
+   "gain": 0.35
+  },
+  {
+   "t": 17.599,
+   "name": "creak",
+   "gain": 0.3
+  },
+  {
+   "t": 22.149,
+   "name": "crowd_cheer",
+   "gain": 0.5
+  },
+  {
+   "t": 23.104,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 23.204,
+   "name": "crowd_loop",
+   "gain": 0.3
+  },
+  {
+   "t": 24.979,
+   "name": "door_slam",
+   "gain": 0.45
+  },
+  {
+   "t": 25.779,
+   "name": "march",
+   "gain": 0.4
+  },
+  {
+   "t": 27.279,
+   "name": "drum",
+   "gain": 0.4
+  },
+  {
+   "t": 29.214,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 29.314,
+   "name": "drone",
+   "gain": 0.2
+  },
+  {
+   "t": 32.949,
+   "name": "bell",
+   "gain": 0.35
+  },
+  {
+   "t": 34.989,
+   "name": "swell",
+   "gain": 0.4
+  },
+  {
+   "t": 36.689,
+   "name": "crowd_cheer",
+   "gain": 0.3
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 9.153,
+   "name": "wind_loop",
+   "gain": 0.25
+  },
+  {
+   "start": 0,
+   "end": 9.153,
+   "name": "march_loop",
+   "gain": 0.3
+  },
+  {
+   "start": 8.353,
+   "end": 17.899,
+   "name": "wind_loop",
+   "gain": 0.3
+  },
+  {
+   "start": 17.099,
+   "end": 23.804000000000002,
+   "name": "ocean_loop",
+   "gain": 0.35
+  },
+  {
+   "start": 23.004,
+   "end": 29.914,
+   "name": "crowd_loop",
+   "gain": 0.3
+  },
+  {
+   "start": 29.114,
+   "end": 38.898999999999994,
+   "name": "drone",
+   "gain": 0.2
+  },
+  {
+   "start": 29.114,
+   "end": 38.898999999999994,
+   "name": "crowd_loop",
+   "gain": 0.1
+  }
+ ]
+}

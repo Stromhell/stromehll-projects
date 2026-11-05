@@ -1,0 +1,273 @@
+[
+ {
+  "id": 1,
+  "act": 0,
+  "s0": 1,
+  "s1": 2,
+  "hook": "One ship got stuck sideways and blocked ten billion dollars of trade every single day.",
+  "kicker": "EVER GIVEN \u00b7 2021",
+  "mood": "tension",
+  "title": "The Ship That Blocked $10 Billion a Day",
+  "desc": "In March 2021 the Ever Given jammed the Suez Canal for six days. That ditch in the desert took 3,000 years to build.\nWatch the full video on our YouTube channel.\n\n#Shorts #History #SuezCanal #Egypt #EverGiven #Shipping",
+  "thumb": [
+   "$10 BILLION",
+   "A DAY"
+  ],
+  "pre": "SZ"
+ },
+ {
+  "id": 2,
+  "act": 1,
+  "s0": 1,
+  "s1": 3,
+  "hook": "An Egyptian pharaoh stopped digging the Suez Canal because of one prophecy.",
+  "kicker": "600 BC",
+  "mood": "tension",
+  "title": "The Prophecy That Stopped a Pharaoh's Canal",
+  "desc": "Pharaoh Necho II started a canal from the Nile to the Red Sea. Then an oracle warned it would only help invaders.\nWatch the full video on our YouTube channel.\n\n#Shorts #History #SuezCanal #Egypt #AncientEgypt #Pharaoh",
+  "thumb": [
+   "ONE",
+   "PROPHECY"
+  ],
+  "pre": "SZ",
+  "tt": 23.5,
+  "thx": 930,
+  "tz": 1.25,
+  "thy": 1.0
+ },
+ {
+  "id": 3,
+  "act": 1,
+  "s0": 4,
+  "s1": 6,
+  "hook": "A Persian king carved giant stones in the desert so nobody would forget his canal.",
+  "kicker": "DARIUS THE GREAT",
+  "mood": "epic",
+  "title": "The Persian King Who Finished Egypt's Canal",
+  "desc": "Darius finished the canal and set up carved stones along the bank. The desert buried it anyway.\nWatch the full video on our YouTube channel.\n\n#Shorts #History #SuezCanal #Egypt #Persia #Darius",
+  "thumb": [
+   "CARVED IN",
+   "STONE"
+  ],
+  "pre": "SZ",
+  "tt": 4.4,
+  "thx": 590,
+  "tz": 1.05,
+  "thy": 0.85
+ },
+ {
+  "id": 4,
+  "act": 2,
+  "s0": 1,
+  "s1": 2,
+  "hook": "The first canal lock in history may have been built in Egypt over two thousand years ago.",
+  "kicker": "PTOLEMY II \u00b7 ~270 BC",
+  "mood": "calm",
+  "title": "The First Canal Lock in History?",
+  "desc": "Ptolemy II reopened the canal and added a gate that kept salt water away from the Nile farms.\nWatch the full video on our YouTube channel.\n\n#Shorts #History #SuezCanal #Egypt #AncientHistory #Engineering",
+  "thumb": [
+   "FIRST",
+   "LOCK EVER"
+  ],
+  "pre": "SZ"
+ },
+ {
+  "id": 5,
+  "act": 2,
+  "s0": 3,
+  "s1": 5,
+  "hook": "Rome ate Egyptian bread. Then the canal that carried it disappeared for a thousand years.",
+  "kicker": "ROME \u2192 640 \u2192 GONE",
+  "mood": "sad",
+  "title": "The Canal That Vanished for 1,000 Years",
+  "desc": "Rome shipped Egyptian grain through the canal. When Rome weakened, sand swallowed it, and even its route was forgotten.\nWatch the full video on our YouTube channel.\n\n#Shorts #History #SuezCanal #Egypt #Rome #LostHistory",
+  "thumb": [
+   "GONE FOR",
+   "1,000 YEARS"
+  ],
+  "pre": "SZ",
+  "tt": 5.8,
+  "thx": 760,
+  "thy": 0.85
+ },
+ {
+  "id": 6,
+  "act": 2,
+  "s0": 6,
+  "s1": 6,
+  "hook": "An Ottoman ruler tried to beat Portugal with a canal, and it never happened.",
+  "kicker": "SOKOLLU MEHMED PASHA",
+  "mood": "tension",
+  "title": "The Ottoman Canal That Was Never Dug",
+  "desc": "When Portugal sailed round Africa and took the spice trade, Istanbul planned a Suez canal. It was shelved.\nWatch the full video on our YouTube channel.\n\n#Shorts #History #SuezCanal #Egypt #Ottoman #SpiceTrade",
+  "thumb": [
+   "NEVER",
+   "DUG"
+  ],
+  "pre": "SZ",
+  "tt": 3.5,
+  "thx": 900,
+  "tz": 1.0,
+  "thy": 0.5
+ },
+ {
+  "id": 7,
+  "act": 3,
+  "s0": 1,
+  "s1": 3,
+  "hook": "Napoleon's engineers made a ten-metre mistake that delayed the Suez Canal by fifty years.",
+  "kicker": "NAPOLEON \u00b7 1798",
+  "mood": "tension",
+  "title": "Napoleon's 10-Metre Mistake",
+  "desc": "Le P\u00e8re told Napoleon the Red Sea was 10 metres higher than the Mediterranean. He was wrong.\nWatch the full video on our YouTube channel.\n\n#Shorts #History #SuezCanal #Egypt #Napoleon #History",
+  "thumb": [
+   "10 METRE",
+   "MISTAKE"
+  ],
+  "pre": "SZ",
+  "tt": 23,
+  "thx": 1000
+ },
+ {
+  "id": 8,
+  "act": 3,
+  "s0": 4,
+  "s1": 6,
+  "hook": "The Suez Canal wasn't built by an engineer. It was built by a retired diplomat with one friend.",
+  "kicker": "FERDINAND DE LESSEPS",
+  "mood": "epic",
+  "title": "The Diplomat Who Got the Suez Canal Built",
+  "desc": "De Lesseps used an old friendship with Egypt's new ruler to win the right to build. Britain called it a fraud.\nWatch the full video on our YouTube channel.\n\n#Shorts #History #SuezCanal #Egypt #DeLesseps #Diplomacy",
+  "thumb": [
+   "NOT AN",
+   "ENGINEER"
+  ],
+  "pre": "SZ",
+  "tt": 13,
+  "thx": 560,
+  "tz": 1.15,
+  "thy": 0.95
+ },
+ {
+  "id": 9,
+  "act": 4,
+  "s0": 1,
+  "s1": 3,
+  "hook": "Around twenty thousand Egyptian farmers were forced to dig the Suez Canal by hand.",
+  "kicker": "APRIL 1859",
+  "mood": "sad",
+  "title": "The Forced Labour Behind the Suez Canal",
+  "desc": "Picks, baskets, camels carrying water, and then cholera in 1865. Nobody knows the full death toll.\nWatch the full video on our YouTube channel.\n\n#Shorts #History #SuezCanal #Egypt #Egypt #DarkHistory",
+  "thumb": [
+   "DUG BY",
+   "HAND"
+  ],
+  "pre": "SZ"
+ },
+ {
+  "id": 10,
+  "act": 4,
+  "s0": 4,
+  "s1": 5,
+  "hook": "In 1864 the workers vanished overnight and everyone thought the Suez Canal was dead.",
+  "kicker": "1864",
+  "mood": "sad",
+  "title": "The Year the Suez Canal Almost Died",
+  "desc": "Britain pushed the Ottoman sultan to ban the forced labour. The camps emptied and the money ran out.\nWatch the full video on our YouTube channel.\n\n#Shorts #History #SuezCanal #Egypt #History #Egypt",
+  "thumb": [
+   "THE CANAL",
+   "IS DEAD"
+  ],
+  "pre": "SZ",
+  "thx": 1440,
+  "tt": 15,
+  "tz": 1.0,
+  "thy": 0.5
+ },
+ {
+  "id": 11,
+  "act": 5,
+  "s0": 1,
+  "s1": 3,
+  "hook": "Steam monsters saved the Suez Canal, and then dug up a two-thousand-year-old secret.",
+  "kicker": "1866",
+  "mood": "epic",
+  "title": "The Machines That Saved the Suez Canal",
+  "desc": "Giant steam dredgers did most of the digging, and in 1866 they unearthed one of Darius's stones.\nWatch the full video on our YouTube channel.\n\n#Shorts #History #SuezCanal #Egypt #Engineering #Industrial",
+  "thumb": [
+   "STEAM",
+   "MONSTERS"
+  ],
+  "pre": "SZ"
+ },
+ {
+  "id": 12,
+  "act": 5,
+  "s0": 4,
+  "s1": 6,
+  "hook": "Egypt threw one of the most expensive parties in history to open the Suez Canal.",
+  "kicker": "17 NOV 1869",
+  "mood": "hope",
+  "title": "The Most Expensive Party in History",
+  "desc": "Empress Eugenie's yacht led the ships, kings came, and Cairo got a brand new opera house.\nWatch the full video on our YouTube channel.\n\n#Shorts #History #SuezCanal #Egypt #1869 #Egypt",
+  "thumb": [
+   "MOST EXPENSIVE",
+   "PARTY EVER"
+  ],
+  "pre": "SZ",
+  "tt": 23,
+  "thx": 960,
+  "tz": 1.35,
+  "thy": 1.0
+ },
+ {
+  "id": 13,
+  "act": 6,
+  "s0": 1,
+  "s1": 3,
+  "hook": "Egypt built the Suez Canal, then sold it to Britain to pay its debts.",
+  "kicker": "1875",
+  "mood": "sad",
+  "title": "How Egypt Lost Its Own Canal",
+  "desc": "Ismail went broke, Disraeli bought Egypt's shares with a Rothschild loan, and British troops followed.\nWatch the full video on our YouTube channel.\n\n#Shorts #History #SuezCanal #Egypt #Britain #Disraeli",
+  "thumb": [
+   "SOLD TO",
+   "BRITAIN"
+  ],
+  "pre": "SZ"
+ },
+ {
+  "id": 14,
+  "act": 6,
+  "s0": 4,
+  "s1": 5,
+  "hook": "In 1956 Egypt took its canal back, and three countries invaded.",
+  "kicker": "NASSER \u00b7 1956",
+  "mood": "tension",
+  "title": "The Day Egypt Took Its Canal Back",
+  "desc": "Nasser nationalised the canal. Britain, France and Israel invaded, then pulled back under US and Soviet pressure.\nWatch the full video on our YouTube channel.\n\n#Shorts #History #SuezCanal #Egypt #SuezCrisis #Nasser",
+  "thumb": [
+   "TAKEN",
+   "BACK"
+  ],
+  "pre": "SZ"
+ },
+ {
+  "id": 15,
+  "act": 6,
+  "s0": 5,
+  "s1": 6,
+  "hook": "One in eight of everything the world trades goes through this one ditch.",
+  "kicker": "TODAY",
+  "mood": "hope",
+  "title": "Why This Ditch Still Runs the World",
+  "desc": "Pharaohs, kings, emperors and sultans tried. It took steam, debt and one stubborn diplomat.\nWatch the full video on our YouTube channel.\n\n#Shorts #History #SuezCanal #Egypt #Trade #Geopolitics",
+  "thumb": [
+   "1 IN 8",
+   "OF ALL TRADE"
+  ],
+  "pre": "SZ",
+  "tz": 1.3,
+  "thy": 1.0
+ }
+]

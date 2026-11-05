@@ -1,0 +1,77 @@
+<!doctype html><html><head><meta charset="utf-8"><title>EC2 act 2</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/vp/engine.js"></script><script src="../../../../shared/vp/cast.js"></script><script src="../../../../shared/vp/scenes.js"></script><script src="../../../../shared/vp/spain.js"></script>
+<script src="../../../../shared/kit.js"></script><script src="../../../../shared/vp.js"></script>
+<script src="../../../../spain-1-al-andalus/production/es1_sets.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act1.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act2.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act3.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act4.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act5.js"></script><script src="../../../../spain-1-al-andalus/production/es1_cast.js"></script>
+<script src="../../../../spain-2-empire/production/es2_sets.js"></script><script src="../../../../spain-2-empire/production/es2_sets_act2.js"></script>
+<script src="../../../../spain-3-civil-war/production/es3_sets.js"></script><script src="../../../../spain-3-civil-war/production/es3_sets_act4b.js"></script><script src="../../../../spain-3-civil-war/production/es3_sets_act5b.js"></script><script src="../../../../spain-3-civil-war/production/es3_cast.js"></script>
+<script src="../../../../japan-comeback/production/jp_cast.js"></script><script src="../../../../japan-comeback/production/jp_sets.js"></script>
+<script src="../../../../suez-canal/production/sz_sets.js"></script><script src="../../../../suez-canal/production/sz_sets2.js"></script><script src="../../../../suez-canal/production/sz_cast.js"></script><script src="../../../../suez-canal/production/sz_props.js"></script>
+<script src="../../../../napoleon/production/np_sets.js"></script><script src="../../../../napoleon/production/np_cast.js"></script><script src="../../../../napoleon/production/np_props.js"></script>
+<script src="../../../../mongols-ain-jalut/production/mg_sets.js"></script><script src="../../../../mongols-ain-jalut/production/mg_cast.js"></script><script src="../../../../mongols-ain-jalut/production/mg_props.js"></script>
+<script src="../../../../spain-2-empire/production/es2_sets_act1.js"></script><script src="../../../../spain-3-civil-war/production/es3_sets_act2.js"></script><script src="../../../../spain-3-civil-war/production/es3_sets_act4.js"></script><script src="../../../../spain-3-civil-war/production/es3_sets_act5.js"></script><script src="../../../../spain-3-civil-war/production/es3_sets_act6.js"></script><script src="../../../../spain-3-civil-war/production/es3_sets_act6b.js"></script><script src="../../../../japan-comeback/production/jp_sets_act1.js"></script><script src="../../../../japan-comeback/production/jp_sets_act2.js"></script><script src="../../../../japan-comeback/production/jp_sets_act3.js"></script><script src="../../../../japan-comeback/production/jp_sets_act4.js"></script><script src="../../../../eli-cohen-1/production/ec_cast.js"></script><script src="../../../../eli-cohen-1/production/ec_sets.js"></script><script src="../../../../eli-cohen-1/production/ec_sets2.js"></script><script src="../../../../eli-cohen-1/production/ec_props.js"></script><script src="../../ec2_sets.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, E = K.E, C = S.ECC, MGC = S.MGC, ES3 = S.ES3, JPC = S.JP, NPC = S.NPC, SZC = S.SZC, H1 = S.ES1H, PL = S.mgPlaces, MX = S.MGX, TAU = Math.PI * 2;
+const at = VP.at, seg = K.seg, lerp = K.lerp;
+const SUN = lt => VP.light('studio', lt, { swing: 3, set: { L: [.6, -.9], amb: '#6a5a4a', ambA: .2, rim: '#fff0d0', rimA: .8, tint: '#ffe8c0', tintA: .08 } });
+const DUSK = lt => VP.light('studio', lt, { swing: 3, set: { L: [-.7, -.6], amb: '#4a3a5a', ambA: .3, rim: '#ffc890', rimA: .9, tint: '#ffb070', tintA: .14 } });
+const DAWN = lt => VP.light('studio', lt, { swing: 3, set: { L: [.7, -.5], amb: '#5a5a7a', ambA: .25, rim: '#ffd0a0', rimA: .9, tint: '#ffc8a0', tintA: .1 } });
+const COLD = lt => VP.light('studio', lt, { swing: 2, set: { L: [.3, -.9], amb: '#6a7a8a', ambA: .3, rim: '#e8f0ff', rimA: .7, tint: '#c8d8f0', tintA: .12 } });
+const GREY = lt => VP.light('studio', lt, { swing: 2, set: { L: [.4, -.9], amb: '#5a5a5a', ambA: .3, rim: '#f0f0f0', rimA: .6, tint: '#d0d0c8', tintA: .1 } });
+const NIGHT = lt => VP.light('studio', lt, { swing: 2, set: { L: [-.6, -.7], amb: '#2a3050', ambA: .45, rim: '#a8b8e8', rimA: .8, tint: '#4a5a9a', tintA: .2 } });
+const CANDLE = lt => VP.light('studio', lt, { swing: 6, set: { L: [-.8, -.4], amb: '#2a1a10', ambA: .45, rim: '#ffb050', rimA: 1, tint: '#ff9a40', tintA: .16 } });
+const FIRE = lt => VP.light('studio', lt, { swing: 8, set: { L: [.8, -.3], amb: '#3a1a10', ambA: .4, rim: '#ff8a30', rimA: 1, tint: '#ff7a30', tintA: .2 } });
+const fig = (c, ch, x, y, uu, pose, lt, k, L, f = {}) => { S.contact(c, x, y, uu * .5, .35); VP.figure(c, [x, y], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, ch, x, y, uu, pose, Object.assign({ blink: S.blinkAt(lt, k), time: lt }, f), L)); };
+const pose = (lt, k, o) => Object.assign(S.idle(lt, k), o);
+const walk = (lt, k, o) => Object.assign(H1.walk(lt * 1.1 + k), o);
+const musket = (cc, a = -1.2) => wr => S.npMusket(cc, wr[0], wr[1], a, .9);
+const ride = (c, ch, x, y, uu, col, lt, ph, wk, L, po = {}, f = {}, face = 1) => VP.figure(c, [x, y], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => VP.rider(cc, ch, x, y, uu, uu * 5, { face, ph, walk: wk, t: lt, col, tack: f.tack || { cloth: ['#7a2a22', '#3c1410'], trim: '#c8a040' } }, Object.assign({ lean: 2 }, po), Object.assign({ blink: S.blinkAt(lt, 3), time: lt }, f), L));
+const WHITEH = ['#e8e4dc', '#a8a49c'], BAY = ['#6a3a1e', '#3a1e0e'], GREYH = ['#8a8a8a', '#4a4a4a'];
+const baby = cc => wr => { cc.save(); cc.translate(wr[0], wr[1]); cc.fillStyle = '#e8e4f0'; cc.beginPath(); cc.ellipse(0, 4, 26, 14, -.2, 0, TAU); cc.fill(); cc.fillStyle = '#d8a888'; cc.beginPath(); cc.arc(-20, -2, 9, 0, TAU); cc.fill(); cc.restore(); };
+const sc = (cc, s = .55) => wr => S.ecSuitcase(cc, wr[0], wr[1] + 34 * s, s);
+const clock = (c, x, y, r, t) => { c.fillStyle = '#f0ece0'; c.beginPath(); c.arc(x, y, r, 0, TAU); c.fill(); c.strokeStyle = '#3a2a1a'; c.lineWidth = 4; c.stroke(); c.lineCap = 'round'; c.lineWidth = 3; c.beginPath(); c.moveTo(x, y); c.lineTo(x + Math.sin(t) * r * .8, y - Math.cos(t) * r * .8); c.moveTo(x, y); c.lineTo(x + Math.sin(t / 12) * r * .5, y - Math.cos(t / 12) * r * .5); c.stroke(); };
+
+window.SHOTS = [
+  // 2.01 MED: a ministry office; the minister laughs with Eli; a rumour card, then NO PROOF
+  { set: 'ec2_ministry', cam: { z: [1.08, 1.15], x: [640, 680], y: [430, 440], ease: E.io }, bed: [['office_loop', .15]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tR = at(Sh, 'rumours', 2.6); Sh.tP = at(Sh, 'proof', Sh.dur - 1.6); },
+    draw: (c, lt, u, Sh) => { const L = SUN(lt), talk = Math.sin(lt * 8) > 0 ? 1 : 0;
+      fig(c, C.MINISTER, 800, 668, 35, pose(lt, 1, { face: -1, shN: 40 + 20 * Math.sin(lt), elN: 70 }), lt, 1, L, { look: [-.7, 0], smile: 1, open: lt < Sh.tR ? talk : 0 });
+      fig(c, C.ELIK, 500, 668, 35, pose(lt, 0, { face: 1, shN: 30, elN: 60 }), lt, 0, L, { look: [.7, 0], smile: 1 }); },
+    over: [(c, lt) => K.dateTag(c, 'DAMASCUS · 1964', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'RUMOUR: DEPUTY DEFENCE MINISTER?', lt, { at: Sh.tR, x: 1300, y: 150, px: 40, rot: 2 }), (c, lt, u, Sh) => K.card(c, 'NO PROOF', lt, { at: Sh.tP, x: 1500, y: 260, px: 54, rot: -4 })],
+    sfx: [[.1, 'office_loop', .15], [1, 'laugh', .25], ['rumours', 'whisper', .3], ['proof', 'stamp', .45]] },
+
+  // 2.02 MED: the bedroom at night; Eli taps the key while a wall clock spins through the hours; a warning arrives
+  { set: 'ec_bedroom', cam: { z: [1.3, 1.4], x: [880, 900], y: [460, 470], ease: E.io }, bed: [['morse_loop', .3], ['clock_loop', .2]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tW = at(Sh, 'warned', Sh.dur - 2.4); },
+    draw: (c, lt, u, Sh) => { const L = NIGHT(lt), pr = Math.max(0, Math.sin(lt * 18)) * (Math.sin(lt * 3.1) > -.3 ? 1 : 0);
+      clock(c, 470, 330, 40, lt * 3); c.fillStyle = '#f0ece0'; c.fillRect(560, 290, 80, 90); c.fillStyle = '#b82a1a'; c.fillRect(560, 290, 80, 20); c.fillStyle = '#2a2a2a'; c.font = 'bold 40px Oswald'; c.textAlign = 'center'; c.fillText(String(1 + Math.floor(lt * 1.5) % 28), 600, 362); c.textAlign = 'left';
+      S.ecChair(c, 880, 664, 1, 1); fig(c, C.ELIK, 880, 664, 34, Object.assign(VP.sit(C.ELIK, lt * .2, 0, { seat: .4 }), { face: 1, shN: 70, elN: 40, shF: 60, elF: 50, lean: 8 }), lt, 0, L, { look: [.6, .4], worry: lt > Sh.tW ? 1 : 0 });
+      S.ecTable(c, 1060, 664, 170, 70, '#4a3020'); S.ecTin(c, 1110, 586, .7, 1, 1); S.ecKey(c, 1010, 588, .55, lt > Sh.tW ? 0 : pr); VP.glow(c, 1040, 560, 140, '#ffd890', .28); },
+    over: [(c, lt, u, Sh) => K.card(c, 'SAME HOURS · EVERY DAY', lt, { at: 1.5, x: 1400, y: 150, px: 42, rot: 2, until: Sh.tW }), (c, lt, u, Sh) => K.card(c, 'HQ: SLOW DOWN', lt, { at: Sh.tW, x: 1400, y: 150, px: 50, rot: 2 })],
+    sfx: [[.1, 'morse_loop', .35], [.2, 'clock_loop', .25], ['warned', 'paper', .35]] },
+
+  // 2.03 MED: a small kitchen in Israel; Nadia holds the baby; a tired Eli at the table reaches out for his son
+  { set: 'ec_kitchen', cam: { z: [1.1, 1.18], x: [640, 660], y: [440, 450], ease: E.io }, bed: [['birds_loop', .12], ['music_box', .15]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tT = at(Sh, 'tired', 4); Sh.tB = at(Sh, 'barely', Sh.dur - 2.5); },
+    draw: (c, lt, u, Sh) => { const L = SUN(lt), r = E.io(seg(lt, Sh.tB - .5, Sh.tB + .8));
+      S.ecChair(c, 520, 664, 1, 1); fig(c, C.ELIL, 520, 664, 34, Object.assign(VP.sit(C.ELIL, lt * .2, 0, { seat: .4 }), { face: 1, shN: 20 + 60 * r, elN: 70 - 40 * r }), lt, 0, L, { look: [.6, -.2], worry: lt > Sh.tT ? 1 : 0, blink: lt > Sh.tT && lt < Sh.tB ? .4 : 0 });
+      S.ecTable(c, 330, 664, 180, 70, '#8a6a4a', '#e8e0d0'); S.ecGlass(c, 330, 590, 1, .5, '#c8a060');
+      fig(c, C.NADIA, 780 - 40 * r, 668, 33, pose(lt, 1, { face: -1, shN: 60, elN: 90, shF: 50, elF: 100, holdN: baby(c) }), lt, 1, L, { look: [-.5, .3], smile: 1 }); },
+    over: [(c, lt) => K.dateTag(c, 'ISRAEL · NOVEMBER 1964', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, '"I AM TIRED"', lt, { at: Sh.tT, x: 1420, y: 150, px: 46, rot: 2 })],
+    sfx: [[.1, 'birds_loop', .12], [.2, 'music_box', .15], ['barely', 'breath', .25]] },
+
+  // 2.04 MED: an airport gate; Nadia and the baby wave; Eli, suitcase in hand, walks out towards the plane
+  { set: 'ec2_airport', cam: { z: [1.05, 1.1], x: [640, 680], y: [420, 420], ease: E.io }, bed: [['crowd_loop', .12], ['engine_loop', .1]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tO = at(Sh, 'one', 1.5); },
+    draw: (c, lt, u, Sh) => { const L = SUN(lt), w = seg(lt, 1.2, Sh.dur), wave = Math.sin(lt * 6) * 25;
+      fig(c, C.NADIA, 320, 668, 33, pose(lt, 1, { face: 1, shN: 150 + wave, elN: 20, shF: 60, elF: 100, holdF: baby(c) }), lt, 1, L, { look: [.6, 0], worry: 1 });
+      fig(c, C.HANDLER, 980, 664, 34, pose(lt, 2, { face: -1, shN: 30, elN: 60 }), lt, 2, L, { look: [-.6, 0] });
+      fig(c, C.ELIL, lerp(520, 1400, E.inn(w)), 668, 35, walk(lt, 0, { face: 1, holdN: sc(c) }), lt, 0, L, { look: [-.3, 0] }); },
+    over: [(c, lt, u, Sh) => K.card(c, 'ONE MORE TIME', lt, { at: Sh.tO, x: 1380, y: 150, px: 50, rot: 2 })],
+    sfx: [[.1, 'crowd_loop', .12], [.2, 'engine_loop', .1], [.5, 'footsteps', .3], [3, 'horn', .2]] },
+];
+VP.build(); K.boot();
+</script></body></html>

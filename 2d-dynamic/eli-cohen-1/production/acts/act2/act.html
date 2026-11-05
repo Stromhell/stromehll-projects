@@ -1,0 +1,94 @@
+<!doctype html><html><head><meta charset="utf-8"><title>EC1 act 2</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/vp/engine.js"></script><script src="../../../../shared/vp/cast.js"></script><script src="../../../../shared/vp/scenes.js"></script><script src="../../../../shared/vp/spain.js"></script>
+<script src="../../../../shared/kit.js"></script><script src="../../../../shared/vp.js"></script>
+<script src="../../../../spain-1-al-andalus/production/es1_sets.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act1.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act2.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act3.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act4.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act5.js"></script><script src="../../../../spain-1-al-andalus/production/es1_cast.js"></script>
+<script src="../../../../spain-2-empire/production/es2_sets.js"></script><script src="../../../../spain-2-empire/production/es2_sets_act2.js"></script>
+<script src="../../../../spain-3-civil-war/production/es3_sets.js"></script><script src="../../../../spain-3-civil-war/production/es3_sets_act4b.js"></script><script src="../../../../spain-3-civil-war/production/es3_sets_act5b.js"></script><script src="../../../../spain-3-civil-war/production/es3_cast.js"></script>
+<script src="../../../../japan-comeback/production/jp_cast.js"></script><script src="../../../../japan-comeback/production/jp_sets.js"></script>
+<script src="../../../../suez-canal/production/sz_sets.js"></script><script src="../../../../suez-canal/production/sz_sets2.js"></script><script src="../../../../suez-canal/production/sz_cast.js"></script><script src="../../../../suez-canal/production/sz_props.js"></script>
+<script src="../../../../napoleon/production/np_sets.js"></script><script src="../../../../napoleon/production/np_cast.js"></script><script src="../../../../napoleon/production/np_props.js"></script>
+<script src="../../../../mongols-ain-jalut/production/mg_sets.js"></script><script src="../../../../mongols-ain-jalut/production/mg_cast.js"></script><script src="../../../../mongols-ain-jalut/production/mg_props.js"></script>
+<script src="../../../../spain-2-empire/production/es2_sets_act1.js"></script><script src="../../../../spain-3-civil-war/production/es3_sets_act2.js"></script><script src="../../../../spain-3-civil-war/production/es3_sets_act4.js"></script><script src="../../../../spain-3-civil-war/production/es3_sets_act5.js"></script><script src="../../../../spain-3-civil-war/production/es3_sets_act6.js"></script><script src="../../../../spain-3-civil-war/production/es3_sets_act6b.js"></script><script src="../../../../japan-comeback/production/jp_sets_act1.js"></script><script src="../../../../japan-comeback/production/jp_sets_act2.js"></script><script src="../../../../japan-comeback/production/jp_sets_act3.js"></script><script src="../../../../japan-comeback/production/jp_sets_act4.js"></script><script src="../../ec_cast.js"></script><script src="../../ec_sets.js"></script><script src="../../ec_sets2.js"></script><script src="../../ec_props.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, E = K.E, C = S.ECC, MGC = S.MGC, ES3 = S.ES3, JPC = S.JP, NPC = S.NPC, SZC = S.SZC, H1 = S.ES1H, PL = S.mgPlaces, MX = S.MGX, TAU = Math.PI * 2;
+const at = VP.at, seg = K.seg, lerp = K.lerp;
+const SUN = lt => VP.light('studio', lt, { swing: 3, set: { L: [.6, -.9], amb: '#6a5a4a', ambA: .2, rim: '#fff0d0', rimA: .8, tint: '#ffe8c0', tintA: .08 } });
+const DUSK = lt => VP.light('studio', lt, { swing: 3, set: { L: [-.7, -.6], amb: '#4a3a5a', ambA: .3, rim: '#ffc890', rimA: .9, tint: '#ffb070', tintA: .14 } });
+const DAWN = lt => VP.light('studio', lt, { swing: 3, set: { L: [.7, -.5], amb: '#5a5a7a', ambA: .25, rim: '#ffd0a0', rimA: .9, tint: '#ffc8a0', tintA: .1 } });
+const COLD = lt => VP.light('studio', lt, { swing: 2, set: { L: [.3, -.9], amb: '#6a7a8a', ambA: .3, rim: '#e8f0ff', rimA: .7, tint: '#c8d8f0', tintA: .12 } });
+const GREY = lt => VP.light('studio', lt, { swing: 2, set: { L: [.4, -.9], amb: '#5a5a5a', ambA: .3, rim: '#f0f0f0', rimA: .6, tint: '#d0d0c8', tintA: .1 } });
+const NIGHT = lt => VP.light('studio', lt, { swing: 2, set: { L: [-.6, -.7], amb: '#2a3050', ambA: .45, rim: '#a8b8e8', rimA: .8, tint: '#4a5a9a', tintA: .2 } });
+const CANDLE = lt => VP.light('studio', lt, { swing: 6, set: { L: [-.8, -.4], amb: '#2a1a10', ambA: .45, rim: '#ffb050', rimA: 1, tint: '#ff9a40', tintA: .16 } });
+const FIRE = lt => VP.light('studio', lt, { swing: 8, set: { L: [.8, -.3], amb: '#3a1a10', ambA: .4, rim: '#ff8a30', rimA: 1, tint: '#ff7a30', tintA: .2 } });
+const fig = (c, ch, x, y, uu, pose, lt, k, L, f = {}) => { S.contact(c, x, y, uu * .5, .35); VP.figure(c, [x, y], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, ch, x, y, uu, pose, Object.assign({ blink: S.blinkAt(lt, k), time: lt }, f), L)); };
+const pose = (lt, k, o) => Object.assign(S.idle(lt, k), o);
+const walk = (lt, k, o) => Object.assign(H1.walk(lt * 1.1 + k), o);
+const musket = (cc, a = -1.2) => wr => S.npMusket(cc, wr[0], wr[1], a, .9);
+const ride = (c, ch, x, y, uu, col, lt, ph, wk, L, po = {}, f = {}, face = 1) => VP.figure(c, [x, y], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => VP.rider(cc, ch, x, y, uu, uu * 5, { face, ph, walk: wk, t: lt, col, tack: f.tack || { cloth: ['#7a2a22', '#3c1410'], trim: '#c8a040' } }, Object.assign({ lean: 2 }, po), Object.assign({ blink: S.blinkAt(lt, 3), time: lt }, f), L));
+const WHITEH = ['#e8e4dc', '#a8a49c'], BAY = ['#6a3a1e', '#3a1e0e'], GREYH = ['#8a8a8a', '#4a4a4a'];
+const door = (c, open) => { c.fillStyle = '#c8b898'; c.fillRect(90, 160, 180, 360); c.fillStyle = '#2a2018'; c.fillRect(104, 172, 152, 348); c.save(); c.translate(104, 172); c.scale(1 - open * .75, 1); c.fillStyle = '#7a5a3a'; c.fillRect(0, 0, 152, 348); c.strokeStyle = '#5a3a22'; c.lineWidth = 3; c.strokeRect(14, 16, 124, 140); c.strokeRect(14, 180, 124, 150); c.fillStyle = '#c8a040'; c.beginPath(); c.arc(130, 190, 6, 0, TAU); c.fill(); c.restore(); };
+const mat = (c, x, y) => { c.fillStyle = '#8a2a2a'; c.beginPath(); c.moveTo(x - 90, y); c.lineTo(x + 90, y); c.lineTo(x + 70, y - 26); c.lineTo(x - 70, y - 26); c.fill(); c.strokeStyle = '#d8a040'; c.lineWidth = 3; c.beginPath(); c.moveTo(x - 76, y - 4); c.lineTo(x + 76, y - 4); c.lineTo(x + 60, y - 22); c.lineTo(x - 60, y - 22); c.closePath(); c.stroke(); };
+const book = (cc) => wr => { cc.save(); cc.translate(wr[0], wr[1]); cc.fillStyle = '#2a5a3a'; cc.fillRect(-16, -12, 32, 22); cc.fillStyle = '#e8dcc0'; cc.fillRect(-14, -10, 28, 18); cc.fillStyle = '#c8a040'; cc.fillRect(-1, -12, 2, 22); cc.restore(); };
+
+window.SHOTS = [
+  // 2.01 MED: a small flat in Tel Aviv; Eli and Nadia at a table; a baby's cot
+  { set: 'ec_flat', cam: { z: [1.35, 1.42], x: [640, 700], y: [520, 520], ease: E.io }, bed: [['city_loop', .1], ['clock_loop', .12]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tN = at(Sh, 'nadia', 4); Sh.tF = at(Sh, 'family', Sh.dur - 1.6); },
+    draw: (c, lt, u, Sh) => { const L = SUN(lt);
+      S.ecChair(c, 430, 650, 1.1, 1); S.ecChair(c, 700, 650, 1.1, -1);
+      fig(c, C.ELIS, 450, 650, 33, Object.assign(VP.sit(C.ELIS, lt * .3, 0, { seat: .4 }), { face: 1, shN: 40, elN: 70 }), lt, 0, L, { look: [.6, 0], smile: 1 });
+      fig(c, C.NADIA, 680, 650, 31, Object.assign(VP.sit(C.NADIA, lt * .3, 1, { seat: .4 }), { face: -1, shN: 40, elN: 70 }), lt, 1, L, { look: [-.6, 0], smile: 1 });
+      S.ecTable(c, 565, 690, 200, 74, '#6a4a2a', '#e8d8b8'); S.ecGlass(c, 520, 604, 1, .7, '#c8e0f0'); S.ecPlate(c, 600, 608, 44, '#e8b040');
+      S.ecCot(c, 1060, 690, 1.3 * E.out(1)); },
+    over: [(c, lt) => K.dateTag(c, 'TEL AVIV · 1959', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'NADIA', lt, { at: Sh.tN, x: 1100, y: 160, px: 50, rot: 2 })],
+    sfx: [[.1, 'city_loop', .1], [.2, 'clock_loop', .12], ['nadia', 'chime', .3], ['family', 'music_box', .25]] },
+
+  // 2.02 MED: two men in plain suits at the flat's door; Eli listens; Nadia in the background
+  { set: 'ec_flat', cam: { z: [1.28, 1.34], x: [560, 600], y: [500, 500], ease: E.io }, bed: [['clock_loop', .15]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tT = at(Sh, 'turned', 2.5); Sh.tB = at(Sh, 'back', Sh.dur - 3); },
+    draw: (c, lt, u, Sh) => { const L = SUN(lt), op = E.io(seg(lt, .3, 1.2));
+      door(c, op); fig(c, C.NADIA, 960, 600, 26, pose(lt, 2, { face: -1, shN: 20, elN: 70 }), lt, 2, L, { look: [-.7, 0], worry: lt > Sh.tB ? 1 : 0 });
+      [[C.HANDLER, 300, .9], [C.HANDLER2, 410, 1.4]].forEach(([ch, x, d], k) => { const w = seg(lt, d, d + 1.6); fig(c, ch, lerp(180, x, E.out(w)), 670, 34, w < 1 ? walk(lt, k + 3, { face: 1 }) : pose(lt, k + 3, { face: 1, shN: k ? 40 : 20, elN: k ? 70 : 60 }), lt, k + 3, L, { look: [.7, -.1], open: !k && lt > Sh.tB && Math.sin(lt * 8) > 0 ? 1 : 0 }); });
+      fig(c, C.ELIS, 700, 670, 34, pose(lt, 0, { face: -1, shN: 20, elN: 60 }), lt, 0, L, { look: [-.7, -.1], worry: lt < Sh.tB ? 1 : 0 }); },
+    over: [(c, lt) => K.dateTag(c, '1960', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'MILITARY INTELLIGENCE', lt, { at: Sh.tB, x: 1360, y: 150, px: 44, rot: 2 })],
+    sfx: [[.1, 'clock_loop', .15], [.2, 'door_slam', .2], [.9, 'footsteps', .3], ['back', 'tension', .3]] },
+
+  // 2.03 MED: the map; the Golan Heights above the Sea of Galilee; Syrian guns; Israeli fields below
+  { set: 'np_parch', cam: { z: [1.02, 1.1], x: [640, 680], y: [350, 350], ease: E.io }, bed: [['drone', .2]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tG = at(Sh, 'guns', 2.5); Sh.tS = at(Sh, 'shelled', 4); Sh.tL = at(Sh, 'little', Sh.dur - 2.6); },
+    draw: (c, lt, u, Sh) => { const q = seg(lt, Sh.tG - .3, Sh.tG + 1.2), sh = seg(lt, Sh.tS, Sh.tS + .4) * (1 - seg(lt, Sh.tL - .4, Sh.tL));
+      S.ecGolan(c, q, 1, sh, lt);
+      S.mgLabel(c, 'SEA OF GALILEE', 560, 520, 1, 24, '#2a4a6a'); S.mgLabel(c, 'ISRAELI FARMS', 330, 520, 1, 28, '#3a5a2a'); S.mgLabel(c, 'SYRIAN GUNS', 900, 130, q, 30, '#5a2a1a');
+      const qm = seg(lt, Sh.tL - .2, Sh.tL + .6); if (qm > 0) { c.save(); c.globalAlpha = qm; c.font = '90px Anton'; c.textAlign = 'center'; c.fillStyle = '#f4ead4'; c.strokeStyle = '#3a2a1a'; c.lineWidth = 6; [[880, 330], [1000, 460], [800, 520]].forEach(([x, y], k) => { const yy = y + Math.sin(lt * 2 + k) * 6; c.strokeText('?', x, yy); c.fillText('?', x, yy); }); c.restore(); } },
+    over: [(c, lt) => K.card(c, 'THE GOLAN HEIGHTS', lt, { at: .5, x: 1400, y: 950, px: 50, rot: -2 })],
+    sfx: [[.2, 'drone', .2], ['guns', 'drum', .35], ['shelled', 'cannon', .4], ['shelled', 'thud', .3], ['little', 'tension', .3]] },
+
+  // 2.04 MED: the safehouse; Morse practice; prayer with an instructor; learning weapons from photos
+  { set: 'ec_safe', cam: (lt, u, Sh) => ({ z: [1.32], x: [lt < Sh.tQ ? 600 : lt < Sh.tC ? 700 : 620], y: [520] }), bed: [['hum_loop', .15]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tQ = at(Sh, 'quran', 1.8); Sh.tC = at(Sh, 'codes', 4.2); },
+    draw: (c, lt, u, Sh) => { const L = SUN(lt);
+      if (lt < Sh.tQ) { S.ecChair(c, 520, 660, 1.1, 1); fig(c, C.ELIS, 540, 660, 33, Object.assign(VP.sit(C.ELIS, lt * .3, 0, { seat: .4 }), { face: 1, shN: 60, elN: 50 }), lt, 0, L, { look: [.6, .4] });
+        S.ecTable(c, 680, 700, 200, 76); S.ecKey(c, 650, 614, .5, Math.max(0, Math.sin(lt * 16))); fig(c, C.INSTR, 880, 680, 34, pose(lt, 1, { face: -1, shN: 30, elN: 70 }), lt, 1, L, { look: [-.6, .2] }); return; }
+      if (lt < Sh.tC) { mat(c, 620, 680); fig(c, C.ELIS, 620, 674, 33, Object.assign(VP.sit(C.ELIS, lt * .2, 0, { seat: 0 }), { face: 1, lean: 20 + 10 * Math.sin(lt * 1.5), shN: 30, elN: 60 }), lt, 0, L, { look: [.4, .5] });
+        fig(c, C.SHEIKH, 860, 680, 33, pose(lt, 2, { face: -1, shN: 40, elN: 80, holdN: book(c) }), lt, 2, L, { look: [-.6, .3] }); return; }
+      S.ecTable(c, 640, 700, 300, 76); [[560, -.1], [640, .05], [720, .12]].forEach(([x, r]) => S.ecPhoto(c, x, 600, .9, r)); c.fillStyle = '#3a3a3a'; c.fillRect(600, 590, 40, 8); c.fillRect(694, 600, 50, 6);
+      fig(c, C.ELIS, 460, 680, 33, pose(lt, 0, { face: 1, shN: 60, elN: 40, lean: 8 }), lt, 0, L, { look: [.6, .5] }); fig(c, C.INSTR, 860, 680, 34, pose(lt, 1, { face: -1, shN: 60, elN: 20 }), lt, 1, L, { look: [-.6, .4] }); },
+    over: [(c, lt, u, Sh) => K.card(c, 'SYRIAN DIALECT · CODES · RADIO', lt, { at: .4, x: 960, y: 130, px: 40, rot: -2 })],
+    sfx: [[.1, 'hum_loop', .15], [.2, 'morse', .3], ['quran', 'whisper', .25], ['codes', 'paper', .35], ['codes', 'camera_shutter', .25]] },
+
+  // 2.05 CU: a desk; a new passport, business cards and family photos; KAMEL AMIN THAABET typed onto a card
+  { set: 'ec_desktop', cam: { z: [1.05, 1.15], x: [640, 640], y: [360, 360], ease: E.io }, bed: [['typing', .25]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tK = at(Sh, 'kamel', 2); Sh.tA = at(Sh, 'argentina', 5.5); Sh.tB = at(Sh, 'businessman', Sh.dur - 3); },
+    draw: (c, lt, u, Sh) => { const a = E.out(seg(lt, .2, 1)), b = E.out(seg(lt, Sh.tA - .4, Sh.tA + .4)), d = E.out(seg(lt, Sh.tB - .4, Sh.tB + .4)), ty = seg(lt, Sh.tK, Sh.tK + 2);
+      S.ecPassport(c, lerp(-100, 380, a), 400, 2, -.08, E.io(seg(lt, 1, 1.8)));
+      S.ecPhoto(c, lerp(1400, 900, b), 230, 1.6, .1); S.ecPhoto(c, lerp(1400, 1010, b), 290, 1.5, -.12);
+      [0, 1, 2].forEach(k => S.ecCard(c, lerp(1400, 920 + k * 12, d), 470 + k * 10, 1.1, 'KAMEL AMIN THAABET', -.05 + k * .03, 1));
+      S.ecCard(c, 640, 210, 1.8, 'KAMEL AMIN THAABET', 0, ty); },
+    over: [],
+    sfx: [[.1, 'paper', .3], ['kamel', 'typing', .4], ['argentina', 'paper', .3], ['businessman', 'stamp', .4]] },
+];
+VP.build(); K.boot();
+</script></body></html>

@@ -1,0 +1,157 @@
+<title>Village Cast Sheet</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Hind:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: a dark warm screening room. One reading column; every mockup plays full column width. */
+:root {
+  --bg: #17120e; --surface: #221a14; --line: #3a2d22; --fg: #f1e6d2; --muted: #b9a88f;
+  --marigold: #e9a23b; --teal: #6fa3a8; --do: #8fbf6f; --dont: #e0745a;
+  --display: 'Yatra One', 'Georgia', serif; --body: 'Hind', 'Segoe UI', system-ui, sans-serif; --mono: 'IBM Plex Mono', ui-monospace, monospace;
+  color-scheme: dark;
+}
+body { background: var(--bg); color: var(--fg); font: 400 17px/1.6 var(--body); }
+.wrap { max-width: 1040px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 28px 80px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 400; text-wrap: balance; letter-spacing: .2px; }
+h1 { font-size: clamp(36px, 6vw, 60px); line-height: 1.05; margin: 8px 0 12px; }
+h2 { font-size: clamp(26px, 3.6vw, 36px); margin: 64px 0 8px; }
+h3 { font-size: 22px; margin: 28px 0 6px; }
+p { max-width: 68ch; margin: 0 0 14px; }
+.eyebrow { font: 500 12px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--marigold); }
+.lede { font-size: 19px; color: var(--fg); }
+.muted { color: var(--muted); }
+figure { margin: 18px 0 8px; }
+.screen { position: relative; border-radius: 6px; overflow: hidden; background: #000; box-shadow: 0 18px 40px rgba(0,0,0,.45); }
+.screen canvas { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; max-width: 100%; }
+.screen button { position: absolute; right: 10px; bottom: 10px; font: 500 12px var(--mono); color: var(--fg); background: rgba(23,18,14,.72); border: 1px solid var(--line); border-radius: 4px; padding: 6px 10px; cursor: pointer; }
+.screen button:focus-visible { outline: 2px solid var(--marigold); outline-offset: 2px; }
+figcaption { font-size: 15px; color: var(--muted); margin-top: 8px; max-width: 72ch; }
+figcaption b { color: var(--fg); font-weight: 600; }
+.refs { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 18px; margin-top: 18px; }
+.ref { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+.ref img { display: block; width: 100%; height: 150px; object-fit: cover; object-position: top; }
+.ref div { padding: 12px 14px 14px; font-size: 15px; }
+.ref .tag { font: 500 11px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--teal); }
+.ref.main .tag { color: var(--marigold); }
+.ref a { color: var(--muted); font: 500 12px var(--mono); }
+.rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 10px 32px; margin-top: 10px; }
+.rules ul { margin: 0; padding-left: 18px; }
+.rules li { margin: 4px 0; max-width: 60ch; }
+.table-wrap { overflow-x: auto; margin-top: 12px; }
+table { border-collapse: collapse; font-size: 15px; min-width: 560px; width: 100%; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 500 12px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.moods { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 14px; margin-top: 14px; }
+.mood { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; }
+.mood h4 { margin: 0 0 8px; font: 400 18px var(--display); }
+.sw { display: flex; flex-wrap: wrap; gap: 6px; }
+.sw span { width: 34px; height: 34px; border-radius: 4px; border: 1px solid rgba(255,255,255,.12); }
+.mood p { font-size: 14px; color: var(--muted); margin: 8px 0 0; }
+.dd { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: 24px; margin-top: 16px; }
+.dd ol { list-style: none; margin: 0; padding: 0; }
+.dd li { display: grid; grid-template-columns: 44px 1fr; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--line); }
+.dd li > span { font: 500 13px/1.7 var(--mono); }
+.do li > span { color: var(--do); }
+.dont li > span { color: var(--dont); }
+.dd h3 { margin-top: 0; }
+.do h3 { color: var(--do); } .dont h3 { color: var(--dont); }
+.ask { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--marigold); border-radius: 6px; padding: 18px 20px; margin-top: 18px; }
+.ask ol { margin: 6px 0 0; padding-left: 22px; }
+.ask li { margin: 8px 0; max-width: 70ch; }
+code { font: 500 14px var(--mono); color: var(--marigold); }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 22px; }
+.grid2 > * { min-width: 0; }
+footer { margin-top: 60px; color: var(--muted); font-size: 14px; }
+@media (prefers-reduced-motion: reduce) { .screen button { display: none; } }
+</style>
+<div class="wrap">
+  <div class="eyebrow">2D style study · Village Painterly · learning only</div>
+  <h1>Village cast: character sheet</h1>
+  <p class="lede">Five characters drawn as a full turnaround (front, 3/4 right, 3/4 left, back), with body anatomy taken from the two turnaround sheets you sent. Nothing here touches the live 2D videos.</p>
+  <h2>Main look: village cast</h2>
+  <p>This is the main version for the style board. Hands now have four separate fingers with knuckles and nails, the nose has a clean bridge, tip and nostril, and the cast is shown facing the camera as well as in 3/4.</p>
+  <figure>
+    <div class="screen"><canvas id="cv-cast-front" width="1280" height="720" aria-label="The five characters facing the camera, side by side with head-height guide lines"></canvas><button type="button">Pause</button></div>
+    <figcaption><b>Front view.</b> The main cast facing the camera: detailed four-finger hands and a proper nose in every view.</figcaption>
+  </figure>
+  <h3>Lineup, 3/4 view</h3>
+  <figure>
+    <div class="screen"><canvas id="cv-cast" width="1280" height="720" aria-label="Five characters standing side by side with head-height guide lines"></canvas><button type="button">Pause</button></div>
+    <figcaption><b>Cast lineup.</b> Dashed lines are one head tall. Each character breathes, shifts weight and blinks on their own timing.</figcaption>
+  </figure>
+  <h2>Body rules</h2>
+  <ul>
+    <li><b>Heads tall:</b> boy 4.5, adults 5.7 to 6. Cartoon heads stay a little big, so adults are 6 heads, not the real 7.5.</li>
+    <li><b>Torso:</b> shoulder, chest, waist, hip. Men are widest at the shoulder; the mother is widest at the hip.</li>
+    <li><b>Limbs (from the Tala sheets):</b> one smooth taper from shoulder to wrist and hip to ankle. No pinch, bump or crease at the elbow or knee, so joints never show. Bends are wide, soft curves.</li>
+    <li><b>Hands:</b> tucked under the end of the sleeve or arm, so there is no seam at the wrist.</li>
+    <li><b>Arms:</b> hang close to the body and reach mid-thigh, with a slight bend at the elbow.</li>
+    <li><b>Hands and feet:</b> a hand is about two thirds of a face. Feet are short and rounded, a little over half a head long.</li>
+    <li><b>Stance:</b> legs straight with a small gap between them, feet under the hips.</li>
+    <li><b>Joints:</b> knees bend forward only and elbows bend back only, always in a soft curve.</li>
+  </ul>
+  <h2>One sheet per character</h2>
+  <p class="muted">Each sheet is a turnaround like your references: front, both 3/4 sides and the back against a head ruler, plus three expressions, the colours and my drawing notes.</p>
+  <figure>
+    <div class="screen"><canvas id="cv-sheet-boy" width="1280" height="720" aria-label="Character sheet for Raju, village boy, 10: turnaround from front, both 3/4 sides and back, head ruler, three expressions, colours and notes"></canvas><button type="button">Pause</button></div>
+    <figcaption><b>Raju, village boy, 10.</b> A 10-year-old with a big round head and short legs, about 4.5 heads tall. Curly hair sits above the brows so his eyebrows always read.</figcaption>
+  </figure>
+  <figure>
+    <div class="screen"><canvas id="cv-sheet-youth" width="1280" height="720" aria-label="Character sheet for Arjun, young man, 20: turnaround from front, both 3/4 sides and back, head ruler, three expressions, colours and notes"></canvas><button type="button">Pause</button></div>
+    <figcaption><b>Arjun, young man, 20.</b> The tallest and slimmest: long legs, narrow waist, shoulders about one and a half heads wide. Shirt untucked, satchel across the chest.</figcaption>
+  </figure>
+  <figure>
+    <div class="screen"><canvas id="cv-sheet-mother" width="1280" height="720" aria-label="Character sheet for Lakshmi, mother, 40: turnaround from front, both 3/4 sides and back, head ruler, three expressions, colours and notes"></canvas><button type="button">Pause</button></div>
+    <figcaption><b>Lakshmi, mother, 40.</b> Soft, rounded shoulders, a narrow waist and wider hips under a long kurta. The dupatta frames her face and falls over one shoulder.</figcaption>
+  </figure>
+  <figure>
+    <div class="screen"><canvas id="cv-sheet-father" width="1280" height="720" aria-label="Character sheet for Gopal, father, 45: turnaround from front, both 3/4 sides and back, head ruler, three expressions, colours and notes"></canvas><button type="button">Pause</button></div>
+    <figcaption><b>Gopal, father, 45.</b> The broadest frame, with a deep chest and a little belly. Thick moustache, strong jaw, and a mundu that falls straight to the ankle.</figcaption>
+  </figure>
+  <figure>
+    <div class="screen"><canvas id="cv-sheet-elder" width="1280" height="720" aria-label="Character sheet for Dada, grandfather, 75: turnaround from front, both 3/4 sides and back, head ruler, three expressions, colours and notes"></canvas><button type="button">Pause</button></div>
+    <figcaption><b>Dada, grandfather, 75.</b> Stooped forward about 8 degrees, with thin arms and a slower idle. White side hair, beard and round glasses.</figcaption>
+  </figure>
+  <h2>Experiment: noodle anatomy (copied from Tala)</h2>
+  <p>Raju rebuilt to your Tala breakdown: exactly 3 heads tall (head, then neck and torso, then legs and shoes, each one third). Wide bottom-heavy head, big round eyes that touch, ears low at the cheeks, a very thin neck, a narrow loose t-shirt with zig-zag trim, thin noodle arms and legs with no joints at all, and chunky high-top shoes for weight.</p>
+  <p class="muted">Round 2 fixes from your feedback: pear-shaped head with chubby lower cheeks that runs into an upturned nose in 3/4 and side; ears hang off the back of the jaw; hair has real volume with a thick bang that hooks up at the tip and V partings over the eyes; torso 35% narrower; a slight S-curve in 3/4 and side; open four-fingered hands; high-tops with ankle collar, toe box, white sole and eyelets.</p>
+  <p class="muted">Round 3 (poses): arms about 35% longer and always ending in open space outside the head; open hands with three splayed fingers and a thumb, turned to follow the forearm; an arm that crosses the face or chest is drawn on top. Defeated leans toward the knees with the elbow on the knee and the palm on the cheek; Come on! sweeps both arms back; Leaping and Dancing open wide; Ready for Action leans hard over the front leg.</p>
+  <figure>
+    <div class="screen"><canvas id="cv-noodle-lineup" width="1280" height="720" aria-label="Raju at three heads tall in five views: front, three-quarter front, side, three-quarter back and back"></canvas><button type="button">Pause</button></div>
+    <figcaption><b>Line-up.</b> The bracket on the left splits him into three equal head units, like the Tala sheet.</figcaption>
+  </figure>
+  <figure>
+    <div class="screen"><canvas id="cv-noodle-poses" width="1280" height="720" aria-label="Raju in six action poses: defeated, come on, leaping, swaying, ready for action, dancing"></canvas><button type="button">Pause</button></div>
+    <figcaption><b>Poses.</b> The same six poses as the Tala sheet. Arms and legs bend in C and S curves and never at a corner.</figcaption>
+  </figure>
+  <h2>Help me get it right</h2>
+  <ul>
+    <li>Is this closer to the anatomy in your turnaround sheets? Which view looks most off?</li>
+    <li>Should I add a straight side view (profile) as a fifth view?</li>
+    <li>Any character whose face, hair or clothes look wrong for the village?</li>
+    <li>Should hands get separate fingers, or stay simple mitten shapes for faster animation?</li>
+  </ul>
+  <footer class="muted">Drawn live in your browser from the study rig (engine.js, cast.js, scenes.js). Saved to GitHub under 2d-style-study/village-painterly and to Drive under AI / 2D Style Study / Village Painterly.</footer>
+</div>
+<script src="engine.js"></script>
+<script src="cast.js"></script>
+<script src="scenes.js"></script>
+<script src="noodle.js"></script>
+<script>
+(function () {
+  const ids = ['cast-front', 'cast', 'noodle-lineup', 'noodle-poses', 'sheet-boy', 'sheet-youth', 'sheet-mother', 'sheet-father', 'sheet-elder'];
+  const start = () => {
+    for (const name of ids) {
+      const cv = document.getElementById('cv-' + name); if (!cv) continue;
+      const sc = S.SCENES[name];
+      const P = S.player(cv, (c, t) => sc.draw(c, t), { dur: sc.dur, start: .4 });
+      const btn = cv.parentElement.querySelector('button');
+      btn.addEventListener('click', () => { P.playing = !P.playing; btn.textContent = P.playing ? 'Pause' : 'Play'; });
+    }
+    S.loop();
+  };
+  const fontsReady = document.fonts && document.fonts.ready ? Promise.race([document.fonts.ready, new Promise(r => setTimeout(r, 1500))]) : Promise.resolve();
+  fontsReady.then(start);
+})();
+</script>

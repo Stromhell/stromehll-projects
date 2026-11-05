@@ -1,0 +1,175 @@
+<!doctype html><html><head><meta charset="utf-8"><title>ES1 act 5 - The Last Kingdom</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/vp/engine.js"></script><script src="../../../../shared/vp/cast.js"></script><script src="../../../../shared/vp/scenes.js"></script><script src="../../../../shared/vp/spain.js"></script>
+<script src="../../../../shared/kit.js"></script><script src="../../../../shared/vp.js"></script><script src="../../es1_sets.js"></script><script src="../../es1_sets_act1.js"></script><script src="../../es1_sets_act2.js"></script><script src="../../es1_sets_act3.js"></script><script src="../../es1_sets_act4.js"></script><script src="../../es1_sets_act5.js"></script><script src="../../es1_cast.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, E = K.E, X = S.SPX, CH = S.SPAIN, C = S.ES1, H = S.ES1H, TAU = Math.PI * 2;
+const at = VP.at, seg = K.seg, lerp = K.lerp, pulse = H.pulse, walk = H.walk;
+const turb = (b, s, r) => X.turban({ base: '#f2ecdc', shade: '#aca288', rim: '#ffffff' }, { base: b, shade: s, rim: r });
+const BOABDIL = CH.boabdil;
+const SULTAN = Object.assign({}, CH.boabdil, { name: 'Abu al-Hasan', build: 'elder', hairCol: X.HR.grey, beard: true, shirt: ['#7a2a3a', '#3a1018'], long: true, mundu: false, headwear: turb('#7a2a3a', '#3a1018', '#e0a0b0') });
+const ISABELLA = Object.assign({}, CH.aisha, { name: 'Isabella', skin: X.SK.fair, hairCol: { base: '#b87a3a', shade: '#6a3e14', rim: '#f0c080' }, shirt: ['#7a1e2a', '#3a0a10'], pants: ['#7a1e2a', '#3a0a10'], dupatta: null, headwear: null });
+const ISABELLA_Q = Object.assign({}, ISABELLA, { headwear: X.crown });
+const FERDINAND = Object.assign({}, C.RODERIC, { name: 'Ferdinand', beard: false, mustache: false, hairCol: { base: '#4a2e1a', shade: '#22140a', rim: '#9a7a5a' }, shirt: ['#d8b020', '#7a5a0a'], pants: ['#2a2a4a', '#14142a'] });
+const FERDINAND_K = Object.assign({}, FERDINAND, { headwear: X.crown });
+const PRIEST = Object.assign({}, C.BISHOP, { headwear: null, hair: 'neat' });
+const GRANADAN = Object.assign({}, C.BERBER2, { shirt: ['#2f6b4a', '#173a28'] });
+const CASTILIAN = Object.assign({}, C.SOLDIER, { shirt: ['#b8282a', '#5a1010'], pants: ['#6a6e76', '#34383e'] });
+const BLACK = ['#2c2424', '#0e0a0a'], WHITE = ['#ece6dc', '#a8a096'], BAY = ['#7a4a2e', '#3a2014'];
+const NTACK = { cloth: ['#2f6b4a', '#173a28'], trim: '#d8b060', reins: 1 }, CTACK = { cloth: ['#b8282a', '#5a1010'], trim: '#d8b060', reins: 1 };
+const DAYL = (o = {}) => Object.assign({ L: [-.6, -1], amb: '#5a4a6a', ambA: .25, rim: '#fff0d0', rimA: .8, tint: '#ffd8a0', tintA: .1, sw: .3, rw: .05 }, o);
+const sword = (cc, wr, uu, ang = -.4) => { cc.save(); cc.translate(wr[0], wr[1]); cc.rotate(ang); cc.fillStyle = '#d8dce4'; cc.fillRect(-uu * .04, -uu * 1.6, uu * .08, uu * 1.6); cc.fillStyle = '#8a6a2a'; cc.fillRect(-uu * .2, -uu * .05, uu * .4, uu * .08); cc.restore(); };
+const P = (lo, la) => X.LL(lo, la);
+const mapCandle = (c, lt) => { const f = VP.flicker(lt, 3); VP.glow(c, 420 + 80 * Math.sin(lt * .35), 260 + 30 * Math.sin(lt * .5), 520, '#ffcf80', .14 + .1 * f);
+  c.save(); c.globalCompositeOperation = 'multiply'; const vg = c.createRadialGradient(640, 380, 200, 640, 380, 820); vg.addColorStop(0, 'rgba(255,255,255,0)'); vg.addColorStop(1, `rgba(60,30,10,${.5 - .1 * f})`); c.fillStyle = vg; c.fillRect(0, 0, 1280, 720); c.restore(); };
+const GRANADA_POLY = [[-5.4, 36.15], [-4.4, 36.7], [-3.5, 36.7], [-2.2, 36.75], [-1.7, 37.2], [-2.3, 37.6], [-3.1, 37.6], [-3.8, 37.4], [-4.6, 37.2], [-5.2, 36.8]];
+
+window.SHOTS = [
+  // 1 MAP: one small green patch left in the south; the counter ticks to 1250
+  { set: 'map', cam: { z: [1.1, 1.8], x: [600, 470], y: [400, 560], ease: E.io }, bed: [['drone', .25]], sub: 'bottom',
+    init: Sh => { Sh.tG = at(Sh, 'emirate of granada', 3); },
+    draw: (c, lt, u, Sh) => {
+      c.save(); c.clip(S.poly(X.IBERIA, false)); c.fillStyle = S.rgba('#b8282a', .25); c.fillRect(0, 0, 1280, 720); c.restore();
+      const gp = S.poly(GRANADA_POLY.map(q => P(q[0], q[1])), false), pul = .5 + .1 * Math.sin(lt * 3);
+      c.fillStyle = S.rgba('#2f7a3a', pul); c.fill(gp); c.strokeStyle = '#1e5a2a'; c.lineWidth = 3; c.stroke(gp);
+      VP.glow(c, P(-3.6, 37.18)[0], P(-3.6, 37.18)[1], 90, '#8aff9a', .2 * seg(lt, Sh.tG - .5, Sh.tG + .5));
+      H.stamp(c, 'Granada', P(-3.6, 37.18)[0], P(-3.6, 37.18)[1], lt, Sh.tG, { px: 32 });
+      mapCandle(c, lt);
+    },
+    over: [(c, lt) => { c.save(); c.globalAlpha = seg(lt, .2, .6); K.outlined(c, '1250', 1640, 150, 120, { fill: '#ffd27a' }); K.outlined(c, 'AD', 1640, 238, 40, { fam: 'Oswald' }); c.restore(); }, (c, lt, u, Sh) => K.card(c, 'EMIRATE OF\nGRANADA', lt, { at: Sh.tG + .2, x: 1540, y: 460, px: 54, rot: -3 })],
+    sfx: [[.2, 'paper', .4], ['emirate of granada', 'chime', .45]] },
+
+  // 2 WIDE: the Alhambra under the snowy Sierra Nevada; a cut into the Court of the Lions, the fountain running
+  { set: 'dawn', cam: { z: [1.85, 1.45], x: [420, 600], y: [800, 790], ease: E.io }, bed: [['wind_loop', .2], ['birds_loop', .2]],
+    init: Sh => { Sh.tT = at(Sh, 'tribute', 3); Sh.tB = at(Sh, 'built the alhambra', Sh.dur - 2.5); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      if (true) { VP.light('golden', lt); VP.glow(c, 250, 600, 420, '#ffcf90', .3); VP.rays(c, 250, 590, lt, { ang: .35, spread: .1, n: 9, len: 1300, a: .05, w1: 160 });
+        VP.banner(c, 330, 722, 34, 26, ['#2f8a5a', '#15402a'], lt, { Lt: S.LIGHT.golden, ph: 0 }); VP.banner(c, 470, 862, 44, 32, ['#2f8a5a', '#15402a'], lt, { Lt: S.LIGHT.golden, ph: 2 });
+        // a tribute caravan of mules heading out with chests
+        const q = seg(lt, Sh.tT - 1, Sh.tB); for (let k = 0; k < 5; k++) { const x = lerp(480, 1100, K.clamp(q * 1.3 - k * .08)), y = 1040 + k * 6; H.tiny(c, x, y, 2.6, '#c8962a', lt, k, { helm: '#e8dcc2', walk: true, pike: false }); c.fillStyle = '#5a3a1e'; c.fillRect(x - 6, y - 22, 12, 8); }
+        VP.motes(c, lt, 0, 820, 1280, 400, { n: 30, a: .4 }); return; }
+      VP.drawSet(c, 'lions'); VP.light('golden', lt);
+      // the fountain's jets, and sunlight sliding across the arcade
+      c.strokeStyle = 'rgba(220,245,255,.85)'; c.lineWidth = 3; for (let k = 0; k < 8; k++) { const a = k / 8 * TAU + lt * .1, x = 640 + Math.cos(a) * 110; c.beginPath(); c.moveTo(x, 600 + Math.sin(a) * 26); c.quadraticCurveTo((x + 640) / 2, 560 - 10 * Math.sin(lt * 4 + k), 640 + Math.cos(a) * 60, 592 + Math.sin(a) * 14); c.stroke(); }
+      c.strokeStyle = 'rgba(220,245,255,.9)'; c.lineWidth = 4; c.beginPath(); c.moveTo(640, 520); c.quadraticCurveTo(660, 500 + 4 * Math.sin(lt * 5), 680, 528); c.moveTo(640, 520); c.quadraticCurveTo(620, 500 + 4 * Math.sin(lt * 5 + 1), 600, 528); c.stroke();
+      c.save(); c.globalCompositeOperation = 'screen'; const x = 200 + lt * 10; const g = c.createLinearGradient(x, 0, x + 400, 0); g.addColorStop(0, 'rgba(255,240,200,0)'); g.addColorStop(.5, 'rgba(255,240,200,.18)'); g.addColorStop(1, 'rgba(255,240,200,0)'); c.fillStyle = g; c.fillRect(0, 100, 1280, 400); c.restore();
+      VP.motes(c, lt, 0, 200, 1280, 500, { n: 40, a: .45 });
+    },
+    over: [(c, lt, u, Sh) => K.card(c, '~250 YEARS', lt, { at: .5, x: 1540, y: 200, px: 60, rot: 3, until: Sh.tB }), (c, lt, u, Sh) => K.badge(c, 'PAID TRIBUTE TO CASTILE', lt, { at: Sh.tT, until: Sh.tB }), (c, lt, u, Sh) => K.card(c, 'THE ALHAMBRA', lt, { at: Sh.tB + .3, x: 1540, y: 200, px: 64, rot: -3 })],
+    sfx: [[.2, 'swell', .3], ['tribute', 'coins', .35], ['built the alhambra', 'chime', .45]] },
+
+  // 3 MED: a small candlelit wedding in secret. Isabella, 18, and Ferdinand, 17, exchange rings
+  { set: 'church', cam: { z: [1.6, 2.0], x: [640, 640], y: [420, 380], ease: E.sine }, bed: [['drone', .15]],
+    init: Sh => { Sh.tS = at(Sh, 'in secret', 1.5); Sh.tI = at(Sh, 'isabella', 3); Sh.tF = at(Sh, 'ferdinand', 5); Sh.tT = at(Sh, 'together', Sh.dur - 2.5); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = S.rgba('#2a1e3a', .55); c.fillRect(0, 0, 1280, 720); c.restore();
+      const f = VP.flicker(lt, 4); for (const [x, y, i] of [[560, 456, 0], [720, 456, 1], [640, 440, 2]]) { H.fire(c, x, y, .12, lt, i + 20); c.fillStyle = '#f0e6d0'; c.fillRect(x - 4, y, 8, 30); }
+      VP.glow(c, 640, 440, 360, '#ffb860', .25 + .1 * f);
+      const L = { L: [.45, -.9], amb: '#3a2a40', ambA: .28, rim: '#ffc880', rimA: 1, tint: '#ffa050', tintA: .14, sw: .2, rw: .05 }, ring = seg(lt, Sh.tF + .5, Sh.tF + 1.5);
+      S.person(c, PRIEST, 640, 600, 38, Object.assign(S.idle(lt, 2), { face: 1, shN: 60, elN: 50 }), { blink: S.blinkAt(lt, 2), time: lt }, L);
+      VP.figure(c, [530, 650], { k: -.3, sy: -.2, a: .4, blur: 3 }, cc => S.person(cc, ISABELLA, 530, 650, 50, Object.assign(S.idle(lt, 0), { face: 1, shN: 40 + 40 * ring, elN: 40 }), { blink: S.blinkAt(lt, 0), smile: .4, look: [.8, 0], time: lt }, L));
+      VP.figure(c, [750, 650], { k: .3, sy: -.2, a: .4, blur: 3 }, cc => S.person(cc, FERDINAND, 750, 650, 50, Object.assign(S.idle(lt, 1), { face: -1, shN: 40 + 40 * ring, elN: 40 }), { blink: S.blinkAt(lt, 1), smile: .4, look: [-.8, 0], time: lt }, L));
+      if (ring > 0) VP.glow(c, 640, 470, 30, '#ffe08a', .7 * pulse(lt, Sh.tF + 1, 1.4));
+      // a guard at the door keeps watch: it is a secret
+      c.fillStyle = S.rgba('#ffd090', .15 * (.6 + .4 * f)); c.fillRect(1000, 250, 120, 350);
+      VP.motes(c, lt, 400, 300, 500, 300, { n: 30, a: .5 });
+    },
+    over: [(c, lt) => K.dateTag(c, 'VALLADOLID · 1469', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'ISABELLA · 18\nHEIR TO CASTILE', lt, { at: Sh.tI + .2, x: 330, y: 220, px: 42, rot: -3 }), (c, lt, u, Sh) => K.card(c, 'FERDINAND · 17\nHEIR TO ARAGON', lt, { at: Sh.tF + .2, x: 1560, y: 220, px: 42, rot: 3 }), (c, lt, u, Sh) => K.card(c, 'CASTILE + ARAGON', lt, { at: Sh.tT, x: 960, y: 880, px: 56, rot: -2 })],
+    sfx: [['in secret', 'whoosh_soft', .3], ['isabella', 'pop', .35], ['ferdinand', 'pop', .35], ['together', 'chime', .45]] },
+
+  // 4 MED: inside the Alhambra, Boabdil argues with his father the sultan; guards draw swords
+  { set: 'nasrid', cam: (lt, u, Sh) => ({ z: [lerp(1.4, 1.7, E.io(u))], x: [640], y: [440], shake: pulse(lt, Sh.tR + .2, .5) * 3 }), bed: [['tension', .25]],
+    init: Sh => { Sh.tW = at(Sh, 'war', 1.5); Sh.tS = at(Sh, 'split', 4); Sh.tR = at(Sh, 'rebelled', 6.5); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const L = DAYL({ L: [.2, -1], tint: '#ffd8a0' }), draw_ = seg(lt, Sh.tR - .2, Sh.tR + .4), talk = k => .4 * Math.abs(Math.sin(lt * 10 + k)) * (Math.sin(lt * 1.6 + k * 3) > 0);
+      c.save(); c.globalCompositeOperation = 'screen'; const g = c.createLinearGradient(600, 200, 700, 640); g.addColorStop(0, 'rgba(255,240,200,.35)'); g.addColorStop(1, 'rgba(255,240,200,0)'); c.fillStyle = g; c.beginPath(); c.moveTo(580, 190); c.lineTo(700, 190); c.lineTo(820, 640); c.lineTo(520, 640); c.fill(); c.restore();
+      VP.figure(c, [500, 640], { k: -.4, sy: -.22, a: .35, blur: 2 }, cc => S.person(cc, BOABDIL, 500, 640, 48, Object.assign(S.idle(lt, 0), { face: 1, lean: 6, shN: 60 + 30 * Math.sin(lt * 2), elN: 50 }), { blink: S.blinkAt(lt, 0), angry: .8, open: talk(0), look: [.8, 0], time: lt }, L));
+      VP.figure(c, [780, 640], { k: .4, sy: -.22, a: .35, blur: 2 }, cc => S.person(cc, SULTAN, 780, 640, 48, Object.assign(S.idle(lt, 1), { face: -1, shN: 80 + 20 * Math.sin(lt * 2.4), elN: 30 }), { blink: S.blinkAt(lt, 1), angry: .9, open: talk(1), look: [-.8, 0], time: lt }, L));
+      for (const [x, k, ch] of [[300, 2, GRANADAN], [980, 3, C.BERBER]]) VP.figure(c, [x, 650], { k: x < 640 ? -.5 : .5, sy: -.22, a: .35, blur: 2 }, cc => S.person(cc, ch, x, 650, 44, Object.assign(S.idle(lt, k), { face: x < 640 ? 1 : -1, shN: 40 + 70 * draw_, elN: 40 - 30 * draw_, holdN: wr => sword(cc, wr, 44, x < 640 ? .9 - 1.2 * draw_ : -.9 + 1.2 * draw_) }), { angry: .6, blink: S.blinkAt(lt, k), time: lt }, L));
+    },
+    over: [(c, lt) => K.dateTag(c, 'THE GRANADA WAR · 1482', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'SON vs FATHER', lt, { at: Sh.tR + .2, x: 1540, y: 200, px: 60, rot: 3 })],
+    sfx: [['war', 'hit', .4], ['split', 'paper_tear', .4], ['rebelled', 'scrape', .5]] },
+
+  // 5 MED: Boabdil in chains before Ferdinand; then freed, riding home with a Castilian escort while towns fall one by one
+  { set: 'tent', cam: (lt, u, Sh) => lt < Sh.tG ? { z: [1.45], x: [640], y: [420] } : { z: [1.1], x: [640], y: [400] }, bed: [['wind_loop', .2]],
+    init: Sh => { Sh.tC = at(Sh, 'captured', 1); Sh.tG = at(Sh, 'let him go', 3.5); Sh.tW = at(Sh, 'civil war', 6); Sh.tT = at(Sh, 'one by one', Sh.dur - 1); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      if (lt < Sh.tG) { const L = { L: [1, -.6], amb: '#3a2a3a', ambA: .4, rim: '#fff0d0', rimA: .9, tint: '#ffd8a0', tintA: .12, sw: .3, rw: .05 };
+        VP.figure(c, [760, 640], { k: -.4, sy: -.22, a: .35, blur: 2 }, cc => S.person(cc, FERDINAND_K, 760, 640, 48, Object.assign(S.idle(lt, 0), { face: -1, shN: 40, elN: 50 }), { blink: S.blinkAt(lt, 0), smile: .3, look: [-.8, .2], time: lt }, L));
+        VP.figure(c, [480, 650], { k: -.4, sy: -.22, a: .35, blur: 2 }, cc => S.person(cc, BOABDIL, 480, 650, 46, Object.assign(S.idle(lt, 1), { face: 1, tilt: 8, lean: 6, shN: 10, elN: 80, shF: 10, elF: 80 }), { blink: S.blinkAt(lt, 1), worry: .9, look: [.6, .5], time: lt }, L));
+        c.strokeStyle = '#5a5a60'; c.lineWidth = 4; c.beginPath(); for (let k = 0; k < 8; k++) { const x = 490 + k * 6, y = 470 + Math.sin(k + lt) * 3; k ? c.lineTo(x, y) : c.moveTo(x, y); } c.stroke();
+        for (const x of [380, 870]) S.person(c, CASTILIAN, x, 650, 42, Object.assign(S.idle(lt, x), { face: x < 640 ? 1 : -1, shN: 30, elN: 40, holdN: wr => { c.strokeStyle = '#3a2a1a'; c.lineWidth = 3; c.beginPath(); c.moveTo(wr[0], wr[1] + 40); c.lineTo(wr[0], wr[1] - 120); c.stroke(); } }), { time: lt }, L);
+        return; }
+      VP.drawSet(c, 'santafe'); const L = VP.light('golden', lt, { swing: 4 }), q = seg(lt, Sh.tG, Sh.dur + 1);
+      // Boabdil rides back toward Granada with Castilian riders; behind, small towns flip red one by one
+      for (const [ch, col, tack, dx, uu] of [[CASTILIAN, BAY, CTACK, -150, 16], [BOABDIL, BLACK, NTACK, 0, 18], [CASTILIAN, BAY, CTACK, 150, 16]]) { const x = lerp(200, 900, q) + dx, y = 620 - Math.abs(dx) * .12; VP.figure(c, [x, y], { k: -.4, sy: -.2, a: .3, blur: 2 }, cc => VP.rider(cc, ch, x, y, uu, uu * 5, { face: 1, ph: lt * .8 + dx, walk: .8, t: lt, col, tack }, { lean: 2 }, { time: lt, worry: ch === BOABDIL ? .6 : 0 }, L)); }
+      for (let k = 0; k < 5; k++) { const x = 820 + k * 90, y = 330 + (k % 2) * 8, fl = seg(lt, Sh.tW + k * .5, Sh.tW + k * .5 + .3); c.fillStyle = fl > 0 ? '#b8282a' : '#2f8a5a'; c.fillRect(x, y - 30, 3, 30); c.fillRect(x + 3, y - 30, 16 * (fl > 0 ? 1 : 1), 10); if (fl > 0 && fl < 1) VP.glow(c, x, y - 20, 30, '#ffb060', .6 * (1 - fl)); }
+    },
+    over: [(c, lt, u, Sh) => K.card(c, 'CAPTURED', lt, { at: Sh.tC + .2, x: 1540, y: 200, px: 60, rot: 3, until: Sh.tG }), (c, lt, u, Sh) => K.card(c, 'FREED, FOR A PRICE', lt, { at: Sh.tG + .4, x: 1520, y: 200, px: 50, rot: -3 }), (c, lt, u, Sh) => K.badge(c, 'GRANADA IN CIVIL WAR', lt, { at: Sh.tW })],
+    sfx: [['captured', 'thud', .45], ['let him go', 'whoosh', .4], ['one by one', 'thud', .35]] },
+
+  // 6 WIDE: Santa Fe, a whole stone town built on the plain; Isabella on horseback inspects it
+  { set: 'santafe', cam: { z: [1.1, 1.5], x: [700, 420], y: [400, 470], ease: E.io }, bed: [['wind_loop', .2], ['city_loop', .1]],
+    init: Sh => { Sh.tS = at(Sh, 'stone', 3); Sh.tN = at(Sh, 'santa fe', Sh.dur - 2.5); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const L = VP.light('golden', lt, { swing: 5 }), sh = VP.shadowOf(L, 1.4, .3, .12);
+      // tents of the army around the town
+      for (let k = 0; k < 12; k++) { const x = 70 + k * 100 + (k % 2) * 30, y = 570 + (k % 3) * 26, red = k % 3 === 0, s = .9 + (y - 570) / 120, tw = 34 * s, th = 40 * s;
+        c.fillStyle = S.rgba('#3a2a14', .25); c.beginPath(); c.ellipse(x + 8, y + 2, tw * 1.1, 5 * s, 0, 0, TAU); c.fill();
+        c.fillStyle = red ? '#b8282a' : '#ece2cc'; c.beginPath(); c.moveTo(x - tw, y); c.quadraticCurveTo(x - tw * .3, y - th * .55, x, y - th); c.quadraticCurveTo(x + tw * .3, y - th * .55, x + tw, y); c.fill();
+        c.fillStyle = red ? '#7a1414' : '#b8ac94'; c.beginPath(); c.moveTo(x, y - th); c.quadraticCurveTo(x + tw * .3, y - th * .55, x + tw, y); c.lineTo(x + tw * .25, y); c.fill();
+        if (!red) { c.fillStyle = S.rgba('#b8282a', .8); for (const f of [.35, .7]) c.fillRect(x - tw * (1 - f) , y - th * f - 2 * s, tw * 2 * (1 - f), 3 * s); }
+        c.fillStyle = '#3a2418'; c.beginPath(); c.moveTo(x - 6 * s, y); c.lineTo(x, y - th * .45); c.lineTo(x + 6 * s, y); c.fill();
+        c.strokeStyle = '#4a3a2a'; c.lineWidth = 1.5; c.beginPath(); c.moveTo(x, y - th); c.lineTo(x, y - th - 14 * s); c.stroke(); c.fillStyle = red ? '#e8c040' : '#b8282a'; c.beginPath(); c.moveTo(x, y - th - 14 * s); c.lineTo(x + 12 * s + 2 * Math.sin(lt * 3 + k), y - th - 11 * s); c.lineTo(x, y - th - 8 * s); c.fill();
+        c.strokeStyle = S.rgba('#6a5a40', .6); c.lineWidth = 1; c.beginPath(); c.moveTo(x - tw * .5, y - th * .4); c.lineTo(x - tw * 1.4, y + 2); c.moveTo(x + tw * .5, y - th * .4); c.lineTo(x + tw * 1.4, y + 2); c.stroke(); }
+      // masons at work by the crane: one guides the hanging block, two carry a stone between them
+      for (const [ch, x, k, pose] of [[C.SOLDIER, 560, 0, 'guide'], [C.TOWNSMAN, 690, 1, 'carry'], [VP.vary(C.TOWNSMAN, 301), 740, 2, 'carry']]) { const y = 540; VP.figure(c, [x, y], sh, cc => S.person(cc, VP.vary(ch, 310 + k), x, y, 14, Object.assign(pose === 'carry' ? walk(lt * .6 + k) : S.idle(lt, k), { face: k === 2 ? -1 : 1, shN: pose === 'guide' ? 150 : 50, elN: pose === 'guide' ? 10 : 70 }), { time: lt }, L)); }
+      { const x = 715, y = 524; c.fillStyle = '#d8c8a8'; c.fillRect(x - 12, y - 6, 24, 12); c.fillStyle = S.rgba('#8a7a5a', .6); c.fillRect(x + 4, y - 6, 8, 12); }
+      // workers lifting stone blocks with a crane
+      const cr = Math.sin(lt * .8) * .2; c.strokeStyle = '#4a2a14'; c.lineWidth = 4; c.beginPath(); c.moveTo(640, 540); c.lineTo(620, 360); c.stroke(); c.beginPath(); c.moveTo(600, 540); c.lineTo(620, 360); c.lineTo(620 + Math.cos(cr - .4) * 90, 360 + Math.sin(cr - .4) * 90); c.stroke(); const bx = 620 + Math.cos(cr - .4) * 90, by = 360 + Math.sin(cr - .4) * 90 + 40 + 20 * Math.sin(lt); c.beginPath(); c.moveTo(bx, by - 40 - 20 * Math.sin(lt)); c.lineTo(bx, by); c.stroke(); c.fillStyle = '#d8c8a8'; c.fillRect(bx - 12, by, 24, 16);
+      // Isabella on her white horse in the foreground
+      const x = lerp(240, 420, E.sine(u)), y = 680;
+      VP.figure(c, [x, y], sh, cc => { const r = VP.rider(cc, ISABELLA_Q, x, y, 30, 150, { face: 1, ph: lt * .6, walk: .5, t: lt, col: WHITE, tack: CTACK }, { lean: 2, shN: 40, elN: 40 }, { blink: S.blinkAt(lt, 0), smile: .4, look: [.7, -.1], time: lt }, L); VP._m = r.muzzle; });
+      VP.breath(c, VP._m.x, VP._m.y, lt, { dx: 16, rise: 10, size: 8, a: .25 });
+      VP.motes(c, lt, 0, 300, 1280, 400, { n: 30, a: .35 });
+    },
+    over: [(c, lt) => K.dateTag(c, 'OUTSIDE GRANADA · 1491', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'SANTA FE\n"HOLY FAITH"', lt, { at: Sh.tN + .2, x: 1540, y: 220, px: 54, rot: 3 })],
+    sfx: [[.2, 'swell', .3], ['stone', 'thud', .35], ['santa fe', 'chime', .4]] },
+
+  // 7 MED: hunger in Granada; the treaty on the table and Boabdil's slow hand signing it
+  { set: 'nasrid', cam: (lt, u, Sh) => lt < Sh.tS ? { z: [1.3], x: [640], y: [460] } : { z: [lerp(1.4, 1.9, E.io(seg(lt, Sh.tS, Sh.tS + 3)))], x: [660], y: [500] }, bed: [['tension', .2], ['wind_loop', .1]], sub: 'top',
+    init: Sh => { Sh.tH = at(Sh, 'starving', 1); Sh.tS = at(Sh, 'signed', 3.5); Sh.tP = at(Sh, 'promised', 5.5); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = S.rgba('#4a4a6a', .35); c.fillRect(0, 0, 1280, 720); c.restore();
+      const L = { L: [.6, -.8], amb: '#3a3a5a', ambA: .45, rim: '#ffe8c0', rimA: .8, tint: '#c8b8d8', tintA: .1, sw: .3, rw: .05 }, wr = seg(lt, Sh.tS - .2, Sh.tS + 2.5);
+      S.person(c, BOABDIL, 640, 660, 46, Object.assign(S.idle(lt, 0), { face: 1, lean: 10, shN: 50, elN: 60 + 6 * Math.sin(lt * 3) * (wr > 0 && wr < 1) }), { blink: S.blinkAt(lt, 0), worry: .95, look: [.4, .9], time: lt }, L);
+      c.fillStyle = '#4a2a14'; c.fillRect(460, 580, 360, 16); c.fillRect(480, 596, 12, 80); c.fillRect(788, 596, 12, 80);
+      c.fillStyle = '#f4e8c8'; c.fillRect(600, 570, 140, 12); c.strokeStyle = '#2a1a10'; c.lineWidth = 1.3; c.beginPath(); for (let k = 0; k < 6; k++) { c.moveTo(610, 573 + k * 1.4); c.lineTo(720, 573 + k * 1.4); } c.globalAlpha = .4; c.stroke(); c.globalAlpha = 1;
+      c.beginPath(); for (let x = 0; x < 60 * wr; x += 2) { const y = 578 + Math.sin(x * .7) * 2; x ? c.lineTo(660 + x, y) : c.moveTo(660, y); } c.lineWidth = 1.6; c.stroke();
+      // the promises appear as small icons once he signs
+      for (const [k, txt] of [[0, 'MOSQUES'], [1, 'LAWS'], [2, 'LANGUAGE'], [3, 'PROPERTY']]) { const q = E.back(seg(lt, Sh.tP + k * .5, Sh.tP + k * .5 + .4)); if (q <= 0) continue; c.save(); c.translate(320 + k * 210, 200); c.scale(q, q); c.fillStyle = '#f4ead4'; c.fillRect(-80, -24, 160, 48); c.strokeStyle = '#2f6b4a'; c.lineWidth = 3; c.strokeRect(-80, -24, 160, 48); c.font = '26px Oswald'; c.fillStyle = '#1e3a14'; c.textAlign = 'center'; c.fillText('✓ ' + txt, 0, 9); c.restore(); }
+      VP.motes(c, lt, 300, 300, 600, 300, { n: 25, a: .4 });
+    },
+    over: [(c, lt, u, Sh) => K.card(c, 'GRANADA\nIS STARVING', lt, { at: Sh.tH + .2, x: 1540, y: 860, px: 50, rot: 3, until: Sh.tS }), (c, lt, u, Sh) => K.dateTag(c, 'TREATY OF GRANADA · NOV 1491', lt, { at: Sh.tS })],
+    sfx: [['starving', 'heartbeat', .4], ['signed', 'paper', .5], ['promised', 'pop', .3]] },
+
+  // 8 WIDE: 2 January 1492. The cross and the royal banners go up over the Alhambra; on the map the last green dot goes out
+  { set: 'dawn', cam: (lt, u, Sh) => lt < Sh.tY ? { z: [lerp(1.9, 1.5, E.io(lt / Sh.tY))], x: [480], y: [800] } : { z: [1.12], x: [600], y: [380] }, bed: [['wind_loop', .25]],
+    init: Sh => { Sh.tR = at(Sh, 'raised', 2.5); Sh.tY = at(Sh, 'seven hundred', 5); Sh.tO = at(Sh, 'iberia was over', Sh.dur - .6); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const L = VP.light('golden', lt, { swing: 5 });
+      if (lt < Sh.tY) { VP.glow(c, 250, 600, 380, '#ffcf90', .3); const up = E.io(seg(lt, Sh.tR - 1, Sh.tR + 1.5));
+        VP.banner(c, 470, 862, 70, 50, ['#b8282a', '#5a1010'], lt, { Lt: L, ph: 0, drop: 1 - up, pw: 3 }); c.save(); c.globalAlpha = up; c.translate(332, 742 - 60 * up); c.fillStyle = '#e8e8f0'; c.fillRect(-4, -50, 8, 50); c.fillRect(-16, -38, 32, 7); c.restore(); VP.glow(c, 332, 680 - 40 * up, 60, '#ffffff', .3 * up);
+        c.fillStyle = 'rgba(40,24,30,.7)'; for (let k = 0; k < 6; k++) { const x = 500 + lt * 40 + k * 30, y = 700 + Math.sin(k) * 20, f = Math.sin(lt * 9 + k) * 4; c.beginPath(); c.moveTo(x - 6, y - f); c.quadraticCurveTo(x, y - 2, x + 6, y - f); c.strokeStyle = 'rgba(40,24,30,.7)'; c.lineWidth = 1.5; c.stroke(); }
+        return; }
+      // the map: the green dot of Granada shrinks and goes out
+      c.save(); VP.drawSet(c, 'map'); const gp = S.poly(GRANADA_POLY.map(q => P(q[0], q[1])), false), a = 1 - seg(lt, Sh.tO - .8, Sh.tO + .2);
+      c.fillStyle = S.rgba('#2f7a3a', .55 * a); c.fill(gp); if (a < 1 && a > 0) VP.glow(c, P(-3.6, 37.18)[0], P(-3.6, 37.18)[1], 60 * a, '#8aff9a', .5 * a); c.restore();
+    },
+    over: [(c, lt) => K.dateTag(c, '2 JANUARY 1492', lt, { at: .4 }), (c, lt, u, Sh) => { if (lt < Sh.tY) return; const q = E.out(seg(lt, Sh.tY, Sh.tY + 2)), n = Math.round(781 * q); c.save(); c.globalAlpha = Math.min(1, q * 3); K.outlined(c, String(n), 1600, 220, 130, { fill: '#ffd27a' }); K.outlined(c, 'YEARS', 1600, 310, 44, { fam: 'Oswald' }); c.restore(); }],
+    sfx: [['raised', 'swell', .45], ['seven hundred', 'tick', .35], ['over', 'hit', .55]] },
+];
+VP.build(); K.boot();
+</script></body></html>

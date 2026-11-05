@@ -1,0 +1,138 @@
+<!doctype html><html><head><meta charset="utf-8"><title>JP act 2 - The War Next Door</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/vp/engine.js"></script><script src="../../../../shared/vp/cast.js"></script><script src="../../../../shared/vp/scenes.js"></script><script src="../../../../shared/vp/spain.js"></script>
+<script src="../../../../shared/kit.js"></script><script src="../../../../shared/vp.js"></script>
+<script src="../../../../spain-1-al-andalus/production/es1_sets.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act1.js"></script><script src="../../../../spain-1-al-andalus/production/es1_cast.js"></script>
+<script src="../../../../spain-3-civil-war/production/es3_cast.js"></script>
+<script src="../../jp_cast.js"></script><script src="../../jp_sets.js"></script><script src="../../jp_sets_act1.js"></script><script src="../../jp_sets_act2.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, E = K.E, J = S.JP, JX = S.JPX, H1 = S.ES1H, TAU = Math.PI * 2;
+const at = VP.at, seg = K.seg, lerp = K.lerp;
+const GREY = lt => VP.light('studio', lt, { swing: 3, set: { L: [.6, -.9], amb: '#4a4a52', ambA: .35, rim: '#e0d8d0', rimA: .5, tint: '#c8c4c0', tintA: .12 } });
+const DUSK = lt => VP.light('studio', lt, { swing: 3, set: { L: [-.8, -.4], amb: '#3a2a3a', ambA: .4, rim: '#ffa060', rimA: .9, tint: '#ff9a60', tintA: .12 } });
+const BULB = lt => VP.light('studio', lt, { swing: 6, set: { L: [.2, -1], amb: '#2a2018', ambA: .45, rim: '#ffd890', rimA: .9, tint: '#ffc870', tintA: .14 } });
+const DAY = lt => VP.light('studio', lt, { swing: 3, set: { L: [.7, -.8], amb: '#6a7a8a', ambA: .18, rim: '#fff8e8', rimA: .7, tint: '#fff4e0', tintA: .05 } });
+const night = (c, a, col) => { c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = `rgba(${col},${a})`; c.fillRect(0, 0, 1280, 720); c.restore(); };
+const fig = (c, ch, x, y, uu, pose, face, L, k = 0) => { S.contact(c, x, y, uu * .9, .35); VP.figure(c, [x, y], { k: .6, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, ch, x, y, uu, pose, Object.assign({ blink: S.blinkAt(face.time || 0, k) }, face), L)); };
+const hold = (fn) => fn;
+const WARM = lt => VP.light('studio', lt, { swing: 3, set: { L: [.5, -.8], amb: '#3a2a20', ambA: .25, rim: '#ffe0b0', rimA: .8, tint: '#ffd8a0', tintA: .1 } });
+const NITE = lt => VP.light('studio', lt, { swing: 3, set: { L: [.3, -1], amb: '#1a2238', ambA: .5, rim: '#ffd890', rimA: .9, tint: '#ffc870', tintA: .12 } });
+const AS = JX.ASIA, AL = JX.AL;
+const arrow = (c, a, b, q, col = '#c82010', wdt = 6) => { if (q <= 0) return; const x = lerp(a[0], b[0], q), y = lerp(a[1], b[1], q), an = Math.atan2(b[1] - a[1], b[0] - a[0]); c.strokeStyle = col; c.lineWidth = wdt; c.lineCap = 'round'; c.beginPath(); c.moveTo(a[0], a[1]); c.lineTo(x, y); c.stroke(); c.fillStyle = col; c.beginPath(); c.moveTo(x + Math.cos(an) * 18, y + Math.sin(an) * 18); c.lineTo(x + Math.cos(an + 2.5) * 16, y + Math.sin(an + 2.5) * 16); c.lineTo(x + Math.cos(an - 2.5) * 16, y + Math.sin(an - 2.5) * 16); c.fill(); };
+const PARCH = [[60, 40], [640, 22], [1222, 44], [1250, 360], [1226, 684], [640, 700], [52, 680], [34, 360]];
+const flood = (c, poly, q, col, fromY) => { if (q <= 0) return; c.save(); c.beginPath(); PARCH.forEach((p, i) => i ? c.lineTo(p[0], p[1]) : c.moveTo(p[0], p[1])); c.closePath(); c.clip(); c.beginPath(); poly.forEach((p, i) => i ? c.lineTo(p[0], p[1]) : c.moveTo(p[0], p[1])); c.closePath(); c.clip(); c.fillStyle = col; c.fillRect(0, fromY, 1280, (720 - fromY) * 0 + 720 * q); c.restore(); };
+const truck = (c, x, y, s, lit) => { c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = 'rgba(0,0,0,.3)'; c.beginPath(); c.ellipse(0, 4, 120, 10, 0, 0, TAU); c.fill();
+  c.fillStyle = '#4a5a3a'; c.fillRect(-120, -70, 150, 56); c.fillStyle = '#3a4a2e'; for (let k = 0; k < 6; k++) c.fillRect(-116 + k * 24, -70, 3, 56); c.fillStyle = '#5a6a44'; c.beginPath(); c.moveTo(34, -14); c.lineTo(34, -84); c.lineTo(80, -84); c.lineTo(104, -50); c.lineTo(110, -14); c.fill(); c.fillStyle = lit ? '#ffe8a0' : '#a8c0c8'; c.fillRect(46, -78, 36, 26);
+  c.fillStyle = '#e8e0c8'; c.font = 'bold 12px Oswald'; c.fillText('U.S. ARMY', -100, -36); for (const wx of [-80, 70]) { c.fillStyle = '#1a1a1a'; c.beginPath(); c.arc(wx, -8, 20, 0, TAU); c.fill(); c.fillStyle = '#6a6a6a'; c.beginPath(); c.arc(wx, -8, 8, 0, TAU); c.fill(); }
+  if (lit) { c.fillStyle = '#fff4c0'; c.beginPath(); c.arc(108, -30, 5, 0, TAU); c.fill(); c.restore(); c.save(); const g = c.createLinearGradient(x + 110 * s, 0, x + 400 * s, 0); g.addColorStop(0, 'rgba(255,240,180,.5)'); g.addColorStop(1, 'rgba(255,240,180,0)'); c.fillStyle = g; c.beginPath(); c.moveTo(x + 110 * s, y - 34 * s); c.lineTo(x + 420 * s, y - 80 * s); c.lineTo(x + 420 * s, y + 10 * s); c.closePath(); c.fill(); } c.restore(); };
+const gdp = (c, lt, q) => { c.save(); c.strokeStyle = '#e8c040'; c.lineWidth = 5; c.shadowColor = 'rgba(0,0,0,.5)'; c.shadowBlur = 6; c.beginPath(); for (let i = 0; i <= 40; i++) { const x = 40 + i * 30, f = i / 40, y = 700 - 30 - (f < .5 ? 10 * f : 10 * .5 + 140 * (f - .5) * q * 2) - 4 * Math.sin(i); if (f > .5 + q * .5) break; i ? c.lineTo(x, y) : c.moveTo(x, y); } c.stroke(); c.restore(); };
+
+window.SHOTS = [
+  // 2.01 the Cold War map: red floods China; the Soviet bear's shadow in the north; arrows point at Japan
+  { set: 'jp_asia', cam: (lt, u, Sh) => ({ z: [lerp(1.0, 1.15, E.io(seg(lt, 0, Sh.dur)))], x: [lerp(560, 640, E.io(seg(lt, 0, Sh.dur)))], y: [340] }), bed: [['drone', .25]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tC = at(Sh, 'communist', 2.5); Sh.tS = at(Sh, 'Soviet Union', 5); Sh.tA = at(Sh, 'needed Japan', 7.5); },
+    draw: (c, lt, u, Sh) => {
+      flood(c, AS.RUSSIA, E.out(seg(lt, Sh.tS - .4, Sh.tS + 1.4)), 'rgba(150,20,20,.35)', 0);
+      flood(c, AS.CHINA, E.out(seg(lt, Sh.tC - .6, Sh.tC + 2.2)), 'rgba(200,30,20,.45)', 0);
+      // the bear's silhouette over Siberia
+      const b = seg(lt, Sh.tS, Sh.tS + 1); if (b > 0) { c.save(); c.globalAlpha = .35 * b; c.fillStyle = '#3a0a0a'; c.translate(560, 120); c.beginPath(); c.ellipse(0, 0, 120, 50, 0, 0, TAU); c.ellipse(120, -20, 44, 34, 0, 0, TAU); c.fill(); c.beginPath(); c.arc(140, -54, 12, 0, TAU); c.arc(104, -54, 12, 0, TAU); c.fill(); for (const lx of [-80, -30, 40, 90]) c.fillRect(lx, 30, 26, 50); c.restore(); }
+      const jp = AL(138, 36); [[AL(116, 40), 0], [AL(132, 46), .3], [AL(127, 39), .6]].forEach(([a, d]) => arrow(c, a, [jp[0] - 30, jp[1] + 10], E.out(seg(lt, Sh.tS + 1 + d, Sh.tS + 2.2 + d)), 'rgba(170,20,20,.8)'));
+      const s = seg(lt, Sh.tA, Sh.tA + .6); if (s > 0) { VP.glow(c, jp[0], jp[1], 260 * s, '#7ab0ff', .5); }
+    },
+    over: [(c, lt) => K.dateTag(c, 'THE COLD WAR', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'AMERICA NEEDS JAPAN STRONG', lt, { at: Sh.tA + .5, x: 1420, y: 840, px: 44, rot: -2 })],
+    sfx: [[.4, 'drone', .3], ['communist', 'paper_tear', .35], ['Soviet Union', 'thud', .35], ['strong', 'swell', .35]] },
+
+  // 2.02 Joseph Dodge stamps the yen rate; then the factory gate swings shut and workers walk away
+  { set: 'jp_embassy', cam: (lt, u, Sh) => ({ z: [1.35], x: [600], y: [440] }), bed: [['office_loop', .1]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tY = at(Sh, 'three hundred and sixty', 4); Sh.tL = at(Sh, 'laying people off', 8); Sh.tD = at(Sh, 'depression', Sh.dur - 1.5); },
+    draw: (c, lt, u, Sh) => {
+      if (lt < Sh.tL - .2) { const L = DAY(lt); JX.wood(c, 420, 560, 440, 26, '#5a3a20', 21); c.fillStyle = '#4a2a18'; c.fillRect(440, 586, 18, 90); c.fillRect(822, 586, 18, 90); c.fillStyle = '#f4ecd8'; c.fillRect(560, 548, 120, 14);
+        const st = seg(lt, Sh.tY - .3, Sh.tY), up = st > 0 && st < 1;
+        c.fillStyle = '#4a2a18'; c.fillRect(470, 570, 12, 70); c.fillRect(540, 600, 10, 40); c.fillStyle = '#6a3a22'; c.fillRect(470, 586, 84, 14); c.fillRect(466, 520, 14, 80); c.fillStyle = S.rgba('#ffd8a0', .2); c.fillRect(470, 586, 84, 3);
+        fig(c, J.DODGE, 520, 640, 50, Object.assign(VP.sit(J.DODGE, lt * .4, 0), { face: 1, shN: up ? 120 : 60, elN: up ? 10 : 60, holdN: wr => { c.fillStyle = '#6a4a2a'; c.fillRect(wr[0] - 6, wr[1] - 4, 12, 18); c.fillStyle = '#c82020'; c.fillRect(wr[0] - 10, wr[1] + 14, 20, 6); } }), { look: [.6, .5], time: lt }, L, 0);
+        if (lt > Sh.tY) { c.save(); c.translate(640, 556); c.rotate(-.08); c.strokeStyle = '#c82020'; c.lineWidth = 3; c.strokeRect(-46, -12, 92, 22); c.fillStyle = '#c82020'; c.font = 'bold 15px Oswald'; c.textAlign = 'center'; c.fillText('$1 = ¥360', 0, 5); c.restore(); } }
+      else { VP.drawSet(c, 'jp_works'); const L = GREY(lt), sh = E.io(seg(lt, Sh.tL, Sh.tL + 2));
+        // the gate swings shut: two iron leaves
+        for (const sd of [-1, 1]) { c.save(); c.translate(680 + sd * 100, 540); c.scale(lerp(.2, 1, sh) * -sd, 1); c.strokeStyle = '#2a2a2e'; c.lineWidth = 4; c.strokeRect(0, -110, 100, 110); for (let k = 0; k < 8; k++) { c.beginPath(); c.moveTo(k * 12.5, -110); c.lineTo(k * 12.5, 0); c.stroke(); } c.restore(); }
+        if (sh > .9) { c.fillStyle = '#f4ecd8'; c.fillRect(640, 480, 80, 30); c.fillStyle = '#c82020'; c.font = 'bold 16px Oswald'; c.textAlign = 'center'; c.fillText('休業 CLOSED', 680, 501); c.textAlign = 'left'; }
+        [J.WORKER, J.WORKER2, J.WORKER, J.SALARY2].forEach((ch, k) => { const x = lerp(720 + k * 80, 300 - k * 110, E.io(seg(lt, Sh.tL + .5 + k * .5, Sh.dur + 1))); fig(c, ch, x, 640 + (k % 2) * 8, 44, Object.assign(H1.walk(lt * 1.0 + k * .25), { face: -1 }), { worry: .7, look: [-.8, .3], time: lt }, L, k + 2); }); }
+    },
+    over: [(c, lt, u, Sh) => K.card(c, 'JOSEPH DODGE · 1949', lt, { at: .6, x: 420, y: 220, px: 44, rot: -3, until: Sh.tL - .2 }), (c, lt, u, Sh) => K.badge(c, '$1 = ¥360', lt, { at: Sh.tY + .2 }), (c, lt, u, Sh) => K.card(c, 'CLOSE TO A DEPRESSION', lt, { at: Sh.tD, x: 1420, y: 260, px: 44, rot: 2 })],
+    sfx: [['subsidies', 'paper', .3], ['three hundred and sixty', 'stamp', .6], ['laying people off', 'gate_slam', .55], ['depression', 'drone', .3]] },
+
+  // 2.03 the empty Toyota floor; Kiichiro Toyoda bows deeply to his workers; nobody moves
+  { set: 'jp_factory', cam: (lt, u, Sh) => ({ z: [lerp(1.1, 1.3, E.io(seg(lt, 0, Sh.dur)))], x: [640], y: [420] }), bed: [['hum_loop', .08]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tJ = at(Sh, 'thousand jobs', 3); Sh.tR = at(Sh, 'resigned', Sh.dur - 1.5); },
+    draw: (c, lt, u, Sh) => {
+      night(c, .35, '120,120,140'); const L = GREY(lt), bow = E.io(seg(lt, Sh.tR - 2.2, Sh.tR - .8));
+      fig(c, J.TOYODA, 640, 600, 46, Object.assign(S.idle(lt * .2, 0), { face: -1, lean: 50 * bow, shN: 5, elN: 5, shF: 5, elF: 5 }), { look: [0, .7 * bow], worry: .7, time: lt }, L, 0);
+      [[J.WORKER, 300, 660], [J.WORKER2, 400, 676], [J.WORKER, 860, 676], [J.SELLER, 960, 660], [J.WORKER2, 1060, 670], [J.ELDER, 200, 668]].forEach(([ch, x, y], k) => fig(c, ch, x, y, 46, Object.assign(S.idle(lt * .2, k + 1), { face: x < 640 ? 1 : -1, shN: 6, elN: 10, shF: 6, elF: 10 }), { look: [x < 640 ? .8 : -.8, -.1], worry: .6, time: lt }, L, k + 1));
+    },
+    over: [(c, lt) => K.dateTag(c, 'TOYOTA · 1950', lt, { at: .4 }), (c, lt, u, Sh) => K.badge(c, 'OVER 1,000 JOBS CUT', lt, { at: Sh.tJ }), (c, lt, u, Sh) => K.card(c, 'KIICHIRO TOYODA RESIGNS', lt, { at: Sh.tR, x: 1380, y: 260, px: 44, rot: -2 })],
+    sfx: [['nearly bankrupt', 'drone', .3], ['thousand jobs', 'thud', .4], ['resigned', 'creak', .3]] },
+
+  // 2.04 Korea: arrows cross the 38th parallel; supply ships stream from Japan across the strait
+  { set: 'jp_asia', cam: (lt, u, Sh) => ({ z: [lerp(1.6, 1.8, E.io(seg(lt, 0, Sh.dur)))], x: [AL(129, 37)[0]], y: [AL(129, 37)[1]] }), bed: [['drone', .25]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tA = at(Sh, 'American forces', 4); Sh.tT = at(Sh, 'trucks', 6.5); Sh.tN = at(Sh, 'right next door', Sh.dur - 1.5); },
+    draw: (c, lt, u, Sh) => {
+      flood(c, AS.CHINA, 1, 'rgba(200,30,20,.3)', 0);
+      [[AL(125.5, 39.5), AL(126.5, 36.6)], [AL(127.3, 39.4), AL(128.2, 36.2)]].forEach(([a, b], k) => arrow(c, a, b, E.out(seg(lt, .4 + k * .3, 2.4 + k * .3)), '#b01818', 5));
+      arrow(c, AL(131, 33.6), AL(128.9, 35.2), E.out(seg(lt, Sh.tA, Sh.tA + 1.2)), '#2a4a9a', 5);
+      const P = [AL(130.6, 33.7), AL(129.05, 35.1)]; for (let k = 0; k < 10; k++) { const q = ((lt - Sh.tT) * .25 + k / 10) % 1; if (lt < Sh.tT) break; const x = lerp(P[0][0], P[1][0], q), y = lerp(P[0][1], P[1][1], q) + Math.sin(q * 6 + k) * 3; c.fillStyle = '#2a2a3a'; c.beginPath(); c.moveTo(x - 7, y); c.lineTo(x + 7, y); c.lineTo(x + 5, y + 3); c.lineTo(x - 5, y + 3); c.fill(); c.fillRect(x - 2, y - 4, 4, 4); c.strokeStyle = S.rgba('#ffffff', .6); c.lineWidth = 1; c.beginPath(); c.moveTo(x - 7, y + 2); c.lineTo(x - 20, y + 2 + 4); c.stroke(); }
+      const n = seg(lt, Sh.tN, Sh.tN + .6); if (n > 0) VP.glow(c, AL(132, 34)[0], AL(132, 34)[1], 120 * n, '#7ab0ff', .5);
+    },
+    over: [(c, lt) => K.dateTag(c, 'KOREAN WAR · 25 JUNE 1950', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'TRUCKS · UNIFORMS · PARTS', lt, { at: Sh.tT + .3, x: 1420, y: 260, px: 44, rot: 2 })],
+    sfx: [[.4, 'hit', .45], ['American forces', 'whoosh', .4], ['trucks', 'tick', .3], ['next door', 'swell', .3]] },
+
+  // 2.05 night: the Toyota windows light up one after another; a US Army truck rolls out of the gate
+  { set: 'jp_works_night', cam: { z: [1.05, 1.15], x: [640, 680], y: [380, 400], ease: E.io }, bed: [['night_loop', .15]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tO = at(Sh, 'ordered', .5); Sh.tL = at(Sh, 'lights came back', 3); },
+    draw: (c, lt, u, Sh) => {
+      const W = []; for (let r = 0; r < 2; r++) { for (let k = 0; k < 11; k++) W.push([140 + 16 + k * 46, 300 + 24 + r * 54]); for (let k = 0; k < 9; k++) W.push([760 + 16 + k * 46, 280 + 24 + r * 54]); }
+      W.forEach(([x, y], i) => { const t0 = Sh.tO + (S.rng(i + 3)() * .8 + i / W.length) * (Sh.tL + .5 - Sh.tO); if (lt < t0) return; const fl = lt - t0 < .25 ? (Math.sin((lt - t0) * 80) > 0 ? 1 : .3) : 1; c.fillStyle = S.rgba('#ffd870', .9 * fl); c.fillRect(x, y, 30, 36); VP.glow(c, x + 15, y + 18, 50, '#ffc860', .25 * fl); });
+      const q = E.io(seg(lt, Sh.tL, Sh.dur + .3)); truck(c, lerp(680, 1400, q), 600, 1.1, true);
+    },
+    over: [(c, lt, u, Sh) => K.badge(c, 'US ARMY: THOUSANDS OF TRUCKS', lt, { at: Sh.tO + .3 })],
+    sfx: [['ordered', 'typing', .2], ['lights', 'hum_loop', .2], ['came back on', 'riser', .4]] },
+
+  // 2.06 chimneys smoke again; the GDP line along the bottom lifts
+  { set: 'jp_works', cam: { z: [1.0, 1.08], x: [640, 640], y: [360, 340], ease: E.io }, bed: [['city_loop', .15]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tB = at(Sh, 'billions', 2.5); Sh.tJ = at(Sh, 'jumped', 4.5); Sh.tD = at(Sh, 'divine aid', Sh.dur - 1.5); },
+    draw: (c, lt, u, Sh) => {
+      for (const [x, ht] of [[311, 210], [371, 170], [991, 240]]) H1.smoke(c, x, 300 - ht + 36, 1.4, lt + x, '200,196,190');
+      const L = DAY(lt); [J.WORKER, J.WORKER2, J.WORKER, J.WORKER2, J.SALARY].forEach((ch, k) => { const x = lerp(-60 - k * 130, 900 - k * 130, E.io(seg(lt, 0, 6))); fig(c, ch, x, 620 + (k % 2) * 10, 42, Object.assign(H1.walk(lt + k * .2), { face: 1 }), { smile: .4, look: [.8, -.1], time: lt }, L, k); });
+      gdp(c, lt, E.io(seg(lt, Sh.tJ - .5, Sh.dur)));
+    },
+    over: [(c, lt, u, Sh) => K.badge(c, 'WAR ORDERS: BILLIONS OF DOLLARS', lt, { at: Sh.tB }), (c, lt, u, Sh) => K.card(c, '"DIVINE AID"', lt, { at: Sh.tD, x: 1420, y: 240, px: 60, rot: -3 })],
+    sfx: [['billions', 'coins_cascade', .35], ['jumped', 'riser', .4], ['divine aid', 'chime', .45]] },
+
+  // 2.07 the father, back from the war, works on a truck engine; he stops at a newspaper photo of Korean refugees
+  { set: 'jp_factory', cam: (lt, u, Sh) => ({ z: [lerp(1.4, 2.1, E.io(seg(lt, 1.5, Sh.dur)))], x: [lerp(560, 600, E.io(seg(lt, 1.5, Sh.dur)))], y: [lerp(470, 430, E.io(seg(lt, 1.5, Sh.dur)))] }), bed: [['hum_loop', .12]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tS = at(Sh, 'uncomfortable', 1.5); },
+    draw: (c, lt, u, Sh) => {
+      const L = WARM(lt), stop = seg(lt, Sh.tS - .5, Sh.tS + .5);
+      c.fillStyle = '#3a4a3a'; c.fillRect(600, 500, 160, 90); c.fillStyle = '#2a2a2a'; c.fillRect(620, 480, 120, 30); c.fillStyle = '#5a5a5e'; for (let k = 0; k < 4; k++) c.fillRect(630 + k * 28, 470, 16, 14);
+      c.save(); c.translate(690, 462); c.rotate(-.06); c.scale(.8, .5); c.fillStyle = '#e8e0cc'; c.fillRect(-40, -30, 80, 56); c.fillStyle = '#4a4a4a'; c.fillRect(-34, -24, 40, 30); c.fillStyle = '#6a6a6a'; for (let k = 0; k < 4; k++) c.fillRect(-30 + k * 9, -14, 5, 18); c.fillStyle = '#2a2a2a'; for (let k = 0; k < 5; k++) c.fillRect(10, -22 + k * 7, 24, 2); c.restore();
+      fig(c, J.FATHER_W, 560, 640, 48, Object.assign(S.idle(lt * .3, 0), { face: 1, lean: 14 - 10 * stop, shN: lerp(70 + 15 * Math.sin(lt * 5), 30, stop), elN: lerp(60, 80, stop), shF: lerp(60, 20, stop), elF: 60 }), { look: [lerp(.8, -.4, stop), .6], worry: .8 * stop, time: lt }, L, 0);
+    },
+    over: [(c, lt, u, Sh) => K.card(c, 'AN UNCOMFORTABLE GIFT', lt, { at: Sh.tS + .6, x: 1420, y: 240, px: 44, rot: 2 })],
+    sfx: [[.2, 'scrape', .25], ['uncomfortable', 'heartbeat', .35]] },
+
+  // 2.08 San Francisco: Yoshida signs; the occupation ends; India signs its own treaty
+  { set: 'jp_hall', cam: (lt, u, Sh) => ({ z: [lerp(1.3, 1.5, E.io(seg(lt, 0, Sh.tI)))], x: [640], y: [420] }), bed: [['crowd_loop', .08]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tO = at(Sh, 'occupation ended', 5); Sh.tI = at(Sh, 'India', 8); },
+    draw: (c, lt, u, Sh) => {
+      const L = WARM(lt);
+      if (lt < Sh.tI - .1) { fig(c, J.YOSHIDA, 600, 590, 44, Object.assign(S.idle(lt * .3, 1), { face: 1, lean: 22, shN: 35, elN: 75 + 8 * Math.sin(lt * 6), holdN: wr => { c.strokeStyle = '#1a1a1a'; c.lineWidth = 2; c.beginPath(); c.moveTo(wr[0], wr[1]); c.lineTo(wr[0] + 8, wr[1] + 10); c.stroke(); } }), { look: [.4, .7], time: lt }, L, 0);
+        [[J.SALARY, 440], [J.SALARY2, 840], [J.GI, 940]].forEach(([ch, x], k) => fig(c, ch, x, 590, 44, Object.assign(S.idle(lt * .3, k + 1), { face: x < 640 ? 1 : -1, shN: 10, elN: 20 }), { look: [x < 640 ? .6 : -.6, .2], time: lt }, L, k + 1)); }
+      else { night(c, .2, '200,170,140'); const sh = E.io(seg(lt, Sh.tI, Sh.tI + 1.2));
+        fig(c, J.INDIAN, lerp(470, 560, sh), 600, 48, Object.assign(S.idle(lt * .3, 3), { face: 1, shN: 60, elN: 20 + 6 * Math.sin(lt * 6) }), { smile: .6, look: [.7, 0], time: lt }, L, 3);
+        fig(c, J.SALARY, lerp(810, 720, sh), 600, 48, Object.assign(S.idle(lt * .3, 4), { face: -1, shN: 60, elN: 20 + 6 * Math.sin(lt * 6) }), { smile: .6, look: [-.7, 0], time: lt }, L, 4); }
+    },
+    over: [(c, lt) => K.dateTag(c, 'SAN FRANCISCO · 8 SEPT 1951', lt, { at: .4 }), (c, lt, u, Sh) => K.badge(c, 'OCCUPATION ENDS · APRIL 1952', lt, { at: Sh.tO, until: Sh.tI }), (c, lt, u, Sh) => K.card(c, 'INDIA: ITS OWN TREATY · 1952', lt, { at: Sh.tI + .8, x: 960, y: 200, px: 46, rot: -2 })],
+    sfx: [[.3, 'crowd_loop', .1], ['signed', 'paper', .4], ['occupation ended', 'chime', .4], ['India', 'whoosh_soft', .4]] },
+];
+VP.build(); K.boot();
+</script></body></html>

@@ -1,0 +1,111 @@
+<!doctype html><html><head><meta charset="utf-8"><title>SZ act 3 - napoleon and de lesseps</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/vp/engine.js"></script><script src="../../../../shared/vp/cast.js"></script><script src="../../../../shared/vp/scenes.js"></script><script src="../../../../shared/vp/spain.js"></script>
+<script src="../../../../shared/kit.js"></script><script src="../../../../shared/vp.js"></script>
+<script src="../../../../spain-1-al-andalus/production/es1_sets.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act1.js"></script><script src="../../../../spain-1-al-andalus/production/es1_cast.js"></script>
+<script src="../../../../spain-3-civil-war/production/es3_cast.js"></script>
+<script src="../../../../japan-comeback/production/jp_cast.js"></script><script src="../../../../japan-comeback/production/jp_sets.js"></script>
+<script src="../../sz_sets.js"></script><script src="../../sz_cast.js"></script><script src="../../sz_props.js"></script><script src="../../sz_sets2.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, E = K.E, Z = S.SZ, C = S.SZC, H1 = S.ES1H, TAU = Math.PI * 2;
+const at = VP.at, seg = K.seg, lerp = K.lerp;
+{ const T = window.TIMING, L = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length + 1, start: L.end, end: L.end + 4.8, vo_start: L.end, vo_end: L.end, text: '' }); T.dur = L.end + 4.8; }
+const SUN = lt => VP.light('studio', lt, { swing: 3, set: { L: [.6, -.9], amb: '#6a5a4a', ambA: .2, rim: '#fff0d0', rimA: .8, tint: '#ffe8c0', tintA: .08 } });
+const DUSK = lt => VP.light('studio', lt, { swing: 3, set: { L: [-.7, -.6], amb: '#4a3a5a', ambA: .3, rim: '#ffc890', rimA: .9, tint: '#ffb070', tintA: .14 } });
+const shimmer = (c, lt, y0, y1) => { for (let k = 0; k < 18; k++) { const r = S.rng(k + 50), y = y0 + r() * (y1 - y0); c.fillStyle = S.rgba('#fff4dc', .05); c.fillRect(0, y + Math.sin(lt * 3 + k) * 2, 1280, 2); } };
+// route on the parchment map: the long way round Africa, and the Suez shortcut
+const LONG = [[4, 51.8], [-6, 47], [-11, 40], [-18, 28], [-19, 16], [-12, 5], [4, 0], [10, -14], [14, -30], [19, -37.5], [28, -36], [38, -26], [44, -14], [52, 0], [56, 12], [62, 17], [72, 15], [80, 6], [95, 4], [104, 1.3]];
+const HEAT = lt => VP.light('studio', lt, { swing: 2, set: { L: [.2, -1], amb: '#7a5a3a', ambA: .15, rim: '#fff4d8', rimA: .9, tint: '#ffe8b0', tintA: .1 } });
+const GREY = lt => VP.light('studio', lt, { swing: 3, set: { L: [.6, -.9], amb: '#4a4a52', ambA: .3, rim: '#e0d8d0', rimA: .5, tint: '#c8c4c0', tintA: .1 } });
+const crew = (c, list, lt, L, y, uu, look = [0, 0]) => list.forEach(([x, ch, k, pose, yy, u2]) => { const Y = yy ?? y, U = u2 ?? uu; S.contact(c, x, Y, U * .5, .35); VP.figure(c, [x, Y], { k: .6, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, ch, x, Y, U, pose, { blink: S.blinkAt(lt, k), look, time: lt }, L)); });
+const WHITE = ['#e8e4dc', '#9a948a'], BAY = ['#7a4a2e', '#3a2014'], BLACK = ['#2c2424', '#0e0a0a'], TACK = { cloth: ['#2a4a9a', '#14244e'], trim: '#d8b060', reins: 1 }, TACK2 = { cloth: ['#8a2a2a', '#4a1414'], trim: '#d8b060', reins: 1 };
+const ride = (c, ch, x, y, uu, col, tack, lt, ph, walk, L, po = {}, f = {}) => VP.figure(c, [x, y], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => VP.rider(cc, ch, x, y, uu, uu * 5, { face: 1, ph, walk, t: lt, col, tack }, Object.assign({ lean: 2 }, po), Object.assign({ blink: S.blinkAt(lt, 3), time: lt }, f), L));
+const dust = (c, x, y, lt, n = 16) => { for (let k = 0; k < n; k++) { const q = (lt * .9 + k / n) % 1; c.fillStyle = S.rgba('#e0c08a', .45 * (1 - q)); c.beginPath(); c.arc(x - q * 140 - k * 3, y - q * 40 + Math.sin(k) * 10, 8 + q * 22, 0, TAU); c.fill(); } };
+const paper = (c, x, y, w, h, rot) => { c.save(); c.translate(x, y); c.rotate(rot); c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(-w / 2 + 6, -h / 2 + 6, w, h); c.fillStyle = '#efe2c0'; c.fillRect(-w / 2, -h / 2, w, h); return () => c.restore(); };
+
+window.SHOTS = [
+  // 3.01 MED: French soldiers in blue coats in the desert; Napoleon on horseback looks over the sand; banners flap
+  { set: 'sz_camp', cam: { z: [1.0, 1.12], x: [640, 700], y: [380, 420], ease: E.io }, bed: [['wind_loop', .25], ['drum_loop', .15]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tB = at(Sh, 'Britain', 3.5); },
+    draw: (c, lt, u, Sh) => { const L = HEAT(lt), hx = lerp(-80, 700, E.out(seg(lt, 0, 3.2))), w = seg(lt, 0, 3.2) < 1 ? .8 : 0;
+      dust(c, hx - 60, 600, lt);
+      ride(c, C.NAPOLEON, hx, 640, 30, WHITE, TACK, lt, lt * .8, w, L, { shN: lt > Sh.tB ? 100 : 20, elN: 30 }, { look: [.8, -.2] });
+      [[280, C.FRSOLD, 0], [400, C.FRSOLD, 1], [940, C.FRSOLD, 2], [1080, C.FRSOLD, 4]].forEach(([x, ch, k]) => { const xx = x + (k > 1 ? 0 : lerp(-300, 0, E.out(seg(lt, k * .4, 3 + k * .4)))), wk = k <= 1 && lt < 3 + k * .4; S.contact(c, xx, 650 - (k % 2) * 30, 16, .35);
+        VP.figure(c, [xx, 650 - (k % 2) * 30], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, ch, xx, 650 - (k % 2) * 30, 30, Object.assign(wk ? H1.walk(lt * 1.2 + k) : S.idle(lt, k), { face: k > 1 ? -1 : 1, shF: 160, elF: 10, holdF: wr => { cc.strokeStyle = '#4a3a2a'; cc.lineWidth = 3; cc.beginPath(); cc.moveTo(wr[0], wr[1] + 30); cc.lineTo(wr[0], wr[1] - 70); cc.stroke(); cc.strokeStyle = '#c8c8d0'; cc.lineWidth = 2; cc.beginPath(); cc.moveTo(wr[0], wr[1] - 70); cc.lineTo(wr[0], wr[1] - 90); cc.stroke(); } }), { blink: S.blinkAt(lt, k), look: [.4, 0], time: lt }, L)); }); },
+    over: [(c, lt) => K.dateTag(c, 'NAPOLEON · EGYPT · 1798', lt, { at: .4, y: 100 }), (c, lt, u, Sh) => K.card(c, 'HURT BRITAIN\'S TRADE WITH INDIA', lt, { at: Sh.tB + .3, x: 960, y: 190, px: 50, rot: -2 })],
+    sfx: [[.2, 'wind_loop', .25], [.4, 'hooves', .45], [.6, 'drum_loop', .2], ['Britain', 'drum', .35]] },
+
+  // 3.02 MED: surveyors with a brass level and a pole; Le Pere shows Napoleon a drawing: a wave floods Egypt
+  { set: 'sz_dunes', cam: (lt, u, Sh) => lt < Sh.tR ? { z: [1.0], x: [640], y: [400] } : { z: [lerp(1.0, 1.3, E.io(seg(lt, Sh.tR, Sh.tR + 2)))], x: [640], y: [lerp(400, 380, seg(lt, Sh.tR, Sh.tR + 2))] }, bed: [['wind_loop', .2]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tN = at(Sh, 'terrible news', 4); Sh.tR = at(Sh, 'Red Sea', 6); Sh.tF = at(Sh, 'flood', Sh.dur - 2); },
+    draw: (c, lt, u, Sh) => { const L = HEAT(lt);
+      // surveying level on a tripod and a striped pole held by a soldier
+      c.strokeStyle = '#5a3a1e'; c.lineWidth = 3; for (const d of [-14, 0, 14]) { c.beginPath(); c.moveTo(250, 560); c.lineTo(250 + d, 640); c.stroke(); } c.fillStyle = '#c8a040'; c.fillRect(226, 548, 50, 14); c.fillStyle = '#8a6a20'; c.beginPath(); c.arc(276, 555, 6, 0, TAU); c.fill();
+      for (let k = 0; k < 8; k++) { c.fillStyle = k % 2 ? '#c82a2a' : '#f4f0e8'; c.fillRect(1100, 440 + k * 20, 10, 20); }
+      crew(c, [[200, C.FRSOLD, 1, Object.assign(S.idle(lt, 1), { face: 1, lean: .1, shN: 60, elN: 90 })], [1140, C.FRSOLD, 2, Object.assign(S.idle(lt, 2), { face: -1, shN: 60, elN: 80 })]], lt, L, 640, 30, [.6, 0]);
+      const wq = seg(lt, Sh.tN - .2, Sh.tN + .4); 
+      crew(c, [[520, C.LEPERE, 0, Object.assign(S.idle(lt, 0), { face: 1, shN: 80, elN: 60, shF: 80, elF: 60 })], [800, C.NAPOLEON, 3, Object.assign(S.idle(lt, 3), { face: -1, shN: 20, elN: 120 })]], lt, L, 660, 38, [.3, .2]);
+      if (wq > 0) { const done = paper(c, 640, 440, 220 * wq, 150, -.04); if (wq >= 1) {
+        const fl = E.io(seg(lt, Sh.tR, Sh.tF + .5)); c.fillStyle = '#c8a870'; c.beginPath(); c.moveTo(-90, 40); c.lineTo(-60, -40); c.lineTo(30, -50); c.lineTo(90, -20); c.lineTo(80, 50); c.lineTo(-80, 60); c.fill();
+        c.fillStyle = '#4a7aa0'; c.fillRect(70, -60, 30, 120); c.fillStyle = S.rgba('#4a7aa0', .75); c.beginPath(); c.moveTo(70, -60); for (let k = 0; k <= 10; k++) c.lineTo(70 - fl * 150 + Math.sin(k + lt * 4) * 8, -60 + k * 12); c.lineTo(70, 60); c.fill();
+        c.strokeStyle = '#3a6a8a'; c.lineWidth = 2; c.beginPath(); c.moveTo(-10, 60); c.lineTo(-20, -30); c.stroke(); c.font = '18px Caveat'; c.fillStyle = '#3a1a0a'; c.fillText('Red Sea', 50, -66); c.fillText('Nile delta', -86, -50); }
+        done(); } },
+    over: [(c, lt) => K.badge(c, 'JACQUES-MARIE LE PÈRE', lt, { at: .8 }), (c, lt, u, Sh) => K.card(c, '"10 METRES HIGHER"', lt, { at: Sh.tR + .8, x: 1460, y: 200, px: 58, rot: 2 })],
+    sfx: [[.2, 'wind_loop', .2], ['terrible news', 'paper', .45], ['ten metres', 'drum', .35], ['flood', 'splash', .5]] },
+
+  // 3.03 CU: two water levels on a chart slide together; a red stamp lands: WRONG
+  { set: 'sz_map', cam: { z: [1.0, 1.06], x: [640], y: [360], ease: E.io }, bed: [['drone', .2]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tW = at(Sh, 'wrong', .4); Sh.tY = at(Sh, '1847', 3.2); Sh.tS = at(Sh, 'same height', Sh.dur - 1.2); },
+    draw: (c, lt, u, Sh) => { const done = paper(c, 640, 360, 900, 520, 0);
+      c.strokeStyle = S.rgba('#8a7a5a', .4); c.lineWidth = 1; for (let k = -4; k <= 4; k++) { c.beginPath(); c.moveTo(-420, k * 50); c.lineTo(420, k * 50); c.stroke(); }
+      const q = E.io(seg(lt, Sh.tY, Sh.tS)), yR = lerp(-140, 20, q), yM = 20;
+      c.fillStyle = S.rgba('#3a7aa0', .55); c.fillRect(-400, yM, 340, 200); c.fillRect(60, yR, 340, 220 - yR);
+      c.strokeStyle = '#1a4a6a'; c.lineWidth = 4; c.beginPath(); c.moveTo(-400, yM); c.lineTo(-60, yM); c.moveTo(60, yR); c.lineTo(400, yR); c.stroke();
+      c.font = '30px Caveat'; c.fillStyle = '#2a1a0a'; c.textAlign = 'center'; c.fillText('Mediterranean', -230, yM - 16); c.fillText('Red Sea', 230, yR - 16);
+      if (q < .5) { c.strokeStyle = '#8a2a1a'; c.lineWidth = 2; c.setLineDash([6, 5]); c.beginPath(); c.moveTo(0, yM); c.lineTo(0, yR); c.stroke(); c.setLineDash([]); c.fillStyle = '#8a2a1a'; c.fillText('10 m?', 36, (yM + yR) / 2); }
+      done();
+      const st = seg(lt, Sh.tW - .1, Sh.tW + .25); if (st > 0) { c.save(); c.translate(640, 230); c.rotate(-.12); const sc = lerp(2.4, 1, E.out(st)); c.scale(sc, sc); c.globalAlpha = Math.min(1, st * 2); c.strokeStyle = '#c82020'; c.lineWidth = 7; c.strokeRect(-150, -46, 300, 92); c.fillStyle = '#c82020'; c.font = '72px Anton'; c.textAlign = 'center'; c.fillText('WRONG', 0, 26); c.restore(); } },
+    over: [(c, lt, u, Sh) => K.card(c, '1847: SAME LEVEL', lt, { at: Sh.tS - .2, x: 960, y: 840, px: 60, rot: -2 })],
+    sfx: [['wrong', 'stamp', .6], ['1847', 'paper', .35], ['same height', 'chime', .4]] },
+
+  // 3.04 MED: flashback (sepia): young de Lesseps laughing with young Said; horses grazing behind
+  { set: 'sz_delta', cam: { z: [1.05, 1.15], x: [640], y: [420, 440], ease: E.io }, bed: [['birds_loop', .2], ['music_box', .1]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tD = at(Sh, 'diplomat', 3); Sh.tS = at(Sh, 'Said', Sh.dur - 2); },
+    draw: (c, lt, u, Sh) => { const L = HEAT(lt);
+      VP.figure(c, [300, 560], { k: .4, sy: -.2, a: .25, blur: 3 }, cc => VP.horse(cc, 300, 560, 22 * 5, { face: 1, t: lt, col: BAY, walk: 0, headDown: .6 }, S.LIGHT.golden));
+      VP.figure(c, [1020, 570], { k: .4, sy: -.2, a: .25, blur: 3 }, cc => VP.horse(cc, 1020, 570, 22 * 5, { face: -1, t: lt + 1, col: WHITE, walk: 0 }, S.LIGHT.golden));
+      const laugh = .5 + .5 * Math.sin(lt * 7); const clap = lt > Sh.tS ? Math.max(0, Math.sin((lt - Sh.tS) * 5)) : 0;
+      crew(c, [[560, C.YLESSEPS, 0, Object.assign(S.idle(lt, 0), { face: 1, shN: 40 + 20 * laugh, elN: 60 })], [720, C.YSAID, 1, Object.assign(S.idle(lt, 1), { face: -1, shN: 60 + 60 * clap, elN: 30 })]].map(r => r), lt, L, 660, 40, [0, -.1]);
+      c.fillStyle = S.rgba('#a07840', .32); c.fillRect(0, 0, 1280, 720); const vg = c.createRadialGradient(640, 360, 200, 640, 360, 760); vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(40,20,0,.55)'); c.fillStyle = vg; c.fillRect(0, 0, 1280, 720); },
+    over: [(c, lt) => K.badge(c, 'FLASHBACK · 1830s', lt, { at: .3 }), (c, lt, u, Sh) => K.card(c, 'FERDINAND DE LESSEPS', lt, { at: .9, x: 640, y: 200, px: 52, rot: -2 }), (c, lt, u, Sh) => K.card(c, 'NOT AN ENGINEER: A DIPLOMAT', lt, { at: Sh.tD, x: 1340, y: 300, px: 42, rot: 2 }), (c, lt, u, Sh) => K.card(c, "SA'ID, THE RULER'S SON", lt, { at: Sh.tS, x: 1300, y: 860, px: 46, rot: -2 })],
+    sfx: [[.2, 'birds_loop', .2], [.5, 'laugh', .3], ['Said', 'laugh', .3]] },
+
+  // 3.05 MED: 1854; Said and de Lesseps ride side by side across the desert; then a signed paper with a wax seal
+  { set: 'sz_dunes', cam: { z: [1.0, 1.08], x: [640], y: [400], ease: E.io }, bed: [['wind_loop', .2], ['hooves_loop', .25]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tR = at(Sh, 'rode', 3); Sh.tW = at(Sh, 'walked away', Sh.dur - 3); },
+    draw: (c, lt, u, Sh) => { const L = HEAT(lt);
+      if (lt < Sh.tW) { const x = lerp(-120, 1400, seg(lt, Sh.tR - 1.5, Sh.tW + .5));
+        dust(c, x - 140, 590, lt, 18); ride(c, C.SAID, x - 150, 600, 26, BLACK, TACK2, lt, lt * .9, .8, L, { shN: 20 }, { look: [.6, 0], smile: .5 });
+        ride(c, C.LESSEPS, x, 620, 27, BAY, TACK, lt, lt * .9 + .3, .8, L, { shN: 30 }, { look: [-.3, 0], smile: .8 });
+        if (lt < Sh.tR - 1.4) { const done = paper(c, 640, 380, 240, 160, .03); c.font = '26px Caveat'; c.fillStyle = '#3a1a0a'; c.textAlign = 'center'; c.fillText("Sa'id Pasha", 0, -20); c.fillText('Wali of Egypt · 1854', 0, 20); done(); }
+        return; }
+      const done = paper(c, 640, 380, 420, 300, -.03); c.font = '34px Caveat'; c.fillStyle = '#2a1a0a'; c.textAlign = 'center'; c.fillText('Firman of Concession', 0, -100); c.font = '20px Caveat'; for (let k = 0; k < 5; k++) c.fillText('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~', 0, -60 + k * 24);
+      const sq = seg(lt, Sh.tW + .5, Sh.tW + .9); c.save(); c.translate(120, 100); c.scale(lerp(2, 1, sq), lerp(2, 1, sq)); c.globalAlpha = sq; c.fillStyle = '#a82020'; c.beginPath(); c.arc(0, 0, 28, 0, TAU); c.fill(); c.fillStyle = '#d84040'; c.beginPath(); c.arc(-6, -6, 10, 0, TAU); c.fill(); c.restore();
+      c.strokeStyle = '#1a1a3a'; c.lineWidth = 2; c.beginPath(); const sg = seg(lt, Sh.tW, Sh.tW + .6); for (let k = 0; k <= 30 * sg; k++) c.lineTo(-160 + k * 6, 100 + Math.sin(k * .9) * 8); c.stroke(); done(); },
+    over: [(c, lt) => K.dateTag(c, '1854', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'THE RIGHT TO BUILD', lt, { at: Sh.tW + .8, x: 1500, y: 170, px: 60, rot: -2 })],
+    sfx: [['rode', 'hooves', .5], ['walked away', 'paper', .45], ['canal', 'stamp', .45]] },
+
+  // 3.06 MED: London; Palmerston at a window frowning; a newsboy waves a paper: FRAUD
+  { set: 'sz_london', cam: { z: [1.0, 1.1], x: [640], y: [380, 420], ease: E.io }, bed: [['city_loop', .2], ['rain_loop', .08]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tP = at(Sh, 'Palmerston', 3); Sh.tI = at(Sh, 'impossible', 4.5); Sh.tN = at(Sh, 'newspapers', Sh.dur - 3); },
+    draw: (c, lt, u, Sh) => { const L = GREY(lt);
+      const wk = seg(lt, .2, 3); crew(c, [[lerp(1360, 760, E.out(wk)), C.PALM, 0, Object.assign(wk < 1 ? H1.walk(lt * 1.1) : S.idle(lt, 0), { face: -1, shN: lt > Sh.tI ? 120 : 20, elN: lt > Sh.tI ? 100 : 30 }), 600, 42]], lt, L, 600, 42, [-.4, 0]);
+      const nq = seg(lt, Sh.tN - 1.6, Sh.tN); const nx = lerp(-80, 300, E.out(nq)); if (nq > 0) crew(c, [[nx, C.NEWSBOY, 1, Object.assign(nq < 1 ? H1.walk(lt * 1.4) : S.idle(lt, 1), { face: 1, shN: 150, elN: 20, holdN: wr => { c.save(); c.translate(wr[0], wr[1] - 20); c.rotate(-.1); c.fillStyle = '#ece4d0'; c.fillRect(-30, -40, 60, 74); c.fillStyle = '#1a1a1a'; c.font = 'bold 14px Oswald'; c.textAlign = 'center'; c.fillText('THE TIMES', 0, -24); c.fillStyle = '#a82020'; c.font = 'bold 16px Anton'; c.fillText('FRAUD!', 0, 4); c.fillStyle = '#5a5a5a'; for (let k = 0; k < 3; k++) c.fillRect(-24, 12 + k * 6, 48, 2); c.restore(); } }), 640, 32]], lt, L, 640, 32, [.5, -.2]);
+      c.fillStyle = S.rgba('#c8c8d0', .12); for (let k = 0; k < 40; k++) { const r = S.rng(k + 600), x = (r() * 1300 + lt * 40) % 1300, y = (r() * 720 + lt * 300) % 720; c.fillRect(x, y, 1, 12); } },
+    over: [(c, lt) => K.dateTag(c, 'LONDON · 1850s', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'LORD PALMERSTON: "IMPOSSIBLE"', lt, { at: Sh.tI, x: 1300, y: 200, px: 46, rot: 2 }), (c, lt, u, Sh) => K.card(c, '"A FRAUD"', lt, { at: Sh.tN + .5, x: 600, y: 300, px: 64, rot: -3 })],
+    sfx: [[.2, 'city_loop', .2], ['Palmerston', 'footsteps', .3], ['impossible', 'thud', .35], ['newspapers', 'paper', .4], ['fraud', 'stamp', .45]] },
+];
+VP.build(); K.boot();
+</script></body></html>

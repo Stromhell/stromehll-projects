@@ -1,0 +1,35 @@
+<!doctype html><html><body style="margin:0"><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../shared/vp/engine.js"></script>
+<script src="../../../shared/vp/cast.js"></script>
+<script src="../../../shared/vp/scenes.js"></script>
+<script src="../../../shared/vp/spain.js"></script>
+<script src="../../../shared/kit.js"></script>
+<script src="../../../shared/vp.js"></script>
+<script src="../../../japan-comeback/production/jp_sets.js"></script>
+<script src="../../../japan-comeback/production/jp_sets_act1.js"></script>
+<script src="../../../japan-comeback/production/jp_sets_act2.js"></script>
+<script src="../../../japan-comeback/production/jp_sets_act3.js"></script>
+<script src="../../../japan-comeback/production/jp_sets_act4.js"></script>
+<script src="../../../spain-1-al-andalus/production/es1_sets.js"></script>
+<script src="../../../spain-1-al-andalus/production/es1_sets_act1.js"></script>
+<script src="../../../spain-1-al-andalus/production/es1_sets_act2.js"></script>
+<script src="../../../spain-1-al-andalus/production/es1_sets_act3.js"></script>
+<script src="../../../spain-1-al-andalus/production/es1_sets_act4.js"></script>
+<script src="../../../spain-1-al-andalus/production/es1_sets_act5.js"></script>
+<script src="../../../spain-2-empire/production/es2_sets.js"></script>
+<script src="../../../spain-2-empire/production/es2_sets_act1.js"></script>
+<script src="../../../spain-2-empire/production/es2_sets_act2.js"></script>
+<script src="../../../spain-3-civil-war/production/es3_sets.js"></script>
+<script src="../../../spain-3-civil-war/production/es3_sets_act2.js"></script>
+<script src="../../../spain-3-civil-war/production/es3_sets_act4.js"></script>
+<script src="../../../spain-3-civil-war/production/es3_sets_act4b.js"></script>
+<script src="../../../spain-3-civil-war/production/es3_sets_act5.js"></script>
+<script src="../../../spain-3-civil-war/production/es3_sets_act5b.js"></script>
+<script src="../../../spain-3-civil-war/production/es3_sets_act6.js"></script>
+<script src="../../../spain-3-civil-war/production/es3_sets_act6b.js"></script>
+<script src="../../../suez-canal/production/sz_sets.js"></script>
+<script src="../../../suez-canal/production/sz_sets2.js"></script>
+<script>
+const NAMES=['steppe','pass','plain','valley','tent','throne','damascus','cordoba','library','river','market','gate','towngate','sz_cairo','sz_dunes','sz_palace','mezquita','zahra','outpost','hall','north','stone','sz_nightcamp','sz_camp','np_parch','map','mapwide','np_frost','np_berezina','np_moscow','sz_temple','lions'];
+window.draw=t=>{const c=document.getElementById('c').getContext('2d');c.setTransform(1.5,0,0,1.5,0,0);c.fillStyle='#000';c.fillRect(0,0,1280,720);try{VP.drawSet(c,NAMES[t])}catch(e){c.fillStyle='#f00';c.fillText(e.message,20,40)}c.fillStyle='#000';c.fillRect(0,0,300,60);c.fillStyle='#ff0';c.font='40px sans-serif';c.fillText(NAMES[t],10,45)};
+</script></body></html>

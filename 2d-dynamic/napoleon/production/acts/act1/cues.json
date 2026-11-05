@@ -1,0 +1,185 @@
+{
+ "dur": 46.428,
+ "cues": [
+  {
+   "t": 0.2,
+   "name": "ocean_loop",
+   "gain": 0.3
+  },
+  {
+   "t": 0.5,
+   "name": "birds_loop",
+   "gain": 0.2
+  },
+  {
+   "t": 1,
+   "name": "run_steps",
+   "gain": 0.3
+  },
+  {
+   "t": 7.46,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 8.695,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 8.995,
+   "name": "laugh",
+   "gain": 0.3
+  },
+  {
+   "t": 15.37,
+   "name": "laugh",
+   "gain": 0.35
+  },
+  {
+   "t": 13.77,
+   "name": "coins",
+   "gain": 0.2
+  },
+  {
+   "t": 16.525,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 16.625,
+   "name": "clock_loop",
+   "gain": 0.2
+  },
+  {
+   "t": 16.925,
+   "name": "paper",
+   "gain": 0.3
+  },
+  {
+   "t": 22.46,
+   "name": "drum",
+   "gain": 0.35
+  },
+  {
+   "t": 24.875,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 24.975,
+   "name": "crowd_loop",
+   "gain": 0.4
+  },
+  {
+   "t": 25.075,
+   "name": "drum_loop",
+   "gain": 0.2
+  },
+  {
+   "t": 29.03,
+   "name": "hooves",
+   "gain": 0.4
+  },
+  {
+   "t": 30.13,
+   "name": "thud",
+   "gain": 0.3
+  },
+  {
+   "t": 32.01,
+   "name": "crowd_cheer",
+   "gain": 0.35
+  },
+  {
+   "t": 34.145,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 34.245,
+   "name": "night_loop",
+   "gain": 0.2
+  },
+  {
+   "t": 34.345,
+   "name": "ocean_loop",
+   "gain": 0.2
+  },
+  {
+   "t": 40.558,
+   "name": "whoosh_soft",
+   "gain": 0.3
+  },
+  {
+   "t": 42.598,
+   "name": "cannon",
+   "gain": 0.6
+  },
+  {
+   "t": 42.818,
+   "name": "cannon",
+   "gain": 0.5
+  },
+  {
+   "t": 43.798,
+   "name": "cannon",
+   "gain": 0.5
+  },
+  {
+   "t": 44.878,
+   "name": "drum",
+   "gain": 0.4
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 9.395000000000001,
+   "name": "ocean_loop",
+   "gain": 0.3
+  },
+  {
+   "start": 0,
+   "end": 9.395000000000001,
+   "name": "birds_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 8.595,
+   "end": 17.225,
+   "name": "hum_loop",
+   "gain": 0.1
+  },
+  {
+   "start": 16.425,
+   "end": 25.575,
+   "name": "clock_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 24.775,
+   "end": 34.845,
+   "name": "crowd_loop",
+   "gain": 0.4
+  },
+  {
+   "start": 24.775,
+   "end": 34.845,
+   "name": "drum_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 34.045,
+   "end": 47.227999999999994,
+   "name": "night_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 34.045,
+   "end": 47.227999999999994,
+   "name": "ocean_loop",
+   "gain": 0.2
+  }
+ ]
+}

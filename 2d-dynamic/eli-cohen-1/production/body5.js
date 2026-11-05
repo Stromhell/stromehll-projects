@@ -1,0 +1,55 @@
+const glass = (cc, s = 1.1, col) => wr => S.ecGlass(cc, wr[0], wr[1] + 2, s, .6, col);
+const invite = cc => wr => { cc.save(); cc.translate(wr[0], wr[1]); cc.fillStyle = '#f4ecd8'; cc.fillRect(-18, -14, 36, 26); cc.fillStyle = '#c8a040'; cc.beginPath(); cc.arc(0, -2, 6, 0, TAU); cc.fill(); cc.restore(); };
+const NEWS = [['AL-AYYAM', 0], ['AL-BAATH', .4], ['AL-NASR', .8], ['AL-AYYAM', .2], ['AL-THAWRA', .6]];
+
+window.SHOTS = [
+  // 5.01 MED: newspaper front pages stacking up, each with a different leader's face
+  { set: 'ec_desktop', cam: { z: [1.05, 1.15], x: [640, 640], y: [360, 360], ease: E.io }, bed: [['drone', .2]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => { NEWS.forEach(([h, tone], k) => { const q = E.out(seg(lt, .2 + k * 1, .8 + k * 1)); if (q <= 0) return; S.ecNews(c, lerp(1500, 520 + k * 60, q), 360 + (k % 2) * 20, 1.25, -.12 + k * .06, h, tone); }); },
+    over: [(c, lt) => K.card(c, 'COUP AFTER COUP', lt, { at: 2.5, x: 1460, y: 140, px: 50, rot: 2 })],
+    sfx: [[.1, 'drone', .2], [.3, 'paper', .35], [1.3, 'paper', .35], [2.3, 'paper', .35], [3.3, 'paper', .35], [4.3, 'paper', .35]] },
+
+  // 5.02 WIDE: tanks in a Damascus square at dawn; soldiers at the radio station; a crowd watching
+  { set: 'ec_dsquare', cam: { z: [1.02, 1.08], x: [640, 660], y: [400, 400], ease: E.io }, bed: [['engine_loop', .3], ['wind_loop', .15]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tB = at(Sh, 'baath', 2.5); },
+    draw: (c, lt, u, Sh) => { const L = DAWN(lt), q = E.out(seg(lt, 0, 2.6));
+      [[C.SYRSOLD, 580], [C.SYRSOLD2, 720]].forEach(([ch, x], k) => fig(c, ch, x, 470, 18, pose(lt, k, { face: k ? -1 : 1, holdN: wr => S.npMusket(c, wr[0], wr[1], -1.3, .5) }), lt, k, L, { look: [k ? -.6 : .6, 0] }));
+      S.ecTank(c, lerp(1700, 960, q), 640, 2.0, -1, Math.sin(lt * .5) * .05); S.ecTank(c, lerp(2000, 1180, E.out(seg(lt, .6, 3.2))), 540, 1.4, -1, 0);
+      [[C.CAFE2, 140], [C.EGMAN || C.BROTHER, 230], [C.CAFE3, 320]].forEach(([ch, x], k) => fig(c, ch || C.BROTHER, x, 650 + (k % 2) * 10, 30, pose(lt, k + 3, { face: 1, shN: 20, elN: 60 }), lt, k + 3, L, { look: [.7, -.1], worry: 1 })); },
+    over: [(c, lt) => K.dateTag(c, '8 MARCH 1963', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, "BA'ATH PARTY COUP", lt, { at: Sh.tB, x: 1360, y: 150, px: 48, rot: 2 })],
+    sfx: [[.1, 'engine_loop', .3], [.2, 'wind_loop', .15], [.6, 'clank', .3], ['baath', 'drum', .45]] },
+
+  // 5.03 MED: a palace hall; officers from Eli's parties now in high posts; Amin al-Hafiz at the centre
+  { set: 'sz_palace', cam: { z: [1.15, 1.25], x: [640, 640], y: [470, 470], ease: E.io }, bed: [['drone', .2]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tH = at(Sh, 'hafiz', Sh.dur - 3.4); },
+    draw: (c, lt, u, Sh) => { const L = SUN(lt), w = E.out(seg(lt, Sh.tH - 1.8, Sh.tH));
+      [[300, C.SYROFF, 1], [440, C.SYROFF3, 1], [840, C.SYROFF2, -1], [980, C.MINISTER, -1]].forEach(([x, ch, f], k) => fig(c, ch, x, 670, 33, pose(lt, k + 1, { face: f, shN: 20, elN: 60 }), lt, k + 1, L, { look: [f * .5, 0] }));
+      fig(c, C.HAFIZ, lerp(640, 640, w), lerp(560, 676, w), lerp(30, 37, w), w < 1 ? walk(lt, 0, { face: 1 }) : pose(lt, 0, { face: 1, shN: 20, elN: 50 }), lt, 0, L, { look: [0, -.1] }); },
+    over: [(c, lt, u, Sh) => K.card(c, 'FROM THE PARTIES', lt, { at: 1, x: 480, y: 150, px: 46, rot: -2, until: Sh.tH }), (c, lt, u, Sh) => K.card(c, 'AMIN AL-HAFIZ · LEADER', lt, { at: Sh.tH, x: 1360, y: 150, px: 48, rot: 2 })],
+    sfx: [[.1, 'drone', .2], [.4, 'footsteps', .25], ['hafiz', 'horn', .35], ['hafiz', 'swell', .3]] },
+
+  // 5.04 MED: Eli at a party, now with ministers; someone hands him an official invitation with an eagle seal
+  { set: 'ec_salon', cam: { z: [1.2, 1.3], x: [640, 680], y: [490, 490], ease: E.io }, bed: [['crowd_loop', .2], ['waltz', .12]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tF = at(Sh, 'friend', 2.2); },
+    draw: (c, lt, u, Sh) => { const L = CANDLE(lt), g = E.io(seg(lt, .4, 1.8));
+      fig(c, C.MINISTER, 380, 670, 34, pose(lt, 1, { face: 1, shN: 30, elN: 90, holdN: glass(c) }), lt, 1, L, { look: [.6, 0], smile: 1 });
+      fig(c, C.ELIK, 620, 676, 35, pose(lt, 0, { face: 1, shN: 30 + 40 * g, elN: 60 - 40 * g, holdN: g > .9 ? invite(c) : undefined }), lt, 0, L, { look: [.6, -.1], smile: 1 });
+      fig(c, C.SYROFF2, 840, 672, 35, pose(lt, 2, { face: -1, shN: 70 * (1 - g * .6) + 20, elN: 20, holdN: g <= .9 ? invite(c) : undefined }), lt, 2, L, { look: [-.6, 0], smile: 1 });
+      fig(c, C.MINISTER2, 1040, 672, 33, pose(lt, 3, { face: -1, shN: 30, elN: 90, holdN: glass(c) }), lt, 3, L, { look: [-.6, 0], smile: 1 }); },
+    over: [(c, lt, u, Sh) => K.card(c, 'FRIEND OF THE GOVERNMENT', lt, { at: Sh.tF, x: 1300, y: 150, px: 44, rot: 2 })],
+    sfx: [[.1, 'crowd_loop', .2], [.2, 'waltz', .12], [1, 'paper', .3], ['friend', 'chime', .35]] },
+
+  // 5.05 WIDE: an army jeep at the foot of the Golan; an officer waves Eli into the passenger seat
+  { set: 'ec_golan', cam: { z: [1.05, 1.15], x: [640, 700], y: [420, 430], ease: E.io }, bed: [['wind_loop', .25]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tT = at(Sh, 'tour', Sh.dur - 3.6); },
+    draw: (c, lt, u, Sh) => { const L = SUN(lt), w = seg(lt, .5, Sh.tT), go = E.inn(seg(lt, Sh.tT + 1.6, Sh.dur)), jx = lerp(760, 1700, go);
+      if (go <= 0) { S.ecJeep(c, jx, 650, 2.5, 1, '#6a7448', 0);
+        fig(c, C.SYROFF, 1150, 664, 33, pose(lt, 1, { face: -1, shN: 90 + 30 * Math.sin(lt * 5), elN: 20 }), lt, 1, L, { look: [-.6, 0], smile: 1 });
+        fig(c, C.ELIK, lerp(200, 470, E.out(w)), 668, 34, w < 1 ? walk(lt, 0, { face: 1 }) : pose(lt, 0, { face: 1, shN: 20, elN: 60 }), lt, 0, L, { look: [.6, -.2], smile: 1 }); }
+      else { fig(c, C.ELIK, jx - 40, 600, 30, Object.assign(VP.sit(C.ELIK, lt, 0, { seat: .4 }), { face: 1 }), lt, 0, L, { look: [.6, -.2] }); fig(c, C.SYROFF, jx + 60, 600, 30, Object.assign(VP.sit(C.SYROFF, lt, 1, { seat: .4 }), { face: 1, shN: 60, elN: 40 }), lt, 1, L, { look: [.6, -.2] }); S.ecJeep(c, jx, 650, 2.5, 1, '#6a7448', lt * 9); S.mgDust(c, lt, jx - 420, 650, 220, .3); } },
+    over: [(c, lt, u, Sh) => K.card(c, 'A TOUR OF THE GOLAN DEFENCES', lt, { at: Sh.tT, x: 1100, y: 150, px: 44, rot: -2 })],
+    sfx: [[.1, 'wind_loop', .25], [.6, 'footsteps', .25], ['tour', 'door_slam', .3], ['tour', 'engine_loop', .35]] },
+];
+VP.build(); K.boot();
+</script></body></html>

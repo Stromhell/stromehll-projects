@@ -1,0 +1,213 @@
+<!doctype html><html><head><meta charset="utf-8"><title>ES3 act 5 - Franco's Spain</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/vp/engine.js"></script><script src="../../../../shared/vp/cast.js"></script><script src="../../../../shared/vp/scenes.js"></script><script src="../../../../shared/vp/spain.js"></script>
+<script src="../../../../shared/kit.js"></script><script src="../../../../shared/vp.js"></script>
+<script src="../../../../spain-1-al-andalus/production/es1_sets.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act1.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act2.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act3.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act4.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act5.js"></script><script src="../../../../spain-1-al-andalus/production/es1_cast.js"></script>
+
+<script src="../../es3_cast.js"></script><script src="../../es3_sets.js"></script><script src="../../es3_sets_act2.js"></script><script src="../../es3_sets_act4.js"></script><script src="../../es3_sets_act5.js"></script><script src="../../es3_sets_act5b.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, E = K.E, X = S.SPX, CH = S.SPAIN, C = S.ES3, H1 = S.ES1H, TAU = Math.PI * 2;
+const at = VP.at, seg = K.seg, lerp = K.lerp, pulse = H1.pulse, walk = H1.walk;
+const night = (c, a, col = '30,40,100') => { c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = `rgba(${col},${a})`; c.fillRect(0, 0, 1280, 720); c.restore(); };
+// the running device: a Spanish flag on the wall with a crack through it; size and crack width animate
+const flag = (c, x, y, w, h, crack, lt, o = {}) => { const cols = o.cols || ['#b8202a', '#e8b820', '#b8202a'], bands = o.bands || [.25, .5, .25];
+  c.save(); c.translate(x, y); let yy = -h / 2; bands.forEach((b, i) => { c.fillStyle = cols[i]; c.fillRect(-w / 2, yy, w, b * h + 1); yy += b * h; });
+  S.dabs(c, { x: -w / 2, y: -h / 2, w, h, n: 80, cols: ['#ffffff', '#000000'], r0: 4, r1: 16, a0: .03, a1: .08, seed: 7 });
+  for (let i = 0; i < 4; i++) { const xx = -w / 2 + (i + .5) * w / 4 + Math.sin(lt * .8 + i) * 4; const gr = c.createLinearGradient(xx - 30, 0, xx + 30, 0); gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(.5, 'rgba(0,0,0,.12)'); gr.addColorStop(1, 'rgba(0,0,0,0)'); c.fillStyle = gr; c.fillRect(xx - 30, -h / 2, 60, h); }
+  if (crack > 0) { const pts = []; for (let i = 0; i <= 12; i++) { const r = S.rng(i + 31)(); pts.push([-w * .05 + (r - .5) * w * .12 + i * w * .01, -h / 2 + i * h / 12]); }
+    c.fillStyle = '#120a08'; c.beginPath(); pts.forEach((p, i) => i ? c.lineTo(p[0] - crack * (.6 + .4 * Math.sin(i)), p[1]) : c.moveTo(p[0] - crack, p[1])); for (let i = pts.length - 1; i >= 0; i--) c.lineTo(pts[i][0] + crack * (.6 + .4 * Math.cos(i)), pts[i][1]); c.fill();
+    c.strokeStyle = S.rgba('#ffe0b0', .35); c.lineWidth = 2; c.beginPath(); pts.forEach((p, i) => i ? c.lineTo(p[0] + crack, p[1]) : c.moveTo(p[0] + crack, p[1])); c.stroke(); }
+  c.strokeStyle = S.rgba('#000000', .5); c.lineWidth = 3; c.strokeRect(-w / 2, -h / 2, w, h); c.restore(); };
+const muzzle = (c, x, y, lt, t0) => { const q = seg(lt, t0, t0 + .15); if (q > 0 && q < 1) { VP.glow(c, x, y, 120, '#fff0b0', 1 - q); c.fillStyle = `rgba(255,240,180,${1 - q})`; c.beginPath(); c.moveTo(x, y); for (let k = 0; k < 8; k++) { const a = k / 8 * TAU, r = k % 2 ? 10 : 30; c.lineTo(x + Math.cos(a) * r, y + Math.sin(a) * r); } c.fill(); } };
+// a row of red leather benches with a wooden front, drawn in front of seated deputies
+const bench = (c, y, x0, x1, s = 1) => { X.wood(c, x0, y - 30 * s, x1 - x0, 46 * s, '#5a301c', Math.round(y)); c.fillStyle = '#c8a040'; c.fillRect(x0, y - 30 * s, x1 - x0, 3 * s); c.fillStyle = '#8a1e1e'; c.fillRect(x0, y - 44 * s, x1 - x0, 14 * s); c.fillStyle = S.rgba('#ff9a8a', .25); c.fillRect(x0, y - 44 * s, x1 - x0, 3 * s); };
+const DEP = [C.DEPUTY, C.DEPUTY2, C.DEPUTY3, C.SUAREZ];
+const LT_HALL = (lt) => VP.light('studio', lt, { swing: 4, set: { L: [.4, -1], amb: '#3a2a20', ambA: .2, rim: '#ffe0b0', rimA: .7, tint: '#ffd8a0', tintA: .08 } });
+
+
+const coinFlag = (c, lt, cr, o = {}) => { c.save(); c.translate(150, 120); c.scale(.16, .16); flag(c, 0, 0, 820, 520, cr, lt, o); c.restore(); };
+const REP = { cols: ['#b8202a', '#e8b820', '#6a2a7a'], bands: [1 / 3, 1 / 3, 1 / 3] };
+const car = (c, x, y, s, lt, lights) => { c.fillStyle = '#1a1a20'; c.beginPath(); c.moveTo(x - 80 * s, y - 10 * s); c.lineTo(x - 70 * s, y - 40 * s); c.lineTo(x - 10 * s, y - 60 * s); c.lineTo(x + 50 * s, y - 60 * s); c.lineTo(x + 70 * s, y - 34 * s); c.lineTo(x + 90 * s, y - 30 * s); c.lineTo(x + 90 * s, y - 10 * s); c.fill(); c.fillStyle = '#3a4a5a'; c.fillRect(x - 5 * s, y - 54 * s, 50 * s, 20 * s);
+  for (const dx of [-50, 60]) { c.fillStyle = '#0a0a0a'; c.beginPath(); c.arc(x + dx * s, y - 6 * s, 14 * s, 0, TAU); c.fill(); c.fillStyle = '#5a5a5a'; c.beginPath(); c.arc(x + dx * s, y - 6 * s, 5 * s, 0, TAU); c.fill(); }
+  if (lights) { c.fillStyle = '#ff3a2a'; c.fillRect(x - 82 * s, y - 30 * s, 6 * s, 8 * s); VP.glow(c, x - 80 * s, y - 26 * s, 50 * s, '#ff3a2a', .7); } };
+
+const FRONT = [C.WORKER, C.WOMAN, C.LABOURER, C.WORKER, C.LABOURER2, C.WOMAN, C.WORKER, C.LABOURER];
+const frontRow = (c, lt, L, y, u, o = {}) => { FRONT.forEach((ch, k) => { const x = 110 + k * 150 + (k % 2) * 20, up = o.cheer ? (Math.sin(lt * 4 + k * 1.7) > 0 ? 1 : 0) : 0, fl = o.flags && k % 2 === 0;
+  VP.figure(c, [x, y], { k: .3, sy: -.25, a: .3, blur: 2 }, cc => S.person(cc, ch, x, y, u, Object.assign(S.idle(lt, k), { face: k % 2 ? -1 : 1, shN: fl ? 150 + 10 * Math.sin(lt * 3 + k) : 30 + 120 * up, elN: fl ? 10 : 20, holdN: fl ? wr => { cc.strokeStyle = '#3a2a1a'; cc.lineWidth = 2.4; cc.beginPath(); cc.moveTo(wr[0], wr[1] + 14); cc.lineTo(wr[0], wr[1] - 70); cc.stroke(); for (let b = 0; b < 3; b++) { cc.fillStyle = ['#b8202a', '#e8b820', '#6a2a7a'][b]; cc.beginPath(); for (let j = 0; j <= 8; j++) { const fx = wr[0] + 1 + j * 6, fy = wr[1] - 70 + b * 10 + Math.sin(lt * 5 + k + j * .7) * 3 * j / 8; j ? cc.lineTo(fx, fy) : cc.moveTo(fx, fy); } for (let j = 8; j >= 0; j--) { const fx = wr[0] + 1 + j * 6, fy = wr[1] - 60 + b * 10 + Math.sin(lt * 5 + k + j * .7) * 3 * j / 8; cc.lineTo(fx, fy); } cc.fill(); } } : null }), { blink: S.blinkAt(lt, k), smile: .5, look: [k % 2 ? -.2 : .2, -.6], time: lt }, L)); }); };
+
+
+const paper = (cc, wr, w = 34, h = 24, rot = -.2) => { cc.save(); cc.translate(wr[0], wr[1]); cc.rotate(rot); cc.fillStyle = '#f0e8d4'; cc.fillRect(-4, -h, w, h); cc.fillStyle = S.rgba('#3a3a3a', .5); for (let k = 0; k < 4; k++) cc.fillRect(0, -h + 5 + k * 5, w - 10, 1.5); cc.restore(); };
+const truck = (c, x, y, s, lt, on) => { c.fillStyle = '#1e2430'; c.fillRect(x - 120 * s, y - 90 * s, 150 * s, 80 * s); c.fillStyle = '#2a3040'; c.beginPath(); c.moveTo(x + 30 * s, y - 70 * s); c.lineTo(x + 80 * s, y - 70 * s); c.lineTo(x + 100 * s, y - 40 * s); c.lineTo(x + 100 * s, y - 10 * s); c.lineTo(x + 30 * s, y - 10 * s); c.fill(); c.fillStyle = '#4a5a6a'; c.fillRect(x + 40 * s, y - 64 * s, 34 * s, 22 * s);
+  for (const dx of [-80, 60]) { c.fillStyle = '#0a0a0a'; c.beginPath(); c.arc(x + dx * s, y - 8 * s, 18 * s, 0, TAU); c.fill(); c.fillStyle = '#4a4a4a'; c.beginPath(); c.arc(x + dx * s, y - 8 * s, 6 * s, 0, TAU); c.fill(); }
+  if (on) { c.save(); c.globalCompositeOperation = 'lighter'; const g = c.createLinearGradient(x + 100 * s, 0, x + 500 * s, 0); g.addColorStop(0, 'rgba(255,240,190,.5)'); g.addColorStop(1, 'rgba(255,240,190,0)'); c.fillStyle = g; c.beginPath(); c.moveTo(x + 100 * s, y - 34 * s); c.lineTo(x + 520 * s, y - 80 * s); c.lineTo(x + 520 * s, y + 40 * s); c.lineTo(x + 100 * s, y - 22 * s); c.fill(); c.restore(); VP.glow(c, x + 100 * s, y - 28 * s, 30 * s, '#fff0c0', .9); } };
+const dyn = (cc, wr, lt, k) => { cc.save(); cc.translate(wr[0], wr[1]); cc.rotate(-.5); cc.fillStyle = '#b8302a'; cc.fillRect(-3, -18, 7, 22); cc.strokeStyle = '#3a2a1a'; cc.lineWidth = 1.2; cc.beginPath(); cc.moveTo(0, -18); cc.quadraticCurveTo(4, -26, 2, -30); cc.stroke(); cc.restore(); };
+
+
+const biplane = (c, x, y, s, lt, prop = 1) => { c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = '#e8e0cc'; c.beginPath(); c.moveTo(-90, 0); c.quadraticCurveTo(-60, -16, 40, -14); c.lineTo(80, -6); c.lineTo(80, 6); c.lineTo(-60, 8); c.fill(); c.fillStyle = '#c8b898'; c.fillRect(-20, -40, 60, 8); c.fillRect(-26, 6, 70, 8); c.strokeStyle = '#5a4a3a'; c.lineWidth = 2; for (const xx of [-10, 30]) { c.beginPath(); c.moveTo(xx, -32); c.lineTo(xx, 6); c.stroke(); }
+  c.fillStyle = '#3a4a6a'; for (let k = 0; k < 4; k++) c.fillRect(-40 + k * 18, -10, 10, 7); c.fillStyle = '#c8b898'; c.beginPath(); c.moveTo(-90, 0); c.lineTo(-100, -26); c.lineTo(-80, -26); c.lineTo(-70, -2); c.fill();
+  c.fillStyle = '#2a2a2a'; c.beginPath(); c.arc(0, 22, 7, 0, TAU); c.fill(); c.strokeStyle = '#2a2a2a'; c.beginPath(); c.moveTo(0, 14); c.lineTo(0, 22); c.stroke();
+  c.fillStyle = S.rgba('#888888', .5); c.beginPath(); c.ellipse(82, 0, 3, 22 * Math.abs(Math.sin(lt * 40 * prop + .5)) + 2, 0, 0, TAU); c.fill(); c.restore(); };
+const trimotor = (c, x, y, s, lt) => { c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = '#5a5a52'; c.beginPath(); c.ellipse(0, 0, 90, 14, 0, 0, TAU); c.fill(); c.beginPath(); c.moveTo(-20, -6); c.lineTo(30, -70); c.lineTo(50, -70); c.lineTo(20, 0); c.lineTo(50, 70); c.lineTo(30, 70); c.lineTo(-20, 6); c.fill(); c.beginPath(); c.moveTo(-80, 0); c.lineTo(-100, -26); c.lineTo(-90, 0); c.lineTo(-100, 26); c.fill();
+  c.fillStyle = S.rgba('#ffffff', .15); c.beginPath(); c.ellipse(10, -4, 70, 4, 0, 0, TAU); c.fill(); for (const [px, py] of [[92, 0], [36, -40], [36, 40]]) { c.fillStyle = '#3a3a34'; c.beginPath(); c.arc(px - 6, py, 7, 0, TAU); c.fill(); c.fillStyle = S.rgba('#c8c8c8', .45); c.beginPath(); c.ellipse(px, py, 2, 16 * Math.abs(Math.sin(lt * 30 + px)) + 2, 0, 0, TAU); c.fill(); } c.restore(); };
+const crate = (c, x, y, open, lt) => { X.wood(c, x - 50, y - 40, 100, 40, '#8a6a3a', Math.round(x)); c.strokeStyle = '#4a3418'; c.lineWidth = 2; c.strokeRect(x - 50, y - 40, 100, 40); for (let k = 0; k < 5; k++) { c.strokeStyle = '#3a2a1a'; c.lineWidth = 3; c.beginPath(); c.moveTo(x - 40 + k * 18, y - 38); c.lineTo(x - 30 + k * 18, y - 60); c.stroke(); } c.save(); c.translate(x - 50, y - 40); c.rotate(-1.2 * open); X.wood(c, 0, -8, 100, 8, '#9a7a4a', 9); c.restore(); };
+const LLp = pts => pts.map(q => X.LL(q[0], q[1]));
+const NAT = [LLp([[-9.6, 43.4], [-7.5, 43.2], [-6.5, 43.1], [-4.8, 42.9], [-3.6, 42.9], [-2.4, 42.7], [-1.6, 43.0], [-0.8, 42.6], [-0.4, 41.7], [-1.6, 41.0], [-3.2, 41.0], [-4.3, 40.5], [-5.4, 40.2], [-6.8, 40.1], [-7.2, 39.4], [-9.8, 39.4]]), LLp([[-7.6, 37.4], [-6.4, 37.9], [-5.4, 37.9], [-4.6, 37.4], [-4.3, 36.6], [-5.8, 35.8], [-6.8, 36.6]])];
+
+
+const snow = (c, lt, n = 120, a = .8) => { for (let i = 0; i < n; i++) { const r = S.rng(i + 900), x = (r() * 1400 + Math.sin(lt * .8 + i) * 30 + lt * 20) % 1400 - 60, y = (r() * 760 + lt * (40 + r() * 40)) % 760 - 20; c.fillStyle = S.rgba('#ffffff', a * (.4 + r() * .6)); c.beginPath(); c.arc(x, y, 1.5 + r() * 2.5, 0, TAU); c.fill(); } };
+const piece = (c, x, y, s, col) => { c.fillStyle = S.rgba('#000000', .35); c.beginPath(); c.ellipse(x + 4, y + 2, 16 * s, 5 * s, 0, 0, TAU); c.fill(); c.fillStyle = col; c.beginPath(); c.moveTo(x - 14 * s, y); c.lineTo(x - 8 * s, y - 24 * s); c.lineTo(x + 8 * s, y - 24 * s); c.lineTo(x + 14 * s, y); c.fill(); c.beginPath(); c.arc(x, y - 30 * s, 9 * s, 0, TAU); c.fill(); c.fillStyle = S.rgba('#ffffff', .3); c.fillRect(x - 6 * s, y - 22 * s, 3 * s, 18 * s); };
+const SHC = document.createElement('canvas'); SHC.width = 1280; SHC.height = 720; const shade = (c, fn) => { const o = SHC.getContext('2d'); o.setTransform(1, 0, 0, 1, 0, 0); o.globalCompositeOperation = 'source-over'; o.clearRect(0, 0, 1280, 720); fn(o); o.globalCompositeOperation = 'source-in'; o.fillStyle = '#0e0a08'; o.fillRect(0, 0, 1280, 720); c.drawImage(SHC, 0, 0); };
+const plane = (c, x, y, s, lt = 0) => { c.save(); c.translate(x, y); c.scale(-s, s); c.fillStyle = '#3a3a36'; c.beginPath(); c.moveTo(46, -2); c.quadraticCurveTo(40, -9, 10, -8); c.lineTo(-38, -4); c.lineTo(-44, -18); c.lineTo(-50, -18); c.lineTo(-48, 2); c.lineTo(10, 5); c.quadraticCurveTo(40, 5, 46, -2); c.fill(); c.fillStyle = '#2a2a26'; c.fillRect(-10, -2, 34, 5); c.fillRect(0, -1, 14, 9); c.fillStyle = S.rgba('#c8d0d8', .6); c.fillRect(26, -7, 10, 3); c.fillStyle = S.rgba('#888888', .45); c.beginPath(); c.ellipse(48, -2, 2, 10 * Math.abs(Math.sin(lt * 40)) + 2, 0, 0, TAU); c.fill(); c.restore(); };
+const dustPuff = (c, x, y, lt, t0) => { const q = seg(lt, t0, t0 + .8); if (q <= 0 || q >= 1) return; c.fillStyle = S.rgba('#d8c8a8', .6 * (1 - q)); c.beginPath(); c.arc(x, y - 20 * q, 8 + 20 * q, 0, TAU); c.fill(); };
+
+
+const P3 = S.ES3P, GREY = ['#7a7a74', '#3c3c38'];
+const PRIS = P3.man({ skin: S.SPX.SK.olive, shirt: GREY, pants: GREY, sleeves: true, hairCol: S.SPX.HR.black });
+const PRIS2 = P3.man({ skin: S.SPX.SK.fair, shirt: GREY, pants: GREY, sleeves: true, hairCol: S.SPX.HR.grey, mustache: true });
+const BLUEDIV = P3.man({ skin: S.SPX.SK.olive, shirt: ['#2a3a6a', '#141c34'], pants: ['#5a5a4a', '#2c2c24'], sleeves: true, headwear: S.SPX.peaked({ base: '#5a5a4a', shade: '#2c2c24', rim: '#9a9a8a' }) });
+const YANK = P3.man({ skin: S.SPX.SK.fair, hairCol: S.SPX.HR.brown, shirt: ['#6a6a4a', '#34341e'], pants: ['#6a6a4a', '#34341e'], sleeves: true, tie: '#3a3a2a', headwear: S.SPX.peaked({ base: '#6a6a4a', shade: '#34341e', rim: '#a8a88a' }) });
+const OLDFRANCO = Object.assign({}, C.FRANCO, { hairCol: S.SPX.HR.grey, stoop: 4 });
+const JCY = P3.suit(['#2a2a3a', '#14141e'], '#5a2a2a', { name: 'Juan Carlos', skin: S.SPX.SK.fair, hairCol: { base: '#6a4a2a', shade: '#2e1e10', rim: '#c09a70' } });
+const TOUR = [Object.assign({}, C.VOTER, { shirt: ['#e86a4a', '#a83a24'], pants: ['#f0e8d8', '#b8b0a0'] }), P3.man({ skin: S.SPX.SK.fair, hairCol: { base: '#e0c080', shade: '#a08040', rim: '#fff0c0' }, shirt: ['#f0e8a0', '#b8a860'], pants: ['#4a7aa8', '#24405a'] }), Object.assign({}, C.KID, { shirt: ['#5ab0e0', '#2a6aa0'] })];
+const umbrella = (c, x, y, s, col, lt) => { c.strokeStyle = '#5a4a3a'; c.lineWidth = 2 * s; c.beginPath(); c.moveTo(x, y); c.lineTo(x, y - 60 * s); c.stroke(); c.fillStyle = col; c.beginPath(); c.moveTo(x - 40 * s, y - 52 * s); c.quadraticCurveTo(x, y - 82 * s, x + 40 * s, y - 52 * s); c.fill(); c.fillStyle = S.rgba('#ffffff', .5); c.beginPath(); c.moveTo(x - 6 * s, y - 52 * s); c.quadraticCurveTo(x, y - 82 * s, x + 6 * s, y - 52 * s); c.fill(); };
+const seat600 = (c, x, y, s) => { c.fillStyle = '#e8e0c8'; c.beginPath(); c.moveTo(x - 50 * s, y - 10 * s); c.quadraticCurveTo(x - 50 * s, y - 40 * s, x - 20 * s, y - 50 * s); c.lineTo(x + 24 * s, y - 50 * s); c.quadraticCurveTo(x + 50 * s, y - 40 * s, x + 52 * s, y - 10 * s); c.fill(); c.fillStyle = '#5a7a9a'; c.fillRect(x - 18 * s, y - 46 * s, 18 * s, 14 * s); c.fillRect(x + 4 * s, y - 46 * s, 18 * s, 14 * s); for (const dx of [-30, 32]) { c.fillStyle = '#1a1a1a'; c.beginPath(); c.arc(x + dx * s, y - 8 * s, 10 * s, 0, TAU); c.fill(); } };
+const crane = (c, x, y, h, lt) => { c.strokeStyle = '#d8a030'; c.lineWidth = 3; c.beginPath(); c.moveTo(x, y); c.lineTo(x, y - h); c.lineTo(x + 120, y - h); c.moveTo(x - 40, y - h); c.lineTo(x, y - h); c.stroke(); const hx = x + 40 + 60 * (.5 + .5 * Math.sin(lt * .4)); c.lineWidth = 1; c.beginPath(); c.moveTo(hx, y - h); c.lineTo(hx, y - h + 60); c.stroke(); };
+const bomb = (c, lt, t0, x, y) => { const q = seg(lt, t0, t0 + 1.2); if (q <= 0 || q >= 1) return; VP.glow(c, x, y, 400 * q + 60, '#fff0b0', 1 - q); c.fillStyle = S.rgba('#5a4a3a', .7 * (1 - q)); for (let k = 0; k < 10; k++) { const a = k / 10 * Math.PI + Math.PI; c.beginPath(); c.arc(x + Math.cos(a) * 200 * q, y + Math.sin(a) * 260 * q, 30 + 40 * q, 0, TAU); c.fill(); } };
+
+const coach = (c, x, y, w, ht, col) => { const bg = c.createLinearGradient(0, y, 0, y + ht); bg.addColorStop(0, S.mix(col, '#ffffff', .12)); bg.addColorStop(.5, col); bg.addColorStop(1, S.mix(col, '#000000', .4)); c.fillStyle = bg; c.fillRect(x, y, w, ht);
+  c.fillStyle = S.mix(col, '#000000', .45); c.beginPath(); c.moveTo(x - 4, y + 4); c.quadraticCurveTo(x + w / 2, y - 18, x + w + 4, y + 4); c.lineTo(x + w + 4, y + 8); c.lineTo(x - 4, y + 8); c.fill();
+  for (let k = 0; k < Math.floor((w - 20) / 70); k++) { const wx = x + 16 + k * 70; c.fillStyle = '#e8d8a0'; c.fillRect(wx, y + 18, 44, 30); c.fillStyle = '#8a2a2a'; c.fillRect(wx, y + 18, 10, 30); c.fillRect(wx + 34, y + 18, 10, 30); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(wx + 10, y + 36, 24, 12); c.strokeStyle = S.mix(col, '#000000', .6); c.lineWidth = 2; c.strokeRect(wx, y + 18, 44, 30); }
+  c.strokeStyle = '#c8a040'; c.lineWidth = 2; c.beginPath(); c.moveTo(x, y + 58); c.lineTo(x + w, y + 58); c.stroke(); c.strokeStyle = 'rgba(0,0,0,.35)'; c.lineWidth = 1.5; for (let k = 0; k <= Math.floor(w / 140); k++) { c.beginPath(); c.moveTo(x + k * 140, y + 10); c.lineTo(x + k * 140, y + ht); c.stroke(); } };
+window.SHOTS = [
+  // 5.01 MED: a grey prison yard; prisoners in lines; the colour drains away
+  { set: 'prison', cam: { z: [1.2, 1.3], x: [600, 640], y: [430, 440], ease: E.io }, bed: [['wind_loop', .2], ['drone', .15]],
+    init: Sh => { Sh.tF = at(Sh, 'falange', 2.5); Sh.tE = at(Sh, 'executed', 5); Sh.tC = at(Sh, 'camps', Sh.dur - 2); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const L = VP.light('studio', lt, { swing: 3, set: { L: [-.4, -1] } }), sh = VP.shadowOf(L, 1, .3, .12);
+      for (let r = 0; r < 2; r++) for (let k = 0; k < 7; k++) { const x = 140 + k * 120 + r * 50, y = 620 + r * 50; VP.figure(c, [x, y], sh, cc => S.person(cc, (k + r) % 2 ? PRIS : PRIS2, x, y, 28 + r * 4, Object.assign(S.idle(lt, k + r * 7), { face: 1, lean: 6, shN: 10, elN: 10, shF: 10, elF: 10 }), { blink: S.blinkAt(lt, k + r * 7), worry: .7, look: [.3, .5], time: lt }, L)); }
+      VP.figure(c, [1100, 640], sh, cc => S.person(cc, C.GUARD, 1100, 640, 34, Object.assign(S.idle(lt, 20), { face: -1, shF: 50, elF: 60, holdF: wr => { cc.strokeStyle = '#1a1a1a'; cc.lineWidth = 4; cc.beginPath(); cc.moveTo(wr[0] + 10, wr[1] + 30); cc.lineTo(wr[0] - 10, wr[1] - 60); cc.stroke(); } }), { blink: S.blinkAt(lt, 20), look: [-.8, 0], time: lt }, L));
+      const gq = seg(lt, Sh.tE - 1, Sh.tE + 2); if (gq > 0) { c.save(); c.globalCompositeOperation = 'saturation'; c.fillStyle = `rgba(128,128,128,${gq})`; c.fillRect(0, 0, 1280, 720); c.restore(); }
+      VP.motes(c, lt, 0, 200, 1280, 500, { n: 20, a: .2, col: '#d8d8d8' });
+    },
+    over: [(c, lt, u, Sh) => coinFlag(c, lt, 28 * (1 - seg(lt, Sh.tE, Sh.tE + 2)), { cols: ['#8a8a8a', '#b0b0b0', '#8a8a8a'], bands: [.25, .5, .25] }), (c, lt, u, Sh) => K.card(c, 'ONE PARTY: THE FALANGE', lt, { at: Sh.tF + .2, x: 960, y: 170, px: 46 }), (c, lt, u, Sh) => K.card(c, 'TENS OF THOUSANDS EXECUTED', lt, { at: Sh.tE + .3, x: 960, y: 290, px: 42, rot: -2 })],
+    sfx: [[.2, 'wind_loop', .2], ['falange', 'stamp', .4], ['executed', 'drone', .4], ['camps', 'gate_slam', .4]] },
+
+  // 5.02 MED: children recite under a crucifix and Franco's portrait; outside, a Catalan sign is painted over
+  { set: 'school', cam: (lt, u, Sh) => ({ z: [lerp(1.2, 1.5, E.io(seg(lt, Sh.tE - 1, Sh.tE + 1)))], x: [lerp(640, 1060, E.io(seg(lt, Sh.tE - 1, Sh.tE + 1)))], y: [lerp(420, 260, E.io(seg(lt, Sh.tE - 1, Sh.tE + 1)))] }), bed: [['office_loop', .1]],
+    init: Sh => { Sh.tB = at(Sh, 'basque', 1.5); Sh.tE = at(Sh, 'everything', Sh.dur - 3); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const L = VP.light('golden', lt, { swing: 4, set: { L: [-.6, -.8] } }), sh = VP.shadowOf(L, 1, .3, .1), pq = seg(lt, Sh.tB, Sh.tE);
+      c.save(); c.beginPath(); c.rect(1020, 90, 200, 260); c.clip(); c.fillStyle = '#e8e0d0'; c.fillRect(1020, 90, 200, 260); c.fillStyle = '#c8b898'; c.fillRect(1040, 150, 160, 60); c.fillStyle = '#3a2a1a'; c.font = 'bold 22px Oswald'; c.textAlign = 'center'; c.fillText('ESCOLA', 1120, 188); c.fillStyle = '#e8e0d0'; c.fillRect(1040, 150, 160 * pq, 60); if (pq > 0 && pq < 1) { c.fillStyle = '#5a3a1a'; c.fillRect(1040 + 160 * pq - 4, 140, 8, 80); } c.restore();
+      VP.figure(c, [300, 640], sh, cc => S.person(cc, C.PRIEST, 300, 640, 40, Object.assign(S.idle(lt, 9), { face: 1, shN: 100 + 20 * Math.sin(lt * 2), elN: 20 }), { blink: S.blinkAt(lt, 9), look: [.6, 0], time: lt }, L));
+      for (let r = 0; r < 2; r++) for (let k = 0; k < 5; k++) { const x = 470 + k * 130 + r * 40, y = 640 + r * 50, say = Math.max(0, Math.sin(lt * 5 + k * .2)), uu = 33 + r * 3; VP.figure(c, [x, y], sh, cc => S.person(cc, Object.assign({}, C.KID, { shirt: [['#e8e4da', '#a8a294'], ['#d8e0e8', '#98a0a8']][(k + r) % 2] }), x, y, uu, Object.assign(S.idle(lt, k), { face: -1 }), { blink: S.blinkAt(lt, k + r * 5), mouth: say, look: [-.6, -.2], time: lt }, L)); }
+      VP.rays(c, 1120, 120, lt, { n: 4, len: 700, spread: .12, a: .07, ang: 2.4 });
+    },
+    over: [(c, lt) => coinFlag(c, lt, 0, { cols: ['#8a8a8a', '#b0b0b0', '#8a8a8a'] }), (c, lt, u, Sh) => K.card(c, 'CATALAN · BASQUE · GALICIAN: BANNED IN PUBLIC', lt, { at: Sh.tB + .2, x: 960, y: 170, px: 36 }), (c, lt, u, Sh) => K.card(c, 'SPANISH · CATHOLIC · OBEDIENT', lt, { at: Sh.tE + .3, x: 760, y: 300, px: 44, rot: -2 })],
+    sfx: [['catalan', 'crowd_loop', .15], ['pushed', 'scrape', .3], ['everything', 'stamp', .4]] },
+
+  // 5.03 MED: Hendaye, 1940: a train at the platform; Franco and Hitler (in shadow) shake hands
+  { set: 'station', cam: (lt, u, Sh) => ({ z: [lerp(1.25, 1.55, E.io(seg(lt, Sh.tH - 1, Sh.tH + 2)))], x: [lerp(640, 700, E.io(seg(lt, 0, Sh.dur)))], y: [lerp(430, 470, E.io(seg(lt, 0, Sh.dur)))] }), bed: [['hum_loop', .15]],
+    init: Sh => { Sh.tW = at(Sh, 'world war', 1); Sh.tH = at(Sh, 'hitler met', 4); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const L = VP.light('studio', lt, { swing: 3 }), sh = VP.shadowOf(L, 1, .3, .1), sq = E.io(seg(lt, Sh.tH, Sh.tH + 2));
+      for (let k = 0; k < 4; k++) { coach(c, k * 330 - 10, 384, 320, 90, '#2a3428'); c.fillStyle = '#1a1a1a'; c.fillRect(k * 330 + 310, 420, 10, 30); } c.fillStyle = '#2a2a2e'; c.fillRect(0, 470, 1280, 14);
+      for (let k = 0; k < 3; k++) H1.smoke(c, 200 + k * 380, 420, 1.2, lt + k * 3, '200,200,205');
+      const fx = lerp(560, 600, sq), hx = lerp(820, 690, sq);
+      VP.figure(c, [fx, 660], sh, cc => S.person(cc, C.FRANCO, fx, 660, 40, Object.assign(S.idle(lt, 1), { face: 1, shN: 30 + 40 * sq, elN: 30 }), { blink: S.blinkAt(lt, 1), smile: .2, look: [.6, -.1], time: lt }, L));
+      shade(c, o => S.person(o, Object.assign({}, C.OFFICER, { shirt: ['#5a5a50', '#2c2c28'], pants: ['#5a5a50', '#2c2c28'] }), hx, 660, 42, Object.assign(S.idle(lt, 2), { face: -1, shN: 30 + 40 * sq, elN: 30 }), { blink: 0, look: [-.6, -.1], time: lt }, L));
+      for (let k = 0; k < 4; k++) { const x = 160 + k * 90 + (k > 1 ? 800 : 0); VP.figure(c, [x, 650], sh, cc => S.person(cc, k > 1 ? Object.assign({}, C.SOLDIER, { shirt: ['#5a5a50', '#2c2c28'], pants: ['#5a5a50', '#2c2c28'] }) : C.SOLDIER, x, 650, 30, Object.assign(S.idle(lt, k + 4), { face: k > 1 ? -1 : 1 }), { blink: S.blinkAt(lt, k + 4), look: [k > 1 ? -.6 : .6, 0], time: lt }, L)); }
+    },
+    over: [(c, lt) => coinFlag(c, lt, 0, { cols: ['#8a8a8a', '#b0b0b0', '#8a8a8a'] }), (c, lt, u, Sh) => K.card(c, 'WORLD WAR II', lt, { at: Sh.tW + .2, x: 960, y: 170, px: 52, until: Sh.tH }), (c, lt, u, Sh) => K.dateTag(c, 'HENDAYE · 23 OCT 1940', lt, { at: Sh.tH }), (c, lt, u, Sh) => K.card(c, 'FRANCO MEETS HITLER', lt, { at: Sh.tH + .5, x: 960, y: 170, px: 50 })],
+    sfx: [['world war', 'drone', .3], ['hitler met', 'hum_loop', .35], ['border', 'whoosh_soft', .3]] },
+
+  // 5.04 CU: Hitler (in shadow) rubs his jaw as the train door closes; Franco calm
+  { set: 'station', cam: { z: [1.7, 1.8], x: [700, 700], y: [480, 480], ease: E.io }, bed: [['hum_loop', .15]],
+    init: Sh => { Sh.tA = at(Sh, 'too much', 1); Sh.tT = at(Sh, 'teeth', Sh.dur - 3); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const L = VP.light('studio', lt, { swing: 3 }), sh = VP.shadowOf(L, 1, .3, .1), rub = seg(lt, Sh.tT - .5, Sh.tT), rubA = Math.sin(lt * 6) * .5 + .5;
+      coach(c, 720, 384, 400, 92, '#2a2a30'); c.fillStyle = '#3a3a40'; c.fillRect(1060, 400, 44, 76); c.strokeStyle = '#c8a040'; c.lineWidth = 2; c.strokeRect(1060, 400, 44, 76);
+      shade(c, o => S.person(o, Object.assign({}, C.OFFICER, { shirt: ['#5a5a50', '#2c2c28'] }), 840, 660, 48, Object.assign(S.idle(lt, 2), { face: 1, shN: 40 + 90 * rub, elN: 30 + 90 * rub + 15 * rubA * rub }), { blink: 0, look: [.6, 0], time: lt }, L));
+      VP.figure(c, [560, 660], sh, cc => S.person(cc, C.FRANCO, 560, 660, 46, Object.assign(S.idle(lt, 1), { face: 1, shN: 20, elN: 40, shF: 20, elF: 40 }), { blink: S.blinkAt(lt, 1), smile: .15, look: [.6, 0], time: lt }, L));
+      const dq = seg(lt, Sh.dur - 1.6, Sh.dur - .8); if (dq > 0) { c.fillStyle = '#1e1e22'; c.fillRect(720, 300, 420 * dq, 420); }
+    },
+    over: [(c, lt) => coinFlag(c, lt, 0, { cols: ['#8a8a8a', '#b0b0b0', '#8a8a8a'] }), (c, lt, u, Sh) => K.card(c, 'FRENCH AFRICA · WEAPONS · FOOD', lt, { at: Sh.tA + .3, x: 520, y: 170, px: 40, rot: -2 }), (c, lt, u, Sh) => K.card(c, '"3 OR 4 TEETH"', lt, { at: Sh.tT + .2, x: 1420, y: 300, px: 60, rot: 3 })],
+    sfx: [['too much', 'paper', .3], ['teeth', 'pop', .4], ['again', 'door_slam', .4]] },
+
+  // 5.05 MED: the Blue Division marches through the Russian snow
+  { set: 'steppe', cam: (lt, u, Sh) => ({ z: [1.2], x: [lerp(560, 720, E.io(seg(lt, 0, Sh.dur)))], y: [440] }), bed: [['wind_loop', .4]],
+    init: Sh => { Sh.tO = at(Sh, 'officially', 1); Sh.tB = at(Sh, 'blue division', Sh.dur - 3); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const L = VP.light('moon', lt, { swing: 3, set: { L: [-.4, -1] } }), sh = VP.shadowOf(L, .8, .2, .1);
+      for (let i = 0; i < 10; i++) { const q = ((lt * .012 + i / 10) % 1), x = lerp(1340, 860, q), y = lerp(476, 540, q * q), uu = lerp(12, 18, q); VP.figure(c, [x, y], sh, cc => S.person(cc, C.SOLDIER, x, y, uu, Object.assign(walk(lt * 1.1 + i * .6), { face: -1, lean: 6, shF: 40, elF: 70, holdF: wr => { cc.strokeStyle = '#3a2a1a'; cc.lineWidth = Math.max(1.5, uu / 9); cc.beginPath(); cc.moveTo(wr[0] + uu * .3, wr[1] + uu * .8); cc.lineTo(wr[0] - uu * .5, wr[1] - uu * 1.6); cc.stroke(); } }), { blink: S.blinkAt(lt, i), worry: .5, look: [-.8, 0], time: lt }, L)); }
+      for (let k = 0; k < 4; k++) { const x = 900 - k * 140 - lt * 6, y = 690 - (k % 2) * 10; VP.figure(c, [x, y], sh, cc => S.person(cc, BLUEDIV, x, y, 36, Object.assign(walk(lt * 1.1 + k * .25), { face: -1, lean: 8, shF: 30, elF: 80, holdF: wr => { cc.strokeStyle = '#3a2a1a'; cc.lineWidth = 4; cc.beginPath(); cc.moveTo(wr[0], wr[1] + 20); cc.lineTo(wr[0] + 18, wr[1] - 60); cc.stroke(); } }), { blink: S.blinkAt(lt, k), worry: .5, look: [-.8, .1], time: lt }, L)); }
+      snow(c, lt, 200, .9);
+    },
+    over: [(c, lt) => coinFlag(c, lt, 0, { cols: ['#8a8a8a', '#b0b0b0', '#8a8a8a'] }), (c, lt, u, Sh) => K.card(c, 'OFFICIALLY NEUTRAL', lt, { at: Sh.tO + .2, x: 460, y: 170, px: 44, rot: -3 }), (c, lt, u, Sh) => K.card(c, 'THE BLUE DIVISION · ~45,000', lt, { at: Sh.tB + .3, x: 1400, y: 300, px: 42, rot: 3 })],
+    sfx: [['officially', 'wind_loop', .3], ['volunteers', 'footsteps', .45], ['soviet', 'drone', .35]] },
+
+  // 5.06 MED: a ration queue outside the bakery; a mother splits one small loaf among her children
+  { set: 'village', cam: (lt, u, Sh) => ({ z: [lerp(1.2, 1.7, E.io(seg(lt, Sh.tH - 1, Sh.tH + 1)))], x: [lerp(640, 900, E.io(seg(lt, Sh.tH - 1, Sh.tH + 1)))], y: [lerp(440, 520, E.io(seg(lt, Sh.tH - 1, Sh.tH + 1)))] }), bed: [['wind_loop', .2]],
+    init: Sh => { Sh.tS = at(Sh, 'shut out', 1); Sh.tF = at(Sh, 'failed', 5); Sh.tH = at(Sh, 'hunger', Sh.dur - 3); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const L = VP.light('golden', lt, { swing: 4, set: { L: [-.6, -.9] } }), sh = VP.shadowOf(L, 1, .3, .1), br = seg(lt, Sh.tH, Sh.tH + .8);
+      const q = [C.WOMAN, C.LABOURER2, C.MUM, C.BASQUE, C.WOMAN, C.LABOURER]; q.forEach((ch, k) => { const x = 620 - k * 80, y = 650 + (k % 2) * 8; VP.figure(c, [x, y], sh, cc => S.person(cc, ch, x, y, 30, Object.assign(S.idle(lt, k), { face: 1, lean: 4 }), { blink: S.blinkAt(lt, k), worry: .6, look: [.7, 0], time: lt }, L)); });
+      VP.figure(c, [900, 700], sh, cc => S.person(cc, C.MUM, 900, 700, 38, Object.assign(S.idle(lt, 7), { face: 1, shN: 60, elN: 70, shF: 60, elF: 70, holdN: wr => { cc.fillStyle = '#c8904a'; cc.beginPath(); cc.ellipse(wr[0] + 6 + 8 * br, wr[1], 10, 7, 0, 0, TAU); cc.fill(); }, holdF: br > 0 ? wr => { cc.fillStyle = '#c8904a'; cc.beginPath(); cc.ellipse(wr[0] - 6 - 8 * br, wr[1], 10, 7, 0, 0, TAU); cc.fill(); } : null }), { blink: S.blinkAt(lt, 7), worry: .8, look: [.5, .5], time: lt }, L));
+      for (let k = 0; k < 2; k++) { const x = 990 + k * 60, reach = seg(lt, Sh.tH + .6 + k * .3, Sh.tH + 1.2 + k * .3); VP.figure(c, [x, 704], sh, cc => S.person(cc, k ? Object.assign({}, C.KID, { shirt: ['#8a6a4a', '#4a3424'] }) : C.KID, x, 704, 24, Object.assign(S.idle(lt, k + 8), { face: -1, shN: 30 + 60 * reach, elN: 20 }), { blink: S.blinkAt(lt, k + 8), worry: .5, look: [-.6, -.4], time: lt }, L)); }
+      VP.motes(c, lt, 0, 300, 1280, 400, { n: 30, a: .3, col: '#e8d8b0' });
+    },
+    over: [(c, lt) => coinFlag(c, lt, 0, { cols: ['#8a8a8a', '#b0b0b0', '#8a8a8a'] }), (c, lt, u, Sh) => K.card(c, 'SHUT OUT AFTER 1945', lt, { at: Sh.tS + .2, x: 460, y: 170, px: 44, rot: -3 }), (c, lt, u, Sh) => K.card(c, 'LOS AÑOS DEL HAMBRE', lt, { at: Sh.tH + .3, x: 1420, y: 170, px: 46, rot: 3 })],
+    sfx: [['shut out', 'gate_slam', .3], ['failed', 'thud', .3], ['hunger', 'paper_tear', .3]] },
+
+  // 5.07 MED: an American jet lands at a Spanish airbase; an officer shakes Franco's hand; dollars drift
+  { set: 'airbase', cam: (lt, u, Sh) => ({ z: [1.25], x: [lerp(560, 700, E.io(seg(lt, 0, Sh.dur)))], y: [450], shake: Math.abs(lt - Sh.tJ - .8) < .5 ? 1.5 : 0 }), bed: [['wind_loop', .15]],
+    init: Sh => { Sh.tC = at(Sh, 'cold war', 1); Sh.tJ = at(Sh, 'americans', 3); Sh.tD = at(Sh, '1953', 6); Sh.tU = at(Sh, 'united nations', Sh.dur - 2); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const L = VP.light('golden', lt, { swing: 4, set: { L: [-.6, -.9] } }), sh = VP.shadowOf(L, 1, .3, .1), jq = E.out(seg(lt, Sh.tJ - .5, Sh.tJ + 2)), jx = lerp(1500, 200, jq), jy = lerp(300, 560, Math.min(1, jq * 1.3));
+      c.save(); c.translate(jx, jy); c.rotate(.05 * (1 - jq)); c.fillStyle = '#b8bcc4'; c.beginPath(); c.moveTo(-90, 0); c.lineTo(80, -8); c.lineTo(110, 0); c.lineTo(80, 8); c.lineTo(-90, 6); c.fill(); c.beginPath(); c.moveTo(-10, 0); c.lineTo(40, 0); c.lineTo(-20, 40); c.lineTo(-40, 40); c.fill(); c.beginPath(); c.moveTo(-70, 0); c.lineTo(-60, -34); c.lineTo(-44, -34); c.lineTo(-40, 0); c.fill(); c.fillStyle = '#3a4a6a'; c.fillRect(60, -10, 20, 6); c.fillStyle = '#2a4a8a'; c.beginPath(); c.arc(0, 4, 6, 0, TAU); c.fill(); c.restore(); if (jq < .95) { c.fillStyle = S.rgba('#888888', .3); c.fillRect(jx + 100, jy - 3, 300, 6); }
+      const hq = E.io(seg(lt, Sh.tD, Sh.tD + 1.2));
+      VP.figure(c, [lerp(500, 560, hq), 660], sh, cc => S.person(cc, OLDFRANCO, lerp(500, 560, hq), 660, 38, Object.assign(S.idle(lt, 1), { face: 1, shN: 20 + 50 * hq, elN: 30 }), { blink: S.blinkAt(lt, 1), smile: .3 * hq, look: [.6, 0], time: lt }, L));
+      VP.figure(c, [lerp(760, 640, hq), 660], sh, cc => S.person(cc, YANK, lerp(760, 640, hq), 660, 40, Object.assign(S.idle(lt, 2), { face: -1, shN: 20 + 50 * hq, elN: 30 }), { blink: S.blinkAt(lt, 2), smile: .6, look: [-.6, 0], time: lt }, L));
+      if (lt > Sh.tD) for (let i = 0; i < 14; i++) { const r = S.rng(i + 970), ph = (lt * .15 + r()) % 1; c.save(); c.globalAlpha = .7 * Math.sin(ph * Math.PI); c.fillStyle = '#3a7a3a'; c.font = 'bold 36px Oswald'; c.fillText('$', 200 + r() * 900, 100 + ph * 400); c.restore(); }
+    },
+    over: [(c, lt) => coinFlag(c, lt, 0, { cols: ['#8a8a8a', '#b0b0b0', '#8a8a8a'] }), (c, lt, u, Sh) => K.card(c, 'THE COLD WAR', lt, { at: Sh.tC + .2, x: 460, y: 170, px: 50, rot: -3, until: Sh.tD }), (c, lt, u, Sh) => K.dateTag(c, 'PACT OF MADRID · 1953', lt, { at: Sh.tD }), (c, lt, u, Sh) => K.card(c, 'UN MEMBER · 1955', lt, { at: Sh.tU + .2, x: 1420, y: 170, px: 46, rot: 3 })],
+    sfx: [['cold war', 'drone', .3], ['americans', 'whoosh', .6], ['1953', 'paper', .35], ['dollars', 'coins', .4], ['united nations', 'chime', .35]] },
+
+  // 5.08 WIDE: the Costa del Sol: an empty beach fills with umbrellas, hotels and cranes; a SEAT 600 drives the coast road
+  { set: 'costa', cam: { z: [1.15, 1.2], x: [640, 680], y: [400, 400], ease: E.io }, bed: [['ocean_loop', .3], ['crowd_loop', .1]],
+    init: Sh => { Sh.tO = at(Sh, 'opened', 1); Sh.tM = at(Sh, 'miracle', Sh.dur - 2); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const L = VP.light('golden', lt, { swing: 3, set: { L: [-.3, -1] } }), sh = VP.shadowOf(L, .8, .25, .1), fill = seg(lt, Sh.tO, Sh.dur - 1);
+      for (let i = 0; i < 8; i++) { const hq = seg(fill, i / 10, i / 10 + .3); if (hq <= 0) continue; const x = 460 + i * 105, hh = 40 + (i % 3) * 30, top = 300 - hh * hq; c.fillStyle = '#f0ece0'; c.fillRect(x, top, 80, 300 - top); for (let r = 0; r < 6; r++) { if (top + 8 + r * 14 > 296) break; c.fillStyle = '#5a8ab8'; c.fillRect(x + 8, top + 8 + r * 14, 64, 6); } if (hq < 1) crane(c, x + 40, 300, hh + 40, lt); }
+      for (let i = 0; i < 40; i++) { const r = S.rng(i + 980); if (r() > fill * 1.1) continue; const x = 300 + r() * 980, y = 500 + r() * 200; umbrella(c, x, y, .7 + (y - 500) / 300, ['#e85a4a', '#f0c040', '#4a8ad8', '#f4f0e8'][i % 4], lt); }
+      TOUR.forEach((ch, k) => { const x = 520 + k * 170, y = 690; if (fill < .2 * (k + 1)) return; VP.figure(c, [x, y], sh, cc => S.person(cc, ch, x, y, ch === TOUR[2] ? 24 : 32, Object.assign(S.idle(lt, k), { face: k % 2 ? -1 : 1 }), { blink: S.blinkAt(lt, k), smile: .8, look: [.4, .1], time: lt }, L)); });
+      seat600(c, lerp(-80, 420, seg(lt, Sh.tO + 2, Sh.dur)), 300, .6);
+    },
+    over: [(c, lt) => coinFlag(c, lt, 0, { cols: ['#8a8a8a', '#b0b0b0', '#8a8a8a'] }), (c, lt, u, Sh) => K.dateTag(c, 'FROM 1959', lt, { at: Sh.tO }), (c, lt, u, Sh) => K.card(c, 'THE SPANISH MIRACLE', lt, { at: Sh.tM + .2, x: 960, y: 170, px: 58 })],
+    sfx: [['opened', 'ocean_loop', .3], ['cars', 'whoosh_soft', .3], ['tourists', 'crowd_loop', .3], ['miracle', 'chime', .4]] },
+
+  // 5.09 MED: old Franco beside young Juan Carlos at a ceremony; a hand on the shoulder
+  { set: 'cortes', cam: { z: [1.5, 1.7], x: [640, 640], y: [300, 320], ease: E.io }, bed: [['crowd_loop', .1]],
+    init: Sh => { Sh.tJ = at(Sh, 'juan carlos', 2); Sh.tR = at(Sh, 'raised', 5); Sh.tE = at(Sh, 'everyone', Sh.dur - 3); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const L = LT_HALL(lt), sh = { k: .4, sy: -.2, a: .25, blur: 2 }, hand = seg(lt, Sh.tE, Sh.tE + .8);
+      VP.figure(c, [590, 342], sh, cc => S.person(cc, OLDFRANCO, 590, 342, 34, Object.assign(S.idle(lt, 1), { face: 1, shN: 20 + 70 * hand, elN: 20 }), { blink: S.blinkAt(lt, 1), look: [.6, -.1], time: lt }, L));
+      VP.figure(c, [680, 342], sh, cc => S.person(cc, JCY, 680, 342, 38, Object.assign(S.idle(lt, 2), { face: -1 }), { blink: S.blinkAt(lt, 2), look: [0, .1], time: lt }, L));
+    },
+    over: [(c, lt) => coinFlag(c, lt, 0, { cols: ['#8a8a8a', '#b0b0b0', '#8a8a8a'] }), (c, lt, u, Sh) => K.dateTag(c, 'JUAN CARLOS · 1969', lt, { at: Sh.tJ }), (c, lt, u, Sh) => K.card(c, 'GRANDSON OF ALFONSO XIII', lt, { at: Sh.tJ + 1.2, x: 1420, y: 200, px: 40, rot: 3 }), (c, lt, u, Sh) => K.card(c, 'KEEP THE SYSTEM GOING?', lt, { at: Sh.tE + .3, x: 480, y: 200, px: 42, rot: -3 })],
+    sfx: [['juan carlos', 'crowd_cheer', .2], ['raised', 'tick', .2], ['everyone', 'tension', .3]] },
+
+  // 5.10 CU: a quiet Madrid street; a black car; the street erupts and the car arcs over the roof
+  { set: 'mstreet', cam: (lt, u, Sh) => ({ z: [1.35], x: [640], y: [440], shake: lt > Sh.tB && lt < Sh.tB + 1.5 ? 3 : 0 }), bed: [['city_loop', .2]],
+    init: Sh => { Sh.tE = at(Sh, 'eta', 2); Sh.tB = at(Sh, 'bomb', 6); Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => {
+      const L = VP.light('golden', lt, { swing: 3 }), cq = seg(lt, 0, Sh.tB), fly = seg(lt, Sh.tB, Sh.tB + 2.4), cx = fly > 0 ? lerp(640, 900, fly) : lerp(-100, 640, cq), cy = fly > 0 ? 640 - Math.sin(fly * Math.PI) * 480 : 640;
+      c.save(); c.translate(cx, cy); c.rotate(fly * 2.4); c.translate(-cx, -cy); car(c, cx, cy, 1.1, lt, false); c.restore();
+      bomb(c, lt, Sh.tB, 640, 640); if (lt > Sh.tB) { H1.smoke(c, 640, 600, 2, lt, '80,70,60'); c.fillStyle = '#1a1410'; c.beginPath(); c.ellipse(640, 660, 120 * Math.min(1, fly * 3), 20, 0, 0, TAU); c.fill(); }
+    },
+    over: [(c, lt) => coinFlag(c, lt, 0, { cols: ['#8a8a8a', '#b0b0b0', '#8a8a8a'] }), (c, lt, u, Sh) => K.dateTag(c, 'MADRID · 20 DEC 1973', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'ADM. CARRERO BLANCO', lt, { at: Sh.tE + .8, x: 1420, y: 200, px: 44, rot: 3 })],
+    sfx: [[.2, 'city_loop', .2], ['eta', 'tension', .3], ['bomb', 'hit', .9], ['bomb', 'thud', .7], ['roof', 'whoosh', .4]] },
+];
+VP.build(); K.boot();
+</script></body></html>

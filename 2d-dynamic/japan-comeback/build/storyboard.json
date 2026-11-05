@@ -1,0 +1,547 @@
+{
+ "meta": {
+  "slug": "japan-comeback",
+  "prefix": "JP",
+  "title": "From Eating Rats to Bullet Trains: How Japan Rebuilt Itself",
+  "working_title": "Fall Seven Times, Stand Up Eight: Japan's Comeback",
+  "device": "One family, the Sakais, is followed from 1945 to 1964: a mother and her two children in a burnt Tokyo shack, a father back from the war, a son who becomes a factory worker, a daughter who becomes an engineer. A small daruma doll on their shelf gets knocked over in every act and is set upright again. A GDP line paints itself along the bottom of the map in the background, from the floor to third in the world.",
+  "style": "2D dynamic, locked Village Painterly look: 6-head characters from the village-cast rig (smooth tapered limbs, detailed 4-finger hands, nose below the eye line), in Japanese dress of the time (monpe trousers, school uniforms, work overalls, 1960s suits). Highly detailed painted backgrounds with warm light and dynamic cast shadows: burnt Tokyo under grey skies, black markets under rail bridges, terraced rice villages, small workshops, factory floors, the 1964 Shinkansen on a blue sky with Mount Fuji. Moving cameras, 3 to 5 parallax layers, characters acting in every shot, match-cut transitions. The bombings are shown through aftermath and light, never gore. SFX under the VO; no music until combine.",
+  "source": "'How Japan Became a SUPERPOWER? World's Greatest Comeback' (English, translated from a Hindi creator), sponsor segments cut, India comparisons removed, fact-checked."
+ },
+ "stats": {
+  "shots": 42,
+  "words": 1058,
+  "runtime": "7:14",
+  "acts": 6
+ },
+ "acts": [
+  {
+   "name": "Cold open",
+   "folder": "act0-coldopen",
+   "shots": [
+    {
+     "id": "0.01",
+     "type": "WIDE",
+     "sec": 6.4,
+     "vo": "In 1945, Japanese newspapers printed advice on how to eat acorns, sawdust and even rats.",
+     "visual": "A burnt Tokyo street of black chimneys; a mother reads a newspaper by a tin shack; her two thin children beside her.",
+     "onscreen": "TOKYO \u00b7 1945",
+     "anim": "Grey ash drifts; the paper flutters; push in on the headline.",
+     "img": ""
+    },
+    {
+     "id": "0.02",
+     "type": "MED",
+     "sec": 10.6,
+     "vo": "Sixty-six cities had been burned. Around nine million people had no home. The American general who now ran the country reportedly called Japan a fourth-rate nation.",
+     "visual": "Map of Japan with dozens of city dots burning; then a tall American general in sunglasses with a corncob pipe.",
+     "onscreen": "66 CITIES \u00b7 ~9,000,000 HOMELESS",
+     "anim": "Dots ignite one after another; cut to MacArthur stepping off a plane.",
+     "img": ""
+    },
+    {
+     "id": "0.03",
+     "type": "MED",
+     "sec": 12.4,
+     "vo": "Twenty-three years later, Japan was the third-largest economy on Earth. Its trains ran at two hundred kilometres an hour, and its radios and cars were about to take over the world.",
+     "visual": "Match cut from the shack to a gleaming white bullet train passing Mount Fuji.",
+     "onscreen": "1945 \u2192 1968",
+     "anim": "Whip pan; the train flashes past with a whoosh.",
+     "img": ""
+    },
+    {
+     "id": "0.04",
+     "type": "MED",
+     "sec": 13.2,
+     "vo": "How did a country with no oil, no colonies and no army pull that off? Not with one trick. With a war next door, a few stubborn founders and millions of ordinary families.",
+     "visual": "Three quick images: a truck factory, a tiny radio in a hand, a family putting coins in a post office bank book.",
+     "onscreen": "",
+     "anim": "Three hard cuts on beats.",
+     "img": ""
+    },
+    {
+     "id": "0.05",
+     "type": "TITLE",
+     "sec": 4.0,
+     "vo": "",
+     "visual": "Title over a small red daruma doll that tips over and rocks back upright.",
+     "onscreen": "FALL SEVEN TIMES, STAND UP EIGHT",
+     "anim": "The doll tips, rocks, settles upright; title fades in.",
+     "img": ""
+    }
+   ],
+   "sec": 46.6,
+   "words": 105
+  },
+  {
+   "name": "Act 1: Year Zero",
+   "folder": "act1-1945",
+   "shots": [
+    {
+     "id": "1.01",
+     "type": "WIDE",
+     "sec": 10.9,
+     "vo": "By August 1945, American firebombing had burned out about half of Tokyo and most of Japan's big cities. Then came the atomic bombs on Hiroshima and Nagasaki.",
+     "visual": "A wide view of a flattened city at dusk; only stone buildings and chimneys standing.",
+     "onscreen": "AUGUST 1945",
+     "anim": "Slow pan across the ruins; wind; a distant siren fades.",
+     "img": ""
+    },
+    {
+     "id": "1.02",
+     "type": "MED",
+     "sec": 9.8,
+     "vo": "Factories made a fraction of what they had made before the war. Food was rationed, and the ration was not enough to live on.",
+     "visual": "A rice ration queue; a tiny scoop of rice poured into a bowl.",
+     "onscreen": "",
+     "anim": "Rice grains fall in slow motion; a child's eyes follow them.",
+     "img": ""
+    },
+    {
+     "id": "1.03",
+     "type": "MED",
+     "sec": 15.1,
+     "vo": "Families survived on the black market, where rice cost many times the official price. They sold their clothes and watches one by one. People called it the bamboo-shoot life, peeling off layers to eat, like a bamboo shoot.",
+     "visual": "A black market under a railway bridge; the mother trades a kimono for a small bag of rice.",
+     "onscreen": "THE BAMBOO-SHOOT LIFE",
+     "anim": "Train rumbles overhead; the kimono is folded into a stranger's arms.",
+     "img": ""
+    },
+    {
+     "id": "1.04",
+     "type": "MED",
+     "sec": 12.8,
+     "vo": "In September 1945 Emperor Hirohito, whom many Japanese had been taught to see as divine, visited General Douglas MacArthur. The photo of the tall general beside the small emperor shocked the nation.",
+     "visual": "The famous pose re-staged: MacArthur relaxed, hands on hips; Hirohito stiff in a morning coat.",
+     "onscreen": "27 SEPT 1945",
+     "anim": "A camera flash freezes the frame into a newspaper photo.",
+     "img": ""
+    },
+    {
+     "id": "1.05",
+     "type": "MED",
+     "sec": 10.9,
+     "vo": "The Americans rewrote the rules. A new constitution came into force in 1947. Its Article 9 said Japan would give up war forever and keep no army.",
+     "visual": "A printed constitution; Article 9 highlighted; a soldier's helmet hung up on a nail.",
+     "onscreen": "ARTICLE 9",
+     "anim": "The helmet swings gently on the nail.",
+     "img": ""
+    },
+    {
+     "id": "1.06",
+     "type": "MED",
+     "sec": 11.7,
+     "vo": "In the villages, a land reform took land from absentee landlords and sold it cheaply to the farmers who worked it. Farmers' own village committees decided who got what.",
+     "visual": "A terraced rice village; a committee of farmers around a map at a low table; an old farmer holds his new deed.",
+     "onscreen": "LAND REFORM \u00b7 1946",
+     "anim": "Paddy water glitters; the old farmer's hands tremble on the deed.",
+     "img": ""
+    }
+   ],
+   "sec": 71.2,
+   "words": 177
+  },
+  {
+   "name": "Act 2: The War Next Door",
+   "folder": "act2-korea",
+   "shots": [
+    {
+     "id": "2.01",
+     "type": "MAP",
+     "sec": 8.7,
+     "vo": "Then the world changed. China was going communist. The Soviet Union was next door. America suddenly needed Japan strong, not weak.",
+     "visual": "Map of East Asia: red spreads over China; a Soviet bear shadow in the north; Japan in the middle.",
+     "onscreen": "THE COLD WAR",
+     "anim": "Red ink floods China; arrows point at Japan.",
+     "img": ""
+    },
+    {
+     "id": "2.02",
+     "type": "MED",
+     "sec": 14.3,
+     "vo": "In 1949 an American banker, Joseph Dodge, cut subsidies and fixed the yen at three hundred and sixty to the dollar. Prices calmed down, but companies started laying people off. Japan was close to a depression.",
+     "visual": "Dodge at a desk with a stamp; then a factory gate with a CLOSED sign and workers walking away.",
+     "onscreen": "$1 = \u00a5360",
+     "anim": "Stamp; the gate swings shut; workers' shadows lengthen.",
+     "img": ""
+    },
+    {
+     "id": "2.03",
+     "type": "MED",
+     "sec": 7.5,
+     "vo": "Toyota was nearly bankrupt. In 1950 it cut over a thousand jobs, and its founder Kiichiro Toyoda resigned.",
+     "visual": "An empty Toyota factory floor; Kiichiro Toyoda bowing deeply to his workers.",
+     "onscreen": "TOYOTA \u00b7 1950",
+     "anim": "He bows; nobody moves.",
+     "img": ""
+    },
+    {
+     "id": "2.04",
+     "type": "WIDE",
+     "sec": 11.3,
+     "vo": "On the twenty-fifth of June 1950, North Korea invaded South Korea. American forces rushed in, and they needed trucks, uniforms and parts, fast. Japan was right next door.",
+     "visual": "Map: arrows cross into South Korea; supply ships stream from Japan across the sea.",
+     "onscreen": "KOREAN WAR \u00b7 25 JUNE 1950",
+     "anim": "Ships trail lines across the strait.",
+     "img": ""
+    },
+    {
+     "id": "2.05",
+     "type": "MED",
+     "sec": 6.4,
+     "vo": "The US Army ordered thousands of trucks from Toyota. The factory lights came back on.",
+     "visual": "Night: the Toyota factory windows light up one after another; a truck rolls off the line.",
+     "onscreen": "",
+     "anim": "Lights flicker on in sequence; engine starts.",
+     "img": ""
+    },
+    {
+     "id": "2.06",
+     "type": "MED",
+     "sec": 9.4,
+     "vo": "Across Japan, war orders brought in billions of dollars. Factory output jumped. The governor of the Bank of Japan called it divine aid.",
+     "visual": "Factory chimneys start smoking again; the GDP line along the bottom lifts.",
+     "onscreen": "\"DIVINE AID\"",
+     "anim": "Smoke rises; the line climbs.",
+     "img": ""
+    },
+    {
+     "id": "2.07",
+     "type": "CU",
+     "sec": 7.5,
+     "vo": "But it was an uncomfortable gift. A country rebuilt by one war was now growing rich from another.",
+     "visual": "The father, back from the war, works on a truck engine; he stops and looks at a newspaper photo of Korean refugees.",
+     "onscreen": "",
+     "anim": "His hands stop; slow push on his face.",
+     "img": ""
+    },
+    {
+     "id": "2.08",
+     "type": "MED",
+     "sec": 13.2,
+     "vo": "In September 1951 Japan signed a peace treaty in San Francisco, and in April 1952 the occupation ended. India did not attend. It signed its own, more generous treaty with Japan in 1952.",
+     "visual": "Prime Minister Yoshida signing in a hall; then an Indian and a Japanese diplomat shaking hands.",
+     "onscreen": "SAN FRANCISCO \u00b7 1951",
+     "anim": "Pen signs; match cut to the handshake.",
+     "img": ""
+    }
+   ],
+   "sec": 78.3,
+   "words": 192
+  },
+  {
+   "name": "Act 3: The Stubborn Ones",
+   "folder": "act3-founders",
+   "shots": [
+    {
+     "id": "3.01",
+     "type": "MED",
+     "sec": 11.3,
+     "vo": "Most experts said Japan should not even try to make its own cars. In 1950 the United States built millions of passenger cars. Japan built about sixteen hundred.",
+     "visual": "Bar chart drawn as cars: a huge stack for the US, a tiny one for Japan.",
+     "onscreen": "",
+     "anim": "The US stack keeps growing; Japan's barely moves.",
+     "img": ""
+    },
+    {
+     "id": "3.02",
+     "type": "MED",
+     "sec": 10.2,
+     "vo": "Toyota tried anyway. In 1957 it sent the Toyopet Crown to America. On American highways it shook, overheated and broke down. Americans laughed at it.",
+     "visual": "A small Crown on a wide highway, steaming at the roadside as big American cars roar past.",
+     "onscreen": "TOYOPET CROWN \u00b7 1957",
+     "anim": "Steam hisses; a big car's horn blares past.",
+     "img": ""
+    },
+    {
+     "id": "3.03",
+     "type": "MED",
+     "sec": 13.9,
+     "vo": "So Toyota changed how it worked. Make only what is needed, when it is needed, and let any worker stop the line if they see a problem. That system later became famous around the world.",
+     "visual": "A worker pulls a cord; a lamp lights above the assembly line; the team gathers to fix a part.",
+     "onscreen": "THE TOYOTA WAY",
+     "anim": "Cord pulled; lamp glows; line stops; hands fix the part.",
+     "img": ""
+    },
+    {
+     "id": "3.04",
+     "type": "MED",
+     "sec": 13.2,
+     "vo": "In 1945 an engineer named Masaru Ibuka opened a radio repair shop in a burnt-out department store in Tokyo. The next year he started a company with a young navy officer, Akio Morita.",
+     "visual": "A tiny workshop in a burnt building; Ibuka and Morita bent over a workbench with tubes and wires.",
+     "onscreen": "IBUKA \u00b7 MORITA \u00b7 1946",
+     "anim": "Soldering smoke curls; a radio crackles to life.",
+     "img": ""
+    },
+    {
+     "id": "3.05",
+     "type": "MED",
+     "sec": 7.5,
+     "vo": "Their first product, an electric rice cooker, was a disaster. It burned the rice or left it raw.",
+     "visual": "A rice cooker opened: half burned, half raw; Ibuka laughs and scratches his head.",
+     "onscreen": "",
+     "anim": "Lid lifts; steam; a puff of black smoke.",
+     "img": ""
+    },
+    {
+     "id": "3.06",
+     "type": "MED",
+     "sec": 15.1,
+     "vo": "In 1953 they bought the right to make transistors from an American company, even though Japan's own trade ministry thought it was a waste. By 1957 they had a radio small enough to slip into a shirt pocket.",
+     "visual": "Morita drops a tiny radio into his shirt pocket and grins.",
+     "onscreen": "TR-63 \u00b7 1957",
+     "anim": "The radio slides into the pocket; music plays.",
+     "img": ""
+    },
+    {
+     "id": "3.07",
+     "type": "CU",
+     "sec": 12.8,
+     "vo": "An American company offered to buy a hundred thousand radios, but only if they carried its brand name. Morita said no. He wanted his own brand on them. The brand was Sony.",
+     "visual": "Morita across a desk from an American buyer; he slides the contract back; the word SONY on the radio.",
+     "onscreen": "SONY",
+     "anim": "The contract slides back; the SONY logo shines.",
+     "img": ""
+    },
+    {
+     "id": "3.08",
+     "type": "MED",
+     "sec": 12.8,
+     "vo": "And in a wooden shed in 1946, a mechanic named Soichiro Honda strapped small engines onto bicycles. When the government later tried to limit which companies could make cars, Honda ignored it.",
+     "visual": "A wooden shed; Honda in oily overalls fitting an engine to a bicycle; it putters off down a village road.",
+     "onscreen": "SOICHIRO HONDA",
+     "anim": "Engine coughs, then puffs off; dust trails behind.",
+     "img": ""
+    }
+   ],
+   "sec": 96.8,
+   "words": 241
+  },
+  {
+   "name": "Act 4: The Plan and the Piggy Bank",
+   "folder": "act4-boom",
+   "shots": [
+    {
+     "id": "4.01",
+     "type": "MED",
+     "sec": 8.3,
+     "vo": "In December 1960 Prime Minister Hayato Ikeda promised to double people's incomes in ten years. Critics called it a fantasy.",
+     "visual": "Ikeda at a podium; a chart with a line doubling over ten years.",
+     "onscreen": "INCOME-DOUBLING PLAN \u00b7 1960",
+     "anim": "The line draws itself; critics shake their heads.",
+     "img": ""
+    },
+    {
+     "id": "4.02",
+     "type": "MED",
+     "sec": 7.9,
+     "vo": "The government poured money into roads, ports, railways and especially schools. Science and engineering places at universities grew fast.",
+     "visual": "A school lab: students with test tubes; then a university lecture hall packed with engineering students.",
+     "onscreen": "",
+     "anim": "Flasks bubble; students lean over a drawing of a train.",
+     "img": ""
+    },
+    {
+     "id": "4.03",
+     "type": "MED",
+     "sec": 9.1,
+     "vo": "In 1950 fewer than half of Japanese children went on to high school. By the mid-1970s, more than nine in ten did.",
+     "visual": "The daughter in a school uniform walking through the school gate with friends.",
+     "onscreen": "~43% \u2192 ~92%",
+     "anim": "The gate fills with more and more students.",
+     "img": ""
+    },
+    {
+     "id": "4.04",
+     "type": "MED",
+     "sec": 9.4,
+     "vo": "Young people from the countryside rode special trains to city factories. Companies were so short of workers that they called them golden eggs.",
+     "visual": "A packed train from a rice village; the son with a small suitcase, his mother waving on the platform.",
+     "onscreen": "\"GOLDEN EGGS\"",
+     "anim": "Train pulls away; the mother's waving hand gets smaller.",
+     "img": ""
+    },
+    {
+     "id": "4.05",
+     "type": "MED",
+     "sec": 9.1,
+     "vo": "But where did the money for all of this come from? Japan had no oil and no colonies. It came from families.",
+     "visual": "The mother counts coins at a low table and puts them in a post office savings book.",
+     "onscreen": "",
+     "anim": "Coins stack; the bankbook stamp thumps.",
+     "img": ""
+    },
+    {
+     "id": "4.06",
+     "type": "MED",
+     "sec": 11.3,
+     "vo": "Japanese households saved more of their income than almost any rich country, over twenty percent by the mid-1970s. Banks and post offices lent that money to the factories.",
+     "visual": "Coins flow out of thousands of homes into a post office, then out along pipes to factories.",
+     "onscreen": "SAVINGS ~20%+",
+     "anim": "Animated flow of coins along pipes.",
+     "img": ""
+    },
+    {
+     "id": "4.07",
+     "type": "MED",
+     "sec": 4.9,
+     "vo": "The income-doubling plan was reached in about seven years, not ten.",
+     "visual": "The doubling line hits its target early; a small celebration in a factory canteen.",
+     "onscreen": "",
+     "anim": "Line hits the mark; a cup is raised.",
+     "img": ""
+    }
+   ],
+   "sec": 60.0,
+   "words": 145
+  },
+  {
+   "name": "Act 5: 1964",
+   "folder": "act5-1964",
+   "shots": [
+    {
+     "id": "5.01",
+     "type": "WIDE",
+     "sec": 11.3,
+     "vo": "On the first of October 1964, the world's first high-speed train, the Tokaido Shinkansen, left Tokyo for Osaka at up to two hundred and ten kilometres an hour.",
+     "visual": "The white-and-blue bullet train glides out of Tokyo station; crowds wave flags.",
+     "onscreen": "SHINKANSEN \u00b7 1 OCT 1964",
+     "anim": "Train accelerates; parallax of the city flying past.",
+     "img": ""
+    },
+    {
+     "id": "5.02",
+     "type": "MED",
+     "sec": 5.7,
+     "vo": "Nine days later, Tokyo opened the first Olympic Games ever held in Asia.",
+     "visual": "The Olympic stadium full; colourful team flags marching.",
+     "onscreen": "TOKYO 1964",
+     "anim": "Crowd cheers; flags ripple.",
+     "img": ""
+    },
+    {
+     "id": "5.03",
+     "type": "CU",
+     "sec": 10.9,
+     "vo": "The last runner carrying the Olympic flame was nineteen-year-old Yoshinori Sakai. He was born in Hiroshima on the sixth of August 1945, the day the bomb fell.",
+     "visual": "A young runner in white carries the torch up the stadium steps.",
+     "onscreen": "YOSHINORI SAKAI \u00b7 BORN 6 AUG 1945",
+     "anim": "Slow motion as he climbs; the cauldron bursts into flame.",
+     "img": ""
+    },
+    {
+     "id": "5.04",
+     "type": "MED",
+     "sec": 8.7,
+     "vo": "Hiroshima itself had been rebuilt. By the late 1950s its population was back to where it had been before the war.",
+     "visual": "Hiroshima's rebuilt streets and the Peace Park, the domed ruin in the background, trees in bloom.",
+     "onscreen": "",
+     "anim": "Petals drift across the frame.",
+     "img": ""
+    },
+    {
+     "id": "5.05",
+     "type": "MED",
+     "sec": 9.8,
+     "vo": "In 1968 Japan passed West Germany. It was now the third-largest economy in the world, behind only the United States and the Soviet Union.",
+     "visual": "The GDP line climbs past a German flag marker into third place.",
+     "onscreen": "#3 IN THE WORLD \u00b7 1968",
+     "anim": "The line ticks past the marker with a soft chime.",
+     "img": ""
+    },
+    {
+     "id": "5.06",
+     "type": "MED",
+     "sec": 13.2,
+     "vo": "In 1980 Japan made more cars than America. By the late 1980s, Japanese firms made most of the world's memory chips. American business schools started writing books on how to learn from Japan.",
+     "visual": "A port full of export cars; then a chip wafer under light; then an American professor holding a book titled Japan as Number One.",
+     "onscreen": "",
+     "anim": "Rows of cars; the wafer glints; book cover slams shut.",
+     "img": ""
+    },
+    {
+     "id": "5.07",
+     "type": "MED",
+     "sec": 6.4,
+     "vo": "There is a Japanese saying: nana korobi ya oki. Fall seven times, stand up eight.",
+     "visual": "The family, older now, around a table; the daruma doll on the shelf, upright.",
+     "onscreen": "\u4e03\u8ee2\u3073\u516b\u8d77\u304d",
+     "anim": "The daruma wobbles once and stands firm.",
+     "img": ""
+    },
+    {
+     "id": "5.08",
+     "type": "WIDE",
+     "sec": 14.7,
+     "vo": "Japan was knocked down harder than almost any country in modern history. It did not stand back up because of one plan. It stood up because millions of people kept getting up, one day at a time.",
+     "visual": "Pull back from the family's window to the lit city, the bullet train crossing a bridge in the distance.",
+     "onscreen": "",
+     "anim": "Slow pull back into the night city.",
+     "img": ""
+    }
+   ],
+   "sec": 80.7,
+   "words": 198
+  }
+ ],
+ "hooks": [
+  [
+   "You've never been told this: in 1945 Japan's newspapers taught people to eat rats. 23 years later it was the third-largest economy on Earth.",
+   51
+  ],
+  [
+   "Why did a country with no oil, no army and 9 million homeless people overtake everyone but America and the USSR in 23 years?",
+   50
+  ]
+ ],
+ "launch": {
+  "titles": [
+   "From Eating Rats to Bullet Trains: How Japan Rebuilt Itself in 20 Years",
+   "How Japan Went From Ashes to #3 in the World in 23 Years",
+   "Fall Seven Times, Stand Up Eight: Japan's Impossible Comeback"
+  ],
+  "thumb": "Split image in the painterly style: a burnt grey Tokyo with a mother and child on the left, a gleaming 1964 bullet train passing Mount Fuji on the right. Text: 1945 \u2192 1964.",
+  "reels": [
+   "When Japan's newspapers taught people to eat rats",
+   "The bamboo-shoot life",
+   "The photo that shocked Japan (Hirohito and MacArthur)",
+   "Article 9: the country that gave up war",
+   "Divine aid: how the Korean War saved Japan's economy",
+   "Toyota's founder bows and resigns",
+   "The car Americans laughed at",
+   "Pull the cord: the Toyota way",
+   "Sony's first product was a terrible rice cooker",
+   "Why Sony turned down 100,000 radios",
+   "Honda's engine on a bicycle",
+   "Golden eggs: the village kids who built Japan",
+   "Japan's piggy bank economy",
+   "The torchbearer born the day Hiroshima was bombed",
+   "Fall seven times, stand up eight"
+  ]
+ },
+ "fixes": [
+  "Sponsor segments cut: '3-hour Live AI Masterclass' (middle and end) and the Singapore end plug.",
+  "India comparisons ($5 trillion, Indian schools) removed; the 1952 India-Japan treaty kept as a neutral fact.",
+  "'George Cannon' corrected to George Kennan; 'NSC 13-2' to NSC 13/2 (approved Oct 1948).",
+  "Garbled line 'Hiroshima was again under attack by the bomb after 3 days' was about Nagasaki; removed.",
+  "City damage percentages and the '195% inflation' figure from the source are not used; script says 'about half of Tokyo' and 'many times the official price'.",
+  "MacArthur's 'fourth-rate nation' line is widely reported; script says 'reportedly'.",
+  "Constitution promulgated Nov 1946, in force 3 May 1947.",
+  "Korean War procurement: totals cited vary ($2.3bn to $3.5bn+ for 1950-53); script says 'billions of dollars'.",
+  "Toyota 1950: about 1,600 jobs cut and Kiichiro Toyoda resigned; US Army truck orders followed. Script says 'over a thousand' and 'thousands of trucks'.",
+  "Bank of Japan governor Hisato Ichimada called the war boom 'divine aid'.",
+  "San Francisco Treaty signed 8 Sept 1951, occupation ended 28 April 1952; India signed a separate treaty on 9 June 1952 waiving reparations.",
+  "Japan car output 1950: about 1,600 passenger cars (source agrees).",
+  "Toyopet Crown exported to the US 1957-58.",
+  "Sony: Tokyo Tsushin Kogyo founded May 1946; transistor licence from Western Electric 1953 (MITI hesitant); TR-55 1955; TR-63 1957; 100,000-radio Bulova offer rejected by Morita; name Sony adopted 1958.",
+  "Honda: Soichiro Honda's institute started 1946, Honda Motor 1948; he resisted MITI's 1960s plan to limit car makers.",
+  "High-school progression ~42.5% (1950) to ~91.9% (1975): source figures, consistent with official data.",
+  "Household savings rate peaked above 20% in the mid-1970s.",
+  "Shinkansen opened 1 Oct 1964 at up to 210 km/h; Tokyo Olympics opened 10 Oct 1964; torchbearer Yoshinori Sakai born 6 Aug 1945 in Hiroshima prefecture.",
+  "Japan overtook West Germany in 1968 to become the second-largest economy in the non-communist world (third overall with the USSR).",
+  "Japan became the largest car producer in 1980; led the global memory-chip (DRAM) market in the mid-to-late 1980s. 'Japan as Number One' by Ezra Vogel, 1979."
+ ],
+ "cuts": [
+  "AI Masterclass sponsor (twice), Singapore plug, India politics comparisons, and the motivational 'invest in yourself' ending."
+ ]
+}

@@ -1,0 +1,754 @@
+{
+ "meta": {
+  "slug": "spain-1-al-andalus",
+  "prefix": "ES1",
+  "title": "How Muslims Ruled Spain for 700 Years, and Lost It All",
+  "working_title": "781 Years: The Rise and Fall of Muslim Spain",
+  "device": "A painted map of Iberia on old parchment. A green wash spreads north from Gibraltar in 711, then shrinks back south act by act until one small green dot (Granada) is left, and goes out in 1492. A year counter in the corner ticks from 711 to 1492.",
+  "style": "2D dynamic, locked Village Painterly look: 6-head characters from the village-cast rig (smooth tapered limbs, detailed 4-finger hands, nose below the eye line), dressed for each era (Visigoth wool and mail, Berber and Arab robes and turbans, Andalusi silk, Castilian armour). Highly detailed painted backgrounds with warm light, dynamic cast shadows and highlights: Gibraltar's rock at dawn, Cordoba's mosque arches, orange-tree courtyards, the Alhambra at sunset, Sierra Nevada snow. Dynamic means moving cameras (push, pan, parallax in 3 to 5 layers), characters acting in every shot, match-cut transitions. SFX under the VO; no music until combine.",
+  "source": "Hindi transcript 'How 700 Years of Muslim Rule Ended in Spain' (poor captions, fully rewritten) plus the first half of 'The Entire History of Spain', fact-checked."
+ },
+ "stats": {
+  "shots": 62,
+  "words": 1612,
+  "runtime": "10:58",
+  "acts": 7
+ },
+ "acts": [
+  {
+   "name": "Cold open",
+   "folder": "act0-coldopen",
+   "shots": [
+    {
+     "id": "0.01",
+     "type": "WIDE",
+     "sec": 9.8,
+     "vo": "On the second of January 1492, a king rode out of the most beautiful palace in Europe and handed its keys to his enemies.",
+     "visual": "Dawn over the Alhambra's red walls; a small procession leaves the gate; a Christian army waits on the plain below.",
+     "onscreen": "GRANADA \u00b7 2 JAN 1492",
+     "anim": "Slow crane down from the snowy Sierra Nevada to the Alhambra gate; banners stir; horses breathe steam.",
+     "img": ""
+    },
+    {
+     "id": "0.02",
+     "type": "MED",
+     "sec": 8.3,
+     "vo": "His name was Muhammad the Twelfth. The Spanish called him Boabdil. He was the last Muslim ruler in Western Europe.",
+     "visual": "Boabdil on a black horse, green robe, eyes down, holding a heavy iron key.",
+     "onscreen": "BOABDIL",
+     "anim": "Push in on his face; the key glints as he turns it in his hand.",
+     "img": ""
+    },
+    {
+     "id": "0.03",
+     "type": "CU",
+     "sec": 13.9,
+     "vo": "Legend says that on a mountain pass he turned for one last look at Granada and wept. And his mother told him: weep like a woman for what you could not defend like a man.",
+     "visual": "On a rocky pass, Boabdil looks back; a tear; his mother beside him, stern, in a dark veil.",
+     "onscreen": "\"THE MOOR'S LAST SIGH\" (LEGEND)",
+     "anim": "Wind; he turns in the saddle; the city small and golden behind; the mother's line lands as a hard cut to her face.",
+     "img": ""
+    },
+    {
+     "id": "0.04",
+     "type": "MAP",
+     "sec": 10.2,
+     "vo": "That moment ended a story that began seven hundred and eighty-one years earlier, when a small army crossed a narrow strip of sea from Africa.",
+     "visual": "The parchment map; the green wash pulls back in reverse, from Granada all the way down to Gibraltar; counter spins 1492 to 711.",
+     "onscreen": "711 \u2192 1492",
+     "anim": "Counter spins backwards; the green drains south like water down a drain to a single point at Gibraltar.",
+     "img": ""
+    },
+    {
+     "id": "0.05",
+     "type": "MED",
+     "sec": 9.4,
+     "vo": "In those centuries, the cities of Muslim Spain had street lamps, public baths and libraries, while most of Europe had none of them.",
+     "visual": "Split frame: a lamp-lit Cordoba street with tiled fountains; a muddy, dark northern town.",
+     "onscreen": "",
+     "anim": "Wipe between the two halves; lamps flicker on one by one along the Cordoba street.",
+     "img": ""
+    },
+    {
+     "id": "0.06",
+     "type": "MED",
+     "sec": 10.9,
+     "vo": "So how did a few thousand soldiers take a whole country? How did it become the richest place in Europe? And why did it all fall apart?",
+     "visual": "Three quick cards: soldiers on a beach, a glowing library, the Alhambra keys dropping.",
+     "onscreen": "",
+     "anim": "Three fast match cuts on a drum hit each.",
+     "img": ""
+    },
+    {
+     "id": "0.07",
+     "type": "TITLE",
+     "sec": 4.0,
+     "vo": "",
+     "visual": "Title over the Alhambra at sunset, a single green banner lowering.",
+     "onscreen": "781 YEARS",
+     "anim": "Banner slides down the pole; title fades up in gold.",
+     "img": ""
+    }
+   ],
+   "sec": 66.5,
+   "words": 154
+  },
+  {
+   "name": "Act 1: Seven Thousand Men",
+   "folder": "act1-711",
+   "shots": [
+    {
+     "id": "1.01",
+     "type": "MAP",
+     "sec": 12.4,
+     "vo": "Around the year 700, the land we now call Spain and Portugal belonged to the Visigoths, a Germanic people who had taken over after the Roman Empire fell in the west.",
+     "visual": "Map of Iberia in Visigoth ochre, Toledo marked with a crown.",
+     "onscreen": "VISIGOTH KINGDOM \u00b7 c. 700",
+     "anim": "Roman roads fade under the ochre; a crown drops on Toledo.",
+     "img": ""
+    },
+    {
+     "id": "1.02",
+     "type": "WIDE",
+     "sec": 11.3,
+     "vo": "They ruled from Toledo, a hilltop city above the river Tagus. But the kingdom was weak. Nobles fought over the crown, and most kings were murdered or overthrown.",
+     "visual": "Toledo on its rock above the curving river; inside a hall, nobles argue around an empty throne.",
+     "onscreen": "TOLEDO",
+     "anim": "Parallax across the river gorge; cut inside, fists hit a table, a cup spills.",
+     "img": ""
+    },
+    {
+     "id": "1.03",
+     "type": "MED",
+     "sec": 7.5,
+     "vo": "In 710 a noble named Roderic seized the throne. The family of the old king never accepted him.",
+     "visual": "Roderic crowned in a dim church; to the side, rival nobles exchange a look.",
+     "onscreen": "KING RODERIC \u00b7 710",
+     "anim": "Crown lowered onto his head; camera drifts to the rivals in shadow.",
+     "img": ""
+    },
+    {
+     "id": "1.04",
+     "type": "MAP",
+     "sec": 9.8,
+     "vo": "Across the sea, the Umayyad Caliphate, run from Damascus, had spread Islam from Arabia across all of North Africa in less than a century.",
+     "visual": "Map widens: a green wash flows west from Arabia along North Africa to Morocco.",
+     "onscreen": "UMAYYAD CALIPHATE",
+     "anim": "Green floods west along the coast in one smooth sweep.",
+     "img": ""
+    },
+    {
+     "id": "1.05",
+     "type": "MED",
+     "sec": 10.6,
+     "vo": "Its governor in North Africa, Musa ibn Nusayr, sent his general Tariq ibn Ziyad across the strait with about seven thousand men, most of them Berbers.",
+     "visual": "Musa in a tent pointing at a map; Tariq, a Berber commander, nods.",
+     "onscreen": "TARIQ IBN ZIYAD",
+     "anim": "Musa's finger traces the strait; Tariq rolls up the map and steps out into wind.",
+     "img": ""
+    },
+    {
+     "id": "1.06",
+     "type": "WIDE",
+     "sec": 9.8,
+     "vo": "They landed in 711 below a huge rock. It is still named after him. Jabal Tariq, the mountain of Tariq. Today we say Gibraltar.",
+     "visual": "Small boats run onto a beach under the towering Rock of Gibraltar at dawn.",
+     "onscreen": "JABAL TARIQ \u2192 GIBRALTAR",
+     "anim": "Boats slide up the sand; the text morphs letter by letter from JABAL TARIQ to GIBRALTAR.",
+     "img": ""
+    },
+    {
+     "id": "1.07",
+     "type": "CU",
+     "sec": 12.1,
+     "vo": "A later story says Tariq burned his own boats and told his men: the sea is behind you, the enemy is in front of you. There is no way back.",
+     "visual": "Tariq on the sand, boats burning behind him, soldiers' faces lit orange.",
+     "onscreen": "(A LATER LEGEND)",
+     "anim": "Fire flickers across faces; slow push in on Tariq.",
+     "img": ""
+    },
+    {
+     "id": "1.08",
+     "type": "WIDE",
+     "sec": 13.2,
+     "vo": "Roderic marched south with a much bigger army. But at the battle of Guadalete, parts of his army turned on him or simply left. Roderic was killed, and his body was never found.",
+     "visual": "Two armies on a river plain; mid-battle, one Visigoth wing turns and rides away.",
+     "onscreen": "GUADALETE \u00b7 711",
+     "anim": "Dust and arrows; the deserting wing peels off the line; Roderic's riderless horse.",
+     "img": ""
+    },
+    {
+     "id": "1.09",
+     "type": "MAP",
+     "sec": 9.1,
+     "vo": "After that the kingdom fell like dominoes. Toledo, Cordoba, Seville, Merida. Within seven years almost the whole peninsula was under Muslim rule.",
+     "visual": "Green wash races north across the map; city names stamp in.",
+     "onscreen": "711\u2013718",
+     "anim": "Each city name stamps with a thud; counter ticks 711 to 718.",
+     "img": ""
+    },
+    {
+     "id": "1.10",
+     "type": "MED",
+     "sec": 12.8,
+     "vo": "Many towns did not fight at all. They signed treaties. Christians and Jews could keep their churches, their synagogues and their land, as long as they paid a tax called the jizya.",
+     "visual": "A town gate opens; a bishop and a Muslim commander sign a parchment at a table.",
+     "onscreen": "THE JIZYA",
+     "anim": "Quill scratches; a wax seal presses down; the gate swings open.",
+     "img": ""
+    },
+    {
+     "id": "1.11",
+     "type": "WIDE",
+     "sec": 12.8,
+     "vo": "Only the cold, rocky mountains of the far north held out. In about 722 a Visigoth noble named Pelayo beat a Muslim force at Covadonga, and founded the little kingdom of Asturias.",
+     "visual": "Misty green mountains; a cave above a gorge; a small band of fighters with spears.",
+     "onscreen": "COVADONGA \u00b7 c. 722",
+     "anim": "Mist rolls through the gorge; rocks tumble down the slope.",
+     "img": ""
+    },
+    {
+     "id": "1.12",
+     "type": "MED",
+     "sec": 9.8,
+     "vo": "Muslim armies even crossed into France, until they were stopped near Tours in 732. The frontier settled. The Muslims called their new land Al-Andalus.",
+     "visual": "Map: a green arrow pushes into France, hits a wall at Tours, pulls back; the word AL-ANDALUS paints itself across Iberia.",
+     "onscreen": "AL-ANDALUS",
+     "anim": "Arrow bounces back; the name writes itself in flowing calligraphy.",
+     "img": ""
+    }
+   ],
+   "sec": 131.2,
+   "words": 324
+  },
+  {
+   "name": "Act 2: The Prince Who Swam",
+   "folder": "act2-abd-al-rahman",
+   "shots": [
+    {
+     "id": "2.01",
+     "type": "WIDE",
+     "sec": 10.9,
+     "vo": "Then, far away in Syria, everything changed. In 750 a rival family, the Abbasids, overthrew the Umayyads and hunted down almost every member of the royal family.",
+     "visual": "Damascus at night; black banners flood the streets; a palace gate is broken in.",
+     "onscreen": "750 \u00b7 THE ABBASID REVOLUTION",
+     "anim": "Torches surge through the frame; banners ripple.",
+     "img": ""
+    },
+    {
+     "id": "2.02",
+     "type": "MED",
+     "sec": 10.2,
+     "vo": "One young prince escaped. Abd al-Rahman, about twenty years old, ran with his little brother and jumped into the Euphrates river with soldiers behind them.",
+     "visual": "Two young men plunge into a wide river; soldiers on the bank.",
+     "onscreen": "",
+     "anim": "Splash; underwater shot of them kicking; arrows hit the water.",
+     "img": ""
+    },
+    {
+     "id": "2.03",
+     "type": "CU",
+     "sec": 7.9,
+     "vo": "The soldiers promised safety if they came back. His brother turned around and was killed. Abd al-Rahman kept swimming.",
+     "visual": "The younger brother looks back toward the bank; Abd al-Rahman, already far out, keeps going.",
+     "onscreen": "",
+     "anim": "Hold on the brother's hesitation; cut to Abd al-Rahman's arm breaking the water.",
+     "img": ""
+    },
+    {
+     "id": "2.04",
+     "type": "MAP",
+     "sec": 7.2,
+     "vo": "He spent about five years on the run across North Africa, hiding with his mother's Berber relatives.",
+     "visual": "A dotted line crosses North Africa from Syria to Morocco.",
+     "onscreen": "c. 750\u2013755",
+     "anim": "The dotted line crawls west; small campfire icons mark stops.",
+     "img": ""
+    },
+    {
+     "id": "2.05",
+     "type": "MED",
+     "sec": 9.8,
+     "vo": "In 755 he landed in Al-Andalus. Within a year he took Cordoba and declared himself emir. Al-Andalus now answered to nobody in the east.",
+     "visual": "Abd al-Rahman, older and hardened, rides into Cordoba; people line the old Roman bridge.",
+     "onscreen": "EMIRATE OF CORDOBA \u00b7 756",
+     "anim": "Low tracking shot across the Roman bridge; banners rise behind him.",
+     "img": ""
+    },
+    {
+     "id": "2.06",
+     "type": "WIDE",
+     "sec": 10.6,
+     "vo": "He started building the Great Mosque of Cordoba on the site of an old church. Its forest of red and white striped arches is still standing.",
+     "visual": "Interior of the Great Mosque: rows of red-and-white double arches stretching into shadow, light in shafts.",
+     "onscreen": "MEZQUITA \u00b7 FROM 785",
+     "anim": "Slow dolly through the arches with parallax; dust in the light beams.",
+     "img": ""
+    }
+   ],
+   "sec": 56.6,
+   "words": 138
+  },
+  {
+   "name": "Act 3: The City of Lamps",
+   "folder": "act3-cordoba",
+   "shots": [
+    {
+     "id": "3.01",
+     "type": "MED",
+     "sec": 9.1,
+     "vo": "In 929 his descendant Abd al-Rahman the Third went further and called himself caliph, a ruler equal to the caliph in Baghdad.",
+     "visual": "A throne hall with marble columns; Abd al-Rahman III rises as courtiers bow.",
+     "onscreen": "CALIPHATE OF CORDOBA \u00b7 929",
+     "anim": "Courtiers bow in a wave from front to back.",
+     "img": ""
+    },
+    {
+     "id": "3.02",
+     "type": "WIDE",
+     "sec": 11.3,
+     "vo": "Cordoba became one of the largest cities in the world. Historians think it may have had a few hundred thousand people when Paris and London were small towns.",
+     "visual": "Aerial painted view of Cordoba: domes, minarets, gardens, the river and the bridge, thousands of roofs.",
+     "onscreen": "CORDOBA \u00b7 c. 1000",
+     "anim": "Camera glides over rooftops; smoke and birds; tiny people move in streets.",
+     "img": ""
+    },
+    {
+     "id": "3.03",
+     "type": "MED",
+     "sec": 9.8,
+     "vo": "Its main streets were paved, and at night some of them were lit. There were hundreds of public baths and running water from aqueducts.",
+     "visual": "A lamplighter at dusk; a bathhouse with steam and tiled pools; water flowing in a channel.",
+     "onscreen": "",
+     "anim": "Lamp catches; steam drifts; the water channel sparkles.",
+     "img": ""
+    },
+    {
+     "id": "3.04",
+     "type": "MED",
+     "sec": 14.3,
+     "vo": "The caliph Al-Hakam the Second collected books from across the Islamic world. Chroniclers said his library held four hundred thousand volumes. Even if that is an exaggeration, it was one of the biggest libraries on Earth.",
+     "visual": "A vast library hall: scholars at desks, copyists writing, shelves to the ceiling.",
+     "onscreen": "~400,000 BOOKS (CHRONICLERS' CLAIM)",
+     "anim": "Push through the hall; pages turn; a ladder slides along a shelf.",
+     "img": ""
+    },
+    {
+     "id": "3.05",
+     "type": "MED",
+     "sec": 9.4,
+     "vo": "Farmers brought in new crops from the east: rice, oranges, lemons, sugar cane, cotton, saffron. Water wheels and canals turned dry valleys green.",
+     "visual": "A huerta (irrigated garden) with orange trees and rice paddies; a big wooden water wheel turning.",
+     "onscreen": "",
+     "anim": "Water wheel turns, buckets tipping; leaves sway; a farmer picks an orange.",
+     "img": ""
+    },
+    {
+     "id": "3.06",
+     "type": "MED",
+     "sec": 10.2,
+     "vo": "Paper mills appeared in Al-Andalus, among the first in Europe. Doctors, astronomers and mathematicians worked in Arabic, and their books were later translated into Latin.",
+     "visual": "A paper mill with pulp vats; an astronomer with a brass astrolabe on a rooftop at night.",
+     "onscreen": "",
+     "anim": "Sheet lifted from the vat dripping; the astrolabe ring turns under the stars.",
+     "img": ""
+    },
+    {
+     "id": "3.07",
+     "type": "MED",
+     "sec": 13.6,
+     "vo": "In the 9th century a man named Abbas ibn Firnas is said to have strapped on wings, jumped from a height and glided, more than six hundred years before Leonardo drew his flying machines.",
+     "visual": "A man with feathered wings on a tower; a crowd below looking up.",
+     "onscreen": "ABBAS IBN FIRNAS",
+     "anim": "He leaps; a short glide; a hard, comic landing in dust; crowd gasps.",
+     "img": ""
+    },
+    {
+     "id": "3.08",
+     "type": "MED",
+     "sec": 9.1,
+     "vo": "Muslims, Christians and Jews lived side by side. A Jewish doctor, Hasdai ibn Shaprut, served as a top minister to the caliph.",
+     "visual": "A busy market: a Christian potter, a Jewish cloth merchant, a Muslim spice seller; Hasdai in court robes beside the caliph.",
+     "onscreen": "",
+     "anim": "Market bustle; camera weaves between stalls to the palace.",
+     "img": ""
+    },
+    {
+     "id": "3.09",
+     "type": "CU",
+     "sec": 14.3,
+     "vo": "But it was not equality. Christians and Jews paid extra taxes, could not build new places of worship freely, and could not rule over Muslims. It was tolerance with rules, and those rules could get harsher.",
+     "visual": "A tax collector's table; coins counted; a Christian man waits his turn, cap in hand.",
+     "onscreen": "TOLERANCE, WITH LIMITS",
+     "anim": "Coins clink one by one; slow push on his face.",
+     "img": ""
+    },
+    {
+     "id": "3.10",
+     "type": "WIDE",
+     "sec": 13.2,
+     "vo": "Outside Cordoba the caliph built a whole palace city, Madinat al-Zahra, with gardens, a zoo and a hall where, it was said, a bowl of mercury made the light dance on the walls.",
+     "visual": "Terraced palace city on a hillside; inside, sunlight bounces off a bowl of mercury onto gold walls.",
+     "onscreen": "MADINAT AL-ZAHRA",
+     "anim": "Mercury ripples; light shimmers across the walls.",
+     "img": ""
+    }
+   ],
+   "sec": 114.3,
+   "words": 283
+  },
+  {
+   "name": "Act 4: The Kingdom Breaks",
+   "folder": "act4-taifas",
+   "shots": [
+    {
+     "id": "4.01",
+     "type": "MED",
+     "sec": 9.1,
+     "vo": "Around the year 1000, the real power was a ruler's chief minister, Al-Mansur. He raided the Christian north more than fifty times.",
+     "visual": "Al-Mansur in armour on horseback before an army leaving Cordoba.",
+     "onscreen": "AL-MANSUR",
+     "anim": "Army files past; dust; he raises a hand.",
+     "img": ""
+    },
+    {
+     "id": "4.02",
+     "type": "WIDE",
+     "sec": 10.2,
+     "vo": "In 997 he sacked Santiago de Compostela, the great Christian pilgrim shrine, and made Christian prisoners carry its church bells all the way to Cordoba.",
+     "visual": "Captives carrying huge bronze bells on poles along a dusty road.",
+     "onscreen": "SANTIAGO \u00b7 997",
+     "anim": "Bells sway on the poles; feet trudge; a slow pan along the line.",
+     "img": ""
+    },
+    {
+     "id": "4.03",
+     "type": "MAP",
+     "sec": 10.2,
+     "vo": "But after he died, Cordoba exploded into civil war. In 1031 the caliphate was abolished. Al-Andalus broke into more than twenty small kingdoms called taifas.",
+     "visual": "The green wash cracks like glass into many pieces, each with its own name.",
+     "onscreen": "1031 \u00b7 THE TAIFAS",
+     "anim": "Crack sound; pieces drift apart slightly.",
+     "img": ""
+    },
+    {
+     "id": "4.04",
+     "type": "MED",
+     "sec": 9.8,
+     "vo": "The taifa kings competed with each other in poetry, palaces and war. Some even paid the Christian kings for protection against their Muslim neighbours.",
+     "visual": "A taifa king hands a chest of gold to a Castilian knight while another taifa king watches from a hill.",
+     "onscreen": "PARIAS (PROTECTION MONEY)",
+     "anim": "Chest lid opens; gold gleams; the rival king's eyes narrow.",
+     "img": ""
+    },
+    {
+     "id": "4.05",
+     "type": "MAP",
+     "sec": 10.2,
+     "vo": "In the north, the small Christian kingdoms had grown: Leon, Castile, Navarre, Aragon and later Portugal. In 1085 Castile captured Toledo, the old Visigoth capital.",
+     "visual": "Northern kingdoms in different colours push south; Toledo flips colour.",
+     "onscreen": "TOLEDO \u00b7 1085",
+     "anim": "Colours advance; Toledo's dot flips with a stamp.",
+     "img": ""
+    },
+    {
+     "id": "4.06",
+     "type": "MED",
+     "sec": 11.3,
+     "vo": "Terrified, the taifa kings asked for help from the Almoravids, strict Berber warriors from Morocco. They crossed the sea, beat the Castilians, then took over the taifas themselves.",
+     "visual": "Veiled Almoravid warriors with tall shields stepping off ships; a taifa king realising his mistake.",
+     "onscreen": "THE ALMORAVIDS",
+     "anim": "Drums; shields lock; the king's smile fades.",
+     "img": ""
+    },
+    {
+     "id": "4.07",
+     "type": "MED",
+     "sec": 12.8,
+     "vo": "This was the age of El Cid, a Castilian knight who fought for Christian and Muslim lords alike, for whoever paid, and in 1094 took the rich city of Valencia for himself.",
+     "visual": "El Cid on a white horse before Valencia's walls, sword raised.",
+     "onscreen": "EL CID \u00b7 VALENCIA 1094",
+     "anim": "Horse rears; the city gates open behind him.",
+     "img": ""
+    },
+    {
+     "id": "4.08",
+     "type": "MED",
+     "sec": 12.4,
+     "vo": "Later another Moroccan dynasty, the Almohads, took over. They were even stricter. The great Muslim thinker Averroes was sent into exile, and the Jewish philosopher Maimonides fled Cordoba with his family.",
+     "visual": "Averroes leaving a city gate with a bundle of books; Maimonides as a young man with his family on a road.",
+     "onscreen": "AVERROES \u00b7 MAIMONIDES",
+     "anim": "Gate closes behind Averroes; dust on the road.",
+     "img": ""
+    },
+    {
+     "id": "4.09",
+     "type": "WIDE",
+     "sec": 7.2,
+     "vo": "In 1212 the Christian kings joined forces at Las Navas de Tolosa and crushed the Almohad army.",
+     "visual": "A huge battle in a mountain pass; Christian knights charge a ring of chained defenders around a red tent.",
+     "onscreen": "LAS NAVAS DE TOLOSA \u00b7 1212",
+     "anim": "Charge with dust and banners; chains break.",
+     "img": ""
+    },
+    {
+     "id": "4.10",
+     "type": "MAP",
+     "sec": 10.2,
+     "vo": "After that the great cities fell one after another. Cordoba in 1236. Seville in 1248. The Great Mosque of Cordoba was turned into a cathedral.",
+     "visual": "Green shrinks fast; Cordoba and Seville flip colour; a cross rises over the mosque's minaret.",
+     "onscreen": "1236 \u00b7 1248",
+     "anim": "The green slides south; a cross caps the minaret with a ring.",
+     "img": ""
+    }
+   ],
+   "sec": 103.4,
+   "words": 254
+  },
+  {
+   "name": "Act 5: The Last Sultan",
+   "folder": "act5-granada",
+   "shots": [
+    {
+     "id": "5.01",
+     "type": "MAP",
+     "sec": 9.1,
+     "vo": "By 1250 only one Muslim state was left: the Emirate of Granada, a strip of mountains and coast in the far south.",
+     "visual": "One small green patch left in the south; counter at 1250.",
+     "onscreen": "EMIRATE OF GRANADA",
+     "anim": "Map zooms in on the green patch; the rest goes grey.",
+     "img": ""
+    },
+    {
+     "id": "5.02",
+     "type": "WIDE",
+     "sec": 10.2,
+     "vo": "It survived for almost two hundred and fifty years. It paid tribute to Castile, played the Christian kings against each other, and built the Alhambra.",
+     "visual": "The Alhambra on its hill under the snowy Sierra Nevada; the Court of the Lions with its fountain.",
+     "onscreen": "THE ALHAMBRA",
+     "anim": "Pan across the hill, cut inside; water spouts from the stone lions.",
+     "img": ""
+    },
+    {
+     "id": "5.03",
+     "type": "MED",
+     "sec": 9.8,
+     "vo": "In 1469 two teenagers married in secret. Isabella, heir to Castile, and Ferdinand, heir to Aragon. Together they would rule almost all of Spain.",
+     "visual": "A small candlelit wedding: Isabella, 18, and Ferdinand, 17, exchange rings.",
+     "onscreen": "ISABELLA + FERDINAND \u00b7 1469",
+     "anim": "Candles flicker; rings slide on; the map behind them merges two colours.",
+     "img": ""
+    },
+    {
+     "id": "5.04",
+     "type": "MED",
+     "sec": 10.2,
+     "vo": "In 1482 they started a war to finish the Reconquista. Granada was split. The young prince Boabdil had rebelled against his own father, the sultan.",
+     "visual": "Inside the Alhambra, Boabdil argues with his father; guards draw swords.",
+     "onscreen": "GRANADA WAR \u00b7 1482",
+     "anim": "Sharp cut between their faces; a door slams.",
+     "img": ""
+    },
+    {
+     "id": "5.05",
+     "type": "MED",
+     "sec": 12.4,
+     "vo": "Then Boabdil was captured by the Castilians. Ferdinand let him go, in return for help. So Granada fought a civil war while the Christian armies took its towns one by one.",
+     "visual": "Boabdil in chains before Ferdinand; then freed, riding back with Castilian escorts.",
+     "onscreen": "",
+     "anim": "Chains unlock; Ferdinand's thin smile.",
+     "img": ""
+    },
+    {
+     "id": "5.06",
+     "type": "WIDE",
+     "sec": 12.4,
+     "vo": "By 1491 the Christian army camped outside the city and built a whole new town of stone just to show they were never leaving. They called it Santa Fe, holy faith.",
+     "visual": "A neat stone camp-town on the plain facing Granada; Isabella on horseback inspecting it.",
+     "onscreen": "SANTA FE \u00b7 1491",
+     "anim": "Time-lapse: tents become stone walls; Isabella rides through.",
+     "img": ""
+    },
+    {
+     "id": "5.07",
+     "type": "MED",
+     "sec": 10.6,
+     "vo": "Granada was starving. In November 1491 Boabdil signed a surrender treaty. It promised that Muslims could keep their mosques, their laws, their language and their property.",
+     "visual": "A treaty on a table; Boabdil signs, his hand slow.",
+     "onscreen": "TREATY OF GRANADA \u00b7 NOV 1491",
+     "anim": "The quill hesitates; then signs; a slow fade of the list of promises.",
+     "img": ""
+    },
+    {
+     "id": "5.08",
+     "type": "WIDE",
+     "sec": 12.4,
+     "vo": "On the second of January 1492, the cross and the royal banners were raised over the Alhambra. Seven hundred and eighty-one years after Tariq landed, Muslim rule in Iberia was over.",
+     "visual": "Royal banners and a silver cross rise over the Alhambra's tower; the green dot on the map goes out.",
+     "onscreen": "2 JAN 1492",
+     "anim": "Banner climbs; the map's last green light blinks out; counter stops at 1492.",
+     "img": ""
+    }
+   ],
+   "sec": 87.1,
+   "words": 215
+  },
+  {
+   "name": "Act 6: The Promises",
+   "folder": "act6-1492",
+   "shots": [
+    {
+     "id": "6.01",
+     "type": "MED",
+     "sec": 10.2,
+     "vo": "The promises in that treaty did not last. Three months later, Ferdinand and Isabella ordered every Jew in Spain to convert to Christianity or leave.",
+     "visual": "A herald reads a decree in a town square; Jewish families listen in shock.",
+     "onscreen": "ALHAMBRA DECREE \u00b7 31 MAR 1492",
+     "anim": "Scroll unrolls; faces in the crowd turn to each other.",
+     "img": ""
+    },
+    {
+     "id": "6.02",
+     "type": "WIDE",
+     "sec": 10.6,
+     "vo": "Tens of thousands left, many for Portugal, North Africa and the Ottoman Empire. Their descendants, the Sephardic Jews, kept the old Spanish language alive for centuries.",
+     "visual": "A long line of families with carts and bundles heading to a port; ships waiting.",
+     "onscreen": "",
+     "anim": "Slow pan along the line to the sea.",
+     "img": ""
+    },
+    {
+     "id": "6.03",
+     "type": "MED",
+     "sec": 12.4,
+     "vo": "That same spring, in the camp at Santa Fe, the queen signed a deal with an Italian sailor who promised to reach Asia by sailing west. His name was Christopher Columbus.",
+     "visual": "Columbus kneels before Isabella in the Santa Fe camp; a contract on the table.",
+     "onscreen": "SANTA FE \u00b7 APRIL 1492",
+     "anim": "Seal pressed; Columbus looks up; match cut to a ship's sail filling.",
+     "img": ""
+    },
+    {
+     "id": "6.04",
+     "type": "MED",
+     "sec": 12.4,
+     "vo": "In Granada, the archbishop at first tried to convert Muslims slowly. Then the hard-line Cardinal Cisneros took over. He pushed mass baptisms and burned thousands of Arabic books in the street.",
+     "visual": "A bonfire of books in a Granada square; Cisneros watching; a scholar reaching toward the flames.",
+     "onscreen": "CISNEROS \u00b7 1499",
+     "anim": "Pages curl and blow away as sparks.",
+     "img": ""
+    },
+    {
+     "id": "6.05",
+     "type": "MED",
+     "sec": 13.2,
+     "vo": "Granada's Muslims rebelled. By 1502 Muslims in Castile were told to convert or leave. Those who stayed were called Moriscos, new Christians watched by the Inquisition for any sign of their old faith.",
+     "visual": "A family praying behind closed shutters while a shadow passes the window.",
+     "onscreen": "MORISCOS",
+     "anim": "The shadow crosses; they freeze; candle flame wavers.",
+     "img": ""
+    },
+    {
+     "id": "6.06",
+     "type": "WIDE",
+     "sec": 9.8,
+     "vo": "In 1609 the king ordered even the Moriscos out. Around three hundred thousand people were forced to leave Spain over the next five years.",
+     "visual": "Crowded ships leaving a Spanish harbour; people on deck looking back at the coast.",
+     "onscreen": "1609\u20131614 \u00b7 ~300,000 EXPELLED",
+     "anim": "Ships pull out; the coastline shrinks.",
+     "img": ""
+    },
+    {
+     "id": "6.07",
+     "type": "MED",
+     "sec": 12.8,
+     "vo": "But Al-Andalus never really left. Thousands of Spanish words come from Arabic: aceite for oil, azucar for sugar, alcalde for mayor. Even ojala, hopefully, comes from law sha Allah, if God wills.",
+     "visual": "A modern Spanish street caf\u00e9; Arabic and Spanish word pairs float up from objects (oil, sugar, a town hall).",
+     "onscreen": "OJAL\u00c1 \u2190 LAW SHA ALLAH",
+     "anim": "Words pop out of the objects and flip from Arabic script to Spanish.",
+     "img": ""
+    },
+    {
+     "id": "6.08",
+     "type": "WIDE",
+     "sec": 5.7,
+     "vo": "And the Alhambra is now one of the most visited monuments in Spain.",
+     "visual": "The Alhambra today at sunset with tourists on the terraces.",
+     "onscreen": "",
+     "anim": "Slow pull back from the palace to the whole valley.",
+     "img": ""
+    },
+    {
+     "id": "6.09",
+     "type": "MED",
+     "sec": 11.7,
+     "vo": "In 1492 Spain finished one story and started another. That same year, Columbus's three small ships sailed west, and Spain was about to become the richest empire on Earth.",
+     "visual": "Three small ships on a golden sea at dusk.",
+     "onscreen": "NEXT: THE SPANISH EMPIRE",
+     "anim": "Sails fill; the camera rises as the ships head into the sunset.",
+     "img": ""
+    }
+   ],
+   "sec": 98.8,
+   "words": 244
+  }
+ ],
+ "hooks": [
+  [
+   "You've never been told this: 7,000 men crossed a 14 km strait in 711 and took all of Spain in seven years. Here's how they lost it.",
+   62
+  ],
+  [
+   "Why did a city with street lamps and 400,000 books, when London was a muddy town, vanish from your history books?",
+   51
+  ]
+ ],
+ "launch": {
+  "titles": [
+   "How Muslims Ruled Spain for 700 Years, and Lost It All",
+   "781 Years: The Rise and Fall of Muslim Spain",
+   "The Muslim Kingdom That Was Europe's Richest Place"
+  ],
+  "thumb": "The Alhambra at sunset in the painterly style, a Castilian banner rising over its red walls, Boabdil small in the foreground looking back. Text: 700 YEARS.",
+  "reels": [
+   "711: 7,000 men and the rock named after their general",
+   "Tariq burns the boats (and why it's probably a legend)",
+   "The prince who swam the Euphrates and founded a kingdom",
+   "Cordoba vs London in the year 1000",
+   "400,000 books: the caliph's library",
+   "The man who flew 600 years before Leonardo",
+   "Tolerance with rules: life for Christians and Jews in Al-Andalus",
+   "Captives carried the bells of Santiago to Cordoba",
+   "El Cid, the knight who fought for whoever paid",
+   "Las Navas de Tolosa: the battle that broke Al-Andalus",
+   "The town built just to besiege Granada",
+   "The Moor's last sigh",
+   "1492: one year, three events that changed the world",
+   "300,000 Moriscos expelled",
+   "Spanish words that are secretly Arabic"
+  ]
+ },
+ "fixes": [
+  "Transcript 6 auto-captions garbled names ('Siberia' for Iberia, 'Rodeways' for Roderic, 'Kumawat' for Umayyad); all rewritten from scratch.",
+  "Tariq's army: sources give ~7,000, later reinforced to ~12,000; script says 'about seven thousand'.",
+  "'Burned his boats' is a later legend; labelled as such.",
+  "Count Julian's daughter story (in the Hindi source) is a later legend and left out.",
+  "Covadonga date traditionally 718 or 722; script says 'about 722'.",
+  "Tours/Poitiers 732 (Charles Martel) kept brief.",
+  "Abd al-Rahman I escaped 750, landed 755, emir 756; Mezquita begun c. 785.",
+  "Cordoba population estimates vary widely (100,000 to 500,000); script says 'a few hundred thousand' with 'historians think it may have'.",
+  "Library of 400,000 volumes is the chroniclers' figure; flagged on screen.",
+  "Abbas ibn Firnas glide (c. 875) comes from a later account; script says 'is said to'.",
+  "Caliphate abolished 1031; taifas 'more than twenty' (counts vary 20-30).",
+  "Santiago sacked 997; bells carried to Cordoba and returned in 1236.",
+  "Granada surrender treaty signed 25 Nov 1491; handover 2 Jan 1492. 781 years counts from 711.",
+  "Alhambra Decree signed 31 Mar 1492; numbers expelled are debated (estimates 40,000 to 100,000+); script says 'tens of thousands'.",
+  "Capitulations of Santa Fe signed 17 April 1492.",
+  "Cisneros book burning in Granada, 1499 (date often given as 1499/1500).",
+  "Morisco expulsion 1609-1614, about 300,000.",
+  "Spanish words of Arabic origin: commonly cited as about 4,000; script says 'thousands'. 'Ojal\u00e1' from 'law sha' Allah' is the usual etymology.",
+  "The Hindi source says 750 years; the English source says 781; script uses 781 (711 to 1492)."
+ ],
+ "cuts": [
+  "No sponsor read. Dropped the Roman and prehistoric opening of transcript 5 (not needed for this story) and the Hindi source's channel intro and UPSC framing."
+ ]
+}

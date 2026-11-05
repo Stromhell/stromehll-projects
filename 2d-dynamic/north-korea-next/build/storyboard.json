@@ -1,0 +1,388 @@
+{
+ "meta": {
+  "slug": "north-korea-next",
+  "prefix": "NK",
+  "title": "Who Will Rule North Korea Next?",
+  "working_title": "The Girl Who May Rule North Korea",
+  "device": "The white horse. In Kim family myth, a white horse on Mount Paektu stands for the bloodline. It appears in the parade for 'the leader's beloved child', in a riding ring at the Wonsan estate, in the old propaganda paintings of Kim Il Sung and Kim Jong Un, and in the last shot riderless in the snow, waiting for whoever comes next.",
+  "style": "2D dynamic, locked Village Painterly look: 6-head characters from the village-cast rig. Kim Jong Un, Ri Sol Ju, Kim Yo Jong and the girl state media calls his beloved daughter, drawn as painterly characters, never photo-likenesses; generals in peaked caps and medals. Highly detailed painted backgrounds with warm light and dynamic cast shadows: a missile launch pad at dawn, the banquet hall, Kim Il Sung Square at night with parade lights, the Wonsan coast estate with a beach and riding ring, a satellite launch site, a Beijing review stand, snowy Mount Paektu. Moving cameras, 3 to 5 parallax layers, characters act in every shot. Neutral, evidence-first narration: everything about the girl is labelled as reported or believed. No repeats of the 3D NK film's beats (punishments for K-dramas, power cuts, defector escape stories). SFX under VO; music at combine.",
+  "source": "'Who Will Rule North Korea Next?' (Pushpam upload, batch 5, English, Fern). Fully rewritten in our own words, fact-checked, sponsor read cut. Release after 24 Nov and point viewers to the 3D NK film."
+ },
+ "stats": {
+  "shots": 27,
+  "words": 664,
+  "runtime": "4:34",
+  "acts": 6
+ },
+ "acts": [
+  {
+   "name": "Cold open",
+   "folder": "act0-coldopen",
+   "shots": [
+    {
+     "id": "0.01",
+     "type": "WIDE",
+     "sec": 7.9,
+     "vo": "November 2022. North Korea tests one of the largest missiles in the world, built to reach the United States.",
+     "visual": "A giant missile on a launcher at dawn; flame and smoke as it lifts off; the camera shakes.",
+     "onscreen": "HWASONG-17 \u00b7 18 NOV 2022",
+     "anim": "Smoke billows; the missile climbs.",
+     "img": ""
+    },
+    {
+     "id": "0.02",
+     "type": "MED",
+     "sec": 11.7,
+     "vo": "But the world wasn't looking at the missile. It was looking at who stood next to Kim Jong Un: a little girl in a white coat, holding his hand.",
+     "visual": "Kim Jong Un and a small girl in a white puffer coat hand in hand, walking past the launcher.",
+     "onscreen": "",
+     "anim": "Camera flashes freeze the moment.",
+     "img": ""
+    },
+    {
+     "id": "0.03",
+     "type": "MED",
+     "sec": 10.2,
+     "vo": "State media called her his 'beloved child'. Outside intelligence services believe she is around ten years old, and that her name is Kim Ju Ae.",
+     "visual": "A wall of intelligence files with a blank silhouette pinned at the centre and question marks around it.",
+     "onscreen": "KIM JU AE? \u00b7 BORN ~2013?",
+     "anim": "Question marks pin themselves to the board.",
+     "img": ""
+    },
+    {
+     "id": "0.04",
+     "type": "TITLE",
+     "sec": 4.0,
+     "vo": "",
+     "visual": "Title over a white horse standing in falling snow under a mountain.",
+     "onscreen": "WHO WILL RULE NORTH KOREA NEXT?",
+     "anim": "Snow falls; the horse shakes its mane.",
+     "img": ""
+    }
+   ],
+   "sec": 33.8,
+   "words": 73
+  },
+  {
+   "name": "Act 1: The Secret Child",
+   "folder": "act1-secret-child",
+   "shots": [
+    {
+     "id": "1.01",
+     "type": "MED",
+     "sec": 9.1,
+     "vo": "The first hint came from an unlikely source: the American basketball star Dennis Rodman, who had become friends with Kim Jong Un.",
+     "visual": "A basketball court in Pyongyang; a tall American in sunglasses sitting courtside next to Kim, both laughing.",
+     "onscreen": "2013",
+     "anim": "A ball bounces; they clap.",
+     "img": ""
+    },
+    {
+     "id": "1.02",
+     "type": "MED",
+     "sec": 10.6,
+     "vo": "In 2013, after a holiday with the Kim family on the coast, Rodman said he had held Kim's baby daughter, and named her as Ju Ae.",
+     "visual": "A coastal estate with a private beach and a yacht; Rodman holding a baby wrapped in a blanket; a smiling mother.",
+     "onscreen": "WONSAN",
+     "anim": "Waves; the baby yawns.",
+     "img": ""
+    },
+    {
+     "id": "1.03",
+     "type": "MED",
+     "sec": 10.6,
+     "vo": "South Korea's spy agency later reported that Kim had three children, born in 2010, 2013 and 2017. Some researchers doubt there is a son at all.",
+     "visual": "A South Korean intelligence briefing room; a chart with three silhouettes, one shaded with a question mark.",
+     "onscreen": "SOUTH KOREA'S NIS",
+     "anim": "The shaded silhouette flickers.",
+     "img": ""
+    },
+    {
+     "id": "1.04",
+     "type": "MED",
+     "sec": 13.9,
+     "vo": "Her mother is Ri Sol Ju, a former singer, now called the 'respected first lady'. The children are believed to be schooled at home in Pyongyang, not abroad like their father, who studied in Switzerland.",
+     "visual": "Ri Sol Ju in an elegant coat; then a private classroom in a big residence, a tutor at a blackboard.",
+     "onscreen": "RI SOL JU",
+     "anim": "The tutor writes; light moves across the room.",
+     "img": ""
+    },
+    {
+     "id": "1.05",
+     "type": "MED",
+     "sec": 10.2,
+     "vo": "Reports say the girl loves horse riding and skiing. The family's coastal estate has a riding ring, and a giant ski resort was built nearby.",
+     "visual": "A riding ring by the sea with a white horse being led around; then a ski slope with a single lift.",
+     "onscreen": "",
+     "anim": "The horse trots a lap; the ski lift turns.",
+     "img": ""
+    }
+   ],
+   "sec": 54.4,
+   "words": 134
+  },
+  {
+   "name": "Act 2: Into the Spotlight",
+   "folder": "act2-spotlight",
+   "shots": [
+    {
+     "id": "2.01",
+     "type": "MED",
+     "sec": 12.8,
+     "vo": "After the 2022 missile test, she kept appearing. In February 2023, at a banquet for the army's anniversary, she sat at the centre of the top table, generals lined up behind her.",
+     "visual": "A grand banquet hall; the girl in a black coat seated between her parents; rows of generals with medals standing behind.",
+     "onscreen": "FEB 2023",
+     "anim": "Chandeliers glitter; generals stand rigid.",
+     "img": ""
+    },
+    {
+     "id": "2.02",
+     "type": "WIDE",
+     "sec": 12.1,
+     "vo": "The next night, at a military parade in Kim Il Sung Square, a white horse trotted past. The announcer called it the horse most loved by the leader's beloved child.",
+     "visual": "Kim Il Sung Square at night with floodlights, marching columns and missile trucks; a white horse led past the review stand.",
+     "onscreen": "KIM IL SUNG SQUARE",
+     "anim": "Spotlights sweep; the horse passes the stand.",
+     "img": ""
+    },
+    {
+     "id": "2.03",
+     "type": "MED",
+     "sec": 12.1,
+     "vo": "In North Korean myth, white horses carry the Kim family. Kim Il Sung and Kim Jong Un have both been shown riding them on Mount Paektu, the dynasty's sacred mountain.",
+     "visual": "A propaganda-style painting comes alive: a rider on a white horse galloping through snow on a mountain.",
+     "onscreen": "MOUNT PAEKTU",
+     "anim": "Snow kicks up under the hooves.",
+     "img": ""
+    },
+    {
+     "id": "2.04",
+     "type": "MED",
+     "sec": 12.4,
+     "vo": "Later in 2023, she stood in front of her father at the launch of a spy satellite, in a black leather coat like his. Analysts noticed he was in the background.",
+     "visual": "A satellite launch site at night; the girl in a black leather coat in front, her father just behind her, both looking up.",
+     "onscreen": "SPY SATELLITE \u00b7 NOV 2023",
+     "anim": "The rocket's glow lights their faces.",
+     "img": ""
+    },
+    {
+     "id": "2.05",
+     "type": "MED",
+     "sec": 10.2,
+     "vo": "A study by Nikkei Asia counted her days on state TV. Her appearances rose sharply in 2024, more than half of them at military events.",
+     "visual": "A bar chart of appearances by year, the bars rising in 2024; small icons of missiles and tanks on the bars.",
+     "onscreen": "",
+     "anim": "Bars grow; icons pop in.",
+     "img": ""
+    },
+    {
+     "id": "2.06",
+     "type": "MED",
+     "sec": 8.7,
+     "vo": "In September 2025, she travelled with her father to Beijing, where he stood beside China's Xi Jinping and Russia's Vladimir Putin.",
+     "visual": "A review stand in Beijing; three leaders in a row; the girl seen arriving from a train in a formal coat.",
+     "onscreen": "BEIJING \u00b7 SEPT 2025",
+     "anim": "Flags ripple; the train doors open.",
+     "img": ""
+    }
+   ],
+   "sec": 68.3,
+   "words": 169
+  },
+  {
+   "name": "Act 3: Why Now?",
+   "folder": "act3-why-now",
+   "shots": [
+    {
+     "id": "3.01",
+     "type": "MED",
+     "sec": 10.9,
+     "vo": "North Korea has passed power from father to son twice. When Kim Jong Il died in 2011, his son was in his late twenties and almost unknown.",
+     "visual": "A family tree of portraits: Kim Il Sung, Kim Jong Il, Kim Jong Un, with arrows down; an empty frame below.",
+     "onscreen": "1948 \u2192 1994 \u2192 2011",
+     "anim": "Arrows draw down to the empty frame.",
+     "img": ""
+    },
+    {
+     "id": "3.02",
+     "type": "MED",
+     "sec": 7.9,
+     "vo": "He had only months of public preparation. To take control, he had to push aside powerful generals and relatives.",
+     "visual": "A young Kim at a long table with older generals glancing at each other; chairs at the table go empty one by one.",
+     "onscreen": "",
+     "anim": "Chairs empty in sequence.",
+     "img": ""
+    },
+    {
+     "id": "3.03",
+     "type": "MED",
+     "sec": 13.6,
+     "vo": "He knows how dangerous a late handover can be. And his own health is a worry. Intelligence reports describe heavy smoking, drinking and weight gain, and the heart problems that ran in his family.",
+     "visual": "Kim with a cigarette at a desk at night; an ashtray full; a doctor's chart with a heart line.",
+     "onscreen": "",
+     "anim": "Smoke curls; the heart line wobbles.",
+     "img": ""
+    },
+    {
+     "id": "3.04",
+     "type": "MED",
+     "sec": 10.9,
+     "vo": "Some experts think showing the daughter is simply good propaganda: a softer image of a family man at a time of shortages after years of closed borders.",
+     "visual": "A propaganda poster of a father and daughter smiling in front of a rising sun; outside the frame, an empty market stall.",
+     "onscreen": "",
+     "anim": "Camera pulls back from the poster to the empty stall.",
+     "img": ""
+    }
+   ],
+   "sec": 43.3,
+   "words": 107
+  },
+  {
+   "name": "Act 4: The Rivals",
+   "folder": "act4-rivals",
+   "shots": [
+    {
+     "id": "4.01",
+     "type": "MED",
+     "sec": 7.9,
+     "vo": "If not the daughter, then who? The most powerful woman in the country is Kim's sister, Kim Yo Jong.",
+     "visual": "Kim Yo Jong at a desk covered in statements and press releases; aides waiting at the door.",
+     "onscreen": "KIM YO JONG",
+     "anim": "She signs a page; an aide hurries off.",
+     "img": ""
+    },
+    {
+     "id": "4.02",
+     "type": "MED",
+     "sec": 7.5,
+     "vo": "She runs propaganda, speaks for the regime on foreign policy, and stands at her brother's side at summits.",
+     "visual": "Kim Yo Jong standing just behind her brother at a summit table, handing him a folder.",
+     "onscreen": "",
+     "anim": "The folder passes; flashes go off.",
+     "img": ""
+    },
+    {
+     "id": "4.03",
+     "type": "MED",
+     "sec": 8.3,
+     "vo": "But the rule so far is direct bloodline: from father to child. A sister breaks that rule. A daughter doesn't.",
+     "visual": "The family tree again: a dotted line to the sister goes grey; a solid line to the daughter's frame lights up.",
+     "onscreen": "",
+     "anim": "Grey fades; the line glows.",
+     "img": ""
+    },
+    {
+     "id": "4.04",
+     "type": "MED",
+     "sec": 10.9,
+     "vo": "North Korea is a deeply male-dominated society, and it has never had a woman in charge. But the Kim family is treated almost like a royal line.",
+     "visual": "Rows of male generals; then a single small figure in a black coat walking past them.",
+     "onscreen": "",
+     "anim": "Heads turn as she passes.",
+     "img": ""
+    }
+   ],
+   "sec": 34.6,
+   "words": 84
+  },
+  {
+   "name": "Act 5: The Morning Star",
+   "folder": "act5-ending",
+   "shots": [
+    {
+     "id": "5.01",
+     "type": "MED",
+     "sec": 8.7,
+     "vo": "State media now calls her 'respected daughter', and has used titles that South Korean intelligence reads as signs of a successor.",
+     "visual": "A state TV studio; an announcer reading; behind her a photo of the girl and her father framed in gold.",
+     "onscreen": "\"RESPECTED DAUGHTER\"",
+     "anim": "The announcer's papers rustle; the frame glints.",
+     "img": ""
+    },
+    {
+     "id": "5.02",
+     "type": "MED",
+     "sec": 7.2,
+     "vo": "But none of it is official. Her name and age have never been confirmed by North Korea.",
+     "visual": "The intelligence board from the cold open; the question marks still there.",
+     "onscreen": "UNCONFIRMED",
+     "anim": "One question mark flips over and stays.",
+     "img": ""
+    },
+    {
+     "id": "5.03",
+     "type": "MED",
+     "sec": 10.6,
+     "vo": "And there's a twist. In North Korea, children take their father's family name. If she rules and has children, the Kim name may not pass on.",
+     "visual": "The family tree; below the daughter's frame, a new branch appears with a different surname tag.",
+     "onscreen": "",
+     "anim": "A new branch grows; the tag swings.",
+     "img": ""
+    },
+    {
+     "id": "5.04",
+     "type": "WIDE",
+     "sec": 13.2,
+     "vo": "Maybe she is the next leader. Maybe she is a softer face for a hard state. In a country where the leader writes the rules, only one man decides, and he isn't saying.",
+     "visual": "Mount Paektu in snow; a riderless white horse standing in the wind.",
+     "onscreen": "",
+     "anim": "Snow swirls around the horse; fade out.",
+     "img": ""
+    }
+   ],
+   "sec": 39.699999999999996,
+   "words": 97
+  }
+ ],
+ "hooks": [
+  [
+   "She is believed to be about 13. She stands next to nuclear missiles, and she may one day rule North Korea.",
+   56
+  ],
+  [
+   "In 2022 North Korea tested a missile that can reach America. The world looked at the girl holding his hand.",
+   54
+  ]
+ ],
+ "launch": {
+  "titles": [
+   "Who Will Rule North Korea Next?",
+   "The Girl Who May Rule North Korea",
+   "Kim Jong Un's Daughter: Heir or Propaganda?"
+  ],
+  "thumb": "A small girl in a white coat holding a leader's hand in front of a giant missile on a launcher at dawn, painterly style, no photo-likeness. Text: NEXT?",
+  "reels": [
+   "The girl at the missile launch",
+   "How Dennis Rodman revealed her",
+   "Does Kim have a son?",
+   "Why she isn't schooled abroad",
+   "The white horse parade",
+   "Paektu: the dynasty's mountain",
+   "The photo where Kim stood behind her",
+   "Her TV time is catching up",
+   "Beijing 2025",
+   "How Kim Jong Un took power",
+   "Kim's health problem",
+   "Kim Yo Jong: the sister",
+   "Bloodline beats gender?",
+   "The surname problem",
+   "What we don't know"
+  ]
+ },
+ "fixes": [
+  "Her name 'Kim Ju Ae' comes from Dennis Rodman (2013) and NIS; not confirmed by North Korea. Age: NIS believes born ~2013. Script labels both.",
+  "First public appearance: Hwasong-17 ICBM launch, 18 Nov 2022 (white padded coat).",
+  "Banquet 7 Feb 2023 (75th anniversary of the KPA founding); parade the night of 8 Feb 2023; white horse and the 'beloved child' line from KCTV coverage.",
+  "Satellite: Malligyong-1 launch, 21 Nov 2023; NYT noted she stood in front of Kim in an official photo.",
+  "Nikkei Asia analysis of state TV appearances (2022-2025), as cited by the source; script keeps the trend only.",
+  "Beijing Victory Day parade, 3 Sept 2025: Kim stood with Xi and Putin; his daughter was reported to have travelled with him.",
+  "NIS 2017 report on three children (2010, 2013, 2017); a son has never been seen and some researchers doubt he exists.",
+  "Kim Jong Un studied in Bern, Switzerland in the 1990s. Kim Yo Jong also schooled in Bern.",
+  "State-media titles: 'respected daughter' and similar honorifics are documented; NIS has said she is 'most likely' successor (2023 assessment) while hedging. Script says South Korean intelligence 'reads' them as signs.",
+  "Source spells the name many ways ('Chouer', 'Jouer', 'Jer'); corrected to Ju Ae.",
+  "Overlap: no K-drama punishments, power cuts or defector stories (all in the 3D NK film). Purges kept to one generic line ('push aside generals and relatives') to avoid repeating that film."
+ ],
+ "cuts": [
+  "NordVPN read cut. Release after 24 Nov; end card points to the 3D North Korea film."
+ ]
+}

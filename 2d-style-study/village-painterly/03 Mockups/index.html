@@ -1,0 +1,271 @@
+<title>Village Painterly Study</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Hind:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: a dark warm screening room. One reading column; every mockup plays full column width. */
+:root {
+  --bg: #17120e; --surface: #221a14; --line: #3a2d22; --fg: #f1e6d2; --muted: #b9a88f;
+  --marigold: #e9a23b; --teal: #6fa3a8; --do: #8fbf6f; --dont: #e0745a;
+  --display: 'Yatra One', 'Georgia', serif; --body: 'Hind', 'Segoe UI', system-ui, sans-serif; --mono: 'IBM Plex Mono', ui-monospace, monospace;
+  color-scheme: dark;
+}
+body { background: var(--bg); color: var(--fg); font: 400 17px/1.6 var(--body); }
+.wrap { max-width: 1040px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 28px 80px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 400; text-wrap: balance; letter-spacing: .2px; }
+h1 { font-size: clamp(36px, 6vw, 60px); line-height: 1.05; margin: 8px 0 12px; }
+h2 { font-size: clamp(26px, 3.6vw, 36px); margin: 64px 0 8px; }
+h3 { font-size: 22px; margin: 28px 0 6px; }
+p { max-width: 68ch; margin: 0 0 14px; }
+.eyebrow { font: 500 12px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--marigold); }
+.lede { font-size: 19px; color: var(--fg); }
+.muted { color: var(--muted); }
+figure { margin: 18px 0 8px; }
+.screen { position: relative; border-radius: 6px; overflow: hidden; background: #000; box-shadow: 0 18px 40px rgba(0,0,0,.45); }
+.screen canvas { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; max-width: 100%; }
+.screen button { position: absolute; right: 10px; bottom: 10px; font: 500 12px var(--mono); color: var(--fg); background: rgba(23,18,14,.72); border: 1px solid var(--line); border-radius: 4px; padding: 6px 10px; cursor: pointer; }
+.screen button:focus-visible { outline: 2px solid var(--marigold); outline-offset: 2px; }
+figcaption { font-size: 15px; color: var(--muted); margin-top: 8px; max-width: 72ch; }
+figcaption b { color: var(--fg); font-weight: 600; }
+.refs { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 18px; margin-top: 18px; }
+.ref { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+.ref img { display: block; width: 100%; height: 150px; object-fit: cover; object-position: top; }
+.ref div { padding: 12px 14px 14px; font-size: 15px; }
+.ref .tag { font: 500 11px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--teal); }
+.ref.main .tag { color: var(--marigold); }
+.ref a { color: var(--muted); font: 500 12px var(--mono); }
+.rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 10px 32px; margin-top: 10px; }
+.rules ul { margin: 0; padding-left: 18px; }
+.rules li { margin: 4px 0; max-width: 60ch; }
+.table-wrap { overflow-x: auto; margin-top: 12px; }
+table { border-collapse: collapse; font-size: 15px; min-width: 560px; width: 100%; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 500 12px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.moods { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 14px; margin-top: 14px; }
+.mood { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; }
+.mood h4 { margin: 0 0 8px; font: 400 18px var(--display); }
+.sw { display: flex; flex-wrap: wrap; gap: 6px; }
+.sw span { width: 34px; height: 34px; border-radius: 4px; border: 1px solid rgba(255,255,255,.12); }
+.mood p { font-size: 14px; color: var(--muted); margin: 8px 0 0; }
+.dd { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: 24px; margin-top: 16px; }
+.dd ol { list-style: none; margin: 0; padding: 0; }
+.dd li { display: grid; grid-template-columns: 44px 1fr; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--line); }
+.dd li > span { font: 500 13px/1.7 var(--mono); }
+.do li > span { color: var(--do); }
+.dont li > span { color: var(--dont); }
+.dd h3 { margin-top: 0; }
+.do h3 { color: var(--do); } .dont h3 { color: var(--dont); }
+.ask { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--marigold); border-radius: 6px; padding: 18px 20px; margin-top: 18px; }
+.ask ol { margin: 6px 0 0; padding-left: 22px; }
+.ask li { margin: 8px 0; max-width: 70ch; }
+code { font: 500 14px var(--mono); color: var(--marigold); }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 22px; }
+.grid2 > * { min-width: 0; }
+footer { margin-top: 60px; color: var(--muted); font-size: 14px; }
+@media (prefers-reduced-motion: reduce) { .screen button { display: none; } }
+</style>
+
+<div class="wrap">
+  <div class="eyebrow">2D style study · learning only · 29 Oct 2026</div>
+  <h1>Village Painterly</h1>
+  <p class="lede">What I learned from your nine Pinterest references, rebuilt from scratch as a new character rig, a style guide and four animated mockups. Nothing here touches the live 2D videos. Tell me what is wrong and I will fix the rules before anything goes into production.</p>
+
+  <figure>
+    <div class="screen"><canvas id="cv-run" width="1280" height="720" aria-label="Animated mockup: a village boy runs along a dirt path at golden hour holding a letter, palms and thatched huts scroll past"></canvas><button type="button">Pause</button></div>
+    <figcaption><b>Mockup 1 · Golden hour run</b> (from refs 8 and 9). Five painted depth layers scroll at different speeds, the sun sits behind him so he gets a warm rim on his back edges, dust kicks up on each step, grass sways in front of the lens.</figcaption>
+  </figure>
+
+  <h2>The look in one paragraph</h2>
+  <p>Six of the nine references (4 to 9) share one look: a Disney-style 2D cartoon set in an Indian village, with natural body proportions, warm brown skin, big expressive eyes under thick brows, and painted backgrounds that carry the mood. Every shot has one strong, visible light source (sun, window, fire, doorway) and the characters are lit by that same light: a lit side, a shadow side tinted by the room, and a thin bright rim. Lines are thin and warm brown, never black. The animation is quiet and alive: breathing, blinking, eyes leading the head, smoke, dust and leaves always moving, and a slow camera push. References 1 to 3 are different styles; I took techniques from them, not the look.</p>
+
+  <h2>What I took from each reference</h2>
+  <div class="refs">
+    <div class="ref"><img src="refs/ref1.jpg" alt="Tea shop scene, flat-shaded Kerala ad, vertical format"><div><span class="tag">Ref 1 · technique</span><p>Kerala tea shop, vertical ad. Several small everyday actions in one shot (pouring tea, reading the paper, a cat) and a slow vertical pan through layers.</p><a href="https://pin.it/28Xl5060X">pin.it/28Xl5060X</a></div></div>
+    <div class="ref"><img src="refs/ref2.jpg" alt="Saturated pink and purple Indian market motion design"><div><span class="tag">Ref 2 · technique</span><p>Market "Life" piece. Match cuts and liquid wipes between scenes, a character flying through the frame. Colours are too neon for history, the transitions are not.</p><a href="https://pin.it/3McrSdGtH">pin.it/3McrSdGtH</a></div></div>
+    <div class="ref"><img src="refs/ref3.jpg" alt="Old couple in bed, their younger selves dance as shadows on the wall"><div><span class="tag">Ref 3 · technique</span><p>Shadows tell a second story: the old couple's younger selves dance on the wall. I used this idea for the giant firelight shadow in mockup 3.</p><a href="https://pin.it/4vGBLvUmN">pin.it/4vGBLvUmN</a></div></div>
+    <div class="ref main"><img src="refs/ref4.jpg" alt="Father with a moustache in bed, blue moonlight"><div><span class="tag">Ref 4 · main look</span><p>Night, cool blue room, god rays through the window. The camera drifts around him while he turns his head. Copied in mockup 2.</p><a href="https://pin.it/48M9R4bvE">pin.it/48M9R4bvE</a></div></div>
+    <div class="ref main"><img src="refs/ref5.jpg" alt="Father lying in bed, warm morning light, sad"><div><span class="tag">Ref 5 · main look</span><p>Same father in warm morning light. Very small acting: eyes drop, lids get heavy, the head sinks. Proof that slow is fine if something is always moving.</p><a href="https://pin.it/4xN7nM195">pin.it/4xN7nM195</a></div></div>
+    <div class="ref main"><img src="refs/ref6.jpg" alt="Mother in red dupatta crying, a hand reaches to comfort her"><div><span class="tag">Ref 6 · main look</span><p>Close-up emotion: worry, tears that run, then a small smile. Warm doorway light on one side, teal dark on the other. Copied in mockup 4.</p><a href="https://pin.it/1oWHUkyBz">pin.it/1oWHUkyBz</a></div></div>
+    <div class="ref main"><img src="refs/ref7.jpg" alt="Boy stirring a pot over a fire in a dark hut"><div><span class="tag">Ref 7 · main look</span><p>Firelight on a teal wall, rising smoke, a push-in until he looks up and smiles. Copied in mockup 3.</p><a href="https://pin.it/17uJZ20o2">pin.it/17uJZ20o2</a></div></div>
+    <div class="ref main"><img src="refs/ref8.jpg" alt="Boy running with a letter past thatched huts at golden hour"><div><span class="tag">Ref 8 · main look</span><p>Golden haze, palms as soft silhouettes, a tracking camera beside a happy runner. Copied in mockup 1.</p><a href="https://pin.it/2KgCQlnYC">pin.it/2KgCQlnYC</a></div></div>
+    <div class="ref main"><img src="refs/ref9.jpg" alt="Young man with a backpack skipping along a path between maize fields"><div><span class="tag">Ref 9 · main look</span><p>Daylight version: big clouds, birds crossing, maize swaying. Gave me the young man Arjun and the walk-to-skip energy.</p><a href="https://pin.it/5Z0VLwUvm">pin.it/5Z0VLwUvm</a></div></div>
+  </div>
+
+  <h2>Character sheet (main look)</h2>
+  <p>A new cast built for this look, with its own rig. It keeps the rule from the current 2D rig: knees bend forward only, elbows bend back only, and every joint bends in a soft curve, never a corner.</p>
+  <figure>
+    <div class="screen"><canvas id="cv-cast-front" width="1280" height="720" aria-label="The five characters facing the camera, side by side with head-height guide lines"></canvas><button type="button">Pause</button></div>
+    <figcaption><b>Front view.</b> The main cast facing the camera: detailed four-finger hands and a proper nose in every view.</figcaption>
+  </figure>
+  <figure>
+    <div class="screen"><canvas id="cv-cast" width="1280" height="720" aria-label="Five characters standing side by side with head-height guide lines"></canvas><button type="button">Pause</button></div>
+    <figcaption><b>Cast lineup.</b> Dashed lines are one head tall. All five breathe, shift weight and blink on their own timing, so a crowd never blinks together.</figcaption>
+  </figure>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Character</th><th>Heads tall</th><th>Build</th><th>Look</th></tr></thead>
+    <tbody>
+      <tr><td>Raju, village boy, 10</td><td class="num">4.5</td><td>Short legs, round head, big eyes</td><td>Curly mop, cream kurta, rolled blue pants, barefoot</td></tr>
+      <tr><td>Arjun, young man, 20</td><td class="num">6.0</td><td>Long legs, slim</td><td>Neat side-swept hair, white shirt, jeans, leather satchel</td></tr>
+      <tr><td>Lakshmi, mother, 40</td><td class="num">5.8</td><td>Soft shoulders, long kurta</td><td>Maroon dupatta with gold edge over the head, earrings, bangles</td></tr>
+      <tr><td>Gopal, father, 45</td><td class="num">6.0</td><td>Broad, heavier jaw</td><td>Thick moustache, swept hair, white shirt and mundu</td></tr>
+      <tr><td>Dada, grandfather, 75</td><td class="num">5.7</td><td>Stooped 8 degrees</td><td>White side hair, beard, round glasses, beige kurta</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Faces</h3>
+  <figure>
+    <div class="screen"><canvas id="cv-faces" width="1280" height="720" aria-label="Eight expressions of the village boy"></canvas><button type="button">Pause</button></div>
+    <figcaption><b>Expression sheet.</b> The brows do most of the acting. Worry lifts the inner ends, anger drops them, joy squeezes the lower lids up.</figcaption>
+  </figure>
+  <div class="rules">
+    <ul>
+      <li>Default view is three-quarter. The far eye is narrower and sits close to the profile line.</li>
+      <li>Eyes are large almonds: brown iris, one big highlight and one small bounce highlight, a heavy upper lid line with a small flick at the outer corner.</li>
+      <li>Brows are thick, dark, tapered strokes.</li>
+    </ul>
+    <ul>
+      <li>The nose is prominent and rounded, with a nostril. Smaller for women and children.</li>
+      <li>The mouth is a small curve with a shaded lower lip. Laugh lines, forehead lines and jowls mark age.</li>
+      <li>Warm blush on the cheek and nose. Hair throws a soft shadow on the forehead.</li>
+    </ul>
+  </div>
+
+  <h2>Style guide</h2>
+  <h3>Light and shading recipe</h3>
+  <figure>
+    <div class="screen"><canvas id="cv-recipe" width="1280" height="720" aria-label="The same head built up in five shading passes while the light moves"></canvas><button type="button">Pause</button></div>
+    <figcaption><b>Five passes for every part</b> (head, hair, arm, shirt, pot). The light swings left and right so you can see the shadow crescent and the rim follow it. This is how shadows stay dynamic in every scene.</figcaption>
+  </figure>
+  <div class="rules">
+    <ul>
+      <li><b>Three tones per shape:</b> lit tone, a shadow crescent on the side away from the light, a thin bright rim on the side facing it.</li>
+      <li><b>Shadows take the room's colour:</b> blue at night, teal in a firelit hut, warm brown at golden hour. Never grey.</li>
+      <li><b>Soft edge on faces,</b> hard edge on clothes and props.</li>
+    </ul>
+    <ul>
+      <li><b>Line:</b> thin, a darker version of the fill colour, about 2 px at 1080p. Never pure black.</li>
+      <li><b>Character and background share one light.</b> If the window is on the right, the rim is on the right of every face.</li>
+      <li><b>Contact shadows</b> under every foot and object, so nothing floats.</li>
+    </ul>
+  </div>
+
+  <h3>Backgrounds</h3>
+  <div class="rules">
+    <ul>
+      <li>Painted in 4 to 6 depth layers: sky, far hills, middle (huts, palms), ground, foreground framing.</li>
+      <li>Air haze: the further a layer is, the lighter and closer to the sky colour it gets.</li>
+      <li>Texture from many soft brush dabs and strokes (straw, wood grain, plaster), never flat fills.</li>
+    </ul>
+    <ul>
+      <li>The light source is in the shot or clearly implied, with god rays and floating dust in it.</li>
+      <li>Dark, slightly blurred foreground leaves or objects frame the bottom corners.</li>
+      <li>Characters stand on the ground plane with a contact shadow and never cross a prop.</li>
+    </ul>
+  </div>
+
+  <h3>Colour moods</h3>
+  <div class="moods">
+    <div class="mood"><h4>Golden hour</h4><div class="sw"><span style="background:#93c2b6"></span><span style="background:#f2d48c"></span><span style="background:#fffdf2"></span><span style="background:#d8a548"></span><span style="background:#7a4a30"></span><span style="background:#ffe6a8"></span></div><p>Mint sky to honey haze. Warm brown shadows, cream rim.</p></div>
+    <div class="mood"><h4>Moonlit room</h4><div class="sw"><span style="background:#2f4c60"></span><span style="background:#bfe3f0"></span><span style="background:#3f7470"></span><span style="background:#6f93a6"></span><span style="background:#2f4f6e"></span><span style="background:#ffb35a"></span></div><p>Blue-green room, one small warm lamp as the accent.</p></div>
+    <div class="mood"><h4>Firelight hut</h4><div class="sw"><span style="background:#2b4d4a"></span><span style="background:#fff0a0"></span><span style="background:#ffa63a"></span><span style="background:#ff5a1a"></span><span style="background:#20474c"></span><span style="background:#ffc36b"></span></div><p>Teal walls against orange flame. Light flickers on faces.</p></div>
+    <div class="mood"><h4>Doorway</h4><div class="sw"><span style="background:#1f302f"></span><span style="background:#3a2a20"></span><span style="background:#ffaa5a"></span><span style="background:#8f2f22"></span><span style="background:#2a3f3d"></span><span style="background:#e2a64a"></span></div><p>Dark teal interior, warm light spilling from one side.</p></div>
+    <div class="mood"><h4>Skin</h4><div class="sw"><span style="background:#9a5e3e"></span><span style="background:#5e3424"></span><span style="background:#b77a50"></span><span style="background:#7c4631"></span><span style="background:#c98f62"></span><span style="background:#f2b783"></span></div><p>Three warm browns, each with its own shadow and rim.</p></div>
+  </div>
+
+  <h2>Animation guide</h2>
+  <figure>
+    <div class="screen"><canvas id="cv-motion" width="1280" height="720" aria-label="Run cycle with onion skin and four key poses"></canvas><button type="button">Pause</button></div>
+    <figcaption><b>Run cycle.</b> Contact, down, passing and up. The body bobs twice per cycle and leans 9 degrees into the run. Arms swing against the legs.</figcaption>
+  </figure>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Motion</th><th>Timing</th><th>Rule</th></tr></thead>
+    <tbody>
+      <tr><td>Breathing</td><td class="num">every 3–5 s</td><td>Chest, shoulders and blanket rise. Never stops, even in a hold.</td></tr>
+      <tr><td>Blink</td><td class="num">every 3–4 s, 5 frames</td><td>Each character on its own timer. Blink on a head turn to sell it.</td></tr>
+      <tr><td>Eyes lead</td><td class="num">head follows 6–10 frames later</td><td>Eyes dart first, then the head turns, then the brows settle.</td></tr>
+      <tr><td>Run</td><td class="num">0.9–1.5 cycles/s</td><td>Bob at double frequency, dust on each foot strike, hair and paper trail behind.</td></tr>
+      <tr><td>Camera</td><td class="num">3–5% push per shot</td><td>Slow push-in or a sideways track. Layers move at about 0.05, 0.3, 1 and 1.5 times the ground speed.</td></tr>
+      <tr><td>Ambient</td><td class="num">always on</td><td>Smoke, dust, leaves, fire flicker, birds. Something moves in every frame.</td></tr>
+      <tr><td>Follow-through</td><td class="num">2–4 frames behind</td><td>Dupatta edge, earrings, hair curls, paper corners swing after the body stops.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Mockups</h2>
+  <figure>
+    <div class="screen"><canvas id="cv-moon" width="1280" height="720" aria-label="Animated mockup: a father lies awake at night in moonlight, looks toward the window and closes his eyes"></canvas><button type="button">Pause</button></div>
+    <figcaption><b>Mockup 2 · Moonlit room</b> (ref 4). He stares up, his eyes dart to the window, the head follows, the brows knit, he closes his eyes and breathes out. Leaf shadows sway in the window light and dust drifts through the beam.</figcaption>
+  </figure>
+  <figure>
+    <div class="screen"><canvas id="cv-fire" width="1280" height="720" aria-label="Animated mockup: a boy stirs a pot over a fire in a hut, his shadow flickers on the wall, he looks up and smiles"></canvas><button type="button">Pause</button></div>
+    <figcaption><b>Mockup 3 · Firelight hut</b> (refs 7 and 3). The flame drives everything: wall glow, the warm rim on his face, and a giant shadow on the back wall that flickers with it. Steam curls up from the pot. At 5 seconds he looks up and smiles.</figcaption>
+  </figure>
+  <figure>
+    <div class="screen"><canvas id="cv-face" width="1280" height="720" aria-label="Animated mockup: close-up of a mother whose worry turns to tears, then a small smile"></canvas><button type="button">Pause</button></div>
+    <figcaption><b>Mockup 4 · Close-up acting</b> (ref 6). Worry, eyes fill with tears, she squeezes them shut and a tear runs, she breathes, then looks up into the light with a small smile.</figcaption>
+  </figure>
+
+  <h2>What to do, what not to do</h2>
+  <p class="muted">Each rule has a code so you can correct it in one line, for example "X4 is fine, drop it" or "D7 needs more".</p>
+  <div class="dd">
+    <div class="do"><h3>Do</h3><ol>
+      <li><span>D1</span><div>Give every shot one visible light source and light the characters with it.</div></li>
+      <li><span>D2</span><div>Tint shadows with the room's colour (blue, teal, warm brown).</div></li>
+      <li><span>D3</span><div>Add a thin rim on the side facing the light, on faces, hair and clothes.</div></li>
+      <li><span>D4</span><div>Paint backgrounds in depth layers with haze, brush texture and dust in the light.</div></li>
+      <li><span>D5</span><div>Keep something moving in every frame: breath, blinks, smoke, leaves, fire.</div></li>
+      <li><span>D6</span><div>Let the eyes lead, then the head, then the brows.</div></li>
+      <li><span>D7</span><div>Use natural proportions: about 4.5 heads for children, about 6 for adults.</div></li>
+      <li><span>D8</span><div>Bend knees forward and elbows back, always as a soft curve.</div></li>
+      <li><span>D9</span><div>Put a contact shadow under every foot and prop.</div></li>
+      <li><span>D10</span><div>Use cast shadows to tell part of the story (ref 3).</div></li>
+    </ol></div>
+    <div class="dont"><h3>Don't</h3><ol>
+      <li><span>X1</span><div>Pure black outlines or thick cartoon strokes.</div></li>
+      <li><span>X2</span><div>Grey shadows or one flat colour with no light direction.</div></li>
+      <li><span>X3</span><div>Flat backgrounds, or a background lit from a different side than the character.</div></li>
+      <li><span>X4</span><div>Neon pink and purple palettes like ref 2 for history stories.</div></li>
+      <li><span>X5</span><div>Frozen holds where nothing moves.</div></li>
+      <li><span>X6</span><div>Joints that bend backwards or bend at a sharp corner.</div></li>
+      <li><span>X7</span><div>Characters floating, sliding or passing through props.</div></li>
+      <li><span>X8</span><div>Chibi heads or toy-like bodies; this look is closer to real people.</div></li>
+      <li><span>X9</span><div>Everyone blinking or breathing in sync.</div></li>
+      <li><span>X10</span><div>Fast, jerky camera moves; this look is calm.</div></li>
+    </ol></div>
+  </div>
+
+  <h2>Help me learn</h2>
+  <div class="ask">
+    <p><b>Reply in the thread with whatever is off.</b> Short notes are perfect ("nose smaller", "D5 yes", "mother's dupatta wrong"). These are the questions that would teach me the most:</p>
+    <ol>
+      <li>Is refs 4 to 9 the look you want, with refs 1 to 3 only lending techniques (layers, transitions, shadow stories)?</li>
+      <li>Should this become a fourth 2D style next to Leo, Gumball and Alium, for example for stories set in India or in villages?</li>
+      <li>Faces: are the eyes, brows and nose the right size and shape? Should the nose be smaller?</li>
+      <li>Lines: keep the thin brown outline, or go almost lineless like parts of ref 8?</li>
+      <li>The references look like AI image-to-video. My mockups are drawn by code with a rig, which keeps characters consistent but is less painterly. Do you want me to also test the AI keyframe route side by side? That spends generation credits, so I will wait for your yes.</li>
+    </ol>
+  </div>
+
+  <footer>Built from a new rig (engine.js, cast.js, scenes.js) drawn live in your browser. Saved to GitHub under 2d-style-study/village-painterly and to Drive under AI / 2D Style Study / Village Painterly.</footer>
+</div>
+
+<script src="engine.js"></script>
+<script src="cast.js"></script>
+<script src="scenes.js"></script>
+<script>
+(function () {
+  const map = { 'cv-run': 'run', 'cv-cast-front': 'cast-front', 'cv-cast': 'cast', 'cv-faces': 'faces', 'cv-recipe': 'recipe', 'cv-motion': 'motion', 'cv-moon': 'moon', 'cv-fire': 'fire', 'cv-face': 'face' };
+  const start = () => {
+    for (const [id, name] of Object.entries(map)) {
+      const cv = document.getElementById(id); if (!cv) continue;
+      const sc = S.SCENES[name];
+      const P = S.player(cv, (c, t) => sc.draw(c, t), { dur: sc.dur, start: name === 'face' ? 0 : .4 });
+      const btn = cv.parentElement.querySelector('button');
+      btn.addEventListener('click', () => { P.playing = !P.playing; btn.textContent = P.playing ? 'Pause' : 'Play'; });
+    }
+    S.loop();
+  };
+  const fontsReady = document.fonts && document.fonts.ready ? Promise.race([document.fonts.ready, new Promise(r => setTimeout(r, 1500))]) : Promise.resolve();
+  fontsReady.then(start);
+})();
+</script>

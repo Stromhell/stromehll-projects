@@ -1,0 +1,83 @@
+const PX = S.mgPX;
+const ALL = [[PL.steppe, 0, 180], [PX(90, 44), 0, 170], [PL.beijing, 0, 120], [PX(108, 34), 0, 110], [PL.otrar, 0, 150], [PL.samarkand, 0, 150], [PL.nishapur, 0, 130], [PL.sarai, 0, 150], [PL.kiev, 0, 120], [PX(50, 52), 0, 140], [PL.tabriz, 0, 120], [PL.baghdad, 0, 110], [PX(41, 37), 0, 90]];
+const SYR = [[PL.aleppo, 0, 60, .5], [PL.damascus, .4, 55, .9]];
+const gold = (c, a = .55) => { c.fillStyle = S.rgba('#e8b830', a); c.beginPath(); c.arc(PL.cairo[0] - 10, PL.cairo[1] + 40, 80, 0, TAU); c.fill(); };
+const platform = (c, x, y) => { c.fillStyle = '#6a4a2a'; c.fillRect(x - 70, y - 30, 140, 30); c.fillStyle = '#4a3018'; c.fillRect(x - 70, y - 30, 140, 6); };
+
+window.SHOTS = [
+  // 4.01 MED: the map; grey sweeps into Syria, Aleppo and Damascus fall; Egypt stays gold
+  { set: 'np_parch', cam: { z: [1.6, 1.7], x: [330, 330], y: [330, 340], ease: E.io }, bed: [['drone', .2]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tA = at(Sh, 'aleppo', 2); Sh.tD = at(Sh, 'damascus', 3.5); Sh.tE = at(Sh, 'egypt', Sh.dur - 1.5); },
+    draw: (c, lt, u, Sh) => { const q = seg(lt, Sh.tA - .3, Sh.tD + 1.2);
+      S.mgAsia(c, { fill: cc => { S.mgTide(cc, 1, ALL); S.mgTide(cc, q, SYR); gold(cc, .3 + .3 * seg(lt, Sh.tE, Sh.tE + .6)); } });
+      S.mgDot(c, PL.aleppo, 'ALEPPO', seg(lt, Sh.tA - .3, Sh.tA), lt < Sh.tA + .6 ? 1 : 0, 20, -14, -10); S.mgDot(c, PL.damascus, 'DAMASCUS', seg(lt, Sh.tD - .3, Sh.tD), lt < Sh.tD + .6 ? 1 : 0, 20, 4, 70);
+      S.mgDot(c, PL.cairo, 'CAIRO', 1, 1, 20, 30); S.mgLabel(c, 'EGYPT', PL.cairo[0] - 10, PL.cairo[1] + 70, seg(lt, Sh.tE, Sh.tE + .4), 30, '#8a5a10'); },
+    over: [(c, lt) => K.dateTag(c, 'SYRIA · 1260', lt, { at: .4 })],
+    sfx: [[.2, 'drone', .2], ['aleppo', 'drum', .4], ['damascus', 'drum', .4], ['egypt', 'chime', .4]] },
+
+  // 4.02 MED: a slave market, a boy in a fur cap being sold; then young recruits training with bows on horseback
+  { set: 'market', cam: (lt, u, Sh) => lt < Sh.tT ? { z: [lerp(1.1, 1.18, seg(lt, 0, Sh.tT))], x: [640], y: [440] } : { z: [1.0], x: [640], y: [400] }, bed: [['crowd_loop', .2]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tB = at(Sh, 'bought', 2); Sh.tT = at(Sh, 'trained', 5); },
+    draw: (c, lt, u, Sh) => {
+      if (lt < Sh.tT) { const L = SUN(lt); platform(c, 600, 660);
+        fig(c, C.BOY, 600, 630, 24, pose(lt, 0, { face: 1, shN: 4, elN: 20, shF: -4, elF: 20 }), lt, 0, L, { worry: 1, look: [.2, .4] });
+        fig(c, C.BOY2, 480, 680, 24, pose(lt, 1, { face: 1, shN: 4, elN: 20 }), lt, 1, L, { worry: 1, look: [.4, .4] });
+        fig(c, C.SLAVER, 740, 690, 34, pose(lt, 2, { face: -1, shN: 60, elN: 40 }), lt, 2, L, { look: [-.5, -.2] });
+        fig(c, C.BUYER, 1000, 690, 34, pose(lt, 3, { face: -1, shN: lt > Sh.tB ? 80 : 10, elN: 30 }), lt, 3, L, { look: [-.6, -.2] }); if (lt > Sh.tB) S.npCoins ? 0 : 0; return; }
+      VP.drawSet(c, 'mg_square'); const L = SUN(lt);
+      for (let i = 0; i < 3; i++) { const x = -200 + ((lt * 160 + i * 560) % 1700); ride(c, C.RECRUIT, x, 640 + (i % 2) * 30, 28, i % 2 ? BAY : GREYH, lt, lt * 2 + i * .3, 1.4, L, { shN: 90, elN: 10, shF: 70, elF: 80, holdN: S.mgBow(c) }, { look: [1, 0] }, 1); }
+      for (let k = 0; k < 3; k++) { c.fillStyle = '#e8d8b0'; c.beginPath(); c.arc(1180, 520 + k * 40, 16 - k * 4, 0, TAU); c.fill(); c.strokeStyle = '#a82a22'; c.lineWidth = 4; c.stroke(); }
+      c.fillStyle = '#5a3a1e'; c.fillRect(1176, 520, 8, 140);
+      S.mgDust(c, lt, 0, 680, 1280, .2); },
+    over: [(c, lt, u, Sh) => K.card(c, 'THE MAMLUKS', lt, { at: .6, x: 480, y: 150, px: 56, rot: -2 }), (c, lt, u, Sh) => K.card(c, 'BOUGHT · TRAINED · FREED', lt, { at: Sh.tT + .3, x: 1360, y: 150, px: 44, rot: 2 })],
+    sfx: [[.2, 'crowd_loop', .2], ['bought', 'coins', .35], ['trained', 'hooves_loop', .4], ['freed', 'swish', .3]] },
+
+  // 4.03 MED: a tall young officer with one pale clouded eye checks a horse's saddle among Mamluk soldiers
+  { set: 'mg_square', cam: (lt, u, Sh) => ({ z: [lerp(1.05, lt > Sh.tE ? 1.9 : 1.12, E.io(seg(lt, Sh.tE, Sh.tE + 1.4)))], x: [lerp(640, 720, E.io(seg(lt, Sh.tE, Sh.tE + 1.4)))], y: [lerp(430, 420, E.io(seg(lt, Sh.tE, Sh.tE + 1.4)))] }), bed: [['wind_loop', .15]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tK = at(Sh, 'kipchak', 4.5); Sh.tE = at(Sh, 'blue-white', 6); Sh.tN = at(Sh, 'baybars', Sh.dur - 1.5); },
+    draw: (c, lt, u, Sh) => { const L = SUN(lt);
+      VP.horse(c, 560, 640, 150, { face: 1, walk: 0, t: lt, col: BAY, tack: { cloth: ['#c8a040', '#7a5a1a'], trim: '#a82a22' } });
+      fig(c, C.BAYBARSB, 760, 650, 36, pose(lt, 0, { face: -1, shN: 80, elN: 40, lean: 4 }), lt, 0, L, { look: [-.8, .2] });
+      fig(c, C.MAMLUK, 980, 650, 32, pose(lt, 1, { face: -1, holdN: S.mgSpear(c, -1.45) }), lt, 1, L, { look: [-.6, 0] });
+      fig(c, C.MAMLUK3, 1120, 660, 32, pose(lt, 2, { face: -1, shN: 20, elN: 60 }), lt, 2, L, { look: [-.6, 0] });
+      fig(c, C.MAMLUK2, 260, 660, 32, pose(lt, 3, { face: 1, holdN: S.mgSpear(c, -1.45) }), lt, 3, L, { look: [.6, 0] }); },
+    over: [(c, lt, u, Sh) => K.card(c, 'KIPCHAK TURK', lt, { at: Sh.tK, x: 480, y: 150, px: 46, rot: -2, until: Sh.tE + .5 }), (c, lt, u, Sh) => K.card(c, 'BAYBARS', lt, { at: Sh.tN, x: 1360, y: 160, px: 64, rot: 2 })],
+    sfx: [[.2, 'wind_loop', .15], [.6, 'clank', .3], ['blue-white', 'chime', .35], ['baybars', 'drum', .45]] },
+
+  // 4.04 MED: Qutuz reads a scroll; then Cairo's great gate in shadow with a golden tablet on a hook
+  { set: 'mg_iwan', cam: (lt, u, Sh) => lt < Sh.tX ? { z: [lerp(1.1, 1.2, seg(lt, 0, Sh.tX))], x: [640], y: [450] } : { z: [lerp(1.2, 1.32, seg(lt, Sh.tX, Sh.dur))], x: [640], y: [340] }, bed: [['drone', .2]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tL = at(Sh, 'letter', 4); Sh.tX = at(Sh, 'executed', 6.5); },
+    draw: (c, lt, u, Sh) => {
+      if (lt < Sh.tX) { const L = SUN(lt), r = seg(lt, Sh.tL - 1, Sh.tL);
+        fig(c, C.QUTUZR, 640, 660, 38, pose(lt, 0, { face: 1, shN: 70, elN: 80, shF: 66, elF: 80 }), lt, 0, L, { look: [.4, .5], angry: lt > Sh.tL ? 1 : 0 }); S.mgScroll(c, 700, 520, .9, .3 + .7 * r, 0);
+        fig(c, C.ENVOY, 1040, 670, 34, pose(lt, 1, { face: -1, shN: 30, elN: 60 }), lt, 1, L, { look: [-.7, -.1] });
+        fig(c, C.MAMLUK, 300, 670, 34, pose(lt, 2, { face: 1, holdN: S.mgSpear(c, -1.45) }), lt, 2, L, { look: [.6, 0] }); return; }
+      VP.drawSet(c, 'mg_bab'); c.fillStyle = S.rgba('#1a1028', .45); c.fillRect(0, 0, 1280, 720); c.strokeStyle = '#3a3a3a'; c.lineWidth = 4; c.beginPath(); c.moveTo(640, 236); c.lineTo(640, 262); c.stroke();
+      S.mgPaiza(c, 640, 340, .9, Math.sin(lt * 1.3) * .08, .2 + .2 * Math.sin(lt * 2)); },
+    over: [(c, lt) => K.card(c, 'SULTAN QUTUZ', lt, { at: .6, x: 480, y: 150, px: 54, rot: -2 }), (c, lt, u, Sh) => K.card(c, 'BAB ZUWEILA · CAIRO', lt, { at: Sh.tX + .4, x: 1360, y: 160, px: 44, rot: 2 })],
+    sfx: [[.2, 'drone', .2], ['letter', 'paper', .4], ['executed', 'gate_slam', .45], ['gate', 'wind_loop', .3]] },
+
+  // 4.05 MED: Qutuz on the palace steps watches his army assemble in a sandy square
+  { set: 'mg_square', cam: { z: [1.05, 1.12], x: [600, 640], y: [420, 420], ease: E.io }, bed: [['march_loop', .3]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; },
+    draw: (c, lt, u, Sh) => { const L = SUN(lt);
+      fig(c, C.QUTUZ, 160, 476, 30, pose(lt, 0, { face: 1, shN: 20, elN: 60 }), lt, 0, L, { look: [.8, .2] });
+      for (let r = 0; r < 2; r++) for (let i = 0; i < 6; i++) { const x0 = 480 + i * 120 + r * 50, y = 600 + r * 70, w = seg(lt, i * .15 + r * .3, i * .15 + r * .3 + 1.6), x = lerp(1400 + i * 40, x0, E.out(w));
+        fig(c, [C.MAMLUK, C.MAMLUK2, C.MAMLUK3][(i + r) % 3], x, y, 26 + r * 3, w < 1 ? walk(lt, i + r, { face: -1, holdN: S.mgSpear(c, -1.45) }) : pose(lt, i + r, { face: -1, holdN: S.mgSpear(c, -1.45) }), lt, i + r, L, { look: [-.7, 0] }); }
+      S.mgBanner(c, 470, 640, 170, lt); S.mgBanner(c, 1150, 600, 170, lt + 1); },
+    over: [],
+    sfx: [[.2, 'march_loop', .3], [.4, 'drum', .35]] },
+
+  // 4.06 MED: a messenger gallops into Hulagu's camp; Hulagu turns the army east; Kitbuqa watches them leave
+  { set: 'mg_camp', cam: { z: [1.0, 1.06], x: [640, 640], y: [400, 410], ease: E.io }, bed: [['wind_loop', .2]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tM = at(Sh, 'died', 4); Sh.tH = at(Sh, 'took most', 6.5); Sh.tK = at(Sh, 'kitbuqa', Sh.dur - 4); },
+    draw: (c, lt, u, Sh) => { const L = SUN(lt), mq = seg(lt, .2, Sh.tM), go = seg(lt, Sh.tH, Sh.dur);
+      ride(c, C.ENVOY2, lerp(-200, 545, E.out(mq)), 650, 30, BAY, lt, lt * 2.4, mq < 1 ? 1.6 : 0, L, { shN: 40, elN: 40, lean: 12 }, { look: [.8, 0], worry: 1 }, 1);
+      fig(c, C.HULAGUH, 760, 660, 34, pose(lt, 0, { face: lt > Sh.tH ? 1 : -1, shN: lt > Sh.tH ? 110 : 20, elN: 20 }), lt, 0, L, { look: [lt > Sh.tH ? .8 : -.8, -.1], worry: lt > Sh.tM && lt < Sh.tH ? 1 : 0 });
+      for (let i = 0; i < 5; i++) { const x = 880 + i * 150 + go * 900 * (1 + i * .1); if (x > 1400) continue; ride(c, [C.MONGOL, C.MONGOL2, C.MONGOL3, C.MONGOL4][i % 4], x, 560 + (i % 2) * 20, 22, i % 2 ? BAY : GREYH, lt, lt * 1.4 + i * .3, go > 0 ? 1 : 0, L, { shN: 20, elN: 60 }, { look: [.7, 0] }, 1); }
+      fig(c, C.KITBUQA, 190, 670, 36, pose(lt, 2, { face: 1, shN: 20, elN: 60 }), lt, 2, L, { look: [.8, -.1] }); S.mgTug(c, 95, 670, 150, lt, '#1a1a1e'); },
+    over: [(c, lt, u, Sh) => K.card(c, 'MÖNGKE DIES · 1259', lt, { at: Sh.tM - .4, x: 1360, y: 150, px: 46, rot: 2, until: Sh.tK }), (c, lt, u, Sh) => K.card(c, 'KITBUQA · ~10–20,000 MEN', lt, { at: Sh.tK, x: 600, y: 150, px: 48, rot: -2 })],
+    sfx: [[.2, 'wind_loop', .2], [.3, 'hooves', .4], ['died', 'drum', .4], ['took most', 'horn', .45], ['kitbuqa', 'drone', .3]] },
+];
+VP.build(); K.boot();
+</script></body></html>
