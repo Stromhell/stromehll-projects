@@ -147,15 +147,25 @@ export const shots = {
   '6.4': async k => {
     const { scene, camera } = k; k.noAutoOverlay = true;
     // bright moon and a strong blue fill so the water, the boats and the crocodile read from the first frame
-    await real.env(k, 'kloofendal_48d_partly_cloudy_puresky', { sun: [-60, 40, -80], sunI: 3.2, sunColor: 0xb8c8ff, shadowSize: 30, bg: 0x0a1020, envI: .4, exposure: 1.5 });
-    scene.add(new THREE.HemisphereLight(0x8090c0, 0x1a2030, 2.2));
-    const rim = new THREE.SpotLight(0xb8c8ff, 60, 14, .35, .6, 1.2); rim.position.set(-3, 3, -2); rim.target.position.set(1.2, 0, 4); scene.add(rim, rim.target);
-    const fill = new THREE.PointLight(0x90a8e0, 25, 14, 1.6); fill.position.set(3, 2.5, 7); scene.add(fill);
+    await real.env(k, 'kloofendal_48d_partly_cloudy_puresky', { sun: [-60, 40, -80], sunI: .5, sunColor: 0xb8c8ff, shadowSize: 30, bg: 0x0a1020, envI: .3, exposure: 1.25 });
+    scene.add(new THREE.HemisphereLight(0x8898c8, 0x202a3a, 4.2));
+    const rim = new THREE.SpotLight(0xb8c8ff, 16, 14, .35, .6, 1.2); rim.position.set(-3, 3, -2); rim.target.position.set(1.2, 0, 4); scene.add(rim, rim.target);
+    const fill = new THREE.PointLight(0x90a8e0, 5, 14, 1.6); fill.position.set(3, 2.5, 7); scene.add(fill);
     const moon = real.m(new THREE.SphereGeometry(9, 24, 16), new THREE.MeshBasicMaterial({ color: 0xf4f6ff, fog: false }), { pos: [-180, 120, -400], cast: false }); scene.add(moon);
-    const glow = real.m(new THREE.SphereGeometry(18, 24, 16), new THREE.MeshBasicMaterial({ color: 0x8090c0, transparent: true, opacity: .25, depthWrite: false, fog: false }), { pos: [-180, 120, -400], cast: false }); scene.add(glow);
+    const glow = real.m(new THREE.SphereGeometry(18, 24, 16), new THREE.MeshBasicMaterial({ color: 0x8090c0, transparent: true, opacity: .1, depthWrite: false, fog: false }), { pos: [-180, 120, -400], cast: false }); scene.add(glow);
     scene.fog = new THREE.FogExp2(0x0a1020, .006);
     const wg = new THREE.PlaneGeometry(400, 400, 120, 120); wg.rotateX(-P / 2);
-    const water = real.m(wg, real.std(0x16242e, { rough: .1, metal: .6 }), { cast: false }); scene.add(water);
+    const water = real.m(wg, real.std(0x1a2838, { rough: .92, metal: 0 }), { cast: false }); scene.add(water);   // matte water: the dim 'moon' sun gives only a faint sheen
+    // the moon path is drawn explicitly: a narrow additive strip of broken glitter from under the moon to the foreground
+    // texture v=1 is the near end: sparse short flecks there, a denser brighter band toward the horizon
+    const gt = real.canvasTex(64, 4096, gx => { const r = rnd(7); for (let y = 0; y < 4096; y++) { const l = y / 4096, near = Math.min(1, l * 4);   // l = 0 at the lens, 1 under the moon
+      const cw = 8 + l * 24; gx.fillStyle = `rgba(190,205,255,${(near * (.1 + .45 * l)).toFixed(3)})`; gx.fillRect(32 - cw / 2 + (r() - .5) * 6, y, cw, 1);           // soft continuous core, fading out near the lens
+      if (r() < .08 + l * .7) { const w = 4 + r() * 8 + l * 26, h = 1 + Math.floor(r() * 3); gx.fillStyle = `rgba(222,230,255,${((.2 + .8 * near) * (.4 + r() * .6)).toFixed(3)})`; gx.fillRect(32 - w / 2 + (r() - .5) * 16, y, w, h); } } });   // broken glitter: sparse glints near, a dense band far out
+    // a trapezoid: .9 m wide at the lens, ~20 m wide under the moon, so on screen it stays a slim path all the way out
+    const gl = 420, gg = new THREE.PlaneGeometry(.9, gl, 1, 40); gg.rotateX(-P / 2); gg.translate(0, 0, gl / 2);
+    { const pa = gg.attributes.position; for (let i = 0; i < pa.count; i++) pa.setX(i, pa.getX(i) * (1 + pa.getZ(i) / gl * 22)); pa.needsUpdate = true; }
+    const glit = real.m(gg, new THREE.MeshBasicMaterial({ map: gt, color: 0xd0dcff, transparent: true, opacity: 1, blending: THREE.AdditiveBlending, depthWrite: false, fog: false }), { pos: [1.5, .11, 4], cast: false });
+    glit.lookAt(-180, .11, -400); scene.add(glit);
     const base = wg.attributes.position.array.slice();
     // open boats: planked hull with a gunwale rail, thwarts, an outboard on the transom and seated men in dark kit
     const boats = [0, 1, 2].map(i => { const b = new THREE.Group(); const hull = real.std(0x2a3034, { rough: .6 }), rail = real.std(0x4a4036, { rough: .7 }), kit = real.std(0x14181a, { rough: .9 }), skinM = real.std(0x7a6048, { rough: .8 });
@@ -168,14 +178,14 @@ export const shots = {
       for (let j = 0; j < 5; j++) { const x = (j % 2 - .5) * .7, z = -1.5 + j * .62; b.add(real.rbox(.42, .7, .36, .1, kit, { pos: [x, .72, z] })); b.add(real.m(new THREE.SphereGeometry(.13, 12, 10), skinM, { pos: [x, 1.18, z] })); b.add(real.rbox(.3, .12, .3, .05, kit, { pos: [x, 1.25, z] })); }
       b.position.set(-11 + i * 6.5, 0, -30 - i * 6); b.rotation.y = .5; scene.add(b); return b; });
     // crocodile: long snout, brow ridges with eyes, nostril bumps, a line of scutes along the back and a tapering tail
-    const croc = new THREE.Group(); const skin = real.std(0x2a3220, { rough: .85 }), belly = real.std(0x3a4028, { rough: .8 });
+    const croc = new THREE.Group(); const skin = real.std(0x26381a, { rough: .97, metal: 0 }), belly = real.std(0x344622, { rough: .95, metal: 0 }), back = real.std(0x1a2610, { rough: 1, metal: 0 });
     const head = real.m(new THREE.SphereGeometry(.5, 24, 12), skin); head.scale.set(.5, .2, 1.1); croc.add(head);
-    const snout = real.m(new THREE.CylinderGeometry(.16, .24, 1.0, 10), skin, { pos: [0, -.02, -.9], rot: [P / 2, 0, 0], scale: [1.3, 1, .55] }); croc.add(snout);
+    const snout = real.m(new THREE.CylinderGeometry(.16, .24, 1.0, 10), belly, { pos: [0, -.02, -.9], rot: [P / 2, 0, 0], scale: [1.3, 1, .55] }); croc.add(snout);
     for (const s of [-1, 1]) { croc.add(real.m(new THREE.SphereGeometry(.1, 16, 10), skin, { pos: [s * .15, .1, .25] })); croc.add(real.m(new THREE.SphereGeometry(.04, 12, 8), real.std(0xd8b050, { rough: .2, emissive: 0xb08a30, ei: 1.6 }), { pos: [s * .15, .15, .32] })); }
     for (const s of [-1, 1]) croc.add(real.m(new THREE.SphereGeometry(.035, 10, 8), skin, { pos: [s * .05, .08, -1.36] }));
-    const body = real.m(new THREE.SphereGeometry(.5, 20, 12), skin, { pos: [0, -.08, 1.3], scale: [.75, .3, 1.8] }); croc.add(body);
-    for (let i = 0; i < 9; i++) { const z = .5 + i * .22; for (const s of [-.45, .45]) croc.add(real.m(new THREE.ConeGeometry(.028, .065, 4), skin, { pos: [s * (.28 - i * .012), .06, z] })); }
-    const tail = real.m(new THREE.CylinderGeometry(.04, .2, 1.8, 8), skin, { pos: [0, -.05, 3.1], rot: [P / 2, 0, 0], scale: [1.2, 1, .7] }); croc.add(tail);
+    const body = real.m(new THREE.SphereGeometry(.5, 20, 12), back, { pos: [0, -.08, 1.3], scale: [.75, .3, 1.8] }); croc.add(body);
+    for (let i = 0; i < 9; i++) { const z = .5 + i * .22; for (const s of [-.45, .45]) croc.add(real.m(new THREE.ConeGeometry(.028, .065, 4), back, { pos: [s * (.28 - i * .012), .06, z] })); }
+    const tail = real.m(new THREE.CylinderGeometry(.04, .2, 1.8, 8), back, { pos: [0, -.05, 3.1], rot: [P / 2, 0, 0], scale: [1.2, 1, .7] }); croc.add(tail);
     for (let i = 0; i < 6; i++) croc.add(real.m(new THREE.ConeGeometry(.03, .09 - i * .01, 4), skin, { pos: [0, .07 - i * .012, 2.4 + i * .28] }));
     croc.scale.setScalar(.85); croc.position.set(.5, -.3, 2.4); croc.rotation.y = P - .95; scene.add(croc);   // side-on to the lens, 3.5 m off, so snout, back and tail all read
     const cam = C.dolly(camera, { pos: [3.0, .6, 7.2], look: [-4, .2, -40], fov: 40 }, { pos: [2.3, .8, 5.9], look: [.4, -.05, 2.4], fov: 34 });
@@ -389,9 +399,9 @@ export const shots = {
   },
   // lightning bolt emblem flashes across the map (old act's shot; ISRAEL label offset right with a leader line so the polygon, dot and route no longer cover it; the map sits higher so UGANDA clears the caption band)
   '6.16': async k => TB.mapShot(k, {
-    center: [33.5, 16], span: [34, 38], labels: [['ISRAEL', 40.2, 31.6], ['UGANDA', 30.7, 3.3], ['KENYA', 38, 0.5]], highlight: ['ISR', 'UGA'], cities: ['TEL AVIV', 'ENTEBBE'],
+    center: [33.5, 16], span: [34, 38], labels: [['ISRAEL', 40.2, 31.6], ['UGANDA', 30.7, 3.3], ['KENYA', 38.6, 2.6]], highlight: ['ISR', 'UGA'], cities: ['TEL AVIV', 'ENTEBBE'],
     route: [[34.8, 31.9], [34.6, 29.6], [36.6, 24.5], [38.4, 19.5], [41.5, 13.5], [40.5, 8], [36.4, 2], [33.5, .2], [32.44, 0.05]], routeStart: .05, routeEnd: .5,
-    cam: { from: [0, 198, 94], to: [0, 150, 63], look: [0, 0, 16], lookTo: [0, 0, 6] },
+    cam: { from: [0, 236, 112], to: [0, 212, 98], look: [0, 0, 22], lookTo: [0, 0, 26] },
     extra: async (k, map) => { k.scene.add(leader(map, [37.8, 31.6], [35.6, 31.3]));
       return t => { const x = k.overlay; const fl = t > 2.2 && t < 2.6 ? 1 - (t - 2.2) / .4 : 0; if (fl) { x.fillStyle = `rgba(240,240,255,${fl * .6})`; x.fillRect(0, 0, 1920, 1080); }
         if (t > 2.2) { const p = new Path2D(); p.moveTo(10, -80); p.lineTo(-38, 8); p.lineTo(-4, 8); p.lineTo(-20, 80); p.lineTo(40, -14); p.lineTo(6, -14); p.lineTo(24, -80); p.closePath(); x.save(); x.translate(1020, 540); x.scale(3 * TB.core.pop(t, 2.2, .3), 3 * TB.core.pop(t, 2.2, .3)); x.fillStyle = '#e8b321'; x.strokeStyle = '#2b1e16'; x.lineWidth = 6; x.fill(p); x.stroke(p); x.restore(); } }; },
