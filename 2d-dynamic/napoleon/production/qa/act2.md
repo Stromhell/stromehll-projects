@@ -7,4 +7,4 @@
 ## Round 2 (re-render)
 - MED 0:25 a modern microphone on the rostrum (set reused from the Spain civil-war video). Fix: brass candelabrum on the lectern covers it.
 ## Round 3
-(pending re-render)
+CLEAN (re-render ~22:00 UTC). Candelabrum sits on the lectern; tags and cards clear.
