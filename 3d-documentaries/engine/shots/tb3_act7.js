@@ -19,7 +19,14 @@ function briefBoard(target) {
   g.add(real.box(1.6, .8, 1.1, real.std(0x5a5a4a, { rough: .8 }), { pos: [0, .4, -.6] }));
   return g;
 }
-function stretcher() { const g = new THREE.Group(); const tube = real.std(0x9a9a94, { metal: .8, rough: .3 }); g.add(real.box(.56, .06, 1.95, real.std(0x5a6a48, { rough: .9 }), { pos: [0, 0, 0] })); for (const x of [-.29, .29]) g.add(real.box(.03, .03, 2.3, tube, { pos: [x, .01, 0] })); g.add(real.box(.5, .04, .4, real.std(0xe8e6e0, { rough: .9 }), { pos: [0, .05, -.7] })); return g; }
+// field stretcher: canvas between two carry poles that stand proud of it, two straps across, a folded blanket and a small pillow (QA r3 #9: read as shelves with pillows)
+function stretcher() { const g = new THREE.Group(); const tube = real.std(0xa8a8a0, { metal: .8, rough: .3 });
+  g.add(real.box(.56, .05, 1.95, real.std(0x5a6a48, { rough: .9 }), { pos: [0, 0, 0] }));
+  for (const x of [-.33, .33]) { g.add(real.m(new THREE.CylinderGeometry(.024, .024, 2.35, 10), tube, { pos: [x, .03, 0], rot: [P / 2, 0, 0] })); for (const z of [-1.17, 1.17]) g.add(real.m(new THREE.SphereGeometry(.03, 8, 6), real.std(0x1a1a18, { rough: .8 }), { pos: [x, .03, z] })); }
+  for (const z of [-.5, .4]) g.add(real.box(.68, .018, .07, real.std(0x2a2620, { rough: .9 }), { pos: [0, .035, z], cast: false }));
+  g.add(real.rbox(.42, .08, .46, .025, real.std(0x6a7458, { rough: .95 }), { pos: [0, .065, .6] }));
+  g.add(real.box(.38, .035, .28, real.std(0xe0ddd2, { rough: .9 }), { pos: [0, .042, -.78] }));
+  return g; }
 async function c130Line(k, o = {}) {
   const { scene } = k;
   const ground = await real.pbr('concrete_floor_worn_001', { repeat: [60, 60], color: o.groundColor ?? 0xb0aca0 }); scene.add(real.m(new THREE.PlaneGeometry(400, 400), ground, { rot: [-P / 2, 0, 0], cast: false }));
@@ -39,7 +46,7 @@ function hazeBand(scene, { color = 0xc4ccd8, r = 1500, h = 400, clear = .25, y =
   const band = real.m(new THREE.CylinderGeometry(r, r, h, 64, 1, true), m, { pos: [0, y + h / 2, 0], cast: false }); band.renderOrder = -1; scene.add(band); return band;
 }
 // seated soldiers with hands resting on the knees (local version of idleSit: re-aims the forearms after the lib pose)
-const CHILD = { Arm: 'ForeArm', ForeArm: 'Hand' };
+const CHILD = { Arm: 'ForeArm', ForeArm: 'Hand', Hand: 'HandMiddle1', UpLeg: 'Leg', Leg: 'Foot', Foot: 'ToeBase', Spine: 'Spine1', Spine1: 'Spine2', Spine2: 'Neck' };
 function aimBone(p, name, x, y, z) {
   const bones = p.parts.bones, base = name.replace(/^(Left|Right)/, ''), b0 = bones[name], c0 = bones[name.slice(0, name.length - base.length) + CHILD[base]];
   if (!b0 || !c0) return;
@@ -60,12 +67,103 @@ function benchSeats(scene, z0, z1, pitch = .9) {
   for (const s of [-1, 1]) {
     scene.add(real.box(.5, .08, z1 - z0 + .5, web, { pos: [s * 1.3, .41, (z0 + z1) / 2], cast: false }));
     scene.add(real.box(.04, .04, z1 - z0 + .5, real.std(0x9a9a94, { metal: .8, rough: .35 }), { pos: [s * 1.06, .38, (z0 + z1) / 2], cast: false }));
-    const l = new THREE.PointLight(0xff8a60, 3, 3, 1.5); l.position.set(s * .9, .3, (z0 + z1) / 2); scene.add(l);
+    const l = new THREE.PointLight(0xff8a60, .8, 2, 1.5); l.position.set(s * 1.3, .2, (z0 + z1) / 2); scene.add(l);   // under the bench, short throw: no orange streaks by hands/knees (QA r3 #3)
     for (let z = z0; z <= z1 + .01; z += pitch) spots.push({ x: s * 1.3, z, rot: -s * P / 2 });
   }
   return spots;
 }
 const mapDown = (inner, dzK, pull) => async k => { const f = await inner(k); return (t, u) => { f(t, u); const c = k.camera; c.position.multiplyScalar(pull); c.position.z += c.position.y * dzK; }; };
+// steer the auto caption to one band for the whole shot (act 8 pattern): block the bottom so it stays at the top, or the top so it stays at the bottom
+const capTop = () => ui.used.push([0, 840, 1920, 1080]);
+const capBottom = () => ui.used.push([0, 0, 1920, 260]);
+// standing task poses, applied after p.update() (QA r3 #4/#8): all through aimBone so they work on any rig
+const footY = p => { const v = new THREE.Vector3(); return Math.min(p.parts.bones.LeftFoot.getWorldPosition(v).y, p.parts.bones.RightFoot.getWorldPosition(v).y); };
+// deep crouch, hands forward at knee height (at a pump / a wheel); the body is dropped so the feet stay on the floor
+function crouch(p, reach = 1) {
+  const f0 = footY(p);
+  aimBone(p, 'Spine', 0, 1, .6); aimBone(p, 'Spine1', 0, 1, .5); aimBone(p, 'Spine2', 0, 1, .25);
+  for (const [sd, sg] of [['Left', 1], ['Right', -1]]) { aimBone(p, sd + 'UpLeg', sg * .12, -.3, 1); aimBone(p, sd + 'Leg', sg * .04, -1, -.5); aimBone(p, sd + 'Foot', 0, -.3, 1);
+    aimBone(p, sd + 'Arm', sg * .2, -.55, .8 * reach); aimBone(p, sd + 'ForeArm', -sg * .15, -.35, 1); aimBone(p, sd + 'Hand', -sg * .1, -.3, 1); }
+  p.parts.obj.position.y -= footY(p) - f0;
+}
+// one hand (left) down on the frame of the pump beside him, slight lean that way
+function leanOnFrame(p) { aimBone(p, 'Spine', .1, 1, .05); aimBone(p, 'Spine1', .1, 1, .05); aimBone(p, 'LeftArm', .8, -.6, .2); aimBone(p, 'LeftForeArm', .7, -.72, .25); aimBone(p, 'LeftHand', .6, -.8, .25); }
+function hipsHands(p) { for (const [sd, sg] of [['Left', 1], ['Right', -1]]) { aimBone(p, sd + 'Arm', sg * .8, -.65, .05); aimBone(p, sd + 'ForeArm', -sg * .95, -.3, .35); aimBone(p, sd + 'Hand', -sg * .9, -.2, .45); } }
+function foldArms(p) {
+  aimBone(p, 'LeftArm', .3, -.9, .22); aimBone(p, 'LeftForeArm', -1, .25, .12); aimBone(p, 'LeftHand', -1, .15, .05);
+  aimBone(p, 'RightArm', -.34, -.82, .5); aimBone(p, 'RightForeArm', 1, .12, -.02); aimBone(p, 'RightHand', 1, .05, -.25);
+}
+// right arm straight down, slightly out, for a thing carried in the hand
+function carryRight(p) { aimBone(p, 'RightArm', -.3, -1, .05); aimBone(p, 'RightForeArm', -.15, -1, .15); aimBone(p, 'RightHand', -.1, -1, .2); }
+// hose coil carried in the right hand (loop hangs below the hand)
+function hoseCoil() { const g = new THREE.Group(); const rub = real.std(0x1a1a18, { rough: .75 }); for (let i = 0; i < 3; i++) g.add(real.m(new THREE.TorusGeometry(.2 - i * .015, .03, 8, 28), rub, { pos: [0, -.2, i * .04 - .04] })); g.add(real.m(new THREE.CylinderGeometry(.03, .03, .16, 10), real.std(0xb8b4a8, { metal: .7, rough: .35 }), { pos: [.17, -.3, .06], rot: [0, 0, .4] })); return g; }
+// small red medical bag with a white cross and a carry handle
+function medBag() { const g = new THREE.Group(); g.add(real.rbox(.3, .2, .13, .03, real.std(0x8a1e1a, { rough: .6 }), { pos: [0, -.14, 0] })); g.add(real.box(.11, .03, .01, real.std(0xf4f0e8, { rough: .6 }), { pos: [0, -.14, .07], cast: false })); g.add(real.box(.03, .11, .01, real.std(0xf4f0e8, { rough: .6 }), { pos: [0, -.14, .07], cast: false })); g.add(real.m(new THREE.TorusGeometry(.06, .01, 6, 16, P), real.std(0x2a1a14, { rough: .7 }), { pos: [0, -.04, 0] })); return g; }
+// 1970s Mercedes saloon for the hold shots (QA r3 #1: the lib car read as a black mirror slab). Act 8's mercHero body with a dark-grey
+// satin paint (roughness .5), lighter glass with chrome surrounds, roof line, sill, pillars, wheels proud of the body
+function mercHero(o = {}) {
+  const g = new THREE.Group();
+  const paint = new THREE.MeshPhysicalMaterial({ color: o.color ?? 0x30343a, roughness: .55, metalness: .15, sheen: .3, sheenColor: 0x8a9098 });
+  const chrome = real.std(0xd8dade, { rough: .18, metal: 1 }), dark = real.std(0x151516, { rough: .85 }), rubber = real.std(0x0c0c0c, { rough: .95 });
+  const glass = new THREE.MeshPhysicalMaterial({ color: 0x9aaab6, roughness: .08, metalness: 0, transparent: true, opacity: .35 });
+  g.add(real.rbox(1.78, .38, 4.75, .09, paint, { pos: [0, .72, 0] }));   // body ~.50-.95 incl. bevel                 // body .50–.98
+  g.add(real.rbox(1.72, .1, 4.55, .03, dark, { pos: [0, .47, 0] }));                   // sill line
+  g.add(real.box(1.5, .06, 4.1, dark, { pos: [0, .42, 0], cast: false }));              // floor pan
+  g.add(real.box(1.56, .46, 2.3, glass, { pos: [0, 1.2, -.25], cast: false }));         // glasshouse (plain box: an rbox bevel bulged over the roof)
+  g.add(real.rbox(1.6, .03, 1.45, .03, paint, { pos: [0, 1.46, -.4] }));                // roof panel, shorter than the glass so windscreen + rear window show from above
+  for (const z of [.33, -1.13]) g.add(real.box(1.58, .025, .025, chrome, { pos: [0, 1.44, z] }));   // chrome screen headers
+  g.add(real.box(1.5, .04, 2.3, real.std(0x0c0c0d, { rough: .9 }), { pos: [0, .99, -.25], cast: false }));   // dark cabin floor under the glass so windscreen / rear window read darker than the paint
+  const seat = real.std(0x4a3a2c, { rough: .8 }); for (const z of [.25, -.85]) for (const x of [-.4, .4]) g.add(real.rbox(.55, .45, .14, .04, seat, { pos: [x, 1.2, z] }));   // seat backs seen through the glass
+  for (const x of [-.8, .8]) { g.add(real.box(.05, .48, .07, paint, { pos: [x, 1.21, .9] })); g.add(real.box(.05, .48, .09, paint, { pos: [x, 1.21, -1.4] })); g.add(real.box(.05, .48, .06, paint, { pos: [x, 1.21, -.3] })); }
+  for (const x of [-.9, .9]) { g.add(real.box(.015, .02, 4.4, chrome, { pos: [x, .985, 0] })); g.add(real.box(.015, .02, 2.3, chrome, { pos: [x * .9, 1.455, -.25] })); g.add(real.box(.015, .02, 2.3, chrome, { pos: [x * .89, .97, -.25] })); }
+  for (const x of [-.895, .895]) for (const z of [.1, -1.0]) { g.add(real.box(.01, .4, .012, dark, { pos: [x, .74, z] })); g.add(real.box(.02, .025, .12, chrome, { pos: [x, .86, z - .22] })); }
+  const wm = { tyre: real.std(0x111111, { rough: .9 }), hub: real.std(0xc8ccd0, { rough: .25, metal: .9 }), metal: chrome };
+  for (const [x, z] of [[-.8, 1.45], [.8, 1.45], [-.8, -1.45], [.8, -1.45]]) {
+    const w = sets.wheel(.34, .22, wm); w.position.set(x, .34, z); g.add(w);
+    w.add(real.m(new THREE.TorusGeometry(.17, .012, 8, 32), chrome));
+    for (let i = 0; i < 16; i++) { const a = i * P * 2 / 16; w.add(real.m(new THREE.BoxGeometry(.05, .04, .2), rubber, { pos: [Math.cos(a) * .33, Math.sin(a) * .33, 0], rot: [0, 0, a] })); }
+    g.add(real.m(new THREE.CircleGeometry(.43, 24, 0, P), dark, { pos: [x * 1.12, .36, z], rot: [0, Math.sign(x) * P / 2, 0], cast: false }));
+    g.add(real.m(new THREE.CircleGeometry(.43, 24, 0, P), dark, { pos: [x * 1.12, .36, z], rot: [0, -Math.sign(x) * P / 2, 0], cast: false }));
+  }
+  const zf = 2.375;
+  g.add(real.box(.9, .36, .03, dark, { pos: [0, .74, zf - .02] }));
+  for (const y of [.56, .92]) g.add(real.box(.94, .03, .06, chrome, { pos: [0, y, zf + .01] }));
+  for (const x of [-.46, .46]) g.add(real.box(.03, .39, .06, chrome, { pos: [x, .74, zf + .01] }));
+  for (let i = 0; i < 9; i++) g.add(real.box(.014, .33, .04, chrome, { pos: [-.4 + i * .1, .74, zf + .01] }));
+  g.add(real.m(new THREE.CylinderGeometry(.01, .014, .12, 8), chrome, { pos: [0, .99, 2.22] }));
+  for (const x of [-.6, .6]) {
+    g.add(real.m(new THREE.CylinderGeometry(.15, .15, .1, 24), dark, { pos: [x, .74, zf - .03], rot: [P / 2, 0, 0] }));
+    g.add(real.m(new THREE.CylinderGeometry(.12, .1, .06, 24), real.std(0xb8bcc0, { rough: .2, metal: .9 }), { pos: [x, .74, zf - .01], rot: [P / 2, 0, 0] }));
+    g.add(real.m(new THREE.SphereGeometry(.06, 14, 10), real.std(0xffffff, { emissive: 0xfff2d0, ei: o.lights ? 3 : .15, rough: .3 }), { pos: [x, .74, zf + .01], cast: false }));
+    g.add(real.m(new THREE.TorusGeometry(.145, .016, 8, 32), chrome, { pos: [x, .74, zf + .02] }));
+    g.add(real.box(.14, .06, .03, real.std(0xe0a040, { emissive: 0xd08020, ei: .1 }), { pos: [x * 1.25, .52, zf - .01] }));
+  }
+  for (const [z, sg] of [[2.42, 1], [-2.42, -1]]) {
+    g.add(real.rbox(1.84, .11, .14, .03, chrome, { pos: [0, .45, z] }));
+    g.add(real.box(1.84, .03, .145, rubber, { pos: [0, .45, z] }));
+    for (const x of [-.56, .56]) g.add(real.rbox(.08, .17, .1, .02, chrome, { pos: [x, .47, z + sg * .03] }));
+  }
+  for (const x of [-.72, .72]) g.add(real.box(.22, .09, .03, real.std(0x8a1a12, { emissive: 0x600000, ei: .3 }), { pos: [x, .74, -2.385] }));
+  g.add(real.box(.24, .02, .14, chrome, { pos: [0, 1.0, 2.0] }));
+  g.add(real.box(1.0, .015, .6, chrome, { pos: [0, .99, -1.9] }));   // boot-lid chrome strip
+  for (const x of [-.86, .86]) { g.add(real.box(.03, .1, .05, dark, { pos: [x * 1.02, 1.1, .95] })); g.add(real.box(.06, .08, .1, chrome, { pos: [x * 1.06, 1.15, .95] })); }
+  g.traverse(c => { if (c.isMesh) { c.castShadow = true; c.receiveShadow = true; } }); return g;
+}
+// low warm fill beside a car so its flanks and roof never go to a black plane
+function carFill(scene, car, i = 2.5) { for (const x of [-1.25, 1.25]) { const l = new THREE.PointLight(0xfff0dc, i, 4, 1.6); l.position.set(car.position.x + x, 1.2, car.position.z + .4); scene.add(l); } const top = new THREE.PointLight(0xfff0dc, i * .5, 3.5, 1.6); top.position.set(car.position.x, 2.3, car.position.z - .4); scene.add(top); }
+// procedural wood grain for the lib chairs/table (no wood PBR in assets)
+function woodTex(seed = 3) { return real.canvasTex(512, 512, (c, W, H) => { const r = rnd(seed); c.fillStyle = '#6a4426'; c.fillRect(0, 0, W, H);
+  for (let i = 0; i < 120; i++) { c.strokeStyle = `rgba(${18 + r() * 30 | 0},${8 + r() * 16 | 0},${4 + r() * 8 | 0},${.2 + r() * .4})`; c.lineWidth = .8 + r() * 3; c.beginPath(); const x = r() * W; c.moveTo(x, 0); c.bezierCurveTo(x + (r() - .5) * 50, H * .33, x + (r() - .5) * 50, H * .66, x + (r() - .5) * 30, H); c.stroke(); }
+  c.fillStyle = 'rgba(255,215,160,.07)'; for (let i = 0; i < 60; i++) c.fillRect(r() * W, r() * H, 2 + r() * 4, 20 + r() * 140); }); }
+// a single webbing bench on one wall (s = -1 left, +1 right) in olive; returns seat spots
+function sideBench(scene, s, z0, z1, pitch = .7) {
+  const web = real.std(0x5a6448, { rough: .95 }), tube = real.std(0x8a8a84, { metal: .8, rough: .35 }), zc = (z0 + z1) / 2, L = z1 - z0;
+  scene.add(real.box(.42, .04, L, web, { pos: [s * 1.3, .45, zc] })); scene.add(real.box(.03, .03, L, tube, { pos: [s * 1.1, .44, zc] })); scene.add(real.box(.02, .55, L, web, { pos: [s * 1.55, .8, zc] }));
+  for (const x of [s * 1.12, s * 1.48]) for (const z of [z0 + .1, z1 - .1]) scene.add(real.m(new THREE.CylinderGeometry(.015, .015, .44, 8), tube, { pos: [x, .22, z] }));
+  const spots = []; for (let z = z0 + .35; z <= z1 - .3; z += pitch) spots.push({ x: s * 1.28, z, rot: -s * P / 2 }); return spots;
+}
+// turn the hold's ceiling lamp panels down (QA r3 #8: blown out top-left in 7.4)
+const dimLamps = (scene, ei = .6) => scene.traverse(c => { if (c.isMesh && c.material.emissiveIntensity === 2 && c.geometry.parameters?.width === .4) c.material.emissiveIntensity = ei; });
 
 export const shots = {
   // at Entebbe the hijackers relax upstairs, playing cards
@@ -73,13 +171,14 @@ export const shots = {
     const { real, scene, camera } = k;
     await real.env(k, 'small_empty_room_1', { sun: false, bg: 0x060607, envI: .3 });
     await C.room(k, { w: 8, d: 6, h: 3.2, floor: 'rubber_tiles', wallColor: 0xcfc4a8 });
-    scene.add(new THREE.HemisphereLight(0xfff0d8, 0x1a1612, .45));
+    scene.add(new THREE.HemisphereLight(0xfff0d8, 0x1a1612, .6));
+    const wood = new THREE.MeshStandardMaterial({ map: woodTex(3), roughness: .5 });
     const lamp = new THREE.SpotLight(0xffd8a0, 45, 6, .7, .6, 1.3); lamp.position.set(0, 2.6, 0); lamp.target.position.set(0, .75, 0); lamp.castShadow = true; scene.add(lamp, lamp.target);
-    scene.add(real.m(new THREE.CylinderGeometry(.55, .55, .04, 32), WOOD(), { pos: [0, .74, 0] })); scene.add(real.m(new THREE.CylinderGeometry(.06, .2, .72, 16), WOOD(), { pos: [0, .36, 0] }));
+    scene.add(real.m(new THREE.CylinderGeometry(.55, .55, .04, 32), wood, { pos: [0, .74, 0] })); scene.add(real.m(new THREE.CylinderGeometry(.06, .2, .72, 16), wood, { pos: [0, .36, 0] }));
     const cardT = real.canvasTex(128, 180, (c, W, H) => { c.fillStyle = '#f4f0e6'; c.fillRect(0, 0, W, H); c.strokeStyle = '#8a1e1a'; c.lineWidth = 6; c.strokeRect(10, 10, W - 20, H - 20); });
     const r = rnd(5); for (let i = 0; i < 14; i++) { const cd = real.m(new THREE.PlaneGeometry(.063, .088), new THREE.MeshStandardMaterial({ map: cardT, roughness: .6 }), { pos: [(r() - .5) * .45, .762 + i * .0004, (r() - .5) * .45], rot: [-P / 2, 0, r() * P], cast: false }); scene.add(cd); }
     const ids = [C.HJ.bose, C.HJ.hj3, C.HJ.kuhlmann, C.HJ.hj4]; const ppl = [];
-    for (let i = 0; i < 4; i++) { const a = i / 4 * P * 2 + P / 4; const x = Math.sin(a) * .85, z = Math.cos(a) * .85; const ch = chair(); ch.position.set(x * 1.08, 0, z * 1.08); ch.rotation.y = a + P; scene.add(ch);
+    for (let i = 0; i < 4; i++) { const a = i / 4 * P * 2 + P / 4; const x = Math.sin(a) * .85, z = Math.cos(a) * .85; const ch = chair(wood); ch.position.set(x * 1.08, 0, z * 1.08); ch.rotation.y = a + P; scene.add(ch);
       const p = await real.human({ id: ids[i], seed: 4100 + i }); real.put(scene, p, { pos: [x, 0, z], rot: a + P, pose: 'sitDesk', arm: 'desk', seatH: .48, mood: i % 2 ? 'happy' : 'smug' }); p.userData.driven = true; ppl.push(p); }
     const cam = C.dolly(camera, { pos: [2.2, 2.7, 2.6], look: [0, .8, 0], fov: 40 }, { pos: [1.6, 2.4, 1.8], look: [0, .8, 0], fov: 38 });
     return (t, u) => { cam(u); ppl.forEach((p, i) => p.update(t, { pose: 'sitDesk', arm: (t + i) % 3.2 < .5 ? 'point' : 'desk', seatH: .48, mood: i % 2 ? 'happy' : 'smug', talk: Math.sin(t * 1.5 + i * 2) > .4, look: Math.sin(t * .5 + i) * .3 })); };
@@ -97,7 +196,13 @@ export const shots = {
     const { scene, camera } = k;
     await real.env(k, 'qwantani_puresky', { sun: [-50, 50, 40], sunI: 4, sunColor: 0xfff0d8, shadowSize: 60, envI: 1, fog: [0xd8d0c0, 150, 1200], fx: false });
     const grass = await real.pbr('grass_path_2', { repeat: [120, 120], color: 0xc0b080 }); scene.add(real.m(new THREE.PlaneGeometry(2000, 2000), grass, { rot: [-P / 2, 0, 0], cast: false }));
-    scene.add(real.m(new THREE.PlaneGeometry(40, 900), real.std(0x9a7a56, { rough: 1 }), { pos: [0, .02, 0], rot: [-P / 2, 0, 0], cast: false }));
+    // dirt strip: tinted PBR with its own ragged alpha mask so the edge against the grass is broken and soft (QA r3 #5)
+    const dirt = await real.pbr('grass_path_2', { repeat: [9, 180], color: 0x8a6646, rough: 1 });
+    const mask = real.canvasTex(256, 1024, (c, W, H) => { const r = rnd(33); c.fillStyle = '#000'; c.fillRect(0, 0, W, H); c.fillStyle = '#fff'; c.fillRect(W * .22, 0, W * .56, H);
+      for (let i = 0; i < 520; i++) { const y = r() * H, left = i % 2 === 0, x = left ? W * .22 - r() * W * .16 : W * .78 + r() * W * .16, rad = 4 + r() * 18; c.globalAlpha = .35 + r() * .65; c.beginPath(); c.ellipse(x, y, rad, rad * (1.5 + r() * 2.5), 0, 0, P * 2); c.fill(); }
+      c.globalAlpha = 1; c.fillStyle = '#000'; for (let i = 0; i < 50; i++) { const y = r() * H, x = W * .24 + r() * W * .52; c.beginPath(); c.ellipse(x, y, 1.5 + r() * 4, 5 + r() * 12, 0, 0, P * 2); c.fill(); } }, { repeat: [1, 22] });
+    mask.colorSpace = THREE.NoColorSpace; dirt.alphaMap = mask; dirt.transparent = true;
+    scene.add(real.m(new THREE.PlaneGeometry(46, 900), dirt, { pos: [0, .02, 0], rot: [-P / 2, 0, 0], cast: false }));
     const p = S2.c130(); scene.add(p);
     const dustT = real.canvasTex(128, 128, (c, W, H) => { const g = c.createRadialGradient(64, 64, 4, 64, 64, 62); g.addColorStop(0, 'rgba(190,160,120,.8)'); g.addColorStop(1, 'rgba(190,160,120,0)'); c.fillStyle = g; c.fillRect(0, 0, W, H); });
     const puffs = []; for (let i = 0; i < 70; i++) { const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: dustT, transparent: true, depthWrite: false, opacity: 0 })); scene.add(s); puffs.push({ s, born: 1e9 }); }
@@ -112,12 +217,15 @@ export const shots = {
   '7.4': async k => {
     const { real, scene, camera } = k;
     const h = await holdInterior(k, { seats: false, len: 15 });
-    const cars = [S2.landrover(), S2.landrover(), S2.mercedes({})]; cars.forEach((c, i) => { c.position.set(0, 0, -4.8 + i * 4.8); scene.add(c); });
+    dimLamps(scene);
+    const cars = [S2.landrover(), S2.landrover(), mercHero()]; cars.forEach((c, i) => { c.position.set(0, 0, -4.8 + i * 4.8); scene.add(c); });
+    carFill(scene, cars[2]);
     for (const z of [-4.8, 0, 4.8]) { const l = new THREE.PointLight(0xffe0b0, 6, 7, 1.6); l.position.set(0, 1.5, z - 1.2); scene.add(l); }
     const ppl = [];
     for (let i = 0; i < 6; i++) { const p = await real.human({ id: CMD[i], seed: 4300 + i }); real.put(scene, p, { pos: [(i % 2 ? 1.5 : -1.7), 0, -5 + Math.floor(i / 2) * 4.2], rot: (i % 2 ? -1 : 1) * P / 2, mood: 'stern' }); p.userData.driven = true; ppl.push(p); }
     const cam = C.dolly(camera, { pos: [.5, 2.6, 7.1], look: [0, .5, -4], fov: 54 }, { pos: [-.5, 2.55, 6.2], look: [0, .6, -5], fov: 54 });
-    return (t, u) => { cam(u); ppl.forEach((p, i) => p.update(t, { mood: 'stern', look: Math.sin(t * .5 + i) * .2, arm: i === 2 ? 'hug' : null })); };
+    // six different stances: one crouched at the Land Rover's wheel, one with folded arms, one hugging, one hands on hips (QA r3 #8)
+    return (t, u) => { cam(u); capTop(); ppl.forEach((p, i) => { p.update(t, { mood: 'stern', look: Math.sin(t * .5 + i) * .2, arm: i === 2 ? 'hug' : null }); if (i === 3) crouch(p); else if (i === 4) foldArms(p); else if (i === 1) hipsHands(p); }); };
   },
   '7.5': mapDown(old['7.5'], .2, 1.06),
   '7.6': mapDown(old['7.6'], .2, 1.06),
@@ -139,10 +247,18 @@ export const shots = {
       g.add(real.m(new THREE.CylinderGeometry(.045, .045, .02, 20), real.std(0xe8e4d8, { rough: .4 }), { pos: [.24, .4, .232], rot: [P / 2, 0, 0] }));
       g.add(real.m(new THREE.TorusGeometry(.04, .012, 6, 16), blk, { pos: [.3, .2, .235] }), real.box(.14, .07, .01, real.std(0xd8d0b0, { metal: .5 }), { pos: [.18, .22, .236], cast: false })); g.add(real.box(.8, .05, .55, real.std(0x333333, { metal: .7 }), { pos: [0, .04, 0] })); g.add(real.m(new THREE.CylinderGeometry(.08, .08, .3, 16), real.std(0x777777, { metal: .8, rough: .3 }), { pos: [.2, .65, 0] }));
       g.add(real.m(new THREE.TorusGeometry(.32, .04, 8, 28), real.std(0x111111, { rough: .7 }), { pos: [.75, .05, -.45], rot: [-P / 2, 0, 0] })); g.add(real.m(new THREE.TorusGeometry(.24, .04, 8, 28), real.std(0x111111, { rough: .7 }), { pos: [.75, .13, -.45], rot: [-P / 2, 0, 0] })); return g; };
+    // ten men, four of them busy (crouched at a pump, hand on a carry frame, hands on hips, hose coil in hand), the rest jittered so it is no line-up (QA r3 #4)
+    const TASK = ['idle', 'crouch', 'idle', 'lean', 'fold', 'idle', 'hips', 'idle', 'coil', 'idle'], jr = rnd(77);
     const ppl = [];
-    for (let i = 0; i < 10; i++) { const x = i < 5 ? -4.4 + i * 2.2 : -3.3 + (i - 5) * 2.0, z = -1 - Math.floor(i / 5) * 2.4; const p = await real.human({ id: CMD[i % CMD.length], seed: 4400 + i }); real.put(scene, p, { pos: [x, 0, z], rot: .1, mood: 'stern' }); p.userData.driven = true; ppl.push(p); const pm = pump(); pm.position.set(x + .75, 0, z + .4); scene.add(pm); }
+    for (let i = 0; i < 10; i++) { const x = (i < 5 ? -4.4 + i * 2.2 : -3.3 + (i - 5) * 2.0) + (jr() - .5) * .5, z = -1 - Math.floor(i / 5) * 2.4 + (jr() - .5) * .4, task = TASK[i];
+      const p = await real.human({ id: CMD[i % CMD.length], seed: 4400 + i });
+      const pos = task === 'crouch' ? [x + .05, 0, z + .4] : task === 'lean' ? [x + .2, 0, z + .3] : [x, 0, z], rot = task === 'crouch' ? P / 2 : task === 'lean' ? .45 : .1 + (jr() - .5) * .7;
+      real.put(scene, p, { pos, rot, mood: 'stern' }); p.userData.driven = true; p.userData.task = task; ppl.push(p);
+      if (task === 'coil') C.attach(p, hoseCoil(), 'RightHand', [0, -.06, 0]);
+      const pm = pump(); pm.position.set(x + .75, 0, z + .4); scene.add(pm); }
     const cam = C.dolly(camera, { pos: [0, 2.2, 8], look: [0, 1.1, -2], fov: 42 }, { pos: [0, 1.9, 6.2], look: [0, 1.15, -2], fov: 40 });
-    return (t, u) => { cam(u); ppl.forEach((p, i) => p.update(t, { mood: 'stern', arm: null, look: Math.sin(t * .4 + i) * .2 })); };
+    const TASKF = { crouch: p => crouch(p, .9), lean: leanOnFrame, hips: hipsHands, fold: foldArms, coil: carryRight };
+    return (t, u) => { cam(u); ppl.forEach((p, i) => { p.update(t, { mood: 'stern', arm: null, look: Math.sin(t * .4 + i) * .2 }); TASKF[p.userData.task]?.(p); }); };
   },
   // Sharm el-Sheikh: the four planes take off one by one over the sea
   '7.8': async k => {
@@ -151,7 +267,7 @@ export const shots = {
     const sand = await real.pbr('grass_path_2', { repeat: [80, 80], color: 0xc8a878 }); scene.add(real.m(new THREE.PlaneGeometry(1200, 1200), sand, { pos: [0, -.05, -300], rot: [-P / 2, 0, 0], cast: false }));
     const asphalt = await real.pbr('asphalt_02', { repeat: [4, 60] }); scene.add(real.m(new THREE.PlaneGeometry(45, 1200), asphalt, { pos: [0, 0, -300], rot: [-P / 2, 0, 0], cast: false }));
     scene.add(real.m(new THREE.PlaneGeometry(4000, 3000), real.std(0x1a3a52, { rough: .08, metal: .6 }), { pos: [0, -.4, 1800], rot: [-P / 2, 0, 0], cast: false }));
-    const ps = [0, 1, 2, 3].map(() => { const p = S2.c130(); scene.add(p); return p; });
+    const ps = [0, 1, 2, 3].map(() => { const p = S2.c130(); p.userData.lights.forEach(l => l.visible = false); scene.add(p); return p; });   // unlit nav spheres sit just past the wingtip (QA r3 #6): hidden, the planes fly dark
     return (t, u) => { ps.forEach((p, i) => { const tt = Math.max(0, t - i * 1.4); const v = 8 + tt * 14; const z = -160 + tt * (8 + tt * 7); const y = Math.max(0, (z + 30) * .12); p.position.set(0, y, z); p.rotation.x = -Math.min(.14, Math.max(0, (z + 30) * .004)); p.userData.setProps(t, [18, 18, 18, 18]); p.visible = true; });
       camera.position.set(-38, 2, 50); camera.fov = 44; camera.updateProjectionMatrix(); const lp = ps[0].position; const f = C.ease(C.seg(t, 3.2, 5.4)); const o0 = [lp.x * .6, 4 + lp.y * .7, Math.min(60, lp.z) * .7 - 10]; camera.lookAt(C.lerp(o0[0], lp.x, f), C.lerp(o0[1], lp.y + 3, f), C.lerp(o0[2], lp.z, f)); };
   },
@@ -184,10 +300,12 @@ export const shots = {
     const { real, scene, camera } = k;
     const h = await holdInterior(k, { seats: [-7.2, -5.2], len: 16, red: true, lampI: 10, hemi: .7 });
     const ys = new THREE.SpotLight(0xffd0b0, 25, 6, .5, .6, 1.3); ys.position.set(.3, 2.6, -4.6); ys.target.position.set(.3, 1.4, -6.3); scene.add(ys, ys.target);
-    const cars = [S2.mercedes({}), S2.landrover(), S2.landrover()]; cars.forEach((c, i) => { c.position.set(0, 0, -2.6 + i * 4.8); scene.add(c); });
+    const cars = [mercHero(), S2.landrover(), S2.landrover()]; cars.forEach((c, i) => { c.position.set(0, 0, -2.6 + i * 4.8); scene.add(c); });
+    carFill(scene, cars[0], 2);
     const ppl = await seatSoldiers(k, h.seatSpots, CMD, { seed: 4500 });
     const y = await real.human({ id: 'tb_yoni', seed: 4599 }); real.put(scene, y, { pos: [.3, 0, -6.3], rot: P, mood: 'stern' }); y.userData.driven = true;
-    const cam = C.dolly(camera, { pos: [.6, 2.3, -.4], look: [0, 1.1, -7], fov: 50 }, { pos: [.4, 2.0, -2.6], look: [0, 1.2, -7.2], fov: 46 });
+    // dolly runs down the aisle beside the Mercedes so the car is a side strip (roof line, glass, trim), not a full-frame plane (QA r3 #1)
+    const cam = C.dolly(camera, { pos: [1.15, 2.0, -.6], look: [-.1, 1.15, -7], fov: 50 }, { pos: [1.05, 1.9, -2.2], look: [-.1, 1.2, -7.2], fov: 46 });
     return (t, u) => { cam(u); idleSit(ppl, t); y.update(t, { mood: 'stern', arm: t > 2 && t < 4 ? 'point' : null, talk: Math.sin(t * 1.6) > 0, look: Math.sin(t * .5) * .3 }); };
   },
   // a family photo of two brothers (generic, no likeness)
@@ -223,18 +341,22 @@ export const shots = {
     const ppl = await seatSoldiers(k, benchSeats(scene, -4.4, -2.8, .8), CMD, { seed: 4700 });
     const b = briefBoard('MiG LINE'); b.position.set(0, 0, -5.2); scene.add(b);
     const cam = C.dolly(camera, { pos: [0, 1.75, 1.5], look: [0, 1.3, -5.2], fov: 46 }, { pos: [0, 1.5, -1.3], look: [0, 1.3, -5.2], fov: 42 });
-    return (t, u) => { cam(u); kneeIdle(ppl, t); };
+    return (t, u) => { cam(u); capTop(); kneeIdle(ppl, t); };
   },
   // plane four: stretchers and doctors for the hostages
   '7.17': async k => {
     const { real, scene, camera } = k;
-    const h = await holdInterior(k, { len: 14, seats: [-6.2, -3.5] });
-    for (let i = 0; i < 4; i++) for (let j = 0; j < 3; j++) { const s = stretcher(); s.position.set(i < 2 ? -.95 : .95, .3 + j * .55, -1.4 + (i % 2) * 2.5); scene.add(s); }
-    for (const x of [-1.3, -.6, .6, 1.3]) for (const z of [-2.6, -.2, 2.4]) scene.add(real.box(.04, 1.6, .04, real.std(0x9a9a94, { metal: .8, rough: .3 }), { pos: [x, .8, z] }));
-    const ppl = await seatSoldiers(k, h.seatSpots, ['tb_medic', 'tb_cmd2', 'tb_medic'], { seed: 4800, mood: 'calm' });
-    const m = await real.human({ id: 'tb_medic', seed: 4899 }); real.put(scene, m, { pos: [0, 0, 1.6], rot: P, mood: 'calm' }); m.userData.driven = true;
-    const bag = real.rbox(.45, .3, .25, .04, real.std(0x8a1e1a, { rough: .6 }), { pos: [0, .15, 2.3] }); scene.add(bag);
-    return (t, u) => { idleSit(ppl, t, { mood: 'calm' }); m.update(t, { mood: 'calm', arm: 'hold', look: Math.sin(t * .6) * .3 });
+    const h = await holdInterior(k, { len: 14, seats: false });
+    // stretcher racks: two bays on the left, the far bay on the right; the near right side is a bench so the seated medics are in clear view (QA r3 #9)
+    for (const [x, z] of [[-.95, -1.4], [-.95, 1.1], [.95, -1.4]]) for (let j = 0; j < 3; j++) { const s = stretcher(); s.position.set(x, .3 + j * .55, z); scene.add(s); }
+    const post = real.std(0x9a9a94, { metal: .8, rough: .3 });
+    for (const x of [-1.3, -.6]) for (const z of [-2.6, -.2, 2.4]) scene.add(real.box(.04, 1.6, .04, post, { pos: [x, .8, z] }));
+    for (const x of [.6, 1.3]) for (const z of [-2.6, -.2]) scene.add(real.box(.04, 1.6, .04, post, { pos: [x, .8, z] }));
+    const ppl = await seatSoldiers(k, sideBench(scene, 1, .2, 2.6), ['tb_medic', 'tb_cmd2', 'tb_medic'], { seed: 4800, mood: 'calm' });
+    const m = await real.human({ id: 'tb_medic', seed: 4899 }); real.put(scene, m, { pos: [-.15, 0, 1.6], rot: P, mood: 'calm' }); m.userData.driven = true;
+    C.attach(m, medBag(), 'RightHand', [0, -.08, 0]);   // med bag carried in the right hand, arm down (QA r3 #2: hands held air)
+    const bag = real.rbox(.45, .3, .25, .04, real.std(0x8a1e1a, { rough: .6 }), { pos: [-.3, .15, 2.4] }); scene.add(bag);
+    return (t, u) => { idleSit(ppl, t, { mood: 'calm' }); m.update(t, { mood: 'calm', arm: null, look: Math.sin(t * .6) * .3 }); carryRight(m);
       const a = .4 + u * .5; camera.position.set(Math.sin(a) * 1.2, 1.75, 5.2 - u * .6); camera.fov = 50; camera.updateProjectionMatrix(); camera.lookAt(0, 1.0, -1); };
   },
 };
