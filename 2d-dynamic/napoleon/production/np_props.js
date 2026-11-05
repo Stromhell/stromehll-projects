@@ -100,4 +100,30 @@
   S.npSnow = (c, lt, amt, wind = 1) => { for (let k = 0; k < 160 * amt; k++) { const r = S.rng(k + 900), x = ((r() * 1400 + lt * (40 + r() * 60) * wind) % 1400) - 60, y = ((r() * 760 + lt * (50 + r() * 50)) % 760) - 20; c.fillStyle = S.rgba('#ffffff', .5 + r() * .4); c.beginPath(); c.arc(x, y, 1 + r() * 2.5, 0, TAU); c.fill(); } };
   // drifting gun smoke
   S.npSmoke = (c, lt, x, y, w, h, a = .5, seed = 1) => { for (let k = 0; k < 14; k++) { const r = S.rng(seed + k), px = x + ((r() * w + lt * 14) % w), py = y + r() * h; c.fillStyle = S.rgba('#d8d4cc', a * (.4 + r() * .6)); c.beginPath(); c.arc(px, py, 30 + r() * 50, 0, TAU); c.fill(); } };
+  // QA round 1 (5 Nov): ornate draped pedestal for the crown close-up (replaces a flat brown box)
+  window.NPX = window.NPX || {};
+  NPX.pedestal = (c, x, y, lt) => { const TAU = Math.PI * 2; c.save();
+    S.contact(c, x, y + 205, 260, .45);
+    // carved gilt legs
+    [-120, 120].forEach(dx => { const g = c.createLinearGradient(x + dx - 18, 0, x + dx + 18, 0); g.addColorStop(0, '#7a5418'); g.addColorStop(.5, '#e8c060'); g.addColorStop(1, '#6a4410'); c.fillStyle = g;
+      c.beginPath(); c.moveTo(x + dx - 16, y + 60); c.bezierCurveTo(x + dx - 30, y + 120, x + dx + 10, y + 150, x + dx - 10, y + 200); c.lineTo(x + dx + 14, y + 200); c.bezierCurveTo(x + dx + 30, y + 150, x + dx - 6, y + 120, x + dx + 16, y + 60); c.closePath(); c.fill();
+      c.fillStyle = '#c89a38'; c.beginPath(); c.ellipse(x + dx + 2, y + 202, 22, 7, 0, 0, TAU); c.fill(); });
+    // velvet drape with folds
+    const dg = c.createLinearGradient(x - 190, 0, x + 190, 0); dg.addColorStop(0, '#4a0c14'); dg.addColorStop(.35, '#9a1c2a'); dg.addColorStop(.6, '#7a1420'); dg.addColorStop(1, '#3a0810'); c.fillStyle = dg;
+    c.beginPath(); c.moveTo(x - 180, y); c.lineTo(x + 180, y); c.lineTo(x + 196, y + 96);
+    for (let k = 0; k <= 8; k++) { const px = x + 196 - k * 49, py = y + 96 + (k % 2 ? 16 : 0); c.quadraticCurveTo(px + 24, py + 10, px, py); }
+    c.closePath(); c.fill();
+    c.strokeStyle = 'rgba(0,0,0,.28)'; c.lineWidth = 3; for (let k = 1; k < 8; k++) { const px = x - 180 + k * 45; c.beginPath(); c.moveTo(px, y + 8); c.quadraticCurveTo(px + 6, y + 50, px - 2, y + 100); c.stroke(); }
+    // gold fringe and tassels that sway
+    c.strokeStyle = '#d8a838'; c.lineWidth = 5; c.beginPath(); c.moveTo(x - 186, y + 6); c.lineTo(x + 186, y + 6); c.stroke();
+    [-176, 176].forEach((dx, i) => { const sw = Math.sin(lt * 1.6 + i) * 4; c.strokeStyle = '#c89a30'; c.lineWidth = 3; c.beginPath(); c.moveTo(x + dx, y + 96); c.lineTo(x + dx + sw, y + 130); c.stroke(); c.fillStyle = '#e8b848'; c.beginPath(); c.ellipse(x + dx + sw, y + 140, 9, 16, 0, 0, TAU); c.fill(); });
+    // top surface highlight + rim light
+    c.fillStyle = 'rgba(255,230,190,.18)'; c.fillRect(x - 180, y, 360, 10);
+    // tasselled cushion under the crown
+    const cg = c.createRadialGradient(x - 30, y - 30, 10, x, y - 14, 130); cg.addColorStop(0, '#d03040'); cg.addColorStop(1, '#5a0c18'); c.fillStyle = cg;
+    c.beginPath(); c.ellipse(x, y - 14, 130, 30, 0, 0, TAU); c.fill();
+    [-120, 120].forEach(dx => { c.fillStyle = '#e8b848'; c.beginPath(); c.arc(x + dx, y - 6, 8, 0, TAU); c.fill(); });
+    // soft light pool from the window
+    const lg = c.createRadialGradient(x, y - 60, 20, x, y - 60, 320); lg.addColorStop(0, 'rgba(255,240,200,.22)'); lg.addColorStop(1, 'rgba(255,240,200,0)'); c.fillStyle = lg; c.fillRect(x - 340, y - 380, 680, 600);
+    c.restore(); };
 })(window);

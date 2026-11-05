@@ -6,7 +6,7 @@ window.SHOTS = [
   { set: 'np_helena', cam: { z: [1.0, 1.1], x: [600, 700], y: [380, 380], ease: E.io }, bed: [['ocean_loop', .4], ['wind_loop', .25]],
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tS = at(Sh, 'speck', 3.5); Sh.tK = at(Sh, 'kilometres', 6.5); },
     draw: (c, lt, u, Sh) => { S.npShip(c, lerp(100, 520, seg(lt, 0, Sh.dur)), 520, .75, 1, lt, { flag: 'uk' }); for (let k = 0; k < 20; k++) { const r = S.rng(k + 60); c.fillStyle = S.rgba('#e8ecf0', .3); c.fillRect(((r() * 1300 - lt * 30) % 1300 + 1300) % 1300, 440 + r() * 280, 30 + r() * 40, 2); } },
-    over: [(c, lt) => K.dateTag(c, 'SAINT HELENA · OCT 1815', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, '~2,000 KM FROM AFRICA', lt, { at: Sh.tK, x: 1320, y: 150, px: 52, rot: -2 })],
+    over: [(c, lt) => K.dateTag(c, 'SAINT HELENA · OCT 1815', lt, { at: .4, y: 100 }), (c, lt, u, Sh) => K.card(c, '~2,000 KM FROM AFRICA', lt, { at: Sh.tK, x: 960, y: 150, px: 52, rot: -2 })],
     sfx: [[.2, 'ocean_loop', .4], [.3, 'wind_loop', .25], [1.5, 'creak', .3], ['speck', 'swell', .3]] },
 
   // 6.02 MED: foggy Longwood House; Napoleon, older and heavier, in the garden with a hoe; a British sentry watching
@@ -16,7 +16,7 @@ window.SHOTS = [
       fig(c, C.NAPOLD, 520, 650, 40, pose(lt, 0, { face: 1, shN: 40 + 40 * dig, elN: 60 - 30 * dig, shF: 30 + 40 * dig, elF: 70, lean: 10 + 8 * dig, holdN: hoe(c) }), lt, 0, L, { look: [.4, .7] });
       fig(c, C.BRIT, 1040, 640, 38, pose(lt, 2, { face: -1, holdN: musket(c, -1.4) }), lt, 2, L, { look: [-.8, .1] });
       S.NPX.mist(c, 1280, 520, 80, '#e8ecec', .15, Math.floor(lt)); },
-    over: [(c, lt) => K.dateTag(c, 'LONGWOOD HOUSE', lt, { at: .4 }), (c, lt, u, Sh) => K.badge(c, 'MEMOIRS · QUARRELS · GARDENING', lt, { at: Sh.tD })],
+    over: [(c, lt) => K.dateTag(c, 'LONGWOOD HOUSE', lt, { at: .4, y: 100 }), (c, lt, u, Sh) => K.badge(c, 'MEMOIRS · QUARRELS · GARDENING', lt, { at: Sh.tD })],
     sfx: [[.2, 'wind_loop', .25], [.3, 'birds_loop', .1], [1.2, 'dig_loop', .3], ['arguing', 'paper', .25]] },
 
   // 6.03 MED: a dim bedroom; a few servants by the bed; a candle; the window and the grey sea
@@ -28,7 +28,7 @@ window.SHOTS = [
       fig(c, C.SERVANT, 300, 640, 40, pose(lt, 1, { face: 1, shN: -4, elN: 110, shF: -4, elF: 110, lean: 8 }), lt, 1, L, { look: [.6, .6], worry: 1 });
       fig(c, C.MAID, 860, 650, 38, pose(lt, 2, { face: -1, shN: 20, elN: 130, shF: 20, elF: 130, lean: 8 }), lt, 2, L, { look: [-.7, .6], worry: 1 });
       fig(c, C.BRITOFF, 1060, 650, 38, pose(lt, 3, { face: -1, shN: -4, elN: 20 }), lt, 3, L, { look: [-.7, .3] }); },
-    over: [(c, lt, u, Sh) => K.dateTag(c, '5 MAY 1821 · AGED 51', lt, { at: Sh.tD }), (c, lt, u, Sh) => K.card(c, '"FRANCE, THE ARMY, JOSEPHINE"', lt, { at: Sh.tL + 1, x: 1180, y: 150, px: 46, rot: -2 })],
+    over: [(c, lt, u, Sh) => K.dateTag(c, '5 MAY 1821 · AGED 51', lt, { at: Sh.tD, y: 100 }), (c, lt, u, Sh) => K.card(c, '"FRANCE, THE ARMY, JOSEPHINE"', lt, { at: Sh.tL + 1, x: 1180, y: 150, px: 46, rot: -2 })],
     sfx: [[.2, 'clock_loop', .2], [.3, 'ocean_loop', .12], ['died', 'bell', .3], ['last words', 'breath', .3]] },
 
   // 6.04 MED: the CODE CIVIL; its pages fly off onto a world map, landing on country after country
@@ -40,7 +40,7 @@ window.SHOTS = [
         if (q >= 1) { c.fillStyle = S.rgba('#3a5ab8', .5); c.beginPath(); c.arc(tx, ty, 14, 0, TAU); c.fill(); } });
       c.save(); c.globalAlpha = b; S.npBook(c, 170, 620, .9 + .05 * Math.sin(lt * 2), lt); c.restore();
       if (lt > Sh.tE) S.npLabel(c, 'EQUAL CITIZENS', 640, 560, seg(lt, Sh.tE, Sh.tE + .5), 46, '#2a4aa0'); },
-    over: [(c, lt, u, Sh) => K.dateTag(c, 'THE NAPOLEONIC CODE · 1804', lt, { at: .4 })],
+    over: [(c, lt, u, Sh) => K.dateTag(c, 'THE NAPOLEONIC CODE · 1804', lt, { at: .4, y: 100 })],
     sfx: [[.2, 'drone', .15], ['legal code', 'paper', .4], ['dozens', 'whoosh_soft', .3], ['equal', 'chime', .3]] },
 
   // 6.05 MED: a field of white crosses fading into the distance under a grey sky
@@ -48,7 +48,7 @@ window.SHOTS = [
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tK = at(Sh, 'killed', 2.5); },
     draw: (c, lt, u, Sh) => { c.fillStyle = S.rgba('#4a4e58', .55); c.fillRect(0, 0, 1280, 720);
       for (let r = 9; r >= 0; r--) { const y = 340 + r * r * 4 + r * 10, s = .25 + r * .12, n = 26 - r; for (let k = 0; k < n; k++) { const x = (k + .5) * 1280 / n + (r % 2) * 20, d = (9 - r) * .25 + Math.abs(k - n / 2) * .03; S.npCross(c, x, y, s, seg(lt, d, d + .8) * (.4 + r * .06)); } } },
-    over: [(c, lt, u, Sh) => K.card(c, '3.5–6 MILLION DEAD', lt, { at: Sh.tK, x: 1320, y: 150, px: 56, rot: -2 })],
+    over: [(c, lt, u, Sh) => K.card(c, '3.5–6 MILLION DEAD', lt, { at: Sh.tK, x: 960, y: 150, px: 56, rot: -2 })],
     sfx: [[.2, 'wind_loop', .35], [.3, 'drone', .2], ['killed', 'thud', .4]] },
 
   // 6.06 WIDE: the bicorne on a hook at Longwood; through the window, the empty grey sea
@@ -57,7 +57,7 @@ window.SHOTS = [
     draw: (c, lt, u, Sh) => { c.fillStyle = S.rgba('#0a0a14', .25); c.fillRect(0, 0, 1280, 720);
       c.fillStyle = '#6a5a4a'; c.fillRect(214, 262, 12, 6); c.save(); c.translate(222, 330); c.rotate(-.05 + Math.sin(lt * .8) * .015); S.npHat(c, 0, 0, .9, 0); c.restore();
       const f = seg(lt, Sh.dur - 1.6, Sh.dur); if (f > 0) { c.fillStyle = S.rgba('#000000', f); c.fillRect(0, 0, 1280, 720); } },
-    over: [(c, lt, u, Sh) => K.card(c, 'ONE MORE CROWN. ONE MORE WAR.', lt, { at: Sh.tO, until: Sh.tI, x: 1320, y: 150, px: 48, rot: -2 })],
+    over: [(c, lt, u, Sh) => K.card(c, 'ONE MORE CROWN. ONE MORE WAR.', lt, { at: Sh.tO, until: Sh.tI, x: 960, y: 150, px: 48, rot: -2 })],
     sfx: [[.2, 'ocean_loop', .25], [.3, 'wind_loop', .2], ['one more', 'drum', .3], ['island', 'swell', .4]] },
 ];
 VP.build(); K.boot();
