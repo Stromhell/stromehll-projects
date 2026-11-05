@@ -12,7 +12,11 @@ const shadowAll = g => { g.traverse(c => { if (c.isMesh) { c.castShadow = true; 
 // ---------- C-130H Hercules (IAF desert camouflage) ----------
 // length 29.8 m, span 40.4 m, tail height 11.6 m. userData: props[], setProps(rpm[4]), ramp (rotate .rotation.x), rampOpen(a 0..1)
 export function c130(o = {}) {
+  // o.gear: true (or a height in m) lifts the airframe onto visible main + nose gear so it no longer sits on its belly;
+  // the ramp then tilts far enough to rest its tip on the ground. Default 0 keeps the old stance for acts already rendered.
+  const gear = o.gear === true ? .55 : (o.gear ?? 0);
   const g = new THREE.Group(); g.name = 'C130';
+  const A = new THREE.Group(); A.position.y = gear; g.add(A);   // airframe (raised by the gear height); wheels stay on g at ground level
   const camo = canvasTex(2048, 1024, c => {
     c.fillStyle = '#b39a6c'; c.fillRect(0, 0, 2048, 1024);
     const blot = (col, n, s) => { c.fillStyle = col; for (let i = 0; i < n; i++) { c.beginPath(); const x = (i * 733) % 2048, y = (i * 389) % 1024; c.ellipse(x, y, s * (1 + (i % 3) * .4), s * .55, (i % 5) * .6, 0, 7); c.fill(); } };
@@ -32,59 +36,77 @@ export function c130(o = {}) {
   const r = z => z > 10.5 ? R * Math.sqrt(Math.max(0, 1 - ((z - 10.5) / (z1 - 10.5)) ** 2.2)) : z < -6 ? R * (1 - ((-6 - z) / (-6 - z0)) * .8) : R;
   const yc = z => z < -6 ? Y + ((-6 - z) / (-6 - z0)) ** 1.3 * 2.2 : z > 10.5 ? Y - ((z - 10.5) / (z1 - 10.5)) ** 2 * .7 : Y;
   const zs = []; for (let z = z0; z <= z1 + 1e-6; z += .25) zs.push(z);
-  const fus = m(tube(zs, r, yc, 48, 1.02), skin); g.add(fus);
+  const fus = m(tube(zs, r, yc, 48, 1.02), skin); A.add(fus);
   // flat belly / cargo floor fairing and wheel sponsons
-  g.add(m(new THREE.CapsuleGeometry(.75, 6.5, 6, 16), belly, { pos: [2.1, 1.25, .8], rot: [P / 2, 0, 0], scale: [1, 1, 1] }));
-  g.add(m(new THREE.CapsuleGeometry(.75, 6.5, 6, 16), belly, { pos: [-2.1, 1.25, .8], rot: [P / 2, 0, 0] }));
+  A.add(m(new THREE.CapsuleGeometry(.75, 6.5, 6, 16), belly, { pos: [2.1, 1.25, .8], rot: [P / 2, 0, 0], scale: [1, 1, 1] }));
+  A.add(m(new THREE.CapsuleGeometry(.75, 6.5, 6, 16), belly, { pos: [-2.1, 1.25, .8], rot: [P / 2, 0, 0] }));
   // cockpit glazing (many small panes) on the nose top
-  for (let i = -2; i <= 2; i++) g.add(m(new THREE.BoxGeometry(.62, .42, .05), glass, { pos: [i * .66, Y + 1.55 - Math.abs(i) * .08, 12.6 - Math.abs(i) * .18], rot: [-.55, i * .18, 0] }));
+  for (let i = -2; i <= 2; i++) A.add(m(new THREE.BoxGeometry(.62, .42, .05), glass, { pos: [i * .66, Y + 1.55 - Math.abs(i) * .08, 12.6 - Math.abs(i) * .18], rot: [-.55, i * .18, 0] }));
   // high wing on top of the fuselage, straight, slight dihedral
   const wy = Y + R + .1, dh = Math.tan(2.5 * P / 180);
   for (const s of [1, -1]) {
     const secs = [[.6, 4.9, .17], [10.6, 4.1, .15], [20.2, 2.6, .12]].map(([x, c, t]) => ({ x: s * x, y: wy + (x - .6) * dh, z: 3.4 - (x - .6) * .04, c, t }));
-    g.add(m(wing(secs, { flip: s < 0 }), skin));
+    A.add(m(wing(secs, { flip: s < 0 }), skin));
   }
-  // four Allison T56 turboprops
+  // four Allison T56 turboprops: long pointed spinner, four wide paddle blades (4.1 m disc) with yellow tips;
+  // when the prop turns fast the blades fade out and a translucent blur disc with a tip ring fades in (no strobing rods)
   g.userData.props = [];
   const xs = [-10.4, -5.0, 5.0, 10.4];
+  const bladeShape = (() => { const s = new THREE.Shape(); const pts = [[-.09, 0], [-.19, .45], [-.22, 1.1], [-.17, 1.7], [-.07, 2.0], [0, 2.05], [.07, 2.0], [.17, 1.7], [.22, 1.1], [.19, .45], [.09, 0]]; s.moveTo(...pts[0]); pts.slice(1).forEach(q => s.lineTo(...q)); s.closePath(); return s; })();
+  const bladeGeo = new THREE.ExtrudeGeometry(bladeShape, { depth: .05, bevelEnabled: true, bevelThickness: .012, bevelSize: .012, bevelSegments: 2, curveSegments: 6 }); bladeGeo.translate(0, .28, -.025);
+  const blurTex = canvasTex(256, 256, c => { c.clearRect(0, 0, 256, 256); const gr = c.createRadialGradient(128, 128, 0, 128, 128, 128); gr.addColorStop(0, 'rgba(10,10,12,0)'); gr.addColorStop(.14, 'rgba(10,10,12,0)'); gr.addColorStop(.3, 'rgba(14,14,16,.55)'); gr.addColorStop(.86, 'rgba(14,14,16,.4)'); gr.addColorStop(.93, 'rgba(120,110,70,.5)'); gr.addColorStop(.97, 'rgba(14,14,16,.2)'); gr.addColorStop(1, 'rgba(14,14,16,0)'); c.fillStyle = gr; c.fillRect(0, 0, 256, 256); });
   xs.forEach((x, i) => {
     const ny = wy + Math.abs(x) * dh - .55, nz = 3.4 + .4;
-    const nac = new THREE.Group(); nac.position.set(x, ny, nz); g.add(nac);
+    const nac = new THREE.Group(); nac.position.set(x, ny, nz); A.add(nac);
     nac.add(m(lathe([[.0, -6.0], [.45, -5.6], [.62, -4.0], [.66, -1.5], [.58, .3], [.44, 1.2], [.0, 1.5]]), skin, { rot: [P / 2, 0, 0] }));
     nac.add(m(new THREE.BoxGeometry(.5, .35, 1.6), dark, { pos: [0, -.55, .2] }));
+    nac.add(m(new THREE.CylinderGeometry(.09, .11, .5, 10), dark, { pos: [.45, -.1, -1.2], rot: [P / 2, 0, 0] }));   // exhaust stub
     const hub = new THREE.Group(); hub.position.set(0, 0, 1.75); nac.add(hub);
-    hub.add(m(new THREE.ConeGeometry(.34, .9, 20), std(0x2a2b2c, { rough: .4, metal: .5 }), { rot: [P / 2, 0, 0] }));
-    for (let b = 0; b < 4; b++) { const bl = new THREE.Group(); bl.rotation.z = b * P / 2; hub.add(bl); const blade = m(new THREE.BoxGeometry(.32, 2.05, .05), dark, { pos: [0, 1.15, 0], rot: [0, .35, 0] }); bl.add(blade); bl.add(m(new THREE.BoxGeometry(.34, .14, .06), std(0xd8c020, { rough: .5 }), { pos: [0, 2.1, 0], rot: [0, .35, 0] })); }
-    // blurred disc shown when spinning fast
-    const disc = m(new THREE.CircleGeometry(2.2, 40), new THREE.MeshBasicMaterial({ color: 0x111111, transparent: true, opacity: 0, depthWrite: false }), { cast: false }); disc.position.z = .05; hub.add(disc);
-    g.userData.props.push({ hub, disc, angle: i });
+    const bladeMat = new THREE.MeshStandardMaterial({ color: 0x1a1b1c, roughness: .55, metalness: .3, transparent: true, opacity: 1 });
+    const tipMat = new THREE.MeshStandardMaterial({ color: 0xd8c020, roughness: .5, transparent: true, opacity: 1 });
+    hub.add(m(lathe([[0, 1.0], [.14, .82], [.26, .5], [.33, .1], [.35, -.2], [0, -.2]], 24), std(0x2a2b2c, { rough: .4, metal: .5 }), { rot: [-P / 2, 0, 0] }));   // spinner cone (points +z)
+    hub.add(m(new THREE.CylinderGeometry(.36, .36, .12, 24), std(0x202122, { rough: .5, metal: .4 }), { pos: [0, 0, -.2], rot: [P / 2, 0, 0] }));             // spinner backplate
+    for (let b = 0; b < 4; b++) { const bl = new THREE.Group(); bl.rotation.z = b * P / 2; hub.add(bl); const blade = m(bladeGeo, bladeMat, { rot: [0, .42, 0] }); bl.add(blade); bl.add(m(new THREE.BoxGeometry(.3, .16, .055), tipMat, { pos: [0, 2.22, 0], rot: [0, .42, 0] })); }
+    const disc = m(new THREE.CircleGeometry(2.3, 48), new THREE.MeshBasicMaterial({ map: blurTex, transparent: true, opacity: 0, depthWrite: false, side: THREE.DoubleSide }), { cast: false }); disc.position.z = .3; hub.add(disc);
+    const pr = { hub, disc, bladeMat, tipMat, angle: i };
+    // spin(angleTurns, rpm): sets the blade angle and crossfades blades/blur disc by speed (blurry above ~8 turns/s)
+    pr.spin = (turns, w) => { hub.rotation.z = turns * 2 * P; const k = Math.min(1, Math.max(0, (w - 4) / 8)); disc.material.opacity = .9 * k; bladeMat.opacity = tipMat.opacity = 1 - .9 * k; };
+    g.userData.props.push(pr);
   });
-  g.userData.setProps = (t, rpm) => g.userData.props.forEach((p, i) => { const w = rpm[i] ?? 0; p.angle += 0; p.hub.rotation.z = t * w * 2 * P; p.disc.material.opacity = Math.min(.35, w / 25); });
+  g.userData.setProps = (t, rpm) => g.userData.props.forEach((p, i) => { const w = rpm[i] ?? 0; p.spin(t * w, w); });
   // tail: tall fin and stabilisers
   const ty = yc(-14) + .4;
-  g.add(m(wing([{ x: 0, y: ty, z: -9.2, c: 6.4, t: .12 }, { x: 0, y: 11.4, z: -13.2, c: 3.0, t: .1 }], { vertical: true }), skin));
-  for (const s of [1, -1]) g.add(m(wing([{ x: s * .4, y: ty + .2, z: -11.6, c: 4.0, t: .1 }, { x: s * 8.0, y: ty + .35, z: -13.0, c: 2.2, t: .09 }], { flip: s < 0 }), skin));
+  A.add(m(wing([{ x: 0, y: ty, z: -9.2, c: 6.4, t: .12 }, { x: 0, y: 11.4, z: -13.2, c: 3.0, t: .1 }], { vertical: true }), skin));
+  for (const s of [1, -1]) A.add(m(wing([{ x: s * .4, y: ty + .2, z: -11.6, c: 4.0, t: .1 }, { x: s * 8.0, y: ty + .35, z: -13.0, c: 2.2, t: .09 }], { flip: s < 0 }), skin));
   // IAF roundel (Star of David in a circle) on the fin and rear fuselage
   const roundel = canvasTex(256, 256, c => { c.fillStyle = '#f4f4f0'; c.beginPath(); c.arc(128, 128, 120, 0, 7); c.fill(); c.strokeStyle = '#1f4fa8'; c.lineWidth = 14;
     const tri = a => { c.beginPath(); for (let k = 0; k < 3; k++) { const th = a + k * 2 * P / 3; c.lineTo(128 + Math.sin(th) * 82, 128 - Math.cos(th) * 82); } c.closePath(); c.stroke(); }; tri(0); tri(P); });
-  for (const s of [1, -1]) g.add(m(new THREE.CircleGeometry(.75, 32), new THREE.MeshStandardMaterial({ map: roundel, transparent: true, roughness: .6 }), { pos: [s * (R + .04), Y + .3, -4.5], rot: [0, s * P / 2, 0], cast: false }));
+  for (const s of [1, -1]) A.add(m(new THREE.CircleGeometry(.75, 32), new THREE.MeshStandardMaterial({ map: roundel, transparent: true, roughness: .6 }), { pos: [s * (R + .04), Y + .3, -4.5], rot: [0, s * P / 2, 0], cast: false }));
   // rear cargo ramp (hinged at its forward edge) and upper door
-  const ramp = new THREE.Group(); ramp.position.set(0, 1.25, -8.6); g.add(ramp);
+  const ramp = new THREE.Group(); ramp.position.set(0, 1.25, -8.6); A.add(ramp);
   ramp.add(m(new THREE.BoxGeometry(3.0, .18, 4.4), belly, { pos: [0, 0, -2.2] }));
   ramp.add(m(new THREE.BoxGeometry(3.0, .02, 4.3), std(0x3a3a36, { rough: .9 }), { pos: [0, .1, -2.2] }));
+  for (const s of [1, -1]) ramp.add(m(new THREE.BoxGeometry(.06, .12, 4.3), std(0x5a5a54, { rough: .7, metal: .3 }), { pos: [s * 1.47, .12, -2.2] }));   // side rails
   g.userData.ramp = ramp;
-  g.userData.rampOpen = a => { ramp.rotation.x = -a * .27; };   // 0 closed (up), 1 resting on the ground
-  ramp.rotation.x = -.27 * (o.ramp ?? 0);
+  // ramp angle: the old fixed 15.5 degrees, or (with gear) enough for the 4.4 m ramp to reach the ground from the raised floor
+  const rampA = gear ? Math.asin(Math.min(1, (1.25 + gear) / 4.4)) : .27;
+  g.userData.rampAngle = rampA; g.userData.floorY = 1.25 + gear; g.userData.rampHingeZ = -8.6; g.userData.rampLen = 4.4;
+  g.userData.rampOpen = a => { ramp.rotation.x = -a * rampA; };   // 0 closed (up), 1 resting on the ground
+  ramp.rotation.x = -rampA * (o.ramp ?? 0);
   // interior glow seen through the open ramp
-  const glow = new THREE.PointLight(0xff4020, 0, 12, 2); glow.position.set(0, 2.8, -4); g.add(glow); g.userData.glow = glow;
-  // landing gear
+  const glow = new THREE.PointLight(0xff4020, 0, 12, 2); glow.position.set(0, 2.8, -4); A.add(glow); g.userData.glow = glow;
+  // landing gear (on g, at ground level): tandem main wheels under the sponsons, twin nose wheels, with struts when raised
   const mats = { tyre: std(0x151515, { rough: .9 }), hub: std(0x777777, { rough: .4, metal: .7 }), metal: std(0x888888, { rough: .4, metal: .7 }) };
-  for (const s of [1, -1]) for (const z of [-.2, 1.9]) { const w = wheel(.6, .45, mats); w.position.set(s * 2.05, .6, z); g.add(w); }
+  for (const s of [1, -1]) for (const z of [-.2, 1.9]) { const w = wheel(.6, .45, mats); w.position.set(s * 2.05, .6, z); g.add(w);
+    if (gear) { g.add(m(new THREE.CylinderGeometry(.1, .12, .9 + gear, 10), mats.metal, { pos: [s * 2.05, .6 + (.9 + gear) / 2, z] })); g.add(m(new THREE.BoxGeometry(.5, .16, .6), dark, { pos: [s * 2.05, .62 + gear, z] })); } }
   for (const s of [1, -1]) { const w = wheel(.42, .3, mats); w.position.set(s * .3, .42, 10.3); g.add(w); }
-  g.add(m(new THREE.CylinderGeometry(.08, .08, 1.4, 8), mats.metal, { pos: [0, 1.0, 10.3] }));
-  // nav lights (off by default; operation flew dark)
-  g.userData.lights = [m(new THREE.SphereGeometry(.09, 8, 6), std(0xff2020, { emissive: 0xff2020, ei: 0 }), { pos: [-20.3, wy + 19.6 * dh, 3.2] }), m(new THREE.SphereGeometry(.09, 8, 6), std(0x20ff40, { emissive: 0x20ff40, ei: 0 }), { pos: [20.3, wy + 19.6 * dh, 3.2] })];
-  g.userData.lights.forEach(l => g.add(l));
+  g.add(m(new THREE.CylinderGeometry(.08, .1, 1.4 + gear, 10), mats.metal, { pos: [0, .7 + (1.4 + gear) / 2 - .3, 10.3] }));
+  g.add(m(new THREE.CylinderGeometry(.11, .11, .9, 10), mats.metal, { pos: [0, .42, 10.3], rot: [0, 0, P / 2] }));   // nose axle
+  if (gear) { g.add(m(new THREE.CylinderGeometry(.05, .05, 1.3, 8), mats.metal, { pos: [0, .95 + gear * .6, 9.75], rot: [.75, 0, 0] })); for (const s of [1, -1]) g.add(m(new THREE.BoxGeometry(.9, .35, .12), belly, { pos: [0, 1.0 + gear, 10.3 + s * .55] })); }   // drag brace, bay doors
+  // nav lights (off by default; operation flew dark): dark lens so an unlit light does not read as a bright green/red dot in moonlight
+  g.userData.lights = [m(new THREE.SphereGeometry(.09, 8, 6), std(0x301010, { emissive: 0xff2020, ei: 0 }), { pos: [-20.3, wy + 19.6 * dh, 3.2] }), m(new THREE.SphereGeometry(.09, 8, 6), std(0x103010, { emissive: 0x20ff40, ei: 0 }), { pos: [20.3, wy + 19.6 * dh, 3.2] })];
+  g.userData.lights.forEach(l => A.add(l));
+  g.userData.air = A;
   return shadowAll(g);
 }
 
@@ -149,8 +171,13 @@ export function landrover(o = {}) {
   // jerrycan on the tailgate
   g.add(rbox(.2, .45, .32, .03, paint, { pos: [.5, 1.0, -2.12] }));
   const wm = wheelMats(); wm.hub = std(0x4a5236, { rough: .7 });
-  for (const [x, z] of [[-.75, 1.3], [.75, 1.3], [-.75, -1.3], [.75, -1.3]]) { const w = wheel(.42, .26, wm); w.position.set(x, .42, z); g.add(w); }
-  const sp = wheel(.38, .24, wm); sp.position.set(0, 1.42, 1.38); sp.rotation.set(P / 2, 0, 0); g.add(sp); // spare on the bonnet
+  // road wheel with a rolling cue: steel rim ring, five lug nuts, tread blocks round the tyre
+  const lrWheel = (r, wd) => { const w = wheel(r, wd, wm); const ring = m(new THREE.TorusGeometry(r * .5, .02, 8, 32), steel); w.add(ring);
+    for (let i = 0; i < 5; i++) { const a = i * P * 2 / 5; w.add(m(new THREE.CylinderGeometry(.018, .018, wd * .95 + .02, 8), steel, { pos: [Math.cos(a) * r * .28, Math.sin(a) * r * .28, 0], rot: [P / 2, 0, 0] })); }
+    for (let i = 0; i < 14; i++) { const a = i * P * 2 / 14; w.add(m(new THREE.BoxGeometry(.07, .05, wd * .9), std(0x1a1a1a, { rough: .95 }), { pos: [Math.cos(a) * (r - .01), Math.sin(a) * (r - .01), 0], rot: [0, 0, a] })); }
+    return w; };
+  for (const [x, z] of [[-.75, 1.3], [.75, 1.3], [-.75, -1.3], [.75, -1.3]]) { const w = lrWheel(.42, .26); w.position.set(x, .42, z); g.add(w); }
+  const sp = lrWheel(.38, .24); sp.position.set(0, 1.42, 1.38); sp.rotation.set(P / 2, 0, 0); g.add(sp); // spare on the bonnet
   return shadowAll(g);
 }
 
@@ -238,10 +265,14 @@ export async function hall(k, o = {}) {
   for (let x = -w / 2 + 2; x < w / 2 - 1; x += 3) g.add(box(2.2, 1.1, .05, std(o.dawn ? 0x8aa0c0 : 0x0c1018, { emissive: o.dawn ? 0x6a80a0 : 0x000000, ei: o.dawn ? .8 : 0 }), { pos: [x, h - .9, -d / 2 + .03], cast: false }));
   // mattresses
   const mats = []; const mm = std(0xd8d0bc, { rough: .95 }), stripe = std(0x7a8aa8, { rough: .95 });
-  for (let x = -w / 2 + 1.6; x < w / 2 - 1; x += 1.3) for (const z of [-d / 2 + 1.6, -d / 2 + 3.9, d / 2 - 3.9, d / 2 - 1.6]) {
-    if (((x * 7 + z * 3) | 0) % 5 === 0) continue;
-    const mt = new THREE.Group(); mt.position.set(x, 0, z); mt.rotation.y = ((x * 13) % 1) * .2 - .1; g.add(mt);
-    mt.add(rbox(.85, .14, 1.9, .05, mm, { pos: [0, .07, 0] })); mt.add(box(.86, .02, .2, stripe, { pos: [0, .145, -.6] }));
+  // o.tidy: rows laid out clear of the column footprints (columns at z = +-d/6) with gaps between beds, less random yaw
+  const tidy = !!o.tidy, mL = tidy ? 1.8 : 1.9;
+  const rowsZ = tidy ? [-d / 2 + 1.3, -d / 6 - 1.25, d / 6 + 1.25, d / 2 - 1.3] : [-d / 2 + 1.6, -d / 2 + 3.9, d / 2 - 3.9, d / 2 - 1.6];
+  for (let x = -w / 2 + (tidy ? 1.5 : 1.6); x < w / 2 - 1; x += (tidy ? 1.5 : 1.3)) for (const z of rowsZ) {
+    if (!tidy && ((x * 7 + z * 3) | 0) % 5 === 0) continue;
+    if (tidy && ((x * 7 + z * 3) | 0) % 7 === 0) continue;
+    const mt = new THREE.Group(); mt.position.set(x, 0, z); mt.rotation.y = tidy ? (((x * 13) % 1) * .08 - .04) : (((x * 13) % 1) * .2 - .1); g.add(mt);
+    mt.add(rbox(.85, .14, mL, .05, mm, { pos: [0, .07, 0] })); mt.add(box(.86, .02, .2, stripe, { pos: [0, .145, -mL / 2 + .35] }));
     mats.push({ x, z, rot: mt.rotation.y });
   }
   // detail pass: wainscot band, skirting, column bases, posters, a wall clock, luggage and blankets, bulbs with shades
@@ -254,11 +285,22 @@ export async function hall(k, o = {}) {
   for (let x = -w / 2 + 4; x < w / 2; x += 4) for (const z of [-d / 6, d / 6]) { g.add(box(.6, .3, .6, std(0x7a705c, { rough: .85 }), { pos: [x, .15, z] })); g.add(box(.55, .12, .55, std(0x9a907a, { rough: .85 }), { pos: [x, h - .06, z] })); }
   const posters = [['EAST AFRICAN AIRWAYS', 'FLY THE SUPER VC10', '#1d4f8a'], ['UGANDA', 'PEARL OF AFRICA', '#2a6a3a'], ['NO SMOKING', 'TAFADHALI USIVUTE SIGARA', '#8a2a1e']];
   posters.forEach(([a, b, col], i) => {
-    const tex = canvasTex(512, 720, c => { c.fillStyle = '#efe6d0'; c.fillRect(0, 0, 512, 720); c.fillStyle = col; c.fillRect(24, 24, 464, 440); c.fillStyle = '#efe6d0'; c.beginPath(); c.arc(256, 250, 120, 0, 7); c.fill();
-      c.fillStyle = col; c.font = 'bold 50px Oswald, sans-serif'; c.textAlign = 'center'; c.fillText(a, 256, 560, 470); c.font = '30px Oswald, sans-serif'; c.fillStyle = '#3a2e22'; c.fillText(b, 256, 620, 470);
+    const tex = canvasTex(512, 720, c => { c.fillStyle = '#efe6d0'; c.fillRect(0, 0, 512, 720);
+      if (tidy) {   // readable: big stacked words on a coloured field, small emblem, legible from across the hall
+        c.fillStyle = col; c.fillRect(24, 24, 464, 672); c.fillStyle = '#efe6d0'; c.fillRect(44, 44, 424, 632); c.fillStyle = col;
+        const words = a.split(' '); c.textAlign = 'center'; c.font = 'bold 104px Oswald, sans-serif'; words.forEach((wd, j) => c.fillText(wd, 256, 170 + j * 112, 400));
+        c.fillStyle = '#3a2e22'; c.font = 'bold 40px Oswald, sans-serif'; c.fillText(b, 256, 560, 400);
+        c.fillStyle = col; c.beginPath(); c.ellipse(256, 630, 70, 12, 0, 0, 7); c.fill(); c.fillRect(246, 585, 20, 60); c.fillRect(206, 600, 100, 10);
+      } else { c.fillStyle = col; c.fillRect(24, 24, 464, 440); c.fillStyle = '#efe6d0'; c.beginPath(); c.arc(256, 250, 120, 0, 7); c.fill();
+      c.fillStyle = col; c.font = 'bold 50px Oswald, sans-serif'; c.textAlign = 'center'; c.fillText(a, 256, 560, 470); c.font = '30px Oswald, sans-serif'; c.fillStyle = '#3a2e22'; c.fillText(b, 256, 620, 470); }
       c.fillStyle = 'rgba(90,70,40,.18)'; for (let k = 0; k < 40; k++) c.fillRect((k * 97) % 512, (k * 151) % 720, 30, 4); });
     g.add(m(new THREE.PlaneGeometry(.9, 1.27), new THREE.MeshStandardMaterial({ map: tex, roughness: .9 }), { pos: [-w / 2 + 5 + i * 7.5, 2.1, -d / 2 + .03], cast: false }));
   });
+  if (tidy) {   // directional sign board over the back wall: white letters on dark blue, with an arrow
+    const sb = canvasTex(1536, 256, c => { c.fillStyle = '#1b3a62'; c.fillRect(0, 0, 1536, 256); c.strokeStyle = '#e8e2d0'; c.lineWidth = 8; c.strokeRect(14, 14, 1508, 228); c.fillStyle = '#f2ecdc'; c.font = 'bold 120px Oswald, sans-serif'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('TRANSIT LOUNGE', 60, 132); c.font = 'bold 150px Oswald, sans-serif'; c.textAlign = 'right'; c.fillText('\u2192', 1476, 126); });
+    g.add(m(new THREE.PlaneGeometry(3.0, .5), new THREE.MeshStandardMaterial({ map: sb, roughness: .7 }), { pos: [-w / 2 + 15.6, 2.55, -d / 2 + .04], cast: false }));
+    g.add(box(3.1, .6, .03, std(0x2a2a2e, { rough: .6, metal: .3 }), { pos: [-w / 2 + 15.6, 2.55, -d / 2 + .005], cast: false }));   // frame sits behind the face
+  }
   const clock = new THREE.Group(); clock.position.set(w / 2 - 6, h - 1.9, -d / 2 + .06); g.add(clock);
   clock.add(m(new THREE.CylinderGeometry(.32, .32, .06, 32), std(0xf2ecdc, { rough: .5 }), { rot: [P / 2, 0, 0] }));
   clock.add(m(new THREE.TorusGeometry(.32, .03, 8, 32), std(0x2a2620, { metal: .5, rough: .4 })));
