@@ -103,38 +103,69 @@ function medBag() { const g = new THREE.Group(); g.add(real.rbox(.3, .2, .13, .0
 // satin paint (roughness .5), lighter glass with chrome surrounds, roof line, sill, pillars, wheels proud of the body
 function mercHero(o = {}) {
   const g = new THREE.Group();
-  const paint = new THREE.MeshPhysicalMaterial({ color: o.color ?? 0x30343a, roughness: .55, metalness: .15, sheen: .3, sheenColor: 0x8a9098 });
-  const chrome = real.std(0xd8dade, { rough: .18, metal: 1 }), dark = real.std(0x151516, { rough: .85 }), rubber = real.std(0x0c0c0c, { rough: .95 });
-  const glass = new THREE.MeshPhysicalMaterial({ color: 0x9aaab6, roughness: .08, metalness: 0, transparent: true, opacity: .35 });
-  g.add(real.rbox(1.78, .38, 4.75, .09, paint, { pos: [0, .72, 0] }));   // body ~.50-.95 incl. bevel                 // body .50–.98
+  const paint = new THREE.MeshPhysicalMaterial({ color: o.color ?? 0x30343a, roughness: o.rough ?? .45, metalness: .25, clearcoat: .5, clearcoatRoughness: .25 });
+  const paint2 = paint.clone(); paint2.side = THREE.DoubleSide;
+  const chrome = real.std(0xd8dade, { rough: .15, metal: 1 }), dark = real.std(0x151516, { rough: .85 }), rubber = real.std(0x0c0c0c, { rough: .95 });
+  // QA r5: tinted, reflective glass panes (opaque, so the cabin reads as glass set in a painted body, not a see-through fish tank)
+  const glass = new THREE.MeshPhysicalMaterial({ color: 0x1e252c, roughness: .04, metalness: .35, clearcoat: 1, clearcoatRoughness: .02, side: THREE.DoubleSide });
+  g.add(real.rbox(1.78, .48, 4.75, .09, paint, { pos: [0, .74, 0] }));                 // body .50–.98
   g.add(real.rbox(1.72, .1, 4.55, .03, dark, { pos: [0, .47, 0] }));                   // sill line
   g.add(real.box(1.5, .06, 4.1, dark, { pos: [0, .42, 0], cast: false }));              // floor pan
-  g.add(real.box(1.56, .46, 2.3, glass, { pos: [0, 1.2, -.25], cast: false }));         // glasshouse (plain box: an rbox bevel bulged over the roof)
-  g.add(real.rbox(1.6, .03, 1.45, .03, paint, { pos: [0, 1.46, -.4] }));                // roof panel, shorter than the glass so windscreen + rear window show from above
-  for (const z of [.33, -1.13]) g.add(real.box(1.58, .025, .025, chrome, { pos: [0, 1.44, z] }));   // chrome screen headers
-  g.add(real.box(1.5, .04, 2.3, real.std(0x0c0c0d, { rough: .9 }), { pos: [0, .99, -.25], cast: false }));   // dark cabin floor under the glass so windscreen / rear window read darker than the paint
-  const seat = real.std(0x4a3a2c, { rough: .8 }); for (const z of [.25, -.85]) for (const x of [-.4, .4]) g.add(real.rbox(.55, .45, .14, .04, seat, { pos: [x, 1.2, z] }));   // seat backs seen through the glass
-  for (const x of [-.8, .8]) { g.add(real.box(.05, .48, .07, paint, { pos: [x, 1.21, .9] })); g.add(real.box(.05, .48, .09, paint, { pos: [x, 1.21, -1.4] })); g.add(real.box(.05, .48, .06, paint, { pos: [x, 1.21, -.3] })); }
-  for (const x of [-.9, .9]) { g.add(real.box(.015, .02, 4.4, chrome, { pos: [x, .985, 0] })); g.add(real.box(.015, .02, 2.3, chrome, { pos: [x * .9, 1.455, -.25] })); g.add(real.box(.015, .02, 2.3, chrome, { pos: [x * .89, .97, -.25] })); }
+  // QA r5 greenhouse: painted side frames with A/B/C pillars, separate front + rear door glass, raked windscreen and rear window, rounded roof with drip rails
+  const shp = (pts, mat, x, off = 0) => { const s = new THREE.Shape(); pts.forEach(([z, y], i) => i ? s.lineTo(-z, y) : s.moveTo(-z, y)); const m = real.m(new THREE.ShapeGeometry(s), mat, { pos: [x, 0, 0], rot: [0, P / 2, 0] }); return m; };
+  for (const sx of [-1, 1]) {
+    g.add(shp([[.9, .97], [.34, 1.44], [-1.02, 1.44], [-1.52, .97]], paint2, sx * .765));                         // side frame (pillars)
+    const gx = sx * .772;
+    g.add(shp([[.76, 1.0], [.36, 1.36], [-.3, 1.36], [-.3, 1.0]], glass, gx));                                   // front door glass
+    g.add(shp([[-.4, 1.0], [-.4, 1.36], [-.98, 1.36], [-1.2, 1.0]], glass, gx));                                 // rear door glass
+    g.add(real.box(.012, .018, 1.15, chrome, { pos: [sx * .776, 1.37, -.31] }));                                 // window top chrome
+    g.add(real.box(.012, .018, 1.98, chrome, { pos: [sx * .776, .995, -.2] }));                                  // window sill chrome
+    g.add(real.box(.025, .03, 1.62, chrome, { pos: [sx * .76, 1.445, -.34] }));                                  // drip rail
+  }
+  const screen = (z0, z1, w) => { const L = Math.hypot(1.43 - .99, z1 - z0); const m = real.box(w, L, .012, glass, { pos: [0, (1.43 + .99) / 2, (z0 + z1) / 2] }); m.rotation.x = Math.atan2(z1 - z0, 1.43 - .99) * -1; return m; };
+  { const ws = screen(.9, .34, 1.48); ws.rotation.x = -Math.atan2(.56, .44); g.add(ws); const ws2 = real.box(1.52, .025, .02, chrome, { pos: [0, .995, .89] }); g.add(ws2); }
+  { const rs = screen(-1.52, -1.02, 1.48); rs.rotation.x = Math.atan2(.5, .44); g.add(rs); g.add(real.box(1.52, .025, .02, chrome, { pos: [0, .995, -1.51] })); }
+  g.add(real.rbox(1.54, .1, 1.42, .05, paint, { pos: [0, 1.44, -.34] }));                                         // roof, rounded edges
+  g.add(real.rbox(1.4, .04, 1.25, .02, paint, { pos: [0, 1.495, -.34] }));                                        // roof crown
+  for (const x of [-.8, .8]) g.add(real.box(.05, .1, .05, paint, { pos: [x, 1.0, .88] }));                       // A-pillar feet
   for (const x of [-.895, .895]) for (const z of [.1, -1.0]) { g.add(real.box(.01, .4, .012, dark, { pos: [x, .74, z] })); g.add(real.box(.02, .025, .12, chrome, { pos: [x, .86, z - .22] })); }
+  for (const x of [-.9, .9]) g.add(real.box(.015, .02, 4.4, chrome, { pos: [x, .72, 0] }));                      // side trim strip
   const wm = { tyre: real.std(0x111111, { rough: .9 }), hub: real.std(0xc8ccd0, { rough: .25, metal: .9 }), metal: chrome };
   for (const [x, z] of [[-.8, 1.45], [.8, 1.45], [-.8, -1.45], [.8, -1.45]]) {
     const w = sets.wheel(.34, .22, wm); w.position.set(x, .34, z); g.add(w);
     w.add(real.m(new THREE.TorusGeometry(.17, .012, 8, 32), chrome));
-    for (let i = 0; i < 16; i++) { const a = i * P * 2 / 16; w.add(real.m(new THREE.BoxGeometry(.05, .04, .2), rubber, { pos: [Math.cos(a) * .33, Math.sin(a) * .33, 0], rot: [0, 0, a] })); }
+    for (let i = 0; i < 5; i++) { const a = i * P * 2 / 5; w.add(real.m(new THREE.CylinderGeometry(.014, .014, .23, 8), dark, { pos: [Math.cos(a) * .1, Math.sin(a) * .1, 0], rot: [P / 2, 0, 0] })); }
+    for (let i = 0; i < 16; i++) { const a = i * P * 2 / 16; w.add(real.m(new THREE.BoxGeometry(.03, .015, .19), rubber, { pos: [Math.cos(a) * .335, Math.sin(a) * .335, 0], rot: [0, 0, a] })); }
     g.add(real.m(new THREE.CircleGeometry(.43, 24, 0, P), dark, { pos: [x * 1.12, .36, z], rot: [0, Math.sign(x) * P / 2, 0], cast: false }));
     g.add(real.m(new THREE.CircleGeometry(.43, 24, 0, P), dark, { pos: [x * 1.12, .36, z], rot: [0, -Math.sign(x) * P / 2, 0], cast: false }));
   }
+  // nose ported from act 0 (QA act0r3): grille + shell + star on stem, bonnet panel with shut lines, cowl, wipers, headlamp brows
   const zf = 2.375;
   g.add(real.box(.9, .36, .03, dark, { pos: [0, .74, zf - .02] }));
   for (const y of [.56, .92]) g.add(real.box(.94, .03, .06, chrome, { pos: [0, y, zf + .01] }));
   for (const x of [-.46, .46]) g.add(real.box(.03, .39, .06, chrome, { pos: [x, .74, zf + .01] }));
   for (let i = 0; i < 9; i++) g.add(real.box(.014, .33, .04, chrome, { pos: [-.4 + i * .1, .74, zf + .01] }));
-  g.add(real.m(new THREE.CylinderGeometry(.01, .014, .12, 8), chrome, { pos: [0, .99, 2.22] }));
+  g.add(real.box(.86, .02, .045, chrome, { pos: [0, .74, zf + .015] }));
+  g.add(real.rbox(1.42, .035, 1.5, .015, paint, { pos: [0, .995, 1.55] }));
+  g.add(real.rbox(.5, .025, 1.45, .012, paint, { pos: [0, 1.018, 1.57] }));
+  for (const x of [-.25, .25]) g.add(real.box(.012, .01, 1.42, dark, { pos: [x, 1.027, 1.57] }));
+  for (const x of [-.72, .72]) g.add(real.box(.01, .012, 1.52, dark, { pos: [x, 1.0, 1.55] }));
+  g.add(real.box(1.44, .012, .01, dark, { pos: [0, 1.0, .8] }));
+  g.add(real.box(1.5, .02, .14, dark, { pos: [0, .995, .87] }));
+  for (let i = 0; i < 10; i++) g.add(real.box(.1, .006, .1, real.std(0x050506, { rough: .9 }), { pos: [-.63 + i * .14, 1.007, .87] }));
+  for (const [x, r] of [[-.35, .2], [.3, .2]]) { const w = new THREE.Group(); w.position.set(x, 1.02, .9); w.rotation.y = r; g.add(w); w.add(real.box(.55, .015, .02, dark, { pos: [0, .005, 0] })); w.add(real.box(.5, .025, .008, rubber, { pos: [0, .0, .012] })); w.add(real.m(new THREE.CylinderGeometry(.02, .02, .03, 10), chrome, { pos: [.28, 0, 0] })); }
+  g.add(real.rbox(1.0, .1, .16, .03, chrome, { pos: [0, .985, zf - .04] }));
+  g.add(real.rbox(.92, .05, .1, .02, dark, { pos: [0, 1.0, zf - .16] }));
+  for (const x of [-.6, .6]) g.add(real.rbox(.34, .05, .14, .02, chrome, { pos: [x, .9, zf - .06] }));
+  const star = new THREE.Group(); star.position.set(0, 1.13, zf - .04); g.add(star);
+  star.add(real.m(new THREE.TorusGeometry(.055, .008, 8, 24), chrome));
+  for (let i = 0; i < 3; i++) { const a = P / 2 + i * P * 2 / 3; star.add(real.box(.016, .055, .016, chrome, { pos: [Math.cos(a) * .027, Math.sin(a) * .027, 0], rot: [0, 0, a - P / 2] })); }
+  g.add(real.m(new THREE.CylinderGeometry(.012, .02, .1, 10), chrome, { pos: [0, 1.06, zf - .04] }));
   for (const x of [-.6, .6]) {
     g.add(real.m(new THREE.CylinderGeometry(.15, .15, .1, 24), dark, { pos: [x, .74, zf - .03], rot: [P / 2, 0, 0] }));
     g.add(real.m(new THREE.CylinderGeometry(.12, .1, .06, 24), real.std(0xb8bcc0, { rough: .2, metal: .9 }), { pos: [x, .74, zf - .01], rot: [P / 2, 0, 0] }));
     g.add(real.m(new THREE.SphereGeometry(.06, 14, 10), real.std(0xffffff, { emissive: 0xfff2d0, ei: o.lights ? 3 : .15, rough: .3 }), { pos: [x, .74, zf + .01], cast: false }));
+    g.add(real.m(new THREE.SphereGeometry(.13, 20, 14, 0, P * 2, 0, P / 2), new THREE.MeshPhysicalMaterial({ color: 0xffffff, roughness: .05, metalness: 0, transparent: true, opacity: .3 }), { pos: [x, .74, zf + .005], rot: [P / 2, 0, 0], cast: false }));
     g.add(real.m(new THREE.TorusGeometry(.145, .016, 8, 32), chrome, { pos: [x, .74, zf + .02] }));
     g.add(real.box(.14, .06, .03, real.std(0xe0a040, { emissive: 0xd08020, ei: .1 }), { pos: [x * 1.25, .52, zf - .01] }));
   }
@@ -142,9 +173,9 @@ function mercHero(o = {}) {
     g.add(real.rbox(1.84, .11, .14, .03, chrome, { pos: [0, .45, z] }));
     g.add(real.box(1.84, .03, .145, rubber, { pos: [0, .45, z] }));
     for (const x of [-.56, .56]) g.add(real.rbox(.08, .17, .1, .02, chrome, { pos: [x, .47, z + sg * .03] }));
+    g.add(real.box(1.6, .05, .05, chrome, { pos: [0, .39, z - sg * .02] }));
   }
   for (const x of [-.72, .72]) g.add(real.box(.22, .09, .03, real.std(o.tail ?? 0x8a1a12, { emissive: 0x600000, ei: o.tailEi ?? .3 }), { pos: [x, .74, -2.385] }));
-  g.add(real.box(.24, .02, .14, chrome, { pos: [0, 1.0, 2.0] }));
   g.add(real.box(1.0, .015, .6, chrome, { pos: [0, .99, -1.9] }));   // boot-lid chrome strip
   for (const x of [-.86, .86]) { g.add(real.box(.03, .1, .05, dark, { pos: [x * 1.02, 1.1, .95] })); g.add(real.box(.06, .08, .1, chrome, { pos: [x * 1.06, 1.15, .95] })); }
   g.traverse(c => { if (c.isMesh) { c.castShadow = true; c.receiveShadow = true; } }); return g;
@@ -298,16 +329,23 @@ export const shots = {
   // plane one: the assault team and the convoy; Yoni at the front
   '7.13': async k => {
     const { real, scene, camera } = k;
-    const h = await holdInterior(k, { seats: [-7.2, -5.2], len: 16, red: true, lampI: 10, hemi: .7 });
-    const ys = new THREE.SpotLight(0xffd0b0, 25, 6, .5, .6, 1.3); ys.position.set(-.45, 2.6, -4.6); ys.target.position.set(-.45, 1.4, -6.2); scene.add(ys, ys.target);
-    // QA r4: near-black satin Mercedes (rough .5), dead tail lamps (read as candles), neutral key/fill over the car so the red cabin light doesn't paint it a red slab
-    const cars = [mercHero({ color: 0x17191c, tail: 0x2a0806, tailEi: 0 }), S2.landrover(), S2.landrover()]; cars.forEach((c, i) => { c.position.set(0, 0, -2.6 + i * 4.8); scene.add(c); });
-    carFill(scene, cars[0], 3);
-    { const nk = new THREE.SpotLight(0xf2f0ec, 10, 7, .7, .7, 1.4); nk.position.set(.9, 2.7, -6.2); nk.target.position.set(0, .7, -2.6); scene.add(nk, nk.target); }
+    // QA r5: red cabin lamps cut ~60% (lampI 10 -> 4, hemi .7 -> .3); a neutral/cool key + rim over the car so it reads as a black satin Mercedes with chrome
+    const h = await holdInterior(k, { seats: [-7.6, -5.8], len: 16, red: true, lampI: 4, hemi: .3 });
+    const ys = new THREE.SpotLight(0xffd8c0, 14, 6, .6, .6, 1.3); ys.position.set(-1.6, 2.4, .9); ys.target.position.set(-1.2, 1.4, -.6); scene.add(ys, ys.target);
+    // low 3/4 front view: the Mercedes sits angled (nose toward the left wall), Land Rover behind the camera
+    const merc = mercHero({ color: 0x2c2f34, rough: .35 }); merc.position.set(.05, 0, -3.1); merc.rotation.y = -.36; scene.add(merc);
+    merc.traverse(c => { if (c.isMesh && c.material && 'envMapIntensity' in c.material) c.material.envMapIntensity = 1.2; });
+    const lr = S2.landrover(); lr.position.set(0, 0, 6.2); scene.add(lr);
+    { const key = new THREE.SpotLight(0xdfe8ff, 40, 8, .75, .6, 1.4); key.position.set(1.0, 2.8, -1.0); key.target.position.set(0, .8, -2.6); scene.add(key, key.target);
+      const rim = new THREE.SpotLight(0xe8eeff, 22, 8, .7, .6, 1.4); rim.position.set(-1.2, 2.7, -6.0); rim.target.position.set(0, .9, -2.8); scene.add(rim, rim.target);
+      const fl = new THREE.PointLight(0xe6ecf4, 3, 4, 1.6); fl.position.set(1.2, 1.0, -.6); scene.add(fl);
+      const gk = new THREE.SpotLight(0xd8e2f0, 30, 7, .45, .7, 1.4); gk.position.set(1.6, 2.3, .4); gk.target.position.set(0, 1.25, -3.2); scene.add(gk, gk.target);   // glasshouse: makes pillars vs glass read
+      const sd = new THREE.SpotLight(0xdce6f4, 45, 6, .7, .8, 1.4); sd.position.set(1.7, 1.7, -.9); sd.target.position.set(.4, .9, -3.6); scene.add(sd.target); scene.add(sd);   // cool side light: door seams, side glass, sill chrome
+      const af = new THREE.PointLight(0xffe8d8, 6, 5, 1.6); af.position.set(0, 2.2, -6.4); scene.add(af); }   // the seated team aft of the car
     const ppl = await seatSoldiers(k, h.seatSpots, CMD, { seed: 4500 });
-    const y = await real.human({ id: 'tb_yoni', seed: 4599 }); real.put(scene, y, { pos: [-.45, 0, -6.2], rot: P, mood: 'stern' }); y.userData.driven = true;
-    // QA r4: camera at the forward bulkhead looking aft past Yoni at the Mercedes' rear quarter, so it reads as a car (boot, rear window, pillars, side glass, wheels)
-    const cam = C.dolly(camera, { pos: [.95, 1.6, -7.75], look: [.2, .75, -1.2], fov: 56 }, { pos: [.85, 1.55, -7.3], look: [.25, .75, -1.0], fov: 52 });
+    // Yoni stands at the front left of the car (>= .5 m clear of the bumper), briefing toward camera
+    const y = await real.human({ id: 'tb_yoni', seed: 4599 }); real.put(scene, y, { pos: [-1.1, 0, -.05], rot: .7, mood: 'stern' }); y.userData.driven = true;
+    const cam = C.dolly(camera, { pos: [1.4, 1.25, 2.6], look: [-.55, .9, -3.0], fov: 46 }, { pos: [1.35, 1.15, 2.1], look: [-.5, .9, -3.1], fov: 44 });
     return (t, u) => { cam(u); idleSit(ppl, t); y.update(t, { mood: 'stern', arm: t > 2 && t < 4 ? 'point' : null, talk: Math.sin(t * 1.6) > 0, look: Math.sin(t * .5) * .3 }); };
   },
   // a family photo of two brothers (generic, no likeness)
