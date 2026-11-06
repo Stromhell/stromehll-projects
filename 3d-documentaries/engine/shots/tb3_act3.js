@@ -41,6 +41,15 @@ function mapTexture(k, upd) {
 }
 const UG = ['tb_ug1', 'tb_ug2', 'tb_ug3'];
 // rifles are only ever dark shapes, carried slung or held low
+function woodMat() {
+  const draw = (c, bump) => { const W = 1024, H = 1024, pw = 128; for (let i = 0; i < W / pw; i++) { const off = (i * 397) % H;
+      for (const y0 of [off - H, off]) { const sh = (i * 37 + (y0 > 0 ? 11 : 0)) % 30; c.fillStyle = bump ? '#a0a0a0' : `rgb(${120 + sh},${84 + sh * .7},${52 + sh * .4})`; c.fillRect(i * pw, y0, pw, H);
+        for (let g = 0; g < 46; g++) { const gx = i * pw + 4 + ((g * 53 + i * 17) % (pw - 8)); c.strokeStyle = bump ? `rgba(60,60,60,${.25 + (g % 3) * .1})` : `rgba(60,34,18,${.12 + (g % 4) * .05})`; c.lineWidth = 1 + (g % 3); c.beginPath(); c.moveTo(gx, y0); for (let y = 0; y <= H; y += 32) c.lineTo(gx + Math.sin(y * .011 + g) * 3, y0 + y); c.stroke(); }
+        c.fillStyle = bump ? '#000' : 'rgba(30,18,10,.9)'; c.fillRect(i * pw, y0, 3, H); c.fillRect(i * pw, y0, pw, 3); } } };
+  const map = real.canvasTex(1024, 1024, c => draw(c, false), { repeat: [6, 6] });
+  const bump = real.canvasTex(1024, 1024, c => draw(c, true), { repeat: [6, 6] }); bump.colorSpace = THREE.NoColorSpace;
+  return new THREE.MeshStandardMaterial({ map, bumpMap: bump, bumpScale: 1.5, roughness: .62, metalness: 0 });
+}
 function rifleShape() { const g = new THREE.Group(); const mt = new THREE.MeshStandardMaterial({ color: 0x101010, roughness: .6, metalness: .3 }); g.add(new THREE.Mesh(new THREE.BoxGeometry(.04, .07, .95), mt)); const st = new THREE.Mesh(new THREE.BoxGeometry(.04, .12, .25), mt); st.position.set(0, -.03, -.5); g.add(st); g.traverse(c => { if (c.isMesh) c.castShadow = true; }); return g; }
 // Amin's peaked service cap, built here (closed crown + top, cloth band, black visor); group origin = bottom of the band, seated on the skull
 function aminCap(color = 0x3a4428) {
@@ -100,11 +109,21 @@ export const shots = {
     for (let i = 0; i < 8; i++) { const md = new THREE.Group(); md.add(real.box(.035, .02, .006, real.std(rib[i % 4]), { pos: [0, .02, 0] })); md.add(real.m(new THREE.CylinderGeometry(.013, .013, .005, 12), gold, { pos: [0, -.008, 0], rot: [P / 2, 0, 0] })); C.attach(a, md, 'Spine2', [-.12 + (i % 4) * .042, .06 - Math.floor(i / 4) * .06, .13]); }
     const under = new THREE.SpotLight(0xffd8a8, 40, 8, .45, .6, 1.3); under.position.set(0, .2, 1.6); under.target.position.set(0, 1.6, 0); under.castShadow = true; scene.add(under, under.target);
     const rim = new THREE.SpotLight(0x8aa0ff, 60, 8, .4, .6, 1.2); rim.position.set(-1.5, 3, -2); rim.target.position.set(0, 1.5, 0); scene.add(rim, rim.target);
-    scene.add(real.m(new THREE.PlaneGeometry(8, 6), real.std(0x1a1614, { rough: .95 }), { pos: [0, 3, -2.5], cast: false }));
+    // QA act3r7: plain brown disc fading to black -> procedural plank floor (grain + bump), wider fill, and a dim office back wall with flag and portrait
+    const wallM = real.std(0x4a3e34, { rough: .9 }); scene.add(real.box(12, 6, .1, wallM, { pos: [0, 3, -2.6], cast: false }));
+    scene.add(real.box(12, .18, .04, real.std(0x2e2218, { rough: .7 }), { pos: [0, .09, -2.53], cast: false }));
+    const flagTex = real.canvasTex(600, 400, c => { ['#111', '#f2c418', '#c0281e', '#111', '#f2c418', '#c0281e'].forEach((col, i) => { c.fillStyle = col; c.fillRect(0, i * 400 / 6, 600, 400 / 6 + 1); }); c.fillStyle = '#fff'; c.beginPath(); c.arc(300, 200, 70, 0, 7); c.fill(); c.fillStyle = '#8a8a8a'; c.beginPath(); c.arc(300, 200, 40, 0, 7); c.fill(); });
+    const flag = real.m(new THREE.PlaneGeometry(1.5, 1), new THREE.MeshStandardMaterial({ map: flagTex, roughness: .9 }), { pos: [-1.55, 2.2, -2.54], cast: false }); scene.add(flag);
+    scene.add(real.m(new THREE.CylinderGeometry(.015, .015, 1.7, 8), real.std(0xb08a40, { metal: .8, rough: .35 }), { pos: [-2.33, 2.0, -2.53], cast: false }));
+    const pfr = real.std(0x6a4a22, { rough: .5, metal: .2 });
+    for (const [w, h, x, y] of [[.9, .06, 1.6, 2.86], [.9, .06, 1.6, 1.74], [.06, 1.18, 1.18, 2.3], [.06, 1.18, 2.02, 2.3]]) scene.add(real.box(w, h, .05, pfr, { pos: [x, y, -2.52], cast: false }));
+    const portTex = real.canvasTex(300, 400, c => { const gr = c.createLinearGradient(0, 0, 0, 400); gr.addColorStop(0, '#5a4a3a'); gr.addColorStop(1, '#2a2018'); c.fillStyle = gr; c.fillRect(0, 0, 300, 400); c.fillStyle = '#3a4428'; c.beginPath(); c.ellipse(150, 360, 120, 90, 0, 0, 7); c.fill(); c.fillStyle = '#4a3020'; c.beginPath(); c.ellipse(150, 190, 62, 78, 0, 0, 7); c.fill(); c.fillStyle = '#3a4428'; c.fillRect(85, 105, 130, 40); });
+    scene.add(real.m(new THREE.PlaneGeometry(.78, 1.06), new THREE.MeshStandardMaterial({ map: portTex, roughness: .8 }), { pos: [1.6, 2.3, -2.535], cast: false }));
+    const wallWash = new THREE.SpotLight(0xffd6a8, 45, 10, .75, .8, 1.3); wallWash.position.set(0, 3.8, 1.5); wallWash.target.position.set(0, 2.1, -2.6); scene.add(wallWash, wallWash.target);
     // QA a3r6: he stood in a black void -> lit wooden stage floor, a warm pool of light at his feet and a soft contact shadow under them
-    const flr = real.m(new THREE.PlaneGeometry(30, 30), real.std(0x6a5440, { rough: .75 }), { rot: [-P / 2, 0, 0], cast: false }); flr.receiveShadow = true; scene.add(flr);
-    const pool = new THREE.SpotLight(0xffe2bc, 140, 12, .42, .6, 1.2); pool.position.set(.6, 4.5, 2.2); pool.target.position.set(0, 0, 0); pool.castShadow = true; pool.shadow.mapSize.set(2048, 2048); scene.add(pool, pool.target);
-    scene.add(new THREE.HemisphereLight(0x8a7a6a, 0x2a2018, .35));
+    const flr = real.m(new THREE.PlaneGeometry(30, 30), woodMat(), { rot: [-P / 2, 0, 0], cast: false }); flr.receiveShadow = true; scene.add(flr);
+    const pool = new THREE.SpotLight(0xffe2bc, 160, 14, .62, .75, 1.2); pool.position.set(.6, 4.5, 2.2); pool.target.position.set(0, 0, 0); pool.castShadow = true; pool.shadow.mapSize.set(2048, 2048); scene.add(pool, pool.target);
+    scene.add(new THREE.HemisphereLight(0x8a7a6a, 0x2a2018, .6));
     const csTex = real.canvasTex(256, 256, c => { const g = c.getContext ? c : c; const gr = g.createRadialGradient(128, 128, 0, 128, 128, 128); gr.addColorStop(0, 'rgba(0,0,0,.85)'); gr.addColorStop(.45, 'rgba(0,0,0,.5)'); gr.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = gr; g.fillRect(0, 0, 256, 256); });
     scene.add(real.m(new THREE.PlaneGeometry(1.1, .8), new THREE.MeshBasicMaterial({ map: csTex, transparent: true, depthWrite: false }), { pos: [0, .005, .02], rot: [-P / 2, 0, 0], cast: false }));
     const cam = C.dolly(camera, { pos: [0, 1.15, 5.4], look: [0, 1.15, 0], fov: 34 }, { pos: [0, 1.35, 3.4], look: [0, 1.5, 0], fov: 32 });
@@ -275,7 +294,8 @@ export const shots = {
         o.beginPath(); o.moveTo(-200, 40); o.lineTo(-260, 90); o.lineTo(-150, 48); o.fill(); o.fillStyle = '#2b1e16'; o.font = '46px "Anton"'; o.textAlign = 'center'; o.textBaseline = 'middle'; o.fillText('"I AM HERE TO HELP"', 0, -5); o.restore(); } };
   },
   // QA a3r6: the yellow DEMANDS sheet hung in a black void -> pinned to the same lit cork board as 3.15, slamming in on frame 0
-  '3.14': async k => { k.noAutoOverlay = true; return demandBoard(k, [[[['DEMANDS', 130, '#2b1e16'], ['53 PRISONERS', 96], ['40 IN ISRAEL', 96]], '#2b1e16', 0, .02, '#f2cf4a']], { t0: -.25, cam: [[0, 1.62, 4.3], [0, 1.6, 3.6]] }); },
+  // QA act3r7: sheet was yellow here and cream in 3.15 -> both use demandBoard's one shared sheet stock (no per-shot bg)
+  '3.14': async k => { k.noAutoOverlay = true; return demandBoard(k, [[[['DEMANDS', 130, '#2b1e16'], ['53 PRISONERS', 96], ['40 IN ISRAEL', 96]], '#2b1e16', 0, .02]], { t0: -.25, cam: [[0, 1.62, 4.3], [0, 1.6, 3.6]] }); },
   '3.15': async k => demandBoard(k, [[[['DEMANDS', 130, '#2b1e16'], ['53 PRISONERS', 96], ['40 IN ISRAEL', 96]], '#2b1e16', -.85, .03], [[['$5,000,000', 130, '#a02a1e'], ['DEADLINE', 96], ['1 JULY', 96]], '#2b1e16', .85, -.03]]),
 };
 async function demandBoard(k, defs, o = {}) {
@@ -286,13 +306,13 @@ async function demandBoard(k, defs, o = {}) {
     scene.add(real.box(3.6, 2.3, .04, real.std(0xa47c4e, { rough: .95 }), { pos: [0, 1.6, WZ + .02], cast: false }));
     const fr = real.std(0x4a3222, { rough: .7 });
     for (const [w, h, x, y] of [[3.72, .06, 0, 2.78], [3.72, .06, 0, .42], [.06, 2.42, -1.83, 1.6], [.06, 2.42, 1.83, 1.6]]) scene.add(real.box(w, h, .06, fr, { pos: [x, y, WZ + .03], cast: false }));
-    const sheet = (lines, col, bg = '#efe6cf') => real.canvasTex(800, 1040, c => { c.fillStyle = bg; c.fillRect(0, 0, 800, 1040);
+    const SHEET_BG = '#efe6cf', sheet = (lines, col) => real.canvasTex(800, 1040, c => { c.fillStyle = SHEET_BG; c.fillRect(0, 0, 800, 1040);
       c.fillStyle = 'rgba(120,100,60,.12)'; for (let q = 0; q < 80; q++) c.fillRect((q * 131) % 800, (q * 293) % 1040, 40, 3);
       c.strokeStyle = '#2b1e16'; c.lineWidth = 6; c.strokeRect(30, 30, 740, 980); c.textAlign = 'center'; c.textBaseline = 'middle';
       lines.forEach(([t, sz, cl], i) => { c.fillStyle = cl ?? col; c.font = `${sz}px Anton, Oswald, sans-serif`; c.fillText(t, 400, 260 + i * 250); }); });
     const pinM = [0xc0392b, 0x1f4fa8].map(c => real.std(c, { rough: .4 }));
-    const sheets = defs.map(([ls, col, x, rz, bg], i) => { const g = new THREE.Group(); g.position.set(x, 1.6, WZ + .05 + i * .001); g.rotation.z = rz;
-      g.add(real.m(new THREE.PlaneGeometry(1.4, 1.82), new THREE.MeshStandardMaterial({ map: sheet(ls, col, bg), roughness: .85 }), { cast: false }));
+    const sheets = defs.map(([ls, col, x, rz], i) => { const g = new THREE.Group(); g.position.set(x, 1.6, WZ + .05 + i * .001); g.rotation.z = rz;
+      g.add(real.m(new THREE.PlaneGeometry(1.4, 1.82), new THREE.MeshStandardMaterial({ map: sheet(ls, col), roughness: .85 }), { cast: false }));
       for (const px of [-.6, .6]) { const pin = real.m(new THREE.SphereGeometry(.025, 12, 8), pinM[i], { cast: false }); pin.position.set(px, .82, .02); g.add(pin); }
       scene.add(g); return g; });
     const key = new THREE.SpotLight(0xffe8cc, 32, 12, .6, .6, 1.2); key.position.set(.8, 3.6, 3.2); key.target.position.set(0, 1.6, 0); key.castShadow = true; scene.add(key, key.target);
