@@ -4,6 +4,7 @@ import * as ui from '../lib/ui.js';
 import * as S2 from '../lib/sets2.js';
 import { rnd, WOOD, chair, papers, night, holdInterior, seatSoldiers, idleSit } from '../lib/sets3.js';
 import { shots as old } from './tb_act7.js';
+import { core as K1, maps as M1 } from './tb_common.js';
 const { THREE, sets, P, real } = C;
 
 const proj = (cam, v) => { cam.updateMatrixWorld(); const p = new THREE.Vector3(...v).project(cam); return [(p.x + 1) * 960, (1 - p.y) * 540]; };
@@ -309,14 +310,38 @@ export const shots = {
     const cloudT = real.canvasTex(256, 256, (c, W, H) => { const g = c.createRadialGradient(128, 128, 10, 128, 128, 126); g.addColorStop(0, 'rgba(255,255,255,.9)'); g.addColorStop(1, 'rgba(255,255,255,0)'); c.fillStyle = g; c.fillRect(0, 0, W, H); });
     const r = rnd(9); for (let i = 0; i < 90; i++) { const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: cloudT, transparent: true, depthWrite: false, opacity: .8, color: 0xf2eee8 })); s.position.set((r() - .5) * 900, -20 + r() * 25, -200 + (r() - .5) * 900); s.scale.setScalar(60 + r() * 90); scene.add(s); }
     const herc = [0, 1, 2, 3].map(i => { const p = S2.c130(); p.position.set(-30 + i * 22, -60, -60 - i * 30); scene.add(p); return p; });
-    const jets = [0, 1].map(i => { const j = new THREE.Group(); sets.a300({ plain: true }).then(m => j.add(m)); j.position.set(-40 + i * 80, 140 + i * 20, -220 - i * 60); scene.add(j); return j; });
+    const jets = [0, 1].map(i => { const j = new THREE.Group(); sets.a300({ plain: true }).then(m => j.add(m)); j.position.set(-40 + i * 80, 30 + i * 12, -240 - i * 60); scene.add(j); return j; });
     await new Promise(res => setTimeout(res, 50));
-    const cam = C.dolly(camera, { pos: [60, -70, 60], look: [0, -50, -80], fov: 46 }, { pos: [60, 60, 80], look: [0, 120, -220], fov: 46 });
+    const cam = C.dolly(camera, { pos: [60, -70, 60], look: [0, -50, -80], fov: 46 }, { pos: [60, -30, 90], look: [0, -8, -170], fov: 46 });   // QA act7r7: the 707s sit lower, so the tilt ends with the Hercules still in the bottom of frame
     return (t, u) => { cam(u); herc.forEach((p, i) => { p.position.z = -60 - i * 30 + t * 3; p.userData.setProps(t, [18, 18, 18, 18]); }); jets.forEach((j, i) => { j.position.z = -220 - i * 60 + t * 4; });
       const a = C.ease(C.seg(t, 4, 5)); if (a > 0) jets.forEach((j, i) => { const [x, y] = proj(camera, [j.position.x, j.position.y + 12, j.position.z]); label(k.overlay, i ? 'FLYING COMMAND POST' : 'FLYING HOSPITAL', x, y - 40, a); }); };
   },
   '7.10': old['7.10'],
-  '7.11': old['7.11'],
+  // second leg south to Entebbe (QA act7r7): map runs well past the frame on all sides, ETHIOPIA sits east of the route, camera follows the plane icon down to Entebbe
+  '7.11': async k => {
+    const { scene, camera, meta } = k;
+    K1.setEnv(k, 'day', { noFog: true, shadowSize: 120, sunPos: [30, 90, 40] }); scene.background = new THREE.Color(0x3a2c22);
+    const SPAN = [40, 48];
+    const map = await M1.parchment({ center: [35, 8], span: SPAN, k: 4, labelSize: Math.round(120 * SPAN[0] / 26), highlight: ['ISR', 'UGA', 'KEN'],
+      labels: [['EGYPT', 30, 26], ['SUDAN', 30.5, 15], ['SAUDI ARABIA', 44, 23], ['ETHIOPIA', 44.2, 8.2], ['KENYA', 38.6, 2.6], ['UGANDA', 31.4, 2.6], ['ISRAEL', 35.2, 31.5]] });
+    scene.add(map);
+    const dots = ['ENTEBBE', 'NAIROBI'].map(c => map.city(c));
+    const route = [[38.8, 18.5], [41.2, 14], [40.4, 9], [37.6, 4], [34.5, .4], [33.2, -.3], [32.44, 0.05]];
+    const rib = M1.ribbon(map, route, { color: 0xd9a42b }); scene.add(rib);
+    const ic = M1.planeIcon({ s: 2.2 }); scene.add(ic);
+    const dur = meta.seconds, OFF = new THREE.Vector3(0, 58, 36), look = new THREE.Vector3(), tmp = new THREE.Vector3();
+    camera.fov = 40; camera.updateProjectionMatrix();
+    return (t, u) => {
+      dots.forEach((d, i) => { const s = K1.pop(t, .2 + i * .25, .3); d.scale.setScalar(Math.max(.001, s)); if (d.label) d.label.scale.setScalar(Math.max(.001, s)); });
+      const rk = K1.easeInOut(K1.seg(t, dur * .12, dur * .82)); rib.set(rk);
+      const kk = Math.max(.002, Math.min(.998, rk)); const p = rib.curve.getPointAt(kk); const tg = rib.curve.getTangentAt(kk);
+      ic.position.copy(p).add(new THREE.Vector3(0, 1.4, 0)); ic.lookAt(p.clone().add(tg).add(new THREE.Vector3(0, 1.4, 0))); ic.visible = rk > .005;
+      // camera eases from a tight high view onto the icon and keeps it in frame to Entebbe
+      tmp.copy(p).setY(0); const pull = 1 - .25 * K1.easeInOut(u);
+      look.copy(tmp); camera.position.copy(look).addScaledVector(OFF, pull);
+      camera.position.x += Math.sin(t * .7) * .2; camera.position.y += Math.sin(t * .53 + 1) * .12; camera.lookAt(look);
+    };
+  },
   // each plane has its own job: four numbered Hercules at dusk
   '7.12': async k => {
     const { scene, camera } = k; k.noAutoOverlay = true;
