@@ -1,0 +1,30 @@
+The Battle That Stopped the Mongols: release booking sheet (2D dynamic). Pushpam approved going ahead after his review fixes, 6 Nov 2026 16:06 UTC. Book on the rulebook UK/US prime-time slots. Files are in project files /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/ and on Drive AI/2D Dynamic/mongols-ain-jalut/.
+
+FULL VIDEO (YouTube): "The Battle That Stopped the Mongols"
+  video /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/MJ_FULL.mp4 (4:47, 1080p, -14 LUFS)
+  thumbnail /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/MJ_thumbnail.jpg (alt: MJ_thumbnail_alt.jpg)
+  title/description/tags/chapters: /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/MJ_Title_Description.txt
+  slot: next free full-video slot (Mon-Fri 19:00 UTC, Sat-Sun 16:00 UTC), >= 2 days from other full videos (Napoleon is Wed 16 Dec 19:00 UTC)
+
+15 REELS (YouTube Shorts + Instagram Reels), 9:16, 17-38 s each. Titles + descriptions: /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/MJ_Reels_Titles_Descriptions.txt
+Book in this order on the reel slots (19:30, 00:30, 12:00, 22:00, 17:00, 03:00, 07:30 UTC), after Napoleon's reels (15-19 Dec):
+01. "The Mongols Said Surrender. Egypt Said No" | video /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/reels/MJ_Reel_01.mp4 | cover /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/reels/MJ_Reel_01_thumb.jpg
+02. "The Massacre That Started the Mongol Invasion" | video /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/reels/MJ_Reel_02.mp4 | cover /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/reels/MJ_Reel_02_thumb.jpg
+03. "He Executed Genghis Khan's Envoy" | video /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/reels/MJ_Reel_03.mp4 | cover /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/reels/MJ_Reel_03_thumb.jpg
+04. "The Shah Who Died Hunted on an Island" | video /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/reels/MJ_Reel_04.mp4 | cover /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/reels/MJ_Reel_04_thumb.jpg
+05. "The Day Baghdad Fell to the Mongols" | video /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/reels/MJ_Reel_05.mp4 | cover /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/reels/MJ_Reel_05_thumb.jpg
+06. "When the Tigris Ran Black With Ink" | video /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/reels/MJ_Reel_06.mp4 | cover /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/reels/MJ_Reel_06_thumb.jpg
+07. "How the Mongols Killed the Last Caliph" | video /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/reels/MJ_Reel_07.mp4 | cover /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/reels/MJ_Reel_07_thumb.jpg
+08. "The Slave Soldiers Who Ruled Egypt" | video /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/reels/MJ_Reel_08.mp4 | cover /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/reels/MJ_Reel_08_thumb.jpg
+09. "Egypt's Answer to the Mongols" | video /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/reels/MJ_Reel_09.mp4 | cover /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/reels/MJ_Reel_09_thumb.jpg
+10. "The Death That Saved Egypt" | video /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/reels/MJ_Reel_10.mp4 | cover /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/reels/MJ_Reel_10_thumb.jpg
+11. "The Trick That Beat the Mongols" | video /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/reels/MJ_Reel_11.mp4 | cover /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/reels/MJ_Reel_11_thumb.jpg
+12. "The Sultan Who Threw Off His Helmet" | video /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/reels/MJ_Reel_12.mp4 | cover /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/reels/MJ_Reel_12_thumb.jpg
+13. "The First Mongol Defeat That Stuck" | video /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/reels/MJ_Reel_13.mp4 | cover /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/reels/MJ_Reel_13_thumb.jpg
+14. "He Saved Egypt. His Officer Killed Him" | video /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/reels/MJ_Reel_14.mp4 | cover /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/reels/MJ_Reel_14_thumb.jpg
+15. "The Mongols Who Became Muslims" | video /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/reels/MJ_Reel_15.mp4 | cover /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/reels/MJ_Reel_15_thumb.jpg
+
+INSTAGRAM FULL-VIDEO PARTS (Instagram only), one per day at 20:30 UTC, starting the day after the YouTube release, after Napoleon's IG parts (20-22 Dec):
+Part 1 of 3 | video /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/ig/MJ_IG_Part_01.mp4 | caption in MJ_Reels_Titles_Descriptions.txt (cover: first frame)
+Part 2 of 3 | video /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/ig/MJ_IG_Part_02.mp4 | caption in MJ_Reels_Titles_Descriptions.txt (cover: first frame)
+Part 3 of 3 | video /mnt/project-files/2d-dynamic/mongols-ain-jalut/launch/ig/MJ_IG_Part_03.mp4 | caption in MJ_Reels_Titles_Descriptions.txt (cover: first frame)
