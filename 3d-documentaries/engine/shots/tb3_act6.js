@@ -149,13 +149,13 @@ export const shots = {
     // bright moon and a strong blue fill so the water, the boats and the crocodile read from the first frame
     await real.env(k, 'kloofendal_48d_partly_cloudy_puresky', { sun: [-60, 40, -80], sunI: .5, sunColor: 0xb8c8ff, shadowSize: 30, bg: 0x0a1020, envI: .3, exposure: 1.25 });
     scene.add(new THREE.HemisphereLight(0x8898c8, 0x202a3a, 4.2));
-    const rim = new THREE.SpotLight(0xb8c8ff, 16, 14, .35, .6, 1.2); rim.position.set(-3, 3, -2); rim.target.position.set(1.2, 0, 4); scene.add(rim, rim.target);
+    const rim = new THREE.SpotLight(0xb8c8ff, 16, 14, .35, .6, 1.2); rim.position.set(-3, 3, -2); rim.target.position.set(1.2, 0, 4); rim.castShadow = false; scene.add(rim, rim.target);
     const fill = new THREE.PointLight(0x90a8e0, 5, 14, 1.6); fill.position.set(3, 2.5, 7); scene.add(fill);
     const moon = real.m(new THREE.SphereGeometry(9, 24, 16), new THREE.MeshBasicMaterial({ color: 0xf4f6ff, fog: false }), { pos: [-180, 120, -400], cast: false }); scene.add(moon);
     const glow = real.m(new THREE.SphereGeometry(18, 24, 16), new THREE.MeshBasicMaterial({ color: 0x8090c0, transparent: true, opacity: .1, depthWrite: false, fog: false }), { pos: [-180, 120, -400], cast: false }); scene.add(glow);
     scene.fog = new THREE.FogExp2(0x0a1020, .006);
     const wg = new THREE.PlaneGeometry(400, 400, 120, 120); wg.rotateX(-P / 2);
-    const water = real.m(wg, real.std(0x1a2838, { rough: .92, metal: 0 }), { cast: false }); scene.add(water);   // matte water: the dim 'moon' sun gives only a faint sheen
+    const water = real.m(wg, real.std(0x1a2838, { rough: .92, metal: 0 }), { cast: false }); water.receiveShadow = false; scene.add(water);   // matte water: the dim 'moon' sun gives only a faint sheen
     // the moon path is drawn explicitly: a narrow additive strip of broken glitter from under the moon to the foreground
     // texture v=1 is the near end: sparse short flecks there, a denser brighter band toward the horizon
     const gt = real.canvasTex(64, 4096, gx => { const r = rnd(7); for (let y = 0; y < 4096; y++) { const l = y / 4096, near = Math.min(1, l * 4);   // l = 0 at the lens, 1 under the moon
@@ -177,22 +177,36 @@ export const shots = {
       b.add(real.box(.3, .45, .3, kit, { pos: [0, .65, -2.35] })); b.add(real.m(new THREE.CylinderGeometry(.04, .04, .6, 8), kit, { pos: [0, .15, -2.4] })); // outboard
       for (let j = 0; j < 5; j++) { const x = (j % 2 - .5) * .7, z = -1.5 + j * .62; b.add(real.rbox(.42, .7, .36, .1, kit, { pos: [x, .72, z] })); b.add(real.m(new THREE.SphereGeometry(.13, 12, 10), skinM, { pos: [x, 1.18, z] })); b.add(real.rbox(.3, .12, .3, .05, kit, { pos: [x, 1.25, z] })); }
       b.position.set(-11 + i * 6.5, 0, -30 - i * 6); b.rotation.y = .5; scene.add(b); return b; });
-    // crocodile: long snout, brow ridges with eyes, nostril bumps, a line of scutes along the back and a tapering tail
-    const croc = new THREE.Group(); const skin = real.std(0x26381a, { rough: .97, metal: 0 }), belly = real.std(0x344622, { rough: .95, metal: 0 }), back = real.std(0x1a2610, { rough: 1, metal: 0 });
-    const head = real.m(new THREE.SphereGeometry(.5, 24, 12), skin); head.scale.set(.5, .2, 1.1); croc.add(head);
-    const snout = real.m(new THREE.CylinderGeometry(.16, .24, 1.0, 10), belly, { pos: [0, -.02, -.9], rot: [P / 2, 0, 0], scale: [1.3, 1, .55] }); croc.add(snout);
-    for (const s of [-1, 1]) { croc.add(real.m(new THREE.SphereGeometry(.1, 16, 10), skin, { pos: [s * .15, .1, .25] })); croc.add(real.m(new THREE.SphereGeometry(.04, 12, 8), real.std(0xd8b050, { rough: .2, emissive: 0xb08a30, ei: 1.6 }), { pos: [s * .15, .15, .32] })); }
-    for (const s of [-1, 1]) croc.add(real.m(new THREE.SphereGeometry(.035, 10, 8), skin, { pos: [s * .05, .08, -1.36] }));
-    const body = real.m(new THREE.SphereGeometry(.5, 20, 12), back, { pos: [0, -.08, 1.3], scale: [.75, .3, 1.8] }); croc.add(body);
-    for (let i = 0; i < 9; i++) { const z = .5 + i * .22; for (const s of [-.45, .45]) croc.add(real.m(new THREE.ConeGeometry(.028, .065, 4), back, { pos: [s * (.28 - i * .012), .06, z] })); }
-    const tail = real.m(new THREE.CylinderGeometry(.04, .2, 1.8, 8), back, { pos: [0, -.05, 3.1], rot: [P / 2, 0, 0], scale: [1.2, 1, .7] }); croc.add(tail);
-    for (let i = 0; i < 6; i++) croc.add(real.m(new THREE.ConeGeometry(.03, .09 - i * .01, 4), skin, { pos: [0, .07 - i * .012, 2.4 + i * .28] }));
-    croc.scale.setScalar(.85); croc.position.set(.5, -.3, 2.4); croc.rotation.y = P - .95; scene.add(croc);   // side-on to the lens, 3.5 m off, so snout, back and tail all read
-    const cam = C.dolly(camera, { pos: [3.0, .6, 7.2], look: [-4, .2, -40], fov: 40 }, { pos: [2.3, .8, 5.9], look: [.4, -.05, 2.4], fov: 34 });
+    // crocodile (~4 m): tapered toothy snout, raised eye turrets, wedge head, scaled body with 4 splayed legs, double row of back scutes, segmented tapering tail with a crest
+    const croc = new THREE.Group(); const skin = real.std(0x4a5a2c, { rough: .7, metal: 0 }), belly = real.std(0x6a6c3c, { rough: .8, metal: 0 }), back = real.std(0x2e3a1c, { rough: .75, metal: 0 }), toothM = real.std(0xe8e0c0, { rough: .5 });
+    croc.add(real.m(new THREE.CylinderGeometry(.17, .07, .8, 14), skin, { pos: [0, .02, -1.7], rot: [P / 2, 0, 0], scale: [1.35, 1, .42] }));   // snout, narrow at the tip
+    croc.add(real.m(new THREE.CylinderGeometry(.16, .06, .78, 14), belly, { pos: [0, -.05, -1.68], rot: [P / 2, 0, 0], scale: [1.3, 1, .3] }));  // lower jaw
+    for (const s of [-1, 1]) { croc.add(real.m(new THREE.SphereGeometry(.035, 10, 8), back, { pos: [s * .04, .07, -2.06] }));                      // nostril bumps
+      for (let j = 0; j < 8; j++) { const z = -2.0 + j * .1; croc.add(real.m(new THREE.ConeGeometry(.014, .05, 5), toothM, { pos: [s * (.08 + j * .014), -.03, z], rot: [P, 0, 0] })); } }
+    croc.add(real.m(new THREE.SphereGeometry(.5, 24, 14), skin, { pos: [0, .02, -1.05], scale: [.46, .22, .62] }));                                  // wedge head
+    for (const s of [-1, 1]) { croc.add(real.m(new THREE.SphereGeometry(.075, 16, 10), skin, { pos: [s * .13, .14, -.92] }));                       // eye turrets
+      croc.add(real.m(new THREE.SphereGeometry(.04, 12, 8), real.std(0xd8b050, { rough: .2, emissive: 0xb08a30, ei: 1.8 }), { pos: [s * .15, .17, -.97] })); }
+    [[-.6, .34, .15], [-.15, .44, .18], [.35, .48, .19], [.85, .44, .18], [1.3, .34, .15]].forEach(([z, w, h]) => croc.add(real.m(new THREE.SphereGeometry(1, 20, 12), back, { pos: [0, 0, z], scale: [w, h, .42] })));   // overlapping body segments
+    croc.add(real.m(new THREE.SphereGeometry(1, 20, 10), belly, { pos: [0, -.06, .35], scale: [.44, .12, 1.0] }));
+    for (let i = 0; i < 12; i++) { const z = -.6 + i * .17, w = .4 + Math.sin(i / 11 * P) * .1; for (const x of [-.22, -.09, .09, .22]) croc.add(real.m(new THREE.ConeGeometry(.03, Math.abs(x) < .1 ? .1 : .07, 4), back, { pos: [x * w / .45, .14 + (Math.abs(x) < .1 ? .04 : 0), z] })); }   // scutes
+    for (const [z, fz] of [[-.35, -1], [1.05, 1]]) for (const s of [-1, 1]) { const leg = new THREE.Group();                                       // splayed legs with webbed toes
+      leg.add(real.m(new THREE.CylinderGeometry(.07, .09, .4, 10), skin, { pos: [s * .2, -.02, 0], rot: [0, 0, P / 2 - s * .25] }));
+      leg.add(real.m(new THREE.CylinderGeometry(.05, .07, .3, 10), skin, { pos: [s * .4, -.12, fz * .06], rot: [fz * .4, 0, s * .3] }));
+      leg.add(real.m(new THREE.SphereGeometry(.1, 12, 8), skin, { pos: [s * .45, -.2, fz * .12], scale: [1, .3, 1.2] }));
+      for (let t = -1; t <= 1; t++) leg.add(real.m(new THREE.ConeGeometry(.02, .12, 5), back, { pos: [s * (.47 + t * .04), -.2, fz * .12 - .1], rot: [-P / 2, 0, t * .3] }));
+      leg.position.set(s * .3, 0, z); croc.add(leg); }
+    const tail = new THREE.Group(); tail.position.z = 1.55; croc.add(tail); let tz = 0;
+    for (let i = 0; i < 9; i++) { const r = .3 * (1 - i / 10), l = .27; const seg = real.m(new THREE.SphereGeometry(1, 14, 10), back, { pos: [0, -.02, tz + l / 2], scale: [r, r * .55, l * .75] }); tail.add(seg);
+      for (const x of (i < 4 ? [-.5, .5] : [0])) tail.add(real.m(new THREE.ConeGeometry(.03, .1 - i * .006, 4), back, { pos: [x * r, r * .5 + .02, tz + l / 2] })); tz += l * .95; }
+    croc.scale.setScalar(.85); croc.position.set(.5, -.3, 2.4); croc.rotation.y = P - .95; croc.traverse(c => { c.castShadow = false; }); scene.add(croc);   // no cast shadow on the water (it read as floating); ~4 m nose to tail, side-on to the lens
+    // moon rim light from behind the crocodile and a soft key from the lens side, so its outline and ridges read against the dark water
+    const crocRim = new THREE.SpotLight(0xc8d8ff, 30, 12, .4, .9, 1.2); crocRim.position.set(-1.5, 1.6, -1.5); crocRim.target = croc; crocRim.castShadow = false; scene.add(crocRim);
+    const crocKey = new THREE.PointLight(0x8aa0d8, 4, 8, 1.6); crocKey.position.set(2.4, 1.6, 5.4); scene.add(crocKey);
+    const cam = C.dolly(camera, { pos: [3.0, .6, 7.2], look: [-4, .2, -40], fov: 40 }, { pos: [2.5, .9, 6.9], look: [.9, -.05, 2.6], fov: 36 });
     const dur = k.meta.seconds;
     return (t, u) => { cam(u);
       const pa = wg.attributes.position; for (let i = 0; i < pa.count; i++) { const x = base[i * 3], z = base[i * 3 + 2]; pa.array[i * 3 + 1] = Math.sin(x * .35 + t * 1.3) * .05 + Math.sin(z * .5 - t * 1.1) * .04; } pa.needsUpdate = true; wg.computeVertexNormals();
-      croc.position.y = -.3 + C.ease(C.seg(t, .8, 2.2)) * .36; croc.position.z = 2.4 - t * .05; tail.rotation.y = Math.sin(t * 1.5) * .15;
+      croc.position.y = -.3 + C.ease(C.seg(t, .8, 2.2)) * .27; croc.position.z = 2.4 - t * .05; tail.rotation.y = Math.sin(t * 1.5) * .18;
       boats.forEach((b, i) => { b.position.y = Math.sin(t * 1.2 + i) * .06; b.rotation.z = Math.sin(t * 1.0 + i) * .03; });
       const s = C.ease(C.seg(t, dur - 1.6, dur - 1.3)); if (s > 0) { const o = k.overlay; o.save(); o.globalAlpha = s; o.translate(1420, 230); o.rotate(-.07); o.scale(1 + (1 - s) * .5, 1 + (1 - s) * .5); o.strokeStyle = '#d2232a'; o.lineWidth = 10; o.strokeRect(-260, -70, 520, 140); o.fillStyle = '#d2232a'; o.font = '64px "Anton"'; o.textAlign = 'center'; o.textBaseline = 'middle'; o.fillText('PLAN 1 REJECTED', 0, 4); o.restore(); } };
   },
@@ -202,18 +216,24 @@ export const shots = {
     await night(k);
     await S2.runwayNight(k, { lit: true, grass: 0x6a7a58 });
     S2.entebbeOld(k, { pos: [-60, 0, -40], rotY: P / 2, litRow: 0, towerLit: true });
-    const canopy = real.std(0xc8c4a8, { rough: .8, mat: { side: THREE.DoubleSide } });
-    const moonD = new THREE.DirectionalLight(0x9ab0e0, 1.2); moonD.position.set(40, 80, 60); scene.add(moonD);
+    // olive canopy with alternating gore panels, a dark apex vent and a hem band, so each reads as a parachute, not a ball
+    const goreTex = real.canvasTex(512, 128, (c, W, H) => { for (let j = 0; j < 16; j++) { c.fillStyle = j % 2 ? '#8a8a62' : '#b4b088'; c.fillRect(j * W / 16, 0, W / 16 + 1, H); } c.fillStyle = '#3a3a2a'; c.fillRect(0, 0, W, 10); c.fillStyle = '#5a5a40'; c.fillRect(0, H - 8, W, 8); c.strokeStyle = 'rgba(40,40,30,.6)'; c.lineWidth = 2; for (let j = 0; j <= 16; j++) { c.beginPath(); c.moveTo(j * W / 16, 0); c.lineTo(j * W / 16, H); c.stroke(); } });
+    const canopy = real.std(0xffffff, { rough: .85, mat: { side: THREE.DoubleSide, map: goreTex } });
+    const moonD = new THREE.DirectionalLight(0x9ab0e0, 2.2); moonD.position.set(90, 120, 110); scene.add(moonD); scene.add(new THREE.HemisphereLight(0x8090b8, 0x202418, .9));
     const chutes = [];
     // canopy with gores, a ring of heavy shroud lines (thick enough to read from 100 m), and a jumper with pack and legs below; the stick drops over the grass east of the terminal, never over its roof
-    for (let i = 0; i < 12; i++) { const g = new THREE.Group(); g.add(real.m(new THREE.SphereGeometry(3.2, 20, 8, 0, P * 2, 0, P / 2.6), canopy));
-      for (let j = 0; j < 12; j++) { const a = j / 12 * P * 2; g.add(real.box(.04, 3.3, .04, real.std(0x6a5a40, { rough: .9 }), { pos: [Math.cos(a) * 3.28, -.9, Math.sin(a) * 3.28], rot: [0, -a, 0] })); }
+    for (let i = 0; i < 12; i++) { const g = new THREE.Group(); g.add(real.m(new THREE.SphereGeometry(3.2, 32, 8, 0, P * 2, 0, P / 2.6), canopy, { scale: [1, .7, 1] }));
+      { const lineM = new THREE.LineBasicMaterial({ color: 0xd8d4c0 }); const pts = []; for (let j = 0; j < 16; j++) { const a = j / 16 * P * 2; pts.push(new THREE.Vector3(Math.cos(a) * 2.9, .35, Math.sin(a) * 2.9), new THREE.Vector3(0, -3.6, 0)); } g.add(new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(pts), lineM)); }
       for (let j = 0; j < 8; j++) { const a = j / 8 * P * 2; const l = real.box(.07, 4.4, .07, real.std(0xe8e4d8, { rough: .9 }), { pos: [Math.cos(a) * 1.4, -1.6, Math.sin(a) * 1.4] }); l.rotation.set(Math.sin(a) * .5, 0, -Math.cos(a) * .5); g.add(l); }
-      const kit = real.std(0x2a2c20, { rough: .9 }); g.add(real.rbox(.6, 1.0, .45, .12, kit, { pos: [0, -4.3, 0] })); g.add(real.rbox(.5, .5, .3, .1, real.std(0x3a3828, { rough: .9 }), { pos: [0, -4.4, -.35] }));
-      g.add(real.m(new THREE.SphereGeometry(.24, 12, 10), real.std(0x4a4a3a, { rough: .7 }), { pos: [0, -3.65, 0] }));
+      const kit = real.std(0x6a6c50, { rough: .8 }); g.add(real.rbox(.6, 1.0, .45, .12, kit, { pos: [0, -4.3, 0] })); g.add(real.rbox(.5, .5, .3, .1, real.std(0x3a3828, { rough: .9 }), { pos: [0, -4.4, -.35] }));
+      g.add(real.m(new THREE.SphereGeometry(.24, 12, 10), real.std(0x7a7a5a, { rough: .7 }), { pos: [0, -3.65, 0] })); g.scale.setScalar(1.25);
       for (const s of [-1, 1]) { g.add(real.box(.22, .9, .22, kit, { pos: [s * .16, -5.2, .1], rot: [.3, 0, 0] })); g.add(real.box(.18, .8, .18, kit, { pos: [s * .42, -4.1, .25], rot: [-.5, 0, s * .4] })); }
       g.position.set(14 + (i % 4) * 9 + (i * 7 % 3), 160 - Math.floor(i / 4) * 18, -2 + Math.floor(i / 4) * 14 + (i % 3) * 3); g.userData.y0 = g.position.y; scene.add(g); chutes.push(g); }
-    return (t, u) => { camera.position.set(34, 205 - t * 7, 58); camera.fov = 44; camera.updateProjectionMatrix(); camera.lookAt(-12, 40, -12); chutes.forEach((c, i) => { c.position.y = c.userData.y0 - t * 9; c.rotation.z = Math.sin(t * .8 + i) * .08; c.rotation.y = t * .1 + i; }); };
+    // the C-130 that dropped the stick, flying off overhead with its ramp open
+    const herc = S2.c130(); herc.position.set(48, 150, -34); herc.rotation.y = -P / 2; scene.add(herc);
+    return (t, u) => { camera.position.set(95, 150 - t * 5, 110); camera.fov = 44; camera.updateProjectionMatrix(); camera.lookAt(10, 122 - t * 5, -10);
+      herc.position.x = 48 - t * 9; if (herc.userData.setProps) herc.userData.setProps(t, [18, 18, 18, 18]);
+      chutes.forEach((c, i) => { c.position.y = c.userData.y0 - t * 9; c.rotation.z = Math.sin(t * .8 + i) * .08; c.rotation.y = t * .1 + i; }); };
   },
   // plan three: commandos hidden inside a passenger jet
   '6.6': async k => {
@@ -373,11 +393,11 @@ export const shots = {
     const men = [];
     // six different faces; each rifle is a dark shape held in the hands (two-hand carry, as the act 8 sentries), caps on half of them
     const RUN = ['tb_cmd1', 'tb_cmd2', 'tb_cmd3', 'tb_yoni', 'tb_medic', 'tb_off1'];
-    for (let i = 0; i < 6; i++) { const p = await real.human({ id: RUN[i], seed: 3200 + i }); real.put(scene, p, { pos: [-16 - i * 1.6, 0, 0], rot: P / 2, mood: 'stern', arm: 'hold' }); p.userData.driven = true; C.attach(p, rifleShape(), 'RightHand', [0, -.02, .25], [0, 0, 0]); if (i % 2) C.attach(p, S2.cap(0x3a4228), 'Head', [0, .15, .01]); men.push(p); }
+    for (let i = 0; i < 6; i++) { const p = await real.human({ id: RUN[i], seed: 3200 + i }); real.put(scene, p, { pos: [-16 - i * 2.4, 0, i % 2 ? -1.1 : 0], rot: P / 2, mood: 'stern' }); p.userData.driven = true; C.attach(p, rifleShape(), 'Spine2', [.12, .05, -.18], [.9, 0, .3]); /* rifle slung across the back, clear of the torso */ if (i % 2) C.attach(p, S2.cap(0x3a4228), 'Head', [0, .15, .01]); men.push(p); }
     const run = 3.4;
-    return (t, u) => { men.forEach((p, i) => { const sp = run * (1 + ((i * 7) % 5 - 2) * .025); const x = -16 - i * 1.6 + t * sp; const door = [-6, 0, 6].find(dx => x > dx - 1 && x < dx + 1.5);
-        p.position.set(x, 0, door !== undefined && i % 2 ? -.6 : 0); p.update(t, { pose: 'run', dist: t * sp * .55 + i * .53, arm: 'hold', mood: 'stern', look: Math.sin(t * .9 + i * 2) * .15 }); });
-      const cx = -14 + t * run; camera.position.set(cx + 1.5, 1.5, 7); camera.fov = 44; camera.updateProjectionMatrix(); camera.lookAt(cx + 1, 1.2, -1); };
+    return (t, u) => { men.forEach((p, i) => { const sp = run; const x = -16 - i * 2.4 + t * sp; /* one pace for all: 2.4 m apart in file, alternate men 1.1 m deeper, so no two bodies ever meet */
+        p.position.set(x, 0, i % 2 ? -1.1 : 0); p.update(t, { pose: 'run', dist: t * sp * .55 + i * .53, mood: 'stern', look: Math.sin(t * .9 + i * 2) * .15 }); });
+      const cx = -14 + t * run; camera.position.set(cx - 3, 1.5, 7.5); camera.fov = 44; camera.updateProjectionMatrix(); camera.lookAt(cx - 3.5, 1.1, -1); /* framed on the middle of the file */ };
   },
   // the final plan: four planes land, teams fan out, everyone flies home
   '6.15': async k => {
@@ -390,7 +410,10 @@ export const shots = {
     const planes = [0, 1, 2, 3].map(() => { const p = S2.c130(); scene.add(p); return p; });
     const D = k.meta.seconds;
     const targets = [['TERMINAL', [-62, 4, -60]], ['TOWER', [-62, 14, -95]], ['MiG FIGHTERS', [-55, 2, 88]], ['RUNWAY', [10, 0, 160]]];
-    return (t, u) => { camera.position.set(140, 190, 140 - u * 30); camera.fov = 42; camera.updateProjectionMatrix(); camera.lookAt(-20, 0, 0);
+    // moonlit fill over the runway and apron plus apron floodlights, so the planes and buildings read, not just the arrows
+    scene.add(new THREE.HemisphereLight(0x9aa8d0, 0x2a2c24, 1.6)); const moonF = new THREE.DirectionalLight(0xb0c0e8, 2.4); moonF.position.set(120, 200, 80); scene.add(moonF);
+    for (const [x, z] of [[-30, -40], [-30, 20], [-30, 80], [20, -100]]) { const fl = new THREE.PointLight(0xffe0b0, 3000, 120, 1.6); fl.position.set(x, 18, z); scene.add(fl); }
+    return (t, u) => { camera.position.set(95, 105, 95 - u * 25); camera.fov = 46; camera.updateProjectionMatrix(); camera.lookAt(-20, 0, 10);
       planes.forEach((p, i) => { const land = C.ease(C.seg(t, i * .7, 3 + i * .7)); const leave = C.ease(C.seg(t, D - 2.6 + i * .2, D)); const z = -500 + land * (480 - i * 38) + leave * 600; p.position.set(i % 2 ? 6 : -6, Math.max(0, (1 - land) * 60) + leave * 50, z); p.rotation.x = -(1 - land) * .05 - leave * .15; p.userData.setProps(t, [18, 18, 18, 18]); });
       const o = k.overlay; targets.forEach(([lab, v], i) => { const s = C.ease(C.seg(t, 3.6 + i * .8, 4.6 + i * .8)) * (1 - C.seg(t, D - 2.6, D - 2)); if (s <= 0) return; const p0 = proj(camera, [planes[i].position.x, 0, planes[i].position.z]), p1 = proj(camera, v);
         const x = p0[0] + (p1[0] - p0[0]) * s, y = p0[1] + (p1[1] - p0[1]) * s; o.save(); o.strokeStyle = '#e8b321'; o.fillStyle = '#e8b321'; o.lineWidth = 8; o.lineCap = 'round'; o.beginPath(); o.moveTo(...p0); o.lineTo(x, y); o.stroke();
