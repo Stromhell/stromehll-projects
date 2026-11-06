@@ -8,6 +8,7 @@ const EMP = [[PL.paris, 150], [PL.holland, 90], [PL.westphalia, 110], [PL.naples
 const hill = (c, x, y, w, h, col) => { c.fillStyle = col; c.beginPath(); c.ellipse(x, y, w, h, 0, 0, TAU); c.fill(); c.strokeStyle = S.rgba('#5a3a1a', .5); c.lineWidth = 2; for (let k = 1; k < 4; k++) { c.beginPath(); c.ellipse(x, y, w * (1 - k * .22), h * (1 - k * .22), 0, 0, TAU); c.stroke(); } };
 const block = (c, x, y, col, a = 1) => { c.save(); c.globalAlpha = a; c.fillStyle = col; c.fillRect(x - 22, y - 8, 44, 16); c.strokeStyle = S.rgba('#000000', .4); c.strokeRect(x - 22, y - 8, 44, 16); c.restore(); };
 
+const SEA = [[560, 330], [1280, 330], [1280, 720], [660, 720], [660, 480], [600, 468]];
 window.SHOTS = [
   // 3.01 WIDE: Austerlitz at dawn; enemy columns on the heights; Napoleon on a smaller hill with a telescope
   { set: 'np_frost', cam: { z: [1.0, 1.08], x: [640, 600], y: [400, 420], ease: E.io }, bed: [['wind_loop', .25], ['drum_loop', .15]],
@@ -51,29 +52,53 @@ window.SHOTS = [
     sfx: [[.2, 'drone', .15], ['famous', 'whoosh', .35], ['Holy Roman', 'scrape', .35], ['brothers', 'pop', .3], ['Holland', 'pop', .3], ['Westphalia', 'pop', .3]] },
 
   // 3.04 MED: a French port with a CLOSED warehouse; at night smugglers row crates ashore; a British ship sails past
-  { set: 'harbour', cam: { z: [1.0, 1.06], x: [640, 660], y: [380, 390], ease: E.io }, bed: [['ocean_loop', .3]],
+  { set: 'harbour', cam: { z: [1.0, 1.14], x: [640, 760], y: [380, 400], ease: E.io }, bed: [['ocean_loop', .35], ['wind_loop', .15]],
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tB = at(Sh, 'banned', 4); Sh.tS = at(Sh, 'Smuggling', 7.5); Sh.tK = at(Sh, 'kept', Sh.dur - 2.5); },
     draw: (c, lt, u, Sh) => { const night = seg(lt, Sh.tS - .6, Sh.tS), L = night > .5 ? NIGHT(lt) : SUN(lt);
       c.fillStyle = '#c8b090'; c.fillRect(150, 470, 300, 170); c.fillStyle = '#8a3a2a'; c.beginPath(); c.moveTo(130, 474); c.lineTo(300, 410); c.lineTo(470, 474); c.fill(); c.fillStyle = '#4a3020'; c.fillRect(250, 540, 100, 100);
       const b = seg(lt, Sh.tB, Sh.tB + .4); if (b > 0) { c.save(); c.translate(300, 520); c.rotate(-.06); c.scale(.6 + .4 * E.out(b), .6 + .4 * E.out(b)); c.fillStyle = '#f0e4c4'; c.fillRect(-90, -24, 180, 48); c.strokeStyle = '#3a2410'; c.lineWidth = 3; c.strokeRect(-90, -24, 180, 48); c.fillStyle = '#b82a22'; c.font = '34px Anton'; c.textAlign = 'center'; c.fillText('CLOSED', 0, 12); c.restore(); }
       { const g = seg(lt, Sh.tS - 3.2, Sh.tS - .7), gx = lerp(520, -90, E.inn(g)); if (g < 1) fig(c, C.FR, gx, 650, 34, g > 0 ? Object.assign(H1.walk(lt * 1.6), { face: -1, holdN: musket(c, -1.4) }) : pose(lt, 1, { face: -1, holdN: musket(c, -1.4) }), lt, 1, L, { look: [-.5, 0] }); }
-      if (night > 0) { c.fillStyle = S.rgba('#0a1030', .6 * night); c.fillRect(0, 0, 1280, 720);
-        const bx = lerp(1400, 960, E.out(seg(lt, Sh.tS, Sh.tS + 4))); H1.boat(c, bx, 500, .6, lt, { sail: false, hull: '#3a2a1e' });
-        for (let k = 0; k < 3; k++) { c.fillStyle = '#8a6a3a'; c.fillRect(bx - 26 + k * 17, 480, 15, 12); }
-        fig(c, C.SMUG, bx - 30, 500, 18, pose(lt, 3, { face: -1, shN: 60 + 30 * Math.sin(lt * 3), elN: 60, sitY: VP.sitY(C.SMUG) }), lt, 3, L, { look: [-.5, 0] });
-        fig(c, C.SMUG, bx + 34, 500, 18, pose(lt, 4, { face: -1, shN: 70 + 30 * Math.sin(lt * 3 + 1), elN: 50, sitY: VP.sitY(C.SMUG) }), lt, 4, L, { look: [-.5, 0] });
-        if (lt > Sh.tK - 1) S.npShip(c, lerp(1500, 900, seg(lt, Sh.tK - 1, Sh.dur + 2)), 440, .4, -1, lt, { flag: 'uk' }); } },
+      if (night > 0) { c.fillStyle = S.rgba('#0a1030', .62 * night); c.fillRect(0, 0, 1280, 720);
+        // QA r2 (Pushpam): moonlit detailed sea, a real rowing boat with seated smugglers, a big lantern-lit British ship gliding past
+        c.save(); c.globalAlpha = night; c.fillStyle = '#f0ecd8'; c.beginPath(); c.arc(1080, 120, 28, 0, TAU); c.fill(); VP.glow(c, 1080, 120, 200, '#c8d0f0', .35);
+        for (let k = 0; k < 3; k++) { const cx = ((lt * 14 + k * 520) % 1700) - 200; for (let j = 0; j < 7; j++) { const r = S.rng(900 + k * 10 + j), px = cx + (r() - .5) * 300, py = 110 + k * 30 + (r() - .5) * 30, rr = 50 + r() * 60;
+          const g = c.createRadialGradient(px, py, 0, px, py, rr); g.addColorStop(0, S.rgba('#2a3060', .45)); g.addColorStop(.6, S.rgba('#2a3060', .2)); g.addColorStop(1, S.rgba('#2a3060', 0)); c.fillStyle = g; c.fillRect(px - rr, py - rr, rr * 2, rr * 2);
+          c.fillStyle = S.rgba('#c8d0f0', .06); c.beginPath(); c.ellipse(px, py - rr * .4, rr * .7, rr * .15, 0, 0, TAU); c.fill(); } }
+        S.npSea(c, SEA, 330, 720, lt, { top: '#24345e', bot: '#070c1e', glint: 1080, glintCol: '#e8ecff', haze: '#5a6a9a' });
+        const sk = Sh.tK - 1.2, sq = seg(lt, sk, Sh.dur + 1.5); if (lt > sk) { const sx = lerp(1560, 980, E.out(sq)); c.filter = 'brightness(.5) saturate(.7)'; S.npShip(c, sx, 520, .9, -1, lt, { flag: 'uk' }); c.filter = 'none';
+          for (const [dx, dy] of [[-60, -40], [40, -30], [-10, -120]]) VP.glow(c, sx + dx * .9, 520 + dy * .9, 60, '#ffc060', .5);
+          c.fillStyle = S.rgba('#ffffff', .35); c.beginPath(); c.ellipse(sx - 120, 530, 60, 5, 0, 0, TAU); c.fill(); }
+        const bx = lerp(1360, 900, E.out(seg(lt, Sh.tS - .4, Sh.tS + 4.5))), by = 600 + Math.sin(lt * 1.7) * 4, rk = Math.sin(lt * 1.3) * .03, row = Math.sin(lt * 3);
+        c.save(); c.translate(bx, by); c.rotate(rk); c.translate(-bx, -by);
+        c.filter = 'brightness(.75)'; S.npRowBack(c, bx, by, 1); c.filter = 'none';
+        fig(c, C.SMUG, bx - 60, by + 2, 26, Object.assign(VP.sit(C.SMUG, lt, 2, { seat: -.2 }), { face: -1, shN: 50 + 30 * row, elN: 40, shF: 40 + 30 * row, elF: 40, lean: 10 + 8 * row }), lt, 3, L, { look: [-.5, .1], worry: .6 });
+        fig(c, C.SMUG, bx + 60, by + 2, 26, Object.assign(VP.sit(C.SMUG, lt, 3, { seat: -.2 }), { face: -1, shN: 50 - 30 * row, elN: 40, shF: 40 - 30 * row, elF: 40, lean: 10 - 8 * row }), lt, 4, L, { look: [-.6, 0] });
+        for (let k = 0; k < 3; k++) { c.fillStyle = k % 2 ? '#7a5a32' : '#8a6a3a'; c.fillRect(bx - 22 + k * 16, by - 34 - (k === 1 ? 14 : 0), 15, 14); }
+        c.strokeStyle = '#5a3a1e'; c.lineWidth = 4; for (const ox of [-60, 60]) { c.beginPath(); c.moveTo(bx + ox - 24, by - 40); c.lineTo(bx + ox - 24 - 70 - 30 * (ox < 0 ? row : -row), by + 34); c.stroke(); }
+        c.filter = 'brightness(.7)'; S.npRowFront(c, bx, by, 1, lt); c.filter = 'none';
+        c.fillStyle = '#ffd070'; c.fillRect(bx + 104, by - 46, 8, 12); VP.glow(c, bx + 108, by - 40, 120, '#ffb050', .55);
+        c.restore(); c.restore(); } },
     over: [(c, lt) => K.dateTag(c, 'THE CONTINENTAL SYSTEM · 1806', lt, { at: .4, y: 100 }), (c, lt, u, Sh) => K.card(c, 'NO TRADE WITH BRITAIN', lt, { at: Sh.tB + .4, until: Sh.tS, x: 760, y: 250, px: 52, rot: -2 })],
-    sfx: [[.2, 'ocean_loop', .3], ['banned', 'stamp', .5], ['Smuggling', 'splash', .3], ['kept', 'creak', .3]] },
+    sfx: [[.2, 'ocean_loop', .3], ['banned', 'stamp', .5], ['Smuggling', 'splash', .3], ['allies', 'splash', .25], ['kept', 'creak', .35], ['kept', 'drum', .3]] },
 
   // 3.05 MED: a Spanish mountain road; villagers with muskets on the rocks above a French supply column; smoke from an ambush
-  { set: 'pass', cam: { z: [1.0, 1.08], x: [640, 640], y: [400, 420], ease: E.io }, bed: [['wind_loop', .25]],
+  { set: 'pass', cam: (lt, u, Sh) => { const q = E.io(seg(lt, 0, Sh.dur)), h = lt > Sh.tA ? Math.max(0, 1 - (lt - Sh.tA) * 1.4) : 0, sh = h * Math.sin(lt * 55) * 7;
+      return { z: [lerp(1.02, 1.2, q)], x: [lerp(600, 680, q) + sh], y: [lerp(440, 410, q) + sh * .5] }; }, bed: [['wind_loop', .25]],
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tJ = at(Sh, 'Joseph', 2); Sh.tG = at(Sh, 'guerrilla', 6.5); Sh.tA = at(Sh, 'Ambushes', 9); },
     draw: (c, lt, u, Sh) => { const L = SUN(lt), hit = lt > Sh.tA;
       [[150, 400, C.GUERR, 1], [260, 380, C.GUERR2, 1], [1060, 390, C.GUERR, -1], [1150, 410, C.GUERR2, -1]].forEach(([x, y, ch, f], k) => { c.fillStyle = '#7a7060'; c.beginPath(); c.ellipse(x, y + 10, 60, 22, 0, 0, TAU); c.fill(); fig(c, ch, x, y, 22, pose(lt, k, { face: f, shN: 80, elN: 10, holdN: musket(c, .3) }), lt, k, L, { look: [f * .6, .5] }); if (hit) { const t = (lt - Sh.tA + k * .4) % 1.6; if (t < .2) VP.glow(c, x + f * 50, y - 20, 30, '#ffd080', .8); S.npSmoke(c, lt, x + f * 30, y - 60, 120, 40, .25, k * 5); } });
       const mv = hit ? 0 : 1, cx = 640 + (hit ? 0 : (lt - Sh.tA) * 30);
-      [C.FR, C.FR2, C.FR].forEach((ch, k) => { const x = cx - 220 + k * 120; fig(c, ch, x, 600 + (k % 2) * 12, 32, hit ? pose(lt, k, { face: k % 2 ? 1 : -1, shN: 60, elN: 60, holdN: musket(c, -1.0) }) : walk(lt, k, { face: 1, holdN: musket(c, -1.3) }), lt, k + 4, L, { worry: hit ? 1 : 0, look: [0, -.6] }); });
-      cart(c, cx + 180, 620, .9, lt, '#c8b898', hit ? 0 : lt * 2); },
+      [C.FR, C.FR2, C.FR].forEach((ch, k) => { const x = cx - 260 + k * 150; fig(c, ch, x, 600 + (k % 2) * 12, 32, hit ? pose(lt, k, { face: k === 0 ? -1 : 1, shN: 40 + k * 12, elN: 50, holdN: musket(c, -1.35 + k * .1) }) : walk(lt, k, { face: 1, holdN: musket(c, -1.3) }), lt, k + 4, L, { worry: hit ? 1 : 0, look: [0, -.6] }); });
+      cart(c, cx + 180, 620, .9, lt, '#c8b898', hit ? 0 : lt * 2);
+      // QA r2 (Pushpam: more dramatic, less flat): bullet dust on the road, drifting gunsmoke, warm low sun, dark foreground rocks framing the shot
+      if (hit) for (let k = 0; k < 8; k++) { const r = S.rng(5200 + k), t = ((lt - Sh.tA) + k * .41) % 1.6, x = 360 + r() * 560, y = 612 + r() * 50; if (t < 1.2) { const a = (1 - t / 1.2) * .5, rr = 6 + t * 40;
+        c.fillStyle = S.rgba('#c8a878', a); c.beginPath(); c.ellipse(x, y - t * 20, rr, rr * .6, 0, 0, TAU); c.fill(); if (t < .1) { c.fillStyle = S.rgba('#f0d8a0', .8); c.fillRect(x - 2, y - 8, 4, 8); } } }
+      if (hit) S.npSmoke(c, lt - Sh.tA, 640, 330, 900, 120, .18, 9);
+      const wg = c.createLinearGradient(0, 0, 0, 720); wg.addColorStop(0, S.rgba('#ff9a40', .16)); wg.addColorStop(.6, S.rgba('#ff9a40', 0)); wg.addColorStop(1, S.rgba('#1a0c04', .35)); c.fillStyle = wg; c.fillRect(0, 0, 1280, 720);
+      VP.glow(c, 1240, 60, 420, '#ffc070', .35);
+      const rock = (pts, seed) => { c.fillStyle = '#2a1e14'; c.beginPath(); c.moveTo(pts[0][0], pts[0][1]); for (let k = 1; k < pts.length; k++) { const [a, b] = pts[k - 1], [x, y] = pts[k]; c.quadraticCurveTo(a + (x - a) * .2, b - 18, x, y); } c.closePath(); c.fill();
+        c.save(); c.clip(); S.dabs(c, { x: 0, y: 520, w: 1280, h: 240, n: 120, cols: ['#3a2a1c', '#1a120a', '#5a4430'], r0: 4, r1: 14, a0: .4, a1: .7, seed }); c.restore(); };
+      rock([[-20, 760], [-20, 560], [70, 600], [150, 650], [230, 700], [260, 760]], 5301); rock([[1300, 760], [1300, 540], [1200, 590], [1110, 660], [1060, 760]], 5302); },
     over: [(c, lt) => K.dateTag(c, 'SPAIN · 1808', lt, { at: .4, y: 100 }), (c, lt, u, Sh) => K.badge(c, 'KING JOSEPH BONAPARTE', lt, { at: Sh.tJ, until: Sh.tG }), (c, lt, u, Sh) => K.card(c, 'GUERRILLA = "LITTLE WAR"', lt, { at: Sh.tG, x: 960, y: 150, px: 52, rot: -2 })],
     sfx: [[.2, 'wind_loop', .25], [.5, 'march_loop', .25], ['Ambushes', 'musket', .5], ['hills', 'musket', .45], ['year', 'musket', .4]] },
 

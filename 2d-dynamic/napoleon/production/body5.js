@@ -40,7 +40,7 @@ window.SHOTS = [
     draw: (c, lt, u, Sh) => { const L = DUSK(lt);
       [[860, 440, .3], [980, 452, .22]].forEach(([x, y, s]) => H1.boat(c, x + Math.sin(lt * .5) * 10, y, s, lt, {}));
       c.fillStyle = '#c8b090'; c.fillRect(0, 600, 1280, 120); for (let k = 0; k < 32; k++) { c.fillStyle = S.rgba(k % 2 ? '#a89070' : '#d8c0a0', .8); c.fillRect(k * 40, 600, 38, 20); } c.fillStyle = '#a89070'; c.fillRect(0, 618, 1280, 6);
-      const w = seg(lt, .3, 3.5); fig(c, C.NAPG, lerp(200, 560, E.out(w)), 604, 40, w < 1 ? walk(lt, 0, { face: 1, shN: -6, elN: 120, shF: -6, elF: 120 }) : pose(lt, 0, { face: 1, shN: -6, elN: 120, shF: -6, elF: 120 }), lt, 0, L, { look: [1, -.1] }); },
+      const w = seg(lt, 0, 3.4); fig(c, C.NAPG, lerp(120, 540, w), 604, 40, w < 1 ? walk(lt, 0, { face: 1, shN: -6, elN: 120, shF: -6, elF: 120 }) : pose(lt, 0, { face: 1, shN: -6, elN: 120, shF: -6, elF: 120 }), lt, 0, L, { look: [1, -.1] }); },
     over: [(c, lt) => K.dateTag(c, 'ELBA · 1814', lt, { at: .4, y: 100 }), (c, lt, u, Sh) => K.card(c, 'LESS THAN A YEAR', lt, { at: Sh.tL, x: 960, y: 150, px: 54, rot: -2 })],
     sfx: [[.2, 'ocean_loop', .3], [.3, 'birds_loop', .15], [.5, 'footsteps', .3], ['lasted', 'tick', .3]] },
 
@@ -84,8 +84,12 @@ window.SHOTS = [
     draw: (c, lt, u, Sh) => { const L = GREY(lt);
       if (lt >= Sh.tB) { S.npHat(c, 400, 640, 1.2, .15); return; }
       const rise = E.out(seg(lt, Sh.tS, Sh.tS + .6)), back = seg(lt, Sh.tR, Sh.tR + 2);
-      [C.BRIT, C.BRIT2, C.BRIT, C.BRIT2].forEach((ch, k) => { const x = 820 + k * 90, y = 560 + (k % 2) * 10 + (1 - rise) * 60; c.save(); c.beginPath(); c.rect(0, 0, 1280, 590 + (k % 2) * 10); c.clip(); fig(c, ch, x, y, 32, pose(lt, k, { face: -1, shN: rise > .9 ? 85 : 20, elN: rise > .9 ? 0 : 40, shF: rise > .9 ? 80 : 10, holdN: musket(c, rise > .9 ? 0 : -1.3) }), lt, k, L, { look: [-.6, 0] }); c.restore();
+      [C.BRIT, C.BRIT2, C.BRIT, C.BRIT2].forEach((ch, k) => { const x = 820 + k * 90, y = 560 + (k % 2) * 10 + (1 - rise) * 80; c.save(); c.beginPath(); c.rect(0, 0, 1280, 590 + (k % 2) * 10); c.clip(); fig(c, ch, x, y, 32, pose(lt, k, { face: -1, shN: rise > .9 ? 85 : 20, elN: rise > .9 ? 0 : 40, shF: rise > .9 ? 80 : 10, holdN: musket(c, rise > .9 ? 0 : -1.3) }), lt, k, L, { look: [-.6, 0] }); c.restore();
         const t = lt - Sh.tF - k * .1; if (t > 0 && t < .2) VP.glow(c, x - 60, 520, 40, '#ffd080', .8); });
+      // QA r2 (Pushpam: legs looked cut off): tall wheat in front of the redcoats so they are hidden in it, not sliced
+      for (let k = 0; k < 140; k++) { const r = S.rng(8800 + k), x = 740 + r() * 480, base = 612 + r() * 14, ht = 50 + r() * 30, sw = Math.sin(lt * 1.6 + k * .7) * 4;
+        c.strokeStyle = S.mix('#8a7030', '#d8b860', r()); c.lineWidth = 2; c.beginPath(); c.moveTo(x, base); c.quadraticCurveTo(x + sw * .5, base - ht * .6, x + sw, base - ht); c.stroke();
+        c.fillStyle = S.mix('#b89040', '#e8c870', r()); c.beginPath(); c.ellipse(x + sw, base - ht - 5, 2.5, 7, sw * .04, 0, TAU); c.fill(); }
       if (lt > Sh.tF) S.npSmoke(c, lt, 700, 470, 400, 80, .35 * (1 - seg(lt, Sh.tF + 3, Sh.tB)), 41);
       [C.GUARD, C.GUARD, C.GUARD, C.GUARD].forEach((ch, k) => { const x0 = 160 + k * 110 + lt * 18 * (1 - back), x = x0 - back * 300, y = 640 - k * 6; fig(c, ch, x, y, 34, lt < Sh.tR ? walk(lt * .8, k, { face: 1, holdN: musket(c, -1.3) }) : Object.assign(H1.walk(lt * 1.8 + k), { face: -1, holdN: musket(c, -1.3) }), lt, k + 4, L, { look: [.5, -.2], worry: back > 0 ? 1 : 0 }); }); },
     over: [(c, lt, u, Sh) => K.badge(c, 'THE IMPERIAL GUARD', lt, { at: .5, until: Sh.tS }), (c, lt, u, Sh) => K.card(c, 'THE ARMY BREAKS', lt, { at: Sh.tB + .2, x: 960, y: 150, px: 56, rot: -2 })],

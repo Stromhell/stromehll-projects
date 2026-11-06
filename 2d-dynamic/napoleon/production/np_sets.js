@@ -131,15 +131,49 @@
 
   // ===== Moscow from the Sparrow Hills, Sept 1812: domes and towers below an evening sky
   VP.set('np_moscow', 1280, 720, (g, w, h) => {
+    // QA r2 (Pushpam: Moscow looked blocky): layered painted city, Kremlin wall with towers, ribbed onion domes on drums, windows, smoke, textured grass
     sky(g, w, h, [[0, '#2a2a48'], [.45, '#8a5a6a'], [.6, '#e8a070'], [1, '#5a4040']]);
+    S.glow(g, 900, 390, 380, '#ffb070', .35);
+    for (let k = 0; k < 9; k++) { const r = S.rng(3690 + k); g.fillStyle = S.rgba('#c87a6a', .12 + r() * .1); g.beginPath(); g.ellipse(r() * w, 120 + r() * 160, 160 + r() * 200, 10 + r() * 14, 0, 0, TAU); g.fill(); }
     ridge(g, w, h, 400, 14, 160, 3701, '#4a3a40');
-    const dome = (x, y, r, col) => { g.fillStyle = '#3a2a30'; g.fillRect(x - r * .8, y, r * 1.6, 70); g.fillStyle = col; g.beginPath(); g.moveTo(x - r, y); g.quadraticCurveTo(x - r * 1.1, y - r * 1.2, x, y - r * 1.8); g.quadraticCurveTo(x + r * 1.1, y - r * 1.2, x + r, y); g.fill(); g.strokeStyle = '#d8b040'; g.lineWidth = 2; g.beginPath(); g.moveTo(x, y - r * 1.8); g.lineTo(x, y - r * 2.4); g.moveTo(x - 6, y - r * 2.2); g.lineTo(x + 6, y - r * 2.2); g.stroke(); };
-    for (let k = 0; k < 26; k++) { const r = S.rng(3710 + k); g.fillStyle = S.mix('#3a2a30', '#6a4a50', r()); g.fillRect(k * 50 - 10, 380 + r() * 20, 46, 80); }
-    [[300, 370, 18, '#2a6a4a'], [420, 360, 22, '#d8b040'], [470, 372, 14, '#3a5aa0'], [640, 340, 32, '#d8b040'], [700, 362, 18, '#c8402a'], [820, 366, 20, '#2a6a4a'], [960, 376, 16, '#d8b040']].forEach(a => dome(...a));
-    g.fillStyle = '#3a2a30'; g.fillRect(552, 250, 26, 140); g.beginPath(); g.moveTo(548, 250); g.lineTo(565, 196); g.lineTo(582, 250); g.fill();
-    g.fillStyle = '#8a3a2a'; g.fillRect(150, 420, 1000, 20); for (let k = 0; k < 34; k++) g.fillRect(150 + k * 30, 410, 16, 12);
-    g.fillStyle = '#3a3a28'; g.beginPath(); g.moveTo(0, 520); g.quadraticCurveTo(400, 470, 760, 540); g.quadraticCurveTo(1000, 580, 1280, 560); g.lineTo(w, h); g.lineTo(0, h); g.fill();
-    S.dabs(g, { x: 0, y: 500, w, h: 220, n: 260, cols: ['#4a4a30', '#2a2a1a', '#6a5a3a'], r0: 4, r1: 16, a0: .3, a1: .6, seed: 3720 });
+    // far city: small roofs and spires, hazy
+    for (let k = 0; k < 70; k++) { const r = S.rng(3740 + k), x = r() * w, bw = 14 + r() * 26, bh = 14 + r() * 26, y = 396 - r() * 10; g.fillStyle = S.mix('#5a4048', '#7a5a5e', r()); g.fillRect(x, y - bh, bw, bh + 20); g.fillStyle = S.mix('#3a2a30', '#5a3a3a', r()); g.beginPath(); g.moveTo(x - 3, y - bh); g.lineTo(x + bw / 2, y - bh - 8 - r() * 8); g.lineTo(x + bw + 3, y - bh); g.fill(); }
+    g.fillStyle = S.rgba('#e8a070', .18); g.fillRect(0, 340, w, 80);
+    // churches: body, drum, ribbed onion dome with highlight, cross
+    const dome = (x, y, r, col) => { const bw = r * 1.7; g.fillStyle = '#e8dccc'; g.fillRect(x - bw / 2 - r * .4, y + r * .4, bw + r * .8, 60); g.fillStyle = S.rgba('#000000', .18); g.fillRect(x + bw / 4, y + r * .4, bw / 4 + r * .4, 60);
+      for (let k = 0; k < 3; k++) { g.fillStyle = '#3a2a30'; g.beginPath(); g.moveTo(x - bw / 2 + k * bw / 3 + 4, y + r * .4 + 70); g.lineTo(x - bw / 2 + k * bw / 3 + 4, y + r * .4 + 30); g.arc(x - bw / 2 + k * bw / 3 + 4 + bw / 9, y + r * .4 + 30, bw / 9, Math.PI, 0); g.lineTo(x - bw / 2 + k * bw / 3 + 4 + bw * 2 / 9, y + r * .4 + 70); g.fill(); }
+      g.fillStyle = '#d8ccb8'; g.fillRect(x - r * .7, y - r * .1, r * 1.4, r * .6); g.fillStyle = '#5a4a40'; for (let k = 0; k < 4; k++) g.fillRect(x - r * .55 + k * r * .35, y + r * .05, r * .14, r * .3);
+      const dg = g.createLinearGradient(x - r, 0, x + r, 0); dg.addColorStop(0, S.mix(col, '#000000', .35)); dg.addColorStop(.4, S.mix(col, '#ffffff', .25)); dg.addColorStop(1, S.mix(col, '#000000', .45)); g.fillStyle = dg;
+      g.beginPath(); g.moveTo(x - r * .8, y); g.bezierCurveTo(x - r * 1.35, y - r * .7, x - r * .2, y - r * 1.2, x, y - r * 1.9); g.bezierCurveTo(x + r * .2, y - r * 1.2, x + r * 1.35, y - r * .7, x + r * .8, y); g.closePath(); g.fill();
+      g.strokeStyle = S.rgba('#000000', .25); g.lineWidth = 1.2; for (const f of [-.5, 0, .5]) { g.beginPath(); g.moveTo(x + f * r * 1.4, y); g.quadraticCurveTo(x + f * r * .9, y - r * 1.1, x, y - r * 1.85); g.stroke(); }
+      g.fillStyle = S.rgba('#fff4d0', .45); g.beginPath(); g.ellipse(x - r * .35, y - r * .65, r * .14, r * .4, -.3, 0, TAU); g.fill();
+      g.strokeStyle = '#d8b040'; g.lineWidth = 2; g.beginPath(); g.moveTo(x, y - r * 1.9); g.lineTo(x, y - r * 2.5); g.moveTo(x - r * .2, y - r * 2.3); g.lineTo(x + r * .2, y - r * 2.3); g.stroke(); };
+    [[300, 352, 18, '#2a6a4a'], [420, 338, 24, '#d8b040'], [480, 356, 15, '#3a5aa0'], [700, 344, 19, '#c8402a'], [760, 360, 13, '#2a6a4a'], [830, 350, 21, '#2a6a4a'], [960, 360, 17, '#d8b040'], [1040, 368, 12, '#3a5aa0']].forEach(a => dome(...a));
+    // Ivan the Great bell tower, tiered, gold top
+    g.fillStyle = '#ece2d2'; [[540, 250, 44, 160], [546, 205, 32, 48], [550, 175, 24, 32]].forEach(([x, y, ww, hh]) => g.fillRect(x, y, ww, hh)); g.fillStyle = S.rgba('#000000', .16); g.fillRect(568, 175, 18, 235);
+    g.fillStyle = '#4a3a34'; for (let k = 0; k < 3; k++) { g.fillRect(548 + k * 12, 270, 6, 18); g.fillRect(552 + k * 8, 215, 5, 14); }
+    { const x = 562, y = 175, r = 15, dg = g.createLinearGradient(x - r, 0, x + r, 0); dg.addColorStop(0, '#8a6a20'); dg.addColorStop(.4, '#f8d860'); dg.addColorStop(1, '#6a4a10'); g.fillStyle = dg; g.beginPath(); g.moveTo(x - r, y); g.quadraticCurveTo(x - r * 1.1, y - r * 1.4, x, y - r * 2.2); g.quadraticCurveTo(x + r * 1.1, y - r * 1.4, x + r, y); g.fill(); }
+    // big gold cathedral (Dormition) with five domes
+    g.fillStyle = '#efe4d2'; g.fillRect(600, 330, 120, 90); g.fillStyle = S.rgba('#000000', .15); g.fillRect(680, 330, 40, 90); for (let k = 0; k < 4; k++) { g.fillStyle = '#5a4a40'; g.fillRect(612 + k * 28, 350, 10, 26); }
+    [[630, 322, 13], [690, 322, 13], [660, 312, 19]].forEach(([x, y, r]) => dome(x, y, r, '#d8b040'));
+    // Kremlin wall: red brick with swallowtail merlons, towers with green tent roofs
+    const wg = g.createLinearGradient(0, 410, 0, 452); wg.addColorStop(0, '#a84a34'); wg.addColorStop(1, '#6a2a1e'); g.fillStyle = wg; g.fillRect(120, 418, 1060, 34);
+    g.fillStyle = '#9a4030'; for (let k = 0; k < 53; k++) { const x = 122 + k * 20; g.beginPath(); g.moveTo(x, 418); g.lineTo(x, 404); g.lineTo(x + 5, 410); g.lineTo(x + 10, 404); g.lineTo(x + 10, 418); g.fill(); }
+    g.strokeStyle = S.rgba('#3a1408', .35); g.lineWidth = 1; for (let y = 424; y < 452; y += 7) { g.beginPath(); g.moveTo(120, y); g.lineTo(1180, y); g.stroke(); }
+    [[150, 1], [420, 1.3], [700, 1.1], [980, 1.4], [1160, 1]].forEach(([x, s2]) => { g.fillStyle = '#a84834'; g.fillRect(x - 16 * s2, 380 - 30 * s2, 32 * s2, 72 + 30 * s2); g.fillStyle = S.rgba('#000000', .2); g.fillRect(x + 4 * s2, 380 - 30 * s2, 12 * s2, 72 + 30 * s2);
+      g.fillStyle = '#2a5a3a'; g.beginPath(); g.moveTo(x - 20 * s2, 380 - 30 * s2); g.lineTo(x, 380 - 90 * s2); g.lineTo(x + 20 * s2, 380 - 30 * s2); g.fill(); g.fillStyle = '#d8b040'; g.beginPath(); g.arc(x, 380 - 92 * s2, 3 * s2, 0, TAU); g.fill(); g.fillStyle = '#3a1810'; g.fillRect(x - 4 * s2, 400 - 10 * s2, 8 * s2, 12 * s2); });
+    { const bg = g.createLinearGradient(0, 450, 0, 540); bg.addColorStop(0, '#4a3a3e'); bg.addColorStop(1, '#3a3428'); g.fillStyle = bg; g.fillRect(0, 452, w, 90);
+      S.dabs(g, { x: 0, y: 452, w, h: 90, n: 220, cols: ['#5a4a48', '#3a2e2c', '#4a4434', '#6a5a50'], r0: 3, r1: 10, a0: .3, a1: .6, seed: 3730 });
+      for (let k = 0; k < 40; k++) { const r = S.rng(3735 + k), x = r() * w, y = 458 + r() * 70; g.fillStyle = S.rgba('#2a2228', .5); g.fillRect(x, y - 6, 10 + r() * 14, 6); g.fillStyle = S.rgba('#ffc070', .5 * r()); g.fillRect(x + 3, y - 4, 2, 2); } }
+    // thin smoke rising from chimneys
+    for (let k = 0; k < 5; k++) { const r = S.rng(3760 + k), x = 200 + r() * 900; for (let j = 0; j < 8; j++) { g.fillStyle = S.rgba('#6a5a60', .12 - j * .012); g.beginPath(); g.ellipse(x + j * 9, 380 - j * 22, 10 + j * 5, 8 + j * 3, 0, 0, TAU); g.fill(); } }
+    // foreground hill: layered grass with blades and wildflowers
+    const hg = g.createLinearGradient(0, 470, 0, h); hg.addColorStop(0, '#4a4a2c'); hg.addColorStop(1, '#22220f'); g.fillStyle = hg;
+    g.beginPath(); g.moveTo(0, 520); g.quadraticCurveTo(400, 470, 760, 540); g.quadraticCurveTo(1000, 580, 1280, 560); g.lineTo(w, h); g.lineTo(0, h); g.fill();
+    S.dabs(g, { x: 0, y: 500, w, h: 220, n: 320, cols: ['#5a5a34', '#2a2a1a', '#6a6a3a', '#7a6a40'], r0: 3, r1: 12, a0: .25, a1: .55, seed: 3720 });
+    for (let k = 0; k < 900; k++) { const r = S.rng(3800 + k), x = r() * w, y0 = 500 + r() * 220, top = 0; if (y0 < 520 - (x < 760 ? 0 : 0) + Math.min(0, 0)) continue; const len = 4 + (y0 - 500) * .06 + r() * 6;
+      g.strokeStyle = S.rgba(r() < .5 ? '#7a7a44' : '#3a3a1c', .55); g.lineWidth = 1 + (y0 - 500) * .006; g.beginPath(); g.moveTo(x, y0); g.lineTo(x + (r() - .5) * 5, y0 - len); g.stroke(); }
+    for (let k = 0; k < 40; k++) { const r = S.rng(3990 + k), x = r() * w, y = 560 + r() * 150; g.fillStyle = r() < .5 ? '#d8c890' : '#c88a7a'; g.beginPath(); g.arc(x, y, 1.5 + r() * 1.5, 0, TAU); g.fill(); }
     grain(g, w, h, 3729, .05);
   });
 

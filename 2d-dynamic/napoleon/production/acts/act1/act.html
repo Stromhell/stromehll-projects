@@ -73,10 +73,10 @@ window.SHOTS = [
       [[1060, 470, 1], [1150, 480, .9], [1230, 466, .8]].forEach(([x, y, k]) => { S.contact(c, x, y, 60 * k, .3); c.fillStyle = '#efe8d8'; c.beginPath(); c.moveTo(x - 50 * k, y); c.lineTo(x, y - 60 * k); c.lineTo(x + 50 * k, y); c.closePath(); c.fill(); c.fillStyle = 'rgba(120,100,70,.35)'; c.beginPath(); c.moveTo(x, y - 60 * k); c.lineTo(x + 50 * k, y); c.lineTo(x + 8 * k, y); c.closePath(); c.fill(); c.fillStyle = '#4a3a2a'; c.beginPath(); c.moveTo(x - 8 * k, y); c.lineTo(x, y - 30 * k); c.lineTo(x + 8 * k, y); c.fill(); });
       c.fillStyle = '#5a4030'; c.fillRect(880, 340, 5, 140); S.npFlag(c, 885, 346, .8, lt);
       S.npSmoke(c, lt, 760, 430, 420, 90, .22, 7);
-      S.npCannon(c, 700, 600, 1.4, 1); S.npCannon(c, 980, 560, 1.1, 1);
+      S.npCannon(c, 680, 600, 2.2, 1); S.npCannon(c, 1010, 545, 1.8, 1);
       const ram = Math.sin(lt * 2.4) * .5 + .5;
-      fig(c, C.FR, 860, 596, 34, pose(lt, 2, { face: -1, shN: 35 + 30 * ram, elN: 40, shF: 25 + 30 * ram, elF: 50, lean: 16 }), lt, 2, L, { look: [-.6, .3] });
-      fig(c, C.FR2, 1100, 556, 28, pose(lt, 3, { face: -1, shN: 30, elN: 90, lean: 14 }), lt, 3, L, { look: [-.5, .3] });
+      fig(c, C.FR, 880, 596, 34, pose(lt, 2, { face: -1, shN: 35 + 30 * ram, elN: 40, shF: 25 + 30 * ram, elF: 50, lean: 16 }), lt, 2, L, { look: [-.6, .3] });
+      fig(c, C.FR2, 1170, 552, 30, pose(lt, 3, { face: -1, shN: 30, elN: 90, lean: 14 }), lt, 3, L, { look: [-.5, .3] });
       fig(c, C.NAPY, 520, 610, 40, pose(lt, 0, { face: 1, shN: 80 + 6 * Math.sin(lt), elN: 10, shF: -8, elF: 70 }), lt, 0, L, { look: [.6, -.1] }); },
     over: [(c, lt, u, Sh) => K.card(c, 'ARTILLERY OFFICER AT 16', lt, { at: Sh.tO + .3, x: 960, y: 150, px: 52, rot: -2 })],
     sfx: [[.2, 'clock_loop', .2], [.5, 'paper', .3], ['artillery', 'drum', .35]] },
@@ -85,11 +85,11 @@ window.SHOTS = [
   { set: 'np_paris', cam: { z: [1.0, 1.06], x: [640, 640], y: [380, 390], ease: E.io }, bed: [['crowd_loop', .4], ['drum_loop', .2]],
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tN = at(Sh, 'Nobles', 3); Sh.tT = at(Sh, 'talent', 6.5); },
     draw: (c, lt, u, Sh) => { const L = SUN(lt);
+      const cq = seg(lt, Sh.tN, Sh.tN + 3.5); if (cq > 0 && cq < 1) carriage(c, lerp(-300, 1600, cq), 470, .62, lt, L);
       statue(c, 640, 600, 1.1);
-      const cx = lerp(1500, 1500, 0) - 0; const cq = seg(lt, Sh.tN, Sh.tN + 3.5); if (cq > 0 && cq < 1) carriage(c, lerp(-300, 1600, cq), 480, .7, lt, L);
       [[C.SANS, 180, 0, 1], [C.SANSW, 290, 1, 1], [C.SANS2, 400, 2, 1], [C.SANS, 880, 3, -1], [C.SANSW, 990, 4, -1], [C.SANS2, 1100, 5, -1]].forEach(([ch, x, k, f]) => { const up = Math.sin(lt * 3 + k) * .5 + .5;
-        fig(c, ch, x, 640 + (k % 2) * 16, 34, pose(lt, k, { face: f, shN: 140 + 20 * up, elN: 20, shF: 20, elF: 40 }), lt, k, L, { look: [f * .3, -.5], smile: .7 });
-        if (k % 2 === 0) S.npFlag(c, x + f * 20, 560 + (k % 2) * 16 - 20 * up, .8, lt + k); }); },
+        const fl = k % 2 === 0, hold = fl ? { holdN: wr => S.npFlag(c, wr[0], wr[1] + 34, .7, lt + k) } : {};
+        fig(c, ch, x, 640 + (k % 2) * 16, 34, Object.assign(pose(lt, k, fl ? { face: f, shN: 150 + 6 * up, elN: 14, shF: 20, elF: 40 } : { face: f, shN: 140 + 20 * up, elN: 20, shF: 20, elF: 40 }), hold), lt, k, L, { look: [f * .3, -.5], smile: .7 }); }); },
     over: [(c, lt) => K.dateTag(c, 'PARIS · 1789', lt, { at: .4, y: 100 }), (c, lt, u, Sh) => K.card(c, 'TALENT > BIRTH', lt, { at: Sh.tT, x: 960, y: 150, px: 60, rot: -2 })],
     sfx: [[.2, 'crowd_loop', .4], [.3, 'drum_loop', .2], ['Nobles', 'hooves', .4], ['heads', 'thud', .3], ['talent', 'crowd_cheer', .35]] },
 
@@ -100,10 +100,10 @@ window.SHOTS = [
       [[880, 432, .4, 2], [700, 466, .5, 0], [1080, 506, .62, 1]].forEach(([x, y, s, k]) => S.npShip(c, x + away * (200 + k * 60), y, s, 1, lt, { flag: k === 2 ? 'uk' : 'uk', sails: .7 + .3 * away }));
       if (lt > Sh.tG) S.npSmoke(c, lt, 600, 380, 600, 120, .3, 7);
       const fire = k => { const t = lt - Sh.tG - k * .7; return t < 0 ? -1 : t % 2.1; };
-      S.npCannon(c, 160, 520, 1.0, 1, fire(0)); S.npCannon(c, 420, 560, 1.0, 1, fire(1));
+      S.npCannon(c, 320, 455, 1.8, 1, fire(1)); S.npCannon(c, 400, 600, 2.4, 1, fire(0));
       if (lt > Sh.tG) for (const k of [0, 1]) { const f = fire(k); if (f >= 0 && f < .5) VP.glow(c, 900, 470, 80, '#ffb050', .6 * (1 - f * 2)); }
-      fig(c, C.FR2, 90, 520, 30, pose(lt, 2, { face: 1, shN: 20, elN: 60 }), lt, 2, L, { look: [.6, 0] });
-      fig(c, C.NAPY, 300, 540, 36, pose(lt, 0, { face: 1, shN: lt > Sh.tS ? 95 : 20, elN: lt > Sh.tS ? 4 : 30 }), lt, 0, L, { look: [.8, -.1] }); },
+      fig(c, C.FR2, 60, 520, 34, pose(lt, 2, { face: 1, shN: 20, elN: 60 }), lt, 2, L, { look: [.6, 0] });
+      fig(c, C.NAPY, 120, 590, 36, pose(lt, 0, { face: 1, shN: lt > Sh.tS ? 95 : 20, elN: lt > Sh.tS ? 4 : 30 }), lt, 0, L, { look: [.8, -.1] }); },
     over: [(c, lt) => K.dateTag(c, 'TOULON · 1793', lt, { at: .4, y: 100 }), (c, lt, u, Sh) => K.badge(c, 'GENERAL AT 24', lt, { at: Sh.tM })],
     sfx: [[.2, 'night_loop', .2], [.3, 'ocean_loop', .2], ['saw', 'whoosh_soft', .3], ['guns', 'cannon', .6], ['drove', 'cannon', .5], ['harbour', 'cannon', .5], ['general', 'drum', .4]] },
 ];

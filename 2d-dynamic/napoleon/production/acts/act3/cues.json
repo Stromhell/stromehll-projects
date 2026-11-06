@@ -102,8 +102,18 @@
    "gain": 0.3
   },
   {
+   "t": 34.143,
+   "name": "splash",
+   "gain": 0.25
+  },
+  {
    "t": 35.703,
    "name": "creak",
+   "gain": 0.35
+  },
+  {
+   "t": 35.703,
+   "name": "drum",
    "gain": 0.3
   },
   {
@@ -186,7 +196,13 @@
    "start": 26.629,
    "end": 38.058,
    "name": "ocean_loop",
-   "gain": 0.3
+   "gain": 0.35
+  },
+  {
+   "start": 26.629,
+   "end": 38.058,
+   "name": "wind_loop",
+   "gain": 0.15
   },
   {
    "start": 37.258,

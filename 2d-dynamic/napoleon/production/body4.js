@@ -69,7 +69,7 @@ window.SHOTS = [
   { set: 'np_berezina', cam: { z: [1.0, 1.06], x: [640, 640], y: [400, 410], ease: E.io }, bed: [['wind_loop', .5], ['water_loop', .2]],
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tB = at(Sh, 'Berezina', 3.5); Sh.tG = at(Sh, 'gone', Sh.dur - .8); },
     draw: (c, lt, u, Sh) => { const L = COLD(lt);
-      for (let k = 0; k < 7; k++) { const q = (lt * .05 + k / 7) % 1, x = lerp(120, 640, q), y = 392 - q * 6; fig(c, k % 3 ? C.FRCOLD : C.FRRAG, x, y, 16, Object.assign(H1.walk(lt * .6 + k), { face: 1, shN: -4, elN: 130 }), lt, k, L, { worry: 1 }); }
+      for (let k = 0; k < 7; k++) { const q = lt * .04 + k / 9, x = lerp(120, 640, q), y = 392 - q * 6; fig(c, k % 3 ? C.FRCOLD : C.FRRAG, x, y, 16, Object.assign(H1.walk(lt * .6 + k), { face: 1, shN: -4, elN: 130 }), lt, k, L, { worry: 1 }); }
       c.save(); c.translate(980, 640); c.rotate(.04); c.fillStyle = '#4a3020'; c.beginPath(); c.ellipse(0, 0, 90, 20, 0, 0, TAU); c.fill(); c.fillStyle = S.rgba('#ffffff', .8); c.beginPath(); c.ellipse(-10, -12, 70, 10, 0, 0, TAU); c.fill(); c.restore();
       [C.FRCOLD, C.FRRAG, C.FRCOLD, C.FRCOLD].forEach((ch, k) => { const x = ((lt * 22 + k * 200) % 1000) - 60, y = 610 + (k % 2) * 30; fig(c, ch, x, y, 36, Object.assign(H1.walk(lt * .55 + k), { face: 1, shN: -4, elN: 135, shF: -2, elF: 130, lean: 12 }), lt, k + 7, L, { worry: 1, look: [.3, .4] }); });
       S.npSnow(c, lt, 1, 1.6); },

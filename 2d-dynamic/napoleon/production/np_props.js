@@ -77,6 +77,29 @@
     c.fillStyle = '#d8b040'; c.beginPath(); c.arc(0, -72, 7, 0, TAU); c.fill(); c.fillRect(-2, -86, 4, 14); c.fillRect(-7, -82, 14, 4);
     c.restore(); S.glow(c, x - 10 * s, y - 50 * s, 40 * s, '#fff0b0', .3 + .2 * Math.sin(lt * 3)); };
   // waving tricolour on a pole held at (x, y)
+  // detailed painted sea: gradient, perspective swell bands, crest highlights, glint column, foam flecks (animated)
+  S.npSea = (c, poly, y0, y1, lt, o = {}) => { const top = o.top || '#2e6a90', bot = o.bot || '#123a58', gx = o.glint ?? 1000, gc = o.glintCol || '#fff4d8';
+    c.save(); c.beginPath(); poly.forEach(([x, y], k) => k ? c.lineTo(x, y) : c.moveTo(x, y)); c.closePath(); c.clip();
+    const gr = c.createLinearGradient(0, y0, 0, y1); gr.addColorStop(0, top); gr.addColorStop(1, bot); c.fillStyle = gr; c.fillRect(0, y0, 1280, y1 - y0);
+    for (let k = 0; k < 260; k++) { const r = S.rng(7100 + k), d = Math.pow(r(), 1.6), y = y0 + d * (y1 - y0), len = 18 + d * 120 * (.5 + r()), th = 1 + d * 4;
+      const x = ((r() * 1500 + lt * (8 + d * 22) * (r() < .5 ? 1 : -1)) % 1500 + 1500) % 1500 - 110, by = y + Math.sin(lt * 1.4 + k) * (1 + d * 3);
+      c.fillStyle = S.rgba(r() < .55 ? '#000814' : '#ffffff', r() < .55 ? .12 + d * .1 : .05 + d * .1); c.beginPath(); c.ellipse(x, by, len, th, 0, 0, TAU); c.fill(); }
+    for (let k = 0; k < 90; k++) { const r = S.rng(7400 + k), d = r(), y = y0 + 4 + d * (y1 - y0) * .9, w = (6 + d * 40) * (.5 + .5 * Math.sin(lt * 2 + k));
+      c.fillStyle = S.rgba(gc, (.25 + .4 * r()) * (1 - d * .4)); c.fillRect(gx - (20 + d * 140) * (r() - .5) * 2 - w / 2, y, w, 1 + d * 2); }
+    for (let k = 0; k < 50; k++) { const r = S.rng(7600 + k), y = y0 + 20 + r() * (y1 - y0 - 20), x = ((r() * 1400 + lt * 12) % 1400) - 60, a = .25 * (.5 + .5 * Math.sin(lt * 3 + k * 2));
+      c.fillStyle = S.rgba('#ffffff', a); c.beginPath(); c.ellipse(x, y, 4 + r() * 10, 1.2, 0, 0, TAU); c.fill(); }
+    const hz = c.createLinearGradient(0, y0, 0, y0 + 40); hz.addColorStop(0, S.rgba(o.haze || '#c8d8e8', .35)); hz.addColorStop(1, S.rgba(o.haze || '#c8d8e8', 0)); c.fillStyle = hz; c.fillRect(0, y0, 1280, 40);
+    c.restore(); };
+  // a wooden rowing boat seen side-on; back half first (call before the rowers), front half after
+  S.npRowBack = (c, x, y, s) => { c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = '#2a1a10'; c.beginPath(); c.ellipse(0, -14, 118, 14, 0, Math.PI, TAU); c.fill(); c.restore(); };
+  S.npRowFront = (c, x, y, s, lt) => { c.save(); c.translate(x, y); c.scale(s, s);
+    c.fillStyle = S.rgba('#000000', .3); c.beginPath(); c.ellipse(0, 22, 140, 10, 0, 0, TAU); c.fill();
+    const g = c.createLinearGradient(0, -16, 0, 24); g.addColorStop(0, '#7a5232'); g.addColorStop(1, '#3a2414'); c.fillStyle = g;
+    c.beginPath(); c.moveTo(-130, -22); c.quadraticCurveTo(-110, 26, -40, 26); c.lineTo(60, 26); c.quadraticCurveTo(120, 22, 138, -26); c.lineTo(118, -14); c.lineTo(-112, -14); c.closePath(); c.fill();
+    c.strokeStyle = S.rgba('#1a0e06', .6); c.lineWidth = 1.5; for (let k = 0; k < 3; k++) { c.beginPath(); c.moveTo(-118 + k * 6, -6 + k * 10); c.quadraticCurveTo(0, 2 + k * 10, 126 - k * 8, -10 + k * 11); c.stroke(); }
+    c.fillStyle = '#9a6a3e'; c.fillRect(-114, -18, 234, 5); c.fillStyle = S.rgba('#ffe0b0', .25); c.fillRect(-114, -18, 234, 1.5);
+    c.fillStyle = S.rgba('#ffffff', .35); for (let k = 0; k < 6; k++) { c.beginPath(); c.ellipse(-120 + k * 50 + Math.sin(lt * 3 + k) * 6, 26, 22, 3, 0, 0, TAU); c.fill(); }
+    c.restore(); };
   S.npFlag = (c, x, y, s, lt, cols = ['#2a4a9a', '#f4f0e8', '#c82a2a'], vert = true) => { c.save(); c.translate(x, y); c.scale(s, s); c.strokeStyle = '#4a3020'; c.lineWidth = 4; c.beginPath(); c.moveTo(0, 0); c.lineTo(0, -150); c.stroke();
     const W = 90, H = 60, N = 12; for (let i = 0; i < N; i++) { const x0 = i / N * W, x1 = (i + 1) / N * W, w0 = Math.sin(lt * 5 - i * .5) * 6 * i / N, w1 = Math.sin(lt * 5 - (i + 1) * .5) * 6 * (i + 1) / N; c.fillStyle = vert ? cols[Math.min(2, Math.floor(i / N * 3))] : cols[0];
       c.beginPath(); c.moveTo(x0, -150 + w0); c.lineTo(x1, -150 + w1); c.lineTo(x1, -150 + H + w1); c.lineTo(x0, -150 + H + w0); c.fill(); }
