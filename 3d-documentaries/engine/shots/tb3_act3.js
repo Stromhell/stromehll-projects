@@ -104,7 +104,8 @@ export const shots = {
     const cam = C.dolly(camera, { pos: [0, 1.1, 4.6], look: [0, 1.55, 0], fov: 34 }, { pos: [0, 1.2, 3.3], look: [0, 1.62, 0], fov: 32 });
     return (t, u) => { cam(u); a.update(t, { mood: 'smug', look: Math.sin(t * .3) * .08 }); const [x, y] = proj(camera, C.headPos(a, .4)); ui.callout(k.overlay, 'IDI AMIN', 'PRESIDENT OF UGANDA', Math.min(1500, x + 420), Math.max(240, y + 60), t, .9); };
   },
-  // the real-look Amin, newspaper front pages from 1972-76 circling him
+  // the real-look Amin in front of a cork board with newspaper front pages from 1972-76 pinned flat to it
+  // (QA full1: the pages used to circle him in mid air and broke the floating-props rule; now nothing floats)
   '3.2': async k => {
     const { real, scene, camera } = k;
     await real.env(k, 'brown_photostudio_02', { sun: false, bg: 0x070606, envI: .18 });
@@ -121,13 +122,23 @@ export const shots = {
         c.font = 'italic 34px serif'; c.fillText(h2, 400, y + 60); c.fillStyle = '#8a8274'; c.fillRect(60, y + 100, 330, 300);
         c.fillStyle = '#3a342c'; for (let r = 0; r < 26; r++) { c.fillRect(420, y + 100 + r * 12, 320, 4); if (y + 420 + r * 12 < 1000) c.fillRect(60, y + 420 + r * 12, 680, 4); }
         c.fillStyle = 'rgba(120,100,60,.15)'; for (let q = 0; q < 60; q++) c.fillRect((q * 131) % 800, (q * 293) % 1040, 40, 3); });
-      const pl = real.m(new THREE.PlaneGeometry(.62, .8), new THREE.MeshStandardMaterial({ map: tex, roughness: .85, side: THREE.DoubleSide }), { cast: true }); scene.add(pl); return pl; });
+      const pl = real.m(new THREE.PlaneGeometry(.62, .8), new THREE.MeshStandardMaterial({ map: tex, roughness: .85, side: THREE.DoubleSide }), { cast: false }); scene.add(pl); return pl; });
+    // wall from the floor up, a framed cork board fixed to it, the four pages pinned flat on the board, two either side of Amin
+    const WZ = -1.5;
+    scene.add(real.box(8, 4.5, .1, real.std(0x2a2420, { rough: .95 }), { pos: [0, 2.25, WZ - .05], cast: false }));
+    scene.add(real.box(4.4, 1.9, .04, real.std(0x9a7448, { rough: .95 }), { pos: [0, 1.55, WZ + .02], cast: false }));
+    const fr = real.std(0x4a3222, { rough: .7 });
+    for (const [w, h, x, y] of [[4.52, .06, 0, 2.53], [4.52, .06, 0, .57], [.06, 1.98, -2.23, 1.55], [.06, 1.98, 2.23, 1.55]]) scene.add(real.box(w, h, .06, fr, { pos: [x, y, WZ + .03], cast: false }));
+    const pinM = [0xc0392b, 0xe8b321, 0x1f4fa8, 0x2a6a3a].map(c => real.std(c, { rough: .4 }));
+    const slots = [[-1.75, 1.5, .05], [-.95, 1.62, -.04], [.95, 1.58, .03], [1.75, 1.48, -.05]];
+    papers.forEach((pl, i) => { const [x, y, rz] = slots[[2, 1, 0, 3][i]]; pl.position.set(x, y, WZ + .045 + i * .001); pl.rotation.set(0, 0, rz);
+      const pin = real.m(new THREE.SphereGeometry(.018, 12, 8), pinM[i], { cast: false }); pin.position.set(x - Math.sin(rz) * .36, y + Math.cos(rz) * .36, WZ + .065); scene.add(pin); });
     const key = new THREE.SpotLight(0xffe2c0, 70, 10, .5, .5, 1.3); key.position.set(1.6, 3.2, 2.4); key.target.position.set(0, 1.4, 0); key.castShadow = true; scene.add(key, key.target);
     const rim = new THREE.SpotLight(0x8aa0ff, 60, 8, .4, .6, 1.2); rim.position.set(-1.5, 3, -2); rim.target.position.set(0, 1.5, 0); scene.add(rim, rim.target);
     scene.add(real.m(new THREE.PlaneGeometry(30, 30), real.std(0x141210, { rough: .9 }), { rot: [-P / 2, 0, 0], cast: false }));
     const cam = C.orbit(camera, [0, 1.4, 0], 3.6, 1.55, -.35, .35, 38, [0, 1.45, 0]);
     return (t, u) => { cam(u); a.update(t, { mood: 'smug', look: Math.sin(t * .3) * .1, talk: false });
-      papers.forEach((pl, i) => { const ang = t * .45 + i * P / 2, r = 1.55, y = 1.05 + i * .22 + Math.sin(t * .8 + i) * .05; pl.position.set(Math.sin(ang) * r, y, -.35 - Math.abs(Math.cos(ang)) * 1.1); /* papers sweep behind and beside Amin, never in front of him */ pl.lookAt(camera.position); pl.rotateZ(Math.sin(t + i) * .08); }); };
+    };
   },
   '3.3': old['3.3'],
   '3.4': old['3.4'],

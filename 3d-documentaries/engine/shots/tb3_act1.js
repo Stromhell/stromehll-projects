@@ -112,6 +112,9 @@ export const shots = {
   // the flight deck: captain, co-pilot, flight engineer; push in on the captain
   '1.12': async k => {
     const { real, scene, camera } = k;
+    // QA full1: the script line read "the captain, Michel Bacos, the co-pilot", which heard as "Bacos, the co-pilot" against the CAPTAIN label.
+    // The VO was re-voiced (tb_vo/act1/vo-12.wav, same voice and settings); the subtitle follows the new line, not the read-only script json
+    k.meta.narration = 'In the cockpit are Michel Bacos, the captain, his co-pilot, and the flight engineer.';
     await real.env(k, 'kloofendal_48d_partly_cloudy_puresky', { sun: false, bg: 0x101010, envI: .55 });
     const fd = await sets.flightDeck(k, { sky: 0xbfd8f0 });
     const [cpt, fo, fe] = await Promise.all(['tb_bacos', 'tb_copilot', 'tb_engineer'].map((id, i) => real.human({ id, seed: 40 + i })));
