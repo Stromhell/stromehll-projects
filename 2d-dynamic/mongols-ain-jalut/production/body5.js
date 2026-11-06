@@ -47,7 +47,7 @@ window.SHOTS = [
       S.mgArrow(c, [1180, 560], [700, 330], m, S.rgba('#3a3a40', .85), 26, .15);
       const cl = E.io(seg(lt, Sh.tH, Sh.tH + 1.4));
       for (let k = 0; k < 8; k++) { const a = k / 8 * TAU, r = lerp(300, 150, cl), x = 690 + Math.cos(a) * r, y = 320 + Math.sin(a) * r * .6; block(c, x, y, seg(lt, Sh.tH - .4 + k * .05, Sh.tH + k * .05)); } },
-    over: [(c, lt, u, Sh) => K.card(c, 'THEIR OWN TRICK', lt, { at: .6, x: 1400, y: 900, px: 48, rot: 2, until: Sh.tH })],
+    over: [(c, lt, u, Sh) => K.card(c, 'THEIR OWN TRICK', lt, { at: .6, x: 1500, y: 300, px: 48, rot: 2, until: Sh.tH })],
     sfx: [[.2, 'drone', .2], [.4, 'whoosh', .3], ['chased', 'whoosh', .3], ['main', 'drum', .45], ['main', 'tension', .3]] },
 
   // 5.04 MED: Qutuz pulls off his helmet in the middle of the fight and charges; his men turn back to follow him
