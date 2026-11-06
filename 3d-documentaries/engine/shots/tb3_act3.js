@@ -3,9 +3,17 @@ import * as C from './tb3_common.js';
 import * as ui from '../lib/ui.js';
 import * as S2 from '../lib/sets2.js';
 import { shots as old } from './tb_act3.js';
+import { mapShot, ui as ui1 } from './tb_common.js';
 const { THREE, sets, P, real } = C;
 
 const proj = (cam, v) => { cam.updateMatrixWorld(); const p = new THREE.Vector3(...v).project(cam); return [(p.x + 1) * 960, (1 - p.y) * 540]; };
+// QA act3r9: own caption at one fixed spot (tb3_act1.js 1.8 / 1.12 pattern); takes the narration off the auto subtitler, which put it at the top on frame 0
+const ownCaption = (k, cx, cy) => {
+  const m = k.meta, chunks = ui.chunk(m.narration || '', m.voA ?? .15, m.voB ?? m.seconds - .25); m.narration = '';
+  return t => { const o = k.overlay, c = chunks.find(c => t >= c.a && t < c.b); if (!o || !c) return;
+    o.save(); o.font = '600 46px "Oswald"'; o.globalAlpha = Math.min(1, (t - c.a) / .2, (c.b - t) / .05); o.textAlign = 'center'; o.textBaseline = 'middle';
+    o.lineJoin = 'round'; o.lineWidth = 10; o.strokeStyle = 'rgba(20,14,10,.92)'; o.strokeText(c.text, cx, cy); o.fillStyle = '#fff'; o.fillText(c.text, cx, cy); o.restore(); };
+};
 const CAP_OFF = [0, .115, .025], CAP_ROT = [0, 0, 0];
 // QA: the airport map read as flat untextured blocks -> paper grain, terrain mottling and fold creases over the map canvas, bevelled terminal blocks
 function mapTexture(k, upd) {
@@ -201,8 +209,9 @@ export const shots = {
     scene.add(new THREE.HemisphereLight(0x8a7a6a, 0x2a2018, .6));
     const csTex = real.canvasTex(256, 256, c => { const g = c.getContext ? c : c; const gr = g.createRadialGradient(128, 128, 0, 128, 128, 128); gr.addColorStop(0, 'rgba(0,0,0,.85)'); gr.addColorStop(.45, 'rgba(0,0,0,.5)'); gr.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = gr; g.fillRect(0, 0, 256, 256); });
     scene.add(real.m(new THREE.PlaneGeometry(1.1, .8), new THREE.MeshBasicMaterial({ map: csTex, transparent: true, depthWrite: false }), { pos: [0, .005, .02], rot: [-P / 2, 0, 0], cast: false }));
+    const cap = ownCaption(k, 960, 1080 - 110); // QA act3r9: caption locked at bottom centre from frame 0 (it sat at the top on frame 0, then jumped down)
     const cam = C.dolly(camera, { pos: [0, 1.15, 5.4], look: [0, 1.15, 0], fov: 34 }, { pos: [0, 1.35, 3.4], look: [0, 1.5, 0], fov: 32 });
-    return (t, u) => { cam(u); a.update(t, { mood: 'smug', look: Math.sin(t * .3) * .08 }); const [x, y] = proj(camera, C.headPos(a, .4)); ui.callout(k.overlay, 'IDI AMIN', 'PRESIDENT OF UGANDA', Math.min(1500, x + 420), Math.max(240, y + 60), t, .9); };
+    return (t, u) => { cam(u); cap(t); a.update(t, { mood: 'smug', look: Math.sin(t * .3) * .08 }); const [x, y] = proj(camera, C.headPos(a, .4)); ui.callout(k.overlay, 'IDI AMIN', 'PRESIDENT OF UGANDA', Math.min(1500, x + 420), Math.max(240, y + 60), t, .9); };
   },
   // the real-look Amin in front of a cork board with newspaper front pages from 1972-76 pinned flat to it
   // (QA full1: the pages used to circle him in mid air and broke the floating-props rule; now nothing floats)
@@ -240,7 +249,12 @@ export const shots = {
     return (t, u) => { cam(u); a.update(t, { mood: 'smug', look: Math.sin(t * .3) * .1, talk: false });
     };
   },
-  '3.3': old['3.3'],
+  // QA act3r9: the caption and the TENS OF THOUSANDS KILLED badge covered the TANZANIA label -> badge lifted from y 980 to 800 and the caption locked in the top band, both clear of the label; label keeps its place south of the lake
+  '3.3': async k => mapShot(k, {
+    dark: false, center: [32.4, 1.5], span: [12, 10], k: 10, labels: [['UGANDA', 32.3, 1.6], ['KENYA', 37, 1], ['TANZANIA', 33, -2.8], ['S. SUDAN', 31, 4.5], ['DR CONGO', 28.6, 1]],
+    highlight: ['UGA'],
+    extra: async k => { const cap = ownCaption(k, 960, 150); return t => { ui1.tally(k.overlay, '', 'TENS OF THOUSANDS KILLED · 1971-79', 960, 800, t, 1.5); cap(t); }; },
+  }),
   '3.4': old['3.4'],
   // 03:15, Flight 139 touches down at Entebbe with its landing lights on
   '3.5': async k => {
