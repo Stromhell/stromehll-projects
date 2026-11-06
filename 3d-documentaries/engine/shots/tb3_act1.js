@@ -116,7 +116,7 @@ export const shots = {
     // The VO was re-voiced (tb_vo/act1/vo-12.wav, same voice and settings); the subtitle follows the new line, not the read-only script json
     k.meta.narration = 'In the cockpit are Michel Bacos, the captain, his co-pilot, and the flight engineer.';
     await real.env(k, 'kloofendal_48d_partly_cloudy_puresky', { sun: false, bg: 0x101010, envI: .55 });
-    const fd = await sets.flightDeck(k, { sky: 0xbfd8f0 }); deckDetail(k);
+    const fd = await sets.flightDeck(k, { sky: 0xbfd8f0 }); deckDetail(k, fd);
     const [cpt, fo, fe] = await Promise.all(['tb_bacos', 'tb_copilot', 'tb_engineer'].map((id, i) => real.human({ id, seed: 40 + i })));
     real.put(scene, cpt, { pos: [.55, 0, .12], rot: 0, pose: 'sitDesk', arm: 'desk', seatH: .5 });
     real.put(scene, fo, { pos: [-.55, 0, .12], rot: 0, pose: 'sitDesk', arm: 'desk', seatH: .5 });
@@ -172,7 +172,7 @@ const dullCap = p => { const c = capOf(p); if (c) c.traverse(m => { if (m.isMesh
 const engineerLook = p => { const c = capOf(p); if (c) c.visible = false; p.traverse(m => { if (m.isMesh && /hair/i.test(m.name)) { m.material = m.material.clone(); m.material.color.set(0x3a2a1c); } }); };
 // QA act1r10: the flight deck read flat and blocky in close shots. Extra panel detail: overhead switch panels, a busier engineer panel,
 // annunciator strip, pedestal radios, quilted wall lining. Canvas textures with a faint emissive only, no extra lights (RQ=fast overflowed in 1.10)
-function deckDetail(k) {
+function deckDetail(k, fd) {
   const { real, scene } = k; const g = new THREE.Group(); scene.add(g);
   const sw = (w, h, o = {}) => real.canvasTex(w, h, (c, W, H) => {
     c.fillStyle = o.bg ?? '#2b2f34'; c.fillRect(0, 0, W, H); let r = o.seed ?? 3; const rnd = () => (r = (r * 9301 + 49297) % 233280) / 233280;
@@ -206,7 +206,49 @@ function deckDetail(k) {
   const quilt = real.canvasTex(512, 512, (c, W, H) => { c.fillStyle = '#7a7e82'; c.fillRect(0, 0, W, H); for (let y = 0; y < H; y += 64) for (let x = 0; x < W; x += 64) { const gr = c.createRadialGradient(x + 32, y + 32, 4, x + 32, y + 32, 40); gr.addColorStop(0, 'rgba(255,255,255,.12)'); gr.addColorStop(1, 'rgba(0,0,0,.22)'); c.fillStyle = gr; c.fillRect(x, y, 64, 64); } c.fillStyle = 'rgba(0,0,0,.5)'; for (let y = 0; y < H; y += 64) for (let x = 0; x < W; x += 64) c.fillRect(x + 30, y + 30, 4, 4); });
   quilt.wrapS = quilt.wrapT = THREE.RepeatWrapping; quilt.repeat.set(2, 1.5);
   for (const s of [1, -1]) g.add(real.m(new THREE.PlaneGeometry(1.2, .9), new THREE.MeshStandardMaterial({ map: quilt, roughness: .95 }), { pos: [s * 1.6, 1.05, .75], rot: [0, -s * P / 2 + s * .2, 0], cast: false }));
+  // QA act1r12: the wide view in 1.12 showed the base set's flat main panel and block seats, which deckDetail never touched.
+  // Main panel: raised bezel rings on every gauge, section dividers and a knob row (matte materials only, no lights)
+  const mp = new THREE.Group(); mp.position.set(0, .86, .885); mp.rotation.set(-.12, P, 0); g.add(mp);
+  const bez = real.std(0x16181a, { rough: .75, metal: 0 }), knobM = real.std(0x1c1d1f, { rough: .8, metal: 0 }), pin = real.std(0xb8b8b0, { rough: .7, metal: 0 });
+  const L = (x, y) => [(x / 2048 - .5) * 3.0, (.5 - y / 1024) * 1.0];
+  const ring = (x, y, r) => { const [lx, ly] = L(x, y); const t = real.m(new THREE.TorusGeometry(1, .09, 6, 28), bez, { pos: [lx, ly, .012], cast: false }); t.scale.set(r * 3 / 2048 * 1.04, r / 1024 * 1.04, .012); mp.add(t); };
+  for (const cx of [380, 1668]) { ring(cx - 180, 300, 90); ring(cx, 300, 120); ring(cx + 180, 300, 90); ring(cx - 180, 540, 90); ring(cx, 560, 120); ring(cx + 180, 540, 90); }
+  for (let r = 0; r < 5; r++) for (let i = 0; i < 2; i++) ring(924 + i * 200, 180 + r * 150, 62);
+  for (const x of [800, 1248]) { const [lx] = L(x, 0); mp.add(real.box(.03, .98, .03, bez, { pos: [lx, 0, .015], cast: false })); }
+  mp.add(real.box(3.0, .03, .035, bez, { pos: [0, L(0, 770)[1], .016], cast: false }));
+  for (let i = 0; i < 18; i++) { const [lx, ly] = L(150 + i * 104, 700); mp.add(real.m(new THREE.CylinderGeometry(.014, .016, .025, 12), knobM, { pos: [lx, ly, .02], rot: [P / 2, 0, 0], cast: false })); mp.add(real.box(.004, .012, .004, pin, { pos: [lx, ly + .006, .034], cast: false })); }
+  // crew seats: replace the base set's block seats with shaped ones (seat cushion with side bolsters, two-roll back cushion, separate headrest, padded armrests on posts)
+  if (fd?.seats) fd.seats.forEach(st => { st.group.children.slice(1).forEach(c => c.visible = false); st.group.add(shapedSeat(real)); });
   return g;
+}
+// one shaped crew seat (local frame: +z forward, back toward -z), built to sit on the base set's pedestal; all matte
+function shapedSeat(real) {
+  const s = new THREE.Group();
+  const leather = real.std(0x4a3a2c, { rough: .78, metal: 0 }), fleece = real.std(0xcfc3a8, { rough: 1, metal: 0 }), shell = real.std(0x34373b, { rough: .7, metal: 0 }), seam = real.std(0x2e241c, { rough: .85, metal: 0 });
+  // base frame and seat pan
+  s.add(real.rbox(.5, .06, .48, .02, shell, { pos: [0, .37, 0] }));
+  s.add(real.rbox(.44, .1, .46, .045, fleece, { pos: [0, .45, .01] }));
+  for (const x of [-.22, .22]) s.add(real.rbox(.07, .13, .46, .03, leather, { pos: [x, .46, .01] }));
+  s.add(real.rbox(.44, .02, .02, .008, seam, { pos: [0, .5, -.1], cast: false }));
+  // backrest: shell, two stacked cushions, side bolsters, headrest on two stalks
+  const bk = new THREE.Group(); bk.position.set(0, .48, -.24); bk.rotation.x = -.15; s.add(bk);
+  bk.add(real.rbox(.5, .72, .06, .025, shell, { pos: [0, .37, -.06] }));
+  bk.add(real.rbox(.4, .3, .1, .045, fleece, { pos: [0, .2, .01] }));
+  bk.add(real.rbox(.4, .3, .1, .045, fleece, { pos: [0, .52, .01] }));
+  for (const x of [-.215, .215]) bk.add(real.rbox(.08, .66, .12, .035, leather, { pos: [x, .36, .0] }));
+  for (const x of [-.1, .1]) bk.add(real.m(new THREE.CylinderGeometry(.012, .012, .1, 8), shell, { pos: [x, .76, -.02] }));
+  bk.add(real.rbox(.32, .17, .11, .05, leather, { pos: [0, .87, .0] }));
+  // seen from behind (the 1.12 wide): sheepskin cover folded over the top of the back, a leather map pocket and stitched seams on the shell
+  bk.add(real.rbox(.42, .08, .2, .035, fleece, { pos: [0, .7, -.03] }));
+  bk.add(real.rbox(.36, .26, .03, .012, leather, { pos: [0, .2, -.1] }));
+  for (const x of [-.12, .12]) bk.add(real.box(.008, .6, .006, seam, { pos: [x, .38, -.093], cast: false }));
+  // armrests: posts from the frame, padded tops with a rounded front
+  for (const x of [-.29, .29]) {
+    s.add(real.rbox(.04, .2, .04, .01, shell, { pos: [x, .5, -.12] }));
+    s.add(real.rbox(.04, .16, .04, .01, shell, { pos: [x, .48, .12] }));
+    s.add(real.rbox(.08, .055, .4, .026, leather, { pos: [x, .63, -.01] }));
+  }
+  return s;
 }
 const tick = k => { const o = k.overlay; if (!o) return; o.save(); o.setTransform(1, 0, 0, 1, 0, 0); o.globalAlpha = .004; o.fillStyle = '#000'; o.fillRect(0, 0, 2, 2); o.restore(); };
 // QA act1r2: the overhead cutaways floated in a black void. Give the cabin the lower half of its fuselage (aluminium skin, frames standing proud at
@@ -545,7 +587,7 @@ Object.assign(shots, {
   '1.13': async k => {
     const { real, scene, camera } = k;
     await sky(real, k, { envI: .55 });
-    const fd = await sets.flightDeck(k, { sky: 0xbfd8f0 }); deckDetail(k);
+    const fd = await sets.flightDeck(k, { sky: 0xbfd8f0 }); deckDetail(k, fd);
     const [cpt, fo, fe] = await Promise.all([C.CREW.bacos, C.CREW.copilot, C.CREW.engineer].map((id, i) => real.human({ id, seed: 40 + i })));
     real.put(scene, cpt, { pos: [.55, 0, .12], rot: 0, pose: 'sitDesk', arm: 'desk', seatH: .5, mood: 'worried' });
     real.put(scene, fo, { pos: [-.55, 0, .12], rot: 0, pose: 'sitDesk', arm: 'desk', seatH: .5, mood: 'worried' });
@@ -567,7 +609,7 @@ Object.assign(shots, {
   '1.14': async k => {
     const { real, scene, camera } = k;
     await sky(real, k, { envI: .5 });
-    const fd = await sets.flightDeck(k, { sky: 0xbfd8f0, dayI: 1.2 }); deckDetail(k);
+    const fd = await sets.flightDeck(k, { sky: 0xbfd8f0, dayI: 1.2 }); deckDetail(k, fd);
     // bright galley behind the door
     const gp = real.canvasTex(512, 512, (c, w, h) => { c.fillStyle = '#b8b4aa'; c.fillRect(0, 0, w, h); c.strokeStyle = 'rgba(0,0,0,.25)'; c.lineWidth = 3; for (let x = 0; x < w; x += 128) for (let y = 0; y < h; y += 170) c.strokeRect(x + 4, y + 4, 120, 162); });
     scene.add(real.box(2.2, 2.4, 2.4, new THREE.MeshStandardMaterial({ map: gp, roughness: .8, side: THREE.BackSide }), { pos: [-.1, 1.2, -3.1], cast: false }));
@@ -592,7 +634,7 @@ Object.assign(shots, {
   '1.15': async k => {
     const { real, scene, camera } = k;
     await sky(real, k, { envI: .55 });
-    await sets.flightDeck(k, { sky: 0xa8c8e8 }); deckDetail(k); // QA act1r11: same upgraded deck as 1.12-1.14
+    deckDetail(k, await sets.flightDeck(k, { sky: 0xa8c8e8 })); // QA act1r11: same upgraded deck as 1.12-1.14
     const cpt = await real.human({ id: C.CREW.bacos, seed: 40 }), b = await real.human({ id: C.HJ.bose, seed: 81 });
     real.put(scene, cpt, { pos: [.55, 0, .12], rot: 0, pose: 'sitDesk', arm: 'desk', seatH: .5, mood: 'worried' });
     real.put(scene, b, { pos: [-.55, 0, .12], rot: 0, pose: 'sit', arm: 'lap', seatH: .5, mood: 'stern' });
@@ -605,7 +647,7 @@ Object.assign(shots, {
   '1.16': async k => {
     const { real, scene, camera } = k;
     await sky(real, k, { envI: .55 });
-    await sets.flightDeck(k, { sky: 0xa8c8e8 }); deckDetail(k); // QA act1r11: same upgraded deck as 1.12-1.14
+    deckDetail(k, await sets.flightDeck(k, { sky: 0xa8c8e8 })); // QA act1r11: same upgraded deck as 1.12-1.14
     const cpt = await real.human({ id: C.CREW.bacos, seed: 40 }), b = await real.human({ id: C.HJ.bose, seed: 81 });
     real.put(scene, cpt, { pos: [.55, 0, .12], rot: 0, pose: 'sitDesk', arm: 'desk', seatH: .5, mood: 'worried' });
     real.put(scene, b, { pos: [-.55, 0, .12], rot: .25, pose: 'sit', seatH: .5, mood: 'stern' });
@@ -664,7 +706,7 @@ Object.assign(shots, {
   '1.18': async k => {
     const { real, scene, camera } = k;
     await sky(real, k, { envI: .55 });
-    await sets.flightDeck(k, { sky: 0xa8c8e8 }); deckDetail(k); // QA act1r11: same upgraded deck as 1.12-1.14
+    deckDetail(k, await sets.flightDeck(k, { sky: 0xa8c8e8 })); // QA act1r11: same upgraded deck as 1.12-1.14
     const cpt = await real.human({ id: C.CREW.bacos, seed: 40 }), b = await real.human({ id: C.HJ.bose, seed: 81 });
     real.put(scene, cpt, { pos: [.55, 0, .12], rot: 0, pose: 'sitDesk', arm: 'desk', seatH: .5, mood: 'worried' });
     real.put(scene, b, { pos: [-.55, 0, .12], rot: .15, pose: 'sit', seatH: .5, mood: 'stern' });
