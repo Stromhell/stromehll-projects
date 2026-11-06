@@ -408,8 +408,10 @@ Object.assign(shots, {
     // QA act1r4: the light sat 0.15 m under the centre overhead bin (clearcoat). At render quality fast its highlight overflowed the half-float
     // post buffer (Inf), and the AO / bloom passes spread that into a black slab over most of the frame until the standing pair's arms covered the spot.
     // Full-quality stills did not show it. Keep the light well clear of every surface
-    const back = new THREE.PointLight(0xfff0d8, 40, 12, 2); back.position.set(0, 1.6, 5.5); scene.add(back);
-    const fill = new THREE.PointLight(0xdfe6ff, 6, 9, 2); fill.position.set(0, 2.0, -2.5); scene.add(fill); // soft front fill so curtains and the standing pair keep some shape
+    // QA act1r5: at intensity 40 the light read as blown-out white glare at the far end of the aisle and the standing pair were silhouettes in the bloom.
+    // Now a low backlight (rim only, mid-aisle, clear of seats, bins and ceiling) plus a soft front fill from behind the camera so their faces read
+    const back = new THREE.PointLight(0xfff0d8, 10, 8, 2); back.position.set(0, 1.45, 5.0); scene.add(back);
+    const fill = new THREE.PointLight(0xdfe6ff, 14, 10, 2); fill.position.set(0, 1.75, -1.0); scene.add(fill); // soft front fill so the standing pair read clearly
     const first = cb.seats.filter(s => s.cls === 'first');
     const pax = await C.fillCabin(k, cb, { skip: s => s.cls === 'first' ? (s.col === 2 || s.col === 3) : ((s.row + s.col) % 4 === 0) });
     const mk = async (id, seat, side) => { const p = await real.human({ id, seed: 80 + side }); real.put(scene, p, { pos: [seat.x, 0, seat.z], pose: 'sit', seatH: .52 }); p.userData.driven = true; p.userData.seat = seat; p.userData.side = side;
