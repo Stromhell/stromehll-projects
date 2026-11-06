@@ -139,6 +139,18 @@ function ambulance(o = {}) {
   g.add(m(new THREE.CylinderGeometry(.11, .13, .05, 16), chrome, { pos: [0, 2.44, -.4] }));
   g.add(m(new THREE.SphereGeometry(.11, 16, 10, 0, P * 2, 0, P / 2), r.std(0x3070ff, { emissive: 0x3070ff, ei: 2, rough: .2 }), { pos: [0, 2.46, -.4] }));
   g.add(m(new THREE.CylinderGeometry(.01, .01, .5, 6), chrome, { pos: [-.6, 2.65, 1.0] }));
+  // extra period detail (QA act4r3): side lettering, roof light bar with twin lamps, louvred vents, running boards, drip rails, panel rivets
+  const word = r.canvasTex(512, 96, c => { c.fillStyle = '#e8e6de'; c.fillRect(0, 0, 512, 96); c.fillStyle = '#b02a20'; c.font = 'bold 64px Oswald, sans-serif'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('AMBULANCE', 256, 50, 490); });
+  for (const sx of [1, -1]) {
+    g.add(m(new THREE.PlaneGeometry(1.5, .28), new THREE.MeshStandardMaterial({ map: word, roughness: .6 }), { pos: [sx * 1.013, 1.32, -1.0], rot: [0, sx * P / 2, 0], cast: false }));
+    for (let i = 0; i < 6; i++) g.add(r.box(.02, .02, .3, frame, { pos: [sx * 1.005, .78 + i * .045, -2.0] }));
+    g.add(r.box(.22, .04, 2.0, chrome, { pos: [sx * 1.0, .62, 0] }));
+    g.add(r.box(.04, .03, 3.4, chrome, { pos: [sx * 1.0, 2.34, -.75] }));
+    for (let i = 0; i < 9; i++) g.add(m(new THREE.SphereGeometry(.012, 6, 4), chrome, { pos: [sx * 1.0, 2.22, -2.25 + i * .38] }));
+  }
+  g.add(r.rbox(1.2, .1, .22, .04, frame, { pos: [0, 2.5, 1.45] }));
+  for (const sx of [1, -1]) g.add(r.rbox(.26, .12, .2, .04, r.std(0x3070ff, { emissive: 0x3070ff, ei: 1.6, rough: .2 }), { pos: [sx * .4, 2.6, 1.45] }));
+  g.add(r.rbox(.3, .1, .18, .03, r.std(0xff2020, { emissive: 0xff2020, ei: 1.2 }), { pos: [0, 2.6, 1.45] }));
   // wheels
   const wm = { tyre: r.std(0x151515, { rough: .95 }), tread: r.std(0x1e1e1e, { rough: .9 }), hub: r.std(0xcfcfcf, { metal: .7, rough: .3 }), metal: chrome };
   const wheels = [];
@@ -239,11 +251,11 @@ export const shots = {
     const A = new THREE.Vector3(-1.9, 0, 1.5), B = new THREE.Vector3(3.75, 0, 3.55), dir = B.clone().sub(A), LEN = dir.length(); dir.normalize();
     const heading = Math.atan2(dir.x, dir.z), side = new THREE.Vector3(dir.z, 0, -dir.x);
     const d = await real.human({ id: 'tb_pa2', seed: 1300 }); real.put(scene, d, { pos: A.toArray(), rot: heading, mood: 'sad' }); d.userData.driven = true;
-    const s1 = await real.human({ id: 'tb_ug1', seed: 1301 }); real.put(scene, s1, { pos: A.clone().addScaledVector(dir, -.85).addScaledVector(side, -.35).toArray(), rot: heading }); s1.userData.driven = true;
+    const s1 = await real.human({ id: 'tb_ug1', seed: 1301 }); real.put(scene, s1, { pos: A.clone().addScaledVector(dir, -.9).addScaledVector(side, -.8).toArray(), rot: heading }); s1.userData.driven = true;
     const s2 = await real.human({ id: 'tb_ug3', seed: 1302 }); real.put(scene, s2, { pos: [3.25, 0, 1.95], rot: .3 }); s2.userData.driven = true;   // waits by the far door leaf, faces her
     const cam = C.dolly(camera, { pos: [-1, 1.7, 9], look: [.7, 1.2, 2.3], fov: 40 }, { pos: [.4, 1.6, 7.4], look: [3.0, 1.2, 3.0], fov: 38 });
     return (t, u) => { cam(u);
-      const w = C.ease(C.seg(t, .2, 5.4)); d.position.copy(A).addScaledVector(dir, w * LEN); s1.position.copy(d.position).addScaledVector(dir, -.85).addScaledVector(side, -.35); /* the escort walks a step behind her, never through her */
+      const w = C.ease(C.seg(t, .2, 5.4)); d.position.copy(A).addScaledVector(dir, w * LEN); s1.position.copy(d.position).addScaledVector(dir, -.9).addScaledVector(side, -.8); /* the escort walks ~1.2 m behind and to her side, clear of her body (QA act4r3) */
       d.update(t, { pose: w < 1 ? 'walk' : 'idle', dist: w * LEN * .7, mood: 'sad' }); s1.update(t, { pose: w < 1 ? 'walk' : 'idle', dist: w * LEN * .7 });
       s2.update(t, { arm: w > .7 ? 'point' : null, look: -.2 });   // the second soldier at the doors reaches out a hand as she arrives
       k.anchor = C.headPos(d, .35); };
@@ -257,8 +269,13 @@ export const shots = {
     hazeBand(scene);
     const amb = ambulance(); scene.add(amb);
     const beacon = new THREE.PointLight(0x3070ff, 0, 10, 2); beacon.position.set(0, 2.7, -.4); amb.add(beacon);
-    const cam = C.dolly(camera, { pos: [-4, 1.6, 6], look: [3, 1.2, 0], fov: 40 }, { pos: [-4, 1.6, 6], look: [12, 1.6, -6], fov: 40 });
-    return (t, u) => { cam(u); const a = C.seg(t, .3, k.meta.seconds); amb.position.set(6.8 + a * a * 40, 0, 2 - a * a * 18); amb.rotation.y = P / 2 + .4 * a; amb.userData.roll(a * a * 43.9); beacon.intensity = Math.sin(t * 9) > 0 ? 12 : 2; };
+    // fill that travels with the van (apron floods / its own lamps) so it never sinks into the dark (QA act4r3)
+    const fill = new THREE.SpotLight(0xfff0d8, 160, 30, .55, .6, 1.2); fill.position.set(-3, 7, 5); scene.add(fill, fill.target);
+    const lampL = new THREE.SpotLight(0xfff4d0, 40, 25, .4, .5, 1.3); lampL.position.set(0, 1, 2.5); lampL.target.position.set(0, 0, 12); amb.add(lampL, lampL.target);
+    const tail = new THREE.PointLight(0xff3020, 3, 4, 2); tail.position.set(0, .6, -2.8); amb.add(tail);
+    const cam = C.dolly(camera, { pos: [-4, 1.6, 6], look: [3, 1.2, 0], fov: 40 }, { pos: [-4, 1.6, 6], look: [15, 1.4, -2], fov: 40 });
+    return (t, u) => { cam(u); const a = C.seg(t, .3, k.meta.seconds); amb.position.set(6.8 + a * a * 11, 0, 2 - a * a * 5); amb.rotation.y = P / 2 + .4 * a; amb.userData.roll(a * a * 12.1); beacon.intensity = Math.sin(t * 9) > 0 ? 12 : 2;
+      fill.position.set(amb.position.x - 6, 7, amb.position.z + 6); fill.target.position.copy(amb.position); };
   },
   // released groups walk to a waiting jet
   '4.6': async k => {
@@ -296,6 +313,10 @@ export const shots = {
   '4.7': async k => {
     const { real, scene, camera } = k;
     await hallEnv(k, { lampI: 12 });
+    // clear floor for the line-up: take out the mattresses under and just behind the crew so every foot stands on the tiles (QA act4r3)
+    const drop = []; scene.traverse(c => { if (c.isGroup && c.children.length === 2 && c.position.y === 0 && c.position.x > -6 && c.position.x < 9 && c.position.z < 1 && c.position.z > -6.6 && c.children[0].isMesh && c.children[0].position.y === .07) drop.push(c); });
+    drop.forEach(c => c.parent.remove(c));
+    const floorFill = new THREE.SpotLight(0xffe0b0, 110, 16, .8, .6, 1); floorFill.position.set(2, 4, 3.5); floorFill.target.position.set(2, 0, -1.6); scene.add(floorFill, floorFill.target);   // lights the tiles so every pair of feet reads on the floor
     const crew = [];
     // eleven crew behind him (twelve with Bacos) in two staggered rows, nobody directly behind him; the three in civilian suits wear dark-blue jackets
     const ids = [C.CREW.copilot, C.CREW.engineer, C.CREW.steward, 'tb_pa7', C.CREW.steward, 'tb_pa3', C.CREW.copilot, C.CREW.engineer, C.CREW.steward, 'tb_pa8', C.CREW.steward];
@@ -325,6 +346,7 @@ export const shots = {
     return (t, u) => { cam(u); jet.position.set(0, t * 7, 20 + t * 26); jet.rotation.x = -.18;
       // gear up: the legs slide into the belly over the first seconds of the climb, then the bays are closed
       if (gear) { const r = C.ease(C.seg(t, .8, 3.2)); gear.position.y = r * 2.3; gear.visible = r < 1; }
+      ui.used.push([1240, 200, 1720, 400]);   // keep the caption off the sign (QA act4r3)
       const s = C.ease(C.seg(t, k.meta.seconds - 2.6, k.meta.seconds - 2.2)); if (s > 0) { const o = k.overlay; o.save(); o.translate(1480, 300); o.rotate(-.06);
         o.fillStyle = 'rgba(29,23,18,.9)'; o.beginPath(); o.roundRect(-210, -70, 420, 140, 10); o.fill(); o.strokeStyle = '#e8b321'; o.lineWidth = 4; o.stroke();
         o.fillStyle = '#f4ead3'; o.font = '52px "Anton"'; o.textAlign = 'center'; o.textBaseline = 'middle'; o.fillText("HIJACKERS' PLAN", 0, 2);
