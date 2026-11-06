@@ -105,6 +105,9 @@ export const shots = {
     await starNight(k, { moon: [-50, 60, 80], moonI: 1.0, shadowSize: 120 });
     await S2.runwayNight(k, { lit: true });
     S2.entebbeOld(k, { pos: [-60, 0, 80], rotY: P / 2, litRow: 0, towerLit: true });
+    // ground runs on past the runway set and fades into a night haze, so no slab edge meets the black sky
+    await apronGround(k, 0x3a3c40); scene.children[scene.children.length - 1].position.y = -.03;
+    scene.fog = new THREE.FogExp2(0x161c28, .006); hazeBand(scene, { color: 0x161c28, r: 280, h: 160, clear: .3, y: -2 });
     const fl = [[-50, 2, 50], [-45, 3, 100], [-70, 18, 112], [-40, 2, 75]].map(p => flash(scene, p, { size: 2, i: 200, dist: 40 }));
     const cam = C.dolly(camera, { pos: [25, 4, 40], look: [-60, 5, 80], fov: 42 }, { pos: [22, 5, 46], look: [-60, 5, 82], fov: 40 });
     return (t, u) => { cam(u); fl.forEach((f, i) => f(((t * 5 + i * 1.3) % 2.6) < .15 ? 1 : 0)); };
@@ -136,17 +139,24 @@ export const shots = {
   '9.4': async k => {
     const { scene, camera } = k;
     await starNight(k, { moon: [-50, 60, 80], moonI: 1.3, shadowSize: 80, fx: false });
-    await apronGround(k, 0x9a9a96); scene.add(new THREE.HemisphereLight(0x8090b0, 0x202020, .6));
-    for (const x of [-40, 0, 40]) { const fl = new THREE.SpotLight(0xffe0b0, 420, 60, .5, .6, 1.3); fl.position.set(x, 14, 20); fl.target.position.set(x, 0, 0); scene.add(fl, fl.target); }
+    await apronGround(k, 0x9a9a96); scene.add(new THREE.HemisphereLight(0x8090b0, 0x302820, 2.4));
+    // apron floodlights (no distance falloff) keyed onto the row, plus warm fire glow behind it, so every jet reads
+    for (const x of [-50, -25, 0, 25, 50]) { const fl = new THREE.SpotLight(0xffe0b0, 14, 0, .6, .5, 0); fl.position.set(x - 6, 16, 26); fl.target.position.set(x, 1, 0); scene.add(fl, fl.target); }
+    const fires = [-45, -15, 15, 45].map(x => { const l = new THREE.PointLight(0xff8a40, 3, 0, 0); l.position.set(x, 3, -10); scene.add(l); return l; });
     const jets = []; for (let i = 0; i < 11; i++) { const j = migJet(); j.position.set(-50 + i * 10, 0, 0); j.rotation.y = .5; scene.add(j); jets.push(j); }
     const fl = jets.map(j => flash(scene, [j.position.x, 2, j.position.z + 1], { size: 4, i: 400, dist: 30 }));
     const sm = jets.map((j, i) => smoke(scene, [j.position.x, 1.5, j.position.z], 6, 10 + i));
     const D = k.meta.seconds;
     const cam = C.dolly(camera, { pos: [-66, 4.5, 31], look: [-30, 2, 0], fov: 42 }, { pos: [32, 5.5, 35], look: [50, 2, 0], fov: 42 }, { ease: u => u });
-    return (t, u) => { cam(u); jets.forEach((j, i) => { const at = .4 + i * (D - 1.5) / 11; fl[i](t > at && t < at + .2 ? 1 : 0); if (t > at) sm[i](t - at); }); };
+    return (t, u) => { cam(u); fires.forEach((l, i) => l.intensity = 2.6 + Math.sin(t * 7 + i * 2) * .5 + Math.sin(t * 13 + i) * .3); jets.forEach((j, i) => { const at = .4 + i * (D - 1.5) / 11; fl[i](t > at && t < at + .2 ? 1 : 0); if (t > at) sm[i](t - at); }); };
   },
   '9.5': old['9.5'],
-  '9.6': old['9.6'],
+  // two clocks: both ease in (fade + scale over .5 s), the second follows on a short stagger
+  '9.6': async k => {
+    const run = await old['9.6'](k);
+    const groups = k.scene.children.filter(g => g.isGroup && g.c);
+    return (t, u) => { run(t, u); groups.forEach((g, i) => { const s = C.ease(C.seg(t, .25 + i * .45, .75 + i * .45)); g.visible = s > .001; g.scale.setScalar(Math.max(.001, .85 + .15 * s)); g.traverse(o => { if (o.material) { o.material.transparent = true; o.material.opacity = s; } }); }); };
+  },
   '9.7': old['9.7'],
   // morning: the first Hercules lands at Ben Gurion, a crowd waits by the fence
   '9.8': async k => {
@@ -247,7 +257,27 @@ export const shots = {
     const cam = C.dolly(camera, { pos: [-1.2, 1.5, 2.6], look: [.2, .7, -1], fov: 40 }, { pos: [-.8, 1.4, 1.8], look: [.2, .7, -1], fov: 38 });
     return (t, u) => { cam(u); const pa = cg.attributes.position; for (let i = 0; i < pa.count; i++) { const x = cb[i * 3], y = cb[i * 3 + 1]; const d = .6 + (1.2 - y) / 2.4 * .5; pa.array[i * 3 + 2] = (Math.sin(x * 9) * .07 + Math.sin(x * 21 + 1) * .015) * d + Math.sin(x * 3 + t * .6) * .02 * d; } pa.needsUpdate = true; cg.computeVertexNormals(); };
   },
-  '9.13': old['9.13'],
+  // two archive documents on a desk: typed lines, a margin, a stamp and paper grain (titles kept inside the margins)
+  '9.13': async k => {
+    const { scene, camera } = k;
+    await real.env(k, 'small_empty_room_1', { sun: false, bg: 0x14100c, envI: .35 });
+    const wood = await real.pbr('leather_red_03', { repeat: [3, 2], color: 0x6a4a34 }); scene.add(real.m(new THREE.PlaneGeometry(12, 8), wood, { rot: [-P / 2, 0, 0], cast: false }));
+    const key = new THREE.SpotLight(0xffeed8, 7, 0, .6, .5, 0); key.position.set(-1.5, 5, 3); key.target.position.set(0, 0, 0); key.castShadow = true; scene.add(key, key.target);
+    scene.add(new THREE.HemisphereLight(0xfff0d8, 0x201810, .25));
+    const doc = (title, sub, stamp, seed) => real.canvasTex(840, 1100, (c, W, H) => {
+      const r = rnd(seed); c.fillStyle = '#ece2c8'; c.fillRect(0, 0, W, H);
+      for (let i = 0; i < 2500; i++) { c.fillStyle = `rgba(90,70,40,${r() * .07})`; c.fillRect(r() * W, r() * H, 1 + r() * 3, 1 + r() * 3); }
+      const vg = c.createRadialGradient(W / 2, H / 2, W * .3, W / 2, H / 2, W * .8); vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(110,80,40,.28)'); c.fillStyle = vg; c.fillRect(0, 0, W, H);
+      c.fillStyle = '#2a241c'; c.textAlign = 'center'; c.font = '700 56px "Oswald"'; c.fillText(title, W / 2, 150); c.font = '400 34px "Oswald"'; c.fillText(sub, W / 2, 205);
+      c.fillRect(90, 235, W - 180, 3);
+      for (let y = 300; y < H - 120; y += 38) { const w = (W - 180) * (.55 + r() * .45); c.fillStyle = 'rgba(40,34,26,.55)'; c.fillRect(90, y, w, 9); }
+      c.save(); c.translate(W - 230, H - 220); c.rotate(-.22); c.strokeStyle = 'rgba(170,30,30,.8)'; c.lineWidth = 8; c.strokeRect(-140, -50, 280, 100); c.fillStyle = 'rgba(170,30,30,.8)'; c.font = '700 54px "Oswald"'; c.fillText(stamp, 0, 20); c.restore();
+    });
+    const papers = [['UK GOVERNMENT FILES', 'FOREIGN OFFICE · 1976', 'SECRET', 11, -1.05, .06], ['UGANDA INQUIRY', 'REPORT · 1987', 'FILED', 12, 1.05, -.05]].map(([a, b, st, sd, x, ry]) => {
+      const m = real.m(new THREE.PlaneGeometry(1.68, 2.2), new THREE.MeshStandardMaterial({ map: doc(a, b, st, sd), roughness: .9 }), { pos: [x, .004, 0], rot: [-P / 2, 0, ry], cast: false }); m.receiveShadow = true; scene.add(m); return m; });
+    const cam = C.dolly(camera, { pos: [0, 4.9, 2.4], look: [0, 0, .18], fov: 42 }, { pos: [0, 4.5, 2.15], look: [0, 0, .14], fov: 42 });
+    return (t, u) => { cam(u); papers.forEach((m, i) => { m.position.z = (1 - C.ease(C.seg(t, .2 + i * .35, .9 + i * .35))) * -.4; }); };
+  },
   // a memorial stone with a flag; title card OPERATION YONATAN
   '9.14': async k => {
     const { real, scene, camera } = k; k.noAutoOverlay = true;
@@ -264,9 +294,8 @@ export const shots = {
     // engraved bronze plaque on the face of the stone
     const plq = real.canvasTex(1024, 480, (c, W, H) => { c.fillStyle = '#5a4a32'; c.fillRect(0, 0, W, H); c.strokeStyle = '#8a7650'; c.lineWidth = 10; c.strokeRect(28, 28, W - 56, H - 56); c.textAlign = 'center'; c.fillStyle = '#d9c9a0'; c.font = '600 112px "Oswald"'; c.fillText('OPERATION YONATAN', W / 2, 190); c.font = '600 72px "Oswald"'; c.fillText('ENTEBBE  ·  4 JULY 1976', W / 2, 300); c.font = '400 46px "Oswald"'; c.fillStyle = '#b8a880'; c.fillText('THE HOSTAGES CAME HOME', W / 2, 390); });
     scene.add(real.m(new THREE.PlaneGeometry(1.5, .7), new THREE.MeshStandardMaterial({ map: plq, roughness: .55, metalness: .35 }), { pos: [0, .62, .255], cast: false }));
-    const cam = C.dolly(camera, { pos: [.6, 1.45, 4.4], look: [-.5, 1.15, 0], fov: 40 }, { pos: [.3, 1.5, 3.4], look: [-.5, 1.25, 0], fov: 38 });
-    return (t, u) => { cam(u); const pa = fg.attributes.position; for (let i = 0; i < pa.count; i++) { const x = fb[i * 3]; pa.array[i * 3 + 2] = Math.sin(x * 4 + t * 3) * .05 * (x + .75); } pa.needsUpdate = true;
-      card(k, [['OPERATION YONATAN', 200, 92, '#e8b321'], ['4 JULY 1976', 270, 40]], C.ease(C.seg(t, k.meta.seconds * .45, k.meta.seconds * .55)), 1400); };
+    const cam = C.dolly(camera, { pos: [.6, .95, 4.6], look: [-.4, .55, 0], fov: 40 }, { pos: [.35, .95, 3.7], look: [-.4, .6, 0], fov: 38 });
+    return (t, u) => { cam(u); const pa = fg.attributes.position; for (let i = 0; i < pa.count; i++) { const x = fb[i * 3]; pa.array[i * 3 + 2] = Math.sin(x * 4 + t * 3) * .05 * (x + .75); } pa.needsUpdate = true; };
   },
   // a younger brother at a podium years later: generic figure, 1996
   '9.15': async k => {
@@ -298,8 +327,8 @@ export const shots = {
     if (scene.userData.fx) scene.userData.fx.ao = 0;
     // the four Hercules fly high, well above the horizon and the skyline
     const ps = [0, 1, 2, 3].map(i => { const p = S2.c130(); p.rotation.y = P; p.position.set((i - 1.5) * 34, 46 + (i % 2) * 6, -i * 12); scene.add(p); return p; });
-    return (t, u) => { ps.forEach((p, i) => { p.position.z = -i * 12 - t * 40; p.userData.setProps(t, [30, 30, 30, 30]); });
-      camera.position.set(12, 20, 84 - t * 40); camera.fov = 44; camera.updateProjectionMatrix(); camera.lookAt(0, 44, -80 - t * 40);
+    return (t, u) => { ps.forEach((p, i) => { p.position.z = -i * 12 - t * (46 + i * 1.5); p.position.y = 46 + (i % 2) * 6 + Math.sin(t * .9 + i * 1.7) * 1.2; p.position.x = (i - 1.5) * 34 + Math.sin(t * .4 + i) * 2.5; p.rotation.z = Math.sin(t * .4 + i) * .07; p.rotation.x = Math.sin(t * .9 + i * 1.7) * .02; p.userData.setProps(t, [30, 30, 30, 30]); });
+      camera.position.set(12 - t * 2.2, 20 + t * .8, 84 - t * 40); camera.fov = 44; camera.updateProjectionMatrix(); camera.lookAt(0, 44, -80 - t * 40);
       // sun and glow sit ~2.4 km ahead of the camera, just over the skyline (inside the 3 km far plane)
       sun.position.set(camera.position.x - 60, camera.position.y + 330, camera.position.z - 2400); glow.position.copy(sun.position).z += 6; };
   },
