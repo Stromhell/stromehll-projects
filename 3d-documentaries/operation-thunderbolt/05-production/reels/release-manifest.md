@@ -6,7 +6,9 @@ Source: approved full video `/home/user/work/tb3_acts/full2/thunderbolt_full.mp4
 ## Long video
 | File | Duration | Title | Thumbnail | Platform |
 |---|---|---|---|---|
-| /home/user/work/tb3_acts/full2/thunderbolt_full.mp4 | 15:56.5 | (existing long-video title) | NOT MADE: concept + prompt in /home/user/work/tb3_release/TB_Long_Thumbnail_Concept.md (no verified ElevenLabs image tool) | YouTube |
+| /home/user/work/tb3_acts/full2/thunderbolt_full.mp4 | 15:56.5 | 4 Planes, Lights Off, 4,000 km: The Impossible Rescue at Entebbe (1976) | Fallback: /home/user/work/tb3_release/TB_Full_Thumb_frame.png (1280x720, frame-based). ElevenLabs version waiting on Pushpam; concept in /home/user/work/tb3_release/TB_Long_Thumbnail_Concept.md | YouTube |
+
+Description, chapters, tags: `/home/user/work/tb3_release/TB_Full_YouTube.md`
 
 ## Reels (1080x1920, 30 fps, Stormi logo top-right + 3 s YouTube end card)
 Time range = position in the full video. Duration includes the 3 s end card.
@@ -308,6 +310,7 @@ Watch the full video on our YouTube channel.
 ```
 
 ## Notes and open QA items
+- Covers re-made 2026-11-06 so no text overlaps a character (Pushpam's rule): Reels 03, 04, 06, 07, 12 and all 7 IG part covers. The frame sits in the lower part of the cover and the text over empty dark space above it. Every IG part cover now shows OPERATION THUNDERBOLT above a PART N OF 7 pill (episode name as the kicker). Built with reel_thumb.js (new --vy/--top/--size/--below options).
 - No caption-free source exists: the 'clean' acts and per-shot renders carry the engine's burned-in captions. Reels and parts keep those approved captions (timed to the VO) instead of adding a second caption track, so captions never overlap each other. In shot 2.8 (Reel 03, 0:00–0:08) the source caption sits over the AIR FRANCE lettering. It is in the approved full video too (low).
 - Reels use a 1600x1080 window anchored right (x 320–1920) so the engine's right-edge labels (date stamps, name tags) stay whole. Left-edge map borders lose a strip in Reels 07, 08 and 10 (labels still readable, low).
 - The plan's new spoken first line in Pushpam's voice was NOT recorded. Each reel starts on a complete VO line from the film, and the plan's on-screen hook shows for the first 2.6 s. Reels 04 and 05 open on 'Meanwhile, …' (the hook card gives the context).
