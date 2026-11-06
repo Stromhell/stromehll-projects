@@ -143,7 +143,7 @@ function mercHero(o = {}) {
     g.add(real.box(1.84, .03, .145, rubber, { pos: [0, .45, z] }));
     for (const x of [-.56, .56]) g.add(real.rbox(.08, .17, .1, .02, chrome, { pos: [x, .47, z + sg * .03] }));
   }
-  for (const x of [-.72, .72]) g.add(real.box(.22, .09, .03, real.std(0x8a1a12, { emissive: 0x600000, ei: .3 }), { pos: [x, .74, -2.385] }));
+  for (const x of [-.72, .72]) g.add(real.box(.22, .09, .03, real.std(o.tail ?? 0x8a1a12, { emissive: 0x600000, ei: o.tailEi ?? .3 }), { pos: [x, .74, -2.385] }));
   g.add(real.box(.24, .02, .14, chrome, { pos: [0, 1.0, 2.0] }));
   g.add(real.box(1.0, .015, .6, chrome, { pos: [0, .99, -1.9] }));   // boot-lid chrome strip
   for (const x of [-.86, .86]) { g.add(real.box(.03, .1, .05, dark, { pos: [x * 1.02, 1.1, .95] })); g.add(real.box(.06, .08, .1, chrome, { pos: [x * 1.06, 1.15, .95] })); }
@@ -299,13 +299,15 @@ export const shots = {
   '7.13': async k => {
     const { real, scene, camera } = k;
     const h = await holdInterior(k, { seats: [-7.2, -5.2], len: 16, red: true, lampI: 10, hemi: .7 });
-    const ys = new THREE.SpotLight(0xffd0b0, 25, 6, .5, .6, 1.3); ys.position.set(.3, 2.6, -4.6); ys.target.position.set(.3, 1.4, -6.3); scene.add(ys, ys.target);
-    const cars = [mercHero(), S2.landrover(), S2.landrover()]; cars.forEach((c, i) => { c.position.set(0, 0, -2.6 + i * 4.8); scene.add(c); });
-    carFill(scene, cars[0], 2);
+    const ys = new THREE.SpotLight(0xffd0b0, 25, 6, .5, .6, 1.3); ys.position.set(-.45, 2.6, -4.6); ys.target.position.set(-.45, 1.4, -6.2); scene.add(ys, ys.target);
+    // QA r4: near-black satin Mercedes (rough .5), dead tail lamps (read as candles), neutral key/fill over the car so the red cabin light doesn't paint it a red slab
+    const cars = [mercHero({ color: 0x17191c, tail: 0x2a0806, tailEi: 0 }), S2.landrover(), S2.landrover()]; cars.forEach((c, i) => { c.position.set(0, 0, -2.6 + i * 4.8); scene.add(c); });
+    carFill(scene, cars[0], 3);
+    { const nk = new THREE.SpotLight(0xf2f0ec, 10, 7, .7, .7, 1.4); nk.position.set(.9, 2.7, -6.2); nk.target.position.set(0, .7, -2.6); scene.add(nk, nk.target); }
     const ppl = await seatSoldiers(k, h.seatSpots, CMD, { seed: 4500 });
-    const y = await real.human({ id: 'tb_yoni', seed: 4599 }); real.put(scene, y, { pos: [.3, 0, -6.3], rot: P, mood: 'stern' }); y.userData.driven = true;
-    // dolly runs down the aisle beside the Mercedes so the car is a side strip (roof line, glass, trim), not a full-frame plane (QA r3 #1)
-    const cam = C.dolly(camera, { pos: [1.15, 2.0, -.6], look: [-.1, 1.15, -7], fov: 50 }, { pos: [1.05, 1.9, -2.2], look: [-.1, 1.2, -7.2], fov: 46 });
+    const y = await real.human({ id: 'tb_yoni', seed: 4599 }); real.put(scene, y, { pos: [-.45, 0, -6.2], rot: P, mood: 'stern' }); y.userData.driven = true;
+    // QA r4: camera at the forward bulkhead looking aft past Yoni at the Mercedes' rear quarter, so it reads as a car (boot, rear window, pillars, side glass, wheels)
+    const cam = C.dolly(camera, { pos: [.95, 1.6, -7.75], look: [.2, .75, -1.2], fov: 56 }, { pos: [.85, 1.55, -7.3], look: [.25, .75, -1.0], fov: 52 });
     return (t, u) => { cam(u); idleSit(ppl, t); y.update(t, { mood: 'stern', arm: t > 2 && t < 4 ? 'point' : null, talk: Math.sin(t * 1.6) > 0, look: Math.sin(t * .5) * .3 }); };
   },
   // a family photo of two brothers (generic, no likeness)
