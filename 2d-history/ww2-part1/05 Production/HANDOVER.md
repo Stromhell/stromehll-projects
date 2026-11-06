@@ -11,7 +11,10 @@
   - WW2_release_manifest.json (titles and captions for every post)
 - The same kit is on Drive under .../WW2 Part 1 (2D)/Launch, in the folders Reels, Reel covers, IG parts and IG covers.
 - Repo: ww2-part1/reels/ (specs, voices, covers) and ww2-part1/launch/.
-- Zernio: booking sent to the Production plan thread on 6 Nov. Booked times go here once confirmed.
+- Zernio (all 19 posts, ids in launch/WW2_booked.txt):
+  - full video Wed 23 Dec 16:00 UTC, post 6aee2a33413aab040034837e
+  - reels R01-R15 three a day (12:00, 17:00, 22:00 UTC) from 27 to 31 Dec, YT Shorts + IG
+  - IG parts 1-3 at 20:30 UTC on 29, 30 and 31 Dec
 
 ## 2. What was done
 - Content rules: Hitler appears only as a silhouette, with no Nazi symbols, and German forces are plain grey.
@@ -35,9 +38,8 @@
 - /mnt/project-files adds about 6 KB of metadata to binary files, so md5 won't match. Compare pixels or durations instead.
 
 ## 4. Open items
-- Booking confirmation from the Production plan thread, then fill in section 1.
-- Delete /home/user/ww2_nosub frames (container scratch, not shared).
+- Delete /mnt/project-files/2d-history/ww2-part1/launch/full/ (513 MB, already on Drive) once Pushpam OKs it, because the project folder is near its 10 GB limit.
 
 ## 5. Cleanup done
-- Reel frames and IG frame scratch are container-local only.
+- Reel and IG frame scratch deleted: yes
 - Control Room card: not updated (Pushpam, 5 Nov).
