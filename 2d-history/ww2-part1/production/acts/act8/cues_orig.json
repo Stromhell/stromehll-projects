@@ -1,0 +1,139 @@
+{
+ "dur": 30.665,
+ "cues": [
+  {
+   "t": 0.2,
+   "name": "drum",
+   "gain": 0.3
+  },
+  {
+   "t": 0.8,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 5.4,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 7.335,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 7.535,
+   "name": "whoosh_soft",
+   "gain": 0.3
+  },
+  {
+   "t": 10.31,
+   "name": "hit",
+   "gain": 0.45
+  },
+  {
+   "t": 10.51,
+   "name": "heartbeat",
+   "gain": 0.25
+  },
+  {
+   "t": 12.125,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 12.325,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 16.876,
+   "name": "swell",
+   "gain": 0.35
+  },
+  {
+   "t": 17.076,
+   "name": "hit",
+   "gain": 0.4
+  },
+  {
+   "t": 18.111,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 18.311,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 21.155,
+   "name": "riser",
+   "gain": 0.3
+  },
+  {
+   "t": 24.675,
+   "name": "hit",
+   "gain": 0.45
+  },
+  {
+   "t": 26.565,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 26.665,
+   "name": "hit",
+   "gain": 0.4
+  },
+  {
+   "t": 27.265,
+   "name": "stamp",
+   "gain": 0.35
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 8.035,
+   "name": "wind_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 0,
+   "end": 8.035,
+   "name": "tension",
+   "gain": 0.15
+  },
+  {
+   "start": 7.235,
+   "end": 12.825000000000001,
+   "name": "wind_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 7.235,
+   "end": 12.825000000000001,
+   "name": "ocean_loop",
+   "gain": 0.15
+  },
+  {
+   "start": 12.025,
+   "end": 18.811,
+   "name": "hum_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 12.025,
+   "end": 18.811,
+   "name": "swell",
+   "gain": 0.15
+  },
+  {
+   "start": 18.011,
+   "end": 27.265,
+   "name": "tension",
+   "gain": 0.25
+  }
+ ]
+}

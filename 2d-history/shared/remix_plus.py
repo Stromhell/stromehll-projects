@@ -1,7 +1,7 @@
 import json, subprocess, os, shutil, sys
 VID=sys.argv[1] if len(sys.argv)>1 else 'nike'
 V=f'/home/user/stromehll-projects/2d-history/{VID}/production/acts'; SH='/home/user/stromehll-projects/2d-history/shared'
-MK='/tmp/claude-0/-home-user-stromehll-projects/fd3252f4-3420-555b-8c87-d2c08113faa4/scratchpad/tools/mkmusic.py'
+MK=SH+'/mkmusic.py'
 MOOD=sys.argv[2].split(',') if len(sys.argv)>2 else ['drive','warm','warm','tense','drive','epic','tense','drive','tense','warm']
 for a in range(len(MOOD)):
     D=f'{V}/act{a}'; C=json.load(open(f'{D}/cues.json')); T=json.load(open(f'{D}/timing.json'))

@@ -17,7 +17,7 @@ window.SHOTS = [
     init: S => { S.tB = A.at(S, 'banned', 3.8); const tD = A.at(S, 'dictator', 5.6);
       S.D.over = [(c, lt) => K.dateTag(c, 'JAN 1933', lt, { at: .2 }), (c, lt) => K.card(c, 'CHANCELLOR', lt, { at: .6, x: 960, y: 120, px: 48, rot: -2 }),
         (c, lt) => { if (lt < S.tB - .4) return; const w = E.out(K.seg(lt, S.tB - .4, S.tB)); c.save(); c.globalAlpha = w; c.fillStyle = '#3e3630'; c.fillRect(0, 0, 1920, 840); c.fillStyle = '#4a4038'; for (let x = 0; x < 1920; x += 240) c.fillRect(x, 0, 12, 840); c.fillStyle = '#2a221c'; c.fillRect(0, 840, 1920, 240); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(0, 840, 1920, 14); [0, 1, 2].forEach(k => { c.beginPath(); c.ellipse(560 + k * 400, 846, 120, 10, 0, 0, 7); c.fill(); }); [0, 1, 2].forEach(k => DOOR(c, 560 + k * 400, 740, lt, S.tB + k * .3, k)); c.restore(); },
-        (c, lt) => K.title(c, 'DICTATOR', lt, { at: tD, y: 880, px: 100 })];
+        (c, lt) => K.title(c, 'DICTATOR', lt, { at: tD, y: 300, px: 100 })];
       S.D.sfx = [[.2, 'crowd_cheer', .15], [S.tB, 'door_slam', .4], [S.tB + .3, 'door_slam', .4], [S.tB + .6, 'door_slam', .4], [tD, 'hit', .45]]; } },
   // 3.03 'living space': arrows push east from Germany
   { plate: 'map_europe', cam: { z: [1.15, 1.3], x: [1450, 1600], y: [720, 700] }, bed: [['war_drums_loop', .2]],

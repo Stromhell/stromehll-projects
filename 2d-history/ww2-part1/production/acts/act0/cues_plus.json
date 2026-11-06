@@ -1,0 +1,159 @@
+{
+ "dur": 24.883,
+ "cues": [
+  {
+   "t": 0.2,
+   "name": "drum",
+   "gain": 0.3
+  },
+  {
+   "t": 4.057,
+   "name": "stamp",
+   "gain": 0.32
+  },
+  {
+   "t": 4.897,
+   "name": "stamp",
+   "gain": 0.32
+  },
+  {
+   "t": 5.677,
+   "name": "stamp",
+   "gain": 0.32
+  },
+  {
+   "t": 6.557,
+   "name": "stamp",
+   "gain": 0.32
+  },
+  {
+   "t": 7.137,
+   "name": "stamp",
+   "gain": 0.32
+  },
+  {
+   "t": 8.017,
+   "name": "stamp",
+   "gain": 0.32
+  },
+  {
+   "t": 8.357,
+   "name": "stamp",
+   "gain": 0.32
+  },
+  {
+   "t": 8.557,
+   "name": "thud",
+   "gain": 0.35
+  },
+  {
+   "t": 9.332,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 9.532,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 10.232,
+   "name": "heartbeat",
+   "gain": 0.25
+  },
+  {
+   "t": 11.984,
+   "name": "whoosh_soft",
+   "gain": 0.3
+  },
+  {
+   "t": 13.919,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 14.019,
+   "name": "paper",
+   "gain": 0.35
+  },
+  {
+   "t": 14.619,
+   "name": "fire_loop",
+   "gain": 0.2
+  },
+  {
+   "t": 17.693,
+   "name": "hit",
+   "gain": 0.45
+  },
+  {
+   "t": 19.683,
+   "name": "thud",
+   "gain": 0.35
+  },
+  {
+   "t": 20.983,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 21.183,
+   "name": "hit",
+   "gain": 0.5
+  },
+  {
+   "t": 21.783,
+   "name": "stamp",
+   "gain": 0.35
+  },
+  {
+   "t": 0.0,
+   "name": "riser",
+   "gain": 0.35
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 10.032,
+   "name": "war_drums_loop",
+   "gain": 0.22
+  },
+  {
+   "start": 0,
+   "end": 10.032,
+   "name": "wind_loop",
+   "gain": 0.12
+  },
+  {
+   "start": 9.232,
+   "end": 14.619000000000002,
+   "name": "wind_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 9.232,
+   "end": 14.619000000000002,
+   "name": "ocean_loop",
+   "gain": 0.15
+  },
+  {
+   "start": 13.819,
+   "end": 21.683,
+   "name": "tension",
+   "gain": 0.28
+  },
+  {
+   "start": 13.819,
+   "end": 21.683,
+   "name": "fire_loop",
+   "gain": 0.14
+  },
+  {
+   "start": 20.883,
+   "end": 25.683,
+   "name": "swell",
+   "gain": 0.25
+  }
+ ]
+}

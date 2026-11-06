@@ -1,0 +1,180 @@
+{
+ "dur": 47.514,
+ "cues": [
+  {
+   "t": 0.5,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 1.5,
+   "name": "paper",
+   "gain": 0.2
+  },
+  {
+   "t": 3,
+   "name": "paper",
+   "gain": 0.2
+  },
+  {
+   "t": 4.5,
+   "name": "breath",
+   "gain": 0.2
+  },
+  {
+   "t": 8.766,
+   "name": "hit",
+   "gain": 0.4
+  },
+  {
+   "t": 9.961,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 9.961,
+   "name": "footsteps",
+   "gain": 0.3
+  },
+  {
+   "t": 10.361,
+   "name": "hit",
+   "gain": 0.35
+  },
+  {
+   "t": 14.033,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 18.947,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 19.247,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 23.182,
+   "name": "paper_tear",
+   "gain": 0.35
+  },
+  {
+   "t": 26.662,
+   "name": "chime",
+   "gain": 0.35
+  },
+  {
+   "t": 28.097,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 28.397,
+   "name": "whoosh",
+   "gain": 0.35
+  },
+  {
+   "t": 28.797,
+   "name": "whoosh",
+   "gain": 0.35
+  },
+  {
+   "t": 31.912,
+   "name": "stamp",
+   "gain": 0.35
+  },
+  {
+   "t": 34.012,
+   "name": "sword_clash",
+   "gain": 0.2
+  },
+  {
+   "t": 36.592,
+   "name": "ocean_loop",
+   "gain": 0.15
+  },
+  {
+   "t": 38.687,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 38.987,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 39.587,
+   "name": "door_slam",
+   "gain": 0.3
+  },
+  {
+   "t": 39.787,
+   "name": "footsteps",
+   "gain": 0.3
+  },
+  {
+   "t": 43.904,
+   "name": "footsteps",
+   "gain": 0.3
+  },
+  {
+   "t": 45.504,
+   "name": "hit",
+   "gain": 0.4
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 10.661000000000001,
+   "name": "wind_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 0,
+   "end": 10.661000000000001,
+   "name": "birds_loop",
+   "gain": 0.1
+  },
+  {
+   "start": 9.861,
+   "end": 19.647000000000002,
+   "name": "wind_loop",
+   "gain": 0.3
+  },
+  {
+   "start": 18.847,
+   "end": 28.797,
+   "name": "tension",
+   "gain": 0.2
+  },
+  {
+   "start": 27.997,
+   "end": 39.387,
+   "name": "war_drums_loop",
+   "gain": 0.25
+  },
+  {
+   "start": 27.997,
+   "end": 39.387,
+   "name": "ocean_loop",
+   "gain": 0.12
+  },
+  {
+   "start": 38.587,
+   "end": 48.314,
+   "name": "rain_loop",
+   "gain": 0.15
+  },
+  {
+   "start": 38.587,
+   "end": 48.314,
+   "name": "city_loop",
+   "gain": 0.12
+  }
+ ]
+}

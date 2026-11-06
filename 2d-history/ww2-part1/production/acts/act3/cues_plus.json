@@ -1,0 +1,205 @@
+{
+ "dur": 41.838,
+ "cues": [
+  {
+   "t": 0.2,
+   "name": "gate_slam",
+   "gain": 0.3
+  },
+  {
+   "t": 4.5,
+   "name": "hit",
+   "gain": 0.4
+  },
+  {
+   "t": 6.855,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 6.955,
+   "name": "crowd_cheer",
+   "gain": 0.15
+  },
+  {
+   "t": 11.17,
+   "name": "door_slam",
+   "gain": 0.4
+  },
+  {
+   "t": 11.47,
+   "name": "door_slam",
+   "gain": 0.4
+  },
+  {
+   "t": 11.77,
+   "name": "door_slam",
+   "gain": 0.4
+  },
+  {
+   "t": 12.85,
+   "name": "hit",
+   "gain": 0.45
+  },
+  {
+   "t": 14.085,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 15.977,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 17.257,
+   "name": "whoosh",
+   "gain": 0.35
+  },
+  {
+   "t": 17.657,
+   "name": "whoosh",
+   "gain": 0.3
+  },
+  {
+   "t": 18.057,
+   "name": "whoosh",
+   "gain": 0.3
+  },
+  {
+   "t": 19.692,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 20.192,
+   "name": "drone",
+   "gain": 0.3
+  },
+  {
+   "t": 20.892,
+   "name": "whoosh",
+   "gain": 0.25
+  },
+  {
+   "t": 23.466,
+   "name": "stamp",
+   "gain": 0.45
+  },
+  {
+   "t": 25.366,
+   "name": "paper",
+   "gain": 0.35
+  },
+  {
+   "t": 25.866,
+   "name": "scrape",
+   "gain": 0.25
+  },
+  {
+   "t": 28.741,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 28.741,
+   "name": "footsteps",
+   "gain": 0.35
+  },
+  {
+   "t": 33.656,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 33.906,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 34.556,
+   "name": "thud",
+   "gain": 0.35
+  },
+  {
+   "t": 35.651,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 35.651,
+   "name": "footsteps",
+   "gain": 0.3
+  },
+  {
+   "t": 37.328,
+   "name": "hit",
+   "gain": 0.4
+  },
+  {
+   "t": 38.928,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 39.728,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 0.0,
+   "name": "riser",
+   "gain": 0.35
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 7.555,
+   "name": "wind_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 0,
+   "end": 7.555,
+   "name": "rain_loop",
+   "gain": 0.1
+  },
+  {
+   "start": 6.755,
+   "end": 14.785,
+   "name": "drone",
+   "gain": 0.22
+  },
+  {
+   "start": 13.985,
+   "end": 20.392,
+   "name": "war_drums_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 19.592,
+   "end": 29.441,
+   "name": "wind_loop",
+   "gain": 0.15
+  },
+  {
+   "start": 19.592,
+   "end": 29.441,
+   "name": "drone",
+   "gain": 0.15
+  },
+  {
+   "start": 28.641,
+   "end": 36.351,
+   "name": "war_drums_loop",
+   "gain": 0.25
+  },
+  {
+   "start": 35.551,
+   "end": 42.638,
+   "name": "wind_loop",
+   "gain": 0.2
+  }
+ ]
+}

@@ -6,3 +6,4 @@ DONE 746 frames 24.88s
 /home/user/stromehll-projects/2d-history/shared/mix.py:14: WavFileWarning: Chunk (non-data) not understood, skipping it.
   sr, x = wavfile.read(p); x = x.astype(np.float32)
 mixed ww2-part1/production/acts/act0/mix.wav 24.88s
+WROTE ww2-part1/production/acts/act0/act0.mp4

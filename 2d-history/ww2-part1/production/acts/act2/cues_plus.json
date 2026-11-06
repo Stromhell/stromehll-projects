@@ -1,0 +1,178 @@
+{
+ "dur": 38.533,
+ "cues": [
+  {
+   "t": 0.1,
+   "name": "typing",
+   "gain": 0.3
+  },
+  {
+   "t": 0.5,
+   "name": "paper",
+   "gain": 0.3
+  },
+  {
+   "t": 1.6,
+   "name": "paper",
+   "gain": 0.3
+  },
+  {
+   "t": 4.38,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 6.095,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 6.295,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 8.424,
+   "name": "coins",
+   "gain": 0.25
+  },
+  {
+   "t": 10.964,
+   "name": "riser",
+   "gain": 0.3
+  },
+  {
+   "t": 12.904,
+   "name": "hit",
+   "gain": 0.4
+  },
+  {
+   "t": 14.399,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 14.399,
+   "name": "creak",
+   "gain": 0.3
+  },
+  {
+   "t": 15.699,
+   "name": "creak",
+   "gain": 0.25
+  },
+  {
+   "t": 17.099,
+   "name": "creak",
+   "gain": 0.25
+  },
+  {
+   "t": 18.934,
+   "name": "thud",
+   "gain": 0.35
+  },
+  {
+   "t": 20.589,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 20.689,
+   "name": "crowd_cheer",
+   "gain": 0.2
+  },
+  {
+   "t": 27.104,
+   "name": "hit",
+   "gain": 0.35
+  },
+  {
+   "t": 28.184,
+   "name": "gate_slam",
+   "gain": 0.45
+  },
+  {
+   "t": 29.384,
+   "name": "camera_shutter",
+   "gain": 0.35
+  },
+  {
+   "t": 30.459,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 30.559,
+   "name": "paper",
+   "gain": 0.3
+  },
+  {
+   "t": 31.059,
+   "name": "paper",
+   "gain": 0.3
+  },
+  {
+   "t": 31.559,
+   "name": "paper",
+   "gain": 0.3
+  },
+  {
+   "t": 32.059,
+   "name": "paper",
+   "gain": 0.3
+  },
+  {
+   "t": 34.983,
+   "name": "stamp",
+   "gain": 0.45
+  },
+  {
+   "t": 36.843,
+   "name": "heartbeat",
+   "gain": 0.25
+  },
+  {
+   "t": 0.0,
+   "name": "riser",
+   "gain": 0.35
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 6.795,
+   "name": "hum_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 5.995,
+   "end": 15.099,
+   "name": "city_loop",
+   "gain": 0.18
+  },
+  {
+   "start": 14.299,
+   "end": 21.289,
+   "name": "city_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 14.299,
+   "end": 21.289,
+   "name": "wind_loop",
+   "gain": 0.1
+  },
+  {
+   "start": 20.489,
+   "end": 31.159000000000002,
+   "name": "crowd_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 30.359,
+   "end": 39.333,
+   "name": "tension",
+   "gain": 0.25
+  }
+ ]
+}

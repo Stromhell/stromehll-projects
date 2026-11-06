@@ -1,0 +1,198 @@
+{
+ "dur": 33.893,
+ "cues": [
+  {
+   "t": 0.1,
+   "name": "footsteps",
+   "gain": 0.3
+  },
+  {
+   "t": 0.6,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 5.899,
+   "name": "chime",
+   "gain": 0.3
+  },
+  {
+   "t": 6.814,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 6.814,
+   "name": "paper",
+   "gain": 0.35
+  },
+  {
+   "t": 7.429,
+   "name": "scrape",
+   "gain": 0.3
+  },
+  {
+   "t": 12.049,
+   "name": "stamp",
+   "gain": 0.4
+  },
+  {
+   "t": 13.804,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 13.904,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 16.346,
+   "name": "paper",
+   "gain": 0.4
+  },
+  {
+   "t": 17.046,
+   "name": "scrape",
+   "gain": 0.25
+  },
+  {
+   "t": 17.786,
+   "name": "coins_cascade",
+   "gain": 0.3
+  },
+  {
+   "t": 20.346,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 22.699,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 22.999,
+   "name": "paper",
+   "gain": 0.18
+  },
+  {
+   "t": 23.218,
+   "name": "paper",
+   "gain": 0.18
+  },
+  {
+   "t": 23.437,
+   "name": "paper",
+   "gain": 0.18
+  },
+  {
+   "t": 23.656,
+   "name": "paper",
+   "gain": 0.18
+  },
+  {
+   "t": 23.875,
+   "name": "paper",
+   "gain": 0.18
+  },
+  {
+   "t": 24.093,
+   "name": "paper",
+   "gain": 0.18
+  },
+  {
+   "t": 24.312,
+   "name": "paper",
+   "gain": 0.18
+  },
+  {
+   "t": 24.531,
+   "name": "paper",
+   "gain": 0.18
+  },
+  {
+   "t": 24.75,
+   "name": "paper",
+   "gain": 0.18
+  },
+  {
+   "t": 24.969,
+   "name": "paper",
+   "gain": 0.18
+  },
+  {
+   "t": 25.388,
+   "name": "stamp",
+   "gain": 0.45
+  },
+  {
+   "t": 26.888,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 26.888,
+   "name": "footsteps",
+   "gain": 0.3
+  },
+  {
+   "t": 27.188,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 29.843,
+   "name": "scrape",
+   "gain": 0.35
+  },
+  {
+   "t": 31.883,
+   "name": "scrape",
+   "gain": 0.35
+  },
+  {
+   "t": 0.0,
+   "name": "riser",
+   "gain": 0.35
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 7.514,
+   "name": "crowd_loop",
+   "gain": 0.14
+  },
+  {
+   "start": 0,
+   "end": 7.514,
+   "name": "hum_loop",
+   "gain": 0.1
+  },
+  {
+   "start": 6.714,
+   "end": 14.504000000000001,
+   "name": "tension",
+   "gain": 0.22
+  },
+  {
+   "start": 13.704,
+   "end": 23.399,
+   "name": "tension",
+   "gain": 0.2
+  },
+  {
+   "start": 22.599,
+   "end": 27.588,
+   "name": "tension",
+   "gain": 0.15
+  },
+  {
+   "start": 26.788,
+   "end": 34.693,
+   "name": "wind_loop",
+   "gain": 0.18
+  }
+ ]
+}
