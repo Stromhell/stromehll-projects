@@ -4,7 +4,11 @@
 - Title / line: "Napoleon Had Everything. It Wasn't Enough." / 2D dynamic (Village Painterly). Approved by Pushpam 6 Nov 11:31 UTC (v2, after his 9 review notes).
 - Final full video: project files `/mnt/project-files/2d-dynamic/napoleon/final/NP_FULL.mp4` (5:33, 1080p, -14 LUFS, -1.8 dBTP; 370 MB, not in git). Chapters `final/NP_FULL_chapters.json`. Preview https://claude.ai/artifact/9n6wtBLx5eiqGqim42rJEr. Drive: NOT uploaded (token 401).
 - Launch: `napoleon/launch/` (launch.json, Napoleon_Title_Description.txt, Napoleon_thumbnail.jpg + alt; ElevenLabs flow HVmDbNKwGagkzkGssmi7, gemini-3.1-flash-lite, 3 x 206 credits). Reels: `napoleon/reels/` (reels.json, voice/hooks.txt, out/, thumbs/). IG parts: `napoleon/reels/ig/`.
-- Zernio bookings: booked by Production plan (see section 4 until filled).
+- Zernio bookings (6 Nov, by Production plan; full record /mnt/project-files/2d-dynamic/napoleon/launch/NP_booked.txt):
+  - Full video: Wed 16 Dec 19:00 UTC (19:00 UK, 14:00 ET), YouTube, post 6aedc3c54bdecb601cd1ca52.
+  - 15 reels (YT + IG, covers set): 15-19 Dec at 03:00/17:00/22:00 UTC.
+  - IG parts 1-3: 20, 21, 22 Dec at 20:30 UTC.
+  - Next free full-video slot: Fri 18 Dec 19:00 UTC.
 
 ## 2. What was done
 - Script/storyboard from 30 Oct; 7 acts (0-6), narration in Pushpam's voice (act 6 line 5 re-recorded: TTS said "billion").
@@ -31,8 +35,9 @@
 - Gotchas: shared/fonts and shared/sfx are not in git (copy fonts from /mnt/project-files/2d-dynamic/shared/fonts; `python3 shared/mksfx.py shared/sfx`). faster-whisper needs numpy audio (av breaks). Broad `rm -rf /tmp/watch-*` is blocked; delete named dirs.
 
 ## 4. Open items
-- Launch pack finishing in thread cmsg_01Lc5CubZ5khWkxFXSFZXKQ88AwDq5FkvPhhZu4JqMzesU: 15 reels + 3 IG parts, then booking sheet to Production plan (cmsg_01Lc5CubZ5khWkxFXSFZXKQ8Ybga8rCf31JNfvA967T9kg). Bookings get added here when confirmed.
+- Launch pack done and booked. Kit: /mnt/project-files/2d-dynamic/napoleon/launch/ (full, thumbnail, 15 reels + covers, 3 IG parts, titles, booking sheet).
+- Reel covers: thumb_dd defaults hid faces behind the text; set tz 1.25 / thy .9 / thx on the main character (see reels.json).
 - Drive upload of everything once the token works.
 
 ## 5. Cleanup done
-- Scratch caches: pending (after reels). Control Room: not used (dropped 5 Nov).
+- Scratch caches: deleted (qa stills, preview clips, reel temp). Renders kept in project files. Control Room: not used (dropped 5 Nov).
