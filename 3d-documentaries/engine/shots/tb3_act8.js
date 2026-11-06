@@ -5,6 +5,7 @@ import * as ui from '../lib/ui.js';
 import * as S2 from '../lib/sets2.js';
 import { rnd, WOOD, starNight, convoy, flash, holdInterior, handsetShape } from '../lib/sets3.js';
 import { shots as old } from './tb_act8.js';
+import * as TB from './tb_common.js';
 const { THREE, sets, P, real } = C;
 
 const proj = (cam, v) => { cam.updateMatrixWorld(); const p = new THREE.Vector3(...v).project(cam); return [(p.x + 1) * 960, (1 - p.y) * 540]; };
@@ -28,7 +29,18 @@ function rifleShape() {
   g.add(real.box(.012, .05, .02, mt, { pos: [0, .07, .4] }));            // front sight
   g.traverse(c => { if (c.isMesh) c.castShadow = true; }); return g;
 }
-async function runner(k, id, seed, o = {}) { const p = await k.real.human({ id, seed }); k.real.put(k.scene, p, { pos: [0, 0, 0], rot: o.rot ?? P, mood: 'stern' }); p.userData.driven = true; if (o.rifle !== false) C.attach(p, rifleShape(), 'Spine2', [.15, .05, -.18], [.9, 0, .3]); if (o.cap !== false) C.attach(p, S2.cap(0x3a4228), 'Head', [0, .15, .01]); return p; }
+// slung rifle (QA act8r2 #2): lies flat against the back, muzzle up over the right shoulder, stock down by the left hip; solved in world space so it does not depend on the bone axes
+function slung(p) {
+  const r = rifleShape(); const b = p.parts.bones.Spine2; if (!b) return r;
+  p.updateMatrixWorld(true); const q = b.getWorldQuaternion(new THREE.Quaternion()), pq = p.getWorldQuaternion(new THREE.Quaternion());
+  // in the character's own frame (x right, y up, z forward): barrel axis up and to the right, a hand-width behind the back
+  const dir = new THREE.Vector3(-.38, 1, 0).normalize();   // character's right is -x for these rigs facing +z
+  const local = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 0, 1), dir);
+  const wq = pq.clone().multiply(local); r.quaternion.copy(q.clone().invert().multiply(wq));
+  const wpos = b.getWorldPosition(new THREE.Vector3()).add(new THREE.Vector3(0, -.05, -.17).applyQuaternion(pq));
+  const s = 1 / p.parts.obj.scale.x; r.scale.multiplyScalar(s); b.add(r); r.position.copy(b.worldToLocal(wpos)); return r;
+}
+async function runner(k, id, seed, o = {}) { const p = await k.real.human({ id, seed }); k.real.put(k.scene, p, { pos: [0, 0, 0], rot: o.rot ?? P, mood: 'stern' }); p.userData.driven = true; if (o.rifle !== false) slung(p); if (o.cap !== false) C.attach(p, S2.cap(0x3a4228), 'Head', [0, .15, .01]); return p; }
 async function lyingHostages(k, h, every = 2) {
   const ppl = [];
   for (let i = 0; i < h.mats.length; i += every) { const mt = h.mats[i]; const g = new THREE.Group(); g.position.set(mt.x, .26, mt.z - .8); g.rotation.x = P / 2; k.scene.add(g);
@@ -141,22 +153,10 @@ async function convoyHero(k, o = {}) {
 }
 
 const raw = {
-  // the old card map, with the LAKE VICTORIA label raised clear of the caption band and the plane path kept off it (QA act8r1 #9)
-  '8.1': async k => {
-    const { core, props, maps } = k;
-    core.setEnv(k, 'interior', { noFog: true }); k.scene.background = new THREE.Color(0x0d1018);
-    const W = 1600, H = 1100;
-    const plan = props.card('', { h: 6, cw: W, ch: H, bg: '#d8ccb0', draw: (x) => {
-      x.fillStyle = '#5a7a94'; x.fillRect(0, 760, W, 340); x.fillStyle = '#2b1e16'; x.font = '64px Anton'; x.textAlign = 'center'; x.fillText('LAKE VICTORIA', 800, 860);
-      x.save(); x.translate(800, 520); x.rotate(-.12); x.fillStyle = '#6a6a62'; x.fillRect(-640, -40, 1280, 80); x.restore();
-      x.fillStyle = '#9a9488'; x.fillRect(220, 220, 360, 150); x.strokeStyle = '#2b1e16'; x.lineWidth = 8; x.strokeRect(220, 220, 360, 150);
-      x.fillStyle = '#c8302a'; x.fillRect(300, 250, 200, 90); x.fillStyle = '#fff'; x.font = '40px Oswald'; x.fillText('OLD TERMINAL', 400, 310);
-      x.fillStyle = '#2b1e16'; x.fillText('NEW TERMINAL', 1150, 200); x.strokeRect(1000, 220, 300, 120); x.fillText('MiG LINE', 1250, 450); for (let i = 0; i < 6; i++) { x.beginPath(); x.moveTo(1120 + i * 40, 470); x.lineTo(1135 + i * 40, 500); x.lineTo(1105 + i * 40, 500); x.fill(); } } });
-    plan.rotation.x = -P / 2; k.scene.add(plan);
-    const pi = maps.planeIcon({ s: .35, color: 0x2b1e16 }); k.scene.add(pi);
-    const cam = core.camMove(k.camera, { from: [0, 7, 3.5], to: [0, 5.5, 2.4], look: [0, 0, .2], fov: 46 });
-    return (t, u) => { cam(u, t); const r = core.ease(core.seg(t, .3, k.meta.seconds - .5)); pi.position.set(2.8 - r * 3.4, .15, 2.0 - r * 1.8); pi.rotation.y = -P * .8; capBottom(); };
-  },
+  // relief map in the act 6 / act 2 parchment style (QA act8r2 #4: the flat card was a style break): the Hercules track comes up Lake Victoria to Entebbe;
+  // LAKE VICTORIA sits mid-lake, well above the caption band
+  '8.1': async k => TB.mapShot(k, { center: [32.6, -0.4], span: [5, 3.6], k: 30, labels: [['LAKE VICTORIA', 33.75, -0.45], ['UGANDA', 31.5, 1.0], ['KENYA', 34.5, 0.3]], highlight: ['UGA'], cities: ['ENTEBBE', 'KAMPALA'],
+    route: [[33.6, -2.0], [33.1, -1.2], [32.7, -0.5], [32.45, 0.05]], plane: true, routeStart: .05, routeEnd: .9, iconScale: .9 }),
   // the lead Hercules over the lake: lights off, two engines stopped
   '8.2': async k => {
     const { scene, camera } = k;
@@ -186,6 +186,12 @@ const raw = {
     const { real, scene, camera } = k;
     await starNight(k, { moon: [-60, 70, 60], moonI: 1.5 });
     await S2.runwayNight(k, { lit: false, grass: 0x8a9a78 });
+    // faint night-sky gradient (QA act8r2 #2: the top half was flat black): deep navy overhead to a dim blue-grey glow at the horizon, plus a few stars
+    { const tx = document.createElement('canvas'); tx.width = 8; tx.height = 512; const c = tx.getContext('2d'); const gr = c.createLinearGradient(0, 0, 0, 512);
+      gr.addColorStop(0, '#05070d'); gr.addColorStop(.62, '#0f1626'); gr.addColorStop(.86, '#26324a'); gr.addColorStop(1, '#2e3a52'); c.fillStyle = gr; c.fillRect(0, 0, 8, 512);
+      const t = new THREE.CanvasTexture(tx); t.colorSpace = THREE.SRGBColorSpace;
+      const sky = new THREE.Mesh(new THREE.SphereGeometry(900, 32, 16, 0, P * 2, 0, P / 2 + .02), new THREE.MeshBasicMaterial({ map: t, side: THREE.BackSide, fog: false, depthWrite: false }));
+      sky.renderOrder = -1; scene.add(sky); }
     // a three-man crew walks the verge in file, each carrying a lamp; every 6 m they stop, one man stoops and sets his lamp down, it comes on, they walk on (QA act8r1 #1)
     const walkT = 1.9, pauseT = .6, Tc = walkT + pauseT, gap = 6, z0 = -66, file = 1.3;
     const mx = i => -24.6 - (i % 2) * .5;
@@ -201,7 +207,7 @@ const raw = {
         if (st > 0) { aimBone(p, 'Spine', 0, 1 - st * .85, st * 1.0); aimBone(p, 'Spine1', 0, 1 - st * .5, st * .6); aimBone(p, 'RightArm', -.15, -1, .25 + st * .45); aimBone(p, 'RightForeArm', -.05, -1, .3 + st * .5); aimBone(p, 'RightHand', 0, -1, .3); }
         hand[i].visible = !ground.slice(4).some((g, j) => j % 3 === i && (j < s.n || (j === s.n && s.placed))); });
       ground.forEach((g, gi) => { const j = gi - 4; if (j < 0) return; const on = j < s.n || (j === s.n && s.placed); g.visible = on; g.userData.set(on); });
-      const cz = lead - 2; camera.position.set(-30, 1.6, cz - 3); camera.fov = 46; camera.updateProjectionMatrix(); camera.lookAt(-24, .8, cz + 6); };
+      const cz = lead - 2; camera.position.set(-30, 1.6, cz - 3); camera.fov = 46; camera.updateProjectionMatrix(); camera.lookAt(-24, .1, cz + 6); };
   },
   // ramp down: the convoy rolls out (low angle)
   '8.5': async k => {
@@ -378,6 +384,10 @@ const raw = {
     scene.add(real.box(3.2, 3.2, .1, real.std(0x1a1610), { pos: [0, 1.6, -7] }));
     const inside = new THREE.PointLight(0xffd8a0, 10, 12, 2); inside.position.set(0, 2.5, -6); scene.add(inside);
     const fill = new THREE.PointLight(0x9aa8c8, 14, 18, 2); fill.position.set(3, 3.5, 3); scene.add(fill);   // faint moon spill so the three silhouettes keep an edge between flashes
+    // QA act8r2 #3: a cool rim from up-right behind the wall line picks out the right-hand commando's edge against the wall, and a soft low front fill
+    // lifts all three off their own moon shadows (no shadows cast by either)
+    const rim = new THREE.SpotLight(0xb0c0e8, 30, 8, .32, .8, 1.5); rim.position.set(4.2, 2.6, -1.4); rim.target.position.set(2.2, 1.2, -3.3); scene.add(rim, rim.target);
+    const fill2 = new THREE.PointLight(0x8090b8, 10, 12, 2); fill2.position.set(0, 1.4, 1.5); scene.add(fill2);
     const fls = [flash(scene, [-.6, 1.5, -6.2], { size: .1, i: 120, dist: 14 }), flash(scene, [.8, 1.6, -6.5], { size: .1, i: 120, dist: 14 })];
     const men = []; for (let i = 0; i < 3; i++) { const p = await runner(k, CMD[i], 5400 + i, { rot: P, rifle: false }); C.attach(p, rifleShape(), 'RightHand', [0, -.02, .25], [0, 0, 0]); men.push(p); }
     const home = [[-2.2, -3.3], [2.2, -3.3], [-2.8, -2.2]]; men.forEach((p, i) => p.position.set(home[i][0], 0, home[i][1]));
@@ -389,7 +399,7 @@ const raw = {
       const adv = Math.min(.55, flashTimes.reduce((s, tf) => s + C.ease(C.seg(t, tf, tf + .5)), 0) * .09);
       const last = flashTimes.filter(tf => tf <= t).pop(); const fl = last === undefined ? 0 : 1 - C.seg(t, last, last + .45);
       men.forEach((p, i) => { const sw = Math.sin(t * .9 + i * 2.1) * .04, bob = Math.sin(t * 1.7 + i) * .012;
-        p.position.set(home[i][0] + sw + (i === 2 ? -adv * .5 : 0), bob * fl, home[i][1] - adv * (i === 2 ? .4 : 1)); p.rotation.y = P + Math.sin(t * .6 + i) * .06 + (i - 1) * .15 * fl;
+        p.position.set(home[i][0] + sw + (i === 2 ? -adv * .5 : (i ? -1 : 1) * adv * .7), bob * fl, home[i][1] - (i === 2 ? adv * .4 : 0));   // the two at the wall close in on the door along it, never into it p.rotation.y = P + Math.sin(t * .6 + i) * .06 + (i - 1) * .15 * fl;
         p.update(t, { mood: 'stern', arm: 'hold', look: (i - 1) * -.3 + Math.sin(t * .7 + i * 1.3) * .14 + (i - 1) * .2 * fl, nod: Math.sin(t * .5 + i) * .08 - .25 * fl });
         aimBone(p, 'RightArm', -.2, -.75 + fl * .3, .55 + fl * .3); aimBone(p, 'RightForeArm', .25, -.05 + fl * .25, 1); aimBone(p, 'LeftArm', .25, -.6, .7); aimBone(p, 'LeftForeArm', -.3, 0, 1); }); };
   },
@@ -398,6 +408,16 @@ const raw = {
     const { real, scene, camera } = k;
     await real.env(k, 'small_empty_room_1', { sun: false, bg: 0x05060a, envI: .15 });
     const h = await S2.hall(k, { lampI: 6, hemi: .5, tidy: true });   // tidy rows: no mattress under a pillar (QA act8r1 #8)
+    // wide pillar keep-out (QA act8r2 #1): any mattress (or bag/blanket on it) whose footprint comes within pillar-base half-width + mattress half-length
+    // of a pillar is dropped, together with its hostage. Pillars: x = -8, -4, 0 ... z = +-d/6 (hall defaults w 24, d 14)
+    const cols = []; for (let x = -12 + 4; x < 12; x += 4) for (const z of [-14 / 6, 14 / 6]) cols.push([x, z]);
+    const near = (x, z, hx, hz) => cols.some(([cx, cz]) => Math.abs(x - cx) < .35 + hx && Math.abs(z - cz) < .35 + hz);
+    h.mats = h.mats.filter(mt => !near(mt.x, mt.z, .45 + .1, .9 + .35));
+    { const bb = new THREE.Box3(), cc = new THREE.Vector3(), sz = new THREE.Vector3();
+      for (const ch of [...h.group.children]) { bb.setFromObject(ch); if (bb.isEmpty() || bb.max.y > 1.0) continue; bb.getCenter(cc); bb.getSize(sz);
+        if (cols.some(([cx, cz]) => Math.abs(cc.x - cx) < .02 && Math.abs(cc.z - cz) < .02)) continue;   // the pillar base itself
+        if (sz.x > 20) continue;   // floor / wainscot planes
+        if (near(cc.x, cc.z, sz.x / 2 + .1, sz.z / 2 + .35)) ch.visible = false; } }
     const ppl = await lyingHostages(k, h, 2);
     const c = await runner(k, 'tb_cmd2', 5501, { rot: P / 2 + .4 }); c.position.set(-7, 0, 0);
     const mega = new THREE.Group(); mega.add(real.m(new THREE.CylinderGeometry(.13, .04, .32, 20, 1, true), real.std(0xd8d4c8, { rough: .5, mat: { side: THREE.DoubleSide } }), { rot: [0, 0, 0] })); C.attach(c, mega, 'RightHand', [0, .12, .08], [0, 0, 0]);
