@@ -42,10 +42,23 @@ function mercHero(o = {}) {
   for (const x of [-.46, .46]) g.add(real.box(.03, .39, .06, chrome, { pos: [x, .74, zf + .01] }));
   for (let i = 0; i < 9; i++) g.add(real.box(.014, .33, .04, chrome, { pos: [-.4 + i * .1, .74, zf + .01] }));
   g.add(real.box(.86, .02, .045, chrome, { pos: [0, .74, zf + .015] }));
-  const star = new THREE.Group(); star.position.set(0, 1.08, 2.22); g.add(star);
-  star.add(real.m(new THREE.TorusGeometry(.055, .006, 8, 24), chrome));
-  for (let i = 0; i < 3; i++) { const a = P / 2 + i * P * 2 / 3; star.add(real.box(.008, .055, .008, chrome, { pos: [Math.cos(a) * .027, Math.sin(a) * .027, 0], rot: [0, 0, a - P / 2] })); }
-  g.add(real.m(new THREE.CylinderGeometry(.01, .014, .12, 8), chrome, { pos: [0, .99, 2.22] }));
+  // QA act0r3: bonnet as its own panel (shut-line seams, twin creases, raised centre), chrome grille shell standing above the bonnet nose with the star seated on it,
+  // cowl vent and wipers at the screen base, so the close front view is not a flat slab
+  g.add(real.rbox(1.42, .035, 1.5, .015, paint, { pos: [0, .995, 1.55] }));                       // bonnet panel
+  g.add(real.rbox(.5, .025, 1.45, .012, paint, { pos: [0, 1.018, 1.57] }));                         // raised centre section
+  for (const x of [-.25, .25]) g.add(real.box(.012, .01, 1.42, dark, { pos: [x, 1.027, 1.57] }));    // crease shadow lines
+  for (const x of [-.72, .72]) g.add(real.box(.01, .012, 1.52, dark, { pos: [x, 1.0, 1.55] }));     // side shut lines
+  g.add(real.box(1.44, .012, .01, dark, { pos: [0, 1.0, .8] }));                                     // rear shut line
+  g.add(real.box(1.5, .02, .14, dark, { pos: [0, .995, .87] }));                                     // cowl vent
+  for (let i = 0; i < 10; i++) g.add(real.box(.1, .006, .1, real.std(0x050506, { rough: .9 }), { pos: [-.63 + i * .14, 1.007, .87] }));
+  for (const [x, r] of [[-.35, .2], [.3, .2]]) { const w = new THREE.Group(); w.position.set(x, 1.02, .9); w.rotation.y = r; g.add(w); w.add(real.box(.55, .015, .02, dark, { pos: [0, .005, 0] })); w.add(real.box(.5, .025, .008, rubber, { pos: [0, .0, .012] })); w.add(real.m(new THREE.CylinderGeometry(.02, .02, .03, 10), chrome, { pos: [.28, 0, 0] })); }   // wipers
+  g.add(real.rbox(1.0, .1, .16, .03, chrome, { pos: [0, .985, zf - .04] }));                         // grille shell crown
+  g.add(real.rbox(.92, .05, .1, .02, dark, { pos: [0, 1.0, zf - .16] }));                           // shell seat into bonnet
+  for (const x of [-.6, .6]) g.add(real.rbox(.34, .05, .14, .02, chrome, { pos: [x, .9, zf - .06] }));   // headlamp brows
+  const star = new THREE.Group(); star.position.set(0, 1.13, zf - .04); g.add(star);
+  star.add(real.m(new THREE.TorusGeometry(.055, .008, 8, 24), chrome));
+  for (let i = 0; i < 3; i++) { const a = P / 2 + i * P * 2 / 3; star.add(real.box(.016, .055, .016, chrome, { pos: [Math.cos(a) * .027, Math.sin(a) * .027, 0], rot: [0, 0, a - P / 2] })); }
+  g.add(real.m(new THREE.CylinderGeometry(.012, .02, .1, 10), chrome, { pos: [0, 1.06, zf - .04] }));   // star stem rising from the shell crown
   for (const x of [-.6, .6]) {
     g.add(real.m(new THREE.CylinderGeometry(.15, .15, .1, 24), dark, { pos: [x, .74, zf - .03], rot: [P / 2, 0, 0] }));      // housing
     g.add(real.m(new THREE.CylinderGeometry(.12, .1, .06, 24), real.std(0xb8bcc0, { rough: .2, metal: .9 }), { pos: [x, .74, zf - .01], rot: [P / 2, 0, 0] }));  // reflector bowl
@@ -61,7 +74,6 @@ function mercHero(o = {}) {
     g.add(real.box(1.6, .05, .05, chrome, { pos: [0, .39, z - sg * .02] }));
   }
   for (const x of [-.72, .72]) g.add(real.box(.22, .09, .03, real.std(0x8a1a12, { emissive: 0x600000, ei: .5 }), { pos: [x, .74, -2.385] }));   // tail lamps
-  g.add(real.box(.24, .02, .14, chrome, { pos: [0, 1.0, 2.0] }));   // bonnet ridge chrome
   for (const x of [-.86, .86]) { g.add(real.box(.03, .1, .05, dark, { pos: [x * 1.02, 1.1, .95] })); g.add(real.box(.06, .08, .1, chrome, { pos: [x * 1.06, 1.15, .95] })); }   // mirrors
   if (o.flags) for (const x of [-.75, .75]) { g.add(real.m(new THREE.CylinderGeometry(.008, .008, .5, 6), chrome, { pos: [x, 1.2, 2.1] })); g.add(real.m(new THREE.PlaneGeometry(.26, .16), new THREE.MeshStandardMaterial({ map: o.flagTex ?? null, color: o.flagTex ? 0xffffff : 0xd8c040, side: THREE.DoubleSide }), { pos: [x, 1.37, 1.97], rot: [0, P / 2, 0], cast: false })); }
   g.traverse(c => { if (c.isMesh) { c.castShadow = true; c.receiveShadow = true; } }); return g;
@@ -146,6 +158,24 @@ function roverDetail(c) {
   for (const x of [-.86, .86]) for (const z of [-1.7, -1.25]) { c.add(real.rbox(.14, .45, .32, .02, can, { pos: [x, 1.05, z] })); c.add(real.box(.15, .03, .1, steel, { pos: [x, 1.29, z] })); }  // jerry cans
   for (const z of [-1.9, -1.1, -.3]) c.add(real.m(new THREE.TorusGeometry(.8, .025, 6, 24, P), dark, { pos: [0, 1.25, z], cast: false }));       // tilt hoops
   for (const x of [-.82, .82]) c.add(real.box(.02, .02, 2.2, dark, { pos: [x, 1.32, -1.0] }));    // tie-down rope
+  // QA act0r3: the rear seen close (0.7): woven canvas on the tilt, rib bands outside, laced rear curtain with a rolled flap, tail lights with bezels, reflectors, mud flaps
+  const weave = real.canvasTex(512, 512, (x, w, h) => { x.fillStyle = '#7a7352'; x.fillRect(0, 0, w, h); for (let i = 0; i < w; i += 4) { x.fillStyle = `rgba(40,36,20,${.12 + (i % 8 ? .05 : 0)})`; x.fillRect(i, 0, 1, h); x.fillRect(0, i, w, 1); }
+    for (let i = 0; i < 60; i++) { const yy = (i * 104729) % h, xx = (i * 7919) % w; const g = x.createLinearGradient(xx, yy, xx + 60, yy + 8); g.addColorStop(0, 'rgba(20,18,10,0)'); g.addColorStop(.5, 'rgba(20,18,10,.25)'); g.addColorStop(1, 'rgba(255,250,220,.08)'); x.fillStyle = g; x.fillRect(xx, yy, 140, 10); } }, { repeat: [2, 2] });
+  c.traverse(o => { if (o.isMesh && o.material && o.material.color && o.material.color.getHex() === 0x6a6448 && !o.material.map) { o.material = o.material.clone(); o.material.map = weave; o.material.color.set(0xb8b090); o.material.needsUpdate = true; } });
+  const cv = real.std(0x6c6648, { rough: .95 }), web = real.std(0x2e2a1c, { rough: .9 }), red = real.std(0xa01810, { emissive: 0x900000, ei: 1.4, rough: .3 }), amber = real.std(0xd07018, { emissive: 0x803000, ei: .4, rough: .3 });
+  for (const z of [-1.9, -1.35, -.75, -.15]) { c.add(real.box(1.72, .04, .06, cv, { pos: [0, 2.07, z] })); for (const x of [-.86, .86]) c.add(real.box(.03, .88, .06, cv, { pos: [x, 1.62, z] })); }   // rib bands over the tilt
+  c.add(real.box(1.62, .5, .02, cv, { pos: [0, 1.5, -2.035] }));                                    // rear curtain
+  c.add(real.m(new THREE.CylinderGeometry(.07, .07, 1.6, 14), cv, { pos: [0, 1.9, -2.07], rot: [0, 0, P / 2] }));   // rolled-up flap
+  for (const x of [-.5, 0, .5]) { c.add(real.box(.04, .3, .012, web, { pos: [x, 1.78, -2.1] })); c.add(real.box(.05, .04, .02, steel, { pos: [x, 1.64, -2.1] })); }   // flap straps + buckles
+  for (let i = 0; i < 7; i++) for (const x of [-.78, .78]) c.add(real.m(new THREE.TorusGeometry(.015, .005, 6, 12), steel, { pos: [x, 1.3 + i * .08, -2.05] }));   // lacing eyelets
+  for (const x of [-.66, .66]) {
+    c.add(real.box(.16, .14, .04, dark, { pos: [x, .98, -2.06] }));                                 // lamp backplate
+    c.add(real.m(new THREE.CylinderGeometry(.05, .05, .03, 16), red, { pos: [x, 1.01, -2.09], rot: [P / 2, 0, 0], cast: false }));   // tail lamp
+    c.add(real.m(new THREE.CylinderGeometry(.035, .035, .03, 16), amber, { pos: [x, .94, -2.09], rot: [P / 2, 0, 0], cast: false }));   // indicator
+    c.add(real.m(new THREE.TorusGeometry(.05, .008, 6, 18), steel, { pos: [x, 1.01, -2.1] }));
+    c.add(real.box(.08, .03, .01, red, { pos: [x, .62, -2.11] }));                                  // bumper reflector
+    c.add(real.box(.3, .3, .015, real.std(0x101010, { rough: .95 }), { pos: [x * 1.1, .3, -1.72] })); // mud flap
+  }
   c.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
   return c;
 }
@@ -172,7 +202,9 @@ export const shots = {
     cities: ['TEL AVIV', 'ENTEBBE'],
     route: [[34.8, 31.9], [34.6, 29.6], [36.6, 24.5], [38.4, 19.5], [41.5, 13.5], [40.5, 8], [36.4, 2], [33.5, .2], [32.44, 0.05]],
     tally: ['', 4000, ' KM'], plane: true,
-  }).then(f => (t, u) => { f(t, u); ui.used.push([600, 840, 1320, 1080], [0, 0, 1920, 260]); }),   // QA act0r2: caption off the map centre (UGANDA/KENYA) and the top tally: goes bottom-left
+    cam: { from: [0, 318, 74], to: [0, 300, 66], look: [0, 0, 12], lookTo: [0, 0, 11] },   // QA act0r3: whole map incl. UGANDA sits above the caption band
+  }).then(f => { k.meta.noTag = true;   // QA act0r3: the script's RED SEA tag cannot pin to the sea (route runs down it): dropped
+    return (t, u) => { f(t, u); ui.used.push([0, 0, 1920, 260], [0, 0, 400, 1080], [1520, 0, 1920, 1080]); }; }),   // caption stays bottom-centre, below the map   // QA act0r2: caption off the map centre (UGANDA/KENYA) and the top tally: goes bottom-left
   // from ahead of the left wing, all four engines in frame: the outboard pair spools down and stops, the inboard pair keeps turning
   '0.3': async k => {
     const { scene, camera } = k;
@@ -187,6 +219,13 @@ export const shots = {
     const skin = real.canvasTex(1024, 1024, (c, w, h) => { c.fillStyle = '#b8b0a0'; c.fillRect(0, 0, w, h); c.strokeStyle = 'rgba(40,36,30,.55)'; c.lineWidth = 2; for (let x = 0; x < w; x += 64) { c.beginPath(); c.moveTo(x, 0); c.lineTo(x, h); c.stroke(); } for (let y = 0; y < h; y += 128) { c.beginPath(); c.moveTo(0, y); c.lineTo(w, y); c.stroke(); } c.fillStyle = 'rgba(30,26,20,.5)'; for (let x = 0; x < w; x += 64) for (let y = 4; y < h; y += 16) c.fillRect(x - 1, y, 2, 2); for (let i = 0; i < 300; i++) { c.fillStyle = `rgba(${i % 2 ? 60 : 200},${i % 2 ? 54 : 190},${i % 2 ? 44 : 170},.08)`; c.fillRect((i * 7919) % w, (i * 104729) % h, 40 + i % 60, 20 + i % 30); } }, { repeat: [4, 2] });
     scene.traverse(o => { if (o.isLight) o.castShadow = false; });   // QA act0r2: no moon shadow map over the open cloud deck   // QA act0r2: the wing's shadow on the cloud deck read as a hard dark strip at the left edge
     p.traverse(o => { if (o.isMesh && o.material && o.material.isMeshStandardMaterial && !o.material.map && !o.material.transparent) { const c = o.material.color; if (c.r > .25 && Math.abs(c.r - c.b) < .25) { o.material = o.material.clone(); o.material.map = skin; o.material.needsUpdate = true; } } });
+    // QA act0r3: panel seams and rivet rows as a bump map on every opaque skin material (the camouflage ones already carry a colour map), so fuselage and nacelles read riveted in close-up
+    const seams = real.canvasTex(1024, 1024, (c, w, h) => { c.fillStyle = '#808080'; c.fillRect(0, 0, w, h); c.fillStyle = '#2a2a2a';
+      for (let x = 0; x < w; x += 128) c.fillRect(x, 0, 3, h); for (let y = 0; y < h; y += 256) c.fillRect(0, y, w, 3);
+      for (let x = 64; x < w; x += 256) for (let y = 128; y < h; y += 256) c.fillRect(x, y, 90, 2);   // access-panel edges
+      c.fillStyle = '#d8d8d8'; for (let x = 0; x < w; x += 128) for (let y = 6; y < h; y += 14) { c.beginPath(); c.arc(x + 9, y, 2, 0, 7); c.fill(); }
+      for (let y = 0; y < h; y += 256) for (let x = 6; x < w; x += 14) { c.beginPath(); c.arc(x, y + 9, 2, 0, 7); c.fill(); } }, { repeat: [6, 3] });
+    p.traverse(o => { if (o.isMesh && o.material && o.material.isMeshStandardMaterial && !o.material.transparent && !o.material.emissiveMap) { const g = o.geometry; if (!g.boundingSphere) g.computeBoundingSphere(); if (g.boundingSphere.radius < .6) return; o.material = o.material.clone(); o.material.bumpMap = seams; o.material.bumpScale = 1.6; o.material.needsUpdate = true; } });
     const dur = k.meta.seconds;
     const cam = C.dolly(camera, { pos: [-17, 7.2, 24], look: [-2.5, 5.0, 3], fov: 44 }, { pos: [-13.5, 6.6, 18.5], look: [-4, 5.0, 3.5], fov: 40 });
     // the propeller angle is the integral of the spin rate, so spooling down looks continuous in any frame
@@ -259,7 +298,7 @@ export const shots = {
     scene.add(real.box(1.5, .22, .55, real.std(0x15161a, { rough: .8 }), { pos: [0, .9, .75] }));   // dashboard slab under the glow
     const fill = new THREE.PointLight(0x8aa0d0, 2.0, 2.4, 1.6); fill.position.set(0, 1.3, -.35); scene.add(fill);
     const face = new THREE.SpotLight(0xffe0c0, 14, 6, .35, .6, 1.2); face.position.set(.3, 1.4, 3.0); face.target.position.set(0, 1.2, .1); scene.add(face, face.target);   // QA act0r2: soft fill on the faces   // inside the cabin, below the roof
-    const cam = C.dolly(camera, { pos: [.9, 1.3, 3.6], look: [.1, 1.18, .1], fov: 32 }, { pos: [.65, 1.28, 3.1], look: [.15, 1.2, .1], fov: 30 });
+    const cam = C.dolly(camera, { pos: [1.1, 1.62, 7.0], look: [.12, 1.0, .1], fov: 25 }, { pos: [.9, 1.6, 6.4], look: [.15, 1.02, .1], fov: 24 });   // QA act0r3: pulled back so the bonnet, grille, headlamps and bumper are in frame
     return (t, u) => { cam(u); y.update(t, { pose: 'sit', seatH: .45, arm: 'lap', mood: 'calm', look: Math.sin(t * .4) * .05 }); dr.update(t, { pose: 'sitDesk', arm: 'desk', seatH: .45, mood: 'stern', look: Math.sin(t * .6 + 2) * .12 });
       // callout top-right, with a leader line down to Yoni's head
       const x = k.overlay; camera.updateMatrixWorld(); const v = new THREE.Vector3(...C.headPos(y, 0)).project(camera); const hx = (v.x + 1) * 960, hy = (1 - v.y) * 540 + 34;   // QA act0r2: leader ends on Yoni's face
@@ -276,6 +315,8 @@ export const shots = {
     const cars = await convoy(k, { crew: false });
     roverDetail(cars[1]); roverDetail(cars[2]);
     const key = keySpot(scene, 0xb0c0ff, 1.6, [-10, 12, -20], [0, 0, 0]);
+    const rimL = new THREE.SpotLight(0xc8d4ff, 160, 40, .3, .5, 1.2); scene.add(rimL, rimL.target);
+    const backF = new THREE.SpotLight(0x9aa8d8, 110, 30, .16, .7, 1.2); scene.add(backF, backF.target);   // QA act0r3: soft moon fill on the rover's rear so canvas and tailgate read   // QA act0r3: rim light from ahead/above outlines the trailing rover's tilt and sides
     // distant low hills on the horizon so the runway does not end on a hard line
     for (let i = 0; i < 14; i++) { const a = (i / 14) * P * 2; scene.add(real.m(new THREE.SphereGeometry(60 + (i * 37) % 50, 16, 8, 0, P * 2, 0, P / 2), real.std(0x0a0c12, { rough: 1 }), { pos: [Math.sin(a) * 520, -10, Math.cos(a) * 520], scale: [2.2, .22 + (i % 3) * .06, 1], cast: false })); }
     const dur = k.meta.seconds;
@@ -284,7 +325,7 @@ export const shots = {
     return (t, u) => {
       const e1 = u, e2 = C.ease(C.seg(t, dur * .5, dur));
       camera.position.lerpVectors(A, B, e1).addScaledVector(RISE, e2); L.lerpVectors(LA, LB, e1).addScaledVector(RL, e2); camera.lookAt(L);
-      cars.forEach((c, i) => { c.position.set((i - 1) * .3, 0, -i * 8 + t * 4.2 + 8); c.rotation.y = 0; }); key.target.position.copy(cars[1].position); key.position.set(-10, 12, cars[1].position.z - 20); tick(k); };
+      cars.forEach((c, i) => { c.position.set((i - 1) * .3, 0, -i * 8 + t * 4.2 + 8); c.rotation.y = 0; }); key.target.position.copy(cars[1].position); key.position.set(-10, 12, cars[1].position.z - 20); rimL.target.position.copy(cars[2].position); rimL.position.set(3, 9, cars[2].position.z + 10); backF.target.position.copy(cars[2].position).add(new THREE.Vector3(0, 1.6, -2)); backF.position.set(-4, 4, cars[2].position.z - 11); tick(k); };
   },
   // title
   '0.8': async k => {
