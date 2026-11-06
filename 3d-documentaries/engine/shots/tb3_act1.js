@@ -148,6 +148,14 @@ const sky = (real, k, o = {}) => real.env(k, 'kloofendal_48d_partly_cloudy_pures
 const capTop = () => ui.used.push([0, 840, 1920, 1080]);
 const capBottom = () => ui.used.push([0, 0, 1920, 260]);
 // a frame that draws nothing on the 2D overlay comes back with the previous frame's overlay (act 8 pattern); one invisible draw per frame keeps it clean
+// QA act1r3: the shot draws its own caption at one fixed spot with a quick 0.2 s fade in. It takes the narration off the auto subtitler
+// (which re-picks a position every frame and ghosted / doubled captions), so only this one caption is ever on screen
+const ownCaption = (k, cx, cy) => {
+  const m = k.meta, chunks = ui.chunk(m.narration || '', m.voA ?? .15, m.voB ?? m.seconds - .25); m.narration = '';
+  return t => { const o = k.overlay, c = chunks.find(c => t >= c.a && t < c.b); if (!o || !c) return;
+    o.save(); o.font = '600 46px "Oswald"'; o.globalAlpha = Math.min(1, (t - c.a) / .2, (c.b - t) / .05); o.textAlign = 'center'; o.textBaseline = 'middle';
+    o.lineJoin = 'round'; o.lineWidth = 10; o.strokeStyle = 'rgba(20,14,10,.92)'; o.strokeText(c.text, cx, cy); o.fillStyle = '#fff'; o.fillText(c.text, cx, cy); o.restore(); };
+};
 const tick = k => { const o = k.overlay; if (!o) return; o.save(); o.setTransform(1, 0, 0, 1, 0, 0); o.globalAlpha = .004; o.fillStyle = '#000'; o.fillRect(0, 0, 2, 2); o.restore(); };
 // QA act1r2: the overhead cutaways floated in a black void. Give the cabin the lower half of its fuselage (aluminium skin, frames standing proud at
 // the cut and at both open ends, a cut lip along the rim) and a dark blue-grey gradient backdrop with a soft glow under the hull
@@ -172,10 +180,10 @@ function hullShell(k, len) {
   }
   // stringers along the bare ends so the ribs read as one structure
   for (let a = -th + .2; a < th; a += .45) for (const s of [1, -1]) g.add(real.box(.05, .05, 1.65, frameM, { pos: [Math.sin(a) * (Ro - .05), Y - Math.cos(a) * (Ro - .05), s * (len / 2 + .82)], cast: false }));
-  // backdrop: inside-out sphere, deep navy overhead fading to near-black below, plus a soft blue glow under the hull
-  const bg = real.canvasTex(8, 512, (c, W, H) => { const gr = c.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, '#2a3446'); gr.addColorStop(.45, '#161c28'); gr.addColorStop(.6, '#0b0e14'); gr.addColorStop(1, '#040507'); c.fillStyle = gr; c.fillRect(0, 0, W, H); });
+  // backdrop (QA act1r3: lifted, it still read as a black void): inside-out sphere, slate-blue overhead fading to near-black below, plus a soft blue glow under the hull
+  const bg = real.canvasTex(8, 512, (c, W, H) => { const gr = c.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, '#46566e'); gr.addColorStop(.45, '#2c3648'); gr.addColorStop(.6, '#1c2330'); gr.addColorStop(1, '#10141c'); c.fillStyle = gr; c.fillRect(0, 0, W, H); });
   scene.add(real.m(new THREE.SphereGeometry(300, 32, 16), new THREE.MeshBasicMaterial({ map: bg, side: THREE.BackSide, fog: false, depthWrite: false }), { cast: false, receive: false }));
-  const glow = real.canvasTex(256, 256, (c, W, H) => { const gr = c.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, W / 2); gr.addColorStop(0, 'rgba(70,92,128,.55)'); gr.addColorStop(1, 'rgba(70,92,128,0)'); c.fillStyle = gr; c.fillRect(0, 0, W, H); });
+  const glow = real.canvasTex(256, 256, (c, W, H) => { const gr = c.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, W / 2); gr.addColorStop(0, 'rgba(96,120,158,.85)'); gr.addColorStop(.55, 'rgba(70,90,124,.4)'); gr.addColorStop(1, 'rgba(60,78,108,0)'); c.fillStyle = gr; c.fillRect(0, 0, W, H); });
   scene.add(real.m(new THREE.PlaneGeometry(len * 2.6, len * 2.6), new THREE.MeshBasicMaterial({ map: glow, transparent: true, depthWrite: false, fog: false }), { rot: [-P / 2, 0, 0], pos: [0, -4, 0], cast: false, receive: false }));
   return g;
 }
@@ -355,7 +363,9 @@ Object.assign(shots, {
       C.attach(p, bag, 'RightHand', [0, -.2, 0], [0, P / 2, 0]); p.userData.bag = bag;
     }
     camera.fov = 44; camera.updateProjectionMatrix();
+    const cap = ownCaption(k, 960, 150); // QA act1r3: one caption, top band, for the whole shot (it showed top and bottom at once)
     return (t, u) => {
+      tick(k); cap(t);
       const cx = 9 - t * 1.75 + 2.4; camera.position.set(cx + 1.5, 1.5, 4.8); camera.lookAt(cx - 1.2, 1.1, .9);
       const gl = .25 + .2 * Math.sin(t * 5);
       hj.forEach((p, i) => { p.position.x = 9 + i * 1.6 - t * 1.75; p.update(t, { pose: 'walk', dist: t * 1.75 + i * .4, look: i === 1 ? -.25 : 0 }); p.userData.bag.traverse(c => { if (c.userData.glow) c.material.emissiveIntensity = gl; }); });
@@ -401,8 +411,18 @@ Object.assign(shots, {
     const s1 = first.find(s => s.col === 2 && s.z > 2) ?? first[2], s2 = first.find(s => s.col === 3 && s.z > 2) ?? first[3];
     const a = await mk(C.HJ.bose, s1, -1), b = await mk(C.HJ.kuhlmann, s2, 1);
     const cam = C.dolly(camera, { pos: [0, 1.55, .35], look: [0, 1.3, 5], fov: 50 }, { pos: [0, 1.5, 1.2], look: [0, 1.35, 5], fov: 44 }, { ease: u => u }); // QA act1r2: z=-4.5 sat inside the middle seat block (black frame)
+    // QA act1r3: the act render opened on ~4 s of a black slab (a mesh right in front of the lens). Hide any static mesh (not people) that the camera or
+    // the first 0.6 m of its view line passes through, checked every frame (a wider margin hid the near seat backs and left their trays floating), so nothing can sit on the lens whatever the set holds
+    scene.updateMatrixWorld(true);
+    const near = []; const bb = new THREE.Box3(), sz = new THREE.Vector3();
+    scene.traverse(o => { if (!o.isMesh) return; let q = o; while (q) { if (q.userData.person) return; q = q.parent; }
+      bb.setFromObject(o); bb.getSize(sz); if (Math.max(sz.x, sz.y, sz.z) > 3) return; near.push([o, bb.clone()]); }); // big shells (floor, walls, ceiling) wrap the camera: keep them
+    const fwd = new THREE.Vector3(), pA = new THREE.Vector3();
+    const clearLens = () => { camera.getWorldDirection(fwd);
+      for (const [o, box] of near) { let d = Infinity; for (let i = 0; i <= 4; i++) { pA.copy(camera.position).addScaledVector(fwd, .15 * i); d = Math.min(d, box.distanceToPoint(pA)); } o.visible = d > .02 ? (o.userData.wasVis ?? true) : false; } };
+    near.forEach(([o]) => o.userData.wasVis = o.visible);
     return (t, u) => {
-      cam(u); C.idleSeated(pax, t);
+      cam(u); clearLens(); C.idleSeated(pax, t);
       [a, b].forEach(p => {
         const up = C.ease(C.seg(t, 3.2, 4.0)); const s = p.userData.seat;
         if (up <= 0) p.update(t, { pose: 'sit', seatH: .52, arm: 'lap', mood: 'stern' });
@@ -529,15 +549,15 @@ Object.assign(shots, {
     const over = {};
     const cam = C.dolly(camera, { pos: [7, 8, -16], look: [0, .6, -6], fov: 44 }, { pos: [5.5, 9, 0], look: [0, .4, -3], fov: 46 });
     const dur = k.meta.seconds;
+    const cap = ownCaption(k, 960, 1080 - 110); // QA act1r3: caption fixed at bottom centre, fades in over 0.2 s (it crept in faint at the bottom right)
     return (t, u) => {
-      cam(u);
+      cam(u); tick(k); cap(t);
       // hands go up row by row from the back as the hijackers walk forward
       const front = -10.6 + t * 1.2;
       pax.forEach(p => { if (p.userData.seat.z < front) over[p.uuid] = { arm: 'raiseBoth', mood: 'surprised' }; });
       C.idleSeated(pax, t, over);
       hj.forEach((p, i) => { p.position.z = -10.6 + C.seg(t, .4, dur) * 6.5; p.update(t, { pose: C.seg(t, .4, dur) < 1 ? 'walk' : 'idle', dist: t * .9 + i, arm: 'point', mood: 'stern' }); p.userData.spot.position.set(p.position.x, 6.5, p.position.z); p.userData.spot.target.position.set(p.position.x, .9, p.position.z); });
-      C.stopwatch(k.overlay, t, 180, 1660, 300, 180 / Math.max(1, dur - .4));
-      capBottom(); // QA act1r2: one caption band for the whole shot (a top ghost showed under the bottom caption)
+      C.stopwatch(k.overlay, t, 180, 190, 110, 180 / Math.max(1, dur - .4)); // QA act1r3: timer pinned in the empty dark top-left corner, clear of the cutaway
     };
   },
   '1.18': async k => {
