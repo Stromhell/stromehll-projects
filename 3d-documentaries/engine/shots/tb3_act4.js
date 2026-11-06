@@ -251,12 +251,12 @@ export const shots = {
     const A = new THREE.Vector3(-1.9, 0, 1.5), B = new THREE.Vector3(3.75, 0, 3.55), dir = B.clone().sub(A), LEN = dir.length(); dir.normalize();
     const heading = Math.atan2(dir.x, dir.z), side = new THREE.Vector3(dir.z, 0, -dir.x);
     const d = await real.human({ id: 'tb_pa2', seed: 1300 }); real.put(scene, d, { pos: A.toArray(), rot: heading, mood: 'sad' }); d.userData.driven = true;
-    const s1 = await real.human({ id: 'tb_ug1', seed: 1301 }); real.put(scene, s1, { pos: A.clone().addScaledVector(dir, -.9).addScaledVector(side, -.8).toArray(), rot: heading }); s1.userData.driven = true;
+    const s1 = await real.human({ id: 'tb_ug1', seed: 1301 }); real.put(scene, s1, { pos: A.clone().addScaledVector(dir, -1.5).addScaledVector(side, -.35).toArray(), rot: heading }); s1.userData.driven = true;
     const s2 = await real.human({ id: 'tb_ug3', seed: 1302 }); real.put(scene, s2, { pos: [3.25, 0, 1.95], rot: .3 }); s2.userData.driven = true;   // waits by the far door leaf, faces her
     const cam = C.dolly(camera, { pos: [-1, 1.7, 9], look: [.7, 1.2, 2.3], fov: 40 }, { pos: [.4, 1.6, 7.4], look: [3.0, 1.2, 3.0], fov: 38 });
     return (t, u) => { cam(u);
-      const w = C.ease(C.seg(t, .2, 5.4)); d.position.copy(A).addScaledVector(dir, w * LEN); s1.position.copy(d.position).addScaledVector(dir, -.9).addScaledVector(side, -.8); /* the escort walks ~1.2 m behind and to her side, clear of her body (QA act4r3) */
-      d.update(t, { pose: w < 1 ? 'walk' : 'idle', dist: w * LEN * .7, mood: 'sad' }); s1.update(t, { pose: w < 1 ? 'walk' : 'idle', dist: w * LEN * .7 });
+      const w = C.ease(C.seg(t, .2, 5.4)); d.position.copy(A).addScaledVector(dir, w * LEN); const ws = C.ease(C.seg(t, .2, 5.0)) * (LEN - .6) / LEN; s1.position.copy(A).addScaledVector(dir, ws * LEN - 1.5).addScaledVector(side, -.35); /* the escort trails ~1.5 m behind on the camera-left and stops short of the step (QA act4r4) */
+      d.update(t, { pose: w < 1 ? 'walk' : 'idle', dist: w * LEN * .7, mood: 'sad' }); s1.update(t, { pose: ws * LEN < LEN - .61 ? 'walk' : 'idle', dist: ws * LEN * .7 });
       s2.update(t, { arm: w > .7 ? 'point' : null, look: -.2 });   // the second soldier at the doors reaches out a hand as she arrives
       k.anchor = C.headPos(d, .35); };
   },
