@@ -128,7 +128,8 @@ export const shots = {
     const m = k.meta, tE = (m.voA ?? .35) + ((m.voB ?? m.seconds - .25) - (m.voA ?? .35)) * .64;
     cpt.update(0); k.noAutoOverlay = true; // QA act1r2: own callout, clamped to a 5% safe margin and shown only while the narration names Bacos
     const V = new THREE.Vector3();
-    const cam = dolly(camera, { pos: [-.05, 1.66, -1.55], look: [.15, 1.25, 1.3], fov: 56 }, { pos: [-.05, 1.5, .7], look: [.55, 1.28, .1], fov: 44 });
+    // QA act1r13: opening wide starts higher and looks down a little more, so the crew's heads show over the (now lower) headrests
+    const cam = dolly(camera, { pos: [-.05, 1.9, -1.55], look: [.15, 1.1, 1.3], fov: 56 }, { pos: [-.05, 1.5, .7], look: [.55, 1.28, .1], fov: 44 });
     return (t, u) => {
       if (t < tE) cam(Math.min(1, t / tE));
       else { const w = seg(t, tE, m.seconds || 5); camera.fov = 46; camera.updateProjectionMatrix(); camera.position.set(lerp(-.75, -.82, w), 1.6, lerp(-.05, -.15, w)); camera.lookAt(-1.25, 1.25, -1.1); }
@@ -209,11 +210,42 @@ function deckDetail(k, fd) {
   // QA act1r12: the wide view in 1.12 showed the base set's flat main panel and block seats, which deckDetail never touched.
   // Main panel: raised bezel rings on every gauge, section dividers and a knob row (matte materials only, no lights)
   const mp = new THREE.Group(); mp.position.set(0, .86, .885); mp.rotation.set(-.12, P, 0); g.add(mp);
-  const bez = real.std(0x16181a, { rough: .75, metal: 0 }), knobM = real.std(0x1c1d1f, { rough: .8, metal: 0 }), pin = real.std(0xb8b8b0, { rough: .7, metal: 0 });
+  // QA act1r13: the face still read as a black slab. A full-width canvas face in lighter grey-black (about 40 gauges with bright bezels,
+  // labels, annunciators and a switch row) laid just over the base set's panel, matte, with a moderate emissive so it reads without glare
   const L = (x, y) => [(x / 2048 - .5) * 3.0, (.5 - y / 1024) * 1.0];
+  const gauges = [];
+  for (const cx of [380, 1668]) gauges.push([cx - 180, 300, 90], [cx, 300, 120], [cx + 180, 300, 90], [cx - 180, 540, 90], [cx, 560, 120], [cx + 180, 540, 90]);
+  for (let r = 0; r < 5; r++) for (let i = 0; i < 2; i++) gauges.push([924 + i * 200, 180 + r * 150, 62]);
+  for (const x of [680, 1368]) for (const y of [190, 360, 530]) gauges.push([x, y, 62]);
+  for (const x of [80, 1968]) for (const y of [200, 380, 560]) gauges.push([x, y, 48]);
+  for (const x of [200, 380, 560, 1488, 1668, 1848]) gauges.push([x, 110, 40]);
+  const LAB = ['ALT', 'IAS', 'ADI', 'HSI', 'VSI', 'RMI', 'N1', 'N2', 'EGT', 'FF', 'OIL P', 'OIL T', 'HYD', 'FLAP', 'TRIM', 'CAB'];
+  const faceTex = real.canvasTex(2048, 1024, (c, W, H) => {
+    c.fillStyle = '#3d4248'; c.fillRect(0, 0, W, H);
+    const gr = c.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, 'rgba(255,255,255,.06)'); gr.addColorStop(1, 'rgba(0,0,0,.12)'); c.fillStyle = gr; c.fillRect(0, 0, W, H);
+    c.strokeStyle = '#8e949a'; c.lineWidth = 6; for (const [x0, x1] of [[16, 784], [816, 1232], [1264, 2032]]) c.strokeRect(x0, 40, x1 - x0, 720);
+    let sd = 5; const rnd = () => (sd = (sd * 9301 + 49297) % 233280) / 233280;
+    gauges.forEach(([x, y, r], gi) => {
+      c.fillStyle = '#d6d9dc'; c.beginPath(); c.arc(x, y, r + 7, 0, P * 2); c.fill();
+      c.fillStyle = '#5c6167'; c.beginPath(); c.arc(x, y, r + 2, 0, P * 2); c.fill();
+      c.fillStyle = '#111316'; c.beginPath(); c.arc(x, y, r - 3, 0, P * 2); c.fill();
+      c.strokeStyle = '#f2f2ea'; for (let a = 0; a < 24; a++) { const t = -P * 1.25 + a * P * 2.5 / 23, l = a % 3 ? .1 : .2; c.lineWidth = a % 3 ? 2 : 4; c.beginPath(); c.moveTo(x + Math.cos(t) * r * .86, y + Math.sin(t) * r * .86); c.lineTo(x + Math.cos(t) * r * (.86 - l), y + Math.sin(t) * r * (.86 - l)); c.stroke(); }
+      if (r > 60) { c.strokeStyle = '#3fae4a'; c.lineWidth = 6; c.beginPath(); c.arc(x, y, r * .9, -P * .3, P * .1); c.stroke(); }
+      const t = -P * 1.25 + rnd() * P * 2.5; c.strokeStyle = '#fff6d8'; c.lineWidth = r > 60 ? 6 : 4; c.beginPath(); c.moveTo(x, y); c.lineTo(x + Math.cos(t) * r * .75, y + Math.sin(t) * r * .75); c.stroke();
+      c.fillStyle = '#e8e8e0'; c.beginPath(); c.arc(x, y, 5, 0, P * 2); c.fill();
+      c.font = `600 ${r > 60 ? 24 : 18}px "Liberation Sans"`; c.textAlign = 'center'; c.fillStyle = '#e8e8de'; c.fillText(LAB[gi % LAB.length], x, y + r + 30);
+    });
+    for (let x = 40; x < W - 60; x += 64) { c.fillStyle = ['#d8a030', '#4aa84a', '#c8402e', '#9aa0a6'][(x / 64 | 0) % 4]; c.fillRect(x, 800, 46, 26); }
+    c.font = '600 18px "Liberation Sans"'; c.textAlign = 'center';
+    for (let x = 60; x < W; x += 104) { c.fillStyle = '#c8ccd0'; c.fillRect(x - 6, 880, 12, 40); c.fillStyle = '#e8e8de'; c.fillText(['FUEL', 'IGN', 'BLEED', 'PACK', 'GEN', 'BUS'][(x / 104 | 0) % 6], x, 950); }
+  });
+  mp.add(real.m(new THREE.PlaneGeometry(3.0, 1.0), new THREE.MeshStandardMaterial({ map: faceTex, roughness: .85, metalness: 0, emissive: 0xffffff, emissiveMap: faceTex, emissiveIntensity: .32 }), { pos: [0, 0, .006], cast: false }));
+  // soft fill aimed at the panel from high behind the crew: wide cone, no shadows, short range, well away from glossy parts
+  const fill = new THREE.SpotLight(0xe8eef8, 6, 3.2, .75, .9, 1.5); fill.position.set(0, 1.3, -.55); // kept below the glareshield top so its gloss shows no highlight
+  fill.target.position.set(0, .86, .9); fill.castShadow = false; g.add(fill, fill.target);
+  const bez = real.std(0xb4b8bc, { rough: .65, metal: 0 }), knobM = real.std(0x8c9096, { rough: .7, metal: 0 }), pin = real.std(0xf0f0e8, { rough: .7, metal: 0 });
   const ring = (x, y, r) => { const [lx, ly] = L(x, y); const t = real.m(new THREE.TorusGeometry(1, .09, 6, 28), bez, { pos: [lx, ly, .012], cast: false }); t.scale.set(r * 3 / 2048 * 1.04, r / 1024 * 1.04, .012); mp.add(t); };
-  for (const cx of [380, 1668]) { ring(cx - 180, 300, 90); ring(cx, 300, 120); ring(cx + 180, 300, 90); ring(cx - 180, 540, 90); ring(cx, 560, 120); ring(cx + 180, 540, 90); }
-  for (let r = 0; r < 5; r++) for (let i = 0; i < 2; i++) ring(924 + i * 200, 180 + r * 150, 62);
+  gauges.forEach(([x, y, r]) => ring(x, y, r));
   for (const x of [800, 1248]) { const [lx] = L(x, 0); mp.add(real.box(.03, .98, .03, bez, { pos: [lx, 0, .015], cast: false })); }
   mp.add(real.box(3.0, .03, .035, bez, { pos: [0, L(0, 770)[1], .016], cast: false }));
   for (let i = 0; i < 18; i++) { const [lx, ly] = L(150 + i * 104, 700); mp.add(real.m(new THREE.CylinderGeometry(.014, .016, .025, 12), knobM, { pos: [lx, ly, .02], rot: [P / 2, 0, 0], cast: false })); mp.add(real.box(.004, .012, .004, pin, { pos: [lx, ly + .006, .034], cast: false })); }
@@ -224,7 +256,11 @@ function deckDetail(k, fd) {
 // one shaped crew seat (local frame: +z forward, back toward -z), built to sit on the base set's pedestal; all matte
 function shapedSeat(real) {
   const s = new THREE.Group();
-  const leather = real.std(0x4a3a2c, { rough: .78, metal: 0 }), fleece = real.std(0xcfc3a8, { rough: 1, metal: 0 }), shell = real.std(0x34373b, { rough: .7, metal: 0 }), seam = real.std(0x2e241c, { rough: .85, metal: 0 });
+  // QA act1r13: sheepskin needs to read as fleece: off-white with a curly tuft texture (map + bump), shared by every seat
+  const fleeceTex = real.canvasTex(512, 512, (c, W, H) => { c.fillStyle = '#e4ddcf'; c.fillRect(0, 0, W, H); let r = 9; const rnd = () => (r = (r * 9301 + 49297) % 233280) / 233280;
+    for (let i = 0; i < 2600; i++) { const x = rnd() * W, y = rnd() * H, rr = 5 + rnd() * 9, v = rnd(); c.strokeStyle = v < .5 ? 'rgba(150,138,115,.55)' : 'rgba(255,253,246,.8)'; c.lineWidth = 2 + rnd() * 2; c.beginPath(); c.arc(x, y, rr, rnd() * 6, rnd() * 6 + 3.5); c.stroke(); } });
+  fleeceTex.wrapS = fleeceTex.wrapT = THREE.RepeatWrapping; fleeceTex.repeat.set(1.5, 1.5);
+  const leather = real.std(0x4a3a2c, { rough: .78, metal: 0 }), fleece = new THREE.MeshStandardMaterial({ color: 0xf2ede2, map: fleeceTex, bumpMap: fleeceTex, bumpScale: 2.5, roughness: 1, metalness: 0 }), shell = real.std(0x34373b, { rough: .7, metal: 0 }), seam = real.std(0x2e241c, { rough: .85, metal: 0 });
   // base frame and seat pan
   s.add(real.rbox(.5, .06, .48, .02, shell, { pos: [0, .37, 0] }));
   s.add(real.rbox(.44, .1, .46, .045, fleece, { pos: [0, .45, .01] }));
@@ -236,17 +272,20 @@ function shapedSeat(real) {
   bk.add(real.rbox(.4, .3, .1, .045, fleece, { pos: [0, .2, .01] }));
   bk.add(real.rbox(.4, .3, .1, .045, fleece, { pos: [0, .52, .01] }));
   for (const x of [-.215, .215]) bk.add(real.rbox(.08, .66, .12, .035, leather, { pos: [x, .36, .0] }));
-  for (const x of [-.1, .1]) bk.add(real.m(new THREE.CylinderGeometry(.012, .012, .1, 8), shell, { pos: [x, .76, -.02] }));
-  bk.add(real.rbox(.32, .17, .11, .05, leather, { pos: [0, .87, .0] }));
+  for (const x of [-.1, .1]) bk.add(real.m(new THREE.CylinderGeometry(.012, .012, .06, 8), shell, { pos: [x, .72, -.02] }));
+  bk.add(real.rbox(.3, .13, .1, .045, leather, { pos: [0, .78, .0] })); // QA act1r13: headrest set lower and smaller so the crew's heads clear it in the 1.12 wide
   // seen from behind (the 1.12 wide): sheepskin cover folded over the top of the back, a leather map pocket and stitched seams on the shell
   bk.add(real.rbox(.42, .08, .2, .035, fleece, { pos: [0, .7, -.03] }));
   bk.add(real.rbox(.36, .26, .03, .012, leather, { pos: [0, .2, -.1] }));
   for (const x of [-.12, .12]) bk.add(real.box(.008, .6, .006, seam, { pos: [x, .38, -.093], cast: false }));
   // armrests: posts from the frame, padded tops with a rounded front
-  for (const x of [-.29, .29]) {
-    s.add(real.rbox(.04, .2, .04, .01, shell, { pos: [x, .5, -.12] }));
-    s.add(real.rbox(.04, .16, .04, .01, shell, { pos: [x, .48, .12] }));
-    s.add(real.rbox(.08, .055, .4, .026, leather, { pos: [x, .63, -.01] }));
+  // QA act1r13: armrests set wider and higher, lighter tan with a fleece pad, running back past the shell so they show beside the seat back from behind
+  const armM = real.std(0x8a6a48, { rough: .75, metal: 0 });
+  for (const x of [-.32, .32]) {
+    s.add(real.rbox(.045, .26, .045, .01, shell, { pos: [x, .53, -.18] }));
+    s.add(real.rbox(.045, .22, .045, .01, shell, { pos: [x, .51, .14] }));
+    s.add(real.rbox(.1, .06, .52, .028, armM, { pos: [x, .68, -.03] }));
+    s.add(real.rbox(.085, .035, .42, .015, fleece, { pos: [x, .72, -.01] }));
   }
   return s;
 }
@@ -711,13 +750,47 @@ Object.assign(shots, {
     real.put(scene, cpt, { pos: [.55, 0, .12], rot: 0, pose: 'sitDesk', arm: 'desk', seatH: .5, mood: 'worried' });
     real.put(scene, b, { pos: [-.55, 0, .12], rot: .15, pose: 'sit', seatH: .5, mood: 'stern' });
     [cpt, b].forEach(p => { p.userData.driven = true; dullCap(p); });
-    // handheld cabin microphone with its coiled cord
-    const mic = new THREE.Group(); mic.add(real.m(new THREE.CapsuleGeometry(.025, .07, 4, 12), real.std(0x1a1a1a, { rough: .4 }))); mic.add(real.m(new THREE.CylinderGeometry(.027, .027, .01, 16), real.std(0x5a5a5a, { metal: .7, rough: .3 }), { pos: [0, .06, 0] }));
-    C.attach(b, mic, 'RightHand', [0, -.06, .03], [0, 0, 0]);
-    const cam = C.dolly(camera, { pos: [-.05, 1.45, .88], look: [-.55, 1.22, .12], fov: 52 }, { pos: [-.18, 1.42, .78], look: [-.56, 1.25, .12], fov: 48 });
+    // QA act1r13: handheld cabin microphone, larger and mid grey with a light grille cap so it reads; held in front of his mouth (not against the cheek)
+    const mic = new THREE.Group(); mic.add(real.m(new THREE.CapsuleGeometry(.03, .09, 4, 12), real.std(0x4a4c50, { rough: .6, metal: 0 })));
+    mic.add(real.m(new THREE.CylinderGeometry(.032, .032, .025, 16), real.std(0xb8bcc0, { rough: .6, metal: 0 }), { pos: [0, .07, 0] }));
+    mic.add(real.m(new THREE.CylinderGeometry(.007, .007, .06, 8), real.std(0x111111, { rough: .8 }), { pos: [0, -.08, 0] }));
+    scene.add(mic); mic.traverse(c => { if (c.isMesh) c.castShadow = true; }); // placed in the closed right fist each frame (world space)
+    // slow push in over the whole shot, with a slight drift so the frame is never still
+    const cam = C.dolly(camera, { pos: [-.04, 1.46, .86], look: [-.55, 1.21, .12], fov: 54 }, { pos: [-.2, 1.42, .7], look: [-.56, 1.24, .12], fov: 42 }, { ease: u => u * u * (3 - 2 * u) * .3 + u * .7 });
+    const B = b.parts.bones, Q1 = new THREE.Quaternion(), Q2 = new THREE.Quaternion(), V1 = new THREE.Vector3(), V2 = new THREE.Vector3(), W = new THREE.Vector3();
+    // world-space bone aim (same method as lib/real.js), relative to the figure's own facing
+    const aimB = (name, child, x, y, z) => { const b0 = B[name], c0 = B[child]; if (!b0 || !c0) return; b0.updateWorldMatrix(true, true); b0.getWorldPosition(V1); c0.getWorldPosition(V2);
+      const cur = V2.sub(V1).normalize(); b.getWorldQuaternion(Q1); W.set(x, y, z).normalize().applyQuaternion(Q1); const dq = new THREE.Quaternion().setFromUnitVectors(cur, W);
+      b0.getWorldQuaternion(Q2); b0.parent.getWorldQuaternion(Q1); b0.quaternion.copy(Q1.invert().multiply(dq.multiply(Q2))); b0.updateWorldMatrix(false, true); };
+    // close the right hand into a fist round the handset: curl each finger about one hinge axis, then seat the mic in the palm,
+    // its head pointing up out of the fist (index side) and tipped toward his mouth
+    const n = new THREE.Vector3(), a1 = new THREE.Vector3(), a2 = new THREE.Vector3(), ax = new THREE.Vector3(), up = new THREE.Vector3(), fw = new THREE.Vector3(), mx = new THREE.Vector3(), mz = new THREE.Vector3(), M4 = new THREE.Matrix4();
+    const wp = (bn, v) => B[bn].getWorldPosition(v);
+    const turnAx = (bone, axis, ang) => { bone.updateMatrixWorld(true); bone.getWorldQuaternion(Q2); bone.parent.getWorldQuaternion(Q1); const dq = new THREE.Quaternion().setFromAxisAngle(axis, ang); bone.quaternion.copy(Q1.invert().multiply(dq.multiply(Q2))); bone.updateMatrixWorld(true); };
+    const fistMic = () => {
+      if (!B.RightHand || !B.RightHandIndex1 || !B.RightHandPinky1) return;
+      b.updateMatrixWorld(true); fw.set(0, 0, 1).applyQuaternion(b.quaternion);
+      wp('RightHandIndex1', a1).sub(wp('RightHandPinky1', a2)); wp('RightHandMiddle1', up).sub(wp('RightHand', V1)); n.crossVectors(a1, up).normalize(); if (n.dot(fw) < 0) n.negate();
+      for (const f of ['Index', 'Middle', 'Ring', 'Pinky']) [1.35, 1.5, 1.1].forEach((ang, i) => { const bn = B['RightHand' + f + (i + 1)], ch = bn?.children.find(x => x.isBone); if (!bn || !ch) return;
+        if (i === 0) { ch.getWorldPosition(a2).sub(bn.getWorldPosition(V2)).normalize(); ax.crossVectors(a2, n).normalize(); } turnAx(bn, ax, ang); });
+      [.35, .6, .6].forEach((ang, i) => { const bn = B['RightHandThumb' + (i + 1)], ch = bn?.children.find(x => x.isBone); if (!bn || !ch) return;
+        if (i === 0) { ch.getWorldPosition(a2).sub(bn.getWorldPosition(V2)).normalize(); ax.crossVectors(a2, n).normalize(); } turnAx(bn, ax, ang); });
+      wp('RightHand', V1); wp('RightHandMiddle1', V2); const pc = V1.lerp(V2, .7).addScaledVector(n, .035);
+      wp('RightHandIndex1', up).sub(wp('RightHandPinky1', a2)).normalize(); wp('Head', a1).addScaledVector(fw, .1); a1.y -= .04; a1.sub(pc).normalize(); up.lerp(a1, .7).normalize(); // up out of the fist, the head tipped toward his mouth
+      mz.copy(n).addScaledVector(up, -n.dot(up)).normalize(); mx.crossVectors(up, mz); M4.makeBasis(mx, up, mz); mic.quaternion.setFromRotationMatrix(M4);
+      mic.position.copy(pc).addScaledVector(up, .045);
+    };
     return (t, u) => {
-      cam(u);
-      b.update(t, { pose: 'sit', seatH: .5, arm: 'phone', mood: 'stern', look: .3, talk: t > .8 });
+      cam(u); tick(k); // keeps the overlay clean before the waveform starts (it showed the previous shot's dial at t=0)
+      // idle: head turns and nods between Bacos and the cabin, shoulders shift; the mic hand bobs a little as he talks
+      const lk = .3 + Math.sin(t * .55) * .14 + Math.sin(t * 1.3) * .04, nd = Math.max(0, Math.sin(t * .8 + 1)) * .18;
+      b.update(t, { pose: 'sit', seatH: .5, arm: 'lap', mood: 'stern', look: lk, nod: nd, talk: t > .8 });
+      aimB('Spine2', 'Neck', Math.sin(t * .45) * .07, 1, -.02 + Math.sin(t * .7) * .04);
+      aimB('RightShoulder', 'RightArm', -1, .12 + Math.sin(t * .9) * .05, .05);
+      const bob = Math.sin(t * 2.1) * .03;
+      aimB('RightArm', 'RightForeArm', -.25, -.85, .45); aimB('RightForeArm', 'RightHand', .7, .95 + bob, .4); aimB('RightHand', 'RightHandMiddle1', .25, .9, .3);
+      aimB('Neck', 'Head', Math.sin(t * .5) * .05, 1, .1);
+      fistMic();
       cpt.update(t, { pose: 'sitDesk', arm: 'desk', seatH: .5, mood: 'worried', look: -.35 });
       if (t > .8) C.waveform(k.overlay, t, 1380, 250, 340, true);
     };
