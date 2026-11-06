@@ -457,6 +457,9 @@ Object.assign(shots, {
         for (const f of ['Index', 'Middle', 'Ring', 'Pinky']) [1.35, 1.55, 1.1].forEach((a, i) => bendTo(boneOf(p, sd + 'Hand' + f + (i + 1)), n, a, i === 0));
         [.35, .6, .6].forEach((a, i) => bendTo(boneOf(p, sd + 'HandThumb' + (i + 1)), n, a, i === 0));
         H.updateMatrixWorld(true); wp(H, v1); wp(boneOf(p, sd + 'HandMiddle1'), v2); pc.copy(v1).lerp(v2, .75).addScaledVector(n, .03); // centre of the closed palm
+        // QA act1r8: from behind the man's left fist read as empty. Scale his grenade up a little and seat it high in the fist so its dark top
+        // shows clearly above the curled index finger and thumb, nudged toward the camera
+        if (sd === 'Left' && p.userData.side < 0) { if (!p.userData.nadeBig) { p.userData.nade.scale.multiplyScalar(1.3); p.userData.nadeBig = true; } pc.y += .045; pc.addScaledVector(n, -.025); }
         if (sd === 'Left') { H.getWorldQuaternion(qO); place(p.userData.nade, H, qO, pc); continue; }
         wp(boneOf(p, sd + 'HandIndex1'), yA).sub(wp(boneOf(p, sd + 'HandPinky1'), v3)).normalize(); zA.copy(n).addScaledVector(yA, -n.dot(yA)).normalize(); xA.crossVectors(yA, zA);
         mO.makeBasis(xA, yA, zA); qO.setFromRotationMatrix(mO); // grip (local -y) runs down through the fist toward the little finger, barrel (local z) forward
