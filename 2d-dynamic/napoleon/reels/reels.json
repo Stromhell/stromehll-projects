@@ -14,10 +14,9 @@
    "GONE"
   ],
   "pre": "NP",
-  "tz": 1.6,
-  "thy": 1.0,
   "thx": 1720,
-  "name": "NAPOLEON"
+  "name": "NAPOLEON",
+  "layout": "top"
  },
  {
   "id": 2,
@@ -34,11 +33,10 @@
    "SCHOOL"
   ],
   "pre": "NP",
-  "tz": 1.2,
-  "thy": 0.9,
   "thx": 600,
   "tt": 12,
-  "name": "NAPOLEON"
+  "name": "NAPOLEON",
+  "layout": "top"
  },
  {
   "id": 3,
@@ -55,10 +53,9 @@
    "AT 24"
   ],
   "pre": "NP",
-  "tz": 1.25,
-  "thy": 0.9,
   "thx": 350,
-  "name": "NAPOLEON"
+  "name": "NAPOLEON",
+  "layout": "top"
  },
  {
   "id": 4,
@@ -75,10 +72,9 @@
    "HIS ARMY"
   ],
   "pre": "NP",
-  "tz": 1.25,
-  "thy": 0.9,
   "thx": 450,
-  "name": "NAPOLEON"
+  "name": "NAPOLEON",
+  "layout": "top"
  },
  {
   "id": 5,
@@ -95,10 +91,9 @@
    "HIMSELF"
   ],
   "pre": "NP",
-  "tz": 1.25,
-  "thy": 0.9,
   "thx": 960,
-  "name": "NAPOLEON"
+  "name": "NAPOLEON",
+  "layout": "top"
  },
  {
   "id": 6,
@@ -115,10 +110,9 @@
    "PURPOSE"
   ],
   "pre": "NP",
-  "tz": 1.25,
-  "thy": 0.9,
   "thx": 320,
-  "name": "NAPOLEON"
+  "name": "NAPOLEON",
+  "layout": "top"
  },
  {
   "id": 7,
@@ -135,11 +129,10 @@
    "WITH BRITAIN"
   ],
   "pre": "NP",
-  "tz": 1.4,
-  "thy": 1.0,
   "thx": 1520,
   "tt": 9.8,
-  "name": "NAPOLEON"
+  "name": "NAPOLEON",
+  "layout": "top"
  },
  {
   "id": 8,
@@ -156,10 +149,9 @@
    "WAR"
   ],
   "pre": "NP",
-  "tz": 1.25,
-  "thy": 0.9,
   "thx": 800,
-  "name": "NAPOLEON"
+  "name": "NAPOLEON",
+  "layout": "top"
  },
  {
   "id": 9,
@@ -176,10 +168,9 @@
    "NO WIFE"
   ],
   "pre": "NP",
-  "tz": 1.25,
-  "thy": 0.9,
   "thx": 950,
-  "name": "NAPOLEON"
+  "name": "NAPOLEON",
+  "layout": "top"
  },
  {
   "id": 10,
@@ -196,10 +187,9 @@
    "BURNED"
   ],
   "pre": "NP",
-  "tz": 1.25,
-  "thy": 0.9,
   "thx": 300,
-  "name": "NAPOLEON"
+  "name": "NAPOLEON",
+  "layout": "top"
  },
  {
   "id": 11,
@@ -216,10 +206,9 @@
    "IS GONE"
   ],
   "pre": "NP",
-  "tz": 1.25,
-  "thy": 0.9,
   "thx": 640,
-  "name": "NAPOLEON"
+  "name": "NAPOLEON",
+  "layout": "top"
  },
  {
   "id": 12,
@@ -236,10 +225,9 @@
    "A YEAR"
   ],
   "pre": "NP",
-  "tz": 1.25,
-  "thy": 0.9,
   "thx": 660,
-  "name": "NAPOLEON"
+  "name": "NAPOLEON",
+  "layout": "top"
  },
  {
   "id": 13,
@@ -256,10 +244,9 @@
    "I AM\""
   ],
   "pre": "NP",
-  "tz": 1.25,
-  "thy": 0.9,
   "thx": 660,
-  "name": "NAPOLEON"
+  "name": "NAPOLEON",
+  "layout": "top"
  },
  {
   "id": 14,
@@ -276,10 +263,9 @@
    "BREAKS"
   ],
   "pre": "NP",
-  "tz": 1.25,
-  "thy": 0.9,
   "thx": 1000,
-  "name": "NAPOLEON"
+  "name": "NAPOLEON",
+  "layout": "top"
  },
  {
   "id": 15,
@@ -296,9 +282,8 @@
    "WORDS"
   ],
   "pre": "NP",
-  "tz": 1.5,
-  "thy": 1.0,
   "thx": 560,
-  "name": "NAPOLEON"
+  "name": "NAPOLEON",
+  "layout": "top"
  }
 ]
