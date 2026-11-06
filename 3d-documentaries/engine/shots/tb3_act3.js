@@ -270,5 +270,29 @@ export const shots = {
   },
   // QA: 3.14 opened on ~1 s of near black (empty dark wall, card edge-on until ~.65 s); run the card slam .35 s ahead so the card is already turning on frame 0
   '3.14': async k => { const upd = await old['3.14'](k); return (t, u) => upd(t + .35, u); },
-  '3.15': old['3.15'],
+  // QA a3r5: the two sheets used to float in a black void -> pinned to a lit cork board on a wall, dropping in one after the other
+  '3.15': async k => {
+    const { real, scene, camera } = k;
+    await real.env(k, 'brown_photostudio_02', { sun: false, bg: 0x070606, envI: .25 });
+    const WZ = 0;
+    scene.add(real.box(9, 5, .1, real.std(0x3a322a, { rough: .95 }), { pos: [0, 1.9, WZ - .05], cast: false }));
+    scene.add(real.box(3.6, 2.3, .04, real.std(0xa47c4e, { rough: .95 }), { pos: [0, 1.6, WZ + .02], cast: false }));
+    const fr = real.std(0x4a3222, { rough: .7 });
+    for (const [w, h, x, y] of [[3.72, .06, 0, 2.78], [3.72, .06, 0, .42], [.06, 2.42, -1.83, 1.6], [.06, 2.42, 1.83, 1.6]]) scene.add(real.box(w, h, .06, fr, { pos: [x, y, WZ + .03], cast: false }));
+    const sheet = (lines, col) => real.canvasTex(800, 1040, c => { c.fillStyle = '#efe6cf'; c.fillRect(0, 0, 800, 1040);
+      c.fillStyle = 'rgba(120,100,60,.12)'; for (let q = 0; q < 80; q++) c.fillRect((q * 131) % 800, (q * 293) % 1040, 40, 3);
+      c.strokeStyle = '#2b1e16'; c.lineWidth = 6; c.strokeRect(30, 30, 740, 980); c.textAlign = 'center'; c.textBaseline = 'middle';
+      lines.forEach(([t, sz, cl], i) => { c.fillStyle = cl ?? col; c.font = `${sz}px Anton, Oswald, sans-serif`; c.fillText(t, 400, 260 + i * 250); }); });
+    const defs = [[[['DEMANDS', 130, '#2b1e16'], ['53 PRISONERS', 96], ['40 IN ISRAEL', 96]], '#2b1e16', -.85, .03], [[['$5,000,000', 130, '#a02a1e'], ['DEADLINE', 96], ['1 JULY', 96]], '#2b1e16', .85, -.03]];
+    const pinM = [0xc0392b, 0x1f4fa8].map(c => real.std(c, { rough: .4 }));
+    const sheets = defs.map(([ls, col, x, rz], i) => { const g = new THREE.Group(); g.position.set(x, 1.6, WZ + .05 + i * .001); g.rotation.z = rz;
+      g.add(real.m(new THREE.PlaneGeometry(1.4, 1.82), new THREE.MeshStandardMaterial({ map: sheet(ls, col), roughness: .85 }), { cast: false }));
+      for (const px of [-.6, .6]) { const pin = real.m(new THREE.SphereGeometry(.025, 12, 8), pinM[i], { cast: false }); pin.position.set(px, .82, .02); g.add(pin); }
+      scene.add(g); return g; });
+    const key = new THREE.SpotLight(0xffe8cc, 32, 12, .6, .6, 1.2); key.position.set(.8, 3.6, 3.2); key.target.position.set(0, 1.6, 0); key.castShadow = true; scene.add(key, key.target);
+    scene.add(new THREE.HemisphereLight(0xfff2dc, 0x302820, .25));
+    scene.add(real.m(new THREE.PlaneGeometry(30, 30), real.std(0x1a1612, { rough: .9 }), { rot: [-P / 2, 0, 0], cast: false }));
+    const cam = C.dolly(camera, { pos: [0, 1.62, 4.6], look: [0, 1.6, 0], fov: 40 }, { pos: [0, 1.6, 4.1], look: [0, 1.6, 0], fov: 40 });
+    return (t, u) => { cam(u); sheets.forEach((g, i) => { const s = C.ease(C.seg(t, i * .5, .4 + i * .5)); g.visible = s > 0; g.position.z = WZ + .05 + i * .001 + (1 - s) * .6; g.scale.setScalar(.9 + .1 * s); }); };
+  },
 };
