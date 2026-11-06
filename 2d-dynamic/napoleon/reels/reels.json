@@ -13,7 +13,10 @@
    "600,000 MEN",
    "GONE"
   ],
-  "pre": "NP"
+  "pre": "NP",
+  "tz": 1.6,
+  "thy": 1.0,
+  "thx": 1720
  },
  {
   "id": 2,
@@ -29,7 +32,11 @@
    "MOCKED AT",
    "SCHOOL"
   ],
-  "pre": "NP"
+  "pre": "NP",
+  "tz": 1.2,
+  "thy": 0.9,
+  "thx": 600,
+  "tt": 12
  },
  {
   "id": 3,
@@ -45,7 +52,10 @@
    "GENERAL",
    "AT 24"
   ],
-  "pre": "NP"
+  "pre": "NP",
+  "tz": 1.25,
+  "thy": 0.9,
+  "thx": 350
  },
  {
   "id": 4,
@@ -61,7 +71,10 @@
    "HE LEFT",
    "HIS ARMY"
   ],
-  "pre": "NP"
+  "pre": "NP",
+  "tz": 1.25,
+  "thy": 0.9,
+  "thx": 450
  },
  {
   "id": 5,
@@ -77,7 +90,10 @@
    "HE CROWNED",
    "HIMSELF"
   ],
-  "pre": "NP"
+  "pre": "NP",
+  "tz": 1.25,
+  "thy": 0.9,
+  "thx": 960
  },
  {
   "id": 6,
@@ -93,7 +109,10 @@
    "WEAK ON",
    "PURPOSE"
   ],
-  "pre": "NP"
+  "pre": "NP",
+  "tz": 1.25,
+  "thy": 0.9,
+  "thx": 320
  },
  {
   "id": 7,
@@ -109,7 +128,11 @@
    "NO TRADE",
    "WITH BRITAIN"
   ],
-  "pre": "NP"
+  "pre": "NP",
+  "tz": 1.4,
+  "thy": 1.0,
+  "thx": 1520,
+  "tt": 9.8
  },
  {
   "id": 8,
@@ -125,7 +148,10 @@
    "THE LITTLE",
    "WAR"
   ],
-  "pre": "NP"
+  "pre": "NP",
+  "tz": 1.25,
+  "thy": 0.9,
+  "thx": 800
  },
  {
   "id": 9,
@@ -141,7 +167,10 @@
    "NO SON,",
    "NO WIFE"
   ],
-  "pre": "NP"
+  "pre": "NP",
+  "tz": 1.25,
+  "thy": 0.9,
+  "thx": 950
  },
  {
   "id": 10,
@@ -157,7 +186,10 @@
    "MOSCOW",
    "BURNED"
   ],
-  "pre": "NP"
+  "pre": "NP",
+  "tz": 1.25,
+  "thy": 0.9,
+  "thx": 300
  },
  {
   "id": 11,
@@ -173,7 +205,10 @@
    "THE ARMY",
    "IS GONE"
   ],
-  "pre": "NP"
+  "pre": "NP",
+  "tz": 1.25,
+  "thy": 0.9,
+  "thx": 640
  },
  {
   "id": 12,
@@ -189,7 +224,10 @@
    "LESS THAN",
    "A YEAR"
   ],
-  "pre": "NP"
+  "pre": "NP",
+  "tz": 1.25,
+  "thy": 0.9,
+  "thx": 660
  },
  {
   "id": 13,
@@ -205,7 +243,10 @@
    "\"HERE",
    "I AM\""
   ],
-  "pre": "NP"
+  "pre": "NP",
+  "tz": 1.25,
+  "thy": 0.9,
+  "thx": 660
  },
  {
   "id": 14,
@@ -221,7 +262,10 @@
    "THE ARMY",
    "BREAKS"
   ],
-  "pre": "NP"
+  "pre": "NP",
+  "tz": 1.25,
+  "thy": 0.9,
+  "thx": 1000
  },
  {
   "id": 15,
@@ -237,6 +281,9 @@
    "HIS LAST",
    "WORDS"
   ],
-  "pre": "NP"
+  "pre": "NP",
+  "tz": 1.5,
+  "thy": 1.0,
+  "thx": 560
  }
 ]

@@ -1,0 +1,30 @@
+Napoleon release booking sheet (2D dynamic). Pushpam approved the full video 6 Nov 2026 11:31 UTC. Please book on the rulebook UK/US prime-time slots. Drive upload is blocked (token 401), so all files are in project files: /mnt/project-files/2d-dynamic/napoleon/launch/
+
+FULL VIDEO (YouTube): "Napoleon Had Everything. It Wasn't Enough."
+  video /mnt/project-files/2d-dynamic/napoleon/launch/NP_FULL.mp4 (5:33, 1080p, -14 LUFS)
+  thumbnail /mnt/project-files/2d-dynamic/napoleon/launch/Napoleon_thumbnail.jpg (alt: Napoleon_thumbnail_alt.jpg)
+  title/description/tags/chapters: /mnt/project-files/2d-dynamic/napoleon/launch/Napoleon_Title_Description.txt
+  slot: next free full-video slot (Mon-Fri 19:00 UTC, Sat-Sun 16:00 UTC), >= 2 days from other full videos
+
+15 REELS (YouTube Shorts + Instagram Reels), 9:16, 12-27 s each. Titles + descriptions: /mnt/project-files/2d-dynamic/napoleon/launch/NP_Reels_Titles_Descriptions.txt
+Reels may go out before the full video. Book in this order on the reel slots (19:30, 00:30, 12:00, 22:00, 17:00, 03:00, 07:30 UTC):
+01. "600,000 Men Marched Into Russia. Few Came Back" | video /mnt/project-files/2d-dynamic/napoleon/launch/reels/NP_Reel_01.mp4 | cover /mnt/project-files/2d-dynamic/napoleon/launch/reels/NP_Reel_01_thumb.jpg
+02. "Bullied for His Accent, Then He Ruled Europe" | video /mnt/project-files/2d-dynamic/napoleon/launch/reels/NP_Reel_02.mp4 | cover /mnt/project-files/2d-dynamic/napoleon/launch/reels/NP_Reel_02_thumb.jpg
+03. "A 24-Year-Old Captain Beat Two Navies" | video /mnt/project-files/2d-dynamic/napoleon/launch/reels/NP_Reel_03.mp4 | cover /mnt/project-files/2d-dynamic/napoleon/launch/reels/NP_Reel_03_thumb.jpg
+04. "He Abandoned His Army in Egypt" | video /mnt/project-files/2d-dynamic/napoleon/launch/reels/NP_Reel_04.mp4 | cover /mnt/project-files/2d-dynamic/napoleon/launch/reels/NP_Reel_04_thumb.jpg
+05. "He Crowned Himself in Front of the Pope" | video /mnt/project-files/2d-dynamic/napoleon/launch/reels/NP_Reel_05.mp4 | cover /mnt/project-files/2d-dynamic/napoleon/launch/reels/NP_Reel_05_thumb.jpg
+06. "The Fake Weakness That Won Austerlitz" | video /mnt/project-files/2d-dynamic/napoleon/launch/reels/NP_Reel_06.mp4 | cover /mnt/project-files/2d-dynamic/napoleon/launch/reels/NP_Reel_06_thumb.jpg
+07. "Napoleon Banned Europe From Trading With Britain" | video /mnt/project-files/2d-dynamic/napoleon/launch/reels/NP_Reel_07.mp4 | cover /mnt/project-files/2d-dynamic/napoleon/launch/reels/NP_Reel_07_thumb.jpg
+08. "Where the Word "Guerrilla" Came From" | video /mnt/project-files/2d-dynamic/napoleon/launch/reels/NP_Reel_08.mp4 | cover /mnt/project-files/2d-dynamic/napoleon/launch/reels/NP_Reel_08_thumb.jpg
+09. "He Divorced Josephine for an Heir" | video /mnt/project-files/2d-dynamic/napoleon/launch/reels/NP_Reel_09.mp4 | cover /mnt/project-files/2d-dynamic/napoleon/launch/reels/NP_Reel_09_thumb.jpg
+10. "He Took Moscow and Still Lost" | video /mnt/project-files/2d-dynamic/napoleon/launch/reels/NP_Reel_10.mp4 | cover /mnt/project-files/2d-dynamic/napoleon/launch/reels/NP_Reel_10_thumb.jpg
+11. "How the Grande Armée Vanished" | video /mnt/project-files/2d-dynamic/napoleon/launch/reels/NP_Reel_11.mp4 | cover /mnt/project-files/2d-dynamic/napoleon/launch/reels/NP_Reel_11_thumb.jpg
+12. "Exiled to an Island, Back in 10 Months" | video /mnt/project-files/2d-dynamic/napoleon/launch/reels/NP_Reel_12.mp4 | cover /mnt/project-files/2d-dynamic/napoleon/launch/reels/NP_Reel_12_thumb.jpg
+13. ""If Any of You Wants to Kill His Emperor, Here I Am"" | video /mnt/project-files/2d-dynamic/napoleon/launch/reels/NP_Reel_13.mp4 | cover /mnt/project-files/2d-dynamic/napoleon/launch/reels/NP_Reel_13_thumb.jpg
+14. "The Charge That Ended Napoleon" | video /mnt/project-files/2d-dynamic/napoleon/launch/reels/NP_Reel_14.mp4 | cover /mnt/project-files/2d-dynamic/napoleon/launch/reels/NP_Reel_14_thumb.jpg
+15. "Napoleon's Last Words" | video /mnt/project-files/2d-dynamic/napoleon/launch/reels/NP_Reel_15.mp4 | cover /mnt/project-files/2d-dynamic/napoleon/launch/reels/NP_Reel_15_thumb.jpg
+
+INSTAGRAM FULL-VIDEO PARTS (Instagram only), one per day at 20:30 UTC, starting the day after the YouTube release, in order:
+Part 1 of 3 | video /mnt/project-files/2d-dynamic/napoleon/launch/ig/NP_IG_Part_01.mp4 | caption in NP_Reels_Titles_Descriptions.txt (cover: first frame)
+Part 2 of 3 | video /mnt/project-files/2d-dynamic/napoleon/launch/ig/NP_IG_Part_02.mp4 | caption in NP_Reels_Titles_Descriptions.txt (cover: first frame)
+Part 3 of 3 | video /mnt/project-files/2d-dynamic/napoleon/launch/ig/NP_IG_Part_03.mp4 | caption in NP_Reels_Titles_Descriptions.txt (cover: first frame)
