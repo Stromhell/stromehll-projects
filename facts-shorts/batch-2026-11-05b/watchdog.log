@@ -1,0 +1,358 @@
+21:18:29 watchdog start for /home/user/stromehll-projects/facts-shorts/batch-2026-11-05b
+21:18:29 restart voice job (not running)
+21:21:29 voiced 35-banana-radioactive
+21:21:32 timed 35-banana-radioactive
+21:23:32 render 35-banana-radioactive started
+21:24:32 voiced 36-pistol-shrimp
+21:24:35 timed 36-pistol-shrimp
+21:25:40 rendered 35-banana-radioactive (23.082667s, decode clean)
+21:25:51 qa sheet ready 35-banana-radioactive
+21:25:51 render 36-pistol-shrimp started
+21:28:01 qa sheet ready 35-banana-radioactive
+21:28:05 rendered 36-pistol-shrimp (24.874667s, decode clean)
+21:28:15 qa sheet ready 36-pistol-shrimp
+21:28:15 render 35-banana-radioactive started
+21:30:15 voiced 37-cleopatra-moon
+21:30:18 timed 37-cleopatra-moon
+21:30:29 qa sheet ready 36-pistol-shrimp
+21:30:34 rendered 35-banana-radioactive (23.082667s, decode clean)
+21:30:49 qa sheet ready 35-banana-radioactive
+21:30:49 render 36-pistol-shrimp started
+21:33:01 qa sheet ready 35-banana-radioactive
+21:33:05 rendered 36-pistol-shrimp (24.874667s, decode clean)
+21:33:16 qa sheet ready 36-pistol-shrimp
+21:33:16 render 37-cleopatra-moon started
+21:35:25 qa sheet ready 36-pistol-shrimp
+21:35:28 rendered 37-cleopatra-moon (23.637333s, decode clean)
+21:35:28 voiced 38-tardigrade-space
+21:35:28 FAILED timing 38-tardigrade-space: word not found: Tardigrades#1 in This animal survived the vacuum of space, hardy grades, also called water bears, are smaller than a millimeter. In 2007, scientists sent them into orbit on a European space mission and left them exposed to open space. Many came back alive and some even laid eggs. The trick is drying out and almost switching their bodies off until water returns.
+21:35:36 qa sheet ready 37-cleopatra-moon
+21:35:36 render 35-banana-radioactive started
+21:37:41 rendered 35-banana-radioactive (23.082667s, decode clean)
+21:37:54 qa sheet ready 35-banana-radioactive
+21:37:54 render 36-pistol-shrimp started
+21:39:12 qa sheet ready 35-banana-radioactive
+21:40:12 voiced 39-venus-day
+21:40:15 timed 39-venus-day
+21:40:18 rendered 36-pistol-shrimp (24.874667s, decode clean)
+21:40:28 qa sheet ready 36-pistol-shrimp
+21:40:28 render 38-tardigrade-space started
+21:41:44 qa sheet ready 36-pistol-shrimp
+21:41:47 rendered 38-tardigrade-space (21.568000s, decode clean)
+21:41:58 qa sheet ready 38-tardigrade-space
+21:41:58 render 35-banana-radioactive started
+21:44:07 qa sheet ready 38-tardigrade-space
+21:44:11 rendered 35-banana-radioactive (23.082667s, decode clean)
+21:44:22 qa sheet ready 35-banana-radioactive
+21:44:22 render 36-pistol-shrimp started
+21:45:40 qa sheet ready 35-banana-radioactive
+21:46:40 voiced 40-hippo-swim
+21:46:43 timed 40-hippo-swim
+21:46:46 rendered 36-pistol-shrimp (24.874667s, decode clean)
+21:46:56 qa sheet ready 36-pistol-shrimp
+21:46:56 render 39-venus-day started
+21:48:59 rendered 39-venus-day (19.306667s, decode clean)
+21:49:08 qa sheet ready 39-venus-day
+21:49:08 render 38-tardigrade-space started
+21:50:20 qa sheet ready 39-venus-day
+21:50:23 rendered 38-tardigrade-space (21.568000s, decode clean)
+21:50:33 qa sheet ready 38-tardigrade-space
+21:50:33 render 35-banana-radioactive started
+21:52:33 voiced 41-shortest-war
+21:52:35 timed 41-shortest-war
+21:52:39 rendered 35-banana-radioactive (23.082667s, decode clean)
+21:52:50 qa sheet ready 35-banana-radioactive
+21:52:51 render 40-hippo-swim started
+21:54:54 rendered 40-hippo-swim (18.090667s, decode clean)
+21:55:02 qa sheet ready 40-hippo-swim
+21:55:02 render 39-venus-day started
+21:57:02 voiced 42-scotland-unicorn
+21:57:04 timed 42-scotland-unicorn
+21:57:07 rendered 39-venus-day (19.306667s, decode clean)
+21:57:16 qa sheet ready 39-venus-day
+21:57:16 render 41-shortest-war started
+21:59:19 rendered 41-shortest-war (18.986667s, decode clean)
+21:59:27 qa sheet ready 41-shortest-war
+21:59:28 render 42-scotland-unicorn started
+22:01:28 voiced 43-nintendo-1889
+22:01:31 timed 43-nintendo-1889
+22:01:33 rendered 42-scotland-unicorn (20.117333s, decode clean)
+22:01:43 qa sheet ready 42-scotland-unicorn
+22:02:43 restart voice job (not running)
+22:02:43 voiced 44-napoleon-height
+22:02:43 FAILED timing 44-napoleon-height: word not found: seven#1 in Napoleon wasn't short. He was about 5 foot 7, roughly 1 .69 meters, which was average or even a bit tall for a Frenchman of his time. The myth came from two things. Old French inches were longer than British ones, so his height got mistranslated and British cartoonists loved drawing him tiny.
+22:04:44 render 43-nintendo-1889 started
+22:05:44 voiced 45-butterfly-feet
+22:05:46 timed 45-butterfly-feet
+22:06:50 rendered 43-nintendo-1889 (22.208000s, decode clean)
+22:07:02 qa sheet ready 43-nintendo-1889
+22:07:02 render 44-napoleon-height started
+22:09:02 voiced 46-neutron-spoon
+22:09:05 timed 46-neutron-spoon
+22:09:14 qa sheet ready 43-nintendo-1889
+22:09:17 rendered 44-napoleon-height (19.370667s, decode clean)
+22:09:26 qa sheet ready 44-napoleon-height
+22:09:26 render 43-nintendo-1889 started
+22:11:35 qa sheet ready 44-napoleon-height
+22:11:38 rendered 43-nintendo-1889 (22.208000s, decode clean)
+22:11:48 qa sheet ready 43-nintendo-1889
+22:11:48 render 45-butterfly-feet started
+22:13:48 voiced 47-trees-stars
+22:13:50 timed 47-trees-stars
+22:13:53 rendered 45-butterfly-feet (18.496000s, decode clean)
+22:14:02 qa sheet ready 45-butterfly-feet
+22:14:02 render 44-napoleon-height started
+22:16:06 rendered 44-napoleon-height (19.370667s, decode clean)
+22:16:15 qa sheet ready 44-napoleon-height
+22:16:15 render 46-neutron-spoon started
+22:18:15 voiced 48-ketchup-medicine
+22:18:17 timed 48-ketchup-medicine
+22:18:21 rendered 46-neutron-spoon (19.072000s, decode clean)
+22:18:31 qa sheet ready 46-neutron-spoon
+22:18:31 render 47-trees-stars started
+22:20:35 rendered 47-trees-stars (19.562667s, decode clean)
+22:20:43 qa sheet ready 47-trees-stars
+22:20:44 render 48-ketchup-medicine started
+22:22:44 voiced 49-empire-lightning
+22:22:46 timed 49-empire-lightning
+22:22:49 rendered 48-ketchup-medicine (19.882667s, decode clean)
+22:22:58 qa sheet ready 48-ketchup-medicine
+22:23:58 voiced 50-saturn-float
+22:24:00 timed 50-saturn-float
+22:26:01 voiced 51-mantis-punch
+22:26:03 timed 51-mantis-punch
+22:26:03 render 49-empire-lightning started
+22:28:07 rendered 49-empire-lightning (18.197333s, decode clean)
+22:28:15 qa sheet ready 49-empire-lightning
+22:28:15 render 50-saturn-float started
+22:29:18 rendered 50-saturn-float (16.213333s, decode clean)
+22:29:26 qa sheet ready 50-saturn-float
+22:29:26 render 51-mantis-punch started
+22:30:30 rendered 51-mantis-punch (17.813333s, decode clean)
+22:30:39 qa sheet ready 51-mantis-punch
+22:31:40 voiced 52-polar-bear-skin
+22:31:42 timed 52-polar-bear-skin
+22:33:43 voiced 53-crows-faces
+22:33:45 timed 53-crows-faces
+22:34:46 render 52-polar-bear-skin started
+22:36:47 voiced 54-great-fire
+22:36:49 timed 54-great-fire
+22:36:52 rendered 52-polar-bear-skin (18.389333s, decode clean)
+22:37:01 qa sheet ready 52-polar-bear-skin
+22:37:01 render 53-crows-faces started
+22:39:04 rendered 53-crows-faces (19.946667s, decode clean)
+22:39:14 qa sheet ready 53-crows-faces
+22:39:14 render 54-great-fire started
+22:40:26 qa sheet ready 53-crows-faces
+22:40:28 rendered 54-great-fire (18.282667s, decode clean)
+22:40:38 qa sheet ready 54-great-fire
+22:40:38 render 53-crows-faces started
+22:41:50 qa sheet ready 54-great-fire
+22:41:53 rendered 53-crows-faces (19.946667s, decode clean)
+22:42:02 qa sheet ready 53-crows-faces
+22:42:02 render 54-great-fire started
+22:43:02 voiced 55-pineapple-years
+22:43:04 timed 55-pineapple-years
+22:44:08 rendered 54-great-fire (18.282667s, decode clean)
+22:44:19 qa sheet ready 54-great-fire
+22:45:19 voiced 56-fingernails
+22:45:19 FAILED timing 56-fingernails: word not found: writing#1 in Your fingernails grow about twice as fast as your toenails. A fingernail grows around 3 mm a month, so a whole nail is replaced in about 6 months. A toenail can take over a year. Scientists think it's because your hands get more blood flow and more knocks. Even your nails on your right hand grow faster.
+22:45:26 qa sheet ready 54-great-fire
+22:45:26 render 55-pineapple-years started
+22:47:30 rendered 55-pineapple-years (18.304000s, decode clean)
+22:47:40 qa sheet ready 55-pineapple-years
+22:47:40 render 54-great-fire started
+22:49:41 voiced 57-sound-water
+22:49:43 timed 57-sound-water
+22:49:46 rendered 54-great-fire (18.282667s, decode clean)
+22:49:57 qa sheet ready 54-great-fire
+22:49:57 render 56-fingernails started
+22:52:01 rendered 56-fingernails (19.242667s, decode clean)
+22:52:10 qa sheet ready 56-fingernails
+22:52:10 render 57-sound-water started
+22:54:10 voiced 58-rain-smell
+22:54:10 FAILED timing 58-rain-smell: word not found: petrichor#1 in That smell after rain has a name, it's called petricore. Most of it comes from geosmin, a chemical made by tiny bacteria living in soil. When rain drops hit the ground, they fling it into the air as tiny bubbles. Your nose is so sensitive to it that you can smell just a few drops in a swimming pool.
+22:54:13 rendered 57-sound-water (19.093333s, decode clean)
+22:54:22 qa sheet ready 57-sound-water
+22:56:23 voiced 59-sloth-breath
+22:56:23 FAILED timing 59-sloth-breath: word not found: heartbeat#1 in Slots can hold their breath for up to 40 minutes, that's longer than dolphins because they slow their heart beat right down to save oxygen. And here's the surprise, slots are actually good swimmers about 3 times faster in water than they are on land.
+22:56:23 render 58-rain-smell started
+22:58:26 rendered 58-rain-smell (19.626667s, decode clean)
+22:58:34 qa sheet ready 58-rain-smell
+22:58:34 render 59-sloth-breath started
+22:59:34 voiced 60-moon-away
+22:59:37 timed 60-moon-away
+22:59:46 qa sheet ready 58-rain-smell
+22:59:50 rendered 59-sloth-breath (18.197333s, decode clean)
+22:59:59 qa sheet ready 59-sloth-breath
+22:59:59 render 58-rain-smell started
+23:02:03 rendered 58-rain-smell (19.626667s, decode clean)
+23:02:12 qa sheet ready 58-rain-smell
+23:02:12 render 60-moon-away started
+23:04:12 voiced 61-antarctica-desert
+23:04:14 timed 61-antarctica-desert
+23:04:17 rendered 60-moon-away (18.517333s, decode clean)
+23:04:24 qa sheet ready 60-moon-away
+23:05:25 render 61-antarctica-desert started
+23:06:25 voiced 62-cloud-weight
+23:06:27 timed 62-cloud-weight
+23:06:30 rendered 61-antarctica-desert (19.221333s, decode clean)
+23:06:38 qa sheet ready 61-antarctica-desert
+23:07:39 render 62-cloud-weight started
+23:09:40 voiced 63-elephant-jump
+23:09:42 timed 63-elephant-jump
+23:09:45 rendered 62-cloud-weight (19.797333s, decode clean)
+23:09:57 qa sheet ready 62-cloud-weight
+23:10:57 render 63-elephant-jump started
+23:12:58 restart voice job (not running)
+23:12:58 voiced 64-dolphin-sleep
+23:13:00 timed 64-dolphin-sleep
+23:13:02 rendered 63-elephant-jump (18.496000s, decode clean)
+23:13:10 qa sheet ready 63-elephant-jump
+23:14:19 qa sheet ready 63-elephant-jump
+23:14:19 render 64-dolphin-sleep started
+23:15:22 rendered 64-dolphin-sleep (16.042667s, decode clean)
+23:15:29 qa sheet ready 64-dolphin-sleep
+23:15:29 render 63-elephant-jump started
+23:16:37 qa sheet ready 64-dolphin-sleep
+23:16:40 rendered 63-elephant-jump (18.496000s, decode clean)
+23:16:49 qa sheet ready 63-elephant-jump
+23:16:49 render 64-dolphin-sleep started
+23:17:51 rendered 64-dolphin-sleep (16.042667s, decode clean)
+23:17:59 qa sheet ready 64-dolphin-sleep
+23:18:59 voiced 65-mammoth-pyramids
+23:18:59 FAILED timing 65-mammoth-pyramids: word not found: Wrangel#1 in Wooly Mammoths were still alive when the Great Pyramid was built. The pyramid went up around 250 BC. Meanwhile, a small group of mammoths survived on Rangel Island off the coast of Siberia until about 2000 BC, that's hundreds of years after the pyramid was finished. So, ancient Egyptians and mammoths shared the same planet.
+23:20:59 voiced 66-hummingbird-backwards
+23:21:02 timed 66-hummingbird-backwards
+23:22:03 render 66-hummingbird-backwards started
+23:24:03 voiced 67-heart-beats
+23:24:06 timed 67-heart-beats
+23:24:08 rendered 66-hummingbird-backwards (21.973333s, decode clean)
+23:24:19 qa sheet ready 66-hummingbird-backwards
+23:25:20 render 67-heart-beats started
+23:27:20 voiced 68-purple-carrots
+23:27:23 timed 68-purple-carrots
+23:27:26 rendered 67-heart-beats (21.568000s, decode clean)
+23:27:38 qa sheet ready 67-heart-beats
+23:28:38 render 68-purple-carrots started
+23:30:39 voiced 69-spider-silk
+23:30:41 timed 69-spider-silk
+23:30:44 rendered 68-purple-carrots (21.930667s, decode clean)
+23:30:56 qa sheet ready 68-purple-carrots
+23:31:57 render 69-spider-silk started
+23:33:57 voiced 70-glass-frog
+23:33:59 timed 70-glass-frog
+23:34:02 rendered 69-spider-silk (19.690667s, decode clean)
+23:34:12 qa sheet ready 69-spider-silk
+23:35:19 qa sheet ready 69-spider-silk
+23:35:20 render 70-glass-frog started
+23:37:20 voiced 71-viking-helmets
+23:37:20 FAILED timing 71-viking-helmets: word not found: Gjermundbu#1 in Vikings never wore horned helmets. The only nearly complete Viking helmet ever found, the German bow helmet from Norway has no horns at all. The horns came from an opera. In 1876, costume designer Karl Emil Doopler gave horned helmets to the characters in Wagner's Ring Cycle. In a real fight, horns would just get grabbed.
+23:37:23 rendered 70-glass-frog (19.690667s, decode clean)
+23:37:33 qa sheet ready 70-glass-frog
+23:37:33 render 69-spider-silk started
+23:39:37 rendered 69-spider-silk (19.690667s, decode clean)
+23:39:45 qa sheet ready 69-spider-silk
+23:39:45 render 71-viking-helmets started
+23:40:57 qa sheet ready 69-spider-silk
+23:41:57 voiced 72-koala-fingerprints
+23:42:00 timed 72-koala-fingerprints
+23:42:03 rendered 71-viking-helmets (21.589333s, decode clean)
+23:42:14 qa sheet ready 71-viking-helmets
+23:42:14 render 69-spider-silk started
+23:44:15 voiced 73-bee-faces
+23:44:17 timed 73-bee-faces
+23:44:20 rendered 69-spider-silk (19.690667s, decode clean)
+23:44:30 qa sheet ready 69-spider-silk
+23:44:30 render 72-koala-fingerprints started
+23:46:34 rendered 72-koala-fingerprints (19.605333s, decode clean)
+23:46:43 qa sheet ready 72-koala-fingerprints
+23:46:43 render 73-bee-faces started
+23:48:44 voiced 74-flamingo-pink
+23:48:47 timed 74-flamingo-pink
+23:48:49 rendered 73-bee-faces (19.178667s, decode clean)
+23:49:00 qa sheet ready 73-bee-faces
+23:50:00 render 74-flamingo-pink started
+23:52:01 voiced 75-mars-sunset
+23:52:03 timed 75-mars-sunset
+23:52:06 rendered 74-flamingo-pink (21.418667s, decode clean)
+23:52:16 qa sheet ready 74-flamingo-pink
+23:53:17 render 75-mars-sunset started
+23:55:17 voiced 76-red-spot
+23:55:19 timed 76-red-spot
+23:55:22 rendered 75-mars-sunset (20.928000s, decode clean)
+23:55:33 qa sheet ready 75-mars-sunset
+23:56:34 render 76-red-spot started
+23:58:34 voiced 77-owl-neck
+23:58:36 timed 77-owl-neck
+23:58:39 rendered 76-red-spot (19.797333s, decode clean)
+23:58:52 qa sheet ready 76-red-spot
+23:59:53 render 77-owl-neck started
+00:00:55 rendered 77-owl-neck (17.301333s, decode clean)
+00:01:03 qa sheet ready 77-owl-neck
+00:02:03 voiced 78-hiccups-68-years
+00:02:06 timed 78-hiccups-68-years
+00:02:14 qa sheet ready 77-owl-neck
+00:02:14 render 77-owl-neck started
+00:04:17 rendered 77-owl-neck (17.301333s, decode clean)
+00:04:26 qa sheet ready 77-owl-neck
+00:04:26 render 78-hiccups-68-years started
+00:06:26 voiced 79-cacao-money
+00:06:29 timed 79-cacao-money
+00:06:31 rendered 78-hiccups-68-years (19.584000s, decode clean)
+00:06:42 qa sheet ready 78-hiccups-68-years
+00:07:51 qa sheet ready 78-hiccups-68-years
+00:07:51 render 78-hiccups-68-years started
+00:09:51 voiced 80-goldfish-memory
+00:09:53 timed 80-goldfish-memory
+00:09:56 rendered 78-hiccups-68-years (19.584000s, decode clean)
+00:10:06 qa sheet ready 78-hiccups-68-years
+00:10:06 render 79-cacao-money started
+00:12:09 rendered 79-cacao-money (19.328000s, decode clean)
+00:12:17 qa sheet ready 79-cacao-money
+00:12:17 render 80-goldfish-memory started
+00:13:20 rendered 80-goldfish-memory (17.685333s, decode clean)
+00:13:28 qa sheet ready 80-goldfish-memory
+00:14:28 voiced 81-sun-mass
+00:14:28 FAILED timing 81-sun-mass: word not found: percent#1 in The sun holds almost all the stuff in our solar system. It makes up about 99 .86 % of the solar system's mass. All the planets, moons, asteroids and comets share the tiny bit left over. And Jupiter takes most of that. You could fit about 1 .3 million hertz inside the sun.
+00:14:36 qa sheet ready 80-goldfish-memory
+00:14:36 render 80-goldfish-memory started
+00:16:39 rendered 80-goldfish-memory (17.685333s, decode clean)
+00:16:46 qa sheet ready 80-goldfish-memory
+00:16:46 render 81-sun-mass started
+00:17:46 voiced 82-immortal-jellyfish
+00:17:49 timed 82-immortal-jellyfish
+00:18:52 rendered 81-sun-mass (21.034667s, decode clean)
+00:19:02 qa sheet ready 81-sun-mass
+00:19:02 render 82-immortal-jellyfish started
+00:21:03 voiced 83-oldest-tree
+00:21:05 timed 83-oldest-tree
+00:21:08 rendered 82-immortal-jellyfish (20.224000s, decode clean)
+00:21:19 qa sheet ready 82-immortal-jellyfish
+00:22:28 qa sheet ready 82-immortal-jellyfish
+00:22:28 render 82-immortal-jellyfish started
+00:24:28 restart voice job (not running)
+00:24:28 voiced 84-stomach-lining
+00:24:30 timed 84-stomach-lining
+00:24:33 rendered 82-immortal-jellyfish (20.224000s, decode clean)
+00:24:42 qa sheet ready 82-immortal-jellyfish
+00:24:42 render 83-oldest-tree started
+00:26:45 rendered 83-oldest-tree (18.965333s, decode clean)
+00:26:54 qa sheet ready 83-oldest-tree
+00:26:54 render 84-stomach-lining started
+00:28:54 voiced 65-mammoth-pyramids
+00:28:55 FAILED timing 65-mammoth-pyramids: word not found: Rangel#1 in Uli mammoths were still alive when the Great Pyramid was built. The pyramid went up around 2560 BC. Meanwhile, a small group of mammoths survived on Rangal Island off the coast of Siberia until about 2000 BC. That's hundreds of years after the pyramid was finished. So, ancient Egyptians and mammoths shared the same planet.
+00:28:56 rendered 84-stomach-lining (18.432000s, decode clean)
+00:29:02 qa sheet ready 84-stomach-lining
+00:29:02 all voiced, render queue empty: watchdog exit
+00:29:21 watchdog start for /home/user/stromehll-projects/facts-shorts/batch-2026-11-05b
+00:29:21 render 65-mammoth-pyramids started
+00:30:23 rendered 65-mammoth-pyramids (22.016000s, decode clean)
+00:30:29 qa sheet ready 65-mammoth-pyramids
+00:30:29 all voiced, render queue empty: watchdog exit
+00:30:52 watchdog start for /home/user/stromehll-projects/facts-shorts/batch-2026-11-05b
+00:30:58 qa sheet ready 65-mammoth-pyramids
+00:30:58 render 65-mammoth-pyramids started
+00:32:01 rendered 65-mammoth-pyramids (22.016000s, decode clean)
+00:32:07 qa sheet ready 65-mammoth-pyramids
+00:32:07 all voiced, render queue empty: watchdog exit
