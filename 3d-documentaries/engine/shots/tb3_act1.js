@@ -551,8 +551,9 @@ Object.assign(shots, {
     real.put(scene, fo, { pos: [-.55, 0, .12], rot: 0, pose: 'sitDesk', arm: 'desk', seatH: .5, mood: 'worried' });
     real.put(scene, fe, { pos: [-1.05, 0, -1.0], rot: -P / 2 + .3, pose: 'sit', seatH: .5 });
     [cpt, fo, fe].forEach(p => { p.userData.driven = true; dullCap(p); }); engineerLook(fe);
+    // QA act1r11: raised and tilted down a little so the captain's head and cap clear the bottom edge
     // QA act1r10: camera pulled back and up, over the captain's right shoulder (it sat nearly inside his head)
-    const cam = C.dolly(camera, { pos: [1.3, 2.05, 1.15], look: [-.4, 1.05, -1.6], fov: 50 }, { pos: [1.2, 2.0, .95], look: [-.4, 1.1, -1.9], fov: 46 });
+    const cam = C.dolly(camera, { pos: [1.3, 2.15, 1.15], look: [-.4, .85, -1.6], fov: 50 }, { pos: [1.2, 2.1, .95], look: [-.4, .8, -1.9], fov: 46 });
     return (t, u) => {
       cam(u);
       cpt.update(t, { pose: 'sitDesk', arm: t > 1.2 && t < 2.6 ? 'point' : 'desk', seatH: .5, look: -1.2 * C.ease(C.seg(t, .3, 1.0)), mood: 'worried' });
@@ -591,12 +592,12 @@ Object.assign(shots, {
   '1.15': async k => {
     const { real, scene, camera } = k;
     await sky(real, k, { envI: .55 });
-    await sets.flightDeck(k, { sky: 0xa8c8e8 });
+    await sets.flightDeck(k, { sky: 0xa8c8e8 }); deckDetail(k); // QA act1r11: same upgraded deck as 1.12-1.14
     const cpt = await real.human({ id: C.CREW.bacos, seed: 40 }), b = await real.human({ id: C.HJ.bose, seed: 81 });
     real.put(scene, cpt, { pos: [.55, 0, .12], rot: 0, pose: 'sitDesk', arm: 'desk', seatH: .5, mood: 'worried' });
     real.put(scene, b, { pos: [-.55, 0, .12], rot: 0, pose: 'sit', arm: 'lap', seatH: .5, mood: 'stern' });
     C.attach(b, C.pistolShape(), 'RightHand', [0, -.08, .05], [P / 2, 0, 0]);
-    [cpt, b].forEach(p => p.userData.driven = true);
+    [cpt, b].forEach(p => { p.userData.driven = true; dullCap(p); });
     b.update(0); k.anchor = C.headPos(b);
     const cam = C.orbit(camera, [-.55, 1.2, .12], 1.25, 1.55, -2.6, -1.75, 44, [-.5, 1.25, .2]);
     return (t, u) => { cam(u); cpt.update(t, { pose: 'sitDesk', arm: 'desk', seatH: .5, mood: 'worried', look: -.25 }); b.update(t, { pose: 'sit', arm: 'lap', seatH: .5, mood: 'stern', look: .35 }); k.anchor = C.headPos(b); };
@@ -604,11 +605,11 @@ Object.assign(shots, {
   '1.16': async k => {
     const { real, scene, camera } = k;
     await sky(real, k, { envI: .55 });
-    await sets.flightDeck(k, { sky: 0xa8c8e8 });
+    await sets.flightDeck(k, { sky: 0xa8c8e8 }); deckDetail(k); // QA act1r11: same upgraded deck as 1.12-1.14
     const cpt = await real.human({ id: C.CREW.bacos, seed: 40 }), b = await real.human({ id: C.HJ.bose, seed: 81 });
     real.put(scene, cpt, { pos: [.55, 0, .12], rot: 0, pose: 'sitDesk', arm: 'desk', seatH: .5, mood: 'worried' });
     real.put(scene, b, { pos: [-.55, 0, .12], rot: .25, pose: 'sit', seatH: .5, mood: 'stern' });
-    [cpt, b].forEach(p => p.userData.driven = true);
+    [cpt, b].forEach(p => { p.userData.driven = true; dullCap(p); });
     // a large heading indicator on the captain's panel; the card turns from west (270) to south (180)
     const cv = document.createElement('canvas'); cv.width = cv.height = 512; const cx = cv.getContext('2d');
     const tex = new THREE.CanvasTexture(cv); tex.colorSpace = THREE.SRGBColorSpace;
@@ -663,11 +664,11 @@ Object.assign(shots, {
   '1.18': async k => {
     const { real, scene, camera } = k;
     await sky(real, k, { envI: .55 });
-    await sets.flightDeck(k, { sky: 0xa8c8e8 });
+    await sets.flightDeck(k, { sky: 0xa8c8e8 }); deckDetail(k); // QA act1r11: same upgraded deck as 1.12-1.14
     const cpt = await real.human({ id: C.CREW.bacos, seed: 40 }), b = await real.human({ id: C.HJ.bose, seed: 81 });
     real.put(scene, cpt, { pos: [.55, 0, .12], rot: 0, pose: 'sitDesk', arm: 'desk', seatH: .5, mood: 'worried' });
     real.put(scene, b, { pos: [-.55, 0, .12], rot: .15, pose: 'sit', seatH: .5, mood: 'stern' });
-    [cpt, b].forEach(p => p.userData.driven = true);
+    [cpt, b].forEach(p => { p.userData.driven = true; dullCap(p); });
     // handheld cabin microphone with its coiled cord
     const mic = new THREE.Group(); mic.add(real.m(new THREE.CapsuleGeometry(.025, .07, 4, 12), real.std(0x1a1a1a, { rough: .4 }))); mic.add(real.m(new THREE.CylinderGeometry(.027, .027, .01, 16), real.std(0x5a5a5a, { metal: .7, rough: .3 }), { pos: [0, .06, 0] }));
     C.attach(b, mic, 'RightHand', [0, -.06, .03], [0, 0, 0]);
