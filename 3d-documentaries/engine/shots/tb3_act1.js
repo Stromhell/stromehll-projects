@@ -429,12 +429,20 @@ Object.assign(shots, {
     const clearLens = () => { camera.updateMatrixWorld(); camera.getWorldDirection(fwd); // the camera is not in the scene: refresh its matrix so frame 0 checks the real view line
       for (const [o, box] of near) { let d = Infinity; for (let i = 0; i <= 4; i++) { pA.copy(camera.position).addScaledVector(fwd, .15 * i); d = Math.min(d, box.distanceToPoint(pA)); } o.visible = d > .02 ? (o.userData.wasVis ?? true) : false; } };
     near.forEach(([o]) => o.userData.wasVis = o.visible);
+    // QA act1r6: even 'handsUp' left the hands above the head and the man's grenade at the right bin edge. Drop each upper arm a little and tip
+    // the forearm in toward the head (world-space turns about the view axis), so the hands sit at about head height, well clear of the bins
+    const qd = new THREE.Quaternion(), qp = new THREE.Quaternion(), qw = new THREE.Quaternion(), Z = new THREE.Vector3(0, 0, 1);
+    const turnW = (bone, ang) => { if (!bone) return; bone.updateMatrixWorld(true); bone.getWorldQuaternion(qw); bone.parent.getWorldQuaternion(qp);
+      qd.setFromAxisAngle(Z, ang); bone.quaternion.copy(qp.invert().multiply(qd.multiply(qw))); bone.updateMatrixWorld(true); };
+    const boneOf = (p, n) => { if (!p.userData.bn) { p.userData.bn = {}; p.traverse(c => { if (c.isBone) p.userData.bn[c.name.replace(/^mixamorig[:_]?/, '')] = c; }); } return p.userData.bn[n]; };
+    const lowerHands = p => { p.updateMatrixWorld(true); for (const [sd, sg] of [['Left', 1], ['Right', -1]]) { turnW(boneOf(p, sd + 'Arm'), -sg * .35); turnW(boneOf(p, sd + 'ForeArm'), sg * .65); } };
     return (t, u) => {
       cam(u); clearLens(); C.idleSeated(pax, t);
       [a, b].forEach(p => {
+        // QA act1r6: 'raiseBoth' lifted the man's hand into the overhead bin. 'handsUp' holds the hands at about head height, and the pair stand nearer the aisle centre
         const up = C.ease(C.seg(t, 3.2, 4.0)); const s = p.userData.seat;
         if (up <= 0) p.update(t, { pose: 'sit', seatH: .52, arm: 'lap', mood: 'stern' });
-        else { p.position.x = C.lerp(s.x, p.userData.side * .28, up); p.position.z = s.z + .35 * up; p.rotation.y = 0; p.update(t, { pose: 'idle', arm: t > 4.6 ? 'raiseBoth' : null, mood: 'stern' }); }
+        else { p.position.x = C.lerp(s.x, p.userData.side * .2, up); p.position.z = s.z + .35 * up; p.rotation.y = 0; p.update(t, { pose: 'idle', arm: t > 4.6 ? 'handsUp' : null, mood: 'stern' }); if (t > 4.6) lowerHands(p); }
       });
     };
   },
