@@ -1,0 +1,14 @@
+frames 150/1488  31 ms/frame
+frames 300/1488  30 ms/frame
+frames 450/1488  28 ms/frame
+frames 600/1488  27 ms/frame
+frames 750/1488  27 ms/frame
+frames 900/1488  29 ms/frame
+frames 1050/1488  31 ms/frame
+frames 1200/1488  31 ms/frame
+frames 1350/1488  31 ms/frame
+DONE 1488 frames 49.60s
+/home/user/stromehll-projects/2d-history/shared/mix.py:14: WavFileWarning: Chunk (non-data) not understood, skipping it.
+  sr, x = wavfile.read(p); x = x.astype(np.float32)
+mixed ww2-part1/production/acts/act4/mix.wav 49.60s
+WROTE ww2-part1/production/acts/act4/act4.mp4

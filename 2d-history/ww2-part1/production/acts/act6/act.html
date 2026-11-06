@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><title>MX act 6 - the phony war and the fall of norway</title>
+<!doctype html><html><head><meta charset="utf-8"><title>MX act 6 - Phony war</title>
 <style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
 <body><canvas id="c" width="1920" height="1080"></canvas>
 <script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "leo";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
@@ -24,7 +24,7 @@ window.SHOTS = [
     figs: [{ x: 820, y: 1330, s: 1.55, ...WW.SOLDIER(0, 'fr'), facing: 1, mood: 'happy' }, { x: 1340, y: 1330, s: 1.55, ...WW.SOLDIER(1, 'fr'), facing: -1, mood: 'focus' }, { x: 1800, y: 1300, s: 1.5, ...WW.SOLDIER(2, 'fr'), facing: 1, mood: 'happy', eyes: 'closed' }],
     front: [(c, lt) => ZZZ(c, 1860, 820, lt)],
     init: S => { const tP = A.at(S, 'Phony', 7.4);
-      S.D.over = [(c, lt) => K.card(c, 'WAR DECLARED... THEN NOTHING', lt, { at: .5, x: 960, y: 120, px: 44, rot: -2 }), (c, lt) => K.title(c, 'THE PHONY WAR', lt, { at: tP, y: 860, px: 90 })];
+      S.D.over = [(c, lt) => K.card(c, 'WAR DECLARED... THEN NOTHING', lt, { at: .5, x: 960, y: 120, px: 44, rot: -2 }), (c, lt) => K.title(c, 'THE PHONY WAR', lt, { at: tP, y: 300, px: 90 })];
       S.D.sfx = [[.5, 'pop', .3], [1.5, 'paper', .2], [3, 'paper', .2], [4.5, 'breath', .2], [tP, 'hit', .4]]; } },
   // 6.02 the Winter War: Finnish ski troops in white move through the snow
   { plate: 'snow_forest', cam: { z: [1.04, 1.1], x: [1280, 1300], y: [800, 790] }, bed: [['wind_loop', .3]],

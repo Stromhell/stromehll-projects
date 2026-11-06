@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><title>MX act 4 - austria and the paper peace</title>
+<!doctype html><html><head><meta charset="utf-8"><title>MX act 4 - Appeasement</title>
 <style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
 <body><canvas id="c" width="1920" height="1080"></canvas>
 <script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "leo";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
@@ -19,8 +19,8 @@ const CHAIR = (c, x, y) => { c.save(); c.fillStyle = '#8a2a22'; c.strokeStyle = 
 window.SHOTS = [
   // 4.01 Feb 1938: a looming silhouette bullies Austria's small chancellor
   { plate: 'partners_room', cam: { z: [1.04, 1.12], x: [1280, 1280], y: [800, 780] }, bed: [['drone', .2], ['tension', .15]],
-    live: [(c, lt) => WW.silhouette(c, 900, 1360, 1.35, { arm: .25 + .2 * Math.abs(Math.sin(lt * 2.4)), talk: true, lt })],
-    figs: [{ x: 1720, y: 1360, s: 1.45, ...WW.SCHUSCHNIGG, facing: -1, mood: 'worried', walk: { x0: 2900, x1: 1720, t0: .1, dur: 2.4 } }],
+    live: [(c, lt) => WW.silhouette(c, 900, 1360, 1.0, { arm: .25 + .2 * Math.abs(Math.sin(lt * 2.4)), talk: true, lt })],
+    figs: [{ x: 1640, y: 1360, s: 1.75, ...WW.SCHUSCHNIGG, facing: -1, mood: 'worried', walk: { x0: 2900, x1: 1640, t0: .1, dur: 2.4 } }],
     init: S => { const tB = A.at(S, 'bullied', 4.2);
       S.D.over = [(c, lt) => K.dateTag(c, 'FEB 1938', lt, { at: .2 }), (c, lt) => K.card(c, "AUSTRIA'S CHANCELLOR", lt, { at: 1.4, x: 1460, y: 160, px: 42, rot: 2 }), (c, lt) => K.card(c, 'PUT NAZIS IN YOUR GOVERNMENT', lt, { at: tB, x: 620, y: 220, px: 40, rot: -3 })];
       S.D.sfx = [[.1, 'footsteps', .3], [.4, 'door_slam', .3], [tB, 'hit', .4]]; } },
@@ -29,7 +29,7 @@ window.SHOTS = [
     init: S => { const tT = A.at(S, 'troops', 3.6), t13 = A.at(S, '13', 6.4);
       S.D.live = [(c, lt) => { WW.map(c, B38); WW.flip(c, 'austria', '#d8b070', WW.COL.taken, K.seg(lt, t13, t13 + .6)); WW.faceOn(c, 'germany', 'smug', 1.1, lt); WW.faceOn(c, 'austria', lt > tT ? 'shocked' : 'worried', .9, lt);
         WW.arrow(c, [[11.5, 49.5], [13, 48.4], [15.8, 47.9]], K.seg(lt, tT, tT + 1.4), '#3a3c40', 26); }];
-      S.D.over = [(c, lt) => { const a = pop(lt, .3, .45) * (1 - K.seg(lt, tT - .4, tT)); if (a > 0) { BALLOT(c, 420, 720, a); K.card(c, 'INDEPENDENCE?', lt, { at: .5, x: 420, y: 470, px: 38, rot: -3 }); } },
+      S.D.over = [(c, lt) => { const a = pop(lt, .3, .45) * (1 - K.seg(lt, tT - .4, tT)); if (a > 0) { BALLOT(c, 1250, 880, .7 * a); K.card(c, 'INDEPENDENCE?', lt, { at: .5, x: 1250, y: 740, px: 38, rot: -3 }); } },
         (c, lt) => K.title(c, 'AUSTRIA · 13 MARCH 1938', lt, { at: t13, y: 140, px: 70 })];
       S.D.sfx = [[.3, 'paper', .3], [tT, 'footsteps', .35], [t13, 'stamp', .45]]; } },
   // 4.03 next: the Sudetenland edge of Czechoslovakia glows

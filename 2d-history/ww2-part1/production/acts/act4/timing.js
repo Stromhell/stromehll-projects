@@ -1,1 +1,690 @@
-window.TIMING={"dur": 70.895, "shots": [{"i": 0, "start": 0, "vo_start": 0.3, "vo_end": 10.275, "text": "In February 1938 Hitler summoned Austria's chancellor, Kurt Schuschnigg, and bullied him into putting Nazis in his government.", "end": 10.675}, {"i": 1, "start": 10.675, "vo_start": 10.975, "vo_end": 23.87, "text": "Schuschnigg called a vote on independence. Before it could happen, German troops crossed the border. On 13 March 1938 Austria was declared part of Germany.", "end": 24.27}, {"i": 2, "start": 24.27, "vo_start": 24.57, "vo_end": 34.83, "text": "Next was the Sudetenland, a border region of Czechoslovakia where about three million German speakers lived. Hitler demanded it.", "end": 35.23}, {"i": 3, "start": 35.23, "vo_start": 35.53, "vo_end": 47.525, "text": "In September 1938 Britain's prime minister, Neville Chamberlain, met Hitler in Munich with France and Italy. Czechoslovakia wasn't even in the room.", "end": 47.925}, {"i": 4, "start": 47.925, "vo_start": 48.225, "vo_end": 60.365, "text": "They handed him the Sudetenland in return for a promise of no more war. Chamberlain flew home waving the paper and promised 'peace for our time'.", "end": 60.765}, {"i": 5, "start": 60.765, "vo_start": 61.065, "vo_end": 70.195, "text": "Six months later, in March 1939, German troops took the rest of Czechoslovakia. The promise was worthless.", "end": 70.895}], "words": [{"w": "In", "s": 0.3, "e": 0.57}, {"w": "February", "s": 0.63, "e": 1.17}, {"w": "1938", "s": 1.23, "e": 1.59}, {"w": "Hitler", "s": 1.65, "e": 2.1}, {"w": "summoned", "s": 2.16, "e": 2.7}, {"w": "Austria's", "s": 2.76, "e": 3.345}, {"w": "chancellor", "s": 3.405, "e": 4.08}, {"w": "Kurt", "s": 4.39, "e": 4.75}, {"w": "Schuschnigg", "s": 4.81, "e": 5.53}, {"w": "and", "s": 5.84, "e": 6.155}, {"w": "bullied", "s": 6.215, "e": 6.71}, {"w": "him", "s": 6.77, "e": 7.085}, {"w": "into", "s": 7.145, "e": 7.505}, {"w": "putting", "s": 7.565, "e": 8.06}, {"w": "Nazis", "s": 8.12, "e": 8.525}, {"w": "in", "s": 8.585, "e": 8.855}, {"w": "his", "s": 8.915, "e": 9.23}, {"w": "government", "s": 9.29, "e": 9.965}, {"w": "Schuschnigg", "s": 10.975, "e": 11.65}, {"w": "called", "s": 11.71, "e": 12.16}, {"w": "a", "s": 12.22, "e": 12.445}, {"w": "vote", "s": 12.505, "e": 12.865}, {"w": "on", "s": 12.925, "e": 13.195}, {"w": "independence", "s": 13.255, "e": 14.02}, {"w": "Before", "s": 14.33, "e": 14.78}, {"w": "it", "s": 14.84, "e": 15.11}, {"w": "could", "s": 15.17, "e": 15.575}, {"w": "happen", "s": 15.635, "e": 16.13}, {"w": "German", "s": 16.44, "e": 16.89}, {"w": "troops", "s": 16.95, "e": 17.4}, {"w": "crossed", "s": 17.46, "e": 17.955}, {"w": "the", "s": 18.015, "e": 18.33}, {"w": "border", "s": 18.39, "e": 18.885}, {"w": "On", "s": 19.195, "e": 19.465}, {"w": "13", "s": 19.525, "e": 19.795}, {"w": "March", "s": 19.855, "e": 20.26}, {"w": "1938", "s": 20.32, "e": 20.68}, {"w": "Austria", "s": 20.74, "e": 21.235}, {"w": "was", "s": 21.295, "e": 21.61}, {"w": "declared", "s": 21.67, "e": 22.21}, {"w": "part", "s": 22.27, "e": 22.63}, {"w": "of", "s": 22.69, "e": 22.96}, {"w": "Germany", "s": 23.02, "e": 23.56}, {"w": "Next", "s": 24.57, "e": 24.93}, {"w": "was", "s": 24.99, "e": 25.305}, {"w": "the", "s": 25.365, "e": 25.68}, {"w": "Sudetenland", "s": 25.74, "e": 26.46}, {"w": "a", "s": 26.77, "e": 26.995}, {"w": "border", "s": 27.055, "e": 27.505}, {"w": "region", "s": 27.565, "e": 28.015}, {"w": "of", "s": 28.075, "e": 28.345}, {"w": "Czechoslovakia", "s": 28.405, "e": 29.215}, {"w": "where", "s": 29.275, "e": 29.68}, {"w": "about", "s": 29.74, "e": 30.145}, {"w": "three", "s": 30.205, "e": 30.61}, {"w": "million", "s": 30.67, "e": 31.165}, {"w": "German", "s": 31.225, "e": 31.675}, {"w": "speakers", "s": 31.735, "e": 32.275}, {"w": "lived", "s": 32.335, "e": 32.785}, {"w": "Hitler", "s": 33.095, "e": 33.545}, {"w": "demanded", "s": 33.605, "e": 34.145}, {"w": "it", "s": 34.205, "e": 34.52}, {"w": "In", "s": 35.53, "e": 35.8}, {"w": "September", "s": 35.86, "e": 36.445}, {"w": "1938", "s": 36.505, "e": 36.865}, {"w": "Britain's", "s": 36.925, "e": 37.51}, {"w": "prime", "s": 37.57, "e": 37.975}, {"w": "minister", "s": 38.035, "e": 38.62}, {"w": "Neville", "s": 38.93, "e": 39.425}, {"w": "Chamberlain", "s": 39.485, "e": 40.205}, {"w": "met", "s": 40.515, "e": 40.83}, {"w": "Hitler", "s": 40.89, "e": 41.34}, {"w": "in", "s": 41.4, "e": 41.67}, {"w": "Munich", "s": 41.73, "e": 42.18}, {"w": "with", "s": 42.24, "e": 42.6}, {"w": "France", "s": 42.66, "e": 43.11}, {"w": "and", "s": 43.17, "e": 43.485}, {"w": "Italy", "s": 43.545, "e": 43.995}, {"w": "Czechoslovakia", "s": 44.305, "e": 45.115}, {"w": "wasn't", "s": 45.175, "e": 45.625}, {"w": "even", "s": 45.685, "e": 46.045}, {"w": "in", "s": 46.105, "e": 46.375}, {"w": "the", "s": 46.435, "e": 46.75}, {"w": "room", "s": 46.81, "e": 47.215}, {"w": "They", "s": 48.225, "e": 48.585}, {"w": "handed", "s": 48.645, "e": 49.095}, {"w": "him", "s": 49.155, "e": 49.47}, {"w": "the", "s": 49.53, "e": 49.845}, {"w": "Sudetenland", "s": 49.905, "e": 50.58}, {"w": "in", "s": 50.64, "e": 50.91}, {"w": "return", "s": 50.97, "e": 51.42}, {"w": "for", "s": 51.48, "e": 51.795}, {"w": "a", "s": 51.855, "e": 52.08}, {"w": "promise", "s": 52.14, "e": 52.635}, {"w": "of", "s": 52.695, "e": 52.965}, {"w": "no", "s": 53.025, "e": 53.295}, {"w": "more", "s": 53.355, "e": 53.715}, {"w": "war", "s": 53.775, "e": 54.135}, {"w": "Chamberlain", "s": 54.445, "e": 55.12}, {"w": "flew", "s": 55.18, "e": 55.54}, {"w": "home", "s": 55.6, "e": 55.96}, {"w": "waving", "s": 56.02, "e": 56.47}, {"w": "the", "s": 56.53, "e": 56.845}, {"w": "paper", "s": 56.905, "e": 57.31}, {"w": "and", "s": 57.37, "e": 57.685}, {"w": "promised", "s": 57.745, "e": 58.285}, {"w": "'peace", "s": 58.345, "e": 58.795}, {"w": "for", "s": 58.855, "e": 59.17}, {"w": "our", "s": 59.23, "e": 59.545}, {"w": "time'", "s": 59.605, "e": 60.055}, {"w": "Six", "s": 61.065, "e": 61.38}, {"w": "months", "s": 61.44, "e": 61.89}, {"w": "later", "s": 61.95, "e": 62.4}, {"w": "in", "s": 62.71, "e": 62.98}, {"w": "March", "s": 63.04, "e": 63.445}, {"w": "1939", "s": 63.505, "e": 63.91}, {"w": "German", "s": 64.22, "e": 64.67}, {"w": "troops", "s": 64.73, "e": 65.18}, {"w": "took", "s": 65.24, "e": 65.6}, {"w": "the", "s": 65.66, "e": 65.975}, {"w": "rest", "s": 66.035, "e": 66.395}, {"w": "of", "s": 66.455, "e": 66.725}, {"w": "Czechoslovakia", "s": 66.785, "e": 67.64}, {"w": "The", "s": 67.95, "e": 68.265}, {"w": "promise", "s": 68.325, "e": 68.82}, {"w": "was", "s": 68.88, "e": 69.195}, {"w": "worthless", "s": 69.255, "e": 69.885}]}
+window.TIMING={
+"dur": 49.596,
+"shots": [
+{
+"i": 1,
+"start": 0.0,
+"vo_start": 0.6,
+"vo_end": 6.607,
+"text": "In February 1938 Hitler summoned Austria's chancellor, Kurt Schuschnigg, and bullied him into putting Nazis in his government.",
+"end": 6.882
+},
+{
+"i": 2,
+"start": 6.882,
+"vo_start": 7.157,
+"vo_end": 16.476,
+"text": "Schuschnigg called a vote on independence. Before it could happen, German troops crossed the border. On 13 March 1938 Austria was declared part of Germany.",
+"end": 16.751
+},
+{
+"i": 3,
+"start": 16.751,
+"vo_start": 17.026,
+"vo_end": 24.436,
+"text": "Next was the Sudetenland, a border region of Czechoslovakia where about three million German speakers lived. Hitler demanded it.",
+"end": 24.711
+},
+{
+"i": 4,
+"start": 24.711,
+"vo_start": 24.986,
+"vo_end": 32.906,
+"text": "In September 1938 Britain's prime minister, Neville Chamberlain, met Hitler in Munich with France and Italy. Czechoslovakia wasn't even in the room.",
+"end": 33.181
+},
+{
+"i": 5,
+"start": 33.181,
+"vo_start": 33.456,
+"vo_end": 41.216,
+"text": "They handed him the Sudetenland in return for a promise of no more war. Chamberlain flew home waving the paper and promised 'peace for our time'.",
+"end": 41.491
+},
+{
+"i": 6,
+"start": 41.491,
+"vo_start": 41.766,
+"vo_end": 48.646,
+"text": "Six months later, in March 1939, German troops took the rest of Czechoslovakia. The promise was worthless.",
+"end": 49.596
+}
+],
+"words": [
+{
+"w": "In",
+"s": 0.6,
+"e": 0.787
+},
+{
+"w": "February",
+"s": 0.6,
+"e": 0.947
+},
+{
+"w": "1938",
+"s": 0.787,
+"e": 1.767
+},
+{
+"w": "Hitler",
+"s": 0.947,
+"e": 2.207
+},
+{
+"w": "summoned",
+"s": 2.087,
+"e": 2.647
+},
+{
+"w": "Austria's",
+"s": 2.207,
+"e": 3.287
+},
+{
+"w": "chancellor,",
+"s": 2.647,
+"e": 3.567
+},
+{
+"w": "Kurt",
+"s": 3.287,
+"e": 4.247
+},
+{
+"w": "Schuschnigg,",
+"s": 3.767,
+"e": 4.467
+},
+{
+"w": "and",
+"s": 4.367,
+"e": 4.667
+},
+{
+"w": "bullied",
+"s": 4.467,
+"e": 4.867
+},
+{
+"w": "him",
+"s": 4.667,
+"e": 5.067
+},
+{
+"w": "into",
+"s": 4.867,
+"e": 5.327
+},
+{
+"w": "putting",
+"s": 5.067,
+"e": 5.607
+},
+{
+"w": "Nazis",
+"s": 5.327,
+"e": 5.787
+},
+{
+"w": "in",
+"s": 5.607,
+"e": 5.887
+},
+{
+"w": "his",
+"s": 5.787,
+"e": 6.127
+},
+{
+"w": "government.",
+"s": 5.887,
+"e": 6.127
+},
+{
+"w": "Schuschnigg",
+"s": 7.157,
+"e": 7.676
+},
+{
+"w": "called",
+"s": 7.676,
+"e": 7.896
+},
+{
+"w": "a",
+"s": 7.896,
+"e": 8.036
+},
+{
+"w": "vote",
+"s": 8.036,
+"e": 8.196
+},
+{
+"w": "on",
+"s": 8.196,
+"e": 8.396
+},
+{
+"w": "independence.",
+"s": 8.396,
+"e": 8.796
+},
+{
+"w": "Before",
+"s": 9.916,
+"e": 10.056
+},
+{
+"w": "it",
+"s": 10.056,
+"e": 10.216
+},
+{
+"w": "could",
+"s": 10.216,
+"e": 10.376
+},
+{
+"w": "happen,",
+"s": 10.376,
+"e": 10.736
+},
+{
+"w": "German",
+"s": 10.936,
+"e": 11.016
+},
+{
+"w": "troops",
+"s": 11.016,
+"e": 11.296
+},
+{
+"w": "crossed",
+"s": 11.296,
+"e": 11.596
+},
+{
+"w": "the",
+"s": 11.596,
+"e": 11.796
+},
+{
+"w": "border.",
+"s": 11.796,
+"e": 12.036
+},
+{
+"w": "On",
+"s": 12.836,
+"e": 12.936
+},
+{
+"w": "13",
+"s": 12.936,
+"e": 13.296
+},
+{
+"w": "March",
+"s": 13.296,
+"e": 13.636
+},
+{
+"w": "1938",
+"s": 13.636,
+"e": 14.476
+},
+{
+"w": "Austria",
+"s": 14.476,
+"e": 14.896
+},
+{
+"w": "was",
+"s": 14.896,
+"e": 15.116
+},
+{
+"w": "declared",
+"s": 15.116,
+"e": 15.436
+},
+{
+"w": "part",
+"s": 15.436,
+"e": 15.736
+},
+{
+"w": "of",
+"s": 15.736,
+"e": 15.916
+},
+{
+"w": "Germany.",
+"s": 15.916,
+"e": 16.216
+},
+{
+"w": "Next",
+"s": 17.026,
+"e": 17.336
+},
+{
+"w": "was",
+"s": 17.026,
+"e": 17.616
+},
+{
+"w": "the",
+"s": 17.336,
+"e": 17.916
+},
+{
+"w": "Sudetenland,",
+"s": 17.616,
+"e": 18.496
+},
+{
+"w": "a",
+"s": 17.916,
+"e": 18.876
+},
+{
+"w": "border",
+"s": 18.776,
+"e": 19.056
+},
+{
+"w": "region",
+"s": 18.876,
+"e": 19.356
+},
+{
+"w": "of",
+"s": 19.056,
+"e": 19.496
+},
+{
+"w": "Czechoslovakia",
+"s": 19.356,
+"e": 20.256
+},
+{
+"w": "where",
+"s": 19.496,
+"e": 20.796
+},
+{
+"w": "about",
+"s": 20.256,
+"e": 21.016
+},
+{
+"w": "three",
+"s": 20.796,
+"e": 21.556
+},
+{
+"w": "million",
+"s": 21.296,
+"e": 21.856
+},
+{
+"w": "German",
+"s": 21.556,
+"e": 22.176
+},
+{
+"w": "speakers",
+"s": 21.856,
+"e": 22.636
+},
+{
+"w": "lived.",
+"s": 22.176,
+"e": 23.496
+},
+{
+"w": "Hitler",
+"s": 23.316,
+"e": 23.996
+},
+{
+"w": "demanded",
+"s": 23.496,
+"e": 24.336
+},
+{
+"w": "it.",
+"s": 23.996,
+"e": 24.336
+},
+{
+"w": "In",
+"s": 24.986,
+"e": 25.166
+},
+{
+"w": "September",
+"s": 24.986,
+"e": 25.526
+},
+{
+"w": "1938",
+"s": 25.166,
+"e": 26.286
+},
+{
+"w": "Britain's",
+"s": 25.526,
+"e": 26.826
+},
+{
+"w": "prime",
+"s": 26.446,
+"e": 26.926
+},
+{
+"w": "minister,",
+"s": 26.826,
+"e": 27.326
+},
+{
+"w": "Neville",
+"s": 26.926,
+"e": 27.686
+},
+{
+"w": "Chamberlain,",
+"s": 27.326,
+"e": 28.506
+},
+{
+"w": "met",
+"s": 28.126,
+"e": 28.846
+},
+{
+"w": "Hitler",
+"s": 28.506,
+"e": 29.066
+},
+{
+"w": "in",
+"s": 28.846,
+"e": 29.346
+},
+{
+"w": "Munich",
+"s": 29.066,
+"e": 29.586
+},
+{
+"w": "with",
+"s": 29.346,
+"e": 29.886
+},
+{
+"w": "France",
+"s": 29.586,
+"e": 30.046
+},
+{
+"w": "and",
+"s": 29.886,
+"e": 30.346
+},
+{
+"w": "Italy.",
+"s": 30.046,
+"e": 31.706
+},
+{
+"w": "Czechoslovakia",
+"s": 31.106,
+"e": 32.026
+},
+{
+"w": "wasn't",
+"s": 31.706,
+"e": 32.186
+},
+{
+"w": "even",
+"s": 32.026,
+"e": 32.366
+},
+{
+"w": "in",
+"s": 32.186,
+"e": 32.486
+},
+{
+"w": "the",
+"s": 32.366,
+"e": 32.626
+},
+{
+"w": "room.",
+"s": 32.486,
+"e": 32.626
+},
+{
+"w": "They",
+"s": 33.456,
+"e": 33.676
+},
+{
+"w": "handed",
+"s": 33.676,
+"e": 33.976
+},
+{
+"w": "him",
+"s": 33.976,
+"e": 34.196
+},
+{
+"w": "the",
+"s": 34.196,
+"e": 34.356
+},
+{
+"w": "Sudetenland",
+"s": 34.356,
+"e": 34.896
+},
+{
+"w": "in",
+"s": 34.696,
+"e": 35.116
+},
+{
+"w": "return",
+"s": 34.896,
+"e": 35.356
+},
+{
+"w": "for",
+"s": 35.116,
+"e": 35.556
+},
+{
+"w": "a",
+"s": 35.356,
+"e": 35.656
+},
+{
+"w": "promise",
+"s": 35.556,
+"e": 35.896
+},
+{
+"w": "of",
+"s": 35.656,
+"e": 36.096
+},
+{
+"w": "no",
+"s": 35.896,
+"e": 36.296
+},
+{
+"w": "more",
+"s": 36.096,
+"e": 36.496
+},
+{
+"w": "war.",
+"s": 36.296,
+"e": 36.936
+},
+{
+"w": "Chamberlain",
+"s": 36.496,
+"e": 37.836
+},
+{
+"w": "flew",
+"s": 37.576,
+"e": 38.196
+},
+{
+"w": "home",
+"s": 37.836,
+"e": 38.536
+},
+{
+"w": "waving",
+"s": 38.196,
+"e": 38.896
+},
+{
+"w": "the",
+"s": 38.676,
+"e": 39.116
+},
+{
+"w": "paper",
+"s": 38.896,
+"e": 39.376
+},
+{
+"w": "and",
+"s": 39.116,
+"e": 39.756
+},
+{
+"w": "promised",
+"s": 39.376,
+"e": 40.036
+},
+{
+"w": "'peace",
+"s": 39.756,
+"e": 40.356
+},
+{
+"w": "for",
+"s": 40.036,
+"e": 40.596
+},
+{
+"w": "our",
+"s": 40.356,
+"e": 40.716
+},
+{
+"w": "time'.",
+"s": 40.596,
+"e": 40.956
+},
+{
+"w": "Six",
+"s": 41.766,
+"e": 41.966
+},
+{
+"w": "months",
+"s": 41.966,
+"e": 42.166
+},
+{
+"w": "later,",
+"s": 42.166,
+"e": 42.586
+},
+{
+"w": "in",
+"s": 42.786,
+"e": 42.886
+},
+{
+"w": "March",
+"s": 42.886,
+"e": 43.126
+},
+{
+"w": "1939,",
+"s": 43.126,
+"e": 44.006
+},
+{
+"w": "German",
+"s": 44.386,
+"e": 44.546
+},
+{
+"w": "troops",
+"s": 44.546,
+"e": 44.806
+},
+{
+"w": "took",
+"s": 44.806,
+"e": 45.066
+},
+{
+"w": "the",
+"s": 45.066,
+"e": 45.226
+},
+{
+"w": "rest",
+"s": 45.226,
+"e": 45.366
+},
+{
+"w": "of",
+"s": 45.366,
+"e": 45.586
+},
+{
+"w": "Czechoslovakia.",
+"s": 45.586,
+"e": 46.386
+},
+{
+"w": "The",
+"s": 47.146,
+"e": 47.326
+},
+{
+"w": "promise",
+"s": 47.326,
+"e": 47.586
+},
+{
+"w": "was",
+"s": 47.586,
+"e": 47.846
+},
+{
+"w": "worthless.",
+"s": 47.846,
+"e": 48.186
+}
+]
+}

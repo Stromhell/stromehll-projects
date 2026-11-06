@@ -34,7 +34,7 @@ window.SHOTS = [
       const b = pop(lt, S.dur - 1.2, .4); if (b > 0) { c.save(); c.translate(1700, 420); c.scale(b, b); c.fillStyle = 'rgba(255,140,40,.5)'; c.beginPath(); c.arc(0, 0, 160, 0, 7); c.fill(); c.restore(); } },
     bed: [['tension', .28], ['fire_loop', .14]],
     init: S => { S.dur = S.end - S.start; const tP = A.at(S, 'part one', 4.5);
-      S.D.over = [(c, lt) => K.card(c, 'HOW DID 1919 LEAD TO 1940?', lt, { at: .5, x: 1300, y: 150, px: 42, rot: -2 }), (c, lt) => K.title(c, 'WHY WORLD WAR 2 HAPPENED', lt, { at: tP, y: 850, px: 80 })];
+      S.D.over = [(c, lt) => K.card(c, 'HOW DID 1919 LEAD TO 1940?', lt, { at: .5, x: 1300, y: 150, px: 42, rot: -2 })];
       S.D.sfx = [[.2, 'paper', .35], [.8, 'fire_loop', .2], [tP, 'hit', .45], [S.dur - 1.2, 'thud', .35]]; } },
   // 0.04 title over the grey shadow spreading across Europe
   { plate: 'map_europe', cam: { z: [1.12, 1.0], x: [1280, 1280], y: [720, 720] }, bed: [['swell', .25]],

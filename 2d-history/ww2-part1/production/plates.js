@@ -145,7 +145,7 @@
 })(window);
 
 window.PLATES = {
-  map_europe: (c, r, W, H) => ENV.regionMap(c, r, W, H, { view: { lon0: -12, lon1: 42, lat0: 35, lat1: 66 }, grid: 5, compass: [-9, 38], title: 'Europe 1939', titleXY: [1880, 1010], labels: [], mountains: [[10, 46.5, 8, 2]], rivers: [], greens: [], deserts: [] }),
+  map_europe: (c, r, W, H) => ENV.regionMap(c, r, W, H, { view: { lon0: -12, lon1: 42, lat0: 35, lat1: 66 }, grid: 5, compass: [-9, 38], labels: [], mountains: [[10, 46.5, 8, 2]], rivers: [], greens: [], deserts: [] }),
   mirror_hall: (c, r, W, H) => ENV.mirrorHall(c, r, W, H),
   berlin_street: (c, r, W, H) => ENV.berlinStreet(c, r, W, H),
   beer_hall: (c, r, W, H) => ENV.beerHall(c, r, W, H),

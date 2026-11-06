@@ -17,7 +17,7 @@ window.SHOTS = [
     figs: [{ x: 1080, y: 1280, s: 1.6, ...WW.BAKER, facing: 1, mood: 'worried' }],
     init: S => { const t0 = A.at(S, '160', 2.2), tN = A.at(S, 'November', 4.4), t2 = A.at(S, '200', 6.2);
       S.D.over = [(c, lt) => { const a = pop(lt, .3, .5); if (a <= 0) return; c.save(); c.fillStyle = '#6a4a2e'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(1100, 740, 320, 26); c.strokeRect(1100, 740, 320, 26); for (const lx of [1120, 1380]) { c.fillRect(lx, 766, 20, 200); c.strokeRect(lx, 766, 20, 200); } c.restore(); WW.bread(c, 1260, 710, 1.4 * a); const v = lt < tN ? 160 : 160 * Math.pow(1.25e9, E.io(K.seg(lt, tN, t2 + .3)));
-          c.save(); c.translate(1300, 520); c.rotate(-.06 + Math.sin(lt * 20) * .02 * (lt > tN && lt < t2 + .3 ? 1 : 0)); c.scale(a, a); c.fillStyle = '#f8f0d8'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.roundRect(-360, -70, 720, 140, 16); c.fill(); c.stroke();
+          c.save(); c.translate(1400, 330); c.rotate(-.06 + Math.sin(lt * 20) * .02 * (lt > tN && lt < t2 + .3 ? 1 : 0)); c.scale(a, a); c.fillStyle = '#f8f0d8'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.roundRect(-360, -70, 720, 140, 16); c.fill(); c.stroke();
           WW.label(c, fmt(v) + ' MARKS', 0, 4, v > 1e9 ? 54 : 70, v > 1e6 ? RED : INK); c.restore(); },
         (c, lt) => K.dateTag(c, lt < tN ? '1922' : 'NOV 1923', lt, { at: t0 - .2 })];
       S.D.sfx = [[.3, 'pop', .3], [t0, 'coins', .25], [tN, 'riser', .3], [t2 + .3, 'hit', .4]]; } },
@@ -34,8 +34,8 @@ window.SHOTS = [
       WW.silhouette(c, 1280, 1122, .95, { arm: .22 + .14 * Math.abs(Math.sin(lt * 2.2)), talk: true, lt }); }],
     figs: [0, 1, 2, 3].map(i => ({ x: [420, 760, 1800, 2140][i], y: 1360, s: 1.7, ...WW.CIVILIAN(i + 1), facing: i < 2 ? 1 : -1, mood: i % 2 ? 'shocked' : 'angry' })),
     init: S => { S.tP = A.at(S, 'prison', 6.8); const tF = A.at(S, 'famous', 9.2);
-      S.D.over = [(c, lt) => K.dateTag(c, 'MUNICH 1923', lt, { at: .3 }), (c, lt) => K.card(c, 'FAILED COUP', lt, { at: A.at(S, 'coup', 5), x: 560, y: 140, px: 44, rot: -3 }),
-        (c, lt) => { const d = E.out(K.seg(lt, S.tP, S.tP + .5)); if (d <= 0) return; c.save(); c.fillStyle = 'rgba(10,10,12,.35)'; c.fillRect(0, 0, 1920, 1080 * d); c.fillStyle = '#2a2a2e'; c.strokeStyle = '#5a5a60'; c.lineWidth = 4; for (let k = 0; k < 11; k++) { c.fillRect(60 + k * 180, -1080 + 1080 * d, 34, 1080); c.strokeRect(60 + k * 180, -1080 + 1080 * d, 34, 1080); } c.fillRect(0, 200 * d - 40, 1920, 30); c.restore(); },
+      S.D.over = [(c, lt) => { const d = E.out(K.seg(lt, S.tP, S.tP + .5)); if (d <= 0) return; c.save(); c.fillStyle = 'rgba(10,10,12,.35)'; c.fillRect(0, 0, 1920, 1080 * d); c.fillStyle = '#2a2a2e'; c.strokeStyle = '#5a5a60'; c.lineWidth = 4; for (let k = 0; k < 11; k++) { c.fillRect(60 + k * 180, -1080 + 1080 * d, 34, 1080); c.strokeRect(60 + k * 180, -1080 + 1080 * d, 34, 1080); } c.fillRect(0, 200 * d - 40, 1920, 30); c.restore(); },
+        (c, lt) => K.dateTag(c, 'MUNICH 1923', lt, { at: .3 }), (c, lt) => K.card(c, 'FAILED COUP', lt, { at: A.at(S, 'coup', 5), x: 560, y: 140, px: 44, rot: -3 }),
         (c, lt) => K.card(c, 'PRISON, BUT NOW FAMOUS', lt, { at: tF, x: 1400, y: 150, px: 44, rot: 2 })];
       S.D.sfx = [[.2, 'crowd_cheer', .2], [A.at(S, 'coup', 5), 'hit', .35], [S.tP, 'gate_slam', .45], [tF, 'camera_shutter', .35]]; } },
   // 2.05 hate posters go up on a wall, blurred and stamped FALSE

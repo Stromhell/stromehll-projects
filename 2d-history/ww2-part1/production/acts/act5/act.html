@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><title>MX act 5 - poland and the lightning war</title>
+<!doctype html><html><head><meta charset="utf-8"><title>MX act 5 - Poland</title>
 <style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
 <body><canvas id="c" width="1920" height="1080"></canvas>
 <script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "leo";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
@@ -21,8 +21,8 @@ const TIN = (c, x, y, s) => { c.save(); c.translate(x, y); c.scale(s, s); c.fill
 
 window.SHOTS = [
   // 5.01 Aug 1939: two dictators (silhouettes) shake on a pact over the map
-  { draw: (c, lt, u, S) => { backdrop('map_europe', .5, 5)(c); WW.silhouette(c, 700, 1000, .95, { arm: .55, lt }); WW.silhouette(c, 1220, 1000, .95, { arm: .55, lt, dir: -1, cap: true, col: '#221a1c' });
-      c.save(); c.fillStyle = '#1a1618'; c.beginPath(); c.arc(960, 620 + Math.sin(lt * 9) * 6 * (lt > S.tS ? 1 : 0), 34, 0, 7); c.fill(); c.restore(); },
+  { draw: (c, lt, u, S) => { backdrop('map_europe', .5, 5)(c); WW.silhouette(c, 732, 1000, .95, { arm: .55, lt }); WW.silhouette(c, 1188, 1000, .95, { arm: .55, lt, dir: -1, cap: true, col: '#221a1c' });
+      c.save(); c.fillStyle = '#1a1618'; c.beginPath(); c.arc(960, 620 + Math.sin(lt * 9) * 6 * (lt > S.tS ? 1 : 0), 42, 0, 7); c.fill(); c.restore(); },
     bed: [['tension', .25]],
     init: S => { S.tS = A.at(S, 'signed', 5);
       S.D.over = [(c, lt) => K.card(c, 'HITLER', lt, { at: .6, x: 700, y: 330, px: 34, rot: -3 }), (c, lt) => K.card(c, "STALIN (SOVIET UNION)", lt, { at: 1.4, x: 1220, y: 330, px: 34, rot: 3 }), (c, lt) => K.card(c, 'SWORN ENEMIES', lt, { at: 2.2, x: 960, y: 160, px: 42, rot: -2 }),
@@ -57,10 +57,10 @@ window.SHOTS = [
         (c, lt) => { const a = pop(lt, tB, .35); if (a > 0) { c.save(); c.globalAlpha = Math.max(0, 1 - K.seg(lt, tB, tB + .25)) * .8; c.fillStyle = '#fff8d0'; c.fillRect(0, 0, 1920, 1080); c.restore(); BOLT(c, 960, 520, a * 1.1); } }, (c, lt) => K.title(c, 'BLITZKRIEG = LIGHTNING WAR', lt, { at: tB + .3, y: 860, px: 70 })];
       S.D.sfx = [[.1, 'drone', .3], [A.at(S, 'tanks', 1.6), 'scrape', .3], [A.at(S, 'planes', 3.2), 'whoosh', .35], [tB, 'hit', .5], [tB + .05, 'thud', .4]]; } },
   // 5.06 Pervitin: a tin of meth pills and a soldier's wide-open eyes
-  { draw: (c, lt) => { backdrop('plain', .35, 10)(c); const a = pop(lt, .2, .45); if (a > 0) TIN(c, 560, 560, 1.1 * a); },
+  { draw: (c, lt) => { backdrop('plain', .35, 10)(c); const a = pop(lt, .2, .45); if (a > 0) TIN(c, 560, 800, 1.1 * a); },
     figs: [{ x: 1820, y: 1700, s: 3.0, ...WW.SOLDIER(2, 'de'), facing: -1, mood: 'shocked', noSmooth: true }],
     bed: [['heartbeat', .3]],
-    init: S => { S.D.over = [(c, lt) => K.title(c, 'PERVITIN = METH', lt, { at: A.at(S, 'methamphetamine', 2.2), y: 140, px: 80 }), (c, lt) => K.card(c, 'AWAKE FOR DAYS', lt, { at: A.at(S, 'awake', 4), x: 560, y: 880, px: 44, rot: -2 })];
+    init: S => { S.D.over = [(c, lt) => K.title(c, 'PERVITIN = METH', lt, { at: A.at(S, 'methamphetamine', 2.2), y: 140, px: 80 }), (c, lt) => K.card(c, 'AWAKE FOR DAYS', lt, { at: A.at(S, 'awake', 4), x: 560, y: 360, px: 44, rot: -2 })];
       S.D.sfx = [[.2, 'pop', .3], [A.at(S, 'methamphetamine', 2.2), 'hit', .4], [A.at(S, 'awake', 4), 'heartbeat', .35]]; } },
   // 5.07 horses face tanks; then the Soviets invade from the east and Poland is split
   { plate: 'plain', cam: { z: [1.05, 1.1], x: [1280, 1280], y: [800, 790] }, bed: [['wind_loop', .2]],

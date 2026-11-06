@@ -16,7 +16,7 @@ window.SHOTS = [
     live: [(c, lt) => { WW.silhouette(c, 1280, 1250, 1.0, { arm: .2 + .12 * Math.abs(Math.sin(lt * 2)), talk: true, lt }); LECTERN(c); }],
     init: S => { S.tB = A.at(S, 'banned', 3.8); const tD = A.at(S, 'dictator', 5.6);
       S.D.over = [(c, lt) => K.dateTag(c, 'JAN 1933', lt, { at: .2 }), (c, lt) => K.card(c, 'CHANCELLOR', lt, { at: .6, x: 960, y: 120, px: 48, rot: -2 }),
-        (c, lt) => { if (lt < S.tB - .4) return; c.save(); c.fillStyle = 'rgba(12,10,8,.55)'; c.fillRect(0, 0, 1920, 1080); c.restore(); [0, 1, 2].forEach(k => DOOR(c, 560 + k * 400, 560, lt, S.tB + k * .3, k)); },
+        (c, lt) => { if (lt < S.tB - .4) return; const w = E.out(K.seg(lt, S.tB - .4, S.tB)); c.save(); c.globalAlpha = w; c.fillStyle = '#3e3630'; c.fillRect(0, 0, 1920, 840); c.fillStyle = '#4a4038'; for (let x = 0; x < 1920; x += 240) c.fillRect(x, 0, 12, 840); c.fillStyle = '#2a221c'; c.fillRect(0, 840, 1920, 240); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(0, 840, 1920, 14); [0, 1, 2].forEach(k => { c.beginPath(); c.ellipse(560 + k * 400, 846, 120, 10, 0, 0, 7); c.fill(); }); [0, 1, 2].forEach(k => DOOR(c, 560 + k * 400, 740, lt, S.tB + k * .3, k)); c.restore(); },
         (c, lt) => K.title(c, 'DICTATOR', lt, { at: tD, y: 880, px: 100 })];
       S.D.sfx = [[.2, 'crowd_cheer', .15], [S.tB, 'door_slam', .4], [S.tB + .3, 'door_slam', .4], [S.tB + .6, 'door_slam', .4], [tD, 'hit', .45]]; } },
   // 3.03 'living space': arrows push east from Germany
@@ -28,7 +28,7 @@ window.SHOTS = [
       S.D.sfx = [[A.at(S, 'master', 1.6), 'pop', .3], [tL, 'whoosh', .35], [tL + .4, 'whoosh', .3], [tL + .8, 'whoosh', .3]]; } },
   // 3.04 1935: planes roll out of the hangar; Britain signs a naval deal
   { plate: 'airfield', cam: { z: [1.02, 1.1], x: [1280, 1280], y: [760, 740] }, bed: [['wind_loop', .15], ['drone', .15]],
-    live: [(c, lt, u, S) => { for (let k = 0; k < 3; k++) { const t = K.seg(lt, .6 + k * .7, 4.5 + k * .7), x = 520 + k * 120 + 1500 * E.io(t), y = 860 + k * 70; if (t > 0) WW.plane(c, x, y, .55 + k * .1, 1, '#6a6c70', lt); } }],
+    live: [(c, lt, u, S) => { for (let k = 0; k < 3; k++) { const t = K.seg(lt, .6 + k * .7, 4.5 + k * .7), x = 380 + k * 160 + 2300 * E.io(t), y = 820 + k * 110; if (t > 0) WW.plane(c, x, y, .55 + k * .1, 1, '#6a6c70', lt); } }],
     init: S => { const tT = A.at(S, 'breaking', 3.8), tN = A.at(S, 'Britain', 5.6);
       S.D.over = [(c, lt) => K.dateTag(c, '1935', lt, { at: .2 }), (c, lt) => { if (lt < tN) K.card(c, 'NEW AIR FORCE + CONSCRIPTION', lt, { at: .5, x: 960, y: 120, px: 44, rot: -2 }); }, (c, lt) => WW.stamp(c, 1500, 330, pop(lt, tT, .35) * .9, 'TREATY BROKEN'),
         (c, lt) => { const a = pop(lt, tN, .45); if (a > 0) { c.save(); c.fillStyle = 'rgba(12,10,8,.45)'; c.fillRect(0, 0, 1920, 1080); c.restore(); WW.doc(c, 960, 560, .95 * a, { title: 'NAVAL DEAL 1935', sig: K.seg(lt, tN + .5, tN + 1.6) }); K.card(c, 'BRITAIN SIGNS: GERMANY MAY BUILD A NAVY', lt, { at: tN + .3, x: 960, y: 140, px: 40, rot: 2 }); } }];
