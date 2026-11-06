@@ -415,7 +415,7 @@ Object.assign(shots, {
     const first = cb.seats.filter(s => s.cls === 'first');
     const pax = await C.fillCabin(k, cb, { skip: s => s.cls === 'first' ? (s.col === 2 || s.col === 3) : ((s.row + s.col) % 4 === 0) });
     const mk = async (id, seat, side) => { const p = await real.human({ id, seed: 80 + side }); real.put(scene, p, { pos: [seat.x, 0, seat.z], pose: 'sit', seatH: .52 }); p.userData.driven = true; p.userData.seat = seat; p.userData.side = side;
-      C.attach(p, C.pistolShape(), 'RightHand', [0, -.08, .05], [P / 2, 0, 0]); C.attach(p, C.grenadeShape(), 'LeftHand', [0, -.07, .04]); return p; };
+      p.userData.gun = C.attach(p, C.pistolShape(), 'RightHand', [0, -.08, .05], [P / 2, 0, 0]); p.userData.nade = C.attach(p, C.grenadeShape(), 'LeftHand', [0, -.07, .04]); return p; };
     const s1 = first.find(s => s.col === 2 && s.z > 2) ?? first[2], s2 = first.find(s => s.col === 3 && s.z > 2) ?? first[3];
     const a = await mk(C.HJ.bose, s1, -1), b = await mk(C.HJ.kuhlmann, s2, 1);
     const cam = C.dolly(camera, { pos: [0, 1.55, .35], look: [0, 1.3, 5], fov: 50 }, { pos: [0, 1.5, 1.2], look: [0, 1.35, 5], fov: 44 }, { ease: u => u }); // QA act1r2: z=-4.5 sat inside the middle seat block (black frame)
@@ -436,13 +436,41 @@ Object.assign(shots, {
       qd.setFromAxisAngle(Z, ang); bone.quaternion.copy(qp.invert().multiply(qd.multiply(qw))); bone.updateMatrixWorld(true); };
     const boneOf = (p, n) => { if (!p.userData.bn) { p.userData.bn = {}; p.traverse(c => { if (c.isBone) p.userData.bn[c.name.replace(/^mixamorig[:_]?/, '')] = c; }); } return p.userData.bn[n]; };
     const lowerHands = p => { p.updateMatrixWorld(true); for (const [sd, sg] of [['Left', 1], ['Right', -1]]) { turnW(boneOf(p, sd + 'Arm'), -sg * .35); turnW(boneOf(p, sd + 'ForeArm'), sg * .65); } };
+    // QA act1r7: the hands were open with spread fingers and the props sat beside the palms. Tip each forearm a little forward (toward the galley),
+    // curl the fingers and thumb into a fist, and seat the props (still children of the hand bones) in the closed palm each frame:
+    // the grenade inside the left fist, the pistol grip across the right fist with the dark barrel shape pointing forward
+    const v1 = new THREE.Vector3(), v2 = new THREE.Vector3(), v3 = new THREE.Vector3(), nP = new THREE.Vector3(), lat = new THREE.Vector3(), fw = new THREE.Vector3(), X = new THREE.Vector3(1, 0, 0);
+    const wp = (b, v) => b.getWorldPosition(v);
+    const turnAx = (bone, ax, ang) => { if (!bone) return; bone.updateMatrixWorld(true); bone.getWorldQuaternion(qw); bone.parent.getWorldQuaternion(qp);
+      qd.setFromAxisAngle(ax, ang); bone.quaternion.copy(qp.invert().multiply(qd.multiply(qw))); bone.updateMatrixWorld(true); };
+    const bendAx = new THREE.Vector3(); // one fixed hinge axis per finger (from its root segment), so the later joints keep curling the same way
+    const bendTo = (bone, n, ang, root) => { const c = bone && bone.children.find(x => x.isBone); if (!c) return; if (root) { wp(c, v1).sub(wp(bone, v2)).normalize(); bendAx.crossVectors(v1, n).normalize(); } turnAx(bone, bendAx, ang); };
+    const palm = (p, sd) => { const H = boneOf(p, sd + 'Hand'); wp(boneOf(p, sd + 'HandIndex1'), lat).sub(wp(boneOf(p, sd + 'HandPinky1'), v1)); wp(boneOf(p, sd + 'HandMiddle1'), v2).sub(wp(H, v1));
+      nP.crossVectors(lat, v2).normalize(); fw.set(0, 0, 1).applyQuaternion(p.quaternion); if (nP.dot(fw) < 0) nP.negate(); return H; };
+    const qO = new THREE.Quaternion(), mO = new THREE.Matrix4(), yA = new THREE.Vector3(), zA = new THREE.Vector3(), xA = new THREE.Vector3(), pc = new THREE.Vector3();
+    const place = (obj, H, q, pos) => { H.getWorldQuaternion(qp); obj.quaternion.copy(qp.invert().multiply(q)); obj.position.copy(H.worldToLocal(pos.clone())); };
+    const grip = p => {
+      for (const sd of ['Left', 'Right']) {
+        fw.set(0, 0, 1).applyQuaternion(p.quaternion); xA.copy(X).applyQuaternion(p.quaternion);
+        turnAx(boneOf(p, sd + 'ForeArm'), xA, .3); // forearm tipped about 17 degrees forward, hand height nearly unchanged
+        let H = palm(p, sd); const n = nP.clone();
+        for (const f of ['Index', 'Middle', 'Ring', 'Pinky']) [1.35, 1.55, 1.1].forEach((a, i) => bendTo(boneOf(p, sd + 'Hand' + f + (i + 1)), n, a, i === 0));
+        [.35, .6, .6].forEach((a, i) => bendTo(boneOf(p, sd + 'HandThumb' + (i + 1)), n, a, i === 0));
+        H.updateMatrixWorld(true); wp(H, v1); wp(boneOf(p, sd + 'HandMiddle1'), v2); pc.copy(v1).lerp(v2, .75).addScaledVector(n, .03); // centre of the closed palm
+        if (sd === 'Left') { H.getWorldQuaternion(qO); place(p.userData.nade, H, qO, pc); continue; }
+        wp(boneOf(p, sd + 'HandIndex1'), yA).sub(wp(boneOf(p, sd + 'HandPinky1'), v3)).normalize(); zA.copy(n).addScaledVector(yA, -n.dot(yA)).normalize(); xA.crossVectors(yA, zA);
+        mO.makeBasis(xA, yA, zA); qO.setFromRotationMatrix(mO); // grip (local -y) runs down through the fist toward the little finger, barrel (local z) forward
+        v3.set(0, -.07, -.05).multiplyScalar(1 / p.parts.obj.scale.x).applyQuaternion(qO); // the attach scale makes the shape world size again
+        place(p.userData.gun, H, qO, pc.clone().sub(v3.multiplyScalar(p.parts.obj.scale.x)));
+      }
+    };
     return (t, u) => {
       cam(u); clearLens(); C.idleSeated(pax, t);
       [a, b].forEach(p => {
         // QA act1r6: 'raiseBoth' lifted the man's hand into the overhead bin. 'handsUp' holds the hands at about head height, and the pair stand nearer the aisle centre
         const up = C.ease(C.seg(t, 3.2, 4.0)); const s = p.userData.seat;
         if (up <= 0) p.update(t, { pose: 'sit', seatH: .52, arm: 'lap', mood: 'stern' });
-        else { p.position.x = C.lerp(s.x, p.userData.side * .2, up); p.position.z = s.z + .35 * up; p.rotation.y = 0; p.update(t, { pose: 'idle', arm: t > 4.6 ? 'handsUp' : null, mood: 'stern' }); if (t > 4.6) lowerHands(p); }
+        else { p.position.x = C.lerp(s.x, p.userData.side * .2, up); p.position.z = s.z + .35 * up; p.rotation.y = 0; p.update(t, { pose: 'idle', arm: t > 4.6 ? 'handsUp' : null, mood: 'stern' }); if (t > 4.6) { lowerHands(p); grip(p); } }
       });
     };
   },
