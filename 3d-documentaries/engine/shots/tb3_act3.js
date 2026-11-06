@@ -8,10 +8,12 @@ const { THREE, sets, P, real } = C;
 
 const proj = (cam, v) => { cam.updateMatrixWorld(); const p = new THREE.Vector3(...v).project(cam); return [(p.x + 1) * 960, (1 - p.y) * 540]; };
 // QA act3r9: own caption at one fixed spot (tb3_act1.js 1.8 / 1.12 pattern); takes the narration off the auto subtitler, which put it at the top on frame 0
-const ownCaption = (k, cx, cy) => {
+// QA act3r10: opt.from0 -> the first chunk starts on frame 0 at full opacity (no fade-in)
+const ownCaption = (k, cx, cy, opt = {}) => {
   const m = k.meta, chunks = ui.chunk(m.narration || '', m.voA ?? .15, m.voB ?? m.seconds - .25); m.narration = '';
+  if (opt.from0 && chunks[0]) chunks[0].a = -1;
   return t => { const o = k.overlay, c = chunks.find(c => t >= c.a && t < c.b); if (!o || !c) return;
-    o.save(); o.font = '600 46px "Oswald"'; o.globalAlpha = Math.min(1, (t - c.a) / .2, (c.b - t) / .05); o.textAlign = 'center'; o.textBaseline = 'middle';
+    o.save(); o.font = '600 46px "Oswald"'; o.globalAlpha = Math.max(0, Math.min(1, opt.from0 && c === chunks[0] ? 1 : (t - c.a) / .2, (c.b - t) / .05)); o.textAlign = 'center'; o.textBaseline = 'middle';
     o.lineJoin = 'round'; o.lineWidth = 10; o.strokeStyle = 'rgba(20,14,10,.92)'; o.strokeText(c.text, cx, cy); o.fillStyle = '#fff'; o.fillText(c.text, cx, cy); o.restore(); };
 };
 const CAP_OFF = [0, .115, .025], CAP_ROT = [0, 0, 0];
@@ -209,7 +211,7 @@ export const shots = {
     scene.add(new THREE.HemisphereLight(0x8a7a6a, 0x2a2018, .6));
     const csTex = real.canvasTex(256, 256, c => { const g = c.getContext ? c : c; const gr = g.createRadialGradient(128, 128, 0, 128, 128, 128); gr.addColorStop(0, 'rgba(0,0,0,.85)'); gr.addColorStop(.45, 'rgba(0,0,0,.5)'); gr.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = gr; g.fillRect(0, 0, 256, 256); });
     scene.add(real.m(new THREE.PlaneGeometry(1.1, .8), new THREE.MeshBasicMaterial({ map: csTex, transparent: true, depthWrite: false }), { pos: [0, .005, .02], rot: [-P / 2, 0, 0], cast: false }));
-    const cap = ownCaption(k, 960, 1080 - 110); // QA act3r9: caption locked at bottom centre from frame 0 (it sat at the top on frame 0, then jumped down)
+    const cap = ownCaption(k, 960, 1080 - 110, { from0: true }); // QA act3r9: caption locked at bottom centre from frame 0 (it sat at the top on frame 0, then jumped down)
     const cam = C.dolly(camera, { pos: [0, 1.15, 5.4], look: [0, 1.15, 0], fov: 34 }, { pos: [0, 1.35, 3.4], look: [0, 1.5, 0], fov: 32 });
     return (t, u) => { cam(u); cap(t); a.update(t, { mood: 'smug', look: Math.sin(t * .3) * .08 }); const [x, y] = proj(camera, C.headPos(a, .4)); ui.callout(k.overlay, 'IDI AMIN', 'PRESIDENT OF UGANDA', Math.min(1500, x + 420), Math.max(240, y + 60), t, .9); };
   },
@@ -246,15 +248,44 @@ export const shots = {
     const rim = new THREE.SpotLight(0x8aa0ff, 60, 8, .4, .6, 1.2); rim.position.set(-1.5, 3, -2); rim.target.position.set(0, 1.5, 0); scene.add(rim, rim.target);
     scene.add(real.m(new THREE.PlaneGeometry(30, 30), real.std(0x141210, { rough: .9 }), { rot: [-P / 2, 0, 0], cast: false }));
     const cam = C.orbit(camera, [0, 1.4, 0], 3.6, 1.55, -.35, .35, 38, [0, 1.45, 0]);
-    return (t, u) => { cam(u); a.update(t, { mood: 'smug', look: Math.sin(t * .3) * .1, talk: false });
+    // QA act3r10: he stood frozen arms-down for 7.5 s -> idle sway + breathing, and two gestures on "He was loud, unpredictable"
+    const ch = ui.chunk(k.meta.narration || '', k.meta.voA ?? .15, k.meta.voB ?? k.meta.seconds - .25);
+    const cL = ch.find(c => /loud/.test(c.text)) ?? ch[2], cU = ch.find(c => /unpredictable/.test(c.text)) ?? ch[3];
+    const gA0 = cL.a - .15, gA1 = cL.b + .1, gB0 = cU.a, gB1 = Math.min(cU.a + 1.7, cU.b);
+    const env = (t, a0, a1, r = .45) => { const e = x => x * x * (3 - 2 * x); return e(Math.max(0, Math.min(1, (t - a0) / r))) * e(Math.max(0, Math.min(1, (a1 - t) / r))); };
+    const B = a.parts.bones, vA = new THREE.Vector3(), vB = new THREE.Vector3(), w = new THREE.Vector3(), rq = new THREE.Quaternion(), pq = new THREE.Quaternion(), wq = new THREE.Quaternion(), dq = new THREE.Quaternion();
+    const CH = { LeftArm: 'LeftForeArm', LeftForeArm: 'LeftHand', LeftHand: 'LeftHandMiddle1', RightArm: 'RightForeArm', RightForeArm: 'RightHand', RightHand: 'RightHandMiddle1' };
+    const aim = (n, d) => { const b0 = B[n], c0 = B[CH[n]]; if (!b0 || !c0) return; b0.updateWorldMatrix(true, true); b0.getWorldPosition(vA); c0.getWorldPosition(vB);
+      a.getWorldQuaternion(rq); w.set(...d).normalize().applyQuaternion(rq); dq.setFromUnitVectors(vB.sub(vA).normalize(), w);
+      b0.getWorldQuaternion(wq); b0.parent.getWorldQuaternion(pq); b0.quaternion.copy(pq.invert().multiply(dq.multiply(wq))); b0.updateWorldMatrix(false, true); };
+    const mix = (p, q, f) => p.map((v, i) => v + (q[i] - v) * f);
+    const rot = (n, x, y, z) => { const b = B[n]; if (b) { b.rotateX(x); b.rotateY(y); b.rotateZ(z); } };
+    return (t, u) => { cam(u);
+      const fA = env(t, gA0, gA1), fB = env(t, gB0, gB1);
+      a.update(t, { mood: 'smug', look: Math.sin(t * .3) * .1 + fA * .22 - fB * .15, nod: .1 * fB, talk: false });
+      // weight shift and breathing (torso first, the arms are aimed afterwards in world space)
+      a.rotation.y = Math.sin(t * .45) * .045; rot('Hips', 0, 0, Math.sin(t * .45) * .02); rot('Spine', 0, 0, -Math.sin(t * .45) * .025);
+      const br = Math.sin(t * 2 * Math.PI / 3.6); rot('Spine2', -br * .02, 0, 0); rot('LeftShoulder', 0, 0, br * .015); rot('RightShoulder', 0, 0, -br * .015);
+      for (const [sd, sg] of [['Left', 1], ['Right', -1]]) {
+        const sw = Math.sin(t * .8 + sg) * .03 + br * .01;
+        let arm = [sg * .16, -1, sw], fo = [sg * .07, -1, sw + .18], ha = [sg * .02, -1, sw + .1];
+        // "loud": right hand comes up and forward, palm out, beside the body
+        if (sg < 0 && fA > 0) { const k2 = fA * (1 + Math.sin((t - gA0) * 7) * .04); arm = mix(arm, [sg * .42, -.82, .42], k2); fo = mix(fo, [sg * .3, .3, 1], k2); ha = mix(ha, [sg * .25, .55, .9], k2); }
+        // "unpredictable": both forearms open outwards, palms up
+        if (fB > 0) { arm = mix(arm, [sg * .4, -.9, .3], fB); fo = mix(fo, [sg * .62, -.25, .8], fB); ha = mix(ha, [sg * .75, -.05, .65], fB); }
+        aim(sd + 'Arm', arm); aim(sd + 'ForeArm', fo); aim(sd + 'Hand', ha);
+      }
     };
   },
   // QA act3r9: the caption and the TENS OF THOUSANDS KILLED badge covered the TANZANIA label -> badge lifted from y 980 to 800 and the caption locked in the top band, both clear of the label; label keeps its place south of the lake
-  '3.3': async k => mapShot(k, {
+  '3.3': async k => { const cfg3_3 = {
     dark: false, center: [32.4, 1.5], span: [12, 10], k: 10, labels: [['UGANDA', 32.3, 1.6], ['KENYA', 37, 1], ['TANZANIA', 33, -2.8], ['S. SUDAN', 31, 4.5], ['DR CONGO', 28.6, 1]],
     highlight: ['UGA'],
-    extra: async k => { const cap = ownCaption(k, 960, 150); return t => { ui1.tally(k.overlay, '', 'TENS OF THOUSANDS KILLED · 1971-79', 960, 800, t, 1.5); cap(t); }; },
-  }),
+    // QA act3r10: the default push-in carried TANZANIA out of the bottom of frame -> end the push wider
+    extra: async (k, map) => { const [MW, MH] = map.size, fit = Math.max(MW / 1.78, MH) * .5 / Math.tan(20 * Math.PI / 180);
+      cfg3_3.cam = { from: [0, fit * .95, fit * .45], to: [0, fit * .9, fit * .42], look: [0, 0, 0], lookTo: [0, 0, fit * .02] };
+      const cap = ownCaption(k, 960, 150); return t => { ui1.tally(k.overlay, '', 'TENS OF THOUSANDS KILLED · 1971-79', 960, 800, t, 1.5); cap(t); }; },
+  }; return mapShot(k, cfg3_3); },
   '3.4': old['3.4'],
   // 03:15, Flight 139 touches down at Entebbe with its landing lights on
   '3.5': async k => {
