@@ -391,8 +391,11 @@ Object.assign(shots, {
       const sp = new THREE.SpotLight(0xffb070, 0, 9, .16, .5, 1.2); sp.position.set(s.x, 6.5, s.z + .3); sp.target.position.set(s.x, .8, s.z); scene.add(sp, sp.target); p.userData.spot = sp;
     }
     const cam = C.dolly(camera, { pos: [6, 12, -14], look: [0, 0, 2], fov: 42 }, { pos: [4.5, 6.5, 4], look: [0, .6, 2], fov: 44 });
+    // QA act1r4: 1.8 never had a caption lock, so the auto subtitler kept dodging the seated people's screen boxes (top, bottom, top).
+    // The shot now draws its own caption, fixed at bottom centre, and takes the narration off the auto subtitler
+    const cap = ownCaption(k, 960, 1080 - 110);
     return (t, u) => {
-      cam(u); tick(k); C.idleSeated(pax, t);
+      cam(u); tick(k); cap(t); C.idleSeated(pax, t);
       special.forEach((p, i) => { p.update(t, { pose: 'sit', seatH: .52, arm: 'lap', mood: 'calm', look: Math.sin(t * .4 + i) * .1 }); p.userData.spot.intensity = 60 * C.ease(C.seg(t, i < 2 ? 1.2 : 3.2, i < 2 ? 2 : 4)); });
     };
   },
@@ -402,7 +405,10 @@ Object.assign(shots, {
     await sky(real, k, { envI: .35 });
     const cb = await sets.cabin(k, { len: 12, first: 4, lampI: 5, hemi: .7 });
     // strong light from the galley at the front turns the standing pair into silhouettes
-    const back = new THREE.PointLight(0xfff0d8, 40, 12, 2); back.position.set(0, 1.9, 5.7); scene.add(back);
+    // QA act1r4: the light sat 0.15 m under the centre overhead bin (clearcoat). At render quality fast its highlight overflowed the half-float
+    // post buffer (Inf), and the AO / bloom passes spread that into a black slab over most of the frame until the standing pair's arms covered the spot.
+    // Full-quality stills did not show it. Keep the light well clear of every surface
+    const back = new THREE.PointLight(0xfff0d8, 40, 12, 2); back.position.set(0, 1.6, 5.5); scene.add(back);
     const fill = new THREE.PointLight(0xdfe6ff, 6, 9, 2); fill.position.set(0, 2.0, -2.5); scene.add(fill); // soft front fill so curtains and the standing pair keep some shape
     const first = cb.seats.filter(s => s.cls === 'first');
     const pax = await C.fillCabin(k, cb, { skip: s => s.cls === 'first' ? (s.col === 2 || s.col === 3) : ((s.row + s.col) % 4 === 0) });
@@ -418,7 +424,7 @@ Object.assign(shots, {
     scene.traverse(o => { if (!o.isMesh) return; let q = o; while (q) { if (q.userData.person) return; q = q.parent; }
       bb.setFromObject(o); bb.getSize(sz); if (Math.max(sz.x, sz.y, sz.z) > 3) return; near.push([o, bb.clone()]); }); // big shells (floor, walls, ceiling) wrap the camera: keep them
     const fwd = new THREE.Vector3(), pA = new THREE.Vector3();
-    const clearLens = () => { camera.getWorldDirection(fwd);
+    const clearLens = () => { camera.updateMatrixWorld(); camera.getWorldDirection(fwd); // the camera is not in the scene: refresh its matrix so frame 0 checks the real view line
       for (const [o, box] of near) { let d = Infinity; for (let i = 0; i <= 4; i++) { pA.copy(camera.position).addScaledVector(fwd, .15 * i); d = Math.min(d, box.distanceToPoint(pA)); } o.visible = d > .02 ? (o.userData.wasVis ?? true) : false; } };
     near.forEach(([o]) => o.userData.wasVis = o.visible);
     return (t, u) => {
