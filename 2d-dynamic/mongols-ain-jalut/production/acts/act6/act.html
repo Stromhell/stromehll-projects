@@ -9,9 +9,10 @@
 <script src="../../../../japan-comeback/production/jp_cast.js"></script><script src="../../../../japan-comeback/production/jp_sets.js"></script>
 <script src="../../../../suez-canal/production/sz_sets.js"></script><script src="../../../../suez-canal/production/sz_sets2.js"></script><script src="../../../../suez-canal/production/sz_cast.js"></script><script src="../../../../suez-canal/production/sz_props.js"></script>
 <script src="../../../../napoleon/production/np_sets.js"></script><script src="../../../../napoleon/production/np_cast.js"></script><script src="../../../../napoleon/production/np_props.js"></script>
-<script src="../../mg_sets.js"></script><script src="../../mg_cast.js"></script><script src="../../mg_props.js"></script>
+<script src="../../mg_geo.js"></script><script src="../../mg_sets.js"></script><script src="../../mg_detail.js"></script><script src="../../mg_cast.js"></script><script src="../../mg_props.js"></script>
 <script src="timing.js"></script>
 <script>
+KIT.xfade = 0; // QA 5 Nov: hard cuts, dissolves ghosted figures
 const K = KIT, E = K.E, C = S.MGC, NPC = S.NPC, SZC = S.SZC, H1 = S.ES1H, PL = S.mgPlaces, MX = S.MGX, TAU = Math.PI * 2;
 const at = VP.at, seg = K.seg, lerp = K.lerp;
 const SUN = lt => VP.light('studio', lt, { swing: 3, set: { L: [.6, -.9], amb: '#6a5a4a', ambA: .2, rim: '#fff0d0', rimA: .8, tint: '#ffe8c0', tintA: .08 } });
@@ -61,7 +62,7 @@ window.SHOTS = [
         for (let i = 0; i < 6; i++) ride(c, MAM[i % 3], 420 + i * 140, 540, 20, i % 2 ? BAY : GREYH, lt, lt + i, 0, L, { shN: 10, elN: 40, holdN: S.mgSpear(c, -1.45) }, { look: [-.3, 0] }, -1);
         const w = seg(lt, .2, Sh.tM), bx = lerp(1360, 260, w); ride(c, C.BAYBARSK, bx, 640, 26, WHITEH, lt, lt * 1.1, w < 1 ? .6 : 0, L, { shN: 20, elN: 60 }, { look: [-.5, -.2] }, -1); return; }
       VP.drawSet(c, 'np_parch');
-      S.mgAsia(c, { fill: cc => { S.mgTide(cc, 1, GREYE); S.mgTide(cc, 1, GOLD, '#e8b830', .5); } });
+      S.mgAsia(c, { fill: cc => { S.mgTide(cc, 1, GREYE); S.mgRegion(cc, S.mgBounds.MAMLUK_SY, '#e8b830', .5); } });
       [[PX(37.2, 37.6), 0], [PX(36.2, 34.2), .4], [PX(34.6, 31.4), .8], [PX(39.6, 35.4), 1.2]].forEach(([p, d]) => castle(c, p[0], p[1], .55, E.out(seg(lt, Sh.tM + .6 + d, Sh.tM + 1.2 + d))));
       [0, 1, 2].forEach(k => { const q = seg(lt, Sh.tA + k * .5, Sh.tA + k * .5 + .6); if (q > 0 && q < 1) { const p = PX(39 - k * .8, 35.5 - k * .6); VP.glow(c, p[0], p[1], 40, '#ffd860', .6 * Math.sin(q * Math.PI)); } });
       S.mgDot(c, PL.cairo, 'CAIRO', 1, 1, 20, 30); },
@@ -72,10 +73,10 @@ window.SHOTS = [
   { set: 'mg_steppe', cam: { z: [1.0, 1.08], x: [640, 640], y: [410, 420], ease: E.io }, bed: [['wind_loop', .35]],
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tB = at(Sh, 'berke', 3); Sh.tW = at(Sh, 'war', Sh.dur - 3.2); },
     draw: (c, lt, u, Sh) => { const L = COLD(lt);
-      c.fillStyle = '#c8d8e4'; c.beginPath(); c.moveTo(600, 400); c.lineTo(680, 400); c.lineTo(760, 720); c.lineTo(540, 720); c.closePath(); c.fill();
-      c.strokeStyle = S.rgba('#ffffff', .7); c.lineWidth = 2; for (let k = 0; k < 5; k++) { c.beginPath(); c.moveTo(610 + k * 12, 430 + k * 50); c.lineTo(640 + k * 10, 460 + k * 50); c.stroke(); }
-      for (let i = 0; i < 5; i++) { const x = 160 + i * 75, y = 520 + (i % 2) * 40; ride(c, i === 2 ? C.BERKE : MON[i % 4], x, y, i === 2 ? 24 : 20, i % 2 ? BAY : GREYH, lt, lt + i, 0, L, { shN: 10, elN: 40 }, { look: [.8, 0], angry: lt > Sh.tW ? 1 : 0 }, 1); }
-      for (let i = 0; i < 5; i++) { const x = 840 + i * 75, y = 520 + (i % 2) * 40; ride(c, i === 2 ? C.HULAGUH : MON[(i + 1) % 4], x, y, i === 2 ? 24 : 20, i % 2 ? GREYH : BAY, lt, lt + i + 2, 0, L, { shN: 10, elN: 40 }, { look: [-.8, 0], angry: lt > Sh.tW ? 1 : 0 }, -1); }
+      { const g = c.createLinearGradient(0, 400, 0, 720); g.addColorStop(0, '#9ab8c8'); g.addColorStop(1, '#4a7a92'); c.fillStyle = g; c.beginPath(); c.moveTo(610, 400); c.quadraticCurveTo(560, 560, 560, 720); c.lineTo(780, 720); c.quadraticCurveTo(720, 560, 670, 400); c.closePath(); c.fill(); c.strokeStyle = S.rgba('#3a5a3a', .6); c.lineWidth = 4; c.stroke();
+      c.strokeStyle = S.rgba('#ffffff', .5); c.lineWidth = 2; for (let k = 0; k < 9; k++) { const yy = 430 + k * 34, xx = 625 + k * 2 + Math.sin(lt * 1.5 + k) * 10, w = 14 + k * 5; c.beginPath(); c.moveTo(xx - w / 2, yy); c.quadraticCurveTo(xx, yy - 4, xx + w / 2, yy); c.stroke(); } }
+      for (const i of [0, 2, 1, 3]) { const x = 90 + i * 120 + (i % 2) * 20, y = (i % 2) ? 575 : 500; ride(c, i === 3 ? C.BERKE : MON[i % 4], x, y, i === 3 ? 24 : (i % 2 ? 21 : 17), i % 2 ? BAY : GREYH, lt, lt + i, 0, L, { shN: 10, elN: 40 }, { look: [.8, 0], angry: lt > Sh.tW ? 1 : 0 }, 1); }
+      for (const i of [0, 2, 1, 3]) { const x = 840 + i * 120 + (i % 2) * 20, y = (i % 2) ? 575 : 500; ride(c, i === 1 ? C.HULAGUH : MON[(i + 1) % 4], x, y, i === 1 ? 24 : (i % 2 ? 21 : 17), i % 2 ? GREYH : BAY, lt, lt + i + 2, 0, L, { shN: 10, elN: 40 }, { look: [-.8, 0], angry: lt > Sh.tW ? 1 : 0 }, -1); }
       S.mgTug(c, 70, 600, 150, lt, '#e8e4dc'); S.mgTug(c, 1230, 600, 150, lt + 1, '#1a1a1e');
       VP.motes(c, lt, 0, 0, 1280, 500, { n: 14 }); },
     over: [(c, lt) => K.card(c, 'MONGOL VS MONGOL · 1262', lt, { at: .5, x: 960, y: 130, px: 54, rot: -2 }), (c, lt, u, Sh) => K.card(c, 'BERKE · GOLDEN HORDE', lt, { at: Sh.tB, x: 520, y: 280, px: 40, rot: -2 }), (c, lt, u, Sh) => K.card(c, 'HULAGU', lt, { at: Sh.tW, x: 1440, y: 280, px: 40, rot: 2 })],

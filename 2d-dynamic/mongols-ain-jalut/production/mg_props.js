@@ -8,29 +8,30 @@
   const PL = { karakorum: PX(102.8, 47.2), otrar: PX(68.3, 42.9), bukhara: PX(64.4, 39.8), samarkand: PX(67, 39.65), urgench: PX(60.6, 41.6), nishapur: PX(58.8, 36.2), baghdad: PX(44.4, 33.3), aleppo: PX(37.2, 36.2), damascus: PX(36.3, 33.5), cairo: PX(31.2, 30.0), ainjalut: PX(35.4, 32.55), beijing: PX(116.4, 39.9), island: PX(53.8, 37.0), kiev: PX(30.5, 50.45), tabriz: PX(46.3, 38.1), sarai: PX(46.5, 48.5), steppe: PX(100, 47) };
   S.mgPlaces = PL;
   const poly = (c, pts) => { c.beginPath(); pts.forEach(([lo, la], i) => { const [x, y] = PX(lo, la); i ? c.lineTo(x, y) : c.moveTo(x, y); }); c.closePath(); };
-  const SEAS = [
-    [[14, 41], [19.5, 40], [21, 38], [22.2, 36.5], [23, 37.5], [23.5, 38.5], [22.8, 40.4], [24, 40.8], [26, 40.7], [26.3, 40.1], [26.8, 39], [27.2, 37.8], [28, 36.7], [30, 36.3], [32, 36.1], [34, 36.8], [36, 36.6], [35.9, 35], [35.5, 33.8], [34.9, 32.4], [34.2, 31.3], [32.3, 31.2], [30, 31.4], [28, 31], [25, 31.8], [22, 32.8], [20, 31.5], [14, 30]],
-    [[28, 41.3], [29.5, 41.2], [31, 41.1], [33, 42], [35, 42], [36.5, 41.3], [38, 40.9], [40, 41], [41.5, 41.6], [41.6, 42.6], [40, 43.4], [38, 44.5], [37, 45.2], [36.5, 45.4], [35, 45], [33.5, 44.5], [32.5, 45.4], [31, 46.6], [30, 45.8], [29.6, 45.2], [28.6, 44], [28, 42.5]],
-    [[47, 44.5], [48.5, 46.5], [50, 46.8], [51.5, 46.9], [53, 46.5], [53, 45], [51, 44.5], [51, 43], [52.7, 42], [53, 40.8], [53.9, 40], [53.8, 38.5], [54, 37.4], [52, 36.8], [50.5, 37], [49, 37.6], [49.5, 40.3], [48.4, 41.8], [47.5, 43]],
-    [[32.6, 29.9], [33.2, 28.3], [34, 26.5], [35.5, 24], [37, 21.5], [38.5, 18], [40, 16], [41.5, 14.5], [43.2, 12.4], [43.4, 13.2], [42.7, 15.5], [41.5, 18], [39.5, 21], [38.5, 23.5], [37, 25.5], [35.2, 28], [34.6, 29.5]],
-    [[43.2, 8], [43.5, 12.6], [45, 12.8], [48, 13.8], [52, 16], [55, 17.5], [58, 20.3], [59.8, 22.4], [58.5, 23.6], [56.4, 24.5], [56, 26], [54, 24.2], [51.5, 24.2], [50.5, 25.5], [49.5, 27], [48, 30], [50, 29.5], [51, 28], [54, 26.6], [56.3, 27.2], [57.5, 25.7], [61.5, 25.2], [66.5, 25.3], [67.5, 24], [69, 22.5], [70.5, 20.8], [72.8, 19], [73.5, 16], [74.5, 13], [75.5, 8]],
-    [[77.5, 8], [77.5, 12], [80, 13], [80.3, 15.5], [82, 17], [84.5, 19.5], [87, 21.5], [89, 22], [91, 22.5], [92, 21], [94, 18], [94.5, 16], [97.5, 16.5], [98.5, 13], [99, 8]],
-    [[104, 8], [109, 12], [109.3, 13.8], [108.5, 16], [106.5, 18], [106, 20], [108, 21.5], [110, 21], [111.5, 21.6], [114, 22.3], [117, 23.5], [119.5, 26], [121.5, 28.5], [122, 30.5], [121, 32], [120, 34.5], [119.2, 35], [120.5, 36.5], [122.5, 37.3], [121, 37.8], [118.8, 37.6], [118, 39], [119.5, 39.8], [121.5, 40.8], [122.2, 40.4], [121.3, 39], [124, 39.8], [125.2, 37.8], [126.5, 34.5], [129, 35], [135, 30], [135, 8]],
-  ];
-  const RIVERS = [[[31.2, 31.4], [31.2, 30], [31, 27], [32.5, 25], [32.9, 24], [32.5, 21], [31, 20], [33, 16]], [[42.5, 37.2], [43.1, 36.3], [44.4, 33.3], [46.5, 31.5], [48, 30]], [[38.5, 38.8], [38.2, 36.2], [40, 35], [41.5, 34.3], [44, 32.5], [46.4, 31], [47.4, 30.8]],
-    [[68.5, 37.2], [65, 38], [62.5, 40.5], [60, 42.5], [59.5, 43.6]], [[71, 41], [69, 41.7], [68.3, 42.9], [66, 44.6], [61.5, 46]], [[49, 46], [46.5, 48.5], [44.5, 49], [45, 52], [49, 55]], [[96, 35], [104, 37], [108, 40.5], [111, 39], [110.5, 35], [114, 35], [119, 37.6]]];
   // the land, seas, rivers and mountains; fill(c) paints the political colour layer, clipped to land
-  S.mgAsia = (c, o = {}) => { c.save(); c.fillStyle = '#e8d4a4'; c.fillRect(30, 20, 1220, 680); S.dabs(c, { x: 30, y: 20, w: 1220, h: 680, n: 260, cols: ['#d8c090', '#f0e0b8', '#c8a878'], r0: 6, r1: 26, a0: .2, a1: .45, seed: 61 });
-    if (o.fill) { c.save(); c.beginPath(); c.rect(30, 20, 1220, 680); SEAS.forEach(s => { s.forEach(([lo, la], i) => { const [x, y] = PX(lo, la); i ? c.lineTo(x, y) : c.moveTo(x, y); }); c.closePath(); }); c.clip('evenodd'); o.fill(c); c.restore(); }
-    SEAS.forEach(s => { poly(c, s); c.fillStyle = '#8ab0b8'; c.fill(); c.strokeStyle = '#4a6a78'; c.lineWidth = 2.5; c.stroke(); });
-    { const [x, y] = PX(60, 45); c.fillStyle = '#8ab0b8'; c.beginPath(); c.ellipse(x, y, 16, 14, 0, 0, TAU); c.fill(); c.strokeStyle = '#4a6a78'; c.stroke(); }
-    c.strokeStyle = '#5a8aa0'; c.lineWidth = 2.5; RIVERS.forEach(r => { c.beginPath(); r.forEach(([lo, la], i) => { const [x, y] = PX(lo, la); i ? c.lineTo(x, y) : c.moveTo(x, y); }); c.stroke(); });
-    c.strokeStyle = S.rgba('#7a5a3a', .6); c.lineWidth = 2; for (let k = 0; k < 22; k++) { const [x, y] = PX(72 + k * 1.1, 35.5 - k * .32); c.beginPath(); c.moveTo(x - 9, y + 6); c.lineTo(x, y - 8); c.lineTo(x + 9, y + 6); c.stroke(); }
-    for (let k = 0; k < 10; k++) { const [x, y] = PX(70 + k * 1.4, 39.5 + Math.sin(k) * .6); c.beginPath(); c.moveTo(x - 8, y + 5); c.lineTo(x, y - 7); c.lineTo(x + 8, y + 5); c.stroke(); }
-    for (let k = 0; k < 9; k++) { const [x, y] = PX(40 + k * 1.2, 43 - k * .1); c.beginPath(); c.moveTo(x - 7, y + 4); c.lineTo(x, y - 6); c.lineTo(x + 7, y + 4); c.stroke(); }
-    c.strokeStyle = S.rgba('#5a3a1a', .5); c.lineWidth = 6; c.strokeRect(30, 20, 1220, 680); c.restore(); };
-  // grey Mongol tide: union of growing circles; q 0..1 progress; list of [place[x,y], t0, r]
-  S.mgTide = (c, q, blobs, col = '#5a5a64', a = .62) => { c.beginPath(); blobs.forEach(([p, t0, r, t1]) => { const f = E2(seg2(q, t0, t1 || t0 + .25)); if (f > 0) { c.moveTo(p[0] + r * f, p[1]); c.arc(p[0], p[1], r * f, 0, TAU); } }); c.fillStyle = S.rgba(col, a); c.fill('nonzero'); };
+  // Real geography (Natural Earth 1:50m, see mg_geo.js). Mongol Empire at its 1259-60 peak and Mamluk lands (Egypt; + Syria after Ain Jalut).
+  const EMPIRE = [[28.5, 47], [30, 52], [33, 55.5], [38, 56.5], [45, 57], [52, 57.5], [60, 56.5], [70, 55.5], [80, 54.5], [90, 53.5], [100, 53.5], [110, 53], [120, 52.5], [128, 50], [133, 46], [131, 42.5], [127, 41], [124, 40], [121.5, 39.5], [121, 37], [119.5, 35], [118, 33.6], [115, 33], [112, 32.6], [108, 32], [104, 31], [100, 30.5], [96, 30.5], [92, 32], [86, 33.5], [80, 35], [75, 35.5], [72, 34], [70, 32], [66, 29.5], [62, 27], [58, 26.3], [54, 26.5], [51, 28], [49, 29.8], [47.6, 30], [46, 31], [44, 31.2], [41, 32.5], [38.5, 32.6], [36.6, 31.8], [34.4, 31.4], [34.8, 33], [35.7, 35.2], [36, 36.6], [33, 36.2], [30, 36.4], [27, 37], [26, 40], [28, 42], [28.2, 45]];
+  const MAMLUK_EG = [[24.9, 31.6], [29, 31], [32.5, 31.3], [34.4, 31.3], [34.9, 29.5], [34.2, 27.8], [35.5, 24], [37, 21.8], [33, 21.9], [25, 21.9]];
+  const MAMLUK_SY = MAMLUK_EG.slice(0, 4).concat([[34.8, 33], [35.7, 35.2], [36, 36.7], [38, 36.8], [40, 35.8], [40.6, 34.4], [38.6, 32.5], [36.8, 29.6], [35, 28], [34.2, 27.8]], MAMLUK_EG.slice(5));
+  S.mgBounds = { EMPIRE, MAMLUK_EG, MAMLUK_SY };
+  const GEO = S.MGGEO, RIV = ['Nile', 'Tigris', 'Euphrates', 'Amu Darya', 'Syr Darya', 'Volga', 'Huang', 'Yangtze', 'Indus', 'Ganges', 'Don', 'Ural', 'Jordan', 'Irtysh', 'Selenge', 'Amur'];
+  const landPath = c => { c.beginPath(); GEO.land.forEach(r => { r.forEach(([lo, la], i) => { const [x, y] = PX(lo, la); i ? c.lineTo(x, y) : c.moveTo(x, y); }); c.closePath(); }); };
+  S.mgAsia = (c, o = {}) => { c.save(); c.beginPath(); c.rect(30, 20, 1220, 680); c.clip();
+    c.fillStyle = '#86aeb6'; c.fillRect(30, 20, 1220, 680); S.dabs(c, { x: 30, y: 20, w: 1220, h: 680, n: 160, cols: ['#7aa4ae', '#94bac0', '#6e98a4'], r0: 10, r1: 34, a0: .2, a1: .4, seed: 17 });
+    landPath(c); c.save(); c.fillStyle = '#e8d4a4'; c.fill('evenodd'); c.clip('evenodd'); S.dabs(c, { x: 30, y: 20, w: 1220, h: 680, n: 300, cols: ['#d8c090', '#f0e0b8', '#c8a878'], r0: 6, r1: 26, a0: .2, a1: .45, seed: 61 });
+    c.strokeStyle = S.rgba('#7a5a3a', .55); c.lineWidth = 2; const mt = (lo, la) => { const [x, y] = PX(lo, la); c.beginPath(); c.moveTo(x - 8, y + 5); c.lineTo(x, y - 8); c.lineTo(x + 8, y + 5); c.stroke(); };
+    for (let k = 0; k < 24; k++) mt(73 + k * 1.05, 34.8 - k * .27); for (let k = 0; k < 12; k++) mt(70 + k * 1.5, 41 + Math.sin(k) * .6); for (let k = 0; k < 8; k++) mt(40.5 + k * 1.1, 43.2 - k * .2);
+    for (let k = 0; k < 9; k++) mt(46 + k * 1.6, 33.5 + Math.sin(k * 1.7) * .5 + (k > 5 ? 2 : 0)); for (let k = 0; k < 6; k++) mt(97 + k * 2, 48 + Math.sin(k) * .5); for (let k = 0; k < 7; k++) mt(36 + k * 1.4, 38.3 + Math.cos(k) * .3);
+    if (o.fill) o.fill(c); c.restore();
+    GEO.lakes.forEach(r => { c.beginPath(); r.forEach(([lo, la], i) => { const [x, y] = PX(lo, la); i ? c.lineTo(x, y) : c.moveTo(x, y); }); c.closePath(); c.fillStyle = '#86aeb6'; c.fill(); c.strokeStyle = '#4a6a78'; c.lineWidth = 1.6; c.stroke(); });
+    c.strokeStyle = '#5a8aa0'; c.lineCap = 'round'; c.lineJoin = 'round'; RIV.forEach(n => (GEO.rivers[n] || []).forEach(l => { c.lineWidth = ['Nile', 'Tigris', 'Euphrates', 'Volga', 'Amu Darya', 'Syr Darya', 'Huang', 'Yangtze'].includes(n) ? 2.6 : 1.6; c.beginPath(); l.forEach(([lo, la], i) => { const [x, y] = PX(lo, la); i ? c.lineTo(x, y) : c.moveTo(x, y); }); c.stroke(); }));
+    landPath(c); c.strokeStyle = '#4a6a78'; c.lineWidth = 2.2; c.stroke(); c.restore();
+    c.save(); c.strokeStyle = S.rgba('#5a3a1a', .5); c.lineWidth = 6; c.strokeRect(30, 20, 1220, 680); c.restore(); };
+  const boundFor = col => col === '#e8b830' ? MAMLUK_SY : EMPIRE;
+  // grey Mongol tide: union of growing circles, clipped to the real 1260 empire; q 0..1 progress; list of [place[x,y], t0, r(, t1)]
+  S.mgTide = (c, q, blobs, col = '#5a5a64', a = .62, bound) => { c.save(); poly(c, bound || boundFor(col)); c.clip(); c.beginPath(); blobs.forEach(([p, t0, r, t1]) => { const f = E2(seg2(q, t0, t1 || t0 + .25)); if (f > 0) { c.moveTo(p[0] + r * f, p[1]); c.arc(p[0], p[1], r * f, 0, TAU); } }); c.fillStyle = S.rgba(col, a); c.fill('nonzero'); c.restore(); };
+  // whole region filled, with a dashed edge (inside land clip)
+  S.mgRegion = (c, bound, col = '#5a5a64', a = .62, edge = 1) => { c.save(); poly(c, bound); c.fillStyle = S.rgba(col, a); c.fill(); if (edge > 0) { c.globalAlpha = edge; c.setLineDash([10, 7]); c.strokeStyle = S.mix(col, '#000000', .35); c.lineWidth = 3; c.stroke(); } c.restore(); };
   const seg2 = (t, a, b) => Math.min(1, Math.max(0, (t - a) / (b - a))), E2 = t => 1 - (1 - t) * (1 - t);
   S.mgDot = (c, p, name, a = 1, lit = 1, px = 22, dy = -14, dx = 0) => { if (a <= 0) return; c.save(); c.globalAlpha = a; c.fillStyle = lit > .5 ? '#c8402a' : '#3a3a3a'; c.strokeStyle = '#2a1a10'; c.lineWidth = 2; c.beginPath(); c.arc(p[0], p[1], 7, 0, TAU); c.fill(); c.stroke();
     if (lit > .5) { c.fillStyle = S.rgba('#ffd890', .35); c.beginPath(); c.arc(p[0], p[1], 16, 0, TAU); c.fill(); }

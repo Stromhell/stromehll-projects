@@ -13,7 +13,12 @@ def year(y):
     if 2000 <= y <= 2009: return 'two thousand' + ('' if y == 2000 else ' ' + ONES[y - 2000])
     hi, lo = divmod(y, 100)
     return two(hi) + ' ' + ('hundred' if lo == 0 else ('oh ' + ONES[lo] if lo < 10 else two(lo)))
-WORDS = [(r"\bCUDA\b", 'Kooda'), (r"\bIrimajiri\b", 'Eeri-mah-jeeri'), (r"\bWiessner\b", 'Weess-ner'), (r"\bHadza\b", 'Hahd-za'),
+WORDS = [
+ (r"\bTemüjin\b", 'Teh-moo-jin'), (r"\bKhwarazmian\b", 'Kwa-raz-mee-an'), (r"\bOtrar\b", 'Oh-trar'), (r"\bUrgench\b", 'Oor-gench'),
+ (r"\bNishapur\b", 'Nee-sha-poor'), (r"\bMöngke\b", 'Mung-keh'), (r"\bHulagu\b", 'Hoo-lah-goo'), (r"\bal-Musta'sim\b", 'al-Moos-tah-sim'),
+ (r"\bAbbasid\b", 'Ab-bass-id'), (r"\bMamluks\b", 'Mam-looks'), (r"\bMamluk\b", 'Mam-look'), (r"\bKipchak\b", 'Kip-chak'),
+ (r"\bBaybars\b", 'Bye-bars'), (r"\bQutuz\b", 'Koo-tooz'), (r"\bKitbuqa\b", 'Kit-boo-ka'), (r"\bGhazan\b", 'Ga-zahn'), (r"\bBerke\b", 'Ber-keh'),
+(r"\bCUDA\b", 'Kooda'), (r"\bIrimajiri\b", 'Eeri-mah-jeeri'), (r"\bWiessner\b", 'Weess-ner'), (r"\bHadza\b", 'Hahd-za'),
  (r"Ju/'hoansi", 'Zhu-twa-see'), (r"\bHohle Fels\b", 'Hoh-leh Fels'), (r"\bBlombos\b", 'Blom-boss'), (r"\bDobe\b", 'Doh-bay'),
  (r"\bMalachowsky\b", 'Mala-kow-ski'), (r"\bPriem\b", 'Preem'), (r"\bSutskever\b", 'Suts-kever'), (r"\bKrizhevsky\b", 'Kri-zhev-ski'),
  (r"\bEkirch\b", 'Ee-kirk'), (r"\bGeForce\b", 'Jee Force'), (r"\bRIVA\b", 'Reeva'), (r"\bTSMC\b", 'T S M C'), (r"\biShares\b", 'eye-Shares'),

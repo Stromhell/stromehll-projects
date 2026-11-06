@@ -12,7 +12,7 @@ window.SHOTS = [
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tS = at(Sh, 'september', 5); Sh.tV = at(Sh, 'valley', 7); },
     draw: (c, lt, u, Sh) => { const L = SUN(lt); S.mgTug(c, 1240, 560, 120, lt, '#1a1a1e');
       for (let i = 0; i < 9; i++) { const x0 = 120 + i * 52, w = seg(lt, .3 + i * .25, 2.8 + i * .25), x = lerp(-60 - i * 20, x0, E.out(w));
-        fig(c, MAM[i % 3], x, 440 + (i % 2) * 8, 13, w < 1 ? walk(lt, i, { face: 1, holdN: S.mgSpear(c, -1.45) }) : pose(lt, i, { face: 1, holdN: S.mgSpear(c, -1.45) }), lt, i, L, { look: [.6, 0] }); }
+        fig(c, MAM[i % 3], x, 440 + (i % 2) * 8, 13, w < 1 ? walk(lt, i, { face: 1, holdN: i % 3 === 1 ? S.mgBow(c) : S.mgSpear(c, -1.45) }) : pose(lt, i, { face: 1, shF: 10 + (i % 4) * 14, elF: 20 + (i % 3) * 25, lean: (i % 3 - 1) * 3, holdN: i % 3 === 1 ? S.mgBow(c) : S.mgSpear(c, -1.45 + (i % 2) * .15) }), lt, i, L, { look: [.6, 0] }); }
       S.mgBanner(c, 150, 450, 90, lt); S.mgBanner(c, 400, 446, 90, lt + 1);
       for (let i = 0; i < 6; i++) { const x0 = 700 + i * 95, w = seg(lt, Sh.tV - 2 + i * .2, Sh.tV + .6 + i * .2), x = lerp(1400 + i * 60, x0, E.out(w));
         ride(c, MON[i % 4], x, 580 + (i % 2) * 22, 20, i % 2 ? BAY : GREYH, lt, lt * 1.4 + i, w > 0 && w < 1 ? 1 : 0, L, { shN: 20, elN: 60 }, { look: [-.7, -.1] }, -1); }
@@ -24,8 +24,8 @@ window.SHOTS = [
   { set: 'mg_ainjalut', cam: { z: [1.15, 1.2], x: [760, 740], y: [430, 430], ease: E.io }, bed: [['battle_loop', .25]],
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tT = at(Sh, 'turned', 2.8); },
     draw: (c, lt, u, Sh) => { const L = SUN(lt), inq = E.out(seg(lt, 0, 1.6)), back = seg(lt, Sh.tT, Sh.dur - .2), turned = lt > Sh.tT;
-      for (let i = 0; i < 5; i++) { const x0 = 1010 + i * 60; ride(c, MON[i % 4], x0, 520 + (i % 2) * 26, 20, i % 2 ? GREYH : BAY, lt, lt + i, 0, L, { shN: 60, elN: 30, holdN: S.mgBow(c) }, { look: [-.8, 0] }, -1); }
-      for (let i = 0; i < 4; i++) { const xs = 640 - i * 120, x = turned ? xs - E.io(back) * (1100 + i * 40) : lerp(-260 - i * 140, xs, inq), y = 520 + (i % 2) * 34;
+      for (const i of [0, 2, 1, 3]) { const x0 = 960 + i * 115 + (i % 2) * 40; ride(c, MON[i % 4], x0, (i % 2) ? 548 : 488, (i % 2) ? 20 : 16, i % 2 ? GREYH : BAY, lt, lt + i, 0, L, { shN: 60, elN: 30, holdN: S.mgBow(c) }, { look: [-.8, 0] }, -1); }
+      for (const i of [0, 2, 1, 3]) { const xs = 640 - i * 190, x = turned ? xs - E.io(back) * (1100 + i * 40) : lerp(-260 - i * 140, xs, inq), y = 500 + (i % 2) * 52;
         ride(c, i ? MAM[i % 3] : C.BAYBARSB, x, y, i ? 21 : 23, i % 2 ? BAY : WHITEH, lt, lt * 2.4 + i, (inq < 1 || turned) ? 1.6 : 0, L, { shN: 70, elN: 20, lean: 12, holdN: S.mgBow(c) }, { look: [turned ? -.8 : .8, 0], angry: 1 }, turned ? -1 : 1); }
       arrows(c, lt, 560, 1020, 430, 1.4, 7); S.mgDust(c, lt, 120, 560, 520, .3); },
     over: [(c, lt) => K.card(c, 'BAYBARS · VANGUARD', lt, { at: .5, x: 480, y: 150, px: 46, rot: -2 })],
@@ -35,8 +35,13 @@ window.SHOTS = [
   { set: 'np_parch', cam: { z: [1.05, 1.12], x: [640, 640], y: [370, 370], ease: E.io }, bed: [['drone', .2]],
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tC = at(Sh, 'chased', 2.5); Sh.tH = at(Sh, 'main', Sh.dur - 3); },
     draw: (c, lt, u, Sh) => {
-      c.fillStyle = S.rgba('#7a8a4a', .35); [[260, 260, 200], [1020, 260, 210], [640, 160, 260]].forEach(([x, y, r]) => { c.beginPath(); c.ellipse(x, y, r, r * .55, 0, 0, TAU); c.fill(); });
-      S.mgLabel(c, 'HILLS', 640, 120, 1, 28, '#4a5a2a'); S.mgLabel(c, 'VALLEY', 640, 520, 1, 28, '#5a3a1a');
+      // painted terrain: valley floor, Mount Gilboa and the hills of Galilee with hachures, the spring, a stream
+      c.save(); c.fillStyle = S.rgba('#9aa860', .28); c.beginPath(); c.moveTo(140, 420); c.quadraticCurveTo(640, 380, 1180, 440); c.lineTo(1180, 640); c.lineTo(140, 640); c.fill();
+      [[260, 250, 210, 1], [1020, 250, 220, 2], [640, 150, 270, 3]].forEach(([x, y, r, sd]) => { for (let j = 0; j < 3; j++) { c.fillStyle = S.rgba(['#8a9a52', '#6a7a3a', '#5a6a32'][j], .3); c.beginPath(); c.ellipse(x, y + j * 6, r * (1 - j * .25), r * .55 * (1 - j * .25), 0, 0, TAU); c.fill(); }
+        c.strokeStyle = S.rgba('#4a3a20', .45); c.lineWidth = 2; for (let k = 0; k < 26; k++) { const a = k / 26 * TAU, x1 = x + Math.cos(a) * r * .95, y1 = y + Math.sin(a) * r * .52, x2 = x + Math.cos(a) * r * .72, y2 = y + Math.sin(a) * r * .4; c.beginPath(); c.moveTo(x1, y1); c.lineTo(x2, y2); c.stroke(); } });
+      c.strokeStyle = S.rgba('#4a7a90', .8); c.lineWidth = 4; c.beginPath(); c.moveTo(360, 470); c.quadraticCurveTo(640, 430, 960, 500); c.quadraticCurveTo(1100, 540, 1180, 600); c.stroke();
+      c.fillStyle = '#5a8aa0'; c.beginPath(); c.ellipse(360, 470, 26, 12, 0, 0, TAU); c.fill(); c.restore();
+      S.mgLabel(c, 'HILLS', 640, 110, 1, 26, '#4a5a2a'); S.mgLabel(c, 'MT GILBOA', 1020, 160, 1, 24, '#4a5a2a'); S.mgLabel(c, 'VALLEY', 760, 590, 1, 28, '#5a3a1a'); S.mgLabel(c, 'SPRING', 360, 510, 1, 20, '#2a4a5a');
       const g = E.io(seg(lt, .3, Sh.tC + 1.5)), m = E.io(seg(lt, Sh.tC - .3, Sh.tH + .3));
       S.mgArrow(c, [1000, 520], [640, 300], g, S.rgba('#c89a20', .9), 20, .15);
       S.mgArrow(c, [1180, 560], [700, 330], m, S.rgba('#3a3a40', .85), 26, .15);
@@ -49,8 +54,8 @@ window.SHOTS = [
   { set: 'mg_ainjalut', cam: (lt, u, Sh) => ({ z: [lerp(1.2, 1.35, E.io(seg(lt, Sh.tH - 1, Sh.tH + .6)))], x: [lerp(700, 640, E.io(seg(lt, Sh.tH - 1, Sh.tH + .6)))], y: [440] }), bed: [['battle_loop', .3]],
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tH = at(Sh, 'helmet', 3.6); Sh.tI = at(Sh, 'islam', Sh.dur - 2.4); },
     draw: (c, lt, u, Sh) => { const L = SUN(lt), bare = lt > Sh.tH, ch = seg(lt, Sh.tI, Sh.dur), push = E.io(seg(lt, 0, Sh.tH)) * (1 - E.io(ch));
-      for (let i = 0; i < 4; i++) { const x = 980 + i * 90 - push * 120 + E.io(ch) * 700; if (x > 1400) continue; ride(c, MON[i % 4], x, 500 + (i % 2) * 40, 21, i % 2 ? BAY : GREYH, lt, lt * 2 + i, ch > 0 ? 1.6 : .6, L, { shN: 60, elN: 30, holdN: S.mgSpear(c, -.2) }, { look: [-.8, 0], angry: 1 }, ch > 0 ? 1 : -1); }
-      for (let i = 0; i < 3; i++) { const x = 380 - i * 130 + E.io(ch) * 900, f = bare ? 1 : -1; if (x > 1400) continue; ride(c, MAM[i], x, 500 + (i % 2) * 40, 21, i % 2 ? GREYH : BAY, lt, lt * 2 + i, ch > 0 ? 1.6 : 0, L, { shN: 60, elN: 30, holdN: S.mgSpear(c, -.2) }, { look: [f * .8, 0], worry: bare ? 0 : 1 }, ch > 0 ? 1 : f); }
+      for (const i of [0, 2, 1, 3]) { const x = 990 + i * 170 - push * 120 + E.io(ch) * 700; if (x > 1400) continue; ride(c, MON[i % 4], x, (i % 2) ? 548 : 492, (i % 2) ? 21 : 18, i % 2 ? BAY : GREYH, lt, lt * 2 + i, ch > 0 ? 1.6 : .6, L, { shN: 60, elN: 30, holdN: S.mgSpear(c, -.2) }, { look: [-.8, 0], angry: 1 }, ch > 0 ? 1 : -1); }
+      for (const i of [0, 2, 1]) { const x = 400 - i * 185 + E.io(ch) * 900, f = bare ? 1 : -1; if (x > 1400) continue; ride(c, MAM[i], x, 500 + (i % 2) * 40, 21, i % 2 ? GREYH : BAY, lt, lt * 2 + i, ch > 0 ? 1.6 : 0, L, { shN: 60, elN: 30, holdN: S.mgSpear(c, -.2) }, { look: [f * .8, 0], worry: bare ? 0 : 1 }, ch > 0 ? 1 : f); }
       const qx = 640 + E.io(ch) * 800; ride(c, bare ? C.QUTUZB : C.QUTUZ, qx, 540, 25, WHITEH, lt, lt * 2.4, ch > 0 ? 1.6 : 0, L, { shN: bare && !ch ? 150 : 70, elN: bare && !ch ? 10 : 30, lean: ch > 0 ? 14 : 0 }, { look: [.8, -.2], angry: bare ? 1 : 0, open: lt > Sh.tI && lt < Sh.tI + 1.5 ? 1 : 0 }, 1);
       S.mgBanner(c, 230 + E.io(ch) * 900, 520, 150, lt); S.mgDust(c, lt, 300, 560, 700, .25); },
     over: [(c, lt, u, Sh) => K.card(c, '“O ISLAM!”', lt, { at: Sh.tI, x: 960, y: 150, px: 72, rot: -2 })],
@@ -70,9 +75,9 @@ window.SHOTS = [
   { set: 'np_parch', cam: { z: [1.5, 1.6], x: [340, 340], y: [330, 335], ease: E.io }, bed: [['drone', .2]],
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tL = at(Sh, 'beaten', 2); Sh.tS = at(Sh, 'stopped', Sh.dur - 3.5); },
     draw: (c, lt, u, Sh) => { const back = E.io(seg(lt, Sh.tS, Sh.tS + 2.4)), ln = E.io(seg(lt, Sh.tL - .4, Sh.tL + .6));
-      S.mgAsia(c, { fill: cc => { S.mgTide(cc, 1, ALL); S.mgTide(cc, 1 - back, SYR); cc.fillStyle = S.rgba('#e8b830', .45); cc.beginPath(); cc.arc(PL.cairo[0] - 10, PL.cairo[1] + 40, 80, 0, TAU); cc.fill(); } });
+      S.mgAsia(c, { fill: cc => { S.mgRegion(cc, S.mgBounds.EMPIRE, '#5a5a64', .62, 0); S.mgTide(cc, 1 - back, SYR); S.mgRegion(cc, S.mgBounds.MAMLUK_EG, '#e8b830', .5); } });
       const a = PX(33.5, 31.2), b = PX(38.5, 33.6); c.save(); c.strokeStyle = S.rgba('#ffd860', .95); c.lineWidth = 8; c.shadowColor = '#ffd860'; c.shadowBlur = 18; c.beginPath(); c.moveTo(a[0], a[1]); c.lineTo(lerp(a[0], b[0], ln), lerp(a[1], b[1], ln)); c.stroke(); c.restore();
-      S.mgDot(c, PL.ainjalut, 'AIN JALUT', 1, 1, 20, 26, -40); S.mgDot(c, PL.cairo, 'CAIRO', 1, 1, 20, 30); },
+      S.mgDot(c, PL.ainjalut, 'AIN JALUT', 1, 1, 22, -16, 70); S.mgDot(c, PL.cairo, 'CAIRO', 1, 1, 20, 30); },
     over: [(c, lt, u, Sh) => K.card(c, 'FIRST DEFEAT THAT STUCK', lt, { at: Sh.tL + .4, x: 1360, y: 150, px: 46, rot: 2 })],
     sfx: [[.2, 'drone', .2], ['beaten', 'chime', .45], ['stopped', 'swell', .35], ['stopped', 'whoosh', .3]] },
 ];

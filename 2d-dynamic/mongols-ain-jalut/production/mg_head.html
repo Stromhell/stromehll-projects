@@ -9,9 +9,10 @@
 <script src="../../../../japan-comeback/production/jp_cast.js"></script><script src="../../../../japan-comeback/production/jp_sets.js"></script>
 <script src="../../../../suez-canal/production/sz_sets.js"></script><script src="../../../../suez-canal/production/sz_sets2.js"></script><script src="../../../../suez-canal/production/sz_cast.js"></script><script src="../../../../suez-canal/production/sz_props.js"></script>
 <script src="../../../../napoleon/production/np_sets.js"></script><script src="../../../../napoleon/production/np_cast.js"></script><script src="../../../../napoleon/production/np_props.js"></script>
-<script src="../../mg_sets.js"></script><script src="../../mg_cast.js"></script><script src="../../mg_props.js"></script>
+<script src="../../mg_geo.js"></script><script src="../../mg_sets.js"></script><script src="../../mg_detail.js"></script><script src="../../mg_cast.js"></script><script src="../../mg_props.js"></script>
 <script src="timing.js"></script>
 <script>
+KIT.xfade = 0; // QA 5 Nov: hard cuts, dissolves ghosted figures
 const K = KIT, E = K.E, C = S.MGC, NPC = S.NPC, SZC = S.SZC, H1 = S.ES1H, PL = S.mgPlaces, MX = S.MGX, TAU = Math.PI * 2;
 const at = VP.at, seg = K.seg, lerp = K.lerp;
 const SUN = lt => VP.light('studio', lt, { swing: 3, set: { L: [.6, -.9], amb: '#6a5a4a', ambA: .2, rim: '#fff0d0', rimA: .8, tint: '#ffe8c0', tintA: .08 } });

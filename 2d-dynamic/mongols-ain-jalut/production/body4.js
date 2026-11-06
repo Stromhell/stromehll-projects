@@ -1,7 +1,7 @@
 const PX = S.mgPX;
 const ALL = [[PL.steppe, 0, 180], [PX(90, 44), 0, 170], [PL.beijing, 0, 120], [PX(108, 34), 0, 110], [PL.otrar, 0, 150], [PL.samarkand, 0, 150], [PL.nishapur, 0, 130], [PL.sarai, 0, 150], [PL.kiev, 0, 120], [PX(50, 52), 0, 140], [PL.tabriz, 0, 120], [PL.baghdad, 0, 110], [PX(41, 37), 0, 90]];
 const SYR = [[PL.aleppo, 0, 60, .5], [PL.damascus, .4, 55, .9]];
-const gold = (c, a = .55) => { c.fillStyle = S.rgba('#e8b830', a); c.beginPath(); c.arc(PL.cairo[0] - 10, PL.cairo[1] + 40, 80, 0, TAU); c.fill(); };
+const gold = (c, a = .55) => S.mgRegion(c, S.mgBounds.MAMLUK_EG, '#e8b830', a, 0);
 const platform = (c, x, y) => { c.fillStyle = '#6a4a2a'; c.fillRect(x - 70, y - 30, 140, 30); c.fillStyle = '#4a3018'; c.fillRect(x - 70, y - 30, 140, 6); };
 
 window.SHOTS = [
@@ -9,7 +9,7 @@ window.SHOTS = [
   { set: 'np_parch', cam: { z: [1.6, 1.7], x: [330, 330], y: [330, 340], ease: E.io }, bed: [['drone', .2]],
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tA = at(Sh, 'aleppo', 2); Sh.tD = at(Sh, 'damascus', 3.5); Sh.tE = at(Sh, 'egypt', Sh.dur - 1.5); },
     draw: (c, lt, u, Sh) => { const q = seg(lt, Sh.tA - .3, Sh.tD + 1.2);
-      S.mgAsia(c, { fill: cc => { S.mgTide(cc, 1, ALL); S.mgTide(cc, q, SYR); gold(cc, .3 + .3 * seg(lt, Sh.tE, Sh.tE + .6)); } });
+      S.mgAsia(c, { fill: cc => { S.mgRegion(cc, S.mgBounds.EMPIRE, '#5a5a64', .62, 0); S.mgTide(cc, q, SYR); gold(cc, .3 + .3 * seg(lt, Sh.tE, Sh.tE + .6)); } });
       S.mgDot(c, PL.aleppo, 'ALEPPO', seg(lt, Sh.tA - .3, Sh.tA), lt < Sh.tA + .6 ? 1 : 0, 20, -14, -10); S.mgDot(c, PL.damascus, 'DAMASCUS', seg(lt, Sh.tD - .3, Sh.tD), lt < Sh.tD + .6 ? 1 : 0, 20, 4, 70);
       S.mgDot(c, PL.cairo, 'CAIRO', 1, 1, 20, 30); S.mgLabel(c, 'EGYPT', PL.cairo[0] - 10, PL.cairo[1] + 70, seg(lt, Sh.tE, Sh.tE + .4), 30, '#8a5a10'); },
     over: [(c, lt) => K.dateTag(c, 'SYRIA · 1260', lt, { at: .4 })],
@@ -63,7 +63,7 @@ window.SHOTS = [
     draw: (c, lt, u, Sh) => { const L = SUN(lt);
       fig(c, C.QUTUZ, 160, 476, 30, pose(lt, 0, { face: 1, shN: 20, elN: 60 }), lt, 0, L, { look: [.8, .2] });
       for (let r = 0; r < 2; r++) for (let i = 0; i < 6; i++) { const x0 = 480 + i * 120 + r * 50, y = 600 + r * 70, w = seg(lt, i * .15 + r * .3, i * .15 + r * .3 + 1.6), x = lerp(1400 + i * 40, x0, E.out(w));
-        fig(c, [C.MAMLUK, C.MAMLUK2, C.MAMLUK3][(i + r) % 3], x, y, 26 + r * 3, w < 1 ? walk(lt, i + r, { face: -1, holdN: S.mgSpear(c, -1.45) }) : pose(lt, i + r, { face: -1, holdN: S.mgSpear(c, -1.45) }), lt, i + r, L, { look: [-.7, 0] }); }
+        fig(c, [C.MAMLUK, C.MAMLUK2, C.MAMLUK3][(i + r) % 3], x, y, 26 + r * 3, w < 1 ? walk(lt, i + r, { face: -1, holdN: (i + r) % 3 === 2 ? S.mgBow(c) : S.mgSpear(c, -1.45) }) : pose(lt, i + r, { face: -1, shF: 10 + ((i * 7 + r) % 4) * 12, elF: 20 + ((i + r * 2) % 3) * 25, lean: ((i + r) % 3 - 1) * 3, holdN: (i + r) % 3 === 2 ? S.mgBow(c) : S.mgSpear(c, -1.45 + ((i % 2) * .12)) }), lt, i + r, L, { look: [-.7, 0] }); }
       S.mgBanner(c, 470, 640, 170, lt); S.mgBanner(c, 1150, 600, 170, lt + 1); },
     over: [],
     sfx: [[.2, 'march_loop', .3], [.4, 'drum', .35]] },

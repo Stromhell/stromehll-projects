@@ -1,5 +1,5 @@
 const PX = S.mgPX;
-const CITIES = [['BUKHARA', PL.bukhara, 'bukhara', 30, -40], ['SAMARKAND', PL.samarkand, 'samarkand', -16, 50], ['URGENCH', PL.urgench, 'urgench', -16, -30], ['NISHAPUR', PL.nishapur, 'nishapur', 32, 0]];
+const CITIES = [['BUKHARA', PL.bukhara, 'bukhara', 30, -56], ['SAMARKAND', PL.samarkand, 'samarkand', -14, 70], ['URGENCH', PL.urgench, 'urgench', -16, -40], ['NISHAPUR', PL.nishapur, 'nishapur', 30, -30]];
 const HOME = [[PL.steppe, 0, 180], [PX(90, 44), 0, 160], [PL.otrar, 0, 80]];
 const WAVE = HOME.concat([[PL.beijing, .0, 130], [PX(108, 33), .1, 110], [PL.samarkand, 0, 120], [PL.urgench, 0, 90], [PL.nishapur, 0, 90], [PL.sarai, .2, 150], [PL.kiev, .45, 130], [PX(22, 51), .65, 110], [PX(20, 47.5), .8, 90]]);
 const coffin = (c, x, y, s, lt) => { c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = S.rgba('#000000', .25); c.beginPath(); c.ellipse(0, 4, 110, 10, 0, 0, TAU); c.fill();
@@ -36,7 +36,7 @@ window.SHOTS = [
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tK = at(Sh, 'kept going', 2.6); Sh.tW = ['china', 'russia', 'poland', 'hungary'].map((w, k) => at(Sh, w, 3 + k * .8)); },
     draw: (c, lt, u, Sh) => {
       if (lt < Sh.tK) { const L = GREY(lt); c.fillStyle = S.rgba('#3a4050', .2); c.fillRect(0, 0, 1280, 720); const x = lerp(260, 620, lt / Sh.tK);
-        S.mgTug(c, x + 260, 640, 150, lt, '#1a1a1e'); coffin(c, x, 640, 1, lt * .5);
+        coffin(c, x, 640, 1, lt * .5); VP.horse(c, x + 215, 642, 28 * 4.4, { face: 1, walk: .6, ph: lt * .6, t: lt, col: BAY }); S.mgTug(c, x + 420, 648, 150, lt, '#1a1a1e');
         ride(c, C.MONGOL3, x - 260, 650, 28, BAY, lt, lt * .6, .5, L, { shN: 10, elN: 40, lean: 14 }, { look: [.3, .6], worry: 1 }, 1);
         fig(c, C.MONGOL4, x + 380, 660, 30, walk(lt * .6, 1, { face: 1, lean: 10 }), lt, 1, L, { look: [.3, .6], worry: 1 });
         return; }
@@ -50,10 +50,10 @@ window.SHOTS = [
   { set: 'tent', cam: { z: [1.1, 1.2], x: [640, 640], y: [470, 480], ease: E.io }, bed: [['fire_loop', .15], ['drone', .15]],
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tB = at(Sh, 'brother', 3.5); Sh.tO = at(Sh, 'orders', 5); },
     draw: (c, lt, u, Sh) => { const L = CANDLE(lt), w = E.io(seg(lt, .3, Sh.tB)), g = E.io(seg(lt, Sh.tO, Sh.tO + 1.4));
-      c.fillStyle = '#5a1a14'; c.beginPath(); c.roundRect(380, 650, 140, 26, 8); c.fill();
+      c.fillStyle = S.rgba('#000000', .25); c.beginPath(); c.ellipse(430, 656, 90, 10, 0, 0, TAU); c.fill(); c.fillStyle = '#5a3418'; c.fillRect(360, 586, 130, 68); c.fillStyle = '#c8a040'; c.fillRect(360, 586, 130, 6); c.fillRect(360, 630, 130, 4); c.fillStyle = '#7a3a2a'; c.beginPath(); c.roundRect(356, 568, 140, 22, 8); c.fill(); c.fillStyle = '#4a2410'; c.fillRect(350, 470, 18, 184); c.fillStyle = '#c8a040'; c.beginPath(); c.arc(359, 466, 10, 0, TAU); c.fill();
       fig(c, C.MONGKE, 450, 652, 36, Object.assign(VP.sit(C.MONGKE, lt * .3, 1, { seat: .2 }), { face: 1, shN: 30 + 40 * g, elN: 40 - 30 * g }), lt, 0, L, { look: [.7, 0] });
       const hx = lerp(1300, 760, w); fig(c, C.HULAGU, hx, 690, 38, w < 1 ? walk(lt, 1, { face: -1 }) : pose(lt, 1, { face: -1, shN: 30 + 40 * g, elN: 40 - 30 * g, lean: 4 * g }), lt, 1, L, { look: [-.7, 0] });
-      const px = lerp(520, 640, g), py = 560 - 20 * Math.sin(g * Math.PI); S.mgPaiza(c, px, py, .4, .2, .3 + .5 * g, false);
+      if (g > 0) { const h1 = E.io(seg(g, 0, .45)), h2 = E.io(seg(g, .5, .9)), px = lerp(lerp(470, 515, h1), 690, h2), py = lerp(lerp(565, 505, h1), 503, h2); S.mgPaiza(c, px, py, .4, .2, .3 + .5 * g, false); }
       fig(c, C.MONGOL2, 220, 690, 34, pose(lt, 3, { face: 1, holdN: S.mgSpear(c, -1.45) }), lt, 3, L, { look: [.6, 0] });
       VP.glow(c, 1080, 480, 160, '#ffc070', .35); },
     over: [(c, lt) => K.card(c, 'HULAGU · 1253', lt, { at: .8, x: 1360, y: 150, px: 52, rot: 2 }), (c, lt, u, Sh) => K.card(c, 'GREAT KHAN MÖNGKE', lt, { at: .5, x: 520, y: 150, px: 44, rot: -2 })],

@@ -9,9 +9,10 @@
 <script src="../../../../japan-comeback/production/jp_cast.js"></script><script src="../../../../japan-comeback/production/jp_sets.js"></script>
 <script src="../../../../suez-canal/production/sz_sets.js"></script><script src="../../../../suez-canal/production/sz_sets2.js"></script><script src="../../../../suez-canal/production/sz_cast.js"></script><script src="../../../../suez-canal/production/sz_props.js"></script>
 <script src="../../../../napoleon/production/np_sets.js"></script><script src="../../../../napoleon/production/np_cast.js"></script><script src="../../../../napoleon/production/np_props.js"></script>
-<script src="../../mg_sets.js"></script><script src="../../mg_cast.js"></script><script src="../../mg_props.js"></script>
+<script src="../../mg_geo.js"></script><script src="../../mg_sets.js"></script><script src="../../mg_detail.js"></script><script src="../../mg_cast.js"></script><script src="../../mg_props.js"></script>
 <script src="timing.js"></script>
 <script>
+KIT.xfade = 0; // QA 5 Nov: hard cuts, dissolves ghosted figures
 const K = KIT, E = K.E, C = S.MGC, NPC = S.NPC, SZC = S.SZC, H1 = S.ES1H, PL = S.mgPlaces, MX = S.MGX, TAU = Math.PI * 2;
 const at = VP.at, seg = K.seg, lerp = K.lerp;
 const SUN = lt => VP.light('studio', lt, { swing: 3, set: { L: [.6, -.9], amb: '#6a5a4a', ambA: .2, rim: '#fff0d0', rimA: .8, tint: '#ffe8c0', tintA: .08 } });
@@ -42,7 +43,7 @@ window.SHOTS = [
       const crowd = [C.MONGOL, C.MONGOL3, C.MONGOL4, C.MONGOL2, C.MONGOL3, C.MONGOL4, C.MONGOL, C.MONGOL2];
       crowd.forEach((ch, i) => { const x = i < 4 ? 120 + i * 90 : 820 + (i - 4) * 90, y = 600 + (i % 2) * 22; fig(c, ch, x, y, 28, pose(lt, i, { face: x < 640 ? 1 : -1, shN: lt > Sh.tG ? 150 + 10 * Math.sin(lt * 5 + i) : 20, elN: lt > Sh.tG ? 20 : 30 }), lt, i, L, { look: [x < 640 ? .7 : -.7, -.4], smile: lt > Sh.tG ? .6 : 0 }); });
       // four bearers lift the felt over their heads; two behind it, two in front at its ends
-      const fy = 612 - 180 * up, B = [[590, 1, C.MONGOL4], [690, -1, C.MONGOL3], [530, 1, C.MONGOL3], [750, -1, C.MONGOL4]];
+      const fy = 612 - 115 * up, B = [[590, 1, C.MONGOL4], [690, -1, C.MONGOL3], [530, 1, C.MONGOL3], [750, -1, C.MONGOL4]];
       const bearer = ([x, f, ch], k) => fig(c, ch, x, 650, 30, pose(lt, k + 10, { face: f, shN: 70 + 100 * up, elN: 40 - 30 * up, shF: 70 + 100 * up, elF: 40 - 30 * up }), lt, k + 10, L, { look: [f * .3, -.6] });
       bearer(B[0], 0); bearer(B[1], 1);
       felt(c, 640, fy, 120);
@@ -67,12 +68,13 @@ window.SHOTS = [
   { set: 'towngate', cam: { z: [1.05, 1.12], x: [640, 640], y: [430, 430], ease: E.io }, bed: [['tension', .25]],
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tS = at(Sh, 'spying', 2.5); Sh.tK = at(Sh, 'killed', 5); },
     draw: (c, lt, u, Sh) => { const L = GREY(lt), cl = E.io(seg(lt, Sh.tK, Sh.tK + 1));
-      if (cl < 1) { const q = E.io(seg(lt, Sh.tS, Sh.tS + 2));
-        fig(c, C.GOVERNOR, 300, 640, 34, pose(lt, 0, { face: 1, shN: lt > Sh.tS ? 95 : 20, elN: lt > Sh.tS ? 5 : 40 }), lt, 0, L, { look: [.8, 0], angry: 1 });
-        [C.KGUARD, C.KGUARD2].forEach((ch, k) => { const x = lerp(160 + k * 60, 760 + k * 70, q); fig(c, ch, x, 650, 32, q > 0 && q < 1 ? walk(lt, k + 2, { face: 1, holdN: S.mgSpear(c, -.5) }) : pose(lt, k + 2, { face: 1, holdN: S.mgSpear(c, -.5) }), lt, k + 2, L, { look: [.8, 0], angry: 1 }); });
-        [C.MERCH, C.MERCH2].forEach((ch, k) => fig(c, ch, 960 + k * 120, 650, 32, pose(lt, k + 5, { face: -1, shN: 60 + 40 * q, elN: 90, lean: -6 * q }), lt, k + 5, L, { look: [-.8, 0], worry: 1 })); }
+      // guards close in, then march the merchants off to the right; nobody vanishes
+      // (no door slabs: the arch has no leaves to close; the slam is heard off-screen)
       bale(c, 880, 660, 1.1, '#a82a3a', .3 * cl); bale(c, 1000, 672, 1.0, '#2a6a8a', -.4 * cl); bale(c, 1120, 664, 1.1, '#c8a070', .6 * cl);
-      if (cl > 0) { c.save(); c.globalAlpha = 1; c.fillStyle = '#3a2416'; const w = 70 * cl; c.fillRect(560, 470, w, 220); c.fillRect(720 - w, 470, w, 220); c.restore(); } },
+      { const q = E.io(seg(lt, .2, Sh.tS)), e = seg(lt, Sh.tS + .2, Sh.dur + 1.5), ex = E.inn(e) * 900, mv = e > 0 && e < 1;
+        fig(c, C.GOVERNOR, 300, 640, 34, pose(lt, 0, { face: 1, shN: lt > Sh.tS && e < .3 ? 95 : 20, elN: lt > Sh.tS && e < .3 ? 5 : 40 }), lt, 0, L, { look: [.8, 0], angry: 1 });
+        [C.MERCH, C.MERCH2].forEach((ch, k) => { const x = 960 + k * 120 + ex; if (x < 1500) fig(c, ch, x, 650, 32, mv ? walk(lt, k + 5, { face: 1 }) : pose(lt, k + 5, { face: -1, shN: 60 + 40 * q, elN: 90, lean: -6 * q }), lt, k + 5, L, { look: [mv ? .8 : -.8, 0], worry: 1 }); });
+        [C.KGUARD, C.KGUARD2].forEach((ch, k) => { const x = lerp(160 + k * 60, 800 + k * 70, q) + ex; if (x < 1500) fig(c, ch, x, 650, 32, (q > 0 && q < 1) || mv ? walk(lt, k + 2, { face: 1, holdN: S.mgSpear(c, -.5) }) : pose(lt, k + 2, { face: 1, holdN: S.mgSpear(c, -.5) }), lt, k + 2, L, { look: [.8, 0], angry: 1 }); }); } },
     over: [(c, lt) => K.dateTag(c, 'OTRAR', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, '“SPIES”', lt, { at: Sh.tS, x: 520, y: 170, px: 56, rot: -3 })],
     sfx: [[.2, 'tension', .25], ['spying', 'drum', .35], ['killed', 'gate_slam', .5]] },
 
@@ -92,12 +94,10 @@ window.SHOTS = [
   { set: 'pass', cam: { z: [1.0, 1.08], x: [640, 640], y: [400, 380], ease: E.io }, bed: [['hooves_loop', .45], ['drum_loop', .2]],
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tC = at(Sh, 'worst crime', 3); Sh.tR = at(Sh, 'rode west', Sh.dur - 3); },
     draw: (c, lt, u, Sh) => { const L = SUN(lt);
-      // a far column winding down the pass (small silhouettes), then two lanes of riders crossing, each leading a spare horse
-      for (let i = 0; i < 26; i++) { const q = ((lt * .04) + i / 26) % 1, y = lerp(470, 560, q), x = 640 + Math.sin(q * 5 + 1) * 60 * q, s = lerp(4, 9, q); c.fillStyle = S.rgba('#3a2a1a', .85); c.fillRect(x - s * 1.6, y - s * 2.4, s * 3.2, s * 1.4); c.fillRect(x - s * .4, y - s * 4.4, s * .8, s * 2.2); c.fillRect(x - s * 1.4, y - s, s * .5, s); c.fillRect(x + s * .9, y - s, s * .5, s); }
-      for (let k = 0; k < 4; k++) S.mgTug(c, 600 + k * 30, 520 + k * 4, 40 + k * 6, lt + k, '#1a1a1e');
-      [[612, 28, 70, 0], [700, 38, 95, 1]].forEach(([y, uu, sp, lane]) => { for (let i = 0; i < 4; i++) { const x = -260 + ((lt * sp + i * 430 + lane * 200) % 1720); if (x < -300 || x > 1500) continue;
-        VP.horse(c, x - uu * 8.5, y - 2, uu * 4.4, { face: 1, walk: 1, ph: lt * 1.3 + i * .37 + lane, t: lt, col: (i + lane) % 2 ? GREYH : BAY });
-        ride(c, [C.MONGOL, C.MONGOL2, C.MONGOL3, C.MONGOL4][(i + lane) % 4], x, y, uu, (i + lane) % 3 ? BAY : WHITEH, lt, lt * 1.3 + i * .3 + lane, 1, L, { shN: 20, elN: 60 }, { look: [.7, .1] }, 1); } });
+      [[420, 560], [900, 566]].forEach(([x, y], k) => S.mgTug(c, x, y, 120, lt + k, '#e8e4dc'));
+      // two lanes of riders: a far lane (smaller) and a near lane, each evenly spaced so no two riders overlap within a lane
+      [[600, 19, 52, 200, 0], [700, 30, 80, 320, 1]].forEach(([y, uu, sp, st, lane]) => { const span = st * 6; for (let i = 0; i < 6; i++) { const x = -260 + ((lt * sp + i * st + lane * st / 2) % span); if (x < -300 || x > 1560) continue;
+        ride(c, [C.MONGOL, C.MONGOL2, C.MONGOL3, C.MONGOL4][(i + lane) % 4], x, y, uu, (i + lane) % 3 ? BAY : ((i + lane) % 2 ? WHITEH : GREYH), lt, lt * 1.3 + i * .3 + lane, 1, L, { shN: 20 + (i % 3) * 15, elN: 60 - (i % 2) * 20, holdN: i % 2 ? S.mgSpear(c, -1.35) : undefined }, { look: [.7, .1] }, 1); } });
       S.mgDust(c, lt, 300, 720, 700, .2); },
     over: [(c, lt) => K.dateTag(c, '1219', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'KILLING AN ENVOY = THE WORST CRIME', lt, { at: Sh.tC, x: 960, y: 150, px: 46, rot: -2 })],
     sfx: [[.2, 'hooves_loop', .45], [.3, 'drum_loop', .2], ['worst crime', 'drum', .4], ['rode west', 'horn', .45]] },
