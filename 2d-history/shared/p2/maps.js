@@ -11,7 +11,7 @@
     return { x0: X0, y0: Y0, kx, ky, lon0: v.lon0, lat1: v.lat1, xy: (lon, lat) => [X0 + (lon - v.lon0) * kx, Y0 + (v.lat1 - lat) * ky], cos: Math.cos(midLat) };
   };
   ENV.regionPath = (c, pr, name, smooth = true) => {
-    const rings = (G.WORLD50 || {})[name] || []; c.beginPath();
+    const rings = ((ENV._WD) || G.WORLD50 || {})[name] || []; c.beginPath();
     for (const R0 of rings) { const pts = []; for (let i = 0; i < R0.length; i += 2) pts.push(pr.xy(R0[i], R0[i + 1]));
       if (pts.length < 3) continue; c.moveTo((pts[0][0] + pts[1][0]) / 2, (pts[0][1] + pts[1][1]) / 2);
       for (let i = 1; i < pts.length; i++) { const a = pts[i], b = pts[(i + 1) % pts.length]; if (smooth) c.quadraticCurveTo(a[0], a[1], (a[0] + b[0]) / 2, (a[1] + b[1]) / 2); else c.lineTo(a[0], a[1]); }
@@ -19,9 +19,10 @@
   };
   const poly = (c, pts) => { c.beginPath(); pts.forEach(([x, y], i) => i ? c.lineTo(x, y) : c.moveTo(x, y)); c.closePath(); };
   ENV.regionMap = (ctx, r, W, H, o = {}) => {
+    ENV._WD = o.world === 'ind' ? G.WORLD_IND : null; const WD = ENV._WD || G.WORLD50;
     const c = ctx, P = G.P2, desk = o.desk !== false, pr = ENV.regionProj(W, H, o.view, desk);
-    const visible = n => { const R = G.WORLD50[n]; for (const ring of R) for (let i = 0; i < ring.length; i += 2) { const [x, y] = pr.xy(ring[i], ring[i + 1]); if (x > -400 && x < W + 400 && y > -400 && y < H + 400) return true; } return false; };
-    const names = Object.keys(G.WORLD50 || {}).filter(visible);
+    const visible = n => { const R = WD[n]; for (const ring of R) for (let i = 0; i < ring.length; i += 2) { const [x, y] = pr.xy(ring[i], ring[i + 1]); if (x > -400 && x < W + 400 && y > -400 && y < H + 400) return true; } return false; };
+    const names = Object.keys(WD || {}).filter(visible);
     let px0 = 0, py0 = 0, px1 = W, py1 = H, edge;
     if (desk) {
       c.fillStyle = '#3b2416'; c.fillRect(0, 0, W, H);
@@ -61,6 +62,7 @@
     // borders (dashed) and coast ink
     c.lineJoin = 'round'; names.forEach(n => { ENV.regionPath(c, pr, n); c.setLineDash([7, 6]); c.strokeStyle = 'rgba(90,60,30,.45)'; c.lineWidth = 1.6; c.stroke(); });
     c.setLineDash([]);
+    if (o.highlight && WD[o.highlight]) { ENV.regionPath(c, pr, o.highlight); c.fillStyle = 'rgba(226,150,70,.22)'; c.fill(); c.strokeStyle = 'rgba(96,52,22,.85)'; c.lineWidth = 3.2; c.stroke(); }
     { const tmp = document.createElement('canvas'); tmp.width = W; tmp.height = H; const t = tmp.getContext('2d'); t.fillStyle = '#000'; names.forEach(n => { ENV.regionPath(t, pr, n); t.fill(); });
       const e = document.createElement('canvas'); e.width = W; e.height = H; const et = e.getContext('2d'); et.filter = 'blur(1.4px)'; et.drawImage(tmp, -2, 0); et.drawImage(tmp, 2, 0); et.drawImage(tmp, 0, -2); et.drawImage(tmp, 0, 2); et.filter = 'none'; et.globalCompositeOperation = 'destination-out'; et.drawImage(tmp, 0, 0);
       et.globalCompositeOperation = 'source-in'; et.fillStyle = 'rgba(60,38,18,.9)'; et.fillRect(0, 0, W, H); c.drawImage(e, 0, 0); }
@@ -78,5 +80,6 @@
     c.restore();
     if (desk) { P.glow(c, W * .3, H * .2, 1500, '#ffd9a0', .18); const sh = c.createLinearGradient(0, 0, W, H); sh.addColorStop(0, 'rgba(0,0,0,0)'); sh.addColorStop(1, 'rgba(10,5,0,.35)'); c.fillStyle = sh; c.fillRect(0, 0, W, H); }
     ENV.impasto(ctx, r, W, H, { n: 60000, edge: 30 }); P.finish(ctx, r, W, H, { oil: 0, canvas: 8, grain: 7, vig: .4 });
+    ENV._WD = null;
   };
 })(window);

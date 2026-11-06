@@ -142,7 +142,8 @@
       if (cos.shoes) { ctx.strokeStyle = 'rgba(255,240,220,.35)'; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.moveTo(4, -5); ctx.quadraticCurveTo(16, -7, 24, -1); ctx.stroke(); ctx.fillStyle = shadeHex(sc.startsWith('#') ? sc : '#222222', -.3); ctx.fillRect(-12, 6, 40, 3); }
       ctx.restore();
     };
-    const arm = (side, near) => {
+    const arm = (side, near, only) => {
+      const ga0 = ctx.globalAlpha; if (only === 'hold') ctx.globalAlpha = 0;
       const sx = neck.x + (side > 0 ? shW * .6 : -shW * .58), sy = neck.y + (side > 0 ? 18 : 15); let a1 = P[side < 0 ? 'shL' : 'shR'] * D2R, a2 = a1 - P[side < 0 ? 'elL' : 'elR'] * D2R;
       if (P.chin > 0 && side < 0) { const w = Math.min(1, P.chin), tx = neck.x + Math.sin(lean) * 12 + 20, ty = neck.y + 22, dx = tx - sx, dy = ty - sy, d = Math.min(armU + armL - 1, Math.hypot(dx, dy)), base = Math.atan2(dx, dy), k = Math.acos((armU * armU + d * d - armL * armL) / (2 * armU * d)); const b1 = base - k, ex0 = sx + Math.sin(b1) * armU, ey0 = sy + Math.cos(b1) * armU, b2 = Math.atan2(tx - ex0, ty - ey0); a1 = a1 + (b1 - a1) * w; a2 = a2 + (b2 - a2) * w; }
       const ex = sx + Math.sin(a1) * armU, ey = sy + Math.cos(a1) * armU, hx = ex + Math.sin(a2) * armL, hy = ey + Math.cos(a2) * armL;
@@ -157,10 +158,10 @@
         limb(ctx, [[sx, sy], [ex, ey]], AW, c, { rim: near }); ctx.save(); ctx.translate(ex, ey); ctx.rotate(-a1); ctx.fillStyle = shadeHex(cos.sleeve, -.08); ctx.strokeStyle = INK; ctx.lineWidth = 2.6; ctx.beginPath(); ctx.roundRect(-AW - 3, -6, AW * 2 + 6, 11, 4); ctx.fill(); ctx.stroke(); ctx.restore();
       } else limb(ctx, [[sx, sy], [ex, ey], [hx, hy]], AW * .85, near ? SKIN : SKIN_SH, { shadeCol: SKIN_SH });
       const hm = P[side < 0 ? 'handL' : 'handR']; mitten(ctx, hx, hy - 2, a2, near, hm === 'open' && Math.sin(a2) < 0 ? -1 : 1, hm);
-      const hk = side > 0 ? 'near' : 'far'; if (o.hold && o.hold[hk]) { ctx.save(); ctx.translate(hx, hy); ctx.rotate(-a2); o.hold[hk](ctx, t); ctx.restore(); }
+      const hk = side > 0 ? 'near' : 'far'; ctx.globalAlpha = ga0; const hb = !!o.holdBehind && side > 0; if ((only === 'hold') !== hb) return; if (o.hold && o.hold[hk]) { ctx.save(); ctx.translate(hx, hy); ctx.rotate(-a2); o.hold[hk](ctx, t); ctx.restore(); }
     };
     const folded = o.pose === 'sit' || o.pose === 'squat' || o.pose === 'work';
-    leg(1, false); arm(1, false); if (!folded) leg(-1, true);
+    if (o.holdBehind) arm(1, false, 'hold'); leg(1, false); arm(1, false); if (!folded) leg(-1, true);
     // ---- torso: rounded trapezoid, two-tone cel shade, rim light, folds ----
     const tcol = cos.torso, wide = cos.wide ? 6 : 0;
     const torso = () => { ctx.beginPath(); ctx.moveTo(-hipW - 4 - wide, hipY + 10); ctx.bezierCurveTo(-hipW - 8 - wide, hipY - 20, -shW - 4 + neck.x * .4, neck.y + 40, neck.x - shW + 2, neck.y + 14); ctx.quadraticCurveTo(neck.x - shW + 6, neck.y - 2, neck.x - 14, neck.y); ctx.lineTo(neck.x + 14, neck.y); ctx.quadraticCurveTo(neck.x + shW - 6, neck.y - 2, neck.x + shW - 2, neck.y + 14); ctx.bezierCurveTo(shW + 4 + neck.x * .4, neck.y + 40, hipW + 8 + wide, hipY - 20, hipW + 4 + wide, hipY + 10); ctx.quadraticCurveTo(0, hipY + 16, -hipW - 4 - wide, hipY + 10); ctx.closePath(); };

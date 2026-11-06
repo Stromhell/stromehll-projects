@@ -11,7 +11,7 @@ const backdrop = (name, b = .5, blur = 8) => (c) => { c.save(); c.filter = `blur
 const CARRY = () => ({ shL: 30, elL: -75, shR: 35, elR: -75 });
 const endTitle = (secs) => { const T = window.TIMING; const last = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length, start: last.end, end: last.end + secs, vo_start: last.end, vo_end: last.end, text: '' }); T.dur = last.end + secs; };
 for (const n of ['pco_road', 'map_india', 'warehouse', 'boardroom', 'chai_stall', 'phone_shop']) K.load(n, PL + n + '.jpg');
-const IN = (lon, lat) => [150 + (lon - 62) * (2260 / 40), 240 + (37 - lat) * (1010 / 32)];
+const IN = (lon, lat) => [150 + (lon - 62) * (2260 / 40), 240 + (39 - lat) * (1010 / 34)];
 const CITY = { Delhi: [77.2, 28.6], Mumbai: [72.88, 19.08], Kolkata: [88.36, 22.57], Chennai: [80.27, 13.08], Patna: [85.1, 25.6], Lucknow: [80.95, 26.85], Jaipur: [75.8, 26.9], Ahmedabad: [72.6, 23.0], Hyderabad: [78.5, 17.4], Bengaluru: [77.6, 12.97], Bhopal: [77.4, 23.25], Pune: [73.85, 18.5], Nagpur: [79.1, 21.15], Guwahati: [91.7, 26.1], Indore: [75.85, 22.7] };
 const boothIcon = (c, x, y, s) => { c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = '#f0c020'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(-22, -60, 44, 60); c.strokeRect(-22, -60, 44, 60); c.fillStyle = '#c8281e'; c.fillRect(-18, -54, 36, 10); c.fillStyle = '#3a3a3a'; c.fillRect(-12, -36, 24, 20); c.restore(); };
 const car = (c, x, y, s, col = '#f4f2ec') => { c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = 'rgba(0,0,0,.3)'; c.beginPath(); c.ellipse(0, 6, 300, 26, 0, 0, 7); c.fill(); c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.moveTo(-280, -40); c.lineTo(-270, -120); c.lineTo(-150, -130); c.lineTo(-90, -230); c.lineTo(130, -230); c.lineTo(210, -130); c.lineTo(280, -110); c.lineTo(290, -40); c.closePath(); c.fill(); c.stroke();
@@ -63,7 +63,7 @@ window.SHOTS = [
       S.D.sfx = [[tC, 'phone_ring', .4], [S.tO, 'tension', .3], [tF + 1, 'thud', .4]]; } },
   // 2.07 Rahul walks into a telecom boardroom with a sample under his arm
   { plate: 'boardroom', cam: { z: [1.04, 1.1], x: [1280, 1260], y: [820, 820] }, bed: [['office_loop', .2]],
-    figs: [{ x: 1050, y: 1330, s: 1.9, ...MX.RAHUL_SUIT, facing: 1, pose: 'present', mood: 'focus', walk: { x0: -300, x1: 1050, t0: .2, dur: 2.6 }, hold: { near: samplePhone } },
+    figs: [{ x: 1050, y: 1330, s: 1.9, ...MX.RAHUL_SUIT, facing: 1, pose: 'present', mood: 'focus', walk: { x0: -300, x1: 1050, t0: .2, dur: 2.6 }, hold: { near: samplePhone }, holdBehind: true },
       { x: 1900, y: 1330, s: 1.9, ...MX.P({ costume: 'suit', topCol: '#3a3a44', hair: 'short', hairCol: '#2a2420', seed: 50, glasses: true }), facing: -1, pose: 'think', mood: 'neutral', anim: (o, lt) => { if (lt > 3) { o.pose = 'present'; o.mood = 'happy'; } } }],
     init: S => { S.D.over = [(c, lt) => K.card(c, 'STRAIGHT TO THE PHONE COMPANIES', lt, { at: .6, x: 960, y: 160, px: 42, rot: -2 })]; S.D.sfx = [[.2, 'footsteps', .35], [3, 'pop', .25]]; } },
   // 2.08 the chai-stall board: a revenue bar shoots up past 100 crore

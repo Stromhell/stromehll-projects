@@ -190,10 +190,10 @@ window.PLATES = {
   stage_orange: (c, r, W, H) => ENV.launchStage(c, r, W, H, { col: '#e86a10' }),
   living_room: (c, r, W, H) => ENV.livingRoom(c, r, W, H),
   corkboard: (c, r, W, H) => ENV.corkboard(c, r, W, H),
-  map_india: (c, r, W, H) => ENV.regionMap(c, r, W, H, { view: { lon0: 62, lon1: 102, lat0: 5, lat1: 37 }, grid: 5, compass: [64, 8], title: 'India', titleXY: [2080, 1080],
+  map_india: (c, r, W, H) => ENV.regionMap(c, r, W, H, { world: 'ind', highlight: 'India', view: { lon0: 62, lon1: 102, lat0: 5, lat1: 39 }, grid: 5, compass: [64, 8], title: 'India', titleXY: [2080, 1080],
     labels: [[77.2, 28.6, 'Delhi', 26, true], [72.88, 19.08, 'Mumbai', 24, true], [88.36, 22.57, 'Kolkata', 24, true], [80.27, 13.08, 'Chennai', 24, true], [85.1, 25.6, 'Patna', 22, true], [80.95, 26.85, 'Lucknow', 22, true]],
     mountains: [[80, 31, 14, 6]], rivers: [], greens: [[76, 12, 6], [88, 25, 5]], deserts: [[71, 27, 4]] }),
-  map_asia: (c, r, W, H) => ENV.regionMap(c, r, W, H, { view: { lon0: 64, lon1: 128, lat0: 4, lat1: 46 }, grid: 10, compass: [66, 7], title: 'Asia', titleXY: [2080, 1080],
+  map_asia: (c, r, W, H) => ENV.regionMap(c, r, W, H, { world: 'ind', highlight: 'India', view: { lon0: 64, lon1: 128, lat0: 4, lat1: 46 }, grid: 10, compass: [66, 7], title: 'Asia', titleXY: [2080, 1080],
     labels: [[77.2, 28.6, 'Delhi', 24, true], [114.06, 22.54, 'Shenzhen', 24, true], [116.4, 39.9, 'Beijing', 22, true]],
     mountains: [[85, 31, 16, 8]], rivers: [], greens: [[110, 28, 8]], deserts: [[95, 40, 8]] }),
 };
