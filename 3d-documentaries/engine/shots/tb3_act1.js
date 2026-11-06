@@ -116,22 +116,27 @@ export const shots = {
     // The VO was re-voiced (tb_vo/act1/vo-12.wav, same voice and settings); the subtitle follows the new line, not the read-only script json
     k.meta.narration = 'In the cockpit are Michel Bacos, the captain, his co-pilot, and the flight engineer.';
     await real.env(k, 'kloofendal_48d_partly_cloudy_puresky', { sun: false, bg: 0x101010, envI: .55 });
-    const fd = await sets.flightDeck(k, { sky: 0xbfd8f0 });
+    const fd = await sets.flightDeck(k, { sky: 0xbfd8f0 }); deckDetail(k);
     const [cpt, fo, fe] = await Promise.all(['tb_bacos', 'tb_copilot', 'tb_engineer'].map((id, i) => real.human({ id, seed: 40 + i })));
     real.put(scene, cpt, { pos: [.55, 0, .12], rot: 0, pose: 'sitDesk', arm: 'desk', seatH: .5 });
     real.put(scene, fo, { pos: [-.55, 0, .12], rot: 0, pose: 'sitDesk', arm: 'desk', seatH: .5 });
     real.put(scene, fe, { pos: [-1.05, 0, -1.0], rot: -P / 2 + .3, pose: 'sit', arm: 'desk', seatH: .5 });
-    [cpt, fo, fe].forEach(p => p.userData.driven = true);
+    [cpt, fo, fe].forEach(p => { p.userData.driven = true; dullCap(p); }); engineerLook(fe);
+    // QA act1r10: own caption locked at bottom centre (it flipped top/bottom mid-shot)
+    const cap = ownCaption(k, 960, 1080 - 110);
+    // QA act1r10: "and the flight engineer" cuts to the engineer at his side panel behind the pilots (it played over the captain)
+    const m = k.meta, tE = (m.voA ?? .35) + ((m.voB ?? m.seconds - .25) - (m.voA ?? .35)) * .64;
     cpt.update(0); k.noAutoOverlay = true; // QA act1r2: own callout, clamped to a 5% safe margin and shown only while the narration names Bacos
     const V = new THREE.Vector3();
     const cam = dolly(camera, { pos: [-.05, 1.66, -1.55], look: [.15, 1.25, 1.3], fov: 56 }, { pos: [-.05, 1.5, .7], look: [.55, 1.28, .1], fov: 44 });
     return (t, u) => {
-      cam(u);
+      if (t < tE) cam(Math.min(1, t / tE));
+      else { const w = seg(t, tE, m.seconds || 5); camera.fov = 46; camera.updateProjectionMatrix(); camera.position.set(lerp(-.75, -.82, w), 1.6, lerp(-.05, -.15, w)); camera.lookAt(-1.25, 1.25, -1.1); }
       // the narration names captain, co-pilot, engineer in turn; each one moves as they are named
       cpt.update(t, { pose: 'sitDesk', arm: 'desk', seatH: .5, look: t < 2 ? 0 : -.35 * seg(t, 2, 2.6), mood: 'calm' });
       fo.update(t, { pose: 'sitDesk', arm: t > 3 && t < 4.6 ? 'raise' : 'desk', seatH: .5, look: t > 2.4 ? .3 : 0 });
       fe.update(t, { pose: 'sit', arm: 'desk', seatH: .5, nod: t > 4.2 ? .4 : 0 });
-      tick(k); const a = seg(t, .5, .8) * (1 - seg(t, 2.0, 2.3));
+      tick(k); cap(t); const a = seg(t, .5, .8) * (1 - seg(t, 2.0, 2.3));
       if (a > 0) {
         V.fromArray(headPos(cpt)); V.y += .32; V.project(camera);
         const px = Math.min(1824 - 230, Math.max(96 + 230, (V.x + 1) * 960)), py = Math.min(1026 - 20, Math.max(54 + 112, (1 - V.y) * 540));
@@ -159,6 +164,50 @@ const ownCaption = (k, cx, cy) => {
     o.save(); o.font = '600 46px "Oswald"'; o.globalAlpha = Math.min(1, (t - c.a) / .2, (c.b - t) / .05); o.textAlign = 'center'; o.textBaseline = 'middle';
     o.lineJoin = 'round'; o.lineWidth = 10; o.strokeStyle = 'rgba(20,14,10,.92)'; o.strokeText(c.text, cx, cy); o.fillStyle = '#fff'; o.fillText(c.text, cx, cy); o.restore(); };
 };
+
+// QA act1r10: crew-cap helpers. The cap from lib/uniforms.js hangs off the Head bone; its gold band is full metal and caught the key light
+const capOf = p => { let cap = null; p.parts.bones.Head?.traverse(c => { if (!cap && c.isMesh && c.geometry?.parameters?.radiusTop === .138) cap = c.parent; }); return cap; };
+const dullCap = p => { const c = capOf(p); if (c) c.traverse(m => { if (m.isMesh) { m.material.metalness = Math.min(m.material.metalness, .25); m.material.roughness = Math.max(m.material.roughness, .75); m.material.envMapIntensity = .4; } }); };
+// the flight engineer reads as a younger man without a cap, darker hair, so he is not taken for the captain
+const engineerLook = p => { const c = capOf(p); if (c) c.visible = false; p.traverse(m => { if (m.isMesh && /hair/i.test(m.name)) { m.material = m.material.clone(); m.material.color.set(0x3a2a1c); } }); };
+// QA act1r10: the flight deck read flat and blocky in close shots. Extra panel detail: overhead switch panels, a busier engineer panel,
+// annunciator strip, pedestal radios, quilted wall lining. Canvas textures with a faint emissive only, no extra lights (RQ=fast overflowed in 1.10)
+function deckDetail(k) {
+  const { real, scene } = k; const g = new THREE.Group(); scene.add(g);
+  const sw = (w, h, o = {}) => real.canvasTex(w, h, (c, W, H) => {
+    c.fillStyle = o.bg ?? '#2b2f34'; c.fillRect(0, 0, W, H); let r = o.seed ?? 3; const rnd = () => (r = (r * 9301 + 49297) % 233280) / 233280;
+    c.strokeStyle = 'rgba(200,205,210,.35)'; c.lineWidth = 2;
+    for (let by = 8; by < H - 30; by += 64) for (let bx = 8; bx < W - 30; bx += 96) {
+      c.strokeRect(bx, by, 88, 56); c.fillStyle = 'rgba(220,220,210,.7)'; c.fillRect(bx + 6, by + 4, 40 + rnd() * 30, 3);
+      const kind = rnd();
+      if (kind < .45) for (let i = 0; i < 4; i++) { c.fillStyle = '#111'; c.fillRect(bx + 10 + i * 19, by + 18, 9, 22); c.fillStyle = '#cfcfc8'; c.fillRect(bx + 12 + i * 19, by + (rnd() < .5 ? 19 : 30), 5, 9); }
+      else if (kind < .8) { const cx = bx + 44, cy = by + 32; c.fillStyle = '#0c0d0f'; c.beginPath(); c.arc(cx, cy, 20, 0, P * 2); c.fill(); c.strokeStyle = '#ddd'; c.lineWidth = 1.5;
+        for (let a = 0; a < 12; a++) { const t = -P * 1.2 + a * P * 2.4 / 11; c.beginPath(); c.moveTo(cx + Math.cos(t) * 15, cy + Math.sin(t) * 15); c.lineTo(cx + Math.cos(t) * 19, cy + Math.sin(t) * 19); c.stroke(); }
+        const t = -P * 1.2 + rnd() * P * 2.4; c.strokeStyle = '#f0f0e0'; c.lineWidth = 2.5; c.beginPath(); c.moveTo(cx, cy); c.lineTo(cx + Math.cos(t) * 16, cy + Math.sin(t) * 16); c.stroke(); c.strokeStyle = 'rgba(200,205,210,.35)'; c.lineWidth = 2; }
+      else for (let i = 0; i < 3; i++) { c.fillStyle = ['#b8862a', '#3a7a3a', '#8a2a22'][(i + (rnd() * 3 | 0)) % 3]; c.fillRect(bx + 10 + i * 26, by + 20, 20, 14); c.fillStyle = '#111'; c.fillRect(bx + 10 + i * 26, by + 38, 20, 6); }
+    }
+    c.fillStyle = 'rgba(255,255,255,.18)'; for (let x = 4; x < W; x += 96) for (const y of [3, H - 6]) c.fillRect(x, y, 3, 3);
+  });
+  const panel = (w, h, tex, pos, rot, e = .06) => { const mat = new THREE.MeshStandardMaterial({ map: tex, roughness: .7, metalness: 0, emissive: 0xffffff, emissiveMap: tex, emissiveIntensity: e }); const mm = real.m(new THREE.PlaneGeometry(w, h), mat, { pos, rot, cast: false }); g.add(mm); return mm; };
+  const frame = real.std(0x26292d, { rough: .7, metal: .1 });
+  // overhead: two more switch panels either side of the centre one, angled with the roof, on a raised frame
+  for (const [x, ry] of [[-.78, -.35], [.78, .35]]) { panel(.5, 1.1, sw(512, 1024, { seed: x > 0 ? 7 : 11 }), [x, 2.26, .35], [P / 2 + .25, 0, ry]); }
+  g.add(real.box(2.2, .04, .05, frame, { pos: [0, 2.2, 1.0], cast: false })); g.add(real.box(2.2, .04, .05, frame, { pos: [0, 2.42, -.2], cast: false }));
+  // annunciator strip along the glareshield edge
+  const ann = real.canvasTex(1024, 64, (c, W, H) => { c.fillStyle = '#16181b'; c.fillRect(0, 0, W, H); for (let x = 10; x < W; x += 42) { c.fillStyle = ['#5a4a20', '#2a4a2a', '#4a2020', '#3a3a3a'][(x / 42 | 0) % 4]; c.fillRect(x, 14, 34, 36); } });
+  panel(3.0, .09, ann, [0, 1.27, 1.06], [-.4, P, 0], .25);
+  // pedestal top: radio / nav control heads
+  panel(.56, 1.0, sw(512, 1024, { seed: 5, bg: '#22252a' }), [0, .8, .58], [-P / 2 + .12, 0, 0]);
+  // flight engineer's panel: busier switch-and-gauge face over the plain one, plus a lower breaker row
+  panel(1.36, .86, sw(1024, 640, { seed: 17 }), [-1.705, 1.2, -1.0], [0, P / 2, 0], .1);
+  panel(1.36, .4, sw(1024, 300, { seed: 23 }), [-1.69, 1.78, -1.0], [0, P / 2, -.3], .06);
+  g.add(real.box(.06, .9, 1.44, frame, { pos: [-1.74, 1.2, -1.0], cast: false }));
+  // quilted sound-proofing on the side walls behind the pilots
+  const quilt = real.canvasTex(512, 512, (c, W, H) => { c.fillStyle = '#7a7e82'; c.fillRect(0, 0, W, H); for (let y = 0; y < H; y += 64) for (let x = 0; x < W; x += 64) { const gr = c.createRadialGradient(x + 32, y + 32, 4, x + 32, y + 32, 40); gr.addColorStop(0, 'rgba(255,255,255,.12)'); gr.addColorStop(1, 'rgba(0,0,0,.22)'); c.fillStyle = gr; c.fillRect(x, y, 64, 64); } c.fillStyle = 'rgba(0,0,0,.5)'; for (let y = 0; y < H; y += 64) for (let x = 0; x < W; x += 64) c.fillRect(x + 30, y + 30, 4, 4); });
+  quilt.wrapS = quilt.wrapT = THREE.RepeatWrapping; quilt.repeat.set(2, 1.5);
+  for (const s of [1, -1]) g.add(real.m(new THREE.PlaneGeometry(1.2, .9), new THREE.MeshStandardMaterial({ map: quilt, roughness: .95 }), { pos: [s * 1.6, 1.05, .75], rot: [0, -s * P / 2 + s * .2, 0], cast: false }));
+  return g;
+}
 const tick = k => { const o = k.overlay; if (!o) return; o.save(); o.setTransform(1, 0, 0, 1, 0, 0); o.globalAlpha = .004; o.fillStyle = '#000'; o.fillRect(0, 0, 2, 2); o.restore(); };
 // QA act1r2: the overhead cutaways floated in a black void. Give the cabin the lower half of its fuselage (aluminium skin, frames standing proud at
 // the cut and at both open ends, a cut lip along the rim) and a dark blue-grey gradient backdrop with a soft glow under the hull
@@ -496,13 +545,14 @@ Object.assign(shots, {
   '1.13': async k => {
     const { real, scene, camera } = k;
     await sky(real, k, { envI: .55 });
-    const fd = await sets.flightDeck(k, { sky: 0xbfd8f0 });
+    const fd = await sets.flightDeck(k, { sky: 0xbfd8f0 }); deckDetail(k);
     const [cpt, fo, fe] = await Promise.all([C.CREW.bacos, C.CREW.copilot, C.CREW.engineer].map((id, i) => real.human({ id, seed: 40 + i })));
     real.put(scene, cpt, { pos: [.55, 0, .12], rot: 0, pose: 'sitDesk', arm: 'desk', seatH: .5, mood: 'worried' });
     real.put(scene, fo, { pos: [-.55, 0, .12], rot: 0, pose: 'sitDesk', arm: 'desk', seatH: .5, mood: 'worried' });
     real.put(scene, fe, { pos: [-1.05, 0, -1.0], rot: -P / 2 + .3, pose: 'sit', seatH: .5 });
-    [cpt, fo, fe].forEach(p => p.userData.driven = true);
-    const cam = C.dolly(camera, { pos: [1.0, 1.78, .6], look: [-.4, 1.15, -1.6], fov: 50 }, { pos: [.9, 1.72, .4], look: [-.4, 1.2, -1.9], fov: 46 });
+    [cpt, fo, fe].forEach(p => { p.userData.driven = true; dullCap(p); }); engineerLook(fe);
+    // QA act1r10: camera pulled back and up, over the captain's right shoulder (it sat nearly inside his head)
+    const cam = C.dolly(camera, { pos: [1.3, 2.05, 1.15], look: [-.4, 1.05, -1.6], fov: 50 }, { pos: [1.2, 2.0, .95], look: [-.4, 1.1, -1.9], fov: 46 });
     return (t, u) => {
       cam(u);
       cpt.update(t, { pose: 'sitDesk', arm: t > 1.2 && t < 2.6 ? 'point' : 'desk', seatH: .5, look: -1.2 * C.ease(C.seg(t, .3, 1.0)), mood: 'worried' });
@@ -516,7 +566,7 @@ Object.assign(shots, {
   '1.14': async k => {
     const { real, scene, camera } = k;
     await sky(real, k, { envI: .5 });
-    const fd = await sets.flightDeck(k, { sky: 0xbfd8f0, dayI: 1.2 });
+    const fd = await sets.flightDeck(k, { sky: 0xbfd8f0, dayI: 1.2 }); deckDetail(k);
     // bright galley behind the door
     const gp = real.canvasTex(512, 512, (c, w, h) => { c.fillStyle = '#b8b4aa'; c.fillRect(0, 0, w, h); c.strokeStyle = 'rgba(0,0,0,.25)'; c.lineWidth = 3; for (let x = 0; x < w; x += 128) for (let y = 0; y < h; y += 170) c.strokeRect(x + 4, y + 4, 120, 162); });
     scene.add(real.box(2.2, 2.4, 2.4, new THREE.MeshStandardMaterial({ map: gp, roughness: .8, side: THREE.BackSide }), { pos: [-.1, 1.2, -3.1], cast: false }));
@@ -529,7 +579,7 @@ Object.assign(shots, {
     const fe = await real.human({ id: C.CREW.engineer, seed: 42 }); real.put(scene, fe, { pos: [-.15, 0, -1.35], rot: P, mood: 'surprised' });
     const h = await real.human({ id: C.HJ.bose, seed: 81 }); real.put(scene, h, { pos: [.32, 0, -3.0], rot: -.25, mood: 'stern' });
     C.attach(h, C.pistolShape(), 'RightHand', [0, -.08, .05], [P / 2, 0, 0]);
-    [fe, h].forEach(p => p.userData.driven = true);
+    [fe, h].forEach(p => p.userData.driven = true); dullCap(fe); engineerLook(fe);
     const cam = C.dolly(camera, { pos: [.6, 1.55, .6], look: [-.15, 1.4, -2.2], fov: 50 }, { pos: [.35, 1.55, -.2], look: [-.13, 1.45, -2.4], fov: 44 }, { ease: u => 1 - (1 - Math.min(1, u * 2.2)) ** 3 });
     return (t, u) => {
       cam(u);
