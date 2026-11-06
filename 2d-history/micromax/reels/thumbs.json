@@ -1,0 +1,197 @@
+[
+ {
+  "id": 1,
+  "frame": 386,
+  "hx": 560,
+  "hy": 540,
+  "z": 1.0,
+  "lines": [
+   "THE \u20b956,000",
+   "COMPUTER"
+  ],
+  "hi": 1,
+  "acc": "#ff8a3a"
+ },
+ {
+  "id": 2,
+  "frame": 200,
+  "hx": 700,
+  "hy": 540,
+  "z": 1.0,
+  "lines": [
+   "BOOTH PHONES",
+   "FIRST"
+  ],
+  "hi": 1,
+  "acc": "#ff8a3a"
+ },
+ {
+  "id": 3,
+  "frame": 680,
+  "hx": 670,
+  "hy": 540,
+  "z": 1.0,
+  "lines": [
+   "THE 30-DAY",
+   "BATTERY"
+  ],
+  "hi": 1,
+  "acc": "#ff8a3a"
+ },
+ {
+  "id": 4,
+  "frame": 1191,
+  "hx": 900,
+  "hy": 540,
+  "z": 1.0,
+  "lines": [
+   "SOLD OUT IN",
+   "10 DAYS"
+  ],
+  "hi": 1,
+  "acc": "#ff8a3a"
+ },
+ {
+  "id": 5,
+  "frame": 1477,
+  "hx": 920,
+  "hy": 540,
+  "z": 1.0,
+  "lines": [
+   "THE NOKIA",
+   "SHOCK"
+  ],
+  "hi": 1,
+  "acc": "#ff8a3a"
+ },
+ {
+  "id": 6,
+  "frame": 462,
+  "hx": 975,
+  "hy": 540,
+  "z": 1.0,
+  "lines": [
+   "THE KARVA",
+   "CHAUTH AD"
+  ],
+  "hi": 1,
+  "acc": "#ff8a3a"
+ },
+ {
+  "id": 7,
+  "frame": 1198,
+  "hx": 955,
+  "hy": 540,
+  "z": 1.0,
+  "lines": [
+   "CANVAS",
+   "FEVER"
+  ],
+  "hi": 1,
+  "acc": "#ff8a3a"
+ },
+ {
+  "id": 8,
+  "frame": 1964,
+  "hx": 760,
+  "hy": 540,
+  "z": 1.0,
+  "lines": [
+   "BRANDED",
+   "IN INDIA"
+  ],
+  "hi": 1,
+  "acc": "#ff8a3a"
+ },
+ {
+  "id": 9,
+  "frame": 329,
+  "hx": 690,
+  "hy": 540,
+  "z": 1.0,
+  "lines": [
+   "WHO KILLED",
+   "MICROMAX?"
+  ],
+  "hi": 1,
+  "acc": "#ff8a3a"
+ },
+ {
+  "id": 10,
+  "frame": 942,
+  "hx": 970,
+  "hy": 540,
+  "z": 1.0,
+  "lines": [
+   "FOUR FRIENDS,",
+   "2000"
+  ],
+  "hi": 1,
+  "acc": "#ff8a3a"
+ },
+ {
+  "id": 11,
+  "frame": 200,
+  "hx": 700,
+  "hy": 540,
+  "z": 1.0,
+  "lines": [
+   "SUSPECT 1:",
+   "CHINA"
+  ],
+  "hi": 1,
+  "acc": "#ff8a3a"
+ },
+ {
+  "id": 12,
+  "frame": 1150,
+  "hx": 960,
+  "hy": 540,
+  "z": 1.0,
+  "lines": [
+   "SUSPECT 2:",
+   "JIO"
+  ],
+  "hi": 1,
+  "acc": "#ff8a3a"
+ },
+ {
+  "id": 13,
+  "frame": 1841,
+  "hx": 960,
+  "hy": 540,
+  "z": 1.0,
+  "lines": [
+   "SUSPECT 3:",
+   "ITSELF"
+  ],
+  "hi": 1,
+  "acc": "#ff8a3a"
+ },
+ {
+  "id": 14,
+  "frame": 357,
+  "hx": 960,
+  "hy": 540,
+  "z": 1.0,
+  "lines": [
+   "THE 'IN'",
+   "COMEBACK"
+  ],
+  "hi": 1,
+  "acc": "#ff8a3a"
+ },
+ {
+  "id": 15,
+  "frame": 880,
+  "hx": 920,
+  "hy": 540,
+  "z": 1.0,
+  "lines": [
+   "THE",
+   "VERDICT"
+  ],
+  "hi": 1,
+  "acc": "#ff8a3a"
+ }
+]

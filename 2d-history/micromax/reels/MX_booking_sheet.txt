@@ -1,0 +1,136 @@
+MICROMAX (2D) BOOKING SHEET, 6 Nov 2026
+Files: /mnt/project-files/2d-history/micromax/launch
+
+FULL VIDEO (YouTube): Who Killed Micromax?
+  file: full_parts/ (see notes in manifest)
+  thumbnail: Micromax_Thumbnail_v1.jpg
+  title/description/chapters: Micromax_Title_Description.txt
+
+REELS (Instagram Reels + YouTube Shorts), in order:
+ 1. He Asked for a 56,000-Rupee PC (29.6s)
+    /mnt/project-files/2d-history/micromax/launch/reels/MX_Reel_01.mp4
+    cover /mnt/project-files/2d-history/micromax/launch/reel_covers/MX_Reel_01_thumb.jpg
+    In the 1990s Rahul Sharma asked his father for a computer that cost about 56,000 rupees. With no internet at home, he learned from books and started a business.
+    Watch the full video on our YouTube channel.
+    #Micromax #History #Business #India #HistoryReels
+
+ 2. Micromax Started With Phone Booths (39.9s)
+    /mnt/project-files/2d-history/micromax/launch/reels/MX_Reel_02.mp4
+    cover /mnt/project-files/2d-history/micromax/launch/reel_covers/MX_Reel_02_thumb.jpg
+    Before its own phones, Micromax made wireless booth phones that ran on a SIM card for India's yellow STD-PCO booths.
+    Watch the full video on our YouTube channel.
+    #Micromax #History #Business #India #HistoryReels
+
+ 3. The Phone With a 30-Day Battery (36.4s)
+    /mnt/project-files/2d-history/micromax/launch/reels/MX_Reel_03.mp4
+    cover /mnt/project-files/2d-history/micromax/launch/reel_covers/MX_Reel_03_thumb.jpg
+    Power cuts in Uttar Pradesh and Bihar gave Rahul the idea: a phone whose battery could last up to 30 days on standby. The 2008 Micromax X1i.
+    Watch the full video on our YouTube channel.
+    #Micromax #History #Business #India #HistoryReels
+
+ 4. No Shop Would Stock It (26.5s)
+    /mnt/project-files/2d-history/micromax/launch/reels/MX_Reel_04.mp4
+    cover /mnt/project-files/2d-history/micromax/launch/reel_covers/MX_Reel_04_thumb.jpg
+    Distributors said customers only ask for Nokia. One old distributor tried it, and the first batch of about 10,000 phones sold out in around 10 days.
+    Watch the full video on our YouTube channel.
+    #Micromax #History #Business #India #HistoryReels
+
+ 5. One Customer, Then None (33.5s)
+    /mnt/project-files/2d-history/micromax/launch/reels/MX_Reel_05.mp4
+    cover /mnt/project-files/2d-history/micromax/launch/reel_covers/MX_Reel_05_thumb.jpg
+    Micromax's booth phones had one big customer. Then, as the founders tell it, that customer walked away, and Micromax went straight to the phone companies.
+    Watch the full video on our YouTube channel.
+    #Micromax #History #Business #India #HistoryReels
+
+ 6. The Ad Before Karva Chauth (32.2s)
+    /mnt/project-files/2d-history/micromax/launch/reels/MX_Reel_06.mp4
+    cover /mnt/project-files/2d-history/micromax/launch/reel_covers/MX_Reel_06_thumb.jpg
+    A stylish phone for women barely sold. Then came a TV ad with Akshay Kumar and Twinkle Khanna, right before Karva Chauth.
+    Watch the full video on our YouTube channel.
+    #Micromax #History #Business #India #HistoryReels
+
+ 7. Half the Price of a Samsung (30.0s)
+    /mnt/project-files/2d-history/micromax/launch/reels/MX_Reel_07.mp4
+    cover /mnt/project-files/2d-history/micromax/launch/reel_covers/MX_Reel_07_thumb.jpg
+    Big screens, dual SIMs and big batteries at half the price. Small-town India loved Micromax's Canvas phones.
+    Watch the full video on our YouTube channel.
+    #Micromax #History #Business #India #HistoryReels
+
+ 8. Branded in India, Built in China (34.1s)
+    /mnt/project-files/2d-history/micromax/launch/reels/MX_Reel_08.mp4
+    cover /mnt/project-files/2d-history/micromax/launch/reel_covers/MX_Reel_08_thumb.jpg
+    By 2014 Micromax was on top in India. But most of its phones were designed with, and built by, partners in China.
+    Watch the full video on our YouTube channel.
+    #Micromax #History #Business #India #HistoryReels
+
+ 9. The Indian Brand That Beat Samsung (26.3s)
+    /mnt/project-files/2d-history/micromax/launch/reels/MX_Reel_09.mp4
+    cover /mnt/project-files/2d-history/micromax/launch/reel_covers/MX_Reel_09_thumb.jpg
+    In 2014 an Indian phone brand outsold Samsung in India. Five years later it had almost no market left.
+    Watch the full video on our YouTube channel.
+    #Micromax #History #Business #India #HistoryReels
+
+ 10. Four Friends, One IT Company (24.7s)
+    /mnt/project-files/2d-history/micromax/launch/reels/MX_Reel_10.mp4
+    cover /mnt/project-files/2d-history/micromax/launch/reel_covers/MX_Reel_10_thumb.jpg
+    In 2000 Rahul Sharma, Vikas Jain, Rajesh Agarwal and Sumeet Kumar set up Micromax as a small IT company.
+    Watch the full video on our YouTube channel.
+    #Micromax #History #Business #India #HistoryReels
+
+ 11. Suspect 1: The Chinese Brands (38.3s)
+    /mnt/project-files/2d-history/micromax/launch/reels/MX_Reel_11.mp4
+    cover /mnt/project-files/2d-history/micromax/launch/reel_covers/MX_Reel_11_thumb.jpg
+    Xiaomi, Oppo and Vivo arrived with flash sales, huge ad budgets, fat margins for shopkeepers, and phones they built themselves.
+    Watch the full video on our YouTube channel.
+    #Micromax #History #Business #India #HistoryReels
+
+ 12. Suspect 2: Jio (25.5s)
+    /mnt/project-files/2d-history/micromax/launch/reels/MX_Reel_12.mp4
+    cover /mnt/project-files/2d-history/micromax/launch/reel_covers/MX_Reel_12_thumb.jpg
+    On 5 September 2016 Reliance Jio launched with free calls and free 4G data. Overnight India wanted 4G phones, and Micromax had warehouses of 3G stock.
+    Watch the full video on our YouTube channel.
+    #Micromax #History #Business #India #HistoryReels
+
+ 13. Suspect 3: Micromax Itself (25.3s)
+    /mnt/project-files/2d-history/micromax/launch/reels/MX_Reel_13.mp4
+    cover /mnt/project-files/2d-history/micromax/launch/reel_covers/MX_Reel_13_thumb.jpg
+    Slow to switch, spread across tablets and TVs, and without its own technology, Micromax couldn't get 4G chips as quickly as global rivals.
+    Watch the full video on our YouTube channel.
+    #Micromax #History #Business #India #HistoryReels
+
+ 14. The 'In' Comeback (27.2s)
+    /mnt/project-files/2d-history/micromax/launch/reels/MX_Reel_14.mp4
+    cover /mnt/project-files/2d-history/micromax/launch/reel_covers/MX_Reel_14_thumb.jpg
+    In 2020, after the India-China border clash, Micromax tried a comeback with its 'In' brand. It got headlines, not market share.
+    Watch the full video on our YouTube channel.
+    #Micromax #History #Business #India #HistoryReels
+
+ 15. The Verdict: Who Killed Micromax? (23.0s)
+    /mnt/project-files/2d-history/micromax/launch/reels/MX_Reel_15.mp4
+    cover /mnt/project-files/2d-history/micromax/launch/reel_covers/MX_Reel_15_thumb.jpg
+    Jio pulled the trigger, Chinese rivals were waiting, and Micromax was built on other people's technology. The lesson for every Indian start-up.
+    Watch the full video on our YouTube channel.
+    #Micromax #History #Business #India #HistoryReels
+
+----------
+INSTAGRAM PARTS (3 consecutive days, in order):
+ 1. Who Killed Micromax? Part 1 of 3: Booths and a Big Customer (130.1s)
+    /mnt/project-files/2d-history/micromax/launch/ig_parts/MX_Part_01.mp4
+    cover /mnt/project-files/2d-history/micromax/launch/ig_covers/MX_Part_01_thumb.jpg
+    An Indian brand that beat Samsung, a 56,000-rupee computer, and the booth phones that started Micromax.
+    Part 2 is on this page tomorrow.
+    #Micromax #History #Business #India #Animation
+
+ 2. Who Killed Micromax? Part 2 of 3: The Rise (135.1s)
+    /mnt/project-files/2d-history/micromax/launch/ig_parts/MX_Part_02.mp4
+    cover /mnt/project-files/2d-history/micromax/launch/ig_covers/MX_Part_02_thumb.jpg
+    A 30-day battery, a phone no shop would stock, the Karva Chauth ad, Canvas, and number one in India.
+    Part 3 is on this page tomorrow.
+    #Micromax #History #Business #India #Animation
+
+ 3. Who Killed Micromax? Part 3 of 3: The Suspects (129.1s)
+    /mnt/project-files/2d-history/micromax/launch/ig_parts/MX_Part_03.mp4
+    cover /mnt/project-files/2d-history/micromax/launch/ig_covers/MX_Part_03_thumb.jpg
+    Chinese brands, Jio's free 4G, and Micromax itself. Then the verdict.
+    Watch the full video on our YouTube channel.
+    #Micromax #History #Business #India #Animation
