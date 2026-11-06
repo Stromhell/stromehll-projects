@@ -1,0 +1,152 @@
+[
+ {
+  "id": 1,
+  "act": 0,
+  "s0": 0,
+  "s1": 2,
+  "hook": "In less than a year, Germany took seven countries. Here's how it started.",
+  "kicker": "7 COUNTRIES IN A YEAR",
+  "t0": 0.0,
+  "t1": 20.883
+ },
+ {
+  "id": 2,
+  "act": 1,
+  "s0": 1,
+  "s1": 3,
+  "hook": "One line in a 1919 treaty made Germany pay until 2010.",
+  "kicker": "THE 2010 DEBT",
+  "t0": 6.714,
+  "t1": 26.788
+ },
+ {
+  "id": 3,
+  "act": 2,
+  "s0": 0,
+  "s1": 2,
+  "hook": "A loaf of bread in Berlin cost 200 billion marks.",
+  "kicker": "200 BILLION FOR BREAD",
+  "t0": 0.0,
+  "t1": 20.489
+ },
+ {
+  "id": 4,
+  "act": 2,
+  "s0": 3,
+  "s1": 4,
+  "hook": "His coup failed. Prison made him famous.",
+  "kicker": "THE FAILED COUP",
+  "t0": 20.489,
+  "t1": 38.533
+ },
+ {
+  "id": 5,
+  "act": 3,
+  "s0": 0,
+  "s1": 1,
+  "hook": "Six million out of work. Then one man took over Germany.",
+  "kicker": "CHANCELLOR TO DICTATOR",
+  "t0": 0.0,
+  "t1": 13.985
+ },
+ {
+  "id": 6,
+  "act": 3,
+  "s0": 3,
+  "s1": 5,
+  "hook": "He broke the treaty. Britain even let him build a navy.",
+  "kicker": "TREATY BROKEN",
+  "t0": 19.592,
+  "t1": 41.838
+ },
+ {
+  "id": 7,
+  "act": 4,
+  "s0": 0,
+  "s1": 2,
+  "hook": "Austria called a vote. Germany invaded before it could happen.",
+  "kicker": "AUSTRIA SWALLOWED",
+  "t0": 0.0,
+  "t1": 24.711
+ },
+ {
+  "id": 8,
+  "act": 4,
+  "s0": 3,
+  "s1": 5,
+  "hook": "'Peace for our time.' It lasted six months.",
+  "kicker": "PEACE FOR OUR TIME",
+  "t0": 24.711,
+  "t1": 49.596
+ },
+ {
+  "id": 9,
+  "act": 5,
+  "s0": 0,
+  "s1": 1,
+  "hook": "Hitler and Stalin were sworn enemies. Then they made a secret deal.",
+  "kicker": "THE SECRET DEAL",
+  "t0": 0.0,
+  "t1": 12.734
+ },
+ {
+  "id": 10,
+  "act": 5,
+  "s0": 2,
+  "s1": 3,
+  "hook": "Poland was invaded. Two days later, the world was at war.",
+  "kicker": "1 SEPTEMBER 1939",
+  "t0": 12.734,
+  "t1": 26.431
+ },
+ {
+  "id": 11,
+  "act": 5,
+  "s0": 4,
+  "s1": 5,
+  "hook": "German soldiers were given meth to fight for days.",
+  "kicker": "BLITZKRIEG ON METH",
+  "t0": 26.431,
+  "t1": 42.574
+ },
+ {
+  "id": 12,
+  "act": 6,
+  "s0": 1,
+  "s1": 2,
+  "hook": "Tiny Finland held off Stalin for over three months.",
+  "kicker": "FINLAND VS STALIN",
+  "t0": 9.861,
+  "t1": 27.997
+ },
+ {
+  "id": 13,
+  "act": 7,
+  "s0": 1,
+  "s1": 3,
+  "hook": "France guarded the wrong door. The tanks came through the forest.",
+  "kicker": "THE ARDENNES TRICK",
+  "t0": 8.193,
+  "t1": 30.24
+ },
+ {
+  "id": 14,
+  "act": 7,
+  "s0": 4,
+  "s1": 6,
+  "hook": "338,000 soldiers trapped on a beach. Fishing boats came to save them.",
+  "kicker": "DUNKIRK",
+  "t0": 30.24,
+  "t1": 50.45
+ },
+ {
+  "id": 15,
+  "act": 8,
+  "s0": 0,
+  "s1": 3,
+  "hook": "By 1940 Hitler had won. Except for one country.",
+  "kicker": "BRITAIN ALONE",
+  "t0": 0.0,
+  "t1": 26.465
+ }
+]

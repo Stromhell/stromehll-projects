@@ -1,0 +1,236 @@
+{
+ "video": "WW2 Part 1 (2D)",
+ "prefix": "WW2",
+ "status": "ready to book (Pushpam OK 6 Nov 18:05 UTC)",
+ "made": "2026-11-06",
+ "notes": [
+  "IG parts post on 3 consecutive days in order; each ends with 'watch part N+1 on this page', the last with the YouTube card.",
+  "Full video is also on Drive: AI/long form history video/WW2 Part 1 (2D)/Renders/Full (file id 1Sdqx-Cb6TVap1l2EUpkDONM2J7f8jQBJ).",
+  "Post the full video at a best time (16:00 UTC first choice) and keep reels on separate days from other lines' reels (cap 7/day)."
+ ],
+ "full_video": {
+  "file": "/mnt/project-files/2d-history/ww2-part1/launch/full/ww2-part1_full.mp4",
+  "seconds": 377.4,
+  "title": "How One Treaty Started World War 2 (Part 1)",
+  "title_description_file": "/mnt/project-files/2d-history/ww2-part1/launch/WW2_Part1_Title_Description.txt",
+  "thumbnail": "/mnt/project-files/2d-history/ww2-part1/launch/WW2_Part1_Thumbnail_v1.jpg",
+  "platform": "YouTube"
+ },
+ "reels": [
+  {
+   "order": 1,
+   "file": "/mnt/project-files/2d-history/ww2-part1/launch/reels/WW2_Reel_01.mp4",
+   "cover": "/mnt/project-files/2d-history/ww2-part1/launch/reel_covers/WW2_Reel_01_thumb.jpg",
+   "seconds": 29.3,
+   "title": "7 Countries in Less Than a Year",
+   "caption": "In less than a year, Germany took seven countries. Here's how it started.\nWatch the full video on our YouTube channel.\n#WW2 #History #Europe #HistoryReels #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 2,
+   "file": "/mnt/project-files/2d-history/ww2-part1/launch/reels/WW2_Reel_02.mp4",
+   "cover": "/mnt/project-files/2d-history/ww2-part1/launch/reel_covers/WW2_Reel_02_thumb.jpg",
+   "seconds": 28.0,
+   "title": "Germany Paid for WW1 Until 2010",
+   "caption": "One line in a 1919 treaty made Germany pay until 2010.\nWatch the full video on our YouTube channel.\n#WW2 #TreatyOfVersailles #History #HistoryReels #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 3,
+   "file": "/mnt/project-files/2d-history/ww2-part1/launch/reels/WW2_Reel_03.mp4",
+   "cover": "/mnt/project-files/2d-history/ww2-part1/launch/reel_covers/WW2_Reel_03_thumb.jpg",
+   "seconds": 27.2,
+   "title": "Bread Cost 200 Billion Marks",
+   "caption": "A loaf of bread in Berlin cost 200 billion marks.\nWatch the full video on our YouTube channel.\n#WW2 #Hyperinflation #History #HistoryReels #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 4,
+   "file": "/mnt/project-files/2d-history/ww2-part1/launch/reels/WW2_Reel_04.mp4",
+   "cover": "/mnt/project-files/2d-history/ww2-part1/launch/reel_covers/WW2_Reel_04_thumb.jpg",
+   "seconds": 25.0,
+   "title": "The Coup That Made Hitler Famous",
+   "caption": "His coup failed. Prison made him famous.\nWatch the full video on our YouTube channel.\n#WW2 #History #Germany #HistoryReels #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 5,
+   "file": "/mnt/project-files/2d-history/ww2-part1/launch/reels/WW2_Reel_05.mp4",
+   "cover": "/mnt/project-files/2d-history/ww2-part1/launch/reel_covers/WW2_Reel_05_thumb.jpg",
+   "seconds": 21.6,
+   "title": "From Chancellor to Dictator",
+   "caption": "Six million out of work. Then one man took over Germany.\nWatch the full video on our YouTube channel.\n#WW2 #History #Germany #HistoryReels #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 6,
+   "file": "/mnt/project-files/2d-history/ww2-part1/launch/reels/WW2_Reel_06.mp4",
+   "cover": "/mnt/project-files/2d-history/ww2-part1/launch/reel_covers/WW2_Reel_06_thumb.jpg",
+   "seconds": 29.8,
+   "title": "Breaking the Treaty of Versailles",
+   "caption": "He broke the treaty. Britain even let him build a navy.\nWatch the full video on our YouTube channel.\n#WW2 #TreatyOfVersailles #History #HistoryReels #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 7,
+   "file": "/mnt/project-files/2d-history/ww2-part1/launch/reels/WW2_Reel_07.mp4",
+   "cover": "/mnt/project-files/2d-history/ww2-part1/launch/reel_covers/WW2_Reel_07_thumb.jpg",
+   "seconds": 32.8,
+   "title": "How Austria Was Swallowed",
+   "caption": "Austria called a vote. Germany invaded before it could happen.\nWatch the full video on our YouTube channel.\n#WW2 #Austria #History #HistoryReels #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 8,
+   "file": "/mnt/project-files/2d-history/ww2-part1/launch/reels/WW2_Reel_08.mp4",
+   "cover": "/mnt/project-files/2d-history/ww2-part1/launch/reel_covers/WW2_Reel_08_thumb.jpg",
+   "seconds": 32.4,
+   "title": "'Peace for Our Time' Lasted 6 Months",
+   "caption": "'Peace for our time.' It lasted six months.\nWatch the full video on our YouTube channel.\n#WW2 #Munich #History #HistoryReels #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 9,
+   "file": "/mnt/project-files/2d-history/ww2-part1/launch/reels/WW2_Reel_09.mp4",
+   "cover": "/mnt/project-files/2d-history/ww2-part1/launch/reel_covers/WW2_Reel_09_thumb.jpg",
+   "seconds": 21.0,
+   "title": "Hitler and Stalin's Secret Deal",
+   "caption": "Hitler and Stalin were sworn enemies. Then they made a secret deal.\nWatch the full video on our YouTube channel.\n#WW2 #Stalin #History #HistoryReels #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 10,
+   "file": "/mnt/project-files/2d-history/ww2-part1/launch/reels/WW2_Reel_10.mp4",
+   "cover": "/mnt/project-files/2d-history/ww2-part1/launch/reel_covers/WW2_Reel_10_thumb.jpg",
+   "seconds": 22.2,
+   "title": "1 September 1939: War Begins",
+   "caption": "Poland was invaded. Two days later, the world was at war.\nWatch the full video on our YouTube channel.\n#WW2 #Poland #History #HistoryReels #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 11,
+   "file": "/mnt/project-files/2d-history/ww2-part1/launch/reels/WW2_Reel_11.mp4",
+   "cover": "/mnt/project-files/2d-history/ww2-part1/launch/reel_covers/WW2_Reel_11_thumb.jpg",
+   "seconds": 22.8,
+   "title": "Blitzkrieg on Meth",
+   "caption": "German soldiers were given meth to fight for days.\nWatch the full video on our YouTube channel.\n#WW2 #Blitzkrieg #History #HistoryReels #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 12,
+   "file": "/mnt/project-files/2d-history/ww2-part1/launch/reels/WW2_Reel_12.mp4",
+   "cover": "/mnt/project-files/2d-history/ww2-part1/launch/reel_covers/WW2_Reel_12_thumb.jpg",
+   "seconds": 24.7,
+   "title": "Tiny Finland vs Stalin",
+   "caption": "Tiny Finland held off Stalin for over three months.\nWatch the full video on our YouTube channel.\n#WW2 #WinterWar #Finland #HistoryReels #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 13,
+   "file": "/mnt/project-files/2d-history/ww2-part1/launch/reels/WW2_Reel_13.mp4",
+   "cover": "/mnt/project-files/2d-history/ww2-part1/launch/reel_covers/WW2_Reel_13_thumb.jpg",
+   "seconds": 29.9,
+   "title": "The Ardennes Trick",
+   "caption": "France guarded the wrong door. The tanks came through the forest.\nWatch the full video on our YouTube channel.\n#WW2 #France #History #HistoryReels #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 14,
+   "file": "/mnt/project-files/2d-history/ww2-part1/launch/reels/WW2_Reel_14.mp4",
+   "cover": "/mnt/project-files/2d-history/ww2-part1/launch/reel_covers/WW2_Reel_14_thumb.jpg",
+   "seconds": 29.2,
+   "title": "The Miracle of Dunkirk",
+   "caption": "338,000 soldiers trapped on a beach. Fishing boats came to save them.\nWatch the full video on our YouTube channel.\n#WW2 #Dunkirk #History #HistoryReels #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 15,
+   "file": "/mnt/project-files/2d-history/ww2-part1/launch/reels/WW2_Reel_15.mp4",
+   "cover": "/mnt/project-files/2d-history/ww2-part1/launch/reel_covers/WW2_Reel_15_thumb.jpg",
+   "seconds": 34.2,
+   "title": "Britain Stood Alone",
+   "caption": "By 1940 Hitler had won. Except for one country.\nWatch the full video on our YouTube channel.\n#WW2 #Churchill #History #HistoryReels #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  }
+ ],
+ "ig_parts": [
+  {
+   "order": 1,
+   "file": "/mnt/project-files/2d-history/ww2-part1/launch/ig_parts/WW2_Part_01.mp4",
+   "cover": "/mnt/project-files/2d-history/ww2-part1/launch/ig_covers/WW2_Part_01_thumb.jpg",
+   "seconds": 142.0,
+   "title": "Why WW2 Happened, Part 1 of 3: The Treaty and the Rise",
+   "caption": "How one treaty, a 2010 debt, bread at 200 billion marks and a failed coup set Germany on the road to war.\nPart 2 is on this page tomorrow.\n#WW2 #History #WorldWar2 #Animation",
+   "platforms": [
+    "Instagram"
+   ]
+  },
+  {
+   "order": 2,
+   "file": "/mnt/project-files/2d-history/ww2-part1/launch/ig_parts/WW2_Part_02.mp4",
+   "cover": "/mnt/project-files/2d-history/ww2-part1/launch/ig_covers/WW2_Part_02_thumb.jpg",
+   "seconds": 104.6,
+   "title": "Why WW2 Happened, Part 2 of 3: Munich to Blitzkrieg",
+   "caption": "Austria, the Sudetenland, 'peace for our time', a secret deal with Stalin and Blitzkrieg on meth.\nPart 3 is on this page tomorrow.\n#WW2 #History #WorldWar2 #Animation",
+   "platforms": [
+    "Instagram"
+   ]
+  },
+  {
+   "order": 3,
+   "file": "/mnt/project-files/2d-history/ww2-part1/launch/ig_parts/WW2_Part_03.mp4",
+   "cover": "/mnt/project-files/2d-history/ww2-part1/launch/ig_covers/WW2_Part_03_thumb.jpg",
+   "seconds": 141.2,
+   "title": "Why WW2 Happened, Part 3 of 3: The Fall of France",
+   "caption": "The Phony War, Finland's stand, the Ardennes trick, Dunkirk and Britain alone.\nWatch the full video on our YouTube channel.\n#WW2 #History #WorldWar2 #Animation",
+   "platforms": [
+    "Instagram"
+   ]
+  }
+ ]
+}
