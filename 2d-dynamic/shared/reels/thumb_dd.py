@@ -2,7 +2,7 @@
 """In-house vertical reel covers (1080x1920) for the 2D dynamic line.
 usage: python3 shared/reels/thumb_dd.py VIDEO_DIR [ID ...]
 Reads VIDEO/reels/reels.json. Per reel: thumb [line1, line2] (line 2 goes on the accent slab),
-optional tt (seconds into the reel clip, default middle of shot s0), thx (crop centre x in 1920 px, default 960), tz (zoom, default 1)."""
+optional name (gold name tag above the headline), tt (seconds into the reel clip, default middle of shot s0), thx (crop centre x in 1920 px, default 960), tz (zoom, default 1)."""
 import json, os, sys, subprocess
 from PIL import Image, ImageDraw, ImageFont, ImageEnhance, ImageFilter
 V = sys.argv[1].rstrip('/'); IDS = set(map(int, sys.argv[2:]))
@@ -40,6 +40,13 @@ for R in json.load(open(f'{V}/reels/reels.json')):
     f1 = fit(d, l1, 940, 170); f2 = fit(d, l2, 860, 150)
     h1 = f1.getbbox(l1)[3]; h2 = f2.getbbox(l2)[3]
     y = 1660 - (h1 + 40 + h2 + 70)
+    if R.get('name'):  # optional name tag slab above the headline (gold, like the long thumbnail)
+        nm = R['name']; fn = fit(d, nm, 760, 120); hn = fn.getbbox(nm)[3]; ng = (232, 180, 74)
+        tag = Image.new('RGBA', (int(d.textlength(nm, font=fn) + 70), hn + 50), ng + (255,)); td = ImageDraw.Draw(tag)
+        td.rectangle([0, 0, tag.width - 1, tag.height - 1], outline=(15, 12, 10), width=9); td.text((35, 16), nm, font=fn, fill=(15, 12, 10))
+        tag = tag.rotate(2, expand=True, resample=Image.BICUBIC); y -= tag.height + 34
+        tsh = Image.new('RGBA', tag.size, (0, 0, 0, 0)); tsh.paste((0, 0, 0, 150), (0, 0) + tag.size, tag)
+        px = (W - tag.width) // 2; im.paste(tsh, (px + 12, y + 14), tsh); im.paste(tag, (px, y), tag); y += tag.height + 34
     d.text((W // 2 + 8, y + 10), l1, font=f1, fill=(0, 0, 0), anchor='mt', stroke_width=14, stroke_fill=(0, 0, 0))
     d.text((W // 2, y), l1, font=f1, fill=(255, 255, 255), anchor='mt', stroke_width=12, stroke_fill=(15, 12, 10)); y += h1 + 40
     tw = d.textlength(l2, font=f2); slab = Image.new('RGBA', (int(tw + 90), h2 + 70), acc + (255,)); sd = ImageDraw.Draw(slab)

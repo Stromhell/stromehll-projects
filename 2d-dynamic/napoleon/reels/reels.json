@@ -5,7 +5,7 @@
   "s0": 1,
   "s1": 2,
   "hook": "He led six hundred thousand men into Russia. Almost none of them came back.",
-  "kicker": "RUSSIA \u00b7 1812",
+  "kicker": "RUSSIA · 1812",
   "mood": "tension",
   "title": "600,000 Men Marched Into Russia. Few Came Back",
   "desc": "In 1812 Napoleon led the biggest army Europe had ever seen into Russia. Six months later it was gone.\nWatch the full video on our YouTube channel.\n\n#Shorts #History #Napoleon #Europe #Biography",
@@ -16,7 +16,8 @@
   "pre": "NP",
   "tz": 1.6,
   "thy": 1.0,
-  "thx": 1720
+  "thx": 1720,
+  "name": "NAPOLEON"
  },
  {
   "id": 2,
@@ -24,7 +25,7 @@
   "s0": 1,
   "s1": 2,
   "hook": "The boys at his school mocked his accent. He went on to rule Europe.",
-  "kicker": "CORSICA \u00b7 1769",
+  "kicker": "CORSICA · 1769",
   "mood": "sad",
   "title": "Bullied for His Accent, Then He Ruled Europe",
   "desc": "Napoleon was born on Corsica, sent to a French military school at nine, and mocked by the other boys.\nWatch the full video on our YouTube channel.\n\n#Shorts #History #Napoleon #Europe #Biography",
@@ -36,7 +37,8 @@
   "tz": 1.2,
   "thy": 0.9,
   "thx": 600,
-  "tt": 12
+  "tt": 12,
+  "name": "NAPOLEON"
  },
  {
   "id": 3,
@@ -44,7 +46,7 @@
   "s0": 5,
   "s1": 5,
   "hook": "At twenty-four, one captain saw where to put the cannons, and drove two navies out of a harbour.",
-  "kicker": "TOULON \u00b7 1793",
+  "kicker": "TOULON · 1793",
   "mood": "epic",
   "title": "A 24-Year-Old Captain Beat Two Navies",
   "desc": "In 1793 Captain Bonaparte placed his guns at Toulon and drove the British and Spanish fleets out.\nWatch the full video on our YouTube channel.\n\n#Shorts #History #Napoleon #Europe #Biography",
@@ -55,7 +57,8 @@
   "pre": "NP",
   "tz": 1.25,
   "thy": 0.9,
-  "thx": 350
+  "thx": 350,
+  "name": "NAPOLEON"
  },
  {
   "id": 4,
@@ -63,7 +66,7 @@
   "s0": 2,
   "s1": 3,
   "hook": "He took a hundred and fifty scientists to Egypt. Then he left his whole army behind.",
-  "kicker": "EGYPT \u00b7 1798",
+  "kicker": "EGYPT · 1798",
   "mood": "tension",
   "title": "He Abandoned His Army in Egypt",
   "desc": "In 1798 Napoleon invaded Egypt with an army and scientists. When the British sank his fleet, he slipped home and called it a triumph.\nWatch the full video on our YouTube channel.\n\n#Shorts #History #Napoleon #Europe #Biography",
@@ -74,7 +77,8 @@
   "pre": "NP",
   "tz": 1.25,
   "thy": 0.9,
-  "thx": 450
+  "thx": 450,
+  "name": "NAPOLEON"
  },
  {
   "id": 5,
@@ -82,7 +86,7 @@
   "s0": 5,
   "s1": 5,
   "hook": "The Pope came to crown him. Napoleon took the crown and put it on his own head.",
-  "kicker": "NOTRE-DAME \u00b7 1804",
+  "kicker": "NOTRE-DAME · 1804",
   "mood": "epic",
   "title": "He Crowned Himself in Front of the Pope",
   "desc": "2 December 1804, Notre-Dame: Napoleon took the crown from the Pope and crowned himself Emperor.\nWatch the full video on our YouTube channel.\n\n#Shorts #History #Napoleon #Europe #Biography",
@@ -93,7 +97,8 @@
   "pre": "NP",
   "tz": 1.25,
   "thy": 0.9,
-  "thx": 960
+  "thx": 960,
+  "name": "NAPOLEON"
  },
  {
   "id": 6,
@@ -101,7 +106,7 @@
   "s0": 1,
   "s1": 2,
   "hook": "He made his army look weak on purpose. That trick won his greatest battle.",
-  "kicker": "AUSTERLITZ \u00b7 1805",
+  "kicker": "AUSTERLITZ · 1805",
   "mood": "epic",
   "title": "The Fake Weakness That Won Austerlitz",
   "desc": "At Austerlitz Napoleon made his right flank look weak, lured the enemy off the heights, and split their army in two.\nWatch the full video on our YouTube channel.\n\n#Shorts #History #Napoleon #Europe #Biography",
@@ -112,7 +117,8 @@
   "pre": "NP",
   "tz": 1.25,
   "thy": 0.9,
-  "thx": 320
+  "thx": 320,
+  "name": "NAPOLEON"
  },
  {
   "id": 7,
@@ -132,7 +138,8 @@
   "tz": 1.4,
   "thy": 1.0,
   "thx": 1520,
-  "tt": 9.8
+  "tt": 9.8,
+  "name": "NAPOLEON"
  },
  {
   "id": 8,
@@ -140,7 +147,7 @@
   "s0": 5,
   "s1": 6,
   "hook": "Spain gave the world a new word for war, and it drained Napoleon for six years.",
-  "kicker": "SPAIN \u00b7 1808",
+  "kicker": "SPAIN · 1808",
   "mood": "tension",
   "title": "Where the Word \"Guerrilla\" Came From",
   "desc": "Napoleon put his brother on the Spanish throne. The Spanish fought back with the guerrilla, the little war.\nWatch the full video on our YouTube channel.\n\n#Shorts #History #Napoleon #Europe #Biography",
@@ -151,7 +158,8 @@
   "pre": "NP",
   "tz": 1.25,
   "thy": 0.9,
-  "thx": 800
+  "thx": 800,
+  "name": "NAPOLEON"
  },
  {
   "id": 9,
@@ -170,7 +178,8 @@
   "pre": "NP",
   "tz": 1.25,
   "thy": 0.9,
-  "thx": 950
+  "thx": 950,
+  "name": "NAPOLEON"
  },
  {
   "id": 10,
@@ -178,7 +187,7 @@
   "s0": 4,
   "s1": 5,
   "hook": "He captured Moscow. Then the city burned, and he waited five weeks for a peace that never came.",
-  "kicker": "MOSCOW \u00b7 1812",
+  "kicker": "MOSCOW · 1812",
   "mood": "sad",
   "title": "He Took Moscow and Still Lost",
   "desc": "Napoleon reached Moscow in September 1812. It was empty, then it burned. No peace offer came.\nWatch the full video on our YouTube channel.\n\n#Shorts #History #Napoleon #Europe #Biography",
@@ -189,7 +198,8 @@
   "pre": "NP",
   "tz": 1.25,
   "thy": 0.9,
-  "thx": 300
+  "thx": 300,
+  "name": "NAPOLEON"
  },
  {
   "id": 11,
@@ -197,9 +207,9 @@
   "s0": 6,
   "s1": 6,
   "hook": "By December the greatest army in Europe was gone.",
-  "kicker": "BEREZINA \u00b7 1812",
+  "kicker": "BEREZINA · 1812",
   "mood": "sad",
-  "title": "How the Grande Arm\u00e9e Vanished",
+  "title": "How the Grande Armée Vanished",
   "desc": "Cold, hunger, Cossack raids and the Berezina crossing destroyed Napoleon's army in 1812.\nWatch the full video on our YouTube channel.\n\n#Shorts #History #Napoleon #Europe #Biography",
   "thumb": [
    "THE ARMY",
@@ -208,7 +218,8 @@
   "pre": "NP",
   "tz": 1.25,
   "thy": 0.9,
-  "thx": 640
+  "thx": 640,
+  "name": "NAPOLEON"
  },
  {
   "id": 12,
@@ -216,7 +227,7 @@
   "s0": 3,
   "s1": 3,
   "hook": "They exiled him to a tiny island. He was back in less than a year.",
-  "kicker": "ELBA \u00b7 1814",
+  "kicker": "ELBA · 1814",
   "mood": "hope",
   "title": "Exiled to an Island, Back in 10 Months",
   "desc": "In 1814 Napoleon was sent to rule tiny Elba. He lasted less than a year.\nWatch the full video on our YouTube channel.\n\n#Shorts #History #Napoleon #Europe #Biography",
@@ -227,7 +238,8 @@
   "pre": "NP",
   "tz": 1.25,
   "thy": 0.9,
-  "thx": 660
+  "thx": 660,
+  "name": "NAPOLEON"
  },
  {
   "id": 13,
@@ -235,7 +247,7 @@
   "s0": 4,
   "s1": 5,
   "hook": "He walked up to the soldiers sent to kill him, and dared them to fire.",
-  "kicker": "LAFFREY \u00b7 1815",
+  "kicker": "LAFFREY · 1815",
   "mood": "epic",
   "title": "\"If Any of You Wants to Kill His Emperor, Here I Am\"",
   "desc": "March 1815: the king's soldiers blocked Napoleon's road. He opened his coat. Nobody fired.\nWatch the full video on our YouTube channel.\n\n#Shorts #History #Napoleon #Europe #Biography",
@@ -246,7 +258,8 @@
   "pre": "NP",
   "tz": 1.25,
   "thy": 0.9,
-  "thx": 660
+  "thx": 660,
+  "name": "NAPOLEON"
  },
  {
   "id": 14,
@@ -254,7 +267,7 @@
   "s0": 6,
   "s1": 7,
   "hook": "One last charge at Waterloo, and the whole French army broke.",
-  "kicker": "WATERLOO \u00b7 1815",
+  "kicker": "WATERLOO · 1815",
   "mood": "tension",
   "title": "The Charge That Ended Napoleon",
   "desc": "18 June 1815: the Imperial Guard went up the ridge, the British line rose and fired, and the French army broke.\nWatch the full video on our YouTube channel.\n\n#Shorts #History #Napoleon #Europe #Biography",
@@ -265,7 +278,8 @@
   "pre": "NP",
   "tz": 1.25,
   "thy": 0.9,
-  "thx": 1000
+  "thx": 1000,
+  "name": "NAPOLEON"
  },
  {
   "id": 15,
@@ -273,7 +287,7 @@
   "s0": 3,
   "s1": 3,
   "hook": "His last words were three things: France, the army, Josephine.",
-  "kicker": "SAINT HELENA \u00b7 1821",
+  "kicker": "SAINT HELENA · 1821",
   "mood": "sad",
   "title": "Napoleon's Last Words",
   "desc": "Napoleon died on Saint Helena on 5 May 1821, aged 51. His reported last words: France, the army, Josephine.\nWatch the full video on our YouTube channel.\n\n#Shorts #History #Napoleon #Europe #Biography",
@@ -284,6 +298,7 @@
   "pre": "NP",
   "tz": 1.5,
   "thy": 1.0,
-  "thx": 560
+  "thx": 560,
+  "name": "NAPOLEON"
  }
 ]
