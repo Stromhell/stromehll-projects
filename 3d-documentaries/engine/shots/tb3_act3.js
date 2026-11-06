@@ -62,6 +62,79 @@ function aminCap(color = 0x3a4428) {
   add(new THREE.SphereGeometry(.014, 10, 8), new THREE.MeshStandardMaterial({ color: 0xd4a640, metalness: 1, roughness: .3 }), [0, .045, .128]); // badge
   return g;
 }
+// the suit atlas has faded-denim highlights baked into the trousers (lower-left UV block) that read as a glowing sheen:
+// squash their brightness toward the panel's mean colour and darken the whole cloth a touch (cached per source image)
+const flatCache = new Map();
+function flatSuit(map) {
+  if (!map?.image) return map; if (flatCache.has(map.image)) return flatCache.get(map.image);
+  const im = map.image, W = im.width, H = im.height, cv = document.createElement('canvas'); cv.width = W; cv.height = H; const x = cv.getContext('2d'); x.drawImage(im, 0, 0);
+  const d = x.getImageData(0, 0, W, H), p = d.data, y0 = Math.floor(H * .56), x1 = Math.floor(W * .6);
+  let sr = 0, sg = 0, sb = 0, n = 0;
+  for (let y = y0; y < H; y++) for (let xx = 0; xx < x1; xx++) { const i = (y * W + xx) * 4; if (p[i] + p[i + 1] + p[i + 2] < 60) continue; sr += p[i]; sg += p[i + 1]; sb += p[i + 2]; n++; }
+  const mr = sr / n * .9, mg = sg / n * .9, mb = sb / n * .9;
+  for (let y = 0; y < H; y++) for (let xx = 0; xx < W; xx++) { const i = (y * W + xx) * 4; if (p[i] + p[i + 1] + p[i + 2] < 60) continue;
+    if (y >= y0 && xx < x1) { p[i] = mr + (p[i] - mr) * .3; p[i + 1] = mg + (p[i + 1] - mg) * .3; p[i + 2] = mb + (p[i + 2] - mb) * .3; } }
+  x.putImageData(d, 0, 0);
+  const t = new THREE.CanvasTexture(cv); t.colorSpace = map.colorSpace; t.flipY = map.flipY; t.wrapS = map.wrapS; t.wrapT = map.wrapT; t.anisotropy = 8;
+  flatCache.set(map.image, t); return t;
+}
+// QA act3r8: Amin's uniform read blown out with a glowing sheen -> flat matte cloth: no specular/clearcoat/sheen/emissive, weak env reflections, slightly darker base
+function matteUniform(a) {
+  a.traverse(c => { if (!c.isMesh || !/clothes|casualsuit|shoes/i.test(c.name + ' ' + (c.material?.name || ''))) return;
+    const o = c.material, m = new THREE.MeshStandardMaterial({ name: o.name, map: /casualsuit/i.test(o.name) ? flatSuit(o.map) : o.map, normalMap: o.normalMap, normalScale: o.normalScale?.clone().multiplyScalar(.5), aoMap: o.aoMap, aoMapIntensity: o.aoMapIntensity, alphaTest: o.alphaTest, transparent: o.transparent, side: o.side,
+      color: o.color.clone().multiplyScalar(.82), roughness: 1, metalness: 0, emissive: 0x000000, emissiveIntensity: 0, envMapIntensity: .25 });
+    c.material = m; });
+  return a;
+}
+// QA act3r8: the wall portrait was a blurry blob -> a painted generic officer bust (no real likeness): oil-paint backdrop, tunic with lapels,
+// epaulettes, ribbons and peaked cap, brush-stroke texture, a gilt inner liner and an engraved brass nameplate
+function officerPortrait() {
+  return real.canvasTex(600, 816, (c, W, H) => {
+    let rs = 9137; const R = () => (rs = (rs * 16807) % 2147483647) / 2147483647;
+    const bg = c.createRadialGradient(W * .5, H * .38, 40, W * .5, H * .45, W * .8); bg.addColorStop(0, '#6e5a40'); bg.addColorStop(.6, '#3e3022'); bg.addColorStop(1, '#1e1610'); c.fillStyle = bg; c.fillRect(0, 0, W, H);
+    for (let i = 0; i < 1400; i++) { const x = R() * W, y = R() * H, a = R() * 6.3, l = 10 + R() * 26; c.strokeStyle = `rgba(${R() < .5 ? '40,30,20' : '140,115,80'},${.05 + R() * .06})`; c.lineWidth = 3 + R() * 5; c.beginPath(); c.moveTo(x, y); c.lineTo(x + Math.cos(a) * l, y + Math.sin(a) * l); c.stroke(); }
+    const fill = (col, f) => { c.fillStyle = col; c.beginPath(); f(); c.fill(); };
+    // shoulders + tunic
+    fill('#3d4529', () => { c.moveTo(40, H); c.bezierCurveTo(50, 600, 140, 540, 230, 520); c.lineTo(370, 520); c.bezierCurveTo(460, 540, 550, 600, 560, H); c.closePath(); });
+    const sh = c.createLinearGradient(0, 520, W, H); sh.addColorStop(0, 'rgba(255,240,200,.10)'); sh.addColorStop(1, 'rgba(0,0,0,.35)'); fill(sh, () => { c.moveTo(40, H); c.bezierCurveTo(50, 600, 140, 540, 230, 520); c.lineTo(370, 520); c.bezierCurveTo(460, 540, 550, 600, 560, H); c.closePath(); });
+    // shirt + tie, lapels
+    fill('#c9c2a8', () => { c.moveTo(255, 520); c.lineTo(345, 520); c.lineTo(300, 640); c.closePath(); });
+    fill('#2a2c1e', () => { c.moveTo(290, 540); c.lineTo(310, 540); c.lineTo(318, 650); c.lineTo(300, 680); c.lineTo(282, 650); c.closePath(); });
+    for (const d of [-1, 1]) { fill('#343b23', () => { c.moveTo(300 + d * 48, 515); c.lineTo(300 + d * 8, 700); c.lineTo(300 + d * 120, 640); c.lineTo(300 + d * 95, 540); c.closePath(); });
+      fill('#b8923e', () => { c.moveTo(300 + d * 150, 555); c.lineTo(300 + d * 235, 590); c.lineTo(300 + d * 228, 612); c.lineTo(300 + d * 145, 578); c.closePath(); }); // epaulette
+      c.fillStyle = '#d8b45a'; c.beginPath(); c.arc(300 + d * 155, 566, 7, 0, 7); c.fill(); }
+    // ribbon bars + two medals on the left breast
+    const rib = ['#a8322a', '#2a6a3a', '#d8a828', '#244a98', '#e8e2d0', '#7a2a6a'];
+    for (let r = 0; r < 3; r++) for (let q = 0; q < 3; q++) { const x = 360 + q * 34, y = 640 + r * 20; c.fillStyle = rib[(r * 3 + q) % 6]; c.fillRect(x, y, 32, 17); c.fillStyle = 'rgba(255,255,255,.25)'; c.fillRect(x, y, 32, 4); }
+    for (const x of [378, 428]) { c.fillStyle = '#c8a040'; c.beginPath(); c.arc(x, 732, 13, 0, 7); c.fill(); c.strokeStyle = '#7a5a20'; c.lineWidth = 2; c.stroke(); }
+    c.fillStyle = '#d4b060'; for (let b = 0; b < 3; b++) { c.beginPath(); c.arc(300, 712 + b * 40, 7, 0, 7); c.fill(); }
+    // neck + head (generic, simplified, painted)
+    fill('#5a3a26', () => { c.moveTo(262, 520); c.lineTo(338, 520); c.lineTo(332, 440); c.lineTo(268, 440); c.closePath(); });
+    const sk = c.createRadialGradient(282, 330, 20, 300, 360, 150); sk.addColorStop(0, '#8a5e40'); sk.addColorStop(.7, '#5e3c27'); sk.addColorStop(1, '#3a2418');
+    fill(sk, () => c.ellipse(300, 365, 98, 122, 0, 0, 7));
+    fill('#5e3c27', () => c.ellipse(204, 375, 14, 28, 0, 0, 7)); fill('#5e3c27', () => c.ellipse(396, 375, 14, 28, 0, 0, 7));
+    c.fillStyle = 'rgba(30,18,12,.55)'; for (const x of [262, 338]) { c.beginPath(); c.ellipse(x, 360, 15, 6, 0, 0, 7); c.fill(); }
+    c.strokeStyle = 'rgba(30,18,12,.5)'; c.lineWidth = 6; for (const x of [262, 338]) { c.beginPath(); c.moveTo(x - 20, 338); c.lineTo(x + 20, 336); c.stroke(); }
+    c.strokeStyle = 'rgba(30,18,12,.45)'; c.lineWidth = 4; c.beginPath(); c.moveTo(300, 370); c.lineTo(292, 410); c.lineTo(310, 412); c.stroke();
+    c.strokeStyle = 'rgba(40,20,14,.7)'; c.lineWidth = 5; c.beginPath(); c.moveTo(270, 442); c.quadraticCurveTo(300, 452, 330, 442); c.stroke();
+    c.fillStyle = 'rgba(255,220,180,.12)'; c.beginPath(); c.ellipse(270, 320, 30, 50, -.3, 0, 7); c.fill();
+    // peaked cap
+    fill('#3d4529', () => { c.moveTo(190, 290); c.bezierCurveTo(180, 190, 420, 190, 410, 290); c.closePath(); });
+    fill('#23291a', () => c.rect(196, 272, 208, 26));
+    fill('#121212', () => { c.moveTo(196, 296); c.quadraticCurveTo(300, 340, 404, 296); c.quadraticCurveTo(300, 315, 196, 296); });
+    c.fillStyle = '#d4a640'; c.beginPath(); c.arc(300, 262, 15, 0, 7); c.fill(); c.strokeStyle = '#d4a640'; c.lineWidth = 3; c.beginPath(); c.moveTo(220, 300); c.quadraticCurveTo(300, 322, 380, 300); c.stroke();
+    // brushwork over the figure + varnish crackle + vignette
+    for (let i = 0; i < 2600; i++) { const x = R() * W, y = 180 + R() * (H - 180), a = R() * 6.3, l = 4 + R() * 12; c.strokeStyle = `rgba(${R() < .5 ? '0,0,0' : '255,240,210'},${.03 + R() * .04})`; c.lineWidth = 2 + R() * 3; c.beginPath(); c.moveTo(x, y); c.lineTo(x + Math.cos(a) * l, y + Math.sin(a) * l); c.stroke(); }
+    c.strokeStyle = 'rgba(20,12,6,.08)'; c.lineWidth = 1; for (let i = 0; i < 260; i++) { let x = R() * W, y = R() * H; c.beginPath(); c.moveTo(x, y); for (let q = 0; q < 4; q++) { x += (R() - .5) * 40; y += (R() - .5) * 40; c.lineTo(x, y); } c.stroke(); }
+    const vg = c.createRadialGradient(W / 2, H * .45, H * .3, W / 2, H / 2, H * .75); vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.45)'); c.fillStyle = vg; c.fillRect(0, 0, W, H);
+    // gilt inner liner
+    c.strokeStyle = '#a8823a'; c.lineWidth = 18; c.strokeRect(9, 9, W - 18, H - 18); c.strokeStyle = '#e0c070'; c.lineWidth = 3; c.strokeRect(20, 20, W - 40, H - 40); c.strokeStyle = '#5a4018'; c.lineWidth = 2; c.strokeRect(2, 2, W - 4, H - 4);
+    // brass nameplate
+    const np = c.createLinearGradient(0, H - 92, 0, H - 40); np.addColorStop(0, '#e2c070'); np.addColorStop(.5, '#b8903e'); np.addColorStop(1, '#8a6a28'); c.fillStyle = np; c.beginPath(); c.roundRect(170, H - 92, 260, 52, 6); c.fill(); c.strokeStyle = '#5a4018'; c.lineWidth = 3; c.stroke();
+    c.fillStyle = '#3a2810'; c.font = 'bold 26px Oswald, Anton, serif'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('COMMANDER IN CHIEF', 300, H - 66);
+    for (const x of [184, 416]) { c.fillStyle = '#6a4a18'; c.beginPath(); c.arc(x, H - 66, 4, 0, 7); c.fill(); }
+  });
+}
 async function soldier(k, i, pos, rot, o = {}) {
   const p = await k.real.human({ id: UG[i % 3], seed: 600 + i }); k.real.put(k.scene, p, { pos, rot, mood: o.mood ?? 'stern' }); p.userData.driven = true;
   C.attach(p, S2.cap(0x4a4630, i % 2 === 0), 'Head', [0, .14, .01]);
@@ -103,11 +176,11 @@ export const shots = {
   '3.1': async k => {
     const { real, scene, camera } = k; k.noAutoOverlay = true;
     await real.env(k, 'brown_photostudio_02', { sun: false, bg: 0x060505, envI: .1 });
-    const a = await real.human({ id: 'tb_amin', seed: 801 }); real.put(scene, a, { pos: [0, 0, 0], mood: 'smug' }); a.userData.driven = true;
+    const a = await real.human({ id: 'tb_amin', seed: 801 }); real.put(scene, a, { pos: [0, 0, 0], mood: 'smug' }); a.userData.driven = true; matteUniform(a);
     C.attach(a, aminCap(), 'Head', CAP_OFF, CAP_ROT);
     const gold = real.std(0xd4a640, { metal: 1, rough: .25 }), rib = [0xc0392b, 0x2a6a3a, 0xe8b321, 0x1f4fa8];
     for (let i = 0; i < 8; i++) { const md = new THREE.Group(); md.add(real.box(.035, .02, .006, real.std(rib[i % 4]), { pos: [0, .02, 0] })); md.add(real.m(new THREE.CylinderGeometry(.013, .013, .005, 12), gold, { pos: [0, -.008, 0], rot: [P / 2, 0, 0] })); C.attach(a, md, 'Spine2', [-.12 + (i % 4) * .042, .06 - Math.floor(i / 4) * .06, .13]); }
-    const under = new THREE.SpotLight(0xffd8a8, 40, 8, .45, .6, 1.3); under.position.set(0, .2, 1.6); under.target.position.set(0, 1.6, 0); under.castShadow = true; scene.add(under, under.target);
+    const under = new THREE.SpotLight(0xffd8a8, 20, 8, .45, .6, 1.3); under.position.set(0, .2, 1.6); under.target.position.set(0, 1.6, 0); under.castShadow = true; scene.add(under, under.target);
     const rim = new THREE.SpotLight(0x8aa0ff, 60, 8, .4, .6, 1.2); rim.position.set(-1.5, 3, -2); rim.target.position.set(0, 1.5, 0); scene.add(rim, rim.target);
     // QA act3r7: plain brown disc fading to black -> procedural plank floor (grain + bump), wider fill, and a dim office back wall with flag and portrait
     const wallM = real.std(0x4a3e34, { rough: .9 }); scene.add(real.box(12, 6, .1, wallM, { pos: [0, 3, -2.6], cast: false }));
@@ -116,13 +189,15 @@ export const shots = {
     const flag = real.m(new THREE.PlaneGeometry(1.5, 1), new THREE.MeshStandardMaterial({ map: flagTex, roughness: .9 }), { pos: [-1.55, 2.2, -2.54], cast: false }); scene.add(flag);
     scene.add(real.m(new THREE.CylinderGeometry(.015, .015, 1.7, 8), real.std(0xb08a40, { metal: .8, rough: .35 }), { pos: [-2.33, 2.0, -2.53], cast: false }));
     const pfr = real.std(0x6a4a22, { rough: .5, metal: .2 });
-    for (const [w, h, x, y] of [[.9, .06, 1.6, 2.86], [.9, .06, 1.6, 1.74], [.06, 1.18, 1.18, 2.3], [.06, 1.18, 2.02, 2.3]]) scene.add(real.box(w, h, .05, pfr, { pos: [x, y, -2.52], cast: false }));
-    const portTex = real.canvasTex(300, 400, c => { const gr = c.createLinearGradient(0, 0, 0, 400); gr.addColorStop(0, '#5a4a3a'); gr.addColorStop(1, '#2a2018'); c.fillStyle = gr; c.fillRect(0, 0, 300, 400); c.fillStyle = '#3a4428'; c.beginPath(); c.ellipse(150, 360, 120, 90, 0, 0, 7); c.fill(); c.fillStyle = '#4a3020'; c.beginPath(); c.ellipse(150, 190, 62, 78, 0, 0, 7); c.fill(); c.fillStyle = '#3a4428'; c.fillRect(85, 105, 130, 40); });
-    scene.add(real.m(new THREE.PlaneGeometry(.78, 1.06), new THREE.MeshStandardMaterial({ map: portTex, roughness: .8 }), { pos: [1.6, 2.3, -2.535], cast: false }));
+    const PX = 2.45; // QA act3r8: portrait sat under the IDI AMIN badge -> moved right, clear of the callout
+    for (const [w, h, x, y] of [[.9, .06, PX, 2.86], [.9, .06, PX, 1.74], [.06, 1.18, PX - .42, 2.3], [.06, 1.18, PX + .42, 2.3]]) scene.add(real.box(w, h, .05, pfr, { pos: [x, y, -2.52], cast: false }));
+    const portTex = officerPortrait();
+    scene.add(real.m(new THREE.PlaneGeometry(.78, 1.06), new THREE.MeshStandardMaterial({ map: portTex, roughness: .8 }), { pos: [PX, 2.3, -2.535], cast: false }));
+    const picL = new THREE.SpotLight(0xffe2b8, 14, 4, .35, .7, 1.3); picL.position.set(PX, 3.3, -1.6); picL.target.position.set(PX, 2.3, -2.55); scene.add(picL, picL.target);
     const wallWash = new THREE.SpotLight(0xffd6a8, 45, 10, .75, .8, 1.3); wallWash.position.set(0, 3.8, 1.5); wallWash.target.position.set(0, 2.1, -2.6); scene.add(wallWash, wallWash.target);
     // QA a3r6: he stood in a black void -> lit wooden stage floor, a warm pool of light at his feet and a soft contact shadow under them
     const flr = real.m(new THREE.PlaneGeometry(30, 30), woodMat(), { rot: [-P / 2, 0, 0], cast: false }); flr.receiveShadow = true; scene.add(flr);
-    const pool = new THREE.SpotLight(0xffe2bc, 160, 14, .62, .75, 1.2); pool.position.set(.6, 4.5, 2.2); pool.target.position.set(0, 0, 0); pool.castShadow = true; pool.shadow.mapSize.set(2048, 2048); scene.add(pool, pool.target);
+    const pool = new THREE.SpotLight(0xffe2bc, 120, 14, .62, .75, 1.2); pool.position.set(.6, 4.5, 2.2); pool.target.position.set(0, 0, 0); pool.castShadow = true; pool.shadow.mapSize.set(2048, 2048); scene.add(pool, pool.target);
     scene.add(new THREE.HemisphereLight(0x8a7a6a, 0x2a2018, .6));
     const csTex = real.canvasTex(256, 256, c => { const g = c.getContext ? c : c; const gr = g.createRadialGradient(128, 128, 0, 128, 128, 128); gr.addColorStop(0, 'rgba(0,0,0,.85)'); gr.addColorStop(.45, 'rgba(0,0,0,.5)'); gr.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = gr; g.fillRect(0, 0, 256, 256); });
     scene.add(real.m(new THREE.PlaneGeometry(1.1, .8), new THREE.MeshBasicMaterial({ map: csTex, transparent: true, depthWrite: false }), { pos: [0, .005, .02], rot: [-P / 2, 0, 0], cast: false }));
@@ -134,7 +209,7 @@ export const shots = {
   '3.2': async k => {
     const { real, scene, camera } = k;
     await real.env(k, 'brown_photostudio_02', { sun: false, bg: 0x070606, envI: .18 });
-    const a = await real.human({ id: 'tb_amin', seed: 801 }); real.put(scene, a, { pos: [0, 0, 0], mood: 'smug' }); a.userData.driven = true;
+    const a = await real.human({ id: 'tb_amin', seed: 801 }); real.put(scene, a, { pos: [0, 0, 0], mood: 'smug' }); a.userData.driven = true; matteUniform(a);
     C.attach(a, aminCap(), 'Head', CAP_OFF, CAP_ROT);
     const gold = real.std(0xd4a640, { metal: 1, rough: .25 }), rib = [0xc0392b, 0x2a6a3a, 0xe8b321, 0x1f4fa8];
     for (let i = 0; i < 8; i++) { const md = new THREE.Group(); md.add(real.box(.035, .02, .006, real.std(rib[i % 4]), { pos: [0, .02, 0] })); md.add(real.m(new THREE.CylinderGeometry(.013, .013, .005, 12), gold, { pos: [0, -.008, 0], rot: [P / 2, 0, 0] })); C.attach(a, md, 'Spine2', [-.12 + (i % 4) * .042, .06 - Math.floor(i / 4) * .06, .13]); }
@@ -281,10 +356,10 @@ export const shots = {
     await real.env(k, 'small_empty_room_1', { sun: false, bg: 0x05060a, envI: .15 });
     const h = await S2.hall(k, { lampI: 14, hemi: .9 });
     const ppl = await hostagesOnMats(k, h, 3);
-    const a = await real.human({ id: 'tb_amin', seed: 801 }); real.put(scene, a, { pos: [-h.w / 2 + 2.2, 0, 0], rot: P / 2, mood: 'happy' }); a.userData.driven = true;
+    const a = await real.human({ id: 'tb_amin', seed: 801 }); real.put(scene, a, { pos: [-h.w / 2 + 2.2, 0, 0], rot: P / 2, mood: 'happy' }); a.userData.driven = true; matteUniform(a);
     C.attach(a, aminCap(), 'Head', CAP_OFF, CAP_ROT);
     const g = await soldier(k, 2, [-h.w / 2 + 1.4, 0, 1.4], P / 2);
-    const sp = new THREE.SpotLight(0xffe0b0, 60, 8, .35, .6, 1.3); sp.position.set(-h.w / 2 + 4.5, 3.8, 1.5); sp.target.position.set(-h.w / 2 + 2.2, 1.4, 0); scene.add(sp, sp.target);
+    const sp = new THREE.SpotLight(0xffe0b0, 42, 8, .35, .6, 1.3); sp.position.set(-h.w / 2 + 4.5, 3.8, 1.5); sp.target.position.set(-h.w / 2 + 2.2, 1.4, 0); scene.add(sp, sp.target);
     const cam = C.dolly(camera, { pos: [-4.5, 1.5, 1.6], look: [-h.w / 2 + 2.2, 1.55, 0], fov: 40 }, { pos: [-6, 1.55, 1.2], look: [-h.w / 2 + 2.2, 1.6, 0], fov: 38 });
     return (t, u) => { cam(u); idleMats(ppl, t, { look: -.6, nod: -.3 });
       a.update(t, { mood: 'happy', talk: t > .5, arm: t > 1.2 && t < 3.2 ? 'raise' : null, look: Math.sin(t * .5) * .2 }); g.update(t, {});
@@ -296,7 +371,7 @@ export const shots = {
   // QA a3r6: the yellow DEMANDS sheet hung in a black void -> pinned to the same lit cork board as 3.15, slamming in on frame 0
   // QA act3r7: sheet was yellow here and cream in 3.15 -> both use demandBoard's one shared sheet stock (no per-shot bg)
   '3.14': async k => { k.noAutoOverlay = true; return demandBoard(k, [[[['DEMANDS', 130, '#2b1e16'], ['53 PRISONERS', 96], ['40 IN ISRAEL', 96]], '#2b1e16', 0, .02]], { t0: -.25, cam: [[0, 1.62, 4.3], [0, 1.6, 3.6]] }); },
-  '3.15': async k => demandBoard(k, [[[['DEMANDS', 130, '#2b1e16'], ['53 PRISONERS', 96], ['40 IN ISRAEL', 96]], '#2b1e16', -.85, .03], [[['$5,000,000', 130, '#a02a1e'], ['DEADLINE', 96], ['1 JULY', 96]], '#2b1e16', .85, -.03]]),
+  '3.15': async k => demandBoard(k, [[[['DEMANDS', 130, '#2b1e16'], ['53 PRISONERS', 96], ['40 IN ISRAEL', 96]], '#2b1e16', -.85, .03], [[['$5,000,000', 130, '#a02a1e'], ['DEADLINE', 96], ['1 JULY', 96]], '#2b1e16', .85, -.03]], { starts: [-1, .5], fade: true }), // QA act3r8: DEMANDS pinned from frame 0; $5M sheet fades/slides in over 0.3 s
 };
 async function demandBoard(k, defs, o = {}) {
     const { real, scene, camera } = k;
@@ -314,11 +389,15 @@ async function demandBoard(k, defs, o = {}) {
     const sheets = defs.map(([ls, col, x, rz], i) => { const g = new THREE.Group(); g.position.set(x, 1.6, WZ + .05 + i * .001); g.rotation.z = rz;
       g.add(real.m(new THREE.PlaneGeometry(1.4, 1.82), new THREE.MeshStandardMaterial({ map: sheet(ls, col), roughness: .85 }), { cast: false }));
       for (const px of [-.6, .6]) { const pin = real.m(new THREE.SphereGeometry(.025, 12, 8), pinM[i], { cast: false }); pin.position.set(px, .82, .02); g.add(pin); }
-      scene.add(g); return g; });
+      g.userData.x0 = x; scene.add(g); return g; });
     const key = new THREE.SpotLight(0xffe8cc, 32, 12, .6, .6, 1.2); key.position.set(.8, 3.6, 3.2); key.target.position.set(0, 1.6, 0); key.castShadow = true; scene.add(key, key.target);
     scene.add(new THREE.HemisphereLight(0xfff2dc, 0x302820, .25));
     scene.add(real.m(new THREE.PlaneGeometry(30, 30), real.std(0x1a1612, { rough: .9 }), { rot: [-P / 2, 0, 0], cast: false }));
     const [c0, c1] = o.cam ?? [[0, 1.62, 4.6], [0, 1.6, 4.1]], t0 = o.t0 ?? 0;
     const cam = C.dolly(camera, { pos: c0, look: [0, 1.6, 0], fov: 40 }, { pos: c1, look: [0, 1.6, 0], fov: 40 });
-    return (t, u) => { cam(u); sheets.forEach((g, i) => { const s = C.ease(C.seg(t, t0 + i * .5, t0 + .4 + i * .5)); g.visible = s > 0; g.position.z = WZ + .05 + i * .001 + (1 - s) * .6; g.scale.setScalar(.9 + .1 * s); }); };
+    // QA act3r8: o.starts gives each sheet its own entry time (a start < 0 = already pinned on frame 0); o.fade adds a 0.3 s opacity fade + slide-in
+    if (o.fade) sheets.forEach(g => g.traverse(m => { if (m.isMesh) { m.material.transparent = true; } }));
+    const st = o.starts ?? sheets.map((_, i) => t0 + i * .5), dur = o.fade ? .3 : .4;
+    return (t, u) => { cam(u); sheets.forEach((g, i) => { const s = C.ease(C.seg(t, st[i], st[i] + dur)); g.visible = s > 0; g.position.z = WZ + .05 + i * .001 + (1 - s) * (o.fade ? .25 : .6); g.scale.setScalar(.9 + .1 * s);
+      if (o.fade) { g.position.x = g.userData.x0 + (1 - s) * .35; g.traverse(m => { if (m.isMesh) m.material.opacity = s; }); } }); };
 }
