@@ -38,9 +38,9 @@ window.SHOTS = [
     draw: (c, lt, u, Sh) => { const L = SUN(lt);
       VP.horse(c, 560, 640, 150, { face: 1, walk: 0, t: lt, col: BAY, tack: { cloth: ['#c8a040', '#7a5a1a'], trim: '#a82a22' } });
       fig(c, C.BAYBARSB, 760, 650, 36, pose(lt, 0, { face: -1, shN: 80, elN: 40, lean: 4 }), lt, 0, L, { look: [-.8, .2] });
-      fig(c, C.MAMLUK, 980, 650, 32, pose(lt, 1, { face: -1, holdN: S.mgSpear(c, -1.45) }), lt, 1, L, { look: [-.6, 0] });
+      fig(c, C.MAMLUK, 980, 650, 32, pose(lt, 1, { face: -1, holdN: S.mgSpear(c, -1.12) }), lt, 1, L, { look: [-.6, 0] });
       fig(c, C.MAMLUK3, 1120, 660, 32, pose(lt, 2, { face: -1, shN: 20, elN: 60 }), lt, 2, L, { look: [-.6, 0] });
-      fig(c, C.MAMLUK2, 260, 660, 32, pose(lt, 3, { face: 1, holdN: S.mgSpear(c, -1.45) }), lt, 3, L, { look: [.6, 0] }); },
+      fig(c, C.MAMLUK2, 260, 660, 32, pose(lt, 3, { face: 1, holdN: S.mgSpear(c, -1.12) }), lt, 3, L, { look: [.6, 0] }); },
     over: [(c, lt, u, Sh) => K.card(c, 'KIPCHAK TURK', lt, { at: Sh.tK, x: 480, y: 150, px: 46, rot: -2, until: Sh.tE + .5 }), (c, lt, u, Sh) => K.card(c, 'BAYBARS', lt, { at: Sh.tN, x: 1360, y: 160, px: 64, rot: 2 })],
     sfx: [[.2, 'wind_loop', .15], [.6, 'clank', .3], ['blue-white', 'chime', .35], ['baybars', 'drum', .45]] },
 
@@ -51,7 +51,7 @@ window.SHOTS = [
       if (lt < Sh.tX) { const L = SUN(lt), r = seg(lt, Sh.tL - 1, Sh.tL);
         fig(c, C.QUTUZR, 640, 660, 38, pose(lt, 0, { face: 1, shN: 70, elN: 80, shF: 66, elF: 80 }), lt, 0, L, { look: [.4, .5], angry: lt > Sh.tL ? 1 : 0 }); S.mgScroll(c, 700, 520, .9, .3 + .7 * r, 0);
         fig(c, C.ENVOY, 1040, 670, 34, pose(lt, 1, { face: -1, shN: 30, elN: 60 }), lt, 1, L, { look: [-.7, -.1] });
-        fig(c, C.MAMLUK, 300, 670, 34, pose(lt, 2, { face: 1, holdN: S.mgSpear(c, -1.45) }), lt, 2, L, { look: [.6, 0] }); return; }
+        fig(c, C.MAMLUK, 300, 670, 34, pose(lt, 2, { face: 1, holdN: S.mgSpear(c, -1.12) }), lt, 2, L, { look: [.6, 0] }); return; }
       VP.drawSet(c, 'mg_bab'); c.fillStyle = S.rgba('#1a1028', .45); c.fillRect(0, 0, 1280, 720); c.strokeStyle = '#3a3a3a'; c.lineWidth = 4; c.beginPath(); c.moveTo(640, 236); c.lineTo(640, 262); c.stroke();
       S.mgPaiza(c, 640, 340, .9, Math.sin(lt * 1.3) * .08, .2 + .2 * Math.sin(lt * 2)); },
     over: [(c, lt) => K.card(c, 'SULTAN QUTUZ', lt, { at: .6, x: 480, y: 150, px: 54, rot: -2 }), (c, lt, u, Sh) => K.card(c, 'BAB ZUWEILA · CAIRO', lt, { at: Sh.tX + .4, x: 1360, y: 160, px: 44, rot: 2 })],
@@ -63,7 +63,7 @@ window.SHOTS = [
     draw: (c, lt, u, Sh) => { const L = SUN(lt);
       fig(c, C.QUTUZ, 160, 476, 30, pose(lt, 0, { face: 1, shN: 20, elN: 60 }), lt, 0, L, { look: [.8, .2] });
       for (let r = 0; r < 2; r++) for (let i = 0; i < 6; i++) { const x0 = 480 + i * 120 + r * 50, y = 600 + r * 70, w = seg(lt, i * .15 + r * .3, i * .15 + r * .3 + 1.6), x = lerp(1400 + i * 40, x0, E.out(w));
-        fig(c, [C.MAMLUK, C.MAMLUK2, C.MAMLUK3][(i + r) % 3], x, y, 26 + r * 3, w < 1 ? walk(lt, i + r, { face: -1, holdN: (i + r) % 3 === 2 ? S.mgBow(c) : S.mgSpear(c, -1.45) }) : pose(lt, i + r, { face: -1, shF: 10 + ((i * 7 + r) % 4) * 12, elF: 20 + ((i + r * 2) % 3) * 25, lean: ((i + r) % 3 - 1) * 3, holdN: (i + r) % 3 === 2 ? S.mgBow(c) : S.mgSpear(c, -1.45 + ((i % 2) * .12)) }), lt, i + r, L, { look: [-.7, 0] }); }
+        fig(c, [C.MAMLUK, C.MAMLUK2, C.MAMLUK3][(i + r) % 3], x, y, 26 + r * 3, w < 1 ? walk(lt, i + r, { face: -1, holdN: (i + r) % 3 === 2 ? S.mgBow(c) : S.mgSpear(c, -1.12) }) : pose(lt, i + r, { face: -1, shF: 10 + ((i * 7 + r) % 4) * 12, elF: 20 + ((i + r * 2) % 3) * 25, lean: ((i + r) % 3 - 1) * 3, holdN: (i + r) % 3 === 2 ? S.mgBow(c) : S.mgSpear(c, -1.45 + ((i % 2) * .12)) }), lt, i + r, L, { look: [-.7, 0] }); }
       S.mgBanner(c, 405, 640, 170, lt); S.mgBanner(c, 1235, 600, 170, lt + 1); },
     over: [],
     sfx: [[.2, 'march_loop', .3], [.4, 'drum', .35]] },
@@ -72,9 +72,9 @@ window.SHOTS = [
   { set: 'mg_camp', cam: { z: [1.0, 1.06], x: [640, 640], y: [400, 410], ease: E.io }, bed: [['wind_loop', .2]],
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tM = at(Sh, 'died', 4); Sh.tH = at(Sh, 'took most', 6.5); Sh.tK = at(Sh, 'kitbuqa', Sh.dur - 4); },
     draw: (c, lt, u, Sh) => { const L = SUN(lt), mq = seg(lt, .2, Sh.tM), go = seg(lt, Sh.tH, Sh.dur);
-      ride(c, C.ENVOY2, lerp(-200, 545, E.out(mq)), 650, 30, BAY, lt, lt * 2.4, mq < 1 ? 1.6 : 0, L, { shN: 40, elN: 40, lean: 12 }, { look: [.8, 0], worry: 1 }, 1);
+      rideG(c, C.ENVOY2, l => lerp(-200, 545, E.out(seg(l, .2, Sh.tM))), 650, 30, BAY, lt, L, { shN: 40, elN: 40, lean: 12 }, { look: [.8, 0], worry: 1 }, 1, 0, undefined, 1.6);
       fig(c, C.HULAGUH, 760, 660, 34, pose(lt, 0, { face: lt > Sh.tH ? 1 : -1, shN: lt > Sh.tH ? 110 : 20, elN: 20 }), lt, 0, L, { look: [lt > Sh.tH ? .8 : -.8, -.1], worry: lt > Sh.tM && lt < Sh.tH ? 1 : 0 });
-      for (let i = 0; i < 5; i++) { const x = 880 + i * 150 + go * 900 * (1 + i * .1); if (x > 1400) continue; ride(c, [C.MONGOL, C.MONGOL2, C.MONGOL3, C.MONGOL4][i % 4], x, 560 + (i % 2) * 20, 22, i % 2 ? BAY : GREYH, lt, lt * 1.4 + i * .3, go > 0 ? 1 : 0, L, { shN: 20, elN: 60 }, { look: [.7, 0] }, 1); }
+      for (let i = 0; i < 5; i++) { const XF = l => 880 + i * 150 + seg(l, Sh.tH, Sh.dur) * 900 * (1 + i * .1); if (XF(lt) > 1400) continue; rideG(c, [C.MONGOL, C.MONGOL2, C.MONGOL3, C.MONGOL4][i % 4], XF, 560 + (i % 2) * 20, 22, i % 2 ? BAY : GREYH, lt, L, { shN: 20, elN: 60 }, { look: [.7, 0] }, 1, i * .3); }
       fig(c, C.KITBUQA, 190, 670, 36, pose(lt, 2, { face: 1, shN: 20, elN: 60 }), lt, 2, L, { look: [.8, -.1] }); S.mgTug(c, 95, 670, 150, lt, '#1a1a1e'); },
     over: [(c, lt, u, Sh) => K.card(c, 'MÖNGKE DIES · 1259', lt, { at: Sh.tM - .4, x: 1360, y: 150, px: 46, rot: 2, until: Sh.tK }), (c, lt, u, Sh) => K.card(c, 'KITBUQA · ~10–20,000 MEN', lt, { at: Sh.tK, x: 600, y: 150, px: 48, rot: -2 })],
     sfx: [[.2, 'wind_loop', .2], [.3, 'hooves', .4], ['died', 'drum', .4], ['took most', 'horn', .45], ['kitbuqa', 'drone', .3]] },

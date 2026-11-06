@@ -40,7 +40,7 @@ window.SHOTS = [
         [[260, 0], [700, .9]].forEach(([x, ph]) => { const f = ((lt * .5 + ph) % 1.6); const fire = f < .4 ? E.io(f / .4) : 1 - seg(f, .4, 1.6) * 1; S.mgTrebuchet(c, x, 640, .9, fire, 1);
           const q = seg(f, .25, 1.1); if (q > 0 && q < 1) stone(c, lerp(x + 140, x + 380, q), 500 - Math.sin(q * Math.PI) * 300 + q * 30, 9); });
         fig(c, C.CHINESE, 470, 680, 30, pose(lt, 1, { face: 1, shN: 80, elN: 20 }), lt, 1, L, { look: [.5, -.4] });
-        fig(c, C.MONGOL, 980, 680, 30, pose(lt, 2, { face: -1, holdN: S.mgSpear(c, -1.45) }), lt, 2, L, { look: [-.4, -.3] });
+        fig(c, C.MONGOL, 980, 680, 30, pose(lt, 2, { face: -1, holdN: S.mgSpear(c, -1.12) }), lt, 2, L, { look: [-.4, -.3] });
         fig(c, C.MONGOL2, 1100, 690, 30, pose(lt, 3, { face: -1, shN: 30, elN: 60 }), lt, 3, L, { look: [-.6, -.3] });
         S.mgSmoke(c, lt, 400, 420, 5, .35); S.mgSmoke(c, lt + 3, 900, 430, 5, .35); return; }
       VP.drawSet(c, 'towngate'); const L = GREY(lt); S.mgFlag(c, 640, 330, 110, lt); },

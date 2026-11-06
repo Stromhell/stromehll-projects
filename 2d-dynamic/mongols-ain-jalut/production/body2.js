@@ -54,7 +54,7 @@ window.SHOTS = [
       fig(c, C.MONGKE, 450, 652, 36, Object.assign(VP.sit(C.MONGKE, lt * .3, 1, { seat: .2 }), { face: 1, shN: 30 + 40 * g, elN: 40 - 30 * g }), lt, 0, L, { look: [.7, 0] });
       const hx = lerp(1300, 760, w); fig(c, C.HULAGU, hx, 690, 38, w < 1 ? walk(lt, 1, { face: -1 }) : pose(lt, 1, { face: -1, shN: 30 + 40 * g, elN: 40 - 30 * g, lean: 4 * g }), lt, 1, L, { look: [-.7, 0] });
       if (g > 0) { const h1 = E.io(seg(g, 0, .45)), h2 = E.io(seg(g, .5, .9)), px = lerp(lerp(470, 515, h1), 690, h2), py = lerp(lerp(565, 505, h1), 503, h2); S.mgPaiza(c, px, py, .4, .2, .3 + .5 * g, false); }
-      fig(c, C.MONGOL2, 220, 690, 34, pose(lt, 3, { face: 1, holdN: S.mgSpear(c, -1.45) }), lt, 3, L, { look: [.6, 0] });
+      fig(c, C.MONGOL2, 220, 690, 34, pose(lt, 3, { face: 1, holdN: S.mgSpear(c, -1.12) }), lt, 3, L, { look: [.6, 0] });
       VP.glow(c, 1080, 480, 160, '#ffc070', .35); },
     over: [(c, lt) => K.card(c, 'HULAGU · 1253', lt, { at: .8, x: 1360, y: 150, px: 52, rot: 2 }), (c, lt, u, Sh) => K.card(c, 'GREAT KHAN MÖNGKE', lt, { at: .5, x: 520, y: 150, px: 44, rot: -2 })],
     sfx: [[.2, 'fire_loop', .15], [.3, 'drone', .15], [.5, 'footsteps', .3], ['orders', 'chime', .4]] },

@@ -12,7 +12,7 @@ window.SHOTS = [
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tS = at(Sh, 'september', 5); Sh.tV = at(Sh, 'valley', 7); },
     draw: (c, lt, u, Sh) => { const L = SUN(lt); S.mgTug(c, 1240, 560, 120, lt, '#1a1a1e');
       for (let i = 0; i < 9; i++) { const x0 = 120 + i * 52, w = seg(lt, .3 + i * .25, 2.8 + i * .25), x = lerp(-60 - i * 20, x0, E.out(w));
-        fig(c, MAM[i % 3], x, 440 + (i % 2) * 8, 13, w < 1 ? walk(lt, i, { face: 1, holdN: i % 3 === 1 ? S.mgBow(c) : S.mgSpear(c, -1.45) }) : pose(lt, i, { face: 1, shF: 10 + (i % 4) * 14, elF: 20 + (i % 3) * 25, lean: (i % 3 - 1) * 3, holdN: i % 3 === 1 ? S.mgBow(c) : S.mgSpear(c, -1.45 + (i % 2) * .15) }), lt, i, L, { look: [.6, 0] }); }
+        fig(c, MAM[i % 3], x, 440 + (i % 2) * 8, 13, w < 1 ? walk(lt, i, { face: 1, holdN: i % 3 === 1 ? S.mgBow(c) : S.mgSpear(c, -1.12) }) : pose(lt, i, { face: 1, shF: 10 + (i % 4) * 14, elF: 20 + (i % 3) * 25, lean: (i % 3 - 1) * 3, holdN: i % 3 === 1 ? S.mgBow(c) : S.mgSpear(c, -1.45 + (i % 2) * .15) }), lt, i, L, { look: [.6, 0] }); }
       S.mgBanner(c, 150, 450, 90, lt); S.mgBanner(c, 400, 446, 90, lt + 1);
       for (const i of [1, 3, 0, 2]) { const x0 = 720 + i * 150, w = seg(lt, Sh.tV - 2 + i * .2, Sh.tV + .6 + i * .2), x = lerp(1400 + i * 80, x0, E.out(w));
         ride(c, MON[i % 4], x, (i % 2) ? 540 : 610, (i % 2) ? 17 : 21, i % 2 ? BAY : GREYH, lt, lt * 1.4 + i, w > 0 && w < 1 ? 1 : 0, L, { shN: 20, elN: 60 }, { look: [-.7, -.1] }, -1); }

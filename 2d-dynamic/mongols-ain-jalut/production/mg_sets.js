@@ -38,8 +38,9 @@
     sky(g, w, h, [[0, '#5a8ac0'], [.45, '#c8d8e0'], [.6, '#f0e0c0'], [1, '#8a9a5a']]);
     cloud(g, 300, 110, 1.1, '#ffffff', 5201); cloud(g, 980, 80, 1.3, '#ffffff', 5202);
     ridge(g, w, h, 330, 40, 260, 5203, '#a8a8c0');
-    g.fillStyle = '#8a8a5a'; g.beginPath(); g.moveTo(620, 420); g.quadraticCurveTo(860, 230, 1040, 220); g.quadraticCurveTo(1180, 215, 1280, 260); g.lineTo(1280, 460); g.fill(); g.save(); g.clip();
-    S.dabs(g, { x: 700, y: 220, w: 580, h: 220, n: 240, cols: ['#6a7a4a', '#a89a6a', '#5a6a3a'], r0: 4, r1: 14, a0: .3, a1: .6, seed: 5204 }); g.restore();
+    g.fillStyle = '#8a8a5a'; g.beginPath(); g.moveTo(470, 450); g.quadraticCurveTo(560, 420, 640, 395); g.quadraticCurveTo(860, 230, 1040, 220); g.quadraticCurveTo(1180, 215, 1280, 260); g.lineTo(1280, 470); g.lineTo(470, 470); g.fill(); g.save(); g.clip();
+    { const fg = g.createLinearGradient(0, 340, 0, 445); fg.addColorStop(0, 'rgba(122,154,72,0)'); fg.addColorStop(1, 'rgba(122,154,72,.95)'); g.fillStyle = fg; g.fillRect(460, 330, 820, 140); }
+    S.dabs(g, { x: 470, y: 220, w: 810, h: 230, n: 240, cols: ['#6a7a4a', '#a89a6a', '#5a6a3a'], r0: 4, r1: 14, a0: .3, a1: .6, seed: 5204 }); g.restore();
     g.fillStyle = '#8a9a5a'; g.beginPath(); g.moveTo(0, 330); g.quadraticCurveTo(160, 300, 360, 360); g.quadraticCurveTo(480, 400, 560, 430); g.lineTo(0, 440); g.fill(); g.save(); g.clip();
     S.dabs(g, { x: 0, y: 300, w: 560, h: 140, n: 160, cols: ['#6a7a4a', '#a8a070', '#5a6a3a'], r0: 4, r1: 12, a0: .3, a1: .6, seed: 5205 }); g.restore();
     for (let k = 0; k < 9; k++) olive(g, 40 + k * 56, 380 + (k % 3) * 10, .6, 5206 + k);

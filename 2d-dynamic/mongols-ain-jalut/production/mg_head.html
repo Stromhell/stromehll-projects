@@ -28,4 +28,13 @@ const pose = (lt, k, o) => Object.assign(S.idle(lt, k), o);
 const walk = (lt, k, o) => Object.assign(H1.walk(lt * 1.1 + k), o);
 const musket = (cc, a = -1.2) => wr => S.npMusket(cc, wr[0], wr[1], a, .9);
 const ride = (c, ch, x, y, uu, col, lt, ph, wk, L, po = {}, f = {}, face = 1) => VP.figure(c, [x, y], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => VP.rider(cc, ch, x, y, uu, uu * 5, { face, ph, walk: wk, t: lt, col, tack: f.tack || { cloth: ['#7a2a22', '#3c1410'], trim: '#c8a040' } }, Object.assign({ lean: 2 }, po), Object.assign({ blink: S.blinkAt(lt, 3), time: lt }, f), L));
+// rideG: gait driven by ground distance, so legs move only while the horse travels and stop when it stops.
+// xf(lt) = screen x; gf(lt) = ground x (defaults to xf; pass xf + background scroll when the set pans).
+const rideG = (c, ch, xf, y, uu, col, lt, L, po = {}, f = {}, face = 1, k = 0, gf = xf, amp = 1) => {
+  const x = xf(lt), g = gf(lt), v = Math.abs(gf(lt + .05) - gf(lt - .05)) / .1;
+  ride(c, ch, x, y, uu, col, lt, face * g / (uu * 4) + k, amp * K.clamp(v / (uu * 3)), L, po, f, face); };
+// mgPan: draw a set scrolled left by off px, tiled with a mirrored copy so there is no seam.
+S.mgPan = (c, name, off) => { const s = VP.bg(name), w = s.w, o = Math.round(((off % (2 * w)) + 2 * w) % (2 * w)), I = s.img, sw = I.width - 8, sh = I.height;
+  const D = x => c.drawImage(I, 4, 0, sw, sh, x, 0, w + 1, s.h); // trim the set's light edge columns so tiles meet cleanly
+  D(-o); c.save(); c.translate(2 * w - o + 1, 0); c.scale(-1, 1); D(0); c.restore(); if (o > w) D(2 * w - o); };
 const WHITEH = ['#e8e4dc', '#a8a49c'], BAY = ['#6a3a1e', '#3a1e0e'], GREYH = ['#8a8a8a', '#4a4a4a'];

@@ -28,6 +28,15 @@ const pose = (lt, k, o) => Object.assign(S.idle(lt, k), o);
 const walk = (lt, k, o) => Object.assign(H1.walk(lt * 1.1 + k), o);
 const musket = (cc, a = -1.2) => wr => S.npMusket(cc, wr[0], wr[1], a, .9);
 const ride = (c, ch, x, y, uu, col, lt, ph, wk, L, po = {}, f = {}, face = 1) => VP.figure(c, [x, y], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => VP.rider(cc, ch, x, y, uu, uu * 5, { face, ph, walk: wk, t: lt, col, tack: f.tack || { cloth: ['#7a2a22', '#3c1410'], trim: '#c8a040' } }, Object.assign({ lean: 2 }, po), Object.assign({ blink: S.blinkAt(lt, 3), time: lt }, f), L));
+// rideG: gait driven by ground distance, so legs move only while the horse travels and stop when it stops.
+// xf(lt) = screen x; gf(lt) = ground x (defaults to xf; pass xf + background scroll when the set pans).
+const rideG = (c, ch, xf, y, uu, col, lt, L, po = {}, f = {}, face = 1, k = 0, gf = xf, amp = 1) => {
+  const x = xf(lt), g = gf(lt), v = Math.abs(gf(lt + .05) - gf(lt - .05)) / .1;
+  ride(c, ch, x, y, uu, col, lt, face * g / (uu * 4) + k, amp * K.clamp(v / (uu * 3)), L, po, f, face); };
+// mgPan: draw a set scrolled left by off px, tiled with a mirrored copy so there is no seam.
+S.mgPan = (c, name, off) => { const s = VP.bg(name), w = s.w, o = Math.round(((off % (2 * w)) + 2 * w) % (2 * w)), I = s.img, sw = I.width - 8, sh = I.height;
+  const D = x => c.drawImage(I, 4, 0, sw, sh, x, 0, w + 1, s.h); // trim the set's light edge columns so tiles meet cleanly
+  D(-o); c.save(); c.translate(2 * w - o + 1, 0); c.scale(-1, 1); D(0); c.restore(); if (o > w) D(2 * w - o); };
 const WHITEH = ['#e8e4dc', '#a8a49c'], BAY = ['#6a3a1e', '#3a1e0e'], GREYH = ['#8a8a8a', '#4a4a4a'];
 const PX = S.mgPX;
 const ALL = [[PL.steppe, 0, 180], [PX(90, 44), 0, 170], [PL.beijing, 0, 120], [PX(108, 34), 0, 110], [PL.otrar, 0, 150], [PL.samarkand, 0, 150], [PL.nishapur, 0, 130], [PL.sarai, 0, 150], [PL.kiev, 0, 120], [PX(50, 52), 0, 140], [PL.tabriz, 0, 120], [PL.baghdad, 0, 110], [PX(41, 37), 0, 90]];
@@ -43,7 +52,7 @@ window.SHOTS = [
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tS = at(Sh, 'september', 5); Sh.tV = at(Sh, 'valley', 7); },
     draw: (c, lt, u, Sh) => { const L = SUN(lt); S.mgTug(c, 1240, 560, 120, lt, '#1a1a1e');
       for (let i = 0; i < 9; i++) { const x0 = 120 + i * 52, w = seg(lt, .3 + i * .25, 2.8 + i * .25), x = lerp(-60 - i * 20, x0, E.out(w));
-        fig(c, MAM[i % 3], x, 440 + (i % 2) * 8, 13, w < 1 ? walk(lt, i, { face: 1, holdN: i % 3 === 1 ? S.mgBow(c) : S.mgSpear(c, -1.45) }) : pose(lt, i, { face: 1, shF: 10 + (i % 4) * 14, elF: 20 + (i % 3) * 25, lean: (i % 3 - 1) * 3, holdN: i % 3 === 1 ? S.mgBow(c) : S.mgSpear(c, -1.45 + (i % 2) * .15) }), lt, i, L, { look: [.6, 0] }); }
+        fig(c, MAM[i % 3], x, 440 + (i % 2) * 8, 13, w < 1 ? walk(lt, i, { face: 1, holdN: i % 3 === 1 ? S.mgBow(c) : S.mgSpear(c, -1.12) }) : pose(lt, i, { face: 1, shF: 10 + (i % 4) * 14, elF: 20 + (i % 3) * 25, lean: (i % 3 - 1) * 3, holdN: i % 3 === 1 ? S.mgBow(c) : S.mgSpear(c, -1.45 + (i % 2) * .15) }), lt, i, L, { look: [.6, 0] }); }
       S.mgBanner(c, 150, 450, 90, lt); S.mgBanner(c, 400, 446, 90, lt + 1);
       for (const i of [1, 3, 0, 2]) { const x0 = 720 + i * 150, w = seg(lt, Sh.tV - 2 + i * .2, Sh.tV + .6 + i * .2), x = lerp(1400 + i * 80, x0, E.out(w));
         ride(c, MON[i % 4], x, (i % 2) ? 540 : 610, (i % 2) ? 17 : 21, i % 2 ? BAY : GREYH, lt, lt * 1.4 + i, w > 0 && w < 1 ? 1 : 0, L, { shN: 20, elN: 60 }, { look: [-.7, -.1] }, -1); }

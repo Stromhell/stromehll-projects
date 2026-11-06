@@ -28,6 +28,15 @@ const pose = (lt, k, o) => Object.assign(S.idle(lt, k), o);
 const walk = (lt, k, o) => Object.assign(H1.walk(lt * 1.1 + k), o);
 const musket = (cc, a = -1.2) => wr => S.npMusket(cc, wr[0], wr[1], a, .9);
 const ride = (c, ch, x, y, uu, col, lt, ph, wk, L, po = {}, f = {}, face = 1) => VP.figure(c, [x, y], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => VP.rider(cc, ch, x, y, uu, uu * 5, { face, ph, walk: wk, t: lt, col, tack: f.tack || { cloth: ['#7a2a22', '#3c1410'], trim: '#c8a040' } }, Object.assign({ lean: 2 }, po), Object.assign({ blink: S.blinkAt(lt, 3), time: lt }, f), L));
+// rideG: gait driven by ground distance, so legs move only while the horse travels and stop when it stops.
+// xf(lt) = screen x; gf(lt) = ground x (defaults to xf; pass xf + background scroll when the set pans).
+const rideG = (c, ch, xf, y, uu, col, lt, L, po = {}, f = {}, face = 1, k = 0, gf = xf, amp = 1) => {
+  const x = xf(lt), g = gf(lt), v = Math.abs(gf(lt + .05) - gf(lt - .05)) / .1;
+  ride(c, ch, x, y, uu, col, lt, face * g / (uu * 4) + k, amp * K.clamp(v / (uu * 3)), L, po, f, face); };
+// mgPan: draw a set scrolled left by off px, tiled with a mirrored copy so there is no seam.
+S.mgPan = (c, name, off) => { const s = VP.bg(name), w = s.w, o = Math.round(((off % (2 * w)) + 2 * w) % (2 * w)), I = s.img, sw = I.width - 8, sh = I.height;
+  const D = x => c.drawImage(I, 4, 0, sw, sh, x, 0, w + 1, s.h); // trim the set's light edge columns so tiles meet cleanly
+  D(-o); c.save(); c.translate(2 * w - o + 1, 0); c.scale(-1, 1); D(0); c.restore(); if (o > w) D(2 * w - o); };
 const WHITEH = ['#e8e4dc', '#a8a49c'], BAY = ['#6a3a1e', '#3a1e0e'], GREYH = ['#8a8a8a', '#4a4a4a'];
 const PX = S.mgPX;
 const books = (cc, n = 3) => wr => { for (let k = 0; k < n; k++) S.mgBook(cc, wr[0] + 4, wr[1] - 6 - k * 9, .55, .05 * k, ['#7a2a22', '#2a4a7a', '#3a6a3a'][k % 3]); };
@@ -71,7 +80,7 @@ window.SHOTS = [
         [[260, 0], [700, .9]].forEach(([x, ph]) => { const f = ((lt * .5 + ph) % 1.6); const fire = f < .4 ? E.io(f / .4) : 1 - seg(f, .4, 1.6) * 1; S.mgTrebuchet(c, x, 640, .9, fire, 1);
           const q = seg(f, .25, 1.1); if (q > 0 && q < 1) stone(c, lerp(x + 140, x + 380, q), 500 - Math.sin(q * Math.PI) * 300 + q * 30, 9); });
         fig(c, C.CHINESE, 470, 680, 30, pose(lt, 1, { face: 1, shN: 80, elN: 20 }), lt, 1, L, { look: [.5, -.4] });
-        fig(c, C.MONGOL, 980, 680, 30, pose(lt, 2, { face: -1, holdN: S.mgSpear(c, -1.45) }), lt, 2, L, { look: [-.4, -.3] });
+        fig(c, C.MONGOL, 980, 680, 30, pose(lt, 2, { face: -1, holdN: S.mgSpear(c, -1.12) }), lt, 2, L, { look: [-.4, -.3] });
         fig(c, C.MONGOL2, 1100, 690, 30, pose(lt, 3, { face: -1, shN: 30, elN: 60 }), lt, 3, L, { look: [-.6, -.3] });
         S.mgSmoke(c, lt, 400, 420, 5, .35); S.mgSmoke(c, lt + 3, 900, 430, 5, .35); return; }
       VP.drawSet(c, 'towngate'); const L = GREY(lt); S.mgFlag(c, 640, 330, 110, lt); },

@@ -8,14 +8,21 @@ const GREYE = [[PL.tabriz, 0, 120], [PL.baghdad, 0, 110], [PX(50, 52), 0, 140], 
 
 window.SHOTS = [
   // 6.01 MED: a hunting party in the desert; officers close around Qutuz; then Baybars crowned in Cairo
-  { set: 'sz_dunes', cam: (lt, u, Sh) => lt < Sh.tS ? { z: [lerp(1.05, 1.2, seg(lt, 0, Sh.tS))], x: [640], y: [430] } : { z: [1.1], x: [640], y: [450] }, bed: [['wind_loop', .3]],
-    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tO = at(Sh, 'officers', 3.2); Sh.tS = at(Sh, 'became', Sh.dur - 2.8); },
+  { set: 'sz_dunes', cam: (lt, u, Sh) => lt < Sh.tS ? { z: [lerp(1.16, 1.04, E.io(seg(lt, Sh.t2, Sh.t2 + 1.4)))], x: [640], y: [lerp(440, 410, E.io(seg(lt, Sh.t2, Sh.t2 + 1.4)))] } : { z: [1.1], x: [640], y: [450] }, bed: [['wind_loop', .3]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tO = at(Sh, 'officers', 3.2); Sh.tS = at(Sh, 'became', Sh.dur - 2.8); Sh.t1 = Sh.tO - .3; Sh.t2 = Sh.tO + 1.4;
+      // ground scroll: the party rides home at a steady pace, then slows to a halt as the officers close in
+      const V = 105, d = Sh.t2 - Sh.t1; Sh.off = l => l < Sh.t1 ? V * l : l < Sh.t2 ? V * (Sh.t1 + (l - Sh.t1) - (l - Sh.t1) * (l - Sh.t1) / (2 * d)) : V * (Sh.t1 + d / 2); },
     draw: (c, lt, u, Sh) => {
-      if (lt < Sh.tS) { const L = SUN(lt), cl = E.io(seg(lt, Sh.tO - .3, Sh.tO + 1.4));
-        ride(c, C.QUTUZ, 640, 600, 26, WHITEH, lt, lt * 1.2, cl < 1 ? .5 : 0, L, { shN: 20, elN: 60 }, { look: [cl > .5 ? -.6 : .7, 0], worry: cl > .6 ? 1 : 0 }, 1);
-        ride(c, C.BAYBARS, lerp(260, 470, cl), 590, 25, BAY, lt, lt * 1.2 + 1, cl > 0 && cl < 1 ? 1 : .5, L, { shN: 20, elN: 60 }, { look: [.7, 0], angry: cl > .5 ? 1 : 0 }, 1);
-        ride(c, MAM[1], lerp(1080, 820, cl), 610, 25, GREYH, lt, lt * 1.2 + 2, cl > 0 && cl < 1 ? 1 : .5, L, { shN: 20, elN: 60 }, { look: [-.7, 0], angry: cl > .5 ? 1 : 0 }, -1);
-        ride(c, MAM[2], lerp(1300, 1000, cl), 560, 23, BAY, lt, lt * 1.2 + 3, cl > 0 && cl < 1 ? 1 : .5, L, { shN: 20, elN: 60 }, { look: [-.7, 0] }, -1);
+      if (lt < Sh.tS) { const L = SUN(lt), cl = E.io(seg(lt, Sh.t1, Sh.t2)), CL = l => E.io(seg(l, Sh.t1, Sh.t2)), G = xf => l => xf(l) + Sh.off(l);
+        S.mgPan(c, 'sz_dunes', Sh.off(lt) * .8);
+        // the two officers ahead rein in early, so Qutuz rides up between them while Baybars closes from behind (nobody walks backwards)
+        const e = (Sh.t2 - Sh.t1) / 3, gM = l => 105 * (l < Sh.t1 ? l : l < Sh.t1 + e ? Sh.t1 + (l - Sh.t1) - (l - Sh.t1) * (l - Sh.t1) / (2 * e) : Sh.t1 + e / 2);
+        const XB = l => lerp(260, 470, CL(l)), XQ = () => 640, XM1 = l => 880 + gM(l) - Sh.off(l), XM2 = l => 1090 + gM(l) - Sh.off(l);
+        rideG(c, MAM[2], XM2, 560, 23, BAY, lt, L, { shN: 20, elN: 60 }, { look: [cl > .3 ? -.7 : .7, 0] }, 1, 3, l => 1090 + gM(l));
+        rideG(c, C.QUTUZ, XQ, 600, 26, WHITEH, lt, L, { shN: 20, elN: 60 }, { look: [cl > .5 ? -.6 : .7, 0], worry: cl > .6 ? 1 : 0 }, 1, 0, G(XQ));
+        rideG(c, C.BAYBARS, XB, 590, 25, BAY, lt, L, { shN: 20, elN: 60 }, { look: [.7, 0], angry: cl > .5 ? 1 : 0 }, 1, 1, G(XB));
+        rideG(c, MAM[1], XM1, 610, 25, GREYH, lt, L, { shN: 20, elN: 60 }, { look: [cl > .3 ? -.7 : .7, 0], angry: cl > .5 ? 1 : 0 }, 1, 2, l => 880 + gM(l));
+        S.mgDust(c, lt, 200, 640, 1000, .2 * (1 - cl));
         c.fillStyle = S.rgba('#1a0a08', .55 * seg(lt, Sh.tO + 1.6, Sh.tS)); c.fillRect(0, 0, 1280, 720); return; }
       const L = CANDLE(lt), bw = E.io(seg(lt, Sh.tS + .4, Sh.tS + 1.4)); VP.drawSet(c, 'throne'); cushion(c, 640, 600);
       fig(c, C.BAYBARSK, 640, 600, 34, Object.assign(VP.sit(C.BAYBARSK, lt * .3, 2, { seat: .2 }), { face: 1, shN: 20, elN: 30 }), lt, 0, L, { look: [.3, .1] });
@@ -28,7 +35,7 @@ window.SHOTS = [
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tM = at(Sh, 'strongest', 5); Sh.tA = at(Sh, 'again', Sh.dur - 3); },
     draw: (c, lt, u, Sh) => {
       if (lt < Sh.tM) { const L = SUN(lt);
-        for (let i = 0; i < 5; i++) ride(c, MAM[i % 3], 430 + i * 180, 540, 18, i % 2 ? BAY : GREYH, lt, lt + i, 0, L, { shN: 10, elN: 40, holdN: S.mgSpear(c, -1.45) }, { look: [-.3, 0] }, -1);
+        for (let i = 0; i < 5; i++) ride(c, MAM[i % 3], 430 + i * 180, 540, 18, i % 2 ? BAY : GREYH, lt, lt + i, 0, L, { shN: 10, elN: 40, holdN: S.mgSpear(c, -1.12) }, { look: [-.3, 0] }, -1);
         const w = seg(lt, .2, Sh.tM), bx = lerp(1360, 260, w); ride(c, C.BAYBARSK, bx, 640, 26, WHITEH, lt, lt * 1.1, w < 1 ? .6 : 0, L, { shN: 20, elN: 60 }, { look: [-.5, -.2] }, -1); return; }
       VP.drawSet(c, 'np_parch');
       S.mgAsia(c, { fill: cc => { S.mgTide(cc, 1, GREYE); S.mgRegion(cc, S.mgBounds.MAMLUK_SY, '#e8b830', .5); } });

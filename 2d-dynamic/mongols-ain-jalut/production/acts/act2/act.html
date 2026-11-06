@@ -28,6 +28,15 @@ const pose = (lt, k, o) => Object.assign(S.idle(lt, k), o);
 const walk = (lt, k, o) => Object.assign(H1.walk(lt * 1.1 + k), o);
 const musket = (cc, a = -1.2) => wr => S.npMusket(cc, wr[0], wr[1], a, .9);
 const ride = (c, ch, x, y, uu, col, lt, ph, wk, L, po = {}, f = {}, face = 1) => VP.figure(c, [x, y], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => VP.rider(cc, ch, x, y, uu, uu * 5, { face, ph, walk: wk, t: lt, col, tack: f.tack || { cloth: ['#7a2a22', '#3c1410'], trim: '#c8a040' } }, Object.assign({ lean: 2 }, po), Object.assign({ blink: S.blinkAt(lt, 3), time: lt }, f), L));
+// rideG: gait driven by ground distance, so legs move only while the horse travels and stop when it stops.
+// xf(lt) = screen x; gf(lt) = ground x (defaults to xf; pass xf + background scroll when the set pans).
+const rideG = (c, ch, xf, y, uu, col, lt, L, po = {}, f = {}, face = 1, k = 0, gf = xf, amp = 1) => {
+  const x = xf(lt), g = gf(lt), v = Math.abs(gf(lt + .05) - gf(lt - .05)) / .1;
+  ride(c, ch, x, y, uu, col, lt, face * g / (uu * 4) + k, amp * K.clamp(v / (uu * 3)), L, po, f, face); };
+// mgPan: draw a set scrolled left by off px, tiled with a mirrored copy so there is no seam.
+S.mgPan = (c, name, off) => { const s = VP.bg(name), w = s.w, o = Math.round(((off % (2 * w)) + 2 * w) % (2 * w)), I = s.img, sw = I.width - 8, sh = I.height;
+  const D = x => c.drawImage(I, 4, 0, sw, sh, x, 0, w + 1, s.h); // trim the set's light edge columns so tiles meet cleanly
+  D(-o); c.save(); c.translate(2 * w - o + 1, 0); c.scale(-1, 1); D(0); c.restore(); if (o > w) D(2 * w - o); };
 const WHITEH = ['#e8e4dc', '#a8a49c'], BAY = ['#6a3a1e', '#3a1e0e'], GREYH = ['#8a8a8a', '#4a4a4a'];
 const PX = S.mgPX;
 const CITIES = [['BUKHARA', PL.bukhara, 'bukhara', 30, -56], ['SAMARKAND', PL.samarkand, 'samarkand', -14, 70], ['URGENCH', PL.urgench, 'urgench', -16, -40], ['NISHAPUR', PL.nishapur, 'nishapur', 30, -30]];
@@ -85,7 +94,7 @@ window.SHOTS = [
       fig(c, C.MONGKE, 450, 652, 36, Object.assign(VP.sit(C.MONGKE, lt * .3, 1, { seat: .2 }), { face: 1, shN: 30 + 40 * g, elN: 40 - 30 * g }), lt, 0, L, { look: [.7, 0] });
       const hx = lerp(1300, 760, w); fig(c, C.HULAGU, hx, 690, 38, w < 1 ? walk(lt, 1, { face: -1 }) : pose(lt, 1, { face: -1, shN: 30 + 40 * g, elN: 40 - 30 * g, lean: 4 * g }), lt, 1, L, { look: [-.7, 0] });
       if (g > 0) { const h1 = E.io(seg(g, 0, .45)), h2 = E.io(seg(g, .5, .9)), px = lerp(lerp(470, 515, h1), 690, h2), py = lerp(lerp(565, 505, h1), 503, h2); S.mgPaiza(c, px, py, .4, .2, .3 + .5 * g, false); }
-      fig(c, C.MONGOL2, 220, 690, 34, pose(lt, 3, { face: 1, holdN: S.mgSpear(c, -1.45) }), lt, 3, L, { look: [.6, 0] });
+      fig(c, C.MONGOL2, 220, 690, 34, pose(lt, 3, { face: 1, holdN: S.mgSpear(c, -1.12) }), lt, 3, L, { look: [.6, 0] });
       VP.glow(c, 1080, 480, 160, '#ffc070', .35); },
     over: [(c, lt) => K.card(c, 'HULAGU · 1253', lt, { at: .8, x: 1360, y: 150, px: 52, rot: 2 }), (c, lt, u, Sh) => K.card(c, 'GREAT KHAN MÖNGKE', lt, { at: .5, x: 520, y: 150, px: 44, rot: -2 })],
     sfx: [[.2, 'fire_loop', .15], [.3, 'drone', .15], [.5, 'footsteps', .3], ['orders', 'chime', .4]] },
