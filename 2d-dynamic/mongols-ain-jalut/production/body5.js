@@ -14,8 +14,8 @@ window.SHOTS = [
       for (let i = 0; i < 9; i++) { const x0 = 120 + i * 52, w = seg(lt, .3 + i * .25, 2.8 + i * .25), x = lerp(-60 - i * 20, x0, E.out(w));
         fig(c, MAM[i % 3], x, 440 + (i % 2) * 8, 13, w < 1 ? walk(lt, i, { face: 1, holdN: i % 3 === 1 ? S.mgBow(c) : S.mgSpear(c, -1.45) }) : pose(lt, i, { face: 1, shF: 10 + (i % 4) * 14, elF: 20 + (i % 3) * 25, lean: (i % 3 - 1) * 3, holdN: i % 3 === 1 ? S.mgBow(c) : S.mgSpear(c, -1.45 + (i % 2) * .15) }), lt, i, L, { look: [.6, 0] }); }
       S.mgBanner(c, 150, 450, 90, lt); S.mgBanner(c, 400, 446, 90, lt + 1);
-      for (let i = 0; i < 6; i++) { const x0 = 700 + i * 95, w = seg(lt, Sh.tV - 2 + i * .2, Sh.tV + .6 + i * .2), x = lerp(1400 + i * 60, x0, E.out(w));
-        ride(c, MON[i % 4], x, 580 + (i % 2) * 22, 20, i % 2 ? BAY : GREYH, lt, lt * 1.4 + i, w > 0 && w < 1 ? 1 : 0, L, { shN: 20, elN: 60 }, { look: [-.7, -.1] }, -1); }
+      for (const i of [1, 3, 0, 2]) { const x0 = 720 + i * 150, w = seg(lt, Sh.tV - 2 + i * .2, Sh.tV + .6 + i * .2), x = lerp(1400 + i * 80, x0, E.out(w));
+        ride(c, MON[i % 4], x, (i % 2) ? 540 : 610, (i % 2) ? 17 : 21, i % 2 ? BAY : GREYH, lt, lt * 1.4 + i, w > 0 && w < 1 ? 1 : 0, L, { shN: 20, elN: 60 }, { look: [-.7, -.1] }, -1); }
       },
     over: [(c, lt, u, Sh) => K.card(c, 'AIN JALUT · 3 SEPT 1260', lt, { at: Sh.tS, x: 960, y: 140, px: 56, rot: -2 })],
     sfx: [[.2, 'wind_loop', .25], [.3, 'drone', .15], [.6, 'march_loop', .25], ['valley', 'hooves', .35], ['september', 'drum', .45]] },
@@ -47,7 +47,7 @@ window.SHOTS = [
       S.mgArrow(c, [1180, 560], [700, 330], m, S.rgba('#3a3a40', .85), 26, .15);
       const cl = E.io(seg(lt, Sh.tH, Sh.tH + 1.4));
       for (let k = 0; k < 8; k++) { const a = k / 8 * TAU, r = lerp(300, 150, cl), x = 690 + Math.cos(a) * r, y = 320 + Math.sin(a) * r * .6; block(c, x, y, seg(lt, Sh.tH - .4 + k * .05, Sh.tH + k * .05)); } },
-    over: [(c, lt, u, Sh) => K.card(c, 'THEIR OWN TRICK', lt, { at: .6, x: 1500, y: 300, px: 48, rot: 2, until: Sh.tH })],
+    over: [(c, lt, u, Sh) => K.card(c, 'THEIR OWN TRICK', lt, { at: .6, x: 360, y: 880, px: 48, rot: 2, until: Sh.tH })],
     sfx: [[.2, 'drone', .2], [.4, 'whoosh', .3], ['chased', 'whoosh', .3], ['main', 'drum', .45], ['main', 'tension', .3]] },
 
   // 5.04 MED: Qutuz pulls off his helmet in the middle of the fight and charges; his men turn back to follow him
@@ -55,9 +55,9 @@ window.SHOTS = [
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tH = at(Sh, 'helmet', 3.6); Sh.tI = at(Sh, 'islam', Sh.dur - 2.4); },
     draw: (c, lt, u, Sh) => { const L = SUN(lt), bare = lt > Sh.tH, ch = seg(lt, Sh.tI, Sh.dur), push = E.io(seg(lt, 0, Sh.tH)) * (1 - E.io(ch));
       for (const i of [0, 2, 1, 3]) { const x = 990 + i * 170 - push * 120 + E.io(ch) * 700; if (x > 1400) continue; ride(c, MON[i % 4], x, (i % 2) ? 548 : 492, (i % 2) ? 21 : 18, i % 2 ? BAY : GREYH, lt, lt * 2 + i, ch > 0 ? 1.6 : .6, L, { shN: 60, elN: 30, holdN: S.mgSpear(c, -.2) }, { look: [-.8, 0], angry: 1 }, ch > 0 ? 1 : -1); }
-      for (const i of [0, 2, 1]) { const x = 400 - i * 185 + E.io(ch) * 900, f = bare ? 1 : -1; if (x > 1400) continue; ride(c, MAM[i], x, 500 + (i % 2) * 40, 21, i % 2 ? GREYH : BAY, lt, lt * 2 + i, ch > 0 ? 1.6 : 0, L, { shN: 60, elN: 30, holdN: S.mgSpear(c, -.2) }, { look: [f * .8, 0], worry: bare ? 0 : 1 }, ch > 0 ? 1 : f); }
+      for (const i of [0, 1]) { const x = 400 - i * 185 + E.io(ch) * 900, f = bare ? 1 : -1; if (x > 1400) continue; ride(c, MAM[i], x, 500 + (i % 2) * 40, 21, i % 2 ? GREYH : BAY, lt, lt * 2 + i, ch > 0 ? 1.6 : 0, L, { shN: 60, elN: 30, holdN: S.mgSpear(c, -.2) }, { look: [f * .8, 0], worry: bare ? 0 : 1 }, ch > 0 ? 1 : f); }
       const qx = 640 + E.io(ch) * 800; ride(c, bare ? C.QUTUZB : C.QUTUZ, qx, 540, 25, WHITEH, lt, lt * 2.4, ch > 0 ? 1.6 : 0, L, { shN: bare && !ch ? 150 : 70, elN: bare && !ch ? 10 : 30, lean: ch > 0 ? 14 : 0 }, { look: [.8, -.2], angry: bare ? 1 : 0, open: lt > Sh.tI && lt < Sh.tI + 1.5 ? 1 : 0 }, 1);
-      S.mgBanner(c, 230 + E.io(ch) * 900, 520, 150, lt); S.mgDust(c, lt, 300, 560, 700, .25); },
+      S.mgBanner(c, 110 + E.io(ch) * 900, 520, 150, lt); S.mgDust(c, lt, 300, 560, 700, .25); },
     over: [(c, lt, u, Sh) => K.card(c, '“O ISLAM!”', lt, { at: Sh.tI, x: 960, y: 150, px: 72, rot: -2 })],
     sfx: [[.1, 'battle_loop', .3], [.2, 'hooves_loop', .35], ['helmet', 'clank', .4], ['islam', 'crowd_cheer', .4], ['islam', 'horn', .4]] },
 
@@ -75,7 +75,7 @@ window.SHOTS = [
   { set: 'np_parch', cam: { z: [1.5, 1.6], x: [340, 340], y: [330, 335], ease: E.io }, bed: [['drone', .2]],
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tL = at(Sh, 'beaten', 2); Sh.tS = at(Sh, 'stopped', Sh.dur - 3.5); },
     draw: (c, lt, u, Sh) => { const back = E.io(seg(lt, Sh.tS, Sh.tS + 2.4)), ln = E.io(seg(lt, Sh.tL - .4, Sh.tL + .6));
-      S.mgAsia(c, { fill: cc => { S.mgRegion(cc, S.mgBounds.EMPIRE, '#5a5a64', .62, 0); S.mgTide(cc, 1 - back, SYR); S.mgRegion(cc, S.mgBounds.MAMLUK_EG, '#e8b830', .5); } });
+      S.mgAsia(c, { fill: cc => { S.mgRegion(cc, S.mgBounds.EMPIRE, '#5a5a64', .62, 0); S.mgRegion(cc, S.mgBounds.MAMLUK_SY, '#e8b830', .45 * back, back); S.mgRegion(cc, S.mgBounds.MAMLUK_EG, '#e8b830', .5); } });
       const a = PX(33.5, 31.2), b = PX(38.5, 33.6); c.save(); c.strokeStyle = S.rgba('#ffd860', .95); c.lineWidth = 8; c.shadowColor = '#ffd860'; c.shadowBlur = 18; c.beginPath(); c.moveTo(a[0], a[1]); c.lineTo(lerp(a[0], b[0], ln), lerp(a[1], b[1], ln)); c.stroke(); c.restore();
       S.mgDot(c, PL.ainjalut, 'AIN JALUT', 1, 1, 22, -16, 70); S.mgDot(c, PL.cairo, 'CAIRO', 1, 1, 20, 30); },
     over: [(c, lt, u, Sh) => K.card(c, 'FIRST DEFEAT THAT STUCK', lt, { at: Sh.tL + .4, x: 1360, y: 150, px: 46, rot: 2 })],

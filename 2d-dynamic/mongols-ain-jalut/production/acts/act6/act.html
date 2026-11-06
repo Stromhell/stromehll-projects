@@ -59,7 +59,7 @@ window.SHOTS = [
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tM = at(Sh, 'strongest', 5); Sh.tA = at(Sh, 'again', Sh.dur - 3); },
     draw: (c, lt, u, Sh) => {
       if (lt < Sh.tM) { const L = SUN(lt);
-        for (let i = 0; i < 6; i++) ride(c, MAM[i % 3], 420 + i * 140, 540, 20, i % 2 ? BAY : GREYH, lt, lt + i, 0, L, { shN: 10, elN: 40, holdN: S.mgSpear(c, -1.45) }, { look: [-.3, 0] }, -1);
+        for (let i = 0; i < 5; i++) ride(c, MAM[i % 3], 430 + i * 180, 540, 18, i % 2 ? BAY : GREYH, lt, lt + i, 0, L, { shN: 10, elN: 40, holdN: S.mgSpear(c, -1.45) }, { look: [-.3, 0] }, -1);
         const w = seg(lt, .2, Sh.tM), bx = lerp(1360, 260, w); ride(c, C.BAYBARSK, bx, 640, 26, WHITEH, lt, lt * 1.1, w < 1 ? .6 : 0, L, { shN: 20, elN: 60 }, { look: [-.5, -.2] }, -1); return; }
       VP.drawSet(c, 'np_parch');
       S.mgAsia(c, { fill: cc => { S.mgTide(cc, 1, GREYE); S.mgRegion(cc, S.mgBounds.MAMLUK_SY, '#e8b830', .5); } });
@@ -99,7 +99,7 @@ window.SHOTS = [
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tS = at(Sh, 'slaves', Sh.dur - 5); },
     draw: (c, lt, u, Sh) => { c.fillStyle = S.rgba('#e07830', .28); c.fillRect(0, 0, 1280, 720); c.fillStyle = S.rgba('#3a1a3a', .12 + .1 * seg(lt, 0, Sh.dur)); c.fillRect(0, 0, 1280, 720);
       S.mgPaiza(c, 400, 600, .55, -.5, .35 + .3 * Math.sin(lt * 1.5), false); VP.glow(c, 400, 600, 90, '#ffc070', .3);
-      VP.motes(c, lt, 200, 300, 700, 300, { n: 12 }); },
+      S.mgWind(c, lt, 520, 700, .1); S.mgBirds(c, lt, 900, 170, 6, -1, 35); VP.motes(c, lt, 200, 300, 700, 300, { n: 12 }); },
     over: [],
     sfx: [[.2, 'wind_loop', .25], [.3, 'drone', .15], ['slaves', 'swell', .35], ['conquered', 'chime', .35]] },
 ];

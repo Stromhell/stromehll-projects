@@ -1,0 +1,200 @@
+{
+ "dur": 50.63,
+ "cues": [
+  {
+   "t": 0.2,
+   "name": "city_loop",
+   "gain": 0.15
+  },
+  {
+   "t": 0.3,
+   "name": "water_loop",
+   "gain": 0.15
+  },
+  {
+   "t": 2.78,
+   "name": "chime",
+   "gain": 0.3
+  },
+  {
+   "t": 7.66,
+   "name": "paper",
+   "gain": 0.35
+  },
+  {
+   "t": 9.015,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 9.115,
+   "name": "drone",
+   "gain": 0.15
+  },
+  {
+   "t": 9.415,
+   "name": "footsteps",
+   "gain": 0.3
+  },
+  {
+   "t": 13.228,
+   "name": "tick",
+   "gain": 0.3
+  },
+  {
+   "t": 15.348,
+   "name": "paper",
+   "gain": 0.3
+  },
+  {
+   "t": 17.083,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 17.183,
+   "name": "battle_loop",
+   "gain": 0.2
+  },
+  {
+   "t": 17.583,
+   "name": "creak",
+   "gain": 0.3
+  },
+  {
+   "t": 18.183,
+   "name": "thud",
+   "gain": 0.35
+  },
+  {
+   "t": 20.183,
+   "name": "thud",
+   "gain": 0.35
+  },
+  {
+   "t": 22.218,
+   "name": "bell",
+   "gain": 0.4
+  },
+  {
+   "t": 24.513,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 24.613,
+   "name": "fire_loop",
+   "gain": 0.2
+  },
+  {
+   "t": 24.713,
+   "name": "wind_loop",
+   "gain": 0.3
+  },
+  {
+   "t": 25.913,
+   "name": "creak",
+   "gain": 0.3
+  },
+  {
+   "t": 27.441,
+   "name": "drone",
+   "gain": 0.3
+  },
+  {
+   "t": 32.436,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 32.536,
+   "name": "water_loop",
+   "gain": 0.35
+  },
+  {
+   "t": 33.336,
+   "name": "splash",
+   "gain": 0.3
+  },
+  {
+   "t": 35.836,
+   "name": "splash",
+   "gain": 0.25
+  },
+  {
+   "t": 36.75,
+   "name": "drone",
+   "gain": 0.3
+  },
+  {
+   "t": 39.065,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 39.165,
+   "name": "wind_loop",
+   "gain": 0.3
+  },
+  {
+   "t": 39.365,
+   "name": "hooves_loop",
+   "gain": 0.35
+  },
+  {
+   "t": 47.02,
+   "name": "drum",
+   "gain": 0.45
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 9.715,
+   "name": "city_loop",
+   "gain": 0.15
+  },
+  {
+   "start": 0,
+   "end": 9.715,
+   "name": "water_loop",
+   "gain": 0.15
+  },
+  {
+   "start": 8.915,
+   "end": 17.783,
+   "name": "drone",
+   "gain": 0.15
+  },
+  {
+   "start": 16.983,
+   "end": 25.213,
+   "name": "battle_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 24.413,
+   "end": 33.135999999999996,
+   "name": "fire_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 24.413,
+   "end": 33.135999999999996,
+   "name": "wind_loop",
+   "gain": 0.3
+  },
+  {
+   "start": 32.336,
+   "end": 39.765,
+   "name": "water_loop",
+   "gain": 0.35
+  },
+  {
+   "start": 38.965,
+   "end": 51.43,
+   "name": "wind_loop",
+   "gain": 0.3
+  }
+ ]
+}

@@ -1,0 +1,169 @@
+{
+ "dur": 36.44,
+ "cues": [
+  {
+   "t": 0.2,
+   "name": "crowd_loop",
+   "gain": 0.2
+  },
+  {
+   "t": 0.3,
+   "name": "wind_loop",
+   "gain": 0.15
+  },
+  {
+   "t": 2.94,
+   "name": "drum",
+   "gain": 0.4
+  },
+  {
+   "t": 5.7,
+   "name": "crowd_cheer",
+   "gain": 0.45
+  },
+  {
+   "t": 6.975,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 7.075,
+   "name": "wind_loop",
+   "gain": 0.2
+  },
+  {
+   "t": 7.275,
+   "name": "camel_bell",
+   "gain": 0.3
+  },
+  {
+   "t": 8.875,
+   "name": "footsteps",
+   "gain": 0.15
+  },
+  {
+   "t": 13.19,
+   "name": "coins",
+   "gain": 0.3
+  },
+  {
+   "t": 15.954,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 16.054,
+   "name": "tension",
+   "gain": 0.25
+  },
+  {
+   "t": 18.649,
+   "name": "drum",
+   "gain": 0.35
+  },
+  {
+   "t": 19.869,
+   "name": "gate_slam",
+   "gain": 0.5
+  },
+  {
+   "t": 20.696,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 20.796,
+   "name": "drone",
+   "gain": 0.2
+  },
+  {
+   "t": 21.396,
+   "name": "footsteps",
+   "gain": 0.25
+  },
+  {
+   "t": 23.24,
+   "name": "paper",
+   "gain": 0.3
+  },
+  {
+   "t": 25.06,
+   "name": "hit",
+   "gain": 0.45
+  },
+  {
+   "t": 27.42,
+   "name": "footsteps",
+   "gain": 0.3
+  },
+  {
+   "t": 28.755,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 28.855,
+   "name": "hooves_loop",
+   "gain": 0.45
+  },
+  {
+   "t": 28.955,
+   "name": "drum_loop",
+   "gain": 0.2
+  },
+  {
+   "t": 31.01,
+   "name": "drum",
+   "gain": 0.4
+  },
+  {
+   "t": 34.03,
+   "name": "horn",
+   "gain": 0.45
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 7.675,
+   "name": "crowd_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 0,
+   "end": 7.675,
+   "name": "wind_loop",
+   "gain": 0.15
+  },
+  {
+   "start": 6.875,
+   "end": 16.654,
+   "name": "wind_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 15.854,
+   "end": 21.396,
+   "name": "tension",
+   "gain": 0.25
+  },
+  {
+   "start": 20.596,
+   "end": 29.455000000000002,
+   "name": "drone",
+   "gain": 0.2
+  },
+  {
+   "start": 28.655,
+   "end": 37.239999999999995,
+   "name": "hooves_loop",
+   "gain": 0.45
+  },
+  {
+   "start": 28.655,
+   "end": 37.239999999999995,
+   "name": "drum_loop",
+   "gain": 0.2
+  }
+ ]
+}

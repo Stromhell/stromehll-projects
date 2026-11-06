@@ -1,0 +1,158 @@
+{
+ "dur": 29.351,
+ "cues": [
+  {
+   "t": 0.2,
+   "name": "drone",
+   "gain": 0.2
+  },
+  {
+   "t": 0.6,
+   "name": "drum",
+   "gain": 0.4
+  },
+  {
+   "t": 2.639,
+   "name": "drum",
+   "gain": 0.4
+  },
+  {
+   "t": 4.039,
+   "name": "drum",
+   "gain": 0.4
+  },
+  {
+   "t": 5.219,
+   "name": "drum",
+   "gain": 0.4
+  },
+  {
+   "t": 8.319,
+   "name": "wind_loop",
+   "gain": 0.3
+  },
+  {
+   "t": 9.334,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 9.434,
+   "name": "ocean_loop",
+   "gain": 0.35
+  },
+  {
+   "t": 9.534,
+   "name": "wind_loop",
+   "gain": 0.2
+  },
+  {
+   "t": 13.449,
+   "name": "heartbeat",
+   "gain": 0.3
+  },
+  {
+   "t": 14.724,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 14.824,
+   "name": "wind_loop",
+   "gain": 0.3
+  },
+  {
+   "t": 15.024,
+   "name": "drum",
+   "gain": 0.25
+  },
+  {
+   "t": 17.379,
+   "name": "whoosh",
+   "gain": 0.35
+  },
+  {
+   "t": 18.359,
+   "name": "drum",
+   "gain": 0.3
+  },
+  {
+   "t": 18.359,
+   "name": "drum",
+   "gain": 0.3
+  },
+  {
+   "t": 19.019,
+   "name": "drum",
+   "gain": 0.3
+  },
+  {
+   "t": 19.559,
+   "name": "drum",
+   "gain": 0.3
+  },
+  {
+   "t": 20.834,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 20.934,
+   "name": "fire_loop",
+   "gain": 0.15
+  },
+  {
+   "t": 21.034,
+   "name": "drone",
+   "gain": 0.15
+  },
+  {
+   "t": 21.234,
+   "name": "footsteps",
+   "gain": 0.3
+  },
+  {
+   "t": 24.882,
+   "name": "chime",
+   "gain": 0.4
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 10.034,
+   "name": "drone",
+   "gain": 0.2
+  },
+  {
+   "start": 9.234,
+   "end": 15.424000000000001,
+   "name": "ocean_loop",
+   "gain": 0.35
+  },
+  {
+   "start": 9.234,
+   "end": 15.424000000000001,
+   "name": "wind_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 14.624,
+   "end": 21.534000000000002,
+   "name": "wind_loop",
+   "gain": 0.3
+  },
+  {
+   "start": 20.734,
+   "end": 30.151,
+   "name": "fire_loop",
+   "gain": 0.15
+  },
+  {
+   "start": 20.734,
+   "end": 30.151,
+   "name": "drone",
+   "gain": 0.15
+  }
+ ]
+}
