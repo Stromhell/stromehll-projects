@@ -16,7 +16,7 @@ ffmpeg -y -loglevel error -i "$IN" -i "$LOGO" "${AIN[@]}" -filter_complex \
   "[0:v]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,setsar=1[v];[1:v]scale=190:-1,format=rgba,colorchannelmixer=aa=0.92[l];[v][l]overlay=W-w-70:250[o]" \
   -map "[o]" "${AMAP[@]}" -c:v libx264 -crf 19 -preset medium -pix_fmt yuv420p -r 30 -c:a aac -b:a 192k -ar 48000 -ac 2 "$TMP/body.mp4"
 # 2) end card: last frame blurred and darkened, logo centred, call to action
-ffmpeg -y -loglevel error -sseof -0.1 -i "$TMP/body.mp4" -frames:v 1 "$TMP/last.png"
+ffmpeg -y -loglevel error -sseof -0.6 -i "$TMP/body.mp4" -update 1 "$TMP/last.png"
 DT="drawtext=fontfile=$FONT:fontcolor=white:borderw=6:bordercolor=black"
 ffmpeg -y -loglevel error -loop 1 -t 3 -i "$TMP/last.png" -i "$LOGO" -f lavfi -t 3 -i anullsrc=r=48000:cl=stereo -filter_complex \
   "[0:v]boxblur=24:2,eq=brightness=-0.25,format=yuv420p[bg];[1:v]scale=420:-1[l];[bg][l]overlay=(W-w)/2:560[a];\
