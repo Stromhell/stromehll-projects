@@ -188,24 +188,26 @@ export const shots = {
         for (let j = 0; j <= R; j++) { const a = j / R * P * 2; pos.push(Math.cos(a) * w, y + Math.sin(a) * h * (Math.sin(a) < 0 ? .8 : 1), z); } }
       for (let i = 0; i < N; i++) for (let j = 0; j < R; j++) { const q = i * (R + 1) + j; idx.push(q, q + 1, q + R + 1, q + 1, q + R + 2, q + R + 1); }
       const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g.setIndex(idx); g.computeVertexNormals(); return { mesh: real.m(g, mat), at }; };
-    const bodyK = [[-2.2, .1, .035, .06], [-2.05, .15, .05, .07], [-1.6, .17, .06, .07], [-1.25, .21, .08, .07], [-1.0, .27, .12, .06], [-.8, .25, .11, .05], [-.4, .37, .16, .02], [.3, .45, .19, 0], [.9, .42, .18, 0], [1.4, .31, .15, 0], [1.75, .25, .13, 0]];
-    const body = loft(bodyK, skin); croc.add(body.mesh);
-    for (const s of [-1, 1]) { croc.add(real.m(new THREE.SphereGeometry(.04, 10, 8), back, { pos: [s * .05, .12, -2.08], scale: [1, .7, 1] }));                       // nostril bumps on the flat snout tip
-      for (let j = 0; j < 9; j++) { const z = -2.05 + j * .1, [w, , y] = body.at(z); croc.add(real.m(new THREE.ConeGeometry(.014, .05, 5), toothM, { pos: [s * w * .97, y - .02, z], rot: [P, 0, 0] })); }
-      croc.add(real.m(new THREE.SphereGeometry(.08, 16, 10), skin, { pos: [s * .12, .19, -.92], scale: [1, .8, 1.2] }));                                         // eye turrets
-      croc.add(real.m(new THREE.SphereGeometry(.042, 12, 8), real.std(0xd8b050, { rough: .2, emissive: 0xb08a30, ei: 1.8 }), { pos: [s * .14, .23, -.96] })); }
-    for (let i = 0; i < 13; i++) { const z = -.6 + i * .17, [w, h, y] = body.at(z); for (const x of [-.5, -.2, .2, .5]) { const inner = Math.abs(x) < .3; croc.add(real.m(new THREE.ConeGeometry(.03, inner ? .1 : .07, 4), back, { pos: [x * w, y + h * Math.sqrt(1 - x * x) + (inner ? .03 : .015), z] })); } }   // scutes sit on the back's curve
-    for (const [z, fz] of [[-.35, -1], [1.05, 1]]) for (const s of [-1, 1]) { const leg = new THREE.Group();                                       // splayed legs, under the surface
-      leg.add(real.m(new THREE.CylinderGeometry(.07, .09, .4, 10), skin, { pos: [s * .2, -.06, 0], rot: [0, 0, P / 2 - s * .25] }));
-      leg.add(real.m(new THREE.SphereGeometry(.1, 12, 8), skin, { pos: [s * .42, -.18, fz * .1], scale: [1, .3, 1.2] }));
-      leg.position.set(s * .3, 0, z); croc.add(leg); }
-    const tail = new THREE.Group(); tail.position.z = 1.55; croc.add(tail);
-    const tl = loft([[-.15, .28, .14, .01], [.4, .2, .13, .04], [1.2, .11, .1, .06], [2.4, .015, .04, .06]], back); tail.add(tl.mesh);   // laterally flattened tail, blends into the body
-    for (let i = 0; i < 12; i++) { const z = i * .2, [w, h, y] = tl.at(z); for (const x of (i < 5 ? [-.4, .4] : [0])) tail.add(real.m(new THREE.ConeGeometry(.03, .1 - i * .005, 4), back, { pos: [x * w, y + h + .02, z] })); }
-    croc.scale.setScalar(.85); croc.position.set(.5, -.3, 2.4); croc.rotation.y = P - .95; croc.traverse(c => { c.castShadow = false; }); scene.add(croc);   // no shadow on the water; ~4 m nose to tail, side-on to the lens
+    // one loft nose to tail (~4.6 head lengths): flat snout well ahead of the eyes, wedge head, broad thick back, tail tapering to a point; one material so no shading seam
+    const bodyK = [[-1.55, .07, .035, .07], [-1.45, .11, .045, .07], [-1.15, .14, .06, .07], [-.9, .2, .09, .07], [-.72, .26, .12, .06], [-.58, .25, .12, .05], [-.3, .44, .2, .03], [.15, .52, .22, 0], [.6, .46, .2, 0], [.95, .3, .15, .02], [1.5, .16, .11, .04], [2.1, .06, .06, .05], [2.4, .015, .03, .05]];
+    const body = loft(bodyK, skin, 28, 120); croc.add(body.mesh);
+    const bodyBase = body.mesh.geometry.attributes.position.array.slice();
+    const scuteM = real.std(0x1a2210, { rough: .85, metal: 0 }), eyeM = real.std(0xa89040, { rough: .3, emissive: 0x6a5420, ei: .45 });
+    for (const s of [-1, 1]) { croc.add(real.m(new THREE.SphereGeometry(.03, 10, 8), scuteM, { pos: [s * .04, .1, -1.5], scale: [1, .6, 1] }));                       // nostril bumps on the snout tip
+      for (let j = 0; j < 7; j++) { const z = -1.45 + j * .1, [w, , y] = body.at(z); croc.add(real.m(new THREE.ConeGeometry(.012, .04, 5), toothM, { pos: [s * w * .97, y - .02, z], rot: [P, 0, 0] })); }
+      croc.add(real.m(new THREE.SphereGeometry(.07, 16, 10), skin, { pos: [s * .13, .17, -.72], scale: [1, .75, 1.2] }));                                         // eye turrets behind the snout
+      croc.add(real.m(new THREE.SphereGeometry(.032, 12, 8), eyeM, { pos: [s * .15, .2, -.76] })); }
+    const scuteG = new THREE.BoxGeometry(.07, .025, .09);   // small dark flat scutes in rows along the back and tail
+    for (let i = 0; i < 22; i++) { const z = -.45 + i * .12, [w, h, y] = body.at(z); const xs = z < .9 ? [-.55, -.25, .25, .55] : z < 1.6 ? [-.3, .3] : [0];
+      for (const x of xs) croc.add(real.m(scuteG, scuteM, { pos: [x * w, y + h * Math.sqrt(1 - x * x) * .98, z], scale: [Math.min(1, w * 3), 1, 1], rot: [0, 0, -x * .9] })); }
+    for (const [z, fz] of [[-.25, -1], [.75, 1]]) for (const s of [-1, 1]) { const leg = new THREE.Group();                                       // short splayed legs at the waterline
+      leg.add(real.m(new THREE.CylinderGeometry(.07, .08, .22, 10), skin, { pos: [s * .1, -.02, 0], rot: [0, 0, P / 2 - s * .4] }));
+      leg.add(real.m(new THREE.SphereGeometry(.09, 12, 8), skin, { pos: [s * .22, -.08, fz * .06], scale: [1, .35, 1.3] }));
+      leg.position.set(s * .42, 0, z); croc.add(leg); }
+    croc.scale.setScalar(.7); croc.position.set(.5, -.3, 2.4); croc.rotation.y = P - .55; croc.traverse(c => { c.castShadow = false; }); scene.add(croc);   // no shadow on the water; side-on to the lens, smaller than the boats
     // waterline: a faint flattened ripple ring hugging the hull, plus a second wider one that slowly spreads and fades
     const ringM = o => new THREE.MeshBasicMaterial({ color: 0xa8bcf0, transparent: true, opacity: o, blending: THREE.AdditiveBlending, depthWrite: false, fog: false });
-    const ripples = [.32, .16].map(o => { const r = new THREE.Mesh(new THREE.RingGeometry(1, 1.06, 72), ringM(o)); r.rotation.x = -P / 2; r.position.z = .3; r.renderOrder = 2; const g = new THREE.Group(); g.add(r); g.rotation.y = croc.rotation.y; scene.add(g); return g; });
+    const ripples = [.32, .16].map(o => { const r = new THREE.Mesh(new THREE.RingGeometry(1, 1.06, 72), ringM(o)); r.rotation.x = -P / 2; r.position.z = .45; r.renderOrder = 2; const g = new THREE.Group(); g.add(r); g.rotation.y = croc.rotation.y; scene.add(g); return g; });
     // moon rim light from behind the crocodile and a soft key from the lens side; full penumbra and physical decay so the pool on the water is a soft round glow, no hard edge
     const crocRim = new THREE.SpotLight(0xc8d8ff, 30, 12, .5, 1, 2); crocRim.position.set(-1.5, 1.6, -1.5); crocRim.target = croc; crocRim.castShadow = false; scene.add(crocRim);
     const crocKey = new THREE.PointLight(0x8aa0d8, 4, 8, 2); crocKey.position.set(2.4, 1.6, 5.4); scene.add(crocKey);
@@ -213,8 +215,8 @@ export const shots = {
     const dur = k.meta.seconds;
     return (t, u) => { cam(u);
       const pa = wg.attributes.position; for (let i = 0; i < pa.count; i++) { const x = base[i * 3], z = base[i * 3 + 2]; const d = Math.hypot(x - croc.position.x, z - croc.position.z), calm = Math.min(1, Math.max(.15, (d - 1.5) / 3)); pa.array[i * 3 + 1] = (Math.sin(x * .35 + t * 1.3) * .05 + Math.sin(z * .5 - t * 1.1) * .04) * calm; } pa.needsUpdate = true; wg.computeVertexNormals();
-      const rise = C.ease(C.seg(t, .8, 2.2)); croc.position.y = -.3 + rise * .22; croc.position.z = 2.4 - t * .05;
-      ripples.forEach((g, i) => { const ph = i ? (t * .35) % 1 : 0, sc = 1 + ph * .5 + Math.sin(t * 2 + i) * .02; g.position.set(croc.position.x, .015, croc.position.z); g.scale.set(.42 * sc, 1, 2.5 * sc); g.children[0].material.opacity = (i ? .16 * (1 - ph) : .32) * rise; }); tail.rotation.y = Math.sin(t * 1.5) * .18;
+      const rise = C.ease(C.seg(t, .8, 2.2)); croc.position.y = -.3 + rise * .3; croc.position.z = 2.4 - t * .05;
+      ripples.forEach((g, i) => { const ph = i ? (t * .35) % 1 : 0, sc = 1 + ph * .5 + Math.sin(t * 2 + i) * .02; g.position.set(croc.position.x, .015, croc.position.z); g.scale.set(.5 * sc, 1, 2.0 * sc); g.children[0].material.opacity = (i ? .16 * (1 - ph) : .32) * rise; }); { const pa = body.mesh.geometry.attributes.position; for (let i = 0; i < pa.count; i++) { const z = bodyBase[i * 3 + 2], u = Math.max(0, z - .9); pa.array[i * 3] = bodyBase[i * 3] + Math.sin(t * 1.5 - u * 1.2) * .12 * u * u; } pa.needsUpdate = true; body.mesh.geometry.computeVertexNormals(); }
       boats.forEach((b, i) => { b.position.y = Math.sin(t * 1.2 + i) * .06; b.rotation.z = Math.sin(t * 1.0 + i) * .03; });
       const s = C.ease(C.seg(t, dur - 1.6, dur - 1.3)); if (s > 0) { const o = k.overlay; o.save(); o.globalAlpha = s; o.translate(1420, 230); o.rotate(-.07); o.scale(1 + (1 - s) * .5, 1 + (1 - s) * .5); o.strokeStyle = '#d2232a'; o.lineWidth = 10; o.strokeRect(-260, -70, 520, 140); o.fillStyle = '#d2232a'; o.font = '64px "Anton"'; o.textAlign = 'center'; o.textBaseline = 'middle'; o.fillText('PLAN 1 REJECTED', 0, 4); o.restore(); } };
   },
