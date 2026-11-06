@@ -83,6 +83,30 @@ function hazeBand(scene, { color = 0x03040a, r = 1500, h = 400, clear = .25, y =
   const m = new THREE.MeshBasicMaterial({ map: tex, transparent: true, side: THREE.BackSide, depthWrite: false, fog: false, opacity: op });
   const band = real.m(new THREE.CylinderGeometry(r, r, h, 64, 1, true), m, { pos: [0, y + h / 2, 0], cast: false }); band.renderOrder = -1; scene.add(band); return band;
 }
+// aged-paper layer for a TB.mapShot map (multiplied over its flat fills) and a dark screen vignette
+async function parchmentLayer(k, map) {
+  const [W, H] = map.size, cw = 2048, ch = Math.round(cw * H / W);
+  const c = document.createElement('canvas'); c.width = cw; c.height = ch; const x = c.getContext('2d');
+  let sd = 7; const r = () => (sd = (sd * 16807) % 2147483647) / 2147483647;
+  x.fillStyle = '#f3e6c8'; x.fillRect(0, 0, cw, ch);
+  for (let i = 0; i < 60000; i++) { const v = 150 + r() * 90 | 0; x.fillStyle = `rgba(${v},${v * .82 | 0},${v * .6 | 0},${.08 + r() * .14})`; x.fillRect(r() * cw, r() * ch, 1 + r() * 2.5, 1 + r() * 2.5); }   // grain
+  for (let i = 0; i < 2500; i++) { x.strokeStyle = `rgba(120,85,45,${r() * .16})`; x.lineWidth = .6 + r(); const a = r() * 6.3, l = 6 + r() * 26, X = r() * cw, Y = r() * ch; x.beginPath(); x.moveTo(X, Y); x.lineTo(X + Math.cos(a) * l, Y + Math.sin(a) * l); x.stroke(); }   // fibres
+  for (let i = 0; i < 22; i++) { const X = r() * cw, Y = r() * ch, R = 30 + r() * 160; const g = x.createRadialGradient(X, Y, R * .2, X, Y, R); g.addColorStop(0, 'rgba(150,100,50,.14)'); g.addColorStop(.75, 'rgba(150,100,50,.07)'); g.addColorStop(.9, 'rgba(120,75,35,.12)'); g.addColorStop(1, 'rgba(120,75,35,0)'); x.fillStyle = g; x.beginPath(); x.arc(X, Y, R, 0, 7); x.fill(); }   // foxing / stains
+  for (let i = 0; i < 4; i++) { x.strokeStyle = 'rgba(110,80,45,.18)'; x.lineWidth = 3; const X = cw * (i + 1) / 5 + (r() - .5) * 40; x.beginPath(); x.moveTo(X, 0); x.lineTo(X + (r() - .5) * 30, ch); x.stroke(); }   // fold creases
+  const e = x.createRadialGradient(cw / 2, ch / 2, Math.min(cw, ch) * .3, cw / 2, ch / 2, Math.max(cw, ch) * .62); e.addColorStop(0, 'rgba(90,55,20,0)'); e.addColorStop(.7, 'rgba(90,55,20,.25)'); e.addColorStop(1, 'rgba(60,35,12,.75)'); x.fillStyle = e; x.fillRect(0, 0, cw, ch);   // worn, browned edges
+  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 16;
+  const pl = new THREE.Mesh(new THREE.PlaneGeometry(W, H), new THREE.MeshBasicMaterial({ map: tex, transparent: true, blending: THREE.MultiplyBlending, premultipliedAlpha: true, depthWrite: false }));
+  pl.rotation.x = -P / 2; pl.position.y = .03; pl.userData.noOutline = true; pl.renderOrder = 1; map.add(pl);
+  return () => { const o = k.overlay; o.save(); const g = o.createRadialGradient(960, 540, 380, 960, 540, 1150); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(20,10,4,.6)'); o.fillStyle = g; o.fillRect(0, 0, 1920, 1080); o.restore(); };
+}
+// night-sky gradient dome (same stops as 8.4): deep navy overhead to a dim blue-grey glow at the horizon
+function navySky(scene) {
+  const tx = document.createElement('canvas'); tx.width = 8; tx.height = 512; const c = tx.getContext('2d'); const gr = c.createLinearGradient(0, 0, 0, 512);
+  gr.addColorStop(0, '#05070d'); gr.addColorStop(.62, '#0f1626'); gr.addColorStop(.86, '#26324a'); gr.addColorStop(1, '#2e3a52'); c.fillStyle = gr; c.fillRect(0, 0, 8, 512);
+  const t = new THREE.CanvasTexture(tx); t.colorSpace = THREE.SRGBColorSpace;
+  const sky = new THREE.Mesh(new THREE.SphereGeometry(900, 32, 16, 0, P * 2, 0, P / 2 + .02), new THREE.MeshBasicMaterial({ map: t, side: THREE.BackSide, fog: false, depthWrite: false }));
+  sky.renderOrder = -1; scene.add(sky); return sky;
+}
 // steer the auto caption: block the bottom band so it goes to the top, or the top band so it goes to the bottom
 const capTop = () => ui.used.push([0, 840, 1920, 1080]);
 const capBottom = () => ui.used.push([0, 0, 1920, 260]);
@@ -156,7 +180,9 @@ const raw = {
   // relief map in the act 6 / act 2 parchment style (QA act8r2 #4: the flat card was a style break): the Hercules track comes up Lake Victoria to Entebbe;
   // LAKE VICTORIA sits mid-lake, well above the caption band
   '8.1': async k => TB.mapShot(k, { center: [32.6, -0.4], span: [5, 3.6], k: 30, labels: [['LAKE VICTORIA', 33.75, -0.45], ['UGANDA', 31.5, 1.0], ['KENYA', 34.5, 0.3]], highlight: ['UGA'], cities: ['ENTEBBE', 'KAMPALA'],
-    route: [[33.6, -2.0], [33.1, -1.2], [32.7, -0.5], [32.45, 0.05]], plane: true, routeStart: .05, routeEnd: .9, iconScale: .9 }),
+    // QA act8r3 #4: the track starts mid-lake (not at the bottom edge) so the arrow never crosses the caption band, and a paper layer
+    // (grain, fibres, foxing stains, worn darker edges) sits over the flat fills, plus a screen vignette
+    route: [[33.25, -0.95], [32.95, -0.65], [32.65, -0.3], [32.45, 0.05]], plane: true, routeStart: .05, routeEnd: .9, iconScale: .9, extra: parchmentLayer }),
   // the lead Hercules over the lake: lights off, two engines stopped
   '8.2': async k => {
     const { scene, camera } = k;
@@ -291,14 +317,17 @@ const raw = {
     await starNight(k, { moon: [-50, 60, 80], moonI: .9 });
     await S2.runwayNight(k, { lit: false });
     const cars = await convoy(k, { lights: true, crew: false }); cars.forEach((c, i) => c.position.set(0, 0, -i * 8));
-    const f = flash(scene, [1.2, 1.8, -7], { size: 2.2, i: 300 });
+    navySky(scene);
+    // QA act8r3 #3: the flash was i 300 + a .25 white overlay, which blew the whole frame to flat grey. Clamped: a smaller, dimmer flash light
+    // (short range so it lights the vehicles, not the fog and sky) and only a faint warm overlay, so the sky gradient holds through the flash
+    const f = flash(scene, [1.2, 1.8, -7], { size: 1.4, i: 45, dist: 14 });
     const sil = flash(scene, [-.95, 1.05, 1.2], { size: .35, i: 12, dist: 6 });   // the silenced shot: a tiny spit of light at the Mercedes window
     const cam = C.dolly(camera, { pos: [5, 1.6, -18], look: [0, 1.2, 4], fov: 40 }, { pos: [4.6, 1.6, -16], look: [0, 1.2, 4], fov: 40 });
     // convoy stays on screen until the silenced shot (4.6 s), black for under two seconds, the loud flash from the Land Rover lights the vehicles,
     // then the convoy holds in near-black (headlights just visible) instead of a long dead black (QA act8r1 #10)
     return (t, u) => { cam(u); const fl = t > 6.4 && t < 6.58 ? 1 : 0; f(fl); sil(t > 4.55 && t < 4.63 ? 1 : 0);
       const a = t < 4.63 ? 0 : t < 6.4 ? C.seg(t, 4.63, 4.75) : fl ? 0 : .78;
-      black(k, a); whiteFlash(k, fl * .25); };
+      black(k, a); whiteFlash(k, fl * .05); };
   },
   // the loud shot echoes: across the airport, windows light up
   '8.11': async k => {
@@ -357,7 +386,8 @@ const raw = {
     const sp = 4, stop = k.meta.seconds * .5;
     return (t, u) => { const tt = Math.min(t, stop); const z = tt * sp - (t > stop ? 0 : 0); y.position.set(0, 0, z); y.update(t, { pose: t < stop ? 'walk' : 'idle', dist: tt * sp * .6, mood: 'stern', nod: t > stop ? .5 : 0 });
       camera.position.set(1.2, 1.5, Math.min(t, stop) * sp - 7); camera.fov = 44; camera.updateProjectionMatrix(); camera.lookAt(0, 1.3, Math.min(t, stop) * sp + 6);
-      black(k, C.seg(t, stop + .15, stop + .35)); };
+      // QA act8r3 #2: no long black hold after he stops: the terminal and the still figure stay visible, then a fade under 1 s into the cut
+      black(k, C.seg(t, k.meta.seconds - .8, k.meta.seconds - .05)); };
   },
   // the empty place in the line, one lamp
   '8.16': async k => {
@@ -411,13 +441,16 @@ const raw = {
     // wide pillar keep-out (QA act8r2 #1): any mattress (or bag/blanket on it) whose footprint comes within pillar-base half-width + mattress half-length
     // of a pillar is dropped, together with its hostage. Pillars: x = -8, -4, 0 ... z = +-d/6 (hall defaults w 24, d 14)
     const cols = []; for (let x = -12 + 4; x < 12; x += 4) for (const z of [-14 / 6, 14 / 6]) cols.push([x, z]);
-    const near = (x, z, hx, hz) => cols.some(([cx, cz]) => Math.abs(x - cx) < .35 + hx && Math.abs(z - cz) < .35 + hz);
-    h.mats = h.mats.filter(mt => !near(mt.x, mt.z, .45 + .1, .9 + .35));
+    // QA act8r3 #1: the keep-out is the pillar BASE footprint (.6 x .6, half .3) plus the mattress half-length (.9) plus a margin, on BOTH axes,
+    // so a mattress beside a base (x = -9 next to the x = -8 pillar) goes too, not only one in line with it
+    const KEEP = .3 + .9 + .15;
+    const near = (x, z, hx = 0, hz = 0) => cols.some(([cx, cz]) => Math.abs(x - cx) < KEEP + hx && Math.abs(z - cz) < KEEP + hz);
+    h.mats = h.mats.filter(mt => !near(mt.x, mt.z));
     { const bb = new THREE.Box3(), cc = new THREE.Vector3(), sz = new THREE.Vector3();
       for (const ch of [...h.group.children]) { bb.setFromObject(ch); if (bb.isEmpty() || bb.max.y > 1.0) continue; bb.getCenter(cc); bb.getSize(sz);
         if (cols.some(([cx, cz]) => Math.abs(cc.x - cx) < .02 && Math.abs(cc.z - cz) < .02)) continue;   // the pillar base itself
         if (sz.x > 20) continue;   // floor / wainscot planes
-        if (near(cc.x, cc.z, sz.x / 2 + .1, sz.z / 2 + .35)) ch.visible = false; } }
+        if (near(cc.x, cc.z, .45, .45)) ch.visible = false; } }
     const ppl = await lyingHostages(k, h, 2);
     const c = await runner(k, 'tb_cmd2', 5501, { rot: P / 2 + .4 }); c.position.set(-7, 0, 0);
     const mega = new THREE.Group(); mega.add(real.m(new THREE.CylinderGeometry(.13, .04, .32, 20, 1, true), real.std(0xd8d4c8, { rough: .5, mat: { side: THREE.DoubleSide } }), { rot: [0, 0, 0] })); C.attach(c, mega, 'RightHand', [0, .12, .08], [0, 0, 0]);
