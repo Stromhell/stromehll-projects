@@ -298,7 +298,7 @@ export const shots = {
     // dashboard glow aimed back at the faces (a spot, so nothing leaks through the bonnet) plus a soft cabin fill
     const dash = new THREE.SpotLight(0xffb070, 6, 2.2, .8, .5, 1.5); dash.position.set(0, 1.08, .8); dash.target.position.set(0, 1.35, -.4); scene.add(dash, dash.target);
     scene.add(real.box(1.5, .22, .55, real.std(0x15161a, { rough: .8 }), { pos: [0, .9, .75] }));   // dashboard slab under the glow
-    const fill = new THREE.PointLight(0x8aa0d0, .8, 2.0, 1.6); fill.position.set(0, 1.3, -.35); scene.add(fill);
+    // QA act0r5: the cabin fill point light (0, 1.3, -.35) read as a bright white lamp at the top of the dashboard: removed
     const face = new THREE.SpotLight(0xffe0c0, 8, 7, .35, .6, 1.2); face.position.set(2.2, 2.6, 3.4);   // QA act0r4: off to the side and above so its highlight no longer sits in the windscreen
     face.target.position.set(0, 1.2, .1); scene.add(face, face.target);   // QA act0r2: soft fill on the faces   // inside the cabin, below the roof
     const cam = C.dolly(camera, { pos: [1.1, 1.62, 7.0], look: [.12, 1.0, .1], fov: 25 }, { pos: [.9, 1.6, 6.4], look: [.15, 1.02, .1], fov: 24 });   // QA act0r3: pulled back so the bonnet, grille, headlamps and bumper are in frame
@@ -339,7 +339,7 @@ export const shots = {
     const cam = C.dolly(camera, { pos: [0, 5, -40], look: [0, 4, 100], fov: 42 }, { pos: [0, 4.5, -30], look: [0, 4, 100], fov: 42 });
     const bolt = boltPath();
     return (t, u) => { cam(u); const x = k.overlay;
-      const fl = t > .35 && t < .55 ? 1 - (t - .35) / .2 : 0;
+      const fl = t < .33 ? 0 : t < .43 ? (t - .33) / .1 : t < .63 ? 1 - (t - .43) / .2 : 0;   // QA act0r5: lightning flash ramps up over 3 frames and back down, no single washed-out frame
       if (fl > 0) { x.fillStyle = `rgba(230,235,255,${fl * .55})`; x.fillRect(0, 0, 1920, 1080); }
       ui.slam(x, 'OPERATION THUNDERBOLT', t, .4, { size: 150, y: 520, sub: 'ENTEBBE · 4 JULY 1976' });
       if (t > .4) { x.save(); x.globalAlpha = Math.min(1, (t - .4) / .2); x.translate(960, 330); x.scale(1.2, 1.2); x.fillStyle = '#e8b321'; x.strokeStyle = '#2b1e16'; x.lineWidth = 8; x.fill(bolt); x.stroke(bolt); x.restore(); } };
