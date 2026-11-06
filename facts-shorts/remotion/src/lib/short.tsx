@@ -17,7 +17,7 @@ export const FONT = "Anton, 'Arial Black', 'DejaVu Sans', sans-serif";
 export const NoText = React.createContext(false);
 export const Label: React.FC<{x: number; y: number; size: number; s?: number; color?: string; rot?: number; anchor?: 'middle' | 'start' | 'end'; keep?: boolean; children: React.ReactNode}> =
   ({x, y, size, s = 1, color = '#fff', rot = 0, anchor = 'middle', keep, children}) => (s <= 0.01 || (React.useContext(NoText) && !keep) ? null : (
-    <g transform={`translate(${x} ${y}) rotate(${rot}) scale(${s})`}>
+    <g transform={`translate(${x} ${y}) rotate(${rot}) scale(${s > 1 ? 1 + (s - 1) * 0.3 : s})`}>
       <text textAnchor={anchor} fontFamily={FONT} fontWeight={900} fontSize={size}
         fill={color} stroke={INK} strokeWidth={size * 0.16} paintOrder="stroke" strokeLinejoin="round">{children}</text>
     </g>

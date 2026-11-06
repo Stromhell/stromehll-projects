@@ -1,0 +1,50 @@
+35-banana-radioactive 7 radioactive=radioactive potassium=potassium tiny=tiny dose=dose joke=joke million=million relax=relax
+36-pistol-shrimp 8 shrimp=shrimp snaps=snaps jet=jet bubble=bubble:2 bang=bang split=split nearly=nearly stun=stun
+37-cleopatra-moon 9 closer=closer Giza=Giza finished=finished born=born nearly=nearly landing=landing:2 only=only ancient=ancient
+38-tardigrade-space 10 survived=survived Tardigrades=grades smaller=smaller orbit=orbit exposed=exposed alive=alive eggs=eggs trick=trick water=water:2
+39-venus-day 11 day=day year=year slowly=slowly turn=turn around=around weird=weird backwards=backwards rises=rises
+40-hippo-swim 12 swim=swim hours=hours heavy=heavy bounce=bounce breath=breath sleep=sleep bob=bob
+41-shortest-war 13 shortest=shortest Zanzibar=Zanzibar sultan=sultan warships=warships fire=fire palace=palace flag=flag over=over
+42-scotland-unicorn 14 unicorn=unicorn lion=lion kings=kings purity=purity tame=tame chain=chain
+43-nintendo-1889 15 Nintendo=Nintendo Kyoto=Kyoto cards=cards taxi=taxi rice=rice toys=Toys Mario=Mario
+44-napoleon-height 16 short=short seven=7 average=average myth=myth inches=inches mistranslated=mistranslated cartoonists=cartoonists
+45-butterfly-feet 17 taste=taste covered=covered lands=lands drums=drums eggs=eggs meal=meal landing=landing
+46-neutron-spoon 18 teaspoon=teaspoon neutron=neutron explodes=explodes Sun=Sun city=city Drop=Drop punch=punch
+47-trees-stars 19 trees=trees counted=counted satellites=satellites Milky=Milky several=several cut=cut
+48-ketchup-medicine 20 Ketchup=Ketchup doctor=doctor indigestion=indigestion pills=pills box=box ruined=ruined fries=fries
+49-empire-lightning 21 Lightning=Lightning Empire=Empire hit=hit spire=spire ground=ground struck=struck minutes=minutes
+50-saturn-float 22 float=float huge=huge lighter=lighter bathtub=bathtub bob=bob luck=luck
+51-mantis-punch 23 punches=punches club=club boils=boils collapse=collapse heat=heat glass=glass
+52-polar-bear-skin 24 white=white skin=skin warmth=warmth clear=clear scatters=scatters Shave=Shave
+53-crows-faces 25 forget=forget mask=mask years=years screamed=screamed taught=taught nice=nice
+54-great-fire 26 London=London homes=homes bakery=bakery Cathedral=Cathedral only=only Historians=Historians
+55-pineapple-years 27 pineapple=pineapple plant=plant fruit=fruit berries=berries pizza=pizza toddler=toddler
+56-fingernails 28 fingernails=fingernails grows=grows replaced=replaced toenail=toenail blood=blood writing=right
+57-sound-water 29 Sound=Sound air=air rushes=rushes molecules=molecules whales=whales
+58-rain-smell 30 smell=smell petrichor=petricore bacteria=bacteria raindrops=rain:2 fling=fling nose=nose pool=pool
+59-sloth-breath 31 breath=breath dolphins=dolphins heartbeat=heart surprise=surprise swimmers=swimmers
+60-moon-away 32 running=running drifts=drifts fingernails=fingernails mirrors=mirrors lasers=lasers longer=longer
+61-antarctica-desert 33 Sahara=Sahara Antarctica=Antarctica rain=rain:1 less=less valleys=valleys Cold=Cold
+62-cloud-weight 34 cloud=cloud elephants=elephants droplets=droplets:1 warm=warm heavy=heavy
+63-elephant-jump 35 jump=jump:1 hop=hop feet=feet bones=bones ankles=ankles run=run need=need
+64-dolphin-sleep 36 half=half rests=rests eye=eye swimming=swimming sharks=sharks swap=swap
+65-mammoth-pyramids 37 pyramid=pyramid Meanwhile=Meanwhile Wrangel=Rangal hundreds=hundreds shared=shared
+66-hummingbird-backwards 38 lift=lift twists=twists times=times hover=hover zoom=zoom
+67-heart-beats 39 million=million billion=billion vessels=vessels Laid=Laid off=off
+68-purple-carrots 40 purple=purple Netherlands=Netherlands story=story Historians=Historians stuck=stuck
+69-spider-silk 41 Weight=Weight Kevlar=Kevlar stretch=stretch Darwin=Darwin's rivers=rivers
+70-glass-frog 42 Flip=Flip sleep=sleep liver=liver transparent=transparent Hungry=Hungry
+71-viking-helmets 43 Gjermundbu=German opera=opera y1876=1876 fight=fight
+72-koala-fingerprints 44 microscope=microscope loops=loops relatives=relatives grip=grip
+73-bee-faces 45 y2005=2005 sugar=sugar later=later puzzle=puzzle
+74-flamingo-pink 46 grey=grey algae=algae feathers=feathers fade=fade Zoos=Zoos
+75-mars-sunset 47 dust=dust butterscotch=butterscotch glow=glow rovers=rovers opposite=opposite
+76-red-spot 48 Red=Red winds=winds shrinking=shrinking century=century Now=Now
+77-owl-neck 49 fixed=fixed neck=neck pools=pools tried=tried
+78-hiccups-68-years 50 y1922=1922 y1990=1990 million=million minute=minute married=married
+79-cacao-money 51 Cacao=Cacao turkey=turkey fake=fake mud=mud drank=drank
+80-goldfish-memory 52 myth=myth months=months levers=levers maze=maze
+81-sun-mass 53 percent=% planets=planets Jupiter=Jupiter million=million
+82-immortal-jellyfish 54 hurt=hurt polyp=polyp theory=theory wild=wild
+83-oldest-tree 55 Methuselah=Methuselah Pyramid=Pyramid White=White secret=secret
+84-stomach-lining 56 acid=acid worn=worn replaces=replaces mucus=mucus
