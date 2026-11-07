@@ -23,9 +23,11 @@
   H.ushanka = (col) => fit((c, u, f, Lt, k) => { const t = k.tone(col || T('#5a4a3a', '#2a2018', '#9a8a7a'), Lt), fr = k.tone(T('#8a7a6a', '#4a3e32', '#c8b8a8'), Lt);
     k.celT(c, P([[-.66, -.5], [-.66, -1.0], [0, -1.12], [.66, -1.0], [.66, -.5]], u), t, Lt, u, { swk: .7 });
     k.celT(c, P([[-.8, -.36], [-.84, -.74], [0, -.8], [.84, -.74], [.8, -.36], [0, -.46]], u), fr, Lt, u, { swk: .7 }); }, .8, .02);
-  H.partycone = (a, b) => fit((c, u, f, Lt, k) => { c.save(); c.rotate(.18); c.fillStyle = a; c.beginPath(); c.moveTo(-.48 * u, -.72 * u); c.lineTo(.06 * u, -1.9 * u); c.lineTo(.5 * u, -.72 * u); c.closePath(); c.fill();
-    c.strokeStyle = b; c.lineWidth = .1 * u; [[-.32, -.95, .36, -.95], [-.2, -1.3, .26, -1.3]].forEach(([x1, y1, x2, y2]) => { c.beginPath(); c.moveTo(x1 * u, y1 * u); c.lineTo(x2 * u, y2 * u); c.stroke(); });
-    c.fillStyle = '#ffffff'; c.beginPath(); c.arc(.06 * u, -1.92 * u, .14 * u, 0, TAU); c.fill(); c.restore(); }, 1, 0);
+  // party cone sits on the crown (base inside the hair line, like the beanie), tipped a little
+  H.partycone = (a, b) => fit((c, u, f, Lt, k) => { c.save(); c.translate(0, -.55 * u); c.rotate(.12); c.translate(0, .55 * u); c.fillStyle = a; c.beginPath(); c.moveTo(-.56 * u, -.6 * u); c.lineTo(.04 * u, -1.95 * u); c.lineTo(.58 * u, -.6 * u); c.quadraticCurveTo(0, -.5 * u, -.56 * u, -.6 * u); c.closePath(); c.fill();
+    c.strokeStyle = b; c.lineWidth = .1 * u; [[-.4, -.9, .44, -.9], [-.26, -1.28, .3, -1.28]].forEach(([x1, y1, x2, y2]) => { c.beginPath(); c.moveTo(x1 * u, y1 * u); c.lineTo(x2 * u, y2 * u); c.stroke(); });
+    c.fillStyle = 'rgba(0,0,0,.18)'; c.beginPath(); c.moveTo(.04 * u, -1.95 * u); c.lineTo(.58 * u, -.6 * u); c.lineTo(.3 * u, -.56 * u); c.closePath(); c.fill();
+    c.fillStyle = '#ffffff'; c.beginPath(); c.arc(.04 * u, -1.97 * u, .14 * u, 0, TAU); c.fill(); c.restore(); }, .76, .02);
   H.beanie = (col) => fit((c, u, f, Lt, k) => { const t = k.tone(col, Lt); k.celT(c, P([[-.68, -.52], [-.64, -.96], [0, -1.12], [.64, -.96], [.68, -.52]], u), t, Lt, u, { swk: .6 }); c.fillStyle = '#ffffff'; c.beginPath(); c.arc(0, -1.16 * u, .14 * u, 0, TAU); c.fill(); }, .76, .02);
   H.zucchetto = fit((c, u, f, Lt, k) => { const t = k.tone(T('#ffffff', '#c8c4bc', '#ffffff'), Lt); k.celT(c, P([[-.5, -.82], [-.3, -.98], [.3, -.98], [.5, -.82]], u), t, Lt, u, { swk: .5 }); }, .9, .02);
   S.NYH = H;
