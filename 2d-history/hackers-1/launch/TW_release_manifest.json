@@ -1,0 +1,237 @@
+{
+ "video": "Kids Who Hacked the World Pt1 - Twitter (2D)",
+ "prefix": "TW",
+ "status": "ready to book (Pushpam OK on full video 7 Nov 18:32 UTC; kit preview shared, no OK needed per Pushpam 18:38 UTC)",
+ "made": "2026-11-07",
+ "notes": [
+  "Long-day rule: full video and IG parts only on long days, at least one empty day from other long videos; January is fine. 16:00 UTC first choice, then 13:00, 17:00, 22:00.",
+  "IG parts post in order on long days; parts 1-2 end with 'Part N is next on this page', the last with the YouTube card.",
+  "Full video master on Drive: AI/long form history video/Kids Who Hacked Pt1 - Twitter (2D)/Renders/Full (file id 1SaAHaZyoZh9s3lVhG5JzP35ATX0gBTNX). Project-folder copy is a crf 26 re-encode of the same cut.",
+  "Reels: keep within the 7/day cap and the YouTube ~9/day limit."
+ ],
+ "full_video": {
+  "file": "/mnt/project-files/2d-history/hackers-1/launch/full/hackers-1_full.mp4",
+  "seconds": 323.0,
+  "title": "The Kids Who Hacked the World, Part 1: The 17-Year-Old Who Hacked Twitter",
+  "title_description_file": "/mnt/project-files/2d-history/hackers-1/launch/TW_Title_Description.txt",
+  "thumbnail": "/mnt/project-files/2d-history/hackers-1/launch/TW_Thumbnail_v1.jpg",
+  "platform": "YouTube"
+ },
+ "reels": [
+  {
+   "order": 1,
+   "file": "/mnt/project-files/2d-history/hackers-1/launch/reels/TW_Reel_01.mp4",
+   "cover": "/mnt/project-files/2d-history/hackers-1/launch/reel_covers/TW_Reel_01_thumb.jpg",
+   "seconds": 35.0,
+   "title": "The Phone Call That Hacked Twitter",
+   "caption": "A teenager took over Obama's and Elon Musk's Twitter with one phone call.\nThe true story of the 2020 Twitter hack.\nWatch the full video on our YouTube channel.\n#TwitterHack #TwitterHack #CyberSecurity #TrueCrime #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 2,
+   "file": "/mnt/project-files/2d-history/hackers-1/launch/reels/TW_Reel_02.mp4",
+   "cover": "/mnt/project-files/2d-history/hackers-1/launch/reel_covers/TW_Reel_02_thumb.jpg",
+   "seconds": 25.3,
+   "title": "How SIM Swapping Steals Your Accounts",
+   "caption": "Your phone number is the key to all your accounts. Here's how thieves steal it.\nThe true story of the 2020 Twitter hack.\nWatch the full video on our YouTube channel.\n#SIMSwap #TwitterHack #CyberSecurity #TrueCrime #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 3,
+   "file": "/mnt/project-files/2d-history/hackers-1/launch/reels/TW_Reel_03.mp4",
+   "cover": "/mnt/project-files/2d-history/hackers-1/launch/reel_covers/TW_Reel_03_thumb.jpg",
+   "seconds": 30.8,
+   "title": "The 17-Year-Old With 100 Stolen Bitcoin",
+   "caption": "A Seattle investor lost over 100 Bitcoin. The trail led to a 17-year-old.\nThe true story of the 2020 Twitter hack.\nWatch the full video on our YouTube channel.\n#Bitcoin #TwitterHack #CyberSecurity #TrueCrime #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 4,
+   "file": "/mnt/project-files/2d-history/hackers-1/launch/reels/TW_Reel_04.mp4",
+   "cover": "/mnt/project-files/2d-history/hackers-1/launch/reel_covers/TW_Reel_04_thumb.jpg",
+   "seconds": 42.8,
+   "title": "From Minecraft Scams to Hacking Twitter",
+   "caption": "Before he hacked Twitter, he was scamming kids in Minecraft.\nThe true story of the 2020 Twitter hack.\nWatch the full video on our YouTube channel.\n#Minecraft #TwitterHack #CyberSecurity #TrueCrime #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 5,
+   "file": "/mnt/project-files/2d-history/hackers-1/launch/reels/TW_Reel_05.mp4",
+   "cover": "/mnt/project-files/2d-history/hackers-1/launch/reel_covers/TW_Reel_05_thumb.jpg",
+   "seconds": 27.7,
+   "title": "The Fake Help Desk Call",
+   "caption": "The Twitter hack didn't need code. It needed one employee to believe a phone call.\nThe true story of the 2020 Twitter hack.\nWatch the full video on our YouTube channel.\n#SocialEngineering #TwitterHack #CyberSecurity #TrueCrime #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 6,
+   "file": "/mnt/project-files/2d-history/hackers-1/launch/reels/TW_Reel_06.mp4",
+   "cover": "/mnt/project-files/2d-history/hackers-1/launch/reel_covers/TW_Reel_06_thumb.jpg",
+   "seconds": 22.3,
+   "title": "How He Got Access to Any Account",
+   "caption": "He searched Twitter's own chats until he found the keys to every account.\nThe true story of the 2020 Twitter hack.\nWatch the full video on our YouTube channel.\n#CyberSecurity #TwitterHack #CyberSecurity #TrueCrime #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 7,
+   "file": "/mnt/project-files/2d-history/hackers-1/launch/reels/TW_Reel_07.mp4",
+   "cover": "/mnt/project-files/2d-history/hackers-1/launch/reel_covers/TW_Reel_07_thumb.jpg",
+   "seconds": 23.4,
+   "title": "The Middlemen Behind the Twitter Hack",
+   "caption": "Nobody would buy from him. So he hid behind two middlemen.\nThe true story of the 2020 Twitter hack.\nWatch the full video on our YouTube channel.\n#TwitterHack #TwitterHack #CyberSecurity #TrueCrime #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 8,
+   "file": "/mnt/project-files/2d-history/hackers-1/launch/reels/TW_Reel_08.mp4",
+   "cover": "/mnt/project-files/2d-history/hackers-1/launch/reel_covers/TW_Reel_08_thumb.jpg",
+   "seconds": 25.1,
+   "title": "Stolen Usernames for $3,000",
+   "caption": "Hacked Twitter usernames sold for up to 3,000 dollars each.\nThe true story of the 2020 Twitter hack.\nWatch the full video on our YouTube channel.\n#OGUsers #TwitterHack #CyberSecurity #TrueCrime #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 9,
+   "file": "/mnt/project-files/2d-history/hackers-1/launch/reels/TW_Reel_09.mp4",
+   "cover": "/mnt/project-files/2d-history/hackers-1/launch/reel_covers/TW_Reel_09_thumb.jpg",
+   "seconds": 34.8,
+   "title": "The Day Elon Musk Tweeted a Scam",
+   "caption": "Elon Musk, Obama and Apple all tweeted the same Bitcoin scam on one day.\nThe true story of the 2020 Twitter hack.\nWatch the full video on our YouTube channel.\n#ElonMusk #TwitterHack #CyberSecurity #TrueCrime #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 10,
+   "file": "/mnt/project-files/2d-history/hackers-1/launch/reels/TW_Reel_10.mp4",
+   "cover": "/mnt/project-files/2d-history/hackers-1/launch/reel_covers/TW_Reel_10_thumb.jpg",
+   "seconds": 25.3,
+   "title": "130 Accounts in One Afternoon",
+   "caption": "130 accounts targeted. 45 hijacked. Millions saw the scam.\nThe true story of the 2020 Twitter hack.\nWatch the full video on our YouTube channel.\n#CryptoScam #TwitterHack #CyberSecurity #TrueCrime #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 11,
+   "file": "/mnt/project-files/2d-history/hackers-1/launch/reels/TW_Reel_11.mp4",
+   "cover": "/mnt/project-files/2d-history/hackers-1/launch/reel_covers/TW_Reel_11_thumb.jpg",
+   "seconds": 22.9,
+   "title": "Twitter Pulls the Plug",
+   "caption": "Twitter did something it had never done. It silenced every verified account.\nThe true story of the 2020 Twitter hack.\nWatch the full video on our YouTube channel.\n#Twitter #TwitterHack #CyberSecurity #TrueCrime #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 12,
+   "file": "/mnt/project-files/2d-history/hackers-1/launch/reels/TW_Reel_12.mp4",
+   "cover": "/mnt/project-files/2d-history/hackers-1/launch/reel_covers/TW_Reel_12_thumb.jpg",
+   "seconds": 23.3,
+   "title": "The Tornado Warning That Couldn't Tweet",
+   "caption": "The Twitter shutdown even stopped a tornado warning from going out.\nThe true story of the 2020 Twitter hack.\nWatch the full video on our YouTube channel.\n#TwitterHack #TwitterHack #CyberSecurity #TrueCrime #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 13,
+   "file": "/mnt/project-files/2d-history/hackers-1/launch/reels/TW_Reel_13.mp4",
+   "cover": "/mnt/project-files/2d-history/hackers-1/launch/reel_covers/TW_Reel_13_thumb.jpg",
+   "seconds": 27.9,
+   "title": "The Zoom-Bombed Court Hearing",
+   "caption": "His court hearing got zoom-bombed by pranksters blasting music.\nThe true story of the 2020 Twitter hack.\nWatch the full video on our YouTube channel.\n#Zoombombing #TwitterHack #CyberSecurity #TrueCrime #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 14,
+   "file": "/mnt/project-files/2d-history/hackers-1/launch/reels/TW_Reel_14.mp4",
+   "cover": "/mnt/project-files/2d-history/hackers-1/launch/reel_covers/TW_Reel_14_thumb.jpg",
+   "seconds": 24.6,
+   "title": "What Happened to the Twitter Hacker",
+   "caption": "What happened to the 17-year-old who hacked Twitter?\nThe true story of the 2020 Twitter hack.\nWatch the full video on our YouTube channel.\n#TrueCrime #TwitterHack #CyberSecurity #TrueCrime #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 15,
+   "file": "/mnt/project-files/2d-history/hackers-1/launch/reels/TW_Reel_15.mp4",
+   "cover": "/mnt/project-files/2d-history/hackers-1/launch/reel_covers/TW_Reel_15_thumb.jpg",
+   "seconds": 23.2,
+   "title": "The Scariest Part of the Twitter Hack",
+   "caption": "The scariest part of the Twitter hack is how simple it was.\nThe true story of the 2020 Twitter hack.\nWatch the full video on our YouTube channel.\n#CyberSecurity #TwitterHack #CyberSecurity #TrueCrime #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  }
+ ],
+ "ig_parts": [
+  {
+   "order": 1,
+   "file": "/mnt/project-files/2d-history/hackers-1/launch/ig_parts/TW_Part_01.mp4",
+   "cover": "/mnt/project-files/2d-history/hackers-1/launch/ig_covers/TW_Part_01_thumb.jpg",
+   "seconds": 154.4,
+   "title": "The 17-Year-Old Who Hacked Twitter, Part 1 of 3: The Teen and the Trick",
+   "caption": "From Minecraft scams and SIM swapping to a fake help-desk call that got a 17-year-old inside Twitter.\nPart 2 is next on this page.\n#TwitterHack #CyberSecurity #TrueCrime #Animation",
+   "platforms": [
+    "Instagram"
+   ]
+  },
+  {
+   "order": 2,
+   "file": "/mnt/project-files/2d-history/hackers-1/launch/ig_parts/TW_Part_02.mp4",
+   "cover": "/mnt/project-files/2d-history/hackers-1/launch/ig_covers/TW_Part_02_thumb.jpg",
+   "seconds": 108.4,
+   "title": "The 17-Year-Old Who Hacked Twitter, Part 2 of 3: The Big Bitcoin Scam",
+   "caption": "Middlemen sell stolen usernames, then Elon Musk, Obama and Biden all tweet the same Bitcoin scam, and Twitter pulls the plug.\nPart 3 is next on this page.\n#TwitterHack #CyberSecurity #TrueCrime #Animation",
+   "platforms": [
+    "Instagram"
+   ]
+  },
+  {
+   "order": 3,
+   "file": "/mnt/project-files/2d-history/hackers-1/launch/ig_parts/TW_Part_03.mp4",
+   "cover": "/mnt/project-files/2d-history/hackers-1/launch/ig_covers/TW_Part_03_thumb.jpg",
+   "seconds": 70.6,
+   "title": "The 17-Year-Old Who Hacked Twitter, Part 3 of 3: Caught",
+   "caption": "Traced in two weeks, a zoom-bombed court hearing, the sentence, and why it was so simple.\nWatch the full video on our YouTube channel.\n#TwitterHack #CyberSecurity #TrueCrime #Animation",
+   "platforms": [
+    "Instagram"
+   ]
+  }
+ ]
+}

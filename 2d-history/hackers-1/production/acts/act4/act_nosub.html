@@ -1,0 +1,54 @@
+<!doctype html><html><head><meta charset="utf-8"><title>RU act 4 - the middlemen</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../tw_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+const SW = 1920, SH = 1080, INK = TW.INK, RED = TW.RED, pop = TW.pop, fade = TW.fade;
+const backdrop = (name, b = .5, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const CARRY = () => ({ shL: 30, elL: -75, shR: 35, elR: -75 });
+const endTitle = (secs) => { const T = window.TIMING; const last = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length, start: last.end, end: last.end + secs, vo_start: last.end, vo_end: last.end, text: '' }); T.dur = last.end + secs; };
+for (const n of ['sec_room']) K.load(n, PL + n + '.jpg');
+const meter = (c, x, y, v, lt, a) => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.fillStyle = '#fff'; c.strokeStyle = INK; c.lineWidth = 6; TW.rr(c, -360, -120, 720, 240, 20); c.fill(); c.stroke(); TW.txt(c, 'SELLER REPUTATION', 0, -70, 44, INK, 'center', 'Anton');
+  c.fillStyle = '#e8e8ee'; TW.rr(c, -300, -20, 600, 60, 30); c.fill(); c.stroke(); const g = c.createLinearGradient(-300, 0, 300, 0); g.addColorStop(0, RED); g.addColorStop(1, '#5ad86a'); c.fillStyle = g; c.save(); TW.rr(c, -300, -20, 600 * Math.max(.02, v), 60, 30); c.clip(); c.fillRect(-300, -20, 600, 60); c.restore(); TW.txt(c, Math.round(v * 100) + ' / 100', 0, 80, 34, v < .1 ? RED : INK, 'center', 'Anton'); c.restore(); };
+const avatar = (c, x, y, k, label, sub, a) => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.rotate(k ? .03 : -.03); c.fillStyle = 'rgba(0,0,0,.35)'; TW.rr(c, -230, -270, 480, 560, 26); c.fill(); c.fillStyle = '#fff'; c.strokeStyle = INK; c.lineWidth = 7; TW.rr(c, -240, -280, 480, 560, 26); c.fill(); c.stroke();
+  c.fillStyle = k ? '#3a6aa8' : '#8a4a3a'; TW.rr(c, -240, -280, 480, 70, 26); c.fill(); c.fillRect(-240, -240, 480, 30); TW.txt(c, 'MIDDLEMAN', 0, -245, 36, '#fff', 'center', 'Anton');
+  c.fillStyle = '#c8ccd8'; c.beginPath(); c.arc(0, -50, 110, 0, 7); c.fill(); c.stroke(); c.fillStyle = '#5a6070'; c.beginPath(); c.arc(0, -80, 46, 0, 7); c.fill(); c.beginPath(); c.ellipse(0, 30, 80, 50, 0, Math.PI, 0); c.fill(); TW.txt(c, '?', 0, -78, 60, '#fff', 'center', 'Anton');
+  TW.txt(c, label, 0, 130, 64, INK, 'center', 'Anton'); TW.txt(c, sub, 0, 200, 34, '#3a8a4a', 'center', 'Anton'); for (let s = 0; s < 5; s++) { c.fillStyle = '#f2b830'; c.save(); c.translate(-100 + s * 50, 245); c.beginPath(); for (let i = 0; i < 10; i++) { const r2 = i % 2 ? 9 : 20, an = i * Math.PI / 5 - Math.PI / 2; c.lineTo(Math.cos(an) * r2, Math.sin(an) * r2); } c.closePath(); c.fill(); c.restore(); } c.restore(); };
+window.SHOTS = [
+  // 4.01 PHASE 2: make money; but his forum reputation is at zero, nobody will buy
+  { draw: (c, lt, u, S) => { TW.techBG(c, lt, '232,184,74'); meter(c, 960, 560, .62 * (1 - E.io(K.seg(lt, S._tM, S._tM + 1.2))) + .0, lt, pop(lt, S._tM - .8, .4)); },
+    bed: [['tension', .16]],
+    init: S => { S._tM = A.at(S, 'mud', 3.6); const tN = A.at(S, 'Nobody', 5.0);
+      S.D.over = [(c, lt) => TW.phase(c, 2, lt, .1, S._tM - .9), (c, lt) => K.card(c, 'MAKE MONEY', lt, { at: .8, x: 960, y: 340, px: 50, rot: -2, until: S._tM - .9 }), (c, lt) => TW.stamp(c, 'NOBODY BUYS', 960, 840, lt, tN, { px: 90 })];
+      S.D.sfx = [[.1, 'stamp', .35], [.8, 'coins', .25], [S._tM, 'scrape', .25], [tN, 'stamp', .4]]; } },
+  // 4.02 middlemen with good reputations: a 19-year-old in England and a 22-year-old in Orlando
+  { draw: (c, lt, u, S) => { TW.techBG(c, lt, '90,200,120'); const a1 = pop(lt, Math.min(S._t1, .5), .5), a2 = pop(lt, S._t2, .5); avatar(c, 560 - (1 - a1) * 600, 520, 0, 'ENGLAND, 19', 'GOOD REPUTATION', Math.min(1, a1 * 1.5)); avatar(c, 1360 + (1 - a2) * 600, 520, 1, 'ORLANDO, 22', 'GOOD REPUTATION', Math.min(1, a2 * 1.5)); },
+    bed: [['hum_loop', .12]],
+    init: S => { S._t1 = A.at(S, 'England', 3.4) - .3; S._t2 = A.at(S, 'Orlando', 5.0) - .3; const tK = A.at(S, 'Neither', 6.6);
+      S.D.over = [(c, lt) => K.card(c, 'THE MIDDLEMEN', lt, { at: .3, x: 960, y: 110, px: 54, rot: -2 }), (c, lt) => K.card(c, "DON'T KNOW THE FULL STORY", lt, { at: tK, x: 960, y: 210, px: 38, rot: 2 })];
+      S.D.sfx = [[.3, 'pop', .25], [S._t1, 'whoosh', .3], [S._t2, 'whoosh', .3], [tK, 'tick', .25]]; } },
+  // 4.03 their forum ad: any Twitter account for $2,500-$3,000 in Bitcoin; short rare names sell fast
+  { draw: (c, lt, u, S) => { TW.techBG(c, lt, '150,70,230'); c.save(); c.translate(960, 540); const z = 1 + .05 * u; c.scale(z, z); c.translate(-960, -540);
+      TW.win(c, 280, 150, 1360, 720, 'forum · marketplace', '#3a2a5a', (cc, w, h) => { cc.fillStyle = '#16121f'; cc.fillRect(0, 0, w, h); TW.txt(cc, 'SELLING: ANY TWITTER ACCOUNT', w / 2, 80, 64, '#ffe08a', 'center', 'Anton'); TW.txt(cc, 'short names · rare names · pay in Bitcoin', w / 2, 150, 36, '#cfc8ff', 'center');
+        ['@a', '@xx', '@yo', '@six', '@bit', '@zz'].forEach((nm, k) => { const sold = lt > S._tF + k * .35; cc.fillStyle = sold ? '#3a1e2a' : '#221d30'; TW.rr(cc, 60 + (k % 3) * 420, 220 + (k / 3 | 0) * 170, 380, 140, 14); cc.fill(); TW.txt(cc, nm, 100 + (k % 3) * 420, 290 + (k / 3 | 0) * 170, 54, '#fff', 'left', 'Anton'); if (sold) { cc.save(); cc.translate(330 + (k % 3) * 420, 290 + (k / 3 | 0) * 170); cc.rotate(-.2); cc.strokeStyle = RED; cc.lineWidth = 6; cc.strokeRect(-70, -30, 140, 60); TW.txt(cc, 'SOLD', 0, 2, 40, RED, 'center', 'Anton'); cc.restore(); } }); });
+      c.restore(); const pa = pop(lt, S._tP, .5); if (pa > 0) { c.save(); c.translate(1580, 115); c.scale(pa * .85, pa * .85); c.rotate(.1); c.fillStyle = '#ffd24a'; c.strokeStyle = INK; c.lineWidth = 7; c.beginPath(); c.moveTo(-200, -80); c.lineTo(160, -80); c.lineTo(230, 0); c.lineTo(160, 80); c.lineTo(-200, 80); c.closePath(); c.fill(); c.stroke(); c.beginPath(); c.arc(150, 0, 16, 0, 7); c.stroke(); TW.txt(c, '$2,500-$3,000', -28, 4, 46, INK, 'center', 'Anton'); c.restore(); }
+      if (lt > S._tB) for (let k = 0; k < 9; k++) { const v = ((lt - S._tB) * .7 + k / 9) % 1; TW.btc(c, 340 + k * 150, -60 + v * 1100, 44, lt * 3 + k); } },
+    bed: [['hum_loop', .12]],
+    init: S => { S._tP = A.at(S, '2,500', 3.6) - .2; S._tB = A.at(S, 'Bitcoin', 5.2); S._tF = A.at(S, 'fast', 7.0) - .6; S.D.sfx = [[.3, 'pop', .25], [S._tP, 'stamp', .35], [S._tB, 'coins_cascade', .3], ...Array.from({ length: 6 }, (_, k) => [S._tF + k * .35, 'tick', .2])]; } },
+  // 4.04 meanwhile Twitter's security team notices odd calls and logins; staff gather under red alerts; the clock ticks
+  { plate: 'sec_room', cam: { z: [1.0, 1.06], x: [1280, 1290], y: [720, 735] }, bed: [['alarm', .05], ['hum_loop', .12]], light: { dir: 1, key: 'rgba(255,120,120,.22)' },
+    init: S => { const tS = A.at(S, 'strange', 2.4), tI = A.at(S, 'inside', 4.6), tC = A.at(S, 'clock', 6.0);
+      S.D.figs = [{ x: 900, y: 1300, s: 1.9, ...TW.EMP(1), facing: 1, mood: 'worried', walk: { x0: -250, x1: 900, t0: .2, dur: 3 }, anim: (o, lt) => { if (lt > tI) o.pose = 'point'; } },
+        { x: 1450, y: 1310, s: 1.9, ...TW.WOMAN(2), facing: -1, mood: 'shocked', walk: { x0: 2800, x1: 1450, t0: .8, dur: 2.8 } },
+        { x: 1900, y: 1290, s: 1.85, ...TW.EMP(3), facing: -1, mood: 'worried', walk: { x0: 2900, x1: 1900, t0: 1.6, dur: 2.6 }, anim: (o, lt) => { if (lt > tC) o.pose = 'think'; } }];
+      S.D.live = [(c, lt) => { [560, 1100, 1640].forEach((x, k) => { c.save(); c.beginPath(); c.rect(x + 12, 242, 456, 266); c.clip(); const on = lt > tS + k * .3; c.fillStyle = on ? `rgba(${180 + 60 * Math.sin(lt * 6 + k)},30,30,1)` : '#1a0a10'; c.fillRect(x, 230, 480, 290); if (on) { TW.txt(c, ['ODD LOGINS', 'STRANGE CALLS', 'ALERT'][k], x + 240, 330, 54, '#fff', 'center', 'Anton'); for (let j = 0; j < 4; j++) { c.fillStyle = 'rgba(255,255,255,.5)'; c.fillRect(x + 60, 400 + j * 24, 360 * (.4 + ((j * 37 + k * 11) % 50) / 100), 10); } } c.restore(); }); TW.glow(c, 1280, 380, 900, '255,40,40', .1 + .08 * Math.sin(lt * 6)); }];
+      S.D.over = [(c, lt) => K.card(c, 'TWITTER NOTICES', lt, { at: .3, x: 360, y: 110, px: 48, rot: -2 }), (c, lt) => K.card(c, 'SOMEONE IS INSIDE', lt, { at: tI, x: 1560, y: 110, px: 44, rot: 2 }), (c, lt) => { const a = pop(lt, tC - .2, .4); if (a <= 0) return; c.save(); c.translate(230, 640); c.scale(a, a); c.fillStyle = '#fff'; c.strokeStyle = INK; c.lineWidth = 8; c.beginPath(); c.arc(0, 0, 80, 0, 7); c.fill(); c.stroke(); c.lineWidth = 7; const an = lt * 3; c.beginPath(); c.moveTo(0, 0); c.lineTo(Math.sin(an) * 60, -Math.cos(an) * 60); c.stroke(); c.beginPath(); c.moveTo(0, 0); c.lineTo(Math.sin(an / 12) * 40, -Math.cos(an / 12) * 40); c.stroke(); c.restore(); }];
+      S.D.sfx = [[.2, 'footsteps', .3], [.8, 'footsteps', .25], [tS, 'alarm', .14], [tI, 'drum', .3], ...Array.from({ length: 6 }, (_, k) => [tC + k * .5, 'tick', .28])]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+KIT.drawSubs = () => {};
+</script></body></html>

@@ -40,7 +40,7 @@ for P in PARTS:
     # picture frames, audio and caption words for every act in the part
     frames, words, auds, off = [], [], [], 0.0
     for a in P['acts']:
-        nf = nframes(a); fs = sorted(os.listdir(f'{FR}/act{a}'))[:nf]; fs = fs + [fs[-1]] * (nf - len(fs)); frames += [f'{FR}/act{a}/{x}' for x in fs]
+        nf = nframes(a); fs = sorted(x for x in os.listdir(f'{FR}/act{a}') if x.endswith('.jpg'))[:nf]; fs = fs + [fs[-1]] * (nf - len(fs)); frames += [f'{FR}/act{a}/{x}' for x in fs]
         subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-i', f'{G}/{VID}/production/acts/act{a}/act{a}.mp4', '-vn', '-ac', '1', '-ar', str(SR), f'{TMP}/a{a}.wav'], check=True)
         x = load(f'{TMP}/a{a}.wav'); k = int(nf / FPS * SR); x = np.pad(x, (0, max(0, k - len(x))))[:k]
         fd = int(.06 * SR); x[:fd] *= np.linspace(0, 1, fd); fd = int(.2 * SR); x[-fd:] *= np.linspace(1, 0, fd); auds.append(x)

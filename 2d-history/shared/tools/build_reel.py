@@ -30,7 +30,7 @@ subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-i', f'{B}/r{RID}/aud_raw
 # words inside the clip
 words = [dict(w=FIX.get(w['w'].strip('.,'), w['w']), s=w['s'] - t0, e=w['e'] - t0) for w in T['words'] if w['s'] >= t0 - .05 and w['e'] <= t1 + .05]
 F0 = round(t0 * FPS); frames = sorted(os.listdir(f'{B}/r{RID}/frames'))
-LOGO = Image.open('/tmp/claude-0/brand/stormi.png').convert('RGBA'); LOGO = LOGO.crop(LOGO.getbbox()); LS = LOGO.resize((150, 150 * LOGO.height // LOGO.width), Image.LANCZOS); LB = LOGO.resize((440, 440 * LOGO.height // LOGO.width), Image.LANCZOS)
+LOGO = Image.open(f'{G}/shared/brand/stormi-watermark.png').convert('RGBA'); LOGO = LOGO.crop(LOGO.getbbox()); LS = LOGO.resize((150, 150 * LOGO.height // LOGO.width), Image.LANCZOS); LB = LOGO.resize((440, 440 * LOGO.height // LOGO.width), Image.LANCZOS)
 fK = ImageFont.truetype(FONT, 78); fC = ImageFont.truetype(FONT, 92); fH = ImageFont.truetype(FONT, 84); fE = ImageFont.truetype(FONT, 76)
 def wrap(d, txt, font, maxw):
     lines, cur = [], ''

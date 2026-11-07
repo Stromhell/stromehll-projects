@@ -1,0 +1,31 @@
+Title: The Kids Who Hacked the World, Part 1: The 17-Year-Old Who Hacked Twitter
+
+Backups:
+- The 17-Year-Old Who Hacked Elon Musk, Obama and Biden
+- How One Phone Call Hacked Twitter
+
+Tags: Twitter hack 2020, Graham Ivan Clark, Elon Musk Twitter hack, Obama Twitter hack, Bitcoin scam, crypto giveaway scam, SIM swapping, social engineering, phishing, OGUsers, Joseph O'Connor, PlugwalkJoe, teenage hacker, cybersecurity, hacking explained, true crime, animated explainer, Kids Who Hacked the World
+
+Description:
+On 15 July 2020 the Twitter accounts of Elon Musk, Barack Obama, Joe Biden, Bill Gates, Apple and Uber all posted the same Bitcoin scam. Behind it was a 17-year-old in Florida with a phone and a fake login page.
+
+Part 1 of The Kids Who Hacked the World follows Graham Ivan Clark from Minecraft scams and SIM swapping to a fake help-desk call that got him inside Twitter, the middlemen who sold stolen usernames, the scam that hit 130 accounts, the night Twitter silenced every verified account, the zoom-bombed court hearing and the sentence.
+
+Chapters
+0:00 15 July 2020
+0:31 The Minecraft scammer
+1:06 SIM swapping
+1:44 Phase 1: inside Twitter
+2:32 Phase 2: the middlemen
+3:04 Phase 3: the big scam
+3:46 Twitter pulls the plug
+4:17 Caught
+4:54 How simple it was
+
+Figures are as reported: 130 accounts targeted, 45 tweeted from, a take reported at over 100,000 dollars. The 2019 SIM-swap theft was linked to his online alias by The New York Times; he was a minor and was not charged for it. No real people's photos or logos are shown.
+
+Sources: US Department of Justice and Hillsborough County State Attorney's Office (2020-2021); New York State Department of Financial Services report on the Twitter hack (2020); The New York Times reporting (2020); Twitter's company blog updates (July 2020).
+
+Next: Part 2, the Xbox Underground.
+
+#TwitterHack #CyberSecurity #TrueCrime #Bitcoin #Animation
