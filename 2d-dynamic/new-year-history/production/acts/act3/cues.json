@@ -1,0 +1,179 @@
+{
+ "dur": 37.36,
+ "cues": [
+  {
+   "t": 0.1,
+   "name": "wind_loop",
+   "gain": 0.25
+  },
+  {
+   "t": 1.6,
+   "name": "footsteps",
+   "gain": 0.2
+  },
+  {
+   "t": 2.8,
+   "name": "stamp",
+   "gain": 0.7
+  },
+  {
+   "t": 3.775,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 3.775,
+   "name": "hum_loop",
+   "gain": 0.2
+  },
+  {
+   "t": 7.49,
+   "name": "chime",
+   "gain": 0.4
+  },
+  {
+   "t": 10.13,
+   "name": "ding",
+   "gain": 0.55
+  },
+  {
+   "t": 11.765,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 11.765,
+   "name": "wind_loop",
+   "gain": 0.15
+  },
+  {
+   "t": 11.765,
+   "name": "crickets",
+   "gain": 0.25
+  },
+  {
+   "t": 12.265,
+   "name": "brush",
+   "gain": 0.2
+  },
+  {
+   "t": 14.48,
+   "name": "yawn",
+   "gain": 0.5
+  },
+  {
+   "t": 16.905,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 16.905,
+   "name": "hum_loop",
+   "gain": 0.15
+  },
+  {
+   "t": 17.935,
+   "name": "bell",
+   "gain": 0.35
+  },
+  {
+   "t": 21.875,
+   "name": "trombone",
+   "gain": 0.3
+  },
+  {
+   "t": 24.455,
+   "name": "chime",
+   "gain": 0.45
+  },
+  {
+   "t": 25.806,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 25.806,
+   "name": "hum_loop",
+   "gain": 0.1
+  },
+  {
+   "t": 27.22,
+   "name": "whoosh",
+   "gain": 0.35
+  },
+  {
+   "t": 27.22,
+   "name": "paper",
+   "gain": 0.4
+  },
+  {
+   "t": 29.72,
+   "name": "party_horn",
+   "gain": 0.55
+  },
+  {
+   "t": 29.72,
+   "name": "cheer",
+   "gain": 0.35
+  },
+  {
+   "t": 31.395,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 31.395,
+   "name": "hum_loop",
+   "gain": 0.08
+  },
+  {
+   "t": 31.93,
+   "name": "ding",
+   "gain": 0.35
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 4.475,
+   "name": "wind_loop",
+   "gain": 0.25
+  },
+  {
+   "start": 3.675,
+   "end": 12.465,
+   "name": "hum_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 11.665,
+   "end": 17.605,
+   "name": "wind_loop",
+   "gain": 0.15
+  },
+  {
+   "start": 11.665,
+   "end": 17.605,
+   "name": "crickets",
+   "gain": 0.25
+  },
+  {
+   "start": 16.805,
+   "end": 26.506,
+   "name": "hum_loop",
+   "gain": 0.15
+  },
+  {
+   "start": 25.706,
+   "end": 32.095,
+   "name": "hum_loop",
+   "gain": 0.1
+  },
+  {
+   "start": 31.295,
+   "end": 38.16,
+   "name": "hum_loop",
+   "gain": 0.08
+  }
+ ]
+}

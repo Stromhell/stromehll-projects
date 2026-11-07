@@ -1,0 +1,14 @@
+WHY NEW YEAR IS ON JANUARY 1ST (2D dynamic, prefix NY) - booking sheet, 7 Nov 2026
+Pushpam asked for it to go out 31 Dec 12am, read as 00:00 IST. Pushpam said "then schedule" (7 Nov 21:09 UTC).
+All files: /mnt/project-files/2d-dynamic/new-year-history/launch/ (also Drive AI/2D Dynamic/new-year-history/{Renders,Reels,Instagram parts,Launch}).
+
+FULL VIDEO (YouTube only) | Wed 30 Dec 2026 18:30 UTC (= Thu 31 Dec 00:00 IST; slot already held)
+  video launch/NY_FULL.mp4 (Drive 1K-n2-0qA2RL_67i80MTq4WdzAV1q3td1, 3:38, 1080p)
+  thumbnail launch/NY_thumbnail.jpg | title + description + chapters launch/NY_Title_Description.txt
+
+REELS R01-R15 (YouTube Shorts + Instagram Reels) | all AFTER the full video: first one 30 Dec 19:30 UTC, then the next free reel slots,
+  ideally all out by ~4 Jan while New Year is topical. Respect 7 reels/day and ~9 YouTube uploads/day.
+  videos launch/reels/NY_Reel_NN.mp4, covers launch/reels/NY_Reel_NN_thumb.jpg, titles + captions launch/NY_Reels_Titles_Descriptions.txt
+
+INSTAGRAM FULL-VIDEO PARTS (Instagram only) | 2 parts, one per day at 20:30 UTC from 31 Dec (or the next free IG-part days)
+  launch/ig/NY_IG_Part_01.mp4 (2:01), NY_IG_Part_02.mp4 (1:44); covers launch/ig_covers/NY_IG_PartN_cover.jpg; captions at the end of the titles file.

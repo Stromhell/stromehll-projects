@@ -1,0 +1,136 @@
+{
+ "dur": 26.795,
+ "cues": [
+  {
+   "t": 0.1,
+   "name": "city_loop",
+   "gain": 0.15
+  },
+  {
+   "t": 0.4,
+   "name": "hooves",
+   "gain": 0.25
+  },
+  {
+   "t": 0.6,
+   "name": "footsteps",
+   "gain": 0.2
+  },
+  {
+   "t": 5.419,
+   "name": "paper",
+   "gain": 0.4
+  },
+  {
+   "t": 6.334,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 6.334,
+   "name": "clock_loop",
+   "gain": 0.3
+  },
+  {
+   "t": 10.369,
+   "name": "breath",
+   "gain": 0.4
+  },
+  {
+   "t": 11.589,
+   "name": "tick",
+   "gain": 0.3
+  },
+  {
+   "t": 12.764,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 12.764,
+   "name": "birds_loop",
+   "gain": 0.2
+  },
+  {
+   "t": 12.864,
+   "name": "rooster",
+   "gain": 0.5
+  },
+  {
+   "t": 13.264,
+   "name": "yawn",
+   "gain": 0.45
+  },
+  {
+   "t": 14.035,
+   "name": "scratch",
+   "gain": 0.65
+  },
+  {
+   "t": 14.035,
+   "name": "meow",
+   "gain": 0.45
+  },
+  {
+   "t": 18.935,
+   "name": "trombone",
+   "gain": 0.4
+  },
+  {
+   "t": 19.83,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 19.83,
+   "name": "wind_loop",
+   "gain": 0.3
+  },
+  {
+   "t": 20.005,
+   "name": "bell",
+   "gain": 0.3
+  },
+  {
+   "t": 24.165,
+   "name": "paper_tear",
+   "gain": 0.5
+  },
+  {
+   "t": 24.665,
+   "name": "paper_tear",
+   "gain": 0.5
+  },
+  {
+   "t": 24.665,
+   "name": "ding",
+   "gain": 0.4
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 7.034,
+   "name": "city_loop",
+   "gain": 0.15
+  },
+  {
+   "start": 6.234,
+   "end": 13.464,
+   "name": "clock_loop",
+   "gain": 0.3
+  },
+  {
+   "start": 12.664,
+   "end": 20.53,
+   "name": "birds_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 19.73,
+   "end": 27.595000000000002,
+   "name": "wind_loop",
+   "gain": 0.3
+  }
+ ]
+}

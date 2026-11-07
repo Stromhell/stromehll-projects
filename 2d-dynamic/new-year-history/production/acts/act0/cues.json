@@ -1,0 +1,166 @@
+{
+ "dur": 25.327,
+ "cues": [
+  {
+   "t": 0.1,
+   "name": "crowd_loop",
+   "gain": 0.3
+  },
+  {
+   "t": 0.8,
+   "name": "beep",
+   "gain": 0.5
+  },
+  {
+   "t": 1.15,
+   "name": "beep",
+   "gain": 0.5
+  },
+  {
+   "t": 1.5,
+   "name": "beep",
+   "gain": 0.5
+  },
+  {
+   "t": 1.9,
+   "name": "beep",
+   "gain": 0.5
+  },
+  {
+   "t": 2.15,
+   "name": "beep_long",
+   "gain": 0.5
+  },
+  {
+   "t": 3.15,
+   "name": "crowd_cheer",
+   "gain": 0.4
+  },
+  {
+   "t": 3.15,
+   "name": "firework",
+   "gain": 0.4
+  },
+  {
+   "t": 4.45,
+   "name": "scratch",
+   "gain": 0.7
+  },
+  {
+   "t": 6.814,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 6.814,
+   "name": "night_loop",
+   "gain": 0.15
+  },
+  {
+   "t": 7.314,
+   "name": "yawn",
+   "gain": 0.5
+  },
+  {
+   "t": 8.787,
+   "name": "brush",
+   "gain": 0.4
+  },
+  {
+   "t": 9.947,
+   "name": "brush",
+   "gain": 0.4
+  },
+  {
+   "t": 11.267,
+   "name": "boing",
+   "gain": 0.35
+  },
+  {
+   "t": 12.962,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 12.962,
+   "name": "clock_loop",
+   "gain": 0.25
+  },
+  {
+   "t": 13.262,
+   "name": "rewind",
+   "gain": 0.5
+  },
+  {
+   "t": 14.462,
+   "name": "rewind",
+   "gain": 0.5
+  },
+  {
+   "t": 15.397,
+   "name": "whoosh",
+   "gain": 0.4
+  },
+  {
+   "t": 19.017,
+   "name": "thud",
+   "gain": 0.6
+  },
+  {
+   "t": 20.627,
+   "name": "whoosh_soft",
+   "gain": 0.45
+  },
+  {
+   "t": 20.727,
+   "name": "wind_loop",
+   "gain": 0.2
+  },
+  {
+   "t": 20.827,
+   "name": "swell",
+   "gain": 0.4
+  },
+  {
+   "t": 21.627,
+   "name": "party_horn",
+   "gain": 0.6
+  },
+  {
+   "t": 21.677,
+   "name": "hit",
+   "gain": 0.5
+  },
+  {
+   "t": 21.827,
+   "name": "cheer",
+   "gain": 0.3
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 7.514,
+   "name": "crowd_loop",
+   "gain": 0.3
+  },
+  {
+   "start": 6.714,
+   "end": 13.662,
+   "name": "night_loop",
+   "gain": 0.15
+  },
+  {
+   "start": 12.862,
+   "end": 21.327,
+   "name": "clock_loop",
+   "gain": 0.25
+  },
+  {
+   "start": 20.527,
+   "end": 26.127000000000002,
+   "name": "wind_loop",
+   "gain": 0.2
+  }
+ ]
+}

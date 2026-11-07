@@ -1,0 +1,4 @@
+# Render outputs (on Drive, too big for git)
+*.mp4
+*.wav
+__pycache__/
