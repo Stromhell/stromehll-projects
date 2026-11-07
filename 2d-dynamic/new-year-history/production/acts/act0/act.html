@@ -93,7 +93,7 @@ window.SHOTS = [
       nyCrowd(c, lt, L, CROWD1, 716, 44, ch, 120, 208);
       if (fr) { c.fillStyle = 'rgba(40,30,70,.35)'; c.fillRect(0, 0, 1280, 720); }
       nyConfetti(c, lt, ch, 60, 5, Sh.tH); },
-    over: [(c, lt, u, Sh) => { ['5', '4', '3', '2', '1'].forEach((t, i) => nyNum(c, t, lt, Sh.n[i], { hold: .75, px: 420, y: 560 })); },
+    over: [(c, lt, u, Sh) => { ['5', '4', '3', '2', '1'].forEach((t, i) => nyNum(c, t, lt, Sh.n[i], { hold: i < 4 ? .36 : .8, px: 420, y: 560 })); },
       (c, lt, u, Sh) => lt < Sh.tW && K.card(c, 'HAPPY NEW...', lt, { at: Sh.tH, x: 960, y: 260, px: 90 }),
       (c, lt, u, Sh) => K.card(c, 'WAIT.', lt, { at: Sh.tW, x: 960, y: 300, px: 120, rot: -3 }),
       (c, lt, u, Sh) => K.card(c, 'WHY DO WE DO THIS?', lt, { at: Sh.tY + .3, x: 960, y: 450, px: 70, rot: 2 })],

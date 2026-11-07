@@ -6,6 +6,13 @@ const CAT = (c, x, y, s, shock, lt) => { c.save(); c.translate(x, y); c.scale(s,
 const WINDOW = (c, day) => { const sky = c.createLinearGradient(0, 110, 0, 350); if (day) { sky.addColorStop(0, '#8ac0f0'); sky.addColorStop(1, '#ffe8c0'); } else { sky.addColorStop(0, '#0a1430'); sky.addColorStop(1, '#2a3a6a'); } c.fillStyle = sky; c.fillRect(145, 115, 190, 230);
   if (day) { S.glow(c, 290, 300, 60, '#fff0c0', .8); } else { c.fillStyle = '#f0f0d8'; c.beginPath(); c.arc(190, 160, 14, 0, TAU); c.fill(); c.fillStyle = 'rgba(255,255,255,.8)'; for (let k = 0; k < 10; k++) c.fillRect(150 + (k * 37) % 180, 130 + (k * 53) % 200, 2, 2); }
   c.strokeStyle = '#e8e0d0'; c.lineWidth = 10; c.strokeRect(140, 110, 200, 240); c.fillStyle = '#e8e0d0'; c.fillRect(236, 110, 8, 240); c.fillRect(140, 226, 200, 8); };
+// the sleeper lying in the four-poster: head on the pillow, a body-shaped hump under the blanket
+const INBED = (c, a, lt, blink) => { if (a <= 0) return; c.save(); c.globalAlpha = a; const br = Math.sin(lt * 1.6) * 2;
+  c.fillStyle = '#7a2e2e'; c.beginPath(); c.ellipse(650, 478 - br * .5, 120, 16 + br, 0, Math.PI, TAU); c.fill(); c.fillStyle = '#8a3a3a'; c.fillRect(540, 478, 240, 66);
+  c.fillStyle = '#d8a47c'; c.beginPath(); c.arc(512, 456, 20, 0, TAU); c.fill(); c.strokeStyle = '#3a2a20'; c.lineWidth = 2.5; c.lineCap = 'round';
+  c.beginPath(); c.moveTo(520, 452); c.lineTo(530, 452); c.stroke(); if (!blink) { c.beginPath(); c.arc(525, 466, 4, .2, Math.PI - .2); c.stroke(); }
+  c.fillStyle = '#f4f0e8'; c.beginPath(); c.moveTo(494, 444); c.quadraticCurveTo(500, 420, 470, 410); c.lineTo(466, 418); c.quadraticCurveTo(488, 428, 492, 452); c.fill(); c.beginPath(); c.arc(468, 412, 6, 0, TAU); c.fill();
+  c.restore(); };
 window.SHOTS = [
   // 4.01 MED: Georgian London street; a gentleman checks his calendar: New Year on 25 March
   { set: 'ny_london', cam: { z: [1.45, 1.55], x: [640, 660], y: [470, 470], ease: E.io }, bed: [['city_loop', .15]],
@@ -20,12 +27,14 @@ window.SHOTS = [
 
   // 4.02 MED: night, 2 September 1752: a man in a nightcap blows out his candle and climbs into bed
   { set: 'ny_bedroom', cam: { z: [1.25, 1.35], x: [640, 640], y: [420, 420], ease: E.io }, bed: [['clock_loop', .3]],
-    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tS = at(Sh, 'september', 3.5); Sh.tB = at(Sh, 'bed', 2.5); },
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tS = at(Sh, 'september', 3.5); Sh.tB = Math.min(at(Sh, 'bed', 2.5), Sh.dur - 3.2); },
     draw: (c, lt, u, Sh) => { const lit = 1 - seg(lt, Sh.tB, Sh.tB + .15), L = lit > .5 ? CANDLE(lt) : NIGHT(lt); WINDOW(c, false);
       nyCal(c, 935, 245, .8, '2', 'SEPT 1752', { px: 70 });
       if (lit > 0) { S.glow(c, 910, 412, 160, '#ffb040', .4 * lit); c.fillStyle = '#ffd070'; c.beginPath(); c.ellipse(910, 412, 4, 9, 0, 0, TAU); c.fill(); } else { c.strokeStyle = 'rgba(200,200,210,.5)'; c.lineWidth = 2; c.beginPath(); c.moveTo(910, 418); c.quadraticCurveTo(904 + Math.sin(lt * 3) * 6, 380, 912, 340 - (lt - Sh.tB) * 10); c.stroke(); }
       const blow = Math.sin(Math.PI * seg(lt, Sh.tB - .4, Sh.tB + .2)), q = seg(lt, Sh.tB + .4, Sh.tB + 2);
-      fig(c, NY.SLEEPER, lerp(850, 640, E.io(q)), 668, 32, q > 0 && q < 1 ? walk(lt, 1, { face: -1 }) : pose(lt, 1, { face: -1, lean: 10 * blow }), lt, 1, L, { open: .3 * blow, squint: .6, blink: lt > Sh.tB + 2.2 && lt % 2 < .8, look: [-.6, -.1] });
+      const inb = seg(lt, Sh.tB + 2, Sh.tB + 2.5); c.save(); c.globalAlpha = 1 - inb;
+      if (inb < .98) fig(c, NY.SLEEPER, lerp(850, 700, E.io(q)), 668, 44, q > 0 && q < 1 ? walk(lt, 1, { face: -1 }) : pose(lt, 1, { face: -1, lean: 10 * blow }), lt, 1, L, { open: .3 * blow, squint: .6, look: [-.6, -.1] });
+      c.restore(); INBED(c, inb, lt, true);
       if (lit <= 0) { c.fillStyle = 'rgba(10,15,40,.4)'; c.fillRect(0, 0, 1280, 720); } },
     over: [(c, lt, u, Sh) => K.card(c, 'WEDNESDAY 2 SEPTEMBER 1752', lt, { at: Sh.tS, x: 960, y: 160, px: 50 })],
     sfx: [[.1, 'clock_loop', .3], ['bed', 'breath', .4], ['september', 'tick', .3]] },
@@ -35,8 +44,9 @@ window.SHOTS = [
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tF = at(Sh, 'fourteenth', 1.5); Sh.tE = at(Sh, 'eleven', 3); Sh.tB = at(Sh, 'birthday', Sh.dur - 1); },
     draw: (c, lt, u, Sh) => { const L = SUN(lt); WINDOW(c, true);
       nyCal(c, 935, 245, .8, lt > Sh.tF - .2 ? '14' : '2', 'SEPT 1752', { px: 70 });
-      const st = Math.max(0, Math.sin(Math.PI * seg(lt, .1, Sh.tF - .4))), dt = seg(lt, Sh.tF, Sh.tF + .25), jump = Math.max(0, Math.sin(Math.PI * seg(lt, Sh.tF, Sh.tF + .5)));
-      fig(c, NY.SLEEPER, 700, 668 - jump * 20, 32, pose(lt, 1, { face: 1, shN: lerp(4, 165, st) + dt * 60, shF: lerp(-4, 160, st) + dt * 50, elN: lerp(10, 40, st) + 60 * dt, elF: 40 * st + 60 * dt, lean: -6 * dt }), lt, 1, L, { open: Math.max(st * .7, dt), wide: dt, raise: dt, squint: st * .7 * (1 - dt), look: [lerp(.2, .9, dt), -.3 * dt] });
+      const st = Math.max(0, Math.sin(Math.PI * seg(lt, 1.1, Math.max(1.6, Sh.tF - .4)))), dt = seg(lt, Sh.tF, Sh.tF + .25), jump = Math.max(0, Math.sin(Math.PI * seg(lt, Sh.tF, Sh.tF + .5)));
+      const up = seg(lt, .5, 1.1); INBED(c, 1 - up, lt, false); c.save(); c.globalAlpha = up;
+      if (up > .02) fig(c, NY.SLEEPER, 700, 668 - jump * 20, 44, pose(lt, 1, { face: 1, shN: lerp(4, 165, st) + dt * 60, shF: lerp(-4, 160, st) + dt * 50, elN: lerp(10, 40, st) + 60 * dt, elF: 40 * st + 60 * dt, lean: -6 * dt }), lt, 1, L, { open: Math.max(st * .7, dt), wide: dt, raise: dt, squint: st * .7 * (1 - dt), look: [lerp(.2, .9, dt), -.3 * dt] }); c.restore();
       CAT(c, 560, 668, 1.2, seg(lt, Sh.tF + .15, Sh.tF + .35), lt); },
     over: [(c, lt, u, Sh) => K.card(c, 'THURSDAY 14 SEPTEMBER?!', lt, { at: Sh.tF, x: 960, y: 160, px: 56, rot: -3 }), (c, lt, u, Sh) => K.card(c, '11 DAYS, GONE', lt, { at: Sh.tE, x: 1460, y: 900, px: 54, rot: 3 })],
     sfx: [[.1, 'birds_loop', .2], [.2, 'rooster', .5], [.6, 'yawn', .45], ['fourteenth', 'scratch', .65], ['fourteenth', 'meow', .45], ['birthday', 'trombone', .4]] },

@@ -28,18 +28,18 @@ window.SHOTS = [
     sfx: [[.1, 'wind_loop', .35], ['ten', 'ding', .4], ['winter', 'whoosh', .3], ['winter', 'yawn', .0]] },
 
   // 2.03 MED: King Numa on his stone seat; two workers carry new carved tablets and slot them into the calendar wall
-  { set: 'ny_senate', cam: { z: [1.15, 1.2], x: [640, 640], y: [400, 400], ease: E.io }, bed: [['hum_loop', .1]],
+  { set: 'ny_senate', cam: { z: [1.38, 1.45], x: [650, 650], y: [430, 430], ease: E.io }, bed: [['hum_loop', .1]],
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tK = at(Sh, 'king', 2); Sh.tJ = at(Sh, 'januarius', Sh.dur - 2.5); Sh.tF = at(Sh, 'februarius', Sh.dur - 1.2); },
     draw: (c, lt, u, Sh) => { const L = SUN(lt), qa = seg(lt, Sh.tJ - .4, Sh.tJ + .3), qb = seg(lt, Sh.tF - .4, Sh.tF + .3);
       slab(c, 640, 282, .74, { pre: ['IANUARIUS', 'FEBRUARIUS'].slice(0, (qa >= 1) + (qb >= 1)) });
       // stone seat + Numa
-      c.fillStyle = '#c8bca4'; c.fillRect(150, 560, 140, 60); c.fillStyle = '#e0d6c0'; c.fillRect(140, 548, 160, 16); c.fillRect(150, 470, 20, 80);
-      fig(c, NY.NUMA, 220, 660, 32, pose(lt, 1, { face: 1, sitY: -1.6, hipN: 85, hipF: 85, kneeN: 85, kneeF: 85, shN: lerp(10, 80, seg(lt, Sh.tK, Sh.tK + .5)), elN: 20 }), lt, 1, L, { smile: .5, look: [.8, -.3] });
+      c.save(); c.translate(110, 0); c.fillStyle = 'rgba(0,0,0,.25)'; c.beginPath(); c.ellipse(240, 662, 80, 7, 0, 0, TAU); c.fill(); c.fillStyle = '#9a8a70'; c.fillRect(168, 560, 18, 100); c.fillStyle = '#8a7a62'; c.fillRect(186, 630, 116, 30); c.fillStyle = '#b8a888'; c.fillRect(180, 622, 128, 10); c.strokeStyle = '#4a3a2a'; c.lineWidth = 2; c.strokeRect(186, 630, 116, 30); c.strokeRect(180, 622, 128, 10); c.strokeRect(168, 560, 18, 100);
+      fig(c, NY.NUMA, 220, 660, 32, pose(lt, 1, { face: 1, sitY: -1.6, hipN: 85, hipF: 85, kneeN: 85, kneeF: 85, shN: lerp(10, 80, seg(lt, Sh.tK, Sh.tK + .5)), elN: 20 }), lt, 1, L, { smile: .5, look: [.8, -.3] }); c.restore();
       // workers walk in carrying tablets overhead, from the right
-      [[NY.WORKMAN, Sh.tJ, 0], [NY.MASON, Sh.tF, 1]].forEach(([ch, t, k]) => { const q = seg(lt, t - 3.2, t - .3), x = lerp(1380, 840 + k * 160, E.out(q)), held = lt < t - .1;
+      [[NY.WORKMAN, Sh.tJ, 0], [NY.MASON, Sh.tF, 1]].forEach(([ch, t, k]) => { const q = seg(lt, t - 3.2, t - .3), x = lerp(1380, 770 + k * 150, E.out(q)), held = lt < t - .1;
         fig(c, ch, x, 666, 30, q > 0 && q < 1 ? walk(lt, k + 2, { face: -1, shN: 160, elN: 20, shF: 160, elF: 20 }) : pose(lt, k + 2, { face: -1, shN: held ? 160 : 20, elN: 20, shF: held ? 160 : 10 }), lt, k + 2, L, { look: [-.5, -.5], smile: held ? 0 : .7 });
         if (held) { c.fillStyle = '#d8d0c0'; c.fillRect(x - 50, 666 - 30 * 6.4, 100, 34); c.fillStyle = '#8a1a1a'; c.font = 'bold 13px serif'; c.textAlign = 'center'; c.fillText(k ? 'FEBRUARIUS' : 'IANUARIUS', x, 666 - 30 * 6.4 + 22); } }); },
-    over: [(c, lt, u, Sh) => K.dateTag(c, 'KING NUMA', lt, { at: Sh.tK }), (c, lt, u, Sh) => K.card(c, '+ JANUARIUS', lt, { at: Sh.tJ, x: 1500, y: 650, px: 50 }), (c, lt, u, Sh) => K.card(c, '+ FEBRUARIUS', lt, { at: Sh.tF, x: 1500, y: 740, px: 50, rot: 2 })],
+    over: [(c, lt, u, Sh) => K.dateTag(c, 'KING NUMA', lt, { at: Sh.tK, x: 760, y: 380 }), (c, lt, u, Sh) => K.card(c, '+ JANUARIUS', lt, { at: Sh.tJ, x: 1560, y: 150, px: 50 }), (c, lt, u, Sh) => K.card(c, '+ FEBRUARIUS', lt, { at: Sh.tF, x: 1560, y: 250, px: 50, rot: 2 })],
     sfx: [[.1, 'hum_loop', .1], ['king', 'horn', .3], ['januarius', 'scrape', .4], ['januarius', 'thud', .4], ['februarius', 'scrape', .4], ['februarius', 'thud', .45]] },
 
   // 2.04 MED: a harvest festival with grape baskets, in a snowstorm; confused Romans look up (sad trombone)
@@ -56,13 +56,13 @@ window.SHOTS = [
     sfx: [[.1, 'wind_loop', .3], [.3, 'crowd_loop', .12], ['wrong', 'trombone', .55]] },
 
   // 2.05 MED: Caesar in the senate points at a new calendar where IANUARIUS I glows; senators clap
-  { set: 'ny_senate', cam: { z: [1.1, 1.22], x: [640, 640], y: [380, 370], ease: E.io }, bed: [['crowd_loop', .1]],
+  { set: 'ny_senate', cam: { z: [1.35, 1.45], x: [650, 650], y: [430, 425], ease: E.io }, bed: [['crowd_loop', .1]],
     init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tC = at(Sh, 'caesar', 1.5); Sh.tJ = at(Sh, 'julian', 3); Sh.tF = at(Sh, 'first', Sh.dur - 2.5); },
     draw: (c, lt, u, Sh) => { const L = SUN(lt), g = seg(lt, Sh.tF - .2, Sh.tF + .5);
       c.save(); c.translate(640, 282); c.scale(.74, .74); c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(-196, -126, 400, 270); c.fillStyle = '#efe6d2'; c.fillRect(-200, -130, 400, 270); c.fillStyle = '#5a4a3a'; c.font = 'bold 22px serif'; c.textAlign = 'center'; c.fillText('KALENDAE IULIANAE', 0, -96);
       if (g > 0) { S.glow(c, 0, 10, 160 * g, '#ffd040', .6); } c.fillStyle = g > 0 ? '#a8201a' : '#5a4a3a'; c.font = `bold ${lerp(34, 46, g)}px Anton`; c.fillText('IANUARIUS · I', 0, 22); c.font = '16px serif'; c.fillStyle = '#5a4a3a'; c.fillText('365 DIES', 0, 90); c.restore();
-      fig(c, NY.CAESAR, 360, 660, 34, pose(lt, 1, { face: 1, shN: lerp(10, 120, seg(lt, Sh.tF - .4, Sh.tF)), elN: 5, lean: -2 }), lt, 1, L, { smile: .6, look: [.7, -.4] });
-      const cl = seg(lt, Sh.tF + .2, Sh.tF + .5); [[NY.TOGA, 860], [NY.TOGA2, 1000], [NY.TOGA3, 1140]].forEach(([ch, x], k) => { const cp = Math.abs(Math.sin(lt * 12 + k)) * cl; fig(c, ch, x, 660, 28, pose(lt, k + 2, { face: -1, shN: 60 + 20 * cp, elN: 90 + 30 * cp, shF: 60 + 20 * cp, elF: 90 + 30 * cp }), lt, k + 2, L, { smile: cl, look: [-.6, -.3] }); }); },
+      fig(c, NY.CAESAR, 400, 660, 34, pose(lt, 1, { face: 1, shN: lerp(10, 120, seg(lt, Sh.tF - .4, Sh.tF)), elN: 5, lean: -2 }), lt, 1, L, { smile: .6, look: [.7, -.4] });
+      const cl = seg(lt, Sh.tF + .2, Sh.tF + .5); [[NY.TOGA, 800], [NY.TOGA2, 910], [NY.TOGA3, 1020]].forEach(([ch, x], k) => { const cp = Math.abs(Math.sin(lt * 12 + k)) * cl; fig(c, ch, x, 660, 28, pose(lt, k + 2, { face: -1, shN: 60 + 20 * cp, elN: 90 + 30 * cp, shF: 60 + 20 * cp, elF: 90 + 30 * cp }), lt, k + 2, L, { smile: cl, look: [-.6, -.3] }); }); },
     over: [(c, lt, u, Sh) => K.dateTag(c, 'JULIUS CAESAR · 46 BCE', lt, { at: Sh.tC }), (c, lt, u, Sh) => K.card(c, 'JANUARY 1st!', lt, { at: Sh.tF + .2, x: 1460, y: 220, px: 64, rot: -3 })],
     sfx: [[.1, 'crowd_loop', .1], ['caesar', 'horn', .3], ['julian', 'paper', .4], ['first', 'ding', .55], ['first', 'crowd_cheer', .35]] },
 

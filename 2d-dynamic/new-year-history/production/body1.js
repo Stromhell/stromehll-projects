@@ -48,11 +48,19 @@ window.SHOTS = [
       c.fillStyle = '#4a2e1a'; c.fillRect(760, 380, 8, 220); c.fillRect(1052, 380, 8, 220); c.fillStyle = '#f8e0a0'; c.fillRect(768, 390, 284, 150); S.glow(c, 910, 465, 160, '#ffd080', .3);
       c.save(); c.beginPath(); c.rect(768, 390, 284, 150); c.clip(); c.fillStyle = '#2a1a10';
       // Tiamat: coiling serpent that rears up then sinks on "won"
-      const sink = seg(lt, Sh.tS - .3, Sh.tS + .6), sx = 1000; c.beginPath(); for (let k = 0; k <= 20; k++) { const q = k / 20, x = 1052 - q * 120, y = 540 - Math.sin(q * Math.PI) * (70 - 60 * sink) - Math.sin(q * 9 + lt * 4) * 8; k ? c.lineTo(x, y) : c.moveTo(x, y); } c.lineWidth = 16; c.strokeStyle = '#2a1a10'; c.stroke();
-      c.beginPath(); c.ellipse(sx - 66, 480 + 60 * sink, 16, 10, -.4, 0, TAU); c.fill();
+      const sink = seg(lt, Sh.tS - .3, Sh.tS + .7), hx = 948 + Math.sin(lt * 2) * 6, hy = 440 + 95 * E.io(sink) + Math.sin(lt * 3) * 6;
+      // serpent body: thick tapering coil from the bottom right up to the head
+      for (let k = 0; k < 24; k++) { const q = k / 23, x = lerp(1050, hx + 14, q) + Math.sin(q * 7 + lt * 3) * 18 * (1 - q), y = lerp(545, hy + 14, q) + Math.sin(q * 5 + lt * 2) * 10 * (1 - q); c.beginPath(); c.arc(x, y, lerp(16, 9, q), 0, TAU); c.fill(); }
+      // dragon head looking left: snout, open jaw, horns, a lit eye hole
+      c.save(); c.translate(hx, hy); c.rotate(-.15 + .6 * sink); c.beginPath(); c.ellipse(0, 0, 24, 15, 0, 0, TAU); c.fill(); c.beginPath(); c.moveTo(-8, -6); c.lineTo(-42, -2); c.lineTo(-38, 6); c.lineTo(-6, 6); c.fill();
+      const jw = .25 + .2 * Math.sin(lt * 5) * (1 - sink); c.beginPath(); c.moveTo(-4, 8); c.lineTo(-36, 10 + jw * 30); c.lineTo(-30, 18 + jw * 30); c.lineTo(6, 12); c.fill();
+      c.beginPath(); c.moveTo(8, -10); c.lineTo(22, -34); c.lineTo(16, -8); c.fill(); c.beginPath(); c.moveTo(-2, -12); c.lineTo(4, -32); c.lineTo(6, -10); c.fill();
+      c.fillStyle = '#f8e0a0'; c.beginPath(); c.arc(-10, -3, 3, 0, TAU); c.fill(); c.restore(); c.fillStyle = '#2a1a10';
+      // arrow flies from the bow to the serpent on "wrestling"
+      const fa = seg(lt, Sh.tW, Sh.tW + .5); if (fa > 0 && fa < 1) { const ax = lerp(890, hx - 20, fa), ay = lerp(470, hy, fa); c.lineWidth = 3; c.strokeStyle = '#2a1a10'; c.beginPath(); c.moveTo(ax - 26, ay); c.lineTo(ax, ay); c.stroke(); c.beginPath(); c.moveTo(ax + 8, ay); c.lineTo(ax - 2, ay - 5); c.lineTo(ax - 2, ay + 5); c.fill(); }
       // Marduk: figure with a bow, lunges on "wrestling"
       const lu = Math.sin(Math.PI * seg(lt, Sh.tW - .2, Sh.tW + .8)) * 30, mx = 830 + lu; c.beginPath(); c.arc(mx, 440, 12, 0, TAU); c.fill(); c.fillRect(mx - 8, 452, 16, 50); c.fillRect(mx - 10, 500, 6, 40); c.fillRect(mx + 4, 500, 6, 40);
-      c.lineWidth = 4; c.strokeStyle = '#2a1a10'; c.beginPath(); c.arc(mx + 26, 470, 26, -1.3, 1.3); c.stroke(); c.beginPath(); c.moveTo(mx + 6, 470); c.lineTo(mx + 60, 470); c.stroke(); c.restore();
+      c.lineWidth = 4; c.strokeStyle = '#2a1a10'; c.beginPath(); c.arc(mx + 26, 470, 26, -1.3, 1.3); c.stroke(); if (lt < Sh.tW) { c.beginPath(); c.moveTo(mx + 6, 470); c.lineTo(mx + 60, 470); c.stroke(); } c.restore();
       // the storyteller works the puppets; kids watch and cheer on "won"
       fig(c, NY.STORY, 700, 650, 26, pose(lt, 2, { face: 1, shN: 110 + Math.sin(lt * 3) * 10, elN: 30 }), lt, 2, L, { open: .3 + .3 * Math.sin(lt * 7), look: [.6, -.2] });
       const ch = seg(lt, Sh.tS, Sh.tS + .3); [[NY.BABKID, 860], [NY.BABKID2, 960], [NY.BABKID, 1060]].forEach(([k0, x], k) => fig(c, k0, x, 690 - ch * 6 * Math.abs(Math.sin(lt * 6 + k)), 20, pose(lt, k + 3, { face: -1, shN: lerp(10, 160, ch), shF: lerp(-4, 150, ch) }), lt, k + 3, L, { smile: ch, open: ch * .8, wide: 1 - ch * .5, look: [-.2, -.6] })); },

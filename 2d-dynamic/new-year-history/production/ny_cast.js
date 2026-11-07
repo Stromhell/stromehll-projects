@@ -100,22 +100,26 @@
     // shoulders / herm block
     c.fillStyle = st; c.beginPath(); c.moveTo(-62, 0); c.lineTo(-56, -70); c.quadraticCurveTo(0, -96, 56, -70); c.lineTo(62, 0); c.fill(); c.fillStyle = sh; c.beginPath(); c.moveTo(20, 0); c.lineTo(24, -80); c.quadraticCurveTo(44, -76, 56, -70); c.lineTo(62, 0); c.fill();
     c.fillStyle = st; c.fillRect(-16, -110, 32, 30);
-    const face = (d, m, blink) => { c.save(); c.scale(d, 1); c.translate(14, 0);
-      c.fillStyle = st; c.beginPath(); c.moveTo(0, -112); c.quadraticCurveTo(10, -170, 0, -184); c.quadraticCurveTo(26, -186, 34, -160); c.lineTo(46, -150); c.lineTo(36, -144); c.quadraticCurveTo(40, -136, 34, -128); c.quadraticCurveTo(30, -112, 0, -104); c.fill();
-      // beard
-      c.fillStyle = sh; c.beginPath(); c.moveTo(4, -128); c.quadraticCurveTo(34, -130, 32, -110); c.quadraticCurveTo(20, -96, 2, -100); c.fill();
-      c.strokeStyle = S.rgba('#3a3020', .55); c.lineWidth = 2; for (let k = 0; k < 4; k++) { c.beginPath(); c.moveTo(10 + k * 5, -124); c.quadraticCurveTo(14 + k * 5, -112, 8 + k * 5, -102); c.stroke(); }
-      // eye + brow + mouth
-      c.strokeStyle = '#3a3020'; c.lineWidth = 2.6; c.lineCap = 'round';
-      if (blink) { c.beginPath(); c.moveTo(20, -156); c.lineTo(30, -156); c.stroke(); } else { c.fillStyle = '#3a3020'; c.beginPath(); c.arc(25, -156, 3, 0, TAU); c.fill(); }
-      c.beginPath(); c.moveTo(16, -166 - m * 3); c.quadraticCurveTo(24, -170 - m * 4, 32, -164); c.stroke();
-      c.beginPath(); c.moveTo(28, -134); c.quadraticCurveTo(34, -134 + m * 6, 38, -138 - m * 2); c.stroke();
-      // hair curls
-      c.fillStyle = sh; for (let k = 0; k < 4; k++) { c.beginPath(); c.arc(4 + k * 6, -182 + k * 3, 6, 0, TAU); c.fill(); }
+    // one wide shared head; each side is a profile looking outward, the backs of the two heads meet in a curly hair band
+    c.fillStyle = st; c.beginPath(); c.ellipse(0, -146, 60, 46, 0, 0, TAU); c.fill();
+    const face = (d, m, blink) => { c.save(); c.scale(d, 1);
+      // forehead, round nose, lips, chin
+      c.fillStyle = st; c.beginPath(); c.moveTo(48, -176); c.quadraticCurveTo(62, -168, 62, -156); c.quadraticCurveTo(80, -148, 74, -138); c.quadraticCurveTo(70, -133, 63, -134); c.quadraticCurveTo(66, -128, 62, -124); c.quadraticCurveTo(64, -116, 54, -110); c.lineTo(20, -106); c.lineTo(20, -176); c.fill();
+      c.strokeStyle = S.rgba('#3a3020', .45); c.lineWidth = 2.2; c.beginPath(); c.moveTo(62, -156); c.quadraticCurveTo(80, -148, 74, -138); c.quadraticCurveTo(70, -133, 63, -134); c.stroke();
+      // half of the shared curly beard
+      c.fillStyle = sh; c.beginPath(); c.moveTo(0, -116); c.quadraticCurveTo(30, -122, 56, -114); c.quadraticCurveTo(58, -96, 40, -86); c.quadraticCurveTo(18, -78, 0, -82); c.fill();
+      c.strokeStyle = S.rgba('#3a3020', .5); c.lineWidth = 2; for (let k = 0; k < 5; k++) { c.beginPath(); c.moveTo(8 + k * 10, -114); c.quadraticCurveTo(12 + k * 10, -100, 6 + k * 9, -86); c.stroke(); }
+      // eye, brow, smile (near the outer edge so each side reads as its own face)
+      c.strokeStyle = '#3a3020'; c.lineWidth = 3; c.lineCap = 'round';
+      if (blink) { c.beginPath(); c.moveTo(42, -154); c.lineTo(52, -154); c.stroke(); } else { c.fillStyle = '#3a3020'; c.beginPath(); c.arc(48, -154, 3.6, 0, TAU); c.fill(); }
+      c.beginPath(); c.moveTo(38, -166 - m * 3); c.quadraticCurveTo(47, -171 - m * 4, 57, -165); c.stroke();
+      c.beginPath(); c.moveTo(50, -126); c.quadraticCurveTo(56, -123 + m * 6, 61, -128 - m * 2); c.stroke();
+      // curls over the top of this half
+      c.fillStyle = sh; for (let k = 0; k < 5; k++) { const a = -Math.PI / 2 + (k + .2) * .27; c.beginPath(); c.arc(56 * Math.cos(a), -150 + 44 * Math.sin(a), 10, 0, TAU); c.fill(); }
       c.restore(); };
-    // shared back-of-head: one curly hair mass between the two profiles, with a seam
-    c.fillStyle = sh; c.beginPath(); c.moveTo(-16, -104); c.quadraticCurveTo(-26, -150, -14, -188); c.quadraticCurveTo(0, -198, 14, -188); c.quadraticCurveTo(26, -150, 16, -104); c.fill();
-    c.fillStyle = S.mix(sh, '#3a3020', .25); for (let k = 0; k < 7; k++) { c.beginPath(); c.arc((k % 2 ? 6 : -6), -186 + k * 12, 7, 0, TAU); c.fill(); }
+    // hair band down the middle where the two heads join
+    c.fillStyle = sh; c.beginPath(); c.roundRect(-16, -196, 32, 84, 14); c.fill();
+    c.fillStyle = S.mix(sh, '#3a3020', .2); for (let k = 0; k < 6; k++) { c.beginPath(); c.arc(k % 2 ? 6 : -6, -188 + k * 14, 8, 0, TAU); c.fill(); }
     face(-1, o.mL || 0, o.blinkL); face(1, o.mR || 0, o.blinkR);
     c.fillStyle = S.rgba('#ffffff', .18); c.beginPath(); c.ellipse(-30, -60, 8, 26, -.2, 0, TAU); c.fill();
     c.restore(); };
