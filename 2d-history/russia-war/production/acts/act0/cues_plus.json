@@ -1,0 +1,184 @@
+{
+ "dur": 33.105000000000004,
+ "cues": [
+  {
+   "t": 0.2,
+   "name": "drum",
+   "gain": 0.3
+  },
+  {
+   "t": 2.338,
+   "name": "whoosh",
+   "gain": 0.35
+  },
+  {
+   "t": 5.018,
+   "name": "drone",
+   "gain": 0.35
+  },
+  {
+   "t": 7.798,
+   "name": "whoosh",
+   "gain": 0.35
+  },
+  {
+   "t": 8.698,
+   "name": "thud",
+   "gain": 0.3
+  },
+  {
+   "t": 9.973,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 10.073,
+   "name": "alarm",
+   "gain": 0.18
+  },
+  {
+   "t": 11.808,
+   "name": "stamp",
+   "gain": 0.4
+  },
+  {
+   "t": 12.208,
+   "name": "tick",
+   "gain": 0.25
+  },
+  {
+   "t": 12.768,
+   "name": "tick",
+   "gain": 0.25
+  },
+  {
+   "t": 13.328,
+   "name": "tick",
+   "gain": 0.25
+  },
+  {
+   "t": 13.888,
+   "name": "tick",
+   "gain": 0.25
+  },
+  {
+   "t": 14.448,
+   "name": "tick",
+   "gain": 0.25
+  },
+  {
+   "t": 15.008,
+   "name": "tick",
+   "gain": 0.25
+  },
+  {
+   "t": 15.568,
+   "name": "tick",
+   "gain": 0.25
+  },
+  {
+   "t": 16.128,
+   "name": "tick",
+   "gain": 0.25
+  },
+  {
+   "t": 18.368,
+   "name": "drum",
+   "gain": 0.4
+  },
+  {
+   "t": 19.583,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 19.683,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 25.095,
+   "name": "tick",
+   "gain": 0.3
+  },
+  {
+   "t": 26.095,
+   "name": "tick",
+   "gain": 0.25
+  },
+  {
+   "t": 27.095,
+   "name": "tick",
+   "gain": 0.25
+  },
+  {
+   "t": 26.655,
+   "name": "riser",
+   "gain": 0.3
+  },
+  {
+   "t": 29.205,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 29.305,
+   "name": "swell",
+   "gain": 0.4
+  },
+  {
+   "t": 29.605,
+   "name": "drum",
+   "gain": 0.4
+  },
+  {
+   "t": 0.0,
+   "name": "riser",
+   "gain": 0.35
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 10.673,
+   "name": "war_drums_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 0,
+   "end": 10.673,
+   "name": "wind_loop",
+   "gain": 0.1
+  },
+  {
+   "start": 9.873,
+   "end": 20.283,
+   "name": "hum_loop",
+   "gain": 0.16
+  },
+  {
+   "start": 9.873,
+   "end": 20.283,
+   "name": "tension",
+   "gain": 0.15
+  },
+  {
+   "start": 19.483,
+   "end": 29.905,
+   "name": "heartbeat",
+   "gain": 0.2
+  },
+  {
+   "start": 19.483,
+   "end": 29.905,
+   "name": "tension",
+   "gain": 0.15
+  },
+  {
+   "start": 29.105,
+   "end": 33.905,
+   "name": "war_drums_loop",
+   "gain": 0.2
+  }
+ ]
+}

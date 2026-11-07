@@ -1,0 +1,171 @@
+{
+ "dur": 42.722,
+ "cues": [
+  {
+   "t": 0.3,
+   "name": "swell",
+   "gain": 0.25
+  },
+  {
+   "t": 1.4,
+   "name": "heartbeat",
+   "gain": 0.18
+  },
+  {
+   "t": 6.06,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 8.615,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 8.815,
+   "name": "drone",
+   "gain": 0.18
+  },
+  {
+   "t": 9.83,
+   "name": "scrape",
+   "gain": 0.3
+  },
+  {
+   "t": 11.73,
+   "name": "whoosh",
+   "gain": 0.25
+  },
+  {
+   "t": 13.77,
+   "name": "thud",
+   "gain": 0.3
+  },
+  {
+   "t": 15.845,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 16.045,
+   "name": "typing",
+   "gain": 0.2
+  },
+  {
+   "t": 20.993,
+   "name": "alarm",
+   "gain": 0.3
+  },
+  {
+   "t": 21.293,
+   "name": "hit",
+   "gain": 0.3
+  },
+  {
+   "t": 22.373,
+   "name": "stamp",
+   "gain": 0.35
+  },
+  {
+   "t": 23.808,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 26.122,
+   "name": "scrape",
+   "gain": 0.3
+  },
+  {
+   "t": 26.722,
+   "name": "whoosh",
+   "gain": 0.3
+  },
+  {
+   "t": 29.942,
+   "name": "pop",
+   "gain": 0.25
+  },
+  {
+   "t": 34.077,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 34.277,
+   "name": "footsteps",
+   "gain": 0.3
+  },
+  {
+   "t": 36.177,
+   "name": "footsteps",
+   "gain": 0.25
+  },
+  {
+   "t": 37.312,
+   "name": "pop",
+   "gain": 0.25
+  },
+  {
+   "t": 0.0,
+   "name": "riser",
+   "gain": 0.35
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 9.315000000000001,
+   "name": "ocean_loop",
+   "gain": 0.22
+  },
+  {
+   "start": 0,
+   "end": 9.315000000000001,
+   "name": "wind_loop",
+   "gain": 0.14
+  },
+  {
+   "start": 8.515,
+   "end": 16.544999999999998,
+   "name": "ocean_loop",
+   "gain": 0.14
+  },
+  {
+   "start": 8.515,
+   "end": 16.544999999999998,
+   "name": "hum_loop",
+   "gain": 0.14
+  },
+  {
+   "start": 15.745,
+   "end": 24.508,
+   "name": "hum_loop",
+   "gain": 0.18
+  },
+  {
+   "start": 23.708,
+   "end": 34.776999999999994,
+   "name": "ocean_loop",
+   "gain": 0.14
+  },
+  {
+   "start": 23.708,
+   "end": 34.776999999999994,
+   "name": "tension",
+   "gain": 0.1
+  },
+  {
+   "start": 33.977,
+   "end": 43.522,
+   "name": "wind_loop",
+   "gain": 0.14
+  },
+  {
+   "start": 33.977,
+   "end": 43.522,
+   "name": "hum_loop",
+   "gain": 0.1
+  }
+ ]
+}

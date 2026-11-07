@@ -8,12 +8,12 @@ window.SHOTS = [
     bed: [['tension', .14], ['office_loop', .1]],
     init: S => { const tF = A.at(S, 'fiction', 3.4), tR = A.at(S, 'not', 6.6);
       S.D.over = [(c, lt) => { const H = [['SABOTAGE ON EUROPEAN RAILWAYS', -.08, 520, 470], ['CYBER ATTACKS HIT PORTS', .06, 1400, 450], ['MYSTERY DRONES OVER AIRPORTS', -.03, 960, 760]]; H.forEach(([t, r, x, y], k) => RU.headline(c, x, y, pop(lt, tR - .4 + k * .45, .45) * 1.15, r, t, 'EUROPE, SINCE 2022')); },
-        (c, lt) => K.card(c, 'THIS SCENARIO: FICTION', lt, { at: tF - .4, x: 960, y: 120, px: 44, rot: -2, until: tR + 1.5 }), (c, lt) => K.title(c, 'FICTION vs REAL', lt, { at: tR + 1.6, y: 140, px: 80 })];
+        (c, lt) => K.title(c, 'IMPOSSIBLE TO PREDICT', lt, { at: .4, y: 150, px: 80, until: tF - .5 }), (c, lt) => K.card(c, 'THIS SCENARIO: FICTION', lt, { at: tF - .4, x: 960, y: 120, px: 44, rot: -2, until: tR + 1.5 }), (c, lt) => K.title(c, 'FICTION vs REAL', lt, { at: tR + 1.6, y: 140, px: 80 })];
       S.D.sfx = [[tF, 'paper', .3], [tR - .4, 'paper', .35], [tR + .05, 'paper', .35], [tR + .5, 'paper', .35], [tR + 1.6, 'stamp', .3]]; } },
   // 8.02 years of sabotage and plots; since 2022 defence spending climbs, Germany most of all (illustrative bars, no figures)
   { draw: (c, lt, u, S) => { backdrop('war_room', .38, 9)(c); const yrs = ['2021', '2022', '2023', '2024', '2025'], H0 = [.3, .36, .48, .62, .78], G0 = [.22, .28, .44, .64, .86];
       c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(300, 300, 1320, 620); c.strokeStyle = '#e8e0d0'; c.lineWidth = 4; c.beginPath(); c.moveTo(380, 340); c.lineTo(380, 860); c.lineTo(1560, 860); c.stroke();
-      yrs.forEach((y, k) => { const g = E.out(K.seg(lt, S.tS + k * .35, S.tS + .9 + k * .35)), x = 470 + k * 220; c.fillStyle = '#7a9cc8'; c.fillRect(x, 860 - 480 * H0[k] * g, 70, 480 * H0[k] * g); const gg = E.out(K.seg(lt, S.tG + k * .2, S.tG + .8 + k * .2)); c.fillStyle = '#e8c840'; c.fillRect(x + 80, 860 - 480 * G0[k] * gg, 70, 480 * G0[k] * gg); WW.label(c, y, x + 75, 900, 30, '#f4e8d0'); });
+      yrs.forEach((y, k) => { const g = E.out(K.seg(lt, S.tS + k * .35, S.tS + .9 + k * .35)), x = 470 + k * 220; c.fillStyle = '#7a9cc8'; c.fillRect(x, 860 - 480 * H0[k] * g, 70, 480 * H0[k] * g); const gg = E.out(K.seg(lt, S.tG + k * .1, S.tG + .5 + k * .1)); c.fillStyle = '#e8c840'; c.fillRect(x + 80, 860 - 480 * G0[k] * gg, 70, 480 * G0[k] * gg); WW.label(c, y, x + 75, 900, 30, '#f4e8d0'); });
       if (lt > S.tG) { c.save(); c.globalAlpha = pop(lt, S.tG, .4); c.fillStyle = '#7a9cc8'; c.fillRect(1180, 360, 30, 30); WW.label(c, 'EUROPE', 1225, 376, 26, '#f4e8d0', 'left'); c.fillStyle = '#e8c840'; c.fillRect(1180, 405, 30, 30); WW.label(c, 'GERMANY', 1225, 421, 26, '#f4e8d0', 'left'); c.restore(); } },
     bed: [['tension', .14]],
     init: S => { S.tS = A.at(S, 'spending', 5.4); S.tG = A.at(S, 'Germany', 7.4); const t0 = A.at(S, 'sabotage', .8);

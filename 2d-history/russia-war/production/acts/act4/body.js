@@ -19,7 +19,7 @@ window.SHOTS = [
           const sx = 2900 - 1500 * E.io(K.seg(lt, 0, tC + 1)); RU.sub(c, sx, 1080, .7, -1, 1); if (lt > tC + .6) { const sp = Math.sin(lt * 30) > 0; c.fillStyle = sp ? '#fff6a0' : '#ffb040'; c.beginPath(); c.arc(1200, 1222, 14 + (sp ? 8 : 0), 0, 7); c.fill(); RU.glow(c, 1200, 1222, 120, '255,220,120', .5); }
           if (lt > tH) { const tx = 2700 - (lt - tH) * 500; RU.missile(c, tx, 700, .6, Math.PI, lt); }
           const ma = pop(lt, tM - .3, .5); if (ma > 0) { c.save(); c.globalAlpha = ma; RU.mine(c, 520, 820, .9, lt); RU.mine(c, 760, 880, .7, lt + 1); c.restore(); } }];
-      S.D.over = [(c, lt) => K.card(c, 'DATA CABLES', lt, { at: tC, x: 1280, y: 160, px: 42, rot: -2 }), (c, lt) => K.title(c, 'CABLES · MINES', lt, { at: tM, y: 160, px: 84 })];
+      S.D.over = [(c, lt) => K.card(c, 'DATA CABLES', lt, { at: tC, x: 1280, y: 160, px: 42, rot: -2, until: tM - .2 }), (c, lt) => K.title(c, 'CABLES · MINES', lt, { at: tM, y: 160, px: 84 })];
       S.D.sfx = [[.3, 'drone', .18], [tC + .6, 'scrape', .3], [tH, 'whoosh', .25], [tM, 'thud', .3]]; } },
   // 4.03 nearly at Rotterdam: the port's control room screens flicker and go red. Cyber attack
   { draw: (c, lt, u, S) => { backdrop('serverhall', .5, 6)(c); const err = lt > S.tD; [[420, 470], [960, 420], [1500, 470]].forEach(([x, y], k) => RU.screenPanel(c, x, y, 440, 280, lt + k, err && lt > S.tD + k * .25 ? 1 : 0)); if (err) { c.fillStyle = `rgba(200,30,20,${.12 + .08 * Math.sin(lt * 9)})`; c.fillRect(0, 0, 1920, 1080); } },
@@ -41,9 +41,9 @@ window.SHOTS = [
   // 4.05 soldiers from Fort Stewart walk up the steps of an ordinary airliner
   { plate: 'airbase', cam: { z: [1.0, 1.08], x: [1280, 1360], y: [820, 800] }, bed: [['wind_loop', .14], ['hum_loop', .1]], light: { dir: -1, key: 'rgba(255,230,200,.22)' },
     init: S => { S.dur = S.end - S.start; const tA = A.at(S, 'airliners', 2.6);
-      const SX = 1500, SY = 1262, TX = SX + 308, TY = SY - 322;
-      S.D.live = [(c, lt) => { RU.airliner(c, 1500, 1262, 2.2, 1); c.fillStyle = '#1a2230'; c.fillRect(TX - 10, TY - 150, 70, 150); c.strokeStyle = INK; c.lineWidth = 4; c.strokeRect(TX - 10, TY - 150, 70, 150); RU.stairs(c, SX, SY, 1.4); }];
-      S.D.figs = [0, 1, 2, 3].map(i => { const t0 = .2 + i * 1.5, dur = 3.4; return { x: SX, y: SY, s: 1.25, ...RU.SOLDIER(i, 'us'), pose: 'stand', walk: { x0: -200 - i * 120, x1: TX + 60, t0, dur: dur + 2 }, anim: (o) => { if (o.x > SX) o.y = SY - Math.min(o.x - SX, 308) * (322 / 308); if (o.x > TX + 25) o.x = -5000; } }; });
+      const SX = 1500, SY = 1262, TX = SX + 308, TY = SY - 200;
+      S.D.live = [(c, lt) => { RU.airliner(c, 1500, 1262, 2.2, 1); c.fillStyle = '#1a2230'; c.fillStyle = '#1a2230'; c.fillRect(TX - 10, TY - 120, 64, 120); c.strokeStyle = INK; c.lineWidth = 4; c.strokeRect(TX - 10, TY - 120, 64, 120); c.save(); c.translate(SX, SY); c.scale(1, 200 / 322); c.translate(-SX, -SY); RU.stairs(c, SX, SY, 1.4); c.restore(); }];
+      S.D.figs = [0, 1, 2, 3].map(i => { const t0 = .2 + i * 1.5, dur = 3.4; return { x: SX, y: SY, s: .8, ...RU.SOLDIER(i, 'us'), pose: 'stand', walk: { x0: -200 - i * 120, x1: TX + 60, t0, dur: dur + 2 }, anim: (o) => { if (o.x > SX) o.y = SY - Math.min(o.x - SX, 308) * (200 / 308); if (o.x > TX - 30) o.x = -5000; } }; });
       S.D.over = [(c, lt) => K.card(c, 'FORT STEWART, GEORGIA', lt, { at: .4, x: 380, y: 120, px: 40, rot: -2 }), (c, lt) => K.title(c, 'AIRLINERS FOR TROOPS', lt, { at: tA, y: 220, px: 76 })];
       S.D.sfx = [[.3, 'footsteps', .3], [2.2, 'footsteps', .25], [tA, 'pop', .25]]; } },
 ];

@@ -1,0 +1,160 @@
+{
+ "dur": 43.176,
+ "cues": [
+  {
+   "t": 5.04,
+   "name": "paper",
+   "gain": 0.3
+  },
+  {
+   "t": 7.2,
+   "name": "paper",
+   "gain": 0.35
+  },
+  {
+   "t": 7.65,
+   "name": "paper",
+   "gain": 0.35
+  },
+  {
+   "t": 8.1,
+   "name": "paper",
+   "gain": 0.35
+  },
+  {
+   "t": 9.2,
+   "name": "stamp",
+   "gain": 0.3
+  },
+  {
+   "t": 8.535,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 9.65,
+   "name": "pop",
+   "gain": 0.25
+  },
+  {
+   "t": 15.69,
+   "name": "riser",
+   "gain": 0.3
+  },
+  {
+   "t": 17.61,
+   "name": "chime",
+   "gain": 0.3
+  },
+  {
+   "t": 18.485,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 18.685,
+   "name": "whoosh",
+   "gain": 0.3
+  },
+  {
+   "t": 22.999,
+   "name": "alarm",
+   "gain": 0.14
+  },
+  {
+   "t": 25.659,
+   "name": "scrape",
+   "gain": 0.3
+  },
+  {
+   "t": 29.394,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 29.569,
+   "name": "thud",
+   "gain": 0.35
+  },
+  {
+   "t": 30.894,
+   "name": "pop",
+   "gain": 0.25
+  },
+  {
+   "t": 36.066,
+   "name": "swell",
+   "gain": 0.4
+  },
+  {
+   "t": 38.276,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 38.376,
+   "name": "swell",
+   "gain": 0.35
+  },
+  {
+   "t": 38.676,
+   "name": "drum",
+   "gain": 0.4
+  },
+  {
+   "t": 0.0,
+   "name": "riser",
+   "gain": 0.35
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 9.235000000000001,
+   "name": "tension",
+   "gain": 0.14
+  },
+  {
+   "start": 0,
+   "end": 9.235000000000001,
+   "name": "office_loop",
+   "gain": 0.1
+  },
+  {
+   "start": 8.435,
+   "end": 19.185000000000002,
+   "name": "tension",
+   "gain": 0.14
+  },
+  {
+   "start": 18.385,
+   "end": 30.094,
+   "name": "tension",
+   "gain": 0.2
+  },
+  {
+   "start": 18.385,
+   "end": 30.094,
+   "name": "heartbeat",
+   "gain": 0.12
+  },
+  {
+   "start": 29.294,
+   "end": 38.976,
+   "name": "swell",
+   "gain": 0.14
+  },
+  {
+   "start": 29.294,
+   "end": 38.976,
+   "name": "tension",
+   "gain": 0.1
+  },
+  {
+   "start": 38.176,
+   "end": 43.976,
+   "name": "war_drums_loop",
+   "gain": 0.18
+  }
+ ]
+}

@@ -7,7 +7,7 @@ const chain = (c, x, y, s, u) => { if (u <= 0) return; c.save(); c.strokeStyle =
 window.SHOTS = [
   // 6.01 night at Bremerhaven: tanks roll onto flatcars and are chained down
   { plate: 'rail_yard', cam: { z: [1.0, 1.08], x: [1280, 1300], y: [820, 800] }, bed: [['night_loop', .16], ['hum_loop', .1]], light: { dir: 1, key: 'rgba(220,230,255,.22)' },
-    figs: [{ x: 1700, y: 1330, s: 1.5, ...RU.SOLDIER(2, 'us'), facing: -1, pose: 'point' }],
+    figs: [{ x: 2300, y: 1330, s: 1.5, ...RU.SOLDIER(2, 'us'), facing: -1, pose: 'point' }],
     init: S => { S.dur = S.end - S.start; const tC = A.at(S, 'Germany', 3);
       S.D.live = [(c, lt) => { const u = E.io(K.seg(lt, .2, 3.6)); RU.flatcar(c, 520, 1150, 1.1); RU.flatcar(c, 1100, 1150, 1.1, (cc, x, y, s) => tankLoad(cc, x, y, s)); chain(c, 1100, 1100, 1.1, 1);
           const tx = -300 + u * 820; tankLoad(c, tx, 1095, 1.1); chain(c, 520, 1100, 1.1, K.seg(lt, 3.8, 5)); RU.loco(c, 1820, 1150, 1.1, 1, 0); }];

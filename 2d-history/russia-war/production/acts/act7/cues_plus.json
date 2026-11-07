@@ -1,0 +1,201 @@
+{
+ "dur": 44.365,
+ "cues": [
+  {
+   "t": 0.3,
+   "name": "whoosh_soft",
+   "gain": 0.3
+  },
+  {
+   "t": 3.29,
+   "name": "stamp",
+   "gain": 0.4
+  },
+  {
+   "t": 7.245,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 8.179,
+   "name": "stamp",
+   "gain": 0.35
+  },
+  {
+   "t": 10.899,
+   "name": "drum",
+   "gain": 0.3
+  },
+  {
+   "t": 14.379,
+   "name": "drum",
+   "gain": 0.3
+  },
+  {
+   "t": 17.514,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 18.014,
+   "name": "hit",
+   "gain": 0.22
+  },
+  {
+   "t": 18.714,
+   "name": "hit",
+   "gain": 0.22
+  },
+  {
+   "t": 19.414,
+   "name": "hit",
+   "gain": 0.22
+  },
+  {
+   "t": 20.114,
+   "name": "hit",
+   "gain": 0.22
+  },
+  {
+   "t": 20.814,
+   "name": "hit",
+   "gain": 0.22
+  },
+  {
+   "t": 21.514,
+   "name": "hit",
+   "gain": 0.22
+  },
+  {
+   "t": 22.214,
+   "name": "hit",
+   "gain": 0.22
+  },
+  {
+   "t": 22.914,
+   "name": "hit",
+   "gain": 0.22
+  },
+  {
+   "t": 23.147,
+   "name": "gate_slam",
+   "gain": 0.4
+  },
+  {
+   "t": 23.747,
+   "name": "stamp",
+   "gain": 0.4
+  },
+  {
+   "t": 26.922,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 27.122,
+   "name": "swell",
+   "gain": 0.25
+  },
+  {
+   "t": 30.015,
+   "name": "chime",
+   "gain": 0.3
+  },
+  {
+   "t": 33.035,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 34.47,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 35.723,
+   "name": "stamp",
+   "gain": 0.35
+  },
+  {
+   "t": 38.083,
+   "name": "whoosh",
+   "gain": 0.35
+  },
+  {
+   "t": 38.483,
+   "name": "whoosh",
+   "gain": 0.3
+  },
+  {
+   "t": 38.883,
+   "name": "whoosh",
+   "gain": 0.3
+  },
+  {
+   "t": 42.803,
+   "name": "chime",
+   "gain": 0.25
+  },
+  {
+   "t": 0.0,
+   "name": "riser",
+   "gain": 0.35
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 7.944999999999999,
+   "name": "tension",
+   "gain": 0.18
+  },
+  {
+   "start": 7.145,
+   "end": 18.214000000000002,
+   "name": "tension",
+   "gain": 0.2
+  },
+  {
+   "start": 7.145,
+   "end": 18.214000000000002,
+   "name": "heartbeat",
+   "gain": 0.12
+  },
+  {
+   "start": 17.414,
+   "end": 27.622,
+   "name": "war_drums_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 17.414,
+   "end": 27.622,
+   "name": "wind_loop",
+   "gain": 0.1
+  },
+  {
+   "start": 26.822,
+   "end": 35.169999999999995,
+   "name": "ocean_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 26.822,
+   "end": 35.169999999999995,
+   "name": "birds_loop",
+   "gain": 0.1
+  },
+  {
+   "start": 34.37,
+   "end": 45.165,
+   "name": "tension",
+   "gain": 0.16
+  },
+  {
+   "start": 34.37,
+   "end": 45.165,
+   "name": "war_drums_loop",
+   "gain": 0.12
+  }
+ ]
+}
