@@ -1,0 +1,42 @@
+<!doctype html><html><body style="margin:0"><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../shared/vp/engine.js"></script>
+<script src="../../../shared/vp/cast.js"></script>
+<script src="../../../shared/vp/scenes.js"></script>
+<script src="../../../shared/vp/spain.js"></script>
+<script src="../../../shared/kit.js"></script>
+<script src="../../../shared/vp.js"></script>
+<script src="../../../eli-cohen-1/production/ec_sets.js"></script>
+<script src="../../../eli-cohen-1/production/ec_sets2.js"></script>
+<script src="../../../eli-cohen-2/production/ec2_sets.js"></script>
+<script src="../../../japan-comeback/production/jp_sets.js"></script>
+<script src="../../../japan-comeback/production/jp_sets_act1.js"></script>
+<script src="../../../japan-comeback/production/jp_sets_act2.js"></script>
+<script src="../../../japan-comeback/production/jp_sets_act3.js"></script>
+<script src="../../../japan-comeback/production/jp_sets_act4.js"></script>
+<script src="../../../mongols-ain-jalut/production/mg_geo.js"></script>
+<script src="../../../mongols-ain-jalut/production/mg_sets.js"></script>
+<script src="../../../napoleon/production/np_sets.js"></script>
+<script src="../../../north-korea-next/production/nk_sets.js"></script>
+<script src="../../../spain-1-al-andalus/production/es1_sets.js"></script>
+<script src="../../../spain-1-al-andalus/production/es1_sets_act1.js"></script>
+<script src="../../../spain-1-al-andalus/production/es1_sets_act2.js"></script>
+<script src="../../../spain-1-al-andalus/production/es1_sets_act3.js"></script>
+<script src="../../../spain-1-al-andalus/production/es1_sets_act4.js"></script>
+<script src="../../../spain-1-al-andalus/production/es1_sets_act5.js"></script>
+<script src="../../../spain-2-empire/production/es2_sets.js"></script>
+<script src="../../../spain-2-empire/production/es2_sets_act1.js"></script>
+<script src="../../../spain-2-empire/production/es2_sets_act2.js"></script>
+<script src="../../../spain-3-civil-war/production/es3_sets.js"></script>
+<script src="../../../spain-3-civil-war/production/es3_sets_act2.js"></script>
+<script src="../../../spain-3-civil-war/production/es3_sets_act4.js"></script>
+<script src="../../../spain-3-civil-war/production/es3_sets_act4b.js"></script>
+<script src="../../../spain-3-civil-war/production/es3_sets_act5.js"></script>
+<script src="../../../spain-3-civil-war/production/es3_sets_act5b.js"></script>
+<script src="../../../spain-3-civil-war/production/es3_sets_act6.js"></script>
+<script src="../../../spain-3-civil-war/production/es3_sets_act6b.js"></script>
+<script src="../../../suez-canal/production/sz_sets.js"></script>
+<script src="../../../suez-canal/production/sz_sets2.js"></script>
+<script>
+const NAMES=['sz_delta','sz_temple','nk_beijing','jp_village','church','np_notredame','sz_london','np_moscow','nk_snow','np_paris','hall','study','library','village','plain','huerta','hilltown','plaza','mapwide','np_parch','living','room','np_bedroom','ec_bedroom','mg_square','market','sz_oldcanal','mg_baghdad','jp_home','nk_square','nk_street','np_dorm','rooftop','parish','square','mstreet','estate','cafe','goldhall','np_longwood','towngate','river','jp_market','jp_stadium','nk_banquet','sz_palace','throne','mg_iwan'];
+window.draw=t=>{const c=document.getElementById('c').getContext('2d');c.setTransform(1.5,0,0,1.5,0,0);c.fillStyle='#000';c.fillRect(0,0,1280,720);try{VP.drawSet(c,NAMES[t])}catch(e){c.fillStyle='#f00';c.font='30px sans-serif';c.fillText(e.message,20,100)}c.setTransform(1,0,0,1,0,0);c.fillStyle='#000';c.fillRect(0,0,420,70);c.fillStyle='#ff0';c.font='56px sans-serif';c.fillText(NAMES[t],10,55)};
+</script></body></html>
