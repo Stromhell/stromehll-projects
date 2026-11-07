@@ -5,3 +5,4 @@ Voice: partial act0 clips only. Resume with: VB_ENERGY=0.6 VB_PACE=0.45 python3 
 Next: test-render ny_sets.js in gal.html, write ny_head.html (copy mongols mg_head.html) + body0-5.js, prep_act per act, render, QA.
 Release target: 31 Dec 00:00 IST = 30 Dec 18:30 UTC (confirm with Pushpam at preview). Fact fix: Britain switched in 1752, not 1751.
 Existing sets to reuse: sz_delta/sz_oldcanal (Nile), sz_temple, np_notredame/church (medieval), np_moscow, living, hall/goldhall.
+Rule (Pushpam 7 Nov 18:33): before booking, share a LAUNCH KIT PREVIEW (thumbnail, reels, IG parts, covers, titles, descriptions) and wait for Pushpam's OK.
