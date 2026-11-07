@@ -1,0 +1,41 @@
+for (const n of ['map_europe', 'map_atlantic', 'war_room']) K.load(n, PL + n + '.jpg');
+endTitle(5.0);
+const XY = WW.xy, XA = RU.xyA;
+
+window.SHOTS = [
+  // 8.01 the war-room map fades to real headlines: sabotage, cyber attacks, drones over airports
+  { draw: (c, lt, u, S) => { backdrop('war_room', .5 - .2 * K.seg(lt, 1, 3), 6 + 6 * K.seg(lt, 1, 3))(c); },
+    bed: [['tension', .14], ['office_loop', .1]],
+    init: S => { const tF = A.at(S, 'fiction', 3.4), tR = A.at(S, 'not', 6.6);
+      S.D.over = [(c, lt) => { const H = [['SABOTAGE ON EUROPEAN RAILWAYS', -.08, 520, 470], ['CYBER ATTACKS HIT PORTS', .06, 1400, 450], ['MYSTERY DRONES OVER AIRPORTS', -.03, 960, 760]]; H.forEach(([t, r, x, y], k) => RU.headline(c, x, y, pop(lt, tR - .4 + k * .45, .45) * 1.15, r, t, 'EUROPE, SINCE 2022')); },
+        (c, lt) => K.card(c, 'THIS SCENARIO: FICTION', lt, { at: tF - .4, x: 960, y: 120, px: 44, rot: -2, until: tR + 1.5 }), (c, lt) => K.title(c, 'FICTION vs REAL', lt, { at: tR + 1.6, y: 140, px: 80 })];
+      S.D.sfx = [[tF, 'paper', .3], [tR - .4, 'paper', .35], [tR + .05, 'paper', .35], [tR + .5, 'paper', .35], [tR + 1.6, 'stamp', .3]]; } },
+  // 8.02 years of sabotage and plots; since 2022 defence spending climbs, Germany most of all (illustrative bars, no figures)
+  { draw: (c, lt, u, S) => { backdrop('war_room', .38, 9)(c); const yrs = ['2021', '2022', '2023', '2024', '2025'], H0 = [.3, .36, .48, .62, .78], G0 = [.22, .28, .44, .64, .86];
+      c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(300, 300, 1320, 620); c.strokeStyle = '#e8e0d0'; c.lineWidth = 4; c.beginPath(); c.moveTo(380, 340); c.lineTo(380, 860); c.lineTo(1560, 860); c.stroke();
+      yrs.forEach((y, k) => { const g = E.out(K.seg(lt, S.tS + k * .35, S.tS + .9 + k * .35)), x = 470 + k * 220; c.fillStyle = '#7a9cc8'; c.fillRect(x, 860 - 480 * H0[k] * g, 70, 480 * H0[k] * g); const gg = E.out(K.seg(lt, S.tG + k * .2, S.tG + .8 + k * .2)); c.fillStyle = '#e8c840'; c.fillRect(x + 80, 860 - 480 * G0[k] * gg, 70, 480 * G0[k] * gg); WW.label(c, y, x + 75, 900, 30, '#f4e8d0'); });
+      if (lt > S.tG) { c.save(); c.globalAlpha = pop(lt, S.tG, .4); c.fillStyle = '#7a9cc8'; c.fillRect(1180, 360, 30, 30); WW.label(c, 'EUROPE', 1225, 376, 26, '#f4e8d0', 'left'); c.fillStyle = '#e8c840'; c.fillRect(1180, 405, 30, 30); WW.label(c, 'GERMANY', 1225, 421, 26, '#f4e8d0', 'left'); c.restore(); } },
+    bed: [['tension', .14]],
+    init: S => { S.tS = A.at(S, 'spending', 5.4); S.tG = A.at(S, 'Germany', 7.4); const t0 = A.at(S, 'sabotage', .8);
+      S.D.over = [(c, lt) => K.card(c, 'SABOTAGE · PLOTS · CYBER ATTACKS · DRONES', lt, { at: t0, x: 960, y: 120, px: 36, rot: -2, until: S.tS }), (c, lt) => K.title(c, 'SPENDING UP', lt, { at: S.tS, y: 160, px: 84 }), (c, lt) => K.card(c, 'TREND SHOWN, NOT TO SCALE', lt, { at: S.tS + .6, x: 1620, y: 980, px: 24, rot: 0 })];
+      S.D.sfx = [[t0, 'pop', .25], [S.tS, 'riser', .3], [S.tG, 'chime', .3]]; } },
+  // 8.03 will the US come? the blue arrow from America flickers and turns dashed
+  { plate: 'map_atlantic', cam: { z: [1.0, 1.08], x: [1280, 1240], y: [720, 720] }, bed: [['tension', .2], ['heartbeat', .12]],
+    init: S => { const tN = A.at(S, 'guaranteed', 3.4), tQ = A.at(S, 'questioned', 6.6);
+      S.D.live = [(c, lt) => { const p0 = XA(-80, 37), p1 = XA(8, 52), mid = [(p0[0] + p1[0]) / 2, Math.min(p0[1], p1[1]) - 240]; const pts = Array.from({ length: 30 }, (_, i) => { const t = i / 29, q = 1 - t; return [q * q * p0[0] + 2 * q * t * mid[0] + t * t * p1[0], q * q * p0[1] + 2 * q * t * mid[1] + t * t * p1[1]]; });
+          const fl = lt > tN && lt < tQ ? (Math.sin(lt * 20) > 0 ? 1 : .25) : 1; c.save(); c.globalAlpha = fl; if (lt < tQ) WW.arrow(c, pts.filter((_, i) => i % 3 === 0 || i === 29), K.seg(lt, .2, 1.8), '#3e6aa8', 40); else { RU.dash(c, pts, 1, '#3e6aa8', 14); } c.restore(); }];
+      S.D.over = [(c, lt) => K.card(c, 'OUR SCENARIO: AMERICA SHOWS UP IN FULL', lt, { at: .4, x: 960, y: 120, px: 38, rot: -2, until: tN }), (c, lt) => K.title(c, 'NOT GUARANTEED', lt, { at: tN, y: 150, px: 80, until: tQ + .6 }), (c, lt) => K.title(c, 'WILL THE US COME?', lt, { at: tQ + .6, y: 150, px: 80 })];
+      S.D.sfx = [[.3, 'whoosh', .3], [tN, 'alarm', .14], [tQ, 'scrape', .3]]; } },
+  // 8.04 Ukraine holds a shield on the map; the race clock slows: it is buying Europe time
+  { plate: 'map_europe', cam: { z: [1.35, 1.45], x: [1540, 1560], y: [740, 730] }, bed: [['swell', .14], ['tension', .1]],
+    init: S => { S.dur = S.end - S.start; const tU = A.at(S, 'Ukraine', .8), tT = A.at(S, 'time', S.dur - 1.4);
+      S.D.live = [(c, lt) => { WW.map(c, RU.BASE); const [ux, uy] = XY(31, 49.2), a = pop(lt, tU, .5); if (a > 0) { c.save(); c.translate(ux, uy); c.scale(a, a); RU.shield(c, 40, 0, 1.6); c.restore(); WW.face(c, ux - 120, uy + 20, .9 * a, 'happy', { lt }); }
+          for (let k = 0; k < 4; k++) { const ph = (lt * .6 + k / 4) % 1; c.save(); c.globalAlpha = 1 - ph; WW.arrow(c, [[40, 50 + k * .6], [36 - ph * 2, 49.5 + k * .6]], 1, '#b8302a', 20); c.restore(); } }];
+      S.D.over = [(c, lt) => { const slow = E.io(K.seg(lt, 3, S.dur)); RU.raceClock(c, 380, 830, .9, lt, { a: pop(lt, 1.6, .4), rus: .7 - .25 * slow, nato: .3 + .4 * slow, rusTxt: 'SLOWED', natoTxt: 'CATCHING UP' }); }, (c, lt) => K.title(c, 'TIME', lt, { at: tT, y: 160, px: 120 })];
+      S.D.sfx = [[tU, 'thud', .35], [1.6, 'pop', .25], [tT, 'swell', .4]]; } },
+  // 8.05 end card
+  { plate: 'map_europe', cam: { z: [1.1, 1.16], x: [1500, 1520], y: [660, 650] }, bed: [['war_drums_loop', .18]], sub: 'off',
+    init: S => { S.D.live = [(c, lt) => { WW.map(c, RU.BASE); }];
+      S.D.over = [(c, lt) => { c.fillStyle = 'rgba(10,8,6,.55)'; c.fillRect(0, 0, 1920, 1080); K.title(c, 'HOW A RUSSIA-NATO WAR', lt, { at: .2, y: 430, px: 96 }); K.title(c, 'WOULD UNFOLD', lt, { at: .5, y: 550, px: 96 }); K.card(c, 'A SCENARIO, NOT A PREDICTION', lt, { at: 1.2, x: 960, y: 690, px: 36, rot: -1.5 }); }];
+      S.D.sfx = [[.2, 'swell', .35], [.5, 'drum', .4]]; } },
+];

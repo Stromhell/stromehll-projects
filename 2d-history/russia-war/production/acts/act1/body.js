@@ -1,0 +1,44 @@
+for (const n of ['map_europe', 'war_room']) K.load(n, PL + n + '.jpg');
+const XY = WW.xy;
+const CAPS = [[24.75, 59.44, 'TALLINN'], [24.1, 56.95, 'RIGA'], [25.28, 54.69, 'VILNIUS']];
+const BALT = ['estonia', 'latvia', 'lithuania'];
+const ARR = [[[31, 58.9], [28.4, 58.9], [25.6, 59.0]], [[30.5, 56.8], [27.6, 56.9], [25.0, 56.9]], [[28.6, 54.4], [26.6, 54.7], [25.1, 54.8]]];
+const phone = (c, x, y, s, ring, lt = 0) => { c.save(); c.translate(x + (ring ? Math.sin(lt * 60) * 3 : 0), y); c.scale(s, s); c.fillStyle = 'rgba(0,0,0,.3)'; c.beginPath(); c.ellipse(0, 8, 70, 12, 0, 0, 7); c.fill(); c.fillStyle = '#c83a2a'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.roundRect(-60, -50, 120, 56, 12); c.fill(); c.stroke(); c.fillStyle = '#2a2a2a'; c.beginPath(); c.roundRect(-70, -76, 140, 30, 14); c.fill(); c.stroke(); c.restore(); };
+
+window.SHOTS = [
+  // 1.01 SHAPE in Belgium: the red phone rings; the commander walks in and takes the call; wall screens flash the three capitals
+  { plate: 'war_room', cam: { z: [1.05, 1.16], x: [1280, 1320], y: [700, 690] }, bed: [['hum_loop', .16], ['office_loop', .12]], light: { dir: 1, key: 'rgba(200,220,255,.18)' },
+    figs: [{ x: 230, y: 1190, s: 1.9, ...RU.OFFICER(3), facing: 1, pose: 'stand', walk: { x0: -300, x1: 230, t0: .4, dur: 2.6 } }, { x: 2360, y: 1180, s: 1.9, ...RU.OFFICER(0), facing: -1, pose: 'point' }],
+    init: S => { const tC = A.at(S, 'call', 4.2), tT = A.at(S, 'Tallinn', 5.6);
+      S.D.front = [(c, lt) => phone(c, 700, 1010, 1.1, lt > .2 && lt < tC, lt), (c, lt) => { CAPS.forEach(([, , nm], k) => { const a = pop(lt, tT + k * .6, .35); if (a <= 0) return; const x = 900 + k * 380, y = 300; c.save(); c.globalAlpha = .6 + .4 * Math.sin(lt * 8); RU.glow(c, x, y, 120, '255,70,50', .5); c.restore(); c.save(); c.translate(x, y); c.scale(a, a); c.fillStyle = '#ff5a4a'; c.font = '44px Anton'; c.textAlign = 'center'; c.fillText(nm, 0, 16); c.restore(); }); }];
+      S.D.over = [(c, lt) => K.card(c, 'SHAPE · BELGIUM', lt, { at: .4, x: 360, y: 130, px: 46, rot: -2 }), (c, lt) => K.card(c, 'NATO MILITARY HQ', lt, { at: 1.2, x: 360, y: 220, px: 32, rot: 1.5 }), (c, lt) => K.card(c, 'UNDER ATTACK', lt, { at: tT + 1.6, x: 1500, y: 980, px: 44, rot: -2 })];
+      S.D.sfx = [[.2, 'phone_ring', .3], [.4, 'footsteps', .3], [tC, 'pop', .25], [tT, 'alarm', .18], [tT + .6, 'tick', .25], [tT + 1.2, 'tick', .25]]; } },
+  // 1.02 fait accompli: a red flag is planted on the Baltics and a fence rings it
+  { plate: 'map_europe', cam: { z: [1.9, 2.05], x: [1660, 1660], y: [540, 540] }, bed: [['tension', .2]],
+    init: S => { const tF = A.at(S, 'Grab', 2.8), tD = A.at(S, 'dig', 4.2), tR = A.at(S, 'dare', 5.6);
+      S.D.live = [(c, lt) => { const st = Object.assign({}, RU.BASE); WW.map(c, st); BALT.forEach((g, k) => WW.flip(c, g, WW.COL.balt, WW.COL.rus, K.seg(lt, tF + k * .25, tF + .8 + k * .25)));
+        const [fx, fy] = XY(25.4, 57.2), fa = pop(lt, tF + .4, .5); if (fa > 0) { c.save(); c.translate(fx, fy); c.scale(fa, fa); c.fillStyle = '#2a2a2a'; c.fillRect(-4, -220, 8, 220); c.fillStyle = '#c8302a'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.moveTo(4, -216); for (let i = 0; i <= 8; i++) c.lineTo(4 + i * 16, -216 + Math.sin(lt * 5 + i) * 6 * i / 8); c.lineTo(132, -140); for (let i = 8; i >= 0; i--) c.lineTo(4 + i * 16, -140 + Math.sin(lt * 5 + i) * 6 * i / 8); c.closePath(); c.fill(); c.stroke(); c.restore(); }
+        const n = Math.floor(28 * E.io(K.seg(lt, tD, tD + 2))); for (let k = 0; k < n; k++) { const a = k / 28 * 6.283, x = fx + Math.cos(a) * 190, y = fy - 30 + Math.sin(a) * 230; c.fillStyle = '#4a3a2a'; c.fillRect(x - 4, y - 50, 8, 50); if (k) { const a0 = (k - 1) / 28 * 6.283, x0 = fx + Math.cos(a0) * 190, y0 = fy - 30 + Math.sin(a0) * 230; c.strokeStyle = '#6a6a6a'; c.lineWidth = 3; for (const dy of [-40, -22]) { c.beginPath(); c.moveTo(x0, y0 + dy); c.lineTo(x, y + dy); c.stroke(); } } } }];
+      S.D.over = [(c, lt) => K.title(c, 'FAIT ACCOMPLI', lt, { at: .4, y: 150, px: 84 }), (c, lt) => K.card(c, 'GRAB · DIG IN · DARE NATO', lt, { at: tR, x: 960, y: 880, px: 40, rot: -2 })];
+      S.D.sfx = [[.3, 'stamp', .3], [tF, 'whoosh', .3], [tF + .4, 'thud', .35], ...Array.from({ length: 6 }, (_, k) => [tD + k * .32, 'hit', .15]), [tR, 'drum', .35]]; } },
+  // 1.03 RAND war game: a stopwatch over the map; the three capitals turn red
+  { plate: 'map_europe', cam: { z: [1.75, 1.85], x: [1640, 1640], y: [560, 560] }, bed: [['heartbeat', .2]],
+    init: S => { const tR = A.at(S, 'RAND', 1.6), t36 = A.at(S, '36', 5.4);
+      S.D.live = [(c, lt) => { WW.map(c, RU.BASE); ARR.forEach(P => WW.arrow(c, P, K.seg(lt, .2, 3.5), '#b8302a', 28)); CAPS.forEach(([lon, lat, nm], k) => RU.pin(c, lon, lat, .8, lt > t36 + .4 + k * .5 ? '#c8302a' : '#3e6aa8', lt, nm)); CAPS.forEach(([lon, lat], k) => { if (lt > t36 + .4 + k * .5 && lt < t36 + 1.4 + k * .5) RU.ring(c, lon, lat, 90, lt, '255,90,70'); }); }];
+      S.D.over = [(c, lt) => { const a = pop(lt, tR, .45); if (a > 0) { c.save(); c.translate(380, 520); c.scale(a, a); WW.clock(c, 0, 0, 1.6, lt * 3); c.restore(); } }, (c, lt) => K.card(c, 'RAND WAR GAME', lt, { at: tR, x: 380, y: 230, px: 44, rot: -2 }), (c, lt) => K.title(c, '36-60 HOURS', lt, { at: t36, y: 860, x: 1240, px: 96 })];
+      S.D.sfx = [[tR, 'pop', .3], ...Array.from({ length: 10 }, (_, k) => [tR + .5 + k * .5, 'tick', .2]), [t36, 'stamp', .4], [t36 + .4, 'thud', .25], [t36 + .9, 'thud', .25], [t36 + 1.4, 'thud', .25]]; } },
+  // 1.04 the three Baltic states, small and squeezed between Russia, Belarus and the sea
+  { plate: 'map_europe', cam: { z: [1.55, 2.1], x: [1500, 1660], y: [600, 560] }, bed: [['wind_loop', .14], ['tension', .14]],
+    init: S => { const tP = A.at(S, 'six', 3.6), tB = A.at(S, 'border', 5.4);
+      S.D.live = [(c, lt) => { WW.map(c, RU.BASE); BALT.forEach((g, k) => { const a = pop(lt, .3 + k * .3, .4); if (a > 0) WW.faceOn(c, g, lt > tB + 1 ? 'worried' : 'happy', .7 * a, lt); });
+        const sq = E.io(K.seg(lt, tB, tB + 2)); if (sq > 0) { WW.arrow(c, [[38, 57.5], [33, 57.6], [28.8, 57.4]], sq, '#b8302a', 26); WW.arrow(c, [[29.5, 51.6], [27.5, 53], [26, 54.3]], sq, '#b8302a', 26); WW.faceOn(c, 'belarus', 'smug', .9 * sq, lt); }
+        const [sx, sy] = XY(20.5, 57.5); if (sq > 0) { c.save(); c.globalAlpha = sq; c.font = '36px Anton'; c.fillStyle = '#2a4a6a'; c.textAlign = 'center'; c.fillText('BALTIC SEA', sx, sy); c.restore(); } }];
+      S.D.over = [(c, lt) => K.card(c, 'ESTONIA · LATVIA · LITHUANIA', lt, { at: .4, x: 960, y: 140, px: 44, rot: -2 }), (c, lt) => K.title(c, '~6 MILLION PEOPLE', lt, { at: tP, y: 860, px: 80 })];
+      S.D.sfx = [[.3, 'pop', .25], [.6, 'pop', .25], [.9, 'pop', .25], [tP, 'chime', .3], [tB, 'whoosh', .3]]; } },
+  // 1.05 every hour counts: the race clock, each hour held adds a blue tick
+  { draw: (c, lt, u, S) => { backdrop('map_europe', .45, 6)(c); const h = Math.floor(K.seg(lt, .8, S.dur - .4) * 8); RU.raceClock(c, 960, 520, 1.7, lt, { a: pop(lt, .1, .45), rus: .55 + .03 * Math.sin(lt * 2), nato: .1 + h * .04, rusTxt: 'GRAB THE LAND', natoTxt: h ? '+' + h + ' HOURS HELD' : 'HOLDING ON' });
+      for (let k = 0; k < h; k++) { const a = pop(lt, .8 + k * (S.dur - 1.2) / 8, .3); c.save(); c.translate(560 + k * 60, 820); c.scale(a, a); c.fillStyle = '#4a7ac0'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.roundRect(-20, -30, 40, 60, 8); c.fill(); c.stroke(); c.restore(); } },
+    bed: [['heartbeat', .18]],
+    init: S => { S.dur = S.end - S.start; S.D.over = [(c, lt) => K.card(c, 'EVERY HOUR COUNTS', lt, { at: .3, x: 960, y: 140, px: 50, rot: -2 })];
+      S.D.sfx = Array.from({ length: 8 }, (_, k) => [.8 + k * (S.dur - 1.2) / 8, 'tick', .3]); } },
+];

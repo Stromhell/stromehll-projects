@@ -13,7 +13,12 @@ def year(y):
     if 2000 <= y <= 2009: return 'two thousand' + ('' if y == 2000 else ' ' + ONES[y - 2000])
     hi, lo = divmod(y, 100)
     return two(hi) + ' ' + ('hundred' if lo == 0 else ('oh ' + ONES[lo] if lo < 10 else two(lo)))
-WORDS = [(r"\bCUDA\b", 'Kooda'), (r"\bIrimajiri\b", 'Eeri-mah-jeeri'), (r"\bWiessner\b", 'Weess-ner'), (r"\bHadza\b", 'Hahd-za'),
+WORDS = [
+ (r"\bSuwałki\b", 'Soo-vow-kee'), (r"\bSHAPE\b", 'Shape'), (r"\bRAND\b", 'Rand'), (r"\bOrlan-10\b", 'Orlan ten'), (r"\bGeran-2\b", 'Geh-rahn two'),
+ (r"\bSu-57s\b", 'S U fifty-sevens'), (r"\bBremerhaven\b", 'Bremer-hah-fen'), (r"\bVilnius\b", 'Vil-nee-us'), (r"\bBeaumont\b", 'Boh-mont'), (r"\bShahed\b", 'Sha-hed'),
+ (r"\bfait accompli\b", 'fate ah-com-plee'), (r"\b1,000\b", 'one thousand'), (r"\b8\.5\b", 'eight point five'), (r"\b3\.4\b", 'three point four'), (r"80,000 to 100,000", 'eighty thousand to a hundred thousand'),
+ (r"\bGIUK\b", 'G I U K'), (r"\bTallinn\b", 'Tah-lin'),
+(r"\bCUDA\b", 'Kooda'), (r"\bIrimajiri\b", 'Eeri-mah-jeeri'), (r"\bWiessner\b", 'Weess-ner'), (r"\bHadza\b", 'Hahd-za'),
  (r"Ju/'hoansi", 'Zhu-twa-see'), (r"\bHohle Fels\b", 'Hoh-leh Fels'), (r"\bBlombos\b", 'Blom-boss'), (r"\bDobe\b", 'Doh-bay'),
  (r"\bMalachowsky\b", 'Mala-kow-ski'), (r"\bPriem\b", 'Preem'), (r"\bSutskever\b", 'Suts-kever'), (r"\bKrizhevsky\b", 'Kri-zhev-ski'),
  (r"\bEkirch\b", 'Ee-kirk'), (r"\bGeForce\b", 'Jee Force'), (r"\bRIVA\b", 'Reeva'), (r"\bTSMC\b", 'T S M C'), (r"\biShares\b", 'eye-Shares'),

@@ -1,0 +1,70 @@
+<!doctype html><html><head><meta charset="utf-8"><title>RU act 2 - act</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "alium";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../../../shared/p2/world50.js"></script><script src="../../ww_kit.js"></script><script src="../../ru_props.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+const SW = 1920, SH = 1080, INK = WW.INK, RED = WW.RED, pop = WW.pop, COL = WW.COL;
+const backdrop = (name, b = .5, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const CARRY = () => ({ shL: 30, elL: -75, shR: 35, elR: -75 });
+const endTitle = (secs) => { const T = window.TIMING; const last = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length, start: last.end, end: last.end + secs, vo_start: last.end, vo_end: last.end, text: '' }); T.dur = last.end + secs; };
+for (const n of ['map_europe', 'war_room', 'baltic_border', 'farm_corridor']) K.load(n, PL + n + '.jpg');
+const XY = WW.xy;
+const fir = (c, x, base, h) => { if (h <= 2) return; const w = h * .36; for (let k = 0; k < 5; k++) { const t = k / 5, y = base - h * t - h * .1, ww = w * (1 - t * .8); c.fillStyle = ['#24382c', '#2a4030', '#304834', '#365038', '#3c583c'][k]; c.beginPath(); c.moveTo(x - ww, y); c.lineTo(x, y - h * .32); c.lineTo(x + ww, y); c.closePath(); c.fill(); } c.fillStyle = '#2a2018'; c.fillRect(x - h * .02, base - h * .12, h * .04, h * .12); };
+
+window.SHOTS = [
+  // 2.01 the Baltic border as an obstacle course: dragon's teeth in the fog; a patrol walks the line
+  { plate: 'baltic_border', cam: { z: [1.0, 1.14], x: [1280, 1360], y: [760, 780] }, bed: [['wind_loop', .2], ['birds_loop', .08]],
+    figs: [0, 1].map(i => ({ x: 900 + i * 260, y: 1320, s: 1.6, ...RU.SOLDIER(i, 'balt'), walk: { x0: -400 + i * 260, x1: 900 + i * 260, t0: .3 + i * .3, dur: 5.2 } })),
+    live: [A.mist(800, 300, .18, 22)],
+    init: S => { const tT = A.at(S, 'teeth', 4.6);
+      S.D.over = [(c, lt) => K.card(c, 'BALTIC BORDER', lt, { at: .4, x: 330, y: 130, px: 44, rot: -2 }), (c, lt) => K.title(c, "DRAGON'S TEETH", lt, { at: tT, y: 200, px: 84 }), (c, lt) => K.card(c, 'STOPS TANKS', lt, { at: tT + 1.2, x: 1500, y: 330, px: 40, rot: 2 })];
+      S.D.sfx = [[.3, 'footsteps', .3], [tT, 'thud', .35], [tT + .3, 'thud', .25]]; } },
+  // 2.02 the landmine treaty is torn; warning signs spring up along the border
+  { plate: 'baltic_border', cam: { z: [1.12, 1.2], x: [1280, 1240], y: [820, 820] }, bed: [['tension', .18], ['wind_loop', .12]],
+    init: S => { const t25 = A.at(S, '2025', 1.0), tL = A.at(S, 'leave', 3.2), tM = A.at(S, 'mined', 7.4);
+      S.D.front = [(c, lt) => { for (let k = 0; k < 8; k++) RU.warnSign(c, 260 + k * 300, 1270 + (k % 2) * 30, pop(lt, tM - .4 + k * .14, .4) * 1.1); }];
+      S.D.over = [(c, lt) => { const a = pop(lt, t25 - .2, .4), tear = E.io(K.seg(lt, tL, tL + .9)); if (a <= 0 || lt > tM + .3) return; c.save(); c.translate(960, 500); c.scale(a, a);
+          for (const side of [-1, 1]) { c.save(); c.translate(side * tear * 180, tear * 60); c.rotate(side * tear * .3); c.beginPath(); if (side < 0) { c.moveTo(-260, -300); c.lineTo(10, -300); for (let k = 0; k < 10; k++) c.lineTo(k % 2 ? -14 : 14, -300 + k * 60); c.lineTo(-260, 300); } else { c.moveTo(10, -300); c.lineTo(260, -300); c.lineTo(260, 300); for (let k = 9; k >= 0; k--) c.lineTo(k % 2 ? -14 : 14, -300 + k * 60); } c.closePath(); c.clip();
+            c.fillStyle = WW.PAPER; c.fillRect(-260, -300, 520, 600); c.strokeStyle = INK; c.lineWidth = 5; c.strokeRect(-260, -300, 520, 600); WW.label(c, 'LANDMINE BAN', 0, -220, 52); WW.label(c, 'TREATY', 0, -160, 44); c.fillStyle = 'rgba(40,30,20,.45)'; for (let k = 0; k < 10; k++) c.fillRect(-200, -90 + k * 34, 400 - (k % 3) * 60, 10); c.restore(); }
+          c.restore(); },
+        (c, lt) => K.dateTag(c, '2025', lt, { at: t25 }), (c, lt) => K.card(c, 'ESTONIA · LATVIA · LITHUANIA: LEAVING', lt, { at: tL + .2, x: 960, y: 140, px: 38, rot: -2, until: tM }), (c, lt) => K.title(c, 'MINED BORDER', lt, { at: tM, y: 200, px: 84 })];
+      S.D.sfx = [[t25, 'paper', .35], [tL, 'paper_tear', .5], ...Array.from({ length: 8 }, (_, k) => [tM - .4 + k * .14, 'pop', .2])]; } },
+  // 2.03 Lithuania's sensor wall: posts along the treeline blink as a shape slips past
+  { plate: 'baltic_border', cam: { z: [1.5, 1.55], x: [1280, 1320], y: [700, 700] }, bed: [['night_loop', .14], ['hum_loop', .1]],
+    figs: [{ x: 0, y: 1000, s: 1.0, ...WW.P({ costume: 'suit', topCol: '#1e2226', hair: 'short', hairCol: '#111111', seed: 77, hat: RU.helmetMod('#1a1c1e') }), walk: { x0: -200, x1: 2800, t0: 0, dur: 11 } }],
+    init: S => { S.dur = S.end - S.start; const tS = A.at(S, 'sensors', 3.0);
+      S.D.live = [(c, lt) => { c.fillStyle = 'rgba(10,20,30,.25)'; c.fillRect(0, 0, 2560, 1440); const sx = -200 + (lt / 11) * 3000;
+          for (let k = 0; k < 9; k++) { const x = 500 + k * 200, b = Math.max(0, 1 - Math.abs(sx - x) / 160); RU.sensor(c, x, 900, 1.0, b * (lt > tS - 1 ? 1 : .4)); if (k % 3 === 1) RU.camPost(c, x + 90, 900, .8, lt); } }];
+      S.D.over = [(c, lt) => K.title(c, 'SENSOR WALL', lt, { at: tS, y: 170, px: 84 }), (c, lt) => K.card(c, 'CAMERAS + SOUND SENSORS', lt, { at: tS + 1, x: 960, y: 290, px: 38, rot: -2 })];
+      S.D.sfx = [[.3, 'hum_loop', .1], [tS, 'tick', .3], [tS + 1.4, 'alarm', .12]]; } },
+  // 2.04 old swamps and forests come back: water spreads, trees grow, and the tank column is squeezed onto one road
+  { plate: 'farm_corridor', cam: { z: [1.0, 1.1], x: [1280, 1280], y: [760, 780] }, bed: [['wind_loop', .14], ['rain_loop', .1]],
+    init: S => { const tW = A.at(S, 'swamps', 1.8), tF = A.at(S, 'forests', 2.6), tR = A.at(S, 'roads', 5.4);
+      S.D.live = [(c, lt) => { const w = E.io(K.seg(lt, tW, tW + 2.5)); if (w > 0) for (let k = 0; k < 14; k++) { const left = k % 2, x = left ? 300 + (k * 97) % 600 : 1660 + (k * 131) % 700, y = 820 + (k * 53) % 420, rad = (90 + (k * 37) % 120) * w;
+            c.fillStyle = 'rgba(80,110,110,.75)'; c.beginPath(); c.ellipse(x, y, rad * 1.6, rad * .35, 0, 0, 7); c.fill(); c.fillStyle = 'rgba(200,220,220,.35)'; c.fillRect(x - rad * .6, y - 3, rad * .8, 3); c.strokeStyle = '#5a6a3a'; c.lineWidth = 4; for (let r = 0; r < 4; r++) { c.beginPath(); c.moveTo(x - rad + r * rad * .6, y); c.lineTo(x - rad + r * rad * .6 + 4, y - 40 * w); c.stroke(); } }
+          for (let k = 0; k < 12; k++) { const g = E.back(K.seg(lt, tF + k * .1, tF + .8 + k * .1)), left = k < 6, x = left ? 120 + k * 150 : 1720 + (k - 6) * 150, y = 800 + (k % 3) * 120; fir(c, x, y, 260 * g); }
+          const sq = E.io(K.seg(lt, tR - 1, tR + 1)); for (let k = 0; k < 5; k++) { const d = ((lt * .12 + k * .2) % 1), y = 720 + d * d * 640, sc = .12 + d * .5, x = 1280 + (1 - sq) * (k % 2 ? -1 : 1) * (200 + d * 400); c.save(); c.translate(x, y); c.scale(sc, sc); c.fillStyle = 'rgba(0,0,0,.3)'; c.beginPath(); c.ellipse(0, 10, 120, 24, 0, 0, 7); c.fill(); c.fillStyle = '#6a5a4a'; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.roundRect(-110, -90, 220, 100, 16); c.fill(); c.stroke(); c.fillStyle = '#5a4a3c'; c.beginPath(); c.roundRect(-60, -150, 120, 64, 14); c.fill(); c.stroke(); c.lineWidth = 14; c.beginPath(); c.moveTo(0, -120); c.lineTo(0, -60); c.stroke(); c.restore(); } }];
+      S.D.over = [(c, lt) => K.title(c, 'SWAMPS AS DEFENCE', lt, { at: tW, y: 160, px: 80 }), (c, lt) => K.card(c, 'ONLY A FEW ROADS LEFT', lt, { at: tR, x: 960, y: 280, px: 40, rot: -2 })];
+      S.D.sfx = [[tW, 'swell', .3], [tF, 'creak', .25], [tR, 'thud', .3]]; } },
+  // 2.05 early warning: satellite photos of tank rows pinned up; officers point at them
+  { plate: 'war_room', cam: { z: [1.1, 1.2], x: [1280, 1280], y: [560, 540] }, bed: [['office_loop', .14], ['hum_loop', .1]], light: { dir: 1, key: 'rgba(200,220,255,.18)' },
+    figs: [{ x: 260, y: 1120, s: 1.8, ...RU.OFFICER(1), facing: 1, pose: 'point' }, { x: 2300, y: 1120, s: 1.8, ...RU.OFFICER(2), facing: -1, pose: 'think' }],
+    init: S => { const tU = A.at(S, 'Ukraine', 2.8), tM = A.at(S, 'massing', 5.4), tS = A.at(S, 'moving', 7);
+      const sat = (c, w, h) => { c.fillStyle = '#7a7a62'; c.fillRect(-w / 2, -h / 2, w, h); c.fillStyle = 'rgba(40,50,30,.4)'; for (let k = 0; k < 8; k++) c.fillRect(-w / 2 + k * 30, -h / 2, 12, h); for (let rr = 0; rr < 4; rr++) for (let k = 0; k < 7; k++) { c.fillStyle = '#2a2c24'; c.fillRect(-w / 2 + 20 + k * (w - 40) / 7, -h / 2 + 24 + rr * (h - 40) / 4, 18, 10); } };
+      S.D.front = [(c, lt) => { [[700, 420, -.08], [1280, 380, .05], [1860, 430, -.04]].forEach(([x, y, r], k) => { const a = pop(lt, tM - .6 + k * .4, .4); if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); RU.photo(c, 0, 0, 360, 240, r, sat); c.restore(); }); }];
+      S.D.over = [(c, lt) => K.title(c, 'EARLY WARNING', lt, { at: .4, y: 150, px: 80 }), (c, lt) => K.card(c, 'LIKE UKRAINE, 2022', lt, { at: tU, x: 960, y: 300, px: 40, rot: -2, until: tM - .7 }), (c, lt) => K.card(c, 'NATO STARTS MOVING', lt, { at: tS, x: 960, y: 260, px: 42, rot: 2 })];
+      S.D.sfx = [[tM - .6, 'camera_shutter', .3], [tM - .2, 'camera_shutter', .3], [tM + .2, 'camera_shutter', .3], [tS, 'whoosh', .3]]; } },
+  // 2.06 but can it move? a blue arrow tries to push east across the map and stalls
+  { plate: 'map_europe', cam: { z: [1.2, 1.3], x: [1280, 1320], y: [700, 690] }, bed: [['tension', .18]],
+    init: S => { const tB = A.at(S, 'harder', 4.4);
+      S.D.live = [(c, lt) => { WW.map(c, RU.BASE); const u = Math.min(K.seg(lt, .5, tB) * .7, .55) + (lt > tB ? Math.sin(lt * 18) * .006 : 0); WW.arrow(c, [[-1, 50], [7, 51.5], [14, 52.5], [22, 54.5]], u, '#3e6aa8', 40);
+        if (lt > tB) { const [x, y] = XY(12.5, 52.4); c.save(); c.globalAlpha = .7; c.fillStyle = '#c8c0b0'; for (let k = 0; k < 6; k++) { const ph = (lt * 1.5 + k / 6) % 1; c.beginPath(); c.arc(x + ph * 40, y - 30 - ph * 90, 14 + ph * 30, 0, 7); c.fill(); } c.restore(); } }];
+      S.D.over = [(c, lt) => K.card(c, 'WARNING ONLY HELPS IF YOU CAN MOVE', lt, { at: .4, x: 960, y: 140, px: 40, rot: -2 }), (c, lt) => WW.stamp(c, 1250, 620, pop(lt, tB + .3, .35) * .9, 'STALLED')];
+      S.D.sfx = [[.6, 'whoosh_soft', .3], [tB, 'scrape', .3], [tB + .3, 'stamp', .4]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>
