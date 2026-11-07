@@ -1,0 +1,96 @@
+{
+ "dur": 29.387,
+ "cues": [
+  {
+   "t": 3.477,
+   "name": "scrape",
+   "gain": 0.25
+  },
+  {
+   "t": 5.217,
+   "name": "phone_ring",
+   "gain": 0.25
+  },
+  {
+   "t": 6.057,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 7.057,
+   "name": "drum",
+   "gain": 0.35
+  },
+  {
+   "t": 7.492,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 7.692,
+   "name": "heartbeat",
+   "gain": 0.2
+  },
+  {
+   "t": 14.487,
+   "name": "drum",
+   "gain": 0.3
+  },
+  {
+   "t": 15.922,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 19.377,
+   "name": "whoosh",
+   "gain": 0.3
+  },
+  {
+   "t": 20.857,
+   "name": "stamp",
+   "gain": 0.35
+  },
+  {
+   "t": 24.987,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 25.087,
+   "name": "drum",
+   "gain": 0.35
+  },
+  {
+   "t": 25.687,
+   "name": "stamp",
+   "gain": 0.3
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 8.192,
+   "name": "drone",
+   "gain": 0.16
+  },
+  {
+   "start": 7.392,
+   "end": 16.622,
+   "name": "drone",
+   "gain": 0.16
+  },
+  {
+   "start": 15.822,
+   "end": 25.687,
+   "name": "tension",
+   "gain": 0.14
+  },
+  {
+   "start": 24.887,
+   "end": 30.187,
+   "name": "drone",
+   "gain": 0.18
+  }
+ ]
+}

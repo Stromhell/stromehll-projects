@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><title>RU act 6 - Twitter pulls the plug</title>
+<!doctype html><html><head><meta charset="utf-8"><title>RU act 6 - the shutdown</title>
 <style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
 <body><canvas id="c" width="1920" height="1080"></canvas>
 <script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
@@ -21,7 +21,7 @@ window.SHOTS = [
       ['Barack Obama', 'Elon Musk', 'Apple', 'MrBeast'].forEach((n, k) => { const g = lt > tY + .3 + k * .25; TW.tweet(c, 1420, 210 + k * 210, 560, n, g ? 'Tweeting is switched off' : 'Ready to tweet...', 0, pop(lt, .3 + k * .15, .4), { greyTick: g, avCol: g ? '#9aa0aa' : `hsl(${k * 60},40%,60%)`, h: 180 }); }); },
     bed: [['tension', .14], ['hum_loop', .1]],
     init: S => { S._tY = A.at(S, 'stops', 3.8) - .3;
-      S.D.over = [(c, lt) => K.card(c, 'NEVER DONE BEFORE', lt, { at: A.at(S, 'never', 2) - .2, x: 420, y: 160, px: 42, rot: -2 }), (c, lt) => K.title(c, 'VERIFIED ACCOUNTS FROZEN', lt, { at: S._tY + 1.4, x: 960, y: 960 - 90, px: 70 })];
+      S.D.over = [(c, lt) => K.card(c, 'NEVER DONE BEFORE', lt, { at: A.at(S, 'never', 2) - .2, x: 420, y: 160, px: 42, rot: -2 }), (c, lt) => K.title(c, 'VERIFIED ACCOUNTS FROZEN', lt, { at: S._tY + 1.4, x: 620, y: 800, px: 62 })];
       S.D.sfx = [[S._tY, 'thud', .4], [S._tY + .05, 'swell', .2], ...Array.from({ length: 4 }, (_, k) => [S._tY + .3 + k * .25, 'tick', .22])]; } },
   // 6.02 it kicks every employee off the network; screens go dark row by row; then Graham's own screens go black: cut off
   { plate: 'teen_room', cam: { z: [1.2, 1.32], x: [1600, 1640], y: [760, 780] }, bed: [['hum_loop', .12]], light: { dir: 1, key: 'rgba(120,150,255,.24)' },

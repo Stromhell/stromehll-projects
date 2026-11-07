@@ -39,10 +39,10 @@ window.SHOTS = [
         (c, lt) => K.card(c, 'NYT: LINKED TO HIS ONLINE ALIAS', lt, { at: tN, x: 1420, y: 820, px: 36, rot: 2 }), (c, lt) => K.card(c, 'A MINOR · NEVER CHARGED', lt, { at: tM, x: 1420, y: 900, px: 38, rot: -2 })];
       S.D.sfx = [[1, 'tick', .25], [tL, 'coins_cascade', .3], [tN, 'paper', .3], [tM, 'stamp', .3]]; } },
   // 2.04 living large: his own apartment, a white sedan, a jewelled watch; he's still 17
-  { plate: 'tampa_street', cam: { z: [1.3, 1.36], x: [1580, 1540], y: [900, 920] }, bed: [['city_loop', .14], ['birds_loop', .08]], light: { dir: 1, key: 'rgba(255,220,180,.22)' },
+  { plate: 'tampa_street', cam: { z: [1.32, 1.34], x: [1590, 1585], y: [880, 900] }, bed: [['city_loop', .14], ['birds_loop', .08]], light: { dir: 1, key: 'rgba(255,220,180,.22)' },
     init: S => { const tB = A.at(S, 'BMW', 3.2), tR = A.at(S, 'Rolex', 4.6), tS = A.at(S, 'still', 6.8);
-      S.D.live = [(c, lt) => sedan(c, 1720, 1420, lt)];
-      S.D.figs = [{ x: 860, y: 1425, s: 1.9, ...TW.GRAHAM(), facing: 1, mood: 'happy', walk: { x0: 400, x1: 860, t0: .1, dur: 1.8 }, anim: (o, lt) => { if (lt > tR - .3) { o.pose = 'wave'; } } }];
+      S.D.live = [(c, lt) => sedan(c, 1960, 1420, lt)];
+      S.D.figs = [{ x: 940, y: 1425, s: 1.9, ...TW.GRAHAM(), facing: 1, mood: 'happy', walk: { x0: 300, x1: 940, t0: .1, dur: 1.8 }, anim: (o, lt) => { if (lt > tR - .3) { o.pose = 'present'; } } }];
       S.D.over = [(c, lt) => K.card(c, 'OWN APARTMENT', lt, { at: A.at(S, 'apartment', 2), x: 1500, y: 140, px: 44, rot: -2 }), (c, lt) => K.card(c, 'WHITE BMW', lt, { at: tB, x: 1500, y: 230, px: 44, rot: 2 }), (c, lt) => K.card(c, 'JEWELLED ROLEX', lt, { at: tR, x: 1500, y: 320, px: 44, rot: -1 }), (c, lt) => K.title(c, 'STILL 17', lt, { at: tS, x: 520, y: 220, px: 120 })];
       S.D.sfx = [[.1, 'footsteps', .3], [tB, 'pop', .25], [tR, 'chime', .3], [tS, 'stamp', .35]]; } },
 ];

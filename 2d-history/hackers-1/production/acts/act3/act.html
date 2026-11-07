@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><title>RU act 3 - phase one</title>
+<!doctype html><html><head><meta charset="utf-8"><title>RU act 3 - inside Twitter</title>
 <style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
 <body><canvas id="c" width="1920" height="1080"></canvas>
 <script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
@@ -28,7 +28,7 @@ window.SHOTS = [
   { draw: (c, lt, u) => { TW.techBG(c, lt, '58,140,255'); floorPlan(c, lt, pop(lt, .8, .6) * (1 + .04 * u)); }, bed: [['tension', .18]],
     init: S => { const tS = A.at(S, 'stars', 2.2), tI = A.at(S, 'inside', 5);
       S.D.over = [(c, lt) => TW.phase(c, 1, lt, .1, tS), (c, lt) => K.card(c, 'JULY 2020', lt, { at: .3, x: 300, y: 110, px: 46, rot: -2 }),
-        (c, lt) => { const a = pop(lt, tS, .35), o = 1 - K.seg(lt, tI - .3, tI); if (a <= 0 || o <= 0) return; c.save(); c.globalAlpha = o; ['ONE STAR', 'AT A TIME?'].forEach((s, k) => K.outlined(c, s, 960, 470 + k * 110, 100, {})); TW.stamp(c, 'NO', 960, 520, lt, tS + .8, { px: 200 }); c.restore(); },
+        (c, lt) => { const a = pop(lt, tS, .35), o = 1 - K.seg(lt, tI - .3, tI); if (a <= 0 || o <= 0) return; c.save(); c.globalAlpha = o; ['ONE STAR', 'AT A TIME?'].forEach((s, k) => K.outlined(c, s, 960, 470 + k * 110, 100, {})); TW.stamp(c, 'NO', 960, 790, lt, tS + .8, { px: 150 }); c.restore(); },
         (c, lt) => K.card(c, 'GET INSIDE TWITTER ITSELF', lt, { at: tI, x: 960, y: 140, px: 46, rot: -2 })];
       S.D.sfx = [[.1, 'stamp', .35], [.8, 'whoosh', .3], [tS, 'pop', .25], [tS + .8, 'stamp', .35], [tI, 'drum', .3]]; } },
   // 3.02 he claims to work at Twitter; a small crew forms in a chat app
@@ -60,7 +60,7 @@ window.SHOTS = [
       TW.win(c, 300, 120, 1320, 800, 'internal chat', '#3a4a6a', (cc, w, h) => { cc.fillStyle = '#f6f7fb'; cc.fillRect(0, 0, w, h); const lines = ['lunch at 1?', 'deploy moved to Friday', 'can someone check ticket 4471', 'reminder: all-hands at 3', 'printer on 7 is broken again', 'new laptop request', 'ADMIN LOGIN DETAILS ← (pinned)', 'thanks!', 'who has the meeting room?', 'weekend on-call list']; for (let k = 0; k < 26; k++) { const L = lines[k % lines.length], y = 30 + k * 70 - scroll, hot = k === 16; if (y < -60 || y > h + 40) continue; if (hot && lt > tJ) { cc.fillStyle = `rgba(255,210,74,${.5 + .3 * Math.sin(lt * 8)})`; cc.fillRect(10, y - 6, w - 20, 62); } cc.fillStyle = `hsl(${k * 53},40%,62%)`; cc.beginPath(); cc.arc(44, y + 24, 20, 0, 7); cc.fill(); TW.txt(cc, hot ? 'ADMIN ACCESS DETAILS (pinned)' : L, 84, y + 24, 30, hot ? '#7a1a14' : '#2a2a38', 'left', hot ? 'Anton' : 'Oswald'); } }); c.restore(); },
     bed: [['hum_loop', .12]],
     init: S => { S._tJ = A.at(S, 'finds', 6.2) - .2;
-      S.D.over = [(c, lt) => K.card(c, "CAN'T REACH THE CONTROLS", lt, { at: .4, x: 960, y: 70, px: 40, rot: -2, until: S._tJ }), (c, lt) => K.title(c, 'JACKPOT', lt, { at: S._tJ + .6, x: 1500, y: 560, px: 130 })];
+      S.D.over = [(c, lt) => K.card(c, "CAN'T REACH THE CONTROLS", lt, { at: .4, x: 960, y: 70, px: 40, rot: -2, until: S._tJ }), (c, lt) => K.title(c, 'JACKPOT', lt, { at: S._tJ + .6, x: 1380, y: 560, px: 130 })];
       S.D.sfx = [[.4, 'scrape', .15], [S._tJ, 'chime', .35], [S._tJ + .6, 'coins', .3]]; } },
   // 3.06 Twitter's admin tool: the cursor hovers over "change email"; ANY ACCOUNT
   { draw: (c, lt, u, S) => { TW.techBG(c, lt, '224,64,58'); c.save(); c.translate(960, 540); const z = 1.04 + .08 * u; c.scale(z, z); c.translate(-960, -540);

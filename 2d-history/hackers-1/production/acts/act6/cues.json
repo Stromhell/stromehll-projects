@@ -1,0 +1,147 @@
+{
+ "dur": 30.396,
+ "cues": [
+  {
+   "t": 3.22,
+   "name": "thud",
+   "gain": 0.4
+  },
+  {
+   "t": 3.27,
+   "name": "swell",
+   "gain": 0.2
+  },
+  {
+   "t": 3.52,
+   "name": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 3.77,
+   "name": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 4.02,
+   "name": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 4.27,
+   "name": "tick",
+   "gain": 0.22
+  },
+  {
+   "t": 6.175,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 6.65,
+   "name": "thud",
+   "gain": 0.2
+  },
+  {
+   "t": 7.25,
+   "name": "thud",
+   "gain": 0.2
+  },
+  {
+   "t": 7.85,
+   "name": "thud",
+   "gain": 0.2
+  },
+  {
+   "t": 8.45,
+   "name": "thud",
+   "gain": 0.2
+  },
+  {
+   "t": 10.55,
+   "name": "hit",
+   "gain": 0.35
+  },
+  {
+   "t": 13.53,
+   "name": "drum",
+   "gain": 0.3
+  },
+  {
+   "t": 14.525,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 14.725,
+   "name": "pop",
+   "gain": 0.25
+  },
+  {
+   "t": 16.625,
+   "name": "stamp",
+   "gain": 0.3
+  },
+  {
+   "t": 18.9,
+   "name": "wind_loop",
+   "gain": 0.2
+  },
+  {
+   "t": 20.1,
+   "name": "alarm",
+   "gain": 0.14
+  },
+  {
+   "t": 21.755,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 21.955,
+   "name": "coins",
+   "gain": 0.3
+  },
+  {
+   "t": 26.296,
+   "name": "gate_slam",
+   "gain": 0.35
+  },
+  {
+   "t": 26.346,
+   "name": "stamp",
+   "gain": 0.3
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 6.875,
+   "name": "tension",
+   "gain": 0.14
+  },
+  {
+   "start": 0,
+   "end": 6.875,
+   "name": "hum_loop",
+   "gain": 0.1
+  },
+  {
+   "start": 6.075,
+   "end": 15.225000000000001,
+   "name": "hum_loop",
+   "gain": 0.12
+  },
+  {
+   "start": 14.425,
+   "end": 22.455000000000002,
+   "name": "wind_loop",
+   "gain": 0.16
+  },
+  {
+   "start": 21.655,
+   "end": 31.196,
+   "name": "tension",
+   "gain": 0.14
+  }
+ ]
+}

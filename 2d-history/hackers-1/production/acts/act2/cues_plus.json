@@ -1,0 +1,158 @@
+{
+ "dur": 37.641,
+ "cues": [
+  {
+   "t": 0.2,
+   "name": "footsteps",
+   "gain": 0.3
+  },
+  {
+   "t": 4.2,
+   "name": "paper",
+   "gain": 0.3
+  },
+  {
+   "t": 5.66,
+   "name": "tick",
+   "gain": 0.25
+  },
+  {
+   "t": 2.18,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 7.735,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 7.835,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 8.635,
+   "name": "whoosh_soft",
+   "gain": 0.25
+  },
+  {
+   "t": 9.035,
+   "name": "whoosh_soft",
+   "gain": 0.25
+  },
+  {
+   "t": 9.435,
+   "name": "whoosh_soft",
+   "gain": 0.25
+  },
+  {
+   "t": 11.991,
+   "name": "chime",
+   "gain": 0.25
+  },
+  {
+   "t": 12.491,
+   "name": "chime",
+   "gain": 0.25
+  },
+  {
+   "t": 12.991,
+   "name": "chime",
+   "gain": 0.25
+  },
+  {
+   "t": 16.166,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 17.066,
+   "name": "tick",
+   "gain": 0.25
+  },
+  {
+   "t": 18.341,
+   "name": "coins_cascade",
+   "gain": 0.3
+  },
+  {
+   "t": 21.361,
+   "name": "paper",
+   "gain": 0.3
+  },
+  {
+   "t": 25.741,
+   "name": "stamp",
+   "gain": 0.3
+  },
+  {
+   "t": 28.396,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 28.396,
+   "name": "footsteps",
+   "gain": 0.3
+  },
+  {
+   "t": 32.211,
+   "name": "pop",
+   "gain": 0.25
+  },
+  {
+   "t": 33.591,
+   "name": "chime",
+   "gain": 0.3
+  },
+  {
+   "t": 35.571,
+   "name": "stamp",
+   "gain": 0.35
+  },
+  {
+   "t": 0.0,
+   "name": "riser",
+   "gain": 0.35
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 8.435,
+   "name": "city_loop",
+   "gain": 0.1
+  },
+  {
+   "start": 0,
+   "end": 8.435,
+   "name": "office_loop",
+   "gain": 0.1
+  },
+  {
+   "start": 7.635,
+   "end": 16.866,
+   "name": "tension",
+   "gain": 0.14
+  },
+  {
+   "start": 16.066,
+   "end": 29.096,
+   "name": "night_loop",
+   "gain": 0.14
+  },
+  {
+   "start": 28.296,
+   "end": 38.440999999999995,
+   "name": "city_loop",
+   "gain": 0.14
+  },
+  {
+   "start": 28.296,
+   "end": 38.440999999999995,
+   "name": "birds_loop",
+   "gain": 0.08
+  }
+ ]
+}

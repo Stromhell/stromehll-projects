@@ -1,0 +1,192 @@
+{
+ "dur": 32.558,
+ "cues": [
+  {
+   "t": 0.1,
+   "name": "stamp",
+   "gain": 0.35
+  },
+  {
+   "t": 0.8,
+   "name": "coins",
+   "gain": 0.25
+  },
+  {
+   "t": 4.08,
+   "name": "scrape",
+   "gain": 0.25
+  },
+  {
+   "t": 5.28,
+   "name": "stamp",
+   "gain": 0.4
+  },
+  {
+   "t": 7.215,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 7.415,
+   "name": "pop",
+   "gain": 0.25
+  },
+  {
+   "t": 10.348,
+   "name": "whoosh",
+   "gain": 0.3
+  },
+  {
+   "t": 11.748,
+   "name": "whoosh",
+   "gain": 0.3
+  },
+  {
+   "t": 12.148,
+   "name": "tick",
+   "gain": 0.25
+  },
+  {
+   "t": 15.523,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 15.723,
+   "name": "pop",
+   "gain": 0.25
+  },
+  {
+   "t": 17.358,
+   "name": "stamp",
+   "gain": 0.35
+  },
+  {
+   "t": 20.718,
+   "name": "coins_cascade",
+   "gain": 0.3
+  },
+  {
+   "t": 22.638,
+   "name": "tick",
+   "gain": 0.2
+  },
+  {
+   "t": 22.988,
+   "name": "tick",
+   "gain": 0.2
+  },
+  {
+   "t": 23.338,
+   "name": "tick",
+   "gain": 0.2
+  },
+  {
+   "t": 23.688,
+   "name": "tick",
+   "gain": 0.2
+  },
+  {
+   "t": 24.038,
+   "name": "tick",
+   "gain": 0.2
+  },
+  {
+   "t": 24.388,
+   "name": "tick",
+   "gain": 0.2
+  },
+  {
+   "t": 24.273,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 24.373,
+   "name": "footsteps",
+   "gain": 0.3
+  },
+  {
+   "t": 24.973,
+   "name": "footsteps",
+   "gain": 0.25
+  },
+  {
+   "t": 26.428,
+   "name": "alarm",
+   "gain": 0.14
+  },
+  {
+   "t": 29.188,
+   "name": "drum",
+   "gain": 0.3
+  },
+  {
+   "t": 30.508,
+   "name": "tick",
+   "gain": 0.28
+  },
+  {
+   "t": 31.008,
+   "name": "tick",
+   "gain": 0.28
+  },
+  {
+   "t": 31.508,
+   "name": "tick",
+   "gain": 0.28
+  },
+  {
+   "t": 32.008,
+   "name": "tick",
+   "gain": 0.28
+  },
+  {
+   "t": 32.508,
+   "name": "tick",
+   "gain": 0.28
+  },
+  {
+   "t": 33.008,
+   "name": "tick",
+   "gain": 0.28
+  },
+  {
+   "t": 0.0,
+   "name": "riser",
+   "gain": 0.35
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 7.915,
+   "name": "tension",
+   "gain": 0.16
+  },
+  {
+   "start": 7.115,
+   "end": 16.223,
+   "name": "hum_loop",
+   "gain": 0.12
+  },
+  {
+   "start": 15.423,
+   "end": 24.973,
+   "name": "hum_loop",
+   "gain": 0.12
+  },
+  {
+   "start": 24.173,
+   "end": 33.358,
+   "name": "alarm",
+   "gain": 0.05
+  },
+  {
+   "start": 24.173,
+   "end": 33.358,
+   "name": "hum_loop",
+   "gain": 0.12
+  }
+ ]
+}

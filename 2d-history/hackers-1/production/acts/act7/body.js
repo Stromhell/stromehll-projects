@@ -33,7 +33,7 @@ window.SHOTS = [
   // 7.04 2021: he pleads guilty; 3 years in a juvenile facility, then 3 years probation; at 17 he avoids adult prison
   { draw: (c, lt, u, S) => { TW.techBG(c, lt, '232,184,74'); const tG = S._tG, sw = K.seg(lt, tG, tG + .35), hit = sw >= 1;
       c.save(); c.translate(560, 640); c.fillStyle = '#6a4024'; c.strokeStyle = INK; c.lineWidth = 7; c.beginPath(); c.ellipse(0, 120, 230, 50, 0, 0, 7); c.fill(); c.stroke(); c.fillRect(-150, 70, 300, 50); c.strokeRect(-150, 70, 300, 50);
-      c.save(); c.translate(120, 80); c.rotate(-1.0 + E.back(sw) * 1.0 - (hit ? Math.max(0, .15 - (lt - tG - .35)) : 0)); c.fillStyle = '#8a5a34'; c.fillRect(-14, -330, 28, 300); c.strokeRect(-14, -330, 28, 300); c.translate(0, -340); c.fillStyle = '#6a4024'; TW.rr(c, -110, -50, 220, 100, 20); c.fill(); c.stroke(); c.restore(); c.restore();
+      c.save(); c.translate(340, -40); c.rotate(-1.5708 + .75 * (1 - E.io(sw)) + (hit ? Math.max(0, .12 - (lt - tG - .35) * .4) : 0)); c.fillStyle = '#8a5a34'; c.fillRect(-14, -330, 28, 300); c.strokeRect(-14, -330, 28, 300); c.translate(0, -340); c.fillStyle = '#6a4024'; TW.rr(c, -110, -50, 220, 100, 20); c.fill(); c.stroke(); c.restore(); c.restore();
       if (hit && lt < tG + .6) TW.glow(c, 560, 700, 260, '255,230,170', .4); },
     bed: [['tension', .14]],
     init: S => { S._tG = A.at(S, 'guilty', 2.0) - .2; const tS = A.at(S, 'sentenced', 3.4), tP = A.at(S, 'probation', 6.6), tA = A.at(S, 'avoided', 9.0);

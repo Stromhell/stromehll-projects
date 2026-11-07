@@ -1,0 +1,233 @@
+{
+ "dur": 42.422,
+ "cues": [
+  {
+   "t": 0.1,
+   "name": "stamp",
+   "gain": 0.35
+  },
+  {
+   "t": 4.28,
+   "name": "pop",
+   "gain": 0.35
+  },
+  {
+   "t": 8,
+   "name": "coins",
+   "gain": 0.3
+  },
+  {
+   "t": 9.2,
+   "name": "stamp",
+   "gain": 0.35
+  },
+  {
+   "t": 9.135,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 9.235,
+   "name": "stamp",
+   "gain": 0.3
+  },
+  {
+   "t": 11.529,
+   "name": "pop",
+   "gain": 0.22
+  },
+  {
+   "t": 12.075,
+   "name": "pop",
+   "gain": 0.22
+  },
+  {
+   "t": 12.621,
+   "name": "pop",
+   "gain": 0.22
+  },
+  {
+   "t": 13.166,
+   "name": "pop",
+   "gain": 0.22
+  },
+  {
+   "t": 13.712,
+   "name": "pop",
+   "gain": 0.22
+  },
+  {
+   "t": 14.258,
+   "name": "pop",
+   "gain": 0.22
+  },
+  {
+   "t": 15.904,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 18.004,
+   "name": "hit",
+   "gain": 0.22
+  },
+  {
+   "t": 20.824,
+   "name": "hit",
+   "gain": 0.22
+  },
+  {
+   "t": 21.524,
+   "name": "hit",
+   "gain": 0.22
+  },
+  {
+   "t": 22.264,
+   "name": "hit",
+   "gain": 0.22
+  },
+  {
+   "t": 22.904,
+   "name": "hit",
+   "gain": 0.22
+  },
+  {
+   "t": 23.124,
+   "name": "hit",
+   "gain": 0.22
+  },
+  {
+   "t": 23.644,
+   "name": "hit",
+   "gain": 0.22
+  },
+  {
+   "t": 24.984,
+   "name": "hit",
+   "gain": 0.22
+  },
+  {
+   "t": 25.704,
+   "name": "hit",
+   "gain": 0.22
+  },
+  {
+   "t": 26.819,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 27.434,
+   "name": "tick",
+   "gain": 0.3
+  },
+  {
+   "t": 28.834,
+   "name": "stamp",
+   "gain": 0.35
+  },
+  {
+   "t": 30.094,
+   "name": "tick",
+   "gain": 0.3
+  },
+  {
+   "t": 31.294,
+   "name": "stamp",
+   "gain": 0.35
+  },
+  {
+   "t": 30.954,
+   "name": "riser",
+   "gain": 0.3
+  },
+  {
+   "t": 33.841,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 35.852,
+   "name": "coins",
+   "gain": 0.3
+  },
+  {
+   "t": 37.352,
+   "name": "coins",
+   "gain": 0.25
+  },
+  {
+   "t": 39.812,
+   "name": "thud",
+   "gain": 0.25
+  },
+  {
+   "t": 40.512,
+   "name": "thud",
+   "gain": 0.25
+  },
+  {
+   "t": 41.212,
+   "name": "thud",
+   "gain": 0.25
+  },
+  {
+   "t": 41.912,
+   "name": "thud",
+   "gain": 0.25
+  },
+  {
+   "t": 42.612,
+   "name": "thud",
+   "gain": 0.25
+  },
+  {
+   "t": 43.312,
+   "name": "thud",
+   "gain": 0.25
+  },
+  {
+   "t": 0.0,
+   "name": "riser",
+   "gain": 0.35
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 9.835,
+   "name": "tension",
+   "gain": 0.18
+  },
+  {
+   "start": 9.035,
+   "end": 16.604,
+   "name": "tension",
+   "gain": 0.16
+  },
+  {
+   "start": 15.804,
+   "end": 27.519000000000002,
+   "name": "tension",
+   "gain": 0.2
+  },
+  {
+   "start": 15.804,
+   "end": 27.519000000000002,
+   "name": "heartbeat",
+   "gain": 0.14
+  },
+  {
+   "start": 26.719,
+   "end": 34.541,
+   "name": "tension",
+   "gain": 0.18
+  },
+  {
+   "start": 33.741,
+   "end": 43.221999999999994,
+   "name": "tension",
+   "gain": 0.16
+  }
+ ]
+}

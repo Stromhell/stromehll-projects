@@ -8,7 +8,7 @@ window.SHOTS = [
   { draw: (c, lt, u, S) => { TW.techBG(c, lt, '224,64,58'); const a = pop(lt, S._tP - .2, .5), b = pop(lt, S._tF - .2, .5); TW.glow(c, 600, 520, 380, '58,208,255', .3 * a); TW.glow(c, 1320, 520, 380, '224,64,58', .3 * b);
       if (a > 0) { c.save(); c.translate(600, 500); c.scale(a, a); c.rotate(Math.sin(lt * 20) * .02 * (lt < S._tF ? 1 : 0)); TW.phone(c, 0, 0, 2.2, (cc, w, h) => { TW.txt(cc, 'CALLING…', w / 2, 60, 18, '#fff', 'center', 'Anton'); TW.txt(cc, 'IT HELP DESK', w / 2, 100, 14, '#3ad0ff', 'center', 'Anton'); }); c.restore(); }
       if (b > 0) { c.save(); c.translate(1320, 500); c.scale(b, b); TW.login(c, 0, 0, 520, 420, { url: 'twitter-help.vpn-login.co', fake: true }); c.restore(); }
-      const nc = pop(lt, S._tN, .4); if (nc > 0) { c.save(); c.globalAlpha = Math.min(1, nc); c.translate(960, 200); c.font = '60px monospace'; c.fillStyle = '#5ad86a'; c.textAlign = 'center'; c.fillText('</ brilliant code >', 0, 0); c.strokeStyle = RED; c.lineWidth = 10; c.beginPath(); c.moveTo(-330, 10); c.lineTo(330, -30); c.stroke(); c.restore(); } },
+      const nc = pop(lt, .6, .5), ns = K.clamp(pop(lt, S._tN, .4)); if (nc > 0) { c.save(); c.globalAlpha = Math.min(1, nc); c.translate(960, 480 - 280 * E.io(K.clamp((lt - S._tN - .4) / .6))); c.font = '60px monospace'; c.fillStyle = '#5ad86a'; c.textAlign = 'center'; c.fillText('</ brilliant code >', 0, 0); c.strokeStyle = RED; c.lineWidth = 10; c.beginPath(); if (ns > 0) { c.moveTo(-330, 10); c.lineTo(-330 + 660 * ns, 10 - 40 * ns); c.stroke(); } c.restore(); } },
     bed: [['drone', .16]],
     init: S => { S._tN = A.at(S, 'brilliant', 2.4) - .2; S._tP = A.at(S, 'phone', 4.4); S._tF = A.at(S, 'fake', 6.0);
       S.D.over = [(c, lt) => K.card(c, 'THE SCARY PART', lt, { at: .3, x: 960, y: 110, px: 50, rot: -2, until: S._tN + .3 }), (c, lt) => K.title(c, 'NO GENIUS NEEDED', lt, { at: S._tF + 1, x: 960, y: 880, px: 90 })];
@@ -22,7 +22,7 @@ window.SHOTS = [
       S.D.over = [(c, lt) => K.card(c, 'PRESIDENTS · BILLIONAIRES', lt, { at: A.at(S, 'presidents', 2.4) - .2, x: 400, y: 140, px: 40, rot: -2 }), (c, lt) => K.card(c, 'USED TO STEAL BITCOIN', lt, { at: A.at(S, 'steal', 4.6) - .2, x: 1520, y: 140, px: 40, rot: 2 }), (c, lt) => K.title(c, 'IT COULD HAVE BEEN WORSE', lt, { at: S._tW, x: 960, y: 260, px: 70 })];
       S.D.sfx = [[.3, 'heartbeat', .2], [S._tW, 'drum', .3]]; } },
   // 8.03 he wasn't the first; part two: the boys who stole the next console before it was released
-  { draw: (c, lt, u, S) => { TW.techBG(c, lt, '90,200,120'); const a = pop(lt, S._tB - .3, .6); if (a > 0) { c.save(); c.translate(0, (1 - a) * 200); c.globalAlpha = Math.min(1, a); box(c, 960, 470, 1.1 + .04 * u, lt, pop(lt, S._tS, .4)); c.restore(); } },
+  { draw: (c, lt, u, S) => { TW.techBG(c, lt, '90,200,120'); const a = pop(lt, .5, .6); if (a > 0) { c.save(); c.translate(0, (1 - a) * 200); c.globalAlpha = Math.min(1, a); box(c, 960, 470, 1.1 + .04 * u, lt, pop(lt, S._tS, .4)); c.restore(); } },
     bed: [['tension', .14]],
     init: S => { S._tB = A.at(S, 'part', 4.2); S._tS = A.at(S, 'stole', 5.4);
       S.D.over = [(c, lt) => K.card(c, "HE WASN'T THE FIRST", lt, { at: .3, x: 960, y: 120, px: 50, rot: -2 }), (c, lt) => K.title(c, 'NEXT: STOLE THE XBOX', lt, { at: A.at(S, 'Microsoft', 7) - .2, x: 960, y: 880, px: 80 })];
