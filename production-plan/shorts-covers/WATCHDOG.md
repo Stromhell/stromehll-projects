@@ -5,7 +5,7 @@ Scheduled task "Shorts cover watchdog", every 3 h. Runs in the thread "Set up wa
 1. Read state: /mnt/project-files/system/cover-watchdog/state.json {"last_checked": ISO|null, "last_full": ISO|null, "fixed_total": n}
 2. List YouTube posts that are still to go out:
    mcp__Zernio__call_tool "posts_list_posts" {"status":"scheduled","platform":"youtube","fields":"title,mediaItems,scheduledFor,platforms","limit":100,"sort_by":"scheduled-asc","updated_since": last_checked}
-   - Full sweep (drop updated_since, walk every page with nextCursor) when last_checked is null or last_full is older than 24 h.
+   - Full sweep (drop updated_since, walk every page with nextCursor, fields=mediaItems) only when last_checked is null, more than 4 h old (a run was missed), or last_full is older than 7 days. Unbroken incremental runs already catch every change, so a daily sweep is not needed (saves ~100k tokens/day).
    - Also check status "failed" posts the same way (they may be retried).
 3. A post is MISSING a cover when its video mediaItem has no `thumbnail`, or the post also goes to Instagram and has no `instagramThumbnail`.
 4. Fix, in this order (stop at the first that works):
