@@ -1,0 +1,438 @@
+{
+ "meta": {
+  "slug": "new-year-history",
+  "prefix": "NY",
+  "title": "Why New Year Is on January 1st",
+  "working_title": "The Wild History of New Year",
+  "device": "The countdown. The video opens on a Times Square countdown that freezes at 'one' with a record scratch, rewinds 4,000 years, and every act ends with a little countdown clock ticking toward the present. The last shot finishes the countdown: ten to one, fireworks, HAPPY NEW YEAR. Janus, the two-faced god (one face looking back, one forward), is the mascot who turns up in each era.",
+  "style": "2D dynamic, locked Village Painterly look, played for fun: 6-head characters with big reactions (yawns, double takes, shocked faces). Painted backgrounds with warm light and cast shadows: Babylon's ziggurat at spring sunrise with barley fields, the Nile in flood, a Chinese village with red lanterns, early Rome on its hills, Caesar's senate, the shrine of Janus, a snowy medieval village and church, the Vatican hall of 1582, a Georgian London street in 1752, snowy Moscow in 1918, Times Square at night with the ball and fireworks. Bouncy music, lots of comic SFX (record scratch, boing, cash-register ding for dates, party horns).",
+  "source": "Pushpam's pasted transcript, 7 Nov 2026 (history of New Year celebrations). Kept every fact; tone made fun; one date corrected (see FACT_FIXES)."
+ },
+ "stats": {
+  "shots": 32,
+  "words": 585,
+  "runtime": "4:08",
+  "acts": 6
+ },
+ "acts": [
+  {
+   "name": "Cold open",
+   "folder": "act0-coldopen",
+   "shots": [
+    {
+     "id": "0.01",
+     "type": "WIDE",
+     "sec": 6.0,
+     "vo": "Five. Four. Three. Two. One. Happy New... wait. Why do we actually do this?",
+     "visual": "Times Square at night: the crowd counts down, the glowing ball slides down its pole; on 'one' everything freezes with a record scratch.",
+     "onscreen": "",
+     "anim": "Countdown numbers pop; freeze frame and record scratch.",
+     "img": ""
+    },
+    {
+     "id": "0.02",
+     "type": "MED",
+     "sec": 9.1,
+     "vo": "Why do we stay up until midnight, make resolutions we forget by February, and cheer at a ball falling down a pole?",
+     "visual": "A party guest in a paper hat, fighting sleep on a sofa, holding a resolutions list: 'gym', 'read more', 'sleep early'. Items get crossed out.",
+     "onscreen": "",
+     "anim": "Yawn; pen scratches; a party horn droops.",
+     "img": ""
+    },
+    {
+     "id": "0.03",
+     "type": "MED",
+     "sec": 9.8,
+     "vo": "Because humans have been throwing New Year's parties for about four thousand years. And for most of that time, it wasn't even in January.",
+     "visual": "A giant wall calendar; its pages flip backwards faster and faster until they turn to clay tablets.",
+     "onscreen": "4,000 YEARS",
+     "anim": "Pages whoosh; rewind sound.",
+     "img": ""
+    },
+    {
+     "id": "0.04",
+     "type": "TITLE",
+     "sec": 4.0,
+     "vo": "",
+     "visual": "Title over a two-faced Janus mask resting on a pile of calendar pages and party streamers.",
+     "onscreen": "WHY NEW YEAR IS ON JANUARY 1st",
+     "anim": "Streamers drift; title bounces in.",
+     "img": ""
+    }
+   ],
+   "sec": 28.9,
+   "words": 60
+  },
+  {
+   "name": "Act 1: The First Party",
+   "folder": "act1-babylon",
+   "shots": [
+    {
+     "id": "1.01",
+     "type": "WIDE",
+     "sec": 5.7,
+     "vo": "The first recorded New Year's celebrations happened around 2000 BCE, in ancient Babylon.",
+     "visual": "Babylon at sunrise: the great ziggurat, mud-brick walls, crowds with baskets; the river shines.",
+     "onscreen": "BABYLON \u00b7 c. 2000 BCE",
+     "anim": "Birds; a horn sounds from the ziggurat.",
+     "img": ""
+    },
+    {
+     "id": "1.02",
+     "type": "MED",
+     "sec": 9.1,
+     "vo": "And it wasn't in winter. The Babylonians partied in late March, at the spring equinox, when the crops came back to life.",
+     "visual": "Barley fields turning green; a farmer stretches and grins at the sprouts; the sun rises exactly in the east.",
+     "onscreen": "SPRING EQUINOX",
+     "anim": "Shoots pop up with little boings.",
+     "img": ""
+    },
+    {
+     "id": "1.03",
+     "type": "MED",
+     "sec": 8.3,
+     "vo": "Their festival was called Akitu, and it lasted eleven days. Eleven! Most of us can barely make it to midnight.",
+     "visual": "A street procession with drums, harps and garlands carrying a statue; a day counter on the wall ticks from 1 to 11.",
+     "onscreen": "AKITU \u00b7 11 DAYS",
+     "anim": "Drums; the counter dings each day.",
+     "img": ""
+    },
+    {
+     "id": "1.04",
+     "type": "MED",
+     "sec": 8.7,
+     "vo": "Akitu also celebrated the sky god Marduk beating the sea goddess Tiamat. Basically a divine wrestling match, and the sky won.",
+     "visual": "A storyteller in the square works a shadow-puppet show: Marduk with a bow against a coiling sea serpent; kids cheer.",
+     "onscreen": "MARDUK vs TIAMAT",
+     "anim": "Whoosh, splash, a crowd 'ooh'.",
+     "img": ""
+    },
+    {
+     "id": "1.05",
+     "type": "MED",
+     "sec": 8.3,
+     "vo": "Soon other cultures joined the party. The ancient Egyptians celebrated their new year around the yearly flooding of the Nile.",
+     "visual": "The Nile spilling over its banks into the fields; Egyptians on the bank cheer and wave palm fronds.",
+     "onscreen": "EGYPT",
+     "anim": "Water rushing; cheers.",
+     "img": ""
+    },
+    {
+     "id": "1.06",
+     "type": "MED",
+     "sec": 6.0,
+     "vo": "And in China, people began celebrating the New Year around three thousand years ago.",
+     "visual": "A Chinese village at dusk: red lanterns rise, a drummer, a family at the gate with a feast.",
+     "onscreen": "CHINA \u00b7 3,000 YEARS AGO",
+     "anim": "Lanterns sway; drums and cymbals.",
+     "img": ""
+    }
+   ],
+   "sec": 46.1,
+   "words": 110
+  },
+  {
+   "name": "Act 2: Rome Breaks the Calendar",
+   "folder": "act2-rome",
+   "shots": [
+    {
+     "id": "2.01",
+     "type": "WIDE",
+     "sec": 5.3,
+     "vo": "The Romans also started their year in March, around the spring equinox.",
+     "visual": "Early Rome: small temples and houses on green hills by the Tiber, spring blossom.",
+     "onscreen": "ROME",
+     "anim": "Birdsong; a market bell.",
+     "img": ""
+    },
+    {
+     "id": "2.02",
+     "type": "MED",
+     "sec": 9.4,
+     "vo": "Rome's first calendar had just ten months and three hundred and four days. The middle of winter simply didn't belong to any month.",
+     "visual": "A stone calendar with 10 month names and a big blank gap; a Roman in a toga shivers in the snow next to the gap.",
+     "onscreen": "10 MONTHS \u00b7 304 DAYS",
+     "anim": "Wind howls; teeth chatter.",
+     "img": ""
+    },
+    {
+     "id": "2.03",
+     "type": "MED",
+     "sec": 7.2,
+     "vo": "Back when Rome was still a kingdom, its second king added two new months: Januarius and Februarius.",
+     "visual": "King Numa on a stone seat; workers carry two new carved stone tablets and slot them into the calendar wall.",
+     "onscreen": "KING NUMA",
+     "anim": "Stone scrapes; a satisfied 'clunk'.",
+     "img": ""
+    },
+    {
+     "id": "2.04",
+     "type": "MED",
+     "sec": 6.8,
+     "vo": "But the calendar still didn't match the sun. Over time, festivals drifted into the wrong seasons.",
+     "visual": "A harvest festival with baskets of grapes, in the middle of a snowfall; confused Romans look up.",
+     "onscreen": "",
+     "anim": "Snow falls on the party; a sad trombone.",
+     "img": ""
+    },
+    {
+     "id": "2.05",
+     "type": "MED",
+     "sec": 9.4,
+     "vo": "Hundreds of years later, Julius Caesar fixed it with the Julian calendar, and made January the first the first day of the year.",
+     "visual": "Caesar in the senate points at a new calendar where IANUARIUS I glows; senators clap.",
+     "onscreen": "JULIUS CAESAR \u00b7 46 BCE",
+     "anim": "Applause; a cash-register ding on the date.",
+     "img": ""
+    },
+    {
+     "id": "2.06",
+     "type": "MED",
+     "sec": 13.2,
+     "vo": "From then on, Romans welcomed the year with offerings to Janus, the two-faced god of doorways, who looks back at the old year and forward to the new. January is named after him.",
+     "visual": "The shrine of Janus: a statue with two faces looking both ways; Romans leave honey cakes and coins.",
+     "onscreen": "JANUS",
+     "anim": "Doors creak; coins clink.",
+     "img": ""
+    },
+    {
+     "id": "2.07",
+     "type": "MED",
+     "sec": 9.1,
+     "vo": "And here's the strange part: they always made sure to do at least a little work on New Year's Day. Yes, really.",
+     "visual": "A Roman in a party wreath grumbles as he chisels a few strokes in his workshop, then puts the chisel down.",
+     "onscreen": "",
+     "anim": "Chisel taps; a sigh.",
+     "img": ""
+    }
+   ],
+   "sec": 60.4,
+   "words": 146
+  },
+  {
+   "name": "Act 3: The Party Gets Cancelled",
+   "folder": "act3-medieval-gregory",
+   "shots": [
+    {
+     "id": "3.01",
+     "type": "MED",
+     "sec": 4.9,
+     "vo": "Then came medieval Europe, and the New Year's party got cancelled.",
+     "visual": "A snowy medieval village; a monk takes down a garland from a door; a big red CANCELLED stamp.",
+     "onscreen": "MEDIEVAL EUROPE",
+     "anim": "A stamp thump.",
+     "img": ""
+    },
+    {
+     "id": "3.02",
+     "type": "MED",
+     "sec": 9.1,
+     "vo": "Church leaders saw it as un-Christian, and swapped it for holidays like Christmas. Which, funnily enough, had pagan roots of its own.",
+     "visual": "Inside a stone church at Christmas: evergreen branches, candles; a sneaky card pops up: 'ALSO PAGAN ROOTS'.",
+     "onscreen": "",
+     "anim": "Choir hum; a cheeky 'ding'.",
+     "img": ""
+    },
+    {
+     "id": "3.03",
+     "type": "MED",
+     "sec": 4.9,
+     "vo": "For a while, January the first was just... an ordinary day.",
+     "visual": "A villager on January 1st feeding chickens in the snow, yawning; nothing happens.",
+     "onscreen": "1 JANUARY",
+     "anim": "Chickens cluck; crickets.",
+     "img": ""
+    },
+    {
+     "id": "3.04",
+     "type": "WIDE",
+     "sec": 10.9,
+     "vo": "Then, in 1582, Pope Gregory the Thirteenth stepped in. The calendar had drifted away from the sun again, so he created a new one: the Gregorian calendar.",
+     "visual": "A grand hall in Rome: the pope with astronomers around a globe and a big calendar chart.",
+     "onscreen": "POPE GREGORY XIII \u00b7 1582",
+     "anim": "Organ chord; pages turn.",
+     "img": ""
+    },
+    {
+     "id": "3.05",
+     "type": "MED",
+     "sec": 7.5,
+     "vo": "To catch up, it jumped forward ten days. And New Year's Day was back on January the first.",
+     "visual": "A calendar where ten dates fly off like leaves in the wind; the page lands on 1 JANUARY with confetti.",
+     "onscreen": "+10 DAYS",
+     "anim": "Ten quick whooshes; party horn.",
+     "img": ""
+    },
+    {
+     "id": "3.06",
+     "type": "MED",
+     "sec": 5.7,
+     "vo": "Many Catholic countries in Europe adopted it quickly. Others took a lot longer.",
+     "visual": "A map of Europe: Italy, Spain, Portugal and France light up gold; Britain and Russia stay grey with crossed arms.",
+     "onscreen": "",
+     "anim": "Dings across the map; a grumpy 'hmph'.",
+     "img": ""
+    }
+   ],
+   "sec": 43.0,
+   "words": 102
+  },
+  {
+   "name": "Act 4: The Lost Days",
+   "folder": "act4-britain-russia",
+   "shots": [
+    {
+     "id": "4.01",
+     "type": "MED",
+     "sec": 7.2,
+     "vo": "Britain held out for almost two hundred years. Until then, the British New Year was in March.",
+     "visual": "A Georgian London street: brick houses, a coffee house, a gentleman checking a March calendar.",
+     "onscreen": "LONDON",
+     "anim": "Carriage wheels; a street seller.",
+     "img": ""
+    },
+    {
+     "id": "4.02",
+     "type": "MED",
+     "sec": 6.8,
+     "vo": "Then, in 1752, Britain finally switched. People went to bed on Wednesday, the second of September...",
+     "visual": "A man in a nightcap blows out his candle; the wall calendar shows 2 SEPTEMBER.",
+     "onscreen": "2 SEPTEMBER 1752",
+     "anim": "Candle puff; a clock ticks.",
+     "img": ""
+    },
+    {
+     "id": "4.03",
+     "type": "MED",
+     "sec": 6.8,
+     "vo": "...and woke up on Thursday, the fourteenth. Eleven days, gone. Imagine sleeping straight through your birthday.",
+     "visual": "He wakes, stretches, looks at the calendar: 14 SEPTEMBER. A huge double take; his cat looks just as shocked.",
+     "onscreen": "14 SEPTEMBER",
+     "anim": "Rooster; record scratch; cat meow.",
+     "img": ""
+    },
+    {
+     "id": "4.04",
+     "type": "MED",
+     "sec": 6.4,
+     "vo": "Russia waited even longer. It only adopted the Gregorian calendar after the revolution, in 1918.",
+     "visual": "Snowy Moscow with onion domes; a clerk tears a pile of pages off a calendar while people in fur hats watch.",
+     "onscreen": "RUSSIA \u00b7 1918",
+     "anim": "Wind; pages rip.",
+     "img": ""
+    }
+   ],
+   "sec": 27.2,
+   "words": 64
+  },
+  {
+   "name": "Act 5: Happy New Year",
+   "folder": "act5-today",
+   "shots": [
+    {
+     "id": "5.01",
+     "type": "MED",
+     "sec": 9.1,
+     "vo": "So today, much of the world celebrates on January the first, thanks to Julius Caesar, Pope Gregory the Thirteenth, and many others.",
+     "visual": "Caesar, Pope Gregory and a British clerk stand together like a team photo; Janus peeks in behind them.",
+     "onscreen": "",
+     "anim": "Camera shutter click.",
+     "img": ""
+    },
+    {
+     "id": "5.02",
+     "type": "WIDE",
+     "sec": 8.7,
+     "vo": "Now we celebrate with fireworks, by staying up until midnight, and in America, with the famous ball drop in Times Square.",
+     "visual": "Times Square at night: lights, crowds in hats, fireworks over the skyline, the glowing ball on its pole.",
+     "onscreen": "TIMES SQUARE",
+     "anim": "Crowd buzz; fireworks pop.",
+     "img": ""
+    },
+    {
+     "id": "5.03",
+     "type": "MED",
+     "sec": 9.1,
+     "vo": "From eleven days of Akitu in March, to honey cakes for Janus, to counting down the very last seconds of the year.",
+     "visual": "A painted timeline scroll unrolls: the Akitu procession, the Janus shrine, the Times Square ball.",
+     "onscreen": "",
+     "anim": "Scroll unrolls; three dings.",
+     "img": ""
+    },
+    {
+     "id": "5.04",
+     "type": "MED",
+     "sec": 9.1,
+     "vo": "Four thousand years later, we're still doing the same thing: saying goodbye to the old year, and hello to a new one.",
+     "visual": "Janus' two faces: the back-looking face waves goodbye, the forward face grins and blows a party horn.",
+     "onscreen": "",
+     "anim": "Party horn; a soft 'aww'.",
+     "img": ""
+    },
+    {
+     "id": "5.05",
+     "type": "WIDE",
+     "sec": 6.8,
+     "vo": "So, together now: Ten. Nine. Eight. Seven. Six. Five. Four. Three. Two. One. Happy New Year!",
+     "visual": "Back in Times Square: the countdown finishes, the ball lands, fireworks fill the sky, confetti, everyone cheers; HAPPY NEW YEAR in huge gold letters.",
+     "onscreen": "HAPPY NEW YEAR",
+     "anim": "Countdown beeps, huge fireworks, cheers.",
+     "img": ""
+    }
+   ],
+   "sec": 42.8,
+   "words": 103
+  }
+ ],
+ "hooks": [
+  [
+   "Five, four, three, two, one... wait. Why do we actually do this? The answer is four thousand years old.",
+   58
+  ],
+  [
+   "For most of history, New Year's Day wasn't in January. One Roman changed that.",
+   52
+  ],
+  [
+   "In 1752, Britain went to bed on September 2nd and woke up on September 14th.",
+   55
+  ]
+ ],
+ "launch": {
+  "titles": [
+   "Why New Year Is on January 1st",
+   "The Wild 4,000-Year History of New Year",
+   "How January 1st Became New Year's Day"
+  ],
+  "thumb": "Times Square ball dropping at midnight with fireworks, and Julius Caesar beside it holding a party horn, painterly style. Text: WHY JAN 1?",
+  "reels": [
+   "Why do we even count down?",
+   "The first New Year's party (2000 BCE)",
+   "An 11-day New Year festival",
+   "Sky god vs sea goddess",
+   "The Nile's New Year",
+   "Rome's 10-month calendar",
+   "Where January came from",
+   "Caesar moved New Year",
+   "Janus, the two-faced god",
+   "Romans had to work on New Year's Day",
+   "When New Year got cancelled",
+   "The pope who deleted 10 days",
+   "Britain lost 11 days in 1752",
+   "Russia waited until 1918",
+   "Happy New Year countdown"
+  ]
+ },
+ "fixes": [
+  "Transcript says Britain adopted the Gregorian calendar on 2 September 1751. The switch happened in 1752 (Calendar (New Style) Act 1750): Wednesday 2 September 1752 was followed by Thursday 14 September 1752. Script uses 1752. Britain moved New Year's Day to 1 January for 1752 (from 25 March).",
+  "Rome: the earliest calendar (attributed to Romulus) had 10 months and 304 days, with the winter period unassigned; Numa Pompilius, the second king, added Ianuarius and Februarius. Script orders it that way (transcript had the order reversed).",
+  "Julian calendar introduced 46 BCE, in force from 1 January 45 BCE.",
+  "Gregorian reform, 1582: Thursday 4 October 1582 was followed by Friday 15 October 1582 (10 days dropped). Script says 'jumped forward ten days'.",
+  "Russia adopted the Gregorian calendar in February 1918 (31 Jan 1918 followed by 14 Feb).",
+  "Akitu: Babylonian spring festival around the vernal equinox (month of Nisannu), 11 days in the later Babylonian form; it honoured Marduk, whose victory over Tiamat is told in the Enuma Elish.",
+  "Times Square ball drop: since 1907 (not stated in VO)."
+ ],
+ "cuts": [
+  "Nothing cut; the transcript's facts are all kept, reordered for the Roman calendar."
+ ]
+}

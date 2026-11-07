@@ -18,6 +18,7 @@ WORDS = [
  (r"\bNishapur\b", 'Nee-sha-poor'), (r"\bMöngke\b", 'Mung-keh'), (r"\bHulagu\b", 'Hoo-lah-goo'), (r"\bal-Musta'sim\b", 'al-Moos-tah-sim'),
  (r"\bAbbasid\b", 'Ab-bass-id'), (r"\bMamluks\b", 'Mam-looks'), (r"\bMamluk\b", 'Mam-look'), (r"\bKipchak\b", 'Kip-chak'),
  (r"\bBaybars\b", 'Bye-bars'), (r"\bQutuz\b", 'Koo-tooz'), (r"\bKitbuqa\b", 'Kit-boo-ka'), (r"\bGhazan\b", 'Ga-zahn'), (r"\bBerke\b", 'Ber-keh'),
+(r"\bAkitu\b", 'Ah-kee-too'), (r"\bMarduk\b", 'Mar-dook'), (r"\bTiamat\b", 'Tee-ah-mat'), (r"\bJanuarius\b", 'Yan-oo-ah-ree-us'), (r"\bFebruarius\b", 'Feb-roo-ah-ree-us'), (r"\bBCE\b", 'B C E'),
 (r"\bCUDA\b", 'Kooda'), (r"\bIrimajiri\b", 'Eeri-mah-jeeri'), (r"\bWiessner\b", 'Weess-ner'), (r"\bHadza\b", 'Hahd-za'),
  (r"Ju/'hoansi", 'Zhu-twa-see'), (r"\bHohle Fels\b", 'Hoh-leh Fels'), (r"\bBlombos\b", 'Blom-boss'), (r"\bDobe\b", 'Doh-bay'),
  (r"\bMalachowsky\b", 'Mala-kow-ski'), (r"\bPriem\b", 'Preem'), (r"\bSutskever\b", 'Suts-kever'), (r"\bKrizhevsky\b", 'Kri-zhev-ski'),
@@ -53,7 +54,7 @@ for i in range(max(len(x) for x in acts.values())):
         if k:
             target = f'{out}/rest'; os.makedirs(target, exist_ok=True); sayf = say[:-8] + '.rest.txt'; open(sayf, 'w').write('\n\n'.join(paras[k:]) + '\n')
         t0 = time.time()
-        r = subprocess.run([PY, SPEAK, '--file', sayf, '--scenes', '--energy', '0.45', '--pace', '0.42', '--pause', '0.4', '--out', f'{target}/vo.wav'], capture_output=True, text=True, cwd='/tmp')
+        r = subprocess.run([PY, SPEAK, '--file', sayf, '--scenes', '--energy', os.environ.get('VB_ENERGY','0.45'), '--pace', os.environ.get('VB_PACE','0.42'), '--pause', '0.4', '--out', f'{target}/vo.wav'], capture_output=True, text=True, cwd='/tmp')
         if k:
             for i in range(1, n - k + 1):
                 if os.path.exists(f'{target}/vo-{i:02d}.wav'): os.replace(f'{target}/vo-{i:02d}.wav', f'{out}/vo-{k+i:02d}.wav')
