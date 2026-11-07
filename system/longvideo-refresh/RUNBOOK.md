@@ -5,7 +5,7 @@ Scheduled task "Long video refresh check", every 4 h. Opus 5.5 low. Keep it chea
 
 ## Rule
 - Scope: LONG YouTube videos only (duration > 180 s, no #shorts) on "Stormi Explain Everything" (Zernio account 6add4e45e997d795ad6dfc72).
-- Low views = fewer than THRESHOLD views (state.json, default 50) when 32 h have passed since publish (swap 1) or since the last swap (swap 2).
+- Low views = fewer than THRESHOLD views (state.json, set to 20 by Pushpam 7 Nov 19:52) when 32 h have passed since publish (swap 1) or since the last swap (swap 2).
 - Swap 2 compares views gained since swap 1 against the threshold.
 - At most 2 swaps per video, ever. After swap 2 the video is "done" in state.json and never touched again.
 - Applies to long videos published on or after 1 Nov 2026.

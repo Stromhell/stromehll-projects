@@ -1,4 +1,4 @@
-{"threshold": 50, "hours": 32, "max_swaps": 2, "since": "2026-11-01",
+{"threshold": 20, "hours": 32, "max_swaps": 2, "since": "2026-11-01",
  "videos": {
   "tDz3U5NLh8o": {"zernioPostId": "6ae4266509f261790d6cc9ee", "name": "Spain 1 Al-Andalus", "folder": "/mnt/project-files/2d-dynamic/spain-1-al-andalus", "publishedAt": "2026-11-04T19:00:00Z", "originalTitle": "How Muslims Ruled Spain for 781 Years (and Lost It All)",
    "swaps": [{"n": 1, "at": "2026-11-07T19:50:00Z", "viewsBefore": 14, "title": "How a Tiny Army Took Spain in 7 Years (and Held It for 781)", "thumb": "2d-dynamic/spain-1-al-andalus/launch/refresh-1/Spain1_refresh1_thumbnail.jpg"}], "done": false},
