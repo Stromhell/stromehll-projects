@@ -23,6 +23,7 @@ PROG = {
   'hope':    [(-4, 'M'), (-9, 'M'), (-2, 'M'), (0, 'm')],      # F C G Am
   'epic':    [(0, 'm'), (-4, 'M'), (-2, 'M'), (-5, 'M')],      # Am F G E
   'calm':    [(-9, 'M'), (-2, 'M'), (0, 'm'), (-4, 'M')],      # C G Am F
+  'fun':     [(-9, 'M'), (-2, 'M'), (0, 'm'), (-4, 'M')],      # C G Am F, bouncy (New Year video)
 }
 beat = 60 / a.bpm; bar = beat * 4; chordlen = bar * 2
 hz = lambda semi: 220 * 2 ** (semi / 12)
@@ -40,7 +41,7 @@ while ts < a.dur + 2:
     m = mood_at(ts); P = PROG.get(m, PROG['tension']); root, q = P[k % len(P)]
     s = int(ts * SR); L = min(N - s, int((chordlen + 1.5) * SR))
     if L <= 0: break
-    e = env(L, 1.2 if m != 'epic' else .5, 1.6)
+    e = env(L, 1.2 if m not in ('epic', 'fun') else .5, 1.6)
     # string pad: three detuned saws per note, gentle vibrato
     for i, semi in enumerate(chord(root, q)[1:]):
         f = hz(semi); vib = 1 + .003 * np.sin(2 * np.pi * 5.2 * np.arange(L) / SR + i)
@@ -50,7 +51,7 @@ while ts < a.dur + 2:
     fb = hz(root - 12); ph = np.cumsum(np.full(L, fb)) / SR
     bass[s:s + L] += (np.sin(2 * np.pi * ph) * .5 + (2 * (ph % 1) - 1) * .12) * e * (.5 if m in ('sad', 'calm') else .7)
     # guitar-like plucks: arpeggio in eighths (tension/epic) or quarters (sad/calm/hope)
-    step = beat / 2 if m in ('tension', 'epic') else beat
+    step = beat / 2 if m in ('tension', 'epic', 'fun') else beat
     notes = chord(root, q)[1:] + [chord(root, q)[2] + 12]
     for j in range(int(chordlen / step)):
         ps = s + int(j * step * SR); PL = min(N - ps, int(1.6 * SR))
@@ -59,7 +60,7 @@ while ts < a.dur + 2:
         tone = sum(np.sin(2 * np.pi * f * h * tt) / h ** 1.3 * np.exp(-tt * (3 + h * 1.6)) for h in range(1, 6))
         pl[ps:ps + PL] += tone * (.22 if j % 2 == 0 else .15) * (.6 + .4 * rng.random())
     # frame drum pulses on beats 1 and 3 (tension), every beat (epic)
-    if m in ('tension', 'epic'):
+    if m in ('tension', 'epic', 'fun'):
         for j in range(int(chordlen / beat)):
             if m == 'tension' and j % 2: continue
             ps = s + int(j * beat * SR); DL = min(N - ps, int(.6 * SR))

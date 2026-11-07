@@ -1,0 +1,138 @@
+<!doctype html><html><head><meta charset="utf-8"><title>NY act 4</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/vp/engine.js"></script><script src="../../../../shared/vp/cast.js"></script><script src="../../../../shared/vp/scenes.js"></script><script src="../../../../shared/vp/spain.js"></script>
+<script src="../../../../shared/kit.js"></script><script src="../../../../shared/vp.js"></script>
+<script src="../../../../spain-1-al-andalus/production/es1_sets.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act1.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act2.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act3.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act4.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act5.js"></script><script src="../../../../spain-1-al-andalus/production/es1_cast.js"></script>
+<script src="../../../../spain-2-empire/production/es2_sets.js"></script><script src="../../../../spain-2-empire/production/es2_sets_act2.js"></script>
+<script src="../../../../spain-3-civil-war/production/es3_sets.js"></script><script src="../../../../spain-3-civil-war/production/es3_sets_act4b.js"></script><script src="../../../../spain-3-civil-war/production/es3_sets_act5b.js"></script><script src="../../../../spain-3-civil-war/production/es3_cast.js"></script>
+<script src="../../../../japan-comeback/production/jp_cast.js"></script><script src="../../../../japan-comeback/production/jp_sets.js"></script>
+<script src="../../../../suez-canal/production/sz_sets.js"></script><script src="../../../../suez-canal/production/sz_sets2.js"></script><script src="../../../../suez-canal/production/sz_cast.js"></script><script src="../../../../suez-canal/production/sz_props.js"></script>
+<script src="../../../../napoleon/production/np_sets.js"></script><script src="../../../../napoleon/production/np_cast.js"></script><script src="../../../../napoleon/production/np_props.js"></script>
+<script src="../../../../mongols-ain-jalut/production/mg_geo.js"></script><script src="../../../../mongols-ain-jalut/production/mg_sets.js"></script><script src="../../../../mongols-ain-jalut/production/mg_detail.js"></script><script src="../../../../mongols-ain-jalut/production/mg_cast.js"></script><script src="../../../../mongols-ain-jalut/production/mg_props.js"></script><script src="../../ny_sets.js"></script><script src="../../ny_cast.js"></script>
+<script src="timing.js"></script>
+<script>
+KIT.xfade = 0; // QA 5 Nov: hard cuts, dissolves ghosted figures
+const K = KIT, E = K.E, C = S.MGC, NPC = S.NPC, SZC = S.SZC, H1 = S.ES1H, PL = S.mgPlaces, MX = S.MGX, TAU = Math.PI * 2;
+const at = VP.at, seg = K.seg, lerp = K.lerp;
+const SUN = lt => VP.light('studio', lt, { swing: 3, set: { L: [.6, -.9], amb: '#6a5a4a', ambA: .2, rim: '#fff0d0', rimA: .8, tint: '#ffe8c0', tintA: .08 } });
+const DUSK = lt => VP.light('studio', lt, { swing: 3, set: { L: [-.7, -.6], amb: '#4a3a5a', ambA: .3, rim: '#ffc890', rimA: .9, tint: '#ffb070', tintA: .14 } });
+const DAWN = lt => VP.light('studio', lt, { swing: 3, set: { L: [.7, -.5], amb: '#5a5a7a', ambA: .25, rim: '#ffd0a0', rimA: .9, tint: '#ffc8a0', tintA: .1 } });
+const COLD = lt => VP.light('studio', lt, { swing: 2, set: { L: [.3, -.9], amb: '#6a7a8a', ambA: .3, rim: '#e8f0ff', rimA: .7, tint: '#c8d8f0', tintA: .12 } });
+const GREY = lt => VP.light('studio', lt, { swing: 2, set: { L: [.4, -.9], amb: '#5a5a5a', ambA: .3, rim: '#f0f0f0', rimA: .6, tint: '#d0d0c8', tintA: .1 } });
+const NIGHT = lt => VP.light('studio', lt, { swing: 2, set: { L: [-.6, -.7], amb: '#2a3050', ambA: .45, rim: '#a8b8e8', rimA: .8, tint: '#4a5a9a', tintA: .2 } });
+const CANDLE = lt => VP.light('studio', lt, { swing: 6, set: { L: [-.8, -.4], amb: '#2a1a10', ambA: .45, rim: '#ffb050', rimA: 1, tint: '#ff9a40', tintA: .16 } });
+const FIRE = lt => VP.light('studio', lt, { swing: 8, set: { L: [.8, -.3], amb: '#3a1a10', ambA: .4, rim: '#ff8a30', rimA: 1, tint: '#ff7a30', tintA: .2 } });
+const fig = (c, ch, x, y, uu, pose, lt, k, L, f = {}) => { S.contact(c, x, y, uu * .5, .35); VP.figure(c, [x, y], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, ch, x, y, uu, pose, Object.assign({ blink: S.blinkAt(lt, k), time: lt }, f), L)); };
+const pose = (lt, k, o) => Object.assign(S.idle(lt, k), o);
+const walk = (lt, k, o) => Object.assign(H1.walk(lt * 1.1 + k), o);
+const musket = (cc, a = -1.2) => wr => S.npMusket(cc, wr[0], wr[1], a, .9);
+const ride = (c, ch, x, y, uu, col, lt, ph, wk, L, po = {}, f = {}, face = 1) => VP.figure(c, [x, y], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => VP.rider(cc, ch, x, y, uu, uu * 5, { face, ph, walk: wk, t: lt, col, tack: f.tack || { cloth: ['#7a2a22', '#3c1410'], trim: '#c8a040' } }, Object.assign({ lean: 2 }, po), Object.assign({ blink: S.blinkAt(lt, 3), time: lt }, f), L));
+// rideG: gait driven by ground distance, so legs move only while the horse travels and stop when it stops.
+// xf(lt) = screen x; gf(lt) = ground x (defaults to xf; pass xf + background scroll when the set pans).
+const rideG = (c, ch, xf, y, uu, col, lt, L, po = {}, f = {}, face = 1, k = 0, gf = xf, amp = 1) => {
+  const x = xf(lt), g = gf(lt), v = Math.abs(gf(lt + .05) - gf(lt - .05)) / .1;
+  ride(c, ch, x, y, uu, col, lt, face * g / (uu * 4) + k, amp * K.clamp(v / (uu * 3)), L, po, f, face); };
+// mgPan: draw a set scrolled left by off px, tiled with a mirrored copy so there is no seam.
+S.mgPan = (c, name, off) => { const s = VP.bg(name), w = s.w, o = Math.round(((off % (2 * w)) + 2 * w) % (2 * w)), I = s.img, sw = I.width - 8, sh = I.height;
+  const D = x => c.drawImage(I, 4, 0, sw, sh, x, 0, w + 1, s.h); // trim the set's light edge columns so tiles meet cleanly
+  D(-o); c.save(); c.translate(2 * w - o + 1, 0); c.scale(-1, 1); D(0); c.restore(); if (o > w) D(2 * w - o); };
+const WHITEH = ['#e8e4dc', '#a8a49c'], BAY = ['#6a3a1e', '#3a1e0e'], GREYH = ['#8a8a8a', '#4a4a4a'];
+// ---- New Year shared helpers (loaded after ny_head.html, before bodyN.js) ----
+const NY = S.NYC, NYX = S.NYX;
+const PARTYL = lt => VP.light('studio', lt, { swing: 4, set: { L: [.2, -.8], amb: '#3a2a5a', ambA: .35, rim: '#ffb0e0', rimA: .9, tint: '#c080ff', tintA: .12 } });
+const ROOM = lt => VP.light('studio', lt, { swing: 3, set: { L: [-.6, -.7], amb: '#4a3a30', ambA: .3, rim: '#ffe0b0', rimA: .8, tint: '#ffd8a0', tintA: .08 } });
+// a paper wall calendar: big date line + small month line
+const nyCal = (c, x, y, s, big, small, o = {}) => { c.save(); c.translate(x, y); c.rotate(o.rot || 0); c.scale(s, s);
+  c.fillStyle = 'rgba(0,0,0,.25)'; c.fillRect(-58, -66, 124, 150); c.fillStyle = o.paper || '#f8f2e4'; c.fillRect(-62, -70, 124, 150);
+  c.fillStyle = o.head || '#c8281e'; c.fillRect(-62, -70, 124, 34); c.fillStyle = '#fff'; c.font = 'bold 20px Oswald, sans-serif'; c.textAlign = 'center'; c.fillText(small, 0, -45);
+  c.fillStyle = '#2a2020'; c.font = `bold ${o.px || 66}px Anton, sans-serif`; c.fillText(big, 0, 36);
+  c.fillStyle = '#5a4a3a'; [-40, -20, 0, 20, 40].forEach(dx => { c.beginPath(); c.arc(dx, -70, 3, 0, TAU); c.fill(); }); c.restore(); };
+// one flying calendar page (for flips and the 10 lost days)
+const nyPage = (c, x, y, s, rot, txt, a = 1) => { c.save(); c.globalAlpha = a; c.translate(x, y); c.rotate(rot); c.scale(s, s); c.fillStyle = '#f8f2e4'; c.fillRect(-40, -50, 80, 100); c.fillStyle = '#c8281e'; c.fillRect(-40, -50, 80, 20); c.fillStyle = '#2a2020'; c.font = 'bold 44px Anton, sans-serif'; c.textAlign = 'center'; c.fillText(txt, 0, 30); c.restore(); };
+// fireworks burst at (x,y) that started at t0, radius grows then fades; col colour
+const nyBurst = (c, lt, t0, x, y, col, R = 120, n = 22, seed = 1) => { const q = (lt - t0) / 1.8; if (q <= 0 || q >= 1) return; const r = S.rng(seed);
+  c.save(); c.globalCompositeOperation = 'lighter';
+  for (let k = 0; k < n; k++) { const a = k / n * TAU + r() * .2, d = R * E.out(q) * (.8 + r() * .3), px = x + Math.cos(a) * d, py = y + Math.sin(a) * d + 30 * q * q;
+    c.globalAlpha = (1 - q) * .9; c.strokeStyle = col; c.lineWidth = 3 * (1 - q) + 1; c.beginPath(); c.moveTo(x + Math.cos(a) * d * .7, y + Math.sin(a) * d * .7 + 20 * q * q); c.lineTo(px, py); c.stroke();
+    c.fillStyle = '#ffffff'; c.beginPath(); c.arc(px, py, 2.2, 0, TAU); c.fill(); }
+  const g = c.createRadialGradient(x, y, 0, x, y, R * .8); g.addColorStop(0, S.rgba(col, .35 * (1 - q))); g.addColorStop(1, S.rgba(col, 0)); c.fillStyle = g; c.fillRect(x - R, y - R, 2 * R, 2 * R); c.restore(); };
+// rocket trail rising to a burst
+const nyRocket = (c, lt, t0, x, y, col, seed) => { const q = (lt - t0 + .8) / .8; if (q > 0 && q < 1) { const py = lerp(720, y, E.out(q)); c.save(); c.globalCompositeOperation = 'lighter'; c.strokeStyle = S.rgba('#ffe0a0', .8); c.lineWidth = 2; c.beginPath(); c.moveTo(x, py); c.lineTo(x, py + 40); c.stroke(); c.restore(); } nyBurst(c, lt, t0, x, y, col, 110, 22, seed); };
+// confetti falling from the top, density a (0..1)
+const nyConfetti = (c, lt, a = 1, n = 80, seed = 3, t0 = 0) => { if (a <= 0) return; const r = S.rng(seed), cols = ['#ffd040', '#ff5060', '#60c0ff', '#80ff90', '#ffffff', '#c080ff'];
+  for (let k = 0; k < n; k++) { const sx = r() * 1280, sp = 60 + r() * 80, ph = r() * 10, y = ((lt - t0) * sp + ph * 72) % 800 - 60; if (lt - t0 < 0) continue; const x = sx + Math.sin(lt * 2 + k) * 20;
+    c.save(); c.globalAlpha = a; c.translate(x, y); c.rotate(lt * 3 + k); c.fillStyle = cols[k % 6]; c.fillRect(-4, -2, 8, 4); c.restore(); } };
+// the Times Square ball: glowing faceted sphere on the pole; drop q 0 (top) -> 1 (bottom)
+const nyBall = (c, q, lt, glow = 1) => { const y = lerp(36, 132, E.io(q)), x = 640; S.glow(c, x, y, 70 * glow, '#a0d0ff', .55 * glow);
+  const g = c.createRadialGradient(x - 6, y - 6, 2, x, y, 18); g.addColorStop(0, '#ffffff'); g.addColorStop(.5, '#a8d8ff'); g.addColorStop(1, '#4a6ae8'); c.fillStyle = g; c.beginPath(); c.arc(x, y, 18, 0, TAU); c.fill();
+  c.strokeStyle = 'rgba(255,255,255,.5)'; c.lineWidth = .8; for (let k = -2; k <= 2; k++) { c.beginPath(); c.ellipse(x, y, 18, Math.abs(k) * 5 + 1, 0, 0, TAU); c.stroke(); c.beginPath(); c.ellipse(x, y, Math.abs(k) * 5 + 1, 18, 0, 0, TAU); c.stroke(); }
+  for (let k = 0; k < 6; k++) { const a = lt * 2 + k; c.fillStyle = ['#ff6080', '#ffd040', '#80ff90'][k % 3]; c.globalAlpha = .7 + .3 * Math.sin(lt * 6 + k); c.beginPath(); c.arc(x + Math.cos(a) * 12, y + Math.sin(a * 1.3) * 10, 2.2, 0, TAU); c.fill(); } c.globalAlpha = 1; };
+// big pop-in countdown number in screen space (over layer, 1920x1080)
+const nyNum = (c, txt, lt, t0, o = {}) => { const q = lt - t0; if (q < 0 || q > (o.hold || .9)) return; const s = q < .15 ? lerp(1.8, 1, E.out(q / .15)) : 1, a = q > (o.hold || .9) - .2 ? ((o.hold || .9) - q) / .2 : 1;
+  c.save(); c.globalAlpha = a; c.translate(o.x || 960, o.y || 420); c.scale(s, s); c.font = `${o.px || 260}px Anton`; c.textAlign = 'center'; c.textBaseline = 'middle'; c.lineWidth = 16; c.strokeStyle = '#1a1030'; c.strokeText(txt, 0, 0); c.fillStyle = o.col || '#ffd040'; c.fillText(txt, 0, 0); c.restore(); };
+// a row of party people in the street, spaced so nobody overlaps; cheer 0..1 raises arms; bounce on the beat
+const nyCrowd = (c, lt, L, list, y, uu, cheer = 0, x0 = 120, dx = 150) => list.forEach((ch, k) => { const x = x0 + k * dx + Math.sin(k * 3.3) * 14, b = cheer * Math.abs(Math.sin(lt * 5 + k)) * 6;
+  fig(c, ch, x, y - b, uu, pose(lt, k, { face: k % 2 ? -1 : 1, shN: lerp(-1, 150, cheer) + Math.sin(lt * 6 + k) * 10 * cheer, shF: lerp(2, 140, cheer), elN: lerp(6, 30, cheer), elF: lerp(6, 30, cheer) }), lt, k, L, { smile: 1, look: [k % 2 ? -.3 : .3, -.6] }); });
+// date stamp "CANCELLED"-style rubber stamp in screen space
+const nyStamp = (c, txt, lt, t0, x, y, col = '#c8281e', rot = -.18, px = 110) => { const q = lt - t0; if (q < 0) return; const s = q < .14 ? lerp(2.2, 1, E.in ? E.in(q / .14) : q / .14) : 1;
+  c.save(); c.translate(x, y); c.rotate(rot); c.scale(s, s); c.globalAlpha = Math.min(1, q / .08) * .9; c.strokeStyle = col; c.lineWidth = 10; c.font = `${px}px Anton`; c.textAlign = 'center'; c.textBaseline = 'middle'; const w = c.measureText(txt).width; c.strokeRect(-w / 2 - 30, -px * .62, w + 60, px * 1.24); c.fillStyle = col; c.fillText(txt, 0, 4); c.restore(); };
+const snow = (c, lt, n = 90, a = 1) => { c.save(); c.globalAlpha = a; c.fillStyle = '#ffffff'; for (let k = 0; k < n; k++) { const r = S.rng(k + 40), x = (r() * 1400 + Math.sin(lt + k) * 30) % 1300, y = (r() * 760 + lt * (40 + r() * 40)) % 760 - 20; c.beginPath(); c.arc(x, y, 1.5 + r() * 2.5, 0, TAU); c.fill(); } c.restore(); };
+const shiver = (lt, a = 1) => Math.sin(lt * 40) * 2 * a;
+const CAT = (c, x, y, s, shock, lt) => { c.save(); c.translate(x, y); c.scale(s, s); const j = shock * 18; c.fillStyle = 'rgba(0,0,0,.25)'; c.beginPath(); c.ellipse(0, 2, 26, 5, 0, 0, TAU); c.fill(); c.translate(0, -j);
+  c.fillStyle = '#e89a4a'; c.beginPath(); c.ellipse(0, -18, 24, 16 + shock * 4, 0, 0, TAU); c.fill(); c.beginPath(); c.arc(20, -40, 14, 0, TAU); c.fill(); [[12, -52], [28, -52]].forEach(([a, b]) => { c.beginPath(); c.moveTo(a - 5, b + 4); c.lineTo(a, b - 10 - shock * 4); c.lineTo(a + 5, b + 4); c.fill(); });
+  c.strokeStyle = '#e89a4a'; c.lineWidth = 6; c.lineCap = 'round'; c.beginPath(); c.moveTo(-22, -18); c.quadraticCurveTo(-44, -30 - shock * 20, -36, -50 - shock * 10 + Math.sin(lt * 3) * 4); c.stroke();
+  c.fillStyle = '#2a2020'; const er = 2.5 + shock * 2.5; c.beginPath(); c.arc(15, -42, er, 0, TAU); c.arc(26, -42, er, 0, TAU); c.fill(); if (shock > .3) { c.beginPath(); c.ellipse(21, -32, 3, 4 * shock, 0, 0, TAU); c.fill(); }
+  c.restore(); };
+const WINDOW = (c, day) => { const sky = c.createLinearGradient(0, 110, 0, 350); if (day) { sky.addColorStop(0, '#8ac0f0'); sky.addColorStop(1, '#ffe8c0'); } else { sky.addColorStop(0, '#0a1430'); sky.addColorStop(1, '#2a3a6a'); } c.fillStyle = sky; c.fillRect(145, 115, 190, 230);
+  if (day) { S.glow(c, 290, 300, 60, '#fff0c0', .8); } else { c.fillStyle = '#f0f0d8'; c.beginPath(); c.arc(190, 160, 14, 0, TAU); c.fill(); c.fillStyle = 'rgba(255,255,255,.8)'; for (let k = 0; k < 10; k++) c.fillRect(150 + (k * 37) % 180, 130 + (k * 53) % 200, 2, 2); }
+  c.strokeStyle = '#e8e0d0'; c.lineWidth = 10; c.strokeRect(140, 110, 200, 240); c.fillStyle = '#e8e0d0'; c.fillRect(236, 110, 8, 240); c.fillRect(140, 226, 200, 8); };
+window.SHOTS = [
+  // 4.01 MED: Georgian London street; a gentleman checks his calendar: New Year on 25 March
+  { set: 'ny_london', cam: { z: [1.45, 1.55], x: [640, 660], y: [470, 470], ease: E.io }, bed: [['city_loop', .15]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tH = at(Sh, 'hundred', 2.5); Sh.tM = at(Sh, 'march', Sh.dur - 1); },
+    draw: (c, lt, u, Sh) => { const L = GREY(lt), q = seg(lt, 0, Sh.dur * .6);
+      fig(c, NY.LONW, lerp(1100, 860, q), 668, 36, q < 1 ? walk(lt, 2, { face: -1 }) : pose(lt, 2, { face: -1 }), lt, 2, L, { look: [-.7, 0] });
+      fig(c, NY.GENT2, 380, 666, 36, pose(lt, 3, { face: 1, shN: 30, elN: 60 }), lt, 3, L, { look: [.7, 0] });
+      const up = seg(lt, Sh.tM - 1, Sh.tM - .4);
+      fig(c, NY.GENT, 530, 668, 38, pose(lt, 1, { face: 1, shN: lerp(20, 80, up), elN: lerp(20, 70, up), holdN: up > .05 ? (wr => nyCal(c, wr[0] + 20, wr[1] - 40, .45 * up + .01, '25', 'MARCH', { px: 56 })) : undefined }), lt, 1, L, { smile: .5, look: [.7, -.2] }); },
+    over: [(c, lt) => K.dateTag(c, 'LONDON', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, 'BRITISH NEW YEAR: 25 MARCH', lt, { at: Sh.tM, x: 1300, y: 180, px: 50 })],
+    sfx: [[.1, 'city_loop', .15], [.4, 'hooves', .25], [.6, 'footsteps', .2], ['march', 'paper', .4]] },
+
+  // 4.02 MED: night, 2 September 1752: a man in a nightcap blows out his candle and climbs into bed
+  { set: 'ny_bedroom', cam: { z: [1.25, 1.35], x: [640, 640], y: [420, 420], ease: E.io }, bed: [['clock_loop', .3]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tS = at(Sh, 'september', 3.5); Sh.tB = at(Sh, 'bed', 2.5); },
+    draw: (c, lt, u, Sh) => { const lit = 1 - seg(lt, Sh.tB, Sh.tB + .15), L = lit > .5 ? CANDLE(lt) : NIGHT(lt); WINDOW(c, false);
+      nyCal(c, 935, 245, .8, '2', 'SEPT 1752', { px: 70 });
+      if (lit > 0) { S.glow(c, 910, 412, 160, '#ffb040', .4 * lit); c.fillStyle = '#ffd070'; c.beginPath(); c.ellipse(910, 412, 4, 9, 0, 0, TAU); c.fill(); } else { c.strokeStyle = 'rgba(200,200,210,.5)'; c.lineWidth = 2; c.beginPath(); c.moveTo(910, 418); c.quadraticCurveTo(904 + Math.sin(lt * 3) * 6, 380, 912, 340 - (lt - Sh.tB) * 10); c.stroke(); }
+      const blow = Math.sin(Math.PI * seg(lt, Sh.tB - .4, Sh.tB + .2)), q = seg(lt, Sh.tB + .4, Sh.tB + 2);
+      fig(c, NY.SLEEPER, lerp(850, 640, E.io(q)), 668, 32, q > 0 && q < 1 ? walk(lt, 1, { face: -1 }) : pose(lt, 1, { face: -1, lean: 10 * blow }), lt, 1, L, { open: .3 * blow, squint: .6, blink: lt > Sh.tB + 2.2 && lt % 2 < .8, look: [-.6, -.1] });
+      if (lit <= 0) { c.fillStyle = 'rgba(10,15,40,.4)'; c.fillRect(0, 0, 1280, 720); } },
+    over: [(c, lt, u, Sh) => K.card(c, 'WEDNESDAY 2 SEPTEMBER 1752', lt, { at: Sh.tS, x: 960, y: 160, px: 50 })],
+    sfx: [[.1, 'clock_loop', .3], ['bed', 'breath', .4], ['september', 'tick', .3]] },
+
+  // 4.03 MED: morning; he wakes, stretches, looks at the calendar: 14 SEPTEMBER. Double take; the cat too
+  { set: 'ny_bedroom', cam: (lt, u, Sh) => ({ z: [lt > Sh.tF ? lerp(1.3, 1.7, E.out(seg(lt, Sh.tF, Sh.tF + .3))) : 1.3], x: [lt > Sh.tF ? lerp(640, 780, E.out(seg(lt, Sh.tF, Sh.tF + .3))) : 640], y: [lt > Sh.tF ? lerp(420, 380, E.out(seg(lt, Sh.tF, Sh.tF + .3))) : 420], shake: lt > Sh.tF && lt < Sh.tF + .3 ? 6 : 0 }), bed: [['birds_loop', .2]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tF = at(Sh, 'fourteenth', 1.5); Sh.tE = at(Sh, 'eleven', 3); Sh.tB = at(Sh, 'birthday', Sh.dur - 1); },
+    draw: (c, lt, u, Sh) => { const L = SUN(lt); WINDOW(c, true);
+      nyCal(c, 935, 245, .8, lt > Sh.tF - .2 ? '14' : '2', 'SEPT 1752', { px: 70 });
+      const st = Math.max(0, Math.sin(Math.PI * seg(lt, .1, Sh.tF - .4))), dt = seg(lt, Sh.tF, Sh.tF + .25), jump = Math.max(0, Math.sin(Math.PI * seg(lt, Sh.tF, Sh.tF + .5)));
+      fig(c, NY.SLEEPER, 700, 668 - jump * 20, 32, pose(lt, 1, { face: 1, shN: lerp(4, 165, st) + dt * 60, shF: lerp(-4, 160, st) + dt * 50, elN: lerp(10, 40, st) + 60 * dt, elF: 40 * st + 60 * dt, lean: -6 * dt }), lt, 1, L, { open: Math.max(st * .7, dt), wide: dt, raise: dt, squint: st * .7 * (1 - dt), look: [lerp(.2, .9, dt), -.3 * dt] });
+      CAT(c, 560, 668, 1.2, seg(lt, Sh.tF + .15, Sh.tF + .35), lt); },
+    over: [(c, lt, u, Sh) => K.card(c, 'THURSDAY 14 SEPTEMBER?!', lt, { at: Sh.tF, x: 960, y: 160, px: 56, rot: -3 }), (c, lt, u, Sh) => K.card(c, '11 DAYS, GONE', lt, { at: Sh.tE, x: 1460, y: 900, px: 54, rot: 3 })],
+    sfx: [[.1, 'birds_loop', .2], [.2, 'rooster', .5], [.6, 'yawn', .45], ['fourteenth', 'scratch', .65], ['fourteenth', 'meow', .45], ['birthday', 'trombone', .4]] },
+
+  // 4.04 MED: snowy Moscow 1918; a clerk rips a stack of pages off a big calendar while people in fur hats watch
+  { set: 'ny_moscow', cam: { z: [1.2, 1.3], x: [640, 640], y: [430, 430], ease: E.io }, bed: [['wind_loop', .3]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tR = at(Sh, 'russia', .8); Sh.tV = at(Sh, 'revolution', Sh.dur - 2.5); Sh.tY = at(Sh, '1918', Sh.dur - 1); },
+    draw: (c, lt, u, Sh) => { const L = COLD(lt), rip = seg(lt, Sh.tV - .4, Sh.tY + .4);
+      nyCal(c, 640, 430, 1.1, lt > Sh.tY ? '14' : '31', lt > Sh.tY ? 'FEB 1918' : 'JAN 1918', { px: 66 });
+      for (let k = 0; k < 8; k++) { const t0 = Sh.tV - .4 + k * .25; if (lt < t0) continue; const q = seg(lt, t0, t0 + 1.2), r = S.rng(k + 300); nyPage(c, 640 + 300 * q * (r() - .3), 430 - 80 * q + 300 * q * q, .7, (r() - .5) * 5 * q, String(1 + k), 1 - seg(q, .7, 1)); }
+      fig(c, NY.RUSCLERK, 780, 670, 32, pose(lt, 1, { face: -1, shN: 90 + 30 * Math.abs(Math.sin(lt * 6)) * (rip > 0 && rip < 1), elN: 20 }), lt, 1, L, { angry: .3, look: [-.7, -.4] });
+      [[NY.RUS1, 260, 1], [NY.RUSW, 400, 1], [NY.RUS1, 1050, -1]].forEach(([ch, x, f], k) => fig(c, ch, x, 674, 30, pose(lt, k + 2, { face: f, shN: 50, elN: 110 }), lt, k + 2, L, { raise: rip, open: .4 * rip, look: [f * .7, -.3] }));
+      snow(c, lt, 90, .9); },
+    over: [(c, lt, u, Sh) => K.dateTag(c, 'RUSSIA · 1918', lt, { at: Sh.tR }), (c, lt, u, Sh) => K.card(c, 'FINALLY!', lt, { at: Sh.tY, x: 1460, y: 220, px: 60, rot: -3 })],
+    sfx: [[.1, 'wind_loop', .3], ['russia', 'bell', .3], ['revolution', 'paper_tear', .5], ['1918', 'paper_tear', .5], ['1918', 'ding', .4]] },
+];
+VP.build(); K.boot();
+</script></body></html>

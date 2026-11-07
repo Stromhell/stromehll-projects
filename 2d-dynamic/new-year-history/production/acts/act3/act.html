@@ -1,0 +1,162 @@
+<!doctype html><html><head><meta charset="utf-8"><title>NY act 3</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/vp/engine.js"></script><script src="../../../../shared/vp/cast.js"></script><script src="../../../../shared/vp/scenes.js"></script><script src="../../../../shared/vp/spain.js"></script>
+<script src="../../../../shared/kit.js"></script><script src="../../../../shared/vp.js"></script>
+<script src="../../../../spain-1-al-andalus/production/es1_sets.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act1.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act2.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act3.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act4.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act5.js"></script><script src="../../../../spain-1-al-andalus/production/es1_cast.js"></script>
+<script src="../../../../spain-2-empire/production/es2_sets.js"></script><script src="../../../../spain-2-empire/production/es2_sets_act2.js"></script>
+<script src="../../../../spain-3-civil-war/production/es3_sets.js"></script><script src="../../../../spain-3-civil-war/production/es3_sets_act4b.js"></script><script src="../../../../spain-3-civil-war/production/es3_sets_act5b.js"></script><script src="../../../../spain-3-civil-war/production/es3_cast.js"></script>
+<script src="../../../../japan-comeback/production/jp_cast.js"></script><script src="../../../../japan-comeback/production/jp_sets.js"></script>
+<script src="../../../../suez-canal/production/sz_sets.js"></script><script src="../../../../suez-canal/production/sz_sets2.js"></script><script src="../../../../suez-canal/production/sz_cast.js"></script><script src="../../../../suez-canal/production/sz_props.js"></script>
+<script src="../../../../napoleon/production/np_sets.js"></script><script src="../../../../napoleon/production/np_cast.js"></script><script src="../../../../napoleon/production/np_props.js"></script>
+<script src="../../../../mongols-ain-jalut/production/mg_geo.js"></script><script src="../../../../mongols-ain-jalut/production/mg_sets.js"></script><script src="../../../../mongols-ain-jalut/production/mg_detail.js"></script><script src="../../../../mongols-ain-jalut/production/mg_cast.js"></script><script src="../../../../mongols-ain-jalut/production/mg_props.js"></script><script src="../../ny_sets.js"></script><script src="../../ny_cast.js"></script>
+<script src="timing.js"></script>
+<script>
+KIT.xfade = 0; // QA 5 Nov: hard cuts, dissolves ghosted figures
+const K = KIT, E = K.E, C = S.MGC, NPC = S.NPC, SZC = S.SZC, H1 = S.ES1H, PL = S.mgPlaces, MX = S.MGX, TAU = Math.PI * 2;
+const at = VP.at, seg = K.seg, lerp = K.lerp;
+const SUN = lt => VP.light('studio', lt, { swing: 3, set: { L: [.6, -.9], amb: '#6a5a4a', ambA: .2, rim: '#fff0d0', rimA: .8, tint: '#ffe8c0', tintA: .08 } });
+const DUSK = lt => VP.light('studio', lt, { swing: 3, set: { L: [-.7, -.6], amb: '#4a3a5a', ambA: .3, rim: '#ffc890', rimA: .9, tint: '#ffb070', tintA: .14 } });
+const DAWN = lt => VP.light('studio', lt, { swing: 3, set: { L: [.7, -.5], amb: '#5a5a7a', ambA: .25, rim: '#ffd0a0', rimA: .9, tint: '#ffc8a0', tintA: .1 } });
+const COLD = lt => VP.light('studio', lt, { swing: 2, set: { L: [.3, -.9], amb: '#6a7a8a', ambA: .3, rim: '#e8f0ff', rimA: .7, tint: '#c8d8f0', tintA: .12 } });
+const GREY = lt => VP.light('studio', lt, { swing: 2, set: { L: [.4, -.9], amb: '#5a5a5a', ambA: .3, rim: '#f0f0f0', rimA: .6, tint: '#d0d0c8', tintA: .1 } });
+const NIGHT = lt => VP.light('studio', lt, { swing: 2, set: { L: [-.6, -.7], amb: '#2a3050', ambA: .45, rim: '#a8b8e8', rimA: .8, tint: '#4a5a9a', tintA: .2 } });
+const CANDLE = lt => VP.light('studio', lt, { swing: 6, set: { L: [-.8, -.4], amb: '#2a1a10', ambA: .45, rim: '#ffb050', rimA: 1, tint: '#ff9a40', tintA: .16 } });
+const FIRE = lt => VP.light('studio', lt, { swing: 8, set: { L: [.8, -.3], amb: '#3a1a10', ambA: .4, rim: '#ff8a30', rimA: 1, tint: '#ff7a30', tintA: .2 } });
+const fig = (c, ch, x, y, uu, pose, lt, k, L, f = {}) => { S.contact(c, x, y, uu * .5, .35); VP.figure(c, [x, y], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, ch, x, y, uu, pose, Object.assign({ blink: S.blinkAt(lt, k), time: lt }, f), L)); };
+const pose = (lt, k, o) => Object.assign(S.idle(lt, k), o);
+const walk = (lt, k, o) => Object.assign(H1.walk(lt * 1.1 + k), o);
+const musket = (cc, a = -1.2) => wr => S.npMusket(cc, wr[0], wr[1], a, .9);
+const ride = (c, ch, x, y, uu, col, lt, ph, wk, L, po = {}, f = {}, face = 1) => VP.figure(c, [x, y], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => VP.rider(cc, ch, x, y, uu, uu * 5, { face, ph, walk: wk, t: lt, col, tack: f.tack || { cloth: ['#7a2a22', '#3c1410'], trim: '#c8a040' } }, Object.assign({ lean: 2 }, po), Object.assign({ blink: S.blinkAt(lt, 3), time: lt }, f), L));
+// rideG: gait driven by ground distance, so legs move only while the horse travels and stop when it stops.
+// xf(lt) = screen x; gf(lt) = ground x (defaults to xf; pass xf + background scroll when the set pans).
+const rideG = (c, ch, xf, y, uu, col, lt, L, po = {}, f = {}, face = 1, k = 0, gf = xf, amp = 1) => {
+  const x = xf(lt), g = gf(lt), v = Math.abs(gf(lt + .05) - gf(lt - .05)) / .1;
+  ride(c, ch, x, y, uu, col, lt, face * g / (uu * 4) + k, amp * K.clamp(v / (uu * 3)), L, po, f, face); };
+// mgPan: draw a set scrolled left by off px, tiled with a mirrored copy so there is no seam.
+S.mgPan = (c, name, off) => { const s = VP.bg(name), w = s.w, o = Math.round(((off % (2 * w)) + 2 * w) % (2 * w)), I = s.img, sw = I.width - 8, sh = I.height;
+  const D = x => c.drawImage(I, 4, 0, sw, sh, x, 0, w + 1, s.h); // trim the set's light edge columns so tiles meet cleanly
+  D(-o); c.save(); c.translate(2 * w - o + 1, 0); c.scale(-1, 1); D(0); c.restore(); if (o > w) D(2 * w - o); };
+const WHITEH = ['#e8e4dc', '#a8a49c'], BAY = ['#6a3a1e', '#3a1e0e'], GREYH = ['#8a8a8a', '#4a4a4a'];
+// ---- New Year shared helpers (loaded after ny_head.html, before bodyN.js) ----
+const NY = S.NYC, NYX = S.NYX;
+const PARTYL = lt => VP.light('studio', lt, { swing: 4, set: { L: [.2, -.8], amb: '#3a2a5a', ambA: .35, rim: '#ffb0e0', rimA: .9, tint: '#c080ff', tintA: .12 } });
+const ROOM = lt => VP.light('studio', lt, { swing: 3, set: { L: [-.6, -.7], amb: '#4a3a30', ambA: .3, rim: '#ffe0b0', rimA: .8, tint: '#ffd8a0', tintA: .08 } });
+// a paper wall calendar: big date line + small month line
+const nyCal = (c, x, y, s, big, small, o = {}) => { c.save(); c.translate(x, y); c.rotate(o.rot || 0); c.scale(s, s);
+  c.fillStyle = 'rgba(0,0,0,.25)'; c.fillRect(-58, -66, 124, 150); c.fillStyle = o.paper || '#f8f2e4'; c.fillRect(-62, -70, 124, 150);
+  c.fillStyle = o.head || '#c8281e'; c.fillRect(-62, -70, 124, 34); c.fillStyle = '#fff'; c.font = 'bold 20px Oswald, sans-serif'; c.textAlign = 'center'; c.fillText(small, 0, -45);
+  c.fillStyle = '#2a2020'; c.font = `bold ${o.px || 66}px Anton, sans-serif`; c.fillText(big, 0, 36);
+  c.fillStyle = '#5a4a3a'; [-40, -20, 0, 20, 40].forEach(dx => { c.beginPath(); c.arc(dx, -70, 3, 0, TAU); c.fill(); }); c.restore(); };
+// one flying calendar page (for flips and the 10 lost days)
+const nyPage = (c, x, y, s, rot, txt, a = 1) => { c.save(); c.globalAlpha = a; c.translate(x, y); c.rotate(rot); c.scale(s, s); c.fillStyle = '#f8f2e4'; c.fillRect(-40, -50, 80, 100); c.fillStyle = '#c8281e'; c.fillRect(-40, -50, 80, 20); c.fillStyle = '#2a2020'; c.font = 'bold 44px Anton, sans-serif'; c.textAlign = 'center'; c.fillText(txt, 0, 30); c.restore(); };
+// fireworks burst at (x,y) that started at t0, radius grows then fades; col colour
+const nyBurst = (c, lt, t0, x, y, col, R = 120, n = 22, seed = 1) => { const q = (lt - t0) / 1.8; if (q <= 0 || q >= 1) return; const r = S.rng(seed);
+  c.save(); c.globalCompositeOperation = 'lighter';
+  for (let k = 0; k < n; k++) { const a = k / n * TAU + r() * .2, d = R * E.out(q) * (.8 + r() * .3), px = x + Math.cos(a) * d, py = y + Math.sin(a) * d + 30 * q * q;
+    c.globalAlpha = (1 - q) * .9; c.strokeStyle = col; c.lineWidth = 3 * (1 - q) + 1; c.beginPath(); c.moveTo(x + Math.cos(a) * d * .7, y + Math.sin(a) * d * .7 + 20 * q * q); c.lineTo(px, py); c.stroke();
+    c.fillStyle = '#ffffff'; c.beginPath(); c.arc(px, py, 2.2, 0, TAU); c.fill(); }
+  const g = c.createRadialGradient(x, y, 0, x, y, R * .8); g.addColorStop(0, S.rgba(col, .35 * (1 - q))); g.addColorStop(1, S.rgba(col, 0)); c.fillStyle = g; c.fillRect(x - R, y - R, 2 * R, 2 * R); c.restore(); };
+// rocket trail rising to a burst
+const nyRocket = (c, lt, t0, x, y, col, seed) => { const q = (lt - t0 + .8) / .8; if (q > 0 && q < 1) { const py = lerp(720, y, E.out(q)); c.save(); c.globalCompositeOperation = 'lighter'; c.strokeStyle = S.rgba('#ffe0a0', .8); c.lineWidth = 2; c.beginPath(); c.moveTo(x, py); c.lineTo(x, py + 40); c.stroke(); c.restore(); } nyBurst(c, lt, t0, x, y, col, 110, 22, seed); };
+// confetti falling from the top, density a (0..1)
+const nyConfetti = (c, lt, a = 1, n = 80, seed = 3, t0 = 0) => { if (a <= 0) return; const r = S.rng(seed), cols = ['#ffd040', '#ff5060', '#60c0ff', '#80ff90', '#ffffff', '#c080ff'];
+  for (let k = 0; k < n; k++) { const sx = r() * 1280, sp = 60 + r() * 80, ph = r() * 10, y = ((lt - t0) * sp + ph * 72) % 800 - 60; if (lt - t0 < 0) continue; const x = sx + Math.sin(lt * 2 + k) * 20;
+    c.save(); c.globalAlpha = a; c.translate(x, y); c.rotate(lt * 3 + k); c.fillStyle = cols[k % 6]; c.fillRect(-4, -2, 8, 4); c.restore(); } };
+// the Times Square ball: glowing faceted sphere on the pole; drop q 0 (top) -> 1 (bottom)
+const nyBall = (c, q, lt, glow = 1) => { const y = lerp(36, 132, E.io(q)), x = 640; S.glow(c, x, y, 70 * glow, '#a0d0ff', .55 * glow);
+  const g = c.createRadialGradient(x - 6, y - 6, 2, x, y, 18); g.addColorStop(0, '#ffffff'); g.addColorStop(.5, '#a8d8ff'); g.addColorStop(1, '#4a6ae8'); c.fillStyle = g; c.beginPath(); c.arc(x, y, 18, 0, TAU); c.fill();
+  c.strokeStyle = 'rgba(255,255,255,.5)'; c.lineWidth = .8; for (let k = -2; k <= 2; k++) { c.beginPath(); c.ellipse(x, y, 18, Math.abs(k) * 5 + 1, 0, 0, TAU); c.stroke(); c.beginPath(); c.ellipse(x, y, Math.abs(k) * 5 + 1, 18, 0, 0, TAU); c.stroke(); }
+  for (let k = 0; k < 6; k++) { const a = lt * 2 + k; c.fillStyle = ['#ff6080', '#ffd040', '#80ff90'][k % 3]; c.globalAlpha = .7 + .3 * Math.sin(lt * 6 + k); c.beginPath(); c.arc(x + Math.cos(a) * 12, y + Math.sin(a * 1.3) * 10, 2.2, 0, TAU); c.fill(); } c.globalAlpha = 1; };
+// big pop-in countdown number in screen space (over layer, 1920x1080)
+const nyNum = (c, txt, lt, t0, o = {}) => { const q = lt - t0; if (q < 0 || q > (o.hold || .9)) return; const s = q < .15 ? lerp(1.8, 1, E.out(q / .15)) : 1, a = q > (o.hold || .9) - .2 ? ((o.hold || .9) - q) / .2 : 1;
+  c.save(); c.globalAlpha = a; c.translate(o.x || 960, o.y || 420); c.scale(s, s); c.font = `${o.px || 260}px Anton`; c.textAlign = 'center'; c.textBaseline = 'middle'; c.lineWidth = 16; c.strokeStyle = '#1a1030'; c.strokeText(txt, 0, 0); c.fillStyle = o.col || '#ffd040'; c.fillText(txt, 0, 0); c.restore(); };
+// a row of party people in the street, spaced so nobody overlaps; cheer 0..1 raises arms; bounce on the beat
+const nyCrowd = (c, lt, L, list, y, uu, cheer = 0, x0 = 120, dx = 150) => list.forEach((ch, k) => { const x = x0 + k * dx + Math.sin(k * 3.3) * 14, b = cheer * Math.abs(Math.sin(lt * 5 + k)) * 6;
+  fig(c, ch, x, y - b, uu, pose(lt, k, { face: k % 2 ? -1 : 1, shN: lerp(-1, 150, cheer) + Math.sin(lt * 6 + k) * 10 * cheer, shF: lerp(2, 140, cheer), elN: lerp(6, 30, cheer), elF: lerp(6, 30, cheer) }), lt, k, L, { smile: 1, look: [k % 2 ? -.3 : .3, -.6] }); });
+// date stamp "CANCELLED"-style rubber stamp in screen space
+const nyStamp = (c, txt, lt, t0, x, y, col = '#c8281e', rot = -.18, px = 110) => { const q = lt - t0; if (q < 0) return; const s = q < .14 ? lerp(2.2, 1, E.in ? E.in(q / .14) : q / .14) : 1;
+  c.save(); c.translate(x, y); c.rotate(rot); c.scale(s, s); c.globalAlpha = Math.min(1, q / .08) * .9; c.strokeStyle = col; c.lineWidth = 10; c.font = `${px}px Anton`; c.textAlign = 'center'; c.textBaseline = 'middle'; const w = c.measureText(txt).width; c.strokeRect(-w / 2 - 30, -px * .62, w + 60, px * 1.24); c.fillStyle = col; c.fillText(txt, 0, 4); c.restore(); };
+const snow = (c, lt, n = 90, a = 1) => { c.save(); c.globalAlpha = a; c.fillStyle = '#ffffff'; for (let k = 0; k < n; k++) { const r = S.rng(k + 40), x = (r() * 1400 + Math.sin(lt + k) * 30) % 1300, y = (r() * 760 + lt * (40 + r() * 40)) % 760 - 20; c.beginPath(); c.arc(x, y, 1.5 + r() * 2.5, 0, TAU); c.fill(); } c.restore(); };
+const shiver = (lt, a = 1) => Math.sin(lt * 40) * 2 * a;
+const CHICK = (c, x, y, s, lt, k) => { const p = Math.max(0, Math.sin(lt * 4 + k * 2)); c.save(); c.translate(x, y); c.scale(s * (k % 2 ? -1 : 1), s); c.fillStyle = 'rgba(0,0,0,.2)'; c.beginPath(); c.ellipse(0, 2, 14, 3, 0, 0, TAU); c.fill();
+  c.fillStyle = '#f0e8d8'; c.beginPath(); c.ellipse(0, -12, 13, 10, 0, 0, TAU); c.fill(); c.save(); c.translate(10, -18); c.rotate(p * .9); c.beginPath(); c.arc(0, 0, 6, 0, TAU); c.fill(); c.fillStyle = '#c8281e'; c.fillRect(-2, -8, 4, 4); c.fillStyle = '#e8a020'; c.beginPath(); c.moveTo(5, -1); c.lineTo(10, 1); c.lineTo(5, 3); c.fill(); c.fillStyle = '#2a2020'; c.fillRect(1, -2, 2, 2); c.restore();
+  c.strokeStyle = '#e8a020'; c.lineWidth = 2; c.beginPath(); c.moveTo(-3, -3); c.lineTo(-3, 2); c.moveTo(3, -3); c.lineTo(3, 2); c.stroke(); c.restore(); };
+// simple painted Europe: countries as soft blobs with labels; lit 0..1 turns gold
+const EU = [['PORTUGAL', 250, 470, 40, 70], ['SPAIN', 350, 470, 110, 80], ['FRANCE', 470, 340, 110, 100], ['ITALY', 640, 450, 50, 120], ['BRITAIN', 400, 200, 60, 90], ['RUSSIA', 1000, 220, 220, 150], ['GERMANY', 640, 270, 90, 80], ['POLAND', 790, 260, 80, 70]];
+const europe = (c, lit, lt) => { c.fillStyle = '#9ac0d8'; c.fillRect(120, 90, 1040, 520); c.strokeStyle = '#6a8aa0'; c.lineWidth = 2; for (let k = 0; k < 8; k++) { c.beginPath(); for (let x = 140; x < 1150; x += 20) c.lineTo(x, 120 + k * 64 + Math.sin(x * .03 + lt + k) * 3); c.globalAlpha = .25; c.stroke(); c.globalAlpha = 1; }
+  EU.forEach(([n, x, y, rx, ry], i) => { const q = lit[n] || 0; c.fillStyle = S.mix('#b8aa88', '#f0c040', q); c.beginPath(); for (let k = 0; k <= 24; k++) { const a = k / 24 * TAU, r = 1 + .15 * Math.sin(a * 3 + i) + .08 * Math.sin(a * 5 + i * 2); c.lineTo(x + Math.cos(a) * rx * r, y + Math.sin(a) * ry * r); } c.closePath(); c.fill(); c.strokeStyle = '#6a5a3a'; c.lineWidth = 2; c.stroke();
+    if (q > 0) S.glow(c, x, y, rx * 1.4, '#ffd040', .35 * q); c.fillStyle = '#3a2a1a'; c.font = '20px Anton'; c.textAlign = 'center'; c.fillText(n, x, y + 8); });
+  c.strokeStyle = '#6a5a3a'; c.lineWidth = 8; c.strokeRect(120, 90, 1040, 520); };
+window.SHOTS = [
+  // 3.01 MED: snowy medieval village; a monk takes a garland down from a door; CANCELLED stamp
+  { set: 'ny_snowvillage', cam: { z: [1.25, 1.35], x: [400, 420], y: [450, 450], ease: E.io }, bed: [['wind_loop', .25]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tM = at(Sh, 'medieval', 1); Sh.tC = at(Sh, 'cancelled', Sh.dur - 1); },
+    draw: (c, lt, u, Sh) => { const L = COLD(lt), rm = seg(lt, Sh.tC - 1.6, Sh.tC - .4);
+      // garland on the cottage door, lifted down by the monk
+      const gx = 380, gy = lerp(470, 560, rm); c.strokeStyle = '#2a6a2a'; c.lineWidth = 7; c.beginPath(); c.arc(gx, gy, 20, 0, TAU); c.stroke(); c.fillStyle = '#c8281e'; c.beginPath(); c.arc(gx, gy + 20, 5, 0, TAU); c.fill();
+      fig(c, NY.MONK, 440, 666, 32, pose(lt, 1, { face: -1, shN: lerp(110, 50, rm), elN: 20, shF: lerp(100, 40, rm), elF: 20 }), lt, 1, L, { angry: .3, look: [-.7, -.3] });
+      fig(c, NY.VILLW, 160, 670, 30, pose(lt, 2, { face: 1 }), lt, 2, L, { worry: seg(lt, Sh.tC, Sh.tC + .3), open: .4 * seg(lt, Sh.tC, Sh.tC + .3), look: [.7, 0] });
+      snow(c, lt, 70, .8); },
+    over: [(c, lt, u, Sh) => K.dateTag(c, 'MEDIEVAL EUROPE', lt, { at: Sh.tM }), (c, lt, u, Sh) => nyStamp(c, 'CANCELLED', lt, Sh.tC, 1300, 420)],
+    sfx: [[.1, 'wind_loop', .25], [1.6, 'footsteps', .2], ['cancelled', 'stamp', .7]] },
+
+  // 3.02 MED: inside a stone church at Christmas: evergreen, candles, choir; a cheeky card pops up
+  { set: 'np_notredame', cam: { z: [1.2, 1.3], x: [640, 640], y: [420, 410], ease: E.io }, bed: [['hum_loop', .2]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tX = at(Sh, 'christmas', 3); Sh.tP = at(Sh, 'pagan', Sh.dur - 1.5); },
+    draw: (c, lt, u, Sh) => { const L = CANDLE(lt);
+      // evergreen tree and candles by the altar
+      [[300, 600], [980, 600]].forEach(([x, y], k) => { for (let j = 0; j < 4; j++) { c.fillStyle = S.mix('#1e4a2a', '#3a7a3a', j * .2); c.beginPath(); c.moveTo(x, y - 190 + j * 40); c.lineTo(x - 50 - j * 14, y - 100 + j * 30); c.lineTo(x + 50 + j * 14, y - 100 + j * 30); c.fill(); } c.fillStyle = '#5a3a1a'; c.fillRect(x - 8, y - 20, 16, 20); });
+      for (let k = 0; k < 6; k++) { const x = 470 + k * 68, fl = 1 + .2 * Math.sin(lt * 9 + k * 2); c.fillStyle = '#f0e8d0'; c.fillRect(x - 4, 520, 8, 40); S.glow(c, x, 514, 26 * fl, '#ffb040', .5); c.fillStyle = '#ffd070'; c.beginPath(); c.ellipse(x, 512, 3 * fl, 7 * fl, 0, 0, TAU); c.fill(); }
+      [[NY.MONK, 520], [NY.VILLW, 640], [NY.VILL, 760]].forEach(([ch, x], k) => fig(c, ch, x, 680, 30, pose(lt, k, { face: k === 1 ? 1 : (k ? -1 : 1), shN: 50, elN: 110 }), lt, k, L, { open: .25 + .25 * Math.sin(lt * 3 + k), squint: .4, look: [0, -.3] })); },
+    over: [(c, lt, u, Sh) => K.card(c, 'CHRISTMAS', lt, { at: Sh.tX, x: 960, y: 160, px: 64 }), (c, lt, u, Sh) => K.card(c, '...ALSO PAGAN ROOTS', lt, { at: Sh.tP, x: 1460, y: 290, px: 46, rot: 5, bg: '#ffe070' })],
+    sfx: [[.1, 'hum_loop', .2], ['christmas', 'chime', .4], ['pagan', 'ding', .55]] },
+
+  // 3.03 MED: 1 January in the snowy village: a villager feeds the chickens and yawns; nothing happens
+  { set: 'ny_snowvillage', cam: { z: [1.5, 1.55], x: [960, 960], y: [480, 480], ease: E.io }, bed: [['wind_loop', .15], ['crickets', .25]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tO = at(Sh, 'ordinary', Sh.dur - 1); },
+    draw: (c, lt, u, Sh) => { const L = COLD(lt), yw = Math.max(0, Math.sin(Math.PI * seg(lt, Sh.tO - 1, Sh.tO + .6))), th = Math.max(0, Math.sin(lt * 2));
+      for (let k = 0; k < 4; k++) CHICK(c, 900 + k * 70 + Math.sin(lt * .7 + k) * 10, 680 + (k % 2) * 10, 1.3, lt, k);
+      fig(c, NY.VILL, 780, 670, 32, pose(lt, 1, { face: 1, shN: lerp(40, 160, yw) + 20 * th * (1 - yw), elN: 30, shF: lerp(-4, 150, yw), elF: 30 }), lt, 1, L, { open: yw, squint: .5 + .4 * yw, look: [.5, .4] });
+      if (th > .9 && yw < .1) for (let k = 0; k < 6; k++) { const r = S.rng(Math.floor(lt / 3) * 9 + k); c.fillStyle = '#c8a050'; c.fillRect(860 + r() * 60, 640 + r() * 40, 3, 3); }
+      snow(c, lt, 50, .6); },
+    over: [(c, lt) => K.dateTag(c, '1 JANUARY', lt, { at: .4 }), (c, lt, u, Sh) => K.card(c, '...NOTHING.', lt, { at: Sh.tO, x: 760, y: 220, px: 60, rot: -3 })],
+    sfx: [[.1, 'wind_loop', .15], [.1, 'crickets', .25], [.6, 'brush', .2], ['ordinary', 'yawn', .5]] },
+
+  // 3.04 WIDE: Vatican hall, 1582: Pope Gregory XIII with astronomers around a globe and the calendar chart
+  { set: 'ny_vatican', cam: { z: [1.0, 1.12], x: [640, 640], y: [390, 380], ease: E.io }, bed: [['hum_loop', .15]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tP = at(Sh, 'pope', 1.5); Sh.tD = at(Sh, 'drifted', 4.5); Sh.tG = at(Sh, 'gregorian', Sh.dur - 1.5); },
+    draw: (c, lt, u, Sh) => { const L = SUN(lt);
+      // globe on a table, turning
+      c.fillStyle = '#6a4a2a'; c.fillRect(560, 560, 160, 12); c.fillRect(600, 572, 12, 70); c.fillRect(668, 572, 12, 70); c.fillStyle = '#c8a040'; c.fillRect(636, 520, 8, 40);
+      const g = c.createRadialGradient(630, 490, 4, 640, 500, 40); g.addColorStop(0, '#9ad0e8'); g.addColorStop(1, '#2a5a8a'); c.fillStyle = g; c.beginPath(); c.arc(640, 500, 38, 0, TAU); c.fill(); c.save(); c.beginPath(); c.arc(640, 500, 38, 0, TAU); c.clip(); c.fillStyle = '#7aa05a'; for (let k = 0; k < 3; k++) { const x = 600 + ((lt * 20 + k * 40) % 120); c.beginPath(); c.ellipse(x, 490 + k * 10, 14, 20, .3, 0, TAU); c.fill(); } c.restore(); c.strokeStyle = '#c8a040'; c.lineWidth = 3; c.beginPath(); c.arc(640, 500, 44, -1.9, 1.2); c.stroke();
+      // a red line slips off the calendar chart on "drifted"
+      const dq = seg(lt, Sh.tD - .3, Sh.tD + .6); c.strokeStyle = '#c8281e'; c.lineWidth = 4; c.beginPath(); c.moveTo(510, 300); c.lineTo(770, 300 + 60 * dq); c.stroke();
+      fig(c, NY.GREGORY, 420, 660, 34, pose(lt, 1, { face: 1, shN: lerp(10, 100, seg(lt, Sh.tG - .5, Sh.tG)), elN: 10 }), lt, 1, L, { smile: .4, look: [.7, -.3] });
+      fig(c, NY.ASTRO, 860, 660, 30, pose(lt, 2, { face: -1, shN: 60, elN: 90 }), lt, 2, L, { worry: dq, look: [-.7, -.2] });
+      fig(c, NY.ASTRO2, 1000, 664, 30, pose(lt, 3, { face: -1, shN: 30 + 40 * dq, elN: 60 }), lt, 3, L, { raise: dq, look: [-.7, -.5] }); },
+    over: [(c, lt, u, Sh) => K.dateTag(c, 'POPE GREGORY XIII · 1582', lt, { at: Sh.tP }), (c, lt, u, Sh) => K.card(c, 'GREGORIAN CALENDAR', lt, { at: Sh.tG, x: 960, y: 900, px: 60 })],
+    sfx: [[.1, 'hum_loop', .15], ['pope', 'bell', .35], ['drifted', 'trombone', .3], ['gregorian', 'chime', .45]] },
+
+  // 3.05 MED: ten dates fly off the calendar like leaves; the page lands on 1 JANUARY with confetti
+  { set: 'ny_vatican', cam: { z: [1.7, 1.75], x: [640, 640], y: [330, 330], ease: E.io }, bed: [['hum_loop', .1]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tT = at(Sh, 'ten', 1.5); Sh.tJ = at(Sh, 'january', Sh.dur - 1.5); },
+    draw: (c, lt, u, Sh) => { ROOM(lt); const DAYS = [5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+      DAYS.forEach((d, k) => { const t0 = Sh.tT - .2 + k * .18, q = seg(lt, t0, t0 + 1.4); if (lt < t0) return; const r = S.rng(k + 70); nyPage(c, 640 + (r() - .5) * 600 * E.out(q), 330 - 60 * q + 380 * q * q, .7, (r() - .5) * 6 * q, String(d), 1 - seg(q, .7, 1)); });
+      const land = lt > Sh.tJ - .2; nyCal(c, 640, 330, 1.05, land ? '1' : (lt > Sh.tT - .2 + 10 * .18 ? '15' : '4'), land ? 'JANUARY' : 'OCTOBER 1582', { px: 70 });
+      nyConfetti(c, lt, seg(lt, Sh.tJ, Sh.tJ + .3), 60, 13, Sh.tJ); },
+    over: [(c, lt, u, Sh) => K.card(c, '+10 DAYS', lt, { at: Sh.tT, x: 1460, y: 200, px: 64, rot: 4 }), (c, lt, u, Sh) => K.card(c, 'NEW YEAR: 1 JANUARY', lt, { at: Sh.tJ, x: 960, y: 940, px: 56 })],
+    sfx: [[.1, 'hum_loop', .1], ['ten', 'whoosh', .35], ['ten', 'paper', .4], ['january', 'party_horn', .55], ['january', 'cheer', .35]] },
+
+  // 3.06 MED: map of Europe: Italy, Spain, Portugal, France light gold; Britain and Russia stay grey
+  { set: 'np_parch', cam: { z: [1.0, 1.06], x: [640, 640], y: [360, 360], ease: E.io }, bed: [['hum_loop', .08]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tC = at(Sh, 'catholic', 1.2); Sh.tO = at(Sh, 'others', Sh.dur - 2); },
+    draw: (c, lt, u, Sh) => { const lit = {}; ['ITALY', 'SPAIN', 'PORTUGAL', 'FRANCE', 'POLAND'].forEach((n, k) => lit[n] = seg(lt, Sh.tC + k * .35, Sh.tC + k * .35 + .3)); lit.GERMANY = .5 * seg(lt, Sh.tO - .5, Sh.tO);
+      europe(c, lit, lt);
+      // Britain and Russia: grumpy faces
+      const g = seg(lt, Sh.tO, Sh.tO + .3); [[400, 200], [1000, 220]].forEach(([x, y]) => { if (g <= 0) return; c.save(); c.globalAlpha = g; c.fillStyle = '#3a2a1a'; c.beginPath(); c.arc(x - 14, y - 30, 4, 0, TAU); c.arc(x + 14, y - 30, 4, 0, TAU); c.fill(); c.lineWidth = 3; c.strokeStyle = '#3a2a1a'; c.beginPath(); c.moveTo(x - 22, y - 42); c.lineTo(x - 6, y - 38); c.moveTo(x + 22, y - 42); c.lineTo(x + 6, y - 38); c.moveTo(x - 10, y - 16); c.quadraticCurveTo(x, y - 22, x + 10, y - 16); c.stroke(); c.restore(); }); },
+    over: [(c, lt, u, Sh) => K.card(c, 'NOT YET.', lt, { at: Sh.tO + .3, x: 1500, y: 560, px: 56, rot: -4 })],
+    sfx: [[.1, 'hum_loop', .08], ['catholic', 'ding', .35]] },
+];
+VP.build(); K.boot();
+</script></body></html>

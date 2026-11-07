@@ -36,7 +36,8 @@
 <script src="../../../spain-3-civil-war/production/es3_sets_act6b.js"></script>
 <script src="../../../suez-canal/production/sz_sets.js"></script>
 <script src="../../../suez-canal/production/sz_sets2.js"></script>
+<script src="../ny_sets.js"></script>
 <script>
-const NAMES=['sz_delta','sz_temple','nk_beijing','jp_village','church','np_notredame','sz_london','np_moscow','nk_snow','np_paris','hall','study','library','village','plain','huerta','hilltown','plaza','mapwide','np_parch','living','room','np_bedroom','ec_bedroom','mg_square','market','sz_oldcanal','mg_baghdad','jp_home','nk_square','nk_street','np_dorm','rooftop','parish','square','mstreet','estate','cafe','goldhall','np_longwood','towngate','river','jp_market','jp_stadium','nk_banquet','sz_palace','throne','mg_iwan'];
+const NAMES=['ny_times','ny_babylon','ny_fields','ny_china','ny_rome','ny_senate','ny_janus','ny_workshop','ny_snowvillage','ny_vatican','ny_moscow','ny_party','ny_london','ny_bedroom'];
 window.draw=t=>{const c=document.getElementById('c').getContext('2d');c.setTransform(1.5,0,0,1.5,0,0);c.fillStyle='#000';c.fillRect(0,0,1280,720);try{VP.drawSet(c,NAMES[t])}catch(e){c.fillStyle='#f00';c.font='30px sans-serif';c.fillText(e.message,20,100)}c.setTransform(1,0,0,1,0,0);c.fillStyle='#000';c.fillRect(0,0,420,70);c.fillStyle='#ff0';c.font='56px sans-serif';c.fillText(NAMES[t],10,55)};
 </script></body></html>

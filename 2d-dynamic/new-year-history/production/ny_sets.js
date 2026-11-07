@@ -29,7 +29,7 @@
     // flanking billboard towers
     const BB = [['#e8303a', '#ffd040'], ['#2a8ae8', '#ffffff'], ['#f0a020', '#2a1a0a'], ['#30c080', '#0a2a1a'], ['#c040c0', '#ffffff'], ['#e8e040', '#e8303a']];
     const tower = (x, tw, top, side) => { g.fillStyle = '#24223a'; g.fillRect(x, top, tw, 600 - top); g.fillStyle = S.rgba('#000000', .3); g.fillRect(side > 0 ? x + tw * .8 : x, top, tw * .2, 600 - top);
-      for (let k = 0, y = top + 14; y < 520; k++) { const bh = 50 + (k * 37 % 50), [a, b] = BB[(k + (x | 0)) % BB.length]; S.glow(g, x + tw / 2, y + bh / 2, tw * .7, a, .25);
+      for (let k = 0, y = top + 14; y < 520; k++) { const bh = 50 + (k * 37 % 50), [a, b] = BB[Math.abs(k + (x | 0)) % BB.length]; S.glow(g, x + tw / 2, y + bh / 2, tw * .7, a, .25);
         const bg = g.createLinearGradient(x, y, x + tw, y + bh); bg.addColorStop(0, a); bg.addColorStop(1, S.mix(a, '#000000', .35)); g.fillStyle = bg; g.fillRect(x + 8, y, tw - 16, bh);
         g.fillStyle = b; g.globalAlpha = .85; for (let j = 0; j < 3; j++) g.fillRect(x + 18 + j * (tw - 40) / 3, y + bh * .35, (tw - 50) / 3, bh * .14 + (j % 2) * 6); g.fillRect(x + 18, y + bh * .65, tw * .5, 6); g.globalAlpha = 1; y += bh + 14; } };
     tower(-10, 260, 60, 1); tower(250, 170, 200, 1); tower(860, 170, 200, -1); tower(1030, 260, 60, -1);
@@ -200,7 +200,7 @@
   VP.set('ny_moscow', 1280, 720, (g, w, h) => {
     sky(g, w, h, [[0, '#8a96aa'], [.7, '#d8dce4'], [1, '#e8ecf0']]);
     const onion = (x, y, r, col) => { g.fillStyle = col; g.beginPath(); g.moveTo(x - r * .9, y); g.bezierCurveTo(x - r * 1.4, y - r * 1.2, x - r * .2, y - r * 1.5, x, y - r * 2.2); g.bezierCurveTo(x + r * .2, y - r * 1.5, x + r * 1.4, y - r * 1.2, x + r * .9, y); g.fill(); g.fillStyle = S.rgba('#ffffff', .3); g.beginPath(); g.ellipse(x - r * .35, y - r * .8, r * .15, r * .4, -.3, 0, TAU); g.fill(); g.fillStyle = '#e8c860'; g.fillRect(x - 2, y - r * 2.6, 4, r * .5); };
-    g.fillStyle = '#e8e0d0'; g.fillRect(500, 200, 280, 260); [[560, 200, 34, '#2a8a5a'], [640, 160, 50, '#c8a040'], [720, 200, 34, '#3a5ab0']].forEach(([x, y, r, col]) => { g.fillStyle = '#e8e0d0'; g.fillRect(x - r * .7, y, r * 1.4, 60); onion(x, y, r, col); snowcap(g, x - r * .6, y - r * 1.2, r * 1.2, 6); });
+    MX.bricks(g, 500, 200, 280, 260, '#e8dcc8', 8001); g.fillStyle = S.rgba('#000000', .12); g.fillRect(700, 200, 80, 260); for (let k = 0; k < 4; k++) { g.fillStyle = '#5a4a4a'; g.beginPath(); g.moveTo(525 + k * 64, 330); g.lineTo(525 + k * 64, 290); g.quadraticCurveTo(541 + k * 64, 268, 557 + k * 64, 290); g.lineTo(557 + k * 64, 330); g.fill(); g.fillStyle = '#ffd890'; g.fillRect(531 + k * 64, 296, 20, 30); } g.fillStyle = '#c8281e'; g.fillRect(500, 240, 280, 10); g.fillStyle = '#3a2a2a'; g.beginPath(); g.moveTo(610, 460); g.lineTo(610, 390); g.quadraticCurveTo(640, 360, 670, 390); g.lineTo(670, 460); g.fill(); [[560, 200, 34, '#2a8a5a'], [640, 160, 50, '#c8a040'], [720, 200, 34, '#3a5ab0']].forEach(([x, y, r, col]) => { g.fillStyle = '#e8e0d0'; g.fillRect(x - r * .7, y, r * 1.4, 60); onion(x, y, r, col); snowcap(g, x - r * .6, y - r * 1.2, r * 1.2, 6); });
     const bld = (x, bw, top, col) => { g.fillStyle = col; g.fillRect(x, top, bw, 580 - top); windowsGrid(g, x + 6, top + 20, bw - 12, 560 - top - 40, Math.round(bw / 40), Math.round((560 - top) / 60), '#ffd890', S.mix(col, '#000000', .5), x | 0); snowcap(g, x, top, bw, 10); };
     bld(0, 230, 240, '#c89a7a'); bld(230, 220, 300, '#d8c8a0'); bld(800, 230, 280, '#b8a8c0'); bld(1030, 250, 230, '#c8907a');
     // red posters with a star

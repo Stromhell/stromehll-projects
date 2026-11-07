@@ -1,0 +1,150 @@
+<!doctype html><html><head><meta charset="utf-8"><title>NY act 5</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/vp/engine.js"></script><script src="../../../../shared/vp/cast.js"></script><script src="../../../../shared/vp/scenes.js"></script><script src="../../../../shared/vp/spain.js"></script>
+<script src="../../../../shared/kit.js"></script><script src="../../../../shared/vp.js"></script>
+<script src="../../../../spain-1-al-andalus/production/es1_sets.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act1.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act2.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act3.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act4.js"></script><script src="../../../../spain-1-al-andalus/production/es1_sets_act5.js"></script><script src="../../../../spain-1-al-andalus/production/es1_cast.js"></script>
+<script src="../../../../spain-2-empire/production/es2_sets.js"></script><script src="../../../../spain-2-empire/production/es2_sets_act2.js"></script>
+<script src="../../../../spain-3-civil-war/production/es3_sets.js"></script><script src="../../../../spain-3-civil-war/production/es3_sets_act4b.js"></script><script src="../../../../spain-3-civil-war/production/es3_sets_act5b.js"></script><script src="../../../../spain-3-civil-war/production/es3_cast.js"></script>
+<script src="../../../../japan-comeback/production/jp_cast.js"></script><script src="../../../../japan-comeback/production/jp_sets.js"></script>
+<script src="../../../../suez-canal/production/sz_sets.js"></script><script src="../../../../suez-canal/production/sz_sets2.js"></script><script src="../../../../suez-canal/production/sz_cast.js"></script><script src="../../../../suez-canal/production/sz_props.js"></script>
+<script src="../../../../napoleon/production/np_sets.js"></script><script src="../../../../napoleon/production/np_cast.js"></script><script src="../../../../napoleon/production/np_props.js"></script>
+<script src="../../../../mongols-ain-jalut/production/mg_geo.js"></script><script src="../../../../mongols-ain-jalut/production/mg_sets.js"></script><script src="../../../../mongols-ain-jalut/production/mg_detail.js"></script><script src="../../../../mongols-ain-jalut/production/mg_cast.js"></script><script src="../../../../mongols-ain-jalut/production/mg_props.js"></script><script src="../../ny_sets.js"></script><script src="../../ny_cast.js"></script>
+<script src="timing.js"></script>
+<script>
+KIT.xfade = 0; // QA 5 Nov: hard cuts, dissolves ghosted figures
+const K = KIT, E = K.E, C = S.MGC, NPC = S.NPC, SZC = S.SZC, H1 = S.ES1H, PL = S.mgPlaces, MX = S.MGX, TAU = Math.PI * 2;
+const at = VP.at, seg = K.seg, lerp = K.lerp;
+const SUN = lt => VP.light('studio', lt, { swing: 3, set: { L: [.6, -.9], amb: '#6a5a4a', ambA: .2, rim: '#fff0d0', rimA: .8, tint: '#ffe8c0', tintA: .08 } });
+const DUSK = lt => VP.light('studio', lt, { swing: 3, set: { L: [-.7, -.6], amb: '#4a3a5a', ambA: .3, rim: '#ffc890', rimA: .9, tint: '#ffb070', tintA: .14 } });
+const DAWN = lt => VP.light('studio', lt, { swing: 3, set: { L: [.7, -.5], amb: '#5a5a7a', ambA: .25, rim: '#ffd0a0', rimA: .9, tint: '#ffc8a0', tintA: .1 } });
+const COLD = lt => VP.light('studio', lt, { swing: 2, set: { L: [.3, -.9], amb: '#6a7a8a', ambA: .3, rim: '#e8f0ff', rimA: .7, tint: '#c8d8f0', tintA: .12 } });
+const GREY = lt => VP.light('studio', lt, { swing: 2, set: { L: [.4, -.9], amb: '#5a5a5a', ambA: .3, rim: '#f0f0f0', rimA: .6, tint: '#d0d0c8', tintA: .1 } });
+const NIGHT = lt => VP.light('studio', lt, { swing: 2, set: { L: [-.6, -.7], amb: '#2a3050', ambA: .45, rim: '#a8b8e8', rimA: .8, tint: '#4a5a9a', tintA: .2 } });
+const CANDLE = lt => VP.light('studio', lt, { swing: 6, set: { L: [-.8, -.4], amb: '#2a1a10', ambA: .45, rim: '#ffb050', rimA: 1, tint: '#ff9a40', tintA: .16 } });
+const FIRE = lt => VP.light('studio', lt, { swing: 8, set: { L: [.8, -.3], amb: '#3a1a10', ambA: .4, rim: '#ff8a30', rimA: 1, tint: '#ff7a30', tintA: .2 } });
+const fig = (c, ch, x, y, uu, pose, lt, k, L, f = {}) => { S.contact(c, x, y, uu * .5, .35); VP.figure(c, [x, y], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => S.person(cc, ch, x, y, uu, pose, Object.assign({ blink: S.blinkAt(lt, k), time: lt }, f), L)); };
+const pose = (lt, k, o) => Object.assign(S.idle(lt, k), o);
+const walk = (lt, k, o) => Object.assign(H1.walk(lt * 1.1 + k), o);
+const musket = (cc, a = -1.2) => wr => S.npMusket(cc, wr[0], wr[1], a, .9);
+const ride = (c, ch, x, y, uu, col, lt, ph, wk, L, po = {}, f = {}, face = 1) => VP.figure(c, [x, y], { k: .5, sy: -.2, a: .3, blur: 3 }, cc => VP.rider(cc, ch, x, y, uu, uu * 5, { face, ph, walk: wk, t: lt, col, tack: f.tack || { cloth: ['#7a2a22', '#3c1410'], trim: '#c8a040' } }, Object.assign({ lean: 2 }, po), Object.assign({ blink: S.blinkAt(lt, 3), time: lt }, f), L));
+// rideG: gait driven by ground distance, so legs move only while the horse travels and stop when it stops.
+// xf(lt) = screen x; gf(lt) = ground x (defaults to xf; pass xf + background scroll when the set pans).
+const rideG = (c, ch, xf, y, uu, col, lt, L, po = {}, f = {}, face = 1, k = 0, gf = xf, amp = 1) => {
+  const x = xf(lt), g = gf(lt), v = Math.abs(gf(lt + .05) - gf(lt - .05)) / .1;
+  ride(c, ch, x, y, uu, col, lt, face * g / (uu * 4) + k, amp * K.clamp(v / (uu * 3)), L, po, f, face); };
+// mgPan: draw a set scrolled left by off px, tiled with a mirrored copy so there is no seam.
+S.mgPan = (c, name, off) => { const s = VP.bg(name), w = s.w, o = Math.round(((off % (2 * w)) + 2 * w) % (2 * w)), I = s.img, sw = I.width - 8, sh = I.height;
+  const D = x => c.drawImage(I, 4, 0, sw, sh, x, 0, w + 1, s.h); // trim the set's light edge columns so tiles meet cleanly
+  D(-o); c.save(); c.translate(2 * w - o + 1, 0); c.scale(-1, 1); D(0); c.restore(); if (o > w) D(2 * w - o); };
+const WHITEH = ['#e8e4dc', '#a8a49c'], BAY = ['#6a3a1e', '#3a1e0e'], GREYH = ['#8a8a8a', '#4a4a4a'];
+// ---- New Year shared helpers (loaded after ny_head.html, before bodyN.js) ----
+const NY = S.NYC, NYX = S.NYX;
+const PARTYL = lt => VP.light('studio', lt, { swing: 4, set: { L: [.2, -.8], amb: '#3a2a5a', ambA: .35, rim: '#ffb0e0', rimA: .9, tint: '#c080ff', tintA: .12 } });
+const ROOM = lt => VP.light('studio', lt, { swing: 3, set: { L: [-.6, -.7], amb: '#4a3a30', ambA: .3, rim: '#ffe0b0', rimA: .8, tint: '#ffd8a0', tintA: .08 } });
+// a paper wall calendar: big date line + small month line
+const nyCal = (c, x, y, s, big, small, o = {}) => { c.save(); c.translate(x, y); c.rotate(o.rot || 0); c.scale(s, s);
+  c.fillStyle = 'rgba(0,0,0,.25)'; c.fillRect(-58, -66, 124, 150); c.fillStyle = o.paper || '#f8f2e4'; c.fillRect(-62, -70, 124, 150);
+  c.fillStyle = o.head || '#c8281e'; c.fillRect(-62, -70, 124, 34); c.fillStyle = '#fff'; c.font = 'bold 20px Oswald, sans-serif'; c.textAlign = 'center'; c.fillText(small, 0, -45);
+  c.fillStyle = '#2a2020'; c.font = `bold ${o.px || 66}px Anton, sans-serif`; c.fillText(big, 0, 36);
+  c.fillStyle = '#5a4a3a'; [-40, -20, 0, 20, 40].forEach(dx => { c.beginPath(); c.arc(dx, -70, 3, 0, TAU); c.fill(); }); c.restore(); };
+// one flying calendar page (for flips and the 10 lost days)
+const nyPage = (c, x, y, s, rot, txt, a = 1) => { c.save(); c.globalAlpha = a; c.translate(x, y); c.rotate(rot); c.scale(s, s); c.fillStyle = '#f8f2e4'; c.fillRect(-40, -50, 80, 100); c.fillStyle = '#c8281e'; c.fillRect(-40, -50, 80, 20); c.fillStyle = '#2a2020'; c.font = 'bold 44px Anton, sans-serif'; c.textAlign = 'center'; c.fillText(txt, 0, 30); c.restore(); };
+// fireworks burst at (x,y) that started at t0, radius grows then fades; col colour
+const nyBurst = (c, lt, t0, x, y, col, R = 120, n = 22, seed = 1) => { const q = (lt - t0) / 1.8; if (q <= 0 || q >= 1) return; const r = S.rng(seed);
+  c.save(); c.globalCompositeOperation = 'lighter';
+  for (let k = 0; k < n; k++) { const a = k / n * TAU + r() * .2, d = R * E.out(q) * (.8 + r() * .3), px = x + Math.cos(a) * d, py = y + Math.sin(a) * d + 30 * q * q;
+    c.globalAlpha = (1 - q) * .9; c.strokeStyle = col; c.lineWidth = 3 * (1 - q) + 1; c.beginPath(); c.moveTo(x + Math.cos(a) * d * .7, y + Math.sin(a) * d * .7 + 20 * q * q); c.lineTo(px, py); c.stroke();
+    c.fillStyle = '#ffffff'; c.beginPath(); c.arc(px, py, 2.2, 0, TAU); c.fill(); }
+  const g = c.createRadialGradient(x, y, 0, x, y, R * .8); g.addColorStop(0, S.rgba(col, .35 * (1 - q))); g.addColorStop(1, S.rgba(col, 0)); c.fillStyle = g; c.fillRect(x - R, y - R, 2 * R, 2 * R); c.restore(); };
+// rocket trail rising to a burst
+const nyRocket = (c, lt, t0, x, y, col, seed) => { const q = (lt - t0 + .8) / .8; if (q > 0 && q < 1) { const py = lerp(720, y, E.out(q)); c.save(); c.globalCompositeOperation = 'lighter'; c.strokeStyle = S.rgba('#ffe0a0', .8); c.lineWidth = 2; c.beginPath(); c.moveTo(x, py); c.lineTo(x, py + 40); c.stroke(); c.restore(); } nyBurst(c, lt, t0, x, y, col, 110, 22, seed); };
+// confetti falling from the top, density a (0..1)
+const nyConfetti = (c, lt, a = 1, n = 80, seed = 3, t0 = 0) => { if (a <= 0) return; const r = S.rng(seed), cols = ['#ffd040', '#ff5060', '#60c0ff', '#80ff90', '#ffffff', '#c080ff'];
+  for (let k = 0; k < n; k++) { const sx = r() * 1280, sp = 60 + r() * 80, ph = r() * 10, y = ((lt - t0) * sp + ph * 72) % 800 - 60; if (lt - t0 < 0) continue; const x = sx + Math.sin(lt * 2 + k) * 20;
+    c.save(); c.globalAlpha = a; c.translate(x, y); c.rotate(lt * 3 + k); c.fillStyle = cols[k % 6]; c.fillRect(-4, -2, 8, 4); c.restore(); } };
+// the Times Square ball: glowing faceted sphere on the pole; drop q 0 (top) -> 1 (bottom)
+const nyBall = (c, q, lt, glow = 1) => { const y = lerp(36, 132, E.io(q)), x = 640; S.glow(c, x, y, 70 * glow, '#a0d0ff', .55 * glow);
+  const g = c.createRadialGradient(x - 6, y - 6, 2, x, y, 18); g.addColorStop(0, '#ffffff'); g.addColorStop(.5, '#a8d8ff'); g.addColorStop(1, '#4a6ae8'); c.fillStyle = g; c.beginPath(); c.arc(x, y, 18, 0, TAU); c.fill();
+  c.strokeStyle = 'rgba(255,255,255,.5)'; c.lineWidth = .8; for (let k = -2; k <= 2; k++) { c.beginPath(); c.ellipse(x, y, 18, Math.abs(k) * 5 + 1, 0, 0, TAU); c.stroke(); c.beginPath(); c.ellipse(x, y, Math.abs(k) * 5 + 1, 18, 0, 0, TAU); c.stroke(); }
+  for (let k = 0; k < 6; k++) { const a = lt * 2 + k; c.fillStyle = ['#ff6080', '#ffd040', '#80ff90'][k % 3]; c.globalAlpha = .7 + .3 * Math.sin(lt * 6 + k); c.beginPath(); c.arc(x + Math.cos(a) * 12, y + Math.sin(a * 1.3) * 10, 2.2, 0, TAU); c.fill(); } c.globalAlpha = 1; };
+// big pop-in countdown number in screen space (over layer, 1920x1080)
+const nyNum = (c, txt, lt, t0, o = {}) => { const q = lt - t0; if (q < 0 || q > (o.hold || .9)) return; const s = q < .15 ? lerp(1.8, 1, E.out(q / .15)) : 1, a = q > (o.hold || .9) - .2 ? ((o.hold || .9) - q) / .2 : 1;
+  c.save(); c.globalAlpha = a; c.translate(o.x || 960, o.y || 420); c.scale(s, s); c.font = `${o.px || 260}px Anton`; c.textAlign = 'center'; c.textBaseline = 'middle'; c.lineWidth = 16; c.strokeStyle = '#1a1030'; c.strokeText(txt, 0, 0); c.fillStyle = o.col || '#ffd040'; c.fillText(txt, 0, 0); c.restore(); };
+// a row of party people in the street, spaced so nobody overlaps; cheer 0..1 raises arms; bounce on the beat
+const nyCrowd = (c, lt, L, list, y, uu, cheer = 0, x0 = 120, dx = 150) => list.forEach((ch, k) => { const x = x0 + k * dx + Math.sin(k * 3.3) * 14, b = cheer * Math.abs(Math.sin(lt * 5 + k)) * 6;
+  fig(c, ch, x, y - b, uu, pose(lt, k, { face: k % 2 ? -1 : 1, shN: lerp(-1, 150, cheer) + Math.sin(lt * 6 + k) * 10 * cheer, shF: lerp(2, 140, cheer), elN: lerp(6, 30, cheer), elF: lerp(6, 30, cheer) }), lt, k, L, { smile: 1, look: [k % 2 ? -.3 : .3, -.6] }); });
+// date stamp "CANCELLED"-style rubber stamp in screen space
+const nyStamp = (c, txt, lt, t0, x, y, col = '#c8281e', rot = -.18, px = 110) => { const q = lt - t0; if (q < 0) return; const s = q < .14 ? lerp(2.2, 1, E.in ? E.in(q / .14) : q / .14) : 1;
+  c.save(); c.translate(x, y); c.rotate(rot); c.scale(s, s); c.globalAlpha = Math.min(1, q / .08) * .9; c.strokeStyle = col; c.lineWidth = 10; c.font = `${px}px Anton`; c.textAlign = 'center'; c.textBaseline = 'middle'; const w = c.measureText(txt).width; c.strokeRect(-w / 2 - 30, -px * .62, w + 60, px * 1.24); c.fillStyle = col; c.fillText(txt, 0, 4); c.restore(); };
+const snow = (c, lt, n = 90, a = 1) => { c.save(); c.globalAlpha = a; c.fillStyle = '#ffffff'; for (let k = 0; k < n; k++) { const r = S.rng(k + 40), x = (r() * 1400 + Math.sin(lt + k) * 30) % 1300, y = (r() * 760 + lt * (40 + r() * 40)) % 760 - 20; c.beginPath(); c.arc(x, y, 1.5 + r() * 2.5, 0, TAU); c.fill(); } c.restore(); };
+const shiver = (lt, a = 1) => Math.sin(lt * 40) * 2 * a;
+const CROWD5 = [NY.PARTY, NY.PARTY2, NY.PARTY3, NY.PARTYKID, NY.PARTY4, NY.PARTY5];
+const bubble = (c, x, y, txt, q, dir = 1) => { if (q <= 0) return; c.save(); c.translate(x, y); c.scale(E.out(q), E.out(q)); c.fillStyle = '#ffffff'; c.strokeStyle = '#2a2020'; c.lineWidth = 3; c.beginPath(); c.roundRect(-80, -30, 160, 56, 16); c.fill(); c.stroke(); c.beginPath(); c.moveTo(-14 * dir, 26); c.lineTo(-30 * dir, 50); c.lineTo(6 * dir, 26); c.fill(); c.fillStyle = '#2a2020'; c.font = '26px Anton'; c.textAlign = 'center'; c.fillText(txt, 0, 8); c.restore(); };
+window.SHOTS = [
+  // 5.01 MED: team photo: Caesar, Pope Gregory and a British clerk line up; Janus peeks in behind; camera flash
+  { set: 'ny_janus', cam: { z: [1.55, 1.62], x: [640, 640], y: [470, 470], ease: E.io }, bed: [['crowd_loop', .08]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tC = at(Sh, 'caesar', 3); Sh.tG = at(Sh, 'gregory', 4.5); Sh.tO = at(Sh, 'others', Sh.dur - 1); },
+    draw: (c, lt, u, Sh) => { const L = SUN(lt), pk = seg(lt, Sh.tO - .6, Sh.tO);
+      S.nyJanus(c, 640, 512, .9, { mL: pk, mR: pk, blinkL: lt % 3 < .15, blinkR: (lt + 1.3) % 3 < .15 });
+      const E3 = [[NY.CAESAR, 450, Sh.tC, 1], [NY.GREGORY, 830, Sh.tG, -1], [NY.CLERKGB, 1000, Sh.tO - .8, -1]];
+      E3.forEach(([ch, x, t0, f], k) => { const q = seg(lt, t0 - 1.6, t0), xx = lerp(f > 0 ? 160 : 1120, x, E.out(q)); fig(c, ch, xx, 672, 40, q > 0 && q < 1 ? walk(lt, k, { face: f }) : pose(lt, k, { face: f, shN: lt > Sh.tO ? 150 : 20, elN: 20 }), lt, k, L, { smile: lt > Sh.tO ? 1 : .5, look: [f * .4, 0] }); });
+      if (lt > Sh.tO + .3 && lt < Sh.tO + .5) { c.fillStyle = 'rgba(255,255,255,.8)'; c.fillRect(0, 0, 1280, 720); } },
+    over: [(c, lt, u, Sh) => K.card(c, 'THE NEW YEAR TEAM', lt, { at: Sh.tO + .4, x: 960, y: 160, px: 64 })],
+    sfx: [[.1, 'crowd_loop', .08], ['caesar', 'footsteps', .3], ['gregory', 'footsteps', .3], ['others', 'camera_shutter', .6]] },
+
+  // 5.02 WIDE: Times Square tonight: lights, hats, fireworks over the skyline, the glowing ball on its pole
+  { set: 'ny_times', cam: { z: [1.0, 1.08], x: [640, 640], y: [370, 360], ease: E.io }, bed: [['crowd_loop', .3]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tF = at(Sh, 'fireworks', 1.5); Sh.tM = at(Sh, 'midnight', 3.5); Sh.tB = at(Sh, 'ball', 6); Sh.tT = at(Sh, 'times', Sh.dur - 1.5); },
+    draw: (c, lt, u, Sh) => { const L = PARTYL(lt);
+      [[300, 140, '#ff5080'], [980, 120, '#60c0ff'], [640, 90, '#ffd040'], [460, 170, '#80ff90'], [840, 160, '#c080ff']].forEach(([x, y, col], k) => nyRocket(c, lt, Sh.tF + k * .7, x, y, col, 20 + k));
+      nyBall(c, 0, lt, 1 + .3 * Math.sin(lt * 4) * seg(lt, Sh.tB - .3, Sh.tB));
+      nyCrowd(c, lt, L, CROWD5, 716, 44, .25 + .2 * Math.sin(lt), 120, 208); },
+    over: [(c, lt, u, Sh) => K.card(c, 'FIREWORKS', lt, { at: Sh.tF, x: 420, y: 300, px: 50, rot: -3 }), (c, lt, u, Sh) => K.card(c, 'STAY UP TILL MIDNIGHT', lt, { at: Sh.tM, x: 1500, y: 340, px: 44, rot: 3 }), (c, lt, u, Sh) => K.dateTag(c, 'TIMES SQUARE · NEW YORK', lt, { at: Sh.tT })],
+    sfx: [[.1, 'crowd_loop', .3], ['fireworks', 'firework', .45], ['midnight', 'clock_loop', .2], ['ball', 'chime', .4], ['times', 'firework', .4]] },
+
+  // 5.03 MED: a painted timeline scroll unrolls: Akitu procession, Janus shrine, Times Square ball
+  { set: 'np_parch', cam: { z: [1.0, 1.05], x: [640, 640], y: [360, 360], ease: E.io }, bed: [['hum_loop', .08]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tA = at(Sh, 'akitu', 1.5); Sh.tJ = at(Sh, 'janus', 3.5); Sh.tC = at(Sh, 'counting', Sh.dur - 2); },
+    draw: (c, lt, u, Sh) => { ROOM(lt); const un = E.io(seg(lt, .2, Sh.tC + .5)), xr = lerp(200, 1100, un);
+      c.save(); c.beginPath(); c.rect(180, 180, xr - 180, 360); c.clip(); c.fillStyle = '#f0e2c0'; c.fillRect(180, 200, 920, 320); c.strokeStyle = '#8a6a3a'; c.lineWidth = 4; c.beginPath(); c.moveTo(180, 360); c.lineTo(1100, 360); c.stroke();
+      // vignette 1: ziggurat + procession dots
+      c.fillStyle = '#c8945a'; [[300, 330, 120], [300, 300, 90], [300, 274, 60]].forEach(([x, y, w]) => c.fillRect(x - w / 2, y, w, 28)); c.fillStyle = '#2a4a8a'; c.fillRect(285, 252, 30, 22);
+      // vignette 2: Janus
+      S.nyJanus(c, 640, 350, .55, { mL: .3, mR: .8 });
+      // vignette 3: the ball tower
+      c.fillStyle = '#2c2a44'; c.fillRect(950, 250, 70, 100); c.strokeStyle = '#8a8aa0'; c.lineWidth = 3; c.beginPath(); c.moveTo(985, 250); c.lineTo(985, 210); c.stroke(); S.glow(c, 985, 214, 30, '#a0d0ff', .6); c.fillStyle = '#a8d8ff'; c.beginPath(); c.arc(985, 214, 9, 0, TAU); c.fill();
+      c.fillStyle = '#5a3a1a'; c.font = '26px Anton'; c.textAlign = 'center'; c.fillText('c. 2000 BCE', 300, 420); c.fillText('ROME', 640, 420); c.fillText('TODAY', 985, 420); c.restore();
+      // rolled ends
+      [180, xr].forEach(x => { c.fillStyle = '#c8a878'; c.fillRect(x - 14, 180, 28, 360); c.fillStyle = '#8a6a3a'; c.fillRect(x - 18, 170, 36, 14); c.fillRect(x - 18, 536, 36, 14); }); },
+    over: [(c, lt, u, Sh) => K.card(c, '4,000 YEARS OF PARTIES', lt, { at: Sh.tC, x: 960, y: 900, px: 56 })],
+    sfx: [[.1, 'hum_loop', .08], [.2, 'paper', .5], ['akitu', 'ding', .4], ['janus', 'ding', .4], ['counting', 'ding', .45]] },
+
+  // 5.04 MED: Janus close-up: the back-looking face says goodbye, the forward face grins and blows a party horn
+  { set: 'ny_janus', cam: { z: [1.9, 2.0], x: [640, 640], y: [400, 400], ease: E.io }, bed: [['wind_loop', .1]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; Sh.tG = at(Sh, 'goodbye', 3.5); Sh.tH = at(Sh, 'hello', Sh.dur - 1.5); },
+    draw: (c, lt, u, Sh) => { SUN(lt); const g = seg(lt, Sh.tG - .2, Sh.tG + .2), h = seg(lt, Sh.tH - .2, Sh.tH + .2);
+      S.nyJanus(c, 640, 512, .95, { mL: g * .6, mR: h, blinkL: g > 0 && lt % 1.6 < .3, blinkR: (lt + 1.3) % 3 < .15 });
+      bubble(c, 520, 280, 'BYE, 2026!', g, 1); bubble(c, 760, 280, 'HELLO, 2027!', h, -1);
+      if (h > 0) { const ex = .7 + .3 * Math.sin(lt * 10); c.save(); c.translate(640 + 38 * .95, 512 - 134 * .95); c.fillStyle = '#ffd040'; c.beginPath(); c.moveTo(0, 0); c.lineTo(40 * h, -6); c.lineTo(40 * h, 6); c.fill(); c.strokeStyle = '#e8303a'; c.lineWidth = 4; c.beginPath(); c.moveTo(40 * h, 0); c.lineTo(40 * h + 50 * ex * h, Math.sin(lt * 10) * 4); c.stroke(); c.restore(); nyConfetti(c, lt, h, 40, 17, Sh.tH); } },
+    over: [],
+    sfx: [[.1, 'wind_loop', .1], ['goodbye', 'whoosh_soft', .3], ['hello', 'party_horn', .6]] },
+
+  // 5.05 WIDE: back in Times Square: ten to one, the ball lands, fireworks, confetti, HAPPY NEW YEAR
+  { set: 'ny_times', cam: (lt, u, Sh) => ({ z: [lt < Sh.n[9] ? lerp(1.0, 1.15, E.io(seg(lt, 0, Sh.n[9]))) : lerp(1.15, 1.0, E.out(seg(lt, Sh.n[9], Sh.n[9] + 1)))], x: [640], y: [lt < Sh.n[9] ? 330 : lerp(330, 360, seg(lt, Sh.n[9], Sh.n[9] + 1))], shake: lt > Sh.tH && lt < Sh.tH + .4 ? 5 : 0 }), bed: [['crowd_loop', .35]],
+    init: Sh => { Sh.dur = Sh.end - Sh.start; const W = ['ten', 'nine', 'eight', 'seven', 'six', 'five', 'four', 'three', 'two', 'one']; let prev = .6; Sh.n = W.map((w, i) => { const t = at(Sh, w, prev + .8); prev = t; return t; }); Sh.tH = at(Sh, 'happy', Sh.n[9] + .8); },
+    draw: (c, lt, u, Sh) => { const L = PARTYL(lt), ch = seg(lt, Sh.tH - .1, Sh.tH + .3);
+      nyBall(c, seg(lt, Sh.n[0] - .3, Sh.n[9] + .3), lt, 1 + ch);
+      if (ch > 0) { const C = ['#ff5080', '#60c0ff', '#ffd040', '#80ff90', '#c080ff', '#ffffff']; for (let k = 0; k < 14; k++) { const t0 = Sh.tH + (k % 7) * .55 + Math.floor(k / 7) * 2.2; nyRocket(c, lt, t0, 160 + (k * 173) % 960, 80 + (k * 61) % 160, C[k % 6], 40 + k); } }
+      nyCrowd(c, lt, L, CROWD5, 716, 44, Math.max(.25 * seg(lt, Sh.n[5], Sh.n[9]), ch), 120, 208);
+      nyConfetti(c, lt, ch, 120, 23, Sh.tH); },
+    over: [(c, lt, u, Sh) => { ['10', '9', '8', '7', '6', '5', '4', '3', '2', '1'].forEach((t, i) => nyNum(c, t, lt, Sh.n[i], { hold: Math.min(.8, (Sh.n[i + 1] ?? Sh.tH) - Sh.n[i]), px: 420, y: 560 })); },
+      (c, lt, u, Sh) => { const q = seg(lt, Sh.tH, Sh.tH + .35); if (q <= 0) return; const s = lerp(1.8, 1, E.out(q)) * (1 + .03 * Math.sin(lt * 6));
+        c.save(); c.translate(960, 470); c.scale(s, s); c.globalAlpha = q; c.font = '190px Anton'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.lineWidth = 20; c.strokeStyle = '#1a1030'; c.shadowColor = 'rgba(255,200,80,.8)'; c.shadowBlur = 40;
+        c.strokeText('HAPPY', 0, -110); c.strokeText('NEW YEAR!', 0, 90); c.shadowBlur = 0; const g = c.createLinearGradient(0, -200, 0, 200); g.addColorStop(0, '#fff2a0'); g.addColorStop(.5, '#ffc030'); g.addColorStop(1, '#e88a10'); c.fillStyle = g; c.fillText('HAPPY', 0, -110); c.fillText('NEW YEAR!', 0, 90); c.restore(); }],
+    sfx: [[.1, 'crowd_loop', .35], ['ten', 'beep', .5], ['nine', 'beep', .5], ['eight', 'beep', .5], ['seven', 'beep', .5], ['six', 'beep', .5], ['five', 'beep', .5], ['four', 'beep', .5], ['three', 'beep', .5], ['two', 'beep', .5], ['one', 'beep_long', .55], ['happy', 'crowd_cheer', .6], ['happy', 'firework', .55], ['happy', 'party_horn', .5]] },
+];
+// hold the last shot 4 s after the VO for the fireworks and the cheer
+{ const T = window.TIMING, L = T.shots[T.shots.length - 1]; L.end += 4; T.dur = L.end; }
+VP.build(); K.boot();
+</script></body></html>
