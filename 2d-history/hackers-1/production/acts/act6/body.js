@@ -1,0 +1,41 @@
+for (const n of ['teen_room']) K.load(n, PL + n + '.jpg');
+const tornado = (c, x, y, s, lt) => { c.save(); c.translate(x, y); c.scale(s, s); for (let k = 0; k < 9; k++) { const w = 120 - k * 12, yy = -k * 34; c.strokeStyle = `rgba(80,80,90,${.9 - k * .05})`; c.lineWidth = 14; c.beginPath(); c.ellipse(Math.sin(lt * 4 + k * .6) * 14 * k / 9, yy, w, 14, 0, 0, 7); c.stroke(); } c.restore(); };
+window.SHOTS = [
+  // 6.01 Twitter does something it never has: a giant plug is yanked; verified ticks go grey; no verified account can tweet
+  { draw: (c, lt, u, S) => { TW.techBG(c, lt, '29,155,240'); const tY = S._tY, yank = E.back(K.seg(lt, tY, tY + .5));
+      c.fillStyle = '#e8e4dc'; c.strokeStyle = INK; c.lineWidth = 8; TW.rr(c, 120, 300, 300, 420, 30); c.fill(); c.stroke(); for (const dy of [430, 590]) { c.fillStyle = '#2a2a30'; c.fillRect(230, dy - 40, 22, 60); c.fillRect(290, dy - 40, 22, 60); }
+      const px = 420 + yank * 380, py = 430 - Math.sin(yank * Math.PI) * 60; c.strokeStyle = '#2a2a30'; c.lineWidth = 26; c.beginPath(); c.moveTo(px + 150, py); c.bezierCurveTo(px + 380, py + 40, 900, 900, 1100, 1100); c.stroke(); c.fillStyle = '#f4f1ea'; c.strokeStyle = INK; c.lineWidth = 8; TW.rr(c, px, py - 80, 160, 160, 26); c.fill(); c.stroke(); if (yank < .2) { c.fillStyle = '#c8ccd8'; c.fillRect(px - 60, py - 40, 60, 20); c.fillRect(px - 60, py + 20, 60, 20); }
+      if (lt > tY && lt < tY + .8) for (let k = 0; k < 12; k++) { const a = k * .52, r2 = (lt - tY) * 600; c.strokeStyle = '#ffd24a'; c.lineWidth = 6; c.beginPath(); c.moveTo(430 + Math.cos(a) * r2 * .4, 430 + Math.sin(a) * r2 * .4); c.lineTo(430 + Math.cos(a) * r2, 430 + Math.sin(a) * r2); c.stroke(); }
+      ['Barack Obama', 'Elon Musk', 'Apple', 'MrBeast'].forEach((n, k) => { const g = lt > tY + .3 + k * .25; TW.tweet(c, 1420, 210 + k * 210, 560, n, g ? 'Tweeting is switched off' : 'Ready to tweet...', 0, pop(lt, .3 + k * .15, .4), { greyTick: g, avCol: g ? '#9aa0aa' : `hsl(${k * 60},40%,60%)`, h: 180 }); }); },
+    bed: [['tension', .14], ['hum_loop', .1]],
+    init: S => { S._tY = A.at(S, 'stops', 3.8) - .3;
+      S.D.over = [(c, lt) => K.card(c, 'NEVER DONE BEFORE', lt, { at: A.at(S, 'never', 2) - .2, x: 420, y: 160, px: 42, rot: -2 }), (c, lt) => K.title(c, 'VERIFIED ACCOUNTS FROZEN', lt, { at: S._tY + 1.4, x: 960, y: 960 - 90, px: 70 })];
+      S.D.sfx = [[S._tY, 'thud', .4], [S._tY + .05, 'swell', .2], ...Array.from({ length: 4 }, (_, k) => [S._tY + .3 + k * .25, 'tick', .22])]; } },
+  // 6.02 it kicks every employee off the network; screens go dark row by row; then Graham's own screens go black: cut off
+  { plate: 'teen_room', cam: { z: [1.2, 1.32], x: [1600, 1640], y: [760, 780] }, bed: [['hum_loop', .12]], light: { dir: 1, key: 'rgba(120,150,255,.24)' },
+    init: S => { const tE = A.at(S, 'kicks', .6), tG = A.at(S, 'Graham', 4.8), tO = A.at(S, 'over', 6.8);
+      S.D.figs = [{ x: 1640, y: 1232, s: 1.9, ...TW.GRAHAM(), pose: 'sit', facing: 1, mood: 'focus', anim: (o, lt) => { if (lt < tG + .3) o.arms = TW.TYPE(1.3); else { o.mood = 'shocked'; o.arms = () => ({ shL: -30, elL: -100, shR: 140, elR: -40, handL: 'open', handR: 'open' }); } } }];
+      S.D.live = [(c, lt) => { TW.chair(c, 1640, 1232, 1112, 1); const dark = lt > tG + .2; TW.monitor(c, 1780, 560, 400, 240, (cc, w, h) => { if (dark) { cc.fillStyle = '#000'; cc.fillRect(0, 0, w, h); if (lt < tG + .5) { cc.fillStyle = '#fff'; cc.fillRect(0, h / 2 - 2, w, 4); } TW.txt(cc, 'DISCONNECTED', w / 2, h / 2 + 40, 30, '#ff6a60', 'center', 'Anton'); return; } cc.fillStyle = '#f6f2f2'; cc.fillRect(0, 0, w, h); cc.fillStyle = '#7a1a1a'; cc.fillRect(0, 0, w, 30); TW.txt(cc, 'ADMIN PANEL', 10, 15, 18, '#fff', 'left', 'Anton'); for (let k = 0; k < 4; k++) { cc.fillStyle = '#3a4a6a'; cc.fillRect(16 + (k % 2) * 190, 50 + (k / 2 | 0) * 80, 170, 60); } }, { stand: false });
+        TW.monitor(c, 2210, 600, 260, 180, (cc, w, h) => { cc.fillStyle = dark ? '#000' : '#101828'; cc.fillRect(0, 0, w, h); }, { stand: false }); }];
+      S.D.over = [(c, lt) => { const a = pop(lt, .2, .4) * (1 - K.seg(lt, tG - .2, tG + .2)); if (a <= 0) return; c.save(); c.translate(560, 420); c.scale(a, a); c.fillStyle = '#101018'; c.strokeStyle = INK; c.lineWidth = 7; TW.rr(c, -440, -280, 880, 560, 20); c.fill(); c.stroke(); TW.txt(c, 'TWITTER STAFF SCREENS', 0, -240, 34, '#cfe6ff', 'center', 'Anton');
+          for (let r = 0; r < 4; r++) for (let q = 0; q < 6; q++) { const off = lt > tE + .3 + r * .6 + q * .05; c.fillStyle = off ? '#050508' : `rgba(90,160,255,${.6 + .2 * Math.sin(lt * 3 + r + q)})`; c.fillRect(-400 + q * 135, -195 + r * 115, 115, 90); } c.restore(); },
+        (c, lt) => K.title(c, 'CUT OFF', lt, { at: tG + .4, x: 600, y: 300, px: 140 }), (c, lt) => K.card(c, 'THE HACK IS OVER', lt, { at: tO, x: 600, y: 450, px: 46, rot: -2 })];
+      S.D.sfx = [...Array.from({ length: 4 }, (_, r) => [tE + .3 + r * .6, 'thud', .2]), [tG + .2, 'hit', .35], [tO, 'drum', .3]]; } },
+  // 6.03 side effects: news outlets go quiet; a US weather office cannot tweet a tornado warning
+  { draw: (c, lt, u, S) => { TW.techBG(c, lt, '90,200,120'); const tW = S._tW;
+      const a = pop(lt, .3, .5); c.save(); c.translate(560, 520); c.scale(a, a); c.fillStyle = '#fff'; c.strokeStyle = INK; c.lineWidth = 6; TW.rr(c, -380, -260, 760, 520, 20); c.fill(); c.stroke(); TW.txt(c, 'NEWS FEED', 0, -210, 44, INK, 'center', 'Anton'); for (let k = 0; k < 4; k++) { const q = lt > .9 + k * .3; c.fillStyle = q ? '#e8e8ee' : '#dbe8f8'; TW.rr(c, -340, -160 + k * 100, 680, 80, 12); c.fill(); TW.txt(c, q ? '…' : 'Breaking: ...', -300, -120 + k * 100, 36, q ? '#9aa0aa' : '#2a4a7a'); } TW.stamp(c, 'QUIET', 0, 40, lt, 2.2, { px: 110, col: '#5a6070' }); c.restore();
+      const b = pop(lt, tW - .3, .5); if (b > 0) { c.save(); c.translate(1380, 520); c.scale(b, b); c.fillStyle = '#5a9a5a'; c.strokeStyle = INK; c.lineWidth = 6; TW.rr(c, -380, -300, 760, 600, 20); c.fill(); c.stroke(); for (let k = 0; k < 6; k++) { c.strokeStyle = 'rgba(255,255,255,.25)'; c.lineWidth = 3; c.beginPath(); c.moveTo(-380, -200 + k * 90); c.bezierCurveTo(-100, -240 + k * 90, 100, -160 + k * 90, 380, -220 + k * 90); c.stroke(); }
+        c.fillStyle = 'rgba(224,64,58,.45)'; c.beginPath(); c.ellipse(60, -20, 200, 120, -.3, 0, 7); c.fill(); tornado(c, 60, 60, 1, lt); TW.txt(c, 'TORNADO WARNING', 0, -250, 44, '#fff', 'center', 'Anton');
+        const e = pop(lt, tW + 1.2, .4); if (e > 0) { c.save(); c.translate(0, 190); c.scale(e, e); c.fillStyle = '#fff'; c.strokeStyle = RED; c.lineWidth = 7; TW.rr(c, -300, -60, 600, 120, 16); c.fill(); c.stroke(); TW.txt(c, "✕  CAN'T TWEET RIGHT NOW", 0, 2, 40, RED, 'center', 'Anton'); c.restore(); } c.restore(); } },
+    bed: [['wind_loop', .16]],
+    init: S => { S._tW = A.at(S, 'weather', 3.6);
+      S.D.over = [(c, lt) => K.card(c, 'SIDE EFFECTS', lt, { at: .2, x: 960, y: 90, px: 50, rot: -2 })];
+      S.D.sfx = [[.3, 'pop', .25], [2.2, 'stamp', .3], [S._tW, 'wind_loop', .2], [S._tW + 1.2, 'alarm', .14]]; } },
+  // 6.04 his take: reported at over $100,000; exchanges freeze his wallets: a clamp drops on
+  { draw: (c, lt, u, S) => { TW.techBG(c, lt, '247,147,26'); const tF = S._tF; c.save(); c.translate(960, 560); const z = 1 + .05 * u; c.scale(z, z); c.translate(-960, -560); TW.wallet(c, 960, 520, 2.2, E.io(K.seg(lt, .3, 2)) * .8, lt, { amount: '$100,000+', locked: K.seg(lt, tF, tF + .6) }); c.restore();
+      if (lt > S._tS) for (let k = 0; k < 6; k++) { const v = ((lt - S._tS) * .7 + k / 6) % 1, x = 1560 + Math.sin(k * 2) * 60, y = 100 + v * 300; TW.btc(c, x, y, 34, lt * 2 + k); if (v > .8) { c.strokeStyle = RED; c.lineWidth = 6; c.beginPath(); c.moveTo(x - 30, y - 30); c.lineTo(x + 30, y + 30); c.moveTo(x + 30, y - 30); c.lineTo(x - 30, y + 30); c.stroke(); } } },
+    bed: [['tension', .14]],
+    init: S => { S._tF = A.at(S, 'froze', 3.8) - .2; S._tS = A.at(S, 'stopped', 5.6);
+      S.D.over = [(c, lt) => K.card(c, "GRAHAM'S TAKE (REPORTED)", lt, { at: .3, x: 960, y: 110, px: 44, rot: -2 }), (c, lt) => K.title(c, 'WALLETS FROZEN', lt, { at: S._tF + .7, x: 960, y: 900 - 40, px: 90 })];
+      S.D.sfx = [[.3, 'coins', .3], [S._tF + .45, 'gate_slam', .35], [S._tF + .5, 'stamp', .3]]; } },
+];

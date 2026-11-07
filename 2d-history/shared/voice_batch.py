@@ -14,6 +14,9 @@ def year(y):
     hi, lo = divmod(y, 100)
     return two(hi) + ' ' + ('hundred' if lo == 0 else ('oh ' + ONES[lo] if lo < 10 else two(lo)))
 WORDS = [
+ (r"\bOGUsers\b", 'O G Users'), (r"\bMrBeast\b", 'Mister Beast'), (r"\bSIM\b", 'sim'), (r"\b2,500 to 3,000\b", 'twenty-five hundred to three thousand'), (r"\b5,000\b", 'five thousand'),
+ (r"\b100,000\b", 'a hundred thousand'), (r"\bover 100 Bitcoin\b", 'over a hundred Bitcoin'), (r"\b17-year-old\b", 'seventeen-year-old'), (r"\b19-year-old\b", 'nineteen-year-old'), (r"\b22-year-old\b", 'twenty-two-year-old'),
+ (r"\b130\b", 'a hundred and thirty'), (r"\b45\b", 'forty-five'), (r"\b17\b", 'seventeen'), (r"\b15 July\b", 'July fifteenth,'), (r"\bBMW\b", 'B M W'),
  (r"\bSuwałki\b", 'Soo-vow-kee'), (r"\bSHAPE\b", 'Shape'), (r"\bRAND\b", 'Rand'), (r"\bOrlan-10\b", 'Orlan ten'), (r"\bGeran-2\b", 'Geh-rahn two'),
  (r"\bSu-57s\b", 'S U fifty-sevens'), (r"\bBremerhaven\b", 'Bremer-hah-fen'), (r"\bVilnius\b", 'Vil-nee-us'), (r"\bBeaumont\b", 'Boh-mont'), (r"\bShahed\b", 'Sha-hed'),
  (r"\bfait accompli\b", 'fate ah-com-plee'), (r"\b1,000\b", 'one thousand'), (r"\b8\.5\b", 'eight point five'), (r"\b3\.4\b", 'three point four'), (r"80,000 to 100,000", 'eighty thousand to a hundred thousand'),
