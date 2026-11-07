@@ -42,3 +42,9 @@ complete bodies, detailed backgrounds (29 Oct).
   the hands, is anything moving.
 - For each vehicle or animal group, step through every frame where it touches architecture or another animal.
 - Write each hit with its time, what is wrong and the fix, and mark it at least MEDIUM.
+
+## Real-world scale (Pushpam 7 Nov, Russia-NATO review)
+- Every object must be in real proportion to the people next to it: airliner fuselage ~4 m tall with door sill ~3.4 m; fighter jet ~16 m long; loco ~4.3 m tall; tank ~2.4 m; truck ~3 m; hand drone 0.4-0.7 m. A person in front can be a bit larger for depth, never 2x.
+- Vehicles driving toward/away from camera on a perspective road are drawn front or rear view, never side view (looks like driving sideways).
+- People never walk across a large prop's body; they walk on the ground in front/under it or climb stairs to a door.
+- Any plain set (few props, flat colour) is a MEDIUM: add detail.

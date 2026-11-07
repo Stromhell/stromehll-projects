@@ -7,10 +7,10 @@ const chain = (c, x, y, s, u) => { if (u <= 0) return; c.save(); c.strokeStyle =
 window.SHOTS = [
   // 6.01 night at Bremerhaven: tanks roll onto flatcars and are chained down
   { plate: 'rail_yard', cam: { z: [1.0, 1.08], x: [1280, 1300], y: [820, 800] }, bed: [['night_loop', .16], ['hum_loop', .1]], light: { dir: 1, key: 'rgba(220,230,255,.22)' },
-    figs: [{ x: 2300, y: 1330, s: 1.5, ...RU.SOLDIER(2, 'us'), facing: -1, pose: 'point' }],
+    figs: [{ x: 1900, y: 1340, s: .5, ...RU.SOLDIER(2, 'us'), facing: -1, pose: 'point' }],
     init: S => { S.dur = S.end - S.start; const tC = A.at(S, 'Germany', 3);
-      S.D.live = [(c, lt) => { const u = E.io(K.seg(lt, .2, 3.6)); RU.flatcar(c, 520, 1150, 1.1); RU.flatcar(c, 1100, 1150, 1.1, (cc, x, y, s) => tankLoad(cc, x, y, s)); chain(c, 1100, 1100, 1.1, 1);
-          const tx = -300 + u * 820; tankLoad(c, tx, 1095, 1.1); chain(c, 520, 1100, 1.1, K.seg(lt, 3.8, 5)); RU.loco(c, 1820, 1150, 1.1, 1, 0); }];
+      S.D.live = [(c, lt) => { const u = E.io(K.seg(lt, .2, 3.6)); const Z = 1.76, B = 1180; RU.flatcar(c, 450, B, Z); RU.flatcar(c, 1320, B, Z, (cc, x, y, s) => tankLoad(cc, x, y, s)); chain(c, 1320, B - 50 * Z, Z, 1);
+          const tx = -500 + u * 950; tankLoad(c, tx, B - 50 * Z, Z); chain(c, 450, B - 50 * Z, Z, K.seg(lt, 3.8, 5)); RU.loco(c, 2280, B, Z, 1, 0); }];
       S.D.over = [(c, lt) => K.card(c, 'BREMERHAVEN → EAST', lt, { at: .4, x: 960, y: 120, px: 46, rot: -2 }), (c, lt) => K.card(c, 'NOW: ACROSS GERMANY BY TRAIN', lt, { at: tC, x: 960, y: 230, px: 38, rot: 1.5 })];
       S.D.sfx = [[.3, 'creak', .3], [1.4, 'thud', .25], [3.8, 'scrape', .3], [4.4, 'hit', .2]]; } },
   // 6.02 the North Sea-Baltic corridor glows across the map; old signal boxes and rusty bridges along it

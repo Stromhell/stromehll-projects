@@ -44,7 +44,7 @@ window.SHOTS = [
       S.D.sfx = [[tE, 'pop', .3], [tT, 'pop', .3], [tG, 'pop', .3], [tT + .4, 'whoosh_soft', .25]]; } },
   // 3.05 Port of Beaumont at dawn: tanks and trucks roll up the stern ramp into a giant cargo ship
   { plate: 'port_dawn', cam: { z: [1.0, 1.1], x: [1180, 1180], y: [820, 800] }, bed: [['ocean_loop', .12], ['city_loop', .1]], light: { dir: -1, key: 'rgba(255,200,150,.24)' },
-    figs: [{ x: 1640, y: 1360, s: 1.6, ...RU.CREW(0), facing: -1, pose: 'wave' }],
+    figs: [{ x: 1700, y: 1330, s: .55, ...RU.CREW(0), facing: -1, pose: 'wave' }],
     init: S => { S.dur = S.end - S.start; const tV = A.at(S, 'vehicles', 1.4);
       const P = [[-300, 1180], [600, 1110], [922, 1060], [1280, 760]];
       S.D.live = [(c, lt) => { c.save(); c.beginPath(); c.rect(0, 0, 1290, 1440); c.clip(); for (let k = 0; k < 4; k++) { const u = K.seg(lt, tV - 1.4 + k * 1.6, tV + 2.8 + k * 1.6); if (u <= 0 || u >= 1) continue; const [x, y, ang] = RU.along(P, E.io(u)); c.save(); c.translate(x, y); c.rotate(Math.min(0, ang) * .9); const s = .95 - .45 * Math.max(0, (x - 922) / 360); if (k % 2) RU.truck(c, 0, 0, s, 1, '#6a7050', lt * 2); else RU.tank(c, 0, 0, s, 1, '#6a7050', lt, lt * 2); c.restore(); } c.restore(); }];

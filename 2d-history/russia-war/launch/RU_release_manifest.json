@@ -1,0 +1,237 @@
+{
+ "video": "Russia-NATO War (2D)",
+ "prefix": "RU",
+ "status": "ready to book (Pushpam OK 7 Nov 12:38 UTC, after fixes; fixes done 13:45 UTC)",
+ "made": "2026-11-07",
+ "notes": [
+  "Long-day rule: full video and IG parts only on long days (every other IST day), at least one empty day from other long videos; January is fine. 16:00 UTC first choice.",
+  "IG parts post in order on long days; each ends with \"Part N is next on this page\", the last with the YouTube card.",
+  "Full video master is also on Drive: AI/long form history video/Russia-NATO War (2D)/Renders/Full (file id 1ZmQ1-V30jGUavnE_hFAPxjnHh-MBegRo). The project-folder copy is a smaller re-encode (crf 20) of the same cut.",
+  "Reels: keep within the 7/day cap and the YouTube ~9/day limit."
+ ],
+ "full_video": {
+  "file": "/mnt/project-files/2d-history/russia-war/launch/full/russia-war_full.mp4",
+  "seconds": 392.6,
+  "title": "How a Russia-NATO War Would Unfold",
+  "title_description_file": "/mnt/project-files/2d-history/russia-war/launch/RU_NATO_Title_Description.txt",
+  "thumbnail": "/mnt/project-files/2d-history/russia-war/launch/RU_NATO_Thumbnail_v1.jpg",
+  "platform": "YouTube"
+ },
+ "reels": [
+  {
+   "order": 1,
+   "file": "/mnt/project-files/2d-history/russia-war/launch/reels/RU_Reel_01.mp4",
+   "cover": "/mnt/project-files/2d-history/russia-war/launch/reel_covers/RU_Reel_01_thumb.jpg",
+   "seconds": 25.4,
+   "title": "The Suwałki Gap in 60 Seconds",
+   "caption": "NATO's biggest weak spot is a strip of land just 65 kilometres wide.\nA made-up scenario built from real war games.\nWatch the full video on our YouTube channel.\n#SuwalkiGap #NATO #Russia #Geopolitics #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 2,
+   "file": "/mnt/project-files/2d-history/russia-war/launch/reels/RU_Reel_02.mp4",
+   "cover": "/mnt/project-files/2d-history/russia-war/launch/reel_covers/RU_Reel_02_thumb.jpg",
+   "seconds": 37.8,
+   "title": "What Article 5 Really Means",
+   "caption": "An attack on one is an attack on all. Here's what that means in a real war.\nA made-up scenario built from real war games.\nWatch the full video on our YouTube channel.\n#Article5 #NATO #Russia #Geopolitics #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 3,
+   "file": "/mnt/project-files/2d-history/russia-war/launch/reels/RU_Reel_03.mp4",
+   "cover": "/mnt/project-files/2d-history/russia-war/launch/reel_covers/RU_Reel_03_thumb.jpg",
+   "seconds": 32.8,
+   "title": "45 Days to Move an Army",
+   "caption": "NATO has 3.4 million troops. Getting them to the front could take 45 days.\nA made-up scenario built from real war games.\nWatch the full video on our YouTube channel.\n#NATO #Russia #Geopolitics #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 4,
+   "file": "/mnt/project-files/2d-history/russia-war/launch/reels/RU_Reel_04.mp4",
+   "cover": "/mnt/project-files/2d-history/russia-war/launch/reel_covers/RU_Reel_04_thumb.jpg",
+   "seconds": 24.1,
+   "title": "The 8.5 cm Rail Gap Slowing NATO",
+   "caption": "8.5 centimetres of railway could slow down the whole of NATO.\nA made-up scenario built from real war games.\nWatch the full video on our YouTube channel.\n#RailBaltica #NATO #Russia #Geopolitics #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 5,
+   "file": "/mnt/project-files/2d-history/russia-war/launch/reels/RU_Reel_05.mp4",
+   "cover": "/mnt/project-files/2d-history/russia-war/launch/reel_covers/RU_Reel_05_thumb.jpg",
+   "seconds": 24.3,
+   "title": "Cheap Drones vs Expensive Missiles",
+   "caption": "A drone costs almost nothing. The missile that shoots it down costs a fortune.\nA made-up scenario built from real war games.\nWatch the full video on our YouTube channel.\n#Drones #NATO #Russia #Geopolitics #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 6,
+   "file": "/mnt/project-files/2d-history/russia-war/launch/reels/RU_Reel_06.mp4",
+   "cover": "/mnt/project-files/2d-history/russia-war/launch/reel_covers/RU_Reel_06_thumb.jpg",
+   "seconds": 27.6,
+   "title": "Why Kaliningrad Matters",
+   "caption": "Russia has a heavily armed piece of land right inside NATO territory.\nA made-up scenario built from real war games.\nWatch the full video on our YouTube channel.\n#Kaliningrad #NATO #Russia #Geopolitics #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 7,
+   "file": "/mnt/project-files/2d-history/russia-war/launch/reels/RU_Reel_07.mp4",
+   "cover": "/mnt/project-files/2d-history/russia-war/launch/reel_covers/RU_Reel_07_thumb.jpg",
+   "seconds": 25.0,
+   "title": "Gotland: The Unsinkable Aircraft Carrier",
+   "caption": "This Swedish island is called an unsinkable aircraft carrier.\nA made-up scenario built from real war games.\nWatch the full video on our YouTube channel.\n#Gotland #NATO #Russia #Geopolitics #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 8,
+   "file": "/mnt/project-files/2d-history/russia-war/launch/reels/RU_Reel_08.mp4",
+   "cover": "/mnt/project-files/2d-history/russia-war/launch/reel_covers/RU_Reel_08_thumb.jpg",
+   "seconds": 36.6,
+   "title": "Dragon's Teeth and Swamps",
+   "caption": "Concrete teeth, landmines and swamps. This is how the Baltics plan to stop tanks.\nA made-up scenario built from real war games.\nWatch the full video on our YouTube channel.\n#Baltics #NATO #Russia #Geopolitics #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 9,
+   "file": "/mnt/project-files/2d-history/russia-war/launch/reels/RU_Reel_09.mp4",
+   "cover": "/mnt/project-files/2d-history/russia-war/launch/reel_covers/RU_Reel_09_thumb.jpg",
+   "seconds": 25.7,
+   "title": "A Cyber Attack on a Port Mid-War",
+   "caption": "Mid-war, a ship full of tanks arrives, and the port goes dark.\nA made-up scenario built from real war games.\nWatch the full video on our YouTube channel.\n#CyberAttack #NATO #Russia #Geopolitics #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 10,
+   "file": "/mnt/project-files/2d-history/russia-war/launch/reels/RU_Reel_10.mp4",
+   "cover": "/mnt/project-files/2d-history/russia-war/launch/reel_covers/RU_Reel_10_thumb.jpg",
+   "seconds": 22.7,
+   "title": "Russia's Submarines and the GIUK Gap",
+   "caption": "Russia's submarines are waiting in one narrow gap in the Atlantic.\nA made-up scenario built from real war games.\nWatch the full video on our YouTube channel.\n#Submarines #NATO #Russia #Geopolitics #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 11,
+   "file": "/mnt/project-files/2d-history/russia-war/launch/reels/RU_Reel_11.mp4",
+   "cover": "/mnt/project-files/2d-history/russia-war/launch/reel_covers/RU_Reel_11_thumb.jpg",
+   "seconds": 24.7,
+   "title": "Russia's Fait Accompli Plan",
+   "caption": "Russia's likely plan: grab the land fast, then dare NATO to take it back.\nA made-up scenario built from real war games.\nWatch the full video on our YouTube channel.\n#Russia #NATO #Geopolitics #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 12,
+   "file": "/mnt/project-files/2d-history/russia-war/launch/reels/RU_Reel_12.mp4",
+   "cover": "/mnt/project-files/2d-history/russia-war/launch/reel_covers/RU_Reel_12_thumb.jpg",
+   "seconds": 28.0,
+   "title": "Rail Baltica Keeps Slipping",
+   "caption": "The railway that would fix NATO's problem keeps getting delayed.\nA made-up scenario built from real war games.\nWatch the full video on our YouTube channel.\n#RailBaltica #NATO #Russia #Geopolitics #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 13,
+   "file": "/mnt/project-files/2d-history/russia-war/launch/reels/RU_Reel_13.mp4",
+   "cover": "/mnt/project-files/2d-history/russia-war/launch/reel_covers/RU_Reel_13_thumb.jpg",
+   "seconds": 27.1,
+   "title": "Soldiers on Ordinary Airliners",
+   "caption": "In a crisis, US soldiers could fly to war on ordinary airliners.\nA made-up scenario built from real war games.\nWatch the full video on our YouTube channel.\n#USArmy #NATO #Russia #Geopolitics #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 14,
+   "file": "/mnt/project-files/2d-history/russia-war/launch/reels/RU_Reel_14.mp4",
+   "cover": "/mnt/project-files/2d-history/russia-war/launch/reel_covers/RU_Reel_14_thumb.jpg",
+   "seconds": 24.4,
+   "title": "Eurofighter Scramble: 15 Minutes",
+   "caption": "From alarm to airborne in 15 minutes. This is a Eurofighter scramble.\nA made-up scenario built from real war games.\nWatch the full video on our YouTube channel.\n#Eurofighter #NATO #Russia #Geopolitics #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  },
+  {
+   "order": 15,
+   "file": "/mnt/project-files/2d-history/russia-war/launch/reels/RU_Reel_15.mp4",
+   "cover": "/mnt/project-files/2d-history/russia-war/launch/reel_covers/RU_Reel_15_thumb.jpg",
+   "seconds": 28.2,
+   "title": "Ukraine Is Buying Europe Time",
+   "caption": "While everyone asks if America will come, Ukraine is buying Europe time.\nA made-up scenario built from real war games.\nWatch the full video on our YouTube channel.\n#Ukraine #NATO #Russia #Geopolitics #Animation",
+   "platforms": [
+    "Instagram Reels",
+    "YouTube Shorts"
+   ]
+  }
+ ],
+ "ig_parts": [
+  {
+   "order": 1,
+   "file": "/mnt/project-files/2d-history/russia-war/launch/ig_parts/RU_Part_01.mp4",
+   "cover": "/mnt/project-files/2d-history/russia-war/launch/ig_covers/RU_Part_01_thumb.jpg",
+   "seconds": 163.7,
+   "title": "How a Russia-NATO War Would Unfold, Part 1 of 3: The Invasion and the Plan",
+   "caption": "Tanks cross into the Baltics, Article 5 is invoked, and NATO starts a race against 60 hours: borders, troops and the long trip across Europe.\nA scenario, not a prediction.\nPart 2 is next on this page.\n#NATO #Russia #Geopolitics #Animation",
+   "platforms": [
+    "Instagram"
+   ]
+  },
+  {
+   "order": 2,
+   "file": "/mnt/project-files/2d-history/russia-war/launch/ig_parts/RU_Part_02.mp4",
+   "cover": "/mnt/project-files/2d-history/russia-war/launch/ig_covers/RU_Part_02_thumb.jpg",
+   "seconds": 147.4,
+   "title": "How a Russia-NATO War Would Unfold, Part 2 of 3: Subs, Cyber, Jets and Drones",
+   "caption": "Submarines in the Atlantic, a cyber attack on a port, soldiers on airliners, Eurofighters scrambling and cheap drones against costly missiles.\nA scenario, not a prediction.\nPart 3 is next on this page.\n#NATO #Russia #Geopolitics #Animation",
+   "platforms": [
+    "Instagram"
+   ]
+  },
+  {
+   "order": 3,
+   "file": "/mnt/project-files/2d-history/russia-war/launch/ig_parts/RU_Part_03.mp4",
+   "cover": "/mnt/project-files/2d-history/russia-war/launch/ig_covers/RU_Part_03_thumb.jpg",
+   "seconds": 91.9,
+   "title": "How a Russia-NATO War Would Unfold, Part 3 of 3: The 65 km Gap",
+   "caption": "The 8.5 cm rail gap, saboteurs, the 65 km Suwałki Gap, Gotland, and why time matters now.\nA scenario, not a prediction.\nWatch the full video on our YouTube channel.\n#NATO #Russia #Geopolitics #Animation",
+   "platforms": [
+    "Instagram"
+   ]
+  }
+ ]
+}

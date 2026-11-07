@@ -1,0 +1,14 @@
+frames 150/1413  22 ms/frame
+frames 300/1413  27 ms/frame
+frames 450/1413  31 ms/frame
+frames 600/1413  33 ms/frame
+frames 750/1413  34 ms/frame
+frames 900/1413  32 ms/frame
+frames 1050/1413  31 ms/frame
+frames 1200/1413  35 ms/frame
+frames 1350/1413  41 ms/frame
+DONE 1413 frames 47.10s
+/home/user/stromehll-projects/2d-history/shared/mix.py:14: WavFileWarning: Chunk (non-data) not understood, skipping it.
+  sr, x = wavfile.read(p); x = x.astype(np.float32)
+mixed russia-war/production/acts/act5/mix.wav 47.10s
+WROTE russia-war/production/acts/act5/act5.mp4

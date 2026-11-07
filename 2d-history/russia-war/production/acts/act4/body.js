@@ -41,9 +41,13 @@ window.SHOTS = [
   // 4.05 soldiers from Fort Stewart walk up the steps of an ordinary airliner
   { plate: 'airbase', cam: { z: [1.0, 1.08], x: [1280, 1360], y: [820, 800] }, bed: [['wind_loop', .14], ['hum_loop', .1]], light: { dir: -1, key: 'rgba(255,230,200,.22)' },
     init: S => { S.dur = S.end - S.start; const tA = A.at(S, 'airliners', 2.6);
-      const SX = 1500, SY = 1262, TX = SX + 308, TY = SY - 200;
-      S.D.live = [(c, lt) => { RU.airliner(c, 1500, 1262, 2.2, 1); c.fillStyle = '#1a2230'; c.fillStyle = '#1a2230'; c.fillRect(TX - 10, TY - 120, 64, 120); c.strokeStyle = INK; c.lineWidth = 4; c.strokeRect(TX - 10, TY - 120, 64, 120); c.save(); c.translate(SX, SY); c.scale(1, 200 / 322); c.translate(-SX, -SY); RU.stairs(c, SX, SY, 1.4); c.restore(); }];
-      S.D.figs = [0, 1, 2, 3].map(i => { const t0 = .2 + i * 1.5, dur = 3.4; return { x: SX, y: SY, s: .8, ...RU.SOLDIER(i, 'us'), pose: 'stand', walk: { x0: -200 - i * 120, x1: TX + 60, t0, dur: dur + 2 }, anim: (o) => { if (o.x > SX) o.y = SY - Math.min(o.x - SX, 308) * (200 / 308); if (o.x > TX - 30) o.x = -5000; } }; });
+      // real proportions: soldier ~1.8 m; airliner fuselage ~4 m tall, belly ~2 m off the ground, door sill ~3.4 m
+      const AS = 4.2, AY = 1262, AX = 300, FY = 1300, DX = AX + 400 * AS, SILL = AY - 82 * AS, SX = DX - 330;
+      S.D.live = [(c, lt) => { RU.airliner(c, AX, AY, AS, 1); c.fillStyle = '#1a2230'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.roundRect(DX - 10, SILL - 200, 86, 200, 10); c.fill(); c.stroke();
+          c.save(); c.strokeStyle = INK; c.lineWidth = 6; c.fillStyle = '#d8d8d0'; c.beginPath(); c.moveTo(SX - 40, FY); c.lineTo(DX - 6, SILL); c.lineTo(DX + 20, SILL); c.lineTo(SX + 10, FY); c.closePath(); c.fill(); c.stroke();
+          for (let k = 1; k < 12; k++) { const t = k / 12; c.beginPath(); c.moveTo(SX - 40 + (DX - 6 - SX + 40) * t, FY + (SILL - FY) * t); c.lineTo(SX + 10 + (DX + 20 - SX - 10) * t, FY + (SILL - FY) * t); c.stroke(); }
+          c.beginPath(); c.moveTo(SX - 30, FY - 110); c.lineTo(DX, SILL - 110); c.stroke(); c.fillStyle = '#c84a2a'; c.fillRect(SX - 90, FY - 20, 170, 34); c.strokeRect(SX - 90, FY - 20, 170, 34); c.restore(); }];
+      S.D.figs = [0, 1, 2, 3].map(i => { const t0 = .2 + i * 1.5, dur = 3.4; return { x: SX, y: FY, s: .5, ...RU.SOLDIER(i, 'us'), pose: 'stand', walk: { x0: -200 - i * 120, x1: DX + 30, t0, dur: dur + 1.4 }, anim: (o) => { if (o.x > SX - 15) o.y = FY - Math.min(1, (o.x - SX + 15) / (DX - SX + 15)) * (FY - SILL); if (o.x > DX + 10) o.x = -5000; } }; });
       S.D.over = [(c, lt) => K.card(c, 'FORT STEWART, GEORGIA', lt, { at: .4, x: 380, y: 120, px: 40, rot: -2 }), (c, lt) => K.title(c, 'AIRLINERS FOR TROOPS', lt, { at: tA, y: 220, px: 76 })];
       S.D.sfx = [[.3, 'footsteps', .3], [2.2, 'footsteps', .25], [tA, 'pop', .25]]; } },
 ];

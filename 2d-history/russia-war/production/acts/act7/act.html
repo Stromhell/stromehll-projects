@@ -16,6 +16,16 @@ const KAL = [20.5, 54.7], BEL = [25.5, 53.8], GAP = [[22.6, 54.38], [23.6, 54.0]
 const gapBand = (c, lt, a) => { if (a <= 0) return; const [x0, y0] = XY(22.3, 54.6), [x1, y1] = XY(23.7, 53.85); c.save(); c.globalAlpha = a * (.55 + .2 * Math.sin(lt * 4)); c.strokeStyle = '#ffe080'; c.lineWidth = 46; c.lineCap = 'round'; c.beginPath(); c.moveTo(x0, y0 - 20); c.lineTo(x1, y1 + 20); c.stroke(); c.restore(); };
 const gun = (c, x, y, s, rot, lt) => { c.save(); c.translate(x, y); c.rotate(rot); c.scale(s, s); c.strokeStyle = INK; c.lineWidth = 4; c.fillStyle = '#7a4a3a'; c.beginPath(); c.roundRect(-40, -20, 80, 40, 10); c.fill(); c.stroke(); c.fillRect(30, -8, 70, 16); c.strokeRect(30, -8, 70, 16); if (Math.sin(lt * 3 + x) > .9) { c.fillStyle = '#ffd070'; c.beginPath(); c.arc(110, 0, 18, 0, 7); c.fill(); } c.restore(); };
 
+const truckFront = (c, x, y, s, lt) => { c.save(); c.translate(x, y + Math.sin(lt * 9) * 1.5 * s); c.scale(s, s); c.strokeStyle = INK; c.lineWidth = 5; c.lineJoin = 'round';
+  c.fillStyle = 'rgba(0,0,0,.3)'; c.beginPath(); c.ellipse(0, 6, 150, 18, 0, 0, 7); c.fill();
+  c.fillStyle = '#4e5a3c'; c.beginPath(); c.moveTo(-120, -150); c.quadraticCurveTo(0, -230, 120, -150); c.lineTo(120, -120); c.lineTo(-120, -120); c.closePath(); c.fill(); c.stroke();
+  for (const dx of [-110, 92]) { c.fillStyle = '#1e201e'; c.fillRect(dx, -40, 30, 46); c.strokeRect(dx, -40, 30, 46); }
+  c.fillStyle = '#5e6a4a'; c.beginPath(); c.roundRect(-100, -150, 200, 120, 10); c.fill(); c.stroke();
+  c.fillStyle = '#9ab8c8'; c.fillRect(-86, -140, 80, 46); c.fillRect(6, -140, 80, 46); c.strokeRect(-86, -140, 80, 46); c.strokeRect(6, -140, 80, 46);
+  c.fillStyle = 'rgba(255,255,255,.3)'; c.fillRect(-80, -136, 20, 38);
+  c.fillStyle = '#3a4230'; c.fillRect(-60, -84, 120, 40); c.strokeRect(-60, -84, 120, 40); for (let k = 0; k < 5; k++) { c.fillStyle = '#20241a'; c.fillRect(-52 + k * 22, -80, 12, 32); }
+  for (const dx of [-80, 80]) { c.fillStyle = '#fff4c8'; c.beginPath(); c.arc(dx, -64, 12, 0, 7); c.fill(); c.stroke(); }
+  c.fillStyle = '#2a2c26'; c.fillRect(-110, -38, 220, 16); c.strokeRect(-110, -38, 220, 16); c.restore(); };
 window.SHOTS = [
   // 7.01 every convoy hits the same bottleneck: the Suwalki Gap glows between two dark regions
   { plate: 'map_europe', cam: { z: [1.6, 2.4], x: [1500, 1610], y: [640, 640] }, bed: [['tension', .18]],
@@ -36,7 +46,7 @@ window.SHOTS = [
   // 7.03 a gauntlet: convoys on the corridor road under falling shells; then the gap snaps shut
   { plate: 'farm_corridor', cam: { z: [1.02, 1.1], x: [1280, 1280], y: [780, 760] }, bed: [['war_drums_loop', .2], ['wind_loop', .1]],
     init: S => { S.dur = S.end - S.start; const tC = A.at(S, 'closes', 6.2);
-      S.D.live = [(c, lt) => { for (let k = 0; k < 4; k++) { const d = ((lt * .08 + k * .25) % 1), y = 700 + d * d * 720, sc = .1 + d * .55; RU.truck(c, 1280 + (k % 2 ? -60 : 60) * d, y, sc, k % 2 ? 1 : -1, '#5e6a4a', lt * 2); }
+      S.D.live = [(c, lt) => { for (let k = 0; k < 4; k++) { const d = ((lt * .08 + k * .25) % 1), y = 700 + d * d * 720, sc = .1 + d * .55; truckFront(c, 1280 + (k % 2 ? -70 : 70) * d, y, sc * 1.1, lt + k); }
           for (let k = 0; k < 8; k++) { const t0 = .6 + k * .7, x = 500 + (k * 613) % 1600, y = 800 + (k * 211) % 500; RU.blast(c, x, y, .6 + (y - 800) / 800, K.seg(lt, t0, t0 + .9)); } }];
       S.D.over = [(c, lt) => K.card(c, 'MISSILES · DRONES · ARTILLERY', lt, { at: .4, x: 960, y: 120, px: 40, rot: -2 }), (c, lt) => { const a = pop(lt, tC - .6, .45); if (a <= 0) return; c.save(); c.translate(1580, 520); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(-196, -146, 400, 300); c.fillStyle = '#e4d4ac'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-200, -150, 400, 300); c.strokeRect(-200, -150, 400, 300); const sh = E.io(K.seg(lt, tC, tC + .6)); c.fillStyle = '#b86a5a'; c.fillRect(-200, -150, 150 + 50 * sh, 130); c.fillRect(50 - 50 * sh, 20, 150 + 50 * sh, 130); c.fillStyle = '#e8d48a'; c.fillRect(-60, -150, 260, 90); WW.label(c, 'BALTICS', 70, -105, 24); WW.label(c, 'GAP', 0, 0, 22, sh > .9 ? RED : INK); c.restore(); }, (c, lt) => WW.stamp(c, 960, 300, pop(lt, tC + .6, .35), 'CUT OFF'), (c, lt) => K.card(c, 'ONLY BY SEA OR AIR', lt, { at: tC + 1.8, x: 960, y: 420, px: 38, rot: 2 })];
       S.D.sfx = [...Array.from({ length: 8 }, (_, k) => [.6 + k * .7, 'hit', .22]), [tC, 'gate_slam', .4], [tC + .6, 'stamp', .4]]; } },

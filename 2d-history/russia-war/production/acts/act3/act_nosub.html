@@ -1,0 +1,75 @@
+<!doctype html><html><head><meta charset="utf-8"><title>RU act 3 - x</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "alium";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../../../shared/p2/world50.js"></script><script src="../../ww_kit.js"></script><script src="../../ru_props.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+const SW = 1920, SH = 1080, INK = WW.INK, RED = WW.RED, pop = WW.pop, COL = WW.COL;
+const backdrop = (name, b = .5, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const CARRY = () => ({ shL: 30, elL: -75, shR: 35, elR: -75 });
+const endTitle = (secs) => { const T = window.TIMING; const last = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length, start: last.end, end: last.end + secs, vo_start: last.end, vo_end: last.end, text: '' }); T.dur = last.end + secs; };
+for (const n of ['map_europe', 'map_atlantic', 'war_room', 'port_dawn']) K.load(n, PL + n + '.jpg');
+const XY = WW.xy, XA = RU.xyA;
+const ROUTE = [[-94.1, 29.6], [-90, 26.5], [-84, 24.4], [-80, 26.5], [-72, 33], [-50, 41], [-25, 47.5], [-8, 49.4], [2, 51.6], [8.5, 53.6]];
+const man = (c, x, y, s, col) => { c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 2.5; c.beginPath(); c.arc(x, y - 30 * s, 10 * s, 0, 7); c.fill(); c.stroke(); c.beginPath(); c.roundRect(x - 11 * s, y - 19 * s, 22 * s, 22 * s, 6 * s); c.fill(); c.stroke(); };
+const cal = (c, x, y, s, txt, flip, col = INK) => { c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(-240, -140, 500, 380); c.fillStyle = '#8a2a22'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-250, -250, 500, 100); c.strokeRect(-250, -250, 500, 100); c.fillStyle = WW.PAPER; c.fillRect(-250, -150, 500, 370); c.strokeRect(-250, -150, 500, 370);
+  for (const rx of [-150, 150]) { c.fillStyle = '#3a3a3a'; c.beginPath(); c.arc(rx, -250, 16, 0, 7); c.fill(); } WW.label(c, 'DAY', 0, -200, 46, '#f4e8d0'); WW.label(c, txt, 0, 40, 190, col);
+  if (flip > 0 && flip < 1) { c.fillStyle = 'rgba(242,232,210,.92)'; c.beginPath(); c.moveTo(-250, -150); c.lineTo(250, -150); c.lineTo(250 - flip * 40, -150 - 250 * flip); c.lineTo(-250 + flip * 40, -150 - 250 * flip); c.closePath(); c.fill(); c.stroke(); } c.restore(); };
+
+window.SHOTS = [
+  // 3.01 on paper NATO is huge: two stacks of soldier icons, NATO's more than twice as tall
+  { draw: (c, lt, u, S) => { backdrop('war_room', .4, 9)(c); const gN = E.io(K.seg(lt, .4, 3.2)), gR = E.io(K.seg(lt, .8, 2.6));
+      c.fillStyle = 'rgba(30,26,22,.55)'; c.fillRect(380, 820, 1160, 12);
+      const stack = (x0, rows, g, cols) => { const n = Math.floor(rows * g); for (let r = 0; r < n; r++) for (let k = 0; k < 6; k++) man(c, x0 + k * 36, 810 - r * 36, 1, cols(r)); };
+      stack(560, 17, gN, r => lt > S.tUS && r < 7 ? '#3e6aa8' : lt > S.tUS && r < 10 ? '#c85a4a' : lt > S.tUS && r < 12 ? '#5a86bc' : '#7a9cc8'); stack(1180, 7, gR, () => '#b86a5a');
+      WW.label(c, 'NATO', 650, 870, 46, '#f4e8d0'); WW.label(c, 'RUSSIA', 1270, 870, 46, '#f4e8d0');
+      if (lt > S.tUS) { const a = pop(lt, S.tUS, .4); c.save(); c.globalAlpha = a; WW.label(c, 'USA', 540, 700, 34, '#9ac0f0', 'right'); WW.label(c, 'TURKEY', 540, 480, 34, '#f0a090', 'right'); WW.label(c, 'FRANCE', 540, 400, 34, '#a8c8f0', 'right'); c.restore(); } },
+    bed: [['war_drums_loop', .16]],
+    init: S => { S.tUS = A.at(S, 'American', 5.6); const tM = A.at(S, 'million', 2.4);
+      S.D.over = [(c, lt) => K.card(c, 'ON PAPER', lt, { at: .3, x: 960, y: 110, px: 44, rot: -2 }), (c, lt) => K.title(c, '3.4M vs ~1.3M', lt, { at: tM, x: 1500, y: 300, px: 80 }), (c, lt) => K.card(c, 'ACTIVE TROOPS', lt, { at: tM + .6, x: 1500, y: 410, px: 34, rot: 2 })];
+      S.D.sfx = [[.4, 'riser', .25], [tM, 'stamp', .35], [S.tUS, 'pop', .3]]; } },
+  // 3.02 hundreds of thousands to the eastern flank: blue arrows from all over Europe point east
+  { plate: 'map_europe', cam: { z: [1.05, 1.15], x: [1280, 1340], y: [760, 740] }, bed: [['war_drums_loop', .16], ['tension', .1]],
+    init: S => { const tH = A.at(S, 'hundreds', 3.4), tE = A.at(S, 'eastern', 6);
+      const SRC = [[[-3, 40.5], [8, 46], [18, 51.5]], [[2, 47], [12, 50.5], [21, 53]], [[-2, 53], [9, 53.3], [21, 54.3]], [[10, 60], [17, 58], [22.5, 56.2]], [[12, 43], [17, 47.5], [22, 50.5]], [[24, 39], [26, 44], [26.5, 49]]];
+      S.D.live = [(c, lt) => { WW.map(c, RU.BASE); SRC.forEach((P, k) => WW.arrow(c, P, K.seg(lt, .4 + k * .45, 2.4 + k * .45), '#3e6aa8', 24)); const g = K.seg(lt, tE, tE + .6); if (g > 0) { c.save(); c.globalAlpha = .35 + .2 * Math.sin(lt * 5); c.strokeStyle = '#ffe9a0'; c.lineWidth = 16; c.setLineDash([30, 20]); c.beginPath(); const L = [[27.5, 59.5], [26.5, 55.5], [24, 53], [24, 50.5], [22.5, 48], [28, 45.5]].map(p => XY(...p)); L.forEach((p, i) => i ? c.lineTo(...p) : c.moveTo(...p)); c.stroke(); c.restore(); } }];
+      S.D.over = [(c, lt) => K.title(c, 'HUNDREDS OF THOUSANDS', lt, { at: tH, y: 150, px: 76 }), (c, lt) => K.card(c, 'EASTERN FLANK', lt, { at: tE, x: 1500, y: 300, px: 42, rot: 2 })];
+      S.D.sfx = [...Array.from({ length: 6 }, (_, k) => [.4 + k * .45, 'whoosh_soft', .2]), [tH, 'drum', .3], [tE, 'chime', .25]]; } },
+  // 3.03 a calendar flips to day 45; a target sticker says 10
+  { draw: (c, lt, u, S) => { backdrop('war_room', .42, 9)(c); const k = E.io(K.seg(lt, .4, S.t45)), d = Math.max(1, Math.round(45 * k)); const fp = (lt * 6) % 1; cal(c, 760, 560, 1.1, String(d), k < 1 && fp < .45 ? fp / .45 * .5 : 0, d === 45 ? RED : INK);
+      const a = pop(lt, S.t10, .45); if (a > 0) { c.save(); c.translate(1420, 520); c.rotate(.12); c.scale(a, a); c.fillStyle = '#4a7ac0'; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.arc(0, 0, 170, 0, 7); c.fill(); c.stroke(); WW.label(c, 'GOAL', 0, -70, 44, '#f4e8d0'); WW.label(c, '10', 0, 30, 140, '#fff'); WW.label(c, 'DAYS', 0, 120, 34, '#f4e8d0'); c.restore(); } },
+    bed: [['tension', .18]],
+    init: S => { S.t45 = A.at(S, '45', 4.6) + .3; S.t10 = A.at(S, 'under', 7.6);
+      S.D.over = [(c, lt) => K.card(c, 'ATLANTIC COAST → EASTERN EDGE', lt, { at: .4, x: 960, y: 110, px: 40, rot: -2 }), (c, lt) => WW.stamp(c, 1420, 800, pop(lt, S.t45, .35) * .7, 'UP TO 45 DAYS')];
+      S.D.sfx = [...Array.from({ length: 9 }, (_, k) => [.5 + k * (S.t45 - .8) / 9, 'paper', .16]), [S.t45, 'stamp', .4], [S.t10, 'pop', .35]]; } },
+  // 3.04 America: troops already in Europe; more from Texas and Georgia, dotted arcs across the Atlantic
+  { plate: 'map_atlantic', cam: { z: [1.05, 1.12], x: [1280, 1240], y: [740, 740] }, bed: [['ocean_loop', .12], ['tension', .1]],
+    init: S => { const tE = A.at(S, '80,000', 1.0), tT = A.at(S, 'Texas', 6.2), tG = A.at(S, 'Georgia', 7.4);
+      S.D.live = [(c, lt) => { const eu = XA(10, 51); const a = pop(lt, tE, .4); if (a > 0) { c.save(); c.translate(eu[0], eu[1]); c.scale(a, a); for (let k = 0; k < 10; k++) man(c, -100 + (k % 5) * 44, (k < 5 ? 0 : 50), 1.4, '#3e6aa8'); c.restore(); }
+        const tx = XA(-94.1, 30.1), ga = XA(-81.6, 31.9); { const [ux, uy] = XA(-92, 38); c.save(); c.globalAlpha = .3 + .2 * Math.sin(lt * 3); c.strokeStyle = '#3e6aa8'; c.lineWidth = 12; c.beginPath(); c.ellipse(ux, uy, 330, 190, 0, 0, 7); c.stroke(); c.restore(); WW.label(c, 'USA', ux, uy, 60, '#3e6aa8'); }
+        if (lt > tT - .4) { const [x, y] = tx; c.save(); c.translate(x, y); const s = pop(lt, tT - .4, .4) * .9; c.scale(s, s); c.fillStyle = RED; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.moveTo(0, 0); c.bezierCurveTo(-26, -34, -22, -66, 0, -66); c.bezierCurveTo(22, -66, 26, -34, 0, 0); c.fill(); c.stroke(); c.restore(); WW.label(c, 'TEXAS', x, y + 34, 30); }
+        if (lt > tG - .4) { const [x, y] = ga; c.save(); c.translate(x, y); const s = pop(lt, tG - .4, .4) * .9; c.scale(s, s); c.fillStyle = RED; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.moveTo(0, 0); c.bezierCurveTo(-26, -34, -22, -66, 0, -66); c.bezierCurveTo(22, -66, 26, -34, 0, 0); c.fill(); c.stroke(); c.restore(); WW.label(c, 'GEORGIA', x + 40, y + 34, 30); }
+        for (const [p0, t0] of [[tx, tT], [ga, tG]]) { const u = E.io(K.seg(lt, t0, t0 + 2.4)); if (u <= 0) continue; const p1 = XA(8, 52), mid = [(p0[0] + p1[0]) / 2, Math.min(p0[1], p1[1]) - 260]; const pts = Array.from({ length: 30 }, (_, i) => { const t = i / 29, q = 1 - t; return [q * q * p0[0] + 2 * q * t * mid[0] + t * t * p1[0], q * q * p0[1] + 2 * q * t * mid[1] + t * t * p1[1]]; }); RU.dash(c, pts, u, '#3e6aa8', 8); } }];
+      S.D.over = [(c, lt) => K.title(c, '80,000-100,000 US TROOPS', lt, { at: tE, y: 140, px: 64, until: tT - .2 }), (c, lt) => K.card(c, 'ALREADY IN EUROPE', lt, { at: tE + .6, x: 1500, y: 250, px: 38, rot: 2, until: tT - .2 }), (c, lt) => K.title(c, 'FROM TEXAS AND GEORGIA', lt, { at: tT, y: 140, px: 70 })];
+      S.D.sfx = [[tE, 'pop', .3], [tT, 'pop', .3], [tG, 'pop', .3], [tT + .4, 'whoosh_soft', .25]]; } },
+  // 3.05 Port of Beaumont at dawn: tanks and trucks roll up the stern ramp into a giant cargo ship
+  { plate: 'port_dawn', cam: { z: [1.0, 1.1], x: [1180, 1180], y: [820, 800] }, bed: [['ocean_loop', .12], ['city_loop', .1]], light: { dir: -1, key: 'rgba(255,200,150,.24)' },
+    figs: [{ x: 1700, y: 1330, s: .55, ...RU.CREW(0), facing: -1, pose: 'wave' }],
+    init: S => { S.dur = S.end - S.start; const tV = A.at(S, 'vehicles', 1.4);
+      const P = [[-300, 1180], [600, 1110], [922, 1060], [1280, 760]];
+      S.D.live = [(c, lt) => { c.save(); c.beginPath(); c.rect(0, 0, 1290, 1440); c.clip(); for (let k = 0; k < 4; k++) { const u = K.seg(lt, tV - 1.4 + k * 1.6, tV + 2.8 + k * 1.6); if (u <= 0 || u >= 1) continue; const [x, y, ang] = RU.along(P, E.io(u)); c.save(); c.translate(x, y); c.rotate(Math.min(0, ang) * .9); const s = .95 - .45 * Math.max(0, (x - 922) / 360); if (k % 2) RU.truck(c, 0, 0, s, 1, '#6a7050', lt * 2); else RU.tank(c, 0, 0, s, 1, '#6a7050', lt, lt * 2); c.restore(); } c.restore(); }];
+      S.D.over = [(c, lt) => K.card(c, 'PORT OF BEAUMONT · TEXAS', lt, { at: .4, x: 400, y: 120, px: 42, rot: -2 }), (c, lt) => K.card(c, 'A SHIP BUILT TO CARRY AN ARMY', lt, { at: tV + 2.4, x: 1300, y: 200, px: 38, rot: 2 })];
+      S.D.sfx = [[.3, 'birds_loop', .1], ...Array.from({ length: 5 }, (_, k) => [tV - .6 + k * 1.5, 'creak', .18]), [tV + 1, 'thud', .2]]; } },
+  // 3.06 the ship sails out through the Gulf of Mexico and across the Atlantic: about two weeks
+  { plate: 'map_atlantic', cam: { z: [1.0, 1.06], x: [1280, 1300], y: [740, 740] }, bed: [['ocean_loop', .2]],
+    init: S => { S.dur = S.end - S.start; const tA = A.at(S, 'Atlantic', 3), tW = A.at(S, 'two weeks', 5.4);
+      S.D.live = [(c, lt) => { const pts = ROUTE.map(p => XA(...p)), u = E.io(K.seg(lt, .4, S.dur - .3)); RU.dash(c, pts, u, '#3e6aa8', 8); const [x, y, ang] = RU.along(pts, u); c.save(); c.translate(x, y); c.scale(.26, .26); RU.roro(c, 0, 0, 1, Math.cos(ang) >= 0 ? 1 : -1, lt); c.restore(); }];
+      S.D.over = [(c, lt) => K.card(c, 'GULF OF MEXICO', lt, { at: .4, x: 400, y: 880, px: 38, rot: -2, until: tA + .5 }), (c, lt) => K.title(c, '~2 WEEKS AT SEA', lt, { at: tW, y: 150, px: 76 }), (c, lt) => { const d = Math.round(14 * E.io(K.seg(lt, .4, S.dur - .3))), a = pop(lt, .4, .4); if (a <= 0) return; c.save(); c.translate(1700, 300); c.scale(a, a); c.rotate(-.04); c.fillStyle = WW.PAPER; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.roundRect(-150, -56, 300, 112, 10); c.fill(); c.stroke(); c.font = '24px Anton'; c.fillStyle = INK; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('DAYS AT SEA', 0, -26); c.font = '56px Anton'; c.fillStyle = '#3e6aa8'; c.fillText(String(d), 0, 18); c.restore(); }];
+      S.D.sfx = [[.3, 'ocean_loop', .1], [tA, 'whoosh_soft', .3], [tW, 'chime', .3]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+KIT.drawSubs = () => {};
+</script></body></html>

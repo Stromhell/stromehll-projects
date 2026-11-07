@@ -2,6 +2,14 @@ for (const n of ['map_europe', 'cold_sky', 'airbase', 'farm_corridor', 'baltic_b
 const XY = WW.xy;
 const contrail = (c, x0, y0, x1, y1, a) => { if (a <= 0) return; c.save(); c.globalAlpha = a; c.strokeStyle = 'rgba(255,255,255,.7)'; c.lineCap = 'round'; c.lineWidth = 10; c.beginPath(); c.moveTo(x0, y0); c.lineTo(x1, y1); c.stroke(); c.lineWidth = 22; c.globalAlpha = a * .3; c.stroke(); c.restore(); };
 
+const G5 = 1300, JET5 = [{ x: 560, g: 1300, s: 3.6, t0: 4.9 }, { x: 2200, g: 1240, s: 3.2, t0: 4.1 }];
+const JB0 = { x0: 560 + 400, x1: 560 + 400 + 230, h: 340 }, JB1 = { x0: 2200 + 350, x1: 2200 + 350 + 210, h: 300 };
+// a Eurofighter at real size next to the pilots: about 16 m long, landing gear on the runway
+const eurofighter = (c, x, g, s, rot, lt, burner, lift) => { const yc = g - 78 * s; c.save(); c.translate(x, yc); c.rotate(rot);
+  if (lift < 40) { c.strokeStyle = INK; c.lineWidth = 5; c.fillStyle = '#2a2a2a'; for (const gx of [-60, 130]) { c.fillStyle = '#7a7c80'; c.fillRect(gx * s - 5, 14 * s, 10, (78 - 14) * s - 22 * s * .6); c.fillStyle = '#1e1e1e'; c.beginPath(); c.arc(gx * s, 78 * s - 14 * s * .6, 14 * s * .6, 0, 7); c.fill(); c.stroke(); } }
+  RU.jet(c, 0, 0, s, 1, '#8a929c', lt, burner); c.restore();
+  if (lift < 200) { c.save(); c.globalAlpha = Math.max(0, 1 - lift / 200); c.fillStyle = 'rgba(0,0,0,.25)'; c.beginPath(); c.ellipse(x + 20 * s, g + 4, 220 * s, 12, 0, 0, 7); c.fill(); c.restore(); } };
+const ladder = (c, J) => { const B = J === JET5[0] ? JB0 : JB1; c.save(); c.strokeStyle = INK; c.lineWidth = 6; c.fillStyle = '#e8c840'; for (const o of [0, 16]) { c.beginPath(); c.moveTo(B.x0 + o, J.g); c.lineTo(B.x1 + o, J.g - B.h); c.stroke(); } for (let k = 1; k < 8; k++) { const t = k / 8; c.beginPath(); c.moveTo(B.x0 + (B.x1 - B.x0) * t, J.g - B.h * t); c.lineTo(B.x0 + (B.x1 - B.x0) * t + 16, J.g - B.h * t); c.stroke(); } c.restore(); };
 window.SHOTS = [
   // 5.01 over the Baltics: two dark fighters streak across a cold sky
   { plate: 'cold_sky', cam: { z: [1.0, 1.06], x: [1280, 1240], y: [720, 720] }, bed: [['wind_loop', .22]],
@@ -11,9 +19,9 @@ window.SHOTS = [
       S.D.sfx = [[.4, 'whoosh', .45], [1.0, 'whoosh', .4], [tS, 'drum', .3]]; } },
   // 5.02 a German airbase: pilots sprint out, two Eurofighters roll and take off
   { plate: 'airbase', cam: { z: [1.0, 1.08], x: [1280, 1320], y: [800, 780] }, bed: [['alarm', .1], ['wind_loop', .12]], light: { dir: -1, key: 'rgba(255,230,200,.22)' },
-    figs: [0, 1].map(i => ({ x: 900 + i * 500, y: 1300, s: 1.3, ...RU.PILOT(i), walk: { x0: -300 - i * 200, x1: 900 + i * 500, t0: .2, dur: 2.6, pose: 'run' }, anim: (o, tt) => { if (tt > 3.4) o.x = -5000; } })),
+    figs: [0, 1].map(i => { const B = i ? JB1 : JB0; return { x: B.x0, y: G5, s: .55, ...RU.PILOT(i), walk: { x0: -260 - i * 160, x1: B.x1, t0: .2, dur: 2.4 + i * .9, pose: 'run' }, anim: (o) => { if (o.x > B.x0) o.y = G5 - Math.min(1, (o.x - B.x0) / (B.x1 - B.x0)) * B.h; if (o.x > B.x1 - 12) o.x = -5000; } }; }),
     init: S => { S.dur = S.end - S.start; const t15 = A.at(S, '15', 4.6), tH = A.at(S, 'hour', 8.2);
-      S.D.live = [(c, lt) => { for (let k = 0; k < 2; k++) { const u = Math.pow(K.seg(lt, 4 + k * .8, 8 + k * .8), 2), x = 1000 + k * 500 + u * 2200, y = 1180 + k * 30 - Math.max(0, u - .45) * 900, rot = -Math.max(0, Math.min(.35, (u - .45) * 1.2)); c.save(); c.translate(x, y); c.rotate(rot); RU.jet(c, 0, 0, .8, 1, '#8a929c', lt, u > 0 ? .4 + u : 0); c.restore(); } }];
+      S.D.live = [(c, lt) => { for (const k of [1, 0]) { const J = JET5[k], u = Math.pow(K.seg(lt, J.t0, J.t0 + 4.4), 2), x = J.x + u * 3600, lift = Math.max(0, u - .5) * 1100, rot = -Math.max(0, Math.min(.3, (u - .5) * 1.1)); eurofighter(c, x, J.g - lift, J.s, rot, lt, u > 0 ? .5 + u : 0, lift); if (u <= 0) ladder(c, J); } }];
       S.D.over = [(c, lt) => K.card(c, 'EUROFIGHTER TYPHOONS · GERMANY', lt, { at: .4, x: 960, y: 110, px: 40, rot: -2 }), (c, lt) => K.title(c, '15 MINUTES TO AIRBORNE', lt, { at: t15, y: 220, px: 72 }), (c, lt) => K.card(c, '~1 HOUR TO THE EASTERN FLANK', lt, { at: tH, x: 960, y: 330, px: 38, rot: 2 })];
       S.D.sfx = [[.2, 'alarm', .25], [.4, 'run_steps', .35], [4, 'whoosh', .4], [4.8, 'whoosh', .4], [t15, 'stamp', .35]]; } },
   // 5.03 the cheap-weapons problem: a cheap drone, an expensive missile, price tags
@@ -48,7 +56,8 @@ window.SHOTS = [
   { plate: 'baltic_border', cam: { z: [1.05, 1.12], x: [1280, 1280], y: [800, 780] }, bed: [['wind_loop', .14], ['drone', .12]],
     figs: [0, 1, 2].map(i => ({ x: 860 + i * 420, y: 1330, s: 1.55, ...RU.SOLDIER(i + 1, 'balt'), facing: i === 2 ? -1 : 1, pose: 'present' })),
     init: S => { const tL = A.at(S, 'Lithuanian', 3.6), tS = A.at(S, 'cheap', 6);
-      S.D.front = [(c, lt) => { for (let k = 0; k < 18; k++) { const i = k % 3, up = E.io(K.seg(lt, tS - .5 + k * .08, tS + 2.6 + k * .08)), x0 = 860 + i * 420 + (i === 2 ? -120 : 120), y0 = 1050; if (k >= 3 && up <= 0) continue; const x = x0 + up * ((k * 137) % 900 - 450), y = y0 - up * (300 + (k * 71) % 400); RU.drone(c, x, y, .55, 'quad', lt + k); } }];
+      const swarm = (c, lt, held) => { const GAP = [1070, 1490, 640, 1920]; for (let k = 0; k < 18; k++) { if ((k < 3) !== held) continue; const i = k % 3, up = E.io(K.seg(lt, tS - .5 + k * .08, tS + 2.6 + k * .08)); if (k >= 3 && up <= 0) continue; const hand = 860 + i * 420 + (i === 2 ? -120 : 120), xg = k < 3 ? [1070, 1490, 1490][i] : GAP[k % 4], x0 = k < 3 ? hand + Math.min(1, up * 5) * (xg - hand) : xg, y = 1050 - up * (520 + (k * 71) % 400), dx = ((k * 137) % 900 - 450), x = x0 + (y < 740 ? (740 - y) / 400 * dx : 0); RU.drone(c, x, y, k < 3 ? 1.15 : .9 - (k % 4) * .06, 'quad', lt + k); } };
+      S.D.live.push((c, lt) => swarm(c, lt, false)); S.D.front = [(c, lt) => swarm(c, lt, true)];
       S.D.over = [(c, lt) => K.card(c, 'BALTIC DRONE UNITS', lt, { at: .4, x: 400, y: 120, px: 42, rot: -2 }), (c, lt) => K.card(c, 'CHEAP DRONES: MOST OF THE DAMAGE?', lt, { at: tL + .6, x: 960, y: 230, px: 34, rot: 1.5, until: tS + 1 }), (c, lt) => K.title(c, 'DRONES ON BOTH SIDES', lt, { at: tS + 1.2, y: 200, px: 76 })];
       S.D.sfx = [[.3, 'drone', .2], [tS, 'drone', .4], [tS + .8, 'whoosh_soft', .3]]; } },
 ];

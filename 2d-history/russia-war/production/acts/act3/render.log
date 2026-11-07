@@ -1,11 +1,11 @@
-frames 150/1287  55 ms/frame
-frames 300/1287  56 ms/frame
-frames 450/1287  55 ms/frame
-frames 600/1287  56 ms/frame
-frames 750/1287  54 ms/frame
-frames 900/1287  51 ms/frame
-frames 1050/1287  51 ms/frame
-frames 1200/1287  50 ms/frame
+frames 150/1287  48 ms/frame
+frames 300/1287  47 ms/frame
+frames 450/1287  47 ms/frame
+frames 600/1287  47 ms/frame
+frames 750/1287  46 ms/frame
+frames 900/1287  44 ms/frame
+frames 1050/1287  44 ms/frame
+frames 1200/1287  43 ms/frame
 DONE 1287 frames 42.90s
 /home/user/stromehll-projects/2d-history/shared/mix.py:14: WavFileWarning: Chunk (non-data) not understood, skipping it.
   sr, x = wavfile.read(p); x = x.astype(np.float32)

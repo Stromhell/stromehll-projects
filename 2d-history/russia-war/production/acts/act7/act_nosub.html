@@ -1,0 +1,71 @@
+<!doctype html><html><head><meta charset="utf-8"><title>RU act 7 - The Suwalki Gap</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "alium";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../../../shared/p2/world50.js"></script><script src="../../ww_kit.js"></script><script src="../../ru_props.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+const SW = 1920, SH = 1080, INK = WW.INK, RED = WW.RED, pop = WW.pop, COL = WW.COL;
+const backdrop = (name, b = .5, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const CARRY = () => ({ shL: 30, elL: -75, shR: 35, elR: -75 });
+const endTitle = (secs) => { const T = window.TIMING; const last = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length, start: last.end, end: last.end + secs, vo_start: last.end, vo_end: last.end, text: '' }); T.dur = last.end + secs; };
+for (const n of ['map_europe', 'farm_corridor', 'gotland']) K.load(n, PL + n + '.jpg');
+const XY = WW.xy;
+const KAL = [20.5, 54.7], BEL = [25.5, 53.8], GAP = [[22.6, 54.38], [23.6, 54.0]];
+const gapBand = (c, lt, a) => { if (a <= 0) return; const [x0, y0] = XY(22.3, 54.6), [x1, y1] = XY(23.7, 53.85); c.save(); c.globalAlpha = a * (.55 + .2 * Math.sin(lt * 4)); c.strokeStyle = '#ffe080'; c.lineWidth = 46; c.lineCap = 'round'; c.beginPath(); c.moveTo(x0, y0 - 20); c.lineTo(x1, y1 + 20); c.stroke(); c.restore(); };
+const gun = (c, x, y, s, rot, lt) => { c.save(); c.translate(x, y); c.rotate(rot); c.scale(s, s); c.strokeStyle = INK; c.lineWidth = 4; c.fillStyle = '#7a4a3a'; c.beginPath(); c.roundRect(-40, -20, 80, 40, 10); c.fill(); c.stroke(); c.fillRect(30, -8, 70, 16); c.strokeRect(30, -8, 70, 16); if (Math.sin(lt * 3 + x) > .9) { c.fillStyle = '#ffd070'; c.beginPath(); c.arc(110, 0, 18, 0, 7); c.fill(); } c.restore(); };
+
+const truckFront = (c, x, y, s, lt) => { c.save(); c.translate(x, y + Math.sin(lt * 9) * 1.5 * s); c.scale(s, s); c.strokeStyle = INK; c.lineWidth = 5; c.lineJoin = 'round';
+  c.fillStyle = 'rgba(0,0,0,.3)'; c.beginPath(); c.ellipse(0, 6, 150, 18, 0, 0, 7); c.fill();
+  c.fillStyle = '#4e5a3c'; c.beginPath(); c.moveTo(-120, -150); c.quadraticCurveTo(0, -230, 120, -150); c.lineTo(120, -120); c.lineTo(-120, -120); c.closePath(); c.fill(); c.stroke();
+  for (const dx of [-110, 92]) { c.fillStyle = '#1e201e'; c.fillRect(dx, -40, 30, 46); c.strokeRect(dx, -40, 30, 46); }
+  c.fillStyle = '#5e6a4a'; c.beginPath(); c.roundRect(-100, -150, 200, 120, 10); c.fill(); c.stroke();
+  c.fillStyle = '#9ab8c8'; c.fillRect(-86, -140, 80, 46); c.fillRect(6, -140, 80, 46); c.strokeRect(-86, -140, 80, 46); c.strokeRect(6, -140, 80, 46);
+  c.fillStyle = 'rgba(255,255,255,.3)'; c.fillRect(-80, -136, 20, 38);
+  c.fillStyle = '#3a4230'; c.fillRect(-60, -84, 120, 40); c.strokeRect(-60, -84, 120, 40); for (let k = 0; k < 5; k++) { c.fillStyle = '#20241a'; c.fillRect(-52 + k * 22, -80, 12, 32); }
+  for (const dx of [-80, 80]) { c.fillStyle = '#fff4c8'; c.beginPath(); c.arc(dx, -64, 12, 0, 7); c.fill(); c.stroke(); }
+  c.fillStyle = '#2a2c26'; c.fillRect(-110, -38, 220, 16); c.strokeRect(-110, -38, 220, 16); c.restore(); };
+window.SHOTS = [
+  // 7.01 every convoy hits the same bottleneck: the Suwalki Gap glows between two dark regions
+  { plate: 'map_europe', cam: { z: [1.6, 2.4], x: [1500, 1610], y: [640, 640] }, bed: [['tension', .18]],
+    init: S => { const tG = A.at(S, 'Suwałki', 3.2);
+      S.D.live = [(c, lt) => { WW.map(c, RU.BASE); [[[8.6, 53.5], [14, 53], [19.5, 53.6], [22.6, 54.3]], [[13.4, 51.5], [18, 52.3], [22.4, 54.1]]].forEach((P, k) => WW.arrow(c, P, K.seg(lt, .3 + k * .4, 2.6 + k * .4), '#3e6aa8', 26));
+          gapBand(c, lt, K.seg(lt, tG - .4, tG + .4)); RU.ring(c, 23.1, 54.2, 110, lt); }];
+      S.D.over = [(c, lt) => K.card(c, 'POLAND · LITHUANIA BORDER', lt, { at: .4, x: 960, y: 120, px: 40, rot: -2 }), (c, lt) => K.title(c, 'THE SUWAŁKI GAP', lt, { at: tG, y: 860, px: 86 })];
+      S.D.sfx = [[.3, 'whoosh_soft', .3], [tG, 'stamp', .4]]; } },
+  // 7.02 only ~65 km wide: Kaliningrad on one side, Belarus on the other, guns pointing at the gap
+  { plate: 'map_europe', cam: { z: [2.5, 2.7], x: [1620, 1620], y: [670, 670] }, bed: [['tension', .2], ['heartbeat', .12]],
+    init: S => { const t65 = A.at(S, '65', 1.2), tK = A.at(S, 'Kaliningrad', 3.4), tB = A.at(S, 'Belarus', 7);
+      S.D.live = [(c, lt) => { WW.map(c, RU.BASE); gapBand(c, lt, 1); const [ax, ay] = XY(22.4, 54.6), [bx, by] = XY(23.5, 53.9), m = E.io(K.seg(lt, t65 - .3, t65 + .8)); if (m > 0) { c.save(); c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.moveTo(ax - 60, ay - 40); c.lineTo(ax - 60 + (bx - ax + 120) * m, ay - 40 + (by - ay + 80) * m); c.stroke(); c.restore(); }
+          const kp = XY(...KAL), bp = XY(...BEL); const ka = pop(lt, tK, .4), ba = pop(lt, tB, .4);
+          if (ka > 0) { WW.face(c, kp[0], kp[1], .8 * ka, 'angry', { lt }); for (let k = 0; k < 3; k++) gun(c, kp[0] + 40 + k * 30, kp[1] + 50 + k * 25, .5 * ka, .5, lt + k); WW.label(c, 'KALININGRAD', kp[0], kp[1] - 70, 30, INK); }
+          if (ba > 0) { WW.face(c, bp[0], bp[1], .9 * ba, 'smug', { lt }); for (let k = 0; k < 3; k++) gun(c, bp[0] - 120 - k * 30, bp[1] - 40 + k * 30, .5 * ba, Math.PI + .5, lt + k); WW.label(c, 'BELARUS', bp[0], bp[1] + 80, 30, INK); } }];
+      S.D.over = [(c, lt) => K.title(c, '~65 KM WIDE', lt, { at: t65, y: 150, px: 92 })];
+      S.D.sfx = [[t65, 'stamp', .35], [tK, 'drum', .3], [tB, 'drum', .3]]; } },
+  // 7.03 a gauntlet: convoys on the corridor road under falling shells; then the gap snaps shut
+  { plate: 'farm_corridor', cam: { z: [1.02, 1.1], x: [1280, 1280], y: [780, 760] }, bed: [['war_drums_loop', .2], ['wind_loop', .1]],
+    init: S => { S.dur = S.end - S.start; const tC = A.at(S, 'closes', 6.2);
+      S.D.live = [(c, lt) => { for (let k = 0; k < 4; k++) { const d = ((lt * .08 + k * .25) % 1), y = 700 + d * d * 720, sc = .1 + d * .55; truckFront(c, 1280 + (k % 2 ? -70 : 70) * d, y, sc * 1.1, lt + k); }
+          for (let k = 0; k < 8; k++) { const t0 = .6 + k * .7, x = 500 + (k * 613) % 1600, y = 800 + (k * 211) % 500; RU.blast(c, x, y, .6 + (y - 800) / 800, K.seg(lt, t0, t0 + .9)); } }];
+      S.D.over = [(c, lt) => K.card(c, 'MISSILES · DRONES · ARTILLERY', lt, { at: .4, x: 960, y: 120, px: 40, rot: -2 }), (c, lt) => { const a = pop(lt, tC - .6, .45); if (a <= 0) return; c.save(); c.translate(1580, 520); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(-196, -146, 400, 300); c.fillStyle = '#e4d4ac'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-200, -150, 400, 300); c.strokeRect(-200, -150, 400, 300); const sh = E.io(K.seg(lt, tC, tC + .6)); c.fillStyle = '#b86a5a'; c.fillRect(-200, -150, 150 + 50 * sh, 130); c.fillRect(50 - 50 * sh, 20, 150 + 50 * sh, 130); c.fillStyle = '#e8d48a'; c.fillRect(-60, -150, 260, 90); WW.label(c, 'BALTICS', 70, -105, 24); WW.label(c, 'GAP', 0, 0, 22, sh > .9 ? RED : INK); c.restore(); }, (c, lt) => WW.stamp(c, 960, 300, pop(lt, tC + .6, .35), 'CUT OFF'), (c, lt) => K.card(c, 'ONLY BY SEA OR AIR', lt, { at: tC + 1.8, x: 960, y: 420, px: 38, rot: 2 })];
+      S.D.sfx = [...Array.from({ length: 8 }, (_, k) => [.6 + k * .7, 'hit', .22]), [tC, 'gate_slam', .4], [tC + .6, 'stamp', .4]]; } },
+  // 7.04 the Baltic Sea becomes vital, and one island most of all: Gotland
+  { plate: 'gotland', cam: { z: [1.0, 1.1], x: [1280, 1400], y: [720, 700] }, bed: [['ocean_loop', .2], ['birds_loop', .1]],
+    live: [A.birds(400, 220, 6, 50, 1.2)],
+    init: S => { const tG = A.at(S, 'Gotland', 4.4), tN = A.at(S, '2024', 7.4);
+      S.D.live.push((c, lt) => { for (let k = 0; k < 2; k++) { const x = 400 + ((lt * 30 + k * 600) % 1400); WW.boat(c, x, 1100 + k * 60, .6, 'little', lt); } });
+      S.D.over = [(c, lt) => K.card(c, 'THE BALTIC SEA', lt, { at: .4, x: 400, y: 120, px: 42, rot: -2 }), (c, lt) => K.title(c, 'GOTLAND', lt, { at: tG, y: 200, px: 100 }), (c, lt) => K.card(c, 'SWEDEN · NATO SINCE 2024', lt, { at: tN - .4, x: 960, y: 330, px: 40, rot: 2 })];
+      S.D.sfx = [[.3, 'swell', .25], [tG, 'chime', .3], [tN, 'pop', .3]]; } },
+  // 7.05 an unsinkable aircraft carrier: jet icons launch from the island toward Russia's supply lines
+  { plate: 'map_europe', cam: { z: [1.9, 2.0], x: [1560, 1580], y: [560, 560] }, bed: [['tension', .16], ['war_drums_loop', .12]],
+    init: S => { const tU = A.at(S, 'unsinkable', 1.4), tJ = A.at(S, 'Jets', 4), tD = A.at(S, 'days', 8.6);
+      S.D.live = [(c, lt) => { WW.map(c, RU.BASE); const [gx, gy] = XY(18.5, 57.45); c.save(); c.globalAlpha = .5 + .3 * Math.sin(lt * 4); c.strokeStyle = '#ffe080'; c.lineWidth = 14; c.beginPath(); c.ellipse(gx, gy, 60, 90, .3, 0, 7); c.stroke(); c.restore();
+          for (let k = 0; k < 3; k++) { const u = E.io(K.seg(lt, tJ + k * .4, tJ + 2.4 + k * .4)); if (u <= 0) continue; const P = [[gx, gy], XY(...[[21, 55.3], [23.5, 56.4], [21.5, 57.8]][k])], x = P[0][0] + (P[1][0] - P[0][0]) * u, y = P[0][1] + (P[1][1] - P[0][1]) * u; RU.dash(c, P, u, '#3e6aa8', 5); c.save(); c.translate(x, y); c.rotate(Math.atan2(P[1][1] - P[0][1], P[1][0] - P[0][0])); RU.jet(c, 0, 0, .18, 1, '#3e6aa8', lt, .6); c.restore(); } }];
+      S.D.over = [(c, lt) => K.title(c, 'UNSINKABLE CARRIER', lt, { at: tU, y: 150, px: 80 }), (c, lt) => K.card(c, 'READY WITHIN DAYS', lt, { at: tD, x: 1500, y: 880, px: 40, rot: 2 })];
+      S.D.sfx = [[tU, 'stamp', .35], [tJ, 'whoosh', .35], [tJ + .4, 'whoosh', .3], [tJ + .8, 'whoosh', .3], [tD, 'chime', .25]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+KIT.drawSubs = () => {};
+</script></body></html>

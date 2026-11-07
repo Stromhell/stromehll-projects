@@ -1,0 +1,212 @@
+[
+ {
+  "id": 1,
+  "frame": 287,
+  "hx": 960,
+  "hy": 520,
+  "z": 1.25,
+  "lines": [
+   "NATO'S WEAKEST",
+   "65 KM"
+  ],
+  "hi": 1,
+  "acc": "#e8b44a",
+  "tag": "RUSSIA vs NATO"
+ },
+ {
+  "id": 2,
+  "frame": 480,
+  "hx": 960,
+  "hy": 520,
+  "z": 1.25,
+  "lines": [
+   "ATTACK ONE,",
+   "ATTACK ALL"
+  ],
+  "hi": 1,
+  "acc": "#e8b44a",
+  "tag": "RUSSIA vs NATO"
+ },
+ {
+  "id": 3,
+  "frame": 375,
+  "hx": 960,
+  "hy": 520,
+  "z": 1.25,
+  "lines": [
+   "45 DAYS",
+   "TO MOVE"
+  ],
+  "hi": 1,
+  "acc": "#e8b44a",
+  "tag": "RUSSIA vs NATO"
+ },
+ {
+  "id": 4,
+  "frame": 270,
+  "hx": 960,
+  "hy": 520,
+  "z": 1.25,
+  "lines": [
+   "8.5 CM",
+   "SLOWS NATO"
+  ],
+  "hi": 1,
+  "acc": "#e8b44a",
+  "tag": "RUSSIA vs NATO"
+ },
+ {
+  "id": 5,
+  "frame": 254,
+  "hx": 960,
+  "hy": 520,
+  "z": 1.25,
+  "lines": [
+   "CHEAP DRONE,",
+   "COSTLY MISSILE"
+  ],
+  "hi": 1,
+  "acc": "#e8b44a",
+  "tag": "RUSSIA vs NATO"
+ },
+ {
+  "id": 6,
+  "frame": 324,
+  "hx": 960,
+  "hy": 520,
+  "z": 1.25,
+  "lines": [
+   "RUSSIA INSIDE",
+   "NATO"
+  ],
+  "hi": 1,
+  "acc": "#e8b44a",
+  "tag": "RUSSIA vs NATO"
+ },
+ {
+  "id": 7,
+  "frame": 289,
+  "hx": 960,
+  "hy": 520,
+  "z": 1.25,
+  "lines": [
+   "UNSINKABLE",
+   "CARRIER"
+  ],
+  "hi": 1,
+  "acc": "#e8b44a",
+  "tag": "RUSSIA vs NATO"
+ },
+ {
+  "id": 8,
+  "frame": 449,
+  "hx": 960,
+  "hy": 520,
+  "z": 1.25,
+  "lines": [
+   "DRAGON'S",
+   "TEETH"
+  ],
+  "hi": 1,
+  "acc": "#e8b44a",
+  "tag": "RUSSIA vs NATO"
+ },
+ {
+  "id": 9,
+  "frame": 300,
+  "hx": 960,
+  "hy": 520,
+  "z": 1.25,
+  "lines": [
+   "PORT",
+   "GOES DARK"
+  ],
+  "hi": 1,
+  "acc": "#e8b44a",
+  "tag": "RUSSIA vs NATO"
+ },
+ {
+  "id": 10,
+  "frame": 259,
+  "hx": 960,
+  "hy": 520,
+  "z": 1.25,
+  "lines": [
+   "SUBS IN",
+   "THE GAP"
+  ],
+  "hi": 1,
+  "acc": "#e8b44a",
+  "tag": "RUSSIA vs NATO"
+ },
+ {
+  "id": 11,
+  "frame": 275,
+  "hx": 960,
+  "hy": 520,
+  "z": 1.25,
+  "lines": [
+   "GRAB AND",
+   "DIG IN"
+  ],
+  "hi": 1,
+  "acc": "#e8b44a",
+  "tag": "RUSSIA vs NATO"
+ },
+ {
+  "id": 12,
+  "frame": 313,
+  "hx": 1500,
+  "hy": 560,
+  "z": 1.25,
+  "lines": [
+   "2026? NOW",
+   "2030"
+  ],
+  "hi": 1,
+  "acc": "#e8b44a",
+  "tag": "RUSSIA vs NATO"
+ },
+ {
+  "id": 13,
+  "frame": 313,
+  "hx": 960,
+  "hy": 520,
+  "z": 1.25,
+  "lines": [
+   "SOLDIERS ON",
+   "AIRLINERS"
+  ],
+  "hi": 1,
+  "acc": "#e8b44a",
+  "tag": "RUSSIA vs NATO"
+ },
+ {
+  "id": 14,
+  "frame": 260,
+  "hx": 960,
+  "hy": 520,
+  "z": 1.25,
+  "lines": [
+   "AIRBORNE IN",
+   "15 MIN"
+  ],
+  "hi": 1,
+  "acc": "#e8b44a",
+  "tag": "RUSSIA vs NATO"
+ },
+ {
+  "id": 15,
+  "frame": 326,
+  "hx": 960,
+  "hy": 520,
+  "z": 1.25,
+  "lines": [
+   "UKRAINE IS",
+   "BUYING TIME"
+  ],
+  "hi": 1,
+  "acc": "#e8b44a",
+  "tag": "RUSSIA vs NATO"
+ }
+]
