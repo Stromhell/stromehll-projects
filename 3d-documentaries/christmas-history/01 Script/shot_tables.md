@@ -1,0 +1,98 @@
+**Runtime (estimate):** 7:59 · **Narration:** 1107 words at 150 wpm · **Shots:** 61 · **Average shot:** 7.9 s · **Map shots:** 0 (0%)
+
+
+### Act 0: CHRISTMAS EVE (24 DECEMBER) · 0:47 · 7 shots
+
+| Shot | Time | Sec | Type | Narration | On screen | Motion | SFX | Date tag | Title / overlay |
+|---|---|---|---|---|---|---|---|---|---|
+| 0.1 | 0:00 | 3.8 | SCENE | Today is the 24th of December. Christmas Eve. | Snowy village at night, warm windows; a snowdrift wobbles and Flurry the snowman pushes up out of it, shakes off snow and blinks awake | slow push in on the snowdrift | soft wind, sleigh bells, snow puff | 24 DECEMBER |  |
+| 0.2 | 0:03 | 10.6 | SCENE | Well, it is on the day this video goes up. If you are watching later, hello, future person! Tell us in the comments what happened. | Flurry hops toward camera and waves with a twig arm; a speech-bubble comment floats up beside him | gentle orbit around Flurry | boing hops, chime |  |  |
+| 0.3 | 0:14 | 6.6 | SCENE | Tomorrow, the whole world celebrates Christmas. Even in countries where most people are not Christian. | A night globe slowly turning in space, warm lights twinkle on across it one by one | slow rotation, push in | twinkle chimes |  |  |
+| 0.4 | 0:21 | 6.6 | SCENE | Japan is a great example. Very few Christians, but trees, lights, gifts and parties everywhere. | Flurry slides along a lantern-lit street with a giant lit tree, paper lanterns sway | lateral dolly with Flurry | city bells, light crowd |  | chip: JAPAN LOVES CHRISTMAS |
+| 0.5 | 0:27 | 6.6 | SCENE | But here is the twist. Jesus was probably not born on the 25th of December. | Flurry holds up a big calendar page DEC 25; it flips over to a giant question mark; Flurry's eyes go wide | quick push in | page flip, comic sting |  |  |
+| 0.6 | 0:34 | 7.4 | SCENE | And the tree, the mistletoe, the carols, the feast? Most of them are older than Christmas itself. | Tree, mistletoe, songbook and roast slide in around Flurry one by one; his carrot nose droops in shock | orbit around Flurry | four whooshes |  |  |
+| 0.7 | 0:41 | 5.8 | SCENE | So grab a hot chocolate. Let's find out where Christmas really comes from. | Flurry jumps on a red sled and zooms down a snowy hill past pine trees, hot chocolate steaming | fast tracking shot beside the sled | sled whoosh, music lifts |  | slam: THE HISTORY OF CHRISTMAS |
+
+### Act 1: THE FIRST STORY (1ST CENTURY) · 0:44 · 6 shots
+
+| Shot | Time | Sec | Type | Narration | On screen | Motion | SFX | Date tag | Title / overlay |
+|---|---|---|---|---|---|---|---|---|---|
+| 1.1 | 0:00 | 5.4 | SCENE | Christmas celebrates the birth of Jesus Christ, the central figure of Christianity. | Night over Bethlehem, flat-roofed stone houses, palms, one huge bright star | crane down from the star | night insects, soft choir pad | BETHLEHEM |  |
+| 1.2 | 0:05 | 10.6 | SCENE | Christians believe he is the son of God. And almost all historians agree he was a real person, who lived about two thousand years ago. | An old book opens on a reading stand by lamplight; Flurry peeks over it, nodding | slow push in | page turn |  | chip: A REAL HISTORICAL PERSON |
+| 1.3 | 0:16 | 8.6 | SCENE | The Gospels of Luke and Matthew tell the story. Joseph and Mary travel from Nazareth to Bethlehem, for a census. | Joseph walks leading a grey donkey carrying Mary along a desert road at dusk; Flurry hops along behind in a tiny headscarf | side tracking with the walkers | hooves, footsteps on gravel |  | callout: NAZARETH TO BETHLEHEM / FOR A ROMAN CENSUS |
+| 1.4 | 0:24 | 8.2 | SCENE | There is no room to stay. So the baby is born in a stable, and laid in a manger. | Warm lantern-lit stable, straw, ox and donkey, Mary and Joseph kneel by the manger | slow push in | straw rustle, soft lullaby |  |  |
+| 1.5 | 0:32 | 6.6 | SCENE | Angels announce a saviour. Shepherds come to see him, and wise men follow a star. | Hillside with shepherds and sheep looking up at a glowing light; three wise men on camels follow the star across the dunes | pan up to the star | choir swell, camel bells |  |  |
+| 1.6 | 0:39 | 5.4 | SCENE | A beautiful story. With one small problem. It never says the date. | Flurry flips frantically through a giant book, then shrugs with both twig arms | push in on Flurry | fast page flips, comic boing |  | chip: NO DATE GIVEN |
+
+### Act 2: WHY 25 DECEMBER (200 - 336 AD) · 1:02 · 7 shots
+
+| Shot | Time | Sec | Type | Narration | On screen | Motion | SFX | Date tag | Title / overlay |
+|---|---|---|---|---|---|---|---|---|---|
+| 2.1 | 0:00 | 8.6 | SCENE | Around the year 200, a scholar called Clement of Alexandria wrote that some people had worked out the exact day. | A scholar writes at a desk piled with scrolls in a sunlit library with columns | dolly past the scroll shelves | quill scratching | AROUND 200 AD | callout: CLEMENT OF ALEXANDRIA / SCHOLAR, EGYPT |
+| 2.2 | 0:08 | 7.4 | SCENE | Their answer? The 25th of the Egyptian month of Pachon. That is around the 20th of May. | A big calendar flips from PACHON 25 to MAY 20; Flurry pops on sunglasses | push in on the calendar | page flip, ding |  | chip: 25 PACHON = 20 MAY |
+| 2.3 | 0:16 | 5.4 | SCENE | May! So how did we end up in the middle of winter? | Snow starts falling on Flurry in his sunglasses; he shivers and tugs his scarf tight | slow pull back | wind gust, teeth chatter |  |  |
+| 2.4 | 0:21 | 7.0 | SCENE | The first recorded Christmas was in Rome, on the 25th of December, in the year 336. | Roman temple courtyard at winter morning, people in togas, banners, braziers | crane down past the columns | crowd murmur, brazier crackle | 25 DEC 336 AD |  |
+| 2.5 | 0:28 | 13.0 | SCENE | And that date was already a party. It sat right by the winter solstice, the darkest time of the year, when Romans honoured their sun god, Sol Invictus, the Unconquered Sun. | A golden statue with a ray crown on a plinth; the sun rises behind the temple and light sweeps across the crowd | push in as the sun rises | gong, warm swell |  | callout: SOL INVICTUS / THE UNCONQUERED SUN |
+| 2.6 | 0:41 | 8.2 | SCENE | Christians already linked Jesus with light. One Bible verse even says, unto you shall the sun of righteousness arise. | A scroll unrolls and its lines glow gold; rays spread from it | slow push in | soft choir |  |  |
+| 2.7 | 0:49 | 12.6 | SCENE | So as Christianity grew in the Roman Empire, the church picked the solstice for the birth of Christ. One historian calls it cosmic symbolism. The day the sun is reborn. | Sun breaks over a snowy horizon; Flurry squints, starts to sweat a little and fans himself with his hat | wide shot, slow push | sizzle, warm swell |  |  |
+
+### Act 3: OLDER THAN CHRISTMAS (PAGAN WINTER) · 1:22 · 11 shots
+
+| Shot | Time | Sec | Type | Narration | On screen | Motion | SFX | Date tag | Title / overlay |
+|---|---|---|---|---|---|---|---|---|---|
+| 3.1 | 0:00 | 6.2 | SCENE | Long before Christmas, winter festivals were the biggest parties of the year across Europe. | Snowy pine forest clearing at night, a bonfire, villagers in furs dancing in a ring | slow orbit around the bonfire | fire crackle, folk drum |  |  |
+| 3.2 | 0:06 | 4.6 | SCENE | The Celts brought mistletoe and ivy into their winter celebrations. | A druid in a white robe reaches up into an oak to cut mistletoe; Flurry stands under the hanging mistletoe and looks around, embarrassed | push in | snip, giggle |  | callout: CELTS / MISTLETOE AND IVY |
+| 3.3 | 0:10 | 4.6 | SCENE | The Norse and the Anglo-Saxons celebrated Yule. Yes, that Yule. | A long wooden Norse hall in snow with carved dragon gables, smoke from the roof | crane down to the door | wind, distant horn |  | chip: YULE |
+| 3.4 | 0:15 | 9.4 | SCENE | They feasted on boar and goat, and burned the Yule log, a real tree trunk, chosen and dragged home for the festival. | Villagers drag a huge log on ropes across the snow into the hall; inside a fire roars and a feast table waits | tracking beside the log | log scraping snow, fire roar |  |  |
+| 3.5 | 0:24 | 5.8 | SCENE | In Rome, the solstice festival of Saturnalia had feasting and gift giving too. | Romans around a long table hand each other small wrapped gifts, laughing | slow dolly along the table | laughter, cups clink |  | callout: SATURNALIA / ROME'S WINTER PARTY |
+| 3.6 | 0:30 | 7.8 | SCENE | In Eastern Europe, singers went from house to house for Koleda. That tradition grew into the Christmas carol. | Carol singers with a star lantern walk door to door in a snowy village; Flurry joins the end of the line, music notes float up | side tracking with the singers | footsteps in snow, la-la choir |  | chip: KOLEDA = CAROLS |
+| 3.7 | 0:38 | 9.0 | SCENE | And the Christmas tree? Its story starts in medieval Livonia, today's Estonia and Latvia, where German merchants put up decorated trees. | Medieval town square with timber houses; a tree hung with apples and candles in the middle; merchants admire it | crane up the tree | market bustle |  | callout: LIVONIA / TODAY ESTONIA AND LATVIA |
+| 3.8 | 0:47 | 10.6 | SCENE | Later, German Protestants brought trees into their homes. The Catholic Church resisted for centuries. The Vatican did not get its first Christmas tree until 1982. | A huge tree rises in a grand square in front of a domed church; Flurry taps his wrist like checking a watch | low angle push up the tree | crowd cheer | 1982 | chip: VATICAN'S FIRST TREE: 1982 |
+| 3.9 | 0:58 | 8.2 | SCENE | Some customs are religious. In 1223, Saint Francis of Assisi popularised the nativity scene, and it spread across Europe. | A candle-lit church with a small nativity crib; a friar in a brown robe sets a figure down | slow push in | candle flicker, soft bells | 1223 | callout: SAINT FRANCIS OF ASSISI / NATIVITY SCENE |
+| 3.10 | 1:06 | 9.8 | SCENE | Even the colours mean something. Red for the blood of Christ, green for eternal life, gold for the gifts of the wise men. | Three giant baubles, red, green and gold, swing down on ribbons and light up one by one | slow track across the baubles | three chimes |  |  |
+| 3.11 | 1:16 | 6.2 | SCENE | Or, if you ask the shops, red for Santa and green for the tree. | Flurry winks, pulls a Santa hat onto his head, a tree slides in beside him | push in | wink ding, cash register |  |  |
+
+### Act 4: SANTA (280 - 1930s) · 1:37 · 12 shots
+
+| Shot | Time | Sec | Type | Narration | On screen | Motion | SFX | Date tag | Title / overlay |
+|---|---|---|---|---|---|---|---|---|---|
+| 4.1 | 0:00 | 5.0 | SCENE | Which brings us to the biggest star of all. Santa Claus. | Spotlight snaps on a snowy rooftop chimney; Flurry drumrolls on a bucket | push in on the chimney | drumroll, cymbal |  | slam: SANTA CLAUS |
+| 4.2 | 0:05 | 8.2 | SCENE | His story begins with a real man, Saint Nicholas, born in the late 200s in what is now Turkey. | A sunny Mediterranean town with white houses; a bishop in red robes and a tall mitre walks the street | tracking beside Nicholas | seagulls, footsteps | AROUND 280 AD | callout: SAINT NICHOLAS / MYRA, TODAY'S TURKEY |
+| 4.3 | 0:13 | 11.0 | SCENE | He was known for kindness. It is said he gave away all his inherited wealth to people in need, and he became the protector of children. | At night Nicholas drops a small bag of coins through a window; inside, children wake up and cheer | slow push to the window | coin jingle, kids cheer |  |  |
+| 4.4 | 0:24 | 6.2 | SCENE | His feast day falls in December. So, over time, he got tied to Christmas. | A calendar page shows 6 DECEMBER, slides along to 25 DECEMBER | lateral slide | page slide |  | chip: FEAST DAY IN DECEMBER |
+| 4.5 | 0:30 | 10.2 | SCENE | Dutch families brought him to America. In 1773, a New York newspaper reported them honouring Sinterklaas. Say Sinterklaas fast, and you get Santa Claus. | An old newspaper spins in; the word SINTERKLAAS squeezes and morphs into SANTA CLAUS while Flurry says it faster and faster | spin in, push in | paper whoosh, squeak | 1773 |  |
+| 4.6 | 0:40 | 9.0 | SCENE | In 1841, thousands of children lined up at a Philadelphia shop to see a life-size Santa. After that, Santa was everywhere. | An old shop window with a life-size Santa model, a long line of children in coats outside in the snow | dolly along the queue | crowd of kids, bell on door | 1841 |  |
+| 4.7 | 0:49 | 9.8 | SCENE | Early Santas often wore green, blue, or white. Coca-Cola's adverts in the 1930s made the jolly red Santa famous all over the world. | A Santa figure's coat changes colour green, blue, white, then red; Flurry spins dizzy watching | orbit around Santa | four magic swishes | 1930s |  |
+| 4.8 | 0:59 | 9.4 | SCENE | And why the North Pole? Thank the cartoonist Thomas Nast, drawing for Harper's Weekly from 1863. The reindeer came with the address. | Icy North Pole with a striped pole, a reindeer team and a red sleigh; Flurry pats a reindeer | crane down to the sleigh | wind, sleigh bells | 1863 | callout: THOMAS NAST / HARPER'S WEEKLY |
+| 4.9 | 1:08 | 7.8 | SCENE | Other countries have their own gift bringers. In Germany and Switzerland, it is the Christkind, an angel-like child. | A glowing golden-haired angel child in white floats over a snowy German street with gifts | slow push | soft bells |  | chip: CHRISTKIND |
+| 4.10 | 1:16 | 6.2 | SCENE | In Scandinavia, a little elf called the Jultomte rides a sleigh pulled by goats. | A small bearded elf in a red cap drives a sleigh pulled by two goats through snowy pines | tracking with the sleigh | goat bleat, bells |  | chip: JULTOMTE |
+| 4.11 | 1:22 | 6.6 | SCENE | Finland's Joulupukki, the Yule Goat, started out rather scary, before he became a friendly Santa. | A shaggy goat-horned figure in a dark doorway; a puff of snow and he becomes a smiling Santa; Flurry hides, then laughs | push in | spooky sting, pop, laugh |  | chip: JOULUPUKKI = YULE GOAT |
+| 4.12 | 1:29 | 7.8 | SCENE | And in Italy, La Befana, a kind old witch on a broomstick, slides down the chimney with toys. | A witch on a broomstick flies over moonlit rooftops and dives into a chimney | track with the broom | whoosh, cackle |  | chip: LA BEFANA |
+
+### Act 5: KINGS AND FEASTS (800 - 1848) · 1:22 · 10 shots
+
+| Shot | Time | Sec | Type | Narration | On screen | Motion | SFX | Date tag | Title / overlay |
+|---|---|---|---|---|---|---|---|---|---|
+| 5.1 | 0:00 | 10.2 | SCENE | Through the Middle Ages, Christmas came and went. At first, a bigger day was Epiphany, the 6th of January, when the wise men visited. | Three wise men on camels crest a dune at sunrise under the star | crane up over the dune | camel bells, wind | 6 JANUARY |  |
+| 5.2 | 0:10 | 8.2 | SCENE | In Spain, it is still the Day of the Kings, and that is when many children open their presents. | Spanish street parade with three kings on a float throwing sweets; children in a living room open gifts | dolly with the parade | cheers, music |  | chip: DAY OF THE KINGS |
+| 5.3 | 0:18 | 6.2 | SCENE | Soon December took over. The twelve days of Christmas began, another echo of Saturnalia. | Twelve candles light up one after another along a long table | track along the candles | twelve soft ticks |  | chip: 12 DAYS OF CHRISTMAS |
+| 5.4 | 0:24 | 8.6 | SCENE | Kings loved it. Charlemagne was crowned on Christmas Day in the year 800. So was William the Conqueror, in 1066. | A stone church throne room; a crown is lowered onto a king's head; a second king in mail follows | push in on the crown | organ chord, cheer | 25 DEC 800 |  |
+| 5.5 | 0:33 | 8.2 | SCENE | And in 1377, King Richard the Second threw a Christmas feast where guests ate 28 oxen and 300 sheep. | A huge medieval feast hall, a long table piled with roasts, a tally counting oxen and sheep; Flurry sits at the end looking very full | slow dolly down the table | feast chatter, lute | 1377 | tally: 28 OXEN + 300 SHEEP |
+| 5.6 | 0:41 | 9.0 | SCENE | Back then, gifts often went between landlords and tenants, not just family. And they were swapped on the 6th of January. | A lord at a manor door receives a basket from a tenant and hands back a wrapped gift | slow push | door creak, coins |  |  |
+| 5.7 | 0:50 | 8.2 | SCENE | In the 1500s and 1600s, during the Reformation, many Protestants moved gift giving to the 24th and the 25th. | A family by a fire hands out gifts; a calendar slides from 6 JAN to 25 DEC | push in | fire crackle, page slide |  | chip: GIFTS MOVE TO 25 DEC |
+| 5.8 | 0:58 | 5.8 | SCENE | Some strict Puritans even banned Christmas for a while. It did not last. | A stern Puritan nails up a BANNED sign; a snowball from Flurry knocks it off | static wide, then whip to Flurry | hammer, splat |  | chip: CHRISTMAS BANNED! |
+| 5.9 | 1:04 | 9.4 | SCENE | In Britain, Christmas Day became a bank holiday in 1834. And German-born Queen Charlotte brought the Christmas tree to the royal court. | A Georgian palace parlour; Queen Charlotte in a gown beside a tree lit with candles | crane down to the tree | harpsichord, candle flicker | 1834 | callout: QUEEN CHARLOTTE / GERMAN-BORN QUEEN |
+| 5.10 | 1:13 | 8.6 | SCENE | And by 1848, a famous picture of the royal family around their tree made one a must-have in every home. | A gilded picture frame shows a royal family around a tree; it pulls back to many homes with trees in their windows | pull back from the frame | music swell | 1848 |  |
+
+### Act 6: EVERYONE'S WINTER (TODAY) · 1:03 · 8 shots
+
+| Shot | Time | Sec | Type | Narration | On screen | Motion | SFX | Date tag | Title / overlay |
+|---|---|---|---|---|---|---|---|---|---|
+| 6.1 | 0:00 | 5.0 | SCENE | Winter has always been a time to celebrate, whatever you believe. | A snowy town square at dusk full of people, lights strung between houses | crane down into the square | crowd, bells |  |  |
+| 6.2 | 0:05 | 7.0 | SCENE | Jewish families celebrate Hanukkah, the eight-night festival of lights. Its dates move with the Hebrew calendar. | A menorah in a frosty window; candles light one by one | slow push in | soft ticks, warm pad |  | chip: HANUKKAH / 8 NIGHTS |
+| 6.3 | 0:12 | 9.8 | SCENE | Muslims celebrate Eid al-Fitr at the end of Ramadan, and it moves through the year. Fun fact: Islam honours Jesus as a prophet. | Lanterns and a crescent moon over a family dinner table | slow dolly | lantern clink, chatter |  | chip: EID AL-FITR |
+| 6.4 | 0:21 | 7.0 | SCENE | Kwanzaa, a celebration of African-American heritage, starts on the 26th of December and lasts seven days. | A kinara with seven candles, three red, one black, three green, lights up on a table | push in | soft drum |  | chip: KWANZAA / 26 DEC - 1 JAN |
+| 6.5 | 0:28 | 9.0 | SCENE | And millions of people, of every faith or none, simply enjoy the lights, the food, the gifts and time with family. | Flurry and a crowd of villagers gather around a giant lit tree in the square | crane up the tree | cheer, bells |  |  |
+| 6.6 | 0:37 | 13.0 | SCENE | So that is Christmas. A birthday on a borrowed date. A tree from Livonia. A log from the Norse. Carols from Koleda. And a saint from Turkey in a red suit. | The tree, log, carol star and Santa hat orbit Flurry one after another | orbit around Flurry | whoosh per item |  |  |
+| 6.7 | 0:50 | 8.2 | SCENE | However you celebrate, tell us in the comments how you spend it. And subscribe for more stories like this. | Flurry points at a big glowing subscribe bell that swings in | push in | bell ding |  |  |
+| 6.8 | 0:59 | 4.2 | SCENE | From all of us, and from Flurry... Happy Christmas! | Flurry and the reindeer wave; fireworks burst over the snowy village and HAPPY CHRISTMAS lights up in the sky | crane back and up | bells, cheer, fireworks |  | slam: HAPPY CHRISTMAS! |

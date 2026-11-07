@@ -1,0 +1,1 @@
+for a in 0 1 2 3 4 5 6; do ~/.cache/pushpam-voice/venv/bin/python /root/.claude/skills/synced/28996af7-eb85-4e49-9dd9-f273fd537747_5b2788dc-eca9-4918-911b-4b5aaf7c3164/pushpam-voice/scripts/speak.py --file vo/act$a/say.txt --out vo/act$a/vo.wav --scenes --energy 0.6 --pause 0.2 > vo/act$a/log.txt 2>&1; echo act $a done $(date -u +%H:%M) >> vo/progress.txt; done
