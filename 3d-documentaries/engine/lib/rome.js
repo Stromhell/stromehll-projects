@@ -345,7 +345,7 @@ export async function courtyard(k, o = {}) {
   }
   // plane trees in rows + hedges
   const trees = [];
-  if (o.trees !== false) for (const s of [-1, 1]) for (let z = -8; z <= 18; z += 8.5) { try { const t = await real.prop('island_tree_01', { scale: 1.6 }); t.position.set(s * 6.5, 0, z); t.rotation.y = z; g.add(t); trees.push(t); } catch (e) {} }
+  if (o.trees !== false) for (const s of [-1, 1]) for (let z = -8; z <= 18; z += 8.5) { try { const t = pineTree(Math.round(z * 7 + s * 13 + 50)); t.position.set(s * 6.5, 0, z); t.rotation.y = z; g.add(t); trees.push(t); } catch (e) {} }
   return { group: g, M, doors };
 }
 
@@ -582,3 +582,26 @@ export function inscription(text, w, h, o = {}) {
 }
 // ship token for maps
 export function shipToken(o = {}) { const g = new THREE.Group(); const w = real.std(0x5a3a20, { rough: .6 }); const hull = real.m(new THREE.SphereGeometry(.06, 16, 8, 0, P * 2, P / 2, P / 2), w); hull.scale.set(.6, .5, 1.8); g.add(hull); g.add(real.m(new THREE.CylinderGeometry(.003, .003, .14, 6), w, { pos: [0, .07, 0] })); g.add(real.box(.09, .07, .003, real.std(o.sail ?? 0xd8cdb4, { rough: .9 }), { pos: [0, .09, 0], rot: [0, P / 2, 0] })); g.scale.setScalar(o.s ?? 1); return g; }
+
+// Italian stone pine, built light (a few thousand triangles): curved trunk + umbrella canopy of lumpy clumps
+const PINE = {};
+export function pineTree(seed = 1, o = {}) {
+  const r = rng(seed); const g = new THREE.Group();
+  if (!PINE.bark) { PINE.bark = real.std(0x5a4636, { rough: .95 }); PINE.leaf = [0x2f4a22, 0x3a5528, 0x26401c].map(c => real.std(c, { rough: .85 })); }
+  const H = (o.h ?? 6.5) * (.85 + r() * .3), lean = (r() - .5) * .5;
+  const pts = []; for (let i = 0; i <= 6; i++) { const f = i / 6; pts.push(new THREE.Vector3(Math.sin(f * 1.6) * lean, f * H, Math.sin(f * 2.1) * lean * .5)); }
+  const curve = new THREE.CatmullRomCurve3(pts);
+  const trunk = new THREE.Mesh(new THREE.TubeGeometry(curve, 12, .22, 8, false), PINE.bark); trunk.castShadow = true; g.add(trunk);
+  const top = pts[6];
+  for (let i = 0; i < 3; i++) { const a = r() * 6.28; const b = new THREE.Mesh(new THREE.CylinderGeometry(.05, .1, 1.8, 6), PINE.bark); b.position.set(top.x + Math.sin(a) * .5, H - .5, top.z + Math.cos(a) * .5); b.rotation.set(Math.cos(a) * .9, 0, -Math.sin(a) * .9); g.add(b); }
+  const n = 16; const R = 2.6 + r() * .8;
+  for (let i = 0; i < n; i++) {
+    const a = r() * 6.28, d = Math.sqrt(r()) * R;
+    const geo = new THREE.IcosahedronGeometry(.9 + r() * .7, 2); const pa = geo.attributes.position;
+    for (let v = 0; v < pa.count; v++) { const x = pa.getX(v), y = pa.getY(v), zz = pa.getZ(v); const k = 1 + Math.sin(x * 5 + seed) * .12 + Math.cos(zz * 6 + y * 4) * .12; pa.setXYZ(v, x * k, y * k * .55, zz * k); }
+    geo.computeVertexNormals();
+    const m = new THREE.Mesh(geo, PINE.leaf[i % 3]); m.position.set(top.x + Math.sin(a) * d, H + .2 + r() * .6 - d * .12, top.z + Math.cos(a) * d); m.rotation.y = r() * 6; m.castShadow = true; m.receiveShadow = true; g.add(m);
+  }
+  g.traverse(c => { if (c.isMesh) c.userData.solid = false; });
+  return g;
+}

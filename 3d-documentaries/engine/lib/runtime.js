@@ -55,20 +55,20 @@ window.loadShot = async (modPath, meta, opts = {}) => {
 
 window.frame = (t, fmt = 'jpeg', q = .93) => {
   const { scene, camera, upd, kit, dur, chunks, meta, opts } = cur;
-  const u = core.clamp(t / dur);
+  const u = core.clamp(t / dur); const P0 = performance.now(); window.PROF = /prof/.test(location.search) || window.PROF;
   vx.clearRect(0, 0, core.W, core.H); ui.used.length = 0;
   kit.overlay = vx;
   // fade in/out at act edges
   R.uni.fade.value = (meta.fadeIn ? core.clamp(t / .6) : 1) * (meta.fadeOut ? core.clamp((dur - t) / .8) : 1) * (meta.black ? 0 : 1);
   scene.traverse(o => { if (o.userData.person && o.userData.auto !== false && !o.userData.driven) o.update(t); });
-  upd && upd(t, u);
+  upd && upd(t, u); const P1 = performance.now();
   // wheels roll with their vehicle: spin each wheel by the distance its hub moved along the vehicle's heading
   scene.updateMatrixWorld();
   scene.traverse(o => { if (!o.userData.wheelR || o.rotation.x !== 0) return;
     const p = new THREE.Vector3().setFromMatrixPosition(o.matrixWorld), prev = o.userData.prevPos;
     if (prev && t > (o.userData.prevT ?? -1)) { const fwd = new THREE.Vector3(0, 0, 1).transformDirection(o.parent.matrixWorld); o.rotation.z += p.clone().sub(prev).dot(fwd) / o.userData.wheelR; }
     o.userData.prevPos = p; o.userData.prevT = t; });
-  R.render(scene, camera, t);
+  R.render(scene, camera, t); const P2 = performance.now();
   ox.imageSmoothingQuality = 'high'; ox.drawImage(gl, 0, 0, core.W, core.H);
   if (!opts.sketch || opts.sketchUI) {
     if (meta.dateTag && !meta.noTag) ui.dateTag(vx, meta.dateTag, t);
@@ -86,5 +86,7 @@ window.frame = (t, fmt = 'jpeg', q = .93) => {
     if (!opts.sketch && chunks.length) ui.subtitles(vx, chunks, t, [...projectBoxes(scene, camera), ...ui.used.map(b => [b[0] - 20, b[1] - 20, b[2] + 20, b[3] + 20]).flatMap(b => [b, b, b, b, b])]);
   }
   ox.drawImage(ov, 0, 0);
-  return out.toDataURL('image/' + fmt, q);
+  const P3 = performance.now(); const du = out.toDataURL('image/' + fmt, q); if (window.PROF && !window.__tc) { window.__tc = 1; const by = {}; scene.children.forEach(c => { let n = 0; c.traverse(o => { if (o.isMesh && o.visible) n += (o.geometry.index ? o.geometry.index.count : o.geometry.attributes.position.count) / 3 * (o.isInstancedMesh ? o.count : 1); }); const key = (c.name || c.type) + (c.userData.person ? '*person' : ''); by[key] = (by[key] || 0) + n; }); console.error('TRIS', JSON.stringify(Object.entries(by).sort((a, b) => b[1] - a[1]).slice(0, 12).map(([a, b]) => a + ':' + Math.round(b / 1000) + 'k'))); }
+  if (window.PROF) console.error('PROF', (performance.now() - P0) | 0, 'upd', (P1 - P0) | 0, 'render', (P2 - P1) | 0, 'ui', (P3 - P2) | 0, 'calls', R.renderer.info.render.calls, 'tris', R.renderer.info.render.triangles, 'prog', R.renderer.info.programs.length);
+  return du;
 };

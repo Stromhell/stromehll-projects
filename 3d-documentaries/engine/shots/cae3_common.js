@@ -9,8 +9,10 @@ export const CIT = ['cae_cit1', 'cae_cit2', 'cae_cit3', 'cae_cit4', 'cae_cit5', 
 export const GLAD = ['cae_glad1', 'cae_glad2', 'cae_glad3', 'cae_glad4'];
 export const LEG = ['cae_leg1', 'cae_leg2', 'cae_leg3'];
 // a person, placed, optionally with a laurel wreath
+// crowd extras (senators, citizens) load a lighter mesh (*_lo.glb, ~35% triangles) unless o.hi
+export const lo = (id, o = {}) => (!o.hi && /^cae_(sen|cit)/.test(id) ? id + '_lo' : id);
 export async function person(k, id, o = {}) {
-  const p = await real.human({ id, seed: o.seed ?? 1 });
+  const p = await real.human({ id: lo(id, o), seed: o.seed ?? 1 });
   real.put(k.scene, p, o); p.userData.driven = o.driven ?? true; if (o.name) p.name = o.name;
   if (o.laurel) rome.laurel(p, typeof o.laurel === 'object' ? o.laurel : {});
   return p;
@@ -22,9 +24,9 @@ export async function fillBenches(k, cu, o = {}) {
     if (o.zMin !== undefined && s.z < o.zMin) continue; if (o.zMax !== undefined && s.z > o.zMax) continue;
     if (o.skip ? o.skip(s, i) : ((Math.round(s.z * 3) + s.tier * 2 + (s.side > 0 ? 1 : 0)) % 3 === 0)) continue;
     const id = SEN[(Math.round(s.z * 7) + s.tier * 3 + (s.side > 0 ? 5 : 0) + 100) % SEN.length];
-    const p = await real.human({ id, seed: 300 + i });
+    const p = await real.human({ id: lo(id, o), seed: 300 + i });
     real.put(k.scene, p, { pos: [s.x, s.y, s.z], rot: s.rot, pose: 'sit', seatH: .5, arm: 'lap', mood: o.mood ?? 'calm' });
-    p.position.y = s.y; p.userData.driven = true; p.userData.seat = s; p.userData.ph = i * 1.37; ppl.push(p); i++;
+    p.position.y = s.y; if (!o.shadow) p.traverse(c => { if (c.isMesh) c.castShadow = false; }); p.userData.driven = true; p.userData.seat = s; p.userData.ph = i * 1.37; ppl.push(p); i++;
   }
   return ppl;
 }

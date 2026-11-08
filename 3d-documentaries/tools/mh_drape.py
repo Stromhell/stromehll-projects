@@ -88,7 +88,7 @@ def build_drape(spec, BV, BF, BG, bw, split_mesh, smooth_normals, top4, J):
     H = BV[hv]
     top, bot = H[:, 1].max(), H[:, 1].min()
     zc2 = float(H[:, 2].mean())
-    NR, NS = 44, 120
+    NR, NS = 28, 80
     hem_bot = bot - (.55 if kind == 'stola' else .1)
     if kind == 'tunic' or d.get('hem') == 'knee': hem_bot = knee_y - .2
     ys = np.linspace(top, hem_bot, NR)

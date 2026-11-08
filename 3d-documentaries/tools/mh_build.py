@@ -344,7 +344,7 @@ def build(spec, out):
         keep_morph = {k: v[vi] for k, v in mo.items()} if kind in ('eyebrows', 'eyelashes', 'eyes') else None
         proxies.append((f'{kind}_{name}', P(pos[vi]), uv, tris, J, W, mat, keep_morph))
     eyes_mat = os.path.join(ASSETS, 'eyes', 'materials', spec.get('eyes', 'brown') + '.mhmat')
-    proxy('eyes', 'high-poly', rough=.15, mat_override=eyes_mat, alpha=True)
+    proxy('eyes', spec.get('eyeMesh', 'low-poly'), rough=.15, mat_override=eyes_mat, alpha=True)
     if spec.get('brows'): proxy('eyebrows', spec['brows'], alpha=True)
     if spec.get('lashes'): proxy('eyelashes', spec['lashes'], alpha=True)
     if spec.get('hair'): proxy('hair', spec['hair'], alpha=True, rough=.55, tint=spec.get('hairTint'), double=True)

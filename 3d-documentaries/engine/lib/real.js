@@ -159,7 +159,7 @@ export async function human(o = {}) {
   const skinTint = new THREE.Color(SKINS[o.skin ?? 0]);
   obj.traverse(c => {
     if (!c.isMesh) return;
-    c.castShadow = true; c.receiveShadow = true; c.frustumCulled = false;
+    c.castShadow = !/eye|brow|lash/i.test(c.name); c.receiveShadow = true; c.frustumCulled = false;
     const mat = c.material.clone(); c.material = mat; const n = mat.name || '';
     if (kind === 'mh') { if (mat.map) mat.map.anisotropy = 8; if (/skin/i.test(n) || c.name === 'body') { mat.roughness = .55; } }
     else if (kind === 'man') {
@@ -186,6 +186,8 @@ export async function human(o = {}) {
   // bones
   const bones = {}; obj.traverse(c => { if (c.isBone) bones[bn(c.name)] = c; });
   const rest = {}; for (const k in bones) rest[k] = bones[k].quaternion.clone();
+  // crowd meshes (*_lo) drop their face morphs: the morph loop runs on every vertex every pass, even at weight 0
+  if (/_lo$/.test(o.id || '') || o.noFace) obj.traverse(c => { if (c.isMesh && c.morphTargetDictionary) { c.geometry.morphAttributes = {}; c.morphTargetInfluences = undefined; c.morphTargetDictionary = undefined; } });
   const faces = []; obj.traverse(c => { if (c.isMesh && c.morphTargetDictionary) faces.push(c); });
   const phase = r() * 10;
   root.userData.person = true;
