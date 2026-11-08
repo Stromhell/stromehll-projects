@@ -1,0 +1,5 @@
+{
+  "mcpServers": {
+    "subframe-motion": { "type": "http", "url": "https://mcp.subframe.com/motion/mcp" }
+  }
+}
