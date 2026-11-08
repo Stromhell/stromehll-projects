@@ -474,15 +474,15 @@ export async function paperMap(o = {}) {
 // war-room table under lamps with the map on it
 export async function mapTable(k, o = {}) {
   const { scene } = k; const M = await mats();
-  await real.env(k, 'brown_photostudio_02', { sun: o.sun ?? [3, 9, 4], sunI: o.sunI ?? 1.6, sunColor: 0xffd6a0, shadowSize: 5, envI: .05, bg: 0x060504, exposure: o.exposure ?? 1.0 });
-  scene.userData.fx = { ao: 1.2, aoRadius: .4, bloom: .3, bloomThreshold: .85 };
+  await real.env(k, 'brown_photostudio_02', { sun: o.sun ?? [3, 9, 4], sunI: o.sunI ?? 2.2, sunColor: 0xffd6a0, shadowSize: 5, envI: .05, bg: 0x060504, exposure: o.exposure ?? 1.0 });
+  scene.userData.fx = { ao: 1.2, aoRadius: .4, bloom: .16, bloomThreshold: .92 };
   const map = await paperMap(o); scene.add(map.group); map.group.position.y = .905;
   const tw = map.Wm + .7, td = map.Hm + .7;
   scene.add(real.box(tw, .1, td, M.wood, { pos: [0, .85, 0] }));
   for (const x of [-tw / 2 + .2, tw / 2 - .2]) for (const z of [-td / 2 + .2, td / 2 - .2]) scene.add(real.box(.14, .8, .14, M.wood, { pos: [x, .4, z] }));
   scene.add(real.m(new THREE.PlaneGeometry(40, 40), await real.pbr('floor_tiles_06', { repeat: [10, 10], color: 0x6a5a48 }), { rot: [-P / 2, 0, 0], cast: false }));
   const lamps = [];
-  for (const [x, z] of o.lamps ?? [[-map.Wm / 2 - .12, -map.Hm / 2 - .12], [map.Wm / 2 + .12, map.Hm / 2 + .12], [map.Wm / 2 + .12, -map.Hm / 2 - .12]]) lamps.push(oilLamp(scene, [x, .92, z], { i: 3.2, dist: 7, shadow: true }));
+  for (const [x, z] of o.lamps ?? [[-map.Wm / 2 - .12, -map.Hm / 2 - .12], [map.Wm / 2 + .12, map.Hm / 2 + .12], [map.Wm / 2 + .12, -map.Hm / 2 - .12]]) lamps.push(oilLamp(scene, [x, .92, z], { i: o.lampI ?? 1.6, dist: 7, shadow: true }));
   return { map, lamps, M };
 }
 // legion token / figurine for the map (bronze eagle standard on a base)

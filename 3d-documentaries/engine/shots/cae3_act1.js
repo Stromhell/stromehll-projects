@@ -56,7 +56,7 @@ export const shots = {
     const st = rome.aquila(); st.position.set(-9.5, 0, .6); k.scene.add(st);
     const cz = await C.person(k, 'cae_caesar_y', { pos: [0, 0, 6.5], rot: P, laurel: false });
     rome.legionary(cz, { shield: false, crest: true });
-    const cam = C.dolly(k.camera, { pos: [-9, 1.6, 3.6], look: [-7, 1.5, 0], fov: 42 }, { pos: [6, 1.7, 3.8], look: [7.5, 1.5, 0], fov: 42 });
+    const cam = C.dolly(k.camera, { pos: [-9, 1.6, 3.6], look: [-7, 1.5, 0], fov: 42 }, { pos: [2.6, 1.7, 3.8], look: [3.6, 1.5, 0], fov: 42 });
     return (t, u) => { cam(u); ranks.forEach((p, i) => { const sal = t > 1.2 + (i % 9) * .25; p.rotation.y = lerp(0, .25, seg(t, .9 + (i % 9) * .25, 1.4 + (i % 9) * .25)); p.update(t, { arm: sal ? 'raise' : null, mood: 'stern' }); }); cz.update(t, { mood: 'calm' }); };
   },
   // 1.5 coins pour into a chest; the crowd in the Forum cheers
