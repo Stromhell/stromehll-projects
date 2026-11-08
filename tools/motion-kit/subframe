@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# subframe: call the Subframe Motion MCP (no sign-in needed) from the shell, for sessions where it is not loaded as a tool.
+#   subframe search "glowing border sweep"      -> search_motion_examples
+#   subframe get <slug>                          -> get_motion_example (React source + adapt notes)
+#   subframe guide <topic>                       -> get_motion_guidance
+#   subframe tools                               -> list tools
+set -euo pipefail
+U=https://mcp.subframe.com/motion/mcp; T="$(mktemp)"; trap 'rm -f "$T"' EXIT
+H=(-H 'content-type: application/json' -H 'accept: application/json, text/event-stream')
+curl -sS -m 30 -D "$T" "${H[@]}" -X POST $U -d '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-06-18","capabilities":{},"clientInfo":{"name":"stormi","version":"1"}}}' >/dev/null
+SID=$(grep -i '^mcp-session-id' "$T" | awk '{print $2}' | tr -d '\r' || true)
+[ -n "$SID" ] && H+=(-H "mcp-session-id: $SID")
+curl -sS -m 30 "${H[@]}" -X POST $U -d '{"jsonrpc":"2.0","method":"notifications/initialized"}' >/dev/null
+call() { python3 -c 'import json,sys;print(json.dumps({"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":sys.argv[1],"arguments":json.loads(sys.argv[2])}}))' "$1" "$2"; }
+case "${1:-tools}" in
+  tools)  BODY='{"jsonrpc":"2.0","id":2,"method":"tools/list"}';;
+  search) BODY=$(call search_motion_examples "$(python3 -c 'import json,sys;print(json.dumps({"query":sys.argv[1],"limit":8}))' "${2:?query}")");;
+  get)    BODY=$(call get_motion_example "{\"slug\":\"${2:?slug}\"}");;
+  guide)  BODY=$(call get_motion_guidance "$(python3 -c 'import json,sys;print(json.dumps({"topics":sys.argv[1:]}))' "${@:2}")");;
+  *) sed -n '2,7p' "$0"; exit 2;;
+esac
+curl -sS -m 60 "${H[@]}" -X POST $U -d "$BODY" | sed -n 's/^data: //p' | python3 -c '
+import json,sys
+for line in sys.stdin:
+    m=json.loads(line); r=m.get("result",m)
+    if "tools" in r: [print(t["name"],"-",t.get("description","")[:160]) for t in r["tools"]]
+    else: [print(c.get("text","")) for c in r.get("content",[])] or print(json.dumps(r)[:4000])'
