@@ -449,7 +449,8 @@ export async function paperMap(o = {}) {
   const api = {
     group: g, to3, Wm, Hm, ctx: ox, px,
     clear() { ox.clearRect(0, 0, cw, ch); },
-    region(poly, color, a = 1, outline = true) { if (a <= 0) return; ox.save(); ox.globalAlpha = a * .62; ox.fillStyle = color; ox.beginPath(); poly.forEach(([lo, la], i) => { const [X, Y] = px(lo, la); i ? ox.lineTo(X, Y) : ox.moveTo(X, Y); }); ox.closePath(); ox.fill(); if (outline) { ox.globalAlpha = a; ox.setLineDash([14, 10]); ox.strokeStyle = color; ox.lineWidth = 6; ox.stroke(); } ox.restore(); },
+    region(poly, color, a = 1, outline = true) { if (a <= 0) return; if (!api._rc) { api._rc = document.createElement('canvas'); api._rc.width = cw; api._rc.height = ch; } const rc = api._rc, rx = rc.getContext('2d'); rx.clearRect(0, 0, cw, ch); rx.save(); rx.globalAlpha = a * .62; rx.fillStyle = color; rx.beginPath(); poly.forEach(([lo, la], i) => { const [X, Y] = px(lo, la); i ? rx.lineTo(X, Y) : rx.moveTo(X, Y); }); rx.closePath(); rx.fill(); if (outline) { rx.globalAlpha = a; rx.setLineDash([14, 10]); rx.strokeStyle = color; rx.lineWidth = 6; rx.stroke(); } rx.restore(); rx.globalCompositeOperation = 'destination-in'; rx.drawImage(mk, 0, 0); rx.globalCompositeOperation = 'source-over'; ox.drawImage(rc, 0, 0); },
+    _regionOld(poly, color, a = 1, outline = true) { if (a <= 0) return; ox.save(); ox.globalAlpha = a * .62; ox.fillStyle = color; ox.beginPath(); poly.forEach(([lo, la], i) => { const [X, Y] = px(lo, la); i ? ox.lineTo(X, Y) : ox.moveTo(X, Y); }); ox.closePath(); ox.fill(); if (outline) { ox.globalAlpha = a; ox.setLineDash([14, 10]); ox.strokeStyle = color; ox.lineWidth = 6; ox.stroke(); } ox.restore(); },
     label(text, lon, lat, size = 60, a = 1, o2 = {}) { if (a <= 0) return; const [X, Y] = px(lon, lat); ox.save(); ox.globalAlpha = a; ox.font = `${o2.italic ? 'italic ' : ''}${o2.weight ?? 600} ${size}px "Liberation Serif"`; ox.textAlign = 'center'; ox.textBaseline = 'middle'; ox.lineWidth = size * .12; ox.strokeStyle = 'rgba(236,224,196,.85)'; ox.strokeText(text, X, Y); ox.fillStyle = o2.color ?? '#3a2414'; ox.fillText(text, X, Y); ox.restore(); },
     dot(lon, lat, rr = 16, color = '#7a1a12', a = 1) { if (a <= 0) return; const [X, Y] = px(lon, lat); ox.save(); ox.globalAlpha = a; ox.fillStyle = color; ox.beginPath(); ox.arc(X, Y, rr, 0, 7); ox.fill(); ox.lineWidth = 4; ox.strokeStyle = '#2a1a10'; ox.stroke(); ox.restore(); },
     // inked route that draws on: u 0..1
@@ -508,3 +509,75 @@ export function laurelEmblem(x, cx, cy, s, a = 1) {
   for (const sd of [-1, 1]) for (let i = 0; i < 9; i++) { const ang = P / 2 + sd * (.35 + i * .27); const r = 70; x.save(); x.translate(Math.cos(ang) * r, Math.sin(ang) * r); x.rotate(ang + sd * 1.1); x.beginPath(); x.ellipse(0, 0, 9, 20, 0, 0, 7); x.fill(); x.stroke(); x.restore(); }
   x.restore();
 }
+
+// ---------- army kit ----------
+// legionary armour on a person: segmented cuirass bands, shoulder plates, helmet with cheek guards, curved shield, belt
+export function legionary(p, o = {}) {
+  const M = MC.get('m'); const B = p.parts.bones; const s = 1 / p.parts.obj.scale.x;
+  const steel = new THREE.MeshStandardMaterial({ color: 0x8a8a86, metalness: .85, roughness: .35 });
+  const leather = real.std(0x4a2e1a, { rough: .7 });
+  const sp = B.Spine1 || B.Spine; const sp2 = B.Spine2 || sp;
+  if (sp) {
+    const torso = new THREE.Group();
+    for (let i = 0; i < 4; i++) { const band = real.m(new THREE.CylinderGeometry(.165 - i * .004, .17 - i * .004, .055, 28, 1, true), steel, { pos: [0, -.06 + i * .06, .01] }); band.scale.set(1.12, 1, .82); band.material = steel.clone(); band.material.side = THREE.DoubleSide; torso.add(band); }
+    torso.scale.setScalar(s); sp.add(torso);
+  }
+  for (const side of ['Left', 'Right']) { const sh = B[side + 'Arm']; if (!sh) continue; const pl = new THREE.Group(); for (let i = 0; i < 3; i++) { const c = real.m(new THREE.SphereGeometry(.085 - i * .008, 16, 8, 0, P * 2, 0, P * .5), steel, { pos: [0, .02 - i * .04, 0] }); c.material = steel; pl.add(c); } pl.scale.setScalar(s); sh.add(pl); }
+  const hd = B.Head; if (hd) { const h = new THREE.Group(); const dome = real.m(new THREE.SphereGeometry(.118, 24, 12, 0, P * 2, 0, P * .55), M.bronze); dome.scale.set(1, 1.05, 1.12); h.add(dome);
+    h.add(real.m(new THREE.CylinderGeometry(.13, .14, .012, 24, 1, false, P * .6, P * .8), M.bronze, { pos: [0, -.01, -.02] })); // neck guard
+    for (const sx of [-1, 1]) h.add(real.box(.012, .08, .06, M.bronze, { pos: [sx * .1, -.06, .04] }));
+    if (o.crest) h.add(real.box(.02, .06, .2, real.std(0x8a1a12, { rough: .9 }), { pos: [0, .14, 0] }));
+    h.scale.setScalar(s); h.position.set(0, .13 * s, .005 * s); hd.add(h); }
+  const hips = B.Hips; if (hips) { const belt = real.m(new THREE.TorusGeometry(.16, .015, 8, 28), leather, { rot: [P / 2, 0, 0] }); belt.scale.set(1.1, .85, 1); belt.scale.multiplyScalar(s); belt.position.y = .08 * s; hips.add(belt);
+    for (let i = -2; i <= 2; i++) { const st = real.box(.02, .16, .01, leather, { pos: [i * .035 * s, -.02 * s, .15 * s] }); st.scale.setScalar(s); hips.add(st); } }
+  if (o.shield !== false) { const g = new THREE.Group(); const geo = new THREE.CylinderGeometry(.55, .55, 1.05, 24, 1, true, -.55, 1.1); const sh = new THREE.Mesh(geo, real.std(o.shieldColor ?? 0x8a1f16, { rough: .6 })); sh.castShadow = true; sh.material.side = THREE.DoubleSide; g.add(sh);
+    g.add(real.m(new THREE.SphereGeometry(.07, 16, 8, 0, P * 2, 0, P / 2), M.bronze, { pos: [0, 0, .55], rot: [P / 2, 0, 0] }));
+    g.position.set(0, 0, -.55); const holder = new THREE.Group(); holder.add(g); holder.position.set(o.shieldX ?? .36, .72, .16); holder.rotation.set(0, .35, 0); p.add(holder); }
+  return p;
+}
+// eagle standard (aquila) on a pole
+export function aquila(o = {}) {
+  const M = MC.get('m'); const g = new THREE.Group();
+  g.add(real.m(new THREE.CylinderGeometry(.02, .02, 2.6, 10), real.std(0x4a3020, { rough: .6 }), { pos: [0, 1.3, 0] }));
+  const e = new THREE.Group(); e.position.y = 2.7; g.add(e);
+  e.add(real.m(new THREE.SphereGeometry(.06, 12, 8), M.gold, { scale: [1, 1.3, 1.6] }));
+  for (const s of [-1, 1]) { const w = real.m(new THREE.BoxGeometry(.22, .1, .02), M.gold, { pos: [s * .13, .07, 0], rot: [0, 0, s * .5] }); e.add(w); }
+  e.add(real.box(.16, .04, .1, M.gold, { pos: [0, -.12, 0] }));
+  g.add(real.box(.4, .3, .01, real.std(0x8a1a12, { rough: .9 }), { pos: [0, 2.2, .02] }));
+  return g;
+}
+// open field with grass and distant hills
+export async function field(k, o = {}) {
+  const { scene } = k;
+  await real.env(k, o.hdri ?? 'kloofendal_48d_partly_cloudy_puresky', { sun: o.sun ?? [-30, 20, 20], sunI: o.sunI ?? 4.4, sunColor: o.sunColor ?? 0xffe0b0, shadowSize: o.shadowSize ?? 30, envI: o.envI ?? .7, fog: [o.fog ?? 0xc8c0b0, o.fogNear ?? 40, o.fogFar ?? 260], exposure: o.exposure });
+  scene.userData.fx = { ao: 1, aoRadius: .6, bloom: .25 };
+  const gm = await real.pbr(o.ground ?? 'forest_ground_04', { repeat: [80, 80] });
+  scene.add(real.m(new THREE.PlaneGeometry(400, 400), gm, { rot: [-P / 2, 0, 0], cast: false }));
+  const hill = real.std(0x5a6040, { rough: 1 }); const r = rng(3);
+  for (let i = 0; i < 14; i++) { const a = r() * P * 2, d = 160 + r() * 60; const h = real.m(new THREE.SphereGeometry(30 + r() * 40, 24, 12), hill, { pos: [Math.sin(a) * d, -18, Math.cos(a) * d], cast: false }); h.scale.y = .5; scene.add(h); }
+  return {};
+}
+// shallow river: dark reflective water with moving ripples
+export async function river(k, o = {}) {
+  const nor = await real.tex('tex/coast_sand_rocks_02/nor.jpg');
+  const n = nor ? nor.clone() : null; if (n) { n.wrapS = n.wrapT = THREE.RepeatWrapping; n.repeat.set(30, 30); n.needsUpdate = true; }
+  const mat = new THREE.MeshStandardMaterial({ color: o.color ?? 0x2a3830, metalness: .1, roughness: .08, normalMap: n, normalScale: new THREE.Vector2(.25, .25), transparent: true, opacity: .9 });
+  const w = real.m(new THREE.PlaneGeometry(o.w ?? 40, o.l ?? 200), mat, { rot: [-P / 2, 0, o.rot ?? 0], pos: o.pos ?? [0, .25, 0], cast: false });
+  k.scene.add(w); w.userData.flow = t => { if (n) n.offset.set(t * .01, t * .04); };
+  return w;
+}
+// gold coins pouring into a chest (instanced)
+export function coinStream(scene, from, to, n = 160) {
+  const M = MC.get('m'); const geo = new THREE.CylinderGeometry(.012, .012, .003, 16);
+  const im = new THREE.InstancedMesh(geo, M.gold, n); im.castShadow = true; scene.add(im);
+  const r = rng(11); const seeds = Array.from({ length: n }, () => [r(), r(), r(), r()]); const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), e = new THREE.Euler(), v = new THREE.Vector3(), one = new THREE.Vector3(1, 1, 1);
+  im.userData.tick = t => { for (let i = 0; i < n; i++) { const [a, b, c, d] = seeds[i]; const ph = ((t * .9 + a * 3) % 1.2) / 1.2; v.set(from[0] + (b - .5) * .12 + (to[0] - from[0]) * ph, from[1] + (to[1] - from[1]) * ph * ph, from[2] + (c - .5) * .12 + (to[2] - from[2]) * ph); e.set(t * 7 * d + a * 9, t * 5 + b * 9, c * 9); q.setFromEuler(e); m4.compose(v, q, one); im.setMatrixAt(i, m4); } im.instanceMatrix.needsUpdate = true; };
+  return im;
+}
+// a carved inscription plate (canvas text on marble)
+export function inscription(text, w, h, o = {}) {
+  const t = real.canvasTex(1024, Math.round(1024 * h / w), (c, W, H) => { c.fillStyle = o.bg ?? '#d8d0c2'; c.fillRect(0, 0, W, H); c.font = `600 ${o.px ?? Math.round(H * .55)}px "Liberation Serif"`; c.textAlign = 'center'; c.textBaseline = 'middle'; { let f = o.px ?? Math.round(H * .55); while (f > 10) { c.font = `600 ${f}px "Liberation Serif"`; if (c.measureText(text).width < W * .9) break; f -= 4; } } c.fillStyle = 'rgba(255,255,255,.5)'; c.fillText(text, W / 2 + 2, H / 2 + 3); c.fillStyle = o.ink ?? '#3a2a1a'; c.fillText(text, W / 2, H / 2); });
+  return real.m(new THREE.PlaneGeometry(w, h), new THREE.MeshStandardMaterial({ map: t, roughness: .5 }), { cast: false });
+}
+// ship token for maps
+export function shipToken(o = {}) { const g = new THREE.Group(); const w = real.std(0x5a3a20, { rough: .6 }); const hull = real.m(new THREE.SphereGeometry(.06, 16, 8, 0, P * 2, P / 2, P / 2), w); hull.scale.set(.6, .5, 1.8); g.add(hull); g.add(real.m(new THREE.CylinderGeometry(.003, .003, .14, 6), w, { pos: [0, .07, 0] })); g.add(real.box(.09, .07, .003, real.std(o.sail ?? 0xd8cdb4, { rough: .9 }), { pos: [0, .09, 0], rot: [0, P / 2, 0] })); g.scale.setScalar(o.s ?? 1); return g; }
