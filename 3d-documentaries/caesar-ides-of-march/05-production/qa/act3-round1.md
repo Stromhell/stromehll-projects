@@ -5,3 +5,7 @@
 - 3.9 bridge model too dark, men invisible -> front fill light + water strip. FIXED
 - 3.1-3.4, 3.6, 3.8, 3.11-3.15: clean.
 RESULT: FIXING (re-render 3.5, 3.7, 3.9, 3.10)
+
+# Round 2
+- 3.5, 3.7, 3.9, 3.10 re-rendered: no blow-outs, bridge men visible.
+RESULT: CLEAN
