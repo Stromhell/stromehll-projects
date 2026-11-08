@@ -20,7 +20,7 @@ function figurine(color) { const g = new THREE.Group(); const m = real.std(color
 export const shots = {
   // 4.1 morning at the Curia: servants carry wooden boxes up the steps; crane down to the doorway
   '4.1': async k => {
-    const cy = await rome.courtyard(k, { trees: true, sun: [-25, 10, 30], sunI: 3.6 });
+    const cy = await rome.courtyard(k, { trees: false, sun: [-25, 10, 30], sunI: 3.6 });
     const sv = []; for (let i = 0; i < 4; i++) { const p = await C.person(k, C.CIT[i], { pos: [-1.6 + i * 1.1, 0, -11 + (i % 2) * 1.2], rot: P, seed: 900 + i }); const b = rome.tabletBox(cy.M); b.scale.setScalar(.8); C.attach(p, b, 'RightHand', [0, -.02, .12], [0, 0, P / 2]); sv.push(p); }
     const cam = C.dolly(k.camera, { pos: [3, 8, -6], look: [0, 1, -16], fov: 44 }, { pos: [2.4, 2.4, -9], look: [0, 1.8, -20], fov: 42 });
     return (t, u) => { cam(u); cy.doors.set(1); sv.forEach((p, i) => { const z = -11 + (i % 2) * 1.2 - t * .75; p.position.z = z; p.position.y = stairY(z); p.update(t, { pose: 'walk', dist: t * .75 + i, arm: 'hold', mood: 'neutral' }); }); };
@@ -30,9 +30,9 @@ export const shots = {
     const d = await rome.domus(k, { room: 'none', night: true }); k.exposure = .9;
     const b = rome.tabletBox(d.M); b.position.set(0, 0, 0); k.scene.add(b);
     const dg = rome.daggerShape(); dg.rotation.set(-P / 2, 0, .3); dg.position.set(0, .2, 0); dg.traverse(c => { if (c.isMesh) { c.material = real.std(0x8a8a90, { metal: 1, rough: .2 }); } }); k.scene.add(dg);
-    rome.oilLamp(k.scene, [.5, .02, .35], { i: 3, shadow: true });
+    rome.oilLamp(k.scene, [.5, .02, .35], { i: 1, shadow: true });
     const gl = new THREE.PointLight(0xfff0d0, 0, 1.2); gl.position.set(0, .27, .1); k.scene.add(gl);
-    rome.key(k.scene, [.4, 1.6, 1.4], [0, .2, 0], { i: 30, angle: .5 });
+    rome.key(k.scene, [.4, 1.6, 1.4], [0, .2, 0], { i: 16, angle: .5 });
     const cam = C.dolly(k.camera, { pos: [.2, .8, 1.5], look: [0, .22, 0], fov: 36 }, { pos: [.1, .55, .85], look: [0, .25, 0], fov: 32 });
     const D = k.meta.seconds;
     return (t, u) => { cam(u); rome.flickerAll(k.scene, t); const o = seg(t, D * .2, D * .4) * (1 - seg(t, D * .72, D * .88)); b.userData.lid.rotation.x = -.18 * ease(o); gl.intensity = o * (.6 + Math.sin(t * 9) * .4); };
@@ -99,7 +99,7 @@ export const shots = {
     const bl = balance(d.M); bl.position.set(0, .94, 0); k.scene.add(bl);
     const cz = figurine(0xeae2d2), an = figurine(0x8a2a2a), cz2 = figurine(0xeae2d2);
     const [pL, pR] = bl.userData.pans; pL.add(cz); cz.position.set(0, -.3, 0); pR.add(cz2); cz2.position.set(-.04, -.3, 0); pR.add(an); an.position.set(.045, -.3, 0);
-    rome.oilLamp(k.scene, [-.7, .97, .35], { i: 2.5, shadow: true }); rome.key(k.scene, [.4, 2.8, 1.8], [0, 1.4, 0], { i: 30, angle: .5 });
+    rome.oilLamp(k.scene, [-.7, .97, .35], { i: .8, shadow: true }); rome.key(k.scene, [.4, 2.8, 1.8], [0, 1.4, 0], { i: 14, angle: .5 });
     const cam = C.dolly(k.camera, { pos: [0, 1.5, 2.2], look: [0, 1.35, 0], fov: 38 }, { pos: [0, 1.45, 1.7], look: [0, 1.35, 0], fov: 36 });
     const D = k.meta.seconds;
     return (t, u) => { cam(u); rome.flickerAll(k.scene, t);
