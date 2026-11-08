@@ -14,6 +14,7 @@ cast.json: [{"id":"pax_m1","gender":1,"age":.5,"weight":.5,"muscle":.5,"height":
 Data roots: MH_DATA (mpfb/data) and MH_ASSETS (system assets pack), default /home/user/mh/...
 """
 import gzip, json, os, struct, sys, io
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import numpy as np
 from PIL import Image
 
@@ -349,6 +350,27 @@ def build(spec, out):
     if spec.get('hair'): proxy('hair', spec['hair'], alpha=True, rough=.55, tint=spec.get('hairTint'), double=True)
     for c in spec.get('clothes', []):
         proxy('clothes', c, rough=.85, tint=spec.get('tint', {}).get(c), alpha=c.startswith('fedora') is False and False)
+    # Roman drapes (tunic / toga / stola) built from the fitting helpers
+    if spec.get('drape'):
+        import mh_drape
+        Jd = {n.split(':')[1]: jpos(rig[n]['head']) for n in names if n.startswith('mixamorig:')}
+        Jd['_hips_bone'] = bidx['mixamorig:Hips']; Jd['_bones'] = {n.split(':')[1]: i for n, i in bidx.items() if ':' in n}
+        parts_d, _, _ = mh_drape.build_drape(spec, BV, BF, BG, bw, split_mesh, smooth_normals, top4, Jd)
+        dd = spec['drape']; mats = {}
+        def tex_mat(key, color, rough=.92, seed=1):
+            alb, nrm = mh_drape.wool_tex(color, seed)
+            def enc(a):
+                b = io.BytesIO(); Image.fromarray(a).save(b, 'JPEG', quality=90); return b.getvalue()
+            mat = {'name': key, 'doubleSided': True, 'pbrMetallicRoughness': {'metallicFactor': 0, 'roughnessFactor': rough, 'baseColorTexture': {'index': g.image(enc(alb), 'image/jpeg')}},
+                   'normalTexture': {'index': g.image(enc(nrm), 'image/jpeg'), 'scale': 1.0}}
+            g.j['materials'].append(mat); return len(g.j['materials']) - 1
+        wool = dd.get('color', [.93, .9, .82])
+        mats['wool'] = tex_mat('wool', wool, seed=dd.get('seed', 1))
+        mats['tunic'] = tex_mat('tunic', dd.get('tunic', wool), seed=dd.get('seed', 1) + 1)
+        if dd.get('border') is not None: mats['border'] = tex_mat('border', dd['border'], rough=.8, seed=3)
+        if dd.get('clavus') is not None: mats['clavus'] = tex_mat('clavus', dd['clavus'], rough=.8, seed=4)
+        for (nm, pos, uvv, tr, jj, ww, mk) in parts_d:
+            proxies.append((nm, P(pos), uvv, tr, jj.astype(np.uint16), ww.astype(np.float32), mats[mk], None))
     # body (skin), with clothes-covered faces removed
     keep = []
     for (vs, ts), gname in zip(BF, BG):

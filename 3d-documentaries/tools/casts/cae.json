@@ -1,0 +1,1858 @@
+[
+{
+"id": "cae_caesar",
+"gender": 1,
+"age": 0.82,
+"weight": 0.42,
+"muscle": 0.5,
+"height": 0.55,
+"race": {
+"caucasian": 1
+},
+"skin": "middleage_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short01",
+"hairTint": [
+0.32,
+0.28,
+0.24
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "toga",
+"color": [
+0.92,
+0.89,
+0.82
+],
+"border": [
+0.36,
+0.12,
+0.42
+],
+"clavus": [
+0.36,
+0.12,
+0.42
+],
+"seed": 11
+}
+},
+{
+"id": "cae_caesar_y",
+"gender": 1,
+"age": 0.55,
+"weight": 0.42,
+"muscle": 0.5,
+"height": 0.55,
+"race": {
+"caucasian": 1
+},
+"skin": "young_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short01",
+"hairTint": [
+0.2,
+0.16,
+0.12
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "toga",
+"color": [
+0.92,
+0.89,
+0.82
+],
+"border": null,
+"clavus": [
+0.36,
+0.12,
+0.42
+],
+"seed": 12
+}
+},
+{
+"id": "cae_antony",
+"gender": 1,
+"age": 0.6,
+"weight": 0.62,
+"muscle": 0.85,
+"height": 0.62,
+"race": {
+"caucasian": 1
+},
+"skin": "middleage_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow006",
+"lashes": "eyelashes01",
+"hair": "short04",
+"hairTint": [
+0.12,
+0.1,
+0.09
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "toga",
+"color": [
+0.92,
+0.89,
+0.82
+],
+"border": [
+0.36,
+0.12,
+0.42
+],
+"clavus": [
+0.36,
+0.12,
+0.42
+],
+"seed": 13
+}
+},
+{
+"id": "cae_brutus",
+"gender": 1,
+"age": 0.62,
+"weight": 0.45,
+"muscle": 0.5,
+"height": 0.5,
+"race": {
+"caucasian": 1
+},
+"skin": "middleage_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow004",
+"lashes": "eyelashes01",
+"hair": "short02",
+"hairTint": [
+0.12,
+0.1,
+0.09
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "toga",
+"color": [
+0.92,
+0.89,
+0.82
+],
+"border": null,
+"clavus": [
+0.36,
+0.12,
+0.42
+],
+"seed": 14
+}
+},
+{
+"id": "cae_cassius",
+"gender": 1,
+"age": 0.66,
+"weight": 0.28,
+"muscle": 0.45,
+"height": 0.58,
+"race": {
+"caucasian": 1
+},
+"skin": "middleage_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow010",
+"lashes": "eyelashes01",
+"hair": "short03",
+"hairTint": [
+0.18,
+0.16,
+0.15
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "toga",
+"color": [
+0.92,
+0.89,
+0.82
+],
+"border": null,
+"clavus": [
+0.36,
+0.12,
+0.42
+],
+"seed": 15
+}
+},
+{
+"id": "cae_decimus",
+"gender": 1,
+"age": 0.6,
+"weight": 0.5,
+"muscle": 0.6,
+"height": 0.5,
+"race": {
+"caucasian": 1
+},
+"skin": "middleage_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow003",
+"lashes": "eyelashes01",
+"hair": "short01",
+"hairTint": [
+0.3,
+0.2,
+0.13
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "toga",
+"color": [
+0.92,
+0.89,
+0.82
+],
+"border": null,
+"clavus": [
+0.36,
+0.12,
+0.42
+],
+"seed": 16
+}
+},
+{
+"id": "cae_trebonius",
+"gender": 1,
+"age": 0.72,
+"weight": 0.6,
+"muscle": 0.5,
+"height": 0.5,
+"race": {
+"caucasian": 1
+},
+"skin": "old_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short04",
+"hairTint": [
+0.55,
+0.53,
+0.5
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "toga",
+"color": [
+0.92,
+0.89,
+0.82
+],
+"border": null,
+"clavus": [
+0.36,
+0.12,
+0.42
+],
+"seed": 17
+}
+},
+{
+"id": "cae_cimber",
+"gender": 1,
+"age": 0.62,
+"weight": 0.48,
+"muscle": 0.5,
+"height": 0.5,
+"race": {
+"caucasian": 1
+},
+"skin": "middleage_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow007",
+"lashes": "eyelashes01",
+"hair": "short02",
+"hairTint": [
+0.1,
+0.08,
+0.07
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "toga",
+"color": [
+0.92,
+0.89,
+0.82
+],
+"border": null,
+"clavus": [
+0.36,
+0.12,
+0.42
+],
+"seed": 18
+}
+},
+{
+"id": "cae_casca",
+"gender": 1,
+"age": 0.74,
+"weight": 0.55,
+"muscle": 0.5,
+"height": 0.5,
+"race": {
+"caucasian": 1
+},
+"skin": "old_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short03",
+"hairTint": [
+0.55,
+0.53,
+0.5
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "toga",
+"color": [
+0.92,
+0.89,
+0.82
+],
+"border": null,
+"clavus": [
+0.36,
+0.12,
+0.42
+],
+"seed": 19
+}
+},
+{
+"id": "cae_octavian",
+"gender": 1,
+"age": 0.42,
+"weight": 0.35,
+"muscle": 0.5,
+"height": 0.5,
+"race": {
+"caucasian": 1
+},
+"skin": "young_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short01",
+"hairTint": [
+0.38,
+0.28,
+0.18
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "toga",
+"color": [
+0.92,
+0.89,
+0.82
+],
+"border": [
+0.36,
+0.12,
+0.42
+],
+"clavus": [
+0.36,
+0.12,
+0.42
+],
+"seed": 20
+}
+},
+{
+"id": "cae_lepidus",
+"gender": 1,
+"age": 0.66,
+"weight": 0.55,
+"muscle": 0.5,
+"height": 0.5,
+"race": {
+"caucasian": 1
+},
+"skin": "middleage_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short04",
+"hairTint": [
+0.25,
+0.22,
+0.2
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "toga",
+"color": [
+0.92,
+0.89,
+0.82
+],
+"border": [
+0.36,
+0.12,
+0.42
+],
+"clavus": [
+0.36,
+0.12,
+0.42
+],
+"seed": 21
+}
+},
+{
+"id": "cae_tarquin",
+"gender": 1,
+"age": 0.72,
+"weight": 0.65,
+"muscle": 0.6,
+"height": 0.6,
+"race": {
+"caucasian": 1
+},
+"skin": "middleage_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short02",
+"hairTint": [
+0.15,
+0.13,
+0.12
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "toga",
+"color": [
+0.32,
+0.1,
+0.2
+],
+"border": [
+0.75,
+0.58,
+0.2
+],
+"clavus": [
+0.75,
+0.58,
+0.2
+],
+"seed": 22
+}
+},
+{
+"id": "cae_pompey",
+"gender": 1,
+"age": 0.7,
+"weight": 0.55,
+"muscle": 0.6,
+"height": 0.6,
+"race": {
+"caucasian": 1
+},
+"skin": "middleage_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short01",
+"hairTint": [
+0.32,
+0.28,
+0.24
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "toga",
+"color": [
+0.92,
+0.89,
+0.82
+],
+"border": [
+0.36,
+0.12,
+0.42
+],
+"clavus": [
+0.36,
+0.12,
+0.42
+],
+"seed": 23
+}
+},
+{
+"id": "cae_spurinna",
+"gender": 1,
+"age": 0.9,
+"weight": 0.4,
+"muscle": 0.5,
+"height": 0.5,
+"race": {
+"caucasian": 1
+},
+"skin": "old_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short04",
+"hairTint": [
+0.75,
+0.73,
+0.7
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "toga",
+"color": [
+0.55,
+0.36,
+0.2
+],
+"border": null,
+"clavus": null,
+"seed": 24
+}
+},
+{
+"id": "cae_artemidorus",
+"gender": 1,
+"age": 0.75,
+"weight": 0.4,
+"muscle": 0.5,
+"height": 0.5,
+"race": {
+"caucasian": 1
+},
+"skin": "old_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short03",
+"hairTint": [
+0.6,
+0.58,
+0.55
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "toga",
+"color": [
+0.36,
+0.42,
+0.55
+],
+"border": null,
+"clavus": null,
+"seed": 25
+}
+},
+{
+"id": "cae_sen1",
+"gender": 1,
+"age": 0.62,
+"weight": 0.45,
+"muscle": 0.5,
+"height": 0.45,
+"race": {
+"caucasian": 1
+},
+"skin": "middleage_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short01",
+"hairTint": [
+0.32,
+0.28,
+0.24
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "toga",
+"color": [
+0.92,
+0.89,
+0.82
+],
+"border": null,
+"clavus": [
+0.36,
+0.12,
+0.42
+],
+"seed": 30
+}
+},
+{
+"id": "cae_sen2",
+"gender": 1,
+"age": 0.7,
+"weight": 0.6,
+"muscle": 0.5,
+"height": 0.55,
+"race": {
+"caucasian": 1
+},
+"skin": "middleage_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow002",
+"lashes": "eyelashes01",
+"hair": "short02",
+"hairTint": [
+0.12,
+0.1,
+0.09
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "toga",
+"color": [
+0.92,
+0.89,
+0.82
+],
+"border": null,
+"clavus": [
+0.36,
+0.12,
+0.42
+],
+"seed": 31
+}
+},
+{
+"id": "cae_sen3",
+"gender": 1,
+"age": 0.8,
+"weight": 0.7,
+"muscle": 0.5,
+"height": 0.6,
+"race": {
+"caucasian": 1
+},
+"skin": "old_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow003",
+"lashes": "eyelashes01",
+"hair": "short03",
+"hairTint": [
+0.55,
+0.53,
+0.5
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "toga",
+"color": [
+0.92,
+0.89,
+0.82
+],
+"border": [
+0.36,
+0.12,
+0.42
+],
+"clavus": [
+0.36,
+0.12,
+0.42
+],
+"seed": 32
+}
+},
+{
+"id": "cae_sen4",
+"gender": 1,
+"age": 0.66,
+"weight": 0.4,
+"muscle": 0.5,
+"height": 0.5,
+"race": {
+"caucasian": 1
+},
+"skin": "middleage_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow004",
+"lashes": "eyelashes01",
+"hair": "short04",
+"hairTint": [
+0.3,
+0.2,
+0.13
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "toga",
+"color": [
+0.92,
+0.89,
+0.82
+],
+"border": null,
+"clavus": [
+0.36,
+0.12,
+0.42
+],
+"seed": 33
+}
+},
+{
+"id": "cae_sen5",
+"gender": 1,
+"age": 0.9,
+"weight": 0.55,
+"muscle": 0.5,
+"height": 0.4,
+"race": {
+"caucasian": 1
+},
+"skin": "old_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow005",
+"lashes": "eyelashes01",
+"hair": "short01",
+"hairTint": [
+0.7,
+0.68,
+0.65
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "toga",
+"color": [
+0.92,
+0.89,
+0.82
+],
+"border": null,
+"clavus": [
+0.36,
+0.12,
+0.42
+],
+"seed": 34
+}
+},
+{
+"id": "cae_sen6",
+"gender": 1,
+"age": 0.58,
+"weight": 0.45,
+"muscle": 0.5,
+"height": 0.45,
+"race": {
+"caucasian": 1
+},
+"skin": "young_caucasian_male2",
+"eyes": "brown",
+"brows": "eyebrow006",
+"lashes": "eyelashes01",
+"hair": "short02",
+"hairTint": [
+0.32,
+0.28,
+0.24
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "toga",
+"color": [
+0.92,
+0.89,
+0.82
+],
+"border": null,
+"clavus": [
+0.36,
+0.12,
+0.42
+],
+"seed": 35
+}
+},
+{
+"id": "cae_sen7",
+"gender": 1,
+"age": 0.75,
+"weight": 0.6,
+"muscle": 0.5,
+"height": 0.55,
+"race": {
+"caucasian": 1
+},
+"skin": "middleage_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow007",
+"lashes": "eyelashes01",
+"hair": "short03",
+"hairTint": [
+0.12,
+0.1,
+0.09
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "toga",
+"color": [
+0.92,
+0.89,
+0.82
+],
+"border": [
+0.36,
+0.12,
+0.42
+],
+"clavus": [
+0.36,
+0.12,
+0.42
+],
+"seed": 36
+}
+},
+{
+"id": "cae_sen8",
+"gender": 1,
+"age": 0.85,
+"weight": 0.7,
+"muscle": 0.5,
+"height": 0.6,
+"race": {
+"caucasian": 1
+},
+"skin": "old_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow008",
+"lashes": "eyelashes01",
+"hair": "short04",
+"hairTint": [
+0.55,
+0.53,
+0.5
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "toga",
+"color": [
+0.92,
+0.89,
+0.82
+],
+"border": null,
+"clavus": [
+0.36,
+0.12,
+0.42
+],
+"seed": 37
+}
+},
+{
+"id": "cae_sen9",
+"gender": 1,
+"age": 0.68,
+"weight": 0.4,
+"muscle": 0.5,
+"height": 0.5,
+"race": {
+"caucasian": 1
+},
+"skin": "young_caucasian_male2",
+"eyes": "brown",
+"brows": "eyebrow009",
+"lashes": "eyelashes01",
+"hair": "short01",
+"hairTint": [
+0.3,
+0.2,
+0.13
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "toga",
+"color": [
+0.92,
+0.89,
+0.82
+],
+"border": null,
+"clavus": [
+0.36,
+0.12,
+0.42
+],
+"seed": 38
+}
+},
+{
+"id": "cae_sen10",
+"gender": 1,
+"age": 0.72,
+"weight": 0.55,
+"muscle": 0.5,
+"height": 0.4,
+"race": {
+"caucasian": 1
+},
+"skin": "middleage_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short02",
+"hairTint": [
+0.7,
+0.68,
+0.65
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "toga",
+"color": [
+0.92,
+0.89,
+0.82
+],
+"border": null,
+"clavus": [
+0.36,
+0.12,
+0.42
+],
+"seed": 39
+}
+},
+{
+"id": "cae_glad1",
+"gender": 1,
+"age": 0.5,
+"weight": 0.55,
+"muscle": 0.95,
+"height": 0.6,
+"race": {
+"caucasian": 1
+},
+"skin": "young_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short02",
+"hairTint": [
+0.12,
+0.1,
+0.09
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "tunic",
+"color": [
+0.45,
+0.36,
+0.26
+],
+"clavus": null,
+"seed": 50,
+"sleeve": 0.2
+}
+},
+{
+"id": "cae_glad2",
+"gender": 1,
+"age": 0.55,
+"weight": 0.55,
+"muscle": 0.95,
+"height": 0.6,
+"race": {
+"african": 1
+},
+"skin": "middleage_african_male",
+"eyes": "brown",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short03",
+"hairTint": [
+0.3,
+0.2,
+0.13
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "tunic",
+"color": [
+0.36,
+0.3,
+0.24
+],
+"clavus": null,
+"seed": 51,
+"sleeve": 0.2
+}
+},
+{
+"id": "cae_glad3",
+"gender": 1,
+"age": 0.45,
+"weight": 0.55,
+"muscle": 0.95,
+"height": 0.6,
+"race": {
+"caucasian": 1
+},
+"skin": "young_caucasian_male2",
+"eyes": "brown",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short04",
+"hairTint": [
+0.12,
+0.1,
+0.09
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "tunic",
+"color": [
+0.5,
+0.42,
+0.3
+],
+"clavus": null,
+"seed": 52,
+"sleeve": 0.2
+}
+},
+{
+"id": "cae_glad4",
+"gender": 1,
+"age": 0.6,
+"weight": 0.55,
+"muscle": 0.95,
+"height": 0.6,
+"race": {
+"caucasian": 1
+},
+"skin": "middleage_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short01",
+"hairTint": [
+0.15,
+0.12,
+0.1
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "tunic",
+"color": [
+0.3,
+0.26,
+0.22
+],
+"clavus": null,
+"seed": 53,
+"sleeve": 0.2
+}
+},
+{
+"id": "cae_leg1",
+"gender": 1,
+"age": 0.45,
+"weight": 0.5,
+"muscle": 0.8,
+"height": 0.58,
+"race": {
+"caucasian": 1
+},
+"skin": "young_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short01",
+"hairTint": [
+0.12,
+0.1,
+0.09
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "tunic",
+"color": [
+0.55,
+0.12,
+0.1
+],
+"clavus": null,
+"seed": 60,
+"sleeve": 0.3
+}
+},
+{
+"id": "cae_leg2",
+"gender": 1,
+"age": 0.5,
+"weight": 0.5,
+"muscle": 0.8,
+"height": 0.58,
+"race": {
+"caucasian": 1
+},
+"skin": "young_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short02",
+"hairTint": [
+0.3,
+0.2,
+0.13
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "tunic",
+"color": [
+0.55,
+0.12,
+0.1
+],
+"clavus": null,
+"seed": 61,
+"sleeve": 0.3
+}
+},
+{
+"id": "cae_leg3",
+"gender": 1,
+"age": 0.55,
+"weight": 0.5,
+"muscle": 0.8,
+"height": 0.58,
+"race": {
+"caucasian": 1
+},
+"skin": "young_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short03",
+"hairTint": [
+0.12,
+0.1,
+0.09
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "tunic",
+"color": [
+0.55,
+0.12,
+0.1
+],
+"clavus": null,
+"seed": 62,
+"sleeve": 0.3
+}
+},
+{
+"id": "cae_cit1",
+"gender": 1,
+"age": 0.45,
+"weight": 0.5,
+"muscle": 0.5,
+"height": 0.5,
+"race": {
+"caucasian": 1
+},
+"skin": "young_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short01",
+"hairTint": [
+0.12,
+0.1,
+0.09
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "tunic",
+"color": [
+0.62,
+0.5,
+0.34
+],
+"clavus": null,
+"seed": 70,
+"sleeve": 0.45
+}
+},
+{
+"id": "cae_cit2",
+"gender": 1,
+"age": 0.6,
+"weight": 0.6,
+"muscle": 0.5,
+"height": 0.5,
+"race": {
+"caucasian": 1
+},
+"skin": "middleage_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short02",
+"hairTint": [
+0.3,
+0.2,
+0.13
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "tunic",
+"color": [
+0.45,
+0.5,
+0.38
+],
+"clavus": null,
+"seed": 71,
+"sleeve": 0.45
+}
+},
+{
+"id": "cae_cit3",
+"gender": 1,
+"age": 0.75,
+"weight": 0.45,
+"muscle": 0.5,
+"height": 0.5,
+"race": {
+"caucasian": 1
+},
+"skin": "old_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short03",
+"hairTint": [
+0.55,
+0.53,
+0.5
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "tunic",
+"color": [
+0.55,
+0.36,
+0.25
+],
+"clavus": null,
+"seed": 72,
+"sleeve": 0.45
+}
+},
+{
+"id": "cae_cit4",
+"gender": 1,
+"age": 0.52,
+"weight": 0.4,
+"muscle": 0.5,
+"height": 0.5,
+"race": {
+"caucasian": 1
+},
+"skin": "young_caucasian_male2",
+"eyes": "brown",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short04",
+"hairTint": [
+0.32,
+0.28,
+0.24
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "tunic",
+"color": [
+0.4,
+0.36,
+0.32
+],
+"clavus": null,
+"seed": 73,
+"sleeve": 0.45
+}
+},
+{
+"id": "cae_cit5",
+"gender": 1,
+"age": 0.85,
+"weight": 0.5,
+"muscle": 0.5,
+"height": 0.5,
+"race": {
+"caucasian": 1
+},
+"skin": "old_caucasian_male",
+"eyes": "brown",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short01",
+"hairTint": [
+0.7,
+0.68,
+0.65
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "tunic",
+"color": [
+0.7,
+0.62,
+0.48
+],
+"clavus": null,
+"seed": 74,
+"sleeve": 0.45
+}
+},
+{
+"id": "cae_cit6",
+"gender": 1,
+"age": 0.4,
+"weight": 0.55,
+"muscle": 0.5,
+"height": 0.5,
+"race": {
+"african": 1
+},
+"skin": "middleage_african_male",
+"eyes": "brown",
+"brows": "eyebrow001",
+"lashes": "eyelashes01",
+"hair": "short02",
+"hairTint": [
+0.12,
+0.1,
+0.09
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "tunic",
+"color": [
+0.36,
+0.38,
+0.48
+],
+"clavus": null,
+"seed": 75,
+"sleeve": 0.45
+}
+},
+{
+"id": "cae_calpurnia",
+"gender": 0,
+"age": 0.55,
+"weight": 0.45,
+"muscle": 0.4,
+"height": 0.45,
+"race": {
+"caucasian": 1
+},
+"skin": "middleage_caucasian_female",
+"eyes": "brown",
+"brows": "eyebrow011",
+"lashes": "eyelashes01",
+"hair": "braid01",
+"hairTint": [
+0.12,
+0.09,
+0.08
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "stola",
+"color": [
+0.82,
+0.78,
+0.7
+],
+"border": [
+0.25,
+0.3,
+0.42
+],
+"clavus": null,
+"seed": 80,
+"sash": true,
+"sleeve": 0.6
+}
+},
+{
+"id": "cae_citf1",
+"gender": 0,
+"age": 0.45,
+"weight": 0.45,
+"muscle": 0.4,
+"height": 0.45,
+"race": {
+"caucasian": 1
+},
+"skin": "young_caucasian_female",
+"eyes": "brown",
+"brows": "eyebrow011",
+"lashes": "eyelashes01",
+"hair": "ponytail01",
+"hairTint": [
+0.2,
+0.14,
+0.1
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "stola",
+"color": [
+0.6,
+0.45,
+0.4
+],
+"border": null,
+"clavus": null,
+"seed": 81,
+"sash": true,
+"sleeve": 0.6
+}
+},
+{
+"id": "cae_citf2",
+"gender": 0,
+"age": 0.7,
+"weight": 0.45,
+"muscle": 0.4,
+"height": 0.45,
+"race": {
+"caucasian": 1
+},
+"skin": "old_caucasian_female",
+"eyes": "brown",
+"brows": "eyebrow011",
+"lashes": "eyelashes01",
+"hair": "bob02",
+"hairTint": [
+0.5,
+0.48,
+0.45
+],
+"clothes": [
+"shoes01"
+],
+"tint": {
+"shoes01": [
+0.16,
+0.1,
+0.07
+]
+},
+"drape": {
+"kind": "stola",
+"color": [
+0.45,
+0.48,
+0.42
+],
+"border": null,
+"clavus": null,
+"seed": 82,
+"sash": true,
+"sleeve": 0.6
+}
+}
+]

@@ -41,7 +41,7 @@ window.loadShot = async (modPath, meta, opts = {}) => {
   // people from the cast get their costume extras (airline crew uniforms) wherever they appear
   const realK = { ...real, human: async (o = {}) => { const p = await real.human(o); dressCrew(p, o.id); return p; } };
   const kit = { THREE, scene, camera, core, people, props, maps, ui, real: realK, meta, opts, overlay: null, renderer: R.renderer };
-  const fn = mod.shots[meta.id];
+  const fn = mod.shots[meta.module_shot || meta.id];
   if (!fn) throw new Error('no shot ' + meta.id);
   const upd = await fn(kit);
   R.renderer.toneMappingExposure = kit.exposure ?? 1.05;
