@@ -1,6 +1,6 @@
 # The Real History of Christmas (3D) - handover (8 Nov 2026)
 
-Status: DONE. Booking sent to the Production plan thread 8 Nov ~01:40 UTC (full video in the held slot 23 Dec 18:30 UTC = 24 Dec 00:00 IST; reels suggested 24-27 Dec; 3 IG parts on the next free long days). Post ids: see BOOKED section below once added.
+Status: DONE and BOOKED (see BOOKED below).
 - Full: XM_FULL.mp4 6:34, -14 LUFS. Drive AI/The Real History of Christmas/05 Production (XM_FULL id 1-y4uy7ru1al2l4FDDEW_Odk_BWcN0ExD), subfolders Reels, Reel covers, IG parts, Launch.
 - Launch kit page https://claude.ai/artifact/EygwzWZkT49ZvH7hWR91oG ; storyboard https://claude.ai/artifact/Rm9rtv9NbvXj6smHBiY4KU
 - Character: Flurry the snowman (engine/shots/xm_sets.js), finale shot 6.8 says HAPPY CHRISTMAS. No sponsor.
@@ -18,3 +18,8 @@ Lessons for the next 3D video
 - White beard + pale skin = blank face; add rosy skin, nose, cheeks.
 - Artifact publish limit 64 MB per call: send preview media in two publishes; root must be the scratchpad.
 - tools/ig_brand.sh already exists; don't regenerate it.
+
+## BOOKED (Zernio, 8 Nov 01:42 UTC, by Production plan thread) - all UTC
+- FULL YouTube 23 Dec 18:30 id 6aefd2f9be05bcc4c643d145
+- IG parts: P1 22 Jan 13:00 (6aefd2fdbe05bcc4c643d14a), P2 22 Jan 16:00 (6aefd302be05bcc4c643d156), P3 24 Jan 13:00 (6aefd305be05bcc4c643d167)
+- Reels 24-29 Dec (R15 Happy Christmas 25 Dec 07:30, id 6aefd3399c9d4fffcac2cec0); full record /mnt/project-files/3d-documentaries/christmas-history/launch/XM_booked.txt
