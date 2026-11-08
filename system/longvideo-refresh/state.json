@@ -1,6 +1,42 @@
-{"threshold": 20, "hours": 32, "max_swaps": 2, "since": "2026-11-01",
+{
+ "threshold": 20,
+ "hours": 32,
+ "max_swaps": 2,
+ "since": "2026-11-01",
  "videos": {
-  "tDz3U5NLh8o": {"zernioPostId": "6ae4266509f261790d6cc9ee", "name": "Spain 1 Al-Andalus", "folder": "/mnt/project-files/2d-dynamic/spain-1-al-andalus", "publishedAt": "2026-11-04T19:00:00Z", "originalTitle": "How Muslims Ruled Spain for 781 Years (and Lost It All)",
-   "swaps": [{"n": 1, "at": "2026-11-07T19:50:00Z", "viewsBefore": 14, "title": "How a Tiny Army Took Spain in 7 Years (and Held It for 781)", "thumb": "2d-dynamic/spain-1-al-andalus/launch/refresh-1/Spain1_refresh1_thumbnail.jpg"}], "done": false},
-  "ZUZtO-kP5sY": {"zernioPostId": "6ae3c6755db31e4a3f6f2b5d", "name": "Spain 2 Empire", "folder": "/mnt/project-files/2d-dynamic/spain-2-empire", "publishedAt": "2026-11-06T19:00:00Z", "originalTitle": "How Spain Got Rich From a Mistake (and Still Went Broke)", "swaps": [], "done": false}
- }}
+  "tDz3U5NLh8o": {
+   "zernioPostId": "6ae4266509f261790d6cc9ee",
+   "name": "Spain 1 Al-Andalus",
+   "folder": "/mnt/project-files/2d-dynamic/spain-1-al-andalus",
+   "publishedAt": "2026-11-04T19:00:00Z",
+   "originalTitle": "How Muslims Ruled Spain for 781 Years (and Lost It All)",
+   "swaps": [
+    {
+     "n": 1,
+     "at": "2026-11-07T19:50:00Z",
+     "viewsBefore": 14,
+     "title": "How a Tiny Army Took Spain in 7 Years (and Held It for 781)",
+     "thumb": "2d-dynamic/spain-1-al-andalus/launch/refresh-1/Spain1_refresh1_thumbnail.jpg"
+    },
+    {
+     "n": 2,
+     "at": "2026-11-08T04:53:00Z",
+     "viewsBefore": 14,
+     "title": "When Europe's Greatest City Was Muslim: The Rise and Fall of Al-Andalus",
+     "thumb": "2d-dynamic/spain-1-al-andalus/launch/refresh-2/Spain1_refresh2_thumbnail.jpg"
+    }
+   ],
+   "done": true
+  },
+  "ZUZtO-kP5sY": {
+   "zernioPostId": "6ae3c6755db31e4a3f6f2b5d",
+   "name": "Spain 2 Empire",
+   "folder": "/mnt/project-files/2d-dynamic/spain-2-empire",
+   "publishedAt": "2026-11-06T19:00:00Z",
+   "originalTitle": "How Spain Got Rich From a Mistake (and Still Went Broke)",
+   "swaps": [],
+   "done": true,
+   "note": "78 views at 34 h (2026-11-08T04:52Z): above threshold, no swap needed"
+  }
+ }
+}
