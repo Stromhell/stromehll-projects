@@ -1,4 +1,4 @@
-# The Ides of March: Storyboard v1
+# The Ides of March: storyboard (realistic 3D)
 
 91 shots, sketch frames in img/.
 
