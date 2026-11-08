@@ -24,7 +24,7 @@ export const shots = {
     const cu = await hall(k); const ppl = await C.fillBenches(k, cu, { zMin: -8 });
     const cz = await seated(k);
     const cm = await C.person(k, 'cae_cimber', { pos: [.1, 0, -8.6], rot: P });
-    rome.key(k.scene, [2.5, 5, -6], [0, 1.4, -10], { i: 160 });
+    rome.key(k.scene, [2.5, 5, -6], [0, 1.4, -10], { i: 55 });
     const cam = C.dolly(k.camera, { pos: [.9, 1.8, -4.8], look: [0, 1.3, -10.3], fov: 38 }, { pos: [.6, 1.7, -6.6], look: [0, 1.35, -10.4], fov: 34 });
     return (t, u) => { cam(u); C.idleBench(ppl, t, { look: 0 }); cm.update(t, { arm: 'raiseBoth', mood: 'worried', talk: true }); cz.update(t, { pose: 'sit', seatH: .5, mood: 'stern', look: Math.sin(t * .5) * .1 }); };
   },
@@ -34,7 +34,7 @@ export const shots = {
   '5.3': async k => {
     const cu = await hall(k); const cz = await seated(k);
     const cm = await C.person(k, 'cae_cimber', { pos: [.55, .45, -9.85], rot: P - .6 });
-    rome.key(k.scene, [-2, 3.5, -7], [0, 1.4, -10.6], { i: 150 });
+    rome.key(k.scene, [-2, 3.5, -7], [0, 1.4, -10.6], { i: 55 });
     const cam = C.dolly(k.camera, { pos: [-.9, 1.45, -8.1], look: [0, 1.4, -10.5], fov: 34 }, { pos: [-.55, 1.42, -8.9], look: [0, 1.42, -10.55], fov: 30 });
     const D = k.meta.seconds;
     return (t, u) => { cam(u); const g = t > D * .35; cm.update(t, { arm: g ? 'hold' : 'raiseBoth', mood: 'stern' }); cz.update(t, { pose: 'sit', seatH: .5, mood: g ? 'surprised' : 'stern', look: g ? .4 : 0 }); };
@@ -43,7 +43,7 @@ export const shots = {
   '5.4': async k => {
     const cu = await hall(k);
     const cz = await C.person(k, 'cae_caesar', { pos: [0, .45, -10.0], rot: 0, laurel: true });
-    rome.key(k.scene, [1.5, 3, -7], [0, 1.9, -10], { i: 160 });
+    rome.key(k.scene, [1.5, 3, -7], [0, 1.9, -10], { i: 55 });
     const cam = C.dolly(k.camera, { pos: [.2, 1.75, -7.4], look: [0, 1.95, -10], fov: 36 }, { pos: [.1, 1.95, -8.7], look: [0, 2.05, -10], fov: 30 });
     return (t, u) => { cam(u); cz.update(t, { mood: 'surprised', talk: true, arm: 'shrug', look: .2 }); };
   },
@@ -54,7 +54,7 @@ export const shots = {
     const cz = await seated(k, 'surprised');
     const ca = await C.person(k, 'cae_casca', { pos: [-.7, .45, -11.4], rot: .5 });
     C.attach(ca, rome.daggerShape(), 'RightHand', [0, -.08, .02], [P, 0, 0]);
-    rome.key(k.scene, [0, 4, -14], [-.6, 1.8, -11.4], { i: 260, color: 0xffd0a0, angle: .4 });
+    rome.key(k.scene, [0, 4, -14], [-.6, 1.8, -11.4], { i: 110, color: 0xffd0a0, angle: .4 });
     const cam = C.dolly(k.camera, { pos: [1.4, 1.5, -7.6], look: [-.4, 1.7, -11], fov: 36 }, { pos: [1.0, 1.55, -8.4], look: [-.5, 1.8, -11.2], fov: 32 });
     const D = k.meta.seconds;
     return (t, u) => { cam(u); ca.update(t, { arm: 'raise', mood: 'stern' }); cz.update(t, { pose: 'sit', seatH: .5, mood: 'surprised' }); black(k.overlay, seg(t, D * .72, D * .74)); };
@@ -64,7 +64,7 @@ export const shots = {
     const cu = await hall(k);
     const cz = await C.person(k, 'cae_caesar', { pos: [0, .45, -10.0], rot: .4, laurel: true });
     const st = rome.stylus(); st.scale.setScalar(1.6); C.attach(cz, st, 'RightHand', [0, -.07, .03], [0, 0, P]);
-    rome.key(k.scene, [2, 3, -7], [0, 1.2, -10], { i: 160 });
+    rome.key(k.scene, [2, 3, -7], [0, 1.2, -10], { i: 55 });
     const cam = C.dolly(k.camera, { pos: [1.3, 2.0, -7.6], look: [0, 2.0, -10], fov: 38 }, { pos: [1.0, 2.05, -8.3], look: [0, 2.05, -10], fov: 34 });
     const D = k.meta.seconds;
     return (t, u) => { cam(u); cz.update(t, { arm: 'raise', mood: 'stern', look: .3 });
@@ -86,7 +86,7 @@ export const shots = {
     const cu = await hall(k, { sunI: 1.6 }); k.exposure = .8;
     const br = await C.person(k, 'cae_brutus', { pos: [0, 0, -8.6], rot: P });
     const sides = []; for (const [x, z] of [[-.7, -8.9], [.7, -8.8], [-.4, -8.0], [.5, -7.9]]) sides.push(await C.person(k, C.SEN[sides.length + 4], { pos: [x, 0, z], rot: P, seed: 1040 + sides.length }));
-    rome.key(k.scene, [0, 3.5, -12], [0, 1.7, -8.6], { i: 160, color: 0xffd0a0 });
+    rome.key(k.scene, [0, 3.5, -12], [0, 1.7, -8.6], { i: 90, color: 0xffd0a0 });
     const cam = C.dolly(k.camera, { pos: [0, 1.72, -11.2], look: [0, 1.7, -8.6], fov: 34 }, { pos: [0, 1.72, -10.0], look: [0, 1.7, -8.6], fov: 30 });
     const D = k.meta.seconds;
     return (t, u) => { cam(u); br.update(t, { mood: 'sad', look: 0 }); sides.forEach(p => p.update(t, { mood: 'stern' })); black(k.overlay, seg(t, D * .8, D * .82)); };

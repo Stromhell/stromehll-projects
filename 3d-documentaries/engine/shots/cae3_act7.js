@@ -10,7 +10,7 @@ const PL = rome.PLACES;
 
 function mask() {
   const t = real.canvasTex(512, 640, (c, W, H) => { c.clearRect(0, 0, W, H); });
-  const g = new THREE.Group(); const m = real.std(0xeee8dc, { rough: .35 });
+  const g = new THREE.Group(); const m = real.std(0xc9bc9f, { rough: .55 });
   const face = real.m(new THREE.SphereGeometry(.13, 32, 20, P * .08, P * .84, P * .18, P * .62), m); face.scale.set(1, 1.3, .9); face.material = m.clone(); face.material.side = THREE.DoubleSide; g.add(face);
   const dark = real.std(0x0a0806, { rough: 1 });
   for (const s of [-1, 1]) g.add(real.m(new THREE.SphereGeometry(.02, 12, 8), dark, { pos: [s * .045, .03, .112] }));
@@ -54,7 +54,7 @@ export const shots = {
     k.noAutoOverlay = true;
     const cu = await rome.curia(k, { shaftI: .1 });
     const oc = await C.person(k, 'cae_octavian', { pos: [0, .45, -9.6], rot: 0, laurel: { gold: true } });
-    rome.key(k.scene, [1, 4, -6], [0, 1.9, -9.6], { i: 160 });
+    rome.key(k.scene, [1, 4, -6], [0, 1.9, -9.6], { i: 55 });
     const cam = C.dolly(k.camera, { pos: [0, 1.95, -6.2], look: [0, 2.0, -9.6], fov: 34 }, { pos: [0, 2.0, -7.3], look: [0, 2.05, -9.6], fov: 30 });
     return (t, u) => { cam(u); oc.update(t, { mood: 'calm' }); const x = k.overlay; x.fillStyle = `rgba(0,0,0,${.3 * seg(t, 2, 2.6)})`; x.fillRect(0, 0, 1920, 1080); ui.slam(x, 'AUGUSTUS', t, 2.2, { size: 170, y: 860, sub: '27 BC · FIRST EMPEROR OF ROME' }); };
   },
@@ -84,7 +84,7 @@ export const shots = {
     const cu = await rome.curia(k, { shaftI: .08 }); k.exposure = .9;
     const oc = await C.person(k, 'cae_octavian', { pos: [0, .45, -9.6], rot: 0, laurel: { gold: true } });
     const mk = mask(); mk.scale.setScalar(.85); k.scene.add(mk);
-    rome.key(k.scene, [1, 3.5, -6.5], [0, 2.0, -9.6], { i: 90 });
+    rome.key(k.scene, [1, 3.5, -6.5], [0, 2.0, -9.6], { i: 30 });
     const cam = C.dolly(k.camera, { pos: [.3, 2.05, -7.4], look: [0, 2.05, -9.6], fov: 32 }, { pos: [.15, 2.08, -8.3], look: [0, 2.08, -9.6], fov: 28 });
     const D = k.meta.seconds;
     return (t, u) => { cam(u); oc.update(t, { mood: 'calm', look: 0 }); const [hx, hy, hz] = C.headPos(oc, .1); const e = ease(seg(t, D * .2, D * .7)); mk.position.set(hx, hy + (1 - e) * .6, hz + .07); };

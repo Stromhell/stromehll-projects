@@ -407,7 +407,7 @@ export async function domus(k, o = {}) {
   }
   if (o.room === 'study' || o.room === 'meeting') {
     g.add(real.box(2.4, .08, 1.3, M.wood, { pos: [0, .9, 0] })); for (const x of [-1.05, 1.05]) for (const z of [-.5, .5]) g.add(real.box(.08, .9, .08, M.wood, { pos: [x, .45, z] }));
-    for (const [x, z] of [[-.6, .2], [.7, -.2]]) lamps.push(oilLamp(scene, [x, .95, z], { i: 2.6, shadow: true }));
+    for (const [x, z] of [[-.6, .2], [.7, -.2]]) lamps.push(oilLamp(scene, [x, .95, z], { i: o.lampI ?? 2.6, shadow: true }));
   }
   return { group: g, M, lamps, W, D, H };
 }

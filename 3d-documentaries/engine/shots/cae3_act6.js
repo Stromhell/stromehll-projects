@@ -35,7 +35,7 @@ export const shots = {
   '6.2': async k => {
     k.calloutPos = [1400, 320];
     const cy = await rome.courtyard(k, { trees: true, sun: [-25, 9, 30], sunI: 3 });
-    const al = altar(cy.M); al.position.set(0, 0, -8); k.scene.add(al); rome.brazier(k.scene, [1.3, 0, -8.4], { i: 6 }); rome.oilLamp(k.scene, [0, 1.04, -8], { i: 1.2 });
+    const al = altar(cy.M); al.position.set(0, 0, -8); k.scene.add(al); rome.brazier(k.scene, [1.3, 0, -8.4], { i: 3 }); rome.oilLamp(k.scene, [0, 1.04, -8], { i: .35 });
     const sp = await C.person(k, 'cae_spurinna', { pos: [0, 0, -9.1], rot: 0 });
     const cz = await C.person(k, 'cae_caesar', { pos: [1.7, 0, -7.3], rot: -P / 2 - .3, laurel: true });
     const cam = C.dolly(k.camera, { pos: [-1.0, 1.7, -4.6], look: [0, 1.4, -8.6], fov: 38 }, { pos: [-.4, 1.65, -6.4], look: [0, 1.55, -9.1], fov: 32 });
@@ -55,7 +55,7 @@ export const shots = {
   },
   // 6.4 dinner: goblets, Caesar raises a hand ("a sudden one"); slow orbit
   '6.4': async k => {
-    const d = await rome.domus(k, { room: 'dining' }); k.exposure = .7;
+    const d = await rome.domus(k, { room: 'dining', lampI: .5 }); k.exposure = .7;
     const cz = await C.person(k, 'cae_caesar', { pos: [0, .55, -2.4], rot: 0, pose: 'sit', seatH: .1, laurel: true });
     const ppl = []; for (const [id, x, z, r] of [['cae_lepidus', -2.4, -.3, P / 2], ['cae_sen4', -2.4, .6, P / 2], ['cae_decimus', 2.4, -.3, -P / 2], ['cae_sen7', 2.4, .6, -P / 2]]) ppl.push(await C.person(k, id, { pos: [x, .55, z], rot: r, pose: 'sit', seatH: .1, seed: 1100 + ppl.length }));
     const orb = C.orbit(k.camera, [0, 1.2, -.6], 3.6, 2.2, -.5, .45, 44, [0, 1.0, -.8]);
@@ -84,28 +84,28 @@ export const shots = {
   // 6.7 priests shake their heads over the altar; lateral dolly
   '6.7': async k => {
     const cy = await rome.courtyard(k, { trees: true, sun: [-25, 14, 30] });
-    const al = altar(cy.M); al.position.set(0, 0, -8); k.scene.add(al); rome.brazier(k.scene, [-2.2, 0, -8.6], { i: 5 }); rome.oilLamp(k.scene, [0, 1.04, -8], { i: 1.2 });
+    const al = altar(cy.M); al.position.set(0, 0, -8); k.scene.add(al); rome.brazier(k.scene, [-2.2, 0, -8.6], { i: 5 }); rome.oilLamp(k.scene, [0, 1.04, -8], { i: .35 });
     const pr = []; for (const [i, x] of [[0, -1.1], [1, 0], [2, 1.1]]) pr.push(await C.person(k, ['cae_sen1', 'cae_sen6', 'cae_sen10'][i], { pos: [x, 0, -9.1], rot: 0, seed: 1150 + i }));
     const cam = C.dolly(k.camera, { pos: [-2.4, 1.7, -4.6], look: [-.5, 1.4, -8.6], fov: 40 }, { pos: [2.4, 1.7, -4.6], look: [.5, 1.4, -8.6], fov: 40 });
     return (t, u) => { cam(u); rome.flickerAll(k.scene, t); pr.forEach((p, i) => p.update(t, { mood: 'worried', look: Math.sin(t * 5 + i) * .35 })); };
   },
   // 6.8 Caesar sits back down and takes off his laurel
   '6.8': async k => {
-    const d = await rome.domus(k, { room: 'study' }); k.exposure = .8;
+    const d = await rome.domus(k, { room: 'study', lampI: .6 }); k.exposure = .8;
     const cz = await C.person(k, 'cae_caesar', { pos: [0, .45, 1.6], rot: P, pose: 'sit', seatH: .5 });
     k.scene.add(real.box(.6, .45, .5, d.M.wood, { pos: [0, .225, 1.65] }));
     const lr = rome.laurel(cz);
-    rome.key(k.scene, [-1.2, 2.6, -1], [0, 1.4, 1.6], { i: 14 }); k.exposure = .6;
+    rome.key(k.scene, [-1.2, 2.6, -1], [0, 1.4, 1.6], { i: 5 }); k.exposure = .6;
     const cam = C.dolly(k.camera, { pos: [-.4, 1.5, -.9], look: [0, 1.25, 1.6], fov: 38 }, { pos: [-.25, 1.45, -.2], look: [0, 1.3, 1.6], fov: 34 });
     const D = k.meta.seconds;
     return (t, u) => { cam(u); rome.flickerAll(k.scene, t); const off = t > D * .55; lr.visible = !off; cz.update(t, { pose: 'sit', seatH: .5, arm: t > D * .42 && t < D * .58 ? 'raiseBoth' : 'lap', mood: 'sad', look: 0 }); };
   },
   // 6.9 Decimus at the doorway, persuasive hands; push in
   '6.9': async k => {
-    const d = await rome.domus(k, { room: 'study' }); k.exposure = .8;
+    const d = await rome.domus(k, { room: 'study', lampI: .6 }); k.exposure = .8;
     const dc = await C.person(k, 'cae_decimus', { pos: [0, 0, -2.6], rot: 0 });
     const cz = await C.person(k, 'cae_caesar', { pos: [-1.3, 0, .9], rot: P - .5 });
-    rome.key(k.scene, [1.5, 2.6, 1], [0, 1.6, -2.6], { i: 40 });
+    rome.key(k.scene, [1.5, 2.6, 1], [0, 1.6, -2.6], { i: 14 });
     const cam = C.dolly(k.camera, { pos: [2.2, 1.65, 3.2], look: [0, 1.6, -2.6], fov: 38 }, { pos: [1.9, 1.65, 2.2], look: [0, 1.62, -2.6], fov: 32 });
     return (t, u) => { cam(u); rome.flickerAll(k.scene, t); dc.update(t, { arm: Math.floor(t / 2) % 2 ? 'shrug' : 'point', mood: 'happy', talk: true }); cz.update(t, { mood: 'stern', look: 0 }); };
   },
