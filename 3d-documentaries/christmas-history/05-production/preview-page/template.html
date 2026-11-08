@@ -1,0 +1,66 @@
+<title>Christmas Launch Kit</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+:root{--bg:#f6f1e7;--card:#fffdf8;--fg:#1d2420;--mute:#5d6660;--line:#e2d9c8;--red:#b8232f;--green:#1f5b3f;--gold:#b98a1c;--chip:#f0e6d3}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1714;--card:#17211d;--fg:#eee8dc;--mute:#a3aba3;--line:#2a3833;--red:#e2525c;--green:#5fb98b;--gold:#e0b44a;--chip:#22302a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1714;--card:#17211d;--fg:#eee8dc;--mute:#a3aba3;--line:#2a3833;--red:#e2525c;--green:#5fb98b;--gold:#e0b44a;--chip:#22302a;color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font:16px/1.55 "Source Sans 3",system-ui,sans-serif}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 64px;display:grid;gap:40px}
+h1,h2{font-family:Anton,Impact,sans-serif;font-weight:400;letter-spacing:.5px;text-wrap:balance;margin:0}
+h1{font-size:clamp(34px,6vw,58px);line-height:1.02}h2{font-size:28px;display:flex;gap:12px;align-items:baseline}
+h2 small{font:600 14px "Source Sans 3",sans-serif;color:var(--mute);letter-spacing:.06em;text-transform:uppercase}
+h3{margin:2px 0 4px;font-size:18px;line-height:1.3;text-wrap:balance}
+.kicker{font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--red)}
+.lede{color:var(--mute);max-width:65ch;margin:8px 0 0}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.facts span{background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:14px}
+.full{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:24px;align-items:start}
+.full img{width:100%;border-radius:10px;border:1px solid var(--line);display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;min-width:0}
+pre{white-space:pre-wrap;font:14px/1.5 "Source Sans 3",sans-serif;margin:8px 0 0;color:var(--fg)}
+.title{font-size:20px;font-weight:700;margin:4px 0 0}
+details summary{cursor:pointer;font-weight:600;color:var(--green);font-size:14px}
+.reels{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}
+.reel,.part{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.reel video{width:100%;aspect-ratio:9/16;background:#000;display:block;max-width:100%}
+.meta{padding:12px 14px 14px;display:grid;gap:4px;min-width:0}
+.num{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+.hook{font-size:13px;color:var(--mute)}
+.cov{font-size:13px;color:var(--green);font-weight:600}
+.parts{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
+.part video{width:100%;aspect-ratio:9/16;background:#000;max-height:560px;display:block}
+.covers{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px}
+.covers img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+.note{font-size:14px;color:var(--mute);max-width:70ch}
+@media (max-width:760px){.full{grid-template-columns:1fr}}
+</style>
+<div class="wrap">
+<header>
+<div class="kicker">Stormi Explain Everything · 3D · Launch kit</div>
+<h1>The Real History of Christmas</h1>
+<p class="lede">Flurry the snowman guides a happy, fast tour of where Christmas comes from, and the video ends with “Happy Christmas!”. Everything below gets booked straight away. This page is for a look only, no approval needed.</p>
+<div class="facts"><span>Full video {{FULLDUR}}</span><span>YouTube: 24 Dec, 12:00 AM IST</span><span>15 reels</span><span>3 Instagram long parts</span><span>-14 LUFS</span></div>
+</header>
+
+<section style="display:grid;gap:16px">
+<h2>Full video <small>YouTube</small></h2>
+<div class="full">
+<div><img src="media/thumb.jpg" alt="YouTube thumbnail: Jesus wasn't born on Christmas?"></div>
+<div class="card"><div class="num">Title</div><div class="title">{{TITLE}}</div>
+<details open><summary>Description and chapters</summary><pre>{{DESC}}</pre></details>
+<details><summary>Tags</summary><pre>{{TAGS}}</pre></details></div>
+</div>
+</section>
+
+<section style="display:grid;gap:16px">
+<h2>Reels <small>YouTube Shorts · Instagram</small></h2>
+<p class="note">Each reel opens with its hook in the first 2 seconds, keeps the Stormi logo in the top-right corner and ends on the “Watch the full video on our YouTube channel” card. The previews below are smaller copies. The booked files are full 1080×1920.</p>
+<div class="reels">{{REELS}}</div>
+</section>
+
+<section style="display:grid;gap:16px">
+<h2>Instagram long parts <small>under 3 min each</small></h2>
+<div class="parts">{{PARTS}}</div>
+</section>
+</div>
