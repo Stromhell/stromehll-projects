@@ -121,10 +121,11 @@ export const shots = {
     const v = village(k, { env: 'night', houses: [[-9, -10, .25], [0, -14, 0], [9, -11, -.3], [-15, -2, .9], [15, -1, -.9], [-6, -24, .1], [7, -26, -.1]] });
     [[-9, -10, .25], [0, -14, 0], [9, -11, -.3], [-15, -2, .9], [15, -1, -.9], [-6, -24, .1], [7, -26, -.1]].forEach(([x, z, ry], i) => { const tt = xmasTree(1.5, { n: 18, seed: i }); const o = new THREE.Vector3(-1.4, 0, 2.6).applyAxisAngle(new THREE.Vector3(0, 1, 0), ry); tt.position.set(x + o.x, 0, z + o.z); k.scene.add(tt); });
     const pic = frame(3.2, 2.2, (x, c) => { x.fillStyle = '#efe0c0'; x.fillRect(0, 0, c.width, c.height); x.fillStyle = '#d8c8a0'; x.fillRect(0, c.height * .72, c.width, c.height * .28);
-      x.fillStyle = '#2f6a3a'; x.beginPath(); x.moveTo(400, 60); x.lineTo(560, 420); x.lineTo(240, 420); x.fill(); x.fillStyle = '#e8b32a'; for (let i = 0; i < 16; i++) { x.beginPath(); x.arc(270 + (i * 53) % 260, 140 + (i * 37) % 260, 7, 0, 7); x.fill(); }
+      x.fillStyle = '#2f6a3a'; x.beginPath(); x.moveTo(400, 75); x.lineTo(560, 420); x.lineTo(240, 420); x.fill(); x.fillStyle = '#e8b32a'; for (let i = 0; i < 16; i++) { x.beginPath(); x.arc(270 + (i * 53) % 260, 140 + (i * 37) % 260, 7, 0, 7); x.fill(); }
       const fig = (cx, h, col) => { x.fillStyle = col; x.fillRect(cx - h * .18, 470 - h * .7, h * .36, h * .7); x.fillStyle = '#f0d0b0'; x.beginPath(); x.arc(cx, 470 - h * .82, h * .13, 0, 7); x.fill(); };
       fig(150, 220, '#2a3a6a'); fig(230, 200, '#8a2a3a'); fig(560, 140, '#5a8ac0'); fig(630, 120, '#e8b0c0'); fig(700, 150, '#3a5a3a');
-      x.fillStyle = '#5a3a22'; x.font = 'bold 40px serif'; x.textAlign = 'center'; x.fillText('THE ROYAL CHRISTMAS TREE, 1848', 400, 530); });
+      x.fillStyle = '#5a3a22'; x.font = 'bold 40px serif'; x.textAlign = 'center'; x.fillText('THE ROYAL CHRISTMAS TREE, 1848', 400, 46); });
+    pic.traverse(m => { if (m.isMesh) m.castShadow = false; });
     k.scene.add(pic);
     const cam = core.camMove(k.camera, { from: [0, 3, 3.2], to: [0, 6, 22], look: [0, 3, 0], lookTo: [0, 1.5, -8], fov: 44 });
     return (t, u) => { cam(u, t); v.update(t); pic.position.set(0, 3 + ease(seg(u, .3, 1)) * 8, 0); pic.scale.setScalar(Math.max(.01, 1 - ease(seg(u, .35, .8)))); };

@@ -45,16 +45,16 @@ export const shots = {
     const c1 = calendar('6\nDECEMBER', { head: 'ST NICHOLAS', size: 120 }); const c2 = calendar('25\nDECEMBER', { head: 'CHRISTMAS', size: 120 });
     [c1, c2].forEach(c => { c.scale.setScalar(1.5); k.scene.add(c); });
     const cam = core.camMove(k.camera, { from: [-.6, 2.1, 2.6], to: [.6, 2.1, 2.6], look: [-.6, 2.1, -3], lookTo: [.6, 2.1, -3], fov: 44 });
-    return (t, u) => { cam(u, t); R.update(t); const kk = ease(seg(t, .6, k.meta.seconds - .8)); c1.position.set(-1.3 + kk * 2.6, 2.1, -3.4); c2.position.set(1.3, 2.1, -3.4); c2.visible = kk > .02; c1.visible = kk < .98; c1.rotation.z = Math.sin(kk * P) * .15; c2.scale.setScalar(1.5 * Math.max(.01, easeOut(seg(kk, .4, 1)))); };
+    return (t, u) => { cam(u, t); R.update(t); const kk = ease(seg(t, .6, k.meta.seconds - .8)); const x = -1.3 + kk * 2.6; c1.position.set(x, 2.1, -3.4); c2.position.set(x, 2.1, -3.4); const fl = ease(seg(kk, .35, .65)); c1.rotation.set(0, Math.min(1, fl * 2) * P / 2, 0); c2.rotation.set(0, (Math.max(0, fl * 2 - 1) - 1) * P / 2, 0); c1.visible = fl < .5; c2.visible = fl >= .5; c2.scale.setScalar(1.5); };
   },
   '4.5': async k => {
     k.scene.background = new THREE.Color(0x2a1e18); k.scene.add(new THREE.HemisphereLight(0xfff0d8, 0x3a2a1a, 2.2)); const dl = new THREE.DirectionalLight(0xffffff, 2); dl.position.set(3, 5, 6); k.scene.add(dl);
-    const np = props.newspaper('DUTCH FAMILIES HONOUR SINTERKLAAS', 'NEW YORK, DECEMBER 1773'); np.scale.setScalar(1.3); k.scene.add(np);
-    const w1 = sign('SINTERKLAAS', .55, { color: '#ffe08a', size: 140 }); const w2 = sign('SANTA CLAUS', .65, { color: '#ff5050', size: 140 }); [w1, w2].forEach(w => { w.position.set(0, -1.5, .5); k.scene.add(w); });
+    const np = props.newspaper('DUTCH FAMILIES HONOUR SINTERKLAAS', 'NEW YORK, DECEMBER 1773'); np.scale.setScalar(1.05); k.scene.add(np);
+    const w1 = sign('SINTERKLAAS', .55, { color: '#ffe08a', size: 140 }); const w2 = sign('SANTA CLAUS', .65, { color: '#ff5050', size: 140 }); [w1, w2].forEach(w => { w.position.set(.5, -.2, .5); k.scene.add(w); });
     const f = fl(k, [2.6, -2.1, -.6], -.4);
     const cam = core.camMove(k.camera, { from: [0, -.3, 6.2], to: [0, -.4, 5.4], look: [0, -.4, 0], fov: 42 });
     const T = k.meta.seconds * .6;
-    return (t, u) => { cam(u, t); const sp = easeOut(seg(t, 0, 1.2)); np.rotation.z = (1 - sp) * P * 3; np.scale.setScalar(1.3 * Math.max(.02, sp)); np.position.set(-.4, .5 + (1 - sp) * 2, 0);
+    return (t, u) => { cam(u, t); const sp = easeOut(seg(t, 0, 1.2)); np.rotation.z = (1 - sp) * P * 3; np.scale.setScalar(1.05 * Math.max(.02, sp)); np.position.set(-1.3, .1 + (1 - sp) * 2, 0);
       const sq = seg(t, T, T + 1.2); w1.visible = sq < .5 && t > T - 1.5; w1.scale.set(Math.max(.05, 1 - sq * 1.6), 1, 1); w1.material.opacity = clamp((t - (T - 1.5)) / .3);
       w2.visible = sq >= .5; w2.scale.setScalar(Math.max(.05, easeOut(seg(sq, .5, 1)) * (1 + Math.sin(t * 6) * .02)));
       f.update(t, { mood: t > T ? 'surprised' : 'happy', arm: t > T + 1.2 ? 'up' : 'none', look: -.3 }); };

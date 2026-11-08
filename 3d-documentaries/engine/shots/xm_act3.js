@@ -34,7 +34,7 @@ export const shots = {
     const F = forest(k, { env: 'night', r0: 16, clearZ: 6 }); const h = longhall(); h.position.set(0, 0, -10); h.rotation.y = .2; k.scene.add(h);
     const glow = new THREE.PointLight(0xffa050, 10, 10); glow.position.set(1.6, 1.4, -1.6); k.scene.add(glow);
     for (const x of [-1.6, 1.6]) { const tch = fire({ s: .3, i: 3 }); tch.position.set(x + .8, 1.6, -1.4); k.scene.add(tch); }
-    const cam = core.camMove(k.camera, { from: [6, 12, 14], to: [3, 2.2, 6], look: [0, 3, -10], lookTo: [1.5, 1.6, -2], fov: 44 });
+    const cam = core.camMove(k.camera, { from: [3.5, 6.5, 9], to: [3, 2.2, 6], look: [0, 3, -10], lookTo: [1.5, 1.6, -2], fov: 44 });
     return (t, u) => { cam(u, t); F.update(t); h.update(t); };
   },
   '3.4': async k => {

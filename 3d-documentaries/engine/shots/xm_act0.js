@@ -92,7 +92,9 @@ export const shots = {
       f.update(t, { mood: shock ? 'shock' : 'surprised', noseDroop: shock ? .5 * ease(seg(t, T0 + 2.2 * span, T0 + 2.2 * span + .4)) : 0, look: Math.sin(t * .9) * .5 }); };
   },
   '0.7': async k => {
-    const F = forest(k, { env: 'night', r0: 6, n: 90, flat: 3 });
+    core.setEnv(k, 'night', { fogNear: 25, fogFar: 100, shadowSize: 40 }); snowGround(k, { flat: 70 });
+    const r = core.rng(17); for (let i = 0; i < 110; i++) { const side = i % 2 ? 1 : -1; const pn = pine(3 + r() * 4, { seed: i }); pn.position.set(side * (6 + r() * 16), 0, 6 - r() * 62); k.scene.add(pn); }
+    const sf = snowfall(k, { r: 16, center: [0, 0, -20] }); const F = { update: t => sf.update(t) };
     const f = fl(k, [0, 0, 0]); const s = sled(); k.scene.add(s); const m = mug(); k.scene.add(m);
     const cam = core.camMove(k.camera, { from: [2.4, 1.2, -3.6], to: [2.4, 1.2, -45.6], look: [0, .9, 0], lookTo: [0, .9, -42], fov: 46, e: x => x, drift: .08 });
     return (t, u) => { F.update(t); const z = -u * 42; s.position.set(Math.sin(u * 7) * .5, 0, z); s.rotation.y = P + Math.cos(u * 7) * .1;
@@ -100,6 +102,6 @@ export const shots = {
       f.position.set(s.position.x, .38, z + .05); f.rotation.y = s.rotation.y; f.update(t, { pose: 'slide', mood: 'happy', arm: 'none' });
       // the mug rides in his right twig hand
       f.updateMatrixWorld(); const hand = new THREE.Vector3(); f.parts.armR.fore.getWorldPosition(hand); m.position.copy(hand).add(new THREE.Vector3(0, -.12, 0)); m.update(t);
-      ui.slam(k.overlay, 'THE HISTORY OF CHRISTMAS', t, k.meta.seconds - 2.2, { size: 120 }); };
+      ui.slam(k.overlay, 'THE HISTORY OF CHRISTMAS', t, k.meta.seconds - 2.2, { size: 120, y: 200 }); };
   },
 };
