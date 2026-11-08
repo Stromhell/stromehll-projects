@@ -402,7 +402,7 @@ export async function domus(k, o = {}) {
     couch(0, -2.4, 0); couch(-2.4, 0, P / 2); couch(2.4, 0, -P / 2);
     g.add(real.m(new THREE.CylinderGeometry(.75, .75, .06, 40), M.marble, { pos: [0, .62, 0] })); g.add(real.m(new THREE.CylinderGeometry(.08, .14, .6, 16), M.bronze, { pos: [0, .3, 0] }));
     try { const gb = await real.prop('brass_goblets'); gb.position.set(.2, .65, .1); g.add(gb); const bowl = await real.prop('wooden_bowl_01'); bowl.position.set(-.25, .65, -.15); g.add(bowl); } catch (e) {}
-    for (const [x, z] of [[-.4, .3], [.45, -.3], [0, .55]]) lamps.push(oilLamp(scene, [x, .67, z], { i: 2.0 }));
+    for (const [x, z] of [[-.4, .3], [.45, -.3], [0, .55]]) lamps.push(oilLamp(scene, [x, .67, z], { i: o.lampI ?? 2.0 }));
     for (const [x, z] of [[-3.6, -3.6], [3.6, -3.6]]) { brazier(scene, [x, 0, z], { i: 6 }); }
   }
   if (o.room === 'study' || o.room === 'meeting') {

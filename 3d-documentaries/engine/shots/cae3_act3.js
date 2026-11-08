@@ -9,8 +9,8 @@ const PL = rome.PLACES;
 async function tableTop(k, o = {}) {
   const d = await rome.domus(k, { room: 'none', night: true }); k.exposure = o.exposure ?? .9;
   k.scene.add(real.box(2.4, .08, 1.6, d.M.wood, { pos: [0, .9, 0] })); for (const x of [-1.05, 1.05]) for (const z of [-.65, .65]) k.scene.add(real.box(.08, .9, .08, d.M.wood, { pos: [x, .45, z] }));
-  for (const [x, z] of [[-1.1, -.7], [1.1, -.7]]) rome.oilLamp(k.scene, [x, .97, z], { i: 2.2, shadow: true });
-  rome.key(k.scene, [.4, 3.2, .6], [0, .9, 0], { i: o.keyI ?? 22, angle: .5, soft: .5 });
+  for (const [x, z] of [[-1.1, -.7], [1.1, -.7]]) rome.oilLamp(k.scene, [x, .97, z], { i: o.lampI ?? .8, shadow: true });
+  rome.key(k.scene, [.4, 3.2, .6], [0, .9, 0], { i: o.keyI ?? 13, angle: .5, soft: .5 });
   return d;
 }
 function bridgeModel(M) {
@@ -73,7 +73,7 @@ export const shots = {
   },
   // 3.5 rich senators at a banquet frown at Caesar's statue; crane over the table
   '3.5': async k => {
-    const d = await rome.domus(k, { room: 'dining' }); k.exposure = .7;
+    const d = await rome.domus(k, { room: 'dining', lampI: .5 }); k.exposure = .55;
     const st = await rome.statueOf(k, 'cae_caesar', { pos: [0, 0, -3.7], arm: 'raise', scale: .8, plinth: 1.2 });
     const ppl = [];
     for (const [id, x, z, r] of [['cae_sen1', 0, -2.4, 0], ['cae_sen4', -2.4, -.3, P / 2], ['cae_sen7', -2.4, .6, P / 2], ['cae_sen10', 2.4, -.3, -P / 2], ['cae_sen3', 2.4, .6, -P / 2]]) ppl.push(await C.person(k, id, { pos: [x, .55, z], rot: r, pose: 'sit', seatH: .1, seed: 700 + ppl.length }));
@@ -120,7 +120,7 @@ export const shots = {
   // 3.9 Plan two: a tiny bridge model with tiny men below; X
   '3.9': async k => {
     const d = await tableTop(k);
-    const br = bridgeModel(d.M); br.position.set(0, .945, 0); k.scene.add(br);
+    const br = bridgeModel(d.M); br.position.set(0, .945, 0); k.scene.add(br); rome.key(k.scene, [.3, 1.12, 1.7], [0, 1.0, 0], { i: 16, angle: .45, soft: .5 }); k.scene.add(real.box(1.6, .005, .5, real.std(0x2a4a5a, { rough: .15 }), { pos: [0, .948, 0] }));
     const men = tinyMen(8); men.position.set(-.05, .95, .3); k.scene.add(men);
     const tiny = tinyMen(1, 0xd8cfc0); tiny.position.set(0, 1.175, 0); k.scene.add(tiny);
     const cam = C.dolly(k.camera, { pos: [.3, 1.45, 1.5], look: [0, 1.05, 0], fov: 40 }, { pos: [.2, 1.3, 1.1], look: [0, 1.05, 0], fov: 38 });
@@ -154,7 +154,7 @@ export const shots = {
   }),
   // 3.13 Caesar at the head of his army, sun behind; slow push
   '3.13': async k => {
-    await rome.field(k, { sun: [0, 6, -40], sunI: 4.5, sunColor: 0xffc080, ground: 'forest_ground_04' });
+    await rome.field(k, { sun: [0, 6, -40], sunI: 4.5, sunColor: 0xffc080, ground: 'forest_ground_04' }); await rome.mats();
     const cz = await C.person(k, 'cae_caesar', { pos: [0, 0, 0], rot: 0, laurel: true }); rome.legionary(cz, { shield: false });
     const army = []; for (let i = 0; i < 18; i++) { const p = await C.person(k, C.LEG[i % 3], { pos: [(i % 6 - 2.5) * 1.3, 0, -2.5 - Math.floor(i / 6) * 1.8], rot: 0, seed: 800 + i }); rome.legionary(p, {}); army.push(p); }
     const aq = rome.aquila(); aq.position.set(-1.6, 0, -1.8); k.scene.add(aq);
