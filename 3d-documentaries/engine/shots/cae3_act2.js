@@ -103,7 +103,7 @@ export const shots = {
     const ids = ['cae_cassius', 'cae_brutus', 'cae_casca', 'cae_cimber', 'cae_trebonius'];
     const pos = [[-.6, -1.0, 0], [.6, -1.0, 0], [-1.75, 0, P / 2], [1.75, 0, -P / 2], [0, -1.75, 0]];
     const ppl = []; for (let i = 0; i < ids.length; i++) ppl.push(await C.person(k, ids[i], { pos: [pos[i][0], 0, pos[i][1]], rot: pos[i][2], seed: 500 + i }));
-    k.exposure = .5; rome.key(k.scene, [-2, 3, 2.5], [0, 1.5, 0], { i: 8, color: 0xffa860, angle: .6 }); rome.key(k.scene, [2.5, 2.2, -2], [0, 1.6, 0], { i: 6, color: 0x6a80c0, angle: .6 });
+    k.exposure = .5; rome.key(k.scene, [-2, 3, 2.5], [0, 1.5, 0], { i: 3.2, color: 0xffa860, angle: .6 }); rome.key(k.scene, [2.5, 2.2, -2], [0, 1.6, 0], { i: 3, color: 0x6a80c0, angle: .6 });
     const sc = document.createElement('canvas'); sc.width = sc.height = 256; { const c = sc.getContext('2d'); const g = c.createRadialGradient(128, 128, 0, 128, 128, 128); g.addColorStop(0, 'rgba(200,190,170,.35)'); g.addColorStop(1, 'rgba(200,190,170,0)'); c.fillStyle = g; c.fillRect(0, 0, 256, 256); } const smoke = new THREE.CanvasTexture(sc);
     const puffs = []; for (let i = 0; i < 0; i++) { const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: smoke, transparent: true, depthWrite: false, opacity: .5 })); s.scale.setScalar(1.2); k.scene.add(s); puffs.push(s); }
     const cam = C.dolly(k.camera, { pos: [.2, 1.7, 4.2], look: [0, 1.3, 0], fov: 40 }, { pos: [.1, 1.55, 2.4], look: [0, 1.3, -.2], fov: 36 });
