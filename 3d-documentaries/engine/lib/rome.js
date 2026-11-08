@@ -258,6 +258,7 @@ export function waxTablet(text, o = {}) {
   const t = real.canvasTex(512, 384, (c, w, h) => { c.fillStyle = '#2b2116'; c.fillRect(0, 0, w, h); c.fillStyle = '#c9a66a'; c.font = 'bold 64px "Liberation Serif"'; c.textAlign = 'center'; (text || '').split('\n').forEach((l, i, a) => c.fillText(l, w / 2, h / 2 + 22 - (a.length - 1) * 36 + i * 72)); });
   g.add(real.box(.32, .02, .24, wood, { pos: [0, .01, 0] }));
   g.add(real.m(new THREE.PlaneGeometry(.28, .2), new THREE.MeshStandardMaterial({ map: t, roughness: .35 }), { pos: [0, .021, 0], rot: [-P / 2, 0, 0], cast: false }));
+  if (o.both) g.add(real.m(new THREE.PlaneGeometry(.28, .2), new THREE.MeshStandardMaterial({ map: t, roughness: .35 }), { pos: [0, -.001, 0], rot: [P / 2, 0, o.rotZ ?? 0], cast: false }));
   if (o.open) g.add(real.box(.32, .02, .24, wood, { pos: [0, .01, -.25] }));
   return g;
 }

@@ -54,3 +54,13 @@ export async function mapShot(k, o, draw) {
   return (t, u) => { cam(u); rome.flickerAll(k.scene, t); m.clear(); draw(m, t, u, mt); m.commit(); };
 }
 import { dolly } from './tb3_common.js';
+// red ink stamp on the overlay: an X, or a word in a box
+export function stamp(x, t, t0, o = {}) {
+  const a = seg(t, t0, t0 + .25); if (a <= 0) return; const s = 1 + (1 - a) * 1.4;
+  const cx = o.x ?? 960, cy = o.y ?? 560; x.save(); x.translate(cx, cy); x.rotate(o.rot ?? -.12); x.scale(s, s); x.globalAlpha = Math.min(1, a * 1.6) * .9;
+  x.strokeStyle = '#b3140e'; x.fillStyle = '#b3140e'; x.lineCap = 'round';
+  if (o.text) { x.lineWidth = 12; x.font = '700 120px "Oswald", "Liberation Sans"'; const w = x.measureText(o.text).width + 80; x.strokeRect(-w / 2, -95, w, 170); x.textAlign = 'center'; x.fillText(o.text, 0, 30); }
+  else { const r = o.r ?? 230; x.lineWidth = 46; x.beginPath(); x.moveTo(-r, -r * .8); x.lineTo(r, r * .8); x.moveTo(r, -r * .8); x.lineTo(-r, r * .8); x.stroke(); }
+  x.restore();
+}
+import { seg } from './tb3_common.js';
