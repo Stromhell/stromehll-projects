@@ -1,0 +1,155 @@
+{
+ "music": {
+  "file": "/home/user/work/audio/music/Ossuary_6_-_Air.mp3",
+  "gain": 0.28,
+  "ss": 0,
+  "fadeOut": 3
+ },
+ "amb": {
+  "5.1": "room",
+  "5.2": "room",
+  "5.3": "room",
+  "5.4": "room",
+  "5.5": "night",
+  "5.6": "room",
+  "5.7": "room",
+  "5.8": "room",
+  "5.9": "room",
+  "5.10": "room",
+  "5.11": "room",
+  "5.12": "room",
+  "5.13": "room"
+ },
+ "whoosh": [
+  "/home/user/work/audio/sfx/1795.mp3",
+  "/home/user/work/audio/sfx/1796.mp3"
+ ],
+ "cues": [
+  [
+   "5.1",
+   0.3,
+   "/home/user/work/audio/sfx/0839.mp3",
+   0.3,
+   {
+    "dur": 3.5,
+    "lp": 4000
+   }
+  ],
+  [
+   "5.1",
+   0,
+   "/home/user/work/audio/sfx/3515.mp3",
+   0.2,
+   {
+    "dur": 5,
+    "lp": 1500,
+    "fadeIn": 0.5
+   }
+  ],
+  [
+   "5.2",
+   0,
+   "/home/user/work/audio/sfx/3516.mp3",
+   0.22,
+   {
+    "dur": 5,
+    "lp": 2500,
+    "fadeIn": 0.5
+   }
+  ],
+  [
+   "5.2",
+   0.2,
+   "/home/user/work/audio/sfx/3389.mp3",
+   0.25,
+   {
+    "dur": 5,
+    "lp": 2500,
+    "fadeIn": 1.2
+   }
+  ],
+  [
+   "5.3",
+   0.4,
+   "/home/user/work/audio/sfx/0128.mp3",
+   0.2,
+   {
+    "dur": 1
+   }
+  ],
+  [
+   "5.4",
+   0.3,
+   "/home/user/work/audio/sfx/3389.mp3",
+   0.25,
+   {
+    "dur": 1.5,
+    "lp": 1500
+   }
+  ],
+  [
+   "5.5",
+   0.1,
+   "/home/user/work/audio/sfx/2338.mp3",
+   0.5,
+   {
+    "dur": 2.5
+   }
+  ],
+  [
+   "5.7",
+   0.4,
+   "/home/user/work/audio/sfx/0128.mp3",
+   0.2,
+   {
+    "dur": 1
+   }
+  ],
+  [
+   "5.8",
+   0.2,
+   "/home/user/work/audio/sfx/0839.mp3",
+   0.35,
+   {
+    "dur": 2.5
+   }
+  ],
+  [
+   "5.9",
+   0.1,
+   "/home/user/work/audio/sfx/2338.mp3",
+   0.5,
+   {
+    "dur": 2.5
+   }
+  ],
+  [
+   "5.11",
+   0.5,
+   "/home/user/work/audio/sfx/1220.mp3",
+   0.18,
+   {
+    "dur": 2.5,
+    "hp": 1500
+   }
+  ],
+  [
+   "5.11",
+   1.2,
+   "/home/user/work/audio/sfx/2339.mp3",
+   0.35,
+   {
+    "dur": 1
+   }
+  ],
+  [
+   "5.12",
+   0.4,
+   "/home/user/work/audio/sfx/0362.mp3",
+   0.3,
+   {
+    "dur": 1.2
+   }
+  ]
+ ]
+}

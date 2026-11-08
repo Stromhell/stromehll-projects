@@ -1,0 +1,73 @@
+{
+ "music": {
+  "file": "/home/user/work/audio/music/Lord_of_the_Land.mp3",
+  "gain": 0.28,
+  "ss": 20,
+  "fadeOut": 3
+ },
+ "amb": {
+  "2.1": "room",
+  "2.2": "room",
+  "2.3": "room",
+  "2.4": "room",
+  "2.5": "room",
+  "2.6": "room",
+  "2.7": "night"
+ },
+ "whoosh": [
+  "/home/user/work/audio/sfx/1795.mp3",
+  "/home/user/work/audio/sfx/1796.mp3"
+ ],
+ "cues": [
+  [
+   "2.3",
+   0.3,
+   "/home/user/work/audio/sfx/3389.mp3",
+   0.3,
+   {
+    "dur": 4,
+    "fadeIn": 0.3
+   }
+  ],
+  [
+   "2.3",
+   1.2,
+   "/home/user/work/audio/sfx/1702.mp3",
+   0.45,
+   {
+    "dur": 1.5,
+    "lp": 900
+   }
+  ],
+  [
+   "2.5",
+   0.5,
+   "/home/user/work/audio/sfx/0362.mp3",
+   0.3,
+   {
+    "dur": 2
+   }
+  ],
+  [
+   "2.7",
+   0.4,
+   "/home/user/work/audio/sfx/1103.mp3",
+   0.2,
+   {
+    "dur": 3,
+    "hp": 300
+   }
+  ],
+  [
+   "2.7",
+   0,
+   "/home/user/work/audio/sfx/0987.mp3",
+   0.12,
+   {
+    "dur": 6,
+    "lp": 2000,
+    "fadeIn": 0.5
+   }
+  ]
+ ]
+}

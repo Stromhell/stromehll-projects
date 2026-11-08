@@ -1,0 +1,149 @@
+{
+ "music": {
+  "file": "/home/user/work/audio/music/Dark_Times.mp3",
+  "gain": 0.28,
+  "ss": 0,
+  "fadeOut": 3
+ },
+ "amb": {
+  "0.1": "room",
+  "0.2": "room",
+  "0.3": "room",
+  "0.4": "room",
+  "0.5": "room",
+  "0.6": "room",
+  "0.7": "room",
+  "0.8": "paper"
+ },
+ "whoosh": [
+  "/home/user/work/audio/sfx/1795.mp3",
+  "/home/user/work/audio/sfx/1796.mp3"
+ ],
+ "cues": [
+  [
+   "0.1",
+   0.2,
+   "/home/user/work/audio/sfx/1318.mp3",
+   0.35,
+   {
+    "dur": 4,
+    "lp": 3500
+   }
+  ],
+  [
+   "0.1",
+   0,
+   "/home/user/work/audio/sfx/3515.mp3",
+   0.22,
+   {
+    "dur": 6,
+    "lp": 1800,
+    "fadeIn": 0.6
+   }
+  ],
+  [
+   "0.2",
+   0.25,
+   "/home/user/work/audio/sfx/2338.mp3",
+   0.45,
+   {
+    "dur": 2
+   }
+  ],
+  [
+   "0.2",
+   0.25,
+   "/home/user/work/audio/sfx/2338.mp3",
+   0.45,
+   {
+    "dur": 2
+   }
+  ],
+  [
+   "0.3",
+   0,
+   "/home/user/work/audio/sfx/3515.mp3",
+   0.2,
+   {
+    "dur": 5,
+    "lp": 1500,
+    "fadeIn": 0.5
+   }
+  ],
+  [
+   "0.3",
+   0.6,
+   "/home/user/work/audio/sfx/2574.mp3",
+   0.2,
+   {
+    "dur": 1.2
+   }
+  ],
+  [
+   "0.4",
+   0,
+   "/home/user/work/audio/sfx/3516.mp3",
+   0.18,
+   {
+    "dur": 4,
+    "lp": 2200
+   }
+  ],
+  [
+   "0.4",
+   0.5,
+   "/home/user/work/audio/sfx/1702.mp3",
+   0.3,
+   {
+    "dur": 2
+   }
+  ],
+  [
+   "0.5",
+   0.4,
+   "/home/user/work/audio/sfx/1702.mp3",
+   0.4,
+   {
+    "dur": 1.6,
+    "lp": 1200
+   }
+  ],
+  [
+   "0.6",
+   0.2,
+   "/home/user/work/audio/sfx/0243.mp3",
+   0.35,
+   {
+    "dur": 5,
+    "lp": 900
+   }
+  ],
+  [
+   "0.6",
+   0.3,
+   "/home/user/work/audio/sfx/0373.mp3",
+   0.2,
+   {
+    "dur": 1.2
+   }
+  ],
+  [
+   "0.8",
+   0.3,
+   "/home/user/work/audio/sfx/2338.mp3",
+   0.55,
+   {
+    "dur": 2.2
+   }
+  ],
+  [
+   "0.8",
+   0.6,
+   "/home/user/work/audio/sfx/3183.mp3",
+   0.4,
+   {
+    "dur": 4.5
+   }
+  ]
+ ]
+}
