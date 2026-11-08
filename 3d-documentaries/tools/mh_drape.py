@@ -134,16 +134,16 @@ def build_drape(spec, BV, BF, BG, bw, split_mesh, smooth_normals, top4, J):
     hb = J['_hips_bone']; B = J['_bones']; knee = J['LeftLeg'][1]
     for i, y in enumerate(ys):
         f = i / (NR - 1)
-        legs = .75 * min(1, f * 1.6)
+        legs = .95 * min(1, max(0, (f - .04) / .22)) ** 1.5
         for j in range(NS + 1):
             t = 2 * np.pi * j / NS - np.pi
-            L = float(np.clip(.5 + np.sin(t) * .8, 0, 1))
-            low = float(np.clip((knee + 1.0 - y) / 2.0, 0, 1))  # below the knee: shin bones
+            L = float(np.clip(.5 + np.sin(t) * .9, 0, 1))
+            low = float(np.clip((knee + .6 - y) / 1.2, 0, 1))  # below the knee: shin bones
             dct = {hb: 1 - legs}
             for side, sw in (('Left', L), ('Right', 1 - L)):
                 if sw <= 0: continue
-                dct[B[side + 'UpLeg']] = dct.get(B[side + 'UpLeg'], 0) + legs * sw * (1 - low * .6)
-                dct[B[side + 'Leg']] = dct.get(B[side + 'Leg'], 0) + legs * sw * low * .6
+                dct[B[side + 'UpLeg']] = dct.get(B[side + 'UpLeg'], 0) + legs * sw * (1 - low * .85)
+                dct[B[side + 'Leg']] = dct.get(B[side + 'Leg'], 0) + legs * sw * low * .85
             wl.append(dct)
     Js, Ws = top4(wl)
     uvs = np.array([[j / NS * 6, -V[i * (NS + 1) + j, 1] / 3] for i in range(NR) for j in range(NS + 1)])

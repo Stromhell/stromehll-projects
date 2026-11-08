@@ -2,8 +2,8 @@
 # Render one act with its voice-over. Resumable: each shot is its own clip, finished clips are skipped.
 # Usage: act_pipeline.sh <act> [out dir]   env: MOD=tb3 (shot module prefix), FPS=24
 set -e
-A=$1; OUT=${2:-/home/user/work/tb_acts}; MOD=${MOD:-tb3}; FPS=${FPS:-24}; VO=/home/user/work/tb_vo/act$A
-J="/mnt/project-files/3d/thunderbolt/TB - Script v1 shots.json"
+A=$1; OUT=${2:-/home/user/work/tb_acts}; MOD=${MOD:-tb3}; FPS=${FPS:-24}; VO=${VOROOT:-/home/user/work/tb_vo}/act$A
+J=${J:-"/mnt/project-files/3d/thunderbolt/TB - Script v1 shots.json"}
 ENG=/home/user/stromehll-projects/3d-documentaries/engine
 mkdir -p $OUT/shots
 # 1) timing: each shot lasts its VO clip + 0.35 s lead-in + 0.45 s tail
