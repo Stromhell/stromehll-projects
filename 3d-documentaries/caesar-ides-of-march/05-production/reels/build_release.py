@@ -149,7 +149,7 @@ def first_sentence(k):
     ss = sentences(k); b = ss[0][1][1]; sh = shots[k]; nx = ss[1][1][0] - 0.08 if len(ss) > 1 else sh['e']
     return (sh['act'], sh['s'], min(b + 0.45, nx, sh['e']))
 
-REELS = json.load(open(f'{W}/reels.json'))
+REELS = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'reels.json')))
 def segs_of(r):
     out = []
     for sg in r['segs']:
@@ -168,7 +168,7 @@ if __name__ == '__main__':
         c = ffcmd(sg, ass, body, ('reel', r.get('dx', 0)))
         brand = f"nice -n 10 bash {REPO}/tools/reel_brand.sh {body} {OUT}/reels/{n}.mp4 'THE IDES OF MARCH'"
         jobs.append((n, dur, ' '.join(f"'{x}'" if (' ' in x or ';' in x or '[' in x) else x for x in c) + ' && ' + brand))
-    IG = json.load(open(f'{W}/ig.json'))
+    IG = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ig.json')))
     for p in IG:
         # global range -> act-local segments
         g0, g1 = p['g0'], p['g1']; sg = []
