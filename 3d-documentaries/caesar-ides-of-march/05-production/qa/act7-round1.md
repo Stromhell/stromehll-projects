@@ -5,3 +5,7 @@
 - 7.1-7.4 (Curia, triumvirs, Philippi map, war spotlights), 7.6-7.9 (pardons, empty chair, statue, forum), 7.11 crowd, 7.12 end card: clean.
 Stills after fix look right. Re-render queued after acts 5/6 redo.
 RESULT: FIXING
+
+## Round 2 (9 Nov 01:05 UTC)
+Relit shots re-rendered; 1 fps sheet checked, faces readable, no blow-outs.
+RESULT: CLEAN

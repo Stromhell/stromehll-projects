@@ -7,3 +7,7 @@
 - 6.1 hourglass, 6.3 calendar, 6.5/6.6 bedroom, 6.10 gossip forum, 6.11 Artemidorus scroll, 6.12-6.13 Curia steps: clean.
 Stills after fix look right. Shots re-render after act 7 (queued with act 5).
 RESULT: FIXING
+
+## Round 2 (9 Nov 01:05 UTC)
+Relit shots re-rendered; 1 fps sheet checked, faces readable, no blow-outs.
+RESULT: CLEAN

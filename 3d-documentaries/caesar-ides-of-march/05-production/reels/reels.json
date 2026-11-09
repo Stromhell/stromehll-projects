@@ -1,0 +1,155 @@
+[
+ {
+  "n": 1,
+  "segs": [
+   [
+    "0.1",
+    "0.8"
+   ]
+  ],
+  "hook": "60 MEN.\\N1 TARGET."
+ },
+ {
+  "n": 2,
+  "segs": [
+   [
+    "1.7",
+    "1.10"
+   ]
+  ],
+  "hook": "HE CROSSED\\NTHE LINE"
+ },
+ {
+  "n": 3,
+  "segs": [
+   [
+    "2.1",
+    "2.4"
+   ]
+  ],
+  "hook": "ONE WORD\\NSCARED ROME"
+ },
+ {
+  "n": 4,
+  "segs": [
+   [
+    "2.5",
+    "2.7"
+   ]
+  ],
+  "hook": "WHY JULY IS\\NCALLED JULY"
+ },
+ {
+  "n": 5,
+  "segs": [
+   [
+    "3.1",
+    "3.6"
+   ]
+  ],
+  "hook": "WHO WANTED\\NHIM DEAD?"
+ },
+ {
+  "n": 6,
+  "segs": [
+   [
+    "3.7",
+    "3.10"
+   ]
+  ],
+  "hook": "3 PLANS\\NTHEY DROPPED"
+ },
+ {
+  "n": 7,
+  "segs": [
+   [
+    "3.11",
+    "3.15"
+   ]
+  ],
+  "hook": "WHY THE\\NSENATE?"
+ },
+ {
+  "n": 8,
+  "segs": [
+   [
+    "4.1",
+    "4.6"
+   ]
+  ],
+  "hook": "DAGGERS IN\\NPENCIL BOXES"
+ },
+ {
+  "n": 9,
+  "segs": [
+   [
+    "4.7",
+    "4.10"
+   ]
+  ],
+  "hook": "THEY SPARED\\NANTONY"
+ },
+ {
+  "n": 10,
+  "segs": [
+   [
+    "5.1",
+    "5.6"
+   ]
+  ],
+  "hook": "THE SIGNAL"
+ },
+ {
+  "n": 11,
+  "segs": [
+   [
+    "5.10",
+    "5.12"
+   ]
+  ],
+  "hook": "\"ET TU, BRUTE\"\\NIS FAKE"
+ },
+ {
+  "n": 12,
+  "segs": [
+   [
+    "6.1",
+    "6.5"
+   ]
+  ],
+  "hook": "THE WARNINGS"
+ },
+ {
+  "n": 13,
+  "segs": [
+   [
+    "6.6",
+    "6.11"
+   ]
+  ],
+  "hook": "HE ALMOST\\NSTAYED HOME"
+ },
+ {
+  "n": 14,
+  "segs": [
+   [
+    "6.12",
+    "6.13"
+   ],
+   [
+    "5.13"
+   ]
+  ],
+  "hook": "HE NEVER\\NREAD IT"
+ },
+ {
+  "n": 15,
+  "segs": [
+   [
+    "7.6",
+    "7.11"
+   ]
+  ],
+  "hook": "HIS MERCY\\NKILLED HIM"
+ }
+]
