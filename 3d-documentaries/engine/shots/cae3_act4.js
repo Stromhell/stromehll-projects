@@ -45,7 +45,8 @@ export const shots = {
     rome.key(k.scene, [2, 3, -8], [0, 1.4, -12], { i: 120 });
     const cam = C.dolly(k.camera, { pos: [.6, 1.5, -9.4], look: [0, 1.25, -12], fov: 34 }, { pos: [.35, 1.4, -10.6], look: [0, 1.2, -12], fov: 30 });
     const D = k.meta.seconds;
-    return (t, u) => { cam(u); const v = seg(t, D * .45, D * .7); dg.scale.setScalar(1 - v); sn.update(t, { arm: v < 1 ? 'hold' : null, mood: 'stern', look: Math.sin(t * 1.2) * .4 }); };
+    // holds the dagger low, glances round, then slides it inside the toga at the chest (hidden once the hand is under the fold)
+    return (t, u) => { cam(u); const tuck = t > D * .5; dg.visible = t < D * .62; sn.update(t, { arm: tuck ? 'cover' : 'hold', mood: 'stern', look: tuck ? 0 : Math.sin(t * 1.2) * .4 }); };
   },
   // 4.4 top-down: gladiators spread to the courtyard exits
   '4.4': async k => {
@@ -61,10 +62,10 @@ export const shots = {
     k.calloutPos = [1380, 320];
     const d = await rome.domus(k, { room: 'study' }); k.exposure = .75;
     const dc = await C.person(k, 'cae_decimus', { pos: [0, 0, 1.4], rot: 0 });
-    const sc = rome.openScroll(['TESTAMENTUM', 'C. IULIUS CAESAR'], { font: 'bold 70px "Liberation Serif"' }); sc.scale.setScalar(.38); C.attach(dc, sc, 'RightHand', [0, -.05, .12], [-.3, 0, 0]);
+    const sc = rome.openScroll(['TESTAMENTUM', 'C. IULIUS CAESAR'], { font: 'bold 70px "Liberation Serif"' }); sc.scale.setScalar(.4); const hs = C.holdBoth(k, dc, sc, { fwd: .07, up: .03, tilt: -.35 });
     rome.key(k.scene, [1.4, 2.8, 3.6], [0, 1.4, 1.4], { i: 60 });
     const cam = C.dolly(k.camera, { pos: [.4, 1.6, 4.6], look: [0, 1.45, 1.4], fov: 38 }, { pos: [.25, 1.5, 3.1], look: [0, 1.35, 1.5], fov: 34 });
-    return (t, u) => { cam(u); rome.flickerAll(k.scene, t); dc.update(t, { arm: 'hold', mood: 'calm', look: -.2 }); };
+    return (t, u) => { cam(u); rome.flickerAll(k.scene, t); dc.update(t, { arm: 'hold', mood: 'calm', look: -.2 }); hs(); };
   },
   // 4.6 Caesar and Decimus laughing together; slow orbit
   '4.6': async k => {
@@ -110,8 +111,8 @@ export const shots = {
   '4.10': async k => {
     const cu = await rome.curia(k, { shaftI: .12 });
     const ppl = await C.fillBenches(k, cu, {});
-    const cz = await C.person(k, 'cae_caesar', { pos: [0, .45, -10.6], rot: 0, pose: 'sit', seatH: .5, laurel: true });
+    const cz = await C.person(k, 'cae_caesar', { pos: [0, .45, -10.6], rot: 0, pose: 'sit', seatH: .6, laurel: true });
     const cam = C.dolly(k.camera, { pos: [0, 2.2, 12], look: [0, 1.4, -8], fov: 44 }, { pos: [0, 8.5, 13], look: [0, .8, -6], fov: 48 });
-    return (t, u) => { cam(u); C.idleBench(ppl, t, { look: 0 }); cz.update(t, { pose: 'sit', seatH: .5, mood: 'calm' }); };
+    return (t, u) => { cam(u); C.idleBench(ppl, t, { look: 0 }); cz.update(t, { pose: 'sit', seatH: .6, mood: 'calm' }); };
   },
 };

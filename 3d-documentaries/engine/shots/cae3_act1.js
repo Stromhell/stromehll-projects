@@ -33,9 +33,8 @@ export const shots = {
     return (t, u) => {
       cam(u); const D = k.meta.seconds; const p = ease(seg(t, .3, D - .4)); const zf = lerp(3, -4 * stepD + 1, p);
       // y: climbs each step as he crosses its front edge (short hop with knees bent)
-      const idx = Math.max(0, Math.min(5, Math.floor((stepD / 2 - zf) / stepD) + 1)); const yT = idx * stepH;
-      const z0 = stepD / 2 - (idx - 1) * stepD; const hop = idx > 0 ? Math.min(1, (z0 - zf) / .6) : 1;
-      const y = idx > 0 ? (idx - 1) * stepH + stepH * Math.min(1, Math.max(0, hop)) : 0;
+      // lift starts just before each front edge and is finished just after it, so the feet never sink into a step
+      let y = 0; for (let i = 0; i < 5; i++) { const e = stepD / 2 - i * stepD; y += stepH * Math.min(1, Math.max(0, (e - zf + .5) / .6)); }
       cz.position.set(0, y, zf); cz.update(t, { pose: 'walk', dist: (3 - zf) * .9, mood: 'calm' });
     };
   },
@@ -63,10 +62,12 @@ export const shots = {
   '1.5': async k => {
     await rome.forum(k, { sun: [-25, 22, 18] });
     const ch = await C.real.prop('treasure_chest'); ch.position.set(0, 0, 6); ch.scale.setScalar(1.2); k.scene.add(ch);
+    const lid = ch.getObjectByName('treasure_chest_lid'); if (lid) lid.rotation.x = -1.95; const lk = ch.getObjectByName('treasure_chest_lock'); if (lk) lk.visible = false; // lid open so the coins fall inside
     const cs = rome.coinStream(k.scene, [0, 2.4, 5.9], [0, .45, 6], 220);
     const crowd = []; for (let i = 0; i < 16; i++) crowd.push(await C.person(k, C.CIT[i % 8], { pos: [-7 + (i % 8) * 2, 0, -2 - Math.floor(i / 8) * 2.4 + (i % 3) * .4], rot: (i % 2 ? .2 : -.2), seed: 100 + i }));
     const cam = C.dolly(k.camera, { pos: [.8, 1.3, 8.6], look: [0, .7, 6], fov: 38 }, { pos: [.4, 1.7, 3.8], look: [0, 1.6, -3], fov: 44 });
-    return (t, u) => { cam(u); cs.userData.tick(t); crowd.forEach((p, i) => p.update(t, { arm: Math.sin(t * 3 + i) > .2 ? (i % 3 ? 'raise' : 'raiseBoth') : null, mood: 'happy', talk: true })); };
+    const D5 = k.meta.seconds;
+    return (t, u) => { cam(u); const fo = seg(t, D5 - .35, D5); if (fo > 0) { k.overlay.fillStyle = `rgba(0,0,0,${fo * .85})`; k.overlay.fillRect(0, 0, 1920, 1080); } cs.userData.tick(t); crowd.forEach((p, i) => p.update(t, { arm: Math.sin(t * 3 + i) > .2 ? (i % 3 ? 'raise' : 'raiseBoth') : null, mood: 'happy', talk: true })); };
   },
   // 1.6 the cheering crowd seen from above; a stern senator watches; push on his frown
   '1.6': async k => {
@@ -77,7 +78,7 @@ export const shots = {
     const crowd = []; for (let i = 0; i < 18; i++) crowd.push(await C.person(k, C.CIT[i % 8], { pos: [-4 + (i % 6) * 1.8, 0, -1 - Math.floor(i / 6) * 2], rot: (i % 2 ? .3 : -.3) - .4, seed: 140 + i }));
     rome.key(k.scene, [-9, 8, 13], [-12.6, 5.5, 9.4], { i: 160 });
     const cam = C.dolly(k.camera, { pos: [-11.5, 7.5, 13.5], look: [-4, 0, -2], fov: 46 }, { pos: [-11.6, 5.7, 7.4], look: [-12.6, 5.55, 9.4], fov: 30 });
-    return (t, u) => { cam(u); sn.update(t, { mood: 'stern', look: .1 }); crowd.forEach((p, i) => p.update(t, { arm: Math.sin(t * 3 + i) > .3 ? 'raise' : null, mood: 'happy' })); };
+    return (t, u) => { cam(u); const fi = 1 - seg(t, 0, .45); if (fi > 0) { k.overlay.fillStyle = `rgba(0,0,0,${fi * .85})`; k.overlay.fillRect(0, 0, 1920, 1080); } sn.update(t, { mood: 'stern', look: .1 }); crowd.forEach((p, i) => p.update(t, { arm: Math.sin(t * 3 + i) > .3 ? 'raise' : null, mood: 'happy' })); };
   },
   // 1.7 MAP 49 BC: a sealed order flies from Rome to Caesar in Gaul; Pompey callout
   '1.7': async k => {

@@ -64,16 +64,16 @@ export const shots = {
   '0.5': async k => {
     const cu = await rome.curia(k, { shaftI: .1 });
     const ppl = await C.fillBenches(k, cu, {});
-    const cz = await C.person(k, 'cae_caesar', { pos: [0, .45, -10.6], rot: 0, pose: 'sit', seatH: .5, laurel: true });
+    const cz = await C.person(k, 'cae_caesar', { pos: [0, .45, -10.6], rot: 0, pose: 'sit', seatH: .6, laurel: true });
     rome.key(k.scene, [3, 5, -6], [0, 1.4, -10.6], { i: 160 });
     const cam = C.dolly(k.camera, { pos: [3.6, 7.5, -15.5], look: [0, 1, -4], fov: 46 }, { pos: [2.3, 2.4, -13.2], look: [-.4, 1.3, -6], fov: 40 });
-    return (t, u) => { cam(u); C.idleBench(ppl, t, { look: 0 }); cz.update(t, { pose: 'sit', seatH: .5, mood: 'calm', look: Math.sin(t * .4) * .1 }); cu.doors.set(1 - ease(seg(t, .4, 3.4))); };
+    return (t, u) => { cam(u); C.idleBench(ppl, t, { look: 0 }); cz.update(t, { pose: 'sit', seatH: .6, mood: 'calm', look: Math.sin(t * .4) * .1 }); cu.doors.set(1 - ease(seg(t, .4, 3.4))); };
   },
   // 0.6 across the room one senator stands up and walks toward him; dozens of eyes follow
   '0.6': async k => {
     const cu = await rome.curia(k, {});
     const ppl = await C.fillBenches(k, cu, { skip: (s, i) => (s.side < 0 && s.tier === 0 && Math.abs(s.z - 1.5) < .6) || ((Math.round(s.z * 3) + s.tier * 2 + (s.side > 0 ? 1 : 0)) % 3 === 0) });
-    const cz = await C.person(k, 'cae_caesar', { pos: [0, .45, -10.6], rot: 0, pose: 'sit', seatH: .5, laurel: true });
+    const cz = await C.person(k, 'cae_caesar', { pos: [0, .45, -10.6], rot: 0, pose: 'sit', seatH: .6, laurel: true });
     const sn = await C.person(k, 'cae_cimber', { pos: [-4.0, 0, 1.5], rot: P * .8 });
     rome.key(k.scene, [-1, 6, 4], [-3, 1.4, 0], { i: 120 });
     const cam = C.dolly(k.camera, { pos: [-1.8, 1.9, 6.5], look: [-3.6, 1.5, 0], fov: 40 }, { pos: [-1.9, 1.85, 3.2], look: [-2.2, 1.5, -3.5], fov: 40 });
@@ -83,18 +83,21 @@ export const shots = {
       sn.position.set(-4.0 + Math.sin(a) * d, 0, 1.5 + Math.cos(a) * d); sn.rotation.y = a; sn.update(t, { pose: d > 0 ? 'walk' : 'idle', dist: d, mood: 'stern' });
       // senators turn their heads to follow him
       ppl.forEach(p => { const dx = sn.position.x - p.position.x, dz = sn.position.z - p.position.z; const ang = Math.atan2(dx, dz) - p.rotation.y; const lk = Math.max(-.9, Math.min(.9, Math.atan2(Math.sin(ang), Math.cos(ang)))) * seg(t, .3, 1.6); p.update(t, { pose: 'sit', seatH: .5, arm: 'lap', look: lk }); });
-      cz.update(t, { pose: 'sit', seatH: .5 });
+      cz.update(t, { pose: 'sit', seatH: .6 });
     };
   },
   // 0.7 the ring of togas closing round the chair, top-down slow rotation; tally 60+
   '0.7': async k => {
     const cu = await rome.curia(k, { shafts: false, sunI: 6 });
-    const cz = await C.person(k, 'cae_caesar', { pos: [0, .45, -10.6], rot: 0, pose: 'sit', seatH: .5, laurel: true });
+    const cz = await C.person(k, 'cae_caesar', { pos: [0, .45, -10.6], rot: 0, pose: 'sit', seatH: .6, laurel: true });
     const ring = [];
     const rings = [[14, 2.0, 5.2], [12, 3.0, 6.6]];
     let n = 0;
     for (const [cnt, r1, r0] of rings) for (let i = 0; i < cnt; i++) {
-      const a = (i / cnt) * P * 2 + (r1 > 2.5 ? .2 : 0);
+      let a = (i / cnt) * P * 2 + (r1 > 2.5 ? .2 : 0);
+      // keep each walker's path clear of the hall's columns (x = +-4.6, every 4.4 m along z)
+      const hits = b => { for (let r = r1; r <= r0; r += .25) { const x = Math.sin(b) * r, z = -10.6 + Math.cos(b) * r; for (let cz0 = -11; cz0 <= 11; cz0 += 4.4) if (Math.hypot(Math.abs(x) - 4.6, z - cz0) < .75) return true; } return false; };
+      for (let tries = 0; tries < 12 && hits(a); tries++) a += (tries % 2 ? -1 : 1) * .06 * (tries + 1);
       if (Math.abs(Math.atan2(Math.sin(a - P), Math.cos(a - P))) < .5 && r1 < 2.5) continue; // gap behind the chair (statue side)
       const p = await C.person(k, C.SEN[n % C.SEN.length], { seed: 500 + n }); p.userData.ring = { a, r0, r1 }; p.position.set(Math.sin(a) * r0, 0, -10.6 + Math.cos(a) * r0); ring.push(p); n++;
     }
@@ -102,7 +105,7 @@ export const shots = {
     return (t, u) => {
       const e = ease(seg(t, 0, k.meta.seconds * .85));
       ring.forEach((p, i) => { const { a, r0, r1 } = p.userData.ring; const r = lerp(r0, r1, e); const px = c[0] + Math.sin(a) * r, pz = c[2] + Math.cos(a) * r; p.position.set(px, (Math.abs(px) < 2.5 && Math.abs(pz + 10.8) < 1.6) ? .45 : 0, pz); p.rotation.y = a + P; p.update(t, { pose: e < .98 ? 'walk' : 'idle', dist: (r0 - r) , mood: 'stern' }); });
-      cz.update(t, { pose: 'sit', seatH: .5, mood: 'worried' });
+      cz.update(t, { pose: 'sit', seatH: .6, mood: 'worried' });
       const ang = .3 + u * .5; k.camera.position.set(c[0] + Math.sin(ang) * 1.2, 13 - u * 1.5, c[2] + Math.cos(ang) * 1.2); k.camera.up.set(Math.sin(ang + P), 0, Math.cos(ang + P)); k.camera.lookAt(...c); k.camera.fov = 42; k.camera.updateProjectionMatrix();
     };
   },

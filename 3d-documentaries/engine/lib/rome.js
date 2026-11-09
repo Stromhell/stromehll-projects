@@ -184,10 +184,15 @@ export function doorPair(M, w, h) {
 // curule chair (sella curulis): gilded X legs, purple cushion
 export function sella(M) {
   const g = new THREE.Group();
-  for (const z of [-.24, .24]) for (const s of [-1, 1]) {
-    const leg = real.m(new THREE.TorusGeometry(.42, .035, 10, 40, P * .62), M.gold, { pos: [0, .02, z], rot: [0, 0, s > 0 ? P * .19 : P * .81] });
-    leg.position.y = s > 0 ? .02 : .02; g.add(leg);
+  // two curved legs per side cross in an X (front and back pairs), feet joined by a floor bar
+  for (const z of [-.24, .24]) {
+    for (const s of [-1, 1]) {
+      const c = new THREE.QuadraticBezierCurve3(new THREE.Vector3(-.32 * s, .02, z), new THREE.Vector3(.12 * s, .02, z), new THREE.Vector3(.3 * s, .47, z));
+      g.add(real.m(new THREE.TubeGeometry(c, 24, .03, 8), M.gold));
+      g.add(real.m(new THREE.SphereGeometry(.045, 12, 8), M.gold, { pos: [-.32 * s, .03, z] }));
+    }
   }
+  for (const x of [-.32, .32]) g.add(real.m(new THREE.CylinderGeometry(.022, .022, .52, 10), M.gold, { pos: [x, .03, 0], rot: [P / 2, 0, 0] }));
   g.add(real.rbox(.7, .1, .6, .03, M.gold, { pos: [0, .5, 0] }));
   g.add(real.rbox(.66, .1, .56, .04, M.purple, { pos: [0, .59, 0] }));
   for (const z of [-.24, .24]) g.add(real.m(new THREE.CylinderGeometry(.03, .03, .6, 12), M.gold, { pos: [0, .46, z], rot: [0, 0, P / 2] }));
@@ -498,7 +503,7 @@ export function legionToken(M, o = {}) {
 // dramatic key light (spot) for a subject: key(scene, from, target, {i, color, angle, soft})
 export function key(scene, from, target, o = {}) {
   const s = new THREE.SpotLight(o.color ?? 0xffe0b8, o.i ?? 120, o.dist ?? 0, o.angle ?? .35, o.soft ?? .6, 2);
-  s.position.set(...from); s.target.position.set(...target); s.castShadow = o.shadow ?? true; s.shadow.mapSize.set(2048, 2048); s.shadow.bias = -.0004; s.shadow.radius = 5;
+  s.position.set(...from); s.target.position.set(...target); s.castShadow = o.shadow ?? true; s.shadow.mapSize.set(2048, 2048); s.shadow.bias = -.0004; s.shadow.normalBias = .02; s.shadow.radius = 5;
   scene.add(s, s.target); return s;
 }
 // gladiator helmet (bronze, broad brim, crest), held or worn
@@ -570,8 +575,21 @@ export async function river(k, o = {}) {
   const nor = await real.tex('tex/coast_sand_rocks_02/nor.jpg');
   const n = nor ? nor.clone() : null; if (n) { n.wrapS = n.wrapT = THREE.RepeatWrapping; n.repeat.set(30, 30); n.needsUpdate = true; }
   const mat = new THREE.MeshStandardMaterial({ color: o.color ?? 0x2a3830, metalness: .1, roughness: .08, normalMap: n, normalScale: new THREE.Vector2(.25, .25), transparent: true, opacity: .9 });
-  const w = real.m(new THREE.PlaneGeometry(o.w ?? 40, o.l ?? 200), mat, { rot: [-P / 2, 0, o.rot ?? 0], pos: o.pos ?? [0, .25, 0], cast: false });
-  k.scene.add(w); w.userData.flow = t => { if (n) n.offset.set(t * .01, t * .04); };
+  // subdivided surface: rolling waves moved every frame, plus a fine scrolling normal map for ripples
+  const W0 = o.w ?? 40, L0 = o.l ?? 200, geo = new THREE.PlaneGeometry(W0, L0, Math.round(W0 * 4), Math.min(400, Math.round(L0 * 2)));
+  const w = real.m(geo, mat, { rot: [-P / 2, 0, o.rot ?? 0], pos: o.pos ?? [0, .25, 0], cast: false }); w.receiveShadow = true;
+  const pa = geo.attributes.position, bx = Float32Array.from(pa.array);
+  mat.color.setHex(o.color ?? 0x24382f); mat.roughness = .12; if (n) mat.normalScale.set(.45, .45);
+  k.scene.add(w);
+  // stones along both banks so the edge of the water reads
+  const rk = real.std(0x6b6358, { rough: .9 }), rr = rng(7);
+  for (let i = 0; i < 70; i++) { const side = i % 2 ? 1 : -1, along = (rr() - .5) * Math.min(L0, 60); const st = real.m(new THREE.DodecahedronGeometry(.15 + rr() * .35, 0), rk, { pos: [side * (W0 / 2 + rr() * .6 - .2), .05, along] }); st.scale.y = .5; st.rotation.y = rr() * 6; const gq = new THREE.Group(); gq.add(st); gq.rotation.y = o.rot ?? 0; gq.position.set(...(o.pos ?? [0, .25, 0])); gq.position.y = 0; k.scene.add(gq); }
+  w.userData.flow = t => {
+    if (n) n.offset.set(t * .02, t * .09);
+    for (let i = 0; i < pa.count; i++) { const x = bx[i * 3], y = bx[i * 3 + 1]; pa.setZ(i, Math.sin(y * 1.3 - t * 2.2 + x * .4) * .05 + Math.sin(y * 3.1 - t * 3.4 - x * 1.7) * .025 + Math.sin(x * 2.3 + t * 1.1) * .015); }
+    pa.needsUpdate = true; geo.computeVertexNormals();
+  };
+  w.userData.flow(0);
   return w;
 }
 // gold coins pouring into a chest (instanced)

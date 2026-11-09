@@ -255,11 +255,23 @@ export async function human(o = {}) {
       // open-palmed shrug
       if (arm === 'shrug') { aim(sd + 'Arm', sg * .3, -1, .1); aim(sd + 'ForeArm', sg * .6, .2, .8); aim(sd + 'Hand', sg * .75, .15, .65); continue; }
       if (arm === 'hold' || arm === 'desk') { aim(sd + 'Arm', sg * .25, -1, .25); aim(sd + 'ForeArm', -sg * .35, -.1, 1); aim(sd + 'Hand', -sg * .3, -.1, 1); continue; }
+      if (arm === 'plead') { aim(sd + 'Arm', sg * .3, -.45, .85); aim(sd + 'ForeArm', -sg * .15, .2, 1); aim(sd + 'Hand', -sg * .05, .45, 1); continue; }
+      if (right && arm === 'stab') { aim(sd + 'Arm', sg * .05, -.1, 1); aim(sd + 'ForeArm', sg * .02, -.3, 1); aim(sd + 'Hand', 0, -.45, 1); continue; }
+      if (!right && arm === 'stab') { aim(sd + 'Arm', sg * .35, -.6, .5); aim(sd + 'ForeArm', -sg * .2, .1, 1); continue; }
       if (arm === 'hug') { aim(sd + 'Arm', sg * .4, -.3, 1); aim(sd + 'ForeArm', -sg * 1, 0, .6); continue; }
       if (sit && (arm === 'lap' || !arm)) { aim(sd + 'Arm', sg * .2, -1, .35); aim(sd + 'ForeArm', -sg * .15, -.25, 1); aim(sd + 'Hand', -sg * .1, -.4, 1); continue; }
       if (arm === 'cover') { aim(sd + 'Arm', sg * .2, -.2, 1); aim(sd + 'ForeArm', -sg * .5, 1, .3); continue; }
       const sw = walk ? S(ph + (sg > 0 ? Math.PI : 0)) * .35 : S(tt * .8 + sg) * .02;
       aim(sd + 'Arm', sg * .16, -1, sw); aim(sd + 'ForeArm', sg * .05, -1, sw + .18); aim(sd + 'Hand', 0, -1, sw + .1);
+    }
+    // arm pose changes ease in over 0.35 s (from the last frame's arms) instead of snapping
+    {
+      const AB = ['LeftArm', 'LeftForeArm', 'LeftHand', 'RightArm', 'RightForeArm', 'RightHand'].filter(n => bones[n]);
+      const key = String(arm ?? '') + (sit ? 's' : '');
+      if (root._armKey !== undefined && key !== root._armKey && root._armPrev && t > (root._armLastT ?? -9)) { root._armFrom = root._armPrev.map(q => q.clone()); root._armT = t; }
+      root._armKey = key;
+      if (root._armFrom && t >= root._armT && t - root._armT < .35) { const e = (t - root._armT) / .35, w = e * e * (3 - 2 * e); AB.forEach((n, i) => bones[n].quaternion.slerpQuaternions(root._armFrom[i], bones[n].quaternion.clone(), w)); }
+      root._armPrev = AB.map(n => bones[n].quaternion.clone()); root._armLastT = t;
     }
     // face: blink + mood (ready player me blendshapes)
     for (const f of faces) {

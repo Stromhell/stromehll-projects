@@ -70,6 +70,12 @@ if m:
     flt.append('[mus][k2]sidechaincompress=threshold=0.02:ratio=8:attack=30:release=700[musd]'); mix.append('[musd]')
 else:
     flt.append('[k2]anullsink')
+# 5) optional silence drops: "silence": [["5.12", 0.2, 2.0], ...] mutes music + effects (not the VO) with short fades
+sil = [(start[s] + a, start[s] + a + d) for s, a, d in C.get('silence', []) if s in start]
+if sil:
+    g = '*'.join(f'(1-clip((t-{a:.3f})/0.25,0,1)*clip(({b:.3f}-t)/0.25,0,1))' for a, b in sil)
+    for j, lab in enumerate(mix[1:]):
+        flt.append(f"{lab}volume=eval=frame:volume='{g}'[q{j}]"); mix[j + 1] = f'[q{j}]'
 flt.append(''.join(mix) + f'amix=inputs={len(mix)}:normalize=0' + ('[o]' if __import__('os').environ.get('NOLN') else ',alimiter=limit=0.95,loudnorm=I=-16:TP=-1.5:LRA=11[o]'))
 subprocess.check_call(['ffmpeg', '-y', '-loglevel', 'error', *ins, '-filter_complex', ';'.join(flt), '-map', '[o]', '-ar', '48000', '-ac', '2', out])
 print('mixed', out, f'{total:.1f}s')

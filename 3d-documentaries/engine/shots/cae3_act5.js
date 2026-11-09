@@ -7,7 +7,7 @@ const CH = [0, .45, -10.6];
 const black = (x, a) => { if (a <= 0) return; x.fillStyle = `rgba(0,0,0,${Math.min(1, a)})`; x.fillRect(0, 0, 1920, 1080); };
 async function desk(k) { const d = await rome.domus(k, { room: 'none', night: true }); k.exposure = .9; k.scene.add(real.box(2.4, .08, 1.3, d.M.wood, { pos: [0, .9, 0] })); for (const x of [-1.05, 1.05]) for (const z of [-.5, .5]) k.scene.add(real.box(.08, .9, .08, d.M.wood, { pos: [x, .45, z] })); rome.oilLamp(k.scene, [-.95, .97, -.45], { i: 2.2, shadow: true }); return d; }
 async function hall(k, o = {}) { const cu = await rome.curia(k, { shaftI: .1, ...o }); return cu; }
-const seated = (k, mood = 'calm') => C.person(k, 'cae_caesar', { pos: CH, rot: 0, pose: 'sit', seatH: .5, laurel: true, mood });
+const seated = (k, mood = 'calm') => C.person(k, 'cae_caesar', { pos: CH, rot: 0, pose: 'sit', seatH: .6, laurel: true, mood });
 function paperTex(lines, prog = 1, o = {}) {
   const cv = document.createElement('canvas'); cv.width = 1024; cv.height = 720; const c = cv.getContext('2d');
   const draw = p => { c.fillStyle = '#ece0c4'; c.fillRect(0, 0, 1024, 720); for (let i = 0; i < 1500; i++) { c.fillStyle = `rgba(120,90,50,${(i * 7 % 13) / 260})`; c.fillRect((i * 97) % 1024, (i * 61) % 720, 18, 2); }
@@ -26,7 +26,7 @@ export const shots = {
     const cm = await C.person(k, 'cae_cimber', { pos: [.1, 0, -8.6], rot: P });
     rome.key(k.scene, [2.5, 5, -6], [0, 1.4, -10], { i: 55 });
     const cam = C.dolly(k.camera, { pos: [.9, 1.8, -4.8], look: [0, 1.3, -10.3], fov: 38 }, { pos: [.6, 1.7, -6.6], look: [0, 1.35, -10.4], fov: 34 });
-    return (t, u) => { cam(u); C.idleBench(ppl, t, { look: 0 }); cm.update(t, { arm: 'raiseBoth', mood: 'worried', talk: true }); cz.update(t, { pose: 'sit', seatH: .5, mood: 'stern', look: Math.sin(t * .5) * .1 }); };
+    return (t, u) => { cam(u); C.idleBench(ppl, t, { look: 0 }); cm.update(t, { arm: Math.floor(t / 2.2) % 3 === 1 ? 'shrug' : 'plead', mood: 'worried', talk: true, nod: Math.sin(t * 1.6) * .25 }); /* begging: palms up, small bows */ cz.update(t, { pose: 'sit', seatH: .6, mood: 'stern', look: Math.sin(t * .5) * .1 }); };
   },
   // 5.2 togas rise from the benches and close in like a tide (reuses the Act 0 ring shot)
   '5.2': k => A0['0.7'](k),
@@ -37,7 +37,7 @@ export const shots = {
     rome.key(k.scene, [-2, 3.5, -7], [0, 1.4, -10.6], { i: 55 });
     const cam = C.dolly(k.camera, { pos: [-.9, 1.45, -8.1], look: [0, 1.4, -10.5], fov: 34 }, { pos: [-.55, 1.42, -8.9], look: [0, 1.42, -10.55], fov: 30 });
     const D = k.meta.seconds;
-    return (t, u) => { cam(u); const g = t > D * .35; cm.update(t, { arm: g ? 'hold' : 'raiseBoth', mood: 'stern' }); cz.update(t, { pose: 'sit', seatH: .5, mood: g ? 'surprised' : 'stern', look: g ? .4 : 0 }); };
+    return (t, u) => { cam(u); const g = t > D * .35; cm.update(t, { arm: g ? 'hold' : 'raiseBoth', mood: 'stern' }); cz.update(t, { pose: 'sit', seatH: .6, mood: g ? 'surprised' : 'stern', look: g ? .4 : 0 }); };
   },
   // 5.4 Caesar half-standing, mouth open; quick push in
   '5.4': async k => {
@@ -57,7 +57,7 @@ export const shots = {
     rome.key(k.scene, [0, 4, -14], [-.6, 1.8, -11.4], { i: 110, color: 0xffd0a0, angle: .4 });
     const cam = C.dolly(k.camera, { pos: [1.4, 1.5, -7.6], look: [-.4, 1.7, -11], fov: 36 }, { pos: [1.0, 1.55, -8.4], look: [-.5, 1.8, -11.2], fov: 32 });
     const D = k.meta.seconds;
-    return (t, u) => { cam(u); ca.update(t, { arm: 'raise', mood: 'stern' }); cz.update(t, { pose: 'sit', seatH: .5, mood: 'surprised' }); black(k.overlay, seg(t, D * .72, D * .74)); };
+    return (t, u) => { cam(u); ca.update(t, { arm: 'raise', mood: 'stern' }); cz.update(t, { pose: 'sit', seatH: .6, mood: 'surprised' }); black(k.overlay, seg(t, D * .72, D * .74)); };
   },
   // 5.6 the stylus in Caesar's hand; a small comic "OUCH"
   '5.6': async k => {
@@ -67,7 +67,8 @@ export const shots = {
     rome.key(k.scene, [2, 3, -7], [0, 1.2, -10], { i: 55 });
     const cam = C.dolly(k.camera, { pos: [1.3, 2.0, -7.6], look: [0, 2.0, -10], fov: 38 }, { pos: [1.0, 2.05, -8.3], look: [0, 2.05, -10], fov: 34 });
     const D = k.meta.seconds;
-    return (t, u) => { cam(u); cz.update(t, { arm: 'raise', mood: 'stern', look: .3 });
+    // guard, wind up, then a jab forward with the stylus as OUCH lands
+    return (t, u) => { cam(u); cz.update(t, { arm: t < D * .4 ? 'hold' : t < D * .56 ? 'raise' : 'stab', mood: t < D * .4 ? 'surprised' : 'angry', look: .3 });
       const a = seg(t, D * .6, D * .65) * (1 - seg(t, D * .85, D * .9)); if (a > 0) { const x = k.overlay; x.save(); x.globalAlpha = a; x.translate(1380, 520); x.rotate(-.15); x.font = '900 64px "Comic Sans MS", "Liberation Sans"'; x.lineWidth = 10; x.strokeStyle = '#000'; x.strokeText('OUCH!', 0, 0); x.fillStyle = '#ffd23a'; x.fillText('OUCH!', 0, 0); x.restore(); } };
   },
   // 5.7 the ring of togas closes over the chair from above (Act 0 ring shot again)
@@ -93,10 +94,29 @@ export const shots = {
   },
   // 5.10 black screen: tally to 23 and the doctor's note
   '5.10': async k => {
-    k.scene.background = new THREE.Color(0); k.noAutoOverlay = false;
+    // forensic graphic: a dark torso silhouette, 23 wound marks count up, 22 fade, the one fatal mark (chest) glows crimson
+    k.scene.background = new THREE.Color(0); k.noAutoOverlay = true;
     k.camera.position.set(0, 0, 5); k.camera.lookAt(0, 0, 0);
-    const D = k.meta.seconds;
-    return (t, u) => { black(k.overlay, 1); const a = seg(t, D * .45, D * .55); if (a > 0) { const x = k.overlay; x.save(); x.globalAlpha = a; x.fillStyle = '#e8dcc0'; x.translate(960, 720); x.rotate(-.03); x.fillRect(-430, -110, 860, 220); x.fillStyle = '#2a1a10'; x.textAlign = 'center'; x.font = '600 40px "Liberation Serif"'; x.fillText('The physician Antistius:', 0, -30); x.font = 'italic 46px "Liberation Serif"'; x.fillText('only one wound, to the chest, was fatal.', 0, 40); x.restore(); } };
+    const D = k.meta.seconds, R = (s => () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296))(23);
+    const cx = 640, cy = 500;
+    const marks = []; while (marks.length < 22) { const x = cx + (R() - .5) * 300, y = cy - 120 + R() * 360; if (Math.abs(x - cx - 25) < 40 && Math.abs(y - cy + 40) < 40) continue; marks.push([x, y]); }
+    marks.splice(1, 0, [cx + 30, cy - 40]); // the second blow: the chest
+    const torso = x => { x.beginPath(); x.arc(cx, cy - 300, 62, 0, Math.PI * 2); x.moveTo(cx - 40, cy - 238); x.quadraticCurveTo(cx - 190, cy - 230, cx - 200, cy - 150); x.lineTo(cx - 175, cy + 260); x.lineTo(cx + 175, cy + 260); x.lineTo(cx + 200, cy - 150); x.quadraticCurveTo(cx + 190, cy - 230, cx + 40, cy - 238); x.closePath(); };
+    return (t, u) => {
+      const x = k.overlay; x.save(); x.fillStyle = '#000'; x.fillRect(0, 0, 1920, 1080);
+      const g = x.createRadialGradient(cx, cy, 40, cx, cy, 520); g.addColorStop(0, 'rgba(70,52,36,.55)'); g.addColorStop(1, 'rgba(0,0,0,0)'); x.fillStyle = g; x.fillRect(0, 0, 1920, 1080);
+      x.globalAlpha = C.ease(seg(t, 0, .6)); torso(x); x.fillStyle = '#16110d'; x.fill(); x.lineWidth = 3; x.strokeStyle = '#8a6a3a'; x.stroke();
+      const n = Math.floor(23 * C.ease(seg(t, .5, D * .45))), dim = seg(t, D * .5, D * .6);
+      for (let i = 0; i < n; i++) { const [mx, my] = marks[i], fatal = i === 1; const a = fatal ? 1 : 1 - dim * .8; x.globalAlpha = a;
+        x.beginPath(); x.arc(mx, my, fatal ? 10 + dim * 8 + Math.sin(t * 6) * 2 * dim : 7, 0, Math.PI * 2); x.fillStyle = fatal && dim > 0 ? '#d42a1e' : '#efe4d2'; x.fill();
+        if (fatal && dim > 0) { x.globalAlpha = dim * .45; x.beginPath(); x.arc(mx, my, 30 + Math.sin(t * 6) * 4, 0, Math.PI * 2); x.strokeStyle = '#d42a1e'; x.lineWidth = 3; x.stroke(); } }
+      x.globalAlpha = 1; x.textAlign = 'left'; x.fillStyle = '#efe4d2'; x.font = '120px "Anton"'; x.fillText(String(n), 1060, 330);
+      x.font = '600 44px "Oswald"'; x.fillStyle = '#c8b28a'; x.fillText('WOUNDS', 1060 + x.measureText(String(n)).width * 0 + 150, 320);
+      const f = C.ease(seg(t, D * .55, D * .65)); if (f > 0) { x.globalAlpha = f; x.strokeStyle = '#d42a1e'; x.lineWidth = 3; x.beginPath(); x.moveTo(marks[1][0] + 20, marks[1][1]); x.lineTo(1040, 430); x.lineTo(1060, 430); x.stroke();
+        x.fillStyle = '#d42a1e'; x.font = '600 46px "Oswald"'; x.fillText('ONLY ONE WAS FATAL', 1075, 445); x.fillStyle = '#c8b28a'; x.font = '34px "Oswald"'; x.fillText('the second blow, to the chest', 1075, 495); }
+      const p = C.ease(seg(t, D * .7, D * .8)); if (p > 0) { x.globalAlpha = p; x.fillStyle = '#e8dcc0'; x.save(); x.translate(1360, 640); x.rotate(-.025); x.fillRect(-300, -60, 600, 120); x.fillStyle = '#2a1a10'; x.textAlign = 'center'; x.font = '600 32px "Liberation Serif"'; x.fillText('The physician Antistius:', 0, -12); x.font = 'italic 32px "Liberation Serif"'; x.fillText('only one wound, to the chest, was fatal.', 0, 34); x.restore(); }
+      x.restore();
+    };
   },
   // 5.11 a quill writes ET TU, BRUTE? ; SHAKESPEARE 1599 stamp
   '5.11': async k => {

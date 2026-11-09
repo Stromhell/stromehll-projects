@@ -66,3 +66,17 @@ export function stamp(x, t, t0, o = {}) {
   x.restore();
 }
 import { seg } from './tb3_common.js';
+
+// a prop held in both hands: each frame it sits between the palms, a little in front of them, turned with the body.
+// Call the returned function after the person's update. o.fwd (m in front of the wrists), o.up, o.tilt (pitch), o.roll
+export function holdBoth(k, p, obj, o = {}) {
+  k.scene.add(obj); const L = new THREE.Vector3(), R = new THREE.Vector3();
+  const f = (q = p) => {
+    q.updateMatrixWorld(true); q.parts.bones.LeftHand.getWorldPosition(L); q.parts.bones.RightHand.getWorldPosition(R);
+    const m = L.add(R).multiplyScalar(.5), yaw = q.rotation.y, fw = o.fwd ?? .08;
+    obj.position.set(m.x + Math.sin(yaw) * fw, m.y + (o.up ?? 0), m.z + Math.cos(yaw) * fw);
+    obj.rotation.set(o.tilt ?? -.5, yaw + (o.yaw ?? 0), o.roll ?? 0, 'YXZ');
+    return obj.position;
+  };
+  return f;
+}

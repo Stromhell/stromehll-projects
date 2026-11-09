@@ -56,7 +56,7 @@ export const shots = {
     const oc = await C.person(k, 'cae_octavian', { pos: [0, .45, -9.6], rot: 0, laurel: { gold: true } });
     rome.key(k.scene, [1, 4, -6], [0, 1.9, -9.6], { i: 55 });
     const cam = C.dolly(k.camera, { pos: [0, 1.95, -6.2], look: [0, 2.0, -9.6], fov: 34 }, { pos: [0, 2.0, -7.3], look: [0, 2.05, -9.6], fov: 30 });
-    return (t, u) => { cam(u); oc.update(t, { mood: 'calm' }); const x = k.overlay; x.fillStyle = `rgba(0,0,0,${.3 * seg(t, 2, 2.6)})`; x.fillRect(0, 0, 1920, 1080); ui.slam(x, 'AUGUSTUS', t, 2.2, { size: 170, y: 860, sub: '27 BC · FIRST EMPEROR OF ROME' }); };
+    return (t, u) => { cam(u); oc.update(t, { mood: 'calm' }); const x = k.overlay; x.fillStyle = `rgba(0,0,0,${.2 * C.ease(seg(t, 1.2, 2.8))})`; x.fillRect(0, 0, 1920, 1080); ui.slam(x, 'AUGUSTUS', t, 2.2, { size: 170, y: 860, sub: '27 BC · FIRST EMPEROR OF ROME' }); };
   },
   // 7.6 Augustus looks at Caesar's statue; slow push
   '7.6': async k => {

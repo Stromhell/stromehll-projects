@@ -226,9 +226,6 @@ export function createRenderer(canvas, w = W, h = H) {
       const DBG = (/[?&]dbg=([\w,]+)/.exec(location.search) || [])[1] || '';
       if (/noshadow/.test(DBG)) renderer.shadowMap.enabled = false;
       if (/nopeople/.test(DBG)) scene.children.forEach(c => { if (c.userData.person) c.visible = false; });
-      // shadows are redrawn every 2nd frame (and on each new shot): halves the shadow-pass cost, lag is invisible at 24 fps
-      const fi = Math.round(time * 24); renderer.shadowMap.autoUpdate = false;
-      renderer.shadowMap.needsUpdate = /allshadow/.test(DBG) || scene !== this.lastScene || fi % 2 === 0 || fi < this.lastFi; this.lastScene = scene; this.lastFi = fi;
       const fx = /nofx/.test(DBG) ? null : scene.userData.fx;
       if (fx) {
         if (!this.comp) {

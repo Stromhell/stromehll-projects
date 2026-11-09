@@ -23,10 +23,19 @@ function bridgeModel(M) {
 }
 function tinyMen(n, color = 0x3a2a20) { const g = new THREE.Group(); const m = real.std(color, { rough: .8 }); for (let i = 0; i < n; i++) { const f = new THREE.Group(); f.add(real.m(new THREE.CylinderGeometry(.008, .011, .05, 8), m, { pos: [0, .025, 0] })); f.add(real.m(new THREE.SphereGeometry(.008, 8, 6), m, { pos: [0, .058, 0] })); f.position.set((i % 4) * .05 - .08, 0, Math.floor(i / 4) * .05 - .03); g.add(f); } return g; }
 function arenaModel(M) {
-  const g = new THREE.Group();
-  const wall = real.m(new THREE.CylinderGeometry(.5, .52, .16, 48, 1, true), M.stone, { pos: [0, .08, 0] }); wall.scale.z = .72; wall.material = M.stone.clone(); wall.material.side = THREE.DoubleSide; g.add(wall);
-  for (let i = 0; i < 3; i++) { const r = real.m(new THREE.CylinderGeometry(.47 - i * .05, .47 - i * .05, .04, 48), M.stone, { pos: [0, .14 - i * .04, 0] }); r.scale.z = .72; g.add(r); }
-  const sand = real.m(new THREE.CylinderGeometry(.3, .3, .02, 40), real.std(0xc8a870, { rough: 1 }), { pos: [0, .01, 0] }); sand.scale.z = .72; g.add(sand);
+  // table model of a Roman amphitheatre: oval arcaded facade in three storeys, stepped seating bowl, sand floor
+  const g = new THREE.Group(), RX = .55, RZ = .42, N = 40, st = M.stone, tr = M.travertine ?? M.stone;
+  const ring = (rx, rz, y, h, th) => { const m = real.m(new THREE.CylinderGeometry(1, 1, h, 64, 1, true), tr, { pos: [0, y, 0] }); m.scale.set(rx, 1, rz); m.material = tr.clone(); m.material.side = THREE.DoubleSide; return m; };
+  for (let j = 0; j < 3; j++) {
+    const y0 = j * .075, h = .075;
+    for (let i = 0; i < N; i++) { const a = i / N * Math.PI * 2; const pier = real.box(.018, h * .78, .03, tr, { pos: [Math.cos(a) * RX, y0 + h * .39, Math.sin(a) * RZ] }); pier.rotation.y = -a; g.add(pier); }
+    g.add(ring(RX, RZ, y0 + h * .88, h * .24));
+  }
+  g.add(ring(RX, RZ, .24, .04)); // attic
+  for (let i = 0; i < 6; i++) { const r = 1 - i * .085; const tier = real.m(new THREE.CylinderGeometry(1, 1, .03, 64, 1, true), st, { pos: [0, .21 - i * .034, 0] }); tier.scale.set(RX * .95 * r, 1, RZ * .95 * r); tier.material = st.clone(); tier.material.side = THREE.DoubleSide; g.add(tier);
+    const top = real.m(new THREE.RingGeometry(r - .085, r, 64), st, { pos: [0, .225 - i * .034, 0], rot: [-Math.PI / 2, 0, 0] }); top.scale.set(RX * .95, RZ * .95, 1); top.material = st.clone(); top.material.side = THREE.DoubleSide; g.add(top); }
+  const sand = real.m(new THREE.CylinderGeometry(1, 1, .02, 48), real.std(0xc8a870, { rough: 1 }), { pos: [0, .01, 0] }); sand.scale.set(RX * .46, 1, RZ * .46); g.add(sand);
+  const pod = real.m(new THREE.CylinderGeometry(1, 1, .03, 48, 1, true), st, { pos: [0, .025, 0] }); pod.scale.set(RX * .47, 1, RZ * .47); pod.material = st.clone(); pod.material.side = THREE.DoubleSide; g.add(pod);
   return g;
 }
 
@@ -53,32 +62,32 @@ export const shots = {
   // 3.3 Caesar hands a pardon scroll to a former enemy; PARDONED stamp; lateral dolly
   '3.3': async k => {
     await rome.forum(k, { sun: [-25, 20, 18], trees: false });
-    const cz = await C.person(k, 'cae_caesar', { pos: [-.65, 0, 5], rot: P / 2, laurel: true });
-    const en = await C.person(k, 'cae_cassius', { pos: [.65, 0, 5], rot: -P / 2 });
+    const cz = await C.person(k, 'cae_caesar', { pos: [-.8, 0, 5], rot: P / 2, laurel: true });
+    const en = await C.person(k, 'cae_cassius', { pos: [.8, 0, 5], rot: -P / 2 });
     const others = []; for (let i = 0; i < 3; i++) others.push(await C.person(k, C.SEN[i + 2], { pos: [1.8 + i * .9, 0, 4 - i * .7], rot: -P / 2 - .3, seed: 640 + i }));
-    const sc = rome.scroll({ seal: true }); C.attach(cz, sc, 'RightHand', [0, -.08, .04], [0, 0, P / 2]);
+    const sc = rome.scroll({ seal: true }); const hs = C.holdBoth(k, cz, sc, { fwd: .09, tilt: 0 });
     rome.key(k.scene, [0, 4, 9], [0, 1.5, 5], { i: 120 });
     const cam = C.dolly(k.camera, { pos: [-2.2, 1.6, 9.2], look: [-.3, 1.4, 5], fov: 36 }, { pos: [1.4, 1.6, 9.0], look: [.3, 1.4, 5], fov: 36 });
-    return (t, u) => { cam(u); cz.update(t, { arm: 'hold', mood: 'calm', look: 0 }); en.update(t, { arm: t > 2 ? 'hold' : null, mood: 'neutral' }); others.forEach(p => p.update(t, { mood: 'stern' }));
+    return (t, u) => { cam(u); cz.update(t, { arm: 'hold', mood: 'calm', look: 0 }); hs(); en.update(t, { arm: t > 2 ? 'hold' : null, mood: 'neutral' }); others.forEach(p => p.update(t, { mood: 'stern' }));
       C.stamp(k.overlay, t, k.meta.seconds * .6, { text: 'PARDONED', x: 1460, y: 300 }); };
   },
   // 3.4 a senator reads REPUBLIC scratched in a wax tablet; slow push
   '3.4': async k => {
     await rome.courtyard(k, { trees: false });
     const sn = await C.person(k, 'cae_sen2', { pos: [0, 0, 2], rot: .15 });
-    const tb = rome.waxTablet('REPUBLIC', { both: true, rotZ: -P / 2 }); C.attach(sn, tb, 'LeftHand', [0, -.06, .1], [P / 2.4, 0, P / 2]);
+    const tb = rome.waxTablet('REPUBLIC', { both: true, rotZ: P }); const ht = C.holdBoth(k, sn, tb, { fwd: .1, tilt: .6 });
     rome.key(k.scene, [2, 3.5, 5], [0, 1.5, 2], { i: 120 });
     const cam = C.dolly(k.camera, { pos: [.9, 1.75, 4.4], look: [0, 1.35, 2], fov: 36 }, { pos: [.4, 1.6, 3.4], look: [0, 1.35, 2], fov: 38 });
-    return (t, u) => { cam(u); sn.update(t, { arm: 'hold', mood: 'stern', look: -.35 }); };
+    return (t, u) => { cam(u); sn.update(t, { arm: 'hold', mood: 'stern', look: -.35 }); ht(); };
   },
   // 3.5 rich senators at a banquet frown at Caesar's statue; crane over the table
   '3.5': async k => {
     const d = await rome.domus(k, { room: 'dining', lampI: .5 }); k.exposure = .55;
     const st = await rome.statueOf(k, 'cae_caesar', { pos: [0, 0, -3.7], arm: 'raise', scale: .8, plinth: 1.2 });
     const ppl = [];
-    for (const [id, x, z, r] of [['cae_sen1', 0, -2.4, 0], ['cae_sen4', -2.4, -.3, P / 2], ['cae_sen7', -2.4, .6, P / 2], ['cae_sen10', 2.4, -.3, -P / 2], ['cae_sen3', 2.4, .6, -P / 2]]) ppl.push(await C.person(k, id, { pos: [x, .55, z], rot: r, pose: 'sit', seatH: .1, seed: 700 + ppl.length }));
+    for (const [id, x, z, r] of [['cae_sen1', 0, -1.98, 0], ['cae_sen4', -1.98, -.4, P / 2], ['cae_sen7', -1.98, .6, P / 2], ['cae_sen10', 1.98, -.4, -P / 2], ['cae_sen3', 1.98, .6, -P / 2]]) ppl.push(await C.person(k, id, { pos: [x, 0, z], rot: r, pose: 'sit', seatH: .66, seed: 700 + ppl.length }));
     const cam = C.dolly(k.camera, { pos: [0, 1.6, 4.2], look: [0, .9, -.5], fov: 44 }, { pos: [0, 4.0, 2.6], look: [0, .9, -1.8], fov: 46 });
-    return (t, u) => { cam(u); rome.flickerAll(k.scene, t); ppl.forEach((p, i) => p.update(t, { pose: 'sit', seatH: .1, mood: 'angry', look: i ? (i < 3 ? -.5 : .5) : 0, talk: Math.floor(t / 2) % 5 === i })); };
+    return (t, u) => { cam(u); rome.flickerAll(k.scene, t); ppl.forEach((p, i) => p.update(t, { pose: 'sit', seatH: .66, mood: 'angry', look: i ? (i < 3 ? -.5 : .5) : 0, talk: Math.floor(t / 2) % 5 === i })); };
   },
   // 3.6 Brutus and Cassius step forward from the group; push in
   '3.6': async k => {
@@ -131,7 +140,7 @@ export const shots = {
     const d = await tableTop(k);
     const ar = arenaModel(d.M); ar.position.set(0, .945, 0); k.scene.add(ar);
     const men = tinyMen(6, 0x7a5a3a); men.position.set(0, .965, 0); k.scene.add(men);
-    const cam = C.dolly(k.camera, { pos: [0, 2.0, 1.4], look: [0, .95, 0], fov: 40 }, { pos: [0, 1.7, .9], look: [0, .95, 0], fov: 38 });
+    const cam = C.dolly(k.camera, { pos: [.95, 1.5, 1.25], look: [0, 1.0, 0], fov: 38 }, { pos: [.55, 1.32, .9], look: [0, 1.0, 0], fov: 36 });
     return (t, u) => { cam(u); rome.flickerAll(k.scene, t); C.stamp(k.overlay, t, k.meta.seconds * .6); };
   },
   // 3.11 the calendar for MARTIUS, the 15th circled in red; push in on the circle

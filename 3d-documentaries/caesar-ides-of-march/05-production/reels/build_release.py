@@ -118,10 +118,10 @@ def write_ass(path, ev, dur, cap, hook=None, kicker='', title=None, pill=None, h
     open(path, 'w').write(h + '\n'.join(L) + '\n')
 
 def ffcmd(segs, ass, body, panel):
-    """panel: ('reel', dx) 4:3 crop at y 500, or ('ig',) full 16:9 at y 656"""
+    """panel: ('reel', dx) 4:3 centred crop, vertically centred, or ('ig',) full 16:9 at y 656"""
     ins, fl, n = [], [], len(segs)
     for j, sg in enumerate(segs):
-        act, t0, t1 = sg[:3]; dx = sg[3] if len(sg) > 3 else 160
+        act, t0, t1 = sg[:3]; dx = sg[3] if len(sg) > 3 else 0
         ins += ['-ss', f'{OFF[act] + t0:.3f}', '-t', f'{t1 - t0:.3f}', '-i', FULL]
         ins += ['-ss', f'{OFF[act] + t0:.3f}', '-t', f'{t1 - t0:.3f}', '-i', FULL]
         d = t1 - t0
@@ -136,7 +136,7 @@ def ffcmd(segs, ass, body, panel):
         fl.append(f'[{2*j+1}:a]asetpts=PTS-STARTPTS,aresample=48000{fi}{fo}[a{j}]')
     fl.append(''.join(f'[s{j}][p{j}][a{j}]' for j in range(n)) + f'concat=n={n}:v=2:a=1[cv][fg][ca]')
     fl.append('[cv]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,boxblur=28:2,eq=brightness=-0.28:saturation=0.8[bg]')
-    if panel[0] == 'reel': hh = round(1080*1080/1600)//2*2; y0 = 500
+    if panel[0] == 'reel': hh = round(1080*1080/1600)//2*2; y0 = (1920 - hh)//2//2*2
     else: y0, hh = 656, 608
     fl.append(f'[bg][fg]overlay=0:{y0},drawbox=x=0:y={y0-5}:w=1080:h=5:color=0xE8B321:t=fill,drawbox=x=0:y={y0+hh}:w=1080:h=5:color=0xE8B321:t=fill,'
               f"subtitles={ass}:fontsdir={REPO}/engine/fonts[vo]")

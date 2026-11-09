@@ -56,11 +56,11 @@ export const shots = {
   // 6.4 dinner: goblets, Caesar raises a hand ("a sudden one"); slow orbit
   '6.4': async k => {
     const d = await rome.domus(k, { room: 'dining', lampI: .5 }); k.exposure = .7;
-    const cz = await C.person(k, 'cae_caesar', { pos: [0, .55, -2.4], rot: 0, pose: 'sit', seatH: .1, laurel: true });
-    const ppl = []; for (const [id, x, z, r] of [['cae_lepidus', -2.4, -.3, P / 2], ['cae_sen4', -2.4, .6, P / 2], ['cae_decimus', 2.4, -.3, -P / 2], ['cae_sen7', 2.4, .6, -P / 2]]) ppl.push(await C.person(k, id, { pos: [x, .55, z], rot: r, pose: 'sit', seatH: .1, seed: 1100 + ppl.length }));
+    const cz = await C.person(k, 'cae_caesar', { pos: [0, 0, -1.98], rot: 0, pose: 'sit', seatH: .66, laurel: true });
+    const ppl = []; for (const [id, x, z, r] of [['cae_lepidus', -1.98, -.4, P / 2], ['cae_sen4', -1.98, .6, P / 2], ['cae_decimus', 1.98, -.4, -P / 2], ['cae_sen7', 1.98, .6, -P / 2]]) ppl.push(await C.person(k, id, { pos: [x, 0, z], rot: r, pose: 'sit', seatH: .66, seed: 1100 + ppl.length }));
     const orb = C.orbit(k.camera, [0, 1.2, -.6], 3.6, 2.2, -.5, .45, 44, [0, 1.0, -.8]);
     const D = k.meta.seconds;
-    return (t, u) => { orb(u); rome.flickerAll(k.scene, t); cz.update(t, { pose: 'sit', seatH: .1, arm: t > D * .5 ? 'raise' : 'lap', mood: 'calm', talk: t > D * .5 }); ppl.forEach((p, i) => p.update(t, { pose: 'sit', seatH: .1, mood: 'happy', look: i < 2 ? .4 : -.4, talk: t < D * .5 && Math.floor(t / 1.5) % 4 === i })); };
+    return (t, u) => { orb(u); rome.flickerAll(k.scene, t); cz.update(t, { pose: 'sit', seatH: .66, arm: t > D * .5 ? 'raise' : 'lap', mood: 'calm', talk: t > D * .5 }); ppl.forEach((p, i) => p.update(t, { pose: 'sit', seatH: .66, mood: 'happy', look: i < 2 ? .4 : -.4, talk: t < D * .5 && Math.floor(t / 1.5) % 4 === i })); };
   },
   // 6.5 bedroom at night: the shutters bang open, the curtain blows in; quick push
   '6.5': async k => {
@@ -130,19 +130,21 @@ export const shots = {
     await rome.forum(k, { trees: false });
     const cz = await C.person(k, 'cae_caesar', { pos: [0, 0, 4], rot: P / 2 - .4, laurel: true });
     const ar = await C.person(k, 'cae_artemidorus', { pos: [.9, 0, 4.4], rot: -P / 2 - .2 });
-    const sc = rome.scroll({ seal: true }); C.attach(ar, sc, 'RightHand', [0, -.08, .04], [0, 0, P / 2]);
+    const sc = rome.scroll({ seal: true }); const hA = C.holdBoth(k, ar, sc, { fwd: .09, tilt: 0 }), hC = C.holdBoth(k, cz, sc, { fwd: .09, tilt: 0 }); const V1 = new THREE.Vector3();
     const crowd = []; for (let i = 0; i < 12; i++) crowd.push(await C.person(k, C.CIT[i % 8], { pos: [-4 + (i % 6) * 1.6 + (i % 6 > 2 ? 1.5 : 0), 0, 2.2 - Math.floor(i / 6) * 2.5], rot: .2, seed: 1250 + i }));
     const cam = C.dolly(k.camera, { pos: [.6, 1.7, 8.2], look: [.4, 1.4, 4.2], fov: 38 }, { pos: [.5, 1.45, 5.9], look: [.45, 1.2, 4.2], fov: 32 });
-    return (t, u) => { cam(u); cz.update(t, { mood: 'calm', arm: t > 3 ? 'hold' : null }); ar.update(t, { arm: 'hold', mood: 'worried', talk: true }); crowd.forEach((p, i) => p.update(t, { mood: 'happy', arm: i % 4 === 0 ? 'raise' : null })); };
+    return (t, u) => { cam(u); cz.update(t, { mood: 'calm', arm: t > 3 ? 'hold' : null }); ar.update(t, { arm: t < 3.6 ? 'hold' : null, mood: 'worried', talk: true });
+      { const e = ease(seg(t, 3.0, 3.5)); V1.copy(hA()); const r = sc.rotation.y; const pc = hC(); sc.position.lerpVectors(V1, pc, e); if (e < .5) sc.rotation.y = r; } crowd.forEach((p, i) => p.update(t, { mood: 'happy', arm: i % 4 === 0 ? 'raise' : null })); };
   },
   // 6.13 the scroll in Caesar's hand, unopened, as the Curia doors close; slow push to the doors
   '6.13': async k => {
     const cy = await rome.courtyard(k, { trees: true });
     const cz = await C.person(k, 'cae_caesar', { pos: [0, 0, -15], rot: P, laurel: true });
-    const sc = rome.scroll({ seal: true }); C.attach(cz, sc, 'LeftHand', [0, -.08, .04], [0, 0, P / 2]);
+    const sc = rome.scroll({ seal: true }); const hs = C.holdBoth(k, cz, sc, { fwd: .09, tilt: 0 });
     const stairY = z => z > -16 ? 0 : Math.min(1.6, Math.ceil((-16 - z) / .45) * .2);
     const cam = C.dolly(k.camera, { pos: [.9, 1.6, -11.5], look: [0, 1.6, -18], fov: 40 }, { pos: [.6, 2.6, -15.5], look: [0, 2.8, -24.8], fov: 40 });
     const D = k.meta.seconds;
-    return (t, u) => { cam(u); const z = -15 - t * 1.0; cz.position.set(0, stairY(z), z); cz.visible = z > -25.4; cz.update(t, { pose: 'walk', dist: t, arm: 'hold', mood: 'calm' }); cy.doors.set(1 - ease(seg(t, D * .82, D))); };
+    // he is fully through the doorway before the doors start to swing shut
+    return (t, u) => { cam(u); const z = -15 - t * 1.25; cz.position.set(0, stairY(z), z); cz.visible = z > -26.2; sc.visible = cz.visible; cz.update(t, { pose: 'walk', dist: t * 1.25, arm: 'hold', mood: 'calm' }); hs(); cy.doors.set(1 - ease(seg(t, Math.max(D * .8, 10.8 / 1.25), D))); };
   },
 };

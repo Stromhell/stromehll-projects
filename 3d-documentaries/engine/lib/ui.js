@@ -91,17 +91,28 @@ export function slam(x, text, t, start = .2, o = {}) {
 }
 
 // dynamic subtitles: phrase chunks, placed top or bottom away from characters.
+const _cap = {};
 export function subtitles(x, chunks, t, avoid = []) {
   const c = chunks.find(c => t >= c.a && t < c.b); if (!c) return;
   const size = 46;
   x.save(); x.font = `600 ${size}px "Oswald"`;
   const w = x.measureText(c.text).width;
   // candidate positions: bottom centre, top centre, bottom left, bottom right
-  const cands = [[960, 1080 - 150], [960, 150], [520, 1080 - 150], [1400, 1080 - 150]];
+  // keep every caption inside the centre 4:3 area (x 200-1720) so 9:16 reel crops never cut it
+  const sx = cx => Math.max(200 + w / 2 + 20, Math.min(1720 - w / 2 - 20, cx));
+  const cands = [[960, 1080 - 150], [960, 150], [sx(560), 1080 - 150], [sx(1360), 1080 - 150]];
   const box = (cx, cy) => [cx - w / 2 - 20, cy - size * .8, cx + w / 2 + 20, cy + size * .8];
   const hit = b => avoid.reduce((s, a) => s + Math.max(0, Math.min(b[2], a[2]) - Math.max(b[0], a[0])) * Math.max(0, Math.min(b[3], a[3]) - Math.max(b[1], a[1])), 0);
-  let best = cands[0], bh = Infinity;
-  for (const p of cands) { const h = hit(box(...p)); if (h < bh - 1) { bh = h; best = p; } }
+  // sticky placement: a caption only moves when a new line starts, and within a shot it stays where the
+  // previous line was unless that spot is now clearly covered (stops captions jumping around)
+  const S = _cap; let best;
+  if (S.chunks === chunks && S.c === c) best = S.pos;
+  else {
+    let bh = Infinity; best = cands[0];
+    for (const p of cands) { const h = hit(box(...p)); if (h < bh - 1) { bh = h; best = p; } }
+    if (S.chunks === chunks && S.pos) { const bb = box(...S.pos), area = (bb[2] - bb[0]) * (bb[3] - bb[1]); if (hit(bb) < area * .35) best = S.pos; }
+    S.chunks = chunks; S.c = c; S.pos = best;
+  }
   const a = clamp((t - c.a) / .03) * clamp((c.b - t) / .03); // near hard cut: a slow fade ghosted captions over bright shots
   x.globalAlpha = a; x.textAlign = 'center'; x.textBaseline = 'middle';
   x.lineJoin = 'round'; x.lineWidth = 10; x.strokeStyle = 'rgba(20,14,10,.92)';

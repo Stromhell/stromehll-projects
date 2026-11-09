@@ -31,6 +31,11 @@ K = [
 ]
 MUSIC = {0: ('Dark_Times', 0), 1: ('Heroic_Age', 0), 2: ('Lord_of_the_Land', 20), 3: ('Unholy_Knight', 0), 4: ('Impact_Prelude', 0),
          5: ('Ossuary_6_-_Air', 0), 6: ('Dark_Times', 60), 7: ('Lord_of_the_Land', 90)}
+HB = lambda d: {'dur': d, 'lp': 700, 'fadeIn': .8, 'loop': True}
+EXTRA = {0: [('0.1', 0, '0243', .4, HB(7)), ('0.5', 0, '0243', .35, HB(6)), ('0.6', 0, '0243', .45, HB(6))],
+         5: [('5.1', 0, '0243', .35, HB(8)), ('5.3', .9, '0128', .45, {'dur': 1.2, 'rate': .8}), ('5.4', 0, '0243', .5, HB(4)),
+             ('5.5', .6, '2574', .35, {'dur': .8, 'lp': 5000}), ('5.9', .8, '2574', .3, {'dur': .8, 'lp': 5000}), ('5.9', 1.6, '0128', .3, {'dur': .8})]}
+SILENCE = {5: [['5.12', 0.0, 2.0]]}
 d = json.load(open(J))
 for a in d['acts']:
     n = a['act']; amb, cues = {}, []
@@ -41,6 +46,8 @@ for a in d['acts']:
         for kw, f, vol, at, o in K:
             if kw in sfx and not any(kw in u for u in used) and len(used) < 3:
                 used.add(kw); cues.append([sid, at, S + f + '.mp3', vol, o])
+    # extra cues from the production guide: heartbeat undercurrent, cloth rip, dagger foley
+    for sid, at, fn, vol, o in EXTRA.get(n, []): cues.append([sid, at, S + fn + '.mp3', vol, o])
     json.dump({'music': {'file': M + MUSIC[n][0] + '.mp3', 'gain': .28, 'ss': MUSIC[n][1], 'fadeOut': 3},
-               'amb': amb, 'whoosh': [S + '1795.mp3', S + '1796.mp3'], 'cues': cues}, open(f'{OUT}/act{n}.cues.json', 'w'), indent=1)
+               'amb': amb, 'silence': SILENCE.get(n, []), 'whoosh': [S + '1795.mp3', S + '1796.mp3'], 'cues': cues}, open(f'{OUT}/act{n}.cues.json', 'w'), indent=1)
     print('act', n, len(cues), 'cues')
