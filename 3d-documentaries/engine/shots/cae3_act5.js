@@ -56,7 +56,7 @@ export const shots = {
     C.attach(ca, rome.daggerShape(), 'RightHand', [0, -.08, .02], [P, 0, 0]);
     rome.key(k.scene, [0, 4, -14], [-.6, 1.8, -11.4], { i: 110, color: 0xffd0a0, angle: .4 });
     const cam = C.dolly(k.camera, { pos: [1.4, 1.5, -7.6], look: [-.4, 1.7, -11], fov: 36 }, { pos: [1.0, 1.55, -8.4], look: [-.5, 1.8, -11.2], fov: 32 });
-    const D = k.meta.seconds;
+    const D = k.meta.seconds; k.overlayEnd = D * .72; // name tag goes with the picture when the screen cuts to black
     return (t, u) => { cam(u); ca.update(t, { arm: 'raise', mood: 'stern' }); cz.update(t, { pose: 'sit', seatH: .6, mood: 'surprised' }); black(k.overlay, seg(t, D * .72, D * .74)); };
   },
   // 5.6 the stylus in Caesar's hand; a small comic "OUCH"

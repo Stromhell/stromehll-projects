@@ -75,7 +75,7 @@ window.frame = (t, fmt = 'jpeg', q = .93) => {
     // overlay column from the script: callout / chip / tally
     const ovs = (meta.overlay || '').split(';').map(s => s.trim()).filter(Boolean);
     for (const o of ovs) {
-      const m = o.match(/^(callout|chip|tally):\s*(.*)$/i); if (!m || kit.noAutoOverlay) continue;
+      const m = o.match(/^(callout|chip|tally):\s*(.*)$/i); if (!m || kit.noAutoOverlay || (kit.overlayEnd != null && t > kit.overlayEnd)) continue;
       const [a, b] = m[2].split('/').map(s => s.trim());
       let px = 1480, py = 300;
       if (kit.anchor) { const v = new THREE.Vector3(...kit.anchor).project(camera); px = (v.x + 1) * 960; py = (1 - v.y) * 540; }
