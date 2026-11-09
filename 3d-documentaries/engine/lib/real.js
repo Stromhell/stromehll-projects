@@ -260,6 +260,8 @@ export async function human(o = {}) {
       if (!right && arm === 'stab') { aim(sd + 'Arm', sg * .35, -.6, .5); aim(sd + 'ForeArm', -sg * .2, .1, 1); continue; }
       if (arm === 'hug') { aim(sd + 'Arm', sg * .4, -.3, 1); aim(sd + 'ForeArm', -sg * 1, 0, .6); continue; }
       if (sit && (arm === 'lap' || !arm)) { aim(sd + 'Arm', sg * .2, -1, .35); aim(sd + 'ForeArm', -sg * .15, -.25, 1); aim(sd + 'Hand', -sg * .1, -.4, 1); continue; }
+      // right hand slides across the chest into the toga fold (hiding a dagger); left arm stays at rest
+      if (right && arm === 'tuck') { aim(sd + 'Arm', sg * .12, -.75, .65); aim(sd + 'ForeArm', -sg * .95, .3, .35); aim(sd + 'Hand', -sg * .9, .25, .2); continue; }
       if (arm === 'cover') { aim(sd + 'Arm', sg * .2, -.2, 1); aim(sd + 'ForeArm', -sg * .5, 1, .3); continue; }
       const sw = walk ? S(ph + (sg > 0 ? Math.PI : 0)) * .35 : S(tt * .8 + sg) * .02;
       aim(sd + 'Arm', sg * .16, -1, sw); aim(sd + 'ForeArm', sg * .05, -1, sw + .18); aim(sd + 'Hand', 0, -1, sw + .1);

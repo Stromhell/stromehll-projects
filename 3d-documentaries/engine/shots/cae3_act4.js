@@ -46,7 +46,7 @@ export const shots = {
     const cam = C.dolly(k.camera, { pos: [.6, 1.5, -9.4], look: [0, 1.25, -12], fov: 34 }, { pos: [.35, 1.4, -10.6], look: [0, 1.2, -12], fov: 30 });
     const D = k.meta.seconds;
     // holds the dagger low, glances round, then slides it inside the toga at the chest (hidden once the hand is under the fold)
-    return (t, u) => { cam(u); const tuck = t > D * .5; dg.visible = t < D * .62; sn.update(t, { arm: tuck ? 'cover' : 'hold', mood: 'stern', look: tuck ? 0 : Math.sin(t * 1.2) * .4 }); };
+    return (t, u) => { cam(u); const tuck = t > D * .5; dg.visible = t < D * .62; sn.update(t, { arm: tuck ? 'tuck' : 'hold', mood: 'stern', look: tuck ? 0 : Math.sin(t * 1.2) * .4 }); };
   },
   // 4.4 top-down: gladiators spread to the courtyard exits
   '4.4': async k => {
