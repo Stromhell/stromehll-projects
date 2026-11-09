@@ -68,7 +68,7 @@ export const shots = {
     const cam = C.dolly(k.camera, { pos: [1.3, 2.0, -7.6], look: [0, 2.0, -10], fov: 38 }, { pos: [1.0, 2.05, -8.3], look: [0, 2.05, -10], fov: 34 });
     const D = k.meta.seconds;
     // guard, wind up, then a jab forward with the stylus as OUCH lands
-    return (t, u) => { cam(u); cz.update(t, { arm: t < D * .4 ? 'hold' : t < D * .56 ? 'raise' : 'stab', mood: t < D * .4 ? 'surprised' : 'angry', look: .3 });
+    return (t, u) => { cam(u); cz.update(t, { arm: t < D * .54 ? 'hold' : 'stab', mood: t < D * .4 ? 'surprised' : 'angry', look: .3 });
       const a = seg(t, D * .6, D * .65) * (1 - seg(t, D * .85, D * .9)); if (a > 0) { const x = k.overlay; x.save(); x.globalAlpha = a; x.translate(1380, 520); x.rotate(-.15); x.font = '900 64px "Comic Sans MS", "Liberation Sans"'; x.lineWidth = 10; x.strokeStyle = '#000'; x.strokeText('OUCH!', 0, 0); x.fillStyle = '#ffd23a'; x.fillText('OUCH!', 0, 0); x.restore(); } };
   },
   // 5.7 the ring of togas closes over the chair from above (Act 0 ring shot again)

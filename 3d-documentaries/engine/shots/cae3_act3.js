@@ -140,6 +140,7 @@ export const shots = {
     const d = await tableTop(k);
     const ar = arenaModel(d.M); ar.position.set(0, .945, 0); k.scene.add(ar);
     const men = tinyMen(6, 0x7a5a3a); men.position.set(0, .965, 0); k.scene.add(men);
+    rome.key(k.scene, [1.2, 2.2, 1.6], [0, 1.0, 0], { i: 22 }); // warm light across the arcades so the colosseum reads
     const cam = C.dolly(k.camera, { pos: [.95, 1.5, 1.25], look: [0, 1.0, 0], fov: 38 }, { pos: [.55, 1.32, .9], look: [0, 1.0, 0], fov: 36 });
     return (t, u) => { cam(u); rome.flickerAll(k.scene, t); C.stamp(k.overlay, t, k.meta.seconds * .6); };
   },

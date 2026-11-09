@@ -285,7 +285,7 @@ export function oilLamp(scene, pos, o = {}) {
   g.position.set(...pos); scene.add(g);
   const l = real.lamp(scene, [pos[0], pos[1] + .15, pos[2] + .1], { i: (o.i ?? 2.2) * 8, dist: o.dist ?? 6, color: 0xffb060, shadow: !!o.shadow });
   const base = l.intensity; const ph = Math.random() * 9;
-  g.userData.flicker = t => { const f = 1 + Math.sin(t * 13 + ph) * .06 + Math.sin(t * 29 + ph * 2) * .04; l.intensity = base * f; fl.scale.y = 2.2 * f; };
+  g.userData.flicker = t => { const f = 1 + Math.sin(t * 5 + ph) * .035 + Math.sin(t * 8.3 + ph * 2) * .02; l.intensity = base * f; fl.scale.y = 2.2 * f; };
   return g;
 }
 // standing bronze brazier with fire
@@ -297,7 +297,7 @@ export function brazier(scene, pos, o = {}) {
   g.position.set(...pos); scene.add(g);
   const l = real.lamp(scene, [pos[0], pos[1] + 1.6, pos[2]], { i: (o.i ?? 10) * 6, dist: o.dist ?? 10, color: 0xff9a40, shadow: o.shadow ?? true });
   const base = l.intensity, ph = Math.random() * 9;
-  g.userData.flicker = t => { const f = 1 + Math.sin(t * 11 + ph) * .08 + Math.sin(t * 23 + ph) * .05; l.intensity = base * f; fl.scale.set(1, f, 1); };
+  g.userData.flicker = t => { const f = 1 + Math.sin(t * 4.6 + ph) * .04 + Math.sin(t * 7.9 + ph) * .02; l.intensity = base * f; fl.scale.set(1, f, 1); };
   return g;
 }
 export const flickerAll = (scene, t) => scene.traverse(o => o.userData.flicker && o.userData.flicker(t));
