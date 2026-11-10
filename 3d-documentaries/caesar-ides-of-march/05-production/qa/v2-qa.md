@@ -5,3 +5,5 @@
 - Act 3: CLEAN. 3.3 no hand clipping, 3.4 tablet two-handed, 3.5 diners on couches, 3.10 lit colosseum, 3.15 no light flicker.
 - Act 4: 4.3 used the face-cover pose for hiding the dagger; added a 'tuck' pose (hand into toga fold). 4.3 re-render queued after act 7. Rest CLEAN (4.5 scroll two-handed, 4.10 floor steady).
 - Act 5: CLEAN (pleading Cimber, guard-to-jab stylus, wounds graphic, Et tu cards). 5.5 name tag hidden during the blackout; re-render queued.
+- Act 6: CLEAN. 6.4 diners seated on couches, 6.8 arm cloth steady, 6.12 scroll passed hand to hand, 6.13 doors close after Caesar is inside.
+- Act 7: CLEAN. 7.4 new VO, 7.5 gentle dim, 7.8 chair complete. 4.3 re-render: hand slides into toga fold (CLEAN).
