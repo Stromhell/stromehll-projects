@@ -1,0 +1,23 @@
+full	2027-02-25T16:00:00Z	youtube	6af2bcd83b0d55c747a215f0	60 Men, 1 Target: The Real Story of Julius Caesar's Assassination
+reel01	2027-02-26T16:00:00Z	youtube+instagram	6af2bdf6df948007f25f91cf	60 Men. 1 Target. The Ides of March, 44 BC #shorts
+reel02	2027-02-27T12:00:00Z	youtube+instagram	6af2bdfaec3ad8b0f0ddf267	The Day Caesar Crossed the Rubicon #shorts
+reel03	2027-02-27T17:00:00Z	youtube+instagram	6af2bdfcec3ad8b0f0ddf296	The One Word That Terrified Rome #shorts
+reel04	2027-02-27T22:00:00Z	youtube+instagram	6af2bdffec3ad8b0f0ddf2b8	Why July Is Named After Julius Caesar #shorts
+reel05	2027-02-28T12:00:00Z	youtube+instagram	6af2be01ec3ad8b0f0ddf2dd	Who Wanted Julius Caesar Dead? #shorts
+reel06	2027-02-28T17:00:00Z	youtube+instagram	6af2be21ec3ad8b0f0ddf41e	The Bridge Plan to Kill Caesar #shorts
+reel07	2027-02-28T22:00:00Z	youtube+instagram	6af2be246dffc2e36ce55860	Why They Killed Caesar in the Senate #shorts
+reel08	2027-03-01T12:00:00Z	youtube+instagram	6af2be27653ff5dfa3cc7522	Daggers Hidden in Pencil Boxes #shorts
+reel09	2027-03-01T17:00:00Z	youtube+instagram	6af2be29ec3ad8b0f0ddf431	Why the Assassins Let Mark Antony Live #shorts
+reel10	2027-03-01T22:00:00Z	youtube+instagram	6af2be2ca599f74dc5206454	The Signal: How Caesar's Murder Began #shorts
+reel11	2027-03-02T12:00:00Z	youtube+instagram	6af2be57fa5f56d0ea83f8a0	"Et Tu, Brute?" Caesar Probably Never Said It #shorts
+reel12	2027-03-02T17:00:00Z	youtube+instagram	6af2be59797838c9e0acd623	Caesar Was Warned for a Month #shorts
+reel13	2027-03-02T22:00:00Z	youtube+instagram	6af2be5cfa5f56d0ea83f8bf	Caesar Almost Stayed Home That Day #shorts
+reel14	2027-03-03T12:00:00Z	youtube+instagram	6af2be5ef25ba120bcb03c79	The Warning Caesar Never Read #shorts
+reel15	2027-03-03T17:00:00Z	youtube+instagram	6af2be61fa5f56d0ea83f8f0	Caesar's Mercy May Have Killed Him #shorts
+part1	2027-02-26T14:30:00Z	instagram	6af2bededbdeed9d63c1acf1	The Ides of March, Part 1 of 7
+part2	2027-02-27T14:30:00Z	instagram	6af2bee3dbdeed9d63c1acfe	The Ides of March, Part 2 of 7
+part3	2027-02-28T14:30:00Z	instagram	6af2bee9ac857aeb789d0596	The Ides of March, Part 3 of 7
+part4	2027-03-01T14:30:00Z	instagram	6af2beec2b59bac5dd5144ad	The Ides of March, Part 4 of 7
+part5	2027-03-02T14:30:00Z	instagram	6af2beef224f35dde5017e17	The Ides of March, Part 5 of 7
+part6	2027-03-03T14:30:00Z	instagram	6af2bef3ac857aeb789d05ad	The Ides of March, Part 6 of 7
+part7	2027-03-04T14:30:00Z	instagram	6af2bef73239570b595e7d22	The Ides of March, Part 7 of 7
