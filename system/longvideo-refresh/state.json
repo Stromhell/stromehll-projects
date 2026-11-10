@@ -24,6 +24,14 @@
      "viewsBefore": 14,
      "title": "When Europe's Greatest City Was Muslim: The Rise and Fall of Al-Andalus",
      "thumb": "2d-dynamic/spain-1-al-andalus/launch/refresh-2/Spain1_refresh2_thumbnail.jpg"
+    },
+    {
+     "n": 3,
+     "at": "2026-11-10T14:25:00Z",
+     "viewsBefore": 18,
+     "title": "Why Spain Was Muslim for 781 Years",
+     "thumb": "2d-dynamic/spain-1-al-andalus/launch/refresh-3/Spain1_refresh3_thumbnail.jpg",
+     "note": "one-time extra swap approved by Pushpam 10 Nov 14:21 UTC; tags also changed; FINAL"
     }
    ],
    "done": true
@@ -37,6 +45,16 @@
    "swaps": [],
    "done": true,
    "note": "78 views at 34 h (2026-11-08T04:52Z): above threshold, no swap needed"
+  },
+  "dERXbnzyjug": {
+   "zernioPostId": "6ae1d893eb3ba1ed54c5f32a",
+   "name": "Salman al-Farsi",
+   "folder": null,
+   "publishedAt": "2026-11-09T16:00:08Z",
+   "originalTitle": "He Crossed 5,000 km to Find One Man || salman al farsi",
+   "swaps": [],
+   "done": false,
+   "note": "added 2026-11-10T04:51Z: 4 views at 13 h; 32 h mark = 2026-11-11T00:00Z; project folder not found in project files"
   }
  }
 }
