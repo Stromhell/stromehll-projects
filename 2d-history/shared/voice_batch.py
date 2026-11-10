@@ -14,6 +14,11 @@ def year(y):
     hi, lo = divmod(y, 100)
     return two(hi) + ' ' + ('hundred' if lo == 0 else ('oh ' + ONES[lo] if lo < 10 else two(lo)))
 WORDS = [
+ (r"\bMegaspeed's\b", 'Mega-speed\'s'), (r"\bMegaspeed\b", 'Mega-speed'), (r"\bNvidia's\b", 'En-vidia\'s'), (r"\bNvidia\b", 'En-vidia'), (r"\bComputex\b", 'Com-pew-tex'),
+ (r"\bHuang Le\b", 'Hwahng Luh'), (r"\bHuang\b", 'Hwahng'), (r"\bJensanity\b", 'Jen-sanity'), (r"\bH200\b", 'H two hundred'), (r"\bMar-a-Lago\b", 'Mar-uh-Lah-go'),
+ (r"\bXi Jinping\b", 'Shee Jin-ping'), (r"\bXi\b", 'Shee'), (r"\bSwalwell\b", 'Swall-well'), (r"\bLeung\b", 'Lee-ung'), (r"\bShenzhen\b", 'Shen-jen'),
+ (r"\bYi He\b", 'Yee Huh'), (r"\bBinance's\b", 'By-nance\'s'), (r"\bBinance\b", 'By-nance'), (r"\bAlibaba\b", 'Ali-baba'), (r"\bGE\b", 'G E'),
+ (r"\bLinkedIn\b", 'Linked-In'), (r"\bOBI\b", 'O B I'), (r"\bChatGPT\b", 'Chat G P T'), (r"\bUS\b", 'U S'), (r"\bAbu Dhabi\b", 'Ah-boo Dah-bee'),
  (r"\bXenomega\b", 'Zee-no-mega'), (r"\bPokora\b", 'Puh-kor-ah'), (r"\bNesheiwat\b", 'Neh-shay-wat'), (r"\bSanadodeh\b", 'Sana-doh-deh'), (r"\bLeroux\b", 'Leh-roo'),
  (r"\bAlcala\b", 'Al-kah-la'), (r"\bDurango\b", 'Doo-rang-go'), (r"\bSeychelles\b", 'Say-shells'), (r"\bMTW\b", 'M T W'), (r"\bEA\b", 'E A'), (r"\bAMD\b", 'A M D'),
  (r"\b8,000 dollars\b", 'eight thousand dollars'), (r"\b100 dollars\b", 'a hundred dollars'), (r"\b5,000 dollars\b", 'five thousand dollars'), (r"\b14-year-old\b", 'fourteen-year-old'), (r"\b18-year-old\b", 'eighteen-year-old'),

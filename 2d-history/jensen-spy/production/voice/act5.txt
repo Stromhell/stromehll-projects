@@ -1,0 +1,11 @@
+August 2022. Washington tells Nvidia it needs a licence to sell its best AI chips to China. The worry is that China's military will build its AI on American chips.
+
+So Nvidia makes a slower version for China. Washington closes that gap. Nvidia designs another one, made to fit just under the new rules. In April 2025 that last China chip needs a licence too, and Nvidia writes off four and a half billion dollars.
+
+He says the rules have pushed China to build its own chips, and that Nvidia's share of the market there has fallen from about ninety-five percent to about half. He tells interviewers China is right behind America. Not far behind at all.
+
+He makes the same case in Washington, to Congress and to the president. That summer, after he lobbies the White House, the licences come back. In exchange, the US government takes fifteen percent of the sales.
+
+But there's a gap in the wall. The rules stop chips going into China. They don't stop a Chinese company renting them somewhere else, over the internet. That's the business Megaspeed is in.
+
+By October 2025, Singapore's police are investigating Megaspeed, and so is the US Commerce Department. Nvidia says it's a small cloud company like many others. Megaspeed later says investigators found no evidence of wrongdoing.
