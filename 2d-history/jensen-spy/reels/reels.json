@@ -1,0 +1,122 @@
+[
+ {
+  "id": 1,
+  "act": 0,
+  "t0": 1.33,
+  "t1": 56.59,
+  "hook": "US intel says she was a Chinese spy.",
+  "kicker": "THE BET"
+ },
+ {
+  "id": 2,
+  "act": 1,
+  "t0": 0.4,
+  "t1": 69.44,
+  "hook": "Two employees. Two billion dollars of chips.",
+  "kicker": "WHO IS ALICE HUANG?"
+ },
+ {
+  "id": 3,
+  "act": 2,
+  "t0": 0.4,
+  "t1": 37.09,
+  "hook": "Look who's standing right behind him.",
+  "kicker": "COMPUTEX 2025"
+ },
+ {
+  "id": 4,
+  "act": 3,
+  "t0": 0.4,
+  "t1": 25.9,
+  "hook": "Nvidia's CEO cleaned toilets at a reform school.",
+  "kicker": "JENSEN AT 9"
+ },
+ {
+  "id": 5,
+  "act": 3,
+  "t0": 26.05,
+  "t1": 54.87,
+  "hook": "He started Nvidia in a Denny's booth.",
+  "kicker": "200 DOLLARS EACH"
+ },
+ {
+  "id": 6,
+  "act": 4,
+  "t0": 0.4,
+  "t1": 40.55,
+  "hook": "Five trillion dollars. China can't buy it.",
+  "kicker": "5 TRILLION"
+ },
+ {
+  "id": 7,
+  "act": 5,
+  "t0": 0.4,
+  "t1": 52.58,
+  "hook": "Washington took fifteen percent of his China sales.",
+  "kicker": "THE CHIP WAR"
+ },
+ {
+  "id": 8,
+  "act": 5,
+  "t0": 52.78,
+  "t1": 77.5,
+  "hook": "There's a hole in America's chip wall.",
+  "kicker": "THE LOOPHOLE"
+ },
+ {
+  "id": 9,
+  "act": 6,
+  "t0": 0.4,
+  "t1": 39.61,
+  "hook": "This is how China's spies recruit you.",
+  "kicker": "CHINA'S MSS"
+ },
+ {
+  "id": 10,
+  "act": 6,
+  "t0": 39.75,
+  "t1": 82.66,
+  "hook": "Code name: Parlor Maid.",
+  "kicker": "SPY ROMANCES"
+ },
+ {
+  "id": 11,
+  "act": 7,
+  "t0": 0.4,
+  "t1": 42.9,
+  "hook": "They hid his name. Then they looked.",
+  "kicker": "THE BLACK BAR"
+ },
+ {
+  "id": 12,
+  "act": 7,
+  "t0": 42.99,
+  "t1": 75.25,
+  "hook": "Now nobody knows where she is.",
+  "kicker": "WHAT DID SHE WANT?"
+ },
+ {
+  "id": 13,
+  "act": 8,
+  "t0": 1.26,
+  "t1": 74.79,
+  "hook": "Trump was told. He did nothing.",
+  "kicker": "NOBODY WARNED HIM"
+ },
+ {
+  "id": 14,
+  "act": 9,
+  "t0": 0.4,
+  "t1": 67.92,
+  "hook": "The story that wiped four percent off Nvidia.",
+  "kicker": "THE STORY BREAKS"
+ },
+ {
+  "id": 15,
+  "act": 10,
+  "t0": 0.4,
+  "t1": 61.31,
+  "hook": "I was unfaithful to my wife.",
+  "kicker": "THE APOLOGY"
+ }
+]
