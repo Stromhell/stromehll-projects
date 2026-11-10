@@ -1,0 +1,305 @@
+{
+ "dur": 41.163,
+ "cues": [
+  {
+   "t": 0.996,
+   "name": "pop",
+   "gain": 0.25
+  },
+  {
+   "t": 2.696,
+   "name": "whoosh",
+   "gain": 0.3
+  },
+  {
+   "t": 3.996,
+   "name": "chime",
+   "gain": 0.3
+  },
+  {
+   "t": 5.756,
+   "name": "whoosh_soft",
+   "gain": 0.3
+  },
+  {
+   "t": 6.416,
+   "name": "swell",
+   "gain": 0.25
+  },
+  {
+   "t": 7.651,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 7.751,
+   "name": "pop",
+   "gain": 0.2
+  },
+  {
+   "t": 7.981,
+   "name": "whoosh",
+   "gain": 0.3
+  },
+  {
+   "t": 9.321,
+   "name": "pop",
+   "gain": 0.2
+  },
+  {
+   "t": 9.571,
+   "name": "pop",
+   "gain": 0.2
+  },
+  {
+   "t": 9.821,
+   "name": "pop",
+   "gain": 0.2
+  },
+  {
+   "t": 10.071,
+   "name": "pop",
+   "gain": 0.2
+  },
+  {
+   "t": 10.741,
+   "name": "chime",
+   "gain": 0.25
+  },
+  {
+   "t": 11.481,
+   "name": "typing",
+   "gain": 0.25
+  },
+  {
+   "t": 12.281,
+   "name": "whoosh",
+   "gain": 0.3
+  },
+  {
+   "t": 13.241,
+   "name": "whoosh_soft",
+   "gain": 0.3
+  },
+  {
+   "t": 14.141,
+   "name": "tick",
+   "gain": 0.25
+  },
+  {
+   "t": 15.441,
+   "name": "swell",
+   "gain": 0.25
+  },
+  {
+   "t": 17.005,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 17.205,
+   "name": "riser",
+   "gain": 0.2
+  },
+  {
+   "t": 17.073,
+   "name": "whoosh",
+   "gain": 0.3
+  },
+  {
+   "t": 17.673,
+   "name": "thud",
+   "gain": 0.25
+  },
+  {
+   "t": 20.693,
+   "name": "drum",
+   "gain": 0.3
+  },
+  {
+   "t": 21.093,
+   "name": "stamp",
+   "gain": 0.3
+  },
+  {
+   "t": 21.913,
+   "name": "crowd_cheer",
+   "gain": 0.35
+  },
+  {
+   "t": 22.013,
+   "name": "coins_cascade",
+   "gain": 0.2
+  },
+  {
+   "t": 23.353,
+   "name": "scrape",
+   "gain": 0.25
+  },
+  {
+   "t": 23.653,
+   "name": "pop",
+   "gain": 0.25
+  },
+  {
+   "t": 24.72,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 24.92,
+   "name": "crowd_cheer",
+   "gain": 0.25
+  },
+  {
+   "t": 25.22,
+   "name": "camera_shutter",
+   "gain": 0.2
+  },
+  {
+   "t": 25.92,
+   "name": "camera_shutter",
+   "gain": 0.2
+  },
+  {
+   "t": 26.72,
+   "name": "camera_shutter",
+   "gain": 0.2
+  },
+  {
+   "t": 24.895,
+   "name": "pop",
+   "gain": 0.2
+  },
+  {
+   "t": 27.108,
+   "name": "stamp",
+   "gain": 0.3
+  },
+  {
+   "t": 27.208,
+   "name": "crowd_cheer",
+   "gain": 0.3
+  },
+  {
+   "t": 27.928,
+   "name": "whoosh",
+   "gain": 0.35
+  },
+  {
+   "t": 29.548,
+   "name": "tick",
+   "gain": 0.2
+  },
+  {
+   "t": 29.808,
+   "name": "riser",
+   "gain": 0.2
+  },
+  {
+   "t": 31.068,
+   "name": "hit",
+   "gain": 0.4
+  },
+  {
+   "t": 31.118,
+   "name": "stamp",
+   "gain": 0.3
+  },
+  {
+   "t": 31.368,
+   "name": "crowd_cheer",
+   "gain": 0.2
+  },
+  {
+   "t": 33.915,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 34.015,
+   "name": "whoosh_soft",
+   "gain": 0.3
+  },
+  {
+   "t": 34.861,
+   "name": "drum",
+   "gain": 0.2
+  },
+  {
+   "t": 35.501,
+   "name": "pop",
+   "gain": 0.2
+  },
+  {
+   "t": 38.861,
+   "name": "thud",
+   "gain": 0.35
+  },
+  {
+   "t": 38.961,
+   "name": "hit",
+   "gain": 0.25
+  },
+  {
+   "t": 39.161,
+   "name": "stamp",
+   "gain": 0.35
+  },
+  {
+   "t": 39.681,
+   "name": "tension",
+   "gain": 0.2
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 8.351,
+   "name": "hum_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 0,
+   "end": 8.351,
+   "name": "drone",
+   "gain": 0.1
+  },
+  {
+   "start": 7.551,
+   "end": 17.705000000000002,
+   "name": "hum_loop",
+   "gain": 0.3
+  },
+  {
+   "start": 16.905,
+   "end": 25.42,
+   "name": "crowd_loop",
+   "gain": 0.22
+  },
+  {
+   "start": 16.905,
+   "end": 25.42,
+   "name": "hum_loop",
+   "gain": 0.1
+  },
+  {
+   "start": 24.62,
+   "end": 34.614999999999995,
+   "name": "crowd_loop",
+   "gain": 0.3
+  },
+  {
+   "start": 33.815,
+   "end": 41.962999999999994,
+   "name": "tension",
+   "gain": 0.2
+  },
+  {
+   "start": 33.815,
+   "end": 41.962999999999994,
+   "name": "drone",
+   "gain": 0.1
+  }
+ ]
+}

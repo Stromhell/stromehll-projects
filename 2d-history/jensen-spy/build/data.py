@@ -100,7 +100,7 @@ S = [
   ("MED", "On the twenty-ninth of October 2025, Nvidia becomes the first company in history worth five trillion dollars. Remember that date.",
    "A share-price line rockets; a big '$5 TRILLION' badge; a calendar page '29 OCT' pins to the corner.", "$5 TRILLION · 29 OCT",
    "bg:chart;prop:bars,.5,.6,1.3;prop:calendar,.85,.25,.6;txt:.5,.15,$5T", "Line rockets; badge slams."),
-  ("MED", "In Taiwan, where he was born, they call it Jensanity. One of his leather jackets sells at auction for nine hundred and sixty thousand dollars.",
+  ("MED", "In Taiwan, where he was born, they call it Jensanity. One of his leather jackets sold at auction for nine hundred and sixty thousand dollars.",
    "Taipei crowd with phones up; an auction gavel over a leather jacket on a stand.", "$960,000 JACKET",
    "bg:street;fig:.5,.86,stand,jacket;prop:stamp,.8,.5,1;txt:.5,.15,JENSANITY", "Crowd cheers; gavel drops."),
   ("MED", "But there's one country that wants his chips more than almost anyone. And it isn't allowed to buy them.",
