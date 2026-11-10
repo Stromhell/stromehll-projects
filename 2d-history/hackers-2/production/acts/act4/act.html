@@ -1,0 +1,57 @@
+<!doctype html><html><head><meta charset="utf-8"><title>XU act N</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../tw_kit.js"></script><script src="../../xu_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+const SW = 1920, SH = 1080, INK = TW.INK, RED = TW.RED, pop = TW.pop, fade = TW.fade;
+const backdrop = (name, b = .5, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const CARRY = () => ({ shL: 30, elL: -75, shR: 35, elR: -75 });
+const endTitle = (secs) => { const T = window.TIMING; const last = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length, start: last.end, end: last.end + secs, vo_start: last.end, vo_end: last.end, text: '' }); T.dur = last.end + secs; };
+const CREW = [['XENOMEGA', '#5ad83a'], ['SUPERDAE', '#e8c23a'], ['SONIC', '#3ad0ff'], ['MTW', '#e86a3a'], ['AUSTIN', '#c86ad8'], ['NATHAN', '#8a9aff']];
+// two figures seen from behind, lit by the screen (screen space)
+const backs = (c, lt, glow = '154,255,122') => { [[640, 1080, 1.0], [1300, 1100, 1.08]].forEach(([x, y, s], k) => { c.save(); c.translate(x + Math.sin(lt * .8 + k) * 4, y); c.scale(s, s); c.fillStyle = '#07090c'; c.beginPath(); c.ellipse(0, -60, 250, 170, 0, Math.PI, 0); c.fill(); c.fillRect(-250, -60, 500, 80); c.beginPath(); c.arc(0, -280, 120, 0, 7); c.fill(); c.fillStyle = k ? '#1a120c' : '#0f0c0a'; c.beginPath(); c.arc(0, -300, 118, Math.PI * 1.05, Math.PI * 1.95); c.fill();
+  c.strokeStyle = `rgba(${glow},.45)`; c.lineWidth = 5; c.beginPath(); c.arc(0, -280, 121, Math.PI * 1.2, Math.PI * 1.8); c.stroke(); c.beginPath(); c.ellipse(0, -60, 252, 172, 0, Math.PI * 1.15, Math.PI * 1.85); c.stroke(); c.restore(); }); };
+window.SHOTS = [
+  // 4.01 the others can't resist: Microsoft, EA, Valve, Activision, Blizzard flip green one by one; then 'far beyond games'
+  { draw: (c, lt, u, S) => { XU.bg(c, lt); const z = 1 + .06 * u; c.save(); c.translate(960, 560); c.scale(z, z); c.translate(-960, -560); XU.wall(c, lt, S._g, { y0: 330, stagger: .04 }); c.restore(); },
+    bed: [['tension', .18]],
+    init: S => { const t = ['Microsoft', 'EA', 'Valve', 'Activision', 'Blizzard'].map((w, k) => A.at(S, w, 2 + k * .6)); const tB = A.at(S, 'beyond', 6.0);
+      S._g = [t[0], null, t[1], t[2], t[3], t[4]];
+      S.D.over = [(c, lt) => K.card(c, "THEY CAN'T RESIST", lt, { at: .3, x: 560, y: 940, px: 50, rot: -2 }), (c, lt) => K.card(c, 'FAR BEYOND GAMES', lt, { at: tB, x: 1400, y: 940, px: 46, rot: 2 })]; S.D.sub = 'top';
+      S.D.sfx = [[.3, 'pop', .2], ...t.map(x => [x, 'hit', .2]), [tB, 'riser', .2]]; } },
+  // 4.02 Intel, AMD, Disney, Warner Bros, Google flip too; a counter climbs to about 25 companies
+  { draw: (c, lt, u, S) => { XU.bg(c, lt); const z = 1.06 - .06 * u; c.save(); c.translate(960, 560); c.scale(z, z); c.translate(-960, -560); XU.wall(c, lt + 7, S._g, { y0: 330, in: -5 }); c.restore(); },
+    bed: [['tension', .18]],
+    init: S => { const t = ['Intel', 'AMD', 'Disney', 'Warner', 'Google'].map((w, k) => A.at(S, w, .4 + k * .5)); const tA = A.at(S, 'Around', 3.4);
+      S._g = [-9, -9, -9, -9, -9, -9, t[0], t[1], t[2], t[3], t[4], null];
+      S.D.over = [(c, lt) => { const a = pop(lt, tA - .2, .45); if (a <= 0) return; c.save(); c.translate(960, 560); c.scale(a, a); c.fillStyle = 'rgba(8,14,8,.9)'; c.strokeStyle = XU.NEON; c.lineWidth = 8; TW.rr(c, -330, -150, 660, 300, 30); c.fill(); c.stroke(); K.counter(c, 0, 25, lt, { at: tA, dur: 1.4, x: 0, y: -20, px: 170, pre: '≈' }); TW.txt(c, 'COMPANIES', 0, 100, 54, '#dfffd2', 'center', 'Anton'); c.restore(); }]; S.D.sub = 'top';
+      S.D.sfx = [...t.map(x => [x, 'hit', .2]), [tA, 'drum', .3], ...Array.from({ length: 6 }, (_, k) => [tA + .1 + k * .2, 'tick', .18])]; } },
+  // 4.03 2012: a link from a game studio to a US Army system: an Apache simulator on a military screen; two silhouettes hesitate; the cursor clicks DOWNLOAD
+  { draw: (c, lt, u, S) => { c.fillStyle = '#05070a'; c.fillRect(0, 0, 1920, 1080); const z = 1 + .05 * u; c.save(); c.translate(960, 420); c.scale(z, z); c.translate(-960, -420);
+      TW.monitor(c, 300, 90, 1320, 660, (cc, w, h) => { cc.fillStyle = '#04140a'; cc.fillRect(0, 0, w, h); cc.strokeStyle = 'rgba(154,255,122,.15)'; cc.lineWidth = 2; for (let x = 0; x < w; x += 60) { cc.beginPath(); cc.moveTo(x, 0); cc.lineTo(x, h); cc.stroke(); } for (let y = 0; y < h; y += 60) { cc.beginPath(); cc.moveTo(0, y); cc.lineTo(w, y); cc.stroke(); }
+        TW.txt(cc, 'US ARMY · RESTRICTED', 30, 40, 36, '#9aff7a', 'left', 'Anton'); const ha = fade(lt, S._tH - .3, .5); if (ha < 1) TW.txt(cc, 'ACCESSING SERVER' + '.'.repeat(1 + Math.floor(lt * 3) % 3), w / 2, h / 2, 54, `rgba(154,255,122,${1 - ha})`, 'center', 'Anton'); cc.globalAlpha = ha; XU.heli(cc, w * .42, h * .48, 1.1, lt); TW.txt(cc, 'APACHE TRAINING SIMULATOR', w * .42, h * .82, 40, '#9aff7a', 'center', 'Anton'); cc.globalAlpha = 1;
+        const ba = fade(lt, S._tD - 1.2, .4); if (ba > 0) { cc.globalAlpha = ba; const hot = lt > S._tC; cc.fillStyle = hot ? '#9aff7a' : '#0c3a18'; cc.strokeStyle = '#9aff7a'; cc.lineWidth = 4; TW.rr(cc, w * .74, h * .4, 260, 90, 12); cc.fill(); cc.stroke(); TW.txt(cc, hot ? 'DOWNLOADING…' : 'DOWNLOAD', w * .74 + 130, h * .4 + 46, 40, hot ? '#04140a' : '#9aff7a', 'center', 'Anton');
+          if (hot) { cc.fillStyle = '#9aff7a'; cc.fillRect(w * .74, h * .4 + 110, 260 * K.seg(lt, S._tC, S._tC + 2.5), 14); }
+          // the cursor drifts in, hovers and wobbles (hesitation), then clicks
+          const hx = w * .74 + 170, hy = h * .4 + 60, arr = E.out(K.seg(lt, S._tD - 1.2, S._tD - .2)), wob = lt < S._tC ? Math.sin(lt * 9) * 14 * K.seg(lt, S._tD - .2, S._tD) : 0, cx = w * .5 + (hx - w * .5) * arr + wob, cy = h * .9 + (hy - h * .9) * arr; cc.fillStyle = '#fff'; cc.strokeStyle = '#000'; cc.lineWidth = 3; cc.beginPath(); cc.moveTo(cx, cy); cc.lineTo(cx, cy + 46); cc.lineTo(cx + 12, cy + 34); cc.lineTo(cx + 24, cy + 56); cc.lineTo(cx + 32, cy + 52); cc.lineTo(cx + 20, cy + 30); cc.lineTo(cx + 36, cy + 30); cc.closePath(); cc.fill(); cc.stroke(); cc.globalAlpha = 1; } }, { stand: false });
+      c.restore(); TW.glow(c, 960, 500, 900, '154,255,122', .08); backs(c, lt); },
+    bed: [['tension', .2], ['hum_loop', .1]],
+    init: S => { S._tH = A.at(S, 'Apache', 5.6); S._tD = A.at(S, 'hesitate', 9.2) + .4; S._tC = A.at(S, 'download', 11.4); const tA = A.at(S, 'Army', 3.6);
+      S.D.over = [(c, lt) => K.card(c, '2012', lt, { at: .3, x: 200, y: 100, px: 58, rot: -2 }), (c, lt) => K.card(c, 'A LINK TO THE US ARMY', lt, { at: tA, x: 1560, y: 100, px: 42, rot: 2 }), (c, lt) => TW.stamp(c, 'DOWNLOADED', 960, 420, lt, S._tC + .9, { px: 90 })];
+      S.D.sfx = [[tA, 'alarm', .08], [S._tH, 'swell', .2], [S._tD, 'heartbeat', .3], [S._tC, 'tick', .4], [S._tC + .9, 'stamp', .35]]; } },
+  // 4.04 they joke about their prison-gang name; a tag 'XBOX UNDERGROUND' swings over the cards; laugh bubbles; then bar shadows fall: not for long
+  { draw: (c, lt, u, S) => { XU.bg(c, lt); CREW.forEach(([t, col], k) => XU.roster(c, 260 + k * 280, 660 + Math.sin(lt * 2 + k) * (lt < S._tN ? 8 : 0), t, 'THE CREW', pop(lt, .1 + k * .08, .4), 0, { avatar: col, w: 240, h: 330, rot: (k - 2.5) * .02 }));
+      const ta = pop(lt, S._tX - .2, .5); if (ta > 0) { const sw = Math.sin((lt - S._tX) * 3) * .12 * Math.exp(-(lt - S._tX) * .6); c.save(); c.translate(960, 300); c.rotate(sw); c.scale(ta, ta); c.strokeStyle = '#c8ccd0'; c.lineWidth = 5; c.beginPath(); c.moveTo(-200, -70); c.lineTo(-180, 0); c.moveTo(200, -70); c.lineTo(180, 0); c.stroke(); c.fillStyle = '#ffe08a'; c.strokeStyle = INK; c.lineWidth = 7; TW.rr(c, -330, 0, 660, 130, 18); c.fill(); c.stroke(); TW.txt(c, "'XBOX UNDERGROUND'", 0, 66, 64, INK, 'center', 'Anton'); c.restore(); }
+      if (lt > S._tL) ['HAHA', 'LOL', 'HAHA', 'LOL'].forEach((s2, k) => { const a = pop(lt, S._tL + k * .25, .3) * (1 - K.seg(lt, S._tN - .3, S._tN)); TW.bubble(c, 330 + k * 420, 930, s2, a, { px: 44, tail: k % 2 ? 1 : -1 }); });
+      const b = E.out(K.seg(lt, S._tN, S._tN + .8)); if (b > 0) { c.save(); c.globalAlpha = .55 * b; c.fillStyle = '#0a0404'; for (let k = 0; k < 9; k++) c.fillRect(80 + k * 220, -1080 + b * 1080, 70, 1080); c.globalAlpha = .25 * b; c.fillStyle = '#7a0a0a'; c.fillRect(0, 0, 1920, 1080); c.restore(); } },
+    bed: [['hum_loop', .12]],
+    init: S => { S._tX = A.at(S, 'Underground', 3.0); S._tL = A.at(S, 'laugh', 5.0); S._tN = A.at(S, 'Not', 5.8);
+      S.D.over = [(c, lt) => K.title(c, 'NOT FOR LONG', lt, { at: S._tN + .5, y: 940, px: 110 })]; S.D.sub = 'top';
+      S.D.sfx = [...Array.from({ length: 6 }, (_, k) => [.1 + k * .08, 'pop', .12]), [S._tX, 'whoosh', .3], [S._tL, 'crowd_cheer', .12], [S._tN, 'gate_slam', .4], [S._tN + .5, 'drum', .3]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>
