@@ -1,0 +1,135 @@
+{
+ "video": "The Kids Who Hacked the World, Part 2: The Teens Who Stole the Next Xbox",
+ "prefix": "XU",
+ "full": {
+  "scheduled_utc": "2027-03-01T16:00:00Z",
+  "zernio_id": "6af2f181e5c368b241446aa8",
+  "drive_id": "1qSx90FfW7TwbdJzcf0vujdzXWXYz9D1T",
+  "thumbnail": "XU_Thumbnail_v1.jpg"
+ },
+ "ig_parts": [
+  {
+   "n": 1,
+   "utc": "2027-03-01T13:00:00Z",
+   "id": "6af2f1995bdc46ef5b4078e5"
+  },
+  {
+   "n": 2,
+   "utc": "2027-03-05T13:00:00Z",
+   "id": "6af2f19d5bdc46ef5b407900"
+  },
+  {
+   "n": 3,
+   "utc": "2027-03-06T13:00:00Z",
+   "id": "6af2f1a1257dbd6c94167478"
+  }
+ ],
+ "reels": [
+  {
+   "n": "R01",
+   "title": "Arrested at the Border Over a Gamer Tag",
+   "hook": "He drove to the border to pick up a car bumper. He left in handcuffs.",
+   "utc": "2027-03-04T12:00:00Z",
+   "id": "6af2f26e0a8e88479d709e8b"
+  },
+  {
+   "n": "R02",
+   "title": "Secret Xbox Dev Kits Found in a Scrapyard",
+   "hook": "Secret Xbox dev kits turned up at a recycling yard. That's how it all started.",
+   "utc": "2027-03-04T17:00:00Z",
+   "id": "6af2f2acba398d9c39fdbbd8"
+  },
+  {
+   "n": "R03",
+   "title": "The Teen Who Sold Call of Duty Cheats",
+   "hook": "A teenager said he made 8,000 dollars a day selling Call of Duty cheats.",
+   "utc": "2027-03-04T22:00:00Z",
+   "id": "6af2f2b0ba398d9c39fdbc14"
+  },
+  {
+   "n": "R04",
+   "title": "The Teen Gang That Hacked Microsoft",
+   "hook": "A 14-year-old and his online friends built a gang that hacked Microsoft.",
+   "utc": "2027-03-05T12:00:00Z",
+   "id": "6af2f2b4ba398d9c39fdbc45"
+  },
+  {
+   "n": "R05",
+   "title": "How One Password Opened Epic Games",
+   "hook": "One reused password let a teenager walk straight into Epic Games.",
+   "utc": "2027-03-05T17:00:00Z",
+   "id": "6af2f2b9257dbd6c9416780f"
+  },
+  {
+   "n": "R06",
+   "title": "Gears of War 3 Leaked in a 'Wedding Videos' Box",
+   "hook": "They mailed a stolen Gears of War 3 in a box marked wedding videos.",
+   "utc": "2027-03-05T22:00:00Z",
+   "id": "6af2f2bdba398d9c39fdbcae"
+  },
+  {
+   "n": "R07",
+   "title": "The Teen Who Spied Through Office Webcams",
+   "hook": "He watched game studio staff through their own office webcams.",
+   "utc": "2027-03-06T12:00:00Z",
+   "id": "6af2f2c1ba398d9c39fdbcf4"
+  },
+  {
+   "n": "R08",
+   "title": "Teen Hackers Got Inside 25 Giant Companies",
+   "hook": "Microsoft, Valve, Disney, Google. Teenagers got inside about 25 companies.",
+   "utc": "2027-03-06T17:00:00Z",
+   "id": "6af2f2c6ba398d9c39fdbd20"
+  },
+  {
+   "n": "R09",
+   "title": "Gamers Who Downloaded an Army Helicopter Sim",
+   "hook": "Teenage gamers downloaded a US Army helicopter simulator.",
+   "utc": "2027-03-06T22:00:00Z",
+   "id": "6af2f2ca257dbd6c9416784e"
+  },
+  {
+   "n": "R10",
+   "title": "They Built the Xbox One Before It Was Revealed",
+   "hook": "Kids built the Xbox One before Microsoft even revealed it.",
+   "utc": "2027-03-07T12:00:00Z",
+   "id": "6af2f2cdba398d9c39fdbd58"
+  },
+  {
+   "n": "R11",
+   "title": "A Secret Xbox Prototype on eBay",
+   "hook": "He put a secret Xbox prototype on eBay. Bids passed 20,000 dollars.",
+   "utc": "2027-03-07T17:00:00Z",
+   "id": "6af2f2d1ba398d9c39fdbd7b"
+  },
+  {
+   "n": "R12",
+   "title": "He Stole From Microsoft, Then Got Hired",
+   "hook": "A fan stole three Xbox prototypes. Then Microsoft offered him a job.",
+   "utc": "2027-03-07T22:00:00Z",
+   "id": "6af2f2d5257dbd6c94167881"
+  },
+  {
+   "n": "R13",
+   "title": "How the Xbox Underground Got Caught",
+   "hook": "One by one, police came for every gamer in the gang.",
+   "utc": "2027-03-08T12:00:00Z",
+   "id": "6af2f2d8257dbd6c94167888"
+  },
+  {
+   "n": "R14",
+   "title": "Who Was 'Person A'?",
+   "hook": "The FBI had years of their chats. The source was called Person A.",
+   "utc": "2027-03-08T17:00:00Z",
+   "id": "6af2f2dcba398d9c39fdbdf0"
+  },
+  {
+   "n": "R15",
+   "title": "What Happened to the Xbox Hackers",
+   "hook": "Two of them got 18 months in prison for hacking Xbox.",
+   "utc": "2027-03-08T22:00:00Z",
+   "id": "6af2f2dfba398d9c39fdbe10"
+  }
+ ],
+ "kit_preview": "https://claude.ai/artifact/7vCcg1dfZypgwWuNeuDHEh"
+}

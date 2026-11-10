@@ -1,0 +1,58 @@
+<!doctype html><html><head><meta charset="utf-8"><title>XU act N</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../tw_kit.js"></script><script src="../../xu_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+const SW = 1920, SH = 1080, INK = TW.INK, RED = TW.RED, pop = TW.pop, fade = TW.fade;
+const backdrop = (name, b = .5, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const CARRY = () => ({ shL: 30, elL: -75, shR: 35, elR: -75 });
+const endTitle = (secs) => { const T = window.TIMING; const last = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length, start: last.end, end: last.end + secs, vo_start: last.end, vo_end: last.end, text: '' }); T.dur = last.end + secs; };
+for (const n of ['kitchen_night']) K.load(n, PL + n + '.jpg');
+// night outside the kitchen window (plate window shows day)
+const nightWin = (c, lt) => { c.fillStyle = '#0c1428'; c.fillRect(1052, 378, 440, 368); for (let k = 0; k < 30; k++) { c.fillStyle = `rgba(255,255,255,${.3 + .3 * Math.sin(lt + k)})`; c.fillRect(1060 + (k * 97) % 420, 390 + (k * 53) % 200, 3, 3); } c.fillStyle = '#060a14'; for (let k = 0; k < 8; k++) { c.beginPath(); c.arc(1080 + k * 60, 700, 50, 0, 7); c.fill(); } c.strokeStyle = '#d8d8e0'; c.lineWidth = 10; c.strokeRect(1052, 378, 440, 368); c.beginPath(); c.moveTo(1272, 378); c.lineTo(1272, 746); c.stroke(); };
+const table = (c) => { c.fillStyle = 'rgba(0,0,0,.35)'; c.beginPath(); c.ellipse(1300, 1400, 460, 30, 0, 0, 7); c.fill(); c.fillStyle = '#7a5a3a'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(860, 1170, 880, 40); c.strokeRect(860, 1170, 880, 40); c.fillStyle = '#5a3e26'; c.fillRect(890, 1210, 34, 190); c.fillRect(1676, 1210, 34, 190); c.fillStyle = 'rgba(255,255,255,.1)'; c.fillRect(860, 1170, 880, 8); };
+window.SHOTS = [
+  // 5.01 August 2012: inside Microsoft, a locked folder; a blueprint unrolls stamped DURANGO; it will become the Xbox One
+  { draw: (c, lt, u, S) => { XU.bg(c, lt, '90,150,255'); const la = pop(lt, .2, .45) * (1 - K.seg(lt, S._tB - .4, S._tB)); if (la > 0) { c.save(); c.translate(960, 500); c.scale(la, la); TW.lock(c, 0, 40, 2.2, K.seg(lt, S._tB - 1.2, S._tB - .6)); c.restore(); }
+      XU.blueprint(c, 960, 500, 1300, 640, K.seg(lt, S._tB, S._tB + 1.2), lt); TW.stamp(c, 'DURANGO', 1380, 300, lt, S._tC, { px: 90, col: '#ffe08a' });
+      const xa = pop(lt, S._tO - .2, .5); if (xa > 0) { c.save(); c.translate(960, 560); c.scale(xa, xa); c.fillStyle = 'rgba(8,10,14,.85)'; TW.rr(c, -420, -150, 840, 300, 26); c.fill(); XU.xboxOne(c, 0, 50, 1.2, .6 + .4 * Math.sin(lt * 3)); TW.txt(c, '= XBOX ONE', 0, -80, 64, '#fff', 'center', 'Anton'); c.restore(); } },
+    bed: [['tension', .16]],
+    init: S => { S._tB = A.at(S, 'designs', 4.0) - .3; S._tC = A.at(S, 'codename', 6.0) + .5; S._tO = A.at(S, 'Xbox', 8.0) + .3; const tA = A.at(S, 'Inside', 1.2);
+      S.D.over = [(c, lt) => K.card(c, 'AUGUST 2012', lt, { at: .3, x: 300, y: 110, px: 52, rot: -2 }), (c, lt) => K.card(c, 'INSIDE MICROSOFT', lt, { at: tA, x: 300, y: 210, px: 40, rot: 2 })];
+      S.D.sfx = [[.2, 'pop', .2], [S._tB - 1.2, 'tick', .3], [S._tB, 'paper', .35], [S._tC, 'stamp', .35], [S._tO, 'chime', .3]]; } },
+  // 5.02 the parts can be bought; Nathan builds a working copy at the kitchen table; it glows; then a buyer in the Seychelles offers $5,000
+  { plate: 'kitchen_night', cam: { z: [1.35, 1.5], x: [1300, 1300], y: [980, 1010] }, bed: [['night_loop', .1], ['hum_loop', .08]], light: { dir: -1, key: 'rgba(255,230,190,.22)' },
+    init: S => { const tO = A.at(S, 'order', 2.0), tN = A.at(S, 'Nathan', 3.6), tW = A.at(S, 'working', 5.0), tS = A.at(S, 'Seychelles', 8.4), t5 = A.at(S, '5,000', 9.8);
+      S.D.figs = [{ x: 1340, y: 1300, s: 1.9, ...XU.NATHAN(), facing: -1, mood: 'focus', anim: (o, lt) => { o.arms = () => ({ shR: 62 + Math.sin(lt * 5) * 6, elR: -60, shL: 56 + Math.sin(lt * 4 + 1) * 6, elL: -56 }); if (lt > tW + .6) { o.arms = null; o.pose = 'cheer'; o.mood = 'happy'; } if (lt > tS) { o.pose = 'think'; } } }];
+      S.D.live = [nightWin, (c, lt) => { const L = 1020; c.save(); c.translate(0, 0); c.restore(); }];
+      S.D.front = [(c, lt) => { table(c); // parts slide in from the edges, then click together into the console
+          const parts = [[-1, 980, 1150], [1, 1600, 1150], [-1, 1060, 1120], [1, 1520, 1125]]; const join = E.io(K.seg(lt, tN, tW));
+          parts.forEach(([sd, x, y], k) => { const a = E.out(K.seg(lt, tO - .6 + k * .2, tO - .1 + k * .2)); if (a <= 0 || join >= 1) return; const px = x + sd * (1 - a) * 700, tx = 1300 + (px - 1300) * (1 - join), ty = y + (1150 - y) * join; c.fillStyle = ['#1e5a2a', '#3a3e44', '#c8ccd0', '#2a2a30'][k]; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(tx - 60, ty - 24, 120, 40); c.strokeRect(tx - 60, ty - 24, 120, 40); });
+          if (join >= 1) { XU.xboxOne(c, 1300, 1170, .5, .5 + .5 * Math.sin(lt * 3)); TW.glow(c, 1300, 1120, 300, '200,230,255', .2); } }];
+      S.D.over = [(c, lt) => K.card(c, 'PARTS ORDERED ONLINE', lt, { at: tO, x: 380, y: 110, px: 44, rot: -2 }), (c, lt) => K.card(c, 'BUILT AT HOME', lt, { at: tW, x: 380, y: 210, px: 44, rot: 2 }),
+        (c, lt) => { const a = pop(lt, tS - .2, .45); if (a <= 0) return; c.save(); c.translate(1560, 200); c.scale(a, a); c.fillStyle = '#fff'; c.strokeStyle = INK; c.lineWidth = 6; TW.rr(c, -280, -90, 560, 180, 20); c.fill(); c.stroke(); TW.txt(c, 'BUYER · SEYCHELLES', 0, -38, 40, INK, 'center', 'Anton'); TW.txt(c, lt > t5 - .2 ? 'OFFER: $5,000' : 'OFFER: …', 0, 34, 52, '#1a7a2a', 'center', 'Anton'); c.restore(); }];
+      S.D.sfx = [...Array.from({ length: 4 }, (_, k) => [tO - .3 + k * .2, 'whoosh_soft', .2]), ...Array.from({ length: 4 }, (_, k) => [tN + k * .4, 'tick', .25]), [tW, 'chime', .35], [tS, 'pop', .25], [t5, 'coins', .3]]; } },
+  // 5.03 Justin offers to post it; the parcel never arrives (stamp); then Dylan puts photos on an auction site; bids spin past $20,000
+  { draw: (c, lt, u, S) => { XU.bg(c, lt, '232,140,58'); const pa = 1 - K.seg(lt, S._tE - .5, S._tE);
+      if (pa > 0) { c.save(); c.globalAlpha = pa; const m = E.io(K.seg(lt, .8, 3.0)); c.save(); c.strokeStyle = 'rgba(255,224,138,.7)'; c.lineWidth = 6; c.setLineDash([18, 16]); c.beginPath(); for (let q = 0; q <= m; q += .02) { const px = 400 + q * 1100, py = 620 - Math.sin(q * Math.PI) * 120; q ? c.lineTo(px, py) : c.moveTo(px, py); } c.stroke(); c.setLineDash([]); [[400, 'PERTH'], [1500, 'SEYCHELLES']].forEach(([px, nm]) => { c.fillStyle = '#ffe08a'; c.beginPath(); c.arc(px, 640, 14, 0, 7); c.fill(); TW.txt(c, nm, px, 720, 44, '#ffe08a', 'center', 'Anton'); }); c.restore(); c.save(); c.translate(400 + m * 1100, 620 - Math.sin(m * Math.PI) * 120); c.rotate(Math.sin(m * Math.PI) * .1); XU.parcel(c, 0, 0, .9, 1, lt, { label: 'SEYCHELLES' }); c.restore(); if (lt > S._tN) TW.stamp(c, 'NEVER ARRIVED', 1500, 520, lt, S._tN, { px: 80 }); c.restore(); }
+      const aa = pop(lt, S._tE, .5); if (aa > 0) { c.save(); c.translate(960, 560); c.scale(aa, aa); c.translate(-960, -560); XU.auction(c, 260, 200, 1400, 720, 400 + 21200 * E.out(K.seg(lt, S._tE + .4, S.end - S.start - .3)), lt); c.restore(); } },
+    bed: [['hum_loop', .12]],
+    init: S => { S._tN = A.at(S, 'never', 2.4); S._tE = A.at(S, 'eBay', 7.0) - 1.4; const tJ = A.at(S, 'Justin', .3), tD = A.at(S, 'without', 4.4);
+      S.D.over = [(c, lt) => K.card(c, 'MTW POSTS IT', lt, { at: tJ + .2, x: 360, y: 110, px: 46, rot: -2, until: tD - .1 }), (c, lt) => K.card(c, "DYLAN DIDN'T ASK", lt, { at: tD, x: 270, y: 110, px: 44, rot: 2 }), (c, lt) => K.title(c, 'BIDS OVER $20,000', lt, { at: S._tE + 2.4, y: 970, px: 80 })]; S.D.sub = 'top';
+      S.D.sfx = [[.8, 'whoosh', .25], [S._tN, 'stamp', .35], [S._tE, 'pop', .25], ...Array.from({ length: 8 }, (_, k) => [S._tE + .5 + k * .3, 'tick', .18]), [S._tE + 2.4, 'coins_cascade', .25]]; } },
+  // 5.04 the auction goes viral; it is taken down (REMOVED); Dylan gives a video interview; angry chat bubbles from the others stack up
+  { draw: (c, lt, u, S) => { XU.bg(c, lt, '224,64,58'); const ra = 1 - K.seg(lt, S._tI - .4, S._tI);
+      if (ra > 0) { c.save(); c.globalAlpha = ra; XU.auction(c, 260, 200, 1400, 720, 21600, lt); TW.stamp(c, 'TAKEN DOWN', 960, 560, lt, S._tT, { px: 120 }); c.restore(); }
+      const ia = pop(lt, S._tI, .5); if (ia > 0) { c.save(); c.translate(620, 520); c.scale(ia, ia); c.translate(-620, -520); TW.win(c, 140, 200, 960, 600, 'LIVE · VIDEO INTERVIEW', '#8a1a2a', (cc, w, h) => { const g = cc.createLinearGradient(0, 0, 0, h); g.addColorStop(0, '#3a4a6a'); g.addColorStop(1, '#1a2030'); cc.fillStyle = g; cc.fillRect(0, 0, w, h); cc.fillStyle = '#2a2e3a'; cc.fillRect(0, h * .7, w, h * .3); cc.fillStyle = '#4a3a2a'; cc.fillRect(w * .7, h * .2, 160, 220); A.figure(cc, Object.assign({ x: w * .45, y: h + 260, s: 1.7, facing: 1, mood: 'happy', talk: true, pose: (lt % 3 < 1.5 ? 'present' : 'shrug') }, XU.DYLAN()), lt, u, S); TW.txt(cc, 'SUPERDAE · 14', 30, h - 40, 34, '#fff', 'left', 'Anton'); }); c.restore(); }
+      if (lt > S._tA) [['XENOMEGA', 'Who said you could post that?!'], ['SONIC', "Are you serious right now"], ['MTW', 'Take it DOWN'], ['AUSTIN', 'we are so dead']].forEach(([n, t], k) => { const a = pop(lt, S._tA + k * .45, .35); if (a <= 0) return; c.save(); c.translate(1500, 260 + k * 170); c.scale(a, a); c.fillStyle = '#fff'; c.strokeStyle = '#c0302a'; c.lineWidth = 5; TW.rr(c, -330, -60, 660, 120, 20); c.fill(); c.stroke(); TW.txt(c, n, -300, -26, 28, '#c0302a', 'left', 'Anton'); TW.txt(c, t, -300, 20, 32, INK, 'left', 'Oswald'); c.restore(); }); },
+    bed: [['hum_loop', .12]], light: { dir: -1, key: 'rgba(255,240,220,.2)' },
+    init: S => { S._tT = A.at(S, 'taken', 2.4); S._tI = A.at(S, 'interviews', 4.6) - .6; S._tA = A.at(S, 'furious', 7.0) - .8; const tV = A.at(S, 'viral', 1.0);
+      S.D.over = [(c, lt) => K.card(c, 'GOES VIRAL', lt, { at: tV, x: 1650, y: 110, px: 50, rot: -2, until: S._tI }), (c, lt) => K.card(c, 'THE GANG IS FURIOUS', lt, { at: S._tA, x: 1650, y: 110, px: 42, rot: 2 })]; S.D.sub = 'top';
+      S.D.sfx = [[tV, 'riser', .2], [S._tT, 'stamp', .4], [S._tI, 'pop', .25], ...Array.from({ length: 4 }, (_, k) => [S._tA + k * .45, 'pop', .2])]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot(); KIT.drawSubs = () => {};
+</script></body></html>

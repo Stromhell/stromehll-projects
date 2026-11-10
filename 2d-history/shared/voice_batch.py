@@ -25,7 +25,7 @@ WORDS = [
  (r"\bSuwałki\b", 'Soo-vow-kee'), (r"\bSHAPE\b", 'Shape'), (r"\bRAND\b", 'Rand'), (r"\bOrlan-10\b", 'Orlan ten'), (r"\bGeran-2\b", 'Geh-rahn two'),
  (r"\bSu-57s\b", 'S U fifty-sevens'), (r"\bBremerhaven\b", 'Bremer-hah-fen'), (r"\bVilnius\b", 'Vil-nee-us'), (r"\bBeaumont\b", 'Boh-mont'), (r"\bShahed\b", 'Sha-hed'),
  (r"\bfait accompli\b", 'fate ah-com-plee'), (r"\b1,000\b", 'one thousand'), (r"\b8\.5\b", 'eight point five'), (r"\b3\.4\b", 'three point four'), (r"80,000 to 100,000", 'eighty thousand to a hundred thousand'),
- (r"\bGIUK\b", 'G I U K'), (r"\bTallinn\b", 'Tah-lin'),
+ (r"\bGIUK\b", 'G I U K'), (r"\b20,000 dollars\b", 'twenty thousand dollars'), (r"\babout 25 companies\b", 'about twenty-five companies'), (r"\bGears of War 3\b", 'Gears of War three'), (r"\bTallinn\b", 'Tah-lin'),
 (r"\bCUDA\b", 'Kooda'), (r"\bIrimajiri\b", 'Eeri-mah-jeeri'), (r"\bWiessner\b", 'Weess-ner'), (r"\bHadza\b", 'Hahd-za'),
  (r"Ju/'hoansi", 'Zhu-twa-see'), (r"\bHohle Fels\b", 'Hoh-leh Fels'), (r"\bBlombos\b", 'Blom-boss'), (r"\bDobe\b", 'Doh-bay'),
  (r"\bMalachowsky\b", 'Mala-kow-ski'), (r"\bPriem\b", 'Preem'), (r"\bSutskever\b", 'Suts-kever'), (r"\bKrizhevsky\b", 'Kri-zhev-ski'),

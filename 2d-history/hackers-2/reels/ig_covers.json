@@ -1,0 +1,29 @@
+[
+ {
+  "n": 1,
+  "of": 3,
+  "frame": "/tmp/claude-0/xu_nosub/act0/f00450.jpg",
+  "tag": "XBOX UNDERGROUND",
+  "l1": "TEEN HACKERS",
+  "l2": "VS MICROSOFT",
+  "sub": "THE CONSOLE KIDS"
+ },
+ {
+  "n": 2,
+  "of": 3,
+  "frame": "/tmp/claude-0/xu_nosub/act5/f00900.jpg",
+  "tag": "XBOX UNDERGROUND",
+  "l1": "THE NEXT XBOX",
+  "l2": "ON EBAY",
+  "sub": "INSIDE EPIC AND MICROSOFT"
+ },
+ {
+  "n": 3,
+  "of": 3,
+  "frame": "/tmp/claude-0/xu_nosub/act7/f00300.jpg",
+  "tag": "XBOX UNDERGROUND",
+  "l1": "THE FBI",
+  "l2": "CLOSES IN",
+  "sub": "PERSON A AND THE ARRESTS"
+ }
+]
