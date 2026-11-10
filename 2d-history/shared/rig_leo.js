@@ -111,7 +111,8 @@
       if (o.seat === 'stone') { ctx.fillStyle = '#8c8170'; ctx.beginPath(); ctx.moveTo(-w, 4); ctx.bezierCurveTo(-w - 6, top + 10, -w * .4, top - 4, 6, top); ctx.bezierCurveTo(w * .7, top - 2, w + 8, top + 14, w, 4); ctx.closePath(); ctx.fill(); ctx.stroke(); ctx.fillStyle = 'rgba(255,240,210,.18)'; ctx.beginPath(); ctx.ellipse(-8, top + 12, w * .6, 8, -.05, 0, 7); ctx.fill(); }
       else { ctx.fillStyle = '#7a5434'; ctx.beginPath(); ctx.roundRect(-w, top, w * 2, -top + 4, 10); ctx.fill(); ctx.stroke(); ctx.fillStyle = '#b48a5c'; ctx.beginPath(); ctx.ellipse(w - 2, (top + 4) / 2 + top / 2 * 0, 10, (-top + 4) / 2 - 2, 0, 0, 7); ctx.fill(); ctx.stroke(); ctx.strokeStyle = 'rgba(40,24,12,.45)'; ctx.lineWidth = 1.6; for (const k of [.3, .6]) { ctx.beginPath(); ctx.moveTo(-w + 8, top + (-top) * k); ctx.lineTo(w - 16, top + (-top) * k + 2); ctx.stroke(); } }
       ctx.restore(); }
-    leg(1, false); if (!folded) leg(-1, true);
+    const legsFront = o.pose === 'squat' || o.pose === 'work'; // seated legs go behind the torso (Pushpam 10 Nov)
+    leg(1, false); if (!legsFront) leg(-1, true);
     arm(1, false);
     // ---- torso ----
     const hem = hipY + (L.top === 'tunic' ? 30 : L.top === 'cardigan' ? 22 : 16), hw = hipW + (L.top === 'tunic' ? 14 : 11);
@@ -162,7 +163,7 @@
     }
     ctx.restore();
     torso(); ctx.strokeStyle = INK; ctx.lineWidth = 3.2; ctx.lineJoin = 'round'; ctx.stroke();
-    if (folded) leg(-1, true);
+    if (legsFront) leg(-1, true);
     // ---- head ----
     const X = hc.x, Y = hc.y;
     const head = () => { ctx.beginPath(); ctx.moveTo(X - rx, Y - ry * .1); ctx.bezierCurveTo(X - rx, Y - ry * 1.05, X + rx, Y - ry * 1.05, X + rx, Y - ry * .1); ctx.bezierCurveTo(X + rx * 1.02, Y + ry * .55, X + rx * .55, Y + ry * 1.02, X + rx * .05, Y + ry * 1.0); ctx.bezierCurveTo(X - rx * .6, Y + ry * 1.0, X - rx * 1.02, Y + ry * .5, X - rx, Y - ry * .1); ctx.closePath(); };

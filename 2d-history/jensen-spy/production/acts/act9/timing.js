@@ -1,1 +1,1050 @@
-window.TIMING={"dur": 89.24, "shots": [{"i": 0, "start": 0, "end": 11.47, "vo_start": 0.6, "vo_end": 11.22, "text": "Thursday, the twenty-ninth of October. One year to the day after Nvidia became the first five-trillion-dollar company, the New York Times breaks the story."}, {"i": 1, "start": 11.47, "end": 30.07, "vo_start": 11.77, "vo_end": 29.82, "text": "Nvidia says the claims about Megaspeed were investigated and dismissed a year ago. Jensen calls its dealings with Megaspeed normal. China's foreign ministry calls the report groundless speculation, an attempt to smear China. Nvidia's stock falls more than four percent."}, {"i": 2, "start": 30.07, "end": 45.57, "vo_start": 30.37, "vo_end": 45.32, "text": "On Saturday, at a Halloween party at Mar-a-Lago, Trump says he didn't know about the specific thing. Should Jensen stay on his council? He'd like to say yes, unless they find out something to the contrary."}, {"i": 3, "start": 45.57, "end": 63.69, "vo_start": 45.87, "vo_end": 63.44, "text": "Now everyone has someone to blame. Democrats ask why a president who was briefed did nothing. They point out that Nvidia, according to one source who spoke to the Times, gave at least twenty million dollars to Trump's new White House ballroom."}, {"i": 4, "start": 63.69, "end": 74.15, "vo_start": 63.99, "vo_end": 73.9, "text": "Nvidia points back at Washington: it would have been warned. Beijing blames the American press. And Republicans in the House go after Nvidia."}, {"i": 5, "start": 74.15, "end": 89.24, "vo_start": 74.45, "vo_end": 88.69, "text": "Three of their committee chairs write to Jensen. They call her a publicly reported Chinese intelligence asset. They want him in a closed room on the eighteenth of November, to brief them in person."}], "words": [{"w": "Thursday", "s": 0.6, "e": 1.12}, {"w": "the", "s": 1.17, "e": 1.47}, {"w": "twenty-ninth", "s": 1.52, "e": 2.14}, {"w": "of", "s": 2.19, "e": 2.46}, {"w": "October.", "s": 2.51, "e": 2.99}, {"w": "One", "s": 3.04, "e": 3.35}, {"w": "year", "s": 3.4, "e": 3.73}, {"w": "to", "s": 3.79, "e": 4.05}, {"w": "the", "s": 4.11, "e": 4.41}, {"w": "day", "s": 4.46, "e": 4.77}, {"w": "after", "s": 4.82, "e": 5.19}, {"w": "Nvidia", "s": 5.24, "e": 5.65}, {"w": "became", "s": 5.7, "e": 6.11}, {"w": "the", "s": 6.16, "e": 6.47}, {"w": "first", "s": 6.52, "e": 6.89}, {"w": "five-trillion-dollar", "s": 6.94, "e": 7.84}, {"w": "company", "s": 7.89, "e": 8.37}, {"w": "the", "s": 8.42, "e": 8.73}, {"w": "New", "s": 8.78, "e": 9.08}, {"w": "York", "s": 9.13, "e": 9.47}, {"w": "Times", "s": 9.52, "e": 9.9}, {"w": "breaks", "s": 9.95, "e": 10.36}, {"w": "the", "s": 10.41, "e": 10.71}, {"w": "story.", "s": 10.76, "e": 11.17}, {"w": "Nvidia", "s": 11.77, "e": 12.18}, {"w": "says", "s": 12.23, "e": 12.57}, {"w": "the", "s": 12.62, "e": 12.93}, {"w": "claims", "s": 12.98, "e": 13.39}, {"w": "about", "s": 13.44, "e": 13.81}, {"w": "Megaspeed", "s": 13.86, "e": 14.38}, {"w": "were", "s": 14.43, "e": 14.77}, {"w": "investigated", "s": 14.82, "e": 15.44}, {"w": "and", "s": 15.49, "e": 15.79}, {"w": "dismissed", "s": 15.84, "e": 16.36}, {"w": "a", "s": 16.41, "e": 16.64}, {"w": "year", "s": 16.69, "e": 17.03}, {"w": "ago.", "s": 17.08, "e": 17.42}, {"w": "Jensen", "s": 17.47, "e": 17.88}, {"w": "calls", "s": 17.93, "e": 18.31}, {"w": "its", "s": 18.36, "e": 18.66}, {"w": "dealings", "s": 18.71, "e": 19.19}, {"w": "with", "s": 19.24, "e": 19.58}, {"w": "Megaspeed", "s": 19.63, "e": 20.15}, {"w": "normal.", "s": 20.2, "e": 20.64}, {"w": "China's", "s": 20.69, "e": 21.14}, {"w": "foreign", "s": 21.19, "e": 21.63}, {"w": "ministry", "s": 21.68, "e": 22.16}, {"w": "calls", "s": 22.21, "e": 22.59}, {"w": "the", "s": 22.64, "e": 22.94}, {"w": "report", "s": 22.99, "e": 23.4}, {"w": "groundless", "s": 23.45, "e": 24.0}, {"w": "speculation", "s": 24.05, "e": 24.67}, {"w": "an", "s": 24.72, "e": 24.99}, {"w": "attempt", "s": 25.04, "e": 25.49}, {"w": "to", "s": 25.54, "e": 25.81}, {"w": "smear", "s": 25.86, "e": 26.23}, {"w": "China.", "s": 26.28, "e": 26.69}, {"w": "Nvidia's", "s": 26.74, "e": 27.22}, {"w": "stock", "s": 27.27, "e": 27.65}, {"w": "falls", "s": 27.7, "e": 28.07}, {"w": "more", "s": 28.12, "e": 28.46}, {"w": "than", "s": 28.51, "e": 28.85}, {"w": "four", "s": 28.9, "e": 29.24}, {"w": "percent.", "s": 29.29, "e": 29.77}, {"w": "On", "s": 30.37, "e": 30.64}, {"w": "Saturday", "s": 30.69, "e": 31.21}, {"w": "at", "s": 31.26, "e": 31.53}, {"w": "a", "s": 31.58, "e": 31.81}, {"w": "Halloween", "s": 31.86, "e": 32.38}, {"w": "party", "s": 32.43, "e": 32.8}, {"w": "at", "s": 32.85, "e": 33.12}, {"w": "Mar-a-Lago", "s": 33.17, "e": 33.76}, {"w": "Trump", "s": 33.81, "e": 34.18}, {"w": "says", "s": 34.23, "e": 34.57}, {"w": "he", "s": 34.62, "e": 34.89}, {"w": "didn't", "s": 34.94, "e": 35.35}, {"w": "know", "s": 35.4, "e": 35.74}, {"w": "about", "s": 35.79, "e": 36.17}, {"w": "the", "s": 36.22, "e": 36.52}, {"w": "specific", "s": 36.57, "e": 37.05}, {"w": "thing.", "s": 37.1, "e": 37.51}, {"w": "Should", "s": 37.56, "e": 37.97}, {"w": "Jensen", "s": 38.02, "e": 38.43}, {"w": "stay", "s": 38.48, "e": 38.82}, {"w": "on", "s": 38.87, "e": 39.14}, {"w": "his", "s": 39.19, "e": 39.5}, {"w": "council", "s": 39.55, "e": 40.03}, {"w": "He'd", "s": 40.08, "e": 40.42}, {"w": "like", "s": 40.47, "e": 40.81}, {"w": "to", "s": 40.86, "e": 41.13}, {"w": "say", "s": 41.18, "e": 41.48}, {"w": "yes", "s": 41.53, "e": 41.87}, {"w": "unless", "s": 41.92, "e": 42.33}, {"w": "they", "s": 42.38, "e": 42.72}, {"w": "find", "s": 42.77, "e": 43.11}, {"w": "out", "s": 43.16, "e": 43.47}, {"w": "something", "s": 43.52, "e": 44.03}, {"w": "to", "s": 44.08, "e": 44.35}, {"w": "the", "s": 44.4, "e": 44.71}, {"w": "contrary.", "s": 44.76, "e": 45.27}, {"w": "Now", "s": 45.87, "e": 46.18}, {"w": "everyone", "s": 46.23, "e": 46.71}, {"w": "has", "s": 46.76, "e": 47.06}, {"w": "someone", "s": 47.11, "e": 47.56}, {"w": "to", "s": 47.61, "e": 47.88}, {"w": "blame.", "s": 47.93, "e": 48.34}, {"w": "Democrats", "s": 48.39, "e": 48.9}, {"w": "ask", "s": 48.95, "e": 49.26}, {"w": "why", "s": 49.31, "e": 49.61}, {"w": "a", "s": 49.66, "e": 49.9}, {"w": "president", "s": 49.95, "e": 50.46}, {"w": "who", "s": 50.51, "e": 50.81}, {"w": "was", "s": 50.86, "e": 51.17}, {"w": "briefed", "s": 51.22, "e": 51.66}, {"w": "did", "s": 51.71, "e": 52.02}, {"w": "nothing.", "s": 52.07, "e": 52.55}, {"w": "They", "s": 52.6, "e": 52.94}, {"w": "point", "s": 52.99, "e": 53.36}, {"w": "out", "s": 53.41, "e": 53.72}, {"w": "that", "s": 53.77, "e": 54.11}, {"w": "Nvidia", "s": 54.16, "e": 54.6}, {"w": "according", "s": 54.65, "e": 55.17}, {"w": "to", "s": 55.22, "e": 55.49}, {"w": "one", "s": 55.54, "e": 55.84}, {"w": "source", "s": 55.89, "e": 56.3}, {"w": "who", "s": 56.35, "e": 56.66}, {"w": "spoke", "s": 56.71, "e": 57.08}, {"w": "to", "s": 57.13, "e": 57.4}, {"w": "the", "s": 57.45, "e": 57.76}, {"w": "Times", "s": 57.81, "e": 58.22}, {"w": "gave", "s": 58.27, "e": 58.61}, {"w": "at", "s": 58.66, "e": 58.93}, {"w": "least", "s": 58.98, "e": 59.35}, {"w": "twenty", "s": 59.4, "e": 59.81}, {"w": "million", "s": 59.86, "e": 60.31}, {"w": "dollars", "s": 60.36, "e": 60.8}, {"w": "to", "s": 60.85, "e": 61.12}, {"w": "Trump's", "s": 61.17, "e": 61.62}, {"w": "new", "s": 61.67, "e": 61.97}, {"w": "White", "s": 62.02, "e": 62.4}, {"w": "House", "s": 62.45, "e": 62.82}, {"w": "ballroom.", "s": 62.87, "e": 63.39}, {"w": "Nvidia", "s": 63.99, "e": 64.4}, {"w": "points", "s": 64.45, "e": 64.86}, {"w": "back", "s": 64.91, "e": 65.25}, {"w": "at", "s": 65.3, "e": 65.57}, {"w": "Washington", "s": 65.62, "e": 66.2}, {"w": "it", "s": 66.25, "e": 66.52}, {"w": "would", "s": 66.57, "e": 66.95}, {"w": "have", "s": 67.0, "e": 67.34}, {"w": "been", "s": 67.39, "e": 67.73}, {"w": "warned.", "s": 67.78, "e": 68.22}, {"w": "Beijing", "s": 68.27, "e": 68.72}, {"w": "blames", "s": 68.77, "e": 69.18}, {"w": "the", "s": 69.23, "e": 69.53}, {"w": "American", "s": 69.58, "e": 70.06}, {"w": "press.", "s": 70.11, "e": 70.52}, {"w": "And", "s": 70.57, "e": 70.88}, {"w": "Republicans", "s": 70.93, "e": 71.51}, {"w": "in", "s": 71.56, "e": 71.83}, {"w": "the", "s": 71.88, "e": 72.19}, {"w": "House", "s": 72.24, "e": 72.61}, {"w": "go", "s": 72.66, "e": 72.93}, {"w": "after", "s": 72.98, "e": 73.36}, {"w": "Nvidia.", "s": 73.41, "e": 73.85}, {"w": "Three", "s": 74.45, "e": 74.83}, {"w": "of", "s": 74.88, "e": 75.15}, {"w": "their", "s": 75.2, "e": 75.57}, {"w": "committee", "s": 75.62, "e": 76.14}, {"w": "chairs", "s": 76.19, "e": 76.6}, {"w": "write", "s": 76.65, "e": 77.02}, {"w": "to", "s": 77.07, "e": 77.34}, {"w": "Jensen.", "s": 77.39, "e": 77.84}, {"w": "They", "s": 77.89, "e": 78.23}, {"w": "call", "s": 78.28, "e": 78.62}, {"w": "her", "s": 78.67, "e": 78.97}, {"w": "a", "s": 79.02, "e": 79.26}, {"w": "publicly", "s": 79.31, "e": 79.79}, {"w": "reported", "s": 79.84, "e": 80.32}, {"w": "Chinese", "s": 80.37, "e": 80.81}, {"w": "intelligence", "s": 80.86, "e": 81.48}, {"w": "asset.", "s": 81.53, "e": 81.94}, {"w": "They", "s": 81.99, "e": 82.33}, {"w": "want", "s": 82.38, "e": 82.72}, {"w": "him", "s": 82.77, "e": 83.08}, {"w": "in", "s": 83.13, "e": 83.4}, {"w": "a", "s": 83.45, "e": 83.68}, {"w": "closed", "s": 83.73, "e": 84.14}, {"w": "room", "s": 84.19, "e": 84.53}, {"w": "on", "s": 84.58, "e": 84.85}, {"w": "the", "s": 84.9, "e": 85.21}, {"w": "eighteenth", "s": 85.26, "e": 85.81}, {"w": "of", "s": 85.86, "e": 86.13}, {"w": "November", "s": 86.18, "e": 86.69}, {"w": "to", "s": 86.74, "e": 87.01}, {"w": "brief", "s": 87.06, "e": 87.44}, {"w": "them", "s": 87.49, "e": 87.83}, {"w": "in", "s": 87.88, "e": 88.15}, {"w": "person.", "s": 88.2, "e": 88.64}], "estimated": true}
+window.TIMING={
+"dur": 68.757,
+"shots": [
+{
+"i": 1,
+"start": 0.0,
+"vo_start": 0.6,
+"vo_end": 8.993,
+"text": "Thursday, the twenty-ninth of October. One year to the day after Nvidia became the first five-trillion-dollar company, the New York Times breaks the story.",
+"end": 9.268
+},
+{
+"i": 2,
+"start": 9.268,
+"vo_start": 9.543,
+"vo_end": 24.914,
+"text": "Nvidia says the claims about Megaspeed were investigated and dismissed a year ago. Jensen calls its dealings with Megaspeed normal. China's foreign ministry calls the report groundless speculation, an attempt to smear China. Nvidia's stock falls more than four percent.",
+"end": 25.189
+},
+{
+"i": 3,
+"start": 25.189,
+"vo_start": 25.464,
+"vo_end": 35.464,
+"text": "On Saturday, at a Halloween party at Mar-a-Lago, Trump says he didn't know about the specific thing. Should Jensen stay on his council? He'd like to say yes, unless they find out something to the contrary.",
+"end": 35.739
+},
+{
+"i": 4,
+"start": 35.739,
+"vo_start": 36.014,
+"vo_end": 49.143,
+"text": "Now everyone has someone to blame. Democrats ask why a president who was briefed did nothing. They point out that Nvidia, according to one source who spoke to the Times, gave at least twenty million dollars to Trump's new White House ballroom.",
+"end": 49.418
+},
+{
+"i": 5,
+"start": 49.418,
+"vo_start": 49.693,
+"vo_end": 57.455,
+"text": "Nvidia points back at Washington: it would have been warned. Beijing blames the American press. And Republicans in the House go after Nvidia.",
+"end": 57.73
+},
+{
+"i": 6,
+"start": 57.73,
+"vo_start": 58.005,
+"vo_end": 67.807,
+"text": "Three of their committee chairs write to Jensen. They call her a publicly reported Chinese intelligence asset. They want him in a closed room on the eighteenth of November, to brief them in person.",
+"end": 68.757
+}
+],
+"words": [
+{
+"w": "Thursday,",
+"s": 0.6,
+"e": 1.053
+},
+{
+"w": "the",
+"s": 0.6,
+"e": 2.433
+},
+{
+"w": "twenty-ninth",
+"s": 1.333,
+"e": 2.433
+},
+{
+"w": "of",
+"s": 2.433,
+"e": 3.433
+},
+{
+"w": "October.",
+"s": 3.273,
+"e": 3.593
+},
+{
+"w": "One",
+"s": 3.593,
+"e": 3.853
+},
+{
+"w": "year",
+"s": 3.753,
+"e": 4.053
+},
+{
+"w": "to",
+"s": 3.853,
+"e": 4.053
+},
+{
+"w": "the",
+"s": 3.853,
+"e": 4.373
+},
+{
+"w": "day",
+"s": 4.053,
+"e": 4.373
+},
+{
+"w": "after",
+"s": 4.053,
+"e": 4.733
+},
+{
+"w": "Nvidia",
+"s": 4.373,
+"e": 5.113
+},
+{
+"w": "became",
+"s": 4.733,
+"e": 5.313
+},
+{
+"w": "the",
+"s": 5.113,
+"e": 5.513
+},
+{
+"w": "first",
+"s": 5.313,
+"e": 5.933
+},
+{
+"w": "five-trillion-dollar",
+"s": 5.513,
+"e": 6.813
+},
+{
+"w": "company,",
+"s": 6.253,
+"e": 7.493
+},
+{
+"w": "the",
+"s": 7.353,
+"e": 7.673
+},
+{
+"w": "New",
+"s": 7.493,
+"e": 7.673
+},
+{
+"w": "York",
+"s": 7.493,
+"e": 8.013
+},
+{
+"w": "Times",
+"s": 7.673,
+"e": 8.293
+},
+{
+"w": "breaks",
+"s": 8.013,
+"e": 8.553
+},
+{
+"w": "the",
+"s": 8.293,
+"e": 8.793
+},
+{
+"w": "story.",
+"s": 8.553,
+"e": 8.793
+},
+{
+"w": "Nvidia",
+"s": 9.543,
+"e": 9.815
+},
+{
+"w": "says",
+"s": 9.543,
+"e": 10.155
+},
+{
+"w": "the",
+"s": 9.815,
+"e": 10.395
+},
+{
+"w": "claims",
+"s": 10.155,
+"e": 10.595
+},
+{
+"w": "about",
+"s": 10.395,
+"e": 10.855
+},
+{
+"w": "Megaspeed",
+"s": 10.595,
+"e": 11.375
+},
+{
+"w": "were",
+"s": 11.075,
+"e": 11.595
+},
+{
+"w": "investigated",
+"s": 11.375,
+"e": 12.195
+},
+{
+"w": "and",
+"s": 11.595,
+"e": 12.515
+},
+{
+"w": "dismissed",
+"s": 12.195,
+"e": 12.875
+},
+{
+"w": "a",
+"s": 12.515,
+"e": 12.875
+},
+{
+"w": "year",
+"s": 12.515,
+"e": 13.215
+},
+{
+"w": "ago.",
+"s": 13.055,
+"e": 13.595
+},
+{
+"w": "Jensen",
+"s": 13.215,
+"e": 14.715
+},
+{
+"w": "calls",
+"s": 14.595,
+"e": 15.075
+},
+{
+"w": "its",
+"s": 14.715,
+"e": 15.275
+},
+{
+"w": "dealings",
+"s": 15.075,
+"e": 15.575
+},
+{
+"w": "with",
+"s": 15.275,
+"e": 15.775
+},
+{
+"w": "Megaspeed",
+"s": 15.575,
+"e": 16.375
+},
+{
+"w": "normal.",
+"s": 16.075,
+"e": 16.755
+},
+{
+"w": "China's",
+"s": 16.375,
+"e": 17.675
+},
+{
+"w": "foreign",
+"s": 17.395,
+"e": 17.855
+},
+{
+"w": "ministry",
+"s": 17.675,
+"e": 18.275
+},
+{
+"w": "calls",
+"s": 17.855,
+"e": 18.275
+},
+{
+"w": "the",
+"s": 17.855,
+"e": 18.575
+},
+{
+"w": "report",
+"s": 18.275,
+"e": 18.715
+},
+{
+"w": "groundless",
+"s": 18.575,
+"e": 19.915
+},
+{
+"w": "speculation,",
+"s": 19.055,
+"e": 20.615
+},
+{
+"w": "an",
+"s": 19.915,
+"e": 20.615
+},
+{
+"w": "attempt",
+"s": 19.915,
+"e": 21.275
+},
+{
+"w": "to",
+"s": 21.055,
+"e": 21.275
+},
+{
+"w": "smear",
+"s": 21.055,
+"e": 21.475
+},
+{
+"w": "China.",
+"s": 21.275,
+"e": 21.715
+},
+{
+"w": "Nvidia's",
+"s": 21.475,
+"e": 22.855
+},
+{
+"w": "stock",
+"s": 22.775,
+"e": 23.095
+},
+{
+"w": "falls",
+"s": 22.855,
+"e": 23.375
+},
+{
+"w": "more",
+"s": 23.235,
+"e": 23.715
+},
+{
+"w": "than",
+"s": 23.375,
+"e": 23.975
+},
+{
+"w": "four",
+"s": 23.715,
+"e": 24.155
+},
+{
+"w": "percent.",
+"s": 23.975,
+"e": 24.735
+},
+{
+"w": "On",
+"s": 25.464,
+"e": 25.64
+},
+{
+"w": "Saturday,",
+"s": 25.64,
+"e": 26.36
+},
+{
+"w": "at",
+"s": 26.04,
+"e": 26.44
+},
+{
+"w": "a",
+"s": 26.36,
+"e": 26.7
+},
+{
+"w": "Halloween",
+"s": 26.44,
+"e": 27.08
+},
+{
+"w": "party",
+"s": 26.7,
+"e": 27.34
+},
+{
+"w": "at",
+"s": 27.08,
+"e": 27.8
+},
+{
+"w": "Mar-a-Lago,",
+"s": 27.34,
+"e": 28.64
+},
+{
+"w": "Trump",
+"s": 28.68,
+"e": 28.84
+},
+{
+"w": "says",
+"s": 28.84,
+"e": 29.06
+},
+{
+"w": "he",
+"s": 29.06,
+"e": 29.26
+},
+{
+"w": "didn't",
+"s": 29.26,
+"e": 29.42
+},
+{
+"w": "know",
+"s": 29.42,
+"e": 29.6
+},
+{
+"w": "about",
+"s": 29.6,
+"e": 29.76
+},
+{
+"w": "the",
+"s": 29.76,
+"e": 29.92
+},
+{
+"w": "specific",
+"s": 29.92,
+"e": 30.2
+},
+{
+"w": "thing.",
+"s": 30.2,
+"e": 30.52
+},
+{
+"w": "Should",
+"s": 30.8,
+"e": 30.88
+},
+{
+"w": "Jensen",
+"s": 30.88,
+"e": 31.18
+},
+{
+"w": "stay",
+"s": 31.18,
+"e": 31.48
+},
+{
+"w": "on",
+"s": 31.48,
+"e": 31.6
+},
+{
+"w": "his",
+"s": 31.6,
+"e": 31.74
+},
+{
+"w": "council?",
+"s": 31.74,
+"e": 31.98
+},
+{
+"w": "He'd",
+"s": 32.62,
+"e": 32.74
+},
+{
+"w": "like",
+"s": 32.74,
+"e": 32.86
+},
+{
+"w": "to",
+"s": 32.86,
+"e": 32.98
+},
+{
+"w": "say",
+"s": 32.98,
+"e": 33.14
+},
+{
+"w": "yes,",
+"s": 33.14,
+"e": 33.38
+},
+{
+"w": "unless",
+"s": 33.76,
+"e": 33.88
+},
+{
+"w": "they",
+"s": 33.88,
+"e": 34.04
+},
+{
+"w": "find",
+"s": 34.04,
+"e": 34.22
+},
+{
+"w": "out",
+"s": 34.22,
+"e": 34.38
+},
+{
+"w": "something",
+"s": 34.38,
+"e": 34.58
+},
+{
+"w": "to",
+"s": 34.58,
+"e": 34.82
+},
+{
+"w": "the",
+"s": 34.82,
+"e": 34.94
+},
+{
+"w": "contrary.",
+"s": 34.94,
+"e": 35.26
+},
+{
+"w": "Now",
+"s": 36.014,
+"e": 36.204
+},
+{
+"w": "everyone",
+"s": 36.014,
+"e": 36.584
+},
+{
+"w": "has",
+"s": 36.204,
+"e": 36.824
+},
+{
+"w": "someone",
+"s": 36.584,
+"e": 37.204
+},
+{
+"w": "to",
+"s": 36.824,
+"e": 37.424
+},
+{
+"w": "blame.",
+"s": 37.204,
+"e": 37.684
+},
+{
+"w": "Democrats",
+"s": 37.424,
+"e": 38.624
+},
+{
+"w": "ask",
+"s": 38.624,
+"e": 39.044
+},
+{
+"w": "why",
+"s": 38.624,
+"e": 39.444
+},
+{
+"w": "a",
+"s": 39.044,
+"e": 39.444
+},
+{
+"w": "president",
+"s": 39.044,
+"e": 39.844
+},
+{
+"w": "who",
+"s": 39.604,
+"e": 40.164
+},
+{
+"w": "was",
+"s": 39.844,
+"e": 40.264
+},
+{
+"w": "briefed",
+"s": 40.164,
+"e": 40.604
+},
+{
+"w": "did",
+"s": 40.264,
+"e": 40.964
+},
+{
+"w": "nothing.",
+"s": 40.604,
+"e": 41.344
+},
+{
+"w": "They",
+"s": 40.964,
+"e": 42.024
+},
+{
+"w": "point",
+"s": 41.944,
+"e": 42.224
+},
+{
+"w": "out",
+"s": 42.024,
+"e": 42.224
+},
+{
+"w": "that",
+"s": 42.024,
+"e": 42.444
+},
+{
+"w": "Nvidia,",
+"s": 42.224,
+"e": 43.224
+},
+{
+"w": "according",
+"s": 42.604,
+"e": 43.684
+},
+{
+"w": "to",
+"s": 43.444,
+"e": 43.684
+},
+{
+"w": "one",
+"s": 43.444,
+"e": 43.944
+},
+{
+"w": "source",
+"s": 43.684,
+"e": 44.444
+},
+{
+"w": "who",
+"s": 44.124,
+"e": 44.444
+},
+{
+"w": "spoke",
+"s": 44.124,
+"e": 44.704
+},
+{
+"w": "to",
+"s": 44.444,
+"e": 44.944
+},
+{
+"w": "the",
+"s": 44.704,
+"e": 44.944
+},
+{
+"w": "Times,",
+"s": 44.704,
+"e": 45.244
+},
+{
+"w": "gave",
+"s": 45.124,
+"e": 45.524
+},
+{
+"w": "at",
+"s": 45.244,
+"e": 45.524
+},
+{
+"w": "least",
+"s": 45.244,
+"e": 46.024
+},
+{
+"w": "twenty",
+"s": 45.864,
+"e": 46.244
+},
+{
+"w": "million",
+"s": 46.024,
+"e": 46.944
+},
+{
+"w": "dollars",
+"s": 46.704,
+"e": 47.464
+},
+{
+"w": "to",
+"s": 46.944,
+"e": 47.844
+},
+{
+"w": "Trump's",
+"s": 47.464,
+"e": 48.064
+},
+{
+"w": "new",
+"s": 47.844,
+"e": 48.284
+},
+{
+"w": "White",
+"s": 48.064,
+"e": 48.584
+},
+{
+"w": "House",
+"s": 48.284,
+"e": 48.984
+},
+{
+"w": "ballroom.",
+"s": 48.584,
+"e": 48.984
+},
+{
+"w": "Nvidia",
+"s": 49.693,
+"e": 50.003
+},
+{
+"w": "points",
+"s": 50.003,
+"e": 50.383
+},
+{
+"w": "back",
+"s": 50.383,
+"e": 50.643
+},
+{
+"w": "at",
+"s": 50.643,
+"e": 50.783
+},
+{
+"w": "Washington:",
+"s": 50.783,
+"e": 51.123
+},
+{
+"w": "it",
+"s": 51.663,
+"e": 51.723
+},
+{
+"w": "would",
+"s": 51.723,
+"e": 51.903
+},
+{
+"w": "have",
+"s": 51.903,
+"e": 52.063
+},
+{
+"w": "been",
+"s": 52.063,
+"e": 52.223
+},
+{
+"w": "warned.",
+"s": 52.223,
+"e": 52.603
+},
+{
+"w": "Beijing",
+"s": 53.083,
+"e": 53.243
+},
+{
+"w": "blames",
+"s": 53.243,
+"e": 53.603
+},
+{
+"w": "the",
+"s": 53.603,
+"e": 53.803
+},
+{
+"w": "American",
+"s": 53.803,
+"e": 54.123
+},
+{
+"w": "press.",
+"s": 54.123,
+"e": 54.483
+},
+{
+"w": "And",
+"s": 54.963,
+"e": 55.063
+},
+{
+"w": "Republicans",
+"s": 55.063,
+"e": 55.403
+},
+{
+"w": "in",
+"s": 55.403,
+"e": 55.683
+},
+{
+"w": "the",
+"s": 55.683,
+"e": 55.763
+},
+{
+"w": "House",
+"s": 55.763,
+"e": 56.003
+},
+{
+"w": "go",
+"s": 56.003,
+"e": 56.243
+},
+{
+"w": "after",
+"s": 56.243,
+"e": 56.523
+},
+{
+"w": "Nvidia.",
+"s": 56.523,
+"e": 56.903
+},
+{
+"w": "Three",
+"s": 58.005,
+"e": 58.195
+},
+{
+"w": "of",
+"s": 58.005,
+"e": 58.275
+},
+{
+"w": "their",
+"s": 58.195,
+"e": 58.455
+},
+{
+"w": "committee",
+"s": 58.275,
+"e": 58.675
+},
+{
+"w": "chairs",
+"s": 58.455,
+"e": 59.015
+},
+{
+"w": "write",
+"s": 58.675,
+"e": 59.275
+},
+{
+"w": "to",
+"s": 59.015,
+"e": 59.275
+},
+{
+"w": "Jensen.",
+"s": 59.015,
+"e": 59.695
+},
+{
+"w": "They",
+"s": 59.455,
+"e": 60.475
+},
+{
+"w": "call",
+"s": 60.255,
+"e": 60.695
+},
+{
+"w": "her",
+"s": 60.475,
+"e": 60.695
+},
+{
+"w": "a",
+"s": 60.475,
+"e": 60.855
+},
+{
+"w": "publicly",
+"s": 60.695,
+"e": 61.275
+},
+{
+"w": "reported",
+"s": 61.015,
+"e": 61.715
+},
+{
+"w": "Chinese",
+"s": 61.275,
+"e": 62.115
+},
+{
+"w": "intelligence",
+"s": 61.715,
+"e": 62.595
+},
+{
+"w": "asset.",
+"s": 62.115,
+"e": 62.595
+},
+{
+"w": "They",
+"s": 62.115,
+"e": 63.015
+},
+{
+"w": "want",
+"s": 62.595,
+"e": 63.675
+},
+{
+"w": "him",
+"s": 63.535,
+"e": 63.675
+},
+{
+"w": "in",
+"s": 63.535,
+"e": 63.895
+},
+{
+"w": "a",
+"s": 63.675,
+"e": 63.895
+},
+{
+"w": "closed",
+"s": 63.675,
+"e": 64.135
+},
+{
+"w": "room",
+"s": 64.035,
+"e": 64.535
+},
+{
+"w": "on",
+"s": 64.235,
+"e": 64.535
+},
+{
+"w": "the",
+"s": 64.235,
+"e": 64.535
+},
+{
+"w": "eighteenth",
+"s": 64.235,
+"e": 65.555
+},
+{
+"w": "of",
+"s": 65.255,
+"e": 66.075
+},
+{
+"w": "November,",
+"s": 65.555,
+"e": 66.655
+},
+{
+"w": "to",
+"s": 66.075,
+"e": 66.875
+},
+{
+"w": "brief",
+"s": 66.655,
+"e": 67.075
+},
+{
+"w": "them",
+"s": 66.875,
+"e": 67.215
+},
+{
+"w": "in",
+"s": 67.075,
+"e": 67.475
+},
+{
+"w": "person.",
+"s": 67.215,
+"e": 67.475
+}
+]
+}

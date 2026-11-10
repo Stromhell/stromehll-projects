@@ -1,0 +1,267 @@
+{
+ "dur": 37.783,
+ "cues": [
+  {
+   "t": 0.1,
+   "name": "footsteps",
+   "gain": 0.25
+  },
+  {
+   "t": 1.036,
+   "name": "paper",
+   "gain": 0.35
+  },
+  {
+   "t": 2.296,
+   "name": "scrape",
+   "gain": 0.15
+  },
+  {
+   "t": 2.596,
+   "name": "coins",
+   "gain": 0.15
+  },
+  {
+   "t": 3.756,
+   "name": "scrape",
+   "gain": 0.15
+  },
+  {
+   "t": 5.576,
+   "name": "pop",
+   "gain": 0.25
+  },
+  {
+   "t": 7.176,
+   "name": "scrape",
+   "gain": 0.15
+  },
+  {
+   "t": 8.389,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 8.994,
+   "name": "stamp",
+   "gain": 0.25
+  },
+  {
+   "t": 10.314,
+   "name": "coins",
+   "gain": 0.25
+  },
+  {
+   "t": 11.394,
+   "name": "whoosh_soft",
+   "gain": 0.2
+  },
+  {
+   "t": 12.194,
+   "name": "tick",
+   "gain": 0.2
+  },
+  {
+   "t": 13.014,
+   "name": "coins_cascade",
+   "gain": 0.25
+  },
+  {
+   "t": 13.214,
+   "name": "chime",
+   "gain": 0.2
+  },
+  {
+   "t": 14.728,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 14.928,
+   "name": "camera_shutter",
+   "gain": 0.25
+  },
+  {
+   "t": 16.028,
+   "name": "camera_shutter",
+   "gain": 0.2
+  },
+  {
+   "t": 16.3,
+   "name": "pop",
+   "gain": 0.2
+  },
+  {
+   "t": 18.34,
+   "name": "camera_shutter",
+   "gain": 0.35
+  },
+  {
+   "t": 18.84,
+   "name": "camera_shutter",
+   "gain": 0.3
+  },
+  {
+   "t": 19.54,
+   "name": "camera_shutter",
+   "gain": 0.3
+  },
+  {
+   "t": 20.98,
+   "name": "tension",
+   "gain": 0.15
+  },
+  {
+   "t": 21.68,
+   "name": "whoosh",
+   "gain": 0.2
+  },
+  {
+   "t": 23.26,
+   "name": "hit",
+   "gain": 0.25
+  },
+  {
+   "t": 24.77,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 24.87,
+   "name": "pop",
+   "gain": 0.2
+  },
+  {
+   "t": 25.995,
+   "name": "pop",
+   "gain": 0.2
+  },
+  {
+   "t": 27.295,
+   "name": "creak",
+   "gain": 0.3
+  },
+  {
+   "t": 27.995,
+   "name": "footsteps",
+   "gain": 0.25
+  },
+  {
+   "t": 28.395,
+   "name": "camera_shutter",
+   "gain": 0.3
+  },
+  {
+   "t": 31.095,
+   "name": "door_slam",
+   "gain": 0.15
+  },
+  {
+   "t": 31.055,
+   "name": "whoosh_soft",
+   "gain": 0.25
+  },
+  {
+   "t": 32.295,
+   "name": "thud",
+   "gain": 0.25
+  },
+  {
+   "t": 33.247,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 33.598,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 34.338,
+   "name": "drum",
+   "gain": 0.25
+  },
+  {
+   "t": 35.578,
+   "name": "tension",
+   "gain": 0.25
+  },
+  {
+   "t": 35.778,
+   "name": "hit",
+   "gain": 0.3
+  },
+  {
+   "t": 0.02,
+   "name": "hit",
+   "gain": 0.55
+  },
+  {
+   "t": 0.0,
+   "name": "riser",
+   "gain": 0.4
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 9.089,
+   "name": "office_loop",
+   "gain": 0.08
+  },
+  {
+   "start": 0,
+   "end": 9.089,
+   "name": "drone",
+   "gain": 0.1
+  },
+  {
+   "start": 8.289,
+   "end": 15.428,
+   "name": "office_loop",
+   "gain": 0.1
+  },
+  {
+   "start": 8.289,
+   "end": 15.428,
+   "name": "night_loop",
+   "gain": 0.06
+  },
+  {
+   "start": 14.628,
+   "end": 25.470000000000002,
+   "name": "crowd_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 14.628,
+   "end": 25.470000000000002,
+   "name": "office_loop",
+   "gain": 0.06
+  },
+  {
+   "start": 24.67,
+   "end": 33.946999999999996,
+   "name": "night_loop",
+   "gain": 0.14
+  },
+  {
+   "start": 24.67,
+   "end": 33.946999999999996,
+   "name": "city_loop",
+   "gain": 0.1
+  },
+  {
+   "start": 33.147,
+   "end": 38.583,
+   "name": "drone",
+   "gain": 0.2
+  },
+  {
+   "start": 33.147,
+   "end": 38.583,
+   "name": "crowd_loop",
+   "gain": 0.06
+  }
+ ]
+}
