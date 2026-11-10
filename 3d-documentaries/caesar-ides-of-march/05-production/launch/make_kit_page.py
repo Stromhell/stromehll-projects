@@ -64,8 +64,8 @@ pre{{white-space:pre-wrap;font:14px/1.5 var(--body);color:var(--fg);margin:10px 
 <header><span class="eyebrow">Stormi Explain Everything · 3D · Rome, 15 March 44 BC</span><h1>The Ides of March launch kit</h1>
 <span class="status">Not scheduled · waiting for Pushpam's OK on the full video</span></header>
 <section class="hero"><img src="{thumb}" alt="YouTube thumbnail: 60 men, 1 target, Caesar">
-<div class="txt"><span class="eyebrow">Long video · YouTube · 10:18 · -14 LUFS</span><h2>{e(title)}</h2>
-<a class="btn" href="{dl('1Y18i18q351BKm4XRBl4UWOplyKgO6l-G')}" target="_blank" rel="noopener">Watch the full video</a>
+<div class="txt"><span class="eyebrow">Long video · YouTube · 10:15 · -14 LUFS</span><h2>{e(title)}</h2>
+<a class="btn" href="{dl('1TUUS83GiOfeyN3HgmfkyBGKm9vzAO-Kb')}" target="_blank" rel="noopener">Watch the full video</a>
 <p class="lead" style="color:var(--mute);margin:0">Planned slot: 25 Feb 2027, 16:00 UTC (next free long-video day, one long video every 4 days).</p>
 <details open><summary>Description and chapters</summary><pre>{e(desc)}</pre></details>
 <details><summary>Tags</summary><pre>{e(tags)}</pre></details></div></section>

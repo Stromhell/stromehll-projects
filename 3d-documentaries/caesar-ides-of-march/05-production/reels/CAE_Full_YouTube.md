@@ -28,7 +28,7 @@ Chapters
 4:47 Daggers in the Senate
 5:51 The Assassination
 7:22 The Warnings He Ignored
-8:54 After Caesar: Augustus and the Mask
+8:53 After Caesar: Augustus and the Mask
 
 Music: "Dark Times", "Heroic Age", "Lord of the Land", "Unholy Knight", "Impact Prelude", "Ossuary 6 - Air" by Kevin MacLeod (incompetech.com). Licensed under Creative Commons: By Attribution 4.0 License, http://creativecommons.org/licenses/by/4.0/
 Sound effects: BigSoundBank.
