@@ -3,7 +3,7 @@
 ## Status (10 Nov 2026)
 - **Full video:** 12:35, booked on YouTube for 10 Nov 20:30 UTC (Zernio post 6af36d63b7f08d9bcc57e79c). v2 is on Drive (id 1wIpoqupSQ-fVOkUPj9IrDTOw1jZP_BIt).
 - **Thumbnail:** JH_Thumbnail_v2.jpg (Drive id 1Plo_H3JtJere34_MU_Pd-gif1ZdwvxOT).
-- **Reels:** 15, booked by the Zernio thread, about 2 a day from 11 Nov through 18 Nov. Each has an Instagram Manual Trial Reel copy. Record: /mnt/project-files/2d-history/jensen-spy/launch/JH_reels_booked.txt.
+- **Reels:** 15, ALL BOOKED 10 Nov 21:58 UTC on YouTube + Instagram, 11-18 Nov, each with an Instagram Manual Trial Reel copy 1.5 h later. They use the v2 face-cutout covers (reels/covers_v2.py). Ids: /mnt/project-files/2d-history/jensen-spy/launch/JH_reels_booked.txt. The 15 displaced reels now sit 27 Feb-9 Mar 2027.
 - **Launch kit:** https://claude.ai/artifact/UBHjyHe68hSxUamRJn4HGz
 
 ## Where things are
