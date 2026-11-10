@@ -36,7 +36,7 @@ const NOTE = CLIP;
 
 window.SHOTS = [
   // 1.01 Alice, full figure; her profile card builds (Huang Le, Chinese citizen); two HUANG tiles with a NO RELATION slash
-  { draw: zbg('newsroom', .34), cam: { z: [1, 1.06], x: [1280, 1240], y: [720, 740] }, bed: [['office_loop', .08], ['drone', .1]], light: { dir: 1, key: 'rgba(255,230,200,.24)' },
+  { draw: zbg('newsroom', .62, 3), cam: { z: [1, 1.06], x: [1280, 1240], y: [720, 740] }, bed: [['office_loop', .08], ['drone', .1]], light: { dir: 1, key: 'rgba(255,230,200,.24)' },
     init: S => { const tA = A.at(S, 'Alice', .7), tH = A.at(S, 'Huang', 3.2), tC = A.at(S, 'citizen', 5.1), tN = A.at(S, 'relation', 8.0);
       S.D.figs = [{ x: 680, y: 1320, s: 2.7, ...JH.ALICE(), facing: 1, mood: 'smug', anim: (o, lt) => { if (lt > tA && lt < tH) o.pose = 'present'; if (lt > tN) o.pose = 'shrug'; } }];
       S.D.front = [(c, lt) => tag(c, 'ALICE HUANG', 690, 550, lt, tA, { px: 54 })];
@@ -45,7 +45,7 @@ window.SHOTS = [
         (c, lt) => TW.stamp(c, 'NO RELATION', 1330, 800, lt, tN + .3, { px: 54, rot: -.06 })];
       S.D.sfx = [[tA, 'pop', .25], [tH - .5, 'paper', .3], [tC, 'tick', .25], [tN - .6, 'pop', .2], [tN, 'hit', .2], [tN + .3, 'stamp', .35]]; } },
   // 1.02 career timeline: Alice walks along it; tiles pop: state TV reporter (mic), private banker, Shanghai fund executive
-  { draw: (c, lt, u) => { zbg('skyline', .38, 5)(c, lt, u); c.fillStyle = 'rgba(10,12,24,.35)'; c.fillRect(0, 0, 1920, 1080); }, cam: { z: [1, 1], x: [1280, 1280], y: [720, 720] }, bed: [['city_loop', .08], ['drone', .1]], light: { dir: -1, key: 'rgba(200,220,255,.2)' },
+  { draw: (c, lt, u) => { zbg('skyline', .7, 3)(c, lt, u); c.fillStyle = 'rgba(10,12,24,.12)'; c.fillRect(0, 0, 1920, 1080); }, cam: { z: [1, 1], x: [1280, 1280], y: [720, 720] }, bed: [['city_loop', .08], ['drone', .1]], light: { dir: -1, key: 'rgba(200,220,255,.2)' },
     init: S => { const tT = A.at(S, 'Times', 1.3), tR = A.at(S, 'reporter', 3.5), tB = A.at(S, 'banker', 7.4), tE = A.at(S, 'executive', 10.2), tSh = A.at(S, 'Shanghai', 11.3);
       const ST = [560, 1280, 2000], sp = 2.2; const segs = [[.1, tR - .5, 120, ST[0]], [tR + 1.2, tB - tR - 1.6, ST[0], ST[1]], [tB + 1.0, tE - tB - 1.3, ST[1], ST[2]]];
       S.D.figs = [{ x: 120, y: 1330, s: sp, ...JH.ALICE(), facing: 1, mood: 'neutral', anim: (o, lt) => { o.pose = 'stand'; legs(o, lt, segs, sp); if (o.pose !== 'walk') { if (lt < tB) { o.hold = MIC; o.arms = () => ({ shR: 55, elR: -95, handR: 'fist' }); o.talk = lt > tR - .1 && lt < tR + 1.2; } else if (lt < tE) { o.pose = 'present'; o.mood = 'happy'; } else { o.pose = 'think'; o.mood = 'smug'; } } } }];

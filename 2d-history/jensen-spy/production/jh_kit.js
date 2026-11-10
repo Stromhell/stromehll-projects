@@ -9,11 +9,11 @@
 
   // ---- cast
   // Jensen: black leather jacket over a black tee, swept dark-grey hair, no tie
-  JH.JENSEN = () => look('banker', { hair: 'swept', hairCol: '#2a2a2e', streak: '#6a6a70', skin: '#efc39c', top: 'jacket', topCol: '#17171b', inner: '#26262c', tie: null, legs: '#22242a', shoes: '#141416', seed: 11 });
+  JH.JENSEN = () => look('banker', { hair: 'swept', hairCol: '#b4b4b8', streak: '#e2e2e6', skin: '#efc39c', glasses: true, top: 'jacket', topCol: '#17171b', inner: '#111114', tie: null, legs: '#1a1a1e', shoes: '#141416', seed: 11 });
   JH.JENSEN_KID = () => look('teen', { hair: 'short', hairCol: '#1a1410', streak: '#3a2a20', skin: '#efc39c', topCol: '#5a7aa0', inner: '#e8e8e2', legs: '#3a4a66', seed: 12 });
   JH.JENSEN_TEEN = () => look('teen', { hair: 'swept', hairCol: '#1a1410', streak: '#3a2a20', skin: '#efc39c', top: 'shirt', topCol: '#f2f0ea', inner: '#f2f0ea', legs: '#2a2e3a', seed: 13 });
   // Alice Huang: long black hair, cream blazer, dark top
-  JH.ALICE = () => look('woman', { hair: 'long', hairCol: '#16120f', streak: '#3a2a22', skin: '#f2c8a4', topCol: '#e8dcc6', inner: '#1e1e24', legs: '#1e1e24', shoes: '#1a1416', seed: 21 });
+  JH.ALICE = () => look('woman', { hair: 'long', hairCol: '#120e0c', streak: '#2e2420', skin: '#f6d2b4', topCol: '#f4f0e8', inner: '#f4f0e8', legs: '#1e1e24', shoes: '#1a1416', lashes: true, seed: 21 });
   // generic executives at the bar, officials, reporters
   JH.EXEC = (k = 0) => look('banker', { hair: ['neat', 'short', 'swept', 'bald'][k % 4], hairCol: ['#1d1712', '#3b2a20', '#6a6a6a', '#8a7a6a'][k % 4], topCol: ['#2f3646', '#4c5260', '#3a2e2a', '#24303a'][k % 4], inner: '#e8eef6', tie: [null, '#2a3a6a', null, '#7a2a2a'][k % 4], skin: ['#f2c6a0', '#d9a57c', '#e9bc94', '#c99068'][k % 4], seed: 30 + k });
   JH.WOMAN = (k = 0) => look('woman', { hair: ['bun', 'long', 'short'][k % 3], hairCol: ['#2a1a14', '#6a3a20', '#1d1712'][k % 3], topCol: ['#2e5a8a', '#3a6a4a', '#5a3a6a'][k % 3], skin: ['#f0c09a', '#c99068', '#d9a57c'][k % 3], seed: 40 + k });
