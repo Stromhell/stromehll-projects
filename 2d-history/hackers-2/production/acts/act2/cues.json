@@ -1,0 +1,207 @@
+{
+ "dur": 32.8,
+ "cues": [
+  {
+   "t": 0.2,
+   "name": "typing",
+   "gain": 0.1
+  },
+  {
+   "t": 0.55,
+   "name": "typing",
+   "gain": 0.1
+  },
+  {
+   "t": 0.9,
+   "name": "typing",
+   "gain": 0.1
+  },
+  {
+   "t": 1.25,
+   "name": "typing",
+   "gain": 0.1
+  },
+  {
+   "t": 1.6,
+   "name": "typing",
+   "gain": 0.1
+  },
+  {
+   "t": 1.95,
+   "name": "typing",
+   "gain": 0.1
+  },
+  {
+   "t": 2.3,
+   "name": "typing",
+   "gain": 0.1
+  },
+  {
+   "t": 2.65,
+   "name": "typing",
+   "gain": 0.1
+  },
+  {
+   "t": 3,
+   "name": "typing",
+   "gain": 0.1
+  },
+  {
+   "t": 3.35,
+   "name": "typing",
+   "gain": 0.1
+  },
+  {
+   "t": 3.2,
+   "name": "pop",
+   "gain": 0.2
+  },
+  {
+   "t": 5.2,
+   "name": "chime",
+   "gain": 0.3
+  },
+  {
+   "t": 5.92,
+   "name": "alarm",
+   "gain": 0.1
+  },
+  {
+   "t": 7.96,
+   "name": "stamp",
+   "gain": 0.35
+  },
+  {
+   "t": 9.415,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 9.79,
+   "name": "pop",
+   "gain": 0.2
+  },
+  {
+   "t": 13.81,
+   "name": "fire_loop",
+   "gain": 0.08
+  },
+  {
+   "t": 14.21,
+   "name": "tick",
+   "gain": 0.2
+  },
+  {
+   "t": 14.91,
+   "name": "chime",
+   "gain": 0.3
+  },
+  {
+   "t": 16.765,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 16.865,
+   "name": "pop",
+   "gain": 0.2
+  },
+  {
+   "t": 17.38,
+   "name": "chime",
+   "gain": 0.3
+  },
+  {
+   "t": 20.26,
+   "name": "whoosh",
+   "gain": 0.3
+  },
+  {
+   "t": 21.66,
+   "name": "coins",
+   "gain": 0.3
+  },
+  {
+   "t": 22.36,
+   "name": "stamp",
+   "gain": 0.3
+  },
+  {
+   "t": 23.835,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 23.835,
+   "name": "pop",
+   "gain": 0.15
+  },
+  {
+   "t": 23.955,
+   "name": "pop",
+   "gain": 0.15
+  },
+  {
+   "t": 24.075,
+   "name": "pop",
+   "gain": 0.15
+  },
+  {
+   "t": 24.195,
+   "name": "pop",
+   "gain": 0.15
+  },
+  {
+   "t": 25.61,
+   "name": "whoosh",
+   "gain": 0.3
+  },
+  {
+   "t": 28.21,
+   "name": "whoosh",
+   "gain": 0.3
+  },
+  {
+   "t": 30.63,
+   "name": "chime",
+   "gain": 0.25
+  },
+  {
+   "t": 30.93,
+   "name": "stamp",
+   "gain": 0.3
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 10.115,
+   "name": "hum_loop",
+   "gain": 0.14
+  },
+  {
+   "start": 9.315,
+   "end": 17.465,
+   "name": "hum_loop",
+   "gain": 0.14
+  },
+  {
+   "start": 16.665,
+   "end": 24.535,
+   "name": "hum_loop",
+   "gain": 0.12
+  },
+  {
+   "start": 23.735,
+   "end": 33.599999999999994,
+   "name": "hum_loop",
+   "gain": 0.12
+  },
+  {
+   "start": 23.735,
+   "end": 33.599999999999994,
+   "name": "swell",
+   "gain": 0.1
+  }
+ ]
+}
