@@ -1,0 +1,184 @@
+{
+ "dur": 33.049,
+ "cues": [
+  {
+   "t": 0.2,
+   "name": "drone",
+   "gain": 0.12
+  },
+  {
+   "t": 5.2,
+   "name": "scrape",
+   "gain": 0.18
+  },
+  {
+   "t": 5.5,
+   "name": "thud",
+   "gain": 0.15
+  },
+  {
+   "t": 5.82,
+   "name": "pop",
+   "gain": 0.2
+  },
+  {
+   "t": 8.375,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 8.77,
+   "name": "tick",
+   "gain": 0.3
+  },
+  {
+   "t": 8.87,
+   "name": "pop",
+   "gain": 0.15
+  },
+  {
+   "t": 10.77,
+   "name": "pop",
+   "gain": 0.2
+  },
+  {
+   "t": 11.91,
+   "name": "alarm",
+   "gain": 0.14
+  },
+  {
+   "t": 12.11,
+   "name": "drum",
+   "gain": 0.3
+  },
+  {
+   "t": 15.27,
+   "name": "stamp",
+   "gain": 0.3
+  },
+  {
+   "t": 16.565,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 16.665,
+   "name": "footsteps",
+   "gain": 0.3
+  },
+  {
+   "t": 17.365,
+   "name": "footsteps",
+   "gain": 0.25
+  },
+  {
+   "t": 18.679,
+   "name": "stamp",
+   "gain": 0.3
+  },
+  {
+   "t": 18.929,
+   "name": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 19.959,
+   "name": "drum",
+   "gain": 0.3
+  },
+  {
+   "t": 23.039,
+   "name": "whoosh",
+   "gain": 0.3
+  },
+  {
+   "t": 23.979,
+   "name": "hit",
+   "gain": 0.2
+  },
+  {
+   "t": 24.219,
+   "name": "hit",
+   "gain": 0.2
+  },
+  {
+   "t": 26.399,
+   "name": "hit",
+   "gain": 0.25
+  },
+  {
+   "t": 23.639,
+   "name": "stamp",
+   "gain": 0.3
+  },
+  {
+   "t": 28.949,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 28.999,
+   "name": "chime",
+   "gain": 0.4
+  },
+  {
+   "t": 29.449,
+   "name": "stamp",
+   "gain": 0.35
+  },
+  {
+   "t": 30.149,
+   "name": "whoosh",
+   "gain": 0.3
+  },
+  {
+   "t": 0.0,
+   "name": "riser",
+   "gain": 0.35
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 9.075000000000001,
+   "name": "wind_loop",
+   "gain": 0.14
+  },
+  {
+   "start": 0,
+   "end": 9.075000000000001,
+   "name": "hum_loop",
+   "gain": 0.08
+  },
+  {
+   "start": 8.275,
+   "end": 17.265,
+   "name": "wind_loop",
+   "gain": 0.12
+  },
+  {
+   "start": 8.275,
+   "end": 17.265,
+   "name": "hum_loop",
+   "gain": 0.1
+  },
+  {
+   "start": 16.465,
+   "end": 29.649,
+   "name": "wind_loop",
+   "gain": 0.12
+  },
+  {
+   "start": 16.465,
+   "end": 29.649,
+   "name": "tension",
+   "gain": 0.16
+  },
+  {
+   "start": 28.849,
+   "end": 33.849,
+   "name": "drone",
+   "gain": 0.2
+  }
+ ]
+}

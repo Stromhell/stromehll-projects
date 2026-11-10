@@ -1,0 +1,122 @@
+{
+ "dur": 23.319,
+ "cues": [
+  {
+   "t": 0.2,
+   "name": "footsteps",
+   "gain": 0.25
+  },
+  {
+   "t": 1.6,
+   "name": "footsteps",
+   "gain": 0.25
+  },
+  {
+   "t": 3,
+   "name": "footsteps",
+   "gain": 0.2
+  },
+  {
+   "t": 7.175,
+   "name": "tick",
+   "gain": 0.35
+  },
+  {
+   "t": 7.475,
+   "name": "chime",
+   "gain": 0.2
+  },
+  {
+   "t": 9.175,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 9.125,
+   "name": "footsteps",
+   "gain": 0.25
+  },
+  {
+   "t": 10.727,
+   "name": "whoosh_soft",
+   "gain": 0.2
+  },
+  {
+   "t": 11.227,
+   "name": "whoosh_soft",
+   "gain": 0.2
+  },
+  {
+   "t": 11.727,
+   "name": "whoosh_soft",
+   "gain": 0.2
+  },
+  {
+   "t": 12.707,
+   "name": "paper_tear",
+   "gain": 0.2
+  },
+  {
+   "t": 13.707,
+   "name": "run_steps",
+   "gain": 0.25
+  },
+  {
+   "t": 15.082,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 16.569,
+   "name": "chime",
+   "gain": 0.35
+  },
+  {
+   "t": 19.249,
+   "name": "camera_shutter",
+   "gain": 0.3
+  },
+  {
+   "t": 19.649,
+   "name": "tick",
+   "gain": 0.25
+  },
+  {
+   "t": 21.649,
+   "name": "stamp",
+   "gain": 0.4
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 9.875,
+   "name": "night_loop",
+   "gain": 0.16
+  },
+  {
+   "start": 0,
+   "end": 9.875,
+   "name": "wind_loop",
+   "gain": 0.08
+  },
+  {
+   "start": 9.075,
+   "end": 15.782,
+   "name": "hum_loop",
+   "gain": 0.14
+  },
+  {
+   "start": 9.075,
+   "end": 15.782,
+   "name": "tension",
+   "gain": 0.12
+  },
+  {
+   "start": 14.982,
+   "end": 24.119,
+   "name": "hum_loop",
+   "gain": 0.12
+  }
+ ]
+}
