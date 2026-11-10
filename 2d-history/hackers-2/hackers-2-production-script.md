@@ -91,7 +91,7 @@ Working title: **The Teens Who Stole the Xbox Before It Existed (The Kids Who Ha
 |---|---|---|---|---|---|
 | 8.01 | MED | 10.6 | In the US, the four plead guilty. David and Sonic each get 18 months in prison. Austin, who helps the FBI on another case, gets probation. | A gavel; sentence cards: 18 MONTHS, 18 MONTHS, PROBATION. | 18 MONTHS |
 | 8.02 | MED | 9.1 | David later works in cyber security. Sonic struggles under strict probation, and is jailed again before finally getting back on his feet. | David at a security-company desk; Sonic at a window, then smiling. |  |
-| 8.03 | MED | 11.7 | Nathan, the youngest and least involved, served two years. After release, Holly, as she was later known, took her own life. If you're struggling, please reach out to someone. | A single lit window at night; a helpline card fades in. | NEED HELP? CALL OR TEXT 988 (US) · FIND A HELPLINE: findahelpline.com |
+| 8.03 | MED | 11.7 | Nathan, one of the least involved, served two years. After release, Holly, as she was later known, took her own life. If you're struggling, please reach out to someone. | A single lit window at night; a helpline card fades in. | NEED HELP? CALL OR TEXT 988 (US) · FIND A HELPLINE: findahelpline.com |
 | 8.04 | MED | 12.4 | In Australia, Dylan pleaded not guilty, then left for the Czech Republic before his case ended. In 2017 Justin was arrested for separate frauds, and later sentenced to years in prison. | A plane leaving Perth; then a separate cell door. |  |
 | 8.05 | MED | 6.4 | Next: two British teenagers who broke into the email of the head of the CIA. | A CIA-style seal with an inbox icon; NEXT card. | NEXT: HACKED THE CIA BOSS |
 | 8.06 | TITLE | 4.0 |  | End card. | THE KIDS WHO HACKED THE WORLD · PART 3 NEXT |

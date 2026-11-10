@@ -14,6 +14,11 @@ def year(y):
     hi, lo = divmod(y, 100)
     return two(hi) + ' ' + ('hundred' if lo == 0 else ('oh ' + ONES[lo] if lo < 10 else two(lo)))
 WORDS = [
+ (r"\bXenomega\b", 'Zee-no-mega'), (r"\bPokora\b", 'Puh-kor-ah'), (r"\bNesheiwat\b", 'Neh-shay-wat'), (r"\bSanadodeh\b", 'Sana-doh-deh'), (r"\bLeroux\b", 'Leh-roo'),
+ (r"\bAlcala\b", 'Al-kah-la'), (r"\bDurango\b", 'Doo-rang-go'), (r"\bSeychelles\b", 'Say-shells'), (r"\bMTW\b", 'M T W'), (r"\bEA\b", 'E A'), (r"\bAMD\b", 'A M D'),
+ (r"\b8,000 dollars\b", 'eight thousand dollars'), (r"\b100 dollars\b", 'a hundred dollars'), (r"\b5,000 dollars\b", 'five thousand dollars'), (r"\b14-year-old\b", 'fourteen-year-old'), (r"\b18-year-old\b", 'eighteen-year-old'),
+ (r"\bXbox 360\b", 'Xbox three-sixty'), (r"\b18 months\b", 'eighteen months'), (r"\b25 major\b", 'twenty-five major'), (r", 24,", ', twenty-four,'), (r", 16,", ', sixteen,'), (r", 18,", ', eighteen,'),
+ (r"'Person A'", 'Person A'), (r"\bFBI's\b", 'F B I\'s'), (r"\bFBI\b", 'F B I'), (r"\bCIA\b", 'C I A'), (r"\beBay\b", 'ee-Bay'),
  (r"\bOGUsers\b", 'O G Users'), (r"\bMrBeast\b", 'Mister Beast'), (r"\bSIM\b", 'sim'), (r"\b2,500 to 3,000\b", 'twenty-five hundred to three thousand'), (r"\b5,000\b", 'five thousand'),
  (r"\b100,000\b", 'a hundred thousand'), (r"\bover 100 Bitcoin\b", 'over a hundred Bitcoin'), (r"\b17-year-old\b", 'seventeen-year-old'), (r"\b19-year-old\b", 'nineteen-year-old'), (r"\b22-year-old\b", 'twenty-two-year-old'),
  (r"\b130\b", 'a hundred and thirty'), (r"\b45\b", 'forty-five'), (r"\b17\b", 'seventeen'), (r"\b15 July\b", 'July fifteenth,'), (r"\bBMW\b", 'B M W'),
