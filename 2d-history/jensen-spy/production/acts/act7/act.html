@@ -1,0 +1,157 @@
+<!doctype html><html><head><meta charset="utf-8"><title>JH act N</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../tw_kit.js"></script><script src="../../xu_kit.js"></script><script src="../../jh_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+const SW = 1920, SH = 1080, INK = TW.INK, RED = TW.RED, pop = TW.pop, fade = TW.fade;
+const backdrop = (name, b = .5, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const CARRY = () => ({ shL: 30, elL: -75, shR: 35, elR: -75 });
+const endTitle = (secs) => { const T = window.TIMING; const last = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length, start: last.end, end: last.end + secs, vo_start: last.end, vo_end: last.end, text: '' }); T.dur = last.end + secs; };
+// ===== JH act 7: The File =====
+const D2 = Math.PI / 180, rr = TW.rr, txt = TW.txt;
+// prop held upright in a hand: a2 = shoulder + elbow angle of that arm
+const held = (a2, fn) => (ctx, t) => { ctx.save(); ctx.rotate(a2 * D2); fn(ctx, t); ctx.restore(); };
+// highlighted name tag (screen space)
+const nameTag = (c, s, x, y, lt, at, opts = {}) => { const a = pop(lt, at, .4), o = 1 - K.seg(lt, (opts.until ?? 999) - .3, opts.until ?? 999); if (a <= 0 || o <= 0) return; const px = opts.px ?? 40; c.save(); c.globalAlpha = o; c.translate(x, y); c.rotate(opts.rot ?? -.02); c.scale(a, a); c.font = `${px}px Anton`; const w = c.measureText(s).width + 44, h = px * 1.45;
+  c.fillStyle = 'rgba(0,0,0,.35)'; rr(c, -w / 2 + 6, -h / 2 + 8, w, h, 10); c.fill(); c.fillStyle = JH.GOLD; c.strokeStyle = INK; c.lineWidth = 4; rr(c, -w / 2, -h / 2, w, h, 10); c.fill(); c.stroke(); txt(c, s, 0, 3, px, INK, 'center', 'Anton');
+  if (opts.sub) { c.font = '28px Oswald'; const w2 = c.measureText(opts.sub).width + 26; c.fillStyle = 'rgba(20,16,14,.82)'; rr(c, -w2 / 2, h / 2 + 6, w2, 40, 8); c.fill(); txt(c, opts.sub, 0, h / 2 + 27, 28, '#f6efe2', 'center', 'Oswald'); } c.restore(); };
+// shield badge (screen or world): label, colours
+const shield = (c, x, y, s, label, col, opts = {}) => { c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = 'rgba(0,0,0,.35)'; c.beginPath(); c.moveTo(8, -128); c.lineTo(118, -80); c.lineTo(100, 66); c.lineTo(8, 140); c.lineTo(-84, 66); c.lineTo(-104, -80); c.closePath(); c.fill();
+  c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 7; c.beginPath(); c.moveTo(0, -136); c.lineTo(112, -88); c.lineTo(94, 58); c.lineTo(0, 132); c.lineTo(-94, 58); c.lineTo(-112, -88); c.closePath(); c.fill(); c.stroke();
+  c.fillStyle = opts.inner || 'rgba(255,255,255,.14)'; c.beginPath(); c.arc(0, -14, 64, 0, 7); c.fill(); if (opts.star) { c.fillStyle = JH.GOLD; c.beginPath(); for (let k = 0; k < 10; k++) { const r = k % 2 ? 22 : 54, a = -Math.PI / 2 + k * Math.PI / 5; c.lineTo(Math.cos(a) * r, -14 + Math.sin(a) * r); } c.closePath(); c.fill(); c.strokeStyle = INK; c.lineWidth = 3; c.stroke(); }
+  txt(c, label, 0, opts.star ? 86 : -12, opts.star ? 40 : 56, opts.tc || '#f6efe2', 'center', 'Anton'); c.restore(); };
+// a half shield (left or right half), for the split badge
+const halfShield = (c, x, y, s, side, label, col) => { c.save(); c.translate(x, y); c.beginPath(); if (side < 0) c.rect(-200 * s, -200 * s, 200 * s, 400 * s); else c.rect(0, -200 * s, 200 * s, 400 * s); c.clip(); shield(c, 0, 0, s, '', col); c.restore(); txt(c, label, x + side * 52 * s, y - 12 * s, 46 * s, '#f6efe2', 'center', 'Anton'); };
+// jet engine front view with spinning fan (screen or world)
+const engine = (c, x, y, r, lt) => { c.save(); c.translate(x, y); c.fillStyle = 'rgba(0,0,0,.35)'; c.beginPath(); c.arc(8, 10, r * 1.08, 0, 7); c.fill(); c.fillStyle = '#c8ccd4'; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.arc(0, 0, r * 1.08, 0, 7); c.fill(); c.stroke(); c.fillStyle = '#2a2e36'; c.beginPath(); c.arc(0, 0, r * .92, 0, 7); c.fill();
+  c.save(); c.rotate(lt * 2.4); for (let k = 0; k < 18; k++) { c.rotate(Math.PI * 2 / 18); c.fillStyle = k % 2 ? '#9aa2b0' : '#8a92a0'; c.beginPath(); c.moveTo(0, -r * .2); c.quadraticCurveTo(r * .35, -r * .5, r * .12, -r * .9); c.lineTo(-r * .08, -r * .9); c.quadraticCurveTo(r * .05, -r * .5, -r * .1, -r * .2); c.closePath(); c.fill(); } c.restore();
+  c.fillStyle = '#e8ecf2'; c.beginPath(); c.arc(0, 0, r * .2, 0, 7); c.fill(); c.stroke(); c.fillStyle = INK; c.beginPath(); c.moveTo(0, -r * .06); c.quadraticCurveTo(r * .12, 0, 0, r * .06); c.fill(); c.restore(); };
+// steaming dish on the dinner table (world)
+const dish = (c, x, y, lt, k) => { c.fillStyle = 'rgba(0,0,0,.2)'; c.beginPath(); c.ellipse(x + 4, y + 6, 64, 14, 0, 0, 7); c.fill(); c.fillStyle = '#f4f1ea'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.ellipse(x, y, 62, 14, 0, 0, 7); c.fill(); c.stroke(); c.fillStyle = ['#c86a2a', '#6a9a3a', '#b8402a'][k % 3]; c.beginPath(); c.ellipse(x, y - 4, 36, 9, 0, Math.PI, 0); c.fill();
+  for (let j = 0; j < 3; j++) { const life = (lt * .5 + j / 3 + k * .2) % 1; c.strokeStyle = `rgba(255,255,255,${.35 * (1 - life)})`; c.lineWidth = 4; c.beginPath(); c.moveTo(x - 14 + j * 14, y - 12); c.quadraticCurveTo(x - 24 + j * 14 + Math.sin(lt * 2 + j) * 10, y - 40 - life * 40, x - 10 + j * 14, y - 60 - life * 70); c.stroke(); } };
+// dining chair, side view; back on the far side from the table (back = -1 left, 1 right). seatY = seat top
+const dChair = (c, x, floorY, seatY, back) => { c.save(); c.fillStyle = 'rgba(0,0,0,.3)'; c.beginPath(); c.ellipse(x, floorY, 110, 14, 0, 0, 7); c.fill(); c.strokeStyle = INK; c.lineWidth = 5; c.fillStyle = '#5a2a1a';
+  const bx = x + back * 80; c.fillRect(bx - 10, seatY - 250, 20, floorY - seatY + 250); c.strokeRect(bx - 10, seatY - 250, 20, floorY - seatY + 250); rr(c, bx - 16, seatY - 262, 32, 40, 8); c.fill(); c.stroke();
+  c.fillRect(x - back * 70 - 9, seatY + 20, 18, floorY - seatY - 20); c.strokeRect(x - back * 70 - 9, seatY + 20, 18, floorY - seatY - 20); c.fillStyle = '#7a3a22'; rr(c, x - 95, seatY, 190, 28, 8); c.fill(); c.stroke(); c.restore(); };
+// prison bars dropping over the frame (screen): u 0 up .. 1 down
+const bars = (c, u) => { if (u <= 0) return; const dy = (1 - E.out(u)) * -1100; c.save(); c.translate(0, dy); c.fillStyle = 'rgba(10,10,14,.35)'; c.fillRect(0, -40, 1920, 1120); for (let k = 0; k < 11; k++) { const x = 40 + k * 184; c.fillStyle = '#3a3e46'; c.fillRect(x, -40, 34, 1120); c.fillStyle = 'rgba(255,255,255,.22)'; c.fillRect(x + 5, -40, 7, 1120); c.strokeStyle = INK; c.lineWidth = 4; c.strokeRect(x, -40, 34, 1120); }
+  c.fillStyle = '#3a3e46'; c.fillRect(0, 60, 1920, 34); c.strokeRect(-4, 60, 1928, 34); c.fillRect(0, 820, 1920, 34); c.strokeRect(-4, 820, 1928, 34); c.restore(); };
+// a file photo (silhouette only, no likeness) with caption
+const filePhoto = (c, x, y, s, cap, opts = {}) => { c.save(); c.translate(x, y); c.rotate(opts.rot ?? 0); c.scale(s, s); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(-122, -152, 256, 330); c.fillStyle = '#f7f3e8'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-130, -160, 260, 330); c.strokeRect(-130, -160, 260, 330);
+  c.fillStyle = '#9aa0aa'; c.fillRect(-106, -136, 212, 220); c.fillStyle = opts.sil || '#3a3e48'; c.beginPath(); c.arc(0, -56, 46, 0, 7); c.fill(); if (opts.hair) { c.beginPath(); c.ellipse(0, -40, 60, 70, 0, Math.PI, 0); c.fill(); c.fillRect(-60, -40, 22, 90); c.fillRect(38, -40, 22, 90); } c.beginPath(); c.ellipse(0, 76, 86, 64, 0, Math.PI, 0); c.fill();
+  txt(c, cap, 0, 122, 30, INK, 'center', 'Anton'); if (opts.sub) txt(c, opts.sub, 0, 154, 22, '#5a5248', 'center', 'Oswald'); c.restore(); };
+// campaign poster (world)
+const poster = (c, x, y, w, h, l1, l2, col) => { c.save(); c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(x + 8, y + 10, w, h); c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(x, y, w, h); c.strokeRect(x, y, w, h); c.fillStyle = '#f6efe2'; c.fillRect(x + 10, y + h * .62, w - 20, 6);
+  txt(c, l1, x + w / 2, y + h * .32, Math.min(46, w * .2), '#fff', 'center', 'Anton'); txt(c, l2, x + w / 2, y + h * .8, Math.min(30, w * .13), '#fff', 'center', 'Oswald'); c.restore(); };
+
+for (const n of ['stage_blue', 'white_house_night', 'sec_room', 'rain_street', 'office', 'gov_corridor', 'chip']) K.load(n, PL + n + '.jpg');
+// framed inset of another plate (screen space)
+const inset = (c, name, x, y, w, h, a, opts = {}) => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.rotate(opts.rot ?? .02); c.fillStyle = 'rgba(0,0,0,.4)'; c.fillRect(-w / 2 + 10, -h / 2 + 12, w + 16, h + 16); c.fillStyle = '#f6efe2'; c.fillRect(-w / 2 - 8, -h / 2 - 8, w + 16, h + 16 + (opts.cap ? 50 : 0)); c.strokeStyle = INK; c.lineWidth = 4; c.strokeRect(-w / 2 - 8, -h / 2 - 8, w + 16, h + 16 + (opts.cap ? 50 : 0));
+  const sx = opts.sx ?? 0, sy = opts.sy ?? 0, sw = opts.sw ?? 2560, sh2 = opts.sh ?? 1440; c.drawImage(K.imgs[name], sx, sy, sw, sh2, -w / 2, -h / 2, w, h); if (opts.cap) txt(c, opts.cap, 0, h / 2 + 30, 34, INK, 'center', 'Anton'); c.restore(); };
+const rain = (n = 90, sp = 1400) => (c, lt) => { c.strokeStyle = 'rgba(190,210,240,.35)'; c.lineWidth = 2; for (let k = 0; k < n; k++) { const x = (k * 293.7 + lt * 120) % 2700 - 70, y = (k * 151.3 + lt * sp) % 1500 - 60; c.beginPath(); c.moveTo(x, y); c.lineTo(x - 8, y + 34); c.stroke(); } };
+const coverSign = (c, lt) => { c.fillStyle = '#14161e'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.moveTo(830, 786); c.lineTo(1730, 786); c.lineTo(1700, 864); c.lineTo(860, 864); c.closePath(); c.fill(); c.stroke(); const f = .85 + .15 * Math.sin(lt * 23) * Math.sin(lt * 5); TW.glow(c, 1280, 826, 360, '255,120,170', .25 * f); txt(c, 'XINYI TOWER', 1280, 828, 52, `rgba(255,190,220,${f})`, 'center', 'Anton'); };
+const puddles = (c, lt) => { for (let k = 0; k < 6; k++) { const x = 200 + k * 420, ph = (lt * .8 + k * .37) % 1; c.strokeStyle = `rgba(200,220,255,${.3 * (1 - ph)})`; c.lineWidth = 2; c.beginPath(); c.ellipse(x, 1330 + (k % 2) * 40, 20 + ph * 60, 5 + ph * 12, 0, 0, 7); c.stroke(); } };
+
+window.SHOTS = [
+  // 7.01 the target: Jensen on a keynote stage; a red ring tightens round him; the screen shows a roadmap; a dashed line runs to the White House
+  { plate: 'stage_blue', cam: { z: [1.18, 1.32], x: [1280, 1280], y: [690, 710] }, bed: [['crowd_loop', .1], ['hum_loop', .08]], light: { dir: 1, key: 'rgba(150,190,255,.26)' },
+    init: S => { const tA = A.at(S, 'According', .6), tW = A.at(S, 'wants', 3.2), tO = A.at(S, 'one man', 4.8), tN = A.at(S, 'Nvidia', 8.2), tP = A.at(S, 'president', 11.3), tAl = A.at(S, 'allowed', 12.7);
+      S.D.figs = [{ x: 1280, y: 905, s: 1.0, ...JH.JENSEN(), facing: 1, mood: 'happy', anim: (o, lt) => { if (lt > tN - .3 && lt < tP - .5) o.pose = 'present'; if (lt > tP - .3) { o.pose = 'point'; o.talk = true; } } }];
+      S.D.live = [(c, lt) => { // the stage screen: a roadmap arrow drawing on at "Nvidia"
+          const u = E.out(K.seg(lt, tN - .2, tN + 1.6)); c.save(); c.fillStyle = 'rgba(10,20,50,.35)'; c.fillRect(520, 125, 1520, 615); TW.glow(c, 1280, 430, 700, '120,170,255', .12 + .04 * Math.sin(lt * 2));
+          if (u > 0) { c.globalAlpha = Math.min(1, u * 2); c.strokeStyle = JH.GREEN; c.lineWidth = 14; c.lineCap = 'round'; c.beginPath(); c.moveTo(640, 690); for (let k = 0; k <= 40 * u; k++) c.lineTo(640 + k * 30, 690 - k * k * .12); c.stroke();
+            ['2026', '2027', '2028'].forEach((y2, k) => { if (u > .3 + k * .25) { const x = 900 + k * 330; c.fillStyle = '#e8f0ff'; const yy = 690 - ((x - 640) / 30) ** 2 * .12; c.beginPath(); c.arc(x, yy, 16, 0, 7); c.fill(); txt(c, y2, x + 50, yy + 36, 32, '#cfe0ff', 'center', 'Oswald'); } }); } c.restore(); },
+        (c, lt) => { for (let k = 0; k < 14; k++) { const x = 60 + k * 190, y = 1250 + (k % 3) * 60, f = Math.sin(lt * 3 + k * 1.7); if (f > .2) TW.glow(c, x, y, 30, '255,255,255', .4 * f); } }];
+      S.D.front = [(c, lt) => { JH.target(c, 1280, 760, lt, tW, { r0: 520, r1: 230, d: 2.2 }); if (lt > tW + 2.2) JH.target(c, 1280, 760, 99, 0, { r0: 230 + 8 * Math.sin(lt * 4), r1: 230 + 8 * Math.sin(lt * 4) }); }];
+      S.D.over = [(c, lt) => JH.src(c, 'THE NEW YORK TIMES', 420, 90, lt, tA), (c, lt) => K.card(c, 'THE TARGET', lt, { at: tW, x: 300, y: 200, px: 56, rot: -3 }),
+        (c, lt) => nameTag(c, 'JENSEN HUANG', 960, 790, lt, tO, { px: 48, sub: 'NVIDIA CEO' }),
+        (c, lt) => K.card(c, 'KNOWS WHERE NVIDIA IS GOING', lt, { at: tN, x: 360, y: 330, px: 34, rot: 2 }),
+        (c, lt) => { const a = pop(lt, tP - .3, .5); if (a <= 0) return; const u = E.out(K.seg(lt, tP - .1, tP + .8)); c.save(); c.strokeStyle = '#f6efe2'; c.lineWidth = 6; c.setLineDash([16, 12]); c.lineDashOffset = -lt * 40; c.beginPath(); c.moveTo(1060, 430); c.lineTo(1060 + (1380 - 1060) * u, 430 - (430 - 330) * u); c.stroke(); c.restore();
+          inset(c, 'white_house_night', 1580, 260, 420, 236, a, { cap: 'TALKS TO THE PRESIDENT', sx: 200, sy: 200, sw: 2160, sh: 1215 }); },
+        (c, lt) => K.card(c, "WHO'S ALLOWED TO BUY ITS CHIPS", lt, { at: tAl, x: 1560, y: 520, px: 34, rot: -2 })];
+      S.D.sfx = [[tA, 'pop', .2], [tW, 'riser', .2], [tW + 2, 'hit', .2], [tO, 'stamp', .3], [tN, 'whoosh_soft', .25], [tP - .3, 'pop', .25], [tAl, 'tick', .25]]; } },
+
+  // 7.02 the surveillance room: waveforms pulse on the wall screens; ALICE HUANG's profile card; a year-long bar fills; an arrow runs to Beijing; ASSESSED: RECRUITED
+  { plate: 'sec_room', cam: { z: [1.0, 1.12], x: [1280, 1280], y: [720, 760] }, bed: [['hum_loop', .14], ['typing', .05]], light: { dir: 1, key: 'rgba(255,120,120,.18)' },
+    init: S => { const tY = A.at(S, 'year', 1.4), tUS = A.at(S, 'intelligence', 2.1), tAl = A.at(S, 'Alice', 3.7), tE = A.at(S, 'electronic', 5.0), tD = A.at(S, 'decide', 6.7), tF = A.at(S, 'funnelling', 7.5), tB = A.at(S, 'Beijing', 9.1), tR = A.at(S, 'recruited', 11.3);
+      S.D.figs = [{ x: 620, y: 1330, s: 1.5, ...JH.AGENT(0), facing: 1, mood: 'focus', anim: (o, lt) => { if (lt > tD - .2 && lt < tB) o.pose = 'point'; o.talk = lt > tD && lt < tF + .8; } },
+        { x: 1960, y: 1340, s: 1.5, ...JH.WOMAN(0), facing: -1, mood: 'focus', anim: (o, lt) => { if (lt > tR - .3) o.pose = 'think'; } }];
+      S.D.live = [(c, lt) => { [[550, 1037], [1096, 1582], [1638, 2125]].forEach(([x0, x1], k) => { const on = K.seg(lt, tE - .4 + k * .2, tE + k * .2); c.save(); c.beginPath(); c.rect(x0 + 8, 230, x1 - x0 - 16, 284); c.clip(); c.fillStyle = `rgba(20,6,8,${.6 * on})`; c.fillRect(x0, 220, x1 - x0, 300);
+          c.strokeStyle = `rgba(255,120,110,${.9 * on})`; c.lineWidth = 4; c.beginPath(); for (let x = x0; x <= x1; x += 6) { const v = Math.sin(x * .05 + lt * (6 + k)) * Math.sin(x * .013 + lt * 1.3 + k) * 70 * (.5 + .5 * Math.sin(lt * 2 + k)); x === x0 ? c.moveTo(x, 372 + v) : c.lineTo(x, 372 + v); } c.stroke();
+          txt(c, ['INTERCEPT 01', 'INTERCEPT 02', 'INTERCEPT 03'][k], x0 + 24, 256, 26, `rgba(255,200,190,${on})`, 'left', 'Oswald'); if (Math.sin(lt * 5 + k) > 0) { c.fillStyle = `rgba(255,60,50,${on})`; c.beginPath(); c.arc(x1 - 34, 254, 9, 0, 7); c.fill(); } c.restore(); TW.glow(c, (x0 + x1) / 2, 372, 360, '255,80,70', .1 * on); }); }];
+      S.D.over = [(c, lt) => K.card(c, 'UNDER SURVEILLANCE', lt, { at: tE, x: 330, y: 110, px: 50, rot: -2 }), (c, lt) => K.card(c, 'US INTELLIGENCE', lt, { at: tUS, x: 1600, y: 110, px: 40, rot: 2 }),
+        (c, lt) => nameTag(c, 'ALICE HUANG', 960, 330, lt, tAl, { px: 46 }),
+        (c, lt) => { JH.profile(c, 960, 560, lt, tAl, 'ALICE HUANG', ['MEGASPEED', 'WIRETAP · EMAIL · PHONE', ''], { w: 520, head: 'SUBJECT FILE', step: .6 }); if (lt > tR) TW.stamp(c, 'ASSESSED: RECRUITED BY MSS', 960, 640, lt, tR, { px: 40, rot: -.07 }); },
+        (c, lt) => { const u = E.out(K.seg(lt, tY - .2, tD)); if (lt < tY - .3) return; c.save(); c.fillStyle = 'rgba(14,10,12,.8)'; rr(c, 560, 790, 800, 56, 12); c.fill(); c.fillStyle = '#c8282e'; rr(c, 566, 796, 788 * u, 44, 10); c.fill(); txt(c, 'ABOUT 1 YEAR', 960, 819, 32, '#fff', 'center', 'Anton'); c.restore(); },
+        (c, lt) => { const u = E.out(K.seg(lt, tF, tB + .2)); if (u <= 0) return; c.save(); c.strokeStyle = JH.GOLD; c.lineWidth = 7; c.setLineDash([16, 10]); c.lineDashOffset = -lt * 50; c.beginPath(); c.moveTo(1230, 520); c.quadraticCurveTo(1500, 380, 1230 + 380 * u, 520 - 200 * u); c.stroke(); c.restore(); if (u > .9) K.card(c, 'BEIJING', lt, { at: tB, x: 1660, y: 300, px: 48, rot: 3, bg: '#c8282e', color: '#fff' }); },
+        (c, lt) => K.card(c, 'INFORMATION', lt, { at: tF + .3, x: 1460, y: 420, px: 30, rot: -4, until: tR })];
+      S.D.sfx = [[tY, 'tick', .2], [tAl, 'pop', .25], [tE, 'alarm', .08], [tD, 'tick', .25], [tF, 'whoosh_soft', .25], [tB, 'pop', .25], [tR, 'stamp', .4]]; } },
+
+  // 7.03 Taiwan: Alice walks a wet street at night, a man tails her at a distance; Singapore: an interview-room door opens, RELEASED; Singapore's line
+  { plate: 'rain_street', cam: { z: [1.7, 1.75], x: [900, 1800], y: [1000, 990] }, bed: [['rain_loop', .2], ['city_loop', .08]], light: { dir: -1, key: 'rgba(255,210,170,.22)' },
+    init: S => { const tA = A.at(S, 'According', .3), tT = A.at(S, "Taiwan's", 2.9), tFo = A.at(S, 'followed', 4.9), tSg = A.at(S, 'Singapore', 5.5), tQ = A.at(S, 'questioning', 7.5), tG = A.at(S, 'go', 9.3), tSa = A.at(S, 'says', 10.2);
+      S.D.figs = [{ x: 2700, y: 1200, s: .75, ...JH.ALICE(), facing: 1, mood: 'neutral', walk: { x0: 450, x1: 2700, t0: .1, dur: 11.5 }, anim: (o, lt) => { if (lt > tFo) o.mood = 'worried'; } },
+        { x: 2000, y: 1206, s: .75, ...JH.AGENT(2), facing: 1, mood: 'focus', walk: { x0: -350, x1: 2000, t0: .6, dur: 12 } }];
+      S.D.live = [coverSign, puddles, A.glowRect(1000, 860, 560, 230, '255,200,140', .18)];
+      S.D.front = [rain()];
+      S.D.over = [(c, lt) => JH.src(c, 'THE WALL STREET JOURNAL', 960, 90, lt, tA), (c, lt) => K.card(c, 'TAIWAN', lt, { at: tT, x: 220, y: 200, px: 50, rot: -2, until: tSg }),
+        (c, lt) => K.card(c, 'INVESTIGATORS TAIL HER', lt, { at: tFo - .4, x: 560, y: 300, px: 40, rot: 2, until: tSg }),
+        (c, lt) => { const a = pop(lt, tSg - .2, .45); if (a <= 0) return; c.save(); c.translate(560, 330); c.scale(a, a); const w = 620, h = 360; c.fillStyle = 'rgba(0,0,0,.4)'; c.fillRect(-w / 2 + 10, -h / 2 + 12, w, h); c.fillStyle = '#c8ccd0'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-w / 2, -h / 2, w, h); c.strokeRect(-w / 2, -h / 2, w, h);
+          c.fillStyle = '#9aa0a8'; c.fillRect(-w / 2, 90, w, 90); c.fillStyle = '#6a5a4a'; c.fillRect(-250, 30, 230, 20); c.fillRect(-150, 50, 20, 60); TW.glow(c, -140, -150, 180, '255,250,230', .35);
+          const op = E.io(K.seg(lt, tG - .6, tG + .2)); c.fillStyle = '#e8e0c8'; c.fillRect(80, -110, 150, 220); c.save(); c.translate(80, 0); c.scale(1 - op * .75, 1); c.fillStyle = '#5a4030'; c.fillRect(0, -110, 150, 220); c.strokeRect(0, -110, 150, 220); c.fillStyle = JH.GOLD; c.beginPath(); c.arc(130, 0, 8, 0, 7); c.fill(); c.restore(); c.strokeRect(80, -110, 150, 220);
+          txt(c, 'SINGAPORE', -w / 2 + 20, -h / 2 + 34, 34, INK, 'left', 'Anton'); txt(c, 'QUESTIONED', -w / 2 + 20, -h / 2 + 76, 30, '#3a342a', 'left', 'Oswald'); c.restore(); TW.stamp(c, 'RELEASED', 560, 420, lt, tG, { px: 60, rot: -.1, col: '#2a8a3a' }); },
+        (c, lt) => JH.quote(c, "INVESTIGATING THE COMPANY,|NOT HER.", 'SINGAPORE', 1380, 330, lt, tSa, { px: 44 })];
+      S.D.sfx = [[.2, 'footsteps', .2], [3.5, 'footsteps', .18], [tA, 'pop', .2], [tFo, 'tick', .2], [tSg - .2, 'pop', .2], [tG - .6, 'creak', .3], [tG, 'stamp', .3], [tSa, 'paper', .25]]; } },
+
+  // 7.04 masking: an intercept report; the American is a US PERSON under a black bar; a senior official asks; UNMASKED; the bar slides off: JENSEN HUANG
+  { plate: 'office', cam: { z: [1.12, 1.2], x: [1500, 1540], y: [860, 860] }, bed: [['hum_loop', .12], ['office_loop', .06]], light: { dir: 1, key: 'rgba(170,200,255,.2)' },
+    init: S => { const tL = A.at(S, 'listening', 3.4), tF = A.at(S, 'foreigner', 4.6), tH = A.at(S, 'hidden', 6.9), tUS = A.at(S, 'US person', 8.0), tSn = A.at(S, 'Senior', 10.4), tAsk = A.at(S, 'ask', 11.7), tFi = A.at(S, 'file', 14.2), tHim = A.at(S, 'him', 15.8);
+      S.D.figs = [{ x: 2060, y: 1300, s: 1.5, ...JH.OFFICIAL(0), facing: -1, mood: 'neutral', walk: { x0: 2900, x1: 2060, t0: tSn - 1.6, dur: 1.8 }, anim: (o, lt) => { if (lt > tAsk - .2 && lt < tFi) { o.pose = 'point'; o.talk = true; } if (lt > tHim) o.mood = 'shocked'; } }];
+      S.D.live = [A.glowRect(1150, 600, 200, 100, '120,170,255', .2), A.glowRect(2160, 600, 200, 100, '120,170,255', .2)];
+      S.D.over = [(c, lt) => { const a = pop(lt, .2, .5); if (a <= 0) return; const rv = E.io(K.seg(lt, tHim - .5, tHim + .4)); c.save(); c.translate(570, 470); c.scale(a, a); c.rotate(-.015); c.translate(-570, -470);
+          JH.doc(c, 130, 140, 880, 620, { top: 'INTERCEPT REPORT', title: lt > tFi - .3 ? 'FILE: ALICE HUANG' : 'FOREIGN TARGET', lines: ['TARGET: FOREIGN NATIONAL', '~', 'CONTACT: U.S. PERSON', '~', '~', '~'], redact: { i: 2, x: 470, w: 330, reveal: rv, name: 'JENSEN HUANG' } }); c.restore();
+          if (lt > tL - .2) { const w = K.seg(lt, tL - .2, tL + .3); c.save(); c.globalAlpha = w; c.strokeStyle = '#c8282e'; c.lineWidth = 4; for (let k = 0; k < 3; k++) { c.beginPath(); c.arc(1000, 160, 30 + k * 26 + (lt * 30 % 26), -.9, .9); c.stroke(); } c.restore(); } },
+        (c, lt) => K.card(c, 'NAME HIDDEN', lt, { at: tH, x: 760, y: 880 - 120, px: 40, rot: 3, until: tSn }),
+        (c, lt) => TW.bubble(c, 1450, 380, 'Show me|the name.', pop(lt, tAsk - .2, .4) * (1 - K.seg(lt, tFi + .4, tFi + .7)), { px: 40, tail: 1 }),
+        (c, lt) => nameTag(c, 'SENIOR OFFICIAL', 1440, 150, lt, tSn, { px: 34 }),
+        (c, lt) => TW.stamp(c, 'UNMASKED', 760, 230, lt, tFi + .2, { px: 64, rot: .08 }),
+        (c, lt) => nameTag(c, 'JENSEN HUANG', 640, 660, lt, tHim, { px: 52, sub: "IT'S HIM" })];
+      S.D.sfx = [[.2, 'paper', .3], [tUS, 'thud', .2], [tSn - 1.6, 'footsteps', .25], [tAsk, 'pop', .2], [tFi + .2, 'stamp', .35], [tHim - .5, 'scrape', .3], [tHim, 'hit', .35]]; } },
+
+  // 7.05 a government memo; one line underlined; FT source tag
+  { draw: () => {},
+    bed: [['hum_loop', .1]],
+    init: S => { const tM = A.at(S, 'memo', 1.2), tFT = A.at(S, 'Financial', 2.0), tR = A.at(S, 'romantically', 5.6);
+      S.D.draw = (c, lt, u) => { backdrop('gov_corridor', .42, 6)(c); A.dust(0, 0, 1920, 1080, 30)(c, lt); const z = 1 + .06 * u, a = pop(lt, tM - .4, .5); c.save(); c.translate(960, 480); c.scale(z * a, z * a); c.rotate(-.012); c.translate(-960, -480);
+        JH.doc(c, 330, 150, 1260, 620, { top: 'GOVERNMENT MEMO', title: 'RE: SURVEILLANCE · A. HUANG', lines: ['~', '~', 'The two are romantically involved.', '~', '~'], hi: 2, hiU: E.out(K.seg(lt, tR, tR + 1)) }); c.restore(); };
+      S.D.over = [(c, lt) => JH.src(c, 'THE FINANCIAL TIMES', 960, 840, lt, tFT, { px: 32 })];
+      S.D.sfx = [[tM - .4, 'paper', .35], [tFT, 'stamp', .25], [tR, 'scrape', .2]]; } },
+
+  // 7.06 what the ministry wants: the chip is crossed out (NOT THE DESIGNS); three cards drop in: Nvidia's plans, what Jensen tells the administration, a nudge on chip sales
+  { plate: 'chip', cam: { z: [1.15, 1.5], x: [1300, 1300], y: [900, 900] }, bed: [['hum_loop', .12], ['drone', .06]],
+    init: S => { const tW = A.at(S, 'want', 2.3), tN = A.at(S, 'Not', 2.7), tAc = A.at(S, 'according', 4.3), tPl = A.at(S, 'planning', 8.7), tJ = A.at(S, 'Jensen', 9.6), tNu = A.at(S, 'nudge', 14.6), tCh = A.at(S, 'China buy', 16.5);
+      S.D.live = [(c, lt) => { for (let k = 0; k < 24; k++) { const ph = (lt * .5 + k / 24) % 1, x = 900 + (k * 71) % 800, y = 1000 - (k * 37) % 300; c.fillStyle = `rgba(150,255,120,${.5 * Math.sin(ph * Math.PI)})`; c.beginPath(); c.arc(x, y, 3, 0, 7); c.fill(); } TW.glow(c, 1300, 920, 400, '120,255,120', .1 + .05 * Math.sin(lt * 3)); }];
+      S.D.front = [(c, lt) => { const u = E.out(K.seg(lt, tN, tN + .5)); if (u <= 0) return; c.save(); c.strokeStyle = '#d02a2a'; c.lineWidth = 28; c.lineCap = 'round'; c.beginPath(); c.moveTo(1060, 780); c.lineTo(1060 + 480 * u, 780 + 280 * u); c.stroke(); const v = E.out(K.seg(lt, tN + .3, tN + .8)); if (v > 0) { c.beginPath(); c.moveTo(1540, 780); c.lineTo(1540 - 480 * v, 780 + 280 * v); c.stroke(); } c.restore(); }];
+      S.D.over = [(c, lt) => K.title(c, 'WHAT DOES THE MINISTRY WANT?', lt, { at: .3, y: 130, px: 70, until: tPl - .2 }), (c, lt) => TW.stamp(c, 'NOT THE CHIP DESIGNS', 960, 300, lt, tN + .4, { px: 60, rot: -.06 }),
+        (c, lt) => JH.src(c, 'THE NEW YORK TIMES', 960, 840, lt, tAc, { px: 30 }),
+        (c, lt) => { const cards = [["WHAT NVIDIA|IS PLANNING", tPl, 380, 230], ["WHAT JENSEN TELLS|TRUMP'S TEAM ABOUT AI", tJ, 1540, 230], ["NUDGE WASHINGTON:|LET CHINA BUY MORE|ADVANCED CHIPS", tNu, 960, 600]]; cards.forEach(([s2, t, x, y], k) => JH.quote(c, s2, null, x, y, lt, t, { px: 44, rot: [-.03, .03, -.015][k] })); }];
+      S.D.sfx = [[tN, 'scrape', .3], [tN + .4, 'stamp', .4], [tAc, 'pop', .2], [tPl, 'pop', .25], [tJ, 'pop', .25], [tNu, 'drum', .3], [tCh, 'coins', .2]]; } },
+
+  // 7.07 nothing shown; she leaves the board, her shares move on; she walks off into the rain while her profile card dissolves: WHEREABOUTS UNKNOWN
+  { plate: 'rain_street', cam: { z: [1.65, 1.8], x: [1200, 1400], y: [990, 1000] }, bed: [['rain_loop', .22], ['night_loop', .06]], light: { dir: -1, key: 'rgba(255,210,170,.2)' },
+    init: S => { const tNo = A.at(S, 'Nobody', .3), tNv = A.at(S, 'November', 4.6), tBo = A.at(S, 'board', 7.0), tSh = A.at(S, 'shares', 8.1), tNew = A.at(S, 'new owner', 10.0), tGo = A.at(S, 'gone from', 11.6), tWh = A.at(S, 'Where', 13.2), tK = A.at(S, 'known', 15.1);
+      S.D.figs = [{ x: 1240, y: 1200, s: .75, ...JH.ALICE(), facing: 1, mood: 'neutral', walk: { x0: 1240, x1: 2800, t0: tGo - .6, dur: 6.5 }, anim: (o, lt) => { if (lt < tGo - .6) o.facing = -1; } }];
+      S.D.live = [coverSign, puddles, A.glowRect(1000, 860, 560, 230, '255,200,140', .16)]; S.D.front = [rain(110)];
+      S.D.over = [(c, lt) => K.card(c, 'WHAT SHE GOT FROM HIM: NOT SHOWN', lt, { at: tNo + .3, x: 960, y: 100, px: 40, rot: -2, until: tGo }),
+        (c, lt) => { const dis = E.io(K.seg(lt, tGo, tK)); JH.profile(c, 560, 360, lt, .6, 'ALICE HUANG', [lt > tBo - .3 ? 'MEGASPEED BOARD: OFF' : '', lt > tSh - .3 ? 'SHARES: TO A NEW OWNER' : '', lt > tGo - .3 ? 'RECORD: —' : ''], { w: 560, head: 'PROFILE', dissolve: dis, step: 0 }); },
+        (c, lt) => { const a = pop(lt, tNv - .2, .45); if (a <= 0) return; const o = 1 - K.seg(lt, tGo, tGo + .6); c.save(); c.globalAlpha = o; JH.calendar(c, 1180, 300, .9 * a, '2025', 'NOV'); c.restore(); },
+        (c, lt) => { const u = E.out(K.seg(lt, tSh, tNew + .3)); if (u <= 0) return; const o = 1 - K.seg(lt, tGo, tGo + .6); c.save(); c.globalAlpha = o; c.strokeStyle = JH.GOLD; c.lineWidth = 7; c.beginPath(); c.moveTo(880, 450); c.lineTo(880 + 520 * u, 450); c.stroke(); if (u > .95) { c.fillStyle = JH.GOLD; c.beginPath(); c.moveTo(1420, 450); c.lineTo(1390, 430); c.lineTo(1390, 470); c.fill(); K.card(c, 'NEW OWNER', lt, { at: tNew, x: 1540, y: 450, px: 36, rot: 2 }); } c.restore(); },
+        (c, lt) => TW.stamp(c, 'WHEREABOUTS UNKNOWN', 960, 200, lt, tWh, { px: 64, rot: -.05 })];
+      S.D.sfx = [[tNo, 'tick', .2], [tNv - .2, 'paper', .25], [tBo, 'scrape', .25], [tSh, 'whoosh_soft', .2], [tGo - .6, 'footsteps', .2], [tWh, 'stamp', .35], [tK, 'swell', .2]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>

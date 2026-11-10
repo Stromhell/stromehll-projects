@@ -1,0 +1,85 @@
+<!doctype html><html><head><meta charset="utf-8"><title>JH act N</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../tw_kit.js"></script><script src="../../xu_kit.js"></script><script src="../../jh_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+const SW = 1920, SH = 1080, INK = TW.INK, RED = TW.RED, pop = TW.pop, fade = TW.fade;
+const backdrop = (name, b = .5, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const CARRY = () => ({ shL: 30, elL: -75, shR: 35, elR: -75 });
+const endTitle = (secs) => { const T = window.TIMING; const last = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length, start: last.end, end: last.end + secs, vo_start: last.end, vo_end: last.end, text: '' }); T.dur = last.end + secs; };
+for (const n of ['taipei_bar', 'abu_dhabi_flat']) K.load(n, PL + n + '.jpg');
+endTitle(4);
+const txtB = TW.txt, rrB = TW.rr;
+const CAM_BAR = { z: [1.45, 1.85], x: [1700, 1880], y: [860, 960] };
+// glowing exchange tile (plain text, no logo): a candlestick chart inside a rounded frame
+const tileB = (c, x, y, s, lt, a, glow = 1) => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(s * a, s * a); TW.glow(c, 0, 0, 420, '240,185,11', .35 * glow); c.fillStyle = '#121218'; c.strokeStyle = '#f0b90b'; c.lineWidth = 8; rrB(c, -260, -180, 520, 360, 30); c.fill(); c.stroke();
+  for (let k = 0; k < 9; k++) { const up = Math.sin(k * 1.7 + 1) > -.2, h = 40 + (k * 37 % 70), cy = -10 + Math.sin(k * .9 + lt * .6) * 30, x0 = -200 + k * 50; c.strokeStyle = up ? '#2ebd85' : '#f6465d'; c.lineWidth = 3; c.beginPath(); c.moveTo(x0, cy - h / 2 - 16); c.lineTo(x0, cy + h / 2 + 16); c.stroke(); c.fillStyle = up ? '#2ebd85' : '#f6465d'; c.fillRect(x0 - 12, cy - h / 2, 24, h); }
+  txtB(c, 'CRYPTO EXCHANGE', 0, 136, 40, '#f0b90b', 'center', 'Anton'); c.restore(); };
+// phone in hand: buzzes from tb (shake + vibration arcs + lit screen)
+const phoneB = (tb) => (cc, t) => { const on = t > tb, sh = on ? Math.sin(t * 60) * 3 * (Math.sin(t * 3) > 0 ? 1 : .2) : 0; cc.save(); cc.translate(sh, 0); TW.phone(cc, 0, -6, .36, (q, w, h) => { q.fillStyle = on ? '#1a1206' : '#0a0a10'; q.fillRect(0, 0, w, h); if (on) { q.fillStyle = '#f6465d'; q.fillRect(8, 30, w - 16, 40); q.fillStyle = '#f0b90b'; for (let k = 0; k < 4; k++) q.fillRect(10, 90 + k * 28, w - 20 - k * 10, 10); } }); cc.restore();
+  if (on && Math.sin(t * 3) > 0) { cc.strokeStyle = 'rgba(255,240,200,.8)'; cc.lineWidth = 3; for (const d of [1, -1]) for (let r = 0; r < 2; r++) { cc.beginPath(); cc.arc(0, -6, 60 + r * 16, d > 0 ? -.5 : Math.PI - .5, d > 0 ? .5 : Math.PI + .5); cc.stroke(); } } };
+// end card shared by the last VO shot and the end hold (absolute time keeps it continuous)
+const endB = (c, T, t0, tSub) => { const lt = T - t0; TW.techBG(c, lt, '240,185,11');
+  K.title(c, 'NEXT:', lt, { at: .2, y: 150, px: 64 }); K.title(c, 'THE BINANCE HACK', lt, { at: .5, y: 260, px: 120 });
+  const a = TW.pop(lt, .9, .5); if (a > 0) { c.save(); c.translate(960, 520); c.rotate(-.02); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.4)'; rrB(c, -340, -150, 690, 310, 18); c.fill(); c.fillStyle = '#0c0c14'; c.strokeStyle = INK; c.lineWidth = 6; rrB(c, -350, -160, 700, 310, 18); c.fill(); c.stroke();
+    c.save(); c.beginPath(); rrB(c, -350, -160, 700, 310, 18); c.clip(); for (let k = 0; k < 14; k++) { c.fillStyle = `rgba(240,185,11,${.15 + (k % 3) * .1})`; c.fillRect(-340 + k * 50, 40 - (k * 41 % 120), 36, 200); } c.restore();
+    JH.counter(c, 0, 6, 0, -30, lt, 1.1, 2.6, { px: 130, col: '#f0b90b', fmt: v => '$' + Math.round(v) + 'B' }); txtB(c, 'SIGNED. EVERY TRANSFER.', 0, 90, 36, '#e8eef8', 'center', 'Anton'); c.restore(); }
+  const b = TW.pop(lt, tSub - .3, .45); if (b > 0) { const pul = 1 + .04 * Math.sin(T * 5); c.save(); c.translate(960, 790); c.scale(b * pul, b * pul); c.fillStyle = 'rgba(0,0,0,.4)'; rrB(c, -206, -46, 420, 100, 50); c.fill(); c.fillStyle = '#e0302a'; c.strokeStyle = INK; c.lineWidth = 6; rrB(c, -210, -50, 420, 100, 50); c.fill(); c.stroke(); txtB(c, 'SUBSCRIBE', 0, 4, 56, '#fff', 'center', 'Anton'); c.restore();
+    const cu = E.io(K.seg(lt, tSub, tSub + .7)), cx = 1300 - cu * 200, cy = 900 - cu * 90, click = K.seg(lt, tSub + .7, tSub + 1.0); c.save(); c.translate(cx, cy); c.scale(1 - click * .15 * (1 - click) * 4, 1 - click * .15 * (1 - click) * 4); c.fillStyle = '#fff'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.moveTo(0, 0); c.lineTo(0, 56); c.lineTo(14, 44); c.lineTo(26, 68); c.lineTo(36, 62); c.lineTo(24, 40); c.lineTo(42, 38); c.closePath(); c.fill(); c.stroke(); c.restore();
+    txtB(c, 'STORMI EXPLAIN EVERYTHING', 960, 880, 34, 'rgba(240,236,224,.85)', 'center', 'Oswald'); } };
+
+window.SHOTS = [
+  // 11.01 back in the Taipei bar from the cold open: the table is empty now, one whisky glass catching the light; slow push in
+  { plate: 'taipei_bar', cam: CAM_BAR, bed: [['night_loop', .1], ['hum_loop', .08]], light: { dir: 1, key: 'rgba(255,200,140,.22)' },
+    init: S => { const tW = A.at(S, 'woman', 2.1), tJ = A.at(S, 'Jensen', 5.6);
+      S.D.live = [(c, lt) => { c.drawImage(K.imgs.taipei_bar, 1984, 926, 40, 55, 2108, 926, 46, 55); // paint out the second glass so one reads
+          TW.glow(c, 1990, 960, 200, '255,190,110', .25 + .08 * Math.sin(lt * 7) * Math.sin(lt * 3.1)); TW.sparkle(c, 1962, 948, lt, .4, '255,236,200');
+          TW.glow(c, 2290, 560, 160, '90,255,200', .12 + .06 * Math.sin(lt * 2)); TW.glow(c, 1840, 280, 120, '255,120,200', .1 + .05 * Math.sin(lt * 3)); A.dust(1500, 300, 900, 700, 30)(c, lt); }];
+      S.D.over = [(c, lt) => K.card(c, 'TAIPEI', lt, { at: .3, x: 260, y: 110, px: 54, rot: -2 }), (c, lt) => K.card(c, 'THE BET', lt, { at: tW + .3, x: 280, y: 210, px: 44, rot: 2 }),
+        (c, lt) => K.card(c, 'NOBODY AT THE TABLE NOW', lt, { at: tJ, x: 1300, y: 150, px: 44, rot: -2 })];
+      S.D.sfx = [[.3, 'pop', .15], [tW + .3, 'pop', .15], [tJ, 'chime', .2]]; } },
+  // 11.02 the glass light dissolves into a dark screen; a glowing exchange tile rises; a target closes on it
+  { draw: (c, lt) => { const f = E.io(K.seg(lt, .2, 1.8)); if (f < 1) { c.save(); K.plate(c, 'taipei_bar', CAM_BAR, 1); c.drawImage(K.imgs.taipei_bar, 1984, 926, 40, 55, 2108, 926, 46, 55); K.screen(c); c.fillStyle = `rgba(4,4,8,${f})`; c.fillRect(0, 0, 1920, 1080); c.restore(); } else { c.fillStyle = '#04040a'; c.fillRect(0, 0, 1920, 1080); }
+      c.save(); c.globalAlpha = f; TW.techBG(c, lt, '240,185,11'); c.restore(); }, bed: [['drone', .16], ['hum_loop', .08]], xfade: .3,
+    init: S => { const tD = A.at(S, 'day', .4), tS = A.at(S, 'spies', 3.5), tE = A.at(S, 'empire', 6.0), tN = A.at(S, 'need', 7.3);
+      S.D.over = [(c, lt) => { // glass glint swells, then the tile grows out of it
+          const g = 1 - K.seg(lt, 1.4, 2.4); if (g > 0) TW.glow(c, 1100, 620, 120 + 300 * K.seg(lt, 0, 1.6), '255,190,110', .6 * g);
+          const a = E.back(K.seg(lt, 1.4, 2.3)), y = 520 - 40 * K.seg(lt, 1.4, 3), x = 1100 - 140 * E.io(K.seg(lt, 1.4, 2.6)); tileB(c, x, y, 1, lt, a, .8 + .2 * Math.sin(lt * 3)); },
+        (c, lt) => JH.target(c, 960, 500, lt, tS, { r0: 560, r1: 300, d: 1 }),
+        (c, lt) => K.card(c, 'THE NEXT DAY', lt, { at: tD, x: 300, y: 120, px: 50, rot: -2 }), (c, lt) => K.card(c, "ANOTHER COUNTRY'S SPIES", lt, { at: tS, x: 1500, y: 140, px: 44, rot: 2 }),
+        (c, lt) => K.card(c, 'A DIFFERENT TECH EMPIRE', lt, { at: tE - .4, x: 420, y: 830, px: 42, rot: 2 }), (c, lt) => K.card(c, 'NO ONE AT THE TABLE', lt, { at: tN, x: 1500, y: 830, px: 46, rot: -2, bg: '#f0b90b' })];
+      S.D.sfx = [[.2, 'whoosh_soft', .3], [1.4, 'swell', .3], [tD, 'pop', .2], [tS, 'tension', .25], [tS + .2, 'drum', .2], [tE - .4, 'pop', .2], [tN, 'stamp', .3]]; } },
+  // 11.03 Abu Dhabi, half past midnight: Yi He by the window, phone in hand; it buzzes; the outgoing transfers stack up, each one SIGNED; $1B -> $3B -> $6B
+  { plate: 'abu_dhabi_flat', cam: { z: [1.18, 1.3], x: [1500, 1560], y: [820, 860] }, bed: [['night_loop', .1], ['hum_loop', .1], ['tension', .08]], light: { dir: 1, key: 'rgba(200,190,255,.2)' },
+    init: S => { const tH = A.at(S, 'half', .4), tY = A.at(S, 'Yi', 2.9), tBd = A.at(S, 'bed', 6.7), tM = A.at(S, 'More', 7.1), tB1 = A.at(S, 'billion', 8.2), tP = A.at(S, 'permission', 11.7), t3 = A.at(S, 'three', 12.7), t6 = A.at(S, 'six', 14.1), tSg = A.at(S, 'signed', 16.2);
+      const YH = JH.WOMAN(0); YH.look = Object.assign({}, YH.look, { hair: 'long', hairCol: '#14100e', topCol: '#d8d2c8', inner: '#d8d2c8', legs: '#3a3a44', seed: 91 });
+      S.D.figs = [{ x: 1760, y: 1290, s: 1.5, ...YH, facing: -1, mood: 'neutral', hold: { near: phoneB(tM - .4) }, walk: { x0: 2100, x1: 1760, t0: tY - .6, dur: 1.6 },
+        anim: (o, lt) => { o.arms = lt > tM - .1 ? () => ({ shR: 40, elR: -105, handR: 'relaxed', shL: 10, elL: -10 }) : () => ({ shR: 8, elR: -14, handR: 'relaxed' }); if (lt > tM) o.mood = 'focus'; if (lt > t3) o.mood = 'shocked'; if (lt > tSg) { o.mood = 'worried'; o.pose = lt > tSg + .4 ? 'think' : o.pose; } } }];
+      S.D.live = [(c, lt) => { TW.glow(c, 1000, 740, 300, '255,230,170', .25 + .04 * Math.sin(lt * 2)); for (let k = 0; k < 30; k++) { const x = 80 + (k * 211) % 2400, y = 700 + (k * 53) % 160; if (Math.sin(lt * 1.1 + k * 2.7) > .5) { c.fillStyle = 'rgba(255,230,160,.55)'; c.fillRect(x, y, 5, 7); } }
+          TW.glow(c, 1690, 280, 90, '160,200,255', .2 + .12 * Math.sin(lt * 4)); if (lt > tM - .4) TW.glow(c, 1700, 980, 140, '255,190,80', .3 + .15 * Math.sin(lt * 9)); }];
+      const rows = []; const add = (t, n) => { for (let k = 0; k < n; k++) rows.push(t + k * .3); }; add(tB1 - .2, 3); add(t3 - .2, 3); add(t6 - .2, 3);
+      S.D.over = [(c, lt) => K.card(c, '00:30 · ABU DHABI', lt, { at: tH, x: 330, y: 100, px: 46, rot: -2, until: tM }),
+        (c, lt) => { const a = TW.pop(lt, tY, .45); if (a <= 0) return; c.save(); c.translate(1500, 230); c.scale(a, a); c.font = '42px Anton'; const s = 'YI HE', w = c.measureText(s).width + 40; c.fillStyle = JH.GOLD; c.strokeStyle = INK; c.lineWidth = 5; rrB(c, -w / 2, -34, w, 68, 10); c.fill(); c.stroke(); txtB(c, s, 0, 2, 42, INK, 'center', 'Anton'); txtB(c, 'CO-FOUNDER, BINANCE', 0, 62, 28, '#f4efe2', 'center', 'Oswald'); c.restore(); },
+        (c, lt) => { // transfers panel
+          const a = E.out(K.seg(lt, tM - .3, tM + .2)); if (a <= 0) return; c.save(); c.translate(-(1 - a) * 900, 0); const X = 70, Y = 150, W = 760, H = 690; c.fillStyle = 'rgba(0,0,0,.45)'; rrB(c, X + 8, Y + 10, W, H, 16); c.fill(); c.fillStyle = '#0e0e16'; c.strokeStyle = INK; c.lineWidth = 6; rrB(c, X, Y, W, H, 16); c.fill(); c.stroke();
+          c.fillStyle = '#1e1e2a'; rrB(c, X, Y, W, 60, 16); c.fill(); txtB(c, 'OUTGOING TRANSFERS', X + 24, Y + 31, 32, '#f0b90b', 'left', 'Anton'); if (Math.sin(lt * 6) > 0 && lt > tB1) { c.fillStyle = '#f6465d'; c.beginPath(); c.arc(X + W - 34, Y + 30, 10, 0, 7); c.fill(); }
+          rows.forEach((t, k) => { const u = K.seg(lt, t, t + .25); if (u <= 0) return; const yy = Y + 100 + k * 64; c.save(); c.globalAlpha = u; c.translate((1 - u) * 40, 0); c.fillStyle = k % 2 ? '#15151f' : '#1a1a26'; c.fillRect(X + 14, yy - 26, W - 28, 54);
+            txtB(c, '0x' + ((k * 2654435761) >>> 0).toString(16).slice(0, 6) + '…', X + 30, yy, 28, '#8a96aa', 'left', 'Oswald'); txtB(c, '$' + (560 + (k * 97) % 300) + 'M', X + 330, yy, 32, '#f4efe2', 'left', 'Anton');
+            const tk = K.seg(lt, t + .3, t + .5), hot = lt > tSg && lt < tSg + 1.5 ? .5 + .5 * Math.sin(lt * 12) : 0; if (tk > 0) { c.save(); c.translate(X + W - 140, yy); c.scale(1 + (1 - tk) * .8 + hot * .08, 1 + (1 - tk) * .8 + hot * .08); c.fillStyle = '#2ebd85'; rrB(c, -90, -20, 180, 40, 8); c.fill(); txtB(c, '✓ SIGNED', 0, 1, 26, '#fff', 'center', 'Anton'); c.restore(); } c.restore(); });
+          c.restore(); },
+        (c, lt) => { if (lt < tB1 - .3) return; const v = lt < t3 ? 1 : lt < t6 ? 1 + 2 * E.out(K.seg(lt, t3, t3 + .5)) : 3 + 3 * E.out(K.seg(lt, t6, t6 + .5)); const a = TW.pop(lt, tB1 - .3, .4); c.save(); c.translate(1500, 490); c.scale(a, a); txtB(c, 'MORE THAN', 0, -90, 34, '#f4efe2', 'center', 'Anton'); JH.counter(c, v, v, 0, 0, lt, 0, .01, { px: 130, col: '#f0b90b', fmt: x => '$' + Math.round(x) + 'B' }); c.restore(); },
+        (c, lt) => K.card(c, 'WITHOUT PERMISSION', lt, { at: tP - .3, x: 1500, y: 650, px: 40, rot: 2, until: tSg }), (c, lt) => { (() => { const u = K.seg(lt, tSg, tSg + .3); if (u > 0) { c.save(); c.globalAlpha = u * .92; c.translate(450, 520); c.rotate(-.14); c.fillStyle = '#0a0a10'; rrB(c, -440, -44, 880, 88, 14); c.fill(); c.restore(); } })(), TW.stamp(c, "SIGNED BY BINANCE'S OWN SYSTEM", 450, 520, lt, tSg, { px: 46, col: '#2ebd85' }); }];
+      S.D.sfx = [[tH, 'tick', .25], [tY - .6, 'footsteps', .15], [tY, 'pop', .2], [tM - .4, 'phone_ring', .3], [tM - .3, 'whoosh_soft', .3], ...rows.map(t => [t + .3, 'tick', .18]), [tB1 - .3, 'alarm', .14], [t3, 'coins', .25], [t6, 'coins_cascade', .3], [tSg, 'stamp', .35]]; } },
+  // 11.04 end card: NEXT: THE BINANCE HACK, subscribe button clicked
+  { draw: (c, lt, u, S) => endB(c, S.start + lt, S.start, S._tSub ?? .3), bed: [['drone', .14]],
+    init: S => { S._tSub = A.at(S, 'Subscribe', .3); window._END0 = S.start; window._ENDSUB = S._tSub;
+      S.D.sfx = [[.2, 'whoosh', .3], [.5, 'stamp', .3], [1.1, 'coins', .2], [S._tSub - .3, 'pop', .25], [S._tSub + .8, 'chime', .3]]; } },
+  // end hold (~4 s): the same card keeps animating
+  { draw: (c, lt, u, S) => endB(c, S.start + lt, window._END0 ?? S.start - 5.6, window._ENDSUB ?? .3), bed: [['drone', .12]], sub: 'off', inSfx: false, xfade: 0 },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>

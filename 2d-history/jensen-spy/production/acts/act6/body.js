@@ -1,0 +1,174 @@
+// ===== JH act 6: The Ministry =====
+const D2 = Math.PI / 180, rr = TW.rr, txt = TW.txt;
+for (const n of ['ministry', 'office', 'skyline', 'court_ext', 'fbi_office']) K.load(n, PL + n + '.jpg');
+// prop held upright in a hand: a2 = shoulder + elbow angle of that arm
+const held = (a2, fn) => (ctx, t) => { ctx.save(); ctx.rotate(a2 * D2); fn(ctx, t); ctx.restore(); };
+// hand-off: cap(id, fn) is a hold that records the hand's screen position (and draws fn upright there);
+// pass() draws the prop travelling between two recorded hands, so a hand-off never jumps
+const HAND = {};
+const cap = (id, fn) => (ctx, t) => { const T = ctx.getTransform(), k = Math.hypot(T.a, T.b); HAND[id] = { x: T.e, y: T.f, k, cv: ctx.canvas }; if (fn) { ctx.save(); ctx.setTransform(k, 0, 0, k, T.e, T.f); fn(ctx, t); ctx.restore(); } };
+const handAt = (c, id, f) => { const h = HAND[id]; if (!h) return null; if (h.cv === c.canvas) return h; const M = c.getTransform(), gx = M.a * f.x + M.e, gy = M.d * f.y + M.f, sc = Math.abs(M.a) * f.s * .8, w = Math.ceil(560 * sc), hh = Math.ceil(620 * sc); return { x: h.x + Math.floor(gx - w / 2), y: h.y + Math.floor(gy - hh + 40 * sc), k: h.k }; };
+const pass = (c, a, b, u, fn, sy = 1) => { if (!a || !b) return; const e = E.io(u), k = a.k + (b.k - a.k) * e; c.save(); c.setTransform(k, 0, 0, k * (1 + (sy - 1) * e), a.x + (b.x - a.x) * e, a.y + (b.y - a.y) * e - Math.sin(Math.PI * e) * 14); fn(c); c.restore(); };
+// highlighted name tag (screen space)
+const nameTag = (c, s, x, y, lt, at, opts = {}) => { const a = pop(lt, at, .4), o = 1 - K.seg(lt, (opts.until ?? 999) - .3, opts.until ?? 999); if (a <= 0 || o <= 0) return; const px = opts.px ?? 40; c.save(); c.globalAlpha = o; c.translate(x, y); c.rotate(opts.rot ?? -.02); c.scale(a, a); c.font = `${px}px Anton`; const w = c.measureText(s).width + 44, h = px * 1.45;
+  c.fillStyle = 'rgba(0,0,0,.35)'; rr(c, -w / 2 + 6, -h / 2 + 8, w, h, 10); c.fill(); c.fillStyle = JH.GOLD; c.strokeStyle = INK; c.lineWidth = 4; rr(c, -w / 2, -h / 2, w, h, 10); c.fill(); c.stroke(); txt(c, s, 0, 3, px, INK, 'center', 'Anton');
+  if (opts.sub) { c.font = '28px Oswald'; const w2 = c.measureText(opts.sub).width + 26; c.fillStyle = 'rgba(20,16,14,.82)'; rr(c, -w2 / 2, h / 2 + 6, w2, 40, 8); c.fill(); txt(c, opts.sub, 0, h / 2 + 27, 28, '#f6efe2', 'center', 'Oswald'); } c.restore(); };
+// shield badge (screen or world): label, colours
+const shield = (c, x, y, s, label, col, opts = {}) => { c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = 'rgba(0,0,0,.35)'; c.beginPath(); c.moveTo(8, -128); c.lineTo(118, -80); c.lineTo(100, 66); c.lineTo(8, 140); c.lineTo(-84, 66); c.lineTo(-104, -80); c.closePath(); c.fill();
+  c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 7; c.beginPath(); c.moveTo(0, -136); c.lineTo(112, -88); c.lineTo(94, 58); c.lineTo(0, 132); c.lineTo(-94, 58); c.lineTo(-112, -88); c.closePath(); c.fill(); c.stroke();
+  c.fillStyle = opts.inner || 'rgba(255,255,255,.14)'; c.beginPath(); c.arc(0, -14, 64, 0, 7); c.fill(); if (opts.star) { c.fillStyle = JH.GOLD; c.beginPath(); for (let k = 0; k < 10; k++) { const r = k % 2 ? 22 : 54, a = -Math.PI / 2 + k * Math.PI / 5; c.lineTo(Math.cos(a) * r, -14 + Math.sin(a) * r); } c.closePath(); c.fill(); c.strokeStyle = INK; c.lineWidth = 3; c.stroke(); }
+  txt(c, label, 0, opts.star ? 86 : -12, opts.star ? 40 : 56, opts.tc || '#f6efe2', 'center', 'Anton'); c.restore(); };
+// a half shield (left or right half), for the split badge
+const halfShield = (c, x, y, s, side, label, col) => { c.save(); c.translate(x, y); c.beginPath(); if (side < 0) c.rect(-200 * s, -200 * s, 200 * s, 400 * s); else c.rect(0, -200 * s, 200 * s, 400 * s); c.clip(); shield(c, 0, 0, s, '', col); c.restore(); txt(c, label, x + side * 52 * s, y - 12 * s, 46 * s, '#f6efe2', 'center', 'Anton'); };
+// jet engine front view with spinning fan (screen or world)
+const engine = (c, x, y, r, lt) => { c.save(); c.translate(x, y); c.fillStyle = 'rgba(0,0,0,.35)'; c.beginPath(); c.arc(8, 10, r * 1.08, 0, 7); c.fill(); c.fillStyle = '#c8ccd4'; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.arc(0, 0, r * 1.08, 0, 7); c.fill(); c.stroke(); c.fillStyle = '#2a2e36'; c.beginPath(); c.arc(0, 0, r * .92, 0, 7); c.fill();
+  c.save(); c.rotate(lt * 2.4); for (let k = 0; k < 18; k++) { c.rotate(Math.PI * 2 / 18); c.fillStyle = k % 2 ? '#9aa2b0' : '#8a92a0'; c.beginPath(); c.moveTo(0, -r * .2); c.quadraticCurveTo(r * .35, -r * .5, r * .12, -r * .9); c.lineTo(-r * .08, -r * .9); c.quadraticCurveTo(r * .05, -r * .5, -r * .1, -r * .2); c.closePath(); c.fill(); } c.restore();
+  c.fillStyle = '#e8ecf2'; c.beginPath(); c.arc(0, 0, r * .2, 0, 7); c.fill(); c.stroke(); c.fillStyle = INK; c.beginPath(); c.moveTo(0, -r * .06); c.quadraticCurveTo(r * .12, 0, 0, r * .06); c.fill(); c.restore(); };
+// steaming dish on the dinner table (world)
+const dish = (c, x, y, lt, k) => { c.fillStyle = 'rgba(0,0,0,.2)'; c.beginPath(); c.ellipse(x + 4, y + 6, 64, 14, 0, 0, 7); c.fill(); c.fillStyle = '#f4f1ea'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.ellipse(x, y, 62, 14, 0, 0, 7); c.fill(); c.stroke(); c.fillStyle = ['#c86a2a', '#6a9a3a', '#b8402a'][k % 3]; c.beginPath(); c.ellipse(x, y - 4, 36, 9, 0, Math.PI, 0); c.fill();
+  for (let j = 0; j < 3; j++) { const life = (lt * .5 + j / 3 + k * .2) % 1; c.strokeStyle = `rgba(255,255,255,${.35 * (1 - life)})`; c.lineWidth = 4; c.beginPath(); c.moveTo(x - 14 + j * 14, y - 12); c.quadraticCurveTo(x - 24 + j * 14 + Math.sin(lt * 2 + j) * 10, y - 40 - life * 40, x - 10 + j * 14, y - 60 - life * 70); c.stroke(); } };
+// dining chair, side view; back on the far side from the table (back = -1 left, 1 right). seatY = seat top
+const dChair = (c, x, floorY, seatY, back) => { c.save(); c.fillStyle = 'rgba(0,0,0,.3)'; c.beginPath(); c.ellipse(x, floorY, 110, 14, 0, 0, 7); c.fill(); c.strokeStyle = INK; c.lineWidth = 5; c.fillStyle = '#5a2a1a';
+  const bx = x + back * 80; c.fillRect(bx - 10, seatY - 250, 20, floorY - seatY + 250); c.strokeRect(bx - 10, seatY - 250, 20, floorY - seatY + 250); rr(c, bx - 16, seatY - 262, 32, 40, 8); c.fill(); c.stroke();
+  c.fillRect(x - back * 70 - 9, seatY + 20, 18, floorY - seatY - 20); c.strokeRect(x - back * 70 - 9, seatY + 20, 18, floorY - seatY - 20); c.fillStyle = '#7a3a22'; rr(c, x - 95, seatY, 190, 28, 8); c.fill(); c.stroke(); c.restore(); };
+// prison bars dropping over the frame (screen): u 0 up .. 1 down
+const bars = (c, u) => { if (u <= 0) return; const dy = (1 - E.out(u)) * -1100; c.save(); c.translate(0, dy); c.fillStyle = 'rgba(10,10,14,.35)'; c.fillRect(0, -40, 1920, 1120); for (let k = 0; k < 11; k++) { const x = 40 + k * 184; c.fillStyle = '#3a3e46'; c.fillRect(x, -40, 34, 1120); c.fillStyle = 'rgba(255,255,255,.22)'; c.fillRect(x + 5, -40, 7, 1120); c.strokeStyle = INK; c.lineWidth = 4; c.strokeRect(x, -40, 34, 1120); }
+  c.fillStyle = '#3a3e46'; c.fillRect(0, 60, 1920, 34); c.strokeRect(-4, 60, 1928, 34); c.fillRect(0, 820, 1920, 34); c.strokeRect(-4, 820, 1928, 34); c.restore(); };
+// a file photo (silhouette only, no likeness) with caption
+const filePhoto = (c, x, y, s, cap, opts = {}) => { c.save(); c.translate(x, y); c.rotate(opts.rot ?? 0); c.scale(s, s); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(-122, -152, 256, 330); c.fillStyle = '#f7f3e8'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-130, -160, 260, 330); c.strokeRect(-130, -160, 260, 330);
+  c.fillStyle = '#9aa0aa'; c.fillRect(-106, -136, 212, 220); c.fillStyle = opts.sil || '#3a3e48'; c.beginPath(); c.arc(0, -56, 46, 0, 7); c.fill(); if (opts.hair) { c.beginPath(); c.ellipse(0, -40, 60, 70, 0, Math.PI, 0); c.fill(); c.fillRect(-60, -40, 22, 90); c.fillRect(38, -40, 22, 90); } c.beginPath(); c.ellipse(0, 76, 86, 64, 0, Math.PI, 0); c.fill();
+  txt(c, cap, 0, 122, 30, INK, 'center', 'Anton'); if (opts.sub) txt(c, opts.sub, 0, 154, 22, '#5a5248', 'center', 'Oswald'); c.restore(); };
+// campaign poster (world)
+const poster = (c, x, y, w, h, l1, l2, col) => { c.save(); c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(x + 8, y + 10, w, h); c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(x, y, w, h); c.strokeRect(x, y, w, h); c.fillStyle = '#f6efe2'; c.fillRect(x + 10, y + h * .62, w - 20, 6);
+  txt(c, l1, x + w / 2, y + h * .32, Math.min(46, w * .2), '#fff', 'center', 'Anton'); txt(c, l2, x + w / 2, y + h * .8, Math.min(30, w * .13), '#fff', 'center', 'Oswald'); c.restore(); };
+
+window.SHOTS = [
+  // 6.01 Beijing 1983: the ministry building; two officials cross the forecourt; split badge CIA | FBI slides together into one MSS badge
+  { plate: 'ministry', cam: { z: [1.0, 1.14], x: [1280, 1300], y: [720, 760] }, bed: [['city_loop', .12], ['wind_loop', .1]], light: { dir: -1, key: 'rgba(255,244,220,.18)' },
+    init: S => { const tB = A.at(S, 'Beijing', .6), tM = A.at(S, 'Ministry', 2.8), tC = A.at(S, 'CIA', 7.9), tF = A.at(S, 'FBI', 9.0), tS = A.at(S, 'spying', 9.3), tA = A.at(S, 'abroad', 9.8), tH = A.at(S, 'catching', 10.7);
+      S.D.figs = [{ x: 1500, y: 1230, s: 1.0, ...JH.OFFICIAL(1), facing: 1, mood: 'neutral', walk: { x0: -260, x1: 1500, t0: .2, dur: 8.6 }, anim: (o, lt) => { if (lt > 9) o.mood = 'focus'; } },
+        { x: 1200, y: 1250, s: 1.0, ...JH.EXEC(3), facing: 1, mood: 'neutral', walk: { x0: -620, x1: 1200, t0: .5, dur: 8.9 }, anim: (o, lt) => { if (lt > 9.6) o.pose = 'think'; } }];
+      S.D.live = [A.birds(200, 260, 6, 40, 1.1), A.mist(1180, 120, .12, 20)];
+      S.D.over = [(c, lt) => K.card(c, 'BEIJING · 1983', lt, { at: tB, x: 300, y: 120, px: 52, rot: -2 }),
+        (c, lt) => K.title(c, 'MINISTRY OF STATE SECURITY', lt, { at: tM, y: 240, px: 76, until: tC - .2 }),
+        (c, lt) => { if (lt < tC - .3) return; const m = E.io(K.seg(lt, tS, tS + .8)), gap = 330 * (1 - m), a1 = pop(lt, tC - .3, .45), a2 = pop(lt, tF - .3, .45), cx = 960, cy = 300;
+          if (m < 1) { c.save(); c.globalAlpha = 1 - K.seg(lt, tS + .6, tS + .8); if (a1 > 0) { c.save(); c.translate(cx - gap, cy); c.scale(a1, a1); halfShield(c, 0, 0, 1.1, -1, 'CIA', '#1f3a6a'); c.restore(); } if (a2 > 0) { c.save(); c.translate(cx + gap, cy); c.scale(a2, a2); halfShield(c, 0, 0, 1.1, 1, 'FBI', '#2a4a7a'); c.restore(); } c.restore(); }
+          if (m > .7) { const b = pop(lt, tS + .6, .45); TW.glow(c, cx, cy, 300, '255,200,80', .25 * b); c.save(); c.translate(cx, cy); c.scale(b, b); shield(c, 0, 0, 1.1, 'MSS', '#b8202a', { star: true }); c.restore(); }
+          if (lt < tS + .6) { K.card(c, 'SPIES ABROAD', lt, { at: tC, x: cx - 420, y: cy + 190, px: 34, rot: -3, until: tS + .5 }); K.card(c, 'SPY-CATCHING AT HOME', lt, { at: tF, x: cx + 440, y: cy + 190, px: 34, rot: 3, until: tS + .5 }); } },
+        (c, lt) => K.card(c, 'SPYING ABROAD', lt, { at: tA, x: 600, y: 520, px: 40, rot: -2 }), (c, lt) => K.card(c, '+ CATCHING SPIES AT HOME', lt, { at: tH, x: 1340, y: 520, px: 40, rot: 2 })];
+      S.D.sfx = [[.3, 'footsteps', .18], [3.2, 'footsteps', .16], [tB, 'pop', .2], [tM, 'drum', .3], [tC - .3, 'whoosh_soft', .25], [tF - .3, 'whoosh_soft', .25], [tS + .6, 'stamp', .35], [tA, 'pop', .18], [tH, 'pop', .18]]; } },
+
+  // 6.02 the playbook: an ordinary office worker; a friendly stranger walks up; a staircase of favours builds step by step (coffee, dinner, a favour, a document)
+  { plate: 'office', cam: { z: [1.3, 1.38], x: [1575, 1575], y: [880, 930] }, bed: [['office_loop', .14], ['hum_loop', .06]], light: { dir: 1, key: 'rgba(170,200,255,.18)' },
+    init: S => { const tP = A.at(S, 'people', 3.1), tF = A.at(S, 'Find', 5.9), tFr = A.at(S, 'friend', 10.0), tAs = A.at(S, 'Ask', 10.5), tSm = A.at(S, 'small', 11.8), tMo = A.at(S, 'more', 13.3);
+      S._st = [tFr - .6, tFr + .1, tSm, tMo];
+      const cup = (ctx) => { ctx.fillStyle = '#f4f1ea'; ctx.strokeStyle = INK; ctx.lineWidth = 3; ctx.fillRect(-12, -34, 24, 30); ctx.strokeRect(-12, -34, 24, 30); ctx.fillStyle = '#6a3a1a'; ctx.fillRect(-10, -32, 20, 5); };
+      S.D.figs = [{ x: 2080, y: 1250, s: 1.45, ...JH.ENGINEER(1), facing: 1, mood: 'neutral', arms: () => ({ shR: 40, elR: 60 }), hold: { near: held(100, cup) }, anim: (o, lt) => { if (lt > tFr) o.mood = 'happy'; if (lt > tMo) { o.mood = 'worried'; o.pose = 'think'; o.arms = null; o.hold = null; } } },
+        { x: 2400, y: 1262, s: 1.45, ...JH.EXEC(1), facing: -1, mood: 'happy', walk: { x0: 3100, x1: 2400, t0: tF - .4, dur: 2.6 }, anim: (o, lt) => { if (lt > tFr - .3 && lt < tAs) o.pose = 'wave'; if (lt > tSm - .2 && lt < tMo) o.pose = 'present'; if (lt > tMo) o.pose = 'reach'; o.talk = (lt > tFr - .4 && lt < tFr + .6) || (lt > tSm - .3 && lt < tMo + .5); } }];
+      S.D.live = [A.glowRect(1150, 600, 200, 100, '120,170,255', .18), A.glowRect(2160, 600, 200, 100, '120,170,255', .18)];
+      S.D.over = [(c, lt) => K.card(c, 'THE PLAYBOOK', lt, { at: .3, x: 300, y: 110, px: 54, rot: -2 }),
+        (c, lt) => K.card(c, 'REAL LIVES · REAL JOBS', lt, { at: tP, x: 1430, y: 120, px: 40, rot: 2, until: tF + 1.2 }),
+        (c, lt) => { // the staircase of favours, rising left to right
+          const L = [['COFFEE', 'cup'], ['DINNER', 'dish'], ['A FAVOUR', 'gift'], ['A DOCUMENT', 'doc']]; L.forEach(([lab, ic], k) => { const t = S._st[k], u = E.back(K.seg(lt, t, t + .45)); if (u <= 0) return; const x = 50 + k * 172, top = 820 - k * 110, h = 840 - top + 20;
+            c.save(); c.translate(0, (1 - u) * 160); c.globalAlpha = Math.min(1, u * 1.5); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(x + 8, top + 10, 168, h); c.fillStyle = k === 3 ? '#c8282e' : ['#3a4a6a', '#4a5a7a', '#5a6a8a'][k]; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(x, top, 168, h); c.strokeRect(x, top, 168, h);
+            c.fillStyle = 'rgba(255,255,255,.14)'; c.fillRect(x, top, 168, 14); txt(c, lab, x + 84, top + 46, k === 3 ? 26 : 30, '#f6efe2', 'center', 'Anton');
+            const ix = x + 84, iy = top - 46; c.fillStyle = '#f6efe2'; c.strokeStyle = INK; c.lineWidth = 4;
+            if (ic === 'cup') { c.fillRect(ix - 26, iy - 30, 52, 58); c.strokeRect(ix - 26, iy - 30, 52, 58); c.beginPath(); c.arc(ix + 32, iy, 14, -1.4, 1.4); c.stroke(); for (let j = 0; j < 2; j++) { c.strokeStyle = 'rgba(255,255,255,.5)'; c.beginPath(); c.moveTo(ix - 8 + j * 16, iy - 38); c.quadraticCurveTo(ix + Math.sin(lt * 3 + j) * 10, iy - 60, ix - 6 + j * 16, iy - 80); c.stroke(); } }
+            if (ic === 'dish') { c.beginPath(); c.ellipse(ix, iy + 14, 70, 18, 0, 0, 7); c.fill(); c.stroke(); c.fillStyle = '#c86a2a'; c.beginPath(); c.ellipse(ix, iy + 8, 40, 14, 0, Math.PI, 0); c.fill(); }
+            if (ic === 'gift') { c.fillStyle = '#e8b44a'; c.fillRect(ix - 40, iy - 34, 80, 64); c.strokeRect(ix - 40, iy - 34, 80, 64); c.fillStyle = '#c8282e'; c.fillRect(ix - 8, iy - 34, 16, 64); }
+            if (ic === 'doc') { c.save(); c.translate(ix, iy - 10); c.rotate(.06 * Math.sin(lt * 2)); c.fillRect(-40, -52, 80, 104); c.strokeRect(-40, -52, 80, 104); c.fillStyle = '#c8282e'; c.fillRect(-40, -52, 80, 20); c.fillStyle = '#9a948a'; for (let j = 0; j < 4; j++) c.fillRect(-28, -18 + j * 16, 56, 6); c.restore(); TW.glow(c, ix, iy, 160, '255,80,60', .2 + .1 * Math.sin(lt * 4)); }
+            c.restore(); }); },
+        (c, lt) => { const u = E.out(K.seg(lt, S._st[0], S._st[3] + .5)); if (u <= 0) return; c.save(); c.strokeStyle = JH.GOLD; c.lineWidth = 7; c.setLineDash([18, 12]); c.beginPath(); c.moveTo(100, 720); c.lineTo(100 + 520 * u, 720 - 330 * u); c.stroke(); c.setLineDash([]); c.restore(); },
+        (c, lt) => K.card(c, 'BECOME THEIR FRIEND', lt, { at: tFr - .2, x: 420, y: 240, px: 40, rot: 2, until: tSm - .1 }), (c, lt) => K.card(c, 'SMALL ASK, THEN MORE', lt, { at: tSm, x: 420, y: 240, px: 44, rot: -2 }),
+        (c, lt) => TW.bubble(c, 1640, 330, 'Coffee sometime?', pop(lt, tFr - .2, .4) * (1 - K.seg(lt, tSm - .4, tSm - .1)), { px: 38, tail: 1 }),
+        (c, lt) => TW.bubble(c, 1640, 330, 'Could you send|me one file?', pop(lt, tMo - .3, .4), { px: 38, tail: 1 })];
+      S.D.sfx = [[tF - .4, 'footsteps', .25], [S._st[0], 'pop', .2], [S._st[1], 'pop', .2], [S._st[2], 'pop', .22], [S._st[3], 'thud', .25], [tFr - .2, 'chime', .12], [tMo - .3, 'pop', .2]]; } },
+
+  // 6.03 GE Aviation 2017: a jet engine; the officer and the engineer at dinner; questions; the engineer had gone to the FBI; bars drop: 20 years
+  { draw: (c, lt) => { const g = c.createLinearGradient(0, 0, 0, 1080); g.addColorStop(0, '#4a1e18'); g.addColorStop(1, '#2a100c'); c.fillStyle = g; c.fillRect(0, 0, 1920, 1080); },
+    cam: { z: [1.42, 1.52], x: [1280, 1290], y: [1040, 1050] }, bed: [['crowd_loop', .08], ['hum_loop', .06]], light: { dir: -1, key: 'rgba(255,200,140,.22)' },
+    init: S => { const t7 = A.at(S, '2017', .6), tG = A.at(S, 'GE', 4.1), tT = A.at(S, 'talk', 7.7), tD = A.at(S, 'Dinner', 8.8), tQ = A.at(S, 'questions', 9.7), tFB = A.at(S, 'FBI', 14.3), tOf = A.at(S, 'officer ends', 15.4), tY = A.at(S, 'twenty', 17.0);
+      S._tY = tY; const sO = 1.5, FL = 1300, seat = FL - 63 * sO;
+      S.D.figs = [{ x: 960, y: FL, s: sO, ...JH.EXEC(0), pose: 'sit', facing: 1, mood: 'happy', anim: (o, lt) => { o.talk = (lt > tT - 1.5 && lt < tT + .6) || (lt > tQ - .2 && lt < tQ + 1.8); if (lt > tQ - .2) { o.mood = 'focus'; o.arms = () => ({ shR: 60, elR: -50, handR: 'open' }); } if (lt > tOf) { o.mood = 'shocked'; o.arms = null; } } },
+        { x: 1600, y: FL, s: sO, ...JH.ENGINEER(0), pose: 'sit', facing: -1, mood: 'neutral', anim: (o, lt) => { if (lt > tD && lt < tQ) o.mood = 'happy'; if (lt > tQ + .4) o.mood = 'focus'; if (lt > tFB - .3) { o.mood = 'neutral'; } } }];
+      S.D.live = [(c, lt) => { // the restaurant: panelled wall, red lanterns, floor
+          c.fillStyle = '#6a2a20'; c.fillRect(0, 0, 2560, 1120); c.fillStyle = '#5a2218'; for (let x = 0; x < 2560; x += 320) { c.fillRect(x + 20, 120, 280, 640); } c.strokeStyle = '#c89a4a'; c.lineWidth = 6; for (let x = 0; x < 2560; x += 320) c.strokeRect(x + 40, 140, 240, 600);
+          c.fillStyle = '#3a1a12'; c.fillRect(0, 780, 2560, 340); c.fillStyle = '#c89a4a'; c.fillRect(0, 780, 2560, 10); c.fillStyle = '#2a140e'; c.fillRect(0, 1120, 2560, 320); c.fillStyle = 'rgba(255,200,140,.06)'; for (let x = -200; x < 2560; x += 260) { c.beginPath(); c.moveTo(x, 1440); c.lineTo(x + 200, 1120); c.lineTo(x + 220, 1120); c.lineTo(x + 40, 1440); c.fill(); }
+          for (const [lx, ly] of [[700, 640], [1280, 600], [1860, 640]]) { const sw = Math.sin(lt * 1.3 + lx) * .04; c.save(); c.translate(lx, 0); c.rotate(sw); c.strokeStyle = '#2a1a10'; c.lineWidth = 4; c.beginPath(); c.moveTo(0, 0); c.lineTo(0, ly - 70); c.stroke(); TW.glow(c, 0, ly, 260, '255,120,60', .35 + .05 * Math.sin(lt * 7 + lx)); c.fillStyle = '#d8302a'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.ellipse(0, ly, 70, 80, 0, 0, 7); c.fill(); c.stroke(); c.fillStyle = '#e8b44a'; c.fillRect(-36, ly - 86, 72, 14); c.fillRect(-36, ly + 72, 72, 14); c.strokeStyle = 'rgba(0,0,0,.3)'; c.lineWidth = 3; for (const dx of [-35, 0, 35]) { c.beginPath(); c.ellipse(0, ly, Math.abs(dx) + 4, 78, 0, 0, 7); c.stroke(); } c.restore(); }
+          dChair(c, 960, FL, seat, -1); dChair(c, 1600, FL, seat, 1); }];
+      S.D.front = [(c, lt) => { // the table, in front of the diners' laps
+          c.fillStyle = 'rgba(0,0,0,.3)'; c.beginPath(); c.ellipse(1280, FL, 300, 24, 0, 0, 7); c.fill(); c.fillStyle = '#4a2a1a'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(1250, 1060, 60, FL - 1060); c.strokeRect(1250, 1060, 60, FL - 1060); c.fillRect(1150, FL - 20, 260, 20); c.strokeRect(1150, FL - 20, 260, 20);
+          c.fillStyle = '#f4f1ea'; c.beginPath(); c.moveTo(1040, 1040); c.lineTo(1520, 1040); c.lineTo(1540, 1130); c.lineTo(1020, 1130); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#e2ddd0'; c.fillRect(1022, 1110, 516, 20);
+          if (lt > tD - .3) { const a = K.seg(lt, tD - .3, tD + .2); c.save(); c.globalAlpha = a; dish(c, 1170, 1040, lt, 0); dish(c, 1390, 1040, lt, 1); dish(c, 1280, 1030, lt, 2); c.restore(); }
+          for (const gx of [1090, 1470]) { c.fillStyle = 'rgba(200,230,255,.6)'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(gx - 14, 990); c.lineTo(gx + 14, 990); c.lineTo(gx + 8, 1034); c.lineTo(gx - 8, 1034); c.closePath(); c.fill(); c.stroke(); } }];
+      S.D.over = [(c, lt) => K.card(c, '2017', lt, { at: t7, x: 220, y: 110, px: 56, rot: -2 }),
+        (c, lt) => { const a = pop(lt, tG - .3, .45), o = 1 - K.seg(lt, tD - .3, tD); if (a <= 0 || o <= 0) return; c.save(); c.globalAlpha = o; c.translate(960, 290); c.scale(a * .8, a * .8); c.fillStyle = 'rgba(14,10,8,.7)'; rr(c, -360, -230, 720, 440, 22); c.fill(); engine(c, -150, -10, 150, lt); txt(c, 'GE AVIATION', 150, -60, 52, '#f6efe2', 'center', 'Anton'); txt(c, 'JET ENGINES', 150, 10, 40, JH.GOLD, 'center', 'Oswald'); txt(c, 'AN ENGINEER', 150, 80, 34, '#cfc6b4', 'center', 'Oswald'); c.restore(); },
+        (c, lt) => K.card(c, 'INVITED TO GIVE A TALK IN CHINA', lt, { at: tT - .2, x: 960, y: 640, px: 38, rot: 2, until: tD }),
+        (c, lt) => nameTag(c, 'MINISTRY OFFICER', 600, 330, lt, tD, { px: 34, until: tY - .2 }), (c, lt) => nameTag(c, 'GE AVIATION ENGINEER', 1340, 330, lt, tD + .3, { px: 34, until: tY - .2 }),
+        (c, lt) => TW.bubble(c, 760, 440, 'So... the engines?', pop(lt, tQ, .4) * (1 - K.seg(lt, tFB - .4, tFB - .1)), { px: 40, tail: 1 }),
+        (c, lt) => { const a = pop(lt, tFB - .3, .45); if (a <= 0) return; c.save(); c.globalAlpha = 1 - K.seg(lt, tY - .3, tY); XU.badge(c, 1640, 420, .9, a); c.restore(); }, (c, lt) => K.card(c, 'THE ENGINEER WENT TO THE FBI', lt, { at: tFB, x: 960, y: 270, px: 42, rot: -2, until: tY - .1 }),
+        (c, lt) => bars(c, K.seg(lt, tY - .2, tY + .4)), (c, lt) => K.title(c, '20 YEARS', lt, { at: tY + .2, y: 330, px: 150 }), (c, lt) => K.card(c, 'THE OFFICER · AMERICAN PRISON', lt, { at: tY + .8, x: 960, y: 480, px: 40, rot: 2 })];
+      S.D.sfx = [[t7, 'pop', .2], [tG - .3, 'whoosh', .25], [tT, 'pop', .15], [tD, 'chime', .15], [tQ, 'pop', .18], [tFB - .3, 'thud', .3], [tFB, 'stamp', .25], [tY - .2, 'scrape', .3], [tY + .3, 'door_slam', .45], [tY + .4, 'drum', .3]]; } },
+
+  // 6.04 LA 1982: night skyline; an FBI source file for KATRINA LEUNG; CODE NAME: PARLOR MAID stamps; her handler's file photo sits beside hers; prosecutors' claim as text
+  { plate: 'skyline', cam: { z: [1.08, 1.2], x: [1180, 1420], y: [700, 680] }, bed: [['city_loop', .14], ['night_loop', .08]],
+    init: S => { const t8 = A.at(S, '1982', 2.5), tFB = A.at(S, 'FBI turns', 3.2), tK = A.at(S, 'Katrina', 5.9), tSo = A.at(S, 'source', 7.5), tPM = A.at(S, 'Parlor', 8.8), tY = A.at(S, 'twenty', 10.5), tPr = A.at(S, 'prosecutors', 11.4);
+      S.D.live = [(c, lt) => { for (let k = 0; k < 40; k++) { const x = (k * 263) % 2560, y = 620 + (k * 97) % 560; if (Math.sin(lt * (1.5 + k % 4) + k * 2.1) > .6) { c.fillStyle = 'rgba(255,230,160,.8)'; c.fillRect(x, y, 10, 14); } } c.fillStyle = Math.sin(lt * 5) > 0 ? '#ff4a3a' : '#5a1a14'; c.beginPath(); c.arc(1880, 330, 6, 0, 7); c.fill();
+          const px = -300 + lt * 120; c.save(); c.translate(px, 260); c.fillStyle = '#d8dce4'; c.fillRect(-40, -6, 80, 12); c.fillStyle = Math.sin(lt * 8) > 0 ? '#ff3030' : '#30ff60'; c.beginPath(); c.arc(-40, 0, 5, 0, 7); c.fill(); c.restore();
+          c.fillStyle = 'rgba(255,220,150,.12)'; for (let k = 0; k < 20; k++) { const x = (k * 151 + lt * 30) % 2560; c.fillRect(x, 1320 + (k % 4) * 22, 60, 4); } }];
+      S.D.over = [(c, lt) => K.card(c, 'LOS ANGELES · 1982', lt, { at: t8, x: 330, y: 110, px: 50, rot: -2 }),
+        (c, lt) => { const a = pop(lt, tFB, .5); if (a <= 0) return; c.save(); c.translate(720, 500); c.scale(a, a); c.rotate(-.03); c.fillStyle = 'rgba(0,0,0,.4)'; c.fillRect(-330, -250, 680, 520); c.fillStyle = '#e8dcc0'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-340, -262, 680, 520); c.strokeRect(-340, -262, 680, 520);
+          c.fillStyle = '#c8b890'; c.fillRect(-340, -262, 260, 50); c.strokeRect(-340, -262, 260, 50); txt(c, 'FBI · SOURCE FILE', -210, -236, 28, INK, 'center', 'Anton'); c.restore();
+          c.save(); c.translate(720, 500); c.scale(a, a); filePhoto(c, -180, 20, .9, 'K. LEUNG', { hair: true, sil: '#2a2a32', sub: 'BUSINESSWOMAN' }); const l = K.seg(lt, tSo, tSo + .4); c.globalAlpha = l; txt(c, 'STATUS:', 0, -120, 34, '#5a5248', 'left', 'Oswald'); txt(c, 'SOURCE', 0, -70, 54, '#1f3a6a', 'left', 'Anton'); c.fillStyle = '#9a948a'; for (let j = 0; j < 3; j++) c.fillRect(0, 10 + j * 34, 260 - j * 40, 10); c.restore();
+          TW.stamp(c, 'CODE NAME: PARLOR MAID', 700, 800, lt, tPM, { px: 54, rot: -.06 }); },
+        (c, lt) => nameTag(c, 'KATRINA LEUNG', 760, 150, lt, tK, { px: 46, sub: 'FBI SOURCE FROM 1982' }),
+        (c, lt) => { const a = pop(lt, tY - .2, .45); if (a <= 0) return; c.save(); c.translate(1460, 480); c.scale(a, a); filePhoto(c, 0, 0, 1.0, 'HER FBI HANDLER', { sil: '#3a3e48', rot: .04 }); c.restore(); },
+        (c, lt) => JH.counter(c, 0, 20, 1460, 210, lt, tY - .2, tY + .9, { pre: '~', suf: ' YEARS', px: 72, col: '#f6efe2' }),
+        (c, lt) => K.card(c, 'PROSECUTORS ALLEGED: A SEXUAL\nRELATIONSHIP WITH HER HANDLER', lt, { at: tPr, x: 1440, y: 790, px: 32, rot: 2 })];
+      S.D.sfx = [[t8, 'pop', .2], [tFB, 'paper', .3], [tK, 'pop', .2], [tSo, 'tick', .25], [tPM, 'stamp', .4], [tY - .2, 'paper', .25], [tPr, 'thud', .2]]; } },
+
+  // 6.05 2003: outside the courthouse; a SECRET document is copied; ARRESTED stamps; the case file tears in half; what she pleaded guilty to
+  { plate: 'court_ext', cam: { z: [1.12, 1.22], x: [1400, 1460], y: [860, 880] }, bed: [['city_loop', .12], ['wind_loop', .08]], light: { dir: -1, key: 'rgba(255,244,220,.2)' },
+    init: S => { const t3 = A.at(S, '2003', .6), tAc = A.at(S, 'accuses', 1.7), tCo = A.at(S, 'copying', 2.9), tHo = A.at(S, 'took home', 5.5), tAr = A.at(S, 'arrests', 6.7), tCa = A.at(S, 'case', 8.4), tAp = A.at(S, 'apart', 9.2), tPl = A.at(S, 'pleads', 10.7), tLy = A.at(S, 'lying', 12.4), tTx = A.at(S, 'tax', 14.8);
+      S.D.figs = [{ x: 1760, y: 1300, s: 1.05, ...JH.WOMAN(2), facing: -1, mood: 'neutral', walk: { x0: 2780, x1: 1760, t0: tAp - 1.8, dur: 3.2 }, anim: (o, lt) => { if (lt > tPl) o.mood = 'focus'; } },
+        { x: 2060, y: 1310, s: 1.05, ...JH.EXEC(2), facing: -1, mood: 'neutral', walk: { x0: 3100, x1: 2060, t0: tAp - 1.6, dur: 3.2 }, anim: (o, lt) => { if (lt > tPl + .4) o.pose = 'present'; o.talk = lt > tPl && lt < tTx + .6; } }];
+      S.D.live = [A.birds(300, 240, 5, 30, 1), A.mist(1300, 100, .1, 14)];
+      S.D.over = [(c, lt) => K.card(c, '2003', lt, { at: t3, x: 220, y: 110, px: 56, rot: -2 }),
+        (c, lt) => { // the SECRET document and its copy sliding out
+          const a = pop(lt, tAc, .45), o = 1 - K.seg(lt, tAr + .9, tAr + 1.3); if (a <= 0 || o <= 0) return; c.save(); c.globalAlpha = o; c.translate(560, 420); c.scale(a, a);
+          const cp = E.out(K.seg(lt, tCo, tCo + .9)); c.save(); c.translate(cp * 230, cp * 30); c.rotate(.05 * cp); JH.doc(c, -170, -220, 340, 430, { top: 'COPY', lines: ['~', '~', '~', '~'] }); c.restore();
+          JH.doc(c, -170, -220, 340, 430, { top: 'SECRET', lines: ['~', '~', '~', '~', '~'] }); c.restore();
+          if (lt > tHo - .2 && lt < tAr + 1.3) K.card(c, "THE HANDLER'S DOCUMENT", lt, { at: tHo - .2, x: 560, y: 160, px: 38, rot: -2, until: tAr + 1.3 }); },
+        (c, lt) => { // the two file photos get ARRESTED stamps, then the case file tears in half
+          const a = pop(lt, tAr - .3, .45); if (a <= 0) return; const tear = E.out(K.seg(lt, tAp, tAp + .8)), fo = 1 - K.seg(lt, tPl - .3, tPl + .2); if (fo <= 0) return; c.save(); c.globalAlpha = fo;
+          const draw = () => { filePhoto(c, 470, 430, .8, 'K. LEUNG', { hair: true, sil: '#2a2a32' }); filePhoto(c, 760, 440, .8, 'HANDLER', { rot: .04 }); };
+          if (tear <= 0) { c.save(); c.translate(615, 430); c.scale(a, a); c.translate(-615, -430); draw(); c.restore(); }
+          else for (const sd of [-1, 1]) { c.save(); c.translate(sd * tear * 90, tear * 60); c.rotate(sd * tear * .12); c.beginPath(); if (sd < 0) { c.moveTo(0, 0); c.lineTo(615, 0); for (let k = 0; k <= 12; k++) c.lineTo(615 + (k % 2 ? 18 : -18), 200 + k * 50); c.lineTo(0, 1080); } else { c.moveTo(1920, 0); c.lineTo(615, 0); for (let k = 0; k <= 12; k++) c.lineTo(615 + (k % 2 ? 18 : -18), 200 + k * 50); c.lineTo(1920, 1080); } c.closePath(); c.clip(); draw(); c.restore(); }
+          TW.stamp(c, 'ARRESTED', 470, 500, lt, tAr, { px: 44, rot: -.18 }); TW.stamp(c, 'ARRESTED', 770, 510, lt, tAr + .35, { px: 44, rot: .12 }); c.restore(); },
+        (c, lt) => K.card(c, 'CASE COLLAPSES', lt, { at: tAp, x: 620, y: 150, px: 54, rot: 2, until: tPl - .2 }),
+        (c, lt) => { const a = pop(lt, tPl - .2, .45); if (a <= 0) return; c.save(); c.translate(560, 420); c.scale(a, a); c.rotate(-.02); c.fillStyle = 'rgba(0,0,0,.35)'; rr(c, -362, -190, 740, 400, 18); c.fill(); c.fillStyle = JH.CREAM; c.strokeStyle = INK; c.lineWidth = 5; rr(c, -370, -200, 740, 400, 18); c.fill(); c.stroke();
+          txt(c, 'PLEADED GUILTY ONLY TO:', 0, -130, 44, INK, 'center', 'Anton'); [['LYING TO THE FBI', tLy], ['A TAX CHARGE', tTx]].forEach(([s2, t], k) => { const u = K.seg(lt, t - .2, t + .15); if (u <= 0) return; c.globalAlpha = u; c.strokeStyle = '#2a8a3a'; c.lineWidth = 9; c.beginPath(); c.moveTo(-300, -10 + k * 110); c.lineTo(-276, 14 + k * 110); c.lineTo(-236, -36 + k * 110); c.stroke(); txt(c, s2, -200, -8 + k * 110, 50, '#2a2620', 'left', 'Anton'); c.globalAlpha = 1; }); c.restore(); }];
+      S.D.sfx = [[t3, 'pop', .2], [tAc, 'paper', .3], [tCo, 'scrape', .2], [tAr, 'stamp', .4], [tAr + .35, 'stamp', .35], [tAp, 'paper_tear', .45], [tAp - 1.8, 'footsteps', .25], [tPl - .2, 'pop', .2], [tLy, 'tick', .3], [tTx, 'tick', .3]]; } },
+
+  // 6.06 Bay Area 2011: campaign posters; CHRISTINE FANG helps a young congressman; 2015 an FBI agent hands him a sealed WARNING envelope; he turns away from her; she walks out; a plane leaves; NEVER CHARGED
+  { plate: 'fbi_office', cam: { z: [1.2, 1.3], x: [1380, 1460], y: [880, 900] }, bed: [['office_loop', .12], ['crowd_loop', .06]], light: { dir: -1, key: 'rgba(255,244,220,.2)' },
+    init: S => { const t1 = A.at(S, '2011', .6), tCF = A.at(S, 'Christine', 2.7), tBay = A.at(S, 'Bay', 4.7), tR = A.at(S, 'raise', 6.8), tES = A.at(S, 'Eric', 9.4), t5 = A.at(S, '2015', 10.7), tDB = A.at(S, 'defensive', 12.8), tW = A.at(S, 'warning', 14.3), tCu = A.at(S, 'cuts', 15.5), tLe = A.at(S, 'leaves', 17.0), tNC = A.at(S, 'never', 18.9);
+      S._tHand = tW - .1; const env = (ctx) => XU.letter(ctx, 0, -40, .42, 0, { word: 'WARNING' });
+      S.D.figs = [{ x: 1080, y: 1290, s: 1.3, ...JH.WOMAN(1), facing: 1, mood: 'happy', walk: { x0: -300, x1: 1080, t0: .2, dur: 3.6 }, anim: (o, lt) => { o.talk = lt > tR - .3 && lt < tR + 1.6; if (lt > tR - .2 && lt < tES) o.pose = 'present'; if (lt > tCu) o.mood = 'sad'; if (lt > tLe - .2) { const w = { x0: 1080, x1: -400, t0: tLe - .2, dur: 4.2 }, X = R.walkX(lt, w.x0, w.x1, w.t0, w.dur, o.s); o.x = X.x; o.t = X.phase; o.pose = 'walk'; o.facing = -1; } } },
+        { x: 1420, y: 1300, s: 1.3, ...JH.OFFICIAL(1), facing: -1, mood: 'happy', anim: (o, lt) => { o.talk = lt > tES && lt < tES + 1; if (lt > tR + .6 && lt < tES + .4) o.pose = 'wave'; if (lt > t5 + 1.6) { o.facing = 1; o.mood = 'neutral'; } o.hold = { near: cap('sw', lt >= S._tHand + .15 ? env : null) }; if (lt >= S._tHand + .15) { o.arms = () => ({ shR: 30, elR: 60 }); o.mood = 'worried'; } if (lt > S._tHand - .6 && lt < S._tHand + .45) { o.pose = 'reach'; o.arms = null; } if (lt > tCu) o.mood = 'focus'; } },
+        { x: 1700, y: 1310, s: 1.3, ...JH.AGENT(1), facing: -1, mood: 'neutral', walk: { x0: 2900, x1: 1700, t0: t5 - .6, dur: 2.6 }, anim: (o, lt) => { o.hold = { near: cap('ag', lt < S._tHand - .15 ? env : null) }; o.arms = lt < S._tHand - .15 ? () => ({ shR: 70, elR: 20 }) : null; if (lt > S._tHand - .6 && lt < S._tHand + .45) { o.pose = 'reach'; o.arms = null; } o.talk = lt > tDB - .2 && lt < tW + .4; } }];
+      S.D.front = [(c, lt) => { const u = K.seg(lt, S._tHand - .15, S._tHand + .15); if (lt < S._tHand - .15 || u >= 1) return; pass(c, handAt(c, 'ag', { x: 1700, y: 1310, s: 1.3 }), handAt(c, 'sw', { x: 1420, y: 1300, s: 1.3 }), u, env); }];
+      S.D.live = [(c, lt) => { // campaign posters on the back wall and a banner
+          poster(c, 1010, 540, 170, 220, 'SWALWELL', 'FOR CONGRESS', '#2a4a8a'); poster(c, 1530, 540, 170, 220, 'SWALWELL', 'FOR CONGRESS', '#b8282e'); poster(c, 2180, 560, 140, 190, 'VOTE', 'NOVEMBER', '#2a4a8a');
+          c.fillStyle = '#f6efe2'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(1090, 430, 520, 70); c.strokeRect(1090, 430, 520, 70); txt(c, 'BAY AREA · VOLUNTEERS', 1350, 466, 36, '#2a4a8a', 'center', 'Anton');
+          for (let k = 0; k < 9; k++) { c.fillStyle = ['#c8282e', '#f6efe2', '#2a4a8a'][k % 3]; c.beginPath(); c.moveTo(1100 + k * 58, 506); c.lineTo(1130 + k * 58, 506); c.lineTo(1115 + k * 58, 540 + Math.sin(lt * 2 + k) * 4); c.fill(); } }];
+      S.D.over = [(c, lt) => K.card(c, 'BAY AREA · 2011', lt, { at: t1, x: 300, y: 110, px: 50, rot: -2, until: t5 - .1 }), (c, lt) => K.card(c, '2015', lt, { at: t5, x: 220, y: 110, px: 56, rot: -2 }),
+        (c, lt) => nameTag(c, 'CHRISTINE FANG', 520, 260, lt, tCF, { px: 44, sub: 'CHINESE STUDENT', until: tCu - .1 }),
+        (c, lt) => { const a = pop(lt, tR - .2, .45), o = 1 - K.seg(lt, t5 - .4, t5); if (a <= 0 || o <= 0) return; c.save(); c.globalAlpha = o; K.card(c, 'FUNDRAISING', lt, { at: tR - .2, x: 1000, y: 120, px: 40, rot: 2 }); JH.counter(c, 0, 1, 1000, 220, lt, tR, tR + 1.6, { fmt: v => '$'.repeat(1 + Math.round(v * 4)), px: 70, col: '#7ad85a' }); c.restore(); },
+        (c, lt) => nameTag(c, 'REP. ERIC SWALWELL', 1420, 260, lt, tES, { px: 40, until: t5 + .6 }),
+        (c, lt) => K.card(c, 'DEFENSIVE BRIEFING', lt, { at: tDB, x: 1420, y: 140, px: 50, rot: 2 }), (c, lt) => K.card(c, 'A WARNING FROM THE FBI', lt, { at: tW, x: 1420, y: 240, px: 36, rot: -2, until: tLe + .2 }),
+        (c, lt) => K.card(c, 'HE CUTS HER OFF', lt, { at: tCu, x: 560, y: 260, px: 40, rot: -2, until: tLe + .3 }),
+        (c, lt) => { const u = K.seg(lt, tLe, tLe + 3.4); if (u <= 0 || u >= 1) return; XU.plane(c, -200 + u * 1500, 380 - u * 260, .55, -.18); },
+        (c, lt) => K.card(c, 'LEFT THE COUNTRY', lt, { at: tLe + .3, x: 560, y: 260, px: 40, rot: 2 }), (c, lt) => TW.stamp(c, 'NEVER CHARGED', 560, 400, lt, tNC, { px: 62, rot: -.08 })];
+      S.D.sfx = [[.3, 'footsteps', .22], [t1, 'pop', .2], [tCF, 'pop', .2], [tR, 'coins', .3], [tES, 'pop', .18], [t5 - .6, 'footsteps', .25], [S._tHand, 'paper', .35], [tDB, 'stamp', .25], [tCu, 'thud', .2], [tLe - .2, 'footsteps', .22], [tLe + .3, 'whoosh', .3], [tNC, 'stamp', .35]]; } },
+];
