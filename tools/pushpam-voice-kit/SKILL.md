@@ -5,6 +5,8 @@ description: Narrate any video script in Pushpam's own cloned voice with the fre
 
 # Pushpam Voice Kit
 
+> **DEFAULT VOICE CHANGED (10 Nov 2026):** all new narration uses the mixed-accent voice. Read `DEFAULT_VOICE.md` and use `scripts/speak_mixed.py` with `voice/pushpam_mixed.wav`. The sections below still apply for setup, timing (wt.py), debreath and mixing.
+
 This kit is the exact voice pipeline used for every Stormi Explain Everything video (2D, 2D dynamic and 3D lines). Any model or agent that can run Python and ffmpeg can follow it and produce narration in Pushpam's voice. Nothing here is paid and nothing needs an API key.
 
 ## 1. What the voice is
