@@ -11,7 +11,7 @@ const backdrop = (name, b = .5, blur = 8) => (c) => { c.save(); c.filter = `blur
 const CARRY = () => ({ shL: 30, elL: -75, shR: 35, elR: -75 });
 const endTitle = (secs) => { const T = window.TIMING; const last = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length, start: last.end, end: last.end + secs, vo_start: last.end, vo_end: last.end, text: '' }); T.dur = last.end + secs; };
 for (const n of ['ky_school', 'dishroom', 'booth', 'lab_wb', 'diner_ext', 'chip', 'fg_sink', 'fg_booth']) K.load(n, PL + n + (n.startsWith('fg_') ? '.png' : '.jpg'));
-K.load('dorm_bath', '../../../../nvidia/production/plates/dorm_bath.jpg'); // washroom plate borrowed from the nvidia video
+K.load('dorm_bath', PL + 'dorm_bath.jpg'); // washroom plate borrowed from the nvidia video
 // ---------- act-local helpers ----------
 const SPAN = S => S.end - S.start;
 const W2S = (S, lt, x, y) => { const m = K.camAt(S.D.cam || {}, K.clamp(lt / SPAN(S))); return [x * m.sc + m.tx, y * m.sc + m.ty]; };
@@ -176,7 +176,7 @@ window.SHOTS = [
         (c, lt) => { const u = K.seg(lt, tG, tG + 2.2); c.save(); c.translate(1130, 905); c.scale(1, .45); c.fillStyle = '#fbf8ee'; c.strokeStyle = 'rgba(40,40,40,.4)'; c.lineWidth = 2; c.fillRect(-90, -90, 180, 180); c.strokeRect(-90, -90, 180, 180); CHIPSKETCH(c, 0, 0, .6, u); c.restore(); },
         (c, lt) => { if (lt < tN) return; TW.glow(c, 1130, 900, 300, '118,185,0', .35 + .1 * Math.sin(lt * 6)); }];
       const EXT = { out: tBo + .2, fade: true, d: .7, plate: 'diner_ext', cam: { z: [1.0, 1.9], x: [1280, 1357], y: [720, 760], ease: E.inn }, live: [(c, lt) => { const f = .85 + .15 * Math.sin(lt * 9) * Math.sin(lt * 3.3); TW.glow(c, 1357, 500, 420, '255,90,140', .22 * f); TW.glow(c, 260, 360, 260, '255,200,120', .2 * f); }] };
-      S.D.over = [SCN(S, EXT), (c, lt) => K.card(c, '1993', lt, { at: t93, x: 300, y: 140, px: 70, rot: -3 }), (c, lt) => K.card(c, "A DENNY'S IN SAN JOSE", lt, { at: tSJ, x: 1460, y: 150, px: 44, rot: 2, until: tG }),
+      S.D.over = [SCN(S, EXT), (c, lt) => K.card(c, '1993', lt, { at: t93, x: 300, y: 140, px: 70, rot: -3, until: tEn }), (c, lt) => K.card(c, "A DENNY'S IN SAN JOSE", lt, { at: tSJ, x: 1460, y: 150, px: 44, rot: 2, until: tEn }),
         (c, lt) => { const m = K.camAt(S.D.cam, K.clamp(lt / SPAN(S))); TAG(c, lt, tHe, 1280 * m.sc + m.tx, 390 * m.sc + m.ty, 'JENSEN HUANG', 'AGE 30', { until: tG }); TAG(c, lt, tEn, 690 * m.sc + m.tx, 390 * m.sc + m.ty, 'CHRIS MALACHOWSKY', 'ENGINEER', { until: tG, bg: '#f6eedc' }); TAG(c, lt, tEn + .3, 1880 * m.sc + m.tx, 390 * m.sc + m.ty, 'CURTIS PRIEM', 'ENGINEER', { until: tG, bg: '#f6eedc' }); },
         (c, lt) => { const a = pop(lt, tG - .1, .45); if (a <= 0) return; c.save(); c.translate(960, 190); c.scale(a, a); c.rotate(-.025); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(-262, -112, 540, 240); c.fillStyle = '#fbf8ee'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-270, -120, 540, 240); c.strokeRect(-270, -120, 540, 240); c.strokeStyle = 'rgba(0,0,0,.08)'; for (let k = 1; k < 4; k++) { c.beginPath(); c.moveTo(-270 + k * 135, -120); c.lineTo(-270 + k * 135, 120); c.stroke(); }
           CHIPSKETCH(c, -130, 0, .85, K.seg(lt, tG, tG + 2.2)); TW.txt(c, 'GRAPHICS', 110, -60, 40, '#2a4a8a', 'center', 'Caveat'); TW.txt(c, 'CHIP', 110, -16, 40, '#2a4a8a', 'center', 'Caveat'); const nv = K.seg(lt, tN, tN + .8); if (nv > 0) { c.save(); c.beginPath(); c.rect(0, 10, 260 * nv, 90); c.clip(); TW.txt(c, 'NVIDIA', 115, 58, 66, '#4a8a00', 'center', 'Anton'); c.restore(); } c.restore(); },

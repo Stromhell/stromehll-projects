@@ -1,5 +1,5 @@
 for (const n of ['ky_school', 'dishroom', 'booth', 'lab_wb', 'diner_ext', 'chip', 'fg_sink', 'fg_booth']) K.load(n, PL + n + (n.startsWith('fg_') ? '.png' : '.jpg'));
-K.load('dorm_bath', '../../../../nvidia/production/plates/dorm_bath.jpg'); // washroom plate borrowed from the nvidia video
+K.load('dorm_bath', PL + 'dorm_bath.jpg'); // washroom plate borrowed from the nvidia video
 // ---------- act-local helpers ----------
 const SPAN = S => S.end - S.start;
 const W2S = (S, lt, x, y) => { const m = K.camAt(S.D.cam || {}, K.clamp(lt / SPAN(S))); return [x * m.sc + m.tx, y * m.sc + m.ty]; };
