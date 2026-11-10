@@ -1,0 +1,48 @@
+<!doctype html><html><head><meta charset="utf-8"><title>XU act N</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../tw_kit.js"></script><script src="../../xu_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+const SW = 1920, SH = 1080, INK = TW.INK, RED = TW.RED, pop = TW.pop, fade = TW.fade;
+const backdrop = (name, b = .5, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const CARRY = () => ({ shL: 30, elL: -75, shR: 35, elR: -75 });
+const endTitle = (secs) => { const T = window.TIMING; const last = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length, start: last.end, end: last.end + secs, vo_start: last.end, vo_end: last.end, text: '' }); T.dur = last.end + secs; };
+for (const n of ['campus_night', 'tw_office']) K.load(n, PL + n + '.jpg');
+const accessCard = c => { c.save(); c.rotate(-.3); c.fillStyle = '#f4f6fa'; c.strokeStyle = INK; c.lineWidth = 3; TW.rr(c, -26, 10, 52, 34, 5); c.fill(); c.stroke(); c.fillStyle = '#3a6ad0'; c.fillRect(-26, 10, 52, 9); c.restore(); };
+// backpack on the office desk, three prototype boxes go in, then it zips shut (world coords)
+const bagDesk = (c, lt, tIn, tZip) => { for (let k = 0; k < 3; k++) { const f = E.io(K.seg(lt, tIn + k * .5, tIn + .45 + k * .5)); const x = 1180 - f * (1180 - 960), y = 1030 - Math.sin(f * Math.PI) * 120 - f * (k * 22); if (f < 1) { c.fillStyle = '#e8eaee'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(x - 70 + k * 6, y - 60, 140, 60); c.strokeRect(x - 70 + k * 6, y - 60, 140, 60); TW.txt(c, 'PROTO', x + k * 6, y - 30, 26, '#c0302a', 'center', 'Anton'); } }
+  const z = K.seg(lt, tZip, tZip + .6); c.fillStyle = '#2a4a6a'; c.strokeStyle = INK; c.lineWidth = 6; TW.rr(c, 840, 860, 260, 190, 40); c.fill(); c.stroke(); c.fillStyle = '#1e3a54'; TW.rr(c, 870, 960, 200, 80, 20); c.fill(); c.stroke();
+  c.fillStyle = '#121e2a'; c.fillRect(870, 880, 200 * (1 - z), 30); c.fillStyle = '#d8b44a'; c.fillRect(870 + 200 * (1 - z) - 6, 876, 14, 38); };
+window.SHOTS = [
+  // 6.01 an 18-year-old fan has been sneaking onto Microsoft's campus at night with copied access cards: he walks up the path and taps a card at the door
+  { plate: 'campus_night', cam: { z: [1.15, 1.35], x: [1100, 1280], y: [900, 920] }, bed: [['night_loop', .16], ['wind_loop', .08]], light: { dir: 1, key: 'rgba(255,220,150,.26)', amb: 'rgb(50,60,90)' },
+    init: S => { const tF = A.at(S, 'fan', 1.6), tS = A.at(S, 'sneaking', 4.6), tC = Math.min(A.at(S, 'cards', 7.6), S.end - S.start - 1.6);
+      S.D.figs = [{ x: 1380, y: 1320, s: 1.35, ...XU.FAN(), facing: 1, mood: 'worried', walk: { x0: -200, x1: 1380, t0: .2, dur: Math.max(3, tC - 1.4) }, anim: (o, lt) => { if (lt > tC - 1.0) { o.pose = 'reach'; o.hold = { near: accessCard }; } } }];
+      S.D.live = [(c, lt) => { const ok = lt > tC - .3; c.fillStyle = ok ? '#3ad06a' : '#e83a2a'; c.fillRect(1478, 890, 14, 8); if (ok) TW.glow(c, 1485, 894, 60, '58,208,106', .6); }];
+      S.D.over = [(c, lt) => K.card(c, 'AN 18-YEAR-OLD FAN', lt, { at: tF, x: 360, y: 110, px: 46, rot: -2 }), (c, lt) => K.card(c, 'FOR MONTHS', lt, { at: tS + .6, x: 360, y: 210, px: 42, rot: 2 }), (c, lt) => K.card(c, 'COPIED ACCESS CARDS', lt, { at: tC, x: 1500, y: 140, px: 44, rot: -2 })];
+      S.D.sfx = [[.2, 'footsteps', .25], [1.6, 'footsteps', .25], [3.0, 'footsteps', .2], [tC - .3, 'tick', .35], [tC, 'chime', .2]]; } },
+  // 6.02 one night inside an office: he slides three prototype consoles into his backpack, zips it and walks out
+  { plate: 'tw_office', cam: { z: [1.2, 1.3], x: [1150, 1120], y: [900, 900] }, bed: [['hum_loop', .14], ['tension', .12]], light: { dir: -1, key: 'rgba(170,200,255,.2)' },
+    init: S => { const tP = A.at(S, 'puts', 2.0), tT = A.at(S, 'three', 2.8), tW = A.at(S, 'out', 5.8) - .5;
+      S.D.figs = [{ x: 1450, y: 1320, s: 1.9, ...XU.FAN(), facing: -1, mood: 'worried', walk: { x0: 2800, x1: 1450, t0: .05, dur: 1.6 }, anim: (o, lt) => { if (lt > 1.7 && lt < tW) o.pose = 'reach'; if (lt > tW) { const w = R.walkX(lt, 1450, 2900, tW, 2.6, 1.9); o.x = w.x; o.t = w.phase; o.walkPhase = w.phase; o.pose = 'walk'; o.facing = 1; o.hold = { near: c2 => { c2.fillStyle = '#2a4a6a'; c2.strokeStyle = INK; c2.lineWidth = 5; TW.rr(c2, -60, 0, 120, 90, 20); c2.fill(); c2.stroke(); } }; } } }];
+      S.D.front = [(c, lt) => { if (lt < tW) { c.save(); c.translate(260, 0); bagDesk(c, lt, tP, tW - 1.0); c.restore(); } }];
+      S.D.over = [(c, lt) => K.card(c, 'ONE NIGHT', lt, { at: .3, x: 320, y: 110, px: 50, rot: -2 }), (c, lt) => K.title(c, '3 PROTOTYPES', lt, { at: tT + .3, x: 560, y: 260, px: 84 }), (c, lt) => K.card(c, 'AND WALKS OUT', lt, { at: tW, x: 1500, y: 140, px: 44, rot: 2 })];
+      S.D.sfx = [[.05, 'footsteps', .25], [tP, 'whoosh_soft', .2], [tP + .5, 'whoosh_soft', .2], [tP + 1, 'whoosh_soft', .2], [tW - 1.0, 'paper_tear', .2], [tW, 'run_steps', .25]]; } },
+  // 6.03 a week later Microsoft offers him the job he applied for; weeks later CCTV catches up with him and he loses it
+  { draw: (c, lt, u, S) => { XU.bg(c, lt, '90,150,255'); const ea = pop(lt, S._tJ - .2, .45) * (1 - K.seg(lt, S._tC - .5, S._tC));
+      if (ea > 0) { c.save(); c.translate(960, 520); c.scale(ea, ea); c.translate(-960, -520); TW.win(c, 360, 200, 1200, 620, 'inbox', '#1f3a5a', (cc, w, h) => { cc.fillStyle = '#fbfbfd'; cc.fillRect(0, 0, w, h); TW.txt(cc, 'From: Recruiting', 40, 50, 30, '#6a7080'); TW.txt(cc, "YOU'RE HIRED!", w / 2, 190, 110, '#1a7a2a', 'center', 'Anton'); TW.txt(cc, 'Welcome to the team. Your start date is…', w / 2, 300, 38, '#3a3a48', 'center'); cc.fillStyle = '#3a6ad0'; TW.rr(cc, w / 2 - 160, 380, 320, 80, 40); cc.fill(); TW.txt(cc, 'ACCEPT', w / 2, 420, 38, '#fff', 'center', 'Anton'); }); c.restore(); }
+      const ca = fade(lt, S._tC, .4); if (ca > 0) { const zz = 1 + E.io(K.seg(lt, S._tC + .6, S._tC + 2.4)) * .6; c.save(); c.globalAlpha = ca; c.translate(960, 520); c.scale(zz, zz); c.translate(-960, -520);
+          XU.cctv(c, 360, 160, 1200, 700, lt, (cc, w, h) => { cc.fillStyle = '#3a3e48'; cc.fillRect(0, 0, w, h); cc.fillStyle = '#5a5e68'; cc.fillRect(0, h * .65, w, h * .35); for (let k = 0; k < 4; k++) { cc.fillStyle = '#2a2e36'; cc.fillRect(80 + k * 290, h * .55, 220, 30); } cc.fillStyle = '#16181c'; cc.beginPath(); cc.arc(w * .55, h * .42, 40, 0, 7); cc.fill(); cc.beginPath(); cc.ellipse(w * .55, h * .7, 70, 110, 0, Math.PI, 0); cc.fill(); cc.fillRect(w * .55 - 60, h * .7, 120, 140);
+            const r2 = K.seg(lt, S._tC + .4, S._tC + 1.2); if (r2 > 0) { cc.strokeStyle = '#e02020'; cc.lineWidth = 8; cc.beginPath(); cc.arc(w * .55, h * .55, 170, -Math.PI / 2, -Math.PI / 2 + r2 * Math.PI * 2); cc.stroke(); } }, { stamp: '02:14:37' });
+          c.restore(); } },
+    bed: [['hum_loop', .12]],
+    init: S => { S._tJ = A.at(S, 'job', 2.0) - .6; S._tC = A.at(S, 'security', 6.0) - .3; const tL = A.at(S, 'loses', 8.4);
+      S.D.over = [(c, lt) => K.card(c, 'A WEEK LATER', lt, { at: .3, x: 1720, y: 120, px: 46, rot: -2, until: S._tC }), (c, lt) => TW.stamp(c, 'FIRED', 1500, 860, lt, tL, { px: 110 }), (c, lt) => K.card(c, 'HIRED... THEN FIRED', lt, { at: tL + .4, x: 520, y: 900, px: 50, rot: 2 })]; S.D.sub = 'top';
+      S.D.sfx = [[S._tJ, 'chime', .35], [S._tC, 'camera_shutter', .3], [S._tC + .4, 'tick', .25], [tL, 'stamp', .4]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>

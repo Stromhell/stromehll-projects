@@ -1,24 +1,22 @@
 for (const n of ['campus_night', 'tw_office']) K.load(n, PL + n + '.jpg');
 const accessCard = c => { c.save(); c.rotate(-.3); c.fillStyle = '#f4f6fa'; c.strokeStyle = INK; c.lineWidth = 3; TW.rr(c, -26, 10, 52, 34, 5); c.fill(); c.stroke(); c.fillStyle = '#3a6ad0'; c.fillRect(-26, 10, 52, 9); c.restore(); };
 // backpack on the office desk, three prototype boxes go in, then it zips shut (world coords)
-const bagDesk = (c, lt, tIn, tZip) => { c.fillStyle = 'rgba(0,0,0,.35)'; c.beginPath(); c.ellipse(1000, 1150, 330, 22, 0, 0, 7); c.fill(); c.fillStyle = '#3a3e48'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(660, 1050, 680, 34); c.strokeRect(660, 1050, 680, 34); c.fillStyle = '#2a2e36'; c.fillRect(690, 1084, 26, 220); c.fillRect(1284, 1084, 26, 220);
-  for (let k = 0; k < 3; k++) { const f = E.io(K.seg(lt, tIn + k * .5, tIn + .45 + k * .5)); const x = 1180 - f * (1180 - 960), y = 1030 - Math.sin(f * Math.PI) * 120 - f * (k * 22); if (f < 1) { c.fillStyle = '#e8eaee'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(x - 70 + k * 6, y - 60, 140, 60); c.strokeRect(x - 70 + k * 6, y - 60, 140, 60); TW.txt(c, 'PROTO', x + k * 6, y - 30, 26, '#c0302a', 'center', 'Anton'); } }
+const bagDesk = (c, lt, tIn, tZip) => { for (let k = 0; k < 3; k++) { const f = E.io(K.seg(lt, tIn + k * .5, tIn + .45 + k * .5)); const x = 1180 - f * (1180 - 960), y = 1030 - Math.sin(f * Math.PI) * 120 - f * (k * 22); if (f < 1) { c.fillStyle = '#e8eaee'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(x - 70 + k * 6, y - 60, 140, 60); c.strokeRect(x - 70 + k * 6, y - 60, 140, 60); TW.txt(c, 'PROTO', x + k * 6, y - 30, 26, '#c0302a', 'center', 'Anton'); } }
   const z = K.seg(lt, tZip, tZip + .6); c.fillStyle = '#2a4a6a'; c.strokeStyle = INK; c.lineWidth = 6; TW.rr(c, 840, 860, 260, 190, 40); c.fill(); c.stroke(); c.fillStyle = '#1e3a54'; TW.rr(c, 870, 960, 200, 80, 20); c.fill(); c.stroke();
   c.fillStyle = '#121e2a'; c.fillRect(870, 880, 200 * (1 - z), 30); c.fillStyle = '#d8b44a'; c.fillRect(870 + 200 * (1 - z) - 6, 876, 14, 38); };
 window.SHOTS = [
   // 6.01 an 18-year-old fan has been sneaking onto Microsoft's campus at night with copied access cards: he walks up the path and taps a card at the door
   { plate: 'campus_night', cam: { z: [1.15, 1.35], x: [1100, 1280], y: [900, 920] }, bed: [['night_loop', .16], ['wind_loop', .08]], light: { dir: 1, key: 'rgba(255,220,150,.26)', amb: 'rgb(50,60,90)' },
-    init: S => { const tF = A.at(S, 'fan', 1.6), tS = A.at(S, 'sneaking', 4.6), tC = A.at(S, 'cards', 7.6);
+    init: S => { const tF = A.at(S, 'fan', 1.6), tS = A.at(S, 'sneaking', 4.6), tC = Math.min(A.at(S, 'cards', 7.6), S.end - S.start - 1.6);
       S.D.figs = [{ x: 1380, y: 1320, s: 1.35, ...XU.FAN(), facing: 1, mood: 'worried', walk: { x0: -200, x1: 1380, t0: .2, dur: Math.max(3, tC - 1.4) }, anim: (o, lt) => { if (lt > tC - 1.0) { o.pose = 'reach'; o.hold = { near: accessCard }; } } }];
       S.D.live = [(c, lt) => { const ok = lt > tC - .3; c.fillStyle = ok ? '#3ad06a' : '#e83a2a'; c.fillRect(1478, 890, 14, 8); if (ok) TW.glow(c, 1485, 894, 60, '58,208,106', .6); }];
       S.D.over = [(c, lt) => K.card(c, 'AN 18-YEAR-OLD FAN', lt, { at: tF, x: 360, y: 110, px: 46, rot: -2 }), (c, lt) => K.card(c, 'FOR MONTHS', lt, { at: tS + .6, x: 360, y: 210, px: 42, rot: 2 }), (c, lt) => K.card(c, 'COPIED ACCESS CARDS', lt, { at: tC, x: 1500, y: 140, px: 44, rot: -2 })];
       S.D.sfx = [[.2, 'footsteps', .25], [1.6, 'footsteps', .25], [3.0, 'footsteps', .2], [tC - .3, 'tick', .35], [tC, 'chime', .2]]; } },
   // 6.02 one night inside an office: he slides three prototype consoles into his backpack, zips it and walks out
   { plate: 'tw_office', cam: { z: [1.2, 1.3], x: [1150, 1120], y: [900, 900] }, bed: [['hum_loop', .14], ['tension', .12]], light: { dir: -1, key: 'rgba(170,200,255,.2)' },
-    init: S => { const tP = A.at(S, 'puts', 2.0), tT = A.at(S, 'three', 2.8), tW = A.at(S, 'walks', 5.4);
+    init: S => { const tP = A.at(S, 'puts', 2.0), tT = A.at(S, 'three', 2.8), tW = A.at(S, 'out', 5.8) - .5;
       S.D.figs = [{ x: 1450, y: 1320, s: 1.9, ...XU.FAN(), facing: -1, mood: 'worried', walk: { x0: 2800, x1: 1450, t0: .05, dur: 1.6 }, anim: (o, lt) => { if (lt > 1.7 && lt < tW) o.pose = 'reach'; if (lt > tW) { const w = R.walkX(lt, 1450, 2900, tW, 2.6, 1.9); o.x = w.x; o.t = w.phase; o.walkPhase = w.phase; o.pose = 'walk'; o.facing = 1; o.hold = { near: c2 => { c2.fillStyle = '#2a4a6a'; c2.strokeStyle = INK; c2.lineWidth = 5; TW.rr(c2, -60, 0, 120, 90, 20); c2.fill(); c2.stroke(); } }; } } }];
-      S.D.front = [(c, lt) => { if (lt < tW) bagDesk(c, lt, tP, tW - 1.0); else { // desk stays, bag leaves with him
-          c.fillStyle = 'rgba(0,0,0,.35)'; c.beginPath(); c.ellipse(1000, 1150, 330, 22, 0, 0, 7); c.fill(); c.fillStyle = '#3a3e48'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(660, 1050, 680, 34); c.strokeRect(660, 1050, 680, 34); c.fillStyle = '#2a2e36'; c.fillRect(690, 1084, 26, 220); c.fillRect(1284, 1084, 26, 220); } }];
+      S.D.front = [(c, lt) => { if (lt < tW) { c.save(); c.translate(260, 0); bagDesk(c, lt, tP, tW - 1.0); c.restore(); } }];
       S.D.over = [(c, lt) => K.card(c, 'ONE NIGHT', lt, { at: .3, x: 320, y: 110, px: 50, rot: -2 }), (c, lt) => K.title(c, '3 PROTOTYPES', lt, { at: tT + .3, x: 560, y: 260, px: 84 }), (c, lt) => K.card(c, 'AND WALKS OUT', lt, { at: tW, x: 1500, y: 140, px: 44, rot: 2 })];
       S.D.sfx = [[.05, 'footsteps', .25], [tP, 'whoosh_soft', .2], [tP + .5, 'whoosh_soft', .2], [tP + 1, 'whoosh_soft', .2], [tW - 1.0, 'paper_tear', .2], [tW, 'run_steps', .25]]; } },
   // 6.03 a week later Microsoft offers him the job he applied for; weeks later CCTV catches up with him and he loses it
@@ -30,6 +28,6 @@ window.SHOTS = [
           c.restore(); } },
     bed: [['hum_loop', .12]],
     init: S => { S._tJ = A.at(S, 'job', 2.0) - .6; S._tC = A.at(S, 'security', 6.0) - .3; const tL = A.at(S, 'loses', 8.4);
-      S.D.over = [(c, lt) => K.card(c, 'A WEEK LATER', lt, { at: .3, x: 960, y: 100, px: 46, rot: -2, until: S._tC }), (c, lt) => TW.stamp(c, 'FIRED', 1500, 860, lt, tL, { px: 110 }), (c, lt) => K.card(c, 'HIRED... THEN FIRED', lt, { at: tL + .4, x: 520, y: 900, px: 50, rot: 2 })]; S.D.sub = 'top';
+      S.D.over = [(c, lt) => K.card(c, 'A WEEK LATER', lt, { at: .3, x: 1720, y: 120, px: 46, rot: -2, until: S._tC }), (c, lt) => TW.stamp(c, 'FIRED', 1500, 860, lt, tL, { px: 110 }), (c, lt) => K.card(c, 'HIRED... THEN FIRED', lt, { at: tL + .4, x: 520, y: 900, px: 50, rot: 2 })]; S.D.sub = 'top';
       S.D.sfx = [[S._tJ, 'chime', .35], [S._tC, 'camera_shutter', .3], [S._tC + .4, 'tick', .25], [tL, 'stamp', .4]]; } },
 ];
