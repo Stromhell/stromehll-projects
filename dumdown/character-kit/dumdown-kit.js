@@ -168,10 +168,10 @@
 
   // Hair styles are recipes for 3D "locks" on the head sphere (lon/lat in degrees).
   const HAIR_STYLES = {
-    spiky: { n: 20, lat: [-5, 85], len: [16, 34], w: [6, 10], droop: 0.05, bend: 0.5, bangs: 6, bangLat: 30, bangLen: [14, 24], bangW: [5, 8], bangDroop: 1.7 },
-    messy: { n: 26, lat: [-10, 80], len: [10, 20], w: [6, 9], droop: 0.45, bend: 0.8, bangs: 7, bangLat: 32, bangLen: [14, 22], bangW: [4.5, 7], bangDroop: 1.9 },
-    long: { n: 16, lat: [20, 85], len: [6, 12], w: [8, 11], droop: 0.9, bend: 0.4, bangs: 7, bangLat: 34, bangLen: [16, 24], bangW: [5, 7.5], bangDroop: 2.4, curtain: { n: 10, len: [85, 120], w: [15, 19] }, sides: 52 },
-    bob: { n: 20, lat: [0, 80], len: [12, 20], w: [8, 11], droop: 1.2, bend: 0.3, bangs: 8, bangLat: 34, bangLen: [16, 20], bangW: [5, 6.5], bangDroop: 2.6, curtain: { n: 12, len: [34, 44], w: [10, 13] }, sides: 30 },
+    spiky: { n: 20, lat: [0, 85], len: [16, 30], w: [7.5, 11.5], droop: 0.28, bend: 0.9, bangs: 7, bangLat: 30, bangLen: [14, 22], bangW: [5, 8], bangDroop: 1.9 },
+    messy: { n: 28, lat: [-10, 80], len: [10, 19], w: [6.5, 9.5], droop: 0.75, bend: 1.3, bangs: 7, bangLat: 32, bangLen: [14, 21], bangW: [4.5, 7], bangDroop: 2.1 },
+    long: { n: 9, lat: [30, 85], len: [6, 10], w: [10, 13], droop: 1.2, bend: 0.8, bangs: 7, bangLat: 34, bangLen: [16, 23], bangW: [5, 7.5], bangDroop: 2.6, curtain: { n: 11, len: [80, 112], w: [13, 17] }, sides: 50 },
+    bob: { n: 12, lat: [20, 80], len: [10, 16], w: [8, 11], droop: 1.4, bend: 0.6, bangs: 8, bangLat: 34, bangLen: [16, 20], bangW: [5, 6.5], bangDroop: 2.8, curtain: { n: 12, len: [34, 44], w: [11, 14] }, sides: 30 },
     buzz: { n: 30, lat: [5, 85], len: [4, 7], w: [6, 8], droop: 0.2, bend: 0.2, bangs: 0 }
   };
 
@@ -183,43 +183,71 @@
     for (let i = 0; i < st.n; i++) {
       const lon = -180 + 360 * (i + R() * 0.7) / st.n;
       const back = Math.abs(lon) > 90;
-      out.push({ lon, lat: rr(st.lat), len: rr(st.len) * (h.volume || 1) * (back ? 1.08 : 1), w: rr(st.w), droop: st.droop, bend: (R() - 0.5) * st.bend });
+      out.push({ lon, lat: rr(st.lat), len: rr(st.len) * (h.volume || 1) * (back ? 1.08 : 1), w: rr(st.w), droop: st.droop, bend: (R() - 0.5) * st.bend + (lon > 0 ? 0.25 : -0.25), wave: (R() - 0.5) * 0.5, fork: R() < 0.35 ? (R() < 0.5 ? -1 : 1) : 0 });
     }
     for (let i = 0; i < st.bangs; i++) {
       const lon = -58 + 116 * (i + 0.5) / st.bangs + (R() - 0.5) * 10;
-      out.push({ lon, lat: st.bangLat + R() * 10, len: rr(st.bangLen), w: rr(st.bangW), droop: st.bangDroop, bend: (R() - 0.5) * 0.5 + lon / 90 * 0.45, bang: true });
+      out.push({ lon, lat: st.bangLat + R() * 10, len: rr(st.bangLen), w: rr(st.bangW), droop: st.bangDroop, bend: (R() - 0.5) * 0.6 + lon / 90 * 0.6, wave: (R() - 0.5) * 0.4, fork: R() < 0.3 ? (lon > 0 ? 1 : -1) : 0, bang: true });
     }
     if (st.curtain) {
       for (let i = 0; i < st.curtain.n; i++) {
         const lon = 70 + 220 * (i + R() * 0.5) / st.curtain.n;
-        out.push({ lon, lat: 8 + R() * 22, len: rr(st.curtain.len) * (h.length || 1), w: rr(st.curtain.w), droop: 3.5, bend: (R() - 0.5) * 0.25, curtain: true });
+        out.push({ lon, lat: 8 + R() * 22, len: rr(st.curtain.len) * (h.length || 1), w: rr(st.curtain.w), droop: 3.5, bend: (R() - 0.5) * 0.35, wave: (R() - 0.5) * 0.9, fork: R() < 0.45 ? (R() < 0.5 ? -1 : 1) : 0, curtain: true });
       }
-      for (const sg of [-1, 1]) out.push({ lon: sg * 74, lat: 22, len: st.sides * (h.length || 1), w: 11, droop: 4, bend: sg * 0.06, curtain: true, side: true });
+      for (const sg of [-1, 1]) out.push({ lon: sg * 74, lat: 22, len: st.sides * (h.length || 1), w: 11, droop: 4, bend: sg * 0.12, wave: 0.35 * sg, fork: sg, curtain: true, side: true });
     }
     if (h.ahoge) out.push({ lon: 8, lat: 88, len: 26, w: 2.6, droop: -0.3, bend: 0.9, ahoge: true });
     if (h.streak) { const k = out.find(l => l.bang); if (k) k.streak = true; }
     return out;
   }
 
+  /**
+   * One hair lock: a tapered ribbon along a curved spine. The spine curls more toward the tip
+   * (gravity + bend) with a soft S-wave, the ribbon bulges just past the root, and some locks
+   * split into a forked tip. Each lock gets a lit side, a shadow side and one inner strand line.
+   */
   function drawLock(L, h, yaw, mir, sway) {
     const n3 = [Math.cos(rad(L.lat)) * Math.sin(rad(L.lon)), -Math.sin(rad(L.lat)), Math.cos(rad(L.lat)) * Math.cos(rad(L.lon))];
     const base3 = sphere(L.lon, L.lat, HEAD_R - 2);
-    let d3 = [n3[0], n3[1] + L.droop, n3[2]]; const m = Math.hypot(...d3); d3 = d3.map(v => v / m);
+    const spread = L.curtain ? 0.28 : 1; // long hair falls straight down instead of flaring out
+    let d3 = [n3[0] * spread, n3[1] + L.droop, n3[2] * spread]; const m = Math.hypot(...d3); d3 = d3.map(v => v / m);
     const tip3 = [base3[0] + d3[0] * L.len, base3[1] + d3[1] * L.len, base3[2] + d3[2] * L.len];
     const b = proj3(base3, yaw), t = proj3(tip3, yaw);
-    const sw = (sway || 0) * L.len * (L.curtain ? 0.035 : 0.015);
-    const B = [b[0], b[1]], T = [t[0] + sw, t[1]];
+    const swy = (sway || 0) * L.len * (L.curtain ? 0.035 : 0.015);
+    const B = [b[0], b[1]], T = [t[0] + swy, t[1]];
     const dx = T[0] - B[0], dy = T[1] - B[1], len = Math.hypot(dx, dy) || 0.01;
     const u = [dx / len, dy / len], p = [-u[1], u[0]];
-    const w = L.w, bend = L.bend * len * 0.35;
-    const mid = [(B[0] + T[0]) / 2, (B[1] + T[1]) / 2];
-    const bl = add(B, p, w), br = add(B, p, -w);
-    const cL = add(mid, p, w * 0.55 + bend), cR = add(mid, p, -w * 0.55 + bend), cM = add(mid, p, bend);
+    const w = L.w * (L.ahoge ? 1 : 1);
+    const N = 7;
+    const spine = [], wid = [];
+    for (let i = 0; i <= N; i++) {
+      const k = i / N;
+      const off = (L.bend || 0) * len * 0.45 * k * k + (L.wave || 0) * len * 0.18 * Math.sin(k * Math.PI);
+      spine.push(add(add(B, u, len * k), p, off));
+      wid.push(w * (k < 0.25 ? lerp(1, 1.12, k / 0.25) : 1.12 * Math.pow(1 - (k - 0.25) / 0.75, 0.85)));
+    }
+    const nrm = i => { const a = spine[Math.max(0, i - 1)], c = spine[Math.min(N, i + 1)]; const ex = c[0] - a[0], ey = c[1] - a[1], l = Math.hypot(ex, ey) || 1; return [-ey / l, ex / l]; };
+    const left = [], right = [];
+    for (let i = 0; i < N; i++) { const q = nrm(i); left.push(add(spine[i], q, wid[i])); right.push(add(spine[i], q, -wid[i])); }
+    const tip = spine[N];
+    const d = smooth([...left, tip, ...right.slice().reverse()], true, 0.9);
+    const lightLeft = (p[0] + p[1]) * (mir ? -1 : 1) > 0;
+    const half = lightLeft ? [...spine.slice(0, N), tip, ...right.slice().reverse()] : [...left, tip, ...spine.slice(0, N).reverse()];
+    const shadeD = smooth(half, true, 0.9);
     const col = L.streak && h.streak ? h.streak : h.color;
-    const d = `M${P(...bl)}Q${P(...cL)} ${P(...T)}Q${P(...cR)} ${P(...br)}Z`;
-    const lightSide = (p[0] + p[1]) * (mir ? -1 : 1) > 0 ? -1 : 1;
-    const shadeD = lightSide > 0 ? `M${P(...B)}Q${P(...cM)} ${P(...T)}Q${P(...cR)} ${P(...br)}Z` : `M${P(...bl)}Q${P(...cL)} ${P(...T)}Q${P(...cM)} ${P(...B)}Z`;
-    return { z: (b[2] + t[2]) / 2, svg: `<path d="${d}" fill="${col}"/><path d="${shadeD}" fill="${shade(col)}"/><path d="${d}" fill="none" stroke="${INK}" stroke-width="${L.ahoge ? 1.8 : 2.2}" stroke-linejoin="round"/>`, back: b[2] < 0, bang: L.bang, curtain: L.curtain };
+    let svg = `<path d="${d}" fill="${col}"/><path d="${shadeD}" fill="${shade(col)}"/>`;
+    if (L.fork && len > 14 && !L.ahoge) {
+      // forked tip: a thinner sub-lock peeling off from the middle of the spine
+      const s0 = spine[3], q = nrm(3), fl = len * 0.42;
+      const dir = [u[0] * 0.85 + q[0] * 0.5 * L.fork, u[1] * 0.85 + q[1] * 0.5 * L.fork];
+      const ft = add(s0, dir, fl), fm = add(add(s0, dir, fl * 0.5), q, L.fork * w * 0.3);
+      const fw = wid[3] * 0.55;
+      const fd = smooth([add(s0, q, fw), add(fm, q, fw * 0.6), ft, add(fm, q, -fw * 0.6), add(s0, q, -fw)], true, 0.9);
+      svg = `<path d="${fd}" fill="${shade(col)}" stroke="${INK}" stroke-width="1.8" stroke-linejoin="round"/>` + svg;
+    }
+    svg += `<path d="${d}" fill="none" stroke="${INK}" stroke-width="${L.ahoge ? 1.8 : 2}" stroke-linejoin="round"/>`;
+    if (len > 16 && !L.ahoge) svg += `<path d="${smooth(spine.slice(1, 6).map((pt, i) => add(pt, nrm(i + 1), wid[i + 1] * 0.25)), false)}" fill="none" stroke="${INK}" stroke-width=".9" opacity=".45" stroke-linecap="round"/>`;
+    return { z: (b[2] + t[2]) / 2, svg, back: b[2] < 0, bang: L.bang, curtain: L.curtain };
   }
 
   function hairlinePts(yaw) {
@@ -351,7 +379,7 @@
     return s;
   }
 
-  function drawHead(spec, J, view, ex, mir, pose) {
+  function drawHead(spec, J, view, ex, mir, pose, opts) {
     const yaw = J.yaw;
     const h = spec.hair, skin = spec.skin, eyeCol = spec.eyes || '#5a3a2a';
     const E = resolveExpr(ex);
@@ -359,7 +387,9 @@
     const backView = Math.cos(rad(yaw)) < -0.4;
     let back = '', front = '';
     const sorted = locks.slice().sort((a, b) => a.z - b.z);
-    for (const L of sorted) { if (L.back || L.curtain && !backView) back += L.svg; else front += L.svg; }
+    let behind = '';
+    for (const L of sorted) { if (L.curtain && !backView) behind += L.svg; else if (L.back) back += L.svg; else front += L.svg; }
+    if (opts && opts.layer === 'behind') return behind;
     const headEll = 'M-29,-6C-29,-44 29,-44 29,-6C29,14 18,22 0,24C-18,22 -29,14 -29,-6Z';
     let s = '';
     // 1 back hair (behind everything on the head)
@@ -725,6 +755,9 @@
     const nearSide = J.s > 0 ? 'L' : 'R', farSide = nearSide === 'L' ? 'R' : 'L';
     let s = `<g transform="${tf}">`;
     s += `<ellipse cx="0" cy="${footY - 6}" rx="${sideOn ? 48 : 44}" ry="7" fill="#000" opacity=".14"/>`;
+    // long hair hangs BEHIND the body: draw it first, at the head's transform
+    const headTf = `translate(${P(...J.head)}) rotate(${r1(J.headAngle)}) scale(${r1(J.B.head)})`;
+    s += `<g transform="${headTf}">${drawHead(spec, J, view, opts.expr, mir, pose, { layer: 'behind' })}</g>`;
     // long-hair back curtain sits behind the body
     const head = drawHead(spec, J, view, opts.expr, mir, pose);
     if (sideOn) {
@@ -1119,7 +1152,7 @@
     return svg(W, H, bg + drawCharacter(spec, { view: opts.view || 'front', dir: opts.dir, x: opts.x ?? W / 2, y: opts.y ?? H * 0.95, scale: opts.scale ?? 1.25, pose: a.pose, expr: a.expr || opts.expr || spec.defaultExpr }), opts.bg);
   }
 
-  const api = { version: '1.0.0', INK, VIEWS, POSES, HAND_POSES, EXPRESSIONS, HAIR_STYLES, ANIMS, CAST, PALETTES, BACKGROUNDS, drawCharacter, drawSkeleton, drawHand: (spec, pose, x, y, angle = 0, mirror = false, scale = 1) => `<g transform="translate(${x},${y}) scale(${scale})">${drawHand([0, 0], angle, pose, mirror, spec, false)}</g>`, drawHead: (spec, opts = {}) => { const J = solve(spec, normPose(opts.pose), opts.view || 'front'); return `<g transform="translate(${opts.x || 0},${opts.y || 0}) scale(${(opts.scale || 1) * (opts.dir || 1)},${opts.scale || 1})">${drawHead(spec, J, opts.view || 'front', opts.expr, (opts.dir || 1) < 0, normPose(opts.pose))}</g>`; }, drawBackground, generateCharacter, frame, svg, solve, onTwos, ease, shade, light, mix, rng };
+  const api = { version: '1.0.0', INK, VIEWS, POSES, HAND_POSES, EXPRESSIONS, HAIR_STYLES, ANIMS, CAST, PALETTES, BACKGROUNDS, drawCharacter, drawSkeleton, drawHand: (spec, pose, x, y, angle = 0, mirror = false, scale = 1) => `<g transform="translate(${x},${y}) scale(${scale})">${drawHand([0, 0], angle, pose, mirror, spec, false)}</g>`, drawHead: (spec, opts = {}) => { const J = solve(spec, normPose(opts.pose), opts.view || 'front'); const mr = (opts.dir || 1) < 0, np = normPose(opts.pose); return `<g transform="translate(${opts.x || 0},${opts.y || 0}) scale(${(opts.scale || 1) * (opts.dir || 1)},${opts.scale || 1})">${drawHead(spec, J, opts.view || 'front', opts.expr, mr, np, { layer: 'behind' })}${drawHead(spec, J, opts.view || 'front', opts.expr, mr, np)}</g>`; }, drawBackground, generateCharacter, frame, svg, solve, onTwos, ease, shade, light, mix, rng };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   root.DumDown = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);
