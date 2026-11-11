@@ -172,6 +172,7 @@
     messy: { n: 28, lat: [-10, 80], len: [10, 19], w: [6.5, 9.5], droop: 0.75, bend: 1.3, bangs: 7, bangLat: 32, bangLen: [14, 21], bangW: [4.5, 7], bangDroop: 2.1 },
     long: { n: 9, lat: [30, 85], len: [6, 10], w: [10, 13], droop: 1.2, bend: 0.8, bangs: 7, bangLat: 34, bangLen: [16, 23], bangW: [5, 7.5], bangDroop: 2.6, curtain: { n: 11, len: [80, 112], w: [13, 17] }, sides: 50 },
     bob: { n: 12, lat: [20, 80], len: [10, 16], w: [8, 11], droop: 1.4, bend: 0.6, bangs: 8, bangLat: 34, bangLen: [16, 20], bangW: [5, 6.5], bangDroop: 2.8, curtain: { n: 12, len: [34, 44], w: [11, 14] }, sides: 30 },
+    cloud: { n: 0, lat: [-5, 85], len: [11, 17], w: [12, 16], droop: 0.45, bend: 1.4, round: true, bangs: 5, bangLat: 31, bangLen: [13, 19], bangW: [7, 9.5], bangDroop: 1.8 },
     buzz: { n: 30, lat: [5, 85], len: [4, 7], w: [6, 8], droop: 0.2, bend: 0.2, bangs: 0 }
   };
 
@@ -183,11 +184,11 @@
     for (let i = 0; i < st.n; i++) {
       const lon = -180 + 360 * (i + R() * 0.7) / st.n;
       const back = Math.abs(lon) > 90;
-      out.push({ lon, lat: rr(st.lat), len: rr(st.len) * (h.volume || 1) * (back ? 1.08 : 1), w: rr(st.w), droop: st.droop, bend: (R() - 0.5) * st.bend + (lon > 0 ? 0.25 : -0.25), wave: (R() - 0.5) * 0.5, fork: R() < 0.35 ? (R() < 0.5 ? -1 : 1) : 0 });
+      out.push({ lon, lat: rr(st.lat), len: rr(st.len) * (h.volume || 1) * (back ? 1.08 : 1), w: rr(st.w), droop: st.droop, round: st.round, bend: (R() - 0.5) * st.bend + (lon > 0 ? 0.25 : -0.25), wave: (R() - 0.5) * 0.5, fork: R() < 0.35 ? (R() < 0.5 ? -1 : 1) : 0 });
     }
     for (let i = 0; i < st.bangs; i++) {
       const lon = -58 + 116 * (i + 0.5) / st.bangs + (R() - 0.5) * 10;
-      out.push({ lon, lat: st.bangLat + R() * 10, len: rr(st.bangLen), w: rr(st.bangW), droop: st.bangDroop, bend: (R() - 0.5) * 0.6 + lon / 90 * 0.6, wave: (R() - 0.5) * 0.4, fork: R() < 0.3 ? (lon > 0 ? 1 : -1) : 0, bang: true });
+      out.push({ lon, lat: st.bangLat + R() * 10, len: rr(st.bangLen), w: rr(st.bangW), droop: st.bangDroop, round: st.round, bend: (R() - 0.5) * 0.6 + lon / 90 * 0.6, wave: (R() - 0.5) * 0.4, fork: R() < 0.3 ? (lon > 0 ? 1 : -1) : 0, bang: true });
     }
     if (st.curtain) {
       for (let i = 0; i < st.curtain.n; i++) {
@@ -224,7 +225,7 @@
       const k = i / N;
       const off = (L.bend || 0) * len * 0.45 * k * k + (L.wave || 0) * len * 0.18 * Math.sin(k * Math.PI);
       spine.push(add(add(B, u, len * k), p, off));
-      wid.push(w * (k < 0.25 ? lerp(1, 1.12, k / 0.25) : 1.12 * Math.pow(1 - (k - 0.25) / 0.75, 0.85)));
+      wid.push(L.round ? w * (k < 0.5 ? lerp(1, 1.25, k / 0.5) : lerp(1.25, 0.45, (k - 0.5) / 0.5)) : w * (k < 0.25 ? lerp(1, 1.12, k / 0.25) : 1.12 * Math.pow(1 - (k - 0.25) / 0.75, 0.85)));
     }
     const nrm = i => { const a = spine[Math.max(0, i - 1)], c = spine[Math.min(N, i + 1)]; const ex = c[0] - a[0], ey = c[1] - a[1], l = Math.hypot(ex, ey) || 1; return [-ey / l, ex / l]; };
     const left = [], right = [];
@@ -246,7 +247,7 @@
       svg = `<path d="${fd}" fill="${shade(col)}" stroke="${INK}" stroke-width="1.8" stroke-linejoin="round"/>` + svg;
     }
     svg += `<path d="${d}" fill="none" stroke="${INK}" stroke-width="${L.ahoge ? 1.8 : 2}" stroke-linejoin="round"/>`;
-    if (len > 16 && !L.ahoge) svg += `<path d="${smooth(spine.slice(1, 6).map((pt, i) => add(pt, nrm(i + 1), wid[i + 1] * 0.25)), false)}" fill="none" stroke="${INK}" stroke-width=".9" opacity=".45" stroke-linecap="round"/>`;
+    if (len > 16 && !L.ahoge && !L.round) svg += `<path d="${smooth(spine.slice(1, 6).map((pt, i) => add(pt, nrm(i + 1), wid[i + 1] * 0.25)), false)}" fill="none" stroke="${INK}" stroke-width=".9" opacity=".45" stroke-linecap="round"/>`;
     return { z: (b[2] + t[2]) / 2, svg, back: b[2] < 0, bang: L.bang, curtain: L.curtain };
   }
 
@@ -379,6 +380,36 @@
     return s;
   }
 
+  /** Cloud hair: overlapping puffs on the head sphere, outlined only on the outside edge. */
+  function cloudPuffs(h, yaw, mir, front) {
+    const R = rng((h.seed || 7) + 99);
+    const puffs = [];
+    for (const [lat, n, r] of [[-12, 9, 12], [12, 10, 14], [38, 9, 14.5], [62, 6, 13.5], [86, 1, 13]]) {
+      for (let i = 0; i < n; i++) {
+        const lon = -180 + 360 * (i + 0.5 + (R() - 0.5) * 0.4) / n + lat;
+        if (lat < 0 && Math.abs(((lon + 540) % 360) - 180) < 70) continue; // keep the face clear
+        const q = proj3(sphere(lon, lat, HEAD_R + 3 * (h.volume || 1)), yaw);
+        puffs.push({ x: q[0], y: q[1] - 2, z: q[2], r: r * (0.85 + R() * 0.3) * (h.volume || 1), lat });
+      }
+    }
+    const sel = front ? puffs.filter(p => p.z > 4 && p.lat >= 38) : puffs;
+    if (!sel.length) return '';
+    const sx = mir ? -1 : 1;
+    let o = '', f = '', sh = '';
+    for (const p of sel) {
+      o += `<circle cx="${r1(p.x)}" cy="${r1(p.y)}" r="${r1(p.r + 1.4)}" fill="${INK}"/>`;
+      sh += `<circle cx="${r1(p.x)}" cy="${r1(p.y)}" r="${r1(p.r)}" fill="${shade(h.color)}"/>`;
+    }
+    for (const p of sel) f += `<circle cx="${r1(p.x - 2.6 * sx)}" cy="${r1(p.y - 2.6)}" r="${r1(p.r * 0.86)}" fill="${h.color}"/>`;
+    // little inner curls so the cloud reads as soft volume
+    for (const p of sel.filter((_, i) => i % 3 === 0)) f += `<path d="M${P(p.x - p.r * 0.5, p.y + p.r * 0.2)}q${r1(p.r * 0.35)},${r1(-p.r * 0.45)} ${r1(p.r * 0.75)},${r1(-p.r * 0.15)}" fill="none" stroke="${INK}" stroke-width="1" opacity=".35" stroke-linecap="round"/>`;
+    return o + sh + f;
+  }
+  function boltAhoge(col, yaw) {
+    const x = 4 + 10 * Math.sin(rad(yaw));
+    return `<path d="M${P(x - 2, -40)}L${P(x + 7, -55)}L${P(x + 2, -55)}L${P(x + 10, -70)}L${P(x - 4, -52)}L${P(x + 1, -52)}L${P(x - 6, -40)}Z" fill="${col}" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/>`;
+  }
+
   function drawHead(spec, J, view, ex, mir, pose, opts) {
     const yaw = J.yaw;
     const h = spec.hair, skin = spec.skin, eyeCol = spec.eyes || '#5a3a2a';
@@ -393,7 +424,7 @@
     const headEll = 'M-29,-6C-29,-44 29,-44 29,-6C29,14 18,22 0,24C-18,22 -29,14 -29,-6Z';
     let s = '';
     // 1 back hair (behind everything on the head)
-    s += back + `<path d="${headEll}" fill="${h.color}"/>`;
+    s += back + (h.style === 'cloud' ? cloudPuffs(h, yaw, mir, false) : '') + `<path d="${headEll}" fill="${h.color}"/>`;
     // 2 ears
     for (const lon of [-100, 100]) {
       const f = feat(lon, 26.5, yaw);
@@ -423,6 +454,7 @@
       if (nose.z > 0.05 && Math.abs(Math.sin(rad(yaw))) < 0.92) s += line([[nose.x + 0.5, 9], [nose.x + 2, 12.5], [nose.x, 13]], 1.3, shade(skin, 2.2));
       const mouth = feat(0, 20, yaw);
       if (mouth.z > -0.1) s += drawMouth(mouth.x, 20, Math.max(0.55, mouth.fs), E.mouth);
+      if (spec.cheekMarks === 'bolt') for (const f of [eyeR, eyeL]) if (f.z > 0.15) { const cx = f.x + (f.x < feat(0, 20, yaw).x ? -5 : 5) * f.fs; s += `<path d="M${P(cx + 1.5 * f.fs, 13)}L${P(cx - 2.5 * f.fs, 17.5)}L${P(cx + 0.5 * f.fs, 17.5)}L${P(cx - 1.5 * f.fs, 22)}" fill="none" stroke="#ffc21a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`; }
       if (E.blush) for (const f of [eyeR, eyeL]) if (f.z > 0.1) for (let i = 0; i < 3; i++) s += line([[f.x - 5 + i * 3.5, 14], [f.x - 7 + i * 3.5, 17.5]], 1.2, '#e2546a');
       if (E.blush) for (const f of [eyeR, eyeL]) if (f.z > 0.1) s += `<ellipse cx="${r1(f.x)}" cy="15.5" rx="7" ry="3" fill="#ff7d8f" opacity=".35"/>`;
     } else {
@@ -440,6 +472,8 @@
     s += `<clipPath id="${cid}"><path d="${capClip}"/></clipPath><g clip-path="url(#${cid})">${cel(headEll, h.color, { sx: 4, sy: 5, mir, sw: 2.6 })}</g>`;
     if (!backView && hl.length > 2) s += `<path d="M${hl.map(p => P(...p)).join('L')}" fill="none" stroke="${INK}" stroke-width="2"/>`;
     s += front;
+    if (h.style === 'cloud') s += cloudPuffs(h, yaw, mir, true);
+    if (h.bolt) s += boltAhoge(h.bolt, yaw);
     // hair shine
     s += curve(`M${P(-14 + 10 * Math.sin(rad(yaw)), -30)}Q${P(-6 + 10 * Math.sin(rad(yaw)), -35)} ${P(2 + 10 * Math.sin(rad(yaw)), -33)}`, 2.2, light(h.color, 0.55), 'opacity=".8"');
     // brows on top of the bangs (standard anime see-through brows)
@@ -620,6 +654,7 @@
       for (let i = 0; i < 5; i++) { const a = i * 72; const p = dirv(a); s += `<circle cx="${r1(p[0] * 5.5)}" cy="${r1(p[1] * 5.5)}" r="2.2" fill="#fff" stroke="${INK}" stroke-width=".9"/>`; }
       return s + '</g>';
     }
+    if (kind === 'bolt') return `<g transform="translate(${P(x, y)}) scale(${r1(fs * 1.1)},1.1)"><circle r="11" fill="${col}" stroke="${INK}" stroke-width="2"/><path d="M2,-9L-6,2H0L-3,10L6,-2H0Z" fill="#ffd23d" stroke="${INK}" stroke-width="1.4" stroke-linejoin="round"/></g>`;
     if (kind === 'zz') return `<g transform="translate(${P(x, y)}) scale(${r1(fs)},1)"><path d="M-9,-7H3L-7,7H7" fill="none" stroke="${col}" stroke-width="4" stroke-linejoin="round"/><path d="M-9,-7H3L-7,7H7" fill="none" stroke="${INK}" stroke-width="1" /></g>`;
     return '';
   }
@@ -1103,6 +1138,18 @@
       gloves: { color: '#3a2f4f', cuff: '#ffd23d', fingerless: true },
       defaultExpr: 'excited'
     }
+  };
+
+  CAST.stormi = {
+    name: 'Stormi', role: 'Channel mascot. A walking thunderstorm who explains superhero movies at lightning speed and zaps every plot hole.',
+    skin: '#f1c8a8', eyes: '#2fc6ff', scale: 1, cheekMarks: 'bolt',
+    hair: { style: 'cloud', color: '#d3dae8', seed: 31, streak: '#ffd23d', bolt: '#ffd23d', volume: 1.05 },
+    top: { type: 'hoodie', color: '#2a3990', accent: '#1b2461', cuff: '#ffd23d', hood: '#22307c', strings: '#ffd23d', emblem: 'bolt', backPrint: 'bolt', hem: 16 },
+    bottom: { color: '#1d2142', baggy: true, cuff: '#ffd23d' },
+    shoes: { color: '#ffd23d', sole: '#1d2142', lace: '#2a3990', type: 'sneaker' },
+    gloves: { color: '#1d2142', cuff: '#ffd23d', fingerless: true },
+    scarf: '#e23a3a',
+    defaultExpr: 'smug'
   };
 
   const PALETTES = {
