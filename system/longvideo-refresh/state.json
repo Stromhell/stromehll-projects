@@ -49,12 +49,21 @@
   "dERXbnzyjug": {
    "zernioPostId": "6ae1d893eb3ba1ed54c5f32a",
    "name": "Salman al-Farsi",
-   "folder": null,
+   "folder": "/mnt/project-files/system/longvideo-refresh/salman-al-farsi",
    "publishedAt": "2026-11-09T16:00:08Z",
    "originalTitle": "He Crossed 5,000 km to Find One Man || salman al farsi",
-   "swaps": [],
+   "swaps": [
+    {
+     "n": 1,
+     "at": "2026-11-11T05:01:00Z",
+     "viewsBefore": 24,
+     "title": "He Crossed 5,000 km to Find the Last Prophet | Salman al-Farsi",
+     "thumb": "system/longvideo-refresh/salman-al-farsi/refresh-1/Salman_refresh1_thumbnail.jpg",
+     "note": "requested by Pushpam 11 Nov 04:58 UTC (above threshold, so manual); face shown + name on thumb per Pushpam"
+    }
+   ],
    "done": false,
-   "note": "added 2026-11-10T04:51Z: 4 views at 13 h; 32 h mark = 2026-11-11T00:00Z; project folder not found in project files"
+   "note": "swap 1 used (Pushpam request); 1 swap left"
   }
  }
 }
