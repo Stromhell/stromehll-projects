@@ -1,0 +1,139 @@
+<!doctype html><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap">
+<style>html,body{margin:0;background:#000}canvas{display:block}</style>
+<canvas id="cv" width="1280" height="720"></canvas>
+<script src="../rh.js"></script>
+<script src="../cast.js"></script>
+<script>
+/* Explainer-style preview: rubber-hose cast inside a modern YouTube explainer grammar.
+   Grammar learned from the reference: black handwritten chapter cards, spotlight stages,
+   slow constant camera push, rack-focus blur cuts, pop-in tags with overshoot, numbered
+   callouts, charts characters walk on, falling paper, magnifier inserts. */
+const W = 1280, H = 720, cv = document.getElementById('cv'), X = cv.getContext('2d');
+const CH = {}; for (const k in CAST) CH[k] = RH.character(CAST[k]);
+const E = RH.ease, lerp = RH.lerp, clamp = RH.clamp;
+const outBack = t => { t = clamp(t, 0, 1); const c1 = 1.9, c3 = c1 + 1; return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2); };
+const k01 = (t, a, b) => clamp((t - a) / (b - a), 0, 1);
+const HAND = '"Caveat Brush", "Comic Sans MS", cursive';
+const off = document.createElement('canvas'); off.width = W; off.height = H; const O = off.getContext('2d');
+const BG = { room: RH.bg.render('room', 1600, 900, 31), forest: RH.bg.render('forest', 1600, 900, 21) };
+
+function vignette(c, k) { const g = c.createRadialGradient(W / 2, H * 0.55, H * 0.25, W / 2, H / 2, W * 0.75); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, `rgba(10,6,4,${k})`); c.fillStyle = g; c.fillRect(0, 0, W, H); }
+function spotlight(c, x, y, r, a) { c.save(); c.globalCompositeOperation = 'lighter'; const g = c.createRadialGradient(x, y, 10, x, y, r); g.addColorStop(0, `rgba(255,236,190,${a})`); g.addColorStop(1, 'rgba(255,236,190,0)'); c.fillStyle = g; c.fillRect(0, 0, W, H); c.restore(); }
+function tag(c, txt, x, y, s, rot, col, bg) {
+  c.save(); c.translate(x, y); c.rotate(rot || 0); c.scale(s, s);
+  c.font = `40px ${HAND}`; const w = c.measureText(txt).width + 44;
+  c.fillStyle = 'rgba(0,0,0,0.25)'; c.fillRect(-w / 2 + 6, -30 + 7, w, 62);
+  c.fillStyle = bg || '#f6efdc'; c.fillRect(-w / 2, -30, w, 62); c.lineWidth = 3; c.strokeStyle = '#1e1612'; c.strokeRect(-w / 2, -30, w, 62);
+  c.fillStyle = 'rgba(230,210,150,0.8)'; c.save(); c.rotate(-0.08); c.fillRect(-28, -42, 56, 20); c.restore();
+  c.fillStyle = col || '#1e1612'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(txt, 0, 3); c.restore();
+}
+function bubbleNum(c, n, x, y, s) { if (s <= 0) return; c.save(); c.translate(x, y); c.scale(s, s); c.beginPath(); c.arc(0, 0, 24, 0, Math.PI * 2); c.fillStyle = '#1e1612'; c.fill(); c.lineWidth = 4; c.strokeStyle = '#e8d27a'; c.stroke(); c.fillStyle = '#f6efdc'; c.font = `34px ${HAND}`; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(n, 0, 2); c.restore(); }
+function card(c, txt, t, dur) { c.fillStyle = '#000'; c.fillRect(0, 0, W, H); const a = Math.min(k01(t, 0.15, 0.6), 1 - k01(t, dur - 0.45, dur)); c.save(); c.globalAlpha = a; c.font = `60px ${HAND}`; c.fillStyle = '#f4efe6'; c.textAlign = 'center'; c.textBaseline = 'middle'; const w = c.measureText(txt).width; c.beginPath(); c.rect(W / 2 - w / 2 - 40, 0, (w + 80) * E(k01(t, 0.1, 1.0)), H); c.clip(); c.fillText(txt, W / 2, H / 2); c.restore(); }
+function cam(c, cx, cy, z, rot) { c.translate(W / 2, H / 2); c.rotate(rot || 0); c.scale(z, z); c.translate(-cx, -cy); }
+
+/* ---------- shots (each draws into ctx c at local time t) ---------- */
+function shotStage(c, t) { // Pip opens his lemonade company on a spotlight stage
+  const g = c.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#3a2c22'); g.addColorStop(0.62, '#7a6248'); g.addColorStop(0.63, '#cbb38e'); g.addColorStop(1, '#8c7556'); c.fillStyle = g; c.fillRect(0, 0, W, H);
+  c.save(); cam(c, 640, 400, lerp(1.0, 1.14, E(k01(t, 0, 6))), 0);
+  c.save(); c.globalAlpha = 0.25; c.fillStyle = '#fff2cc'; c.beginPath(); c.moveTo(560, -60); c.lineTo(720, -60); c.lineTo(900, 600); c.lineTo(380, 600); c.closePath(); c.fill(); c.restore();
+  c.fillStyle = 'rgba(255,240,200,0.35)'; c.beginPath(); c.ellipse(640, 600, 330, 52, 0, 0, Math.PI * 2); c.fill();
+  // lemonade stand slides in from the right with overshoot
+  const sx = lerp(1500, 860, outBack(k01(t, 0.6, 1.4)));
+  c.fillStyle = 'rgba(0,0,0,0.25)'; c.beginPath(); c.ellipse(sx, 602, 150, 18, 0, 0, Math.PI * 2); c.fill();
+  c.fillStyle = '#c98e4f'; c.fillRect(sx - 130, 470, 260, 130); c.lineWidth = 4; c.strokeStyle = '#1e1612'; c.strokeRect(sx - 130, 470, 260, 130);
+  c.fillStyle = '#e3c77a'; for (let i = 0; i < 6; i++) c.fillRect(sx - 130 + i * 44, 470, 22, 130);
+  c.strokeRect(sx - 130, 470, 260, 130); c.fillStyle = '#8c5a34'; c.fillRect(sx - 145, 455, 290, 18); c.strokeRect(sx - 145, 455, 290, 18);
+  c.fillStyle = '#f3e05a'; c.beginPath(); c.ellipse(sx - 60, 430, 26, 22, 0, 0, Math.PI * 2); c.fill(); c.stroke(); c.fillStyle = 'rgba(240,240,255,0.7)'; c.fillRect(sx + 10, 395, 50, 60); c.strokeRect(sx + 10, 395, 50, 60); c.fillStyle = '#f3e05a'; c.fillRect(sx + 12, 420, 46, 33);
+  const P = RH.anim.idle(t, 'front'); if (t > 3.2 && t < 5.4) { const w = RH.anim.wave(t, 'front'); P.arms[1] = w.arms[1]; P.face.expr = 'happy'; } else P.face.expr = 'neutral';
+  RH.draw(c, CH.pip, P, 520, 600, 1.15);
+  const ts = outBack(k01(t, 1.5, 2.0)); if (ts > 0) tag(c, "PIP'S LEMONADE CO.", sx, 380 - 0, ts, -0.05);
+  const ps = outBack(k01(t, 2.4, 2.9)); if (ps > 0) tag(c, 'EST. 1934', sx + 30, 525, ps * 0.7, 0.06, '#c2372d');
+  c.restore();
+  spotlight(c, 600, 420, 380, 0.25); vignette(c, 0.75);
+}
+function shotChart(c, t) { // Pip walks up his own share price
+  const g = c.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#f2a26a'); g.addColorStop(0.55, '#f6cf8a'); g.addColorStop(1, '#e9b56f'); c.fillStyle = g; c.fillRect(0, 0, W, H);
+  c.fillStyle = '#fff3c8'; c.beginPath(); c.arc(260, 160, 60, 0, Math.PI * 2); c.fill();
+  const px = (k) => 120 + k * 1040, py = (k) => 560 - (Math.pow(k, 1.6) * 330 + Math.sin(k * 14) * 18 * (1 - k));
+  const prog = clamp(t / 5.6, 0, 1), pk = prog;
+  c.save(); cam(c, lerp(560, 760, E(prog)), lerp(420, 330, E(prog)), lerp(1.0, 1.12, prog), 0);
+  c.fillStyle = '#c87a52'; c.beginPath(); c.moveTo(-200, 600); [[100, 440], [260, 520], [420, 400], [640, 500], [860, 380], [1080, 480], [1500, 420], [1500, 900], [-200, 900]].forEach(p => c.lineTo(p[0], p[1])); c.fill();
+  c.fillStyle = '#a65f3e'; c.beginPath(); c.moveTo(-200, 640); [[200, 560], [520, 610], [800, 540], [1100, 600], [1500, 560], [1500, 900], [-200, 900]].forEach(p => c.lineTo(p[0], p[1])); c.fill();
+  c.fillStyle = '#7a4630'; c.fillRect(-200, 600, 1800, 400);
+  c.strokeStyle = 'rgba(40,20,10,0.35)'; c.lineWidth = 2; c.font = `26px ${HAND}`; c.fillStyle = '#3a2016'; c.textAlign = 'center';
+  ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN'].forEach((m, i) => c.fillText(m, 140 + i * 200, 640));
+  // line draws just ahead of Pip
+  const head = Math.min(1, pk + 0.06);
+  c.lineCap = 'round'; c.lineJoin = 'round';
+  for (const [w, col] of [[16, '#1e1612'], [9, '#3fbf5a']]) { c.beginPath(); for (let k = 0; k <= head; k += 0.005) { const x = px(k), y = py(k); k ? c.lineTo(x, y) : c.moveTo(x, y); } c.lineWidth = w; c.strokeStyle = col; c.stroke(); }
+  c.save(); c.globalCompositeOperation = 'lighter'; c.beginPath(); for (let k = 0; k <= head; k += 0.01) { const x = px(k), y = py(k); k ? c.lineTo(x, y) : c.moveTo(x, y); } c.lineWidth = 26; c.strokeStyle = 'rgba(120,255,140,0.18)'; c.stroke(); c.restore();
+  [[0.3, '1', 1.6], [0.55, '2', 2.8], [0.8, '3', 4.0]].forEach(([k, n, at]) => bubbleNum(c, n, px(k) + 10, py(k) - 70, outBack(k01(t, at, at + 0.35))));
+  const P = RH.anim.walk(t, 'side', { cps: 1.05 }); P.lean = 0.12; P.face.expr = 'happy';
+  RH.draw(c, CH.pip, P, px(pk) - 10, py(pk) + 4, 0.62);
+  c.restore();
+  tag(c, 'LEMONADE STOCK, 1934', 250, 70, outBack(k01(t, 0.3, 0.8)) * 0.9, -0.04);
+  const pct = Math.round(lerp(0, 840, E(prog))); c.save(); c.font = `64px ${HAND}`; c.fillStyle = '#1e7a34'; c.textAlign = 'right'; c.globalAlpha = k01(t, 0.5, 1); c.fillText('+' + pct + '%', 1220, 110); c.restore();
+  vignette(c, 0.45);
+}
+const papers = Array.from({ length: 26 }, (_, i) => { const r = RH.rng(i + 3); return { x: 120 + r() * 1040, d: r() * 1.6, sp: 180 + r() * 160, rot: r() * 6, vr: (r() - 0.5) * 3, txt: r() < 0.6 ? 'SELL' : 'DUMP', w: 70 + r() * 30 }; });
+function shotSell(c, t) { // Wendell sneaks in, the sell-off starts
+  c.save(); cam(c, 800, 470, lerp(1.0, 1.08, E(k01(t, 0, 6))), 0); c.drawImage(BG.room, 0, 0); c.restore();
+  c.fillStyle = 'rgba(15,8,20,0.45)'; c.fillRect(0, 0, W, H);
+  spotlight(c, 820, 450, 330, 0.3);
+  const wx = lerp(-140, 470, k01(t, 0, 3.4));
+  const S = t < 3.4 ? RH.anim.sneak(t, 'side') : (() => { const p = RH.stand('q'); p.face.expr = 'sly'; p.face.mouth = 'grin'; p.arms[1] = { h: [0.7, -0.9], hand: 'point', rot: -1.2 }; return p; })();
+  RH.draw(c, CH.wendell, S, wx, 650, 0.95);
+  const P = RH.stand('q'); P.dir = -1; P.face.expr = t > 3.6 ? 'scared' : 'neutral'; P.face.look = t > 1.2 ? [-1, 0] : [0, 0]; if (t > 3.6) { P.arms[0] = { h: [-0.8, -0.7], hand: 'open' }; P.arms[1] = { h: [0.8, -0.7], hand: 'open' }; P.tx = Math.sin(t * 50) * 0.04; }
+  RH.draw(c, CH.pip, P, 900, 650, 0.95);
+  if (t > 3.6) papers.forEach(p => { const tt = t - 3.6 - p.d * 0.6; if (tt < 0) return; const y = -60 + tt * p.sp; if (y > 760) return; c.save(); c.translate(p.x + Math.sin(tt * 2 + p.rot) * 30, y); c.rotate(p.rot + tt * p.vr); c.fillStyle = '#f6efdc'; c.fillRect(-p.w / 2, -26, p.w, 52); c.strokeStyle = '#1e1612'; c.lineWidth = 2.5; c.strokeRect(-p.w / 2, -26, p.w, 52); c.fillStyle = '#c2372d'; c.font = `30px ${HAND}`; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(p.txt, 0, 2); c.restore(); });
+  tag(c, 'THE BIG SELL-OFF', 640, 70, outBack(k01(t, 3.5, 4.0)) * 0.95, 0.03, '#c2372d');
+  vignette(c, 0.8);
+}
+function shotReceipt(c, t) { // magnifier insert on the receipt
+  const g = c.createRadialGradient(640, 360, 50, 640, 360, 800); g.addColorStop(0, '#e6d8a6'); g.addColorStop(1, '#8a7a50'); c.fillStyle = g; c.fillRect(0, 0, W, H);
+  const zIn = E(k01(t, 2.6, 3.6));
+  c.save(); cam(c, lerp(640, 820, zIn), lerp(380, 470, zIn), lerp(1.0, 1.9, zIn), 0);
+  c.fillStyle = 'rgba(40,30,10,0.25)'; c.beginPath(); c.ellipse(560, 640, 280, 40, 0, 0, Math.PI * 2); c.fill();
+  const P = t < 3.7 ? RH.stand('q') : RH.anim.take(0.45 + (t - 3.7) * 0.9, 'q'); if (t < 3.7) { P.face.expr = 'neutral'; P.arms[1] = { h: [0.95, 0.15], hand: 'grab' }; P.face.look = [1, 0.3]; }
+  RH.draw(c, CH.pip, P, 470, 640, 1.0);
+  // receipt
+  c.save(); c.translate(820, 400); c.rotate(0.02); c.fillStyle = 'rgba(0,0,0,0.2)'; c.fillRect(-150 + 8, -230 + 8, 300, 470); c.fillStyle = '#fbf7ee'; c.fillRect(-150, -230, 300, 470); c.strokeStyle = '#1e1612'; c.lineWidth = 3; c.strokeRect(-150, -230, 300, 470);
+  c.fillStyle = '#1e1612'; c.font = `30px ${HAND}`; c.textAlign = 'center'; c.fillText("PIP'S BOOKS", 0, -185);
+  c.font = `26px ${HAND}`; const rows = [['LEMONS', '$'], ['SUGAR', '$'], ['CUPS', '$'], ['ICE', '$$'], ['HYPE', '$$$$$$']];
+  rows.forEach((r, i) => { c.textAlign = 'left'; c.fillStyle = r[0] === 'HYPE' ? '#c2372d' : '#1e1612'; c.fillText(r[0], -125, -120 + i * 52); c.textAlign = 'right'; c.fillText(r[1], 125, -120 + i * 52); c.strokeStyle = 'rgba(30,22,18,0.2)'; c.beginPath(); c.moveTo(-125, -108 + i * 52); c.lineTo(125, -108 + i * 52); c.stroke(); });
+  c.fillStyle = '#1e1612'; c.fillRect(-125, 160, 250, 3); c.textAlign = 'left'; c.font = `30px ${HAND}`; c.fillText('VALUE', -125, 205); c.textAlign = 'right'; c.fillStyle = '#c2372d'; c.fillText('$1 MILLION', 125, 205);
+  c.restore();
+  // magnifier slides in on an arc
+  const m = E(k01(t, 1.0, 2.3)); const mx = lerp(1250, 900, m), my = lerp(760, 300 + 52 * 4 - 35, m) - Math.sin(m * Math.PI) * 80;
+  if (m > 0) { c.save(); c.beginPath(); c.arc(mx, my, 70, 0, Math.PI * 2); c.save(); c.clip(); c.translate(mx, my); c.scale(1.6, 1.6); c.translate(-mx, -my); c.fillStyle = 'rgba(255,255,255,0.0)'; c.restore(); c.fillStyle = 'rgba(220,240,255,0.25)'; c.fill(); c.lineWidth = 10; c.strokeStyle = '#3a2a1e'; c.stroke(); c.lineWidth = 3; c.strokeStyle = '#c9a36b'; c.stroke(); c.lineCap = 'round'; c.lineWidth = 18; c.strokeStyle = '#5a3424'; c.beginPath(); c.moveTo(mx + 50, my + 50); c.lineTo(mx + 120, my + 120); c.stroke(); c.restore(); }
+  c.restore();
+  if (t > 3.9) { const s = outBack(k01(t, 3.9, 4.3)); tag(c, 'WAIT... HYPE?', 360, 110, s, -0.06, '#c2372d'); }
+  vignette(c, 0.6);
+}
+
+/* ---------- timeline ---------- */
+const SHOTS = [
+  { d: 2.6, f: (c, t) => card(c, 'This is Pip.', t, 2.6), card: 1 },
+  { d: 6.0, f: shotStage },
+  { d: 5.8, f: shotChart },
+  { d: 6.2, f: shotSell },
+  { d: 5.6, f: shotReceipt },
+  { d: 2.8, f: (c, t) => card(c, 'It was mostly hype.', t, 2.8), card: 1 }
+];
+const TOTAL = SHOTS.reduce((a, s) => a + s.d, 0);
+window.TOTAL = TOTAL;
+window.CUTS = (() => { let a = 0; return SHOTS.map(s => { const r = a; a += s.d; return r; }); })();
+function frame(t) {
+  let a = 0, i = 0; while (i < SHOTS.length - 1 && t >= a + SHOTS[i].d) { a += SHOTS[i].d; i++; }
+  const s = SHOTS[i], lt = t - a;
+  O.save(); O.clearRect(0, 0, W, H); s.f(O, lt); O.restore();
+  // rack-focus: blur out at the end of a shot and blur in at the start of the next (not on black cards)
+  let blur = 0; if (!s.card) { blur = Math.max(blur, 14 * (1 - k01(lt, 0, 0.45))); blur = Math.max(blur, 14 * k01(lt, s.d - 0.35, s.d)); }
+  X.save(); X.fillStyle = '#000'; X.fillRect(0, 0, W, H); if (blur > 0.3) X.filter = `blur(${blur.toFixed(1)}px)`; X.drawImage(off, 0, 0); X.restore();
+  if (!s.card) RH.film(X, W, H, t, 0.35);
+}
+window.renderAt = frame;
+window.ready = (document.fonts ? document.fonts.load(`40px ${HAND}`).then(() => document.fonts.ready) : Promise.resolve()).then(() => true);
+if (!/render/.test(location.hash)) { const t0 = performance.now(); (function loop(now) { frame(((now - t0) / 1000) % TOTAL); requestAnimationFrame(loop); })(t0); }
+</script>
