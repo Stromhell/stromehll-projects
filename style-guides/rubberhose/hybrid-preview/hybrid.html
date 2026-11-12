@@ -1,0 +1,207 @@
+<!doctype html><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap">
+<style>html,body{margin:0;background:#000}canvas{display:block}#gl{position:absolute;left:-9999px}</style>
+<canvas id="out" width="1280" height="720"></canvas>
+<script src="three.min.js"></script>
+<script src="../rh.js"></script>
+<script src="../cast.js"></script>
+<script>
+/* 2D/3D hybrid preview: real 3D sets, lights and camera moves (three.js) + flat 2D rubber-hose cast
+   drawn by rh.js onto camera-facing cards, composited with vignette, blur cuts, tags and black cards. */
+const W = 1280, H = 720, OUT = document.getElementById('out'), X = OUT.getContext('2d');
+const HAND = '"Caveat Brush", "Comic Sans MS", cursive';
+const E = RH.ease, lerp = RH.lerp, clamp = RH.clamp, k01 = (t, a, b) => clamp((t - a) / (b - a), 0, 1);
+const outBack = t => { t = clamp(t, 0, 1); const c1 = 1.9, c3 = c1 + 1; return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2); };
+const CH = {}; for (const k in CAST) CH[k] = RH.character(CAST[k]);
+const R = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+R.setSize(W, H); R.setPixelRatio(1); R.shadowMap.enabled = true; R.shadowMap.type = THREE.PCFSoftShadowMap;
+R.outputColorSpace = THREE.SRGBColorSpace; R.toneMapping = THREE.ACESFilmicToneMapping; R.toneMappingExposure = 1.1;
+const V3 = (x, y, z) => new THREE.Vector3(x, y, z);
+const std = (c, o) => new THREE.MeshStandardMaterial(Object.assign({ color: c, roughness: 0.75, metalness: 0 }, o || {}));
+function box(w, h, d, m, x, y, z, sh) { const b = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m); b.position.set(x, y, z); if (sh !== false) { b.castShadow = true; b.receiveShadow = true; } return b; }
+function canvasTex(w, h) { const c = document.createElement('canvas'); c.width = w; c.height = h; const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; return { c, x: c.getContext('2d'), t }; }
+
+/* ---- flat 2D cast card inside 3D ---- */
+function castCard(scene, key, height, tint) {
+  const T = canvasTex(512, 768);
+  const g = new THREE.PlaneGeometry(height * 512 / 768, height); g.translate(0, height / 2 - height * 0.02, 0);
+  const m = new THREE.Mesh(g, new THREE.MeshBasicMaterial({ map: T.t, transparent: true, alphaTest: 0.05, color: tint || 0xffffff, side: THREE.DoubleSide }));
+  const sh = new THREE.Mesh(new THREE.CircleGeometry(height * 0.28, 32), new THREE.MeshBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.45, depthWrite: false }));
+  sh.rotation.x = -Math.PI / 2; sh.scale.set(1, 0.45, 1);
+  scene.add(m); scene.add(sh);
+  return {
+    mesh: m, set(x, z, P, cam) { m.position.set(x, 0, z); sh.position.set(x, 0.01, z); if (cam) m.rotation.y = Math.atan2(cam.position.x - x, cam.position.z - z); T.x.clearRect(0, 0, 512, 768); RH.draw(T.x, CH[key], P, 256, 748, 2.35, { noShadow: true }); T.t.needsUpdate = true; }
+  };
+}
+/* the reference's locomotion shortcut: slide + 2-frame leg wiggle + small bounce */
+function slidePose(t, dir) { const P = RH.stand('side'); const f = Math.floor(t * 9) % 2; P.legs = f ? [{ f: [-0.35, 0], rot: 0.2 }, { f: [0.45, -0.18], rot: -0.2 }] : [{ f: [0.3, -0.18], rot: -0.2 }, { f: [-0.4, 0], rot: 0.2 }]; P.bob = f ? -0.08 : 0; P.arms[0].h = [f ? 0.35 : -0.35, 1.4]; P.arms[1].h = [f ? -0.35 : 0.35, 1.4]; P.dir = dir || 1; P.lean = 0.06; return P; }
+
+/* ===== Scene 1: server hallway ===== */
+const S1 = new THREE.Scene(); S1.fog = new THREE.FogExp2(0x02060a, 0.07); S1.background = new THREE.Color(0x020507);
+const C1 = new THREE.PerspectiveCamera(40, W / H, 0.1, 200);
+S1.add(new THREE.AmbientLight(0x223040, 0.6));
+{ const fl = new THREE.Mesh(new THREE.PlaneGeometry(14, 80), std(0x0c1216, { roughness: 0.35, metalness: 0.4 })); fl.rotation.x = -Math.PI / 2; fl.position.z = -30; fl.receiveShadow = true; S1.add(fl);
+  const tile = new THREE.GridHelper(80, 80, 0x1c3a2a, 0x10201a); tile.position.set(0, 0.005, -30); S1.add(tile);
+  const ledG = new THREE.BoxGeometry(0.05, 0.03, 0.02), ledM = new THREE.MeshBasicMaterial({ color: 0x6dff8a }), ledM2 = new THREE.MeshBasicMaterial({ color: 0x2bd4ff });
+  const N = 2 * 26 * 60, inst = new THREE.InstancedMesh(ledG, ledM, N), inst2 = new THREE.InstancedMesh(ledG, ledM2, N); let a = 0, b = 0; const mtx = new THREE.Matrix4(); const r = RH.rng(5);
+  for (const side of [-1, 1]) for (let i = 0; i < 26; i++) { const z = 2 - i * 1.25, x = side * 2.6; S1.add(box(0.7, 2.4, 1.15, std(0x161b20, { roughness: 0.5, metalness: 0.6 }), x, 1.2, z)); S1.add(box(0.72, 0.06, 1.17, std(0x2a3036), x, 2.42, z, false));
+    for (let j = 0; j < 60; j++) { mtx.makeTranslation(x - side * 0.36, 0.25 + (j % 20) * 0.1, z - 0.45 + Math.floor(j / 20) * 0.3 + r() * 0.05); if (r() < 0.8) inst.setMatrixAt(a++, mtx); else inst2.setMatrixAt(b++, mtx); } }
+  inst.count = a; inst2.count = b; S1.add(inst); S1.add(inst2);
+  for (let i = 0; i < 8; i++) { const l = box(0.4, 0.04, 2.4, new THREE.MeshBasicMaterial({ color: 0xbff5d0 }), 0, 3.2, -i * 4.5, false); S1.add(l); const pl = new THREE.PointLight(0x5cff8a, 6, 7, 2); pl.position.set(0, 2.8, -i * 4.5); S1.add(pl); }
+  const ceil = new THREE.Mesh(new THREE.PlaneGeometry(14, 80), std(0x07090b)); ceil.rotation.x = Math.PI / 2; ceil.position.set(0, 3.3, -30); S1.add(ceil);
+}
+const spot1 = new THREE.SpotLight(0xffe2b0, 60, 12, 0.42, 0.6, 1.5); spot1.position.set(0, 3.1, 1.5); spot1.target.position.set(0, 0, 0.5); spot1.castShadow = true; S1.add(spot1); S1.add(spot1.target);
+const beam1 = new THREE.Mesh(new THREE.ConeGeometry(1.35, 3.1, 40, 1, true), new THREE.MeshBasicMaterial({ color: 0xffe2b0, transparent: true, opacity: 0.07, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide })); beam1.position.set(0, 1.55, 1.0); S1.add(beam1);
+const pip1 = castCard(S1, 'pip', 1.7, 0xf2ead8);
+function shot1(t) {
+  const x = lerp(-2.2, 0, E(k01(t, 0.3, 3.0))); const P = t < 3.0 ? slidePose(t) : (() => { const p = RH.anim.idle(t, 'front'); p.face.expr = t > 4.4 ? 'surprised' : 'neutral'; p.face.look = t > 4.4 ? [0, -1] : [0, 0]; return p; })();
+  C1.position.set(lerp(-0.6, 0.4, E(k01(t, 0, 7))), lerp(1.5, 1.25, E(k01(t, 0, 7))), lerp(6.6, 5.3, E(k01(t, 0, 7)))); C1.lookAt(0, lerp(1.25, 1.15, k01(t, 3, 7)), -3);
+  pip1.set(x, 1.0, P, C1); R.render(S1, C1);
+  return [{ txt: 'THE SERVER FARM', x: 330, y: 90, s: outBack(k01(t, 0.6, 1.1)), r: -0.04 }, { txt: '40,000 GPUs', x: 980, y: 150, s: outBack(k01(t, 4.0, 4.5)) * 0.85, r: 0.05, col: '#2f8a46' }];
+}
+
+/* ===== Scene 2: night office + whiteboard ===== */
+const S2 = new THREE.Scene(); S2.background = new THREE.Color(0x05070c); S2.fog = new THREE.Fog(0x05070c, 9, 20);
+const C2 = new THREE.PerspectiveCamera(38, W / H, 0.1, 100);
+S2.add(new THREE.AmbientLight(0x30406a, 0.9));
+const wb = canvasTex(1024, 640);
+{ const fl = new THREE.Mesh(new THREE.PlaneGeometry(14, 10), std(0x3a2a20, { roughness: 0.6 })); fl.rotation.x = -Math.PI / 2; fl.receiveShadow = true; S2.add(fl);
+  const wallM = std(0x2a2630); const back = new THREE.Mesh(new THREE.PlaneGeometry(14, 4.5), wallM); back.position.set(0, 2.25, -3); back.receiveShadow = true; S2.add(back);
+  const left = new THREE.Mesh(new THREE.PlaneGeometry(10, 4.5), wallM); left.rotation.y = Math.PI / 2; left.position.set(-4.5, 2.25, 2); left.receiveShadow = true; S2.add(left);
+  // window with a night city painted in canvas (no real landmark)
+  const city = canvasTex(1024, 512); const c = city.x; const g = c.createLinearGradient(0, 0, 0, 512); g.addColorStop(0, '#0b1430'); g.addColorStop(1, '#2a3560'); c.fillStyle = g; c.fillRect(0, 0, 1024, 512); const r = RH.rng(9);
+  for (let i = 0; i < 70; i++) { c.fillStyle = '#fff'; c.globalAlpha = r(); c.fillRect(r() * 1024, r() * 200, 2, 2); } c.globalAlpha = 1; c.fillStyle = '#e8e6c8'; c.beginPath(); c.arc(820, 90, 34, 0, 7); c.fill();
+  let x = 0; while (x < 1024) { const w = 40 + r() * 90, h = 120 + r() * 260; c.fillStyle = '#121a33'; c.fillRect(x, 512 - h, w, h); for (let yy = 512 - h + 10; yy < 500; yy += 18) for (let xx = x + 6; xx < x + w - 8; xx += 14) if (r() < 0.35) { c.fillStyle = r() < 0.7 ? '#f6d27a' : '#9fd8ff'; c.fillRect(xx, yy, 7, 9); } x += w + 4; }
+  city.t.needsUpdate = true;
+  const win = new THREE.Mesh(new THREE.PlaneGeometry(4.2, 2.1), new THREE.MeshBasicMaterial({ map: city.t })); win.position.set(1.4, 2.25, -2.98); S2.add(win);
+  const frameM = std(0x15151a); [[1.4, 3.33, 4.4, 0.1], [1.4, 1.17, 4.4, 0.1], [-0.72, 2.25, 0.1, 2.2], [3.52, 2.25, 0.1, 2.2], [1.4, 2.25, 0.06, 2.2]].forEach(f => S2.add(box(f[2], f[3], 0.1, frameM, f[0], f[1], -2.94, false)));
+  // whiteboard on the left wall area
+  const board = new THREE.Mesh(new THREE.PlaneGeometry(2.6, 1.62), new THREE.MeshStandardMaterial({ map: wb.t, roughness: 0.35 })); board.position.set(-2.4, 1.85, -2.9); S2.add(board);
+  S2.add(box(2.75, 1.76, 0.06, std(0x9aa0a6, { metalness: 0.6, roughness: 0.3 }), -2.4, 1.85, -2.96, false)); S2.add(box(2.6, 0.05, 0.14, std(0x9aa0a6), -2.4, 1.0, -2.85));
+  // desk + lamp
+  const wood = std(0x5a3a26, { roughness: 0.55 }); S2.add(box(2.2, 0.08, 1.0, wood, 2.0, 0.78, -1.2)); [[1.0, -0.8], [3.0, -0.8], [1.0, -1.6], [3.0, -1.6]].forEach(p => S2.add(box(0.07, 0.78, 0.07, wood, p[0], 0.39, p[1])));
+  S2.add(box(0.5, 0.06, 0.35, std(0xe8e0cc), 2.4, 0.83, -1.1)); const shade = new THREE.Mesh(new THREE.ConeGeometry(0.22, 0.25, 24, 1, true), std(0x2f5a3a, { side: THREE.DoubleSide, metalness: 0.3 })); shade.position.set(1.5, 1.35, -1.3); S2.add(shade); S2.add(box(0.03, 0.55, 0.03, std(0xb08a3a, { metalness: 0.8, roughness: 0.3 }), 1.5, 1.07, -1.3));
+  const bulb = new THREE.Mesh(new THREE.SphereGeometry(0.06), new THREE.MeshBasicMaterial({ color: 0xfff1c8 })); bulb.position.set(1.5, 1.26, -1.3); S2.add(bulb);
+  const lamp = new THREE.SpotLight(0xffc878, 30, 6, 0.9, 0.7, 1.6); lamp.position.set(1.5, 1.28, -1.3); lamp.target.position.set(1.7, 0, -1.0); lamp.castShadow = true; S2.add(lamp); S2.add(lamp.target);
+  const top = new THREE.SpotLight(0xfff0d0, 50, 9, 0.5, 0.6, 1.4); top.position.set(-1.6, 4.2, 0.5); top.target.position.set(-2.0, 1.2, -2.6); top.castShadow = true; S2.add(top); S2.add(top.target);
+  S2.add(box(0.7, 0.9, 0.7, std(0x1a1a1f), -3.9, 0.45, 0.6)); // filing cabinet
+}
+const wen2 = castCard(S2, 'wendell', 1.85, 0xe6dccb);
+function drawBoard(t) {
+  const c = wb.x; c.fillStyle = '#f4f6f4'; c.fillRect(0, 0, 1024, 640); c.globalAlpha = 0.08; c.fillStyle = '#7a8a90'; c.fillRect(0, 0, 1024, 640); c.globalAlpha = 1;
+  const write = (txt, x, y, size, col, a, b) => { const p = k01(t, a, b); if (p <= 0) return; c.save(); c.font = `${size}px ${HAND}`; const w = c.measureText(txt).width; c.beginPath(); c.rect(x - 10, y - size, (w + 20) * p, size * 1.4); c.clip(); c.fillStyle = col; c.fillText(txt, x, y); c.restore(); };
+  write('NEW CHIP DEAL', 60, 110, 70, '#1c3c8a', 0.4, 1.0);
+  write('$17B / YEAR', 120, 270, 130, '#1e1612', 1.0, 2.2);
+  const s = k01(t, 2.6, 3.0); if (s > 0) { c.strokeStyle = '#d0281e'; c.lineWidth = 16; c.lineCap = 'round'; c.beginPath(); c.moveTo(100, 220); c.lineTo(100 + 640 * s, 230 - 30 * s); c.stroke(); }
+  write('+15% tariff', 140, 400, 90, '#d0281e', 3.2, 3.9); write('+25% tariff', 520, 520, 90, '#d0281e', 4.1, 4.8);
+  const sc = k01(t, 5.0, 6.5); if (sc > 0) { c.strokeStyle = '#1e1612'; c.lineWidth = 7; c.beginPath(); for (let i = 0; i < sc * 60; i++) { const a = i * 0.9, rr = 40 + (i % 7) * 6; c.lineTo(820 + Math.cos(a) * rr + i * 1.2, 160 + Math.sin(a) * rr * 0.7 + Math.sin(i) * 10); } c.stroke(); }
+  wb.t.needsUpdate = true;
+}
+function shot2(t) {
+  drawBoard(t);
+  const P = t < 1.6 ? slidePose(t + 3, -1) : RH.anim.talk(t, 'q'); if (t >= 1.6) { P.dir = 1; P.arms[1] = { h: [0.75, -0.5 + 0.1 * Math.sin(t * 6)], hand: 'point', rot: -0.7 }; P.face.expr = t > 5 ? 'angry' : 'sly'; }
+  const wx = t < 1.6 ? lerp(0.6, -0.65, E(k01(t, 0, 1.6))) : -0.65;
+  C2.position.set(lerp(1.2, 0.3, E(k01(t, 0, 7))), 1.55, lerp(4.4, 3.2, E(k01(t, 0, 7)))); C2.lookAt(lerp(-0.6, -1.4, E(k01(t, 0, 7))), 1.45, -2.4);
+  wen2.set(wx, -2.0, P, C2); R.render(S2, C2);
+  return [{ txt: 'WASHINGTON, 11:48 PM', x: 300, y: 80, s: outBack(k01(t, 0.3, 0.8)) * 0.85, r: -0.03 }];
+}
+
+/* ===== Scene 3: brass balance scale ===== */
+const S3 = new THREE.Scene(); S3.background = new THREE.Color(0x0a0705); S3.fog = new THREE.Fog(0x0a0705, 6, 16);
+const C3 = new THREE.PerspectiveCamera(36, W / H, 0.1, 100);
+S3.add(new THREE.AmbientLight(0x403028, 0.5));
+const brass = std(0xc9a24a, { metalness: 0.9, roughness: 0.28 });
+const beamPivot = new THREE.Group(); const pans = [];
+{ const fl = new THREE.Mesh(new THREE.CircleGeometry(6, 64), std(0x2a1d16, { roughness: 0.9 })); fl.rotation.x = -Math.PI / 2; fl.receiveShadow = true; S3.add(fl);
+  const tb = new THREE.Mesh(new THREE.CylinderGeometry(1.8, 1.8, 0.7, 64), std(0x3b2414, { roughness: 0.5 })); tb.position.y = 0.35; tb.castShadow = tb.receiveShadow = true; S3.add(tb);
+  const base = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.45, 0.12, 40), brass); base.position.y = 0.76; base.castShadow = true; S3.add(base);
+  const post = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.07, 1.5, 24), brass); post.position.y = 1.5; post.castShadow = true; S3.add(post);
+  beamPivot.position.set(0, 2.25, 0); S3.add(beamPivot); const bm = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.07, 0.07), brass); bm.castShadow = true; beamPivot.add(bm);
+  const knob = new THREE.Mesh(new THREE.SphereGeometry(0.1, 24, 16), brass); beamPivot.add(knob);
+  for (const s of [-1, 1]) { const hang = new THREE.Group(); hang.position.set(s * 1.15, 0, 0); beamPivot.add(hang); const pan = new THREE.Group(); hang.add(pan);
+    for (let i = 0; i < 3; i++) { const a = i / 3 * Math.PI * 2; const ch = new THREE.Mesh(new THREE.CylinderGeometry(0.006, 0.006, 0.8), brass); ch.position.set(Math.cos(a) * 0.17, -0.4, Math.sin(a) * 0.17); ch.rotation.z = -Math.cos(a) * 0.2; ch.rotation.x = Math.sin(a) * 0.2; pan.add(ch); }
+    const dish = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.3, 0.06, 40), brass); dish.position.y = -0.82; dish.castShadow = true; dish.receiveShadow = true; pan.add(dish); pans.push({ hang, pan }); }
+  // GPU on left pan
+  const gpu = new THREE.Group(); gpu.add(box(0.62, 0.08, 0.42, std(0x1b2a1e, { metalness: 0.4, roughness: 0.4 }), 0, 0, 0)); gpu.add(box(0.5, 0.03, 0.3, new THREE.MeshBasicMaterial({ color: 0x7dff6a }), 0, 0.055, 0, false)); for (let i = 0; i < 10; i++) gpu.add(box(0.03, 0.03, 0.05, brass, -0.27 + i * 0.06, -0.02, 0.23, false));
+  gpu.position.y = -0.74; gpu.rotation.y = 0.3; pans[0].pan.add(gpu); const gl = new THREE.PointLight(0x6dff7a, 4, 2.5, 2); gl.position.set(0, -0.5, 0); pans[0].pan.add(gl);
+  // car on right pan
+  const car = new THREE.Group(); const red = std(0xb8352a, { metalness: 0.5, roughness: 0.35 }); car.add(box(0.62, 0.13, 0.3, red, 0, 0.12, 0)); car.add(box(0.34, 0.12, 0.26, red, -0.03, 0.24, 0)); car.add(box(0.3, 0.09, 0.27, std(0x9fd0e8, { metalness: 0.2, roughness: 0.1 }), -0.03, 0.245, 0, false));
+  for (const p of [[-0.2, 0.16], [0.2, 0.16], [-0.2, -0.16], [0.2, -0.16]]) { const w = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 0.05, 20), std(0x111111)); w.rotation.x = Math.PI / 2; w.position.set(p[0], 0.07, p[1]); car.add(w); }
+  car.position.y = -0.79; car.rotation.y = -0.4; pans[1].pan.add(car);
+  const top = new THREE.SpotLight(0xffe0b0, 70, 10, 0.45, 0.5, 1.4); top.position.set(0.3, 6, 1.2); top.target.position.set(0, 1, 0); top.castShadow = true; top.shadow.mapSize.set(1024, 1024); S3.add(top); S3.add(top.target);
+  const rim = new THREE.DirectionalLight(0x6688ff, 0.6); rim.position.set(-3, 3, -4); S3.add(rim);
+}
+const gus3 = castCard(S3, 'gus', 1.8, 0xeadfcc);
+function shot3(t) {
+  const tip = t < 1.8 ? 0 : 0.32 * outBack(k01(t, 1.8, 2.5)) + 0.04 * Math.sin((t - 2.5) * 9) * Math.exp(-(t - 2.5) * 2) * (t > 2.5 ? 1 : 0);
+  beamPivot.rotation.z = tip; pans.forEach(p => { p.hang.rotation.z = -tip; });
+  C3.position.set(lerp(-1.2, 0.8, E(k01(t, 0, 6))), lerp(2.9, 2.6, k01(t, 0, 6)), lerp(5.8, 5.0, E(k01(t, 0, 6)))); C3.lookAt(0.35, 1.6, 0.3);
+  const P = t < 2.4 ? RH.anim.idle(t, 'q') : RH.anim.take(0.45 + (t - 2.4) * 0.8, 'q'); P.dir = -1; if (t < 2.4) P.face.look = [-1, -0.3];
+  gus3.set(1.9, 0.1, P, C3); R.render(S3, C3);
+  const proj = (v) => { const p = v.clone().project(C3); return [(p.x + 1) / 2 * W, (1 - p.y) / 2 * H]; };
+  const a = proj(pans[0].pan.localToWorld(V3(0, -0.2, 0))), b = proj(pans[1].pan.localToWorld(V3(0, -0.2, 0)));
+  return [{ txt: '1 GPU: $30,000', x: a[0], y: a[1] - 110, s: outBack(k01(t, 0.5, 1.0)) * 0.8, r: -0.04, col: '#2f8a46' }, { txt: '1 NEW CAR', x: b[0], y: b[1] - 110, s: outBack(k01(t, 0.9, 1.4)) * 0.8, r: 0.04, col: '#b8352a' }];
+}
+
+/* ===== Scene 4: stamp desk ===== */
+const S4 = new THREE.Scene(); S4.background = new THREE.Color(0x070504);
+const C4 = new THREE.PerspectiveCamera(34, W / H, 0.1, 50);
+S4.add(new THREE.AmbientLight(0x3a2c20, 0.45)); S4.add(new THREE.HemisphereLight(0x6a5040, 0x2a1810, 0.9));
+const paper = canvasTex(768, 1024); const stamp = new THREE.Group(); let glove4;
+{ const desk = new THREE.Mesh(new THREE.PlaneGeometry(10, 8), std(0x4a2e1c, { roughness: 0.5 })); desk.rotation.x = -Math.PI / 2; desk.receiveShadow = true; S4.add(desk);
+  const pg = new THREE.Mesh(new THREE.PlaneGeometry(1.5, 2.0), std(0xffffff, { map: paper.t, roughness: 0.9 })); pg.rotation.x = -Math.PI / 2; pg.rotation.z = 0.06; pg.position.set(0, 0.006, 0); pg.receiveShadow = true; S4.add(pg);
+  const block = box(0.62, 0.16, 0.36, std(0x6a1c18, { roughness: 0.5 }), 0, 0.08, 0); stamp.add(block); stamp.add(box(0.58, 0.04, 0.32, std(0x2a0c0a), 0, -0.01, 0, false));
+  const neck = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.07, 0.3, 20), brass); neck.position.y = 0.3; neck.castShadow = true; stamp.add(neck);
+  const knob = new THREE.Mesh(new THREE.SphereGeometry(0.13, 24, 16), std(0x2a1a12, { roughness: 0.3 })); knob.position.y = 0.5; knob.scale.y = 0.8; knob.castShadow = true; stamp.add(knob); S4.add(stamp);
+  // a flat 2D rubber-hose glove gripping the 3D stamp (insert-shot hand)
+  const gT = canvasTex(256, 256); const gc = RH.character({ R: 70 }); gT.x.clearRect(0, 0, 256, 256); RH.glove(gT.x, gc, 60, 150, -0.15, 'fist', 1, 3.2, false); gT.t.needsUpdate = true;
+  glove4 = new THREE.Mesh(new THREE.PlaneGeometry(0.95, 0.95), new THREE.MeshBasicMaterial({ map: gT.t, transparent: true, alphaTest: 0.05, color: 0xf0e6d4 })); glove4.position.set(0.02, 0.47, 0.2); glove4.scale.x = -1; stamp.add(glove4);
+  const lamp = new THREE.SpotLight(0xffd08a, 40, 8, 0.55, 0.6, 1.5); lamp.position.set(-1.2, 3.2, 0.8); lamp.target.position.set(0, 0, 0); lamp.castShadow = true; lamp.shadow.mapSize.set(1024, 1024); S4.add(lamp); S4.add(lamp.target);
+  S4.add(box(0.5, 0.05, 0.5, std(0x222222), 1.45, 0.025, -0.6)); // ink pad
+}
+function drawPaper(t) {
+  const c = paper.x; c.fillStyle = '#f7f2e6'; c.fillRect(0, 0, 768, 1024); c.fillStyle = '#1e1612'; c.font = `64px ${HAND}`; c.textAlign = 'center'; c.fillText('EXPORT LICENCE', 384, 110);
+  c.font = `38px ${HAND}`; c.textAlign = 'left'; ['ITEM: GPU x 90,000', 'BUYER: ??????', 'VALUE: $2.7 BILLION', 'SIGNED: ________'].forEach((l, i) => c.fillText(l, 70, 230 + i * 80));
+  c.strokeStyle = 'rgba(30,22,18,0.2)'; c.lineWidth = 2; for (let y = 560; y < 960; y += 40) { c.beginPath(); c.moveTo(70, y); c.lineTo(700, y); c.stroke(); }
+  const st = (txt, x, y, rot, col, at) => { if (t < at) return; c.save(); c.translate(x, y); c.rotate(rot); c.globalAlpha = 0.85; c.strokeStyle = col; c.lineWidth = 10; c.strokeRect(-230, -70, 460, 140); c.fillStyle = col; c.font = `100px ${HAND}`; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(txt, 0, 6); c.restore(); };
+  st('APPROVED', 384, 720, -0.12, '#2f7a3a', 1.12); st('BLOCKED', 384, 760, 0.1, '#c2281e', 3.02);
+  paper.t.needsUpdate = true;
+}
+function stampY(t) { // lift, slam, lift, slam
+  const seg = (a, b, y0, y1, f) => t >= a && t < b ? lerp(y0, y1, f(k01(t, a, b))) : null;
+  return seg(0, 0.9, 1.4, 0.9, E) ?? seg(0.9, 1.12, 0.9, 0.006, x => x * x) ?? seg(1.12, 1.6, 0.006, 0.006, x => x) ?? seg(1.6, 2.6, 0.006, 1.1, E) ?? seg(2.6, 2.82, 1.1, 0.006, x => x * x) ?? seg(2.82, 3.3, 0.006, 0.006, x => x) ?? lerp(0.006, 1.6, E(k01(t, 3.3, 4.2)));
+}
+function shot4(t) {
+  drawPaper(t); const y = stampY(t); stamp.position.set(t < 1.6 ? -0.05 : 0.05, y, t < 1.6 ? 0.25 : 0.3); stamp.rotation.y = t < 1.6 ? -0.12 : 0.1;
+  const hit = Math.max(Math.exp(-(t - 1.12) * 14) * (t > 1.12 ? 1 : 0), Math.exp(-(t - 2.82) * 14) * (t > 2.82 ? 1 : 0));
+  C4.position.set(0.9 + Math.sin(t * 70) * 0.03 * hit, lerp(3.2, 2.6, E(k01(t, 0, 5))) + Math.cos(t * 63) * 0.03 * hit, lerp(2.4, 1.9, E(k01(t, 0, 5)))); C4.lookAt(0, 0.2, 0.1);
+  glove4.lookAt(C4.position.x, glove4.getWorldPosition(V3()).y, C4.position.z);
+  R.render(S4, C4); return [];
+}
+
+/* ===== timeline + compositing ===== */
+const SHOTS = [
+  { d: 2.6, card: 'The Man With the Key.' },
+  { d: 7.0, f: shot1 },
+  { d: 7.0, f: shot2 },
+  { d: 6.0, f: shot3 },
+  { d: 4.6, f: shot4 },
+  { d: 2.8, card: 'Pip has no idea.' }
+];
+const TOTAL = SHOTS.reduce((a, s) => a + s.d, 0); window.TOTAL = TOTAL;
+function tag(c, o) { if (!o.s || o.s <= 0) return; c.save(); c.translate(o.x, o.y); c.rotate(o.r || 0); c.scale(o.s, o.s); c.font = `40px ${HAND}`; const w = c.measureText(o.txt).width + 44; c.fillStyle = 'rgba(0,0,0,0.35)'; c.fillRect(-w / 2 + 6, -24, w, 62); c.fillStyle = '#f6efdc'; c.fillRect(-w / 2, -30, w, 62); c.lineWidth = 3; c.strokeStyle = '#1e1612'; c.strokeRect(-w / 2, -30, w, 62); c.fillStyle = 'rgba(230,210,150,0.85)'; c.save(); c.rotate(-0.08); c.fillRect(-28, -42, 56, 20); c.restore(); c.fillStyle = o.col || '#1e1612'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(o.txt, 0, 3); c.restore(); }
+function vignette(c, k) { const g = c.createRadialGradient(W / 2, H * 0.52, H * 0.28, W / 2, H / 2, W * 0.72); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, `rgba(0,0,0,${k})`); c.fillStyle = g; c.fillRect(0, 0, W, H); }
+function card(txt, t, d) { X.fillStyle = '#000'; X.fillRect(0, 0, W, H); const a = Math.min(k01(t, 0.15, 0.6), 1 - k01(t, d - 0.45, d)); X.save(); X.globalAlpha = a; X.font = `62px ${HAND}`; X.fillStyle = '#f4efe6'; X.textAlign = 'center'; X.textBaseline = 'middle'; const w = X.measureText(txt).width; X.beginPath(); X.rect(W / 2 - w / 2 - 40, 0, (w + 80) * E(k01(t, 0.1, 1.1)), H); X.clip(); X.fillText(txt, W / 2, H / 2); X.restore(); }
+function frame(t) {
+  let a = 0, i = 0; while (i < SHOTS.length - 1 && t >= a + SHOTS[i].d) { a += SHOTS[i].d; i++; }
+  const s = SHOTS[i], lt = t - a;
+  if (s.card) { card(s.card, lt, s.d); return; }
+  const tags = s.f(lt);
+  const blur = Math.max(12 * (1 - k01(lt, 0, 0.45)), 12 * k01(lt, s.d - 0.35, s.d));
+  X.save(); X.fillStyle = '#000'; X.fillRect(0, 0, W, H); if (blur > 0.3) X.filter = `blur(${blur.toFixed(1)}px)`; X.drawImage(R.domElement, 0, 0); X.restore();
+  tags.forEach(o => tag(X, o)); vignette(X, 0.85); RH.film(X, W, H, t, 0.3);
+}
+window.renderAt = frame;
+window.ready = (document.fonts ? document.fonts.load(`40px ${HAND}`).then(() => document.fonts.ready) : Promise.resolve()).then(() => true);
+if (!/render/.test(location.hash)) { const t0 = performance.now(); (function loop(now) { frame(((now - t0) / 1000) % TOTAL); requestAnimationFrame(loop); })(t0); }
+</script>
