@@ -1,4 +1,4 @@
-# Build each cutaway gag's audio (local Piper voices + code SFX + code music) and its timeline JSON for the renderer.
+# Build each cutaway gag's audio (ElevenLabs Flash voices + code SFX + code music) and its timeline JSON for the renderer.
 import numpy as np, os, sys, json, subprocess, hashlib
 from scipy.io import wavfile
 from scipy.signal import resample
@@ -21,12 +21,19 @@ FX = {'': 'anull', 'deep': 'rubberband=pitch=0.88', 'up': 'rubberband=pitch=1.1'
       'robot': "afftfilt=real='hypot(re,im)*sin(0)':imag='hypot(re,im)*cos(0)':win_size=512:overlap=0.75,flanger=delay=2:depth=2,aecho=0.8:0.6:12:0.3",
       'radio': 'highpass=f=320,lowpass=f=3200,acrusher=bits=10:mix=0.3,volume=1.4', 'trailer': 'rubberband=pitch=0.8,aecho=0.8:0.7:60|120:0.35|0.2',
       'old': 'highpass=f=450,lowpass=f=2800,acrusher=bits=8:mix=0.4,volume=1.5'}
+sys.path.insert(0, os.path.join(HERE, 'el')); from elmap import WHO, FXK
+ELX = {'robot': 'flanger=delay=1.5:depth=1.5:regen=20,aecho=0.8:0.5:9:0.25', 'radio': FX['radio'], 'old': FX['old'], 'trailer': 'aecho=0.8:0.7:70|140:0.3|0.15'}
+_EL = None
 def voice(who, text):
-    spk, ls, fx = V[who]; ls = round(ls * .9, 3); raw = X.tts(spk, text, ls); h = hashlib.md5(f'{spk}{ls}{text}{fx}'.encode()).hexdigest()[:16]; f = os.path.join(X.CACHE, h + '_fx.wav')
-    if not os.path.exists(f):
-        src = f + '.src.wav'; wavfile.write(src, SR, (raw / (np.abs(raw).max() or 1) * .8 * 32767).astype(np.int16))
-        subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-i', src, '-af', FX[fx] + ',aresample=48000', '-ac', '1', f], check=True); os.remove(src)
-    x = load(f); nz = np.where(np.abs(x) > .01)[0]; x = x[max(0, nz[0] - 600): nz[-1] + 1200] if len(nz) else x
+    # ElevenLabs Flash v2.5 lines (one take per voice batch, split per line by el/split.py)
+    global _EL
+    if _EL is None: _EL = json.load(open(os.path.join(HERE, 'el', 'lines_all.json')))
+    src = os.path.join(HERE, _EL[text.strip() + '|' + WHO[who]]); fx = FXK.get(who)
+    if fx:
+        f = src[:-4] + '_' + fx + '.wav'
+        if not os.path.exists(f): subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-i', src, '-af', ELX[fx] + ',aresample=48000', '-ac', '1', f], check=True)
+        src = f
+    x = load(src); nz = np.where(np.abs(x) > .01)[0]; x = x[max(0, nz[0] - 600): nz[-1] + 1200] if len(nz) else x
     return x / (np.sqrt(np.mean(x ** 2)) or 1) * .12
 # ---------------- music ----------------
 def ks(f, d, damp=.996):

@@ -43,11 +43,28 @@ const bump = t => { let z = 0; for (const e of [...G.laugh, ...G.slam, ...evs('r
 const shk = t => { let a = 0; for (const n of ['airhorn', 'braam', 'gunshot', 'gavel3', 'gavel', 'zap']) for (const e of evs(n)) if (t >= e.t) a = Math.max(a, 1 - seg(t, e.t, e.t + .45)); return a; };
 // ---------- people ----------
 const POSE = { ...D.POSES };
+// talking hand gestures: chest-height beats, varied per line (never hands at the hips/crotch)
+const GEST = [
+  b => ({ R: { sh: 30 + b * 8, el: 92 + b * 16, wr: 10, hand: 'open' }, L: { sh: -10, el: 10, hand: 'relaxed' } }),
+  b => ({ R: { sh: 36 + b * 6, el: 92, wr: 8, hand: 'open' }, L: { sh: -36 - b * 6, el: -92, wr: -8, hand: 'open' }, tilt: b * 3 }),
+  b => ({ R: { sh: 78 + b * 6, el: 14, hand: 'point' }, L: { sh: -10, el: 10, hand: 'relaxed' }, lean: -2 }),
+  b => ({ R: { sh: 26 + b * 6, el: 100 + b * 22, wr: 14, hand: 'open' }, L: { sh: -42, el: 70, hand: 'fist' } }),
+  b => ({ R: { sh: 48 + b * 4, el: 58 + b * 28, wr: -6, hand: 'open' }, L: { sh: -12, el: 12, hand: 'relaxed' } }),
+  b => ({ R: { sh: 24, el: 118 + b * 8, wr: 6, hand: b > 0 ? 'point' : 'peace' }, L: { sh: -26, el: -104 - b * 8, hand: 'open' } }),
+  b => ({ L: { sh: -32 - b * 8, el: -96 - b * 16, wr: -10, hand: 'open' }, R: { sh: 10, el: -10, hand: 'relaxed' } }),
+  b => ({ R: { sh: 44 + b * 10, el: 80, wr: 4, hand: 'grab' }, L: { sh: -44 - b * 10, el: -80, hand: 'grab' } }),
+];
+function talkPose(who, t, tt, o) {
+  let k = 0, t0 = 0; G.speech.forEach((s, i) => { if (s.who === who && t >= s.t0 && t < s.t1) { k = i; t0 = s.t0; } });
+  const h = [...who].reduce((a, c) => a * 31 + c.charCodeAt(0), 7) + k * 5 + Math.floor((t - t0) / 1.8) * 3 + (o.seed || 0);
+  const beat = Math.sin(tt * Math.PI * 2 * 0.9 + k), p = GEST[Math.abs(h) % GEST.length](beat);
+  return { legL: { hip: -3 }, legR: { hip: 4 }, bob: Math.abs(beat) * -0.8, hairSway: Math.sin(t * 2.1 - .5) * .5, tilt: Math.sin(t * 2.1) * 3, ...p };
+}
 function person(spec, who, t, o) {
   const tt = onTwos(t + (o.ph || 0)), L = lvl(who, t); let pose, expr;
   if (o.walk) { pose = D.ANIMS.walk(onTwos(Math.abs(o.dist) / (240 * (o.s || 1) * (spec.scale || 1)))).pose; expr = o.expr || spec.defaultExpr; }
   else if (L >= 0) {
-    const a = D.ANIMS.talk(tt, o.seed || 3); pose = o.hold ? JSON.parse(JSON.stringify(o.pose)) : a.pose; pose.tilt = (pose.tilt || 0) + Math.sin(t * 2.3 + (o.ph || 0)) * 2.5;
+    pose = o.hold ? JSON.parse(JSON.stringify(o.pose)) : talkPose(who, t, tt, o); pose.tilt = (pose.tilt || 0) + Math.sin(t * 2.3 + (o.ph || 0)) * 2.5;
     const m = L === 0 ? 'flat' : L === 1 ? (Math.floor(t * 12) % 2 ? 'open' : 'o') : ['open', 'shout', 'o'][Math.floor(t * 12) % 3];
     expr = { base: (typeof o.talk === 'string' ? o.talk : 'talk'), mouth: m };
   } else { const a = D.ANIMS.idle(tt, o.pose || POSE.stand); pose = a.pose; const e = typeof o.expr === 'function' ? o.expr(t) : (o.expr || spec.defaultExpr); expr = a.expr === 'blink' && !o.noBlink ? 'blink' : e; }
@@ -113,14 +130,29 @@ function intro(t) {
   const r = Math.pow(seg(t, .62, OPEN), 1.6) * 1300; if (r > 0) { ox.globalCompositeOperation = 'destination-out'; ox.beginPath(); ox.arc(W / 2, H / 2, r, 0, 7); ox.fill(); ox.globalCompositeOperation = 'source-over'; ox.lineWidth = 18; ox.strokeStyle = '#231A24'; ox.beginPath(); ox.arc(W / 2, H / 2, r, 0, 7); ox.stroke(); }
   ctx.drawImage(oc, 0, 0); }
 function outro(t) { const k = seg(t, DUR - .35, DUR); if (k <= 0) return; screen(); ox.setTransform(1, 0, 0, 1, 0, 0); ox.clearRect(0, 0, W, H); ox.drawImage(cv, 0, 0); for (let i = 1; i < 7; i++) { ctx.globalAlpha = .28; ctx.drawImage(oc, -i * 90 * k * 3, 0); } ctx.globalAlpha = 1; ctx.fillStyle = `rgba(255,255,255,${k * .5})`; ctx.fillRect(0, 0, W, H); }
+function phoneAt(h, f, sc, skin = '#e3cfe3') { // smartphone gripped in the hand, top end at the ear
+  const a = Math.atan2(f.y + 40 * f.sc - h.y, f.x - h.x) ; ctx.save(); ctx.translate(h.x, h.y); ctx.rotate(a - Math.PI / 2 + Math.PI);
+  const w = 15 * sc, L = 32 * sc; rr(-w / 2, -L * .15, w, L, 4 * sc, '#1d1d24', '#231A24', 2.5 * sc); ctx.fillStyle = '#2fc6ff'; ctx.globalAlpha = .55; ctx.fillRect(-w / 2 + 2 * sc, -L * .15 + 3 * sc, w - 4 * sc, L - 6 * sc); ctx.globalAlpha = 1;
+  ctx.fillStyle = skin; ctx.strokeStyle = '#231A24'; ctx.lineWidth = 2 * sc; for (let i = 0; i < 3; i++) { ctx.beginPath(); ctx.ellipse(-w / 2 - 1 * sc, L * .12 + i * 5.5 * sc, 4 * sc, 2.8 * sc, 0, 0, 7); ctx.fill(); ctx.stroke(); }
+  ctx.beginPath(); ctx.ellipse(w / 2 + 1 * sc, L * .2, 3.4 * sc, 2.6 * sc, 0, 0, 7); ctx.fill(); ctx.stroke(); ctx.restore(); }
+function micAt(h, m, sc) { // handheld mic: handle in the fist, grille at the mouth
+  const a = Math.atan2(m.y - h.y, m.x - h.x), L = Math.hypot(m.x - h.x, m.y - h.y); ctx.save(); ctx.translate(h.x, h.y); ctx.rotate(a);
+  ctx.fillStyle = '#2a2a30'; ctx.strokeStyle = '#231A24'; ctx.lineWidth = 2.5 * sc; ctx.beginPath(); ctx.moveTo(-10 * sc, -3.5 * sc); ctx.lineTo(L - 9 * sc, -5.5 * sc); ctx.lineTo(L - 9 * sc, 5.5 * sc); ctx.lineTo(-10 * sc, 3.5 * sc); ctx.closePath(); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = '#b8bcc8'; ctx.beginPath(); ctx.arc(L - 4 * sc, 0, 8 * sc, 0, 7); ctx.fill(); ctx.stroke(); ctx.strokeStyle = 'rgba(40,40,50,.6)'; ctx.lineWidth = 1 * sc; for (let i = -2; i <= 2; i++) { ctx.beginPath(); ctx.moveTo(L - 4 * sc + i * 3 * sc, -7 * sc); ctx.lineTo(L - 4 * sc + i * 3 * sc, 7 * sc); ctx.stroke(); }
+  ctx.fillStyle = '#1d1d24'; ctx.strokeStyle = '#231A24'; ctx.lineWidth = 2 * sc; for (let i = 0; i < 3; i++) { ctx.beginPath(); ctx.ellipse(i * 5 * sc, -5 * sc, 3 * sc, 4 * sc, 0, 0, 7); ctx.fill(); ctx.stroke(); } ctx.restore(); }
+function wrenchAt(h, sc, skin) { // spanner gripped in the fist, jaw up
+  ctx.save(); ctx.translate(h.x, h.y); ctx.rotate(-2.4); ctx.fillStyle = '#9aa0ac'; ctx.strokeStyle = '#231A24'; ctx.lineWidth = 2.5 * sc;
+  ctx.beginPath(); ctx.roundRect(-4 * sc, -8 * sc, 8 * sc, 50 * sc, 3 * sc); ctx.fill(); ctx.stroke();
+  ctx.beginPath(); ctx.arc(0, 46 * sc, 10 * sc, 0, 7); ctx.fill(); ctx.stroke(); ctx.fillStyle = '#5a6a7a'; ctx.beginPath(); ctx.moveTo(-4 * sc, 58 * sc); ctx.lineTo(4 * sc, 58 * sc); ctx.lineTo(3 * sc, 44 * sc); ctx.lineTo(-3 * sc, 44 * sc); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = skin; ctx.strokeStyle = '#231A24'; ctx.lineWidth = 2 * sc; for (let i = 0; i < 3; i++) { ctx.beginPath(); ctx.ellipse(-5 * sc, i * 5 * sc, 3.6 * sc, 2.8 * sc, 0, 0, 7); ctx.fill(); ctx.stroke(); } ctx.restore(); }
 // ---------- scenes ----------
 const camOf = (t, base) => ({ ...base, z: base.z * (1 + .07 * bump(t)) + (base.push || 0) * seg(t, OPEN, DUR), sx: (base.sx || 0) + Math.sin(t * 47) * 14 * shk(t), sy: Math.cos(t * 39) * 10 * shk(t) });
 async function cast(list, cam, t) { await chars(list.map(([sp, who, o]) => person(sp, who, t, o)), cam); }
 const S = {};
 S.phone = async (t, two) => {
   const L = { z: 1.3, x: 1000, y: 860, sx: -470 }, R = { z: 1.3, x: 1600, y: 860, sx: 470 };
-  const vo = { x: 900, y: 1390, s: 2.1, view: 'threequarter', dir: 1, pose: POSE.think, hold: true, expr: 'deadpan' };
-  halfplate('', 0, 1); const cl = camOf(t, L); plate(two ? 'loft' : 'westview_corner', cl); await cast([[C.vision, 'VIS', vo]], cl, t); apply(cl); { const h = hnd(C.vision, vo); emo('📱', h.x + 6, h.y - 40, 90, -.3); } ctx.restore();
+  const vo = { x: 900, y: 1390, s: 2.1, view: 'threequarter', dir: 1, pose: { ...POSE.stand, L: { sh: 68, el: 164, wr: 0, hand: 'grab' } }, hold: true, expr: 'deadpan' };
+  halfplate('', 0, 1); const cl = camOf(t, L); plate(two ? 'loft' : 'westview_corner', cl); await cast([[C.vision, 'VIS', vo]], cl, t); apply(cl); { const h = hnd(C.vision, vo, 'L'), f = head(C.vision, vo, 0); phoneAt(h, f, vo.s); } ctx.restore();
   halfplate('', 0, 0); const cr = camOf(t, R); apply(cr);
   if (two) { plate('noir_office', cr); grade('#2a1a3a', .2); } else { ctx.fillStyle = lg(0, 0, 0, 1440, ['#a8b8c8', '#7a8a9a']); ctx.fillRect(0, 0, 2560, 1440); for (let i = 0; i < 6; i++) { ctx.fillStyle = '#5a6a7a'; ctx.fillRect(900 + i * 300, 700, 260, 300); ctx.fillStyle = '#c8d4e0'; ctx.fillRect(910 + i * 300, 640, 240, 70); } rr(1250, 330, 420, 260, 6, '#f4f1ea', '#231A24'); txt('YOU CAN DO IT', 1460, 420, 40, '#2a3990'); txt('(PROBABLY)', 1460, 480, 32, '#e23a3a'); ctx.fillStyle = '#c8d0d8'; ctx.fillRect(0, 1180, 2560, 260); }
   const who = two ? 'COL' : 'GARY', spec = two ? X.col : X.gary, onHold = !two && t < sp('GARY').t0 - .1;
@@ -133,9 +165,14 @@ S.nature = async t => {
   const cam = camOf(t, { z: 1.45, x: 1280 + Math.sin(t * .7) * 40, y: 880 + Math.sin(t * 1.3) * 12, push: .1 }); plate('mind_living', cam); grade('#3a5a2a', .15);
   const run = seg(t, ev('run_steps'), ev('run_steps') + 1.6), ex = 1000 - run * 900;
   const eo = run > 0 ? { x: ex, y: 1390, s: 1.95, view: 'threequarter', dir: -1, walk: true, dist: run * 900, expr: 'shock' } : { x: 1000, y: 1390, s: 1.95, view: 'threequarter', dir: 1, expr: t > ev('whoosh') ? 'shock' : 'nervous' };
-  const dm = { x: 1650, y: 1390, s: 2.05, view: 'threequarter', dir: -1, pose: { ...POSE.stand, R: { sh: 30, el: 100, wr: -10, hand: 'grab' } }, hold: true, expr: t > ev('crunch') ? 'happy' : 'blank' };
+  const cr = ev('crunch'), up = io(seg(t, cr - .7, cr - .1)) * (1 - io(seg(t, cr + 2.2, cr + 2.8)));
+  const dm = { x: 1650, y: 1390, s: 2.05, view: 'threequarter', dir: -1, pose: { ...POSE.stand, bob: t > cr && t < cr + 2.2 ? Math.abs(Math.sin(t * 16)) * 1.5 : 0, L: up > 0 ? { sh: lerp(-10, 51, up), el: lerp(30, 146, up), hand: 'grab' } : { sh: -8, el: 6, hand: 'relaxed' }, R: up > 0 || t > cr ? { sh: 8, el: -6, hand: 'relaxed' } : { sh: 30, el: 100, wr: -10, hand: 'grab' } }, hold: true, expr: t > cr + 2.2 ? 'happy' : 'blank' };
   await cast([[C.edith, 'EDI', eo], [C.dume, 'DUME', dm]], cam, t); apply(cam);
-  { const h = hnd(C.dume, dm); const chew = t > ev('crunch') ? 1 - seg(t, ev('crunch'), ev('crunch') + 2.5) : 1; if (chew > .05) emo('🧾', h.x, h.y - 30, 80 * (.4 + .6 * chew)); }
+  { const h = hnd(C.dume, dm, up > 0 ? 'L' : 'R'); const chew = t > cr ? 1 - seg(t, cr, cr + 2.0) : 1; if (chew > .05) { ctx.save(); ctx.translate(h.x, h.y - 26 * (1 - up)); ctx.rotate(up * -.5); ctx.scale(chew, chew); emo('🧾', 0, -10, 80); ctx.restore(); }
+    if (up > .5) { const sc = dm.s, f = head(C.dume, dm, 0), mx = f.x - 2 * sc, my = f.y + 26 * f.sc, ch = t > cr && t < cr + 2.2 ? Math.sin(t * 16) * 2 * sc : 0; ctx.save(); ctx.globalAlpha = Math.min(1, (up - .5) * 4); ctx.translate(mx, my + ch); ctx.rotate(-.25);
+      ctx.fillStyle = '#d9a582'; ctx.strokeStyle = '#231A24'; ctx.lineWidth = 2.6 * sc; ctx.beginPath(); ctx.roundRect(-15 * sc, -9 * sc, 30 * sc, 20 * sc, 9 * sc); ctx.fill(); ctx.stroke();
+      ctx.lineWidth = 1.6 * sc; for (let i = 1; i < 4; i++) { ctx.beginPath(); ctx.moveTo(-15 * sc + i * 7.5 * sc, -9 * sc); ctx.lineTo(-15 * sc + i * 7.5 * sc, -2 * sc); ctx.stroke(); }
+      ctx.beginPath(); ctx.ellipse(16 * sc, 6 * sc, 5 * sc, 7 * sc, .4, 0, 7); ctx.fill(); ctx.stroke(); ctx.restore(); } }
   const pk = seg(t, ev('whoosh'), ev('whoosh') + 1.0); if (pk > 0 && pk < 1) { const px = lerp(2400, 900, pk), py = 760 + Math.sin(pk * 9) * 40; ctx.save(); ctx.translate(px, py); ctx.rotate(-.2 + Math.sin(pk * 9) * .2); ctx.fillStyle = '#f4f1ea'; ctx.strokeStyle = '#231A24'; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(-60, 0); ctx.lineTo(50, -14); ctx.lineTo(50, 14); ctx.closePath(); ctx.fill(); ctx.stroke(); ctx.restore(); }
   screen(); ctx.filter = 'blur(14px)'; ctx.fillStyle = '#1e3a14'; for (let i = 0; i < 9; i++) { ctx.beginPath(); ctx.ellipse(i < 5 ? i * 70 : W - (i - 5) * 80, H - 120 - (i % 3) * 90, 200, 70, i * .7, 0, 7); ctx.fill(); } ctx.filter = 'none';
   txt('● REC', 200, BAR + 50, 34, '#e23a3a', { align: 'left' }); };
@@ -215,14 +252,19 @@ S.runway = async t => {
   ctx.fillStyle = lg(0, 900, 0, 1440, ['#2a2a34', '#e8e8f0']); ctx.beginPath(); ctx.moveTo(1180, 900); ctx.lineTo(1380, 900); ctx.lineTo(1900, 1440); ctx.lineTo(660, 1440); ctx.fill(); ctx.strokeStyle = '#ffd23d'; ctx.lineWidth = 6; ctx.stroke();
   for (let i = 0; i < 12; i++) { const k = i / 12; [-1, 1].forEach(s => { ctx.fillStyle = '#fff2b0'; ctx.beginPath(); ctx.arc(1280 + s * (100 + k * 520), 900 + k * 540, 6 + k * 8, 0, 7); ctx.fill(); }); }
   cone(1280, 0, 30, 400, 1440, 'rgba(255,240,220,A)', .25);
-  const k = seg(t, OPEN, DUR - .5), y = lerp(1010, 1460, k), s = lerp(.85, 2.1, k); const vo = { x: 1280, y, s, view: 'front', walk: true, dist: lerp(0, 450, k) * 2.2, expr: 'smug' };
+  const k = seg(t, OPEN, DUR - .5), y = lerp(1010, 1460, k), s = lerp(.85, 2.1, k); const vo = { x: 1280, y, s, view: 'front', walk: true, dist: Math.max(0, t - OPEN) * 240 * s * 1.75, expr: 'smug' };
   await cast([[X.velvet, 'VIS', vo]], cam, t); apply(cam); crowd(1460, 14, 3, '#08060c', 1.1, t); emo('📸', 300, 1100, 80); emo('📸', 2250, 1080, 80); };
 S.wedding = async t => {
   const cam = camOf(t, { z: 1.12, x: 1280, y: 800 }); plate('gallery', cam); grade('#ffb0d0', .35, 'soft-light'); apply(cam);
   for (let i = 0; i < 18; i++) { ctx.fillStyle = 'rgba(255,255,255,.7)'; ctx.beginPath(); ctx.arc(i * 150, 180 + Math.sin(i) * 20, 40, 0, 7); ctx.fill(); }
   const run = seg(t, sp('JOC', 1).t1, sp('JOC', 1).t1 + 1.4); const jo = run > 0 ? { x: 1950 + run * 900, y: 1440, s: 2.05, view: 'threequarter', dir: 1, walk: true, dist: run * 900 } : { x: 1950, y: 1440, s: 2.05, view: 'threequarter', dir: -1, expr: 'blank' };
   const po = { x: 1280, y: 1440, s: 2.05, view: 'front', pose: { ...POSE.stand, L: { sh: -30, el: -95, hand: 'grab' } }, expr: 'excited' }, uo = { x: 620, y: 1440, s: 2.2, view: 'threequarter', dir: 1, expr: t > sp('JOC', 1).t1 ? 'shock' : 'smug' };
-  await cast([[C.ultron, 'ULT', uo], [X.pln, 'PLN', po], [C.jocasta, 'JOC', jo]], cam, t); apply(cam); { const h = hnd(X.pln, po, 'L'); emo('📋', h.x, h.y - 30, 90); const f = head(C.jocasta, jo, -10); ctx.fillStyle = 'rgba(255,255,255,.55)'; ctx.beginPath(); ctx.moveTo(f.x - f.sc * 8, f.y); ctx.quadraticCurveTo(f.x, f.y - f.sc * 6, f.x + f.sc * 8, f.y); ctx.lineTo(f.x + f.sc * 14 * jo.dir, f.y + f.sc * 40); ctx.lineTo(f.x - f.sc * 6 * jo.dir, f.y + f.sc * 40); ctx.fill(); } };
+  { jo._pose = run > 0 ? D.ANIMS.walk(onTwos(run * 900 / (240 * jo.s))).pose : POSE.stand; const f = head(C.jocasta, jo, -10), bk = -jo.dir, fl = run > 0 ? Math.sin(t * 14) * 6 : Math.sin(t * 2) * 2, q = f.sc;
+    ctx.fillStyle = 'rgba(255,255,255,.5)'; ctx.strokeStyle = 'rgba(255,255,255,.8)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(f.x - bk * 6 * q, f.y - 4 * q); ctx.quadraticCurveTo(f.x + bk * 10 * q, f.y - 9 * q, f.x + bk * 30 * q, f.y + 2 * q);
+    ctx.quadraticCurveTo(f.x + bk * (50 + (run > 0 ? 18 : 0)) * q + fl * q, f.y + 60 * q, f.x + bk * (48 + (run > 0 ? 30 : 0)) * q + fl * q, f.y + 118 * q); ctx.lineTo(f.x + bk * (26 + (run > 0 ? 22 : 0)) * q, f.y + 112 * q);
+    ctx.quadraticCurveTo(f.x + bk * 28 * q, f.y + 50 * q, f.x + bk * 18 * q, f.y + 6 * q); ctx.closePath(); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = '#f4f1ea'; ctx.beginPath(); ctx.ellipse(f.x + bk * 4 * q, f.y - 6 * q, 12 * q, 3.5 * q, -bk * .2, 0, 7); ctx.fill(); }
+  await cast([[C.ultron, 'ULT', uo], [X.pln, 'PLN', po], [C.jocasta, 'JOC', jo]], cam, t); apply(cam); { const h = hnd(X.pln, po, 'L'); emo('📋', h.x, h.y - 30, 90);  } };
 S.sitcom = async t => {
   const cam = camOf(t, { z: 1.2, x: 1280, y: 820 }); plate('mind_kitchen', cam); grade('#ffcc88', .25);
   const ent = seg(t, OPEN, OPEN + 1.1); const to = ent < 1 ? { x: lerp(200, 880, ent), y: 1440, s: 2.15, view: 'threequarter', dir: 1, walk: true, dist: ent * 680 } : { x: 880, y: 1440, s: 2.15, view: 'threequarter', dir: 1, expr: 'nervous', seed: 2 };
@@ -259,7 +301,7 @@ S.pigeons = async t => {
   ctx.fillStyle = lg(0, 1120, 0, 1440, ['#4a4a52', '#2a2a30']); ctx.fillRect(0, 1120, 2560, 320); ctx.fillStyle = '#5a5a62'; ctx.fillRect(0, 1100, 2560, 30);
   rr(860, 360, 840, 120, 8, '#e23a3a', '#231A24'); txt('PIGEON UNION · LOCAL 42', 1280, 420, 50, '#fff');
   rr(700, 1060, 1160, 60, 8, '#6a4a2a', '#231A24'); const chant = t > ev('chant') && t < ev('chant') + 3;
-  [[820, 'PIG1'], [1060, ''], [1280, 'PIG2'], [1500, ''], [1740, '']].forEach(([x, who], i) => { const L = who ? lvl(who, t) : -1; const b = chant ? Math.abs(Math.sin(t * 9 + i)) * 50 : (L > 0 ? Math.abs(Math.sin(t * 16)) * 26 : 0); emo('🐦', x, 960 - b, 200, i % 2 ? .1 : -.1); ctx.fillStyle = '#ffd23d'; ctx.strokeStyle = '#231A24'; ctx.lineWidth = 5; ctx.beginPath(); ctx.arc(x - 10, 885 - b, 50, Math.PI, 0); ctx.fill(); ctx.stroke(); if (chant) emo('✊', x + 90, 860 - b, 70); }); };
+  [[820, 'PIG1'], [1060, ''], [1280, 'PIG2'], [1500, ''], [1740, '']].forEach(([x, who], i) => { const L = who ? lvl(who, t) : -1; const b = chant ? Math.abs(Math.sin(t * 9 + i)) * 50 : (L > 0 ? Math.abs(Math.sin(t * 16)) * 26 : 0); emo('🐦', x, 960 - b, 200, i % 2 ? .1 : -.1); ctx.fillStyle = '#ffd23d'; ctx.strokeStyle = '#231A24'; ctx.lineWidth = 5; { const hx = x + (i % 2 ? -26 : -34), hy = 905 - b; ctx.save(); ctx.translate(hx, hy); ctx.rotate(i % 2 ? .1 : -.1); ctx.beginPath(); ctx.arc(0, 0, 36, Math.PI, 0); ctx.closePath(); ctx.fill(); ctx.stroke(); ctx.beginPath(); ctx.roundRect(-50, -4, 100, 12, 6); ctx.fill(); ctx.stroke(); ctx.restore(); } if (chant) emo('✊', x + 90, 860 - b, 70); }); };
 S.newsreel = async t => {
   const cam = camOf(t, { z: 1.1, x: 1280, y: 800, sx: 0 }); cam.sx += (rng(Math.floor(t * 24))() - .5) * 8; plate('lab1939', cam);
   const ho = { x: 820, y: 1440, s: 2.15, view: 'threequarter', dir: 1, pose: POSE.wave, expr: 'happy' }, ro = { x: 1650, y: 1440, s: 2.15, view: 'front', expr: 'blank', pose: POSE.wave, ph: .5 };
@@ -270,7 +312,7 @@ S.garage = async t => {
   const cam = camOf(t, { z: 1.12, x: 1280, y: 800 }); plate('cargo_plane', cam); grade('#3a3020', .25); apply(cam);
   rr(1100, 560, 420, 260, 10, '#1a1a1a', '#231A24'); ctx.strokeStyle = '#3aff7a'; ctx.lineWidth = 5; ctx.beginPath(); for (let i = 0; i <= 40; i++) { const x = 1120 + i * 9.5; ctx.lineTo(x, 700 + Math.sin(i * .8 + t * 6) * 40 * (i % 7 === 0 ? 2 : .4)); } ctx.stroke(); txt('SOUL DIAGNOSTIC', 1310, 600, 30, '#3aff7a', { font: 'monospace', w: 700 });
   const mo = { x: 1750, y: 1440, s: 2.15, view: 'threequarter', dir: -1, pose: { ...POSE.stand, R: { sh: 30, el: 80, hand: 'grab' } }, hold: true, expr: 'deadpan' }, vo = { x: 820, y: 1440, s: 2.15, view: 'threequarter', dir: 1, expr: 'nervous' };
-  await cast([[X.mech, 'MECH', mo], [C.vision, 'VIS', vo]], cam, t); apply(cam); { const h = hnd(X.mech, mo); emo('🔧', h.x, h.y - 30, 90, -.5); const f = head(X.mech, mo, -12); ctx.fillStyle = '#e23a3a'; ctx.beginPath(); ctx.arc(f.x, f.y, f.sc * 9, Math.PI, 0); ctx.fill(); ctx.fillRect(f.x, f.y - 6, f.sc * 12 * mo.dir, 12); }
+  await cast([[X.mech, 'MECH', mo], [C.vision, 'VIS', vo]], cam, t); apply(cam); { const h = hnd(X.mech, mo); wrenchAt(h, mo.s, X.mech.skin); const f = head(X.mech, mo, -12); ctx.fillStyle = '#e23a3a'; ctx.beginPath(); ctx.arc(f.x, f.y, f.sc * 9, Math.PI, 0); ctx.fill(); ctx.fillRect(f.x, f.y - 6, f.sc * 12 * mo.dir, 12); }
   if (t > sp('MECH', 3).t0) { const f = head(C.vision, vo); const on = Math.floor(t * 4) % 2; ctx.fillStyle = on ? '#ffd23d' : '#8a6a10'; ctx.beginPath(); ctx.arc(f.x, f.y, f.sc * 1.6, 0, 7); ctx.fill(); if (on) glowS(...worldPt(cam, f.x, f.y), 70, 'rgba(255,220,60,A)', .9); } };
 S.support = async t => {
   const cam = camOf(t, { z: 1.08, x: 1280, y: 780 }); plate('hospital', cam); grade('#2a3a2a', .2); apply(cam);
@@ -282,23 +324,24 @@ S.support = async t => {
   { const f = head(X.ship, sh, -12); ctx.fillStyle = '#f4f1ea'; ctx.strokeStyle = '#231A24'; ctx.lineWidth = 5; ctx.beginPath(); ctx.moveTo(f.x - f.sc * 14, f.y + f.sc * 2); ctx.lineTo(f.x + f.sc * 14, f.y + f.sc * 2); ctx.lineTo(f.x, f.y - f.sc * 12); ctx.closePath(); ctx.fill(); ctx.stroke(); }
   rr(1700, 1150, 260, 100, 10, '#8a8a90', '#231A24'); emo('☕', 1760, 1110, 70); emo('🍩', 1880, 1120, 60); };
 S.soap = async t => {
-  const st = [...evs('organ'), ...evs('dundun')].filter(e => t > e.t).pop(); const focus = st ? (st.n === 'dundun' ? 900 : 1650) : 1280; const zk = st ? io(seg(t, st.t, st.t + .3)) : 0;
-  const cam = camOf(t, { z: 1.15 + .25 * zk, x: lerp(1280, focus, zk), y: 820 - 120 * zk }); plate('manor', cam, 2); grade('#ff80c0', .25, 'soft-light');
+  const FX_ = { VIR: 900, ULT: 1650, TOM: 2150 }, past = G.speech.filter(q => q.t0 - .2 <= t), cur = past[past.length - 1], prv = past[past.length - 2];
+  const zk = cur ? io(seg(t, cur.t0 - .2, cur.t0 + .15)) : 0, f0 = prv ? FX_[prv.who] : 1280, focus = cur ? lerp(prv && prv.who !== cur.who ? f0 : (prv ? f0 : 1280), FX_[cur.who], zk) : 1280, zz = cur ? (prv ? 1 : zk) : 0;
+  const cam = camOf(t, { z: 1.15 + .25 * zz, x: focus, y: 820 - 120 * zz }); plate('manor', cam, 2); grade('#ff80c0', .25, 'soft-light');
   const tin = seg(t, sp('TOM').t0 - .5, sp('TOM').t0); const vo = { x: 900, y: 1440, s: 2.2, view: 'threequarter', dir: 1, expr: 'sad' }, uo = { x: 1650, y: 1440, s: 2.2, view: 'threequarter', dir: -1, expr: t > sp('ULT').t0 ? 'shock' : 'nervous' }, to = { x: lerp(2700, 2150, io(tin)), y: 1440, s: 2.1, view: 'threequarter', dir: -1, expr: 'deadpan' };
   await cast([[X.virgil, 'VIR', vo], [C.ultron, 'ULT', uo], ...(tin > 0 ? [[C.tommy, 'TOM', to]] : [])], cam, t);
   screen(); const v = ctx.createRadialGradient(W / 2, H / 2, H * .3, W / 2, H / 2, W * .65); v.addColorStop(0, 'rgba(255,200,230,0)'); v.addColorStop(1, 'rgba(120,40,90,.55)'); ctx.fillStyle = v; ctx.fillRect(0, 0, W, H); };
 S.plumber = async t => {
   const cam = camOf(t, { z: 1.12, x: 1280, y: 800 }); plate('bathroom', cam); grade('#3a5a5a', .15);
   const mo = { x: 1650, y: 1440, s: 2.15, view: 'threequarter', dir: -1, pose: { ...POSE.stand, R: { sh: 30, el: 80, hand: 'grab' } }, hold: true, expr: 'deadpan' }, bo = { x: 820, y: 1440, s: 2.1, view: 'threequarter', dir: 1, expr: 'nervous' };
-  await cast([[X.mech, 'MECH', mo], [X.billy, 'BILLY', bo]], cam, t); apply(cam); { const h = hnd(X.mech, mo); emo('🔧', h.x, h.y - 30, 90, -.5); const f = head(X.mech, mo, -12); ctx.fillStyle = '#e23a3a'; ctx.beginPath(); ctx.arc(f.x, f.y, f.sc * 9, Math.PI, 0); ctx.fill(); }
+  await cast([[X.mech, 'MECH', mo], [X.billy, 'BILLY', bo]], cam, t); apply(cam); { const h = hnd(X.mech, mo); wrenchAt(h, mo.s, X.mech.skin); const f = head(X.mech, mo, -12); ctx.fillStyle = '#e23a3a'; ctx.beginPath(); ctx.arc(f.x, f.y, f.sc * 9, Math.PI, 0); ctx.fill(); }
   rr(1980, 1150, 520, 260, 60, '#f4f1ea', '#231A24'); for (let i = 0; i < 6; i++) emo('🫧', 2050 + i * 70, 1130 - Math.abs(Math.sin(t * 2 + i)) * 60, 50); };
 S.karaoke = async t => {
   const cam = camOf(t, { z: 1.08, x: 1280, y: 780 }); plate('pub_int', cam); grade('#1a0a2a', .55, 'multiply'); apply(cam);
   txt('KARAOKE NIGHT', 1280, 400, 90, '#ff5ab0', { glow: '#ff5ab0', blur: 40 }); ctx.fillStyle = '#2a1a2a'; ctx.fillRect(600, 1180, 1360, 260); ctx.fillStyle = '#ffd23d'; ctx.fillRect(600, 1170, 1360, 16);
   cone(1280, 0, 30, 360, 1200, 'rgba(255,220,250,A)', .3);
   const hostOn = t < sp('JOC').t0 - .3; const zt = ev('zap'), zap = t > zt && t < zt + .5;
-  const ko = { x: 2050, y: 1440, s: 2.0, view: 'threequarter', dir: -1, expr: 'excited', pose: POSE.point }, jo = { x: 1280, y: 1270, s: 1.95, view: 'front', pose: { ...POSE.stand, R: { sh: 40, el: 110, wr: -10, hand: 'grab' } }, hold: true, expr: 'blank' };
-  await cast([[C.jocasta, 'JOC', jo], ...(hostOn ? [[X.khost, 'KHOST', ko]] : [])], cam, t); apply(cam); { const h = hnd(C.jocasta, jo); emo('🎤', h.x - 10, h.y - 40, 80, .4); }
+  const ko = { x: 2050, y: 1440, s: 2.0, view: 'threequarter', dir: -1, expr: 'excited', pose: POSE.point }, jo = { x: 1280, y: 1270, s: 1.95, view: 'front', pose: { ...POSE.stand, L: { sh: 33, el: 134, wr: 0, hand: 'grab' } }, hold: true, expr: 'blank' };
+  await cast([[C.jocasta, 'JOC', jo], ...(hostOn ? [[X.khost, 'KHOST', ko]] : [])], cam, t); apply(cam); { const h = hnd(C.jocasta, jo, 'L'), f = head(C.jocasta, jo, 0); micAt(h, { x: f.x - 1 * jo.s, y: f.y + 27 * f.sc }, jo.s); }
   if (zap) { const f = head(C.jocasta, jo, 2); ctx.strokeStyle = '#ff3030'; ctx.lineWidth = 16; ctx.shadowColor = '#ff3030'; ctx.shadowBlur = 40; ctx.beginPath(); ctx.moveTo(f.x - 18, f.y + 20); ctx.lineTo(500, 1500); ctx.moveTo(f.x + 18, f.y + 20); ctx.lineTo(2100, 1500); ctx.stroke(); ctx.shadowBlur = 0; }
   if (t < zt + .25) crowd(1380, 12, 5, '#06040a', 1.15, t * (t > sp('BOO').t0 && t < sp('BOO').t1 + .3 ? 1 : 0)); };
 S.weather = async t => {

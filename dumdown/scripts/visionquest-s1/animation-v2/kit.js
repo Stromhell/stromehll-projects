@@ -498,7 +498,7 @@
     const eR = feat(-32, 22, yaw), eL = feat(32, 22, yaw), m = feat(0, 20, yaw), jl = feat(-80, 27, yaw), jr = feat(80, 27, yaw);
     if (!backView && A.stubble) s += `<path d="M${P(jl.x, 8)}C${P(jl.x, 26)} ${P(m.x - 12, 30)} ${P(m.x, 30)}C${P(m.x + 12, 30)} ${P(jr.x, 26)} ${P(jr.x, 8)}L${P(jr.x * .7, 14)}Q${P(m.x, 24)} ${P(jl.x * .7, 14)}Z" fill="${A.stubble}" opacity=".35"/>`;
     if (!backView && A.beard) { const c = A.beard, sh = shade(c), jl = feat(-74, 26, yaw), jr = feat(74, 26, yaw);
-      const d = `M${P(jl.x, 4)}C${P(jl.x - 1, 22)} ${P(m.x - 16, 38)} ${P(m.x, 40)}C${P(m.x + 16, 38)} ${P(jr.x + 1, 22)} ${P(jr.x, 4)}L${P(jr.x * .82, 6)}C${P(jr.x * .8, 16)} ${P(m.x + 9, 23)} ${P(m.x, 23)}C${P(m.x - 9, 23)} ${P(jl.x * .8, 16)} ${P(jl.x * .82, 6)}Z`;
+      const d = `M${P(jl.x, 13)}C${P(jl.x - 1, 26)} ${P(m.x - 16, 38)} ${P(m.x, 40)}C${P(m.x + 16, 38)} ${P(jr.x + 1, 26)} ${P(jr.x, 13)}L${P(jr.x * .82, 15)}C${P(jr.x * .8, 21)} ${P(m.x + 9, 25)} ${P(m.x, 25)}C${P(m.x - 9, 25)} ${P(jl.x * .8, 21)} ${P(jl.x * .82, 15)}Z`;
       cid0 = 'bd' + (++UID); const cid = cid0, cp = `<path d="${facePath(yaw)}" transform="translate(0,-2) scale(1,1.32) translate(0,2)"/>`;
       s += `<clipPath id="${cid}">${cp}</clipPath><g clip-path="url(#${cid})"><path d="${d}" fill="${c}" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/><path d="M${P(m.x - 6, 32)}Q${P(m.x, 37)} ${P(m.x + 6, 32)}" fill="none" stroke="${sh}" stroke-width="2"/></g>`
         + `<g clip-path="url(#${cid}x)"></g><clipPath id="${cid}x"><path d="${d}"/></clipPath><path d="${facePath(yaw)}" transform="translate(0,-2) scale(1,1.32) translate(0,2)" fill="none" stroke="${INK}" stroke-width="2" clip-path="url(#${cid}x)"/>`; }
