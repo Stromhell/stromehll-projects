@@ -41,6 +41,9 @@ const C = {
   fiona: base({ name: 'Barmaid (Fiona)', skin: '#f4d2b8', eyes: '#3d6fb5', scale: .95, hair: { style: 'long', color: '#d8a85a', seed: 44, length: .7 },
     top: { type: 'jacket', color: '#2a2a30', shirt: '#f4f1ea', tie: null, accent: '#3a3a44', cuff: '#f4f1ea', hem: -10, sleeves: 'long' },
     bottom: { color: '#1d1d24' }, shoes: { color: '#1a1a1a', sole: '#000', lace: '#333', type: 'boot' }, defaultExpr: 'smile' }),
+  lisa: base({ name: 'Pickpocket (Lisa)', skin: '#f2cdb4', eyes: '#3f8f5f', scale: .95, hair: { style: 'bob', color: '#8a3a22', seed: 52, volume: 1 },
+    top: { type: 'jacket', color: '#1d1d22', shirt: '#7a7f8a', tie: null, accent: '#3a3a40', cuff: '#0e0e10', hem: -10, sleeves: 'long' },
+    bottom: { color: '#2a2a34' }, shoes: { color: '#1a1a1a', sole: '#000', lace: '#333', type: 'boot' }, defaultExpr: 'deadpan' }),
 };
 module.exports = { D, C };
 if (require.main === module) {
