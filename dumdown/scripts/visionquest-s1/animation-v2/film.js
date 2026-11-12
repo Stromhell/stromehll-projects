@@ -82,8 +82,8 @@ const SH = [
  // 5. The mind house: truck past five AI roommates in front of the sofa
  { a: V(25.7), b: V(32.2), async draw(t, lt, u) { const cam = { z: 1.32, x: lerp(820, 1740, io(u)), y: 820 };
    plate('mind_living', cam, 1.2); apply(cam); ctx.drawImage(IM.fg_sofa, 0, 0, 2560, 1440);
-   const R = [[C.jarvis, 700, 'front', 'smile', 'stand'], [C.friday, 1000, 'threequarter', 'deadpan', 'hips'], [C.edith, 1290, 'front', 'nervous', 'wave'], [C.dume, 1590, 'threequarter', 'happy', 'thumbsUp'], [C.u, 1880, 'front', 'excited', 'peace']];
-   await chars(R.map(([s, x, v, e, p], i) => fig(s, lt + i * .6, { x, y: 1290, s: 1.18, view: v, dir: i > 2 ? -1 : 1, expr: e, anim: p === 'wave' ? 'wave' : null, pose: D.POSES[p] })), cam);
+   const R = [[C.jarvis, 650, 'front', 'smile', 'stand'], [C.friday, 970, 'threequarter', 'deadpan', 'hips'], [C.edith, 1290, 'front', 'nervous', 'wave'], [C.dume, 1630, 'threequarter', 'happy', 'hips'], [C.u, 1930, 'front', 'excited', 'peace']];
+   await chars(R.map(([s, x, v, e, p], i) => fig(s, lt + i * .6, { x, y: 1370, s: 1.75, view: v, dir: i > 2 ? -1 : 1, expr: e, anim: p === 'wave' ? 'wave' : null, pose: D.POSES[p] })), cam);
    // motes
    screen(); for (let i = 0; i < 40; i++) { const R2 = rng(i + 1); const x = (R2() * W + lt * 30 * (R2() - .3)) % W, y = (R2() * H - lt * 20 * R2() + H) % H; ctx.fillStyle = `rgba(200,235,255,${.25 + .2 * Math.sin(lt * 2 + i)})`; ctx.beginPath(); ctx.arc(x, y, 2 + R2() * 3, 0, 7); ctx.fill(); }
    grade('#ffb070', .14); return {}; } },
@@ -92,7 +92,7 @@ const SH = [
    plate('pub_int', cam, 4); const turn = lt > .9;
    await chars([fig(C.vision, lt, { view: turn ? 'front' : 'threequarter', dir: -1, x: 1300, y: 1500, s: 2.4, expr: turn ? 'smug' : 'deadpan', noBlink: true })], cam);
    grade('#ff8a30', .16); screen(); const a = io(seg(lt, .5, 1.1)) * (1 - seg(lt, 2.5, 2.9));
-   ctx.globalAlpha = a; ctx.font = '600 30px Inter'; ctx.fillStyle = '#e8dcc0'; ctx.textAlign = 'center'; ctx.letterSpacing = '18px'; ctx.fillText('VISIONQUEST', W / 2, H - BAR - 70); ctx.font = '500 18px Inter'; ctx.letterSpacing = '10px'; ctx.fillText('SEASON ONE', W / 2, H - BAR - 38); ctx.letterSpacing = '0px'; ctx.globalAlpha = 1; return {}; } },
+   ctx.globalAlpha = a; ctx.font = '600 30px Inter'; ctx.fillStyle = '#e8dcc0'; ctx.textAlign = 'center'; ctx.letterSpacing = '18px'; ctx.fillText('VISIONQUEST', W / 2, BAR + 70); ctx.font = '500 18px Inter'; ctx.letterSpacing = '10px'; ctx.fillText('SEASON ONE', W / 2, BAR + 102); ctx.letterSpacing = '0px'; ctx.globalAlpha = 1; return {}; } },
  // 7. Market: the bounty hunter grabs the street kid (handheld)
  { a: V(35.1), b: V(36.45), async draw(t, lt, u) { const sh = Math.sin(lt * 37) * 8, sh2 = Math.cos(lt * 29) * 6, whip = 1 - out3(seg(lt, 0, .25));
    const cam = { z: 1.5, x: 1280 - whip * 500, y: 860, sx: sh, sy: sh2, rot: Math.sin(lt * 11) * .6 };

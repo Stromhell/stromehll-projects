@@ -73,9 +73,9 @@ const SH = [
    if (dive > .7) { screen(); ctx.fillStyle = `rgba(240,250,255,${(dive - .7) / .3})`; ctx.fillRect(0, 0, W, H); } return {}; } },
  // 9. The mind house: the five AI roommates pop in one by one
  { a: V(39.3), b: V(45.3), async draw(t, lt, u) { const cam = { z: lerp(1.15, 1.32, io(u)), x: 1290, y: lerp(760, 820, u) }; plate('mind_living', cam, 1); apply(cam); ctx.drawImage(IM.fg_sofa, 0, 0, 2560, 1440);
-   const R = [[C.jarvis, 700, 'front', 'smile', 'stand'], [C.friday, 1000, 'threequarter', 'deadpan', 'hips'], [C.edith, 1290, 'front', 'nervous', 'wave'], [C.dume, 1590, 'threequarter', 'happy', 'thumbsUp'], [C.u, 1880, 'front', 'excited', 'peace']];
+   const R = [[C.jarvis, 650, 'front', 'smile', 'stand'], [C.friday, 970, 'threequarter', 'deadpan', 'hips'], [C.edith, 1290, 'front', 'nervous', 'wave'], [C.dume, 1630, 'threequarter', 'happy', 'hips'], [C.u, 1930, 'front', 'excited', 'peace']];
    const t0 = V(41.0) - this.a, list = [], sp = [];
-   R.forEach(([s, x, v, e, p], i) => { const k = seg(lt, t0 + i * .45, t0 + i * .45 + .35); if (k <= 0) return; list.push(fig(s, lt + i * .6, { x, y: 1290, s: 1.18 * outBack(k), view: v, dir: i > 2 ? -1 : 1, expr: e, anim: p === 'wave' ? 'wave' : null, pose: D.POSES[p] })); sp.push([worldPt(cam, x, 1290 - 230), seg(lt, t0 + i * .45, t0 + i * .45 + .8)]); });
+   R.forEach(([s, x, v, e, p], i) => { const k = seg(lt, t0 + i * .45, t0 + i * .45 + .35); if (k <= 0) return; list.push(fig(s, lt + i * .6, { x, y: 1370, s: 1.75 * outBack(k), view: v, dir: i > 2 ? -1 : 1, expr: e, anim: p === 'wave' ? 'wave' : null, pose: D.POSES[p] })); sp.push([worldPt(cam, x, 1370 - 560), seg(lt, t0 + i * .45, t0 + i * .45 + .8)]); });
    await chars(list, cam); for (const [[x, y], k] of sp) sparkle(x, y, k);
    screen(); for (let i = 0; i < 40; i++) { const R2 = rng(i + 1); const x = (R2() * W + lt * 30 * (R2() - .3) + W) % W, y = (R2() * H - lt * 20 * R2() + H) % H; ctx.fillStyle = `rgba(200,235,255,${.25 + .2 * Math.sin(lt * 2 + i)})`; ctx.beginPath(); ctx.arc(x, y, 2 + R2() * 3, 0, 7); ctx.fill(); }
    grade('#ffb070', .14); if (lt < .6) { screen(); ctx.fillStyle = `rgba(240,250,255,${1 - lt / .6})`; ctx.fillRect(0, 0, W, H); } return {}; } },
