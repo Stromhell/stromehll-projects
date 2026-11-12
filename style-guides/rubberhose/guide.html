@@ -62,7 +62,7 @@ code{font-family:var(--mono);font-size:.92em}
   <p class="lede">A 1930s rubber-hose cartoon look, rebuilt as code. Every character, glove, shoe, face and background on this page is drawn live by one JavaScript file (<code>rh.js</code>), so Claude Code can make new characters and scenes that keep this exact feel.</p>
   <div class="frame"><canvas id="hero" width="1600" height="720" aria-label="Animated street scene with the test cast"></canvas></div>
   <nav class="toc" aria-label="Sections">
-    <a href="#dna">Style DNA</a><a href="#cast">Cast</a><a href="#turn">Turnarounds</a><a href="#faces">Faces</a><a href="#hands">Hands</a><a href="#joints">Joints &amp; movement</a><a href="#anim">Animations</a><a href="#bgs">Backgrounds</a><a href="#shots">Camera shots</a><a href="#new">New characters</a><a href="#code">Using it in Claude Code</a>
+    <a href="#dna">Style DNA</a><a href="#cast">Cast</a><a href="#turn">Turnarounds</a><a href="#faces">Faces</a><a href="#hands">Hands</a><a href="#joints">Joints &amp; movement</a><a href="#anim">Animations</a><a href="#bgs">Backgrounds</a><a href="#shots">Camera shots</a><a href="#new">New characters</a><a href="#hybrid">Hybrid (locked)</a><a href="#code">Using it in Claude Code</a>
   </nav>
 </header>
 
@@ -210,6 +210,38 @@ RH.film(ctx, 1920, 1080, t);          // grain + flicker per frame</pre></div>
     </ul></div>
   </div>
   <p class="note">This is version 1 of the style. Tell me what to push further (bigger heads, thicker lines, more texture, a different colour mood, other clothes) and I will update the kit and this page.</p>
+</section>
+<section id="hybrid">
+  <div class="sec-head"><div class="eyebrow">12 · Locked final style · Finance with Stromi</div><h2>The 2D/3D hybrid look</h2><p>This is the locked style for the Finance with Stromi channel, which Pushpam approved on 12 Nov 2026. The rubber-hose cast from this guide stays flat 2D. They act inside 3D sets built in code with three.js, and real light and shadow do the mood work. Reference: <a href="https://drive.google.com/file/d/1zUpgpZcjnB-w0vw5yIlQWZxFWYMlvUxd/view">Hybrid_2D3D_Preview_v1.mp4</a> (30 s). Code lives in <code>style-guides/rubberhose/hybrid-preview/</code>.</p></div>
+  <div class="grid g2">
+    <div class="card"><h3>Characters: "bean + noodle"</h3><ul>
+      <li>Always 2D, drawn by <code>rh.js</code> every frame onto a card in the 3D scene that turns to face the camera. Never model a character in 3D.</li>
+      <li>Circle or bean heads with a thick outline, capsule bodies, rubber-hose limbs with no joints.</li>
+      <li>Detailed hands only in close-up inserts, like the glove on the stamp.</li>
+      <li>To move, characters slide sideways with a 2-frame leg wiggle at 9 Hz and a small bounce (<code>slidePose</code>).</li>
+      <li>Acting comes before text: clear poses, takes, pointing and lip-sync to the voice.</li></ul></div>
+    <div class="card"><h3>Sets: 2.5D / 3D in code</h3><ul>
+      <li>Story places: server-rack hallways, offices at night, trading floors, vaults, desks.</li>
+      <li>One practical key light per set: a spotlight, desk lamp or strip light, with a volumetric cone where it fits. Everything else falls into near black.</li>
+      <li>Fog, soft shadows, ACES tone mapping, then a heavy vignette (0.85) and film grain.</li>
+      <li>The camera keeps moving: a slow push or dolly. Cuts use a 12 px blur.</li></ul></div>
+    <div class="card"><h3>Data lives in the world</h3><ul>
+      <li>Numbers sit on things in the scene: whiteboards that write themselves, paper, price tags pinned to objects, scales, cash stacks and APPROVED/BLOCKED stamps.</li>
+      <li>No floating charts or UI. A tag is a small paper label tied to a 3D point.</li>
+      <li>Use comparisons people feel, like one GPU outweighing a car.</li></ul></div>
+    <div class="card"><h3>Rhythm and sound</h3><ul>
+      <li>Black handwritten cards (Caveat Brush) at the open, the close and big turns only. Use fewer cards than the reference.</li>
+      <li>A narrator plus voices for the cast.</li>
+      <li>Foley made in code: marker squeaks, stamp thuds, metal clanks, paper, phones, room tone, and a whoosh on every cut.</li>
+      <li>Music: a low minor pad with a pulse that sits under the voice.</li></ul></div>
+  </div>
+  <div class="card"><h3>New shot recipe</h3><pre>const S = new THREE.Scene(); S.fog = new THREE.FogExp2(0x050505, 0.08);
+// one key light + props
+const key = new THREE.SpotLight(0xffe0b0, 60, 10, 0.45, 0.5, 1.4); key.castShadow = true;
+// 2D cast card (rh.js redraws it every frame)
+const pip = castCard(S, 'pip', 1.6);
+// each frame: pip.set(x, z, pose, camera); camera path; tags; R.render(S, cam)
+// then add to SHOTS: { dur, draw(t) }</pre></div>
 </section>
 </div>
 
