@@ -38,6 +38,9 @@ const C = {
   jocasta: base({ name: 'Robot Bride (Jocasta)', skin: '#2a2a33', eyes: '#ff2a2a', scale: .98, hair: { style: 'long', color: '#121218', seed: 8, length: 1 },
     acc: { glowEyes: '#ff3030' }, top: { type: 'hoodie', color: '#141418', accent: '#2a2a33', cuff: '#0a0a0c', hood: '#101014', strings: '#2a2a33', hem: 16 },
     bottom: { color: '#1a1a20' }, shoes: { color: '#1a1a20', sole: '#000', lace: '#333', type: 'boot' }, defaultExpr: 'blank' }),
+  fiona: base({ name: 'Barmaid (Fiona)', skin: '#f4d2b8', eyes: '#3d6fb5', scale: .95, hair: { style: 'long', color: '#d8a85a', seed: 44, length: .7 },
+    top: { type: 'jacket', color: '#2a2a30', shirt: '#f4f1ea', tie: null, accent: '#3a3a44', cuff: '#f4f1ea', hem: -10, sleeves: 'long' },
+    bottom: { color: '#1d1d24' }, shoes: { color: '#1a1a1a', sole: '#000', lace: '#333', type: 'boot' }, defaultExpr: 'smile' }),
 };
 module.exports = { D, C };
 if (require.main === module) {
