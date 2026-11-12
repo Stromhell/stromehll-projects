@@ -1,7 +1,7 @@
-# Money Follows
+# Finance with Stormi (name spelling to confirm)
 
 Third YouTube channel (created 12 Nov 2026), separate from Stormi Explain Everything and DumDown.
-Keep every Money Follows file inside this folder (project files), `money-follows/` in the repo, and Drive `AI/Money Follows/`.
+Keep every Finance with Stormi file inside this folder (project files), `finance-with-stormi/` in the repo, and Drive `AI/Finance with Stormi/`.
 
 - `00 Channel/Branding` profile, banner, watermark, logo, intro/end screen
 - `00 Channel/Plan` setup plan and decisions
