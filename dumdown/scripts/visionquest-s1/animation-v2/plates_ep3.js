@@ -3,15 +3,31 @@ window.PLATES = window.PLATES || {};
 (function () {
 const { hex, rgb, mix, jitter, shade, stroke, fillStrokes, wash, glow, rays, finish, poly, paintRegion } = P2;
 const ENV = window.ENV, M = window.M2;
-function tree(c, r, x, y, h, col) { c.fillStyle = '#3a2a20'; c.fillRect(x - h * .03, y - h * .55, h * .06, h * .55);
-  for (let i = 0; i < 70; i++) { const a = r() * 6.283, d = Math.sqrt(r()) * h * .32; c.fillStyle = rgb(jitter(hex(r.pick(col)), r, 18), .85); c.beginPath(); c.ellipse(x + Math.cos(a) * d, y - h * .62 + Math.sin(a) * d * .8, h * r.range(.05, .1), h * r.range(.04, .08), r() * 3, 0, 7); c.fill(); } }
+function tree(c, r, x, y, h, col, haze = 0) {
+  const hz = (cc) => mix(typeof cc === 'string' ? hex(cc) : cc, hex('#e8d0b0'), haze), hs = (cc) => rgb(hz(cc)), tw = h * .045;
+  // tapered trunk with bark strokes + a few branches
+  c.fillStyle = hs('#3a2a20'); c.beginPath(); c.moveTo(x - tw, y); c.quadraticCurveTo(x - tw * .5, y - h * .3, x - tw * .35, y - h * .62); c.lineTo(x + tw * .35, y - h * .62); c.quadraticCurveTo(x + tw * .5, y - h * .3, x + tw, y); c.closePath(); c.fill();
+  for (let i = 0; i < 14; i++) stroke(c, r, x + r.range(-tw * .6, tw * .6), y - r() * h * .55, r.range(20, 50), -Math.PI / 2, r.range(2, 4), hz(r.pick(['#5a4434', '#241810', '#6a5040'])), .6);
+  c.strokeStyle = hs('#3a2a20'); for (let i = 0; i < 6; i++) { const by = y - h * r.range(.35, .6), d = r() < .5 ? -1 : 1; c.lineWidth = tw * r.range(.25, .45); c.beginPath(); c.moveTo(x, by); c.quadraticCurveTo(x + d * h * .08, by - h * .05, x + d * h * r.range(.14, .22), by - h * r.range(.1, .2)); c.stroke(); }
+  // foliage: shadow mass, then mid, then sunlit top-left strokes
+  const cx = x, cy = y - h * .66, R = h * .34;
+  for (let pass = 0; pass < 3; pass++) { const n = [260, 320, 200][pass], off = [.15, 0, -.18][pass], sh = [-.35, 0, .25][pass];
+    for (let i = 0; i < n; i++) { const a = r() * 6.283, d = Math.sqrt(r()) * R * (pass === 2 ? .7 : 1); const px = cx + Math.cos(a) * d + off * R * .5, py = cy + Math.sin(a) * d * .78 + off * R; const cc = shade(r.pick(col), sh);
+      stroke(c, r, px, py, r.range(h * .02, h * .045), r.range(-.6, .6) + (pass === 2 ? -.8 : 0), r.range(h * .012, h * .024), hz(cc), .75); } }
+  // a few gaps of sky/light + falling leaves
+  for (let i = 0; i < 10; i++) { c.fillStyle = hs(r.pick(col)); c.beginPath(); c.ellipse(cx + r.range(-R, R), cy + R + r() * h * .3, 4, 2, r() * 3, 0, 7); c.fill(); } }
 const AUT = ['#d8742a', '#e8a030', '#b8401a', '#f0c050', '#8a3a1a', '#c8601a'];
 
 // 1. Autumn woods road (side view), low sun through trees
 PLATES.autumn_road = (c, r, W, H) => {
   M.sky(c, r, W, H * .6, '#8ab0d8', '#f8d8a0', { strokes: 2200 });
   const N = P2.Noise(31); M.hills(c, r, N, W, 680, 120, .0013, 3, '#8a6a5a', { density: 700, topLight: .12, botDark: -.1, rim: '#ffd0a0' });
-  for (let i = 0; i < 26; i++) tree(c, r, r() * W, r.range(760, 820), r.range(380, 520), AUT.slice(2));
+  for (let i = 0; i < 30; i++) tree(c, r, r() * W, r.range(720, 760), r.range(260, 340), AUT.slice(2), .55);
+  { const g = c.createLinearGradient(0, 560, 0, 840); g.addColorStop(0, 'rgba(255,230,190,0)'); g.addColorStop(1, 'rgba(255,230,190,.35)'); c.fillStyle = g; c.fillRect(0, 560, W, 280); }
+  for (let i = 0; i < 24; i++) tree(c, r, r() * W, r.range(800, 840), r.range(380, 500), AUT.slice(1), .3);
+  // undergrowth + verge under the trees
+  paintRegion(c, r, [[0, 800], [W, 800], [W, 945], [0, 945]], '#7a5a3a', { density: 260, len: [10, 30], w: [3, 7], ang: -Math.PI / 2, angJ: .5, al: .5, topLight: -.1, botDark: .1 });
+  for (let i = 0; i < 900; i++) stroke(c, r, r() * W, r.range(860, 945), r.range(10, 28), -Math.PI / 2 + r.gauss() * .4, r.range(3, 6), r.pick(['#8a6a2a', '#a07a30', '#6a5a2a', '#c08a3a', '#5a4a22']), .6);
   rays(c, r, 2000, 200, 12, 1700, '#fff0c0', .06, 1.0);
   for (let i = 0; i < 18; i++) tree(c, r, i * 150 + r.range(-40, 40), r.range(880, 920), r.range(520, 700), AUT);
   // road
@@ -42,7 +58,7 @@ PLATES.volvo_int = (c, r, W, H) => {
   // steering wheel (left, UK drive... Vision drives on the right? keep left-of-centre)
   c.strokeStyle = '#141414'; c.lineWidth = 34; c.beginPath(); c.arc(700, 1080, 230, 0, 7); c.stroke(); c.lineWidth = 26; c.beginPath(); c.moveTo(500, 1080); c.lineTo(900, 1080); c.stroke();
   // dash dials
-  for (const [x, y] of [[620, 960], [780, 960]]) { c.fillStyle = '#0e0e10'; c.beginPath(); c.arc(x, y, 50, 0, 7); c.fill(); c.strokeStyle = '#ffaa40'; c.lineWidth = 4; c.beginPath(); c.moveTo(x, y); c.lineTo(x + 30, y - 25); c.stroke(); }
+  for (const [x, y] of [[1050, 930], [1180, 930]]) { c.fillStyle = '#0e0e10'; c.beginPath(); c.arc(x, y, 50, 0, 7); c.fill(); c.strokeStyle = '#ffaa40'; c.lineWidth = 4; c.beginPath(); c.moveTo(x, y); c.lineTo(x + 30, y - 25); c.stroke(); }
   glow(c, 1500, 400, 1300, '#ffe0a0', .15);
   finish(c, r, W, H, { oil: 3, grain: 8, vig: .5 });
 };
