@@ -2,6 +2,7 @@
 import json, subprocess, os, sys
 sys.path.insert(0, '../gags'); from gags_data import G
 ACTS = [('film', 0), ('ep1', 49.79), ('ep2', 212.79), ('ep3', 322.79), ('ep4', 436.79), ('ep5', 615.79), ('ep6', 726.5), ('ep7', 868.29), ('ep8', 989.71), ('epi', 1187.71)]
+CUT = {6, 8, 17, 20, 21}
 os.makedirs('pieces', exist_ok=True)
 def dur(f): return float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', f], capture_output=True, text=True).stdout)
 def cut(src, a, b, out):
@@ -9,8 +10,8 @@ def cut(src, a, b, out):
     subprocess.run(cmd, check=True)
 seq = []
 for i, (a, off) in enumerate(ACTS):
-    src = f'acts_v2/{a}.mp4'; d = dur(src); end = ACTS[i + 1][1] if i + 1 < len(ACTS) else None
-    pts = [g for g in G if g['at'] >= off and (end is None or g['at'] < end)]
+    src = f'acts_v3/{a}.mp4' if os.path.exists(f'acts_v3/{a}.mp4') else f'acts_v2/{a}.mp4'; d = dur(src); end = ACTS[i + 1][1] if i + 1 < len(ACTS) else None
+    pts = [g for g in G if g['id'] not in CUT and g['at'] >= off and (end is None or g['at'] < end)]
     cuts = [0] + [round((g['at'] - off) * 24) / 24 for g in pts] + [None]
     for k in range(len(cuts) - 1):
         out = f'pieces/{a}_{k}.mp4'
@@ -18,6 +19,6 @@ for i, (a, off) in enumerate(ACTS):
         else: cut(src, cuts[k], cuts[k + 1], out); seq.append(out)
         if k < len(pts): seq.append(f'../gags/out/gag{pts[k]["id"]:02d}.mp4')
     print(a, round(d, 2), len(pts), 'gags', flush=True)
-open('concat_v3.txt', 'w').write(''.join(f"file '{os.path.abspath(f)}'\n" for f in seq))
-subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', 'concat_v3.txt', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-ar', '48000', '-ac', '2', '-movflags', '+faststart', 'DumDown_VisionQuest_S1_FULL_v3.mp4'], check=True)
-print('full', dur('DumDown_VisionQuest_S1_FULL_v3.mp4'))
+open('concat_v4.txt', 'w').write(''.join(f"file '{os.path.abspath(f)}'\n" for f in seq))
+subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', 'concat_v4.txt', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-ar', '48000', '-ac', '2', '-movflags', '+faststart', 'DumDown_VisionQuest_S1_FULL_v4.mp4'], check=True)
+print('full', dur('DumDown_VisionQuest_S1_FULL_v4.mp4'))
