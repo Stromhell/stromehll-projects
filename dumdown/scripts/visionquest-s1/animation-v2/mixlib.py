@@ -29,14 +29,14 @@ class Mix:
             if n is None: continue
             f = 440 * 2 ** ((n - 9) / 12) * 2
             s.place(s.tone(f, .5, 6) + .4 * np.pad(s.tone(f * 2.76, .3, 12), (0, int(.5 * SR) - int(.3 * SR))), t0 + i * step, None, g, 0, .05)
-    def render(s, vo_mp3, score_wav, out_wav, lead=.6, mus_g=.30, sfx_g=.5):
+    def render(s, vo_mp3, score_wav, out_wav, lead=.6, mus_g=.38, sfx_g=.5):
         subprocess.run(['ffmpeg', '-loglevel', 'error', '-y', '-i', vo_mp3, '-ar', str(SR), '-ac', '1', '/tmp/claude-0/-home-user/eca28a6f-197e-5823-8545-e6c017ffb7cd/scratchpad/_vo48.wav'])
         sr, vo = wavfile.read('/tmp/claude-0/-home-user/eca28a6f-197e-5823-8545-e6c017ffb7cd/scratchpad/_vo48.wav'); vo = vo.astype(np.float32) / 32768
         v = np.zeros(s.N); i0 = int(lead * SR); n = min(len(vo), s.N - i0); v[i0:i0 + n] = vo[:n]
         sr, mu = wavfile.read(score_wav); mu = mu.astype(np.float32) / 32768
         if mu.ndim > 1: mu = mu.mean(1)
         mu = mu[:s.N] if len(mu) >= s.N else np.pad(mu, (0, s.N - len(mu)))
-        env = np.convolve(np.abs(v), np.ones(int(.3 * SR)) / int(.3 * SR), 'same'); duck = 1 - .55 * np.clip(env / (env.max() * .25 + 1e-9), 0, 1)
+        from scipy.ndimage import uniform_filter1d; env = uniform_filter1d(np.abs(v), int(.3 * SR)); duck = 1 - .40 * np.clip(env / (env.max() * .25 + 1e-9), 0, 1)
         mus = mu * mus_g * duck; k = int(1.0 * SR); mus[:k] *= np.linspace(0, 1, k); k = int(2.5 * SR); mus[-k:] *= np.linspace(1, 0, k)
         mix = v + mus + s.out * sfx_g; mix /= max(1e-9, np.abs(mix).max()) / .89
         wavfile.write(out_wav, SR, (mix * 32767).astype(np.int16)); print('mix ok', s.dur)

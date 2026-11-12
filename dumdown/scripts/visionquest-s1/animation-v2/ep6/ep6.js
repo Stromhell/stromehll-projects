@@ -82,7 +82,7 @@ const SH = [
  // 5. Surprise cameo: Raza, the cave guy
  { a: V(60.7), b: V(69.0), async draw(t, lt, u) { const T = x => V(x) - this.a; const cam = { z: lerp(1.15, 1.3, io(u)), x: 1180, y: 760 }; plate('cave', cam);
    await chars([fig(RAZA, lt, { view: 'threequarter', dir: 1, x: 900, y: 1430, s: 1.85, expr: lt > T(66.2) ? 'smug' : 'angry', pose: lt > T(66.2) ? D.POSES.hips : D.POSES.stand })], cam);
-   white(.9 * (1 - seg(lt, 0, .35))); blueprint(lt, seg(lt, T(66.2), T(66.6))); card('SURPRISE CAMEO: RAZA', 'THE CAVE GUY FROM IRON MAN 1', lt, T(62.8), T(66.0)); return {}; } },
+   white(.9 * (1 - seg(lt, 0, .35))); blueprint(lt, seg(lt, T(66.2), T(66.6))); await window.FX.intro(RAZA, "RAZA", "The cave guy from Iron Man 1. Back for a cameo.", lt, T(62.8), { side: 'R', items: ["🪨", "📐", "🔧"], tags: ["THE CAVE", "BLUEPRINTS", "SCRAP"], stat: "CAMEO 1", type: "HUMAN \u00b7 WARLORD", col: '#5a3a1a', no: 10 }); return {}; } },
  // 6. Raza wants the bounty: adamantium round into Vision
  { a: V(69.0), b: V(78.9), async draw(t, lt, u) { const T = x => V(x) - this.a; const hit = T(71.4); const sh = lt > hit && lt < hit + .5 ? shake(lt, 14) : { sx: 0, sy: 0 }; const cam = { z: 1.25, x: 1280, y: 780, ...sh }; plate('madripoor', cam, 2);
    await chars([fig(RAZA, lt, { view: 'threequarter', dir: 1, x: 640, y: 1430, s: 1.85, expr: 'angry', pose: D.POSES.point }), fig(C.vision, lt, { view: 'threequarter', dir: -1, x: 1900, y: 1430, s: 1.85, expr: lt > hit ? (lt > T(75.2) ? 'sad' : 'shock') : 'deadpan' })], cam);

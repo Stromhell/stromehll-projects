@@ -22,7 +22,7 @@ function apply(cam, par = 1) { const m = camTf(cam); ctx.setTransform(1, 0, 0, 1
   if (par === 1) ctx.transform(m.sc, 0, 0, m.sc, m.tx, m.ty); else { const sc = m.sc * par + (W / 2560) * (1 - par); const cx = (W / 2 - m.tx) / m.sc, cy = (H / 2 - m.ty) / m.sc; ctx.transform(sc, 0, 0, sc, W / 2 - (1280 + (cx - 1280) * par) * sc, H / 2 - (720 + (cy - 720) * par) * sc); } }
 function plate(n, cam, blur = 0, par = 1) { apply(cam, par); if (blur) ctx.filter = `blur(${blur}px)`; ctx.drawImage(IM[n], 0, 0, 2560, 1440); ctx.filter = 'none'; }
 async function chars(list, cam, blur = 0) { if (!list.length) return; let s = ''; for (const c of list) s += c; const svg = D.svg(2560, 1440, s, null); const im = new Image(); im.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg); await im.decode(); apply(cam); if (blur) ctx.filter = `blur(${blur}px)`; ctx.drawImage(im, 0, 0, 2560, 1440); ctx.filter = 'none'; }
-function fig(spec, t, o) { const tt = onTwos(t); const a = o.anim ? D.ANIMS[o.anim](tt) : D.ANIMS.idle(tt, o.pose || D.POSES.stand); const pose = o.pose && o.anim ? o.pose : a.pose; if (o.bob) pose.bob = (pose.bob || 0) + o.bob; if (o.lean != null) pose.lean = o.lean; if (o.tilt != null) pose.tilt = o.tilt;
+function fig(spec, t, o) { const tt = (o.anim === 'walk') ? onTwos(Math.abs(o.dist ?? (o.x + 20000)) / (240 * (o.s || 1) * (spec.scale || 1))) : onTwos(t); const a = o.anim ? D.ANIMS[o.anim](tt) : D.ANIMS.idle(tt, o.pose || D.POSES.stand); const pose = o.pose && o.anim ? o.pose : a.pose; if (o.bob) pose.bob = (pose.bob || 0) + o.bob; if (o.lean != null) pose.lean = o.lean; if (o.tilt != null) pose.tilt = o.tilt;
   return D.drawCharacter(spec, { view: o.view || 'front', dir: o.dir || 1, x: o.x, y: o.y, scale: o.s, pose, expr: (a.expr === 'blink' && !o.noBlink) ? 'blink' : (o.expr || spec.defaultExpr) }); }
 function screen() { ctx.setTransform(1, 0, 0, 1, 0, 0); }
 function grade(col, a, op = 'soft-light') { screen(); ctx.globalCompositeOperation = op; ctx.globalAlpha = a; ctx.fillStyle = col; ctx.fillRect(0, 0, W, H); ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over'; }
@@ -40,11 +40,19 @@ function finishFrame(f, t, fade = 1) { screen();
 
 // ---------- shots (times in film seconds; VO starts at LEAD) ----------
 const V = x => x + LEAD;
+let ROAD = null; function roadLayer() { if (ROAD) return ROAD; const c = document.createElement('canvas'); c.width = 2560; c.height = 1440; const x = c.getContext('2d');
+  const rg = x.createLinearGradient(0, 1000, 0, 1050); rg.addColorStop(0, '#5a4a52'); rg.addColorStop(1, '#7a6668'); x.fillStyle = rg; x.beginPath(); x.moveTo(0, 1014); x.bezierCurveTo(800, 1002, 1700, 1006, 2560, 1002); x.lineTo(2560, 1048); x.bezierCurveTo(1700, 1052, 800, 1048, 0, 1062); x.closePath(); x.fill();
+  x.strokeStyle = 'rgba(40,30,40,.35)'; x.lineWidth = 3; for (const yy of [1018, 1036]) { x.beginPath(); x.moveTo(0, yy + 6); x.bezierCurveTo(800, yy - 4, 1700, yy, 2560, yy - 4); x.stroke(); }
+  x.fillStyle = 'rgba(230,200,170,.13)'; for (let i = 0; i < 120; i++) { const R = rng(i + 41); x.fillRect(R() * 2560, 1006 + R() * 40, 6 + R() * 18, 2); }
+  const p = document.createElement('canvas'); p.width = 2560; p.height = 1440; const px = p.getContext('2d'); px.drawImage(IM.highlands, 0, 0, 2560, 1440);
+  const src = px.getImageData(0, 990, 2560, 80), dst = x.getImageData(0, 990, 2560, 80);
+  for (let i = 0; i < src.data.length; i += 4) { const l = .3 * src.data[i] + .59 * src.data[i + 1] + .11 * src.data[i + 2]; if (l < 52) dst.data[i + 3] = 0; }
+  x.putImageData(dst, 0, 990); ROAD = c; return c; }
 const SH = [
  // 1. Edinburgh street, crane down onto the pub as the pale man walks in from the left
  { a: 0, b: V(3.1), async draw(t, lt, u) { const cam = { z: lerp(1.0, 1.28, io(u)), x: lerp(1280, 1700, io(u)), y: lerp(520, 860, io(u)) };
    plate('pub_ext', cam); const x = lerp(700, 1660, lt / (this.b - this.a));
-   await chars([fig(C.vision, lt, { anim: 'walk', view: 'side', x, y: 1180, s: .72, expr: 'deadpan' })], cam);
+   await chars([fig(C.vision, lt, { anim: 'walk', dist: x - 700, view: 'side', x, y: 1180, s: .72, expr: 'deadpan' })], cam);
    rainFx(lt, .4); grade('#1a2a5a', .35); return { fade: io(lt / 1.0) }; } },
  // 2. Pub interior: slow dolly to the pale man at the bar (background softly out of focus)
  { a: V(3.1), b: V(8.95), async draw(t, lt, u) { const cam = { z: lerp(1.05, 1.42, io(u)), x: lerp(1280, 1300, u), y: lerp(760, 640, io(u)) };
@@ -72,12 +80,12 @@ const SH = [
  // 4. Highlands at dusk: a white streak crosses the sky and lands by the village; push in
  { a: V(18.9), b: V(25.7), async draw(t, lt, u) { const land = V(23.0) - this.a, k = io(seg(lt, .4, land));
    const cam = { z: lerp(1.0, 1.55, io(seg(lt, land - .6, this.b - this.a))), x: lerp(1100, 1850, io(u)), y: lerp(620, 880, io(seg(lt, land - .6, this.b - this.a))) };
-   plate('highlands', cam);
-   const sx = lerp(-200, 1860, k), sy = lerp(150, 960, Math.pow(k, 1.7));
+   plate('highlands', cam); apply(cam); ctx.drawImage(roadLayer(), 0, 0);
+   const sx = lerp(-200, 1820, k), sy = lerp(150, 1026, Math.pow(k, 1.7));
    apply(cam); if (k < 1) { ctx.lineCap = 'round'; for (let j = 0; j < 4; j++) { ctx.strokeStyle = `rgba(230,245,255,${.5 - j * .1})`; ctx.lineWidth = 16 - j * 3; ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(sx - 380 + j * 40, sy - 210 + j * 20); ctx.stroke(); } ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(sx, sy, 14, 0, 7); ctx.fill(); }
    const [px, py] = worldPt(cam, sx, sy); glowS(px, py, k < 1 ? 160 : 260 * (1 - seg(lt, land, land + 1)), 'rgba(200,240,255,A)', .6);
-   if (lt > land) { apply(cam); const w = seg(lt, land, land + 1.2); ctx.strokeStyle = `rgba(255,255,255,${1 - w})`; ctx.lineWidth = 6; ctx.beginPath(); ctx.ellipse(1860, 965, 40 + w * 260, 8 + w * 50, 0, 0, 7); ctx.stroke();
-     await chars([fig(C.vision, lt, { x: 1860, y: 975, s: .16, expr: 'deadpan' })], cam); }
+   if (lt > land) { apply(cam); const w = seg(lt, land, land + 1.2); ctx.strokeStyle = `rgba(255,255,255,${1 - w})`; ctx.lineWidth = 6; ctx.beginPath(); ctx.ellipse(1820, 1030, 40 + w * 260, 6 + w * 40, 0, 0, 7); ctx.stroke();
+     await chars([fig(C.vision, lt, { x: 1820, y: 1034, s: .19, expr: 'deadpan' })], cam); }
    grade('#ff9a6a', .12); return {}; } },
  // 5. The mind house: truck past five AI roommates in front of the sofa
  { a: V(25.7), b: V(32.2), async draw(t, lt, u) { const cam = { z: 1.32, x: lerp(820, 1740, io(u)), y: 820 };

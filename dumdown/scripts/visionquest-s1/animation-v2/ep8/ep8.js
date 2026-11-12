@@ -48,7 +48,7 @@ const SH = [
  // 2. The mystery client: Virgil Horton, son of Phineas, secret sixth partner
  { a: V(3.7), b: V(13.3), async draw(t, lt, u) { const T = x => V(x) - this.a; const cam = { z: lerp(1.2, 1.45, io(u)), x: 1600, y: 800 }; plate('loft', cam); grade('#000000', .45 * (1 - seg(lt, T(6.6), T(7.4))));
    await chars([fig(VIRGIL, lt, { view: 'front', x: 1700, y: 1420, s: 1.85, expr: lt > T(6.8) ? 'smug' : 'neutral' })], cam); { const [sx, sy] = worldPt(cam, 1700, 1000); glowS(sx, sy, 500, 'rgba(255,230,180,A)', .25 * seg(lt, T(6.6), T(7.4))); }
-   orgChart(lt, seg(lt, T(9.7), T(10.1)), seg(lt, T(11.4), T(11.7))); card('VIRGIL HORTON', 'SON OF PHINEAS · THE MYSTERY CLIENT', lt, T(6.8), T(9.5)); return {}; } },
+   orgChart(lt, seg(lt, T(9.7), T(10.1)), seg(lt, T(11.4), T(11.7))); await window.FX.intro(VIRGIL, "VIRGIL HORTON", "Son of Phineas. The mystery client all along.", lt, T(6.8), { side: 'L', items: ["👴", "📝", "🕹️"], tags: ["THE SON", "THE CLIENT", "PULLS STRINGS"], stat: "SCHEME 95", type: "HUMAN \u00b7 VILLAIN", col: '#3a3a3a', no: 12 }); return {}; } },
  // 3. The twist: Ultron's human face was always Virgil's face
  { a: V(13.3), b: V(27.7), async draw(t, lt, u) { const T = x => V(x) - this.a; const cam = { z: 1.25, x: 1280, y: 780 }; plate('loft', cam, 3);
    await chars([fig(C.ultron, lt, { view: 'threequarter', dir: 1, x: 820, y: 1420, s: 1.85, expr: 'smug' }), fig(VIRGIL, lt, { view: 'threequarter', dir: -1, x: 1760, y: 1420, s: 1.85, expr: 'smug' })], cam);
@@ -66,7 +66,7 @@ const SH = [
      screen(); ctx.fillStyle = '#f4ecd8'; ctx.fillRect(cut - 4, 0, 8, H);
      const [px, py] = worldPt(cam, 1900, 900); portal(px, py, 120, lt, seg(lt, T(48.2), T(48.6)) * (1 - seg(lt, T(49.6), T(49.8))), true); cat(W * .86, H * .45, seg(lt, T(49.8), T(50.2)) * (1 - seg(lt, T(51.4), T(51.6))));
      bubble(W * .72, H * .3, 'why do you sound\nScottish now?', seg(lt, T(51.8), T(52.1)) * (1 - seg(lt, T(54.6), T(54.9))), 520); }
-   card('THE BATHTUB DREAM-LINK', 'TOMMY CALLS HIS TWIN', lt, T(37.6), T(42.2)); card('BILLY · NEW JERSEY', 'A MAGIC KID, LIKE WANDA', lt, T(42.6), T(48.0)); card('BROTHERS', 'ALWAYS ROASTING', lt, T(53.2), T(54.9)); return {}; } },
+   card('THE BATHTUB DREAM-LINK', 'TOMMY CALLS HIS TWIN', lt, T(37.6), T(42.2)); await window.FX.intro(BILLY, "BILLY", "Tommy's twin. A magic kid, like Wanda.", lt, T(42.6), { side: 'L', items: ["✨", "🛁", "🌀"], tags: ["MAGIC", "DREAM-LINK", "NEW JERSEY"], stat: "MAGIC 98", type: "HUMAN \u00b7 WITCH KID", col: '#6a1a2a', no: 13 }); card('BROTHERS', 'ALWAYS ROASTING', lt, T(53.2), T(54.9)); return {}; } },
  // 6. Virgil's real plan: upload himself into Vision's body (the ultimate body swap)
  { a: V(55.0), b: V(69.2), async draw(t, lt, u) { const T = x => V(x) - this.a; const cam = { z: lerp(1.2, 1.35, io(u)), x: 1280, y: 780 }; plate('manor', cam);
    await chars([fig(VIRGIL, lt, { view: 'threequarter', dir: 1, x: 750, y: 1420, s: 1.85, expr: 'smug', pose: D.POSES.point }), fig(C.vision, lt, { view: 'front', x: 1750, y: 1420, s: 1.85, expr: 'blank', noBlink: true })], cam);
@@ -82,7 +82,7 @@ const SH = [
    await chars([fig(C.paladin, lt, { view: run < 1 ? 'side' : 'threequarter', dir: 1, x: lerp(-200, 520, run), y: 1430, s: 1.8, expr: 'angry', anim: run < 1 ? 'walk' : null, pose: lt > T(73.0) && lt < T(74.6) ? D.POSES.point : D.POSES.stand }), fig(C.tommy, lt, { view: run < 1 ? 'side' : 'threequarter', dir: 1, x: lerp(-400, 300, run), y: 1440, s: 1.6, expr: 'excited', anim: run < 1 ? 'walk' : null }), fig(C.lisa, lt, { view: run < 1 ? 'side' : 'threequarter', dir: 1, x: lerp(-600, 90, run), y: 1440, s: 1.65, expr: 'angry', anim: run < 1 ? 'walk' : null }),
      lt < T(73.6) ? vir : lie(vir, lerp(1500, 1950, fly), 1420, 80 * fly, 260 * fly * (lt > hit ? .5 : 1)).replace('rotate', `translate(${lerp(0, 450, fly)} 0) rotate`), ...(rise > 0 ? [lie(fig(ROBO, lt, { view: 'front', x: 1180, y: 1420, s: 1.8, expr: 'angry', noBlink: true }), 1180, 1420, -70 * (1 - rise), 0)] : [])], cam);
    if (lt > hit) { const [sx, sy] = worldPt(cam, 1950, 1300); sparks(sx, sy, lt - hit, 20, 400, 5); } { const [gx, gy] = worldPt(cam, 1180, 1380); apply(cam); screen(); shards(gx, gy, lt, seg(lt, T(75.8), T(77.0))); }
-   card('THE MANOR FIGHT', 'PALADIN · TOMMY · LISA', lt, .3, T(73.4)); card('ULTRON', 'NOW IN A ROBOT BODY', lt, T(77.3), T(80.2)); return {}; } },
+   card('THE MANOR FIGHT', 'PALADIN · TOMMY · LISA', lt, .3, T(73.4)); await window.FX.intro(ROBO, "ULTRON", "Back in a robot body. Very upset about it.", lt, T(77.3), { side: 'R', items: ["🤖", "🔥", "📡"], tags: ["NEW BODY", "RAGE", "UPLOADS"], stat: "EVIL 100", type: "AI \u00b7 VILLAIN", col: '#5a1a1a', no: 14 }); return {}; } },
  // 8. Jo remembers who she really was: the song
  { a: V(80.4), b: V(92.1), async draw(t, lt, u) { const T = x => V(x) - this.a; const cam = { z: lerp(1.3, 1.55, io(u)), x: 1280, y: 820 }; plate('manor', cam, 6); grade('#ffb060', .25 * seg(lt, T(83.1), T(84.4)), 'soft-light');
    await chars([fig(C.jocasta, lt, { view: 'front', x: 1280, y: 1420, s: 1.85, expr: lt > T(84.4) ? 'sad' : 'blank', noBlink: lt < T(84.4) })], cam); const [hx, hy] = worldPt(cam, 1280, 900); glowS(hx, hy, 600, 'rgba(255,200,120,A)', .25 * seg(lt, T(84.4), T(85.4)));

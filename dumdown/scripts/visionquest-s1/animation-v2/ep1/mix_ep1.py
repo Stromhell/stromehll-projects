@@ -66,7 +66,7 @@ v=np.zeros(N); i0=int(.6*SR); n=min(len(vo),N-i0); v[i0:i0+n]=vo[:n]
 sr,mu=wavfile.read('score1.wav'); mu=mu.astype(np.float32)/32768
 if mu.ndim>1: mu=mu.mean(1)
 mu=mu[:N] if len(mu)>=N else np.pad(mu,(0,N-len(mu)))
-envv=np.convolve(np.abs(v),np.ones(int(.3*SR))/int(.3*SR),'same'); duck=1-.55*np.clip(envv/(envv.max()*.25+1e-9),0,1)
-mus=mu*.30*duck; k=int(1.0*SR); mus[:k]*=np.linspace(0,1,k); k=int(2.5*SR); mus[-k:]*=np.linspace(1,0,k)
+envv=np.convolve(np.abs(v),np.ones(int(.3*SR))/int(.3*SR),'same'); duck=1-.40*np.clip(envv/(envv.max()*.25+1e-9),0,1)
+mus=mu*.38*duck; k=int(1.0*SR); mus[:k]*=np.linspace(0,1,k); k=int(2.5*SR); mus[-k:]*=np.linspace(1,0,k)
 mix=v+mus+out*.5; mix/=max(1e-9,np.abs(mix).max())/.89
 wavfile.write('mix1.wav',SR,(mix*32767).astype(np.int16)); print('mix ok',DUR)

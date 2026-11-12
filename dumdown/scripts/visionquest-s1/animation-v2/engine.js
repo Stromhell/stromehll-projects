@@ -22,8 +22,11 @@ function apply(cam, par = 1) { const m = camTf(cam); ctx.setTransform(1, 0, 0, 1
   if (par === 1) ctx.transform(m.sc, 0, 0, m.sc, m.tx, m.ty); else { const sc = m.sc * par + (W / 2560) * (1 - par); const cx = (W / 2 - m.tx) / m.sc, cy = (H / 2 - m.ty) / m.sc; ctx.transform(sc, 0, 0, sc, W / 2 - (1280 + (cx - 1280) * par) * sc, H / 2 - (720 + (cy - 720) * par) * sc); } }
 function plate(n, cam, blur = 0, par = 1) { apply(cam, par); if (blur) ctx.filter = `blur(${blur}px)`; ctx.drawImage(IM[n], 0, 0, 2560, 1440); ctx.filter = 'none'; }
 async function chars(list, cam, blur = 0) { if (!list.length) return; let s = ''; for (const c of list) s += c; const svg = D.svg(2560, 1440, s, null); const im = new Image(); im.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg); await im.decode(); apply(cam); if (blur) ctx.filter = `blur(${blur}px)`; ctx.drawImage(im, 0, 0, 2560, 1440); ctx.filter = 'none'; }
-function fig(spec, t, o) { const tt = onTwos(t); const a = o.anim ? D.ANIMS[o.anim](tt) : D.ANIMS.idle(tt, o.pose || D.POSES.stand); const pose = o.pose && o.anim ? o.pose : a.pose; if (o.bob) pose.bob = (pose.bob || 0) + o.bob; if (o.lean != null) pose.lean = o.lean; if (o.tilt != null) pose.tilt = o.tilt;
+function fig(spec, t, o) { const tt = (o.anim === 'walk') ? onTwos(Math.abs(o.dist ?? (o.x + 20000)) / (240 * (o.s || 1) * (spec.scale || 1))) : onTwos(t); const a = o.anim ? D.ANIMS[o.anim](tt) : D.ANIMS.idle(tt, o.pose || D.POSES.stand); const pose = o.pose && o.anim ? o.pose : a.pose; if (o.bob) pose.bob = (pose.bob || 0) + o.bob; if (o.lean != null) pose.lean = o.lean; if (o.tilt != null) pose.tilt = o.tilt;
   return D.drawCharacter(spec, { view: o.view || 'front', dir: o.dir || 1, x: o.x, y: o.y, scale: o.s, pose, expr: (a.expr === 'blink' && !o.noBlink) ? 'blink' : (o.expr || spec.defaultExpr) }); }
+function figPose(spec, t, o) { const tt = (o.anim === 'walk') ? onTwos(Math.abs(o.dist ?? (o.x + 20000)) / (240 * (o.s || 1) * (spec.scale || 1))) : onTwos(t); const a = o.anim ? D.ANIMS[o.anim](tt) : D.ANIMS.idle(tt, o.pose || D.POSES.stand); const pose = o.pose && o.anim ? o.pose : a.pose; if (o.bob) pose.bob = (pose.bob || 0) + o.bob; if (o.lean != null) pose.lean = o.lean; if (o.tilt != null) pose.tilt = o.tilt; return pose; }
+function hand(spec, t, o, side = 'R') { return D.wrist(spec, { view: o.view || 'front', dir: o.dir || 1, x: o.x, y: o.y, scale: o.s, pose: figPose(spec, t, o) }, side); }
+function brow(spec, t, o) { return D.forehead(spec, { view: o.view || 'front', dir: o.dir || 1, x: o.x, y: o.y, scale: o.s, pose: figPose(spec, t, o) }); }
 function screen() { ctx.setTransform(1, 0, 0, 1, 0, 0); }
 function grade(col, a, op = 'soft-light') { screen(); ctx.globalCompositeOperation = op; ctx.globalAlpha = a; ctx.fillStyle = col; ctx.fillRect(0, 0, W, H); ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over'; }
 function glowS(x, y, r, col, a) { screen(); ctx.globalCompositeOperation = 'screen'; const g = ctx.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, col.replace('A', a)); g.addColorStop(1, col.replace('A', 0)); ctx.fillStyle = g; ctx.fillRect(x - r, y - r, 2 * r, 2 * r); ctx.globalCompositeOperation = 'source-over'; }
@@ -40,7 +43,7 @@ function finishFrame(f, t, fade = 1) { screen();
 
 
 const V = x => x + (window.LEAD ?? LEAD);
-window.E = { D, C, W, H, FPS, BAR, IM, ctx, cv, clamp, lerp, io, out3, inn, seg, onTwos, rng, camTf, apply, plate, chars, fig, screen, grade, glowS, rainFx, worldPt, V };
+window.E = { D, C, W, H, FPS, BAR, IM, ctx, cv, clamp, lerp, io, out3, inn, seg, onTwos, rng, camTf, apply, plate, chars, fig, screen, grade, glowS, rainFx, worldPt, V, hand, figPose, brow };
 FILM.setup = (SH) => { FILM.dur = SH[SH.length - 1].b; FILM.frames = Math.round(FILM.dur * FPS); FILM.shots = SH.map(s => [s.a, s.b]);
 FILM.frame = async (f) => { const t = f / FPS; const s = SH.find(s => t >= s.a && t < s.b) || SH[SH.length - 1]; const lt = t - s.a, u = lt / (s.b - s.a);
   screen(); ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H); const r = (await s.draw.call(s, t, lt, u)) || {}; finishFrame(f, t, r.fade ?? 1); return cv.toDataURL('image/jpeg', .92); }; };

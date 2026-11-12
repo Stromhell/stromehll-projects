@@ -52,6 +52,10 @@ function chat(lt, a, b) { screen(); const k1 = out3(seg(lt, a, a + .4)), k2 = ou
     ctx.strokeStyle = '#c8ccd8'; ctx.lineWidth = 5; const ix = W / 2 - 280, iy = y + 515; ctx.beginPath(); ctx.moveTo(ix - 20, iy - 10); ctx.lineTo(ix - 8, iy - 10); ctx.lineTo(ix + 8, iy - 24); ctx.lineTo(ix + 8, iy + 16); ctx.lineTo(ix - 8, iy + 2); ctx.lineTo(ix - 20, iy + 2); ctx.closePath(); ctx.stroke(); ctx.beginPath(); ctx.moveTo(ix + 18, iy - 16); ctx.lineTo(ix + 40, iy + 8); ctx.moveTo(ix + 40, iy - 16); ctx.lineTo(ix + 18, iy + 8); ctx.stroke(); ctx.globalAlpha = 1; } }
 const ROOM = [[C.friday, 760, 'threequarter', 1], [C.edith, 1080, 'front', 1], [C.dume, 1420, 'threequarter', -1], [C.u, 1740, 'front', -1]];
 
+function paperHeld(hx, hy, sc, rot, w, h, lines, stamp) { screen(); ctx.save(); ctx.translate(hx, hy); ctx.rotate(rot); ctx.scale(sc, sc); ctx.translate(w / 2 - 40, -h / 2 + 30); ctx.fillStyle = 'rgba(0,0,0,.35)'; ctx.fillRect(-w / 2 + 12, -h / 2 + 14, w, h); ctx.fillStyle = '#f6f0e2'; ctx.fillRect(-w / 2, -h / 2, w, h); ctx.strokeStyle = '#231A24'; ctx.lineWidth = 4; ctx.strokeRect(-w / 2, -h / 2, w, h);
+  ctx.textAlign = 'left'; ctx.fillStyle = '#231A24'; lines.forEach(([t, f], i) => { ctx.font = f; ctx.fillText(t, -w / 2 + 30, -h / 2 + 60 + i * 50); });
+  if (stamp) { ctx.rotate(-.25); ctx.strokeStyle = '#e23a3a'; ctx.fillStyle = '#e23a3a'; ctx.lineWidth = 6; ctx.strokeRect(-40, h / 2 - 150, 280, 80); ctx.font = '800 46px Inter'; ctx.textAlign = 'center'; ctx.fillText(stamp, 100, h / 2 - 93); }
+  ctx.restore(); ctx.save(); ctx.translate(hx, hy); ctx.fillStyle = C.paladin.skin; ctx.strokeStyle = '#231A24'; ctx.lineWidth = 3.5; ctx.beginPath(); ctx.ellipse(10, -22, 11, 22, .35, 0, 7); ctx.fill(); ctx.stroke(); ctx.restore(); }
 const SH = [
  // 1. Title: the old white Volvo rolls through autumn woods
  { a: 0, b: V(4.2), async draw(t, lt, u) { const cam = { z: lerp(1.08, 1.16, u), x: 1280, y: 820 }; plate('autumn_road', cam); apply(cam); volvo(lerp(-400, 1100, u), 1060, .9, lt); leaves(lt, 30, 2); title('EPISODE THREE', 'Tommy Maximoff Is Real', lt, .4, 3.0, BAR + 150); return { fade: io(lt / .8) }; } },
@@ -93,8 +97,10 @@ const SH = [
    await chars([fig(C.paladin, lt, { view: 'threequarter', dir: 1, x: 860, y: 1420, s: 2.0, expr: lt > T(40.4) ? 'angry' : 'deadpan', pose: lt > T(37.8) && lt < T(42) ? D.POSES.point : D.POSES.stand })], cam);
    card('PAUL DENNING', 'PALADIN · ADOPTED · FULL OF SCARS', lt, T(34.9), T(37.6)); return {}; } },
  // 8. The receipt gag
- { a: V(43.7), b: V(48.8), async draw(t, lt, u) { const cam = { z: 1.3, x: 1280, y: 760 }; plate('van_int', cam, 6); grade('#000000', .3); const k = out3(seg(lt, .1, .7));
-   paper(W / 2, lerp(H + 400, H / 2, k), 640, 480, -.04 + (1 - k) * .2, [['RECEIPT', '800 46px Inter'], ['Item: 1 x billy club to the face', '500 28px Inter'], ['Vendor: M. Murdock, Esq.', '500 28px Inter'], ["Location: Hell's Kitchen", '500 28px Inter'], ['Refunds: absolutely not', 'italic 500 26px Georgia']], lt > 2.2 ? 'PAID' : null); return {}; } },
+ { a: V(43.7), b: V(48.8), async draw(t, lt, u) { const cam = { z: lerp(1.35, 1.5, io(u)), x: 1180, y: 760 }; plate('van_int', cam, 2.5); grade('#000000', .2); const k = out3(seg(lt, .1, .7));
+   const po = { view: 'threequarter', dir: 1, x: 820, y: 1440, s: 2.0, expr: lt > 2.2 ? 'smug' : 'deadpan', pose: { L: { sh: -8, el: 6 }, R: { sh: lerp(10, 62, k), el: lerp(10, 64, k), wr: -10, hand: 'grab' }, legL: { hip: -4 }, legR: { hip: 4 } } };
+   await chars([fig(C.paladin, lt, po)], cam); const hw = window.E.hand(C.paladin, lt, po, 'R'); const [hx, hy] = worldPt(cam, hw.x, hw.y);
+   paperHeld(hx, hy, .62, -.06, 640, 480, [['RECEIPT', '800 46px Inter'], ['Item: 1 x billy club to the face', '500 28px Inter'], ['Vendor: M. Murdock, Esq.', '500 28px Inter'], ["Location: Hell's Kitchen", '500 28px Inter'], ['Refunds: absolutely not', 'italic 500 26px Georgia']], lt > 2.2 ? 'PAID' : null); return {}; } },
  // 9. Bing, Bang and Boom
  { a: V(48.8), b: V(53.6), async draw(t, lt, u) { const T = x => V(x) - this.a; const cam = { z: 1.25, x: 1450, y: 760 }; plate('van_int', cam, 3);
    await chars([fig(C.paladin, lt, { view: 'threequarter', dir: 1, x: 920, y: 1430, s: 2.0, pose: lt > T(51.0) ? D.POSES.thumbsUp : D.POSES.hips, expr: 'smug' })], cam); apply(cam);

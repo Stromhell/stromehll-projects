@@ -4,8 +4,7 @@ const { D, C, W, H, BAR, IM, ctx, cv, clamp, lerp, io, out3, inn, seg, rng, appl
 const SCR = [[560, 300, 440, 270], [1060, 300, 440, 270], [1560, 300, 440, 270], [560, 610, 440, 270], [1060, 610, 440, 270], [1560, 610, 440, 270]];
 const outBack = u => { u = clamp(u); const k = 1.70158; return 1 + (k + 1) * Math.pow(u - 1, 3) + k * Math.pow(u - 1, 2); };
 // name card: small, elegant, lower left (not a subtitle)
-function card(name, sub, lt, a, b) { const al = io(seg(lt, a, a + .4)) * (1 - io(seg(lt, b - .4, b))); if (al <= 0) return; screen(); ctx.globalAlpha = al; const x = 120 + (1 - al) * -30, y = H - BAR - 70;
-  ctx.fillStyle = '#ffd23d'; ctx.fillRect(x, y - 44, 6, 64); ctx.textAlign = 'left'; ctx.fillStyle = '#f4ecd8'; ctx.font = '700 40px Inter'; ctx.letterSpacing = '8px'; ctx.fillText(name, x + 24, y - 6); ctx.font = '500 20px Inter'; ctx.letterSpacing = '3px'; ctx.fillStyle = '#d8ccb0'; ctx.fillText(sub, x + 26, y + 22); ctx.letterSpacing = '0px'; ctx.globalAlpha = 1; }
+const card = () => {}; const { intro } = window.FX;
 function pint(x, y, ang, fill = 1, s = 1) { ctx.save(); ctx.translate(x, y); ctx.rotate(ang); ctx.scale(s, s);
   ctx.fillStyle = 'rgba(210,140,40,.9)'; const fh = 150 * fill; ctx.beginPath(); ctx.moveTo(-40, 0); ctx.lineTo(40, 0); ctx.lineTo(40 + 8 * fh / 160, -fh); ctx.lineTo(-40 - 8 * fh / 160, -fh); ctx.closePath(); ctx.fill();
   if (fill > .05) { ctx.fillStyle = '#fff6e0'; ctx.beginPath(); ctx.ellipse(0, -fh, 46, 12, 0, 0, 7); ctx.fill(); ctx.fillRect(-46, -fh - 14, 92, 14); }
@@ -27,7 +26,7 @@ const SH = [
  // 2. Westview corner: he strolls in, camera tilts up the pole to the street signs
  { a: V(3.0), b: V(9.5), async draw(t, lt, u) { const up = io(seg(lt, 2.2, 5.2)); const cam = { z: lerp(1.15, 1.75, up), x: lerp(980, 830, up), y: lerp(900, 470, up) };
    plate('westview_corner', cam); const wx = lerp(250, 640, clamp(lt / 4.2)), walking = lt < 4.2;
-   await chars([fig(C.vision, lt, { view: walking ? 'side' : 'threequarter', dir: 1, x: wx, y: 1250, s: .78, anim: walking ? 'walk' : null, expr: 'deadpan' })], cam);
+   await chars([fig(C.vision, lt, { view: walking ? 'side' : 'threequarter', dir: 1, x: wx, dist: wx - 250, y: 1250, s: .78, anim: walking ? 'walk' : null, expr: 'deadpan' })], cam);
    grade('#ffe8b0', .12); return {}; } },
  // 3. Sign close-ups, whip to the welcome board, then a sitcom flash on "WandaVision"
  { a: V(9.5), b: V(17.4), async draw(t, lt, u) { const L = this.b - this.a, p1 = io(seg(lt, .6, 1.4)), whip = seg(lt, V(12.6) - this.a, V(13.2) - this.a);
@@ -81,24 +80,25 @@ const SH = [
    grade('#ffb070', .14); if (lt < .6) { screen(); ctx.fillStyle = `rgba(240,250,255,${1 - lt / .6})`; ctx.fillRect(0, 0, W, H); } return {}; } },
  // 10. Jarvis: the butler AI is now a literal butler (bow + silver tray)
  { a: V(45.3), b: V(50.7), async draw(t, lt, u) { const cam = { z: lerp(1.7, 1.85, io(u)), x: lerp(1180, 1260, u), y: 800 }; plate('mind_living', cam, 2.5); const bow = io(seg(lt, V(48.2) - this.a, V(48.8) - this.a)) * (1 - io(seg(lt, V(49.6) - this.a, V(50.3) - this.a)));
-   await chars([fig(C.jarvis, lt, { view: 'front', x: 1280, y: 1440, s: 1.95, expr: 'smile', lean: bow * 22, pose: D.POSES.thumbsUp })], cam);
-   apply(cam); { const tx = 1420, ty = 1040 + bow * 40; ctx.fillStyle = '#c8ccd6'; ctx.beginPath(); ctx.ellipse(tx, ty, 120, 22, 0, 0, 7); ctx.fill(); ctx.strokeStyle = '#231A24'; ctx.lineWidth = 5; ctx.stroke(); ctx.fillStyle = '#e4e8f0'; ctx.beginPath(); ctx.arc(tx, ty - 6, 80, Math.PI, 0); ctx.fill(); ctx.stroke(); ctx.fillStyle = '#231A24'; ctx.beginPath(); ctx.arc(tx, ty - 92, 10, 0, 7); ctx.fill(); ctx.fillStyle = 'rgba(255,255,255,.6)'; ctx.fillRect(tx - 50, ty - 60, 14, 40); }
-   grade('#ffb070', .14); card('JARVIS', "TONY'S OLD BUTLER AI", lt, .3, this.b - this.a - .1); return {}; } },
+   const jo = { view: 'front', x: 1280, y: 1440, s: 1.95, expr: 'smile', lean: bow * 22, pose: { L: { sh: -8, el: 6 }, R: { sh: 28, el: 92, wr: -6, hand: 'open' }, legL: { hip: -4 }, legR: { hip: 4 } } }; const hw = window.E.hand(C.jarvis, lt, jo, 'R');
+   await chars([fig(C.jarvis, lt, jo)], cam);
+   apply(cam); { const tx = hw.x + 34 * hw.sc, ty = hw.y + 6 * hw.sc; ctx.fillStyle = '#c8ccd6'; ctx.beginPath(); ctx.ellipse(tx, ty, 120, 22, 0, 0, 7); ctx.fill(); ctx.strokeStyle = '#231A24'; ctx.lineWidth = 5; ctx.stroke(); ctx.fillStyle = '#e4e8f0'; ctx.beginPath(); ctx.arc(tx, ty - 6, 80, Math.PI, 0); ctx.fill(); ctx.stroke(); ctx.fillStyle = '#231A24'; ctx.beginPath(); ctx.arc(tx, ty - 92, 10, 0, 7); ctx.fill(); ctx.fillStyle = 'rgba(255,255,255,.6)'; ctx.fillRect(tx - 50, ty - 60, 14, 40); }
+   grade('#ffb070', .14); await window.FX.intro(C.jarvis, "JARVIS", "Tony's old butler AI. Still serving. Mostly dinner.", lt, 0.4, { side: 'L', items: ["🤵", "🍽️", "💾"], tags: ["BUTLER", "DINNER", "BACKUP"], stat: "IQ 9000", type: "AI \u00b7 BUTLER", col: '#26264a', no: 1 }); return {}; } },
  // 11. Friday: no time for your nonsense
  { a: V(50.7), b: V(57.5), async draw(t, lt, u) { const cam = { z: lerp(1.55, 1.8, io(u)), x: lerp(1380, 1300, u), y: 820 }; plate('mind_kitchen', cam, 2.5); const mad = lt > V(55.4) - this.a;
    await chars([fig(C.friday, lt, { view: 'threequarter', dir: -1, x: 1300, y: 1440, s: 2.0, pose: D.POSES.hips, expr: mad ? 'angry' : 'deadpan', tilt: mad ? -6 : null })], cam);
    if (mad) { const [x, y] = worldPt(cam, 1440, 640); screen(); ctx.strokeStyle = '#e23a3a'; ctx.lineWidth = 7; const k = outBack(seg(lt, V(55.4) - this.a, V(55.8) - this.a)); for (let i = 0; i < 4; i++) { const a = -.6 + i * .4; ctx.beginPath(); ctx.moveTo(x + Math.cos(a) * 30 * k, y + Math.sin(a) * 30 * k - 40); ctx.lineTo(x + Math.cos(a) * 70 * k, y + Math.sin(a) * 70 * k - 40); ctx.stroke(); } }
-   grade('#ffb070', .12); card('FRIDAY', "TONY'S SECOND AI", lt, .3, this.b - this.a - .1); return {}; } },
+   grade('#ffb070', .12); await window.FX.intro(C.friday, "FRIDAY", "Tony's second AI. Zero time for your nonsense.", lt, 0.4, { side: 'L', items: ["⏱️", "🙄", "🔧"], tags: ["NO TIME", "ATTITUDE", "FIXES IT"], stat: "SASS 99", type: "AI \u00b7 ASSISTANT", col: '#5a2a3a', no: 2 }); return {}; } },
  // 12. Edith: fighter pilot with anxiety (a paper jet buzzes her)
  { a: V(57.5), b: V(65.6), async draw(t, lt, u) { const cam = { z: lerp(1.6, 1.75, io(u)), x: lerp(900, 1000, u), y: 800 }; plate('mind_living', cam, 2.5); const jt = seg(lt, V(63.5) - this.a, V(64.6) - this.a), duck = jt > .25 && jt < 1;
    await chars([fig(C.edith, lt, { view: 'front', x: 980, y: 1440 + (duck ? 30 : 0), s: 1.95, anim: lt < 2.2 ? 'wave' : null, expr: duck || lt > V(64.6) - this.a ? 'shock' : 'nervous', lean: duck ? 16 : 0 })], cam);
    if (jt > 0 && jt < 1) { const x = lerp(-150, W + 150, jt), y = 330 + Math.sin(jt * 6) * 60; screen(); ctx.save(); ctx.translate(x, y); ctx.rotate(Math.cos(jt * 6) * .3); ctx.fillStyle = '#f4f1ea'; ctx.strokeStyle = '#231A24'; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(70, 0); ctx.lineTo(-60, -40); ctx.lineTo(-30, 0); ctx.lineTo(-60, 40); ctx.closePath(); ctx.fill(); ctx.stroke(); ctx.restore(); ctx.strokeStyle = 'rgba(255,255,255,.5)'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(x - 80, y); ctx.lineTo(x - 300, y + 20); ctx.stroke(); }
-   grade('#ffb070', .12); card('EDITH', 'THE GLASSES AI', lt, .3, this.b - this.a - .1); return {}; } },
+   grade('#ffb070', .12); await window.FX.intro(C.edith, "EDITH", "The glasses AI. Fighter pilot with anxiety.", lt, 0.4, { side: 'R', items: ["👓", "✈️", "😰"], tags: ["GLASSES", "PILOT", "ANXIETY"], stat: "NERVES 2", type: "AI \u00b7 DEFENCE", col: '#2a3990', no: 3 }); return {}; } },
  // 13. DUM-E and U by the sink... and the invoice
  { a: V(65.6), b: V(75.9), async draw(t, lt, u) { const cam = { z: lerp(1.3, 1.45, io(u)), x: lerp(1200, 1300, u), y: 840 }; plate('mind_kitchen', cam, 1.5); const bill = seg(lt, V(73.9) - this.a, V(74.6) - this.a);
    await chars([fig(C.dume, lt, { view: 'threequarter', dir: 1, x: 1040, y: 1400, s: 1.6, pose: D.POSES.thumbsUp, expr: 'happy' }), fig(C.u, lt + .7, { view: 'threequarter', dir: -1, x: 1540, y: 1400, s: 1.55, pose: D.POSES.peace, expr: lt > V(70.3) - this.a ? 'excited' : 'blank' })], cam);
    apply(cam); ctx.fillStyle = '#9aa0aa'; ctx.save(); ctx.translate(1160, 1150); ctx.rotate(-.5); ctx.fillRect(-8, 0, 16, 120); ctx.beginPath(); ctx.arc(0, 0, 26, 0, 7); ctx.fill(); ctx.restore();
-   grade('#ffb070', .12); card('DUM-E & U', "THE GARAGE ROBOT ARMS", lt, .5, V(73.6) - this.a);
+   grade('#ffb070', .12); await window.FX.intro(C.dume, "DUM-E & U", "The garage robot arms. Now with legs. And an invoice.", lt, 0.4, { side: 'L', items: ["🦾", "🧯", "🧾"], tags: ["ROBOT ARMS", "FIRE SAFETY", "THE BILL"], stat: "HELP 1", type: "BOTS \u00b7 DUO", col: '#3a4a5a', no: 4 });
    if (bill > 0) paper(W / 2 + 120, lerp(H + 300, H / 2 + 10, out3(bill)), 560, 400, -.06, [['INVOICE', '800 42px Inter'], ['Sink: fixed', '500 30px Inter'], ['Labour: 2 big lads', '500 30px Inter'], ['TOTAL: $400 x 2', '700 34px Inter']], 'DOUBLE');
    return {}; } },
  // 14. Up in the attic: creeping push, TVs flicker, a top-hatted shape in the dark
@@ -139,7 +139,7 @@ const SH = [
    const cam = { z: lerp(1.45, 1.75, io(u)) + Math.sin(dq * Math.PI) * .25, x: 1280, y: 760, rot: Math.sin(dq * Math.PI) * 6 }; plate('van_int', cam, 2.2);
    await chars([fig(C.paladin, lt, { view: 'front', x: 1280, y: 1460, s: 1.9, pose: D.POSES.hips, expr: dq > 0 && dq < 1 ? 'smug' : 'deadpan' })], cam);
    if (lt > T(112.4)) { apply(cam); const [x, y, w, h] = SCR[2]; ctx.fillStyle = '#1a0a0a'; ctx.fillRect(x, y, w, h); ctx.fillStyle = '#ff3a3a'; ctx.font = '800 160px Inter'; ctx.textAlign = 'center'; ctx.fillText('?', x + w / 2, y + h / 2 + 56); ctx.textAlign = 'left'; }
-   grade('#ff3a3a', .14 + Math.sin(dq * Math.PI) * .2); card('PALADIN', 'BOUNTY HUNTER · PART-TIME DRAMA QUEEN', lt, .4, this.b - this.a - .2); return {}; } },
+   grade('#ff3a3a', .14 + Math.sin(dq * Math.PI) * .2); await window.FX.intro(C.paladin, "PALADIN", "Bounty hunter. Part-time drama queen.", lt, 0.4, { side: 'R', items: ["💰", "🎯", "🕶️"], tags: ["BOUNTIES", "NEVER MISSES", "DRAMA"], stat: "ATK 88", type: "HUMAN \u00b7 HUNTER", col: '#2a2a32', no: 5 }); return {}; } },
  // 21. "He goes after the family": push into the centre screen, the kid in the crosshair
  { a: V(114.7), b: V(121.3), async draw(t, lt, u) { const [x, y, w, h] = SCR[4]; const cam = { z: lerp(1.2, 3.6, inn(seg(lt, 1.2, this.b - this.a))), x: lerp(1280, x + w / 2, io(seg(lt, .6, 3))), y: lerp(640, y + h / 2, io(seg(lt, .6, 3))) };
    plate('van_int', cam); apply(cam); ctx.save(); ctx.beginPath(); ctx.rect(x, y, w, h); ctx.clip(); ctx.fillStyle = '#3a3a50'; ctx.fillRect(x, y, w, h); ctx.restore();
@@ -150,8 +150,8 @@ const SH = [
  { a: V(121.3), b: V(126.6), async draw(t, lt, u) { const T = x => V(x) - this.a, zip = seg(lt, T(124.0), T(124.5)); const tx = lt < T(124.0) ? lerp(500, 1100, lt / T(124.0)) : lerp(1100, 1850, out3(zip)) + Math.max(0, lt - T(124.5)) * 0;
    const cam = { z: 1.45, x: lerp(900, 1500, io(u)), y: 860 }; plate('market', cam, 1.5);
    if (zip > 0) { apply(cam); for (let k = 0; k < 6; k++) { ctx.strokeStyle = `rgba(255,240,200,${.5 - k * .07})`; ctx.lineWidth = 14 - k * 2; ctx.beginPath(); ctx.moveTo(tx - 60, 1000 + k * 40); ctx.lineTo(tx - 60 - 900 * (1 - zip * .6), 1000 + k * 40); ctx.stroke(); } }
-   await chars([fig(C.tommy, lt, { view: 'side', dir: 1, x: tx, y: 1290, s: 1.2, anim: 'walk', expr: zip > 0 ? 'smug' : 'neutral', lean: zip > 0 && zip < 1 ? 18 : 0 })], cam);
-   grade('#ff7a3a', .12); card('TOMMY', 'LONDON STREET GRIFTER', lt, .4, T(124.0)); return {}; } },
+   await chars([fig(C.tommy, lt, { view: 'side', dir: 1, x: tx, dist: tx - 500, y: 1290, s: 1.2, anim: 'walk', expr: zip > 0 ? 'smug' : 'neutral', lean: zip > 0 && zip < 1 ? 18 : 0 })], cam);
+   grade('#ff7a3a', .12); await window.FX.intro(C.tommy, "TOMMY", "London street grifter. Suspiciously fast.", lt, 0.4, { side: 'R', items: ["⚡", "👟", "💸"], tags: ["FAST", "RUNS", "GRIFTS"], stat: "SPD 999", type: "HUMAN?? \u00b7 SPEEDSTER", col: '#2a5a3a', no: 6, dur: 3.2 }); return {}; } },
  // 23. Panic attack: heartbeat zoom, red pulse
  { a: V(126.6), b: V(130.6), async draw(t, lt, u) { const hb = Math.pow(Math.max(0, Math.sin(lt * 7.5)), 8); const cam = { z: 2.0 + hb * .08 + u * .2, x: 1300, y: 760, ...shake(lt, 3 + hb * 6) }; plate('market', cam, 5);
    await chars([fig(C.tommy, lt, { view: 'front', x: 1300, y: 1500, s: 2.1, expr: lt > 1.2 ? 'shock' : 'nervous', pose: D.POSES.shrug, noBlink: true })], cam);

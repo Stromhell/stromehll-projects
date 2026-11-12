@@ -38,7 +38,7 @@ const SH = [
  // 5. Pan across the aisle: Lisa, two cages down
  { a: V(22.3), b: V(30.7), async draw(t, lt, u) { const p = io(seg(lt, 1.0, 2.2)); const cam = { z: 1.45, x: lerp(1600, 950, p), y: 820, rot: Math.sin(lt * 1.3) * .8 }; plate('bus_int', cam, 1.5);
    await chars([fig(C.tommy, lt, { view: 'threequarter', dir: -1, x: 1650, y: 1450, s: 1.9, expr: 'deadpan' }), fig(C.lisa, lt, { view: 'threequarter', dir: 1, x: 900, y: 1450, s: 1.85, expr: 'smug', pose: lt > 2.4 ? D.POSES.peace : D.POSES.stand })], cam);
-   bars(cam, 1300, 2050, 380, 1440, 95); bars(cam, 520, 1230, 380, 1440, 95); sweep(lt, .6); grade('#2a3a6a', .22); card('LISA', 'PICKPOCKET · AT EVERY DISASTER', lt, 2.0, this.b - this.a - .2); return {}; } },
+   bars(cam, 1300, 2050, 380, 1440, 95); bars(cam, 520, 1230, 380, 1440, 95); sweep(lt, .6); grade('#2a3a6a', .22); await window.FX.intro(C.lisa, "LISA", "Pickpocket. Somehow at every disaster.", lt, 2.0, { side: 'C', items: ["👛", "🔥", "🌪️"], tags: ["WALLETS", "DISASTERS", "CHAOS"], stat: "LUCK 77", type: "HUMAN \u00b7 THIEF", col: '#5a2a4a', no: 7 }); return {}; } },
  // 6. The bus breaks down: Tommy's hands buzz, lights die, sparks
  { a: V(30.7), b: V(34.9), async draw(t, lt, u) { const buzz = seg(lt, .4, 2.6); const cam = { z: lerp(1.6, 1.8, u), x: 1640, y: 800, ...shake(lt, 2 + buzz * 10) }; plate('bus_int', cam, 1.5);
    await chars([fig(C.tommy, lt, { view: 'front', x: 1650 + Math.sin(lt * 90) * 8 * buzz, y: 1450, s: 1.9, expr: buzz > .3 ? 'shock' : 'nervous', pose: D.POSES.shrug, noBlink: true })], cam); bars(cam, 1300, 2050, 380, 1440, 95);

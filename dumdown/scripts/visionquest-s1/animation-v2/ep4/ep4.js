@@ -5,11 +5,43 @@ const { outBack, card, title, paper, sparkle, shake, scanlines, white, sparks } 
 const VEL = { ...C.vision, top: { ...C.vision.top, color: '#6a1a2a', accent: '#d8b060', cuff: '#4a0e1a' } };
 const PRIEST = { ...C.edith, top: { ...C.edith.top, color: '#16161a', shirt: '#16161a' } };
 
-// the Butcherbird: dark winged silhouette with red eyes; (x, y) = feet, world coords
-function bird(x, y, s, lt, spread = 1, al = 1) { ctx.save(); ctx.globalAlpha = al; ctx.translate(x, y); ctx.scale(s, s); const fl = Math.sin(lt * 5) * .06 * spread;
-  for (const d of [-1, 1]) { ctx.save(); ctx.scale(d, 1); ctx.rotate(-fl); ctx.fillStyle = '#0c0c10'; ctx.beginPath(); ctx.moveTo(20, -300); for (let k = 0; k <= 7; k++) { const a = -1.2 + k * .2 * spread, R = 260 + k * 30 * spread; ctx.lineTo(Math.cos(a) * R * spread + 20, -300 + Math.sin(a) * R * .9 + k * 20); ctx.lineTo(Math.cos(a + .1) * (R - 70) * spread + 20, -300 + Math.sin(a + .1) * (R - 70) * .9 + k * 20 + 30); } ctx.lineTo(30, -160); ctx.closePath(); ctx.fill(); ctx.restore(); }
-  ctx.fillStyle = '#121218'; ctx.beginPath(); ctx.moveTo(-60, 0); ctx.lineTo(-45, -280); ctx.quadraticCurveTo(0, -330, 45, -280); ctx.lineTo(60, 0); ctx.closePath(); ctx.fill(); ctx.beginPath(); ctx.ellipse(0, -360, 44, 54, 0, 0, 7); ctx.fill();
-  ctx.fillStyle = '#ff2a2a'; ctx.shadowColor = '#ff2a2a'; ctx.shadowBlur = 20; ctx.beginPath(); ctx.ellipse(-16, -365, 9, 5, .2, 0, 7); ctx.ellipse(16, -365, 9, 5, -.2, 0, 7); ctx.fill(); ctx.restore(); }
+// the Butcherbird v2: gaunt cloaked figure with a bone-beak skull mask, layered ragged wings, talons, red eyes, mist. (x, y) = feet, world coords; ~1.15x human height at s = char s / 1.06
+function bird(x, y, s, lt, spread = 1, al = 1) { s *= 1.9; ctx.save(); ctx.globalAlpha = al; ctx.translate(x, y); ctx.scale(s, s);
+  const br = Math.sin(lt * 2.1), tw = Math.sin(lt * 23) * Math.max(0, Math.sin(lt * 1.3) - .8) * 6; const R = i => { let v = Math.sin(i * 127.1 + 311.7) * 43758.5453; return v - Math.floor(v); };
+  // ground mist + red underglow
+  let g = ctx.createRadialGradient(0, -6, 4, 0, -6, 190); g.addColorStop(0, 'rgba(120,10,20,.35)'); g.addColorStop(1, 'rgba(120,10,20,0)'); ctx.fillStyle = g; ctx.fillRect(-200, -120, 400, 160);
+  for (let i = 0; i < 14; i++) { const mx = (R(i) - .5) * 300 + Math.sin(lt * .7 + i) * 18, mr = 30 + R(i + 9) * 40; g = ctx.createRadialGradient(mx, -8, 0, mx, -8, mr); g.addColorStop(0, 'rgba(30,26,34,.55)'); g.addColorStop(1, 'rgba(30,26,34,0)'); ctx.fillStyle = g; ctx.fillRect(mx - mr, -8 - mr, mr * 2, mr * 2); }
+  // wings: three layers of ragged feathers per side
+  for (const d of [-1, 1]) { ctx.save(); ctx.translate(d * 26, -300); ctx.scale(d, 1); ctx.rotate(-(.08 + br * .04) * spread);
+    for (let layer = 0; layer < 3; layer++) { const n = 11 - layer * 2, L0 = (210 - layer * 50) * (.35 + .65 * spread);
+      for (let k = 0; k < n; k++) { const u = k / (n - 1), a = lerp(-1.05, 1.25, u) * (.4 + .6 * spread), len = L0 * (1 - Math.abs(u - .35) * .45) * (.85 + R(k * 7 + layer) * .3);
+        const bx = Math.cos(a) * 24 * layer * .4, by = Math.sin(a) * 30 + layer * 18; const ex = bx + Math.cos(a) * len, ey = by + Math.sin(a) * len * .95 + len * .25;
+        const nx = -Math.sin(a), ny = Math.cos(a), w = 16 - layer * 3;
+        ctx.fillStyle = ['#07070b', '#0e0d14', '#16141c'][layer]; ctx.beginPath(); ctx.moveTo(bx + nx * w, by + ny * w); ctx.quadraticCurveTo((bx + ex) / 2 + nx * w * 1.4, (by + ey) / 2 + ny * w * 1.4, ex, ey); ctx.lineTo(ex - nx * 5 + Math.cos(a) * -14, ey - ny * 5 + 10); ctx.quadraticCurveTo((bx + ex) / 2 - nx * w, (by + ey) / 2 - ny * w, bx - nx * w, by - ny * w); ctx.closePath(); ctx.fill();
+        ctx.strokeStyle = `rgba(110,100,130,${.35 - layer * .08})`; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.moveTo(bx, by); ctx.quadraticCurveTo((bx + ex) / 2 + nx * 3, (by + ey) / 2 + ny * 3, ex, ey); ctx.stroke();
+        if (R(k + layer * 31) > .55) { ctx.fillStyle = 'rgba(0,0,0,0)'; ctx.strokeStyle = 'rgba(8,8,12,.9)'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(ex, ey); ctx.lineTo(ex + Math.cos(a + .5) * 18, ey + Math.sin(a + .5) * 18 + 8); ctx.stroke(); } } }
+    ctx.restore(); }
+  // cloak body: tall, hunched, ragged hem
+  const hem = []; for (let i = 0; i <= 16; i++) { const u = i / 16; hem.push([lerp(-92, 92, u), -4 - (i % 2 ? 22 + R(i) * 26 : 0) + Math.sin(lt * 3 + i) * 3]); }
+  g = ctx.createLinearGradient(-90, -330, 90, 0); g.addColorStop(0, '#16141c'); g.addColorStop(.5, '#0b0a10'); g.addColorStop(1, '#050508'); ctx.fillStyle = g;
+  ctx.beginPath(); ctx.moveTo(-52, -318); ctx.bezierCurveTo(-78, -250, -96, -120, hem[0][0], hem[0][1]); for (const [hx, hy] of hem) ctx.lineTo(hx, hy); ctx.bezierCurveTo(96, -120, 78, -250, 52, -318); ctx.quadraticCurveTo(0, -342, -52, -318); ctx.fill();
+  ctx.strokeStyle = 'rgba(150,40,50,.28)'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(54, -312); ctx.bezierCurveTo(80, -240, 92, -120, 90, -20); ctx.stroke();
+  ctx.strokeStyle = 'rgba(90,86,110,.25)'; ctx.lineWidth = 2; for (let i = 0; i < 6; i++) { const fx = -50 + i * 20; ctx.beginPath(); ctx.moveTo(fx * .6, -300); ctx.quadraticCurveTo(fx, -160, fx * 1.4 + Math.sin(lt * 2 + i) * 3, -20); ctx.stroke(); }
+  // quill collar
+  for (let i = 0; i < 15; i++) { const a = lerp(-2.7, -.45, i / 14), r = 52 + R(i + 3) * 26; ctx.fillStyle = i % 2 ? '#0a0a0e' : '#1c1a24'; ctx.beginPath(); ctx.moveTo(Math.cos(a) * 30, -322 + Math.sin(a) * 12); ctx.lineTo(Math.cos(a) * r * 1.3, -330 + Math.sin(a) * r); ctx.lineTo(Math.cos(a + .14) * 34, -320 + Math.sin(a + .14) * 14); ctx.closePath(); ctx.fill(); }
+  // talon hands hanging from the cloak
+  for (const d of [-1, 1]) { const hx = d * 70, hy = -150 + br * 3; ctx.fillStyle = '#2a2430'; ctx.beginPath(); ctx.ellipse(hx, hy, 12, 16, 0, 0, 7); ctx.fill();
+    for (let f = 0; f < 4; f++) { const fx = hx + d * (-9 + f * 6), ln = 42 + f % 2 * 10; ctx.strokeStyle = '#2a2430'; ctx.lineWidth = 5; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(fx, hy + 8); ctx.quadraticCurveTo(fx + d * 4, hy + ln * .6, fx + d * 2, hy + ln); ctx.stroke(); ctx.strokeStyle = '#c8c0b0'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(fx + d * 2, hy + ln); ctx.quadraticCurveTo(fx - d * 4, hy + ln + 12, fx - d * 10, hy + ln + 8); ctx.stroke(); } }
+  // head: hood + bone beak skull mask, twitching
+  ctx.save(); ctx.translate(tw, -350); ctx.rotate(Math.sin(lt * .9) * .06 + tw * .01);
+  ctx.fillStyle = '#0b0a10'; ctx.beginPath(); ctx.moveTo(-50, 30); ctx.quadraticCurveTo(-62, -40, 0, -70); ctx.quadraticCurveTo(62, -40, 50, 30); ctx.closePath(); ctx.fill();
+  g = ctx.createLinearGradient(-30, -40, 30, 40); g.addColorStop(0, '#e8e0cc'); g.addColorStop(1, '#8a8270'); ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(-30, -18); ctx.quadraticCurveTo(0, -46, 30, -18); ctx.quadraticCurveTo(34, 8, 14, 18); ctx.quadraticCurveTo(8, 60, -2, 96); ctx.quadraticCurveTo(-10, 56, -14, 18); ctx.quadraticCurveTo(-34, 8, -30, -18); ctx.fill();
+  ctx.strokeStyle = '#3a3428'; ctx.lineWidth = 2; ctx.stroke(); ctx.beginPath(); ctx.moveTo(-6, 22); ctx.quadraticCurveTo(-2, 60, -2, 92); ctx.moveTo(-20, 0); ctx.lineTo(-12, 12); ctx.moveTo(18, -6); ctx.lineTo(10, 8); ctx.stroke();
+  ctx.fillStyle = '#050505'; for (const ex of [-14, 14]) { ctx.beginPath(); ctx.ellipse(ex, -10, 10, 8, ex < 0 ? .3 : -.3, 0, 7); ctx.fill(); }
+  ctx.shadowColor = '#ff1a1a'; ctx.shadowBlur = 24; ctx.fillStyle = '#ff2a2a'; for (const ex of [-14, 14]) { ctx.beginPath(); ctx.arc(ex, -9, 3.6 + Math.max(0, Math.sin(lt * 1.7)) * 1.2, 0, 7); ctx.fill(); } ctx.shadowBlur = 0;
+  ctx.restore();
+  ctx.restore(); }
+function camTfS(cam) { return window.E.camTf(cam).sc; }
 function ticker(lt, k, txt) { if (k <= 0) return; screen(); const y = H - BAR - 120 + (1 - out3(k)) * 140; ctx.fillStyle = '#c81a2a'; ctx.fillRect(0, y, 300, 70); ctx.fillStyle = '#f4ecd8'; ctx.font = '900 34px Inter'; ctx.textAlign = 'center'; ctx.fillText('BREAKING', 150, y + 47);
   ctx.fillStyle = 'rgba(14,16,24,.92)'; ctx.fillRect(300, y, W - 300, 70); ctx.save(); ctx.beginPath(); ctx.rect(300, y, W - 300, 70); ctx.clip(); ctx.fillStyle = '#f4ecd8'; ctx.font = '700 32px Inter'; ctx.textAlign = 'left'; const x0 = 340 + W - ((lt * 260) % (W + 1400)); ctx.fillText(txt, x0, y + 46); ctx.restore(); }
 function book(x, y, s, open) { ctx.save(); ctx.translate(x, y); ctx.scale(s, s); ctx.fillStyle = '#3a1a10'; ctx.fillRect(-120, -80, 240, 160); ctx.fillStyle = '#f4ecd8'; if (open) { ctx.fillRect(-110, -72, 105, 144); ctx.fillRect(5, -72, 105, 144); ctx.fillStyle = '#2a6aff'; ctx.font = '700 18px monospace'; ctx.textAlign = 'left'; ['if (demon)', '  exit(0);', 'sudo pray', 'rm -rf evil'].forEach((l, i) => ctx.fillText(l, -104, -40 + i * 28)); }
@@ -60,12 +92,12 @@ const SH = [
  { a: 0, b: V(5.1), async draw(t, lt, u) { const cam = { z: lerp(1.05, 1.18, u), x: 1280, y: 740 }; plate('crime_scene', cam); title('EPISODE FOUR', 'The Butcherbird', lt, .4, 4.0, BAR + 150); return { fade: io(lt / .8) }; } },
  // 2. The Butcherbird rises under the work lamp; news ticker
  { a: V(5.1), b: V(10.3), async draw(t, lt, u) { const cam = { z: lerp(1.3, 1.45, u), x: 1280, y: 760 }; plate('crime_scene', cam); apply(cam); const k = io(seg(lt, .2, 1.6)); bird(1280, 1020, .95, lt, lerp(.4, 1, k), k);
-   card('THE BUTCHERBIRD', 'SERIAL KILLER · ALWAYS ON THE NEWS', lt, .5, 3.4); ticker(lt, seg(lt, 1.8, 2.3), 'BUTCHERBIRD STRIKES AGAIN  ·  WING MARKS FOUND AT EVERY SCENE  ·  POLICE BAFFLED  ·  BIRDWATCHERS NERVOUS  ·'); return {}; } },
+   await window.FX.intro(null, "THE BUTCHERBIRD", "Serial killer. Leaves wing marks. Always on the news.", lt, 0.5, { side: 'L', items: ["🪶", "📰", "🔪"], tags: ["WING MARKS", "HEADLINES", "KILLER"], stat: "FEAR 999", type: "??? \u00b7 SERIAL KILLER", col: '#3a0a12', no: 15, portrait: (c, x, y, w, h, t) => { c.save(); c.translate(x + w / 2, y + 490); bird(0, 0, .59, t, .5); c.restore(); }, glow: '#a01a2a' }); ticker(lt, seg(lt, 1.8, 2.3), 'BUTCHERBIRD STRIKES AGAIN  ·  WING MARKS FOUND AT EVERY SCENE  ·  POLICE BAFFLED  ·  BIRDWATCHERS NERVOUS  ·'); return {}; } },
  // 3. Wing marks on the floor
  { a: V(10.3), b: V(13.5), async draw(t, lt, u) { const cam = { z: lerp(2.6, 2.3, io(u)), x: 1280, y: lerp(880, 940, u) }; plate('crime_scene', cam); grade('#4a6aaa', .12); return {}; } },
  // 4. Rent-free: she moves into the mind house; NO VACANCY
  { a: V(13.5), b: V(20.3), async draw(t, lt, u) { const T = x => V(x) - this.a; const cam = { z: lerp(1.15, 1.25, u), x: 1280, y: 780 }; plate('mind_living', cam, 1); apply(cam); ctx.drawImage(IM.fg_sofa, 0, 0, 2560, 1440);
-   const k = io(seg(lt, .3, 1.3)); apply(cam); bird(1090, 1370, .85, lt, .55, k * .95);
+   const k = io(seg(lt, .3, 1.3)); apply(cam); bird(1090, 1370, .85, lt, .22, k * .95);
    await chars(ROOM.map(([c, x, v, d]) => fig(c, lt, { view: v, dir: d, x, y: 1370, s: 1.75, expr: lt > 1.5 ? 'nervous' : 'neutral' })), cam);
    const kp = seg(lt, T(16.8), T(17.3)); if (kp > 0) { screen(); ctx.save(); ctx.translate(W / 2, BAR + 160 + (1 - outBack(kp)) * -300); ctx.rotate(Math.sin(lt * 3) * .04); ctx.fillStyle = '#c81a2a'; ctx.beginPath(); ctx.roundRect(-330, -70, 660, 150, 18); ctx.fill(); ctx.strokeStyle = '#f4ecd8'; ctx.lineWidth = 6; ctx.stroke(); ctx.fillStyle = '#f4ecd8'; ctx.textAlign = 'center'; ctx.font = '900 60px Inter'; ctx.fillText('NO VACANCY', 0, 10); ctx.font = '700 24px Inter'; ctx.fillText('PG FOR GENTS, LADIES & AIs · NO REFUNDS', 0, 54); ctx.restore(); }
    return {}; } },
@@ -73,8 +105,9 @@ const SH = [
  { a: V(20.3), b: V(32.6), async draw(t, lt, u) { const T = x => V(x) - this.a; const yell = lt > T(26.3); const cam = { z: lerp(1.2, 1.4, io(u)), x: 1280, y: 780, ...(yell ? shake(lt, 3) : {}) }; plate('mind_living', cam, 1); grade('#1a0a2a', .45, 'multiply');
    apply(cam); for (let i = 0; i < 7; i++) { const x = 500 + i * 260; ctx.fillStyle = '#f4ecd8'; ctx.fillRect(x - 10, 1310, 20, 70); ctx.fillStyle = `rgba(255,200,90,${.8 + Math.sin(lt * 11 + i) * .2})`; ctx.beginPath(); ctx.ellipse(x, 1296, 10, 18, 0, 0, 7); ctx.fill(); const [px, py] = worldPt(cam, x, 1290); glowS(px, py, 90, 'rgba(255,200,90,A)', .45); }
    apply(cam); bird(1680, 1300, .85, lt, .7 + Math.sin(lt * 4) * .2);
-   await chars([fig(PRIEST, lt, { view: 'threequarter', dir: 1, x: 900, y: 1380, s: 1.8, expr: yell ? 'angry' : 'deadpan', pose: yell ? D.POSES.point : D.POSES.stand })], cam);
-   const [bx, by] = worldPt(cam, 760, 960); screen(); ctx.save(); ctx.translate(bx, by); book(0, 0, 1.1 * cam.z / 1.3, lt > T(23.3)); ctx.restore();
+   const po = { view: 'threequarter', dir: 1, x: 900, y: 1380, s: 1.8, expr: yell ? 'angry' : 'deadpan', pose: { ...(yell ? D.POSES.point : D.POSES.stand), L: { sh: -30, el: -96, wr: 4, hand: 'open' } } }; const hb = window.E.hand(PRIEST, lt, po, 'L');
+   await chars([fig(PRIEST, lt, po)], cam);
+   const [bx, by] = worldPt(cam, hb.x - 10 * hb.sc, hb.y - 34 * hb.sc); screen(); ctx.save(); ctx.translate(bx, by); ctx.rotate(-.08); book(0, 0, .3 * hb.sc * camTfS(cam), lt > T(23.3)); ctx.restore();
    if (yell) { key(W * .3, H / 2 - 80, 'CTRL', seg(lt, T(29.0), T(29.3))); key(W * .5, H / 2 - 80, 'ALT', seg(lt, T(29.5), T(29.8))); key(W * .7, H / 2 - 80, 'DEL', seg(lt, T(30.0), T(30.3))); }
    card('EDITH', 'PART-TIME PRIEST · FULL-TIME IT', lt, T(23.3), T(26.2)); return {}; } },
  // 6. It does not work: restart fails, support ticket closed
@@ -83,7 +116,7 @@ const SH = [
    const kt = seg(lt, T(37.5), T(38.0)); if (kt > 0) paper(W * .32, lerp(H + 300, H / 2, out3(kt)), 640, 440, -.04, [['IT SUPPORT TICKET #666', '800 34px Inter'], ['Issue: demon in head', '500 28px Inter'], ['Tried: turning it off and on', '500 28px Inter'], ['Status: CLOSED (won\'t fix)', 'italic 500 26px Georgia']], 'NOPE');
    return {}; } },
  // 7. Hacking Interpol: the database is a noir movie
- { a: V(40.6), b: V(46.7), async draw(t, lt, u) { const cam = { z: lerp(1.1, 1.25, io(u)), x: 1280, y: 760 }; plate('noir_office', cam); await chars([fig(C.edith, lt, { view: 'threequarter', dir: 1, x: 1500, y: 1420, s: 1.7, expr: 'smug', anim: lt < 2.2 ? 'walk' : null })], cam);
+ { a: V(40.6), b: V(46.7), async draw(t, lt, u) { const cam = { z: lerp(1.1, 1.25, io(u)), x: 1280, y: 760 }; plate('noir_office', cam); await chars([fig(C.edith, lt, { view: 'threequarter', dir: 1, x: lerp(1050, 1500, clamp(lt / 2.2)), y: 1420, s: 1.7, expr: 'smug', anim: lt < 2.2 ? 'walk' : null })], cam);
    desat(1); grade('#ffeec8', .08, 'screen'); scanlines(.08); screen(); for (let i = 0; i < 30; i++) { const R = rng(i + ((lt * 12) | 0)); ctx.fillStyle = `rgba(255,255,255,${R() * .15})`; ctx.fillRect(R() * W, R() * H, 2, R() * 80); }
    card('INTERPOL DATABASE', 'NOW SHOWING IN BLACK AND WHITE', lt, .4, 5.6); return {}; } },
  // 8. The CAPTCHA: a robot proving she's not a robot
@@ -128,7 +161,7 @@ const SH = [
  { a: V(101.2), b: V(110.6), async draw(t, lt, u) { const T = x => V(x) - this.a; const cam = { z: lerp(1.2, 1.4, io(u)), x: 1280, y: 760 }; plate('gala_hall', cam);
    await chars([fig(VEL, lt, { view: 'front', x: 1200, y: 1420, s: 1.85, expr: 'smug', pose: lt > T(106.0) ? D.POSES.hips : D.POSES.stand, anim: lt < T(104.6) ? null : null }), fig(C.tommy, lt, { view: 'threequarter', dir: -1, x: 1750, y: 1420, s: 1.65, expr: 'nervous' })], cam);
    if (lt > T(106.0)) { const [px, py] = worldPt(cam, 1200, 790); screen(); ctx.fillStyle = '#141418'; ctx.save(); ctx.translate(px, py - 30 + Math.sin(lt * 3) * 4); ctx.fillRect(-70, -150, 140, 150); ctx.fillRect(-110, -10, 220, 26); ctx.fillStyle = '#6a1a2a'; ctx.fillRect(-70, -40, 140, 22); ctx.restore(); sparkle(px + 160, py - 120, (lt * .8) % 1, '255,220,120'); }
-   card('VISION', 'BURGUNDY VELVET · KIDS\' PARTY ENERGY · DUBAI PRICES', lt, T(104.9), T(110.4)); return {}; } },
+   await window.FX.intro(VEL, "VISION", "Burgundy velvet. Kids' party energy. Dubai prices.", lt, T(104.9), { side: 'L', items: ["🎩", "🎈", "💸"], tags: ["VELVET", "PARTIES", "PRICEY"], stat: "STYLE 100", type: "SYNTHEZOID \u00b7 ICON", col: '#6a1a2a', no: 8 }); return {}; } },
  // 15. Fake Italian and a made-up coat of arms
  { a: V(110.6), b: V(115.5), async draw(t, lt, u) { const cam = { z: 1.4, x: 1280, y: 760 }; plate('gala_hall', cam, 2);
    await chars([fig(VEL, lt, { view: 'threequarter', dir: 1, x: 900, y: 1420, s: 1.85, expr: 'smug', pose: D.POSES.point }), fig(C.tommy, lt, { view: 'threequarter', dir: 1, x: 560, y: 1420, s: 1.65, expr: 'excited', anim: 'wave' })], cam);
@@ -153,7 +186,7 @@ const SH = [
    if (bride) veil(cam, 1500, 1420, 1.9 / 1.0 * .5);
    await chars([fig(C.jocasta, lt, { view: bride ? 'threequarter' : 'front', dir: -1, x: bride ? 1500 : 1280, y: 1420, s: 1.9, expr: 'deadpan', noBlink: true })].concat(bride ? [fig(C.ultron, lt, { view: 'threequarter', dir: 1, x: 950, y: 1420, s: 1.85, expr: 'happy', pose: D.POSES.thumbsUp })] : []), cam);
    if (bride) { hearts(lt, 14); const [px, py] = worldPt(cam, 1225, 580); screen(); ctx.fillStyle = '#ffd23d'; ctx.font = '900 70px Georgia'; ctx.textAlign = 'center'; ctx.fillText('JUST MARRIED (IN THE COMICS)', W / 2, BAR + 110); }
-   card('JOCASTA', 'AI BUILT FROM THE MIND OF DR. JO CARRINGTON', lt, T(144.6), T(149.3)); return {}; } },
+   await window.FX.intro(C.jocasta, "JOCASTA", "AI built from the mind of Dr. Jo Carrington.", lt, T(144.6), { side: 'C', items: ["🧠", "💍", "🤖"], tags: ["JO'S MIND", "THE BRIDE", "ROBOT"], stat: "LOVE 404", type: "AI \u00b7 BRIDE", col: '#3a2a5a', no: 9 }); return {}; } },
  // 20. Uh-oh: Vision losing the fight
  { a: V(153.0), b: V(159.9), async draw(t, lt, u) { const T = x => V(x) - this.a; const hit = (lt * 1.6) % 1 < .2; const cam = { z: 1.45, x: 1280, y: 760, ...(hit ? shake(lt, 10) : {}) }; plate('gala_hall', cam, 1);
    const kb = Math.max(0, Math.sin(lt * 1.6 * Math.PI)) * 80; await chars([fig(C.jocasta, lt, { view: 'threequarter', dir: 1, x: 900, y: 1420, s: 1.9, expr: 'angry', pose: D.POSES.point, noBlink: true }), fig(VEL, lt, { view: 'threequarter', dir: -1, x: 1650 + kb, y: 1420, s: 1.85, expr: lt > T(155.4) ? 'shock' : 'nervous', tilt: 8, lean: 10 })], cam);
