@@ -1,0 +1,384 @@
+<title>Rubber Hose Style Bible</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Limelight&family=Karla:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a 1930s studio model-sheet binder. Paper pages, inked rules, one red accent. */
+:root{
+  --paper:#efe2c4; --sheet:#f7eedb; --ink:#1e1612; --muted:#6d5a49; --red:#c2372d; --rule:#cdb995; --chip:#e6d5b2;
+  --display:"Limelight", Georgia, serif; --body:"Karla", system-ui, sans-serif; --mono:"IBM Plex Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--paper:#1a1411;--sheet:#241c17;--ink:#f1e6cf;--muted:#b9a68c;--red:#e5604f;--rule:#4a3b2f;--chip:#2f251e;color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#1a1411;--sheet:#241c17;--ink:#f1e6cf;--muted:#b9a68c;--red:#e5604f;--rule:#4a3b2f;--chip:#2f251e;color-scheme:dark}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 80px}
+h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0}
+h1{font-size:clamp(34px,6vw,64px);line-height:1.02;letter-spacing:.01em}
+h2{font-size:clamp(26px,3.6vw,38px);line-height:1.1}
+h3{font-size:20px}
+p{margin:0;max-width:68ch}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--red)}
+.lede{font-size:18px;color:var(--muted)}
+section{padding-block:44px;border-top:2px solid var(--ink);display:grid;gap:20px}
+.sec-head{display:grid;gap:8px}
+.hero{display:grid;gap:18px;padding-block:8px 36px}
+canvas{display:block;width:100%;height:auto;border-radius:6px;background:var(--sheet)}
+.frame{border:2px solid var(--ink);border-radius:8px;overflow:hidden;background:var(--sheet)}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));align-items:start}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr))}
+.card{background:var(--sheet);border:1px solid var(--rule);border-radius:8px;padding:14px;display:grid;gap:8px;align-content:start;min-width:0}
+.card h3{font-size:18px}
+.card p,.card li{font-size:15px;color:var(--muted)}
+.card ul{margin:0;padding-left:18px;display:grid;gap:4px}
+.tag{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.swatches{display:flex;flex-wrap:wrap;gap:10px}
+.sw{display:grid;gap:4px;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.sw i{display:block;width:56px;height:56px;border-radius:50%;border:2.5px solid #1e1612}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+button{font:600 14px var(--body);color:var(--ink);background:var(--chip);border:1.5px solid var(--ink);border-radius:999px;padding:7px 14px;cursor:pointer}
+button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+button:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+label.tog{display:inline-flex;gap:6px;align-items:center;font-size:14px;color:var(--muted)}
+pre{margin:0;background:#1e1612;color:#f1e6cf;border-radius:8px;padding:14px;font:13px/1.5 var(--mono);overflow-x:auto;min-width:0}
+code{font-family:var(--mono);font-size:.92em}
+.anim-card{display:grid;gap:6px;min-width:0}
+.anim-card b{font-family:var(--display);font-weight:400;font-size:19px}
+.anim-card span{font-size:14px;color:var(--muted)}
+.rules{counter-reset:r;display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.rules li{display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:start}
+.rules li::before{counter-increment:r;content:counter(r);font-family:var(--display);font-size:22px;color:var(--red);line-height:1.1}
+.toc{display:flex;flex-wrap:wrap;gap:6px 14px;font-family:var(--mono);font-size:13px}
+.toc a{color:var(--ink)}
+.note{border-left:4px solid var(--red);padding:8px 14px;background:var(--sheet);border-radius:0 8px 8px 0}
+@media (prefers-reduced-motion: reduce){.motion-note{display:block}}
+</style>
+
+<div class="wrap">
+<header class="hero">
+  <div class="eyebrow">Style bible · v1 · project name to come</div>
+  <h1>Rubber Hose Style Bible</h1>
+  <p class="lede">A 1930s rubber-hose cartoon look, rebuilt as code. Every character, glove, shoe, face and background on this page is drawn live by one JavaScript file (<code>rh.js</code>), so Claude Code can make new characters and scenes that keep this exact feel.</p>
+  <div class="frame"><canvas id="hero" width="1600" height="720" aria-label="Animated street scene with the test cast"></canvas></div>
+  <nav class="toc" aria-label="Sections">
+    <a href="#dna">Style DNA</a><a href="#cast">Cast</a><a href="#turn">Turnarounds</a><a href="#faces">Faces</a><a href="#hands">Hands</a><a href="#joints">Joints &amp; movement</a><a href="#anim">Animations</a><a href="#bgs">Backgrounds</a><a href="#shots">Camera shots</a><a href="#new">New characters</a><a href="#code">Using it in Claude Code</a>
+  </nav>
+</header>
+
+<section id="dna">
+  <div class="sec-head"><div class="eyebrow">01 · What we took from your pins</div><h2>Style DNA</h2>
+  <p>Pins 1 to 5 are 1930s rubber-hose characters (round heads, pie-cut eyes, white four-digit gloves, big shoes, bendy limbs, thick warm ink). Pins 6 to 14 are movement references: walk and run cycles, game sprites, sneaks and a talking kid. This page turns both into rules.</p></div>
+  <div class="grid g3">
+    <div class="card"><h3>Shapes</h3><ul><li>Head is the biggest shape, about one third of the height.</li><li>Pear, barrel or slim torso. No necks.</li><li>Limbs are tubes of one fixed width with no elbows or knees drawn.</li></ul></div>
+    <div class="card"><h3>Line</h3><ul><li>One warm near-black ink, about 3 px at 1x.</li><li>Outline the whole silhouette, never the inside overlaps.</li><li>Clothing seams and folds get thinner lines at half opacity.</li></ul></div>
+    <div class="card"><h3>Colour</h3><ul><li>Muted print colours, never neon.</li><li>Light from the top left. Shadow is the same colour, darker and slightly purple.</li><li>Halftone dots inside the shadow side, like old printed comics.</li></ul></div>
+    <div class="card"><h3>Faces</h3><ul><li>Tall eyes that touch, with pie-cut black pupils.</li><li>Button nose, blush ovals, a smile with tick marks at the corners.</li><li>Expressions come from lids and brows first, the mouth second.</li></ul></div>
+    <div class="card"><h3>Hands and feet</h3><ul><li>White gloves with three fingers plus a thumb, a flared cuff and three stitch lines.</li><li>Shoes are big round bulbs with a pale sole, a shine and laces.</li><li>Gloves are about the size of the face.</li></ul></div>
+    <div class="card"><h3>Texture and motion</h3><ul><li>Paper grain, soft vignette, gentle film flicker.</li><li>Everything bounces: idle on the beat, squash on landing, stretch on the way up.</li><li>Animate on twos (12 drawings a second) for the vintage feel.</li></ul></div>
+  </div>
+  <div class="grid g2">
+    <div class="card"><h3>Palette</h3><div class="swatches" id="swatches"></div></div>
+    <div class="card"><h3>Skin tones and hair</h3><div class="swatches" id="swatches2"></div></div>
+  </div>
+</section>
+
+<section id="cast">
+  <div class="sec-head"><div class="eyebrow">02 · Test cast</div><h2>Five characters, one rig</h2>
+  <p>These are placeholder characters built only to prove the rig can make very different people. They are all the same code with different spec values: body shape, head shape, hair, hat, clothes and colours.</p></div>
+  <div class="frame"><canvas id="lineup" width="1600" height="760" aria-label="Cast lineup"></canvas></div>
+  <div class="grid g4" id="castCards"></div>
+</section>
+
+<section id="turn">
+  <div class="sec-head"><div class="eyebrow">03 · Model sheet</div><h2>Turnarounds</h2><p>Front, three-quarter, side and back. Pick a character. The rig moves the face across the head, squeezes the body width and swaps ear, hair and hat drawings per view, so any new character gets all four views for free.</p></div>
+  <div class="bar" id="turnPick"></div>
+  <div class="frame"><canvas id="turnCv" width="1600" height="640" aria-label="Character turnaround"></canvas></div>
+</section>
+
+<section id="faces">
+  <div class="sec-head"><div class="eyebrow">04 · Acting</div><h2>Expressions and mouth shapes</h2><p>Ten expressions and ten mouth shapes. For lip sync, map sounds to mouths: M B P → <code>M</code>, A I → <code>open</code>, E → <code>E</code>, O U W → <code>O</code>, rest → <code>smile</code>.</p></div>
+  <div class="bar" id="facePick"></div>
+  <div class="frame"><canvas id="exprCv" width="1600" height="700" aria-label="Expression sheet"></canvas></div>
+  <div class="frame"><canvas id="mouthCv" width="1600" height="300" aria-label="Mouth chart"></canvas></div>
+</section>
+
+<section id="hands">
+  <div class="sec-head"><div class="eyebrow">05 · Gloves</div><h2>Seven hand poses</h2><p>Hands are drawn outline first, fill second, so the fingers merge into one clean glove shape. Each pose is a short list of ovals and finger tubes, so adding a new pose is a few lines.</p></div>
+  <div class="frame"><canvas id="handCv" width="1600" height="300" aria-label="Glove poses"></canvas></div>
+</section>
+
+<section id="joints">
+  <div class="sec-head"><div class="eyebrow">06 · How 2D bodies move</div><h2>Joints and movement</h2>
+  <p>The rig has only the joints you can see on the left. Arms and legs are rubber hoses: each one has a fixed length, a start joint and an end point. When the end comes closer, the hose bows out in a smooth curve, and that curve is the elbow or knee. When the end goes further, the hose stretches. That is the whole rubber-hose trick, and it is why these limbs never break.</p></div>
+  <div class="grid g2">
+    <div class="frame"><canvas id="skelCv" width="800" height="760" aria-label="Skeleton diagram"></canvas></div>
+    <div class="card"><h3>What each joint does</h3><ul>
+      <li><b>Pelvis</b>: moves up and down for bounce, leans the upper body.</li>
+      <li><b>Neck</b>: tilts the head, which lags behind the body by a few frames.</li>
+      <li><b>Shoulder and hip</b>: the start of each hose. Fixed to the body.</li>
+      <li><b>Elbow and knee</b>: not real joints. The bend point is worked out from limb length, so it always lands on a smooth arc. Knees bow forward, elbows bow back.</li>
+      <li><b>Wrist</b>: where the glove sits. The glove turns to follow the forearm unless a pose fixes its angle (dangling sneak fingers, waving).</li>
+      <li><b>Ankle</b>: where the shoe sits. The shoe rolls heel to toe through a step.</li>
+    </ul>
+    <h3>Twelve rules of good motion we follow</h3>
+    <ol class="rules">
+      <li>Squash on landing, stretch on the way up. Keep the volume the same.</li>
+      <li>Anticipation: crouch before a jump, wind up before a take.</li>
+      <li>Follow-through: hats, braids and tails stop after the body.</li>
+      <li>Arcs: hands, feet and heads travel on curves, never straight lines.</li>
+      <li>Slow in and slow out at the ends of a move; the sneak holds each step.</li>
+      <li>Opposite arm swings with each leg.</li>
+      <li>The body is lowest just after the heel lands and highest while passing.</li>
+      <li>Heel hits first, toe pushes off last.</li>
+      <li>Things never pop in: they walk, slide or bounce in.</li>
+      <li>Feet stay planted on the ground line; the contact shadow shrinks when off it.</li>
+      <li>Keep a few frames of hold so the audience can read a pose.</li>
+      <li>Blink every 3 seconds or so, and on big head turns.</li>
+    </ol></div>
+  </div>
+  <div class="card"><h3>Walk cycle, frame by frame</h3><p>One full cycle is two steps. The red dotted line on frames 1 and 5 is the arc the front foot travels through a full cycle.</p></div>
+  <div class="frame"><canvas id="walkStrip" width="1600" height="440" aria-label="Walk cycle key poses"></canvas></div>
+</section>
+
+<section id="anim">
+  <div class="sec-head"><div class="eyebrow">07 · Small animations</div><h2>Seven motion tests</h2><p>Each one is a single function of time. Pass in the seconds, get back a pose, draw it. Turn off "on twos" for smooth 60 fps.</p></div>
+  <div class="bar"><label class="tog"><input type="checkbox" id="twos" checked> On twos (12 fps, vintage)</label><label class="tog"><input type="checkbox" id="film" checked> Film grain and flicker</label><button id="pauseBtn" aria-pressed="false">Pause</button></div>
+  <div class="grid g3" id="animGrid"></div>
+</section>
+
+<section id="bgs">
+  <div class="sec-head"><div class="eyebrow">08 · Painted sets</div><h2>Backgrounds</h2><p>Backgrounds are drawn in a fixed 1600 × 900 world, painted in layers from back to front, then finished with a warm wash, paper grain and a vignette. Change the seed and a whole new street, forest or room comes out with the same style.</p></div>
+  <div class="bar"><button id="reseed">New seed for all three</button><span class="tag" id="seedTag">seed 5</span></div>
+  <div class="grid g2" id="bgGrid"></div>
+  <div class="grid g3">
+    <div class="card"><h3>Layer recipe</h3><ul><li>1. Sky gradient + soft wash dabs</li><li>2. Sun glow and inked cream clouds</li><li>3. Far silhouettes, paler and bluer</li><li>4. Main set pieces with ink outlines and texture</li><li>5. Ground: tiles, cobbles, planks or grass</li><li>6. Props and foreground details</li><li>7. Light shafts, wash, grain, vignette</li></ul></div>
+    <div class="card"><h3>Detail checklist</h3><ul><li>Every surface gets a texture: bricks, grain, bark, cobbles.</li><li>Windows get frames, curtains, sills and flower boxes.</li><li>Ink lines wobble slightly so they look hand drawn.</li><li>At least three props per set at real size next to the cast.</li></ul></div>
+    <div class="card"><h3>Keep the cast readable</h3><ul><li>Sets are lower contrast than characters.</li><li>The ground line sits at 70 to 80 percent of the height.</li><li>Keep the busiest detail away from where faces go.</li></ul></div>
+  </div>
+</section>
+
+<section id="shots">
+  <div class="sec-head"><div class="eyebrow">09 · Cinematography</div><h2>Camera shots</h2><p>Every shot below is the same scene with a different camera: a centre point, a zoom and a tilt. The code is one transform before drawing, so any scene can be reframed without redrawing it.</p></div>
+  <div class="grid g3" id="shotGrid"></div>
+</section>
+
+<section id="new">
+  <div class="sec-head"><div class="eyebrow">10 · Character generator</div><h2>Make a new character</h2><p>Press the button for a new random character built from the same rules. Copy its spec into a project and change anything you like. Below it you can see how it walks.</p></div>
+  <div class="bar"><button id="genBtn">Generate a new character</button><button id="copyBtn">Copy spec</button><span class="tag" id="genTag"></span></div>
+  <div class="grid g2">
+    <div class="frame"><canvas id="genCv" width="900" height="640" aria-label="Generated character in four views"></canvas></div>
+    <pre id="genSpec" aria-label="Character spec"></pre>
+  </div>
+</section>
+
+<section id="code">
+  <div class="sec-head"><div class="eyebrow">11 · For Claude Code</div><h2>Using the kit</h2><p>Everything lives in <code>style-guides/rubberhose/</code>: <code>rh.js</code> (the whole kit), <code>cast.js</code> (the test cast), and this page. Load <code>rh.js</code> in any HTML page or render script.</p></div>
+  <div class="grid g2">
+    <div class="card"><h3>1. Make a character</h3><pre>const pip = RH.character({
+  name: 'Pip Tumble', skin: '#f1c9a0', freckles: true,
+  head: { shape: 'round' },          // round | bean | long
+  hair: { style: 'tuft' },           // tuft curls slick bun braids bald spiky
+  hat:  { type: 'cap', color: '#5b6e4e' }, // none top bowler cap boater
+  body: { shape: 'pear' },           // pear barrel slim tall
+  top:  { type: 'shorts', color: '#c2372d', accent: '#2b2523' },
+        // tee shorts overalls tux dress
+  nose: 'button', eyes: 'pie', tie: 'none'
+});</pre></div>
+    <div class="card"><h3>2. Pose it and draw it</h3><pre>// still pose in any view: front | q | side | back
+RH.draw(ctx, pip, RH.stand('q'), x, groundY, scale);
+
+// animation: any RH.anim.* is a function of time
+const pose = RH.anim.walk(t, 'side');
+pose.dir = -1;                       // face left
+RH.draw(ctx, pip, pose, x, groundY, scale);
+
+// faces and hands
+pose.face = { expr: 'angry', mouth: 'grit', look: [1, 0] };
+pose.arms[1].hand = 'point';</pre></div>
+    <div class="card"><h3>3. Backgrounds and finish</h3><pre>const street = RH.bg.render('street', 1920, 1080, seed);
+ctx.drawImage(street, 0, 0);         // also 'forest', 'room'
+// ...draw characters...
+RH.film(ctx, 1920, 1080, t);          // grain + flicker per frame</pre></div>
+    <div class="card"><h3>4. Rules for every new character</h3><ul>
+      <li>Start from <code>RH.character()</code>; never draw a body by hand.</li>
+      <li>New hair, hats or clothes go into <code>rh.js</code> as a new option, so every view works.</li>
+      <li>Check all four views and three expressions on a sheet before animating.</li>
+      <li>Keep heads about one third of the height and gloves face-sized.</li>
+      <li>Use only the palette colours, or mix two of them.</li>
+      <li>Every scene: a set from <code>RH.bg</code>, contact shadows, film finish.</li>
+    </ul></div>
+  </div>
+  <p class="note">This is version 1 of the style. Tell me what to push further (bigger heads, thicker lines, more texture, a different colour mood, other clothes) and I will update the kit and this page.</p>
+</section>
+</div>
+
+<script>
+/*RH_JS*/
+</script>
+<script>
+/*CAST_JS*/
+</script>
+<script>
+(function(){
+'use strict';
+const CH = {}; for (const k in CAST) CH[k] = RH.character(CAST[k]);
+const KEYS = Object.keys(CH);
+const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = id => document.getElementById(id);
+const ctxOf = id => $(id).getContext('2d');
+function paper(c, W, H){ c.fillStyle = '#f3e7cc'; c.fillRect(0,0,W,H); RH.bg.finish(c, W, H, 4); }
+function label(c, txt, x, y, size, col){ c.font = `${size||22}px Limelight, Georgia, serif`; c.fillStyle = col||'#1e1612'; c.textAlign='center'; c.textBaseline='alphabetic'; c.fillText(txt, x, y); }
+function mono(c, txt, x, y, size, col){ c.font = `600 ${size||16}px "IBM Plex Mono", monospace`; c.fillStyle = col||'#6d5a49'; c.textAlign='center'; c.fillText(txt, x, y); }
+
+/* swatches */
+const sw = [['ink',RH.PAL.ink],['paper',RH.PAL.paper],['glove',RH.PAL.glove],['blush',RH.PAL.blush]].concat(RH.PAL.cloth.map((h,i)=>['cloth '+(i+1),h]));
+$('swatches').innerHTML = sw.map(s=>`<div class="sw"><i style="background:${s[1]}"></i>${s[1]}</div>`).join('');
+$('swatches2').innerHTML = RH.PAL.skin.concat(RH.PAL.hair).map(h=>`<div class="sw"><i style="background:${h}"></i>${h}</div>`).join('');
+
+/* backgrounds cache */
+let SEED = 5; const BGC = {};
+function bg(name, W, H){ const k = name+W+'x'+H+'s'+SEED; if(!BGC[k]) BGC[k] = RH.bg.render(name, W, H, SEED + name.length); return BGC[k]; }
+
+/* lineup */
+function drawLineup(){ const c = ctxOf('lineup'); c.drawImage(bg('street',1600,900),0,-80,1600,900); c.fillStyle='rgba(30,20,10,0.12)'; c.fillRect(0,0,1600,760);
+  const order=['wendell','mabel','pip','gus','dot']; order.forEach((k,i)=>{ const P=RH.stand(i===2?'front':'q'); P.face.expr = ['sly','neutral','happy','surprised','happy'][i]; if(i>2) P.dir=-1; RH.draw(c, CH[k], P, 200+i*300, 700, 1.25); });
+  $('castCards').innerHTML = KEYS.map(k=>{const s=CAST[k]; return `<div class="card"><h3>${s.name}</h3><p class="tag">${(s.body&&s.body.shape)||'pear'} body · ${(s.head&&s.head.shape)||'round'} head · ${s.hair.style} hair · ${(s.hat&&s.hat.type)||'no'} hat · ${s.top.type}</p></div>`}).join('');
+}
+
+/* turnaround */
+let turnKey = 'pip';
+function drawTurn(){ const c = ctxOf('turnCv'); paper(c,1600,640);
+  c.strokeStyle='rgba(30,22,18,0.25)'; c.lineWidth=2; for(let y=120;y<=600;y+=80){ c.beginPath(); c.moveTo(40,y); c.lineTo(1560,y); c.stroke(); }
+  ['front','q','side','back'].forEach((v,i)=>{ RH.draw(c, CH[turnKey], RH.stand(v), 230+i*380, 590, 1.35); mono(c, ['FRONT','3/4','SIDE','BACK'][i], 230+i*380, 630, 18); });
+  label(c, CAST[turnKey].name, 800, 50, 34);
+}
+function pickBar(id, cb, initial){ const el=$(id); el.innerHTML = KEYS.map(k=>`<button data-k="${k}" aria-pressed="${k===initial}">${CAST[k].name}</button>`).join(''); el.addEventListener('click', e=>{ const b=e.target.closest('button'); if(!b) return; el.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed', x===b)); cb(b.dataset.k); }); }
+pickBar('turnPick', k=>{turnKey=k; drawTurn();}, 'pip');
+
+/* faces */
+let faceKey = 'pip';
+function drawFaces(){ const c = ctxOf('exprCv'); paper(c,1600,700);
+  RH.EXPRESSIONS.forEach((e,i)=>{ const x=160+(i%5)*320, y=200+Math.floor(i/5)*330; RH.drawHead(c, CH[faceKey], x, y, 1.9, i%2?'q':'front', {expr:e}); mono(c, e.toUpperCase(), x, y+150, 18); });
+  const m = ctxOf('mouthCv'); paper(m,1600,300); const mk = RH.character(Object.assign({}, CAST[faceKey], {hat:{type:'none'}}));
+  RH.MOUTHS.forEach((mo,i)=>{ const x=80+i*160; m.save(); m.beginPath(); m.rect(x-75,40,150,200); m.clip(); RH.drawHead(m, mk, x, 128, 2.2, 'front', {expr:'neutral', mouth:mo}); m.restore(); mono(m, mo, x, 275, 18); });
+}
+pickBar('facePick', k=>{faceKey=k; drawFaces();}, 'pip');
+
+/* hands */
+function drawHands(){ const c = ctxOf('handCv'); paper(c,1600,300); const g = RH.character({R:90});
+  RH.HAND_POSES.forEach((h,i)=>{ const x=120+i*225; c.save(); RH.glove(c, g, x-60, 140, h==='thumb'?-0.2:-0.35, h, 1, 3.4, false); c.restore(); mono(c, h, x, 280, 18); });
+}
+
+/* skeleton */
+function drawSkelOnly(){ const c = ctxOf('skelCv'); paper(c,800,760); c.strokeStyle='rgba(30,22,18,.3)'; c.setLineDash([6,6]); c.beginPath(); c.moveTo(0,705); c.lineTo(800,705); c.stroke(); c.setLineDash([]);
+  const P = RH.stand('q'); P.arms[1] = {h:[0.85,0.6], hand:'open'}; P.legs[1] = {f:[0.75,-0.35], rot:-0.2}; P.lean=0.05;
+  const off = document.createElement('canvas'); off.width=800; off.height=760; const o=off.getContext('2d'); RH.draw(o, CH.pip, P, 300, 705, 2.3);
+  c.globalAlpha=0.4; c.drawImage(off,0,0); c.globalAlpha=1;
+  const sk = document.createElement('canvas'); sk.width=800; sk.height=760; const s2=sk.getContext('2d');
+  // draw skeleton by drawing an invisible character pass with skeleton enabled
+  s2.globalAlpha=1; RH.draw(s2, CH.pip, P, 300, 705, 2.3, {noShadow:true, skeleton:true});
+  // keep only the red/white skeleton pixels: redraw the character into a mask and subtract
+  const base = document.createElement('canvas'); base.width=800; base.height=760; const b2=base.getContext('2d'); RH.draw(b2, CH.pip, P, 300, 705, 2.3, {noShadow:true});
+  const A=s2.getImageData(0,0,800,760), B=b2.getImageData(0,0,800,760); for(let i=0;i<A.data.length;i+=4){ if(A.data[i]===B.data[i]&&A.data[i+1]===B.data[i+1]&&A.data[i+2]===B.data[i+2]&&A.data[i+3]===B.data[i+3]) A.data[i+3]=0; }
+  s2.putImageData(A,0,0); c.drawImage(sk,0,0);
+}
+
+/* walk strip with arcs */
+function drawWalkStrip(){ const c = ctxOf('walkStrip'); paper(c,1600,440); const names=['contact','down','passing','up','contact','down','passing','up'];
+  c.strokeStyle='rgba(30,22,18,.35)'; c.setLineDash([6,6]); c.beginPath(); c.moveTo(0,380); c.lineTo(1600,380); c.stroke(); c.setLineDash([]);
+  for(let i=0;i<8;i++){ const t=(i/8)/0.95, x=110+i*195; const P=RH.anim.walk(t,'side'); P.face.blink=0; RH.draw(c, CH.pip, P, x, 380, 0.82); mono(c, (i+1)+' '+names[i], x, 420, 15); }
+  // arcs for frame-independent paths, drawn on the first and fifth frame
+  [110, 890].forEach(x=>{ c.save(); c.setLineDash([3,5]); c.lineWidth=2.5; c.strokeStyle='#d23a2a'; c.beginPath(); for(let k=0;k<=60;k++){ const P=RH.anim.walk(k/60/0.95,'side'); const L=P.legs[1]; const px=x+L.f[0]*40*0.82, py=380+L.f[1]*40*0.82-4; k?c.lineTo(px,py):c.moveTo(px,py);} c.stroke(); c.restore(); });
+}
+
+/* animations */
+const ANIMS = [
+  {n:'idle', t:'Idle bounce', d:'Bounce on the beat, squash on the down, arms sway.', ch:'pip', v:'front', bg:'room'},
+  {n:'walk', t:'Walk', d:'Two steps a second, heel first, body lowest after contact.', ch:'mabel', v:'side', bg:'street', move:1},
+  {n:'run', t:'Run', d:'Lean in, fists pump, both feet leave the ground.', ch:'dot', v:'side', bg:'forest', move:2.3},
+  {n:'sneak', t:'Sneak', d:'Tiptoe with held steps, hunched, fingers dangling, eyes darting.', ch:'wendell', v:'side', bg:'room', move:0.5},
+  {n:'wave', t:'Wave', d:'Hand on hip, big arc wave, happy face.', ch:'gus', v:'front', bg:'street'},
+  {n:'talk', t:'Talk', d:'Mouth shapes change on syllables; brows and hands punctuate.', ch:'wendell', v:'q', bg:'room'},
+  {n:'take', t:'Surprise take', d:'Anticipate, pop up, shake, settle. The hat flies up and lags.', ch:'pip', v:'front', bg:'forest'}
+];
+const animCv = [];
+$('animGrid').innerHTML = ANIMS.map((a,i)=>`<div class="anim-card"><div class="frame"><canvas id="an${i}" width="640" height="420" aria-label="${a.t} animation"></canvas></div><b>${a.t}</b><span>${a.d}</span></div>`).join('');
+ANIMS.forEach((a,i)=>animCv.push(ctxOf('an'+i)));
+function drawAnim(i, t){ const a=ANIMS[i], c=animCv[i]; const B=bg(a.bg,640,360);
+  let x=320; if(a.move){ const span=900, sp=a.move*58; x = ((t*sp + 420)%span) - 130; }
+  const pan = a.move ? 0 : 0; c.drawImage(B, -20, -10, 680, 440);
+  const P = RH.anim[a.n](t, a.v); RH.draw(c, CH[a.ch], P, x, a.bg==='room'?378:a.bg==='forest'?392:400, 0.86);
+  if(film) RH.film(c, 640, 420, t, 0.8);
+}
+
+/* camera shots */
+const SHOTS = [
+  {t:'Establishing wide', d:'Open a scene: where are we, who is here.', cx:800, cy:450, z:0.63, r:0},
+  {t:'Full shot', d:'Show whole bodies for walks, dances and slapstick.', cx:800, cy:620, z:0.85, r:0},
+  {t:'Medium two-shot', d:'Two characters talking, waist up.', cx:810, cy:610, z:1.15, r:0},
+  {t:'Close-up', d:'One face, for a reaction or a key line.', cx:655, cy:540, z:2.1, r:0},
+  {t:'Extreme close-up', d:'Eyes only, for shock, a reveal or a gag beat.', cx:668, cy:520, z:4.2, r:0},
+  {t:'Low angle', d:'Makes a character big, proud or scary.', cx:900, cy:560, z:1.1, r:0, low:1},
+  {t:'High angle', d:'Makes a character small, lost or trapped.', cx:700, cy:660, z:1.0, r:0, high:1},
+  {t:'Over the shoulder', d:'Conversation from one side, listener in the foreground.', cx:900, cy:600, z:1.25, r:0, ots:1},
+  {t:'Dutch tilt', d:'Something is wrong: danger, a chase, confusion.', cx:800, cy:600, z:1.0, r:0.16}
+];
+$('shotGrid').innerHTML = SHOTS.map((s,i)=>`<div class="anim-card"><div class="frame"><canvas id="sh${i}" width="640" height="360" aria-label="${s.t}"></canvas></div><b>${s.t}</b><span>${s.d}</span></div>`).join('');
+function drawShot(i){ const s=SHOTS[i], c=ctxOf('sh'+i), W=640, H=360, B=bg('street',1600,900);
+  c.save(); c.fillStyle='#000'; c.fillRect(0,0,W,H);
+  const zz = s.z*(W/1600)*1.6;
+  const hw=W/2/zz, hh=H/2/zz; const cx=Math.min(Math.max(s.cx,hw),1600-hw), cy=Math.min(Math.max(s.cy,hh),900-hh);
+  c.translate(W/2,H/2); c.rotate(s.r); if(s.low) c.transform(1,0,0,1.08,0,0); c.scale(zz,zz); c.translate(-cx,-cy);
+  c.drawImage(B,0,0);
+  const A=RH.stand('q'); A.face.expr = s.high?'scared':'neutral'; A.face.mouth = 'smile'; if(s.high) A.face.look=[0,-1];
+  if(i===4) A.face.expr='surprised';
+  const Bp=RH.stand('q'); Bp.dir=-1; Bp.face.expr='sly'; Bp.arms[0]={h:[0.6,0.7],hand:'point'};
+  if(!s.ots) RH.draw(c, CH.wendell, Bp, 980, 800, 1.55);
+  RH.draw(c, CH.pip, A, 640, 800, 1.55);
+  if(s.ots){ const O=RH.stand('qback'); O.dir=-1; c.filter='blur(2px)'; RH.draw(c, CH.wendell, O, 1180, 960, 2.6, {noShadow:true}); c.filter='none'; }
+  c.restore();
+  RH.film(c, W, H, i*0.37, 0.6);
+}
+
+/* generator */
+let genSeed = 7, genSpec = null;
+function cleanSpec(ch){ const o = JSON.parse(JSON.stringify(ch, (k,v)=>typeof v==='number'?Math.round(v*100)/100:v)); delete o.R; delete o.line; delete o.gloveColor; delete o.headScale; return o; }
+function drawGen(){ genSpec = RH.random(genSeed); const c = ctxOf('genCv'); c.drawImage(bg('forest',900,640),0,0);
+  ['front','q','side'].forEach((v,i)=>{ const P = RH.stand(v); P.face.expr = ['happy','neutral','sly'][i]; RH.draw(c, genSpec, P, 160+i*290, 560, 1.05); });
+  $('genSpec').textContent = 'RH.character(' + JSON.stringify(cleanSpec(genSpec), null, 2) + ')'; $('genTag').textContent = 'seed ' + genSeed;
+}
+$('genBtn').addEventListener('click', ()=>{ genSeed = Math.floor(Math.random()*99999)+1; drawGen(); });
+$('copyBtn').addEventListener('click', ()=>{ const txt=$('genSpec').textContent; const done=()=>{$('copyBtn').textContent='Copied';setTimeout(()=>$('copyBtn').textContent='Copy spec',1500)}; try{ navigator.clipboard.writeText(txt).then(done, ()=>selectSpec()); }catch(e){ selectSpec(); } });
+function selectSpec(){ const r=document.createRange(); r.selectNodeContents($('genSpec')); const s=window.getSelection(); s.removeAllRanges(); s.addRange(r); }
+
+/* backgrounds */
+function drawBgs(){ $('bgGrid').innerHTML = ['street','forest','room'].map(n=>`<div class="anim-card"><div class="frame"><canvas id="bg_${n}" width="1280" height="720" aria-label="${n} background"></canvas></div><b>${{street:'Main Street, 1934',forest:'Whispering Woods',room:'The Parlour'}[n]}</b><span><code>RH.bg.render('${n}', W, H, seed)</code></span></div>`).join('');
+  ['street','forest','room'].forEach(n=>{ ctxOf('bg_'+n).drawImage(bg(n,1280,720),0,0); }); $('seedTag').textContent='seed '+SEED; }
+$('reseed').addEventListener('click', ()=>{ SEED = Math.floor(Math.random()*9999)+1; drawBgs(); drawLineup(); for(let i=0;i<SHOTS.length;i++) drawShot(i); drawGen(); });
+
+/* hero */
+const hc = ctxOf('hero');
+function drawHero(t){ const B=bg('street',1600,900); hc.drawImage(B,0,-150);
+  const span=2000, x1=((t*58)%span)-200;
+  const pw=RH.anim.walk(t,'side'); RH.draw(hc, CH.pip, pw, x1, 690, 1.15);
+  const pm=RH.anim.wave(t,'front'); RH.draw(hc, CH.mabel, pm, 1240, 690, 1.15);
+  const ps=RH.anim.sneak(t,'side'); RH.draw(hc, CH.wendell, ps, ((t*22)%span)-160, 690, 1.15);
+  const pg=RH.anim.idle(t,'q'); pg.dir=-1; RH.draw(hc, CH.gus, pg, 1460, 700, 1.15);
+  if(film) RH.film(hc, 1600, 720, t, 0.9);
+}
+
+/* loop */
+let film = true, twos = true, paused = false, last = -1, visible = new Set();
+$('film').addEventListener('change', e=>film=e.target.checked);
+$('twos').addEventListener('change', e=>twos=e.target.checked);
+$('pauseBtn').addEventListener('click', e=>{ paused=!paused; e.target.setAttribute('aria-pressed', paused); e.target.textContent = paused?'Play':'Pause'; });
+const io = 'IntersectionObserver' in window ? new IntersectionObserver(es=>es.forEach(en=>{ en.isIntersecting?visible.add(en.target.id):visible.delete(en.target.id); })) : null;
+['hero'].concat(ANIMS.map((a,i)=>'an'+i)).forEach(id=>{ if(io) io.observe($(id)); else visible.add(id); });
+const t0 = performance.now();
+function frame(now){ let t=(now-t0)/1000; if(twos) t=Math.floor(t*12)/12; if(!paused && t!==last){ last=t; if(visible.has('hero')) drawHero(t); ANIMS.forEach((a,i)=>{ if(visible.has('an'+i)) drawAnim(i,t); }); } requestAnimationFrame(frame); }
+
+function init(){ drawHero(0.6); ANIMS.forEach((a,i)=>drawAnim(i,0.6)); drawLineup(); drawTurn(); drawFaces(); drawHands(); drawSkelOnly(); drawWalkStrip(); drawBgs(); for(let i=0;i<SHOTS.length;i++) drawShot(i); drawGen(); if(!reduce) requestAnimationFrame(frame); }
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(init); else init();
+})();
+</script>
