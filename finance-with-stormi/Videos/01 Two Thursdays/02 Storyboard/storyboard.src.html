@@ -40,7 +40,7 @@ footer{margin-top:48px;border-top:1px solid var(--line);padding-top:18px;color:v
 
 <div class="wrap">
 <header>
-  <div class="eyebrow">Finance with Stromi · Video 01 · Storyboard v1 · 12 Nov 2026</div>
+  <div class="eyebrow">Finance with Stormi · Video 01 · Storyboard v1 · 12 Nov 2026</div>
   <h1>Two Thursdays</h1>
   <p class="lede">Shot-by-shot plan for the script v1 (about 17 min). Frames are drawn with the rubber-hose kit; in production every set becomes a three.js 3D set with the 2D cast on cards (locked hybrid style), one practical light, fog, vignette, grain and blur cuts.</p>
   <div class="legend"><span><b>SET</b> 3D set to build</span><span><b>CAM</b> camera move</span><span><b>VO</b> narrator</span><span><b>SKIT</b> cast lines</span><span><b>SFX</b> code foley</span></div>
@@ -175,7 +175,7 @@ shot(C7,{tc:'15:58',dur:'12s',set:'Split screen: shop window SALE (Pip, 25) / ki
 
 shot(C8,{tc:'16:10',dur:'25s',set:'Hero chip, patched with tape; four hands reach in holding pins',cam:'Slow push-in; hands enter from four sides',vo:'A bubble doesn\'t pop when prices fall. It pops when the money stops... Thursday the fifth was the day the market noticed the pin. Thursday the twelfth, how many hands are on it.',sfx:'Low pulse, music swell',draw:c=>{room(c); cone(c,480,0,480,220); chip(c,480,280,1.05,{cracks:4}); c.strokeStyle='#d9c79a'; c.lineWidth=12; c.beginPath(); c.moveTo(410,170); c.lineTo(550,230); c.stroke(); [['VOTERS',120,140],['CONGRESS',840,140],['BEIJING',140,420],['',820,420]].forEach(h=>{ tag(c,h[0]||'(empty cuff)',h[1],h[2],{fs:16,bg:h[0]?'#f3e7cc':'#16110f',col:h[0]?'#1e1612':'#a8998a'}); ink(c,3); c.beginPath(); c.moveTo(h[1],h[2]+18); c.lineTo(h[1]+(480-h[1])*0.35,h[2]+(240-h[2])*0.35); c.stroke(); }); finish(c);}});
 shot(C8,{tc:'16:35',dur:'20s',set:'Cold-open office callback: janitor flicks the lamp off; phone lights once more',cam:'Same framing as 0:12, hold to black',vo:'Next Tuesday, Nvidia tells the world how much money is still coming in. For the first time in thirty-three years, someone else will be holding the microphone.',sfx:'Lamp click, silence',draw:c=>{room(c,{wall:'#120f0d',floor:'#0d0a09'}); chair(c,420,420,true); desk(c,250,380,320); phone(c,470,365,true); guy(c,'janitor',700,500,0.95,{view:'q',dir:-1,expr:'sad'}); finish(c);}});
-shot(C8,{tc:'16:55',dur:'5s',set:'End screen (clean, no VO)',cam:'Static',vo:'',sfx:'Music tail',draw:c=>{black(c,'Finance with Stromi','end screen · last 5 s clean');}});
+shot(C8,{tc:'16:55',dur:'5s',set:'End screen (clean, no VO)',cam:'Static',vo:'',sfx:'Music tail',draw:c=>{black(c,'Finance with Stormi','end screen · last 5 s clean');}});
 
 /* ---------- render ---------- */
 const board=document.getElementById('board'), nav=document.getElementById('nav');

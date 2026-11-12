@@ -1,4 +1,4 @@
-# Finance with Stromi, Video 01: "Two Thursdays" (script v1)
+# Finance with Stormi, Video 01: "Two Thursdays" (script v1)
 
 Written 12 Nov 2026, ~17:45 UTC. Based on the story in Pushpam's transcript (the 5 Nov 2026 AI-stock crash), rewritten in our own words (tone guide: copy the formula, never the wording), plus everything that happened 6-12 Nov 2026 and what it means for markets.
 Facts and sources: `01-Two-Thursdays-sources.md` in this folder. Lines marked **[CHECK AT RECORD]** depend on news still moving on 12 Nov (US market was still open when this was written).
