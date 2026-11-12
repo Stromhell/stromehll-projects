@@ -4,7 +4,7 @@ Third YouTube channel, separate from Stormi Explain Everything and DumDown. Mode
 
 ## Decided by Pushpam
 - Name: Finance with Stromi (first "Money Follows"; spelling Stromi vs Stormi still to confirm).
-- Look: follows the rubber-hose design style thread (2D rubber-hose cast, finance-explainer adaptation, 2D/3D hybrid sets). ../Style/README.md
+- Look: LOCKED 12 Nov (2D rubber-hose cast on billboard cards in three.js sets, chiaroscuro). Source: style-guides/rubberhose/STYLE-LOCKED.md. ../Style/README.md
 - Tone and scripts: Paper Billions-style money thrillers. ../Tone/TONE-AND-SCRIPT-GUIDE.md
 
 ## Proposed (until Pushpam says otherwise)
