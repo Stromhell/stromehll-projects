@@ -1,4 +1,4 @@
-# Finance with Stormi: tone and script guide (v1, 12 Nov 2026)
+# Finance with Stromi: tone and script guide (v1, 12 Nov 2026)
 
 Source: Pushpam's breakdown of the reference channel Paper Billions (@PaperBillionsTV, "Money stories, drawn on paper"), shared 12 Nov 2026 17:17 UTC. Pushpam: "this will be ur tonality; animation style will be from that thread" (rubber-hose style thread, see ../Style/README.md).
 We copy the formula, never their characters, art, titles or wording.

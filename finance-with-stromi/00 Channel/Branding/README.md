@@ -1,6 +1,6 @@
-# Finance with Stormi branding v1 (12 Nov 2026)
+# Finance with Stromi branding v1 (12 Nov 2026)
 
-Built in code with the locked rubber-hose kit (rh.js). Mascot "Stormi": cream head, bowler hat with gold band, green suit, gold bow tie, white gloves, gold coin.
+Built in code with the locked rubber-hose kit (rh.js). Mascot "Stromi": cream head, bowler hat with gold band, green suit, gold bow tie, white gloves, gold coin.
 Palette: ink #1e1612, cream #f6ecd2, money green #2f5a43, gold #d9a23a / #f2c75c, red #c2372d, night #120e0b. Fonts: Anton, Alfa Slab One, Permanent Marker (all free Google Fonts).
 
 00 Final (upload-ready):

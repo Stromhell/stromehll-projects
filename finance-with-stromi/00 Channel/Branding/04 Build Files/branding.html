@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><title>Finance with Stormi branding</title>
+<!doctype html><html><head><meta charset="utf-8"><title>Finance with Stromi branding</title>
 <style>
 @font-face{font-family:Anton;src:url(fonts/Anton-Regular.ttf)}
 @font-face{font-family:Marker;src:url(fonts/PermanentMarker-Regular.ttf)}
@@ -7,10 +7,10 @@ body{margin:0;background:#222}canvas{display:block}
 </style></head><body>
 <script src="rh.js"></script>
 <script>
-/* Finance with Stormi channel branding, built with the locked rubber-hose kit (rh.js).
+/* Finance with Stromi channel branding, built with the locked rubber-hose kit (rh.js).
    Palette: ink #1e1612, paper #efe2c4, money green #2f5a43, gold #d9a23a, red #c2372d, night #120e0b */
 const C={ink:'#1e1612',paper:'#efe2c4',cream:'#f6ecd2',green:'#2f5a43',green2:'#3f7a57',gold:'#d9a23a',gold2:'#f2c75c',red:'#c2372d',night:'#120e0b'};
-const STORMI=RH.character({name:'Stormi',R:40,line:3.4,skin:'#f4ead6',blush:true,
+const STROMI=RH.character({name:'Stromi',R:40,line:3.4,skin:'#f4ead6',blush:true,
  hair:{style:'tuft',color:C.ink},hat:{type:'bowler',color:'#1e1612',band:C.gold},
  top:{type:'tux',color:C.green,accent:C.cream},tie:'bow',tieColor:C.gold,
  legs:{color:'#24303a'},shoes:{color:'#2a1d17',sole:C.gold},eyeSize:1.08});
@@ -31,7 +31,7 @@ function coin(c,x,y,r,opts={}){ // gold coin, ink outline, rubber-hose shading
  if(opts.dollar!==false){c.fillStyle=C.ink;c.font=`${r*1.05}px Slab`;c.textAlign='center';c.textBaseline='middle';c.fillText('$',0,r*0.06)}
  c.restore()}
 function bolt(c,x,y,s,col){c.save();c.translate(x,y);c.scale(s,s);c.beginPath();c.moveTo(8,-30);c.lineTo(-14,4);c.lineTo(0,4);c.lineTo(-8,30);c.lineTo(16,-6);c.lineTo(2,-6);c.closePath();c.fillStyle=col;c.fill();c.lineWidth=3/s*s;c.strokeStyle=C.ink;c.lineWidth=3;c.stroke();c.restore()}
-function stormi(c,x,y,s,pose){const P=RH.stand(pose.view||'front');Object.assign(P.face,pose.face||{});if(pose.arms)P.arms=pose.arms;if(pose.legs)P.legs=pose.legs;P.lean=pose.lean||0;P.tilt=pose.tilt||0;RH.draw(c,STORMI,P,x,y,s,{noShadow:!!pose.noShadow});}
+function stromi(c,x,y,s,pose){const P=RH.stand(pose.view||'front');Object.assign(P.face,pose.face||{});if(pose.arms)P.arms=pose.arms;if(pose.legs)P.legs=pose.legs;P.lean=pose.lean||0;P.tilt=pose.tilt||0;RH.draw(c,STROMI,P,x,y,s,{noShadow:!!pose.noShadow});}
 function handCoin(c,x,y,s){coin(c,x,y,s)}
 function mk(w,h){const cv=document.createElement('canvas');cv.width=w;cv.height=h;document.body.appendChild(cv);return [cv,cv.getContext('2d')]}
 function outlinedText(c,t,x,y,font,fill,lw,stroke){c.font=font;c.lineJoin='round';c.lineWidth=lw;c.strokeStyle=stroke||C.ink;c.strokeText(t,x,y);c.fillStyle=fill;c.fillText(t,x,y)}
@@ -39,7 +39,7 @@ function outlinedText(c,t,x,y,font,fill,lw,stroke){c.font=font;c.lineJoin='round
 // pose: thumbs-up + coin held high
 const POSE_HERO={view:'front',face:{expr:'happy'},arms:[{h:[-1.25,-1.1],hand:'grab',rot:-1.2},{h:[0.75,0.55],hand:'thumb',rot:0.2}],legs:[{f:[-0.5,0],rot:-0.1},{f:[0.55,0],rot:0.15}],tilt:-0.06};
 
-/* ---- 1. LOGO 1024 transparent: Stormi head breaking out of a gold coin ---- */
+/* ---- 1. LOGO 1024 transparent: Stromi head breaking out of a gold coin ---- */
 function logo(size,withShadow){const [cv,c]=mk(size,size);const k=size/1024;c.save();c.scale(k,k);
  coin(c,512,560,400,{dollar:false});
  // inner dark disc
@@ -47,7 +47,7 @@ function logo(size,withShadow){const [cv,c]=mk(size,size);const k=size/1024;c.sa
  const g=c.createRadialGradient(470,460,20,512,560,300);g.addColorStop(0,'rgba(255,230,170,0.35)');g.addColorStop(1,'rgba(0,0,0,0.35)');c.fillStyle=g;c.beginPath();c.arc(512,560,300,0,7);c.fill();
  // dollar ticks around rim
  c.fillStyle=C.ink;for(let i=0;i<24;i++){const a=i/24*Math.PI*2;c.save();c.translate(512+Math.cos(a)*350,560+Math.sin(a)*350);c.rotate(a+Math.PI/2);c.fillRect(-4,-16,8,32);c.restore()}
- RH.drawHead(c,STORMI,512,610,5.0,'front',{expr:'sly',look:[0.3,0]});
+ RH.drawHead(c,STROMI,512,610,5.0,'front',{expr:'sly',look:[0.3,0]});
  bolt(c,812,250,2.2,C.gold2);
  c.restore();return cv}
 
@@ -55,7 +55,7 @@ function logo(size,withShadow){const [cv,c]=mk(size,size);const k=size/1024;c.sa
 function profile(){const W=800,[cv,c]=mk(W,W);room(c,W,W,400,250);cone(c,400,-20,60,380,820,0.18);
  coin(c,400,420,330,{dollar:false});c.fillStyle=C.green;c.lineWidth=12;c.strokeStyle=C.ink;c.beginPath();c.arc(400,420,250,0,7);c.fill();c.stroke();
  const g=c.createRadialGradient(370,340,10,400,420,250);g.addColorStop(0,'rgba(255,230,170,0.35)');g.addColorStop(1,'rgba(0,0,0,0.4)');c.fillStyle=g;c.beginPath();c.arc(400,420,250,0,7);c.fill();
- RH.drawHead(c,STORMI,400,470,4.1,'front',{expr:'sly',look:[0.3,0]});
+ RH.drawHead(c,STROMI,400,470,4.1,'front',{expr:'sly',look:[0.3,0]});
  bolt(c,640,190,1.8,C.gold2);
  vignette(c,W,W,400,400,0.55);grain(c,W,W,14);return cv}
 
@@ -74,14 +74,14 @@ function banner(){const W=2560,H=1440,[cv,c]=mk(W,H);room(c,W,H,1280,560);
  coin(c,1000,968,34);coin(c,1060,978,30);coin(c,2240,965,36);
  // stamp
  c.save();c.translate(2300,870);c.rotate(-0.12);c.strokeStyle=C.red;c.lineWidth=8;c.strokeRect(-150,-50,300,100);c.fillStyle=C.red;c.font='64px Anton';c.textAlign='center';c.textBaseline='middle';c.fillText('APPROVED',0,4);c.restore();
- // Stormi standing behind desk area, inside safe area at left of title
- stormi(c,840,1000,1.75,POSE_HERO);coin(c,727,616,36);
+ // Stromi standing behind desk area, inside safe area at left of title
+ stromi(c,840,1000,1.75,POSE_HERO);coin(c,727,616,36);
  // coin in raised hand (approx position of left glove)
  // title, centred in safe area (x 507..2053, y 508..931)
  c.textAlign='center';c.textBaseline='alphabetic';
  outlinedText(c,'FINANCE',1430,690,'200px Anton',C.cream,22);
  c.save();c.translate(1870,680);c.rotate(-0.12);outlinedText(c,'with',0,0,'100px Marker',C.gold2,16);c.restore();
- outlinedText(c,'STORMI',1490,845,'170px Slab',C.gold,22);
+ outlinedText(c,'STROMI',1490,845,'170px Slab',C.gold,22);
  c.fillStyle=C.cream;c.font='46px Marker';c.fillText('The money behind the headlines',1490,912);
  // keep whiteboard from fighting title: dim it
  vignette(c,W,H,1280,720,0.7);grain(c,W,H,12);return cv}

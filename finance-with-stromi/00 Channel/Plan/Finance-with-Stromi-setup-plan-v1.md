@@ -1,9 +1,9 @@
-# Finance with Stormi: setup plan v1 (12 Nov 2026)
+# Finance with Stromi: setup plan v1 (12 Nov 2026)
 
 Third YouTube channel, separate from Stormi Explain Everything and DumDown. Modelled on the DumDown setup.
 
 ## Decided by Pushpam
-- Name: Finance with Stormi (first "Money Follows", then typed "Stromi"; Pushpam confirmed Stormi 12 Nov 18:06 UTC).
+- Name: Finance with Stromi (first "Money Follows"; Pushpam confirmed STROMI 12 Nov 18:26 UTC to match the YouTube channel @financewithstromi).
 - Look: LOCKED 12 Nov (2D rubber-hose cast on billboard cards in three.js sets, chiaroscuro). Source: style-guides/rubberhose/STYLE-LOCKED.md. ../Style/README.md
 - Tone and scripts: Paper Billions-style money thrillers. ../Tone/TONE-AND-SCRIPT-GUIDE.md
 
@@ -28,4 +28,4 @@ Third YouTube channel, separate from Stormi Explain Everything and DumDown. Mode
 File storage (repo + Drive, one folder per video), /watch QA loop + QA lessons, full-video OK before scheduling, launch kit preview, handover + new thread per video, end screen 5 s, tags rule (own constant tag set), ElevenLabs only for long thumbnails unless Pushpam OKs more, Opus 5.5 low, Graphify, motion kit tools. Fact-check every number; never invent data.
 
 ## Folders
-Project files finance-with-stormi/, repo branch claude/project-thread-st9mxu finance-with-stormi/, Drive AI/Finance with Stormi.
+Project files finance-with-stromi/, repo branch claude/project-thread-st9mxu finance-with-stromi/, Drive AI/Finance with Stromi.
