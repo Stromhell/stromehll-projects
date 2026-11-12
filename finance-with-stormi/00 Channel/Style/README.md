@@ -1,4 +1,4 @@
-# Style: Finance with Stromi
+# Style: Finance with Stormi
 
 LOCKED 12 Nov 2026 17:28 UTC (Pushpam approved in the rubber-hose style thread). This channel follows that style and never defines its own.
 - Look: 2D/3D hybrid. 2D rubber-hose cast on billboard cards inside three.js 3D sets, chiaroscuro lighting.
