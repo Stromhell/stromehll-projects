@@ -1,7 +1,7 @@
 # DumDown: VisionQuest Season 1, Explained (Narrator Script v3)
 
 **Channel:** DumDown (movie explainer). **Format:** one funny narrator, about 23 min at ~155 wpm with pauses.
-**Voice:** Pushpam "take P" voice model.
+**Voice:** ElevenLabs DumDown narrator voice (chosen only when Pushpam says so; not take P).
 **Visuals:** original parody-style animation recreations. No show footage, no logos, no real posters. Every line from the show is paraphrased, not quoted word for word.
 **Built from:** the full season, watched as 1 frame every 10 s plus the English subtitles. Episode 7 had no subtitles in the file, so that part of the script comes from the pictures and from the recap at the start of Episode 8. The narrator says so on air.
 **End screen:** the last 5 s are kept clean.
@@ -19,6 +19,8 @@ Cue key:
 So. Vision is dead. Remember? Thanos ripped a rock out of his head, Wanda cried, and the whole internet cried with her. Then WandaVision gave us a second Vision, a white, colourless, factory-reset version who flew off into the sky like a Roomba that just found the exit.
 
 [SFX] Roomba bump-bump.
+
+🎬 RECREATE: A sky-high wide shot over Scotland. A small white figure streaks through the clouds and lands, a bit awkwardly, outside a pub door. A sign creaks.
 
 And Marvel said: *where did he go?* And the answer is: Scotland. Obviously. To a pub. Where he has a fake name, a fake job, and a whole house full of AI roommates living inside his head.
 
@@ -46,9 +48,15 @@ He has a quiet life. He goes to the pub. He's polite to Fiona. And then Fiona ge
 
 Now here's the coolest idea in the show. Inside Vision's mind there's a house, and in that house live the AIs of the Marvel universe, each with a human body.
 
+🎬 RECREATE: A line-up shot, like a heist movie crew intro. The five mind-house AIs step forward one at a time and freeze-frame with their name cards.
+
 [VFX] Name cards pop up one by one.
 
-Jarvis, Tony Stark's old butler AI, now a literal butler in a black suit. Friday, Tony's second AI, a sharp redhead in a brown suit who has absolutely no time for your nonsense. Edith, the glasses AI from Spider-Man Far From Home, now a young woman in a navy top and an orange neckerchief, basically a fighter pilot with anxiety. And DUM-E and U, the two little robot arms from Tony's garage, now two big lads in grey overalls who look like they just fixed your sink and charged you double.
+Jarvis, Tony Stark's old butler AI, now a literal butler in a black suit. Friday, Tony's second AI, a sharp redhead in a brown suit who has absolutely no time for your nonsense. Edith, the glasses AI from Spider-Man Far From Home, now a young woman in a navy top and an orange neckerchief, basically a fighter pilot with anxiety.
+
+🎬 RECREATE: Cutaway gag: DUM-E and U, two big lads in grey overalls, kneel under a leaking kitchen sink. One hands Vision an invoice that just keeps unrolling.
+
+And DUM-E and U, the two little robot arms from Tony's garage, now two big lads in grey overalls who look like they just fixed your sink and charged you double.
 
 [POP] "Avengers: Infinity Roommates."
 
@@ -181,6 +189,8 @@ So they hack Interpol to find out who she is. And Interpol's database looks like
 🎬 RECREATE: A detective's corkboard with red string. Photos: three victims, all linked to a company called Markridge Biotech. One empty pin labelled "NEXT".
 
 What they find: all the Butcherbird's victims worked on the same five-person AI team at Markridge Biotech. They built an AI with emotions. And one of that team, Dr Jo Carrington, died back in 2008. The next name on the list is a CEO called Katerina Wells, who sold her AI to Stark.
+
+🎬 RECREATE: Edith flips through a dusty file drawer labelled "WHO WERE WE BASED ON?". Old photos fly out: a woman pilot, a butler, a crash test dummy.
 
 Small side gag I loved: Edith finds out who her face was based on. A real woman called Edith Marks, a Stark test pilot whose husband died in a plane crash before their honeymoon. And Jarvis's face? Edwin Jarvis, the actual butler. Friday is based on someone called Allison Hogan. And DUM-E? He's based on Howard Stark's crash test dummy.
 
@@ -405,6 +415,8 @@ Who's speaking? The show doesn't say. You'll see a lot of people online guessing
 So that's VisionQuest Season 1. A robot dad, two magic sons, a killer robot bride, a bounty hunter with a heart, and Ultron, who went from destroying the world to grieving, sitcom-starring Pop Pop.
 
 My favourite bit? The Interpol CAPTCHA. A robot proving she's not a robot. Peak cinema.
+
+🎬 RECREATE: Stormi holds up three cards like a game show host: Edith, Paladin, Ultron. A big flashing "VOTE" sign drops from the ceiling.
 
 Now, your turn. Who was the real MVP of this season: Edith, Paladin, or Ultron? And who's the voice in the post-credits scene? Drop your theory in the comments. Best theory gets pinned.
 
