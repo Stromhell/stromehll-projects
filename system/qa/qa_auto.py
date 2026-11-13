@@ -92,7 +92,10 @@ def main():
         s, e = float(m.group(1)), float(m.group(2))
         if s < 0.2 and a.kind != "reel":
             continue
-        add("FAIL", "black frames", f"{fmt(s)}-{fmt(e)}", "missing shot/plate or bad cut: check the shot at that time")
+        if a.kind == "full" and e >= dur - 0.5 and s >= dur - 7:
+            continue  # end screen
+        add("FAIL" if e - s > 4 else "CHECK", "black / near-black", f"{fmt(s)}-{fmt(e)} ({e-s:.1f}s)",
+            "OK if it is a chapter/title card or fade; otherwise a missing shot/plate or bad cut")
     fs = re.findall(r"freeze_start: ([\d.]+)", err); fe = re.findall(r"freeze_end: ([\d.]+)", err)
     for i, s in enumerate(fs):
         s = float(s); e = float(fe[i]) if i < len(fe) else dur
@@ -169,15 +172,60 @@ def main():
                 where = ["top", "upper", "lower", "bottom"][c // 4] + "-" + ["left", "mid-left", "mid-right", "right"][c % 4]
                 hits.setdefault((round((k+1)/4, 1), kind), []).append(where)
         items = sorted(hits.items())
-        for (t, kind), ws in items[:12]:
+        for (t, kind), ws in items[:25]:
             if kind == "flicker":
                 add("CHECK", "local glitch/flicker", f"~{fmt(t)} {', '.join(ws)}",
                     "background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot")
             else:
                 add("CHECK", "possible pop-in", f"~{fmt(t)} {', '.join(ws)}",
                     "something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK)")
-        if len(items) > 12:
-            add("CHECK", "more local changes", f"{len(items)-12} more spots, e.g. " + ", ".join(fmt(t) for (t, _), _ in items[12:20]), "step through those seconds at 8 fps")
+        if len(items) > 25:
+            add("CHECK", "more local changes", f"{len(items)-25} more spots, e.g. " + ", ".join(fmt(t) for (t, _), _ in items[25:33]), "step through those seconds at 8 fps")
+    # 4b. z-fighting / texture shimmer: pixels that flip A->B->A frame to frame (full native fps), persisting
+    # in the same screen cell for >=3 of 4 s. Tuned on Frozen Market (13 Nov): catches 2:40 cork board,
+    # 6:04 small door, 13:54 windows, and window shimmer at 3:36 + 4:30 that review missed. No false hits on clean renders.
+    try:
+        fps_n = rfr or 24.0
+        zw, zh = (256, 144) if W >= H else (144, 256)
+        cy, cx = (9, 16) if W >= H else (16, 9)
+        pz = subprocess.Popen(["ffmpeg", "-v", "error", "-i", f, "-vf", f"scale={zw}:{zh},format=gray", "-f", "rawvideo", "-"], stdout=subprocess.PIPE)
+        buf, rows = [], []
+        while True:
+            b = pz.stdout.read(zw * zh)
+            if len(b) < zw * zh: break
+            buf.append(np.frombuffer(b, np.uint8).astype(np.int16).reshape(zh, zw))
+            if len(buf) == 3:
+                A = np.abs(buf[1] - buf[0]); B = np.abs(buf[2] - buf[0])
+                osc = (A > 20) & (B < 6)
+                rows.append(osc.reshape(cy, 16, cx, 16).sum(axis=(1, 3)) > 12)
+                buf.pop(0)
+        c = np.array(rows)
+        n = int(len(c) / fps_n)
+        if n >= 4:
+            per = np.array([c[int(i*fps_n):int((i+1)*fps_n)].mean(axis=0) for i in range(n)]) >= 0.1
+            k = np.array([per[max(0, i-3):i+1].sum(axis=0) for i in range(n)])
+            flag = (k >= 3)
+            any_f = flag.any(axis=(1, 2))
+            i = 0
+            while i < n:
+                if any_f[i]:
+                    j = i
+                    while j < n and any_f[j]: j += 1
+                    if j + 3 < n and any_f[j:j+4].any():  # bridge short gaps
+                        j2 = j + int(np.argmax(any_f[j:j+4]));
+                        any_f[j:j2] = True; continue
+                    cells = np.argwhere(flag[i:j].any(axis=0))
+                    ys, xs = cells[:, 0].mean() / cy, cells[:, 1].mean() / cx
+                    where = ["top", "middle", "bottom"][min(2, int(ys*3))] + "-" + ["left", "centre", "right"][min(2, int(xs*3))]
+                    zlv = "FAIL" if (j - max(0, i-3)) >= 8 else "CHECK"
+                    add(zlv, "z-fighting / shimmer", f"{fmt(max(0,i-3))}-{fmt(j)} around {where} ({len(cells)} cells)",
+                        "3D: coplanar surfaces (board on frame, window on wall, door on desk plane) -> offset 1-2 cm or polygonOffset, raise near plane; 2D: per-frame random/texture swap -> fixed seed")
+                    i = j
+                else:
+                    i += 1
+    except Exception as e:
+        add("INFO", "z-fighting check", f"skipped: {e}")
+
     # 5. audio: loudness, peaks, silence gaps, noise floor (VO hiss)
     if au:
         _, _, err = run(["ffmpeg", "-hide_banner", "-i", f, "-af", "ebur128=peak=true", "-f", "null", "-"])

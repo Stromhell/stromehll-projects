@@ -117,7 +117,7 @@ Severity: HIGH = broken/unwatchable or factual/map error or upload risk; MEDIUM 
 ### B9. Frozen Market review (Pushpam 13 Nov 19:19, Finance with Stromi) - misses that v2 must now catch
 | # | Look for | How to catch | Standard fix |
 |---|---|---|---|
-| 50 | Background / door / window glitching (2:40, 6:04, 13:54) | qa_auto "local glitch/flicker" (one region changes while the rest is calm); step that second at 8 fps | stable layer order, no per-frame random, no texture/sprite swap, fixed seeds; 3D: no z-fighting (offset coplanar door/window planes), no shadow throttle |
+| 50 | Background / door / window glitching (2:40, 6:04, 13:54) | qa_auto "z-fighting / shimmer" FAIL (pixels flipping A-B-A every frame in one spot for 3+ s; tuned on Frozen Market, catches 2:40, 6:04, 13:54) and "local glitch/flicker" CHECK; step that second at 8 fps | stable layer order, no per-frame random, no texture/sprite swap, fixed seeds; 3D: no z-fighting (offset coplanar door/window planes), no shadow throttle |
 | 51 | Held props floating (chain at 4:24) | for every chain, rope, leash, bag, sign: is one end in a hand? | parent the prop to the hand joint, not to the scene |
 | 52 | Labels/tokens floating instead of resting (FOR/AGAINST at 11:59) | anything that "belongs on" a scale, table, shelf must touch it | place them on the pans/surface with a contact shadow; move with the object |
 | 53 | Stamps/graphics landing ON a building or prop (stamp at 6:12) | landing graphic overlaps the house/prop silhouette | land in clear space beside it; check the end frame of every slam/stamp animation |
