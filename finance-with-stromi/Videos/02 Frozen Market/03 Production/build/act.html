@@ -1,0 +1,9 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;background:#000}canvas{display:block}</style>
+<script src="font.js"></script><script src="three.min.js"></script><script src="rh.js"></script><script src="cast.js"></script></head>
+<body><canvas id="out" width="1280" height="720"></canvas>
+<script src="engine.js"></script><script src="sets02.js"></script><script src="acts02.js"></script><script src="timing.js"></script><script src="mgdata02.js"></script><script src="mg02.js"></script>
+<script>
+const ACT = +(new URLSearchParams(location.search).get('act') || 0);
+buildTimeline(ACTS[ACT], TIMING); window.renderAt = t => { frame(t); MG.draw(t); };
+if (!/render/.test(location.hash)) { const t0 = performance.now(); (function loop(now) { renderAt(((now - t0) / 1000) % TOTAL); requestAnimationFrame(loop); })(t0); }
+</script></body></html>
