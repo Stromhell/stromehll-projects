@@ -62,6 +62,44 @@ P.softServe = (o) => { const { x, y, s = 1 } = o; ctx.save(); ctx.translate(x, y
 // Puffy radiation suit overlay drawn as a white blob body around a figure point
 P.suit = (o) => { const { x, y, s = 1 } = o; ctx.save(); ctx.translate(x, y); ctx.scale(s, s); ctx.fillStyle = '#e8e4d8'; ctx.strokeStyle = INK; ctx.lineWidth = 6; rr(-80, -300, 160, 200, 60); ctx.fill(); ctx.stroke(); rr(-70, -110, 60, 110, 26); ctx.fill(); ctx.stroke(); rr(10, -110, 60, 110, 26); ctx.fill(); ctx.stroke();
   ctx.fillStyle = 'rgba(200,230,255,.6)'; ctx.beginPath(); ctx.arc(0, -360, 70, 0, 7); ctx.fill(); ctx.stroke(); ctx.fillStyle = '#ff8a2a'; ctx.fillRect(-60, -250, 120, 20); ctx.restore(); };
+
+// Time-Keeper: our own robed lizard-headed statue-god (three of them on the keepers plate)
+P.keeper = (o, lt) => { const { x, y, s = 1, ph = 0 } = o; ctx.save(); ctx.translate(x, y + Math.sin(lt * 1.3 + ph) * 6); ctx.scale(s, s); ctx.strokeStyle = INK; ctx.lineWidth = 7; ctx.lineJoin = 'round';
+  // robe
+  const g = ctx.createLinearGradient(0, -560, 0, 0); g.addColorStop(0, '#b88a2c'); g.addColorStop(1, '#5a3a12'); ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(-70, -560); ctx.lineTo(70, -560); ctx.lineTo(170, 0); ctx.lineTo(-170, 0); ctx.closePath(); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = '#e2b84a'; ctx.beginPath(); ctx.moveTo(-18, -560); ctx.lineTo(18, -560); ctx.lineTo(30, 0); ctx.lineTo(-30, 0); ctx.closePath(); ctx.fill(); ctx.stroke();
+  // collar + shoulders
+  ctx.fillStyle = '#d8a83a'; ctx.beginPath(); ctx.ellipse(0, -555, 120, 40, 0, 0, 7); ctx.fill(); ctx.stroke();
+  // lizard head (side-ish snout), green scales; o.hy/o.hr pop the head off on a spring (robot reveal)
+  const hy = o.hy || 0, hr = o.hr || 0; if (hy) { ctx.strokeStyle = '#8a8a90'; ctx.lineWidth = 6; ctx.beginPath(); for (let i = 0; i <= 12; i++) { const yy = -570 - i * hy / 12; ctx.lineTo((i % 2 ? -18 : 18), yy); } ctx.stroke(); ctx.strokeStyle = INK; ctx.lineWidth = 7; }
+  ctx.save(); ctx.translate(0, -hy - 650); ctx.rotate(hr); ctx.translate(0, 650);
+  ctx.fillStyle = '#4f7a3a'; ctx.beginPath(); ctx.moveTo(-60, -590); ctx.quadraticCurveTo(-70, -720, 0, -740); ctx.quadraticCurveTo(70, -735, 80, -680); ctx.lineTo(150, -650); ctx.quadraticCurveTo(160, -615, 120, -605); ctx.lineTo(55, -592); ctx.closePath(); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = '#6f9a4a'; for (let i = 0; i < 6; i++) { ctx.beginPath(); ctx.arc(-30 + i * 14, -700 + (i % 2) * 18, 7, 0, 7); ctx.fill(); }
+  ctx.strokeStyle = INK; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(60, -622); ctx.lineTo(140, -632); ctx.stroke();
+  // eye (glowing)
+  ctx.fillStyle = '#ffe27a'; ctx.beginPath(); ctx.ellipse(35, -680, 16, 12, 0, 0, 7); ctx.fill(); ctx.lineWidth = 4; ctx.stroke(); ctx.fillStyle = INK; ctx.fillRect(32, -690, 6, 20);
+  glow(35, -680, 70, 'rgba(255,220,120,A)', .45 + .15 * Math.sin(lt * 3 + ph));
+  // crown spikes
+  ctx.fillStyle = '#e2b84a'; ctx.lineWidth = 5; for (let i = -2; i <= 2; i++) { ctx.beginPath(); ctx.moveTo(-14 + i * 22, -735); ctx.lineTo(-4 + i * 22, -790 - (2 - Math.abs(i)) * 14); ctx.lineTo(6 + i * 22, -735); ctx.closePath(); ctx.fill(); ctx.stroke(); }
+  ctx.restore(); ctx.restore(); };
+// Judge's high bench: wooden desk with a gold seal, drawn in FRONT of the judge
+P.bench = (o, lt) => { const { x, y, s = 1, w = 520, h = 300 } = o; ctx.save(); ctx.translate(x, y); ctx.scale(s, s); ctx.strokeStyle = INK; ctx.lineWidth = 7;
+  const g = ctx.createLinearGradient(0, -h, 0, 0); g.addColorStop(0, '#7a5230'); g.addColorStop(1, '#3a2414'); ctx.fillStyle = g; rr(-w / 2, -h, w, h, 10); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = '#9a6a3a'; rr(-w / 2 - 20, -h - 26, w + 40, 34, 8); ctx.fill(); ctx.stroke();
+  ctx.strokeStyle = 'rgba(35,26,36,.5)'; ctx.lineWidth = 4; for (const k of [-1, 1]) { rr(k * w / 4 - 80, -h + 50, 160, h - 90, 8); ctx.stroke(); }
+  ctx.fillStyle = '#c9a046'; ctx.strokeStyle = INK; ctx.lineWidth = 5; ctx.beginPath(); ctx.arc(0, -h / 2 + 10, 46, 0, 7); ctx.fill(); ctx.stroke(); ctx.fillStyle = '#4a3018'; ctx.beginPath(); ctx.arc(0, -h / 2 + 10, 26, 0, 7); ctx.fill();
+  ctx.restore(); };
+// Old passenger plane (side view, nose right) for the 1971 skyjack gag
+P.plane = (o, lt) => { const { x, y, s = 1 } = o; ctx.save(); ctx.translate(x, y); ctx.scale(s, s); ctx.strokeStyle = INK; ctx.lineWidth = 7; ctx.lineJoin = 'round';
+  ctx.fillStyle = '#c8ccd6'; ctx.beginPath(); ctx.moveTo(-520, -60); ctx.lineTo(-640, -230); ctx.lineTo(-560, -230); ctx.lineTo(-440, -70); ctx.closePath(); ctx.fill(); ctx.stroke();
+  const g = ctx.createLinearGradient(0, -90, 0, 90); g.addColorStop(0, '#f4f6fa'); g.addColorStop(1, '#a8aebc'); ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(-600, -40); ctx.lineTo(380, -80); ctx.quadraticCurveTo(560, -70, 600, 10); ctx.quadraticCurveTo(560, 80, 380, 80); ctx.lineTo(-560, 50); ctx.closePath(); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = '#3a5a9a'; ctx.fillRect(-560, 0, 940, 18); ctx.fillStyle = '#c23a2a'; ctx.fillRect(-560, 20, 940, 8);
+  ctx.fillStyle = '#2a3a5a'; for (let i = 0; i < 14; i++) { ctx.beginPath(); ctx.ellipse(-420 + i * 56, -30, 13, 17, 0, 0, 7); ctx.fill(); }
+  ctx.fillStyle = '#2a3a5a'; ctx.beginPath(); ctx.moveTo(470, -55); ctx.lineTo(560, -30); ctx.lineTo(500, -20); ctx.closePath(); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = '#1a1a22'; rr(-470, -45, 70, 100, 6); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = '#b8bcc8'; ctx.beginPath(); ctx.moveTo(-60, 30); ctx.lineTo(180, 30); ctx.lineTo(60, 200); ctx.lineTo(-40, 200); ctx.closePath(); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = '#9aa0ae'; rr(40, 70, 90, 40, 18); ctx.fill(); ctx.stroke();
+  ctx.restore(); };
 window.PROPS = P;
 })();
 // Yggdrasil: glowing tree of timelines growing from (x,y), k = growth 0..1

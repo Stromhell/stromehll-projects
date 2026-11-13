@@ -10,7 +10,7 @@ function pop(text, lt, a, dur = 2.6, o = {}) { if (lt < a || lt > a + dur) retur
   const lines = []; let line = ''; for (const w of text.split(' ')) { const t = line ? line + ' ' + w : w; if (ctx.measureText(t).width > 640 && line) { lines.push(line); line = w; } else line = t; } lines.push(line);
   const bw = Math.max(...lines.map(l => ctx.measureText(l).width)) + 60, bh = lines.length * 50 + 36; ctx.fillStyle = '#231A24'; ctx.fillRect(-bw / 2 + 10, -bh / 2 + 10, bw, bh); ctx.fillStyle = '#ffd23d'; ctx.fillRect(-bw / 2, -bh / 2, bw, bh); ctx.strokeStyle = '#231A24'; ctx.lineWidth = 5; ctx.strokeRect(-bw / 2, -bh / 2, bw, bh);
   ctx.fillStyle = '#231A24'; ctx.textAlign = 'center'; lines.forEach((l, i) => ctx.fillText(l, 0, -bh / 2 + 62 + i * 50)); ctx.restore(); }
-function bigText(text, lt, a, b, col = '#f4ecd8') { const al = io(seg(lt, a, a + .3)) * (1 - io(seg(lt, b - .3, b))); if (al <= 0) return; screen(); ctx.globalAlpha = al; ctx.textAlign = 'center'; ctx.font = '900 120px "Inter Display"'; ctx.letterSpacing = '6px'; ctx.lineWidth = 14; ctx.strokeStyle = '#231A24'; ctx.strokeText(text, W / 2, H / 2 + 40); ctx.fillStyle = col; ctx.fillText(text, W / 2, H / 2 + 40); ctx.letterSpacing = '0px'; ctx.globalAlpha = 1; }
+function bigText(text, lt, a, b, col = '#f4ecd8', bx = null, by = null) { const al = io(seg(lt, a, a + .3)) * (1 - io(seg(lt, b - .3, b))); if (al <= 0) return; screen(); ctx.globalAlpha = al; ctx.textAlign = 'center'; ctx.font = '900 120px "Inter Display"'; ctx.letterSpacing = '6px'; ctx.lineWidth = 14; ctx.strokeStyle = '#231A24'; ctx.strokeText(text, bx ?? W / 2, by ?? H / 2 + 40); ctx.fillStyle = col; ctx.fillText(text, bx ?? W / 2, by ?? H / 2 + 40); ctx.letterSpacing = '0px'; ctx.globalAlpha = 1; }
 window.LK = { pop, bigText };
 function build(ACT) {
   const T = ACT.timing, starts = []; let t = 0; T.durs.forEach(d => { starts.push(t); t += d + T.gap; }); const total = t + (ACT.tail ?? 1.2);
@@ -20,6 +20,9 @@ function build(ACT) {
   return SH.map(({ s, a, b }) => ({ a, b, async draw(tt, lt, u) {
     const d = b - a, ue = s.ease === 'lin' ? u : io(u), cm = s.cam || {};
     const cam = { z: val(cm.z ?? 1, ue), x: val(cm.x ?? 1280, ue), y: val(cm.y ?? 720, ue), rot: val(cm.rot ?? 0, ue) };
+    // keep every head (and horns) below the top letterbox: lower cam.y if needed (continuous in ue, so no jumps)
+    if (!s.noHeadFit) for (const c of (s.chars || [])) { const ch = (C[c.c] || {}).acc || {}, hs = ch.hornStyle, hx = ch.horns ? (hs === 'huge' ? 230 : hs === 'small' ? 70 : hs === 'broken' ? 90 : 150) : 0;
+      const top = val(c.y, ue) - (410 + hx) * val(c.s ?? 1.4, ue), need = top - (165 - 540) / (cam.z * .75); if (cam.y > need) cam.y = Math.max(need, 720 / cam.z); }
     if (cm.shake) { cam.sx = Math.sin(lt * 41) * cm.shake; cam.sy = Math.cos(lt * 33) * cm.shake * .7; }
     if (s.plate) plate(s.plate, cam, s.blur || 0, s.par ?? 1); else { screen(); ctx.fillStyle = s.bg || '#000'; ctx.fillRect(0, 0, W, H); }
     if (s.pre) await s.pre(lt, cam, u, d);
@@ -38,7 +41,7 @@ function build(ACT) {
     if (s.title) FX.title(s.title[0], s.title[1], lt, .4, Math.min(3.2, d - .6));
     for (const c of (s.cards || [])) await FX.intro(c.c ? C[c.c] : null, c.name, c.sub, lt, c.at ?? .4, Object.assign({ side: c.side || 'R', dur: c.dur || 3.6 }, c));
     for (const p of (s.pops || [])) pop(p.t, lt, p.at, p.dur || 2.6, p);
-    if (s.big) bigText(s.big[0], lt, s.big[1], s.big[2], s.big[3]);
+    if (s.big) bigText(s.big[0], lt, s.big[1], s.big[2], s.big[3], s.big[4], s.big[5]);
     const fin = s.fin ?? (b - a > 1.2 ? .35 : 0);
     return { fade: (s.fadeIn ? io(lt / (s.fadeIn === true ? .5 : s.fadeIn)) : 1) * (s.fadeOut ? 1 - io(seg(lt, d - .6, d)) : 1) };
   } }));
