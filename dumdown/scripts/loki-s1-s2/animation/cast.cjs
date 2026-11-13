@@ -1,0 +1,67 @@
+// Loki S1+S2 parody cast for DumDown (original designs in the DumDown anime style; no actor likeness, no logos)
+const D = require('./kit.js');
+const base = (o) => Object.assign({ scale: 1, wraps: false, gloves: null, belt: null, defaultExpr: 'neutral' }, o);
+const boot = (c = '#1a1a1a') => ({ color: c, sole: '#000', lace: '#333', type: 'boot' });
+const suit = (c, shirt = '#f4f1ea', tie = '#3a2a1a') => ({ type: 'jacket', color: c, shirt, tie, accent: D.shade ? c : c, cuff: '#2a2014', hem: -10, sleeves: 'long' });
+const C = {
+  loki: base({ name: 'Loki (TVA suit)', skin: '#f1dccb', eyes: '#3f9f5f', hair: { style: 'long', color: '#141018', seed: 31, length: .62 },
+    top: suit('#6a5236', '#f4f1ea', '#2a1d12'), bottom: { color: '#4a3826' }, shoes: boot('#2a1d12'), defaultExpr: 'smirk' }),
+  lokiHorns: base({ name: 'Loki (armour)', skin: '#f1dccb', eyes: '#3f9f5f', hair: { style: 'long', color: '#141018', seed: 31, length: .62 },
+    acc: { horns: '#d9a520' }, top: { type: 'jacket', color: '#1f5a3a', shirt: '#1a1a1a', tie: null, accent: '#d9a520', cuff: '#d9a520', hem: -10, sleeves: 'long' },
+    bottom: { color: '#141418' }, shoes: boot('#141418'), scarf: '#2f8a4f', defaultExpr: 'smug' }),
+  lokiGreen: base({ name: 'Loki (season 2 green)', skin: '#f1dccb', eyes: '#3f9f5f', hair: { style: 'long', color: '#141018', seed: 31, length: .66 },
+    top: { type: 'jacket', color: '#1d4a32', shirt: '#14141a', tie: null, accent: '#c9a046', cuff: '#c9a046', hem: -10, sleeves: 'long' },
+    bottom: { color: '#141418' }, shoes: boot('#141418'), defaultExpr: 'neutral' }),
+  lokiKing: base({ name: 'Loki (god of stories)', skin: '#f1dccb', eyes: '#5fdf8f', hair: { style: 'long', color: '#141018', seed: 31, length: .7 },
+    acc: { horns: '#e2b02a', hornStyle: 'huge' }, top: { type: 'jacket', color: '#14402a', shirt: '#0e0e12', tie: null, accent: '#e2b02a', cuff: '#e2b02a', hem: -10, sleeves: 'long' },
+    bottom: { color: '#0e0e12' }, shoes: boot('#0e0e12'), scarf: '#1f6a3f', defaultExpr: 'gloom' }),
+  sylvie: base({ name: 'Sylvie', skin: '#f3d8c2', eyes: '#3d7a5a', scale: .96, hair: { style: 'long', color: '#e2c26a', seed: 18, length: .8 },
+    acc: { horns: '#c9a046', hornStyle: 'broken' }, top: { type: 'jacket', color: '#1d3a2a', shirt: '#2a2a22', tie: null, accent: '#7a6a3a', cuff: '#14261c', hem: -10, sleeves: 'long' },
+    bottom: { color: '#1a1a16' }, shoes: boot('#2a2014'), scarf: '#2a4a32', defaultExpr: 'deadpan' }),
+  mobius: base({ name: 'Mobius', skin: '#efc9a8', eyes: '#4a6a8a', scale: 1.02, hair: { style: 'buzz', color: '#b8b0a8', seed: 9, volume: .75 },
+    acc: { moustache: '#9a928a' }, top: suit('#7a6a52', '#e8e2d2', '#4a3a2a'), bottom: { color: '#6a5a44' }, shoes: boot('#3a2a1a'), defaultExpr: 'smile' }),
+  b15: base({ name: 'Hunter B-15', skin: '#7a4a32', eyes: '#2a1a12', scale: .97, hair: { style: 'buzz', color: '#1a1210', seed: 4, volume: .7 },
+    top: { type: 'jacket', color: '#3a3226', shirt: '#2a241a', tie: null, accent: '#c9a046', cuff: '#1d1a14', hem: -10, sleeves: 'long' }, belt: '#1a160f',
+    bottom: { color: '#2a241a', kneePad: '#1a160f' }, shoes: boot(), defaultExpr: 'deadpan' }),
+  ravonna: base({ name: 'Judge Renslayer', skin: '#7a5038', eyes: '#2a1a12', scale: .98, hair: { style: 'bob', color: '#14100e', seed: 66, volume: 1.05 },
+    top: { type: 'jacket', color: '#141418', shirt: '#2a2a30', tie: null, accent: '#c9a046', cuff: '#0a0a0c', hem: -10, sleeves: 'long' },
+    bottom: { color: '#141418' }, shoes: boot('#0a0a0c'), defaultExpr: 'deadpan' }),
+  kidLoki: base({ name: 'Kid Loki', skin: '#f1dccb', eyes: '#3f9f5f', scale: .7, hair: { style: 'messy', color: '#141018', seed: 7, volume: 1 },
+    acc: { horns: '#d9a520', hornStyle: 'small' }, top: { type: 'hoodie', color: '#1f5a3a', accent: '#d9a520', cuff: '#14402a', hood: '#14402a', strings: '#d9a520', hem: 16 },
+    bottom: { color: '#141418' }, shoes: boot(), defaultExpr: 'smug' }),
+  classicLoki: base({ name: 'Classic Loki', skin: '#ecd0b8', eyes: '#3f9f5f', scale: 1.0, hair: { style: 'long', color: '#8a8a90', seed: 55, length: .7 },
+    acc: { horns: '#e2c22a', hornStyle: 'huge', stubble: '#7a7a80' }, top: { type: 'jacket', color: '#2f7a3a', shirt: '#e2c22a', tie: null, accent: '#e2c22a', cuff: '#e2c22a', hem: -10, sleeves: 'long' },
+    bottom: { color: '#2f7a3a' }, shoes: boot('#e2c22a'), scarf: '#e2c22a', defaultExpr: 'smile' }),
+  boastful: base({ name: 'Boastful Loki', skin: '#e8c8ae', eyes: '#3f9f5f', scale: 1.08, body: { shoulder: 33, hip: 17, torso: 104, thigh: 86, shin: 84, upper: 58, fore: 54 },
+    hair: { style: 'long', color: '#141018', seed: 77, length: .75 }, acc: { horns: '#d9a520', beard: '#141018' },
+    top: { type: 'tee', color: '#1f5a3a', accent: '#d9a520', cuff: '#d9a520', hem: 14, sleeves: 'short' }, bottom: { color: '#2a2a2a' }, shoes: boot(), defaultExpr: 'grin' }),
+  hwr: base({ name: 'He Who Remains', skin: '#7a5038', eyes: '#2a1a12', scale: 1.0, hair: { style: 'wavy', color: '#14100e', seed: 23, volume: 1 },
+    acc: { stubble: '#14100e' }, top: { type: 'jacket', color: '#3a2a5a', shirt: '#14141a', tie: null, accent: '#7a5aa8', cuff: '#2a1a40', hem: -10, sleeves: 'long' },
+    bottom: { color: '#2a1a40' }, shoes: boot('#14141a'), defaultExpr: 'smile' }),
+  timely: base({ name: 'Victor Timely', skin: '#7a5038', eyes: '#2a1a12', scale: 1.0, hair: { style: 'wavy', color: '#14100e', seed: 24, volume: .9 },
+    acc: { glasses: '#8a6a2a', moustache: '#14100e' }, top: suit('#3a3a44', '#f4f1ea', '#5a1a2a'), bottom: { color: '#2a2a30' }, shoes: boot(), defaultExpr: 'nervous' }),
+  ob: base({ name: 'O.B.', skin: '#e8c09a', eyes: '#2a1a12', scale: .95, hair: { style: 'messy', color: '#2a2018', seed: 41, volume: 1.05 },
+    acc: { glasses: '#3a3a40' }, top: { type: 'jacket', color: '#8a6a3a', shirt: '#d8cfa8', tie: '#5a3a1a', accent: '#6a4a24', cuff: '#5a3a1a', hem: -10, sleeves: 'long' },
+    bottom: { color: '#5a4a34' }, shoes: boot('#3a2a1a'), defaultExpr: 'excited' }),
+  dox: base({ name: 'General Dox', skin: '#f2d4bc', eyes: '#5a7a9a', scale: .98, hair: { style: 'bob', color: '#e8d8a8', seed: 12, volume: .8 },
+    top: { type: 'jacket', color: '#2a3226', shirt: '#1a2016', tie: null, accent: '#8a9a6a', cuff: '#14180f', hem: -10, sleeves: 'long' }, belt: '#14180f',
+    bottom: { color: '#2a3226', kneePad: '#14180f' }, shoes: boot(), defaultExpr: 'deadpan' }),
+  casey: base({ name: 'Casey', skin: '#f0cfb2', eyes: '#3a5a7a', scale: .97, hair: { style: 'messy', color: '#6a4a2a', seed: 19, volume: .9 },
+    top: suit('#5a6a7a', '#f4f1ea', '#2a3a5a'), bottom: { color: '#3a4a5a' }, shoes: boot(), defaultExpr: 'happy' }),
+  brad: base({ name: 'Brad Wolfe (X-5)', skin: '#e8c09a', eyes: '#3a5a7a', scale: 1.02, hair: { style: 'wavy', color: '#5a3a1a', seed: 88, volume: 1.1 },
+    acc: { sunglasses: true }, top: { type: 'jacket', color: '#c9a46a', shirt: '#8a2a1a', tie: null, accent: '#a8844a', cuff: '#8a6a3a', hem: -10, sleeves: 'long' },
+    bottom: { color: '#c9a46a' }, shoes: boot('#5a3a1a'), defaultExpr: 'smug' }),
+  hunter: base({ name: 'Minuteman', skin: '#d9a582', eyes: '#2a1a12', hair: { style: 'buzz', color: '#2a1a12', seed: 2, volume: .6 },
+    top: { type: 'jacket', color: '#3a3226', shirt: '#2a241a', tie: null, accent: '#c9a046', cuff: '#1d1a14', hem: -10, sleeves: 'long' }, belt: '#1a160f',
+    bottom: { color: '#2a241a', kneePad: '#1a160f' }, shoes: boot(), defaultExpr: 'deadpan' }),
+  thor: base({ name: 'Big Brother (Thor)', skin: '#efc6a6', eyes: '#3d6fb5', scale: 1.08, body: { shoulder: 33, hip: 17, torso: 104, thigh: 86, shin: 84, upper: 58, fore: 54 },
+    hair: { style: 'long', color: '#d8b04a', seed: 11, length: .7 }, top: { type: 'jacket', color: '#3a3a44', shirt: '#2a2a30', tie: null, accent: '#a8a8b0', cuff: '#a8a8b0', hem: -10, sleeves: 'long' },
+    bottom: { color: '#2a2a30' }, shoes: boot(), scarf: '#b02a2a', defaultExpr: 'grin' }),
+};
+module.exports = { D, C };
+if (require.main === module) {
+  const keys = Object.keys(C), W = 120 + keys.length * 190, H = 820; let s = `<rect width="${W}" height="${H}" fill="#efe9dc"/>`;
+  keys.forEach((k, i) => { const x = 110 + i * 190; s += D.drawCharacter(C[k], { x, y: 740, scale: .95, view: i % 3 === 2 ? 'threequarter' : 'front', expr: C[k].defaultExpr });
+    s += `<text x="${x}" y="800" text-anchor="middle" font-family="Inter" font-weight="700" font-size="15" fill="#231A24">${C[k].name}</text>`; });
+  require('fs').writeFileSync('castsheet.svg', D.svg(W, H, s));
+}
