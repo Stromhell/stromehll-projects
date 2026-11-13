@@ -21,8 +21,11 @@ function build(ACT) {
     const d = b - a, ue = s.ease === 'lin' ? u : io(u), cm = s.cam || {};
     const cam = { z: val(cm.z ?? 1, ue), x: val(cm.x ?? 1280, ue), y: val(cm.y ?? 720, ue), rot: val(cm.rot ?? 0, ue) };
     // keep every head (and horns) below the top letterbox: lower cam.y if needed (continuous in ue, so no jumps)
+    const cam0y = cam.y;
     if (!s.noHeadFit) for (const c of (s.chars || [])) { const ch = (C[c.c] || {}).acc || {}, hs = ch.hornStyle, hx = ch.horns ? (hs === 'huge' ? 230 : hs === 'small' ? 70 : hs === 'broken' ? 90 : 150) : 0;
-      const top = val(c.y, ue) - (410 + hx) * val(c.s ?? 1.4, ue), need = top - (165 - 540) / (cam.z * .75); if (cam.y > need) cam.y = Math.max(need, 720 / cam.z); }
+      const sc = val(c.s ?? 1.4, ue), cy = val(c.y, ue), lim = (165 - 540) / (cam.z * .75); let need = cy - (410 + hx) * sc - lim;
+      if (cam0y - need > .3 * 720 / cam.z) need = cy - 410 * sc - lim; // close-up: keep the face framed, let horn tips leave the frame
+      if (cam.y > need) cam.y = Math.max(need, 720 / cam.z); }
     if (cm.shake) { cam.sx = Math.sin(lt * 41) * cm.shake; cam.sy = Math.cos(lt * 33) * cm.shake * .7; }
     if (s.plate) plate(s.plate, cam, s.blur || 0, s.par ?? 1); else { screen(); ctx.fillStyle = s.bg || '#000'; ctx.fillRect(0, 0, W, H); }
     if (s.pre) await s.pre(lt, cam, u, d);
