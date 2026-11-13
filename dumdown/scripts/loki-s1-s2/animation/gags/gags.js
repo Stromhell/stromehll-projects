@@ -86,7 +86,7 @@ function sfxFx(t, cam) {
 }
 function slams(t) {
   for (const s of G.slam) { const k = seg(t, s.t, s.t + s.d); if (k <= 0 || k >= 1) continue; screen(); const kin = seg(t, s.t, s.t + .18), out = seg(t, s.t + s.d - .25, s.t + s.d);
-    const sc = (1.9 - .9 * io(kin)) * (1 - .2 * out); ctx.save(); ctx.globalAlpha = io(kin) * (1 - out); ctx.translate(W / 2, H * .5); ctx.rotate(-.06); ctx.scale(sc, sc);
+    const sc = (1.9 - .9 * io(kin)) * (1 - .2 * out); ctx.save(); ctx.globalAlpha = io(kin) * (1 - out); ctx.translate(G.set === 'trailer' ? W * .3 : W / 2, H * .5); ctx.rotate(-.06); ctx.scale(sc, sc);
     if (G.set === 'trailer') { txt(s.txt, 0, 0, 120, '#f4ecd8', { glow: '#ff3030', blur: 40, font: 'Georgia, serif', w: 700 }); }
     else { ctx.font = '900 104px Inter'; const w = ctx.measureText(s.txt).width + 90; rr(-w / 2 + 14, -84, w, 168, 26, '#231A24'); rr(-w / 2, -96, w, 168, 26, '#ffd23d', '#231A24', 9); txt(s.txt, 0, -12, 104, '#231A24'); }
     ctx.restore(); } }
@@ -190,13 +190,13 @@ S.repair = async t => {
   desk(1340, 1180, 860, 280, '#5a6a7a', '#3a4a5a', '#c9a046'); ctx.save(); ctx.translate(1560, 1100); for (let i = 0; i < 9; i++) { ctx.strokeStyle = `hsla(${40 + i * 12},90%,60%,.9)`; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(-80, i * 6 - 30); ctx.bezierCurveTo(-20, -60 + i * 10, 20, 40 - i * 8, 90, i * 5 - 20 + Math.sin(t * 4 + i) * 10); ctx.stroke(); } ctx.restore();
   rr(1900, 1090, 200, 90, 8, '#f4f1ea', '#231A24', 4); txt('MULTIVERSE', 2000, 1120, 22, '#231A24'); txt('(BROKEN)', 2000, 1152, 22, '#e23a3a'); };
 S.trailer = async t => {
-  const cam = camOf(t, { z: 1.15 + .1 * seg(t, OPEN, DUR), x: 1280, y: 820 }); plate('london', cam, 2); grade('#1a0a20', .5, 'multiply'); grade('#ff6a2a', .2);
+  const cam = camOf(t, { z: 1.1 + .08 * seg(t, OPEN, DUR), x: 1280, y: 760 }); plate('london', cam, 2); grade('#1a0a20', .5, 'multiply'); grade('#ff6a2a', .2);
   const b = ev('hit'); if (t > b - .2) { apply(cam); const k = seg(t, b - .2, b + .6); for (let i = 0; i < 3; i++) glowS(1280 + (i - 1) * 300, 800, 300 + 500 * k, 'rgba(255,140,40,A)', .5 * (1 - seg(t, b + 1, b + 3))); emo('💥', 1600, 1000, 140 + 60 * k); }
-  const bo = { x: lerp(900, 1300, seg(t, sp('BRAD').t0 - 2, DUR)), y: 1440, s: 2.1, view: 'front', expr: 'smug', pose: POSE.peace, hold: true };
+  const bo = { x: lerp(1550, 1750, seg(t, sp('BRAD').t0 - 2, DUR)), y: 1440, s: 2.1, view: 'front', expr: 'smug', pose: POSE.peace, hold: true };
   if (t > ev('whoosh') - .3) await cast([[C.brad, 'BRAD', bo]], cam, t);
-  vhs(t, .5); screen(); ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, 170); ctx.fillRect(0, H - 170, W, 170);
+  vhs(t, .5); screen(); ctx.fillStyle = 'rgba(0,0,0,.55)'; ctx.fillRect(0, H - BAR - 120, W, 120);
   const lines = G.speech.filter(s => s.who === 'ANN'); let cur = -1; lines.forEach((s, i) => { if (t > s.t0) cur = i; });
-  const TX = ['IN A WORLD...', 'WHERE ONE MAN...', 'HAS REALLY GREAT HAIR', 'RATED: PLEASE STOP']; if (cur >= 0 && (cur === 3 || t < lines[cur].t1 + .3)) txt(TX[cur], W / 2, H - 85, 58, cur === 3 ? '#ff4a3a' : '#f4ecd8', { font: 'Georgia, serif', w: 700 }); };
+  const TX = ['IN A WORLD...', 'WHERE ONE MAN...', 'HAS REALLY GREAT HAIR', 'RATED: PLEASE STOP']; if (cur >= 0 && (cur === 3 || t < lines[cur].t1 + .3)) txt(TX[cur], W / 2, H - BAR - 60, 58, cur === 3 ? '#ff4a3a' : '#f4ecd8', { font: 'Georgia, serif', w: 700 }); };
 S.profile = async t => {
   const cam = camOf(t, { z: 1, x: 1280, y: 720 }); apply(cam); ctx.fillStyle = lg(0, 0, 2560, 1440, ['#ff9ac0', '#ffc8a0']); ctx.fillRect(0, 0, 2560, 1440);
   for (let i = 0; i < 14; i++) emo('💗', (i * 211 + t * 40) % 2600, 1440 - ((t * 90 + i * 137) % 1600), 60);
@@ -219,10 +219,10 @@ S.fans = async t => {
   rr(1080, 1300, 420, 160, 6, '#8a5a2a', '#231A24'); for (const [tt, x] of [[th, 980], [th2, 1600]]) if (t > tt) { for (let i = 0; i < 4; i++) emo('💫', x + Math.cos(t * 4 + i * 1.6) * 120, 1260 + Math.sin(t * 4 + i * 1.6) * 30, 60); }
   screen(); rr(80, BAR + 30, 640, 90, 10, 'rgba(20,16,24,.85)'); txt('🔁 LOOP #' + (1 + Math.floor(t * 3)), 400, BAR + 75, 42, '#ffd23d'); };
 S.ad = async t => {
-  const cam = camOf(t, { z: 1.08, x: 1280, y: 800 }); plate('jetski', cam); grade('#ffd080', .15); apply(cam);
+  const cam = camOf(t, { z: 1.08, x: 1280, y: 720 }); plate('jetski', cam); grade('#ffd080', .15); apply(cam);
   const dn = { x: 1000, y: 1450, s: 2.1, view: 'front', expr: 'excited', pose: lvl('DON', t) < 0 ? POSE.thumbsUp : undefined };
   await cast([[X.don, 'DON', dn]], cam, t); apply(cam);
-  ctx.save(); ctx.translate(1900, 520); ctx.rotate(.12); burst(0, 0, 260, t, '#ffd23d', '#ff6a2b', 16); txt('0%', 0, -30, 120, '#231A24'); txt('FINANCING', 0, 70, 46, '#231A24'); ctx.restore();
+  ctx.save(); ctx.translate(1950, 700); ctx.rotate(.12); burst(0, 0, 260, t, '#ffd23d', '#ff6a2b', 16); txt('0%', 0, -30, 120, '#231A24'); txt('FINANCING', 0, 70, 46, '#231A24'); ctx.restore();
   if (t > sp('DON', 2).t0) { ctx.save(); ctx.translate(1900, 1000); ctx.rotate(-.08); rr(-320, -70, 640, 140, 16, '#2fc6ff', '#231A24', 8); txt('100% WET', 0, 0, 70, '#fff'); ctx.restore(); }
   screen(); rr(0, H - 260, W, 120, 0, 'rgba(10,10,40,.85)'); txt("DON'S JET SKIS · 555-0199 · KANSAS", W / 2, H - 200, 52, '#ffd23d'); vhs(t, 1.1); pillar(); };
 S.study = async t => {
