@@ -17,8 +17,8 @@ function front(name, sub, o, im, lt) {
   rr(-CW / 2, -CH / 2, CW, CH, 22); ctx.fillStyle = gg; ctx.fill(); ctx.lineWidth = 6; ctx.strokeStyle = '#231A24'; ctx.stroke();
   const col = o.col || '#2a3990'; rr(-CW / 2 + 14, -CH / 2 + 14, CW - 28, CH - 28, 14); const ig = ctx.createLinearGradient(0, -CH / 2, 0, CH / 2); ig.addColorStop(0, col); ig.addColorStop(1, '#0d1233'); ctx.fillStyle = ig; ctx.fill();
   // header
-  ctx.font = '800 19px Inter'; const stw = ctx.measureText(o.stat || 'HP 100').width; ctx.textAlign = 'left'; ctx.fillStyle = '#fff6dc'; ctx.font = '800 27px Inter'; let fs = 27; while (ctx.measureText(name).width > CW - 70 - stw && fs > 14) { fs -= 1; ctx.font = `800 ${fs}px Inter`; } ctx.fillText(name, -CW / 2 + 28, -CH / 2 + 50);
-  ctx.textAlign = 'right'; ctx.fillStyle = '#ffd23d'; ctx.font = '800 19px Inter'; ctx.fillText(o.stat || 'HP 100', CW / 2 - 28, -CH / 2 + 48);
+  const hs = o.stat && o.stat.length <= 9 ? o.stat : (o.hp || 'HP 100'); ctx.font = '800 19px Inter'; const stw = ctx.measureText(hs).width; ctx.textAlign = 'left'; ctx.fillStyle = '#fff6dc'; ctx.font = '800 27px Inter'; let fs = 27; while (ctx.measureText(name).width > CW - 70 - stw && fs > 14) { fs -= 1; ctx.font = `800 ${fs}px Inter`; } ctx.fillText(name, -CW / 2 + 28, -CH / 2 + 50);
+  ctx.textAlign = 'right'; ctx.fillStyle = '#ffd23d'; ctx.font = '800 19px Inter'; ctx.fillText(hs, CW / 2 - 28, -CH / 2 + 48);
   // portrait window
   const px = -CW / 2 + 28, py = -CH / 2 + 66, pw = CW - 56, ph = 230; ctx.save(); rr(px, py, pw, ph, 10); ctx.clip();
   const rg = ctx.createRadialGradient(0, py + ph * .55, 10, 0, py + ph * .55, 220); rg.addColorStop(0, o.glow || '#9fe6ff'); rg.addColorStop(1, col); ctx.fillStyle = rg; ctx.fillRect(px, py, pw, ph);
@@ -29,9 +29,9 @@ function front(name, sub, o, im, lt) {
   rr(px + 20, py + ph - 14, pw - 40, 30, 15); ctx.fillStyle = '#231A24'; ctx.fill(); ctx.textAlign = 'center'; ctx.fillStyle = '#ffd23d'; ctx.font = '700 15px Inter'; ctx.letterSpacing = '3px'; ctx.fillText(o.type || 'CHARACTER', 0, py + ph + 6); ctx.letterSpacing = '0px';
   // ability
   const ay = py + ph + 48; ctx.textAlign = 'left'; ctx.fillStyle = '#ffd23d'; ctx.font = '800 17px Inter'; ctx.fillText('★ ABILITY', px + 4, ay);
-  ctx.fillStyle = '#f4ecd8'; ctx.font = '600 19px Inter'; wrap(sub, pw - 8).forEach((l, i) => ctx.fillText(l, px + 4, ay + 30 + i * 25));
+  ctx.fillStyle = '#f4ecd8'; ctx.font = '600 19px Inter'; const sl = wrap(sub, pw - 8); sl.forEach((l, i) => ctx.fillText(l, px + 4, ay + 30 + i * 25)); if (o.stat && o.stat !== hs) { const sy = ay + 30 + sl.length * 25 + 14; ctx.fillStyle = '#ff8a5a'; ctx.font = '800 15px Inter'; wrap(o.stat, pw - 8).forEach((l, i) => ctx.fillText(l, px + 4, sy + i * 21)); }
   // footer
-  ctx.textAlign = 'center'; ctx.fillStyle = 'rgba(255,246,220,.6)'; ctx.font = '600 12px Inter'; ctx.letterSpacing = '3px'; ctx.fillText(`DUMDOWN · VQ-S1 · ${String(o.no || 1).padStart(3, '0')}/018`, 0, CH / 2 - 26); ctx.letterSpacing = '0px';
+  ctx.textAlign = 'center'; ctx.fillStyle = 'rgba(255,246,220,.6)'; ctx.font = '600 12px Inter'; ctx.letterSpacing = '3px'; ctx.fillText(`DUMDOWN · ${window.CARD_SET || 'LOKI'} · ${String(o.no || 1).padStart(3, '0')}/015`, 0, CH / 2 - 26); ctx.letterSpacing = '0px';
   // holo sweep
   const sx = ((lt * .55) % 1) * (CW * 2.4) - CW * 1.2; ctx.save(); rr(-CW / 2, -CH / 2, CW, CH, 22); ctx.clip(); ctx.globalCompositeOperation = 'screen'; const hg = ctx.createLinearGradient(sx - 120, -CH / 2, sx + 120, CH / 2);
   hg.addColorStop(0, 'rgba(255,255,255,0)'); hg.addColorStop(.4, 'rgba(160,240,255,.28)'); hg.addColorStop(.5, 'rgba(255,200,250,.4)'); hg.addColorStop(.6, 'rgba(255,255,160,.28)'); hg.addColorStop(1, 'rgba(255,255,255,0)'); ctx.fillStyle = hg; ctx.fillRect(-CW, -CH, CW * 2, CH * 2); ctx.restore(); }

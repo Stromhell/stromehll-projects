@@ -5,7 +5,7 @@ const boot = (c = '#1a1a1a') => ({ color: c, sole: '#000', lace: '#333', type: '
 const suit = (c, shirt = '#f4f1ea', tie = '#3a2a1a') => ({ type: 'jacket', color: c, shirt, tie, accent: D.shade ? c : c, cuff: '#2a2014', hem: -10, sleeves: 'long' });
 const C = {
   loki: base({ name: 'Loki (TVA suit)', skin: '#f1dccb', eyes: '#3f9f5f', hair: { style: 'long', color: '#141018', seed: 31, length: .62 },
-    top: suit('#6a5236', '#f4f1ea', '#2a1d12'), bottom: { color: '#4a3826' }, shoes: boot('#2a1d12'), defaultExpr: 'smirk' }),
+    top: suit('#6a5236', '#f4f1ea', '#2a1d12'), bottom: { color: '#4a3826' }, shoes: boot('#2a1d12'), defaultExpr: 'smug' }),
   lokiHorns: base({ name: 'Loki (armour)', skin: '#f1dccb', eyes: '#3f9f5f', hair: { style: 'long', color: '#141018', seed: 31, length: .62 },
     acc: { horns: '#d9a520' }, top: { type: 'jacket', color: '#1f5a3a', shirt: '#1a1a1a', tie: null, accent: '#d9a520', cuff: '#d9a520', hem: -10, sleeves: 'long' },
     bottom: { color: '#141418' }, shoes: boot('#141418'), scarf: '#2f8a4f', defaultExpr: 'smug' }),
@@ -14,7 +14,7 @@ const C = {
     bottom: { color: '#141418' }, shoes: boot('#141418'), defaultExpr: 'neutral' }),
   lokiKing: base({ name: 'Loki (god of stories)', skin: '#f1dccb', eyes: '#5fdf8f', hair: { style: 'long', color: '#141018', seed: 31, length: .7 },
     acc: { horns: '#e2b02a', hornStyle: 'huge' }, top: { type: 'jacket', color: '#14402a', shirt: '#0e0e12', tie: null, accent: '#e2b02a', cuff: '#e2b02a', hem: -10, sleeves: 'long' },
-    bottom: { color: '#0e0e12' }, shoes: boot('#0e0e12'), scarf: '#1f6a3f', defaultExpr: 'gloom' }),
+    bottom: { color: '#0e0e12' }, shoes: boot('#0e0e12'), scarf: '#1f6a3f', defaultExpr: 'sad' }),
   sylvie: base({ name: 'Sylvie', skin: '#f3d8c2', eyes: '#3d7a5a', scale: .96, hair: { style: 'long', color: '#e2c26a', seed: 18, length: .8 },
     acc: { horns: '#c9a046', hornStyle: 'broken' }, top: { type: 'jacket', color: '#1d3a2a', shirt: '#2a2a22', tie: null, accent: '#7a6a3a', cuff: '#14261c', hem: -10, sleeves: 'long' },
     bottom: { color: '#1a1a16' }, shoes: boot('#2a2014'), scarf: '#2a4a32', defaultExpr: 'deadpan' }),
@@ -34,7 +34,7 @@ const C = {
     bottom: { color: '#2f7a3a' }, shoes: boot('#e2c22a'), scarf: '#e2c22a', defaultExpr: 'smile' }),
   boastful: base({ name: 'Boastful Loki', skin: '#e8c8ae', eyes: '#3f9f5f', scale: 1.08, body: { shoulder: 33, hip: 17, torso: 104, thigh: 86, shin: 84, upper: 58, fore: 54 },
     hair: { style: 'long', color: '#141018', seed: 77, length: .75 }, acc: { horns: '#d9a520', beard: '#141018' },
-    top: { type: 'tee', color: '#1f5a3a', accent: '#d9a520', cuff: '#d9a520', hem: 14, sleeves: 'short' }, bottom: { color: '#2a2a2a' }, shoes: boot(), defaultExpr: 'grin' }),
+    top: { type: 'tee', color: '#1f5a3a', accent: '#d9a520', cuff: '#d9a520', hem: 14, sleeves: 'short' }, bottom: { color: '#2a2a2a' }, shoes: boot(), defaultExpr: 'happy' }),
   hwr: base({ name: 'He Who Remains', skin: '#7a5038', eyes: '#2a1a12', scale: 1.0, hair: { style: 'wavy', color: '#14100e', seed: 23, volume: 1 },
     acc: { stubble: '#14100e' }, top: { type: 'jacket', color: '#3a2a5a', shirt: '#14141a', tie: null, accent: '#7a5aa8', cuff: '#2a1a40', hem: -10, sleeves: 'long' },
     bottom: { color: '#2a1a40' }, shoes: boot('#14141a'), defaultExpr: 'smile' }),
@@ -56,7 +56,15 @@ const C = {
     bottom: { color: '#2a241a', kneePad: '#1a160f' }, shoes: boot(), defaultExpr: 'deadpan' }),
   thor: base({ name: 'Big Brother (Thor)', skin: '#efc6a6', eyes: '#3d6fb5', scale: 1.08, body: { shoulder: 33, hip: 17, torso: 104, thigh: 86, shin: 84, upper: 58, fore: 54 },
     hair: { style: 'long', color: '#d8b04a', seed: 11, length: .7 }, top: { type: 'jacket', color: '#3a3a44', shirt: '#2a2a30', tie: null, accent: '#a8a8b0', cuff: '#a8a8b0', hem: -10, sleeves: 'long' },
-    bottom: { color: '#2a2a30' }, shoes: boot(), scarf: '#b02a2a', defaultExpr: 'grin' }),
+    bottom: { color: '#2a2a30' }, shoes: boot(), scarf: '#b02a2a', defaultExpr: 'happy' }),
+  ex1: base({ name: 'Extra (woman)', skin: '#e8c09a', eyes: '#3a5a7a', scale: .95, hair: { style: 'bob', color: '#8a3a22', seed: 61, volume: 1 },
+    top: { type: 'jacket', color: '#8a2a3a', shirt: '#e8d8c8', tie: null, accent: '#6a1a2a', cuff: '#6a1a2a', hem: -10, sleeves: 'long' }, bottom: { color: '#3a2a2a' }, shoes: boot(), defaultExpr: 'neutral' }),
+  ex2: base({ name: 'Extra (old man)', skin: '#d9a582', eyes: '#2a1a12', scale: .97, hair: { style: 'buzz', color: '#d8d8d8', seed: 62, volume: .6 }, acc: { beard: '#d8d8d8' },
+    top: { type: 'jacket', color: '#4a5a3a', shirt: '#d8d0b8', tie: null, accent: '#3a4a2a', cuff: '#3a4a2a', hem: -10, sleeves: 'long' }, bottom: { color: '#3a3a30' }, shoes: boot('#3a2a1a'), defaultExpr: 'deadpan' }),
+  ex3: base({ name: 'Extra (local)', skin: '#c8905a', eyes: '#2a1a12', scale: .98, hair: { style: 'messy', color: '#1a1210', seed: 63, volume: .9 },
+    top: { type: 'tee', color: '#c87a3a', accent: '#8a4a1a', cuff: '#8a4a1a', hem: 14, sleeves: 'long' }, bottom: { color: '#5a4a3a' }, shoes: boot('#5a3a1a'), defaultExpr: 'blank' }),
+  ex4: base({ name: 'Extra (kid)', skin: '#f0cfb2', eyes: '#3a5a7a', scale: .72, hair: { style: 'messy', color: '#c8a050', seed: 64, volume: 1 },
+    top: { type: 'tee', color: '#3a8ac8', accent: '#2a5a8a', cuff: '#2a5a8a', hem: 14, sleeves: 'short' }, bottom: { color: '#c8a050' }, shoes: { color: '#f4f1ea', sole: '#d9472b', lace: '#fff', type: 'sneaker' }, defaultExpr: 'happy' }),
 };
 module.exports = { D, C };
 if (require.main === module) {

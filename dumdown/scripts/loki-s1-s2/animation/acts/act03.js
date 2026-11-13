@@ -1,0 +1,16 @@
+// Act 03: S1 EP2 The Variant
+window.ACT = { timing: window.TIMING, shots: [
+ { p: 0, plate: 'renfair', title: ['SEASON 1 · EPISODE 2', 'The Variant'], cam: { z: [1.2, 1.35], x: 1280, y: 820 }, chars: [{ c: 'hunter', x: [800, 1100], y: 1080, s: 1.3, view: 'threequarter' }, { c: 'hunter', x: [600, 900], y: 1080, s: 1.3, view: 'threequarter' }] },
+ { p: 0, f: .35, plate: 'renfair', cam: { z: [1.5, 1.6], x: 1280, y: [878, 857] }, chars: [{ c: 'loki', x: 1100, y: 1100, s: 1.4, view: 'threequarter', talk: true, expr: 'smug' }, { c: 'mobius', x: 1450, y: 1100, s: 1.42, view: 'threequarter', dir: -1, expr: 'deadpan' }] },
+ { p: 0, f: .7, plate: 'renfair', cam: { z: [1.7, 1.5], x: [1000, 1300], y: [837, 878] }, chars: [{ c: 'loki', x: [1100, 1700], y: 1100, s: 1.4, view: 'threequarter', expr: 'shock', lin: true, t1: 2.2 }, { c: 'mobius', x: 1720, y: 1100, s: 1.42, view: 'threequarter', dir: -1, expr: 'smug', pose: 'hips', t0: 1.2 }], pops: [{ t: 'Caught in 4 seconds', at: 1.8 }] },
+ { p: 1, plate: 'archive', cam: { z: [1.3, 1.6], x: 1280, y: 980 }, chars: [{ c: 'loki', x: 1280, y: 1290, s: 1.5, pose: 'think', expr: 'deadpan' }] },
+ { p: 1, f: .3, plate: 'archive', cam: { z: [1.8, 2.0], x: 1280, y: [978, 950] }, chars: [{ c: 'loki', x: 1280, y: 1290, s: 1.5, pose: 'point', expr: 'excited' }], big: ['APOCALYPSES!', .8, 2.8, '#ffd23d'] },
+ { p: 1, f: .5, plate: 'pompeii', cam: { z: [1.3, 1.45], x: 1280, y: 900, shake: 2 }, chars: [{ c: 'loki', x: 1150, y: 1230, s: 1.6, pose: 'wave', talk: true, expr: 'excited' }, { c: 'mobius', x: 1550, y: 1230, s: 1.6, view: 'threequarter', dir: -1, expr: 'nervous' }], fx: ['sparks'] },
+ { p: 1, f: .82, plate: 'pompeii', cam: { z: [2.0, 2.2], x: 1550, y: [850, 826] }, chars: [{ c: 'ex2', x: 1550, y: 1230, s: 1.6, pose: 'shrug', expr: 'deadpan' }], pops: [{ t: '¯\\_(ツ)_/¯', at: .4 }] },
+ { p: 2, plate: 'roxxcart', cam: { z: [1.0, 1.2], x: 1280, y: 720 }, fx: ['rain'], ease: 'lin' },
+ { p: 2, f: .5, plate: 'roxxcart', cam: { z: [1.5, 1.6], x: 1280, y: [1000, 985] }, fx: ['rain'], chars: [{ c: 'loki', x: [800, 1100], y: 1260, s: 1.5, view: 'threequarter' }, { c: 'mobius', x: [600, 900], y: 1260, s: 1.5, view: 'threequarter' }, { c: 'b15', x: [400, 700], y: 1260, s: 1.48, view: 'threequarter' }] },
+ { p: 3, plate: 'roxxcart', cam: { z: [2.0, 2.4], x: 1500, y: [920, 876] }, chars: [{ c: 'sylvie', x: 1500, y: 1260, s: 1.5, view: 'threequarter', dir: -1, expr: 'angry' }], grade: ['#ff3a6a', .15],
+   cards: [{ c: 'sylvie', name: 'SYLVIE', sub: 'Move: Enchant', at: 1.0, side: 'L', type: 'LOKI (YES, REALLY)', stat: 'STATUS: ANGRY', items: ['👑', '🗡️'], tags: ['VARIANT', 'NOPE'] }] },
+ { p: 3, f: .45, plate: 'roxxcart', cam: { z: [1.2, 1.0], x: 1280, y: 720, shake: 6 }, post: (lt) => { E.apply({ z: 1, x: 1280, y: 720 }); window.PROPS.branches({ y: 300, k: Math.min(1, lt / 2) }, lt); }, fx: ['flash'] },
+ { p: 3, f: .72, plate: 'roxxcart', cam: { z: [1.5, 1.7], x: 1400, y: [1000, 965] }, props: [{ k: 'door', x: 1700, y: 1260, s: 1 }], chars: [{ c: 'sylvie', x: [1500, 1720], y: 1260, s: 1.5, view: 'threequarter', t1: 2 }, { c: 'loki', x: [900, 1720], y: 1260, s: 1.5, view: 'threequarter', lin: true, expr: 'angry' }], fadeOut: true },
+]};
