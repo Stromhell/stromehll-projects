@@ -152,6 +152,32 @@ def main():
                     add("CHECK", "flash/flicker spike", f"~{fmt((k+1)/4)} (one-frame change then back)",
                         "look for texture/ground flicker, shadow-update throttle, variety flip, pop-in; keep cuts on purpose")
 
+        # local glitch / pop-in: one 4x4 grid cell jumps while the rest of the frame is calm (Frozen Market 13 Nov:
+        # background, door, window glitching; characters popping in from nowhere). Cuts change every cell -> skipped.
+        gh, gw = sh // 4, sw // 4
+        cell = d[:, :gh*4, :gw*4].reshape(len(d), 4, gh, 4, gw).mean(axis=(2, 4)).reshape(len(d), 16)
+        hits = {}
+        skip = set(range(8, 16)) if a.kind == "reel" else set()  # reel caption band changes every word
+        for k in range(1, len(cell) - 1):
+            row = cell[k]; calm = np.median(row)
+            hot = [c for c in np.where((row > 14) & (row > 8 * (calm + 0.5)))[0] if c not in skip]
+            if not hot or len(hot) > 3:
+                continue  # nothing, or a cut / camera move
+            for c in hot:
+                if cell[k-1][c] > 0.3 * row[c]: continue
+                kind = "flicker" if cell[k+1][c] > 0.6 * row[c] else "pop"
+                where = ["top", "upper", "lower", "bottom"][c // 4] + "-" + ["left", "mid-left", "mid-right", "right"][c % 4]
+                hits.setdefault((round((k+1)/4, 1), kind), []).append(where)
+        items = sorted(hits.items())
+        for (t, kind), ws in items[:12]:
+            if kind == "flicker":
+                add("CHECK", "local glitch/flicker", f"~{fmt(t)} {', '.join(ws)}",
+                    "background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot")
+            else:
+                add("CHECK", "possible pop-in", f"~{fmt(t)} {', '.join(ws)}",
+                    "something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK)")
+        if len(items) > 12:
+            add("CHECK", "more local changes", f"{len(items)-12} more spots, e.g. " + ", ".join(fmt(t) for (t, _), _ in items[12:20]), "step through those seconds at 8 fps")
     # 5. audio: loudness, peaks, silence gaps, noise floor (VO hiss)
     if au:
         _, _, err = run(["ffmpeg", "-hide_banner", "-i", f, "-af", "ebur128=peak=true", "-f", "null", "-"])

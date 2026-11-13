@@ -1,4 +1,4 @@
-# Render QA checklist + watch procedure (v2, 13 Nov 2026)
+# Render QA checklist + watch procedure (v2.1, 13 Nov 2026)
 
 Applies to EVERY line and channel: Stormi 2D, 2D dynamic, 3D, 3D low, DumDown, Finance with Stromi, reels, IG parts, shorts.
 Built from every mistake Pushpam caught by eye (29 Oct to 13 Nov). Each item says what to look for, how to catch it,
@@ -16,15 +16,16 @@ Project files `/mnt/project-files/system/qa/`, repo `system/qa/` (branch claude/
    - It writes `QA_DIR/qa_auto.md`, timestamped 1 fps contact sheets `QA_DIR/sheets/`, zoom crops `QA_DIR/zoom/`.
 2. **/watch pass:** `python3 .claude/skills/watch/scripts/watch.py FILE --engine local --question "<paste section D>"`
    (setup once: `bash tools/claude-video/setup-cloud.sh`, branch claude/project-thread-6cjl04). Local engine only.
-3. **Eyes-on pass:** Read EVERY contact sheet and every zoom crop. For each frame walk the checklist in section B:
+3. **Design pass:** run the taste + impeccable skills on one frame per shot for alignment, clipping and detail (Pushpam 13 Nov).
+4. **Eyes-on pass:** Read EVERY contact sheet and every zoom crop. For each frame walk the checklist in section B:
    feet, what is under them, what is in the hands, what overlaps, is anything moving, does the scale make sense,
    is the text clear. For every walk shot, vehicle crossing, prop hand-off and seated shot, also extract that
    stretch at 4-10 fps (`ffmpeg -ss T -t 4 -i FILE -vf fps=8,scale=480:-2,tile=8x4 out.jpg`) and step through it.
-4. **Listen pass:** check the qa_auto audio lines, then listen to 3 random 10 s spots + the first 10 s: hiss, clicks,
+5. **Listen pass:** check the qa_auto audio lines, then listen to 3 random 10 s spots + the first 10 s: hiss, clicks,
    VO cut mid-word, music audible, SFX on cuts.
-5. **Write the note** `05 Production/qa/<file>-roundN.md`: each hit = time, frame, severity, cause, fix (use the fix column).
-6. **Fix every hit, re-render, re-run 1-5.** Repeat until the round is clean. Only then hand over / combine / book.
-7. Full video only: after the final encode, `--kind full` again on the EXACT file that will be uploaded (decode + CFR).
+6. **Write the note** `05 Production/qa/<file>-roundN.md`: each hit = time, frame, severity, cause, fix (use the fix column).
+7. **Fix every hit, re-render, re-run 1-6.** Repeat until the round is clean. Only then hand over / combine / book.
+8. Full video only: after the final encode, `--kind full` again on the EXACT file that will be uploaded (decode + CFR).
 
 Severity: HIGH = broken/unwatchable or factual/map error or upload risk; MEDIUM = anything in section B; LOW = polish.
 
@@ -113,6 +114,21 @@ Severity: HIGH = broken/unwatchable or factual/map error or upload risk; MEDIUM 
 | 48 | No clean last 5 s for the end screen | qa_auto zoom/last5s.jpg | hold a clean 5 s end (no text/subtitles) |
 | 49 | Wrong size/codec | qa_auto streams | full 1920x1080 h264 yuv420p; reels 1080x1920 |
 
+### B9. Frozen Market review (Pushpam 13 Nov 19:19, Finance with Stromi) - misses that v2 must now catch
+| # | Look for | How to catch | Standard fix |
+|---|---|---|---|
+| 50 | Background / door / window glitching (2:40, 6:04, 13:54) | qa_auto "local glitch/flicker" (one region changes while the rest is calm); step that second at 8 fps | stable layer order, no per-frame random, no texture/sprite swap, fixed seeds; 3D: no z-fighting (offset coplanar door/window planes), no shadow throttle |
+| 51 | Held props floating (chain at 4:24) | for every chain, rope, leash, bag, sign: is one end in a hand? | parent the prop to the hand joint, not to the scene |
+| 52 | Labels/tokens floating instead of resting (FOR/AGAINST at 11:59) | anything that "belongs on" a scale, table, shelf must touch it | place them on the pans/surface with a contact shadow; move with the object |
+| 53 | Stamps/graphics landing ON a building or prop (stamp at 6:12) | landing graphic overlaps the house/prop silhouette | land in clear space beside it; check the end frame of every slam/stamp animation |
+| 54 | Props clipping furniture or each other (rope through table 11:21, lock on door 13:17) | prop edge passes through another object's edge | move/raise the prop (lock a little up), layer behind/in front correctly, shorten the rope |
+| 55 | Characters clipping furniture (sofa 9:59, people 13:54) | body overlaps the sofa/chair/desk outline wrongly | seat into the sofa with the right layer order (legs behind cushion front), or move them apart |
+| 56 | Characters popping in from nowhere (all scenes) | qa_auto "possible pop-in"; any person in frame N not in N-1 without walking in | walk in from the frame edge or a door, or a deliberate fade + whoosh; never appear |
+| 57 | Any scene not highly detailed (8:21 and "all scenes") | rate every scene's set: props, texture, depth layers, light; 3D hybrid sets too | add set dressing, textures, depth layers, practical lights; rebuild plain sets |
+| 58 | Graphics misaligned / crowding characters | design pass with the taste + impeccable skills on one frame per shot | align cards/tags to a grid, keep clear of bodies and faces, consistent margins |
+
+Every stamp, tag, label, card or graphic that animates in gets its END frame checked: where it lands, what it touches, what it covers.
+
 ---
 
 ## C. Two worked fixes Pushpam asked for by name
@@ -120,4 +136,4 @@ Severity: HIGH = broken/unwatchable or factual/map error or upload risk; MEDIUM 
 - **Upload "Processing abandoned" (VisionQuest, 13 Nov):** cause was a full stitched from separately encoded acts and gags without re-encode. Fix = single-pass CFR re-encode + decode check before upload.
 
 ## D. /watch question (paste as --question)
-"Check against the Stormi render QA checklist. Report every hit with its timestamp and a fix: characters standing on furniture, sitting on air, walking above ground or over big props, floating props or luggage, terrain not touching the ground; walk-in-place, gliding, walk cycles too fast or not starting/stopping on time, wheels not turning, frozen characters or still shots over 5 s, abrupt pose snaps, action out of sync with the narration; overlapping characters or animals, props clipping bodies, seated legs in front of the torso, vehicles through buildings, camera inside heads, characters vanishing or popping in, legs cut off by crops; wrong real-world scale, vehicles side-on on a road toward camera, mics facing away from the speaker, identical rows of figures; plain or blocky scenes, blocky sea or textures, scenes too dark, flicker; text over subtitles or characters, cut-off signs, spelling, wrong India map; reel logo top-right, centred end card, hook in the first 3 s; audio hiss, quiet music or SFX, dead air, words cut at joins."
+"Check against the Stormi render QA checklist. Report every hit with its timestamp and a fix: characters standing on furniture, sitting on air, walking above ground or over big props, floating props or luggage, terrain not touching the ground; walk-in-place, gliding, walk cycles too fast or not starting/stopping on time, wheels not turning, frozen characters or still shots over 5 s, abrupt pose snaps, action out of sync with the narration; overlapping characters or animals, props clipping bodies, seated legs in front of the torso, vehicles through buildings, camera inside heads, characters vanishing or popping in, legs cut off by crops; background, door or window glitching; held props (chains, ropes) not in a hand; labels not resting on their object; stamps or graphics landing on buildings; props clipping furniture (rope through table, lock through door); characters clipping sofas or chairs; graphics misaligned or crowding characters; wrong real-world scale, vehicles side-on on a road toward camera, mics facing away from the speaker, identical rows of figures; plain or blocky scenes, blocky sea or textures, scenes too dark, flicker; text over subtitles or characters, cut-off signs, spelling, wrong India map; reel logo top-right, centred end card, hook in the first 3 s; audio hiss, quiet music or SFX, dead air, words cut at joins."
