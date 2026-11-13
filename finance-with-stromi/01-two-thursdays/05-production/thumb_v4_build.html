@@ -1,0 +1,55 @@
+<!doctype html><meta charset="utf-8"><style>@font-face{font-family:A;src:url(Anton-Regular.ttf)}body{margin:0;background:#000}</style>
+<canvas id="c" width="1920" height="1080"></canvas>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d'),W=1920,H=1080;let s=9;const R=()=>(s=(s*16807)%2147483647)/2147483647;
+const GRN='#3fd06a',GRN2='#1f8a43',RED='#ff3344',RED2='#b3121f',INK='#120c0a',CRM='#fff6e6';
+function inked(path,fill,lw){x.save();path();x.fillStyle=fill;x.fill();x.lineWidth=lw||12;x.strokeStyle=INK;x.lineJoin='round';x.stroke();x.restore()}
+document.fonts.load('100px A').then(()=>{
+const FX=1430,FY=440; // face centre target
+// 1. flat comic panel split: green left, red right with a diagonal cut
+x.fillStyle='#0d3b22';x.fillRect(0,0,W,H);
+x.beginPath();x.moveTo(860,0);x.lineTo(W,0);x.lineTo(W,H);x.lineTo(560,H);x.closePath();x.fillStyle='#5c0b14';x.fill();
+// 2. action burst rays from the face
+for(let i=0;i<36;i++){const a0=i/36*Math.PI*2,a1=a0+Math.PI/36;x.beginPath();x.moveTo(FX,FY);x.lineTo(FX+Math.cos(a0)*2400,FY+Math.sin(a0)*2400);x.lineTo(FX+Math.cos(a1)*2400,FY+Math.sin(a1)*2400);x.closePath();x.fillStyle=i%2?'rgba(255,51,68,.22)':'rgba(0,0,0,.18)';x.fill()}
+// 3. halftone dots
+for(let i=0;i<W;i+=26)for(let j=0;j<H;j+=26){const d=Math.hypot(i-FX,j-FY)/1400;const r=Math.max(0,5.5*(d-.25));if(r<.4)continue;x.fillStyle=i<(860-j*0.28)?'rgba(63,208,106,.28)':'rgba(255,51,68,.28)';x.beginPath();x.arc(i,j,r,0,7);x.fill()}
+// 5. big inked crash arrow smashing down to the chip
+const A=[[30,200],[330,150],[520,380],[640,320],[860,770]];const hw=34;
+function thickPath(){x.beginPath();A.forEach((q,i)=>i?x.lineTo(...q):x.moveTo(...q))}
+x.save();x.lineCap='round';x.lineJoin='round';thickPath();x.lineWidth=hw*2+24;x.strokeStyle=INK;x.stroke();thickPath();x.lineWidth=hw*2;x.strokeStyle=RED;x.stroke();thickPath();x.lineWidth=12;x.strokeStyle='rgba(255,255,255,.45)';x.translate(-10,-14);x.stroke();x.restore();
+const [ex,ey]=A[A.length-1],ang=Math.atan2(ey-A[3][1],ex-A[3][0]);x.save();x.translate(ex,ey);x.rotate(ang);inked(()=>{x.beginPath();x.moveTo(110,0);x.lineTo(-30,-95);x.lineTo(-30,95);x.closePath()},RED,12);x.restore();
+// 6. inked chip, cracked in two halves, under the arrow tip
+function chipHalf(cx,cy,rot,side){x.save();x.translate(cx,cy);x.rotate(rot);const S=250;
+ x.save();x.beginPath();if(side<0){x.moveTo(-200,-200);x.lineTo(30,-200);x.lineTo(-10,-40);x.lineTo(40,20);x.lineTo(-20,200);x.lineTo(-200,200)}else{x.moveTo(200,-200);x.lineTo(30,-200);x.lineTo(-10,-40);x.lineTo(40,20);x.lineTo(-20,200);x.lineTo(200,200)}x.closePath();x.clip();
+ for(let i=-4;i<=4;i++){inked(()=>{x.beginPath();x.rect(i*26-8,-S*.66,16,40)},'#f2c14e',5);inked(()=>{x.beginPath();x.rect(i*26-8,S*.5,16,40)},'#f2c14e',5);inked(()=>{x.beginPath();x.rect(-S*.66,i*26-8,40,16)},'#f2c14e',5);inked(()=>{x.beginPath();x.rect(S*.5,i*26-8,40,16)},'#f2c14e',5)}
+ inked(()=>{x.beginPath();x.roundRect(-S/2,-S/2,S,S,24)},GRN,10);x.fillStyle=GRN2;x.fillRect(-S/2+8,S*.18,S-16,S*.3);
+ inked(()=>{x.beginPath();x.roundRect(-S*.3,-S*.3,S*.6,S*.6,12)},'#dfe5e8',8);x.fillStyle=INK;x.font='34px A';x.textAlign='center';x.textBaseline='middle';x.fillText('NVIDIA',0,-4);x.restore();
+ x.restore()}
+chipHalf(800,895,-0.07,-1);chipHalf(818,893,0.07,1);
+// impact lines + debris
+x.strokeStyle=INK;x.lineWidth=8;x.lineCap='round';for(let k=0;k<7;k++){const a=-Math.PI+k*Math.PI/6.5;x.beginPath();x.moveTo(820+Math.cos(a)*190,830+Math.sin(a)*150);x.lineTo(820+Math.cos(a)*250,830+Math.sin(a)*200);x.stroke()}
+for(let i=0;i<7;i++){const dx=700+R()*420,dy=640+R()*160;x.save();x.translate(dx,dy);x.rotate(R()*6);inked(()=>{x.beginPath();x.moveTo(0,0);x.lineTo(34,8);x.lineTo(10,32);x.closePath()},i%2?GRN:'#f2c14e',5);x.restore()}
+// 7. face: white sticker outline then art
+const img=new Image();img.onload=()=>{const h=1180,w=img.width*h/img.height,fx=W-w+40,fy=H-h+120;
+ const off=document.createElement('canvas');off.width=w+60;off.height=h+60;const o=off.getContext('2d');
+ for(let a=0;a<16;a++){o.drawImage(img,30+Math.cos(a/16*6.283)*14,30+Math.sin(a/16*6.283)*14,w,h)}o.globalCompositeOperation='source-in';o.fillStyle=INK;o.fillRect(0,0,off.width,off.height);
+ x.save();x.shadowColor='rgba(0,0,0,.6)';x.shadowOffsetX=18;x.shadowOffsetY=18;x.drawImage(off,fx-30,fy-30);x.restore();x.drawImage(img,fx,fy,w,h);
+ const tx=fx+176*h/img.height,ty=fy+205*h/img.height;
+ // comic target: inked red rings + ticks
+ x.save();x.translate(tx,ty);const ring=(r,lw)=>{x.beginPath();x.arc(0,0,r,0,7);x.lineWidth=lw+10;x.strokeStyle=INK;x.stroke();x.lineWidth=lw;x.strokeStyle=RED;x.stroke()};
+ ring(230,14);x.setLineDash([22,16]);x.beginPath();x.arc(0,0,285,0,7);x.lineWidth=8;x.strokeStyle=RED;x.stroke();x.setLineDash([]);
+ for(let k=0;k<4;k++){x.save();x.rotate(k*Math.PI/2);x.lineCap='round';x.beginPath();x.moveTo(240,0);x.lineTo(330,0);x.lineWidth=26;x.strokeStyle=INK;x.stroke();x.lineWidth=13;x.strokeStyle=RED;x.stroke();
+  x.beginPath();x.moveTo(200,0);x.lineTo(222,0);x.lineWidth=8;x.strokeStyle=RED;x.stroke();x.restore()}
+ x.lineCap='round';for(const [w,col] of [[14,INK],[6,RED]]){x.lineWidth=w;x.strokeStyle=col;x.beginPath();x.moveTo(-26,0);x.lineTo(26,0);x.moveTo(0,-26);x.lineTo(0,26);x.stroke()}
+ x.restore();
+ // 8. type, comic style with hard offset shadow
+ function comicText(t,X,Y,size,fill,rot){x.save();x.translate(X,Y);x.rotate(rot||0);x.font=size+'px A';x.lineJoin='round';x.textBaseline='alphabetic';
+  x.fillStyle=INK;x.fillText(t,14,14);x.lineWidth=size*0.11;x.strokeStyle=INK;x.strokeText(t,0,0);x.fillStyle=fill;x.fillText(t,0,0);x.restore()}
+ comicText('FIRED',60,340,330,CRM,-0.05);
+ comicText('-$400B',70,560,200,RED,-0.05);
+ // name tag
+ x.save();x.translate(80,610);x.rotate(-0.05);x.font='60px A';const nw=x.measureText('JENSEN HUANG').width;inked(()=>{x.beginPath();x.rect(0,0,nw+40,82)},GRN,9);x.fillStyle=INK;x.textBaseline='alphabetic';x.fillText('JENSEN HUANG',20,66);x.restore();
+ // panel border
+ x.lineWidth=22;x.strokeStyle=INK;x.strokeRect(0,0,W,H);
+ window.done=1};img.src='face.png';});
+</script>
