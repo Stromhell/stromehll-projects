@@ -1,0 +1,19 @@
+<html><head><link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet"></head><body style="margin:0"><canvas id="c" width="1920" height="1080"></canvas><script>
+(async()=>{await document.fonts.load('200px Anton');const c=document.getElementById('c'),x=c.getContext('2d');const im=new Image();im.src='c.png';await im.decode();
+// fill, shift art right slightly
+const s=1080/768,w=1376*s;x.drawImage(im,1920-w,0,w,1080);
+// darken left edge for text
+let g=x.createLinearGradient(0,0,900,0);g.addColorStop(0,'rgba(0,10,5,.85)');g.addColorStop(1,'rgba(0,10,5,0)');x.fillStyle=g;x.fillRect(0,0,900,1080);
+// target on face
+const fx=1920-w+1048*s, fy=232*s; x.save();x.shadowColor='rgba(255,40,40,.9)';x.shadowBlur=18;x.strokeStyle='#ff2a2a';x.lineWidth=7;
+x.beginPath();x.arc(fx,fy,165,0,7);x.stroke();x.lineWidth=3;x.setLineDash([14,12]);x.beginPath();x.arc(fx,fy,200,0,7);x.stroke();x.setLineDash([]);x.lineWidth=7;
+for(const[a,b]of[[0,1],[0,-1],[1,0],[-1,0]]){x.beginPath();x.moveTo(fx+a*140,fy+b*140);x.lineTo(fx+a*225,fy+b*225);x.stroke();}
+x.lineWidth=4;x.beginPath();x.moveTo(fx-18,fy);x.lineTo(fx+18,fy);x.moveTo(fx,fy-18);x.lineTo(fx,fy+18);x.stroke();x.restore();
+function txt(t,X,Y,size,fill,rot){x.save();x.translate(X,Y);x.rotate(rot);x.font=size+'px Anton';x.lineJoin='round';
+x.shadowColor='rgba(0,0,0,.7)';x.shadowOffsetX=10;x.shadowOffsetY=12;x.shadowBlur=0;x.lineWidth=size*0.12;x.strokeStyle='#000';x.strokeText(t,0,0);x.shadowColor='transparent';x.fillStyle=fill;x.fillText(t,0,0);x.restore();}
+txt('FIRED',70,400,330,'#ffffff',-0.04);
+txt('-$400B',80,640,210,'#ff2b2b',-0.04);
+// green tag
+x.save();x.translate(90,720);x.rotate(-0.04);x.fillStyle='#22c55e';x.strokeStyle='#000';x.lineWidth=8;x.beginPath();x.rect(0,0,470,90);x.fill();x.stroke();x.font='64px Anton';x.fillStyle='#04140a';x.fillText('JENSEN HUANG',24,70);x.restore();
+window.done=1;})();
+</script></body></html>
