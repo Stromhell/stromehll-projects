@@ -3,7 +3,7 @@ import numpy as np
 S='/tmp/claude-0/-home-user/acf60ddd-1269-5955-894d-60b48246689c/scratchpad/loki'
 FB='/usr/share/fonts/opentype/inter/InterDisplay-Black.otf'
 W,H=1280,720; ML=56
-src=Image.open(f'{S}/shots/throne_hq.jpg').convert('RGB'); Z=1.29
+src=Image.open(f'/tmp/claude-0/-home-user/acf60ddd-1269-5955-894d-60b48246689c/scratchpad/upscale/throne_x4.png').convert('RGB'); Z=1.29/4
 bg=src.resize((int(src.width*Z),int(src.height*Z)),Image.LANCZOS).crop((0,62,W,62+H))
 a=np.asarray(bg).astype(float)/255; a=np.clip((a-0.02)/0.85,0,1)**0.82; bg=Image.fromarray((a*255).astype('uint8'))
 bg=ImageEnhance.Contrast(ImageEnhance.Color(bg).enhance(1.25)).enhance(1.12).filter(ImageFilter.MedianFilter(3))
@@ -48,4 +48,4 @@ dm=dm.crop((int(cx-c/2),int(cy-c/2),int(cx+c/2),int(cy+c/2))).resize((230,230),I
 X,Y=1010,46; m=Image.new('L',(230,230)); ImageDraw.Draw(m).ellipse((0,0,229,229),fill=255)
 sh=Image.new('L',(W,H)); ImageDraw.Draw(sh).ellipse((X-8+8,Y-8+10,X+238+8,Y+238+10),fill=200); sh=sh.filter(ImageFilter.GaussianBlur(8)); bg.paste(Image.new('RGB',(W,H),'#000'),(0,0),sh)
 d.ellipse((X-11,Y-11,X+241,Y+241),fill='#e23a3a',outline='#050505',width=5); bg.paste(dm,(X,Y),m)
-bg.save(f'{S}/thumb/loki_thumb_v5.jpg',quality=93); bg.resize((320,180),Image.LANCZOS).save(f'{S}/thumb/small5.jpg')
+bg.save(f'{S}/thumb/loki_thumb_v6.jpg',quality=93); bg.resize((320,180),Image.LANCZOS).save(f'{S}/thumb/small6.jpg')
