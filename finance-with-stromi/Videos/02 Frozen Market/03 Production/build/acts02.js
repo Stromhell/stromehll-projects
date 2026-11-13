@@ -36,7 +36,7 @@ ACTS[0] = [
       return { scene: s.S, cam: s.C, vig: 0.7, tags: [T('DANIELLE, 34 · NURSE', 340, 110, pop(t, 0.6)), T('AUSTIN · 2023 · FHA LOAN', 920, 110, pop(t, 4.5), { bg: '#e3c77a' })] }; } },
   { id: 'S08', f(t, d) { const s = getSet('apartment'); const k = E(k01(t, 0, d)); const half = d * 0.55;
       if (t < half) camLerp(s, k01(t, 0, half), [-2.8, 1.8, s.z0 + 2.4], [0.2, 1.7, s.z0 + 2.6], [-2.8, 1.6, s.z0], [0.2, 1.4, s.z0]); else camLerp(s, E(k01(t, half, d)), [0.2, 1.5, s.z0 + 4.6], [0.6, 1.4, s.z0 + 3.9], [0.8, 1.0, s.z0 + 0.4], [0.9, 1.0, s.z0 + 0.5]);
-      if (t > half - 0.3) sp(s, 'marcus', 0.35, s.z0 + 0.95, { view: 'q', dir: 1, expr: 'sad', look: [0.7, 0.2], seed: 3 }, t, null, null, 1.75); else hideCards(s);
+      if (t >= half) sp(s, 'marcus', 0.35, s.z0 + 0.95, { view: 'q', dir: 1, expr: 'sad', look: [0.7, 0.2], seed: 3 }, t, null, null, 1.75); else hideCards(s);
       s.jar.userData.coins.children.forEach((c, i) => c.visible = i < 6 + Math.floor(t / d * 8));
       return { scene: s.S, cam: s.C, tags: [T('MARCUS, 38 · RENTING', 330, 110, pop(t, 0.6)), T('6 YEARS SAVING', 960, 110, pop(t, 4.2), { bg: '#e3c77a' }), T('ONE MARKET · THREE PROBLEMS', 640, 620, t > half ? pop(t, half + 2) : 0, { size: 36 })] }; } },
 ];
@@ -74,7 +74,7 @@ ACTS[1] = [
       sp(s, 'linda', 1.2, s.z0 + 2.1, { view: 'q', dir: -1, expr: 'smirk', look: [-0.7, 0.2], seed: 2 }, t, L, 'LINDA', 1.6);
       return { scene: s.S, cam: s.C, tags: [] }; } },
   { id: 'S18', f(t, d) { const s = getSet('kitchen'); hideCards(s, ['linda']); s.flyer.visible = false;
-      if (!s.cuff) { const gold = std(0xe0b84a, { metalness: 0.95, roughness: 0.2 }); s.cuff = group(); const ring = new THREE.Mesh(new THREE.TorusGeometry(0.07, 0.014, 10, 32), gold); s.cuff.add(ring); for (let i = 0; i < 18; i++) { const l = new THREE.Mesh(new THREE.TorusGeometry(0.03, 0.008, 8, 16), gold); l.position.set(0.09 + i * 0.07, -0.02 * Math.sin(i / 17 * Math.PI) * 6, i * 0.03); l.rotation.y = i % 2 ? Math.PI / 2 : 0; s.cuff.add(l); } s.S.add(shadowy(s.cuff)); }
+      if (!s.cuff) { const gold = std(0xe0b84a, { metalness: 0.95, roughness: 0.2 }); s.cuff = group(); const ring = new THREE.Mesh(new THREE.TorusGeometry(0.07, 0.014, 10, 32), gold); s.cuff.add(ring); const cc = new THREE.CatmullRomCurve3([V3(0.075, -0.02, 0.02), V3(0.12, -0.3, 0.06), V3(0.2, -0.585, 0.05), V3(0.42, -0.59, -0.15), V3(0.58, -0.56, -0.42)], false, 'centripetal'); const NL = 26; for (let i = 0; i < NL; i++) { const u = i / (NL - 1); const l = new THREE.Mesh(new THREE.TorusGeometry(0.03, 0.008, 8, 16), gold); l.position.copy(cc.getPointAt(u)); l.lookAt(l.position.clone().add(cc.getTangentAt(u))); l.rotateY(Math.PI / 2); if (i % 2) l.rotateX(Math.PI / 2); s.cuff.add(l); } s.S.add(shadowy(s.cuff)); }
       s.cuff.visible = true; s.cuff.position.set(-0.3, 0.62, s.z0 + 2.35); const half = d * 0.4;
       if (t < half) camLerp(s, E(k01(t, 0, half)), [0.2, 1.0, s.z0 + 3.3], [0.8, 1.2, s.z0 + 3.7], [-0.2, 0.65, s.z0 + 2.3], [0.4, 0.8, s.z0 + 2.4]); else camLerp(s, E(k01(t, half, d)), [2.6, 1.9, s.z0 + 5.4], [1.4, 1.7, s.z0 + 4.6], [0, 1.0, s.z0 + 1.5], [0, 1.0, s.z0 + 1.6]);
       sp(s, 'linda', -0.6, s.z0 + 2.2, { view: 'q', dir: 1, expr: 'sad', look: [0.2, -0.3], seed: 2 }, t, null, null, 1.6);
@@ -87,26 +87,26 @@ ACTS[2] = [
   { id: 'S21', f(t, d, L) { const s = getSet('bakery'); const g1 = lineAt(L, 'GUS', 1); s.clock.userData.set(8, 40 + t * 1.2); s.sticker.visible = g1 && t > g1.t1 - 0.2; s.sticker.position.set(0.2, 1.06, s.z0 + 1.71);
       const sk = lineAt(L, 'GUS') ? lineAt(L, 'GUS').t0 - 0.4 : d; if (t < sk) camLerp(s, E(k01(t, 0, sk)), [0, 1.9, s.z0 + 5.6], [0.2, 1.7, s.z0 + 5.0], [0, 1.4, s.z0], [0, 1.3, s.z0 + 0.5]); else CAM(s, [0.4, 1.6, s.z0 + 5.4], [0.4, 1.15, s.z0 + 1.4]);
       sp(s, 'gus', -0.9, s.z0 + 2.1, { view: 'q', dir: 1, expr: g1 && t > g1.t0 ? 'sad' : 'happy', look: [0.6, 0.2], seed: 1 }, t, L, 'GUS', 1.75);
-      if (t > sk - 0.8) sp(s, 'dot', 1.2, s.z0 + 2.3, { view: 'q', dir: -1, expr: 'neutral', look: [-0.7, 0.3], seed: 3 }, t, L, 'DOT', 1.55); else hideCards(s, ['gus']);
+      walkTo(s, 'dot', 3.6, 1.2, s.z0 + 2.3, t, sk - 3.2, sk - 0.4, { view: 'q', dir: -1, expr: 'neutral', look: [-0.7, 0.3], seed: 3 }, L, 'DOT', 1.55);
       return { scene: s.S, cam: s.C, tags: [T('A HOUSE = INVENTORY', 640, 100, t < sk ? pop(t, 4) : 0, { size: 46 })] }; } },
   { id: 'S22', f(t, d) { const s = getSet('subdiv'); const k = E(k01(t, 0, d)); camLerp(s, k, [0, 7, 8], [0, 3.2, -10], [0, 0, -8], [0, 1.4, -30]);
       s.flags.forEach((f, i) => f.rotation.z = Math.sin(t * 2 + i) * 0.03);
       return { scene: s.S, cam: s.C, vig: 0.6, tags: [T('MOST UNSOLD NEW HOMES SINCE 2009', 640, 100, pop(t, 7), { size: 38, bg: '#e3c77a' }), T('RATE BUYDOWN', 640, 620, t > d * 0.6 ? pop(t, d * 0.62) : 0, { size: 46, bg: '#c2372d', col: '#fff' })] }; } },
   { id: 'S23', f(t, d) { const s = getSet('lender'); const hit = d * 0.55; s.setTag('$450,000'); const k = E(k01(t, 0, d));
       const ep = k01(t, 1.5, 4.5); s.env.position.set(lerp(1.2, 0.05, E(ep)), 0.81, s.z0 + lerp(1.9, 1.7, E(ep)));
-      const sk = k01(t, hit - 0.5, hit); s.stamp.position.set(0.3 - 0.4 * sk, 0.81 + (sk > 0 && sk < 1 ? Math.sin(sk * Math.PI) * 0.25 : 0), s.z0 + 1.55);
+      const sk = k01(t, hit - 0.5, hit); s.stamp.position.set(0.75 - 0.3 * sk, 0.81 + (sk > 0 && sk < 1 ? Math.sin(sk * Math.PI) * 0.25 : 0), s.z0 + lerp(1.55, 1.68, sk));
       camLerp(s, k, [-0.9, 1.5, s.z0 + 3.1], [0.4, 1.4, s.z0 + 2.9], [-0.3, 1.0, s.z0 + 1.6], [0.1, 0.9, s.z0 + 1.65]);
       return { scene: s.S, cam: s.C, tags: [T('PRICE TAG: SAME', 330, 110, pop(t, 0.6)), T('REAL PRICE: ~$420K', 950, 110, t > hit ? pop(t, hit) : 0, { bg: '#c2372d', col: '#fff' })] }; } },
   { id: 'S24', f(t, d, L) { const s = getSet('carlot'); s.board.visible = false; const w0 = lineAt(L, 'WENDELL'); const sk = w0 ? w0.t0 - 0.4 : d; const n2 = L.filter(l => l.who === 'N')[1]; const after = n2 ? n2.t0 - 0.3 : d;
       s.bunt.children.forEach((f, i) => f.rotation.z = Math.sin(t * 3 + i) * 0.2);
       if (t < sk) camLerp(s, E(k01(t, 0, sk)), [-6, 2.4, 8], [0.3, 1.8, 7], [-1, 0.8, 0], [0.3, 0.9, 0]); else if (t < after) CAM(s, [0.3, 1.6, 6.2], [0.3, 1.0, 0.5]); else camLerp(s, E(k01(t, after, d)), [0.3, 1.6, 6.2], [0.3, 3.0, 9.5], [0.3, 1.0, 0.5], [0.3, 0.9, 0]);
-      if (t > sk - 1) { sp(s, 'wendell', 0.2, 1.8, { view: 'front', expr: 'sly', look: [0, 0.3], seed: 2, arms: [{ h: [-0.8, 0.5], hand: 'point' }, { h: [0.8, 0.5], hand: 'point' }] }, t, L, 'WENDELL', 1.8); sp(s, 'pip', 1.6, 2.6, { view: 'q', dir: -1, expr: 'surprised', look: [-0.8, 0.4], seed: 4 }, t, L, 'PIP', 1.5); } else hideCards(s);
+      { sp(s, 'wendell', 0.2, 1.8, { view: 'front', expr: 'sly', look: [0, 0.3], seed: 2, arms: [{ h: [-0.8, 0.5], hand: 'point' }, { h: [0.8, 0.5], hand: 'point' }] }, t, L, 'WENDELL', 1.8); walkTo(s, 'pip', 5.5, 1.6, 2.6, t, sk - 3.5, sk - 0.4, { view: 'q', dir: -1, expr: 'surprised', look: [-0.8, 0.4], seed: 4 }, L, 'PIP', 1.5); }
       return { scene: s.S, cam: s.C, tags: [] }; } },
   { id: 'S25', card: 'The Price Tag Trick' },
   { id: 'S26', f(t, d, L) { const s = getSet('carlot'); s.board.visible = true; s.tn.visible = s.to.visible = false; const p0 = lineAt(L, 'PIP'); const sk = p0 ? p0.t0 - 0.3 : 0; const n2 = L.filter(l => l.who === 'N')[1]; const after = n2 ? n2.t0 : d;
       s.board.userData.draw(t < sk + 1.5 ? ['MARCH: 10 SEDANS + 1 SUV', 'AVG PRICE: $28,000'] : ['MARCH: 10 SEDANS + 1 SUV', 'APRIL: 0 SEDANS + 2 SUVs', 'AVG PRICE: $61,000 ↑'], t < sk + 1.5 ? 1 : 2);
       if (t < sk) camLerp(s, E(k01(t, 0, sk)), [0, 2.0, -2], [0, 1.7, -3.2], [0, 1.6, -6.5], [0, 1.6, -6.5]); else if (t < after) CAM(s, [0, 1.5, -1.2], [0, 1.25, -6.5]); else camLerp(s, E(k01(t, after, d)), [0, 1.6, -2.4], [3, 2.4, 3], [0, 1.4, -6.5], [0, 1, -3]);
-      if (t > sk - 0.5 && t < after + 1) { sp(s, 'pip', -1.0, -5.4, { view: 'q', dir: 1, expr: lineAt(L, 'PIP', 1) && t > lineAt(L, 'PIP', 1).t0 ? 'sad' : 'happy', look: [0.6, 0.2], seed: 3 }, t, L, 'PIP', 1.5); sp(s, 'mabel', 1.1, -5.3, { view: 'q', dir: -1, expr: 'smirk', look: [-0.7, 0.3], seed: 4 }, t, L, 'MABEL', 1.55); } else hideCards(s);
+      { walkTo(s, 'pip', -4.5, -1.0, -5.4, t, sk - 3, sk - 0.3, { view: 'q', dir: 1, expr: lineAt(L, 'PIP', 1) && t > lineAt(L, 'PIP', 1).t0 ? 'sad' : 'happy', look: [0.6, 0.2], seed: 3 }, L, 'PIP', 1.5); walkTo(s, 'mabel', 4.5, 1.1, -5.3, t, sk - 2.8, sk - 0.2, { view: 'q', dir: -1, expr: 'smirk', look: [-0.7, 0.3], seed: 4 }, L, 'MABEL', 1.55); }
       return { scene: s.S, cam: s.C, tags: [T('WE ONLY MEASURE WHAT SELLS', 640, 100, t < sk ? pop(t, 3) : 0, { size: 40 }), T('25%+ PAID ALL CASH', 640, 620, t > after ? pop(t, d - 5) : 0, { bg: '#e3c77a' })] }; } },
   { id: 'S27', f(t, d) { const s = getSet('maptable'); s.flags.forEach(f => f.visible = false); const order = ['AUSTIN', 'FLORIDA', 'CHICAGO', 'NEW YORK', 'SEATTLE', 'SF']; const at0 = [d * 0.32, d * 0.36, d * 0.55, d * 0.66, d * 0.76, d * 0.8];
       order.forEach((n, i) => { const a = s.arrows[n]; const k = outBack(k01(t, at0[i], at0[i] + 0.5)); a.visible = k > 0.01; a.scale.setScalar(Math.max(0.001, k) * 1.4); });
@@ -122,14 +122,14 @@ ACTS[2] = [
   { id: 'S30', f(t, d, L) { const s = getSet('backyard'); const g0 = lineAt(L, 'GUS'); const sk = g0 ? g0.t0 - 0.4 : d; const ns = L.filter(l => l.who === 'N'); const after = ns[1] ? ns[1].t0 : d;
       s.coals.material.color.setHSL(0.05, 1, 0.5 + 0.08 * Math.sin(t * 7)); const burnt = t > after - 1.5; s.burger.material.color.set(burnt ? 0x1a0d08 : 0x5a2a14);
       if (t < sk) camLerp(s, E(k01(t, 0, sk)), [0, 3.5, 7], [0.5, 2.2, 5], [0, 1.4, -3], [0.4, 1.0, 0]); else if (t < after) CAM(s, [0.6, 1.6, 4.6], [0.5, 1.0, 0]); else camLerp(s, E(k01(t, after, d)), [1.5, 1.5, 1.6], [1.5, 1.15, 0.85], [1.5, 0.78, 0.4], [1.5, 0.78, 0.4]);
-      if (t > sk - 1 && t < after + 0.5) { sp(s, 'gus', -0.7, 0.6, { view: 'q', dir: 1, expr: lineAt(L, 'GUS', 1) && t > lineAt(L, 'GUS', 1).t0 ? 'surprised' : 'grin', look: [0.7, 0.2], seed: 1 }, t, L, 'GUS', 1.75); sp(s, 'mabel', 1.4, 1.2, { view: 'q', dir: -1, expr: 'smirk', look: [-0.7, 0.3], seed: 2 }, t, L, 'MABEL', 1.55); } else hideCards(s);
+      { walkTo(s, 'gus', -5, -0.7, 0.6, t, sk - 3.5, sk - 0.4, { view: 'q', dir: 1, expr: lineAt(L, 'GUS', 1) && t > lineAt(L, 'GUS', 1).t0 ? 'surprised' : 'grin', look: [0.7, 0.2], seed: 1 }, L, 'GUS', 1.75); walkTo(s, 'mabel', 5.5, 1.4, 1.2, t, sk - 3.2, sk - 0.2, { view: 'q', dir: -1, expr: 'smirk', look: [-0.7, 0.3], seed: 2 }, L, 'MABEL', 1.55); }
       return { scene: s.S, cam: s.C, tags: [T('REAL PRICES: DOWN 15 MONTHS IN A ROW', 640, 100, t < sk ? pop(t, sk - 6) : 0, { size: 34, bg: '#e3c77a' })] }; } },
 ];
 ACTS[3] = [
   { id: 'S31', card: 'Underwater' },
   { id: 'S32', f(t, d) { const s = getSet('living'); const lv = lerp(0.02, 1.15, E(k01(t, 1, d - 2))); s.water.position.y = lv; s.mug.position.set(0.25, Math.max(lv + 0.05, 1.25), s.z0 + 1.0);
       const k = E(k01(t, 0, d)); camLerp(s, k, [0, 1.5, s.z0 + 4.8], [0, 1.4, s.z0 + 3.6], [0, 1.0, s.z0 + 0.8], [0, 1.1, s.z0 + 0.9]);
-      sp(s, 'danielle', 0, s.z0 + 1.15, { view: 'front', expr: 'sad', look: [0, 0.3], seed: 3, arms: [null, { h: [0.4, 0.5], hand: 'fist' }] }, t, null, null, 1.68);
+      sp(s, 'danielle', 0, s.z0 + 1.62, { view: 'front', expr: 'sad', look: [0, 0.3], seed: 3, arms: [null, { h: [0.4, 0.5], hand: 'fist' }] }, t, null, null, 1.68);
       return { scene: s.S, cam: s.C, tags: [T('OWES MORE THAN IT\'S WORTH', 640, 100, pop(t, 5), { size: 40 }), T('BRING CASH JUST TO LEAVE', 640, 640, t > d * 0.6 ? pop(t, d * 0.62) : 0, { bg: '#c2372d', col: '#fff' })] }; } },
   { id: 'S33', f(t, d, L) { const s = getSet('lender'); s.tagm.visible = false; s.house.visible = false; s.env.visible = false; if (!s.owe) { s.owe = poster(0.3, 0.4, (x, w, h) => { x.fillStyle = '#f4ecd8'; x.fillRect(0, 0, w, h); txt(x, 'CLOSING STATEMENT', w / 2, h * 0.1, h * 0.065); txt(x, 'YOU OWE', w / 2, h * 0.45, h * 0.1); txt(x, '$19,000', w / 2, h * 0.62, h * 0.15, '#c2372d'); }); s.S.add(s.owe); }
       const d0 = lineAt(L, 'DANIELLE'); s.owe.position.set(0.55, 1.15, s.z0 + 1.95); s.owe.visible = true;
@@ -163,8 +163,8 @@ ACTS[3] = [
 ACTS[4] = [
   { id: 'S40', card: 'Musical Chairs' },
   { id: 'S41', f(t, d, L) { const s = getSet('hall'); hideCards(s, ['linda', 'marcus', 'gus', 'mabel']); const m0 = lineAt(L, 'MARCUS'); const sk = m0 ? m0.t0 - 2.5 : d;
-      const occ = [['linda', 1.6], ['gus', 1.75], ['mabel', 1.55]]; occ.forEach(([k, h], i) => { const a = (i * 2 + 1) / 6 * TAU; const c = card(s, k, h); const P = pose({ view: 'front', expr: 'smile', seed: i, look: [0, 0.4] }, t, L, k.toUpperCase()); c.set(Math.cos(a) * 1.6 * 1.12, s.z0 + 3.4 + Math.sin(a) * 1.2 * 1.12, P, s.C, 0); });
-      const ang = t * 0.9; const mx = Math.cos(ang) * 2.2, mz = s.z0 + 3.4 + Math.sin(ang) * 1.5; const mc = card(s, 'marcus', 1.75); const moving = t > sk - 3; mc.set(moving ? mx : 0, moving ? mz : s.z0 + 5, moving ? slidePose(t, Math.sin(ang) > 0 ? -1 : 1, 1.8, 1.75) : pose({ view: 'q', expr: 'neutral' }, t), s.C);
+      s.chairs.forEach((c, i) => c.visible = i % 2 === 0); const occ = [['linda', 1.6], ['gus', 1.75], ['mabel', 1.55]]; occ.forEach(([k, h], i) => { const a = (i * 2 + 1) / 6 * TAU; const c = card(s, k, h); const P = pose({ view: 'front', expr: 'smile', seed: i, look: [0, 0.4] }, t, L, k.toUpperCase()); c.set(Math.cos(a) * 1.6, s.z0 + 3.4 + Math.sin(a) * 1.2, P, s.C, 0); });
+      const ang = t * 0.9; const mx = Math.cos(ang) * 2.7, mz = s.z0 + 3.4 + Math.sin(ang) * 2.0; const mc = card(s, 'marcus', 1.75); const moving = t > sk - 3; mc.set(moving ? mx : 0, moving ? mz : s.z0 + 5, moving ? slidePose(t, Math.sin(ang) > 0 ? -1 : 1, 1.8, 1.75) : pose({ view: 'q', expr: 'neutral' }, t), s.C);
       const k = E(k01(t, 0, d)); if (t < sk) camLerp(s, E(k01(t, 0, sk)), [0, 3.2, s.z0 + 9], [0, 2.4, s.z0 + 7.6], [0, 0.6, s.z0 + 3.4], [0, 0.8, s.z0 + 3.4]); else CAM(s, [lerp(1.5, -1.0, k01(t, sk, d)), 1.8, s.z0 + 7.2], [0, 0.9, s.z0 + 3.4]);
       return { scene: s.S, cam: s.C, tags: [T('NOT AN EXPLOSION. A FREEZE.', 640, 100, t > sk - 4 && t < sk + 1 ? pop(t, sk - 3.8) : 0, { size: 42 })] }; } },
   { id: 'S42', f(t, d) { const s = getSet('tabletop'); [s.gift, s.anvil, s.str, s.giftTag, s.sc, s.letter].forEach(o => o.visible = false); s.cake.visible = true; const n = Math.floor(40 * k01(t, 1, 7)); s.flames.forEach((f, i) => { f.visible = i < n; f.scale.y = 1.6 + 0.3 * Math.sin(t * 12 + i); }); s.cl.intensity = 2.5 * n / 40; s.key.intensity = lerp(50, 20, n / 40);
@@ -173,7 +173,7 @@ ACTS[4] = [
   { id: 'S43', f(t, d) { const s = getSet('club'); const k = E(k01(t, 0, d)); camLerp(s, k, [-3.5, 0.9, 6.5], [-0.8, 1.2, 5], [0, 1.6, -1], [0.6, 1.4, 0]);
       sp(s, 'gus', 1.5, 0.9, { view: 'q', dir: -1, expr: 'frown', look: [-0.8, 0.2], seed: 1, arms: [{ h: [0.4, 0.3], hand: 'fist' }, { h: [-0.3, 0.3], hand: 'fist' }] }, t, null, null, 1.8);
       sp(s, 'marcus', -1.7, 2.0, { view: 'q', dir: 1, expr: 'sad', look: [0.6, 0.3], seed: 2 }, t, null, null, 1.75); sp(s, 'danielle', -2.6, 2.6, { view: 'q', dir: 1, expr: 'neutral', look: [0.6, 0.3], seed: 3 }, t, null, null, 1.68);
-      return { scene: s.S, cam: s.C, vig: 0.65, tags: [T('LA 15% · ORANGE 15% · SAN DIEGO 16%', 640, 100, pop(t, 7), { size: 34 }), T('CAN AFFORD A MEDIAN HOME', 640, 160, pop(t, 7.5), { size: 28, bg: '#e3c77a' })] }; } },
+      return { scene: s.S, cam: s.C, vig: 0.65, tags: [T('LA 15% · ORANGE 15% · SAN DIEGO 16%', 640, 100, pop(t, 7), { size: 29 }), T('CAN AFFORD A MEDIAN HOME', 640, 160, pop(t, 7.5), { size: 28, bg: '#e3c77a' })] }; } },
   { id: 'S44', f(t, d) { const s = getSet('tabletop'); [s.gift, s.anvil, s.str, s.giftTag, s.sc, s.cake].forEach(o => o.visible = false); s.cl.intensity = 0; s.key.intensity = 50; s.letter.visible = true; const stop = d * 0.55; s.clock.userData.set(4, t < stop ? t * 6 : stop * 6);
       const half = d * 0.4; if (t < half) camLerp(s, E(k01(t, 0, half)), [-0.3, 1.5, s.z0 + 2.2], [-0.3, 1.15, s.z0 + 1.8], [-0.3, 0.78, s.z0 + 1.45], [-0.3, 0.78, s.z0 + 1.4]); else camLerp(s, E(k01(t, half, d)), [0.5, 1.8, s.z0 + 1.9], [0.8, 1.9, s.z0 + 1.2], [0.9, 1.9, s.z0], [0.9, 1.9, s.z0]);
       return { scene: s.S, cam: s.C, tags: [T('NO RESET?', 640, 640, t > d * 0.55 ? pop(t, d * 0.56) : 0, { size: 52, bg: '#c2372d', col: '#fff' })] }; } },
@@ -181,7 +181,7 @@ ACTS[4] = [
   { id: 'S46', f(t, d) { const s = getSet('pond'); const at0 = [d * 0.12, d * 0.72]; s.cracks.forEach((c, i) => { const v = i < 2 && t > at0[i]; c.visible = v; c.scale.setScalar(v ? Math.max(0.01, k01(t, at0[i], at0[i] + 0.6)) : 0.01); c.userData.lab.visible = v; c.userData.lab.lookAt(s.C.position); });
       const k = E(k01(t, 0, d)); const a = lerp(-0.4, 0.4, k); CAM(s, [Math.sin(a) * 7, 6, Math.cos(a) * 7], [0, 0, 0]);
       return { scene: s.S, cam: s.C, vig: 0.6, tags: [] }; } },
-  { id: 'S47', f(t, d, L) { const s = getSet('hall'); const l0 = lineAt(L, 'LINDA'); const burst = l0 ? l0.t0 - 3.5 : d * 0.3; hideCards(s);
+  { id: 'S47', f(t, d, L) { const s = getSet('hall'); const l0 = lineAt(L, 'LINDA'); const burst = l0 ? l0.t0 - 3.5 : d * 0.3; hideCards(s); s.chairs.forEach(c => c.visible = true);
       ['linda', 'danielle'].forEach((k, i) => { const c = card(s, k, k === 'linda' ? 1.6 : 1.68); c.set(-3.4 + i * 0.75, s.z0 + 1.6, pose({ view: 'q', dir: 1, expr: t > burst ? 'surprised' : 'neutral', look: [0.7, 0.2], seed: i }, t, L, k.toUpperCase()), s.C); });
       if (!s.crowd) s.crowd = ['marcus', 'pip', 'dot', 'wendell', 'mabel', 'gus'].map(k => castCard(s.S, k, k === 'pip' ? 1.5 : 1.7)); s.door.rotation.y = -Math.PI / 2 + (t > burst ? -1.3 * E(k01(t, burst, burst + 0.3)) : 0);
       s.crowd.forEach((c, i) => { if (t < burst + i * 0.18) return c.hide(); const tt = t - burst - i * 0.18; const x = lerp(4.7, -0.5 + (i % 3) * 0.6, k01(tt, 0, 2.2)), z = s.z0 + 4.5 - (i % 3) * 0.3 - Math.floor(i / 3) * 0.6 - k01(tt, 0, 2.2) * 1.2; c.set(x, z, tt < 2.2 ? slidePose(t + i, -1, 2.6, 1.75) : pose({ view: 'q', expr: 'scared', seed: i }, t), s.C); });
