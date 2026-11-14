@@ -53,6 +53,9 @@ body{{font-family:Urbane,sans-serif;color:{INK};background:#fff;position:relativ
 .step .n{{width:78px;height:78px;border-radius:50%;display:grid;place-items:center;font-size:40px;font-weight:700;background:{BLUE};color:#fff;box-shadow:0 14px 34px rgba(67,164,220,.5)}}
 .step .t{{font-size:44px;font-weight:700}}
 .ring{{position:absolute;border-radius:50%;border:2px solid rgba(67,164,220,.35);transform:translate(-50%,-50%)}}
+.dk .node{{background:#0b2038;color:#eaf4fb;border-color:rgba(120,195,240,.6);box-shadow:0 0 40px rgba(67,164,220,.55)}}
+.dk .node .ic{{background:rgba(67,164,220,.2)}} .dk .node.o .ic{{background:rgba(236,100,8,.2)}} .dk .node.o{{border-color:{ORANGE};box-shadow:0 0 50px rgba(236,100,8,.6)}}
+.dk svg[stroke="#0d1620"]{{stroke:#eaf4fb}}
 .streak{{position:absolute;height:5px;border-radius:3px;background:linear-gradient(90deg,rgba(67,164,220,0),{BLUE});box-shadow:0 0 18px {BLUE}}}
 """
 
@@ -167,10 +170,10 @@ scene("Most agents give you an answer and a \"confidence score\". But confidence
  "Close-up: the approval box shows only an answer and \"Confidence: 92%\". The 92% is hollow: nothing behind it.",
  "Camera crashes into the card; 92% counts up 0 → 92 with a ticking SFX; on \"isn't evidence\" a magnifier sweeps over the number and finds nothing (empty dashed box), the % cracks and drops out of frame.",
  '<div class="dots"></div>' + approval(170, 170, conf=True, scale=1.3, rot="rotate(-2deg)") +
- f'<div class="card tiltR" style="left:1240px;top:300px;width:520px;height:440px;border:3px dashed #c9d8e3;background:rgba(255,255,255,.6);box-shadow:none">'
+ f'<div class="card tiltR" style="left:1340px;top:300px;width:480px;height:440px;border:3px dashed #c9d8e3;background:rgba(255,255,255,.6);box-shadow:none">'
  f'<div style="position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);text-align:center">{icon("search", 120, 1.6)}'
  '<div class="mono" style="font-size:22px;color:#6a8396;margin-top:16px">evidence: none found</div></div></div>' +
- f'<div style="position:absolute;left:1085px;top:420px;font-size:150px;font-weight:300;color:{ORANGE}">≠</div>')
+ f'<div style="position:absolute;left:1190px;top:445px;width:140px;height:140px;border-radius:50%;background:{ORANGE};display:grid;place-items:center;box-shadow:0 0 0 10px rgba(236,100,8,.18),0 0 60px rgba(236,100,8,.7);font-size:96px;font-weight:600;color:#fff;line-height:1">≠</div>')
 
 # 03 title
 scene("(music sting, no VO)", "Can You Trust Your AI Agent with Multi-hop Decision-making Tasks?",
@@ -179,17 +182,16 @@ scene("(music sting, no VO)", "Can You Trust Your AI Agent with Multi-hop Decisi
  '<div class="dots"></div>' + edges([((1250,200),(1480,330)),((1480,330),(1700,220)),((1480,330),(1620,520)),((1620,520),(1820,640))], dim=[3]) +
  "".join(f'<div style="position:absolute;left:{x-16}px;top:{y-16}px;width:32px;height:32px;border-radius:50%;background:#fff;border:4px solid {c};box-shadow:0 0 22px {c}"></div>'
          for x, y, c in [(1250,200,BLUE),(1480,330,BLUE),(1700,220,BLUE),(1620,520,ORANGE),(1820,640,"#c9d8e3")]) +
- logo("left:110px;top:90px;height:64px") +
- f'<div style="position:absolute;left:110px;top:360px;width:1480px"><span class="pill">Agentic AI · Part 3</span>'
+  f'<div style="position:absolute;left:110px;top:360px;width:1480px"><span class="pill">Agentic AI · Part 3</span>'
  f'<div class="h1" style="font-size:112px;margin-top:30px">Can You Trust Your AI Agent with <span style="color:{BLUE}">Multi-hop</span> Decision-making Tasks?</div></div>')
 
 # 04 black box vs glass box
-gb = edges([((1210,470),(1350,400)),((1350,400),(1490,490)),((1490,490),(1620,410)),((1350,400),(1460,600))])
+gb = edges([((1210,470),(1350,400)),((1350,400),(1490,490)),((1490,490),(1620,410)),((1350,400),(1460,600))], hot=[0,1,2,3])
 for x, y in [(1210,470),(1350,400),(1490,490),(1620,410),(1460,600)]:
-    gb += f'<div style="position:absolute;left:{x-15}px;top:{y-15}px;width:30px;height:30px;border-radius:50%;background:#fff;border:4px solid {BLUE};box-shadow:0 0 20px {BLUE}"></div>'
+    gb += f'<div style="position:absolute;left:{x-18}px;top:{y-18}px;width:36px;height:36px;border-radius:50%;background:{ORANGE};border:5px solid #fff;box-shadow:0 0 0 6px rgba(236,100,8,.25),0 0 26px {ORANGE}"></div>'
 scene("So what does it take for an agent to show its evidence? A black box gives you an answer, but a glass box gives you the answer AND the path behind it: which facts it used, how they connect, which rules it checked, and in what order.",
  "Black box: answer + score · Glass box: answer + path",
- "Two cubes face off in 3D. Left: a solid black box that only outputs an answer and a score. Right: a clear glass box with the same answer plus a visible path of linked facts inside.",
+ "Two cubes face off in 3D on TG Blue. Left: a solid black box that only outputs an answer and a score. Right: a clear glass box with the same answer plus a visible path of orange linked facts inside.",
  "Both cubes drop in and slowly rotate; the black box stays opaque and spits out a score tag; the glass box turns transparent and the path inside lights node by node on \"facts… connect… rules… order\", each with a soft click SFX. Camera orbits slightly between them.",
  '<div class="dots"></div>' +
  f'<div style="position:absolute;left:200px;top:230px;width:600px;height:520px;border-radius:28px;background:linear-gradient(145deg,#2a333c,#000);transform:perspective(2000px) rotateY(18deg) rotateX(6deg);box-shadow:0 50px 90px rgba(0,0,0,.35)">'
@@ -312,19 +314,22 @@ scene("Now you're not trusting a score. You're approving a decision you can read
  '<div class="mono" style="margin-top:20px;font-size:20px;color:#4d6577">trail unchanged · 5 steps · 7 facts · 1 policy</div></div>')
 
 # 13 vector vs graph
-vec = "".join(f'<div class="card" style="left:{x}px;top:{y}px;width:600px;padding:24px 28px;transform:rotate({r}deg)">{icon("doc", 28)}<span style="font-size:23px;color:#4d6577;margin-left:12px">"{t}"</span>'
+vec = "".join(f'<div class="card" style="left:{x}px;top:{y}px;width:600px;padding:24px 28px;transform:rotate({r}deg);background:#f2f5f8;border-color:#e1e8ee;box-shadow:0 6px 14px rgba(20,60,100,.06);filter:grayscale(1);opacity:.85">{icon("doc", 28)}<span style="font-size:23px;color:#4d6577;margin-left:12px">"{t}"</span>'
               f'<span class="mono" style="float:right;font-size:22px;color:{BLUE};font-weight:500">{s}</span></div>'
               for x, y, r, t, s in [(110, 300, -4, "…rollback procedures for payment…", "0.87"), (190, 470, 3, "…configuration changes may cause…", "0.84"), (90, 640, -2, "…premium customer SLA terms…", "0.81")])
 scene("You might ask, \"why does this need a graph?\" Because vector search can only tell you which passages looked similar to the question. It can't tell you why they matter to the decision.",
  "Similar ≠ explained",
- "Split: vector search shows three loose text chunks with similarity scores. Graph search shows the connected path.",
+ "Split: vector search is plain and flat (three grey text chunks with similarity scores). Graph search is the hero: a glowing deep-navy panel where the connected path lights up, every link labelled, ending in an \"Explained path\" badge.",
  "Left: chunks drop in, scores count up, then drift apart with no links (floaty, unanchored). Right: the demo path draws itself in one continuous stroke and settles firmly. A big '≠' slams in between with a bass hit.",
  '<div class="dots"></div><div style="position:absolute;left:110px;top:200px" class="lbl" ><span style="color:#6a8396">Vector search</span></div>' + vec +
  '<div style="position:absolute;left:1090px;top:200px" class="lbl">Graph search</div>' +
- '<div class="panel" style="left:1040px;top:260px;width:820px;height:600px;opacity:.6"></div>' +
- edges([((1150,560),(1330,460)),((1330,460),(1520,560)),((1520,360),(1520,560)),((1520,560),(1720,700))]) +
- node(1150, 560, "Alert", "alert") + node(1330, 460, "API", "api") + node(1520, 560, "DB", "db") + node(1520, 360, "Change", "gear") + node(1720, 700, "12 accts", "users", "", "o") +
- f'<div style="position:absolute;left:870px;top:420px;font-size:180px;font-weight:300;color:{ORANGE}">≠</div>')
+ '<div style="position:absolute;left:1020px;top:250px;width:860px;height:660px;border-radius:32px;background:radial-gradient(600px 400px at 70% 30%,rgba(67,164,220,.45),transparent 70%),linear-gradient(160deg,#0a2647,#04111f);box-shadow:0 40px 90px rgba(10,38,71,.45),0 0 0 2px rgba(67,164,220,.6),0 0 80px rgba(67,164,220,.55);transform:perspective(2200px) rotateY(-10deg) rotateX(4deg)"></div>' +
+ '<div style="position:absolute;left:1020px;top:250px;width:860px;height:660px;border-radius:32px;background-image:radial-gradient(rgba(120,195,240,.35) 1.3px,transparent 1.5px);background-size:30px 30px;transform:perspective(2200px) rotateY(-10deg) rotateX(4deg)"></div>' +
+ '<div class="dk">' + edges([((1150,580),(1330,470)),((1330,470),(1530,580)),((1530,370),(1530,580)),((1530,580),(1730,720))], hot=[3]) +
+ "".join(f'<div class="mono" style="position:absolute;left:{x}px;top:{y}px;font-size:15px;color:#a9d6f2;background:rgba(10,38,71,.9);padding:4px 10px;border-radius:6px;border:1px solid rgba(120,195,240,.5)">{t}</div>' for x, y, t in [(1215,535,"DEPENDS_ON"),(1395,500,"RUNS_ON"),(1545,450,"CHANGED"),(1600,640,"SERVES")]) +
+ node(1150, 580, "Alert", "alert", "", "on") + node(1330, 470, "API", "api", "", "on") + node(1530, 580, "DB", "db", "", "on") + node(1530, 370, "Change", "gear", "", "on") + node(1730, 720, "12 accts", "users", "", "o") + '</div>' +
+ f'<div style="position:absolute;left:1110px;top:820px;display:flex;gap:12px;align-items:center;padding:12px 22px;border-radius:30px;background:rgba(34,181,115,.18);border:2px solid {GREEN};color:#5fe0a4;font-size:24px;font-weight:600;box-shadow:0 0 30px rgba(34,181,115,.45)">✓ Explained path · 4 hops</div>' +
+ f'<div style="position:absolute;left:860px;top:470px;width:130px;height:130px;border-radius:50%;background:{ORANGE};display:grid;place-items:center;box-shadow:0 0 0 10px rgba(236,100,8,.18),0 0 60px rgba(236,100,8,.6);font-size:90px;font-weight:600;color:#fff;line-height:1">≠</div>')
 
 # 14 labelled path
 lab = [((250,560),(610,560),"DEPENDS_ON"),((610,560),(980,560),"RUNS_ON"),((980,290),(980,560),"CHANGED"),((980,560),(1380,400),"FEEDS"),((980,560),(1380,730),"SERVES"),((1380,400),(1720,560),"GOVERNED_BY")]
@@ -355,10 +360,10 @@ scene("Your policies sit in the graph too, as guardrails. So when an agent refus
  '')
 
 # 16 regulated industries: hub-and-orbit composition (client: v2 felt static / ppt-like)
-def cnode(x, y, d, ic, label="", ring=ORANGE, blur=0):
+def cnode(x, y, d, ic, label="", ring=ORANGE, blur=0, glow=None):
     lb = f'<div style="position:absolute;left:50%;top:{d+18}px;transform:translateX(-50%);white-space:nowrap;font-size:{max(22,int(d*.17))}px;font-weight:700;color:#fff;text-shadow:0 4px 16px rgba(0,30,60,.45)">{label}</div>' if label else ""
     return (f'<div style="position:absolute;left:{x-d/2}px;top:{y-d/2}px;width:{d}px;height:{d}px;border-radius:50%;background:#fff;border:{max(6,int(d*.05))}px solid {ring};'
-            f'box-shadow:0 0 0 {int(d*.06)}px rgba(255,255,255,.18),0 0 {int(d*.45)}px {ring},0 30px 60px rgba(4,30,60,.4);display:grid;place-items:center;filter:blur({blur}px)">'
+            f'box-shadow:0 0 0 {int(d*.06)}px rgba(255,255,255,.22),0 0 {int(d*.45)}px {glow or ring},0 30px 60px rgba(4,30,60,.4);display:grid;place-items:center;filter:blur({blur}px)">'
             f'{icon(ic, int(d*.5), 1.6)}{lb}</div>')
 HUB = (960, 520)
 def s16(stage_=2):
@@ -366,15 +371,17 @@ def s16(stage_=2):
     h = '<div class="dots"></div>'
     h += "".join(f'<div class="ring" style="left:{HUB[0]}px;top:{HUB[1]+40}px;width:{w}px;height:{w*.36:.0f}px;border-color:rgba(255,255,255,{o});transform:translate(-50%,-50%) rotate(-8deg)"></div>' for w, o in [(900,.45),(1400,.3),(1900,.18)])
     if stage_ >= 2:
-        h += edges([(HUB, p) for p, *_ in sat], hot=[0, 1, 2])
+        h += ('<svg style="position:absolute;inset:0" width="1920" height="1080"><defs><filter id="wg" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>' + "".join(
+            f'<path d="M{HUB[0]},{HUB[1]} L{p[0]},{p[1]}" stroke="#fff" stroke-width="5" stroke-linecap="round" filter="url(#wg)"/>'
+            f'<circle cx="{HUB[0]+(p[0]-HUB[0])*.6:.0f}" cy="{HUB[1]+(p[1]-HUB[1])*.6:.0f}" r="9" fill="#0a2647" stroke="#fff" stroke-width="4" filter="url(#wg)"/>' for p, *_ in sat) + '</svg>')
     else:
         h += ('<svg style="position:absolute;inset:0" width="1920" height="1080">' + "".join(
             f'<path d="M{HUB[0]},{HUB[1]} L{HUB[0]+(p[0]-HUB[0])*.35:.0f},{HUB[1]+(p[1]-HUB[1])*.35:.0f}" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-dasharray="2 14"/>' for p, *_ in sat) + '</svg>')
-    h += cnode(*HUB, 260, "shield", "", BLUE)
+    h += cnode(*HUB, 260, "shield", "", "#0a2647", 0, "rgba(255,255,255,.9)")
     h += f'<div style="position:absolute;left:{HUB[0]}px;top:{HUB[1]+160}px;transform:translateX(-50%);white-space:nowrap;font-size:40px;font-weight:700;color:#fff">Explainable decisions</div>'
     if stage_ >= 2:
         for (p, d, ic, lb), bl in zip(sat, [0, 0, 1.2]):
-            h += cnode(p[0], p[1], d, ic, lb, ORANGE, bl)
+            h += cnode(p[0], p[1], d, ic, lb, "#0a2647", bl, "rgba(255,255,255,.85)")
         for x, y, r, t in [(170, 300, -6, "✓ why this decision"), (1560, 400, 5, "✓ policy checked"), (700, 880, -3, "✓ audit trail replayable"), (1420, 140, 4, "✓ data source + time")]:
             h += f'<div class="card" style="left:{x}px;top:{y}px;padding:14px 22px;transform:rotate({r}deg);font-size:24px;font-weight:600;white-space:nowrap">{t}</div>'
         h += bokeh([(1700, 860, 260, 160, 10), (-40, 80, 220, 140, -8)])
@@ -419,9 +426,9 @@ scene("Regular models predict. TigerGraph proves.", "Regular models predict. Tig
  "End card on TG Blue: white logo, tagline, CTAs \"Request a demo\" and \"Start free\", tigergraph.com.",
  "Network texture drifts slowly behind; logo holds centre; tagline fades up word by word; CTA buttons rise with a soft bounce. Hold clean for the last 4-5 s.",
  '<div class="dots"></div>' + edges([((120,900),(420,800)),((420,800),(700,960)),((1300,140),(1580,260)),((1580,260),(1820,150))], dim=[0, 1, 2, 3]) +
- logo("left:50%;top:250px;width:620px;transform:translateX(-50%)") +
- '<div style="position:absolute;left:0;right:0;top:470px;text-align:center"><div class="h1" style="font-size:78px;font-weight:500">Regular models predict. <span style="color:#43a4dc;font-weight:700">TigerGraph proves.</span></div>'
- '<div style="margin-top:70px;display:flex;gap:30px;justify-content:center"><span class="btn o" style="font-size:34px">Request a demo</span><span class="btn g" style="font-size:34px">Start free</span></div>'
+ logo("left:50%;top:200px;width:560px;transform:translateX(-50%)") +
+ '<div style="position:absolute;left:0;right:0;top:445px;text-align:center"><div style="font-size:46px;font-weight:300;letter-spacing:.5px;opacity:.9">Regular models predict.</div><div class="h1" style="font-size:118px;font-weight:700;margin-top:6px">TigerGraph proves.</div>'
+ '<div style="margin-top:58px;display:flex;gap:30px;justify-content:center"><span class="btn o" style="font-size:34px">Request a demo</span><span class="btn g" style="font-size:34px">Start free</span></div>'
  '<div class="mono" style="margin-top:56px;font-size:26px;color:#fff;font-weight:500">tigergraph.com</div></div>')
 
 # ---------------------------------------------------------------- themes (client: mix light / deep navy / TG Blue for contrast)
