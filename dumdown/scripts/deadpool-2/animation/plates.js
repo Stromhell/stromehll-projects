@@ -83,12 +83,12 @@ PLATES.icebox = (c, r, W, H) => { wash(c, r, [0, 0, W, H], '#2a3a4e', '#0a1220')
   floor(c, r, 1000, '#5a6676', '#3a4656', false); for (let i = 0; i < 6; i++) { c.strokeStyle = '#ffd23d'; c.lineWidth = 10; c.setLineDash([60, 40]); c.beginPath(); c.moveTo(0, 1060 + i * 70); c.lineTo(W, 1060 + i * 70); c.stroke(); c.setLineDash([]); break; }
   for (let i = 0; i < 260; i++) { c.fillStyle = 'rgba(220,240,255,.5)'; c.fillRect(r() * W, r() * H, 2, 2); } finish(c, r, W, H, { oil: 2, grain: 12, vig: .55 }); };
 // 12. The pit in the Icebox basement: chains, dark, two red eyes possible
-PLATES.pit = (c, r, W, H) => { wash(c, r, [0, 0, W, H], '#121822', '#040608'); brutalWall(c, r, 0, 0, W, 1100, '#222a34'); c.fillStyle = '#05070a'; c.beginPath(); c.ellipse(1280, 1180, 900, 220, 0, 0, 7); c.fill();
+PLATES.pit = (c, r, W, H) => { wash(c, r, [0, 0, W, H], '#121822', '#040608'); brutalWall(c, r, 0, 0, W, 1100, '#3a4452'); c.fillStyle = '#05070a'; c.beginPath(); c.ellipse(1280, 1180, 900, 220, 0, 0, 7); c.fill();
   for (let i = 0; i < 8; i++) { const x = 600 + i * 190; c.strokeStyle = '#5a6270'; c.lineWidth = 10; c.setLineDash([24, 10]); c.beginPath(); c.moveTo(x, 0); c.quadraticCurveTo(x + 40, 600, 1280 + (x - 1280) * .3, 1150); c.stroke(); c.setLineDash([]); }
   glow(c, 1280, 200, 500, '#6a8aff', .15); finish(c, r, W, H, { oil: 2, grain: 12, vig: .7 }); };
 // 13. Night road with lightning crater
-PLATES.road_night = (c, r, W, H) => { M.sky(c, r, W, 900, '#04040c', '#1a1a3a'); M.clouds(c, r, W, 40, 400, 10, '#3a3a5a', '#0a0a18'); M.distantTrees(c, r, W, 900, 50, '#0a0e14');
-  pr(c, r, 0, 900, W, 540, '#1a1a20', { density: 120 }); for (let i = 0; i < 6; i++) { c.fillStyle = 'rgba(232,220,160,.6)'; c.fillRect(i * 460 + 80, 1180, 220, 16); }
+PLATES.road_night = (c, r, W, H) => { M.sky(c, r, W, 900, '#0c0e22', '#2c2e5a'); M.clouds(c, r, W, 40, 400, 10, '#3a3a5a', '#0a0a18'); M.distantTrees(c, r, W, 900, 50, '#0a0e14');
+  pr(c, r, 0, 900, W, 540, '#2c2c36', { density: 120 }); for (let i = 0; i < 6; i++) { c.fillStyle = 'rgba(232,220,160,.6)'; c.fillRect(i * 460 + 80, 1180, 220, 16); }
   c.fillStyle = '#0a0a0e'; c.beginPath(); c.ellipse(1280, 1120, 420, 80, 0, 0, 7); c.fill(); glow(c, 1280, 1100, 500, '#6ab4ff', .4); finish(c, r, W, H, { oil: 2, grain: 12, vig: .6 }); };
 // 14. Weasel's bar: dim, neon beer signs, bottles
 PLATES.bar = (c, r, W, H) => { wash(c, r, [0, 0, W, H], '#3a2418', '#120a06'); pr(c, r, 0, 0, W, 1000, '#4a2c1a', { density: 140 });
@@ -148,13 +148,13 @@ function cam(c, x, y) { c.fillStyle = '#d8d8d0'; c.strokeStyle = INK; c.lineWidt
 function rivets(c, fy) { c.fillStyle = 'rgba(200,210,220,.35)'; for (let x = 40; x < 2560; x += 80) for (let y = 60; y < fy; y += 300) { c.beginPath(); c.arc(x, y, 5, 0, 7); c.fill(); } }
 const DRESS = {
   apt_barrels: (c, r) => { grime(c, r, 1060); base(c, 1060, '#2a1a14'); planks(c, r, 1060); sconce(c, 1450, 480, '#ffb070'); frame(c, r, 1280, 250, 180, 140, 3); shelf(c, r, 2340, 760, 200); pendant(c, 900, 120, '#ffb070'); },
-  apt_warm: (c, r) => { grime(c, r, 1060, .6); base(c, 1060, '#2a1a14'); planks(c, r, 1060); sconce(c, 1250, 470); frame(c, r, 180, 300, 200, 160, 0); frame(c, r, 1350, 640, 150, 120, 1); plant(c, r, 1060, 1100, .9); shelf(c, r, 120, 760, 240); },
-  bar: (c, r) => { grime(c, r, 1000, .5); [500, 1280, 2060].forEach(x => pendant(c, x, 60, '#ffc070')); sign(c, 1280, 760, 'NO CAPES', '#1a1214', '#ff5a3a', 30); },
+  apt_warm: (c, r) => { grime(c, r, 1060, .6); base(c, 1060, '#2a1a14'); planks(c, r, 1060); sconce(c, 1250, 470); frame(c, r, 180, 300, 200, 160, 0); frame(c, r, 1350, 640, 150, 120, 1); shelf(c, r, 120, 760, 240); },
+  bar: (c, r) => { grime(c, r, 1000, .5); [500, 1280, 2060].forEach(x => pendant(c, x, 60, '#ffc070')); },
   classroom: (c, r) => { grime(c, r, 1040, .5); base(c, 1040, '#5a4a3a'); planks(c, r, 1040); frame(c, r, 300, 300, 180, 220, 1); plant(c, r, 2460, 1090, .9); sign(c, 1500, 800, 'NO POWERS IN CLASS', '#f4f1ea', '#a01a1a', 26); [700, 1600].forEach(x => pendant(c, x, 40, '#fff4d8')); },
-  office: (c, r) => { grime(c, r, 1020, .4); base(c, 1020, '#7a7468'); plant(c, r, 160, 1080, 1); plant(c, r, 1450, 1060, .7); sign(c, 1300, 260, 'EMPLOYEE OF THE MONTH: NOBODY', '#f4f1ea', '#2a3990', 22); frame(c, r, 1180, 360, 220, 160, 2); shelf(c, r, 2300, 880, 220); },
+  office: (c, r) => { grime(c, r, 1020, .4); base(c, 1020, '#7a7468'); plant(c, r, 160, 1080, 1); sign(c, 1300, 260, 'EMPLOYEE OF THE MONTH: NOBODY', '#f4f1ea', '#2a3990', 22); shelf(c, r, 2300, 880, 220); },
   future_home: (c, r) => { grime(c, r, 1040, .5); base(c, 1040, '#2a2a3a'); planks(c, r, 1040, '#3a3a4a'); frame(c, r, 1150, 330, 240, 180, 1); plant(c, r, 2400, 1090, .8); sconce(c, 900, 470, '#c8d8ff'); },
   mansion_hall: (c, r) => { grime(c, r, 1040, .4); base(c, 1040, '#3a2414'); planks(c, r, 1100); [500, 1280, 2060].forEach(x => sconce(c, x, 640, '#ffd890')); plant(c, r, 140, 1110, 1.1); plant(c, r, 2420, 1110, 1.1); },
-  icebox: (c, r) => { grime(c, r, 1000, 1.2); pipe(c, 130); rivets(c, 1000); stripes(c, 0, 960, 2560, 40); sign(c, 1280, 330, 'BLOCK C · MUTANTS', '#e8e0c8', '#a01a1a', 34); cam(c, 1220, 600); cam(c, 2480, 260); },
+  icebox: (c, r) => { grime(c, r, 1000, 1.2); pipe(c, 130); rivets(c, 1000); stripes(c, 0, 960, 2560, 40); sign(c, 1280, 330, 'BLOCK C · MUTANTS', '#e8e0c8', '#a01a1a', 34); cam(c, 2480, 260); },
   truck: (c, r) => { grime(c, r, 1060, 1); pipe(c, 110, '#3a3a40'); rivets(c, 1060); stripes(c, 0, 1020, 2560, 36); sign(c, 1280, 360, 'NO TALKING', '#ffd23d', '#1a1a1a', 34); },
 };
 for (const k in DRESS) { const f = PLATES[k]; if (!f) continue; PLATES[k] = (c, r, W, H) => { f(c, r, W, H); DRESS[k](c, r); finish(c, r, W, H, { oil: 1, grain: 6, vig: .25 }); }; }

@@ -1,18 +1,18 @@
-# Assemble the Loki S1+S2 full video with ONE lossy video encode (CFR 24 fps).
+# Assemble the Deadpool 2 full video with ONE lossy video encode (CFR 24 fps).
 # Segments (act pieces + gags spliced in at their act points) are decoded one at a time and piped as raw frames
 # into a single x264 encoder, so memory stays flat (a 42-input filter graph ran out of memory).
 # Audio is cut at the same frame boundaries (2000 samples per frame at 48 kHz), joined as PCM, then two-pass loudnorm -14.
 import json, subprocess, sys, os, wave
 sys.path.insert(0, 'gags'); from gags_data import G
-SCR = '/tmp/claude-0/-home-user/acf60ddd-1269-5955-894d-60b48246689c/scratchpad/loki'
-OUT = f'{SCR}/full/DumDown_Loki_S1S2_FULL_v1.mp4'; os.makedirs(f'{SCR}/full', exist_ok=True)
+SCR = os.environ.get('SCR', '/tmp/dp2work')
+OUT = f'{SCR}/full/DumDown_Deadpool2_FULL_v1.mp4'; os.makedirs(f'{SCR}/full', exist_ok=True)
 def dur(f): return float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', f], capture_output=True, text=True).stdout)
 segs = []  # (video, audio, start_frame, n_frames)
-for n in range(15):
+for n in range(19):
     v = f'{SCR}/acts/act{n:02d}.mp4'; a = f'{SCR}/mix/act{n:02d}.wav'; tot = round(min(dur(v), dur(a)) * 24)
-    pts = sorted([g for g in G if g['act'] == n], key=lambda g: g['at']); cuts = [0] + [round(g['at'] * 24) for g in pts] + [tot]
+    pts = sorted([g for g in G if g['act'] == n], key=lambda g: g['at']); cuts = [0] + [min(tot, round(g['at'] * 24)) for g in pts] + [tot]
     for k in range(len(cuts) - 1):
-        segs.append((v, a, cuts[k], cuts[k + 1] - cuts[k]))
+        if cuts[k + 1] > cuts[k]: segs.append((v, a, cuts[k], cuts[k + 1] - cuts[k]))
         if k < len(pts):
             gv = f'gags/out/gag{pts[k]["id"]:02d}.mp4'; segs.append((gv, gv, 0, round(dur(gv) * 24)))
 W, H, FB = 1920, 1080, 1920 * 1080 * 3 // 2
@@ -40,5 +40,5 @@ enc.stdin.close(); assert enc.wait() == 0
 m = subprocess.run(['ffmpeg', '-hide_banner', '-i', tmp, '-af', 'loudnorm=I=-14:TP=-1.5:LRA=11:print_format=json', '-f', 'null', '-'], capture_output=True, text=True).stderr
 j = json.loads(m[m.rindex('{'):m.rindex('}') + 1])
 ln = f"loudnorm=I=-14:TP=-1.5:LRA=11:measured_I={j['input_i']}:measured_TP={j['input_tp']}:measured_LRA={j['input_lra']}:measured_thresh={j['input_thresh']}:offset={j['target_offset']}:linear=true"
-subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-i', tmp, '-map', '0:v', '-map', '0:a', '-c:v', 'copy', '-af', ln + ',aresample=48000', '-c:a', 'aac', '-b:a', '192k', '-ar', '48000', '-ac', '2', '-movflags', '+faststart', OUT], check=True)
+subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-i', tmp, '-map', '0:v', '-map', '0:a', '-c:v', 'copy', '-af', ln + ',alimiter=limit=0.7:level=0,aresample=48000', '-c:a', 'aac', '-b:a', '192k', '-ar', '48000', '-ac', '2', '-movflags', '+faststart', OUT], check=True)
 print('full', dur(OUT), len(segs), 'segments', total, 'frames')

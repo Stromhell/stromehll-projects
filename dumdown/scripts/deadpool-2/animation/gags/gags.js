@@ -166,9 +166,11 @@ S.reviews = async t => {
   const sw = ev('swipe'), k = io(seg(t, sw, sw + .35));
   const card = (y, who, n, lines, al) => { ctx.globalAlpha = al; rr(240, y, W - 480, 230, 16, '#fff', '#d0d0d8', 3); ctx.fillStyle = '#c8d8e8'; ctx.beginPath(); ctx.arc(320, y + 60, 40, 0, 7); ctx.fill(); txt(who, 380, y + 50, 30, '#231A24', { align: 'left' }); stars(390, y + 92, n, 34);
     lines.forEach((l, i) => txt(l, 280, y + 140 + i * 40, 30, '#333', { align: 'left', w: 600 })); ctx.globalAlpha = 1; };
+  const sc = t * 9; ctx.save(); ctx.translate(0, -sc);
   const r1 = seg(t, sp('READ').t0 - .2, sp('READ').t0 + .2);
   card(BAR + 130 - 300 * k, 'Russell, 14', 1, ['Room was cold. Staff were cold. Food was cold.', 'My neighbour was a giant man in the basement. Would not recommend.'], r1 * (1 - k));
   if (t > sw) card(BAR + 130 + 260 * (1 - k), 'Anonymous critic', 1, ['Too much foreshadowing.'], k);
+  ctx.restore(); { const cx = 900 + Math.sin(t * .9) * 420, cy = 640 + Math.sin(t * 1.3) * 160; ctx.fillStyle = '#fff'; ctx.strokeStyle = '#231A24'; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx, cy + 56); ctx.lineTo(cx + 14, cy + 42); ctx.lineTo(cx + 30, cy + 70); ctx.lineTo(cx + 40, cy + 64); ctx.lineTo(cx + 26, cy + 38); ctx.lineTo(cx + 44, cy + 36); ctx.closePath(); ctx.fill(); ctx.stroke(); }
   if (t > sp('READ', 3).t0) { ctx.save(); ctx.translate(W - 420, H - BAR - 160); ctx.rotate(-.1); rr(-170, -50, 340, 100, 12, '#e23a3a', '#231A24', 6); txt('VERIFIED STAY', 0, 2, 34, '#fff'); ctx.restore(); } };
 S.gate = async t => {
   const cam = camW(t, { z: 1.1, x: 1280, y: 780 }); apply(cam); wall('#c8d4e0', '#9aa8b8', 1180, '#6a7480', '#3a424c');
