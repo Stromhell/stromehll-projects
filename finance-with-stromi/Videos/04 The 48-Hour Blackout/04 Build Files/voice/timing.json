@@ -1,0 +1,965 @@
+{
+ "S01": {
+  "dur": 13.049,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 12.499,
+    "text": "Friday, November thirteenth. Six minutes before the stock market closed. For only the third time this century, the United States stopped every plane in the country from taking off."
+   }
+  ]
+ },
+ "S02": {
+  "dur": 14.842,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 3.521,
+    "text": "And that wasn't even the first thing to break that week."
+   },
+   {
+    "who": "JIMMY",
+    "t0": 3.824,
+    "t1": 9.651,
+    "text": "My flight says cancelled. My email won't load. My bank app says try later. What is happening?"
+   },
+   {
+    "who": "AGENT",
+    "t0": 10.009,
+    "t1": 11.841,
+    "text": "Sir, I'd check your email, but..."
+   },
+   {
+    "who": "JIMMY",
+    "t0": 12.252,
+    "t1": 13.122,
+    "text": "Yours too?"
+   },
+   {
+    "who": "AGENT",
+    "t0": 13.49,
+    "t1": 14.292,
+    "text": "Mine too."
+   }
+  ]
+ },
+ "S03": {
+  "dur": 21.059,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 20.509,
+    "text": "In about forty-eight hours, America's email, America's skies and America's payroll all failed, one after another. No bombs. No hackers, as far as anyone can tell. So how do three of the biggest systems on earth fall over in the same two days? And why should you, sitting at home, care?"
+   }
+  ]
+ },
+ "S04": {
+  "dur": 7.476,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 6.926,
+    "text": "To answer that, we have to go back one day. Thursday. Just before one in the afternoon. Chicago."
+   }
+  ]
+ },
+ "S05": {
+  "dur": 3.0,
+  "lines": [],
+  "card": "Three People, Two Days"
+ },
+ "S06": {
+  "dur": 21.987,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 21.437,
+    "text": "Quick heads up: the three people you're about to meet are made up. Everything that happens to them happened to real people this week. Nina, forty-one, runs a twelve-person accounting office in Chicago. Her business lives in one place: her inbox. Clients, invoices, deadlines. If Outlook is open, Nina is working."
+   }
+  ]
+ },
+ "S07": {
+  "dur": 9.574,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 9.024,
+    "text": "Jimmy, twenty-nine, is flying Phoenix to Philadelphia on Friday for his sister's wedding. He's the best man. He has the rings."
+   }
+  ]
+ },
+ "S08": {
+  "dur": 18.0,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 17.45,
+    "text": "And Carla, fifty-two, shift lead at a big-box store in Ohio. She clocks in, clocks out, books her days off and gets paid, through one app on her phone. Three people. Three systems. They've never met. By Saturday, all three will have the same bad week."
+   }
+  ]
+ },
+ "S09": {
+  "dur": 3.2,
+  "lines": [],
+  "card": "Thursday, 1 PM"
+ },
+ "S10": {
+  "dur": 15.58,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 15.03,
+    "text": "Thursday, just before one p.m. Eastern. Microsoft's email system, the engine behind Outlook, starts failing. Not in one city. In the US, in Europe, across Asia-Pacific. More than seventy countries."
+   }
+  ]
+ },
+ "S11": {
+  "dur": 10.987,
+  "lines": [
+   {
+    "who": "NINA",
+    "t0": 0.45,
+    "t1": 1.373,
+    "text": "Is it us?"
+   },
+   {
+    "who": "WENDELL",
+    "t0": 1.725,
+    "t1": 2.992,
+    "text": "It's not us."
+   },
+   {
+    "who": "NINA",
+    "t0": 3.405,
+    "t1": 4.624,
+    "text": "Is it the building?"
+   },
+   {
+    "who": "WENDELL",
+    "t0": 5.129,
+    "t1": 6.612,
+    "text": "It's not the building."
+   },
+   {
+    "who": "NINA",
+    "t0": 7.096,
+    "t1": 8.665,
+    "text": "Is it... Chicago?"
+   },
+   {
+    "who": "WENDELL",
+    "t0": 9.142,
+    "t1": 10.437,
+    "text": "It's... Earth."
+   }
+  ]
+ },
+ "S12": {
+  "dur": 24.588,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 24.038,
+    "text": "Hospitals in Britain's National Health Service lost some services. Air India rerouted its email. Millions of office workers stared at a little spinning circle. Microsoft first blamed a surge of traffic, and a part of its system that checks whether servers are healthy. Later it said the real cause was an issue during an earlier network capacity upgrade."
+   }
+  ]
+ },
+ "S13": {
+  "dur": 7.736,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 7.186,
+    "text": "Translation: they were making the pipes bigger, and a joint burst. Remember that, because it's going to come back."
+   }
+  ]
+ },
+ "S14": {
+  "dur": 15.149,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 7.89,
+    "text": "It wasn't a one-hour blip. Microsoft didn't say service was fully restored until Saturday. About two days."
+   },
+   {
+    "who": "NINA",
+    "t0": 8.19,
+    "t1": 9.69,
+    "text": "Who still has a fax?"
+   },
+   {
+    "who": "DOT",
+    "t0": 10.127,
+    "t1": 11.178,
+    "text": "My uncle."
+   },
+   {
+    "who": "NINA",
+    "t0": 11.568,
+    "t1": 13.146,
+    "text": "Is your uncle a client?"
+   },
+   {
+    "who": "DOT",
+    "t0": 13.517,
+    "t1": 14.599,
+    "text": "He is now."
+   }
+  ]
+ },
+ "S15": {
+  "dur": 15.599,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 15.049,
+    "text": "For a twelve-person firm in the year-end rush, two days without email is two days of invoices not sent. Which means money not coming in. Small delays in big systems become real dollars in small businesses."
+   }
+  ]
+ },
+ "S16": {
+  "dur": 3.2,
+  "lines": [],
+  "card": "Friday, 3:54 PM"
+ },
+ "S17": {
+  "dur": 16.937,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 16.387,
+    "text": "Friday. Jimmy's at the gate. Boarding in twenty minutes. At three fifty-four p.m. Eastern, the Federal Aviation Administration does something it almost never does. It orders a nationwide ground stop. No departures. Anywhere."
+   }
+  ]
+ },
+ "S18": {
+  "dur": 15.932,
+  "lines": [
+   {
+    "who": "AGENT",
+    "t0": 0.45,
+    "t1": 6.003,
+    "text": "Ladies and gentlemen, the F A A has stopped all departures across the United States."
+   },
+   {
+    "who": "JIMMY",
+    "t0": 6.362,
+    "t1": 7.605,
+    "text": "Just this airport?"
+   },
+   {
+    "who": "AGENT",
+    "t0": 7.984,
+    "t1": 9.502,
+    "text": "Across the United States."
+   },
+   {
+    "who": "JIMMY",
+    "t0": 10.009,
+    "t1": 11.468,
+    "text": "Like... my whole country?"
+   },
+   {
+    "who": "AGENT",
+    "t0": 11.957,
+    "t1": 15.382,
+    "text": "Your whole country, sir. The pretzel stand is still open."
+   }
+  ]
+ },
+ "S19": {
+  "dur": 22.408,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 21.858,
+    "text": "Here's what was happening behind the curtain. Air traffic controllers talk to planes, and to each other, over a private communications network. On Friday, parts of that network started dropping out. Patchy radio. Gaps in radar. When controllers can't reliably see or talk to planes, you don't let more planes into the sky."
+   }
+  ]
+ },
+ "S20": {
+  "dur": 9.719,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 9.169,
+    "text": "Planes already flying landed normally. But nothing new took off for about four hours and twenty minutes, until eight fifteen that night."
+   }
+  ]
+ },
+ "S21": {
+  "dur": 19.191,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 18.641,
+    "text": "The damage was huge. More than four thousand seven hundred flights cancelled on Friday alone, and around ten thousand delayed. Hundreds diverted. And because planes and crews were now in the wrong cities, the mess rolled into Saturday, with thousands more cancellations."
+   }
+  ]
+ },
+ "S22": {
+  "dur": 11.43,
+  "lines": [
+   {
+    "who": "JIMMY",
+    "t0": 0.45,
+    "t1": 10.88,
+    "text": "No, I still have the rings. No, I'm not in Philadelphia. No, I can't drive, it's two thousand miles. Tell her to stall. I don't know, Dad, give a really long toast!"
+   }
+  ]
+ },
+ "S23": {
+  "dur": 22.399,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 21.849,
+    "text": "For perspective. The first time America cleared its entire sky was September eleventh, two thousand one. The last nationwide stop of departures before this was January twenty twenty-three, when a corrupted file in a pilot-safety system halted takeoffs for about an hour and a half. This one was longer. Much longer."
+   }
+  ]
+ },
+ "S24": {
+  "dur": 3.0,
+  "lines": [],
+  "card": "The Router From 2003"
+ },
+ "S25": {
+  "dur": 22.368,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 21.818,
+    "text": "So what broke? Transportation Secretary Sean Duffy explained it the next day. The F A A has been swapping old copper phone lines for modern fiber. During that work, one router started flooding the routers around it. Duffy said the system was seeing over one thousand connection attempts every four to five seconds."
+   }
+  ]
+ },
+ "S26": {
+  "dur": 17.192,
+  "lines": [
+   {
+    "who": "WENDELL",
+    "t0": 0.45,
+    "t1": 3.196,
+    "text": "Good news, buddy. You're getting fiber."
+   },
+   {
+    "who": "ROUTER",
+    "t0": 3.681,
+    "t1": 7.461,
+    "text": "Fiber? I was built in two thousand three. I eat copper."
+   },
+   {
+    "who": "WENDELL",
+    "t0": 7.945,
+    "t1": 9.187,
+    "text": "It's faster."
+   },
+   {
+    "who": "ROUTER",
+    "t0": 9.562,
+    "t1": 12.74,
+    "text": "Hello? Hello? Hello? Is anyone there? Hello? Hello?"
+   },
+   {
+    "who": "WENDELL",
+    "t0": 13.136,
+    "t1": 16.642,
+    "text": "That's one thousand hellos every five seconds."
+   }
+  ]
+ },
+ "S27": {
+  "dur": 24.021,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 23.471,
+    "text": "According to C B S News, the problem was limited to one model of Cisco router, made between two thousand one and two thousand six. Duffy blamed contract work by L3Harris, the F A A's long-time communications contractor. The F A A switched off the faulty function on about sixty of those routers across the country."
+   }
+  ]
+ },
+ "S28": {
+  "dur": 24.747,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 24.197,
+    "text": "Think about that. The machines guiding the busiest airspace on earth were partly running on routers older than the first iPhone. And this wasn't a surprise. In September, the Government Accountability Office, Congress's watchdog, warned about the F A A's ageing copper cables, some dating back to the nineteen sixties, and its slow progress replacing them."
+   }
+  ]
+ },
+ "S29": {
+  "dur": 14.245,
+  "lines": [
+   {
+    "who": "GUS",
+    "t0": 0.45,
+    "t1": 3.186,
+    "text": "It says here: fix the old wires."
+   },
+   {
+    "who": "WENDELL",
+    "t0": 3.638,
+    "t1": 5.195,
+    "text": "We're working on it."
+   },
+   {
+    "who": "GUS",
+    "t0": 5.667,
+    "t1": 8.296,
+    "text": "This report is from September."
+   },
+   {
+    "who": "WENDELL",
+    "t0": 8.79,
+    "t1": 10.663,
+    "text": "We're working on it fast."
+   },
+   {
+    "who": "GUS",
+    "t0": 11.162,
+    "t1": 13.695,
+    "text": "There's a dinosaur on page two."
+   }
+  ]
+ },
+ "S30": {
+  "dur": 23.088,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 22.538,
+    "text": "Duffy's answer is money. He's asking Congress for fifty billion dollars in emergency funding to rebuild the air traffic control system. That's about a hundred and fifty dollars for every person in America. Hold on to that number. When governments spend fifty billion dollars, somebody receives fifty billion dollars. We'll get to who."
+   }
+  ]
+ },
+ "S31": {
+  "dur": 3.2,
+  "lines": [],
+  "card": "Friday, 5 PM"
+ },
+ "S32": {
+  "dur": 17.214,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 16.664,
+    "text": "While Jimmy is sleeping on an airport floor, there's a third failure. Shortly after five p.m. on Friday, Workday starts going down. Most people have never heard of Workday. But if you work for a big company, there's a good chance it's how you get paid."
+   }
+  ]
+ },
+ "S33": {
+  "dur": 23.655,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 23.105,
+    "text": "Workday runs H R and payroll for around eleven thousand five hundred businesses, including names like Walmart, Target, General Electric and Morgan Stanley. Workers couldn't clock in or out, couldn't request time off, couldn't do benefits enrollment. Which, in November, is exactly when a lot of people pick next year's health insurance."
+   }
+  ]
+ },
+ "S34": {
+  "dur": 12.55,
+  "lines": [
+   {
+    "who": "DOT",
+    "t0": 0.45,
+    "t1": 2.238,
+    "text": "How do I clock out?"
+   },
+   {
+    "who": "CARLA",
+    "t0": 2.594,
+    "t1": 3.387,
+    "text": "You can't."
+   },
+   {
+    "who": "DOT",
+    "t0": 3.836,
+    "t1": 5.915,
+    "text": "Then am I still at work?"
+   },
+   {
+    "who": "CARLA",
+    "t0": 6.376,
+    "t1": 8.116,
+    "text": "Technically, you're at work forever."
+   },
+   {
+    "who": "DOT",
+    "t0": 8.547,
+    "t1": 10.577,
+    "text": "I want to speak to my manager."
+   },
+   {
+    "who": "CARLA",
+    "t0": 10.949,
+    "t1": 12.0,
+    "text": "I'm your manager."
+   }
+  ]
+ },
+ "S35": {
+  "dur": 11.844,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 11.294,
+    "text": "Workday said the trouble started while it was testing its backup systems. Read that again. The backup test, the thing meant to protect you if something breaks, is what broke."
+   }
+  ]
+ },
+ "S36": {
+  "dur": 20.775,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 20.225,
+    "text": "Some systems went into maintenance mode, and the company posted updates every half hour, without giving a time it would be fixed. If your paycheck runs through one app, and that app has a bad weekend, the question isn't whether your boss owes you the money. They do. The question is whether your rent can wait for it."
+   }
+  ]
+ },
+ "S37": {
+  "dur": 3.0,
+  "lines": [],
+  "card": "Was It Hackers?"
+ },
+ "S38": {
+  "dur": 11.936,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 11.386,
+    "text": "Three huge failures. Forty-eight hours. Of course the internet said cyberattack. Even a member of Congress asked out loud whether something nefarious was going on."
+   }
+  ]
+ },
+ "S39": {
+  "dur": 10.186,
+  "lines": [
+   {
+    "who": "MABEL",
+    "t0": 0.45,
+    "t1": 2.154,
+    "text": "Did you take down the airplanes?"
+   },
+   {
+    "who": "PIP",
+    "t0": 2.579,
+    "t1": 3.223,
+    "text": "No."
+   },
+   {
+    "who": "MABEL",
+    "t0": 3.579,
+    "t1": 4.425,
+    "text": "The email?"
+   },
+   {
+    "who": "PIP",
+    "t0": 4.933,
+    "t1": 5.578,
+    "text": "No."
+   },
+   {
+    "who": "MABEL",
+    "t0": 6.073,
+    "t1": 6.899,
+    "text": "Payroll?"
+   },
+   {
+    "who": "PIP",
+    "t0": 7.338,
+    "t1": 9.636,
+    "text": "I use Workday. I didn't get paid either."
+   }
+  ]
+ },
+ "S40": {
+  "dur": 18.959,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 18.409,
+    "text": "Every official answer so far says the same thing: no sign of an attack. The White House said there was no indication of a nefarious act. Microsoft said it found no malicious activity. And reports on Workday said it wasn't believed to be a security incident either."
+   }
+  ]
+ },
+ "S41": {
+  "dur": 26.868,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 26.318,
+    "text": "And here's the part I actually think is scarier. Microsoft: broke during a capacity upgrade. The F A A: broke during a copper-to-fiber upgrade. Workday: broke during a test of its backups. Nobody attacked these systems. They broke while someone was trying to make them better. That's not a villain you can arrest. That's complexity. Systems so big and so tangled, that fixing one wire can knock over a country."
+   }
+  ]
+ },
+ "S42": {
+  "dur": 3.0,
+  "lines": [],
+  "card": "What the Market Did"
+ },
+ "S43": {
+  "dur": 19.711,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 11.712,
+    "text": "Okay. So what did Wall Street do with all this? The timing was almost comic. The ground stop hit at three fifty-four. The New York market closes at four. Six minutes."
+   },
+   {
+    "who": "GUS",
+    "t0": 12.026,
+    "t1": 14.057,
+    "text": "Airlines are falling!"
+   },
+   {
+    "who": "GUS",
+    "t0": 14.561,
+    "t1": 16.124,
+    "text": "Market's closed."
+   },
+   {
+    "who": "GUS",
+    "t0": 16.567,
+    "t1": 19.161,
+    "text": "Airlines are falling in the dark now."
+   }
+  ]
+ },
+ "S44": {
+  "dur": 20.203,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 19.653,
+    "text": "In those last minutes, airline shares slipped. United closed down about one point seven percent. JetBlue and Alaska fell about one point four. American, about one percent. Delta barely moved. After the bell, a few dipped further. JetBlue was down nearly four percent."
+   }
+  ]
+ },
+ "S45": {
+  "dur": 22.09,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 7.922,
+    "text": "And Microsoft, after two days of the world's email being broken? Its stock was basically flat on Friday."
+   },
+   {
+    "who": "NINA",
+    "t0": 8.34,
+    "t1": 12.033,
+    "text": "Their email was down for two days and their stock didn't move?"
+   },
+   {
+    "who": "WENDELL",
+    "t0": 12.526,
+    "t1": 14.804,
+    "text": "Their customers can't leave."
+   },
+   {
+    "who": "NINA",
+    "t0": 15.235,
+    "t1": 16.111,
+    "text": "Why not?"
+   },
+   {
+    "who": "WENDELL",
+    "t0": 16.526,
+    "t1": 20.423,
+    "text": "Where would you go? You'd have to email everyone your new address."
+   },
+   {
+    "who": "NINA",
+    "t0": 20.871,
+    "t1": 21.54,
+    "text": "Huh."
+   }
+  ]
+ },
+ "S46": {
+  "dur": 26.477,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 25.927,
+    "text": "That's a lesson investors have learned before. In July twenty twenty-four, a bad software update from the security company CrowdStrike crashed millions of Windows computers worldwide. CrowdStrike's stock dropped about eleven percent that day. Delta Air Lines said that outage cost it around half a billion dollars. And within about a year, CrowdStrike's stock was higher than before the crash."
+   }
+  ]
+ },
+ "S47": {
+  "dur": 15.508,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 14.958,
+    "text": "Markets tend to punish the companies stuck with the bill, like airlines, more than the companies that caused the problem. Because when one company runs the pipes that everyone needs, a bad week doesn't change who everyone needs."
+   }
+  ]
+ },
+ "S48": {
+  "dur": 21.928,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 21.378,
+    "text": "Monday the sixteenth is the first full trading day since all this. Watch three things. Airlines, which lose money on every cancelled flight and every hotel voucher. Workday, whose outage started after Friday's close, so Monday is the market's first chance to react. And the companies that might be paid to fix it."
+   }
+  ]
+ },
+ "S49": {
+  "dur": 24.528,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 16.456,
+    "text": "Remember the fifty billion dollars? If Congress agrees, that money flows to the companies that build radar, radios, fiber and routers. A failure like this is a disaster for travellers. For some suppliers, it's a sales pitch."
+   },
+   {
+    "who": "WENDELL",
+    "t0": 16.793,
+    "t1": 18.069,
+    "text": "What's all this?"
+   },
+   {
+    "who": "GUS",
+    "t0": 18.438,
+    "t1": 19.501,
+    "text": "Routers."
+   },
+   {
+    "who": "WENDELL",
+    "t0": 19.896,
+    "t1": 21.007,
+    "text": "All of you?"
+   },
+   {
+    "who": "GUS",
+    "t0": 21.493,
+    "t1": 23.978,
+    "text": "Fifty billion dollars of us."
+   }
+  ]
+ },
+ "S50": {
+  "dur": 3.0,
+  "lines": [],
+  "card": "One Well, Whole Village"
+ },
+ "S51": {
+  "dur": 20.182,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 17.341,
+    "text": "Here's the big idea under all three stories. Imagine a village where every family gets water from one well. It's efficient. One well is cheaper to dig, cheaper to clean, and easier to manage than a hundred. Until the day somebody drops a boot in it."
+   },
+   {
+    "who": "DOT",
+    "t0": 17.608,
+    "t1": 19.632,
+    "text": "It was a very small boot."
+   }
+  ]
+ },
+ "S52": {
+  "dur": 24.613,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 24.063,
+    "text": "That's modern business. A huge share of the world's offices run their email on one company. Thousands of employers run payroll through one company. The whole US sky is managed through one network. Each choice made sense on its own. Cheaper. Simpler. But together they create what engineers call a single point of failure. One boot, whole village."
+   }
+  ]
+ },
+ "S53": {
+  "dur": 29.251,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 18.287,
+    "text": "And it shows up in your investments too. If you own a simple index fund, the kind that holds the five hundred biggest American companies, a big slice of your money sits in just a handful of giant tech firms. Including the one whose email went down this week."
+   },
+   {
+    "who": "DAD",
+    "t0": 18.555,
+    "t1": 21.971,
+    "text": "I'm diversified. I own five hundred companies."
+   },
+   {
+    "who": "JIMMY",
+    "t0": 22.424,
+    "t1": 25.22,
+    "text": "Dad, a huge chunk of your pie is like ten of them."
+   },
+   {
+    "who": "DAD",
+    "t0": 25.61,
+    "t1": 27.237,
+    "text": "It's a very big slice."
+   },
+   {
+    "who": "JIMMY",
+    "t0": 27.673,
+    "t1": 28.701,
+    "text": "That's the point."
+   }
+  ]
+ },
+ "S54": {
+  "dur": 10.975,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 10.425,
+    "text": "That isn't a reason to panic. These companies are huge for a reason. It's just worth knowing that diversified, and spread out, aren't always the same thing."
+   }
+  ]
+ },
+ "S55": {
+  "dur": 3.0,
+  "lines": [],
+  "card": "Your Wallet"
+ },
+ "S56": {
+  "dur": 15.987,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 15.437,
+    "text": "So what do you actually do with this? Four questions. One. If your paycheck arrived a week late, could you still pay rent? A small cash cushion, even a few hundred dollars, turns a payroll outage from a crisis into an annoyance."
+   }
+  ]
+ },
+ "S57": {
+  "dur": 14.132,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 13.582,
+    "text": "Two. If your flight gets cancelled, do you know your rights? In the US, if an airline cancels your flight and you choose not to travel, you're entitled to a cash refund, not just a voucher. Ask for it."
+   }
+  ]
+ },
+ "S58": {
+  "dur": 24.289,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 23.739,
+    "text": "Three. Run a business? Where does it all live? If your email, your files and your invoices all sit with one provider, write down what you'd do for two days without it. Nina's fax-machine uncle is not a plan. Four. Look inside your index fund. Find out how much of it is in the top five or ten companies. You might be happy with the answer. You should still know it."
+   }
+  ]
+ },
+ "S59": {
+  "dur": 15.971,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 15.421,
+    "text": "Let's check in one last time. Nina's email is back. She's sending two days of invoices at once, and buying a backup laptop. Carla is still waiting for the app to come back, and checking her bank account every hour. And Jimmy?"
+   }
+  ]
+ },
+ "S60": {
+  "dur": 10.454,
+  "lines": [
+   {
+    "who": "SISTER",
+    "t0": 0.45,
+    "t1": 2.1,
+    "text": "You're two hours late."
+   },
+   {
+    "who": "JIMMY",
+    "t0": 2.525,
+    "t1": 6.275,
+    "text": "I took a bus. Two trains. And a man named Gary's minivan."
+   },
+   {
+    "who": "SISTER",
+    "t0": 6.677,
+    "t1": 8.26,
+    "text": "Did you bring the rings?"
+   },
+   {
+    "who": "JIMMY",
+    "t0": 8.779,
+    "t1": 9.904,
+    "text": "I brought the rings."
+   }
+  ]
+ },
+ "S61": {
+  "dur": 20.697,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 20.147,
+    "text": "Three systems broke in forty-eight hours. Not because anyone attacked them, but because we built them to be so big, and so shared, that one small mistake travels everywhere at once. The machines will get fixed. The question is whether you've built a little backup of your own, before the board flips again."
+   }
+  ]
+ },
+ "S62": {
+  "dur": 10.525,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 9.975,
+    "text": "Now I want to hear from you. Did any of these outages hit you this week? A cancelled flight, a dead inbox, a missing paycheck? Tell me in the comments."
+   }
+  ]
+ },
+ "S99": {
+  "dur": 5.5,
+  "lines": [],
+  "card": ""
+ }
+}

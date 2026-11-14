@@ -1,0 +1,14 @@
+<html><head><link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet"></head><body style="margin:0"><canvas id="c" width="1920" height="1080"></canvas><script>
+(async()=>{await document.fonts.load('200px Anton');const c=document.getElementById('c'),x=c.getContext('2d');const im=new Image();im.src='c.jpg';await im.decode();
+const s=1080/768,w=1376*s;x.drawImage(im,1920-w+90,0,w,1080);
+let g=x.createLinearGradient(0,0,1000,0);g.addColorStop(0,'rgba(4,6,14,.95)');g.addColorStop(0.6,'rgba(4,6,14,.85)');g.addColorStop(1,'rgba(4,6,14,0)');x.fillStyle=g;x.fillRect(0,0,1000,1080);
+function txt(t,X,Y,size,fill,rot){x.save();x.translate(X,Y);x.rotate(rot);x.font=size+'px Anton';x.lineJoin='round';
+x.shadowColor='rgba(0,0,0,.8)';x.shadowOffsetX=10;x.shadowOffsetY=12;x.lineWidth=size*0.12;x.strokeStyle='#000';x.strokeText(t,0,0);x.shadowColor='transparent';
+if(fill==='red'){const gg=x.createLinearGradient(0,-size,0,0);gg.addColorStop(0,'#ff6a5a');gg.addColorStop(1,'#d3121c');x.fillStyle=gg;}else x.fillStyle=fill;x.fillText(t,0,0);x.restore();}
+txt('EVERYTHING',60,330,190,'#ffffff',-0.035);
+txt('BROKE',60,590,270,'red',-0.035);
+function box(t,X,Y,W,H,fs,rot){x.save();x.translate(X,Y);x.rotate(rot);x.fillStyle='#ffd23a';x.strokeStyle='#000';x.lineWidth=9;x.beginPath();x.rect(0,0,W,H);x.fill();x.stroke();x.font=fs+'px Anton';x.fillStyle='#111';x.textAlign='center';x.fillText(t,W/2,H*0.78);x.restore();}
+box('IN 48 HOURS',70,650,600,130,100,-0.035);
+box('3 SYSTEMS DOWN',1490,130,410,96,62,0.03);
+window.done=1;})();
+</script></body></html>

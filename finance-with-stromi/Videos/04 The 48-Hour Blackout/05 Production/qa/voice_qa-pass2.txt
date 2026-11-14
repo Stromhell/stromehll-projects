@@ -1,0 +1,378 @@
+
+## voice_qa: S01.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.5 syllables/s over 10s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 8.3 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S02.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.6 syllables/s over 11s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 13.9 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S03.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.0 syllables/s over 17s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 8.9 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S04.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.0 syllables/s over 5s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 8.5 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S06.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.4 syllables/s over 18s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 9.4 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S07.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.1 syllables/s over 7s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 8.5 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S08.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.3 syllables/s over 14s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 9.0 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S10.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.5 syllables/s over 12s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 8.3 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S11.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.0 syllables/s over 7s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 14.8 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S12.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.8 syllables/s over 21s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 8.5 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S13.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~5.1 syllables/s over 6s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 9.5 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S14.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.4 syllables/s over 11s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 15.6 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S15.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.1 syllables/s over 13s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 9.1 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S17.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.4 syllables/s over 13s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 8.4 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S18.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.3 syllables/s over 11s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 7.4 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S19.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.6 syllables/s over 18s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 9.3 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S20.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.3 syllables/s over 8s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 8.8 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S21.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.4 syllables/s over 16s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 8.9 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S22.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~3.9 syllables/s over 10s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 13.1 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S23.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.5 syllables/s over 18s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 7.8 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S25.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.6 syllables/s over 19s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 9.1 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S26.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~3.6 syllables/s over 12s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 11.0 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S27.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.7 syllables/s over 20s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 9.3 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S28.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.5 syllables/s over 20s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 9.5 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S29.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| WARN | pitch glitches | 1 warble/crack spots, e.g. 0:00.59 | listen there: voice crack/warble/octave flip -> re-generate the line (lower speed or different seed) |
+| PASS | pace | ~3.5 syllables/s over 10s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 23.7 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S30.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.8 syllables/s over 19s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 9.5 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S32.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.1 syllables/s over 14s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 8.7 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S33.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.4 syllables/s over 19s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 8.2 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S34.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.3 syllables/s over 8s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 10.2 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S35.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~5.1 syllables/s over 9s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 8.7 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S36.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.7 syllables/s over 17s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 8.7 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S38.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.2 syllables/s over 9s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 9.4 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S39.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.2 syllables/s over 5s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 22.9 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S40.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.6 syllables/s over 16s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 9.0 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S41.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| FAIL | clipped word | ~0:19.42 word stops dead (37 dB drop in 10-20 ms at full level) | re-trim with 30-60 ms handles + 10 ms fades; never cut on a phoneme; re-generate if the TTS truncated the word |
+| PASS | pace | ~4.4 syllables/s over 22s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 8.4 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S43.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| WARN | pace jump | 0:16.63 2.1/s vs clip median 4.2/s | re-generate that sentence or match speed |
+| PASS | pace | ~3.8 syllables/s over 15s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 24.4 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S44.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.1 syllables/s over 16s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 8.3 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S45.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~3.7 syllables/s over 16s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 13.6 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S46.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.5 syllables/s over 22s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 9.1 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S47.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.8 syllables/s over 13s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 8.4 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S48.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.7 syllables/s over 18s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 8.3 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S49.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~3.9 syllables/s over 19s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 23.7 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S51.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.6 syllables/s over 16s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 10.1 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S52.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.4 syllables/s over 19s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 9.0 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S53.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.3 syllables/s over 23s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 10.4 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S54.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.3 syllables/s over 8s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 9.3 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S56.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.7 syllables/s over 13s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 9.7 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S57.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.8 syllables/s over 11s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 9.3 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S58.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| WARN | pitch glitches | 2 warble/crack spots, e.g. 0:03.91, 0:13.89 | listen there: voice crack/warble/octave flip -> re-generate the line (lower speed or different seed) |
+| PASS | pace | ~4.6 syllables/s over 19s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 9.2 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S59.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.2 syllables/s over 13s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 10.3 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S60.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.1 syllables/s over 7s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 11.6 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S61.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| FAIL | clipped word | ~0:14.26 word stops dead (42 dB drop in 10-20 ms at full level) | re-trim with 30-60 ms handles + 10 ms fades; never cut on a phoneme; re-generate if the TTS truncated the word |
+| PASS | pace | ~4.4 syllables/s over 17s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 9.2 semitones (natural narration ~3-8) |  |
+
+## voice_qa: S62.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.0 syllables/s over 8s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 9.1 semitones (natural narration ~3-8) |  |
+
+Listen too: breaths, mouth clicks, wrong stress, mispronounced names, accent drift, emotion that fits the line.

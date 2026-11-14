@@ -1,0 +1,13 @@
+import json, os, sys, re
+sys.path.insert(0, '/home/user/work/bo'); from shots import SHOTS
+tf = '/home/user/work/bo/voice/timing.json'; real = json.load(open(tf)) if os.path.exists(tf) else {}
+out = {}
+for s in SHOTS:
+    if s['id'] in real and not s.get('card') is not None: out[s['id']] = real[s['id']]; continue
+    if s.get('card') is not None: out[s['id']] = {'dur': s['dur'], 'lines': [], 'card': s['card'], 'sub': s.get('sub')}; continue
+    t = 0.45; lines = []
+    for who, text in s['lines']:
+        d = len(text.split()) / 2.6 + 0.3; lines.append({'who': who, 't0': round(t, 3), 't1': round(t + d, 3), 'text': text}); t += d + 0.25
+    out[s['id']] = {'dur': round(t + 0.3, 3), 'lines': lines, 'est': True}
+open('/home/user/work/bo/build/timing04.js', 'w').write('const TIMING=' + json.dumps(out) + ';\n')
+print('real', sum(1 for k in out if not out[k].get('est')), 'est', sum(1 for k in out if out[k].get('est')), 'total', round(sum(v['dur'] for v in out.values()), 1))
