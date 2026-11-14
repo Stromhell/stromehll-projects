@@ -1,0 +1,42 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;700&family=Geist+Mono:wght@400;500&display=block');
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1920px;height:1080px;overflow:hidden}
+body{font-family:Geist,sans-serif;color:#eaf4fb;background:#04070d;position:relative}
+.bg{position:absolute;inset:0;background:
+ radial-gradient(900px 600px at 20% 15%,rgba(67,164,220,.28),transparent 70%),
+ radial-gradient(800px 700px at 85% 90%,rgba(67,164,220,.18),transparent 70%),
+ linear-gradient(180deg,#050a14,#03060b)}
+.bg.warm{background:
+ radial-gradient(900px 600px at 80% 20%,rgba(236,100,8,.22),transparent 70%),
+ radial-gradient(900px 700px at 15% 85%,rgba(67,164,220,.22),transparent 70%),
+ linear-gradient(180deg,#060912,#03050a)}
+.grid{position:absolute;inset:0;background-image:
+ linear-gradient(rgba(67,164,220,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(67,164,220,.06) 1px,transparent 1px);
+ background-size:80px 80px;mask-image:radial-gradient(circle at 50% 50%,#000 30%,transparent 80%)}
+.glass{position:absolute;border-radius:22px;background:linear-gradient(160deg,rgba(255,255,255,.10),rgba(255,255,255,.025));
+ border:1px solid rgba(120,195,240,.28);box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 60px rgba(67,164,220,.12) inset;backdrop-filter:blur(14px)}
+.tilt{transform:perspective(2200px) rotateX(10deg) rotateY(-12deg) rotateZ(1deg)}
+.tiltR{transform:perspective(2200px) rotateX(8deg) rotateY(12deg) rotateZ(-1deg)}
+.mono{font-family:'Geist Mono',monospace}
+.super{position:absolute;left:120px;bottom:96px;font-size:44px;font-weight:500;letter-spacing:-.5px;
+ padding:14px 26px;border-left:5px solid #ec6408;background:linear-gradient(90deg,rgba(4,7,13,.85),rgba(4,7,13,0))}
+.h1{font-weight:700;letter-spacing:-2px;line-height:1.02}
+.lbl{font-size:20px;letter-spacing:3px;text-transform:uppercase;color:#43a4dc;font-weight:500}
+.btn{display:inline-block;padding:18px 40px;border-radius:14px;font-size:28px;font-weight:600}
+.btn.o{background:#ec6408;color:#fff;box-shadow:0 0 40px rgba(236,100,8,.55)}
+.btn.g{border:1px solid rgba(255,255,255,.3);color:#cfe3f1}
+.node{position:absolute;transform:translate(-50%,-50%);padding:18px 26px;border-radius:16px;font-size:26px;font-weight:500;white-space:nowrap;
+ background:rgba(10,24,40,.85);border:1.5px solid #43a4dc;box-shadow:0 0 30px rgba(67,164,220,.45)}
+.node.dim{color:rgba(234,244,251,.38);background:#08121e;box-shadow:none;border-color:rgba(120,195,240,.3)}
+.node.dim small{color:rgba(159,198,223,.35)}
+.node.o{border-color:#ec6408;box-shadow:0 0 34px rgba(236,100,8,.55)}
+.node small{display:block;font-family:'Geist Mono',monospace;font-size:17px;color:#9fc6df;margin-top:6px;font-weight:400}
+.tag{display:inline-block;font-family:'Geist Mono',monospace;font-size:17px;padding:5px 10px;border-radius:8px;background:rgba(67,164,220,.16);color:#bfe2f7;margin-right:8px}
+.cursor{position:absolute;width:44px;height:44px}
+.logo{position:absolute;height:64px}
+.step{position:absolute;left:120px;top:110px;display:flex;align-items:center;gap:22px}
+.step .n{width:74px;height:74px;border-radius:50%;display:grid;place-items:center;font-size:38px;font-weight:700;background:#43a4dc;color:#04101c;box-shadow:0 0 40px rgba(67,164,220,.7)}
+.step .t{font-size:40px;font-weight:600}
+.demo{position:absolute;right:60px;top:50px;font-family:'Geist Mono',monospace;font-size:20px;color:#f5b83d;border:1px dashed #f5b83d;padding:8px 14px;border-radius:8px}
+</style></head><body><div class="bg"></div><div class="lbl" style="position:absolute;left:120px;top:60px">Evidence trail · Roll back config change</div><div class="step"><div class="n">5</div><div class="t">Flag the gap</div></div><svg style="position:absolute;inset:0" width="1920" height="1080"><defs><filter id="gl" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><path d="M330,470 C545.0,470 545.0,470 760,470" stroke="#43a4dc" stroke-width="3" fill="none" filter="url(#gl)"/><circle cx="760" cy="470" r="6" fill="#43a4dc" filter="url(#gl)"/><path d="M760,470 C980.0,470 980.0,470 1200,470" stroke="#43a4dc" stroke-width="3" fill="none" filter="url(#gl)"/><circle cx="1200" cy="470" r="6" fill="#43a4dc" filter="url(#gl)"/><path d="M1200,220 C1200.0,220 1200.0,470 1200,470" stroke="#43a4dc" stroke-width="3" fill="none" filter="url(#gl)"/><circle cx="1200" cy="470" r="6" fill="#43a4dc" filter="url(#gl)"/><path d="M1200,470 C1410.0,470 1410.0,330 1620,330" stroke="#43a4dc" stroke-width="3" fill="none" filter="url(#gl)"/><circle cx="1620" cy="330" r="6" fill="#43a4dc" filter="url(#gl)"/><path d="M1200,470 C1410.0,470 1410.0,520 1620,520" stroke="#43a4dc" stroke-width="3" fill="none" filter="url(#gl)"/><circle cx="1620" cy="520" r="6" fill="#43a4dc" filter="url(#gl)"/><path d="M1200,470 C1410.0,470 1410.0,720 1620,720" stroke="#43a4dc" stroke-width="3" fill="none" filter="url(#gl)"/><circle cx="1620" cy="720" r="6" fill="#43a4dc" filter="url(#gl)"/></svg><div class="node o" style="left:330px;top:470px">⚠ Alert<small>checkout slow · 02:04</small></div><div class="node dim" style="left:760px;top:470px">Payments API</div><div class="node dim" style="left:1200px;top:470px">DB cluster<small>pg-pay-03</small></div><div class="node dim" style="left:1200px;top:220px">Config change #4471</div><div style="display:none"><span class="tag">01:44 AM</span><span class="tag">source: deploy-log</span></div><div class="node dim" style="left:1620px;top:330px">Checkout</div><div class="node dim" style="left:1620px;top:520px">Refunds</div><div class="node dim" style="left:1620px;top:720px">12 premium accounts<small>SLA at risk</small></div><div style="position:absolute;left:1500px;top:440px;width:240px;height:160px;border:3px dashed #f5b83d;border-radius:24px"></div><div class="glass" style="left:640px;top:640px;width:800px;padding:30px;border-color:#f5b83d;box-shadow:0 0 50px rgba(245,184,61,.25)"><div class="lbl" style="color:#f5b83d">⚑ Evidence gap</div><div style="font-size:28px;margin-top:12px;line-height:1.35">No evidence on whether the change touched the refunds schema.</div><div style="margin-top:14px;font-size:26px;color:#f5b83d;font-weight:600">👤 Human check recommended</div></div><div class="super" style="bottom:60px">5 · Gap flagged → human check</div><div class="demo">DEMO · needs recording</div></body></html>

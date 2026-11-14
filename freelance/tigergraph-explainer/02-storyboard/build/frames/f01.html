@@ -1,0 +1,63 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;700&family=Geist+Mono:wght@400;500&display=block');
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1920px;height:1080px;overflow:hidden}
+body{font-family:Geist,sans-serif;color:#eaf4fb;background:#04070d;position:relative}
+.bg{position:absolute;inset:0;background:
+ radial-gradient(900px 600px at 20% 15%,rgba(67,164,220,.28),transparent 70%),
+ radial-gradient(800px 700px at 85% 90%,rgba(67,164,220,.18),transparent 70%),
+ linear-gradient(180deg,#050a14,#03060b)}
+.bg.warm{background:
+ radial-gradient(900px 600px at 80% 20%,rgba(236,100,8,.22),transparent 70%),
+ radial-gradient(900px 700px at 15% 85%,rgba(67,164,220,.22),transparent 70%),
+ linear-gradient(180deg,#060912,#03050a)}
+.grid{position:absolute;inset:0;background-image:
+ linear-gradient(rgba(67,164,220,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(67,164,220,.06) 1px,transparent 1px);
+ background-size:80px 80px;mask-image:radial-gradient(circle at 50% 50%,#000 30%,transparent 80%)}
+.glass{position:absolute;border-radius:22px;background:linear-gradient(160deg,rgba(255,255,255,.10),rgba(255,255,255,.025));
+ border:1px solid rgba(120,195,240,.28);box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 60px rgba(67,164,220,.12) inset;backdrop-filter:blur(14px)}
+.tilt{transform:perspective(2200px) rotateX(10deg) rotateY(-12deg) rotateZ(1deg)}
+.tiltR{transform:perspective(2200px) rotateX(8deg) rotateY(12deg) rotateZ(-1deg)}
+.mono{font-family:'Geist Mono',monospace}
+.super{position:absolute;left:120px;bottom:96px;font-size:44px;font-weight:500;letter-spacing:-.5px;
+ padding:14px 26px;border-left:5px solid #ec6408;background:linear-gradient(90deg,rgba(4,7,13,.85),rgba(4,7,13,0))}
+.h1{font-weight:700;letter-spacing:-2px;line-height:1.02}
+.lbl{font-size:20px;letter-spacing:3px;text-transform:uppercase;color:#43a4dc;font-weight:500}
+.btn{display:inline-block;padding:18px 40px;border-radius:14px;font-size:28px;font-weight:600}
+.btn.o{background:#ec6408;color:#fff;box-shadow:0 0 40px rgba(236,100,8,.55)}
+.btn.g{border:1px solid rgba(255,255,255,.3);color:#cfe3f1}
+.node{position:absolute;transform:translate(-50%,-50%);padding:18px 26px;border-radius:16px;font-size:26px;font-weight:500;white-space:nowrap;
+ background:rgba(10,24,40,.85);border:1.5px solid #43a4dc;box-shadow:0 0 30px rgba(67,164,220,.45)}
+.node.dim{color:rgba(234,244,251,.38);background:#08121e;box-shadow:none;border-color:rgba(120,195,240,.3)}
+.node.dim small{color:rgba(159,198,223,.35)}
+.node.o{border-color:#ec6408;box-shadow:0 0 34px rgba(236,100,8,.55)}
+.node small{display:block;font-family:'Geist Mono',monospace;font-size:17px;color:#9fc6df;margin-top:6px;font-weight:400}
+.tag{display:inline-block;font-family:'Geist Mono',monospace;font-size:17px;padding:5px 10px;border-radius:8px;background:rgba(67,164,220,.16);color:#bfe2f7;margin-right:8px}
+.cursor{position:absolute;width:44px;height:44px}
+.logo{position:absolute;height:64px}
+.step{position:absolute;left:120px;top:110px;display:flex;align-items:center;gap:22px}
+.step .n{width:74px;height:74px;border-radius:50%;display:grid;place-items:center;font-size:38px;font-weight:700;background:#43a4dc;color:#04101c;box-shadow:0 0 40px rgba(67,164,220,.7)}
+.step .t{font-size:40px;font-weight:600}
+.demo{position:absolute;right:60px;top:50px;font-family:'Geist Mono',monospace;font-size:20px;color:#f5b83d;border:1px dashed #f5b83d;padding:8px 14px;border-radius:8px}
+</style></head><body><div class="bg warm"></div>
+<div class="glass tilt" style="left:150px;top:120px;width:1560px;height:860px;padding:34px">
+ <div style="display:flex;justify-content:space-between;align-items:center">
+  <div style="display:flex;gap:14px;align-items:center"><div style="width:14px;height:14px;border-radius:50%;background:#ec6408;box-shadow:0 0 16px #ec6408"></div>
+   <span style="font-size:24px;font-weight:600">Ops Console · Production</span></div>
+  <span class="mono" style="font-size:30px;color:#fff">02:06 AM</span></div>
+ <div style="display:flex;gap:24px;margin-top:30px">
+  <div class="glass" style="position:relative;flex:1.4;height:300px;padding:24px">
+   <div class="lbl" style="font-size:16px">Payments API · p99 latency</div>
+   <div style="display:flex;align-items:flex-end;gap:8px;height:200px;margin-top:20px"><div style="flex:1;height:30%;background:linear-gradient(#43a4dc,rgba(67,164,220,.2));border-radius:4px"></div><div style="flex:1;height:42%;background:linear-gradient(#43a4dc,rgba(67,164,220,.2));border-radius:4px"></div><div style="flex:1;height:38%;background:linear-gradient(#43a4dc,rgba(67,164,220,.2));border-radius:4px"></div><div style="flex:1;height:55%;background:linear-gradient(#43a4dc,rgba(67,164,220,.2));border-radius:4px"></div><div style="flex:1;height:48%;background:linear-gradient(#43a4dc,rgba(67,164,220,.2));border-radius:4px"></div><div style="flex:1;height:62%;background:linear-gradient(#43a4dc,rgba(67,164,220,.2));border-radius:4px"></div><div style="flex:1;height:58%;background:linear-gradient(#43a4dc,rgba(67,164,220,.2));border-radius:4px"></div><div style="flex:1;height:70%;background:linear-gradient(#43a4dc,rgba(67,164,220,.2));border-radius:4px"></div><div style="flex:1;height:66%;background:linear-gradient(#43a4dc,rgba(67,164,220,.2));border-radius:4px"></div><div style="flex:1;height:92%;background:linear-gradient(#43a4dc,rgba(67,164,220,.2));border-radius:4px"></div><div style="flex:1;height:96%;background:linear-gradient(#43a4dc,rgba(67,164,220,.2));border-radius:4px"></div><div style="flex:1;height:88%;background:linear-gradient(#43a4dc,rgba(67,164,220,.2));border-radius:4px"></div><div style="flex:1;height:94%;background:linear-gradient(#43a4dc,rgba(67,164,220,.2));border-radius:4px"></div><div style="flex:1;height:97%;background:linear-gradient(#43a4dc,rgba(67,164,220,.2));border-radius:4px"></div></div></div>
+  <div class="glass" style="position:relative;flex:1;height:300px;padding:24px">
+   <div class="lbl" style="font-size:16px;color:#ec6408">Active alert</div>
+   <div style="font-size:30px;font-weight:600;margin-top:18px">Checkout slowdown</div>
+   <div class="mono" style="font-size:18px;color:#9fc6df;margin-top:10px">SEV-1 · started 02:04</div>
+   <div class="mono" style="font-size:18px;color:#9fc6df;margin-top:6px">region us-east · 3 services</div></div></div>
+ <div style="display:flex;gap:24px;margin-top:24px">
+  <div class="glass" style="position:relative;flex:1;height:150px;opacity:.6"></div><div class="glass" style="position:relative;flex:1;height:150px;opacity:.6"></div><div class="glass" style="position:relative;flex:1;height:150px;opacity:.6"></div></div>
+</div><div class="glass" style="left:560px;top:360px;width:800px;padding:40px;transform:scale(1.0);transform-origin:top left;
+ background:linear-gradient(160deg,rgba(20,40,64,.96),rgba(8,16,28,.96));border-color:rgba(67,164,220,.6)">
+ <div class="lbl">AI agent · proposed action</div>
+ <div style="font-size:46px;font-weight:600;margin-top:16px">Roll back config change</div>
+ <div style="margin-top:34px;display:flex;gap:18px"><span class="btn o">Approve</span><span class="btn g">Reject</span></div></div><svg class="cursor" style="left:760px;top:600px" viewBox="0 0 24 24"><path d="M3 2l7 19 2.6-7.4L20 11z" fill="#fff" stroke="#000" stroke-width="1.2"/></svg><div class="super">02:06 · Approve rollback?</div></body></html>
