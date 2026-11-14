@@ -170,10 +170,10 @@ scene("Most agents give you an answer and a \"confidence score\". But confidence
  "Close-up: the approval box shows only an answer and \"Confidence: 92%\". The 92% is hollow: nothing behind it.",
  "Camera crashes into the card; 92% counts up 0 → 92 with a ticking SFX; on \"isn't evidence\" a magnifier sweeps over the number and finds nothing (empty dashed box), the % cracks and drops out of frame.",
  '<div class="dots"></div>' + approval(170, 170, conf=True, scale=1.3, rot="rotate(-2deg)") +
- f'<div class="card tiltR" style="left:1340px;top:300px;width:480px;height:440px;border:3px dashed #c9d8e3;background:rgba(255,255,255,.6);box-shadow:none">'
+ f'<div class="card tiltR" style="left:1420px;top:300px;width:440px;height:440px;border:3px dashed #c9d8e3;background:rgba(255,255,255,.6);box-shadow:none">'
  f'<div style="position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);text-align:center">{icon("search", 120, 1.6)}'
  '<div class="mono" style="font-size:22px;color:#6a8396;margin-top:16px">evidence: none found</div></div></div>' +
- f'<div style="position:absolute;left:1190px;top:445px;width:140px;height:140px;border-radius:50%;background:{ORANGE};display:grid;place-items:center;box-shadow:0 0 0 10px rgba(236,100,8,.18),0 0 60px rgba(236,100,8,.7);font-size:96px;font-weight:600;color:#fff;line-height:1">≠</div>')
+ f'<div style="position:absolute;left:1200px;top:520px;width:200px;transform:translateY(-50%);text-align:center;font-size:150px;font-weight:300;line-height:1;color:{ORANGE}">≠</div>')
 
 # 03 title
 scene("(music sting, no VO)", "Can You Trust Your AI Agent with Multi-hop Decision-making Tasks?",
@@ -329,7 +329,7 @@ scene("You might ask, \"why does this need a graph?\" Because vector search can 
  "".join(f'<div class="mono" style="position:absolute;left:{x}px;top:{y}px;font-size:15px;color:#a9d6f2;background:rgba(10,38,71,.9);padding:4px 10px;border-radius:6px;border:1px solid rgba(120,195,240,.5)">{t}</div>' for x, y, t in [(1215,535,"DEPENDS_ON"),(1395,500,"RUNS_ON"),(1545,450,"CHANGED"),(1600,640,"SERVES")]) +
  node(1150, 580, "Alert", "alert", "", "on") + node(1330, 470, "API", "api", "", "on") + node(1530, 580, "DB", "db", "", "on") + node(1530, 370, "Change", "gear", "", "on") + node(1730, 720, "12 accts", "users", "", "o") + '</div>' +
  f'<div style="position:absolute;left:1110px;top:820px;display:flex;gap:12px;align-items:center;padding:12px 22px;border-radius:30px;background:rgba(34,181,115,.18);border:2px solid {GREEN};color:#5fe0a4;font-size:24px;font-weight:600;box-shadow:0 0 30px rgba(34,181,115,.45)">✓ Explained path · 4 hops</div>' +
- f'<div style="position:absolute;left:860px;top:470px;width:130px;height:130px;border-radius:50%;background:{ORANGE};display:grid;place-items:center;box-shadow:0 0 0 10px rgba(236,100,8,.18),0 0 60px rgba(236,100,8,.6);font-size:90px;font-weight:600;color:#fff;line-height:1">≠</div>')
+ f'<div style="position:absolute;left:810px;top:560px;width:200px;transform:translateY(-50%);text-align:center;font-size:170px;font-weight:300;line-height:1;color:{ORANGE}">≠</div>')
 
 # 14 labelled path
 lab = [((250,560),(610,560),"DEPENDS_ON"),((610,560),(980,560),"RUNS_ON"),((980,290),(980,560),"CHANGED"),((980,560),(1380,400),"FEEDS"),((980,560),(1380,730),"SERVES"),((1380,400),(1720,560),"GOVERNED_BY")]
@@ -373,15 +373,15 @@ def s16(stage_=2):
     if stage_ >= 2:
         h += ('<svg style="position:absolute;inset:0" width="1920" height="1080"><defs><filter id="wg" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>' + "".join(
             f'<path d="M{HUB[0]},{HUB[1]} L{p[0]},{p[1]}" stroke="#fff" stroke-width="5" stroke-linecap="round" filter="url(#wg)"/>'
-            f'<circle cx="{HUB[0]+(p[0]-HUB[0])*.6:.0f}" cy="{HUB[1]+(p[1]-HUB[1])*.6:.0f}" r="9" fill="#0a2647" stroke="#fff" stroke-width="4" filter="url(#wg)"/>' for p, *_ in sat) + '</svg>')
+            f'<circle cx="{HUB[0]+(p[0]-HUB[0])*.6:.0f}" cy="{HUB[1]+(p[1]-HUB[1])*.6:.0f}" r="9" fill="#9fdcff" stroke="#fff" stroke-width="4" filter="url(#wg)"/>' for p, *_ in sat) + '</svg>')
     else:
         h += ('<svg style="position:absolute;inset:0" width="1920" height="1080">' + "".join(
             f'<path d="M{HUB[0]},{HUB[1]} L{HUB[0]+(p[0]-HUB[0])*.35:.0f},{HUB[1]+(p[1]-HUB[1])*.35:.0f}" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-dasharray="2 14"/>' for p, *_ in sat) + '</svg>')
-    h += cnode(*HUB, 260, "shield", "", "#0a2647", 0, "rgba(255,255,255,.9)")
+    h += cnode(*HUB, 260, "shield", "", "#9fdcff", 0, "rgba(190,235,255,.95)")
     h += f'<div style="position:absolute;left:{HUB[0]}px;top:{HUB[1]+160}px;transform:translateX(-50%);white-space:nowrap;font-size:40px;font-weight:700;color:#fff">Explainable decisions</div>'
     if stage_ >= 2:
         for (p, d, ic, lb), bl in zip(sat, [0, 0, 1.2]):
-            h += cnode(p[0], p[1], d, ic, lb, "#0a2647", bl, "rgba(255,255,255,.85)")
+            h += cnode(p[0], p[1], d, ic, lb, "#9fdcff", bl, "rgba(190,235,255,.9)")
         for x, y, r, t in [(170, 300, -6, "✓ why this decision"), (1560, 400, 5, "✓ policy checked"), (700, 880, -3, "✓ audit trail replayable"), (1420, 140, 4, "✓ data source + time")]:
             h += f'<div class="card" style="left:{x}px;top:{y}px;padding:14px 22px;transform:rotate({r}deg);font-size:24px;font-weight:600;white-space:nowrap">{t}</div>'
         h += bokeh([(1700, 860, 260, 160, 10), (-40, 80, 220, 140, -8)])
