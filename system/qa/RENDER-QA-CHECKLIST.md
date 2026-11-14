@@ -1,10 +1,10 @@
-# Render QA checklist + watch procedure (v2.1, 13 Nov 2026)
+# Render QA checklist + watch procedure (v2.3, 14 Nov 2026)
 
 Applies to EVERY line and channel: Stormi 2D, 2D dynamic, 3D, 3D low, DumDown, Finance with Stromi, reels, IG parts, shorts.
 Built from every mistake Pushpam caught by eye (29 Oct to 13 Nov). Each item says what to look for, how to catch it,
 and the standard fix. Any hit is at least MEDIUM. Nothing is handed over, combined, uploaded or booked until a round is clean.
 
-Files: `system/qa/RENDER-QA-CHECKLIST.md` (this), `system/qa/qa_auto.py` (machine checks + 1 fps sheets).
+Files: `system/qa/RENDER-QA-CHECKLIST.md` (this), `system/qa/qa_auto.py` (machine checks + 1 fps sheets), `system/qa/voice_qa.py` (voice naturalness, run on every dry VO stem).
 Project files `/mnt/project-files/system/qa/`, repo `system/qa/` (branch claude/project-thread-s1uli2), Drive `AI/Tools/Render QA`.
 
 ---
@@ -14,6 +14,7 @@ Project files `/mnt/project-files/system/qa/`, repo `system/qa/` (branch claude/
 1. **Machine pass:** `python3 /mnt/project-files/system/qa/qa_auto.py FILE --kind act|full|reel --out QA_DIR`
    - Fix every FAIL before anything else. WARN = fix unless clearly intended. CHECK = look at that timestamp by eye.
    - It writes `QA_DIR/qa_auto.md`, timestamped 1 fps contact sheets `QA_DIR/sheets/`, zoom crops `QA_DIR/zoom/`.
+1b. **Voice pass (Pushpam 14 Nov, every video, every channel, every voice):** `python3 /mnt/project-files/system/qa/voice_qa.py VO_FILES...` on the DRY voice of the narrator and every character/gag line, before mixing. Fix every FAIL, listen to every WARN timestamp. Then listen to the whole VO once at 1x for the items in B10 a machine can't hear.
 2. **/watch pass:** `python3 .claude/skills/watch/scripts/watch.py FILE --engine local --question "<paste section D>"`
    (setup once: `bash tools/claude-video/setup-cloud.sh`, branch claude/project-thread-6cjl04). Local engine only.
 3. **Design pass:** run the taste + impeccable skills on one frame per shot for alignment, clipping and detail (Pushpam 13 Nov).
@@ -129,6 +130,19 @@ Severity: HIGH = broken/unwatchable or factual/map error or upload risk; MEDIUM 
 
 Every stamp, tag, label, card or graphic that animates in gets its END frame checked: where it lands, what it touches, what it covers.
 
+### B10. Voice naturalness (Pushpam 14 Nov 2026: "make sure all the voices sound natural", all videos, all channels)
+Run `voice_qa.py` on the dry VO of EVERY voice (narrator, characters, gag voices; take P, Kokoro, Piper, ElevenLabs alike), then listen.
+| # | Look for | How to catch | Standard fix |
+|---|---|---|---|
+| 59 | Robotic / monotone delivery | voice_qa "intonation": pitch spread < 1.6 st FAIL, < 2.2 st WARN (natural 3-8); by ear: flat, same melody every sentence | more expressive settings (Kokoro/Piper: lower speed slightly, split long sentences; ElevenLabs: lower stability), add emphasis/punctuation, or switch to a more natural voice |
+| 60 | Pace too fast / too slow / sudden speed-ups | voice_qa "pace" 2.6-6.0 syl/s ok (FAIL < 2.2 or > 6.8) and "pace jump" (sentence 45% faster/40% slower than the clip) | set speed 0.9-1.1 so all lines match; regenerate the odd sentence |
+| 61 | Pitch glitches: cracks, warble, octave flips, metallic artefacts | voice_qa "pitch glitches" timestamps; listen there | regenerate that line (other seed, slightly slower); never pitch-shift a whole take |
+| 62 | Clipped words (first/last syllable cut, word stops dead) | voice_qa "clipped word" (no lead-in, no tail, 35 dB drop at full level) | regenerate or re-trim with 30-60 ms handles + 10 ms fades; keep 50-100 ms before and 100-200 ms after each line |
+| 63 | Hiss / noise / breath noise in pauses | voice_qa "noise in pauses" (floor > -58 dBFS WARN, > -50 FAIL; hiss share) | arnndn + afftdn nr=14 (trim 1680-sample delay), gate at -55 dBFS; de-breath loud breaths (-12 dB), keep soft natural ones |
+| 64 | No breathing room / wall of speech, or dead gaps | voice_qa "wall of speech" (> 22 s without a pause) and "long gap mid-clip" (> 1.6 s) | punctuation/SSML breaks: 0.25-0.5 s between sentences, 0.6-0.9 s at paragraph turns |
+| 65 | Wrong stress, mispronounced names/places, accent drift between lines, emotion not fitting the line | LISTEN (machine can't): read along with the script once | phonetic respell (e.g. 'Huang' -> 'Hwahng'), re-voice the line, keep one voice model + settings per character for the whole video |
+| 66 | Digital clipping / distortion in the voice | voice_qa "digital clipping" | lower TTS gain, re-export, limiter at -1.5 dBTP |
+
 ---
 
 ## C. Two worked fixes Pushpam asked for by name
@@ -136,4 +150,4 @@ Every stamp, tag, label, card or graphic that animates in gets its END frame che
 - **Upload "Processing abandoned" (VisionQuest, 13 Nov):** cause was a full stitched from separately encoded acts and gags without re-encode. Fix = single-pass CFR re-encode + decode check before upload.
 
 ## D. /watch question (paste as --question)
-"Check against the Stormi render QA checklist. Report every hit with its timestamp and a fix: characters standing on furniture, sitting on air, walking above ground or over big props, floating props or luggage, terrain not touching the ground; walk-in-place, gliding, walk cycles too fast or not starting/stopping on time, wheels not turning, frozen characters or still shots over 5 s, abrupt pose snaps, action out of sync with the narration; overlapping characters or animals, props clipping bodies, seated legs in front of the torso, vehicles through buildings, camera inside heads, characters vanishing or popping in, legs cut off by crops; background, door or window glitching; held props (chains, ropes) not in a hand; labels not resting on their object; stamps or graphics landing on buildings; props clipping furniture (rope through table, lock through door); characters clipping sofas or chairs; graphics misaligned or crowding characters; wrong real-world scale, vehicles side-on on a road toward camera, mics facing away from the speaker, identical rows of figures; plain or blocky scenes, blocky sea or textures, scenes too dark, flicker; text over subtitles or characters, cut-off signs, spelling, wrong India map; reel logo top-right, centred end card, hook in the first 3 s; audio hiss, quiet music or SFX, dead air, words cut at joins."
+"Check against the Stormi render QA checklist. Report every hit with its timestamp and a fix: characters standing on furniture, sitting on air, walking above ground or over big props, floating props or luggage, terrain not touching the ground; walk-in-place, gliding, walk cycles too fast or not starting/stopping on time, wheels not turning, frozen characters or still shots over 5 s, abrupt pose snaps, action out of sync with the narration; overlapping characters or animals, props clipping bodies, seated legs in front of the torso, vehicles through buildings, camera inside heads, characters vanishing or popping in, legs cut off by crops; background, door or window glitching; held props (chains, ropes) not in a hand; labels not resting on their object; stamps or graphics landing on buildings; props clipping furniture (rope through table, lock through door); characters clipping sofas or chairs; graphics misaligned or crowding characters; wrong real-world scale, vehicles side-on on a road toward camera, mics facing away from the speaker, identical rows of figures; plain or blocky scenes, blocky sea or textures, scenes too dark, flicker; text over subtitles or characters, cut-off signs, spelling, wrong India map; reel logo top-right, centred end card, hook in the first 3 s; audio hiss, quiet music or SFX, dead air, words cut at joins; any voice that sounds robotic, monotone, too fast or slow, glitchy, clipped, mispronounced or out of character."
