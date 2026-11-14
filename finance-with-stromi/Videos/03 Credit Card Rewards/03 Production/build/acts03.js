@@ -16,13 +16,13 @@ ACTS[0] = [
       const kr = k01(t, 0.3, 2.2), x = lerp(0.9, 0.12, E(kr)); s.coin.position.set(x, ty + 0.04 - 0.03 * kr, tz + 0.25); s.coin.rotation.set(kr < 1 ? Math.PI / 2 : lerp(Math.PI / 2, 0, E(k01(t, 2.2, 3.4))), t * (kr < 1 ? 9 : 2), 0);
       const grab = k01(t, d - 2.2, d - 1.2); if (grab > 0) s.coin.position.y = ty + 0.01 + grab * 0.6;
       s.coin.visible = grab < 0.95;
-      cl(s, k01(t, 0, d), [[0.5, 1.15, tz + 0.75], [0.1, ty + 0.03, tz + 0.2]], [[-0.2, 1.5, tz + 1.6], [0, 0.95, tz - 0.2]]);
-      sp(s, 'jo', 0.1, tz - 1.15, { view: 'front', expr: t > d - 2.4 ? 'happy' : 'neutral', look: [0.1, -0.6], arms: [null, grab > 0 ? { h: [0.5, 0.2 + grab * 0.4], hand: 'grab' } : null] }, t, null, null, 1.62);
+      cl(s, k01(t, 0, d), [[0.45, 1.1, tz + 1.05], [0.1, ty + 0.36, tz - 0.4]], [[-0.2, 1.5, tz + 1.7], [0, 1.0, tz - 0.3]]);
+      sp(s, 'jo', 0.1, tz - 1.15, { view: 'q', dir: 1, expr: t > d - 2.4 ? 'happy' : 'neutral', arms: [null, grab > 0 ? { h: [0.5, 0.2 + grab * 0.4], hand: 'grab' } : null] }, t, null, null, 1.62);
       return { scene: s.S, cam: s.C, tags: [T('+$2.00', 980, 130, pop(t, 1.0), GT), T('INTEREST: $0', 300, 620, pop(t, ph(L, 'no interest')), YT), T('...AGAIN?', 980, 620, pop(t, ph(L, 'again')), RT)] }; } },
   { id: 'S02', f(t, d, L) { const s = getSet('vault3'); const z = s.z0 + 3.2; s.piles.forEach(p => p.visible = false); s.labs.forEach(p => p.visible = false); s.big.visible = true;
       const k = E(k01(t, 0.5, 6)); s.counter.userData.draw({ t: '$' + (47.5 * k).toFixed(1) + ' BILLION' });
-      cl(s, k01(t, 0, d), [[0, 0.6, z + 3.4], [0, 0.9, z]], [[1.4, 3.2, z + 5.8], [0, 1.6, z - 1]]);
-      return { scene: s.S, cam: s.C, vig: 0.7, tags: [T('REWARDS · 2024', 640, 100, pop(t, 0.6), YT), T('THE STORE FEE?', 1000, 600, pop(t, ph(L, 'fees stores pay')), RT)] }; } },
+      cl(s, k01(t, 0, d), [[0, 0.6, z + 3.4], [0, 0.9, z]], [[1.4, 2.8, z + 6.4], [0, 2.0, z - 1]]);
+      return { scene: s.S, cam: s.C, vig: 0.7, tags: [T('REWARDS · 2024', 300, 620, pop(t, 0.6), YT), T('THE STORE FEE?', 1000, 600, pop(t, ph(L, 'fees stores pay')), RT)] }; } },
   { id: 'S03', f(t, d, L) { const s = getSet('office3'); hideCards(s, ['wendell']); const b = lineAt(L, 'BANKER'); const bt = b ? b.t0 : d;
       s.ledger.userData.draw({ title: 'CARD PROFITS', rows: [['Paying side', t > ph(L, 'slightly unprofitable') ? '-' : '?', REDC], ['Lending side', '???']] }); s.mail.visible = false; s.ccard.visible = false;
       if (t < bt - 0.2) cl(s, k01(t, 0, bt), [[0.6, 1.25, s.dz + 0.9], [0.15, 0.8, s.dz + 0.1]], [[0.2, 1.05, s.dz + 0.55], [0.15, 0.8, s.dz + 0.1]]);
@@ -159,7 +159,8 @@ ACTS[3] = [
       P.cardL.position.set(-0.225 - 0.25 * sep, 0, 0); P.cardR.position.set(0.225 + 0.25 * sep, 0, 0); P.cardL.rotation.y = 0.08 * sep; P.cardR.rotation.y = -0.08 * sep;
       P.saw.position.set(0, 0.07, lerp(-0.45, 0.45, cut) + 0.02 * Math.sin(t * 30) * (cut > 0 && cut < 1 ? 1 : 0)); P.saw.rotation.y = Math.PI / 2; P.saw.visible = cut < 1;
       P.labL.position.set(-0.5, 0.01, 0.42); flat(P.labL, 0.01); P.labR.position.set(0.5, 0.01, 0.42); flat(P.labR, 0.01); P.labL.visible = t > ph(L, 'One job is paying'); P.labR.visible = t > ph(L, 'other job is lending');
-      cl(s, k01(t, 0, d), [[0, 1.3, 0.9], [0, 0, 0]], [[0.3, 0.9, 1.25], [0, 0, 0.05]]);
+      P.cardL.position.x -= 0.05 * k01(t, 5, d); P.cardR.position.x += 0.05 * k01(t, 5, d); P.cardL.rotation.y += 0.06 * Math.sin(t * 0.9) * sep; P.cardR.rotation.y -= 0.06 * Math.sin(t * 0.8 + 1) * sep;
+      cl(s, k01(t, 0, d), [[-0.35, 1.3, 0.95], [0, 0, 0]], [[0.45, 0.85, 1.3], [0, 0, 0.05]]);
       return { scene: s.S, cam: s.C, tags: [T('2 BUSINESSES · 1 PIECE OF PLASTIC', 640, 96, pop(t, ph(L, 'two businesses')), YT)] }; } },
   { id: 'S31', f(t, d, L) { const s = getSet('table3'); const P = s.P; s.show(['jars', 'clock', 'cardL']); P.cardL.position.set(0, 0, 0.55); P.cardL.rotation.y = 0;
       P.jars.children.forEach((j, i) => { const on = t > ph(L, ['interchange', 'annual fees', 'rewards', 'fraud', 'covering your'][i]); j.scale.setScalar(on ? 1.25 * outBack(k01(t, ph(L, ['interchange', 'annual fees', 'rewards', 'fraud', 'covering your'][i]), ph(L, ['interchange', 'annual fees', 'rewards', 'fraud', 'covering your'][i]) + 0.4)) : 0.001); });
@@ -168,7 +169,7 @@ ACTS[3] = [
       return { scene: s.S, cam: s.C, tags: [T('IN', 380, 110, pop(t, ph(L, 'earns interchange')), GT), T('OUT', 860, 110, pop(t, ph(L, 'It pays for')), RT), T('A FREE LOAN UNTIL THE DUE DATE', 640, 620, pop(t, ph(L, 'lending you that')), YT)] }; } },
   { id: 'S32', f(t, d, L) { const s = getSet('table3'); const P = s.P; s.show(['scale', 'panL', 'panR', 'water']); const r = ph(L, 'Then came the rewards'); const tilt = t < r ? 0.12 * E(k01(t, 1, 3)) : lerp(0.12, -0.22, E(k01(t, r, r + 1.5)));
       P.scale.userData.tilt(tilt); P.panR.visible = t > r; P.water.position.set(0, lerp(-0.1, 0.32, E(k01(t, ph(L, 'underwater'), ph(L, 'underwater') + 2))), -0.1);
-      cl(s, k01(t, 0, d), [[0, 1.3, 1.8], [0, 0.7, -0.1]], [[0.4, 0.95, 1.4], [0, 0.6, -0.1]]);
+      cl(s, k01(t, 0, d), [[-0.6, 1.3, 1.8], [0, 0.7, -0.1]], [[0.55, 0.95, 1.35], [0, 0.6, -0.1]]);
       return { scene: s.S, cam: s.C, tags: [T('$1.30 IN', 330, 120, pop(t, ph(L, 'a dollar thirty')), GT), T('$1.50 OUT', 950, 120, pop(t, r + 0.5), RT), T('SLIGHTLY UNDERWATER', 640, 620, pop(t, ph(L, 'underwater')), RT)] }; } },
   { id: 'S33', f(t, d, L) { const s = getSet('table3'); const P = s.P; s.show(['track']); const hot = ph(L, 'heated up'); const sp0 = t < hot ? 0.25 : 0.25 + 0.8 * k01(t, hot, hot + 3);
       P.racers.forEach((c, i) => { const a = -(t * sp0 + i * 0.6 + (t > hot ? (t - hot) * 0.25 * i : 0)); c.position.set(Math.cos(a) * 0.85 * 1.5, 0.006, Math.sin(a) * 0.85); c.rotation.y = -a; c.children[1].scale.setScalar(1 + (t > hot ? 0.8 * k01(t, hot, hot + 6) : 0)); c.children[1].rotation.y = t * 3; });
@@ -177,14 +178,14 @@ ACTS[3] = [
       return { scene: s.S, cam: s.C, vig: 0.75, tags: [T('THE REWARD RACE', 640, 96, pop(t, hot), RT), T('REWARDS +25% (2015-2020)', 330, 620, pop(t, ph(L, 'a quarter more')), YT), T('PAYING SIDE: ≈ -4% OF PROFITS', 900, 620, pop(t, m), RT)] }; } },
   { id: 'S34', f(t, d, L) { const s = getSet('marble'); hideCards(s, []); s.bars.visible = t > ph(L, 'fifteen percent') - 1; s.bd.visible = !s.bars.visible; s.ropes.visible = false; s.signT.visible = s.signR.visible = false; s.stage.visible = false; s.easel.visible = false;
       s.bars.userData.draw({ k: k01(t, ph(L, 'fifteen percent'), ph(L, 'sixty percent') + 1.2) }); s.bd.userData.draw({ lines: [['HIGH-REWARD', 0.16, '#efe4cf'], ['PREMIUM CARDS', 0.2]] });
-      s.peds.forEach((p, i) => { p.visible = true; p.userData.card.rotation.z = t * 0.6 + i; p.userData.card.position.y = 1.25 + 0.04 * Math.sin(t * 2 + i); });
-      const cf = ph(L, 'CFPB'); if (t < cf) cl(s, k01(t, 0, cf), [[-3, 1.4, s.z0 + 7.5], [0, 1.5, s.z0 + 2]], [[0, 1.7, s.z0 + 8.5], [0, 2.0, s.z0]]); else cl(s, k01(t, cf, d), [[2.6, 1.5, s.z0 + 4.2], [1.6, 1.3, s.z0 + 2.4]], [[1.2, 1.5, s.z0 + 3.8], [0.4, 1.3, s.z0 + 2.4]]);
+      s.peds.forEach((p, i) => { p.visible = true; p.rotation.y = 0.35 * Math.sin(t * 0.7 + i); p.userData.card.position.y = 1.3 + 0.04 * Math.sin(t * 2 + i); });
+      const cf = ph(L, 'CFPB'); if (t < cf) cl(s, k01(t, 0, cf), [[-3, 1.4, s.z0 + 7.5], [0, 1.5, s.z0 + 2]], [[0, 1.7, s.z0 + 8.5], [0, 2.0, s.z0]]); else cl(s, k01(t, cf, d), [[2.2, 1.8, s.z0 + 5.0], [1.6, 1.3, s.z0 + 2.4]], [[0.9, 1.75, s.z0 + 4.7], [0.6, 1.35, s.z0 + 2.4]]);
       return { scene: s.S, cam: s.C, vig: 0.7, tags: [T('CHARGE STORES MORE', 330, 96, pop(t, ph(L, 'charge stores more')), RT), T('REWARD RATE 1.4% → 1.6%', 900, 620, pop(t, cf), YT)] }; } },
   { id: 'S35', f(t, d, L) { const s = getSet('store'); hideCards(s, []); const cz = s.cz; STORE(s, { ok: true }); const sch = ph(L, 'fee schedule');
       if (t < ph(L, 'Compare Europe')) cl(s, k01(t, 0, ph(L, 'Compare Europe')), [[1.2, 1.6, cz + 2.6], [1.3, 1.1, cz]], [[1.7, 1.25, cz + 1.0], [1.45, 1.06, cz + 0.32]]); else cl(s, k01(t, ph(L, 'Compare Europe'), d), [[1.9, 1.35, cz + 1.0], [1.45, 1.06, cz + 0.32]], [[2.2, 1.8, cz + 2.2], [1.2, 1.1, cz]]);
       return { scene: s.S, cam: s.C, tags: [T('PREMIUM CARD AT BIG GROCER: $1.45', 640, 96, pop(t, sch), YT), T('REWARD: $2.00', 330, 620, pop(t, ph(L, 'reward was two')), GT), T('EUROPE: 30¢', 960, 620, pop(t, ph(L, 'Compare Europe')), RT)] }; } },
   { id: 'S36', f(t, d, L) { const s = getSet('desk3'); s.jars.visible = s.chute.visible = false; s.fly.forEach(c => c.visible = false); s.pie.visible = true; s.pie.rotation.y = t * 0.3;
-      s.pie.children[0].position.set(0, 0.03, 0); const out = E(k01(t, ph(L, 'eighty-six'), ph(L, 'eighty-six') + 1.2)); s.pie.children[0].position.x = 0.08 * out;
+      const out = E(k01(t, ph(L, 'eighty-six'), ph(L, 'eighty-six') + 1.2)); const g0 = s.pie.children[0]; g0.position.set(0, 0.03 + 0.012 * out, 0); g0.scale.set(1 + 0.05 * out, 1 + 0.12 * out, 1 + 0.05 * out); s.mag.position.set(0.12, s.ty + 0.012, s.dz + 0.36); g0.material.emissive && g0.material.emissive.setRGB(0.25 * out * (0.6 + 0.4 * Math.sin(t * 4)), 0.17 * out * (0.6 + 0.4 * Math.sin(t * 4)), 0);
       s.doc.userData.draw({ org: '2025 STUDY', band: '#3f6b4f', title: 'Where interchange goes', date: '', rows: [['~86% back as rewards', GRNC], ['Lending drives profit', REDC]], hi: t > ph(L, 'Lending is') ? 2 : t > ph(L, 'eighty-six') ? 1 : 0 });
       cl(s, k01(t, 0, d), [[0.5, 1.4, s.dz + 0.9], [0.3, 0.8, s.dz + 0.1]], [[0.2, 1.15, s.dz + 0.6], [0.3, 0.8, s.dz + 0.1]]);
       return { scene: s.S, cam: s.C, tags: [T('~86% → REWARDS', 960, 110, pop(t, ph(L, 'eighty-six')), GT), T('LENDING DRIVES PROFIT', 640, 620, pop(t, ph(L, 'Lending is')), RT)] }; } },
@@ -207,27 +208,27 @@ ACTS[4] = [
       return { scene: s.S, cam: s.C, tags: [T("YOU'RE PRE-APPROVED!", 900, 110, pop(t, 1.2), RT), T('A LOAN, NO QUESTIONS ASKED', 640, 620, pop(t, ph(L, 'a loan you can')), YT)] }; } },
   { id: 'S40', f(t, d, L) { const s = getSet('kitchen3'); hideCards(s, []); s.coin.visible = s.coin2.visible = false; const gp = ph(L, 'grace period'), un = ph(L, 'Leave part');
       s.cal.userData.draw({ title: 'DECEMBER', grace: t > ph(L, 'by the due date') ? [1, 25] : null, late: t > un ? 25 : null, marks: { 1: 'statement', 25: 'DUE' } });
-      if (t < un) cl(s, k01(t, 0, un), [[1.8, 1.5, s.z0 + 2.6], [2.6, 1.3, s.z0 + 0.76]], [[2.4, 1.4, s.z0 + 1.7], [2.6, 1.35, s.z0 + 0.76]]); else cl(s, k01(t, un, d), [[2.4, 1.4, s.z0 + 1.7], [2.6, 1.35, s.z0 + 0.76]], [[0.3, 1.3, s.tz + 0.7], [0.05, 0.8, s.tz + 0.1]]);
+      if (t < un) cl(s, k01(t, 0, un), [[1.8, 1.5, s.z0 + 2.6], [2.6, 1.3, s.z0 + 0.76]], [[2.4, 1.4, s.z0 + 1.7], [2.6, 1.35, s.z0 + 0.76]]); else if (t < un + 2.6) cl(s, k01(t, un + 1.0, un + 2.6), [[2.4, 1.4, s.z0 + 1.7], [2.6, 1.35, s.z0 + 0.76]], [[0.3, 1.3, s.tz + 0.7], [0.05, 0.8, s.tz + 0.1]]); else cl(s, k01(t, un + 2.6, d), [[0.3, 1.3, s.tz + 0.7], [0.05, 0.8, s.tz + 0.1]], [[0.22, 1.15, s.tz + 0.52], [0.05, 0.78, s.tz + 0.1]]);
       s.stmt.userData.draw({ ring: t > ph(L, 'the line on your') ? 1 : 0 });
       return { scene: s.S, cam: s.C, tags: [T('GRACE PERIOD = NO INTEREST', 640, 96, pop(t, gp), GT), T('UNPAID? INTEREST RUNS', 640, 620, pop(t, un), RT)] }; } },
   { id: 'S41', f(t, d, L) { const s = getSet('table3'); const P = s.P; s.show(['pie', 'crumb']); P.pie.rotation.y = t * 0.25; P.pie.children.forEach((m, i) => m.position.set(0, 0.04, 0)); const l = ph(L, 'eighty percent'), f = ph(L, 'late fees'), n = ph(L, 'slightly negative');
-      P.pie.children[0].scale.setScalar(t > l ? 1 : 0.001); P.pie.children[1].scale.setScalar(t > f ? 1 : 0.001); P.pie.children[2].visible = false; P.crumb.visible = t > n; P.crumb.position.set(0.85, 0.015 + 0.01 * Math.sin(t * 5), 0.3);
+      P.pie.children[0].scale.setScalar(Math.max(0.001, E(k01(t, 0.3, 1.3)))); P.pie.children[1].scale.setScalar(t > f ? 1 : 0.001); P.pie.children[2].visible = false; P.crumb.visible = t > n; P.crumb.position.set(0.85, 0.015 + 0.01 * Math.sin(t * 5), 0.3);
       cl(s, k01(t, 0, d), [[0, 1.6, 1.4], [0, 0, 0]], [[0.6, 1.0, 1.3], [0.2, 0, 0.1]]);
       return { scene: s.S, cam: s.C, tags: [T('LENDING ~80%', 330, 110, pop(t, l), { bg: '#2f4d6b', col: '#fff' }), T('FEES ~15%', 950, 110, pop(t, f), RT), T('PAYING: SLIGHTLY NEGATIVE', 900, 620, pop(t, n), GT)] }; } },
   { id: 'S42', f(t, d, L) { const s = getSet('marble'); hideCards(s, ['jo', 'ray', 'student', 'econ2', 'gus', 'mabel']); s.bars.visible = false; s.bd.visible = true; s.peds.forEach(p => p.visible = false); s.ropes.visible = true; s.signT.visible = s.signR.visible = true; s.stage.visible = false; s.easel.visible = false;
       const h = ph(L, 'about half'); s.bd.userData.draw({ lines: [['ACTIVE ACCOUNTS', 0.14, '#efe4cf'], [t > h ? '~HALF CARRY A BALANCE' : 'PAY IN FULL OR CARRY?', 0.15], ['CFPB · 2024', 0.12, '#efe4cf']] });
-      const keys = ['jo', 'ray', 'student', 'econ2', 'gus', 'mabel']; keys.forEach((k, i) => { const toR = i % 2 === 1; const k2 = toR ? E(k01(t, h + i * 0.3, h + 1.5 + i * 0.3)) : 0; const x = lerp(-2.2 + (i % 3) * 0.5 - 0.6, 1.4 + (i % 3) * 0.55, k2); const moving = toR && t > h + i * 0.3 && t < h + 1.5 + i * 0.3;
-        const c = card(s, k, [1.62, 1.55, 1.6, 1.65, 1.55, 1.6][i]); c.set(x, s.z0 + 5.0 + (i < 3 ? 0 : 0.3) + i * 0.02, moving ? slidePose(t, 1, 1.6, 1.6) : pose({ view: 'front', expr: 'neutral', seed: i }, t, null, null), s.C); });
-      cl(s, k01(t, 0, d), [[0, 2.4, s.z0 + 11], [0, 1.5, s.z0 + 4]], [[0, 2.0, s.z0 + 9], [0, 1.6, s.z0 + 4]]);
+      const keys = ['jo', 'ray', 'student', 'econ2', 'gus', 'mabel']; keys.forEach((k, i) => { const toR = i % 2 === 1; const k2 = toR ? E(k01(t, h + i * 0.3, h + 1.5 + i * 0.3)) : 0; const kk = E(k01(t, h + i * 0.3, h + 1.5 + i * 0.3)); const x = lerp(-1.9 + i * 0.76, toR ? 1.5 + ((i - 1) / 2) * 0.75 : -3.0 + (i / 2) * 0.75, kk); const moving = t > h + i * 0.3 && t < h + 1.5 + i * 0.3;
+        const c = card(s, k, [1.62, 1.55, 1.6, 1.65, 1.55, 1.6][i]); c.set(x, s.z0 + 5.0 + (i % 2) * 0.05, moving ? slidePose(t, toR ? 1 : -1, 1.6, 1.6) : pose({ view: 'front', expr: 'neutral', seed: i }, t, null, null), s.C); });
+      cl(s, k01(t, 0, d), [[0, 2.3, s.z0 + 11.5], [0, 1.15, s.z0 + 4]], [[0, 2.05, s.z0 + 10.8], [0, 1.25, s.z0 + 4]]);
       return { scene: s.S, cam: s.C, vig: 0.7, tags: [T('PAY IN FULL', 330, 620, pop(t, ph(L, 'transactors')), GT), T('CARRY A BALANCE', 950, 620, pop(t, ph(L, 'revolvers')), RT)] }; } },
   { id: 'S43', f(t, d, L) { const s = getSet('vault3'); s.big.visible = false; const z = s.z0 + 3.4; const a = ph(L, 'hundred and sixty'), b = ph(L, 'thirty-one'), c = ph(L, 'side by side');
-      s.piles[0].visible = t > a - 0.5; s.piles[1].visible = t > b - 0.5; s.piles[2].visible = t > c; s.piles[0].scale.setScalar(Math.max(0.01, E(k01(t, a - 0.5, a + 1)))); s.piles[1].scale.setScalar(Math.max(0.01, E(k01(t, b - 0.5, b + 1)))); s.piles[2].scale.setScalar(Math.max(0.01, E(k01(t, c, c + 1.2))));
-      s.labs[0].visible = t > a; s.labs[1].visible = t > b; s.labs[2].visible = t > c; s.labs[0].userData.draw({ t: '$160B INTEREST', bg: '#2f4d6b', col: '#fff' }); s.labs[1].userData.draw({ t: '$31.3B FEES', bg: REDC, col: '#fff' }); s.labs[2].userData.draw({ t: '$47.5B REWARDS', bg: '#3f9b5f', col: '#fff' });
+      s.piles[0].visible = true; s.piles[1].visible = t > b - 0.5; s.piles[2].visible = t > c; s.piles[0].scale.setScalar(Math.max(0.25 * E(k01(t, 0.1, 1.2)) + 0.3 * k01(t, 1.2, a - 0.5), E(k01(t, a - 0.5, a + 1)))); s.piles[1].scale.setScalar(Math.max(0.01, E(k01(t, b - 0.5, b + 1)))); s.piles[2].scale.setScalar(Math.max(0.01, E(k01(t, c, c + 1.2))));
+      s.labs[0].visible = t > a; s.labs[1].visible = t > b && !(t > ph(L, 'Careful') && t < c); s.labs[2].visible = t > c; s.labs[0].userData.draw({ t: '$160B INTEREST', bg: '#2f4d6b', col: '#fff' }); s.labs[1].userData.draw({ t: '$31.3B FEES', bg: REDC, col: '#fff' }); s.labs[2].userData.draw({ t: '$47.5B REWARDS', bg: '#3f9b5f', col: '#fff' });
       s.counter.userData.draw({ t: t < a ? '2024' : t < ph(L, 'Careful') ? 'INTEREST CHARGED' : t < c ? 'NOT PROFIT' : 'SAME YEAR' });
-      const cf = ph(L, 'Careful'); if (t < cf) cl(s, k01(t, 0, cf), [[-3, 2.2, z + 6], [-1.5, 1.0, z]], [[1, 2.6, z + 6.5], [0, 1.0, z]]); else if (t < c) cl(s, k01(t, cf, c), [[-3.1, 1.2, z + 3.2], [-3.1, 1.2, z]], [[-2.4, 1.6, z + 4], [-2.4, 1.2, z]]); else cl(s, k01(t, c, d), [[0, 2.0, z + 7], [0, 1.2, z]], [[0, 2.6, z + 8], [0, 1.0, z]]);
-      return { scene: s.S, cam: s.C, vig: 0.7, tags: [T('MOSTLY LATE FEES', 640, 620, t < cf && t > b + 1 ? pop(t, b + 1) : 0, RT), T('INTEREST CHARGED ≠ PROFIT', 640, 620, t > cf && t < c ? pop(t, cf) : 0, YT)] }; } },
+      const cf = ph(L, 'Careful'); if (t < cf) cl(s, k01(t, 0, cf), [[-3, 2.2, z + 6], [-1.5, 1.0, z]], [[1, 2.6, z + 6.5], [0, 1.0, z]]); else if (t < c) cl(s, k01(t, cf, c), [[-1.9, 1.7, z + 4.6], [-2.3, 1.5, z]], [[-1.4, 1.9, z + 5.0], [-2.0, 1.5, z]]); else cl(s, k01(t, c, d), [[0, 2.0, z + 7], [0, 1.2, z]], [[0, 2.6, z + 8], [0, 1.0, z]]);
+      return { scene: s.S, cam: s.C, vig: 0.7, tags: [T('THE LENDING SIDE', 640, 620, t < a - 0.3 ? pop(t, 0.8) : 0, YT), T('MOSTLY LATE FEES', 640, 620, t < cf && t > b + 1 ? pop(t, b + 1) : 0, RT), T('INTEREST CHARGED ≠ PROFIT', 640, 620, t > cf && t < c ? pop(t, cf) : 0, YT)] }; } },
   { id: 'S44', f(t, d, L) { const s = getSet('office3'); hideCards(s, ['wendell']); s.ccard.visible = true; s.coinA.position.y = -1; s.coinB.position.y = -1; const fl = ph(L, 'Two percent back'); const k = E(k01(t, fl, fl + 1.2));
-      s.ccard.position.set(0.3, s.ty + 0.01 + Math.sin(k * Math.PI) * 0.25, s.dz + 0.3); s.ccard.rotation.set(0, 0, k * Math.PI);
+      s.ccard.position.set(0.3, s.ty + 0.01 + Math.sin(k * Math.PI) * 0.25, s.dz + 0.3); s.ccard.rotation.set(0, 0, k * Math.PI * 2);
       if (t < fl) cl(s, k01(t, 0, fl), [[0.3, 1.6, s.dz + 2.6], [0, 1.3, s.dz - 0.3]], [[0.4, 1.4, s.dz + 1.6], [0.2, 1.0, s.dz]]); else cl(s, k01(t, fl, d), [[0.35, 1.3, s.dz + 0.85], [0.3, 0.85, s.dz + 0.3]], [[0.35, 1.15, s.dz + 0.7], [0.3, 0.85, s.dz + 0.3]]);
       sp(s, 'wendell', 0, s.dz - 0.75, { view: 'front', expr: 'sly', arms: [{ h: [0.6, 0.35], hand: 'grab' }, null] }, t, null, null, 1.9);
       return { scene: s.S, cam: s.C, tags: [T('~22% A YEAR · Q3 2026', 960, 96, pop(t, ph(L, 'twenty-two percent a year in')), RT), T('2% BACK', 330, 620, pop(t, fl), GT), T('22% OWED', 950, 620, pop(t, ph(L, 'on what you owe')), RT)] }; } },
@@ -272,7 +273,7 @@ ACTS[5] = [
       cl(s, k01(t, 0, d), [[0, 1.8, s.z0 + 8.5], [0, 1.4, s.z0 + 2]], [[0, 1.6, s.z0 + 7], [0, 1.4, s.z0 + 2]]);
       return { scene: s.S, cam: s.C, vig: 0.7, tags: [T('ALWAYS: 1 IN 5', 950, 620, pop(t, ph(L, 'every single month')), RT), T('NEVER: 1 IN 5', 330, 620, pop(t, ph(L, 'never had')), GT), T('SOMETIMES: ~1/4', 640, 620, t > q ? pop(t, q) : 0, YT)] }; } },
   { id: 'S53', f(t, d, L) { const s = getSet('archive'); hideCards(s, []); s.trolley.position.set(3.4, 0, s.tz + 1.4); const b4 = ph(L, 'By twenty twenty-four');
-      s.cork.userData.draw({ title: 'ACCOUNTS CARRYING A BALANCE', k: t < b4 ? 0.5 * k01(t, ph(L, 'forty-five') - 0.5, ph(L, 'forty-five') + 1) : 0.5 + 0.5 * k01(t, b4, b4 + 1.2), bars: [{ v: 0.45 / 0.62, lab: 'END 2021', txt: '~45%', col: '#5fa3a6' }, { v: 0.5 / 0.62, lab: '2024', txt: '~50%', col: REDC }] });
+      s.cork.userData.draw({ title: 'ACCOUNTS CARRYING A BALANCE', k: t < b4 ? 0.5 * k01(t, Math.min(1.0, ph(L, 'forty-five') - 0.5), Math.min(2.2, ph(L, 'forty-five') + 1)) : 0.5 + 0.5 * k01(t, b4, b4 + 1.2), bars: [{ v: 0.45 / 0.62, lab: 'END 2021', txt: '~45%', col: '#5fa3a6' }, { v: 0.5 / 0.62, lab: '2024', txt: '~50%', col: REDC }] });
       const ns = ph(L, 'not necessarily'); if (t < ns) cl(s, k01(t, 0, ns), [[-1.2, 1.9, s.z0 + 3.8], [0, 1.85, s.z0]], [[0.6, 1.9, s.z0 + 3.0], [0, 1.85, s.z0]]); else cl(s, k01(t, ns, d), [[0.6, 1.9, s.z0 + 3.0], [0, 1.85, s.z0]], [[0, 1.8, s.tz + 3.2], [0, 1.3, s.z0]]);
       return { scene: s.S, cam: s.C, vig: 0.7, tags: [T('IT MOVES WITH THE ECONOMY', 640, 620, pop(t, ph(L, 'moves with')), YT), T('"NOT NECESSARILY STATIC"', 640, 620, t > ns ? pop(t, ns) : 0, GT)] }; } },
   { id: 'S54', f(t, d, L) { const s = getSet('garage3'); hideCards(s, ['jo', 'mech']); const g = lineAt(L, 'GUS'); const gt = g ? g.t0 : d; const stop = 2.6;
@@ -292,9 +293,11 @@ ACTS[5] = [
       sp(s, 'jo', 1.15, cz + 0.85, { view: 'q', dir: 1, expr: t > off ? 'happy' : 'neutral', arms: [null, { h: [0.75, 0.55], hand: 'grab' }] }, t, null, null, 1.62); sp(s, 'cashier', 0.2, cz - 0.75, { view: 'front', expr: 'happy' }, t, null, null, 1.6);
       return { scene: s.S, cam: s.C, tags: [T('STILL 2% BACK', 330, 110, pop(t, ph(L, 'same two percent')), GT), T('+ A LOAN', 950, 110, pop(t, ph(L, 'now a loan')), RT), T('PAID OFF · LINE BLANK', 640, 620, pop(t, off), GT)] }; } },
   { id: 'S57', f(t, d, L) { const s = getSet('living3'); hideCards(s, ['jo']); s.mail.forEach(e => e.visible = false); const a = ph(L, 'A repair'), b = ph(L, 'A gap'), c = ph(L, 'A medical');
-      s.props.bill.visible = t > a; s.props.cal.visible = t > b; s.props.bag.visible = t > c;
-      if (t < a) cl(s, k01(t, 0, a), [[0.4, 1.6, s.z0 + 5.2], [0, 1.0, s.z0 + 1]], [[0.2, 1.5, s.z0 + 4.4], [0, 1.0, s.z0 + 1]]); else if (t < c + 2.5) cl(s, k01(t, a, c + 2.5), [[-0.2, 1.2, s.z0 + 2.4], [-0.2, 0.6, s.z0 + 1.3]], [[1.1, 1.4, s.z0 + 2.3], [0.9, 1.1, s.z0 + 0.6]]); else cl(s, k01(t, c + 2.5, d), [[0.6, 1.5, s.z0 + 4.2], [0.2, 1.1, s.z0 + 1]], [[0.4, 1.7, s.z0 + 5.0], [0.2, 1.1, s.z0 + 1]]);
-      sp(s, 'jo', -2.0, s.z0 + 2.1, { view: 'q', dir: 1, expr: 'neutral', look: [0.3, 0.3] }, t, null, null, 1.62);
+      const P = s.props, base = { bill: 0.52, cal: 1.6, bag: 0.79 }, at0 = { bill: a, cal: b, bag: c };
+      for (const k in base) { const e = k01(t, at0[k], at0[k] + 0.45); P[k].visible = t > at0[k]; P[k].position.y = base[k] + (1 - E(e)) * 0.7; P[k].userData.s0 = P[k].userData.s0 || P[k].scale.x; P[k].scale.setScalar(P[k].userData.s0 * (0.6 + 0.4 * E(e))); }
+      const W0 = [[0.0, 1.6, s.z0 + 5.1], [-0.45, 1.0, s.z0 + 1]], W1 = [[-0.2, 1.5, s.z0 + 4.4], [-0.45, 1.0, s.z0 + 1]], C0 = [[-0.2, 1.2, s.z0 + 2.4], [-0.2, 0.6, s.z0 + 1.3]], C1 = [[1.1, 1.4, s.z0 + 2.3], [0.9, 1.1, s.z0 + 0.6]], W2 = [[0.1, 1.7, s.z0 + 5.0], [-0.25, 1.1, s.z0 + 1]];
+      if (t < a - 1.2) cl(s, k01(t, 0, a - 1.2), W0, W1); else if (t < a + 0.2) cl(s, k01(t, a - 1.2, a + 0.2), W1, C0); else if (t < c + 2.5) cl(s, k01(t, a + 0.2, c + 2.5), C0, C1); else cl(s, k01(t, c + 2.5, Math.min(d, c + 4.5)), C1, W2);
+      sp(s, 'jo', -1.65, s.z0 + 2.05, { view: 'q', dir: 1, expr: t > a ? 'sad' : 'neutral', look: [0.3, 0.3] }, t, null, null, 1.62);
       return { scene: s.S, cam: s.C, tags: [T('AN ILLUSTRATION, NOT A PREDICTION', 640, 96, pop(t, 0.6), YT), T('NOT CARELESSNESS', 640, 620, pop(t, ph(L, 'careless')), GT)] }; } },
   { id: 'S58', f(t, d, L) { const s = getSet('store'); hideCards(s, ['jo']); const cz = s.cz; STORE(s, {}); s.ptag.visible = false; s.promo.visible = true;
       cl(s, k01(t, 0, d), [[-0.4, 1.7, s.z0 + 5.2], [-1.9, 1.9, s.z0]], [[-0.9, 1.6, s.z0 + 4.4], [-1.7, 1.7, s.z0 + 0.6]]);
@@ -316,7 +319,7 @@ ACTS[6] = [
   { id: 'S62', f(t, d, L) { const s = getSet('marble'); hideCards(s, ['wendell', 'gus']); s.bars.visible = false; s.bd.visible = true; s.peds.forEach(p => p.visible = false); s.ropes.visible = false; s.signT.visible = s.signR.visible = false; s.stage.visible = false; s.easel.visible = true; const st = ph(L, 'still pending');
       s.bd.userData.draw({ lines: [['US LAW', 0.12, '#efe4cf'], ['DEBIT: CAPPED (BIG BANKS)', 0.12], [t > ph(L, 'but not credit') ? 'CREDIT: NOT CAPPED' : '', 0.12, '#ff8a7a']] });
       s.scroll.userData.draw({ rows: [t > ph(L, 'tenth') ? '-0.1 pt for 5 years' : '', t > ph(L, 'one point two five') ? 'Standard cards: 1.25% cap' : '', t > ph(L, 'one point two five') ? '   for 8 years' : '', t > ph(L, 'thirty-eight') ? 'Est. value ~$38 billion' : '', t > ph(L, 'Large retailers') ? 'Retailers object' : ''], stamp: t > st ? outBack(k01(t, st, st + 0.5)) : 0 });
-      if (t < ph(L, 'A settlement')) cl(s, k01(t, 0, ph(L, 'A settlement')), [[0, 2.0, s.z0 + 8], [0, 2.8, s.z0]], [[0, 2.4, s.z0 + 6], [0, 3.2, s.z0]]); else cl(s, k01(t, ph(L, 'A settlement'), d), [[2.0, 1.9, s.z0 + 9.5], [1.4, 1.6, s.z0 + 3.2]], [[1.9, 1.8, s.z0 + 8.2], [1.5, 1.6, s.z0 + 3.2]]);
+      if (t < ph(L, 'A settlement')) cl(s, k01(t, 0, ph(L, 'A settlement')), [[0, 2.0, s.z0 + 8.5], [0, 2.5, s.z0]], [[0, 2.0, s.z0 + 7.6], [0, 2.4, s.z0]]); else cl(s, k01(t, ph(L, 'A settlement'), d), [[2.0, 1.9, s.z0 + 9.5], [1.4, 1.6, s.z0 + 3.2]], [[1.9, 1.8, s.z0 + 8.2], [1.5, 1.6, s.z0 + 3.2]]);
       sp(s, 'wendell', -0.6, s.z0 + 3.6, { view: 'q', dir: 1, expr: 'neutral', look: [0.6, 0] }, t, null, null, 1.9); sp(s, 'gus', 4.0, s.z0 + 3.6, { view: 'q', dir: -1, expr: t > ph(L, 'Large retailers') ? 'angry' : 'neutral', arms: [{ h: [0.6, 0.9], hand: 'point' }, null] }, t, null, null, 1.55);
       return { scene: s.S, cam: s.C, vig: 0.7, tags: [T('BIG FEE = BIG REWARD', 640, 620, pop(t, ph(L, 'The reward is big')), YT)] }; } },
   { id: 'S63', f(t, d, L) { const s = getSet('kitchen3'); hideCards(s, ['jo']); s.coin.visible = s.coin2.visible = false; const sw = ph(L, 'Somewhere else'); s.stmt.userData.draw({});
@@ -324,7 +327,7 @@ ACTS[6] = [
       sp(s, 'jo', 0.1, s.tz - 1.15, { view: 'front', expr: 'neutral', look: [0, -0.5] }, t, null, null, 1.62);
       return { scene: s.S, cam: s.C, tags: [T("A STORE'S FEE", 330, 110, pop(t, ph(L, "store's fee")), YT), T('A HIGHER PRICE TAG', 950, 110, pop(t, ph(L, 'price tag')), YT), T('A RED LINE IN A LEDGER', 330, 620, pop(t, ph(L, 'red line')), RT), T("STATEMENTS THAT AREN'T BLANK", 950, 620, pop(t, ph(L, "isn't blank")), RT)] }; } },
   { id: 'S64', noBlurOut: true, f(t, d, L) { const s = getSet('kitchen3'); hideCards(s, ['jo']); s.coin2.visible = false; s.stmt.userData.draw({}); const { tz, ty } = s; const fl = k01(t, 0.6, 1.8);
-      s.coin.visible = true; s.coin.position.set(0.1, ty + 0.01 + Math.sin(fl * Math.PI) * 0.45, tz + 0.3); s.coin.rotation.set(fl * 14, 0, 0);
+      s.coin.visible = true; s.coin.position.set(0.1, ty + 0.01 + Math.sin(fl * Math.PI) * 0.45, tz + 0.3); s.coin.rotation.set(fl * Math.PI * 4, 0, 0);
       cl(s, k01(t, 0, 5), [[0.4, 1.4, tz + 1.2], [0.05, 0.9, tz]], [[0.2, 1.5, tz + 1.8], [0, 1.1, tz - 0.4]]);
       sp(s, 'jo', 0.1, tz - 1.15, { view: 'front', expr: t > 2 ? 'happy' : 'neutral', look: [0, -0.3] }, t, null, null, 1.62);
       const fade = k01(t, d - 6.2, d - 5.4);

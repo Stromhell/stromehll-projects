@@ -15,7 +15,7 @@ const MGD = [
   ['S34', 'one point six', 'R', 'num', { to: 1.6, dec: 1, suf: '%', label: 'REWARD RATE · CFPB 2024', col: GRN }],
   ['S36', 'eighty-six', 'L', 'pie', { pct: 86, label: 'INTERCHANGE → REWARDS', col: GRN }],
   ['S40', 'grace period', 'L', 'words', { txt: 'PAY IN FULL BY THE DUE DATE = NO INTEREST' }],
-  ['S42', 'about half', 'R', 'pie', { pct: 50, label: 'ACCOUNTS CARRYING A BALANCE', col: RED }],
+  ['S42', 'about half', 'C', 'pie', { delay: 2.8, pct: 50, label: 'ACCOUNTS CARRYING A BALANCE', col: RED }],
   ['S43', 'hundred and sixty', 'L', 'num', { pre: '$', to: 160, suf: 'B', label: 'INTEREST CHARGED · 2024', col: RED }],
   ['S43', 'side by side', 'R', 'bars', { vals: [160, 47.5], labels: ['INTEREST', 'REWARDS'], label: '2024 ($B)', dec: 0 }],
   ['S44', 'twenty-two percent a year in', 'L', 'num', { to: 22, suf: '%', label: 'RATE ON ACCOUNTS CHARGED INTEREST', col: RED }],
@@ -23,5 +23,5 @@ const MGD = [
   
   ['S55', 'about nineteen', 'L', 'num', { pre: '$', to: 19, label: 'ONE MONTH OF INTEREST', col: RED }],
   ['S61', 'one and a half', 'R', 'bars', { vals: [1.9, 1.5, 0.3], labels: ['US FEE', 'US REWARD', 'CAP FEE'], label: '% OF SPENDING', dec: 1 }],
-  ['S62', 'thirty-eight', 'L', 'num', { pre: '$', to: 38, suf: 'B', label: 'EST. SETTLEMENT VALUE', col: GLD }],
+  ['S62', 'thirty-eight', 'CL', 'num', { pre: '$', to: 38, suf: 'B', label: 'EST. SETTLEMENT VALUE', col: GLD }],
 ];

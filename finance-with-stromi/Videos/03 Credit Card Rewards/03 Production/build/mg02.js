@@ -68,13 +68,13 @@ const D = {
     for (let i = 0; i < 12; i++) { const an = i / 12 * Math.PI * 2; X.beginPath(); X.moveTo(Math.sin(an) * 58, -Math.cos(an) * 58); X.lineTo(Math.sin(an) * 66, -Math.cos(an) * 66); X.stroke(); }
     const m = t * 2.4, hr = 9.5 / 12 * Math.PI * 2 + m / 12; X.lineWidth = 5; X.beginPath(); X.moveTo(0, 0); X.lineTo(Math.sin(hr) * 36, -Math.cos(hr) * 36); X.stroke(); X.lineWidth = 3; X.strokeStyle = RED; X.beginPath(); X.moveTo(0, 0); X.lineTo(Math.sin(m) * 56, -Math.cos(m) * 56); X.stroke(); },
 };
-const POS = { HL: [230, 185], HR: [1050, 185], TC: [640, 262], L: [215, 360], R: [1065, 360], TL: [230, 300], TR: [1050, 300], BL: [230, 460], BR: [1050, 460] };
+const POS = { HL: [230, 185], HR: [1050, 185], TC: [640, 262], L: [215, 360], R: [1065, 360], TL: [230, 300], TR: [1050, 300], BL: [230, 460], BR: [1050, 460], C: [640, 400], CL: [520, 430] };
 
 function anchor(s, at) { if (typeof at === 'number') return at; const q = at.toLowerCase();
   for (const l of s.lines) { const i = l.text.toLowerCase().indexOf(q); if (i >= 0) return l.t0 + (l.t1 - l.t0) * i / l.text.length; }
   console.error('MG anchor not found', s.id, at); return 0.5; }
 let BEATS = null;
-function build() { BEATS = []; for (const s of TL) { if (s.card !== undefined) continue; const B = MGD.filter(b => b[0] === s.id).map(b => [anchor(s, b[1]), b]).sort((p, q) => p[0] - q[0]);
+function build() { BEATS = []; for (const s of TL) { if (s.card !== undefined) continue; const B = MGD.filter(b => b[0] === s.id).map(b => [anchor(s, b[1]) + (b[4].delay || 0), b]).sort((p, q) => p[0] - q[0]);
   B.forEach(([at, b], i) => { const t0 = s.start + at; let t1 = Math.min(s.start + s.d - 0.4, t0 + (b[4].hold || 6.5), i + 1 < B.length ? s.start + B[i + 1][0] - 0.05 : 1e9); BEATS.push({ t0, t1, pos: b[2], type: b[3], a: b[4], key: b[0] + b[1] }); }); } }
 function draw(t) { if (!BEATS) build();
   for (const b of BEATS) { if (t < b.t0 || t > b.t1 + 0.32) continue; const lt = t - b.t0, inK = outBack(k01(lt, 0, 0.45)), outK = 1 - ease(k01(t, b.t1, b.t1 + 0.3));
