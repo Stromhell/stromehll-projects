@@ -186,12 +186,12 @@ scene("(music sting, no VO)", "Can You Trust Your AI Agent with Multi-hop Decisi
  f'<div class="h1" style="font-size:112px;margin-top:30px">Can You Trust Your AI Agent with <span style="color:{BLUE}">Multi-hop</span> Decision-making Tasks?</div></div>')
 
 # 04 black box vs glass box
-gb = edges([((1210,470),(1350,400)),((1350,400),(1490,490)),((1490,490),(1620,410)),((1350,400),(1460,600))], hot=[0,1,2,3])
+gb = edges([((1210,470),(1350,400)),((1350,400),(1490,490)),((1490,490),(1620,410)),((1350,400),(1460,600))], hot=[0,1,2,3]).replace(ORANGE, "#0a2647")
 for x, y in [(1210,470),(1350,400),(1490,490),(1620,410),(1460,600)]:
-    gb += f'<div style="position:absolute;left:{x-18}px;top:{y-18}px;width:36px;height:36px;border-radius:50%;background:{ORANGE};border:5px solid #fff;box-shadow:0 0 0 6px rgba(236,100,8,.25),0 0 26px {ORANGE}"></div>'
+    gb += f'<div style="position:absolute;left:{x-18}px;top:{y-18}px;width:36px;height:36px;border-radius:50%;background:#0a2647;border:5px solid #fff;box-shadow:0 0 0 6px rgba(10,38,71,.25),0 0 26px rgba(255,255,255,.8)"></div>'
 scene("So what does it take for an agent to show its evidence? A black box gives you an answer, but a glass box gives you the answer AND the path behind it: which facts it used, how they connect, which rules it checked, and in what order.",
  "Black box: answer + score · Glass box: answer + path",
- "Two cubes face off in 3D on TG Blue. Left: a solid black box that only outputs an answer and a score. Right: a clear glass box with the same answer plus a visible path of orange linked facts inside.",
+ "Two cubes face off in 3D on TG Blue. Left: a solid black box that only outputs an answer and a score. Right: a clear glass box with the same answer plus a visible path of navy linked facts inside.",
  "Both cubes drop in and slowly rotate; the black box stays opaque and spits out a score tag; the glass box turns transparent and the path inside lights node by node on \"facts… connect… rules… order\", each with a soft click SFX. Camera orbits slightly between them.",
  '<div class="dots"></div>' +
  f'<div style="position:absolute;left:200px;top:230px;width:600px;height:520px;border-radius:28px;background:linear-gradient(145deg,#2a333c,#000);transform:perspective(2000px) rotateY(18deg) rotateX(6deg);box-shadow:0 50px 90px rgba(0,0,0,.35)">'
