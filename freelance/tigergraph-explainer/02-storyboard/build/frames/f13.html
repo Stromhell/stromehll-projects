@@ -1,42 +1,45 @@
 <!doctype html><html><head><meta charset="utf-8"><style>
-@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;700&family=Geist+Mono:wght@400;500&display=block');
+@font-face{font-family:Urbane;font-weight:200;src:url(../../../fonts/Urbane-Extra-Light.woff2)}
+@font-face{font-family:Urbane;font-weight:300;src:url(../../../fonts/Urbane-Light.woff2)}
+@font-face{font-family:Urbane;font-weight:500;src:url(../../../fonts/Urbane-Medium.woff2)}
+@font-face{font-family:Urbane;font-weight:600;src:url(../../../fonts/Urbane-Demi-Bold.woff2)}
+@font-face{font-family:Urbane;font-weight:700;src:url(../../../fonts/Urbane-Bold.woff2)}
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&display=block');
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{width:1920px;height:1080px;overflow:hidden}
-body{font-family:Geist,sans-serif;color:#eaf4fb;background:#04070d;position:relative}
+body{font-family:Urbane,sans-serif;color:#0d1620;background:#fff;position:relative}
 .bg{position:absolute;inset:0;background:
- radial-gradient(900px 600px at 20% 15%,rgba(67,164,220,.28),transparent 70%),
- radial-gradient(800px 700px at 85% 90%,rgba(67,164,220,.18),transparent 70%),
- linear-gradient(180deg,#050a14,#03060b)}
-.bg.warm{background:
- radial-gradient(900px 600px at 80% 20%,rgba(236,100,8,.22),transparent 70%),
- radial-gradient(900px 700px at 15% 85%,rgba(67,164,220,.22),transparent 70%),
- linear-gradient(180deg,#060912,#03050a)}
-.grid{position:absolute;inset:0;background-image:
- linear-gradient(rgba(67,164,220,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(67,164,220,.06) 1px,transparent 1px);
- background-size:80px 80px;mask-image:radial-gradient(circle at 50% 50%,#000 30%,transparent 80%)}
-.glass{position:absolute;border-radius:22px;background:linear-gradient(160deg,rgba(255,255,255,.10),rgba(255,255,255,.025));
- border:1px solid rgba(120,195,240,.28);box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 60px rgba(67,164,220,.12) inset;backdrop-filter:blur(14px)}
-.tilt{transform:perspective(2200px) rotateX(10deg) rotateY(-12deg) rotateZ(1deg)}
-.tiltR{transform:perspective(2200px) rotateX(8deg) rotateY(12deg) rotateZ(-1deg)}
+ radial-gradient(1000px 700px at 85% 10%,rgba(67,164,220,.20),transparent 70%),
+ radial-gradient(900px 700px at 5% 100%,rgba(67,164,220,.14),transparent 70%),#fff}
+.dots{position:absolute;inset:0;background-image:radial-gradient(rgba(67,164,220,.35) 1.4px,transparent 1.6px);background-size:36px 36px;
+ mask-image:radial-gradient(circle at 70% 40%,#000 0%,transparent 65%)}
+.panel{position:absolute;border-radius:32px;background:linear-gradient(135deg,#eef6fc 0%,#cfe5f4 45%,#93c6e8 100%);box-shadow:0 40px 90px rgba(30,90,140,.18)}
+.card{position:absolute;border-radius:20px;background:#fff;border:1px solid #dce8f1;box-shadow:0 24px 60px rgba(20,60,100,.14)}
+.tilt{transform:perspective(2400px) rotateX(14deg) rotateY(-16deg) rotateZ(2deg)}
+.tiltR{transform:perspective(2400px) rotateX(10deg) rotateY(16deg) rotateZ(-2deg)}
+.plane{transform:perspective(2600px) rotateX(16deg) rotateZ(-4deg) scale(1.06);transform-origin:50% 60%}
+.blurfg{filter:blur(7px);opacity:.75}
 .mono{font-family:'Geist Mono',monospace}
-.super{position:absolute;left:120px;bottom:96px;font-size:44px;font-weight:500;letter-spacing:-.5px;
- padding:14px 26px;border-left:5px solid #ec6408;background:linear-gradient(90deg,rgba(4,7,13,.85),rgba(4,7,13,0))}
-.h1{font-weight:700;letter-spacing:-2px;line-height:1.02}
-.lbl{font-size:20px;letter-spacing:3px;text-transform:uppercase;color:#43a4dc;font-weight:500}
-.btn{display:inline-block;padding:18px 40px;border-radius:14px;font-size:28px;font-weight:600}
-.btn.o{background:#ec6408;color:#fff;box-shadow:0 0 40px rgba(236,100,8,.55)}
-.btn.g{border:1px solid rgba(255,255,255,.3);color:#cfe3f1}
-.node{position:absolute;transform:translate(-50%,-50%);padding:18px 26px;border-radius:16px;font-size:26px;font-weight:500;white-space:nowrap;
- background:rgba(10,24,40,.85);border:1.5px solid #43a4dc;box-shadow:0 0 30px rgba(67,164,220,.45)}
-.node.dim{color:rgba(234,244,251,.38);background:#08121e;box-shadow:none;border-color:rgba(120,195,240,.3)}
-.node.dim small{color:rgba(159,198,223,.35)}
-.node.o{border-color:#ec6408;box-shadow:0 0 34px rgba(236,100,8,.55)}
-.node small{display:block;font-family:'Geist Mono',monospace;font-size:17px;color:#9fc6df;margin-top:6px;font-weight:400}
-.tag{display:inline-block;font-family:'Geist Mono',monospace;font-size:17px;padding:5px 10px;border-radius:8px;background:rgba(67,164,220,.16);color:#bfe2f7;margin-right:8px}
-.cursor{position:absolute;width:44px;height:44px}
-.logo{position:absolute;height:64px}
-.step{position:absolute;left:120px;top:110px;display:flex;align-items:center;gap:22px}
-.step .n{width:74px;height:74px;border-radius:50%;display:grid;place-items:center;font-size:38px;font-weight:700;background:#43a4dc;color:#04101c;box-shadow:0 0 40px rgba(67,164,220,.7)}
-.step .t{font-size:40px;font-weight:600}
-.demo{position:absolute;right:60px;top:50px;font-family:'Geist Mono',monospace;font-size:20px;color:#f5b83d;border:1px dashed #f5b83d;padding:8px 14px;border-radius:8px}
-</style></head><body><div class="bg"></div><div style="position:absolute;left:120px;top:150px;width:760px"><div class="lbl" style="color:#8a97a3">Vector search</div><div class="glass" style="position:relative;margin-top:18px;padding:22px;font-size:22px;color:#b9cfdd">"…rollback procedures for payment…"<span class="mono" style="float:right;color:#43a4dc">0.87</span></div><div class="glass" style="position:relative;margin-top:18px;padding:22px;font-size:22px;color:#b9cfdd">"…configuration changes may cause…"<span class="mono" style="float:right;color:#43a4dc">0.84</span></div><div class="glass" style="position:relative;margin-top:18px;padding:22px;font-size:22px;color:#b9cfdd">"…premium customer SLA terms…"<span class="mono" style="float:right;color:#43a4dc">0.81</span></div></div><div style="position:absolute;left:1040px;top:150px" class="lbl">Graph search</div><svg style="position:absolute;inset:0" width="1920" height="1080"><defs><filter id="gl" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><path d="M1100,420 C1200.0,420 1200.0,420 1300,420" stroke="#43a4dc" stroke-width="3" fill="none" filter="url(#gl)"/><circle cx="1300" cy="420" r="6" fill="#43a4dc" filter="url(#gl)"/><path d="M1300,420 C1400.0,420 1400.0,420 1500,420" stroke="#43a4dc" stroke-width="3" fill="none" filter="url(#gl)"/><circle cx="1500" cy="420" r="6" fill="#43a4dc" filter="url(#gl)"/><path d="M1500,280 C1500.0,280 1500.0,420 1500,420" stroke="#43a4dc" stroke-width="3" fill="none" filter="url(#gl)"/><circle cx="1500" cy="420" r="6" fill="#43a4dc" filter="url(#gl)"/><path d="M1500,420 C1610.0,420 1610.0,560 1720,560" stroke="#43a4dc" stroke-width="3" fill="none" filter="url(#gl)"/><circle cx="1720" cy="560" r="6" fill="#43a4dc" filter="url(#gl)"/></svg><div class="node " style="left:1100px;top:420px">Alert</div><div class="node " style="left:1300px;top:420px">API</div><div class="node " style="left:1500px;top:420px">DB</div><div class="node " style="left:1500px;top:280px">Change</div><div class="node o" style="left:1720px;top:560px">12 accts</div><div style="position:absolute;left:930px;top:360px;font-size:90px;color:#ec6408">≠</div><div class="super">Similar ≠ explained</div></body></html>
+.h1{font-weight:700;letter-spacing:-1.5px;line-height:1.04}
+.pill{display:inline-block;font-family:'Geist Mono',monospace;font-size:19px;letter-spacing:2px;text-transform:uppercase;
+ padding:8px 16px;border-radius:8px;background:#e8f2f9;color:#3d7fa8}
+.lbl{font-size:18px;letter-spacing:3px;text-transform:uppercase;color:#43a4dc;font-weight:600}
+.btn{display:inline-block;padding:18px 40px;border-radius:12px;font-size:28px;font-weight:600}
+.btn.o{background:#ec6408;color:#fff;box-shadow:0 14px 34px rgba(236,100,8,.35)}
+.btn.g{border:1.5px solid #c7d6e1;color:#0d1620;background:#fff}
+.node{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:16px;padding:14px 24px 14px 14px;border-radius:16px;
+ font-size:27px;font-weight:600;white-space:nowrap;background:#fff;border:1.5px solid #d6e4ee;box-shadow:0 16px 40px rgba(20,60,100,.16)}
+.node .ic{width:52px;height:52px;border-radius:12px;background:#eaf3fa;display:grid;place-items:center}
+.node small{display:block;font-family:'Geist Mono',monospace;font-size:16px;color:#6a8396;margin-top:3px;font-weight:400}
+.node.on{border-color:#43a4dc;box-shadow:0 0 0 6px rgba(67,164,220,.15),0 18px 44px rgba(67,164,220,.35)}
+.node.o{border-color:#ec6408;box-shadow:0 0 0 6px rgba(236,100,8,.12),0 18px 44px rgba(236,100,8,.28)}
+.node.o .ic{background:#fdeee3}
+.node.dim{opacity:.45;box-shadow:0 8px 20px rgba(20,60,100,.06)}
+.tag{display:inline-block;font-family:'Geist Mono',monospace;font-size:17px;padding:6px 12px;border-radius:8px;background:#e8f2f9;color:#2f6f97;margin-right:8px}
+.cursor{position:absolute;width:46px;height:46px;filter:drop-shadow(0 6px 10px rgba(0,0,0,.25))}
+.step{position:absolute;left:110px;top:96px;display:flex;align-items:center;gap:22px}
+.step .n{width:78px;height:78px;border-radius:50%;display:grid;place-items:center;font-size:40px;font-weight:700;background:#43a4dc;color:#fff;box-shadow:0 14px 34px rgba(67,164,220,.5)}
+.step .t{font-size:44px;font-weight:700}
+.ring{position:absolute;border-radius:50%;border:2px solid rgba(67,164,220,.35);transform:translate(-50%,-50%)}
+.streak{position:absolute;height:5px;border-radius:3px;background:linear-gradient(90deg,rgba(67,164,220,0),#43a4dc);box-shadow:0 0 18px #43a4dc}
+</style></head><body><div class="bg"></div><div class="dots"></div><div style="position:absolute;left:110px;top:200px" class="lbl" ><span style="color:#6a8396">Vector search</span></div><div class="card" style="left:110px;top:300px;width:600px;padding:24px 28px;transform:rotate(-4deg)"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0d1620" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2.5h8l4 4v15H6z"/><path d="M14 2.5v4h4M9 12h6M9 16h6" stroke="#43a4dc"/></svg><span style="font-size:23px;color:#4d6577;margin-left:12px">"…rollback procedures for payment…"</span><span class="mono" style="float:right;font-size:22px;color:#43a4dc;font-weight:500">0.87</span></div><div class="card" style="left:190px;top:470px;width:600px;padding:24px 28px;transform:rotate(3deg)"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0d1620" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2.5h8l4 4v15H6z"/><path d="M14 2.5v4h4M9 12h6M9 16h6" stroke="#43a4dc"/></svg><span style="font-size:23px;color:#4d6577;margin-left:12px">"…configuration changes may cause…"</span><span class="mono" style="float:right;font-size:22px;color:#43a4dc;font-weight:500">0.84</span></div><div class="card" style="left:90px;top:640px;width:600px;padding:24px 28px;transform:rotate(-2deg)"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0d1620" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2.5h8l4 4v15H6z"/><path d="M14 2.5v4h4M9 12h6M9 16h6" stroke="#43a4dc"/></svg><span style="font-size:23px;color:#4d6577;margin-left:12px">"…premium customer SLA terms…"</span><span class="mono" style="float:right;font-size:22px;color:#43a4dc;font-weight:500">0.81</span></div><div style="position:absolute;left:1090px;top:200px" class="lbl">Graph search</div><div class="panel" style="left:1040px;top:260px;width:820px;height:600px;opacity:.6"></div><svg style="position:absolute;inset:0;overflow:visible" width="1920" height="1080"><defs><filter id="gl" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><path d="M1150,560 C1240.0,560 1240.0,460 1330,460" stroke="#43a4dc" stroke-width="3.5" fill="none" filter="url(#gl)"/><circle cx="1261" cy="488" r="7" fill="#fff" stroke="#43a4dc" stroke-width="3" filter="url(#gl)"/><path d="M1330,460 C1425.0,460 1425.0,560 1520,560" stroke="#43a4dc" stroke-width="3.5" fill="none" filter="url(#gl)"/><circle cx="1447" cy="532" r="7" fill="#fff" stroke="#43a4dc" stroke-width="3" filter="url(#gl)"/><path d="M1520,360 C1520.0,360 1520.0,560 1520,560" stroke="#43a4dc" stroke-width="3.5" fill="none" filter="url(#gl)"/><circle cx="1520" cy="504" r="7" fill="#fff" stroke="#43a4dc" stroke-width="3" filter="url(#gl)"/><path d="M1520,560 C1620.0,560 1620.0,700 1720,700" stroke="#43a4dc" stroke-width="3.5" fill="none" filter="url(#gl)"/><circle cx="1643" cy="661" r="7" fill="#fff" stroke="#43a4dc" stroke-width="3" filter="url(#gl)"/></svg><div class="node " style="left:1150px;top:560px"><div class="ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#0d1620" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9.5 17h-19z" stroke="#ec6408"/><path d="M12 10v4M12 17.5v.5"/></svg></div><div>Alert</div></div><div class="node " style="left:1330px;top:460px"><div class="ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#0d1620" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l3 3-3 3M12 15h5" stroke="#43a4dc"/></svg></div><div>API</div></div><div class="node " style="left:1520px;top:560px"><div class="ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#0d1620" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5.5" rx="8" ry="2.8"/><path d="M4 5.5v13c0 1.5 3.6 2.8 8 2.8s8-1.3 8-2.8v-13"/><path d="M4 12c0 1.5 3.6 2.8 8 2.8s8-1.3 8-2.8" stroke="#43a4dc"/></svg></div><div>DB</div></div><div class="node " style="left:1520px;top:360px"><div class="ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#0d1620" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2" stroke="#43a4dc"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg></div><div>Change</div></div><div class="node o" style="left:1720px;top:700px"><div class="ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#0d1620" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.3-5.5 6.5-5.5s5.9 1.9 6.5 5.5"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.8c2 .7 3.2 2.5 3.5 5.2" stroke="#43a4dc"/></svg></div><div>12 accts</div></div><div style="position:absolute;left:870px;top:420px;font-size:180px;font-weight:300;color:#ec6408">≠</div></body></html>

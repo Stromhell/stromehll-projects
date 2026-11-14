@@ -5,9 +5,8 @@
   "dur": 12.4,
   "vo": "If you're a developer, I've got a question for you… It's 2 a.m and your AI agent wants to roll back a change in production. Do you click approve?",
   "sup": "02:06 · Approve rollback?",
-  "visual": "Dark operations dashboard (same as video 2), 2:06 a.m. The agent's plan sits in an approval box: \"Roll back config change.\" Cursor hovers over Approve.",
-  "motion": "Slow push-in on the tilted dashboard; latency bars pulse; clock ticks 02:05 → 02:06; approval box slides up with glass blur; cursor drifts in and hovers (button glow breathes).",
-  "demo": false
+  "visual": "Ops console in TigerGraph's product style (white UI on a blue gradient panel), 2:06 a.m. Latency spikes orange. The agent's plan pops up in an approval box: \"Roll back config change.\" Cursor hovers over Approve.",
+  "motion": "Open on an extreme close-up of the clock flipping 02:05 → 02:06, whip-pull back to reveal the tilted console swinging into place; latency bars shoot up and turn orange; the approval card springs forward out of the screen toward camera (overshoot + soft shadow); cursor glides in and hovers, Approve button breathes."
  },
  {
   "n": 2,
@@ -15,9 +14,8 @@
   "dur": 8.4,
   "vo": "Most agents give you an answer and a \"confidence score\". But confidence isn't evidence. You can't audit a percentage.",
   "sup": "Confidence ≠ evidence",
-  "visual": "Close-up: the approval box shows only an answer and \"Confidence: 92%\".",
-  "motion": "Camera dives into the approval box; 92% counts up from 0; on \"isn't evidence\" a ≠ sign stamps between the words and the % flickers / hollows out.",
-  "demo": false
+  "visual": "Close-up: the approval box shows only an answer and \"Confidence: 92%\". The 92% is hollow: nothing behind it.",
+  "motion": "Camera crashes into the card; 92% counts up 0 → 92 with a ticking SFX; on \"isn't evidence\" a magnifier sweeps over the number and finds nothing (empty dashed box), the % cracks and drops out of frame."
  },
  {
   "n": 3,
@@ -25,9 +23,8 @@
   "dur": 4.0,
   "vo": "(music sting, no VO)",
   "sup": "Can You Trust Your AI Agent with Multi-hop Decision-making Tasks?",
-  "visual": "Title card.",
-  "motion": "Glass panel sweeps in; title builds word by word (kinetic type, Geist Bold); a faint graph texture (brand texture) drifts behind; TigerGraph logo top-left.",
-  "demo": false
+  "visual": "Title card on white with the brand node texture.",
+  "motion": "Nodes fly in from depth and lock into a network behind the text; the title builds word by word with a slight 3D rotate-in; \"Multi-hop\" lights TG Blue as a light pulse hops across three nodes."
  },
  {
   "n": 4,
@@ -35,9 +32,8 @@
   "dur": 19.8,
   "vo": "So what does it take for an agent to show its evidence? A black box gives you an answer, but a glass box gives you the answer AND the path behind it: which facts it used, how they connect, which rules it checked, and in what order.",
   "sup": "Black box: answer + score · Glass box: answer + path",
-  "visual": "Split screen. Left: a black box with an answer and a score. Right: a glass box with the answer plus a visible path of linked facts.",
-  "motion": "Two cubes/panels rise from the floor; left stays opaque; right turns to glass and the path lights node by node in sync with \"facts… connect… rules… order\".",
-  "demo": false
+  "visual": "Two cubes face off in 3D. Left: a solid black box that only outputs an answer and a score. Right: a clear glass box with the same answer plus a visible path of linked facts inside.",
+  "motion": "Both cubes drop in and slowly rotate; the black box stays opaque and spits out a score tag; the glass box turns transparent and the path inside lights node by node on \"facts… connect… rules… order\", each with a soft click SFX. Camera orbits slightly between them."
  },
  {
   "n": 5,
@@ -45,9 +41,8 @@
   "dur": 3.5,
   "vo": "The model predicts. And the graph proves.",
   "sup": "The model predicts. The graph proves.",
-  "visual": "The line resolves on screen.",
-  "motion": "Kinetic type: \"The model predicts.\" types on in white; \"The graph proves.\" assembles from graph nodes snapping into letterforms, orange underline swipe.",
-  "demo": false
+  "visual": "Kinetic typography: the line resolves on screen.",
+  "motion": "\"The model predicts.\" types on in grey, slightly out of focus; camera racks focus down to \"The graph proves.\" whose letters assemble from flying graph nodes; an orange underline whips across; a brief light flare passes over \"graph\"."
  },
  {
   "n": 6,
@@ -55,9 +50,8 @@
   "dur": 5.1,
   "vo": "Let's open the trail behind that rollback with this readiness checklist:",
   "sup": "Evidence trail",
-  "visual": "The approval box expands into an evidence trail. [DEMO: needs recording]",
-  "motion": "Approval box splits open like a drawer; the dashboard falls back into depth of field; an empty node canvas unfolds with a scanning light line.",
-  "demo": true
+  "visual": "The approval box unfolds into an evidence trail panel (animated product UI).",
+  "motion": "The approval card flips 180° in 3D; its back unfolds downward like an accordion into the evidence trail; the console behind falls away into blur; a scan line sweeps the panel and step 1 starts glowing."
  },
  {
   "n": 7,
@@ -65,9 +59,8 @@
   "dur": 6.7,
   "vo": "Step one: The alert traces to the Payments API, which depends on one database cluster.",
   "sup": "1 · Alert → Payments API → DB cluster",
-  "visual": "Step 1 lights up: Alert → Payments API → Database cluster.",
-  "motion": "Alert node pulses orange; a light pulse travels along the edge to Payments API, then to DB cluster; each node pops with a soft scale-in (0.9 → 1).",
-  "demo": true
+  "visual": "Step 1 lights up: Alert → Payments API → Database cluster, on a tilted graph plane.",
+  "motion": "Camera dolly-tracks left → right along the plane; the alert node pulses orange, a light pulse shoots along the edge to Payments API (whoosh), then on to the DB cluster; each node pops up out of the plane (scale 0.8 → 1 with overshoot)."
  },
  {
   "n": 8,
@@ -75,9 +68,8 @@
   "dur": 10.8,
   "vo": "Step two: That cluster had a configuration change at 1:44 am, twenty minutes before the slowdown began. Every fact carries its source and its timestamp.",
   "sup": "2 · Config change, 1:44 a.m. · source + time on every fact",
-  "visual": "Step 2: Config change #4471, applied 1:44 a.m., linked to the cluster. A timestamp and source tag sit beside it.",
-  "motion": "Config node drops in above the cluster and links down; timestamp + source tags type on beside it; a mini timeline 01:44 → 02:04 ('20 min') draws under the graph.",
-  "demo": true
+  "visual": "Step 2: Config change #4471, applied 1:44 a.m., drops onto the cluster. A timestamp and source tag sit beside it; a timeline shows the 20-minute gap.",
+  "motion": "Config node slams down from above with a dust-ring ripple; source + timestamp tags flip open like labels; a timeline scrubber races 01:44 → 02:04 under the graph and stamps \"+20 min\"."
  },
  {
   "n": 9,
@@ -85,9 +77,8 @@
   "dur": 9.6,
   "vo": "Step three: The same cluster feeds checkout and refunds, and twelve premium customers are affected. Now that's an impact, not a guess.",
   "sup": "3 · Checkout, Refunds · 12 premium accounts",
-  "visual": "Step 3: the path branches to Checkout, Refunds and 12 premium accounts.",
-  "motion": "Three branches fan out from the cluster; '12' counter ticks up on the premium node; affected nodes glow orange-rimmed.",
-  "demo": true
+  "visual": "Step 3: the path branches out to Checkout, Refunds and 12 premium accounts.",
+  "motion": "Three branches burst out of the cluster like a shockwave (ring ripples); the camera pulls up to a top-down angle; the '12' counter rolls up on the premium node, which flares orange."
  },
  {
   "n": 10,
@@ -95,9 +86,8 @@
   "dur": 14.5,
   "vo": "Step four: Before acting, this agent checked your rollback policy, which lives in the graph alongside the data. The change is under an hour old. Premium customers are at risk. The rule allows it.",
   "sup": "4 · Policy checked ✓",
-  "visual": "Step 4: a policy card attaches to the path: \"Auto-rollback allowed when the change is under 1 hour old and premium SLAs are at risk.\" A green tick.",
-  "motion": "Policy card slides in and snaps onto the path with a connector; the two conditions tick one by one in sync with VO; final green tick stamps.",
-  "demo": true
+  "visual": "Step 4: a policy card plugs into the path: \"Auto-rollback allowed when the change is under 1 hour old and premium SLAs are at risk.\" A green tick.",
+  "motion": "The policy card spins in from screen right and docks onto the graph like a puzzle piece; the two conditions tick one by one on the VO; a big green tick stamps with a satisfying click and a soft glow wave washes over the path."
  },
  {
   "n": 11,
@@ -105,9 +95,8 @@
   "dur": 10.8,
   "vo": "And step five: the agent says what it doesn't know. It found no evidence on the refunds data, so it asked a human to check.",
   "sup": "5 · Gap flagged → human check",
-  "visual": "Step 5: an amber flag: \"No evidence on whether the change touched the refunds schema. Human check recommended.\"",
-  "motion": "Refunds node flickers; a dashed amber ring and empty edge appear; the flag card unfolds; a small human icon fades in.",
-  "demo": true
+  "visual": "Step 5: an amber flag on Refunds: \"No evidence on whether the change touched the refunds schema. Human check recommended.\"",
+  "motion": "The Refunds node glitches/flickers; a dashed amber ring scans around it; the flag card unfolds from the node; a human avatar slides in and the handoff arrow draws from agent to human."
  },
  {
   "n": 12,
@@ -115,9 +104,8 @@
   "dur": 12.8,
   "vo": "Now you're not trusting a score. You're approving a decision you can read. And six months from now, when someone asks why, the same trail is still there to replay.",
   "sup": "Approve with evidence · Replay it later",
-  "visual": "The full trail on screen; the cursor clicks Approve. Cut to a calendar flipping forward six months; an auditor opens the same trail, unchanged.",
-  "motion": "Click: button ripple + confirm chime, trail locks with a 'Signed 02:07' stamp. Whip to calendar pages flipping NOV → MAY; auditor window opens the same trail and a play ▶ scrubber replays it.",
-  "demo": false
+  "visual": "The full trail on one card; cursor clicks Approve and it locks as \"signed\". Then a calendar flips forward six months and an auditor replays the same trail, unchanged.",
+  "motion": "Click: ripple burst + confirm chime, a lock icon snaps shut on the trail. Whip-pan right as calendar pages tear off in a flurry (NOV → MAY); the auditor's window swings in from depth and a play scrubber replays the trail, nodes re-lighting in order."
  },
  {
   "n": 13,
@@ -125,9 +113,8 @@
   "dur": 14.1,
   "vo": "You might ask, \"why does this need a graph?\" Because vector search can only tell you which passages looked similar to the question. It can't tell you why they matter to the decision.",
   "sup": "Similar ≠ explained",
-  "visual": "Split: a vector search result shows three text chunks and similarity scores. A graph result shows the connected path.",
-  "motion": "Left: chunks drop in as loose cards, scores count up, then drift apart (no links). Right: the demo path draws itself as one connected line. '≠' stamps in the centre.",
-  "demo": false
+  "visual": "Split: vector search shows three loose text chunks with similarity scores. Graph search shows the connected path.",
+  "motion": "Left: chunks drop in, scores count up, then drift apart with no links (floaty, unanchored). Right: the demo path draws itself in one continuous stroke and settles firmly. A big '≠' slams in between with a bass hit."
  },
  {
   "n": 14,
@@ -135,9 +122,8 @@
   "dur": 12.8,
   "vo": "In a graph search, the customers, systems, changes and rules are connected explicitly. So the path the agent followed is pretty clear. Nothing has to be reconstructed after the fact.",
   "sup": "The path is the explanation",
-  "visual": "The path from the demo, with each connection labelled.",
-  "motion": "Camera tracks along the path left → right; each relationship label pops as the light pulse passes it; legend chips (customers · systems · changes · rules) fade in.",
-  "demo": false
+  "visual": "The path from the demo, now with every connection labelled (customers, systems, changes, rules).",
+  "motion": "Low-angle camera glides along the tilted path like a fly-through; each relationship label flips up as the light pulse passes it; legend chips pop in at the end and the whole graph settles into a hero composition."
  },
  {
   "n": 15,
@@ -145,9 +131,8 @@
   "dur": 9.6,
   "vo": "Your policies sit in the graph too, as guardrails. So when an agent refuses to act, it can explain that as well.",
   "sup": "Guardrails with reasons",
-  "visual": "Policy cards slot into the graph as guardrails; one blocks an action with a visible reason.",
-  "motion": "Policy cards fly in and lock onto graph edges like rails; an action arrow hits one and bounces back; a red-orange 'Blocked' badge expands with its reason.",
-  "demo": false
+  "visual": "Policy cards slot into the graph as guardrails; one blocks an agent action and shows the reason.",
+  "motion": "Policy cards fly in and lock onto the graph rails with a magnetic snap; the agent's action arrow races toward the guardrail, hits it and bounces back with a shake; the 'Blocked' card expands and the reason types on."
  },
  {
   "n": 16,
@@ -155,9 +140,8 @@
   "dur": 6.3,
   "vo": "And in regulated industries, explaining automated decisions is becoming a requirement, not a nice-to-have.",
   "sup": "Explainability: from best practice to requirement",
-  "visual": "Short regulatory montage: a bank, a hospital, a government building. [VERIFY: client to approve any regulation named on screen.]",
-  "motion": "Three line-art buildings (brand icon style, TG Blue + black) draw on in sequence, each with a small evidence trail card above; no specific regulation named until the client approves.",
-  "demo": false
+  "visual": "Montage of three regulated sectors drawn as TigerGraph-style line icons (black + TG Blue): a bank, a hospital, a government building. Each carries a small evidence-trail badge. No specific regulation is named.",
+  "motion": "Icons draw on stroke by stroke (line-reveal) in quick succession with a camera slide across; small trail badges pop under each; the cards slide into a tilted row and a blue light sweep runs across all three."
  },
  {
   "n": 17,
@@ -165,9 +149,8 @@
   "dur": 5.5,
   "vo": "So before you trust an agent with multi-step decisions, run this checklist.",
   "sup": "Readiness checklist",
-  "visual": "A five-item checklist builds, one line at a time.",
-  "motion": "Glass card; each line slides in with a tick-box drawing itself; ticks fill TG Blue as each is named (lines 1-5 timed to edit).",
-  "demo": false
+  "visual": "A five-item readiness checklist builds one line at a time.",
+  "motion": "The card swings in from a 3D angle and flattens; each line slides in from the right with a stagger, its tick-box drawing itself and filling TG Blue as it's named; the camera slowly pushes in."
  },
  {
   "n": 18,
@@ -175,18 +158,16 @@
   "dur": 8.8,
   "vo": "If you can't tick all five, the agent isn't ready for production. But TigerGraph is built to tick them all.",
   "sup": "Ready for production?",
-  "visual": "All five ticks turn green over the TigerGraph logo.",
-  "motion": "All five ticks flip to green in a quick cascade; the card shrinks left and the TigerGraph logo resolves on the right with a soft blue bloom.",
-  "demo": false
+  "visual": "All five ticks turn green next to the TigerGraph logo.",
+  "motion": "Ticks flip to green in a fast domino cascade with rising pitch SFX; the card slides left and tilts away; the TigerGraph logo builds on the right (tiger head draws on, wordmark wipes in) with a soft blue bloom."
  },
  {
   "n": 19,
   "start": 175.50000000000003,
   "dur": 7.5,
-  "vo": "AI predicts but Graph reveals the evidence.",
+  "vo": "Regular models predict. TigerGraph proves.",
   "sup": "Regular models predict. TigerGraph proves.",
-  "visual": "End card. CTAs: Request a demo · Start free.",
-  "motion": "Logo holds centre; tagline fades up; two CTA buttons rise; subtle node texture drifts behind. Hold 4-5 s clean for end.",
-  "demo": false
+  "visual": "End card on white: logo, tagline, CTAs \"Request a demo\" and \"Start free\", tigergraph.com.",
+  "motion": "Network texture drifts slowly behind; logo holds centre; tagline fades up word by word; CTA buttons rise with a soft bounce. Hold clean for the last 4-5 s."
  }
 ]
