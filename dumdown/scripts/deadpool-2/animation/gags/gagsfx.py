@@ -55,6 +55,7 @@ def build():
         f = 466 * (1 + .01 * np.sin(2 * np.pi * 7 * T(d))); s = saw(f, d) + saw(f * 1.006, d) + .6 * saw(f * 1.5, d)
         return np.tanh(bp(s, 300, 4000) * 3) * np.minimum(1, T(d) * 60) * np.minimum(1, (d - T(d)) * 40)
     x = blank(1.6); at(x, blast(.16), 0); at(x, blast(.16), .22); at(x, blast(.7), .45); L['airhorn'] = x
+    x = blank(1.0); hk = lambda d: np.tanh(lp(sq(392, d) + sq(494, d) * .8, 3000) * 2) * np.minimum(1, T(d) * 200) * np.minimum(1, (d - T(d)) * 60) * .5; at(x, hk(.18), 0); at(x, hk(.42), .26); L['honk'] = x
     d = .6; L['buzzer'] = np.tanh(lp(sq(110, d) + sq(165, d) * .6, 2500) * 1.5) * np.minimum(1, (d - T(d)) * 30)
     knock = lambda: sine(520 * (1 + .3 * ex(.25, 50)), .25) * ex(.25, 22) + bp(N(.25), 800, 3500) * ex(.25, 60) * .8
     L['gavel'] = rev(knock(), .5, .2); x = blank(1.2); [at(x, knock(), k * .28) for k in range(3)]; L['gavel3'] = rev(x, .5, .2)
@@ -112,7 +113,7 @@ def build():
     for k, v in L.items(): wav(k, att(v))
 
 # ---------- local voices ----------
-KOK = '/tmp/claude-0/-home-user/acf60ddd-1269-5955-894d-60b48246689c/scratchpad/kokoro'
+KOK = '/tmp/kok'
 _K = None
 def tts(spk, text, ls=1.0):
     global _K

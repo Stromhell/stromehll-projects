@@ -1,4 +1,4 @@
-# Loki S1+S2 act audio: Kokoro VO (free, local) + code score (styles per scene) + code/library SFX driven by the shot cues. No AI audio services.
+# DumDown Deadpool 2 act audio: Kokoro VO (free, local) + code score (styles per scene) + code/library SFX driven by the shot cues. No AI audio services.
 # usage: python mixloki.py NN [NN...]  -> SCR/mix/actNN.wav
 import sys, os, json, subprocess, numpy as np
 from scipy.io import wavfile
@@ -7,7 +7,7 @@ from scipy.ndimage import uniform_filter1d
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, os.path.join(HERE, 'gags'))
 import gagaudio as GA
 from gagsfx import SR, lp, hp
-SCR = '/tmp/claude-0/-home-user/acf60ddd-1269-5955-894d-60b48246689c/scratchpad/loki'; os.makedirs(SCR + '/mix', exist_ok=True)
+SCR = os.environ.get('SCR', '/tmp/dp2work'); os.makedirs(SCR + '/mix', exist_ok=True)
 SFXD = [os.path.join(HERE, 'gags', 'sfx'), '/mnt/project-files/2d-dynamic/shared/sfx']
 GA.STY.update({
  'tva':     dict(bpm=100, prog=[(62, 'min'), (55, 'dom'), (60, 'maj'), (57, 'min')], inst=GA.organ, mel=GA.bell, drums='brush', walk=True, mel_oct=12),
@@ -18,20 +18,17 @@ GA.STY.update({
  'epic':    dict(bpm=84, prog=[(50, 'm'), (46, 'M'), (48, 'M'), (45, 'M')], inst=GA.brass, mel=None, drums='march', stab=True),
  'wonder':  dict(bpm=66, prog=[(62, 'M'), (67, 'M'), (59, 'm'), (69, 'M')], inst=GA.pad, mel=None, drums='', arp=True),
 })
-PLATE_MOOD = {'tva_office': 'tva', 'tva_lobby': 'tva', 'tva_corridor': 'tva', 'archive': 'tva', 'interrogation': 'tension', 'court': 'tension', 'workshop': 'tva',
-  'lamentis': 'mystery', 'void': 'mystery', 'train': 'romance', 'ark': 'action', 'keepers': 'ominous', 'citadel': 'ominous', 'citadel_int': 'ominous',
-  'loom': 'tension', 'loom_ctrl': 'tension', 'throne': 'epic', 'gobi': 'mystery', 'ny_lobby': 'tva', 'theatre': 'comedy', 'renfair': 'comedy', 'pompeii': 'action',
-  'roxxcart': 'tension', 'london': 'comedy', 'diner': 'lounge', 'alley1868': 'mystery', 'fair1893': 'comedy', 'jetski': 'comedy', 'alcatraz': 'action', 'clinic': 'lounge',
-  'bookshop': 'lounge', 'beach': 'wonder', 'tva_ruin': 'sad'}
+PLATE_MOOD = {'apt_barrels': 'tension', 'apt_warm': 'romance', 'bar': 'lounge', 'classroom': 'comedy', 'comic': 'comedy', 'dream': 'sad', 'future_home': 'sad',
+  'heaven': 'wonder', 'highway': 'action', 'hongkong': 'action', 'icebox': 'tension', 'mansion_ext': 'comedy', 'mansion_hall': 'comedy', 'nyc_street': 'comedy',
+  'office': 'comedy', 'orphanage': 'tension', 'orphanage_fire': 'action', 'pit': 'ominous', 'road_night': 'sad', 'rooftop_dusk': 'wonder', 'sky_drop': 'action', 'truck': 'tension'}
 GA.STY['comedy'] = GA.STY['sitcom']; GA.STY['romance'] = GA.STY['harp']
-# per-act overrides: shot index -> mood
-OVR = {'00': {0: 'action'}, '04': {7: 'romance', 8: 'romance', 9: 'sad'}, '05': {0: 'romance', 1: 'romance', 3: 'romance', 11: 'action', 12: 'mystery'},
-  '07': {7: 'sad', 8: 'tension', 9: 'sad', 10: 'sad', 11: 'sad'}, '09': {7: 'action'}, '11': {5: 'sad', 6: 'epic'}, '12': {7: 'action', 8: 'tension'},
-  '13': {7: 'sad', 8: 'sad', 9: 'epic', 10: 'epic', 11: 'epic', 12: 'wonder', 13: 'wonder', 14: 'wonder', 15: 'wonder', 16: 'lounge'}, '14': {0: 'wonder', 1: 'comedy', 2: 'comedy', 3: 'comedy'}}
-AMB = {'tva': ('office_loop', .10), 'lamentis': ('fire_loop', .12), 'void': ('wind_loop', .14), 'diner': ('crowd_loop', .07), 'fair1893': ('crowd_loop', .10), 'theatre': ('crowd_loop', .06),
-  'london': ('city_loop', .10), 'jetski': ('ocean_loop', .12), 'beach': ('ocean_loop', .14), 'alley1868': ('night_loop', .12), 'loom': ('hum_loop', .12), 'loom_ctrl': ('hum_loop', .12),
-  'citadel': ('wind_loop', .12), 'citadel_int': ('hum_loop', .06), 'pompeii': ('fire_loop', .14), 'renfair': ('crowd_loop', .1), 'train': ('hum_loop', .08), 'keepers': ('drone', .08),
-  'throne': ('wind_loop', .07), 'gobi': ('wind_loop', .12), 'alcatraz': ('ocean_loop', .08), 'tva_ruin': ('wind_loop', .1), 'roxxcart': ('crowd_loop', .08), 'ark': ('fire_loop', .1)}
+# per-act overrides by paragraph: p -> mood
+OVRP = {'00': {0: 'action'}, '03': {3: 'sad', 4: 'sad'}, '04': {0: 'tension'}, '06': {2: 'sad'}, '08': {0: 'ominous', 1: 'action'}, '09': {0: 'sad', 1: 'sad'},
+  '13': {2: 'sad', 3: 'sad'}, '15': {0: 'tension', 1: 'epic', 2: 'epic', 3: 'sad', 4: 'wonder'}, '16': {4: 'wonder'}, '18': {0: 'wonder', 1: 'comedy', 2: 'comedy'}}
+OVR = {}
+AMB = {'nyc_street': ('city_loop', .10), 'hongkong': ('city_loop', .10), 'highway': ('city_loop', .08), 'sky_drop': ('wind_loop', .14), 'orphanage_fire': ('fire_loop', .14),
+  'bar': ('crowd_loop', .07), 'office': ('office_loop', .08), 'icebox': ('hum_loop', .08), 'truck': ('hum_loop', .10), 'rooftop_dusk': ('wind_loop', .07),
+  'road_night': ('night_loop', .12), 'pit': ('drone', .08), 'apt_barrels': ('city_loop', .05), 'dream': ('wind_loop', .06)}
 _C = {}
 def S(n):
     if n not in _C:
@@ -59,7 +56,7 @@ def act(nn):
     # score: merge consecutive shots with the same mood, crossfade 1.2 s
     ov = OVR.get(nn, {}); segs = []
     for i, s in enumerate(cu['shots']):
-        m = ov.get(i, PLATE_MOOD.get(s['plate'], 'tva'))
+        m = OVRP.get(nn, {}).get(s.get('p'), PLATE_MOOD.get(s['plate'], 'comedy'))
         if segs and segs[-1][2] == m: segs[-1][1] = s['b']
         else: segs.append([s['a'], s['b'], m])
     M = np.zeros(N + SR * 4)
@@ -72,7 +69,7 @@ def act(nn):
     for i, s in enumerate(cu['shots']):
         a, b = s['a'], s['b']
         if i: place(X, S('whoosh_soft'), a - .15, g=.22)
-        amb = AMB.get(s['plate']) or (AMB['tva'] if (s['plate'] or '').startswith('tva') else None)
+        amb = AMB.get(s['plate'])
         if amb: place(X, S(amb[0]), a, b, g=amb[1] * 1.6, fi=.25, fo=.25, loop=True)
         if s['title']: place(X, S('swell'), a + .1, g=.35); place(X, S('hit'), a + .45, g=.45)
         for p in s['pops']: place(X, S('pop'), p, g=.5); place(X, S('boing'), p + .05, g=.12)
@@ -82,6 +79,7 @@ def act(nn):
         if 'flash' in s['fx']: place(X, S('hit'), a, g=.6); place(X, S('zap'), a, g=.3)
         if 'whiteout' in s['fx']: place(X, S('riser'), max(a, b - 2.2), g=.45)
         if 'rain' in s['fx']: place(X, S('rain_loop'), a, b, g=.3, loop=True, fi=.3, fo=.3)
+        for bt in s.get('booms', []): place(X, S('hit'), bt, g=.7); place(X, S('thud'), bt, g=.6); place(X, S('fire_loop'), bt, bt + 1.6, g=.35, fo=.8, loop=True)
         if s['walk']: place(X, S('footsteps'), a, b, g=.25, loop=True, fi=.2, fo=.3)
     X = X * .6
     mix = V + M + X; mix = mix / (np.abs(mix).max() or 1) * .89

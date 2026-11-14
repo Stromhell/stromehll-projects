@@ -1,13 +1,11 @@
-// DumDown Loki S1+S2 cutaway gags (Comedy-Central-style parody inserts). One gag per page: window.GAGDATA = timeline from gagaudio.py.
+// DumDown Deadpool 2 cutaway gags (Comedy-Central-style parody inserts). One gag per page: window.GAGDATA = timeline from gagaudio.py.
 (function () {
 const { D, C, W, H, BAR, IM, ctx, cv, clamp, lerp, io, seg, rng, apply, plate, chars, screen, grade, glowS, worldPt, onTwos, camTf } = window.E;
 const G = window.GAGDATA, OPEN = .9, DUR = G.dur;
 // ---------- extra cast ----------
 const tw = (b, o) => ({ ...b, ...o, top: { ...b.top, ...(o.top || {}) }, hair: { ...b.hair, ...(o.hair || {}) }, acc: o.acc !== undefined ? o.acc : b.acc });
 const PR = window.PROPS;
-const X = {
-  don: tw(C.mobius, { top: { type: 'tee', color: '#ff7a3a', accent: '#2fc6ff', cuff: '#2fc6ff', sleeves: 'short' }, defaultExpr: 'excited' }),
-};
+const X = {};
 // ---------- timeline helpers ----------
 const evs = n => G.sfx.filter(e => e.n === n);
 const ev = (n, k = 0) => (evs(n)[k] || { t: 1e9 }).t;
@@ -86,15 +84,15 @@ function sfxFx(t, cam) {
 }
 function slams(t) {
   for (const s of G.slam) { const k = seg(t, s.t, s.t + s.d); if (k <= 0 || k >= 1) continue; screen(); const kin = seg(t, s.t, s.t + .18), out = seg(t, s.t + s.d - .25, s.t + s.d);
-    const sc = (1.9 - .9 * io(kin)) * (1 - .2 * out); ctx.save(); ctx.globalAlpha = io(kin) * (1 - out); ctx.translate(G.set === 'trailer' ? W * .3 : W / 2, H * .5); ctx.rotate(-.06); ctx.scale(sc, sc);
-    if (G.set === 'trailer') { txt(s.txt, 0, 0, 120, '#f4ecd8', { glow: '#ff3030', blur: 40, font: 'Georgia, serif', w: 700 }); }
+    const sc = (1.9 - .9 * io(kin)) * (1 - .2 * out); ctx.save(); ctx.globalAlpha = io(kin) * (1 - out); ctx.translate(G.set === 'oscar' ? W * .3 : W / 2, H * .5); ctx.rotate(-.06); ctx.scale(sc, sc);
+    if (G.set === 'oscar') { txt(s.txt, 0, 0, 120, '#f4ecd8', { glow: '#ff3030', blur: 40, font: 'Georgia, serif', w: 700 }); }
     else { ctx.font = '900 104px Inter'; const w = ctx.measureText(s.txt).width + 90; rr(-w / 2 + 14, -84, w, 168, 26, '#231A24'); rr(-w / 2, -96, w, 168, 26, '#ffd23d', '#231A24', 9); txt(s.txt, 0, -12, 104, '#231A24'); }
     ctx.restore(); } }
-function bug(t) { if (!G.title || ['trailer', 'book'].includes(G.set)) return; screen(); const k = io(seg(t, OPEN, OPEN + .4)); ctx.save(); ctx.globalAlpha = k; ctx.translate(W - 70, BAR + 52); ctx.font = '900 30px Inter'; const w = ctx.measureText(G.title).width + 60;
+function bug(t) { if (!G.title || ['oscar'].includes(G.set)) return; screen(); const k = io(seg(t, OPEN, OPEN + .4)); ctx.save(); ctx.globalAlpha = k; ctx.translate(W - 70, BAR + 52); ctx.font = '900 30px Inter'; const w = ctx.measureText(G.title).width + 60;
   ctx.transform(1, 0, -.18, 1, 0, 0); rr(-w, -30, w, 60, 8, 'rgba(14,12,20,.86)'); ctx.fillStyle = '#e23a3a'; ctx.fillRect(-w, -30, 14, 60); txt(G.title, -w / 2 + 8, 1, 30, '#ffd23d'); ctx.restore(); }
 // intro card + outro whip
 const oc = document.createElement('canvas'); oc.width = W; oc.height = H; const ox = oc.getContext('2d');
-const INTRO = { trailer: 'COMING SOON...ISH', book: 'A WORD FROM OUR SPONSOR' };
+const INTRO = { oscar: 'A MESSAGE TO THE ACADEMY', drive: 'A WORD FROM OUR SPONSOR' };
 function intro(t) {
   if (t >= OPEN) return; const save = ctx; screen(); ox.setTransform(1, 0, 0, 1, 0, 0); ox.clearRect(0, 0, W, H);
   ox.save(); ox.translate(W / 2, H / 2); ox.rotate(t * .8); for (let i = 0; i < 24; i++) { ox.fillStyle = i % 2 ? '#ffd23d' : '#ff6a2b'; ox.beginPath(); ox.moveTo(0, 0); ox.arc(0, 0, 1500, i / 24 * 6.283, (i + 1) / 24 * 6.283); ox.fill(); } ox.restore();
@@ -124,115 +122,122 @@ const camOf = (t, base) => ({ ...base, z: base.z * (1 + .07 * bump(t)) + (base.p
 async function cast(list, cam, t) { await chars(list.map(([sp, who, o]) => person(sp, who, t, o)), cam); }
 const S = {};
 const lineup = (t, list, cam) => cast(list, cam, t);
-S.dmv = async t => {
-  const cam = camOf(t, { z: 1.12, x: 1280, y: 780 }); plate('tva_office', cam, 6); grade('#7a5a2a', .2);
-  apply(cam); rr(1000, 330, 560, 120, 14, '#1a0a0a', '#231A24'); const n = t > sp('CLERK', 3).t0 ? '8,000,000,000' : '4,812,006'; txt('NOW SERVING ' + (t > sp('CLERK', 3).t0 ? '#8B' : '#4.8M'), 1280, 392, 40, '#ff8a3a', { glow: '#ff8a3a', blur: 18 });
-  const lo = { x: 900, y: 1450, s: 2.1, view: 'threequarter', dir: 1, expr: t > sp('CLERK', 3).t0 ? 'shock' : t > sp('CLERK').t1 ? 'angry' : 'smug', pose: t < sp('LOKI').t1 ? { ...POSE.stand, R: { sh: 60, el: 60, hand: 'point' } } : undefined };
-  const co = { x: 1720, y: 1450, s: 2.05, view: 'threequarter', dir: -1, expr: 'blank', noBlink: false };
-  await cast([[C.ex1, 'CLERK', co], [C.loki, 'LOKI', lo]], cam, t); apply(cam);
-  desk(1380, 1160, 760, 300, '#8a6a3a', '#5a4020', '#c9a046'); rr(1460, 1100, 300, 70, 8, '#f4f1ea', '#231A24', 4); txt('FORM 1A-B', 1610, 1135, 28, '#231A24');
-  const st = ev('stamp'); if (t > st) { const k = seg(t, st, st + .15); ctx.save(); ctx.translate(1610, 1135); ctx.rotate(-.15); ctx.scale(1.6 - .6 * k, 1.6 - .6 * k); ctx.globalAlpha = k; rr(-130, -40, 260, 80, 8, null, '#e23a3a', 8); txt('DENIED', 0, 2, 48, '#e23a3a'); ctx.restore(); }
-  PR.missMinutes({ x: 2250, y: 520, s: .45, mood: 'happy' }, t); };
-S.circle = async t => {
-  const cam = camOf(t, { z: 1.0, x: 1280, y: 760, push: .06 }); apply(cam); ctx.fillStyle = lg(0, 0, 0, 1440, ['#d8c8a0', '#a89870']); ctx.fillRect(0, 0, 2560, 1440); ctx.fillStyle = '#8a6a4a'; ctx.fillRect(0, 1150, 2560, 290);
-  for (let i = 0; i < 8; i++) { ctx.fillStyle = 'rgba(255,255,255,.08)'; ctx.fillRect(100 + i * 320, 140, 200, 860); } rr(780, 300, 1000, 150, 12, '#f4f1ea', '#231A24'); txt('VARIANT ANONYMOUS', 1280, 360, 64, '#2a6a3a'); txt('ONE TIMELINE AT A TIME', 1280, 420, 30, '#8a5a2a');
-  emo('☕', 2300, 1010, 90); emo('🍩', 2420, 1030, 70); rr(2180, 1060, 340, 40, 6, '#6a4a2a', '#231A24');
-  const flip = t > ev('pop'); const pl = [[C.lokiGreen, 'L2', 520], [C.classicLoki, 'L3', 860], [C.loki, 'LOKI', 1220], [C.boastful, 'X', 1580]];
-  const list = pl.map(([sp, who, x], i) => [sp, who, { x, y: 1330, s: 1.7, view: 'threequarter', dir: x < 1280 ? 1 : -1, expr: who === 'LOKI' && t > sp_('LEAD', 2) ? 'nervous' : 'neutral', ph: i * .3 }]);
-  list.push([flip ? C.lokiHorns : C.ex2, 'LEAD', { x: 1980, y: 1330, s: 1.7, view: 'threequarter', dir: -1, expr: flip ? 'smug' : 'smile' }]);
-  await cast(list, cam, t); if (t > ev('pop') && t < ev('pop') + .4) { screen(); emo('💥', W * .77, H * .45, 260); } };
-const sp_ = (w, k) => sp(w, k).t0;
-S.phone = async t => {
-  const L = { z: 1.3, x: 1000, y: 860, sx: -470 }, R = { z: 1.3, x: 1600, y: 860, sx: 470 };
-  const so = { x: 900, y: 1390, s: 2.1, view: 'threequarter', dir: 1, pose: { ...POSE.stand, L: { sh: 68, el: 164, wr: 0, hand: 'grab' } }, hold: true, expr: t > sp('TECH', 1).t0 ? 'angry' : 'deadpan' };
-  halfplate('', 0, 1); const cl = camOf(t, L); plate('lamentis', cl); grade('#ff5a3a', .15); await cast([[C.sylvie, 'SYL', so]], cl, t); apply(cl); { const h = hnd(C.sylvie, so, 'L'), f = head(C.sylvie, so, 0); phoneAt(h, f, so.s); }
-  { const m = 'rgba(255,140,60,.8)'; for (let i = 0; i < 5; i++) { const k = ((t * .5 + i * .2) % 1); ctx.strokeStyle = m; ctx.lineWidth = 8; ctx.beginPath(); ctx.moveTo(300 + i * 300 + k * 200, 100 + k * 700); ctx.lineTo(340 + i * 300 + k * 200, 60 + k * 700); ctx.stroke(); } } ctx.restore();
-  halfplate('', 0, 0); const cr = camOf(t, R); apply(cr);
-  ctx.fillStyle = lg(0, 0, 0, 1440, ['#a8b8c8', '#7a8a9a']); ctx.fillRect(0, 0, 2560, 1440); for (let i = 0; i < 6; i++) { ctx.fillStyle = '#5a6a7a'; ctx.fillRect(900 + i * 300, 700, 260, 300); ctx.fillStyle = '#c8d4e0'; ctx.fillRect(910 + i * 300, 640, 240, 70); } rr(1250, 330, 420, 260, 6, '#f4f1ea', '#231A24'); txt('TEMPAD SUPPORT', 1460, 420, 38, '#2a3990'); txt('Est. wait: ∞', 1460, 480, 32, '#e23a3a'); ctx.fillStyle = '#c8d0d8'; ctx.fillRect(0, 1180, 2560, 260);
-  const onHold = t < sp('TECH').t0 - .1; const po = { x: 1640, y: 1500, s: 2.1, view: 'threequarter', dir: -1, expr: 'deadpan', seed: 5 };
-  if (onHold) { rr(1150, 520, 900, 480, 30, '#1b2470', '#231A24', 10); txt('PLEASE HOLD', 1600, 610, 76, '#ffd23d'); const iv = lvl('IVR', t); for (let i = 0; i < 24; i++) { const a = iv > 0 ? (.3 + .7 * Math.abs(Math.sin(t * 20 + i * 1.7))) * iv / 2 : .05; ctx.fillStyle = '#2fc6ff'; ctx.fillRect(1230 + i * 31, 760 - a * 150, 18, 4 + a * 300); } emo('⏳', 1600, 1080, 150); }
-  else { await cast([[C.ex3, 'TECH', po]], cr, t); apply(cr); const f = head(C.ex3, po, -10); ctx.strokeStyle = '#231A24'; ctx.lineWidth = 10; ctx.beginPath(); ctx.arc(f.x, f.y, f.sc * 9, Math.PI * 1.05, Math.PI * 1.95); ctx.stroke(); ctx.fillStyle = '#231A24'; ctx.beginPath(); ctx.arc(f.x - f.sc * 8.5, f.y + f.sc * 1, f.sc * 2.4, 0, 7); ctx.fill(); desk(1200, 1250, 900, 200, '#d8d8d0', '#a8a8a0'); }
-  ctx.restore(); splitLine(); };
-S.dating = async t => {
-  const cam = camOf(t, { z: 1.0, x: 1280, y: 760 }); apply(cam); studio('#5a1a4a', '#2a0a2a', '#ff5ab0', t);
-  txt('MEET YOURSELF!', 1280, 260, 110, '#ffd0e8', { glow: '#ff5ab0', blur: 30 }); txt('♥', 1280, 520, 300, 'rgba(255,90,170,.25)', { glow: '#ff5ab0', blur: 40 });
-  rr(160, 820, 120, 400, 10, '#ff5ab0', '#231A24'); rr(2280, 820, 120, 400, 10, '#ff5ab0', '#231A24'); rr(1650, 560, 30, 720, 6, '#f4f1ea', '#231A24');
-  const ho = { x: 420, y: 1420, s: 1.9, view: 'threequarter', dir: 1, expr: 'excited', pose: { ...POSE.stand, R: { sh: 70, el: 150, hand: 'grab' } }, hold: lvl('HOST', t) < 0 };
-  const c1 = t > sp('HOST').t0 + 2.4, c2 = t > sp('HOST', 1).t0 + 1.4;
-  const list = [[C.ex3, 'HOST', ho], [C.loki, 'LOKI', { x: 1250, y: 1420, s: 1.9, view: 'threequarter', dir: 1, expr: t > sp('HOST', 2).t0 ? 'deadpan' : 'smug', pose: t > sp('LOKI').t0 && t < sp('LOKI').t1 + .4 ? POSE.think : undefined }]];
-  if (c1) list.push([C.lokiGreen, 'X1', { x: 1900, y: 1380, s: 1.6, view: 'threequarter', dir: -1, expr: 'smug' }]); if (c2) list.push([C.loki, 'X2', { x: 2200, y: 1380, s: 1.6, view: 'threequarter', dir: -1, expr: 'smug', ph: .7 }]);
-  await cast(list, cam, t); apply(cam); { const h = hnd(C.ex3, ho), f = head(C.ex3, ho, 0); micAt(h, f, ho.s); }
-  if (c1) { rr(1800, 1180, 200, 70, 10, '#231A24'); txt('#1', 1900, 1215, 44, '#ffd23d'); } if (c2) { rr(2100, 1180, 200, 70, 10, '#231A24'); txt('#2', 2200, 1215, 44, '#ffd23d'); } };
-S.bbq = async t => {
-  const cam = camOf(t, { z: 1.0, x: 1280, y: 760 }); apply(cam); ctx.fillStyle = lg(0, 0, 0, 1000, ['#7ac0f0', '#cfe8f8']); ctx.fillRect(0, 0, 2560, 1000);
-  for (let i = 0; i < 40; i++) { ctx.fillStyle = i % 2 ? '#c8a070' : '#b88e5e'; ctx.fillRect(i * 66, 640, 60, 380); ctx.beginPath(); ctx.moveTo(i * 66, 640); ctx.lineTo(i * 66 + 30, 600); ctx.lineTo(i * 66 + 60, 640); ctx.fill(); }
-  ctx.fillStyle = lg(0, 1000, 0, 1440, ['#6ab04a', '#3a7a2a']); ctx.fillRect(0, 1000, 2560, 440); for (let i = 0; i < 30; i++) { const R = rng(i); ctx.fillStyle = 'rgba(30,80,20,.4)'; ctx.fillRect(R() * 2560, 1020 + R() * 400, 6, 24); }
-  rr(140, 260, 900, 120, 10, '#f4f1ea', '#231A24'); txt('LOKI FAMILY REUNION 🎉', 590, 320, 54, '#2a6a3a'); for (let i = 0; i < 14; i++) { ctx.fillStyle = ['#e23a3a', '#ffd23d', '#2a8a4a', '#2a3990'][i % 4]; ctx.beginPath(); ctx.moveTo(1100 + i * 100, 220); ctx.lineTo(1150 + i * 100, 220); ctx.lineTo(1125 + i * 100, 280); ctx.fill(); }
-  const h1 = ev('hit'), h2 = ev('hit', 1);
-  const list = [[C.kidLoki, 'KID', { x: 520, y: 1400, s: 1.6, view: 'threequarter', dir: 1, expr: t > h2 ? 'shock' : 'happy' }], [C.boastful, 'BOAST', { x: 1050, y: 1400, s: 1.75, view: 'threequarter', dir: -1, expr: t > h1 ? 'shock' : 'excited' }],
-    [C.classicLoki, 'CLASSIC', { x: 1620, y: 1400, s: 1.75, view: 'threequarter', dir: -1, expr: 'smug' }], [C.loki, 'LOKI', { x: 2080, y: 1400, s: 1.75, view: 'threequarter', dir: -1, expr: 'smile' }]];
-  await cast(list, cam, t); apply(cam);
-  rr(1180, 1180, 300, 60, 10, '#3a3a3a', '#231A24'); ctx.fillStyle = '#231A24'; ctx.fillRect(1200, 1240, 14, 200); ctx.fillRect(1446, 1240, 14, 200); emo('🌭', 1260, 1160, 70); emo('🍔', 1400, 1160, 70); for (let i = 0; i < 4; i++) { ctx.globalAlpha = .35; ctx.fillStyle = '#ccc'; ctx.beginPath(); ctx.arc(1330 + Math.sin(t * 2 + i) * 30, 1100 - ((t * 80 + i * 60) % 260), 30, 0, 7); ctx.fill(); ctx.globalAlpha = 1; }
-  emo('🥗', 820, 1250, 80); for (const [hh, x] of [[h1, 1050], [h2, 520]]) if (t > hh) { emo('🗡️', x + 40, 1100, 110, .8); if (t < hh + .3) { screen(); ctx.fillStyle = 'rgba(255,255,255,.35)'; ctx.fillRect(0, 0, W, H); } } };
-S.diner = async t => {
-  const cam = camOf(t, { z: 1.1, x: 1280, y: 800 }); plate('diner', cam, 4); apply(cam);
-  const tr = ev('thud'); const wo = { x: 1900, y: 1440, s: 2.0, view: 'threequarter', dir: -1, expr: t > tr && t < tr + 1.5 ? 'shock' : t > sp('WAIT', 2).t0 ? 'angry' : 'deadpan', pose: t > tr && t < tr + 1.2 ? { ...POSE.stand, tilt: 25, R: { sh: 120, el: 30, hand: 'open' }, L: { sh: -120, el: -30, hand: 'open' } } : undefined, hold: t > tr && t < tr + 1.2 };
-  const ho = { x: 900, y: 1440, s: 2.0, view: 'threequarter', dir: 1, expr: t > sp('HWR', 4).t0 ? 'shock' : 'smug' };
-  await cast([[C.hwr, 'HWR', ho], [C.ex3, 'WAIT', wo]], cam, t); apply(cam);
-  desk(560, 1200, 900, 260, '#e23a3a', '#a01a1a', '#f4f1ea'); emo('🍲', 900, 1150, 110); if (t > ev('scrape')) { ctx.fillStyle = 'rgba(200,120,40,.85)'; ctx.beginPath(); ctx.ellipse(1050, 1215, 120 * Math.min(1, (t - ev('scrape')) * 3), 18, 0, 0, 7); ctx.fill(); }
-  if (t > tr && t < tr + 1.2) { emo('🍽️', 2050 + (t - tr) * 300, 1100 - Math.sin((t - tr) * 3) * 200, 90, t * 6); emo('💥', 2000, 1380, 120); }
-  if (t > sp('WAIT', 1).t0) { rr(1580, 1060, 160, 210, 6, '#f4f1ea', '#231A24', 4); txt('BILL', 1660, 1100, 30, '#231A24'); txt('∞ ¢', 1660, 1180, 44, '#e23a3a'); } };
-S.repair = async t => {
-  const cam = camOf(t, { z: 1.1, x: 1280, y: 790 }); plate('workshop', cam, 4); apply(cam);
-  rr(860, 340, 840, 140, 10, '#ffd23d', '#231A24'); txt("O.B.'S REPAIRS", 1280, 395, 64, '#231A24'); txt('NO REFUNDS · NO TIMELINES', 1280, 455, 28, '#e23a3a');
-  const mo = { x: 820, y: 1450, s: 2.05, view: 'threequarter', dir: 1, expr: t > sp('OB', 1).t0 ? 'deadpan' : 'smile' }, oo = { x: 1760, y: 1450, s: 2.0, view: 'threequarter', dir: -1, expr: 'excited' };
-  await cast([[C.mobius, 'MOB', mo], [C.ob, 'OB', oo]], cam, t); apply(cam);
-  desk(1340, 1180, 860, 280, '#5a6a7a', '#3a4a5a', '#c9a046'); ctx.save(); ctx.translate(1560, 1100); for (let i = 0; i < 9; i++) { ctx.strokeStyle = `hsla(${40 + i * 12},90%,60%,.9)`; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(-80, i * 6 - 30); ctx.bezierCurveTo(-20, -60 + i * 10, 20, 40 - i * 8, 90, i * 5 - 20 + Math.sin(t * 4 + i) * 10); ctx.stroke(); } ctx.restore();
-  rr(1900, 1090, 200, 90, 8, '#f4f1ea', '#231A24', 4); txt('MULTIVERSE', 2000, 1120, 22, '#231A24'); txt('(BROKEN)', 2000, 1152, 22, '#e23a3a'); };
-S.trailer = async t => {
-  const cam = camOf(t, { z: 1.1 + .08 * seg(t, OPEN, DUR), x: 1280, y: 760 }); plate('london', cam, 2); grade('#1a0a20', .5, 'multiply'); grade('#ff6a2a', .2);
-  const b = ev('hit'); if (t > b - .2) { apply(cam); const k = seg(t, b - .2, b + .6); for (let i = 0; i < 3; i++) glowS(1280 + (i - 1) * 300, 800, 300 + 500 * k, 'rgba(255,140,40,A)', .5 * (1 - seg(t, b + 1, b + 3))); emo('💥', 1600, 1000, 140 + 60 * k); }
-  const bo = { x: lerp(1550, 1750, seg(t, sp('BRAD').t0 - 2, DUR)), y: 1440, s: 2.1, view: 'front', expr: 'smug', pose: POSE.peace, hold: true };
-  if (t > ev('whoosh') - .3) await cast([[C.brad, 'BRAD', bo]], cam, t);
-  vhs(t, .5); screen(); ctx.fillStyle = 'rgba(0,0,0,.55)'; ctx.fillRect(0, H - BAR - 120, W, 120);
-  const lines = G.speech.filter(s => s.who === 'ANN'); let cur = -1; lines.forEach((s, i) => { if (t > s.t0) cur = i; });
-  const TX = ['IN A WORLD...', 'WHERE ONE MAN...', 'HAS REALLY GREAT HAIR', 'RATED: PLEASE STOP']; if (cur >= 0 && (cur === 3 || t < lines[cur].t1 + .3)) txt(TX[cur], W / 2, H - BAR - 60, 58, cur === 3 ? '#ff4a3a' : '#f4ecd8', { font: 'Georgia, serif', w: 700 }); };
-S.profile = async t => {
-  const cam = camOf(t, { z: 1, x: 1280, y: 720 }); apply(cam); ctx.fillStyle = lg(0, 0, 2560, 1440, ['#ff9ac0', '#ffc8a0']); ctx.fillRect(0, 0, 2560, 1440);
-  for (let i = 0; i < 14; i++) emo('💗', (i * 211 + t * 40) % 2600, 1440 - ((t * 90 + i * 137) % 1600), 60);
-  rr(880, 120, 800, 1220, 60, '#1a1a1a', '#231A24', 10); rr(910, 160, 740, 1140, 40, '#fff'); ctx.fillStyle = lg(0, 200, 0, 860, ['#ffd0a0', '#ff9a5a']); ctx.fillRect(930, 200, 700, 660);
-  const mad = t > sp('MMD').t0; PR.missMinutes({ x: 1280, y: 600, s: 1.1, mood: mad ? 'mad' : 'happy' }, t);
-  txt('Miss Minutes, 1,000,000+', 960, 920, 44, '#231A24', { align: 'left' }); txt('📍 The T.V.A. (all of it)', 960, 980, 32, '#555', { align: 'left', w: 600 });
-  txt('⏰ long walks through time', 960, 1040, 30, '#555', { align: 'left', w: 600 }); txt('🔌 controlling every system', 960, 1090, 30, '#555', { align: 'left', w: 600 });
-  const pr = t > sp('MM', 2).t0 ? seg(t, sp('MM', 2).t0, sp('MM', 2).t0 + .3) : 0; rr(1000, 1150, 180, 120, 60, '#f4f1ea', '#231A24', 4); txt('✖', 1090, 1210, 60, '#999');
-  ctx.save(); ctx.translate(1470, 1210); ctx.scale(1 + .2 * Math.sin(pr * 3.14), 1 + .2 * Math.sin(pr * 3.14)); rr(-90, -60, 180, 120, 60, '#2fd07a', '#231A24', 4); txt('♥', 0, 0, 64, '#fff'); ctx.restore();
-  if (mad) { grade('#ff2a00', .4 * seg(t, sp('MMD').t0, sp('MMD').t0 + .3)); } };
-S.fans = async t => {
-  const cam = camOf(t, { z: 1.1, x: 1280, y: 790 }); plate('fair1893', cam, 5); apply(cam); crowd(1240, 10, 3, 'rgba(20,16,24,.6)', .8, t);
-  const th = ev('thud'), th2 = ev('thud', 1); const down = (tt, x, sp_, who) => tt;
-  const oo = { x: 980, y: 1450, s: 2.0, view: 'threequarter', dir: 1, expr: t > th ? 'blank' : t > sp('OB', 1).t0 ? 'nervous' : 'excited', pose: { ...POSE.stand, R: { sh: 70, el: 60, hand: 'grab' } }, hold: lvl('OB', t) < 0 };
-  const to = { x: 1600, y: 1450, s: 2.0, view: 'threequarter', dir: -1, expr: t > th2 ? 'blank' : 'nervous', pose: { ...POSE.stand, R: { sh: 70, el: 60, hand: 'grab' } }, hold: lvl('TIM', t) < 0 };
-  const sink = (tt) => Math.min(1, Math.max(0, (t - tt) * 3));
-  oo.y += 600 * sink(th); to.y += 600 * sink(th2);
-  await cast([[C.ob, 'OB', oo], [C.timely, 'TIM', to]], cam, t); apply(cam);
-  if (t < th) { for (const [sp2, o] of [[C.ob, oo], [C.timely, to]]) { const h = hnd(sp2, o); rr(h.x - 50, h.y - 70, 100, 130, 4, '#f4ecd8', '#231A24', 3); ctx.strokeStyle = '#2a3990'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(h.x - 30, h.y); ctx.bezierCurveTo(h.x - 10, h.y - 30, h.x + 10, h.y + 20, h.x + 30, h.y - 10); ctx.stroke(); } }
-  rr(1080, 1300, 420, 160, 6, '#8a5a2a', '#231A24'); for (const [tt, x] of [[th, 980], [th2, 1600]]) if (t > tt) { for (let i = 0; i < 4; i++) emo('💫', x + Math.cos(t * 4 + i * 1.6) * 120, 1260 + Math.sin(t * 4 + i * 1.6) * 30, 60); }
-  screen(); rr(80, BAR + 30, 640, 90, 10, 'rgba(20,16,24,.85)'); txt('🔁 LOOP #' + (1 + Math.floor(t * 3)), 400, BAR + 75, 42, '#ffd23d'); };
-S.ad = async t => {
-  const cam = camOf(t, { z: 1.08, x: 1280, y: 720 }); plate('jetski', cam); grade('#ffd080', .15); apply(cam);
-  const dn = { x: 1000, y: 1450, s: 2.1, view: 'front', expr: 'excited', pose: lvl('DON', t) < 0 ? POSE.thumbsUp : undefined };
-  await cast([[X.don, 'DON', dn]], cam, t); apply(cam);
-  ctx.save(); ctx.translate(1950, 700); ctx.rotate(.12); burst(0, 0, 260, t, '#ffd23d', '#ff6a2b', 16); txt('0%', 0, -30, 120, '#231A24'); txt('FINANCING', 0, 70, 46, '#231A24'); ctx.restore();
-  if (t > sp('DON', 2).t0) { ctx.save(); ctx.translate(1900, 1000); ctx.rotate(-.08); rr(-320, -70, 640, 140, 16, '#2fc6ff', '#231A24', 8); txt('100% WET', 0, 0, 70, '#fff'); ctx.restore(); }
-  screen(); rr(0, H - 260, W, 120, 0, 'rgba(10,10,40,.85)'); txt("DON'S JET SKIS · 555-0199 · KANSAS", W / 2, H - 200, 52, '#ffd23d'); vhs(t, 1.1); pillar(); };
-S.study = async t => {
-  const cam = camOf(t, { z: 1.1, x: 1280, y: 790 }); plate('archive', cam, 5); grade('#2a2a5a', .2); apply(cam);
-  rr(1900, 380, 340, 360, 10, '#f4f1ea', '#231A24'); rr(1900, 380, 340, 90, 10, '#e23a3a', '#231A24'); txt('EXAM DAY', 2070, 425, 40, '#fff'); txt('TOMORROW', 2070, 580, 54, '#231A24'); txt('(always)', 2070, 660, 32, '#888');
-  const lo = { x: 960, y: 1450, s: 2.0, view: 'threequarter', dir: 1, expr: t > sp('LOKI', 2).t0 ? 'sad' : 'deadpan' }, oo = { x: 1720, y: 1450, s: 1.95, view: 'threequarter', dir: -1, expr: 'excited' };
-  await cast([[C.loki, 'LOKI', lo], [C.ob, 'OB', oo]], cam, t); apply(cam);
-  desk(560, 1200, 1500, 260, '#6a4a2a', '#4a2a10', '#8a5a2a'); ctx.save(); ctx.translate(1000, 1080); ctx.rotate(-.04); rr(-220, -110, 440, 200, 10, '#2a3990', '#231A24', 6); rr(-200, -100, 400, 30, 4, '#f4f1ea'); txt('TIME PHYSICS · VOL. 9,000', 0, -30, 28, '#ffd23d'); txt('(abridged)', 0, 20, 24, '#f4f1ea'); ctx.restore();
-  for (let i = 0; i < 6; i++) { rr(1300 + i * 110, 1160 - (i % 2) * 20, 90, 40, 4, ['#e23a3a', '#2a8a4a', '#ffd23d'][i % 3], '#231A24', 3); } emo('☕', 1960, 1150, 70);
-  screen(); rr(80, BAR + 30, 560, 90, 10, 'rgba(20,16,24,.85)'); txt('YEAR ' + (300 + Math.floor(t * 41)), 360, BAR + 75, 46, '#ffd23d'); };
+const camW = (t, b) => camOf(t, b);
+function wall(c0, c1, floorY = 1180, f0 = '#5a4a3a', f1 = '#2a2018') { ctx.fillStyle = lg(0, 0, 0, floorY, [c0, c1]); ctx.fillRect(0, 0, 2560, floorY); ctx.fillStyle = lg(0, floorY, 0, 1440, [f0, f1]); ctx.fillRect(0, floorY, 2560, 1440 - floorY); ctx.fillStyle = 'rgba(0,0,0,.25)'; ctx.fillRect(0, floorY - 10, 2560, 14); }
+function chair(x, y, s = 1, col = '#7a2a2a') { ctx.save(); ctx.translate(x, y); ctx.scale(s, s); rr(-50, -150, 100, 110, 10, col, '#231A24', 5); rr(-56, -50, 112, 26, 6, shade(col), '#231A24', 5); ctx.fillStyle = '#231A24'; ctx.fillRect(-46, -24, 8, 70); ctx.fillRect(38, -24, 8, 70); ctx.restore(); }
+function shade(c) { return c.replace(/[0-9a-f]{2}/gi, h => Math.max(0, parseInt(h, 16) - 40).toString(16).padStart(2, '0')); }
+function stars(x, y, n, sz = 56) { for (let i = 0; i < 5; i++) txt('★', x + i * sz * 1.05, y, sz, i < n ? '#ffb020' : '#c8c8c8'); }
+function clip(h, sc) { ctx.save(); ctx.translate(h.x, h.y); ctx.rotate(-.2); rr(-36 * sc, -50 * sc, 72 * sc, 96 * sc, 5 * sc, '#c89a5a', '#231A24', 2.5 * sc); rr(-30 * sc, -40 * sc, 60 * sc, 80 * sc, 3 * sc, '#f4f1ea'); ctx.fillStyle = '#888'; for (let i = 0; i < 5; i++) ctx.fillRect(-24 * sc, (-28 + i * 13) * sc, 44 * sc, 3 * sc); ctx.restore(); }
+const XC = {
+  agent: tw(C.ex2, { top: { type: 'jacket', color: '#3a4a6a', shirt: '#f4f1ea', tie: '#c8a020', accent: '#2a3a5a', cuff: '#2a3a5a', hem: -10, sleeves: 'long' }, acc: { glasses: '#2a2a30', beard: '#d8d8d8' } }),
+  mod: tw(C.ex2, { top: { type: 'jacket', color: '#1a1a24', shirt: '#f4f1ea', tie: '#a01a1a', accent: '#111', cuff: '#111', hem: -10, sleeves: 'long' } }),
+  ranger: tw(C.ex3, { top: { type: 'tee', color: '#5a6a3a', accent: '#3a4a2a', cuff: '#3a4a2a', hem: 14, sleeves: 'short' }, defaultExpr: 'happy' }),
+  host: tw(C.ex3, { top: { type: 'jacket', color: '#c8a020', shirt: '#1a1a20', tie: '#a01a1a', accent: '#8a6a10', cuff: '#8a6a10', hem: -10, sleeves: 'long' }, defaultExpr: 'excited' }),
+  gate: tw(C.ex1, { top: { type: 'jacket', color: '#2a5a9a', shirt: '#f4f1ea', tie: '#e23a3a', accent: '#1a3a6a', cuff: '#1a3a6a', hem: -10, sleeves: 'long' }, defaultExpr: 'smile' }),
+  clerk: tw(C.ex1, { top: { type: 'tee', color: '#e23a3a', accent: '#a01a1a', cuff: '#a01a1a', hem: 14, sleeves: 'short' }, hair: { color: '#2a1a12' }, defaultExpr: 'deadpan' }),
+};
+S.drive = async t => {
+  const cam = camW(t, { z: 1.08, x: 1280, y: 760 }); plate('nyc_street', cam, 3); grade('#ffd080', .15); apply(cam);
+  ctx.save(); ctx.translate(1960, 600); ctx.rotate(.1); burst(0, 0, 250, t, '#ffd23d', '#ff6a2b', 16); txt('LESSONS', 0, -30, 76, '#231A24'); txt('$9.99*', 0, 50, 56, '#e23a3a'); ctx.restore();
+  const th = ev('thud'); PR.cab({ x: 1500, y: 1330, s: 1.5, roll: t > th - .5 && t < th + .3 ? t * 6 : 0 }, t);
+  const dp = { x: 820, y: 1450, s: 2.1, view: 'front', expr: t > th ? 'excited' : 'happy', pose: lvl('DOP', t) < 0 ? POSE.thumbsUp : undefined };
+  await cast([[C.dopinder, 'DOP', dp]], cam, t); apply(cam);
+  if (t > th && t < th + 1) { emo('💥', 1900, 1150, 160); }
+  screen(); rr(0, H - 260, W, 120, 0, 'rgba(10,10,40,.85)'); txt("DOPINDER'S DRIVING SCHOOL · CALL 555-TAXI", W / 2, H - 200, 50, '#ffd23d'); screen(); ctx.fillStyle = '#fff'; ctx.font = '600 22px Inter'; ctx.textAlign = 'left'; ctx.fillText('*murder lessons not included', 270, H - 150); vhs(t, 1.1); pillar(); };
+S.insure = async t => {
+  const cam = camW(t, { z: 1.12, x: 1280, y: 780 }); plate('office', cam, 5); grade('#2a3a6a', .15); apply(cam);
+  rr(700, 360, 840, 130, 12, '#f4f1ea', '#231A24'); txt('IMMORTAL MUTUAL INSURANCE', 1120, 410, 46, '#2a3990'); txt('"We cover everything. Almost."', 1120, 460, 28, '#888');
+  const wo = { x: 860, y: 1450, s: 2.05, view: 'threequarter', dir: 1, expr: t > ev('stamp') ? 'shock' : 'smug' }, ao = { x: 1760, y: 1450, s: 2.0, view: 'threequarter', dir: -1, expr: 'deadpan' };
+  await cast([[C.wade, 'WADE', wo], [XC.agent, 'AGENT', ao]], cam, t); apply(cam);
+  desk(1380, 1160, 760, 300, '#6a4a2a', '#4a2a10', '#c9a046'); rr(1460, 1080, 320, 90, 8, '#f4f1ea', '#231A24', 4); txt('CLAIM #14', 1620, 1110, 26, '#231A24'); txt('CAUSE: EXPLODED', 1620, 1145, 22, '#e23a3a');
+  for (let i = 0; i < 13; i++) rr(1820 + (i % 3) * 8, 1150 - i * 10, 200, 14, 2, '#e8e0d0', '#888', 2);
+  const st = ev('stamp'); if (t > st) { const k = seg(t, st, st + .15); ctx.save(); ctx.translate(1620, 1125); ctx.rotate(-.15); ctx.scale(1.6 - .6 * k, 1.6 - .6 * k); ctx.globalAlpha = k; rr(-130, -40, 260, 80, 8, null, '#e23a3a', 8); txt('DENIED', 0, 2, 48, '#e23a3a'); ctx.restore(); } };
+S.hoa = async t => {
+  const cam = camW(t, { z: 1.0, x: 1280, y: 760, push: .08 }); plate('mansion_hall', cam, 4); apply(cam);
+  rr(880, 360, 800, 120, 10, '#f4f1ea', '#231A24'); txt('X-MANSION H.O.A.', 1280, 405, 52, '#1d3a8a'); txt('MEETING TONIGHT · ALL X-MEN WELCOME', 1280, 455, 26, '#8a5a2a');
+  for (let r = 0; r < 3; r++) for (let i = 0; i < 9; i++) chair(420 + i * 220 + r * 30, 1250 + r * 70, .9 + r * .1);
+  const yuk = t > sp('YUK').t0 - .2; const co = { x: 1950, y: 1380, s: 1.75, view: 'threequarter', dir: -1, expr: t > sp('COL', 2).t0 ? 'sad' : 'neutral' };
+  await cast([[C.nega, 'NEGA', { x: 640, y: 1330, s: 1.5, view: 'threequarter', dir: 1, expr: 'deadpan' }], [C.yukio, 'YUK', { x: 900, y: 1330, s: 1.5, view: 'threequarter', dir: 1, expr: yuk ? 'excited' : 'happy', pose: yuk ? POSE.wave : undefined, hold: yuk && lvl('YUK', t) < 0 }], [C.colossus, 'COL', co]], cam, t); apply(cam);
+  rr(1780, 1130, 300, 280, 10, '#6a4a2a', '#231A24'); { const h = hnd(C.colossus, co, 'L'); clip(h, 1.6); }
+  screen(); rr(80, BAR + 30, 520, 90, 10, 'rgba(20,16,24,.85)'); txt('ATTENDANCE: 3', 340, BAR + 75, 44, '#ffd23d'); };
+S.reviews = async t => {
+  const cam = camW(t, { z: 1.0, x: 1280, y: 720 }); plate('icebox', cam, 10); grade('#0a1a3a', .4, 'multiply');
+  screen(); rr(160, BAR + 30, W - 320, H - 2 * BAR - 60, 22, '#f4f4f6', '#231A24', 6); rr(160, BAR + 30, W - 320, 70, 22, '#2a8a5a'); txt('🦉 IceboxAdvisor', 330, BAR + 66, 34, '#fff', { align: 'left' }); txt('Icebox Super-Prison · #1 of 1 prisons nearby', 1180, BAR + 66, 26, '#e8f8f0');
+  const sw = ev('swipe'), k = io(seg(t, sw, sw + .35));
+  const card = (y, who, n, lines, al) => { ctx.globalAlpha = al; rr(240, y, W - 480, 230, 16, '#fff', '#d0d0d8', 3); ctx.fillStyle = '#c8d8e8'; ctx.beginPath(); ctx.arc(320, y + 60, 40, 0, 7); ctx.fill(); txt(who, 380, y + 50, 30, '#231A24', { align: 'left' }); stars(390, y + 92, n, 34);
+    lines.forEach((l, i) => txt(l, 280, y + 140 + i * 40, 30, '#333', { align: 'left', w: 600 })); ctx.globalAlpha = 1; };
+  const r1 = seg(t, sp('READ').t0 - .2, sp('READ').t0 + .2);
+  card(BAR + 130 - 300 * k, 'Russell, 14', 1, ['Room was cold. Staff were cold. Food was cold.', 'My neighbour was a giant man in the basement. Would not recommend.'], r1 * (1 - k));
+  if (t > sw) card(BAR + 130 + 260 * (1 - k), 'Anonymous critic', 1, ['Too much foreshadowing.'], k);
+  if (t > sp('READ', 3).t0) { ctx.save(); ctx.translate(W - 420, H - BAR - 160); ctx.rotate(-.1); rr(-170, -50, 340, 100, 12, '#e23a3a', '#231A24', 6); txt('VERIFIED STAY', 0, 2, 34, '#fff'); ctx.restore(); } };
+S.gate = async t => {
+  const cam = camW(t, { z: 1.1, x: 1280, y: 780 }); apply(cam); wall('#c8d4e0', '#9aa8b8', 1180, '#6a7480', '#3a424c');
+  rr(260, 220, 1200, 600, 10, '#1a2a4a', '#231A24', 10); ctx.fillStyle = lg(0, 220, 0, 820, ['#ff9a5a', '#5a3a8a']); ctx.fillRect(270, 230, 1180, 580); ctx.fillStyle = '#231A24'; ctx.save(); ctx.translate(860 + Math.sin(t * .4) * 80, 560); ctx.beginPath(); ctx.ellipse(0, 0, 300, 40, 0, 0, 7); ctx.fill(); ctx.beginPath(); ctx.moveTo(-60, 0); ctx.lineTo(60, -160); ctx.lineTo(120, -160); ctx.lineTo(60, 0); ctx.fill(); ctx.restore();
+  rr(1520, 420, 640, 180, 10, '#1a1a24', '#231A24'); txt('GATE ∞  ·  TIME AIR', 1840, 475, 44, '#ffd23d'); txt('DEPARTS: WHENEVER', 1840, 545, 34, '#2fc6ff');
+  const co = { x: 840, y: 1450, s: 2.05, view: 'threequarter', dir: 1, expr: t > sp('CABLE', 1).t0 ? 'deadpan' : t > sp('GATE', 1).t0 ? 'angry' : 'neutral' }, go = { x: 1820, y: 1450, s: 1.95, view: 'threequarter', dir: -1, expr: 'smile' };
+  await cast([[C.cable, 'CABLE', co], [XC.gate, 'GATE', go]], cam, t); apply(cam);
+  desk(1440, 1150, 800, 310, '#3a4a6a', '#1a2a4a', '#c9a046'); PR.device({ x: 1600, y: 1110, s: 1.0, charges: t > sp('GATE', 1).t0 ? 0 : 2 }, t); rr(1720, 1080, 240, 70, 6, '#f4f1ea', '#231A24', 4); txt('NO REFUNDS', 1840, 1115, 26, '#e23a3a'); };
+S.debate = async t => {
+  const cam = camW(t, { z: 1.0, x: 1280, y: 760 }); apply(cam); studio('#1a2a5a', '#0a1030', '#2fc6ff', t);
+  txt('THE GREAT DEBATE', 1200, 420, 96, '#f4f1ea', { glow: '#2fc6ff', blur: 26 }); txt('IS LUCK A SUPERPOWER?', 1200, 530, 54, '#ffd23d');
+  const th = ev('thud'), zp = ev('zap'); const hit = t > th;
+  const dom = { x: 620, y: 1400, s: 1.8, view: 'threequarter', dir: 1, expr: hit ? 'smug' : 'deadpan' }, wa = { x: 1940, y: 1400, s: 1.85, view: 'threequarter', dir: -1, expr: hit ? 'blank' : 'angry', tilt: 0 };
+  const mo = { x: 1280, y: 1400, s: 1.6, view: 'front', expr: hit ? 'shock' : 'neutral' };
+  await cast([[C.domino, 'DOM', dom], [XC.mod, 'MOD', mo], [C.wade, 'WADE', wa]], cam, t); apply(cam);
+  for (const [x, col, nm] of [[620, '#2a8a4a', 'DOMINO'], [1940, '#a01a1a', 'WADE']]) { rr(x - 170, 1120, 340, 340, 10, col, '#231A24', 6); txt(nm, x, 1200, 48, '#fff'); }
+  rr(1150, 1180, 260, 280, 10, '#3a3a4a', '#231A24', 6);
+  { const f = head(C.wade, wa, 0); const k = clamp((t - th + .45) / .45); if (k > 0) { const y = lerp(f.y - 900, f.y - 40 * f.sc, k * k); ctx.save(); ctx.translate(f.x, y); ctx.rotate(k * 2.2); rr(-12, -10, 24, 140, 8, '#2a2a30', '#231A24', 4); ctx.fillStyle = '#b8bcc8'; ctx.beginPath(); ctx.arc(0, -20, 30, 0, 7); ctx.fill(); ctx.stroke(); ctx.restore(); if (hit) for (let i = 0; i < 4; i++) emo('💫', f.x + Math.cos(t * 4 + i * 1.6) * 110, f.y - 120 + Math.sin(t * 4 + i * 1.6) * 30, 56); } }
+  if (t > zp) { screen(); ctx.fillStyle = `rgba(0,0,0,${.85 * Math.min(1, (t - zp) * 6)})`; ctx.fillRect(W / 2 + 140, 0, W / 2, H); } };
+S.weather = async t => {
+  const cam = camW(t, { z: 1.0, x: 1280, y: 760 }); apply(cam); ctx.fillStyle = lg(0, 0, 0, 1440, ['#2a6ab0', '#1a3a7a']); ctx.fillRect(0, 0, 2560, 1440);
+  ctx.fillStyle = '#5aa04a'; ctx.strokeStyle = '#231A24'; ctx.lineWidth = 8; ctx.beginPath(); ctx.moveTo(1150, 300); ctx.bezierCurveTo(1700, 180, 2400, 320, 2300, 700); ctx.bezierCurveTo(2250, 1000, 1700, 1100, 1300, 960); ctx.bezierCurveTo(1050, 860, 950, 420, 1150, 300); ctx.fill(); ctx.stroke();
+  txt('CANADA-ISH', 1700, 640, 40, 'rgba(255,255,255,.7)'); for (let i = 0; i < 5; i++) { const x = 1300 + ((t * 260 + i * 260) % 1100), y = 400 + i * 110; ctx.strokeStyle = '#fff'; ctx.lineWidth = 10; ctx.beginPath(); ctx.moveTo(x - 120, y); ctx.lineTo(x, y); ctx.lineTo(x - 30, y - 24); ctx.moveTo(x, y); ctx.lineTo(x - 30, y + 24); ctx.stroke(); }
+  emo('🌬️', 1400, 420, 120); emo('🪁', 2150, 420 + Math.sin(t * 3) * 40, 110); txt('WIND: YES', 1750, 1020, 54, '#ffd23d');
+  const wh = ev('whoosh'); if (t > wh) { const k = seg(t, wh, wh + 1.6); emo('🪂', lerp(1250, 2500, k), 500 + Math.sin(k * 12) * 80, 90, k * 8); }
+  const ro = { x: 720, y: 1450, s: 2.05, view: 'threequarter', dir: 1, expr: t > wh + .4 ? 'nervous' : 'happy' };
+  await cast([[XC.ranger, 'RANGER', ro]], cam, t); apply(cam);
+  { const f = head(XC.ranger, ro, -14); ctx.save(); ctx.translate(f.x, f.y - 4 * f.sc); ctx.fillStyle = '#8a6a3a'; ctx.strokeStyle = '#231A24'; ctx.lineWidth = 4; ctx.beginPath(); ctx.ellipse(0, 0, 40 * f.sc, 9 * f.sc, 0, 0, 7); ctx.fill(); ctx.stroke(); ctx.beginPath(); ctx.moveTo(-20 * f.sc, 0); ctx.lineTo(-12 * f.sc, -24 * f.sc); ctx.lineTo(12 * f.sc, -24 * f.sc); ctx.lineTo(20 * f.sc, 0); ctx.fill(); ctx.stroke(); ctx.restore(); }
+  screen(); rr(0, H - BAR - 110, W, 80, 0, 'rgba(10,20,60,.85)'); txt('⚠ HIGH WIND ADVISORY · DO NOT SKYDIVE · SERIOUSLY', W / 2 - ((t * 120) % 400) + 200, H - BAR - 70, 40, '#ffd23d'); };
+S.fitness = async t => {
+  const cam = camW(t, { z: 1.0, x: 1280, y: 760 }); apply(cam); ctx.fillStyle = lg(0, 0, 0, 1440, ['#2a0a4a', '#ff3aa0']); ctx.fillRect(0, 0, 2560, 1440);
+  ctx.strokeStyle = 'rgba(80,255,240,.6)'; ctx.lineWidth = 4; for (let i = -12; i < 30; i++) { ctx.beginPath(); ctx.moveTo(1280 + i * 40, 1000); ctx.lineTo(1280 + i * 220, 1440); ctx.stroke(); } for (let j = 0; j < 8; j++) { const y = 1000 + j * j * 7 + ((t * 40) % 20); ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(2560, y); ctx.stroke(); }
+  ctx.fillStyle = '#ffd23d'; ctx.beginPath(); ctx.arc(1280, 900, 360, Math.PI, 0); ctx.fill(); txt('BABY LEGS FITNESS', 1280, 300, 120, '#5afff0', { glow: '#ff3aa0', blur: 36, font: 'Georgia, serif', w: 900 });
+  rr(780, 1140, 1000, 60, 20, '#2fc6ff', '#231A24', 6);
+  const kick = t < ev('thud') && lvl('WADE', t) >= 0; const b = Math.sin(t * 9);
+  const wo = { x: 1280, y: 1160, s: 2.0, view: 'front', expr: t > ev('thud') ? 'deadpan' : 'excited', pose: kick ? { ...POSE.stand, R: { sh: 150, el: 20, hand: 'fist' }, L: { sh: -150, el: -20, hand: 'fist' }, legR: { hip: b > 0 ? 40 : 4 }, legL: { hip: b < 0 ? -40 : -3 } } : undefined, hold: kick };
+  await cast([[C.wadeBaby, 'WADE', wo]], cam, t); vhs(t, .8); };
+S.clock = async t => {
+  const cam = camW(t, { z: 1.0, x: 1280, y: 760 }); apply(cam); studio('#4a1a6a', '#1a0a2a', '#ffd23d', t);
+  const st = ev('tick'), bz = ev('buzzer'); const k = t < st ? 0 : t > bz ? 1 : (t - st) / Math.max(.1, bz - st);
+  ctx.save(); ctx.translate(1280, 520); ctx.fillStyle = '#f4f1ea'; ctx.strokeStyle = '#231A24'; ctx.lineWidth = 16; ctx.beginPath(); ctx.arc(0, 0, 300, 0, 7); ctx.fill(); ctx.stroke(); ctx.fillStyle = 'rgba(226,58,58,.75)'; ctx.beginPath(); ctx.moveTo(0, 0); ctx.arc(0, 0, 280, -Math.PI / 2, -Math.PI / 2 + k * 6.283); ctx.fill();
+  ctx.rotate(-Math.PI / 2 + Math.floor(k * 30) / 30 * 6.283 + Math.PI / 2); ctx.fillStyle = '#231A24'; ctx.fillRect(-8, -270, 16, 270); ctx.restore(); txt(String(Math.max(0, 30 - Math.floor(k * 30))), 1280, 920, 90, '#ffd23d', { glow: '#ff6a2b', blur: 20 });
+  const ho = { x: 460, y: 1430, s: 1.95, view: 'threequarter', dir: 1, expr: 'excited', pose: { ...POSE.stand, R: { sh: 70, el: 150, hand: 'grab' } }, hold: lvl('HOST', t) < 0 };
+  const wo = { x: 2060, y: 1430, s: 1.95, view: 'threequarter', dir: -1, expr: t > bz ? 'shock' : 'nervous' };
+  await cast([[XC.host, 'HOST', ho], [C.wade, 'WADE', wo]], cam, t); apply(cam); { const h = hnd(XC.host, ho), f = head(XC.host, ho, 0); micAt(h, f, ho.s); }
+  rr(1880, 1150, 360, 300, 10, '#c8a020', '#231A24', 6); txt('CONTESTANT', 2060, 1210, 34, '#231A24');
+  if (t > sp('HOST', 2).t0) { rr(1100, 1180, 360, 260, 10, '#e23a3a', '#231A24', 6); emo('🏆', 1280, 1100, 100); ctx.save(); ctx.translate(1280, 1290); ctx.rotate(-.5); rr(-70, -18, 120, 36, 18, '#c8a020', '#231A24', 4); rr(40, -18, 40, 36, 18, '#8a6a10', '#231A24', 4); ctx.restore(); } };
+S.manners = async t => {
+  const cam = camW(t, { z: 1.08, x: 1280, y: 780 }); plate('classroom', cam, 5); apply(cam);
+  rr(980, 360, 1240, 500, 10, '#2a4a3a', '#8a5a2a', 18); txt('NICE WORDS', 1500, 430, 60, '#f4f1ea', { font: 'Georgia, serif', w: 700 });
+  const L = [['F*@#', 'FUDGE'], ['S.O.B.', 'SON OF A BISCUIT']]; L.forEach(([a, b], i) => { if (t > sp('COL', i).t0) { txt(a, 1260, 540 + i * 110, 46, 'rgba(244,241,234,.6)'); ctx.strokeStyle = '#ff6a6a'; ctx.lineWidth = 6; ctx.beginPath(); ctx.moveTo(1160, 540 + i * 110); ctx.lineTo(1360, 540 + i * 110); ctx.stroke(); txt('→ ' + b, 1720, 540 + i * 110, 46, '#ffd23d'); } });
+  if (t > sp('COL', 2).t0) txt('...STILL BISCUIT', 1600, 790, 44, '#f4f1ea');
+  const co = { x: 900, y: 1450, s: 1.9, view: 'threequarter', dir: 1, expr: t > sp('COL', 2).t0 ? 'deadpan' : 'smile', pose: lvl('COL', t) < 0 ? { ...POSE.stand, R: { sh: 80, el: 20, hand: 'point' } } : undefined, hold: lvl('COL', t) < 0 };
+  const ko = { x: 2200, y: 1430, s: 1.7, view: 'threequarter', dir: -1, expr: t > sp('KID').t0 ? 'nervous' : 'neutral', pose: t > sp('KID').t0 - .3 && t < sp('KID').t1 + .2 ? POSE.wave : undefined, hold: t > sp('KID').t0 - .3 && t < sp('KID').t1 + .2 };
+  await cast([[C.colossus, 'COL', co], [C.russell, 'KID', ko]], cam, t); apply(cam); desk(1960, 1250, 480, 210, '#8a6a3a', '#5a4020', '#c9a046'); };
+S.oscar = async t => {
+  const cam = camW(t, { z: 1.1 + .06 * seg(t, OPEN, DUR), x: 1280, y: 760 }); plate('heaven', cam, 6); grade('#1a1008', .7, 'multiply'); grade('#ffb040', .25);
+  const wo = { x: 1780, y: 1440, s: 2.1, view: 'threequarter', dir: -1, expr: 'sad', pose: { ...POSE.stand, R: { sh: 30, el: 150, hand: 'open' }, L: { sh: -120, el: -30, hand: 'open' }, tilt: -8 }, hold: true };
+  apply(cam); cone(1780, 0, 60, 420, 1500, 'rgba(255,230,170,A)', .3); await cast([[C.wade, 'X', wo]], cam, t);
+  screen(); const lines = G.speech.filter(s => s.who === 'ANN'); const TX = ['FOR YOUR CONSIDERATION', 'BEST ACTOR IN A VERY LONG DEATH', '40 MIN OF DYING · 4 COSTUMES · 1 SONG', '— THE NEW PORK TIMES'];
+  lines.forEach((s, i) => { if (t > s.t0) { const a = io(seg(t, s.t0, s.t0 + .5)); ctx.globalAlpha = a; txt(TX[i], 720, BAR + 150 + i * 100, i ? 40 : 58, '#e8c060', { font: 'Georgia, serif', w: 700, glow: '#8a5a10', blur: 16 }); ctx.globalAlpha = 1; } });
+  film(t); };
+S.returns = async t => {
+  const cam = camW(t, { z: 1.1, x: 1280, y: 780 }); apply(cam); wall('#e8e0c8', '#c8b898', 1180, '#8a7a6a', '#4a3a2a');
+  for (let r = 0; r < 3; r++) { ctx.fillStyle = '#8a5a2a'; ctx.fillRect(120, 340 + r * 220, 900, 20); for (let i = 0; i < 6; i++) rr(140 + i * 145, 230 + r * 220, 120, 110, 6, ['#e23a3a', '#2a8a4a', '#2a3990', '#ffd23d'][(i + r) % 4], '#231A24', 4); }
+  rr(1400, 400, 760, 140, 10, '#e23a3a', '#231A24'); txt('RETURNS & EXCHANGES', 1780, 450, 46, '#fff'); txt('Receipt required. Timeline optional.', 1780, 505, 26, '#ffe0e0');
+  const wo = { x: 860, y: 1450, s: 2.05, view: 'threequarter', dir: 1, expr: t > sp('WADE', 2).t0 ? 'smug' : 'happy' }, co = { x: 1820, y: 1450, s: 1.95, view: 'threequarter', dir: -1, expr: t > sp('WADE', 2).t1 ? 'blank' : 'deadpan' };
+  await cast([[C.wade, 'WADE', wo], [XC.clerk, 'CLERK', co]], cam, t); apply(cam);
+  desk(1180, 1160, 1000, 300, '#c8c0a8', '#8a8070', '#e23a3a'); PR.device({ x: 1380, y: 1110, s: 1.1, charges: 2 }, t); rr(1560, 1060, 180, 100, 6, '#f4f1ea', '#231A24', 4); txt('RECEIPT', 1650, 1095, 24, '#231A24'); txt('(2019)', 1650, 1130, 22, '#888'); };
 const SH = [{ a: 0, b: DUR, async draw(t) {
   screen(); ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
   await S[G.set](Math.max(t, OPEN - .3)); sfxFx(t); slams(t); bug(t); intro(t); outro(t); return {}; } }];

@@ -1,4 +1,4 @@
-// Data-driven shot interpreter for the Loki acts. window.ACT = { timing, shots:[...] } -> FILM.setup(SH)
+// Data-driven shot interpreter for the Deadpool 2 acts. window.ACT = { timing, shots:[...] } -> FILM.setup(SH)
 (function () {
 const E = window.E, { D, C, W, H, BAR, IM, ctx, cv, clamp, lerp, io, out3, seg, apply, plate, chars, fig, screen, grade, glowS, rainFx, worldPt, hand } = E;
 const FX = window.FX, P = window.PROPS;
@@ -29,19 +29,20 @@ function build(ACT) {
     if (cm.shake) { cam.sx = Math.sin(lt * 41) * cm.shake; cam.sy = Math.cos(lt * 33) * cm.shake * .7; }
     if (s.plate) plate(s.plate, cam, s.blur || 0, s.par ?? 1); else { screen(); ctx.fillStyle = s.bg || '#000'; ctx.fillRect(0, 0, W, H); }
     if (s.pre) await s.pre(lt, cam, u, d);
-    const list = [], fronts = [];
-    for (const p of (s.props || [])) if ((p.layer || 'back') === 'back' && lt >= (p.t0 || 0) && lt <= (p.t1 ?? 1e9)) { apply(cam); P[p.k](Object.assign({}, p, { x: val(p.x, ue), y: val(p.y, ue), s: val(p.s ?? 1, ue), k: p.kk === undefined ? 1 : val(p.kk, ue) }), lt); }
+    const list = [], fronts = [], CO = [];
+    const at = p => { if (p.onHead != null) { const k = CO[p.onHead]; if (!k) return null; const o = k[2], f = D.forehead(k[0], { view: o.view || 'front', dir: o.dir || 1, x: o.x, y: o.y, scale: o.s, pose: E.figPose(k[0], k[1], o), fy: p.fy ?? 36 }); return { x: f.x + (p.dx || 0), y: f.y + (p.dy || 0), s: (p.s ?? 1) * f.sc / 1.9 }; } if (p.on == null) return null; const k = CO[p.on]; if (!k) return null; const w = hand(k[0], k[1], k[2], p.side || 'R'); return { x: w.x + (p.dx || 0), y: w.y + (p.dy || 0) }; };
+    for (const p of (s.props || [])) if ((p.layer || 'back') === 'back' && lt >= (p.t0 || 0) && lt <= (p.t1 ?? 1e9)) { apply(cam); P[p.k](Object.assign({}, p, at(p) || { x: val(p.x, ue), y: val(p.y, ue) }, { s: val(p.s ?? 1, ue), k: p.kk === undefined ? 1 : val(p.kk, ue) }), lt); }
     for (const c of (s.chars || [])) { if (lt < (c.t0 || 0) || lt > (c.t1 ?? 1e9)) continue; const rng_ = Array.isArray(c.x) ? Math.abs(c.x[1] - c.x[0]) : 0, span = (c.t1 ?? d) - (c.t0 || 0), wEnd = rng_ > 20 && rng_ / span < 140 ? (c.t0 || 0) + Math.max(.8, rng_ / 160) : (c.t1 ?? d); const cu = c.t0 || c.t1 || wEnd < d ? clamp((lt - (c.t0 || 0)) / (wEnd - (c.t0 || 0))) : ue; const cue = c.lin ? cu : io(cu);
       const x = val(c.x, cue), moving = Array.isArray(c.x) && Math.abs(c.x[1] - c.x[0]) > 20 && cu > 0 && cu < 1;
       const talk = c.talk && (Array.isArray(c.talk) ? c.talk.some(([p, q]) => lt >= p && lt <= q) : true);
-      list.push(fig(C[c.c], lt + (c.ph || 0), { x, y: val(c.y, cue), s: val(c.s ?? 1.4, cue), view: c.view || 'front', dir: c.dir || 1, expr: (typeof c.expr === 'function' ? c.expr(lt) : c.expr) || (talk ? 'talk' : undefined), anim: moving ? 'walk' : c.anim || (talk ? 'talk' : null), pose: c.pose ? D.POSES[c.pose] : undefined, lean: c.lean, tilt: c.tilt })); }
+      const fo = { x, y: val(c.y, cue), s: val(c.s ?? 1.4, cue), view: c.view || 'front', dir: c.dir || 1, expr: (typeof c.expr === 'function' ? c.expr(lt) : c.expr) || (talk ? 'talk' : undefined), anim: moving ? 'walk' : c.anim || (talk ? 'talk' : null), pose: c.pose ? D.POSES[c.pose] : undefined, lean: c.lean, tilt: c.tilt }; CO[(s.chars || []).indexOf(c)] = [C[c.c], lt + (c.ph || 0), fo]; list.push(fig(C[c.c], lt + (c.ph || 0), fo)); }
     if (list.length) await chars(list, cam, s.cblur || 0);
-    for (const p of (s.props || [])) if (p.layer === 'front' && lt >= (p.t0 || 0) && lt <= (p.t1 ?? 1e9)) { apply(cam); P[p.k](Object.assign({}, p, { x: val(p.x, ue), y: val(p.y, ue), s: val(p.s ?? 1, ue), k: p.kk === undefined ? 1 : val(p.kk, ue) }), lt); }
+    for (const p of (s.props || [])) if (p.layer === 'front' && lt >= (p.t0 || 0) && lt <= (p.t1 ?? 1e9)) { apply(cam); P[p.k](Object.assign({}, p, at(p) || { x: val(p.x, ue), y: val(p.y, ue) }, { s: val(p.s ?? 1, ue), k: p.kk === undefined ? 1 : val(p.kk, ue) }), lt); }
     if (s.fg && IM[s.fg]) { apply(cam); ctx.drawImage(IM[s.fg], 0, 0, 2560, 1440); }
     if (s.post) await s.post(lt, cam, u, d);
     for (const f of (s.fx || [])) { if (f === 'rain') rainFx(lt, .35); else if (f === 'snow') FX.snow(lt); else if (f === 'sparks') FX.sparks(W / 2, H / 2, lt); else if (f === 'flash') FX.white(1 - seg(lt, 0, .5)); else if (f === 'whiteout') FX.white(seg(lt, d - 1.2, d)); }
     if (s.grade) grade(s.grade[0], s.grade[1], s.grade[2] || 'soft-light');
-    if (s.title) FX.title(s.title[0], s.title[1], lt, .4, Math.min(3.2, d - .6));
+    if (s.title) FX.title(s.title[0], s.title[1], lt, .4, Math.min(3.2, d - .6), 1080 - 138 - 120);
     for (const c of (s.cards || [])) await FX.intro(c.c ? C[c.c] : null, c.name, c.sub, lt, c.at ?? .4, Object.assign({ side: c.side || 'R', dur: c.dur || 3.6 }, c));
     for (const p of (s.pops || [])) pop(p.t, lt, p.at, p.dur || 2.6, p);
     if (s.big) bigText(s.big[0], lt, s.big[1], s.big[2], s.big[3], s.big[4], s.big[5]);

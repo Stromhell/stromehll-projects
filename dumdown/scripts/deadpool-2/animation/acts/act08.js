@@ -1,0 +1,11 @@
+// Act 08: CABLE
+window.ACT = { timing: window.TIMING, shots: [
+ { p: 0, plate: 'road_night', title: ['PART 7', 'Cable'], fx: ['flash'], cam: { z: [1.1, 1.3], x: 1280, y: 820, shake: 10 }, props: [{ k: 'portalRing', x: 1280, y: 1120, s: 1 }], chars: [{ c: 'cable', x: 1280, y: 1250, s: 1.35, expr: 'angry' }] },
+ { p: 0, f: .5, plate: 'road_night', cam: { z: [2.1, 2.4], x: 1280, y: 760 }, props: [{ k: 'teddy', x: 1420, y: 1060, s: .8, layer: 'front' }], chars: [{ c: 'cable', x: 1280, y: 1250, s: 1.35, expr: 'deadpan' }],
+   cards: [{ c: 'cable', name: 'CABLE', sub: 'Move: Grumpy Stare', at: .4, side: 'L', type: 'TIME SOLDIER', stat: 'WEAKNESS: HEIGHT JOKES', items: ['⏳', '🧸'], tags: ['FUTURE', 'GRUMPY'] }] },
+ { p: 1, plate: 'icebox', fx: ['flash'], cam: { z: [1.15, 1.3], x: 1280, y: 800, shake: 18 }, props: [{ k: 'boom', x: 400, y: 800, s: 1, kk: [0, 1] }, { k: 'gun', on: 0, x: 0, y: 0, dx: 20, dy: -26, s: .5, fire: true, layer: 'front' }], chars: [{ c: 'cable', x: 500, y: 1280, s: 1.35, view: 'threequarter', expr: 'angry', pose: 'point' }, { c: 'wadeJail', x: 1300, y: 1280, s: 1.5, view: 'threequarter', dir: -1, expr: 'angry', pose: 'hips' }, { c: 'russellJail', x: 1750, y: 1280, s: 1.4, view: 'threequarter', dir: -1, expr: 'shock' }] },
+ { p: 1, f: .6, plate: 'icebox', cam: { z: [1.9, 2.1], x: 1300, y: 760 }, chars: [{ c: 'wadeJail', x: 1300, y: 1280, s: 1.5, view: 'threequarter', dir: -1, expr: 'smug', talk: true }] },
+ { p: 2, plate: 'icebox', cam: { z: [1.5, 1.65], x: 900, y: 800 }, chars: [{ c: 'wadeJail', x: 1150, y: 1280, s: 1.5, view: 'threequarter', dir: -1, expr: 'excited', talk: true, pose: 'point' }, { c: 'cable', x: 600, y: 1280, s: 1.35, view: 'threequarter', expr: 'deadpan' }], pops: [{ t: 'Is dubstep still a thing?', at: .6 }, { t: 'Homebrew beer?', at: 3.6 }, { t: 'Does Dopinder find love?', at: 6.4 }] },
+ { p: 3, plate: 'icebox', cam: { z: [1.2, 1.05], x: 1280, y: 760, shake: 22 }, fx: ['flash'], props: [{ k: 'boom', x: 1280, y: 700, s: 1.3, kk: [0, 1] }], chars: [{ c: 'wadeJail', x: [1300, 2300], y: [1280, 900], s: 1.5, expr: 'shock', lin: true }, { c: 'cable', x: [1000, 2100], y: [1280, 950], s: 1.35, expr: 'angry', lin: true }] },
+ { p: 3, f: .6, plate: 'pit', cam: { z: [1.3, 1.6], x: 1280, y: 900 }, chars: [{ c: 'russellJail', x: 1280, y: 1150, s: 1.3, view: 'back', expr: 'sad' }] },
+]};
