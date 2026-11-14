@@ -422,7 +422,7 @@ scene("Regular models predict. TigerGraph proves.", "Regular models predict. Tig
  logo("left:50%;top:250px;width:620px;transform:translateX(-50%)") +
  '<div style="position:absolute;left:0;right:0;top:470px;text-align:center"><div class="h1" style="font-size:78px;font-weight:500">Regular models predict. <span style="color:#43a4dc;font-weight:700">TigerGraph proves.</span></div>'
  '<div style="margin-top:70px;display:flex;gap:30px;justify-content:center"><span class="btn o" style="font-size:34px">Request a demo</span><span class="btn g" style="font-size:34px">Start free</span></div>'
- '<div class="mono" style="margin-top:56px;font-size:24px;color:#4d6577">tigergraph.com</div></div>')
+ '<div class="mono" style="margin-top:56px;font-size:26px;color:#fff;font-weight:500">tigergraph.com</div></div>')
 
 # ---------------------------------------------------------------- themes (client: mix light / deep navy / TG Blue for contrast)
 THEME = {1: "dark", 2: "dark", 3: "dark", 4: "blue", 5: "dark", 6: "dark", 7: "light", 8: "light", 9: "light", 10: "dark", 11: "light",
