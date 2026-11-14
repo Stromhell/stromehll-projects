@@ -1,0 +1,60 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Urbane;font-weight:200;src:url(../../../fonts/Urbane-Extra-Light.woff2)}
+@font-face{font-family:Urbane;font-weight:300;src:url(../../../fonts/Urbane-Light.woff2)}
+@font-face{font-family:Urbane;font-weight:500;src:url(../../../fonts/Urbane-Medium.woff2)}
+@font-face{font-family:Urbane;font-weight:600;src:url(../../../fonts/Urbane-Demi-Bold.woff2)}
+@font-face{font-family:Urbane;font-weight:700;src:url(../../../fonts/Urbane-Bold.woff2)}
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&display=block');
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1920px;height:1080px;overflow:hidden}
+body{font-family:Urbane,sans-serif;color:#eaf4fb;background:#0d1928;position:relative}
+.bg{position:absolute;inset:0;background:
+ radial-gradient(1000px 700px at 85% 10%,rgba(67,164,220,.20),transparent 70%),
+ radial-gradient(900px 700px at 5% 100%,rgba(67,164,220,.14),transparent 70%),#fff}
+.dots{position:absolute;inset:0;background-image:radial-gradient(rgba(67,164,220,.35) 1.4px,transparent 1.6px);background-size:36px 36px;
+ mask-image:radial-gradient(circle at 70% 40%,#000 0%,transparent 65%)}
+.panel{position:absolute;border-radius:32px;background:linear-gradient(135deg,#eef6fc 0%,#cfe5f4 45%,#93c6e8 100%);box-shadow:0 40px 90px rgba(30,90,140,.18)}
+.card{position:absolute;border-radius:20px;background:#0d1928;border:1px solid #dce8f1;box-shadow:0 24px 60px rgba(20,60,100,.14)}
+.tilt{transform:perspective(2400px) rotateX(14deg) rotateY(-16deg) rotateZ(2deg)}
+.tiltR{transform:perspective(2400px) rotateX(10deg) rotateY(16deg) rotateZ(-2deg)}
+.plane{transform:perspective(2600px) rotateX(16deg) rotateZ(-4deg) scale(1.06);transform-origin:50% 60%}
+.blurfg{filter:blur(7px);opacity:.75}
+.mono{font-family:'Geist Mono',monospace}
+.h1{font-weight:700;letter-spacing:-1.5px;line-height:1.04}
+.pill{display:inline-block;font-family:'Geist Mono',monospace;font-size:19px;letter-spacing:2px;text-transform:uppercase;
+ padding:8px 16px;border-radius:8px;background:rgba(67,164,220,.15);color:#3d7fa8}
+.lbl{font-size:18px;letter-spacing:3px;text-transform:uppercase;color:#43a4dc;font-weight:600}
+.btn{display:inline-block;padding:18px 40px;border-radius:12px;font-size:28px;font-weight:600}
+.btn.o{background:#ec6408;color:#fff;box-shadow:0 14px 34px rgba(236,100,8,.35)}
+.btn.g{border:1.5px solid #c7d6e1;color:#eaf4fb;background:#fff}
+.node{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:16px;padding:14px 24px 14px 14px;border-radius:16px;
+ font-size:27px;font-weight:600;white-space:nowrap;background:#0d1928;border:1.5px solid #d6e4ee;box-shadow:0 16px 40px rgba(20,60,100,.16)}
+.node .ic{width:52px;height:52px;border-radius:12px;background:rgba(67,164,220,.15);display:grid;place-items:center}
+.node small{display:block;font-family:'Geist Mono',monospace;font-size:16px;color:#8fb3cb;margin-top:3px;font-weight:400}
+.node.on{border-color:#43a4dc;box-shadow:0 0 0 6px rgba(67,164,220,.15),0 18px 44px rgba(67,164,220,.35)}
+.node.o{border-color:#ec6408;box-shadow:0 0 0 6px rgba(236,100,8,.12),0 18px 44px rgba(236,100,8,.28)}
+.node.o .ic{background:#fdeee3}
+.node.dim{opacity:.45;box-shadow:0 8px 20px rgba(20,60,100,.06)}
+.tag{display:inline-block;font-family:'Geist Mono',monospace;font-size:17px;padding:6px 12px;border-radius:8px;background:rgba(67,164,220,.15);color:#2f6f97;margin-right:8px}
+.cursor{position:absolute;width:46px;height:46px;filter:drop-shadow(0 6px 10px rgba(0,0,0,.25))}
+.step{position:absolute;left:110px;top:96px;display:flex;align-items:center;gap:22px}
+.step .n{width:78px;height:78px;border-radius:50%;display:grid;place-items:center;font-size:40px;font-weight:700;background:#43a4dc;color:#fff;box-shadow:0 14px 34px rgba(67,164,220,.5)}
+.step .t{font-size:44px;font-weight:700}
+.ring{position:absolute;border-radius:50%;border:2px solid rgba(67,164,220,.35);transform:translate(-50%,-50%)}
+.streak{position:absolute;height:5px;border-radius:3px;background:linear-gradient(90deg,rgba(67,164,220,0),#43a4dc);box-shadow:0 0 18px #43a4dc}
+
+body{color:#eaf4fb!important;background:#04070d!important}
+.bg{background:radial-gradient(1000px 700px at 85% 10%,rgba(67,164,220,.30),transparent 70%),radial-gradient(900px 700px at 5% 100%,rgba(67,164,220,.18),transparent 70%),linear-gradient(180deg,#060b15,#03060b)!important}
+.dots{background-image:radial-gradient(rgba(67,164,220,.28) 1.4px,transparent 1.6px)!important}
+.panel{background:linear-gradient(135deg,#0b1726 0%,#0f2a44 50%,#1b5a86 100%)!important;box-shadow:0 40px 90px rgba(0,0,0,.6),0 0 80px rgba(67,164,220,.15)!important}
+.card{background:linear-gradient(160deg,rgba(22,38,58,.96),rgba(10,18,30,.96))!important;border-color:rgba(120,195,240,.28)!important;box-shadow:0 30px 70px rgba(0,0,0,.6)!important}
+.node{background:#0d1928!important;border-color:rgba(120,195,240,.35)!important;box-shadow:0 16px 40px rgba(0,0,0,.5)!important}
+.node.on{border-color:#43a4dc!important;box-shadow:0 0 0 6px rgba(67,164,220,.18),0 0 40px rgba(67,164,220,.55)!important}
+.node.o{border-color:#ec6408!important;box-shadow:0 0 0 6px rgba(236,100,8,.15),0 0 40px rgba(236,100,8,.5)!important}
+.node .ic{background:rgba(67,164,220,.15)!important}.node.o .ic{background:rgba(236,100,8,.15)!important}
+.node small{color:#8fb3cb!important}
+.btn.g{background:transparent!important;color:#eaf4fb!important;border-color:rgba(255,255,255,.35)!important}
+.pill,.tag{background:rgba(67,164,220,.16)!important;color:#a9d6f2!important}
+svg[stroke="#0d1620"]{stroke:#eaf4fb}
+.blurfg{opacity:.35!important}
+</style></head><body><div class="bg"></div><div class="dots"></div><div class="card tilt" style="left:120px;top:110px;width:980px;height:860px;padding:60px"><span class="pill" style="background:rgba(34,181,115,.18);color:#5fe0a4">Ready for production?</span><div style="display:flex;align-items:center;gap:28px;margin-top:30px;opacity:1;transform:translateX(0px)"><div style="width:66px;height:66px;border-radius:16px;background:#22b573;border:3px solid #22b573;display:grid;place-items:center"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><div style="font-size:48px;font-weight:600"><span class="mono" style="color:#43a4dc;font-size:28px;margin-right:18px">01</span>Shows the path</div></div><div style="display:flex;align-items:center;gap:28px;margin-top:30px;opacity:1;transform:translateX(0px)"><div style="width:66px;height:66px;border-radius:16px;background:#22b573;border:3px solid #22b573;display:grid;place-items:center"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><div style="font-size:48px;font-weight:600"><span class="mono" style="color:#43a4dc;font-size:28px;margin-right:18px">02</span>Current context</div></div><div style="display:flex;align-items:center;gap:28px;margin-top:30px;opacity:1;transform:translateX(0px)"><div style="width:66px;height:66px;border-radius:16px;background:#22b573;border:3px solid #22b573;display:grid;place-items:center"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><div style="font-size:48px;font-weight:600"><span class="mono" style="color:#43a4dc;font-size:28px;margin-right:18px">03</span>Policies built in</div></div><div style="display:flex;align-items:center;gap:28px;margin-top:30px;opacity:1;transform:translateX(0px)"><div style="width:66px;height:66px;border-radius:16px;background:#22b573;border:3px solid #22b573;display:grid;place-items:center"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><div style="font-size:48px;font-weight:600"><span class="mono" style="color:#43a4dc;font-size:28px;margin-right:18px">04</span>Knows when to hand off</div></div><div style="display:flex;align-items:center;gap:28px;margin-top:30px;opacity:1;transform:translateX(0px)"><div style="width:66px;height:66px;border-radius:16px;background:#22b573;border:3px solid #22b573;display:grid;place-items:center"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><div style="font-size:48px;font-weight:600"><span class="mono" style="color:#43a4dc;font-size:28px;margin-right:18px">05</span>Replayable</div></div></div><div style="position:absolute;left:1180px;top:340px;width:680px;height:400px;background:radial-gradient(closest-side,rgba(67,164,220,.30),transparent)"></div><img src="../logo_white.png" style="position:absolute;left:1230px;top:490px;width:580px"></body></html>
