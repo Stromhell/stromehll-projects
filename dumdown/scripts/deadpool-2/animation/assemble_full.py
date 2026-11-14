@@ -5,7 +5,7 @@
 import json, subprocess, sys, os, wave
 sys.path.insert(0, 'gags'); from gags_data import G
 SCR = os.environ.get('SCR', '/tmp/dp2work')
-OUT = f'{SCR}/full/DumDown_Deadpool2_FULL_v1.mp4'; os.makedirs(f'{SCR}/full', exist_ok=True)
+OUT = f'{SCR}/full/DumDown_Deadpool2_FULL_v2.mp4'; os.makedirs(f'{SCR}/full', exist_ok=True)
 def dur(f): return float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', f], capture_output=True, text=True).stdout)
 segs = []  # (video, audio, start_frame, n_frames)
 for n in range(19):
