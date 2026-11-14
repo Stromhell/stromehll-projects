@@ -40,7 +40,7 @@ th{{font-size:14px;letter-spacing:2px;text-transform:uppercase;color:#43a4dc}}
 .sw{{width:150px;height:110px;border-radius:12px}}
 """
 def hdr(title, right): return f'<div class="hdr"><div class="t"><img src="build/icon_color.png">{title}</div><div class="r">{right}</div></div>'
-def foot(n): return f'<div class="foot"><span>TIGERGRAPH.COM | AGENTIC AI · SCRIPT 3 · STORYBOARD v3</span><span>{n}</span></div>'
+def foot(n): return f'<div class="foot" style="border-top:none;justify-content:flex-end"><span>{n}</span></div>'
 
 pages = []
 # cover: matches the brand guideline cover (TG Blue field, light wordmark-style title, rule + date, white logo)
