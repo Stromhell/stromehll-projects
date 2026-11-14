@@ -1,0 +1,12 @@
+<html><head><link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet"></head><body style="margin:0"><canvas id="c" width="1920" height="1080"></canvas><script>
+(async()=>{await document.fonts.load('200px Anton');const c=document.getElementById('c'),x=c.getContext('2d');const im=new Image();im.src='c.jpg';await im.decode();
+const s=1080/768,w=1376*s;x.drawImage(im,1920-w+90,0,w,1080);
+let g=x.createLinearGradient(0,0,1000,0);g.addColorStop(0,'rgba(4,6,14,.97)');g.addColorStop(0.62,'rgba(4,6,14,.95)');g.addColorStop(0.8,'rgba(4,6,14,.5)');g.addColorStop(1,'rgba(4,6,14,0)');x.fillStyle=g;x.fillRect(0,0,1000,1080);
+function txt(t,X,Y,size,fill,rot){x.save();x.translate(X,Y);x.rotate(rot);x.font=size+'px Anton';x.lineJoin='round';
+x.shadowColor='rgba(0,0,0,.8)';x.shadowOffsetX=10;x.shadowOffsetY=12;x.lineWidth=size*0.12;x.strokeStyle='#000';x.strokeText(t,0,0);x.shadowColor='transparent';
+if(fill==='red'){const gg=x.createLinearGradient(0,-size,0,0);gg.addColorStop(0,'#ff6a5a');gg.addColorStop(1,'#d3121c');x.fillStyle=gg;}else x.fillStyle=fill;x.fillText(t,0,0);x.restore();}
+txt('DARK',70,330,250,'#ffffff',-0.035);
+txt('SIDE',70,590,250,'red',-0.035);
+x.save();x.translate(80,660);x.rotate(-0.035);x.fillStyle='#ffd23a';x.strokeStyle='#000';x.lineWidth=9;x.beginPath();x.rect(0,0,640,130);x.fill();x.stroke();x.font='96px Anton';x.fillStyle='#111';x.fillText('OF CREDIT CARDS',24,104);x.restore();
+window.done=1;})();
+</script></body></html>

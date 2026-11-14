@@ -1,0 +1,7 @@
+window.CAST = {
+ pip: {name:'Pip Tumble', skin:'#f1c9a0', freckles:true, hair:{style:'tuft',color:'#1e1612'}, hat:{type:'cap',color:'#5b6e4e'}, top:{type:'shorts',color:'#c2372d',accent:'#2b2523'}, legs:{color:'#2b2523'}, shoes:{color:'#7a2d22',sole:'#e8dcc0'}},
+ mabel: {name:'Mabel Cork', skin:'#e8b183', head:{shape:'round',w:1,h:1}, hair:{style:'braids',color:'#3a2418',ribbon:'#e3c77a'}, top:{type:'dress',color:'#4f7f86',accent:'#f6ecd2',pattern:'dots'}, legs:{color:'#e8b183',len:0.95,w:0.8}, shoes:{color:'#1e1612',sole:'#8a6a46'}, eyeSize:1.08},
+ wendell: {name:'Count Wendell Fogg', skin:'#efd8b8', head:{shape:'long',w:0.9,h:1.05}, nose:'long', hair:{style:'slick',color:'#1e1612'}, hat:{type:'top',color:'#1e1612',band:'#8a2f3c'}, body:{shape:'slim',w:0.95,h:1.05}, top:{type:'tux',color:'#24303a',accent:'#8a8a8a'}, legs:{color:'#24303a',len:1.25,w:0.85}, tie:'bow', tieColor:'#d9a23a', shoes:{color:'#1e1612',sole:'#d9b45a'}},
+ gus: {name:'Big Gus Barrel', skin:'#b97d52', head:{shape:'bean',w:1.05,h:0.98}, nose:'bulb', ears:'big', hair:{style:'bald',color:'#1e1612'}, hat:{type:'bowler',color:'#3b2a22',band:'#c2372d'}, body:{shape:'barrel',w:1.1,h:1.05}, top:{type:'overalls',color:'#2f4d6b',accent:'#e3c77a'}, legs:{color:'#2f4d6b',len:0.85,w:1.3}, arms:{w:1.25}, gloveSize:1.12},
+ dot: {name:'Dot Okafor', skin:'#6a4129', hair:{style:'curls',color:'#1e1612'}, hat:{type:'boater',color:'#e3c77a',band:'#c2372d'}, top:{type:'tee',color:'#d9a23a',accent:'#c2372d',emblem:'bolt'}, legs:{color:'#24303a'}, shoes:{color:'#2a1d17',sole:'#e8dcc0'}, blush:true}
+};
