@@ -7,14 +7,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&display=block');
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{width:1920px;height:1080px;overflow:hidden}
-body{font-family:Urbane,sans-serif;color:#0d1620;background:#fff;position:relative}
+body{font-family:Urbane,sans-serif;color:#eaf4fb;background:#0b2038;position:relative}
 .bg{position:absolute;inset:0;background:
  radial-gradient(1000px 700px at 85% 10%,rgba(67,164,220,.20),transparent 70%),
  radial-gradient(900px 700px at 5% 100%,rgba(67,164,220,.14),transparent 70%),#fff}
 .dots{position:absolute;inset:0;background-image:radial-gradient(rgba(67,164,220,.35) 1.4px,transparent 1.6px);background-size:36px 36px;
  mask-image:radial-gradient(circle at 70% 40%,#000 0%,transparent 65%)}
 .panel{position:absolute;border-radius:32px;background:linear-gradient(135deg,#eef6fc 0%,#cfe5f4 45%,#93c6e8 100%);box-shadow:0 40px 90px rgba(30,90,140,.18)}
-.card{position:absolute;border-radius:20px;background:#fff;border:1px solid #dce8f1;box-shadow:0 24px 60px rgba(20,60,100,.14)}
+.card{position:absolute;border-radius:20px;background:#0b2038;border:1px solid #cfe2ef;box-shadow:0 24px 60px rgba(20,60,100,.14),0 0 0 1px rgba(67,164,220,.10),0 0 46px rgba(67,164,220,.30)}
 .tilt{transform:perspective(2400px) rotateX(14deg) rotateY(-16deg) rotateZ(2deg)}
 .tiltR{transform:perspective(2400px) rotateX(10deg) rotateY(16deg) rotateZ(-2deg)}
 .plane{transform:perspective(2600px) rotateX(16deg) rotateZ(-4deg) scale(1.06);transform-origin:50% 60%}
@@ -22,24 +22,39 @@ body{font-family:Urbane,sans-serif;color:#0d1620;background:#fff;position:relati
 .mono{font-family:'Geist Mono',monospace}
 .h1{font-weight:700;letter-spacing:-1.5px;line-height:1.04}
 .pill{display:inline-block;font-family:'Geist Mono',monospace;font-size:19px;letter-spacing:2px;text-transform:uppercase;
- padding:8px 16px;border-radius:8px;background:#e8f2f9;color:#3d7fa8}
+ padding:8px 16px;border-radius:8px;background:rgba(67,164,220,.18);color:#3d7fa8}
 .lbl{font-size:18px;letter-spacing:3px;text-transform:uppercase;color:#43a4dc;font-weight:600}
 .btn{display:inline-block;padding:18px 40px;border-radius:12px;font-size:28px;font-weight:600}
 .btn.o{background:#ec6408;color:#fff;box-shadow:0 14px 34px rgba(236,100,8,.35)}
-.btn.g{border:1.5px solid #c7d6e1;color:#0d1620;background:#fff}
+.btn.g{border:1.5px solid #c7d6e1;color:#eaf4fb;background:#fff}
 .node{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:16px;padding:14px 24px 14px 14px;border-radius:16px;
- font-size:27px;font-weight:600;white-space:nowrap;background:#fff;border:1.5px solid #d6e4ee;box-shadow:0 16px 40px rgba(20,60,100,.16)}
-.node .ic{width:52px;height:52px;border-radius:12px;background:#eaf3fa;display:grid;place-items:center}
-.node small{display:block;font-family:'Geist Mono',monospace;font-size:16px;color:#6a8396;margin-top:3px;font-weight:400}
+ font-size:27px;font-weight:600;white-space:nowrap;background:#0b2038;border:1.5px solid #cfe2ef;box-shadow:0 16px 40px rgba(20,60,100,.16),0 0 34px rgba(67,164,220,.30)}
+.node .ic{width:52px;height:52px;border-radius:12px;background:rgba(67,164,220,.18);display:grid;place-items:center}
+.node small{display:block;font-family:'Geist Mono',monospace;font-size:16px;color:#8fb3cb;margin-top:3px;font-weight:400}
 .node.on{border-color:#43a4dc;box-shadow:0 0 0 6px rgba(67,164,220,.15),0 18px 44px rgba(67,164,220,.35)}
 .node.o{border-color:#ec6408;box-shadow:0 0 0 6px rgba(236,100,8,.12),0 18px 44px rgba(236,100,8,.28)}
 .node.o .ic{background:#fdeee3}
 .node.dim{opacity:.45;box-shadow:0 8px 20px rgba(20,60,100,.06)}
-.tag{display:inline-block;font-family:'Geist Mono',monospace;font-size:17px;padding:6px 12px;border-radius:8px;background:#e8f2f9;color:#2f6f97;margin-right:8px}
+.tag{display:inline-block;font-family:'Geist Mono',monospace;font-size:17px;padding:6px 12px;border-radius:8px;background:rgba(67,164,220,.18);color:#2f6f97;margin-right:8px}
 .cursor{position:absolute;width:46px;height:46px;filter:drop-shadow(0 6px 10px rgba(0,0,0,.25))}
 .step{position:absolute;left:110px;top:96px;display:flex;align-items:center;gap:22px}
 .step .n{width:78px;height:78px;border-radius:50%;display:grid;place-items:center;font-size:40px;font-weight:700;background:#43a4dc;color:#fff;box-shadow:0 14px 34px rgba(67,164,220,.5)}
 .step .t{font-size:44px;font-weight:700}
 .ring{position:absolute;border-radius:50%;border:2px solid rgba(67,164,220,.35);transform:translate(-50%,-50%)}
 .streak{position:absolute;height:5px;border-radius:3px;background:linear-gradient(90deg,rgba(67,164,220,0),#43a4dc);box-shadow:0 0 18px #43a4dc}
-</style></head><body><div class="bg"></div><div class="dots"></div><svg style="position:absolute;inset:0;overflow:visible" width="1920" height="1080"><defs><filter id="gl" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><path d="M1250,200 C1365.0,200 1365.0,330 1480,330" stroke="#43a4dc" stroke-width="3.5" fill="none" filter="url(#gl)"/><circle cx="1392" cy="293" r="7" fill="#fff" stroke="#43a4dc" stroke-width="3" filter="url(#gl)"/><path d="M1480,330 C1590.0,330 1590.0,220 1700,220" stroke="#43a4dc" stroke-width="3.5" fill="none" filter="url(#gl)"/><circle cx="1615" cy="251" r="7" fill="#fff" stroke="#43a4dc" stroke-width="3" filter="url(#gl)"/><path d="M1480,330 C1550.0,330 1550.0,520 1620,520" stroke="#43a4dc" stroke-width="3.5" fill="none" filter="url(#gl)"/><circle cx="1566" cy="466" r="7" fill="#fff" stroke="#43a4dc" stroke-width="3" filter="url(#gl)"/><path d="M1620,520 C1720.0,520 1720.0,640 1820,640" stroke="#c9d8e3" stroke-width="2.5" fill="none" stroke-dasharray="2 8" stroke-linecap="round"/></svg><div style="position:absolute;left:1234px;top:184px;width:32px;height:32px;border-radius:50%;background:#fff;border:4px solid #43a4dc;box-shadow:0 0 22px #43a4dc"></div><div style="position:absolute;left:1464px;top:314px;width:32px;height:32px;border-radius:50%;background:#fff;border:4px solid #43a4dc;box-shadow:0 0 22px #43a4dc"></div><div style="position:absolute;left:1684px;top:204px;width:32px;height:32px;border-radius:50%;background:#fff;border:4px solid #43a4dc;box-shadow:0 0 22px #43a4dc"></div><div style="position:absolute;left:1604px;top:504px;width:32px;height:32px;border-radius:50%;background:#fff;border:4px solid #ec6408;box-shadow:0 0 22px #ec6408"></div><div style="position:absolute;left:1804px;top:624px;width:32px;height:32px;border-radius:50%;background:#fff;border:4px solid #c9d8e3;box-shadow:0 0 22px #c9d8e3"></div><img src="../logo_color.png" style="position:absolute;left:110px;top:90px;height:64px"><div style="position:absolute;left:110px;top:360px;width:1480px"><span class="pill">Agentic AI · Part 3</span><div class="h1" style="font-size:112px;margin-top:30px">Can You Trust Your AI Agent with <span style="color:#43a4dc">Multi-hop</span> Decision-making Tasks?</div></div></body></html>
+
+body{color:#eaf4fb}
+.bg{background:radial-gradient(1100px 760px at 82% 12%,rgba(67,164,220,.34),transparent 70%),radial-gradient(900px 700px at 8% 100%,rgba(236,100,8,.10),transparent 70%),linear-gradient(160deg,#0a2647 0%,#061a33 45%,#030c18 100%)}
+.dots{background-image:radial-gradient(rgba(120,195,240,.30) 1.4px,transparent 1.6px)}
+.panel{background:linear-gradient(135deg,#0c2440 0%,#103a62 55%,#1d6aa0 100%);box-shadow:0 40px 90px rgba(0,0,0,.55),0 0 90px rgba(67,164,220,.30)}
+.card{background:linear-gradient(160deg,rgba(20,44,72,.97),rgba(8,22,40,.97))!important;border-color:rgba(120,195,240,.45)!important;box-shadow:0 30px 70px rgba(0,0,0,.55),0 0 0 1px rgba(67,164,220,.25),0 0 60px rgba(67,164,220,.40)}
+.node{background:#0b2038;border-color:rgba(120,195,240,.5);box-shadow:0 16px 40px rgba(0,0,0,.5),0 0 40px rgba(67,164,220,.45)}
+.node.on{border-color:#43a4dc;box-shadow:0 0 0 6px rgba(67,164,220,.2),0 0 60px rgba(67,164,220,.75)}
+.node.o{border-color:#ec6408;box-shadow:0 0 0 6px rgba(236,100,8,.18),0 0 60px rgba(236,100,8,.65)}
+.node .ic{background:rgba(67,164,220,.18)}.node.o .ic{background:rgba(236,100,8,.18)}
+.node small{color:#8fb3cb}
+.btn.g{background:transparent;color:#eaf4fb;border-color:rgba(255,255,255,.4)}
+.pill,.tag{background:rgba(67,164,220,.18);color:#a9d6f2}
+svg[stroke="#0d1620"]{stroke:#eaf4fb}
+.blurfg{opacity:.35}
+</style></head><body><div class="bg"></div><div class="dots"></div><svg style="position:absolute;inset:0;overflow:visible" width="1920" height="1080"><defs><filter id="gl" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><path d="M1250,200 C1365.0,200 1365.0,330 1480,330" stroke="#43a4dc" stroke-width="3.5" fill="none" filter="url(#gl)"/><circle cx="1392" cy="293" r="7" fill="#0b2038" stroke="#43a4dc" stroke-width="3" filter="url(#gl)"/><path d="M1480,330 C1590.0,330 1590.0,220 1700,220" stroke="#43a4dc" stroke-width="3.5" fill="none" filter="url(#gl)"/><circle cx="1615" cy="251" r="7" fill="#0b2038" stroke="#43a4dc" stroke-width="3" filter="url(#gl)"/><path d="M1480,330 C1550.0,330 1550.0,520 1620,520" stroke="#43a4dc" stroke-width="3.5" fill="none" filter="url(#gl)"/><circle cx="1566" cy="466" r="7" fill="#0b2038" stroke="#43a4dc" stroke-width="3" filter="url(#gl)"/><path d="M1620,520 C1720.0,520 1720.0,640 1820,640" stroke="#c9d8e3" stroke-width="2.5" fill="none" stroke-dasharray="2 8" stroke-linecap="round"/></svg><div style="position:absolute;left:1234px;top:184px;width:32px;height:32px;border-radius:50%;background:#0b2038;border:4px solid #43a4dc;box-shadow:0 0 22px #43a4dc"></div><div style="position:absolute;left:1464px;top:314px;width:32px;height:32px;border-radius:50%;background:#0b2038;border:4px solid #43a4dc;box-shadow:0 0 22px #43a4dc"></div><div style="position:absolute;left:1684px;top:204px;width:32px;height:32px;border-radius:50%;background:#0b2038;border:4px solid #43a4dc;box-shadow:0 0 22px #43a4dc"></div><div style="position:absolute;left:1604px;top:504px;width:32px;height:32px;border-radius:50%;background:#0b2038;border:4px solid #ec6408;box-shadow:0 0 22px #ec6408"></div><div style="position:absolute;left:1804px;top:624px;width:32px;height:32px;border-radius:50%;background:#0b2038;border:4px solid #c9d8e3;box-shadow:0 0 22px #c9d8e3"></div><img src="../logo_white.png" style="position:absolute;left:110px;top:90px;height:64px"><div style="position:absolute;left:110px;top:360px;width:1480px"><span class="pill">Agentic AI · Part 3</span><div class="h1" style="font-size:112px;margin-top:30px">Can You Trust Your AI Agent with <span style="color:#43a4dc">Multi-hop</span> Decision-making Tasks?</div></div></body></html>

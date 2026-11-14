@@ -5,8 +5,21 @@
   "dur": 12.4,
   "vo": "If you're a developer, I've got a question for you… It's 2 a.m and your AI agent wants to roll back a change in production. Do you click approve?",
   "sup": "02:06 · Approve rollback?",
-  "visual": "Ops console in TigerGraph's product style (white UI on a blue gradient panel), 2:06 a.m. Latency spikes orange. The agent's plan pops up in an approval box: \"Roll back config change.\" Cursor hovers over Approve.",
-  "motion": "Open on an extreme close-up of the clock flipping 02:05 → 02:06, whip-pull back to reveal the tilted console swinging into place; latency bars shoot up and turn orange; the approval card springs forward out of the screen toward camera (overshoot + soft shadow); cursor glides in and hovers, Approve button breathes."
+  "visual": "Ops console in TigerGraph's product style (glowing UI cards on a deep-navy stage), 2:06 a.m. Latency spikes orange. The agent's plan pops up in an approval box: \"Roll back config change.\" Cursor hovers over Approve.",
+  "motion": "Open on an extreme close-up of the clock flipping 02:05 → 02:06, whip-pull back to reveal the tilted console swinging into place; latency bars shoot up and turn orange; the approval card springs forward out of the screen toward camera (overshoot + soft shadow); cursor glides in and hovers, Approve button breathes.",
+  "theme": "dark",
+  "frames": [
+   {
+    "file": "f01a",
+    "label": "Cold open",
+    "note": "Extreme close-up: the clock flips 02:05 → 02:06; an orange alert ripple pulses out and the SEV-1 chip slides in. Whip-pull back to the console (next frame)."
+   },
+   {
+    "file": "f01b",
+    "label": "Key frame",
+    "note": "Open on an extreme close-up of the clock flipping 02:05 → 02:06, whip-pull back to reveal the tilted console swinging into place; latency bars shoot up and turn orange; the approval card springs forward out of the screen toward camera (overshoot + soft shadow); cursor glides in and hovers, Approve button breathes."
+   }
+  ]
  },
  {
   "n": 2,
@@ -15,7 +28,15 @@
   "vo": "Most agents give you an answer and a \"confidence score\". But confidence isn't evidence. You can't audit a percentage.",
   "sup": "Confidence ≠ evidence",
   "visual": "Close-up: the approval box shows only an answer and \"Confidence: 92%\". The 92% is hollow: nothing behind it.",
-  "motion": "Camera crashes into the card; 92% counts up 0 → 92 with a ticking SFX; on \"isn't evidence\" a magnifier sweeps over the number and finds nothing (empty dashed box), the % cracks and drops out of frame."
+  "motion": "Camera crashes into the card; 92% counts up 0 → 92 with a ticking SFX; on \"isn't evidence\" a magnifier sweeps over the number and finds nothing (empty dashed box), the % cracks and drops out of frame.",
+  "theme": "dark",
+  "frames": [
+   {
+    "file": "f02",
+    "label": "Key frame",
+    "note": "Camera crashes into the card; 92% counts up 0 → 92 with a ticking SFX; on \"isn't evidence\" a magnifier sweeps over the number and finds nothing (empty dashed box), the % cracks and drops out of frame."
+   }
+  ]
  },
  {
   "n": 3,
@@ -23,8 +44,16 @@
   "dur": 4.0,
   "vo": "(music sting, no VO)",
   "sup": "Can You Trust Your AI Agent with Multi-hop Decision-making Tasks?",
-  "visual": "Title card on white with the brand node texture.",
-  "motion": "Nodes fly in from depth and lock into a network behind the text; the title builds word by word with a slight 3D rotate-in; \"Multi-hop\" lights TG Blue as a light pulse hops across three nodes."
+  "visual": "Title card on deep navy with the brand node texture; 'Multi-hop' in TG Blue.",
+  "motion": "Nodes fly in from depth and lock into a network behind the text; the title builds word by word with a slight 3D rotate-in; \"Multi-hop\" lights TG Blue as a light pulse hops across three nodes.",
+  "theme": "dark",
+  "frames": [
+   {
+    "file": "f03",
+    "label": "Key frame",
+    "note": "Nodes fly in from depth and lock into a network behind the text; the title builds word by word with a slight 3D rotate-in; \"Multi-hop\" lights TG Blue as a light pulse hops across three nodes."
+   }
+  ]
  },
  {
   "n": 4,
@@ -33,7 +62,15 @@
   "vo": "So what does it take for an agent to show its evidence? A black box gives you an answer, but a glass box gives you the answer AND the path behind it: which facts it used, how they connect, which rules it checked, and in what order.",
   "sup": "Black box: answer + score · Glass box: answer + path",
   "visual": "Two cubes face off in 3D. Left: a solid black box that only outputs an answer and a score. Right: a clear glass box with the same answer plus a visible path of linked facts inside.",
-  "motion": "Both cubes drop in and slowly rotate; the black box stays opaque and spits out a score tag; the glass box turns transparent and the path inside lights node by node on \"facts… connect… rules… order\", each with a soft click SFX. Camera orbits slightly between them."
+  "motion": "Both cubes drop in and slowly rotate; the black box stays opaque and spits out a score tag; the glass box turns transparent and the path inside lights node by node on \"facts… connect… rules… order\", each with a soft click SFX. Camera orbits slightly between them.",
+  "theme": "blue",
+  "frames": [
+   {
+    "file": "f04",
+    "label": "Key frame",
+    "note": "Both cubes drop in and slowly rotate; the black box stays opaque and spits out a score tag; the glass box turns transparent and the path inside lights node by node on \"facts… connect… rules… order\", each with a soft click SFX. Camera orbits slightly between them."
+   }
+  ]
  },
  {
   "n": 5,
@@ -42,7 +79,20 @@
   "vo": "The model predicts. And the graph proves.",
   "sup": "The model predicts. The graph proves.",
   "visual": "Kinetic typography: the line resolves on screen.",
-  "motion": "\"The model predicts.\" types on in grey, slightly out of focus; camera racks focus down to \"The graph proves.\" whose letters assemble from flying graph nodes; an orange underline whips across; a brief light flare passes over \"graph\"."
+  "motion": "\"The model predicts.\" types on in grey, slightly out of focus; camera racks focus down to \"The graph proves.\" whose letters assemble from flying graph nodes; an orange underline whips across; a brief light flare passes over \"graph\".",
+  "theme": "dark",
+  "frames": [
+   {
+    "file": "f05a",
+    "label": "Line 1",
+    "note": "\"The model predicts.\" types on alone, centred, then lifts and blurs as the camera racks down to line 2."
+   },
+   {
+    "file": "f05b",
+    "label": "Key frame",
+    "note": "\"The model predicts.\" types on in grey, slightly out of focus; camera racks focus down to \"The graph proves.\" whose letters assemble from flying graph nodes; an orange underline whips across; a brief light flare passes over \"graph\"."
+   }
+  ]
  },
  {
   "n": 6,
@@ -51,7 +101,15 @@
   "vo": "Let's open the trail behind that rollback with this readiness checklist:",
   "sup": "Evidence trail",
   "visual": "The approval box unfolds into an evidence trail panel (animated product UI).",
-  "motion": "The approval card flips 180° in 3D; its back unfolds downward like an accordion into the evidence trail; the console behind falls away into blur; a scan line sweeps the panel and step 1 starts glowing."
+  "motion": "The approval card flips 180° in 3D; its back unfolds downward like an accordion into the evidence trail; the console behind falls away into blur; a scan line sweeps the panel and step 1 starts glowing.",
+  "theme": "dark",
+  "frames": [
+   {
+    "file": "f06",
+    "label": "Key frame",
+    "note": "The approval card flips 180° in 3D; its back unfolds downward like an accordion into the evidence trail; the console behind falls away into blur; a scan line sweeps the panel and step 1 starts glowing."
+   }
+  ]
  },
  {
   "n": 7,
@@ -60,7 +118,20 @@
   "vo": "Step one: The alert traces to the Payments API, which depends on one database cluster.",
   "sup": "1 · Alert → Payments API → DB cluster",
   "visual": "Step 1 lights up: Alert → Payments API → Database cluster, on a tilted graph plane.",
-  "motion": "Camera dolly-tracks left → right along the plane; the alert node pulses orange, a light pulse shoots along the edge to Payments API (whoosh), then on to the DB cluster; each node pops up out of the plane (scale 0.8 → 1 with overshoot)."
+  "motion": "Camera dolly-tracks left → right along the plane; the alert node pulses orange, a light pulse shoots along the edge to Payments API (whoosh), then on to the DB cluster; each node pops up out of the plane (scale 0.8 → 1 with overshoot).",
+  "theme": "light",
+  "frames": [
+   {
+    "file": "f07a",
+    "label": "Alert fires",
+    "note": "The alert node lands on the plane with a shockwave; the other nodes are still faint ghosts waiting to be traced."
+   },
+   {
+    "file": "f07b",
+    "label": "Key frame",
+    "note": "Camera dolly-tracks left → right along the plane; the alert node pulses orange, a light pulse shoots along the edge to Payments API (whoosh), then on to the DB cluster; each node pops up out of the plane (scale 0.8 → 1 with overshoot)."
+   }
+  ]
  },
  {
   "n": 8,
@@ -69,7 +140,15 @@
   "vo": "Step two: That cluster had a configuration change at 1:44 am, twenty minutes before the slowdown began. Every fact carries its source and its timestamp.",
   "sup": "2 · Config change, 1:44 a.m. · source + time on every fact",
   "visual": "Step 2: Config change #4471, applied 1:44 a.m., drops onto the cluster. A timestamp and source tag sit beside it; a timeline shows the 20-minute gap.",
-  "motion": "Config node slams down from above with a dust-ring ripple; source + timestamp tags flip open like labels; a timeline scrubber races 01:44 → 02:04 under the graph and stamps \"+20 min\"."
+  "motion": "Config node slams down from above with a dust-ring ripple; source + timestamp tags flip open like labels; a timeline scrubber races 01:44 → 02:04 under the graph and stamps \"+20 min\".",
+  "theme": "light",
+  "frames": [
+   {
+    "file": "f08",
+    "label": "Key frame",
+    "note": "Config node slams down from above with a dust-ring ripple; source + timestamp tags flip open like labels; a timeline scrubber races 01:44 → 02:04 under the graph and stamps \"+20 min\"."
+   }
+  ]
  },
  {
   "n": 9,
@@ -78,7 +157,15 @@
   "vo": "Step three: The same cluster feeds checkout and refunds, and twelve premium customers are affected. Now that's an impact, not a guess.",
   "sup": "3 · Checkout, Refunds · 12 premium accounts",
   "visual": "Step 3: the path branches out to Checkout, Refunds and 12 premium accounts.",
-  "motion": "Three branches burst out of the cluster like a shockwave (ring ripples); the camera pulls up to a top-down angle; the '12' counter rolls up on the premium node, which flares orange."
+  "motion": "Three branches burst out of the cluster like a shockwave (ring ripples); the camera pulls up to a top-down angle; the '12' counter rolls up on the premium node, which flares orange.",
+  "theme": "light",
+  "frames": [
+   {
+    "file": "f09",
+    "label": "Key frame",
+    "note": "Three branches burst out of the cluster like a shockwave (ring ripples); the camera pulls up to a top-down angle; the '12' counter rolls up on the premium node, which flares orange."
+   }
+  ]
  },
  {
   "n": 10,
@@ -87,7 +174,20 @@
   "vo": "Step four: Before acting, this agent checked your rollback policy, which lives in the graph alongside the data. The change is under an hour old. Premium customers are at risk. The rule allows it.",
   "sup": "4 · Policy checked ✓",
   "visual": "Step 4: a policy card plugs into the path: \"Auto-rollback allowed when the change is under 1 hour old and premium SLAs are at risk.\" A green tick.",
-  "motion": "The policy card spins in from screen right and docks onto the graph like a puzzle piece; the two conditions tick one by one on the VO; a big green tick stamps with a satisfying click and a soft glow wave washes over the path."
+  "motion": "The policy card spins in from screen right and docks onto the graph like a puzzle piece; the two conditions tick one by one on the VO; a big green tick stamps with a satisfying click and a soft glow wave washes over the path.",
+  "theme": "dark",
+  "frames": [
+   {
+    "file": "f10a",
+    "label": "Policy flies in",
+    "note": "The policy card whips in from screen right with motion streaks and a slight spin, about to dock onto the path."
+   },
+   {
+    "file": "f10b",
+    "label": "Key frame",
+    "note": "The policy card spins in from screen right and docks onto the graph like a puzzle piece; the two conditions tick one by one on the VO; a big green tick stamps with a satisfying click and a soft glow wave washes over the path."
+   }
+  ]
  },
  {
   "n": 11,
@@ -96,7 +196,15 @@
   "vo": "And step five: the agent says what it doesn't know. It found no evidence on the refunds data, so it asked a human to check.",
   "sup": "5 · Gap flagged → human check",
   "visual": "Step 5: an amber flag on Refunds: \"No evidence on whether the change touched the refunds schema. Human check recommended.\"",
-  "motion": "The Refunds node glitches/flickers; a dashed amber ring scans around it; the flag card unfolds from the node; a human avatar slides in and the handoff arrow draws from agent to human."
+  "motion": "The Refunds node glitches/flickers; a dashed amber ring scans around it; the flag card unfolds from the node; a human avatar slides in and the handoff arrow draws from agent to human.",
+  "theme": "light",
+  "frames": [
+   {
+    "file": "f11",
+    "label": "Key frame",
+    "note": "The Refunds node glitches/flickers; a dashed amber ring scans around it; the flag card unfolds from the node; a human avatar slides in and the handoff arrow draws from agent to human."
+   }
+  ]
  },
  {
   "n": 12,
@@ -105,7 +213,20 @@
   "vo": "Now you're not trusting a score. You're approving a decision you can read. And six months from now, when someone asks why, the same trail is still there to replay.",
   "sup": "Approve with evidence · Replay it later",
   "visual": "The full trail on one card; cursor clicks Approve and it locks as \"signed\". Then a calendar flips forward six months and an auditor replays the same trail, unchanged.",
-  "motion": "Click: ripple burst + confirm chime, a lock icon snaps shut on the trail. Whip-pan right as calendar pages tear off in a flurry (NOV → MAY); the auditor's window swings in from depth and a play scrubber replays the trail, nodes re-lighting in order."
+  "motion": "Click: ripple burst + confirm chime, a lock icon snaps shut on the trail. Whip-pan right as calendar pages tear off in a flurry (NOV → MAY); the auditor's window swings in from depth and a play scrubber replays the trail, nodes re-lighting in order.",
+  "theme": "dark",
+  "frames": [
+   {
+    "file": "f12a",
+    "label": "Key frame",
+    "note": "Click: ripple burst + confirm chime, a lock icon snaps shut on the trail. Whip-pan right as calendar pages tear off in a flurry (NOV → MAY); the auditor's window swings in from depth and a play scrubber replays the trail, nodes re-lighting in order."
+   },
+   {
+    "file": "f12b",
+    "label": "Six months later",
+    "note": "After the calendar flurry, the auditor's window fills the frame: the same trail replays node by node, unchanged, with the original sign-off stamp."
+   }
+  ]
  },
  {
   "n": 13,
@@ -114,7 +235,15 @@
   "vo": "You might ask, \"why does this need a graph?\" Because vector search can only tell you which passages looked similar to the question. It can't tell you why they matter to the decision.",
   "sup": "Similar ≠ explained",
   "visual": "Split: vector search shows three loose text chunks with similarity scores. Graph search shows the connected path.",
-  "motion": "Left: chunks drop in, scores count up, then drift apart with no links (floaty, unanchored). Right: the demo path draws itself in one continuous stroke and settles firmly. A big '≠' slams in between with a bass hit."
+  "motion": "Left: chunks drop in, scores count up, then drift apart with no links (floaty, unanchored). Right: the demo path draws itself in one continuous stroke and settles firmly. A big '≠' slams in between with a bass hit.",
+  "theme": "light",
+  "frames": [
+   {
+    "file": "f13",
+    "label": "Key frame",
+    "note": "Left: chunks drop in, scores count up, then drift apart with no links (floaty, unanchored). Right: the demo path draws itself in one continuous stroke and settles firmly. A big '≠' slams in between with a bass hit."
+   }
+  ]
  },
  {
   "n": 14,
@@ -123,7 +252,15 @@
   "vo": "In a graph search, the customers, systems, changes and rules are connected explicitly. So the path the agent followed is pretty clear. Nothing has to be reconstructed after the fact.",
   "sup": "The path is the explanation",
   "visual": "The path from the demo, now with every connection labelled (customers, systems, changes, rules).",
-  "motion": "Low-angle camera glides along the tilted path like a fly-through; each relationship label flips up as the light pulse passes it; legend chips pop in at the end and the whole graph settles into a hero composition."
+  "motion": "Low-angle camera glides along the tilted path like a fly-through; each relationship label flips up as the light pulse passes it; legend chips pop in at the end and the whole graph settles into a hero composition.",
+  "theme": "dark",
+  "frames": [
+   {
+    "file": "f14",
+    "label": "Key frame",
+    "note": "Low-angle camera glides along the tilted path like a fly-through; each relationship label flips up as the light pulse passes it; legend chips pop in at the end and the whole graph settles into a hero composition."
+   }
+  ]
  },
  {
   "n": 15,
@@ -132,7 +269,15 @@
   "vo": "Your policies sit in the graph too, as guardrails. So when an agent refuses to act, it can explain that as well.",
   "sup": "Guardrails with reasons",
   "visual": "Policy cards slot into the graph as guardrails; one blocks an agent action and shows the reason.",
-  "motion": "Policy cards fly in and lock onto the graph rails with a magnetic snap; the agent's action arrow races toward the guardrail, hits it and bounces back with a shake; the 'Blocked' card expands and the reason types on."
+  "motion": "Policy cards fly in and lock onto the graph rails with a magnetic snap; the agent's action arrow races toward the guardrail, hits it and bounces back with a shake; the 'Blocked' card expands and the reason types on.",
+  "theme": "light",
+  "frames": [
+   {
+    "file": "f15",
+    "label": "Key frame",
+    "note": "Policy cards fly in and lock onto the graph rails with a magnetic snap; the agent's action arrow races toward the guardrail, hits it and bounces back with a shake; the 'Blocked' card expands and the reason types on."
+   }
+  ]
  },
  {
   "n": 16,
@@ -140,8 +285,21 @@
   "dur": 6.3,
   "vo": "And in regulated industries, explaining automated decisions is becoming a requirement, not a nice-to-have.",
   "sup": "Explainability: from best practice to requirement",
-  "visual": "Montage of three regulated sectors drawn as TigerGraph-style line icons (black + TG Blue): a bank, a hospital, a government building. Each carries a small evidence-trail badge. No specific regulation is named.",
-  "motion": "Icons draw on stroke by stroke (line-reveal) in quick succession with a camera slide across; small trail badges pop under each; the cards slide into a tilted row and a blue light sweep runs across all three."
+  "visual": "Hub-and-orbit composition on TG Blue: an 'Explainable decisions' shield hub at the centre, with Banking, Healthcare and Government as glowing circle nodes (brand line icons) orbiting at different depths, linked by orange edges. Small proof chips float around them. No regulation named.",
+  "motion": "Shield hub drops in and pulses; orbit rings spin up; the three sector nodes swing in along the orbit (big Banking passes close to camera, Government sits far back, out of focus); edges fire outward from the hub; proof chips pop on with a stagger; camera arcs 15° around the hub throughout so nothing is static.",
+  "theme": "blue",
+  "frames": [
+   {
+    "file": "f16a",
+    "label": "Hub forms",
+    "note": "The shield hub drops in and pulses; dashed orbit slots show where the three sectors will swing in; edges start firing outward."
+   },
+   {
+    "file": "f16b",
+    "label": "Key frame",
+    "note": "Shield hub drops in and pulses; orbit rings spin up; the three sector nodes swing in along the orbit (big Banking passes close to camera, Government sits far back, out of focus); edges fire outward from the hub; proof chips pop on with a stagger; camera arcs 15° around the hub throughout so nothing is static."
+   }
+  ]
  },
  {
   "n": 17,
@@ -150,7 +308,15 @@
   "vo": "So before you trust an agent with multi-step decisions, run this checklist.",
   "sup": "Readiness checklist",
   "visual": "A five-item readiness checklist builds one line at a time.",
-  "motion": "The card swings in from a 3D angle and flattens; each line slides in from the right with a stagger, its tick-box drawing itself and filling TG Blue as it's named; the camera slowly pushes in."
+  "motion": "The card swings in from a 3D angle and flattens; each line slides in from the right with a stagger, its tick-box drawing itself and filling TG Blue as it's named; the camera slowly pushes in.",
+  "theme": "light",
+  "frames": [
+   {
+    "file": "f17",
+    "label": "Key frame",
+    "note": "The card swings in from a 3D angle and flattens; each line slides in from the right with a stagger, its tick-box drawing itself and filling TG Blue as it's named; the camera slowly pushes in."
+   }
+  ]
  },
  {
   "n": 18,
@@ -159,7 +325,20 @@
   "vo": "If you can't tick all five, the agent isn't ready for production. But TigerGraph is built to tick them all.",
   "sup": "Ready for production?",
   "visual": "All five ticks turn green next to the TigerGraph logo.",
-  "motion": "Ticks flip to green in a fast domino cascade with rising pitch SFX; the card slides left and tilts away; the TigerGraph logo builds on the right (tiger head draws on, wordmark wipes in) with a soft blue bloom."
+  "motion": "Ticks flip to green in a fast domino cascade with rising pitch SFX; the card slides left and tilts away; the TigerGraph logo builds on the right (tiger head draws on, wordmark wipes in) with a soft blue bloom.",
+  "theme": "dark",
+  "frames": [
+   {
+    "file": "f18a",
+    "label": "Key frame",
+    "note": "Ticks flip to green in a fast domino cascade with rising pitch SFX; the card slides left and tilts away; the TigerGraph logo builds on the right (tiger head draws on, wordmark wipes in) with a soft blue bloom."
+   },
+   {
+    "file": "f18b",
+    "label": "Logo resolve",
+    "note": "The checklist slides away; the TigerGraph logo resolves in the centre with a green 'ready' tick badge and a blue bloom."
+   }
+  ]
  },
  {
   "n": 19,
@@ -167,7 +346,15 @@
   "dur": 7.5,
   "vo": "Regular models predict. TigerGraph proves.",
   "sup": "Regular models predict. TigerGraph proves.",
-  "visual": "End card on white: logo, tagline, CTAs \"Request a demo\" and \"Start free\", tigergraph.com.",
-  "motion": "Network texture drifts slowly behind; logo holds centre; tagline fades up word by word; CTA buttons rise with a soft bounce. Hold clean for the last 4-5 s."
+  "visual": "End card on TG Blue: white logo, tagline, CTAs \"Request a demo\" and \"Start free\", tigergraph.com.",
+  "motion": "Network texture drifts slowly behind; logo holds centre; tagline fades up word by word; CTA buttons rise with a soft bounce. Hold clean for the last 4-5 s.",
+  "theme": "blue",
+  "frames": [
+   {
+    "file": "f19",
+    "label": "Key frame",
+    "note": "Network texture drifts slowly behind; logo holds centre; tagline fades up word by word; CTA buttons rise with a soft bounce. Hold clean for the last 4-5 s."
+   }
+  ]
  }
 ]

@@ -26,7 +26,7 @@ body{{font-family:Urbane,sans-serif;color:{INK};background:#fff;position:relativ
 .dots{{position:absolute;inset:0;background-image:radial-gradient(rgba(67,164,220,.35) 1.4px,transparent 1.6px);background-size:36px 36px;
  mask-image:radial-gradient(circle at 70% 40%,#000 0%,transparent 65%)}}
 .panel{{position:absolute;border-radius:32px;background:linear-gradient(135deg,#eef6fc 0%,#cfe5f4 45%,#93c6e8 100%);box-shadow:0 40px 90px rgba(30,90,140,.18)}}
-.card{{position:absolute;border-radius:20px;background:#fff;border:1px solid #dce8f1;box-shadow:0 24px 60px rgba(20,60,100,.14)}}
+.card{{position:absolute;border-radius:20px;background:#fff;border:1px solid #cfe2ef;box-shadow:0 24px 60px rgba(20,60,100,.14),0 0 0 1px rgba(67,164,220,.10),0 0 46px rgba(67,164,220,.30)}}
 .tilt{{transform:perspective(2400px) rotateX(14deg) rotateY(-16deg) rotateZ(2deg)}}
 .tiltR{{transform:perspective(2400px) rotateX(10deg) rotateY(16deg) rotateZ(-2deg)}}
 .plane{{transform:perspective(2600px) rotateX(16deg) rotateZ(-4deg) scale(1.06);transform-origin:50% 60%}}
@@ -40,7 +40,7 @@ body{{font-family:Urbane,sans-serif;color:{INK};background:#fff;position:relativ
 .btn.o{{background:{ORANGE};color:#fff;box-shadow:0 14px 34px rgba(236,100,8,.35)}}
 .btn.g{{border:1.5px solid #c7d6e1;color:{INK};background:#fff}}
 .node{{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:16px;padding:14px 24px 14px 14px;border-radius:16px;
- font-size:27px;font-weight:600;white-space:nowrap;background:#fff;border:1.5px solid #d6e4ee;box-shadow:0 16px 40px rgba(20,60,100,.16)}}
+ font-size:27px;font-weight:600;white-space:nowrap;background:#fff;border:1.5px solid #cfe2ef;box-shadow:0 16px 40px rgba(20,60,100,.16),0 0 34px rgba(67,164,220,.30)}}
 .node .ic{{width:52px;height:52px;border-radius:12px;background:#eaf3fa;display:grid;place-items:center}}
 .node small{{display:block;font-family:'Geist Mono',monospace;font-size:16px;color:#6a8396;margin-top:3px;font-weight:400}}
 .node.on{{border-color:{BLUE};box-shadow:0 0 0 6px rgba(67,164,220,.15),0 18px 44px rgba(67,164,220,.35)}}
@@ -156,7 +156,7 @@ def scene(vo, sup, visual, motion, body, demo=False):
 # 01 hook
 scene("If you're a developer, I've got a question for you… It's 2 a.m and your AI agent wants to roll back a change in production. Do you click approve?",
  "02:06 · Approve rollback?",
- "Ops console in TigerGraph's product style (white UI on a blue gradient panel), 2:06 a.m. Latency spikes orange. The agent's plan pops up in an approval box: \"Roll back config change.\" Cursor hovers over Approve.",
+ "Ops console in TigerGraph's product style (glowing UI cards on a deep-navy stage), 2:06 a.m. Latency spikes orange. The agent's plan pops up in an approval box: \"Roll back config change.\" Cursor hovers over Approve.",
  "Open on an extreme close-up of the clock flipping 02:05 → 02:06, whip-pull back to reveal the tilted console swinging into place; latency bars shoot up and turn orange; the approval card springs forward out of the screen toward camera (overshoot + soft shadow); cursor glides in and hovers, Approve button breathes.",
  '<div class="dots"></div>' + dashboard() + approval(820, 420, rot="rotate(-3deg)") + cursor(1060, 690) +
  bokeh([(1580, 760, 360, 220, 8), (60, 40, 260, 160, -6)]))
@@ -174,7 +174,7 @@ scene("Most agents give you an answer and a \"confidence score\". But confidence
 
 # 03 title
 scene("(music sting, no VO)", "Can You Trust Your AI Agent with Multi-hop Decision-making Tasks?",
- "Title card on white with the brand node texture.",
+ "Title card on deep navy with the brand node texture; 'Multi-hop' in TG Blue.",
  "Nodes fly in from depth and lock into a network behind the text; the title builds word by word with a slight 3D rotate-in; \"Multi-hop\" lights TG Blue as a light pulse hops across three nodes.",
  '<div class="dots"></div>' + edges([((1250,200),(1480,330)),((1480,330),(1700,220)),((1480,330),(1620,520)),((1620,520),(1820,640))], dim=[3]) +
  "".join(f'<div style="position:absolute;left:{x-16}px;top:{y-16}px;width:32px;height:32px;border-radius:50%;background:#fff;border:4px solid {c};box-shadow:0 0 22px {c}"></div>'
@@ -354,18 +354,39 @@ scene("Your policies sit in the graph too, as guardrails. So when an agent refus
          for x, y, r, t in [(180, 800, -4, "rollback-001"), (560, 860, 3, "access-012"), (960, 820, -2, "pii-003")]) +
  '')
 
-# 16 regulated industries (brand-style icons, no regulation named)
+# 16 regulated industries: hub-and-orbit composition (client: v2 felt static / ppt-like)
+def cnode(x, y, d, ic, label="", ring=ORANGE, blur=0):
+    lb = f'<div style="position:absolute;left:50%;top:{d+18}px;transform:translateX(-50%);white-space:nowrap;font-size:{max(22,int(d*.17))}px;font-weight:700;color:#fff;text-shadow:0 4px 16px rgba(0,30,60,.45)">{label}</div>' if label else ""
+    return (f'<div style="position:absolute;left:{x-d/2}px;top:{y-d/2}px;width:{d}px;height:{d}px;border-radius:50%;background:#fff;border:{max(6,int(d*.05))}px solid {ring};'
+            f'box-shadow:0 0 0 {int(d*.06)}px rgba(255,255,255,.18),0 0 {int(d*.45)}px {ring},0 30px 60px rgba(4,30,60,.4);display:grid;place-items:center;filter:blur({blur}px)">'
+            f'{icon(ic, int(d*.5), 1.6)}{lb}</div>')
+HUB = (960, 520)
+def s16(stage_=2):
+    sat = [((430, 640), 300, "bank", "Banking"), ((1500, 680), 270, "hospital", "Healthcare"), ((1250, 230), 190, "gov", "Government")]
+    h = '<div class="dots"></div>'
+    h += "".join(f'<div class="ring" style="left:{HUB[0]}px;top:{HUB[1]+40}px;width:{w}px;height:{w*.36:.0f}px;border-color:rgba(255,255,255,{o});transform:translate(-50%,-50%) rotate(-8deg)"></div>' for w, o in [(900,.45),(1400,.3),(1900,.18)])
+    if stage_ >= 2:
+        h += edges([(HUB, p) for p, *_ in sat], hot=[0, 1, 2])
+    else:
+        h += ('<svg style="position:absolute;inset:0" width="1920" height="1080">' + "".join(
+            f'<path d="M{HUB[0]},{HUB[1]} L{HUB[0]+(p[0]-HUB[0])*.35:.0f},{HUB[1]+(p[1]-HUB[1])*.35:.0f}" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-dasharray="2 14"/>' for p, *_ in sat) + '</svg>')
+    h += cnode(*HUB, 260, "shield", "", BLUE)
+    h += f'<div style="position:absolute;left:{HUB[0]}px;top:{HUB[1]+160}px;transform:translateX(-50%);white-space:nowrap;font-size:40px;font-weight:700;color:#fff">Explainable decisions</div>'
+    if stage_ >= 2:
+        for (p, d, ic, lb), bl in zip(sat, [0, 0, 1.2]):
+            h += cnode(p[0], p[1], d, ic, lb, ORANGE, bl)
+        for x, y, r, t in [(170, 300, -6, "✓ why this decision"), (1560, 400, 5, "✓ policy checked"), (700, 880, -3, "✓ audit trail replayable"), (1420, 140, 4, "✓ data source + time")]:
+            h += f'<div class="card" style="left:{x}px;top:{y}px;padding:14px 22px;transform:rotate({r}deg);font-size:24px;font-weight:600;white-space:nowrap">{t}</div>'
+        h += bokeh([(1700, 860, 260, 160, 10), (-40, 80, 220, 140, -8)])
+    else:
+        for (p, d, ic, lb) in sat:
+            h += f'<div style="position:absolute;left:{p[0]-d/2}px;top:{p[1]-d/2}px;width:{d}px;height:{d}px;border-radius:50%;border:4px dashed rgba(255,255,255,.55)"></div>'
+    return h
 scene("And in regulated industries, explaining automated decisions is becoming a requirement, not a nice-to-have.",
  "Explainability: from best practice to requirement",
- "Montage of three regulated sectors drawn as TigerGraph-style line icons (black + TG Blue): a bank, a hospital, a government building. Each carries a small evidence-trail badge. No specific regulation is named.",
- "Icons draw on stroke by stroke (line-reveal) in quick succession with a camera slide across; small trail badges pop under each; the cards slide into a tilted row and a blue light sweep runs across all three.",
- '<div class="dots"></div>' +
- "".join(f'<div class="card" style="left:{170+i*540}px;top:{250+[0,-40,0][i]}px;width:480px;height:520px;transform:perspective(2000px) rotateY({[16,0,-16][i]}deg)">'
-         f'<div style="position:absolute;left:0;right:0;top:80px;display:grid;place-items:center"><div style="width:240px;height:240px;border-radius:40px;background:#eaf3fa;display:grid;place-items:center">{icon(ic, 150, 1.5)}</div></div>'
-         f'<div style="position:absolute;left:0;right:0;top:370px;text-align:center;font-size:40px;font-weight:700">{n}</div>'
-         f'<div style="position:absolute;left:0;right:0;top:432px;text-align:center"><span class="tag">✓ decision explained</span></div></div>'
-         for i, (ic, n) in enumerate([("bank", "Banking"), ("hospital", "Healthcare"), ("gov", "Government")])) +
- f'<div class="streak" style="left:170px;top:800px;width:1560px;opacity:.6"></div>')
+ "Hub-and-orbit composition on TG Blue: an 'Explainable decisions' shield hub at the centre, with Banking, Healthcare and Government as glowing circle nodes (brand line icons) orbiting at different depths, linked by orange edges. Small proof chips float around them. No regulation named.",
+ "Shield hub drops in and pulses; orbit rings spin up; the three sector nodes swing in along the orbit (big Banking passes close to camera, Government sits far back, out of focus); edges fire outward from the hub; proof chips pop on with a stagger; camera arcs 15° around the hub throughout so nothing is static.",
+ s16(2))
 
 CHECK = ["Shows the path", "Current context", "Policies built in", "Knows when to hand off", "Replayable"]
 def checklist(done, allgreen=False):
@@ -395,7 +416,7 @@ scene("If you can't tick all five, the agent isn't ready for production. But Tig
  + logo("left:1230px;top:490px;width:580px"))
 
 scene("Regular models predict. TigerGraph proves.", "Regular models predict. TigerGraph proves.",
- "End card on white: logo, tagline, CTAs \"Request a demo\" and \"Start free\", tigergraph.com.",
+ "End card on TG Blue: white logo, tagline, CTAs \"Request a demo\" and \"Start free\", tigergraph.com.",
  "Network texture drifts slowly behind; logo holds centre; tagline fades up word by word; CTA buttons rise with a soft bounce. Hold clean for the last 4-5 s.",
  '<div class="dots"></div>' + edges([((120,900),(420,800)),((420,800),(700,960)),((1300,140),(1580,260)),((1580,260),(1820,150))], dim=[0, 1, 2, 3]) +
  logo("left:50%;top:250px;width:620px;transform:translateX(-50%)") +
@@ -403,21 +424,123 @@ scene("Regular models predict. TigerGraph proves.", "Regular models predict. Tig
  '<div style="margin-top:70px;display:flex;gap:30px;justify-content:center"><span class="btn o" style="font-size:34px">Request a demo</span><span class="btn g" style="font-size:34px">Start free</span></div>'
  '<div class="mono" style="margin-top:56px;font-size:24px;color:#4d6577">tigergraph.com</div></div>')
 
+# ---------------------------------------------------------------- themes (client: mix light / deep navy / TG Blue for contrast)
+THEME = {1: "dark", 2: "dark", 3: "dark", 4: "blue", 5: "dark", 6: "dark", 7: "light", 8: "light", 9: "light", 10: "dark", 11: "light",
+         12: "dark", 13: "light", 14: "dark", 15: "light", 16: "blue", 17: "light", 18: "dark", 19: "blue"}
+DARK = """
+body{color:#eaf4fb}
+.bg{background:radial-gradient(1100px 760px at 82% 12%,rgba(67,164,220,.34),transparent 70%),radial-gradient(900px 700px at 8% 100%,rgba(236,100,8,.10),transparent 70%),linear-gradient(160deg,#0a2647 0%,#061a33 45%,#030c18 100%)}
+.dots{background-image:radial-gradient(rgba(120,195,240,.30) 1.4px,transparent 1.6px)}
+.panel{background:linear-gradient(135deg,#0c2440 0%,#103a62 55%,#1d6aa0 100%);box-shadow:0 40px 90px rgba(0,0,0,.55),0 0 90px rgba(67,164,220,.30)}
+.card{background:linear-gradient(160deg,rgba(20,44,72,.97),rgba(8,22,40,.97))!important;border-color:rgba(120,195,240,.45)!important;box-shadow:0 30px 70px rgba(0,0,0,.55),0 0 0 1px rgba(67,164,220,.25),0 0 60px rgba(67,164,220,.40)}
+.node{background:#0b2038;border-color:rgba(120,195,240,.5);box-shadow:0 16px 40px rgba(0,0,0,.5),0 0 40px rgba(67,164,220,.45)}
+.node.on{border-color:#43a4dc;box-shadow:0 0 0 6px rgba(67,164,220,.2),0 0 60px rgba(67,164,220,.75)}
+.node.o{border-color:#ec6408;box-shadow:0 0 0 6px rgba(236,100,8,.18),0 0 60px rgba(236,100,8,.65)}
+.node .ic{background:rgba(67,164,220,.18)}.node.o .ic{background:rgba(236,100,8,.18)}
+.node small{color:#8fb3cb}
+.btn.g{background:transparent;color:#eaf4fb;border-color:rgba(255,255,255,.4)}
+.pill,.tag{background:rgba(67,164,220,.18);color:#a9d6f2}
+svg[stroke="#0d1620"]{stroke:#eaf4fb}
+.blurfg{opacity:.35}
+"""
+BLUEBG = """
+body{color:#fff}
+.bg{background:radial-gradient(1000px 700px at 80% 15%,rgba(255,255,255,.30),transparent 70%),radial-gradient(900px 700px at 10% 100%,rgba(6,40,80,.45),transparent 70%),linear-gradient(135deg,#4fb0e6 0%,#2f8ccb 45%,#14609a 100%)}
+.dots{background-image:radial-gradient(rgba(255,255,255,.45) 1.4px,transparent 1.6px)}
+.card,.node{color:#0d1620}
+.card{box-shadow:0 30px 70px rgba(4,30,60,.35),0 0 50px rgba(255,255,255,.45)!important}
+.lbl{color:#fff}.card .lbl{color:#43a4dc}
+.pill{background:rgba(255,255,255,.22);color:#fff}
+.btn.g{background:transparent;color:#fff;border-color:rgba(255,255,255,.7)}
+.ring{border-color:rgba(255,255,255,.4)}
+"""
+def themed(html, th):
+    if th == "dark":
+        for a, b in [("#fff8f3", "rgba(236,100,8,.12)"), ("background:#eaf3fa", "background:rgba(67,164,220,.18)"), ("background:#e8f2f9", "background:rgba(67,164,220,.18)"),
+                     ("color:#6a8396", "color:#8fb3cb"), ("color:#4d6577", "color:#9fbcd0"), ("color:#9db0bf", "color:#5d7d97"), ("color:#0d1620", "color:#eaf4fb"),
+                     ("background:#fff;", "background:#0b2038;"), ("../logo_color.png", "../logo_white.png"),
+                     ("linear-gradient(135deg,#eef6fc,#b9dbf0)", "linear-gradient(135deg,#0f2a44,#1b5a86)"),
+                     ("rgba(255,255,255,.75),rgba(207,229,244,.55)", "rgba(67,164,220,.14),rgba(67,164,220,.04)"), ("rgba(255,255,255,.6)", "rgba(255,255,255,.04)"),
+                     ("background:#e3f6ec;color:#178a57", "background:rgba(34,181,115,.18);color:#5fe0a4"), ('fill="#fff" stroke=', 'fill="#0b2038" stroke=')]:
+            html = html.replace(a, b)
+        return html.replace("</style>", DARK + "</style>", 1)
+    if th == "blue":
+        for a, b in [("../logo_color.png", "../logo_white.png"), ("color:#4d6577;margin-top:56px", "color:#fff;margin-top:56px"),
+                     ('<span style="color:#43a4dc;font-weight:700">', '<span style="color:#fff;font-weight:700;text-decoration:underline;text-decoration-color:#ec6408;text-decoration-thickness:7px;text-underline-offset:16px">'),
+                     ("background:linear-gradient(145deg,rgba(255,255,255,.75),rgba(207,229,244,.55))", "background:linear-gradient(145deg,rgba(255,255,255,.35),rgba(255,255,255,.12))")]:
+            html = html.replace(a, b)
+        return html.replace("</style>", BLUEBG + "</style>", 1)
+    return html
+
+# ---------------------------------------------------------------- extra keyframes (client: add more frames)
+# n -> list of (position, label, motion note, body); position "before"/"after" the scene's key frame
+EXTRA = {
+ 1: [("before", "Cold open", "Extreme close-up: the clock flips 02:05 → 02:06; an orange alert ripple pulses out and the SEV-1 chip slides in. Whip-pull back to the console (next frame).",
+      '<div class="dots"></div>' + "".join(f'<div class="ring" style="left:960px;top:500px;width:{r}px;height:{r}px;border-color:rgba(236,100,8,{o})"></div>' for r, o in [(520,.6),(760,.35),(1040,.18)]) +
+      '<div class="mono" style="position:absolute;left:0;right:0;top:360px;text-align:center;font-size:250px;font-weight:500;letter-spacing:-6px;text-shadow:0 0 60px rgba(67,164,220,.7)">02:06</div>'
+      f'<div class="card" style="left:760px;top:700px;padding:18px 28px;display:flex;gap:14px;align-items:center;border-color:{ORANGE}">{icon("alert", 34)}<span style="font-size:28px;font-weight:600">SEV-1 · Checkout slowdown</span></div>'
+      + bokeh([(1500, 120, 340, 220, 8), (80, 760, 300, 200, -6)]))],
+ 5: [("before", "Line 1", "\"The model predicts.\" types on alone, centred, then lifts and blurs as the camera racks down to line 2.",
+      '<div class="dots"></div><div style="position:absolute;left:0;right:0;top:450px;text-align:center"><div class="h1" style="font-size:140px;font-weight:300">The model predicts.<span style="color:#43a4dc">|</span></div></div>')],
+ 7: [("before", "Alert fires", "The alert node lands on the plane with a shockwave; the other nodes are still faint ghosts waiting to be traced.",
+      stage(node(*PT["alert"], "Alert", "alert", "checkout slow · 02:04", "o") + "".join(f'<div class="ring" style="left:{PT["alert"][0]}px;top:{PT["alert"][1]}px;width:{r}px;height:{r*.55:.0f}px;border-color:rgba(236,100,8,{o})"></div>' for r, o in [(380,.6),(600,.35)]) +
+            node(*PT["api"], "Payments API", "api", "", "dim") + node(*PT["db"], "DB cluster", "db", "", "dim")) + step(1, "Trace the alert"))],
+ 10: [("before", "Policy flies in", "The policy card whips in from screen right with motion streaks and a slight spin, about to dock onto the path.",
+       stage(trail(4)) + step(4, "Check the policy") +
+       "".join(f'<div class="streak" style="left:{x}px;top:{y}px;width:{w}px"></div>' for x, y, w in [(1380, 640, 380), (1420, 720, 300), (1360, 800, 420)]) +
+       f'<div class="card" style="left:1100px;top:560px;width:860px;padding:34px;border-color:{GREEN};transform:rotate(9deg) scale(.92)">'
+       f'<div style="display:flex;gap:12px;align-items:center">{icon("shield", 34)}<span class="lbl" style="color:{GREEN}">Policy · rollback-001</span></div>'
+       '<div style="font-size:30px;font-weight:500;margin-top:14px;line-height:1.35">Auto-rollback allowed when the change is under 1 hour old and premium SLAs are at risk.</div></div>')],
+ 12: [("after", "Six months later", "After the calendar flurry, the auditor's window fills the frame: the same trail replays node by node, unchanged, with the original sign-off stamp.",
+       '<div class="dots"></div>' +
+       "".join(f'<div class="card" style="left:{120+i*30}px;top:{140-i*18}px;width:260px;height:300px;transform:rotate({-16+i*8}deg);opacity:{.3+i*.15}"><div style="position:absolute;inset:0;display:grid;place-items:center;font-size:84px;font-weight:700;color:#5d7d97">{m}</div></div>' for i, m in enumerate(["NOV", "JAN", "MAR"])) +
+       f'<div class="card tiltR" style="left:520px;top:150px;width:1280px;height:800px;padding:44px">'
+       f'<div style="display:flex;gap:20px;align-items:center"><div class="card" style="position:relative;width:160px;padding:16px;text-align:center;box-shadow:none"><div class="lbl" style="color:{ORANGE}">May</div><div style="font-size:66px;font-weight:700">14</div></div>'
+       '<div><span class="pill">Audit · replay</span><div style="font-size:40px;font-weight:700;margin-top:10px">Why did we roll back #4471?</div></div></div>'
+       '<div style="position:relative;margin-top:34px;height:470px;border-radius:18px;background:linear-gradient(135deg,#0f2a44,#1b5a86)">' +
+       edges([((180,330),(420,330)),((420,330),(660,330)),((660,170),(660,330)),((660,330),(900,240)),((660,330),(900,430))]).replace('width="1920" height="1080"', 'width="1180" height="470"') +
+       "".join(f'<div style="position:absolute;left:{x-16}px;top:{y-16}px;width:32px;height:32px;border-radius:50%;background:#0b2038;border:4px solid {BLUE};box-shadow:0 0 22px {BLUE}"></div>' for x, y in [(180,330),(420,330),(660,330),(660,170),(900,240),(900,430)]) +
+       f'<div style="position:absolute;left:40px;right:40px;bottom:30px;height:8px;background:rgba(255,255,255,.2);border-radius:4px"><div style="width:70%;height:100%;background:{BLUE};border-radius:4px"></div></div>'
+       f'<div class="mono" style="position:absolute;right:40px;top:30px;font-size:22px;color:#9fbcd0">{icon("lock", 26)} signed 02:07 · unchanged</div></div></div>')],
+ 16: [("before", "Hub forms", "The shield hub drops in and pulses; dashed orbit slots show where the three sectors will swing in; edges start firing outward.", s16(1))],
+ 18: [("after", "Logo resolve", "The checklist slides away; the TigerGraph logo resolves in the centre with a green 'ready' tick badge and a blue bloom.",
+       '<div class="dots"></div><div style="position:absolute;left:560px;top:260px;width:800px;height:520px;background:radial-gradient(closest-side,rgba(67,164,220,.45),transparent)"></div>'
+       + logo("left:50%;top:430px;width:760px;transform:translateX(-50%)") +
+       f'<div style="position:absolute;left:50%;top:250px;transform:translateX(-50%);display:flex;gap:16px;align-items:center;padding:14px 28px;border-radius:40px;background:rgba(34,181,115,.18);border:2px solid {GREEN};box-shadow:0 0 40px rgba(34,181,115,.5);font-size:30px;font-weight:600;color:#5fe0a4">'
+       '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#5fe0a4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>5 / 5 · ready for production</div>')],
+}
+
 # ---------------------------------------------------------------- timing + write
 def dur(vo):
     w = len(vo.replace("(music sting, no VO)", "").split())
     return max(3.5, round(w / 2.45 + 0.6, 1))  # ~147 wpm + breathing room
 
+def page(body, th):
+    html = (f'<!doctype html><html><head><meta charset="utf-8"><style>{CSS}</style></head><body>'
+            f'<div class="bg"></div>{body}</body></html>')
+    return themed(html, th)
+
+out = os.path.join(HERE, "frames")
+for f in os.listdir(out):
+    if f.endswith(".html") or f.endswith(".png"): os.remove(os.path.join(out, f))
 t = 0.0
 meta = []
+nframes = 0
 for i, s in enumerate(S, 1):
     d = dur(s["vo"]) if i != 3 else 4.0
     if i == len(S): d += 4.0  # clean end hold
     s.update(n=i, start=t, dur=d)
     t += d
-    html = (f'<!doctype html><html><head><meta charset="utf-8"><style>{CSS}</style></head><body>'
-            f'<div class="bg"></div>{s["body"]}</body></html>')
-    open(os.path.join(HERE, "frames", f"f{i:02d}.html"), "w").write(html)
-    meta.append({k: s[k] for k in ("n", "start", "dur", "vo", "sup", "visual", "motion")})
+    th = THEME[i]
+    fr = [("key", "Key frame", s["motion"], s["body"])]
+    for pos, lab, note, body in EXTRA.get(i, []):
+        (fr.insert(0, (pos, lab, note, body)) if pos == "before" else fr.append((pos, lab, note, body)))
+    flist = []
+    for k, (_, lab, note, body) in enumerate(fr):
+        name = f"f{i:02d}" + (chr(97 + k) if len(fr) > 1 else "")
+        open(os.path.join(out, name + ".html"), "w").write(page(body, th))
+        flist.append({"file": name, "label": lab, "note": note})
+        nframes += 1
+    meta.append({**{k: s[k] for k in ("n", "start", "dur", "vo", "sup", "visual", "motion")}, "theme": th, "frames": flist})
 json.dump(meta, open(os.path.join(HERE, "scenes.json"), "w"), indent=1, ensure_ascii=False)
-print(len(S), "scenes, total", round(t, 1), "s")
+print(len(S), "scenes,", nframes, "frames, total", round(t, 1), "s")

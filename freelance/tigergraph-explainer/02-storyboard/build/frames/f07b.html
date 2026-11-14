@@ -1,0 +1,45 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Urbane;font-weight:200;src:url(../../../fonts/Urbane-Extra-Light.woff2)}
+@font-face{font-family:Urbane;font-weight:300;src:url(../../../fonts/Urbane-Light.woff2)}
+@font-face{font-family:Urbane;font-weight:500;src:url(../../../fonts/Urbane-Medium.woff2)}
+@font-face{font-family:Urbane;font-weight:600;src:url(../../../fonts/Urbane-Demi-Bold.woff2)}
+@font-face{font-family:Urbane;font-weight:700;src:url(../../../fonts/Urbane-Bold.woff2)}
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&display=block');
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1920px;height:1080px;overflow:hidden}
+body{font-family:Urbane,sans-serif;color:#0d1620;background:#fff;position:relative}
+.bg{position:absolute;inset:0;background:
+ radial-gradient(1000px 700px at 85% 10%,rgba(67,164,220,.20),transparent 70%),
+ radial-gradient(900px 700px at 5% 100%,rgba(67,164,220,.14),transparent 70%),#fff}
+.dots{position:absolute;inset:0;background-image:radial-gradient(rgba(67,164,220,.35) 1.4px,transparent 1.6px);background-size:36px 36px;
+ mask-image:radial-gradient(circle at 70% 40%,#000 0%,transparent 65%)}
+.panel{position:absolute;border-radius:32px;background:linear-gradient(135deg,#eef6fc 0%,#cfe5f4 45%,#93c6e8 100%);box-shadow:0 40px 90px rgba(30,90,140,.18)}
+.card{position:absolute;border-radius:20px;background:#fff;border:1px solid #cfe2ef;box-shadow:0 24px 60px rgba(20,60,100,.14),0 0 0 1px rgba(67,164,220,.10),0 0 46px rgba(67,164,220,.30)}
+.tilt{transform:perspective(2400px) rotateX(14deg) rotateY(-16deg) rotateZ(2deg)}
+.tiltR{transform:perspective(2400px) rotateX(10deg) rotateY(16deg) rotateZ(-2deg)}
+.plane{transform:perspective(2600px) rotateX(16deg) rotateZ(-4deg) scale(1.06);transform-origin:50% 60%}
+.blurfg{filter:blur(7px);opacity:.75}
+.mono{font-family:'Geist Mono',monospace}
+.h1{font-weight:700;letter-spacing:-1.5px;line-height:1.04}
+.pill{display:inline-block;font-family:'Geist Mono',monospace;font-size:19px;letter-spacing:2px;text-transform:uppercase;
+ padding:8px 16px;border-radius:8px;background:#e8f2f9;color:#3d7fa8}
+.lbl{font-size:18px;letter-spacing:3px;text-transform:uppercase;color:#43a4dc;font-weight:600}
+.btn{display:inline-block;padding:18px 40px;border-radius:12px;font-size:28px;font-weight:600}
+.btn.o{background:#ec6408;color:#fff;box-shadow:0 14px 34px rgba(236,100,8,.35)}
+.btn.g{border:1.5px solid #c7d6e1;color:#0d1620;background:#fff}
+.node{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:16px;padding:14px 24px 14px 14px;border-radius:16px;
+ font-size:27px;font-weight:600;white-space:nowrap;background:#fff;border:1.5px solid #cfe2ef;box-shadow:0 16px 40px rgba(20,60,100,.16),0 0 34px rgba(67,164,220,.30)}
+.node .ic{width:52px;height:52px;border-radius:12px;background:#eaf3fa;display:grid;place-items:center}
+.node small{display:block;font-family:'Geist Mono',monospace;font-size:16px;color:#6a8396;margin-top:3px;font-weight:400}
+.node.on{border-color:#43a4dc;box-shadow:0 0 0 6px rgba(67,164,220,.15),0 18px 44px rgba(67,164,220,.35)}
+.node.o{border-color:#ec6408;box-shadow:0 0 0 6px rgba(236,100,8,.12),0 18px 44px rgba(236,100,8,.28)}
+.node.o .ic{background:#fdeee3}
+.node.dim{opacity:.45;box-shadow:0 8px 20px rgba(20,60,100,.06)}
+.tag{display:inline-block;font-family:'Geist Mono',monospace;font-size:17px;padding:6px 12px;border-radius:8px;background:#e8f2f9;color:#2f6f97;margin-right:8px}
+.cursor{position:absolute;width:46px;height:46px;filter:drop-shadow(0 6px 10px rgba(0,0,0,.25))}
+.step{position:absolute;left:110px;top:96px;display:flex;align-items:center;gap:22px}
+.step .n{width:78px;height:78px;border-radius:50%;display:grid;place-items:center;font-size:40px;font-weight:700;background:#43a4dc;color:#fff;box-shadow:0 14px 34px rgba(67,164,220,.5)}
+.step .t{font-size:44px;font-weight:700}
+.ring{position:absolute;border-radius:50%;border:2px solid rgba(67,164,220,.35);transform:translate(-50%,-50%)}
+.streak{position:absolute;height:5px;border-radius:3px;background:linear-gradient(90deg,rgba(67,164,220,0),#43a4dc);box-shadow:0 0 18px #43a4dc}
+</style></head><body><div class="bg"></div><div class="dots"></div><div class="panel plane" style="left:120px;top:210px;width:1700px;height:760px;opacity:.55"></div><div class="plane" style="position:absolute;inset:0"><svg style="position:absolute;inset:0;overflow:visible" width="1920" height="1080"><defs><filter id="gl" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><path d="M330,520 C560.0,520 560.0,520 790,520" stroke="#43a4dc" stroke-width="3.5" fill="none" filter="url(#gl)"/><circle cx="613" cy="520" r="7" fill="#fff" stroke="#43a4dc" stroke-width="3" filter="url(#gl)"/><path d="M790,520 C1020.0,520 1020.0,520 1250,520" stroke="#43a4dc" stroke-width="3.5" fill="none" filter="url(#gl)"/><circle cx="1073" cy="520" r="7" fill="#fff" stroke="#43a4dc" stroke-width="3" filter="url(#gl)"/></svg><div class="node o" style="left:330px;top:520px"><div class="ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#0d1620" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9.5 17h-19z" stroke="#ec6408"/><path d="M12 10v4M12 17.5v.5"/></svg></div><div>Alert<small>checkout slow · 02:04</small></div></div><div class="node on" style="left:790px;top:520px"><div class="ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#0d1620" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l3 3-3 3M12 15h5" stroke="#43a4dc"/></svg></div><div>Payments API</div></div><div class="node on" style="left:1250px;top:520px"><div class="ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#0d1620" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5.5" rx="8" ry="2.8"/><path d="M4 5.5v13c0 1.5 3.6 2.8 8 2.8s8-1.3 8-2.8v-13"/><path d="M4 12c0 1.5 3.6 2.8 8 2.8s8-1.3 8-2.8" stroke="#43a4dc"/></svg></div><div>DB cluster<small>pg-pay-03</small></div></div></div><div class="step"><div class="n">1</div><div class="t">Trace the alert</div></div><div class="card blurfg" style="left:1600px;top:820px;width:340px;height:200px;transform:rotate(6deg)"></div></body></html>

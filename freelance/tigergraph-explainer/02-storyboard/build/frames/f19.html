@@ -14,7 +14,7 @@ body{font-family:Urbane,sans-serif;color:#0d1620;background:#fff;position:relati
 .dots{position:absolute;inset:0;background-image:radial-gradient(rgba(67,164,220,.35) 1.4px,transparent 1.6px);background-size:36px 36px;
  mask-image:radial-gradient(circle at 70% 40%,#000 0%,transparent 65%)}
 .panel{position:absolute;border-radius:32px;background:linear-gradient(135deg,#eef6fc 0%,#cfe5f4 45%,#93c6e8 100%);box-shadow:0 40px 90px rgba(30,90,140,.18)}
-.card{position:absolute;border-radius:20px;background:#fff;border:1px solid #dce8f1;box-shadow:0 24px 60px rgba(20,60,100,.14)}
+.card{position:absolute;border-radius:20px;background:#fff;border:1px solid #cfe2ef;box-shadow:0 24px 60px rgba(20,60,100,.14),0 0 0 1px rgba(67,164,220,.10),0 0 46px rgba(67,164,220,.30)}
 .tilt{transform:perspective(2400px) rotateX(14deg) rotateY(-16deg) rotateZ(2deg)}
 .tiltR{transform:perspective(2400px) rotateX(10deg) rotateY(16deg) rotateZ(-2deg)}
 .plane{transform:perspective(2600px) rotateX(16deg) rotateZ(-4deg) scale(1.06);transform-origin:50% 60%}
@@ -28,7 +28,7 @@ body{font-family:Urbane,sans-serif;color:#0d1620;background:#fff;position:relati
 .btn.o{background:#ec6408;color:#fff;box-shadow:0 14px 34px rgba(236,100,8,.35)}
 .btn.g{border:1.5px solid #c7d6e1;color:#0d1620;background:#fff}
 .node{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:16px;padding:14px 24px 14px 14px;border-radius:16px;
- font-size:27px;font-weight:600;white-space:nowrap;background:#fff;border:1.5px solid #d6e4ee;box-shadow:0 16px 40px rgba(20,60,100,.16)}
+ font-size:27px;font-weight:600;white-space:nowrap;background:#fff;border:1.5px solid #cfe2ef;box-shadow:0 16px 40px rgba(20,60,100,.16),0 0 34px rgba(67,164,220,.30)}
 .node .ic{width:52px;height:52px;border-radius:12px;background:#eaf3fa;display:grid;place-items:center}
 .node small{display:block;font-family:'Geist Mono',monospace;font-size:16px;color:#6a8396;margin-top:3px;font-weight:400}
 .node.on{border-color:#43a4dc;box-shadow:0 0 0 6px rgba(67,164,220,.15),0 18px 44px rgba(67,164,220,.35)}
@@ -42,4 +42,14 @@ body{font-family:Urbane,sans-serif;color:#0d1620;background:#fff;position:relati
 .step .t{font-size:44px;font-weight:700}
 .ring{position:absolute;border-radius:50%;border:2px solid rgba(67,164,220,.35);transform:translate(-50%,-50%)}
 .streak{position:absolute;height:5px;border-radius:3px;background:linear-gradient(90deg,rgba(67,164,220,0),#43a4dc);box-shadow:0 0 18px #43a4dc}
-</style></head><body><div class="bg"></div><div class="dots"></div><svg style="position:absolute;inset:0;overflow:visible" width="1920" height="1080"><defs><filter id="gl" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><path d="M120,900 C270.0,900 270.0,800 420,800" stroke="#c9d8e3" stroke-width="2.5" fill="none" stroke-dasharray="2 8" stroke-linecap="round"/><path d="M420,800 C560.0,800 560.0,960 700,960" stroke="#c9d8e3" stroke-width="2.5" fill="none" stroke-dasharray="2 8" stroke-linecap="round"/><path d="M1300,140 C1440.0,140 1440.0,260 1580,260" stroke="#c9d8e3" stroke-width="2.5" fill="none" stroke-dasharray="2 8" stroke-linecap="round"/><path d="M1580,260 C1700.0,260 1700.0,150 1820,150" stroke="#c9d8e3" stroke-width="2.5" fill="none" stroke-dasharray="2 8" stroke-linecap="round"/></svg><img src="../logo_color.png" style="position:absolute;left:50%;top:250px;width:620px;transform:translateX(-50%)"><div style="position:absolute;left:0;right:0;top:470px;text-align:center"><div class="h1" style="font-size:78px;font-weight:500">Regular models predict. <span style="color:#43a4dc;font-weight:700">TigerGraph proves.</span></div><div style="margin-top:70px;display:flex;gap:30px;justify-content:center"><span class="btn o" style="font-size:34px">Request a demo</span><span class="btn g" style="font-size:34px">Start free</span></div><div class="mono" style="margin-top:56px;font-size:24px;color:#4d6577">tigergraph.com</div></div></body></html>
+
+body{color:#fff}
+.bg{background:radial-gradient(1000px 700px at 80% 15%,rgba(255,255,255,.30),transparent 70%),radial-gradient(900px 700px at 10% 100%,rgba(6,40,80,.45),transparent 70%),linear-gradient(135deg,#4fb0e6 0%,#2f8ccb 45%,#14609a 100%)}
+.dots{background-image:radial-gradient(rgba(255,255,255,.45) 1.4px,transparent 1.6px)}
+.card,.node{color:#0d1620}
+.card{box-shadow:0 30px 70px rgba(4,30,60,.35),0 0 50px rgba(255,255,255,.45)!important}
+.lbl{color:#fff}.card .lbl{color:#43a4dc}
+.pill{background:rgba(255,255,255,.22);color:#fff}
+.btn.g{background:transparent;color:#fff;border-color:rgba(255,255,255,.7)}
+.ring{border-color:rgba(255,255,255,.4)}
+</style></head><body><div class="bg"></div><div class="dots"></div><svg style="position:absolute;inset:0;overflow:visible" width="1920" height="1080"><defs><filter id="gl" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><path d="M120,900 C270.0,900 270.0,800 420,800" stroke="#c9d8e3" stroke-width="2.5" fill="none" stroke-dasharray="2 8" stroke-linecap="round"/><path d="M420,800 C560.0,800 560.0,960 700,960" stroke="#c9d8e3" stroke-width="2.5" fill="none" stroke-dasharray="2 8" stroke-linecap="round"/><path d="M1300,140 C1440.0,140 1440.0,260 1580,260" stroke="#c9d8e3" stroke-width="2.5" fill="none" stroke-dasharray="2 8" stroke-linecap="round"/><path d="M1580,260 C1700.0,260 1700.0,150 1820,150" stroke="#c9d8e3" stroke-width="2.5" fill="none" stroke-dasharray="2 8" stroke-linecap="round"/></svg><img src="../logo_white.png" style="position:absolute;left:50%;top:250px;width:620px;transform:translateX(-50%)"><div style="position:absolute;left:0;right:0;top:470px;text-align:center"><div class="h1" style="font-size:78px;font-weight:500">Regular models predict. <span style="color:#fff;font-weight:700;text-decoration:underline;text-decoration-color:#ec6408;text-decoration-thickness:7px;text-underline-offset:16px">TigerGraph proves.</span></div><div style="margin-top:70px;display:flex;gap:30px;justify-content:center"><span class="btn o" style="font-size:34px">Request a demo</span><span class="btn g" style="font-size:34px">Start free</span></div><div class="mono" style="margin-top:56px;font-size:24px;color:#4d6577">tigergraph.com</div></div></body></html>
