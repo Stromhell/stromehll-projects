@@ -1,0 +1,7 @@
+// Act 17: GHOST AGATHA
+window.ACT = { timing: window.TIMING, shots: [
+ { p: 0, plate: 'ri_bedroom', title: ['PART 17', 'Ghost Agatha'], cam: { z: [1.2, 1.3], x: 1280, y: 820 }, props: [{ k: 'aura', x: 1650, y: 900, col: '160,220,255', s: .8 }], chars: [{ c: 'billy', x: 950, y: 1270, s: 1.36, view: 'threequarter', expr: 'shock' }, { c: 'agathaGhost', x: 1650, y: 1240, s: 1.42, view: 'threequarter', dir: -1, expr: 'smug', pose: 'wave', ghost: .62 }], pops: [{ t: '"Boo."', at: 3 }] },
+ { p: 0, f: .3, plate: 'ri_bedroom', cam: { z: [1.5, 1.65], x: 1100, y: 780 }, props: [{ k: 'redSparks', x: 1000, y: 900, col: '255,60,80', r: 400 }], chars: [{ c: 'billy', x: 1000, y: 1270, s: 1.36, view: 'threequarter', expr: 'angry', pose: 'point', talk: true }, { c: 'agathaGhost', x: 1500, y: 1240, s: 1.42, view: 'threequarter', dir: -1, expr: 'deadpan', ghost: .62 }], pops: [{ t: 'Banishing spell: FAILED', at: 1.5 }] },
+ { p: 0, f: .55, plate: 'ri_bedroom', cam: { z: [1.6, 1.75], x: 1400, y: 760 }, chars: [{ c: 'agathaGhost', x: 1400, y: 1240, s: 1.42, view: 'threequarter', dir: -1, expr: 'sad', ghost: .62 }], pops: [{ t: 'Scared to face Nicky', at: .8 }] },
+ { p: 0, f: .78, plate: 'ri_bedroom', cam: { z: [1.35, 1.45], x: 1280, y: 800 }, chars: [{ c: 'billy', x: 1050, y: 1270, s: 1.36, view: 'threequarter', expr: 'smile', pose: 'thumbsUp' }, { c: 'agathaGhost', x: 1550, y: 1240, s: 1.42, view: 'threequarter', dir: -1, expr: 'smug', ghost: .62 }], big: ['COVEN OF TWO', .3, 4, '#c89aff'] },
+]};
