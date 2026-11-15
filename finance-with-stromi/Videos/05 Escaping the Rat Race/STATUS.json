@@ -1,12 +1,12 @@
 {
  "channel": "finance",
  "video": "05 Escaping the Rat Race",
- "state": "waiting_approval",
+ "state": "booked",
  "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ87e2Z2cCFV1ZXSAAoEFV5NF",
- "feedback": true,
+ "feedback": false,
  "queue_pos": null,
- "booked_for": null,
- "zernio_post": null,
- "updated": "2026-11-15T14:05Z",
- "note": "v4 (6 review fixes) + kit shared; waiting for Pushpam OK; book 21 Nov 16:00 UTC"
+ "booked_for": "2026-11-21T16:00Z",
+ "zernio_post": "6af9bc80f145948f64a622fe",
+ "updated": "2026-11-15T14:20Z",
+ "note": "Pushpam OK 15 Nov 14:05 UTC on v4; booked on Finance Zernio"
 }
