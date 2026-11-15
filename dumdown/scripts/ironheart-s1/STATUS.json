@@ -1,0 +1,12 @@
+{
+ "channel": "dumdown",
+ "video": "ironheart-s1",
+ "state": "booked",
+ "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ8VENmxyoCURFbGwj4v2veH6",
+ "feedback": false,
+ "queue_pos": null,
+ "booked_for": "2026-11-21T16:00Z",
+ "zernio_post": null,
+ "updated": "2026-11-15T15:20:54+00:00",
+ "note": "Pushpam allowed building Ironheart alongside Rat Race (15 Nov 11:12 UTC, one-time exception to the one-video rule) | 15 Nov 12:48 UTC: Rat Race moved to waiting_approval, so Ironheart is now the one video in making (no exception needed). | 15 Nov 14:50 UTC: full v3 (17:23) + launch kit https://claude.ai/artifact/S4Pt9zRHynPAMuuSLvCKYk sent for OK. Video Drive 1rAICZryjLBTpH1X2uBWskgNWuOv1w493. Earliest slot Sat 21 Nov 16:00 UTC. | BOOKED 21 Nov 16:00 UTC, Zernio post 6af9cd98f354bd89ed6a0661 (Pushpam OK 15 Nov 15:16 UTC)."
+}
