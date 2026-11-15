@@ -1,0 +1,8 @@
+// Act 18: AFTER
+window.ACT = { timing: window.TIMING, shots: [
+ { p: 0, plate: 'tva_office', cam: { z: [1.25, 1.35], x: 1280, y: 790 }, chars: [{ c: 'paradoxHurt', x: 1200, y: 1270, s: 1.45, view: 'threequarter', expr: 'sad' }, { c: 'tvaSoldier', x: 1650, y: 1270, s: 1.4, view: 'threequarter', dir: -1, expr: 'deadpan' }], pops: [{ t: 'PARADOX: ARRESTED', at: .5, dur: 2.4 }] },
+ { p: 0, f: .4, plate: 'tva_office', cam: { z: [1.3, 1.4], x: 1280, y: 790 }, chars: [{ c: 'wade', x: 1000, y: 1270, s: 1.45, view: 'threequarter', expr: 'excited', pose: 'fistPump' }, { c: 'logan', x: 1500, y: 1270, s: 1.45, view: 'threequarter', dir: -1, expr: 'smile' }], big: ['WORLD: NOT DYING', .3, 3, '#7aff9a'] },
+ { p: 0, f: .72, plate: 'tva_office', cam: { z: [1.55, 1.65], x: 1500, y: 780 }, chars: [{ c: 'logan', x: 1500, y: 1270, s: 1.5, view: 'threequarter', dir: -1, expr: 'sad' }], pops: [{ t: 'NOTHING TO FIX', at: .4, dur: 2.6 }] },
+ { p: 1, plate: 'apt_warm', cam: { z: [1.05, 1.15], x: 1280, y: 800 }, props: [{ k: 'table', x: 1280, y: 1180, w: 1200 }, { k: 'dog', x: 1900, y: 1270, s: .9, dir: -1 }], chars: [{ c: 'blindAl', x: 650, y: 1270, s: 1.38, view: 'threequarter', expr: 'smile' }, { c: 'logan', x: 1000, y: 1270, s: 1.45, view: 'threequarter', expr: 'smile' }, { c: 'wadeFace', x: 1350, y: 1270, s: 1.45, expr: 'happy' }, { c: 'peter', x: 1650, y: 1270, s: 1.4, view: 'threequarter', dir: -1, expr: 'happy', pose: 'wave' }], grade: ['#ffb060', .12] },
+ { p: 1, f: .6, plate: 'apt_warm', cam: { z: [1.5, 1.7], x: 1350, y: 780 }, chars: [{ c: 'wadeFace', x: 1350, y: 1270, s: 1.5, expr: 'smile' }], big: ['LOOK AROUND THE TABLE', .4, 3.4, '#ffd23d'], grade: ['#ffb060', .12] },
+]};

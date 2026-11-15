@@ -1,0 +1,10 @@
+// Act 07: WOLVERINE SHOPPING
+window.ACT = { timing: window.TIMING, shots: [
+ { p: 0, plate: 'tva_office', title: ['PART 7', 'Wolverine Shopping'], cam: { z: [1.4, 1.55], x: 1280, y: 790 }, props: [{ k: 'tempad', on: 0, dy: -20, s: .8 }], chars: [{ c: 'wade', x: 1280, y: 1270, s: 1.5, expr: 'excited', talk: true }] },
+ { p: 0, f: .2, plate: 'snow_forest', cam: { z: [1.4, 1.5], x: 1280, y: 790 }, chars: [{ c: 'wade', x: 1000, y: 1270, s: 1.45, view: 'threequarter', expr: 'smile' }, { c: 'logShort', x: 1500, y: 1270, s: 1.15, view: 'threequarter', dir: -1, expr: 'angry' }], pops: [{ t: 'COMIC-ACCURATE SHORT KING', at: .3, dur: 2.4 }] },
+ { p: 0, f: .45, plate: 'road', cam: { z: [1.35, 1.45], x: 1280, y: 790 }, chars: [{ c: 'wade', x: 1000, y: 1270, s: 1.45, view: 'threequarter', expr: 'happy' }, { c: 'logBrown', x: 1500, y: 1270, s: 1.45, view: 'threequarter', dir: -1, expr: 'deadpan' }], pops: [{ t: 'CLASSIC BROWN', at: .3, dur: 2 }] },
+ { p: 0, f: .66, plate: 'rooftop_dusk', cam: { z: [1.45, 1.55], x: 1280, y: 790 }, chars: [{ c: 'wade', x: 1000, y: 1270, s: 1.45, view: 'threequarter', expr: 'shock', pose: 'think' }, { c: 'logHot', x: 1500, y: 1270, s: 1.45, view: 'threequarter', dir: -1, expr: 'smug' }], pops: [{ t: '"This feels right."', at: .4, dur: 2 }, { t: 'NOBODY WANTS TO COME', at: 3, dur: 2.2 }], grade: ['#ff9a6a', .12] },
+ { p: 1, plate: 'bar', cam: { z: [1.3, 1.45], x: 1280, y: 790 }, props: [{ k: 'bottle', on: 0, dy: -10, s: .9 }], chars: [{ c: 'logan', x: 1280, y: 1270, s: 1.5, view: 'threequarter', dir: -1, expr: 'angry' }],
+   cards: [{ c: 'logan', name: 'LOGAN', sub: 'The worst Wolverine', at: .4, side: 'L', type: 'DRUNK · ANGRY · YELLOW', stat: 'BARS BANNED FROM: ALL', items: ['🍺', '🗡️'], tags: ['GRUMPY', 'CLAWS'] }] },
+ { p: 1, f: .6, plate: 'bar', cam: { z: [1.2, 1.3], x: 1280, y: 800 }, chars: [{ c: 'wade', x: [1300, 800], y: 1270, s: 1.45, view: 'threequarter', dir: -1, expr: 'smug' }, { c: 'logan', x: [1700, 1200], y: 1270, s: 1.45, view: 'threequarter', dir: -1, expr: 'angry' }], pops: [{ t: '"Perfect."', at: .2, dur: 2 }] },
+]};

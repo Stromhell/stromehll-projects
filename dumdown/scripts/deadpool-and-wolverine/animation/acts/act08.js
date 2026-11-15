@@ -1,0 +1,8 @@
+// Act 08: THE WORST WOLVERINE
+window.ACT = { timing: window.TIMING, shots: [
+ { p: 0, plate: 'tva_office', cam: { z: [1.15, 1.3], x: 1280, y: 800 }, chars: [{ c: 'wade', x: 800, y: 1270, s: 1.45, view: 'threequarter', expr: 'excited', pose: 'hips' }, { c: 'logan', x: 1180, y: 1270, s: 1.45, view: 'threequarter', expr: 'deadpan' }, { c: 'paradox', x: 1800, y: 1270, s: 1.45, view: 'threequarter', dir: -1, expr: 'happy', talk: true }], pops: [{ t: 'TA-DA!', at: .3, dur: 1.8 }] },
+ { p: 0, f: .4, plate: 'tva_office', cam: { z: [1.55, 1.7], x: 1500, y: 780 }, chars: [{ c: 'paradox', x: 1550, y: 1270, s: 1.5, view: 'threequarter', dir: -1, expr: 'smug', talk: true, pose: 'point' }], big: ['THE WORST ONE', 1, 3.8, '#ff5a5a'] },
+ { p: 0, f: .75, plate: 'tva_office', cam: { z: [1.6, 1.7], x: 1180, y: 780 }, chars: [{ c: 'logan', x: 1180, y: 1270, s: 1.5, view: 'threequarter', expr: 'sad' }], pops: [{ t: 'FILE: [REDACTED]', at: .3, dur: 2.6 }], grade: ['#3050a0', .15] },
+ { p: 1, plate: 'tva_office', cam: { z: [1.3, 1.45], x: 1280, y: 790 }, chars: [{ c: 'wade', x: 950, y: 1270, s: 1.45, view: 'threequarter', expr: 'angry', talk: true, pose: 'point' }, { c: 'paradox', x: 1600, y: 1270, s: 1.45, view: 'threequarter', dir: -1, expr: 'nervous' }], pops: [{ t: 'BLACK BELT IN KAREN', at: 2.4, dur: 2.8 }] },
+ { p: 1, f: .62, plate: 'tva_office', cam: { z: [1.2, 1.35], x: 1280, y: 790 }, props: [{ k: 'portalRing', x: 1280, y: 980, s: 1.1 }], chars: [{ c: 'wade', x: [1050, 1200], y: 1270, s: 1.45, view: 'threequarter', expr: 'shock' }, { c: 'logan', x: [1500, 1360], y: 1270, s: 1.45, view: 'threequarter', dir: -1, expr: 'angry' }], big: ['YEET', 2, 3.6, '#ffd23d'], fx: ['whiteout'] },
+]};

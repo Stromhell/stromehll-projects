@@ -1,0 +1,11 @@
+// Act 02: THE AVENGERS JOB INTERVIEW
+window.ACT = { timing: window.TIMING, shots: [
+ { p: 0, plate: 'boardroom', title: ['PART 2', 'The Job Interview'], cam: { z: [1.15, 1.3], x: 1280, y: 800 }, chars: [{ c: 'wadeTie', x: 900, y: 1270, s: 1.45, view: 'threequarter', expr: 'excited', talk: true }, { c: 'happy', x: 1650, y: 1270, s: 1.45, view: 'threequarter', dir: -1, expr: 'deadpan' }] },
+ { p: 0, f: .55, plate: 'boardroom', cam: { z: [1.5, 1.65], x: 1500, y: 780 }, chars: [{ c: 'happy', x: 1550, y: 1270, s: 1.5, view: 'threequarter', dir: -1, expr: 'deadpan' }],
+   cards: [{ c: 'happy', name: 'HAPPY HOGAN', sub: 'Head of Hiring (somehow)', at: .3, side: 'L', type: 'FORMER DRIVER', stat: 'STILL DRIVING', items: ['🚗', '📋'], tags: ['TIRED', 'NOT IMPRESSED'] }] },
+ { p: 1, plate: 'boardroom', cam: { z: [1.3, 1.45], x: 1100, y: 790 }, props: [{ k: 'whiteboard', x: 1720, y: 700, s: .7, at: .3, lines: ['WADE W. - CV', 'Skills: stabbing', 'Team: X-Force (RIP)', 'Refs: toy Hulk hand'] }], chars: [{ c: 'wadeTie', x: 1000, y: 1270, s: 1.45, view: 'threequarter', expr: 'smile', pose: 'thumbsUp', talk: true }], pops: [{ t: 'REFERENCES: A TOY HULK HAND', at: .8, dur: 2.8 }] },
+ { p: 1, f: .5, plate: 'sky_drop', noHeadFit: true, cam: { z: [1.1, 1.3], x: 1280, y: 760 }, chars: [{ c: 'wade', x: 1280, y: [950, 1450], s: 1.4, expr: 'shock', lean: 25, pose: 'wave', noHeadFit: true }], big: ['X-FORCE: DIED ON DAY ONE', .3, 3.6, '#ff5a5a'], pops: [{ t: 'COD: GRAVITY', at: 4, dur: 2.4 }] },
+ { p: 2, plate: 'boardroom', cam: { z: [1.5, 1.7], x: 1000, y: 780 }, chars: [{ c: 'wadeTie', x: 1000, y: 1270, s: 1.5, view: 'threequarter', expr: 'sad', talk: true }], pops: [{ t: 'I NEED TO MATTER', at: 1, dur: 3 }] },
+ { p: 2, f: .45, plate: 'boardroom', cam: { z: [1.3, 1.4], x: 1280, y: 800 }, chars: [{ c: 'wadeTie', x: 900, y: 1270, s: 1.45, view: 'threequarter', expr: 'nervous' }, { c: 'happy', x: 1650, y: 1270, s: 1.45, view: 'threequarter', dir: -1, expr: 'deadpan', talk: true, pose: 'point' }], pops: [{ t: '"Aim for the middle, kid."', at: 2, dur: 3 }] },
+ { p: 2, f: .85, plate: 'boardroom', cam: { z: [1.6, 1.7], x: 1280, y: 780, shake: 4 }, chars: [{ c: 'wadeTie', x: 1280, y: 1270, s: 1.5, expr: 'shock' }], big: ['REJECTED', .1, 2.4, '#ff3a3a'], grade: ['#c3202c', .14] },
+]};

@@ -1,0 +1,11 @@
+// Act 10: CASSANDRA NOVA
+window.ACT = { timing: window.TIMING, shots: [
+ { p: 0, plate: 'skull_lair', title: ['PART 9', 'The Bald Queen'], cam: { z: [1.1, 1.25], x: 1280, y: 790 }, props: [{ k: 'aura', x: 1280, y: 900, col: '200,80,255', s: .8 }], chars: [{ c: 'cassandra', x: 1280, y: 1270, s: 1.5, expr: 'smug', pose: 'hips' }] },
+ { p: 0, f: .2, plate: 'skull_lair', cam: { z: [1.45, 1.6], x: 1400, y: 780 }, chars: [{ c: 'cassandra', x: 1450, y: 1270, s: 1.5, view: 'threequarter', dir: -1, expr: 'smug' }],
+   cards: [{ c: 'cassandra', name: 'CASSANDRA NOVA', sub: "Professor X's evil twin", at: .3, side: 'L', type: 'QUEEN OF THE VOID', stat: 'BORN: THE BACK DOOR', items: ['🧠', '💍'], tags: ['BALD', 'FINGERS'] }] },
+ { p: 0, f: .65, plate: 'skull_lair', cam: { z: [1.6, 1.75], x: 1280, y: 780 }, props: [{ k: 'aura', x: 1280, y: 900, col: '200,80,255', s: .6 }], chars: [{ c: 'cassandra', x: 1150, y: 1270, s: 1.5, view: 'threequarter', expr: 'smug', pose: 'point' }, { c: 'tvaSoldier', x: 1550, y: 1270, s: 1.45, view: 'threequarter', dir: -1, expr: 'shock' }], big: ['LIKE A BOWLING BALL', .5, 3.6, '#c89aff'] },
+ { p: 1, plate: 'skull_lair', cam: { z: [1.35, 1.5], x: 1500, y: 790 }, props: [{ k: 'aura', x: 1550, y: 950, col: '255,140,40', s: .6 }], chars: [{ c: 'johnny', x: 1550, y: 1270, s: 1.45, view: 'threequarter', dir: -1, expr: 'smug', pose: 'hips' }], pops: [{ t: 'HUMAN TORCH (FORMERLY CAPTAIN AMERICA)', at: .5, dur: 3.2 }] },
+ { p: 1, f: .3, plate: 'skull_lair', cam: { z: [1.5, 1.65], x: 1050, y: 780 }, chars: [{ c: 'wade', x: 1050, y: 1270, s: 1.5, view: 'threequarter', expr: 'smug', talk: true, pose: 'point' }], pops: [{ t: '"Johnny said WHAT about you?"', at: .5, dur: 3 }, { t: '(HE DID NOT)', at: 4.2, dur: 2.2 }] },
+ { p: 1, f: .62, plate: 'skull_lair', cam: { z: [1.3, 1.4], x: 1280, y: 790, shake: 5 }, props: [{ k: 'smoke', x: 1500, y: 1100, col: '200,120,60' }], chars: [{ c: 'cassandra', x: 1050, y: 1270, s: 1.45, view: 'threequarter', expr: 'smug' }], big: ['JOHNNY: DELETED', .3, 3, '#ff7a3a'], grade: ['#c3202c', .12] },
+ { p: 1, f: .85, plate: 'skull_lair', cam: { z: [1.55, 1.65], x: 1280, y: 780 }, chars: [{ c: 'wade', x: 1280, y: 1270, s: 1.5, expr: 'deadpan', pose: 'shrug', talk: true }], pops: [{ t: 'WE\'RE ALL GRIEVING', at: .2, dur: 2.2 }] },
+]};

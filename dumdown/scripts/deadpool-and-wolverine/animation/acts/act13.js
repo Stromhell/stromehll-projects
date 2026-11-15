@@ -1,0 +1,9 @@
+// Act 13: LOGAN'S CONFESSION
+window.ACT = { timing: window.TIMING, shots: [
+ { p: 0, plate: 'rebel_camp', title: ['PART 12', 'The Worst Wolverine'], cam: { z: [1.4, 1.55], x: 1280, y: 790 }, chars: [{ c: 'laura', x: 1050, y: 1270, s: 1.35, view: 'threequarter', expr: 'sad', talk: true }, { c: 'logan', x: 1500, y: 1270, s: 1.45, view: 'threequarter', dir: -1, expr: 'sad' }], grade: ['#1a2a6a', .25] },
+ { p: 0, f: .6, plate: 'rebel_camp', cam: { z: [1.6, 1.7], x: 1050, y: 780 }, chars: [{ c: 'laura', x: 1050, y: 1270, s: 1.4, view: 'threequarter', expr: 'sad' }], pops: [{ t: 'HE SHOWED UP', at: .3, dur: 2.4 }], grade: ['#1a2a6a', .25] },
+ { p: 1, plate: 'rebel_camp', cam: { z: [1.6, 1.75], x: 1500, y: 780 }, chars: [{ c: 'logan', x: 1500, y: 1270, s: 1.5, view: 'threequarter', dir: -1, expr: 'sad', talk: true }], grade: ['#1a2a6a', .25] },
+ { p: 1, f: .2, plate: 'mansion_hall', cam: { z: [1.15, 1.25], x: 1280, y: 800 }, chars: [{ c: 'ex1', x: 800, y: 1270, s: 1.4, view: 'threequarter', expr: 'happy', pose: 'wave' }, { c: 'ex2', x: 1150, y: 1270, s: 1.4, expr: 'happy' }, { c: 'loganDrunk', x: 1750, y: 1270, s: 1.45, view: 'threequarter', dir: -1, expr: 'angry' }], pops: [{ t: 'JOIN US! — NO.', at: .4, dur: 2.6 }], grade: ['#c8a060', .25] },
+ { p: 1, f: .45, plate: 'mansion_hall', cam: { z: [1.3, 1.4], x: 1280, y: 790 }, props: [{ k: 'smoke', x: 1280, y: 1100, col: '60,40,40' }, { k: 'flames', x: 1280, y: 1220, w: 1600, kk: .8 }], big: ['THEY WERE GONE', .5, 3.4, '#f4ecd8'], grade: ['#c3202c', .3] },
+ { p: 1, f: .7, plate: 'rebel_camp', cam: { z: [1.5, 1.6], x: 1280, y: 780 }, chars: [{ c: 'logan', x: 1280, y: 1270, s: 1.5, expr: 'sad' }], pops: [{ t: 'THE SUIT = THEIR MEMORY', at: .2, dur: 2.4 }, { t: 'REVENGE: WAY TOO MUCH', at: 3, dur: 2.6 }], grade: ['#1a2a6a', .25] },
+]};

@@ -1,0 +1,9 @@
+// Act 01: BONE NUNCHUCKS
+window.ACT = { timing: window.TIMING, shots: [
+ { p: 0, plate: 'graveyard_snow', title: ['PART 1', 'The Bone Nunchuck'], cam: { z: [1.2, 1.3], x: 1280, y: 820 }, fx: ['snow'], chars: [{ c: 'wade', x: 1280, y: 1270, s: 1.45, expr: 'smug', talk: true }],
+   cards: [{ c: 'wade', name: 'WADE WILSON', sub: 'aka Deadpool', at: .8, side: 'L', type: 'THE MERC WITH A MOUTH', stat: 'HEALING: YES · FILTER: NO', items: ['⚔️', '🌮'], tags: ['UNKILLABLE', 'ANNOYING'] }] },
+ { p: 0, f: .3, plate: 'graveyard_snow', cam: { z: [1.15, 1.25], x: 1280, y: 800 }, fx: ['snow'], props: [{ k: 'portalRing', x: 1900, y: 1000, s: .9 }], chars: [{ c: 'wade', x: 800, y: 1270, s: 1.45, view: 'threequarter', expr: 'shock' }, { c: 'tvaSoldier', x: 1650, y: 1270, s: 1.4, view: 'threequarter', dir: -1, expr: 'deadpan' }, { c: 'tvaSoldier', x: 1950, y: 1270, s: 1.4, view: 'threequarter', dir: -1, expr: 'angry', ph: .4 }], pops: [{ t: 'TIME COPS. 6 SECONDS.', at: .3, dur: 2.2 }] },
+ { p: 0, f: .6, plate: 'graveyard_snow', cam: { z: [1.35, 1.5], x: 1280, y: 790, shake: 6 }, fx: ['snow'], props: [{ k: 'bone', on: 0, dy: -60, s: 1, swing: true }, { k: 'boom', x: 1700, y: 1000, s: .5 }], chars: [{ c: 'wade', x: 1100, y: 1270, s: 1.45, view: 'threequarter', expr: 'angry', pose: 'fistPump' }, { c: 'tvaSoldier', x: 1650, y: 1270, s: 1.4, view: 'threequarter', dir: -1, expr: 'shock' }], big: ['BONE NUNCHUCK', .5, 3.4, '#f4ecd8'], grade: ['#c3202c', .12] },
+ { p: 1, plate: 'graveyard_snow', cam: { z: [1.6, 1.75], x: 1280, y: 760 }, fx: ['snow'], chars: [{ c: 'wade', x: 1280, y: 1270, s: 1.5, expr: 'deadpan', pose: 'shrug', talk: true }], pops: [{ t: '"Not proud of this."', at: .5, dur: 2.6 }], grade: ['#3050a0', .15] },
+ { p: 1, f: .55, plate: 'comic', cam: { z: [1.2, 1.4], x: 1280, y: 780, rot: [0, .04] }, chars: [{ c: 'wade', x: 1280, y: 1270, s: 1.45, expr: 'excited', pose: 'point' }], big: ['REWIND: 6 YEARS', .2, 3, '#ffd23d'] },
+]};

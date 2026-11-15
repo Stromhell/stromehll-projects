@@ -1,0 +1,10 @@
+// Act 03: USED CARS & BLIND AL
+window.ACT = { timing: window.TIMING, shots: [
+ { p: 0, plate: 'carlot', title: ['PART 3', 'Used Car Wade'], cam: { z: [1.1, 1.25], x: 1280, y: 800 }, props: [{ k: 'minivan', x: 1750, y: 1290, s: .95, dir: -1 }], chars: [{ c: 'wadeSales', x: 900, y: 1270, s: 1.45, view: 'threequarter', expr: 'smile', talk: true, pose: 'thumbsUp' }, { c: 'peter', x: 1250, y: 1270, s: 1.42, view: 'threequarter', expr: 'happy' }] },
+ { p: 0, f: .3, plate: 'carlot', cam: { z: [1.3, 1.45], x: 1280, y: 800 }, chars: [{ c: 'peter', x: 1280, y: 1270, s: 1.5, expr: 'happy', pose: 'wave' }],
+   cards: [{ c: 'peter', name: 'PETER', sub: 'Best friend · Zero powers', at: .3, side: 'L', type: 'NORMAL GUY', stat: 'NORMALITY: 100%', items: ['🍺', '🙂'], tags: ['LEGEND', 'NICE'] }] },
+ { p: 0, f: .55, plate: 'carlot', cam: { z: [1.3, 1.5], x: 1280, y: 790 }, props: [{ k: 'minivan', x: 1500, y: 1290, s: .9, dir: -1 }], chars: [{ c: 'wadeSales', x: 900, y: 1270, s: 1.45, view: 'threequarter', expr: 'talk', talk: true, pose: 'point' }, { c: 'hostW', x: 1950, y: 1270, s: 1.4, view: 'threequarter', dir: -1, expr: 'shock' }], pops: [{ t: '"No kids. Let me explain why."', at: .5, dur: 3 }, { t: 'SALE: CANCELLED', at: 5, dur: 2.4 }] },
+ { p: 1, plate: 'apt_warm', cam: { z: [1.2, 1.35], x: 1280, y: 800 }, chars: [{ c: 'wadeFace', x: 900, y: 1270, s: 1.45, view: 'threequarter', expr: 'sad' }, { c: 'blindAl', x: 1650, y: 1270, s: 1.4, view: 'threequarter', dir: -1, expr: 'smug', talk: true }],
+   cards: [{ c: 'blindAl', name: 'BLIND AL', sub: 'Roommate · Wants him dead', at: .5, side: 'R', type: 'GRANDMA OF DOOM', stat: 'THREATS PER DAY: 3', items: ['☕', '🔪'], tags: ['HONEST', 'MEAN'] }] },
+ { p: 1, f: .65, plate: 'apt_warm', cam: { z: [1.5, 1.6], x: 1280, y: 790 }, chars: [{ c: 'wadeFace', x: 1050, y: 1270, s: 1.45, view: 'threequarter', expr: 'smile', pose: 'thumbsUp' }, { c: 'blindAl', x: 1500, y: 1270, s: 1.4, view: 'threequarter', dir: -1, expr: 'angry' }], big: ['HEALTHIEST RELATIONSHIP', .2, 3, '#7aff9a'] },
+]};
