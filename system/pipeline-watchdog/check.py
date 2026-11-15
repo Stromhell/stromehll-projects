@@ -17,6 +17,7 @@ GAP = timedelta(hours=48)
 ACTIVE = {"making"}                     # counts against the 1-in-production limit
 STATES = {"queued", "making", "waiting_approval", "approved", "booked", "live", "parked"}
 STALE = timedelta(hours=24)
+WRITE_STATE = "--dry" not in sys.argv   # only exceptions.json bookkeeping
 
 def ts(s):
     if not s: return None
@@ -83,7 +84,27 @@ def check(now=None):
             "next_free_slot": slot.strftime("%Y-%m-%dT%H:%MZ") if slot else None,
         }
     # Rule 1 (Pushpam 15 Nov 09:53): ONE video in making/rendering across DumDown + Finance COMBINED
-    if len(ALL_MAKING) > 1:
+    mk = {f"{v.get('channel')}/{v['video']}" for v in ALL_MAKING}
+    exc_ok = False
+    ep = os.path.join(os.path.dirname(os.path.abspath(__file__)), "exceptions.json")
+    if os.path.exists(ep) and len(mk) > 1:
+        ex = json.load(open(ep)); changed = False
+        for e in ex.get("allow_together", []):
+            if e.get("expired"): continue
+            if mk <= set(e["videos"]):
+                exc_ok = True
+                if not e.get("seen_together") and mk == set(e["videos"]):
+                    e["seen_together"] = True; changed = True
+        if changed and WRITE_STATE: json.dump(ex, open(ep, "w"), indent=1)
+    if os.path.exists(ep):
+        ex = json.load(open(ep)); changed = False
+        for e in ex.get("allow_together", []):
+            if not e.get("expired") and e.get("seen_together") and not set(e["videos"]) <= mk:
+                e["expired"] = True; changed = True   # one-time exception over
+        if changed and WRITE_STATE: json.dump(ex, open(ep, "w"), indent=1)
+    if exc_ok:
+        report["notes"] = ["combined: %s making together under Pushpam's one-time exception" % ", ".join(sorted(mk))]
+    if len(ALL_MAKING) > 1 and not exc_ok:
         report["violations"].append("combined: %d videos in making at once (limit 1 across DumDown + Finance): %s" % (
             len(ALL_MAKING), ", ".join(f"{v.get('channel')}/{v['video']} ({v.get('thread','?')})" for v in ALL_MAKING)))
     # Rule 2: nothing in making but work queued -> start the next one (feedback first, then queue_pos)
@@ -105,6 +126,7 @@ if __name__ == "__main__":
             print(f"[{ch}] making={c['making']} waiting={c['waiting_approval']} queue={c['queue']}")
             print(f"        last booked={c['last_booked']} next free slot={c['next_free_slot']}")
         print(f"[combined] making={r['combined']['making']} queue={r['combined']['queue']}")
+        for n in r.get("notes", []): print("NOTE:", n)
         print("VIOLATIONS:", *(r["violations"] or ["none"]), sep="\n  ")
         print("ACTIONS:", *(r["actions"] or ["none"]), sep="\n  ")
     sys.exit(1 if r["violations"] else 0)

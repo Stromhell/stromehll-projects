@@ -55,3 +55,7 @@ Opus 5.5 low effort. Keep it cheap. Each run:
 4. ACTIONS only: message the owning thread (or coordinator to start the next queued video). Do not repeat the same action more than once every 6 h (state.json `last_sent`).
 5. VIOLATIONS: report to the project chat via the coordinator, naming the videos/threads and what rule is broken.
 6. NEVER delete, cancel, move or re-time any post, and never change another thread's STATUS.json. Report only.
+
+## One-time exceptions (exceptions.json)
+
+When Pushpam allows two videos in making together, add an entry to `exceptions.json` (`videos` as "channel/video"). check.py does not flag that set while it is making, and marks the entry `expired` as soon as either video leaves making, so the normal one-at-a-time rule is back automatically. Current: Rat Race + Ironheart (Pushpam 15 Nov 11:12 UTC, "start the video of dumdown also for now").
