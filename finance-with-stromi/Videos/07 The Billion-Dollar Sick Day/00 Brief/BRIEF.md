@@ -7,6 +7,6 @@
 - CLIPS (Pushpam 15 Nov 12:38 UTC: "u can use this clips in the video"): Drive folder "gta 6" https://drive.google.com/drive/folders/1Y3PQvH-fA2C9TudEmBe4Rl75QAwzoWGB
   - Grand-Theft-Auto-SnapYT.App.mp4 (69 MB) id 18mfIQTqn4ypBdMze595mrCAiv4J17eU4
   - Grand-Theft-Auto-SnapYT.App (1).mp4 (121 MB) id 1WdXY5mx08PsTdbXB7kp1yVr1HUGxgwJr
-  - Use as short trailer inserts (a few seconds each, under narration, framed as a TV/phone screen inside our sets, on-screen credit "Footage: Rockstar Games trailer"). Commentary use; keep each insert short to limit Content ID claims. Our cast is never composited onto the footage.
+  - RULE (Pushpam 15 Nov 12:42 UTC): each insert max 5 SECONDS at a time, never longer. Use as short trailer inserts ( under narration, framed as a TV/phone screen inside our sets, on-screen credit "Footage: Rockstar Games trailer"). Commentary use; keep each insert short to limit Content ID claims. Our cast is never composited onto the footage.
 - Queue: Finance shared queue pos 3 (after Rat Race making, Ironheart, 06 Basic Financial Concepts). Do NOT voice/animate/render until its turn.
 - Timing: game launches Thu 19 Nov; earliest Finance slot for this video ~25 Nov 16:00 UTC (48 h rule). Written as a post-launch story; chapter 7 = launch-week numbers filled on voice day.
