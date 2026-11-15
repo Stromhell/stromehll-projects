@@ -1,12 +1,12 @@
 {
  "channel": "dumdown",
  "video": "deadpool-and-wolverine",
- "state": "waiting_approval",
+ "state": "queued",
  "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ82ekaREayE8x2jkm2ajLiad",
  "feedback": false,
  "queue_pos": 5,
  "booked_for": null,
  "zernio_post": null,
- "updated": "2026-11-15T13:40Z",
- "note": "Script v1 + storyboard v1 shared for Pushpam's OK. Queued after Agatha; animate only when check.py says it's next. Earliest booking 25 Nov 16:00 UTC (48 h after Agatha's 23 Nov slot). Adult jokes OK (Pushpam 15 Nov 13:09 UTC)."
+ "updated": "2026-11-15T13:28Z",
+ "note": "Storyboard v1 OK'd by Pushpam 15 Nov 13:27 UTC (https://claude.ai/artifact/Y54rc9GiiZa3yH6L2qTHeF). Queued after Agatha; animate only when check.py says it's next. Earliest booking 25 Nov 16:00 UTC. Adult jokes OK (Pushpam 15 Nov 13:09 UTC)."
 }
