@@ -1,0 +1,12 @@
+{
+ "channel": "finance",
+ "video": "06 Basic Financial Concepts",
+ "state": "queued",
+ "thread": null,
+ "feedback": false,
+ "queue_pos": 2,
+ "booked_for": null,
+ "zernio_post": null,
+ "updated": "2026-11-15T10:25Z",
+ "note": "brief + source transcript in 00 Brief; queued behind dumdown/ironheart-s1; needs its own thread when it starts"
+}
