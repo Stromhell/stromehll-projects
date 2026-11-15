@@ -1,0 +1,12 @@
+{
+ "channel": "finance",
+ "video": "06 Basic Financial Concepts",
+ "state": "making",
+ "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ8FX51GptoJ2juWcSk1ZCZEw",
+ "feedback": false,
+ "queue_pos": 0,
+ "booked_for": null,
+ "zernio_post": null,
+ "updated": "2026-11-15T19:47Z",
+ "note": "production thread cmsg_01Lc5CubZ5khWkxFXSFZXKQ8FX51GptoJ2juWcSk1ZCZEw started 15 Nov 19:45 UTC; earliest slot 25 Nov 16:00 UTC"
+}
