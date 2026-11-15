@@ -1,12 +1,12 @@
 {
  "channel": "finance",
  "video": "07 The Billion-Dollar Sick Day",
- "state": "queued",
+ "state": "making",
  "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ87C3tDdy2HzDALdBY1ucpZU",
  "feedback": false,
- "queue_pos": 2,
+ "queue_pos": null,
  "booked_for": null,
  "zernio_post": null,
- "updated": "2026-11-15T12:43Z",
- "note": "Pushpam 15 Nov 12:41 UTC: jump ahead of 06 Basic Financial Concepts, aim 23 Nov 16:00 UTC. Script v1 + storyboard v1 (https://claude.ai/artifact/1EUEXruZCYR8JxTAAdGugE) awaiting OK; chapter 7 launch numbers filled at record"
+ "updated": "2026-11-15T14:20Z",
+ "note": "Pushpam 15 Nov 14:12 UTC 'start the gta finance video ... also': in making ALONGSIDE dumdown/ironheart-s1 by Pushpam's one-time exception (system/pipeline-watchdog/exceptions.json). Storyboard v1 https://claude.ai/artifact/1EUEXruZCYR8JxTAAdGugE. Ch 7 launch numbers filled after 19 Nov launch. Aim 23 Nov 16:00 UTC."
 }
