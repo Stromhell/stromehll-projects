@@ -1,0 +1,12 @@
+{
+ "channel": "dumdown",
+ "video": "agatha-all-along-s1",
+ "state": "queued",
+ "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ8T7BCknYL9Tsi3qYiderQNY",
+ "feedback": false,
+ "queue_pos": 4,
+ "booked_for": null,
+ "zernio_post": null,
+ "updated": "2026-11-15T12:58Z",
+ "note": "Script v1 + storyboard v1 shared for Pushpam's OK (https://claude.ai/artifact/LwA9yME9sxKLGAUKMoo17d). Queued behind Finance 06 and 07; animate only when its turn comes. Earliest booking 23 Nov 16:00 UTC (48 h after Ironheart's 21 Nov)."
+}
