@@ -1,6 +1,24 @@
-{"allow_together": [
- {"videos": ["finance/05 Escaping the Rat Race", "dumdown/ironheart-s1"],
-  "by": "Pushpam 15 Nov 2026 11:12 UTC (start the video of dumdown also for now)",
-  "ends": "one-time: expires as soon as either video leaves making",
-  "seen_together": false, "expired": false}
-]}
+{
+ "allow_together": [
+  {
+   "videos": [
+    "finance/05 Escaping the Rat Race",
+    "dumdown/ironheart-s1"
+   ],
+   "by": "Pushpam 15 Nov 2026 11:12 UTC (start the video of dumdown also for now)",
+   "ends": "one-time: expires as soon as either video leaves making",
+   "seen_together": true,
+   "expired": true
+  },
+  {
+   "videos": [
+    "finance/05 Escaping the Rat Race",
+    "dumdown/ironheart-s1"
+   ],
+   "by": "Pushpam 15 Nov 2026 13:55 UTC (let both run): Rat Race feedback fixes alongside Ironheart",
+   "ends": "one-time: expires as soon as either video leaves making",
+   "seen_together": true,
+   "expired": false
+  }
+ ]
+}
