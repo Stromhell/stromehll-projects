@@ -64,7 +64,7 @@ Object.assign(SETB, {
       ['THE BILLS', (x, w, h) => { x.fillStyle = '#efe4cf'; x.fillRect(0, 0, w, h); for (let i = 0; i < 9; i++) { x.save(); x.translate(w * (0.25 + (i % 3) * 0.25), h * (0.3 + Math.floor(i / 3) * 0.22)); x.rotate((i % 4 - 1.5) * 0.15); x.fillStyle = '#fbf6ea'; x.fillRect(-w * 0.12, -h * 0.1, w * 0.24, h * 0.2); x.strokeStyle = '#c2372d'; x.lineWidth = 4; x.strokeRect(-w * 0.12, -h * 0.1, w * 0.24, h * 0.2); x.fillStyle = '#c2372d'; x.font = `${h * 0.06}px ${HAND}`; x.textAlign = 'center'; x.fillText('DUE', 0, 6); x.restore(); } }]];
     const easels = ex.map(([lab, paint], i) => { const e = P5.easel((x, w, h) => { paint(x, w, h * 0.82); x.fillStyle = '#1e1612'; x.fillRect(0, h * 0.82, w, h * 0.18); ltxt(x, lab, w / 2, h * 0.91, h * 0.11, '#efe4cf', 'center'); }); e.position.set(-2.4 + i * 1.6, 0, 3.9); e.visible = false; S.add(e); return e; });
     const exL = new THREE.PointLight(0xffe0b0, 0, 7); exL.position.set(0, 2.6, 5.6); S.add(exL);
-    const broom = group(cyl(0.015, 0.015, 1.3, std(0x8a6a46), 0, 0, 0), rbox(0.3, 0.12, 0.08, 0.02, std(0xc9a24a, { roughness: 0.9 }), 0, -0.02, 0)); broom.visible = false; S.add(broom);
+    const broom = group(cyl(0.015, 0.015, 1.3, std(0x8a6a46), 0, 0, 0), rbox(0.3, 0.14, 0.08, 0.02, std(0xc9a24a, { roughness: 0.9 }), 0, -0.62, 0)); broom.visible = false; S.add(broom);
     return { S, C, z0: 0, paper, paper2, easels, broom, spot, exL }; },
 
   classroom() { const { S, C } = scene(0x0d0b09, [9, 18]); S.add(new THREE.AmbientLight(0x4a3a2a, 0.75)); S.add(new THREE.HemisphereLight(0xfff0d8, 0x2a2018, 0.45));

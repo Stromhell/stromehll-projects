@@ -3,10 +3,10 @@
  "video": "05 Escaping the Rat Race",
  "state": "waiting_approval",
  "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ87e2Z2cCFV1ZXSAAoEFV5NF",
- "feedback": false,
+ "feedback": true,
  "queue_pos": null,
  "booked_for": null,
  "zernio_post": null,
- "updated": "2026-11-15T12:55Z",
- "note": "full video v3 + launch kit https://claude.ai/artifact/RBCGhp691rBSsiMQznABtv shared; waiting for Pushpam OK; book 21 Nov 16:00 UTC"
+ "updated": "2026-11-15T14:05Z",
+ "note": "v4 (6 review fixes) + kit shared; waiting for Pushpam OK; book 21 Nov 16:00 UTC"
 }

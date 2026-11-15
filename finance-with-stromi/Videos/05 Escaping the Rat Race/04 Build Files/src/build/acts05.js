@@ -45,9 +45,9 @@ ACTS[0] = [
       return { scene: s.S, cam: s.C, tags: [T('AUGUST 2003', 260, 100, pop(t, ph(L, 'august')), BT), T('~$300M EARNED', 300, 600, pop(t, ph(L, 'three hundred')), GT), T('~$23M OWED', 980, 600, pop(t, ph(L, 'twenty-three')), RT)] }; } },
   { id: 'S02', f(t, d, L) { const s = getSet('ring'); hideCards(s, ['pip', 'dot']); RING(s, t); const d0 = lineAt(L, 'DOT').t0;
       s.paper.position.set(0.2, 0.62, 0.4); s.paper.rotation.set(-Math.PI / 2, 0, 0.25); const pk = 0;
-      s.broom.visible = true; s.broom.position.set(2.0 + Math.sin(t * 3) * 0.12, 0.65, 3.6); s.broom.rotation.z = 0.35 + Math.sin(t * 3) * 0.1;
+      s.broom.visible = false; s.broom.position.set(2.36, 0.66, 3.9); s.broom.rotation.set(0, 0, 0.06 + Math.sin(t * 1.5) * 0.015);
       if (t < d0 - 0.5) cl(s, k01(t, 0, d0), [[3.5, 1.9, 8], [1.0, 1.0, 3]], [[2.4, 1.7, 6.6], [1.4, 1.0, 3.4]]); else cl(s, k01(t, d0 - 0.5, d), [[1.5, 1.55, 6.0], [1.5, 1.15, 3.4]], [[1.5, 1.5, 5.6], [1.5, 1.15, 3.4]]);
-      sp(s, 'pip', 2.1, 3.6, { view: 'q', dir: -1, expr: lineAt(L, 'PIP', 1).t0 < t ? 'sad' : 'neutral', look: [-0.6, 0.1], arms: [{ h: [0.4, 0.35], hand: 'grab' }, { h: [0.5, 0.2], hand: 'grab' }], seed: 3 }, t, L, 'PIP', 1.5);
+      sp(s, 'pip', 2.1, 3.6, { view: 'q', dir: -1, expr: lineAt(L, 'PIP', 1).t0 < t ? 'sad' : 'neutral', look: [-0.6, 0.1], arms: [null, { h: [0.3, 0.3], hand: 'grab' }], seed: 3 }, t, L, 'PIP', 1.5);
       walkTo(s, 'dot', -0.6, 0.9, 3.6, t, 0.3, d0 - 1.2, { view: 'q', dir: 1, expr: t > d0 ? 'surprised' : 'neutral', look: [0.6, 0.2], arms: [pk > 0.5 ? { h: [0.35, 0.5], hand: 'grab' } : null, null] }, L, 'DOT', 1.55);
       return { scene: s.S, cam: s.C, tags: [T('$300M IN', 280, 110, pop(t, ph(L, 'three hundred million in')), GT), T('< $0 LEFT', 1000, 110, pop(t, ph(L, 'less than zero')), RT)] }; } },
   { id: 'S03', f(t, d, L) { const s = getSet('street'); hideCards(s); const k = E(k01(t, 0, d)); camLerp(s, k, [0, 2.6, 14], [0, 2.1, 9], [0, 2.2, -3], [0, 1.7, -3]);
@@ -94,10 +94,10 @@ ACTS[2] = [
       walkTo(s, 'dot', 4.2, 1.2, 1.2, t, w0 - 2.6, w0 - 0.3, { view: 'q', dir: -1, expr: t > lineAt(L, 'DOT', 2).t0 ? 'sly' : 'neutral', look: [-0.6, 0.2], arms: [{ h: [0.5, 0.6], hand: 'fist' }, null] }, L, 'DOT', 1.55);
       return { scene: s.S, cam: s.C, tags: [T('BARTER', 640, 100, pop(t, 1.0), YT), T('NO CHICKENS REQUIRED', 640, 620, t < w0 ? pop(t, ph(L, 'chickens')) : 0, BT)] }; } },
   { id: 'S15', f(t, d, L) { const s = getSet('market'); hideCards(s, ['wendell', 'dot']); s.setPrice('$1.00'); const cx = once(s, 'coin5', s => { const c = P4.coin(0.07); s.S.add(c); return c; });
-      const k = k01(t, 0.6, 2.0); cx.visible = t < 4.5; cx.position.set(lerp(-0.6, 1.0, E(k)), 1.25 + Math.sin(k * Math.PI) * 0.4, 1.2); cx.rotation.set(Math.PI / 2, 0, t * 6);
+      const k = E(k01(t, 7.0, 7.8)); cx.visible = true; cx.position.set(-0.35, 1.05, 1.15); cx.rotation.set(Math.PI / 2, 0, 0);
       cl(s, k01(t, 0, d), [[0.3, 1.6, 4.9], [0.25, 1.15, 0.6]], [[1.6, 1.8, 6.2], [0.6, 1.1, 0.6]]);
       sp(s, 'wendell', -0.8, 1.0, { view: 'q', dir: 1, expr: 'happy', look: [0.6, 0.2], arms: [null, { h: [0.7, 0.5], hand: 'open' }], seed: 1 }, t, null, null, 1.8);
-      walkTo(s, 'dot', 1.2, 4.5, 1.2, t, 3.2, 6.5, { view: 'q', dir: 1, expr: 'happy', look: [0.5, 0.2] }, null, null, 1.55);
+      walkTo(s, 'dot', 1.2, 4.5, 1.2, t, 3.2, 6.5, { view: 'q', dir: -1, expr: 'happy', look: [-0.5, 0.2], arms: [t > 6.4 && t < 7.4 ? { h: [-0.5, 0.45], hand: 'open' } : null, null] }, null, null, 1.55);
       return { scene: s.S, cam: s.C, tags: [T('MONEY = A RECEIPT FOR VALUE', 640, 110, pop(t, ph(L, 'receipt for value')), GOLDT), T('$20 = "WORTH IT TO ME"', 330, 620, pop(t, ph(L, 'twenty dollars')), YT), T('YOUR HOURS = THEIR VALUE', 950, 620, pop(t, ph(L, 'your boss')), GT)] }; } },
   { id: 'S16', f(t, d, L) { const s = getSet('cork'); hideCards(s);
       const n = once(s, 'n5', s => ({ a: s.pin(-0.6, 1.75, 1.1, 0.5, (x, w, h) => { x.fillStyle = '#ffe14a'; x.fillRect(0, 0, w, h); txt(x, 'MONEY = VALUE', w / 2, h / 2, h * 0.32); }, 0.03), b: s.pin(0.5, 1.05, 1.6, 0.42, (x, w, h) => { x.fillStyle = '#f6efe0'; x.fillRect(0, 0, w, h); txt(x, '"money is the root of all evil"', w / 2, h / 2, h * 0.2); }, -0.02),
@@ -107,7 +107,7 @@ ACTS[2] = [
       return { scene: s.S, cam: s.C, tags: [T('1 TIMOTHY 6:10', 1040, 620, pop(t, ph(L, 'from the bible')), BT), T('TWO WORDS, BIG DIFFERENCE', 330, 620, pop(t, ph(L, 'two words')), RT)] }; } },
   { id: 'S17', f(t, d, L) { const s = getSet('diner'); hideCards(s, ['gus', 'dot']); s.menu.userData.draw(['TODAY', 'PIE', '$4'], 1); const z = s.z0 + 3.0; const n0 = lineAt(L, 'N').t0;
       const mag = once(s, 'mag5', s => { const m = board(0.3, 0.4, (x, w, h) => { paperBg(x, w, h, '#f4e8c8'); ltxt(x, 'FRIDGE KING', w / 2, h * 0.12, h * 0.09, REDC, 'center'); x.fillStyle = '#9ac0d0'; x.fillRect(w * 0.25, h * 0.25, w * 0.5, h * 0.55); x.fillStyle = '#1e1612'; x.beginPath(); x.arc(w / 2, h * 0.4, w * 0.12, 0, TAU); x.fill(); ltxt(x, 'BILLIONAIRE!', w / 2, h * 0.9, h * 0.07, INK, 'center'); }); s.S.add(m); return m; });
-      mag.position.set(-0.2, 1.25, z + 0.15); mag.rotation.y = 0.2;
+      mag.visible = false;
       if (t < n0 - 0.3) { const i = L.filter(l => l.who !== 'N' && l.t0 <= t + 0.1).length; const c = i % 2 ? [[-0.7, 1.45, z + 2.0], [-0.3, 1.25, z]] : [[0.5, 1.45, z + 2.0], [0.1, 1.25, z]]; cl(s, 0.5, c, c); } else cl(s, k01(t, n0 - 0.3, d), [[0, 1.6, z + 3], [0, 1.2, z]], [[0, 2.0, z + 4.2], [0, 1.4, z - 1]]);
       sp(s, 'gus', -0.65, z, { view: 'q', dir: 1, expr: 'sly', look: [0.4, 0.3], arms: [{ h: [0.4, 0.55], hand: 'grab' }, null], seed: 3 }, t, L, 'GUS', 1.75);
       sp(s, 'dot', 0.55, z, { view: 'q', dir: -1, expr: 'frown', look: [-0.4, 0.3], seed: 2 }, t, L, 'DOT', 1.55);
@@ -154,10 +154,10 @@ ACTS[4] = [
       walkTo(s, 'jimmy', 5.5, 1.5, 1.9, t, w0 - 3.0, w0 - 0.4, { view: 'q', dir: -1, expr: t > lineAt(L, 'WENDELL', 2).t0 ? 'surprised' : 'grin', look: [-0.6, 0.3] }, L, 'JIMMY', 1.72);
       return { scene: s.S, cam: s.C, tags: [T('RAISE: +$10,000/YR', 300, 110, pop(t, ph(L, 'ten thousand')), GT), T('72 MONTHS', 980, 110, pop(t, ph(L, 'seventy-two')), RT), T('"LOW MONTHLY PAYMENT"', 980, 620, pop(t, lineAt(L, 'WENDELL', 3).t0), YT)] }; } },
   { id: 'S27', f(t, d, L) { const s = getSet('living3'); hideCards(s, ['jimmy']); const n = Math.min(6, Math.floor(k01(t, ph(L, 'one more subscription') - 2.5, d - 1) * 7)); const tvk = k01(t, 1.0, 2.0);
-      const x = APT(s, { tv: { t: 'BIGGER TV', bg: '#1a2a4a' }, subs: n, coffee: t > ph(L, 'nicer car') }); x.tv.scale.setScalar(lerp(1, 1.35, E(tvk))); phoneScr(s, false);
+      const x = APT(s, { tv: { t: 'BIGGER TV', bg: '#1a2a4a' }, subs: 0, coffee: t > ph(L, 'nicer car') }); x.tv.scale.setScalar(lerp(1, 1.35, E(tvk))); phoneScr(s, false);
       cl(s, k01(t, 0, d), [[0.0, 1.8, s.z0 + 5.6], [0, 1.4, s.z0]], [[0.3, 1.7, s.z0 + 4.2], [0, 1.6, s.z0]]);
       sp(s, 'jimmy', 0.6, s.z0 + 2.0, { view: 'q', dir: -1, expr: 'happy', look: [-0.4, 0.3], seed: 1 }, t, null, null, 1.72);
-      return { scene: s.S, cam: s.C, tags: [T('LIFESTYLE CREEP', 640, 100, pop(t, ph(L, 'lifestyle creep')), RT), T('RAISE: GONE', 1000, 200, pop(t, ph(L, 'disappears')), RT), T('EARN MORE → NEED MORE', 300, 620, pop(t, ph(L, 'need to earn')), YT)] }; } },
+      return { scene: s.S, cam: s.C, tags: [T('LIFESTYLE CREEP', 640, 100, pop(t, ph(L, 'lifestyle creep')), RT), T('RAISE: GONE', 1000, 200, pop(t, ph(L, 'disappears')), RT), T('EARN MORE → NEED MORE', 300, 620, pop(t, ph(L, 'need to earn')), YT), T('+' + n + ' SUBSCRIPTIONS', 300, 200, n > 0 ? 1 : 0, GT)] }; } },
   { id: 'S28', f(t, d, L) { const s = getSet('ring'); hideCards(s); RING(s, t, { easels: true, dim: 0.8 });
       cl(s, k01(t, 0, d), [[-2.6, 1.6, 7.2], [-1.6, 1.2, 3.9]], [[2.0, 1.55, 6.8], [1.6, 1.2, 3.9]]);
       return { scene: s.S, cam: s.C, tags: [T('BAD DEALS · LAWSUITS · TAXES', 640, 100, pop(t, ph(L, 'bad deals')), BT), T('IRS: $13M+', 1040, 180, pop(t, ph(L, 'thirteen million')), RT)] }; } },
@@ -217,10 +217,10 @@ ACTS[6] = [
       cl(s, k01(t, 0, d), [[0.8, 1.6, s.z0 + 4.4], [0.9, 0.9, s.z0 + 1.3]], [[0.9, 1.4, s.z0 + 3.2], [1.0, 0.9, s.z0 + 1.3]]);
       sp(s, 'jimmy', 0.4, s.z0 + 1.8, { view: 'q', dir: 1, expr: 'scared', look: [0.6, 0.6], arms: [null, reach ? { h: [0.8, 0.2], hand: 'open' } : null], seed: 1 }, t, null, null, 1.72);
       return { scene: s.S, cam: s.C, tags: [T('STEP 1: LOOK', 640, 100, pop(t, ph(L, 'look.')), YT), T('HOUSING · TRANSPORT · FOOD · BILLS · FUN · DEBT', 640, 620, pop(t, ph(L, 'housing')), BT)] }; } },
-  { id: 'S41', f(t, d, L) { const s = getSet('living3'); hideCards(s, ['jimmy', 'dot']); const x = APT(s, { tv: { t: '' }, cush: true }); phoneScr(s, false); const dk = lineAt(L, 'DOT').t0;
-      const dip = E(k01(t, 0.2, 1.0)); x.cush.position.set(0.37, lerp(0.85, 1.22, dip), s.z0 + 2.05); x.cush.rotation.set(0.1, 0, 0.15);
+  { id: 'S41', f(t, d, L) { const s = getSet('living3'); hideCards(s, ['jimmy', 'dot']); const x = APT(s, { tv: { t: '' }, cush: false }); phoneScr(s, false); const dk = lineAt(L, 'DOT').t0;
+      
       const i = L.filter(l => l.t0 <= t + 0.1).length; const c = i % 2 ? [[0.0, 1.5, s.z0 + 3.6], [0.4, 1.1, s.z0 + 1.8]] : [[1.2, 1.5, s.z0 + 3.4], [1.0, 1.1, s.z0 + 1.8]]; cl(s, 0.5, c, c);
-      const jc = sp(s, 'jimmy', 0.35, s.z0 + 1.8, { view: 'q', dir: -1, expr: 'scared', arms: [{ h: [-0.1, 0.9], hand: 'grab' }, { h: [0.1, 0.9], hand: 'grab' }], seed: 1 }, t, L, 'JIMMY', 1.72);
+      const jc = sp(s, 'jimmy', 0.35, s.z0 + 1.55, { view: 'qback', dir: -1, expr: 'scared', arms: [null, null], seed: 1 }, t, L, 'JIMMY', 1.72);
       walkTo(s, 'dot', 3.0, 1.5, s.z0 + 2.3, t, dk - 2.2, dk - 0.3, { view: 'q', dir: -1, expr: 'surprised', look: [-0.6, 0.3], arms: [{ h: [0.4, 0.4], hand: 'grab' }, null] }, L, 'DOT', 1.55);
       return { scene: s.S, cam: s.C, tags: [] }; } },
   { id: 'S42', f(t, d, L) { const s = getSet('study'); hideCards(s);
