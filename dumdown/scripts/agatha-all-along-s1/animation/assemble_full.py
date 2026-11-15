@@ -5,7 +5,8 @@
 import json, subprocess, sys, os, wave
 sys.path.insert(0, 'gags'); from gags_data import G
 SCR = os.environ.get('SCR', '/tmp/agwork')
-OUT = f'{SCR}/full/DumDown_AgathaS1_FULL_v1.mp4'; os.makedirs(f'{SCR}/full', exist_ok=True)
+GOUT = os.environ.get('GOUT', 'gags/out'); VER = os.environ.get('VER', 'v1')
+OUT = f'{SCR}/full/DumDown_AgathaS1_FULL_{VER}.mp4'; os.makedirs(f'{SCR}/full', exist_ok=True)
 def dur(f): return float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', f], capture_output=True, text=True).stdout)
 segs = []  # (video, audio, start_frame, n_frames)
 for n in range(19):
@@ -14,7 +15,7 @@ for n in range(19):
     for k in range(len(cuts) - 1):
         if cuts[k + 1] > cuts[k]: segs.append((v, a, cuts[k], cuts[k + 1] - cuts[k]))
         if k < len(pts):
-            gv = f'gags/out/gag{pts[k]["id"]:02d}.mp4'; segs.append((gv, gv, 0, round(dur(gv) * 24)))
+            gv = f'{GOUT}/gag{pts[k]["id"]:02d}.mp4'; segs.append((gv, gv, 0, round(dur(gv) * 24)))
 W, H, FB = 1920, 1080, 1920 * 1080 * 3 // 2
 # audio: one PCM track cut at the same frame boundaries
 wav = f'{SCR}/full/_audio.wav'; wo = wave.open(wav, 'wb'); wo.setnchannels(2); wo.setsampwidth(2); wo.setframerate(48000)

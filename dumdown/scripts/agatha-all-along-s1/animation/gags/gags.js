@@ -36,7 +36,7 @@ function person(spec, who, t, o) {
   const tt = onTwos(t + (o.ph || 0)), L = lvl(who, t); let pose, expr;
   if (o.walk) { pose = D.ANIMS.walk(onTwos(Math.abs(o.dist) / (240 * (o.s || 1) * (spec.scale || 1)))).pose; expr = o.expr || spec.defaultExpr; }
   else if (L >= 0) {
-    pose = o.hold ? JSON.parse(JSON.stringify(o.pose)) : talkPose(who, t, tt, o); pose.tilt = (pose.tilt || 0) + Math.sin(t * 2.3 + (o.ph || 0)) * 2.5;
+    pose = o.hold ? D.ACTING.idle(tt, o.pose, 11).pose : talkPose(who, t, tt, o); pose.tilt = (pose.tilt || 0) + Math.sin(t * 2.3 + (o.ph || 0)) * 2.5;
     const m = L === 0 ? 'flat' : L === 1 ? (Math.floor(t * 12) % 2 ? 'open' : 'o') : ['open', 'shout', 'o'][Math.floor(t * 12) % 3];
     expr = { base: (typeof o.talk === 'string' ? o.talk : 'talk'), mouth: m };
   } else { const a = D.ANIMS.idle(tt, o.pose || POSE.stand); pose = a.pose; const e = typeof o.expr === 'function' ? o.expr(t) : (o.expr || spec.defaultExpr); expr = a.expr === 'blink' && !o.noBlink ? 'blink' : e; }
@@ -118,7 +118,11 @@ function wrenchAt(h, sc, skin) { // spanner gripped in the fist, jaw up
   ctx.beginPath(); ctx.arc(0, 46 * sc, 10 * sc, 0, 7); ctx.fill(); ctx.stroke(); ctx.fillStyle = '#5a6a7a'; ctx.beginPath(); ctx.moveTo(-4 * sc, 58 * sc); ctx.lineTo(4 * sc, 58 * sc); ctx.lineTo(3 * sc, 44 * sc); ctx.lineTo(-3 * sc, 44 * sc); ctx.closePath(); ctx.fill();
   ctx.fillStyle = skin; ctx.strokeStyle = '#231A24'; ctx.lineWidth = 2 * sc; for (let i = 0; i < 3; i++) { ctx.beginPath(); ctx.ellipse(-5 * sc, i * 5 * sc, 3.6 * sc, 2.8 * sc, 0, 0, 7); ctx.fill(); ctx.stroke(); } ctx.restore(); }
 // ---------- scenes ----------
-const camOf = (t, base) => ({ ...base, z: base.z * (1 + .07 * bump(t)) + (base.push || 0) * seg(t, OPEN, DUR), sx: (base.sx || 0) + Math.sin(t * 47) * 14 * shk(t), sy: Math.cos(t * 39) * 10 * shk(t) });
+// operator camera (Agatha rework): two-push ease on the push, a slow lateral truck, handheld drift; never a frozen frame
+const opE = u => .62 * (1 - Math.pow(1 - clamp(u), 1.7)) * (u > 0 ? 1 : 0) * 1 + 0;
+const opPush = t => { const u = seg(t, OPEN * .3, DUR); return .62 * (1 - Math.pow(1 - seg(u, 0, .42), 1.7)) + .38 * io(seg(u, .48, 1)); };
+const nz = (t, s) => Math.sin(t * .63 + s) * .6 + Math.sin(t * 1.37 + s * 2.1) * .3 + Math.sin(t * 2.9 + s * .7) * .1;
+const camOf = (t, base) => ({ ...base, x: (base.x ?? 1280) + (base.truck ?? 60) * (opPush(t) - .5) * 2, rot: nz(t + 4, 2) * .2, z: base.z * (1 + .07 * bump(t)) * (1 + (base.push ?? .1) * opPush(t)), sx: (base.sx || 0) + nz(t, 1) * 6 + Math.sin(t * 47) * 14 * shk(t), sy: nz(t + 9, 3) * 4 + Math.cos(t * 39) * 10 * shk(t) });
 async function cast(list, cam, t) { await chars(list.map(([sp, who, o]) => person(sp, who, t, o)), cam); }
 const S = {};
 const lineup = (t, list, cam) => cast(list, cam, t);

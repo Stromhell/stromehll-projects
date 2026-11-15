@@ -188,7 +188,7 @@
     }
     for (let i = 0; i < st.bangs; i++) {
       const lon = -58 + 116 * (i + 0.5) / st.bangs + (R() - 0.5) * 10;
-      out.push({ lon, lat: st.bangLat + R() * 10, len: rr(st.bangLen), w: rr(st.bangW), droop: st.bangDroop, round: st.round, bend: (R() - 0.5) * 0.6 + lon / 90 * 0.6, wave: (R() - 0.5) * 0.4, fork: R() < 0.3 ? (lon > 0 ? 1 : -1) : 0, bang: true });
+      out.push({ lon, lat: st.bangLat + R() * 10 + (h.bangLift ?? 4), len: rr(st.bangLen) * (h.bangK ?? .78), w: rr(st.bangW), droop: st.bangDroop, round: st.round, bend: (R() - 0.5) * 0.6 + lon / 90 * 0.6, wave: (R() - 0.5) * 0.4, fork: R() < 0.3 ? (lon > 0 ? 1 : -1) : 0, bang: true });
     }
     if (st.curtain) {
       for (let i = 0; i < st.curtain.n; i++) {
@@ -197,6 +197,8 @@
       }
       for (const sg of [-1, 1]) out.push({ lon: sg * 74, lat: 22, len: st.sides * (h.length || 1), w: 11, droop: 4, bend: sg * 0.12, wave: 0.35 * sg, fork: sg, curtain: true, side: true });
     }
+    if (h.tidy ?? true) for (const L of out) if (!L.curtain && !L.bang && Math.abs(L.lon) < 80) L.lat = Math.max(L.lat, 46);   // no lock grows out of the face over the eyes
+    if (h.tidy ?? true) for (const L of out) if (!L.curtain) { L.fork = L.bang ? 0 : (L.fork && Math.abs(L.lon) > 100 ? L.fork : 0); L.wave *= .5; L.bend *= .7; }   // no stray flying strands (Pushpam 15 Nov)
     if (h.ahoge) out.push({ lon: 8, lat: 88, len: 26, w: 2.6, droop: -0.3, bend: 0.9, ahoge: true });
     if (h.streak) { const k = out.find(l => l.bang); if (k) k.streak = true; }
     return out;
@@ -551,7 +553,7 @@
       s += `<path d="M${P(ox - 32, -16)}C${P(ox - 36, -62)} ${P(ox + 36, -62)} ${P(ox + 32, -16)}Z" fill="${c}" stroke="${INK}" stroke-width="2.6"/><path d="M${P(ox - 33, -22)}L${P(ox + 33, -22)}L${P(ox + 33, -12)}L${P(ox - 33, -12)}Z" fill="${shade(c)}" stroke="${INK}" stroke-width="2"/>`; }
     if (!backView && A.starEye) { const f = eL; if (f.z > 0.05) s += `<path d="M${P(f.x, -14)}L${P(f.x + 4, -2)}L${P(f.x + 14 * f.fs, 2)}L${P(f.x + 4, 6)}L${P(f.x, 20)}L${P(f.x - 4, 6)}L${P(f.x - 14 * f.fs, 2)}L${P(f.x - 4, -2)}Z" fill="${A.starEye}" stroke="${INK}" stroke-width="1.4" opacity=".9"/>`; }
     if (!backView && A.chrome) { s += `<path d="M${P(sy * 18 - 8, -30)}L${P(sy * 18 - 8, 18)}M${P(sy * 18 + 8, -34)}L${P(sy * 18 + 8, 20)}" stroke="${shade(spec.skin)}" stroke-width="1.6" opacity=".7"/>`; }
-    if (!backView && A.glowEyes) for (const f of [eR, eL]) if (f.z > 0.05) s += `<ellipse cx="${r1(f.x)}" cy="3" rx="${r1(8 * f.fs)}" ry="4" fill="${A.glowEyes}"/><ellipse cx="${r1(f.x)}" cy="3" rx="${r1(16 * f.fs)}" ry="9" fill="${A.glowEyes}" opacity=".3"/>`;
+    if (!backView && A.glowEyes) for (const f of [eR, eL]) if (f.z > 0.05) s += `<ellipse cx="${r1(f.x)}" cy="2" rx="${r1(11 * f.fs)}" ry="10" fill="${A.glowEyes}" opacity=".16"/>`;   // soft iris glow, no opaque band over the eyes (Pushpam 15 Nov)
     return s;
   }
 
@@ -852,7 +854,10 @@
     const backView = J.c < -0.4;
     // which arm/leg is nearer the camera: with yaw>0 the character's right (L in screen terms) is near
     const nearSide = J.s > 0 ? 'L' : 'R', farSide = nearSide === 'L' ? 'R' : 'L';
+    const part = opts.part || 'all';
     let s = `<g transform="${tf}">`;
+    if (part === 'front') { if (sideOn) s += drawArm(spec, J, nearSide, mir, false); else s += drawArm(spec, J, 'L', mir, false) + drawArm(spec, J, 'R', mir, false);
+      s += `<g transform="translate(${P(...J.head)}) rotate(${r1(J.headAngle)}) scale(${r1(J.B.head)})">${drawHead(spec, J, view, opts.expr, mir, pose)}</g>`; return s + '</g>'; }
     s += `<ellipse cx="0" cy="${footY - 6}" rx="${sideOn ? 48 : 44}" ry="7" fill="#000" opacity=".14"/>`;
     // long hair hangs BEHIND the body: draw it first, at the head's transform
     const headTf = `translate(${P(...J.head)}) rotate(${r1(J.headAngle)}) scale(${r1(J.B.head)})`;
@@ -873,6 +878,7 @@
     s += drawTorso(spec, J, mir);
     s += drawHood(spec, J, mir, 'over');
     if (spec.scarf) s += cel(smooth([add(J.neck, [-17, 2]), add(J.neck, [0, -6]), add(J.neck, [17, 2]), add(J.neck, [14, 12]), add(J.neck, [0, 8]), add(J.neck, [-14, 12])]), spec.scarf, { sx: 2, sy: 2, mir });
+    if (part === 'body') return s + '</g>';
     if (sideOn) s += drawArm(spec, J, nearSide, mir, false);
     else s += drawArm(spec, J, 'L', mir, false) + drawArm(spec, J, 'R', mir, false);
     s += `<g transform="translate(${P(...J.head)}) rotate(${r1(J.headAngle)}) scale(${r1(J.B.head)})">${head}</g>`;
@@ -1263,10 +1269,27 @@
     return svg(W, H, bg + drawCharacter(spec, { view: opts.view || 'front', dir: opts.dir, x: opts.x ?? W / 2, y: opts.y ?? H * 0.95, scale: opts.scale ?? 1.25, pose: a.pose, expr: a.expr || opts.expr || spec.defaultExpr }), opts.bg);
   }
 
-  const wrist = (spec, opts, side = 'R') => { const view = opts.view ?? 'front', J = solve(spec, normPose(opts.pose || POSES.stand), view), dir = opts.dir ?? 1, sc = (opts.scale ?? 1) * (spec.scale || 1), footY = J.B.thigh + J.B.shin + 30, w = J[(opts.joint || 'wr') + side], e = J['el' + side]; return { x: (opts.x ?? 0) + dir * sc * w[0], y: (opts.y ?? 0) + sc * (w[1] - footY), ex: (opts.x ?? 0) + dir * sc * e[0], ey: (opts.y ?? 0) + sc * (e[1] - footY), sc }; };
+  const wrist = (spec, opts, side = 'R') => { const view = opts.view ?? 'front', J = solve(spec, normPose(opts.pose || POSES.stand), view), dir = opts.dir ?? 1, sc = (opts.scale ?? 1) * (spec.scale || 1), footY = J.B.thigh + J.B.shin + 30, w = J[(opts.joint || 'wr') + side], e = J['el' + side]; const hs_ = (spec.body && spec.body.hand) || DEFAULT_BODY.hand, pm = add(w, dirv(J['handA' + side]), 11 * hs_), ha = J['handA' + side]; return { px: (opts.x ?? 0) + dir * sc * pm[0], py: (opts.y ?? 0) + sc * (pm[1] - footY), ang: Math.atan2(sc * (pm[1] - w[1]), dir * sc * (pm[0] - w[0])), x: (opts.x ?? 0) + dir * sc * w[0], y: (opts.y ?? 0) + sc * (w[1] - footY), ex: (opts.x ?? 0) + dir * sc * e[0], ey: (opts.y ?? 0) + sc * (e[1] - footY), sc }; };
   const forehead = (spec, opts) => { const view = opts.view ?? 'front', J = solve(spec, normPose(opts.pose || POSES.stand), view), dir = opts.dir ?? 1, sc = (opts.scale ?? 1) * (spec.scale || 1), footY = J.B.thigh + J.B.shin + 30, a = J.headAngle * Math.PI / 180, hy = opts.fy ?? -7, hx = (opts.fx ?? 0) + Math.sin(J.yaw * Math.PI / 180) * 6;
     const lx = J.head[0] + (hx * Math.cos(a) - hy * Math.sin(a)) * J.B.head, ly = J.head[1] + (hx * Math.sin(a) + hy * Math.cos(a)) * J.B.head; return { x: (opts.x ?? 0) + dir * sc * lx, y: (opts.y ?? 0) + sc * (ly - footY), sc: sc * J.B.head }; };
-  const api = { version: '1.0.0', wrist, forehead, INK, VIEWS, POSES, HAND_POSES, EXPRESSIONS, HAIR_STYLES, ANIMS, CAST, PALETTES, BACKGROUNDS, drawCharacter, drawSkeleton, drawHand: (spec, pose, x, y, angle = 0, mirror = false, scale = 1) => `<g transform="translate(${x},${y}) scale(${scale})">${drawHand([0, 0], angle, pose, mirror, spec, false)}</g>`, drawHead: (spec, opts = {}) => { const J = solve(spec, normPose(opts.pose), opts.view || 'front'); const mr = (opts.dir || 1) < 0, np = normPose(opts.pose); return `<g transform="translate(${opts.x || 0},${opts.y || 0}) scale(${(opts.scale || 1) * (opts.dir || 1)},${opts.scale || 1})">${drawHead(spec, J, opts.view || 'front', opts.expr, mr, np, { layer: 'behind' })}${drawHead(spec, J, opts.view || 'front', opts.expr, mr, np)}</g>`; }, drawBackground, generateCharacter, frame, svg, solve, onTwos, ease, shade, light, mix, rng };
+  // world <-> character-local helpers, world joints, and 2-bone arm IK (Agatha rework: props held for real)
+  const frameOf = (spec, opts) => { const view = opts.view ?? 'front', pose = normPose(opts.pose || POSES.stand), J = solve(spec, pose, view), dir = opts.dir ?? 1, sc = (opts.scale ?? 1) * (spec.scale || 1), footY = J.B.thigh + J.B.shin + 30; return { J, pose, view, dir, sc, footY, x: opts.x ?? 0, y: opts.y ?? 0 }; };
+  const toW = (F, p) => ({ x: F.x + F.dir * F.sc * p[0], y: F.y + F.sc * (p[1] - F.footY) });
+  const toL = (F, X, Y) => [(X - F.x) / (F.dir * F.sc), (Y - F.y) / F.sc + F.footY];
+  const joints = (spec, opts) => { const F = frameOf(spec, opts), J = F.J, o = { sc: F.sc }; for (const k of ['pelvis', 'chest', 'neck', 'head', 'shL', 'shR', 'elL', 'elR', 'wrL', 'wrR']) if (J[k]) o[k] = toW(F, J[k]); o.at = (h, x) => toW(F, [J.pelvis[0] + J.up[0] * h + J.across[0] * x, J.pelvis[1] + J.up[1] * h + J.across[1] * x]); return o; };
+  const DEG = 180 / Math.PI;
+  function ikArm(spec, opts, side, X, Y, o = {}) {
+    const F = frameOf(spec, opts), J = F.J, pose = F.pose, S = J['sh' + side], u = J.B.upper, f = J.B.fore;
+    const [tx, ty] = toL(F, X, Y); let dx = tx - S[0], dy = ty - S[1], d = Math.hypot(dx, dy); const reach = (u + f) * 0.985;
+    const short = d > reach + 2; d = Math.min(Math.max(d, Math.abs(u - f) + 2), reach);
+    const phi = Math.atan2(dx, dy) * DEG, al = Math.acos(Math.min(1, Math.max(-1, (u * u + d * d - f * f) / (2 * u * d)))) * DEG;
+    const sg = (side === 'R' ? 1 : -1) * (o.bend ?? 1), a1 = phi + sg * al;
+    const E = add(S, dirv(a1), u), phi2 = Math.atan2(tx - E[0], ty - E[1]) * DEG;
+    const arm = Object.assign({}, pose[side], { sh: a1 - J.lean * 0.3, el: phi2 - a1, wr: o.handAng != null ? o.handAng - phi2 : (o.wr ?? 0), hand: o.hand || pose[side].hand || 'grab' });
+    const np = Object.assign({}, opts.pose || {}, { [side]: arm }); np._ikShort = (opts.pose && opts.pose._ikShort) || (short ? d : 0);
+    return np;
+  }
+  const api = { version: '1.0.0', wrist, joints, ikArm, forehead, INK, VIEWS, POSES, HAND_POSES, EXPRESSIONS, HAIR_STYLES, ANIMS, CAST, PALETTES, BACKGROUNDS, drawCharacter, drawSkeleton, drawHand: (spec, pose, x, y, angle = 0, mirror = false, scale = 1) => `<g transform="translate(${x},${y}) scale(${scale})">${drawHand([0, 0], angle, pose, mirror, spec, false)}</g>`, drawHead: (spec, opts = {}) => { const J = solve(spec, normPose(opts.pose), opts.view || 'front'); const mr = (opts.dir || 1) < 0, np = normPose(opts.pose); return `<g transform="translate(${opts.x || 0},${opts.y || 0}) scale(${(opts.scale || 1) * (opts.dir || 1)},${opts.scale || 1})">${drawHead(spec, J, opts.view || 'front', opts.expr, mr, np, { layer: 'behind' })}${drawHead(spec, J, opts.view || 'front', opts.expr, mr, np)}</g>`; }, drawBackground, generateCharacter, frame, svg, solve, onTwos, ease, shade, light, mix, rng };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   root.DumDown = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);
