@@ -4,9 +4,9 @@
  "state": "queued",
  "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ87C3tDdy2HzDALdBY1ucpZU",
  "feedback": false,
- "queue_pos": 3,
+ "queue_pos": 2,
  "booked_for": null,
  "zernio_post": null,
- "updated": "2026-11-15T12:45Z",
- "note": "script v1 + storyboard v1 (https://claude.ai/artifact/1EUEXruZCYR8JxTAAdGugE) awaiting Pushpam OK; queued behind 06 Basic Financial Concepts; news topic (GTA 6 launches 19 Nov) - chapter 7 filled with launch numbers at record"
+ "updated": "2026-11-15T12:43Z",
+ "note": "Pushpam 15 Nov 12:41 UTC: jump ahead of 06 Basic Financial Concepts, aim 23 Nov 16:00 UTC. Script v1 + storyboard v1 (https://claude.ai/artifact/1EUEXruZCYR8JxTAAdGugE) awaiting OK; chapter 7 launch numbers filled at record"
 }
