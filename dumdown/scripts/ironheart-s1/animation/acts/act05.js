@@ -1,0 +1,10 @@
+// Act 05: X-MEN TRAINEE
+window.ACT = { timing: window.TIMING, shots: [
+ { p: 0, plate: 'mansion_ext', title: ['PART 4', 'X-Men Trainee'], cam: { z: [1.05, 1.2], x: 1280, y: 820 }, chars: [{ c: 'colossus', x: [700, 1000], y: 1300, s: 1.3, view: 'threequarter', expr: 'smile' }, { c: 'wadeFace', x: [520, 800], y: 1300, s: 1.45, view: 'threequarter', expr: 'deadpan' }] },
+ { p: 0, f: .35, plate: 'mansion_hall', cam: { z: [1.2, 1.35], x: 1280, y: 820 }, chars: [{ c: 'nega', x: 1150, y: 1260, s: 1.45, view: 'threequarter', expr: 'deadpan' }, { c: 'yukio', x: 1550, y: 1260, s: 1.45, view: 'threequarter', dir: -1, expr: 'happy', pose: 'wave' }],
+   cards: [{ c: 'nega', name: 'NEGASONIC', sub: 'Move: Eye Roll Blast', at: .5, side: 'L', type: 'ATOMIC', stat: 'WEAKNESS: ENTHUSIASM', items: ['💥', '🙄'], tags: ['TEEN', 'MOODY'] }, { c: 'yukio', name: 'YUKIO', sub: 'Move: "Hi Wade!"', at: 2.4, side: 'R', type: 'SUNSHINE', stat: 'WEAKNESS: NONE, SHE IS PERFECT', items: ['💖', '⚡'], tags: ['SWEET', 'HI!'] }] },
+ { p: 0, f: .8, plate: 'mansion_hall', cam: { z: [2.2, 2.5], x: 1550, y: 680 }, chars: [{ c: 'yukio', x: 1550, y: 1260, s: 1.45, view: 'threequarter', dir: -1, expr: 'excited', pose: 'wave', talk: true }], pops: [{ t: '"Hi Wade!"', at: .2 }] },
+ { p: 1, plate: 'mansion_hall', cam: { z: [1.15, 1.3], x: [900, 1700], y: 760 }, chars: [{ c: 'wadeFace', x: [700, 1600], y: 1260, s: 1.45, view: 'threequarter', expr: 'deadpan', lin: true }], pops: [{ t: 'Population: 3', at: 2.5 }] },
+ { p: 1, f: .6, plate: 'mansion_hall', cam: { z: [1.9, 2.1], x: 1500, y: 720 }, chars: [{ c: 'wadeFace', x: 1500, y: 1260, s: 1.45, expr: 'smug', talk: true, pose: 'shrug' }], pops: [{ t: 'Studio budget joke', at: .4 }] },
+ { p: 2, plate: 'classroom', cam: { z: [1.2, 1.35], x: 1280, y: 760 }, props: [{ k: 'whiteboard', x: 1280, y: 480, s: 1, lines: ['RULE 1: NO KILLING', 'RULE 2: LABEL YOUR FRIDGE FOOD'], at: .5 }], chars: [{ c: 'colossus', x: 700, y: 1260, s: 1.3, view: 'threequarter', expr: 'smile', pose: 'point', talk: true }, { c: 'wadeFace', x: 1900, y: 1260, s: 1.45, view: 'threequarter', dir: -1, expr: 'deadpan' }] },
+]};

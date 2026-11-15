@@ -1,0 +1,10 @@
+// Act 02: THE WORLD TOUR OF BAD GUYS
+window.ACT = { timing: window.TIMING, shots: [
+ { p: 0, plate: 'hongkong', title: ['PART 1', 'The World Tour'], cam: { z: [1.15, 1.3], x: 1280, y: 820 }, chars: [{ c: 'boss', x: 1500, y: 1250, s: 1.5, view: 'threequarter', dir: -1, expr: 'smug' }, { c: 'thug', x: 1900, y: 1250, s: 1.5, view: 'threequarter', dir: -1, expr: 'angry' }] },
+ { p: 0, f: .4, plate: 'hongkong', cam: { z: [1.3, 1.5], x: 1280, y: 820, shake: 10 }, props: [{ k: 'swords', on: 0, x: 0, y: 0, s: .8, layer: 'front', swing: true }], chars: [{ c: 'wade', x: [700, 1050], y: 1250, s: 1.5, view: 'threequarter', expr: 'angry' }, { c: 'boss', x: 1500, y: 1250, s: 1.5, view: 'threequarter', dir: -1, expr: 'shock' }, { c: 'thug', x: 1900, y: 1250, s: 1.5, view: 'threequarter', dir: -1, expr: 'shock' }] },
+ { p: 0, f: .75, plate: 'hongkong', cam: { z: [1.9, 2.2], x: 1100, y: 700 }, chars: [{ c: 'wade', x: 1100, y: 1250, s: 1.5, pose: 'wave', expr: 'happy' }], pops: [{ t: 'Hi Mom!', at: .4 }] },
+ { p: 1, plate: 'bar', cam: { z: [1.3, 1.45], x: 1280, y: 800 }, chars: [{ c: 'wade', x: 1000, y: 1250, s: 1.55, view: 'threequarter', expr: 'smug', talk: true, pose: 'point' }, { c: 'thug', x: 1600, y: 1250, s: 1.5, view: 'threequarter', dir: -1, expr: 'blank' }], pops: [{ t: '"¿Dónde está la biblioteca?"', at: 1.4 }] },
+ { p: 2, plate: 'nyc_street', cam: { z: [1.2, 1.35], x: 1500, y: 820 }, props: [{ k: 'cab', x: 1900, y: 1240, s: 1.6 }], chars: [{ c: 'dopinder', x: 1250, y: 1260, s: 1.5, view: 'threequarter', expr: 'excited', talk: true }, { c: 'wade', x: 900, y: 1260, s: 1.5, view: 'threequarter', expr: 'smug' }],
+   cards: [{ c: 'dopinder', name: 'DOPINDER', sub: 'Move: Meter Running', at: 1.0, side: 'R', type: 'TAXI DRIVER', stat: 'WEAKNESS: WANTS TO BE A HITMAN', items: ['🚕', '🎵'], tags: ['SWEET', 'UH-OH'] }] },
+ { p: 2, f: .7, plate: 'nyc_street', cam: { z: [2.2, 2.5], x: 1250, y: 640 }, chars: [{ c: 'dopinder', x: 1250, y: 1260, s: 1.5, expr: 'excited', pose: 'fistPump' }], pops: [{ t: 'Terrible advice. Remember it.', at: .3 }] },
+]};

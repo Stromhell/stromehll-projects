@@ -1,0 +1,8 @@
+// Act 07: PRISON BUDDIES
+window.ACT = { timing: window.TIMING, shots: [
+ { p: 0, plate: 'icebox', title: ['PART 6', 'Prison Buddies'], cam: { z: [1.1, 1.25], x: 1280, y: 820 }, chars: [{ c: 'wadeJail', x: 1100, y: 1280, s: 1.5, view: 'threequarter', expr: 'sad' }, { c: 'russellJail', x: [1900, 1450], y: 1280, s: 1.4, view: 'threequarter', dir: -1, expr: 'happy' }, { c: 'guard', x: 400, y: 1260, s: 1.45, view: 'threequarter', expr: 'deadpan' }] },
+ { p: 0, f: .6, plate: 'icebox', cam: { z: [1.8, 2.0], x: 1280, y: 760 }, chars: [{ c: 'wadeJail', x: 1100, y: 1280, s: 1.5, view: 'threequarter', expr: 'angry', talk: true, pose: 'point' }, { c: 'russellJail', x: 1450, y: 1280, s: 1.4, view: 'threequarter', dir: -1, expr: 'sad' }], pops: [{ t: 'Go away, kid.', at: .4 }] },
+ { p: 1, plate: 'icebox', cam: { z: [1.5, 1.7], x: 1350, y: 800 }, chars: [{ c: 'russellJail', x: 1450, y: 1280, s: 1.4, view: 'threequarter', dir: -1, expr: 'angry', talk: true }, { c: 'wadeJail', x: 1100, y: 1280, s: 1.5, view: 'threequarter', expr: 'deadpan' }] },
+ { p: 1, f: .6, plate: 'icebox', cam: { z: [1.15, 1.25], x: 1280, y: 760 }, chars: [{ c: 'bigInmate', x: 1850, y: 1280, s: 1.4, view: 'threequarter', dir: -1, expr: 'angry' }, { c: 'russellJail', x: 1350, y: 1280, s: 1.4, view: 'threequarter', expr: 'nervous' }], pops: [{ t: 'Step 1: find the biggest guy', at: .3 }] },
+ { p: 2, plate: 'pit', cam: { z: [1.2, 1.6], x: 1280, y: 900 }, post: (lt, cam) => { const E = window.E, c = E.ctx; E.apply(cam); const on = lt > 1.5 ? Math.min(1, (lt - 1.5) * 2) : 0; if (!on) return; for (const x of [1220, 1340]) { c.fillStyle = `rgba(255,40,30,${on})`; c.beginPath(); c.ellipse(x, 1120, 26, 10, 0, 0, 7); c.fill(); } E.glowS && 0; }, pops: [{ t: '...a BIGGER guy', at: 2.2 }] },
+]};
