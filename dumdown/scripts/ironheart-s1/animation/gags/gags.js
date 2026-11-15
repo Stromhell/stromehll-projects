@@ -232,8 +232,8 @@ S.terms = async t => {
   ctx.save(); ctx.translate(1280, 640); burst(0, 0, 360, t, hap ? '#ffd23d' : '#3a1020', hap ? '#ff6a2b' : '#24080e', 20); ctx.restore();
   rr(1080, 960, 400, 240, 10, '#c9a046', '#231A24', 8); PR.cape({ x: 1280, y: 960, s: 1.6 }, t);
   if (hap) txt('HOOD™', 1280, 430, 110, '#fff', { stroke: '#231A24', glow: '#ff3a5a' });
-  if (!hap) { screen(); ctx.fillStyle = 'rgba(255,255,255,.9)'; ctx.font = '600 26px Inter'; ctx.textAlign = 'left'; const L = ['By wearing this hood you agree to: scars, visions, bad decisions,', 'the loss of your soul, a mandatory subscription to Dark Dimension Plus,', 'whispering, purple glowing, trust issues, one (1) devil pizza party,', 'cancellation is not possible, cancellation was never possible,', 'side effects may include becoming the villain of a TV show.'];
-    rr(250, H - BAR - 250, 1050, 230, 10, 'rgba(10,4,8,.8)'); const y0 = H - BAR - 40 - ((t - OPEN) * 60) % 260; L.forEach((l, i) => ctx.fillText(l, 280, y0 - (L.length - i) * 34)); }
+  if (!hap) { screen(); const L = ['By wearing this hood you agree to: scars, visions, bad decisions,', 'the loss of your soul, a mandatory subscription to Dark Dimension Plus,', 'whispering, purple glowing, trust issues, one (1) devil pizza party,', 'cancellation is not possible, cancellation was never possible,', 'side effects may include becoming the villain of a TV show.'];
+    rr(250, H - BAR - 250, 1050, 230, 10, 'rgba(10,4,8,.8)'); ctx.fillStyle = 'rgba(255,255,255,.92)'; ctx.font = '600 26px Inter'; ctx.textAlign = 'left'; const y0 = H - BAR - 40 - ((t - OPEN) * 60) % 260; L.forEach((l, i) => ctx.fillText(l, 280, y0 - (L.length - i) * 34)); }
   else banner("HOOD! IT'S TO DIE FOR!", '#231A24', '#ffd23d'); vhs(t, .9); };
 S.rehab = async t => {
   const cam = camW(t, { z: 1.08, x: 1280, y: 780 }); plate('ri_bedroom', cam, 4); grade('#2a3a6a', .3, 'multiply'); apply(cam);
