@@ -1,14 +1,14 @@
-# Assemble the Ironheart S1 full video with ONE lossy video encode (CFR 24 fps).
+# Assemble the Agatha All Along S1 full video with ONE lossy video encode (CFR 24 fps).
 # Segments (act pieces + gags spliced in at their act points) are decoded one at a time and piped as raw frames
 # into a single x264 encoder, so memory stays flat (a 42-input filter graph ran out of memory).
 # Audio is cut at the same frame boundaries (2000 samples per frame at 48 kHz), joined as PCM, then two-pass loudnorm -14.
 import json, subprocess, sys, os, wave
 sys.path.insert(0, 'gags'); from gags_data import G
 SCR = os.environ.get('SCR', '/tmp/agwork')
-OUT = f'{SCR}/full/DumDown_IronheartS1_FULL_v3.mp4'; os.makedirs(f'{SCR}/full', exist_ok=True)
+OUT = f'{SCR}/full/DumDown_AgathaS1_FULL_v1.mp4'; os.makedirs(f'{SCR}/full', exist_ok=True)
 def dur(f): return float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', f], capture_output=True, text=True).stdout)
 segs = []  # (video, audio, start_frame, n_frames)
-for n in range(25):
+for n in range(19):
     v = f'{SCR}/acts/act{n:02d}.mp4'; a = f'{SCR}/mix/act{n:02d}.wav'; tot = round(min(dur(v), dur(a)) * 24)
     pts = sorted([g for g in G if g['act'] == n], key=lambda g: g['at']); cuts = [0] + [min(tot, round(g['at'] * 24)) for g in pts] + [tot]
     for k in range(len(cuts) - 1):

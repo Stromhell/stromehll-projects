@@ -1,12 +1,12 @@
 {
  "channel": "dumdown",
  "video": "agatha-all-along-s1",
- "state": "queued",
+ "state": "waiting_approval",
  "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ8T7BCknYL9Tsi3qYiderQNY",
  "feedback": false,
- "queue_pos": 4,
+ "queue_pos": null,
  "booked_for": null,
  "zernio_post": null,
- "updated": "2026-11-15T12:45Z",
- "note": "Storyboard v1 OK'd by Pushpam 15 Nov 12:43 UTC (https://claude.ai/artifact/LwA9yME9sxKLGAUKMoo17d). Queued behind Finance 06 and 07; animate only when its turn comes. Earliest booking 23 Nov 16:00 UTC."
+ "updated": "2026-11-15T19:44Z",
+ "note": "Production started 15 Nov 16:28 UTC on Pushpam's ask, alongside Finance 07 (one-time exception). Storyboard v1 OK'd. | FULL v1 15:38 done 15 Nov 19:45 UTC, Drive 1LeRwNPtQRIXWHGJELhjUgkxzSdpbrfnn, kit https://claude.ai/artifact/8T43ygvf7KxELUEsaA98x6, thumb v2 ElevenLabs. Waiting for Pushpam OK."
 }
