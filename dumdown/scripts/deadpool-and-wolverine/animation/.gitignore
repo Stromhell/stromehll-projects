@@ -2,3 +2,4 @@ gags/out/
 gags/tts_cache/
 gags/__pycache__/
 page_*.html
+gags/out_v1/

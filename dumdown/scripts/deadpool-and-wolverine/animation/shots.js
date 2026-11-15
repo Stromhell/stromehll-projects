@@ -17,27 +17,41 @@ function build(ACT) {
   const at = (p, f = 0) => LEAD + (p >= starts.length ? total : starts[p] + (p < T.durs.length ? T.durs[p] * f : 0));
   const SH = ACT.shots.map((s, i) => ({ s, a: s.t0 ?? at(s.p, s.f || 0) }));
   SH.forEach((x, i) => { x.b = i + 1 < SH.length ? SH[i + 1].a : LEAD + total; if (i === 0) x.a = 0; });
-  return SH.map(({ s, a, b }) => ({ a, b, async draw(tt, lt, u) {
+  return SH.map(({ s, a, b }, si) => ({ a, b, async draw(tt, lt, u) {
     const d = b - a, ue = s.ease === 'lin' ? u : io(u), cm = s.cam || {};
-    const cam = { z: val(cm.z ?? 1, ue), x: val(cm.x ?? 1280, ue), y: val(cm.y ?? 720, ue), rot: val(cm.rot ?? 0, ue) };
+    const zr_ = [].concat(cm.z ?? 1), zk = !s.still && (zr_.length < 2 || Math.abs(zr_[1] - zr_[0]) < .12) ? 1 + .07 * ue : 1;
+    const cam = { z: val(cm.z ?? 1, ue) * zk, x: val(cm.x ?? 1280, ue), y: val(cm.y ?? 720, ue), rot: val(cm.rot ?? 0, ue) };
     // keep every head (and horns) below the top letterbox: lower cam.y if needed (continuous in ue, so no jumps)
     const cam0y = cam.y;
     if (!s.noHeadFit) for (const c of (s.chars || [])) { const ch = (C[c.c] || {}).acc || {}, hs = ch.hornStyle, hx = ch.horns ? (hs === 'huge' ? 230 : hs === 'small' ? 70 : hs === 'broken' ? 90 : 150) : 0;
       const sc = val(c.s ?? 1.4, ue), cy = val(c.y, ue), lim = (165 - 540) / (cam.z * .75); let need = cy - (410 + hx) * sc - lim;
       if (cam0y - need > .3 * 720 / cam.z) need = cy - 410 * sc - lim; // close-up: keep the face framed, let horn tips leave the frame
       if (cam.y > need) cam.y = Math.max(need, 720 / cam.z); }
+    // CINEMATIC v2 (Pushpam 15 Nov: no slideshow): every shot keeps moving (dolly drift + push-in), plates parallax behind
+    // the cast, and cuts to a new place whip-pan (blurred slide in/out) instead of hard-cutting.
+    if (!s.still) { const dirv = s.drift ?? (si % 2 ? -1 : 1);
+      if (!Array.isArray(cm.x)) cam.x += dirv * lerp(-120, 120, ue);
+      cam.sy = (cam.sy || 0) + Math.sin(lt * 1.3 + si) * 3; }
+    let whip = 0; const prevS = si ? SH[si - 1].s : null, nextS = SH[si + 1] ? SH[si + 1].s : null, WD = .22;
+    if (prevS && prevS.plate !== s.plate && !s.noWhip && lt < WD) whip = (si % 2 ? -1 : 1) * (1 - io(lt / WD));
+    if (nextS && nextS.plate !== s.plate && !nextS.noWhip && d - lt < WD) whip = ((si + 1) % 2 ? 1 : -1) * io(1 - (d - lt) / WD);
+    if (whip) { const m = Math.max(0, (2560 - 2560 / cam.z) / 2) * cam.z * .75; cam.sx = (cam.sx || 0) + whip * Math.min(m * .6, 150); }
     if (cm.shake) { cam.sx = Math.sin(lt * 41) * cm.shake; cam.sy = Math.cos(lt * 33) * cm.shake * .7; }
-    if (s.plate) plate(s.plate, cam, s.blur || 0, s.par ?? 1); else { screen(); ctx.fillStyle = s.bg || '#000'; ctx.fillRect(0, 0, W, H); }
+    if (s.plate) plate(s.plate, cam, (s.blur || 0) + Math.abs(whip) * 22, s.par ?? .86); else { screen(); ctx.fillStyle = s.bg || '#000'; ctx.fillRect(0, 0, W, H); }
     if (s.pre) await s.pre(lt, cam, u, d);
     const list = [], fronts = [], CO = [];
     const at = p => { if (p.onHead != null) { const k = CO[p.onHead]; if (!k) return null; const o = k[2], f = D.forehead(k[0], { view: o.view || 'front', dir: o.dir || 1, x: o.x, y: o.y, scale: o.s, pose: E.figPose(k[0], k[1], o), fy: p.fy ?? 36 }); return { x: f.x + (p.dx || 0), y: f.y + (p.dy || 0), s: (p.s ?? 1) * f.sc / 1.9 }; } if (p.on == null) return null; const k = CO[p.on]; if (!k) return null; const w = hand(k[0], k[1], k[2], p.side || 'R'); return { x: w.x + (p.dx || 0), y: w.y + (p.dy || 0) }; };
+    ctx.filter = whip ? `blur(${(Math.abs(whip) * 16).toFixed(1)}px)` : 'none';
     for (const p of (s.props || [])) if ((p.layer || (p.on != null || p.onHead != null ? 'front' : 'back')) === 'back' && lt >= (p.t0 || 0) && lt <= (p.t1 ?? 1e9)) { apply(cam); P[p.k](Object.assign({}, p, at(p) || { x: val(p.x, ue), y: val(p.y, ue) }, { s: val(p.s ?? 1, ue), k: p.kk === undefined ? 1 : val(p.kk, ue) }), lt); }
+    ctx.filter = 'none';
     for (const c of (s.chars || [])) { if (lt < (c.t0 || 0) || lt > (c.t1 ?? 1e9)) continue; const rng_ = Array.isArray(c.x) ? Math.abs(c.x[1] - c.x[0]) : 0, span = (c.t1 ?? d) - (c.t0 || 0), wEnd = rng_ > 20 && rng_ / span < 140 ? (c.t0 || 0) + Math.max(.8, rng_ / 160) : (c.t1 ?? d); const cu = c.t0 || c.t1 || wEnd < d ? clamp((lt - (c.t0 || 0)) / (wEnd - (c.t0 || 0))) : ue; const cue = c.lin ? cu : io(cu);
       const x = val(c.x, cue), moving = Array.isArray(c.x) && Math.abs(c.x[1] - c.x[0]) > 20 && cu > 0 && cu < 1;
       const talk = c.talk && (Array.isArray(c.talk) ? c.talk.some(([p, q]) => lt >= p && lt <= q) : true);
       const fo = { x, y: val(c.y, cue), s: val(c.s ?? 1.4, cue), view: c.view || 'front', dir: c.dir || 1, expr: (typeof c.expr === 'function' ? c.expr(lt) : c.expr) || (talk ? 'talk' : undefined), anim: moving ? 'walk' : c.anim || (talk ? 'talk' : null), pose: c.pose ? D.POSES[c.pose] : undefined, lean: c.lean, tilt: c.tilt }; CO[(s.chars || []).indexOf(c)] = [C[c.c], lt + (c.ph || 0), fo]; const fg_ = fig(C[c.c], lt + (c.ph || 0), fo); list.push(c.ghost ? `<g opacity="${typeof c.ghost === 'number' ? c.ghost : .62}">${fg_}</g>` : fg_); }
-    if (list.length) await chars(list, cam, s.cblur || 0);
+    if (list.length) await chars(list, cam, (s.cblur || 0) + Math.abs(whip) * 16);
+    ctx.filter = whip ? `blur(${(Math.abs(whip) * 16).toFixed(1)}px)` : 'none';
     for (const p of (s.props || [])) if ((p.layer || (p.on != null || p.onHead != null ? 'front' : 'back')) === 'front' && lt >= (p.t0 || 0) && lt <= (p.t1 ?? 1e9)) { apply(cam); P[p.k](Object.assign({}, p, at(p) || { x: val(p.x, ue), y: val(p.y, ue) }, { s: val(p.s ?? 1, ue), k: p.kk === undefined ? 1 : val(p.kk, ue) }), lt); }
+    ctx.filter = 'none';
     if (s.fg && IM[s.fg]) { apply(cam); ctx.drawImage(IM[s.fg], 0, 0, 2560, 1440); }
     if (s.post) await s.post(lt, cam, u, d);
     for (const f of (s.fx || [])) { if (f === 'rain') rainFx(lt, .35); else if (f === 'snow') FX.snow(lt); else if (f === 'sparks') FX.sparks(W / 2, H / 2, lt); else if (f === 'flash') FX.white(1 - seg(lt, 0, .5)); else if (f === 'whiteout') FX.white(seg(lt, d - 1.2, d)); }

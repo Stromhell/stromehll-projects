@@ -1,0 +1,12 @@
+{
+ "channel": "dumdown",
+ "video": "deadpool-and-wolverine",
+ "state": "waiting_approval",
+ "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ82ekaREayE8x2jkm2ajLiad",
+ "feedback": false,
+ "queue_pos": 0,
+ "booked_for": null,
+ "zernio_post": null,
+ "updated": "2026-11-15T22:05Z",
+ "note": "FULL v2 15:10 shared (Drive 1oxjgZcfzqqEBZn6f0HpUQ1a14NhUUNnx, kit https://claude.ai/artifact/VkjkM2dmbAtMt3ZRppARoK). Waiting for Pushpam OK; then book DumDown Zernio earliest 25 Nov 16:00 UTC."
+}
