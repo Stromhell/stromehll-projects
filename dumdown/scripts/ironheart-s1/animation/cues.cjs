@@ -1,6 +1,6 @@
 // node cues.cjs NN -> prints JSON shot timeline for act NN (same timing maths as shots.js)
 const fs = require('fs'), vm = require('vm');
-const n = process.argv[2], VO = process.env.VO || '/tmp/dp2work/vo';
+const n = process.argv[2], VO = process.env.VO || '/tmp/ihwork/vo';
 const T = JSON.parse(fs.readFileSync(`${VO}/act${n}.json`)); const win = { TIMING: T, E: {}, PROPS: {} }; win.window = win;
 vm.runInNewContext(fs.readFileSync(`acts/act${n}.js`, 'utf8'), win);
 const ACT = win.ACT, LEAD = .6, starts = []; let t = 0; T.durs.forEach(d => { starts.push(t); t += d + T.gap; }); const total = t + (ACT.tail ?? 1.2);

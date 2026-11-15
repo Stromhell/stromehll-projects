@@ -1,51 +1,51 @@
-# DumDown Deadpool 2 cutaway gags. 'act' + 'at' = insertion point (seconds into that act's video; act end = whole act).
+# DumDown Ironheart S1 cutaway gags. 'act' + 'at' = insertion point (seconds into that act's video; act end = whole act).
 # Item kinds: [WHO, text] speech | ['sfx', name, gain_db] | ['wait', s] | ['slam', TEXT, dur] | ['laugh', kind]
 # Voices: free local Kokoro voice, length scale, fx (NO ElevenLabs)
 V = {
-  'WADE': ('am_puck', 1.0, ''), 'COL': ('am_onyx', .95, 'deep'), 'CABLE': ('am_fenrir', 1.05, 'deep'), 'DOM': ('af_kore', 1.0, ''),
-  'NEGA': ('af_nova', 1.05, ''), 'YUK': ('af_sky', .95, 'up'), 'DOP': ('am_echo', .95, 'up'), 'HOST': ('am_eric', .9, ''),
-  'MOD': ('bm_george', 1.0, ''), 'RANGER': ('am_liam', .92, ''), 'AGENT': ('bm_daniel', 1.05, ''), 'CLERK': ('af_nicole', 1.1, ''),
-  'GATE': ('af_bella', 1.0, ''), 'READ': ('af_heart', 1.0, ''), 'KID': ('af_sky', 1.0, 'up'), 'ANN': ('am_onyx', 1.25, 'trailer'),
+  'RIRI': ('af_nova', 1.0, ''), 'NAT': ('af_jessica', 1.0, 'up'), 'PARKER': ('am_fenrir', 1.0, ''), 'JOE': ('am_echo', 1.0, ''),
+  'ZEKE': ('am_onyx', .95, 'robot'), 'MEPH': ('bm_fable', 1.0, ''), 'HR': ('af_bella', 1.0, ''), 'HOST': ('am_eric', .9, ''),
+  'HOST2': ('am_puck', .88, ''), 'WEATHER': ('af_heart', 1.0, ''), 'OP': ('af_river', 1.12, ''), 'ANN': ('am_onyx', 1.2, 'trailer'),
+  'FAST': ('am_liam', .55, ''), 'KID': ('af_sky', 1.0, 'up'), 'GRP': ('am_adam', 1.0, ''), 'GUY2': ('am_santa', 1.0, 'deep'),
+  'GUY3': ('bm_lewis', 1.0, ''), 'NARR': ('am_michael', 1.05, ''), 'SMOOTH': ('bm_george', 1.05, ''), 'JING': ('af_kore', .9, 'up'),
 }
 G = [
- dict(id=1, act=2, at=35.94, title="DOPINDER'S DRIVING SCHOOL", set='drive', music='infomercial', items=[
-  ['DOP', 'Hello! Do you want to drive a taxi? Learn to drive with Dopinder!'], ['sfx', 'honk', -4],
-  ['DOP', 'Learn to drive! Learn to drive angry!'], ['wait', .2], ['DOP', 'Learn to drive... through a man!'], ['sfx', 'thud', 0], ['sfx', 'honk', -4],
-  ['wait', .3], ['ANN', 'Dopinder. Lessons. Taxi. Murder.'], ['DOP', 'Please call!'], ['sfx', 'cash', -4], ['laugh', 'big'], ['wait', 1.4]]),
- dict(id=2, act=4, at=38.46, title='INSURANCE FOR IMMORTALS', set='insure', music='hold', items=[
-  ['AGENT', 'So. You exploded.'], ['WADE', 'Yep.'], ['wait', .3], ['AGENT', 'Again.'], ['WADE', 'Yep.'], ['wait', .4],
-  ['AGENT', 'Sir, this is your fourteenth claim this month.'], ['WADE', "I'm on a journey."], ['wait', .4], ['sfx', 'stamp', -2], ['slam', 'DENIED', 1.4],
+ dict(id=1, act=2, at=34.6, title='HOMEWORK BY RIRI', set='homework', music='infomercial', items=[
+  ['RIRI', 'Failing calculus? Hate your professor?'], ['sfx', 'ding', -4], ['RIRI', 'Homework by Riri. A plus, or your money back.'], ['sfx', 'cash', -4],
+  ['wait', .3], ['NARR', 'Side effects include being expelled.'], ['sfx', 'sad_trombone', -4], ['laugh', 'big'], ['wait', 1.4]]),
+ dict(id=2, act=5, at=57.45, title='INTERVIEW TIPS WITH A VILLAIN', set='hr', music='hold', items=[
+  ['HR', 'Welcome to your new job! Step one: lock the applicant in a box.'], ['sfx', 'gate_slam', -4],
+  ['HR', 'Step two: remove the oxygen.'], ['sfx', 'gasp', -4], ['HR', 'Step three: watch, with snacks.'], ['sfx', 'crunch', -2],
+  ['wait', .3], ['HR', 'Join us! We have dental.'], ['wait', .4], ['HR', 'Probably.'], ['sfx', 'rimshot', -3], ['laugh', 'big'], ['wait', 1.4]]),
+ dict(id=3, act=7, at=36.05, title='GHOST OR GLITCH?', set='ghost', music='gameshow', items=[
+  ['HOST', 'Contestant! Your dead best friend is now a hologram that roasts your outfits.'], ['NAT', 'Girl, those shoes.'], ['HOST', 'Ghost... or glitch?'],
+  ['sfx', 'tick', -6], ['RIRI', '...Glitch?'], ['sfx', 'buzzer', -2], ['HOST', "Wrong! It's both. And she lives in your chest."], ['sfx', 'dundun', -3], ['laugh', 'big'], ['wait', 1.4]]),
+ dict(id=4, act=9, at=41.55, title='BESTIE GPS', set='gps', music='lounge', items=[
+  ['SMOOTH', 'Introducing the new Bestie GPS.'], ['NAT', 'Turn left.'], ['wait', .3], ['NAT', 'No, your OTHER left.'],
+  ['NAT', 'Why are you driving like my grandma? Recalculating your life choices.'], ['sfx', 'honk', -4], ['sfx', 'thud', 0], ['wait', .4],
+  ['SMOOTH', 'Bestie GPS. She has notes.'], ['laugh', 'mid'], ['wait', 1.4]]),
+ dict(id=5, act=11, at=43.1, title='VILLAIN DADS ANONYMOUS', set='dads', music='soap', items=[
+  ['JOE', 'Hi. I\'m Joe. And my dad was a giant metal man who tried to kill his boss.'], ['GRP', 'Hi, Joe.'], ['wait', .4],
+  ['GUY2', 'Mine was a purple space titan.'], ['wait', .3], ['GUY3', 'Mine was a planet.'], ['wait', .5], ['sfx', 'coo', -6], ['JOE', '...Okay, you win.'],
   ['laugh', 'big'], ['wait', 1.4]]),
- dict(id=3, act=5, at=37.39, title='X-MANSION H.O.A. MEETING', set='hoa', music='soap', items=[
-  ['COL', 'Okay. Roll call. Professor?'], ['wait', .6], ['COL', 'Storm?'], ['wait', .5], ['COL', '...Anyone with a famous name?'], ['sfx', 'crickets', -4], ['wait', 1.2],
-  ['NEGA', 'Nope.'], ['COL', 'Great. Motion to buy a new couch. All in favour?'], ['wait', .4], ['YUK', 'Hi Wade!'], ['wait', .3], ['COL', 'Passed.'], ['sfx', 'gavel', -2],
-  ['laugh', 'mid'], ['wait', 1.4]]),
- dict(id=4, act=6, at=55.75, title='ICEBOX TRAVEL REVIEWS', set='reviews', music='lounge', items=[
-  ['READ', 'One star. Room was cold. Staff were cold. Food was cold.'], ['READ', 'My neighbour was a giant man in the basement. Would not recommend.'], ['sfx', 'swipe', -6], ['wait', .4],
-  ['READ', 'Next review. One star.'], ['wait', .2], ['READ', 'Too much foreshadowing.'], ['sfx', 'rimshot', -3], ['laugh', 'big'], ['wait', 1.4]]),
- dict(id=5, act=8, at=43.22, title='TIME TRAVEL AIRLINES', set='gate', music='hold', items=[
-  ['sfx', 'ding', -6], ['GATE', 'Welcome to Time Air! You have two charges. One to get here, and one to get home.'], ['CABLE', 'What if I need a third?'],
-  ['wait', .3], ['GATE', 'No refunds.'], ['wait', .5], ['CABLE', "...That's just lazy writing."], ['sfx', 'rimshot', -3], ['laugh', 'big'], ['wait', 1.4]]),
- dict(id=6, act=10, at=49.25, title='IS LUCK A SUPERPOWER? THE DEBATE', set='debate', music='newsreel', items=[
-  ['MOD', 'Tonight: is luck a superpower?'], ['DOM', 'Yes it is.'], ['WADE', "No it isn't."], ['DOM', 'Yes it is.'], ['WADE', 'No it is...'],
-  ['sfx', 'thud', 0], ['sfx', 'boing', -4], ['wait', .6], ['DOM', '...Yes it is.'], ['sfx', 'zap', -6], ['laugh', 'big'], ['wait', 1.4]]),
- dict(id=7, act=11, at=38.46, title='THE WEATHER WITH A FOREST RANGER', set='weather', music='weather', items=[
-  ['RANGER', 'Good evening! Today: high winds.'], ['RANGER', 'A good day to fly a kite.'], ['wait', .2],
-  ['RANGER', 'A bad day to skydive with a superhero team you met yesterday.'], ['sfx', 'whoosh', -4], ['wait', .8], ['RANGER', 'Anyway! Back to you.'],
-  ['sfx', 'sad_trombone', -4], ['laugh', 'mid'], ['wait', 1.4]]),
- dict(id=8, act=13, at=16.18, title='BABY LEGS FITNESS', set='fitness', music='runway', items=[
-  ['WADE', 'Okay, people! And kick! And kick!'], ['sfx', 'boing', -6], ['WADE', 'And kick! And...'], ['wait', .4],
-  ['WADE', 'Sit down. These legs are four days old.'], ['sfx', 'thud', -2], ['slam', 'TONED IN TEN YEARS', 1.8], ['laugh', 'big'], ['wait', 1.4]]),
- dict(id=9, act=13, at=66.46, title='THIRTY SECONDS TO SAVE A SOUL', set='clock', music='gameshow', items=[
-  ['HOST', 'Thirty seconds to save a soul! Your time starts... now!'], ['sfx', 'tick', -6], ['WADE', 'Kid! You are special! You matter! You are...'],
-  ['sfx', 'buzzer', -2], ['HOST', "Time's up! And our prize is..."], ['wait', .3], ['HOST', 'A bullet!'], ['sfx', 'gunshot', -8], ['laugh', 'whoo'], ['wait', 1.4]]),
- dict(id=10, act=14, at=44.11, title="COLOSSUS' MANNERS CLASS", set='manners', music='harp', items=[
-  ['COL', 'Instead of that word, we say: fudge.'], ['COL', 'Instead of that word, we say: son of a biscuit.'], ['wait', .4],
-  ['KID', 'What if a giant is punching me?'], ['wait', .7], ['COL', '...Still biscuit.'], ['sfx', 'rimshot', -3], ['laugh', 'big'], ['wait', 1.4]]),
- dict(id=11, act=15, at=54.41, title='FOR YOUR CONSIDERATION', set='oscar', music='none', items=[
-  ['sfx', 'braam', -2], ['wait', .3], ['ANN', 'For your consideration.'], ['ANN', 'Best Actor in a Very Long Death.'], ['ANN', 'Forty minutes of dying. Four costume changes. One song.'],
-  ['sfx', 'whoosh', -4], ['slam', '"PLEASE JUST GO."', 1.8], ['ANN', 'The New Pork Times.'], ['laugh', 'mid'], ['wait', 1.4]]),
- dict(id=12, act=17, at=25.22, title='TIME MACHINE RETURN DESK', set='returns', music='hold', items=[
-  ['sfx', 'shopbell', -6], ['WADE', "Hi! I'd like to return this time machine."], ['CLERK', "What's wrong with it?"], ['WADE', 'Nothing. I fixed everything.'],
-  ['CLERK', 'Then why return it?'], ['wait', .4], ['WADE', "Because next movie, I'll need it again."], ['sfx', 'rimshot', -3], ['laugh', 'big'], ['wait', 1.4]]),
+ dict(id=6, act=13, at=55.25, title='DUMDOWN WEATHER REPORT', set='weather', music='weather', items=[
+  ['WEATHER', 'Tonight in Chicago, a one hundred percent chance of greenhouse gas.'], ['WEATHER', 'Locally. Inside one building. Very specifically.'],
+  ['sfx', 'boing', -6], ['wait', .3], ['WEATHER', 'And watch out for a cold front of guilt, moving in on our girl genius.'], ['sfx', 'sad_trombone', -4], ['laugh', 'mid'], ['wait', 1.4]]),
+ dict(id=7, act=15, at=35.4, title='MAGIC CUSTOMER SERVICE', set='callcentre', music='none', items=[
+  ['sfx', 'dtmf', -6], ['OP', 'Thank you for calling the Dark Dimension.'], ['OP', 'For possession, press one. For curses, press two.'],
+  ['OP', 'For refunds, please hold. Forever.'], ['sfx', 'organ', -2], ['wait', 1.6], ['OP', 'Your soul is important to us.'], ['laugh', 'big'], ['wait', 1.4]]),
+ dict(id=8, act=17, at=36.8, title='PIMP MY CYBORG', set='pimp', music='runway', items=[
+  ['HOST2', 'Yo! We heard you like robot parts.'], ['HOST2', 'So we put robot parts in your robot parts!'], ['sfx', 'wrench', -4], ['sfx', 'zap', -6],
+  ['wait', .4], ['ZEKE', 'Is it good?'], ['HOST2', "It's giving store-brand action hero."], ['sfx', 'airhorn', -4], ['laugh', 'whoo'], ['wait', 1.4]]),
+ dict(id=9, act=19, at=43.0, title='TERMS AND CONDITIONS', set='terms', music='infomercial', items=[
+  ['FAST', 'By wearing this hood you agree to scars, visions, bad decisions, the loss of your soul, and a mandatory subscription to Dark Dimension Plus. Cancel anytime. You cannot cancel.'],
+  ['wait', .3], ['JING', 'Hood! It\'s to die for!'], ['sfx', 'dingding', -4], ['laugh', 'big'], ['wait', 1.4]]),
+ dict(id=10, act=21, at=35.9, title='HOOD-BE-GONE', set='rehab', music='harp', items=[
+  ['ANN', 'Are you addicted to an evil cloak?'], ['PARKER', 'It whispers to me.'], ['ANN', 'Do you shiver without a demon in your ear?'],
+  ['wait', .3], ['ANN', 'Call Hood-Be-Gone. Our blankets are completely un-cursed.'], ['wait', .4], ['ANN', 'Mostly.'], ['sfx', 'dundun', -3], ['laugh', 'mid'], ['wait', 1.4]]),
+ dict(id=11, act=22, at=52.1, title='SHARK TANK: HELL EDITION', set='hellTank', music='court', items=[
+  ['MEPH', "I'll invest in your dead best friend. For one hundred percent of your soul."], ['RIRI', 'Counter offer. Fifty percent.'], ['wait', .3],
+  ['MEPH', 'Done!'], ['sfx', 'gavel3', -2], ['wait', .4], ['NARR', "That's not how negotiation works."], ['laugh', 'big'], ['wait', 1.4]]),
+ dict(id=12, act=23, at=13.55, title='DUMDOWN DEAL CHECKER', set='quiz', music='gameshow', items=[
+  ['HOST', 'Quick, kids! The devil offers you free pizza. Do you, A, eat it? Or B, run?'], ['sfx', 'tick', -6], ['KID', 'Eat it?'], ['sfx', 'buzzer', -2],
+  ['HOST', "Wrong! That's how you lose your soul. And your crust."], ['laugh', 'big'], ['wait', 1.4]]),
 ]

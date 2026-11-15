@@ -1,10 +1,8 @@
-// Act 03: HAPPY ANNIVERSARY
+// Act 03: FLYING HOME (BADLY)
 window.ACT = { timing: window.TIMING, shots: [
- { p: 0, plate: 'apt_warm', title: ['PART 2', 'Happy Anniversary'], cam: { z: [1.15, 1.3], x: 1100, y: 800 }, chars: [{ c: 'wadeFace', x: 900, y: 1250, s: 1.55, view: 'threequarter', expr: 'happy' }, { c: 'vanessa', x: 1350, y: 1250, s: 1.5, view: 'threequarter', dir: -1, expr: 'smile', talk: true }] },
- { p: 0, f: .55, plate: 'apt_warm', cam: { z: [2.6, 3.0], x: 1130, y: 980 }, props: [{ k: 'token', x: 1130, y: 980, s: 1.6, spin: 3, layer: 'front' }], pops: [{ t: 'IMPORTANT COIN. PROBABLY.', at: .5 }] },
- { p: 1, plate: 'apt_warm', cam: { z: [1.5, 1.7], x: 1130, y: 800 }, chars: [{ c: 'wadeFace', x: 900, y: 1250, s: 1.55, view: 'threequarter', expr: 'shock' }, { c: 'vanessa', x: 1350, y: 1250, s: 1.5, view: 'threequarter', dir: -1, expr: 'happy', talk: true }], pops: [{ t: 'Baby names: Todd? Cher?', at: 4 }] },
- { p: 2, plate: 'apt_warm', cam: { z: [1.8, 2.0], x: 1350, y: 720 }, chars: [{ c: 'vanessa', x: 1350, y: 1250, s: 1.5, view: 'threequarter', dir: -1, expr: 'smile', talk: true }] },
- { p: 2, f: .55, plate: 'apt_warm', cam: { z: [1.8, 2.0], x: 900, y: 720 }, chars: [{ c: 'wadeFace', x: 900, y: 1250, s: 1.55, view: 'threequarter', expr: 'sad' }], pops: [{ t: '"Better than we used to be."', at: .3 }] },
- { p: 3, plate: 'apt_warm', grade: ['#1a1030', .35, 'multiply'], cam: { z: [1.2, 1.35], x: 1500, y: 800, shake: 6 }, props: [{ k: 'gun', on: 0, x: 0, y: 0, dx: -18, dy: -22, s: .45, dir: -1, layer: 'front' }], chars: [{ c: 'thug', x: 2150, y: 1250, s: 1.5, view: 'threequarter', dir: -1, expr: 'angry', pose: 'point' }, { c: 'vanessa', x: 1200, y: 1250, s: 1.5, view: 'threequarter', expr: 'shock' }] },
- { p: 4, plate: 'apt_warm', grade: ['#101020', .4, 'multiply'], cam: { z: [2.6, 3.2], x: 1280, y: 1150 }, props: [{ k: 'token', x: [1100, 1280], y: 1180, s: 1.3, spin: 1 }] },
+ { p: 0, plate: 'sky_drop', title: ['PART 3', 'Flying Home (Badly)'], grade: ['#ff9a5a', .25], cam: { z: [1.1, 1.25], x: [1100, 1460], y: 720 }, chars: [{ c: 'ririSuit', x: 1280, y: 1000, s: 1.4, view: 'threequarter', expr: 'deadpan', pose: 'fistPump' }], pops: [{ t: 'TRVOR: "Chicago is a rock band."', at: 4.5 }] },
+ { p: 0, f: .6, plate: 'sky_drop', grade: ['#ff9a5a', .25], cam: { z: [1.8, 2.0], x: 1280, y: 640, shake: 8 }, chars: [{ c: 'ririSuit', x: 1280, y: 1000, s: 1.4, expr: 'angry', talk: true }], pops: [{ t: '"Reh-Ree."', at: .5 }] },
+ { p: 1, plate: 'southside', cam: { z: [1.2, 1.1], x: 1280, y: 820, shake: 22 }, fx: ['flash'], props: [{ k: 'wreck', x: 1280, y: 1250, s: 1.3 }, { k: 'smoke', x: 1280, y: 1220, s: 1, col: '90,90,100' }], chars: [{ c: 'ririSuit', x: 1280, y: 1270, s: 1.35, expr: 'shock', t0: 1.2 }] },
+ { p: 1, f: .35, plate: 'southside', cam: { z: [1.35, 1.5], x: 1400, y: 860 }, props: [{ k: 'wagon', x: 1750, y: 1270, s: 1.0, dir: -1 }], chars: [{ c: 'landon', x: 1650, y: 1270, s: 1.4, view: 'threequarter', dir: -1, expr: 'smug', talk: true }, { c: 'riri', x: 1100, y: 1270, s: 1.35, view: 'threequarter', expr: 'deadpan' }],
+   cards: [{ c: 'landon', name: 'LANDON', sub: 'Move: "$20 To The Door"', at: .6, side: 'L', type: 'BUSINESSMAN', stat: 'WEAKNESS: NONE, HONESTLY', items: ['💵', '🛒'], tags: ['10', 'CEO'] }], pops: [{ t: '+$5 to take it upstairs', at: 4.6 }] },
 ]};

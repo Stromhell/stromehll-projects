@@ -1,4 +1,4 @@
-# DumDown Deadpool 2 act audio: Kokoro VO (free, local) + code score (styles per scene) + code/library SFX driven by the shot cues. No AI audio services.
+# DumDown Ironheart S1 act audio: Kokoro VO (free, local) + code score (styles per scene) + code/library SFX driven by the shot cues. No AI audio services.
 # usage: python mixloki.py NN [NN...]  -> SCR/mix/actNN.wav
 import sys, os, json, subprocess, numpy as np
 from scipy.io import wavfile
@@ -7,7 +7,7 @@ from scipy.ndimage import uniform_filter1d
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, os.path.join(HERE, 'gags'))
 import gagaudio as GA
 from gagsfx import SR, lp, hp
-SCR = os.environ.get('SCR', '/tmp/dp2work'); os.makedirs(SCR + '/mix', exist_ok=True)
+SCR = os.environ.get('SCR', '/tmp/ihwork'); os.makedirs(SCR + '/mix', exist_ok=True)
 SFXD = [os.path.join(HERE, 'gags', 'sfx'), '/mnt/project-files/2d-dynamic/shared/sfx']
 GA.STY.update({
  'tva':     dict(bpm=100, prog=[(62, 'min'), (55, 'dom'), (60, 'maj'), (57, 'min')], inst=GA.organ, mel=GA.bell, drums='brush', walk=True, mel_oct=12),
@@ -21,14 +21,18 @@ GA.STY.update({
 PLATE_MOOD = {'apt_barrels': 'tension', 'apt_warm': 'romance', 'bar': 'lounge', 'classroom': 'comedy', 'comic': 'comedy', 'dream': 'sad', 'future_home': 'sad',
   'heaven': 'wonder', 'highway': 'action', 'hongkong': 'action', 'icebox': 'tension', 'mansion_ext': 'comedy', 'mansion_hall': 'comedy', 'nyc_street': 'comedy',
   'office': 'comedy', 'orphanage': 'tension', 'orphanage_fire': 'action', 'pit': 'ominous', 'road_night': 'sad', 'rooftop_dusk': 'wonder', 'sky_drop': 'action', 'truck': 'tension'}
+PLATE_MOOD.update({'southside': 'comedy', 'mural': 'sad', 'junkshop': 'mystery', 'elevator': 'tension', 'loft': 'tension', 'bunker': 'comedy', 'tunnel': 'tension',
+  'greenhouse': 'mystery', 'gh_inside': 'action', 'candyshop': 'mystery', 'garage': 'comedy', 'golden': 'ominous', 'boardroom': 'comedy', 'ri_bedroom': 'comedy',
+  'ma_kitchen': 'comedy', 'burger': 'tension', 'skyline': 'action', 'suburb': 'comedy', 'joe_home': 'comedy'})
 GA.STY['comedy'] = GA.STY['sitcom']; GA.STY['romance'] = GA.STY['harp']
 # per-act overrides by paragraph: p -> mood
-OVRP = {'00': {0: 'action'}, '03': {3: 'sad', 4: 'sad'}, '04': {0: 'tension'}, '06': {2: 'sad'}, '08': {0: 'ominous', 1: 'action'}, '09': {0: 'sad', 1: 'sad'},
-  '13': {2: 'sad', 3: 'sad'}, '15': {0: 'tension', 1: 'epic', 2: 'epic', 3: 'sad', 4: 'wonder'}, '16': {4: 'wonder'}, '18': {0: 'wonder', 1: 'comedy', 2: 'comedy'}}
+OVRP = {'00': {0: 'action', 1: 'epic'}, '03': {0: 'action', 1: 'action'}, '04': {1: 'sad'}, '07': {1: 'wonder'}, '09': {1: 'action', 2: 'tension'},
+  '11': {1: 'ominous'}, '12': {0: 'sad', 1: 'tension'}, '13': {1: 'action', 2: 'action', 3: 'sad'}, '14': {0: 'sad', 1: 'ominous'}, '16': {1: 'sad'},
+  '17': {1: 'action'}, '18': {0: 'sad', 1: 'wonder'}, '19': {1: 'ominous'}, '20': {1: 'sad'}, '21': {0: 'action', 1: 'epic'}, '22': {3: 'sad'}, '24': {0: 'wonder', 1: 'comedy', 2: 'wonder'}}
 OVR = {}
 AMB = {'nyc_street': ('city_loop', .10), 'hongkong': ('city_loop', .10), 'highway': ('city_loop', .08), 'sky_drop': ('wind_loop', .14), 'orphanage_fire': ('fire_loop', .14),
   'bar': ('crowd_loop', .07), 'office': ('office_loop', .08), 'icebox': ('hum_loop', .08), 'truck': ('hum_loop', .10), 'rooftop_dusk': ('wind_loop', .07),
-  'road_night': ('night_loop', .12), 'pit': ('drone', .08), 'apt_barrels': ('city_loop', .05), 'dream': ('wind_loop', .06)}
+  'road_night': ('night_loop', .12), 'skyline': ('wind_loop', .10), 'southside': ('city_loop', .08), 'suburb': ('night_loop', .05), 'tunnel': ('hum_loop', .10), 'gh_inside': ('hum_loop', .08), 'loft': ('city_loop', .04), 'burger': ('crowd_loop', .05), 'golden': ('drone', .06), 'elevator': ('hum_loop', .08), 'pit': ('drone', .08), 'apt_barrels': ('city_loop', .05), 'dream': ('wind_loop', .06)}
 _C = {}
 def S(n):
     if n not in _C:

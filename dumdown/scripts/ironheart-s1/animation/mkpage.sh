@@ -1,6 +1,6 @@
 #!/bin/bash
 # mkpage.sh NN -> page_actNN.html (embeds timing from VO json)
-n=$1; VO=${VO:-/tmp/dp2work/vo}
+n=$1; VO=${VO:-/tmp/ihwork/vo}
 cat > page_act$n.html <<H
 <!doctype html><html><head><meta charset="utf-8"></head><body style="margin:0;background:#000"><canvas id="c" width="1920" height="1080"></canvas>
 <script src="kit.js"></script>

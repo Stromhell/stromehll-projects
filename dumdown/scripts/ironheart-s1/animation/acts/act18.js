@@ -1,7 +1,8 @@
-// Act 18: OUTRO (last 5 s clean for the end screen)
-window.ACT = { tail: 5.4, timing: window.TIMING, shots: [
- { p: 0, plate: 'apt_warm', cam: { z: [1.1, 1.25], x: 1280, y: 820 }, props: [{ k: 'token', x: 1280, y: 1120, s: .8 }], chars: [{ c: 'wadeFace', x: 900, y: 1260, s: 1.5, view: 'threequarter', expr: 'happy' }, { c: 'vanessa', x: 1250, y: 1260, s: 1.45, view: 'threequarter', dir: -1, expr: 'smile' }, { c: 'russell', x: 1650, y: 1260, s: 1.35, view: 'threequarter', dir: -1, expr: 'happy' }, { c: 'cable', x: 2000, y: 1260, s: 1.3, view: 'threequarter', dir: -1, expr: 'deadpan' }] },
- { p: 1, plate: 'office', cam: { z: [1.5, 1.6], x: 1280, y: 760 }, chars: [{ c: 'peter', x: 1280, y: 1260, s: 1.45, expr: 'happy', pose: 'wave' }], pops: [{ t: 'Team Peter. Correct answer.', at: 1 }] },
- { p: 2, plate: 'apt_warm', cam: { z: [1.2, 1.3], x: 1280, y: 820 }, chars: [{ c: 'wade', x: 1280, y: 1260, s: 1.5, expr: 'happy', pose: 'wave', talk: true }] },
- { t0: 29.2, plate: 'apt_warm', fadeOut: true, cam: { z: [1.0, 1.05], x: 1280, y: 760 }, grade: ['#000000', .45, 'multiply'] },
+// Act 18: GARY'S GARAGE
+window.ACT = { timing: window.TIMING, shots: [
+ { p: 0, plate: 'garage', title: ['PART 18', "Gary's Garage"], cam: { z: [1.15, 1.3], x: 1280, y: 820 }, chars: [{ c: 'ronnie', x: 1600, y: 1270, s: 1.4, view: 'threequarter', dir: -1, expr: 'sad' }, { c: 'riri', x: 1100, y: 1270, s: 1.4, view: 'threequarter', expr: 'sad', talk: true }], pops: [{ t: 'The night of the shooting, she froze.', at: 4 }] },
+ { p: 0, f: .6, plate: 'garage', grade: ['#1a1a3a', .3, 'multiply'], cam: { z: [1.8, 2.0], x: 1100, y: 760 }, chars: [{ c: 'riri', x: 1100, y: 1270, s: 1.4, expr: 'sad' }], big: ['NEVER FREEZE AGAIN.', 1.0, 4.4, '#9ae0ff'] },
+ { p: 1, plate: 'garage', grade: ['#ffc07a', .35], cam: { z: [1.3, 1.45], x: 1280, y: 820 }, props: [{ k: 'goggles', x: 900, y: 860, s: 1.2 }], chars: [{ c: 'gary', x: 1450, y: 1270, s: 1.45, view: 'threequarter', dir: -1, expr: 'happy', pose: 'wave', talk: true }, { c: 'ririKid', x: 1100, y: 1270, s: 1.4, view: 'threequarter', expr: 'excited' }], pops: [{ t: '"You got a good old iron head."', at: 2.5 }] },
+ { p: 1, f: .45, plate: 'garage', cam: { z: [1.2, 1.3], x: 1800, y: 860 }, props: [{ k: 'sheetCar', x: 1880, y: 1180, s: 1.1, kk: [0, 1] }], chars: [{ c: 'ronnie', x: 1250, y: 1270, s: 1.4, view: 'threequarter', expr: 'happy', pose: 'point' }, { c: 'riri', x: 950, y: 1270, s: 1.4, view: 'threequarter', expr: 'shock' }] },
+ { p: 1, f: .75, plate: 'garage', cam: { z: [1.4, 1.55], x: 1280, y: 800 }, chars: [{ c: 'ririCar', x: 1280, y: 1270, s: 1.5, expr: 'smug', pose: 'fistPump' }], pops: [{ t: 'IRON HEAD. IRONHEART. THEY WENT THERE.', at: 1.5 }] },
 ]};

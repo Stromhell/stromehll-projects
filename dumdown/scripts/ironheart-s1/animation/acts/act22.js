@@ -1,0 +1,9 @@
+// Act 22: THE DEVIL ORDERS PIZZA
+window.ACT = { timing: window.TIMING, shots: [
+ { p: 0, plate: 'mansion_hall', title: ['PART 22', 'The Devil Orders Pizza'], grade: ['#5a1a1a', .2], cam: { z: [1.15, 1.3], x: 1280, y: 820 }, props: [{ k: 'table', x: 1280, y: 1180, s: 1.3, w: 1200 }, { k: 'pizza', x: 1280, y: 1150, s: .8, n: 8 }], chars: [{ c: 'mephisto', x: 1550, y: 1270, s: 1.45, view: 'threequarter', dir: -1, expr: 'smug', pose: 'wave', talk: true }, { c: 'ririCar', x: 950, y: 1270, s: 1.45, view: 'threequarter', expr: 'deadpan' }], pops: [{ t: '100 richest people. 14 kings. 3 popes.', at: 7 }, { t: 'And Ringo.', at: 12 }] },
+ { p: 1, plate: 'mansion_hall', grade: ['#5a1a1a', .2], cam: { z: [1.8, 2.0], x: 1550, y: 760 }, chars: [{ c: 'mephisto', x: 1550, y: 1270, s: 1.45, expr: 'angry', talk: true }], pops: [{ t: '"Dormammu?!" (offended)', at: .3 }] },
+ { p: 2, plate: 'golden', grade: ['#ff2a2a', .2], cam: { z: [1.2, 1.4], x: 1280, y: 800, shake: 8 }, chars: [{ c: 'mephisto', x: 1280, y: 1270, s: 1.55, expr: 'smug', pose: 'shrug' }],
+   cards: [{ c: 'mephisto', name: 'MEPHISTO', sub: 'Move: "Sign Here"', at: .6, side: 'L', type: 'THE DEVIL', stat: 'WEAKNESS: BEING CALLED DORMAMMU', items: ['🍕', '📜'], tags: ['DEAL MAKER'] }] },
+ { p: 3, plate: 'golden', grade: ['#ffd08a', .3], cam: { z: [1.3, 1.5], x: 1280, y: 820 }, chars: [{ c: 'natReal', x: 1450, y: 1270, s: 1.4, view: 'threequarter', dir: -1, expr: 'happy', pose: 'wave' }, { c: 'riri', x: 1050, y: 1270, s: 1.4, view: 'threequarter', expr: 'sad' }], pops: [{ t: 'The REAL Natalie.', at: .4 }] },
+ { p: 3, f: .55, plate: 'golden', cam: { z: [1.8, 2.1], x: 1280, y: 900 }, chars: [{ c: 'riri', x: 1050, y: 1270, s: 1.4, view: 'threequarter', expr: 'deadpan', pose: 'point' }, { c: 'mephisto', x: 1550, y: 1270, s: 1.45, view: 'threequarter', dir: -1, expr: 'smug', pose: 'point' }], big: ['DID SHE SIGN?', 3.5, 6.6, '#e23a3a'] },
+]};

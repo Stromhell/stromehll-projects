@@ -159,3 +159,102 @@ const DRESS = {
 };
 for (const k in DRESS) { const f = PLATES[k]; if (!f) continue; PLATES[k] = (c, r, W, H) => { f(c, r, W, H); DRESS[k](c, r); finish(c, r, W, H, { oil: 1, grain: 6, vig: .25 }); }; }
 })();
+
+// ================= Ironheart S1 plates (DumDown) =================
+(function () {
+const { hex, rgb, shade, wash, glow, rays, finish, paintRegion } = P2;
+const M = window.M2, PR = window.PR, ENV = window.ENV, ink = '#231A24';
+const rect = (x, y, w, h) => [[x, y], [x + w, y], [x + w, y + h], [x, y + h]];
+const pr = (c, r, x, y, w, h, col, o = {}) => paintRegion(c, r, rect(x, y, w, h), col, Object.assign({ density: 80, len: [10, 40], w: [3, 9], al: .45, topLight: .08, botDark: -.25, var: 10 }, o));
+const box = (c, x, y, w, h, col, lw = 5) => { c.fillStyle = col; c.fillRect(x, y, w, h); c.strokeStyle = ink; c.lineWidth = lw; c.strokeRect(x, y, w, h); };
+function bricks(c, r, x0, y0, w, h, col) { pr(c, r, x0, y0, w, h, col, { density: 140, var: 12 }); for (let y = y0 + 20; y < y0 + h; y += 46) for (let x = x0 + ((y / 46) % 2) * 60; x < x0 + w; x += 120) { c.strokeStyle = 'rgba(20,10,10,.32)'; c.lineWidth = 3; c.strokeRect(x, y, 120, 46); } }
+function floorC(c, r, y, col) { pr(c, r, 0, y, 2560, 1440 - y, col, { density: 100, topLight: -.1, botDark: -.35 }); const g = c.createLinearGradient(0, y, 0, 1440); g.addColorStop(0, 'rgba(0,0,0,.25)'); g.addColorStop(1, 'rgba(0,0,0,0)'); c.fillStyle = g; c.fillRect(0, y, 2560, 120); }
+function shelves(c, r, x, y, w, rows, gap, items) { for (let k = 0; k < rows; k++) { const yy = y + k * gap; box(c, x, yy, w, 18, '#5a3a1e', 4); let xx = x + 14; while (xx < x + w - 40) { const it = r.pick(items), bw = 26 + r() * 40, bh = 40 + r() * (gap - 70); c.fillStyle = it; c.strokeStyle = ink; c.lineWidth = 3; c.fillRect(xx, yy - bh, bw, bh); c.strokeRect(xx, yy - bh, bw, bh); c.fillStyle = 'rgba(255,255,255,.2)'; c.fillRect(xx + 4, yy - bh + 4, 5, bh - 8); xx += bw + 6 + r() * 10; } } }
+function jars(c, r, x, y, w, rows, gap) { for (let k = 0; k < rows; k++) { const yy = y + k * gap; box(c, x, yy, w, 16, '#8a5a3a', 4); for (let xx = x + 20; xx < x + w - 60; xx += 74) { const col = r.pick(['#ff5a8a', '#ffd23d', '#5ad8ff', '#8aff6a', '#c86aff', '#ff8a3a']); c.fillStyle = 'rgba(230,240,255,.35)'; c.strokeStyle = ink; c.lineWidth = 3; c.beginPath(); c.roundRect(xx, yy - 96, 56, 96, 10); c.fill(); c.stroke(); for (let i = 0; i < 9; i++) { c.fillStyle = col; c.beginPath(); c.arc(xx + 10 + r() * 36, yy - 12 - r() * 60, 7 + r() * 4, 0, 7); c.fill(); } c.fillStyle = '#e8e0d0'; c.fillRect(xx - 2, yy - 106, 60, 12); } } }
+function tool(c, x, y, a) { c.save(); c.translate(x, y); c.rotate(a); c.fillStyle = '#9aa2ac'; c.strokeStyle = ink; c.lineWidth = 3; c.fillRect(-6, 0, 12, 90); c.strokeRect(-6, 0, 12, 90); c.fillStyle = '#c83a1a'; c.fillRect(-9, 60, 18, 40); c.restore(); }
+
+// Ready-made p2 environments
+PLATES.boardroom = (c, r, W, H) => ENV.boardroom(c, r, W, H, {});
+PLATES.ri_bedroom = (c, r, W, H) => ENV.bedroom2(c, r, W, H, {});
+PLATES.ma_kitchen = (c, r, W, H) => ENV.kitchen2(c, r, W, H, {});
+PLATES.burger = (c, r, W, H) => ENV.dinerBooth(c, r, W, H, {});
+PLATES.skyline = (c, r, W, H) => ENV.skylinePlate(c, r, W, H, {});
+PLATES.suburb = (c, r, W, H) => ENV.suburb(c, r, W, H, {});
+PLATES.joe_home = (c, r, W, H) => ENV.kitchen(c, r, W, H, {});
+
+// Chicago South Side street at night: brick walk-ups, corner store, streetlights
+PLATES.southside = (c, r, W, H) => { M.sky(c, r, W, 700, '#0c1230', '#3a2a5a'); for (let i = 0; i < 9; i++) M.tower(c, r, i * 300 - 60, 200, 260, 500 + r() * 200, '#1a1a30', '#ffcf6a', {});
+  const cols = ['#7a3a2a', '#8a5a3a', '#6a2e26', '#7a4a2a'];
+  for (let i = 0; i < 5; i++) { const x = i * 540 - 40, w = 520, top = 260 + (i % 2) * 70; bricks(c, r, x, top, w, 780 - top, cols[i % 4]); c.fillStyle = '#3a2a24'; c.fillRect(x, top - 20, w, 30);
+    for (let k = 0; k < 2; k++) for (let j = 0; j < 3; j++) { const wx = x + 50 + j * 160, wy = top + 60 + k * 180; box(c, wx, wy, 110, 130, r() < .5 ? '#ffd98a' : '#2a2a40', 4); c.fillStyle = 'rgba(0,0,0,.25)'; c.fillRect(wx, wy + 62, 110, 4); } }
+  box(c, 1700, 560, 520, 220, '#2a3a4a'); c.fillStyle = '#ffd23d'; c.font = '900 56px Inter'; c.textAlign = 'center'; c.fillText('CORNER STORE', 1960, 530); glow(c, 1960, 650, 400, '#ffe8a0', .35);
+  pr(c, r, 0, 780, W, 120, '#6a6a70', { density: 60 }); pr(c, r, 0, 900, W, 540, '#2a2a32', { density: 110 }); for (let i = 0; i < 8; i++) { c.fillStyle = 'rgba(232,220,160,.55)'; c.fillRect(i * 340 + 40, 1180, 180, 14); }
+  for (const x of [300, 1300, 2300]) { c.fillStyle = '#2a2a30'; c.fillRect(x - 8, 380, 16, 520); c.fillRect(x - 8, 380, 90, 14); glow(c, x + 80, 400, 380, '#ffcf8a', .45); rays(c, r, x + 80, 400, 8, 600, '#ffe0a0', .05, .6); }
+  finish(c, r, W, H, { oil: 2, grain: 12, vig: .5 }); };
+// Mural wall: painted portrait mural of a teen girl and a man in a jumpsuit, on bricks, daylight
+PLATES.mural = (c, r, W, H) => { M.sky(c, r, W, 400, '#6a9ad8', '#e8f0f8'); bricks(c, r, 0, 120, W, 900, '#8a4a32');
+  c.save(); c.beginPath(); c.roundRect(360, 200, 1840, 720, 30); c.clip(); wash(c, r, [360, 200, 1840, 720], '#ffd23d', '#ff6a8a'); rays(c, r, 1280, 560, 20, 1400, '#fff6c8', .18, 6.3);
+  for (const [x, sk, hair, top] of [[900, '#7a4a32', '#1a1210', '#e23a8a'], [1640, '#5a3422', '#2a1a14', '#2a5a9a']]) { c.fillStyle = top; c.beginPath(); c.ellipse(x, 960, 250, 260, 0, 0, 7); c.fill(); c.fillStyle = sk; c.beginPath(); c.ellipse(x, 560, 140, 170, 0, 0, 7); c.fill(); c.fillStyle = hair; c.beginPath(); c.ellipse(x, 450, 170, 120, 0, Math.PI, 0); c.fill(); c.fillStyle = ink; c.beginPath(); c.arc(x - 50, 560, 12, 0, 7); c.arc(x + 50, 560, 12, 0, 7); c.fill(); c.strokeStyle = ink; c.lineWidth = 8; c.beginPath(); c.arc(x, 610, 50, .2, Math.PI - .2); c.stroke(); }
+  c.restore(); c.strokeStyle = ink; c.lineWidth = 8; c.strokeRect(360, 200, 1840, 720); c.fillStyle = '#f4ecd8'; c.font = '900 70px Inter'; c.textAlign = 'center'; c.fillText('FOREVER IN OUR HEARTS', 1280, 290);
+  for (let i = 0; i < 40; i++) { c.fillStyle = r.pick(['#ff5a8a', '#ffd23d', '#e8e8f0']); c.beginPath(); c.arc(400 + r() * 1760, 1000 + r() * 30, 8 + r() * 8, 0, 7); c.fill(); }
+  pr(c, r, 0, 1020, W, 420, '#7a7a80', { density: 80 }); finish(c, r, W, H, { oil: 2, grain: 12, vig: .3 }); };
+// Junk shop: crowded shelves of parts, hanging cables, counter
+PLATES.junkshop = (c, r, W, H) => { wash(c, r, [0, 0, W, H], '#4a3a2a', '#1a120a'); pr(c, r, 0, 0, W, 1040, '#5a4a36', { density: 140 });
+  shelves(c, r, 80, 300, 1000, 4, 220, ['#6a7480', '#8a6a3a', '#3a5a6a', '#9a3a2a', '#c8a040', '#4a4a50']); shelves(c, r, 1480, 300, 1000, 4, 220, ['#6a7480', '#2a6a4a', '#8a8a90', '#c86a2a', '#3a3a44']);
+  for (let i = 0; i < 12; i++) { c.strokeStyle = r.pick(['#1a1a1a', '#c83a1a', '#2a5aa8', '#e8c040']); c.lineWidth = 6; c.beginPath(); const x = 100 + i * 210; c.moveTo(x, 0); c.quadraticCurveTo(x + 60, 150 + r() * 80, x + 120, 0); c.stroke(); }
+  box(c, 1100, 760, 360, 280, '#6a4a2a'); box(c, 1160, 680, 120, 80, '#2a2a30'); c.fillStyle = '#5aff8a'; c.fillRect(1175, 695, 90, 45);
+  floorC(c, r, 1040, '#3a2e22'); PR.pendant(c, r, 1280, 0, 1.2); glow(c, 1280, 300, 700, '#ffc070', .3); finish(c, r, W, H, { oil: 2, grain: 12, vig: .5 }); };
+// Tiny elevator: steel walls, red warning light, a box on the floor
+PLATES.elevator = (c, r, W, H) => { wash(c, r, [0, 0, W, H], '#5a6068', '#20242a'); for (let i = 0; i < 4; i++) { pr(c, r, 380 + i * 450, 80, 440, 980, '#8a929c', { density: 60, var: 6 }); c.strokeStyle = ink; c.lineWidth = 5; c.strokeRect(380 + i * 450, 80, 440, 980); for (let y = 140; y < 1060; y += 90) { c.fillStyle = 'rgba(255,255,255,.08)'; c.fillRect(390 + i * 450, y, 420, 6); } }
+  box(c, 0, 0, 380, H, '#3a4048'); box(c, 2180, 0, 380, H, '#3a4048'); box(c, 1980, 420, 120, 260, '#2a2e34'); for (let k = 0; k < 6; k++) { c.fillStyle = '#e8e0c8'; c.beginPath(); c.arc(2040, 470 + k * 38, 12, 0, 7); c.fill(); }
+  c.fillStyle = '#ff2a2a'; c.beginPath(); c.arc(1280, 60, 40, 0, 7); c.fill(); glow(c, 1280, 60, 900, '#ff2a2a', .45); c.fillStyle = 'rgba(255,0,0,.08)'; c.fillRect(0, 0, W, H);
+  floorC(c, r, 1060, '#4a4e56'); box(c, 1180, 1080, 200, 110, '#c8a040'); c.fillStyle = ink; c.font = '900 28px Inter'; c.textAlign = 'center'; c.fillText('OPEN ME', 1280, 1145); finish(c, r, W, H, { oil: 2, grain: 12, vig: .6 }); };
+// Crew loft hideout: exposed brick, big couches, TV screen, city windows
+PLATES.loft = (c, r, W, H) => { wash(c, r, [0, 0, W, H], '#3a2a2a', '#120a0a'); bricks(c, r, 0, 0, W, 1040, '#6a3a2a');
+  for (const x of [120, 900]) { box(c, x, 140, 560, 520, '#141428'); for (let i = 0; i < 6; i++) M.tower(c, r, x + i * 95, 660 - 200 - r() * 200, 80, 200 + r() * 200, '#1a1a30', '#ffcf6a', {}); c.strokeStyle = ink; c.lineWidth = 10; c.strokeRect(x, 140, 560, 520); c.beginPath(); c.moveTo(x + 280, 140); c.lineTo(x + 280, 660); c.moveTo(x, 400); c.lineTo(x + 560, 400); c.stroke(); }
+  box(c, 1700, 220, 700, 400, '#0a0a14', 10); c.fillStyle = '#2fc6ff'; c.globalAlpha = .25; c.fillRect(1710, 230, 680, 380); c.globalAlpha = 1; glow(c, 2050, 420, 600, '#2fc6ff', .25);
+  paintRegion(c, r, [[1500, 800], [2500, 800], [2520, 1060], [1480, 1060]], '#6a2a3a', { density: 40, al: .75, topLight: .2, botDark: -.4 }); c.strokeStyle = ink; c.lineWidth = 6; c.strokeRect(1500, 880, 1000, 180);
+  for (let i = 0; i < 3; i++) PR.pendant(c, r, 500 + i * 800, 0, 1); floorC(c, r, 1040, '#2a1e18'); finish(c, r, W, H, { oil: 2, grain: 12, vig: .5 }); };
+// Joe's secret bunker: round silo walls, crates, robot parts, missiles, a framed quote
+PLATES.bunker = (c, r, W, H) => { wash(c, r, [0, 0, W, H], '#3a4448', '#101416'); for (let i = 0; i < 9; i++) { pr(c, r, i * 290, 0, 290, 1060, i % 2 ? '#5a666a' : '#4e5a5e', { density: 60 }); c.fillStyle = 'rgba(0,0,0,.25)'; c.fillRect(i * 290, 0, 8, 1060); }
+  for (const x of [180, 520, 2000, 2300]) { box(c, x, 840, 260, 220, '#6a5a3a'); c.strokeStyle = ink; c.lineWidth = 4; c.beginPath(); c.moveTo(x, 840); c.lineTo(x + 260, 1060); c.moveTo(x + 260, 840); c.lineTo(x, 1060); c.stroke(); }
+  for (let i = 0; i < 4; i++) { c.save(); c.translate(900 + i * 180, 1040); c.fillStyle = '#d8d8d0'; c.strokeStyle = ink; c.lineWidth = 4; c.beginPath(); c.moveTo(-26, 0); c.lineTo(-26, -360); c.lineTo(0, -420); c.lineTo(26, -360); c.lineTo(26, 0); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#c83a1a'; c.fillRect(-26, -340, 52, 30); c.restore(); }
+  box(c, 920, 220, 660, 240, '#f4ecd8', 8); c.fillStyle = ink; c.font = 'italic 700 44px Georgia'; c.textAlign = 'center'; c.fillText('Live, Laugh,', 1250, 320); c.fillText('Love', 1250, 380);
+  for (let i = 0; i < 6; i++) { c.strokeStyle = '#8a929c'; c.lineWidth = 10; c.beginPath(); c.moveTo(200 + i * 60, 400); c.lineTo(230 + i * 60, 560); c.stroke(); } glow(c, 1280, 0, 900, '#cfe8ff', .25);
+  floorC(c, r, 1060, '#3a4044'); finish(c, r, W, H, { oil: 2, grain: 12, vig: .55 }); };
+// Underground car tunnel: neon strips, concrete arch, a car lift platform
+PLATES.tunnel = (c, r, W, H) => { wash(c, r, [0, 0, W, H], '#1a1e2a', '#05060a'); for (let k = 0; k < 7; k++) { const s = 1 - k * .13, w = 2560 * s, h = 1300 * s, x = 1280 - w / 2, y = 1240 - h; c.strokeStyle = `rgba(255,${80 + k * 20},${200 - k * 10},${.8 - k * .1})`; c.lineWidth = 14 * s; c.beginPath(); c.moveTo(x, 1240); c.lineTo(x, y + h * .35); c.quadraticCurveTo(1280, y - h * .2, x + w, y + h * .35); c.lineTo(x + w, 1240); c.stroke(); }
+  glow(c, 1280, 700, 600, '#ff3ab0', .25); paintRegion(c, r, [[0, 1240], [2560, 1240], [2560, 1440], [0, 1440]], '#2a2a34', { density: 80 }); paintRegion(c, r, [[1020, 1240], [1540, 1240], [2100, 1440], [460, 1440]], '#3a3a48', { density: 60 });
+  for (let i = 0; i < 5; i++) { c.fillStyle = '#ffd23d'; const y = 1260 + i * 36; c.fillRect(1270 - 6 - i * 4, y, 12 + i * 8, 20); }
+  box(c, 1700, 980, 640, 60, '#5a6470'); for (let i = 0; i < 3; i++) box(c, 1760 + i * 200, 1040, 30, 200, '#3a4048', 3); finish(c, r, W, H, { oil: 2, grain: 12, vig: .55 }); };
+// Futuristic farm at night: five glass greenhouses glowing green around a central atrium
+PLATES.greenhouse = (c, r, W, H) => { M.sky(c, r, W, 760, '#06101a', '#14304a'); for (let i = 0; i < 120; i++) { c.fillStyle = 'rgba(255,255,255,.6)'; c.fillRect(r() * W, r() * 500, 2, 2); }
+  M.ground(c, r, W, H, 760, '#1a2a1a', '#2a3a22', {});
+  const gh = (x, y, w, h) => { c.save(); c.fillStyle = 'rgba(90,255,140,.18)'; c.strokeStyle = '#bfffd0'; c.lineWidth = 4; c.beginPath(); c.moveTo(x, y + h); c.lineTo(x, y + h * .35); c.quadraticCurveTo(x + w / 2, y - h * .25, x + w, y + h * .35); c.lineTo(x + w, y + h); c.closePath(); c.fill(); c.stroke(); for (let k = 1; k < 6; k++) { c.beginPath(); c.moveTo(x + w * k / 6, y + h); c.lineTo(x + w * k / 6, y + h * .1); c.stroke(); } for (let k = 0; k < 14; k++) { c.fillStyle = r.pick(['#2a8a3a', '#3aaa4a', '#1a6a2a']); c.beginPath(); c.arc(x + 30 + r() * (w - 60), y + h - 20 - r() * h * .4, 16 + r() * 20, 0, 7); c.fill(); } glow(c, x + w / 2, y + h * .6, w, '#5aff8a', .3); c.restore(); };
+  gh(60, 640, 520, 300); gh(560, 560, 460, 240); gh(1540, 560, 460, 240); gh(1980, 640, 520, 300);
+  c.fillStyle = 'rgba(200,255,230,.25)'; c.strokeStyle = '#e8fff0'; c.lineWidth = 6; c.beginPath(); c.moveTo(1000, 900); c.lineTo(1000, 520); c.lineTo(1280, 300); c.lineTo(1560, 520); c.lineTo(1560, 900); c.closePath(); c.fill(); c.stroke(); glow(c, 1280, 600, 600, '#9affd8', .35);
+  box(c, 2380, 360, 60, 400, '#3a4048'); box(c, 2330, 320, 160, 70, '#4a5058'); glow(c, 2410, 350, 200, '#ffffff', .4);
+  pr(c, r, 0, 940, W, 500, '#1e2a20', { density: 90 }); finish(c, r, W, H, { oil: 2, grain: 12, vig: .5 }); };
+// Inside a greenhouse: lit rows of plants, misting pipes, glass panes
+PLATES.gh_inside = (c, r, W, H) => { wash(c, r, [0, 0, W, H], '#2a5a3a', '#0a1a10'); for (let x = 0; x < W; x += 220) { c.strokeStyle = 'rgba(200,255,220,.5)'; c.lineWidth = 6; c.beginPath(); c.moveTo(x, 0); c.lineTo(x, 1000); c.stroke(); } for (let y = 80; y < 1000; y += 200) { c.fillStyle = 'rgba(200,255,220,.25)'; c.fillRect(0, y, W, 5); }
+  c.fillStyle = '#6a7480'; c.fillRect(0, 140, W, 24); for (let x = 100; x < W; x += 260) { c.fillStyle = '#9aa2ac'; c.fillRect(x, 164, 14, 40); }
+  for (let k = 0; k < 3; k++) { const y = 760 + k * 90; box(c, 0, y, W, 40, '#5a4a3a', 3); for (let x = 20; x < W; x += 70) { c.fillStyle = r.pick(['#2a8a3a', '#3aaa4a', '#4aba5a']); c.beginPath(); c.ellipse(x, y - 30 - r() * 20, 30, 40 + r() * 20, 0, 0, 7); c.fill(); } }
+  glow(c, 1280, 400, 1200, '#bfffd0', .25); floorC(c, r, 1040, '#2a3a2a'); finish(c, r, W, H, { oil: 2, grain: 12, vig: .55 }); };
+// Candy + crystal shop: jar walls, crystals, a beaded curtain to the back
+PLATES.candyshop = (c, r, W, H) => { wash(c, r, [0, 0, W, H], '#6a3a7a', '#2a1030'); pr(c, r, 0, 0, W, 1040, '#7a4a8a', { density: 120 }); for (let x = 0; x < W; x += 80) { c.fillStyle = 'rgba(255,255,255,.05)'; c.fillRect(x, 0, 40, 1040); }
+  jars(c, r, 80, 360, 900, 3, 200); jars(c, r, 1580, 360, 900, 3, 200);
+  for (let i = 0; i < 26; i++) { c.strokeStyle = r.pick(['#ffd23d', '#ff5a8a', '#5ad8ff']); c.lineWidth = 4; c.setLineDash([10, 8]); c.beginPath(); c.moveTo(1080 + i * 16, 220); c.lineTo(1080 + i * 16, 920); c.stroke(); c.setLineDash([]); }
+  box(c, 960, 860, 640, 180, '#5a2a4a'); for (let i = 0; i < 6; i++) { c.fillStyle = r.pick(['#c86aff', '#5ad8ff', '#ff8ab0']); c.beginPath(); const x = 1000 + i * 100; c.moveTo(x, 860); c.lineTo(x + 20, 790); c.lineTo(x + 40, 860); c.fill(); }
+  c.fillStyle = '#ffd23d'; c.font = '900 64px Georgia'; c.textAlign = 'center'; c.fillText('SWEETS · READS · WISHES', 1280, 140); glow(c, 1280, 120, 700, '#ffd23d', .2);
+  for (let i = 0; i < 3; i++) PR.pendant(c, r, 500 + i * 780, 0, 1); floorC(c, r, 1040, '#3a2030'); finish(c, r, W, H, { oil: 2, grain: 12, vig: .5 }); };
+// Gary's garage: tool walls, workbench, an old car under a sheet, hanging bulb
+PLATES.garage = (c, r, W, H) => { wash(c, r, [0, 0, W, H], '#4a4038', '#16120e'); pr(c, r, 0, 0, W, 1040, '#5a5046', { density: 130 }); for (let x = 0; x < W; x += 240) { c.fillStyle = 'rgba(0,0,0,.18)'; c.fillRect(x, 0, 6, 1040); }
+  box(c, 120, 260, 820, 420, '#8a6a42'); for (let i = 0; i < 12; i++) tool(c, 180 + i * 64, 300 + (i % 2) * 40, (r() - .5) * .3); box(c, 100, 700, 900, 50, '#5a3a1e'); box(c, 130, 750, 40, 290, '#3a2a1a', 3); box(c, 930, 750, 40, 290, '#3a2a1a', 3);
+  c.fillStyle = '#c8c0b0'; c.strokeStyle = ink; c.lineWidth = 6; c.beginPath(); c.moveTo(1300, 1040); c.quadraticCurveTo(1340, 760, 1600, 720); c.quadraticCurveTo(1900, 640, 2200, 700); c.quadraticCurveTo(2420, 760, 2460, 1040); c.closePath(); c.fill(); c.stroke(); for (let i = 0; i < 8; i++) { c.strokeStyle = 'rgba(0,0,0,.15)'; c.lineWidth = 4; c.beginPath(); c.moveTo(1400 + i * 130, 760); c.lineTo(1380 + i * 135, 1030); c.stroke(); }
+  box(c, 1180, 160, 420, 220, '#c83a1a'); c.fillStyle = '#f4ecd8'; c.font = '900 50px Inter'; c.textAlign = 'center'; c.fillText("GARY'S", 1390, 250); c.font = '700 34px Inter'; c.fillText('AUTO REPAIR', 1390, 310);
+  c.strokeStyle = '#1a1214'; c.lineWidth = 4; c.beginPath(); c.moveTo(1280, 0); c.lineTo(1280, 420); c.stroke(); glow(c, 1280, 440, 900, '#ffd890', .45); c.fillStyle = '#fff2c8'; c.beginPath(); c.arc(1280, 440, 22, 0, 7); c.fill();
+  for (let i = 0; i < 30; i++) { c.strokeStyle = 'rgba(220,220,220,.3)'; c.lineWidth = 1; c.beginPath(); const x = r() * W; c.moveTo(x, 0); c.lineTo(x + 30, 60); c.stroke(); }
+  floorC(c, r, 1040, '#4a4440'); c.fillStyle = 'rgba(0,0,0,.25)'; c.beginPath(); c.ellipse(700, 1200, 180, 40, 0, 0, 7); c.fill(); finish(c, r, W, H, { oil: 2, grain: 12, vig: .55 }); };
+// Golden deal light (Mephisto's offer)
+PLATES.golden = (c, r, W, H) => { wash(c, r, [0, 0, W, H], '#3a0a10', '#0a0204'); rays(c, r, 1280, 500, 26, 1800, '#ffb84a', .1, 6.3); M.glowDisk(c, 1280, 520, 420, '#ffcf7a'); for (let i = 0; i < 200; i++) { c.fillStyle = `rgba(255,${120 + r() * 100},40,${r() * .6})`; c.beginPath(); c.arc(r() * W, r() * H, 2 + r() * 4, 0, 7); c.fill(); } pr(c, r, 0, 1080, W, 360, '#2a0a0c', { density: 60 }); finish(c, r, W, H, { oil: 2, grain: 12, vig: .6 }); };
+})();
