@@ -29,3 +29,8 @@ Source: Pushpam's 6 Pinterest pins (refs/). Flat "teen cartoon" look: lanky bodi
 - Shoulders/hips use ZXY order: Y twists the arm so the elbow bends toward the body (hand on hip works).
 - Body collision: forearm and hand points are tested against the torso; the shoulder auto-lifts outward until nothing goes inside the body.
 - Current master: viewer_v5.html.
+
+## v6 (16 Nov): athletic build + real eyelids
+- Lean-muscular: broader chest with pec shapes, V taper to waist, wider shoulders, deltoid caps, thicker upper arms/forearms/neck/thighs (joint radii still matched = seamless).
+- Eyelids are skin-coloured hemispheres with an ink lash rim that roll down over the eye (blink, half lid, side glance, serious, happy squint). Brows sit above and only tilt; they never cover the eye.
+- Wave fixed: upper arm out to the side, forearm straight up, palm forward.
