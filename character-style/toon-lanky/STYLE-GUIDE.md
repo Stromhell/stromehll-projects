@@ -22,3 +22,10 @@ Source: Pushpam's 6 Pinterest pins (refs/). Flat "teen cartoon" look: lanky bodi
 - Ink outline in clip space = constant pixel width, with line boil (wobble changes each drawing).
 - Animate on twos (12 fps step) toggle; paper grain overlay; flat drop shadow disc instead of real shadows.
 - More detail: lathe limbs, collar, chest panel, tee sleeves over long sleeves, cuffs, belt + buckle, necklace tag, cargo pockets + flap, knee fold lines, layered sneakers with toe cap/laces/collar, 2-segment fingers, lashes, pupil highlights, 13 hair locks + fringe.
+
+## v5 (16 Nov): clean cartoon joints (Pushpam feedback)
+- Limbs are capped tubes whose round ends match the next segment's radius, so bends are seamless; no visible joint balls. Lathe winding fixed (was inside-out).
+- Elbows/knees are hinges only (elbow X -150..0, knee X 0..150), finger tips curl one way, wrist/neck/head limited.
+- Shoulders/hips use ZXY order: Y twists the arm so the elbow bends toward the body (hand on hip works).
+- Body collision: forearm and hand points are tested against the torso; the shoulder auto-lifts outward until nothing goes inside the body.
+- Current master: viewer_v5.html.
