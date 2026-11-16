@@ -1,14 +1,14 @@
 {
  "channel": "finance",
  "video": "06 Basic Financial Concepts",
- "state": "waiting_approval",
+ "state": "booked",
  "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ8FX51GptoJ2juWcSk1ZCZEw",
  "feedback": false,
  "queue_pos": 0,
- "booked_for": null,
- "zernio_post": null,
- "updated": "2026-11-16T02:35Z",
- "note": "full v1 15:48 shared 16 Nov 02:35 UTC; waiting for Pushpam OK; book 25 Nov 16:00 UTC",
+ "booked_for": "2026-11-25T16:00Z",
+ "zernio_post": "6afabbabb2fea84c5d952f1d",
+ "updated": "2026-11-16T08:25Z",
+ "note": "booked 25 Nov 16:00 UTC after Pushpam OK 16 Nov 08:13 UTC; handover in 05 Production",
  "full_video": "https://drive.google.com/file/d/1cRv5bsYwrqWQUhbLC7p4hQWemaKg4v1N/view",
  "launch_kit": "https://claude.ai/artifact/CLSSh9btApunkFZY86wkXG"
 }
