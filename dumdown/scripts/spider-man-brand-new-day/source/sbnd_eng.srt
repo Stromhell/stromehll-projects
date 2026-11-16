@@ -1,0 +1,7669 @@
+1
+00:01:18,684 --> 00:01:21,311
+<i>Hi. My name is Peter Parker.</i>
+
+2
+00:01:23,355 --> 00:01:26,399
+<i>You don't remember me,
+but I have something to tell you</i>
+
+3
+00:01:26,400 --> 00:01:28,402
+<i>that's gonna sound crazy.</i>
+
+4
+00:01:31,196 --> 00:01:32,406
+<i>But it's the truth.</i>
+
+5
+00:01:34,283 --> 00:01:36,034
+<i>And I know you're gonna believe me,</i>
+
+6
+00:01:36,159 --> 00:01:39,288
+<i>because you're very good
+at telling when I'm lying.</i>
+
+7
+00:01:41,081 --> 00:01:43,666
+E.V., can you check the calibration
+of my targeting matrix?
+
+8
+00:01:43,667 --> 00:01:45,376
+That doesn't feel zeroed in to me.
+
+9
+00:01:45,377 --> 00:01:47,379
+<i>Checking target calibration.</i>
+
+10
+00:01:56,179 --> 00:01:57,389
+Hey, E.V., take five.
+
+11
+00:01:58,140 --> 00:01:59,182
+<i>Standing by.</i>
+
+12
+00:02:04,896 --> 00:02:06,315
+<i>We used to know each other.</i>
+
+13
+00:02:07,691 --> 00:02:09,483
+<i>We were together.</i>
+
+14
+00:02:10,736 --> 00:02:12,403
+<i>But something bad was gonna happen,</i>
+
+15
+00:02:12,404 --> 00:02:15,991
+<i>and the only way to stop it
+was to make everyone forget me.</i>
+
+16
+00:02:20,871 --> 00:02:23,205
+{\an8}<i>First day at MIT, let's go!</i>
+
+17
+00:02:23,206 --> 00:02:25,334
+{\an8}<i>Oh, my gosh! We're here! We made it!</i>
+
+18
+00:02:26,084 --> 00:02:27,251
+<i>MJ, come on.</i>
+
+19
+00:02:27,252 --> 00:02:28,419
+{\an8}<i>Including you.</i>
+
+20
+00:02:28,420 --> 00:02:29,879
+{\an8}<i>Pretend like you're not the happiest
+you've ever been</i>
+
+21
+00:02:29,880 --> 00:02:31,256
+{\an8}<i>in your entire life right now.</i>
+
+22
+00:02:32,215 --> 00:02:33,382
+{\an8}<i>I can't.</i>
+
+23
+00:02:33,383 --> 00:02:36,260
+{\an8}<i>-Let's just do this! You're happy!
+- Okay, okay, okay. Okay.</i>
+
+24
+00:02:36,261 --> 00:02:38,263
+<i>Because I'm not just Peter Parker.</i>
+
+25
+00:02:40,015 --> 00:02:41,432
+<i>I'm Spider-Man.</i>
+
+26
+00:02:41,433 --> 00:02:43,225
+<i>I'm really, really
+understanding the culture</i>
+
+27
+00:02:43,226 --> 00:02:44,769
+<i>out here in Boston is just so different.</i>
+
+28
+00:02:44,770 --> 00:02:47,688
+<i>And sometimes,
+Spider-Man has to do the hard thing,</i>
+
+29
+00:02:47,689 --> 00:02:49,774
+<i>even if it breaks Peter Parker's heart.</i>
+
+30
+00:02:49,775 --> 00:02:52,986
+<i>And everyone here is like,
+"Pahk the cah by the hahba."</i>
+
+31
+00:02:54,321 --> 00:02:56,239
+<i>And maybe that's my responsibility.</i>
+
+32
+00:02:57,407 --> 00:02:58,909
+<i>To live alone with the truth.</i>
+
+33
+00:03:00,327 --> 00:03:03,830
+<i>But the truth is, MJ, that I love you.</i>
+
+34
+00:03:05,374 --> 00:03:06,624
+<i>And I hope that deep down,</i>
+
+35
+00:03:06,625 --> 00:03:09,336
+<i>something inside of you
+remembers that you love me, too.</i>
+
+36
+00:03:10,712 --> 00:03:13,464
+<i>Suspect is 5'8", 5'10", medium build.</i>
+
+37
+00:03:13,465 --> 00:03:16,259
+<i>But until then,
+I'm just gonna be Spider-Man.</i>
+
+38
+00:03:22,265 --> 00:03:23,308
+Incoming!
+
+39
+00:03:26,645 --> 00:03:27,646
+Hey, get him!
+
+40
+00:03:29,064 --> 00:03:30,065
+Hey, hey, hey. Whoa, whoa, whoa!
+
+41
+00:03:43,412 --> 00:03:45,496
+<i>Members of the Manfredi crime syndicate</i>
+
+42
+00:03:45,497 --> 00:03:48,125
+<i>were apprehended by Spider-Man yesterday.</i>
+
+43
+00:04:10,272 --> 00:04:12,566
+Hey, we live on the same floor.
+
+44
+00:04:14,568 --> 00:04:15,569
+Cool.
+
+45
+00:04:19,281 --> 00:04:20,866
+Does anybody ever come up here?
+
+46
+00:04:21,491 --> 00:04:23,577
+Not unless they like asbestos.
+
+47
+00:04:24,077 --> 00:04:26,788
+We've just been using it for storage.
+
+48
+00:04:27,831 --> 00:04:29,207
+It's perfect.
+
+49
+00:04:30,709 --> 00:04:33,211
+<i>Hey, everyone, sophomore-year Ned is back.</i>
+
+50
+00:04:33,712 --> 00:04:36,548
+{\an8}<i>Older, wiser, flyer.</i>
+
+51
+00:04:37,382 --> 00:04:38,675
+{\an8}<i>Let's go!</i>
+
+52
+00:04:39,426 --> 00:04:41,886
+{\an8}<i>-What is on your face?
+- How do you feel about it?</i>
+
+53
+00:04:41,887 --> 00:04:44,014
+{\an8}<i>I mean, you look
+like an assistant coach.</i>
+
+54
+00:04:48,685 --> 00:04:50,437
+You sure you wanna do this, Scorpion?
+
+55
+00:04:50,812 --> 00:04:52,022
+Did you miss me, Spidey?
+
+56
+00:04:58,195 --> 00:04:59,612
+If I drop you from here,
+
+57
+00:04:59,613 --> 00:05:01,823
+how long you think
+it will take you to hit the ground?
+
+58
+00:05:02,866 --> 00:05:04,326
+Well, I don't know. You tell me.
+
+59
+00:05:05,661 --> 00:05:06,870
+Let's end this on a high note, huh?
+
+60
+00:05:13,168 --> 00:05:14,294
+Yo, Lonnie!
+
+61
+00:05:14,962 --> 00:05:16,170
+{\an8}Wha ha happened?
+
+62
+00:05:16,171 --> 00:05:19,799
+{\an8}DeWolff, all the evidence you're gonna
+need is in the trunk of his car.
+
+63
+00:05:19,800 --> 00:05:22,009
+You tryin' to take my job, Spider-Man?
+
+64
+00:05:22,010 --> 00:05:24,304
+Hey, you guys are the professionals,
+I'm just a volunteer.
+
+65
+00:05:34,773 --> 00:05:36,857
+<i>It's a new New York.</i>
+
+66
+00:05:36,858 --> 00:05:40,528
+<i>Thanks to Spider-Man,
+crime rates have dropped to a record low.</i>
+
+67
+00:05:40,529 --> 00:05:42,989
+<i>Police and Damage Control
+give much of the credit</i>
+
+68
+00:05:42,990 --> 00:05:44,156
+<i>to the masked hero.</i>
+
+69
+00:05:44,157 --> 00:05:45,574
+Initiate HUD test.
+
+70
+00:05:45,575 --> 00:05:47,702
+<i>Armed robbery at Civic Union Bank.</i>
+
+71
+00:05:47,703 --> 00:05:49,745
+<i>In the past six months,
+he has taken down</i>
+
+72
+00:05:49,746 --> 00:05:52,790
+<i>every major crime lord
+across the five boroughs,</i>
+
+73
+00:05:52,791 --> 00:05:56,253
+<i>including the superpowered
+ninja group The Hand.</i>
+
+74
+00:06:00,132 --> 00:06:01,841
+{\an8}<i>He is the pride of New York City.</i>
+
+75
+00:06:01,842 --> 00:06:06,138
+{\an8}<i>The hero every grown-up relies on
+and every kid wants to be.</i>
+
+76
+00:06:07,180 --> 00:06:09,640
+<i>Final semester, MIT.</i>
+
+77
+00:06:09,641 --> 00:06:11,935
+{\an8}<i>Oh, my gosh, we're graduating in a month.</i>
+
+78
+00:06:12,352 --> 00:06:15,646
+<i>We've made so many memories.
+Where do I begin?</i>
+
+79
+00:06:15,647 --> 00:06:18,899
+<i>Night swimming in the Charles River
+with Jim and Wiley.</i>
+
+80
+00:06:18,900 --> 00:06:21,777
+<i>The infamous food fight
+at the Banana Lounge.</i>
+
+81
+00:06:21,778 --> 00:06:26,157
+<i>Pulling all-nighters in Stud 5
+with MJ and Nate Dawg.</i>
+
+82
+00:06:26,158 --> 00:06:28,993
+<i>It feels like yesterday
+I was sitting on a roof with MJ,</i>
+
+83
+00:06:28,994 --> 00:06:32,413
+<i>dreaming about coming here together,
+and I still can't believe we did it.</i>
+
+84
+00:06:32,414 --> 00:06:35,207
+<i>I'm so grateful
+for all the friends that I've made.</i>
+
+85
+00:06:35,208 --> 00:06:37,627
+<i>I couldn't imagine
+going through this with anyone else.</i>
+
+86
+00:06:37,628 --> 00:06:39,712
+{\an8}<i>Ned, who do you think
+is actually watching these?</i>
+
+87
+00:06:39,713 --> 00:06:42,340
+{\an8}<i>-I don't know. But maybe someone.
+- Okay.</i>
+
+88
+00:06:42,341 --> 00:06:43,716
+{\an8}<i>Okay, well, bye, someone.</i>
+
+89
+00:06:43,717 --> 00:06:45,802
+{\an8}<i>-What? No!
+- Bye. We're done. Yeah, we're done.</i>
+
+90
+00:07:03,904 --> 00:07:07,198
+I mean, we're talking about
+downtown Brooklyn in broad daylight.
+
+91
+00:07:07,199 --> 00:07:10,201
+High-profile job like that,
+you know that Foswell was involved.
+
+92
+00:07:10,202 --> 00:07:12,495
+Yeah, I hear you, but can you prove it?
+
+93
+00:07:12,496 --> 00:07:14,455
+Yeah, I'm going through
+his financial records
+
+94
+00:07:14,456 --> 00:07:15,958
+and I'm following his crew every night.
+
+95
+00:07:16,875 --> 00:07:19,043
+<i>Do you do anything besides work?</i>
+
+96
+00:07:19,044 --> 00:07:20,670
+You know the saying,
+"You do something you love,
+
+97
+00:07:20,671 --> 00:07:21,922
+"you don't work a day in your life."
+
+98
+00:07:23,507 --> 00:07:25,591
+- Mom, where's my calculator?
+- I don't know.
+
+99
+00:07:25,592 --> 00:07:29,637
+<i>Trust me, aight?
+Being married to the job never ends well.</i>
+
+100
+00:07:29,638 --> 00:07:31,722
+Well, don't worry about it. I'll be okay.
+
+101
+00:07:31,723 --> 00:07:34,351
+Oh, yeah?
+You still getting them headaches, though?
+
+102
+00:07:35,769 --> 00:07:38,270
+Yeah. But... But I'll be fine.
+
+103
+00:07:38,271 --> 00:07:39,522
+<i>I don't know, man.</i>
+
+104
+00:07:39,523 --> 00:07:41,607
+<i>I think your body's tryin'
+to tell you somethin'.</i>
+
+105
+00:07:41,608 --> 00:07:44,151
+Like you need to get outta that suit
+every once in a while.
+
+106
+00:07:44,152 --> 00:07:46,112
+Mom, do you know where my calculator is?
+
+107
+00:07:46,113 --> 00:07:47,114
+I don't know, <i>Papi.</i>
+
+108
+00:07:47,572 --> 00:07:50,449
+<i>What you need
+is some real human connection.</i>
+
+109
+00:07:50,450 --> 00:07:52,159
+What? And we're not connecting?
+
+110
+00:07:52,160 --> 00:07:56,956
+<i>Nah, dude. I don't know your name,
+your face, or nothing about you.</i>
+
+111
+00:07:56,957 --> 00:07:59,417
+I don't think you've ever asked me
+a question about my life.
+
+112
+00:07:59,418 --> 00:08:00,501
+<i>Sure, I have.</i>
+
+113
+00:08:00,502 --> 00:08:01,878
+<i>Yeah, what are my kids' names?</i>
+
+114
+00:08:02,504 --> 00:08:04,506
+Well, for starters,
+your son's name's <i>Papi.</i>
+
+115
+00:08:06,258 --> 00:08:07,425
+Is it Spider-Man?
+
+116
+00:08:07,426 --> 00:08:09,344
+I can't tell you that, sweetheart.
+
+117
+00:08:09,803 --> 00:08:11,304
+That means it's Spider-Man.
+
+118
+00:08:11,305 --> 00:08:12,472
+Gosh.
+
+119
+00:08:15,142 --> 00:08:18,144
+<i>A hijacked tank is heading southbound
+past 34th Street.</i>
+
+120
+00:08:18,145 --> 00:08:19,563
+<i>All available units respond.</i>
+
+121
+00:08:19,896 --> 00:08:21,063
+Hey, you getting this?
+
+122
+00:08:21,064 --> 00:08:22,898
+More work. Lucky you.
+
+123
+00:08:22,899 --> 00:08:24,108
+Okay, I'll see you out there.
+
+124
+00:08:24,109 --> 00:08:25,235
+I'm so sorry, I gotta go.
+
+125
+00:09:42,604 --> 00:09:43,980
+I got you, Spidey!
+
+126
+00:09:43,981 --> 00:09:45,274
+No, no. I don't need your...
+
+127
+00:09:59,621 --> 00:10:00,664
+Hey! Heads up!
+
+128
+00:10:02,499 --> 00:10:05,711
+You okay, kid? Yeah, you're okay.
+See ya later.
+
+129
+00:10:10,340 --> 00:10:11,882
+You wouldn't know it
+just by looking at it,
+
+130
+00:10:11,883 --> 00:10:15,887
+{\an8}but this very street was completely
+destroyed in the Battle of New York.
+
+131
+00:10:23,228 --> 00:10:24,938
+Come on, come on, come on.
+
+132
+00:10:26,607 --> 00:10:28,483
+Come on.
+
+133
+00:10:41,413 --> 00:10:42,414
+Oh, God.
+
+134
+00:10:51,131 --> 00:10:52,132
+Come on.
+
+135
+00:10:52,591 --> 00:10:53,592
+Hey.
+
+136
+00:10:55,093 --> 00:10:57,136
+The hell, Frank?
+You just hit me with the van!
+
+137
+00:10:57,137 --> 00:10:58,512
+Quit your whimpering.
+
+138
+00:10:58,513 --> 00:11:00,139
+We're not doing that again, Frank.
+
+139
+00:11:00,140 --> 00:11:01,641
+You're goddamn right we're not.
+
+140
+00:11:01,642 --> 00:11:03,393
+This time you're gonna
+get the hell outta my way.
+
+141
+00:11:03,894 --> 00:11:05,354
+You mean instead of saving your life?
+
+142
+00:11:06,313 --> 00:11:08,814
+You gonna talk about
+that Staten Island bullshit again?
+
+143
+00:11:08,815 --> 00:11:10,524
+Well, you said it, not me.
+
+144
+00:11:10,525 --> 00:11:11,609
+Jeez.
+
+145
+00:11:11,610 --> 00:11:13,653
+Look, man, you can't just shoot yourself
+out of every situation.
+
+146
+00:11:13,654 --> 00:11:15,112
+Innocent people get hurt.
+
+147
+00:11:15,113 --> 00:11:17,407
+Who do you think's downrange of that tank,
+dumb-dumb?
+
+148
+00:11:22,913 --> 00:11:23,914
+Suit yourself.
+
+149
+00:11:27,584 --> 00:11:28,585
+Jackass.
+
+150
+00:11:29,670 --> 00:11:30,754
+This freakin' guy.
+
+151
+00:11:44,601 --> 00:11:45,602
+Motherf...
+
+152
+00:11:46,853 --> 00:11:48,146
+Go home, Frank!
+
+153
+00:11:52,734 --> 00:11:54,236
+I'm gonna kill this kid.
+
+154
+00:11:59,074 --> 00:12:01,450
+- DeWolff?
+- Are you gonna stop that thing or what?
+
+155
+00:12:01,451 --> 00:12:04,161
+<i>It's heading straight
+for the Damage Control Detention Center.</i>
+
+156
+00:12:04,162 --> 00:12:05,246
+I'm trying.
+
+157
+00:12:05,247 --> 00:12:06,372
+<i>Try harder.</i>
+
+158
+00:12:06,373 --> 00:12:08,207
+<i>There's a lot of scary dudes
+locked up in there.</i>
+
+159
+00:12:08,208 --> 00:12:09,751
+Well, who do you think put them in there?
+
+160
+00:12:10,711 --> 00:12:13,964
+Let's go, Scorpion. Moving day.
+
+161
+00:12:41,450 --> 00:12:43,243
+Please! Evac now!
+
+162
+00:12:44,202 --> 00:12:46,997
+All right, everybody, clear out!
+This guy is armed and dangerous.
+
+163
+00:12:59,259 --> 00:13:00,761
+Get out of the vehicle, ma'am.
+
+164
+00:13:01,386 --> 00:13:03,221
+I was thinking the same thing.
+
+165
+00:13:12,022 --> 00:13:13,482
+Spider-Man?
+
+166
+00:13:14,900 --> 00:13:15,943
+Where am I?
+
+167
+00:13:23,075 --> 00:13:24,159
+What the...
+
+168
+00:13:26,745 --> 00:13:28,371
+Move! Move! Move! Move! Move!
+
+169
+00:13:28,372 --> 00:13:30,123
+Keep her for questioning.
+Clear the building.
+
+170
+00:13:33,293 --> 00:13:35,294
+Enjoy the ride, Scorpion!
+
+171
+00:13:35,295 --> 00:13:37,923
+You won't be seeing much daylight
+in supermax.
+
+172
+00:13:38,966 --> 00:13:40,968
+Scorpions are nocturnal, buddy.
+
+173
+00:13:43,887 --> 00:13:47,265
+<i>The building is under attack.
+Get the prisoner out of here now!</i>
+
+174
+00:13:52,437 --> 00:13:53,438
+Sir!
+
+175
+00:14:12,207 --> 00:14:13,833
+You gotta take off now!
+
+176
+00:14:13,834 --> 00:14:15,836
+The building has been breached. Go! Go!
+
+177
+00:14:16,253 --> 00:14:18,839
+Hey, fire it up! Go! Go!
+
+178
+00:14:27,264 --> 00:14:28,473
+Change of plans!
+
+179
+00:14:29,057 --> 00:14:30,934
+Take him to the helipad at Bellevue.
+
+180
+00:14:31,685 --> 00:14:33,436
+- What?
+- That's an order
+
+181
+00:14:33,437 --> 00:14:34,979
+from Director Metzger. Go!
+
+182
+00:14:34,980 --> 00:14:36,105
+Now!
+
+183
+00:14:36,106 --> 00:14:37,149
+Copy that.
+
+184
+00:14:48,118 --> 00:14:49,869
+Hey! What...
+
+185
+00:14:49,870 --> 00:14:51,288
+How did I get up here?
+
+186
+00:14:55,584 --> 00:14:58,587
+Spider-Man, save me, would you?
+
+187
+00:15:04,301 --> 00:15:05,302
+Who are you?
+
+188
+00:15:06,553 --> 00:15:08,095
+You can see me.
+
+189
+00:15:08,096 --> 00:15:09,431
+Tell me who you are.
+
+190
+00:15:10,682 --> 00:15:11,683
+You first.
+
+191
+00:15:14,770 --> 00:15:16,939
+Hey. Hey.
+
+192
+00:15:22,819 --> 00:15:24,071
+You pushed me out.
+
+193
+00:15:24,780 --> 00:15:26,030
+Interesting.
+
+194
+00:15:26,031 --> 00:15:27,615
+What the hell was that?
+
+195
+00:15:27,616 --> 00:15:29,784
+Did you just try to jump into my mind?
+
+196
+00:15:29,785 --> 00:15:32,871
+You know, the whole time
+you've been chasing me,
+
+197
+00:15:33,622 --> 00:15:36,291
+you forgot to ask yourself
+a very important question.
+
+198
+00:15:38,168 --> 00:15:39,461
+What's in the tank?
+
+199
+00:15:41,421 --> 00:15:43,006
+Go! Move.
+
+200
+00:15:57,187 --> 00:15:58,188
+Spider-Man?
+
+201
+00:15:59,398 --> 00:16:00,565
+What just happened?
+
+202
+00:16:03,527 --> 00:16:04,569
+I don't know.
+
+203
+00:16:06,738 --> 00:16:07,822
+Hey, good job.
+
+204
+00:16:07,823 --> 00:16:08,990
+Hey, way to go, Spidey.
+
+205
+00:16:08,991 --> 00:16:10,783
+You guys okay? You good?
+
+206
+00:16:10,784 --> 00:16:13,786
+I swear. All the things they said I did,
+I don't remember doing any of them.
+
+207
+00:16:13,787 --> 00:16:15,955
+It's okay, it's okay. Look, let these
+people take good care of you.
+
+208
+00:16:15,956 --> 00:16:17,123
+I would never hurt you.
+
+209
+00:16:17,124 --> 00:16:18,541
+- Okay.
+- I love you, Spider-Man.
+
+210
+00:16:18,542 --> 00:16:20,084
+Yeah. All right, buddy. All right.
+
+211
+00:16:20,085 --> 00:16:22,253
+- Hey, what do you got?
+- Here, get this.
+
+212
+00:16:22,254 --> 00:16:24,005
+Chopper took Scorpion to Bellevue.
+
+213
+00:16:24,006 --> 00:16:26,424
+Ten minutes later,
+a guard walked him right out the door.
+
+214
+00:16:26,425 --> 00:16:27,426
+What?
+
+215
+00:16:27,759 --> 00:16:28,926
+What about the tank?
+
+216
+00:16:28,927 --> 00:16:31,637
+Stolen from the Damage Control
+warehouse in Brooklyn.
+
+217
+00:16:31,638 --> 00:16:33,889
+Driver was a janitor who worked there.
+
+218
+00:16:33,890 --> 00:16:34,974
+You got a motive?
+
+219
+00:16:34,975 --> 00:16:37,226
+<i>Nada.</i> And no criminal record.
+
+220
+00:16:37,227 --> 00:16:39,229
+Scorpion must've gotten to her somehow.
+
+221
+00:16:40,272 --> 00:16:42,148
+Yeah. Maybe.
+
+222
+00:16:42,149 --> 00:16:43,733
+What do you mean, "maybe"?
+
+223
+00:16:43,734 --> 00:16:45,652
+I mean, I... I don't know.
+
+224
+00:16:46,445 --> 00:16:47,862
+But I know someone that might.
+
+225
+00:16:47,863 --> 00:16:49,030
+Where you going?
+
+226
+00:16:49,031 --> 00:16:50,781
+You keep following the leads on Scorpion.
+
+227
+00:16:50,782 --> 00:16:52,451
+I'm gonna go talk to someone.
+
+228
+00:17:08,008 --> 00:17:11,511
+Hi, is this 3250 Brighton Beach?
+
+229
+00:17:16,141 --> 00:17:17,267
+Okay.
+
+230
+00:17:17,976 --> 00:17:19,770
+I think I know what that means.
+
+231
+00:17:24,857 --> 00:17:26,026
+Take off your clothes.
+
+232
+00:17:29,112 --> 00:17:30,113
+What?
+
+233
+00:17:30,572 --> 00:17:32,532
+You don't wear clothes in the <i>banya.</i>
+
+234
+00:17:33,700 --> 00:17:34,993
+Ditch the leotard.
+
+235
+00:17:36,161 --> 00:17:37,537
+This is not a leotard.
+
+236
+00:17:38,372 --> 00:17:40,332
+Your text said that this was your office.
+
+237
+00:17:41,667 --> 00:17:43,210
+This is my office.
+
+238
+00:17:43,961 --> 00:17:44,962
+Get in.
+
+239
+00:17:46,213 --> 00:17:47,631
+I'm fine, thanks. I'll just...
+
+240
+00:17:48,924 --> 00:17:50,383
+My office, my rules.
+
+241
+00:17:50,384 --> 00:17:54,345
+This way, you get to enjoy
+a nice, relaxing soak,
+
+242
+00:17:54,346 --> 00:17:56,722
+and I get to see that
+you don't have any weapons,
+
+243
+00:17:56,723 --> 00:17:57,933
+and we both win.
+
+244
+00:18:00,102 --> 00:18:01,103
+Okay.
+
+245
+00:18:10,404 --> 00:18:12,947
+Really? What, you never take that off?
+
+246
+00:18:12,948 --> 00:18:15,033
+No, I... You know, it defeats
+the whole anonymous thing.
+
+247
+00:18:15,242 --> 00:18:19,705
+Even for your girlfriend
+or boyfriend or whatever?
+
+248
+00:18:20,372 --> 00:18:21,999
+There's a lot of conjecture online.
+
+249
+00:18:22,791 --> 00:18:25,335
+And super graphic artwork. Have you seen?
+
+250
+00:18:25,544 --> 00:18:28,337
+The one with you
+and the ten Mysterios, it's...
+
+251
+00:18:28,338 --> 00:18:30,673
+I've... I've... I've seen it. I've...
+
+252
+00:18:30,674 --> 00:18:32,216
+It's hard to unsee, to be honest.
+
+253
+00:18:32,217 --> 00:18:34,261
+But, look, I don't have anyone.
+I just kinda keep to myself.
+
+254
+00:18:35,053 --> 00:18:36,637
+All by yourself? All the time?
+
+255
+00:18:36,638 --> 00:18:38,306
+No wonder you're so sad.
+
+256
+00:18:38,307 --> 00:18:40,558
+- I'm not so sad.
+- A little bit.
+
+257
+00:18:40,559 --> 00:18:42,601
+Could we just talk about
+what I came here to talk to you about,
+
+258
+00:18:42,602 --> 00:18:44,020
+the attack on Damage Control?
+
+259
+00:18:44,021 --> 00:18:47,816
+Yes. So, that is more your area.
+
+260
+00:18:48,650 --> 00:18:51,028
+Like, small potato stuff.
+
+261
+00:18:51,653 --> 00:18:57,743
+Whereas the New Avengers
+are focusing on big potato stuff.
+
+262
+00:18:58,785 --> 00:19:02,289
+Right, okay. Well, there's
+more to it than that, you know, the...
+
+263
+00:19:02,998 --> 00:19:05,541
+the driver and the others
+who were helping,
+
+264
+00:19:05,542 --> 00:19:08,127
+it was like someone
+was talking to me through them.
+
+265
+00:19:08,128 --> 00:19:10,630
+Like someone was looking at me
+through their eyes.
+
+266
+00:19:10,631 --> 00:19:12,923
+And you're wondering if it's mind control?
+
+267
+00:19:12,924 --> 00:19:15,593
+- Exactly.
+- Like how they used on me in the Red Room?
+
+268
+00:19:15,594 --> 00:19:17,303
+- Exactly.
+- And the other widows?
+
+269
+00:19:17,304 --> 00:19:19,347
+- Right.
+- Right. No, I don't think so.
+
+270
+00:19:19,348 --> 00:19:23,560
+I actually think it's probably
+more like possession.
+
+271
+00:19:24,102 --> 00:19:25,103
+Possession?
+
+272
+00:19:26,396 --> 00:19:28,397
+Like a ghost or a demon.
+
+273
+00:19:28,398 --> 00:19:30,191
+- Oh, man.
+- Or in Russia, we have leshy.
+
+274
+00:19:30,192 --> 00:19:33,820
+Leshy rules the forest and can possess...
+
+275
+00:19:36,281 --> 00:19:37,282
+Sorry.
+
+276
+00:19:37,824 --> 00:19:40,034
+Whatever it is,
+they are looking for something.
+
+277
+00:19:40,035 --> 00:19:43,538
+This is the fourth attack
+on the Damage Control facility this month.
+
+278
+00:19:44,373 --> 00:19:46,040
+And what do you think they're looking for?
+
+279
+00:19:46,041 --> 00:19:47,333
+I don't know.
+
+280
+00:19:47,334 --> 00:19:48,918
+But you know what?
+
+281
+00:19:48,919 --> 00:19:51,087
+After the attack today,
+
+282
+00:19:51,088 --> 00:19:55,050
+there was a cross-agency cybersecurity
+alert that got triggered.
+
+283
+00:19:55,509 --> 00:19:58,970
+Someone accessed
+the Damage Control restricted servers
+
+284
+00:19:58,971 --> 00:20:02,473
+using credentials from 30 employees
+from the way station.
+
+285
+00:20:02,474 --> 00:20:04,851
+They all searched for the same thing.
+
+286
+00:20:06,186 --> 00:20:07,229
+V-Max.
+
+287
+00:20:09,022 --> 00:20:10,315
+V-Max.
+
+288
+00:20:11,483 --> 00:20:12,984
+Well, what does that mean?
+
+289
+00:20:12,985 --> 00:20:15,820
+I mean, it could be alien tech,
+
+290
+00:20:15,821 --> 00:20:19,573
+or secretive weapon programs,
+
+291
+00:20:19,574 --> 00:20:22,828
+or launch codes or...
+
+292
+00:20:24,204 --> 00:20:26,372
+I don't know,
+this is for you to figure out.
+
+293
+00:20:26,373 --> 00:20:29,166
+- This is small, baby potato stuff...
+- Okay, okay.
+
+294
+00:20:29,167 --> 00:20:31,335
+- ...not big potato brain stuff.
+- You don't have to shout about it. Jeez.
+
+295
+00:20:31,336 --> 00:20:33,297
+Maybe I'll just go ask
+Damage Control myself.
+
+296
+00:20:35,882 --> 00:20:38,801
+You know, you're not
+completely anonymous anymore.
+
+297
+00:20:38,802 --> 00:20:40,554
+I've seen your belly button.
+
+298
+00:20:41,763 --> 00:20:43,974
+- Okay.
+- Bye.
+
+299
+00:21:08,790 --> 00:21:09,875
+Oh, God.
+
+300
+00:21:11,251 --> 00:21:12,918
+Hi, I got an appointment with...
+
+301
+00:21:12,919 --> 00:21:14,295
+Director Metzger. Yes.
+
+302
+00:21:14,296 --> 00:21:15,797
+Please step through the scanner.
+
+303
+00:21:18,717 --> 00:21:20,719
+<i>Enhanced human detected.</i>
+
+304
+00:21:21,428 --> 00:21:23,471
+<i>Superior strength.</i>
+
+305
+00:21:23,472 --> 00:21:25,598
+<i>Superior agility.</i>
+
+306
+00:21:25,599 --> 00:21:27,308
+<i>Heightened senses.</i>
+
+307
+00:21:27,309 --> 00:21:29,603
+<i>Exogenous DNA. Arachnid.</i>
+
+308
+00:21:31,104 --> 00:21:33,439
+Please remove your face covering
+for identity scan.
+
+309
+00:21:33,440 --> 00:21:34,732
+Oh, no, I can't do that.
+
+310
+00:21:34,733 --> 00:21:36,859
+- That's not possible.
+- Failure to remove your face covering
+
+311
+00:21:36,860 --> 00:21:38,861
+will result in defensive measures.
+
+312
+00:21:38,862 --> 00:21:40,697
+Defensive measures? What are you talk...
+
+313
+00:21:41,823 --> 00:21:44,241
+Guys, guys, guys!
+I can't take my mask off. I'm...
+
+314
+00:21:44,242 --> 00:21:45,285
+Spider-Man.
+
+315
+00:21:46,370 --> 00:21:47,829
+He's all right. At ease.
+
+316
+00:21:53,001 --> 00:21:54,961
+My apologies.
+
+317
+00:21:54,962 --> 00:21:56,171
+We are so glad you're here.
+
+318
+00:21:56,713 --> 00:21:59,423
+Bill Metzger, Director of Damage Control.
+How are you?
+
+319
+00:21:59,424 --> 00:22:00,467
+I'm good, thank you.
+
+320
+00:22:01,009 --> 00:22:03,761
+We had to beef up security around here,
+but I hope we didn't give you a fright.
+
+321
+00:22:03,762 --> 00:22:05,931
+- No, not at all.
+- All right, come on. This way.
+
+322
+00:22:07,599 --> 00:22:09,893
+This floor is mostly
+research and administrative.
+
+323
+00:22:10,477 --> 00:22:13,981
+Downstairs, we have incident cleanup,
+laboratories, agent training.
+
+324
+00:22:15,565 --> 00:22:17,276
+- Hey, what are they doing here?
+- It's okay.
+
+325
+00:22:18,235 --> 00:22:19,820
+The Hand works for us now.
+
+326
+00:22:20,362 --> 00:22:22,113
+After you brought them in,
+I realized that
+
+327
+00:22:22,114 --> 00:22:24,699
+fundamentally, they're a group of kids
+without a leader.
+
+328
+00:22:24,700 --> 00:22:26,701
+All they needed was a little direction.
+
+329
+00:22:26,702 --> 00:22:28,661
+Then, suddenly,
+all the things that made them dangerous
+
+330
+00:22:28,662 --> 00:22:31,039
+turned them into an invaluable part
+of our security team.
+
+331
+00:22:36,712 --> 00:22:39,464
+You can look at the many threats
+that face us and see only danger.
+
+332
+00:22:40,841 --> 00:22:42,301
+Or you can see opportunity.
+
+333
+00:22:43,885 --> 00:22:44,886
+Okay.
+
+334
+00:22:49,433 --> 00:22:50,726
+Wow, look at that.
+
+335
+00:22:51,518 --> 00:22:53,687
+In the hands of Shocker,
+these are a nuisance.
+
+336
+00:22:55,897 --> 00:22:57,690
+But it doesn't mean
+we can't learn from the technology,
+
+337
+00:22:57,691 --> 00:22:59,151
+or respect the innovation.
+
+338
+00:23:00,068 --> 00:23:04,155
+Our mission is to redirect destructive
+energy into something useful.
+
+339
+00:23:04,156 --> 00:23:05,824
+That's the true meaning of Damage Control.
+
+340
+00:23:11,204 --> 00:23:12,414
+Be careful with that.
+
+341
+00:23:13,332 --> 00:23:14,333
+Right this way.
+
+342
+00:23:17,836 --> 00:23:20,881
+I wanted to talk to you
+about the recent attacks on the agency.
+
+343
+00:23:21,340 --> 00:23:23,257
+There's been four, right?
+
+344
+00:23:23,258 --> 00:23:24,343
+Please have a seat.
+
+345
+00:23:25,469 --> 00:23:26,887
+You are right.
+
+346
+00:23:27,387 --> 00:23:29,890
+It appears we're faced with a threat
+we can't control.
+
+347
+00:23:30,432 --> 00:23:31,516
+One we can't even see.
+
+348
+00:23:34,311 --> 00:23:35,520
+But you can.
+
+349
+00:23:36,396 --> 00:23:38,023
+I saw the security footage.
+
+350
+00:23:39,483 --> 00:23:41,610
+I also read Detective DeWolff's report.
+
+351
+00:23:42,653 --> 00:23:45,072
+I believe you understand
+exactly what we're up against.
+
+352
+00:23:45,948 --> 00:23:48,951
+Someone or something
+that can hop into people's minds.
+
+353
+00:23:49,993 --> 00:23:51,077
+But not yours.
+
+354
+00:23:51,078 --> 00:23:53,789
+No, I mean, it tried, but it couldn't.
+
+355
+00:24:02,965 --> 00:24:04,508
+I'm gonna be honest with you.
+
+356
+00:24:05,384 --> 00:24:06,677
+We're on our heels right now.
+
+357
+00:24:07,844 --> 00:24:10,721
+God forbid if it were to get in here
+and find whatever it is it's looking for,
+
+358
+00:24:10,722 --> 00:24:14,434
+the consequences could be unimaginable.
+
+359
+00:24:17,229 --> 00:24:20,190
+Well, let me guess, is whatever
+it's looking for in that giant vault?
+
+360
+00:24:23,151 --> 00:24:25,486
+There are some things,
+because of the nature of my job
+
+361
+00:24:25,487 --> 00:24:26,738
+I cannot tell you.
+
+362
+00:24:27,239 --> 00:24:29,700
+But I believe you are our
+best defense against this.
+
+363
+00:24:30,117 --> 00:24:31,618
+You're the only one who can sense it.
+
+364
+00:24:32,119 --> 00:24:33,537
+You're the only one who's immune to it.
+
+365
+00:24:34,162 --> 00:24:35,789
+I'm counting on you to defeat it.
+
+366
+00:24:39,334 --> 00:24:41,420
+That's a pretty good speech, Director.
+
+367
+00:24:42,170 --> 00:24:43,588
+I'll do everything that I can, I promise.
+
+368
+00:24:45,340 --> 00:24:47,717
+Well, then consider yourself
+a friend of Damage Control.
+
+369
+00:24:47,718 --> 00:24:48,719
+Thank you.
+
+370
+00:24:49,678 --> 00:24:50,679
+I'll be in touch.
+
+371
+00:24:52,597 --> 00:24:53,640
+I wanted to ask...
+
+372
+00:24:54,975 --> 00:24:57,561
+the phrase "V-Max"
+doesn't mean anything to you, does it?
+
+373
+00:24:59,062 --> 00:25:01,440
+No. Where'd you hear that?
+
+374
+00:25:01,940 --> 00:25:04,859
+It's just, you know,
+nature of being a superhero,
+
+375
+00:25:04,860 --> 00:25:06,194
+there are some things
+I just can't tell ya.
+
+376
+00:25:07,529 --> 00:25:08,822
+Anyway, I'll see you later.
+
+377
+00:25:09,865 --> 00:25:11,366
+You guys are doing great. Keep it up.
+
+378
+00:25:11,783 --> 00:25:13,951
+<i>I don't think Metzger knows
+any more than we do,</i>
+
+379
+00:25:13,952 --> 00:25:16,078
+<i>but I told him
+I'd do whatever I can to help.</i>
+
+380
+00:25:16,079 --> 00:25:18,539
+You wanna help?
+The best thing you could do
+
+381
+00:25:18,540 --> 00:25:20,750
+<i>is find Scorpion.
+He's our only lead.</i>
+
+382
+00:25:20,751 --> 00:25:22,627
+Yeah, I know.
+I have every camera in the city
+
+383
+00:25:22,628 --> 00:25:24,504
+running a facial recognition scan for him.
+
+384
+00:25:25,047 --> 00:25:28,424
+That sounds super illegal, Spider-Man.
+I'mma pretend I didn't hear that.
+
+385
+00:25:28,425 --> 00:25:29,884
+Yeah, probably for the best.
+
+386
+00:25:29,885 --> 00:25:31,427
+But look, if he shows his face,
+we'll know.
+
+387
+00:25:31,428 --> 00:25:32,929
+Do you have any mini-kegs?
+
+388
+00:25:33,722 --> 00:25:34,972
+Down at the end.
+
+389
+00:25:34,973 --> 00:25:35,974
+Thanks.
+
+390
+00:25:39,227 --> 00:25:40,354
+I'll call you back.
+
+391
+00:25:45,400 --> 00:25:46,401
+Easy.
+
+392
+00:25:50,572 --> 00:25:54,075
+Hey, also, you got any Sharkfire Energy?
+
+393
+00:25:54,076 --> 00:25:55,452
+Yeah.
+
+394
+00:25:56,620 --> 00:25:57,995
+{\an8}Oh, no, no, no.
+
+395
+00:25:57,996 --> 00:25:59,790
+I don't want any.
+That stuff will kill you.
+
+396
+00:26:00,207 --> 00:26:01,916
+You know, all my friends
+were drinking them during finals
+
+397
+00:26:01,917 --> 00:26:03,167
+and now they're addicted.
+
+398
+00:26:03,168 --> 00:26:06,253
+And so I'm gonna need you
+to not sell me any.
+
+399
+00:26:06,254 --> 00:26:07,422
+Memorize my face.
+
+400
+00:26:08,590 --> 00:26:12,135
+Please do not sell this guy any Sharkfire.
+
+401
+00:26:13,011 --> 00:26:14,179
+Sure. Whatever.
+
+402
+00:26:15,138 --> 00:26:16,348
+Actually, I'll take one.
+
+403
+00:26:17,099 --> 00:26:18,349
+Last one.
+
+404
+00:26:18,350 --> 00:26:19,809
+Maybe two.
+
+405
+00:26:19,810 --> 00:26:21,937
+And then never sell me any.
+
+406
+00:26:23,522 --> 00:26:24,523
+Damn it.
+
+407
+00:26:58,724 --> 00:26:59,974
+Yo, Ned!
+
+408
+00:26:59,975 --> 00:27:01,350
+- What?
+- Ned!
+
+409
+00:27:01,351 --> 00:27:03,060
+- Give me that.
+- My guy, appreciate you.
+
+410
+00:27:03,061 --> 00:27:04,687
+- Let's go!
+- Yeah, man.
+
+411
+00:27:04,688 --> 00:27:05,689
+Let's go!
+
+412
+00:27:40,307 --> 00:27:43,059
+You need a drink.
+Take this, take this, take it.
+
+413
+00:27:43,060 --> 00:27:44,061
+Thanks.
+
+414
+00:27:47,230 --> 00:27:48,231
+Excuse me.
+
+415
+00:28:35,821 --> 00:28:37,698
+See you've stumbled across my board.
+
+416
+00:28:38,699 --> 00:28:40,200
+I'm not one of those weirdos, I swear.
+
+417
+00:28:40,784 --> 00:28:43,120
+He actually saved me and my friends' lives
+a few times in high school.
+
+418
+00:28:44,538 --> 00:28:46,163
+- Cool.
+- Yeah, yeah.
+
+419
+00:28:46,164 --> 00:28:48,542
+And ever since, I've just been trying
+to figure out who he is.
+
+420
+00:28:48,834 --> 00:28:53,129
+Not to unmask him to the world
+or anything, just to know, you know?
+
+421
+00:28:53,130 --> 00:28:55,424
+And to, hopefully, thank him face to face.
+
+422
+00:28:57,926 --> 00:29:01,263
+I actually created this app
+that monitors his sightings.
+
+423
+00:29:01,596 --> 00:29:03,222
+Wait, you created Spidey Tracker?
+
+424
+00:29:03,223 --> 00:29:04,891
+You heard of it? Nice.
+
+425
+00:29:05,892 --> 00:29:07,560
+{\an8}<i>Where is Spider-Man?</i>
+
+426
+00:29:07,561 --> 00:29:08,770
+{\an8}Little chat room right there.
+
+427
+00:29:09,730 --> 00:29:12,315
+Now, we know he's definitely from Queens.
+
+428
+00:29:12,316 --> 00:29:13,525
+Not the biggest revelation.
+
+429
+00:29:14,026 --> 00:29:18,655
+But I have been able to narrow it down
+to two prime suspects.
+
+430
+00:29:22,659 --> 00:29:26,037
+Yeah, if you knew who they were,
+it would really blow your mind.
+
+431
+00:29:26,038 --> 00:29:27,039
+I'm sure.
+
+432
+00:29:27,831 --> 00:29:28,832
+Ned, by the way.
+
+433
+00:29:29,875 --> 00:29:30,876
+I'm...
+
+434
+00:29:31,376 --> 00:29:33,461
+God, there's, like,
+50 people in our apartment.
+
+435
+00:29:33,462 --> 00:29:36,298
+Statistically speaking, that means
+at least two of them are sociopaths,
+
+436
+00:29:36,715 --> 00:29:38,175
+which is kind of cool.
+
+437
+00:29:41,053 --> 00:29:42,054
+Nice flowers.
+
+438
+00:29:43,555 --> 00:29:46,682
+They're a housewarming gift.
+
+439
+00:29:46,683 --> 00:29:47,726
+- Really?
+- Yeah.
+
+440
+00:29:48,435 --> 00:29:50,645
+Okay. Most people just brought
+beer and chips.
+
+441
+00:29:50,646 --> 00:29:51,938
+That's very nice.
+
+442
+00:29:51,939 --> 00:29:52,981
+I'm MJ.
+
+443
+00:29:54,107 --> 00:29:57,527
+I'm... I'm Maynard.
+
+444
+00:29:58,737 --> 00:29:59,821
+Maynard.
+
+445
+00:30:01,365 --> 00:30:02,950
+You two don't know each other?
+
+446
+00:30:03,450 --> 00:30:05,076
+No, I'm a neighbor.
+
+447
+00:30:05,077 --> 00:30:06,161
+Friendly neighbor.
+
+448
+00:30:09,957 --> 00:30:11,041
+Sorry.
+
+449
+00:30:11,583 --> 00:30:13,126
+So, how was the interview?
+
+450
+00:30:13,794 --> 00:30:14,962
+I'm gonna go put these in water.
+
+451
+00:30:15,462 --> 00:30:17,380
+It was nice to meet you, Maynard. Nerd.
+
+452
+00:30:17,381 --> 00:30:18,382
+Maynard. Yeah.
+
+453
+00:30:19,049 --> 00:30:20,800
+Excuse me. I'm sorry.
+
+454
+00:30:20,801 --> 00:30:23,678
+Did you go? Please tell me that you went.
+
+455
+00:30:23,679 --> 00:30:24,887
+Yeah. No, I went.
+
+456
+00:30:24,888 --> 00:30:26,430
+And?
+
+457
+00:30:26,431 --> 00:30:27,640
+And I got the job.
+
+458
+00:30:27,641 --> 00:30:29,850
+Oh, my God, MJ, that's amazing.
+
+459
+00:30:29,851 --> 00:30:31,727
+I turned it down.
+
+460
+00:30:31,728 --> 00:30:32,979
+What?
+
+461
+00:30:32,980 --> 00:30:35,274
+Yeah. I don't wanna work
+for some soulless corporation.
+
+462
+00:30:36,316 --> 00:30:38,235
+They're not all soulless.
+
+463
+00:30:39,194 --> 00:30:41,153
+Okay. They're all mostly soulless.
+
+464
+00:30:41,154 --> 00:30:43,114
+But don't you want, like,
+health insurance?
+
+465
+00:30:43,115 --> 00:30:45,449
+Yeah, of course I do. But at what cost?
+
+466
+00:30:45,450 --> 00:30:47,077
+Depends on your deductible.
+
+467
+00:30:48,578 --> 00:30:49,954
+You mean, like, your principles?
+
+468
+00:30:49,955 --> 00:30:51,122
+- Yes.
+- Sorry.
+
+469
+00:30:51,123 --> 00:30:52,540
+I don't know. I know it sounds cheesy,
+
+470
+00:30:52,541 --> 00:30:54,959
+but something is just telling me
+
+471
+00:30:54,960 --> 00:30:58,463
+that I'm supposed to be waiting
+for something great, you know?
+
+472
+00:30:59,673 --> 00:31:03,593
+Okay. Well, to waiting
+for something great.
+
+473
+00:31:04,219 --> 00:31:05,429
+To waiting for something great.
+
+474
+00:31:06,013 --> 00:31:07,848
+Well, the wait is over.
+
+475
+00:31:09,141 --> 00:31:10,308
+To your new home.
+
+476
+00:31:10,309 --> 00:31:11,726
+Dude, this is top-shelf.
+
+477
+00:31:11,727 --> 00:31:12,769
+Just like you.
+
+478
+00:31:14,313 --> 00:31:15,314
+Dude.
+
+479
+00:31:16,148 --> 00:31:17,149
+I'm gonna hide this.
+
+480
+00:31:19,568 --> 00:31:20,986
+I lifted this off of him again.
+
+481
+00:31:22,863 --> 00:31:25,573
+But what if Ned needs
+the fire of a thousand sharks?
+
+482
+00:31:25,574 --> 00:31:26,783
+You mean heart palpitations?
+
+483
+00:31:28,910 --> 00:31:30,621
+- You can't save everyone.
+- I can try.
+
+484
+00:31:33,165 --> 00:31:34,166
+That's my girl.
+
+485
+00:31:50,807 --> 00:31:51,850
+I'm sorry. I gotta...
+
+486
+00:32:12,955 --> 00:32:15,874
+When we get into MIT,
+we should live together.
+
+487
+00:32:16,500 --> 00:32:18,335
+<i>- Yeah, for sure.
+- Yeah, I'd love that.</i>
+
+488
+00:32:18,794 --> 00:32:21,546
+Be a fresh start.
+And we'll all be together.
+
+489
+00:32:23,215 --> 00:32:24,674
+Yeah, no, you're right. Yeah.
+
+490
+00:32:24,675 --> 00:32:25,801
+Fresh start.
+
+491
+00:32:28,887 --> 00:32:30,222
+<i>You're gonna forget who I am.</i>
+
+492
+00:32:31,056 --> 00:32:32,932
+<i>Forget who you are?
+What are you talking about?</i>
+
+493
+00:32:32,933 --> 00:32:37,104
+<i>It's okay. I'm gonna come and find you,
+and I'll explain everything.</i>
+
+494
+00:32:38,397 --> 00:32:39,731
+- I love...
+- Just wait.
+
+495
+00:32:40,899 --> 00:32:42,943
+Wait and tell me when you see me again.
+
+496
+00:32:47,489 --> 00:32:51,535
+My name is Peter Parker,
+and I would like a coffee.
+
+497
+00:32:53,161 --> 00:32:55,330
+Is there anything else?
+
+498
+00:33:04,756 --> 00:33:05,757
+No.
+
+499
+00:34:07,486 --> 00:34:08,570
+<i>Hey.</i>
+
+500
+00:34:09,821 --> 00:34:10,822
+Hey.
+
+501
+00:34:13,116 --> 00:34:16,453
+You think you don't have to listen
+to me now that you've got powers?
+
+502
+00:34:21,667 --> 00:34:26,838
+You know, this... this whole thing
+can get really scary.
+
+503
+00:34:27,630 --> 00:34:28,632
+You know that?
+
+504
+00:34:30,007 --> 00:34:31,592
+Well, yeah, it's already pretty scary.
+
+505
+00:34:33,887 --> 00:34:34,888
+Yeah.
+
+506
+00:34:35,472 --> 00:34:38,432
+And things can change,
+like, very quickly,
+
+507
+00:34:38,433 --> 00:34:40,686
+in ways that we can't
+even imagine right now.
+
+508
+00:34:41,353 --> 00:34:42,688
+Believe me, I know.
+
+509
+00:34:46,023 --> 00:34:47,359
+I don't think you do know.
+
+510
+00:34:49,987 --> 00:34:50,987
+What do you mean?
+
+511
+00:35:16,596 --> 00:35:17,681
+Oh, God.
+
+512
+00:36:00,015 --> 00:36:01,016
+What?
+
+513
+00:36:18,992 --> 00:36:19,993
+I...
+
+514
+00:36:21,244 --> 00:36:22,371
+I live here. I just...
+
+515
+00:36:24,873 --> 00:36:25,916
+I'm gonna grab my stuff.
+
+516
+00:36:44,643 --> 00:36:45,686
+Is that my shirt?
+
+517
+00:36:48,271 --> 00:36:49,273
+No.
+
+518
+00:36:50,232 --> 00:36:51,858
+Cute dog. Oh, sh...
+
+519
+00:36:58,282 --> 00:36:59,283
+Okay.
+
+520
+00:37:19,761 --> 00:37:23,180
+<i>Hi, Peter. You have 107 new alerts.</i>
+
+521
+00:37:23,181 --> 00:37:24,725
+<i>Please check backlog.</i>
+
+522
+00:37:31,273 --> 00:37:34,568
+What is happening?
+
+523
+00:37:35,652 --> 00:37:38,863
+{\an8}<i>The results of your body scan
+show a surge in the hormones</i>
+
+524
+00:37:38,864 --> 00:37:41,240
+<i>associated with your arachnid DNA,</i>
+
+525
+00:37:41,241 --> 00:37:44,201
+<i>resulting in the formation
+of organic web spinnerets</i>
+
+526
+00:37:44,202 --> 00:37:47,246
+<i>and dangerously heightened
+sensory receptors.</i>
+
+527
+00:37:47,247 --> 00:37:49,333
+Okay, but I feel fine.
+
+528
+00:37:49,583 --> 00:37:51,959
+{\an8}<i>Prolonged isolation or emotional trauma</i>
+
+529
+00:37:51,960 --> 00:37:54,503
+{\an8}<i>could be contributing
+to this sudden change.</i>
+
+530
+00:37:54,504 --> 00:37:57,174
+<i>Have you experienced any
+recent traumatic events?</i>
+
+531
+00:38:00,010 --> 00:38:01,011
+<i>Peter?</i>
+
+532
+00:38:01,637 --> 00:38:03,262
+I'm fine, E.V.
+
+533
+00:38:03,263 --> 00:38:04,722
+<i>You don't seem fine.</i>
+
+534
+00:38:04,723 --> 00:38:07,433
+<i>I recommend you take
+some time to rebalance.</i>
+
+535
+00:38:07,434 --> 00:38:09,186
+Well, that's not really an option, is it?
+
+536
+00:38:25,702 --> 00:38:28,162
+<i>Mechanical web shooters
+and organic webs</i>
+
+537
+00:38:28,163 --> 00:38:30,332
+<i>cannot be used simultaneously.</i>
+
+538
+00:38:31,833 --> 00:38:33,085
+Come on, Peter.
+
+539
+00:38:52,938 --> 00:38:55,440
+<i>Alert. Senses are overloaded.</i>
+
+540
+00:38:57,567 --> 00:38:59,861
+<i>Alert. Senses are overloaded.</i>
+
+541
+00:39:02,281 --> 00:39:05,242
+<i>Alert. Alert.
+Senses are overloaded. Alert.</i>
+
+542
+00:39:08,996 --> 00:39:10,664
+What the hell was that?
+
+543
+00:39:11,164 --> 00:39:15,002
+<i>Your heightened senses are taking in
+too much information at once.</i>
+
+544
+00:39:15,711 --> 00:39:18,379
+Okay. It's okay.
+
+545
+00:39:18,380 --> 00:39:19,463
+It's okay.
+
+546
+00:39:19,464 --> 00:39:22,174
+All right, organic webs.
+Peter Two had 'em.
+
+547
+00:39:22,175 --> 00:39:23,969
+He was cool. You're cool.
+
+548
+00:39:32,894 --> 00:39:34,229
+Oh, my God, that's hideous.
+
+549
+00:39:35,147 --> 00:39:36,148
+Okay, here we go.
+
+550
+00:39:38,400 --> 00:39:39,443
+Okay, that didn't work.
+
+551
+00:39:41,194 --> 00:39:43,322
+Organic webs. Come on! And web!
+
+552
+00:39:46,950 --> 00:39:47,951
+No, no!
+
+553
+00:39:50,996 --> 00:39:51,997
+Stop!
+
+554
+00:39:55,500 --> 00:39:56,501
+What's going on, E.V.?
+
+555
+00:39:57,127 --> 00:40:00,838
+<i>Shots fired at the Damage Control
+Data Center in Manhattan.</i>
+
+556
+00:40:00,839 --> 00:40:03,299
+<i>Suspect facial match with Scorpion.</i>
+
+557
+00:40:03,300 --> 00:40:04,635
+Okay, I'm on my way.
+
+558
+00:40:05,344 --> 00:40:07,054
+Come on. Three, two...
+
+559
+00:40:07,387 --> 00:40:08,388
+Web!
+
+560
+00:40:11,808 --> 00:40:12,809
+Web, stop!
+
+561
+00:40:15,896 --> 00:40:17,940
+Web! Stop! Birds, birds, birds!
+
+562
+00:40:18,774 --> 00:40:19,775
+Web! Stop.
+
+563
+00:40:24,154 --> 00:40:25,447
+I'm sorry. I'm sorry.
+
+564
+00:40:26,239 --> 00:40:27,823
+Web! Stop.
+
+565
+00:40:27,824 --> 00:40:28,825
+Oh, God!
+
+566
+00:40:29,660 --> 00:40:31,203
+Web! Stop, stop, stop.
+
+567
+00:40:55,560 --> 00:40:57,645
+I don't know what you're looking for.
+
+568
+00:40:57,646 --> 00:40:59,606
+I'm looking for V-Max.
+
+569
+00:41:02,192 --> 00:41:04,443
+I don't know anything.
+
+570
+00:41:04,444 --> 00:41:05,946
+I'll see for myself.
+
+571
+00:41:09,074 --> 00:41:10,075
+Oh, God, oh, God!
+
+572
+00:41:18,709 --> 00:41:21,336
+I'm sorry I'm late.
+I've had a really crazy day.
+
+573
+00:41:39,938 --> 00:41:43,317
+Scorpion, do we really gotta
+keep doing this? My head is killing me.
+
+574
+00:41:44,359 --> 00:41:45,819
+You think I'm Scorpion?
+
+575
+00:41:47,571 --> 00:41:48,572
+Web!
+
+576
+00:41:50,574 --> 00:41:51,992
+What's happening to you?
+
+577
+00:41:59,875 --> 00:42:01,418
+You can't sense me anymore.
+
+578
+00:42:04,880 --> 00:42:05,963
+You.
+
+579
+00:42:05,964 --> 00:42:07,758
+What's going on with you, Spider-Man?
+
+580
+00:42:17,100 --> 00:42:19,686
+{\an8}<i>Warning. Arachnid hormones increasing.</i>
+
+581
+00:42:35,452 --> 00:42:36,495
+Who are you?
+
+582
+00:42:37,454 --> 00:42:38,830
+Do you know who you are?
+
+583
+00:43:03,021 --> 00:43:04,982
+- We need some help over here.
+- Get back! Coming through.
+
+584
+00:43:14,032 --> 00:43:15,117
+Spider-Man.
+
+585
+00:43:17,786 --> 00:43:18,912
+What the hell?
+
+586
+00:43:19,246 --> 00:43:20,706
+Somebody get a medic.
+
+587
+00:43:41,101 --> 00:43:42,144
+DeWolff, is she hurt?
+
+588
+00:43:43,312 --> 00:43:44,313
+Is she okay?
+
+589
+00:43:44,730 --> 00:43:46,147
+- Is she okay?
+- No!
+
+590
+00:43:46,148 --> 00:43:48,316
+- Just let me go...
+- Don't! What is going on with you?
+
+591
+00:43:48,317 --> 00:43:49,567
+That wasn't Scorpion, okay?
+
+592
+00:43:49,568 --> 00:43:53,487
+I mean it was, but he was possessed
+by whatever hijacked that tank, okay?
+
+593
+00:43:53,488 --> 00:43:55,616
+- Look, please can I just...
+- All right, listen. Slow down.
+
+594
+00:43:58,160 --> 00:44:01,955
+Listen, I don't know what this is,
+but I need you to pull it together.
+
+595
+00:44:02,539 --> 00:44:04,041
+You almost killed a cop.
+
+596
+00:44:06,835 --> 00:44:08,461
+This isn't you.
+
+597
+00:44:08,462 --> 00:44:09,504
+I know. I'm sorry.
+
+598
+00:44:10,088 --> 00:44:12,674
+If you act like this again,
+I cannot protect you.
+
+599
+00:44:13,675 --> 00:44:16,428
+Whatever this is, you need to fix it.
+
+600
+00:44:37,699 --> 00:44:39,993
+<i>Through lattice chromodynamics,</i>
+
+601
+00:44:41,370 --> 00:44:45,164
+we can arrange time and space in a grid.
+
+602
+00:44:45,165 --> 00:44:50,128
+Which allows us to simulate
+the quarks binding into the protons.
+
+603
+00:44:51,171 --> 00:44:55,217
+Cindy, is this a question about protons
+or more stuff about Avengers?
+
+604
+00:44:56,301 --> 00:44:59,136
+Okay. Guys, I love to tell stories,
+
+605
+00:44:59,137 --> 00:45:02,140
+but you know I gotta teach you
+some physics at some point here.
+
+606
+00:45:06,520 --> 00:45:08,854
+All right. Let it rip, Cindy.
+
+607
+00:45:08,855 --> 00:45:11,650
+If Thanos was so worried
+about over-population,
+
+608
+00:45:12,109 --> 00:45:15,112
+why didn't he just use the magic glove
+to make more food?
+
+609
+00:45:19,199 --> 00:45:21,326
+Arthur, you wanna answer that question?
+
+610
+00:45:22,160 --> 00:45:25,664
+Hulk smash!
+
+611
+00:45:29,167 --> 00:45:30,294
+There you have it.
+
+612
+00:45:31,878 --> 00:45:33,922
+Excuse me, Dr. Banner, I...
+
+613
+00:45:36,341 --> 00:45:38,634
+- You okay?
+- Yeah, sorry, it's just a headache.
+
+614
+00:45:38,635 --> 00:45:40,929
+Have you got a minute? I wanted
+to talk to you about your inhibitor.
+
+615
+00:45:42,848 --> 00:45:45,891
+Sure. Don't worry. It's got fail-safes.
+
+616
+00:45:45,892 --> 00:45:50,063
+I'm not gonna turn into the big green
+raging monster machine in the cafeteria.
+
+617
+00:45:50,647 --> 00:45:53,150
+But if you do see me
+with this thing off, run.
+
+618
+00:45:56,695 --> 00:45:59,990
+No, but you're using target-specific
+short interfering RNA, right?
+
+619
+00:46:01,491 --> 00:46:04,411
+It's like gene silencing, you're just
+incorporating the gamma radiation?
+
+620
+00:46:07,039 --> 00:46:08,165
+What'd you say your name was?
+
+621
+00:46:09,791 --> 00:46:12,085
+Ned... Leeds.
+
+622
+00:46:12,711 --> 00:46:15,838
+So you found a way
+to suppress the expression of DNA
+
+623
+00:46:15,839 --> 00:46:18,883
+even as it's undergoing the mutation
+due to gamma radiation, right?
+
+624
+00:46:18,884 --> 00:46:21,386
+- Yes.
+- Okay, so my question is,
+
+625
+00:46:22,179 --> 00:46:27,100
+would that same thing be possible with DNA
+that's mutating for another reason?
+
+626
+00:46:29,186 --> 00:46:30,228
+What's the reason?
+
+627
+00:46:32,147 --> 00:46:33,190
+I don't know.
+
+628
+00:46:34,232 --> 00:46:38,277
+Let's say that the... the host genome
+is mixed with some kind of foreign DNA.
+
+629
+00:46:38,278 --> 00:46:39,321
+Theoretically.
+
+630
+00:46:40,447 --> 00:46:43,033
+Theoretically? Yes, that's possible. Yes.
+
+631
+00:46:44,034 --> 00:46:47,370
+So, could you suppress
+only some parts of that DNA expression?
+
+632
+00:46:47,371 --> 00:46:49,915
+Like the bad aspects
+but just keep all of the good stuff?
+
+633
+00:46:50,791 --> 00:46:53,876
+You mean, like, if I wanted to keep
+some parts of Hulk but not others?
+
+634
+00:46:53,877 --> 00:46:55,087
+Right.
+
+635
+00:46:55,504 --> 00:46:59,508
+It would be enormously dangerous
+and complex, but...
+
+636
+00:47:00,801 --> 00:47:04,596
+if you were able to target
+the correct mRNA strand...
+
+637
+00:47:05,472 --> 00:47:06,639
+Possibly.
+
+638
+00:47:06,640 --> 00:47:09,183
+Wait, so you could just
+turn the mutating gene on and off
+
+639
+00:47:09,184 --> 00:47:11,728
+as long as you do it
+before the mRNA transcription?
+
+640
+00:47:12,354 --> 00:47:13,355
+Maybe.
+
+641
+00:47:15,607 --> 00:47:17,818
+I mean, if you apply the same thinking,
+you could even...
+
+642
+00:47:18,527 --> 00:47:20,653
+develop some kind of automatic inhibitor
+
+643
+00:47:20,654 --> 00:47:23,615
+that would just adjust
+to any type of mutation.
+
+644
+00:47:24,700 --> 00:47:27,618
+Well, now you're talking about
+a universal inhibitor
+
+645
+00:47:27,619 --> 00:47:30,747
+that would control anyone
+who has any powers.
+
+646
+00:47:32,124 --> 00:47:33,333
+It's a dangerous idea.
+
+647
+00:47:34,543 --> 00:47:36,545
+Well, yeah. But it's theoretical, right?
+
+648
+00:47:39,256 --> 00:47:40,757
+You're not one of my students, are ya?
+
+649
+00:47:43,260 --> 00:47:44,636
+No. I'm a grad student.
+
+650
+00:47:45,595 --> 00:47:46,596
+I've...
+
+651
+00:47:47,681 --> 00:47:48,848
+I've taken enough of your time.
+
+652
+00:47:48,849 --> 00:47:50,767
+I gotta get some books
+back to the library.
+
+653
+00:47:51,351 --> 00:47:52,686
+The library is that way.
+
+654
+00:47:54,688 --> 00:47:56,939
+Right. Right. Duh.
+
+655
+00:47:56,940 --> 00:47:58,275
+How would you decide?
+
+656
+00:47:59,151 --> 00:48:00,152
+What's that?
+
+657
+00:48:01,236 --> 00:48:03,196
+Well, what parts of nature
+are good or bad?
+
+658
+00:48:04,031 --> 00:48:06,032
+What if you're trying
+to control the expression
+
+659
+00:48:06,033 --> 00:48:08,035
+of something that needs to be expressed?
+
+660
+00:48:13,832 --> 00:48:15,292
+Good luck with your studies, Ned.
+
+661
+00:48:17,294 --> 00:48:18,712
+Thank you, Professor.
+
+662
+00:48:19,546 --> 00:48:20,755
+<i>Like reptiles...</i>
+
+663
+00:48:20,756 --> 00:48:23,215
+{\an8}- Oh, God.
+<i>- ...amphibians and arthropods,</i>
+
+664
+00:48:23,216 --> 00:48:26,428
+{\an8}<i>spiders shed skin
+at key points in their life cycles.</i>
+
+665
+00:48:26,720 --> 00:48:28,263
+<i>The process is known as molting.</i>
+
+666
+00:48:28,889 --> 00:48:31,432
+<i>Fourth inhibitor prototype complete.</i>
+
+667
+00:48:31,433 --> 00:48:32,600
+<i>While molting is a natural</i>
+
+668
+00:48:32,601 --> 00:48:34,977
+<i>- part of a spider's life cycle...</i>
+- Okay, come on. Come on.
+
+669
+00:48:34,978 --> 00:48:37,021
+<i>...it can leave the spider
+vulnerable to threats.</i>
+
+670
+00:48:37,022 --> 00:48:39,440
+Upload inhibitor beta build seven.
+
+671
+00:48:39,441 --> 00:48:40,816
+{\an8}<i>...process is initiated
+by hormonal changes...</i>
+
+672
+00:48:40,817 --> 00:48:42,945
+{\an8}<i>Uploaded. Would you like to run a test?</i>
+
+673
+00:48:43,612 --> 00:48:44,695
+Yeah, run it.
+
+674
+00:48:44,696 --> 00:48:45,906
+{\an8}<i>...few hours to several days.</i>
+
+675
+00:48:46,573 --> 00:48:50,118
+{\an8}<i>Spiders have three stages
+in their life cycle.</i>
+
+676
+00:48:50,410 --> 00:48:53,704
+{\an8}<i>Each stage is characterized
+by physical changes,</i>
+
+677
+00:48:53,705 --> 00:48:58,919
+{\an8}<i>with the largest changes occurring during
+the beautiful transition to adulthood.</i>
+
+678
+00:49:01,505 --> 00:49:02,881
+<i>For those who make it through,</i>
+
+679
+00:49:03,382 --> 00:49:05,758
+<i>molting amounts to a kind of rebirth.</i>
+
+680
+00:49:05,759 --> 00:49:07,218
+Can you turn that spider stuff off?
+
+681
+00:49:07,219 --> 00:49:08,595
+<i>Turning off video.</i>
+
+682
+00:49:09,471 --> 00:49:11,013
+<i>- Inhibitor active.</i>
+- Okay, here we go.
+
+683
+00:49:11,014 --> 00:49:12,349
+Come on. Come on.
+
+684
+00:49:13,934 --> 00:49:15,435
+Keep an eye on my vitals.
+
+685
+00:49:17,896 --> 00:49:19,398
+<i>Inhibitor engaged.</i>
+
+686
+00:49:23,402 --> 00:49:26,989
+{\an8}<i>Suppressing arachnid hormones
+to your baseline levels.</i>
+
+687
+00:49:29,866 --> 00:49:30,867
+Okay.
+
+688
+00:49:34,913 --> 00:49:36,497
+All right, E.V., let's do this.
+
+689
+00:49:36,498 --> 00:49:38,458
+<i>Initiating field test one.</i>
+
+690
+00:49:40,419 --> 00:49:41,585
+That's working.
+
+691
+00:49:41,586 --> 00:49:45,631
+{\an8}<i>Alert. Inhibitor is overheating.
+Functionality reducing.</i>
+
+692
+00:49:45,632 --> 00:49:47,425
+Yeah, I'm sensing that.
+
+693
+00:49:47,426 --> 00:49:49,385
+<i>Alert. Senses are overloaded.</i>
+
+694
+00:49:49,386 --> 00:49:52,806
+<i>Alert. Senses are overloaded.
+Senses are overloaded. Alert.</i>
+
+695
+00:49:54,182 --> 00:49:56,059
+<i>Web grenades activated.</i>
+
+696
+00:49:58,145 --> 00:49:59,146
+Oh, sh...
+
+697
+00:50:11,617 --> 00:50:13,994
+<i>Inhibitor field test one, failure.</i>
+
+698
+00:50:16,830 --> 00:50:19,666
+Yo, Spider-Man, you okay?
+
+699
+00:50:20,334 --> 00:50:22,419
+Yeah. I'm just trying out some new tech.
+
+700
+00:50:23,253 --> 00:50:25,881
+Yeah. To get rid
+of that monster inside you?
+
+701
+00:50:31,303 --> 00:50:32,721
+Still can't sense me, huh?
+
+702
+00:50:34,389 --> 00:50:36,266
+Guess your technology isn't working.
+
+703
+00:50:37,434 --> 00:50:39,770
+You know, you're the only person
+I've met that I can't...
+
+704
+00:50:40,812 --> 00:50:42,022
+hop into.
+
+705
+00:50:42,856 --> 00:50:44,941
+I'm sure that's really
+frustrating for you.
+
+706
+00:50:44,942 --> 00:50:46,442
+I'll get in there one day.
+
+707
+00:50:46,443 --> 00:50:47,569
+What do you want?
+
+708
+00:50:47,694 --> 00:50:48,695
+Oh, boy.
+
+709
+00:50:49,446 --> 00:50:54,951
+I wanna know why a half-human, half-spider
+would decide to work for an organization
+
+710
+00:50:54,952 --> 00:50:58,497
+whose sworn mission
+is to hunt down anybody who's different.
+
+711
+00:50:59,539 --> 00:51:02,042
+Damage Control isn't after you
+because you're different.
+
+712
+00:51:02,793 --> 00:51:04,752
+They're hunting you down
+because you're dangerous.
+
+713
+00:51:04,753 --> 00:51:06,421
+Now, what do you want?
+
+714
+00:51:07,047 --> 00:51:11,093
+Since you're a very simple spider,
+let me spell it out for you.
+
+715
+00:51:12,219 --> 00:51:14,638
+Damage Control has something that I need.
+
+716
+00:51:15,555 --> 00:51:16,932
+Oh, you mean V-Max?
+
+717
+00:51:19,935 --> 00:51:23,146
+I was planning to use Scorpion to get it,
+but you keep getting in my way.
+
+718
+00:51:23,897 --> 00:51:26,482
+I will always be in your way.
+
+719
+00:51:26,483 --> 00:51:29,069
+You sure about that, Peter Parker?
+
+720
+00:51:34,241 --> 00:51:37,410
+<i>You know, your apartment
+is kinda like a parody</i>
+
+721
+00:51:37,411 --> 00:51:40,706
+of where you think a sad single guy
+in his 20s might live.
+
+722
+00:51:41,164 --> 00:51:45,877
+Take-out containers,
+free weights, protein powder.
+
+723
+00:51:50,716 --> 00:51:52,133
+You're bluffing.
+
+724
+00:51:52,134 --> 00:51:54,011
+You know,
+you're not hard to track down, Peter.
+
+725
+00:51:54,636 --> 00:51:57,681
+Well, at least not for someone like me.
+
+726
+00:51:58,974 --> 00:52:01,059
+I did find one interesting thing, though.
+
+727
+00:52:02,311 --> 00:52:03,603
+<i>In of all places...</i>
+
+728
+00:52:05,814 --> 00:52:06,857
+coffee cup.
+
+729
+00:52:09,484 --> 00:52:11,194
+E.V., display home work station.
+
+730
+00:52:13,739 --> 00:52:17,242
+You spent four years
+erasing Peter Parker from existence?
+
+731
+00:52:18,201 --> 00:52:20,787
+No wonder the spider's
+trying to swallow up the man.
+
+732
+00:52:21,330 --> 00:52:23,290
+I wonder if MJ would even recognize you.
+
+733
+00:52:26,752 --> 00:52:28,461
+I think I might go see how she's doing.
+
+734
+00:52:28,462 --> 00:52:29,670
+I'm not gonna let that happen.
+
+735
+00:52:29,671 --> 00:52:33,883
+No, her roommate was nice enough
+to post a new address online.
+
+736
+00:52:33,884 --> 00:52:36,553
+How about this? I'll race you there.
+
+737
+00:52:37,054 --> 00:52:38,055
+If you touch her...
+
+738
+00:52:38,722 --> 00:52:40,389
+Better start swinging.
+
+739
+00:52:40,390 --> 00:52:41,767
+I'm fast.
+
+740
+00:53:05,123 --> 00:53:06,290
+Hey.
+
+741
+00:53:06,291 --> 00:53:08,335
+It's a long way to MJ's.
+
+742
+00:53:09,336 --> 00:53:10,879
+You better pick up the pace.
+
+743
+00:53:17,803 --> 00:53:19,805
+E.V., track physical anomalies.
+
+744
+00:53:20,973 --> 00:53:24,016
+{\an8}<i>Searching for physical anomalies
+between subjects.</i>
+
+745
+00:53:24,017 --> 00:53:25,060
+{\an8}<i>Please stand by.</i>
+
+746
+00:53:29,690 --> 00:53:32,109
+Thank you all so much for coming today.
+
+747
+00:53:39,074 --> 00:53:40,491
+I'm sorry about that.
+
+748
+00:53:40,492 --> 00:53:42,535
+Give it up for Spider-Man,
+
+749
+00:53:42,536 --> 00:53:45,789
+in a race for the love of his life,
+and it's not looking good.
+
+750
+00:53:48,041 --> 00:53:50,294
+Come on, Spidey. Keep up.
+
+751
+00:53:51,378 --> 00:53:52,379
+Excuse me. Sorry.
+
+752
+00:54:01,263 --> 00:54:02,264
+Spider-Man!
+
+753
+00:54:05,934 --> 00:54:07,769
+E.V., run these numbers with the others.
+
+754
+00:54:11,064 --> 00:54:13,400
+{\an8}<i>Analyzing jump distances for patterns.</i>
+
+755
+00:54:15,777 --> 00:54:17,112
+Get me that jump data.
+
+756
+00:54:17,529 --> 00:54:18,530
+{\an8}<i>Calculating.</i>
+
+757
+00:54:22,409 --> 00:54:24,036
+Come on, I need an answer!
+
+758
+00:54:25,662 --> 00:54:27,247
+{\an8}<i>Calculations complete.</i>
+
+759
+00:54:42,846 --> 00:54:45,015
+You have a limit
+to your jump radius, don't ya?
+
+760
+00:54:45,599 --> 00:54:46,683
+Thirty-three feet.
+
+761
+00:54:47,684 --> 00:54:49,936
+I don't see anybody up here
+for you to hop into.
+
+762
+00:54:51,313 --> 00:54:52,439
+Very clever.
+
+763
+00:54:52,898 --> 00:54:56,068
+Like I said, you're not getting near her.
+
+764
+00:55:11,792 --> 00:55:13,376
+- Hey, hey, hey.
+- I'm sorry, but you're in danger.
+
+765
+00:55:13,377 --> 00:55:14,460
+- Where's your roommate?
+- What?
+
+766
+00:55:14,461 --> 00:55:15,544
+Where's Ned?
+
+767
+00:55:15,545 --> 00:55:16,796
+In Boston with friends. Why?
+
+768
+00:55:16,797 --> 00:55:18,172
+Okay, good. You gotta come with me.
+
+769
+00:55:18,173 --> 00:55:19,966
+What? I don't know
+if you're the real Spider-Man.
+
+770
+00:55:19,967 --> 00:55:21,550
+- I'm not coming with you.
+- We don't have time for this.
+
+771
+00:55:21,551 --> 00:55:23,803
+- Please. Come on.
+- You need to get out of my apartment.
+
+772
+00:55:23,804 --> 00:55:25,262
+Look, this is gonna sound insane,
+
+773
+00:55:25,263 --> 00:55:27,848
+but there is someone who is after you
+who is really dangerous, okay?
+
+774
+00:55:27,849 --> 00:55:29,643
+And I promised you
+that I would keep you safe.
+
+775
+00:55:30,769 --> 00:55:32,688
+Please, you just have to trust me.
+Come on.
+
+776
+00:55:36,149 --> 00:55:37,234
+Fine.
+
+777
+00:55:43,907 --> 00:55:45,075
+Web. Stop.
+
+778
+00:55:48,578 --> 00:55:49,579
+Web. Stop.
+
+779
+00:55:53,750 --> 00:55:54,835
+Web. Stop.
+
+780
+00:56:00,424 --> 00:56:01,882
+- Are you okay?
+- Yeah, yeah, I'm fine.
+
+781
+00:56:01,883 --> 00:56:04,468
+Okay. We should be safe up here.
+
+782
+00:56:04,469 --> 00:56:05,554
+Okay, well, safe from what?
+
+783
+00:56:06,930 --> 00:56:08,306
+I'm not entirely sure.
+
+784
+00:56:08,307 --> 00:56:09,850
+Okay, well, what do they want with me?
+
+785
+00:56:10,600 --> 00:56:12,269
+- I don't know.
+- You don't know?
+
+786
+00:56:12,811 --> 00:56:15,397
+It doesn't make any sense.
+Why would they choose me?
+
+787
+00:56:16,148 --> 00:56:18,150
+I wish I could tell you. I just...
+
+788
+00:56:20,861 --> 00:56:22,404
+We knew each other, didn't we?
+
+789
+00:56:26,074 --> 00:56:27,075
+What?
+
+790
+00:56:28,076 --> 00:56:29,411
+It's the only explanation.
+
+791
+00:56:30,746 --> 00:56:32,204
+It's been driving me crazy for years,
+
+792
+00:56:32,205 --> 00:56:34,541
+all the times that Spider-Man
+saved either me or Ned.
+
+793
+00:56:35,292 --> 00:56:36,459
+It was the Washington Monument,
+
+794
+00:56:36,460 --> 00:56:39,004
+and then it was London and Prague
+and the Night Monkey.
+
+795
+00:56:39,921 --> 00:56:42,341
+I mean, twice is a coincidence,
+but over and over again...
+
+796
+00:56:44,760 --> 00:56:46,470
+We knew each other. Tell me I'm wrong.
+
+797
+00:56:48,513 --> 00:56:49,680
+Well, you're wrong.
+
+798
+00:56:49,681 --> 00:56:52,476
+What were we? Were we classmates
+or friends or something?
+
+799
+00:56:53,060 --> 00:56:55,478
+Look, I... I don't know
+what you're talking about.
+
+800
+00:56:55,479 --> 00:56:56,647
+Were we something more?
+
+801
+00:56:58,815 --> 00:57:01,151
+I just, I can't... I can't remember.
+
+802
+00:57:01,276 --> 00:57:03,361
+And I feel like
+someone scrambled my brain.
+
+803
+00:57:03,362 --> 00:57:05,238
+And you're the only one
+who would know why.
+
+804
+00:57:06,323 --> 00:57:07,698
+This is crazy. I can't...
+
+805
+00:57:07,699 --> 00:57:09,618
+I know that you can't
+tell me the truth.
+
+806
+00:57:12,579 --> 00:57:13,830
+But I need to know.
+
+807
+00:57:19,002 --> 00:57:21,004
+Maybe there's a part of me
+that still remembers.
+
+808
+00:58:01,628 --> 00:58:02,629
+Peter.
+
+809
+00:58:04,673 --> 00:58:05,840
+MJ.
+
+810
+00:58:05,841 --> 00:58:06,925
+Hey, Peter.
+
+811
+00:58:13,181 --> 00:58:14,891
+I've missed you so much.
+
+812
+00:58:19,855 --> 00:58:21,565
+I can't believe you figured it out.
+
+813
+00:58:21,982 --> 00:58:23,025
+I did.
+
+814
+00:58:28,780 --> 00:58:31,241
+Go ahead, Peter. Touch her.
+
+815
+00:58:32,659 --> 00:58:33,952
+Hold her.
+
+816
+00:58:35,329 --> 00:58:36,788
+You've been wanting to for so long.
+
+817
+00:58:45,672 --> 00:58:47,341
+True love's kiss breaks the spell
+
+818
+00:58:48,216 --> 00:58:50,052
+and reunites the star-crossed lovers.
+
+819
+00:58:52,304 --> 00:58:53,472
+MJ would vomit.
+
+820
+00:58:56,224 --> 00:58:57,851
+You really are a simple spider,
+aren't you?
+
+821
+00:59:01,396 --> 00:59:02,397
+I see why you like her.
+
+822
+00:59:03,065 --> 00:59:04,107
+She's...
+
+823
+00:59:05,275 --> 00:59:06,693
+she's smart...
+
+824
+00:59:07,235 --> 00:59:08,278
+funny...
+
+825
+00:59:09,154 --> 00:59:10,447
+and a little dark and twisted.
+
+826
+00:59:14,493 --> 00:59:15,577
+I mean, it is sad.
+
+827
+00:59:16,703 --> 00:59:19,831
+There is, like,
+no thoughts of you in here...
+
+828
+00:59:21,208 --> 00:59:22,417
+whatsoever.
+
+829
+00:59:23,961 --> 00:59:25,295
+But you knew that, didn't you?
+
+830
+00:59:26,672 --> 00:59:27,965
+You're a monster.
+
+831
+00:59:28,924 --> 00:59:30,800
+If you loved someone
+the way that I love her,
+
+832
+00:59:30,801 --> 00:59:33,678
+then you'd know that what you're doing
+right now is unforgivable.
+
+833
+00:59:33,679 --> 00:59:34,763
+Is that so?
+
+834
+00:59:41,770 --> 00:59:44,815
+You know, some people would kill to hold
+the person they love one last time.
+
+835
+00:59:46,733 --> 00:59:48,110
+Stop it now.
+
+836
+00:59:57,911 --> 00:59:59,288
+You're running out of time, Peter.
+
+837
+01:00:00,455 --> 01:00:03,959
+Soon enough, it won't just be your friends
+who don't remember Peter Parker.
+
+838
+01:00:05,460 --> 01:00:07,170
+Maybe you should
+write a letter to yourself.
+
+839
+01:00:11,800 --> 01:00:12,843
+Get out of her.
+
+840
+01:00:14,386 --> 01:00:15,762
+Who's the monster now, Peter?
+
+841
+01:00:39,119 --> 01:00:40,120
+MJ.
+
+842
+01:00:40,746 --> 01:00:43,164
+MJ. No, no, no. Oh, God.
+
+843
+01:00:43,165 --> 01:00:44,874
+Oh, God, please, no, come on.
+
+844
+01:00:44,875 --> 01:00:46,626
+Come on, come on, come on.
+
+845
+01:00:46,627 --> 01:00:49,253
+Oh, thank God. Oh, thank God.
+
+846
+01:00:49,254 --> 01:00:52,256
+Oh, you're okay. Oh, you're okay.
+
+847
+01:00:52,257 --> 01:00:53,508
+Oh, I'm so sorry.
+
+848
+01:00:55,969 --> 01:00:58,304
+Stop. Wait, wait, stop, stop,
+please, I'll quit.
+
+849
+01:00:58,305 --> 01:01:00,432
+You... You win, you win, you win.
+Just don't hurt her.
+
+850
+01:01:03,477 --> 01:01:04,936
+You're a mess, Spider-Man.
+
+851
+01:01:07,648 --> 01:01:09,273
+Anytime I want...
+
+852
+01:01:09,274 --> 01:01:10,609
+I can be anyone I want.
+
+853
+01:01:11,860 --> 01:01:13,612
+So you can't protect MJ,
+
+854
+01:01:14,988 --> 01:01:16,615
+even from herself.
+
+855
+01:01:23,789 --> 01:01:25,457
+It really is a nice letter.
+
+856
+01:01:26,416 --> 01:01:27,541
+Little heavy-handed.
+
+857
+01:01:27,542 --> 01:01:28,710
+But not bad.
+
+858
+01:01:47,688 --> 01:01:50,314
+You're okay.
+I'm gonna take you someplace safe.
+
+859
+01:01:50,315 --> 01:01:51,316
+What?
+
+860
+01:01:52,734 --> 01:01:54,026
+Take me to 3165...
+
+861
+01:01:54,027 --> 01:01:55,361
+Lafayette Street.
+
+862
+01:01:55,362 --> 01:01:57,698
+<i>Navigating to Empire State University.</i>
+
+863
+01:02:02,744 --> 01:02:04,037
+Wait, wait, wait! Okay.
+
+864
+01:02:06,081 --> 01:02:07,415
+- I got you. I got you.
+- Are you sure?
+
+865
+01:02:07,416 --> 01:02:08,499
+- Yep.
+- Okay.
+
+866
+01:02:08,500 --> 01:02:09,750
+'Cause I feel like
+I'm slipping a little bit.
+
+867
+01:02:09,751 --> 01:02:10,752
+- You're not slipping.
+- Okay.
+
+868
+01:02:12,629 --> 01:02:13,963
+You're okay, you're okay, you're okay.
+
+869
+01:02:13,964 --> 01:02:15,632
+Yeah, yeah, yeah. I'm fine. I'm fine.
+
+870
+01:02:18,927 --> 01:02:20,011
+Okay.
+
+871
+01:02:20,012 --> 01:02:21,387
+Can we just slow down
+
+872
+01:02:21,388 --> 01:02:22,763
+- for like two seconds, please?
+- Well, we're almost there.
+
+873
+01:02:22,764 --> 01:02:25,182
+Yeah, yeah, but you just told me
+I was mind controlled.
+
+874
+01:02:25,183 --> 01:02:26,267
+Well, not technically.
+
+875
+01:02:26,268 --> 01:02:27,518
+I mean, you're lucky
+I believe in that stuff, okay?
+
+876
+01:02:27,519 --> 01:02:29,646
+Because governments have been doing it
+for years, especially the French.
+
+877
+01:02:30,355 --> 01:02:31,647
+- Are you okay?
+- Yeah...
+
+878
+01:02:31,648 --> 01:02:34,026
+Look. Sorry. I'm just trying
+to take you someplace safe, okay?
+
+879
+01:02:38,655 --> 01:02:39,906
+I don't feel safe.
+
+880
+01:02:41,992 --> 01:02:42,993
+Oh, shit.
+
+881
+01:02:47,998 --> 01:02:49,207
+- Sorry.
+- Oh, watch out!
+
+882
+01:02:58,800 --> 01:03:00,052
+You're losing it, kid.
+
+883
+01:03:00,427 --> 01:03:03,054
+Thought you'd be able to see that coming
+a mile away.
+
+884
+01:03:03,055 --> 01:03:04,221
+What is wrong with you?
+
+885
+01:03:04,222 --> 01:03:05,432
+- You could've killed us.
+- Excuse me.
+
+886
+01:03:05,849 --> 01:03:08,476
+You show up to my house unannounced,
+what do you think's gonna happen?
+
+887
+01:03:08,477 --> 01:03:09,602
+Wait, this is your house?
+
+888
+01:03:09,603 --> 01:03:10,646
+- No, no. Don't, don't, don't.
+- Who the hell is that?
+
+889
+01:03:11,104 --> 01:03:12,105
+Who the hell are you?
+
+890
+01:03:12,773 --> 01:03:13,774
+She's...
+
+891
+01:03:14,733 --> 01:03:15,816
+You know.
+
+892
+01:03:15,817 --> 01:03:17,985
+No, I don't know.
+That's why I just asked you.
+
+893
+01:03:17,986 --> 01:03:20,905
+She's in danger, Frank.
+Look, I need your help, okay?
+
+894
+01:03:20,906 --> 01:03:22,950
+- Yeah, looks like it.
+- Well, come on. You owe me.
+
+895
+01:03:23,492 --> 01:03:24,909
+For... Aren't you sick of this story?
+
+896
+01:03:24,910 --> 01:03:25,993
+Staten Island!
+
+897
+01:03:25,994 --> 01:03:27,536
+Nah, Staten Island.
+
+898
+01:03:27,537 --> 01:03:30,081
+What more do you want me to do?
+I literally saved your life.
+
+899
+01:03:30,082 --> 01:03:31,165
+You're out of your mind, kid!
+
+900
+01:03:31,166 --> 01:03:32,333
+What, I gotta save it twice
+
+901
+01:03:32,334 --> 01:03:33,626
+- to get a favor out of you?
+- That guy couldn't hit me
+
+902
+01:03:33,627 --> 01:03:35,795
+- with a handful of rice.
+- I mean, what does that sound like to you?
+
+903
+01:03:35,796 --> 01:03:37,046
+- I had him exactly where I want him.
+- A drug dealer was gonna shoot a guy...
+
+904
+01:03:37,047 --> 01:03:38,506
+- I'm seein' him right there.
+- ...then I webbed the gun
+
+905
+01:03:38,507 --> 01:03:39,632
+- out of the drug dealer's hand...
+- I know exactly what
+
+906
+01:03:39,633 --> 01:03:41,008
+- I'm completely up for.
+- ...and then kicked that drug dealer...
+
+907
+01:03:41,009 --> 01:03:42,218
+- Okay, fine, go ahead.
+- ...back into a storage container.
+
+908
+01:03:42,219 --> 01:03:43,553
+- What would you call that?
+- What does that sound like to you?
+
+909
+01:03:44,888 --> 01:03:45,973
+I don't care. I just wanna go home.
+
+910
+01:03:46,974 --> 01:03:49,266
+That's an excellent idea. Kick rocks.
+
+911
+01:03:49,267 --> 01:03:50,434
+- Go home.
+- No, no, wait, wait.
+
+912
+01:03:50,435 --> 01:03:51,937
+Frank, Frank, Frank, wait. Please.
+
+913
+01:03:53,105 --> 01:03:56,733
+I have got to keep her safe, okay?
+And I don't have anywhere else to go.
+
+914
+01:04:00,696 --> 01:04:01,697
+You like chili?
+
+915
+01:04:02,948 --> 01:04:03,949
+I made chili.
+
+916
+01:04:05,742 --> 01:04:06,743
+All right. Just...
+
+917
+01:04:07,577 --> 01:04:08,786
+watch out for the claymores.
+
+918
+01:04:08,787 --> 01:04:11,415
+Don't wanna pick up pieces of you
+for the next two weeks.
+
+919
+01:04:12,833 --> 01:04:14,918
+Hey, I definitely
+would not eat that chili.
+
+920
+01:04:16,795 --> 01:04:18,671
+So, you telling me that maniac
+
+921
+01:04:18,672 --> 01:04:22,091
+behind all that tank nonsense
+is nothing but a goddamn teenager?
+
+922
+01:04:22,092 --> 01:04:23,259
+And it's not just the tank,
+
+923
+01:04:23,260 --> 01:04:25,928
+it's every attack on Damage Control
+this past month.
+
+924
+01:04:25,929 --> 01:04:27,930
+And how does a kid learn
+how to drive a tank?
+
+925
+01:04:27,931 --> 01:04:29,181
+I don't know, Frank.
+
+926
+01:04:29,182 --> 01:04:30,808
+Beat your ass
+all over the street like that.
+
+927
+01:04:30,809 --> 01:04:32,185
+She did not beat my ass.
+
+928
+01:04:33,145 --> 01:04:34,229
+This your family?
+
+929
+01:04:37,232 --> 01:04:38,942
+Would you get the hell away from that?
+
+930
+01:04:39,693 --> 01:04:41,986
+Look, I got one rule in this house.
+
+931
+01:04:41,987 --> 01:04:44,822
+You don't touch anything.
+You don't move anything.
+
+932
+01:04:44,823 --> 01:04:47,784
+You sure as shit don't ask me
+any goddamn questions about anything.
+
+933
+01:04:49,411 --> 01:04:50,412
+So, three rules?
+
+934
+01:04:53,707 --> 01:04:55,083
+I see why you like her.
+
+935
+01:04:56,126 --> 01:04:57,461
+I'll go put some pants on.
+
+936
+01:04:59,004 --> 01:05:00,297
+Don't touch the chili.
+
+937
+01:05:02,257 --> 01:05:03,258
+I like him.
+
+938
+01:05:04,092 --> 01:05:05,135
+Of course you do.
+
+939
+01:05:06,720 --> 01:05:10,265
+So I managed to pull this image from
+my HUD and run it through the system.
+
+940
+01:05:13,435 --> 01:05:14,602
+Who is she?
+
+941
+01:05:14,603 --> 01:05:17,105
+Until a couple months ago, nobody.
+
+942
+01:05:17,981 --> 01:05:20,608
+She was in and out of foster care,
+psych hospitals,
+
+943
+01:05:20,609 --> 01:05:22,653
+{\an8}and then eventually she ran away
+and dropped off the grid.
+
+944
+01:05:22,986 --> 01:05:25,112
+{\an8}There's hardly any information about her
+that hasn't been scrubbed.
+
+945
+01:05:25,113 --> 01:05:29,117
+But she's classified as a telepath.
+And now we have a name.
+
+946
+01:05:32,913 --> 01:05:33,914
+"Jean Grey."
+
+947
+01:05:35,874 --> 01:05:39,669
+Yeah. These are the Damage Control sites
+that she hasn't hit yet,
+
+948
+01:05:39,670 --> 01:05:41,170
+so if she surfaces,
+
+949
+01:05:41,171 --> 01:05:43,048
+then my facial tracking program
+will pick her up.
+
+950
+01:05:44,174 --> 01:05:45,341
+Right.
+
+951
+01:05:45,342 --> 01:05:46,718
+Oh, yeah? What then?
+
+952
+01:05:49,137 --> 01:05:51,931
+Well, don't worry about "what then."
+Just look after her.
+
+953
+01:05:51,932 --> 01:05:53,557
+Don't worry about it, huh?
+
+954
+01:05:53,558 --> 01:05:55,559
+I'm just supposed to sit here
+and babysit your girlfriend?
+
+955
+01:05:55,560 --> 01:05:57,395
+- I don't need to be babysat, so yeah.
+- She's not my girlfriend.
+
+956
+01:05:57,396 --> 01:05:59,689
+All right, all right.
+Look, what's the plan, huh?
+
+957
+01:05:59,690 --> 01:06:03,317
+Just gonna hope that
+your facial tracking program works?
+
+958
+01:06:03,318 --> 01:06:05,611
+And you get yourself killed,
+I gotta watch her the rest of my life?
+
+959
+01:06:05,612 --> 01:06:07,947
+I'm not gonna get killed, Frank.
+I can catch her, okay?
+
+960
+01:06:07,948 --> 01:06:09,031
+I just...
+
+961
+01:06:09,032 --> 01:06:11,535
+I just have to fix my inhibitor
+and then I'll be good to go.
+
+962
+01:06:12,119 --> 01:06:13,495
+Well, what do you need to do that?
+
+963
+01:06:14,913 --> 01:06:18,458
+Frank. You do not have
+what I need to do that, okay?
+
+964
+01:06:20,002 --> 01:06:21,502
+You know you've got some mouth on you.
+
+965
+01:06:21,503 --> 01:06:23,504
+What do you think,
+you have an anti-static mat,
+
+966
+01:06:23,505 --> 01:06:25,090
+a tonal probe, and micro tools?
+
+967
+01:06:25,799 --> 01:06:27,175
+I got all that shit.
+
+968
+01:06:27,759 --> 01:06:28,843
+What for?
+
+969
+01:06:28,844 --> 01:06:30,387
+- Bombs.
+- Bingo.
+
+970
+01:06:32,848 --> 01:06:33,932
+Unbelievable.
+
+971
+01:06:45,777 --> 01:06:48,070
+Hey, do you think it's safe
+to maybe call someone
+
+972
+01:06:48,071 --> 01:06:49,698
+and let them know I'm okay?
+
+973
+01:06:54,202 --> 01:06:55,203
+Like your boyfriend?
+
+974
+01:06:56,455 --> 01:06:58,707
+No. Like my roommate.
+
+975
+01:07:02,753 --> 01:07:05,172
+I don't think that's such a good idea,
+you know, because...
+
+976
+01:07:06,298 --> 01:07:07,882
+she already knows who he is,
+
+977
+01:07:07,883 --> 01:07:09,759
+and she can inhabit anyone
+she wants, so...
+
+978
+01:07:09,760 --> 01:07:10,926
+Right. Yeah.
+
+979
+01:07:10,927 --> 01:07:12,303
+Yeah, yeah, yeah. You're right.
+
+980
+01:07:12,304 --> 01:07:14,973
+- Sorry.
+- No, it's fine. I totally get it.
+
+981
+01:07:17,142 --> 01:07:18,393
+If I called my boyfriend,
+
+982
+01:07:19,353 --> 01:07:21,604
+he'd just ask me a bunch of questions
+that I couldn't answer,
+
+983
+01:07:21,605 --> 01:07:25,107
+and then he'd tell me
+I was being withholding again.
+
+984
+01:07:25,108 --> 01:07:27,109
+- Withholding?
+- Yep.
+
+985
+01:07:27,110 --> 01:07:28,946
+Sounds like your boyfriend's
+kind of a jerk.
+
+986
+01:07:31,782 --> 01:07:32,950
+But why'd he think you're withholding?
+
+987
+01:07:33,909 --> 01:07:37,788
+I don't know. You tell me,
+masked vigilante behind the curtain.
+
+988
+01:07:40,040 --> 01:07:41,708
+Okay, I see your point.
+
+989
+01:07:43,710 --> 01:07:44,795
+So what about you?
+
+990
+01:07:45,420 --> 01:07:46,421
+What about me?
+
+991
+01:07:47,381 --> 01:07:50,592
+Well, do you have a Mrs. Spider-Man?
+
+992
+01:07:52,761 --> 01:07:54,471
+Do I have a Mrs. Spider-Man?
+
+993
+01:07:58,558 --> 01:08:00,143
+No. No.
+
+994
+01:08:01,269 --> 01:08:04,106
+Why not? Because I'm...
+
+995
+01:08:05,857 --> 01:08:07,818
+I'm too withholding, obviously.
+
+996
+01:08:08,777 --> 01:08:09,820
+Welcome to the club.
+
+997
+01:08:16,868 --> 01:08:17,953
+There was someone.
+
+998
+01:08:19,288 --> 01:08:20,580
+- Really?
+- Yeah, yeah, yeah.
+
+999
+01:08:23,667 --> 01:08:24,750
+What happened?
+
+1000
+01:08:25,502 --> 01:08:26,503
+I...
+
+1001
+01:08:28,171 --> 01:08:29,589
+I had to let her go.
+
+1002
+01:08:30,924 --> 01:08:32,009
+To keep her safe.
+
+1003
+01:08:36,346 --> 01:08:38,348
+I'm sorry.
+That must have been really hard for you.
+
+1004
+01:08:39,766 --> 01:08:41,685
+Yeah, it was. Yeah. It is.
+
+1005
+01:08:42,852 --> 01:08:43,895
+It is really hard.
+
+1006
+01:08:48,275 --> 01:08:49,483
+Are you okay?
+
+1007
+01:08:49,484 --> 01:08:50,650
+Yeah. Yeah, yeah, I'm okay. I...
+
+1008
+01:08:50,651 --> 01:08:52,110
+You know what, I'm just gonna come over.
+
+1009
+01:08:52,111 --> 01:08:54,031
+Hold on, hold on, hold on,
+hold on, hold on.
+
+1010
+01:08:55,906 --> 01:08:56,990
+What's going on?
+
+1011
+01:08:56,991 --> 01:08:58,826
+It just keeps overheating on me.
+
+1012
+01:08:59,660 --> 01:09:01,370
+It's been stumping me for days.
+
+1013
+01:09:02,122 --> 01:09:03,289
+Before I switched to aerospace,
+
+1014
+01:09:03,290 --> 01:09:07,335
+I was gonna major in biochemical
+engineering, so, do you mind if I...
+
+1015
+01:09:07,336 --> 01:09:08,668
+Oh, yeah, for sure.
+
+1016
+01:09:08,669 --> 01:09:10,213
+Here. There you go.
+
+1017
+01:09:13,967 --> 01:09:14,968
+Wow.
+
+1018
+01:09:18,013 --> 01:09:20,139
+So, does the device itself...
+
+1019
+01:09:20,140 --> 01:09:23,892
+I mean, does it generate
+any kind of radiation or a magnetic field?
+
+1020
+01:09:23,893 --> 01:09:25,312
+'Cause that would definitely interfere.
+
+1021
+01:09:25,479 --> 01:09:29,523
+Yeah, it has a micro magnetic field,
+but I accounted for that in the design.
+
+1022
+01:09:29,524 --> 01:09:31,484
+Okay, well, what about your suit?
+
+1023
+01:09:31,485 --> 01:09:34,821
+It actually dissipates into the fabric,
+which is pretty cool.
+
+1024
+01:09:35,781 --> 01:09:36,781
+Okay.
+
+1025
+01:09:39,825 --> 01:09:40,953
+What about those?
+
+1026
+01:09:42,079 --> 01:09:43,080
+What about what?
+
+1027
+01:09:45,665 --> 01:09:48,209
+Your goggles, or whatever you call 'em.
+
+1028
+01:09:48,834 --> 01:09:52,047
+They would create a field.
+It would be tiny, but...
+
+1029
+01:09:53,632 --> 01:09:56,050
+But it's on your head,
+which is very close to the inhibitor.
+
+1030
+01:09:56,051 --> 01:09:58,386
+Which is probably why it's overheating.
+
+1031
+01:09:58,387 --> 01:10:00,222
+MJ, that is genius.
+
+1032
+01:10:02,015 --> 01:10:03,266
+Okay, this has to work.
+
+1033
+01:10:07,396 --> 01:10:08,814
+<i>Inhibitor engaged.</i>
+
+1034
+01:10:10,482 --> 01:10:13,235
+{\an8}<i>Suppressing selected arachnid hormones.</i>
+
+1035
+01:10:14,194 --> 01:10:16,279
+Okay. That feels better.
+
+1036
+01:10:16,280 --> 01:10:18,155
+That feels totally better.
+
+1037
+01:10:18,156 --> 01:10:19,908
+My head feels so clear.
+
+1038
+01:10:20,951 --> 01:10:22,285
+Web, web.
+
+1039
+01:10:22,286 --> 01:10:24,453
+And I'm not shooting organic webs.
+
+1040
+01:10:24,454 --> 01:10:26,707
+Oh, my God, MJ,
+that, like, totally worked.
+
+1041
+01:10:27,749 --> 01:10:30,252
+You know, this is some really
+intense stuff you're working on here.
+
+1042
+01:10:33,088 --> 01:10:34,756
+Well, yeah, it's really important.
+
+1043
+01:10:37,217 --> 01:10:40,887
+Yeah, but this is like, I mean,
+this is like altering your DNA.
+
+1044
+01:10:42,139 --> 01:10:43,889
+I mean, this is the kind of stuff
+you put on, like,
+
+1045
+01:10:43,890 --> 01:10:45,600
+I don't know, like a monster.
+
+1046
+01:10:47,853 --> 01:10:51,063
+Well, if you've seen what's been happening
+to me over the last couple days,
+
+1047
+01:10:51,064 --> 01:10:52,316
+then you might understand.
+
+1048
+01:10:53,025 --> 01:10:54,525
+Yeah, well, I've been with you
+for the last few hours
+
+1049
+01:10:54,526 --> 01:10:55,652
+and that's not what I've seen.
+
+1050
+01:10:56,486 --> 01:10:57,529
+And what have you seen?
+
+1051
+01:10:58,822 --> 01:10:59,990
+From my side of the curtain?
+
+1052
+01:11:02,075 --> 01:11:05,495
+A really good guy
+who might just be changing.
+
+1053
+01:11:10,709 --> 01:11:14,421
+Well, I don't mean to overstep.
+I'll let you get back to it.
+
+1054
+01:11:35,734 --> 01:11:37,027
+Can't sleep either, huh?
+
+1055
+01:11:37,819 --> 01:11:38,820
+You want coffee?
+
+1056
+01:11:39,696 --> 01:11:40,739
+Sure.
+
+1057
+01:11:41,949 --> 01:11:43,158
+You get your shit fixed?
+
+1058
+01:11:44,117 --> 01:11:46,911
+Yeah. I've been wearing it all night.
+
+1059
+01:11:46,912 --> 01:11:47,996
+So far, so good.
+
+1060
+01:11:48,914 --> 01:11:50,748
+I made this other one universal.
+
+1061
+01:11:50,749 --> 01:11:55,212
+So if I could get it on Jean,
+it should completely shut down her powers.
+
+1062
+01:11:56,171 --> 01:11:57,464
+You know what else would work?
+
+1063
+01:11:57,839 --> 01:11:59,256
+You just shoot her.
+
+1064
+01:11:59,257 --> 01:12:00,384
+Nice.
+
+1065
+01:12:03,136 --> 01:12:04,304
+Jesus Christ.
+
+1066
+01:12:05,722 --> 01:12:08,099
+That has gotta be the goofiest shit
+I ever seen in my life.
+
+1067
+01:12:08,100 --> 01:12:11,144
+What, you can't even take the mask off
+to drink a cup of coffee?
+
+1068
+01:12:12,396 --> 01:12:15,399
+Don't take it personally, Frank.
+It stays on for everybody.
+
+1069
+01:12:16,441 --> 01:12:17,484
+Even her?
+
+1070
+01:12:19,945 --> 01:12:21,153
+Who is she, kid?
+
+1071
+01:12:21,154 --> 01:12:22,238
+I don't know.
+
+1072
+01:12:22,239 --> 01:12:24,365
+That's horseshit. Who is she?
+
+1073
+01:12:24,366 --> 01:12:26,826
+- I'm telling you, I don't know who she is.
+- What are you doin'? You care about her.
+
+1074
+01:12:26,827 --> 01:12:28,119
+- You're pretending not to. Why?
+- I don't care about her.
+
+1075
+01:12:28,120 --> 01:12:30,037
+Look, I don't know
+who she is, Frank. Okay?
+
+1076
+01:12:30,038 --> 01:12:32,873
+I don't have anybody. I'm like you.
+I just keep to myself.
+
+1077
+01:12:32,874 --> 01:12:33,917
+You're like me?
+
+1078
+01:12:35,252 --> 01:12:36,586
+What do you know about me, kid?
+
+1079
+01:12:37,587 --> 01:12:38,921
+You think this is a choice?
+
+1080
+01:12:38,922 --> 01:12:41,550
+Living like this, it's a lifestyle?
+Is that what you think?
+
+1081
+01:12:42,217 --> 01:12:43,719
+Kid, this is a sentence.
+
+1082
+01:12:44,886 --> 01:12:45,887
+You know somethin'...
+
+1083
+01:12:46,680 --> 01:12:48,098
+If I had one second,
+
+1084
+01:12:49,057 --> 01:12:52,227
+people I love were still breathing,
+you think I'd be hiding behind a mask?
+
+1085
+01:12:52,853 --> 01:12:55,104
+You think I'd pretend
+to be something that I'm not,
+
+1086
+01:12:55,105 --> 01:12:56,857
+acting like a goddamn coward?
+
+1087
+01:13:02,487 --> 01:13:03,822
+I got a facial match.
+
+1088
+01:13:07,993 --> 01:13:10,286
+She's at the Damage Control HQ
+in Manhattan.
+
+1089
+01:13:10,287 --> 01:13:11,496
+I gotta go. Okay.
+
+1090
+01:13:16,001 --> 01:13:18,085
+She's gonna be okay.
+
+1091
+01:13:18,086 --> 01:13:19,212
+I'll see to it.
+
+1092
+01:13:22,257 --> 01:13:23,383
+Thanks, Frank.
+
+1093
+01:13:30,140 --> 01:13:31,141
+Hey.
+
+1094
+01:13:31,725 --> 01:13:32,726
+Hey.
+
+1095
+01:13:34,394 --> 01:13:35,979
+You just gonna let him go by himself?
+
+1096
+01:13:37,481 --> 01:13:38,857
+You know, I think he might need you.
+
+1097
+01:13:41,777 --> 01:13:43,445
+Kinda like you needed him
+on Staten Island.
+
+1098
+01:13:47,407 --> 01:13:48,533
+Yeah.
+
+1099
+01:14:25,862 --> 01:14:27,823
+You can't hide from me forever, Bill.
+
+1100
+01:14:28,532 --> 01:14:31,785
+<i>You've got a strong door,
+but it's the wall you have to worry about.</i>
+
+1101
+01:14:32,786 --> 01:14:34,329
+Who are you and what do you want?
+
+1102
+01:14:39,543 --> 01:14:40,794
+I'm Jean Grey...
+
+1103
+01:14:41,878 --> 01:14:43,463
+and you know what I want.
+
+1104
+01:15:44,149 --> 01:15:45,359
+Jean?
+
+1105
+01:15:45,943 --> 01:15:48,612
+You looked me up? I'm blushing.
+
+1106
+01:15:49,863 --> 01:15:52,240
+I told you what would happen to your girl
+if you got in my way.
+
+1107
+01:15:53,200 --> 01:15:54,868
+You're not getting near her again.
+
+1108
+01:15:55,410 --> 01:15:57,496
+And you're definitely
+not getting inside that vault.
+
+1109
+01:15:58,038 --> 01:15:59,206
+Maybe not.
+
+1110
+01:16:06,505 --> 01:16:07,756
+But this guy might.
+
+1111
+01:16:10,634 --> 01:16:13,386
+Jean, you don't know
+what you're dealing with.
+
+1112
+01:16:13,387 --> 01:16:16,222
+You know, you and Banner
+have a lot in common.
+
+1113
+01:16:16,223 --> 01:16:20,810
+Both fighting a losing battle
+against the monster that lives inside you.
+
+1114
+01:16:20,811 --> 01:16:22,688
+Jean, this is the Hulk, you can't just...
+
+1115
+01:16:31,280 --> 01:16:32,322
+What the hell?
+
+1116
+01:16:34,533 --> 01:16:35,659
+I see.
+
+1117
+01:16:37,577 --> 01:16:41,038
+Trying to muzzle me
+like you muzzle yourself?
+
+1118
+01:16:41,039 --> 01:16:42,623
+I can't let you in there.
+
+1119
+01:16:42,624 --> 01:16:44,751
+Whatever V-Max is, you're not getting it.
+
+1120
+01:16:45,210 --> 01:16:46,670
+Like hell I'm not.
+
+1121
+01:16:47,254 --> 01:16:48,255
+Oh, crap.
+
+1122
+01:17:00,434 --> 01:17:02,352
+Jean, don't do this.
+
+1123
+01:17:02,936 --> 01:17:03,937
+Save your breath.
+
+1124
+01:17:29,379 --> 01:17:31,297
+Frank, what are you doing here?
+
+1125
+01:17:31,298 --> 01:17:32,965
+What you think I'm doing?
+I'm saving your ass.
+
+1126
+01:17:32,966 --> 01:17:35,092
+This is way above your pay grade, dude.
+
+1127
+01:17:35,093 --> 01:17:36,428
+- We're fighting the Hulk.
+- Oh, shit!
+
+1128
+01:17:59,159 --> 01:18:00,160
+Really?
+
+1129
+01:18:12,255 --> 01:18:13,465
+Get out!
+
+1130
+01:18:19,805 --> 01:18:22,390
+- Stop shooting him!
+- Are you out of your goddamn mind?
+
+1131
+01:18:22,391 --> 01:18:24,643
+He's... Banner's not the problem! She is.
+
+1132
+01:18:38,323 --> 01:18:40,116
+I thought I told you to stay home
+and watch MJ.
+
+1133
+01:18:40,117 --> 01:18:41,284
+Yeah, you did.
+
+1134
+01:18:41,285 --> 01:18:43,203
+And then she tells me
+I gotta come watch you.
+
+1135
+01:18:44,496 --> 01:18:46,039
+Wait, did she actually say that to you?
+
+1136
+01:18:47,040 --> 01:18:48,292
+Are you blushing, daffodil?
+
+1137
+01:18:49,167 --> 01:18:50,294
+I'm not blushing.
+
+1138
+01:18:52,254 --> 01:18:55,047
+Goddamn it.
+I knew I should have brought a bigger gun.
+
+1139
+01:18:55,048 --> 01:18:56,340
+That's a good idea, "Bring a bigger gun."
+
+1140
+01:18:56,341 --> 01:18:57,591
+What are you gonna do,
+tickle him to death?
+
+1141
+01:18:57,592 --> 01:18:59,010
+No. Look, change of plan.
+
+1142
+01:18:59,011 --> 01:19:01,804
+First, we get this on the Hulk,
+then we go after Jean.
+
+1143
+01:19:01,805 --> 01:19:03,055
+I got one better.
+
+1144
+01:19:03,056 --> 01:19:05,016
+That's the highest
+casualty-producing threat.
+
+1145
+01:19:05,017 --> 01:19:08,270
+You contain it. I go find the source.
+I take it down. You got it?
+
+1146
+01:19:08,854 --> 01:19:10,731
+Are you just trying
+to get out of fighting the Hulk?
+
+1147
+01:19:12,357 --> 01:19:13,941
+- I guess so.
+- Okay, whatever, dude.
+
+1148
+01:19:13,942 --> 01:19:14,943
+I got this.
+
+1149
+01:19:15,527 --> 01:19:16,945
+- Wait, no, Frank, Frank, Frank.
+- What?
+
+1150
+01:19:17,321 --> 01:19:18,654
+Do not kill her!
+
+1151
+01:19:18,655 --> 01:19:20,906
+Don't start with that soft serve bullshit.
+
+1152
+01:19:20,907 --> 01:19:22,825
+You know something?
+I'm gonna do this, I'm gonna do it my way.
+
+1153
+01:19:22,826 --> 01:19:25,286
+Just... just go, just go.
+
+1154
+01:19:25,287 --> 01:19:26,830
+And don't get within 33 feet!
+
+1155
+01:19:27,581 --> 01:19:28,832
+So frustrating.
+
+1156
+01:19:43,805 --> 01:19:44,806
+Hey.
+
+1157
+01:19:50,687 --> 01:19:52,856
+This guy's got issues.
+
+1158
+01:19:54,232 --> 01:19:57,234
+No. Oh, no.
+
+1159
+01:19:57,235 --> 01:19:59,947
+No, not again. Oh, no.
+
+1160
+01:20:00,739 --> 01:20:03,283
+Dr. Banner? Is that you?
+
+1161
+01:20:04,201 --> 01:20:06,535
+Spider-Man. What happened?
+
+1162
+01:20:06,536 --> 01:20:07,662
+Where am I?
+
+1163
+01:20:07,663 --> 01:20:09,580
+- Hey, hey, hey.
+- Did I do all this?
+
+1164
+01:20:09,581 --> 01:20:11,082
+- You...
+- Did I hurt anyone?
+
+1165
+01:20:11,083 --> 01:20:13,668
+It's not your fault. She was in your mind.
+You weren't in control.
+
+1166
+01:20:13,669 --> 01:20:15,711
+- I lost my inhibitor.
+- Look here, here.
+
+1167
+01:20:15,712 --> 01:20:18,047
+It's the only thing
+keeping the monster inside.
+
+1168
+01:20:18,048 --> 01:20:19,966
+It's okay. I got another one here.
+I just need you to put this on.
+
+1169
+01:20:19,967 --> 01:20:21,759
+- What is it?
+- It's universal.
+
+1170
+01:20:21,760 --> 01:20:23,053
+It should work on you.
+
+1171
+01:20:32,437 --> 01:20:34,856
+Please, sir, there's people
+in the building. Just put it on.
+
+1172
+01:20:38,610 --> 01:20:39,777
+You okay?
+
+1173
+01:20:39,778 --> 01:20:43,114
+My head. I think she broke something!
+
+1174
+01:20:43,115 --> 01:20:44,407
+Is she still in there?
+
+1175
+01:20:44,408 --> 01:20:45,741
+No.
+
+1176
+01:20:45,742 --> 01:20:46,993
+It's the other guy.
+
+1177
+01:20:46,994 --> 01:20:50,162
+Bruce? Look, I can get you
+out of here, okay?
+
+1178
+01:20:50,163 --> 01:20:51,706
+I just need you
+to put that inhibitor on.
+
+1179
+01:20:51,707 --> 01:20:52,874
+Get away from me!
+
+1180
+01:20:54,710 --> 01:20:56,044
+He's coming.
+
+1181
+01:20:56,712 --> 01:20:58,046
+I can't control.
+
+1182
+01:20:58,755 --> 01:21:00,673
+Yes, you can, Bruce! Yes, you can!
+
+1183
+01:21:00,674 --> 01:21:04,176
+Get out of the building!
+
+1184
+01:21:04,177 --> 01:21:05,637
+Get everyone out of the...
+
+1185
+01:21:09,516 --> 01:21:11,434
+No! No!
+
+1186
+01:21:11,435 --> 01:21:13,103
+Banner, please. Look at me.
+
+1187
+01:21:15,772 --> 01:21:18,609
+No Banner. No girl.
+
+1188
+01:21:19,943 --> 01:21:21,695
+Only Hulk.
+
+1189
+01:21:31,538 --> 01:21:33,248
+I didn't know you could get that big.
+
+1190
+01:21:39,338 --> 01:21:40,631
+Good luck with that, Peter.
+
+1191
+01:21:49,765 --> 01:21:50,766
+There you are.
+
+1192
+01:21:52,434 --> 01:21:53,435
+Just hold still. Just hold still...
+
+1193
+01:21:57,022 --> 01:21:58,023
+Stay!
+
+1194
+01:22:07,282 --> 01:22:08,283
+Oh, God.
+
+1195
+01:22:23,048 --> 01:22:24,049
+No lethal rounds.
+
+1196
+01:22:37,062 --> 01:22:38,814
+<i>Tracking time to detonation.</i>
+
+1197
+01:23:07,759 --> 01:23:09,677
+<i>Ninety seconds to detonation.</i>
+
+1198
+01:23:09,678 --> 01:23:10,679
+I know! I know!
+
+1199
+01:23:16,310 --> 01:23:17,768
+{\an8}Come on. Come on.
+
+1200
+01:23:17,769 --> 01:23:19,395
+{\an8}Why is your skin so thick?
+
+1201
+01:23:19,396 --> 01:23:20,646
+{\an8}<i>Inhibitor cannot attach.</i>
+
+1202
+01:23:20,647 --> 01:23:21,773
+Come on!
+
+1203
+01:24:00,646 --> 01:24:01,647
+Dr. Banner...
+
+1204
+01:24:03,023 --> 01:24:04,149
+please.
+
+1205
+01:24:05,609 --> 01:24:06,610
+Bruce.
+
+1206
+01:24:07,945 --> 01:24:08,946
+It's Peter.
+
+1207
+01:24:10,656 --> 01:24:12,324
+I'm your friend.
+
+1208
+01:24:41,645 --> 01:24:42,646
+Bruce.
+
+1209
+01:25:01,748 --> 01:25:04,543
+Throw down your guns,
+or you'll get the next one in the head.
+
+1210
+01:25:15,846 --> 01:25:17,306
+Where is she?
+
+1211
+01:25:30,736 --> 01:25:31,819
+What did you...
+
+1212
+01:25:31,820 --> 01:25:33,030
+It's over, Jean.
+
+1213
+01:25:48,378 --> 01:25:49,379
+Sara.
+
+1214
+01:26:00,682 --> 01:26:01,808
+Is that my gun?
+
+1215
+01:26:10,817 --> 01:26:13,528
+Is anyone hurt? It's just me?
+
+1216
+01:26:14,488 --> 01:26:15,697
+Is anyone hurt?
+
+1217
+01:26:17,324 --> 01:26:18,325
+Spider-Man...
+
+1218
+01:26:21,078 --> 01:26:22,162
+You saved my life.
+
+1219
+01:26:23,080 --> 01:26:24,747
+And you saved God knows how many lives
+
+1220
+01:26:24,748 --> 01:26:27,500
+by making sure she didn't find
+what she was looking for in there.
+
+1221
+01:26:27,501 --> 01:26:28,835
+Still inside. We got her coming through.
+
+1222
+01:26:29,962 --> 01:26:31,838
+Before she passed out,
+she tried to say something.
+
+1223
+01:26:32,965 --> 01:26:35,634
+A name, Sara.
+Does that mean something to you?
+
+1224
+01:26:36,969 --> 01:26:38,720
+Before you got the inhibitor on her,
+
+1225
+01:26:39,805 --> 01:26:41,807
+she managed to get in my mind
+for a moment.
+
+1226
+01:26:43,350 --> 01:26:46,812
+Sara was the name of someone I worked
+closely with that recently passed.
+
+1227
+01:26:47,437 --> 01:26:48,522
+I'm sorry to hear that.
+
+1228
+01:26:50,023 --> 01:26:53,819
+Somehow the memory of Sara
+must have affected her.
+
+1229
+01:26:56,822 --> 01:26:59,740
+Well, I'd love to talk to her
+when she wakes up, if that's all right.
+
+1230
+01:26:59,741 --> 01:27:03,786
+Of course. She'll be transferred
+to our facility on Roosevelt Island.
+
+1231
+01:27:03,787 --> 01:27:06,205
+Now, I'm just as eager
+to get her talking as you are,
+
+1232
+01:27:06,206 --> 01:27:08,125
+but let's not strain her
+too much in one day.
+
+1233
+01:27:08,750 --> 01:27:09,835
+Yeah, of course.
+
+1234
+01:27:10,585 --> 01:27:12,003
+Thank you, Spider-Man.
+
+1235
+01:27:12,004 --> 01:27:13,005
+My pleasure.
+
+1236
+01:27:24,933 --> 01:27:26,017
+MJ!
+
+1237
+01:27:26,018 --> 01:27:28,394
+It worked. She's in custody.
+
+1238
+01:27:28,395 --> 01:27:29,563
+You're safe now.
+
+1239
+01:27:32,691 --> 01:27:33,692
+You left this.
+
+1240
+01:27:41,992 --> 01:27:43,243
+Did you want me to find it?
+
+1241
+01:27:45,370 --> 01:27:47,247
+No. No.
+
+1242
+01:27:48,457 --> 01:27:49,540
+Look, I can explain, I...
+
+1243
+01:27:49,541 --> 01:27:50,959
+Can you take that off, please?
+
+1244
+01:27:52,836 --> 01:27:53,837
+What?
+
+1245
+01:27:54,880 --> 01:27:55,881
+The mask.
+
+1246
+01:27:57,966 --> 01:28:02,554
+I think I deserve to have
+this conversation with "Peter Parker."
+
+1247
+01:28:28,538 --> 01:28:30,415
+You came to the party
+at our apartment the other night.
+
+1248
+01:28:36,964 --> 01:28:38,131
+And the donut shop.
+
+1249
+01:28:40,384 --> 01:28:41,718
+The year I went off to school.
+
+1250
+01:28:44,596 --> 01:28:45,722
+Why didn't you tell me then?
+
+1251
+01:28:46,473 --> 01:28:48,058
+I was trying to protect you.
+
+1252
+01:28:48,600 --> 01:28:51,519
+Yeah, well, I've almost been killed, like,
+five times in the past 24 hours,
+
+1253
+01:28:51,520 --> 01:28:53,063
+so it's not really working that well.
+
+1254
+01:28:53,939 --> 01:28:55,274
+I know. I'm sorry. I...
+
+1255
+01:28:56,692 --> 01:28:57,985
+Were you ever gonna tell me?
+
+1256
+01:29:04,908 --> 01:29:05,909
+Right.
+
+1257
+01:29:07,411 --> 01:29:09,830
+So you just were gonna
+make that decision for me.
+
+1258
+01:29:10,580 --> 01:29:11,789
+I know. I'm sorry.
+
+1259
+01:29:11,790 --> 01:29:13,749
+I don't really need you to keep saying
+that you're sorry.
+
+1260
+01:29:13,750 --> 01:29:15,042
+I don't know
+what you want me to tell you.
+
+1261
+01:29:15,043 --> 01:29:16,920
+I want you to tell me
+why you would do this to me.
+
+1262
+01:29:23,051 --> 01:29:24,303
+I lost someone.
+
+1263
+01:29:28,265 --> 01:29:30,392
+And they'd still be here
+if it wasn't for me.
+
+1264
+01:29:35,188 --> 01:29:36,815
+I didn't read you that letter because...
+
+1265
+01:29:38,108 --> 01:29:40,526
+I didn't want anything like that
+to happen to you.
+
+1266
+01:29:40,527 --> 01:29:41,819
+But that's not really
+your decision to make.
+
+1267
+01:29:41,820 --> 01:29:43,113
+I know it's not, but...
+
+1268
+01:29:45,490 --> 01:29:46,825
+You mean everything to me.
+
+1269
+01:29:50,078 --> 01:29:52,497
+And I've been trying to live my life
+without you, but I...
+
+1270
+01:29:54,374 --> 01:29:55,375
+I can't.
+
+1271
+01:30:01,590 --> 01:30:02,591
+I love you.
+
+1272
+01:30:14,686 --> 01:30:17,773
+This spell or whatever it is
+that you did...
+
+1273
+01:30:21,443 --> 01:30:22,444
+It worked.
+
+1274
+01:30:25,405 --> 01:30:28,659
+All these memories that you're saying
+that we have together, I don't...
+
+1275
+01:30:30,911 --> 01:30:32,037
+I don't have them.
+
+1276
+01:30:35,832 --> 01:30:38,084
+And I do see why, you know,
+she would love you,
+
+1277
+01:30:38,085 --> 01:30:40,796
+the girl you wrote that letter to, but...
+
+1278
+01:30:45,550 --> 01:30:46,635
+I understand...
+
+1279
+01:30:47,678 --> 01:30:50,597
+that you did what you had to do
+to protect her.
+
+1280
+01:30:52,891 --> 01:30:55,602
+And for that I'm so grateful.
+
+1281
+01:30:59,106 --> 01:31:00,107
+But I...
+
+1282
+01:31:04,152 --> 01:31:05,445
+I don't love you.
+
+1283
+01:31:09,825 --> 01:31:10,826
+Because I don't...
+
+1284
+01:31:11,451 --> 01:31:13,036
+I don't even know you.
+
+1285
+01:31:21,753 --> 01:31:24,131
+I should probably go now.
+
+1286
+01:31:30,554 --> 01:31:32,055
+I really am sorry, Peter.
+
+1287
+01:31:50,407 --> 01:31:51,617
+I don't have a phone.
+
+1288
+01:31:54,828 --> 01:31:56,163
+Do you mind taking me home?
+
+1289
+01:31:58,999 --> 01:32:00,166
+Yeah, of course.
+
+1290
+01:32:00,167 --> 01:32:01,168
+Thank you.
+
+1291
+01:32:44,044 --> 01:32:45,629
+- Thank you.
+- Yeah, sure.
+
+1292
+01:32:46,838 --> 01:32:48,047
+I'm going to...
+
+1293
+01:32:48,048 --> 01:32:49,549
+Yeah, yeah. Yeah, of course.
+
+1294
+01:32:59,059 --> 01:33:00,143
+Do you wanna come up?
+
+1295
+01:33:02,312 --> 01:33:04,564
+Just to say hi to Ned. Maybe.
+
+1296
+01:33:07,985 --> 01:33:08,986
+I would love that.
+
+1297
+01:33:09,945 --> 01:33:11,028
+Okay.
+
+1298
+01:33:11,029 --> 01:33:14,365
+<i>The Hulk, a.k.a. Dr. Bruce Banner,
+is in custody,</i>
+
+1299
+01:33:14,366 --> 01:33:16,742
+<i>currently being transferred
+to a psychiatric ward.</i>
+
+1300
+01:33:16,743 --> 01:33:17,952
+So sad.
+
+1301
+01:33:17,953 --> 01:33:20,329
+<i>After years as a peaceful academic,</i>
+
+1302
+01:33:20,330 --> 01:33:23,249
+<i>the question the world asked today is,</i>
+
+1303
+01:33:23,250 --> 01:33:24,710
+<i>"What finally snapped?"</i>
+
+1304
+01:33:31,008 --> 01:33:32,592
+<i>Hey, I'm nearby.</i>
+
+1305
+01:33:32,926 --> 01:33:34,677
+<i>- Hey, I'm nearby.</i>
+- MJ?
+
+1306
+01:33:34,678 --> 01:33:36,221
+- Yeah.
+<i>- Hey, I'm nearby.</i>
+
+1307
+01:33:37,139 --> 01:33:38,472
+<i>Hey, I'm nearby.</i>
+
+1308
+01:33:38,473 --> 01:33:39,682
+You're not gonna believe this...
+
+1309
+01:33:39,683 --> 01:33:41,684
+<i>- Hey, I'm nearby.</i>
+- ...but the Spidey Tracker app
+
+1310
+01:33:41,685 --> 01:33:42,893
+- says that Spider-Man...
+<i>- Hey, I'm nearby.</i>
+
+1311
+01:33:42,894 --> 01:33:45,104
+- ...is in the direct vicinity.
+<i>- Hey, I'm nearby.</i>
+
+1312
+01:33:45,105 --> 01:33:46,773
+- Oh, yeah? No way. That's crazy.
+<i>- Hey, I'm nearby.</i>
+
+1313
+01:33:47,482 --> 01:33:48,859
+<i>Hey, I'm nearby.</i>
+
+1314
+01:33:50,110 --> 01:33:52,029
+Ned, Spider-Man. Spider-Man, Ned.
+
+1315
+01:33:52,487 --> 01:33:53,654
+It's nice to meet you, Ned.
+
+1316
+01:33:53,655 --> 01:33:54,823
+Hello.
+
+1317
+01:33:55,532 --> 01:33:56,616
+I'm not, like, a weirdo
+
+1318
+01:33:56,617 --> 01:33:57,701
+- or anything, I'm...
+- He's a little weird.
+
+1319
+01:33:58,201 --> 01:34:00,370
+Why... Why are you here?
+
+1320
+01:34:01,413 --> 01:34:02,705
+- I...
+- I was...
+
+1321
+01:34:02,706 --> 01:34:04,957
+- I was on a subway platform.
+- She was in the... Platform. Right.
+
+1322
+01:34:04,958 --> 01:34:06,042
+- And she was on her phone.
+- Yeah, and...
+
+1323
+01:34:06,043 --> 01:34:07,126
+Yeah, I got a little distracted.
+
+1324
+01:34:07,127 --> 01:34:08,336
+- And the train was coming and he...
+- I mean...
+
+1325
+01:34:08,337 --> 01:34:09,629
+And I just swooped her right up.
+
+1326
+01:34:09,630 --> 01:34:11,131
+- Yep. Saved me.
+- Yeah.
+
+1327
+01:34:12,841 --> 01:34:14,426
+Oh, my God.
+
+1328
+01:34:15,510 --> 01:34:16,970
+Why has that never happened to me?
+
+1329
+01:34:17,512 --> 01:34:21,057
+So what if you're mid-swing
+and you decide you need to pee?
+
+1330
+01:34:21,058 --> 01:34:22,683
+Do you just land on top of a building?
+
+1331
+01:34:22,684 --> 01:34:23,893
+What?
+
+1332
+01:34:23,894 --> 01:34:24,977
+Do you drop down to ground level
+
+1333
+01:34:24,978 --> 01:34:26,187
+and run into a coffee shop
+and you're like,
+
+1334
+01:34:26,188 --> 01:34:27,521
+"Hey, it's Spider-Man. I need to pee"?
+
+1335
+01:34:27,522 --> 01:34:29,357
+Or do you find a rooftop somewhere?
+
+1336
+01:34:29,358 --> 01:34:31,275
+No, I don't find a rooftop somewhere, Ned.
+
+1337
+01:34:31,276 --> 01:34:33,361
+Is this really
+what you wanna be asking him right now?
+
+1338
+01:34:33,362 --> 01:34:34,946
+Yeah, dude, come on,
+you can ask me anything.
+
+1339
+01:34:34,947 --> 01:34:36,530
+You wanna know how my web shooters work?
+
+1340
+01:34:36,531 --> 01:34:38,157
+I mean, I already know
+how the web shooters work.
+
+1341
+01:34:38,158 --> 01:34:39,492
+Is that right?
+
+1342
+01:34:39,493 --> 01:34:42,662
+Well, there's obviously
+some sort of a shear-thinning fluid
+
+1343
+01:34:42,663 --> 01:34:46,248
+that is cycling within a chamber, right?
+So it can keep its liquid form.
+
+1344
+01:34:46,249 --> 01:34:48,668
+And then, when you activate it
+by pressing on the triggers,
+
+1345
+01:34:48,669 --> 01:34:50,336
+it runs through a Teflon turbine,
+
+1346
+01:34:50,337 --> 01:34:54,132
+and then it hardens
+when it interacts with the air. Right?
+
+1347
+01:34:57,177 --> 01:34:59,303
+I mean, not exactly, but...
+
+1348
+01:34:59,304 --> 01:35:01,681
+Okay, okay, well, then tell me
+what's in the web fluid.
+
+1349
+01:35:01,682 --> 01:35:04,934
+I would guess something
+like a long chain polymer.
+
+1350
+01:35:04,935 --> 01:35:06,102
+Nylon?
+
+1351
+01:35:06,103 --> 01:35:07,186
+That's pretty close.
+
+1352
+01:35:07,187 --> 01:35:10,148
+Okay, okay. What about Nomex or Kevlar?
+
+1353
+01:35:12,734 --> 01:35:14,652
+"All right, then. Keep your secrets."
+
+1354
+01:35:14,653 --> 01:35:17,863
+"If you're referring
+to the incident with the dragon,
+
+1355
+01:35:17,864 --> 01:35:19,198
+"I was barely involved."
+
+1356
+01:35:19,199 --> 01:35:22,911
+"All I did was simply give your uncle
+a little nudge out the door."
+
+1357
+01:35:25,455 --> 01:35:26,540
+Solid reference.
+
+1358
+01:35:28,250 --> 01:35:29,542
+Banh mi time.
+
+1359
+01:35:29,543 --> 01:35:31,002
+You ordered banh mis?
+
+1360
+01:35:31,003 --> 01:35:32,295
+I ordered five banh mis.
+
+1361
+01:35:32,296 --> 01:35:34,214
+We have Spider-Man in the apartment.
+He's gonna get fed.
+
+1362
+01:35:37,884 --> 01:35:40,970
+Sorry about him. He's just, like,
+very excited that you're here.
+
+1363
+01:35:40,971 --> 01:35:43,307
+You kidding? This is, like,
+the most fun I've had in years.
+
+1364
+01:35:43,974 --> 01:35:45,475
+I really missed you guys.
+
+1365
+01:35:47,394 --> 01:35:49,478
+You guys really do look like best friends.
+
+1366
+01:35:49,479 --> 01:35:50,480
+What do you mean?
+
+1367
+01:36:00,032 --> 01:36:01,033
+You should tell him.
+
+1368
+01:36:01,783 --> 01:36:02,784
+He can handle it.
+
+1369
+01:36:04,661 --> 01:36:05,662
+Yeah, I know.
+
+1370
+01:36:12,794 --> 01:36:16,131
+When she was inhabiting you
+on the rooftop,
+
+1371
+01:36:17,549 --> 01:36:18,759
+she kissed me...
+
+1372
+01:36:19,801 --> 01:36:21,510
+and I kissed her back,
+
+1373
+01:36:21,511 --> 01:36:23,972
+because I... I thought it was you,
+but I didn't know.
+
+1374
+01:36:24,723 --> 01:36:26,516
+And I'm... I'm really sorry.
+
+1375
+01:36:27,893 --> 01:36:29,186
+I just thought you should know.
+
+1376
+01:36:31,605 --> 01:36:32,606
+Thanks for telling me.
+
+1377
+01:36:36,234 --> 01:36:38,987
+I mean, it's not like
+I remember anything anyway, so...
+
+1378
+01:36:40,405 --> 01:36:41,572
+Really?
+
+1379
+01:36:41,573 --> 01:36:44,492
+Yeah. It was weird, it was like,
+one second I was sitting at my desk,
+
+1380
+01:36:44,493 --> 01:36:46,244
+and the next second
+I was lying on the street.
+
+1381
+01:36:47,162 --> 01:36:48,705
+I don't know,
+like a light switch went off.
+
+1382
+01:36:51,249 --> 01:36:52,416
+What?
+
+1383
+01:36:52,417 --> 01:36:53,794
+So you don't remember anything?
+
+1384
+01:36:55,837 --> 01:36:56,921
+No. Why?
+
+1385
+01:36:56,922 --> 01:36:59,966
+Metzger said he remembered
+thinking about someone named Sara,
+
+1386
+01:36:59,967 --> 01:37:03,220
+but what you're saying is that
+you don't remember anything at all?
+
+1387
+01:37:05,347 --> 01:37:07,807
+I mean, yeah, it was instantaneous.
+
+1388
+01:37:07,808 --> 01:37:08,976
+That's what made it so scary.
+
+1389
+01:37:11,019 --> 01:37:12,270
+He lied to me.
+
+1390
+01:37:15,315 --> 01:37:16,941
+<i>I heard you caught leshy.</i>
+
+1391
+01:37:16,942 --> 01:37:18,317
+Yeah. Her name's Jean Grey.
+
+1392
+01:37:18,318 --> 01:37:20,778
+I need some help
+determining the size of some potatoes.
+
+1393
+01:37:20,779 --> 01:37:22,655
+- Potatoes?
+- I think that's Black Widow.
+
+1394
+01:37:22,656 --> 01:37:24,699
+I think Metzger lied to me about a name.
+
+1395
+01:37:24,700 --> 01:37:28,245
+<i>Can you see if there's a connection
+between Jean and someone named Sara?</i>
+
+1396
+01:37:29,371 --> 01:37:31,039
+These potatoes sound meager.
+
+1397
+01:37:32,708 --> 01:37:34,459
+Wow. That really is your office.
+
+1398
+01:37:35,168 --> 01:37:36,335
+Well, well, well.
+
+1399
+01:37:36,336 --> 01:37:38,796
+Internet, government records,
+
+1400
+01:37:38,797 --> 01:37:43,592
+and a lot of data related to Jean Grey
+has been scrubbed by Damage Control.
+
+1401
+01:37:43,593 --> 01:37:44,594
+<i>Data about what?</i>
+
+1402
+01:37:45,554 --> 01:37:46,555
+Her sister.
+
+1403
+01:37:47,264 --> 01:37:48,682
+Wait, Jean has a sister?
+
+1404
+01:37:51,268 --> 01:37:52,351
+Sara Grey.
+
+1405
+01:37:52,352 --> 01:37:54,145
+<i>Also a telepath.</i>
+
+1406
+01:37:54,146 --> 01:37:58,024
+<i>Damage Control took her into custody
+for study and observation.</i>
+
+1407
+01:37:58,025 --> 01:38:00,359
+<i>Wow. I mean, you can probably guess
+what they mean by that.</i>
+
+1408
+01:38:00,360 --> 01:38:02,737
+Experimentation
+and other human rights violations.
+
+1409
+01:38:02,738 --> 01:38:04,614
+Yes, exactly. Wait, who are you?
+
+1410
+01:38:04,615 --> 01:38:06,449
+<i>- Hi. Ned Leeds. Big fan.
+- I'm...</i>
+
+1411
+01:38:06,450 --> 01:38:07,825
+Hi.
+
+1412
+01:38:07,826 --> 01:38:08,910
+<i>I'm sorry.</i>
+
+1413
+01:38:09,369 --> 01:38:12,372
+I'm just so happy
+that the sad man has friends.
+
+1414
+01:38:14,541 --> 01:38:16,752
+Thanks. I owe you one.
+
+1415
+01:38:17,878 --> 01:38:19,253
+<i>Good luck, Spider-Man.</i>
+
+1416
+01:38:19,254 --> 01:38:20,379
+Bye.
+
+1417
+01:38:20,380 --> 01:38:21,922
+She was just looking for her sister
+
+1418
+01:38:21,923 --> 01:38:24,133
+and I handed her
+to the people that took her.
+
+1419
+01:38:24,134 --> 01:38:25,801
+- I gotta go.
+- Hey, Peter...
+
+1420
+01:38:25,802 --> 01:38:26,803
+Yeah?
+
+1421
+01:38:27,846 --> 01:38:28,930
+Just be careful, all right?
+
+1422
+01:38:30,807 --> 01:38:31,808
+Yeah, I will.
+
+1423
+01:38:36,647 --> 01:38:38,315
+Spider-Man's name is Peter?
+
+1424
+01:38:51,995 --> 01:38:54,289
+Jean, who do you want to be?
+
+1425
+01:38:56,833 --> 01:38:58,210
+Her. Pink jacket.
+
+1426
+01:38:59,836 --> 01:39:00,837
+She's too far.
+
+1427
+01:39:01,880 --> 01:39:02,964
+You're gonna have to hop.
+
+1428
+01:39:02,965 --> 01:39:04,423
+Hop?
+
+1429
+01:39:04,424 --> 01:39:06,468
+First, pick someone close.
+
+1430
+01:39:07,135 --> 01:39:08,136
+And then...
+
+1431
+01:39:22,317 --> 01:39:23,318
+Each hop has a limit.
+
+1432
+01:39:23,986 --> 01:39:27,197
+But you can string them together
+and go as far as you want.
+
+1433
+01:39:27,864 --> 01:39:29,116
+And when you let go...
+
+1434
+01:39:30,409 --> 01:39:31,702
+You're right back where you started.
+
+1435
+01:39:32,911 --> 01:39:35,163
+Could you do that
+to everyone in this park at once?
+
+1436
+01:39:36,123 --> 01:39:37,457
+Well, yeah, maybe one day.
+
+1437
+01:39:38,166 --> 01:39:39,376
+If you get really good.
+
+1438
+01:39:53,015 --> 01:39:54,016
+How could she just...
+
+1439
+01:39:55,267 --> 01:39:56,310
+send us away?
+
+1440
+01:39:57,936 --> 01:39:59,271
+She wasn't really a mom.
+
+1441
+01:40:01,481 --> 01:40:02,648
+Not like that, anyway.
+
+1442
+01:40:02,649 --> 01:40:04,734
+She was, before we changed.
+
+1443
+01:40:04,735 --> 01:40:06,652
+Yeah, well, if that's all it takes
+for you to stop being a mom,
+
+1444
+01:40:06,653 --> 01:40:07,654
+then you're not a mom.
+
+1445
+01:40:08,572 --> 01:40:10,699
+What would you do
+if you had daughters like us?
+
+1446
+01:40:11,199 --> 01:40:12,284
+I'd love them.
+
+1447
+01:40:15,871 --> 01:40:17,581
+- Especially the redhead one.
+- Shut up.
+
+1448
+01:40:20,375 --> 01:40:21,752
+We have each other.
+
+1449
+01:40:25,547 --> 01:40:27,174
+And we have ice cream.
+
+1450
+01:40:29,051 --> 01:40:30,427
+- One mint chip, one chocolate?
+- Yeah.
+
+1451
+01:40:36,850 --> 01:40:37,851
+Okay.
+
+1452
+01:40:39,394 --> 01:40:40,979
+Now I know how you're playing.
+
+1453
+01:40:58,413 --> 01:40:59,497
+- Get down!
+- Get down!
+
+1454
+01:40:59,498 --> 01:41:01,165
+- Get down! Get down!
+- Get down! Get down!
+
+1455
+01:41:01,166 --> 01:41:03,001
+- Get down on the ground now!
+- Get down! Get down!
+
+1456
+01:41:05,420 --> 01:41:06,421
+Sara!
+
+1457
+01:41:12,010 --> 01:41:13,428
+<i>I'm sorry, Jean.</i>
+
+1458
+01:41:14,262 --> 01:41:15,722
+<i>I have to keep you safe.</i>
+
+1459
+01:41:58,265 --> 01:42:01,393
+Subject is awake. Heart rate is 94 bpm.
+
+1460
+01:42:04,146 --> 01:42:07,733
+Jean, that's not gonna work anymore,
+thanks to Spider-Man.
+
+1461
+01:42:11,194 --> 01:42:12,195
+Jean?
+
+1462
+01:42:21,747 --> 01:42:23,080
+I need you to breathe.
+
+1463
+01:42:23,081 --> 01:42:24,750
+I need you to look at me and breathe.
+
+1464
+01:42:25,292 --> 01:42:26,584
+Okay?
+
+1465
+01:42:26,585 --> 01:42:28,086
+You're safe. Breathe.
+
+1466
+01:42:30,672 --> 01:42:31,840
+Where is she?
+
+1467
+01:42:33,258 --> 01:42:35,259
+Like your sister,
+you've been blessed with a power
+
+1468
+01:42:35,260 --> 01:42:38,055
+that has the potential
+to do tremendous good in the world,
+
+1469
+01:42:38,805 --> 01:42:40,140
+or tremendous damage.
+
+1470
+01:42:41,099 --> 01:42:45,103
+A power like yours in the hands of a child
+is an impossible burden.
+
+1471
+01:42:45,812 --> 01:42:46,897
+But imagine...
+
+1472
+01:42:48,023 --> 01:42:50,524
+if that power was placed
+in the hands of people
+
+1473
+01:42:50,525 --> 01:42:51,902
+who actually know what to do with it.
+
+1474
+01:43:00,911 --> 01:43:02,663
+Where is my sister?
+
+1475
+01:43:05,540 --> 01:43:07,542
+You're gonna change the world, Jean.
+
+1476
+01:43:07,918 --> 01:43:08,919
+Hey!
+
+1477
+01:43:09,670 --> 01:43:10,671
+Hey!
+
+1478
+01:43:32,526 --> 01:43:33,776
+Frank.
+
+1479
+01:43:33,777 --> 01:43:35,778
+I know where you are, what you're doing.
+
+1480
+01:43:35,779 --> 01:43:36,905
+<i>Oh, yeah? And how's that?</i>
+
+1481
+01:43:37,531 --> 01:43:39,324
+I got eyes everywhere, kid.
+
+1482
+01:43:40,409 --> 01:43:43,119
+Look, Frank.
+Damage Control kidnapped Jean's sister.
+
+1483
+01:43:43,120 --> 01:43:45,663
+Jean was just trying to find her.
+We were wrong about everything.
+
+1484
+01:43:45,664 --> 01:43:47,082
+Sentimental horseshit.
+
+1485
+01:43:47,958 --> 01:43:50,126
+You've seen what she can do
+and what she's capable of.
+
+1486
+01:43:50,127 --> 01:43:52,671
+What, you're gonna let her loose?
+Is that what you're gonna do?
+
+1487
+01:43:53,880 --> 01:43:57,384
+I'll tell you right now, you do that,
+I handle it my way.
+
+1488
+01:43:57,884 --> 01:43:59,428
+<i>Frank, please, can you just...</i>
+
+1489
+01:43:59,720 --> 01:44:00,804
+Frank!
+
+1490
+01:44:13,400 --> 01:44:14,567
+Distance check?
+
+1491
+01:44:14,568 --> 01:44:15,901
+Forty-foot clearance.
+
+1492
+01:44:15,902 --> 01:44:17,403
+Locking down the room.
+
+1493
+01:44:17,404 --> 01:44:18,405
+Locking down.
+
+1494
+01:44:23,660 --> 01:44:24,661
+<i>Disengage inhibitor.</i>
+
+1495
+01:44:29,207 --> 01:44:31,376
+<i>Jean, your powers
+are now fully operational.</i>
+
+1496
+01:44:40,927 --> 01:44:43,764
+<i>As you can tell,
+we are beyond your jump radius.</i>
+
+1497
+01:44:45,182 --> 01:44:46,850
+Tell me what V-Max is.
+
+1498
+01:44:47,643 --> 01:44:49,686
+You're the second person
+to ask me about that. I...
+
+1499
+01:44:50,395 --> 01:44:51,897
+I have no idea what that means.
+
+1500
+01:44:52,022 --> 01:44:53,565
+<i>She sent me a message.</i>
+
+1501
+01:44:54,232 --> 01:44:56,026
+She was trying to help me find her.
+
+1502
+01:44:57,027 --> 01:45:00,489
+She communicated with you telepathically
+across all that distance?
+
+1503
+01:45:00,906 --> 01:45:03,951
+We did register a huge spike
+in that session.
+
+1504
+01:45:05,786 --> 01:45:06,953
+Fascinating.
+
+1505
+01:45:06,954 --> 01:45:09,164
+What does it mean, asshole?
+
+1506
+01:45:10,874 --> 01:45:11,917
+I don't know.
+
+1507
+01:45:12,876 --> 01:45:14,211
+Let's begin.
+
+1508
+01:45:22,386 --> 01:45:24,762
+<i>Our work with Sara centered on two areas,</i>
+
+1509
+01:45:24,763 --> 01:45:27,139
+identifying the source of her power
+
+1510
+01:45:27,140 --> 01:45:29,476
+and identifying a path towards copying it.
+
+1511
+01:45:30,519 --> 01:45:34,146
+If we could find a way to record
+a telepathic brain during a jump,
+
+1512
+01:45:34,147 --> 01:45:37,275
+then perhaps we could replicate
+those pathways
+
+1513
+01:45:37,276 --> 01:45:39,027
+in a mind of our choosing.
+
+1514
+01:45:40,445 --> 01:45:43,573
+<i>This instrument is your sister's legacy.</i>
+
+1515
+01:45:44,700 --> 01:45:47,577
+<i>We built this together
+over many months of trial and error.</i>
+
+1516
+01:45:48,829 --> 01:45:50,956
+I hope you and I can honor her sacrifice.
+
+1517
+01:45:54,126 --> 01:45:55,460
+What are you talking about?
+
+1518
+01:45:56,962 --> 01:45:58,297
+Trigger the first jump.
+
+1519
+01:46:03,010 --> 01:46:05,594
+Tell me what V-Max is.
+
+1520
+01:46:05,595 --> 01:46:07,180
+I know that's where you're hiding her.
+
+1521
+01:46:22,446 --> 01:46:23,447
+She's jumping.
+
+1522
+01:46:25,741 --> 01:46:26,742
+Copy.
+
+1523
+01:46:27,284 --> 01:46:30,369
+We're in full lockdown.
+Process has commenced.
+
+1524
+01:46:30,370 --> 01:46:31,371
+What process?
+
+1525
+01:46:32,831 --> 01:46:35,167
+Hey, whoa,
+that's a pretty serious look there, dude.
+
+1526
+01:46:36,043 --> 01:46:37,668
+Hey, hey, whoa! What the hell, man?
+
+1527
+01:46:37,669 --> 01:46:39,755
+Come on. I'm a friend of Damage Control.
+What are you doin'?
+
+1528
+01:46:44,301 --> 01:46:45,844
+It's gonna be like that. You wanna go.
+
+1529
+01:46:45,969 --> 01:46:46,970
+All right.
+
+1530
+01:46:47,471 --> 01:46:48,972
+All right, well, just give me a sec.
+
+1531
+01:46:49,514 --> 01:46:50,557
+Give me a sec.
+
+1532
+01:46:51,391 --> 01:46:52,934
+I'm not in high school anymore.
+
+1533
+01:46:55,103 --> 01:46:56,687
+Do you stretch? You a big stretcher?
+
+1534
+01:46:56,688 --> 01:46:58,065
+I mean, you should do
+in your line of work.
+
+1535
+01:46:58,732 --> 01:47:01,860
+What about you? You guys stretch?
+It's so good for you.
+
+1536
+01:47:03,487 --> 01:47:04,488
+You ready?
+
+1537
+01:47:14,122 --> 01:47:15,123
+Watch your head!
+
+1538
+01:47:35,018 --> 01:47:36,728
+Where is Jean Grey?
+
+1539
+01:47:37,813 --> 01:47:39,647
+That's jump 26.
+
+1540
+01:47:39,648 --> 01:47:40,982
+Recordings look good.
+
+1541
+01:47:40,983 --> 01:47:42,150
+Excuse me, sir.
+
+1542
+01:47:43,026 --> 01:47:44,111
+We have an intruder.
+
+1543
+01:47:49,199 --> 01:47:50,491
+You were right.
+
+1544
+01:47:50,492 --> 01:47:52,536
+She's much stronger than her sister.
+
+1545
+01:47:53,537 --> 01:47:54,788
+Increase the frequency.
+
+1546
+01:47:56,290 --> 01:47:57,624
+You're doing very well, Jean.
+
+1547
+01:48:45,589 --> 01:48:46,923
+<i>Jean?</i>
+
+1548
+01:48:51,345 --> 01:48:52,512
+Jean, can you hear me?
+
+1549
+01:48:58,977 --> 01:48:59,978
+Jean?
+
+1550
+01:49:04,566 --> 01:49:05,776
+You're a murderer.
+
+1551
+01:49:08,111 --> 01:49:11,280
+Her frequencies are evolving.
+
+1552
+01:49:11,281 --> 01:49:12,449
+This doesn't make sense.
+
+1553
+01:49:13,492 --> 01:49:17,745
+The last thing
+my sister saw was this room.
+
+1554
+01:49:17,746 --> 01:49:20,456
+Her brainwaves are somehow
+affecting the objects around her.
+
+1555
+01:49:20,457 --> 01:49:21,540
+Shut it down.
+
+1556
+01:49:21,541 --> 01:49:22,833
+I'm trying, sir.
+
+1557
+01:49:22,834 --> 01:49:23,835
+What do you mean you're trying?
+
+1558
+01:49:24,336 --> 01:49:29,507
+The last thing my sister saw
+was this goddamn room!
+
+1559
+01:49:29,508 --> 01:49:31,385
+- Shut it down!
+- I can't, sir.
+
+1560
+01:49:32,469 --> 01:49:33,470
+Move.
+
+1561
+01:49:35,931 --> 01:49:37,849
+I can't let you do that, Bill.
+
+1562
+01:49:41,561 --> 01:49:45,607
+The only hands
+that will wield this power...
+
+1563
+01:49:46,692 --> 01:49:48,151
+are mine.
+
+1564
+01:50:13,635 --> 01:50:14,636
+What is happening?
+
+1565
+01:50:16,013 --> 01:50:17,431
+Get inside.
+
+1566
+01:50:24,354 --> 01:50:25,355
+Wait for me!
+
+1567
+01:52:00,826 --> 01:52:02,411
+- What...
+- What do you want?
+
+1568
+01:52:06,123 --> 01:52:09,084
+Jean, I'm here to help you.
+
+1569
+01:52:10,419 --> 01:52:11,795
+You put me here.
+
+1570
+01:52:12,462 --> 01:52:16,466
+I know, and I'm sorry about Sara,
+and I'm sorry that I got it so wrong.
+
+1571
+01:52:18,719 --> 01:52:19,802
+If you came here
+
+1572
+01:52:19,803 --> 01:52:23,056
+to save a helpless girl
+from Damage Control, you're too late.
+
+1573
+01:52:24,141 --> 01:52:26,017
+They're the ones who need saving.
+
+1574
+01:52:26,018 --> 01:52:27,394
+And now...
+
+1575
+01:52:27,978 --> 01:52:28,979
+so do you.
+
+1576
+01:52:31,440 --> 01:52:32,441
+Here we go.
+
+1577
+01:52:46,955 --> 01:52:48,415
+God, that's cool.
+
+1578
+01:53:09,478 --> 01:53:11,480
+Jean! Jean, please!
+
+1579
+01:53:25,827 --> 01:53:27,537
+Come on! Come on! Come on!
+
+1580
+01:53:48,225 --> 01:53:49,309
+What the...
+
+1581
+01:53:51,186 --> 01:53:52,269
+Isn't it funny
+
+1582
+01:53:52,270 --> 01:53:55,815
+how your friends from Damage Control
+developed a special weapon
+
+1583
+01:53:55,816 --> 01:53:57,067
+just for you?
+
+1584
+01:53:58,360 --> 01:54:01,112
+They've got a whole task force ready.
+
+1585
+01:54:01,113 --> 01:54:02,948
+Just in case you ever get out of line.
+
+1586
+01:54:07,536 --> 01:54:08,912
+People are monsters.
+
+1587
+01:54:13,875 --> 01:54:17,004
+You shouldn't trust them
+any more than they trust you.
+
+1588
+01:54:30,684 --> 01:54:31,934
+I'm a little busy, Frank.
+
+1589
+01:54:31,935 --> 01:54:33,269
+We got a problem, kid.
+
+1590
+01:54:33,270 --> 01:54:36,023
+<i>She got ahold of everyone
+within a kilometer of the island.</i>
+
+1591
+01:54:36,607 --> 01:54:37,608
+Wait, what?
+
+1592
+01:54:43,739 --> 01:54:46,032
+Hey, look, if you're gonna do something,
+you better do it now.
+
+1593
+01:54:46,033 --> 01:54:47,117
+I'm trying!
+
+1594
+01:55:12,726 --> 01:55:14,226
+Kid?
+
+1595
+01:55:14,227 --> 01:55:16,021
+Shit! Goddamn it.
+
+1596
+01:55:49,846 --> 01:55:51,138
+My sister died
+
+1597
+01:55:51,139 --> 01:55:52,391
+in this room,
+
+1598
+01:55:53,767 --> 01:55:55,394
+surrounded by these men.
+
+1599
+01:55:56,728 --> 01:55:57,979
+And her only crime
+
+1600
+01:55:57,980 --> 01:55:59,564
+was that she was special.
+
+1601
+01:56:01,400 --> 01:56:02,567
+Just like you.
+
+1602
+01:56:04,027 --> 01:56:05,237
+Just like me.
+
+1603
+01:56:07,906 --> 01:56:10,909
+People like us
+don't get to live a normal life.
+
+1604
+01:56:13,912 --> 01:56:17,082
+We don't get to have friends or a family.
+
+1605
+01:56:19,084 --> 01:56:20,460
+Those people are gone.
+
+1606
+01:56:23,297 --> 01:56:24,965
+That life is over.
+
+1607
+01:56:51,158 --> 01:56:53,577
+So why don't you just
+be honest with yourself?
+
+1608
+01:56:56,538 --> 01:56:57,873
+Are you Peter Parker?
+
+1609
+01:57:00,042 --> 01:57:01,418
+Or are you Spider-Man?
+
+1610
+01:57:34,409 --> 01:57:35,410
+I'm both.
+
+1611
+01:59:20,223 --> 01:59:22,267
+Jean, please.
+
+1612
+01:59:23,560 --> 01:59:24,978
+This won't make it right.
+
+1613
+01:59:27,147 --> 01:59:29,106
+Come on. You're not a killer, Jean.
+
+1614
+01:59:29,107 --> 01:59:30,400
+You have no idea what I am.
+
+1615
+01:59:32,152 --> 01:59:33,779
+I know that you loved your sister.
+
+1616
+01:59:37,115 --> 01:59:40,159
+And I know that losing her
+felt like you'd lost everything.
+
+1617
+01:59:40,160 --> 01:59:43,121
+If you come any closer, he dies!
+They all do!
+
+1618
+02:00:01,431 --> 02:00:03,015
+You know this won't bring her back,
+right, Jean?
+
+1619
+02:00:03,016 --> 02:00:04,017
+You...
+
+1620
+02:00:20,659 --> 02:00:22,786
+Don't be so sure
+I can't get into your mind.
+
+1621
+02:00:24,955 --> 02:00:27,207
+I'm a lot more powerful
+since I last tried.
+
+1622
+02:00:37,342 --> 02:00:38,593
+Go ahead.
+
+1623
+02:00:47,644 --> 02:00:48,645
+Hey.
+
+1624
+02:00:50,022 --> 02:00:51,023
+Hey.
+
+1625
+02:00:53,358 --> 02:00:56,987
+You think you don't have to listen to me
+now that you've got powers?
+
+1626
+02:01:01,700 --> 02:01:07,330
+You know, this... this whole thing
+can get really scary.
+
+1627
+02:01:07,331 --> 02:01:08,332
+You know that?
+
+1628
+02:01:26,975 --> 02:01:28,560
+It's already pretty scary.
+
+1629
+02:01:29,978 --> 02:01:31,479
+Yeah.
+
+1630
+02:01:31,480 --> 02:01:34,523
+And things can change, like, very quickly,
+
+1631
+02:01:34,524 --> 02:01:37,610
+in ways that we can't
+even imagine right now.
+
+1632
+02:01:37,611 --> 02:01:38,778
+I know.
+
+1633
+02:01:38,779 --> 02:01:39,780
+No.
+
+1634
+02:01:42,532 --> 02:01:44,242
+I don't think you do know.
+
+1635
+02:01:46,078 --> 02:01:47,663
+What do you mean?
+
+1636
+02:01:50,791 --> 02:01:52,501
+You're a really special person.
+
+1637
+02:01:54,127 --> 02:01:57,005
+And I would hope that that will always
+make you feel really great about yourself,
+
+1638
+02:01:58,131 --> 02:02:01,050
+but I know sometimes it doesn't.
+
+1639
+02:02:01,051 --> 02:02:03,470
+Sometimes, you'll be really lonely.
+
+1640
+02:02:07,099 --> 02:02:08,308
+And sometimes,
+
+1641
+02:02:09,643 --> 02:02:11,144
+because you're special,
+
+1642
+02:02:13,563 --> 02:02:17,234
+people can do dark,
+monstrous things to you.
+
+1643
+02:02:19,486 --> 02:02:20,570
+But...
+
+1644
+02:02:22,114 --> 02:02:23,532
+this is what I want you to know.
+
+1645
+02:02:25,534 --> 02:02:26,785
+You're beautiful,
+
+1646
+02:02:27,452 --> 02:02:28,995
+and the people who love you,
+
+1647
+02:02:28,996 --> 02:02:32,833
+we love you not because you're special,
+we love you because you're you.
+
+1648
+02:02:34,960 --> 02:02:36,420
+I want you to remember that.
+
+1649
+02:02:38,672 --> 02:02:40,674
+Even when it feels like
+you're totally alone.
+
+1650
+02:02:43,677 --> 02:02:45,595
+That's your deepest responsibility.
+
+1651
+02:02:48,890 --> 02:02:52,144
+Never forget that,
+no matter how powerful you become.
+
+1652
+02:03:08,368 --> 02:03:09,453
+Hey.
+
+1653
+02:03:25,177 --> 02:03:26,720
+I'm sorry about your sister.
+
+1654
+02:03:32,017 --> 02:03:33,810
+I'm sorry about your aunt.
+
+1655
+02:03:37,272 --> 02:03:38,523
+Yeah, you would've loved her.
+
+1656
+02:03:42,361 --> 02:03:44,279
+Just because we've lost someone...
+
+1657
+02:03:47,449 --> 02:03:49,451
+It doesn't mean we have to do this alone.
+
+1658
+02:03:51,495 --> 02:03:54,497
+I mean, we can't.
+
+1659
+02:03:54,498 --> 02:03:56,124
+Trust me, I've been trying.
+
+1660
+02:03:59,378 --> 02:04:00,587
+It doesn't work.
+
+1661
+02:04:05,425 --> 02:04:06,635
+Even if that's true...
+
+1662
+02:04:11,014 --> 02:04:12,182
+I have no one.
+
+1663
+02:04:16,895 --> 02:04:17,980
+You have me.
+
+1664
+02:05:02,608 --> 02:05:03,609
+Are you hurt?
+
+1665
+02:05:04,067 --> 02:05:05,152
+No, I'm fine.
+
+1666
+02:05:11,074 --> 02:05:12,075
+I'm okay.
+
+1667
+02:05:12,993 --> 02:05:14,535
+- Peter.
+- I'm okay, I'm okay, I'm okay.
+
+1668
+02:05:14,536 --> 02:05:15,621
+Peter. No.
+
+1669
+02:05:19,750 --> 02:05:21,751
+Peter, Peter. No, no.
+
+1670
+02:05:21,752 --> 02:05:23,545
+No, no, no, Peter. Peter.
+
+1671
+02:05:24,838 --> 02:05:27,340
+Jean, you gotta get outta here.
+They'll be looking for you.
+
+1672
+02:05:27,341 --> 02:05:29,133
+No, no, no, no, no.
+Please, just stay with me.
+
+1673
+02:05:29,134 --> 02:05:30,468
+Come on, hold on. Come on, please!
+
+1674
+02:05:30,469 --> 02:05:31,637
+Jean, you're...
+
+1675
+02:05:32,512 --> 02:05:34,014
+You're gonna be okay.
+
+1676
+02:05:35,307 --> 02:05:36,308
+Just go.
+
+1677
+02:05:38,518 --> 02:05:39,519
+Look at me.
+
+1678
+02:05:57,287 --> 02:06:02,167
+<i>Shock today, as Spider-Man arrived
+at Bellevue Hospital with a bullet wound,</i>
+
+1679
+02:06:02,668 --> 02:06:04,336
+<i>seemingly at death's door.</i>
+
+1680
+02:06:06,546 --> 02:06:09,256
+<i>The reclusive crime fighter
+is in critical condition,</i>
+
+1681
+02:06:09,257 --> 02:06:12,135
+{\an8}<i>as the city's top medical experts
+work to save him.</i>
+
+1682
+02:06:15,722 --> 02:06:18,475
+<i>Tonight, all eyes are on Spider-Man.</i>
+
+1683
+02:06:20,519 --> 02:06:22,854
+<i>The hero who saved
+New York so many times...</i>
+
+1684
+02:06:23,355 --> 02:06:25,816
+{\an8}<i>is now in the hands
+of its best and brightest.</i>
+
+1685
+02:06:28,318 --> 02:06:31,280
+<i>And the people of New York
+hold their breath.</i>
+
+1686
+02:07:38,138 --> 02:07:39,139
+Frank?
+
+1687
+02:07:42,601 --> 02:07:43,769
+Where am I?
+
+1688
+02:07:45,729 --> 02:07:48,147
+- No, no, no, no, no. Hey.
+- Where's my mask?
+
+1689
+02:07:48,148 --> 02:07:49,523
+Don't worry about that. I got you covered.
+
+1690
+02:07:49,524 --> 02:07:50,567
+Hey, you're good.
+
+1691
+02:07:51,068 --> 02:07:52,526
+Where's Jean? Is she okay?
+
+1692
+02:07:52,527 --> 02:07:54,528
+Yeah, she's okay. She's okay.
+
+1693
+02:07:54,529 --> 02:07:55,739
+Where is she?
+
+1694
+02:07:57,032 --> 02:07:58,575
+I think maybe she just left.
+
+1695
+02:07:59,868 --> 02:08:04,623
+She was using her magic voodoo shit
+to keep you alive.
+
+1696
+02:08:06,124 --> 02:08:08,251
+Yeah... she's all right.
+
+1697
+02:08:14,925 --> 02:08:15,926
+I'm sorry.
+
+1698
+02:08:20,806 --> 02:08:22,348
+- Frank.
+- Just... Just... I'm...
+
+1699
+02:08:22,349 --> 02:08:24,100
+- Frank, it's okay.
+- I'm really sorry for what I did.
+
+1700
+02:08:24,101 --> 02:08:25,977
+- No, Frank, it's okay.
+- And it's... No, it's a lot of things,
+
+1701
+02:08:25,978 --> 02:08:27,813
+but it sure as shit ain't okay, all right?
+
+1702
+02:08:31,483 --> 02:08:32,484
+I've seen...
+
+1703
+02:08:34,319 --> 02:08:37,906
+I've seen real bravery, kid, in my day.
+
+1704
+02:08:39,658 --> 02:08:40,659
+But that...
+
+1705
+02:08:42,119 --> 02:08:43,537
+that was something else.
+
+1706
+02:08:46,957 --> 02:08:48,374
+You crying, Frank?
+
+1707
+02:08:48,375 --> 02:08:49,876
+No. I ain't...
+
+1708
+02:08:56,633 --> 02:08:58,552
+You know, you look the exact way
+I thought you would.
+
+1709
+02:08:59,678 --> 02:09:00,679
+You know.
+
+1710
+02:09:01,138 --> 02:09:02,306
+A nice kid.
+
+1711
+02:09:04,808 --> 02:09:06,143
+Never had a friend like that.
+
+1712
+02:09:07,978 --> 02:09:09,521
+Are we friends now?
+
+1713
+02:09:16,486 --> 02:09:18,154
+I can't believe I just saw you cry.
+
+1714
+02:09:18,155 --> 02:09:20,197
+I didn't cry. What are you talking about?
+
+1715
+02:09:20,198 --> 02:09:21,658
+Bullshit.
+
+1716
+02:09:23,660 --> 02:09:25,328
+Yeah, this.
+
+1717
+02:09:25,329 --> 02:09:27,038
+They've been doing it all night.
+
+1718
+02:09:27,039 --> 02:09:29,583
+They've been here since you walked in.
+Just take a look.
+
+1719
+02:09:40,344 --> 02:09:43,387
+Yo, kid, when you came in,
+they had to cut through the suit,
+
+1720
+02:09:43,388 --> 02:09:45,474
+but when you're ready to split...
+
+1721
+02:09:46,725 --> 02:09:47,809
+I got a plan.
+
+1722
+02:10:09,748 --> 02:10:11,667
+Hey, it's Spider-Man!
+
+1723
+02:10:14,252 --> 02:10:15,671
+Spider-Man!
+
+1724
+02:10:19,466 --> 02:10:20,550
+Hey!
+
+1725
+02:10:23,178 --> 02:10:24,596
+Yeah, Spider-Man!
+
+1726
+02:10:26,014 --> 02:10:27,766
+You're the best, Spider-Man!
+
+1727
+02:10:28,850 --> 02:10:30,143
+Spider-Man!
+
+1728
+02:10:31,853 --> 02:10:33,021
+Over here!
+
+1729
+02:10:34,022 --> 02:10:35,314
+Thank you!
+
+1730
+02:10:35,315 --> 02:10:36,608
+Spider-Man!
+
+1731
+02:11:09,391 --> 02:11:13,561
+Spider-Man! Spider-Man! Spider-Man!
+
+1732
+02:11:13,562 --> 02:11:18,650
+Spider-Man! Spider-Man!
+Spider-Man! Spider-Man!
+
+1733
+02:11:28,785 --> 02:11:36,834
+Spider-Man! Spider-Man! Spider-Man!
+
+1734
+02:11:36,835 --> 02:11:39,212
+Spider-Man! Spider-Man!
+
+1735
+02:12:42,818 --> 02:12:43,819
+I've...
+
+1736
+02:12:46,822 --> 02:12:48,782
+Been thinking a lot about what you said.
+
+1737
+02:12:51,326 --> 02:12:54,037
+And you'd be happy to know
+that I've decided I'm not...
+
+1738
+02:12:55,706 --> 02:12:57,708
+I'm not gonna do this alone anymore.
+
+1739
+02:13:07,217 --> 02:13:08,468
+I miss you, May.
+
+1740
+02:13:16,893 --> 02:13:18,978
+I mean, I've still got a little pain
+in my back,
+
+1741
+02:13:18,979 --> 02:13:22,023
+but I could probably get back out there
+if you need me for anything.
+
+1742
+02:13:22,024 --> 02:13:24,567
+<i>No. What I need you to do is rest.</i>
+
+1743
+02:13:24,568 --> 02:13:26,694
+I know, I know, but come on,
+you gotta give me something.
+
+1744
+02:13:26,695 --> 02:13:28,696
+I mean, how's the investigation going?
+
+1745
+02:13:28,697 --> 02:13:31,699
+<i>Well, Metzger's still missing,</i>
+
+1746
+02:13:31,700 --> 02:13:34,243
+but your friend, Black Widow,
+
+1747
+02:13:34,244 --> 02:13:36,954
+she's been helping us dig through
+all the records
+
+1748
+02:13:36,955 --> 02:13:39,082
+Damage Control tried to have scrubbed.
+
+1749
+02:13:39,583 --> 02:13:42,084
+<i>Had me drop by her office the other day.</i>
+
+1750
+02:13:42,085 --> 02:13:43,128
+And how was that?
+
+1751
+02:13:43,587 --> 02:13:46,089
+Well, my skin feels amazing.
+
+1752
+02:13:47,716 --> 02:13:51,010
+<i>Attention, all units. We have a confirmed
+bank robbery in progress.</i>
+
+1753
+02:13:51,011 --> 02:13:52,012
+Hey, are you getting this?
+
+1754
+02:13:53,680 --> 02:13:54,847
+Yeah, I'm on it.
+
+1755
+02:13:54,848 --> 02:13:57,266
+Hey, it's not that far from me.
+I could probably meet you down there.
+
+1756
+02:13:57,267 --> 02:13:59,686
+No. We can handle a robbery.
+
+1757
+02:14:00,646 --> 02:14:03,398
+Just try to take care of yourself.
+
+1758
+02:14:05,108 --> 02:14:06,109
+Okay.
+
+1759
+02:14:07,444 --> 02:14:08,445
+You too.
+
+1760
+02:14:09,488 --> 02:14:11,156
+Say hello to EJ and Marley for me.
+
+1761
+02:14:12,574 --> 02:14:13,575
+Okay.
+
+1762
+02:14:15,619 --> 02:14:17,037
+Spider-Man says hello.
+
+1763
+02:14:53,282 --> 02:14:54,283
+Hi.
+
+1764
+02:14:54,866 --> 02:14:55,867
+Hey.
+
+1765
+02:14:59,288 --> 02:15:01,122
+Flower guy, right, from... from the party?
+
+1766
+02:15:01,123 --> 02:15:02,124
+Yeah.
+
+1767
+02:15:02,833 --> 02:15:03,959
+I'm Peter.
+
+1768
+02:15:05,043 --> 02:15:06,420
+Okay. Hello.
+
+1769
+02:15:24,980 --> 02:15:26,064
+Peter.
+
+1770
+02:24:27,022 --> 02:24:30,108
+<i>New Spider-Man sighting. Location unknown.</i>
+
+1771
+02:24:31,193 --> 02:24:32,694
+<i>Location unknown.</i>
+
+1772
+02:24:33,987 --> 02:24:35,614
+<i>Location unknown.</i>
+
+1773
+02:24:36,657 --> 02:24:38,283
+<i>Location unknown.</i>
+
+1774
+02:24:39,409 --> 02:24:40,786
+<i>Location unknown.</i>
+
+1775
+02:24:45,290 --> 02:24:47,084
+<i>Location found.</i>
+
