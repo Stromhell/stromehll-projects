@@ -7,6 +7,6 @@ cat > page_act$n.html <<H
 <script>var module = { exports: {} }; var require = () => window.DumDown;</script>
 <script src="cast.cjs"></script><script src="acting.js"></script>
 <script>window.CAST = module.exports.C; window.PLATE_NAMES = $(ls plates | sed 's/\.[a-z]*$//' | sort -u | python3 -c "import sys,json;print(json.dumps([l.strip() for l in sys.stdin]))"); window.LEAD = 0.6; window.CARD_SET = 'SPIDEY'; window.ACT_NO = 1$n; window.PLATE_META = $(cat plate_meta.json 2>/dev/null || echo {}); window.TIMING = $(cat $VO/act$n.json);</script>
-<script src="engine.js"></script><script src="fx.js"></script><script src="cards.js"></script><script src="props.js"></script><script src="agprops.js"></script>
+<script src="engine.js"></script><script src="fx.js"></script><script src="cards.js"></script><script src="props.js"></script><script src="agprops.js"></script><script src="sbprops.js"></script>
 <script src="acts/act$n.js"></script><script src="shots.js"></script></body></html>
 H

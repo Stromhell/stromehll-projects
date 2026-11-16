@@ -45,6 +45,6 @@ window.SNAP=function(o){ // o:{pose,pose2,k,expr,talk,az,el,w,h,blink,hipY,j:{jo
  // screen anchors (px in this canvas) for props / speech
  const P=n=>{const v=new THREE.Vector3();J[n].getWorldPosition(v);v.project(cam);return [(v.x+1)/2*w,(1-v.y)/2*h]};
  const hd=new THREE.Vector3(0,0.9,0);head.localToWorld(hd);hd.project(cam);
- return {handR:P('wristR'),handL:P('wristL'),head:[(hd.x+1)/2*w,(1-hd.y)/2*h],feet:P('ankleL')};
+ return {img:cv.toDataURL('image/png'),handR:P('wristR'),handL:P('wristL'),head:[(hd.x+1)/2*w,(1-hd.y)/2*h],feet:P('ankleL')};
 };
 window.TLREADY=true;

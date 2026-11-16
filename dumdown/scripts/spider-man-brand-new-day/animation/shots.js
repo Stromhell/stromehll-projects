@@ -17,6 +17,13 @@ const glide = u => 1 - Math.pow(1 - clamp(u), 1.7);
 const op = u => .62 * glide(seg(u, 0, .42)) + .38 * io(seg(u, .48, 1));
 const hsh = n => { let x = (n * 2654435761) >>> 0; x ^= x >>> 13; x = Math.imul(x, 0x5bd1e995) >>> 0; return (x ^ (x >>> 15)) >>> 0; };
 const noise = (t, s) => Math.sin(t * .63 + s) * .6 + Math.sin(t * 1.37 + s * 2.1) * .3 + Math.sin(t * 2.9 + s * .7) * .1;
+
+// Toon Lanky 3D characters: sprites rendered per frame by tl/tl_*.html (TLSNAP, exposed by render.cjs), drawn in layer order with the kit SVG chars
+async function layer(list, pc, blur) { let buf = []; for (const e of list) { if (typeof e === 'string') { buf.push(e); continue; } if (buf.length) { await chars(buf, pc, blur); buf = []; }
+  apply(pc); ctx.save(); if (e.ghost) ctx.globalAlpha = typeof e.ghost === 'number' ? e.ghost : .62; if (blur) ctx.filter = `blur(${blur}px)`;
+  ctx.fillStyle = 'rgba(20,14,30,.28)'; ctx.beginPath(); ctx.ellipse(e.x, e.y + 4 * e.f, 150 * e.f, 34 * e.f, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.translate(e.x, e.y); ctx.scale(e.dir * e.f, e.f); ctx.drawImage(e.im, -300, -930); ctx.restore(); ctx.filter = 'none'; }
+  if (buf.length) await chars(buf, pc, blur); }
 function pop(text, lt, a, dur = 2.6, o = {}) { if (lt < a || lt > a + dur) return; const k = outBack(seg(lt, a, a + .35)), ko = io(seg(lt, a + dur - .3, a + dur)); screen(); ctx.save();
   const x = o.x ?? W - 470, y = o.y ?? BAR + 120; ctx.translate(x, y); ctx.rotate(-.05 + Math.sin(lt * 3) * .015); ctx.scale(k * (1 - ko), k * (1 - ko)); ctx.font = '800 40px Inter';
   const lines = []; let line = ''; for (const w of text.split(' ')) { const t = line ? line + ' ' + w : w; if (ctx.measureText(t).width > 640 && line) { lines.push(line); line = w; } else line = t; } lines.push(line);
@@ -26,7 +33,7 @@ function bigText(text, lt, a, b, col = '#f4ecd8', bx = null, by = null) { const 
 window.LK = { pop, bigText };
 
 // held-prop table: palm anchor offset (prop units), real-world scale per character scale unit, grip hand
-const HOLD = { wine: { oy: 14, k: .62, grip: 'grab' }, phone: { oy: 8, k: .42, grip: 'grab' }, libcard: { oy: 30, k: .34, grip: 'grab', rot: -.1 }, broom: { oy: 0, k: .9, grip: 'fist' }, tarot: { oy: 20, k: .4, grip: 'grab' },
+const HOLD = { coffee: { oy: 30, k: .55, grip: 'grab' }, letter: { oy: 40, k: .5, grip: 'grab' }, inhibitor: { oy: 0, k: .7, grip: 'grab' }, gunBig: { oy: 0, k: .8, grip: 'fist' }, flowers: { oy: 40, k: .55, grip: 'fist' }, wine: { oy: 14, k: .62, grip: 'grab' }, phone: { oy: 8, k: .42, grip: 'grab' }, libcard: { oy: 30, k: .34, grip: 'grab', rot: -.1 }, broom: { oy: 0, k: .9, grip: 'fist' }, tarot: { oy: 20, k: .4, grip: 'grab' },
   antidote: { oy: 10, k: .5, grip: 'grab' }, bottle: { oy: 20, k: .6, grip: 'grab' }, flowers: { oy: 10, k: .6, grip: 'fist' }, vinyl: { oy: 0, k: .5, grip: 'grab' }, mic: { oy: 0, k: .5, grip: 'fist' } };
 const INSTR = { guitar: 1, cymbals: 1 };
 const onProp = (o, ang, g, lx, ly) => [o.x + (Math.cos(ang) * lx - Math.sin(ang) * ly) * g, o.y + (Math.sin(ang) * lx + Math.cos(ang) * ly) * g];
@@ -85,6 +92,24 @@ function build(ACT) {
       const talk = c.talk && (Array.isArray(c.talk) ? c.talk.some(([p, q]) => lt >= p && lt <= q) : true);
       let view = c.view || 'front', dir = c.dir || 1;
       if (!c.view && !moving && talker && talker !== c && !c.lockView) { const tx_ = v0(talker.x); if (Math.abs(tx_ - x) > 60) { view = 'threequarter'; dir = tx_ > x ? 1 : -1; } }
+      if (spec.tl) { const hp_ = held[ci] || [], fo = { x, y: val(c.y, cue), s: val(c.s ?? 1.4, cue) }, tl_ = lt + (c.ph || 0), st = Math.floor(tl_ * 12);
+        const tk = talk ? .15 + .85 * Math.abs(Math.sin(st * 1.7 + ci)) * (st % 7 === 3 ? .2 : 1) : 0;
+        const pn = moving ? 'walk' : (typeof c.pose === 'function' ? c.pose(lt) : c.pose) || (talk ? 'talk' : 'idle');
+        let pose = pn, pose2 = null, k = 0;
+        if (pn === 'walk') { pose = 'walkA'; pose2 = 'walkB'; k = .5 + .5 * Math.sin(st / 12 * Math.PI * 2 * 1.6); }
+        else if (pn === 'talk') { const g = Math.floor(tl_ / 2.4 + ci) % 3; pose = ['talk', 'talk2', 'idle'][g]; pose2 = ['talk2', 'idle', 'talk'][g]; k = io(seg(tl_ % 2.4, 1.9, 2.4)); }
+        const ex = (typeof c.expr === 'function' ? c.expr(lt) : c.expr) || (spec.defaultExpr || 'neutral');
+        const az = (view === 'front' ? 0 : view === 'side' ? 1.45 : view === 'back' ? Math.PI : .62) + (c.az || 0);
+        const o = { pose, pose2, k, expr: ex, talk: tk, az, el: c.el || .04, blink: (st + ci * 13) % 50 < 2, breath: Math.sin(tl_ * 2.2), t: st / 12,
+          hipY: pn === 'walk' ? Math.abs(Math.sin(st / 12 * Math.PI * 1.6)) * .12 : 0,
+          j: Object.assign({ head: [Math.sin(tl_ * .9 + ci) * 3 + (talk ? Math.sin(st * .9) * 2.5 : 0), Math.sin(tl_ * .55 + ci) * 7, Math.sin(tl_ * .7) * 2], chest: [0, Math.sin(tl_ * .6 + ci) * 3, 0] }, c.j || {}) };
+        const r = await window.TLSNAP(spec.tl, o); const im = new Image(); im.src = r.img; await im.decode();
+        const f = fo.s * 410 * (spec.scale || 1) / 890, toW = ([hx, hy]) => ({ px: fo.x + dir * (hx - 300) * f, py: fo.y + (hy - 930) * f });
+        const ent = { tl: 1, im, x: fo.x, y: fo.y, f, dir, ghost: c.ghost };
+        for (const p of hp_) { const hd = HOLD[p.k] || { oy: 0, k: .6 }, w = toW(p.side === 'L' ? r.handL : r.handR), ps = (p.s ?? 1) * hd.k * fo.s * (spec.scale || 1);
+          HP.push(() => P[p.k](Object.assign({}, p, { x: w.px + (p.dx || 0), y: w.py + (p.dy || 0) + hd.oy * ps, s: ps, rot: hd.rot ?? p.rot, k: p.kk === undefined ? 1 : val(p.kk, ue) }), lt)); }
+        CO[ci] = [spec, tl_, Object.assign({}, fo, { view, dir, _tlHead: toW(r.head), _f: f })];
+        L1.push(ent); continue; }
       const hp = held[ci] || [], ins = hp.find(p => INSTR[p.k]);
       const fo = { x, y: val(c.y, cue), s: val(c.s ?? 1.4, cue), view, dir, expr: (typeof c.expr === 'function' ? c.expr(lt) : c.expr) || (talk ? 'talk' : undefined), anim: moving ? 'walk' : c.anim || (talk ? 'talk' : null), pose: c.pose ? D.POSES[c.pose] : undefined, hold: c.hold, lean: c.lean, tilt: c.tilt, seed: c.seed, grip: {} };
       if (ins) fo.play = ins.k === 'guitar' ? 'guitar' : 'cymbals';
@@ -110,10 +135,10 @@ function build(ACT) {
       else L1.push(wrap(D.drawCharacter(spec, base)));
       if (pose._ikShort) console.warn('IKREACH', s.plate, ci, pose._ikShort | 0);
     }
-    if (L1.length) await chars(L1, pc, s.cblur || 0);
+    if (L1.length) await layer(L1, pc, s.cblur || 0);
     for (const f of HP) { apply(pc); f(); }
-    if (L2.length) await chars(L2, pc, s.cblur || 0);
-    for (const p of PR) if (vis(p) && p.onHead != null) { const k_ = CO[p.onHead]; if (!k_) continue; const o = k_[2], f = D.forehead(k_[0], { view: o.view, dir: o.dir, x: o.x, y: o.y, scale: o.s, pose: o._pose, fy: p.fy ?? 36 }); apply(pc); P[p.k](Object.assign({}, p, { x: f.x + (p.dx || 0), y: f.y + (p.dy || 0), s: (p.s ?? 1) * f.sc / 1.9, k: p.kk === undefined ? 1 : val(p.kk, ue) }), lt); }
+    if (L2.length) await layer(L2, pc, s.cblur || 0);
+    for (const p of PR) if (vis(p) && p.onHead != null) { const k_ = CO[p.onHead]; if (!k_) continue; const o = k_[2]; if (o._tlHead) { apply(pc); P[p.k](Object.assign({}, p, { x: o._tlHead.px + (p.dx || 0), y: o._tlHead.py + (p.dy || 0), s: (p.s ?? 1) * o.s / 1.9, k: p.kk === undefined ? 1 : val(p.kk, ue) }), lt); continue; } const f = D.forehead(k_[0], { view: o.view, dir: o.dir, x: o.x, y: o.y, scale: o.s, pose: o._pose, fy: p.fy ?? 36 }); apply(pc); P[p.k](Object.assign({}, p, { x: f.x + (p.dx || 0), y: f.y + (p.dy || 0), s: (p.s ?? 1) * f.sc / 1.9, k: p.kk === undefined ? 1 : val(p.kk, ue) }), lt); }
     for (const p of PR) if (vis(p) && p.on == null && p.onHead == null && p.layer === 'front') drawLoose(p);
     if (s.fg && IM[s.fg]) { apply(pc, 1, true); ctx.drawImage(IM[s.fg], 0, 0, 2560, 1440); }
     if (s.post) await s.post(lt, pc, u, d);
@@ -122,7 +147,7 @@ function build(ACT) {
     if (s.grade) grade(s.grade[0], s.grade[1], s.grade[2] || 'soft-light');
     if (m.grade) grade(m.grade[0], m.grade[1], m.grade[2] || 'soft-light');
     if (s.title) FX.title(s.title[0], s.title[1], lt, .4, Math.min(3.2, d - .6), 138 + 150);
-    for (const c of (s.cards || [])) await FX.intro(c.c ? C[c.c] : null, c.name, c.sub, lt, c.at ?? .4, Object.assign({ side: c.side || 'R', dur: c.dur || 3.6 }, c));
+    for (const c of (s.cards || [])) await FX.intro(c.c && !(C[c.c] || {}).tl ? C[c.c] : null, c.name, c.sub, lt, c.at ?? .4, Object.assign({ side: c.side || 'R', dur: c.dur || 3.6 }, c));
     for (const p of (s.pops || [])) pop(p.t, lt, p.at, p.dur || 2.6, p);
     if (s.big) bigText(s.big[0], lt, s.big[1], s.big[2], s.big[3], s.big[4], s.big[5]);
     return { fade: (s.fadeIn ? io(lt / (s.fadeIn === true ? .5 : s.fadeIn)) : 1) * (s.fadeOut ? 1 - io(seg(lt, d - .6, d)) : 1) };

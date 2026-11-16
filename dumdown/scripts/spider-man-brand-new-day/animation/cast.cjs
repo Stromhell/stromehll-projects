@@ -84,6 +84,24 @@ Object.assign(C, {
   chief: base({ name: 'Police chief', skin: '#d8a888', eyes: '#2a1a12', scale: 1.05, hair: { style: 'buzz', color: '#5a4a3a', seed: 223, volume: .4 }, acc: { moustache: '#5a4a3a' }, top: suit('#3a4a6a', '#e8e0d0', '#8a3a2a'), bottom: { color: '#2a3040' }, shoes: boot(), defaultExpr: 'nervous' }),
   mom: base({ name: 'Billy\'s mom', skin: '#f0cdb0', eyes: '#3a5a7a', scale: .95, hair: { style: 'bob', color: '#6a4a2a', seed: 225, volume: 1 }, top: jk('#8ab05a', '#f4ecd8', '#5a7a3a'), bottom: { color: '#3a3a44' }, shoes: boot('#5a3a2a'), defaultExpr: 'nervous' }),
   dad: base({ name: 'Billy\'s dad', skin: '#e8c09a', eyes: '#3a4a5a', scale: 1.02, hair: { style: 'buzz', color: '#5a4a3a', seed: 227, volume: .5 }, acc: { glasses: '#2a2a2a' }, top: tee('#6a7aa8', '#4a5a88', 'long'), bottom: { color: '#c8b48a' }, shoes: boot('#7a5a3a'), defaultExpr: 'smile' }),
+  // ---- Spider-Man: Brand New Day: Toon Lanky 3D cast (rendered by tl/tl_*.html via TLSNAP) ----
+  spidey: { tl: 'spidey', name: "Spider-guy", scale: 1, acc: {}, defaultExpr: 'neutral' },
+  peter: { tl: 'peter', name: "Peter", scale: 1, acc: {}, defaultExpr: 'neutral' },
+  ned: { tl: 'ned', name: "Ned", scale: 1, acc: {}, defaultExpr: 'neutral' },
+  frank: { tl: 'frank', name: "Frank", scale: 1.06, acc: {}, defaultExpr: 'neutral' },
+  metzger: { tl: 'metzger', name: "Director Metzger", scale: 1, acc: {}, defaultExpr: 'neutral' },
+  banner: { tl: 'banner', name: "Dr. Banner", scale: 1, acc: {}, defaultExpr: 'neutral' },
+  hulk: { tl: 'hulk', name: "Big green guy", scale: 1.75, acc: {}, defaultExpr: 'neutral' },
+  scorpion: { tl: 'scorpion', name: "Scorpion thug", scale: 1, acc: {}, defaultExpr: 'neutral' },
+  ninja: { tl: 'ninja', name: "Ninja guard", scale: 1, acc: {}, defaultExpr: 'neutral' },
+  driver: { tl: 'driver', name: "Delivery guy", scale: 1, acc: {}, defaultExpr: 'neutral' },
+  mj: { tl: 'mj', name: "MJ", scale: 1, acc: {}, defaultExpr: 'neutral' },
+  widow: { tl: 'widow', name: "The Widow", scale: 1, acc: {}, defaultExpr: 'neutral' },
+  jean: { tl: 'jean', name: "Jean", scale: 1, acc: {}, defaultExpr: 'neutral' },
+  sara: { tl: 'sara', name: "Sara", scale: 0.92, acc: {}, defaultExpr: 'neutral' },
+  dewolff: { tl: 'dewolff', name: "Detective DeWolff", scale: 1, acc: {}, defaultExpr: 'neutral' },
+  may: { tl: 'may', name: "Aunt May", scale: 1, acc: {}, defaultExpr: 'neutral' },
+
 });
 module.exports = { D, C };
 if (require.main === module) {
@@ -92,23 +110,3 @@ if (require.main === module) {
     s += `<text x="${x}" y="800" text-anchor="middle" font-family="Inter" font-weight="700" font-size="15" fill="#231A24">${C[k].name}</text>`; });
   require('fs').writeFileSync('castsheet.svg', D.svg(W, H, s));
 }
-  // ---- Spider-Man: Brand New Day parody cast (original designs, no logos) ----
-  spidey: base({ name: 'Spider-guy (suit)', skin: '#c8202c', eyes: '#f6f6f2', scale: 1.0, hair: { style: 'buzz', color: '#c8202c', seed: 301, volume: .08 }, acc: { mask: '#c8202c' }, top: { type: 'jacket', color: '#c8202c', shirt: '#c8202c', tie: null, accent: '#1f3a8a', cuff: '#c8202c', hem: -10, sleeves: 'long' }, gloves: { color: '#c8202c' }, belt: '#1f3a8a', bottom: { color: '#1f3a8a' }, shoes: boot('#c8202c'), defaultExpr: 'neutral' }),
-  peter: base({ name: 'Peter (hoodie)', skin: '#f0cdb0', eyes: '#4a3020', scale: 1.0, hair: { style: 'messy', color: '#4a2e1a', seed: 303, volume: .85 }, top: { type: 'hoodie', color: '#5a6a7a', accent: '#3a4a5a', cuff: '#3a4a5a', hood: '#4a5a6a', strings: '#f4f1ea', hem: 16 }, bottom: { color: '#2a3a5a' }, shoes: SNK('#f4f1ea', '#c8202c'), defaultExpr: 'nervous' }),
-  mj: base({ name: 'MJ', skin: '#b07a52', eyes: '#2a1a12', scale: .97, hair: { style: 'long', color: '#2a1a14', seed: 305, length: .7 }, top: jk('#7a4a2a', '#e8dcc8', '#4a2a14'), bottom: { color: '#2a2a3a' }, shoes: boot('#3a2a20'), defaultExpr: 'deadpan' }),
-  ned: base({ name: 'Ned', skin: '#d8a070', eyes: '#2a1a12', scale: 1.0, hair: { style: 'buzz', color: '#1a1210', seed: 307, volume: .6 }, acc: { stubble: '#1a1210' }, top: tee('#e8a82a', '#b07a10', 'short'), bottom: { color: '#3a4a6a' }, shoes: SNK(), defaultExpr: 'excited' }),
-  frank: base({ name: 'Frank (vigilante)', skin: '#d8a888', eyes: '#2a1a12', scale: 1.12, hair: { style: 'buzz', color: '#1a1210', seed: 309, volume: .4 }, acc: { stubble: '#2a1a12' }, top: { type: 'jacket', color: '#1a1a1e', shirt: '#2a2a2e', tie: null, accent: '#3a3a40', cuff: '#1a1a1e', hem: -10, sleeves: 'long' }, gloves: { color: '#1a1a1a' }, belt: '#3a3020', bottom: { color: '#1a1a20', kneePad: '#2a2a2e' }, shoes: boot(), defaultExpr: 'angry' }),
-  widow: base({ name: 'The Widow', skin: '#f4d8c4', eyes: '#3a6a5a', scale: .96, hair: { style: 'long', color: '#e8d08a', seed: 311, length: .55 }, top: jk('#1a1a1e', '#2a2a2e', '#3a3a40'), bottom: { color: '#1a1a20' }, shoes: boot(), defaultExpr: 'deadpan' }),
-  metzger: base({ name: 'Director Metzger', skin: '#e8c0a0', eyes: '#3a4a5a', scale: 1.02, hair: { style: 'buzz', color: '#e0b898', seed: 313, volume: .05 }, top: suit('#5a5e66', '#f4f1ea', '#2a3a5a'), bottom: { color: '#4a4e56' }, shoes: boot(), defaultExpr: 'smile' }),
-  jean: base({ name: 'Jean (telepath)', skin: '#f6dcc8', eyes: '#2a6a3a', scale: .92, hair: { style: 'long', color: '#c8401a', seed: 315, length: .8 }, top: { type: 'hoodie', color: '#2a7a4a', accent: '#1a5a34', cuff: '#1a5a34', hood: '#246e42', strings: '#f4f1ea', hem: 16 }, bottom: { color: '#2a2a3a' }, shoes: SNK('#2a2a2a', '#f4f1ea'), defaultExpr: 'smug' }),
-  jeanGlow: base({ name: 'Jean (powered)', skin: '#f6dcc8', eyes: '#ff7a3a', scale: .92, hair: { style: 'long', color: '#e8501a', seed: 315, length: .8 }, acc: { glowEyes: '#ffb04a' }, top: { type: 'hoodie', color: '#2a7a4a', accent: '#1a5a34', cuff: '#1a5a34', hood: '#246e42', strings: '#f4f1ea', hem: 16 }, bottom: { color: '#2a2a3a' }, shoes: SNK('#2a2a2a', '#f4f1ea'), defaultExpr: 'angry' }),
-  jeanKid: base({ name: 'Little Jean', skin: '#f6dcc8', eyes: '#2a6a3a', scale: .66, hair: { style: 'long', color: '#c8401a', seed: 315, length: .7 }, top: tee('#2a7a4a', '#1a5a34', 'long'), bottom: { color: '#3a4a6a' }, shoes: SNK(), defaultExpr: 'happy' }),
-  sara: base({ name: 'Sara (sister)', skin: '#f6dcc8', eyes: '#2a5a6a', scale: .8, hair: { style: 'long', color: '#b0381a', seed: 317, length: .6 }, top: jk('#e86aa0', '#ffffff', '#b04a7a'), bottom: { color: '#3a3a4a' }, shoes: SNK(), defaultExpr: 'smile' }),
-  banner: base({ name: 'Dr. Banner', skin: '#e8c4a6', eyes: '#3a3020', scale: 1.0, hair: { style: 'messy', color: '#6a6a6a', seed: 319, volume: .8 }, acc: { glasses: '#3a3a3a', stubble: '#6a6a6a' }, top: { type: 'jacket', color: '#8a6a4a', shirt: '#c8d0dc', tie: null, accent: '#6a4a2a', cuff: '#6a4a2a', hem: -10, sleeves: 'long' }, bottom: { color: '#3a3a44' }, shoes: boot('#5a3a2a'), defaultExpr: 'nervous' }),
-  hulk: base(Object.assign({ name: 'Big green guy', skin: '#5aa83a', eyes: '#2a4a1a', scale: 2.3, hair: { style: 'messy', color: '#1a2a12', seed: 321, volume: .9 }, top: { type: 'tee', color: '#5aa83a', accent: '#3a7a22', cuff: '#5aa83a', hem: 0, sleeves: 'none' }, bottom: { color: '#5a2a7a' }, shoes: boot('#5aa83a'), defaultExpr: 'angry' }, { prop: BIG })),
-  scorpion: base({ name: 'Scorpion thug', skin: '#d8b090', eyes: '#2a1a12', scale: 1.06, hair: { style: 'buzz', color: '#1a1210', seed: 323, volume: .4 }, acc: { stubble: '#1a1210' }, top: { type: 'jacket', color: '#3a7a2a', shirt: '#2a5a1a', tie: null, accent: '#a8c83a', cuff: '#a8c83a', hem: -10, sleeves: 'long' }, gloves: { color: '#a8c83a' }, belt: '#1a3a10', bottom: { color: '#2a5a1a', kneePad: '#a8c83a' }, shoes: boot('#1a3a10'), defaultExpr: 'smug' }),
-  dewolff: base({ name: 'Detective DeWolff', skin: '#a06a46', eyes: '#2a1a12', scale: .97, hair: { style: 'bob', color: '#1a1210', seed: 325, volume: .9 }, top: jk('#a08860', '#e8e0d0', '#6a5a3a'), bottom: { color: '#3a3a44' }, shoes: boot('#3a2a20'), defaultExpr: 'deadpan' }),
-  may: base({ name: 'Aunt May', skin: '#f0cdb0', eyes: '#4a3a2a', scale: .95, hair: { style: 'bob', color: '#6a4a3a', seed: 327, volume: 1 }, acc: { glasses: '#6a4a3a' }, top: jk('#c86a6a', '#f4ecd8', '#8a3a3a'), bottom: { color: '#4a3a4a' }, shoes: boot('#5a3a2a'), defaultExpr: 'smile' }),
-  ninja: base({ name: 'Ninja guard', skin: '#1a1a1e', eyes: '#f6f6f2', scale: 1.0, hair: { style: 'buzz', color: '#1a1a1e', seed: 329, volume: .1 }, acc: { mask: '#2a0a0e' }, top: { type: 'jacket', color: '#5a0a12', shirt: '#3a0608', tie: null, accent: '#1a1a1e', cuff: '#1a1a1e', hem: 20, sleeves: 'long' }, belt: '#1a1a1e', bottom: { color: '#3a0608' }, shoes: boot(), defaultExpr: 'angry' }),
-  driver: base({ name: 'Delivery guy (possessed)', skin: '#c89070', eyes: '#ff9a3a', scale: 1.0, hair: { style: 'spiky', color: '#3a2a1a', seed: 331, volume: .6 }, acc: { glowEyes: '#ffb04a' }, top: tee('#e23a3a', '#a01a1a'), bottom: { color: '#2a2a30' }, shoes: SNK(), defaultExpr: 'smug' }),
-
