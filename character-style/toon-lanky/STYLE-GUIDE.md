@@ -15,3 +15,10 @@ Source: Pushpam's 6 Pinterest pins (refs/). Flat "teen cartoon" look: lanky bodi
 - viewer_v3.html — 3D rig (three.js r128): orbit 360, top/bottom, turnaround, X/Y/Z sliders on every joint incl. fingers, poses, faces.
 - viewer2d_v2.html — 2D SVG rig: 8-view turn, look up/down, side-by-side sheet, joint sliders, poses, faces.
 - New character = copy the viewer, change the token block (S / C colours) and hair/clothes builder functions only.
+
+## v4 (16 Nov): 3D model with heavy 2D feel (use for 2D-animation videos)
+- Custom cel shader: camera-locked key light (shadow shapes stay graphic like drawn), hard 2-tone step + small highlight band, purple-tinted shadow colours.
+- Screen-space diagonal hatching inside shadows; hand-painted canvas textures (dry-brush grain, denim weave + stitch, knit stripes, shirt fold lines, hair strokes).
+- Ink outline in clip space = constant pixel width, with line boil (wobble changes each drawing).
+- Animate on twos (12 fps step) toggle; paper grain overlay; flat drop shadow disc instead of real shadows.
+- More detail: lathe limbs, collar, chest panel, tee sleeves over long sleeves, cuffs, belt + buckle, necklace tag, cargo pockets + flap, knee fold lines, layered sneakers with toe cap/laces/collar, 2-segment fingers, lashes, pupil highlights, 13 hair locks + fringe.
