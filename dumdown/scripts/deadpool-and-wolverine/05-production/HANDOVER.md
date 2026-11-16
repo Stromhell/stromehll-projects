@@ -13,4 +13,5 @@
 - Kid-sized characters (kidpool) need s 1.6+ and `noHeadFit` on solo close-ups, or they read tiny or get cropped.
 - Plate text (signs) goes above head height (chamber sign moved to y 560).
 - ElevenLabs thumbnail redraw needs an https URL for the still (Zernio presign publicUrl works); skipped this time.
-- The booking slot must be the one Pushpam saw in the kit; booking an earlier free slot without asking was blocked.
+- Book the slot Pushpam saw in the kit; other threads may book the earlier slot the same minute (Agatha took 23 Nov).
+- 16 Nov 13:35 UTC: thumbnail swapped to v3 (Pushpam's official still, layout: text band on top, photo below, no text over characters; no ElevenLabs needed). Zernio post updated, still 25 Nov 16:00 UTC.
