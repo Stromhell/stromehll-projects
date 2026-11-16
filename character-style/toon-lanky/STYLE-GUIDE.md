@@ -34,3 +34,7 @@ Source: Pushpam's 6 Pinterest pins (refs/). Flat "teen cartoon" look: lanky bodi
 - Lean-muscular: broader chest with pec shapes, V taper to waist, wider shoulders, deltoid caps, thicker upper arms/forearms/neck/thighs (joint radii still matched = seamless).
 - Eyelids are skin-coloured hemispheres with an ink lash rim that roll down over the eye (blink, half lid, side glance, serious, happy squint). Brows sit above and only tilt; they never cover the eye.
 - Wave fixed: upper arm out to the side, forearm straight up, palm forward.
+
+## v7 (16 Nov): brows fixed for every angle
+- Brows are arcs wrapped on the skull surface above the eyes (y 0.8), so from side/3/4 they never float in front of the eye. Raise/tilt only.
+- Hair cap moved back/up to show a forehead; lids slimmer so they don't bulge in profile.
