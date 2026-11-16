@@ -17,7 +17,7 @@ FILM.load = () => Promise.all(names.map(n => new Promise(res => { const im = new
 
 // camera: z zoom, (x,y) plate point at screen centre, rot degrees, shake px
 function camTf(cam) { const z = cam.z, sc = z * W / 2560; let cx = clamp(cam.x, 1280 / z, 2560 - 1280 / z), cy = clamp(cam.y, 720 / z, 1440 - 720 / z);
-  return { sc, tx: W / 2 - cx * sc + (cam.sx || 0), ty: H / 2 - cy * sc + (cam.sy || 0), rot: cam.rot || 0 }; }
+  return { sc, tx: clamp(W / 2 - cx * sc + (cam.sx || 0), W - 2560 * sc, 0), ty: clamp(H / 2 - cy * sc + (cam.sy || 0), H - 1440 * sc, 0), rot: cam.rot || 0 }; }   // never show past the plate edge (whips, handheld)
 // WT: world transform from the act's staging coordinates (feet at y 1270) into the plate's own scale (set per shot by shots.js)
 const WT = { k: 1, tx: 0, ty: 0 }; const wtOn = () => WT.k !== 1 || WT.tx || WT.ty;
 function apply(cam, par = 1, noWT = false) { const m = camTf(cam); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.translate(W / 2, H / 2); ctx.rotate((m.rot * Math.PI) / 180); ctx.translate(-W / 2, -H / 2);

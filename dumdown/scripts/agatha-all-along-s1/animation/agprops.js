@@ -39,3 +39,33 @@ P.redSparks = (o, lt) => { for (let i = 0; i < (o.n || 22); i++) { const ph = (l
 P.cell = (o) => go(o, () => { ctx.strokeStyle = '#4a4a54'; ctx.lineWidth = 16; for (let i = 0; i < 9; i++) { ctx.beginPath(); ctx.moveTo(-400 + i * 100, -760); ctx.lineTo(-400 + i * 100, 0); ctx.stroke(); } ctx.lineWidth = 22; ctx.beginPath(); ctx.moveTo(-430, -700); ctx.lineTo(430, -700); ctx.moveTo(-430, -360); ctx.lineTo(430, -360); ctx.stroke(); });
 P.vinyl = (o, lt) => go(o, () => { ctx.rotate(lt * 3); ctx.fillStyle = '#111'; ctx.beginPath(); ctx.arc(0, 0, 120, 0, 7); ctx.fill(); ctx.strokeStyle = '#333'; ctx.lineWidth = 2; for (let r = 50; r < 116; r += 10) { ctx.beginPath(); ctx.arc(0, 0, r, 0, 7); ctx.stroke(); } ctx.fillStyle = '#ff4a6a'; ctx.beginPath(); ctx.arc(0, 0, 40, 0, 7); ctx.fill(); });
 })();
+// v2: the Witches' Road door as a real carved wooden door in a stone arch (replaces the flat glowing rectangle)
+(function () {
+const { ctx } = window.E; const P = window.PROPS; const INK = '#231A24';
+const glow = (x, y, r, col, a) => { ctx.save(); ctx.globalCompositeOperation = 'screen'; const g = ctx.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, col.replace('A', a)); g.addColorStop(1, col.replace('A', 0)); ctx.fillStyle = g; ctx.fillRect(x - r, y - r, 2 * r, 2 * r); ctx.restore(); };
+const arch = (w, h) => { ctx.beginPath(); ctx.moveTo(-w / 2, 0); ctx.lineTo(-w / 2, -h + w / 2); ctx.arc(0, -h + w / 2, w / 2, Math.PI, 0); ctx.lineTo(w / 2, 0); ctx.closePath(); };
+P.door = (o, lt) => { const { x, y, s = 1 } = o, k = Math.max(0, Math.min(1, o.k ?? 1)); if (k <= 0) return; const W = 250, H = 520;
+  glow(x, y - H * .5 * s, 560 * s * (.4 + .6 * k), 'rgba(255,150,60,A)', .45 * k);
+  ctx.save(); ctx.translate(x, y); ctx.scale(s, s); ctx.globalAlpha = k;
+  // materialise: reveal from the floor up
+  ctx.beginPath(); ctx.rect(-W, -H * 1.2 * (.15 + .85 * k) - 20, 2 * W, H * 1.3); ctx.clip();
+  // stone arch
+  arch(W + 70, H + 40); ctx.fillStyle = '#6d6470'; ctx.fill(); ctx.lineWidth = 6; ctx.strokeStyle = INK; ctx.stroke();
+  ctx.strokeStyle = 'rgba(35,26,36,.55)'; ctx.lineWidth = 3; for (let i = 0; i < 9; i++) { const a = Math.PI + i / 8 * Math.PI, r1 = W / 2 + 4, r2 = W / 2 + 34, cy = -H - 40 + (W + 70) / 2; ctx.beginPath(); ctx.moveTo(Math.cos(a) * r1, cy + Math.sin(a) * r1); ctx.lineTo(Math.cos(a) * r2, cy + Math.sin(a) * r2); ctx.stroke(); }
+  for (let j = 0; j < 6; j++) { const yy = -40 - j * 70; ctx.beginPath(); ctx.moveTo(-W / 2 - 35, yy); ctx.lineTo(-W / 2, yy); ctx.moveTo(W / 2, yy - 35); ctx.lineTo(W / 2 + 35, yy - 35); ctx.stroke(); }
+  // light leaking round the door
+  ctx.save(); ctx.shadowColor = 'rgba(255,190,90,.95)'; ctx.shadowBlur = 40 + Math.sin(lt * 3) * 10; arch(W + 6, H + 6); ctx.fillStyle = '#ffcf7a'; ctx.fill(); ctx.restore();
+  // wood planks
+  arch(W - 8, H - 4); const g = ctx.createLinearGradient(-W / 2, 0, W / 2, 0); g.addColorStop(0, '#3b2416'); g.addColorStop(.5, '#5e3a22'); g.addColorStop(1, '#341f13'); ctx.fillStyle = g; ctx.fill(); ctx.lineWidth = 5; ctx.strokeStyle = INK; ctx.stroke();
+  ctx.save(); arch(W - 8, H - 4); ctx.clip(); ctx.strokeStyle = 'rgba(20,10,8,.7)'; ctx.lineWidth = 3; for (let i = 1; i < 5; i++) { const xx = -W / 2 + i * W / 5; ctx.beginPath(); ctx.moveTo(xx, 0); ctx.lineTo(xx, -H); ctx.stroke(); }
+  ctx.strokeStyle = 'rgba(140,90,50,.35)'; ctx.lineWidth = 2; for (let i = 0; i < 14; i++) { const xx = -W / 2 + 10 + i * 17; ctx.beginPath(); ctx.moveTo(xx, -10); ctx.bezierCurveTo(xx + 6, -H * .3, xx - 6, -H * .6, xx + 3, -H); ctx.stroke(); }
+  // iron straps + studs
+  for (const yy of [-110, -H + 150]) { ctx.fillStyle = '#2a2a30'; ctx.fillRect(-W / 2, yy - 12, W, 24); ctx.strokeStyle = INK; ctx.lineWidth = 3; ctx.strokeRect(-W / 2, yy - 12, W, 24); ctx.fillStyle = '#8a8a96'; for (let i = 0; i < 6; i++) { ctx.beginPath(); ctx.arc(-W / 2 + 20 + i * (W - 40) / 5, yy, 5, 0, 7); ctx.fill(); } }
+  ctx.restore();
+  // glowing witch rune + ring handle
+  const p = .6 + .4 * Math.sin(lt * 2.4); ctx.save(); ctx.shadowColor = '#c890ff'; ctx.shadowBlur = 24; ctx.strokeStyle = `rgba(220,170,255,${p})`; ctx.lineWidth = 5; const ry = -H + 95; ctx.beginPath(); ctx.arc(0, ry, 34, 0, 7); ctx.stroke(); ctx.beginPath(); for (let i = 0; i < 6; i++) { const a = -Math.PI / 2 + i * 2 * Math.PI * 2 / 5; ctx[i ? 'lineTo' : 'moveTo'](Math.cos(a) * 30, ry + Math.sin(a) * 30); } ctx.stroke(); ctx.restore();
+  ctx.strokeStyle = '#b8a070'; ctx.lineWidth = 7; ctx.beginPath(); ctx.arc(W / 2 - 50, -H * .45, 18, 0, 7); ctx.stroke(); ctx.strokeStyle = INK; ctx.lineWidth = 2; ctx.stroke();
+  ctx.restore();
+  // sparkles drifting up from the threshold
+  ctx.save(); ctx.globalCompositeOperation = 'screen'; for (let i = 0; i < 14; i++) { const ph = (lt * .35 + i * .137) % 1, sx = x + Math.sin(i * 12.9 + lt * .7) * W * .55 * s, sy = y - ph * H * 1.1 * s, a = Math.sin(ph * Math.PI) * k; ctx.fillStyle = `rgba(255,215,140,${a})`; ctx.beginPath(); ctx.arc(sx, sy, (3 + (i % 3) * 2) * s, 0, 7); ctx.fill(); } ctx.restore(); };
+})();
