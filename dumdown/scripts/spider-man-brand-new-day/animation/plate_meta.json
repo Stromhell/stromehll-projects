@@ -1,137 +1,267 @@
 {
- "backyard": {
-  "img": "sd_backyard",
-  "k": 1.2,
-  "fy": 1284
- },
- "basement_grow": {
-  "img": "sd_basement_grow",
-  "k": 1.0,
-  "fy": 1284
- },
- "basement": {
-  "img": "sd_basement",
-  "k": 0.96,
-  "fy": 1306
- },
- "beach_kitchen": {
-  "img": "sd_beach_kitchen",
-  "k": 0.97,
-  "fy": 1303
- },
- "cabin": {
-  "img": "sd_cabin",
-  "k": 1.09,
-  "fy": 1322
- },
- "living_night": {
-  "img": "sd_living_night",
-  "k": 0.89,
-  "fy": 1303
- },
- "living": {
-  "img": "sd_living",
-  "k": 0.92,
-  "fy": 1303
- },
- "ri_bedroom": {
-  "img": "sd_ri_bedroom",
-  "k": 1.25,
-  "fy": 1303
- },
- "road_dawn": {
-  "img": "sd_road_dawn",
-  "k": 1.0,
-  "fy": 1303
- },
- "road_night": {
-  "img": "sd_road_night",
-  "k": 0.95,
-  "fy": 1303
- },
- "road": {
-  "img": "sd_road",
-  "k": 1.0,
-  "fy": 1303
- },
- "snow_forest": {
-  "img": "sd_snow_forest",
-  "k": 0.88,
-  "fy": 1280
- },
- "studio": {
-  "img": "sd_studio",
-  "k": 0.94,
-  "fy": 1284
- },
- "suburb": {
-  "img": "sd_suburb",
-  "k": 1.03,
-  "fy": 1350
- },
- "tower": {
-  "img": "sd_tower",
-  "k": 0.72,
-  "fy": 1303
- },
- "candyshop": {
-  "img": "sd_candyshop",
-  "k": 1.23,
-  "fy": 1322
- },
- "comic": {
-  "img": "sd_comic",
-  "k": 1,
-  "fy": 1303
- },
- "creek_night": {
-  "img": "sd_creek_night",
-  "k": 1,
-  "fy": 1260
- },
- "dream": {
-  "img": "sd_dream",
-  "k": 1,
-  "fy": 1303
- },
- "heaven": {
-  "img": "sd_heaven",
-  "k": 1,
-  "fy": 1303
- },
- "interrog": {
-  "img": "sd_interrog",
-  "k": 0.92,
-  "fy": 1303
- },
- "ma_kitchen": {
-  "img": "sd_ma_kitchen",
-  "k": 1.09,
-  "fy": 1303
- },
- "mall": {
-  "img": "sd_mall",
-  "k": 1.15,
-  "fy": 1350
- },
- "station": {
-  "img": "sd_station",
-  "k": 1.23,
-  "fy": 1322
- },
- "tent": {
-  "img": "sd_tent",
-  "k": 0.77,
-  "fy": 1322
- },
- "village": {
-  "img": "sd_village",
-  "k": 1.03,
-  "fy": 1322
- },
- "void_grey": {
-  "img": "sd_void_grey",
-  "k": 1.09,
-  "fy": 1303
- }
+"backyard": {
+"img": "sd_backyard",
+"k": 1.2,
+"fy": 1284
+},
+"basement_grow": {
+"img": "sd_basement_grow",
+"k": 1.0,
+"fy": 1284
+},
+"basement": {
+"img": "sd_basement",
+"k": 0.96,
+"fy": 1306
+},
+"beach_kitchen": {
+"img": "sd_beach_kitchen",
+"k": 0.97,
+"fy": 1303
+},
+"cabin": {
+"img": "sd_cabin",
+"k": 1.09,
+"fy": 1322
+},
+"living_night": {
+"img": "sd_living_night",
+"k": 0.89,
+"fy": 1303
+},
+"living": {
+"img": "sd_living",
+"k": 0.92,
+"fy": 1303
+},
+"ri_bedroom": {
+"img": "sd_ri_bedroom",
+"k": 1.25,
+"fy": 1303
+},
+"road_dawn": {
+"img": "sd_road_dawn",
+"k": 1.0,
+"fy": 1303
+},
+"road_night": {
+"img": "sd_road_night",
+"k": 0.95,
+"fy": 1303
+},
+"road": {
+"img": "sd_road",
+"k": 1.0,
+"fy": 1303
+},
+"snow_forest": {
+"img": "sd_snow_forest",
+"k": 0.88,
+"fy": 1280
+},
+"studio": {
+"img": "sd_studio",
+"k": 0.94,
+"fy": 1284
+},
+"suburb": {
+"img": "sd_suburb",
+"k": 1.03,
+"fy": 1350
+},
+"tower": {
+"img": "sd_tower",
+"k": 0.72,
+"fy": 1303
+},
+"candyshop": {
+"img": "sd_candyshop",
+"k": 1.23,
+"fy": 1322
+},
+"comic": {
+"img": "sd_comic",
+"k": 1,
+"fy": 1303
+},
+"creek_night": {
+"img": "sd_creek_night",
+"k": 1,
+"fy": 1260
+},
+"dream": {
+"img": "sd_dream",
+"k": 1,
+"fy": 1303
+},
+"heaven": {
+"img": "sd_heaven",
+"k": 1,
+"fy": 1303
+},
+"interrog": {
+"img": "sd_interrog",
+"k": 0.92,
+"fy": 1303
+},
+"ma_kitchen": {
+"img": "sd_ma_kitchen",
+"k": 1.09,
+"fy": 1303
+},
+"mall": {
+"img": "sd_mall",
+"k": 1.15,
+"fy": 1350
+},
+"station": {
+"img": "sd_station",
+"k": 1.23,
+"fy": 1322
+},
+"tent": {
+"img": "sd_tent",
+"k": 0.77,
+"fy": 1322
+},
+"village": {
+"img": "sd_village",
+"k": 1.03,
+"fy": 1322
+},
+"void_grey": {
+"img": "sd_void_grey",
+"k": 1.09,
+"fy": 1303
+},
+"boston_roof": {
+"img": "sd_boston_roof",
+"k": 1,
+"fy": 1270
+},
+"mit_gate": {
+"img": "sd_mit_gate",
+"k": 1,
+"fy": 1270
+},
+"nyc_roof": {
+"img": "sd_nyc_roof",
+"k": 1,
+"fy": 1270
+},
+"avenue": {
+"img": "sd_avenue",
+"k": 1,
+"fy": 1270
+},
+"prison_lobby": {
+"img": "sd_prison_lobby",
+"k": 1,
+"fy": 1270
+},
+"banya": {
+"img": "sd_banya",
+"k": 1,
+"fy": 1270
+},
+"dc_lobby": {
+"img": "sd_dc_lobby",
+"k": 1,
+"fy": 1270
+},
+"dc_office": {
+"img": "sd_dc_office",
+"k": 1,
+"fy": 1270
+},
+"party_apt": {
+"img": "sd_party_apt",
+"k": 1,
+"fy": 1270
+},
+"sad_apt": {
+"img": "sd_sad_apt",
+"k": 1,
+"fy": 1270
+},
+"data_center": {
+"img": "sd_data_center",
+"k": 1,
+"fy": 1270
+},
+"lecture_hall": {
+"img": "sd_lecture_hall",
+"k": 1,
+"fy": 1270
+},
+"tower_roof": {
+"img": "sd_tower_roof",
+"k": 1,
+"fy": 1270
+},
+"frank_ext": {
+"img": "sd_frank_ext",
+"k": 1,
+"fy": 1270
+},
+"frank_kitchen": {
+"img": "sd_frank_kitchen",
+"k": 1,
+"fy": 1270
+},
+"frank_porch": {
+"img": "sd_frank_porch",
+"k": 1,
+"fy": 1270
+},
+"atrium": {
+"img": "sd_atrium",
+"k": 1,
+"fy": 1270
+},
+"mj_apt": {
+"img": "sd_mj_apt",
+"k": 1,
+"fy": 1270
+},
+"park": {
+"img": "sd_park",
+"k": 1,
+"fy": 1270
+},
+"white_cell": {
+"img": "sd_white_cell",
+"k": 1,
+"fy": 1270
+},
+"lab": {
+"img": "sd_lab",
+"k": 1,
+"fy": 1270
+},
+"hospital_room": {
+"img": "sd_hospital_room",
+"k": 1,
+"fy": 1270
+},
+"hospital_ext": {
+"img": "sd_hospital_ext",
+"k": 1,
+"fy": 1270
+},
+"coffee_shop": {
+"img": "sd_coffee_shop",
+"k": 1,
+"fy": 1270
+},
+"corridor": {
+"img": "sd_corridor",
+"k": 1,
+"fy": 1270
+},
+"cemetery": {
+"img": "sd_cemetery",
+"k": 1,
+"fy": 1270
+}
 }

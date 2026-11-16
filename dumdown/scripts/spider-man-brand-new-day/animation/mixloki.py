@@ -24,6 +24,7 @@ PLATE_MOOD = {'apt_barrels': 'tension', 'apt_warm': 'romance', 'bar': 'lounge', 
 PLATE_MOOD.update({'southside': 'comedy', 'mural': 'sad', 'junkshop': 'mystery', 'elevator': 'tension', 'loft': 'tension', 'bunker': 'comedy', 'tunnel': 'tension',
   'greenhouse': 'mystery', 'gh_inside': 'action', 'candyshop': 'mystery', 'garage': 'comedy', 'golden': 'ominous', 'boardroom': 'comedy', 'ri_bedroom': 'comedy',
   'ma_kitchen': 'comedy', 'burger': 'tension', 'skyline': 'action', 'suburb': 'comedy', 'joe_home': 'comedy'})
+PLATE_MOOD.update({'boston_roof':'sad','mit_gate':'comedy','nyc_roof':'action','avenue':'action','prison_lobby':'tension','banya':'lounge','dc_lobby':'comedy','dc_office':'comedy','party_apt':'comedy','sad_apt':'sad','data_center':'tension','lecture_hall':'comedy','tower_roof':'epic','frank_ext':'tension','frank_kitchen':'comedy','frank_porch':'sad','atrium':'action','mj_apt':'romance','park':'wonder','white_cell':'ominous','lab':'mystery','hospital_room':'sad','hospital_ext':'tension','coffee_shop':'romance','corridor':'tension','cemetery':'sad','studio':'comedy'})
 GA.STY['comedy'] = GA.STY['sitcom']; GA.STY['romance'] = GA.STY['harp']
 PLATE_MOOD.update({'creek_night': 'mystery', 'station': 'tva', 'interrog': 'tension', 'void_grey': 'ominous', 'basement': 'mystery', 'living': 'comedy', 'living_night': 'mystery',
   'tent': 'mystery', 'mall': 'comedy', 'road': 'wonder', 'road_dawn': 'wonder', 'beach_kitchen': 'lounge', 'studio': 'tension', 'cabin': 'ominous', 'tower': 'tension',
