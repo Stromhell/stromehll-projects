@@ -38,3 +38,7 @@ Source: Pushpam's 6 Pinterest pins (refs/). Flat "teen cartoon" look: lanky bodi
 ## v7 (16 Nov): brows fixed for every angle
 - Brows are arcs wrapped on the skull surface above the eyes (y 0.8), so from side/3/4 they never float in front of the eye. Raise/tilt only.
 - Hair cap moved back/up to show a forehead; lids slimmer so they don't bulge in profile.
+
+## v8 (16 Nov): lids + muscle; first female character
+- Kai v8 (viewer_v8.html): lids hidden when eyes are open (no black rim at the side); side glance/serious lids now clearly drop; broader chest, pecs, traps, wider shoulders, biceps/forearms.
+- Mira v1 (mira_v1.html): female in the same style (from pin 4): long straight ginger hair with swept fringe, freckles, longer lashes + flicks, thin brows, yellow crop top with flower print and straps, bare midriff, narrow waist/wider hips, slim arms with bangles, dark-green frayed cut-off shorts, brown knee boots with heel. Same rig, sliders, poses, faces and 2D-feel shading.
