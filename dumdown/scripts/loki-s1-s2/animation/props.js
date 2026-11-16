@@ -100,8 +100,6 @@ P.plane = (o, lt) => { const { x, y, s = 1 } = o; ctx.save(); ctx.translate(x, y
   ctx.fillStyle = '#b8bcc8'; ctx.beginPath(); ctx.moveTo(-60, 30); ctx.lineTo(180, 30); ctx.lineTo(60, 200); ctx.lineTo(-40, 200); ctx.closePath(); ctx.fill(); ctx.stroke();
   ctx.fillStyle = '#9aa0ae'; rr(40, 70, 90, 40, 18); ctx.fill(); ctx.stroke();
   ctx.restore(); };
-window.PROPS = P;
-})();
 // Yggdrasil: glowing tree of timelines growing from (x,y), k = growth 0..1
 P.tree = (o, lt) => { const { x = 1280, y = 1300, k = 1 } = o; ctx.save(); ctx.lineCap = 'round'; ctx.globalCompositeOperation = 'lighter';
   const br = (x0, y0, a, len, w, d, seed) => { if (d > 7 || len < 8) return; const g = Math.min(1, Math.max(0, k * 8 - d)); if (g <= 0) return; const sw = Math.sin(lt * .8 + seed) * .04; const x1 = x0 + Math.cos(a + sw) * len * g, y1 = y0 + Math.sin(a + sw) * len * g;
@@ -111,3 +109,5 @@ P.tree = (o, lt) => { const { x = 1280, y = 1300, k = 1 } = o; ctx.save(); ctx.l
   // roots
   for (let i = 0; i < 7; i++) { ctx.strokeStyle = 'rgba(120,255,160,.5)'; ctx.lineWidth = 8 - i * .6; ctx.beginPath(); ctx.moveTo(x, y); ctx.quadraticCurveTo(x + (i - 3) * 120, y + 60, x + (i - 3) * 260 * k, y + 120); ctx.stroke(); }
   ctx.restore(); };
+window.PROPS = P;
+})();
