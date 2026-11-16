@@ -42,3 +42,10 @@ Source: Pushpam's 6 Pinterest pins (refs/). Flat "teen cartoon" look: lanky bodi
 ## v8 (16 Nov): lids + muscle; first female character
 - Kai v8 (viewer_v8.html): lids hidden when eyes are open (no black rim at the side); side glance/serious lids now clearly drop; broader chest, pecs, traps, wider shoulders, biceps/forearms.
 - Mira v1 (mira_v1.html): female in the same style (from pin 4): long straight ginger hair with swept fringe, freckles, longer lashes + flicks, thin brows, yellow crop top with flower print and straps, bare midriff, narrow waist/wider hips, slim arms with bangles, dark-green frayed cut-off shorts, brown knee boots with heel. Same rig, sliders, poses, faces and 2D-feel shading.
+
+## v9 (16 Nov): emotion system (from 2 emotion-challenge sheets) + fixes
+- Hybrid face: 3D eyes/lids/brows + a 2D-drawn face decal (canvas texture wrapped on the head, Spider-Verse/Arcane technique) for mouths, ^^ / >< / - - / u u closed eyes, blush, tears, sweat, gloom, anger vein, sparkles; heart/star/swirl pupils.
+- 26 presets (Neutral...Pout) + Face controls (upper lid, lower lid, lid tilt, brow raise/tilt/asym, pupil size/look, mouth type/open/size/offset, extras) + Expression sheet mode. Shared code: face_rig_v1.js.
+- Pupils now sit flush on the eyeball (follow its curve) so lids always cover them.
+- Mira: fuller torso (ribcage, upper back, thicker midriff); side locks shortened so the torso reads in profile.
+- Masters: viewer_v9.html (Kai), mira_v2.html (Mira).
