@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Toon Lanky 2D Rig</title>
+<style>
+:root{--bg:#efeae2;--panel:#fffdf9;--ink:#1b1b1f;--muted:#6b6660;--line:#d9d2c7}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1d1c1f;--panel:#28272b;--ink:#f1eee9;--muted:#a49f98;--line:#3a383d}}
+:root[data-theme="dark"]{--bg:#1d1c1f;--panel:#28272b;--ink:#f1eee9;--muted:#a49f98;--line:#3a383d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.4 system-ui,sans-serif}
+header{padding:12px 16px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;border-bottom:1px solid var(--line)}
+h1{font-size:17px;margin:0 12px 0 0}button{background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:6px 10px;cursor:pointer;font:inherit}
+button.on{background:var(--ink);color:var(--bg)}
+main{display:grid;grid-template-columns:1fr 320px;min-height:calc(100vh - 58px)}
+#stage{display:flex;justify-content:center;align-items:center;gap:8px;padding:12px;flex-wrap:wrap}
+.cell{text-align:center;font-size:12px;letter-spacing:.08em;color:var(--muted)}
+.cell svg{height:min(78vh,640px);max-width:100%}
+.multi .cell svg{height:min(46vh,400px)}
+aside{background:var(--panel);border-left:1px solid var(--line);overflow:auto;padding:12px 16px;max-height:calc(100vh - 58px)}
+details{border-bottom:1px solid var(--line);padding:6px 0}summary{cursor:pointer;font-weight:600}
+label{display:grid;grid-template-columns:70px 1fr 36px;gap:6px;align-items:center;font-size:12px;color:var(--muted)}
+input[type=range]{width:100%}.row{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+@media (max-width:760px){main{grid-template-columns:1fr}aside{border-left:0;border-top:1px solid var(--line);max-height:none}}
+</style></head><body>
+<header><h1>Toon Lanky 2D rig · "Kai"</h1>
+<button data-m="single" class="on">Single</button><button data-m="turn">Side by side</button><button id="spin">Spin 360</button></header>
+<main><div id="stage"></div>
+<aside>
+<label>Turn<input id="turn" type=range min=0 max=359 value=0><output>0</output></label>
+<label>Look up/down<input id="tilt" type=range min=-30 max=30 value=0><output>0</output></label>
+<div class="row" id="poses"></div><div class="row" id="faces"></div>
+<div class="row"><button id="reset">Reset all joints</button></div>
+<div id="joints"></div>
+<p style="font-size:12px;color:var(--muted)">Turn slider snaps between 8 drawn views (front, 3/4, side, 3/4 back, back, mirrored). Look up/down shifts the face and squashes the head like a 2D animator would.</p>
+</aside></main>
+<script>
+// STYLE TOKENS: flat fills, 3px ink outline, no gradients, one hard shadow tone
+const C={ink:'#141418',skin:'#e8a878',skinSh:'#c7835a',hair:'#17171d',shirt:'#c8232c',shirtSh:'#9c1820',sleeve:'#f4f1ea',sleeveSh:'#cfc8bb',pants:'#262a33',pantsSh:'#181b22',shoe:'#c8232c',sole:'#f4f1ea'};
+const SW=3;
+const J={hips:0,spine:0,neck:0,head:0,shoulderL:8,elbowL:-6,wristL:0,shoulderR:-8,elbowR:6,wristR:0,hipL:2,kneeL:0,ankleL:0,hipR:-2,kneeR:0,ankleR:0};
+const BASE={...J};let face='normal',turn=0,tilt=0,mode='single';
+const P=(d,f,extra='')=>`<path d="${d}" fill="${f}" stroke="${C.ink}" stroke-width="${SW}" stroke-linejoin="round" ${extra}/>`;
+const R=(x,y,w,h,f,r=6)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="${f}" stroke="${C.ink}" stroke-width="${SW}"/>`;
+const G=(tx,ty,rot,inner)=>`<g transform="translate(${tx} ${ty}) rotate(${rot})">${inner}</g>`;
+// limb segment: tapered noodle tube pointing down
+const seg=(len,w1,w2,f)=>P(`M${-w1/2},0 L${w1/2},0 L${w2/2},${len} Q0,${len+w2*0.35} ${-w2/2},${len} Z`,f);
+function hand(v){return `<g>${P('M-10,0 L10,0 L11,20 Q0,30 -11,20 Z',C.skin)}${[-7,-2.5,2.5,7].map(x=>`<line x1="${x}" y1="18" x2="${x*1.1}" y2="34" stroke="${C.ink}" stroke-width="7" stroke-linecap="round"/><line x1="${x}" y1="18" x2="${x*1.1}" y2="34" stroke="${C.skin}" stroke-width="3.5" stroke-linecap="round"/>`).join('')}</g>`}
+function shoe(dir){ // dir: 0 front, 1 side
+ return dir?`${P('M-14,-4 L16,-4 Q40,0 42,14 L-16,14 Z',C.shoe)}${R(-17,12,61,9,C.sole,4)}`:`${P('M-15,-4 L15,-4 Q20,10 18,16 L-18,16 Q-20,10 -15,-4 Z',C.shoe)}${R(-19,14,38,8,C.sole,4)}<circle cx="0" cy="8" r="5" fill="${C.sole}" stroke="${C.ink}" stroke-width="2"/>`}
+// views: 0 front,1 3/4 R,2 side R,3 3/4 back R,4 back. 5-7 = mirrors of 3,2,1
+function viewOf(a){return Math.round(((a%360)+360)%360/45)%8}
+function arm(s,v,k){const a=J['shoulder'+s]*k,e=J['elbow'+s]*k,w=J['wrist'+s]*k;
+ return G(0,0,a,`${seg(70,26,22,C.shirt)}${G(0,62,e,`${seg(78,17,15,C.sleeve)}${G(0,80,w,hand(v))}`)}`)}
+function leg(s,v,k,side){const h=J['hip'+s]*k,n=J['knee'+s]*k,an=J['ankle'+s]*k;
+ return G(0,0,h,`${seg(118,40,34,C.pants)}${side?'':R(s==='L'?12:-22,58,10,26,C.pantsSh,3)}${G(0,114,n,`${seg(118,34,36,C.pants)}${G(0,120,an,shoe(side))}`)}`)}
+function headSvg(v,mir){ // tall oval head, big touching eyes, angular hair
+ const up=tilt/30; const fy=-up*10; const sq=1-Math.abs(up)*0.06;
+ let f=`<g transform="scale(1 ${sq})">`;
+ const back=v===4,side=v===2,q=v===1,qb=v===3;
+ // neck
+ f+=R(-8,-10,16,30,C.skin,4);
+ // face shape
+ const fx=side?14:q?7:0;
+ f+=P(`M${-44+fx*0.4},-110 Q${-48+fx*0.4},-30 ${-14+fx},-6 Q${0+fx},2 ${14+fx},-6 Q${48+fx*0.4},-30 ${44+fx*0.4},-110 Q0,-140 ${-44+fx*0.4},-110Z`,C.skin);
+ if(!back&&!side){f+=`<ellipse cx="${-46+fx*0.5}" cy="-62" rx="7" ry="11" fill="${C.skin}" stroke="${C.ink}" stroke-width="${SW}"/>`}
+ if(!back)f+=`<ellipse cx="${side?-12:46+fx*0.3}" cy="-62" rx="7" ry="11" fill="${C.skin}" stroke="${C.ink}" stroke-width="${SW}"/>`;
+ // face features
+ if(!back&&!qb){const ex=side?[30]:q?[-4,24]:[-15,15];const W=side?9:q?[11,13]:[14,14];
+  ex.forEach((x,i)=>{const w=Array.isArray(W)?W[i]:W;const fc=FACES[face];
+   const ry=18*fc.open;f+=`<ellipse cx="${x}" cy="${-72+fy}" rx="${w}" ry="${Math.max(2,ry)}" fill="#fff" stroke="${C.ink}" stroke-width="${SW}"/>`;
+   if(fc.open>0.3)f+=`<ellipse cx="${x+fc.look*w*0.5+(side?4:q?3:0)}" cy="${-70+fy}" rx="${fc.pupil}" ry="${fc.pupil*1.2}" fill="${C.ink}"/>`;
+   if(fc.lid)f+=`<path d="M${x-w-2},${-72+fy-ry*fc.lid} L${x+w+2},${-72+fy-ry*fc.lid}" stroke="${C.ink}" stroke-width="4" stroke-linecap="round"/>`;
+   f+=`<path d="M${x-w},${-96+fy-fc.brow} L${x+w},${-96+fy-fc.brow+(i?-1:1)*fc.browTilt}" stroke="${C.hair}" stroke-width="5" stroke-linecap="round"/>`});
+  const nx=side?46:q?22:2;f+=`<path d="M${nx-2},${-58+fy} L${nx+(side?6:4)},${-44+fy} L${nx-3},${-42+fy}" fill="none" stroke="${C.ink}" stroke-width="2.5" stroke-linejoin="round"/>`;
+  const mx=side?28:q?12:0,fc=FACES[face];f+=fc.mouth(mx,-26+fy)}
+ // hair: blocky flat-top + spikes (graphic silhouette)
+ const hx=side?-6:q?-3:0;
+ f+=P(`M${-50+hx},-80 L${-52+hx},-120 L${-36+hx},-150 L${-20+hx},-142 L${-6+hx},-166 L${10+hx},-148 L${30+hx},-162 L${36+hx},-140 L${58+hx},-146 L${50+hx},-112 L${52+hx},-84 ${back?`L${48+hx},-40 Q${0+hx},-20 ${-48+hx},-40 Z`:`L${40+hx},-100 L${18+hx},-96 L${26+hx},-112 L${-4+hx},-100 L${-24+hx},-108 L${-30+hx},-96 Z`}`,C.hair);
+ f+='</g>';return mir?`<g transform="scale(-1 1)">${f}</g>`:f}
+function figure(a){const v0=viewOf(a);const mir=v0>4;const v=mir?8-v0:v0;
+ const side=v===2,back=v>=3,k=1;
+ const tw=side?0.55:v===1||v===3?0.82:1;// torso width factor
+ const sx=x=>x*tw;
+ let s='';
+ const legs=[['L',sx(-22)],['R',sx(22)]];const arms=[['L',sx(-50)],['R',sx(50)]];
+ // draw order: far side first
+ const far=back?0:1;
+ const L=(o)=>G(o[1],0,0,leg(o[0],v,k,side));
+ const A=(o)=>G(o[1],-196,0,arm(o[0],v,k));
+ const torso=`${G(0,-200,J.spine,`${P(`M${sx(-46)},0 L${sx(46)},0 L${sx(40)},120 L${sx(-40)},120 Z`,C.shirt)}${back||side?'':R(sx(-24),20,sx(48),60,C.sleeve,2)}${P(`M${sx(-40)},120 L${sx(40)},120 L${sx(42)},196 L${sx(-42)},196 Z`,C.sleeve)}`)}`;
+ const pelvis=R(sx(-46),-12,sx(92),36,C.pants,4);
+ const headG=G(0,-206,J.neck,G(0,0,J.head,headSvg(v,mir)));
+ const order=[legs[far],arms[far]];const near=[legs[1-far],arms[1-far]];
+ s+=G(0,400,J.hips,`${L(legs[0])}${L(legs[1])}${side||v===1||v===3?A(order[1]):A(arms[0])}${pelvis}${G(0,0,0,torso)}${headG}${side||v===1||v===3?A(near[1]):A(arms[1])}`);
+ // ground shadow
+ return `<svg viewBox="-200 -80 400 760" xmlns="http://www.w3.org/2000/svg"><ellipse cx="0" cy="666" rx="${side?90:80}" ry="12" fill="#000" opacity=".12"/><g transform="translate(0 0)">${mir?`<g transform="scale(-1 1)">${s.replace(/<g transform="scale\(-1 1\)">/g,'<g>')}</g>`:s}</g></svg>`}
+const FACES={
+ normal:{open:1,pupil:5,look:0,lid:0,brow:0,browTilt:0,mouth:(x,y)=>`<path d="M${x-10},${y} Q${x},${y+8} ${x+10},${y}" fill="none" stroke="${C.ink}" stroke-width="3" stroke-linecap="round"/>`},
+ happy:{open:0.15,pupil:4,look:0,lid:0,brow:4,browTilt:0,mouth:(x,y)=>`<path d="M${x-14},${y-3} Q${x},${y+16} ${x+14},${y-3} Z" fill="#7a1d22" stroke="${C.ink}" stroke-width="3" stroke-linejoin="round"/>`},
+ halflid:{open:1,pupil:5,look:0.3,lid:0.15,brow:-3,browTilt:2,mouth:(x,y)=>`<path d="M${x-10},${y+2} Q${x+2},${y+5} ${x+12},${y-2}" fill="none" stroke="${C.ink}" stroke-width="3" stroke-linecap="round"/>`},
+ surprised:{open:1.15,pupil:3.5,look:0,lid:0,brow:8,browTilt:0,mouth:(x,y)=>`<ellipse cx="${x}" cy="${y+2}" rx="6" ry="8" fill="#7a1d22" stroke="${C.ink}" stroke-width="3"/>`},
+ side:{open:0.9,pupil:5,look:0.7,lid:0.05,brow:-2,browTilt:-4,mouth:(x,y)=>`<path d="M${x-8},${y+2} L${x+10},${y}" stroke="${C.ink}" stroke-width="3" stroke-linecap="round"/>`},
+ angry:{open:0.8,pupil:4.5,look:0,lid:0.1,brow:-6,browTilt:-7,mouth:(x,y)=>`<path d="M${x-10},${y+4} Q${x},${y-4} ${x+10},${y+4}" fill="none" stroke="${C.ink}" stroke-width="3" stroke-linecap="round"/>`}};
+// UI
+const stage=document.getElementById('stage');
+function draw(){if(mode==='turn'){stage.className='multi';stage.innerHTML=[[0,'FRONT'],[45,'3/4'],[90,'SIDE'],[135,'3/4 BACK'],[180,'BACK']].map(([a,t])=>`<div class="cell">${figure(a)}<div>${t}</div></div>`).join('')}
+ else{stage.className='';stage.innerHTML=`<div class="cell">${figure(turn)}</div>`}}
+const tIn=document.getElementById('turn'),tl=document.getElementById('tilt');
+tIn.oninput=()=>{turn=+tIn.value;tIn.nextElementSibling.textContent=turn;draw()};tl.oninput=()=>{tilt=+tl.value;tl.nextElementSibling.textContent=tilt;draw()};
+document.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{mode=b.dataset.m;document.querySelectorAll('[data-m]').forEach(x=>x.classList.toggle('on',x===b));draw()});
+let spinT=null;document.getElementById('spin').onclick=e=>{if(spinT){clearInterval(spinT);spinT=null;e.target.classList.remove('on');return}e.target.classList.add('on');mode='single';spinT=setInterval(()=>{turn=(turn+45)%360;tIn.value=turn;tIn.nextElementSibling.textContent=turn;draw()},450)};
+const groups={Body:['hips','spine','neck','head'],'Left arm':['shoulderL','elbowL','wristL'],'Right arm':['shoulderR','elbowR','wristR'],'Left leg':['hipL','kneeL','ankleL'],'Right leg':['hipR','kneeR','ankleR']};
+const ins={};const jd=document.getElementById('joints');
+Object.entries(groups).forEach(([g,l],i)=>{const d=document.createElement('details');d.open=i<3;d.innerHTML=`<summary>${g}</summary>`;
+ l.forEach(n=>{const lb=document.createElement('label');lb.innerHTML=`${n}<input type=range min=-180 max=180 value=${J[n]}><output>${J[n]}</output>`;const inp=lb.querySelector('input');inp.oninput=()=>{J[n]=+inp.value;lb.querySelector('output').textContent=inp.value;draw()};ins[n]=inp;d.appendChild(lb)});jd.appendChild(d)});
+function setJ(n,v){J[n]=v;ins[n].value=v;ins[n].nextElementSibling.textContent=v}
+function reset(){Object.entries(BASE).forEach(([n,v])=>setJ(n,v))}
+document.getElementById('reset').onclick=()=>{reset();draw()};
+const POSES={'Idle':{},'Hand on hip':{shoulderL:28,elbowL:-70,wristL:30,shoulderR:-35,elbowR:-20,wristR:-20,head:-6,hips:2},'Wave':{shoulderR:-150,elbowR:-30,wristR:-10,head:6},'Arms out':{shoulderL:80,shoulderR:-80,elbowL:0,elbowR:0},'Walk':{hipL:-22,kneeL:10,hipR:22,kneeR:28,shoulderL:-18,shoulderR:-18,elbowL:-10,elbowR:-10},'Shrug':{shoulderL:30,elbowL:-100,wristL:-30,shoulderR:-30,elbowR:100,wristR:30,head:8},'Kick':{hipR:-70,kneeR:30,shoulderL:40,shoulderR:-30,spine:4}};
+const pd=document.getElementById('poses');Object.entries(POSES).forEach(([n,p])=>{const b=document.createElement('button');b.textContent=n;b.onclick=()=>{reset();Object.entries(p).forEach(([j,v])=>setJ(j,v));draw()};pd.appendChild(b)});
+const fd=document.getElementById('faces');Object.keys(FACES).forEach(n=>{const b=document.createElement('button');b.textContent=n;b.onclick=()=>{face=n;draw()};fd.appendChild(b)});
+draw();
+</script></body></html>
