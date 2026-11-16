@@ -6,7 +6,7 @@
 
 **Length:** 15:38 (full v1, -14.5 LUFS, -2.5 dBFS peak). Last 5 s are a clean fade for the end screen.
 
-**Schedule:** NOT BOOKED. Waiting for Pushpam's OK. Earliest slot Mon 23 Nov 2026 16:00 UTC (48 h after Ironheart). Public, category 24, not for kids.
+**Schedule:** BOOKED Mon 23 Nov 2026 16:00 UTC, Zernio post 6afab68206094f3a5cce0e12 (full v2). Public, category 24, not for kids.
 
 ## Description
 A witch wakes up after three years stuck as a TV cop, with zero magic, a strange teenager tied up in her basement, and her ex-girlfriend showing up to threaten her. Her ex is Death. Literally. 💀💜
