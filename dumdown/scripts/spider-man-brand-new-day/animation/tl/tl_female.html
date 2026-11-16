@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mira Toon Rig</title>
+<style>
+:root{--bg:#efeae2;--panel:#fffdf9;--ink:#1b1b1f;--muted:#6b6660;--acc:#c8232c;--line:#d9d2c7}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1d1c1f;--panel:#28272b;--ink:#f1eee9;--muted:#a49f98;--acc:#ff5a5f;--line:#3a383d}}
+:root[data-theme="dark"]{--bg:#1d1c1f;--panel:#28272b;--ink:#f1eee9;--muted:#a49f98;--acc:#ff5a5f;--line:#3a383d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.4 system-ui,sans-serif}
+header{padding:10px 16px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;border-bottom:1px solid var(--line)}
+h1{font-size:17px;margin:0 12px 0 0}
+button{background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:6px 10px;cursor:pointer;font:inherit}
+button.on{background:var(--ink);color:var(--bg)}
+main{display:grid;grid-template-columns:1fr 320px;height:calc(100vh - 58px)}
+#stage{position:relative;min-height:420px}#stage::after{content:"";position:absolute;inset:0;pointer-events:none;mix-blend-mode:multiply;opacity:.35;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/><feColorMatrix values='0 0 0 0 .55  0 0 0 0 .5  0 0 0 0 .45  0 0 0 .5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}canvas{display:block;width:100%;height:100%;touch-action:none}
+#labels{position:absolute;inset:0;pointer-events:none;display:grid}
+#labels span{align-self:end;justify-self:center;margin-bottom:8px;font-size:12px;letter-spacing:.08em;color:var(--muted)}
+aside{background:var(--panel);border-left:1px solid var(--line);overflow:auto;padding:12px 16px}
+details{border-bottom:1px solid var(--line);padding:6px 0}summary{cursor:pointer;font-weight:600}
+label{display:grid;grid-template-columns:22px 1fr 40px;gap:6px;align-items:center;font-size:12px;color:var(--muted)}
+input[type=range]{width:100%}.row{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+@media (max-width:760px){main{grid-template-columns:1fr;height:auto}#stage{height:70vh}aside{border-left:0;border-top:1px solid var(--line)}}
+</style></head><body>
+<header><h1>Toon Lanky 3D · 2D-feel · "Mira" v2 · emotions</h1>
+<button data-v="orbit" class="on">360 orbit</button><button data-v="turn">Turnaround</button>
+<button data-v="front">Front</button><button data-v="side">Side</button><button data-v="back">Back</button><button data-v="q34">3/4</button>
+<button data-v="top">Top</button><button data-v="bottom">Bottom</button><button id="spin">Auto-spin</button><button id="sheetB">Expression sheet</button><button id="twos" class="on">Animate on twos</button><button id="hatchB" class="on">Hatching</button><label style="display:flex;gap:6px;width:auto;color:var(--muted)">Ink<input id="lw" type=range min=0 max=6 step=0.1 value=3.2 style="width:90px"></label></header>
+<main><div id="stage"><canvas id="c"></canvas><div id="labels"></div></div>
+<aside>
+<div class="row" id="poses"></div><div class="row" id="faces"></div>
+<div class="row"><button id="reset">Reset all joints</button></div>
+<div id="joints"></div>
+<p style="font-size:12px;color:var(--muted)">Drag to orbit, scroll/pinch to zoom. Every joint has X/Y/Z rotation sliders (degrees).</p>
+</aside></main>
+<script src="three.min.js"></script>
+<script>window.SPEC=JSON.parse(decodeURIComponent(location.hash.slice(1)||'{}'));
+// ===== STYLE TOKENS v4: 3D model, 2D feel (hard cel, hand-painted texture, ink lines, on-twos) =====
+const S={skin:'#f0b48c',skinSh:'#d48a6c',hair:'#c8643a',hairSh:'#8a3a26',shirt:'#e8c23a',shirtSh:'#a87a2a',sleeve:'#f0b48c',sleeveSh:'#d48a6c',pants:'#2f3a2c',pantsSh:'#1a2219',shoe:'#8a5a3a',shoeSh:'#56341f',sole:'#3a2a20',soleSh:'#1e140e',metal:'#c9c9cf',metalSh:'#6c6c78',eyeW:'#ffffff',eyeWSh:'#d8d2e6',ink:'#121218'};
+Object.assign(S,window.SPEC.S||{});
+const U={time:{value:0},lineW:{value:3.2},res:{value:new THREE.Vector2(1,1)},hatch:{value:1}};
+// ---- hand-painted canvas textures (brush grain, fabric, fold lines) ----
+function rnd(s){return()=>(s=Math.sin(s)*10000,s-Math.floor(s))}
+function tex(kind){const c=document.createElement('canvas');c.width=c.height=256;const g=c.getContext('2d');const r=rnd(kind.length*7.3);
+  g.fillStyle='#fff';g.fillRect(0,0,256,256);
+  // dry-brush grain
+  for(let i=0;i<900;i++){g.fillStyle=`rgba(0,0,0,${r()*0.05})`;g.save();g.translate(r()*256,r()*256);g.rotate(r()*0.4-0.2);g.fillRect(0,0,6+r()*28,1+r()*2);g.restore()}
+  g.strokeStyle='rgba(18,18,24,.55)';g.lineCap='round';
+  if(kind==='denim'){for(let i=0;i<256;i+=3){g.fillStyle=`rgba(255,255,255,${0.03+r()*0.04})`;g.fillRect(0,i,256,1)}
+    g.lineWidth=2.2;[[40,80],[150,95],[90,170],[210,190]].forEach(([x,y])=>{g.beginPath();g.moveTo(x,y);g.quadraticCurveTo(x+18,y+6,x+34,y-4);g.stroke()});
+    g.lineWidth=1.4;g.setLineDash([5,4]);g.beginPath();g.moveTo(128,0);g.lineTo(128,256);g.stroke();g.setLineDash([])}
+  if(kind==='shirt'){g.lineWidth=2;[[30,200],[180,210],[100,60]].forEach(([x,y])=>{g.beginPath();g.moveTo(x,y);g.quadraticCurveTo(x+12,y-14,x+30,y-10);g.stroke()})}
+  if(kind==='knit'){for(let i=0;i<256;i+=8){g.fillStyle='rgba(0,0,0,.06)';g.fillRect(0,i,256,3)}g.lineWidth=3;g.beginPath();g.moveTo(0,232);g.lineTo(256,232);g.stroke()}
+  if(kind==='skin'){g.fillStyle='rgba(255,80,90,.0)';}
+  if(kind==='hair'){g.strokeStyle='rgba(255,255,255,.18)';g.lineWidth=2;for(let i=0;i<14;i++){const x=r()*256;g.beginPath();g.moveTo(x,0);g.quadraticCurveTo(x+20,128,x-10,256);g.stroke()}}
+  const t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;return t}
+const TX={plain:tex('plain'),denim:tex('denim'),shirt:tex('shirt'),knit:tex('knit'),hair:tex('hair'),skin:tex('skin')};
+// ---- cel material: camera-locked key light, hard 2-tone step, screen-space hatching in shadow, rim line ----
+const celV=`varying vec3 vN;varying vec2 vUv;varying vec3 vV;void main(){vUv=uv;vec4 mv=modelViewMatrix*vec4(position,1.);vV=-mv.xyz;vN=normalize(normalMatrix*normal);gl_Position=projectionMatrix*mv;}`;
+const celF=`uniform vec3 lit;uniform vec3 shd;uniform sampler2D map;uniform vec2 rep;uniform float hatch;uniform float time;varying vec3 vN;varying vec2 vUv;varying vec3 vV;
+void main(){vec3 n=normalize(vN);vec3 L=normalize(vec3(-.45,.65,.6));float d=dot(n,L);
+ float g=texture2D(map,vUv*rep).r;float t=.08+(g-.9)*.6;
+ float lm=smoothstep(t-.015,t+.015,d);vec3 c=mix(shd,lit,lm);
+ // second tiny highlight band
+ float hi=smoothstep(.9,.92,d);c=mix(c,mix(lit,vec3(1.),.22),hi*.6);
+ // hatching in shadow (screen space, 2D feel)
+ vec2 fc=gl_FragCoord.xy;float h=step(.78,fract((fc.x+fc.y)/7.));c=mix(c,shd*.72,h*(1.-lm)*.55*hatch);
+ // paint grain
+ c*=mix(.9,1.03,g);
+ // rim
+ float rim=1.-max(dot(n,normalize(vV)),0.);c=mix(c,lit*1.08,smoothstep(.72,.74,rim)*lm*.5);
+ gl_FragColor=vec4(c,1.);}`;
+function M(lit,shd,map='plain',rep=[1,1]){return new THREE.ShaderMaterial({vertexShader:celV,fragmentShader:celF,uniforms:{lit:{value:new THREE.Color(lit)},shd:{value:new THREE.Color(shd)},map:{value:TX[map]},rep:{value:new THREE.Vector2(...rep)},hatch:U.hatch,time:U.time}})}
+// ---- ink outline: clip-space extrusion = constant pixel width, with boiling (line wobble on twos) ----
+const inkMat=new THREE.ShaderMaterial({side:THREE.BackSide,uniforms:U,
+ vertexShader:`uniform float lineW;uniform vec2 res;uniform float time;void main(){vec4 p=projectionMatrix*modelViewMatrix*vec4(position,1.);vec3 n=normalize(normalMatrix*normal);vec2 dir=normalize((projectionMatrix*vec4(n,0.)).xy+1e-5);
+ float boil=.8+.45*sin(dot(position,vec3(13.1,7.7,5.3))+floor(time*12.)*1.7);p.xy+=dir*lineW*boil*2./res*p.w;p.z+=.0006*p.w;gl_Position=p;}`,
+ fragmentShader:`void main(){gl_FragColor=vec4(${'0.07,0.07,0.094'},1.);}`});
+const mats={};function mat(k){if(mats[k])return mats[k];const P={skin:[S.skin,S.skinSh,'skin'],hair:[S.hair,S.hairSh,'hair',[2,1]],shirt:[S.shirt,S.shirtSh,'shirt'],sleeve:[S.sleeve,S.sleeveSh,'knit',[1,1]],pants:[S.pants,S.pantsSh,'denim'],shoe:[S.shoe,S.shoeSh],sole:[S.sole,S.soleSh],metal:[S.metal,S.metalSh],eye:[S.eyeW,S.eyeWSh]}[k];return mats[k]=M(...P)}
+const flat=c=>new THREE.MeshBasicMaterial({color:c});
+function part(geo,k,parent,pos=[0,0,0],rot=[0,0,0],scl=[1,1,1],outline=true){
+  const m=new THREE.Mesh(geo,typeof k==='string'?mat(k):k);m.position.set(...pos);m.rotation.set(...rot);m.scale.set(...scl);parent.add(m);
+  if(outline){const o=new THREE.Mesh(geo,inkMat);m.add(o)}return m}
+const J={};function joint(name,parent,pos){const j=new THREE.Group();j.name=name;j.position.set(...pos);parent.add(j);J[name]=j;return j}
+// tapered smooth limb (lathe) from radius r1 at top to r2 at bottom, length l, hanging down
+function cLimb(r1,r2,l,bulge=0.04){const pts=[];for(let i=0;i<=8;i++){const a=Math.PI/2*(i/8);pts.push(new THREE.Vector2(Math.sin(a)*r1+0.0005,Math.cos(a)*r1))}for(let i=1;i<14;i++){const t=i/14;pts.push(new THREE.Vector2(r1+(r2-r1)*t+Math.sin(t*Math.PI)*bulge*r1,-l*t))}for(let i=0;i<=8;i++){const a=Math.PI/2*(i/8);pts.push(new THREE.Vector2(Math.cos(a)*r2+0.0005,-l-Math.sin(a)*r2))}return new THREE.LatheGeometry(pts.reverse(),28)}
+function limb(r1,r2,l,bulge=0.06){const pts=[];const N=14;pts.push(new THREE.Vector2(0.001,0));for(let i=0;i<=N;i++){const t=i/N;const r=r1+(r2-r1)*t+Math.sin(t*Math.PI)*bulge*r1;pts.push(new THREE.Vector2(r*(t<.06?.7+t*5:t>.94?.7+(1-t)*5:1),-l*t))}pts.push(new THREE.Vector2(0.001,-l));return new THREE.LatheGeometry(pts.reverse(),24)}
+const sph=(r,w=28,h=20)=>new THREE.SphereGeometry(r,w,h);
+const tor=(r,t,arc=Math.PI*2)=>new THREE.TorusGeometry(r,t,10,32,arc);
+const inkLine=(r,t,arc)=>new THREE.Mesh(tor(r,t,arc),flat(S.ink));
+
+// ===== BUILD "KAI" (detailed) =====
+const root=new THREE.Group();
+const hips=joint('hips',root,[0,4.6,0]);
+part(sph(0.56),'pants',hips,[0,-0.02,0],[0,0,0],[1.08,0.6,0.66]);
+const belt=part(tor(0.52,0.06),flat(S.ink),hips,[0,0.2,0],[Math.PI/2,0,0],[1,0.62,1],false);
+part(new THREE.BoxGeometry(0.16,0.12,0.04),'metal',hips,[0,0.2,0.33]);
+const spine=joint('spine',hips,[0,0.22,0]);
+part(limb(0.4,0.36,0.95,0.02),'skin',spine,[0,1.05,0],[0,0,0],[0.98,1.1,0.9]); // bare midriff, narrow waist
+const chest=joint('chest',spine,[0,0.9,0]);
+part(limb(0.52,0.4,0.62,0.08),'shirt',chest,[0,0.95,0],[0,0,0],[1,1,0.82]); // crop top
+part(sph(0.44),'shirt',chest,[0,0.64,-0.02],[0,0,0],[1.18,0.82,0.9]); // ribcage volume
+part(sph(0.3),'skin',chest,[0,0.98,-0.02],[0,0,0],[1.6,0.42,0.9],false); // shoulders/upper back
+part(sph(0.22),'shirt',chest,[0.16,0.6,0.25],[0,0,0],[1,0.9,0.75],false);part(sph(0.22),'shirt',chest,[-0.16,0.6,0.25],[0,0,0],[1,0.9,0.75],false); // bust
+part(sph(0.08,12,10),flat('#c8643a'),chest,[0,0.6,0.46],[0,0,0],[1,1,0.3],false); // flower print
+[0,1,2,3,4].forEach(i=>{const a=i*1.256;const pt=new THREE.Mesh(sph(0.045,10,8),flat('#c8643a'));pt.position.set(Math.cos(a)*0.08,0.6+Math.sin(a)*0.08,0.46);pt.scale.z=0.3;chest.add(pt)});
+[1,-1].forEach(x=>part(new THREE.CylinderGeometry(0.025,0.025,0.45,8),'shirt',chest,[x*0.22,1.05,0.05],[0,0,x*0.15])); // straps
+const neck=joint('neck',chest,[0,0.95,0]);part(limb(0.11,0.13,0.42,0),'skin',neck,[0,0.4,0]);
+const head=joint('head',neck,[0,0.4,0]);head.scale.setScalar(1.32);
+part(sph(0.5,36,28),'skin',head,[0,0.46,0],[0,0,0],[0.9,1.1,0.9]);
+part(sph(0.3),'skin',head,[0,0.2,0.12],[0,0,0],[1,0.8,1]); // jaw
+[1,-1].forEach(x=>{const ear=part(sph(0.11),'skin',head,[x*0.45,0.42,-0.02],[0,0,0],[0.45,1,0.75]);const il=inkLine(0.05,0.008,Math.PI);il.position.set(x*0.02,0,0.03);il.rotation.set(0,x*1.2,Math.PI/2*x);ear.add(il)});
+part(sph(0.06,12,10),'skin',head,[0,0.38,0.46],[0,0,0],[0.8,1,1.2]); // nose
+const eyes={};
+[['L',0.155],['R',-0.155]].forEach(([s,x])=>{const e=new THREE.Group();e.position.set(x,0.56,0.375);e.rotation.y=x*0.5;head.add(e);
+  const w=part(sph(0.15),'eye',e,[0,0,0],[0,0,0],[0.82,1.15,0.45]);
+  const p=new THREE.Mesh(sph(0.055,16,12),flat(S.ink));p.position.set(0,0,0.06);p.scale.set(1,1.25,0.15);e.add(p);
+  const hl=new THREE.Mesh(sph(0.016,8,6),flat('#ffffff'));hl.position.set(0.02,0.03,0.03);p.add(hl);
+  const lid=new THREE.Group();lid.scale.set(0.85,1.19,0.47);e.add(lid);
+  part(new THREE.SphereGeometry(0.158,28,14,0,Math.PI*2,0,Math.PI/2),'skin',lid,[0,0,0],[0,0,0],[1,1,1],false);
+  const lash=inkLine(0.158,0.025,Math.PI);lash.rotation.x=Math.PI/2;lid.add(lash);
+  
+  // brow = arc that wraps the skull surface (never floats in front of the eye from any angle)
+  const brow=new THREE.Group();/*thin brows*/brow.position.set(0,0.8,0);head.add(brow);
+  const bArc=new THREE.Mesh(new THREE.TorusGeometry(0.372,0.018,8,24,0.45),flat('#7a3420'));bArc.rotation.x=Math.PI/2;
+  const yaw=new THREE.Group();yaw.rotation.y=0.25-Math.acos(x/0.372);yaw.add(bArc);brow.add(yaw);brow.userData.side=x>0?1:-1;
+  [0.4,0.75].forEach((a,j)=>{const fl=new THREE.Mesh(new THREE.ConeGeometry(0.018,0.09,6),flat(S.ink));fl.position.set(Math.cos(a)*0.13*(x>0?1:-1)*0.85,Math.sin(a)*0.15*1.15,0.03);fl.rotation.z=(x>0?-1:1)*(0.9+j*0.3);e.add(fl)});
+  eyes[s]={e,w,p,lid,brow,yaw,c:0}});
+const mouth=inkLine(0.1,0.016,Math.PI);mouth.position.set(0,0.2,0.43);mouth.rotation.z=Math.PI;head.add(mouth);
+// hair: base cap + many graphic locks (smooth cones, ink outlined)
+// long straight ginger hair (pin 4): cap, curtain fringe over one eye side, long back panel, side locks
+part(sph(0.54,32,24),'hair',head,[0,0.88,-0.2],[0,0,0],[1.0,0.86,0.98]);
+part(limb(0.5,0.4,1.7,0.06),'hair',head,[0,0.75,-0.26],[0,0,0],[1.05,1,0.34]); // back curtain
+part(sph(0.42),'hair',head,[0,0.45,-0.2],[0,0,0],[1.1,1.1,0.6]); // nape fill
+[1,-1].forEach(x=>part(limb(0.12,0.08,0.75,0.1),'hair',head,[x*0.43,0.75,0.12],[0,0,x*-0.12],[1,1,0.6])); // side locks
+part(sph(0.34),'hair',head,[0.06,1.1,0.2],[0.45,0,-0.25],[1.25,0.38,0.55]); // swept fringe
+// freckles
+[[0.2,0.38],[0.26,0.33],[0.16,0.32],[-0.2,0.38],[-0.26,0.33],[-0.16,0.32]].forEach(([x,y])=>{const f=new THREE.Mesh(sph(0.012,6,5),flat('#b4603e'));f.position.set(x,y,0.4);head.add(f)});
+// arms
+function arm(s,x){const sh=joint('shoulder'+s,chest,[x*0.55,0.82,0]);
+  part(cLimb(0.1,0.085,0.82,0.1),'skin',sh,[0,0,0]);
+  const el=joint('elbow'+s,sh,[0,-0.82,0]);
+  part(cLimb(0.085,0.065,0.8,0.08),'skin',el,[0,0,0]);
+  const bang=part(tor(0.075,0.018),'metal',el,[0,-0.72,0],[Math.PI/2,0,0]); // bangle
+  const wr=joint('wrist'+s,el,[0,-0.82,0]);
+  part(cLimb(0.05,0.05,0.06,0),'skin',wr,[0,0.02,0]);part(sph(0.13),'skin',wr,[0,-0.12,0],[0,0,0],[0.85,1,0.45]);
+  [-0.075,-0.026,0.024,0.072].forEach((fx,i)=>{const f=joint('finger'+s+i,wr,[fx,-0.22,0]);const L=i===0||i===3?0.09:0.11;part(limb(0.026,0.024,L,0),'skin',f,[0,0,0]);
+    const f2=joint('finger'+s+i+'tip',f,[0,-L,0]);part(limb(0.024,0.02,L*0.85,0),'skin',f2,[0,0,0])});
+  const th=joint('thumb'+s,wr,[x*-0.09,-0.1,0.04]);th.rotation.z=x*0.5;part(limb(0.03,0.026,0.13,0),'skin',th,[0,0,0]);
+  sh.rotation.order='ZXY';sh.rotation.z=x*0.08}
+arm('L',1);arm('R',-1);
+// legs: denim cut-off shorts, bare thighs, brown knee boots
+function leg(s,x){const h=joint('hip'+s,hips,[x*0.27,-0.1,0]);h.rotation.order='ZXY';
+  part(cLimb(0.24,0.19,1.92,0.06),'skin',h,[0,0,0]);
+  part(limb(0.3,0.27,0.55,0.02),'pants',h,[0,0.05,0]); // shorts leg
+  [0,1,2,3].forEach(i=>{const t=new THREE.Mesh(new THREE.ConeGeometry(0.05,0.1,4),mat('pants'));const a=i*1.57+0.4;t.position.set(Math.cos(a)*0.27,-0.53,Math.sin(a)*0.27);t.rotation.x=Math.PI;h.add(t)}); // frayed hem
+  const k=joint('knee'+s,h,[0,-1.92,0]);
+  part(cLimb(0.19,0.2,1.86,0.05),'shoe',k,[0,0.12,0]); // knee boot shaft
+  part(tor(0.215,0.04),'shoe',k,[0,0.05,0],[Math.PI/2,0,0]); // boot cuff
+  const a=joint('ankle'+s,k,[0,-1.95,0]);
+  part(sph(0.2),'shoe',a,[0,-0.06,0.12],[0,0,0],[0.85,0.6,1.6]);
+  part(limb(0.2,0.21,0.07,0),'sole',a,[0,-0.15,0.12],[0,0,0],[0.85,1,1.6]);
+  part(new THREE.CylinderGeometry(0.07,0.06,0.2,10),'sole',a,[0,-0.2,-0.16]); // heel
+  [-0.3,-0.9,-1.5].forEach(y=>{const c=inkLine(0.205,0.008,Math.PI);c.rotation.x=Math.PI/2;c.position.y=y;k.add(c)})}
+leg('L',1);leg('R',-1);
+
+// ===== SCENE =====
+const cv=document.getElementById('c');const R=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true,preserveDrawingBuffer:true});R.setPixelRatio(Math.min(2,devicePixelRatio));
+const scene=new THREE.Scene();scene.add(root);
+const shadowDisc=new THREE.Mesh(new THREE.CircleGeometry(1.4,48),new THREE.MeshBasicMaterial({color:0x2a2440,transparent:true,opacity:0.22}));shadowDisc.rotation.x=-Math.PI/2;shadowDisc.position.y=0.35;shadowDisc.scale.set(1,0.55,1);scene.add(shadowDisc);
+const cam=new THREE.PerspectiveCamera(22,1,0.1,100);const tgt=new THREE.Vector3(0,4.7,0);
+let az=0.5,el=0.06,dist=26,mode='orbit',spin=false,twos=true,lastStep=-1;
+function place(c,a,e,d){c.position.set(tgt.x+d*Math.sin(a)*Math.cos(e),tgt.y+d*Math.sin(e),tgt.z+d*Math.cos(a)*Math.cos(e));c.up.set(0,1,0);if(Math.abs(e)>1.5)c.up.set(0,0,e>0?-1:1);c.lookAt(tgt)}
+const presets={front:[0,0],side:[Math.PI/2,0],back:[Math.PI,0],q34:[Math.PI/4,0.06],top:[0,1.5707],bottom:[0,-1.5707]};
+const lab=document.getElementById('labels');
+function setMode(m){mode=m;document.querySelectorAll('header [data-v]').forEach(b=>b.classList.toggle('on',b.dataset.v===m));
+  if(presets[m]){[az,el]=presets[m]}
+  lab.innerHTML=m==='turn'?['FRONT','3/4','SIDE','BACK'].map(t=>`<span>${t}</span>`).join(''):'';lab.style.gridTemplateColumns=m==='turn'?'repeat(4,1fr)':'1fr'}
+document.querySelectorAll('header [data-v]').forEach(b=>b.onclick=()=>setMode(b.dataset.v));
+document.getElementById('sheetB').onclick=e=>{sheet=!sheet;e.target.classList.toggle('on',sheet);if(!sheet){lab.style.gridAutoRows='';setMode(mode)}};
+document.getElementById('spin').onclick=e=>{spin=!spin;e.target.classList.toggle('on',spin)};
+document.getElementById('twos').onclick=e=>{twos=!twos;e.target.classList.toggle('on',twos)};
+document.getElementById('hatchB').onclick=e=>{U.hatch.value=U.hatch.value?0:1;e.target.classList.toggle('on',!!U.hatch.value)};
+document.getElementById('lw').oninput=e=>U.lineW.value=+e.target.value;
+let drag=null;cv.onpointerdown=e=>{drag=[e.clientX,e.clientY];cv.setPointerCapture(e.pointerId);if(mode==='turn')setMode('orbit')};
+cv.onpointermove=e=>{if(!drag)return;az-=(e.clientX-drag[0])*0.01;el=Math.max(-1.5707,Math.min(1.5707,el+(e.clientY-drag[1])*0.01));drag=[e.clientX,e.clientY];document.querySelectorAll('header [data-v]').forEach(b=>b.classList.toggle('on',b.dataset.v==='orbit'));mode='orbit'};
+cv.onpointerup=()=>drag=null;cv.onwheel=e=>{e.preventDefault();dist=Math.max(8,Math.min(50,dist+e.deltaY*0.015))};
+function size(){const r=cv.parentElement.getBoundingClientRect();R.setSize(r.width,r.height,false)}
+addEventListener('resize',size);size();
+function bg(){return getComputedStyle(document.body).backgroundColor}
+let blinkMul=1;
+function loop(t){if(window.HOLD)return;requestAnimationFrame(loop);
+  // animate "on twos": only redraw 12 times a second like hand-drawn animation
+  const step=Math.floor(t/(twos?83.3:16.6));if(step===lastStep)return;lastStep=step;U.time.value=twos?step*0.0833:t/1000;
+  const w=cv.clientWidth,h=cv.clientHeight;R.setClearColor(new THREE.Color(bg()));
+  if(spin&&mode!=='turn')az+=twos?0.05:0.01;
+  chest.scale.y=1+Math.sin(t*0.002)*0.012;const bl=(t%3800)<160;if(!sheet)applyEyes(bl&&!FS.eye2d);
+  R.setScissorTest(true);
+  if(sheet){renderSheet(w,h);return}
+  if(mode==='turn'){const vw=w/4;U.res.value.set(vw,h);[[0,0],[Math.PI/4,0],[Math.PI/2,0],[Math.PI,0]].forEach(([a,e],i)=>{cam.aspect=vw/h;cam.updateProjectionMatrix();place(cam,a,e,dist*1.15);R.setViewport(i*vw,0,vw,h);R.setScissor(i*vw,0,vw,h);R.render(scene,cam)})}
+  else{U.res.value.set(w,h);cam.aspect=w/h;cam.updateProjectionMatrix();place(cam,az,el,dist);R.setViewport(0,0,w,h);R.setScissor(0,0,w,h);R.render(scene,cam)}}
+
+// ===== JOINT CONTROLS =====
+const groups={Body:['hips','spine','chest','neck','head'],'Left arm':['shoulderL','elbowL','wristL','thumbL','fingerL0','fingerL0tip','fingerL1','fingerL1tip','fingerL2','fingerL2tip','fingerL3','fingerL3tip'],'Right arm':['shoulderR','elbowR','wristR','thumbR','fingerR0','fingerR0tip','fingerR1','fingerR1tip','fingerR2','fingerR2tip','fingerR3','fingerR3tip'],'Left leg':['hipL','kneeL','ankleL'],'Right leg':['hipR','kneeR','ankleR']};
+
+// ===== JOINT LIMITS (cartoon-safe): elbows/knees are hinges, fingers curl one way =====
+const LIM={elbow:{x:[-150,0],y:[0,0],z:[0,0]},knee:{x:[0,150],y:[0,0],z:[0,0]},tip:{x:[0,100],y:[0,0],z:[0,0]},wrist:{x:[-70,70],y:[-80,80],z:[-40,40]},neck:{x:[-30,30],y:[-50,50],z:[-25,25]},head:{x:[-35,35],y:[-60,60],z:[-25,25]}};
+function limFor(n){if(/tip$/.test(n))return LIM.tip;for(const k of ['elbow','knee','wrist','neck','head'])if(n.startsWith(k))return LIM[k];return null}
+function clampJ(n,ax,deg){const L=limFor(n);if(!L)return deg;return Math.max(L[ax][0],Math.min(L[ax][1],deg))}
+// ===== BODY COLLISION: arms are pushed out of the torso, never through it =====
+const _v=new THREE.Vector3();
+function insideTorso(obj,off,margin){_v.set(...off);obj.localToWorld(_v);spine.worldToLocal(_v);const y=_v.y;if(y<-0.55||y>1.95)return false;
+  const rx=(y>0.9?0.54:0.42)+margin,rz=(y>0.9?0.42:0.32)+margin;return (_v.x*_v.x)/(rx*rx)+(_v.z*_v.z)/(rz*rz)<1}
+function solveCollisions(){root.updateMatrixWorld(true);['L','R'].forEach(s=>{const sh=J['shoulder'+s],sg=s==='L'?1:-1;
+  for(let i=0;i<60;i++){root.updateMatrixWorld(true);
+    const hit=[[J['elbow'+s],[0,-0.4,0],0.1],[J['elbow'+s],[0,-0.8,0],0.09],[J['wrist'+s],[0,-0.15,0],0.07],[J['wrist'+s],[0,-0.3,0],0.04]].some(([o,off,m])=>insideTorso(o,off,m));
+    if(!hit)break;sh.rotation.z+=sg*0.03}
+  const inp=inputs['shoulder'+s+'z'];if(inp){inp.value=Math.round(sh.rotation.z*57.3);inp.nextSibling.textContent=inp.value}})}
+const base={};Object.entries(J).forEach(([n,j])=>base[n]=j.rotation.toArray().slice(0,3));
+const inputs={};const jd=document.getElementById('joints');
+Object.entries(groups).forEach(([g,list],gi)=>{const d=document.createElement('details');if(gi<2)d.open=true;d.innerHTML=`<summary>${g}</summary>`;
+  list.forEach(n=>{const h=document.createElement('div');h.innerHTML=`<div style="margin-top:6px;font-size:12px">${n}</div>`;
+    ['x','y','z'].forEach((ax,i)=>{const l=document.createElement('label');const v=Math.round(base[n][i]*57.3);
+      l.innerHTML=`<b>${ax.toUpperCase()}</b><input type=range min=-180 max=180 value=${v}><output>${v}</output>`;
+      const inp=l.querySelector('input');inp.oninput=()=>{const c=clampJ(n,ax,+inp.value);inp.value=c;J[n].rotation[ax]=c/57.3;solveCollisions();l.querySelector('output').textContent=inp.value};
+      inputs[n+ax]=inp;h.appendChild(l)});d.appendChild(h)});jd.appendChild(d)});
+function setJ(n,ax,deg){deg=clampJ(n,ax,deg);J[n].rotation[ax]=deg/57.3;if(inputs[n+ax]){inputs[n+ax].value=deg;inputs[n+ax].nextSibling.textContent=Math.round(deg)}}
+function reset(){Object.entries(base).forEach(([n,r])=>['x','y','z'].forEach((a,i)=>setJ(n,a,r[i]*57.3)))}
+document.getElementById('reset').onclick=reset;
+const poses={'T-pose':{shoulderL:[0,0,90],shoulderR:[0,0,-90]},
+ 'Hands in pockets':{shoulderL:[8,-90,14],elbowL:[-25,0,0],wristL:[0,0,10],shoulderR:[8,90,-14],elbowR:[-25,0,0],wristR:[0,0,-10]},
+ 'Wave':{shoulderR:[0,-90,-80],elbowR:[-100,0,0],wristR:[0,0,-10],head:[0,-10,8]},
+ 'Hand on hip (pin 1)':{shoulderL:[-8,-90,42],elbowL:[-100,0,0],wristL:[20,0,0],shoulderR:[-25,70,-30],elbowR:[-70,0,0],wristR:[-20,0,0],hipL:[0,0,4],hipR:[0,0,-6],chest:[0,0,-4],head:[0,0,-8]},
+ 'Arms crossed (pin 6)':{shoulderL:[-30,-75,18],elbowL:[-115,0,0],shoulderR:[-38,75,-18],elbowR:[-110,0,0]},
+ 'Fist':{fingerR0tip:[80,0,0],fingerR1tip:[80,0,0],fingerR2tip:[80,0,0],fingerR3tip:[80,0,0],fingerR0:[70,0,0],fingerR1:[70,0,0],fingerR2:[70,0,0],fingerR3:[70,0,0],shoulderR:[-40,90,-10],elbowR:[-90,0,0]},
+ 'Walk':{hipL:[-25,0,0],kneeL:[5,0,0],hipR:[16,0,0],kneeR:[22,0,0],shoulderL:[20,0,8],shoulderR:[-20,0,-8],elbowL:[-15,0,0],elbowR:[-25,0,0]}};
+const pd=document.getElementById('poses');Object.entries(poses).forEach(([n,p])=>{const b=document.createElement('button');b.textContent=n;b.onclick=()=>{reset();Object.entries(p).forEach(([j,r])=>['x','y','z'].forEach((a,i)=>setJ(j,a,r[i])));solveCollisions()};pd.appendChild(b)});
+// expressions (pin 5 eye sheet subset)
+// ===== FACE RIG v1: 2D-drawn face on a 3D head (Spider-Verse style face decal) =====
+// Learned from the 2 emotion-challenge sheets: emotion = eye SHAPE (lids, squints, closed arcs, tiny/heart/swirl pupils)
+// + brow ANGLE (V angry, inner-up sad, one-up skeptic) + MOUTH SHAPE (open D, teeth, tongue, wavy, o, scream)
+// + EXTRAS (blush, tears, sweat drop, gloom shadow + lines, anger vein, sparkles, stars).
+mouth.visible=false;
+const FW=1024,FH=768,fcv=document.createElement('canvas');fcv.width=FW;fcv.height=FH;const fx=fcv.getContext('2d');
+const ftex=new THREE.CanvasTexture(fcv);ftex.anisotropy=4;
+const PH0=Math.PI/2-1.25,PHL=2.5,TH0=0.12,THL=2.0; // face patch: front 143deg wide, crown to chin
+const fGeo=new THREE.SphereGeometry(0.5,64,48,PH0,PHL,TH0,THL);
+{const pos=fGeo.attributes.position,v=new THREE.Vector3();for(let i=0;i<pos.count;i++){v.fromBufferAttribute(pos,i);
+  v.x*=0.9;v.y*=1.1;v.z*=0.9;v.y+=0.46;const d=v.clone().sub(new THREE.Vector3(0,0.46,0)).normalize();
+  // push out of the jaw ellipsoid (centre 0,.2,.12, radii .3,.24,.3) so the decal sits on the chin too
+  for(let k=0;k<40;k++){const q=(v.x/0.3)**2+((v.y-0.2)/0.24)**2+((v.z-0.12)/0.3)**2;if(q>=1)break;v.addScaledVector(d,0.004)}
+  v.addScaledVector(d,0.004);pos.setXYZ(i,v.x,v.y,v.z)}fGeo.computeVertexNormals()}
+const faceDecal=new THREE.Mesh(fGeo,new THREE.MeshBasicMaterial({map:ftex,transparent:true,depthWrite:false}));faceDecal.renderOrder=2;head.add(faceDecal);
+function fc(x,y,z){const X=x/0.9,Y=(y-0.46)/1.1,Z=z/0.9,r=Math.hypot(X,Y,Z);const th=Math.acos(Y/r),ph=Math.atan2(Z,-X);return[(ph-PH0)/PHL*FW,(th-TH0)/THL*FH]}
+const FP={eyeL:fc(0.155,0.56,0.42),eyeR:fc(-0.155,0.56,0.42),mouth:fc(0,0.2,0.43),cheekL:fc(0.27,0.36,0.36),cheekR:fc(-0.27,0.36,0.36),brow:fc(0,0.86,0.4),temple:fc(0.38,0.7,0.2)};
+const INK='#141418',MOUTH='#5a1420',TONGUE='#e0626f',TEETH='#fbf8f2';
+function stroke(w){fx.lineWidth=w;fx.strokeStyle=INK;fx.lineCap='round';fx.lineJoin='round';fx.stroke()}
+function fillInk(c){fx.fillStyle=c;fx.fill();stroke(7)}
+// ---------- mouth library (each draws around FP.mouth, sc = size, op = openness) ----------
+const MOUTHS={
+ smile:(x,y,s)=>{fx.beginPath();fx.moveTo(x-46*s,y-6);fx.quadraticCurveTo(x,y+40*s,x+46*s,y-6);stroke(9)},
+ smirk:(x,y,s)=>{fx.beginPath();fx.moveTo(x-40*s,y+4);fx.quadraticCurveTo(x+10,y+16*s,x+46*s,y-18*s);stroke(9)},
+ flat:(x,y,s)=>{fx.beginPath();fx.moveTo(x-36*s,y+4);fx.lineTo(x+36*s,y+4);stroke(9)},
+ frown:(x,y,s)=>{fx.beginPath();fx.moveTo(x-42*s,y+18);fx.quadraticCurveTo(x,y-22*s,x+42*s,y+18);stroke(9)},
+ wavy:(x,y,s)=>{fx.beginPath();fx.moveTo(x-50*s,y);for(let i=1;i<=6;i++)fx.quadraticCurveTo(x-50*s+(i-.5)*16.6*s,y+(i%2?-12:12)*s,x-50*s+i*16.6*s,y);stroke(8)},
+ cat:(x,y,s)=>{fx.beginPath();fx.moveTo(x-40*s,y-6);fx.quadraticCurveTo(x-20*s,y+22*s,x,y);fx.quadraticCurveTo(x+20*s,y+22*s,x+40*s,y-6);stroke(8)},
+ o:(x,y,s,op)=>{fx.beginPath();fx.ellipse(x,y+8,16*s,(16+22*op)*s,0,0,7);fillInk(MOUTH)},
+ grin:(x,y,s,op)=>{const h=(30+40*op)*s;fx.beginPath();fx.moveTo(x-60*s,y-10);fx.quadraticCurveTo(x,y-2,x+60*s,y-10);fx.quadraticCurveTo(x+50*s,y+h,x,y+h);fx.quadraticCurveTo(x-50*s,y+h,x-60*s,y-10);fx.closePath();
+   fx.save();fx.fillStyle=MOUTH;fx.fill();fx.clip();fx.fillStyle=TEETH;fx.fillRect(x-70*s,y-20,140*s,22*s);fx.fillStyle=TONGUE;fx.beginPath();fx.ellipse(x,y+h,40*s,26*s*op+10,0,0,7);fx.fill();fx.restore();
+   fx.beginPath();fx.moveTo(x-60*s,y-10);fx.quadraticCurveTo(x,y-2,x+60*s,y-10);fx.quadraticCurveTo(x+50*s,y+h,x,y+h);fx.quadraticCurveTo(x-50*s,y+h,x-60*s,y-10);fx.closePath();stroke(8)},
+ scream:(x,y,s,op)=>{const h=(50+60*op)*s;fx.beginPath();fx.moveTo(x-34*s,y-14);fx.quadraticCurveTo(x,y-26*s,x+34*s,y-14);fx.quadraticCurveTo(x+44*s,y+h,x,y+h);fx.quadraticCurveTo(x-44*s,y+h,x-34*s,y-14);fx.closePath();
+   fx.save();fx.fillStyle=MOUTH;fx.fill();fx.clip();fx.fillStyle=TONGUE;fx.beginPath();fx.ellipse(x,y+h,34*s,22*s,0,0,7);fx.fill();fx.restore();
+   fx.beginPath();fx.moveTo(x-34*s,y-14);fx.quadraticCurveTo(x,y-26*s,x+34*s,y-14);fx.quadraticCurveTo(x+44*s,y+h,x,y+h);fx.quadraticCurveTo(x-44*s,y+h,x-34*s,y-14);fx.closePath();stroke(8)},
+ sad_open:(x,y,s,op)=>{const h=(22+24*op)*s;fx.beginPath();fx.moveTo(x-44*s,y+h);fx.quadraticCurveTo(x,y-h*0.8,x+44*s,y+h);fx.quadraticCurveTo(x,y+h*0.6,x-44*s,y+h);fx.closePath();fillInk(MOUTH)},
+ teeth:(x,y,s)=>{const w=56*s,h=26*s;fx.beginPath();fx.roundRect(x-w,y-h/2,2*w,h+6,10);fx.fillStyle=TEETH;fx.fill();stroke(7);
+   fx.beginPath();fx.moveTo(x-w,y+3);fx.lineTo(x+w,y+3);for(let i=-3;i<=3;i++){fx.moveTo(x+i*w/3.5,y-h/2);fx.lineTo(x+i*w/3.5,y+h/2+6)}stroke(4)},
+ tongue:(x,y,s)=>{fx.beginPath();fx.ellipse(x+8,y+16*s,16*s,20*s,0,0,7);fx.fillStyle=TONGUE;fx.fill();stroke(6);fx.beginPath();fx.moveTo(x+8,y+6);fx.lineTo(x+8,y+24*s);stroke(3);MOUTHS.smile(x,y,s)},
+ tiny_o:(x,y,s)=>{fx.beginPath();fx.ellipse(x,y+6,9*s,11*s,0,0,7);fillInk(MOUTH)},
+};
+// ---------- closed / drawn eye shapes (3D eye is hidden when one of these is used) ----------
+const EYES2D={
+ happy:(x,y,sd)=>{fx.beginPath();fx.moveTo(x-44,y+12);fx.quadraticCurveTo(x,y-40,x+44,y+12);stroke(11)},          // ^ ^
+ squeeze:(x,y,sd)=>{fx.beginPath();fx.moveTo(x-40*sd,y-28);fx.lineTo(x+30*sd,y);fx.lineTo(x-40*sd,y+28);stroke(11)}, // > <
+ line:(x,y)=>{fx.beginPath();fx.moveTo(x-42,y+4);fx.lineTo(x+42,y+4);stroke(10)},                                 // - -
+ sleepy:(x,y)=>{fx.beginPath();fx.moveTo(x-42,y-4);fx.quadraticCurveTo(x,y+30,x+42,y-4);stroke(10)},                // u u
+ wink:(x,y,sd)=>{fx.beginPath();fx.moveTo(x-40,y+6);fx.quadraticCurveTo(x,y-20,x+40,y+6);stroke(10)},
+};
+// ---------- extras ----------
+function blush(a,lines){[FP.cheekL,FP.cheekR].forEach(([x,y])=>{const g=fx.createRadialGradient(x,y,4,x,y,70);g.addColorStop(0,`rgba(240,90,110,${0.55*a})`);g.addColorStop(1,'rgba(240,90,110,0)');fx.fillStyle=g;fx.beginPath();fx.ellipse(x,y,110,60,0,0,7);fx.fill();
+  if(lines){fx.beginPath();for(let i=-1;i<=1;i++){fx.moveTo(x+i*22-8,y+10);fx.lineTo(x+i*22+8,y-10)}fx.lineWidth=4;fx.strokeStyle='rgba(200,50,70,.8)';fx.stroke()}})}
+function tears(a){[FP.eyeL,FP.eyeR].forEach(([x,y],i)=>{fx.beginPath();const sx=x+(i?-36:36);fx.moveTo(sx-20,y+60);fx.quadraticCurveTo(sx-40,y+60+200*a,sx,y+70+230*a);fx.quadraticCurveTo(sx+40,y+60+200*a,sx+20,y+60);fx.closePath();fx.fillStyle='rgba(120,200,255,.85)';fx.fill();fx.lineWidth=4;fx.strokeStyle='#2a6fb0';fx.stroke()})}
+function sweat(){const[x0,y0]=FP.temple;fx.save();fx.translate(x0,y0);fx.scale(1.8,1.8);const x=0,y=0;fx.beginPath();fx.moveTo(x,y-40);fx.quadraticCurveTo(x+30,y+10,x,y+26);fx.quadraticCurveTo(x-30,y+10,x,y-40);fx.fillStyle='#9fd8ff';fx.fill();fx.lineWidth=5;fx.strokeStyle='#2a6fb0';fx.stroke();fx.restore()}
+function gloom(a){const[x,y]=FP.brow;const g=fx.createLinearGradient(0,y-160,0,y+90);g.addColorStop(0,`rgba(60,40,110,${0.6*a})`);g.addColorStop(1,'rgba(60,40,110,0)');fx.fillStyle=g;fx.fillRect(0,0,FW,y+90);
+  fx.beginPath();for(let i=-3;i<=3;i++){fx.moveTo(x+i*40,y-70);fx.lineTo(x+i*40,y+10)}fx.lineWidth=6;fx.strokeStyle=`rgba(30,20,60,${0.8*a})`;fx.stroke()}
+function vein(){const[x,y]=FP.temple;fx.save();fx.translate(x-10,y-60);fx.scale(1.8,1.8);fx.strokeStyle='#d0203a';fx.lineWidth=9;fx.lineCap='round';[[0,1],[1,0],[0,-1],[-1,0]].forEach(([dx,dy])=>{fx.beginPath();fx.moveTo(dx*12+dy*10,dy*12-dx*10);fx.quadraticCurveTo(dx*30,dy*30,dx*12-dy*10,dy*12+dx*10);fx.stroke()});fx.restore()}
+function sparkle(){[[FP.temple[0]+20,FP.temple[1]-120],[FW-FP.temple[0]-20,FP.temple[1]-100]].forEach(([x,y])=>{fx.beginPath();fx.moveTo(x,y-26);fx.lineTo(x+7,y-7);fx.lineTo(x+26,y);fx.lineTo(x+7,y+7);fx.lineTo(x,y+26);fx.lineTo(x-7,y+7);fx.lineTo(x-26,y);fx.lineTo(x-7,y-7);fx.closePath();fx.fillStyle='#ffd84a';fx.fill();stroke(4)})}
+// ---------- pupil overlays (heart / swirl / star) on a small plane in front of each eye ----------
+const pupTex={};function pupilTexture(kind){if(pupTex[kind])return pupTex[kind];const c=document.createElement('canvas');c.width=c.height=128;const g=c.getContext('2d');g.translate(64,64);g.lineWidth=8;g.strokeStyle=INK;g.lineCap='round';
+ if(kind==='heart'){g.beginPath();g.moveTo(0,40);g.bezierCurveTo(-70,-10,-30,-60,0,-24);g.bezierCurveTo(30,-60,70,-10,0,40);g.fillStyle='#e8284a';g.fill();g.stroke()}
+ if(kind==='swirl'){g.beginPath();for(let a=0;a<18;a+=0.1){const r=a*3.2;g.lineTo(Math.cos(a)*r,Math.sin(a)*r)}g.stroke()}
+ if(kind==='star'){g.beginPath();for(let i=0;i<10;i++){const r=i%2?20:50,a=i*Math.PI/5-Math.PI/2;g.lineTo(Math.cos(a)*r,Math.sin(a)*r)}g.closePath();g.fillStyle='#ffd84a';g.fill();g.stroke()}
+ return pupTex[kind]=new THREE.CanvasTexture(c)}
+Object.values(eyes).forEach(o=>{const pl=new THREE.Mesh(new THREE.PlaneGeometry(0.26,0.3),new THREE.MeshBasicMaterial({transparent:true,depthWrite:false}));pl.position.z=0.07;pl.visible=false;pl.renderOrder=3;o.e.add(pl);o.over=pl;
+  // lower lid: skin hemisphere rising from below (smug, squint, sad, cheeky smile)
+  const low=new THREE.Group();low.scale.set(0.85,1.19,0.47);o.e.add(low);part(new THREE.SphereGeometry(0.158,28,14,0,Math.PI*2,Math.PI/2,Math.PI/2),'skin',low,[0,0,0],[0,0,0],[1,1,1],false);
+  const ll=inkLine(0.158,0.014,Math.PI);ll.rotation.x=-Math.PI/2;low.add(ll);o.low=low});
+// ---------- expression state + presets (named after the cells on the two sheets) ----------
+const F0={lid:0,low:0,lidTilt:0,browY:0,browTilt:0,browAsym:0,pup:1,lookX:0,lookY:0,pupilKind:'dot',eye2d:'',mouth:'smile',mOpen:0.5,mSize:1,mX:0,blush:0,blushLines:0,tears:0,sweat:0,gloom:0,vein:0,sparkle:0};
+let FS={...F0};
+const EXPR={
+ 'Neutral':{mouth:'flat',mSize:0.7},
+ 'Happy':{mouth:'smile',low:0.15},
+ 'Big laugh':{eye2d:'happy',mouth:'grin',mOpen:1,browY:0.04,blush:0.6},
+ 'Joy ^^':{eye2d:'happy',mouth:'grin',mOpen:0.5,blush:0.4},
+ 'Smug':{lid:0.42,low:0.2,lidTilt:-0.1,mouth:'smirk',browAsym:0.05,lookX:0.04},
+ 'Love':{pupilKind:'heart',mouth:'grin',mOpen:0.3,blush:1,blushLines:1},
+ 'Starstruck':{pupilKind:'star',mouth:'grin',mOpen:0.8,browY:0.06,sparkle:1},
+ 'Wink + tongue':{eye2d:'',mouth:'tongue',lid:0,wink:1,browAsym:0.04},
+ 'Cheeky :3':{lid:0.3,low:0.25,mouth:'cat',blush:0.5},
+ 'Shocked':{pup:0.45,browY:0.09,mouth:'scream',mOpen:0.7},
+ 'Scared':{pup:0.5,browY:0.06,browTilt:-0.25,mouth:'wavy',sweat:1,gloom:0.5},
+ 'Horror':{pup:0.35,browY:0.08,browTilt:-0.2,mouth:'scream',mOpen:1,gloom:1,sweat:1},
+ 'Sad':{lid:0.35,lidTilt:0.22,browTilt:-0.3,mouth:'frown',lookY:-0.02},
+ 'Crying':{eye2d:'squeeze',browTilt:-0.3,mouth:'sad_open',mOpen:1,tears:1,blush:0.4},
+ 'Teary':{lid:0.2,lidTilt:0.2,browTilt:-0.3,mouth:'wavy',tears:0.35,pup:1.25},
+ 'Angry':{lid:0.35,lidTilt:-0.35,browY:-0.02,browTilt:0.35,mouth:'teeth',vein:1},
+ 'Furious':{eye2d:'',lid:0.25,lidTilt:-0.4,browTilt:0.4,mouth:'scream',mOpen:0.6,pup:0.6,vein:1,gloom:0.4},
+ 'Annoyed':{lid:0.5,low:0.15,browTilt:0.15,mouth:'flat',lookX:0.05},
+ 'Skeptical':{lid:0.3,browAsym:0.08,browTilt:0.1,mouth:'smirk',lookX:-0.04},
+ 'Embarrassed':{lid:0.25,lidTilt:0.12,browTilt:-0.2,mouth:'wavy',blush:1,blushLines:1,sweat:1,lookX:0.05},
+ 'Grimace':{lid:0.2,browTilt:-0.15,mouth:'teeth',sweat:1},
+ 'Sleepy':{eye2d:'sleepy',mouth:'tiny_o'},
+ 'Dizzy':{pupilKind:'swirl',mouth:'wavy',browTilt:-0.2},
+ 'Determined':{lid:0.3,lidTilt:-0.2,browTilt:0.25,low:0.1,mouth:'smirk',mSize:0.8},
+ 'Disgusted':{lid:0.35,low:0.3,browTilt:0.2,browAsym:0.04,mouth:'wavy',mSize:0.7,lookX:0.05},
+ 'Pout':{lid:0.2,browTilt:-0.1,mouth:'tiny_o',mSize:1.2,blush:0.3},
+};
+function drawFace(){fx.clearRect(0,0,FW,FH);const s=FS;
+ if(s.gloom)gloom(s.gloom);if(s.blush)blush(s.blush,s.blushLines);
+ const E2=(f,x,y,sd)=>{fx.save();fx.translate(x,y);fx.scale(1.7,1.5);f(0,0,sd);fx.restore()};
+ if(s.eye2d){[FP.eyeL,FP.eyeR].forEach(([x,y],i)=>E2(EYES2D[s.eye2d],x,y,i?1:-1))}
+ else if(s.wink){E2(EYES2D.wink,FP.eyeR[0],FP.eyeR[1])}
+ const[mx,my]=FP.mouth;fx.save();fx.translate(mx+s.mX*FW,my);fx.scale(2.4,2.2);MOUTHS[s.mouth](0,0,s.mSize,s.mOpen);fx.restore();
+ if(s.tears)tears(s.tears);if(s.sweat)sweat();if(s.vein)vein();if(s.sparkle)sparkle();ftex.needsUpdate=true}
+function applyEyes(blink){Object.entries(eyes).forEach(([k,o])=>{const side=k==='L'?1:-1;const s=FS;
+  const hide2d=!!s.eye2d||(s.wink&&k==='R');o.e.visible=!hide2d;
+  const c=blink?1:s.lid;o.lid.visible=c>0.04;o.lid.rotation.x=-Math.PI/2+(0.38+0.62*c)*Math.PI;o.lid.rotation.z=side*s.lidTilt;
+  o.low.visible=s.low>0.02;o.low.rotation.x=Math.PI/2*(1-1.15*s.low);
+  const fancy=s.pupilKind!=='dot';o.p.visible=!fancy&&c<0.92;o.p.scale.set(s.pup,1.25*s.pup,0.15);o.p.position.x=s.lookX;o.p.position.y=s.lookY;o.p.position.z=0.0675*Math.sqrt(Math.max(0,1-(s.lookX/0.123)**2-(s.lookY/0.1725)**2))-0.004;
+  o.over.visible=fancy&&c<0.92;if(fancy){o.over.material.map=pupilTexture(s.pupilKind);o.over.material.needsUpdate=true}
+  o.brow.position.y=0.8+s.browY*0.6+side*s.browAsym*0.5;o.yaw.rotation.z=side*s.browTilt*0.9})}
+function setExpr(e){FS={...F0,...e};drawFace();applyEyes(false);syncFaceUI()}
+// ---------- UI: preset grid + manual face sliders ----------
+const fd=document.getElementById('faces');fd.innerHTML='';
+Object.keys(EXPR).forEach(n=>{const b=document.createElement('button');b.textContent=n;b.onclick=()=>setExpr(EXPR[n]);fd.appendChild(b)});
+const fdet=document.createElement('details');fdet.innerHTML='<summary>Face controls</summary>';fd.after(fdet);
+const FUI={};
+[['lid',0,1],['low',0,1],['lidTilt',-0.5,0.5],['browY',-0.05,0.12],['browTilt',-0.5,0.5],['browAsym',-0.1,0.1],['pup',0.3,1.6],['lookX',-0.07,0.07],['lookY',-0.06,0.06],['mOpen',0,1],['mSize',0.5,1.6],['mX',-0.06,0.06],['blush',0,1],['tears',0,1],['gloom',0,1]].forEach(([k,a,b])=>{
+  const l=document.createElement('label');l.style.gridTemplateColumns='70px 1fr 40px';l.innerHTML=`${k}<input type=range min=${a} max=${b} step=0.01><output></output>`;const i=l.querySelector('input');
+  i.oninput=()=>{FS[k]=+i.value;l.querySelector('output').textContent=(+i.value).toFixed(2);drawFace();applyEyes(false)};FUI[k]=i;fdet.appendChild(l)});
+[['mouth',Object.keys(MOUTHS)],['eye2d',['',...Object.keys(EYES2D)]],['pupilKind',['dot','heart','star','swirl']]].forEach(([k,opts])=>{const l=document.createElement('label');l.style.gridTemplateColumns='70px 1fr';
+  l.innerHTML=`${k}<select>${opts.map(o=>`<option>${o}</option>`).join('')}</select>`;const sel=l.querySelector('select');sel.onchange=()=>{FS[k]=sel.value;drawFace();applyEyes(false)};FUI[k]=sel;fdet.appendChild(l)});
+[['sweat'],['vein'],['sparkle'],['blushLines']].forEach(([k])=>{const l=document.createElement('label');l.style.gridTemplateColumns='70px 1fr';l.innerHTML=`${k}<input type=checkbox>`;const c=l.querySelector('input');c.onchange=()=>{FS[k]=c.checked?1:0;drawFace()};FUI[k]=c;fdet.appendChild(l)});
+function syncFaceUI(){Object.entries(FUI).forEach(([k,i])=>{if(i.type==='checkbox')i.checked=!!FS[k];else{i.value=FS[k];if(i.nextElementSibling)i.nextElementSibling.textContent=typeof FS[k]==='number'?FS[k].toFixed(2):''}})}
+// ---------- expression sheet mode: renders a grid of heads, one per preset ----------
+let sheet=false;
+function renderSheet(w,h){R.setScissor(0,0,w,h);R.setViewport(0,0,w,h);R.clear();const names=Object.keys(EXPR),cols=w>700?6:3,rows=Math.ceil(names.length/cols),tw=w/cols,th=h/rows;const keep=FS;
+  names.forEach((n,i)=>{FS={...F0,...EXPR[n]};drawFace();applyEyes(false);const cx=i%cols,cy=rows-1-Math.floor(i/cols);
+    cam.aspect=tw/th;cam.updateProjectionMatrix();const t0=tgt.y;tgt.y=7.75;place(cam,0.35,0.04,7.2);tgt.y=t0;U.res.value.set(tw,th);
+    R.setViewport(cx*tw,cy*th,tw,th);R.setScissor(cx*tw,cy*th,tw,th);R.render(scene,cam)});
+  FS=keep;drawFace();applyEyes(false);
+  lab.innerHTML=names.map(n=>`<span style="align-self:start;margin:4px 0 0">${n}</span>`).join('');lab.style.gridTemplateColumns=`repeat(${cols},1fr)`;lab.style.gridAutoRows=`${100/rows}%`}
+setExpr(EXPR['Happy']);
+
+setMode('orbit');requestAnimationFrame(loop);
+
+// ===== DumDown TL hook: headless snapshot API for the act engine =====
+window.HOLD=true;shadowDisc.visible=false;
+(function(){const sp=window.SPEC||{};
+ if(sp.bald||sp.mask){scene.traverse(o=>{if(o.isMesh&&o.material===mats.hair){o.visible=false;o.children.forEach(c=>c.visible=false)}})}
+ if(sp.cover){const up=o=>{let n=o;while(n){if(n===head||n===neck||(n.name&&/^(wrist|finger|thumb)/.test(n.name)))return 'keep';if(n.name&&/^(hip|knee|ankle)[LR]$/.test(n.name))return 'leg';n=n.parent}return 'body'};
+  scene.traverse(o=>{if(o.isMesh&&o.material===mats.skin){const w=up(o);if(w==='body')o.material=mat('sleeve');else if(w==='leg')o.material=mat('pants')}})}
+ if(sp.sx||sp.sy){root.scale.set(sp.sx||1,sp.sy||1,sp.sx||1)}
+ if(sp.headS)head.scale.setScalar(1.32*sp.headS);
+})();
+const XP={idle:{shoulderL:[4,0,6],shoulderR:[4,0,-6],elbowL:[-12,0,0],elbowR:[-12,0,0]},
+ talk:{shoulderR:[-35,40,-18],elbowR:[-70,0,0],wristR:[-20,0,0],shoulderL:[4,0,6],elbowL:[-12,0,0],head:[0,-6,4]},
+ talk2:{shoulderL:[-35,-40,18],elbowL:[-70,0,0],wristL:[-20,0,0],shoulderR:[-20,30,-14],elbowR:[-55,0,0],head:[0,8,-4]},
+ point:{shoulderR:[-80,10,-10],elbowR:[-8,0,0],wristR:[0,0,0],fingerR0:[70,0,0],fingerR0tip:[80,0,0],fingerR2:[70,0,0],fingerR2tip:[80,0,0],fingerR3:[70,0,0],fingerR3tip:[80,0,0],shoulderL:[4,0,6],elbowL:[-12,0,0]},
+ shrug:{shoulderL:[-10,-60,40],elbowL:[-95,0,0],wristL:[30,0,0],shoulderR:[-10,60,-40],elbowR:[-95,0,0],wristR:[30,0,0],head:[0,0,10],chest:[0,0,0]},
+ cross:{shoulderL:[-30,-75,18],elbowL:[-115,0,0],shoulderR:[-38,75,-18],elbowR:[-110,0,0]},
+ hip:{shoulderL:[-8,-90,42],elbowL:[-100,0,0],wristL:[20,0,0],shoulderR:[-25,70,-30],elbowR:[-70,0,0],wristR:[-20,0,0],hipL:[0,0,4],hipR:[0,0,-6],chest:[0,0,-4],head:[0,0,-8]},
+ pockets:{shoulderL:[8,-90,14],elbowL:[-25,0,0],wristL:[0,0,10],shoulderR:[8,90,-14],elbowR:[-25,0,0],wristR:[0,0,-10]},
+ wave:{shoulderR:[0,-90,-80],elbowR:[-100,0,0],wristR:[0,0,-10],head:[0,-10,8]},
+ fist:{fingerR0tip:[80,0,0],fingerR1tip:[80,0,0],fingerR2tip:[80,0,0],fingerR3tip:[80,0,0],fingerR0:[70,0,0],fingerR1:[70,0,0],fingerR2:[70,0,0],fingerR3:[70,0,0],shoulderR:[-40,90,-10],elbowR:[-90,0,0]},
+ walkA:{hipL:[-25,0,0],kneeL:[5,0,0],hipR:[16,0,0],kneeR:[22,0,0],shoulderL:[20,0,8],shoulderR:[-20,0,-8],elbowL:[-15,0,0],elbowR:[-25,0,0]},
+ walkB:{hipR:[-25,0,0],kneeR:[5,0,0],hipL:[16,0,0],kneeL:[22,0,0],shoulderR:[20,0,-8],shoulderL:[-20,0,8],elbowR:[-15,0,0],elbowL:[-25,0,0]},
+ hold:{shoulderR:[-45,20,-12],elbowR:[-60,0,0],wristR:[0,0,0],fingerR0:[40,0,0],fingerR1:[40,0,0],fingerR2:[40,0,0],fingerR3:[40,0,0],shoulderL:[4,0,6],elbowL:[-12,0,0]},
+ facepalm:{shoulderR:[-70,60,-20],elbowR:[-135,0,0],wristR:[10,0,0],head:[15,0,0],shoulderL:[4,0,6],elbowL:[-12,0,0]},
+ armsUp:{shoulderL:[0,0,150],shoulderR:[0,0,-150],elbowL:[-20,0,0],elbowR:[-20,0,0],head:[-10,0,0]},
+ swing:{shoulderR:[0,0,-165],elbowR:[-5,0,0],shoulderL:[-40,0,30],elbowL:[-80,0,0],hipL:[-60,0,0],kneeL:[90,0,0],hipR:[10,0,0],kneeR:[40,0,0]},
+ crouch:{hips:[0,0,0],hipL:[-70,0,10],kneeL:[110,0,0],ankleL:[-40,0,0],hipR:[-70,0,-10],kneeR:[110,0,0],ankleR:[-40,0,0],chest:[20,0,0],shoulderR:[-40,0,-20],elbowR:[-40,0,0],shoulderL:[-40,0,20],elbowL:[-40,0,0]},
+ lie:{},
+};
+const EMAP={neutral:'Neutral',happy:'Happy',laugh:'Big laugh',joy:'Joy ^^',smug:'Smug',love:'Love',excited:'Starstruck',shock:'Shocked',scared:'Scared',horror:'Horror',sad:'Sad',cry:'Crying',teary:'Teary',angry:'Angry',furious:'Furious',deadpan:'Annoyed',annoyed:'Annoyed',skeptical:'Skeptical',nervous:'Embarrassed',embarrassed:'Embarrassed',grimace:'Grimace',sleepy:'Sleepy',dizzy:'Dizzy',determined:'Determined',disgust:'Disgusted',pout:'Pout',smile:'Happy',grin:'Joy ^^'};
+const TALKM={smile:'grin',smirk:'grin',flat:'grin',frown:'sad_open',wavy:'sad_open',tiny_o:'grin',cat:'grin'};
+const baseY=root.position.y;
+window.SNAP=function(o){ // o:{pose,pose2,k,expr,talk,az,el,w,h,blink,hipY,j:{joint:[x,y,z]}}
+ reset();const A=XP[o.pose]||poses[o.pose]||XP.idle,B=o.pose2?(XP[o.pose2]||XP.idle):null,k=o.k||0;
+ const names=new Set([...Object.keys(A),...(B?Object.keys(B):[])]);
+ names.forEach(j=>{const a=A[j]||base[j].map(v=>v*57.3),b=B?(B[j]||base[j].map(v=>v*57.3)):a;['x','y','z'].forEach((ax,i)=>setJ(j,ax,a[i]+(b[i]-a[i])*k))});
+ if(o.j)Object.entries(o.j).forEach(([j,r])=>['x','y','z'].forEach((ax,i)=>{if(r[i]!=null)setJ(j,ax,J[j].rotation[ax]*57.3+r[i])}));
+ solveCollisions();
+ const e=EXPR[EMAP[o.expr]||o.expr]||EXPR.Neutral;let f={...F0,...e};
+ if(o.talk>0){f.mouth=TALKM[f.mouth]||f.mouth;f.mOpen=Math.max(f.mOpen||0,.25+.75*o.talk)}
+ FS=f;drawFace();applyEyes(!!o.blink&&!f.eye2d);
+ chest.scale.y=1+(o.breath||0)*0.012;root.position.y=baseY+(o.hipY||0);
+ const w=o.w||600,h=o.h||1000;if(cv.width!==w||cv.height!==h){cv.style.width=w+'px';cv.style.height=h+'px';R.setPixelRatio(1);R.setSize(w,h,false)}
+ U.time.value=o.t||0;U.res.value.set(w,h);R.setClearColor(0x000000,0);R.setScissorTest(false);
+ cam.aspect=w/h;cam.fov=22;cam.updateProjectionMatrix();tgt.y=4.7*((window.SPEC||{}).sy||1);place(cam,o.az||0,o.el||0.04,o.dist||26*((window.SPEC||{}).sy||1));R.setViewport(0,0,w,h);R.render(scene,cam);
+ // screen anchors (px in this canvas) for props / speech
+ const P=n=>{const v=new THREE.Vector3();J[n].getWorldPosition(v);v.project(cam);return [(v.x+1)/2*w,(1-v.y)/2*h]};
+ const hd=new THREE.Vector3(0,0.9,0);head.localToWorld(hd);hd.project(cam);
+ return {handR:P('wristR'),handL:P('wristL'),head:[(hd.x+1)/2*w,(1-hd.y)/2*h],feet:P('ankleL')};
+};
+window.TLREADY=true;
+
+</script></body></html>

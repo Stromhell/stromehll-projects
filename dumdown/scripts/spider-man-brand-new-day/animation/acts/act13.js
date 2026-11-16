@@ -1,0 +1,10 @@
+// Act 13: TRIAL FOUR: THE TAROT TOWER
+window.ACT = { timing: window.TIMING, shots: [
+ { p: 0, plate: 'tower', title: ['TRIAL 4', 'The Tarot Tower'], cam: { z: [1.1, 1.2], x: 1280, y: 760 }, props: [{ k: 'swordsHang', x: 1280, y: 560, n: 9, drop: 5, which: 6 }, { k: 'tarot', x: 1280, y: 1180, s: 1, cards: ['THE FOOL', 'THE STAR', 'THE MOON', 'THE TOWER'], t0: 1 }], chars: [{ c: 'lilia', x: 700, y: 1270, s: 1.3, view: 'threequarter', expr: 'nervous' }], pops: [{ t: 'Wrong card = falling sword', at: 2.4 }] },
+ { p: 0, f: .45, plate: 'tower', cam: { z: [1.6, 1.75], x: 1280, y: 760 }, props: [{ k: 'redSparks', x: 1280, y: 850, col: '200,180,255', r: 600 }], chars: [{ c: 'lilia', x: 1280, y: 1270, s: 1.36, expr: 'blank' }], pops: [{ t: 'Living life OUT OF ORDER', at: .4 }, { t: '"Kooky" = seeing the future', at: 4.5 }], grade: ['#8060ff', .12] },
+ { p: 1, plate: 'tower', cam: { z: [1.5, 1.65], x: 1280, y: 820 }, props: [{ k: 'tarot', x: 1280, y: 1060, s: 1.4, cards: ['THE TOWER', 'DEATH'], t0: 2 }], chars: [], grade: ['#305040', .12] },
+ { p: 1, f: .4, plate: 'void_grey', cam: { z: [1.4, 1.6], x: 1280, y: 780 }, props: [{ k: 'aura', x: 1280, y: 920, col: '60,220,90', s: 1.1 }], chars: [{ c: 'rioDeath', x: 1280, y: 1270, s: 1.48, expr: 'smug', talk: true, pose: 'hips' }], pops: [{ t: 'SHE DATED DEATH. NOT A METAPHOR.', at: .5, dur: 3 }], big: ['"ALL ROADS LEAD TO ME."', 4, 7, '#7aff9a'] },
+ { p: 2, plate: 'tower', cam: { z: [1.3, 1.45], x: 1280, y: 800 }, props: [{ k: 'tarot', x: 1650, y: 1100, s: 1.1, cards: ['THE TOWER'], t0: 3 }, { k: 'seven', x: 2600, y: 700, v: -150, s: .6 }], chars: [{ c: 'lilia', x: 1150, y: 1270, s: 1.36, view: 'threequarter', expr: 'smug', pose: 'point' }] },
+ { p: 2, f: .45, plate: 'tower', cam: { z: [1.2, 1.35], x: 1280, y: 760, shake: 14 }, props: [{ k: 'swordsHang', x: 1280, y: 560, n: 9, drop: .2, which: 4 }], grade: ['#ffb060', .2], fx: ['flash'], pops: [{ t: 'Goes out like a LEGEND', at: 1.5 }] },
+ { p: 2, f: .78, plate: 'heaven', cam: { z: [1.5, 1.6], x: 1280, y: 780 }, chars: [{ c: 'lilia', x: 1280, y: 1270, s: 1.36, expr: 'happy', ghost: .8 }], big: ['"I LOVED BEING A WITCH."', .3, 3, '#ffe08a'] },
+]};

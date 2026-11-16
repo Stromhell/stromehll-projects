@@ -1,0 +1,317 @@
+{
+ "spidey": {
+  "base": "male",
+  "name": "Spider-guy",
+  "mask": 1,
+  "S": {
+   "skin": "#c8202c",
+   "skinSh": "#7e1430",
+   "shirt": "#c8202c",
+   "shirtSh": "#7e1430",
+   "sleeve": "#1f3a8a",
+   "sleeveSh": "#14245a",
+   "pants": "#1f3a8a",
+   "pantsSh": "#14245a",
+   "shoe": "#c8202c",
+   "shoeSh": "#7e1430",
+   "sole": "#c8202c",
+   "soleSh": "#7e1430",
+   "metal": "#1f3a8a",
+   "metalSh": "#14245a"
+  }
+ },
+ "peter": {
+  "base": "male",
+  "name": "Peter",
+  "S": {
+   "hair": "#3a2414",
+   "hairSh": "#1e120a",
+   "shirt": "#5a6a7a",
+   "shirtSh": "#3a4656",
+   "sleeve": "#e8e2d6",
+   "sleeveSh": "#b4aaa0",
+   "pants": "#2a3a5a",
+   "pantsSh": "#18223a",
+   "shoe": "#f3eee4",
+   "shoeSh": "#b9adc0",
+   "sole": "#c8202c",
+   "soleSh": "#7e1430",
+   "skin": "#f0c4a0",
+   "skinSh": "#d49a7a"
+  }
+ },
+ "ned": {
+  "base": "male",
+  "name": "Ned",
+  "sx": 1.18,
+  "S": {
+   "skin": "#d8a070",
+   "skinSh": "#b47a50",
+   "shirt": "#e8a82a",
+   "shirtSh": "#a8701a",
+   "sleeve": "#e8a82a",
+   "sleeveSh": "#a8701a",
+   "pants": "#3a4a6a",
+   "pantsSh": "#232e46",
+   "shoe": "#f3eee4",
+   "shoeSh": "#b9adc0",
+   "sole": "#2a2a30",
+   "soleSh": "#141418"
+  }
+ },
+ "frank": {
+  "base": "male",
+  "name": "Frank",
+  "sx": 1.22,
+  "sy": 1.06,
+  "bald": 0,
+  "S": {
+   "skin": "#d8a888",
+   "skinSh": "#b4806a",
+   "hair": "#1a1210",
+   "shirt": "#1a1a1e",
+   "shirtSh": "#08080a",
+   "sleeve": "#2a2a2e",
+   "sleeveSh": "#141418",
+   "pants": "#1a1a20",
+   "pantsSh": "#0a0a0e",
+   "shoe": "#2a2420",
+   "shoeSh": "#141210",
+   "sole": "#141210",
+   "soleSh": "#0a0908",
+   "metal": "#5a5a62"
+  }
+ },
+ "metzger": {
+  "base": "male",
+  "name": "Director Metzger",
+  "bald": 1,
+  "S": {
+   "skin": "#e8c0a0",
+   "skinSh": "#c89a7a",
+   "shirt": "#5a5e66",
+   "shirtSh": "#3a3e46",
+   "sleeve": "#f4f1ea",
+   "sleeveSh": "#c4bcb0",
+   "pants": "#4a4e56",
+   "pantsSh": "#2e3238",
+   "shoe": "#1a1a1e",
+   "shoeSh": "#0a0a0e",
+   "sole": "#1a1a1e",
+   "soleSh": "#0a0a0e",
+   "metal": "#2a3a5a"
+  }
+ },
+ "banner": {
+  "base": "male",
+  "name": "Dr. Banner",
+  "S": {
+   "skin": "#e8c4a6",
+   "skinSh": "#c89e82",
+   "hair": "#6a6a6a",
+   "hairSh": "#3e3e42",
+   "shirt": "#8a6a4a",
+   "shirtSh": "#5a422a",
+   "sleeve": "#c8d0dc",
+   "sleeveSh": "#98a0b0",
+   "pants": "#3a3a44",
+   "pantsSh": "#22222a",
+   "shoe": "#5a3a2a",
+   "shoeSh": "#36221a",
+   "sole": "#2a1a12",
+   "soleSh": "#140c08"
+  }
+ },
+ "hulk": {
+  "base": "male",
+  "name": "Big green guy",
+  "sx": 2.0,
+  "sy": 1.75,
+  "S": {
+   "skin": "#5aa83a",
+   "skinSh": "#3a7a22",
+   "hair": "#1a2a12",
+   "hairSh": "#0a140a",
+   "shirt": "#5aa83a",
+   "shirtSh": "#3a7a22",
+   "sleeve": "#5aa83a",
+   "sleeveSh": "#3a7a22",
+   "pants": "#5a2a7a",
+   "pantsSh": "#38184e",
+   "shoe": "#5aa83a",
+   "shoeSh": "#3a7a22",
+   "sole": "#3a7a22",
+   "soleSh": "#24501a",
+   "metal": "#5a2a7a"
+  }
+ },
+ "scorpion": {
+  "base": "male",
+  "name": "Scorpion thug",
+  "sx": 1.1,
+  "S": {
+   "skin": "#d8b090",
+   "skinSh": "#b48a6a",
+   "shirt": "#3a7a2a",
+   "shirtSh": "#22501a",
+   "sleeve": "#a8c83a",
+   "sleeveSh": "#6a8a22",
+   "pants": "#2a5a1a",
+   "pantsSh": "#183a10",
+   "shoe": "#1a3a10",
+   "shoeSh": "#0e2008",
+   "sole": "#a8c83a",
+   "soleSh": "#6a8a22"
+  }
+ },
+ "ninja": {
+  "base": "male",
+  "name": "Ninja guard",
+  "mask": 1,
+  "S": {
+   "skin": "#2a0a0e",
+   "skinSh": "#14050a",
+   "shirt": "#5a0a12",
+   "shirtSh": "#36060a",
+   "sleeve": "#1a1a1e",
+   "sleeveSh": "#0a0a0e",
+   "pants": "#3a0608",
+   "pantsSh": "#200304",
+   "shoe": "#1a1a1e",
+   "shoeSh": "#0a0a0e",
+   "sole": "#1a1a1e",
+   "soleSh": "#0a0a0e"
+  }
+ },
+ "driver": {
+  "base": "male",
+  "name": "Delivery guy",
+  "S": {
+   "skin": "#c89070",
+   "skinSh": "#a46e50",
+   "hair": "#3a2a1a",
+   "shirt": "#e23a3a",
+   "shirtSh": "#a01a1a",
+   "sleeve": "#e23a3a",
+   "sleeveSh": "#a01a1a",
+   "pants": "#2a2a30",
+   "pantsSh": "#16161a"
+  }
+ },
+ "mj": {
+  "base": "female",
+  "name": "MJ",
+  "S": {
+   "skin": "#b07a52",
+   "skinSh": "#8a5a3a",
+   "hair": "#2a1a14",
+   "hairSh": "#140c08",
+   "shirt": "#5a6a3a",
+   "shirtSh": "#3a4624",
+   "sleeve": "#5a6a3a",
+   "sleeveSh": "#3a4624",
+   "pants": "#2a2a3a",
+   "pantsSh": "#16161f",
+   "shoe": "#3a2a20",
+   "shoeSh": "#1e140e"
+  },
+  "cover": 1
+ },
+ "widow": {
+  "base": "female",
+  "name": "The Widow",
+  "S": {
+   "skin": "#f4d8c4",
+   "skinSh": "#d4b09a",
+   "hair": "#e8d08a",
+   "hairSh": "#b09a5a",
+   "shirt": "#1a1a1e",
+   "shirtSh": "#08080a",
+   "sleeve": "#1a1a1e",
+   "sleeveSh": "#08080a",
+   "pants": "#1a1a20",
+   "pantsSh": "#0a0a0e",
+   "shoe": "#1a1a1e",
+   "shoeSh": "#0a0a0e"
+  },
+  "cover": 1
+ },
+ "jean": {
+  "base": "female",
+  "name": "Jean",
+  "S": {
+   "skin": "#f6dcc8",
+   "skinSh": "#d8b4a0",
+   "hair": "#c8401a",
+   "hairSh": "#8a2a10",
+   "shirt": "#2a7a4a",
+   "shirtSh": "#1a5030",
+   "sleeve": "#2a7a4a",
+   "sleeveSh": "#1a5030",
+   "pants": "#2a2a3a",
+   "pantsSh": "#16161f",
+   "shoe": "#2a2a2a",
+   "shoeSh": "#141414"
+  },
+  "cover": 1
+ },
+ "sara": {
+  "base": "female",
+  "name": "Sara",
+  "sx": 0.95,
+  "sy": 0.92,
+  "S": {
+   "skin": "#f6dcc8",
+   "skinSh": "#d8b4a0",
+   "hair": "#b0381a",
+   "hairSh": "#7a240e",
+   "shirt": "#e86aa0",
+   "shirtSh": "#b04a7a",
+   "sleeve": "#e86aa0",
+   "sleeveSh": "#b04a7a",
+   "pants": "#3a3a4a",
+   "pantsSh": "#22222e",
+   "shoe": "#f3eee4",
+   "shoeSh": "#b9adc0"
+  },
+  "cover": 1
+ },
+ "dewolff": {
+  "base": "female",
+  "name": "Detective DeWolff",
+  "S": {
+   "skin": "#a06a46",
+   "skinSh": "#7a4a2e",
+   "hair": "#1a1210",
+   "hairSh": "#0a0806",
+   "shirt": "#a08860",
+   "shirtSh": "#6e5a3a",
+   "sleeve": "#a08860",
+   "sleeveSh": "#6e5a3a",
+   "pants": "#3a3a44",
+   "pantsSh": "#22222a",
+   "shoe": "#3a2a20",
+   "shoeSh": "#1e140e"
+  },
+  "cover": 1
+ },
+ "may": {
+  "base": "female",
+  "name": "Aunt May",
+  "S": {
+   "skin": "#f0cdb0",
+   "skinSh": "#d4a88a",
+   "hair": "#6a4a3a",
+   "hairSh": "#40281e",
+   "shirt": "#c86a6a",
+   "shirtSh": "#8a3a3a",
+   "sleeve": "#c86a6a",
+   "sleeveSh": "#8a3a3a",
+   "pants": "#4a3a4a",
+   "pantsSh": "#2e222e",
+   "shoe": "#5a3a2a",
+   "shoeSh": "#36221a"
+  },
+  "cover": 1
+ }
+}

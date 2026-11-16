@@ -1,0 +1,8 @@
+// Act 18: OUTRO (last 5 s clean for end screen)
+window.ACT = { timing: window.TIMING, tail: 5.6, shots: [
+ { p: 0, plate: 'road_dawn', title: ['THE END', 'Agatha All Along'], cam: { z: [1.15, 1.3], x: 1280, y: 820 }, chars: [{ c: 'billy', x: [700, 1200], y: 1270, s: 1.32, view: 'threequarter', expr: 'smile' }, { c: 'agathaGhost', x: [950, 1450], y: 1240, s: 1.4, view: 'threequarter', expr: 'smug', ghost: .62 }] },
+ { p: 0, f: .5, plate: 'comic', cam: { z: [1.45, 1.55], x: 1280, y: 780 }, chars: [{ c: 'agatha', x: 1280, y: 1270, s: 1.42, expr: 'smug', pose: 'hips' }], pops: [{ t: 'Lies. Steals. Kills. ONE good deed.', at: .5, dur: 3.4 }] },
+ { p: 1, plate: 'backyard', cam: { z: [1.2, 1.3], x: 1280, y: 820 }, props: [{ k: 'flowers', x: 1750, y: 1260, s: 1.3 }], chars: [{ c: 'jen', x: 650, y: 1270, s: 1.3, view: 'threequarter', expr: 'happy' }, { c: 'lilia', x: 1000, y: 1270, s: 1.3, view: 'threequarter', expr: 'happy' }, { c: 'mrsHart', x: 1400, y: 1270, s: 1.3, view: 'threequarter', dir: -1, expr: 'excited', pose: 'wave' }], pops: [{ t: 'Your favourite witch? COMMENTS.', at: 1 }] },
+ { p: 1, f: .7, plate: 'void_grey', cam: { z: [1.5, 1.6], x: 1280, y: 780 }, chars: [{ c: 'rioDeath', x: 1280, y: 1270, s: 1.45, expr: 'smug', pose: 'hips' }], pops: [{ t: 'If you said Rio... we need to talk.', at: .3 }] },
+ { p: 2, plate: 'road_dawn', cam: { z: [1.1, 1.15], x: 1280, y: 800 }, chars: [{ c: 'billy', x: [1200, 1700], y: 1270, s: 1.2, view: 'threequarter', expr: 'smile' }, { c: 'agathaGhost', x: [1450, 1950], y: 1240, s: 1.28, view: 'threequarter', expr: 'smug', ghost: .62 }], fadeOut: true },
+]};
