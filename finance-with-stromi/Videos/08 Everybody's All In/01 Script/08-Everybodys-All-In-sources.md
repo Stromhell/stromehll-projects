@@ -1,0 +1,16 @@
+# 08 sources (v1, 16 Nov 2026). All figures come from the research video (Casual Finance TRupV4DhlxE) and are [CHECK AT RECORD] against primary sources before VO.
+- 34% household net worth in equities, record; long-run avg ~16%; prior peaks 21% (1968), 27% (2000), 29% (2021) — Fed Z.1 Financial Accounts.
+- Stocks ~2x home equity share — Fed Z.1.
+- Post-peak drops: >1/3 over ~18 months after 1968; ~half in 2.5 yrs after 2000; ~25% in 9 months after 2021.
+- Household stocks ~$9T (2009) -> ~$74T; roughly doubled since end-2022; Mar-Jun quarter +$10.7T, share 31%->34% — Fed Z.1.
+- ~80% of retirement contributions into stocks; target-date funds; Pension Protection Act 2006; ~6 in 10 plans auto-enroll — Vanguard How America Saves [CHECK].
+- Atlanta Fed paper: spending >4x as sensitive to stocks vs 1990; 25% selloff -> negative real consumer spending; consumption ~2/3 of GDP.
+- California LAO: >20% downturn lasting the year -> revenue $15-20B below forecast without recession.
+- BofA Global Fund Manager Survey: cash 3.9%; >5% buy / <4% sell rule; biggest tech overweight since Aug 2020; 45% expect AI bubble.
+- Keynes, General Theory (1936), quote "better for reputation to fail conventionally than to succeed unconventionally".
+- Foreigners own ~$22T US stocks (~1/5); US ~2/3 of MSCI ACWI; record foreign buying Mar-Jun.
+- Margin debt record ~$1.5T (June), 5x dot-com peak, 1.5x 2021 peak (FINRA); July drop ~$85B record one-month.
+- FINRA investor page on margin: no notice required; firm chooses what to sell.
+- Wildfire Capital is FICTIONAL (parable). Source names a real AI-focused hedge fund squeezed in July; we do not name it. E29's "a big AI-focused fund" claim [CHECK] or cut.
+- Leveraged ETFs: 218 launched H1 vs 12 in 2021; tech/semis ~67% of assets; Nomura ~$9B per 1% move; record ~$50B rebalance day.
+- 10-yr Treasury highest in 20+ years [CHECK at record]; FMS says 5.9% yield would shift allocation.

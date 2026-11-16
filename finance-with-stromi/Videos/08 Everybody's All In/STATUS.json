@@ -1,0 +1,12 @@
+{
+ "channel": "finance",
+ "video": "08 Everybody's All In",
+ "state": "waiting_approval",
+ "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ8DxLXDaQaPHnf4Kwc1BGo5a",
+ "feedback": false,
+ "queue_pos": 1,
+ "booked_for": null,
+ "zernio_post": null,
+ "updated": "2026-11-16T17:40Z",
+ "note": "script+storyboard v1 sent to Pushpam; animation starts after OK and when the shared slot is free; earliest slot 27 Nov 16:00 UTC"
+}
