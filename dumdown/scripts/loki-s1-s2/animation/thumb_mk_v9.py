@@ -13,6 +13,6 @@ def ctext(x,y,t,sz,fill,stroke,glow=None,anchor='mm'):
     d.text((x,y),t,font=ft,fill=fill,stroke_width=stroke,stroke_fill='#060606',anchor=anchor)
 ctext(960,118,'TRUE PURPOSE',176,'#ffffff',15,'#9affb8')
 def tag(x,y,t,bgc,fg):
-    ft=f(46); l,tp,r,b=d.textbbox((x,y),t,font=ft,anchor='mm'); d.rounded_rectangle((l-24,tp-14,r+24,b+14),16,fill=bgc,outline='#050505',width=6); d.text((x,y),t,font=ft,fill=fg,anchor='mm')
-tag(480,1010,'SEASON 1: PRISONER','#b07a3a','#ffffff'); tag(1440,1010,'SEASON 2: GOD','#2fd36a','#050505')
+    ft=f(74); l,tp,r,b=d.textbbox((x,y),t,font=ft,anchor='mm'); d.rounded_rectangle((l-28,tp-16,r+28,b+16),20,fill=bgc,outline='#050505',width=6); d.text((x,y),t,font=ft,fill=fg,anchor='mm')
+tag(480,995,'S1: PRISONER','#b07a3a','#ffffff'); tag(1440,995,'S2: GOD','#2fd36a','#050505')
 im.resize((1280,720),Image.LANCZOS).save('loki_thumb_v9.jpg',quality=93); im.resize((320,180),Image.LANCZOS).save('small9.jpg')
