@@ -10,3 +10,9 @@
   - If Pushpam sends a transcript later, use it as research only.
 - Queue: Finance position 4 (order 09 -> 10 -> 11 -> 12, as Pushpam numbered them). Only one DumDown/Finance video is in making at a time, so run system/pipeline-watchdog/check.py first. New thread per video.
 - Planned slot if each earlier video is booked on time: 2026-12-05T16:00Z (16:00 UTC = 21:30 IST). Confirm with check.py at booking.
+
+## Update 17 Nov 2026, 18:52 UTC
+Pushpam has now sent the transcript for this video: 00 Brief/source-transcript.md. Use it as research (it replaces 'title only').
+- Source host 'Kamal / Finance Stack': drop the name and CTAs. Links to 09 (Japan/carry trade): avoid repeating it and point to it as 'watch next'.
+- Check gold vs Treasuries in central bank reserves, foreign holder shares, 10y/30y yields, interest cost (Nov 2026 data).
+- Write the script fresh: no copied lines, no source host name, no source CTAs, sponsor reads or course pitches. Fact-check every number with current sources and mark [CHECK AT RECORD] where figures move. Add an educational disclaimer card at the end.
