@@ -1,0 +1,21 @@
+Target: 3000*12*25 = 900000
+life 3000: need 900,000; /mo 10y@7% real 5,200
+life 2000: need 600,000; /mo 10y@7% real 3,467
+life 1500: need 450,000; /mo 10y@7% real 2,600
+3000 life, 15y: 2839  20y: 1728
+1000/mo 10y @7% nominal: 173085  in today$ @3% infl: 128791
+1500/mo 10y @2% real: 199,079; 4% income/mo 664
+1500/mo 10y @4% real: 220,875; 4% income/mo 736
+1500/mo 10y @7% real: 259,627; 4% income/mo 865
+fee drag on 5200/mo 10y: 7% vs 6%: 47868
+year 1 balance 64441 growth 2041 vs put in 62400
+year 2 balance 133541 growth 6700 vs put in 62400
+year 3 balance 207637 growth 11695 vs put in 62400
+year 4 balance 287088 growth 17052 vs put in 62400
+year 5 balance 372283 growth 22795 vs put in 62400
+year 6 balance 463637 growth 28954 vs put in 62400
+year 7 balance 561595 growth 35558 vs put in 62400
+year 8 balance 666634 growth 42639 vs put in 62400
+year 9 balance 779266 growth 50232 vs put in 62400
+year 10 balance 900041 growth 58375 vs put in 62400
+28x of 36000: 1008000  3.5% rule target: 1028571
