@@ -16,3 +16,6 @@ Pushpam has now sent the transcript for this video: 00 Brief/source-transcript.m
 - Source host 'Kamal / Finance Stack': drop the name and CTAs. Links to 09 (Japan/carry trade): avoid repeating it and point to it as 'watch next'.
 - Check gold vs Treasuries in central bank reserves, foreign holder shares, 10y/30y yields, interest cost (Nov 2026 data).
 - Write the script fresh: no copied lines, no source host name, no source CTAs, sponsor reads or course pitches. Fact-check every number with current sources and mark [CHECK AT RECORD] where figures move. Add an educational disclaimer card at the end.
+
+## TITLE RULE (Pushpam 17 Nov 2026, 18:59 UTC)
+Upload with the EXACT title Pushpam gave (top of this brief). Those titles are proven performers. Do not invent a new title. Only fix a clear typo, and ask first if a change seems needed.

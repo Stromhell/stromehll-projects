@@ -10,3 +10,6 @@
   - Fix the source's slips (for example '505% of your investment' should be 50%). Quote the Capital Economics line only if it can be verified, and credit it.
 - Queue: Finance position 1 (order 09 -> 10 -> 11 -> 12, as Pushpam numbered them). Only one DumDown/Finance video is in making at a time, so run system/pipeline-watchdog/check.py first. New thread per video.
 - Planned slot if each earlier video is booked on time: 2026-11-29T16:00Z (16:00 UTC = 21:30 IST). Confirm with check.py at booking.
+
+## TITLE RULE (Pushpam 17 Nov 2026, 18:59 UTC)
+Upload with the EXACT title Pushpam gave (top of this brief). Those titles are proven performers. Do not invent a new title. Only fix a clear typo, and ask first if a change seems needed.
