@@ -1,0 +1,6 @@
+$400k 30y at 2.65%: $1,612/mo
+$400k 30y at 7.24%: $2,726/mo
+$400k 30y at 7.4%: $2,770/mo
+gap 2.65 -> 7.24: $1,114/mo
+10y $1,000 bond, 3% coupon, priced at 5% yield: 846
+household scale: $50k in, $60k out, gap $10k
