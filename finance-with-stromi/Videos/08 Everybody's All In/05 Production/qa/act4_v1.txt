@@ -1,0 +1,17 @@
+# qa_auto report: act4_v1.mp4 (act)
+
+Result: **FAIL** - 2 fail, 2 warn, 3 to eyeball
+
+| level | check | detail | standard fix |
+|---|---|---|---|
+| FAIL | audio stream | no audio | mux the mix |
+| FAIL | cine: cut leak (old scene still on screen) | 0:16.0 19% of the frame unchanged across the cut while 56% changed | checklist B11 rows 67-75 |
+| WARN | dark scene | 0:00.00-0:03.00 mean luma 7/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | cine: cut rhythm | 0:00.0 70% of shots are longer than 8 s (median 9.2 s) | checklist B11 rows 67-75 |
+| CHECK | local glitch/flicker | ~1:18.50 bottom-mid-left | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
+| CHECK | possible pop-in | ~1:38.20 top-mid-right | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | z-fighting / shimmer | 1:18.00-1:24.00 around bottom-right (3 cells) | 3D: coplanar surfaces (board on frame, window on wall, door on desk plane) -> offset 1-2 cm or polygonOffset, raise near plane; 2D: per-frame random/texture swap -> fixed seed |
+| INFO | streams | 1280x720 h264 yuv420p r=24.000 avg=24.000 fps, 107.08 s, audio=0 |  |
+| INFO | cine | still-camera share 7%, 10 shots, median shot 9.25 s |  |
+| INFO | contact sheets | 4 sheets in act4_v1_qa/sheets - READ EVERY ONE against RENDER-QA-CHECKLIST.md |  |
+

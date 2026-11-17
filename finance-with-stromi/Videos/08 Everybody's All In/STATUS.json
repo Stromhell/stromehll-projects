@@ -7,6 +7,8 @@
  "queue_pos": 1,
  "booked_for": null,
  "zernio_post": null,
- "updated": "2026-11-16T17:40Z",
- "note": "script+storyboard v1 sent to Pushpam; animation starts after OK and when the shared slot is free; earliest slot 27 Nov 16:00 UTC"
+ "updated": "2026-11-17T15:55Z",
+ "note": "full v1 12:57, -14.2 LUFS / -2.8 dBTP, CFR 24 fps; waiting for Pushpam OK. Not booked.",
+ "full_video": "https://drive.google.com/file/d/1jrqyqgGi5W0AnSf_7703X3278JMeZqBz/view",
+ "launch_kit": "https://claude.ai/artifact/H2PzZMRFtvVTFbnbFFh31H"
 }

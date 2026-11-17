@@ -1,0 +1,14 @@
+# qa_auto report: act0_v2.mp4 (act)
+
+Result: **FAIL** - 1 fail, 2 warn, 1 to eyeball
+
+| level | check | detail | standard fix |
+|---|---|---|---|
+| FAIL | audio stream | no audio | mux the mix |
+| WARN | dark scene | 1:01.50-1:04.75 mean luma 10/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | cine: cut rhythm | 0:00.0 38% of shots are longer than 8 s (median 6.8 s) | checklist B11 rows 67-75 |
+| CHECK | black / near-black | 1:01.58-1:04.75 (3.2s) | OK if it is a chapter/title card or fade; otherwise a missing shot/plate or bad cut |
+| INFO | streams | 1280x720 h264 yuv420p r=24.000 avg=24.000 fps, 64.79 s, audio=0 |  |
+| INFO | cine | still-camera share 2%, 8 shots, median shot 6.75 s |  |
+| INFO | contact sheets | 3 sheets in act0_v2_qa/sheets - READ EVERY ONE against RENDER-QA-CHECKLIST.md |  |
+

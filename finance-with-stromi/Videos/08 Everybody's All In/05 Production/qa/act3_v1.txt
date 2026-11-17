@@ -1,0 +1,16 @@
+# qa_auto report: act3_v1.mp4 (act)
+
+Result: **FAIL** - 2 fail, 2 warn, 2 to eyeball
+
+| level | check | detail | standard fix |
+|---|---|---|---|
+| FAIL | audio stream | no audio | mux the mix |
+| FAIL | z-fighting / shimmer | 0:25.00-1:09.00 around top-centre (64 cells) | 3D: coplanar surfaces (board on frame, window on wall, door on desk plane) -> offset 1-2 cm or polygonOffset, raise near plane; 2D: per-frame random/texture swap -> fixed seed |
+| WARN | dark scene | 0:00.00-0:03.00 mean luma 7/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | cine: cut rhythm | 0:00.0 57% of shots are longer than 8 s (median 9.3 s) | checklist B11 rows 67-75 |
+| CHECK | local glitch/flicker | ~0:20.20 top-mid-left, top-mid-right | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
+| CHECK | local glitch/flicker | ~1:34.80 top-mid-left, top-mid-right | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
+| INFO | streams | 1280x720 h264 yuv420p r=24.000 avg=24.000 fps, 105.67 s, audio=0 |  |
+| INFO | cine | still-camera share 2%, 7 shots, median shot 9.33 s |  |
+| INFO | contact sheets | 4 sheets in act3_v1_qa/sheets - READ EVERY ONE against RENDER-QA-CHECKLIST.md |  |
+

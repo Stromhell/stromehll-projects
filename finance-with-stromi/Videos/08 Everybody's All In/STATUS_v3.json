@@ -1,0 +1,14 @@
+{
+ "channel": "finance",
+ "video": "08 Everybody's All In",
+ "state": "waiting_approval",
+ "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ8DxLXDaQaPHnf4Kwc1BGo5a",
+ "feedback": false,
+ "queue_pos": 1,
+ "booked_for": null,
+ "zernio_post": null,
+ "updated": "2026-11-17T15:55Z",
+ "note": "full v1 12:57, -14.2 LUFS / -2.8 dBTP, CFR 24 fps; waiting for Pushpam OK. Not booked.",
+ "full_video": "https://drive.google.com/file/d/1jrqyqgGi5W0AnSf_7703X3278JMeZqBz/view",
+ "launch_kit": "https://claude.ai/artifact/H2PzZMRFtvVTFbnbFFh31H"
+}

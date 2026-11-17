@@ -1,0 +1,752 @@
+{
+ "E01": {
+  "dur": 21.789,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 12.946,
+    "text": "Millbrook. Seven fifteen in the morning. Above the counter at Rosa's Diner there's an old ticker board, and when the stock market hits a record, the bell rings. It has rung a lot lately."
+   },
+   {
+    "who": "HANK",
+    "t0": 13.249,
+    "t1": 16.357,
+    "text": "That's the sound of my retirement, Rosa!"
+   },
+   {
+    "who": "JULES",
+    "t0": 16.716,
+    "t1": 18.513,
+    "text": "That's the sound of my second car!"
+   },
+   {
+    "who": "ROSA",
+    "t0": 18.924,
+    "t1": 21.239,
+    "text": "That's the sound of nobody tipping again."
+   }
+  ]
+ },
+ "E02": {
+  "dur": 23.428,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 19.785,
+    "text": "Everybody in Millbrook knows the market is expensive. Seven companies are a third of the whole index. By the most common long-run yardstick, stocks have only been this pricey once before, right at the top of the dot-com bubble. That's not a secret. It's on every phone in this diner."
+   },
+   {
+    "who": "GUS",
+    "t0": 20.073,
+    "t1": 22.878,
+    "text": "Order up. Also, I bought more."
+   }
+  ]
+ },
+ "E03": {
+  "dur": 16.36,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 10.303,
+    "text": "But while everyone watches which stocks are in the market, nobody is watching how much of the town is. And that number just hit a level never seen in history."
+   },
+   {
+    "who": "ROSA",
+    "t0": 10.575,
+    "t1": 15.81,
+    "text": "Bell rings, everybody cheers. Nobody ever asks what happens when it stops ringing."
+   }
+  ]
+ },
+ "E04": {
+  "dur": 3.2,
+  "lines": [],
+  "card": "Everybody's All In",
+  "sub": "Why the next crash hits more than stocks"
+ },
+ "E05": {
+  "dur": 3.0,
+  "lines": [],
+  "card": "1. The Number Nobody Watches",
+  "sub": null
+ },
+ "E06": {
+  "dur": 32.529,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 23.311,
+    "text": "Take everything American households own. The houses, the cars, the cash in the bank, whatever's left of the crypto. According to the Federal Reserve, thirty-four cents of every one of those dollars is now in the stock market. That's the highest share the Fed has ever recorded, and more than double the long-run average of about sixteen cents."
+   },
+   {
+    "who": "N",
+    "t0": 23.643,
+    "t1": 31.979,
+    "text": "For the first time in generations, Americans have roughly twice as much of their wealth in stocks as in the equity of their homes."
+   }
+  ]
+ },
+ "E07": {
+  "dur": 10.546,
+  "lines": [
+   {
+    "who": "DOT",
+    "t0": 0.45,
+    "t1": 3.279,
+    "text": "Who ordered the extra-large stock slice?"
+   },
+   {
+    "who": "HANK",
+    "t0": 3.784,
+    "t1": 5.386,
+    "text": "Everybody, Dot."
+   },
+   {
+    "who": "DOT",
+    "t0": 5.87,
+    "t1": 7.097,
+    "text": "And the salad?"
+   },
+   {
+    "who": "HANK",
+    "t0": 7.575,
+    "t1": 9.996,
+    "text": "Nobody orders the salad."
+   }
+  ]
+ },
+ "E08": {
+  "dur": 34.049,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 28.036,
+    "text": "We've seen a spike like this only three times before. In 1968, stocks reached twenty-one cents of every household dollar. In 2000, twenty-seven. In 2021, twenty-nine. And every time, a big drop followed. After 1968, stocks lost more than a third over the next year and a half. After 2000, nearly half in two and a half years. After 2021, about a quarter in nine months."
+   },
+   {
+    "who": "ROSA",
+    "t0": 28.336,
+    "t1": 31.399,
+    "text": "My father hung one of these every time the bell cracked."
+   },
+   {
+    "who": "JULES",
+    "t0": 31.836,
+    "t1": 33.499,
+    "text": "Why are there so many hooks left?"
+   }
+  ]
+ },
+ "E09": {
+  "dur": 3.0,
+  "lines": [],
+  "card": "2. Nobody Decided This",
+  "sub": null
+ },
+ "E10": {
+  "dur": 31.552,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 26.621,
+    "text": "Here's the strange part. Most people never chose to be this deep in the market. In 2009, at the bottom of the financial crisis, the stocks Americans owned were worth about nine trillion dollars. Today it's about seventy-four trillion. Since the end of 2022 alone, that pile has roughly doubled. Nobody piled in on purpose. The tree just kept growing, until it was the biggest thing in the yard."
+   },
+   {
+    "who": "HANK",
+    "t0": 26.931,
+    "t1": 31.002,
+    "text": "I planted that thing for shade. Now it's blocking the house."
+   }
+  ]
+ },
+ "E11": {
+  "dur": 34.532,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 25.777,
+    "text": "And the new money arrives on autopilot. About eighty percent of what Americans put into retirement accounts goes into stocks, much of it through target-date funds that buy every single payday, whatever the price. Twenty years ago, a law called the Pension Protection Act let employers sign workers into those funds by default. Today about six in ten plans do exactly that."
+   },
+   {
+    "who": "PIP",
+    "t0": 26.08,
+    "t1": 29.521,
+    "text": "Excuse me, sir, do you want to buy stocks at today's price?"
+   },
+   {
+    "who": "GUS",
+    "t0": 29.88,
+    "t1": 31.469,
+    "text": "What's the price?"
+   },
+   {
+    "who": "PIP",
+    "t0": 31.88,
+    "t1": 33.982,
+    "text": "Doesn't matter. You already did."
+   }
+  ]
+ },
+ "E12": {
+  "dur": 12.161,
+  "lines": [
+   {
+    "who": "GUS",
+    "t0": 0.45,
+    "t1": 2.803,
+    "text": "When did I sign up for this?"
+   },
+   {
+    "who": "PIP",
+    "t0": 3.171,
+    "t1": 6.071,
+    "text": "Your first day. You were filling in the parking form."
+   },
+   {
+    "who": "GUS",
+    "t0": 6.423,
+    "t1": 8.503,
+    "text": "I don't even have a car."
+   },
+   {
+    "who": "PIP",
+    "t0": 8.916,
+    "t1": 11.611,
+    "text": "You do now. It's in a target-date fund."
+   }
+  ]
+ },
+ "E13": {
+  "dur": 3.0,
+  "lines": [],
+  "card": "3. The Loop",
+  "sub": null
+ },
+ "E14": {
+  "dur": 23.413,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 17.152,
+    "text": "When a third of what you own goes up with the market, you feel richer. And people who feel richer spend like it. Economists call this the wealth effect. You don't earn more. Your stuff is just worth more on a screen, and suddenly the gold fridge sounds reasonable."
+   },
+   {
+    "who": "JULES",
+    "t0": 17.556,
+    "t1": 19.216,
+    "text": "I'm up forty percent this year."
+   },
+   {
+    "who": "ROSA",
+    "t0": 19.591,
+    "t1": 20.927,
+    "text": "Then pay your tab."
+   },
+   {
+    "who": "JULES",
+    "t0": 21.323,
+    "t1": 22.863,
+    "text": "I can't. It's all in stocks."
+   }
+  ]
+ },
+ "E15": {
+  "dur": 41.148,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 17.395,
+    "text": "Now it turns into a loop. Rising stocks fuel spending. Spending becomes sales for companies. Sales become profits. And profits are the reason investors give for why stocks should keep going up. The economy and the market are feeding each other."
+   },
+   {
+    "who": "N",
+    "t0": 17.767,
+    "t1": 40.598,
+    "text": "A study from the Atlanta Fed found American spending is now more than four times as sensitive to the stock market as it was in 1990. In their scenario, a twenty-five percent drop in stocks is enough to push real consumer spending below zero for the year. And consumer spending is about two thirds of the American economy."
+   }
+  ]
+ },
+ "E16": {
+  "dur": 7.966,
+  "lines": [
+   {
+    "who": "HANK",
+    "t0": 0.45,
+    "t1": 2.336,
+    "text": "Who stopped the wheel?"
+   },
+   {
+    "who": "JULES",
+    "t0": 2.808,
+    "t1": 4.497,
+    "text": "Nobody. We just got slower."
+   },
+   {
+    "who": "GUS",
+    "t0": 4.991,
+    "t1": 7.416,
+    "text": "Same thing, it turns out."
+   }
+  ]
+ },
+ "E17": {
+  "dur": 30.136,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 19.047,
+    "text": "It reaches governments too. California's own budget office has warned that a market drop of more than twenty percent, lasting through the year, could leave state revenue fifteen to twenty billion dollars below forecast. That's without a recession. With one, it would be worse."
+   },
+   {
+    "who": "BEA",
+    "t0": 19.465,
+    "t1": 22.339,
+    "text": "The new library will be funded by the stock market."
+   },
+   {
+    "who": "ROSA",
+    "t0": 22.695,
+    "t1": 24.253,
+    "text": "And if the market falls?"
+   },
+   {
+    "who": "BEA",
+    "t0": 24.702,
+    "t1": 26.789,
+    "text": "Then it will be a very small library."
+   },
+   {
+    "who": "ROSA",
+    "t0": 27.25,
+    "t1": 28.285,
+    "text": "How small?"
+   },
+   {
+    "who": "BEA",
+    "t0": 28.716,
+    "t1": 29.586,
+    "text": "A shelf."
+   }
+  ]
+ },
+ "E18": {
+  "dur": 3.0,
+  "lines": [],
+  "card": "4. The Herd",
+  "sub": null
+ },
+ "E19": {
+  "dur": 34.17,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 23.292,
+    "text": "It isn't only households. Every month Bank of America surveys the world's biggest fund managers. Recent surveys showed them holding just three point nine percent of their money in cash. By the bank's own rule of thumb, cash above five percent is a buy signal, and under four is a warning sign that investors are too excited and too invested."
+   },
+   {
+    "who": "N",
+    "t0": 23.584,
+    "t1": 33.62,
+    "text": "Those same managers piled into tech, even though in July an AI bubble topped their list of biggest risks, named by forty-five percent of them."
+   }
+  ]
+ },
+ "E20": {
+  "dur": 16.929,
+  "lines": [
+   {
+    "who": "PELL",
+    "t0": 0.45,
+    "t1": 3.102,
+    "text": "I think it's a bubble. I'd like to hold some cash."
+   },
+   {
+    "who": "BOSS",
+    "t0": 3.527,
+    "t1": 6.071,
+    "text": "Is everybody else holding cash?"
+   },
+   {
+    "who": "PELL",
+    "t0": 6.427,
+    "t1": 7.195,
+    "text": "No."
+   },
+   {
+    "who": "BOSS",
+    "t0": 7.703,
+    "t1": 10.719,
+    "text": "Then you're fired if you're right too early."
+   },
+   {
+    "who": "PELL",
+    "t0": 11.215,
+    "t1": 13.073,
+    "text": "And if I'm wrong with everybody?"
+   },
+   {
+    "who": "BOSS",
+    "t0": 13.511,
+    "t1": 16.379,
+    "text": "Then you get a bonus and a sad hug."
+   }
+  ]
+ },
+ "E21": {
+  "dur": 22.874,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 22.324,
+    "text": "The economist John Maynard Keynes spotted this back in 1936. He wrote that worldly wisdom teaches it is better for reputation to fail conventionally than to succeed unconventionally. If you lose money when everyone loses money, you keep your job. If you sit in cash while the market rallies twenty percent, you don't."
+   }
+  ]
+ },
+ "E22": {
+  "dur": 30.097,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 21.176,
+    "text": "And the rest of the world joined in. Foreign investors now own about twenty-two trillion dollars of American stocks, roughly a fifth of the whole market. American companies make up nearly two thirds of the main global stock index. Between March and June, foreigners bought American stocks faster than ever recorded."
+   },
+   {
+    "who": "ANNIKA",
+    "t0": 21.49,
+    "t1": 24.201,
+    "text": "One coffee, and whatever stocks you have."
+   },
+   {
+    "who": "ROSA",
+    "t0": 24.705,
+    "t1": 26.062,
+    "text": "We only have pie."
+   },
+   {
+    "who": "ANNIKA",
+    "t0": 26.505,
+    "t1": 29.547,
+    "text": "Is the pie in the S&P 500?"
+   }
+  ]
+ },
+ "E23": {
+  "dur": 3.0,
+  "lines": [],
+  "card": "5. Borrowed Chips",
+  "sub": null
+ },
+ "E24": {
+  "dur": 32.455,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 18.51,
+    "text": "Here's what makes this crowd dangerous. A record amount of these bets are made with borrowed money. Margin debt, money investors borrow from their broker to buy more stock, hit a record one and a half trillion dollars in June. That's five times the peak of the dot-com bubble."
+   },
+   {
+    "who": "N",
+    "t0": 18.929,
+    "t1": 31.905,
+    "text": "Borrowing has surged like this before: right before the dot-com top, in the run-up to the 2008 crisis, and in 2021, less than a year before the 2022 bear market."
+   }
+  ]
+ },
+ "E25": {
+  "dur": 32.199,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 19.405,
+    "text": "Here's the rule of a stock loan. The stock is the collateral, and the loan has to stay covered by what that stock is worth. When the stock falls, the collateral shrinks but the loan doesn't. When the gap gets too big, you get a margin call: send more cash, by a deadline, or they sell your stock."
+   },
+   {
+    "who": "HANK",
+    "t0": 19.817,
+    "t1": 20.69,
+    "text": "Hello?"
+   },
+   {
+    "who": "BROKER",
+    "t0": 21.121,
+    "t1": 23.323,
+    "text": "Hi Hank! Good news and bad news."
+   },
+   {
+    "who": "HANK",
+    "t0": 23.738,
+    "t1": 25.196,
+    "text": "Good news first."
+   },
+   {
+    "who": "BROKER",
+    "t0": 25.643,
+    "t1": 27.675,
+    "text": "You don't have to decide anything."
+   },
+   {
+    "who": "HANK",
+    "t0": 28.093,
+    "t1": 29.629,
+    "text": "And the bad news?"
+   },
+   {
+    "who": "BROKER",
+    "t0": 29.998,
+    "t1": 31.649,
+    "text": "We already decided."
+   }
+  ]
+ },
+ "E26": {
+  "dur": 18.175,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 17.625,
+    "text": "This isn't a joke. The regulator FINRA says a firm doesn't have to warn you before your account drops below the minimum, and doesn't have to let you choose which stocks get sold. They sell what they want, when they want, at whatever price the market pays that day."
+   }
+  ]
+ },
+ "E27": {
+  "dur": 36.923,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 19.289,
+    "text": "Picture a fund. We'll call it Wildfire Capital. A brilliant young founder borrows four dollars for every dollar he has, and bets it all on the companies building AI. For two years, it's magic. The fund grows into tens of billions. Wall Street treats him like royalty."
+   },
+   {
+    "who": "N",
+    "t0": 19.604,
+    "t1": 36.373,
+    "text": "Then the chip stocks slide. The margin calls arrive. And the fund is forced to sell, at the worst moment, to a rival who buys the lot at a discount. Billions gone in weeks. Not because the idea was wrong forever. Because the loan was due today."
+   }
+  ]
+ },
+ "E28": {
+  "dur": 13.015,
+  "lines": [
+   {
+    "who": "BOSS",
+    "t0": 0.45,
+    "t1": 3.449,
+    "text": "Pell, we own the same stocks as Wildfire."
+   },
+   {
+    "who": "PELL",
+    "t0": 3.935,
+    "t1": 5.431,
+    "text": "How many of the same?"
+   },
+   {
+    "who": "BOSS",
+    "t0": 5.779,
+    "t1": 6.973,
+    "text": "All of them."
+   },
+   {
+    "who": "PELL",
+    "t0": 7.322,
+    "t1": 8.593,
+    "text": "So when they sell..."
+   },
+   {
+    "who": "BOSS",
+    "t0": 9.046,
+    "t1": 12.465,
+    "text": "We get the margin call that comes after theirs."
+   }
+  ]
+ },
+ "E29": {
+  "dur": 17.336,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 16.786,
+    "text": "This isn't only a cartoon. In July, chip stocks fell, margin calls went out, and margin debt across the market dropped by about eighty-five billion dollars in a single month. In dollars, that's the biggest one-month drop on record."
+   }
+  ]
+ },
+ "E30": {
+  "dur": 3.0,
+  "lines": [],
+  "card": "6. The Dominoes",
+  "sub": null
+ },
+ "E31": {
+  "dur": 29.675,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 21.541,
+    "text": "And there's a new kind of borrowing that barely existed a few years ago: leveraged ETFs. They promise two or three times the daily move of a stock or an index. By the end of June there were more than seven hundred of them in America, more than double a year earlier. And much of their money sits in tech and chip stocks."
+   },
+   {
+    "who": "JULES",
+    "t0": 21.852,
+    "t1": 24.665,
+    "text": "It's like normal investing, but three times as fun."
+   },
+   {
+    "who": "ROSA",
+    "t0": 25.101,
+    "t1": 27.36,
+    "text": "And three times as what, on a bad day?"
+   },
+   {
+    "who": "JULES",
+    "t0": 27.785,
+    "t1": 29.125,
+    "text": "We don't say that word."
+   }
+  ]
+ },
+ "E32": {
+  "dur": 22.436,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 21.886,
+    "text": "These funds have to rebalance every day to keep their promise. Analysts at Nomura estimate they trade about nine billion dollars for every one percent the market moves. They buy when it's rising and sell when it's falling. A good day gets better. A bad day gets worse. It pours gas on whatever fire is already burning."
+   }
+  ]
+ },
+ "E33": {
+  "dur": 38.467,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 20.025,
+    "text": "Put it together and you get the thing traders fear most: a liquidation cascade. Prices fall, forced selling starts. Forced selling pushes prices lower. Lower prices trigger more margin calls, and more rebalancing, and more forced selling. A chain reaction where nobody chose to sell."
+   },
+   {
+    "who": "N",
+    "t0": 20.347,
+    "t1": 37.917,
+    "text": "What starts it? Nobody knows. It could be the AI trade. It could be bond yields: this autumn the ten-year Treasury climbed above five percent, its highest level since 2007. It doesn't need a disaster. Just a first push, on a crowd this tight."
+   }
+  ]
+ },
+ "E34": {
+  "dur": 8.207,
+  "lines": [
+   {
+    "who": "DOT",
+    "t0": 0.45,
+    "t1": 1.95,
+    "text": "I'm just dusting."
+   },
+   {
+    "who": "GUS",
+    "t0": 2.469,
+    "t1": 4.742,
+    "text": "Dot. Do not sneeze."
+   },
+   {
+    "who": "DOT",
+    "t0": 5.118,
+    "t1": 6.36,
+    "text": "Why would I..."
+   },
+   {
+    "who": "GUS",
+    "t0": 6.774,
+    "t1": 7.657,
+    "text": "Dot."
+   }
+  ]
+ },
+ "E35": {
+  "dur": 3.0,
+  "lines": [],
+  "card": "Your Wallet",
+  "sub": null
+ },
+ "E36": {
+  "dur": 39.766,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 11.375,
+    "text": "So what does this mean for your wallet? This isn't advice, and nobody, including us, knows when or whether a crash comes. But Rosa's napkins are a good start."
+   },
+   {
+    "who": "N",
+    "t0": 11.672,
+    "t1": 39.216,
+    "text": "One. Know your number. Add up what you own and see how much rises and falls with the market. Two. If you have a target-date fund, look at what's inside and when it's set to get safer. Three. Keep real cash for real emergencies, so a bad month never forces you to sell. Four. Be very careful borrowing against stocks. Leverage means someone else decides when you sell. Five. Leveraged ETFs are built for single days, not for decades."
+   }
+  ]
+ },
+ "E37": {
+  "dur": 12.728,
+  "lines": [
+   {
+    "who": "JULES",
+    "t0": 0.45,
+    "t1": 2.24,
+    "text": "Rosa, how do you always stay calm?"
+   },
+   {
+    "who": "ROSA",
+    "t0": 2.694,
+    "t1": 6.569,
+    "text": "Thirty years running a diner. People always come back hungry."
+   },
+   {
+    "who": "HANK",
+    "t0": 6.959,
+    "t1": 8.121,
+    "text": "And your money?"
+   },
+   {
+    "who": "ROSA",
+    "t0": 8.525,
+    "t1": 12.178,
+    "text": "Some in stocks. Some in a cigar box. None of it borrowed."
+   }
+  ]
+ },
+ "E38": {
+  "dur": 27.513,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 23.291,
+    "text": "Everybody knows the market is expensive. And everybody is watching the same seven companies. But under that, a third of everything families own is riding on the market. And under that, an economy that leans on how rich people feel. The bell still rings in Millbrook. The real question is how many people are standing under it when it stops."
+   },
+   {
+    "who": "ROSA",
+    "t0": 23.717,
+    "t1": 26.963,
+    "text": "More coffee? It's the one thing here that isn't leveraged."
+   }
+  ]
+ }
+}

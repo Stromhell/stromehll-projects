@@ -1,0 +1,270 @@
+
+## voice_qa: voice/E01.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.0 syllables/s over 16s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 17.1 semitones (natural narration ~3-8) |  |
+
+Listen too: breaths, mouth clicks, wrong stress, mispronounced names, accent drift, emotion that fits the line.
+
+## voice_qa: voice/E02.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.2 syllables/s over 19s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 22.0 semitones (natural narration ~3-8) |  |
+
+Listen too: breaths, mouth clicks, wrong stress, mispronounced names, accent drift, emotion that fits the line.
+
+## voice_qa: voice/E03.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.9 syllables/s over 13s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 15.8 semitones (natural narration ~3-8) |  |
+
+Listen too: breaths, mouth clicks, wrong stress, mispronounced names, accent drift, emotion that fits the line.
+
+## voice_qa: voice/E06.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.6 syllables/s over 26s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 9.4 semitones (natural narration ~3-8) |  |
+
+Listen too: breaths, mouth clicks, wrong stress, mispronounced names, accent drift, emotion that fits the line.
+
+## voice_qa: voice/E07.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.2 syllables/s over 6s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 26.8 semitones (natural narration ~3-8) |  |
+
+Listen too: breaths, mouth clicks, wrong stress, mispronounced names, accent drift, emotion that fits the line.
+
+## voice_qa: voice/E08.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.6 syllables/s over 27s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 11.7 semitones (natural narration ~3-8) |  |
+
+Listen too: breaths, mouth clicks, wrong stress, mispronounced names, accent drift, emotion that fits the line.
+
+## voice_qa: voice/E10.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.5 syllables/s over 25s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 11.6 semitones (natural narration ~3-8) |  |
+
+Listen too: breaths, mouth clicks, wrong stress, mispronounced names, accent drift, emotion that fits the line.
+
+## voice_qa: voice/E11.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.5 syllables/s over 28s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 10.8 semitones (natural narration ~3-8) |  |
+
+Listen too: breaths, mouth clicks, wrong stress, mispronounced names, accent drift, emotion that fits the line.
+
+## voice_qa: voice/E12.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~3.8 syllables/s over 9s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 24.5 semitones (natural narration ~3-8) |  |
+
+Listen too: breaths, mouth clicks, wrong stress, mispronounced names, accent drift, emotion that fits the line.
+
+## voice_qa: voice/E14.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.3 syllables/s over 18s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 11.2 semitones (natural narration ~3-8) |  |
+
+Listen too: breaths, mouth clicks, wrong stress, mispronounced names, accent drift, emotion that fits the line.
+
+## voice_qa: voice/E15.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.6 syllables/s over 34s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 9.2 semitones (natural narration ~3-8) |  |
+
+Listen too: breaths, mouth clicks, wrong stress, mispronounced names, accent drift, emotion that fits the line.
+
+## voice_qa: voice/E16.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~3.8 syllables/s over 5s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 23.9 semitones (natural narration ~3-8) |  |
+
+Listen too: breaths, mouth clicks, wrong stress, mispronounced names, accent drift, emotion that fits the line.
+
+## voice_qa: voice/E17.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.4 syllables/s over 22s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 15.2 semitones (natural narration ~3-8) |  |
+
+Listen too: breaths, mouth clicks, wrong stress, mispronounced names, accent drift, emotion that fits the line.
+
+## voice_qa: voice/E19.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.6 syllables/s over 28s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 9.0 semitones (natural narration ~3-8) |  |
+
+Listen too: breaths, mouth clicks, wrong stress, mispronounced names, accent drift, emotion that fits the line.
+
+## voice_qa: voice/E20.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~3.2 syllables/s over 11s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 9.0 semitones (natural narration ~3-8) |  |
+
+Listen too: breaths, mouth clicks, wrong stress, mispronounced names, accent drift, emotion that fits the line.
+
+## voice_qa: voice/E21.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.5 syllables/s over 19s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 8.5 semitones (natural narration ~3-8) |  |
+
+Listen too: breaths, mouth clicks, wrong stress, mispronounced names, accent drift, emotion that fits the line.
+
+## voice_qa: voice/E22.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.5 syllables/s over 24s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 16.5 semitones (natural narration ~3-8) |  |
+
+Listen too: breaths, mouth clicks, wrong stress, mispronounced names, accent drift, emotion that fits the line.
+
+## voice_qa: voice/E24.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.4 syllables/s over 26s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 8.9 semitones (natural narration ~3-8) |  |
+
+Listen too: breaths, mouth clicks, wrong stress, mispronounced names, accent drift, emotion that fits the line.
+
+## voice_qa: voice/E25.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.1 syllables/s over 24s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 12.4 semitones (natural narration ~3-8) |  |
+
+Listen too: breaths, mouth clicks, wrong stress, mispronounced names, accent drift, emotion that fits the line.
+
+## voice_qa: voice/E26.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.2 syllables/s over 15s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 9.2 semitones (natural narration ~3-8) |  |
+
+Listen too: breaths, mouth clicks, wrong stress, mispronounced names, accent drift, emotion that fits the line.
+
+## voice_qa: voice/E27.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.3 syllables/s over 30s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 9.2 semitones (natural narration ~3-8) |  |
+
+Listen too: breaths, mouth clicks, wrong stress, mispronounced names, accent drift, emotion that fits the line.
+
+## voice_qa: voice/E28.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~2.8 syllables/s over 9s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 11.1 semitones (natural narration ~3-8) |  |
+
+Listen too: breaths, mouth clicks, wrong stress, mispronounced names, accent drift, emotion that fits the line.
+
+## voice_qa: voice/E29.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.2 syllables/s over 14s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 8.7 semitones (natural narration ~3-8) |  |
+
+Listen too: breaths, mouth clicks, wrong stress, mispronounced names, accent drift, emotion that fits the line.
+
+## voice_qa: voice/E31.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.4 syllables/s over 24s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 11.8 semitones (natural narration ~3-8) |  |
+
+Listen too: breaths, mouth clicks, wrong stress, mispronounced names, accent drift, emotion that fits the line.
+
+## voice_qa: voice/E32.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.4 syllables/s over 18s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 9.4 semitones (natural narration ~3-8) |  |
+
+Listen too: breaths, mouth clicks, wrong stress, mispronounced names, accent drift, emotion that fits the line.
+
+## voice_qa: voice/E33.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.2 syllables/s over 31s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 8.1 semitones (natural narration ~3-8) |  |
+
+Listen too: breaths, mouth clicks, wrong stress, mispronounced names, accent drift, emotion that fits the line.
+
+## voice_qa: voice/E34.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~3.0 syllables/s over 5s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 18.6 semitones (natural narration ~3-8) |  |
+
+Listen too: breaths, mouth clicks, wrong stress, mispronounced names, accent drift, emotion that fits the line.
+
+## voice_qa: voice/E36.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.7 syllables/s over 32s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 8.7 semitones (natural narration ~3-8) |  |
+
+Listen too: breaths, mouth clicks, wrong stress, mispronounced names, accent drift, emotion that fits the line.
+
+## voice_qa: voice/E37.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~3.9 syllables/s over 8s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 18.3 semitones (natural narration ~3-8) |  |
+
+Listen too: breaths, mouth clicks, wrong stress, mispronounced names, accent drift, emotion that fits the line.
+
+## voice_qa: voice/E38.wav
+
+| level | check | detail | fix |
+|---|---|---|---|
+| PASS | pace | ~4.4 syllables/s over 22s of speech (natural 3-5.5) |  |
+| PASS | intonation | pitch spread 11.6 semitones (natural narration ~3-8) |  |
+
+Listen too: breaths, mouth clicks, wrong stress, mispronounced names, accent drift, emotion that fits the line.
