@@ -1,0 +1,14 @@
+spread 49.98/50.02: 0.04
+Ploppy: price 40, EPS 2 -> P/E 20.0 ; book/share 10 -> P/B 4.0 ; div 1.20 -> yield 0.03
+Ploppy profit margin 8 of 100: 0.08 ; market cap 50M x 40 = 2000000000.0
+short: sell 50 buy back 40 gain 10 ; buy back 150 loss 100
+leverage 1000 own+1000 borrowed, stock +10%: on own money +20%
+leverage 1000 own+1000 borrowed, stock -10%: on own money -20%
+leverage 1000 own+1000 borrowed, stock -50%: on own money -100%
+average down: 10@20 + 10@10 = 300 for 20 shares, avg 15.0
+DCA $100x5 at [10, 8, 5, 8, 10]: 65.0 shares, avg cost 7.69 vs avg price 8.20
+$100/mo 30y @7%: 121,997 vs put in 36,000
+$100/mo 10y @7%: 17,308 vs 12,000
+$100 after 10y of 3% inflation buys 74.4
+ROI 500 -> 560: 0.12
+IRA 2026 limit 7500 -> per month 625.0

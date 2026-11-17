@@ -1,12 +1,12 @@
 {
  "channel": "finance",
  "video": "14 Every Stock Market Term",
- "state": "queued",
- "thread": null,
+ "state": "making",
+ "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ8KEaKjq4HE5sipRvPoKdvwy",
  "feedback": false,
  "queue_pos": 6,
  "booked_for": null,
  "zernio_post": null,
- "updated": "2026-11-17T18:55Z",
- "note": "queued by Pushpam 17 Nov; brief + transcript in 00 Brief"
+ "updated": "2026-11-17T19:24Z",
+ "note": "script + storyboard in progress; planned slot 2026-12-09T16:00Z"
 }
