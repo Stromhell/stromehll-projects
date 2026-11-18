@@ -1,0 +1,13 @@
+{
+ "channel": "finance",
+ "video": "09 Terrifying Financial Shift",
+ "state": "waiting_approval",
+ "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ8P5t9ZBPVmGMruhguMVUCC6",
+ "feedback": false,
+ "queue_pos": 1,
+ "booked_for": null,
+ "zernio_post": null,
+ "updated": "2026-11-17T19:05Z",
+ "note": "script v1 + storyboard v1 https://claude.ai/artifact/2iitLEUUA6vqwdoSFgTu8t waiting for Pushpam OK; planned slot 2026-11-29T16:00Z",
+ "storyboard": "https://claude.ai/artifact/2iitLEUUA6vqwdoSFgTu8t"
+}

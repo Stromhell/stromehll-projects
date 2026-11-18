@@ -1,0 +1,16 @@
+{
+ "channel": "finance",
+ "video": "09 Terrifying Financial Shift",
+ "state": "waiting_approval",
+ "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ8P5t9ZBPVmGMruhguMVUCC6",
+ "feedback": false,
+ "queue_pos": 1,
+ "booked_for": null,
+ "zernio_post": null,
+ "updated": "2026-11-18T11:50Z",
+ "note": "Full video v2 (14:42) + launch kit shared for Pushpam OK 18 Nov 11:50 UTC. Drive 03 Renders/09-Terrifying-Shift-full_v2.mp4. Books 29 Nov 16:00 UTC after OK.",
+ "storyboard": "https://claude.ai/artifact/2iitLEUUA6vqwdoSFgTu8t",
+ "title": "Most Terrifying Financial Shift in the World Right Now",
+ "full_video": "https://drive.google.com/file/d/1ys2mltbXot0pdwhopFFs6pa680uGENB5/view",
+ "kit": "https://claude.ai/artifact/TaSTpKVZdwoDcbbt25VMNu"
+}

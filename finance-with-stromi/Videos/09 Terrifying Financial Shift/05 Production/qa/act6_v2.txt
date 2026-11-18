@@ -1,0 +1,32 @@
+# qa_auto report: act6_v2.mp4 (act)
+
+Result: **FAIL** - 10 fail, 7 warn, 5 to eyeball
+
+| level | check | detail | standard fix |
+|---|---|---|---|
+| FAIL | audio stream | no audio | mux the mix |
+| FAIL | cine: edge exposed (camera past the background) | 0:47.3 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:48.8 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:51.0 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:52.3 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:53.5 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:54.8 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:56.0 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:57.2 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:58.8 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| WARN | dark scene | 0:00.00-0:03.00 mean luma 8/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | dark scene | 0:03.75-0:05.25 mean luma 26/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | dark scene | 0:05.75-0:14.25 mean luma 25/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | dark scene | 0:25.25-0:26.75 mean luma 28/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | dark scene | 0:32.25-0:40.50 mean luma 25/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | dark scene | 0:51.50-0:53.25 mean luma 27/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | cine: cut rhythm | 0:00.0 80% of shots are longer than 8 s (median 12.3 s) | checklist B11 rows 67-75 |
+| CHECK | possible pop-in | ~0:14.20 upper-right, lower-right | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | local glitch/flicker | ~0:30.80 top-mid-left, top-mid-right | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
+| CHECK | possible pop-in | ~0:40.50 top-mid-left, top-mid-right | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | possible pop-in | ~0:56.80 top-mid-left, top-mid-right | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | possible pop-in | ~1:03.00 bottom-mid-right | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| INFO | streams | 1280x720 h264 yuv420p r=24.000 avg=24.000 fps, 84.25 s, audio=0 |  |
+| INFO | cine | still-camera share 12%, 5 shots, median shot 12.33 s |  |
+| INFO | contact sheets | 3 sheets in act6_v2_qa/sheets - READ EVERY ONE against RENDER-QA-CHECKLIST.md |  |
+

@@ -1,0 +1,14 @@
+{
+ "channel": "finance",
+ "video": "09 Terrifying Financial Shift",
+ "state": "queued",
+ "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ8P5t9ZBPVmGMruhguMVUCC6",
+ "feedback": true,
+ "queue_pos": 1,
+ "booked_for": null,
+ "zernio_post": null,
+ "updated": "2026-11-18T08:00Z",
+ "note": "PAUSED 18 Nov 08:00 UTC by one-video watchdog (Spider-Man BND v2 has priority). All 8 acts rendered (in /home/user/work/e9/render, cloud scratch). Next on resume: combine acts + mix09_v1.wav, QA, Drive upload, launch kit, share for OK.",
+ "storyboard": "https://claude.ai/artifact/2iitLEUUA6vqwdoSFgTu8t",
+ "title": "Most Terrifying Financial Shift in the World Right Now"
+}
