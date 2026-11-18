@@ -1,0 +1,52 @@
+# qa_auto report: 10-Saving-Into-Investing-full_v3.mp4 (full)
+
+Result: **FAIL** - 4 fail, 10 warn, 25 to eyeball
+
+| level | check | detail | standard fix |
+|---|---|---|---|
+| FAIL | black / near-black | 0:49.88-0:56.04 (6.2s) | OK if it is a chapter/title card or fade; otherwise a missing shot/plate or bad cut |
+| FAIL | black / near-black | 12:21.04-12:25.54 (4.5s) | OK if it is a chapter/title card or fade; otherwise a missing shot/plate or bad cut |
+| FAIL | z-fighting / shimmer | 8:36.00-8:47.00 around middle-centre (4 cells) | 3D: coplanar surfaces (board on frame, window on wall, door on desk plane) -> offset 1-2 cm or polygonOffset, raise near plane; 2D: per-frame random/texture swap -> fixed seed |
+| FAIL | cine: cut leak (old scene still on screen) | 9:46.5 16% of the frame unchanged across the cut while 59% changed | checklist B11 rows 67-75 |
+| WARN | dark scene | 0:50.00-0:56.00 mean luma 9/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | dark scene | 2:55.25-2:58.25 mean luma 8/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | dark scene | 4:13.25-4:16.25 mean luma 8/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | dark scene | 5:27.25-5:30.25 mean luma 9/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | dark scene | 6:20.00-6:23.00 mean luma 8/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | dark scene | 7:41.50-7:44.50 mean luma 9/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | dark scene | 9:20.25-9:23.25 mean luma 8/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | dark scene | 11:14.25-11:17.25 mean luma 9/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | dark scene | 12:21.00-12:25.50 mean luma 11/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | cine: cut rhythm | 0:00.0 52% of shots are longer than 8 s (median 9.3 s) | checklist B11 rows 67-75 |
+| CHECK | black / near-black | 2:55.21-2:58.21 (3.0s) | OK if it is a chapter/title card or fade; otherwise a missing shot/plate or bad cut |
+| CHECK | black / near-black | 4:13.21-4:16.21 (3.0s) | OK if it is a chapter/title card or fade; otherwise a missing shot/plate or bad cut |
+| CHECK | black / near-black | 5:27.17-5:30.17 (3.0s) | OK if it is a chapter/title card or fade; otherwise a missing shot/plate or bad cut |
+| CHECK | black / near-black | 6:19.92-6:22.92 (3.0s) | OK if it is a chapter/title card or fade; otherwise a missing shot/plate or bad cut |
+| CHECK | black / near-black | 7:41.46-7:44.46 (3.0s) | OK if it is a chapter/title card or fade; otherwise a missing shot/plate or bad cut |
+| CHECK | black / near-black | 9:20.21-9:23.21 (3.0s) | OK if it is a chapter/title card or fade; otherwise a missing shot/plate or bad cut |
+| CHECK | black / near-black | 11:14.33-11:17.33 (3.0s) | OK if it is a chapter/title card or fade; otherwise a missing shot/plate or bad cut |
+| CHECK | local glitch/flicker | ~2:27.50 top-mid-left, top-mid-right | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
+| CHECK | local glitch/flicker | ~2:55.00 lower-right | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
+| CHECK | local glitch/flicker | ~3:58.50 upper-left, upper-mid-left | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
+| CHECK | local glitch/flicker | ~5:22.00 upper-left, lower-left | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
+| CHECK | local glitch/flicker | ~5:22.20 top-mid-left | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
+| CHECK | possible pop-in | ~6:09.20 top-mid-left, top-mid-right | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | possible pop-in | ~6:46.00 lower-left | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | possible pop-in | ~7:05.00 top-mid-left, top-mid-right | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | possible pop-in | ~7:47.80 lower-mid-left | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | possible pop-in | ~7:48.50 lower-mid-left | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | possible pop-in | ~7:49.20 lower-mid-left | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | possible pop-in | ~9:12.00 top-mid-left | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | possible pop-in | ~9:41.80 top-mid-left | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | possible pop-in | ~10:02.20 upper-right, lower-right | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | possible pop-in | ~10:06.50 top-mid-left, top-mid-right | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | possible pop-in | ~10:51.00 lower-right | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | z-fighting / shimmer | 10:24.00-10:29.00 around bottom-centre (1 cells) | 3D: coplanar surfaces (board on frame, window on wall, door on desk plane) -> offset 1-2 cm or polygonOffset, raise near plane; 2D: per-frame random/texture swap -> fixed seed |
+| CHECK | end screen | 10-Saving-Into-Investing-full_v3_qa/zoom/last5s.jpg: last 5 s clean (no text/subtitles/characters in the YouTube end-screen element zones) |  |
+| PASS | decode check | decodes with 0 errors |  |
+| INFO | streams | 1920x1080 h264 yuv420p r=24.000 avg=24.000 fps, 751.50 s, audio=1 |  |
+| INFO | loudness | I=-14.1 LUFS, true peak=-2.4 dBTP, LRA=2.8 LU |  |
+| INFO | levels | speech/peak windows -14.5 dBFS, floor -31.8 dBFS |  |
+| INFO | cine | still-camera share 5%, 63 shots, median shot 9.33 s |  |
+| INFO | contact sheets | 26 sheets in 10-Saving-Into-Investing-full_v3_qa/sheets - READ EVERY ONE against RENDER-QA-CHECKLIST.md |  |
+

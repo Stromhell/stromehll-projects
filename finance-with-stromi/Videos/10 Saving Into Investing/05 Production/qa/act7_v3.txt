@@ -1,0 +1,16 @@
+# qa_auto report: act7_v3.mp4 (act)
+
+Result: **FAIL** - 2 fail, 2 warn, 2 to eyeball
+
+| level | check | detail | standard fix |
+|---|---|---|---|
+| FAIL | audio stream | no audio | mux the mix |
+| FAIL | black / near-black | 1:06.71-1:11.21 (4.5s) | OK if it is a chapter/title card or fade; otherwise a missing shot/plate or bad cut |
+| WARN | dark scene | 0:00.00-0:03.00 mean luma 7/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | dark scene | 1:06.75-1:11.25 mean luma 11/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| CHECK | possible pop-in | ~0:28.20 upper-left | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | possible pop-in | ~0:31.50 upper-left | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| INFO | streams | 1280x720 h264 yuv420p r=24.000 avg=24.000 fps, 77.17 s, audio=0 |  |
+| INFO | cine | still-camera share 13%, 8 shots, median shot 5.75 s |  |
+| INFO | contact sheets | 3 sheets in ../render/act7_v3_qa/sheets - READ EVERY ONE against RENDER-QA-CHECKLIST.md |  |
+
