@@ -1,12 +1,12 @@
 {
  "channel": "finance",
  "video": "11 Retire in 10 Years",
- "state": "waiting_approval",
+ "state": "approved",
  "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ8YaAM7xHjWyUxT1nijnrVVz",
  "feedback": false,
  "queue_pos": null,
  "booked_for": null,
  "zernio_post": null,
- "updated": "2026-11-17T19:12Z",
- "note": "script v1 + storyboard v1 https://claude.ai/artifact/Grvsr7xaomeHpLh833dxT9 shared; planned slot 2026-12-03T16:00Z"
+ "updated": "2026-11-18T05:53Z",
+ "note": "storyboard v1 OK by Pushpam 18 Nov 05:50 UTC; animation waits for shared queue slot (order 09,10,11). Upload title: exact given title incl \"(So FEW)\" unless Pushpam says otherwise"
 }
