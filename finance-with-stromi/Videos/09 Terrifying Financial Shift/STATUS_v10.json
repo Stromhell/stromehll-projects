@@ -1,0 +1,16 @@
+{
+ "channel": "finance",
+ "video": "09 Terrifying Financial Shift",
+ "state": "making",
+ "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ8P5t9ZBPVmGMruhguMVUCC6",
+ "feedback": true,
+ "queue_pos": 1,
+ "booked_for": null,
+ "zernio_post": null,
+ "updated": "2026-11-18T16:50Z",
+ "note": "Pushpam feedback 18 Nov 16:28 UTC: kitchen scene objects floating + Nora clipping (0:09, 6:40, all repeats). Fixed in acts09/sets09; re-rendering acts 0,3,5,7 as _v3, then combine v3 and share.",
+ "storyboard": "https://claude.ai/artifact/2iitLEUUA6vqwdoSFgTu8t",
+ "title": "Most Terrifying Financial Shift in the World Right Now",
+ "full_video": "https://drive.google.com/file/d/1ys2mltbXot0pdwhopFFs6pa680uGENB5/view",
+ "kit": "https://claude.ai/artifact/TaSTpKVZdwoDcbbt25VMNu"
+}
