@@ -1,0 +1,797 @@
+{
+ "S01": {
+  "dur": 20.423,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 15.589,
+    "text": "This is Wren. Wren has saved money every single month for eleven years. Birthdays, overtime, the year she didn't take a vacation. Ten thousand dollars, sitting safe in the bank. And tonight, the bank sent her a little thank you."
+   },
+   {
+    "who": "WREN",
+    "t0": 15.892,
+    "t1": 16.858,
+    "text": "Eight cents."
+   },
+   {
+    "who": "PIP",
+    "t0": 17.217,
+    "t1": 18.507,
+    "text": "For the month?"
+   },
+   {
+    "who": "WREN",
+    "t0": 18.918,
+    "t1": 19.873,
+    "text": "For the month."
+   }
+  ]
+ },
+ "S02": {
+  "dur": 14.779,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 7.174,
+    "text": "And this is where her money lives. Wren thinks of it as safe. Her money thinks of it as a waiting room."
+   },
+   {
+    "who": "DIME",
+    "t0": 7.462,
+    "t1": 9.933,
+    "text": "Eleven years I've been in this chair."
+   },
+   {
+    "who": "DOT",
+    "t0": 10.285,
+    "t1": 11.859,
+    "text": "What are we waiting for?"
+   },
+   {
+    "who": "DIME",
+    "t0": 12.272,
+    "t1": 14.229,
+    "text": "Nobody knows. Deal."
+   }
+  ]
+ },
+ "S03": {
+  "dur": 14.642,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 14.092,
+    "text": "Across the canyon is the place where money goes to work. Most people can see it from the waiting room window. They just never cross, because the bridge looks scary. Today we cross it. One plank at a time."
+   }
+  ]
+ },
+ "S04": {
+  "dur": 3.2,
+  "lines": [],
+  "card": "The Waiting Room",
+  "sub": "How to move your savings into investing, one plank at a time"
+ },
+ "S05": {
+  "dur": 3.0,
+  "lines": [],
+  "card": "1. The Waiting Room",
+  "sub": null
+ },
+ "S06": {
+  "dur": 26.554,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 18.854,
+    "text": "Here's what nobody at the counter tells you. Many big banks still pay about one hundredth of one percent on a standard savings account. On ten thousand dollars, that's about one dollar a year. The national average across all banks is a bit better, under half a percent."
+   },
+   {
+    "who": "MORT",
+    "t0": 19.279,
+    "t1": 21.513,
+    "text": "Your yearly interest, madam."
+   },
+   {
+    "who": "WREN",
+    "t0": 21.997,
+    "t1": 23.536,
+    "text": "It's a penny on a cushion."
+   },
+   {
+    "who": "MORT",
+    "t0": 24.014,
+    "t1": 26.004,
+    "text": "It's a very nice cushion."
+   }
+  ]
+ },
+ "S07": {
+  "dur": 24.32,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 17.876,
+    "text": "And there's a second visitor in the waiting room. Prices in America rose about three point seven percent over the last year. So every year your money sits still, it buys a little less. Your ten thousand doesn't shrink on the screen. It shrinks at the grocery store."
+   },
+   {
+    "who": "DIME",
+    "t0": 18.176,
+    "t1": 20.622,
+    "text": "Did somebody just give me a haircut?"
+   },
+   {
+    "who": "GUS",
+    "t0": 21.059,
+    "t1": 23.77,
+    "text": "Every year, pal. Every year."
+   }
+  ]
+ },
+ "S08": {
+  "dur": 29.008,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 23.08,
+    "text": "Now let's do the math with the same ten thousand dollars. At one percent a year, after twenty years you'd have about twelve thousand two hundred. Now imagine it earned what the US stock market has averaged over the last hundred years, around ten percent a year, with dividends reinvested. After twenty years? About sixty-seven thousand."
+   },
+   {
+    "who": "N",
+    "t0": 23.39,
+    "t1": 28.458,
+    "text": "Same money. Same twenty years. The only thing that changed is where it sat."
+   }
+  ]
+ },
+ "S09": {
+  "dur": 18.065,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 11.546,
+    "text": "That bend at the end is compounding. Your money earns money, then that money earns money too. In the early years it looks like nothing. Later it does most of the work."
+   },
+   {
+    "who": "WREN",
+    "t0": 11.837,
+    "t1": 13.602,
+    "text": "Why didn't anybody tell me this?"
+   },
+   {
+    "who": "PIP",
+    "t0": 13.961,
+    "t1": 17.515,
+    "text": "They did. You were in the waiting room. It's very quiet in there."
+   }
+  ]
+ },
+ "S10": {
+  "dur": 21.202,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 20.652,
+    "text": "One honest warning before we go further. Ten percent is a long-run average, not a yearly promise. In two thousand eight the market lost about thirty-seven percent. In twenty twenty-three it gained about twenty-six. Over decades it has trended up. Over any single year, it can do anything."
+   }
+  ]
+ },
+ "S11": {
+  "dur": 3.0,
+  "lines": [],
+  "card": "2. Why We Stay Seated",
+  "sub": null
+ },
+ "S12": {
+  "dur": 17.614,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 7.327,
+    "text": "So if the math is that clear, why doesn't everyone cross? Wren got her saving habit from her grandpa."
+   },
+   {
+    "who": "ABE",
+    "t0": 7.626,
+    "t1": 10.804,
+    "text": "Forty years, this can has never lost a dime."
+   },
+   {
+    "who": "WREN",
+    "t0": 11.31,
+    "t1": 12.784,
+    "text": "Has it ever made one?"
+   },
+   {
+    "who": "ABE",
+    "t0": 13.273,
+    "t1": 17.064,
+    "text": "That's not its job. Its job is to be in the garden."
+   }
+  ]
+ },
+ "S13": {
+  "dur": 28.118,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 18.782,
+    "text": "Abe isn't silly. He's human. Psychologists found that losing money feels roughly twice as bad as winning the same amount feels good. So a savings account that never drops feels safer than one that grows but wiggles. Even when the wiggly one leaves you far richer."
+   },
+   {
+    "who": "ABE",
+    "t0": 19.187,
+    "t1": 21.01,
+    "text": "I don't like wiggles."
+   },
+   {
+    "who": "DOT",
+    "t0": 21.494,
+    "t1": 25.145,
+    "text": "Your can is losing to prices every year."
+   },
+   {
+    "who": "ABE",
+    "t0": 25.52,
+    "t1": 27.568,
+    "text": "Yes, but quietly."
+   }
+  ]
+ },
+ "S14": {
+  "dur": 13.564,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 4.38,
+    "text": "And then there's the other reason people stay seated. Rico."
+   },
+   {
+    "who": "RICO",
+    "t0": 4.683,
+    "t1": 9.301,
+    "text": "Wren! Options. Zero days to expiry. I made four hundred dollars before lunch."
+   },
+   {
+    "who": "WREN",
+    "t0": 9.66,
+    "t1": 10.942,
+    "text": "And after lunch?"
+   },
+   {
+    "who": "RICO",
+    "t0": 11.354,
+    "t1": 13.014,
+    "text": "We don't talk about after lunch."
+   }
+  ]
+ },
+ "S15": {
+  "dur": 15.698,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 15.148,
+    "text": "When people like Rico are what investing looks like, investing looks like gambling. It isn't. The path we're about to walk is slow, boring, and built for people who would rather be doing anything else. That's the point."
+   }
+  ]
+ },
+ "S16": {
+  "dur": 3.0,
+  "lines": [],
+  "card": "3. Plank One: The Cushion",
+  "sub": null
+ },
+ "S17": {
+  "dur": 25.449,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 13.764,
+    "text": "Plank one. Before a single dollar crosses, you build a cushion. Three to six months of your real living costs, kept in cash. Rent, groceries, car, phone. Not a guess. Your actual number."
+   },
+   {
+    "who": "WREN",
+    "t0": 14.177,
+    "t1": 17.105,
+    "text": "My actual number is twenty-four hundred a month."
+   },
+   {
+    "who": "DIME",
+    "t0": 17.604,
+    "t1": 21.238,
+    "text": "So, about seven to fourteen thousand in the cushion."
+   },
+   {
+    "who": "WREN",
+    "t0": 21.593,
+    "t1": 24.899,
+    "text": "Seven thousand, two hundred, minimum. I'll go to nine."
+   }
+  ]
+ },
+ "S18": {
+  "dur": 18.146,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 17.596,
+    "text": "Why so much cash first? Because the worst time to sell an investment is when you have to. The car dies, the job goes, the market is down that same month, and you sell at the bottom to pay the bill. The cushion means life never gets to pick the day you sell."
+   }
+  ]
+ },
+ "S19": {
+  "dur": 27.349,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 22.343,
+    "text": "And the cushion doesn't have to sit in the worst chair. Online high-yield savings accounts are paying around four to four and a half percent right now, with the same government deposit insurance up to two hundred fifty thousand dollars. On nine thousand, that's roughly three hundred and ninety dollars a year, instead of about ninety cents."
+   },
+   {
+    "who": "MORT",
+    "t0": 22.712,
+    "t1": 24.033,
+    "text": "You're leaving?"
+   },
+   {
+    "who": "WREN",
+    "t0": 24.494,
+    "t1": 26.799,
+    "text": "Just the cushion. You can keep the penny."
+   }
+  ]
+ },
+ "S20": {
+  "dur": 3.0,
+  "lines": [],
+  "card": "4. Plank Two: Two Pockets",
+  "sub": null
+ },
+ "S21": {
+  "dur": 27.998,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 20.397,
+    "text": "Plank two is in your head. Your money now has two different jobs. The rainy-day pocket is the cushion. It never moves, it's always there, and it's boring on purpose. The someday pocket is money you won't need for at least five years. That money is allowed to go up and down, because its job is to grow."
+   },
+   {
+    "who": "WREN",
+    "t0": 20.748,
+    "t1": 22.358,
+    "text": "Rainy day. Someday."
+   },
+   {
+    "who": "DIME",
+    "t0": 22.73,
+    "t1": 24.415,
+    "text": "Which one am I?"
+   },
+   {
+    "who": "WREN",
+    "t0": 24.841,
+    "t1": 27.448,
+    "text": "You've been waiting eleven years. You're someday."
+   }
+  ]
+ },
+ "S22": {
+  "dur": 21.769,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 13.654,
+    "text": "This sounds too simple to matter. It matters a lot. When the someday pocket drops, you look at the rainy-day pocket, see that rent is covered, and the drop becomes a number instead of an emergency."
+   },
+   {
+    "who": "PIP",
+    "t0": 13.93,
+    "t1": 16.14,
+    "text": "Market's down four percent."
+   },
+   {
+    "who": "WREN",
+    "t0": 16.649,
+    "t1": 18.337,
+    "text": "Is rent down four percent?"
+   },
+   {
+    "who": "PIP",
+    "t0": 18.832,
+    "t1": 19.707,
+    "text": "No."
+   },
+   {
+    "who": "WREN",
+    "t0": 20.146,
+    "t1": 21.219,
+    "text": "Then I'm fine."
+   }
+  ]
+ },
+ "S23": {
+  "dur": 3.0,
+  "lines": [],
+  "card": "5. Plank Three: Start Tiny",
+  "sub": null
+ },
+ "S24": {
+  "dur": 24.465,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 16.17,
+    "text": "Plank three surprises people. You don't need thousands to start. Most big online brokers have no account minimum, and many let you buy a slice of a share for a few dollars. The first goal isn't to get rich. It's to get used to it."
+   },
+   {
+    "who": "WREN",
+    "t0": 16.484,
+    "t1": 17.802,
+    "text": "This plank is tiny."
+   },
+   {
+    "who": "DIME",
+    "t0": 18.306,
+    "t1": 20.3,
+    "text": "So's your first deposit."
+   },
+   {
+    "who": "WREN",
+    "t0": 20.743,
+    "t1": 21.925,
+    "text": "Fifty dollars."
+   },
+   {
+    "who": "DIME",
+    "t0": 22.423,
+    "t1": 23.915,
+    "text": "Perfect. Step."
+   }
+  ]
+ },
+ "S25": {
+  "dur": 23.718,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 18.339,
+    "text": "The trick that makes it stick is automatic. Pick an amount, pick payday, set it to move on its own. You don't decide every month, so you can't talk yourself out of it every month. Wren started at fifty. Six months later she bumped it to a hundred. A year later, three hundred."
+   },
+   {
+    "who": "PIP",
+    "t0": 18.752,
+    "t1": 21.019,
+    "text": "Did you even notice it leaving?"
+   },
+   {
+    "who": "WREN",
+    "t0": 21.45,
+    "t1": 23.168,
+    "text": "No. That's the whole idea."
+   }
+  ]
+ },
+ "S26": {
+  "dur": 10.949,
+  "lines": [
+   {
+    "who": "RICO",
+    "t0": 0.45,
+    "t1": 4.165,
+    "text": "Fifty bucks? Put it in this dog coin. It did ten times last week."
+   },
+   {
+    "who": "WREN",
+    "t0": 4.579,
+    "t1": 6.053,
+    "text": "What did it do this week?"
+   },
+   {
+    "who": "RICO",
+    "t0": 6.501,
+    "t1": 7.538,
+    "text": "... It's resting."
+   },
+   {
+    "who": "WREN",
+    "t0": 7.956,
+    "t1": 10.399,
+    "text": "So is my fifty. Somewhere sensible."
+   }
+  ]
+ },
+ "S27": {
+  "dur": 19.424,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 18.874,
+    "text": "One honest exception. If you're carrying credit card debt at twenty-plus percent, paying that off usually beats anything the market is likely to give you. The full order of what to pay and fund first is its own video, and we'll make it. Today, we're getting you across the bridge."
+   }
+  ]
+ },
+ "S28": {
+  "dur": 3.0,
+  "lines": [],
+  "card": "6. Plank Four: Buy the Whole Street",
+  "sub": null
+ },
+ "S29": {
+  "dur": 18.367,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 8.331,
+    "text": "Here's where most beginners freeze. Which company? Which stock? Who's the next big one? And here's the relief. You don't have to pick."
+   },
+   {
+    "who": "WREN",
+    "t0": 8.62,
+    "t1": 9.989,
+    "text": "Which one do I buy?"
+   },
+   {
+    "who": "GUS",
+    "t0": 10.384,
+    "t1": 12.635,
+    "text": "How about all of them?"
+   },
+   {
+    "who": "WREN",
+    "t0": 13.122,
+    "t1": 14.666,
+    "text": "Can I afford all of them?"
+   },
+   {
+    "who": "GUS",
+    "t0": 15.013,
+    "t1": 17.817,
+    "text": "For about fifty bucks? Sure."
+   }
+  ]
+ },
+ "S30": {
+  "dur": 28.985,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 21.419,
+    "text": "That's an index fund. Instead of betting on one shop, you buy a tiny slice of the whole street. An S&P 500 fund holds about five hundred of the biggest American companies. A total market fund holds thousands. If one shop closes, you barely feel it. If the street grows, you grow with it."
+   },
+   {
+    "who": "N",
+    "t0": 21.688,
+    "t1": 28.435,
+    "text": "And the cheapest of them charge about three cents a year for every hundred dollars you put in. Three cents."
+   }
+  ]
+ },
+ "S31": {
+  "dur": 19.478,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 18.928,
+    "text": "Does it really beat the experts? Mostly, yes. S&P's own scorecard keeps finding that over fifteen years, around nine in ten US large-company funds run by professional pickers do worse than the plain index. They charge more and still lose to the turtle."
+   }
+  ]
+ },
+ "S32": {
+  "dur": 28.91,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 19.518,
+    "text": "Even Warren Buffett, one of the most famous stock pickers who ever lived, said this in his own letter to shareholders. When he wrote down what should happen with his wife's money after he's gone, he said: put ninety percent in a very low-cost S&P 500 index fund."
+   },
+   {
+    "who": "ABE",
+    "t0": 19.891,
+    "t1": 22.751,
+    "text": "The billionaire picks the boring one?"
+   },
+   {
+    "who": "DOT",
+    "t0": 23.141,
+    "t1": 25.621,
+    "text": "The billionaire picks the boring one."
+   },
+   {
+    "who": "ABE",
+    "t0": 26.057,
+    "t1": 28.36,
+    "text": "...Does it fit in a can?"
+   }
+  ]
+ },
+ "S33": {
+  "dur": 3.0,
+  "lines": [],
+  "card": "7. Plank Five: Keep Walking",
+  "sub": null
+ },
+ "S34": {
+  "dur": 28.667,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 22.894,
+    "text": "The last plank is the longest, and the most boring. Keep going. Say Wren invests three hundred dollars a month, and over the years it averages eight percent. After twenty-five years, she'd have roughly two hundred eighty-five thousand dollars. She only put in ninety. The other hundred and ninety-five thousand is the money her money made."
+   },
+   {
+    "who": "DIME",
+    "t0": 23.239,
+    "t1": 25.735,
+    "text": "So I'm not a coin. I'm a parent."
+   },
+   {
+    "who": "WREN",
+    "t0": 26.136,
+    "t1": 28.117,
+    "text": "You're a grandparent by year twenty."
+   }
+  ]
+ },
+ "S35": {
+  "dur": 19.738,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 19.188,
+    "text": "Now the twist. Same three hundred a month, same eight percent, but she waits ten years before starting and invests for fifteen. She ends up with about a hundred and four thousand. Waiting a third of the time cost her nearly two thirds of the money. The early years are where the bend starts."
+   }
+  ]
+ },
+ "S36": {
+  "dur": 19.201,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 18.651,
+    "text": "And then, at some point, the storm. The market will crash. It always has, many times. The S&P lost more than half its value from twenty oh seven to twenty oh nine. In twenty twenty it fell about a third in one month. Here's what happens if you just keep walking."
+   }
+  ]
+ },
+ "S37": {
+  "dur": 25.939,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 21.129,
+    "text": "Month one, shares cost a hundred dollars. Her three hundred buys three. Month two, the crash, shares cost fifty. Same three hundred buys six. Month three, back to a hundred, three more. She put in nine hundred dollars. The price ended exactly where it started. But she owns twelve shares, worth twelve hundred."
+   },
+   {
+    "who": "RICO",
+    "t0": 21.568,
+    "t1": 23.189,
+    "text": "How did you make money on a crash?"
+   },
+   {
+    "who": "WREN",
+    "t0": 23.564,
+    "t1": 25.389,
+    "text": "I kept walking. You sold."
+   }
+  ]
+ },
+ "S38": {
+  "dur": 17.587,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 17.037,
+    "text": "No promise here. Some recoveries took years, and after twenty-oh-nine it was about four years before the index got back to its old high. That's exactly why the cushion and the five-year rule come first. They're what let you keep walking when the bridge shakes."
+   }
+  ]
+ },
+ "S39": {
+  "dur": 3.0,
+  "lines": [],
+  "card": "Your Wallet",
+  "sub": null
+ },
+ "S40": {
+  "dur": 35.399,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 6.924,
+    "text": "So, what does this mean for your wallet? This isn't personal advice, just the path Wren wrote down."
+   },
+   {
+    "who": "N",
+    "t0": 7.259,
+    "t1": 34.849,
+    "text": "One. Find your real monthly number, and build three to six months of it as a cushion. Two. Move that cushion out of the penny chair into a high-yield, insured savings account. Three. Split your money into rainy day and someday, and only invest what you won't need for five years. Four. Start tiny, and make it automatic on payday. Five. Buy the whole street with a low-cost index fund, then keep walking, especially when it storms."
+   }
+  ]
+ },
+ "S41": {
+  "dur": 8.367,
+  "lines": [
+   {
+    "who": "DIME",
+    "t0": 0.45,
+    "t1": 2.568,
+    "text": "Guys! There's work over here!"
+   },
+   {
+    "who": "DOT",
+    "t0": 2.944,
+    "t1": 4.217,
+    "text": "Is it scary?"
+   },
+   {
+    "who": "DIME",
+    "t0": 4.671,
+    "t1": 7.817,
+    "text": "Only the bridge. And the bridge has a cushion."
+   }
+  ]
+ },
+ "S42": {
+  "dur": 19.903,
+  "lines": [
+   {
+    "who": "N",
+    "t0": 0.45,
+    "t1": 12.646,
+    "text": "Eleven years of saving taught Wren how to keep money safe. Crossing the bridge taught her how to let it grow. And tonight, someone else in the family just got their very first thank you from the bank."
+   },
+   {
+    "who": "WREN",
+    "t0": 12.956,
+    "t1": 13.932,
+    "text": "Eight cents?"
+   },
+   {
+    "who": "PIP",
+    "t0": 14.336,
+    "t1": 15.608,
+    "text": "For the month."
+   },
+   {
+    "who": "WREN",
+    "t0": 16.083,
+    "t1": 19.353,
+    "text": "Okay. Sit down. Let me tell you about the waiting room."
+   }
+  ]
+ },
+ "S43": {
+  "dur": 3.2,
+  "lines": [],
+  "card": "General education, not financial advice",
+  "sub": "Investing involves risk, including loss of money. Past returns don't promise future ones. Check your own situation, or ask a licensed adviser."
+ }
+}

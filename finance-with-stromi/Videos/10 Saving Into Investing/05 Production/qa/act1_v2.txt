@@ -1,0 +1,15 @@
+# qa_auto report: act1_v2.mp4 (act)
+
+Result: **FAIL** - 1 fail, 2 warn, 2 to eyeball
+
+| level | check | detail | standard fix |
+|---|---|---|---|
+| FAIL | audio stream | no audio | mux the mix |
+| WARN | dark scene | 0:00.00-0:03.00 mean luma 8/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | cine: cut rhythm | 0:00.0 62% of shots are longer than 8 s (median 15.6 s) | checklist B11 rows 67-75 |
+| CHECK | possible pop-in | ~0:23.50 upper-right, lower-right | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | local glitch/flicker | ~2:01.80 upper-right, lower-right | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
+| INFO | streams | 1280x720 h264 yuv420p r=24.000 avg=24.000 fps, 122.17 s, audio=0 |  |
+| INFO | cine | still-camera share 2%, 8 shots, median shot 15.58 s |  |
+| INFO | contact sheets | 5 sheets in ../render/act1_v2_qa/sheets - READ EVERY ONE against RENDER-QA-CHECKLIST.md |  |
+

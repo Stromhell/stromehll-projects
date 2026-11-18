@@ -1,0 +1,19 @@
+# qa_auto report: act5_v2.mp4 (act)
+
+Result: **FAIL** - 1 fail, 2 warn, 6 to eyeball
+
+| level | check | detail | standard fix |
+|---|---|---|---|
+| FAIL | audio stream | no audio | mux the mix |
+| WARN | dark scene | 0:00.00-0:03.00 mean luma 9/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | cine: cut rhythm | 0:00.0 71% of shots are longer than 8 s (median 18.3 s) | checklist B11 rows 67-75 |
+| CHECK | possible pop-in | ~0:05.50 lower-mid-left | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | possible pop-in | ~0:06.20 lower-mid-left | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | possible pop-in | ~0:07.00 lower-mid-left | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | possible pop-in | ~0:07.80 lower-mid-left | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | possible pop-in | ~1:30.50 top-mid-left | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | z-fighting / shimmer | 0:55.00-1:02.00 around middle-centre (2 cells) | 3D: coplanar surfaces (board on frame, window on wall, door on desk plane) -> offset 1-2 cm or polygonOffset, raise near plane; 2D: per-frame random/texture swap -> fixed seed |
+| INFO | streams | 1280x720 h264 yuv420p r=24.000 avg=24.000 fps, 98.75 s, audio=0 |  |
+| INFO | cine | still-camera share 2%, 7 shots, median shot 18.33 s |  |
+| INFO | contact sheets | 4 sheets in ../render/act5_v2_qa/sheets - READ EVERY ONE against RENDER-QA-CHECKLIST.md |  |
+

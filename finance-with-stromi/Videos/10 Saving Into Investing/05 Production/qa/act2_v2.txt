@@ -1,0 +1,13 @@
+# qa_auto report: act2_v2.mp4 (act)
+
+Result: **FAIL** - 1 fail, 2 warn, 0 to eyeball
+
+| level | check | detail | standard fix |
+|---|---|---|---|
+| FAIL | audio stream | no audio | mux the mix |
+| WARN | dark scene | 0:00.00-0:03.00 mean luma 8/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | cine: cut rhythm | 0:00.0 67% of shots are longer than 8 s (median 11.8 s) | checklist B11 rows 67-75 |
+| INFO | streams | 1280x720 h264 yuv420p r=24.000 avg=24.000 fps, 78.00 s, audio=0 |  |
+| INFO | cine | still-camera share 7%, 6 shots, median shot 11.75 s |  |
+| INFO | contact sheets | 3 sheets in ../render/act2_v2_qa/sheets - READ EVERY ONE against RENDER-QA-CHECKLIST.md |  |
+

@@ -1,0 +1,37 @@
+# qa_auto report: act4_v1.mp4 (act)
+
+Result: **FAIL** - 21 fail, 2 warn, 4 to eyeball
+
+| level | check | detail | standard fix |
+|---|---|---|---|
+| FAIL | audio stream | no audio | mux the mix |
+| FAIL | z-fighting / shimmer | 0:51.00-1:02.00 around top-right (2 cells) | 3D: coplanar surfaces (board on frame, window on wall, door on desk plane) -> offset 1-2 cm or polygonOffset, raise near plane; 2D: per-frame random/texture swap -> fixed seed |
+| FAIL | cine: cut leak (old scene still on screen) | 0:46.3 25% of the frame unchanged across the cut while 56% changed | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:27.5 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:28.7 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:29.8 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:31.2 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:32.7 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:33.8 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:35.0 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:36.2 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:37.8 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:39.0 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:40.2 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:41.8 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:43.7 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:45.5 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:46.7 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:48.0 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:49.7 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:51.0 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| WARN | dark scene | 0:00.00-0:03.00 mean luma 8/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | cine: cut rhythm | 0:00.0 67% of shots are longer than 8 s (median 14.9 s) | checklist B11 rows 67-75 |
+| CHECK | local glitch/flicker | ~0:30.20 top-mid-right | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
+| CHECK | local glitch/flicker | ~0:46.00 top-mid-left | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
+| CHECK | possible pop-in | ~0:46.00 top-mid-right | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | possible pop-in | ~1:06.80 top-mid-left, top-mid-right | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| INFO | streams | 1280x720 h264 yuv420p r=24.000 avg=24.000 fps, 81.54 s, audio=0 |  |
+| INFO | cine | still-camera share 1%, 6 shots, median shot 14.92 s |  |
+| INFO | contact sheets | 3 sheets in act4_v1_qa/sheets - READ EVERY ONE against RENDER-QA-CHECKLIST.md |  |
+
