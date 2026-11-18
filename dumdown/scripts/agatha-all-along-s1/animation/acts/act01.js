@@ -1,0 +1,11 @@
+// Act 01: DETECTIVE AGNES
+window.ACT = { timing: window.TIMING, shots: [
+ { p: 0, plate: 'station', title: ['PART 1', 'Detective Agnes'], cam: { z: [1.2, 1.3], x: 1280, y: 820 }, chars: [{ c: 'chief', x: 1650, y: 1270, s: 1.45, view: 'threequarter', dir: -1, expr: 'angry', talk: true, pose: 'point' }, { c: 'agnes', x: 850, y: 1270, s: 1.42, view: 'threequarter', expr: 'deadpan' }] },
+ { p: 0, f: .3, plate: 'station', cam: { z: [1.7, 1.85], x: 1050, y: 760 }, props: [{ k: 'phone', on: 0, s: 1 }], chars: [{ c: 'agnes', x: 1050, y: 1270, s: 1.42, view: 'threequarter', expr: 'smug' }], pops: [{ t: 'SUSPENDED. STILL PLAYING CANDY GAMES.', at: .5 }] },
+ { p: 0, f: .58, plate: 'creek_night', cam: { z: [1.3, 1.5], x: 1300, y: 860 }, props: [{ k: 'libcard', on: 0, s: 1 }], chars: [{ c: 'agnes', x: 1250, y: 1270, s: 1.45, view: 'threequarter', expr: 'neutral', pose: 'point' }], grade: ['#3050a0', .16] },
+ { p: 1, plate: 'station', cam: { z: [1.25, 1.35], x: 1280, y: 820 }, chars: [{ c: 'rioAgent', x: 1650, y: 1270, s: 1.45, view: 'threequarter', dir: -1, expr: 'smug', talk: true }, { c: 'agnes', x: 980, y: 1270, s: 1.42, view: 'threequarter', expr: 'nervous' }], pops: [{ t: '"Do you remember why you hate me?"', at: 3.2 }] },
+ { p: 1, f: .62, plate: 'creek_night', cam: { z: [1.6, 1.75], x: 1400, y: 820 }, chars: [{ c: 'rioAgent', x: 1400, y: 1270, s: 1.45, view: 'threequarter', dir: -1, expr: 'smug', pose: 'shrug' }], pops: [{ t: 'Totally normal FBI stuff', at: .4, dur: 2.4 }], grade: ['#305040', .15] },
+ { p: 2, plate: 'void_grey', cam: { z: [1.2, 1.4], x: 1280, y: 800 }, chars: [{ c: 'agnes', x: 1000, y: 1270, s: 1.45, view: 'threequarter', expr: 'shock' }, { c: 'agathaHat', x: 1250, y: 1270, s: 1.45, view: 'threequarter', dir: -1, expr: 'smug' }],
+   cards: [{ c: 'agathaHat', name: 'AGATHA HARKNESS', sub: 'Move: "Steal Your Power"', at: 1.2, side: 'R', type: 'WITCH', stat: 'WEAKNESS: HAVING FEELINGS', items: ['🔮', '🧙‍♀️'], tags: ['VILLAIN', '400 YRS OLD'] }] },
+ { p: 2, f: .5, plate: 'suburb', cam: { z: [1.15, 1.25], x: 1280, y: 800 }, props: [{ k: 'hexDome', x: 1280, y: 1300, r: 1300 }], chars: [{ c: 'agatha', x: 1280, y: 1270, s: 1.4, expr: 'deadpan', talk: true }], pops: [{ t: 'Nosy neighbour → cop show', at: 2.5 }] },
+]};

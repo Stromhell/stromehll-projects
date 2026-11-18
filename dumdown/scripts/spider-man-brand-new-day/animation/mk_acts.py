@@ -212,5 +212,7 @@ A[22] = ('OUTRO', [
 ])
 os.makedirs('acts', exist_ok=True)
 for n, (t, shots) in A.items():
+    for s_ in shots:
+        if s_.get('plate','').endswith('_roof'): s_['props'] = [dict(k='roof', x=1280, y=1262, layer='back')] + s_.get('props', [])
     open(f'acts/act{n:02d}.js', 'w').write(f'// Act {n:02d}: {t}\nwindow.ACT = {{ timing: window.TIMING, shots: ' + json.dumps(shots, ensure_ascii=False) + '};\n')
 print(len(A), 'acts', sum(len(s) for _, s in A.values()), 'shots')

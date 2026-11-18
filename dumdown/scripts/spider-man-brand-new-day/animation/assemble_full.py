@@ -6,10 +6,10 @@ import json, subprocess, sys, os, wave
 sys.path.insert(0, 'gags'); from gags_data import G
 SCR = os.environ.get('SCR', '/tmp/sbwork')
 GOUT = os.environ.get('GOUT', 'gags/out'); VER = os.environ.get('VER', 'v1')
-OUT = f'{SCR}/full/DumDown_AgathaS1_FULL_{VER}.mp4'; os.makedirs(f'{SCR}/full', exist_ok=True)
+OUT = f'{SCR}/full/DumDown_SpiderManBND_FULL_{VER}.mp4'; os.makedirs(f'{SCR}/full', exist_ok=True)
 def dur(f): return float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', f], capture_output=True, text=True).stdout)
 segs = []  # (video, audio, start_frame, n_frames)
-for n in range(19):
+for n in range(23):
     v = f'{SCR}/acts/act{n:02d}.mp4'; a = f'{SCR}/mix/act{n:02d}.wav'; tot = round(min(dur(v), dur(a)) * 24)
     pts = sorted([g for g in G if g['act'] == n], key=lambda g: g['at']); cuts = [0] + [min(tot, round(g['at'] * 24)) for g in pts] + [tot]
     for k in range(len(cuts) - 1):
