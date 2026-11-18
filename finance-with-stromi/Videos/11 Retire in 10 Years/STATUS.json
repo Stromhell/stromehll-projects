@@ -1,12 +1,12 @@
 {
  "channel": "finance",
  "video": "11 Retire in 10 Years",
- "state": "queued",
+ "state": "making",
  "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ8YaAM7xHjWyUxT1nijnrVVz",
  "feedback": false,
- "queue_pos": 3,
+ "queue_pos": null,
  "booked_for": null,
  "zernio_post": null,
- "updated": "2026-11-18T05:53Z",
- "note": "APPROVED storyboard v1 (Pushpam 18 Nov 05:50 UTC); queued for animation after 09, 10. Title exact incl \"(So FEW)\""
+ "updated": "2026-11-18T18:20Z",
+ "note": "resumed 18:18 UTC (watchdog). v1 act renders died at 16:36 during pause; all 9 acts re-rendering as act*_v2.mp4 (~1.5 h)."
 }
