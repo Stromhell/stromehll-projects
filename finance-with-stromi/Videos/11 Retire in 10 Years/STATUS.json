@@ -1,12 +1,12 @@
 {
  "channel": "finance",
  "video": "11 Retire in 10 Years",
- "state": "approved",
+ "state": "queued",
  "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ8YaAM7xHjWyUxT1nijnrVVz",
  "feedback": false,
- "queue_pos": null,
+ "queue_pos": 3,
  "booked_for": null,
  "zernio_post": null,
  "updated": "2026-11-18T05:53Z",
- "note": "storyboard v1 OK by Pushpam 18 Nov 05:50 UTC; animation waits for shared queue slot (order 09,10,11). Upload title: exact given title incl \"(So FEW)\" unless Pushpam says otherwise"
+ "note": "APPROVED storyboard v1 (Pushpam 18 Nov 05:50 UTC); queued for animation after 09, 10. Title exact incl \"(So FEW)\""
 }
