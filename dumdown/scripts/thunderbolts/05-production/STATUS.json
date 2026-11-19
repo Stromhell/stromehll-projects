@@ -1,12 +1,18 @@
 {
  "channel": "dumdown",
  "video": "thunderbolts",
- "state": "making",
+ "state": "waiting_for_approval",
  "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ8BJiVWDQtSa48a9kkrB6wvP",
  "feedback": false,
  "queue_pos": 0,
  "booked_for": null,
  "zernio_post": null,
- "updated": "2026-11-19T18:50Z",
- "note": "Thunderbolts* (2025) explainer. Source Drive 1It0aum7Ct5VktM8YWXDPkdN_7gTTmGU8 (mkv, English subs stream 3). Script+storyboard in progress. Target slot 29 Nov (>=48h after Spider-Man BND 27 Nov)."
+ "updated": "2026-11-19T20:21:00Z",
+ "note": "Thunderbolts* (2025) explainer. Source Drive 1It0aum7Ct5VktM8YWXDPkdN_7gTTmGU8 (mkv, English subs stream 3). Script+storyboard in progress. Target slot 29 Nov (>=48h after Spider-Man BND 27 Nov).",
+ "full_video": "DumDown_Thunderbolts_FULL_v2.mp4",
+ "drive_full_video_id": "1ZthXzhI0o99sPI3S6AV4_kBi8VnJnsHz",
+ "length": "12:39",
+ "launch_kit": "https://claude.ai/artifact/Y7usiLC2kWzXe1FvuQBbwe",
+ "thumbnail": "launch/DumDown_Thunderbolts_thumbnail_v1.jpg",
+ "target_slot": "2026-11-29T16:00:00Z"
 }
