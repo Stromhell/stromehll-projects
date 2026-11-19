@@ -1,0 +1,9 @@
+// Act 00: HOOK — rooftop of the neon tower, she steps off
+window.ACT = { timing: window.TIMING, shots: [
+ { p: 0, plate: 'kl_roof', fadeIn: 1.2, cam: { z: [1.0, 1.35], x: [1280, 1200], y: [560, 820] }, chars: [{ c: 'yelena', x: 1180, y: 1040, s: .9, view: 'side', dir: 1, expr: 'deadpan', pose: 'stand' }], sfx: [['wind_loop', 0, .3]] },
+ { p: 0, f: .38, plate: 'kl_roof', cam: { z: [4.6, 5.0], x: 1200, y: 715 }, still: true, chars: [{ c: 'yelena', x: 1180, y: 1180, s: 1.3, view: 'threequarter', dir: 1, expr: 'deadpan' }], pops: [{ t: 'WORK-LIFE BALANCE: 0%', at: 1.0, dur: 2.8 }] },
+ { p: 0, f: .7, plate: 'kl_roof', cam: { z: [1.5, 1.2], x: [1300, 1500], y: [820, 900], shake: 4 }, chars: [{ c: 'yelena', x: [1200, 1700], y: [1040, 1500], s: .95, view: 'side', dir: 1, expr: 'deadpan', anim: 'run', rot: [0, 40], lin: true }], sfx: [['whoosh', .2, .7], ['scratch', 1.6, .5]] },
+ { p: 1, plate: 'kl_roof', cam: { z: [1.15, 1.4], x: [1000, 1500], y: 700 }, title: ['THUNDERBOLTS*', 'Explained (badly)'], chars: [{ c: 'yelena', x: 820, y: 1180, s: 1.1, view: 'threequarter', expr: 'smug', pose: 'armsCross' }, { c: 'bob', x: 1600, y: 1180, s: 1.1, view: 'front', expr: 'nervous', anim: 'wave' }] },
+ { p: 1, f: .55, plate: 'kl_roof', cam: { z: [1.0, 1.15], x: 1280, y: 760 }, chars: [{ c: 'walker', x: 520, y: 1180, s: 1.06, view: 'threequarter', expr: 'smug', pose: 'shield' }, { c: 'ava', x: 880, y: 1180, s: 1.02, view: 'threequarter', expr: 'deadpan', ghost: .7 }, { c: 'alexei', x: 1280, y: 1180, s: 1.06, view: 'front', expr: 'happy', pose: 'fistPump' }, { c: 'bucky', x: 1680, y: 1180, s: 1.06, view: 'threequarter', dir: -1, expr: 'deadpan', pose: 'armsCross' }, { c: 'yelena', x: 2040, y: 1180, s: 1.02, view: 'threequarter', dir: -1, expr: 'smug', pose: 'hips' }],
+   props: [{ k: 'shield', on: 0, side: 'L', s: .9, layer: 'front' }], big: ["LET'S GET DUMB", 4.2, 7.0, '#ffd23d'] },
+]};

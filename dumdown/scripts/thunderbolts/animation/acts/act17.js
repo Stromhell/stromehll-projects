@@ -1,0 +1,8 @@
+// Act 17: OUTRO — the comfy chair, Yelena shrug, sign-off (clean last 5 s handled in assemble)
+window.ACT = { timing: window.TIMING, tail: 5.6, shots: [
+ { p: 0, plate: 'lobby', cam: { z: [1.0, 1.2], x: 1280, y: 780 }, chars: [{ c: 'alexei', x: 800, y: 1180, s: 1.15, view: 'threequarter', expr: 'angry', pose: 'point' }, { c: 'walker', x: 1100, y: 1180, s: 1.12, view: 'threequarter', expr: 'angry', talk: true }, { c: 'bob', x: 1350, y: [1180, 1120], s: 1.12, view: 'front', expr: 'happy', pose: 'sit' }, { c: 'ava', x: 1650, y: 1180, s: 1.12, view: 'threequarter', dir: -1, expr: 'deadpan', pose: 'armsCross' }, { c: 'bucky', x: 1900, y: 1180, s: 1.12, view: 'threequarter', dir: -1, expr: 'deadpan' }], props: [{ k: 'stool', x: 1350, y: 1185, s: 1.3 }], pops: [{ t: 'BOB GOT THE COMFY CHAIR', at: 2.4, dur: 2.6 }] },
+ { p: 0, f: .45, plate: 'shaft', cam: { z: [3.0, 3.2], x: 1280, y: 760 }, still: true, props: [{ k: 'cuke', x: 1280, y: 760, s: 2.4, rot: -.3 }], big: ['CUCUMBER SAVES LIVES', .4, 3.4, '#7aff9a'] },
+ { p: 0, f: .7, plate: 'void_room', grade: ['#fff6d0', .3], cam: { z: [1.5, 1.6], x: 1300, y: 860 }, chars: [{ c: 'yelena', x: 1150, y: 1200, s: 1.2, view: 'front', expr: 'happy', anim: 'hugSway' }, { c: 'bob', x: 1350, y: 1200, s: 1.2, view: 'front', expr: 'happy', pose: 'hug' }, { c: 'alexei', x: 1560, y: 1210, s: 1.25, view: 'front', expr: 'happy', anim: 'hugSway' }], big: ['HUG YOUR FRIENDS', .6, 3.6, '#ffd23d'] },
+ { p: 1, plate: 'lobby', cam: { z: [3.0, 3.4], x: 1280, y: 790 }, chars: [{ c: 'yelena', x: 1280, y: 1260, s: 1.4, view: 'front', expr: 'smug', pose: 'shrug' }], sfx: [['ding', 3.2, .4]] },
+ { p: 1, f: .97, plate: 'lobby', grade: ['#ffb070', .15], cam: { z: [1.0, 1.05], x: 1280, y: 760 }, fadeOut: true },
+]};
