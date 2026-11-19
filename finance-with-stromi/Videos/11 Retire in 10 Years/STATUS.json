@@ -1,12 +1,12 @@
 {
  "channel": "finance",
  "video": "11 Retire in 10 Years",
- "state": "making",
+ "state": "booked",
  "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ8YaAM7xHjWyUxT1nijnrVVz",
  "feedback": false,
  "queue_pos": null,
- "booked_for": null,
- "zernio_post": null,
- "updated": "2026-11-18T18:20Z",
- "note": "resumed 18:18 UTC (watchdog). v1 act renders died at 16:36 during pause; all 9 acts re-rendering as act*_v2.mp4 (~1.5 h)."
+ "booked_for": "2026-12-03T16:00Z",
+ "zernio_post": "6afe9f05204bf7460615a9fe",
+ "updated": "2026-11-19T07:10Z",
+ "note": "Pushpam OK 19 Nov 06:58 UTC; booked Thu 3 Dec 16:00 UTC with thumbnail v1. HANDOVER.md in 05 Production."
 }
