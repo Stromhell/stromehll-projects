@@ -1,12 +1,12 @@
 {
  "channel": "finance",
  "video": "14 Every Stock Market Term",
- "state": "queued",
+ "state": "waiting_approval",
  "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ8KEaKjq4HE5sipRvPoKdvwy",
  "feedback": false,
  "queue_pos": 6,
  "booked_for": null,
  "zernio_post": null,
- "updated": "2026-11-18T05:53Z",
- "note": "storyboard v1 APPROVED by Pushpam 18 Nov 05:50 UTC; animation waits for shared queue slot (after 09-13); planned 9 Dec 16:00 UTC"
+ "updated": "2026-11-19T11:55Z",
+ "note": "full video v1 (12:02) Drive 1agkILhefdpJVHhP7rvZ9gX7ngIQXF_DV + kit https://claude.ai/artifact/8S3MXHEaknLiJ8AatufmaM sent; after OK book 9 Dec 16:00 UTC Finance Zernio"
 }
