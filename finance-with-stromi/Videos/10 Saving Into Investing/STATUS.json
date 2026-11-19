@@ -1,12 +1,12 @@
 {
  "channel": "finance",
  "video": "10 Saving Into Investing",
- "state": "waiting_approval",
+ "state": "booked",
  "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ8U84JZcbXLFs4qJpqT99DJp",
  "feedback": false,
  "queue_pos": null,
- "booked_for": null,
- "zernio_post": null,
- "updated": "2026-11-18T17:20Z",
- "note": "full video v3 (feedback fixes) https://drive.google.com/file/d/1t3moVAfd9yoOuIGyuIRQeNW0NvtM5S-u/view + kit https://claude.ai/artifact/EYK52N1Z4hiGm9AQ5BX4oT; slot 2026-12-01T16:00Z"
+ "booked_for": "2026-12-01T16:00:00Z",
+ "zernio_post": "6afe9eb0de13c40f07dc3f5e",
+ "updated": "2026-11-19T07:05Z",
+ "note": "Pushpam OK 19 Nov 06:58 UTC ('okay for all post it'); full v3 booked on Finance Zernio"
 }
