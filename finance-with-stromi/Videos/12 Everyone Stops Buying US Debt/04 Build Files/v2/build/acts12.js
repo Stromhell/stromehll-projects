@@ -1,0 +1,264 @@
+/* Finance with Stromi 10 (The Waiting Room): shot functions. Each f(t, d, L) returns {scene, cam, tags, vig, post}. */
+'use strict';
+const sp = (s, key, x, z, o, t, L, who, h, y) => { const c = card(s, key, h || 1.7); c.set(x, z, pose(o, t, L, who), s.C, y); return c; };
+const walkX = (s, key, x0, x1, z, t, t0, t1, o, L, who, h, y) => { const k = k01(t, t0, t1); const x = lerp(x0, x1, E(k)); const c = card(s, key, h || 1.7); const mv = t > t0 && t < t1; c.set(x, z, mv ? slidePose(t, Math.sign(x1 - x0), Math.abs(x1 - x0) / (t1 - t0) * 1.3, h || 1.7) : pose(o, t, L, who), s.C, y); return x; };
+const walkZ = (s, key, x, z0, z1, t, t0, t1, o, L, who, h) => { const k = k01(t, t0, t1); const z = lerp(z0, z1, E(k)); const c = card(s, key, h || 1.7); const mv = t > t0 && t < t1; const P = mv ? RH.anim.walk(t, 'front', { cps: 1.1 }) : pose(o, t, L, who); c.set(x, z, P, s.C); return z; };
+const T = (txt, x, y, s, o) => Object.assign({ txt, x, y, s, r: -0.03, size: 34 }, o || {});
+const ph = (L, q, dflt) => { q = q.toLowerCase(); for (const l of L) { const i = l.text.toLowerCase().indexOf(q); if (i >= 0) return l.t0 + (l.t1 - l.t0) * i / l.text.length; } return dflt == null ? 0 : dflt; };
+const lineAt = (L, who, n) => L.filter(l => l.who === who)[n || 0] || { t0: 1e9, t1: 1e9 };
+const RT = { bg: '#c2372d', col: '#fff' }, GT = { bg: '#3f9b5f', col: '#fff' }, YT = { bg: '#e3c77a' }, BT = { bg: '#24303a', col: '#f4efe6' };
+const cl = (s, k, a, b) => camLerp(s, E(clamp(k, 0, 1)), a[0], b[0], a[1], b[1]);
+const POINT = { h: [0.75, 0.95], hand: 'open' }, UP = { h: [0.35, 1.25], hand: 'open' }, HOLD = { h: [0.4, 0.55], hand: 'fist' }, CHIN = { h: [0.25, 1.05], hand: 'fist' }, CHEER = { h: [0.45, 1.45], hand: 'fist' }, WAVE = { h: [0.55, 1.35], hand: 'wave' }, SHRUG = { h: [0.55, 0.9], hand: 'open' };
+const fadeOut = (t, d, a) => x => { const f = k01(t, d - a, d); if (f > 0) { x.save(); x.globalAlpha = f; x.fillStyle = '#060504'; x.fillRect(0, 0, W, H); x.restore(); } };
+const flash = (t, a, col) => x => { const f = Math.max(0, 1 - Math.abs(t - a) / 0.25); if (f > 0) { x.save(); x.globalAlpha = 0.35 * f; x.fillStyle = col || '#fff'; x.fillRect(0, 0, W, H); x.restore(); } };
+const shake = (s, t, a, amt) => { const k = Math.max(0, 1 - Math.abs(t - a) / 0.5) * (amt || 0.04); s.C.position.x += Math.sin(t * 60) * k; s.C.position.y += Math.cos(t * 53) * k; };
+const posts = (...f) => x => f.forEach(g => g && g(x));
+const span = (t, a, b) => pop(t, a) * (1 - k01(t, b - 0.35, b)); // tag that pops at a and leaves at b
+/* ---------- Finance 11 (The Ten-Year Orchard) shot functions ---------- */
+const cw = (s, key, x, z, o, t, L, who, h, y) => { const c = crowOf(s, key, h || 1.0); const talking = who && L && speaking(L, who, t); const oo = Object.assign({ t, blink: !talking && RH.blinkAt(t + (o.seed || 0)) > 0.5 }, o); if (talking) oo.mouth = MOUTH[Math.floor(t * 9) % MOUTH.length]; c.set(x, z, oo, s.C, y); return c; };
+const sepia = x => { x.save(); x.globalCompositeOperation = 'color'; x.globalAlpha = 0.75; x.fillStyle = '#a8865a'; x.fillRect(0, 0, W, H); x.restore(); x.save(); x.globalAlpha = 0.12; x.fillStyle = '#5a3a1a'; x.fillRect(0, 0, W, H); x.restore(); };
+const confetti = (t, a) => x => { if (t < a) return; const r = RH.rng(42); const cols = ['#c2372d', '#f2c83a', '#3f9b5f', '#3f6bb0', '#fbf8f0']; for (let i = 0; i < 140; i++) { const x0 = r() * W, sp2 = 120 + r() * 160, ph2 = r() * 6; const y = -40 + (t - a) * sp2 + r() * 200 - 200; if (y < -20 || y > H + 20) continue; x.save(); x.translate(x0 + Math.sin((t + ph2) * 3) * 30, y); x.rotate((t + ph2) * 4); x.fillStyle = cols[i % 5]; x.fillRect(-6, -3, 12, 6); x.restore(); } };
+const dim = k => x => { if (k <= 0) return; x.save(); x.globalAlpha = k; x.fillStyle = '#000'; x.fillRect(0, 0, W, H); x.restore(); };
+const money = v => '$' + Math.round(v).toLocaleString('en-US');
+
+
+const ACTS = {};
+/* ---------- Finance 12 (The IOU Auction) shot functions ---------- */
+const sp2 = (s, key, x, z, o, t, L, who, h, y) => { const c = card(s, key, h || 1.7); const P = pose(o, t, L, who); if (o.hatLift) P.hatLift = o.hatLift; c.set(x, z, P, s.C, y); return c; };
+// flying sheets of paper (IOUs) or dollars, 2D overlay
+const sheets = (t, a, o) => x => { o = o || {}; if (t < a) return; const r = RH.rng(o.seed || 7); const n = o.n || 60; const k = o.dur ? clamp(1 - (t - a - o.dur) / 0.8, 0, 1) : 1;
+  for (let i = 0; i < n; i++) { const x0 = (o.x0 == null ? r() * W : o.x0 + (r() - 0.5) * 200), v = 160 + r() * 260, an = (o.up ? -1 : 1) * (0.6 + r() * 0.8), ph = r() * 6; const lt = t - a - r() * (o.spread || 1.5); if (lt < 0) continue;
+    const px = x0 + Math.sin(lt * 2 + ph) * 60 + (o.dx || 0) * lt * (r() - 0.3); const py = (o.y0 == null ? -30 : o.y0) + lt * v * an; if (py < -60 || py > H + 60) continue;
+    x.save(); x.globalAlpha = k; x.translate(px, py); x.rotate(lt * 3 + ph); x.scale(1, 0.55 + 0.45 * Math.sin(lt * 5 + ph)); x.fillStyle = o.col || '#f3ead2'; x.fillRect(-22, -12, 44, 24); x.strokeStyle = o.ink || '#3f6b4f'; x.lineWidth = 2; x.strokeRect(-19, -9, 38, 18); x.fillStyle = o.ink || '#3f6b4f'; x.font = `12px ${HAND}`; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(o.lab || 'IOU', 0, 1); x.restore(); } };
+// newspaper that spins in, 2D overlay
+const paperIn = (t, a, b, L) => x => { if (t < a || t > b + 0.4) return; const k = outBack(k01(t, a, a + 0.6)), q = 1 - k01(t, b, b + 0.4); x.save(); x.translate(W * 0.62, H * 0.47); x.rotate((1 - k) * 6 - 0.04); x.scale(k * q, k * q);
+  x.fillStyle = '#efe6d0'; x.fillRect(-330, -190, 660, 380); x.strokeStyle = '#1e1612'; x.lineWidth = 3; x.strokeRect(-318, -178, 636, 356); x.fillStyle = '#1e1612'; x.textAlign = 'center'; x.textBaseline = 'middle';
+  x.font = `30px ${HAND}`; x.fillText(L[0], 0, -140); x.fillRect(-300, -118, 600, 3); x.font = `66px ${HAND}`; x.fillText(L[1], 0, -60); x.font = `48px ${HAND}`; x.fillStyle = '#c2372d'; x.fillText(L[2], 0, 15); x.fillStyle = '#1e1612'; x.font = `34px ${HAND}`; x.fillText(L[3] || '', 0, 85);
+  for (let i = 0; i < 4; i++) { x.fillStyle = 'rgba(30,22,18,0.25)'; x.fillRect(-300, 120 + i * 14, 600, 5); } x.restore(); };
+// split screen panels (2021 vs 2026)
+const split = (t, a, b) => x => { if (t < a) return; const k = E(k01(t, a, a + 0.6)) * (1 - k01(t, b, b + 0.4)); if (k <= 0) return; x.save(); x.globalAlpha = k;
+  const P = (x0, bg, yr, rate, pay, rain) => { x.fillStyle = bg; x.fillRect(x0 + 30, 120, 560, 420); x.strokeStyle = '#1e1612'; x.lineWidth = 5; x.strokeRect(x0 + 30, 120, 560, 420);
+    if (rain) { x.strokeStyle = 'rgba(200,220,255,0.55)'; x.lineWidth = 2; for (let i = 0; i < 70; i++) { const rx = x0 + 40 + ((i * 97 + t * 400) % 540), ry = 130 + ((i * 53 + t * 900) % 400); x.beginPath(); x.moveTo(rx, ry); x.lineTo(rx - 6, ry + 18); x.stroke(); } } else { x.fillStyle = '#f2c83a'; x.beginPath(); x.arc(x0 + 520, 180, 36, 0, TAU); x.fill(); }
+    x.fillStyle = '#e8dcc0'; x.fillRect(x0 + 215, 290, 190, 140); x.fillStyle = '#7a2d22'; x.beginPath(); x.moveTo(x0 + 200, 295); x.lineTo(x0 + 310, 215); x.lineTo(x0 + 420, 295); x.fill(); x.fillStyle = '#3f6b4f'; x.fillRect(x0 + 292, 360, 36, 70);
+    x.fillStyle = '#1e1612'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.font = `44px ${HAND}`; x.fillText(yr, x0 + 310, 160); x.font = `34px ${HAND}`; x.fillText('$400K LOAN AT ' + rate, x0 + 310, 470); x.font = `46px ${HAND}`; if (rain) { x.fillStyle = '#f6efe0'; x.fillRect(x0 + 120, 488, 380, 44); } x.fillStyle = rain ? '#c2372d' : '#2f6b3f'; x.fillText(pay + ' / MONTH', x0 + 310, 515); };
+  P(10, '#cfe6f2', '2021', '2.65%', '$1,612', false); P(650, '#5a6470', 'LATE OCT 2026', '7.24%', '$2,726', true);
+  const pk = pop(t, a + 2.2); if (pk > 0.01) { x.save(); x.translate(W / 2, 330); x.scale(pk, pk); x.fillStyle = '#c2372d'; x.beginPath(); x.arc(0, 0, 78, 0, TAU); x.fill(); x.fillStyle = '#fff'; x.font = `38px ${HAND}`; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('+$1,114', 0, 0); x.restore(); } x.restore(); };
+const tvBox = (t, a, b) => x => { if (t < a || t > b) return; const k = pop(t, a) * (1 - k01(t, b - 0.3, b)); x.save(); x.translate(1110, 150); x.scale(k, k); x.fillStyle = '#2a1d17'; x.fillRect(-120, -85, 240, 170); x.fillStyle = '#9fb0a8'; x.fillRect(-100, -68, 200, 136);
+  x.fillStyle = '#1e1612'; x.beginPath(); x.arc(0, -10, 24, 0, TAU); x.fill(); x.fillRect(-36, 14, 72, 54); x.beginPath(); x.arc(30, -14, 9, 0, TAU); x.fill(); x.fillStyle = '#c2372d'; x.font = `16px ${HAND}`; x.textAlign = 'center'; x.fillText('BOND SCREEN ↑', 0, 58); x.restore(); };
+const dropN = (t, a, b, v) => clamp(E(k01(t, a, b)), 0, 1) * v;
+const DREST = 0.82; // a domino resting on the next one
+const AU = (s, t, o) => { o = o || {};
+  const dm = o.dom || [0, 0, 0, 0]; s.dom.forEach((d, i) => { d.rotation.x = dm[i]; }); if (o.wob) s.dom[0].rotation.x = Math.max(dm[0], 0.06 + 0.05 * Math.sin(t * 6.5));
+  const u = s.press.userData; u.cover.visible = !!o.cover; if (o.crank) { u.wheel.rotation.x = t * 7; u.roll.rotation.x = t * 5; u.roll2.rotation.x = -t * 5; }
+  s.convey.visible = !!o.conv; s.ious.forEach((p, i) => { p.visible = !!o.conv; if (o.conv) { const q = (t * 0.45 + i / 7) % 1; p.position.x = -2.1 + 4.2 * q; } });
+  if (o.bid) { const k = JSON.stringify(o.bid); if (s._bk !== k) { s.bid.userData.draw(o.bid); s._bk = k; } }
+  s.gauge.userData.set(o.g == null ? 0.25 : o.g);
+  s.sDoom.visible = s.sReal.visible = !!o.signs; if (o.signs) { const k = o.xd ? 'x' : 'n'; if (s._sx !== k) { s.sDoom.userData.draw({ x: o.xd }); s._sx = k; } }
+  s.stall.visible = o.stall !== false; s.chand.forEach((c, i) => { c.rotation.y = Math.sin(t * 0.4 + i) * 0.05; }); };
+const TH = (s, t, o) => { o = o || {}; s.bill.scale.y = Math.max(0.001, o.bill || 0); s.bill.visible = (o.bill || 0) > 0.002; s.bill.position.z = s.TZ + 0.3 + 1.6 * (o.bill || 0);
+  if (o.snow != null) { const k = Math.round(o.snow * 40) / 40; if (s._sn !== k) { s.win.userData.draw({ k, lab: o.lab }); s._sn = k; } } else if (s._sn !== -1) { s.win.userData.draw({}); s._sn = -1; }
+  s.doors.forEach(d => d.visible = !!o.doors); [s.portrait, s.plaque].forEach(m => m.visible = !o.doors); s.glow.intensity = o.doors ? 2 + Math.sin(t * 5) * 0.8 : 0;
+  if (o.stamp != null) { const k = o.stamp ? 1 : 0; if (s._st !== k) { s.plaque.userData.draw({ stamp: !!o.stamp }); s._st = k; } }
+  s.env.visible = !!o.env; if (o.env) s.env.position.set(o.env[0], o.env[1], o.env[2]); };
+const FRONT = [[0, 2.5, 0.8], [0, 1.6, -10]];   // back of hall toward stage
+const BIDDERS = { reserve: [-2.1, -7.7], flash: [-0.9, -7.7], del: [0.3, -7.7], pip12: [1.4, -7.7], dot12: [2.3, -7.7] };
+const crowd = (s, t, L, who, keep, o) => { o = o || {}; for (const k of keep) { const p = (o.pos && o.pos[k]) || BIDDERS[k]; if (!p) continue; const W2 = { reserve: 'RESERVE', flash: 'FLASH', del: 'DEL', pip12: 'PIP', dot12: 'DOT', ferdie: 'FERDIE' }[k];
+    const ex = (o.expr && o.expr[k]) || (k === 'flash' ? 'sly' : k === 'del' ? 'sleepy' : 'neutral'); const ar = (o.arms && o.arms[k]) || [k === 'del' ? UP : null, null];
+    const extra = k === 'flash' ? Math.sin(t * 14) * 0.015 : 0; sp(s, k, p[0] + extra, p[1], { view: 'q', dir: p[0] > 0 ? -1 : 1, expr: ex, arms: ar, seed: p[0] * 3 }, t, L, W2, k === 'reserve' ? 1.62 : k === 'del' ? 1.55 : 1.65); } };
+const tabAt = (s, t, L, o) => { o = o || {}; sp2(s, 'tab', -0.8, s.PZ + 0.1, Object.assign({ view: 'front', expr: 'happy', arms: [null, UP] }, o), t, L, 'TAB', 1.7, s.SY); };
+
+ACTS[0] = [
+  { id: 'D01', f(t, d, L) { const s = getSet('openhouse12'); hideCards(s, ['rosa', 'teo']); const tt = lineAt(L, 'TEO').t0, r = lineAt(L, 'ROSA').t0;
+      s.sold.position.y = -0.9 * (1 - E(k01(t, 0.3, 1.3))) + (t > 0.3 && t < 1.3 ? Math.abs(Math.sin(t * 18)) * 0.05 : 0);
+      sp(s, 'rosa', -0.6, -0.5, { view: 'q', dir: 1, expr: t > r ? 'sad' : 'neutral', arms: [HOLD, null] }, t, L, 'ROSA', 1.62);
+      sp(s, 'teo', 0.35, -0.3, { view: 'q', dir: -1, expr: t > tt ? 'sad' : 'surprised', arms: [t > tt ? CHIN : HOLD, null] }, t, L, 'TEO', 1.72);
+      if (t < tt) cl(s, k01(t, 0, tt), [[1.6, 1.6, 4.6], [0.2, 1.3, -2.0]], [[0.6, 1.5, 3.2], [0.0, 1.2, -1.2]]); else cl(s, k01(t, tt, d), [[-0.4, 1.45, 2.4], [0.0, 1.25, -0.8]], [[-0.2, 1.45, 2.0], [0.0, 1.25, -0.8]]);
+      return { scene: s.S, cam: s.C, post: posts(sheets(t, tt + 0.4, { n: 30, x0: 700, y0: 330, up: false, spread: 0.8, lab: '#16', dur: 2.2 })),
+        tags: [T('OFFER #16', 640, 90, span(t, 0.4, ph(L, 'sixteen times')), YT), T('16 OFFERS · 16 LOSSES', 640, 90, span(t, ph(L, 'sixteen times'), tt), RT), T('+$400 / MONTH', 1000, 220, span(t, ph(L, 'four hundred'), d), RT)] }; } },
+  { id: 'D02', f(t, d, L) { const s = getSet('auction12'); hideCards(s, ['tab', ...Object.keys(BIDDERS)]); AU(s, t, { bid: { rows: [] } }); const a = lineAt(L, 'TAB').t0;
+      crowd(s, t, L, null, Object.keys(BIDDERS)); tabAt(s, t, L, { expr: t > a ? 'happy' : 'neutral', arms: [null, t > a ? WAVE : HOLD] });
+      if (t < a) cl(s, k01(t, 0, a), [[0, 3.2, 1.6], [0, 1.4, -10]], [[0, 2.2, -3.2], [0, 1.6, -10]]); else cl(s, k01(t, a, d), [[-1.7, 2.0, -6.6], [-0.8, 1.6, -10.2]], [[-1.4, 1.95, -7.4], [-0.8, 1.65, -10.2]]);
+      return { scene: s.S, cam: s.C, tags: [T('EVERY WEEK', 950, 600, span(t, ph(L, 'every single week'), a), YT), T('THE US GOVERNMENT', 330, 600, span(t, ph(L, 'united states'), a), BT)] }; } },
+  { id: 'D03', f(t, d, L) { const s = getSet('auction12'); hideCards(s, ['pip12', 'dot12']); const p = lineAt(L, 'PIP').t0; AU(s, t, { wob: 1 });
+      sp(s, 'pip12', -4.3, -8.4, { view: 'q', dir: -1, expr: t > p ? 'scared' : 'neutral', arms: [t > p ? POINT : null, null] }, t, L, 'PIP', 1.6);
+      sp(s, 'dot12', -3.6, -8.0, { view: 'q', dir: -1, expr: t > lineAt(L, 'DOT').t0 ? 'sly' : 'neutral', arms: [null, null] }, t, L, 'DOT', 1.6);
+      if (t < p) cl(s, k01(t, 0, p), [[-1.0, 2.6, -11.2], [-5.4, 1.2, -6.5]], [[-1.4, 2.1, -1.0], [-5.4, 1.0, -3.6]]); else cl(s, k01(t, p, d), [[-2.2, 1.8, -6.2], [-4.6, 1.3, -8.4]], [[-2.4, 1.75, -6.6], [-4.3, 1.3, -8.4]]);
+      return { scene: s.S, cam: s.C, tags: [T('4 DOMINOES', 640, 90, span(t, ph(L, 'four dominoes'), ph(L, 'already wobbling')), YT), T('ALREADY WOBBLING', 640, 90, span(t, ph(L, 'already wobbling'), ph(L, 'last one')), RT), T('YOUR MORTGAGE · GROCERIES · SAVINGS', 640, 640, span(t, ph(L, 'your mortgage'), p), BT)] }; } },
+  { id: 'D04', card: 'The IOU Auction', sub: 'What happens if everyone stops buying US debt?' },
+];
+ACTS[1] = [
+  { id: 'D05', card: '1. America Runs a Tab' },
+  { id: 'D06', f(t, d, L) { const s = getSet('tabhome12'); hideCards(s, ['tab']); TH(s, t); const a = lineAt(L, 'TAB').t0;
+      sp2(s, 'tab', -0.5, s.TZ + 0.6, { view: 'q', dir: 1, expr: t > a ? 'sly' : 'neutral', arms: [t > a ? SHRUG : null, t > a ? SHRUG : null] }, t, L, 'TAB', 1.7);
+      if (t < a) cl(s, k01(t, 0, a), [[2.6, 2.0, 1.8], [0, 1.1, -3.0]], [[1.2, 1.7, 0.4], [-0.4, 1.1, -2.4]]); else cl(s, k01(t, a, d), [[0.2, 1.5, -0.4], [-0.5, 1.2, -2.2]], [[0.1, 1.45, -0.7], [-0.5, 1.2, -2.2]]);
+      return { scene: s.S, cam: s.C, tags: [T('IN: $50,000', 300, 160, span(t, ph(L, 'fifty thousand'), a), GT), T('OUT: $60,000', 980, 160, span(t, ph(L, 'spending sixty'), a), RT), T('GAP: $10,000', 640, 600, span(t, ph(L, 'spending sixty') + 0.8, a + 0.5), YT), T('BORROWED', 640, 600, span(t, ph(L, 'gets borrowed'), d), RT), T('US GAP LAST YEAR: ~$2 TRILLION', 640, 90, span(t, ph(L, 'two trillion'), a), BT)] }; } },
+  { id: 'D07', f(t, d, L) { const s = getSet('auction12'); hideCards(s, ['tab']); AU(s, t); tabAt(s, t, L, { arms: [null, UP], expr: 'happy' });
+      cl(s, k01(t, 0, d), [[-0.2, 2.2, -8.0], [0.1, 1.95, -10.2]], [[-0.4, 2.15, -8.5], [0.05, 1.95, -10.2]]);
+      const k = ph(L, 'and the interest'); const cardIOU = x => { const q = pop(t, 0.4) * (1 - k01(t, k - 0.3, k)); if (q <= 0) return; x.save(); x.translate(900, 330); x.rotate(0.04); x.scale(q, q); x.fillStyle = '#f3ead2'; x.fillRect(-250, -150, 500, 300); x.strokeStyle = '#3f6b4f'; x.lineWidth = 8; x.strokeRect(-235, -135, 470, 270);
+        x.fillStyle = '#1e1612'; x.textAlign = 'center'; x.font = `44px ${HAND}`; x.fillText('I.O.U.', 0, -88); x.font = `26px ${HAND}`; [['LEND ME $1,000', ph(L, 'hand over')], ['I PAY YOU $30 A YEAR', ph(L, 'interest every year')], ['IN 10 YEARS: $1,000 BACK', ph(L, 'at the end')]].forEach(([l, at2], i) => { x.globalAlpha = k01(t, at2, at2 + 0.4); x.fillText(l, 0, -30 + i * 42); }); x.globalAlpha = 1;
+        const st = pop(t, ph(L, 'treasury bonds')); if (st > 0) { x.save(); x.translate(150, 100); x.rotate(-0.25); x.scale(st, st); x.strokeStyle = '#c2372d'; x.lineWidth = 6; x.strokeRect(-95, -28, 190, 56); x.fillStyle = '#c2372d'; x.font = `28px ${HAND}`; x.fillText('US TREASURY', 0, 2); x.restore(); } x.restore(); };
+      return { scene: s.S, cam: s.C, post: cardIOU, tags: [T('YIELD = THE INTEREST RATE', 640, 600, span(t, ph(L, 'the yield'), d), YT)] }; } },
+  { id: 'D08', f(t, d, L) { const s = getSet('auction12'); hideCards(s, ['reserve', 'ferdie', 'flash', 'del', 'pip12', 'dot12']); AU(s, t); const r = lineAt(L, 'RESERVE').t0, f = lineAt(L, 'FERDIE').t0;
+      crowd(s, t, L, null, ['reserve', 'flash', 'del', 'pip12', 'dot12'], { arms: { reserve: [t > r && t < f ? UP : null, null] }, expr: { reserve: t > r ? 'happy' : 'neutral' } });
+      sp(s, 'ferdie', 3.1, -3.4, { view: 'q', dir: -1, expr: t > f ? 'sly' : 'neutral', arms: [t > f ? POINT : null, null] }, t, L, 'FERDIE', 1.62); AU(s, t, { crank: t > f });
+      if (t < r) cl(s, k01(t, 0, r), [[0.3, 1.95, -3.8], [0.1, 1.3, -7.7]], [[0.1, 1.85, -4.4], [0.1, 1.3, -7.7]]); else if (t < f) cl(s, k01(t, r, f), [[-1.6, 1.6, -5.7], [-2.1, 1.3, -7.7]], [[-1.8, 1.55, -6.0], [-2.1, 1.3, -7.7]]); else cl(s, k01(t, f, d), [[1.6, 1.8, -5.4], [3.3, 1.2, -3.2]], [[1.9, 1.7, -4.8], [3.4, 1.1, -3.0]]);
+      return { scene: s.S, cam: s.C, tags: [T('MADAME RESERVE = CENTRAL BANKS', 640, 90, span(t, ph(L, 'foreign central banks'), ph(L, 'and the federal')), BT), T('FERDIE = THE FED', 640, 90, span(t, ph(L, 'and the federal'), r), GT), T('FLASH = HEDGE FUNDS', 330, 620, span(t, 1.0, ph(L, 'most reliable')), YT), T('DEL = DEALER BANKS', 950, 620, span(t, 1.6, ph(L, 'most reliable')), YT)] }; } },
+  { id: 'D09', f(t, d, L) { const s = getSet('auction12'); hideCards(s, ['ferdie', 'pip12']); const p = lineAt(L, 'PIP').t0, f = lineAt(L, 'FERDIE').t0; AU(s, t, { crank: true });
+      sp(s, 'ferdie', 3.1, -3.4, { view: 'q', dir: -1, expr: t > f ? 'happy' : 'sly', arms: [HOLD, HOLD] }, t, L, 'FERDIE', 1.62);
+      sp(s, 'pip12', 2.0, -3.8, { view: 'q', dir: 1, expr: t > p ? 'surprised' : 'neutral', arms: [t > p ? UP : null, null] }, t, L, 'PIP', 1.6);
+      if (t < p) cl(s, k01(t, 0, p), [[1.2, 1.5, -0.8], [3.6, 1.0, -2.9]], [[2.2, 1.4, -1.0], [3.8, 0.9, -2.8]]); else cl(s, k01(t, p, d), [[1.0, 1.7, -1.6], [2.6, 1.2, -3.6]], [[1.2, 1.65, -1.9], [2.6, 1.2, -3.6]]);
+      return { scene: s.S, cam: s.C, post: sheets(t, 0.6, { n: 26, x0: 820, y0: 520, up: true, col: '#bfe0a8', ink: '#2f6b3f', lab: '$', spread: d }), tags: [T('2008 + 2020: TRILLIONS', 640, 90, span(t, ph(L, 'two thousand eight'), ph(L, 'america, in a sense')), YT), T('AMERICA LENT TO AMERICA', 640, 90, span(t, ph(L, 'america, in a sense'), p), RT)] }; } },
+];
+ACTS[2] = [
+  { id: 'D10', card: '2. The Easy Lenders Walk Out' },
+  { id: 'D11', f(t, d, L) { const s = getSet('auction12'); hideCards(s, ['reserve']); AU(s, t); const r = lineAt(L, 'RESERVE').t0;
+      const x = walkX(s, 'reserve', -2.1, 3.4, -7.7, t, r - 3.0, r + 3.2, { view: 'q', dir: 1, expr: t > r ? 'sly' : 'neutral', arms: [HOLD, null] }, L, 'RESERVE', 1.62);
+      CAM(s, [x * 0.8 - 0.4, 2.0, -3.0], [x, 1.3, -7.7]);
+      return { scene: s.S, cam: s.C, tags: [T('2014: ~2/3 OFFICIAL', 300, 140, span(t, ph(L, 'twenty fourteen'), d), BT), T('MID-2026: 41%', 980, 140, span(t, ph(L, 'forty-one'), d), RT), T('OF TREASURIES HELD ABROAD', 640, 640, span(t, ph(L, 'outside america'), r), YT)] }; } },
+  { id: 'D12', f(t, d, L) { const s = getSet('vault12'); hideCards(s, ['reserve']); const r = lineAt(L, 'RESERVE').t0;
+      if (s.wheel) s.wheel.rotation.z = E(k01(t, 2, 4.5)) * 3; sp(s, 'reserve', 0.9, s.z0 + 2.4, { view: 'q', dir: -1, expr: t > r ? 'scared' : 'surprised', arms: [t > 3 ? CHIN : null, null] }, t, L, 'RESERVE', 1.62);
+      if (t < r) cl(s, k01(t, 0, r), [[0, 1.6, s.z0 + 5.2], [0, 1.4, s.z0]], [[0.4, 1.5, s.z0 + 4.2], [0.2, 1.4, s.z0]]); else cl(s, k01(t, r, d), [[0.1, 1.5, s.z0 + 4.4], [0.8, 1.35, s.z0 + 2.4]], [[0.2, 1.5, s.z0 + 4.0], [0.8, 1.35, s.z0 + 2.4]]);
+      const chain = x => { const k = E(k01(t, 2.2, 3.2)); if (k <= 0) return; x.save(); x.strokeStyle = '#8a8f96'; x.lineWidth = 12; for (let i = 0; i < 9; i++) { const px = 360 + i * 70 * k; x.beginPath(); x.ellipse(px, 300 + Math.sin(i) * 10, 26, 14, 0.3 * (i % 2 ? 1 : -1), 0, TAU); x.stroke(); } const lk = pop(t, 3.4); if (lk > 0) { x.translate(640, 360); x.scale(lk, lk); x.fillStyle = '#c9a24a'; x.fillRect(-40, -20, 80, 70); x.strokeStyle = '#8a8f96'; x.lineWidth = 12; x.beginPath(); x.arc(0, -20, 28, Math.PI, 0); x.stroke(); } x.restore(); };
+      return { scene: s.S, cam: s.C, post: posts(chain, sepia), tags: [T('2022', 200, 90, span(t, 0.3, d), YT), T("RUSSIA'S SAVINGS: ~$300B FROZEN", 640, 620, span(t, ph(L, 'froze roughly'), r), RT)] }; } },
+  { id: 'D13', f(t, d, L) { const s = getSet('auction12'); const b = ph(L, 'six hundred'); hideCards(s, []); AU(s, t, { bid: { title: 'CHINA HOLDS (US IOUs)', rows: [['2013', '~$1.3 TRILLION'], ['JUL 2026', '$618 BILLION'], ['', 'LOWEST SINCE 2008']], n: t < b ? 1 : 3, fill: t > b ? 2 : 0 } });
+      if (t < ph(L, 'japan')) cl(s, k01(t, 0, d * 0.6), [[-2.2, 2.4, -7.0], [-4.6, 2.3, -10.8]], [[-3.2, 2.35, -8.4], [-4.6, 2.3, -10.8]]); else cl(s, k01(t, ph(L, 'japan'), d), [[1.2, 2.4, -2.0], [-1, 1.8, -10]], [[0.6, 2.2, -4.0], [-1, 1.8, -10]]);
+      const gold = x => { const k = pop(t, ph(L, 'gold bar')); if (k <= 0.01 || t > ph(L, 'japan')) return; x.save(); x.translate(1020, 520); x.scale(k, k); x.fillStyle = '#e8b83a'; x.beginPath(); x.moveTo(-90, 30); x.lineTo(90, 30); x.lineTo(60, -30); x.lineTo(-60, -30); x.fill(); x.strokeStyle = '#8a5a1a'; x.lineWidth = 4; x.stroke(); x.fillStyle = '#8a5a1a'; x.font = `22px ${HAND}`; x.textAlign = 'center'; x.fillText("CAN'T BE FROZEN", 0, 70); x.restore(); };
+      return { scene: s.S, cam: s.C, post: gold, tags: [T('WATCH: VIDEO 09, THE CARRY TRADE', 640, 640, span(t, ph(L, 'carry trade'), d), YT), T('JAPAN: SELLING TOO', 640, 90, span(t, ph(L, 'japan'), ph(L, 'carry trade')), BT)] }; } },
+  { id: 'D14', f(t, d, L) { const s = getSet('auction12'); hideCards(s, ['ferdie', 'tab']); const a = lineAt(L, 'TAB').t0, f = lineAt(L, 'FERDIE').t0; AU(s, t, { cover: t > 1.2, bid: { title: 'FED BUYS', rows: [['3-MONTH BILLS', 'YES'], ['10-YEAR', 'NO'], ['30-YEAR', 'NO']], fill: 1 } });
+      sp(s, 'ferdie', 3.1, -3.4, { view: 'q', dir: -1, expr: t > f ? 'sly' : 'neutral', arms: [t > ph(L, 'short-term') ? UP : null, null] }, t, L, 'FERDIE', 1.62); tabAt(s, t, L, { expr: t > a ? 'surprised' : 'neutral', arms: [t > a ? UP : null, t > a ? UP : null] });
+      if (t < a) cl(s, k01(t, 0, a), [[1.4, 1.8, -0.6], [3.5, 1.0, -3.0]], [[1.8, 1.7, -1.2], [3.4, 1.1, -3.2]]); else if (t < f) cl(s, k01(t, a, f), [[0.4, 2.0, -7.6], [0, 1.9, -10.2]], [[0.3, 2.0, -8.0], [0, 1.9, -10.2]]); else cl(s, k01(t, f, d), [[2.2, 1.7, -2.0], [3.1, 1.2, -3.4]], [[2.3, 1.7, -2.3], [3.1, 1.2, -3.4]]);
+      return { scene: s.S, cam: s.C, tags: [T('MOSTLY SHORT BILLS', 640, 90, span(t, ph(L, 'short-term bills'), a), GT), T('NOT THE LONG ONES', 640, 600, span(t, ph(L, 'not the long'), a), RT)] }; } },
+  { id: 'D15', f(t, d, L) { const s = getSet('auction12'); hideCards(s, ['flash', 'del', 'pip12', 'dot12']); AU(s, t); const fl = lineAt(L, 'FLASH').t0;
+      crowd(s, t, L, null, ['flash', 'del', 'pip12', 'dot12'], { expr: { flash: t > fl ? 'happy' : 'sly' }, arms: { flash: [t > fl ? WAVE : HOLD, null] } });
+      if (t < fl) cl(s, k01(t, 0, fl), [[0.4, 1.95, -3.8], [0.1, 1.3, -7.7]], [[-0.2, 1.8, -4.6], [-0.3, 1.3, -7.7]]); else cl(s, k01(t, fl, d), [[-0.6, 1.6, -5.6], [-0.9, 1.3, -7.7]], [[-0.8, 1.55, -5.9], [-0.9, 1.3, -7.7]]);
+      return { scene: s.S, cam: s.C, tags: [T('PENSIONS · BOND FUNDS · BANKS · HEDGE FUNDS', 640, 90, span(t, 0.5, ph(L, "they don't have to")), BT), T('BUY ONLY IF THE PRICE IS RIGHT', 640, 90, span(t, ph(L, "they don't have to"), ph(L, 'borrowed money')), YT), T('BORROWED MONEY = THEY SELL FAST', 640, 90, span(t, ph(L, 'borrowed money'), fl), RT)] }; } },
+];
+ACTS[3] = [
+  { id: 'D16', card: '3. Domino One: The Auction' },
+  { id: 'D17', f(t, d, L) { const s = getSet('auction12'); hideCards(s, ['auct', 'flash', 'reserve', 'del', 'tab']); const a = lineAt(L, 'AUCTIONEER').t0; const rows = [['DEL', '4.9%'], ['MADAME R.', '5.0%'], ['PENSION FUND', '5.1%'], ['FLASH', '5.3%']]; const n = Math.min(4, Math.floor(k01(t, 2, a) * 5));
+      AU(s, t, { bid: { rows, n, fill: t > a ? Math.min(4, 1 + Math.floor((t - a) / 1.0)) : 0, sold: t > d - 2.2 ? 'SOLD!' : '' } });
+      sp(s, 'auct', 2.2, s.PZ + 0.2, { view: 'q', dir: -1, expr: 'happy', arms: [null, Math.floor(t * 2) % 2 ? UP : POINT] }, t, L, 'AUCTIONEER', 1.68, s.SY); tabAt(s, t, L, { expr: 'neutral' });
+      crowd(s, t, L, null, ['flash', 'reserve', 'del'], { arms: { flash: [t > a + 2 ? UP : null, null], reserve: [t > a ? UP : null, null] } });
+      if (t < a) cl(s, k01(t, 0, a), [[-1.6, 2.2, -6.0], [-4.6, 2.3, -10.8]], [[-2.6, 2.3, -7.8], [-4.6, 2.3, -10.8]]); else cl(s, k01(t, a, d), [[1.4, 2.1, -6.6], [2.0, 1.9, -10.0]], [[0.6, 2.0, -4.6], [0.4, 1.5, -9.0]]);
+      return { scene: s.S, cam: s.C, tags: [T('BIDS = INTEREST WANTED', 640, 90, span(t, ph(L, 'bid the interest'), ph(L, 'cheapest bids')), YT), T('CHEAPEST FIRST', 640, 90, span(t, ph(L, 'cheapest bids'), ph(L, 'lots of eager')), GT), T('FEWER LENDERS = PRICIER MONEY', 640, 640, span(t, ph(L, 'fewer eager'), a), RT)] }; } },
+  { id: 'D18', f(t, d, L) { const s = getSet('auction12'); hideCards(s, ['tab', 'dot12']); AU(s, t, { conv: true }); const dt = lineAt(L, 'DOT').t0, tb = lineAt(L, 'TAB').t0;
+      tabAt(s, t, L, { expr: t > tb ? 'happy' : 'neutral', arms: [HOLD, Math.floor(t * 1.5) % 2 ? UP : HOLD] }); sp(s, 'dot12', 1.4, -7.7, { view: 'q', dir: -1, expr: t > dt ? 'sly' : 'neutral', arms: [t > dt ? POINT : null, null] }, t, L, 'DOT', 1.6);
+      if (t < dt) cl(s, k01(t, 0, dt), [[-0.3, 2.3, -7.0], [-0.3, 1.9, -11.4]], [[-0.3, 2.2, -8.0], [-0.4, 1.9, -11.4]]); else cl(s, k01(t, dt, d), [[1.6, 1.6, -5.5], [1.4, 1.3, -7.7]], [[0.6, 1.95, -4.8], [-0.4, 1.6, -9.6]]);
+      return { scene: s.S, cam: s.C, tags: [T('FY2025: 444 AUCTIONS', 640, 90, span(t, ph(L, 'four hundred'), ph(L, 'one point nine')), YT), T('$1.9T NEW', 300, 600, span(t, ph(L, 'one point nine'), dt), GT), T('$9.1T ROLLED OVER', 980, 600, span(t, ph(L, 'nine trillion'), dt), RT)] }; } },
+  { id: 'D19', f(t, d, L) { const s = getSet('auction12'); hideCards(s, ['del']); AU(s, t); const dl = lineAt(L, 'DEL').t0;
+      sp(s, 'del', 0.3, -7.7, { view: 'front', expr: 'sleepy', arms: [Math.floor(t / 1.6) % 2 ? UP : HOLD, HOLD] }, t, L, 'DEL', 1.55);
+      if (t < dl) cl(s, k01(t, 0, dl), [[0.5, 1.85, -4.4], [0.3, 1.15, -7.7]], [[0.4, 1.6, -5.3], [0.3, 1.15, -7.7]]); else cl(s, k01(t, dl, d), [[0.1, 1.45, -6.0], [0.3, 1.2, -7.7]], [[0.0, 1.45, -6.2], [0.3, 1.2, -7.7]]);
+      const chainTag = x => { const k = pop(t, 1.0); if (k <= 0) return; x.save(); x.translate(1010, 430); x.scale(k, k); x.strokeStyle = '#8a8f96'; x.lineWidth = 8; for (let i = -4; i <= 4; i++) { x.beginPath(); x.ellipse(i * 34, 40, 16, 9, i % 2 ? 0.4 : -0.4, 0, TAU); x.stroke(); } x.restore(); };
+      return { scene: s.S, cam: s.C, post: chainTag, tags: [T('MUST BID', 1010, 400, span(t, 1.0, d), RT), T('PRIMARY DEALERS', 640, 90, span(t, ph(L, 'primary dealers'), ph(L, 'no modern')), BT), T('NEVER UNSOLD', 640, 90, span(t, ph(L, 'no modern'), ph(L, 'the point is')), GT), T('THE POINT IS THE PRICE', 640, 90, span(t, ph(L, 'the point is'), d), YT)] }; } },
+  { id: 'D20', f(t, d, L) { const s = getSet('auction12'); hideCards(s, ['tab']); const tb = lineAt(L, 'TAB').t0; AU(s, t, { g: 0.62, bid: { rows: [['10-YR, OCT 7', '5.300%']], fill: 1, sold: '$39 BILLION' } });
+      tabAt(s, t, L, { expr: t > tb ? 'surprised' : 'scared', arms: [CHIN, null] });
+      cl(s, k01(t, 0, d), [[0.2, 2.2, -7.4], [0.3, 1.9, -10.2]], [[-0.1, 2.1, -8.4], [0.2, 1.95, -10.2]]);
+      return { scene: s.S, cam: s.C, post: paperIn(t, 0.5, tb - 0.4, ['THE DAILY LEDGER · OCT 7, 2026', '$39B 10-YEAR NOTES', 'SOLD AT 5.30%', 'HIGHEST SINCE 2000']), tags: [T('BUYERS CAME. THEY CHARGED MORE.', 640, 640, span(t, ph(L, 'still turned up'), tb), YT)] }; } },
+  { id: 'D21', f(t, d, L) { const s = getSet('auction12'); hideCards(s, ['flash']); const fl = lineAt(L, 'FLASH').t0; const g = 0.35 + 0.55 * E(k01(t, 2, 6)) - 0.3 * E(k01(t, ph(L, 'paused'), ph(L, 'paused') + 2));
+      AU(s, t, { g }); sp(s, 'flash', -0.9, -7.7, { view: 'front', expr: t > fl ? 'sly' : 'scared', arms: [UP, UP] }, t, L, 'FLASH', 1.65);
+      if (t < fl) cl(s, k01(t, 0, fl), [[1.6, 2.0, -5.0], [3.8, 2.6, -11.0]], [[-0.4, 1.75, -5.2], [-0.9, 1.3, -7.7]]); else cl(s, k01(t, fl, d), [[-0.8, 1.55, -5.8], [-0.9, 1.3, -7.7]], [[-0.5, 1.6, -5.3], [-0.8, 1.35, -7.7]]);
+      return { scene: s.S, cam: s.C, post: posts(sheets(t, 1.2, { n: 50, x0: 560, y0: 420, up: true, spread: 3, dur: ph(L, 'paused') - 1.2 }), tvBox(t, ph(L, 'the president'), fl), t < fl ? sepia : null), tags: [T('APRIL 2025', 200, 90, span(t, 0.3, fl), YT), T('TARIFFS PAUSED', 640, 620, span(t, ph(L, 'paused'), ph(L, 'asked about')), GT), T('DOMINO ONE', 640, 90, span(t, ph(L, "that's the first"), d), RT)] }; } },
+  { id: 'D22', noBlurOut: true, f(t, d, L) { const s = getSet('auction12'); hideCards(s, []); const a = 0.5; AU(s, t, { dom: [dropN(t, a, a + 1.4, DREST), 0.04 * Math.max(0, Math.sin((t - a - 1.4) * 9)) * (t > a + 1.4 ? Math.exp(-(t - a - 1.4) * 2) : 0) + (t > a + 1.4 ? 0.05 : 0), 0, 0] });
+      cl(s, k01(t, 0, d), [[-2.4, 1.6, -11.0], [-5.4, 1.2, -8.0]], [[-2.6, 1.6, -9.2], [-5.4, 1.1, -6.6]]); if (t > a + 1.3 && t < a + 1.8) shake(s, t, a + 1.4, 0.06);
+      return { scene: s.S, cam: s.C, tags: [T('1 AUCTION', 400, 120, span(t, 0.2, d), RT), T('→ 2 INTEREST', 880, 120, span(t, a + 1.4, d), YT)] }; } },
+];
+ACTS[4] = [
+  { id: 'D23', card: '4. Domino Two: The Interest Bill' },
+  { id: 'D24', f(t, d, L) { const s = getSet('tabhome12'); hideCards(s, ['tab']); const bl = E(k01(t, 1.0, 4.0)); TH(s, t, { bill: bl }); const n2 = ph(L, 'out of every');
+      sp2(s, 'tab', -0.4, s.TZ + 0.5, { view: 'front', expr: t > 2 ? 'scared' : 'neutral', arms: [HOLD, t > 2 ? UP : HOLD], hatLift: 0.35 * E(k01(t, 2.6, 3.4)) * (1 - k01(t, n2, n2 + 1)) }, t, L, null, 1.7);
+      if (t < n2) cl(s, k01(t, 0, n2), [[0.2, 2.0, 1.2], [-0.2, 0.95, -1.8]], [[1.2, 2.0, 1.8], [-0.3, 0.9, -1.6]]); else cl(s, k01(t, n2, d), [[0.6, 1.6, 0.6], [-0.4, 1.25, -2.3]], [[0.5, 1.55, 0.3], [-0.4, 1.25, -2.3]]);
+      return { scene: s.S, cam: s.C, tags: [T('INTEREST: > $1 TRILLION A YEAR', 640, 90, span(t, ph(L, 'more than a trillion'), n2), RT), T('~$14 OF EVERY $100', 640, 90, span(t, ph(L, 'about fourteen'), ph(L, "that's more")), YT), T('> THE ENTIRE MILITARY', 640, 90, span(t, ph(L, "that's more"), d), RT)] }; } },
+  { id: 'D25', f(t, d, L) { const s = getSet('tabhome12'); hideCards(s, ['tab', 'pip12']); const tb = lineAt(L, 'TAB').t0, p = lineAt(L, 'PIP').t0; TH(s, t, { stamp: t > ph(L, 'twenty twenty-four') });
+      sp2(s, 'tab', 0.2, s.TZ - 0.6, { view: 'q', dir: -1, expr: t > tb ? 'angry' : 'neutral', arms: [null, t > tb ? POINT : null] }, t, L, 'TAB', 1.7); sp(s, 'pip12', 1.0, s.TZ - 0.3, { view: 'q', dir: -1, expr: t > p ? 'sly' : 'neutral', arms: [t > p ? POINT : null, null] }, t, L, 'PIP', 1.6);
+      if (t < tb) cl(s, k01(t, 0, tb), [[-1.0, 1.9, s.z0 + 4.4], [-1.6, 1.7, s.z0]], [[-1.4, 1.8, s.z0 + 3.6], [-1.6, 1.65, s.z0]]); else cl(s, k01(t, tb, d), [[1.6, 1.6, s.TZ + 1.6], [0.5, 1.3, s.TZ - 0.5]], [[1.4, 1.55, s.TZ + 1.3], [0.5, 1.3, s.TZ - 0.5]]);
+      return { scene: s.S, cam: s.C, tags: [T("FERGUSON'S WARNING", 640, 90, span(t, 0.5, ph(L, 'by his measure')), YT), T('USA CROSSED IT: 2024', 640, 90, span(t, ph(L, 'by his measure'), tb), RT)] }; } },
+  { id: 'D26', f(t, d, L) { const s = getSet('tabhome12'); hideCards(s, ['dot12']); const dt = lineAt(L, 'DOT').t0; const k = E(k01(t, 1.0, dt)); const lab = k < 0.45 ? '$1T' : k < 0.8 ? '$1.5T' : '$2.1T (2036)'; TH(s, t, { snow: k, lab });
+      sp(s, 'dot12', 1.0, s.z0 + 1.4, { view: 'q', dir: 1, expr: t > dt ? 'sly' : 'surprised', arms: [t > dt ? POINT : null, null] }, t, L, 'DOT', 1.6);
+      if (t < dt) cl(s, k01(t, 0, dt), [[1.6, 2.0, s.z0 + 3.4], [1.9, 2.0, s.z0]], [[1.8, 2.0, s.z0 + 2.8], [1.9, 2.0, s.z0]]); else cl(s, k01(t, dt, d), [[0.2, 1.6, s.z0 + 3.2], [1.2, 1.5, s.z0 + 1.2]], [[0.3, 1.6, s.z0 + 2.9], [1.2, 1.5, s.z0 + 1.2]]);
+      return { scene: s.S, cam: s.C, post: x => { const f = k01(t, dt - 0.5, dt + 0.4); if (f <= 0 || t > dt + 3) return; x.save(); x.globalAlpha = 0.45 * f; const g = x.createRadialGradient(780, 300, 20, 780, 300, 240); g.addColorStop(0, '#ff9a3a'); g.addColorStop(1, 'rgba(255,80,0,0)'); x.fillStyle = g; x.fillRect(0, 0, W, H); x.restore(); },
+        tags: [T('BIGGER GAP → MORE IOUs → HIGHER RATES', 640, 640, span(t, ph(L, 'bigger gap'), ph(L, 'congressional')), YT), T('CBO: ~$2.1T A YEAR BY 2036', 640, 90, span(t, ph(L, 'congressional'), dt), RT)] }; } },
+  { id: 'D27', f(t, d, L) { const s = getSet('tabhome12'); hideCards(s, ['tab']); const tb = lineAt(L, 'TAB').t0; const ek = E(k01(t, 0.4, 2.0)); TH(s, t, { env: [lerp(2.6, 0.5, ek), 0.02 + (t > tb - 1 ? 0.9 : 0), s.TZ + 1.2] });
+      sp2(s, 'tab', -0.2, s.TZ + 0.9, { view: 'front', expr: t > tb ? 'happy' : 'surprised', arms: [t > tb - 1 ? HOLD : null, t > tb ? UP : null] }, t, L, 'TAB', 1.7);
+      if (t < tb) cl(s, k01(t, 0, tb), [[1.6, 1.45, s.TZ + 4.2], [0.4, 0.85, s.TZ + 1.2]], [[0.9, 1.5, s.TZ + 3.8], [0.0, 0.95, s.TZ + 1.0]]); else cl(s, k01(t, tb, d), [[0.2, 1.5, s.TZ + 3.7], [-0.2, 1.2, s.TZ + 0.9]], [[0.1, 1.5, s.TZ + 3.4], [-0.2, 1.2, s.TZ + 0.9]]);
+      const report = x => { const k = pop(t, ph(L, 'moody') + 0.5) * (1 - k01(t, tb - 0.2, tb + 0.2)); if (k <= 0) return; x.save(); x.translate(980, 330); x.rotate(0.04); x.scale(k, k); x.fillStyle = '#f6efe0'; x.fillRect(-190, -150, 380, 300); x.strokeStyle = '#1e1612'; x.lineWidth = 4; x.strokeRect(-180, -140, 360, 280); x.fillStyle = '#1e1612'; x.textAlign = 'center'; x.font = `30px ${HAND}`; x.fillText("MOODY'S · MAY 2025", 0, -95); x.font = `64px ${HAND}`; x.fillStyle = '#c2372d'; x.fillText('Aa1', 0, -10); x.fillStyle = '#1e1612'; x.font = `24px ${HAND}`; x.fillText('TOO MUCH DEBT', 0, 55); x.fillText('TOO MUCH INTEREST', 0, 90); x.restore(); };
+      return { scene: s.S, cam: s.C, post: report, tags: [T('LAST OF THE BIG THREE', 640, 90, span(t, ph(L, 'last of the big'), tb), YT)] }; } },
+  { id: 'D28', f(t, d, L) { const s = getSet('tabhome12'); hideCards(s, ['tab']); TH(s, t, { doors: true }); const tb = lineAt(L, 'TAB').t0;
+      const x = walkX(s, 'tab', -0.6, 1.3, s.z0 + 1.4, t, tb - 2.4, tb + 1.0, { view: 'q', dir: 1, expr: 'sly', arms: [CHIN, null] }, L, 'TAB', 1.7);
+      cl(s, k01(t, 0, d), [[0, 1.7, s.z0 + 5.2], [0, 1.2, s.z0]], [[0.6, 1.6, s.z0 + 4.2], [0.8, 1.2, s.z0]]);
+      const dom = x2 => { const k = k01(t, d - 2.2, d - 0.6); if (k <= 0) return; x2.save(); x2.translate(1080, 560); x2.fillStyle = '#f2ede0'; x2.strokeStyle = '#1e1612'; x2.lineWidth = 4; x2.save(); x2.rotate(E(k) * 1.0); x2.fillRect(-30, -120, 60, 120); x2.strokeRect(-30, -120, 60, 120); x2.restore(); x2.fillRect(80, -120, 60, 120); x2.strokeRect(80, -120, 60, 120); x2.fillStyle = '#1e1612'; x2.font = `18px ${HAND}`; x2.textAlign = 'center'; x2.fillText('2 → 3', 50, 30); x2.restore(); };
+      return { scene: s.S, cam: s.C, post: dom, tags: [T('1. TAX MORE', 300, 120, span(t, ph(L, 'raise taxes'), d), BT), T('2. SPEND LESS', 640, 120, span(t, ph(L, 'cut spending'), d), YT), T('3. PRINT', 980, 120, span(t, ph(L, 'the third door'), d), GT)] }; } },
+];
+ACTS[5] = [
+  { id: 'D29', card: '5. Domino Three: Your Mortgage' },
+  { id: 'D30', f(t, d, L) { const s = getSet('bank12'); hideCards(s, ['del', 'teo']); const te = lineAt(L, 'TEO').t0; const lift = (Math.sin(t * 0.9) * 0.5 + 0.5) * k01(t, ph(L, 'bottom step'), ph(L, 'bottom step') + 1); const k = Math.round(lift * 20) / 20; if (s._lf !== k) { s.stair.userData.draw({ lift: k }); s._lf = k; }
+      sp(s, 'del', 0.8, s.cz - 0.6, { view: 'q', dir: -1, expr: 'neutral', arms: [null, t > ph(L, 'bottom step') && t < te ? POINT : null] }, t, L, 'DEL', 1.55); sp(s, 'teo', 1.8, s.cz + 1.2, { view: 'q', dir: -1, expr: t > te ? 'sly' : 'neutral', arms: [t > te ? POINT : null, null] }, t, L, 'TEO', 1.72);
+      if (t < te) cl(s, k01(t, 0, te), [[-2.4, 2.75, s.z0 + 6.4], [-3.5, 2.7, s.z0]], [[-3.1, 2.75, s.z0 + 4.4], [-3.5, 2.75, s.z0]]); else cl(s, k01(t, te, d), [[0.4, 1.6, s.cz + 3.2], [1.3, 1.3, s.cz + 0.2]], [[0.6, 1.6, s.cz + 2.9], [1.3, 1.3, s.cz + 0.2]]);
+      return { scene: s.S, cam: s.C, tags: [T('SAFEST LOAN ON EARTH', 640, 90, span(t, ph(L, 'safest loan'), ph(L, 'so why')), GT), T('GOVT RATE = THE BOTTOM STEP', 640, 640, span(t, ph(L, 'bottom step'), te), YT)] }; } },
+  { id: 'D31', f(t, d, L) { const s = getSet('openhouse12'); hideCards(s, ['rosa']); const r = lineAt(L, 'ROSA').t0; s.sold.position.y = 0;
+      if (t > r - 0.6) sp(s, 'rosa', -0.4, -0.5, { view: 'front', expr: t > r ? 'surprised' : 'neutral', arms: [t > r ? UP : null, null] }, t, L, 'ROSA', 1.62); else card(s, 'rosa', 1.62).hide();
+      if (t < r) cl(s, k01(t, 0, r), [[0.0, 1.6, 4.4], [0, 1.2, -2.0]], [[0.2, 1.6, 4.0], [0, 1.2, -2.0]]); else cl(s, k01(t, r, d), [[-0.2, 1.45, 1.8], [-0.4, 1.3, -0.5]], [[-0.3, 1.45, 1.5], [-0.4, 1.3, -0.5]]);
+      return { scene: s.S, cam: s.C, post: posts(t < r ? dim(0.45 * k01(t, 0.6, 1.2)) : null, split(t, 0.8, r - 0.3)), tags: [T('7.40% ON OCT 15', 640, 640, span(t, ph(L, 'seven point four'), ph(L, 'four-hundred')), RT)] }; } },
+  { id: 'D32', f(t, d, L) { const s = getSet('street12'); hideCards(s, ['teo']); const te = lineAt(L, 'TEO').t0; s.um.forEach(u => u.visible = false);
+      sp(s, 'teo', 0.6, 0.0, { view: 'q', dir: -1, expr: t > te ? 'sad' : 'neutral', arms: [null, null] }, t, L, 'TEO', 1.72);
+      if (t < te) cl(s, k01(t, 0, te), [[0, 2.6, 6.0], [0, 1.0, -30]], [[0, 2.0, 3.0], [0, 1.2, -20]]); else cl(s, k01(t, te, d), [[1.4, 1.6, 2.6], [0.6, 1.3, 0]], [[1.3, 1.6, 2.3], [0.6, 1.3, 0]]);
+      const tumble = x => { const k = k01(t, 0.3, 5); if (k <= 0 || k >= 1) return; x.save(); x.translate(-60 + k * 1400, 560 - Math.abs(Math.sin(k * 20)) * 50); x.rotate(k * 30); x.strokeStyle = '#8a6a46'; x.lineWidth = 3; for (let i = 0; i < 8; i++) { x.beginPath(); x.arc(0, 0, 20 + i * 3, i, i + 3); x.stroke(); } x.restore(); };
+      return { scene: s.S, cam: s.C, post: tumble, tags: [T('PENDING HOME SALES, SEP 2026', 640, 90, span(t, 0.6, te), BT), T('LOWEST SINCE RECORDS BEGAN (2001)', 640, 165, span(t, ph(L, 'lowest level'), te), RT)] }; } },
+  { id: 'D33', f(t, d, L) { const s = getSet('street12'); hideCards(s, ['neigh', 'pip12', 'dot12']); const p = lineAt(L, 'PIP').t0, dt = lineAt(L, 'DOT').t0; s.um.forEach((u, i) => u.visible = (i % 4) < 2);
+      sp(s, 'neigh', -4.6, -2.4, { view: 'q', dir: 1, expr: 'happy', arms: [HOLD, null] }, t, L, null, 1.6); sp(s, 'pip12', -2.4, -1.4, { view: 'q', dir: -1, expr: t > p ? 'happy' : 'sad', arms: [t > p ? POINT : null, null] }, t, L, 'PIP', 1.6); sp(s, 'dot12', -1.6, -0.8, { view: 'q', dir: -1, expr: t > dt ? 'sly' : 'neutral', arms: [null, null] }, t, L, 'DOT', 1.6);
+      const rain = x => { x.save(); x.strokeStyle = 'rgba(190,210,255,0.35)'; x.lineWidth = 2; for (let i = 0; i < 120; i++) { const rx = (i * 131 + t * 300) % W, ry = (i * 71 + t * 1100) % H; x.beginPath(); x.moveTo(rx, ry); x.lineTo(rx - 5, ry + 20); x.stroke(); } x.restore(); };
+      if (t < p) cl(s, k01(t, 0, p), [[0, 3.6, 8.0], [0, 1.0, -16]], [[-1.0, 2.4, 3.4], [-4.0, 1.4, -4]]); else cl(s, k01(t, p, d), [[-1.0, 1.7, 2.2], [-3.0, 1.3, -1.6]], [[-1.2, 1.65, 1.9], [-3.0, 1.3, -1.6]]);
+      return { scene: s.S, cam: s.C, post: rain, tags: [T('~49% OF MORTGAGES UNDER 4%', 640, 90, span(t, ph(L, 'about half'), ph(L, "who's exposed")), GT), T('EXPOSED: BUYING · SELLING · RESETTING', 640, 90, span(t, ph(L, "who's exposed"), ph(L, 'outside america')), RT), T('UK · CANADA · AUSTRALIA TOO', 640, 640, span(t, ph(L, 'outside america'), p), YT)] }; } },
+  { id: 'D34', noBlurOut: true, f(t, d, L) { const s = getSet('auction12'); hideCards(s, []); const a = 0.4; AU(s, t, { dom: [DREST, DREST, dropN(t, a, a + 1.3, DREST), t > a + 1.3 ? 0.05 : 0] });
+      cl(s, k01(t, 0, d), [[-2.8, 1.7, -7.0], [-5.4, 1.2, -4.6]], [[-2.9, 1.6, -5.4], [-5.4, 1.1, -3.0]]); if (t > a + 1.2 && t < a + 1.7) shake(s, t, a + 1.3, 0.06);
+      return { scene: s.S, cam: s.C, tags: [T('3 MORTGAGE', 420, 120, span(t, 0.2, d), RT), T('→ 4 BREAKAGE', 880, 120, span(t, a + 1.3, d), YT)] }; } },
+];
+ACTS[6] = [
+  { id: 'D35', card: '6. Domino Four: When Things Break' },
+  { id: 'D36', f(t, d, L) { const s = getSet('auction12'); hideCards(s, ['pip12']); AU(s, t); const p = lineAt(L, 'PIP').t0; const n2 = L.filter(l => l.who === 'N')[1] || { t0: d };
+      sp(s, 'pip12', 3.9, -8.0, { view: 'q', dir: -1, expr: t > p ? 'sad' : 'neutral', arms: [HOLD, t > p ? SHRUG : null] }, t, L, 'PIP', 1.6);
+      if (t < p) cl(s, k01(t, 0, p), [[2.0, 2.0, -5.2], [4.6, 1.0, -8.6]], [[2.8, 1.7, -6.0], [4.4, 0.95, -8.6]]); else cl(s, k01(t, p, d), [[2.8, 1.6, -6.4], [3.9, 1.3, -8.0]], [[3.0, 1.55, -6.7], [3.9, 1.3, -8.0]]);
+      return { scene: s.S, cam: s.C, tags: [T('OLD: $30 A YEAR', 300, 140, span(t, ph(L, 'thirty dollars'), d), BT), T('NEW: $50 A YEAR', 980, 140, span(t, ph(L, 'new ones pay'), d), GT), T('FAIR PRICE ≈ $846', 980, 215, span(t, n2.t0, d), RT), T('RATES UP → OLD BONDS DOWN', 980, 290, span(t, ph(L, 'old bonds lose'), d), YT)] }; } },
+  { id: 'D37', f(t, d, L) { const s = getSet('bank12'); hideCards(s, ['del']); const dl = lineAt(L, 'DEL').t0; s.lossTag.visible = t > 1.0; s.lossTag.position.set(-0.6, 3.5 - 0.5 * E(k01(t, 1, 2)), s.z0 + 0.3);
+      sp(s, 'del', -0.6, s.cz + 0.9, { view: 'front', expr: t > dl ? 'sly' : 'scared', arms: [CHIN, null] }, t, L, 'DEL', 1.55);
+      if (t < dl) cl(s, k01(t, 0, dl), [[-2.6, 2.75, s.z0 + 6.2], [-3.5, 2.75, s.z0]], [[-1.0, 2.2, s.z0 + 5.4], [-1.4, 2.2, s.z0]]); else cl(s, k01(t, dl, d), [[-0.2, 1.5, s.cz + 3.5], [-0.6, 1.25, s.cz + 0.9]], [[-0.3, 1.5, s.cz + 3.2], [-0.6, 1.25, s.cz + 0.9]]);
+      return { scene: s.S, cam: s.C, tags: [T('MID-2026 (FDIC)', 640, 640, span(t, ph(L, 'three hundred'), ph(L, 'paper losses only')), YT), T('2023: SVB FORCED TO SELL', 640, 90, span(t, ph(L, 'silicon valley'), dl), RT), T('~48 HOURS', 640, 640, span(t, ph(L, 'forty-eight'), dl), RT)] }; } },
+  { id: 'D38', f(t, d, L) { const s = getSet('auction12'); hideCards(s, ['reserve', 'flash', 'del', 'pip12']); const fl = lineAt(L, 'FLASH').t0; AU(s, t, { g: 0.5 + 0.45 * Math.abs(Math.sin(t * 2.1)) });
+      walkX(s, 'reserve', -2.1, 4.4, -7.7, t, 1.0, 6.0, { view: 'q', dir: 1, expr: 'scared', arms: [HOLD, null] }, L, 'RESERVE', 1.62); walkX(s, 'flash', -0.9, 5.0, -6.8, t, 0.6, 4.5, { view: 'q', dir: 1, expr: 'scared', arms: [UP, UP] }, L, 'FLASH', 1.65); walkX(s, 'pip12', 1.4, 5.2, -7.4, t, 1.6, 5.6, { view: 'q', dir: 1, expr: 'scared', arms: [UP, null] }, L, 'PIP', 1.6);
+      sp(s, 'del', 0.3, -7.7, { view: 'front', expr: 'surprised', arms: [UP, null] }, t, L, 'DEL', 1.55);
+      if (t < fl) cl(s, k01(t, 0, fl), [[-2.0, 2.6, -2.0], [1.0, 1.4, -8.0]], [[-0.6, 2.2, -3.0], [3.0, 1.4, -7.2]]); else cl(s, k01(t, fl, d), [[3.0, 1.8, -4.2], [4.6, 1.3, -6.8]], [[3.2, 1.75, -4.6], [4.8, 1.3, -6.8]]);
+      return { scene: s.S, cam: s.C, post: posts(sheets(t, 0.4, { n: 70, up: true, y0: 560, spread: 4 }), t < fl ? sepia : null), tags: [T('MARCH 2020', 200, 90, span(t, 0.3, fl), YT), T('FOREIGN SALES: ~$417B IN ONE MONTH', 640, 640, span(t, ph(L, 'four hundred and seventeen'), fl), RT)] }; } },
+  { id: 'D39', f(t, d, L) { const s = getSet('auction12'); hideCards(s, ['ferdie']); const fr = lineAt(L, 'FERDIE').t0; const n3 = L.filter(l => l.who === 'N')[1] || { t0: d }; AU(s, t, { crank: true, g: lerp(0.9, 0.25, E(k01(t, 2, 8))) });
+      sp(s, 'ferdie', 3.1, -3.4, { view: 'q', dir: -1, expr: t > fr ? 'happy' : 'sly', arms: [UP, UP] }, t, L, 'FERDIE', 1.62);
+      if (t < fr) cl(s, k01(t, 0, fr), [[1.0, 2.4, -0.6], [3.6, 1.0, -3.0]], [[-0.4, 2.6, -1.0], [2.0, 1.6, -9.0]]); else cl(s, k01(t, fr, d), [[1.6, 1.65, -1.2], [3.0, 1.25, -3.4]], [[1.8, 1.6, -1.6], [3.0, 1.25, -3.4]]);
+      return { scene: s.S, cam: s.C, post: sheets(t, 0.3, { n: 90, col: '#bfe0a8', ink: '#2f6b3f', lab: '$', spread: 6 }), tags: [T('FED BOUGHT ~$1.6 TRILLION IN ~3 MONTHS', 640, 90, span(t, ph(L, 'one point six'), ph(L, 'and it worked')), GT), T('RATES CALMED', 640, 640, span(t, ph(L, 'and it worked'), fr), YT), T('PROBLEM MOVED', 640, 640, span(t, n3.t0, d), RT)] }; } },
+  { id: 'D40', f(t, d, L) { const s = getSet('grocery12'); hideCards(s, ['neigh']); const nb = lineAt(L, 'NEIGHBOUR').t0;
+      sp(s, 'neigh', 0.2, s.cz + 1.0, { view: 'q', dir: -1, expr: t > nb ? 'angry' : 'surprised', arms: [HOLD, t > nb ? UP : null] }, t, L, 'NEIGHBOUR', 1.6);
+      if (t < nb) cl(s, k01(t, 0, nb), [[2.0, 2.0, s.cz + 5.0], [0, 1.2, s.z0]], [[1.2, 1.8, s.cz + 3.4], [0.2, 1.3, s.cz + 1.0]]); else cl(s, k01(t, nb, d), [[0.6, 1.5, s.cz + 2.8], [0.2, 1.3, s.cz + 1.0]], [[0.5, 1.5, s.cz + 2.5], [0.2, 1.3, s.cz + 1.0]]);
+      const prices = x => { const items = [['MILK', 3.99, 4.49], ['EGGS', 3.49, 4.19], ['PETROL', 3.29, 3.89]]; items.forEach(([n, a0, a1], i) => { const at2 = ph(L, 'groceries') + i * 0.7; const k = pop(t, 0.6 + i * 0.3); if (k <= 0) return; const v = t > at2 ? a1 : a0; x.save(); x.translate(250 + i * 390, 200); x.scale(k, k); x.rotate(-0.05 + i * 0.04); x.fillStyle = '#f2c83a'; x.fillRect(-110, -50, 220, 100); x.strokeStyle = '#1e1612'; x.lineWidth = 4; x.strokeRect(-110, -50, 220, 100); x.fillStyle = '#1e1612'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.font = `26px ${HAND}`; x.fillText(n, 0, -22); x.font = `40px ${HAND}`; x.fillStyle = t > at2 ? '#c2372d' : '#1e1612'; x.fillText('$' + v.toFixed(2), 0, 18); x.restore(); }); };
+      return { scene: s.S, cam: s.C, post: prices, tags: [T('MORTGAGE: FIXED', 640, 640, span(t, ph(L, 'payment is fixed'), ph(L, 'inflation in america')), GT), T('US INFLATION ~3.5%', 640, 640, span(t, ph(L, 'inflation in america'), nb), RT)] }; } },
+];
+ACTS[7] = [
+  { id: 'D41', card: '7. So, Will Everyone Stop?' },
+  { id: 'D42', f(t, d, L) { const s = getSet('auction12'); hideCards(s, []); const n2 = L.filter(l => l.who === 'N')[1] || { t0: d }; AU(s, t, { signs: true, xd: t > ph(L, 'almost certainly'), dom: [DREST, DREST, DREST, 1.2] });
+      if (t < n2.t0) cl(s, k01(t, 0, n2.t0), [[0, 2.5, -3.2], [0, 2.9, -9.8]], [[0, 2.6, -4.0], [0, 2.95, -9.8]]); else cl(s, k01(t, n2.t0, d), [[1.6, 2.8, -6.2], [1.6, 2.95, -9.8]], [[0, 2.4, -2.0], [-2.4, 1.2, -6.0]]);
+      return { scene: s.S, cam: s.C, tags: [T('> $9 TRILLION HELD ABROAD', 640, 640, span(t, ph(L, 'nine trillion'), ph(L, 'the dollar is')), BT), T('DOLLAR: STILL #1 RESERVE', 640, 640, span(t, ph(L, 'the dollar is'), ph(L, 'the fed can')), GT), T('FED: BUYER OF LAST RESORT', 640, 640, span(t, ph(L, 'the fed can'), n2.t0), YT), T('THE REAL RISK: A SLOW GRIND', 640, 640, span(t, ph(L, 'slow grind'), d), RT)] }; } },
+  { id: 'D43', f(t, d, L) { const s = getSet('auction12'); hideCards(s, ['tab', 'reserve', 'del', 'flash']); AU(s, t, { dom: [DREST, DREST, DREST, 1.2] }); const r = lineAt(L, 'RESERVE').t0, tb2 = lineAt(L, 'TAB', 1).t0, dl = lineAt(L, 'DEL').t0;
+      tabAt(s, t, L, { expr: t > tb2 && t < dl ? 'sad' : 'neutral', arms: [null, null] }); sp(s, 'reserve', 3.6, -6.2, { view: 'q', dir: -1, expr: 'sly', arms: [HOLD, t > r && t < tb2 ? POINT : null] }, t, L, 'RESERVE', 1.62);
+      sp(s, 'del', 0.3, -7.7, { view: 'q', dir: -1, expr: 'neutral', arms: [UP, null] }, t, L, 'DEL', 1.55); sp(s, 'flash', -0.9, -7.7, { view: 'front', expr: 'sleepy', arms: [null, null], lean: 0.25 }, t, L, null, 1.65);
+      if (t < r) cl(s, k01(t, 0, r), [[0.4, 2.0, -7.6], [0, 1.9, -10.2]], [[0.3, 2.0, -8.0], [0, 1.9, -10.2]]); else if (t < tb2) cl(s, k01(t, r, tb2), [[2.4, 1.7, -4.4], [3.6, 1.3, -6.2]], [[2.5, 1.7, -4.7], [3.6, 1.3, -6.2]]); else if (t < dl) cl(s, k01(t, tb2, dl), [[0.3, 2.0, -7.8], [0, 1.9, -10.2]], [[0.2, 2.0, -8.1], [0, 1.9, -10.2]]); else cl(s, k01(t, dl, d), [[0.9, 1.5, -9.4], [0.3, 1.2, -7.7]], [[0.8, 1.5, -9.2], [0.3, 1.2, -7.7]]);
+      return { scene: s.S, cam: s.C, tags: [T('SPEND A LITTLE LESS THAN YOU EARN', 640, 90, span(t, r + 0.5, tb2), YT)] }; } },
+];
+ACTS[8] = [
+  { id: 'D44', card: 'Your Wallet' },
+  { id: 'D45', f(t, d, L) { const s = getSet('wallet12'); hideCards(s, ['stromi', 'rosa', 'teo']); const te = lineAt(L, 'TEO').t0, ro = lineAt(L, 'ROSA').t0; const keys = ['one.', 'two.', 'three.', 'four.'].map(q => ph(L, q, 1e9));
+      s.cards.forEach((c, i) => { const k = pop(t, keys[i]); c.visible = k > 0.02; c.scale.setScalar(Math.max(0.02, k)); c.position.set(-1.2 + i * 0.8, 1.6 + (i % 2) * 0.06, s.dz - 0.3); c.scale.multiplyScalar(0.85); });
+      sp(s, 'stromi', 0, s.dz + 0.7, { view: 'front', expr: 'happy', arms: [null, t > keys[0] && t < te ? POINT : WAVE] }, t, L, 'N', 1.5); sp(s, 'rosa', -1.3, s.dz + 1.1, { view: 'q', dir: 1, expr: t > ro ? 'sly' : 'happy', arms: [HOLD, null] }, t, L, 'ROSA', 1.62); sp(s, 'teo', 1.3, s.dz + 1.1, { view: 'q', dir: -1, expr: t > te ? 'surprised' : 'happy', arms: [t > te ? UP : null, null] }, t, L, 'TEO', 1.72);
+      if (t < te) cl(s, k01(t, 0, te), [[0, 1.8, s.dz + 5.4], [0, 1.35, s.dz]], [[0, 1.75, s.dz + 4.8], [0, 1.4, s.dz]]); else if (t < ro) cl(s, k01(t, te, ro), [[1.8, 1.6, s.dz + 3.2], [1.3, 1.3, s.dz + 1.1]], [[1.7, 1.6, s.dz + 3.0], [1.3, 1.3, s.dz + 1.1]]); else cl(s, k01(t, ro, d), [[-1.8, 1.55, s.dz + 3.0], [-1.3, 1.3, s.dz + 1.1]], [[-1.7, 1.55, s.dz + 2.8], [-1.3, 1.3, s.dz + 1.1]]);
+      return { scene: s.S, cam: s.C, tags: [T('NOT FINANCIAL ADVICE', 640, 90, span(t, 0.5, keys[0]), YT)] }; } },
+  { id: 'D46', f(t, d, L) { const s = getSet('openhouse12'); hideCards(s, ['rosa', 'teo']); s.sold.position.y = 0; s.sale.visible = true; const tb = lineAt(L, 'TAB').t0, ro = lineAt(L, 'ROSA').t0;
+      sp(s, 'rosa', -0.6, -0.4, { view: 'q', dir: 1, expr: t > ro ? 'sly' : 'happy', arms: [HOLD, t > ro ? POINT : null] }, t, L, 'ROSA', 1.62); sp(s, 'teo', 0.35, -0.2, { view: 'q', dir: -1, expr: 'happy', arms: [HOLD, null] }, t, L, 'TEO', 1.72);
+      if (t < tb) cl(s, k01(t, 0, tb), [[0.6, 1.5, 3.4], [0, 1.2, -1.2]], [[-0.6, 1.6, 3.8], [-1.6, 1.2, -1.8]]); else if (t < ro) cl(s, k01(t, tb, ro), [[-1.0, 1.7, 3.6], [-1.6, 1.4, -1.8]], [[-0.9, 1.7, 3.2], [-1.6, 1.4, -1.8]]); else cl(s, k01(t, ro, d), [[0.0, 1.45, 2.0], [-0.6, 1.3, -0.4]], [[1.2, 2.2, 6.0], [0, 1.2, -1.5]]);
+      const tabWin = x => { if (t < tb - 0.3 || t > ro + 0.5) return; const k = pop(t, tb - 0.3) * (1 - k01(t, ro, ro + 0.5)); x.save(); x.translate(1040, 250); x.scale(k, k); x.fillStyle = '#2a1d17'; x.fillRect(-150, -110, 300, 220); x.fillStyle = '#5a1e22'; x.fillRect(-135, -95, 270, 190); x.fillStyle = '#f0c9a4'; x.beginPath(); x.arc(0, -5, 30, 0, TAU); x.fill(); x.fillStyle = '#1e1612'; x.fillRect(-24, -70, 48, 40); x.fillRect(-36, -34, 72, 8); x.fillStyle = '#2f3f6b'; x.fillRect(-40, 25, 80, 70); x.fillStyle = '#f3ead2'; x.fillRect(45, -20, 50, 30); x.fillStyle = '#d9a23a'; x.font = `18px ${HAND}`; x.textAlign = 'center'; x.fillText('THE IOU AUCTION', 0, 85); x.restore(); };
+      return { scene: s.S, cam: s.C, vig: 0.75, post: posts(tabWin, fadeOut(t, d, 0.6)), tags: [T('OFFER #17', 640, 90, span(t, 0.5, ph(L, 'before they make')), YT), T('CHECK ONE NUMBER: THE 10-YR YIELD', 640, 640, span(t, ph(L, 'one number'), tb), GT)] }; } },
+  { id: 'D47', card: 'Watch next: the carry trade', sub: "Video 09: Japan's rubber band. General education only, not financial advice. Figures as of Nov 2026.", dur: 6.0 },
+];
