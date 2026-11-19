@@ -1,12 +1,12 @@
 {
  "channel": "finance",
  "video": "14 Every Stock Market Term",
- "state": "waiting_approval",
+ "state": "booked",
  "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ8KEaKjq4HE5sipRvPoKdvwy",
  "feedback": false,
  "queue_pos": 6,
- "booked_for": null,
- "zernio_post": null,
- "updated": "2026-11-19T11:55Z",
- "note": "full video v1 (12:02) Drive 1agkILhefdpJVHhP7rvZ9gX7ngIQXF_DV + kit https://claude.ai/artifact/8S3MXHEaknLiJ8AatufmaM sent; after OK book 9 Dec 16:00 UTC Finance Zernio"
+ "booked_for": "2026-12-09T16:00Z",
+ "zernio_post": "6aff3f75ddc52195578c715b",
+ "updated": "2026-11-19T18:35Z",
+ "note": "booked after Pushpam OK 19 Nov 18:24 UTC; HANDOVER.md in 05 Production"
 }
