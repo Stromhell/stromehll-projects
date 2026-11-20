@@ -1,0 +1,110 @@
+// PR act 6 - The Fall: reduced-to-clear shelf, Companies House accounts, the crash, the strategic review, the firework.
+// Plates: shelf, office, boardroom, shopfront.
+for (const n of ['shelf', 'office', 'boardroom', 'shopfront']) K.load(n, PL + n + '.jpg');
+const rr = TW.rr, txt = TW.txt;
+// ---- act helpers
+const HYPE = v => (c, lt) => PR.hype(c, 150, 150, .55, typeof v === 'function' ? v(lt) : v);
+const nameTag = (c, name, x, y, lt, at, o = {}) => { const a = pop(lt, at, .4); if (a <= 0) return; const px = o.px ?? 40; c.save(); c.translate(x, y); c.scale(a, a); c.font = `${px}px Anton`; const w = c.measureText(name).width + px * .9, h = px * 1.45;
+  c.fillStyle = 'rgba(0,0,0,.35)'; rr(c, -w / 2 + 6, -h - 12, w, h, 10); c.fill(); c.fillStyle = o.col || JH.GOLD; c.strokeStyle = INK; c.lineWidth = 4; rr(c, -w / 2, -h - 18, w, h, 10); c.fill(); c.stroke();
+  c.beginPath(); c.moveTo(-14, -19); c.lineTo(0, 0); c.lineTo(14, -19); c.closePath(); c.fill(); c.stroke(); c.fillRect(-12, -24, 24, 7); txt(c, name, 0, -h / 2 - 16, px, INK, 'center', 'Anton'); c.restore(); };
+const srcChip = (c, label, x, y, lt, at) => { const a = pop(lt, at, .35); if (a <= 0) return; c.save(); c.translate(x, y); c.rotate(-.03); c.scale(a, a); c.font = '28px Oswald'; const w = c.measureText(label).width + 40;
+  c.fillStyle = '#111'; rr(c, -w / 2, -22, w, 44, 8); c.fill(); c.fillStyle = JH.GOLD; c.fillRect(-w / 2, -22, 8, 44); txt(c, label, 4, 1, 28, '#f4efe2', 'center', 'Oswald'); c.restore(); };
+// empty the middle bays of the drinks aisle (plate px): dark back panels, white shelf lips, price strips
+const emptyShelf = (c, lt, keep = 0) => { c.save(); const g = c.createLinearGradient(0, 300, 0, 940); g.addColorStop(0, '#2a2e36'); g.addColorStop(1, '#1a1c22'); c.fillStyle = g; c.fillRect(706, 300, 1150, 630);
+  for (const sy of [512, 720, 928]) { c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(706, sy - 60, 1150, 60); c.fillStyle = '#e8eaee'; c.fillRect(700, sy - 4, 1162, 18); c.fillStyle = '#d8c23a'; c.fillRect(700, sy + 14, 1162, 10);
+    for (let k = 0; k < 9; k++) { c.fillStyle = '#fff'; c.fillRect(730 + k * 128, sy + 12, 46, 14); } }
+  c.fillStyle = 'rgba(0,0,0,.4)'; c.fillRect(1272, 300, 16, 640);
+  for (let k = 0; k < keep; k++) PR.bottle(c, 760 + k * 60, 928, 2.4, { col: ['red', 'lime'][k % 2] });
+  TW.glow(c, 1280, 330, 700, '230,240,255', .1 + .02 * Math.sin(lt * 31) * (Math.sin(lt * 3) > .8 ? 1 : 0)); c.restore(); };
+const tumbleweed = (c, x, y, r, lt) => { c.save(); PR.shadow(c, x, y, r * .9); c.translate(x, y - r - Math.abs(Math.sin(lt * 5)) * 18); c.rotate(lt * 4); c.strokeStyle = '#8a6a3a'; c.lineWidth = 4;
+  for (let k = 0; k < 14; k++) { c.beginPath(); c.ellipse(0, 0, r, r * .55, k * .45, 0, 7); c.stroke(); } c.strokeStyle = '#b08a4e'; c.lineWidth = 2.5; for (let k = 0; k < 8; k++) { c.beginPath(); c.ellipse(0, 0, r * .8, r * .3, k * .8 + .2, 0, 7); c.stroke(); } c.restore(); };
+const PHONE = { near: cc => TW.phone(cc, 0, -14, .34, (p, w, h) => { p.fillStyle = '#2a3e5a'; p.fillRect(0, 0, w, h); p.fillStyle = '#ffd23a'; p.fillRect(10, h * .4, w - 20, h * .2); }) };
+// filing cabinet (bottom centre), drawer 0..1 open (top drawer)
+const cabinet = (c, x, y, open, lt) => { const w = 300, h = 470; c.save(); PR.shadow(c, x, y, 190); c.fillStyle = '#7d8590'; c.strokeStyle = INK; c.lineWidth = 6; rr(c, x - w / 2, y - h, w, h, 8); c.fill(); c.stroke();
+  c.fillStyle = 'rgba(255,255,255,.12)'; c.fillRect(x - w / 2 + 10, y - h + 8, 18, h - 16);
+  for (let k = 0; k < 4; k++) { const dy = y - h + 18 + k * 112, o = k === 0 ? open * 110 : 0; c.fillStyle = '#929aa6'; rr(c, x - w / 2 + 14 - o * .2, dy - o * .1, w - 28 + o * .4, 96 + o * .2, 6); c.fill(); c.stroke();
+    c.fillStyle = '#d8dce2'; rr(c, x - 40, dy + 18 - o * .1, 80, 16, 6); c.fill(); c.stroke(); c.fillStyle = '#f6f2e6'; c.fillRect(x - 50, dy + 50, 100, 28); c.strokeRect(x - 50, dy + 50, 100, 28); }
+  c.fillStyle = '#1f4a8a'; rr(c, x - w / 2 - 10, y - h - 70, w + 20, 62, 8); c.fill(); c.stroke(); txt(c, 'COMPANIES HOUSE', x, y - h - 39, 34, '#fff', 'center', 'Anton'); c.restore(); };
+// chart easel (bottom centre at x,y): bars [{lab, v (0..1 of max), col, txt}], each bar's value from fn(lt)
+const easel = (c, x, y, lt, bars, title) => { const w = 760, h = 620, top = y - 160 - h; c.save(); c.strokeStyle = INK; c.lineWidth = 12; c.lineCap = 'round';
+  for (const dx of [-300, 300]) { c.beginPath(); c.moveTo(x + dx * .8, top + 40); c.lineTo(x + dx, y); c.stroke(); } PR.shadow(c, x, y, 360, .25);
+  c.fillStyle = '#f7f3e8'; c.lineWidth = 6; rr(c, x - w / 2, top, w, h, 10); c.fill(); c.stroke(); txt(c, title, x, top + 50, 40, INK, 'center', 'Anton');
+  const base = top + h - 70, maxH = h - 170; c.strokeStyle = '#555'; c.lineWidth = 4; c.beginPath(); c.moveTo(x - w / 2 + 50, base); c.lineTo(x + w / 2 - 50, base); c.stroke();
+  bars.forEach((b, i) => { const bx = x - w / 2 + 110 + i * (w - 220) / Math.max(1, bars.length - 1) - 70, v = b.v(lt); if (v > 0.001) { const bh = maxH * v; c.fillStyle = b.col; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(bx, base - bh, 140, bh); c.strokeRect(bx, base - bh, 140, bh); c.fillStyle = 'rgba(255,255,255,.25)'; c.fillRect(bx + 10, base - bh + 6, 16, Math.max(0, bh - 12));
+      if (b.txt) txt(c, b.txt(lt), bx + 70, base - bh - 34, 46, INK, 'center', 'Anton'); }
+    txt(c, b.lab, bx + 70, base + 36, 36, '#333', 'center', 'Oswald'); }); c.restore(); };
+const firework = (c, x, y, lt, t0, hue) => { const u = lt - t0; if (u < -1.1) return; if (u < 0) { const k = 1 + u / 1.1; c.fillStyle = `rgba(255,220,160,${.9})`; c.beginPath(); c.arc(x, y + (1 - k) * 900, 8, 0, 7); c.fill(); TW.glow(c, x, y + (1 - k) * 900, 60, '255,200,120', .6); return; }
+  if (u > 3.2) return; const a = Math.max(0, 1 - u / 3.2), r = 380 * E.out(Math.min(1, u / 1.2)); TW.glow(c, x, y, r * 1.6, hue, .45 * a);
+  for (let k = 0; k < 28; k++) { const an = k / 28 * Math.PI * 2, rr2 = r * (.8 + .2 * Math.sin(k * 3)); const px = x + Math.cos(an) * rr2, py = y + Math.sin(an) * rr2 + u * u * 30; c.strokeStyle = `rgba(${hue},${a})`; c.lineWidth = 6; c.beginPath(); c.moveTo(x + Math.cos(an) * rr2 * .75, py - Math.sin(an) * rr2 * .25); c.lineTo(px, py); c.stroke(); c.fillStyle = `rgba(255,255,240,${a})`; c.beginPath(); c.arc(px, py, 5, 0, 7); c.fill(); } };
+const smoke = (c, x, y, lt, t0) => { const u = lt - t0; if (u < 1) return; const a = Math.max(0, .35 - (u - 1) * .06); for (let k = 0; k < 7; k++) { c.fillStyle = `rgba(160,160,175,${a})`; c.beginPath(); c.arc(x - 260 + k * 90 + Math.sin(u + k) * 20, y + Math.cos(k * 2) * 60 + u * 12, 80 + k % 3 * 20, 0, 7); c.fill(); } };
+const rain = (c, lt, a = .25) => { c.save(); c.strokeStyle = `rgba(200,215,235,${a})`; c.lineWidth = 2; for (let k = 0; k < 110; k++) { const x = (k * 233 + lt * 300) % 2600, y = (k * 151 + lt * 1500) % 1440; c.beginPath(); c.moveTo(x, y); c.lineTo(x - 8, y + 34); c.stroke(); } c.restore(); };
+
+window.SHOTS = [
+  // 6.01 the same supermarket, now quiet: middle bays empty, one bottle left; a shopper snaps the REDUCED sticker; a tumbleweed rolls through
+  { plate: 'shelf', cam: { z: [1.0, 1.22], x: [1280, 1200], y: [720, 760] }, bed: [['hum_loop', .12], ['wind_loop', .05]], light: { dir: 1, key: 'rgba(230,240,255,.18)' },
+    init: S => { const tR = A.at(S, 'Remember', .6), tB = A.at(S, 'By', 2.9), tSh = A.at(S, 'shoppers', 3.7), tPh = A.at(S, 'photos', 5.1), tRd = A.at(S, 'reduced-to-clear', 6.6);
+      S.D.figs = [{ x: 600, y: 1330, s: 1.9, ...PR.SHOPPER(2), facing: 1, mood: 'neutral', walk: { x0: -200, x1: 640, t0: tR + .2, dur: tSh - tR + .6 }, hold: PHONE,
+        anim: (o, lt) => { if (lt > tSh + .9) { o.arms = () => ({ shR: 80, elR: -60, handR: 'fist' }); o.facing = 1; } if (lt > tRd + .3) o.mood = 'smug'; } }];
+      S.D.live = [(c, lt) => { emptyShelf(c, lt); PR.bottle(c, 1280, 720, 2.5, { col: 'blue', glow: .4 }); PR.reduced(c, 1430, 640, .9, tRd, lt); priceStrip(c, 1280, 734, lt, tRd);
+        if (lt > tPh && lt < tPh + .25) { c.fillStyle = `rgba(255,255,255,${.6 * (1 - (lt - tPh) / .25)})`; c.fillRect(0, 0, 2560, 1440); } }];
+      S.D.front = [(c, lt) => { const x = -300 + (lt - tB) * 330; if (lt > tB) tumbleweed(c, x, 1390, 70, lt); }];
+      S.D.over = [HYPE(lt => .25 - .05 * K.seg(lt, tRd, tRd + 1)), (c, lt) => K.card(c, 'REMEMBER THE QUEUES?', lt, { at: tR, x: 1180, y: 120, px: 50, rot: -2, until: tB + .4 }),
+        (c, lt) => K.card(c, 'BY 2024', lt, { at: tB, x: 1180, y: 120, px: 54, rot: 2, until: tRd - .1 }), (c, lt) => K.card(c, 'REDUCED TO CLEAR', lt, { at: tRd, x: 1240, y: 120, px: 62, rot: -3, bg: '#ffd83a' })];
+      S.D.sfx = [[tR, 'whoosh_soft', .2], [tR + .2, 'footsteps', .2], [tB, 'wind_loop', .15], [tPh, 'camera_shutter', .4], [tRd, 'stamp', .4], [tRd + .1, 'pop', .2]]; } },
+  // 6.02 Companies House: the cabinet drawer slides out, a clerk lifts the accounts; the 2023 bar rises to £112M
+  { plate: 'office', cam: { z: [1.05, 1.18], x: [1250, 1320], y: [800, 820] }, bed: [['office_loop', .12]], light: { dir: -1, key: 'rgba(220,235,255,.2)' },
+    init: S => { const tB = A.at(S, 'Britain', 10.7 - 8.2), tF = A.at(S, 'filed', 4.3), tC = A.at(S, 'Companies', 5.9), tY = A.at(S, '2023', 7.3), tO = A.at(S, 'one', 9.1);
+      const drawer = lt => E.out(K.seg(lt, tF - .3, tF + .3));
+      S.D.figs = [{ x: 980, y: 1340, s: 1.9, ...PR.DIRECTOR(1), facing: -1, mood: 'neutral', walk: { x0: 1400, x1: 980, t0: .1, dur: tF - .5 },
+        anim: (o, lt) => { if (lt > tF - .3) { o.arms = () => ({ shR: 60 + 40 * E.io(K.seg(lt, tF, tC)), elR: -40, handR: 'fist' }); } if (lt > tY) { o.facing = 1; o.mood = 'happy'; } } }];
+      S.D.live = [(c, lt) => { cabinet(c, 640, 1340, drawer(lt), lt); const u = E.out(K.seg(lt, tF, tC)); if (u > 0) { c.save(); c.translate(640 + 260 * u, 800 - 120 * u); c.rotate(.08 * u); c.fillStyle = '#f7f3e8'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(-80, -100, 160, 200); c.strokeRect(-80, -100, 160, 200); txt(c, 'ACCOUNTS', 0, -60, 30, INK, 'center', 'Anton'); txt(c, '2023', 0, -20, 28, RED, 'center', 'Anton'); for (let k = 0; k < 4; k++) { c.fillStyle = '#bbb'; c.fillRect(-60, 15 + k * 20, 120 - k * 15, 8); } c.restore(); } }];
+      S.D.front = [(c, lt) => easel(c, 1820, 1360, lt, [{ lab: '2023', col: '#2e8ae0', v: l => .9 * E.out(K.seg(l, tO, tO + 1.6)), txt: () => '£112M' }, { lab: '2024', col: '#c8282e', v: () => 0 }], 'PRIME UK · SALES')];
+      S.D.over = [HYPE(.2), (c, lt) => K.card(c, 'BRITAIN · COMPANIES HOUSE', lt, { at: tB, x: 760, y: 110, px: 48, rot: -2 }), (c, lt) => srcChip(c, 'SOURCE: UK COMPANY ACCOUNTS', 760, 200, lt, tC + .3),
+        (c, lt) => { if (lt > tO) PR.counter(c, 1500, 130, .8, 0, 112, tO, tO + 1.6, lt, { pre: '£', suf: 'M' }); }, (c, lt) => K.card(c, '2023', lt, { at: tY, x: 1250, y: 130, px: 50, rot: 3 })];
+      S.D.sfx = [[.2, 'footsteps', .2], [tF - .3, 'scrape', .4], [tF + .3, 'paper', .35], [tC, 'stamp', .25], [tO, 'riser', .25], [tO + 1.6, 'chime', .3]]; } },
+  // 6.03 the crash: the 2024 bar slumps to £33M, a profit bar shrinks to a sliver, the hype needle clunks to EMPTY
+  { plate: 'office', cam: { z: [1.05, 1.15], x: [1400, 1460], y: [820, 840] }, bed: [['office_loop', .1], ['tension', .08]], light: { dir: -1, key: 'rgba(220,235,255,.2)' },
+    init: S => { const t24 = A.at(S, '2024', .3), tT = A.at(S, 'thirty-three', 1.5), tS = A.at(S, 'Sales', 2.7), tSv = A.at(S, 'seventy', 3.9), tP = A.at(S, 'Profit', 5.2), tN = A.at(S, 'ninety', 6.8);
+      const v24 = lt => lt < tT ? .9 * E.out(K.seg(lt, t24, t24 + .5)) : .9 - (.9 - .27) * E.back(K.seg(lt, tT, tT + .7));
+      S.D.figs = [{ x: 1180, y: 1340, s: 1.9, ...PR.DIRECTOR(1), facing: 1, mood: 'neutral', pose: 'stand', anim: (o, lt) => { if (lt > tT + .3) { o.mood = 'shocked'; o.lean = -4; } if (lt > tP + .2) { o.pose = 'think'; o.mood = 'sad'; } } }];
+      S.D.live = [(c, lt) => cabinet(c, 640, 1340, 1, lt)];
+      S.D.front = [(c, lt) => easel(c, 1820, 1360, lt, [{ lab: '2023', col: '#2e8ae0', v: () => .9, txt: () => '£112M' }, { lab: '2024', col: '#c8282e', v: v24, txt: l => l > tT ? '£33M' : '' }], 'PRIME UK · SALES')];
+      S.D.over = [HYPE(lt => .2 * (1 - E.out(K.seg(lt, tN, tN + .5)))), (c, lt) => { if (lt > tT) PR.counter(c, 1500, 130, .8, 112, 33, tT, tT + .8, lt, { pre: '£', suf: 'M' }); },
+        (c, lt) => TW.stamp(c, 'SALES −70%', 700, 170, lt, tSv, { col: RED, px: 70, rot: -.1 }),
+        (c, lt) => { const a = pop(lt, tP, .4); if (a <= 0) return; c.save(); c.translate(700, 330); c.scale(a, a); c.fillStyle = '#f7f3e8'; c.strokeStyle = INK; c.lineWidth = 5; rr(c, -230, -70, 460, 140, 12); c.fill(); c.stroke(); txt(c, 'PROFIT', -130, -30, 34, INK, 'center', 'Anton');
+          const w = 300 * (1 - .93 * E.out(K.seg(lt, tP + .3, tN + .3))); c.fillStyle = '#3aa05a'; c.fillRect(-200, 4, w, 40); c.strokeRect(-200, 4, w, 40); if (lt > tN) txt(c, '−90%+', 150, -28, 40, RED, 'center', 'Anton'); c.restore(); }];
+      S.D.sfx = [[t24, 'whoosh_soft', .2], [tT, 'thud', .5], [tT + .1, 'coins', .15], [tSv, 'stamp', .4], [tP + .3, 'scrape', .2], [tN, 'thud', .4], [tN + .1, 'hit', .2]]; } },
+  // 6.04 the strategic review: four directors around a blank PLAN B whiteboard; the marker squeaks, nothing gets written
+  { plate: 'boardroom', cam: { z: [1.0, 1.12], x: [1280, 1280], y: [800, 840] }, bed: [['hum_loop', .1], ['night_loop', .05]], light: { dir: 1, key: 'rgba(200,210,255,.2)' },
+    init: S => { const tD = A.at(S, 'directors', .4), tH = A.at(S, 'hyper-growth', 2.4), tSr = A.at(S, 'strategic', 5.1), tCe = A.at(S, 'corporate', 7.2), tN = A.at(S, 'need', 8.9);
+      const squeak = lt => lt > tSr && lt < tN ? Math.sin(lt * 14) : 0;
+      S.D.figs = [{ x: 420, y: 1410, s: 2, ...PR.DIRECTOR(0), facing: 1, pose: 'think', mood: 'neutral' },
+        { x: 760, y: 1410, s: 2, ...PR.DIRECTOR(1), facing: 1, mood: 'neutral', anim: (o, lt) => { if (lt > tSr - .3) { o.pose = 'present'; o.arms = () => ({ shR: 95 + 10 * squeak(lt), elR: -20, handR: 'fist' }); o.hold = { near: cc => { cc.fillStyle = '#1a1a1a'; cc.fillRect(-6, -40, 12, 50); cc.fillStyle = '#2a6ad8'; cc.fillRect(-6, -48, 12, 10); } }; } if (lt > tN) { o.pose = 'shrug'; o.arms = null; o.hold = null; } } },
+        { x: 1800, y: 1410, s: 2, ...PR.DIRECTOR(2), facing: -1, pose: 'shrug', mood: 'neutral', anim: (o, lt) => { o.pose = lt > tH && lt < tSr ? 'shrug' : 'stand'; if (lt > tCe) o.mood = 'sad'; } },
+        { x: 2140, y: 1410, s: 2, ...PR.DIRECTOR(3), facing: -1, pose: 'think', mood: 'neutral', anim: (o, lt) => { if (lt > tN) o.mood = 'shocked'; } }];
+      S.D.live = [(c, lt) => { const x = 1280, y = 1410, w = 700, h = 440, top = y - 300 - h; c.save(); c.strokeStyle = '#9aa0aa'; c.lineWidth = 12; for (const dx of [-260, 260]) { c.beginPath(); c.moveTo(x + dx, top + h); c.lineTo(x + dx * 1.15, y); c.stroke(); }
+        PR.shadow(c, x, y, 330, .25); c.fillStyle = '#9aa0aa'; c.fillRect(x - w / 2 - 14, top - 14, w + 28, h + 28); c.fillStyle = '#fbfbf8'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(x - w / 2, top, w, h); c.strokeRect(x - w / 2 - 14, top - 14, w + 28, h + 28);
+        txt(c, 'PLAN B', x, top + 60, 64, '#2a6ad8', 'center', 'Caveat'); c.strokeStyle = '#2a6ad8'; c.lineWidth = 4; c.beginPath(); c.moveTo(x - 110, top + 96); c.lineTo(x + 110, top + 96); c.stroke();
+        if (lt > tSr) { c.fillStyle = '#2a6ad8'; c.beginPath(); c.arc(x - 260, top + 170, 5, 0, 7); c.fill(); txt(c, '1.', x - 290, top + 172, 44, '#2a6ad8', 'center', 'Caveat'); }
+        TW.glow(c, x, top + h / 2, 520, '255,255,255', .12); c.fillStyle = '#c8cad0'; c.fillRect(x - w / 2, top + h + 14, w, 18); c.restore(); }];
+      S.D.over = [HYPE(0), (c, lt) => K.card(c, 'THE DIRECTORS', lt, { at: tD, x: 400, y: 110, px: 44, rot: -2, until: tSr }), (c, lt) => JH.quote(c, 'HYPER-GROWTH|IS OVER', 'directors', 1500, 200, lt, tH, { px: 46, until: tSr }),
+        (c, lt) => K.card(c, '"STRATEGIC REVIEW"', lt, { at: tSr, x: 960, y: 110, px: 66, rot: -2 }), (c, lt) => K.card(c, '= WE NEED A NEW PLAN', lt, { at: tN - .3, x: 1000, y: 230, px: 48, rot: 2, bg: '#ffd83a' })];
+      S.D.sfx = [[tD, 'pop', .2], [tH, 'paper', .2], [tSr, 'scrape', .35], [tSr + .6, 'scrape', .3], [tSr + 1.3, 'scrape', .3], [tCe, 'tick', .2], [tN, 'pop', .3]]; } },
+  // 6.05 the firework: a burst over the supermarket, everyone looks up; it fizzles; one shopper strolls past on a normal Tuesday
+  { plate: 'shopfront', cam: { z: [1.0, 1.15], x: [1280, 1280], y: [700, 820] }, bed: [['rain_loop', .12], ['city_loop', .06]], light: { dir: 1, key: 'rgba(255,200,170,.2)' },
+    init: S => { const tH = A.at(S, 'happened', .7), tF = A.at(S, 'firework.', 2.7), tSp = A.at(S, 'Spectacular', 3.2), tL = A.at(S, 'looks', 4.8), tO = A.at(S, 'over', 6.4), tP = A.at(S, 'product', 8.2), tNm = A.at(S, 'normal', 10.6);
+      const watcher = (x, k, f, out) => ({ x, y: 1180, s: 1.45, ...PR.SHOPPER(k), facing: f, mood: 'neutral', anim: (o, lt) => { if (lt > tSp) { o.mood = 'happy'; o.lean = -6; if (k % 2) o.pose = 'cheer'; } if (lt > tO + .2) { o.mood = 'neutral'; o.lean = 0; o.pose = 'stand'; } },
+        walk: { x0: x, x1: out, t0: tO + .5 + k * .2, dur: 4.5 } });
+      S.D.figs = [watcher(760, 0, 1, -300), watcher(1100, 1, 1, -300), watcher(1820, 3, -1, 2900),
+        { x: 2900, y: 1220, s: 1.5, ...PR.SHOPPER(4), facing: -1, mood: 'neutral', walk: { x0: 2900, x1: 1280, t0: tP, dur: Math.max(3, tNm - tP + 1.4) } }];
+      S.D.live = [(c, lt) => { const sky = K.seg(lt, tF - 1, tF) * (1 - K.seg(lt, tO, tO + 1.5)); if (sky > 0) { c.fillStyle = `rgba(255,170,90,${.18 * sky})`; c.fillRect(0, 0, 2560, 1440); }
+        firework(c, 1280, 200, lt, tF, '255,90,140'); firework(c, 640, 180, lt, tSp + .5, '120,200,255'); firework(c, 1960, 170, lt, tSp + 1, '255,220,90'); smoke(c, 1280, 200, lt, tL + 1.2); }];
+      S.D.front = [(c, lt) => rain(c, lt, .22)];
+      S.D.over = [HYPE(lt => .45 * K.seg(lt, tF, tF + .4) * (1 - K.seg(lt, tO, tO + .8))), (c, lt) => K.card(c, 'SO WHAT HAPPENED?', lt, { at: tH - .3, x: 960, y: 110, px: 50, until: tF }),
+        (c, lt) => K.card(c, 'HYPE = A FIREWORK', lt, { at: tF, x: 960, y: 110, px: 54, rot: 2, until: tO + .6 }), (c, lt) => K.card(c, 'HYPE IS NOT REPEAT BUYERS', lt, { at: tP, x: 760, y: 120, px: 56, rot: -2 }),
+        (c, lt) => { const a = pop(lt, tNm, .45); if (a <= 0) return; c.save(); c.translate(1560, 300); c.scale(a, a); JH.calendar(c, 0, 0, 1, '12', 'TUESDAY', { rot: .05 }); c.restore(); }];
+      S.D.sfx = [[tF - 1, 'whoosh', .35], [tF, 'pop', .6], [tF + .1, 'crowd_cheer', .3], [tSp + .5, 'pop', .45], [tSp + 1, 'pop', .45], [tO, 'wind_loop', .15], [tP, 'footsteps', .25], [tNm, 'chime', .3]]; } },
+];
+// small price strip under the last bottle (world px); the old £1.99 is struck through once the sticker lands
+function priceStrip(c, x, y, lt, t0) { c.save(); c.fillStyle = '#fff'; c.strokeStyle = INK; c.lineWidth = 2; c.fillRect(x - 46, y, 92, 30); c.strokeRect(x - 46, y, 92, 30); txt(c, '£1.99', x, y + 16, 22, INK, 'center', 'Anton');
+  if (lt > t0) { c.strokeStyle = RED; c.lineWidth = 4; c.beginPath(); c.moveTo(x - 30, y + 22); c.lineTo(x + 30, y + 8); c.stroke(); } c.restore(); }

@@ -1,0 +1,659 @@
+{
+ "meta": {
+  "slug": "prime",
+  "prefix": "PR",
+  "title": "What Really Happened to Prime? Logan Paul, KSI and the $1 Billion Drink",
+  "working_title": "Prime Was Going to Buy Coca-Cola. Now Logan Paul Blames Everyone Else",
+  "device": "A 'hype meter' gauge in the corner that swings from MAX to EMPTY as the story moves, plus a 'CLAIM / COURT SAID' tag that stamps on every lawsuit.",
+  "style": "Business rise-and-fall comedy in the house 2D style, Gumball/t-shirt character style (big white eyes, nose, ears), painterly detailed plates: a Sydney radio studio, a British supermarket aisle with a queue, a school playground, a football stadium, a podcast studio, a Senate podium, a courthouse, a bottling plant, a clearance shelf, a boardroom. Real people stylised, no likeness, no real logos on bottles (generic bright bottles called PRIME only as text). Every lawsuit tagged CLAIM unless a court ruled. SFX under VO (crowd, till beeps, can cracks, gavel, stamps, phone buzz), music at combine.",
+  "char_style": "Gumball",
+  "source": "YouTube reference (UnderLens, 'Remember Prime? Now Logan Paul Blames Everyone Else...', 20 Nov 2026, 32 min) used as research only; key figures checked against City AM / Marketing Week (Prime UK accounts), Bloomberg Law (Refresco, Mas+ settlement), IBTimes / Forbes Mexico (PBD podcast, Sept 2026). Original script in our own words, en-GB."
+ },
+ "stats": {
+  "shots": 51,
+  "words": 1232,
+  "runtime": "8:23",
+  "acts": 9
+ },
+ "acts": [
+  {
+   "name": "Cold open",
+   "folder": "act0-coldopen",
+   "shots": [
+    {
+     "id": "0.01",
+     "type": "WIDE",
+     "sec": 8.3,
+     "vo": "February 2023. Sydney. Two of the biggest YouTubers on the planet are on breakfast radio, and they are feeling confident.",
+     "visual": "Sunrise Sydney harbour, push in to a radio studio window; ON AIR light glows red.",
+     "onscreen": "SYDNEY \u00b7 FEB 2023",
+     "anim": "ON AIR light flicks on; mics glint.",
+     "img": ""
+    },
+    {
+     "id": "0.02",
+     "type": "MED",
+     "sec": 9.1,
+     "vo": "Logan Paul and KSI have a drink called Prime. Someone asks how big it can get. Their answer? They'll probably buy Coca-Cola.",
+     "visual": "Logan grins, KSI nods; a quote card: 'WE'LL PROBABLY BUY COKE'; a giant red cola can looms behind them.",
+     "onscreen": "\"WE'LL PROBABLY BUY COKE\"",
+     "anim": "Quote card slams in; hype meter swings to MAX.",
+     "img": ""
+    },
+    {
+     "id": "0.03",
+     "type": "MED",
+     "sec": 8.3,
+     "vo": "Three years later, Coca-Cola is fine. And Logan Paul is on a podcast, putting a price on his own regret.",
+     "visual": "Smash cut: a dim podcast studio; Logan alone at a mic; a price tag drops onto the desk.",
+     "onscreen": "2026",
+     "anim": "Hype meter drains to EMPTY with a sad whistle.",
+     "img": ""
+    },
+    {
+     "id": "0.04",
+     "type": "MED",
+     "sec": 9.8,
+     "vo": "A minimum of one hundred million dollars, he says. A massive, massive mistake. And it wasn't his fault, he says. It never quite is.",
+     "visual": "Counter flips to $100,000,000; a row of pointing arrows fans out from Logan towards silhouettes.",
+     "onscreen": "\"MINIMUM $100 MILLION\"",
+     "anim": "Counter rolls; arrows point everywhere except him.",
+     "img": ""
+    },
+    {
+     "id": "0.05",
+     "type": "TITLE",
+     "sec": 10.6,
+     "vo": "This is the story of the drink that queued Britain round the block, fell to the bargain bin, and left a trail of lawsuits behind it.",
+     "visual": "Title over a glowing bottle that cracks and tips into a clearance bin.",
+     "onscreen": "WHAT REALLY HAPPENED TO PRIME?",
+     "anim": "Bottle glows, cracks, drops into bin.",
+     "img": ""
+    },
+    {
+     "id": "0.06",
+     "type": "CARD",
+     "sec": 7.9,
+     "vo": "Quick note: lawsuits in this video are claims unless a court has ruled. We'll tell you which is which.",
+     "visual": "Two tags stamp in: CLAIM (amber) and COURT SAID (green).",
+     "onscreen": "CLAIM \u00b7 COURT SAID",
+     "anim": "Tags stamp in one by one.",
+     "img": ""
+    }
+   ],
+   "sec": 54.0,
+   "words": 131
+  },
+  {
+   "name": "Act 1: The Rivals Who Made a Drink",
+   "folder": "act1-rise",
+   "shots": [
+    {
+     "id": "1.01",
+     "type": "MED",
+     "sec": 10.9,
+     "vo": "To understand Prime, you have to remember that Logan Paul and KSI were supposed to hate each other. In 2018 they fought twice, in front of millions.",
+     "visual": "A boxing ring under lights; two stylised fighters square up; crowd flashes.",
+     "onscreen": "2018 \u00b7 THE RIVALRY",
+     "anim": "Bell rings; flashes pop.",
+     "img": ""
+    },
+    {
+     "id": "1.02",
+     "type": "MED",
+     "sec": 9.1,
+     "vo": "So in January 2022, when the two rivals turned up together with a sports drink, the internet's reaction was simple. Wait, what?",
+     "visual": "The fighters drop the gloves, shake hands; a bottle rises between them; a giant WAIT, WHAT? bubble.",
+     "onscreen": "JANUARY 2022",
+     "anim": "Handshake; bottle rises with a shine.",
+     "img": ""
+    },
+    {
+     "id": "1.03",
+     "type": "MED",
+     "sec": 10.9,
+     "vo": "Prime Hydration was made with Congo Brands, a company in Kentucky that already sold energy drinks. Logan and KSI were the faces. Their fans were the marketing.",
+     "visual": "Org chart: CONGO BRANDS box at top, two face badges, and below them a sea of phone screens.",
+     "onscreen": "CONGO BRANDS \u00b7 KENTUCKY",
+     "anim": "Lines draw; phones light up in waves.",
+     "img": ""
+    },
+    {
+     "id": "1.04",
+     "type": "WIDE",
+     "sec": 8.3,
+     "vo": "And in Britain, it went nuclear. Early 2023, shoppers queued outside Aldi before opening time. Bottles sold out in minutes.",
+     "visual": "A rainy British supermarket car park at dawn; a long queue in coats and school uniforms; doors slide open; a rush.",
+     "onscreen": "ALDI \u00b7 2023",
+     "anim": "Doors open; crowd shuffles forward.",
+     "img": ""
+    },
+    {
+     "id": "1.05",
+     "type": "MED",
+     "sec": 9.4,
+     "vo": "Kids traded it in the playground like Pok\u00e9mon cards. Some sellers asked silly money for a single bottle. Some schools banned it outright.",
+     "visual": "A school playground; kids swap bottles; a resale price tag spins up; a headteacher's BANNED sign on the gate.",
+     "onscreen": "PLAYGROUND CURRENCY",
+     "anim": "Price tag spins; sign swings.",
+     "img": ""
+    },
+    {
+     "id": "1.06",
+     "type": "MED",
+     "sec": 11.3,
+     "vo": "The numbers were real too. Bloomberg reported that Prime was heading for more than a billion dollars in yearly sales. At Walmart, it said it was outselling Gatorade.",
+     "visual": "A bar chart rockets past $1 BILLION; a 'REPORTED BY BLOOMBERG' tag stamps on.",
+     "onscreen": "$1 BILLION+ \u00b7 REPORTED",
+     "anim": "Bars shoot up; confetti.",
+     "img": ""
+    },
+    {
+     "id": "1.07",
+     "type": "MED",
+     "sec": 8.3,
+     "vo": "Asked what it would be worth in a year, KSI said over a billion. Then he said: way beyond that.",
+     "visual": "KSI on a sofa, arms wide; a thought bubble fills with stacked zeroes.",
+     "onscreen": "\"WAY BEYOND THAT\"",
+     "anim": "Zeroes stack higher and higher.",
+     "img": ""
+    }
+   ],
+   "sec": 68.2,
+   "words": 167
+  },
+  {
+   "name": "Act 2: The Zero Marketing Budget",
+   "folder": "act2-sponsors",
+   "shots": [
+    {
+     "id": "2.01",
+     "type": "MED",
+     "sec": 7.9,
+     "vo": "On that Sydney radio show, they bragged about something else. Prime, they said, had a marketing budget of zero.",
+     "visual": "Back in the studio; a big 0 glows on a whiteboard; the presenters gasp.",
+     "onscreen": "\"$0 MARKETING\"",
+     "anim": "Zero glows and wobbles.",
+     "img": ""
+    },
+    {
+     "id": "2.02",
+     "type": "MED",
+     "sec": 10.9,
+     "vo": "Which is a funny thing to say when your bottle is the official drink of the UFC. And Arsenal. And Barcelona. And, from 2023, the LA Dodgers.",
+     "visual": "A wall of four stadium banners flips over one by one, each with a generic bright bottle; cash fans out under each.",
+     "onscreen": "UFC \u00b7 ARSENAL \u00b7 BAR\u00c7A \u00b7 DODGERS",
+     "anim": "Banners flip; coins rain under each.",
+     "img": ""
+    },
+    {
+     "id": "2.03",
+     "type": "MED",
+     "sec": 7.5,
+     "vo": "Logan said he could cry when the UFC deal was signed. Zero pounds has never looked so expensive.",
+     "visual": "Logan wipes a happy tear at a contract table; a coin counter spins under a ZERO label.",
+     "onscreen": "",
+     "anim": "Pen signs; counter spins.",
+     "img": ""
+    },
+    {
+     "id": "2.04",
+     "type": "MED",
+     "sec": 9.8,
+     "vo": "And here's the trick. Fans didn't just drink Prime. They filmed themselves drinking it. Every unboxing, every taste test, every reaction was free advertising.",
+     "visual": "A grid of phone screens pops up around a bottle, each showing a different kid reacting; a FREE ADS tag.",
+     "onscreen": "FREE ADVERTISING",
+     "anim": "Screens pop in like bubbles.",
+     "img": ""
+    },
+    {
+     "id": "2.05",
+     "type": "MED",
+     "sec": 7.5,
+     "vo": "The problem with a drink that sells on hype is simple. Sooner or later, somebody actually drinks it.",
+     "visual": "Close-up: a hand twists a cap; a hiss; the hype meter needle trembles.",
+     "onscreen": "",
+     "anim": "Cap twist; hiss; needle wobbles.",
+     "img": ""
+    }
+   ],
+   "sec": 43.6,
+   "words": 106
+  },
+  {
+   "name": "Act 3: The Taste Test",
+   "folder": "act3-taste",
+   "shots": [
+    {
+     "id": "3.01",
+     "type": "MED",
+     "sec": 9.1,
+     "vo": "And the reviews were brutal. Streamers who'd been sent free boxes pulled faces live on camera. One compared the smell to perfume.",
+     "visual": "A streamer's room with ring light; a character sips, eyes water, steam lines rise; a chat feed scrolls with crying faces.",
+     "onscreen": "THE REVIEWS",
+     "anim": "Sip, grimace, chat scrolls.",
+     "img": ""
+    },
+    {
+     "id": "3.02",
+     "type": "MED",
+     "sec": 9.8,
+     "vo": "Nutrition creators went further. Look at the label, they said. It's mostly water, coconut water, a bit of potassium and a sweetener called sucralose.",
+     "visual": "A giant label unrolls like a scroll; ingredients highlight one by one.",
+     "onscreen": "WATER \u00b7 COCONUT WATER \u00b7 SWEETENER",
+     "anim": "Highlighter sweeps each line.",
+     "img": ""
+    },
+    {
+     "id": "3.03",
+     "type": "MED",
+     "sec": 12.1,
+     "vo": "Prime's pitch was that it was a better-for-you drink than old-school sports drinks full of sugar. Critics said it had far too little sodium to really rehydrate you after sport.",
+     "visual": "Split screen: a sugar cube tower beside an old sports drink, and a tiny salt shaker beside Prime; a scale tips.",
+     "onscreen": "CLAIM vs CRITICS",
+     "anim": "Scale wobbles, then tips.",
+     "img": ""
+    },
+    {
+     "id": "3.04",
+     "type": "MED",
+     "sec": 7.9,
+     "vo": "Logan's answer, on his own podcast, was that Prime had won. People bought it. They liked it. Case closed.",
+     "visual": "Logan in his podcast studio raises both arms; a tiny trophy pops up on the desk, which he gives himself.",
+     "onscreen": "\"WE WERE RIGHT\"",
+     "anim": "He hands himself the trophy.",
+     "img": ""
+    },
+    {
+     "id": "3.05",
+     "type": "MED",
+     "sec": 9.1,
+     "vo": "Declaring victory on your own podcast is the easiest win in sport. But the next drink would bring a much bigger problem.",
+     "visual": "Camera pulls back; the trophy is the only thing in a dark room; a can rolls in from the side.",
+     "onscreen": "",
+     "anim": "Can rolls in; spotlight snaps on it.",
+     "img": ""
+    }
+   ],
+   "sec": 48.0,
+   "words": 117
+  },
+  {
+   "name": "Act 4: Prime Energy",
+   "folder": "act4-energy",
+   "shots": [
+    {
+     "id": "4.01",
+     "type": "MED",
+     "sec": 7.9,
+     "vo": "In 2023, Prime Energy arrived. Same name. Same bright colours. But inside each can, two hundred milligrams of caffeine.",
+     "visual": "Two containers side by side: a bottle and a can in the same colours; a caffeine meter on the can shoots to 200 mg.",
+     "onscreen": "200 MG CAFFEINE",
+     "anim": "Meter fills with a buzz.",
+     "img": ""
+    },
+    {
+     "id": "4.02",
+     "type": "MED",
+     "sec": 12.4,
+     "vo": "That's roughly two strong cups of coffee. The can said not for under-18s. But the bottle next to it on the shelf was the one kids queued round the block for.",
+     "visual": "Two coffee cups appear beside the can; a small '18+' label; then a kid reaches past the bottle towards the can.",
+     "onscreen": "\u2248 2 STRONG COFFEES",
+     "anim": "Cups steam; kid reaches; red flash.",
+     "img": ""
+    },
+    {
+     "id": "4.03",
+     "type": "MED",
+     "sec": 9.8,
+     "vo": "In July 2023, US Senator Chuck Schumer stood at a podium and asked the Food and Drug Administration to investigate Prime's marketing to children.",
+     "visual": "A Washington podium with flags; a senator figure holds up a can; a letter to the FDA slides across.",
+     "onscreen": "SENATOR \u2192 FDA",
+     "anim": "Cameras flash; letter slides.",
+     "img": ""
+    },
+    {
+     "id": "4.04",
+     "type": "MED",
+     "sec": 8.3,
+     "vo": "That same month, Canada recalled cans of Prime Energy found in its shops, because they broke its legal caffeine limit.",
+     "visual": "A map of Canada; a maple leaf stamp lands RECALLED on a can.",
+     "onscreen": "CANADA \u00b7 RECALL",
+     "anim": "Stamp thumps.",
+     "img": ""
+    },
+    {
+     "id": "4.05",
+     "type": "MED",
+     "sec": 14.7,
+     "vo": "Logan's response at the time was that the can was clearly labelled eighteen plus, and the caffeine was industry standard. Years later, he was still annoyed that a senator had spoken about it on a Sunday morning.",
+     "visual": "Logan in front of a press backdrop points at the 18+ label; then a calendar flips to SUNDAY with a grumpy cloud over it.",
+     "onscreen": "\"INDUSTRY STANDARD\"",
+     "anim": "Label zooms; calendar flips.",
+     "img": ""
+    },
+    {
+     "id": "4.06",
+     "type": "MED",
+     "sec": 12.1,
+     "vo": "But the senator didn't invent the caffeine. It was printed on the can. Putting it in a can that looked just like the kids' favourite drink? That was a choice.",
+     "visual": "Zoom into the can's small print; it grows huge: 200MG.",
+     "onscreen": "",
+     "anim": "Small print scales up.",
+     "img": ""
+    }
+   ],
+   "sec": 65.2,
+   "words": 161
+  },
+  {
+   "name": "Act 5: Sue Everyone",
+   "folder": "act5-lawsuits",
+   "shots": [
+    {
+     "id": "5.01",
+     "type": "MED",
+     "sec": 7.9,
+     "vo": "Then came the lawsuits. Lots of them. Some Prime started, some it didn't. Let's go through the big ones.",
+     "visual": "A courthouse exterior; a stack of legal folders thumps onto the steps, one by one.",
+     "onscreen": "THE LAWSUITS",
+     "anim": "Folders thud; pigeons scatter.",
+     "img": ""
+    },
+    {
+     "id": "5.02",
+     "type": "MED",
+     "sec": 11.7,
+     "vo": "In 2024, Lionel Messi launched his own drink, called M\u00e1s Plus. Prime said the bottles looked too much like theirs. Messi's side went to court first, and Prime counter-sued.",
+     "visual": "Two bottles on a pedestal under a magnifying glass; a football bounces in; CLAIM tag stamps.",
+     "onscreen": "M\u00c1S+ vs PRIME \u00b7 CLAIM",
+     "anim": "Magnifier sweeps; football bounces.",
+     "img": ""
+    },
+    {
+     "id": "5.03",
+     "type": "MED",
+     "sec": 11.7,
+     "vo": "Logan joked he'd drop it if Messi fought him in the ring. Messi didn't. In January 2026, both sides agreed to drop their claims, and the case was dismissed.",
+     "visual": "Logan in boxing gloves alone in a ring, looking around; then a gavel and a CASE DISMISSED card.",
+     "onscreen": "DISMISSED \u00b7 JAN 2026",
+     "anim": "He punches air; gavel taps.",
+     "img": ""
+    },
+    {
+     "id": "5.04",
+     "type": "MED",
+     "sec": 11.3,
+     "vo": "Boxer Ryan Garcia posted that Prime was full of dangerous chemicals. In May 2024, Prime sued him for defamation. By the end of the month, Garcia had apologised.",
+     "visual": "A phone with angry posts; a big lawsuit folder slides at it; an APOLOGY bubble pops up.",
+     "onscreen": "DEFAMATION SUIT \u00b7 MAY 2024",
+     "anim": "Posts scroll; folder slides; bubble.",
+     "img": ""
+    },
+    {
+     "id": "5.05",
+     "type": "MED",
+     "sec": 10.9,
+     "vo": "A US class action claimed Prime contained so-called forever chemicals. Prime said that wasn't true, and a judge threw out most of the claims in September 2024.",
+     "visual": "A lab bench with a test tube and a bottle; COURT SAID tag stamps green.",
+     "onscreen": "FOREVER CHEMICALS \u00b7 COURT SAID",
+     "anim": "Bubbles; green stamp.",
+     "img": ""
+    },
+    {
+     "id": "5.06",
+     "type": "MED",
+     "sec": 8.3,
+     "vo": "The US Olympic committee said special Kevin Durant bottles used Olympic marks without paying for them. That one was settled.",
+     "visual": "A basketball bottle with five rings drawn on it; a referee whistle; SETTLED card.",
+     "onscreen": "OLYMPIC MARKS \u00b7 SETTLED",
+     "anim": "Whistle; rings fade off.",
+     "img": ""
+    },
+    {
+     "id": "5.07",
+     "type": "MED",
+     "sec": 16.6,
+     "vo": "And the biggest one came from its own supplier. Refresco, a bottling giant, says it built a whole production line just for Prime, and Prime walked away before ordering a single bottle. It's suing for nearly sixty-eight million dollars. Prime disputes it.",
+     "visual": "A gleaming empty bottling line in a factory; conveyor runs with nothing on it; counter $68M; CLAIM tag.",
+     "onscreen": "\u2248 $68 MILLION \u00b7 CLAIM",
+     "anim": "Empty conveyor clanks; counter rolls.",
+     "img": ""
+    },
+    {
+     "id": "5.08",
+     "type": "MED",
+     "sec": 7.9,
+     "vo": "Think about that. A brand that said it was booming, and a bottling line built for it, standing silent.",
+     "visual": "Slow push down the empty, silent line; a single light buzzes and flickers.",
+     "onscreen": "",
+     "anim": "Light flickers; dust floats.",
+     "img": ""
+    }
+   ],
+   "sec": 86.3,
+   "words": 213
+  },
+  {
+   "name": "Act 6: The Fall",
+   "folder": "act6-fall",
+   "shots": [
+    {
+     "id": "6.01",
+     "type": "MED",
+     "sec": 6.8,
+     "vo": "Remember those queues outside Aldi? By 2024, shoppers were posting photos of Prime on reduced-to-clear shelves.",
+     "visual": "Same supermarket, now empty; a lone bottle on a shelf with a big yellow REDUCED sticker.",
+     "onscreen": "REDUCED TO CLEAR",
+     "anim": "Sticker slaps on; tumbleweed rolls.",
+     "img": ""
+    },
+    {
+     "id": "6.02",
+     "type": "MED",
+     "sec": 10.9,
+     "vo": "The clearest numbers come from Britain. Prime's UK company filed its accounts at Companies House. In 2023 it took in about one hundred and twelve million pounds.",
+     "visual": "A filing cabinet labelled COMPANIES HOUSE opens; a document slides out; \u00a3112M bar.",
+     "onscreen": "2023 \u00b7 \u00a3112M",
+     "anim": "Drawer slides; bar rises.",
+     "img": ""
+    },
+    {
+     "id": "6.03",
+     "type": "MED",
+     "sec": 6.8,
+     "vo": "In 2024, about thirty-three million. Sales down around seventy per cent. Profit down more than ninety.",
+     "visual": "The bar crashes down to \u00a333M; a second profit bar shrinks to a sliver; the hype meter hits EMPTY.",
+     "onscreen": "2024 \u00b7 \u00a333M \u00b7 PROFIT \u221290%",
+     "anim": "Bar drops with a thud; meter clunks to zero.",
+     "img": ""
+    },
+    {
+     "id": "6.04",
+     "type": "MED",
+     "sec": 9.8,
+     "vo": "The directors said the days of hyper-growth were over, and announced a strategic review. Which is corporate English for: we need a new plan.",
+     "visual": "A boardroom; four directors stare at a blank whiteboard titled PLAN B.",
+     "onscreen": "\"STRATEGIC REVIEW\"",
+     "anim": "Marker squeaks; nothing gets written.",
+     "img": ""
+    },
+    {
+     "id": "6.05",
+     "type": "MED",
+     "sec": 11.3,
+     "vo": "So what happened? Hype is like a firework. Spectacular, loud, everyone looks up. Then it's over, and you need a product people buy again on a normal Tuesday.",
+     "visual": "A firework bursts over the supermarket; then a calm Tuesday calendar page; a shopper walks past the shelf.",
+     "onscreen": "HYPE \u2260 REPEAT BUYERS",
+     "anim": "Firework bursts; shopper walks by.",
+     "img": ""
+    }
+   ],
+   "sec": 45.6,
+   "words": 111
+  },
+  {
+   "name": "Act 7: Everyone Else's Fault",
+   "folder": "act7-blame",
+   "shots": [
+    {
+     "id": "7.01",
+     "type": "MED",
+     "sec": 13.6,
+     "vo": "In September 2026, Logan sat down on the PBD podcast. The host said he kept seeing videos saying Prime was dead. Logan said that was completely untrue, and that the sales would shock you.",
+     "visual": "Podcast studio with two mics; the host points at a phone showing PRIME IS DEAD; Logan waves it away.",
+     "onscreen": "\"COMPLETELY UNTRUE\"",
+     "anim": "Phone headline flashes; Logan waves.",
+     "img": ""
+    },
+    {
+     "id": "7.02",
+     "type": "MED",
+     "sec": 12.1,
+     "vo": "He didn't say what those sales were. But a few minutes later, he said something else. That not selling at the top cost him at least a hundred million dollars.",
+     "visual": "A blank sales board with a question mark; then the $100M counter from the cold open returns.",
+     "onscreen": "\"MINIMUM $100 MILLION\"",
+     "anim": "Question mark wobbles; counter rolls.",
+     "img": ""
+    },
+    {
+     "id": "7.03",
+     "type": "MED",
+     "sec": 13.2,
+     "vo": "He said there were offers. That private investors would have put in half a billion dollars. But their partners didn't want to sell, he said, and that was a decision he never supported.",
+     "visual": "A deal table with a briefcase of cash; a door labelled PARTNERS stays shut; the briefcase walks away.",
+     "onscreen": "\"OUR PARTNERS DIDN'T WANT IT\"",
+     "anim": "Briefcase shuffles off-screen.",
+     "img": ""
+    },
+    {
+     "id": "7.04",
+     "type": "MED",
+     "sec": 12.8,
+     "vo": "So let's count the villains. Messi's drink. Ryan Garcia. A senator on a Sunday. The big soda companies who, he said, didn't want Prime at the table. And now, his own partners.",
+     "visual": "A police-style line-up wall with five silhouettes and name plates; Logan points down the line.",
+     "onscreen": "THE LINE-UP",
+     "anim": "Name plates flip one by one.",
+     "img": ""
+    },
+    {
+     "id": "7.05",
+     "type": "MED",
+     "sec": 4.5,
+     "vo": "One name is missing from that line-up. The drink itself.",
+     "visual": "A spotlight swings to the empty sixth spot; a single bottle slides into it.",
+     "onscreen": "",
+     "anim": "Spotlight snaps on; bottle slides in.",
+     "img": ""
+    }
+   ],
+   "sec": 56.2,
+   "words": 139
+  },
+  {
+   "name": "Ending",
+   "folder": "act8-ending",
+   "shots": [
+    {
+     "id": "8.01",
+     "type": "MED",
+     "sec": 10.6,
+     "vo": "To be fair, Prime is still on sale, and Logan says he wants to get it back to over a billion dollars. Big words. No date.",
+     "visual": "A bottle on a shelf slowly polishes itself; a calendar with every date blank.",
+     "onscreen": "\"BACK TO $1.2 BILLION\"",
+     "anim": "Bottle shines; calendar pages flutter blank.",
+     "img": ""
+    },
+    {
+     "id": "8.02",
+     "type": "MED",
+     "sec": 9.1,
+     "vo": "In Sydney, the plan was to buy Coca-Cola. Three years later, the plan is to win back the shoppers they already had.",
+     "visual": "Callback: the Sydney studio, now empty; the giant cola can from the cold open rolls past, unbothered.",
+     "onscreen": "SYDNEY \u2192 2026",
+     "anim": "Can rolls past slowly.",
+     "img": ""
+    },
+    {
+     "id": "8.03",
+     "type": "MED",
+     "sec": 10.9,
+     "vo": "So, what do you reckon? Was Prime a good drink that got unlucky? Or two huge names who believed their own hype? Tell us in the comments.",
+     "visual": "Comment bubbles stream up from the bottom with two buttons: UNLUCKY / HYPE.",
+     "onscreen": "UNLUCKY or HYPE?",
+     "anim": "Bubbles stream; buttons pulse.",
+     "img": ""
+    },
+    {
+     "id": "8.04",
+     "type": "CARD",
+     "sec": 5.3,
+     "vo": "And subscribe to Stormi Explain Everything for more stories like this one.",
+     "visual": "End card.",
+     "onscreen": "STORMI EXPLAIN EVERYTHING",
+     "anim": "End card slides up.",
+     "img": ""
+    }
+   ],
+   "sec": 35.9,
+   "words": 87
+  }
+ ],
+ "hooks": [
+  [
+   "In 2023 they said they'd probably buy Coca-Cola. In 2026, Logan Paul is putting a price on his regret: a hundred million dollars.",
+   9
+  ],
+  [
+   "Britain queued round the block for this drink. Two years later it was on the reduced-to-clear shelf.",
+   8
+  ],
+  [
+   "Prime's UK sales fell about 70% in a year. Logan Paul says it's everyone else's fault.",
+   8
+  ]
+ ],
+ "launch": {
+  "titles": [
+   "Remember Prime? Now Logan Paul Blames Everyone Else",
+   "What Really Happened to Prime? Logan Paul, KSI and the $1 Billion Drink",
+   "Prime Was Going to Buy Coca-Cola. Then This Happened",
+   "How Prime Went From Aldi Queues to the Bargain Bin",
+   "Logan Paul's $100 Million Mistake: The Fall of Prime"
+  ],
+  "thumb": "Stylised Logan and KSI holding a glowing bottle on the left; on the right the same bottle in a clearance bin with a yellow REDUCED sticker; text 'PRIME IS FINISHED?'; names LOGAN PAUL / KSI highlighted.",
+  "reels": [
+   "We'll probably buy Coke",
+   "$100 million mistake",
+   "Rivals turned partners",
+   "Britain queued round the block",
+   "Playground currency",
+   "The $0 marketing budget",
+   "Free ads from fans",
+   "The label: mostly water",
+   "Prime Energy: 2 coffees in a can",
+   "The senator and the FDA",
+   "Messi's lookalike bottle",
+   "Sued a boxer for defamation",
+   "The silent bottling line",
+   "UK sales down 70%",
+   "Count the villains"
+  ]
+ },
+ "fixes": [
+  "Every lawsuit tagged CLAIM unless a court ruled; Refresco figure is ~$67.7-68M (Bloomberg Law), not $70M; Prime disputes it.",
+  "Supplier 'Agrana $13M' claim from the source could not be verified: cut.",
+  "Congo Brands Australia administration (source, July 2026) not verified: cut.",
+  "UK accounts: turnover \u00a3112.2M (2023) -> \u00a332.8M (2024), net profit -91.6% (City AM / Marketing Week).",
+  "M\u00e1s+ dispute: dismissed by stipulation Jan 2026 (Bloomberg Law); terms confidential.",
+  "$100M is Logan Paul's own estimate of a missed exit (PBD podcast, Sept 2026), not an audited loss; '$500M' private equity is his claim.",
+  "Federal judge phone/email search order (Kentucky) not verified: cut.",
+  "Real people stylised; no real logos on bottles; reviews paraphrased, no clip audio."
+ ],
+ "cuts": [
+  "Rewritten from scratch in our own words (source ~5,000 words, ours ~1,900).",
+  "All podcast/stream clip audio replaced by narration and short quote cards.",
+  "Lunchly, the Lewig water story, Gordon Ramsay, XQC and Kai Cenat segments cut or folded into one 'reviews' beat.",
+  "Unverified claims cut (see FACT_FIXES)."
+ ]
+}

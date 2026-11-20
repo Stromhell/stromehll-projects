@@ -1,0 +1,95 @@
+// PR act 4: Prime Energy
+for (const n of ['shelf', 'shopfront', 'podium', 'podcast']) K.load(n, PL + n + '.jpg');
+const SPAN = S => S.end - S.start;
+const SCN = (S, o) => { const S2 = { D: { light: o.light || {} } }; return (c, lt) => { const d = o.d ?? .55, a = o.in == null ? 1 : E.io(K.seg(lt, o.in, o.in + d)), b = o.out == null ? 1 : 1 - E.io(K.seg(lt, o.out, o.out + d)); if (a <= 0 || b <= 0) return;
+  const t0 = o.in ?? 0, t1 = o.out != null ? o.out + d : SPAN(S), uu = K.clamp((lt - t0) / Math.max(.5, t1 - t0)); const xl = o.fade || o.in == null ? 0 : SW * (1 - a);
+  c.save(); if (o.fade) c.globalAlpha = Math.min(a, b); c.beginPath(); c.rect(xl, 0, SW - xl, SH); c.clip(); c.fillStyle = '#000'; c.fillRect(0, 0, SW, SH);
+  K.world(c, o.cam, uu); if (o.plate) c.drawImage(K.imgs[o.plate], 0, 0, 2560, 1440);
+  for (const L of o.live || []) { c.save(); L(c, lt, uu); c.restore(); }
+  for (const f of (o.figs || []).slice().sort((p, q) => p.y - q.y)) { c.save(); A.figure(c, f, lt, uu, S2); c.restore(); }
+  for (const L of o.front || []) { c.save(); L(c, lt, uu); c.restore(); }
+  K.screen(c); for (const L of o.over || []) { c.save(); L(c, lt, uu); c.restore(); }
+  if (!o.fade && a < 1) { c.fillStyle = INK; c.fillRect(xl - 8, 0, 16, SH); } c.restore(); }; };
+// ---------- act-local helpers ----------
+const HYPE = (v0, v1) => (c, lt, u) => PR.hype(c, 120, 120, .55, K.lerp(v0, v1, u));
+const NAME = (c, lt, at, x, y, name, sub) => { const a = pop(lt, at, .4); if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.rotate(-.025); c.font = '40px Anton'; const w = Math.max(c.measureText(name).width, sub ? 260 : 0) + 44, h = sub ? 92 : 62;
+  c.fillStyle = 'rgba(0,0,0,.35)'; TW.rr(c, -w / 2 + 6, -h / 2 + 8, w, h, 10); c.fill(); c.fillStyle = PR.GOLD; c.strokeStyle = INK; c.lineWidth = 5; TW.rr(c, -w / 2, -h / 2, w, h, 10); c.fill(); c.stroke();
+  TW.txt(c, name, 0, sub ? -h / 2 + 30 : 2, 40, INK, 'center', 'Anton'); if (sub) TW.txt(c, sub, 0, h / 2 - 22, 24, '#3a2a10', 'center', 'Oswald'); c.restore(); };
+const CHAIR = (x, fl, s, f, col = '#2a2a34') => c => TW.chair(c, x, fl, fl - 63 * s, f, col);
+const TABLE = (x0, x1, y) => c => { c.fillStyle = '#e8e4da'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(x0, y, x1 - x0, 26); c.strokeRect(x0, y, x1 - x0, 26); c.fillStyle = '#9a948a'; c.fillRect(x0 + 30, y + 26, 20, 1310 - y - 26); c.fillRect(x1 - 50, y + 26, 20, 1310 - y - 26); };
+const PODIUM = (x, y, s = 1) => (c) => { c.save(); c.translate(x, y); c.scale(s, s); PR.shadow(c, 0, 0, 160); c.fillStyle = '#6a4228'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.moveTo(-120, -300); c.lineTo(120, -300); c.lineTo(100, 0); c.lineTo(-100, 0); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#8a5a36'; c.fillRect(-140, -320, 280, 30); c.strokeRect(-140, -320, 280, 30);
+  c.fillStyle = '#1e2a5a'; c.beginPath(); c.arc(0, -170, 54, 0, 7); c.fill(); c.strokeStyle = JH.GOLD; c.lineWidth = 6; c.stroke(); c.strokeStyle = '#2a2a2a'; c.lineWidth = 6; c.beginPath(); c.moveTo(-30, -320); c.lineTo(-50, -400); c.moveTo(30, -320); c.lineTo(50, -400); c.stroke(); c.restore(); };
+const flashes = (pts) => (c, lt) => pts.forEach(([x, y], k) => { const f = Math.max(0, Math.sin(lt * 2.3 + k * 2.1)) ** 30; if (f > .05) TW.glow(c, x, y, 160, '255,255,255', .8 * f); });
+
+window.SHOTS = [
+  // 4.0 shelf: a purple Prime Energy can rises in front of the drinks; caffeine meter fills to 200mg
+  { plate: 'shelf', cam: { z: [1.1, 1.28], x: [1280, 1280], y: [820, 840] }, bed: [['hum_loop', .1], ['crowd_loop', .05]], light: { dir: 1 },
+    init: S => { const t23 = A.at(S, '2023,', .6), tAr = A.at(S, 'arrived.', 2.0), tN = A.at(S, 'name.', 3.0), tCo = A.at(S, 'colours.', 4.6), tIn = A.at(S, 'inside', 5.6), tTw = A.at(S, 'two', 6.6);
+      S.D.figs = [{ x: 500, y: 1310, s: 1.85, ...PR.SHOPPER(1), facing: 1, mood: 'neutral', walk: { x0: -200, x1: 500, t0: 0, dur: 2.2 }, anim: (o, lt) => { if (lt > tAr) o.mood = 'shocked'; } }];
+      S.D.live = [(c, lt) => TW.glow(c, 1280, 900, 600, '170,100,255', .25 * K.seg(lt, tAr - .5, tAr + .5) * (.85 + .15 * Math.sin(lt * 3)))];
+      S.D.front = [TABLE(1000, 1560, 1080), (c, lt) => { const u = E.back(K.seg(lt, tAr - .4, tAr + .3)); if (u <= 0) return; PR.can(c, 1180, 1080, 4 * u, { col: 'purple', glow: true }); if (lt > tN) PR.bottle(c, 1400, 1080, 4, { col: 'purple' }); }];
+      S.D.over = [HYPE(.55, .5), (c, lt) => K.card(c, '2023: PRIME ENERGY', lt, { at: t23, x: 960, y: 110, px: 56, rot: -2 }),
+        (c, lt) => K.card(c, 'SAME NAME', lt, { at: tN, x: 420, y: 280, px: 40, rot: -3, until: tIn + .5 }), (c, lt) => K.card(c, 'SAME BRIGHT COLOURS', lt, { at: tCo, x: 480, y: 400, px: 40, rot: 2, until: tIn + .5 }),
+        (c, lt) => { if (lt < tIn) return; PR.meter(c, 1600, 700, 1, 200 * E.out(K.seg(lt, tIn, tTw + .8)), 'CAFFEINE'); }, (c, lt) => K.card(c, '200MG CAFFEINE PER CAN', lt, { at: tTw + .3, x: 760, y: 300, px: 46, rot: -2, bg: JH.RED, color: '#fff' })];
+      S.D.sfx = [[0, 'footsteps', .2], [t23, 'pop', .2], [tAr - .4, 'whoosh', .3], [tN, 'pop', .15], [tCo, 'pop', .15], [tIn, 'riser', .2], [tTw + .3, 'hit', .25]]; } },
+
+  // 4.1 two coffees beside the can; '18+' warning; then the kids' bottle - cut to the queue round the block
+  { plate: 'shelf', cam: { z: [1.2, 1.26], x: [1280, 1300], y: [880, 880] }, bed: [['hum_loop', .1]], light: { dir: 1 },
+    init: S => { const tC = A.at(S, 'cups', 1.6), tU = A.at(S, 'under-18s.', 5.0), tB = A.at(S, 'bottle', 6.8), tQ = A.at(S, 'queued', 9.6);
+      const kidsWalk = (k) => ({ x: 0, y: 1330, s: 1.55, ...PR.KID(k), facing: -1, mood: k % 2 ? 'happy' : 'neutral', walk: { x0: 2900 + k * 260, x1: 900 + k * 260, t0: 0, dur: 2.6 } });
+      const QUEUE = { in: tQ - .3, plate: 'shopfront', cam: { z: [1.05, 1.12], x: [1280, 1300], y: [880, 880] }, light: { dir: 1 },
+        figs: [0, 1, 2, 3, 4, 5].map(kidsWalk), live: [(c, lt) => TW.glow(c, 1280, 900, 300, '255,230,160', .3)],
+        over: [(c, lt) => K.card(c, 'QUEUES ROUND THE BLOCK', lt, { at: tQ + .3, x: 960, y: 130, px: 50, rot: -2 })] };
+      S.D.live = [(c, lt) => TW.glow(c, 1280, 900, 500, '170,100,255', .18)];
+      S.D.front = [TABLE(820, 1760, 1080), (c, lt) => { PR.can(c, 1000, 1080, 4, { col: 'purple', glow: true });
+          for (let k = 0; k < 2; k++) { const u = E.back(K.seg(lt, tC - .6 + k * .3, tC - .2 + k * .3)); if (u > 0) { c.save(); c.translate(1160 + k * 140, 1080); c.scale(u, u); PR.coffee(c, 0, 0, 3.6, lt); c.restore(); } }
+          if (lt > tB - .3) { const u = E.back(K.seg(lt, tB - .3, tB + .2)); PR.bottle(c, 1560, 1080, 4 * u, { col: 'purple', glow: true }); } }];
+      S.D.over = [HYPE(.5, .48), (c, lt) => K.card(c, '≈ 2 STRONG COFFEES', lt, { at: tC, x: 760, y: 180, px: 46, rot: -2, until: tB }),
+        (c, lt) => TW.stamp(c, 'NOT FOR UNDER-18s', 600, 380, lt, tU - .3, { px: 46 }),
+        (c, lt) => K.card(c, "THE KIDS' FAVOURITE", lt, { at: tB, x: 1450, y: 260, px: 44, rot: 2, bg: PR.GOLD }), SCN(S, QUEUE)];
+      S.D.sfx = [[tC - .6, 'pop', .2], [tC - .3, 'pop', .2], [tU - .3, 'stamp', .35], [tB - .3, 'pop', .2], [tQ - .3, 'whoosh', .3], [tQ, 'crowd_loop', .2], [tQ + .2, 'run_steps', .2]]; } },
+
+  // 4.2 Washington podium: the senator asks the FDA to investigate
+  { plate: 'podium', cam: { z: [1.15, 1.3], x: [1280, 1280], y: [820, 780] }, bed: [['wind_loop', .1], ['crowd_loop', .06]], light: { dir: -1 },
+    init: S => { const tJ = A.at(S, 'July', .8), tSe = A.at(S, 'Senator', 2.4), tPo = A.at(S, 'podium', 4.6), tF = A.at(S, 'Food', 6.0), tIn = A.at(S, 'investigate', 7.8), tCh = A.at(S, 'children.', 9.6);
+      S.D.figs = [{ x: 1280, y: 1290, s: 1.9, ...PR.SENATOR(), facing: 1, mood: 'focus', talk: [tSe, tCh + .8], anim: (o, lt) => { o.arms = () => lt > tIn - .3 ? { shR: 100 + 10 * Math.sin(lt * 3), elR: -30, handR: 'point' } : { shR: 40, elR: -60 }; } }];
+      S.D.front = [PODIUM(1280, 1330, 1.25), flashes([[260, 760], [560, 780], [2000, 780], [2300, 760]])];
+      S.D.over = [HYPE(.48, .46), (c, lt) => K.card(c, 'JULY 2023', lt, { at: tJ, x: 300, y: 120, px: 50, rot: -3 }), (c, lt) => NAME(c, lt, tSe, 960, 150, 'SENATOR CHUCK SCHUMER', 'WASHINGTON'),
+        (c, lt) => { const a = E.out(K.seg(lt, tF - .3, tF + .3)); if (a <= 0) return; c.save(); c.translate((1 - a) * 700, 0); JH.doc(c, 1360, 300, 460, 360, { top: 'LETTER TO THE FDA', title: 'PLEASE INVESTIGATE', lines: ["Prime's marketing", 'to children', '~'], hi: 1, hiU: K.seg(lt, tCh - .3, tCh + .5) }); c.restore(); },
+        (c, lt) => TW.stamp(c, 'INVESTIGATE', 1590, 720, lt, tIn, { px: 50 })];
+      S.D.sfx = [[tJ, 'pop', .2], [tSe, 'camera_shutter', .3], [tPo, 'camera_shutter', .25], [tF - .3, 'paper', .3], [tIn, 'stamp', .3], [tCh, 'camera_shutter', .25]]; } },
+
+  // 4.3 Canada recall: cans over the legal caffeine line get pulled into a crate
+  { plate: 'shelf', cam: { z: [1.15, 1.25], x: [1300, 1260], y: [860, 860] }, bed: [['hum_loop', .1]], light: { dir: 1 },
+    init: S => { const tM = A.at(S, 'month,', 1.0), tCa = A.at(S, 'Canada', 1.6), tR = A.at(S, 'recalled', 2.4), tB = A.at(S, 'broke', 5.6), tLi = A.at(S, 'limit.', 7.6);
+      S.D.figs = [{ x: 620, y: 1310, s: 1.9, ...PR.SHOPPER(4), facing: 1, mood: 'worried', walk: { x0: -200, x1: 620, t0: tR - 1.2, dur: 1.6 }, anim: (o, lt) => { if (lt > tR + .4) o.arms = () => ({ shR: 80 + 15 * Math.sin(lt * 5), elR: -20 }); } }];
+      S.D.front = [TABLE(860, 1700, 1080), (c, lt) => { for (let k = 0; k < 5; k++) { const tk = tR + .6 + k * .6, u = E.io(K.seg(lt, tk, tk + .5)); const x = K.lerp(1100 + k * 120, 940, u), y = 1080 - Math.sin(u * Math.PI) * 120 + u * 0; if (u < 1) PR.can(c, x, y, 3.4, { col: 'purple' }); }
+          c.fillStyle = '#c0392b'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(870, 980, 160, 100); c.strokeRect(870, 980, 160, 100); TW.txt(c, 'RECALL', 950, 1030, 30, '#fff', 'center', 'Anton'); }];
+      S.D.over = [HYPE(.46, .44), (c, lt) => K.card(c, 'CANADA · JULY 2023', lt, { at: tCa, x: 960, y: 110, px: 50, rot: -2 }),
+        (c, lt) => TW.stamp(c, 'RECALLED', 1300, 300, lt, tR + .3, { px: 66 }),
+        (c, lt) => { if (lt < tB - .4) return; PR.meter(c, 1640, 760, 1, 200 * E.out(K.seg(lt, tB - .4, tB + .6)), 'CAFFEINE'); const y = 760 - 300 * (150 / 250); c.strokeStyle = JH.RED; c.setLineDash([12, 8]); c.lineWidth = 5; c.beginPath(); c.moveTo(1560, y); c.lineTo(1760, y); c.stroke(); c.setLineDash([]); TW.txt(c, 'LEGAL LIMIT', 1660, y - 22, 26, JH.RED, 'center', 'Anton'); },
+        (c, lt) => K.card(c, 'OVER THE LEGAL CAFFEINE LIMIT', lt, { at: tLi - .3, x: 760, y: 260, px: 40, rot: 2, bg: PR.GOLD })];
+      S.D.sfx = [[tR - 1.2, 'footsteps', .2], [tCa, 'pop', .2], [tR + .3, 'stamp', .35], [tR + .9, 'scrape', .2], [tR + 2.1, 'scrape', .2], [tB, 'alarm', .1]]; } },
+
+  // 4.4 podcast: Logan's answer - labelled 18+, industry standard; years later still annoyed about a Sunday morning
+  { plate: 'podcast', cam: { z: [1.2, 1.34], x: [1420, 1400], y: [900, 900] }, bed: [['hum_loop', .1]], light: { dir: -1, key: 'rgba(255,200,240,.22)' },
+    init: S => { const tL = A.at(S, "Logan's", .4), tCl = A.at(S, 'labelled', 3.2), tIs = A.at(S, 'industry', 6.0), tY = A.at(S, 'Years', 8.6), tAn = A.at(S, 'annoyed', 10.6), tSu = A.at(S, 'Sunday', 13.4), FL = 1320;
+      S.D.figs = [{ x: 1420, y: FL, s: 1.9, ...PR.LOGAN({ blue: true }), pose: 'sit', facing: 1, mood: 'neutral', talk: [tL, 99],
+        anim: (o, lt) => { o.mood = lt > tAn ? 'angry' : 'focus'; o.arms = () => lt > tAn ? { shR: 70 + 20 * Math.sin(lt * 6), elR: -60, handR: 'fist' } : lt > tCl - .2 ? { shR: 95, elR: -40, handR: 'point' } : { shR: 30, elR: -60 }; } }];
+      S.D.live = [(c, lt) => { TW.glow(c, 1600, 300, 500, '255,80,200', .14 + .05 * Math.sin(lt * 2.4)); }, CHAIR(1420, FL, 1.9, 1, '#3a2240'), (c, lt) => PR.coffee(c, 1150, 1000, 1.9, lt)];
+      S.D.over = [HYPE(.44, .42), (c, lt) => NAME(c, lt, tL, 1160, 210, 'LOGAN PAUL', 'AT THE TIME'),
+        (c, lt) => JH.quote(c, 'CLEARLY LABELLED 18+', 'LOGAN PAUL', 560, 300, lt, tCl, { px: 44, until: tY }),
+        (c, lt) => JH.quote(c, 'INDUSTRY STANDARD', 'LOGAN PAUL', 560, 520, lt, tIs, { px: 44, until: tY }),
+        (c, lt) => K.card(c, 'YEARS LATER...', lt, { at: tY, x: 520, y: 200, px: 52, rot: -3 }),
+        (c, lt) => { if (lt > tSu - .3) PR.bubble(c, 560, 450, .9, 'ON A SUNDAY|MORNING?!', { tail: [120, 80] }); }];
+      S.D.sfx = [[tL, 'pop', .15], [tCl, 'pop', .2], [tIs, 'pop', .2], [tY, 'whoosh', .3], [tAn, 'thud', .2], [tSu - .3, 'pop', .2]]; } },
+
+  // 4.5 shelf: can and bottle side by side, look alike; a kid reaches; 'A CHOICE'
+  { plate: 'shelf', cam: { z: [1.15, 1.32], x: [1280, 1300], y: [860, 900] }, bed: [['hum_loop', .1], ['tension', .08]], light: { dir: 1 },
+    init: S => { const tIn = A.at(S, 'invent', 1.4), tPr = A.at(S, 'printed', 3.4), tLo = A.at(S, 'looked', 6.6), tK = A.at(S, "kids'", 8.2), tCh = A.at(S, 'choice.', 10.6);
+      S.D.figs = [{ x: 600, y: 1320, s: 1.55, ...PR.KID(2), facing: 1, mood: 'happy', walk: { x0: -200, x1: 600, t0: tLo - 1.6, dur: 1.6 }, anim: (o, lt) => { if (lt > tK) o.arms = () => ({ shR: 95, elR: -10, handR: 'point' }); } }];
+      S.D.front = [TABLE(900, 1700, 1080), (c, lt) => { PR.can(c, 1080, 1080, 4.2, { col: 'purple', glow: lt > tPr }); PR.bottle(c, 1500, 1080, 4.2, { col: 'purple', glow: lt > tK }); if (lt > tLo) TW.txt(c, '=', 1290, 900, 120, PR.GOLD, 'center', 'Anton'); }];
+      S.D.over = [HYPE(.42, .4), (c, lt) => K.card(c, '200MG: PRINTED ON THE CAN', lt, { at: tPr, x: 700, y: 140, px: 44, rot: -2, until: tLo + .5 }),
+        (c, lt) => K.card(c, 'LOOKS JUST LIKE THE KIDS\' DRINK', lt, { at: tLo, x: 960, y: 140, px: 44, rot: 2 }), (c, lt) => TW.stamp(c, 'A CHOICE', 1300, 400, lt, tCh, { px: 80 })];
+      S.D.sfx = [[tPr, 'pop', .2], [tLo - 1.6, 'footsteps', .2], [tLo, 'chime', .2], [tCh, 'stamp', .4]]; } },
+];
