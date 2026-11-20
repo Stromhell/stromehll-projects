@@ -1,0 +1,180 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+body{margin:0;background:#111}svg{display:block}
+.lbl{font:700 64px 'Trebuchet MS','Verdana',sans-serif;fill:#fff;paint-order:stroke;stroke:rgba(0,0,0,.25);stroke-width:6px}
+</style></head><body>
+<!-- FRAME 1: university two-shot, Victor + Reed, label with arrow -->
+<svg id="f1" width="1920" height="1080" viewBox="0 0 1920 1080">
+<defs>
+ <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9fd4f2"/><stop offset="1" stop-color="#e9f4f0"/></linearGradient>
+ <linearGradient id="brick" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b6523f"/><stop offset="1" stop-color="#97402f"/></linearGradient>
+ <linearGradient id="col" x1="0" x2="1"><stop offset="0" stop-color="#f4efe3"/><stop offset=".65" stop-color="#e6dfcf"/><stop offset="1" stop-color="#cfc6b2"/></linearGradient>
+ <linearGradient id="skinV" x1="0" x2="1"><stop offset="0" stop-color="#f6c9a0"/><stop offset=".7" stop-color="#eeb98c"/><stop offset="1" stop-color="#d99d72"/></linearGradient>
+ <linearGradient id="skinR" x1="0" x2="1"><stop offset="0" stop-color="#ffd7b3"/><stop offset=".7" stop-color="#f5c49c"/><stop offset="1" stop-color="#e2a87e"/></linearGradient>
+ <linearGradient id="greenJ" x1="0" x2="1"><stop offset="0" stop-color="#4f7a52"/><stop offset=".7" stop-color="#456c48"/><stop offset="1" stop-color="#36573a"/></linearGradient>
+ <linearGradient id="blueJ" x1="0" x2="1"><stop offset="0" stop-color="#4f86d6"/><stop offset=".7" stop-color="#4677c4"/><stop offset="1" stop-color="#3561a6"/></linearGradient>
+ <linearGradient id="grass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7fb35a"/><stop offset="1" stop-color="#5d9443"/></linearGradient>
+ <radialGradient id="vign" cx=".5" cy=".5" r=".75"><stop offset=".6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".28"/></radialGradient>
+ <filter id="soft"><feGaussianBlur stdDeviation="3"/></filter>
+ <filter id="blur6"><feGaussianBlur stdDeviation="6"/></filter>
+</defs>
+<rect width="1920" height="1080" fill="url(#sky)"/>
+<!-- far trees -->
+<g fill="#8fbf8a" opacity=".8"><circle cx="80" cy="560" r="140"/><circle cx="1860" cy="540" r="160"/><circle cx="1720" cy="600" r="120"/></g>
+<!-- building -->
+<rect x="160" y="170" width="1600" height="600" fill="url(#brick)"/>
+<g stroke="#8a3a2b" stroke-width="3" opacity=".35"><path d="M160 230H1760M160 290H1760M160 350H1760M160 410H1760M160 470H1760M160 530H1760M160 590H1760M160 650H1760M160 710H1760"/></g>
+<polygon points="120,180 960,40 1800,180" fill="#e9e2d2"/><polygon points="250,170 960,70 1670,170" fill="#d8cfbb"/>
+<circle cx="960" cy="125" r="34" fill="#f6f0e2" stroke="#c9bfa7" stroke-width="6"/><path d="M960 125V102M960 125L976 132" stroke="#5a4c3a" stroke-width="5" stroke-linecap="round"/>
+<!-- windows -->
+<defs><g id="win"><rect x="0" y="0" width="120" height="200" rx="60" fill="#2c4466"/><rect x="8" y="8" width="104" height="184" rx="52" fill="#3c5c86"/><path d="M60 8V192M8 110H112" stroke="#f0ead9" stroke-width="8"/><path d="M20 60Q40 30 70 24" stroke="#fff" stroke-width="6" opacity=".35" fill="none"/></g></defs>
+<use href="#win" x="230" y="260"/><use href="#win" x="420" y="260"/><use href="#win" x="1380" y="260"/><use href="#win" x="1570" y="260"/>
+<!-- columns -->
+<g><rect x="640" y="190" width="70" height="560" fill="url(#col)"/><rect x="800" y="190" width="70" height="560" fill="url(#col)"/><rect x="1050" y="190" width="70" height="560" fill="url(#col)"/><rect x="1210" y="190" width="70" height="560" fill="url(#col)"/>
+<rect x="620" y="170" width="680" height="34" fill="#efe8d8"/></g>
+<rect x="880" y="420" width="160" height="330" rx="80" fill="#5a3826"/><rect x="895" y="435" width="130" height="315" rx="65" fill="#6e4630"/>
+<!-- steps -->
+<rect x="560" y="750" width="800" height="40" fill="#e8e1d1"/><rect x="520" y="790" width="880" height="40" fill="#ddd5c3"/><rect x="480" y="830" width="960" height="40" fill="#d1c8b4"/>
+<rect x="0" y="770" width="1920" height="310" fill="url(#grass)"/>
+<!-- bushes & flowers -->
+<g><circle cx="250" cy="800" r="90" fill="#4e8a3e"/><circle cx="340" cy="820" r="70" fill="#5b9a49"/><circle cx="1650" cy="805" r="95" fill="#4e8a3e"/><circle cx="1560" cy="830" r="65" fill="#5b9a49"/>
+<g fill="#fff6d8"><circle cx="230" cy="770" r="9"/><circle cx="300" cy="800" r="8"/><circle cx="1620" cy="770" r="9"/><circle cx="1680" cy="820" r="8"/><circle cx="1580" cy="800" r="7"/></g></g>
+<!-- leaves -->
+<g fill="#e08a3a" opacity=".9"><ellipse cx="420" cy="140" rx="14" ry="7" transform="rotate(30 420 140)"/><ellipse cx="1500" cy="380" rx="12" ry="6" transform="rotate(-20 1500 380)"/><ellipse cx="1180" cy="90" rx="13" ry="6" transform="rotate(50 1180 90)"/><ellipse cx="700" cy="620" rx="12" ry="6" fill="#d9a23a" transform="rotate(10 700 620)"/></g>
+
+<!-- ===== VICTOR (left, arms crossed, annoyed) ===== -->
+<g transform="translate(560,300)">
+ <ellipse cx="0" cy="770" rx="210" ry="28" fill="#000" opacity=".18" filter="url(#blur6)"/>
+ <!-- legs -->
+ <rect x="-95" y="560" width="80" height="200" rx="30" fill="#3a3a46"/><rect x="15" y="560" width="80" height="200" rx="30" fill="#33333e"/>
+ <ellipse cx="-58" cy="760" rx="62" ry="26" fill="#2a1d16"/><ellipse cx="58" cy="760" rx="62" ry="26" fill="#2a1d16"/>
+ <!-- body / long coat -->
+ <path d="M-150 330 Q-160 300 -120 285 L120 285 Q160 300 150 330 L170 620 Q0 650 -170 620 Z" fill="url(#greenJ)"/>
+ <path d="M-30 288 L0 360 L30 288 Z" fill="#e9e4da"/>
+ <!-- crossed arms -->
+ <path d="M-150 360 Q-40 470 120 430 Q140 470 110 490 Q-60 520 -175 420 Z" fill="#3f6542"/>
+ <path d="M150 360 Q40 460 -120 450 Q-140 480 -100 500 Q80 510 175 420 Z" fill="#4c774f"/>
+ <ellipse cx="-118" cy="462" rx="36" ry="30" fill="url(#skinV)"/><ellipse cx="128" cy="446" rx="36" ry="30" fill="url(#skinV)"/>
+ <!-- head -->
+ <rect x="-150" y="-30" width="300" height="320" rx="140" fill="url(#skinV)"/>
+ <ellipse cx="-150" cy="150" rx="26" ry="38" fill="#e5ab80"/><ellipse cx="150" cy="150" rx="26" ry="38" fill="#d99d72"/>
+ <!-- hair -->
+ <path d="M-160 80 Q-175 -60 -40 -70 Q60 -110 150 -30 Q185 20 160 90 Q130 30 70 20 Q20 60 -40 10 Q-90 50 -160 80Z" fill="#2b2230"/>
+ <path d="M-60 -40 Q0 -70 80 -40" stroke="#4a3d52" stroke-width="10" fill="none" stroke-linecap="round" opacity=".7"/>
+ <!-- eyes -->
+ <ellipse cx="-62" cy="130" rx="58" ry="52" fill="#fff"/><ellipse cx="62" cy="130" rx="58" ry="52" fill="#fff"/>
+ <circle cx="-48" cy="140" r="15" fill="#2a1d16"/><circle cx="48" cy="140" r="15" fill="#2a1d16"/>
+ <circle cx="-43" cy="135" r="5" fill="#fff"/><circle cx="53" cy="135" r="5" fill="#fff"/>
+ <path d="M-130 92 L-10 108" stroke="#2b2230" stroke-width="16" stroke-linecap="round"/><path d="M130 92 L10 108" stroke="#2b2230" stroke-width="16" stroke-linecap="round"/>
+ <path d="M-8 165 Q4 190 -14 196" stroke="#c98a60" stroke-width="7" fill="none" stroke-linecap="round"/>
+ <path d="M-45 232 Q0 218 45 236" stroke="#5a2f22" stroke-width="9" fill="none" stroke-linecap="round"/>
+</g>
+
+<!-- ===== REED (right, big smile, waving, long stretchy arm) ===== -->
+<g transform="translate(1340,280)">
+ <ellipse cx="0" cy="790" rx="210" ry="28" fill="#000" opacity=".18" filter="url(#blur6)"/>
+ <rect x="-90" y="580" width="78" height="200" rx="30" fill="#5b5a63"/><rect x="12" y="580" width="78" height="200" rx="30" fill="#52515a"/>
+ <ellipse cx="-55" cy="780" rx="60" ry="26" fill="#3d2a1f"/><ellipse cx="55" cy="780" rx="60" ry="26" fill="#3d2a1f"/>
+ <path d="M-145 340 Q-150 305 -110 295 L110 295 Q150 305 145 340 L150 600 Q0 625 -150 600 Z" fill="url(#blueJ)"/>
+ <path d="M-40 298 Q0 340 40 298" stroke="#fff" stroke-width="16" fill="none"/>
+ <!-- left arm resting -->
+ <path d="M-140 340 Q-200 450 -170 560" stroke="#4677c4" stroke-width="64" fill="none" stroke-linecap="round"/>
+ <ellipse cx="-168" cy="580" rx="36" ry="32" fill="url(#skinR)"/>
+ <!-- stretchy waving arm -->
+ <path d="M130 340 Q300 300 280 120 Q265 0 330 -80" stroke="#4677c4" stroke-width="58" fill="none" stroke-linecap="round"/>
+ <g transform="translate(340,-110) rotate(12)"><ellipse cx="0" cy="0" rx="52" ry="58" fill="url(#skinR)"/>
+  <g fill="url(#skinR)"><rect x="-48" y="-110" width="24" height="80" rx="12"/><rect x="-20" y="-125" width="24" height="90" rx="12"/><rect x="8" y="-118" width="24" height="86" rx="12"/><rect x="34" y="-95" width="22" height="70" rx="11"/><rect x="-80" y="-30" width="50" height="22" rx="11" transform="rotate(-30 -55 -20)"/></g></g>
+ <path d="M370 -170 q14 -20 30 -8 M395 -120 q22 -8 30 8" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round" opacity=".9"/>
+ <!-- head -->
+ <rect x="-150" y="-40" width="300" height="335" rx="140" fill="url(#skinR)"/>
+ <ellipse cx="-150" cy="150" rx="26" ry="38" fill="#efb88c"/><ellipse cx="150" cy="150" rx="26" ry="38" fill="#e2a87e"/>
+ <path d="M-158 70 Q-170 -70 -20 -78 Q130 -90 160 40 Q165 80 155 95 Q140 20 60 10 Q-10 -10 -80 30 Q-120 40 -158 70Z" fill="#6b4329"/>
+ <path d="M-20 -60 Q60 -70 120 -20" stroke="#8a5a3a" stroke-width="10" fill="none" stroke-linecap="round" opacity=".7"/>
+ <ellipse cx="-62" cy="125" rx="58" ry="58" fill="#fff"/><ellipse cx="62" cy="125" rx="58" ry="58" fill="#fff"/>
+ <circle cx="-56" cy="130" r="15" fill="#3a2414"/><circle cx="56" cy="130" r="15" fill="#3a2414"/>
+ <circle cx="-51" cy="125" r="5" fill="#fff"/><circle cx="61" cy="125" r="5" fill="#fff"/>
+ <path d="M-118 50 Q-62 22 -10 46" stroke="#5a371f" stroke-width="15" fill="none" stroke-linecap="round"/><path d="M118 50 Q62 22 10 46" stroke="#5a371f" stroke-width="15" fill="none" stroke-linecap="round"/>
+ <path d="M-6 168 Q10 192 -10 200" stroke="#d99a6f" stroke-width="7" fill="none" stroke-linecap="round"/>
+ <path d="M-80 215 Q0 300 80 215 Z" fill="#3b1a14"/><path d="M-66 222 Q0 238 66 222 L60 236 Q0 250 -60 236Z" fill="#fff"/><path d="M-30 262 Q0 278 30 262 Q0 250 -30 262" fill="#e46a6a"/>
+</g>
+<!-- label + arrow -->
+<text x="1490" y="1010" class="lbl">reed richards</text>
+<path d="M1560 950 Q1600 860 1520 800" stroke="#fff" stroke-width="9" fill="none" stroke-linecap="round"/><path d="M1518 836 L1516 798 L1552 806" stroke="#fff" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="140" y="250" class="lbl">victor</text>
+<path d="M230 270 Q260 340 360 370" stroke="#fff" stroke-width="9" fill="none" stroke-linecap="round"/><path d="M330 345 L362 371 L328 392" stroke="#fff" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<!-- dust motes -->
+<g fill="#fff" opacity=".7"><circle cx="980" cy="300" r="4"/><circle cx="1120" cy="520" r="3"/><circle cx="860" cy="610" r="3"/><circle cx="460" cy="200" r="3"/><circle cx="1460" cy="640" r="4"/><circle cx="1050" cy="700" r="3"/></g>
+<rect width="1920" height="1080" fill="url(#vign)"/>
+</svg>
+
+<!-- FRAME 2: Doom on throne, low angle, particles, glow -->
+<svg id="f2" width="1920" height="1080" viewBox="0 0 1920 1080">
+<defs>
+ <linearGradient id="hall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1d2f2c"/><stop offset="1" stop-color="#2c4440"/></linearGradient>
+ <radialGradient id="halo" cx=".5" cy=".42" r=".5"><stop offset="0" stop-color="#ffe9a6" stop-opacity=".95"/><stop offset=".5" stop-color="#ffcf5a" stop-opacity=".35"/><stop offset="1" stop-color="#ffcf5a" stop-opacity="0"/></radialGradient>
+ <linearGradient id="cloak" x1="0" x2="1"><stop offset="0" stop-color="#2f9a4c"/><stop offset=".6" stop-color="#25843f"/><stop offset="1" stop-color="#1a6430"/></linearGradient>
+ <linearGradient id="metal" x1="0" x2="1"><stop offset="0" stop-color="#e3e7ea"/><stop offset=".55" stop-color="#b9c0c6"/><stop offset="1" stop-color="#8d959c"/></linearGradient>
+ <linearGradient id="stone" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4c6a63"/><stop offset="1" stop-color="#3a554f"/></linearGradient>
+ <linearGradient id="win2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe680"/><stop offset="1" stop-color="#f2b33c"/></linearGradient>
+ <radialGradient id="vign2" cx=".5" cy=".5" r=".75"><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".45"/></radialGradient>
+ <filter id="b8"><feGaussianBlur stdDeviation="8"/></filter><filter id="b3"><feGaussianBlur stdDeviation="2.5"/></filter>
+</defs>
+<rect width="1920" height="1080" fill="url(#hall)"/>
+<!-- stained windows -->
+<g><rect x="170" y="120" width="190" height="420" rx="95" fill="url(#win2)"/><path d="M265 120V540M170 330H360" stroke="#2d3b37" stroke-width="10"/><polygon points="265,230 300,330 265,430 230,330" fill="#3fb565"/>
+<rect x="1560" y="120" width="190" height="420" rx="95" fill="url(#win2)"/><path d="M1655 120V540M1560 330H1750" stroke="#2d3b37" stroke-width="10"/><polygon points="1655,230 1690,330 1655,430 1620,330" fill="#3fb565"/></g>
+<!-- light shafts -->
+<g opacity=".18" fill="#ffe7a0"><polygon points="190,140 340,140 760,1080 420,1080"/><polygon points="1580,140 1730,140 1500,1080 1160,1080"/></g>
+<!-- banners -->
+<g><path d="M520 60h120v300l-60 -50 -60 50z" fill="#25843f"/><circle cx="580" cy="180" r="30" fill="#e6c25a"/><path d="M1280 60h120v300l-60 -50 -60 50z" fill="#25843f"/><circle cx="1340" cy="180" r="30" fill="#e6c25a"/></g>
+<!-- halo behind throne -->
+<circle cx="960" cy="420" r="430" fill="url(#halo)"/>
+<g stroke="#ffd56a" stroke-width="6" opacity=".55">
+ <path d="M960 420L960 20M960 420L1240 140M960 420L1360 420M960 420L680 140M960 420L560 420M960 420L1160 70M960 420L760 70M960 420L1300 270M960 420L620 270"/></g>
+<!-- steps -->
+<rect x="420" y="850" width="1080" height="70" fill="#5f8078"/><rect x="380" y="920" width="1160" height="80" fill="#557570"/><rect x="330" y="1000" width="1260" height="80" fill="#4b6a64"/>
+<path d="M420 850h1080M380 920h1160M330 1000h1260" stroke="#e6c25a" stroke-width="8"/>
+<!-- throne -->
+<path d="M720 860 L720 300 Q720 170 960 130 Q1200 170 1200 300 L1200 860 Z" fill="url(#stone)"/>
+<path d="M760 860 L760 320 Q760 220 960 190 Q1160 220 1160 320 L1160 860 Z" fill="#2e4642"/>
+<path d="M720 300 Q720 170 960 130 Q1200 170 1200 300" stroke="#e6c25a" stroke-width="12" fill="none"/>
+<rect x="670" y="620" width="140" height="240" rx="22" fill="#4c6a63"/><rect x="1110" y="620" width="140" height="240" rx="22" fill="#4c6a63"/>
+<rect x="670" y="610" width="140" height="30" rx="12" fill="#e6c25a"/><rect x="1110" y="610" width="140" height="30" rx="12" fill="#e6c25a"/>
+<!-- DOOM -->
+<g transform="translate(960,330)">
+ <!-- cloak spread -->
+ <path d="M-230 120 Q-300 400 -260 540 L260 540 Q300 400 230 120 Q0 60 -230 120Z" fill="url(#cloak)"/>
+ <!-- legs -->
+ <rect x="-130" y="330" width="100" height="210" rx="36" fill="url(#metal)"/><rect x="30" y="330" width="100" height="210" rx="36" fill="url(#metal)"/>
+ <path d="M-170 520h150v40h-150zM20 520h150v40h-150z" fill="#6f777e"/>
+ <!-- tunic -->
+ <path d="M-150 120 L150 120 L175 380 Q0 420 -175 380 Z" fill="#2a8f47"/>
+ <rect x="-160" y="260" width="320" height="38" rx="10" fill="#c99a2e"/><circle cx="0" cy="279" r="28" fill="#e6c25a" stroke="#a87c1c" stroke-width="6"/>
+ <!-- arms on armrests -->
+ <path d="M-150 150 Q-250 220 -260 300" stroke="#b9c0c6" stroke-width="80" fill="none" stroke-linecap="round"/>
+ <path d="M150 150 Q250 220 260 300" stroke="#a9b0b6" stroke-width="80" fill="none" stroke-linecap="round"/>
+ <ellipse cx="-262" cy="315" rx="52" ry="42" fill="url(#metal)"/><ellipse cx="262" cy="315" rx="52" ry="42" fill="url(#metal)"/>
+ <!-- hood + head -->
+ <path d="M-190 120 Q-210 -170 0 -190 Q210 -170 190 120 Q0 80 -190 120Z" fill="#23803d"/>
+ <path d="M-150 100 Q-160 -120 0 -135 Q160 -120 150 100 Z" fill="#14501f"/>
+ <!-- mask -->
+ <rect x="-120" y="-120" width="240" height="250" rx="105" fill="url(#metal)"/>
+ <path d="M-120 -20 Q0 -40 120 -20" stroke="#8d959c" stroke-width="6" fill="none"/>
+ <rect x="-85" y="-18" width="64" height="20" rx="6" fill="#152320"/><rect x="21" y="-18" width="64" height="20" rx="6" fill="#152320"/>
+ <circle cx="-48" cy="-8" r="5" fill="#ffd56a"/><circle cx="58" cy="-8" r="5" fill="#ffd56a"/>
+ <path d="M-8 10 L-8 70 M8 10 L8 70" stroke="#8d959c" stroke-width="6"/>
+ <rect x="-60" y="78" width="120" height="14" rx="5" fill="#152320"/>
+ <path d="M-50 92v18M-25 92v18M0 92v18M25 92v18M50 92v18" stroke="#152320" stroke-width="7"/>
+ <g fill="#7b838a"><circle cx="-100" cy="20" r="7"/><circle cx="100" cy="20" r="7"/><circle cx="-90" cy="90" r="7"/><circle cx="90" cy="90" r="7"/></g>
+ <path d="M-90 -100 Q-60 -115 -20 -112" stroke="#fff" stroke-width="10" opacity=".6" fill="none" stroke-linecap="round"/>
+</g>
+<!-- book on step -->
+<g transform="translate(1180,815)"><rect width="150" height="34" rx="6" fill="#7a1d2a"/><rect y="-8" width="150" height="12" rx="4" fill="#efe6cf"/></g>
+<!-- sparkles / particles -->
+<g fill="#fff3c4">
+<circle cx="700" cy="300" r="5"/><circle cx="1240" cy="250" r="4"/><circle cx="860" cy="120" r="3"/><circle cx="1100" cy="560" r="4"/><circle cx="520" cy="640" r="3"/><circle cx="1420" cy="700" r="5"/><circle cx="640" cy="820" r="3"/><circle cx="1300" cy="420" r="3"/><circle cx="430" cy="380" r="4"/><circle cx="1500" cy="360" r="3"/></g>
+<g fill="#fff" opacity=".9"><path d="M1240 610l6 16 16 6-16 6-6 16-6-16-16-6 16-6z"/><path d="M640 470l5 13 13 5-13 5-5 13-5-13-13-5 13-5z"/></g>
+<text x="1330" y="210" class="lbl">doctor doom</text>
+<path d="M1450 230 Q1440 300 1200 330" stroke="#fff" stroke-width="9" fill="none" stroke-linecap="round"/><path d="M1225 305 L1198 331 L1232 350" stroke="#fff" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<rect width="1920" height="1080" fill="url(#vign2)"/>
+</svg>
+</body></html>
