@@ -1,12 +1,12 @@
 {
  "channel": "finance",
  "video": "15 Rockefeller First Billionaire",
- "state": "making",
+ "state": "waiting_approval",
  "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ8CNjVGT5fbn5wUrs6a6qL4J",
  "feedback": false,
  "queue_pos": 0,
  "booked_for": null,
  "zernio_post": null,
- "updated": "2026-11-20T17:05Z",
- "note": "script in progress; slot 11 Dec 16:00 UTC"
+ "updated": "2026-11-20T17:12Z",
+ "note": "storyboard v1 https://claude.ai/artifact/WikWbcVAtktu27GMhMvoma shared; animation after Pushpam OK; slot 11 Dec 16:00 UTC"
 }
