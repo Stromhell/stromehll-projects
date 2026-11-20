@@ -1,0 +1,1508 @@
+{
+ "assets": "../03 Frames",
+ "watermark": "/mnt/project-files/manga-comics-channel/00 Channel/Branding/01 Drafts v1/ska_watermark_600.png",
+ "shots": [
+  {
+   "dur": 3.107,
+   "bg": "paper",
+   "move": "in",
+   "img": "pages/p019.png",
+   "crop": [
+    0,
+    0,
+    1,
+    0.3916
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 3.108,
+   "bg": "paper",
+   "move": "left",
+   "img": "pages/p019.png",
+   "crop": [
+    0.323,
+    0.0446424,
+    0.62,
+    0.242792
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 3.591,
+   "bg": "speed",
+   "move": "in",
+   "img": "pages/p022.png",
+   "crop": [
+    0,
+    0,
+    1,
+    0.361
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "punch": true,
+   "gif": {
+    "file": "gifs/anime-shocked_1.mp4",
+    "pos": "br",
+    "scale": 0.3,
+    "at": 0.25,
+    "tilt": -4
+   },
+   "sfx": "hit"
+  },
+  {
+   "dur": 5.745,
+   "bg": "halftone:#e3262e",
+   "move": "up",
+   "img": "pages/p006.png",
+   "fit": "height",
+   "sfx": null
+  },
+  {
+   "dur": 2.34,
+   "bg": "paper",
+   "move": "left",
+   "img": "pages/p030.png",
+   "crop": [
+    0,
+    0,
+    1,
+    0.7372
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 2.339,
+   "bg": "paper",
+   "move": "in",
+   "img": "pages/p030.png",
+   "crop": [
+    0.056999999999999995,
+    0.0840408,
+    0.62,
+    0.45706399999999997
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 2.574,
+   "bg": "paper",
+   "move": "in",
+   "img": "pages/p009.png",
+   "crop": [
+    0,
+    0.0895,
+    1,
+    0.2985
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": null
+  },
+  {
+   "dur": 2.574,
+   "bg": "paper",
+   "move": "left",
+   "img": "pages/p009.png",
+   "crop": [
+    0.323,
+    0.123529,
+    0.62,
+    0.18506999999999998
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 7.175,
+   "bg": "paper",
+   "move": "right",
+   "img": "pages/p009.png",
+   "crop": [
+    0.4465,
+    0.39949999999999997,
+    0.463,
+    0.3623
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "gif": {
+    "file": "gifs/anime-laughing_1.mp4",
+    "pos": "bl",
+    "scale": 0.3,
+    "at": 0.25,
+    "tilt": -4
+   },
+   "sfx": "pop"
+  },
+  {
+   "dur": 4.252,
+   "bg": "paper",
+   "move": "in",
+   "img": "pages/p009.png",
+   "crop": [
+    0.3547,
+    0.7726,
+    0.5549000000000001,
+    0.2354
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 2.574,
+   "bg": "paper",
+   "move": "left",
+   "img": "pages/p010.png",
+   "crop": [
+    0,
+    0.0751,
+    1,
+    0.3316
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": null
+  },
+  {
+   "dur": 2.574,
+   "bg": "paper",
+   "move": "in",
+   "img": "pages/p010.png",
+   "crop": [
+    0.056999999999999995,
+    0.1129024,
+    0.62,
+    0.205592
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 2.68,
+   "bg": "paper",
+   "move": "in",
+   "img": "pages/p011.png",
+   "crop": [
+    0.42969999999999997,
+    0.3082,
+    0.4893,
+    0.3785
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": null
+  },
+  {
+   "dur": 2.681,
+   "bg": "paper",
+   "move": "left",
+   "img": "pages/p011.png",
+   "crop": [
+    0.5877439,
+    0.35134899999999997,
+    0.303366,
+    0.23467
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 2.744,
+   "bg": "black",
+   "move": "in",
+   "img": "pages/p012.png",
+   "crop": [
+    0.0801,
+    0.4626,
+    0.5493,
+    0.1829
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "amount": 0.14,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 2.745,
+   "bg": "black",
+   "move": "left",
+   "img": "pages/p012.png",
+   "crop": [
+    0.11141010000000001,
+    0.4834506,
+    0.340566,
+    0.113398
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "amount": 0.14,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 3.463,
+   "bg": "halftone:#1b1b1b",
+   "move": "in",
+   "img": "pages/p012.png",
+   "crop": [
+    0.6199,
+    0.0801,
+    0.3665,
+    0.5654
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "gif": {
+    "file": "gifs/anime-nervous_1.mp4",
+    "pos": "br",
+    "scale": 0.3,
+    "at": 0.25,
+    "tilt": 4
+   },
+   "stamp": {
+    "text": "FORESHADOWING",
+    "at": 0.3,
+    "wash": false,
+    "color": "#ffd23d"
+   },
+   "sfx": "pop"
+  },
+  {
+   "dur": 3.224,
+   "bg": "paper",
+   "move": "left",
+   "img": "pages/p013.png",
+   "crop": [
+    0,
+    0.387,
+    1,
+    0.3154
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": null
+  },
+  {
+   "dur": 3.225,
+   "bg": "paper",
+   "move": "in",
+   "img": "pages/p013.png",
+   "crop": [
+    0.056999999999999995,
+    0.4229556,
+    0.62,
+    0.195548
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 5.383,
+   "bg": "speed",
+   "move": "in",
+   "img": "pages/p013.png",
+   "crop": [
+    0,
+    0.7145,
+    1,
+    0.29350000000000004
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "gif": {
+    "file": "gifs/anime-laughing_2.mp4",
+    "pos": "br",
+    "scale": 0.3,
+    "at": 0.25,
+    "tilt": 4
+   },
+   "sfx": "pop"
+  },
+  {
+   "dur": 2.545,
+   "bg": "paper",
+   "move": "in",
+   "img": "pages/p014.png",
+   "crop": [
+    0.5665,
+    0.08579999999999999,
+    0.4415,
+    0.2522
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": null
+  },
+  {
+   "dur": 2.446,
+   "bg": "paper",
+   "move": "right",
+   "img": "pages/p014.png",
+   "crop": [
+    0.07919999999999999,
+    0.35009999999999997,
+    0.5446,
+    0.2679
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": null
+  },
+  {
+   "dur": 2.446,
+   "bg": "paper",
+   "move": "in",
+   "img": "pages/p014.png",
+   "crop": [
+    0.2551058,
+    0.3806406,
+    0.337652,
+    0.16609800000000002
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 4.252,
+   "bg": "black",
+   "move": "in",
+   "img": "pages/p015.png",
+   "crop": [
+    0,
+    0.4089,
+    1,
+    0.2679
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "punch": true,
+   "sfx": "hit"
+  },
+  {
+   "dur": 3.697,
+   "bg": "paper",
+   "move": "left",
+   "img": "pages/p015.png",
+   "crop": [
+    0,
+    0.6883,
+    1,
+    0.2529
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": null
+  },
+  {
+   "dur": 3.033,
+   "bg": "paper",
+   "move": "in",
+   "img": "pages/p016.png",
+   "crop": [
+    0.07819999999999999,
+    0.3595,
+    0.523,
+    0.2685
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": null
+  },
+  {
+   "dur": 3.032,
+   "bg": "paper",
+   "move": "left",
+   "img": "pages/p016.png",
+   "crop": [
+    0.108011,
+    0.390109,
+    0.32426,
+    0.16647
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 6.321,
+   "bg": "halftone:#e3262e",
+   "move": "in",
+   "img": "pages/p016.png",
+   "crop": [
+    0.07819999999999999,
+    0.3595,
+    0.523,
+    0.2685
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "gif": {
+    "file": "gifs/anime-mind-blown_1.mp4",
+    "pos": "bl",
+    "scale": 0.3,
+    "at": 0.25,
+    "tilt": 4
+   },
+   "stamp": {
+    "text": "TITLE DROP",
+    "at": 0.3,
+    "wash": false,
+    "color": "#ffd23d"
+   },
+   "sfx": "pop"
+  },
+  {
+   "dur": 6.001,
+   "bg": "paper",
+   "move": "right",
+   "img": "pages/p016.png",
+   "crop": [
+    0,
+    0.6389,
+    1,
+    0.3004
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "gif": {
+    "file": "gifs/anime-crying_1.mp4",
+    "pos": "br",
+    "scale": 0.3,
+    "at": 0.25,
+    "tilt": -4
+   },
+   "sfx": "pop"
+  },
+  {
+   "dur": 3.505,
+   "bg": "paper",
+   "move": "left",
+   "img": "pages/p017.png",
+   "crop": [
+    0,
+    0.4276,
+    1,
+    0.22099999999999997
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": null
+  },
+  {
+   "dur": 3.676,
+   "bg": "black",
+   "move": "in",
+   "img": "pages/p018.png",
+   "crop": [
+    0,
+    0.5339,
+    1,
+    0.2385
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 2.436,
+   "bg": "black",
+   "move": "in",
+   "img": "pages/p019.png",
+   "crop": [
+    0.3069,
+    0.6601,
+    0.3084,
+    0.3479
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "amount": 0.05,
+   "sfx": null
+  },
+  {
+   "dur": 2.435,
+   "bg": "black",
+   "move": "left",
+   "img": "pages/p019.png",
+   "crop": [
+    0.4065132,
+    0.6997606000000001,
+    0.19120800000000002,
+    0.215698
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "amount": 0.05,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 2.393,
+   "bg": "black",
+   "move": "in",
+   "img": "pages/p019.png",
+   "crop": [
+    0,
+    0.3945,
+    1,
+    0.2529
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "amount": 0.12,
+   "sfx": null
+  },
+  {
+   "dur": 2.392,
+   "bg": "black",
+   "move": "left",
+   "img": "pages/p019.png",
+   "crop": [
+    0.056999999999999995,
+    0.4233306,
+    0.62,
+    0.15679800000000002
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "amount": 0.12,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 3.086,
+   "bg": "paper",
+   "move": "up",
+   "img": "pages/p020.png",
+   "crop": [
+    0.07350000000000001,
+    0,
+    0.9345,
+    0.7316
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "amount": 0.2,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 3.086,
+   "bg": "paper",
+   "move": "in",
+   "img": "pages/p020.png",
+   "crop": [
+    0.3753435,
+    0.0834024,
+    0.57939,
+    0.453592
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "amount": 0.2,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 2.222,
+   "bg": "paper",
+   "move": "left",
+   "img": "pages/p021.png",
+   "crop": [
+    0,
+    0.6476,
+    1,
+    0.3316
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": null
+  },
+  {
+   "dur": 2.222,
+   "bg": "paper",
+   "move": "in",
+   "img": "pages/p021.png",
+   "crop": [
+    0.056999999999999995,
+    0.6854024,
+    0.62,
+    0.205592
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 2.972,
+   "bg": "paper",
+   "move": "down",
+   "img": "pages/p022.png",
+   "crop": [
+    0.07919999999999999,
+    0.6295,
+    0.5465,
+    0.3785
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "punch": true,
+   "sfx": "hit"
+  },
+  {
+   "dur": 5.297,
+   "bg": "black",
+   "move": "up",
+   "img": "pages/p023.png",
+   "crop": [
+    0,
+    0.4332,
+    0.4827,
+    0.5747
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "pop": {
+    "img": "pages/p023.png",
+    "crop": [
+     0.4752,
+     0.6512,
+     0.4396,
+     0.3488
+    ],
+    "at": 0.45,
+    "scale": 0.42,
+    "pos": [
+     0.72,
+     0.5
+    ]
+   },
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 3.783,
+   "bg": "speed",
+   "move": "in",
+   "img": "pages/p024.png",
+   "crop": [
+    0,
+    0.3383,
+    1,
+    0.38230000000000003
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "punch": true,
+   "gif": {
+    "file": "gifs/anime-shocked_2.mp4",
+    "pos": "tr",
+    "scale": 0.3,
+    "at": 0.25,
+    "tilt": 4
+   },
+   "sfx": "hit"
+  },
+  {
+   "dur": 4.38,
+   "bg": "speed:#e3262e",
+   "move": "in",
+   "img": "pages/p025.png",
+   "crop": [
+    0.3697,
+    0.3789,
+    0.5586,
+    0.3935
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": null
+  },
+  {
+   "dur": 3.353,
+   "bg": "paper",
+   "move": "left",
+   "img": "pages/p025.png",
+   "crop": [
+    0,
+    0.7833,
+    1,
+    0.2247
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 3.352,
+   "bg": "paper",
+   "move": "in",
+   "img": "pages/p025.png",
+   "crop": [
+    0.323,
+    0.8089158,
+    0.62,
+    0.139314
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 2.467,
+   "bg": "speed",
+   "move": "in",
+   "img": "pages/p028.png",
+   "crop": [
+    0.5628,
+    0.07819999999999999,
+    0.44520000000000004,
+    0.2822
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": null
+  },
+  {
+   "dur": 2.468,
+   "bg": "speed",
+   "move": "left",
+   "img": "pages/p028.png",
+   "crop": [
+    0.5881763999999999,
+    0.11037079999999999,
+    0.27602400000000005,
+    0.174964
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 2.481,
+   "bg": "black",
+   "move": "in",
+   "img": "pages/p028.png",
+   "crop": [
+    0.0801,
+    0.3745,
+    0.613,
+    0.3279
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "amount": 0.12,
+   "gif": {
+    "file": "gifs/anime-sad_1.mp4",
+    "pos": "br",
+    "scale": 0.3,
+    "at": 0.25,
+    "tilt": 4
+   },
+   "sfx": "pop"
+  },
+  {
+   "dur": 2.247,
+   "bg": "speed",
+   "move": "in",
+   "img": "pages/p030.png",
+   "crop": [
+    0,
+    0,
+    1,
+    0.7372
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "punch": true,
+   "sfx": "hit"
+  },
+  {
+   "dur": 3.889,
+   "bg": "aura:#2b4cff",
+   "move": "up",
+   "img": "pages/p031.png",
+   "crop": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "fit": "width",
+   "margin": 0.96,
+   "amount": 0.25,
+   "sfx": null
+  },
+  {
+   "dur": 3.74,
+   "bg": "paper",
+   "move": "in",
+   "img": "pages/p032.png",
+   "crop": [
+    0.07819999999999999,
+    0.4289,
+    0.4771,
+    0.236
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "gif": {
+    "file": "gifs/anime-smug_2.mp4",
+    "pos": "br",
+    "scale": 0.3,
+    "at": 0.25,
+    "tilt": -4
+   },
+   "sfx": "pop"
+  },
+  {
+   "dur": 2.659,
+   "bg": "black",
+   "move": "in",
+   "img": "pages/p034.png",
+   "crop": [
+    0.3922,
+    0.2989,
+    0.6158,
+    0.4435
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 2.66,
+   "bg": "black",
+   "move": "left",
+   "img": "pages/p034.png",
+   "crop": [
+    0.5911034,
+    0.349459,
+    0.381796,
+    0.27497
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 6.94,
+   "bg": "paper",
+   "move": "left",
+   "img": "pages/p034.png",
+   "crop": [
+    0,
+    0.7539,
+    1,
+    0.2541
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "stamp": {
+    "text": "REMEMBER THIS",
+    "at": 0.3,
+    "wash": false,
+    "color": "#ffd23d"
+   },
+   "sfx": "pop"
+  },
+  {
+   "dur": 3.096,
+   "bg": "black",
+   "move": "in",
+   "img": "pages/p035.png",
+   "crop": [
+    0,
+    0.40449999999999997,
+    1,
+    0.2385
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": null
+  },
+  {
+   "dur": 3.097,
+   "bg": "black",
+   "move": "left",
+   "img": "pages/p035.png",
+   "crop": [
+    0.323,
+    0.431689,
+    0.62,
+    0.14787
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 3.697,
+   "bg": "paper",
+   "move": "right",
+   "img": "pages/p037.png",
+   "crop": [
+    0,
+    0.33949999999999997,
+    1,
+    0.3785
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 1.799,
+   "bg": "speed",
+   "move": "in",
+   "img": "pages/p038.png",
+   "crop": [
+    0,
+    0,
+    1,
+    0.9410000000000001
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "punch": true,
+   "gif": {
+    "file": "gifs/anime-angry_1.mp4",
+    "pos": "bl",
+    "scale": 0.3,
+    "at": 0.25,
+    "tilt": 4
+   },
+   "sfx": "hit"
+  },
+  {
+   "dur": 2.553,
+   "bg": "speed:#e3262e",
+   "move": "down",
+   "img": "pages/p038.png",
+   "crop": [
+    0,
+    0,
+    1,
+    0.9410000000000001
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "amount": 0.2,
+   "sfx": null
+  },
+  {
+   "dur": 2.552,
+   "bg": "speed:#e3262e",
+   "move": "in",
+   "img": "pages/p038.png",
+   "crop": [
+    0.056999999999999995,
+    0.107274,
+    0.62,
+    0.58342
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "amount": 0.2,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 2.82,
+   "bg": "paper",
+   "move": "in",
+   "img": "pages/p039.png",
+   "crop": [
+    0.5271,
+    0.572,
+    0.39180000000000004,
+    0.436
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 2.819,
+   "bg": "paper",
+   "move": "left",
+   "img": "pages/p039.png",
+   "crop": [
+    0.6536514,
+    0.6217039999999999,
+    0.24291600000000002,
+    0.27032
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 2.457,
+   "bg": "black",
+   "move": "in",
+   "img": "pages/p041.png",
+   "crop": [
+    0,
+    0.7482,
+    1,
+    0.2597
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": null
+  },
+  {
+   "dur": 2.456,
+   "bg": "black",
+   "move": "left",
+   "img": "pages/p041.png",
+   "crop": [
+    0.056999999999999995,
+    0.7778058,
+    0.62,
+    0.161014
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 4.167,
+   "bg": "aura:#ff6a2b",
+   "move": "in",
+   "img": "/mnt/project-files/manga-comics-channel/00 Channel/Style/art-tests/manga_test1.png",
+   "fit": "auto",
+   "margin": 0.92,
+   "amount": 0.12,
+   "gif": {
+    "file": "gifs/anime-thumbs-up_1.mp4",
+    "pos": "br",
+    "scale": 0.3,
+    "at": 0.25,
+    "tilt": 4
+   },
+   "sfx": "pop"
+  },
+  {
+   "dur": 2.631,
+   "bg": "speed:#e3262e",
+   "move": "in",
+   "img": "pages/p042.png",
+   "crop": [
+    0,
+    0.377,
+    1,
+    0.631
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "punch": true,
+   "sfx": "hit"
+  },
+  {
+   "dur": 2.862,
+   "bg": "speed",
+   "move": "up",
+   "img": "pages/p043.png",
+   "crop": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "amount": 0.2,
+   "sfx": null
+  },
+  {
+   "dur": 2.862,
+   "bg": "speed",
+   "move": "in",
+   "img": "pages/p043.png",
+   "crop": [
+    0.323,
+    0.11399999999999999,
+    0.62,
+    0.62
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "amount": 0.2,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 5.959,
+   "bg": "paper",
+   "move": "left",
+   "img": "pages/p045.png",
+   "crop": [
+    0.306,
+    0.5089,
+    0.6149,
+    0.4991
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "gif": {
+    "file": "gifs/anime-facepalm_1.mp4",
+    "pos": "br",
+    "scale": 0.3,
+    "at": 0.25,
+    "tilt": -4
+   },
+   "sfx": "pop"
+  },
+  {
+   "dur": 1.628,
+   "bg": "black",
+   "move": "in",
+   "img": "pages/p047.png",
+   "crop": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "amount": 0.1,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 2.436,
+   "bg": "paper",
+   "move": "up",
+   "img": "pages/p049.png",
+   "crop": [
+    0,
+    0.4683,
+    0.5408000000000001,
+    0.4754
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": null
+  },
+  {
+   "dur": 2.435,
+   "bg": "paper",
+   "move": "in",
+   "img": "pages/p049.png",
+   "crop": [
+    0.0308256,
+    0.5224956,
+    0.33529600000000004,
+    0.294748
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 5.831,
+   "bg": "speed",
+   "move": "in",
+   "img": "pages/p049.png",
+   "crop": [
+    0,
+    0,
+    1,
+    0.47040000000000004
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "punch": true,
+   "stamp": {
+    "text": "BIG BRAIN PLAY",
+    "at": 0.3,
+    "wash": false,
+    "color": "#ffd23d"
+   },
+   "sfx": "hit"
+  },
+  {
+   "dur": 4.7,
+   "bg": "halftone:#2b4cff",
+   "move": "in",
+   "img": "pages/p050.png",
+   "crop": [
+    0.38,
+    0,
+    0.3347,
+    0.4547
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "gif": {
+    "file": "gifs/anime-mind-blown_1.mp4",
+    "pos": "br",
+    "scale": 0.3,
+    "at": 0.25,
+    "tilt": -4
+   },
+   "sfx": "pop"
+  },
+  {
+   "dur": 3.128,
+   "bg": "speed",
+   "move": "left",
+   "img": "pages/p050.png",
+   "crop": [
+    0,
+    0.722,
+    1,
+    0.22160000000000002
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": null
+  },
+  {
+   "dur": 3.129,
+   "bg": "speed",
+   "move": "in",
+   "img": "pages/p050.png",
+   "crop": [
+    0.323,
+    0.7472624,
+    0.62,
+    0.13739200000000001
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 2.382,
+   "bg": "black",
+   "move": "in",
+   "img": "pages/p053.png",
+   "crop": [
+    0,
+    0,
+    1,
+    0.3229
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": null
+  },
+  {
+   "dur": 2.382,
+   "bg": "black",
+   "move": "left",
+   "img": "pages/p053.png",
+   "crop": [
+    0.056999999999999995,
+    0.0368106,
+    0.62,
+    0.20019800000000001
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 2.286,
+   "bg": "paper",
+   "move": "up",
+   "img": "pages/p052.png",
+   "crop": [
+    0,
+    0,
+    1,
+    0.5935
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 2.286,
+   "bg": "paper",
+   "move": "in",
+   "img": "pages/p052.png",
+   "crop": [
+    0.323,
+    0.067659,
+    0.62,
+    0.36797
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 2.545,
+   "bg": "aura:#2b4cff",
+   "move": "in",
+   "img": "pages/p054.png",
+   "crop": [
+    0,
+    0,
+    1,
+    0.6904
+   ],
+   "fit": "auto",
+   "margin": 0.95,
+   "sfx": null
+  },
+  {
+   "dur": 2.417,
+   "bg": "black",
+   "move": "right",
+   "img": "pages/p055.png",
+   "crop": [
+    0,
+    0,
+    1,
+    0.40040000000000003
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": null
+  },
+  {
+   "dur": 2.553,
+   "bg": "paper",
+   "move": "in",
+   "img": "pages/p056.png",
+   "crop": [
+    0,
+    0,
+    1,
+    0.6179
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 2.552,
+   "bg": "paper",
+   "move": "left",
+   "img": "pages/p056.png",
+   "crop": [
+    0.056999999999999995,
+    0.0704406,
+    0.62,
+    0.383098
+   ],
+   "fit": "auto",
+   "margin": 0.96,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 7.409,
+   "bg": "paper",
+   "move": "up",
+   "img": "pages/p057.png",
+   "fit": "width",
+   "margin": 0.62,
+   "amount": 0.2,
+   "sfx": null
+  },
+  {
+   "dur": 5.468,
+   "bg": "paper",
+   "move": "up",
+   "img": "pages/p059.png",
+   "fit": "width",
+   "margin": 0.62,
+   "amount": 0.2,
+   "gif": {
+    "file": "gifs/anime-crying_2.mp4",
+    "pos": "br",
+    "scale": 0.3,
+    "at": 0.25,
+    "tilt": -4
+   },
+   "sfx": "pop"
+  },
+  {
+   "dur": 8.945,
+   "bg": "aura:#9e0f1a",
+   "move": "in",
+   "img": "/mnt/project-files/manga-comics-channel/00 Channel/Style/art-tests/manga_test3.png",
+   "fit": "auto",
+   "margin": 0.92,
+   "amount": 0.1,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 3.342,
+   "bg": "speed",
+   "move": "out",
+   "img": "pages/p054.png",
+   "crop": [
+    0,
+    0,
+    1,
+    0.6904
+   ],
+   "fit": "auto",
+   "margin": 0.95,
+   "sfx": null
+  },
+  {
+   "dur": 3.342,
+   "bg": "speed",
+   "move": "right",
+   "img": "pages/p054.png",
+   "crop": [
+    0.056999999999999995,
+    0.0787056,
+    0.62,
+    0.428048
+   ],
+   "fit": "auto",
+   "margin": 0.95,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 7.644,
+   "bg": "stars",
+   "move": "in",
+   "img": "pages/p060.png",
+   "fit": "height",
+   "amount": 0.1,
+   "gif": {
+    "file": "gifs/anime-thumbs-up_2.mp4",
+    "pos": "bl",
+    "scale": 0.3,
+    "at": 0.25,
+    "tilt": 4
+   },
+   "sfx": "pop"
+  },
+  {
+   "dur": 4.017,
+   "bg": "halftone:#e3262e",
+   "move": "out",
+   "img": "pages/p060.png",
+   "fit": "height",
+   "amount": 0.1,
+   "sfx": "whoosh_soft"
+  },
+  {
+   "dur": 5.0,
+   "bg": "halftone:#e3262e",
+   "img": "/mnt/project-files/manga-comics-channel/00 Channel/Branding/01 Drafts v1/ska_logo_1024.png",
+   "fit": "height",
+   "margin": 0.55,
+   "move": "in",
+   "amount": 0.04
+  }
+ ]
+}

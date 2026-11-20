@@ -1,0 +1,78 @@
+# Demon Slayer chapter 1 "Cruelty" — Stormi Knows Anime preview v1 (20 Nov 2026).
+# Each row: (narration line, visual). Visual keys:
+#   v: "p019#0" panel / "P057" full page / "ai:file.png" our own art
+#   bg: moving background, move, gif (name in 03 Frames/gifs without .mp4), gpos, stamp, punch, pop ("p028#3")
+S = [
+# HOOK (no intro: straight into it)
+("Imagine leaving home for one night to sell charcoal... and coming back to find your entire family gone.", dict(v="p019#0", bg="paper", move="in")),
+("And the only survivor? Your little sister. Who now wants to eat you.", dict(v="p022#0", bg="speed", punch=True, gif="anime-shocked_1", gpos="br")),
+("This is chapter one of Demon Slayer, and it might be the most brutal first chapter in shonen history.", dict(v="P006", bg="halftone:#e3262e", move="up")),
+("So let's break down every page, because there is way more hidden in here than you think.", dict(v="p030#0", bg="paper", move="left")),
+# NORMAL LIFE
+("We open on Tanjiro Kamado. Face covered in soot, heart made of pure gold.", dict(v="p009#0", bg="paper", move="in")),
+("His mom says he doesn't have to go to town in the snow, but this boy is basically a golden retriever in a checkered haori.", dict(v="p009#1", bg="paper", move="right", gif="anime-laughing_1", gpos="bl")),
+("He's going anyway, because he wants the family to have a proper New Year's feast.", dict(v="p009#3", bg="paper", move="in")),
+("And look at this family. Six kids, one mom, and no dad, because their father passed away.", dict(v="p010#0", bg="paper", move="left")),
+("The little ones are glued to Tanjiro like he's the main character. Which, to be fair, he is.", dict(v="p011#2", bg="paper", move="in")),
+("Then Gotouge drops this line. When happiness ends, there's always the smell of blood in the air.", dict(v="p012#3", bg="black", move="in", amount=0.14)),
+("Page twelve. Twelve! And the author is already loading the gun.", dict(v="p012#0", bg="halftone:#1b1b1b", stamp="FORESHADOWING", gif="anime-nervous_1", gpos="br")),
+("In town, Tanjiro is the most helpful kid alive. Fixing doors, selling charcoal, solving crimes.", dict(v="p013#1", bg="paper", move="left")),
+("Yes, crimes. He literally sniffs out that a cat broke the dish. Detective Pikachu could never.", dict(v="p013#2", bg="speed", gif="anime-laughing_2", gpos="br")),
+("Remember that nose. It's going to matter a lot.", dict(v="p014#0", bg="paper", move="in")),
+# SABURO
+("By the time he heads home it's getting dark, and old man Saburo stops him cold.", dict(v="p014#3", bg="paper", move="right")),
+("Kid, stay here tonight. Man-eating demons roam these woods after dark.", dict(v="p015#3", bg="black", move="in", punch=True)),
+("Tanjiro does not believe a word of it, but he stays to be polite.", dict(v="p015#4", bg="paper", move="left")),
+("Saburo explains that demons can even come inside houses, and that demon slayers cut them down.", dict(v="p016#3", bg="paper", move="in")),
+("That's the title of the series, dropped casually in a bedtime story. Chekhov's gun, but make it a katana.", dict(v="p016#3", bg="halftone:#e3262e", stamp="TITLE DROP", gif="anime-mind-blown_1", gpos="bl")),
+("And Tanjiro falls asleep thinking, next time I'll bring my little brothers. Bro. Do not say that.", dict(v="p016#4", bg="paper", move="right", gif="anime-crying_1", gpos="br")),
+# TRAGEDY
+("The next morning he walks home... and the smell of blood hits him.", dict(v="p017#3", bg="paper", move="left")),
+("Nezuko and Rokuta are lying in the snow in front of the house.", dict(v="p018#2", bg="black", move="in")),
+("Inside, the whole family has been slaughtered. Mother. Takeo. Hanako. Shigeru.", dict(v="p019#3", bg="black", move="in", amount=0.05)),
+("And this panel of Tanjiro's face says everything. No sound effects. Just shock.", dict(v="p019#1", bg="black", move="in", amount=0.12)),
+("But Nezuko's body is still warm. So he puts her on his back and runs down the mountain to find a doctor.", dict(v="p020#0", bg="paper", move="up", amount=0.2)),
+("He's freezing, he's slipping, and he keeps telling her, your big brother will save you.", dict(v="p021#5", bg="paper", move="left")),
+("Then he slips off a cliff... and the snow saves them both.", dict(v="p022#5", bg="paper", move="down", punch=True)),
+("But when he looks up, Nezuko is standing. On her own. And something is very, very wrong.", dict(v="p023#5", bg="black", move="up", pop="p023#4")),
+("She attacks him. Fangs out. Veins on her face. Full demon mode.", dict(v="p024#2", bg="speed", punch=True, gif="anime-shocked_2", gpos="tr")),
+("Old man Saburo wasn't telling a bedtime story. Demons are real.", dict(v="p025#2", bg="speed:#e3262e", move="in")),
+("And he still refuses to believe she'd hurt anyone, because Nezuko has protected her siblings since the day she was born.", dict(v="p025#5", bg="paper", move="left")),
+("He jams the hatchet handle in her mouth and begs her. Don't turn into a demon. Fight it!", dict(v="p028#0", bg="speed", move="in")),
+("And look. She's crying. There's still a person in there.", dict(v="p028#3", bg="black", move="in", amount=0.12, gif="anime-sad_1", gpos="br")),
+# GIYU
+("And then... a sword comes swinging out of nowhere.", dict(v="p030#0", bg="speed", punch=True)),
+("Enter Giyu Tomioka. Demon slayer. Calm face. Zero chill.", dict(v="p031#0", bg="aura:#2b4cff", move="up", amount=0.25, fit="width")),
+("He has the personality of a wet umbrella, but this man is strong.", dict(v="p032#4", bg="paper", move="in", gif="anime-smug_2", gpos="br")),
+("He grabs Nezuko and says, killing demons is my job. I'll take your sister's head too.", dict(v="p034#2", bg="black", move="in")),
+("Tanjiro swears she hasn't killed anyone. He even smelled someone else at the house. Someone he'd never smelled before.", dict(v="p034#4", bg="paper", move="left", stamp="REMEMBER THIS")),
+("But Giyu says it's simple. Demon blood got into her wound. That is how man-eating demons multiply.", dict(v="p035#2", bg="black", move="in")),
+("So Tanjiro bows his head into the snow and begs for her life.", dict(v="p037#2", bg="paper", move="right")),
+("And Giyu absolutely loses it.", dict(v="p038#0", bg="speed", punch=True, gif="anime-angry_1", gpos="bl")),
+("Never leave yourself so defenseless in front of an enemy. Stop bowing so pitifully!", dict(v="p038#0", bg="speed:#e3262e", move="down", amount=0.2)),
+("This is one of the most important speeches in the series. The weak have no power and no options.", dict(v="p039#2", bg="paper", move="in")),
+("It sounds cruel, but Giyu is trying to light a fire in him. Fill your heart with anger.", dict(v="p041#3", bg="black", move="in")),
+("Insult the main character until he gets stronger. Peak Vegeta energy.", dict(v="ai:manga_test1.png", bg="aura:#ff6a2b", move="in", amount=0.12, gif="anime-thumbs-up_1", gpos="br")),
+# FIGHT
+("Then Giyu stabs Nezuko, to force his hand.", dict(v="p042#1", bg="speed:#e3262e", punch=True)),
+("And Tanjiro finally moves. He throws a rock, grabs a stick, and charges straight at a sword.", dict(v="p043#0", bg="speed", move="up", amount=0.2)),
+("Giyu knocks him out in one hit. A simple head-on attack relying on pure emotion. What a fool.", dict(v="p045#1", bg="paper", move="left", gif="anime-facepalm_1", gpos="br")),
+("But wait. Where is his hatchet?", dict(v="p047#0", bg="black", move="in", amount=0.1)),
+("Before he ran out, he threw the rock. And while hidden behind the tree, he threw his hatchet.", dict(v="p049#2", bg="paper", move="up")),
+("The hatchet comes spinning down from above and Giyu barely dodges it. That was the plan the whole time.", dict(v="p049#0", bg="speed", punch=True, stamp="BIG BRAIN PLAY")),
+("A charcoal kid just out-thought a professional demon slayer. In chapter one.", dict(v="p050#1", bg="halftone:#2b4cff", move="in", gif="anime-mind-blown_1", gpos="br")),
+# NEZUKO
+("Then Nezuko kicks Giyu away, and instead of eating her unconscious brother, she stands over him to protect him.", dict(v="p050#5", bg="speed", move="left")),
+("Giyu has seen starving demons kill their own parents and siblings countless times.", dict(v="p053#0", bg="black", move="in")),
+("A brand new demon, injured, doubly starved... and she still chooses her brother.", dict(v="p052#0", bg="paper", move="up")),
+("That's when Giyu thinks, these two may be different.", dict(v="p054#0", bg="aura:#2b4cff", move="in", fit="auto", margin=0.95)),
+("And that one thought changes the entire story.", dict(v="p055#0", bg="black", move="right")),
+("When Tanjiro wakes up, Nezuko has a bamboo muzzle, and Giyu gives him one instruction.", dict(v="p056#0", bg="paper", move="in")),
+("Go see an old man named Sakonji Urokodaki at the foot of Mount Sagiri. Tell him Giyu Tomioka sent you.", dict(v="P057", bg="paper", move="up", amount=0.2)),
+("Tanjiro buries his family, takes his sister's hand, and walks into a world full of demons.", dict(v="P059", bg="paper", move="up", amount=0.2, gif="anime-crying_2", gpos="br")),
+# THEORY + OUTRO
+("So here's my theory. That strange scent at the house is the key to everything, and whoever it belongs to is way scarier than any demon we've seen so far.", dict(v="ai:manga_test3.png", bg="aura:#9e0f1a", move="in", amount=0.1)),
+("And Giyu just let a demon live. In a corps whose whole job is killing demons. That is going to come back to bite him.", dict(v="p054#0", bg="speed", move="out", fit="auto", margin=0.95)),
+("Chapter one, and we already have a tragedy, a demon sister, a cold swordsman and a big brain hatchet play. Absolute peak.", dict(v="P060", bg="stars", move="in", amount=0.1, gif="anime-thumbs-up_2", gpos="bl")),
+("Drop your favorite moment in the comments, and I'll see you in chapter two.", dict(v="P060", bg="halftone:#e3262e", move="out", amount=0.1)),
+]
