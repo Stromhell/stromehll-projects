@@ -1,12 +1,12 @@
 {
  "channel": "finance",
  "video": "15 Rockefeller First Billionaire",
- "state": "making",
+ "state": "waiting_approval",
  "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ8CNjVGT5fbn5wUrs6a6qL4J",
  "feedback": false,
  "queue_pos": 0,
  "booked_for": null,
  "zernio_post": null,
- "updated": "2026-11-20T18:00Z",
- "note": "storyboard v1 OK'd 17:18 UTC; voices, sets, mix v1, thumbnail v1 done; act renders + QA in progress"
+ "updated": "2026-11-20T22:05Z",
+ "note": "full video v5 (17:01, -14 LUFS, TP -1.1) + launch kit https://claude.ai/artifact/74sSXbpnbJGqUszPaygXxh sent to Pushpam; Drive 04 Renders/15-Rockefeller-full_v5.mp4 (v4 has a bad over-loud mix, ignore). Book 11 Dec 16:00 UTC after OK."
 }
