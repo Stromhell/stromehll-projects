@@ -1,0 +1,36 @@
+{
+ "video": "/mnt/project-files/manga-comics-channel/Videos/00 Style Test/Renders/MC_StyleTest_v1.mp4",
+ "findings": [
+  {
+   "level": "FAIL",
+   "check": "cut leak (old scene still on screen)",
+   "t": 2.5,
+   "at": "0:02.5",
+   "detail": "25% of the frame unchanged across the cut while 50% changed"
+  },
+  {
+   "level": "FAIL",
+   "check": "cut leak (old scene still on screen)",
+   "t": 3.0,
+   "at": "0:03.0",
+   "detail": "25% of the frame unchanged across the cut while 72% changed"
+  },
+  {
+   "level": "FAIL",
+   "check": "cut leak (old scene still on screen)",
+   "t": 10.0,
+   "at": "0:10.0",
+   "detail": "25% of the frame unchanged across the cut while 69% changed"
+  },
+  {
+   "level": "FAIL",
+   "check": "cut leak (old scene still on screen)",
+   "t": 15.33,
+   "at": "0:15.3",
+   "detail": "25% of the frame unchanged across the cut while 75% changed"
+  }
+ ],
+ "still_share": 0.186,
+ "shots": 12,
+ "median_shot_s": 2.08
+}

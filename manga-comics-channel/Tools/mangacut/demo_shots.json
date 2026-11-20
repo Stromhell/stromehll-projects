@@ -1,0 +1,128 @@
+{
+ "assets": "demo_assets",
+ "watermark": "wm.png",
+ "shots": [
+  {
+   "dur": 2.47,
+   "bg": "paper",
+   "img": "page1.png",
+   "move": "in",
+   "amount": 0.06,
+   "sfx": "whoosh"
+  },
+  {
+   "dur": 2.63,
+   "bg": "paper",
+   "img": "page1.png",
+   "move": "left",
+   "amount": 0.25,
+   "pop": {
+    "img": "page1.png",
+    "crop": [
+     0.04,
+     0.03,
+     0.92,
+     0.35
+    ],
+    "at": 0.15,
+    "scale": 0.62,
+    "pos": [
+     0.5,
+     0.5
+    ]
+   },
+   "sfx": "pop"
+  },
+  {
+   "dur": 2.79,
+   "bg": "stars",
+   "img": "hero.png",
+   "move": "in",
+   "amount": 0.1,
+   "punch": true,
+   "sfx": "riser"
+  },
+  {
+   "dur": 2.14,
+   "bg": "paper",
+   "img": "page1.png",
+   "crop": [
+    0.52,
+    0.4,
+    0.44,
+    0.3
+   ],
+   "fit": "height",
+   "move": "in",
+   "sfx": "hit"
+  },
+  {
+   "dur": 2.3,
+   "bg": "paper",
+   "img": "page1.png",
+   "crop": [
+    0.04,
+    0.4,
+    0.46,
+    0.3
+   ],
+   "move": "right",
+   "amount": 0.12,
+   "stamp": {
+    "text": "SHE'S GONE",
+    "at": 0.25
+   },
+   "sfx": "stamp"
+  },
+  {
+   "dur": 2.47,
+   "bg": "black",
+   "img": "page2.png",
+   "move": "up",
+   "amount": 0.3,
+   "sfx": "whoosh"
+  },
+  {
+   "dur": 2.47,
+   "bg": "paper",
+   "img": "page2.png",
+   "move": "in",
+   "pop": {
+    "img": "page2.png",
+    "crop": [
+     0.04,
+     0.47,
+     0.92,
+     0.5
+    ],
+    "at": 0.2,
+    "scale": 0.6
+   },
+   "sfx": "pop"
+  },
+  {
+   "dur": 2.14,
+   "bg": "paper",
+   "img": "page1.png",
+   "crop": [
+    0.04,
+    0.72,
+    0.92,
+    0.26
+   ],
+   "fit": "width",
+   "move": "out",
+   "punch": true,
+   "sfx": "hit"
+  },
+  {
+   "dur": 5.0,
+   "sting": {
+    "title": "M & C",
+    "sub": "MANGA & COMICS EXPLAINED",
+    "color": "#d81f26"
+   },
+   "sfx": "riser"
+  }
+ ]
+}
