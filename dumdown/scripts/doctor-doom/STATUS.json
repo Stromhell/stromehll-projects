@@ -1,12 +1,18 @@
 {
  "channel": "dumdown",
  "video": "doctor-doom",
- "state": "making",
+ "state": "booked",
  "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ8Bkpx3H6EWRRzxV5PDJzgSr",
  "feedback": false,
  "queue_pos": 0,
- "booked_for": null,
- "zernio_post": null,
- "updated": "2026-11-20T09:35Z",
- "note": "Doctor Doom entire history, in the style of reference youtu.be/ZfffqOOlLAY (Rover Explains). Style study + script + storyboard; slot free (Thunderbolts waiting approval)."
+ "booked_for": "2026-12-01T16:00Z",
+ "zernio_post": "6b007d995eaab45ce4db0b53",
+ "updated": "2026-11-20T17:05Z",
+ "note": "Booked after Pushpam OK 20 Nov 17:04 UTC. HANDOVER.md written. Drive upload pending new token.",
+ "storyboard": "https://claude.ai/artifact/UJ4gE4PMCwjhBbRcPw5Bu4",
+ "drive_folder": "1uUT0YMzt3BCpiLDWcV8DUg3KmdU4Z2ck",
+ "repo_branch": "claude/project-thread-87ifha",
+ "kit": "https://claude.ai/artifact/LYpi7zA2EeQBbtMeUrhoaK",
+ "full_video": "https://media.zernio.com/temp/1795173710447_7203a891e2ec3fd0_DumDown_DoctorDoom_FULL_v1.mp4",
+ "proposed_slot": "2026-12-01T16:00Z"
 }

@@ -1,0 +1,23 @@
+// Mum's secret box
+window.ACT = { timing: window.TIMING, shots: [
+ { p: 0, set: 'tent_in', cam: { z: [2.1, 2.6], x: 1280, y: 1080 }, fx: [['dust', .7], ['magic', .5]], mood: 'magic', sfx: [['creak', .4], ['shimmer', 1.2]],
+   props: [{ k: 'chest', x: 1280, y: 1260, s: .9, kk: [0, 1], kt: [.4, 2] }] },
+ { p: 0, f: .3, set: 'tent_in', cam: { z: [1.6, 1.8], x: 1200, y: 960 }, fx: [['dust', .6], ['magic', .4]],
+   chars: [{ c: 'victorTeen', x: 1100, y: 1260, s: .6, pose: 'holdUp', expr: 'happy' }],
+   props: [{ k: 'chest', x: 1560, y: 1270, s: .7, kk: 1 }, { k: 'book', on: 0, side: 1, dx: -60, dy: -20, s: .6 }, { k: 'potions', x: 1700, y: 1060, s: .7 }] },
+ { p: 0, f: .65, set: 'tent_in', cam: { z: [2, 2.3], x: 1280, y: 960 }, fx: [['dust', .6], ['sparks', .3]], sfx: [['tinker', .3]],
+   chars: [{ c: 'victorTeen', x: 1280, y: 1260, s: .6, pose: 'holdUp', expr: 'smug' }],
+   props: [{ k: 'bird', on: 0, side: 1, dx: -60, dy: -50, s: .6, kk: 1 }], pops: [{ t: 'OVERACHIEVER', at: 2.2, dur: 2.6 }] },
+ { p: 1, set: 'tent_in', cam: { z: [1.4, 1.55], x: 1280, y: 900 }, fx: [['dust', .6], ['fireflies', .3]],
+   chars: [{ c: 'victorTeen', x: 1080, y: 1260, s: .6, pose: 'holdUp', expr: 'happy' }, { c: 'valeria', x: 1520, y: 1260, s: .58, pose: 'chin', expr: 'love', view: 'tq', dir: -1 }],
+   props: [{ k: 'bird', on: 0, side: 1, dx: -60, dy: -50, s: .6, kk: 1 }], labels: [{ t: 'valeria', c: 1, at: .6, dur: 3.2, side: 1 }] },
+ { p: 1, f: .55, set: 'camp_day', cam: { z: [1.6, 1.8], x: 1300, y: 1000 }, fx: [['snow', .2]], sfx: [['whoosh', .2]],
+   chars: [{ c: 'victorTeen', x: 1300, y: 1320, s: .55, pose: 'holdUp', expr: 'shock' }],
+   props: [{ k: 'letter', x: [2400, 1300], y: [500, 980], rot: [-200, 0], s: .7 }] },
+ { p: 2, set: 'camp_dusk', cam: { z: [1.7, 1.9], x: 1300, y: 1000 }, fx: [['fireflies', .6], ['snow', .3]], mood: 'sad',
+   chars: [{ c: 'valeria', x: 1100, y: 1320, s: .55, pose: 'reach', expr: 'sad', view: 'tq' }, { c: 'victorTeen', x: [1350, 1600], y: 1320, s: .55, pose: 'hold', expr: 'sad', view: 'tq', t0: 1.2 }],
+   props: [{ k: 'book', on: 1, side: 1, dx: -40, dy: -20, s: .55 }] },
+ { p: 2, f: .55, set: 'camp_dusk', cam: { z: [1.25, 1.15], x: 1500, y: 900 }, fx: [['fireflies', .6], ['snow', .3]],
+   chars: [{ c: 'valeria', x: 1100, y: 1330, s: .45, pose: 'clasp', expr: 'sad' }, { c: 'victorTeen', x: [1500, 2300], y: [1330, 1250], s: [.45, .38], view: 'tq', walkT: 4 }],
+   pops: [{ t: 'LONG DISTANCE: NOT GOING GREAT', at: .5, dur: 3 }] },
+]};

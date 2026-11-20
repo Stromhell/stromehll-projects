@@ -1,0 +1,20 @@
+// The roommate problem
+window.ACT = { timing: window.TIMING, shots: [
+ { p: 0, set: 'university', cam: { z: [1, 1.12], x: [1150, 1400], y: 760 }, fx: [['leaves', 1]], mood: 'jazz',
+   chars: [{ c: 'vill2', x: 500, y: 1290, s: .42, expr: 'smile', pose: 'hold', view: 'tq' }, { c: 'leader1', x: 2050, y: 1300, s: .44, expr: 'smile', pose: 'point', dir: -1, view: 'tq' }, { c: 'victor', x: [900, 1280], y: 1330, s: .48, expr: 'smug', view: 'tq' }],
+   props: [{ k: 'book', on: 0, side: 1, dx: 0, dy: -10, s: .42 }] },
+ { p: 0, f: .62, set: 'university', cam: { z: [2.1, 2.3], on: 0 }, fx: [['leaves', 1]],
+   chars: [{ c: 'victor', x: 1560, y: 1330, s: .55, expr: 'smug', pose: 'cross' }] },
+ { p: 1, set: 'university', still: true, cam: { z: [3.2, 3.4], on: 0, oy: 150 }, fx: [['leaves', .8]], sfx: [['boing', .2]],
+   chars: [{ c: 'reed', x: 1560, y: 1330, s: .58, pose: 'wave', expr: 'happy', talk: [[1.2, 6]], tilt: 8 }], labels: [{ t: 'reed richards', c: 0, at: .5, dur: 3.2, side: 1 }] },
+ { p: 1, f: .45, set: 'university', cam: { z: [1.8, 2], x: 1180, y: 1000 }, fx: [['leaves', .8]],
+   chars: [{ c: 'victor', x: 900, y: 1330, s: .52, expr: 'angry', pose: 'cross' }, { c: 'reed', x: 1250, y: 1330, s: .52, pose: 'wave', expr: 'happy', view: 'tq', dir: -1, talk: [[0, 3]] }],
+   cards: [{ c: 'reed', name: 'REED', type: 'NICE GENIUS', move: '"Small Correction"', weak: 'being right out loud', at: .8, side: 1, dur: 4.6 }] },
+ { p: 2, set: 'dorm', cam: { z: [1.5, 1.65], x: 1000, y: 820 },
+   chars: [{ c: 'victor', x: 700, y: 1150, s: .55, pose: 'point', expr: 'angry', talk: [[.3, 2]], t1: 2.6 }, { c: 'reed', x: 1150, y: 1160, s: .55, pose: 'wave', expr: 'happy', view: 'tq', dir: -1 }], sfx: [['door_slam', 2.6]], shakeAt: [[2.6, 14]] },
+ { p: 2, f: .3, set: 'dorm', cam: { z: [2.2, 2.3], on: 0, ox: -150 },
+   chars: [{ c: 'reed', x: 1150, y: 1160, s: .55, pose: 'shrug', expr: 'happy' }], pops: [{ t: 'NO.', at: .3, dur: 2, x: 700, y: 200 }] },
+ { p: 2, f: .55, set: 'lab', cam: { z: [1.15, 1.35], x: [1500, 1700], y: 820 }, fx: [['dust', .5], ['sparks', .2]], mood: 'secret',
+   chars: [{ c: 'victor', x: 1450, y: 1260, s: .55, pose: 'type', expr: 'determined', view: 'tq' }],
+   props: [{ k: 'portal', x: 1930, y: 1140, s: .62, kk: 0 }] },
+]};

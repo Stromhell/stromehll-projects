@@ -1,0 +1,20 @@
+// King of Latveria
+window.ACT = { timing: window.TIMING, shots: [
+ { p: 0, set: 'latveria', cam: { z: [1, 1.25], x: 1280, y: [600, 820] }, fx: [['dust', .5]], mood: 'march',
+   chars: [{ c: 'doom', x: [600, 1000], y: 1300, s: .42, view: 'tq', expr: 'neutral' }] },
+ { p: 0, f: .55, set: 'throne_hall', cam: { z: [1.5, 1.7], x: 1280, y: 820 }, fx: [['dust', .7], ['confetti', .3]], sfx: [['fanfare', 0]],
+   chars: [{ c: 'doom', x: 1280, y: 1150, s: .72, pose: 'sit', expr: 'smug' }], pops: [{ t: 'GOOD AT IT?!', at: 1.2, dur: 2.4, x: 500 }] },
+ { p: 1, set: 'latveria', cam: { z: [1.6, 1.75], x: [1100, 1450], y: 1000 }, fx: [['dust', .4]],
+   chars: [{ c: 'vill1', x: 950, y: 1330, s: .5, pose: 'holdR', expr: 'smile', view: 'tq' }, { c: 'vill2', x: 1700, y: 1340, s: .5, pose: 'hold', expr: 'smile', dir: -1, view: 'tq' }, { c: 'vill4', x: 2000, y: 1350, s: .45, pose: 'wave', expr: 'happy' }, { c: 'doom', x: [700, 1350], y: 1360, s: .55, view: 'tq', expr: 'neutral', walkT: 6, zz: 1400 }],
+   props: [{ k: 'bread', on: 0, side: 1, dx: 0, dy: -10, s: .5 }, { k: 'basket', on: 1, side: 1, dx: -40, dy: 10, s: .5 }] },
+ { p: 1, f: .38, set: 'latveria', cam: { z: [2.6, 2.8], x: 1500, y: 980 }, fx: [['dust', .4]],
+   chars: [{ c: 'vill1', x: 1350, y: 1330, s: .55, pose: 'clasp', expr: 'worried' }, { c: 'vill3', x: 1650, y: 1330, s: .55, pose: 'clasp', expr: 'smile' }] },
+ { p: 1, f: .62, set: 'latveria', cam: { z: [1.2, 1.3], x: 1280, y: 860 }, fx: [['confetti', 1]], sfx: [['party_horn', .4]],
+   chars: [{ c: 'vill1', x: 800, y: 1320, s: .48, pose: 'cheer', expr: 'worried' }, { c: 'vill4', x: 1000, y: 1340, s: .42, pose: 'raise', expr: 'happy' }, { c: 'vill2', x: 1650, y: 1330, s: .48, pose: 'cheer', expr: 'smile' }, { c: 'vill3', x: 1880, y: 1320, s: .48, pose: 'raise', expr: 'worried' }],
+   pops: [{ t: 'SURPRISE DAY OFF (MANDATORY)', at: 1.2, dur: 4 }] },
+ { p: 2, set: 'bot_hall', cam: { z: [1.05, 1.35], x: 1280, y: 820 }, fx: [['dust', .5]], mood: 'robot', sfx: [['clank_march', .2]],
+   chars: [0, 1, 2, 3, 4, 5].flatMap(i => [{ c: 'doom', x: 1280 - 200 - i * 150, y: 950 + i * 70, s: .22 + i * .06, pose: 'fist', expr: 'neutral', ph: i * .4 }, { c: 'doom', x: 1280 + 200 + i * 150, y: 950 + i * 70, s: .22 + i * .06, pose: 'fist', expr: 'neutral', ph: i * .4 + .2 }]) },
+ { p: 2, f: .55, set: 'city_roof', cam: { z: [1.7, 1.8], x: 1280, y: 920 }, fx: [['sparks', .6]], sfx: [['bonk', .3], ['fizz', .6]],
+   chars: [{ c: 'rock', x: 900, y: 1150, s: .55, pose: 'cheer', expr: 'smug' }, { c: 'doom', x: 1500, y: 1150, s: .55, pose: 'scared', expr: 'neutral', rot: [0, 12], tilt: 20 }],
+   props: [{ k: 'smoke', x: 1500, y: 800, s: .5, layer: 'front' }], pops: [{ t: 'JUST A TOASTER IN A CAPE', at: 1.5, dur: 3, x: 600 }] },
+]};

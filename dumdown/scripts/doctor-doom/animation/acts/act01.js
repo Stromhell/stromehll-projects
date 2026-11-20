@@ -1,0 +1,20 @@
+// A tent, not a castle
+window.ACT = { timing: window.TIMING, shots: [
+ { p: 0, set: 'camp_dusk', cam: { z: [1, 1.12], x: [1050, 1500], y: 760 }, fx: [['fireflies', .8], ['snow', .25]], mood: 'folk', sfx: [['wind_soft', 0]] },
+ { p: 0, f: .48, set: 'camp_dusk', cam: { z: [1.5, 1.65], x: 1450, y: 1000 }, fx: [['fireflies', .6], ['snow', .25]],
+   chars: [{ c: 'vill1', x: [800, 1050], y: 1330, s: .5, expr: 'worried' }, { c: 'vill4', x: [700, 930], y: 1345, s: .5, expr: 'worried' }, { c: 'soldier', x: [2300, 1900], y: 1330, s: .55, pose: 'point', dir: -1, expr: 'angry', talk: true, view: 'tq' }, { c: 'soldier2', x: [2450, 2080], y: 1300, s: .52, dir: -1, expr: 'smug', view: 'tq' }] },
+ { p: 1, set: 'tent_in', cam: { z: [1.35, 1.5], x: 1280, y: 880 }, fx: [['dust', .6]],
+   chars: [{ c: 'werner', x: 1020, y: 1250, s: .62, pose: 'wave', expr: 'happy', talk: [[1, 5]] }, { c: 'cynthia', x: 1540, y: 1250, s: .62, pose: 'hold', expr: 'tired' }],
+   props: [{ k: 'baby', on: 1, side: 1, dx: -60, dy: -10, s: .62 }],
+   labels: [{ t: 'werner (dad)', c: 0, at: .6, dur: 3.4, side: -1 }, { t: 'cynthia (mum)', c: 1, at: 1.4, dur: 3.4, side: 1 }] },
+ { p: 1, f: .5, set: 'tent_in', cam: { z: [2.2, 2.4], on: 0, ox: 330 }, fx: [['dust', .6]],
+   chars: [{ c: 'cynthia', x: 1540, y: 1250, s: .62, pose: 'hips', expr: 'angry' }],
+   cards: [{ c: 'cynthia', name: 'CYNTHIA', type: 'WITCH', move: '"Bad Deal"', weak: 'small print', at: 1.2, side: 1, dur: 4.4 }] },
+ { p: 2, set: 'snow_red', cam: { z: [1.3, 1.55], x: 1280, y: 820 }, fx: [['snow', .7], ['embers', .5]], mood: 'spooky', sfx: [['whoosh_low', .3], ['demon_laugh', 2.2]],
+   chars: [{ c: 'cynthia', x: 1000, y: 1250, s: .6, pose: 'castUp', expr: 'determined', glow: 1 }],
+   props: [{ k: 'shadowDemon', x: 1650, y: 1240, s: [.8, 1.05], kk: [0, 1], kt: [.2, 2.5] }] },
+ { p: 2, f: .45, set: 'snow_red', cam: { z: [2.4, 2.7], x: 1650, y: 820 }, fx: [['snow', .5], ['embers', .6]],
+   props: [{ k: 'shadowDemon', x: 1650, y: 1240, s: 1.05, kk: 1 }], pops: [{ t: 'ALWAYS READ THE TERMS AND CONDITIONS', at: .6, dur: 3.4, x: 600, y: 160 }] },
+ { p: 2, f: .78, set: 'snow_night', cam: { z: [1.3, 1.2], x: 1280, y: 800 }, fx: [['snow', .8]],
+   props: [{ k: 'soulLight', x: [1000, 1650], y: [1050, 700], s: .45, kk: 1 }, { k: 'shadowDemon', x: 1700, y: 1240, s: 1, kk: [1, .2] }] },
+]};

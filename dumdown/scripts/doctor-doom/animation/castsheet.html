@@ -1,0 +1,8 @@
+<!doctype html><html><body style="margin:0"><canvas id="c" width="2560" height="1440"></canvas>
+<script src="flatkit.js"></script><script src="cast.js"></script><script>
+const c=document.getElementById('c'),x=c.getContext('2d');x.fillStyle='#cfe6f2';x.fillRect(0,0,2560,1440);
+const names=Object.keys(CAST).filter(n=>!/doomBack|doomNoHood|attendant|leader2|leader3|vill2|vill3|soldier2|monk2/.test(n));
+names.forEach((n,i)=>{const col=i%14,row=Math.floor(i/14);const ex=['happy','angry','sad','shock','smug','talk','worried','determined'][i%8];
+FLAT.draw(x,CAST[n],{x:100+col*175,y:440+row*470,s:.36,t:i*.7,expr:ex,talk:ex==='talk',pose:['stand','wave','point','cross','shrug','hips','cast','think','hold','raise'][i%10],view:i%3==1?'tq':'front'});
+x.fillStyle='#222';x.font='20px Arial';x.textAlign='center';x.fillText(n,100+col*175,470+row*470);});
+</script></body></html>
