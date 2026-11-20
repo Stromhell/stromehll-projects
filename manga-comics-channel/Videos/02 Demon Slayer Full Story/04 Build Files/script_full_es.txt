@@ -1,0 +1,212 @@
+# Demon Slayer HISTORIA COMPLETA (205 capitulos) - Stormi Knows Anime, version en espanol v1, 20 Nov 2026
+# Same rows/options as script_full.txt, narration + stamps in Latin American Spanish. Voice B = Kokoro em_santa (Pushpam 20 Nov 19:08 UTC).
+@ Gancho
+1 | bg=paper | Un chico. Una caja. Una hermana que podría comérselo.
+200 | bg=speed punch gif=anime-shocked_1 | Y al final, el demonio más fuerte de la historia cae ante un vendedor de carbón con una cicatriz en la frente.
+1 | bg=halftone:#e3262e page | Esto es todo el manga de Demon Slayer. Los doscientos cinco capítulos. En un solo video.
+146-156 | bg=speed | Cada pelea, cada muerte, cada lágrima, y cada vez que Zenitsu gritó como una tetera.
+139 | bg=black | Y créeme, el anime todavía no te ha mostrado ni la mitad.
+204-205 | bg=paper | Así que agarra unos snacks, porque vamos desde una montaña nevada hasta el Tokio de hoy.
+@ Crueldad
+1 | bg=paper | Estamos en la era Taisho, en Japón. Tanjiro Kamado es el hijo mayor de una familia pobre de carboneros.
+1 | bg=paper | Su papá murió, así que Tanjiro baja la montaña cargando carbón para alimentar a su mamá y a sus cinco hermanos.
+1 | bg=paper gif=anime-laughing_1 | Es tan amable que la gente del pueblo hace fila para pedirle favores. Este chico es un servicio al cliente con patas.
+1 | bg=black | Una noche, un anciano lo convence de quedarse, porque los demonios salen en la oscuridad.
+1 | bg=black punch | A la mañana siguiente, Tanjiro vuelve a casa y encuentra a toda su familia masacrada.
+1 | bg=speed:#e3262e | Solo Nezuko sigue tibia. Y cuando despierta, es un demonio.
+1 | bg=aura:#2b4cff | Entonces aparece Giyu Tomioka, un cazador de demonios, listo para cortarle la cabeza.
+1 | bg=speed | Tanjiro suplica. Luego pelea. Y luego hace un truco con su hacha que casi le vuela la cabeza a Giyu.
+1 | bg=paper | Y Nezuko, muerta de hambre, protege a su hermano en lugar de comérselo.
+1 | bg=aura:#2b4cff | Giyu piensa, estos dos son diferentes. Y los manda con su antiguo maestro.
+@ Entrenamiento con Urokodaki
+2-3 | bg=paper | En el camino, Tanjiro mata a su primer demonio con un hacha y con un timing de luz solar bastante dudoso.
+2-3 | bg=paper gif=anime-smug_1 | Luego conoce a Sakonji Urokodaki, un Pilar del Agua retirado que usa una máscara de tengu para que nadie vea lo tierno que es.
+3-4 | bg=paper | La primera prueba de Urokodaki es una montaña llena de trampas. Tanjiro tiene que volver antes del amanecer.
+3-4 | bg=speed | Se cae, sangra, lo golpean troncos, y aun así regresa.
+4 | bg=paper | Así que durante un año entero, Urokodaki lo entrena como un speedrun de protagonista shonen.
+4-5 | bg=black | Mientras tanto, Nezuko solo... duerme. Durante dos años. Y la verdad, la entiendo.
+5 | bg=paper stamp=UN_PASO_MAS | Su última prueba es partir una roca enorme a la mitad. Y no puede.
+5 | bg=aura:#7ec8ff | Entonces aparecen dos chicos de la nada. Sabito y Makomo.
+5 | bg=speed | Sabito le da una paliza todos los días durante seis meses, con una espada de madera, mientras Makomo le da consejos.
+5 | bg=aura:#7ec8ff | Por fin Tanjiro le acierta un golpe a Sabito. Sabito sonríe... y desaparece.
+5 | bg=paper punch | Y Tanjiro ha partido la roca. No la máscara. La roca. Arco de entrenamiento completado.
+@ Selección Final
+6 | bg=paper | La siguiente parada es la Selección Final. Sobrevivir siete días en una montaña llena de demonios. Fácil, ¿no?
+7 | bg=black punch gif=anime-shocked_2 | Entonces aparece esta cosa. El Demonio de las Manos. Literalmente un demonio hecho de brazos.
+7 | bg=black | Lleva en la montaña desde el periodo Edo, y se ha comido a trece alumnos de Urokodaki.
+7 | bg=black | Los reconocía por las máscaras de zorro que Urokodaki tallaba para darles suerte. Sabito y Makomo estaban entre ellos.
+7-8 | bg=paper stamp=MAESTROS_FANTASMA | Sí. Los compañeros de entrenamiento de Tanjiro eran fantasmas todo el tiempo. Momento Sexto Sentido.
+8 | bg=speed punch | Tanjiro usa la Respiración del Agua y le corta el cuello al Demonio de las Manos de un solo tajo.
+8 | bg=aura:#7ec8ff | Y mientras muere, le toma la mano, porque puede oler su tristeza.
+8 | bg=paper gif=anime-crying_1 | Esa es toda la serie en un momento. Matar al demonio. Llorar por la persona.
+@ El herrero y la primera misión
+9 | bg=paper | Tanjiro sobrevive y llega su herrero, Haganezuka. Un hombre adulto que hace berrinches por el color de una espada.
+9 | bg=halftone:#1b1b1b gif=anime-angry_1 | La espada de Tanjiro se vuelve negra, que al parecer trae mala suerte, así que Haganezuka intenta estrangularlo. Atención al cliente: cero estrellas.
+9 | bg=paper | Y Nezuko por fin despierta, y corre directo a los brazos de Urokodaki.
+10-12 | bg=paper | Primera misión. Desaparecen chicas en un pueblo. El culpable es un demonio que nada bajo la tierra como si fuera una piscina.
+10-12 | bg=speed | Y entonces, Nezuko le arranca la cabeza a un demonio de una patada. La hermanita no es la damisela. Es la guardaespaldas.
+12 | bg=black | El demonio moribundo se niega a decir el nombre de Muzan. Le tienen demasiado miedo.
+@ Muzan en Asakusa
+13 | bg=paper | Así que Tanjiro va a Asakusa, la gran ciudad, y sufre un choque cultural con los edificios altos y los fideos.
+13 | bg=black punch stamp=TE_ENCONTRE | Entonces lo huele. El olor de su casa. Muzan Kibutsuji.
+13 | bg=black | Y Muzan está paseando con esposa e hija, haciéndose pasar por un empresario humano.
+13-14 | bg=speed:#e3262e | Muzan convierte a un hombre cualquiera en demonio para distraerlo, y se va.
+14 | bg=paper | Tanjiro conoce a Tamayo, una doctora demonio que escapó del control de Muzan, y a su guardaespaldas Yushiro.
+14-15 | bg=paper gif=anime-smug_2 | Yushiro odia a todo el que no sea Tamayo. Es básicamente un simp con licencia de guardaespaldas.
+15 | bg=aura:#9e0f1a | Tamayo tiene un plan. Si le consiguen sangre de demonios, quizás pueda volver a convertir a Nezuko en humana.
+16-19 | bg=speed | Entonces Muzan envía a dos demonios. Susamaru, con sus pelotas mortales, y Yahaba, que tiene ojos en las palmas.
+16-19 | bg=paper gif=anime-laughing_2 | Una pelea de quemados con demonios. En algún lugar, un profesor de educación física está muy orgulloso.
+19 | bg=black | Tamayo hace que Susamaru diga el nombre de Muzan, y su maldición la destruye por dentro.
+@ Zenitsu e Inosuke
+20 | bg=paper gif=anime-facepalm_1 | Después, Tanjiro conoce a Zenitsu Agatsuma. De rodillas, rogándole a una chica cualquiera que se case con él.
+20-21 | bg=paper | Zenitsu es cobarde, llorón, y de alguna forma también sobrevivió a la Selección Final.
+21-22 | bg=speed | Van a la casa de los tambores, donde un demonio hace girar las habitaciones tocando tambores.
+22-23 | bg=speed punch | ¿Y Zenitsu? Se desmaya del miedo. Y entonces... Respiración del Trueno, Primera Postura. Relámpago y Trueno.
+23 | bg=aura:#ffd23d stamp=MODO_DORMIDO | Solo es fuerte cuando está inconsciente. Básicamente, cualquier gamer a las tres de la mañana.
+23-24 | bg=speed gif=anime-shocked_1 | Entonces un chico con máscara de jabalí atraviesa la pared. Inosuke Hashibira. Criado por jabalíes de verdad.
+24-25 | bg=paper | Tanjiro mata a Kyogai, el demonio del tambor, y le dice que su técnica era increíble. Kyogai llora. Solo quería que alguien apreciara lo que escribía.
+26-27 | bg=speed | Inosuke intenta apuñalar la caja de Nezuko, Zenitsu la protege con su cuerpo, y Tanjiro le da un cabezazo a Inosuke que lo manda a la semana que viene.
+27 | bg=paper gif=anime-laughing_1 | El cabezazo de Tanjiro es el ataque más fuerte de toda la serie. Esa frente es de diamante.
+@ Monte Natagumo
+28 | bg=black | Luego mandan al trío al Monte Natagumo, hogar de una familia de demonios araña.
+29-31 | bg=black | A los cazadores los controlan con hilos como marionetas. A algunos los obligan a matarse entre ellos.
+31-33 | bg=speed | Inosuke pelea contra el Padre Araña, un ogro gigante que no deja de crecer. Y por primera vez, tiene miedo.
+33-34 | bg=paper gif=anime-crying_2 | A Zenitsu lo muerden, empieza a convertirse en araña, y aun así logra un Relámpago a toda velocidad.
+34-37 | bg=black | Y luego está Rui. Luna Inferior Cinco. Un niño demonio que obliga a desconocidos a ser su familia.
+37-38 | bg=speed:#e3262e | Los hilos de Rui son tan fuertes que rompen la espada de Tanjiro. Nezuko queda colgada en su telaraña.
+39-40 | bg=aura:#ff6a2b punch stamp=HINOKAMI_KAGURA | En ese momento, Tanjiro recuerda la danza de fuego de su padre. Hinokami Kagura.
+40 | bg=aura:#ff6a2b | Y la sangre de Nezuko arde. Sangre Explosiva. Hermano y hermana, los dos en llamas, golpeando al mismo tiempo.
+40 | bg=speed punch gif=anime-mind-blown_1 | Si viste el episodio diecinueve del anime, sabes que este es el momento en que el mundo entero se volvió fan de Demon Slayer.
+41 | bg=aura:#2b4cff | Pero Rui no está muerto. Así que entra Giyu y lo termina. Respiración del Agua, Undécima Postura. Calma Total.
+41-43 | bg=aura:#2b4cff | Y antes de morir, Rui recuerda que mató a sus propios padres. Lo único que quería era una familia de verdad.
+42-43 | bg=paper gif=anime-smug_1 | Entonces aparece Shinobu Kocho, sonriendo, e intenta matar a Nezuko. Giyu la detiene. Dos Pilares peleando con espadas y con voz educada.
+@ Reunión de los Pilares
+44-45 | bg=paper | Llevan a Tanjiro y a Nezuko ante los Pilares. Los nueve espadachines más fuertes del Cuerpo.
+45 | bg=speed:#e3262e gif=anime-angry_2 | Sanemi apuñala la caja de Nezuko y se hace sangrar a propósito para tentarla. La peor entrevista de trabajo de la historia.
+45-46 | bg=paper | Pero Nezuko se niega a beber. Y Urokodaki y Giyu juraron que si ella alguna vez se come a un humano, se harán el seppuku.
+46 | bg=aura:#ffd23d | El líder, Kagaya Ubuyashiki, la acepta. Hasta los Pilares se inclinan ante este hombre.
+@ El peor jefe del mundo
+51-52 | bg=black | Mientras tanto, Muzan convoca una reunión de las Lunas Inferiores.
+52 | ai=boss_meeting.png bg=aura:#9e0f1a gif=anime-nervous_1 | Y esto es básicamente una junta de empresa donde el jefe mata a todo el equipo. Todo lo que digas puede ser usado en tu contra.
+52 | bg=black punch | ¿Dices algo negativo? Muerto. ¿Dices algo positivo? También muerto. Solo Enmu sobrevive, porque dice que le encanta.
+52 | bg=black gif=anime-facepalm_2 | Recursos Humanos ha entrado al chat. Recursos Humanos ha salido del chat. Recursos Humanos fue devorado.
+@ Mansión Mariposa
+47-50 | bg=paper | De vuelta en la Mansión Mariposa, el trío aprende la Respiración de Concentración Total. Incluso mientras duermen.
+48-50 | bg=paper gif=anime-laughing_2 | Kanao los destroza en un juego de atrapar con tazas de medicina. Inosuke literalmente se pone a hacer berrinche bajo una cobija.
+50-51 | bg=paper | Tanjiro entrena tanto que puede reventar una calabaza soplando. Y lanza la moneda de Kanao por ella, y le dice que empiece a seguir a su propio corazón.
+@ Tren Infinito
+53-54 | bg=paper | Siguiente misión. Un tren donde han desaparecido cuarenta personas. Y el Pilar de la Llama, Kyojuro Rengoku, ya está a bordo.
+54 | bg=aura:#ff6a2b gif=anime-thumbs-up_1 | Rengoku come gritando delicioso después de cada bocado. Este hombre es un golden retriever con espada.
+55-56 | ai=dream_train.png bg=stars | Entonces todos se quedan dormidos. Enmu, Luna Inferior Uno, los atrapa en sueños.
+55-56 | bg=paper | Tanjiro sueña que su familia sigue viva. Y tiene que cortarse el cuello dentro del sueño para despertar.
+57-60 | bg=speed | Enmu se ha fusionado con todo el tren. Doscientos pasajeros están dentro de un demonio.
+60-62 | bg=speed punch | Inosuke encuentra el cuello, Tanjiro lo corta, y el tren se descarrila.
+63 | bg=black punch stamp=LUNA_SUPERIOR_TRES | Y de la nada, cae Akaza. Luna Superior Tres.
+63-64 | bg=speed:#e3262e | Akaza respeta tanto la fuerza que le ruega a Rengoku que se convierta en demonio. Rengoku dice que no.
+64-65 | bg=aura:#ff6a2b | Novena Postura. Rengoku. Cada centímetro de su cuerpo está en llamas.
+65-66 | bg=black | Akaza le atraviesa el pecho de un golpe. Pero Rengoku lo retiene ahí hasta que sale el sol.
+66 | bg=paper gif=anime-crying_1 | Rengoku le dice a Tanjiro, enciende tu corazón. Y muere sonriendo.
+66 | bg=speed | Tanjiro le grita a Akaza por huir. Es un cobarde que huye del sol. Rengoku ganó.
+66 | bg=aura:#ff6a2b | Dato curioso: la película del Tren Infinito se volvió la más taquillera de la historia en Japón. Eso lo hizo Rengoku.
+@ Distrito Rojo
+70-71 | bg=halftone:#9b59ff | Después aparece el Pilar del Sonido, Tengen Uzui. Extravagante. Musculoso. Tres esposas.
+71-72 | bg=paper gif=anime-laughing_1 | Manda a los chicos de incógnito al distrito rojo... vestidos de chicas. Ese maquillaje es un crimen.
+72-75 | bg=paper | Las tres esposas de Tengen se infiltraron y desaparecieron. Algo se está comiendo a la gente allí.
+76-79 | bg=speed:#e3262e | Es Daki, Luna Superior Seis. Guarda a la gente dentro de sus fajas como snacks en el refrigerador.
+80-82 | bg=black | Tanjiro se exige demasiado, y Daki casi lo mata.
+82-84 | bg=speed:#e3262e punch gif=anime-shocked_2 | Así que Nezuko se transforma por completo. Cuerno, enredaderas, forma adulta. Destroza a Daki.
+84-85 | bg=speed:#e3262e | Pero casi se come a un humano. Tanjiro la salva cantándole una canción de cuna que les cantaba su madre.
+86-88 | bg=black stamp=DOS_POR_UNO | Y luego el verdadero giro. El hermano de Daki, Gyutaro, vivía dentro de ella. La Luna Superior Seis son dos demonios.
+88-92 | bg=speed | Tengen es envenenado, pierde una mano, y aun así sigue peleando con su Partitura.
+92-95 | bg=speed punch | Inosuke, Zenitsu, Tanjiro y Tengen cortan los dos cuellos al mismo tiempo.
+96-97 | bg=black | Y al morir, Gyutaro y Daki recuerdan que eran hermanos que solo se tenían el uno al otro.
+97 | bg=paper gif=anime-crying_2 | En la oscuridad, Gyutaro le dice que vaya al cielo. Ella se sube a su espalda y le dice que irá al infierno con él. Siempre.
+97-98 | bg=aura:#9b59ff | Tengen se retira, vivo, con sus tres esposas. El final más raro para un Pilar en esta serie.
+@ Aldea de los Herreros
+99-101 | bg=paper | Tanjiro rompe su espada otra vez, así que Haganezuka lo persigue con un cuchillo. Un clásico.
+101-103 | bg=paper | En la Aldea de los Herreros, Tanjiro entrena con un robot de seis brazos construido para copiar a un solo hombre. Yoriichi Tsugikuni.
+103 | bg=aura:#ffd23d stamp=RECUERDA_ESTO | Dentro de ese robot hay una espada de trescientos años. Recuerda a Yoriichi. Es importante.
+104-107 | bg=paper | Aquí conocemos a dos Pilares más. Muichiro Tokito, Pilar de la Niebla, catorce años y lo olvida todo.
+104-107 | bg=paper gif=anime-smug_2 | Y Mitsuri Kanroji, Pilar del Amor. Come como cinco luchadores de sumo. Entró al Cuerpo para encontrar esposo.
+107-110 | bg=speed:#e3262e | Entonces atacan dos Lunas Superiores a la vez. Gyokko, un demonio artista de vasijas, y Hantengu, un anciano que se divide en emociones.
+110-115 | bg=speed | Cada vez que le cortas la cabeza a Hantengu, se divide. Ira, Alegría, Tristeza, Placer. Intensamente, pero malvado.
+115-119 | bg=aura:#7ec8ff | Muichiro recuerda su pasado, a su hermano gemelo, y despierta una Marca de Cazador.
+119 | bg=aura:#7ec8ff punch | Derrota a Gyokko con una postura que acaba de inventar. Respiración de la Niebla, Séptima Postura.
+120-123 | bg=paper | Genya Shinazugawa, el hermano menor de Sanemi, come carne de demonio para obtener poderes de demonio por un rato.
+122-125 | bg=aura:#ff5fa2 punch | Y Mitsuri obtiene su Marca, conteniendo sola a Zohakuten, el clon del odio de Hantengu.
+125-126 | bg=speed | Tanjiro persigue al verdadero Hantengu, un demonio diminuto que se esconde como un ratón.
+126-127 | bg=black | Sale el sol. Tanjiro tiene que elegir. Salvar a Nezuko del sol, o matar a Hantengu.
+127 | bg=aura:#ffd23d punch stamp=VENCIO_AL_SOL | Nezuko lo aparta de una patada y camina hacia la luz del sol. Y no se quema.
+127 | bg=paper gif=anime-crying_1 | ¿Sus primeras palabras en meses? Buenos días.
+127 | bg=black | Y muy lejos, Muzan sonríe. Porque ahora la quiere a ella.
+@ Entrenamiento de los Pilares
+128-130 | bg=paper | Con Muzan buscando a Nezuko, el Cuerpo organiza el Entrenamiento de los Pilares. Cada Pilar dirige un campamento.
+130-131 | bg=aura:#2b4cff | Giyu le cuenta a Tanjiro por qué no se siente como los demás. Sabito lo salvó en la Selección Final y murió.
+132-134 | bg=speed gif=anime-angry_1 | Sanemi y Tanjiro se pelean en pleno entrenamiento. Sanemi termina estampado contra una pared.
+134-135 | bg=paper | Y Gyomei Himejima, el Pilar de la Roca, el más fuerte de todos, es ciego y llora todo el tiempo.
+134-135 | bg=paper | Su entrenamiento es empujar una roca gigante. Ya sabes, rutina normal de gimnasio.
+@ La caída de Ubuyashiki
+136-137 | bg=black | Entonces Muzan encuentra la mansión Ubuyashiki. Kagaya, el líder, se está muriendo por una maldición.
+137 | bg=speed punch stamp=BOOM | Kagaya lo recibe sonriendo. Y luego hace explotar la casa. Con él y su familia adentro.
+137-138 | bg=speed:#e3262e | Tamayo le inyecta a Muzan una droga para volverlo humano. Todos los Pilares se lanzan al ataque.
+138-139 | bg=black | Y entonces Muzan los deja caer a todos en el Castillo Infinito.
+@ Castillo Infinito
+139-141 | bg=black | Es un laberinto infinito de habitaciones, controlado por una demonio con un biwa.
+141-143 | bg=paper | Shinobu encuentra a Doma, Luna Superior Dos. El demonio que mató a su hermana.
+142-143 | bg=black gif=anime-angry_2 | Doma es el líder de una secta, con sonrisa falsa y cero sentimientos reales. El personaje más odiado del fandom.
+143 | bg=black punch | Shinobu no puede cortar cuellos. Es demasiado pequeña. Así que Doma la absorbe.
+143 | bg=aura:#ff5fa2 stamp=PLAN_COMPLETO | Pero ese era el plan. Shinobu llenó su cuerpo con tanto veneno de glicina que se convirtió en una bomba andante.
+144-145 | bg=aura:#ffd23d | Zenitsu encuentra a Kaigaku. Su antiguo compañero de entrenamiento. Que se volvió demonio.
+145 | bg=aura:#ffd23d punch | Zenitsu inventa su propia postura. Séptima Postura. Dios del Trueno Llameante. Zenitsu deja de llorar durante un capítulo entero.
+146-148 | bg=speed:#e3262e | Y Tanjiro y Giyu pelean contra Akaza. El que mató a Rengoku.
+148-151 | bg=speed | Tanjiro alcanza el Estado Desinteresado. Esconde su espíritu de pelea y Akaza no puede rastrearlo.
+151 | bg=speed punch gif=anime-mind-blown_2 | Le corta el cuello a Akaza. Y Akaza regenera la cabeza de todos modos.
+152-155 | bg=black | Hasta que recuerda quién era. Hakuji. Un chico que se enamoró y lo perdió todo por un veneno.
+155-156 | bg=paper gif=anime-crying_2 | Akaza se golpea a sí mismo hasta morir. El demonio que quería fuerza por fin la suelta.
+157-163 | bg=speed | Kanao e Inosuke enfrentan a Doma. El veneno de Shinobu hace efecto y su cuerpo se desmorona.
+163 | bg=paper | Kanao usa sus ojos. Inosuke recuerda a su madre. Y Doma muere sin arrepentimientos, porque nunca sintió nada.
+@ Kokushibo
+164-166 | ai=six_eyes.png bg=aura:#7b2cff | Y entonces, el demonio más aterrador de todos. Luna Superior Uno. Kokushibo. Seis ojos.
+165-167 | bg=black | Es el hermano gemelo de Yoriichi. Y el antepasado de Muichiro.
+167-170 | bg=speed | Muichiro pierde un brazo. Genya es partido en dos. Sanemi y Himejima entran a pelear.
+170-173 | bg=speed | Incluso con dos Pilares al máximo, es como pelear contra un desastre natural.
+173-175 | bg=black punch | Genya se come un pedazo de Kokushibo y le dispara. Muichiro lo apuñala y pone su espada al rojo.
+175 | bg=black | Kokushibo ve su reflejo en una espada. Un monstruo. ¿Esto es lo que yo quería?
+175-176 | bg=paper gif=anime-crying_1 | Se desmorona. Genya y Muichiro mueren. Genya pidiéndole perdón a Sanemi hasta el final.
+@ Yoriichi Tsugikuni
+186-187 | bg=paper | Y luego llega la verdadera historia. Yoriichi Tsugikuni, el hombre que creó la Respiración del Sol.
+186-187 | bg=paper | Nació con una marca. Nunca entrenó. Le pegó a su maestro con una espada de madera en el primer intento y se aburrió.
+187 | bg=aura:#ff6a2b stamp=EL_MEJOR | Casi mata a Muzan hace siglos. Muzan tuvo tanto miedo que se partió en mil ochocientos pedazos.
+187 | bg=paper | Uno de los espadachines que conoció en esa época era un vendedor de carbón. Un Kamado.
+187 | bg=aura:#ff6a2b | De ahí viene el Hinokami Kagura. El padre de Tanjiro estuvo bailando la Respiración del Sol todo el tiempo.
+@ La batalla final
+178-182 | ai=sunrise_battle.png bg=aura:#ff6a2b | El castillo se derrumba. Muzan sale en medio de Tokio. Falta una hora para el amanecer.
+180-183 | bg=speed:#e3262e | El Cuerpo tiene una sola misión. Mantener a Muzan al descubierto hasta que salga el sol.
+183-185 | bg=speed | El cuerpo de Muzan es una pesadilla. Látigos por todas partes. Cinco cerebros. Siete corazones.
+184-188 | bg=black | Iguro, Mitsuri, Giyu, Sanemi, Himejima. Todos dan todo lo que tienen.
+186-190 | bg=black punch | Tanjiro es envenenado y casi muere. Luego despierta y pelea con la Respiración del Sol completa.
+190-193 | bg=paper | Mitsuri e Iguro apenas se mantienen en pie. Iguro ya está ciego, pero su serpiente ve por él.
+193-196 | bg=speed | La droga de Tamayo funciona. Envejece a Muzan nueve mil años y lo vuelve más lento.
+196-198 | bg=aura:#ffd23d punch | Llega el amanecer. Himejima rodea a Muzan con una cadena. Todos lo sujetan.
+198-199 | bg=speed | Muzan se convierte en un bebé gigante para cubrirse del sol. Sí, en serio. Un bebé gigante.
+199 | bg=paper gif=anime-facepalm_1 | Con ustedes, el señor Soy el Ser Perfecto.
+200 | bg=aura:#ffd23d punch stamp=MUZAN_HA_MUERTO | Y el sol lo quema hasta desaparecerlo.
+200 | bg=paper gif=anime-crying_2 | Himejima muere. Iguro y Mitsuri prometen casarse en su próxima vida. Eso duele.
+@ Tanjiro, el Rey Demonio
+201 | bg=black punch gif=anime-shocked_1 | Y entonces. Muzan hace su último movimiento. Pone todo su poder dentro de Tanjiro.
+201-202 | bg=speed:#e3262e | Tanjiro se convierte en demonio. Y no cualquier demonio. El rey de los demonios, resistente al sol.
+202 | bg=black | Muzan le ruega dentro de su mente. No regreses. Tú eres mi sucesor.
+202-203 | bg=paper | Pero Nezuko lo abraza, y Kanao le inyecta la última cura de Tamayo.
+203 | bg=aura:#ffd23d | Giyu, Inosuke, Zenitsu, Nezuko, todos tirando de él para traerlo de vuelta.
+203 | bg=paper gif=anime-crying_1 | Y Tanjiro vuelve a ser humano. El último plan de Muzan falla porque su familia lo amaba.
+@ Epílogo
+204 | bg=paper | Tanjiro vuelve a casa con Nezuko, Zenitsu e Inosuke. Nezuko es humana otra vez. Bolitas de arroz para todos.
+204 | ai=chibi_rice.png bg=halftone:#ffd23d | Por favor, que alguien proteja a estos niños para siempre.
+205 | ai=modern_kids.png bg=stars | Y el capítulo final salta al Tokio de hoy.
+205 | bg=paper | Sus descendientes son chicos normales. Kamados, Agatsumas, Hashibiras.
+205 | bg=paper stamp=REENCARNADOS | Y hay versiones reencarnadas de los Pilares por todas partes. Iguro y Mitsuri tienen un restaurante. Juntos.
+205 | bg=paper | Zenitsu escribió un libro entero sobre sus aventuras. Su bisnieto cree que es ficción.
+@ Cierre
+205 | bg=aura:#ff6a2b | Así que eso es Demon Slayer. Doscientos cinco capítulos sobre un chico que nunca perdió su bondad.
+40 | bg=speed | ¿El final fue perfecto? ¿El Castillo Infinito fue el mejor arco? Dímelo en los comentarios.
+1 | bg=halftone:#e3262e page | Y si quieres cada capítulo explicado, suscríbete, porque Stormi Knows Anime.

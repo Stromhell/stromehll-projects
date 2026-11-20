@@ -1,0 +1,213 @@
+# Demon Slayer FULL STORY (all 205 chapters) - Stormi Knows Anime v1, 20 Nov 2026
+# Row: CHAPTERS | options | narration
+# options: bg=paper|speed|speed:#hex|aura:#hex|halftone:#hex|black|stars  gif=<name>  gpos=br|bl|tr  stamp=TEXT_WITH_UNDERSCORES  punch  ai=<file in 03 Frames/art>  move=in|left|right|up|down|out  page (full page instead of a panel)
+@ Hook
+1 | bg=paper | One kid. One box. One sister who might eat him.
+200 | bg=speed punch gif=anime-shocked_1 | And by the end, the strongest demon in history gets beaten by a charcoal seller with a forehead scar.
+1 | bg=halftone:#e3262e page | This is the entire Demon Slayer manga. All two hundred and five chapters. In one video.
+146-156 | bg=speed | Every fight, every death, every tear, and every time Zenitsu screamed like a kettle.
+139 | bg=black | And trust me, the anime has not shown you the half of it.
+204-205 | bg=paper | So grab some snacks, because we are going from a snowy mountain all the way to modern day Tokyo.
+@ Cruelty
+1 | bg=paper | It's the Taisho era in Japan. Tanjiro Kamado is the oldest son of a poor charcoal family.
+1 | bg=paper | Dad passed away, so Tanjiro carries charcoal down the mountain to keep five siblings and his mom fed.
+1 | bg=paper gif=anime-laughing_1 | He is so nice that people in town line up just to ask him for favors. The guy is a walking customer service hotline.
+1 | bg=black | One night an old man convinces him to stay over, because demons roam after dark.
+1 | bg=black punch | Tanjiro comes home the next morning to find his whole family slaughtered.
+1 | bg=speed:#e3262e | Only Nezuko is still warm. And when she wakes up, she's a demon.
+1 | bg=aura:#2b4cff | Then Giyu Tomioka, a demon slayer, shows up to take her head.
+1 | bg=speed | Tanjiro begs. Then he fights. Then he pulls a hatchet trick that nearly takes Giyu's head off.
+1 | bg=paper | And Nezuko, starving, protects her brother instead of eating him.
+1 | bg=aura:#2b4cff | Giyu thinks, these two are different. And he sends them to his old teacher.
+@ Training with Urokodaki
+2-3 | bg=paper | On the road, Tanjiro kills his first demon with a hatchet and some extremely questionable sunlight timing.
+2-3 | bg=paper gif=anime-smug_1 | Then he meets Sakonji Urokodaki, a retired Water Hashira who wears a tengu mask so nobody can see how soft he is.
+3-4 | bg=paper | Urokodaki's first test is a trap filled mountain. Tanjiro has to come back before dawn.
+3-4 | bg=speed | He falls, he bleeds, he gets hit by logs, and he makes it back anyway.
+4 | bg=paper | So for a whole year, Urokodaki trains him like a shonen protagonist speedrun.
+4-5 | bg=black | Meanwhile Nezuko just... sleeps. For two years. Which is honestly a mood.
+5 | bg=paper stamp=ONE_MORE_STEP | His last test is to cut a boulder in half. And he cannot do it.
+5 | bg=aura:#7ec8ff | Then two kids appear out of nowhere. Sabito and Makomo.
+5 | bg=speed | Sabito beats him up every single day for six months, with a wooden sword, while Makomo gives him tips.
+5 | bg=aura:#7ec8ff | Finally Tanjiro lands a hit on Sabito. Sabito smiles... and vanishes.
+5 | bg=paper punch | And Tanjiro has cut the boulder. Not the mask. The rock. Training arc complete.
+@ Final Selection
+6 | bg=paper | Next stop is Final Selection. Survive seven days on a mountain full of demons. Easy, right?
+7 | bg=black punch gif=anime-shocked_2 | Then this thing shows up. The Hand Demon. Literally a demon made of arms.
+7 | bg=black | He's been on the mountain since the Edo period, and he has eaten thirteen of Urokodaki's students.
+7 | bg=black | He found them by the fox masks Urokodaki carved for luck. Sabito and Makomo were among them.
+7-8 | bg=paper stamp=GHOST_TUTORS | Yep. Tanjiro's training buddies were ghosts the whole time. Sixth Sense moment.
+8 | bg=speed punch | Tanjiro uses Water Breathing and takes the Hand Demon's neck in one swing.
+8 | bg=aura:#7ec8ff | And as it dies, he holds its hand, because he can smell its sadness.
+8 | bg=paper gif=anime-crying_1 | That is the whole show in one moment. Kill the demon. Mourn the person.
+@ Swordsmith and First Mission
+9 | bg=paper | Tanjiro survives, and his swordsmith Haganezuka arrives. He's a grown man who throws tantrums over sword color.
+9 | bg=halftone:#1b1b1b gif=anime-angry_1 | Tanjiro's blade turns black, which is apparently bad luck, so Haganezuka tries to strangle him. Customer service: zero stars.
+9 | bg=paper | And Nezuko finally wakes up, and runs straight into Urokodaki's arms.
+10-12 | bg=paper | First mission. Girls are vanishing from a town. The culprit is a demon who swims through the ground like it's a pool.
+10-12 | bg=speed | And then, Nezuko kicks a demon's head clean off. The little sister is not a damsel. She's the bodyguard.
+12 | bg=black | The dying demon refuses to say Muzan's name. They're too scared of him.
+@ Muzan in Asakusa
+13 | bg=paper | So Tanjiro goes to Asakusa, the big city, and he gets culture shock from tall buildings and noodles.
+13 | bg=black punch stamp=FOUND_YOU | Then he smells it. The scent from his house. Muzan Kibutsuji.
+13 | bg=black | And Muzan is walking around with a wife and daughter, pretending to be a human businessman.
+13-14 | bg=speed:#e3262e | Muzan turns a random man into a demon to cause a distraction, and leaves.
+14 | bg=paper | Tanjiro meets Tamayo, a demon doctor who escaped Muzan's control, and her bodyguard Yushiro.
+14-15 | bg=paper gif=anime-smug_2 | Yushiro hates everyone who is not Tamayo. He is basically a simp with a bodyguard license.
+15 | bg=aura:#9e0f1a | Tamayo has a plan. Give her demon blood samples, and she might be able to turn Nezuko back into a human.
+16-19 | bg=speed | Then Muzan sends two demons. Susamaru with her deadly kickballs, and Yahaba, who has eyes on his palms.
+16-19 | bg=paper gif=anime-laughing_2 | A fight with demon dodgeball. Somewhere, a gym teacher is very proud.
+19 | bg=black | Tamayo makes Susamaru say Muzan's name, and his curse destroys her from the inside.
+@ Zenitsu and Inosuke
+20 | bg=paper gif=anime-facepalm_1 | Next, Tanjiro meets Zenitsu Agatsuma. On his knees, begging a random girl to marry him.
+20-21 | bg=paper | Zenitsu is a coward, a crybaby, and somehow he also survived Final Selection.
+21-22 | bg=speed | They head to the drum house, where a demon spins rooms around by beating drums.
+22-23 | bg=speed punch | And Zenitsu? He faints from fear. And then... Thunder Breathing, First Form. Thunderclap and Flash.
+23 | bg=aura:#ffd23d stamp=SLEEP_MODE_ON | He's only strong when he's unconscious. Basically, every gamer at three a.m.
+23-24 | bg=speed gif=anime-shocked_1 | Then a boy in a boar mask crashes through the wall. Inosuke Hashibira. Raised by actual boars.
+24-25 | bg=paper | Tanjiro kills Kyogai, the drum demon, and tells him his blood demon art was amazing. Kyogai cries. He just wanted someone to like his writing.
+26-27 | bg=speed | Inosuke tries to stab Nezuko's box, Zenitsu protects it with his body, and Tanjiro headbutts Inosuke into next week.
+27 | bg=paper gif=anime-laughing_1 | Tanjiro's headbutt is the strongest move in the whole series. That forehead is made of diamonds.
+@ Natagumo Mountain
+28 | bg=black | Then the trio are sent to Natagumo Mountain, home of a family of spider demons.
+29-31 | bg=black | Slayers are being controlled like puppets by strings. Some are forced to kill each other.
+31-33 | bg=speed | Inosuke fights the Father Spider, a giant ogre that keeps growing. And for the first time, he is scared.
+33-34 | bg=paper gif=anime-crying_2 | Zenitsu gets bitten, starts turning into a spider, and still somehow pulls off a full speed Thunderclap.
+34-37 | bg=black | And then there's Rui. Lower Moon Five. A kid demon who forces strangers to play his family.
+37-38 | bg=speed:#e3262e | Rui's threads are so strong they break Tanjiro's sword. Nezuko gets hung up in his web.
+39-40 | bg=aura:#ff6a2b punch stamp=HINOKAMI_KAGURA | In that moment, Tanjiro remembers his father's fire dance. Hinokami Kagura.
+40 | bg=aura:#ff6a2b | And Nezuko's blood burns. Exploding Blood. Brother and sister, both on fire, both hitting at once.
+40 | bg=speed punch gif=anime-mind-blown_1 | If you watched episode nineteen in the anime, you know this is the moment the whole world became a Demon Slayer fan.
+41 | bg=aura:#2b4cff | But Rui isn't dead. So Giyu walks in and ends it. Water Breathing, Eleventh Form. Dead Calm.
+41-43 | bg=aura:#2b4cff | And before he dies, Rui remembers he killed his own parents. All he wanted was a real family.
+42-43 | bg=paper gif=anime-smug_1 | Then Shinobu Kocho shows up, smiling, and tries to kill Nezuko. Giyu stops her. The two Hashira have a sword fight in polite voices.
+@ Hashira Meeting
+44-45 | bg=paper | Tanjiro and Nezuko are dragged in front of the Hashira. The nine strongest swordsmen in the Corps.
+45 | bg=speed:#e3262e gif=anime-angry_2 | Sanemi stabs Nezuko's box and bleeds on purpose to tempt her. It's the worst job interview in history.
+45-46 | bg=paper | But Nezuko refuses to drink. And Urokodaki and Giyu have sworn that if she ever eats a human, they will commit seppuku.
+46 | bg=aura:#ffd23d | The leader, Kagaya Ubuyashiki, accepts her. Even the Hashira bow to this man.
+@ The Worst Boss Ever
+51-52 | bg=black | Meanwhile, Muzan calls a meeting of the Lower Moons.
+52 | ai=boss_meeting.png bg=aura:#9e0f1a gif=anime-nervous_1 | And this is basically a corporate meeting where the boss kills the whole team. Anything you say can be used against you.
+52 | bg=black punch | Say something negative? Dead. Say something positive? Also dead. Only Enmu survives, because he says he loves it.
+52 | bg=black gif=anime-facepalm_2 | HR has entered the chat. HR has left the chat. HR has been eaten.
+@ Butterfly Mansion
+47-50 | bg=paper | Back at the Butterfly Mansion, the trio learn Total Concentration Breathing. Even while sleeping.
+48-50 | bg=paper gif=anime-laughing_2 | Kanao destroys them at a game of tag with medicine cups. Inosuke literally sulks under a blanket.
+50-51 | bg=paper | Tanjiro trains so hard he can blow up a gourd with his lungs. And he flips Kanao's coin for her, and tells her to start following her own heart.
+@ Mugen Train
+53-54 | bg=paper | Next mission. A train where forty people have vanished. And the Flame Hashira, Kyojuro Rengoku, is already on board.
+54 | bg=aura:#ff6a2b gif=anime-thumbs-up_1 | Rengoku eats lunch shouting tasty after every bite. This man is a golden retriever with a sword.
+55-56 | ai=dream_train.png bg=stars | Then everyone falls asleep. Enmu, Lower Moon One, traps them in dreams.
+55-56 | bg=paper | Tanjiro dreams his family is still alive. And he has to cut his own throat in the dream to wake up.
+57-60 | bg=speed | Enmu has fused himself to the whole train. Two hundred passengers are inside a demon.
+60-62 | bg=speed punch | Inosuke finds the neck, Tanjiro cuts it, and the train derails.
+63 | bg=black punch stamp=UPPER_MOON_THREE | Then out of nowhere, Akaza drops in. Upper Moon Three.
+63-64 | bg=speed:#e3262e | Akaza respects strength so much he begs Rengoku to become a demon. Rengoku says no.
+64-65 | bg=aura:#ff6a2b | Ninth Form. Rengoku. Every inch of his body is on fire.
+65-66 | bg=black | Akaza punches through his chest. But Rengoku keeps him there until the sun rises.
+66 | bg=paper gif=anime-crying_1 | Rengoku tells Tanjiro, set your heart ablaze. And he dies smiling.
+66 | bg=speed | Tanjiro screams at Akaza for running away. He is a coward who runs from the sun. Rengoku won.
+66 | bg=aura:#ff6a2b | Fun fact: the Mugen Train movie became the highest grossing film ever in Japan. Rengoku did that.
+@ Entertainment District
+70-71 | bg=halftone:#9b59ff | Next, the Sound Hashira, Tengen Uzui, shows up. Flashy. Muscular. Three wives.
+71-72 | bg=paper gif=anime-laughing_1 | He sends the boys undercover in the red light district... dressed as girls. The makeup is crime.
+72-75 | bg=paper | Tengen's three wives went undercover and disappeared. Something is eating people there.
+76-79 | bg=speed:#e3262e | It's Daki, Upper Moon Six. She stores people inside her obi sashes like snacks in a fridge.
+80-82 | bg=black | Tanjiro pushes himself too far, and Daki nearly kills him.
+82-84 | bg=speed:#e3262e punch gif=anime-shocked_2 | So Nezuko goes full demon. Horn, vines, adult form. She tears Daki apart.
+84-85 | bg=speed:#e3262e | But she almost eats a human. Tanjiro saves her by singing a lullaby their mother used to sing.
+86-88 | bg=black stamp=TWO_FOR_ONE | Then the real twist. Daki's brother Gyutaro was living inside her. Upper Moon Six is two demons.
+88-92 | bg=speed | Tengen gets poisoned, loses a hand, and still fights using his Musical Score.
+92-95 | bg=speed punch | Inosuke, Zenitsu, Tanjiro and Tengen cut both necks at the same time.
+96-97 | bg=black | And in death, Gyutaro and Daki remember they were siblings who only had each other.
+97 | bg=paper gif=anime-crying_2 | In the dark, Gyutaro tells her to go to heaven. She jumps on his back and says she'll go to hell with him. Every time.
+97-98 | bg=aura:#9b59ff | Tengen retires, alive, with all three wives. The rarest ending for a Hashira in this series.
+@ Swordsmith Village
+99-101 | bg=paper | Tanjiro breaks his sword again, so Haganezuka chases him with a knife. Classic.
+101-103 | bg=paper | In the Swordsmith Village, Tanjiro trains with a six armed robot built to copy one man. Yoriichi Tsugikuni.
+103 | bg=aura:#ffd23d stamp=REMEMBER_THIS | Inside that robot, there's a three hundred year old sword. Remember Yoriichi. He matters.
+104-107 | bg=paper | Here we meet two more Hashira. Muichiro Tokito, Mist Hashira, fourteen and forgets everything.
+104-107 | bg=paper gif=anime-smug_2 | And Mitsuri Kanroji, Love Hashira. Eats like five sumo wrestlers. Joined the Corps to find a husband.
+107-110 | bg=speed:#e3262e | Then two Upper Moons attack at once. Gyokko, a pot demon artist, and Hantengu, an old man who splits into emotions.
+110-115 | bg=speed | Every time you cut Hantengu's head, he splits. Anger, Joy, Sorrow, Pleasure. Inside Out, but evil.
+115-119 | bg=aura:#7ec8ff | Muichiro remembers his past, his twin brother, and unlocks a Demon Slayer Mark.
+119 | bg=aura:#7ec8ff punch | He cuts Gyokko down with a form he just invented. Mist Breathing, Seventh Form.
+120-123 | bg=paper | Genya Shinazugawa, Sanemi's little brother, eats demon flesh to temporarily gain demon powers.
+122-125 | bg=aura:#ff5fa2 punch | And Mitsuri gets her Mark, holding off Zohakuten, Hantengu's hatred clone, alone.
+125-126 | bg=speed | Tanjiro chases the real Hantengu, a tiny little demon hiding like a mouse.
+126-127 | bg=black | The sun comes up. Tanjiro has to choose. Save Nezuko from the sun, or kill Hantengu.
+127 | bg=aura:#ffd23d punch stamp=SHE_CONQUERED_THE_SUN | Nezuko kicks him away and walks into the sunlight. And she doesn't burn.
+127 | bg=paper gif=anime-crying_1 | Her first words in months? Good morning.
+127 | bg=black | And far away, Muzan smiles. Because now he wants her.
+@ Hashira Training
+128-130 | bg=paper | With Muzan coming for Nezuko, the Corps runs Hashira Training. Every Hashira runs a boot camp.
+130-131 | bg=aura:#2b4cff | Giyu tells Tanjiro why he isn't like the others. Sabito saved him at Final Selection and died.
+132-134 | bg=speed gif=anime-angry_1 | Sanemi and Tanjiro fight in the middle of training. Sanemi gets punched into a wall.
+134-135 | bg=paper | And Gyomei Himejima, the Stone Hashira, the strongest of them all, is blind and cries all the time.
+134-135 | bg=paper | His training is pushing a giant boulder. You know, a normal guy workout.
+@ The Fall of Ubuyashiki
+136-137 | bg=black | Then Muzan finds the Ubuyashiki estate. Kagaya, the leader, is dying of a curse.
+137 | bg=speed punch stamp=BOOM | Kagaya welcomes him in, smiling. Then he blows up the house. With himself and his family inside.
+137-138 | bg=speed:#e3262e | Tamayo injects Muzan with a drug to turn him human. All the Hashira jump in.
+138-139 | bg=black | And then Muzan drops them all into the Infinity Castle.
+@ Infinity Castle
+139-141 | bg=black | It's an endless maze of rooms, all controlled by a demon with a biwa.
+141-143 | bg=paper | Shinobu finds Doma, Upper Moon Two. The demon who killed her sister.
+142-143 | bg=black gif=anime-angry_2 | Doma is a cult leader with a fake smile and zero real feelings. The most hated character in the fandom.
+143 | bg=black punch | Shinobu cannot cut necks. She's too small. So Doma absorbs her.
+143 | bg=aura:#ff5fa2 stamp=PLAN_COMPLETE | But it was the plan. Shinobu filled her body with so much wisteria poison she became a walking bomb.
+144-145 | bg=aura:#ffd23d | Zenitsu finds Kaigaku. His old training brother. Who became a demon.
+145 | bg=aura:#ffd23d punch | Zenitsu invents his own form. Seventh Form. Flaming Thunder God. Zenitsu stops crying for a whole chapter.
+146-148 | bg=speed:#e3262e | And Tanjiro and Giyu fight Akaza. The man who killed Rengoku.
+148-151 | bg=speed | Tanjiro reaches the Selfless State. He hides his fighting spirit and Akaza can't track him.
+151 | bg=speed punch gif=anime-mind-blown_2 | He cuts Akaza's neck. And then Akaza regenerates his head anyway.
+152-155 | bg=black | Until he remembers who he was. Hakuji. A boy who fell in love and lost everything to poison.
+155-156 | bg=paper gif=anime-crying_2 | Akaza hits himself until he dies. The demon who wanted strength finally lets go.
+157-163 | bg=speed | Kanao and Inosuke take on Doma. Shinobu's poison kicks in and his body falls apart.
+163 | bg=paper | Kanao uses her eyes. Inosuke remembers his mother. And Doma dies with no regrets, because he never felt anything.
+@ Kokushibo
+164-166 | ai=six_eyes.png bg=aura:#7b2cff | Then the scariest demon of all. Upper Moon One. Kokushibo. Six eyes.
+165-167 | bg=black | He is Yoriichi's twin brother. And Muichiro's ancestor.
+167-170 | bg=speed | Muichiro loses an arm. Genya gets cut in half. Sanemi and Himejima step in.
+170-173 | bg=speed | Even with two Hashira at full power, it's like fighting a natural disaster.
+173-175 | bg=black punch | Genya eats a piece of Kokushibo and shoots him. Muichiro stabs him and burns his sword red.
+175 | bg=black | Kokushibo sees his reflection in a sword. A monster. Is this what I wanted?
+175-176 | bg=paper gif=anime-crying_1 | He falls apart. Genya and Muichiro die. Genya apologizing to Sanemi until the very end.
+@ Yoriichi Tsugikuni
+186-187 | bg=paper | Then we get the real backstory. Yoriichi Tsugikuni, the man who created Sun Breathing.
+186-187 | bg=paper | Born with a mark. Never trained. Hit his teacher with a wooden sword on the first swing and got bored.
+187 | bg=aura:#ff6a2b stamp=GOAT | He almost killed Muzan centuries ago. Muzan was so scared he blew himself into eighteen hundred pieces.
+187 | bg=paper | One of the swordsmen he met back then was a charcoal seller. A Kamado.
+187 | bg=aura:#ff6a2b | That is where Hinokami Kagura comes from. Tanjiro's father was dancing Sun Breathing the whole time.
+@ The Final Battle
+178-182 | ai=sunrise_battle.png bg=aura:#ff6a2b | The castle collapses. Muzan surfaces in the middle of Tokyo. One hour until dawn.
+180-183 | bg=speed:#e3262e | The Corps has one job. Keep Muzan in the open until the sun rises.
+183-185 | bg=speed | Muzan's body is a nightmare. Whips everywhere. Five brains. Seven hearts.
+184-188 | bg=black | Iguro, Mitsuri, Giyu, Sanemi, Himejima. All of them throw everything they have.
+186-190 | bg=black punch | Tanjiro gets poisoned and nearly dies. Then he wakes up and fights with the full Sun Breathing.
+190-193 | bg=paper | Mitsuri and Iguro barely stay standing. Iguro is blind now, but his snake sees for him.
+193-196 | bg=speed | Tamayo's drug works. It ages Muzan nine thousand years and slows him down.
+196-198 | bg=aura:#ffd23d punch | Dawn comes. Himejima wraps a chain around Muzan. Everyone holds on.
+198-199 | bg=speed | Muzan turns into a giant baby to block the sun. Yes, really. A giant baby.
+199 | bg=paper gif=anime-facepalm_1 | Mister I'm the Perfect Being, everybody.
+200 | bg=aura:#ffd23d punch stamp=MUZAN_IS_DEAD | And the sun burns him away.
+200 | bg=paper gif=anime-crying_2 | Himejima dies. Iguro and Mitsuri promise to marry in their next life. That one hurts.
+@ Tanjiro the Demon King
+201 | bg=black punch gif=anime-shocked_1 | And then. Muzan makes one last move. He puts all his power into Tanjiro.
+201-202 | bg=speed:#e3262e | Tanjiro becomes a demon. And not any demon. The king of demons, resistant to the sun.
+202 | bg=black | Muzan begs him in his mind. Don't go back. You are my successor.
+202-203 | bg=paper | But Nezuko hugs him, and Kanao injects Tamayo's last cure.
+203 | bg=aura:#ffd23d | Giyu, Inosuke, Zenitsu, Nezuko, everyone pulling him back.
+203 | bg=paper gif=anime-crying_1 | And Tanjiro comes back human. Muzan's last plan fails because his family loved him.
+@ Epilogue
+204 | bg=paper | Tanjiro goes home with Nezuko, Zenitsu and Inosuke. Nezuko is human again. Rice balls for everyone.
+204 | ai=chibi_rice.png bg=halftone:#ffd23d | Somebody please protect these children forever.
+205 | ai=modern_kids.png bg=stars | Then the final chapter jumps to modern day Tokyo.
+205 | bg=paper | Their descendants are just regular kids. Kamados, Agatsumas, Hashibiras.
+205 | bg=paper stamp=REINCARNATED | And reincarnated versions of the Hashira are everywhere. Iguro and Mitsuri run a restaurant. Together.
+205 | bg=paper | Zenitsu wrote a whole book about their adventures. His great grandson thinks it's fiction.
+@ Outro
+205 | bg=aura:#ff6a2b | So that's Demon Slayer. Two hundred and five chapters about a boy who never lost his kindness.
+40 | bg=speed | Was the ending perfect? Was the Infinity Castle the best arc? Tell me in the comments.
+1 | bg=halftone:#e3262e page | And if you want every chapter broken down, subscribe, because Stormi Knows Anime.
