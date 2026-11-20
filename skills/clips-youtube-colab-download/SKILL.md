@@ -49,6 +49,10 @@ His test: a 4 h live stream (12.5 GB at 1440p) took about 10 minutes.
    too -> go to Route B. Runtime disconnected -> run again (no-overwrites keeps finished parts).
 6. Close the tab. Leave the Colab runtime alone; it times out on its own.
 
+Tested 21 Nov 2026 with https://youtu.be/tj9rs2KiWzs: Pushpam clicked "Connect to Google Drive" once, then the 39 s 1080p
+video (8 MB) was in Drive in under a minute and pulled to the cloud fine. Expect the Drive permission popup again on each
+new Colab runtime: post the ask, schedule a 10-minute check, and continue when he says done.
+
 ## Route B (no browser): Remote Control on Pushpam's Mac
 
 Use when the Chrome tools are missing, the browser is not connected, or Colab is blocked too. Pushpam said a no-browser
