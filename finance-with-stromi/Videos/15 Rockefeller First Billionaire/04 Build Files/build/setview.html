@@ -1,0 +1,5 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;background:#000}canvas{display:block}</style>
+<script src="font.js"></script><script src="three.min.js"></script><script src="rh.js"></script><script src="cast.js"></script></head>
+<body><canvas id="out" width="1280" height="720"></canvas>
+<script src="engine.js"></script><script src="sets02.js"></script><script src="sets03.js"></script><script src="sets04.js"></script><script src="sets05.js"></script><script src="sets06_v2.js"></script><script src="sets08.js"></script><script src="sets09.js"></script><script src="sets10.js"></script>
+<script>window.view=(k,p,l,cards)=>{const s=getSet(k);CAM(s,p,l);(cards||[]).forEach(([key,x,z,h])=>{const c=card(s,key,h||1.7);c.set(x,z,pose({view:'front',expr:'happy'},0),s.C);});s.S.traverse(o=>{if(o.userData.tick)o.userData.tick(1);if(o.userData.card&&o.visible)o.rotation.y=Math.atan2(s.C.position.x-o.position.x,s.C.position.z-o.position.z);});R.render(s.S,s.C);X.drawImage(R.domElement,0,0);vignette(X,0.8);return Object.keys(s);};</script></body></html>
