@@ -1,0 +1,10 @@
+// Act 18: BACK IN JERSEY + the archer girl + the other world
+window.ACT = { timing: window.TIMING, shots: [
+ { p: 0, plate: 'khan_backyard', cam: { z: [1.0, 1.3], x: 1280, y: 760 }, chars: [{ c: 'carolCasual', x: 1100, y: 1240, s: 1.25, view: 'threequarter', dir: 1, expr: 'nervous' }, { c: 'ammi', x: 1550, y: 1240, s: 1.25, view: 'threequarter', dir: -1, expr: 'happy', anim: 'talk', talk: true, pose: 'point' }, { c: 'aamir', x: 1900, y: 1240, s: 1.3, view: 'threequarter', dir: -1, expr: 'shock' }], props: [{ k: 'teacup', on: 0, side: 'R', s: .5 }] },
+ { p: 1, plate: 'kate_door', cam: { z: [1.0, 1.3], x: 1280, y: 760 }, chars: [{ c: 'kamalaHome', x: 900, y: 1240, s: 1.2, view: 'threequarter', dir: 1, expr: 'excited', anim: 'talk', talk: true }, { c: 'kate', x: 1500, y: 1240, s: 1.25, view: 'threequarter', dir: -1, expr: 'deadpan' }], props: [{ k: 'pizzaBox', on: 1, side: 'R', s: .7 }] },
+ { p: 1, f: .5, plate: 'kate_door', cam: { z: [2.2, 2.6], x: 1500, y: 900 }, chars: [{ c: 'kate', x: 1500, y: 1240, s: 1.25, view: 'front', expr: 'deadpan', anim: 'talk', talk: true }], pops: [{ t: 'SHE IS 23', at: .8, dur: 2.5 }] },
+ { p: 1, f: .78, plate: 'kate_door', cam: { z: [2.2, 2.6], x: 900, y: 900 }, chars: [{ c: 'kamalaHome', x: 900, y: 1240, s: 1.2, view: 'front', expr: 'smug' }] },
+ { p: 2, plate: 'xlab', cam: { z: [1.0, 1.3], x: 1280, y: 760 }, chars: [{ c: 'monica', x: 1300, y: 1000, s: 1.0, view: 'front', expr: 'blank', pose: 'sit' }, { c: 'binary', x: 1800, y: 1250, s: 1.3, view: 'threequarter', dir: -1, expr: 'smile' }], fadeIn: .8 },
+ { p: 2, f: .4, plate: 'xlab', cam: { z: [2.2, 2.6], x: 1300, y: 860 }, chars: [{ c: 'monica', x: 1300, y: 1000, s: 1.0, view: 'front', expr: 'shock', pose: 'sit' }], pops: [{ t: 'MUM?! (KIND OF)', at: .5, dur: 3 }] },
+ { p: 2, f: .7, plate: 'xlab', cam: { z: [1.3, 1.6], x: 1280, y: 800 }, chars: [{ c: 'binary', x: 900, y: 1250, s: 1.3, view: 'threequarter', dir: 1, expr: 'smile' }, { c: 'beast', x: 1650, y: 1250, s: 1.35, view: 'threequarter', dir: -1, expr: 'smile', anim: 'talk', talk: true }], fin: .4 },
+] };

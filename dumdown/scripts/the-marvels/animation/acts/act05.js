@@ -1,0 +1,10 @@
+// Act 05: MEET THE KREE QUEEN — dying Hala, the Annihilator
+window.ACT = { timing: window.TIMING, shots: [
+ { p: 0, plate: 'hala_throne', cam: { z: [1.0, 1.35], x: 1280, y: [600, 780] }, chars: [{ c: 'darbenn', x: 1280, y: 980, s: .95, view: 'front', expr: 'angry' }, { c: 'kree', x: 700, y: 1300, s: 1.2, view: 'back', expr: 'neutral' }, { c: 'kree', x: 1860, y: 1300, s: 1.2, view: 'back', expr: 'neutral' }], props: [{ k: 'hammer', x: 1450, y: 900, s: .55 }], sfx: [['drone', 0, .5]] },
+ { p: 0, f: .4, plate: 'hala_throne', cam: { z: [1.6, 2.0], x: 1280, y: 820 }, chars: [{ c: 'darbenn', x: 1280, y: 1260, s: 1.3, view: 'front', expr: 'angry', anim: 'talk', talk: true }], cards: [{ c: 'darbenn', name: 'DAR-BENN', sub: 'New boss of the Kree', at: .3, side: 'L', type: 'KREE', stat: 'MOVE: HAMMER TIME', items: ['🔨', '💍', '🌑'], tags: ['HALA', 'VERY ANGRY'] }] },
+ { p: 0, f: .75, plate: 'hala_space', cam: { z: [1.0, 1.3], x: 1100, y: 800 }, props: [{ k: 'star', x: 1900, y: 380, s: .6, dim: .9, col: '200,60,30' }] },
+ { p: 1, plate: 'hala_throne', cam: { z: [2.6, 3.0], x: 1280, y: 900 }, chars: [{ c: 'darbenn', x: 1280, y: 1260, s: 1.3, view: 'front', expr: 'angry' }], props: [{ k: 'bangle', x: 1200, y: 1060, s: 1.3, layer: 'front', col: '120,170,255' }] },
+ { p: 1, f: .25, plate: 'hala_throne', grade: ['#3a6aff', .25], cam: { z: [1.1, 1.4], x: 1280, y: 760 }, chars: [{ c: 'carolGlow', x: 900, y: 1150, s: 1.2, view: 'threequarter', dir: 1, expr: 'angry', pose: 'punch' }], props: [{ k: 'holo', x: 1650, y: 1200, s: 1.3 }, { k: 'photon', x: 1150, y: 900, s: 1.2 }, { k: 'boom', x: 1650, y: 800, s: .8, t0: 2, kk: [0, 1] }], sfx: [['explode', 2.0, .9]] },
+ { p: 1, f: .6, plate: 'tarnax_storm', grade: ['#5a1a10', .35], cam: { z: [1.0, 1.25], x: 1280, y: 760 }, props: [{ k: 'kreeShip', x: 1400, y: 400, s: .8 }, { k: 'smoke', x: 600, y: 1100, s: 1.5 }, { k: 'smoke', x: 2000, y: 1100, s: 1.5 }] },
+ { p: 1, f: .82, plate: 'hala_throne', cam: { z: [1.3, 1.6], x: 1280, y: 760 }, chars: [{ c: 'darbenn', x: 1280, y: 1260, s: 1.3, view: 'front', expr: 'angry', pose: 'point' }], pops: [{ t: 'NICKNAME: THE ANNIHILATOR', at: .3, dur: 3 }], fin: .4 },
+] };

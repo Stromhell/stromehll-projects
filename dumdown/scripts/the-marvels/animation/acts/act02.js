@@ -1,0 +1,10 @@
+// Act 02: THE CAPTAIN IN SPACE — ship, Goose, Fury calls
+window.ACT = { timing: window.TIMING, shots: [
+ { p: 0, plate: 'nebula', cam: { z: [1.0, 1.3], x: [1000, 1500], y: 700 }, props: [{ k: 'ship', x: [700, 1500], y: 700, s: 1.0 }], sfx: [['hum_loop', 0, .3]] },
+ { p: 0, f: .3, plate: 'nebula', cam: { z: [1.2, 1.5], x: 1280, y: 700 }, chars: [{ c: 'carolGlow', x: [600, 1900], y: 900, s: 1.2, view: 'side', dir: 1, expr: 'smug', pose: 'fly' }], props: [{ k: 'trail', x: 300, y: 760, x2: 1700, y2: 760 }], cards: [{ c: 'carol', name: 'CAPTAIN MARVEL', sub: 'Strongest hero · Space resident', at: 1.0, side: 'R', type: 'COSMIC', stat: 'MOVE: PHOTON PUNCH', items: ['✊', '🚀', '🐈'], tags: ['SPACE', 'NO HELMET'] }], sfx: [['whoosh', .2, .8]] },
+ { p: 1, plate: 'cockpit', cam: { z: [1.0, 1.3], x: 1280, y: 820 }, chars: [{ c: 'carol', x: 900, y: 1250, s: 1.3, view: 'threequarter', dir: 1, expr: 'smile', anim: 'talk', talk: true }], props: [{ k: 'goose', x: 1550, y: 950, s: 1.0, dir: -1 }] },
+ { p: 1, f: .45, plate: 'cockpit', cam: { z: [2.2, 2.6], x: 1550, y: 860 }, props: [{ k: 'goose', x: 1550, y: 950, s: 1.3, dir: -1, mouth: 1 }], pops: [{ t: 'NOT A CAT', at: .5, dur: 2.5 }], sfx: [['slurp', .3, .7]] },
+ { p: 2, plate: 'cockpit', cam: { z: [1.4, 1.8], x: 1280, y: 800 }, chars: [{ c: 'carol', x: 1000, y: 1260, s: 1.35, view: 'threequarter', dir: 1, expr: 'deadpan' }], props: [{ k: 'holo', x: 1600, y: 1150, s: 1.0 }, { k: 'goose', x: 1750, y: 950, s: .9, dir: -1 }], pops: [{ t: 'INCOMING CALL: ONE-EYED MAN OF MYSTERY', at: .4, dur: 3 }], sfx: [['phone_ring', .2, .7]] },
+ { p: 2, f: .3, plate: 'saber_int', cam: { z: [1.2, 1.5], x: 1280, y: 760 }, chars: [{ c: 'fury', x: 1280, y: 1250, s: 1.35, view: 'front', expr: 'deadpan', anim: 'talk', talk: true }] },
+ { p: 2, f: .65, plate: 'jumppoint', cam: { z: [1.0, 1.3], x: 1280, y: 700 }, chars: [{ c: 'carolGlow', x: [400, 1000], y: 900, s: 1.0, view: 'side', dir: 1, expr: 'smug', pose: 'fly' }], pops: [{ t: 'THE NEIGHBOURHOOD: 1 BILLION MILES', at: 1.0, dur: 3 }], fin: .4 },
+] };

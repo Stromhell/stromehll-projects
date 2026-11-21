@@ -1,0 +1,14 @@
+{
+ "channel": "dumdown",
+ "video": "the-marvels",
+ "state": "making",
+ "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ8UPbYSjBrVWAfHCcKyGvZPt",
+ "feedback": false,
+ "queue_pos": 0,
+ "booked_for": null,
+ "zernio_post": null,
+ "updated": "2026-11-21T08:35Z",
+ "note": "Storyboard v1 OK by Pushpam 21 Nov 08:32 UTC (\"okay\"). Building VO + animation. Drive AI/DumDown/The Marvels.",
+ "proposed_slot": "2026-12-03T16:00Z",
+ "storyboard": "https://claude.ai/artifact/J5HnFmxjEcb1ZfzDfMGeAy"
+}
