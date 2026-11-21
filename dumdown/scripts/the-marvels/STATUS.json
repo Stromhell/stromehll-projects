@@ -1,14 +1,16 @@
 {
  "channel": "dumdown",
  "video": "the-marvels",
- "state": "making",
+ "state": "waiting_approval",
  "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ8UPbYSjBrVWAfHCcKyGvZPt",
  "feedback": false,
  "queue_pos": 0,
  "booked_for": null,
  "zernio_post": null,
- "updated": "2026-11-21T08:35Z",
- "note": "Storyboard v1 OK by Pushpam 21 Nov 08:32 UTC (\"okay\"). Building VO + animation. Drive AI/DumDown/The Marvels.",
+ "updated": "2026-11-21T10:32Z",
+ "note": "Full video v2 (14:34) + launch kit shared 21 Nov 10:32 UTC; waiting for Pushpam OK before booking 3 Dec 16:00 UTC.",
  "proposed_slot": "2026-12-03T16:00Z",
- "storyboard": "https://claude.ai/artifact/J5HnFmxjEcb1ZfzDfMGeAy"
+ "storyboard": "https://claude.ai/artifact/J5HnFmxjEcb1ZfzDfMGeAy",
+ "full_video_drive": "1ZlHVlFsFmCIt9CxfyKcOK_6okUEQisEZ",
+ "launch_kit": "https://claude.ai/artifact/R759k7NiVvQbfzMBZ1Xei9"
 }
