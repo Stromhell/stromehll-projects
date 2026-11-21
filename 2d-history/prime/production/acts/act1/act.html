@@ -34,43 +34,43 @@ const studioFront = (c, lt) => { micStand(c, 1760, SF + 20, 1700, SF - 330, lt);
 const BOT = (col = 'blue') => ({ near: cc => PR.bottle(cc, 0, 30, 1, { col }) });
 
 const GUARD = (lt, k = 0) => () => { const b = Math.sin(lt * 6 + k) * 6; return { shL: 50 + b, elL: -130, shR: 40 - b, elR: -125, handL: 'fist', handR: 'fist' }; };
-const flashes = (c, lt, n = 30) => { for (let k = 0; k < n; k++) { const ph = (lt * 1.7 + k * .37) % 1; if (ph < .08) TW.glow(c, (k * 397) % 2560, 280 + (k * 131) % 560, 60, '255,255,255', .9 * (1 - ph / .08)); } };
+const flashes = (c, lt, n = 30) => { for (let k = 0; k < n; k++) { const ph = (lt * .5 + k * .37) % 1; if (ph < .25) TW.glow(c, (k * 397) % 2560, 280 + (k * 131) % 560, 70, '255,255,255', .45 * Math.sin(ph / .25 * Math.PI)); } };
 const rain = (c, lt) => { c.save(); c.strokeStyle = 'rgba(200,215,235,.35)'; c.lineWidth = 2; for (let k = 0; k < 140; k++) { const x = (k * 173 + lt * 300) % 2700 - 70, y = (k * 97 + lt * 1400) % 1500 - 60; c.beginPath(); c.moveTo(x, y); c.lineTo(x - 10, y + 40); c.stroke(); } c.restore(); };
 const plinth = (c, x, y, w, col = '#2a3a5a') => { c.save(); c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(x - w / 2, y, w, 70); c.strokeRect(x - w / 2, y, w, 70); c.fillStyle = 'rgba(255,255,255,.15)'; c.fillRect(x - w / 2, y, w, 10); c.restore(); };
 const box = (c, x, y, w, h, t, sub, a, col = JH.GOLD) => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.35)'; rr(c, -w / 2 + 8, -h / 2 + 10, w, h, 14); c.fill(); c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 6; rr(c, -w / 2, -h / 2, w, h, 14); c.fill(); c.stroke(); txt(c, t, 0, sub ? -18 : 0, 60, INK, 'center', 'Anton'); if (sub) txt(c, sub, 0, 40, 32, '#3a2a1a', 'center', 'Oswald'); c.restore(); };
 
 window.SHOTS = [
   // 1.00 2018: two boxers square up in the ring; crowd flashes; two punches on "fought twice"
-  { plate: 'ring', cam: { z: [1.15, 1.35], x: [1280, 1280], y: [820, 900] }, bed: [['crowd_loop', .2]], light: { dir: 1, key: 'rgba(255,255,230,.2)' },
+  { plate: 'ring', cam: { z: [1.5, 1.65], x: [1280, 1280], y: [900, 930] }, bed: [['crowd_loop', .2]], light: { dir: 1, key: 'rgba(255,255,230,.2)' },
     init: S => { const tL = A.at(S, 'Logan', 3.9), tK = A.at(S, 'KSI', 5.1), tH = A.at(S, 'hate', 6.7), tY = A.at(S, '2018', 8.3), tF = A.at(S, 'fought', 9.0), tT = A.at(S, 'twice', 9.5), tM = A.at(S, 'millions.', 11.0);
       const punch = (t0, side) => (lt) => { const p = Math.max(0, 1 - Math.abs(lt - t0 - .15) / .2); return p; };
       S.D.figs = [{ x: 1020, y: 1200, s: 2.0, ...PR.LOGAN_BOX(), facing: 1, mood: 'neutral', anim: (o, lt) => { const g = GUARD(lt)(); const p = punch(tF, 1)(lt); g.shR = 40 + 50 * p; g.elR = -125 + 120 * p; o.arms = () => g; if (lt > tH) o.mood = 'smug'; o.lean = 4 * p; } },
         { x: 1540, y: 1200, s: 2.0, ...PR.KSI_BOX(), facing: -1, mood: 'neutral', anim: (o, lt) => { const g = GUARD(lt, 2)(); const p = punch(tT, -1)(lt); g.shR = 40 + 50 * p; g.elR = -125 + 120 * p; o.arms = () => g; if (lt > tH) o.mood = 'shocked'; if (lt > tT + .4) o.mood = 'smug'; o.lean = 4 * p; } }];
       S.D.live = [(c, lt) => { flashes(c, lt, lt > tM - .6 ? 70 : 30); TW.glow(c, 1280, 700, 900, '255,250,220', .12); }];
-      S.D.front = [(c, lt) => ntag(c, 'LOGAN PAUL', 1020, 560, lt, tL, { px: 38 }), (c, lt) => ntag(c, 'KSI', 1540, 560, lt, tK, { px: 38 }),
+      S.D.front = [(c, lt) => ntag(c, 'LOGAN PAUL', 1020, 610, lt, tL, { px: 38 }), (c, lt) => ntag(c, 'KSI', 1540, 610, lt, tK, { px: 38 }),
         (c, lt) => { for (const [t, x] of [[tF, 1290], [tT, 1270]]) { const u = K.seg(lt, t, t + .35); if (u > 0 && u < 1) TW.sparkle(c, x, 800, lt * 3, 1.2); } }];
       S.D.over = [hypeOv(.5), (c, lt) => K.card(c, '2018 · THE RIVALRY', lt, { at: tY - .3, x: 1600, y: 450, px: 46, rot: -2 }), (c, lt) => K.card(c, 'FIGHT 1', lt, { at: tF, x: 1520, y: 250, px: 36, rot: 3 }), (c, lt) => K.card(c, 'FIGHT 2', lt, { at: tT, x: 1520, y: 330, px: 36, rot: -2 }),
         (c, lt) => K.card(c, 'MILLIONS WATCHING', lt, { at: tM - .4, x: 420, y: 250, px: 40, rot: -3 })];
       S.D.sfx = [[.2, 'crowd_cheer', .2], [tL, 'pop', .2], [tK, 'pop', .2], [tY, 'chime', .3], [tF + .1, 'hit', .4], [tT + .1, 'hit', .4], [tM - .4, 'crowd_cheer', .3], [tM, 'camera_shutter', .25]]; } },
   // 1.01 Jan 2022: the two walk in from each side, shake hands; a bottle rises between them; WAIT, WHAT?
-  { plate: 'ring', cam: { z: [1.3, 1.45], x: [1280, 1280], y: [860, 860] }, bed: [['crowd_loop', .15]], light: { dir: 1, key: 'rgba(255,255,230,.2)' },
+  { plate: 'ring', cam: { z: [1.6, 1.7], x: [1280, 1290], y: [900, 910] }, bed: [['crowd_loop', .15]], light: { dir: 1, key: 'rgba(255,255,230,.2)' },
     init: S => { const tJ = A.at(S, 'January', .6), tTo = A.at(S, 'together', 3.9), tSp = A.at(S, 'sports', 5.1), tR = A.at(S, 'reaction', 7.0), tW = A.at(S, 'Wait', 8.4);
       const shake = (o, lt) => { if (lt > tTo - .3) o.arms = () => ({ shR: 55 + 6 * Math.sin(lt * 14) * (lt < tSp ? 1 : 0), elR: -20, handR: 'open' }); };
       S.D.figs = [{ x: 1110, y: 1200, s: 2.0, ...PR.LOGAN(), facing: 1, mood: 'happy', walk: { x0: 250, x1: 1110, t0: .2, dur: 3.2 }, anim: (o, lt) => { shake(o, lt); if (lt > tW) o.mood = 'smug'; } },
         { x: 1470, y: 1200, s: 2.0, ...PR.KSI(), facing: -1, mood: 'happy', walk: { x0: 2350, x1: 1470, t0: .2, dur: 3.3 }, anim: (o, lt) => { shake(o, lt); if (lt > tW) o.pose = 'cheer'; } }];
       S.D.live = [(c, lt) => { flashes(c, lt, 20); }];
-      S.D.front = [(c, lt) => { const u = E.out(K.seg(lt, tSp - .3, tSp + .6)); if (u <= 0) return; const y = 1200 - 640 * u; TW.glow(c, 1285, y - 120, 260, '90,170,255', .5 * u); PR.bottle(c, 1285, y, 1.9, { col: 'blue', glow: true, shadow: false }); TW.sparkle(c, 1320, y - 200, lt * 2, .8); }];
+      S.D.front = [(c, lt) => { const u = E.out(K.seg(lt, tSp - .3, tSp + .6)); if (u <= 0) return; const y = 1200 - 330 * u; TW.glow(c, 1285, y - 120, 260, '90,170,255', .5 * u); PR.bottle(c, 1285, y, 1.9, { col: 'blue', glow: true, shadow: false }); TW.sparkle(c, 1320, y - 200, lt * 2, .8); }];
       S.D.over = [hypeOv(.65), (c, lt) => K.card(c, 'JANUARY 2022', lt, { at: tJ, x: 480, y: 140, px: 56, rot: 2 }), (c, lt) => K.card(c, 'PRIME HYDRATION', lt, { at: tSp, x: 1480, y: 260, px: 40, rot: -2, bg: '#3e78c8', color: '#fff' }),
         (c, lt) => { const a = pop(lt, tW - .1, .4); if (a > 0) PR.bubble(c, 520, 300, a, 'WAIT,|WHAT?', { px: 60 }); }];
       S.D.sfx = [[.3, 'footsteps', .25], [tTo, 'hit', .15], [tSp - .3, 'riser', .25], [tSp + .4, 'chime', .3], [tW, 'pop', .35], [tW + .2, 'crowd_cheer', .15]]; } },
   // 1.02 org chart: CONGO BRANDS (Kentucky, energy drinks) -> the two faces on plinths -> a sea of fan phones
-  { plate: 'chart', cam: { z: [1.0, 1.08], x: [1280, 1280], y: [720, 740] }, bed: [['hum_loop', .1]], light: {},
+  { plate: 'chart', cam: { z: [1.05, 1.15], x: [1280, 1280], y: [740, 760] }, bed: [['hum_loop', .1]], light: {},
     init: S => { const tC = A.at(S, 'Congo', 2.1), tKy = A.at(S, 'Kentucky', 4.1), tE = A.at(S, 'energy', 5.9), tFa = A.at(S, 'faces.', 8.8), tFn = A.at(S, 'fans', 9.7), tMk = A.at(S, 'marketing.', 10.8);
-      S.D.figs = [{ x: 960, y: 900, s: 1.2, ...PR.LOGAN(), facing: 1, mood: 'happy', anim: (o, lt) => { if (lt > tFa) o.pose = 'wave'; } }, { x: 1600, y: 900, s: 1.2, ...PR.KSI(), facing: -1, mood: 'happy', anim: (o, lt) => { if (lt > tFa) o.pose = 'cheer'; } }];
-      S.D.live = [(c, lt) => { const l = K.seg(lt, tKy, tKy + .8); c.save(); c.strokeStyle = '#e8e2d4'; c.lineWidth = 6; c.setLineDash([16, 10]); if (l > 0) for (const x of [960, 1600]) { c.beginPath(); c.moveTo(1280, 420); c.lineTo(1280 + (x - 1280) * l, 420 + 120 * l); c.stroke(); } c.restore();
-          plinth(c, 960, 900, 300); plinth(c, 1600, 900, 300); }];
+      S.D.figs = [{ x: 900, y: 1000, s: 1.8, ...PR.LOGAN(), facing: 1, mood: 'happy', anim: (o, lt) => { if (lt > tFa) o.pose = 'wave'; } }, { x: 1660, y: 1000, s: 1.8, ...PR.KSI(), facing: -1, mood: 'happy', anim: (o, lt) => { if (lt > tFa) o.pose = 'cheer'; } }];
+      S.D.live = [(c, lt) => { const l = K.seg(lt, tKy, tKy + .8); c.save(); c.strokeStyle = '#e8e2d4'; c.lineWidth = 6; c.setLineDash([16, 10]); if (l > 0) for (const x of [900, 1660]) { c.beginPath(); c.moveTo(1280, 420); c.lineTo(1280 + (x - 1280) * l, 420 + 120 * l); c.stroke(); } c.restore();
+          plinth(c, 900, 1000, 320); plinth(c, 1660, 1000, 320); }];
       S.D.front = [(c, lt) => { box(c, 1280, 330, 620, 170, 'CONGO BRANDS', 'KENTUCKY, USA', pop(lt, tC, .4)); if (lt > tE) for (let k = 0; k < 3; k++) PR.can(c, 1660 + k * 60, 410, 1.2 * pop(lt, tE + k * .15, .3), { col: ['lime', 'purple', 'orange'][k] }); },
-        (c, lt) => ntag(c, 'THE FACES', 1280, 620, lt, tFa, { px: 34 }),
+        (c, lt) => ntag(c, 'THE FACES', 1280, 700, lt, tFa, { px: 34 }),
         (c, lt) => { if (lt < tFn - .3) return; for (let r = 0; r < 2; r++) for (let k = 0; k < 11; k++) { const x = 260 + k * 205 + r * 100, y = 1110 + r * 160, a = pop(lt, tFn - .3 + k * .06 + r * .2, .3); if (a <= 0) continue; const w = .5 + .5 * Math.sin(lt * 4 - k * .7);
             TW.phone(c, x, y, .75 * a, (p, pw, ph) => { p.fillStyle = `rgb(${40 + 60 * w},${80 + 80 * w},${160 + 60 * w})`; p.fillRect(0, 0, pw, ph); p.fillStyle = '#fff'; txt(p, '♥', pw / 2, ph / 2, 50, '#ff5a8a', 'center', 'Anton'); }); } }];
       S.D.over = [hypeOv(.75), (c, lt) => K.card(c, 'ENERGY DRINKS ALREADY', lt, { at: tE, x: 1560, y: 120, px: 34, rot: 3 }), (c, lt) => K.card(c, 'FANS = THE MARKETING', lt, { at: tMk - .5, x: 520, y: 120, px: 44, rot: -3, bg: JH.GOLD })];
@@ -87,7 +87,7 @@ window.SHOTS = [
         (c, lt) => TW.stamp(c, 'SOLD OUT', 1500, 260, lt, tSo, { px: 110 })];
       S.D.sfx = [[tN, 'riser', .25], [tQ, 'footsteps', .2], [tO - .2, 'creak', .25], [tO + .2, 'run_steps', .3], [tO + .4, 'crowd_cheer', .25], [tSo, 'stamp', .4]]; } },
   // 1.04 playground: kids trade a bottle like cards; a seller's price tag spins; BANNED goes up on the gate
-  { plate: 'playground', cam: { z: [1.1, 1.25], x: [1280, 1500], y: [860, 920] }, bed: [['birds_loop', .1], ['wind_loop', .06]], light: { dir: 1, key: 'rgba(255,220,170,.15)' },
+  { plate: 'playground', cam: { z: [1.4, 1.5], x: [1350, 1450], y: [980, 1000] }, bed: [['birds_loop', .1], ['wind_loop', .06]], light: { dir: 1, key: 'rgba(255,220,170,.15)' },
     init: S => { const tK = A.at(S, 'Kids', .3), tTr = A.at(S, 'traded', .5), tPo = A.at(S, 'Pokémon', 2.9), tSi = A.at(S, 'silly', 5.1), tSc = A.at(S, 'schools', 7.9), tBn = A.at(S, 'banned', 8.4);
       const swap = (lt) => E.io(K.seg(lt, tTr, tTr + .9)); const KS = 1.9;
       S.D.figs = [{ x: 900, y: 1250, s: KS, ...PR.KID(0), facing: 1, mood: 'happy', hold: { near: cc => { if (swap(0) < 1) {} } }, anim: (o, lt) => { o.arms = () => ({ shR: 55, elR: -40, handR: 'open' }); o.hold = lt < tTr + .5 ? BOT('blue') : { near: cc => { cc.fillStyle = '#f4e04a'; cc.strokeStyle = INK; cc.lineWidth = 3; cc.fillRect(-14, -10, 28, 40); cc.strokeRect(-14, -10, 28, 40); } }; if (lt > tPo) o.mood = 'smug'; } },
@@ -102,7 +102,7 @@ window.SHOTS = [
   // 1.05 the numbers: bar chart rockets past $1B (Bloomberg); at Walmart, Prime vs Gatorade
   { plate: 'chart', cam: { z: [1.0, 1.06], x: [1280, 1280], y: [720, 720] }, bed: [['trading_loop', .1]], light: {},
     init: S => { const tR = A.at(S, 'real', 1.3), tBl = A.at(S, 'Bloomberg', 2.0), tBi = A.at(S, 'billion', 6.2), tW = A.at(S, 'Walmart', 8.8), tO = A.at(S, 'outselling', 10.7);
-      S.D.live = [(c, lt) => { const g = E.out(K.seg(lt, tR, tBi + .3)); const base = 1150; c.save(); c.strokeStyle = 'rgba(255,255,255,.5)'; c.lineWidth = 4; c.beginPath(); c.moveTo(250, base); c.lineTo(1450, base); c.stroke();
+      S.D.live = [(c, lt) => { TW.glow(c, 1280, 800, 1300, '90,140,255', .3 + .05 * Math.sin(lt)); }, (c, lt) => { const g = E.out(K.seg(lt, tR, tBi + .3)); const base = 1150; c.save(); c.strokeStyle = 'rgba(255,255,255,.5)'; c.lineWidth = 4; c.beginPath(); c.moveTo(250, base); c.lineTo(1450, base); c.stroke();
           c.setLineDash([18, 12]); c.strokeStyle = JH.GOLD; c.beginPath(); c.moveTo(250, 520); c.lineTo(1450, 520); c.stroke(); c.setLineDash([]); txt(c, '$1 BILLION', 420, 490, 38, JH.GOLD, 'center', 'Anton');
           const H = [120, 260, 460, 820]; H.forEach((h, i) => { const hh = h * K.clamp(g * 4 - i); c.fillStyle = i === 3 ? '#3e78c8' : '#5a8ad8'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(330 + i * 270, base - hh, 180, hh); c.strokeRect(330 + i * 270, base - hh, 180, hh); }); c.restore();
           if (lt > tBi && lt < tBi + 1.5) for (let k = 0; k < 40; k++) { const p = (lt - tBi) / 1.5; c.fillStyle = ['#ff5a5a', '#ffd84a', '#5ad0ff', '#7aff7a'][k % 4]; c.fillRect(800 + Math.sin(k * 3) * 600 * p, 400 + p * p * 700 + (k * 37) % 100, 14, 8); }
@@ -111,7 +111,7 @@ window.SHOTS = [
       S.D.over = [hypeOv(1), (c, lt) => JH.src(c, 'BLOOMBERG', 520, 110, lt, tBl, { px: 34 }), (c, lt) => K.card(c, '$1 BILLION+ A YEAR', lt, { at: tBi, x: 880, y: 230, px: 50, rot: -2, bg: JH.GOLD }), (c, lt) => K.card(c, 'AT WALMART: PRIME VS GATORADE', lt, { at: tW, x: 1500, y: 120, px: 36, rot: 2 })];
       S.D.sfx = [[tR, 'riser', .25], [tBl, 'paper', .25], [tBi, 'coins_cascade', .3], [tBi, 'crowd_cheer', .15], [tW, 'pop', .2], [tO, 'stamp', .35]]; } },
   // 1.06 KSI on the sofa, arms wide; a thought bubble fills with zeroes
-  { plate: 'podcast', cam: { z: [1.45, 1.6], x: [1900, 2000], y: [760, 780] }, bed: [['hum_loop', .1]], light: { dir: -1, key: 'rgba(200,120,255,.18)' },
+  { plate: 'podcast', cam: { z: [1.8, 1.9], x: [1980, 2020], y: [800, 810] }, bed: [['hum_loop', .1]], light: { dir: -1, key: 'rgba(200,120,255,.18)' },
     init: S => { const tA = A.at(S, 'Asked', .3), tK = A.at(S, 'KSI', 3.3), tO = A.at(S, 'over', 4.1), tWy = A.at(S, 'way', 6.4), tBe = A.at(S, 'beyond', 6.8);
       S.D.figs = [{ x: 2200, y: 990, s: 1.75, ...PR.KSI(), pose: 'sit', facing: -1, mood: 'happy', talk: [tK, 8], anim: (o, lt) => { if (lt > tWy - .2) { o.arms = () => ({ shL: 115, elL: 25, shR: 115, elR: 25, handL: 'open', handR: 'open' }); o.mood = 'smug'; } } }];
       S.D.live = [(c, lt) => TW.glow(c, 2200, 700, 400, '255,90,200', .12 + .04 * Math.sin(lt * 2))];

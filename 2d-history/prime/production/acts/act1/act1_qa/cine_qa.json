@@ -1,0 +1,15 @@
+{
+ "video": "prime/production/acts/act1/act1.mp4",
+ "findings": [
+  {
+   "level": "WARN",
+   "check": "cut rhythm",
+   "t": 0,
+   "at": "0:00.0",
+   "detail": "50% of shots are longer than 8 s (median 4.7 s)"
+  }
+ ],
+ "still_share": 0.177,
+ "shots": 6,
+ "median_shot_s": 4.75
+}

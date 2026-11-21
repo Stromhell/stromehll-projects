@@ -56,49 +56,49 @@ window.SHOTS = [
         (c, lt) => JH.quote(c, "WE'LL PROBABLY|BUY COKE", 'LOGAN PAUL & KSI', 700, 190, lt, tB - .4, { px: 60 })];
       S.D.sfx = [[tL, 'pop', .2], [tK, 'pop', .2], [tP, 'chime', .25], [tAs, 'whoosh_soft', .2], [tB - .4, 'hit', .35], [tB, 'riser', .2], [tB + .4, 'crowd_cheer', .15]]; } },
   // 0.02 smash cut: dim podcast studio, Logan alone at a mic; a price tag drops onto the desk; the hype meter drains
-  { plate: 'podcast', cam: { z: [1.25, 1.45], x: [1300, 1340], y: [880, 920] }, bed: [['hum_loop', .1]], light: { dir: -1, key: 'rgba(200,120,255,.2)' },
+  { plate: 'podcast', cam: { z: [1.7, 1.85], x: [1400, 1420], y: [1080, 1090] }, bed: [['hum_loop', .1]], light: { dir: -1, key: 'rgba(200,120,255,.2)' },
     init: S => { const tT = A.at(S, 'Three', .3), tF = A.at(S, 'fine', 2.5), tL = A.at(S, 'Logan', 3.0), tPr = A.at(S, 'price', 6.0), tRg = A.at(S, 'regret', 7.4);
-      S.D.figs = [{ x: 1180, y: 1300, s: 1.9, ...PR.LOGAN(), pose: 'sit', facing: 1, mood: 'neutral', walk: null, anim: (o, lt) => { if (lt > tRg) { o.mood = 'worried'; o.pose = 'think'; } }, talk: [tL + .4, tPr] }];
+      S.D.figs = [{ x: 1180, y: 1300, s: 1.9, ...PR.LOGAN(), pose: 'sit', facing: 1, mood: 'neutral', walk: null, anim: (o, lt) => { if (lt > tRg) { o.mood = 'worried'; o.arms = () => ({ shR: 30, elR: -150, handR: 'fist' }); } }, talk: [tL + .4, tPr] }];
       S.D.live = [(c, lt) => { TW.glow(c, 1600, 300, 500, '255,80,200', .18 + .04 * Math.sin(lt * 2)); TW.chair(c, 1180, 1300, 1300 - 63 * 1.9, 1, '#2a2a34'); }];
       S.D.front = [(c, lt) => micStand(c, 1400, 1320, 1350, 1000, lt), (c, lt) => { const u = K.seg(lt, tPr - .2, tPr + .4); if (u <= 0) return; const y = 760 - 500 * (1 - E.out(u)); PR.priceTag(c, 1600, y - 100 + 140 * u, 1.3, 'REGRET', lt > tPr + .4 ? Math.sin(lt * 2) * .3 : (1 - u) * 6); }];
       S.D.over = [hypeOv(lt => 1 - E.io(K.seg(lt, tF, tRg + .3))), (c, lt) => K.card(c, '2026', lt, { at: tT, x: 1500, y: 140, px: 80, rot: 3 }), (c, lt) => K.card(c, 'COCA-COLA: FINE', lt, { at: tF - .3, x: 1500, y: 270, px: 40, rot: -2, until: tL + 1 })];
       S.D.sfx = [[0, 'whoosh', .3], [tT, 'thud', .25], [tF, 'pop', .15], [tPr, 'paper', .3], [tPr + .3, 'thud', .2], [tRg, 'tension', .2]]; } },
   // 0.03 the counter rolls to $100,000,000; "massive mistake"; arrows point everywhere except him
-  { plate: 'podcast', cam: { z: [1.45, 1.35], x: [1320, 1300], y: [860, 860] }, bed: [['hum_loop', .1]], light: { dir: -1, key: 'rgba(200,120,255,.2)' },
+  { plate: 'podcast', xfade: 0, cam: { z: [1.85, 1.75], x: [1420, 1400], y: [1090, 1080] }, bed: [['hum_loop', .1]], light: { dir: -1, key: 'rgba(200,120,255,.2)' },
     init: S => { const tM = A.at(S, 'minimum', .3), tD = A.at(S, 'dollars', 2.5), tMa = A.at(S, 'massive', 4.0), tFa = A.at(S, 'fault', 7.0), tN = A.at(S, 'never', 8.6);
-      S.D.figs = [{ x: 1180, y: 1300, s: 1.9, ...PR.LOGAN(), pose: 'sit', facing: 1, mood: 'worried', talk: [tM, tFa + .5], anim: (o, lt) => { if (lt > tMa) o.pose = 'think'; if (lt > tFa - .2) { o.pose = 'shrug'; o.mood = 'neutral'; } if (lt > tN) o.mood = 'smug'; } }];
+      S.D.figs = [{ x: 1180, y: 1300, s: 1.9, ...PR.LOGAN(), pose: 'sit', facing: 1, mood: 'worried', talk: [tM, tFa + .5], anim: (o, lt) => { if (lt > tMa) o.arms = () => ({ shR: 30, elR: -150, handR: 'fist' }); if (lt > tFa - .2) { o.arms = () => ({ shL: 70, elL: 60, shR: 70, elR: 60, handL: 'open', handR: 'open' }); o.mood = 'neutral'; } if (lt > tN) o.mood = 'smug'; } }];
       S.D.live = [(c, lt) => { TW.glow(c, 1600, 300, 500, '255,80,200', .18 + .04 * Math.sin(lt * 2)); TW.chair(c, 1180, 1300, 1300 - 63 * 1.9, 1, '#2a2a34'); }];
       S.D.front = [(c, lt) => micStand(c, 1400, 1320, 1350, 1000, lt), (c, lt) => PR.priceTag(c, 1600, 800, 1.3, 'REGRET', Math.sin(lt * 2) * .3),
         (c, lt) => { // arrows fanning away from Logan; one swings back towards him at "never", then flicks away
-          const u = E.back(K.seg(lt, tFa - .3, tFa + .3)); if (u <= 0) return; const A0 = [[-2.6, 'THEM'], [-2.1, 'THEM'], [-.9, 'THEM'], [-.4, 'THEM']];
-          A0.forEach(([a, l], i) => { let ang = a; if (i === 3) { const b = K.seg(lt, tN, tN + .3) * (1 - K.seg(lt, tN + .8, tN + 1.1)); ang = a + (Math.PI - .6) * b; } const len = 200 * u, ox = 1180 + Math.cos(ang) * 260, oy = 760 + Math.sin(ang) * 200;
+          const u = E.back(K.seg(lt, tFa - .3, tFa + .3)); if (u <= 0) return; const A0 = [[-3.0, 'THEM'], [-2.75, 'THEM'], [-.35, 'THEM'], [-.1, 'THEM']];
+          A0.forEach(([a, l], i) => { let ang = a; if (i === 3) { const b = K.seg(lt, tN, tN + .3) * (1 - K.seg(lt, tN + .8, tN + 1.1)); ang = a + (Math.PI - .6) * b; } const len = 170 * u, ox = 1180 + Math.cos(ang) * 240, oy = 900 + Math.sin(ang) * 160;
             c.save(); c.translate(ox, oy); c.rotate(ang); c.fillStyle = JH.GOLD; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.moveTo(0, -14); c.lineTo(len, -14); c.lineTo(len, -34); c.lineTo(len + 50, 0); c.lineTo(len, 34); c.lineTo(len, 14); c.lineTo(0, 14); c.closePath(); c.fill(); c.stroke(); c.restore(); }); }];
       S.D.over = [hypeOv(0), (c, lt) => PR.counter(c, 1400, 140, 1, 0, 100000000, tM, tD, lt, { pre: '$' }), (c, lt) => K.card(c, 'MINIMUM', lt, { at: tM, x: 1400, y: 245, px: 34, rot: -2 }),
-        (c, lt) => JH.quote(c, 'A MASSIVE, MASSIVE|MISTAKE', 'LOGAN PAUL', 520, 220, lt, tMa, { px: 46, until: tFa - .2 }),
-        (c, lt) => K.card(c, '"NOT MY FAULT"', lt, { at: tFa, x: 470, y: 230, px: 52, rot: -3 })];
+        (c, lt) => JH.quote(c, 'A MASSIVE, MASSIVE|MISTAKE', 'LOGAN PAUL', 1480, 600, lt, tMa, { px: 46, until: tFa - .2 }),
+        (c, lt) => K.card(c, '"NOT MY FAULT"', lt, { at: tFa, x: 1480, y: 600, px: 52, rot: -3 })];
       S.D.sfx = [[tM, 'tick', .25], [tM + .5, 'coins_cascade', .25], [tD, 'coins', .3], [tMa, 'hit', .3], [tFa - .2, 'whoosh', .3], [tN, 'whoosh_soft', .25], [tN + .8, 'pop', .2]]; } },
   // 0.04 title: a glowing bottle; queues, bargain bin (it cracks and drops into a clearance bin), a trail of lawsuits
   { plate: 'title', cam: { z: [1.0, 1.08], x: [1280, 1280], y: [720, 740] }, bed: [['drone', .12]], light: {},
     init: S => { const tQ = A.at(S, 'queued', 3.0), tBa = A.at(S, 'bargain', 6.2), tL = A.at(S, 'lawsuits', 9.2);
       const BIN = [1720, 1260];
       S.D.live = [(c, lt) => { // a tiny queue of shoppers walking towards the bottle at "queued"
-          const q = K.seg(lt, tQ - .3, tQ + .2); if (q > 0) for (let k = 0; k < 7; k++) { const x = 300 + k * 90 + ((lt * 20) % 90) * K.clamp(1 - K.seg(lt, tBa, tBa + 1)); c.save(); c.globalAlpha = q * (1 - K.seg(lt, tBa + .5, tBa + 1.2)); A.figure(c, { x, y: 1260, s: .55, ...PR.SHOPPER(k % 6), facing: 1, mood: 'happy', pose: 'walk' }, lt, 0, S); c.restore(); }
+          const q = 0; if (q > 0) for (let k = 0; k < 7; k++) { const x = 300 + k * 90 + ((lt * 20) % 90) * K.clamp(1 - K.seg(lt, tBa, tBa + 1)); c.save(); c.globalAlpha = q * (1 - K.seg(lt, tBa + .5, tBa + 1.2)); A.figure(c, { x, y: 1260, s: .55, ...PR.SHOPPER(k % 6), facing: 1, mood: 'happy', pose: 'walk' }, lt, 0, S); c.restore(); }
           // clearance bin
-          const b = E.back(K.seg(lt, tBa - .4, tBa)); if (b > 0) { c.save(); c.translate(BIN[0], BIN[1]); c.scale(b, b); PR.shadow(c, 0, 0, 150); c.fillStyle = '#c8c8d0'; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.moveTo(-150, -200); c.lineTo(-120, 0); c.lineTo(120, 0); c.lineTo(150, -200); c.closePath(); c.fill(); c.stroke();
+          const b = E.back(K.seg(lt, tBa - .9, tBa - .1)); if (b > 0) { c.save(); c.translate(BIN[0], BIN[1]); c.scale(b * 1.5, b * 1.5); PR.shadow(c, 0, 0, 150); c.fillStyle = '#c8c8d0'; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.moveTo(-150, -200); c.lineTo(-120, 0); c.lineTo(120, 0); c.lineTo(150, -200); c.closePath(); c.fill(); c.stroke();
             for (let k = 0; k < 6; k++) { c.beginPath(); c.moveTo(-140 + k * 56, -196); c.lineTo(-114 + k * 46, -4); c.stroke(); } c.fillStyle = JH.RED; c.fillRect(-110, -150, 220, 56); c.strokeRect(-110, -150, 220, 56); txt(c, 'CLEARANCE', 0, -121, 40, '#fff', 'center', 'Anton'); c.restore(); }
           // lawsuit folders trail
           if (lt > tL - .3) PR.folders(c, 900, 1270, 1.6, 6, tL - .3, lt); }];
       S.D.front = [(c, lt) => { // the bottle: glows, cracks, tips and drops into the bin
-          const tip = E.inn(K.seg(lt, tBa, tBa + .8)); const x = 1280 + (BIN[0] - 1280) * tip, y = 1180 + (BIN[1] - 230 - 1180) * tip - 200 * Math.sin(tip * Math.PI);
-          if (tip < 1) { TW.glow(c, x, y - 200, 420, '90,170,255', .5 * (1 - tip) + .1 * Math.sin(lt * 4)); PR.bottle(c, x, y, 8, { col: 'blue', glow: true, rot: tip * 2.2, shadow: tip < .05 });
+          const tip = E.inn(K.seg(lt, tBa, tBa + .8)); const x = 1280 + (BIN[0] - 1280) * tip, y = 1180 + (BIN[1] - 330 - 1180) * tip - 200 * Math.sin(tip * Math.PI);
+          if (tip < 1) { TW.glow(c, x, y - 200, 420, '90,170,255', .5 * (1 - tip) + .1 * Math.sin(lt * 4)); PR.bottle(c, x, y, 11, { col: 'blue', glow: true, rot: tip * 2.2, shadow: tip < .05 });
             const cr = K.seg(lt, tBa - .6, tBa - .2); if (cr > 0) { c.save(); c.translate(x, y); c.rotate(tip * 2.2); c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.moveTo(-40, -330); c.lineTo(-10 * cr, -280); c.lineTo(-30, -230 * (1 + .1 * cr)); c.lineTo(20 * cr, -180); c.stroke(); c.restore(); } }
-          else { c.save(); c.beginPath(); c.rect(BIN[0] - 160, BIN[1] - 500, 320, 330); c.clip(); PR.bottle(c, BIN[0] + 20, BIN[1] - 160, 4.2, { col: 'blue', rot: .5, shadow: false }); c.restore(); PR.reduced(c, BIN[0] + 140, BIN[1] - 330, .9, tBa + .9, lt); } }];
+          else { c.save(); c.beginPath(); c.rect(BIN[0] - 240, BIN[1] - 800, 480, 500); c.clip(); PR.bottle(c, BIN[0] + 30, BIN[1] - 240, 7, { col: 'blue', rot: .5, shadow: false }); c.restore(); PR.reduced(c, BIN[0] + 200, BIN[1] - 480, 1.3, tBa + .9, lt); } }];
       S.D.over = [(c, lt) => K.title(c, 'WHAT REALLY HAPPENED TO PRIME?', lt, { at: .3, y: 160, px: 96 }),
         (c, lt) => K.card(c, 'THE QUEUES', lt, { at: tQ, x: 380, y: 360, px: 40, rot: -3 }), (c, lt) => K.card(c, 'THE BARGAIN BIN', lt, { at: tBa, x: 1520, y: 360, px: 40, rot: 3 }), (c, lt) => K.card(c, 'THE LAWSUITS', lt, { at: tL, x: 960, y: 450, px: 40, rot: -2, bg: JH.RED, color: '#fff' })];
       S.D.sfx = [[.3, 'swell', .3], [tQ, 'footsteps', .2], [tBa - .6, 'paper_tear', .3], [tBa, 'whoosh', .3], [tBa + .8, 'thud', .35], [tBa + .9, 'stamp', .25], [tL, 'paper', .3], [tL + .3, 'drum', .25]]; } },
   // 0.05 card: the claims rule. CLAIM stamps, then COURT SAID
-  { plate: 'card', cam: { z: [1.0, 1.05], x: [1280, 1280], y: [720, 720] }, bed: [['drone', .08]], light: {},
-    init: S => { const tC = A.at(S, 'claims', 2.9), tCo = A.at(S, 'court', 4.1), tW = A.at(S, 'which', 6.5);
+  { plate: 'card', cam: { z: [1.0, 1.06], x: [1280, 1300], y: [720, 710] }, bed: [['drone', .08]], light: {},
+    init: S => { S.D.live = [(c, lt) => { c.fillStyle = 'rgba(70,80,120,.35)'; c.fillRect(0, 0, 2560, 1440); TW.glow(c, 1280, 760, 1200, '120,150,255', .3 + .06 * Math.sin(lt * 1.5)); TW.glow(c, 800 + 200 * Math.sin(lt * .4), 700, 600, '255,190,90', .18); TW.glow(c, 1750, 700, 600, '90,220,140', .15 + .05 * Math.sin(lt)); for (let k = 0; k < 40; k++) { c.fillStyle = `rgba(255,255,255,${.15 + .2 * Math.sin(lt * 2 + k)})`; c.beginPath(); c.arc((k * 233 + lt * 15) % 2560, (k * 151 - lt * 25 + 3000) % 1440, 3, 0, 7); c.fill(); } }]; const tC = A.at(S, 'claims', 2.9), tCo = A.at(S, 'court', 4.1), tW = A.at(S, 'which', 6.5);
       S.D.over = [(c, lt) => K.title(c, 'QUICK NOTE', lt, { at: .2, y: 200, px: 90 }),
         (c, lt) => PR.tag(c, 620, 520, 1.8, 'claim', tC, lt), (c, lt) => PR.tag(c, 1300, 520, 1.8, 'court', tCo, lt),
         (c, lt) => { const a = TW.fade(lt, tC + .3); if (a <= 0) return; c.save(); c.globalAlpha = a; txt(c, 'someone says so', 620, 660, 36, '#e8e2d4', 'center', 'Oswald'); c.globalAlpha = TW.fade(lt, tCo + .3); txt(c, 'a judge ruled', 1300, 660, 36, '#e8e2d4', 'center', 'Oswald'); c.restore(); },

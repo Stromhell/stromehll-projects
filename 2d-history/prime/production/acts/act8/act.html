@@ -47,7 +47,7 @@ window.SHOTS = [
     init: S => { const tF = A.at(S, 'fair', 1.2), tSa = A.at(S, 'sale', 3.1), tL = A.at(S, 'Logan', 3.9), tB = A.at(S, 'billion', 7.9), tBw = A.at(S, 'Big', 8.9), tNd = A.at(S, 'No', 9.7);
       const RAG = { near: cc => { cc.fillStyle = '#f2e6c8'; cc.strokeStyle = INK; cc.lineWidth = 2; cc.beginPath(); cc.ellipse(0, 6, 16, 11, .3, 0, 7); cc.fill(); cc.stroke(); } };
       S.D.figs = [{ x: 1060, y: 1330, s: 1.9, ...PR.LOGAN(), facing: 1, mood: 'happy', hold: RAG, walk: { x0: -250, x1: 1060, t0: .1, dur: Math.max(2, tL) },
-        anim: (o, lt) => { if (lt > tL) { o.arms = () => ({ shR: 70 + 8 * Math.sin(lt * 14), elR: -30 + 10 * Math.sin(lt * 14), handR: 'fist' }); } if (lt > tB) { o.arms = () => ({ shR: 160, elR: -10, handR: 'point', shL: 20, elL: -20 }); o.mood = 'smug'; o.talk = null; } if (lt > tNd) o.mood = 'neutral'; } }];
+        anim: (o, lt) => { if (lt > tL) { o.arms = () => ({ shR: 70 + 8 * Math.sin(lt * 14), elR: -30 + 10 * Math.sin(lt * 14), handR: 'fist' }); } if (lt > tB) { o.arms = null; o.hold = null; o.pose = 'present'; o.mood = 'smug'; } if (lt > tNd) o.mood = 'neutral'; } }];
       S.D.live = [(c, lt) => { emptyShelf(c, lt); PR.bottle(c, 1290, 928, 2.6, { col: 'blue', glow: lt > tL ? .5 + .3 * Math.sin(lt * 6) : .2 }); if (lt > tL) TW.sparkle(c, 1290, 860, lt * 2, .8); }];
       S.D.over = [HYPE(.1), (c, lt) => K.card(c, 'STILL ON SALE', lt, { at: tSa - .2, x: 760, y: 110, px: 52, rot: -2, until: tB }), (c, lt) => JH.quote(c, '"BACK TO $1.2 BILLION"', 'LOGAN PAUL', 760, 170, lt, tB - .3, { px: 50 }), (c, lt) => blankCal(c, 1560, 330, lt, tNd)];
       S.D.sfx = [[.2, 'footsteps', .2], [tSa, 'chime', .2], [tL, 'scrape', .2], [tB, 'riser', .2], [tBw, 'pop', .25], [tNd, 'paper', .35]]; } },

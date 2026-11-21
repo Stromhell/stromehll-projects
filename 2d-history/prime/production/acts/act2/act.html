@@ -39,7 +39,7 @@ const banner = (c, x, y, w, h, name, f, lt) => { if (f <= 0) { c.fillStyle = '#1
 
 window.SHOTS = [
   // 2.00 back in the Sydney studio: a whiteboard with a glowing 0; Logan points at it; the host gasps
-  { plate: 'studio', cam: { z: [1.15, 1.3], x: [1350, 1400], y: [820, 860] }, bed: [['hum_loop', .12]], light: { dir: 1, key: 'rgba(255,180,120,.22)' },
+  { plate: 'studio', cam: { z: [1.35, 1.45], x: [1400, 1420], y: [940, 960] }, bed: [['hum_loop', .12]], light: { dir: 1, key: 'rgba(255,180,120,.22)' },
     init: S => { const tBr = A.at(S, 'bragged', 2.4), tP = A.at(S, 'Prime', 4.3), tMk = A.at(S, 'marketing', 6.2), tZ = A.at(S, 'zero.', 7.6);
       S.D.figs = [{ x: 640, y: SF, s: 1.8, ...PR.HOST(1), pose: 'sit', facing: 1, mood: 'happy', anim: (o, lt) => { if (lt > tZ) o.mood = 'shocked'; } },
         { x: 1560, y: SF, s: SS, ...PR.LOGAN(), pose: 'sit', facing: 1, mood: 'smug', talk: [tBr, tZ + .5], anim: (o, lt) => { if (lt > tZ - .3) o.arms = () => ({ shR: 95, elR: -5, handR: 'point' }); } },
@@ -51,26 +51,26 @@ window.SHOTS = [
       S.D.over = [hypeOv(1), (c, lt) => K.card(c, 'SAME RADIO SHOW', lt, { at: .3, x: 1460, y: 130, px: 44, rot: 2 }), (c, lt) => K.card(c, '"$0 MARKETING"', lt, { at: tZ, x: 1460, y: 250, px: 56, rot: -2, bg: JH.GOLD })];
       S.D.sfx = [[.2, 'whoosh', .25], [tBr, 'pop', .2], [tMk, 'paper', .2], [tZ, 'hit', .35], [tZ + .2, 'chime', .25]]; } },
   // 2.01 stadium, night: LED panels flip to UFC, Arsenal, Barcelona, LA Dodgers; coins rain under each
-  { plate: 'stadium', cam: { z: [1.15, 1.25], x: [1100, 1460], y: [860, 880] }, bed: [['crowd_loop', .2]], light: { dir: 1, key: 'rgba(220,240,255,.15)' },
+  { plate: 'stadium', cam: { z: [1.35, 1.45], x: [1100, 1460], y: [960, 980] }, bed: [['crowd_loop', .2]], light: { dir: 1, key: 'rgba(220,240,255,.15)' },
     init: S => { const T = [A.at(S, 'UFC.', 6.2), A.at(S, 'Arsenal.', 7.1), A.at(S, 'Barcelona.', 8.0), A.at(S, 'Dodgers.', 10.2)], tFu = A.at(S, 'funny', 1.2), t23 = A.at(S, '2023', 9.4);
       const N = ['UFC', 'ARSENAL', 'BARCELONA', 'LA DODGERS'], X = [520, 1100, 1680, 2260];
-      S.D.figs = [{ x: 1400, y: 1300, s: 1.4, ...PR.FOOTBALLER(), facing: 1, mood: 'happy', hold: BOT('ice'), walk: { x0: -100, x1: 1000, t0: .3, dur: 6 }, anim: (o, lt) => { if (lt > T[1]) { o.pose = 'cheer'; } } }];
+      S.D.figs = [{ x: 1400, y: 1300, s: 1.65, ...PR.FOOTBALLER(), facing: 1, mood: 'happy', hold: BOT('ice'), walk: { x0: -100, x1: 1000, t0: .3, dur: 6 }, anim: (o, lt) => { if (lt > T[1]) { o.pose = 'cheer'; } } }];
       S.D.live = [(c, lt) => { for (let k = 0; k < 4; k++) { banner(c, X[k], 815, 520, 110, N[k], K.seg(lt, T[k] - .3, T[k] + .1), lt); coinsFall(c, X[k], 900, lt, T[k] + .1, 8); } }];
       S.D.over = [hypeOv(1), (c, lt) => K.card(c, 'A FUNNY THING TO SAY...', lt, { at: tFu, x: 560, y: 130, px: 44, rot: -2, until: T[0] }), (c, lt) => K.card(c, 'FROM 2023', lt, { at: t23, x: 1500, y: 130, px: 44, rot: 2 })];
       S.D.sfx = [...T.map(t => [t - .2, 'whoosh', .3]), ...T.map(t => [t + .1, 'coins', .3]), [.3, 'crowd_cheer', .15], [T[3] + .3, 'crowd_cheer', .3]]; } },
   // 2.02 the UFC deal: Logan signs at the table, wipes a happy tear; a counter spins under £0
-  { plate: 'boardroom', cam: { z: [1.3, 1.4], x: [1000, 1040], y: [960, 980] }, bed: [['office_loop', .1]], light: { dir: 1, key: 'rgba(255,220,180,.15)' },
+  { plate: 'boardroom', cam: { z: [1.5, 1.6], x: [1000, 1030], y: [1000, 1010] }, bed: [['office_loop', .1]], light: { dir: 1, key: 'rgba(255,220,180,.15)' },
     init: S => { const tC = A.at(S, 'cry', 1.6), tU = A.at(S, 'UFC', 2.7), tSg = A.at(S, 'signed.', 3.8), tZ = A.at(S, 'Zero', 4.3), tEx = A.at(S, 'expensive.', 6.7);
       S.D.figs = [{ x: 760, y: 1420, s: 2.0, ...PR.LOGAN(), facing: 1, mood: 'happy', talk: [.3, tC + .5], anim: (o, lt) => { const w = lt > tC - .2 && lt < tSg - .4; if (w) { o.arms = () => ({ shL: 140, elL: -120, handL: 'fist' }); o.mood = 'sad'; o.eyesClosed = true; } else if (lt > tSg - .4 && lt < tZ + .6) o.arms = () => ({ shR: 60, elR: -30 + 10 * Math.sin(lt * 18), handR: 'fist' }); else o.mood = 'happy'; } }];
       S.D.front = [(c, lt) => { // contract resting on the table top edge to Logan's right
           c.save(); c.translate(1250, 1085); c.rotate(-.05); c.scale(.7, .7); c.fillStyle = '#f7f3e8'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-120, -70, 240, 140); c.strokeRect(-120, -70, 240, 140); txt(c, 'UFC DEAL', 0, -40, 30, INK, 'center', 'Anton'); c.fillStyle = '#c9c2b2'; c.fillRect(-90, -10, 180, 10); c.fillRect(-90, 14, 140, 10);
           const sg = K.seg(lt, tSg - .4, tZ + .4); if (sg > 0) { c.strokeStyle = '#1a3a9a'; c.lineWidth = 4; c.beginPath(); for (let i = 0; i <= 30 * sg; i++) c.lineTo(-80 + i * 5, 50 + Math.sin(i * 1.3) * 10); c.stroke(); } c.restore();
-          if (lt > tC && lt < tSg) { const p = ((lt - tC) * 1.5) % 1; c.fillStyle = '#7ac8ff'; c.beginPath(); c.ellipse(800, 580 + p * 80, 8, 14, 0, 0, 7); c.fill(); } }];
+          if (lt > tC && lt < tSg) { const p = ((lt - tC) * 1.5) % 1; c.fillStyle = '#7ac8ff'; c.beginPath(); c.ellipse(805, 905 + p * 60, 8, 14, 0, 0, 7); c.fill(); } }];
       S.D.over = [hypeOv(1), (c, lt) => K.card(c, '"I COULD CRY"', lt, { at: tC, x: 1400, y: 140, px: 54, rot: 2 }), (c, lt) => K.card(c, 'MARKETING: £0', lt, { at: tZ, x: 1400, y: 270, px: 46, rot: -2, bg: JH.GOLD }),
         (c, lt) => { if (lt < tZ + .2) return; const s = '£' + Array.from({ length: 9 }, (_, i) => Math.floor((lt * 30 + i * 7) % 10)).join('').replace(/(\d)(?=(\d{3})+$)/g, '$1,'); txt(c, s, 1400, 400, 60, '#f4efe2', 'center', 'Anton'); if (lt > tEx) TW.stamp(c, '???', 1400, 400, lt, tEx, { px: 70 }); }];
       S.D.sfx = [[tC, 'breath', .2], [tSg - .4, 'scrape', .25], [tZ, 'pop', .25], [tZ + .2, 'coins_cascade', .25], [tEx, 'stamp', .3]]; } },
   // 2.03 bedroom: a streamer films himself drinking; phone screens pop in: UNBOXING, TASTE TEST, REACTION; FREE ADS
-  { plate: 'bedroom', cam: { z: [1.1, 1.25], x: [1280, 1360], y: [820, 860] }, bed: [['night_loop', .08], ['hum_loop', .06]], light: { dir: -1, key: 'rgba(120,200,255,.18)' },
+  { plate: 'bedroom', cam: { z: [1.45, 1.55], x: [1350, 1370], y: [1000, 1010] }, bed: [['night_loop', .08], ['hum_loop', .06]], light: { dir: -1, key: 'rgba(120,200,255,.18)' },
     init: S => { const tTr = A.at(S, 'trick.', 1.4), tDr = A.at(S, 'drink', 2.9), tFi = A.at(S, 'filmed', 4.1), tU = A.at(S, 'unboxing', 6.5), tTa = A.at(S, 'taste', 7.5), tRe = A.at(S, 'reaction', 8.8), tFr = A.at(S, 'free', 9.7);
       const PH = { near: cc => TW.phone(cc, 0, -20, .4, (p, w, h) => { p.fillStyle = '#ff3a5a'; p.fillRect(0, 0, w, h); txt(p, 'REC', w / 2, h / 2, 30, '#fff', 'center', 'Anton'); }) };
       S.D.figs = [{ x: 1350, y: 1390, s: 1.9, ...PR.STREAMER(0), facing: 1, mood: 'happy', hold: BOT('red'), anim: (o, lt) => { const d = E.io(K.seg(lt, tDr - .3, tDr + .2)) * (1 - E.io(K.seg(lt, tDr + .9, tDr + 1.3))); o.arms = () => ({ shR: 20 + 40 * d, elR: -70 - 70 * d, handR: 'fist', shL: lt > tFi - .3 ? 100 : 20, elL: lt > tFi - .3 ? -60 : -70, handL: 'fist' }); if (lt > tFi - .3) o.hold = { near: BOT('red').near, far: PH.near }; if (lt > tRe) o.mood = 'shocked'; if (lt > tFr) o.mood = 'happy'; } }];
@@ -81,7 +81,7 @@ window.SHOTS = [
       S.D.sfx = [[tTr, 'pop', .2], [tDr, 'breath', .15], [tFi, 'camera_shutter', .3], [tU - .2, 'pop', .25], [tTa - .2, 'pop', .25], [tRe - .2, 'pop', .25], [tFr, 'stamp', .35], [tFr + .2, 'coins', .2]]; } },
   // 2.04 close-up: a hand twists the cap; hiss; the hype meter needle trembles
   { plate: 'card', cam: { z: [1.0, 1.12], x: [1280, 1280], y: [720, 700] }, bed: [['drone', .1]], light: {},
-    init: S => { const tH = A.at(S, 'hype', 3.0), tSo = A.at(S, 'Sooner', 4.3), tDr = A.at(S, 'drinks', 6.6);
+    init: S => { S.D.live = [(c, lt) => { c.fillStyle = 'rgba(70,80,120,.35)'; c.fillRect(0, 0, 2560, 1440); TW.glow(c, 1280, 760, 1200, '120,150,255', .3 + .06 * Math.sin(lt * 1.5)); }]; const tH = A.at(S, 'hype', 3.0), tSo = A.at(S, 'Sooner', 4.3), tDr = A.at(S, 'drinks', 6.6);
       S.D.over = [(c, lt) => { PR.bottle(c, 1150, 880, 9, { col: 'blue', glow: true }); const tw = K.seg(lt, tSo, tDr); // hand on the cap (white mitten), turning
           c.save(); c.translate(1150, 880 - 9 * 50); c.rotate(Math.sin(tw * 14) * .2 * (tw > 0 && tw < 1 ? 1 : 0)); c.fillStyle = '#fffdf8'; c.strokeStyle = TW.INK; c.lineWidth = 7; c.beginPath(); c.ellipse(0, -30, 130, 80, 0, 0, 7); c.fill(); c.stroke(); c.beginPath(); c.ellipse(-120, 10, 40, 28, .6, 0, 7); c.fill(); c.stroke(); c.fillStyle = '#e9e0d2'; c.fillRect(60, -40, 200, 70); c.strokeRect(60, -40, 200, 70); c.restore();
           if (lt > tDr) for (let k = 0; k < 14; k++) { const p = ((lt - tDr) * 1.4 + k / 14) % 1; c.fillStyle = `rgba(220,240,255,${.6 * (1 - p)})`; c.beginPath(); c.arc(1150 + Math.sin(k * 5) * 120 * p, 880 - 9 * 50 - 100 - p * 260, 10 + 14 * p, 0, 7); c.fill(); } },
