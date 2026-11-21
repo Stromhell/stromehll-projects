@@ -123,6 +123,15 @@
 14 | bg=black c=0,0.32,1,0.31 | Y quinto, Imu. Si de verdad quiere tomar la isla y buscar la tecnología él mismo, va a tener que hacerlo rápido. Y eso significa que va a cometer errores.
 9 | bg=black c=0,0.05,1,0.95 | Y no olvidemos a Loki. Un príncipe que fue encadenado por su propia gente, y que ahora cae protegiendo a Elbaph. Eso es un arco de redención en camino.
 13 | bg=speed punch page | Mi predicción: Luffy termina de salvar a los niños, y en uno o dos capítulos lo vemos cara a cara con Imu. Y ahí sí, tambor contra tambor.
+@ Top 3 del capítulo
+1 | bg=halftone:#e3262e c=0.07,0.28,0.88,0.63 | Antes de irnos, mi top tres de momentos de este capítulo.
+4 | bg=black c=0,0,1,0.27 | Número tres. Sanji preguntando con toda la calma del mundo: ¿cuál era tu punto débil? ¿El corazón? Frío, elegante, y aterrador.
+2 | bg=paper c=0.05,0.54,0.95,0.46 gif=anime-smug_2 | Esa es la energía de alguien que ya sabe que ganó la pelea antes de que termine.
+14 | bg=aura:#7a3cff c=0,0.32,1,0.31 | Número dos. Imu, el ser más poderoso del mundo, jadeando y pensando que su vida está en peligro si no vuelve a casa.
+14 | bg=black c=0,0.32,1,0.31 gif=anime-shocked_2 | Después de tantos años como una sombra intocable, por fin vemos que Imu también puede cansarse. Eso lo cambia todo.
+16 | bg=speed c=0.32,0,0.68,0.45 | Y número uno. Obvio. El monito blanco jalándole la nariz a una gigante.
+17 | bg=speed:#e3262e punch c=0,0,1,0.71 | Y después ese puñetazo de goma que la manda a volar. Treinta años de chistes de Monkey D., pagados en una sola página.
+17 | bg=black c=0,0.73,1,0.27 gif=anime-laughing_2 | Oda no solo escribe una historia. Se divierte con nosotros. Y por eso One Piece sigue siendo el rey.
 @ Cierre
 6 | bg=paper c=0.2,0.55,0.8,0.45 | Lo que más me gustó es que Luffy, en lugar de pelear contra el más fuerte, fue a salvar a los niños. Eso es ser el rey de los piratas.
 1 | bg=halftone:#e3262e c=0.07,0.28,0.88,0.63 | Y tú, ¿qué crees? ¿Luffy mono es la mejor forma de la historia? ¿Qué es la tecnología antigua de Elbaph? Déjanos tus teorías en los comentarios, y suscríbete, que este arco apenas empieza.
