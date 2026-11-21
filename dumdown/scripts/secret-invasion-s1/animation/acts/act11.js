@@ -1,7 +1,7 @@
 // 13:50 THE BIG FINALE (gag 8 goes between p2 and p3)
 window.ACT = { timing: window.TIMING, meterEv: [{ p: 1, w: 'wearing', n: 6 }], shots: [
  { p: 0, plate: 'si_plant_ext', fx: ['snow'], cam: { frame: 'full', on: 0, push: [1, 1.12] }, chars: [{ c: 'eyepatch', x: [900, 1500], y: 1320, s: 1.3, view: 'side', dir: 1, anim: 'limp', expr: 'deadpan', acts: [{ a: 'wince', w: 'coughing' }] }],
-   props: [{ k: 'case', on: 0, side: 'R', s: .5, layer: 'front' }] },
+   props: [{ k: 'case', on: 0, side: 'R', s: .6, layer: 'front' }] },
  { p: 0, f: .3, plate: 'si_plant_int', cam: { frame: 'two', on: 0, on2: 1, push: [1.02, 1.12] }, chars: [
    { c: 'eyepatch', x: 1100, y: 1320, s: 1.4, view: 'threequarter', dir: 1, expr: 'sad', acts: [{ a: 'openCase', w: 'opens the case' }, { a: 'raise', w: 'emotional speech' }, { a: 'shrug', w: 'says sorry' }, { a: 'rubEye', w: 'relief' }] },
    { c: 'gravikSuper', x: 1650, y: 1320, s: 1.45, view: 'threequarter', dir: -1, expr: 'smug' }],

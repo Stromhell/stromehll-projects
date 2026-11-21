@@ -5,7 +5,7 @@ window.ACT = { timing: window.TIMING, meterEv: [{ p: 2, w: 'spin-off', n: '∞' 
  { p: 1, plate: 'si_office', cam: { frame: 'two', on: 0, on2: 1, push: [1.02, 1.12] }, chars: [
    { c: 'eyepatch', x: 1100, y: 1320, s: 1.4, view: 'threequarter', dir: 1, expr: 'smug', acts: [{ a: 'pointHold', w: 'one-term' }] },
    { c: 'president', x: 1600, y: 1320, s: 1.4, view: 'threequarter', dir: -1, expr: 'nervous', acts: [{ a: 'holdUp1', w: 'meanest' }] }],
-   props: [{ k: 'papers', on: 1, side: 'R', s: .5, layer: 'front' }], pops: [{ t: 'OUCH', w: 'without saying', dur: 2 }] },
+   props: [{ k: 'papers', on: 1, side: 'R', s: .4, layer: 'front' }], pops: [{ t: 'OUCH', w: 'without saying', dur: 2 }] },
  { p: 1, f: .55, plate: 'si_ship', cam: { frame: 'two', on: 0, on2: 1, push: [1.02, 1.15] }, chars: [
    { c: 'eyepatch', x: 1150, y: 1320, s: 1.4, view: 'threequarter', dir: 1, expr: 'happy', acts: [{ a: 'pat', w: 'brings his wife' }] },
    { c: 'varra', x: 1450, y: 1320, s: 1.35, view: 'threequarter', dir: -1, expr: 'happy', acts: [{ a: 'hug', w: 'brings his wife' }] }] },

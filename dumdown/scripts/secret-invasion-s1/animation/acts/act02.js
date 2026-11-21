@@ -1,8 +1,8 @@
 // 1:35 FURY IS BACK (SORT OF)
 window.ACT = { timing: window.TIMING, shots: [
  { p: 0, plate: 'si_safe_ext', fx: ['rain'], cam: { frame: 'full', on: 0, push: [1, 1.12] }, chars: [
-   { c: 'eyepatch', x: [1500, 1250], t0: .8, y: 1320, s: 1.45, view: 'threequarter', dir: -1, expr: 'deadpan', acts: [{ a: 'stride', w: 'coolest' }] }],
-   props: [{ k: 'sedan', x: 1850, y: 1330, s: 1.1, dir: -1 }],
+   { c: 'eyepatch', x: [1650, 1200], t0: .8, y: 1320, s: 1.45, view: 'threequarter', dir: -1, expr: 'deadpan', acts: [{ a: 'stride', w: 'coolest' }] }],
+   props: [{ k: 'sedan', x: 1950, y: 1330, s: 2.5, dir: -1 }],
    cards: [{ c: 'eyepatch', name: 'EYEPATCH', sub: 'Spy boss · Built the hero team', w: 'coolest', side: 'L', type: 'SPY', stat: 'MOVE: THE STARE', items: ['🕶️', '🧥', '📁'], tags: ['WEAKNESS: STAIRS'] }] },
  { p: 0, f: .66, plate: 'si_ship', cam: { frame: 'med', dx: 380, push: [1, 1.1] }, chars: [{ c: 'eyepatch', x: 1100, y: 1320, s: 1.45, view: 'threequarter', dir: 1, expr: 'neutral', acts: [{ a: 'sip', w: 'space station' }] }], props: [{ k: 'teacup', on: 0, side: 'R', s: .5, layer: 'front' }] },
  { p: 1, plate: 'si_safe_ext', fx: ['rain'], cam: { frame: 'med', on: 0, push: [1.02, 1.14] }, chars: [

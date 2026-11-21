@@ -1,0 +1,17 @@
+{
+ "channel": "dumdown",
+ "video": "secret-invasion-s1",
+ "state": "waiting_approval",
+ "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ8B3Lt9jiwLfkKDVZWDyhhp7",
+ "feedback": false,
+ "queue_pos": 0,
+ "booked_for": null,
+ "zernio_post": null,
+ "proposed_slot": "2026-12-05T16:00Z",
+ "source_drive": "165-_VaN57vyQsMMRDYhqy0KG2XI5OV7n",
+ "updated": "2026-11-21T18:05Z",
+ "note": "v4 after Pushpam review (sitting, held props, real scale) shared ~18:05 UTC; waiting OK + thumbnail pick. Book 5 Dec 16:00 UTC after OK.",
+ "storyboard": "https://claude.ai/artifact/DyoRBxWeKkWPf9X9VoAYim",
+ "full_video_drive": "1oOTfG3PV39j7O9CW4eRMU8nuBKMDFPgb",
+ "launch_kit": "https://claude.ai/artifact/DzVt33euv9pPgGxrnSKf6G"
+}

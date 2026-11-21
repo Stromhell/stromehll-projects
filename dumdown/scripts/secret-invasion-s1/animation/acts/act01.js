@@ -5,7 +5,7 @@ window.ACT = { timing: window.TIMING, meterEv: [{ p: 1, w: 'is a Skrull', n: 1 }
    { c: 'ross', x: 1700, y: 1310, s: 1.4, view: 'threequarter', dir: -1, expr: 'neutral', acts: [{ a: 'wince', w: 'tells his friend' }] }],
    pops: [{ t: '9 DAYS NO SLEEP', w: 'not slept', dur: 2.4 }] },
  { p: 0, f: .72, plate: 'si_flat', cam: { frame: 'cu', on: 0, push: [1, 1.1] }, chars: [{ c: 'prescod', x: 1250, y: 1310, s: 1.4, view: 'front', expr: 'shock', acts: [{ a: 'raise', w: 'want Earth' }] }] },
- { p: 1, plate: 'si_flat', cam: { frame: 'mcu', on: 0, dx: -200, push: [1, 1.12] }, chars: [{ c: 'ross', x: 1500, y: 1310, s: 1.4, view: 'threequarter', dir: -1, expr: 'smile', acts: [{ a: 'pat', w: 'buddy' }, { a: 'holdUp1', w: 'give this' }] }], props: [{ k: 'folder', on: 0, side: 'R', s: .45, layer: 'front' }] },
+ { p: 1, plate: 'si_flat', cam: { frame: 'mcu', on: 0, dx: -200, push: [1, 1.12] }, chars: [{ c: 'ross', x: 1500, y: 1310, s: 1.4, view: 'threequarter', dir: -1, expr: 'smile', acts: [{ a: 'pat', w: 'buddy' }, { a: 'holdUp1', w: 'give this' }] }], props: [{ k: 'folder', on: 0, side: 'R', s: .55, layer: 'front' }] },
  { p: 1, f: .4, plate: 'si_flat', cam: { frame: 'two', on: 0, on2: 1, push: [1, 1.1] }, chars: [
    { c: 'ross', x: [1700, 2500], t0: 0, y: 1310, s: 1.4, view: 'side', dir: 1, expr: 'smile' },
    { c: 'prescod', x: 1100, y: 1310, s: 1.4, view: 'threequarter', dir: 1, expr: 'nervous', acts: [{ a: 'rubEye', w: 'bad feeling' }] }] },
@@ -14,7 +14,7 @@ window.ACT = { timing: window.TIMING, meterEv: [{ p: 1, w: 'is a Skrull', n: 1 }
  { p: 2, plate: 'si_festival', cam: { frame: 'full', on: 0, push: [1, 1.08] }, chars: [
    { c: 'prescod', x: [500, 1900], y: 1310, s: 1.3, view: 'side', dir: 1, anim: 'run', expr: 'shock', lin: 1 },
    { c: 'ross', x: [-100, 1300], y: 1310, s: 1.3, view: 'side', dir: 1, anim: 'run', expr: 'angry', lin: 1 }],
-   props: [{ k: 'crate', x: 1500, y: 1310, s: 1 }, { k: 'shatter', x: 1500, y: 1180, s: 1, layer: 'front', tw: 'Chase', d: .8 }] },
+   props: [{ k: 'crate', x: 1500, y: 1310, s: 1.4 }, { k: 'shatter', x: 1500, y: 1180, s: 1, layer: 'front', tw: 'Chase', d: .8 }] },
  { p: 2, f: .22, plate: 'si_roof', cam: { frame: 'two', on: 0, on2: 1, push: [1.02, 1.14] }, chars: [
    { c: 'prescod', x: 1700, y: 1310, s: 1.4, view: 'threequarter', dir: -1, expr: 'shock', acts: [{ a: 'block', w: 'corners' }, { a: 'slump', w: 'make it' }] },
    { c: 'rossSk', x: 1050, y: 1310, s: 1.4, view: 'threequarter', dir: 1, expr: 'angry', acts: [{ a: 'stride', w: 'corners' }] }] },

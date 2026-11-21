@@ -17,9 +17,9 @@ window.ACT = { timing: window.TIMING, meterEv: [{ p: 3, w: 'memories too', n: 2 
    { c: 'giah', x: 1550, y: 1320, s: 1.4, view: 'threequarter', dir: -1, expr: 'angry', acts: [{ a: 'shrug', w: 'awkward' }] }],
    props: [{ k: 'teacup', on: 0, side: 'R', s: .5, layer: 'front' }], pops: [{ t: '*SIP*', w: 'awkward', dur: 1.6 }] },
  { p: 3, plate: 'si_pods', cam: { frame: 'two', on: 0, on2: 1, push: [1.02, 1.14] }, chars: [
-   { c: 'prisoner', x: 1080, y: 1320, s: 1.4, view: 'side', dir: 1, expr: 'nervous', acts: [{ a: 'sit', at: 0 }] },
+   { c: 'prisoner', seat: 1, x: 1080, y: 1320, s: 1.4, view: 'side', dir: 1, expr: 'nervous' },
    { c: 'skrullM', x: 1520, y: 1320, s: 1.4, view: 'threequarter', dir: -1, expr: 'smug', acts: [{ a: 'pointHold', w: 'copy people' }, { a: 'morph', w: 'memories' }], swap: [{ w: 'memories', to: 'prisoner' }] }],
-   props: [{ k: 'machineChair', x: 1080, y: 1330, s: 1, layer: 'back' }, { k: 'morph', x: 1520, y: 900, s: 1, layer: 'front', tw: 'memories' }] },
+   props: [{ k: 'machineChairS', x: 1080, y: 1320, s: 1.46, layer: 'back' }, { k: 'morph', x: 1520, y: 900, s: 1, layer: 'front', tw: 'memories' }] },
  { p: 3, f: .55, plate: 'si_pods', cam: { frame: 'mcu', on: 0, dx: 380, push: [1, 1.12] }, chars: [{ c: 'prisoner', x: 1100, y: 1320, s: 1.4, view: 'threequarter', dir: 1, expr: 'smug', acts: [{ a: 'holdUp1', w: 'password' }, { a: 'holdUp2', w: 'birthday' }, { a: 'facepalm', w: 'embarrassing' }] }],
    pops: [{ t: 'PASSWORD ✓', w: 'password', dur: 3.4 }, { t: 'BIRTHDAY ✓', w: 'birthday', dur: 2.6 }, { t: 'YEAR 4 SHAME ✓', w: 'embarrassing', dur: 2.2 }] },
 ] };

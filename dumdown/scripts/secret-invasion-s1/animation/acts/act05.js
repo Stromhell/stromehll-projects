@@ -15,6 +15,6 @@ window.ACT = { timing: window.TIMING, meterEv: [{ p: 2, w: 'disguises himself', 
    { c: 'gravikFury', x: [2100, 1550], t0: 0, y: 1320, s: 1.4, view: 'threequarter', dir: -1, expr: 'smug', acts: [{ a: 'raise', w: 'takes her out', d: -.3 }] }],
    props: [{ k: 'glowRing', x: 1300, y: 1000, s: 1, layer: 'front', tw: 'takes her out' }] },
  { p: 2, f: .7, plate: 'si_festival', blur: 4, cam: { frame: 'cu', on: 0, push: [1, 1.2] }, chars: [{ c: 'eyepatch', x: 1280, y: 1320, s: 1.4, view: 'front', expr: 'shock', acts: [{ a: 'freeze', w: 'too late' }] }] },
- { p: 3, plate: 'si_cafe', cam: { frame: 'two', on: 0, on2: 1, push: [1, 1.12] }, chars: [{ c: 'eyepatch', x: 1100, y: 1320, s: 1.4, view: 'side', dir: 1, expr: 'sad', acts: [{ a: 'sit', at: 0 }] }, { c: 'eyepatch', x: 1600, y: 1320, s: 1.4, ghost: .001 }],
-   props: [{ k: 'chair', x: 1080, y: 1330, s: 1 }, { k: 'chair', x: 1620, y: 1330, s: 1, dir: -1 }, { k: 'teacup', x: 1350, y: 1140, s: .5 }] },
+ { p: 3, plate: 'si_cafe', cam: { frame: 'two', on: 0, on2: 1, push: [1, 1.12] }, chars: [{ c: 'eyepatch', seat: 1, x: 1100, y: 1320, s: 1.4, view: 'side', dir: 1, expr: 'sad' }, { c: 'eyepatch', x: 1600, y: 1320, s: 1.4, ghost: .001 }],
+   props: [{ k: 'chairS', x: 1100, y: 1320, s: 1.46 }, { k: 'chairS', x: 1600, y: 1320, s: 1.46, dir: -1 }, { k: 'teacup', x: 1350, y: 1140, s: .5 }] },
 ] };
