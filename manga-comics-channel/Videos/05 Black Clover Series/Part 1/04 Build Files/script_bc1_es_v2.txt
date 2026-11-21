@@ -1,0 +1,234 @@
+# Black Clover PARTE 1 (capitulos 1-150) - Stormi Knows Anime, espanol LatAm v2 (+theory/detail lines for ~25 min), 21 Nov 2026
+# Format: CH or A-B | options | narration. Options: bg=, punch, page, gif=, stamp=, ai=, pick=cNNN-PPP#i
+# Voice: Kokoro em_santa 1.1, lang es. No intro. Ends on the ch 149-150 cliffhanger.
+@ Gancho
+150 | bg=black punch | Los elfos han vuelto. Y acaban de robar los cuerpos de los mejores magos del Reino del Trébol.
+147 | bg=speed:#e3262e | El Rey Mago, el hombre más fuerte del reino, acaba de caer.
+1 | bg=paper gif=bc-scream_1 | Y todo esto empezó con un niño huérfano sin una gota de magia, que no paraba de gritar.
+1 | bg=halftone:#e3262e page | Esto es Black Clover. Parte uno de tres. Desde el capítulo uno hasta el ciento cincuenta.
+36 | bg=speed | Batallas, traiciones, demonios, y un grimorio de cinco hojas que nadie debería tener.
+97 | bg=aura:#7a3cff | Así que agarra tus palomitas, porque esta historia es mucho más oscura de lo que parece.
+@ Dos huérfanos en Hage
+1 | bg=paper | En un mundo donde la magia lo es todo, dos bebés aparecen abandonados en la puerta de una iglesia, en el pueblo de Hage.
+1 | bg=paper | Uno es Yuno. Callado, guapo, y con un talento para la magia que da miedo.
+1 | bg=paper | El otro es Asta. Bajito, ruidoso, y con cero magia. Literalmente cero. Ni para prender una vela.
+1 | bg=speed:#ffd23d | Pero Asta tiene un sueño: convertirse en el Rey Mago, el mago más poderoso del Reino del Trébol.
+1 | bg=paper gif=bc-facepalm_1 | Y para lograrlo, hace lo que haría cualquier persona razonable: entrenar sus músculos hasta parecer un gimnasio con patas.
+1 | bg=paper | A los quince años, llega la ceremonia de los grimorios. El día en que cada joven recibe el libro mágico que definirá su vida.
+1 | bg=aura:#ffd23d | Y a Yuno le toca algo legendario: un grimorio de cuatro hojas. El mismo trébol que usó el primer Rey Mago.
+1 | bg=black | ¿Y Asta? Nada. Ningún libro baja hacia él. El pueblo entero se burla.
+1 | bg=paper | Esa noche, un ladrón llamado Revchi ataca a Yuno para robarle su grimorio. Y lo tiene atrapado.
+1 | bg=black | Asta llega a salvarlo, y Revchi lo destroza. Le dice que un chico sin magia no es nada.
+1 | bg=black punch | Y entonces, de la oscuridad, cae un grimorio negro, sucio, con un trébol de cinco hojas.
+1 | bg=speed:#e3262e punch | De sus páginas sale una espada enorme y oxidada. Y cuando Asta la toca, la magia de Revchi simplemente desaparece.
+1 | bg=aura:#e3262e stamp=ANTIMAGIA | Antimagia. Un poder que anula cualquier hechizo. El chico sin magia tiene el arma perfecta contra los magos.
+1 | bg=paper | Y ahí, Asta y Yuno se hacen una promesa: competir para ver quién se convierte en el Rey Mago.
+1 | bg=paper | Y aquí hay que detenerse un segundo. Porque esta primera escena ya esconde muchísimas pistas.
+1 | bg=aura:#7a3cff | Los grimorios normales tienen un trébol de tres hojas: fe, esperanza y amor. El de cuatro hojas trae buena suerte.
+1 | bg=black | Pero dice la leyenda que en la hoja número cinco vive un demonio. Y el grimorio de Asta tiene exactamente cinco hojas.
+1 | bg=paper ai=bc_joke_grimoire.png | O sea, mientras los demás reciben un libro de hechizos, Asta recibe un libro usado, polvoriento, que nadie quería y que viene con inquilino incluido.
+1 | bg=paper | Y otra cosa. Asta y Yuno fueron encontrados juntos, el mismo día, en la misma puerta. Pero no son hermanos de sangre. Recuerda eso.
+1 | bg=paper | La hermana Lily, la monja de la iglesia, es la única que le da cariño a Asta. Y él le pide matrimonio todos los días. Todos. Los. Días.
+1 | bg=paper gif=bc-laugh_1 | Y ella lo rechaza todos los días. Este chico tiene más rechazos que un formulario de visa.
+@ Los Toros Negros
+2 | bg=paper | Seis meses después llega el examen de ingreso a los Caballeros Mágicos. Nueve escuadrones buscan nuevos miembros.
+2 | bg=speed | Yuno impresiona a todos con su magia de viento. Todos los capitanes lo quieren.
+2 | bg=paper | Durante el examen, Asta no puede volar, no puede lanzar hechizos, y todos los aspirantes se ríen de él.
+3 | bg=black | Asta, en cambio, no puede ni volar en escoba. Cuando le preguntan qué magia tiene, nadie entiende nada.
+3 | bg=black | Ningún capitán levanta la mano. Bueno, casi ninguno.
+3 | bg=speed:#e3262e punch | Yami Sukehiro, el capitán de los Toros Negros. Un tipo enorme, con un cigarro y cara de que te va a cobrar renta.
+3 | bg=black | Yami lo amenaza: si sigues adelante, te podría matar. Y Asta le responde sin miedo: quiero ser el Rey Mago.
+3 | bg=paper gif=bc-laugh_1 | Y a Yami le encanta. Lo acepta. Mientras tanto, Yuno entra al Amanecer Dorado, el mejor escuadrón del reino.
+3 | bg=speed | Pero en la prueba de combate, Asta enfrenta a un noble y lo derrota con su espada sin usar una sola gota de magia.
+3 | bg=paper | Y los capitanes se quedan pensando: ¿qué demonios es este chico? Literalmente. ¿Qué demonios?
+4 | bg=paper | Los Toros Negros son el peor escuadrón de todos. Una pandilla de inadaptados que vive en una base que se cae a pedazos.
+4-6 | bg=paper | Está Magna, el pandillero de fuego. Luck, el loco que sonríe mientras pelea. Vanessa, la bruja que vive borracha.
+4-5 | bg=paper | Y Noelle Silva, una princesa de la familia real que no puede controlar su enorme cantidad de magia.
+4 | bg=paper | Su primer día en la base es una locura. Magna lo reta a pelear como ritual de iniciación, y el edificio casi explota.
+4 | bg=paper | La base de los Toros Negros tiene vida propia. Las habitaciones cambian de lugar. Y nadie limpia nunca nada.
+5-6 | bg=paper gif=bc-cringe_1 | Gauche, el tipo obsesionado con su hermanita de una manera que da un poquito de miedo. Y Charmy, que solo vive para comer.
+5 | bg=paper | Noelle es arrogante, pero en el fondo está sola. Su propia familia la desprecia.
+5 | bg=speed:#ffd23d | Asta le dice que no se rinda. Y ella empieza a confiar en él. Es el inicio de algo, aunque Noelle jamás lo va a admitir.
+5 | bg=paper | Y Asta recibe la túnica de los Toros Negros. Para él, es el mejor regalo de su vida.
+6 | bg=paper | Ahí aprendemos algo importante: Yami eligió a cada uno de estos inadaptados porque nadie más los quería. Igual que a Asta.
+6 | bg=speed:#ffd23d | Los Toros Negros no son un escuadrón. Son una familia de rechazados. Y eso es lo que hace que este manga pegue tan fuerte.
+@ La primera misión
+7 | bg=paper | La primera misión es cazar jabalíes cerca del pueblo de Saussy. Fácil, ¿no?
+7 | bg=paper | Saussy es el pueblo de un chico al que todos llaman inútil, como a Asta. Y eso hace que Asta se lo tome personal.
+8 | bg=black | Pues no. El pueblo está atrapado. Un mago llamado Heath Grice está secuestrando a sus habitantes.
+8 | bg=black | Y lleva un símbolo extraño: el Ojo del Sol de Medianoche. Un grupo terrorista que odia al reino.
+9 | bg=speed:#e3262e punch | Noelle por fin controla su agua, Asta parte el hielo de Heath con su espada, y salvan el pueblo.
+9 | bg=black | Heath Grice, por cierto, no es cualquier enemigo. Él estaba ahí para robar algo del pueblo, y esa pista va a ser importante después.
+9 | bg=speed | Y aquí vemos por primera vez el estilo de pelea de Asta: no esquiva, no piensa, simplemente avanza. Como un tráiler sin frenos.
+10 | bg=paper | Y como premio, Asta recibe su primera estrella. Una estrella. Él la celebra como si fuera la Champions.
+10 | bg=paper | Y por primera vez, Asta ve a Yuno en la capital, con su capa del Amanecer Dorado. La rivalidad está más viva que nunca.
+@ El calabozo
+11 | bg=paper | Luego el reino descubre un calabozo antiguo en la frontera. Un lugar lleno de tesoros mágicos.
+11-12 | bg=paper | Asta, Noelle y Luck van a explorarlo. Y adivina quién más está ahí. Yuno, con su compañero Klaus del Amanecer Dorado.
+12-13 | bg=paper | Klaus, el compañero de Yuno, es el típico noble que se cree superior. Usa lentes, corrige a todos, y dice que Asta es un estorbo.
+13-14 | bg=speed | Luck pelea contra el Reino del Diamante, que también quiere el tesoro. Y descubrimos por qué sonríe tanto.
+14 | bg=paper | Y Mimosa, la prima de Noelle, es una curandera adorable con magia de plantas. Y sí, también se va a enamorar de Asta. Todo el mundo se enamora de Asta.
+15 | bg=black | Su mamá lo obligaba a ganar siempre. Si perdía, ella no lo aceptaba. Por eso Luck pelea sonriendo.
+16-17 | bg=speed | Asta y Yuno, juntos otra vez, avanzan hasta la sala del tesoro. Y ahí los espera Mars, un súper soldado del Reino del Diamante.
+16-17 | bg=speed | Las trampas del calabozo son brutales, pero la antimagia las desactiva todas. Asta es básicamente un antivirus con piernas.
+18 | bg=black | Mars es un monstruo. Puede usar dos tipos de magia a la vez, y destroza a todos.
+18 | bg=black | Mars golpea a Klaus, casi mata a Mimosa, y Yuno no puede con él. Por primera vez, el genio está perdiendo.
+19 | bg=aura:#7a3cff punch | Y entonces, de su grimorio, Asta saca una segunda espada. Más delgada. La Espada Habitante del Demonio.
+19 | bg=black | Asta está tirado en el suelo, con el cuerpo roto. Y lo único que repite es: no me voy a rendir. Esa es mi magia.
+19 | bg=paper ai=bc_joke_nevergiveup.png | Si Asta tuviera un tatuaje, diría: no me rindo. Y abajo, en letras pequeñitas: tampoco leo instrucciones.
+20 | bg=speed:#e3262e punch | Con ella absorbe magia, la lanza de vuelta, y derrota a Mars. El chico sin magia acaba de vencer a un soldado de élite.
+21 | bg=paper | El calabozo se derrumba, pero todos escapan. Y Yuno se queda con algo extraño: un espíritu del viento, la pequeña Bell.
+21 | bg=speed:#ffd23d | Al final, hasta Klaus admite que estaba equivocado. Asta se ganó su respeto. Y ese respeto se va a volver amistad.
+@ Ataque a la capital
+22 | bg=paper | Por su trabajo, los dos van a la capital para recibir premios. Y Asta aprende algo feo: los nobles lo odian.
+23 | bg=paper gif=bc-mad_1 | Lo insultan, se burlan de su pueblo, lo llaman campesino. Y Asta les dice frente a todos que algún día los va a superar.
+24 | bg=black punch | Y en ese momento, la capital es atacada. El Ojo del Sol de Medianoche está aquí.
+24 | bg=black | Y aquí entendemos algo. El Ojo del Sol de Medianoche no ataca al azar. Están buscando a alguien.
+25 | bg=speed:#e3262e | Rades, un mago que usa cadáveres como marionetas, entra con un ejército de muertos.
+25 | bg=black | Rades quiere vengarse del reino porque lo expulsaron de los Caballeros Mágicos. Y sus marionetas de cadáveres son lo más perturbador hasta ahora.
+26-27 | bg=speed | Asta y Fuegoleon Vermillion, el capitán de los Leones Carmesí, protegen la ciudad.
+26-27 | bg=speed | Noelle protege a los civiles con su magia de agua, y por primera vez la vemos actuar como una verdadera caballera.
+28-29 | bg=paper | Mientras tanto, Yuno llega volando y rescata a todos. Porque claro, siempre llega en el momento más dramático. Muy de protagonista de dorama.
+31 | bg=paper | Fuegoleon le dice a Asta algo que nunca olvida: si quieres ser Rey Mago, primero tienes que ser reconocido por todos.
+32 | bg=black | Pero de repente aparece un portal. Fuegoleon es atrapado por alguien desconocido.
+33 | bg=black punch | Y cuando sale, le falta un brazo. El gran capitán cae, inconsciente.
+33-34 | bg=black | Y cuando Fuegoleon cae, Asta jura que va a encontrar al responsable. Esa promesa lo va a perseguir por mucho tiempo.
+34 | bg=speed:#e3262e | Asta está furioso. Y aunque está destrozado, sigue peleando con todo lo que tiene.
+36 | bg=aura:#ffd23d punch | Hasta que llega él. Julius Novachrono. El Rey Mago. Con magia de tiempo, termina la batalla en segundos.
+36 | bg=paper | Y Julius le dice a Asta algo que cambia todo: los méritos son lo único que importa. No la sangre. No la nobleza.
+36 | bg=black | Y Julius, antes de irse, revela que el Ojo del Sol de Medianoche tiene un líder misterioso. Alguien con un poder de luz.
+37 | bg=black | Pero también revela algo terrible. Hay un traidor entre los capitanes de los Caballeros Mágicos.
+@ Los Toros en acción
+38 | bg=paper gif=bc-party_1 | Mientras tanto, los Toros Negros celebran. Y conocemos a Finral, el mago de los portales que coquetea con todas.
+39-40 | bg=paper | Gauche va al pueblo de Kiten para el cumpleaños de su hermana Marie. Y Asta va con él.
+39 | bg=paper | El viaje a Kiten es también la primera vez que vemos a Gauche ser algo más que un hermano obsesivo. Tiene corazón. Uno raro, pero lo tiene.
+41-42 | bg=black | Pero el Reino del Diamante invade Kiten con un ejército enorme.
+41-42 | bg=black | Unos niños del pueblo desaparecen en medio del caos. Y Asta no lo piensa dos veces antes de lanzarse a buscarlos.
+43-44 | bg=speed:#e3262e | Todos los Toros Negros llegan a pelear. Magna, Luck, Noelle, incluso Charmy.
+44 | bg=speed:#e3262e punch | La batalla de Kiten es enorme. Cientos de soldados contra un puñado de Toros Negros.
+46-47 | bg=black | Y el ejército enemigo tiene magos que parecen no tener límite. La batalla se pone fea muy rápido.
+48 | bg=paper | Hay heridos por todas partes, y los Toros Negros tienen que aguantar como sea.
+49 | bg=speed:#e3262e punch | Y entonces Yami entra en serio. Y cuando Yami pelea en serio, hasta el aire tiene miedo.
+50 | bg=aura:#ffd23d | Su magia de oscuridad corta el campo de batalla en dos. El Reino del Diamante tiene que retirarse.
+50 | bg=paper | Y por primera vez, todo el reino empieza a decir el nombre de los Toros Negros con respeto. Bueno, con algo de respeto.
+51 | bg=paper | Kiten se salva. Y Gauche, por una vez, no está pensando en su hermana. Bueno, casi.
+@ El traidor
+53 | bg=paper | De vuelta en la capital, Asta, Noelle y Mimosa van a ver a Fuegoleon en el hospital. Sigue en coma.
+53 | bg=paper | Mimosa, por cierto, ya no puede esconder que está enamorada de Asta. Y Noelle se pone celosa de una forma muy obvia. Muy, muy obvia.
+55 | bg=black | Y la investigación del traidor por fin da resultados. Es Gueldre Poizot, capitán de las Orcas Púrpura.
+55 | bg=black | Gueldre usaba magia de intercambio para mover personas de un lugar a otro. Así secuestraba magos para los terroristas.
+56 | bg=speed:#e3262e punch | Gueldre trabajaba con el Ojo del Sol de Medianoche. Lo atrapan y termina en prisión.
+56 | bg=black | Pero el grupo terrorista sigue ahí. Y su líder todavía no ha mostrado la cara.
+56 | bg=paper | Y Julius le dice a Asta: nadie sabe quién más trabaja para el enemigo. Ni siquiera en la nobleza.
+@ El Templo Submarino
+57 | bg=paper gif=bc-beach_1 | Después de tanta pelea, los Toros Negros se van a la playa. Vacaciones, sol, y Asta entrenando hasta caerse.
+58 | bg=paper | Ahí conocen a Kahono, una chica que canta, y su hermano Kiato. Ellos viven en un lugar muy especial.
+59 | bg=speed | El Templo Submarino. Una ciudad bajo el mar donde guardan una piedra mágica muy valiosa.
+59 | bg=paper | El templo tiene reglas rarísimas: para avanzar, tienes que ganar un juego mágico contra el sumo sacerdote, que es básicamente un niño en el cuerpo de un viejo.
+60-62 | bg=paper gif=bc-game_1 | Y el sumo sacerdote del templo los recibe con un juego. Literalmente un videojuego mágico. Sí, Black Clover se puso modo Nintendo.
+62 | bg=paper | Kahono quiere ser una ídola, una cantante famosa. Su hermano Kiato quiere ser el mejor peleador del mundo. Sueños grandes, como los de Asta.
+64 | bg=black punch | Pero el juego se termina cuando llega el Ojo del Sol de Medianoche. Y con ellos, uno de sus Tres Ojos. Vetto.
+64-65 | bg=black | Vetto no viene solo. El ejército del Ojo del Sol de Medianoche invade el templo para robar la piedra mágica.
+65 | bg=black | Vetto es un monstruo de magia bestial. Su desesperación es su arma. Derrota a Magna y a Luck sin esfuerzo.
+66-67 | bg=speed:#e3262e | Asta lo enfrenta y Vetto lo destruye. Le rompe el cuerpo una y otra vez.
+66-67 | bg=black | Vetto le rompe las piernas a Kiato. Literalmente le quita su sueño de pelear. Esa crueldad lo convierte en uno de los villanos más odiados de la saga.
+67 | bg=speed | Luck despierta su lado más peligroso, Magna lanza todo su fuego, pero nada funciona. Vetto es otro nivel.
+68 | bg=aura:#7a3cff punch | Noelle, por fin, crea su propio hechizo: el Rugido del Dragón Marino. Y golpea a Vetto con todo.
+69 | bg=black | Pero Vetto se levanta. Y le dice a Asta que la esperanza no existe.
+69 | bg=black | Y aquí viene uno de los mejores diálogos de la saga. Vetto le dice a Asta que la desesperación es lo único real.
+70 | bg=aura:#e3262e punch | Y Asta responde con todo. Su brazo se oscurece, y le da el golpe final.
+70 | bg=speed:#ffd23d | Y Asta le contesta: yo no sé nada de desesperación. Lo único que sé hacer es no rendirme.
+71 | bg=speed:#ffd23d | Ganaron. Pero el precio fue altísimo. Los brazos de Asta están cubiertos de una maldición negra.
+71 | bg=black | Pero mientras Asta celebra, Vetto le deja un regalo de despedida. La maldición en sus brazos.
+@ La maldición
+72 | bg=paper | Asta sale del templo como un héroe. Pero cada día que pasa, sus brazos se ponen peor.
+73 | bg=paper | Yami llega justo a tiempo para acabar con lo que queda del enemigo. Y todos lo miran como a un dios.
+74-75 | bg=paper | Kahono y Kiato le prometen a Asta que van a cumplir sus sueños. Y Asta les promete lo mismo.
+76-77 | bg=paper | Asta intenta seguir entrenando, pero sus brazos ya no se mueven. Ni siquiera puede sostener su espada.
+77 | bg=paper | Hay una escena brutal: Asta intenta comer y no puede levantar la cuchara. Y aun así, se ríe para que nadie se preocupe.
+78-79 | bg=paper | Yuno se entera de lo que le pasó a Asta. Y por primera vez, lo vemos preocupado. Muy, muy preocupado.
+80 | bg=black | Y el mejor médico del reino le dice la verdad: esos brazos no se pueden curar. Su carrera como Caballero Mágico terminó.
+80 | bg=black gif=bc-sad_1 | El chico que nunca se rindió, ahora no puede ni levantar un vaso.
+80 | bg=paper | Pero Asta se niega a aceptarlo. Y Vanessa le da una idea: la Reina de las Brujas, su propia madre, podría curarlo.
+80 | bg=black | Asta llora solo, en la oscuridad, donde nadie lo ve. Y es una de las escenas más tristes de toda la primera parte.
+@ El Bosque de las Brujas
+82-83 | bg=paper | Así que van al Bosque de las Brujas. Un lugar lleno de brujas que odian a los hombres. Así que Asta ya empieza mal.
+84 | bg=paper | La Reina de las Brujas cura sus brazos. Pero no lo hace por bondad. Quiere usar su sangre para algo.
+84 | bg=paper | Y aquí aprendemos algo sobre Vanessa: ella huyó del bosque. Su madre la tenía encerrada en una jaula porque su magia era demasiado valiosa.
+85-86 | bg=black | Y en ese mismo momento, el Reino del Diamante y el Ojo del Sol de Medianoche atacan el bosque.
+85 | bg=black | La Reina de las Brujas no es una mamá. Es una carcelera que usa a sus hijas como armas.
+87 | bg=speed | Vanessa despierta su magia de destino. El Hilo Rojo del Destino. Literalmente puede cambiar el resultado de una pelea.
+88-89 | bg=black | Y Fana, una de los Tres Ojos, aparece con su salamandra de fuego. Ella odia a la humanidad con todo su corazón.
+88 | bg=black | Fana tiene una historia triste: los humanos destruyeron su aldea. Por eso los odia a todos.
+89 | bg=black | Y aquí aparece la primera gran pista del pasado. Los Tres Ojos hablan de un señor de la luz al que deben devolver la vida.
+92-93 | bg=speed:#e3262e | Asta pelea contra Fana y contra el Reino del Diamante al mismo tiempo. Y Yuno llega a ayudarlo.
+92 | bg=speed | Y Yuno muestra algo nuevo: su espíritu del viento, Sylph, se fusiona con él por primera vez.
+94-96 | bg=paper | Y resulta que Mars y Fana se conocían desde niños. Asta incluso se hace amigo de Mars. Porque este chico se hace amigo hasta de una piedra.
+95 | bg=paper | La Reina de las Brujas libera a Vanessa de su jaula, y Vanessa le dice algo que todos queríamos escuchar: yo elijo mi propio destino.
+97 | bg=black punch | Y entonces, dentro de su mente, Asta ve algo. Una sombra gigante con ojos rojos que le dice: bienvenido.
+97 | bg=aura:#7a3cff stamp=DEMONIO | Hay un demonio dentro del grimorio de Asta. Y es de ahí de donde viene la antimagia.
+97 | bg=black | Y aquí está la gran teoría de esta parte. ¿Por qué un demonio le daría poder a un chico sin magia?
+97 | bg=aura:#7a3cff ai=bc_joke_demon_roommate.png | Imagina que tu libro de la escuela trae un demonio adentro. Y en vez de asustarte, le dices: perfecto, ¿me prestas tu poder?
+98 | bg=aura:#7a3cff punch | Por primera vez, Asta toma la forma negra. Medio cuerpo cubierto de antimagia, con un ala oscura en la espalda.
+98 | bg=black | Dato curioso: la antimagia es justo lo que Asta necesitaba. Un poder para alguien que el mundo dice que no vale nada.
+99 | bg=black | Pero la Reina de las Brujas tiene sus propios planes. Quiere controlar el poder de Asta con su magia de sangre.
+100 | bg=speed:#e3262e punch | Pero Asta no se deja. Salva a sus amigos, salva el bosque, y la Reina por fin acepta que perdió.
+100 | bg=paper | Y la Reina de las Brujas le revela algo a Asta. Su grimorio no debería existir. Nadie sabe de dónde salió.
+@ Respiro antes de la tormenta
+102 | bg=paper | Después de esa pelea, Yami lleva a Asta y Noelle a un festival. Sí, un capitán dando vacaciones. Milagro.
+103-104 | bg=paper gif=bc-wink_1 | Noelle quiere invitar a Asta a una cita pero no sabe cómo. Y termina gritándole en lugar de hablar. Tsundere nivel experto.
+103 | bg=paper | En el festival, Asta se encuentra con Yuno. Y por un momento, son solo dos chicos de Hage disfrutando del día.
+104 | bg=paper | Pero una noble llamada Rebecca confunde a Asta con alguien. Y Noelle explota de celos. Otra vez.
+105 | bg=black | Y entonces Asta y Noelle descubren a dos magos del Ojo del Sol de Medianoche escondidos en el festival.
+106 | bg=paper | En la ceremonia de estrellas, todos hablan de los novatos. Asta y Yuno ya son famosos en todo el reino.
+107 | bg=paper gif=bc-cringe_2 | Y conocemos al Rey Augustus, el verdadero rey del Trébol. Un tipo que solo quiere que le aplaudan.
+108 | bg=paper | Los capitanes de los nueve escuadrones están en el mismo cuarto. Nozel Silva, el hermano de Noelle, que la desprecia. Mereoleona, la hermana salvaje de Fuegoleon.
+109 | bg=paper | Y Mereoleona agarra a Asta, a Yuno y a otros para entrenarlos en un volcán. Sí, en un volcán. Sin preguntarles.
+@ El examen de los Caballeros Reales
+110-112 | bg=speed | El Rey Mago anuncia algo nuevo: los Caballeros Reales. Un escuadrón de élite para atacar la base del Ojo del Sol de Medianoche.
+113 | bg=speed | El examen es por equipos. Asta queda con Mimosa y un tipo llamado Zora Ideale.
+113 | bg=paper | Cada equipo tiene tres miembros, y gana el que destruya el cristal del equipo rival.
+114-115 | bg=paper | Zora es un fastidio. Se burla de todos, pone trampas, y no quiere trabajar en equipo.
+116-117 | bg=paper | Y además descubrimos que odia a los nobles. Su padre fue un caballero que murió y nadie lo recordó.
+118-119 | bg=paper | Asta pierde algunas peleas, gana otras, y en cada una aprende algo nuevo. Esa es la gracia de este arco.
+120 | bg=speed | Mientras tanto, Yuno y Noelle tienen sus propias peleas, y son increíbles.
+121 | bg=paper | Hasta los capitanes se impresionan con los novatos. El futuro del reino está en estos chicos.
+122-123 | bg=speed:#ffd23d | Asta y Zora, contra todo pronóstico, trabajan juntos. Y ganan.
+124-125 | bg=speed:#e3262e | Y en otra ronda aparece Kirsch Vermillion, el hermano de Mimosa y el tipo más narcisista de todo el anime. Se ama a sí mismo más que a la vida.
+126-127 | bg=paper | Peleas épicas, gente gritando, y nadie se queda sin moretones.
+126 | bg=paper | Y aparece Fanzell, el antiguo maestro de Noelle, que es el prometido de una noble que no lo quiere. Black Clover es un poco telenovela, la verdad.
+128-129 | bg=speed:#e3262e punch | Y el Rey Mago lo resuelve todo. Asta, Noelle, Yuno, Mimosa, todos entran a los Caballeros Reales.
+130 | bg=black | Pero hay un problema. El capitán de los Caballeros Reales es William Vangeance, el capitán del Amanecer Dorado.
+131-132 | bg=speed | Yuno muestra su magia de viento en todo su esplendor. Su grimorio de cuatro hojas ya está cerca de su máximo poder.
+133 | bg=paper | Y al final del examen, el Rey Mago elige a los mejores. Los Caballeros Reales ya están listos.
+@ El ataque a la base
+134 | bg=paper | Los Caballeros Reales tienen una cena antes de la misión. Y uno de los miembros se llama Rill, un capitán que es solo un niño.
+135-136 | bg=speed | Y entonces, los Caballeros Reales atacan la base del Ojo del Sol de Medianoche. Es la gran batalla.
+136 | bg=black | La base del enemigo está escondida con magia espacial. Solo los mejores pueden entrar.
+137-138 | bg=speed:#e3262e | Los Caballeros Reales se dividen y pelean contra los Tres Ojos. Todos contra todos.
+139 | bg=black | Y entonces descubren la verdad del grupo: los Tres Ojos no son humanos. Son elfos. Hace quinientos años, los elfos fueron masacrados.
+139 | bg=black | Y descubrimos que los Tres Ojos fueron elegidos por su odio. Cada uno perdió algo por culpa de los humanos.
+140 | bg=black punch | Y su líder, a quien todos llaman Licht, aparece. Y se presenta.
+140 | bg=black | Asta mira la cara del líder y no lo puede creer. Es la cara de alguien que confiaba en él.
+141-142 | bg=black | Pero el líder no es Licht. Ni siquiera es un elfo completo. Es William Vangeance. El capitán. El aliado de Yuno.
+142 | bg=black | Yuno, que admiraba a William como a un padre, ve cómo su capitán se convierte en el enemigo número uno del reino.
+143 | bg=aura:#7a3cff punch | William tiene una doble personalidad. Dentro de él vive Patry, un elfo que lleva quinientos años esperando venganza.
+143 | bg=black | Y Julius dice que sospechaba de William desde hace años. Pero no dijo nada. Porque creía en él.
+144-145 | bg=speed:#ffd23d punch | Julius Novachrono pelea contra él. El Rey Mago contra el líder de los terroristas. Tiempo contra mundo.
+145 | bg=speed:#e3262e | El tiempo contra la luz. Julius detiene los ataques, los adelanta, los borra. Es la pelea más elegante de la saga hasta ahora.
+146 | bg=speed:#e3262e | Y Julius gana. Y no lo mata. Porque Julius cree que hasta William se merece una segunda oportunidad.
+146 | bg=paper | Y Asta y Yuno, juntos, ayudan a terminar la batalla. Por un segundo, parece que todo terminó bien.
+147 | bg=black punch | Pero Patry sí lo ataca. Y el Rey Mago, el mago más fuerte del reino, cae.
+147 | bg=paper ai=bc_joke_wizardking.png | Spoiler: no terminó bien. Nunca termina bien en el capítulo ciento cuarenta y siete.
+148 | bg=black | Patry cuenta su historia. Hace quinientos años, los elfos vivían en paz. Y en una boda, el día más feliz de su pueblo, los humanos los traicionaron.
+148 | bg=black | Licht, el verdadero líder de los elfos, perdió a su esposa, a su pueblo, a todo. Y antes de morir, juró venganza.
+@ La reencarnación
+148 | bg=black | Y entonces Patry revela su verdadero plan. Todo este tiempo estuvo juntando piedras mágicas.
+148 | bg=black | No eran para destruir el reino. Eran para un hechizo prohibido.
+149 | bg=aura:#7a3cff punch | La Reencarnación. Los elfos que murieron hace quinientos años van a volver a la vida. Dentro de los cuerpos de los magos humanos.
+149 | bg=black gif=bc-shock_1 | Hace quinientos años, los humanos masacraron a los elfos. Y ahora los elfos regresan para cobrar venganza.
+150 | bg=speed:#e3262e punch | Y el hechizo empieza. Una luz cae sobre todo el reino.
+150 | bg=black punch | Luck, el chico que siempre sonreía, abre los ojos. Pero ya no es Luck.
+150 | bg=black | Los cuerpos de los Caballeros Mágicos ya no les pertenecen.
+150 | bg=aura:#7a3cff stamp=CONTINUARÁ | ¿Quiénes se salvan? ¿Qué pasa con Asta, que no tiene magia? ¿Y qué pasó realmente hace quinientos años?
+1 | bg=halftone:#e3262e page | Eso lo vamos a ver en la parte dos. Dale suscribir para no perdértela, y en los comentarios dime: ¿quién es tu personaje favorito hasta ahora?

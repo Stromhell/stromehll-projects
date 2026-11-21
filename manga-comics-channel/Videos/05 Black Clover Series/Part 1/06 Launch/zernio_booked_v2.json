@@ -1,0 +1,98 @@
+{
+ "post": {
+  "_id": "6b0176acebad8c73f5f40fa5",
+  "userId": "6b00ba00f0e8042b55f15b31",
+  "workspaceId": "6b00ba00f0e8042b55f15b33",
+  "title": "",
+  "content": "¡TODA LA HISTORIA DE BLACK CLOVER, DESDE EL CAPÍTULO 1 HASTA EL 150, EN UN SOLO VIDEO! Asta, el chico sin magia, recibe un grimorio de cinco hojas con antimagia, entra a los Toros Negros de Yami Sukehiro y compite con Yuno por el título de Rey Mago.\n\nRepasamos el calabozo, el ataque a la capital, el traidor Gueldre, el Templo Submarino contra Vetto, la maldición en los brazos de Asta, el Bosque de las Brujas, el demonio dentro del grimorio, el examen de los Caballeros Reales, William Vangeance, Patry, Julius Novachrono y la Reencarnación de los elfos.\n\n¿Quién era el verdadero Licht? ¿Y qué va a hacer Asta ahora que los elfos han vuelto?\n\n¡Déjanos tus teorías en los comentarios!\nSuscríbete a Stormi Knows Anime para la Parte 2 y más manga explicado en español.\n\n#BlackClover #Asta #BlackCloverManga\n\nCréditos: Black Clover © Yūki Tabata / Shueisha. Usado con fines de comentario y análisis.\n\n#anime #manga #animeenespañol\n\n0:00 ¡Los ELFOS acaban de volver!\n0:28 El niño SIN MAGIA y el grimorio de 5 hojas\n2:35 Yami recluta a Asta: los Toros Negros\n4:41 Primera misión: el Ojo del Sol de Medianoche\n5:35 El calabozo: Asta vs Mars\n7:19 La capital ARDE: cae Fuegoleon\n9:05 Los Toros Negros en Kiten\n10:17 ¡El TRAIDOR entre los capitanes!\n10:57 Templo Submarino: Asta vs VETTO\n12:53 Los brazos MALDITOS de Asta\n13:51 Bosque de las Brujas: el DEMONIO del grimorio\n16:07 Festival, nobles y el rey Augustus\n17:05 El examen de los Caballeros Reales\n18:35 William Vangeance ES el líder\n20:34 La REENCARNACIÓN: los elfos regresan",
+  "mediaItems": [
+   {
+    "_id": "6b0176c3ebad8c73f5f40fd5",
+    "url": "https://media.zernio.com/media/1795257970961_30617bcd8cd07a32_BC1_ES_v2.mp4",
+    "type": "video",
+    "thumbnail": "https://media.zernio.com/media/1795258027148_09b3207ccdf3844d_BC1_thumb_ES_v3.jpg"
+   }
+  ],
+  "scheduledFor": "2026-11-27T23:00:00.000Z",
+  "timezone": "UTC",
+  "status": "scheduled",
+  "tags": [
+   "black clover",
+   "black clover manga",
+   "black clover historia completa",
+   "black clover explicado",
+   "black clover resumen",
+   "black clover parte 1",
+   "asta",
+   "yuno",
+   "asta vs yuno",
+   "black clover asta",
+   "toros negros",
+   "black bulls",
+   "yami sukehiro",
+   "noelle silva",
+   "julius novachrono",
+   "william vangeance",
+   "patry",
+   "licht black clover",
+   "ojo del sol de medianoche",
+   "eye of the midnight sun",
+   "black clover elfos",
+   "elf reincarnation",
+   "black clover antimagia",
+   "black asta",
+   "black clover espanol",
+   "anime en español",
+   "manga explicado",
+   "resumen de anime",
+   "stormi knows anime",
+   "black clover recap"
+  ],
+  "hashtags": [],
+  "mentions": [],
+  "visibility": "public",
+  "crosspostingEnabled": true,
+  "metadata": {
+   "usageCounted": true
+  },
+  "recycling": {
+   "enabled": false,
+   "gapFreq": "month",
+   "recycleCount": 0,
+   "contentVariations": [],
+   "contentVariationIndex": 0
+  },
+  "createdAt": "2026-11-21T10:47:31.058Z",
+  "updatedAt": "2026-11-21T10:47:42.505Z",
+  "platforms": [
+   {
+    "_id": "6b0176ce6d3bedd48a08a3bb",
+    "platform": "youtube",
+    "accountId": {
+     "_id": "6b00ba86a42f4cf9f57677a1",
+     "platform": "youtube",
+     "username": "stormiknowsanime",
+     "displayName": "Stormi Knows Anime",
+     "profilePicture": "https://yt3.ggpht.com/4kyAJamFAdkP-LVGVBJlZHCysPnEyDIJAs_O7mQq_gbj5pYkIJbsBJEfUkj2CvoLeBeywa9n=s88-c-k-c0x00ffffff-no-rj",
+     "isActive": true,
+     "profileId": "6b00ba00f0e8042b55f15b35"
+    },
+    "profileId": "6b00ba00f0e8042b55f15b35",
+    "customMedia": [],
+    "scheduledFor": "2026-11-27T23:00:00.000Z",
+    "platformSpecificData": {
+     "title": "¡LOS ELFOS HAN VUELTO! Toda la HISTORIA de Black Clover EXPLICADA | Parte 1 (Cap. 1-150)",
+     "categoryId": "1",
+     "visibility": "public",
+     "madeForKids": false,
+     "firstComment": "¿Ya leíste el manga o solo viste el anime? La Parte 2 llega en dos días con la saga de los elfos 👀",
+     "containsSyntheticMedia": false
+    },
+    "status": "pending",
+    "publishAttempts": 0,
+    "contentHash": "847f1f6ad13b5c92bf8bd1cc4847e47f"
+   }
+  ]
+ },
+ "message": "Post updated successfully"
+}

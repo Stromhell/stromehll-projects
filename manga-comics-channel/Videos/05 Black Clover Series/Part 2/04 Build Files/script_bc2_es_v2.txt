@@ -1,0 +1,226 @@
+# Black Clover PARTE 2 (capitulos 151-334) - Stormi Knows Anime, espanol LatAm v2 (+detail lines), 21 Nov 2026
+# Same format as Part 1. Opens with a recap of Part 1. Ends on the ch 333-334 cliffhanger (Julius = Lucius Zogratis).
+@ Gancho
+333 | bg=black punch | El Rey Mago está vivo. Pero ya no es el Rey Mago.
+325 | bg=speed:#e3262e | Asta acaba de vencer al rey de los demonios. Y eso no fue lo peor que pasó en esta parte.
+309 | bg=aura:#7a3cff | Yuno es un príncipe. Asta tiene un demonio. Y alguien lleva todo este tiempo moviendo los hilos.
+152 | bg=halftone:#e3262e page | Esto es Black Clover. Parte dos de tres. Desde el capítulo ciento cincuenta y uno hasta el trescientos treinta y cuatro.
+@ Resumen de la parte 1
+1 | bg=paper | Resumen rápido. Asta, un huérfano sin magia, recibe un grimorio de cinco hojas con antimagia y un demonio adentro.
+3 | bg=paper | Entra a los Toros Negros, el peor escuadrón del reino, y compite con Yuno para ser el Rey Mago.
+71 | bg=black | Pelea contra el Ojo del Sol de Medianoche, sobrevive a una maldición, y descubre su forma negra.
+143 | bg=black | Y al final descubrimos que el líder terrorista era Patry, un elfo viviendo dentro de William Vangeance.
+150 | bg=aura:#7a3cff punch | Patry lanzó el hechizo prohibido. Los elfos reencarnaron en los cuerpos de los magos del reino. Y ahí nos quedamos.
+@ El reino de los elfos
+151 | bg=black | El cielo se llena de luz. Por todo el Reino del Trébol, los magos caen al suelo y se levantan con otros ojos.
+152 | bg=speed:#e3262e punch | Y los elfos empiezan a atacar. A sus vecinos, a sus familias, a todos los humanos.
+152 | bg=black | Pero el hechizo tiene una falla. No funciona con todos. Solo con los cuerpos que tienen una magia parecida a la de un elfo.
+152 | bg=black | Y aquí entendemos por qué el hechizo eligió ciertos cuerpos. Muchos magos humanos son, en realidad, las reencarnaciones de esos mismos elfos.
+153 | bg=speed | Así que Asta, que no tiene ni una gota de magia, sigue siendo Asta. Por primera vez, no tener magia es una ventaja.
+153-154 | bg=speed:#e3262e | Asta y Yuno se encuentran en medio del caos y pelean lado a lado contra elfos con el poder de capitanes.
+154 | bg=paper | O sea, tu mejor amigo podría tener el alma de un elfo de hace quinientos años esperando dentro. Black Clover y su amor por las dobles personalidades.
+155 | bg=paper gif=bc2-hype_1 | Y aquí se nota todo lo que crecieron. Ya no son dos niños de Hage. Son dos de los magos más fuertes del reino.
+155 | bg=speed | Asta corta, salta, golpea, pero no puede matar a nadie. Porque cada elfo está dentro del cuerpo de un amigo.
+156 | bg=black | Y entonces aparece un elfo que se llama a sí mismo Licht. Y dice que el grimorio de Asta le pertenece.
+156 | bg=paper ai=bc2_joke_split.png | Imagina pelear contra tu compañero de equipo sabiendo que mañana vas a tener que desayunar con él. Incómodo.
+157 | bg=aura:#7a3cff | Las espadas de Asta, la antimagia, todo venía de los elfos. Asta lleva todo este tiempo usando las armas de otro.
+157 | bg=black | Y Yuno descubre algo raro. Los elfos lo miran con respeto. Como si su viento les recordara a alguien.
+158 | bg=black | Los elfos se reúnen en su antiguo hogar. Están felices de estar vivos. Y furiosos con los humanos.
+158 | bg=paper | Porque el espíritu del viento de Yuno, Sylph, estuvo con los elfos hace quinientos años.
+159-160 | bg=speed:#ffd23d | Asta y Yuno se separan para salvar el reino. Y se despiden con la misma promesa de siempre: nos vemos en la cima.
+160 | bg=paper | Y Asta, por primera vez, empieza a preguntarse quién era el verdadero dueño de su grimorio.
+@ El pasado de William
+163 | bg=black | Y aquí la historia hace una pausa para contarnos de dónde vino William Vangeance.
+163 | bg=black | La madre de William lo trataba como un error. Lo escondía de todos por culpa de la marca en su cara.
+164 | bg=black | William nació con una cicatriz en la cara. Una marca maldita. Su propia familia lo despreciaba.
+164 | bg=black | Y Patry, desde dentro, le susurraba que el mundo de los humanos era injusto. Y William, en parte, le creía.
+165-166 | bg=paper | Y un día, un mago llamado Julius Novachrono lo encuentra y le dice: únete a los Caballeros Mágicos. Tú vales.
+165 | bg=paper | Julius lo sacó de esa casa. Le dio un lugar, un escuadrón, y un propósito. Lo convirtió en capitán.
+166 | bg=paper | Julius vio en William lo mismo que después vio en Asta. Alguien que el mundo había rechazado.
+166 | bg=black | Y dentro de William vivía Patry. Dos almas en un cuerpo, con dos sueños completamente opuestos.
+166 | bg=paper | Y por eso Julius nunca dijo nada sobre sus sospechas. Porque para Julius, cada persona merece una oportunidad. Recuerda eso. Es importante para el final de esta parte.
+@ La guerra contra los elfos
+167-168 | bg=speed | Los Caballeros Mágicos que siguen siendo humanos se organizan. Pocos, cansados, pero decididos.
+168 | bg=paper | Los Toros Negros se dividen en equipos y salen a recuperar el reino, pueblo por pueblo.
+169-170 | bg=speed:#e3262e | Los Toros Negros enfrentan a elfos que usan los cuerpos de sus propios amigos. Y no pueden atacar con todo, porque los cuerpos siguen siendo de ellos.
+170 | bg=black | Y descubren que algunos elfos no quieren pelear. Solo quieren vivir. Y eso hace todo más complicado.
+171-172 | bg=speed | Mereoleona Vermillion aparece y hace lo que mejor sabe hacer: golpear cosas hasta que dejan de moverse.
+172 | bg=speed:#e3262e | Mereoleona pelea contra un elfo poseyendo el cuerpo de un aliado, y simplemente lo golpea hasta que se rinde. Mereoleona no conoce otro método.
+174-175 | bg=paper gif=bc2-flex_1 | Finral, el mujeriego de los portales, por fin se pone serio. Y resulta que cuando quiere, es muy bueno.
+176-177 | bg=speed:#e3262e | Las batallas se multiplican. Cada escuadrón contra sus propios compañeros poseídos.
+177 | bg=speed | Gauche, Grey y Gordon tienen sus momentos de gloria. Hasta el más raro del escuadrón demuestra por qué está ahí.
+179-180 | bg=black | Los elfos toman el castillo de la capital. El reino está a punto de caer.
+180 | bg=black | Y en la capital, el rey Augustus se esconde mientras su reino se cae. Clásico.
+181 | bg=aura:#7a3cff punch | Y Yami saca su verdadero poder. Magia de oscuridad que corta hasta el espacio.
+182-183 | bg=speed | Charmy, la chica que solo pensaba en comer, revela que es mitad enana. Y su poder es aterrador.
+183 | bg=aura:#ffd23d | Charmy invoca una nube de algodón gigante y se come literalmente la magia del enemigo. La chica del arroz es un monstruo.
+185-186 | bg=speed:#e3262e | Asta lidera el asalto al Palacio de las Sombras, el lugar donde Patry quiere revivir al verdadero Licht.
+186 | bg=speed | El Palacio de las Sombras es un laberinto flotante lleno de trampas. Y los Toros Negros entran sin plan. Como siempre.
+187 | bg=paper | Y cada miembro de los Toros Negros da un paso al frente para cubrir a los demás. Esto es lo que significa ser una familia.
+188-189 | bg=speed:#e3262e | Cada miembro de los Toros Negros enfrenta a un elfo de alto nivel. Y todos ganan a su manera, con trucos, valentía, o pura terquedad.
+190-191 | bg=paper | Finral protege a su hermano Langris, que estaba poseído. Dos hermanos que se odiaban, por fin del mismo lado.
+192 | bg=speed | Y Noelle, por fin, crea su Vestido de Valquiria, una armadura de agua para pelear de cerca. Ya no es la princesa que no podía apuntar.
+193 | bg=aura:#e3262e punch | Y Fuegoleon Vermillion despierta del coma. Con un brazo nuevo hecho de fuego. El león ha vuelto.
+194 | bg=speed:#e3262e | Asta llega al centro del palacio, pero Patry ya empezó el ritual. Llega un segundo tarde.
+@ El demonio detrás de todo
+196 | bg=black | Patry por fin llega al centro del palacio. Va a resucitar al verdadero Licht.
+196 | bg=black punch | Pero algo sale de la quinta hoja de un grimorio. Algo que ha esperado quinientos años.
+197-198 | bg=aura:#7a3cff punch | Un demonio. Zagred. Y se ríe de todos.
+199 | bg=black | Porque la verdad es horrible. La masacre de los elfos hace quinientos años no fue culpa de los humanos. Fue culpa de él.
+199 | bg=black | Zagred ni siquiera tenía cuerpo. Solo podía hablar a través de los grimorios y los cadáveres. Y aun así destruyó dos pueblos.
+200 | bg=black | Zagred manipuló a ambos lados. Hizo que los humanos atacaran a los elfos, y que los elfos odiaran a los humanos.
+201-202 | bg=black gif=bc2-shock_1 | Todo el odio de los elfos. Todo el plan de Patry. Toda esta guerra. Fue un juego para un demonio.
+201 | bg=black | Disfrazado de humano, mató a Tetia, la hermana de Licht, el día de su boda. Y les hizo creer a los elfos que fue Lumiere.
+202 | bg=paper | Y conocemos a Lumiere, el primer Rey Mago. El mejor amigo de Licht. El humano que soñaba con un mundo donde elfos y humanos fueran iguales.
+203-204 | bg=black | Lumiere vuelve a la vida por un momento y enfrenta a Zagred. Y descubre lo que pasó con su amigo.
+203 | bg=paper | Lumiere llegó tarde a la boda. Encontró a todos muertos. Y Licht, antes de morir, maldijo a los humanos con todo su corazón.
+204 | bg=black | Y sobre esa maldición, Zagred construyó quinientos años de odio.
+205 | bg=black punch | Licht murió creyendo que Lumiere lo traicionó. Y Lumiere vivió con la culpa de no haber llegado a tiempo.
+205 | bg=paper ai=bc2_joke_villain.png | Zagred es el tipo de villano que te arruina la vida, y luego se ríe porque no lo notaste. Un villano de telenovela con poderes de dios.
+@ La batalla contra Zagred
+207 | bg=speed | Licht resucita. Y lo primero que hace es usar su poder contra el demonio.
+208 | bg=speed:#e3262e | Asta, Yuno, Licht, William, Lumiere, todos juntos contra una sola criatura.
+208 | bg=speed | Zagred es casi invencible. Cualquier herida que le hacen, se cura en segundos.
+209 | bg=speed:#e3262e punch | Zagred usa la magia de las palabras. Lo que dice, se vuelve realidad. Es casi imposible de tocar.
+210 | bg=speed | Y la antimagia de Asta es la única que puede cortar su poder. El chico sin magia otra vez es la clave.
+210 | bg=speed:#ffd23d | Y aquí ocurre el momento más hermoso del arco: los elfos poseídos y los humanos, por primera vez, pelean del mismo lado.
+211-212 | bg=aura:#ffd23d punch | Asta y Yuno lanzan el ataque final juntos. Y el demonio que arruinó dos civilizaciones por fin cae.
+212 | bg=paper | Lumiere sella a Zagred con su último aliento y le dice a Licht: perdóname. Y Licht, por fin, lo perdona.
+213 | bg=black | Patry llora. Pasó quinientos años odiando a la gente equivocada.
+214 | bg=paper | Y Licht le dice a Asta: el grimorio de cinco hojas ahora es tuyo. Úsalo bien.
+214 | bg=black | Lumiere desaparece. Licht se va con su pueblo. Y Patry, ahora sin odio, se queda para ayudar a reconstruir.
+215 | bg=paper | Los elfos dejan los cuerpos de los humanos. Muchos se van en paz. Y el reino respira otra vez.
+215 | bg=paper gif=bc2-hype_1 | Asta gana algo más que una pelea. Gana una nueva espada, la que antes usaba Licht, y el respeto de dos razas.
+@ Un demonio en el grimorio
+216 | bg=black | Pero quedó una pregunta. Si el grimorio de Asta tenía un demonio, ¿qué demonio es? ¿Y es peligroso?
+216 | bg=paper | Y tras la guerra, Julius vuelve a la vida. Bueno, más o menos. Su cuerpo regresa convertido en un niño pequeño.
+216 | bg=paper ai=bc2_joke_kidking.png | El Rey Mago más poderoso del reino, ahora del tamaño de un niño de diez años. Y aun así nadie le gana en ajedrez.
+217 | bg=black punch | Los nobles deciden que Asta es una amenaza. Lo arrestan. Quieren juzgarlo como un traidor.
+217 | bg=paper gif=bc2-angry_1 | El chico que salvó el reino dos veces, ahora en una celda. Gracias, nobleza.
+219-220 | bg=paper | Yami defiende a Asta. Pero hasta él tiene un límite cuando la nobleza se pone en contra.
+219 | bg=paper | La reunión de capitanes decide el futuro de Asta. Y casi todos votan en su contra.
+220 | bg=paper | Pero Yami, y algunos capitanes que antes lo despreciaban, empiezan a defenderlo. Asta ya se ganó a gente que nunca imaginó.
+221-222 | bg=paper | Y Asta descubre que el demonio de su grimorio tiene nombre: Liebe. Y que lo odia.
+222 | bg=black | Asta entiende que su propio demonio lo odia. Y que necesita controlarlo si quiere ser Rey Mago.
+@ El Reino del Corazón
+223-224 | bg=black | Mientras tanto, llega una amenaza peor. El Reino de la Pica. Gobernado por la Tríada Oscura, tres hermanos con poderes de demonio.
+225-226 | bg=paper | Asta y Noelle viajan al Reino del Corazón, un reino vecino que también quiere detener a la Pica.
+226 | bg=paper | En el Reino del Corazón, la reina Loropechika lleva una venda en los ojos. Y es tan torpe que tropieza con todo. Pero es una de las magas más poderosas del mundo.
+227 | bg=paper | Ahí conocen a la reina Loropechika, una mujer amable que tiene una maldición en el cuerpo.
+228 | bg=black | Esa maldición la puso un demonio llamado Megicula. El mismo demonio que mató a la madre de Noelle.
+228 | bg=black | La maldición de Megicula la está matando poco a poco. Y Noelle ve en ella lo que le pasó a su madre.
+229-231 | bg=speed | Y ahora todo se vuelve personal para Noelle. Entrena como nunca para vengar a su madre.
+230-231 | bg=speed | Noelle entrena con Gadjah, el guardián de la reina, que la lleva al límite.
+232-233 | bg=paper | Asta, por su parte, entrena para controlar su forma demoníaca. Porque lo que viene es más fuerte que todo lo anterior.
+233 | bg=paper | Y Asta, como no puede usar magia, entrena el cuerpo y la mente. Como siempre. Con más músculos que neuronas, pero funciona.
+234 | bg=paper gif=bc2-laugh_1 | Y en algún momento alguien sugiere que uno de sus amigos podría ser de la realeza. Y todos se ríen. Spoiler: no era broma.
+@ La Tríada Oscura
+235-236 | bg=speed:#e3262e | Y empieza el ataque. Zenon, de la Tríada, destroza al Amanecer Dorado. El escuadrón de Yuno.
+236 | bg=speed | Yuno ve cómo Zenon destroza a sus amigos y jura vengarse. Por primera vez, Yuno siente odio de verdad.
+237-238 | bg=black | Los compañeros de Yuno caen uno tras otro. Klaus, Mimosa, todos. Y Yuno no puede hacer nada.
+238 | bg=black | Y Zenon le dice a Yuno algo extraño: tú eres alguien importante en la Pica. Pero Yuno no entiende nada.
+241-242 | bg=black | Al mismo tiempo, la base de los Toros Negros es atacada.
+243 | bg=black | Los Toros Negros están en la base, cocinando, riendo, como cualquier día. Y entonces cae el ataque.
+244-245 | bg=aura:#7a3cff punch | Dante Zogratis aparece. El mayor de los hermanos. Con magia de gravedad y un cuerpo que no muere.
+246 | bg=speed:#e3262e punch | Y Yami llega para enfrentarlo. El capitán contra un monstruo.
+247-249 | bg=speed | Yami pelea con todo. Corta la gravedad, corta la carne, corta lo que sea.
+248 | bg=black | Dante usa magia de cuerpo. Se regenera de cualquier herida y puede convertir a sus enemigos en marionetas.
+250 | bg=speed | Yami corta a Dante una y otra vez. Pero Dante simplemente se vuelve a armar.
+252 | bg=speed:#e3262e | Asta pelea también. Pero esta vez ni siquiera la forma negra es suficiente.
+253-254 | bg=black | Pero la Tríada tiene un plan. No quieren ganar la batalla. Quieren a Yami y a William. Sus cuerpos.
+255-257 | bg=black punch | Y se llevan a Yami. El capitán de los Toros Negros, secuestrado.
+256 | bg=black | Y Dante le dice a Asta: tu capitán ya es nuestro. Vuelve cuando seas lo bastante fuerte.
+257 | bg=black gif=bc2-sad_1 | Asta grita su nombre. Y nadie responde.
+@ Nacht y el pacto
+258-259 | bg=paper | Los Toros Negros están destrozados. Sin capitán, sin plan.
+260-261 | bg=black | Y entonces aparece un tipo que nadie conocía. Nacht Faust. El vicecapitán de los Toros Negros. Sí, tenían un vicecapitán. Nadie sabía.
+261 | bg=paper | Nacht es un tipo que vive en las sombras, literalmente. Puede meterse en la sombra de cualquiera. Y nadie lo había visto en años.
+262-263 | bg=paper | Nacht es frío, serio, y odia todo lo que no sea perfecto. O sea, lo opuesto a los Toros Negros.
+263 | bg=paper | Nacht dice que si los Toros Negros quieren rescatar a Yami, tienen seis meses para volverse más fuertes. Y que la mayoría va a morir.
+264-265 | bg=paper | Y explica la verdad: los demonios usan cuerpos humanos para entrar a nuestro mundo. Y la Tríada quiere abrir las puertas del infierno.
+264 | bg=paper gif=bc2-laugh_1 | Y los Toros Negros responden: perfecto, ¿cuándo empezamos? No entienden el concepto de miedo.
+265-266 | bg=black | Nacht revela otra cosa. Cada miembro de la Tríada tiene un demonio de alto nivel dentro. Y su objetivo es traer al demonio más fuerte de todos.
+266 | bg=speed | Nacht tiene cuatro demonios, con contratos de igual a igual. Y ofrece entrenar a Asta para hacer lo mismo con Liebe.
+267 | bg=black | Pero Liebe no quiere ser amigo de nadie. Quiere matar a Asta.
+267 | bg=speed:#e3262e | Nacht obliga a Asta a pelear contra Liebe dentro de su propia mente. Y Liebe intenta tomar su cuerpo.
+@ La historia de Liebe
+268 | bg=black | Y aquí llega una de las mejores historias del manga. La historia de Liebe.
+268 | bg=black | Liebe nació en el infierno sin magia. Un demonio sin poder. Todos lo despreciaban.
+268-269 | bg=paper | Y un día, escapó al mundo humano. Y una mujer lo encontró. Una mujer llamada Licita.
+269 | bg=paper | Licita tenía un poder extraño: absorbía la magia y la vida de todo lo que tocaba. Por eso vivía sola.
+269 | bg=paper | Pero Liebe no tenía magia. Así que ella pudo abrazarlo sin hacerle daño.
+270 | bg=aura:#ffd23d | Licita lo crió como a un hijo. Le enseñó a reír. Le dio un nombre.
+270 | bg=black punch | Y entonces Lucifero, el rey de los demonios, la mató. Delante de Liebe.
+271 | bg=black stamp=MAMÁ | Y la verdad: Licita era la madre de Asta. Asta y Liebe tienen la misma mamá.
+271 | bg=aura:#e3262e gif=bc2-cry_1 | Por eso Liebe quería venganza. Y por eso usó el cuerpo de Asta. Dos hermanos que nunca supieron que lo eran.
+272 | bg=speed:#ffd23d punch | Asta le dice: no quiero usarte. Quiero que peleemos juntos. Y Liebe acepta. Unión demoníaca.
+272 | bg=paper | Y aquí el título de Asta cambia. Ya no es solo el chico sin magia. Es el chico que se ganó a un demonio.
+272 | bg=aura:#7a3cff | Con Liebe, Asta puede volar, cortar magia a distancia, y usar la antimagia en todo su cuerpo. Es otro nivel.
+@ La invasión del Reino de la Pica
+274-275 | bg=speed | Seis meses después, los Toros Negros invaden el Reino de la Pica para rescatar a Yami.
+275 | bg=paper | Y no van solos. El Reino del Corazón, los Leones Carmesí y otros escuadrones se unen al ataque.
+276-277 | bg=speed:#e3262e | Asta enfrenta otra vez a Dante. Y ahora con Liebe de su lado, la pelea es completamente distinta.
+278-280 | bg=speed:#e3262e | Dante tiene un cuerpo que se regenera. Pero la antimagia no le deja regenerar nada.
+279 | bg=black | Dante convierte a sus soldados en armas y los lanza contra los Toros Negros.
+281-282 | bg=aura:#7a3cff punch | Asta, con cuernos, alas negras y la antimagia completa, derrota a Dante. El niño de Hage acaba de vencer a un miembro de la Tríada.
+283 | bg=paper | Y Dante, antes de caer, dice algo que nadie entiende: todavía no han visto el verdadero poder de los Zogratis.
+284-286 | bg=black | Y conocemos la historia de Nacht. Él y su hermano gemelo Morgen. Morgen era el héroe, y Nacht el que vivía en su sombra.
+287-288 | bg=black | Morgen murió protegiendo a Nacht. Y Nacht juró vivir para destruir a los demonios que causaron eso.
+288 | bg=black | Nacht deja que su odio hable. Y descubrimos que él también tenía un pacto con un demonio. Y que lo usó para sobrevivir.
+289-290 | bg=speed | Los Toros Negros rescatan a Yami y a William. El capitán vuelve, y lo primero que dice es una broma. Claro que sí.
+290 | bg=paper | Yami despierta encadenado. Ve a Asta. Y le dice: llegaste tarde. Pero sonríe.
+@ Noelle contra Vanica
+291-292 | bg=speed | Mientras tanto, Noelle enfrenta a Vanica Zogratis, la hermana loca de la Tríada, que tiene a Megicula dentro.
+293-294 | bg=paper | Vanica es tan fuerte que ni siquiera le importa ganar. Solo quiere divertirse.
+295-296 | bg=speed:#e3262e | Vanica es infantil, cruel, y obsesionada con la sangre. Y Noelle no retrocede ni un paso.
+296 | bg=speed | Y Noelle tiene que superar el miedo que le tiene a la mujer que mató a su madre.
+297-298 | bg=aura:#7a3cff | Noelle lleva su Valquiria a un nivel nuevo. El nivel de su madre.
+299-301 | bg=speed:#e3262e | Megicula toma el control completo de Vanica. Y la pelea se vuelve contra un demonio de verdad.
+300 | bg=speed:#e3262e | Megicula usa magia de maldiciones. Puede matar a alguien solo con quererlo.
+301 | bg=aura:#7a3cff | Y la batalla de Noelle se convierte en una de las más bonitas de todo el manga.
+302 | bg=aura:#ffd23d punch | Noelle, Nozel, Loropechika, todos atacan juntos. Y Megicula cae.
+303 | bg=paper | Y en el último momento, el espíritu de Acier, la madre de Noelle, aparece. Y le dice a sus hijos que vivan.
+303 | bg=paper gif=bc2-cry_2 | Si no lloraste en esta escena, revisa si tienes pulso.
+@ Yuno, el príncipe
+304-305 | bg=speed | Yuno enfrenta a Zenon, el que destrozó a su escuadrón.
+306-307 | bg=speed:#e3262e | Zenon tiene un demonio de hueso y espacio. Y Yuno pierde la primera vez.
+306 | bg=black | Zenon tiene una herida de un ataque de su infancia. Y ahí descubrimos quién atacó a la familia de Yuno.
+307 | bg=black | Zenon fue el que mató a los guardianes del bebé Yuno. Y el que hizo que Yuno terminara en la puerta de una iglesia en Hage.
+308 | bg=black | Pero Yuno recuerda algo. Él no fue abandonado por cualquiera.
+308 | bg=paper | Bell, el espíritu del viento, salvó a Yuno ese día. Lo llevó lejos, al Reino del Trébol. Y lo dejó junto a otro bebé abandonado. Asta.
+309 | bg=aura:#ffd23d punch stamp=PRÍNCIPE | Yuno es Yuno Grinberryall. El hijo de los verdaderos reyes de la Pica. El príncipe que los Zogratis intentaron matar.
+309 | bg=paper ai=bc2_joke_prince.png | Mientras tanto, Asta: yo crecí con él, dormíamos en el mismo cuarto, y no tenía idea de que era un príncipe. Normal.
+310 | bg=speed:#ffd23d punch | Con la magia de las estrellas de su familia, Yuno derrota a Zenon.
+310 | bg=speed:#ffd23d | Con sus dos grimorios, el del Trébol y el de la Pica, Yuno se vuelve un monstruo de magia.
+@ Lucifero
+311-312 | bg=black | Pero la Tríada ya ganó algo. La puerta del infierno se abre.
+312 | bg=black | Moris, un científico loco de la Pica, abre el último portal. Y la sangre de los Zogratis completa el ritual.
+313-314 | bg=black punch | Y Lucifero, el rey de los demonios, el que mató a la madre de Asta, baja al mundo humano.
+315-316 | bg=black | Su sola presencia aplasta a todos. Magos de élite que no pueden ni levantarse.
+316 | bg=black | Hasta Yami y Nacht no pueden mover un dedo. Lucifero tiene magia de gravedad absoluta.
+317 | bg=speed:#e3262e | Y Asta se pone de pie. Con Liebe a su lado. Los dos hijos de Licita contra el que se la quitó.
+318-319 | bg=speed:#e3262e punch | Asta corta. Lucifero responde con gravedad que podría aplastar una ciudad.
+319 | bg=black | Lucifero le dice a Asta que su madre fue su presa. Y Asta, por primera vez, pelea con odio. Y Liebe también.
+320-321 | bg=speed | Yuno llega. Y por primera vez en toda la serie, Asta y Yuno pelean con todo su poder, juntos.
+321 | bg=speed | Asta y Yuno. Los dos huérfanos de Hage, uno príncipe, otro hermano de un demonio, peleando espalda con espalda contra el rey del infierno.
+322-324 | bg=speed:#ffd23d | Todos los Toros Negros, todos los capitanes, todos pelean. Este es el momento que la serie estuvo construyendo.
+323 | bg=speed:#e3262e | Hasta los enemigos de antes ayudan. Los elfos, los del Reino del Corazón, todos.
+324 | bg=aura:#7a3cff | Y Asta usa todas sus espadas con todo su poder. Espadas que cortan incluso el alma de un demonio.
+325 | bg=aura:#ffd23d punch | Y Asta, con Liebe, le da el golpe final al rey de los demonios.
+325 | bg=paper gif=bc2-hype_2 | El chico sin magia acaba de vencer al demonio más fuerte que existe. Esto es Black Clover.
+@ Después de la tormenta
+327-328 | bg=paper | La guerra termina. Vanica se salva, los heridos se curan, y el Reino de la Pica es libre.
+329-330 | bg=paper | Liebe se queda en el grimorio de Asta. Ya no como un prisionero, sino como un hermano. Por fin tiene una familia.
+331 | bg=paper | Y Yuno conoce a su verdadera madre. La reina de la Pica. Y ella le pide que vuelva a su reino.
+331 | bg=paper | Yuno le responde que no. Que su familia está en el Trébol. Que tiene una promesa con su mejor amigo y su rival.
+@ La verdad sobre Julius
+332 | bg=black | Pero alguien estuvo observando todo. Desde las sombras. Desde el principio.
+332 | bg=black | Los Zogratis eran cuatro hermanos. Dante, Zenon, Vanica. ¿Y el cuarto?
+333 | bg=black punch | Lucius Zogratis. El hermano mayor. El que nadie había visto.
+333 | bg=aura:#7a3cff punch | Y aparece en el cuerpo de Julius Novachrono. El Rey Mago. El hombre que creyó en Asta cuando nadie más lo hizo.
+333 | bg=black | Julius y Lucius siempre fueron la misma persona. Dos almas en un cuerpo. Igual que William y Patry.
+334 | bg=black | Y Lucius tiene un plan: usar el alma y la magia del tiempo para crear un mundo perfecto. Un mundo de paladines, sin libre albedrío.
+334 | bg=speed:#e3262e punch | Y su primer paso es eliminar al único que puede detener su magia. Asta.
+334 | bg=aura:#7a3cff stamp=CONTINUARÁ | ¿Qué va a hacer Asta contra el hombre que lo inspiró a ser Rey Mago? ¿Y qué pasó realmente con Julius?
+
+152 | bg=halftone:#e3262e page | Eso lo vemos en la parte tres, la última. Suscríbete para no perdértela, y dime en los comentarios: ¿lo viste venir?
