@@ -23,7 +23,7 @@ const flashes = (pts) => (c, lt) => pts.forEach(([x, y], k) => { const f = Math.
 
 window.SHOTS = [
   // 4.0 shelf: a purple Prime Energy can rises in front of the drinks; caffeine meter fills to 200mg
-  { plate: 'shelf', cam: { z: [1.1, 1.28], x: [1280, 1280], y: [820, 840] }, bed: [['hum_loop', .1], ['crowd_loop', .05]], light: { dir: 1 },
+  { plate: 'shelf', cam: { z: [1.35, 1.5], x: [1100, 1150], y: [930, 950] }, bed: [['hum_loop', .1], ['crowd_loop', .05]], light: { dir: 1 },
     init: S => { const t23 = A.at(S, '2023,', .6), tAr = A.at(S, 'arrived.', 2.0), tN = A.at(S, 'name.', 3.0), tCo = A.at(S, 'colours.', 4.6), tIn = A.at(S, 'inside', 5.6), tTw = A.at(S, 'two', 6.6);
       S.D.figs = [{ x: 500, y: 1310, s: 1.85, ...PR.SHOPPER(1), facing: 1, mood: 'neutral', walk: { x0: -200, x1: 500, t0: 0, dur: 2.2 }, anim: (o, lt) => { if (lt > tAr) o.mood = 'shocked'; } }];
       S.D.live = [(c, lt) => TW.glow(c, 1280, 900, 600, '170,100,255', .25 * K.seg(lt, tAr - .5, tAr + .5) * (.85 + .15 * Math.sin(lt * 3)))];
@@ -34,7 +34,7 @@ window.SHOTS = [
       S.D.sfx = [[0, 'footsteps', .2], [t23, 'pop', .2], [tAr - .4, 'whoosh', .3], [tN, 'pop', .15], [tCo, 'pop', .15], [tIn, 'riser', .2], [tTw + .3, 'hit', .25]]; } },
 
   // 4.1 two coffees beside the can; '18+' warning; then the kids' bottle - cut to the queue round the block
-  { plate: 'shelf', cam: { z: [1.2, 1.26], x: [1280, 1300], y: [880, 880] }, bed: [['hum_loop', .1]], light: { dir: 1 },
+  { plate: 'shelf', cam: { z: [1.45, 1.6], x: [1280, 1320], y: [960, 960] }, bed: [['hum_loop', .1]], light: { dir: 1 },
     init: S => { const tC = A.at(S, 'cups', 1.6), tU = A.at(S, 'under-18s.', 5.0), tB = A.at(S, 'bottle', 6.8), tQ = A.at(S, 'queued', 9.6);
       const kidsWalk = (k) => ({ x: 0, y: 1330, s: 1.55, ...PR.KID(k), facing: -1, mood: k % 2 ? 'happy' : 'neutral', walk: { x0: 2900 + k * 260, x1: 900 + k * 260, t0: 0, dur: 2.6 } });
       const QUEUE = { in: tQ - .3, plate: 'shopfront', cam: { z: [1.05, 1.12], x: [1280, 1300], y: [880, 880] }, light: { dir: 1 },
@@ -60,7 +60,7 @@ window.SHOTS = [
       S.D.sfx = [[tJ, 'pop', .2], [tSe, 'camera_shutter', .3], [tPo, 'camera_shutter', .25], [tF - .3, 'paper', .3], [tIn, 'stamp', .3], [tCh, 'camera_shutter', .25]]; } },
 
   // 4.3 Canada recall: cans over the legal caffeine line get pulled into a crate
-  { plate: 'shelf', cam: { z: [1.15, 1.25], x: [1300, 1260], y: [860, 860] }, bed: [['hum_loop', .1]], light: { dir: 1 },
+  { plate: 'shelf', cam: { z: [1.35, 1.5], x: [1150, 1180], y: [930, 950] }, bed: [['hum_loop', .1]], light: { dir: 1 },
     init: S => { const tM = A.at(S, 'month,', 1.0), tCa = A.at(S, 'Canada', 1.6), tR = A.at(S, 'recalled', 2.4), tB = A.at(S, 'broke', 5.6), tLi = A.at(S, 'limit.', 7.6);
       S.D.figs = [{ x: 620, y: 1310, s: 1.9, ...PR.SHOPPER(4), facing: 1, mood: 'worried', walk: { x0: -200, x1: 620, t0: tR - 1.2, dur: 1.6 }, anim: (o, lt) => { if (lt > tR + .4) o.arms = () => ({ shR: 80 + 15 * Math.sin(lt * 5), elR: -20 }); } }];
       S.D.front = [TABLE(860, 1700, 1080), (c, lt) => { for (let k = 0; k < 5; k++) { const tk = tR + .6 + k * .6, u = E.io(K.seg(lt, tk, tk + .5)); const x = K.lerp(1100 + k * 120, 940, u), y = 1080 - Math.sin(u * Math.PI) * 120 + u * 0; if (u < 1) PR.can(c, x, y, 3.4, { col: 'purple' }); }
@@ -72,7 +72,7 @@ window.SHOTS = [
       S.D.sfx = [[tR - 1.2, 'footsteps', .2], [tCa, 'pop', .2], [tR + .3, 'stamp', .35], [tR + .9, 'scrape', .2], [tR + 2.1, 'scrape', .2], [tB, 'alarm', .1]]; } },
 
   // 4.4 podcast: Logan's answer - labelled 18+, industry standard; years later still annoyed about a Sunday morning
-  { plate: 'podcast', cam: { z: [1.2, 1.34], x: [1420, 1400], y: [900, 900] }, bed: [['hum_loop', .1]], light: { dir: -1, key: 'rgba(255,200,240,.22)' },
+  { plate: 'podcast', cam: { z: [1.2, 1.5], x: [1380, 1420], y: [880, 920] }, bed: [['hum_loop', .1]], light: { dir: -1, key: 'rgba(255,200,240,.22)' },
     init: S => { const tL = A.at(S, "Logan's", .4), tCl = A.at(S, 'labelled', 3.2), tIs = A.at(S, 'industry', 6.0), tY = A.at(S, 'Years', 8.6), tAn = A.at(S, 'annoyed', 10.6), tSu = A.at(S, 'Sunday', 13.4), FL = 1320;
       S.D.figs = [{ x: 1420, y: FL, s: 1.9, ...PR.LOGAN({ blue: true }), pose: 'sit', facing: 1, mood: 'neutral', talk: [tL, 99],
         anim: (o, lt) => { o.mood = lt > tAn ? 'angry' : 'focus'; o.arms = () => lt > tAn ? { shR: 70 + 20 * Math.sin(lt * 6), elR: -60, handR: 'fist' } : lt > tCl - .2 ? { shR: 95, elR: -40, handR: 'point' } : { shR: 30, elR: -60 }; } }];
@@ -85,7 +85,7 @@ window.SHOTS = [
       S.D.sfx = [[tL, 'pop', .15], [tCl, 'pop', .2], [tIs, 'pop', .2], [tY, 'whoosh', .3], [tAn, 'thud', .2], [tSu - .3, 'pop', .2]]; } },
 
   // 4.5 shelf: can and bottle side by side, look alike; a kid reaches; 'A CHOICE'
-  { plate: 'shelf', cam: { z: [1.15, 1.32], x: [1280, 1300], y: [860, 900] }, bed: [['hum_loop', .1], ['tension', .08]], light: { dir: 1 },
+  { plate: 'shelf', cam: { z: [1.35, 1.5], x: [1150, 1200], y: [930, 950] }, bed: [['hum_loop', .1], ['tension', .08]], light: { dir: 1 },
     init: S => { const tIn = A.at(S, 'invent', 1.4), tPr = A.at(S, 'printed', 3.4), tLo = A.at(S, 'looked', 6.6), tK = A.at(S, "kids'", 8.2), tCh = A.at(S, 'choice.', 10.6);
       S.D.figs = [{ x: 600, y: 1320, s: 1.55, ...PR.KID(2), facing: 1, mood: 'happy', walk: { x0: -200, x1: 600, t0: tLo - 1.6, dur: 1.6 }, anim: (o, lt) => { if (lt > tK) o.arms = () => ({ shR: 95, elR: -10, handR: 'point' }); } }];
       S.D.front = [TABLE(900, 1700, 1080), (c, lt) => { PR.can(c, 1080, 1080, 4.2, { col: 'purple', glow: lt > tPr }); PR.bottle(c, 1500, 1080, 4.2, { col: 'purple', glow: lt > tK }); if (lt > tLo) TW.txt(c, '=', 1290, 900, 120, PR.GOLD, 'center', 'Anton'); }];

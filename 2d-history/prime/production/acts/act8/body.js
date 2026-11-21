@@ -29,15 +29,16 @@ const endCard = (c, lt, t0) => { const u = E.out(K.seg(lt, t0, t0 + .7)); c.save
   const p = 1 + .06 * Math.sin(lt * 5); c.save(); c.translate(960, 560); c.scale(p, p); c.fillStyle = '#d8202a'; c.strokeStyle = INK; c.lineWidth = 6; rr(c, -230, -60, 460, 120, 24); c.fill(); c.stroke(); txt(c, 'SUBSCRIBE', 0, 2, 70, '#fff', 'center', 'Anton'); c.restore();
   PR.bottle(c, 560, 700, 5, { col: 'blue', glow: .5, rot: -.15 }); PR.can(c, 1360, 700, 5, { col: 'orange', glow: .5 }); c.restore(); };
 
+const DRIFT = (fns, k = .1) => fns.map(f => (c, lt, u) => { c.save(); const z = 1 + k * (u ?? 0) + .015 * Math.sin(lt * .9); c.translate(960, 480); c.scale(z, z); c.rotate(.006 * Math.sin(lt * .7)); c.translate(-960, -480); f(c, lt, u); c.restore(); });
 window.SHOTS = [
   // 8.01 Prime still on sale: Logan polishes the last bottle on the shelf; BACK TO $1.2 BILLION; the target calendar is blank
-  { plate: 'shelf', cam: { z: [1.05, 1.25], x: [1200, 1260], y: [760, 800] }, bed: [['hum_loop', .12]], light: { dir: 1, key: 'rgba(230,240,255,.18)' },
+  { plate: 'shelf', cam: { z: [1.25, 1.75], x: [1150, 1300], y: [880, 780], ease: u => u < .5 ? u * .15 : .85 + (u - .5) * .3 }, bed: [['hum_loop', .12]], light: { dir: 1, key: 'rgba(230,240,255,.18)' },
     init: S => { const tF = A.at(S, 'fair', 1.2), tSa = A.at(S, 'sale', 3.1), tL = A.at(S, 'Logan', 3.9), tB = A.at(S, 'billion', 7.9), tBw = A.at(S, 'Big', 8.9), tNd = A.at(S, 'No', 9.7);
       const RAG = { near: cc => { cc.fillStyle = '#f2e6c8'; cc.strokeStyle = INK; cc.lineWidth = 2; cc.beginPath(); cc.ellipse(0, 6, 16, 11, .3, 0, 7); cc.fill(); cc.stroke(); } };
       S.D.figs = [{ x: 1060, y: 1330, s: 1.9, ...PR.LOGAN(), facing: 1, mood: 'happy', hold: RAG, walk: { x0: -250, x1: 1060, t0: .1, dur: Math.max(2, tL) },
         anim: (o, lt) => { if (lt > tL) { o.arms = () => ({ shR: 70 + 8 * Math.sin(lt * 14), elR: -30 + 10 * Math.sin(lt * 14), handR: 'fist' }); } if (lt > tB) { o.arms = null; o.hold = null; o.pose = 'present'; o.mood = 'smug'; } if (lt > tNd) o.mood = 'neutral'; } }];
       S.D.live = [(c, lt) => { emptyShelf(c, lt); PR.bottle(c, 1290, 928, 2.6, { col: 'blue', glow: lt > tL ? .5 + .3 * Math.sin(lt * 6) : .2 }); if (lt > tL) TW.sparkle(c, 1290, 860, lt * 2, .8); }];
-      S.D.over = [HYPE(.1), (c, lt) => K.card(c, 'STILL ON SALE', lt, { at: tSa - .2, x: 760, y: 110, px: 52, rot: -2, until: tB }), (c, lt) => JH.quote(c, '"BACK TO $1.2 BILLION"', 'LOGAN PAUL', 760, 170, lt, tB - .3, { px: 50 }), (c, lt) => blankCal(c, 1560, 330, lt, tNd)];
+      S.D.over = [HYPE(.1), (c, lt) => K.card(c, 'STILL ON SALE', lt, { at: tSa - .2, x: 760, y: 110, px: 52, rot: -2, until: tB }), (c, lt) => JH.quote(c, '"BACK TO $1.2 BILLION"', 'LOGAN PAUL', 760, 170, lt, tB - .3, { px: 50 }), (c, lt) => blankCal(c, 1580, 400, lt, tNd)];
       S.D.sfx = [[.2, 'footsteps', .2], [tSa, 'chime', .2], [tL, 'scrape', .2], [tB, 'riser', .2], [tBw, 'pop', .25], [tNd, 'paper', .35]]; } },
   // 8.02 callback: the Sydney studio, empty; the giant cola can shuffles past, unbothered
   { plate: 'studio', cam: { z: [1.0, 1.12], x: [1280, 1320], y: [740, 780] }, bed: [['wind_loop', .06], ['hum_loop', .08]], light: { dir: 1, key: 'rgba(255,200,150,.2)' },
@@ -48,16 +49,16 @@ window.SHOTS = [
         (c, lt) => K.card(c, 'SYDNEY → 2026', lt, { at: tT, x: 960, y: 110, px: 54, rot: 2 }), (c, lt) => K.card(c, 'NEW PLAN:\nWIN BACK OLD SHOPPERS', lt, { at: tW, x: 1400, y: 300, px: 44, rot: -3, bg: '#ffd83a' })];
       S.D.sfx = [[tS, 'whoosh_soft', .2], [.5, 'scrape', .15], [tC, 'pop', .2], [tT, 'tick', .2], [tW, 'paper', .3]]; } },
   // 8.03 over to you: comment bubbles stream up between two pulsing buttons, UNLUCKY / HYPE
-  { plate: 'card', cam: { z: [1.0, 1.06], x: [1280, 1280], y: [720, 720] }, bed: [['hum_loop', .08]], sub: 'off',
+  { plate: 'card', cam: { z: [1.0, 1.3], x: [1100, 1450], y: [720, 720] }, bed: [['hum_loop', .08]], sub: 'off',
     init: S => { const tR = A.at(S, 'reckon', 1.4), tU = A.at(S, 'unlucky', 4.5), tH = A.at(S, 'hype', 8.2), tC = A.at(S, 'comments.', 10);
-      S.D.over = [(c, lt) => K.card(c, 'WHAT DO YOU RECKON?', lt, { at: tR - .5, x: 960, y: 140, px: 64, rot: -2 }), (c, lt) => stream(c, lt, tC - 1.5),
-        (c, lt) => button(c, 560, 400, 'UNLUCKY', '#2e8ae0', lt, tU - .6, 0), (c, lt) => button(c, 1360, 400, 'HYPE', '#d8202a', lt, tH - .6, 1), (c, lt) => txt(c, 'OR', 960, 400, 70 * pop(lt, tH - .8, .4), '#fff', 'center', 'Anton'),
-                (c, lt) => K.card(c, 'TELL US IN THE COMMENTS', lt, { at: tC, x: 960, y: 250, px: 40, rot: 2 })];
+      S.D.over = DRIFT([(c, lt) => K.card(c, 'WHAT DO YOU RECKON?', lt, { at: tR - .5, x: 960, y: 140, px: 64, rot: -2 }), (c, lt) => stream(c, lt, tC - 1.5),
+        (c, lt) => button(c, 560, 400, 'UNLUCKY', '#2e8ae0', lt, Math.min(tU - .6, tR + .4), 0), (c, lt) => button(c, 1360, 400, 'HYPE', '#d8202a', lt, Math.min(tH - .6, tR + 1.2), 1), (c, lt) => txt(c, 'OR', 960, 400, 70 * pop(lt, Math.min(tH - .8, tR + 1), .4), '#fff', 'center', 'Anton'),
+                (c, lt) => K.card(c, 'TELL US IN THE COMMENTS', lt, { at: tC, x: 960, y: 250, px: 40, rot: 2 })]);
       S.D.sfx = [[tR, 'pop', .25], [tU - .6, 'pop', .3], [tH - .6, 'pop', .3], [tC, 'chime', .3], [tC + .3, 'typing', .2]]; } },
   // 8.04 end card slides up
-  { plate: 'title', cam: { z: [1.0, 1.05], x: [1280, 1280], y: [720, 720] }, bed: [['hum_loop', .08]], sub: 'off',
-    init: S => { const tS = A.at(S, 'subscribe', .3); S.D.over = [(c, lt) => endCard(c, lt, tS - .2)]; S.D.sfx = [[tS - .2, 'whoosh', .3], [tS - .2, 'swell', .3], [tS + .6, 'chime', .3]]; } },
+  { plate: 'title', cam: { z: [1.0, 1.25], x: [1150, 1400], y: [700, 760] }, bed: [['hum_loop', .08]], sub: 'off',
+    init: S => { const tS = A.at(S, 'subscribe', .3); S.D.over = DRIFT([(c, lt) => endCard(c, lt, tS - .2)], .12); S.D.sfx = [[tS - .2, 'whoosh', .3], [tS - .2, 'swell', .3], [tS + .6, 'chime', .3]]; } },
   // 8.05 end card hold (endTitle)
-  { plate: 'title', cam: { z: [1.05, 1.1], x: [1280, 1280], y: [720, 720] }, bed: [['hum_loop', .06]], sub: 'off',
-    init: S => { S.D.over = [(c, lt) => endCard(c, lt + 5, 0)]; } },
+  { plate: 'title', cam: { z: [1.25, 1.4], x: [1400, 1250], y: [760, 700] }, bed: [['hum_loop', .06]], sub: 'off',
+    init: S => { S.D.over = DRIFT([(c, lt) => endCard(c, lt + 5, 0)], -.08); } },
 ];

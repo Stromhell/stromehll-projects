@@ -34,14 +34,14 @@ const easel = (c, x, y, lt, bars, title) => { const w = 760, h = 620, top = y - 
       if (b.txt) txt(c, b.txt(lt), bx + 70, base - bh - 34, 46, INK, 'center', 'Anton'); }
     txt(c, b.lab, bx + 70, base + 36, 36, '#333', 'center', 'Oswald'); }); c.restore(); };
 const firework = (c, x, y, lt, t0, hue) => { const u = lt - t0; if (u < -1.1) return; if (u < 0) { const k = 1 + u / 1.1; c.fillStyle = `rgba(255,220,160,${.9})`; c.beginPath(); c.arc(x, y + (1 - k) * 900, 8, 0, 7); c.fill(); TW.glow(c, x, y + (1 - k) * 900, 60, '255,200,120', .6); return; }
-  if (u > 3.2) return; const a = Math.max(0, 1 - u / 3.2), r = 380 * E.out(Math.min(1, u / 1.2)); TW.glow(c, x, y, r * 1.6, hue, .45 * a);
-  for (let k = 0; k < 28; k++) { const an = k / 28 * Math.PI * 2, rr2 = r * (.8 + .2 * Math.sin(k * 3)); const px = x + Math.cos(an) * rr2, py = y + Math.sin(an) * rr2 + u * u * 30; c.strokeStyle = `rgba(${hue},${a})`; c.lineWidth = 6; c.beginPath(); c.moveTo(x + Math.cos(an) * rr2 * .75, py - Math.sin(an) * rr2 * .25); c.lineTo(px, py); c.stroke(); c.fillStyle = `rgba(255,255,240,${a})`; c.beginPath(); c.arc(px, py, 5, 0, 7); c.fill(); } };
+  if (u > 3.2) return; const a = Math.max(0, 1 - u / 3.2), r = 520 * E.out(Math.min(1, u / 1.2)); TW.glow(c, x, y, r * 1.6, hue, .45 * a);
+  for (let k = 0; k < 28; k++) { const an = k / 28 * Math.PI * 2, rr2 = r * (.8 + .2 * Math.sin(k * 3)); const px = x + Math.cos(an) * rr2, py = y + Math.sin(an) * rr2 + u * u * 30; c.strokeStyle = `rgba(${hue},${a})`; c.lineWidth = 10; c.beginPath(); c.moveTo(x + Math.cos(an) * rr2 * .75, py - Math.sin(an) * rr2 * .25); c.lineTo(px, py); c.stroke(); c.fillStyle = `rgba(255,255,240,${a})`; c.beginPath(); c.arc(px, py, 5, 0, 7); c.fill(); } };
 const smoke = (c, x, y, lt, t0) => { const u = lt - t0; if (u < 1) return; const a = Math.max(0, .35 - (u - 1) * .06); for (let k = 0; k < 7; k++) { c.fillStyle = `rgba(160,160,175,${a})`; c.beginPath(); c.arc(x - 260 + k * 90 + Math.sin(u + k) * 20, y + Math.cos(k * 2) * 60 + u * 12, 80 + k % 3 * 20, 0, 7); c.fill(); } };
 const rain = (c, lt, a = .25) => { c.save(); c.strokeStyle = `rgba(200,215,235,${a})`; c.lineWidth = 2; for (let k = 0; k < 110; k++) { const x = (k * 233 + lt * 300) % 2600, y = (k * 151 + lt * 1500) % 1440; c.beginPath(); c.moveTo(x, y); c.lineTo(x - 8, y + 34); c.stroke(); } c.restore(); };
 
 window.SHOTS = [
   // 6.01 the same supermarket, now quiet: middle bays empty, one bottle left; a shopper snaps the REDUCED sticker; a tumbleweed rolls through
-  { plate: 'shelf', cam: { z: [1.0, 1.22], x: [1280, 1200], y: [720, 760] }, bed: [['hum_loop', .12], ['wind_loop', .05]], light: { dir: 1, key: 'rgba(230,240,255,.18)' },
+  { plate: 'shelf', cam: { z: [1.3, 1.5], x: [1000, 1080], y: [900, 920] }, bed: [['hum_loop', .12], ['wind_loop', .05]], light: { dir: 1, key: 'rgba(230,240,255,.18)' },
     init: S => { const tR = A.at(S, 'Remember', .6), tB = A.at(S, 'By', 2.9), tSh = A.at(S, 'shoppers', 3.7), tPh = A.at(S, 'photos', 5.1), tRd = A.at(S, 'reduced-to-clear', 6.6);
       S.D.figs = [{ x: 600, y: 1330, s: 1.9, ...PR.SHOPPER(2), facing: 1, mood: 'neutral', walk: { x0: -200, x1: 640, t0: tR + .2, dur: tSh - tR + .6 }, hold: PHONE,
         anim: (o, lt) => { if (lt > tSh + .9) { o.arms = () => ({ shR: 80, elR: -60, handR: 'fist' }); o.facing = 1; } if (lt > tRd + .3) o.mood = 'smug'; } }];
@@ -75,7 +75,7 @@ window.SHOTS = [
           const w = 300 * (1 - .93 * E.out(K.seg(lt, tP + .3, tN + .3))); c.fillStyle = '#3aa05a'; c.fillRect(-200, 4, w, 40); c.strokeRect(-200, 4, w, 40); if (lt > tN) txt(c, '−90%+', 150, -28, 40, RED, 'center', 'Anton'); c.restore(); }];
       S.D.sfx = [[t24, 'whoosh_soft', .2], [tT, 'thud', .5], [tT + .1, 'coins', .15], [tSv, 'stamp', .4], [tP + .3, 'scrape', .2], [tN, 'thud', .4], [tN + .1, 'hit', .2]]; } },
   // 6.04 the strategic review: four directors around a blank PLAN B whiteboard; the marker squeaks, nothing gets written
-  { plate: 'boardroom', cam: { z: [1.0, 1.12], x: [1280, 1280], y: [800, 840] }, bed: [['hum_loop', .1], ['night_loop', .05]], light: { dir: 1, key: 'rgba(200,210,255,.2)' },
+  { plate: 'boardroom', cam: { z: [1.2, 1.3], x: [1280, 1280], y: [960, 980] }, bed: [['hum_loop', .1], ['night_loop', .05]], light: { dir: 1, key: 'rgba(200,210,255,.2)' },
     init: S => { const tD = A.at(S, 'directors', .4), tH = A.at(S, 'hyper-growth', 2.4), tSr = A.at(S, 'strategic', 5.1), tCe = A.at(S, 'corporate', 7.2), tN = A.at(S, 'need', 8.9);
       const squeak = lt => lt > tSr && lt < tN ? Math.sin(lt * 14) : 0;
       S.D.figs = [{ x: 420, y: 1410, s: 2, ...PR.DIRECTOR(0), facing: 1, pose: 'think', mood: 'neutral' },
@@ -91,12 +91,12 @@ window.SHOTS = [
         (c, lt) => K.card(c, '"STRATEGIC REVIEW"', lt, { at: tSr, x: 960, y: 110, px: 66, rot: -2 }), (c, lt) => K.card(c, '= WE NEED A NEW PLAN', lt, { at: tN - .3, x: 1000, y: 230, px: 48, rot: 2, bg: '#ffd83a' })];
       S.D.sfx = [[tD, 'pop', .2], [tH, 'paper', .2], [tSr, 'scrape', .35], [tSr + .6, 'scrape', .3], [tSr + 1.3, 'scrape', .3], [tCe, 'tick', .2], [tN, 'pop', .3]]; } },
   // 6.05 the firework: a burst over the supermarket, everyone looks up; it fizzles; one shopper strolls past on a normal Tuesday
-  { plate: 'shopfront', cam: { z: [1.0, 1.15], x: [1280, 1280], y: [700, 820] }, bed: [['rain_loop', .12], ['city_loop', .06]], light: { dir: 1, key: 'rgba(255,200,170,.2)' },
+  { plate: 'shopfront', cam: { z: [1.1, 1.25], x: [1280, 1280], y: [720, 790] }, bed: [['rain_loop', .12], ['city_loop', .06]], light: { dir: 1, key: 'rgba(255,200,170,.2)' },
     init: S => { const tH = A.at(S, 'happened', .7), tF = A.at(S, 'firework.', 2.7), tSp = A.at(S, 'Spectacular', 3.2), tL = A.at(S, 'looks', 4.8), tO = A.at(S, 'over', 6.4), tP = A.at(S, 'product', 8.2), tNm = A.at(S, 'normal', 10.6);
       const watcher = (x, k, f, out) => ({ x, y: 1180, s: 1.45, ...PR.SHOPPER(k), facing: f, mood: 'neutral', anim: (o, lt) => { if (lt > tSp) { o.mood = 'happy'; o.lean = -6; if (k % 2) o.pose = 'cheer'; } if (lt > tO + .2) { o.mood = 'neutral'; o.lean = 0; o.pose = 'stand'; } },
-        walk: { x0: x, x1: out, t0: tO + .5 + k * .2, dur: 4.5 } });
+        walk: { x0: x, x1: out, t0: tO + .3 + k * .15, dur: 2.6 } });
       S.D.figs = [watcher(760, 0, 1, -300), watcher(1100, 1, 1, -300), watcher(1820, 3, -1, 2900),
-        { x: 2900, y: 1220, s: 1.5, ...PR.SHOPPER(4), facing: -1, mood: 'neutral', walk: { x0: 2900, x1: 1280, t0: tP, dur: Math.max(3, tNm - tP + 1.4) } }];
+        { x: 2900, y: 1220, s: 1.5, ...PR.SHOPPER(4), facing: -1, mood: 'neutral', walk: { x0: 2900, x1: 1500, t0: tO + 2.2, dur: 3 } }];
       S.D.live = [(c, lt) => { const sky = K.seg(lt, tF - 1, tF) * (1 - K.seg(lt, tO, tO + 1.5)); if (sky > 0) { c.fillStyle = `rgba(255,170,90,${.18 * sky})`; c.fillRect(0, 0, 2560, 1440); }
         firework(c, 1280, 200, lt, tF, '255,90,140'); firework(c, 640, 180, lt, tSp + .5, '120,200,255'); firework(c, 1960, 170, lt, tSp + 1, '255,220,90'); smoke(c, 1280, 200, lt, tL + 1.2); }];
       S.D.front = [(c, lt) => rain(c, lt, .22)];

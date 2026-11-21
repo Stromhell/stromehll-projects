@@ -13,7 +13,7 @@ const SUGAR = (c, x, y, s) => { c.save(); c.translate(x, y); c.scale(s, s); PR.s
 
 window.SHOTS = [
   // 3.0 bedroom streams: two streamers unbox free Prime live, pull faces; one says it smells like perfume
-  { plate: 'bedroom', cam: { z: [1.12, 1.24], x: [1280, 1300], y: [860, 880] }, bed: [['night_loop', .12], ['hum_loop', .08]], light: { dir: 1, key: 'rgba(200,180,255,.22)' },
+  { plate: 'bedroom', cam: { z: [1.3, 1.42], x: [1300, 1300], y: [900, 920] }, bed: [['night_loop', .12], ['hum_loop', .08]], light: { dir: 1, key: 'rgba(200,180,255,.22)' },
     init: S => { const tB = A.at(S, 'brutal', 1.9), tSt = A.at(S, 'Streamers', 2.4), tF = A.at(S, 'faces', 5.6), tP = A.at(S, 'perfume', 8.6), FL = 1300;
       const sip = (t0) => (o, lt) => { const d = K.seg(lt, t0, t0 + .5) * (1 - K.seg(lt, t0 + 1.4, t0 + 1.9)); o.arms = () => ({ shR: 20 + 60 * d, elR: -40 - 70 * d }); o.mood = lt > t0 + .8 ? 'shocked' : 'happy'; };
       S.D.figs = [{ x: 820, y: FL, s: 1.8, ...PR.STREAMER(0), pose: 'sit', facing: 1, mood: 'happy', hold: BOTTLE_H('blue'), anim: sip(tF - .6), talk: [tSt, tF] },
@@ -75,7 +75,7 @@ window.SHOTS = [
       S.D.sfx = [[tL, 'pop', .15], [tW, 'crowd_cheer', .15], [tB, 'pop', .15], [tLi, 'pop', .15], [tCc, 'stamp', .35]]; } },
 
   // 3.4 podcast wide: Logan lifts a trophy he gave himself; lights dip, a glowing can rises behind - a bigger problem
-  { plate: 'podcast', cam: { z: [1.05, 1.2], x: [1280, 1300], y: [820, 760] }, bed: [['hum_loop', .1], ['tension', .1]], light: { dir: -1, key: 'rgba(255,200,240,.22)' },
+  { plate: 'podcast', cam: { z: [1.4, 1.55], x: [1300, 1350], y: [880, 860] }, bed: [['hum_loop', .1], ['tension', .1]], light: { dir: -1, key: 'rgba(255,200,240,.22)' },
     init: S => { const tD = A.at(S, 'Declaring', .4), tE = A.at(S, 'easiest', 2.6), tN = A.at(S, 'next', 5.8), tBi = A.at(S, 'bigger', 7.4), FL = 1320;
       S.D.figs = [{ x: 1000, y: FL, s: 1.9, ...PR.LOGAN({ blue: true }), facing: 1, mood: 'happy', hold: { near: cc => PR.trophy(cc, 0, 30, 1) },
         anim: (o, lt) => { o.arms = () => lt < tN ? { shR: 160 + 6 * Math.sin(lt * 4), elR: -10, handR: 'fist' } : { shR: 40, elR: -70 }; o.mood = lt > tBi ? 'worried' : 'happy'; } }];

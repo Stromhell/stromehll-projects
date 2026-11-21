@@ -37,7 +37,7 @@ const ARROW = (c, x0, x1, y, u, col) => { if (u <= 0) return; const x = K.lerp(x
 const FL_C = 1340;
 window.SHOTS = [
   // 5.0 courthouse: the case files pile up, tags pop for each
-  { plate: 'court_ext', cam: { z: [1.05, 1.2], x: [1500, 1500], y: [820, 840] }, bed: [['city_loop', .12], ['birds_loop', .06]], light: { dir: -1 },
+  { plate: 'court_ext', cam: { z: [1.35, 1.5], x: [1800, 1850], y: [960, 980] }, bed: [['city_loop', .12], ['birds_loop', .06]], light: { dir: -1 },
     init: S => { const tL = A.at(S, 'lawsuits.', 1.2), tLo = A.at(S, 'Lots', 2.2), tSt = A.at(S, 'started,', 4.0), tDi = A.at(S, "didn't.", 5.2), tBi = A.at(S, 'big', 7.0);
       S.D.figs = [{ x: 1700, y: FL_C, s: 1.9, ...PR.DIRECTOR(1), facing: 1, mood: 'worried', walk: { x0: 1100, x1: 1700, t0: 0, dur: 2 }, hold: { near: cc => PR.briefcase(cc, 0, 40, 1, 0) } }];
       S.D.front = [(c, lt) => PR.folders(c, 2080, FL_C, 4, 7, tLo, lt)];
@@ -47,7 +47,7 @@ window.SHOTS = [
       S.D.sfx = [[0, 'footsteps', .2], [tL - .3, 'drum', .25], [tLo, 'paper', .3], [tLo + .8, 'paper', .3], [tSt, 'stamp', .3], [tDi, 'stamp', .3], [tBi, 'pop', .2]]; } },
 
   // 5.1 Messi's Más Plus vs Prime: bottles side by side, both sides sue
-  { plate: 'court_ext', cam: { z: [1.15, 1.25], x: [1600, 1560], y: [860, 860] }, bed: [['city_loop', .12]], light: { dir: -1 },
+  { plate: 'court_ext', cam: { z: [1.3, 1.4], x: [1650, 1620], y: [940, 950] }, bed: [['city_loop', .12]], light: { dir: -1 },
     init: S => { const tM = A.at(S, 'Messi', 1.6), tMa = A.at(S, 'Más', 4.4), tLo = A.at(S, 'looked', 6.2), tCo = A.at(S, 'court', 9.0), tCs = A.at(S, 'counter-sued.', 11.0);
       S.D.figs = [{ x: 2250, y: FL_C, s: 1.9, ...PR.FOOTBALLER(), facing: -1, mood: 'happy', hold: { near: cc => MAS(cc, 0, 34, 1) }, anim: (o, lt) => { o.arms = () => lt > tMa ? { shR: 95, elR: -30 } : { shR: 25, elR: -60 }; } },
         { x: 1050, y: FL_C, s: 1.9, ...PR.LOGAN(), facing: 1, mood: 'focus', hold: { near: cc => PR.bottle(cc, 0, 34, 1, { col: 'blue' }) }, anim: (o, lt) => { o.arms = () => lt > tLo ? { shR: 95, elR: -30 } : { shR: 25, elR: -60 }; o.mood = lt > tCo ? 'angry' : 'focus'; o.talk = lt > tLo && lt < tCo; } }];
@@ -58,7 +58,7 @@ window.SHOTS = [
       S.D.sfx = [[tM, 'pop', .2], [tMa, 'pop', .2], [tLo, 'pop', .2], [tCo, 'whoosh', .3], [tCo + .5, 'stamp', .3], [tCs, 'whoosh', .3], [tCs + .5, 'stamp', .3]]; } },
 
   // 5.2 ring: Logan in boxing kit beckons; the other corner stays empty; January 2026, dismissed
-  { plate: 'ring', cam: { z: [1.15, 1.3], x: [1280, 1280], y: [820, 840] }, bed: [['crowd_loop', .16]], light: { dir: 1, key: 'rgba(255,255,255,.25)' },
+  { plate: 'ring', cam: { z: [1.5, 1.65], x: [1150, 1180], y: [860, 870] }, bed: [['crowd_loop', .16]], light: { dir: 1, key: 'rgba(255,255,255,.25)' },
     init: S => { const tJ = A.at(S, 'joked', 1.0), tRi = A.at(S, 'ring.', 3.2), tDi = A.at(S, "didn't.", 4.8), tJa = A.at(S, 'January', 6.0), tDr = A.at(S, 'drop', 8.4), tDs = A.at(S, 'dismissed.', 11.0), FL = 1170;
       S.D.figs = [{ x: 900, y: FL, s: 1.8, ...PR.LOGAN_BOX(), facing: 1, mood: 'happy', talk: [tJ, tRi + .5], anim: (o, lt) => { o.arms = () => lt < tDi ? { shR: 100, elR: -60 - 30 * Math.sin(lt * 6), handR: 'fist' } : { shR: 20, elR: -20 }; o.mood = lt > tDi ? 'worried' : 'happy'; } }];
       S.D.live = [(c, lt) => { for (let k = 0; k < 10; k++) { const f = Math.max(0, Math.sin(lt * 1.7 + k * 1.3)) ** 40; if (f > .05) TW.glow(c, 200 + k * 230, 450 + (k % 3) * 80, 60, '255,255,255', f); } TW.glow(c, 1280, 900, 700, '255,250,230', .15); }];
@@ -68,7 +68,7 @@ window.SHOTS = [
       S.D.sfx = [[tJ, 'crowd_cheer', .15], [tRi, 'drum', .2], [tDi, 'wind_loop', .1], [tJa, 'pop', .2], [tDs, 'stamp', .35]]; } },
 
   // 5.3 Ryan Garcia's post; Prime sues for defamation; he apologises
-  { plate: 'ring', cam: { z: [1.2, 1.3], x: [1400, 1360], y: [840, 840] }, bed: [['crowd_loop', .12]], light: { dir: 1 },
+  { plate: 'ring', cam: { z: [1.5, 1.65], x: [1350, 1400], y: [860, 870] }, bed: [['crowd_loop', .12]], light: { dir: 1 },
     init: S => { const tB = A.at(S, 'Boxer', .4), tPo = A.at(S, 'posted', 2.0), tMa = A.at(S, 'May', 5.0), tSu = A.at(S, 'sued', 6.4), tEn = A.at(S, 'end', 8.4), tAp = A.at(S, 'apologised.', 10.4), FL = 1170;
       S.D.figs = [{ x: 1650, y: FL, s: 1.8, ...PR.BOXER2(), facing: -1, mood: 'angry', hold: { near: cc => TW.phone(cc, 0, -10, .35, () => {}) }, anim: (o, lt) => { o.arms = () => lt < tAp ? { shR: 85, elR: -60 } : { shR: 30, elR: 50 }; o.mood = lt > tAp - .3 ? 'worried' : lt > tSu ? 'shocked' : 'angry'; o.talk = lt > tAp && lt < tAp + 1; } }];
       S.D.over = [HYPE(.34, .32), (c, lt) => NAME(c, lt, tB, 1250, 200, 'RYAN GARCIA', 'BOXER'),
@@ -78,7 +78,7 @@ window.SHOTS = [
       S.D.sfx = [[tB, 'pop', .2], [tPo, 'phone_ring', .15], [tSu, 'stamp', .35], [tEn, 'tick', .2], [tAp, 'pop', .2]]; } },
 
   // 5.4 class action: 'forever chemicals' claim; judge throws most of it out
-  { plate: 'lab_wb', cam: { z: [1.1, 1.2], x: [1280, 1300], y: [800, 800] }, bed: [['office_loop', .12]], light: { dir: -1 },
+  { plate: 'lab_wb', cam: { z: [1.25, 1.35], x: [1300, 1320], y: [880, 880] }, bed: [['office_loop', .12]], light: { dir: -1 },
     init: S => { const tCl = A.at(S, 'class', 1.0), tFo = A.at(S, 'forever', 3.0), tWa = A.at(S, "wasn't", 5.4), tJu = A.at(S, 'judge', 7.0), tSe = A.at(S, 'September', 9.6), FL = 1330;
       S.D.figs = [0, 1, 2].map(k => ({ x: 450 + k * 300, y: FL, s: 1.8, ...PR.SHOPPER(k + 2), facing: 1, mood: lt => 'focus', anim: (o, lt) => { o.mood = lt > tJu + .5 ? 'worried' : 'angry'; } })).concat([
         { x: 2150, y: FL, s: 1.9, ...PR.DIRECTOR(3), facing: -1, mood: 'focus', talk: [tWa, tJu], anim: (o, lt) => { o.arms = () => lt > tWa ? { shR: 60, elR: -40, handR: 'open' } : { shR: 25, elR: -60 }; } }]);
@@ -88,7 +88,7 @@ window.SHOTS = [
       S.D.sfx = [[tCl, 'pop', .2], [tFo, 'alarm', .08], [tWa, 'pop', .2], [tJu + .2, 'hit', .35], [tSe, 'stamp', .3]]; } },
 
   // 5.5 Olympic marks on special Kevin Durant bottles: settled
-  { plate: 'court_ext', cam: { z: [1.2, 1.3], x: [1700, 1660], y: [860, 860] }, bed: [['city_loop', .12]], light: { dir: -1 },
+  { plate: 'court_ext', cam: { z: [1.3, 1.42], x: [1750, 1720], y: [940, 950] }, bed: [['city_loop', .12]], light: { dir: -1 },
     init: S => { const tO = A.at(S, 'Olympic', 1.0), tDu = A.at(S, 'Durant', 3.4), tPa = A.at(S, 'paying', 5.6), tSe = A.at(S, 'settled.', 7.6);
       S.D.figs = [{ x: 1250, y: FL_C, s: 1.9, ...PR.DIRECTOR(0), facing: 1, mood: 'angry', talk: [tO, tPa + 1], anim: (o, lt) => { o.arms = () => ({ shR: 100, elR: -10, handR: 'point' }); if (lt > tSe) { o.mood = 'happy'; o.arms = () => ({ shR: 70, elR: -40 }); } } },
         { x: 2250, y: FL_C, s: 1.9, ...PR.DIRECTOR(2), facing: -1, mood: 'worried', anim: (o, lt) => { if (lt > tSe) { o.mood = 'happy'; o.arms = () => ({ shR: 70, elR: -40 }); } } }];
@@ -98,7 +98,7 @@ window.SHOTS = [
       S.D.sfx = [[tO, 'pop', .2], [tDu, 'pop', .2], [tPa, 'coins', .2], [tSe, 'stamp', .35]]; } },
 
   // 5.6 Refresco: a whole bottling line built for Prime, running empty; $68M claim, Prime disputes
-  { plate: 'factory', cam: { z: [1.05, 1.22], x: [1280, 1320], y: [800, 820] }, bed: [['hum_loop', .16], ['tension', .08]], light: { dir: -1, key: 'rgba(200,220,255,.2)' },
+  { plate: 'factory', cam: { z: [1.25, 1.4], x: [1350, 1380], y: [900, 920] }, bed: [['hum_loop', .16], ['tension', .08]], light: { dir: -1, key: 'rgba(200,220,255,.2)' },
     init: S => { const tSu = A.at(S, 'supplier.', 2.4), tRe = A.at(S, 'Refresco,', 3.4), tLi = A.at(S, 'line', 7.0), tWa = A.at(S, 'walked', 9.6), tSi = A.at(S, 'single', 11.4), tSix = A.at(S, 'sixty-eight', 14.0), tDi = A.at(S, 'disputes', 16.6), FL = 1360;
       S.D.figs = [{ x: 600, y: FL, s: 1.9, ...PR.DIRECTOR(2), facing: 1, mood: 'focus', talk: [tRe, tSi + 1], anim: (o, lt) => { o.arms = () => lt > tLi - .3 && lt < tSix ? { shR: 105, elR: -10, handR: 'point' } : { shR: 30, elR: -50 }; o.mood = lt > tWa ? 'angry' : 'focus'; } },
         { x: 2200, y: FL, s: 1.9, ...PR.LOGAN(), facing: -1, mood: 'neutral', walk: { x0: 1900, x1: 2800, t0: tWa, dur: 2.6 }, anim: (o, lt) => { if (lt > tDi) o.mood = 'focus'; } }];

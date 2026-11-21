@@ -33,7 +33,7 @@ const lineupLive = (S, times, dimAll) => (c, lt, u) => { const V = VILL(S); V.fo
 
 window.SHOTS = [
   // 7.01 the PBD podcast: the host holds up a phone, PRIME IS DEAD; Logan waves it away
-  { plate: 'podcast', cam: { z: [1.05, 1.25], x: [1290, 1290], y: [760, 800] }, bed: [['hum_loop', .1]], light: { dir: 1, key: 'rgba(220,150,255,.22)' },
+  { plate: 'podcast', cam: { z: [1.1, 1.5], x: [1290, 1480], y: [760, 740], ease: u => u < .55 ? u * .15 : .9 + (u - .55) * .22 }, bed: [['hum_loop', .1]], light: { dir: 1, key: 'rgba(220,150,255,.22)' },
     init: S => { const tS = A.at(S, 'September', .9), tL = A.at(S, 'Logan', 1.9), tP = A.at(S, 'PBD', 3.7), tH = A.at(S, 'host', 5), tV = A.at(S, 'videos', 6.9), tD = A.at(S, 'dead.', 8.6), tL2 = A.at(S, 'Logan', 9.1), tU = A.at(S, 'completely', 10.6), tSh = A.at(S, 'shock', 13.7);
       const F = podFigs(); F.host.talk = [tH, tL2 - .2]; F.host.anim = (o, lt) => { if (lt > tV - .3 && lt < tU + 1) { o.arms = () => ({ shR: 75, elR: -55, handR: 'fist' }); o.hold = PHONE_DEAD; } if (lt > tU) o.mood = 'shocked'; };
       F.logan.talk = [tL2 + .2, tSh + .8]; F.logan.anim = (o, lt) => { if (lt > tU - .1 && lt < tU + 1.8) o.arms = () => ({ shR: 110 + 25 * Math.sin(lt * 12), elR: -40, handR: 'open' }); if (lt > tSh) { o.mood = 'happy'; o.lean = 4; } };
@@ -51,7 +51,7 @@ window.SHOTS = [
         (c, lt) => JH.quote(c, '"MINIMUM $100 MILLION"', 'LOST BY NOT SELLING', 560, 220, lt, tT, { px: 46 }), (c, lt) => { if (lt > tH - .2) PR.counter(c, 560, 470, 1, 0, 100, tH, tH + 1.4, lt, { pre: '$', suf: 'M' }); }];
       S.D.sfx = [[tD, 'pop', .25], [tD + .4, 'tick', .2], [tN, 'whoosh_soft', .2], [tT, 'paper', .2], [tH, 'coins_cascade', .3]]; } },
   // 7.03 the offers: an investor brings a briefcase of cash ($500M); the PARTNERS door stays shut; the investor walks off with it
-  { plate: 'boardroom', cam: { z: [1.0, 1.1], x: [1280, 1300], y: [800, 830] }, bed: [['hum_loop', .1], ['night_loop', .05]], light: { dir: 1, key: 'rgba(200,210,255,.2)' },
+  { plate: 'boardroom', cam: { z: [1.05, 1.4], x: [1280, 1500], y: [800, 940], ease: u => u < .55 ? u * .15 : .9 + (u - .55) * .22 }, bed: [['hum_loop', .1], ['night_loop', .05]], light: { dir: 1, key: 'rgba(200,210,255,.2)' },
     init: S => { const tO = A.at(S, 'offers.', 1.5), tI = A.at(S, 'investors', 2.9), tH = A.at(S, 'half', 4.9), tP = A.at(S, 'partners', 7.4), tSe = A.at(S, 'sell', 9.1), tDe = A.at(S, 'decision', 11.7), tNv = A.at(S, 'never', 12.5);
       const CASE = { near: cc => PR.briefcase(cc, 0, 70, 1.4, 0) };
       S.D.figs = [{ x: 700, y: 1410, s: 2, ...PR.DIRECTOR(2), facing: 1, mood: 'happy', hold: CASE, arms: () => ({ shR: 10, elR: -5, handR: 'fist' }), walk: { x0: -250, x1: 700, t0: .1, dur: Math.max(1.5, tO) },
@@ -67,11 +67,11 @@ window.SHOTS = [
         (c, lt) => { if (lt > tH - .2 && lt < tP + .5) PR.counter(c, 1150, 150, .9, 0, 500, tH, tH + 1.3, lt, { pre: '$', suf: 'M' }); }, (c, lt) => JH.quote(c, '"OUR PARTNERS|DIDN\'T WANT IT"', 'LOGAN PAUL', 1150, 190, lt, tP + .2, { px: 44 })];
       S.D.sfx = [[.2, 'footsteps', .25], [tO, 'pop', .2], [tH, 'coins', .3], [tP, 'door_slam', .35], [tSe, 'stamp', .35], [tDe, 'footsteps', .25]]; } },
   // 7.04 the line-up: five silhouettes; Logan points down the line and each name plate flips as it is named
-  { plate: 'lineup', cam: { z: [1.0, 1.08], x: [1280, 1200], y: [720, 740] }, bed: [['hum_loop', .12], ['tension', .06]], light: { dir: -1, key: 'rgba(255,250,230,.2)' },
+  { plate: 'lineup', cam: { z: [1.0, 1.4], x: [1200, 1450], y: [720, 880], ease: u => u < .55 ? u * .15 : .9 + (u - .55) * .22 }, bed: [['hum_loop', .12], ['tension', .06]], light: { dir: -1, key: 'rgba(255,250,230,.2)' },
     init: S => { const tC = A.at(S, 'villains.', 1.5), t = [A.at(S, "Messi's", 2.1), A.at(S, 'Ryan', 3), A.at(S, 'senator', 4.2), A.at(S, 'soda', 6.5), A.at(S, 'partners.', 12.5)];
-      S.D.figs = [{ x: 170, y: FLR, s: 2.2, ...PR.LOGAN(), facing: 1, mood: 'smug', pose: 'point', anim: (o, lt) => { o.lean = 3 + 2 * Math.sin(lt * 2); } }];
+      S.D.figs = [{ x: 100, y: FLR, s: 2.2, ...PR.LOGAN(), facing: 1, mood: 'smug', pose: 'point', anim: (o, lt) => { o.lean = 3 + 2 * Math.sin(lt * 2); } }];
       S.D.live = [lineupLive(S, t, false)];
-      S.D.front = [(c, lt) => nameTag(c, 'LOGAN PAUL', 170, 560, lt, .3, { px: 34 })];
+      S.D.front = [(c, lt) => nameTag(c, 'LOGAN PAUL', 100, 560, lt, .3, { px: 34 })];
       S.D.over = [HYPE(0), (c, lt) => K.card(c, 'THE LINE-UP', lt, { at: .3, x: 1100, y: 100, px: 60, rot: -2 }), (c, lt) => srcChip(c, 'AS LOGAN TELLS IT', 1100, 200, lt, tC)];
       S.D.sfx = [[.3, 'drum', .3], ...t.map(x => [x, 'paper', .35]), ...t.map(x => [x + .1, 'thud', .2])]; } },
   // 7.05 the empty sixth spot: a spotlight snaps on and the drink itself slides in
