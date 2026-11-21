@@ -1,0 +1,98 @@
+{
+ "post": {
+  "_id": "6b019e11dab5ae75aceb772e",
+  "userId": "6b00ba00f0e8042b55f15b31",
+  "workspaceId": "6b00ba00f0e8042b55f15b33",
+  "title": "",
+  "content": "¡LA SEGUNDA PARTE DE TODA LA HISTORIA DE BLACK CLOVER, DEL CAPÍTULO 151 AL 334, EN UN SOLO VIDEO! Los elfos reencarnan, el reino del Trébol se rompe y Asta descubre quién está detrás de todo.\n\nRepasamos el reino de los elfos, el pasado de William Vangeance y Licht, el demonio Zagred, el demonio dentro del grimorio de Asta (Liebe), el Reino del Corazón, la Tríada Oscura, el pacto de Nacht, la invasión del Reino de la Pica, Noelle contra Vanica, Yuno como príncipe de la Pica, Lucifero y la verdad sobre Julius Novachrono.\n\n¿Lo viste venir? ¿Quién es de verdad Lucius Zogratis?\n\n¡Déjanos tus teorías en los comentarios!\nSuscríbete a Stormi Knows Anime para la Parte 3, el arco final.\n\n#BlackClover #Asta #BlackCloverManga\n\nCréditos: Black Clover © Yūki Tabata / Shueisha. Usado con fines de comentario y análisis.\n\n#anime #manga #animeenespañol\n\n0:00 ¡El Rey Mago NO era quien creíamos!\n0:20 Lo que pasó en la Parte 1\n0:50 ¡Los elfos toman el reino!\n2:37 El oscuro pasado de William\n3:31 Guerra total contra los elfos\n5:44 ¡El demonio detrás de TODO!\n7:06 Batalla contra Zagred\n8:15 ¿Un demonio en el grimorio de Asta?\n9:10 El Reino del Corazón\n10:18 La Tríada Oscura\n11:35 Nacht y su pacto secreto\n12:42 La triste historia de Liebe\n13:42 ¡Invasión del Reino de la Pica!\n14:51 Noelle contra Vanica\n15:42 Yuno, ¿un príncipe?\n16:34 Lucifero, el rey demonio\n17:53 Después de la tormenta\n18:16 La verdad sobre Julius",
+  "mediaItems": [
+   {
+    "_id": "6b019e3cdab5ae75aceb77ce",
+    "url": "https://media.zernio.com/media/1795268071523_59899fc0c1eaaeff_BC2_ES_v2.mp4",
+    "type": "video",
+    "thumbnail": "https://media.zernio.com/media/1795268112362_347935c08a814c59_BC2_thumb_ES_v1.jpg"
+   }
+  ],
+  "scheduledFor": "2026-11-29T23:00:00.000Z",
+  "timezone": "UTC",
+  "status": "scheduled",
+  "tags": [
+   "black clover",
+   "black clover manga",
+   "black clover historia completa",
+   "black clover explicado",
+   "black clover resumen",
+   "black clover parte 2",
+   "asta",
+   "yuno",
+   "julius novachrono",
+   "lucius zogratis",
+   "black clover lucius",
+   "black clover julius",
+   "reino de la pica",
+   "spade kingdom",
+   "tríada oscura",
+   "dark triad",
+   "lucifero",
+   "noelle vs vanica",
+   "liebe black clover",
+   "nacht faust",
+   "yami sukehiro",
+   "william vangeance",
+   "black clover elfos",
+   "black asta",
+   "black clover espanol",
+   "anime en español",
+   "manga explicado",
+   "resumen de anime",
+   "stormi knows anime",
+   "black clover recap"
+  ],
+  "hashtags": [],
+  "mentions": [],
+  "visibility": "public",
+  "crosspostingEnabled": true,
+  "metadata": {
+   "usageCounted": true
+  },
+  "recycling": {
+   "enabled": false,
+   "gapFreq": "month",
+   "recycleCount": 0,
+   "contentVariations": [],
+   "contentVariationIndex": 0
+  },
+  "createdAt": "2026-11-21T13:35:56.830Z",
+  "updatedAt": "2026-11-21T13:35:56.834Z",
+  "platforms": [
+   {
+    "_id": "6b019e3cdab5ae75aceb77cc",
+    "platform": "youtube",
+    "accountId": {
+     "_id": "6b00ba86a42f4cf9f57677a1",
+     "platform": "youtube",
+     "username": "stormiknowsanime",
+     "displayName": "Stormi Knows Anime",
+     "profilePicture": "https://yt3.ggpht.com/4kyAJamFAdkP-LVGVBJlZHCysPnEyDIJAs_O7mQq_gbj5pYkIJbsBJEfUkj2CvoLeBeywa9n=s88-c-k-c0x00ffffff-no-rj",
+     "isActive": true,
+     "profileId": "6b00ba00f0e8042b55f15b35"
+    },
+    "profileId": "6b00ba00f0e8042b55f15b35",
+    "customMedia": [],
+    "scheduledFor": "2026-11-29T23:00:00.000Z",
+    "platformSpecificData": {
+     "title": "¡JULIUS NUNCA EXISTIÓ! Toda la HISTORIA de Black Clover EXPLICADA | Parte 2 (Cap. 151-334)",
+     "categoryId": "1",
+     "visibility": "public",
+     "madeForKids": false,
+     "firstComment": "¿Sospechabas de Julius desde el principio? La Parte 3 llega en dos días con el arco final 👀",
+     "containsSyntheticMedia": false
+    },
+    "status": "pending",
+    "publishAttempts": 0,
+    "contentHash": "b8f6bf73f594810a40ca030662a6897a"
+   }
+  ]
+ },
+ "message": "Post scheduled successfully"
+}

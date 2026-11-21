@@ -1,0 +1,219 @@
+# Black Clover PARTE 3 (capitulos 335-380) - Stormi Knows Anime, espanol LatAm v1, 21 Nov 2026
+# Same format as Parts 1-2. Opens with a recap of Part 2. Facts checked against OCR of ch 335-380 (/tmp/claude-0/bc/ocr). Ends on the latest cliffhanger (ch 379-380).
+@ Gancho
+380 | bg=black punch | Asta y Yuno contra el Emperador Mago. Y todo el reino mirando.
+354 | bg=aura:#ffd23d | Un ejército de ángeles baja del cielo. Y algunos de esos ángeles son personas que ya estaban muertas.
+337 | bg=speed:#e3262e | Y Asta, el único que puede detenerlos, está perdido al otro lado del mundo.
+336 | bg=halftone:#e3262e page | Esto es Black Clover. Parte tres de tres. El arco final, desde el capítulo trescientos treinta y cinco hasta el trescientos ochenta.
+@ Resumen de la parte 2
+151 | bg=paper | Resumen rápido. Los elfos reencarnaron, el reino del Trébol se rompió en pedazos, y Asta descubrió que tenía un demonio en su grimorio, Liebe.
+309 | bg=black | Después vino la invasión del Reino de la Pica, la Tríada Oscura, y Yuno descubrió que era un príncipe.
+325 | bg=speed:#e3262e | Asta y Yuno vencieron a Lucifero, el rey de los demonios.
+333 | bg=aura:#7a3cff punch | Y al final, el Rey Mago Julius resultó ser Lucius Zogratis. El hermano mayor de los Zogratis. Dos almas en un mismo cuerpo.
+@ El ataque de Lucius
+335 | bg=black | Y aquí empieza todo. Asta y Liebe están agotados después de la pelea contra Lucifero. No pueden ni moverse.
+335 | bg=black | Lucius les explica su plan. Con su magia del alma purificó a un demonio, y ahora controla a los demonios supremos que quedaban.
+335 | bg=aura:#7a3cff | Quiere crear seres nuevos. Humanos mejorados, casi inmortales, que peleen por la paz del mundo. Los llama paladines.
+335 | bg=aura:#ffd23d punch | Y él se va a coronar como algo más grande que el Rey Mago. El Emperador Mago.
+335 | bg=black | Y su primera paladín es alguien que Asta quiere como a una madre. La hermana Lily, la monja de la iglesia de Hage.
+335 | bg=speed:#e3262e | Lily, controlada, usa magia espacial y atrapa a Asta en una jaula que corta el espacio.
+335 | bg=black punch | Y Asta desaparece. Así nomás.
+336 | bg=black | En el reino nadie lo puede creer. El Rey Mago es el enemigo, y Asta está muerto.
+336 | bg=paper | Nacht lo intenta todo. Su magia puede viajar a la sombra de cualquier persona. Pero no encuentra la sombra de Asta.
+336 | bg=paper | O está muerto, o está en otra dimensión, o está en otro continente. Muy, muy lejos.
+336 | bg=aura:#7a3cff | Y Lucius anuncia el Día del Juicio. Va a atacar el reino en una semana.
+336 | bg=speed:#ffd23d | Mientras tanto, Yuno es ascendido a gran caballero mágico. Y en lugar de festejar, promete vencer a Lucius y ser Rey Mago.
+337 | bg=paper gif=bc3-determined_1 | Y los Toros Negros hacen lo más Toros Negros posible. Votan. Y deciden, por unanimidad, ir a buscar a ese tonto.
+@ El País del Sol
+337 | bg=paper | Mientras tanto, Asta despierta en un lugar que no conoce. Con las heridas curadas.
+337 | bg=paper | Y frente a él hay un tipo sonriente que sabe todo de su vida. Sus amigos, su corazón roto, hasta que el capitán Yami tarda horas en el baño.
+337 | bg=speed:#e3262e | Se llama Ryuya Ryudo. Y es el shogun del País del Sol. Básicamente, el Rey Mago de este país.
+338 | bg=paper | Y aquí está la sorpresa. El País del Sol es la tierra natal del capitán Yami.
+338 | bg=paper | Aquí no usan grimorios. Usan pergaminos, y su magia se llama yojutsu.
+338 | bg=paper ai=bc3_joke_potato.png | Y Asta encuentra papas como las de Hage. Un huérfano perdido al otro lado del mundo, llorando de felicidad por una papa.
+338 | bg=black | Y Ryuya tiene un ojo especial, el Tengentsu. Con su ojo derecho puede ver todo lo que pasa en cualquier momento.
+338 | bg=speed:#e3262e punch | Y Ryuya le presenta a su guardaespaldas. Ichika. La hermana menor del capitán Yami.
+338 | bg=paper gif=bc3-shock_1 | Yami tiene una hermana. Y nunca, jamás, lo mencionó.
+339 | bg=paper | Liebe también está vivo. Lo curó Fumito, un genio del yojutsu de recuperación que además cocina increíble.
+339 | bg=black | Asta quiere volver ya. Pero Ryuya le dice la verdad. Aunque vuelva ahora, no puede ganarle a Lucius.
+339 | bg=paper | Así que le ofrece entrenar. Y le enseña una técnica de este país. El Zetten.
+339 | bg=speed | El Zetten es controlar el ki, la energía de vida, y soltarla de golpe en el momento exacto.
+339 | bg=speed:#ffd23d | Gente con años de experiencia nunca logra hacerlo. Asta lo saca en su primer intento.
+340 | bg=black | Y para practicar, le toca pelear de verdad contra Ichika. Y ella no se contiene.
+340 | bg=speed:#e3262e | Asta usa la unión demoníaca con Liebe. Y aun así, no le gana.
+341 | bg=paper | Ryuya le presenta a los Siete Ryuzen. Los guerreros más fuertes del País del Sol.
+341 | bg=paper gif=bc3-laugh_1 | Y lo entrenan a golpes. Literalmente. Todos los días, todos contra Asta.
+341 | bg=black | Y entonces Asta le pregunta a Ichika por su hermano. Y la respuesta lo congela.
+341 | bg=aura:#7a3cff punch | Según Ichika, Yami masacró a todo su clan. Y después huyó del país.
+@ La verdad sobre Yami
+342 | bg=black | Ichika cuenta su historia. El clan Yami descendía de asesinos, los Kijin, guardianes de una frontera del país.
+342 | bg=black | Su padre era cruel. Quería convertir a Yami en el guerrero más fuerte del clan, el dios demonio. Y despreciaba a Ichika por ser niña.
+342 | bg=paper | Yami era el único que la protegía. Y Ryuya, el hijo del señor de la región, era su mejor amigo.
+342 | bg=black punch | Hasta que, a los trece años, según Ichika, Yami mató a su padre y a todo el clan.
+342 | bg=speed:#e3262e | Asta no se lo cree. Ese no es el capitán que él conoce. E Ichika lo reta a pelear para demostrarlo.
+343 | bg=speed | Asta, Liebe e Ichika chocan con todo. Zetten contra zetten.
+343 | bg=black | Ichika es más rápida, más precisa. Pero Asta ve algo en su forma de pelear. Hay rabia. Y hay dudas.
+343 | bg=paper | Ryuya los separa. Asta casi lo tiene. Le falta muy poquito.
+@ El dragón de cinco cabezas
+344 | bg=black | Mientras tanto, Lucius sigue trabajando. Y le pide a la hermana Lily algo terrible.
+344 | bg=black | Lucius ve el futuro. Y en ese futuro, una isla lejana, el País del Sol, se vuelve un problema.
+344 | bg=aura:#7a3cff | Así que manda a Lily y a sus paladines a despertar a la leyenda del país. El dragón de cinco cabezas.
+344 | bg=speed:#e3262e | Un monstruo que, según la leyenda, casi destruyó el País del Sol hace siglos.
+345 | bg=black | Asta tiene que pelear con un miembro de los Siete Ryuzen, Mushogatake. Y pierde una y otra vez.
+345 | bg=paper | Porque, como le dice él, Asta está lleno de dudas. Y una espada con dudas no corta.
+345 | bg=black | Y Asta lo admite. Desde que perdió contra Lucius, duda de sí mismo. Duda de poder proteger a la hermana Lily.
+346 | bg=speed:#e3262e | El dragón aparece. Gigante. Y con él vienen los paladines.
+346 | bg=paper ai=bc3_joke_dragon.png | Cinco cabezas. Cinco opiniones distintas. Ese dragón debe tener las peores reuniones de trabajo del mundo.
+346 | bg=speed | Los Siete Ryuzen no huyen. Primero evacúan a la gente. Después atacan con todo su yojutsu.
+347 | bg=black | Pero uno de los paladines usa un hechizo horrible. Despierta los peores recuerdos de su rival y los vuelve reales.
+347 | bg=black | Ichika ve a su padre otra vez. Y ve un recuerdo que no entiende. Una droga secreta del clan. Algo que su padre le hizo a Yami.
+347 | bg=aura:#7a3cff | Algo no cuadra. ¿Y si Ichika lleva toda su vida odiando a su hermano por algo que no pasó como ella cree?
+@ Asta contra la hermana Lily
+348 | bg=black | Ichika está en el suelo. Temblando. Y en ese momento, alguien llega.
+348 | bg=speed:#ffd23d punch | Asta. Que acaba de volver de cortar su propia debilidad.
+348 | bg=paper | Él no tiene talento. Nunca lo tuvo. Por eso tiene que trabajar más que los genios. Y esa es su respuesta.
+348 | bg=speed:#e3262e | Con el Zetten, Asta espera el momento exacto en que el rival lanza el hechizo. Y corta en ese instante.
+349 | bg=black | Y entonces aparece la hermana Lily. Convertida en paladín.
+349 | bg=black | Ella le dice que si Asta está vivo, es un problema. Y lo ataca con magia de agua y magia espacial.
+349 | bg=paper | Lily llora mientras pelea. Repite que todo es por la paz del mundo. Que Lucius tiene razón.
+349 | bg=speed:#e3262e punch | Asta le contesta que no hay forma de que esto sea lo correcto. Y que nunca va a perdonar a Lucius.
+349 | bg=aura:#ffd23d | Y con un golpe de antimagia, corta el poder de paladín. Por favor, hermana, vuelve a ser tú.
+350 | bg=paper | Lily vuelve en sí. Y le pide perdón. Por todo.
+350 | bg=paper | Ella siempre soñó con un mundo sin discriminación por la magia. Rezó, y nada cambió. Por eso Lucius pudo convencerla.
+350 | bg=black | Y le da información importante. Faltan tres días para el Día del Juicio.
+350 | bg=aura:#7a3cff punch | Lucius está combinando el cuerpo, la sangre, la magia y los huesos de sus hermanos Zogratis. Y quiere tomar el control de toda la magia del mundo.
+350 | bg=paper gif=bc3-hug_1 | Asta le dice que no es su culpa. Y que no va a dejar que nadie diga que lo es.
+350 | bg=speed:#e3262e | Deja a Lily con Fumito. Y sale corriendo. Voy a cortar a ese dragón.
+@ La caída del dragón
+351 | bg=speed | Asta corta una cabeza. Y vuelve a crecer. La antimagia la corta fácil, pero el dragón se regenera.
+351 | bg=paper | Y aquí conocemos el pasado de Ryuya. Para obtener el Tengentsu, perdió todo su poder mágico. Todo su yoryoku.
+351 | bg=paper | Era el heredero, y aun así eligió perder su magia para salvar a su gente. Y su gente lo siguió por eso.
+351 | bg=black | Ryuya no tiene magia. Igual que Asta. Y aun así es el shogun.
+352 | bg=speed:#ffd23d | Y Ryuya da la orden. Hay que cortar las cinco cabezas al mismo tiempo. Es la única forma.
+352 | bg=speed | Con su ojo, Ryuya ve todo el campo de batalla. Y le dice a cada guerrero exactamente adónde moverse.
+352 | bg=speed:#e3262e | Uno a uno, los Siete Ryuzen sujetan las cabezas. Pero uno cae herido, y queda una cabeza libre.
+352 | bg=speed:#ffd23d punch | Asta salta. Y con todo lo que tiene, corta la última cabeza.
+352 | bg=paper | Bien hecho, a todos.
+353 | bg=paper | El cielo se despeja. Y el País del Sol celebra a su héroe extranjero.
+353 | bg=paper ai=bc3_joke_sake.png | Hay fiesta, hay comida, y Asta prueba el sake por primera vez. Un vasito. Y ya está flotando.
+353 | bg=paper gif=bc3-drunk_1 | Esto es lo que pasa cuando creces en una iglesia en el pueblo más pobre del reino.
+353 | bg=paper gif=bc3-facepalm_1 | Y en el baño termal entra justo cuando es el turno de las mujeres. Ichika le dice que se abra la panza en disculpa. Clásico.
+353 | bg=black | Pero el tiempo corre. Faltan tres días. Y no hay forma de volver al reino del Trébol.
+353 | bg=paper | Solo pueden confiar en que los Toros Negros los encuentren.
+@ El Día del Juicio
+354 | bg=black punch | Y llega el Día del Juicio.
+354 | bg=black | En el reino del Trébol, todos los escuadrones están en posición. Los ciudadanos fueron evacuados.
+354 | bg=paper | Yami habla con Charlotte antes de la batalla. Quiere tomar té con ella cuando todo termine. Tiene algo que decirle.
+354 | bg=paper | Y Charlotte, por fin, le promete toda su atención. Si ganan.
+354 | bg=aura:#ffd23d | Y entonces el cielo se abre. Ángeles. Cientos de ángeles.
+354 | bg=black punch | Y uno de ellos saluda a Yami. Hola, Yami. Tanto tiempo.
+354 | bg=aura:#7a3cff | Es Morgen. El hermano mayor de Nacht. Muerto hace años. Revivido por Lucius como paladín.
+354 | bg=black | Y no es el único. Mereoleona se encuentra con un viejo enemigo. Y los Silva ven a alguien que no esperaban. Su madre.
+355 | bg=speed:#e3262e | Lucius, con el cuerpo de Julius, vence a William Vangeance sin esfuerzo.
+355 | bg=aura:#7a3cff | Y prepara el juicio final. Un ataque tan grande que nadie en el reino puede detenerlo.
+355 | bg=speed:#ffd23d punch | Hasta que algo lo bloquea. Estrellas. En pleno día.
+355 | bg=speed:#ffd23d | Es Yuno. Que en solo un año se volvió así de fuerte.
+355 | bg=paper | Y William, en el suelo, lo nombra capitán del Amanecer Dorado.
+355 | bg=speed:#e3262e | Yuno le dice a Lucius que nunca lo va a perdonar. Porque él es el hombre que va a ser Rey Mago.
+@ Neverland
+356 | bg=black | Pero los ángeles son monstruosos. Cada uno tiene un poder enorme. Y no les hacen ni un rasguño.
+356 | bg=paper | Lucius convirtió a traidores y rebeldes en ángeles guardianes de su mundo nuevo.
+356 | bg=speed:#ffd23d | Yuno y Bell, su espíritu, unen fuerzas y lanzan un hechizo nuevo. Magia de espíritu de estrella y viento. Neverland.
+356 | bg=speed | Neverland controla el flujo de magia en todo el campo. Hace más fuertes a sus aliados y más débiles a sus enemigos.
+356 | bg=aura:#7a3cff | Y hasta Lucius lo admite. Ese hechizo parece hecho especialmente para vencerlo.
+356 | bg=speed:#e3262e punch | Lucius le dice a Yuno que es su rival. Y Yuno le responde: ya tengo un rival, y no eres tú.
+357 | bg=paper gif=bc3-laugh_1 | Mientras tanto, Jack el Destripador y Yami pelean juntos. Insultándose todo el tiempo, como siempre.
+357 | bg=speed:#e3262e | Jack lanza su corte final. Lo dio todo. Y cae.
+357 | bg=black | Y Morgen promete que todos van a renacer, felices y juntos. Esa es la paz de Lucius.
+358 | bg=speed:#e3262e | Mereoleona pelea contra Morris, el elfo científico, ahora paladín. Su cuerpo se regenera de todo.
+358 | bg=aura:#e3262e | Pero a Mereoleona no le importa. Mientras más pelea, más fuerte es su fuego.
+358 | bg=speed:#e3262e punch | Y en honor a los miembros caídos de su escuadrón, lanza el entierro de llamas. Purgatorio.
+@ El futuro que nadie puede leer
+359 | bg=black | Los Silva se enfrentan a su madre, Acier. La princesa danzante del campo de batalla.
+359 | bg=black | Nozel no puede ganar. Y Noelle duda. ¿Cómo pelear contra la madre que siempre quiso conocer?
+359 | bg=paper | Pero Noelle piensa en Asta. Él está vivo. Ella lo cree. Y va a proteger el reino hasta que vuelva.
+359 | bg=speed:#ffd23d punch | Y Noelle invoca al dios del mar del templo submarino. Leviatán. Y se une a él como a un espíritu.
+360 | bg=black | Y aquí aparece algo importante. Lucius puede ver el futuro. Y la realidad no se parece a sus predicciones.
+360 | bg=aura:#7a3cff | Yuno no debía ser tan fuerte. Noelle no debía ser tan fuerte. Fuegoleon debía estar muerto.
+360 | bg=black punch | ¿Qué cambió? Asta. El futuro de Asta no se puede leer. Y cada persona que lo conoce cambia.
+361 | bg=speed:#e3262e | Lucius se cansa. Y crea clones de sí mismo. No uno. Muchos.
+361 | bg=paper ai=bc3_joke_clones.png | Imagina ganarle a un jefe final y que aparezcan diez más. Con la misma cara de superioridad.
+361 | bg=black | Pero los Toros Negros tienen un plan. Le piden ayuda a la reina de las brujas.
+361 | bg=paper | Ella ya lo sabía. Su adivinación le dijo que Asta está vivo, en una tierra lejana.
+361 | bg=speed:#ffd23d | Y con la magia espacial de Finral en el centro, preparan un hechizo combinado gigantesco. Una puerta para traer a Asta.
+362 | bg=paper | En el reino, la gente está aterrada. Y Mimosa usa su magia para hablarles a todos.
+362 | bg=paper | Les cuenta que, aunque el Rey Mago es el enemigo, hay gente arriesgando la vida por ellos. Que no se rindan.
+362 | bg=speed | Hasta Sekke, el eterno perdedor, sale a pelear. Gritando que él también puede.
+362 | bg=black | Y en el País del Sol, Ryuya prepara a Asta. El otro lado está listo.
+@ Los Toros Negros
+363 | bg=black | Pero Lucius ya lo vio venir. Manda a su paladín más peligroso a cerrar la puerta. Damnatio Kira.
+363 | bg=black | El juez que una vez quiso condenar a Asta. Ahora con magia de balanza y poder de paladín.
+363 | bg=speed:#e3262e punch | Y los Toros Negros se plantan frente a él. De aquí no pasa nadie.
+364 | bg=black | Damnatio usa su balanza para borrar hechizos y robar magia. Los Toros Negros caen uno por uno.
+364 | bg=paper | Pero no se rinden. Gordon sella, Henry los protege, Grey se multiplica. Todo para ganar unos segundos.
+365 | bg=black | Damnatio además tiene una segunda magia. Purificó al demonio supremo Baal y obtuvo magia de atmósfera. Un poder invisible.
+365 | bg=paper gif=bc3-power_2 | Y Charmy, que vivió quinientos años sola con una misión, recuerda por qué está viva. Por sus compañeros.
+365 | bg=speed:#e3262e | Y pelea como nunca. Pero la puerta todavía no se abre.
+366 | bg=paper | Del otro lado, Ryuya y los Siete Ryuzen despiden a Asta. Y Finral aparece por el portal. Te vine a buscar.
+366 | bg=paper | Ichika va con él. Ryuya le dice que vuelvan vivos. Que el destino del mundo está en sus manos.
+366 | bg=speed:#ffd23d punch | Y Asta llega. Por fin.
+366 | bg=black | Damnatio trata de juzgarlo. Pero Asta no tiene magia. Su balanza no le sirve de nada.
+366 | bg=speed:#e3262e | Damnatio usa la magia de atmósfera. Y aun así, Asta lo atraviesa.
+@ El lazo negro
+367 | bg=paper gif=bc3-hug_1 | Los Toros Negros sobreviven. Por muy poco. Y Asta está de vuelta con su familia.
+367 | bg=paper | La reina de las brujas, impresionada, le pide a Vanessa que sea la nueva reina. Vanessa dice que lo va a pensar.
+367 | bg=aura:#ffd23d | Y aquí Asta descubre algo nuevo. Puede compartir su antimagia. Con objetos. Y con personas.
+367 | bg=speed:#ffd23d punch | Todos los Toros Negros con antimagia. Vamos a salvar el mundo.
+368 | bg=black | Pero Yami está en problemas. Morgen tiene una segunda magia, y su poder es demasiado.
+368 | bg=black | Yuno también está cayendo. Si Yuno cae, Neverland se deshace.
+368 | bg=speed:#ffd23d punch | Y una voz le grita a Lucius: esto no se terminó. Apenas estamos empezando.
+368 | bg=speed:#e3262e | Asta y Yuno, otra vez juntos. Perdiste en tus sueños, dice Asta. Ya veremos quién es Rey Mago.
+369 | bg=black | Lucius cuenta. Docenas de ángeles. Tres arcángeles. Y once clones de él mismo.
+369 | bg=speed:#e3262e | Y los Toros Negros entran con todo, armados con la antimagia de Asta. Magna, Luck, Zora. Rayo negro, fuego negro.
+369 | bg=paper gif=bc3-power_1 | Magna y Luck combinan su magia con antimagia. Cañón explosivo de llama negra y rayo negro.
+370 | bg=black | Pero Lucius tiene otro plan. Está preparando un hechizo gigantesco en el cielo para hacer real su mundo ideal.
+370 | bg=speed:#e3262e | Hay que llegar a su cuerpo real. Rápido.
+@ Las batallas finales
+371 | bg=black | Mereoleona sigue contra Morris. Su escuadrón cae protegiéndola. Y Morris se burla de ellos.
+371 | bg=paper | Pero los Leones Carmesí no se rinden. Le piden a Mereoleona que los entrene. Ahora mismo, en plena batalla.
+371 | bg=aura:#e3262e | Y Mereoleona se supera otra vez. Su cuerpo se vuelve maná puro. Y sus llamas reviven a sus compañeros.
+371 | bg=speed:#e3262e punch | Magia de llama definitiva. Excelicitus Leonum. Morris, el elegido de Dios, se queda sin palabras.
+372 | bg=black | Los Silva siguen contra Acier. Y es brutal. Ella es más precisa, más rápida, más fuerte.
+372 | bg=paper | Acier les ofrece renacer juntos. Un mundo nuevo, sin dolor. Y Nebra, por un momento, quiere aceptar.
+372 | bg=speed:#ffd23d | Pero los cuatro hermanos Silva se ponen de pie. Juntos. Por primera vez como familia.
+373 | bg=black | Nozel protege a sus hermanos con mercurio, aunque su propia magia lo envenena.
+373 | bg=paper | Y Nebra confiesa. Odiaba a Noelle porque era igual a su madre. Y le daba envidia.
+373 | bg=speed:#ffd23d | Los cuatro atacan juntos. Y vencen a Acier.
+373 | bg=paper gif=bc3-hug_1 | Y Acier, antes de irse, sonríe. Pude ver a mis hijos crecer. Como madre, estoy satisfecha.
+374 | bg=black | Y llegamos a la pelea más esperada. Yami contra Morgen. El hermano de Nacht. El mejor amigo de Yami.
+374 | bg=paper | Ichika llega para ayudar. Y por fin, Yami le cuenta la verdad.
+374 | bg=aura:#7a3cff punch | Su padre había perdido la cabeza por una droga secreta del clan, la droga del dios demonio. Yami lo detuvo. Y cargó con toda la culpa para proteger a Ichika.
+374 | bg=paper | Ichika se equivocó durante años. Su hermano nunca fue el monstruo. Era su protector.
+374 | bg=speed:#e3262e | Ryuya le había dado a Ichika esa misma droga para una emergencia. Y Yami la toma. Esta vez la puede controlar.
+374 | bg=speed:#ffd23d | Y los dos hermanos pelean lado a lado. Esta vez, yo te protejo a ti, hermano.
+375 | bg=black | Del otro lado, Nacht no puede pelear. Él ya mató a su hermano una vez. No quiere hacerlo otra vez.
+375 | bg=black | Pero Yami le grita. Morgen está muerto. Y Lucius está usando su cara. Eso es lo que hay que detener.
+375 | bg=speed:#e3262e | Y Nacht entiende. Lo único que puede hacer por Morgen ahora es dejarlo descansar en paz.
+376 | bg=black | Morgen ataca con magia de luz y oscuridad, la magia absoluta que le dio Lucius.
+376 | bg=speed:#ffd23d | Yami e Ichika lanzan un ataque combinado. Cielo negro.
+376 | bg=aura:#7a3cff | Y Nacht invoca a sus cuatro demonios, Gallus, Felis, Canis y Equus. Magia de sombra. Noche de Walpurgis.
+376 | bg=black punch | Adiós, Morgen. Y Nacht promete cargar con ese dolor para siempre.
+@ El Emperador Mago
+377 | bg=black | Los arcángeles caen. Las batallas se están ganando. Y solo queda Lucius.
+377 | bg=black | Lucius le dice a Asta que él es la falla del mundo. Que por su culpa la gente sufre.
+377 | bg=speed:#e3262e | Asta le contesta que no es un dios que quiere la paz. Es solo un egoísta al que no le gusta cuando las cosas no salen como quiere.
+378 | bg=speed:#ffd23d | Asta y Yuno pelean juntos contra los clones. Antimagia y magia de viento y estrella. Polos opuestos.
+378 | bg=speed | Y no se estorban. Cada uno supera lo que el otro imaginaba. Y en el medio de la pelea, Asta sube de nivel otra vez.
+379 | bg=speed:#e3262e punch | Todos los clones caen. Y entonces Lucius aparece. El de verdad.
+379 | bg=aura:#7a3cff | Contemplen la llegada del Emperador Mago.
+379 | bg=black | Y revela un secreto sobre los grimorios. Las torres que dan grimorios conectan a los magos con todo lo que la humanidad aprendió.
+379 | bg=black punch | Y cuando un mago muere, su grimorio vuelve a la torre. Y Lucius puede usar los hechizos de todos ellos.
+379 | bg=paper | Yuno usa todo su poder. Y desde el País del Sol, Ryuya mira con su Tengentsu.
+379 | bg=speed:#ffd23d | Y le avisa a Asta. La magia de Lucius se concentra en el cristal de su pecho. Ahí tiene que pegar con el Zetten.
+@ Al borde de la desesperación
+380 | bg=black punch | Pero Lucius es más rápido. Y Asta cae.
+380 | bg=black | Los Toros Negros gritan su nombre. Los seguidores de Lucius celebran. Su mundo parece estar cerca.
+380 | bg=speed:#e3262e | Yuno se queda solo frente a Lucius. Y suelta Neverland para ir con todo.
+380 | bg=speed:#ffd23d punch | Y Yuno le responde: no importa adónde lo mandes. Asta siempre vuelve. Mientras yo esté aquí.
+380 | bg=aura:#7a3cff stamp=CONTINUARÁ | ¿Asta va a volver una vez más? ¿Puede alguien vencer al Emperador Mago?
+336 | bg=halftone:#e3262e page | Y así llegamos al último capítulo publicado. Suscríbete para la próxima parte, y dime en los comentarios: ¿quién crees que va a ser el Rey Mago?

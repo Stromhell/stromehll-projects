@@ -1,0 +1,98 @@
+{
+ "post": {
+  "_id": "6b01cc86808cd1b68adf1573",
+  "userId": "6b00ba00f0e8042b55f15b31",
+  "workspaceId": "6b00ba00f0e8042b55f15b33",
+  "title": "",
+  "content": "¡EL ARCO FINAL DE BLACK CLOVER, DEL CAPÍTULO 335 AL 380, EN UN SOLO VIDEO! Lucius Zogratis manda a Asta al otro lado del mundo, al País del Sol, la tierra natal de Yami. Mientras Asta entrena con el shogun Ryuya y los Siete Ryuzen, el reino del Trébol se prepara para el Día del Juicio.\n\nRepasamos el Zetten, Ichika y la verdad sobre Yami, el dragón de cinco cabezas, la hermana Lily, Neverland de Yuno, Mereoleona contra Morris, los Silva contra Acier, Yami y Nacht contra Morgen, el regreso de Asta y la llegada del Emperador Mago.\n\n¿Quién va a ser el Rey Mago? ¿Puede alguien vencer a Lucius?\n\n¡Déjanos tus teorías en los comentarios!\nSuscríbete a Stormi Knows Anime para más manga explicado en español.\n\n#BlackClover #Asta #BlackCloverManga\n\nCréditos: Black Clover © Yūki Tabata / Shueisha. Usado con fines de comentario y análisis.\n\n#anime #manga #animeenespañol\n\n0:00 ¡Ángeles en el cielo y Asta desaparecido!\n0:21 Lo que pasó en la Parte 2\n0:45 Lucius ataca a Asta\n1:57 ¡Asta en el País del Sol!\n3:37 La verdad sobre Yami\n4:21 ¡El dragón de cinco cabezas!\n5:32 Asta contra la hermana Lily\n6:45 La caída del dragón\n7:58 ¡Llega el Día del Juicio!\n8:59 Neverland, el hechizo de Yuno\n10:01 El futuro que Lucius no puede leer\n11:23 Los Toros Negros contra Damnatio\n12:27 ¡Asta ha vuelto!\n13:32 Las batallas finales\n15:36 ¡El Emperador Mago!\n16:36 Al borde de la desesperación",
+  "mediaItems": [
+   {
+    "_id": "6b01cc9e808cd1b68adf159e",
+    "url": "https://media.zernio.com/media/1795279952597_652b806b00ac787e_BC3_ES_v2.mp4",
+    "type": "video",
+    "thumbnail": "https://media.zernio.com/media/1795280004993_2f70392f6892ad5e_BC3_thumb_ES_v1.jpg"
+   }
+  ],
+  "scheduledFor": "2026-12-01T23:00:00.000Z",
+  "timezone": "UTC",
+  "status": "scheduled",
+  "tags": [
+   "black clover",
+   "black clover manga",
+   "black clover arco final",
+   "black clover explicado",
+   "black clover resumen",
+   "black clover parte 3",
+   "asta",
+   "yuno",
+   "lucius zogratis",
+   "emperador mago",
+   "wizard emperor",
+   "black clover lucius",
+   "país del sol",
+   "land of the sun",
+   "ichika",
+   "ryuya",
+   "zetten",
+   "yami sukehiro",
+   "nacht faust",
+   "morgen faust",
+   "mereoleona",
+   "noelle silva",
+   "black clover 380",
+   "black asta",
+   "black clover espanol",
+   "anime en español",
+   "manga explicado",
+   "resumen de anime",
+   "stormi knows anime",
+   "black clover recap"
+  ],
+  "hashtags": [],
+  "mentions": [],
+  "visibility": "public",
+  "crosspostingEnabled": true,
+  "metadata": {
+   "usageCounted": true
+  },
+  "recycling": {
+   "enabled": false,
+   "gapFreq": "month",
+   "recycleCount": 0,
+   "contentVariations": [],
+   "contentVariationIndex": 0
+  },
+  "createdAt": "2026-11-21T16:53:50.391Z",
+  "updatedAt": "2026-11-21T16:53:50.396Z",
+  "platforms": [
+   {
+    "_id": "6b01cc9e808cd1b68adf159c",
+    "platform": "youtube",
+    "accountId": {
+     "_id": "6b00ba86a42f4cf9f57677a1",
+     "platform": "youtube",
+     "username": "stormiknowsanime",
+     "displayName": "Stormi Knows Anime",
+     "profilePicture": "https://yt3.ggpht.com/4kyAJamFAdkP-LVGVBJlZHCysPnEyDIJAs_O7mQq_gbj5pYkIJbsBJEfUkj2CvoLeBeywa9n=s88-c-k-c0x00ffffff-no-rj",
+     "isActive": true,
+     "profileId": "6b00ba00f0e8042b55f15b35"
+    },
+    "profileId": "6b00ba00f0e8042b55f15b35",
+    "customMedia": [],
+    "scheduledFor": "2026-12-01T23:00:00.000Z",
+    "platformSpecificData": {
+     "title": "¡ASTA HA VUELTO! El ARCO FINAL de Black Clover EXPLICADO | Parte 3 (Cap. 335-380)",
+     "categoryId": "1",
+     "visibility": "public",
+     "madeForKids": false,
+     "firstComment": "¿Quién crees que va a ser el Rey Mago, Asta o Yuno? 👀",
+     "containsSyntheticMedia": false
+    },
+    "status": "pending",
+    "publishAttempts": 0,
+    "contentHash": "c2d1fe6f2faa9d6a1d860428a7beb828"
+   }
+  ]
+ },
+ "message": "Post scheduled successfully"
+}
