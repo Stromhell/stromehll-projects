@@ -1,0 +1,69 @@
+# One Piece capitulo 1198 "La isla de los monstruos" - Stormi Knows Anime, espanol LatAm v1, 20 Nov 2026
+# Format: PAGE | options | narration. ch=1197 for recap pages. c=x,y,w,h normalised crop; page = full page scroll; ai=file in 03 Frames/art
+# Voice: Kokoro em_santa 1.1, lang es. No intro. Recap of 1197 first (Pushpam 20 Nov 23:20).
+@ Gancho
+11 | bg=black punch c=0,0,1,0.8 | Imu está en Elbaph. En persona. Y acaba de derribar a Loki, el dragón más temido de la isla.
+15 | bg=speed:#ffd23d c=0.25,0.57,0.75,0.43 gif=anime-shocked_1 | Y mientras todos creen que Luffy huyó como un cobarde, aparece un monito blanco que no para de decir uk uk uk.
+17 | bg=speed:#e3262e punch c=0,0,1,0.71 | Y ese monito le pega un puñetazo a una gigante del tamaño de un edificio.
+1 | bg=halftone:#e3262e page | Esto es One Piece, capítulo mil ciento noventa y ocho. La isla de los monstruos. Y sí, Oda se volvió loco otra vez.
+@ Resumen rápido
+2 | bg=paper ch=1197 page | Resumen rápido del capítulo anterior. Sanji pelea contra Rimoshifu, un Caballero Sagrado montado a caballo, con su lanza Longinus.
+11 | bg=black ch=1197 page | Rimoshifu lleva una armadura especial que le dio el Gran Uno, y presume que la derrota no es una opción para él.
+8 | bg=speed ch=1197 page | Pero Sanji entiende algo. Su cuerpo, entrenado en el Reino Kamabakka y protegido por su madre, es algo que debe cuidar. Y su defensa se vuelve durísima.
+14 | bg=aura:#ffd23d ch=1197 page | El amor es defensa. Si Zoro es la espada de Luffy, Sanji será su escudo. Y así termina el capítulo mil ciento noventa y siete.
+@ Sanji contra Rimoshifu
+2 | bg=speed:#e3262e punch c=0.05,0,0.95,0.52 | Y empezamos con una explosión. Sanji manda a volar a Rimoshifu con una patada que atraviesa su armadura.
+2 | bg=paper c=0.05,0.54,0.95,0.46 | Sanji camina entre los escombros, tranquilo, como si acabara de sacar un pastel del horno.
+3 | bg=black c=0,0.53,1,0.47 | Rimoshifu se arrastra, grita, y Sanji le cae encima otra vez.
+4 | bg=black c=0,0,1,0.27 | Y Sanji le pregunta con frialdad: ¿cuál era tu punto débil? ¿El corazón?
+4 | bg=paper ai=chef_shield.png | Este es el Sanji que queríamos. El cocinero que se convirtió en un muro.
+@ El Dios de la Lluvia
+4 | bg=paper c=0,0.67,1,0.33 | Pero en otra parte del pueblo, el caos es total. Una gigante enorme, con un sombrero de lluvia, se estira por encima de las casas.
+5 | bg=speed c=0,0.31,1,0.48 | La gente la llama el Dios de la Lluvia. Y se está estirando hacia un barco. Un barco lleno de niños gigantes.
+6 | bg=paper c=0,0,1,0.29 | Sí, otra vez el Gobierno Mundial secuestrando niños. Porque claro, ¿qué más iban a hacer un martes?
+6 | bg=paper c=0.2,0.55,0.8,0.45 gif=anime-crying_1 | Los niños gritan. Nos están secuestrando. Si el barco zarpa, vamos a salir de Elbaph. Uno de ellos ni siquiera ha salido nunca de la isla.
+5 | bg=black c=0,0.82,1,0.18 | Y uno de los captores se ríe. Bien hecho, Dios de la Lluvia. Tu trabajo terminó.
+7 | bg=black c=0,0,0.95,0.29 | Rimoshifu le grita a su compañero Sommers que zarpe ya. Pero el barco no se mueve. Algo está pasando a bordo.
+7 | bg=aura:#7a3cff c=0,0.57,0.5,0.3 | Y de repente, Rimoshifu siente algo. El Haki del Gran Uno.
+7 | bg=black c=0.65,0.57,0.35,0.43 | Y le dice a Sanji: eso significa que tu amigo no tiene ninguna oportunidad.
+@ Imu contra Loki
+8 | bg=black c=0.52,0,0.48,0.18 | Y cambiamos al bosque central. Equipo Imu.
+8 | bg=speed c=0,0,0.46,1 | El cielo se llena de sombras con ojos, y todo suena a tambores. Doron, doron, dan, don.
+8 | bg=black c=0.52,0.72,0.48,0.28 gif=anime-nervous_1 | Los gigantes que miran desde lejos solo pueden decir una cosa: es el fin del maldito mundo.
+9 | bg=black punch c=0,0.05,1,0.95 | Y en el centro, Imu. Altísimo, con cuernos, con una lanza, frente a Loki.
+10 | bg=aura:#e3262e c=0,0.3,1,0.7 | Loki está en su segunda forma híbrida. Fruta Dragón Dragón, modelo Nidhoggr. Un dragón con cara de pocos amigos.
+10 | bg=black c=0,0,1,0.4 | Y Loki está atrapado. Si pelea y muere, Elbaph será esclavizada. Si huye y sobrevive, Elbaph también será esclavizada. Ninguna opción sirve.
+10 | bg=paper c=0,0.75,1,0.25 gif=anime-angry_1 | Y encima, se queja de que Luffy salió corriendo. Nunca pensé que fuera tan cobarde, dice. Spoiler: no lo es.
+11 | bg=black c=0,0,1,0.8 | Imu habla por fin. Cuando haya esclavizado Elbaph, quiere su tecnología antigua. Harald se negó a hablar de ella. Pero Imu sabe que existe.
+11 | bg=black c=0,0.8,1,0.2 | Y Loki responde como el rebelde que es: no tengo idea de qué demonios estás hablando.
+12 | bg=speed:#e3262e punch c=0,0.05,1,0.95 | Respuesta equivocada. Imu ataca.
+13 | bg=speed punch page | Un solo golpe. Y Loki cae.
+14 | bg=black c=0,0,1,0.3 | Todo el bosque escucha el grito. Loki fue derrotado.
+@ Imu tiene prisa
+14 | bg=aura:#7a3cff c=0,0.32,1,0.31 | Pero aquí viene lo más interesante del capítulo. Imu está agotado. Respira con dificultad. Y piensa: si no regreso pronto a Tierra Santa, mi vida está en peligro.
+14 | bg=black c=0,0.32,1,0.31 stamp=¡IMU_TIENE_LÍMITE! | Nunca esperó usar tanto poder. Imu, el ser más intocable del mundo, tiene un límite de tiempo.
+14 | bg=paper ai=hourglass_king.png | Básicamente, Imu está jugando con el cronómetro corriendo. Como el modo de Cenicienta, pero con aniquilación.
+14 | bg=black c=0,0.32,1,0.31 | Así que decide algo peor. Si nadie le dice dónde está la tecnología, tomará la isla y la encontrará él mismo.
+14 | bg=paper c=0,0.65,1,0.35 | Mientras tanto, Usopp y los gigantes no entienden nada. ¿Qué le pasó a Luffy? ¿Tanto para nuestra arma secreta? ¿Era de tipo Zoan?
+@ ¿Dónde está Luffy?
+15 | bg=paper c=0,0,1,0.32 | Jimbei y Nami sienten dos fuentes enormes de Haki yendo hacia el pueblo del oeste. Y piensan lo mismo: Luffy fue primero al pueblo.
+15 | bg=paper c=0,0.33,1,0.2 | Nami no se cree que Luffy haya huido. Y Jimbei tampoco entiende qué estaba haciendo.
+15 | bg=speed:#ffd23d c=0,0.57,0.25,0.43 | Y entonces, uk uk uk. Un monito blanco, con el pelo como nubes, rebotando por los techos.
+15 | bg=paper c=0.25,0.57,0.75,0.43 | ¿Eres tú, Luffy?
+16 | bg=speed c=0.32,0,0.68,0.45 | El monito salta directo a la cara del Dios de la Lluvia y le jala la nariz. Literalmente.
+16 | bg=paper c=0.32,0.48,0.68,0.24 | Los gigantes no lo pueden creer. ¿Un mono? Espera, se parece a...
+16 | bg=paper ai=monkey_punch.png | Sí. Todo indica que Monkey D. Luffy se convirtió en un mono. Oda llevaba casi treinta años preparando este chiste.
+17 | bg=speed:#e3262e punch c=0,0,1,0.71 stamp=¡KA-POP! | Y con puños gigantes de goma, le pega un golpe que la hace volar.
+17 | bg=black c=0,0.73,1,0.27 | Los gigantes gritan: ¿quién es ese? Continuará.
+@ Teorías
+15 | bg=aura:#ffd23d c=0.25,0.57,0.75,0.43 | Ahora, mis teorías. Primero, el mono. Luffy tiene la fruta Humano Humano, modelo Nika. Y su nombre es Monkey D. Luffy. ¿Coincidencia? En One Piece, nunca.
+16 | bg=speed c=0.32,0.73,0.68,0.27 | Creo que esta forma es una versión del Gear cinco aún más caricaturesca. Más pequeña, más rápida, y perfecta para rescatar a los niños sin destruir el pueblo.
+10 | bg=paper c=0,0.75,1,0.25 | Y esto explica por qué Luffy desapareció. No huyó. Fue a salvar a los niños primero. Luffy siempre elige a las personas antes que la pelea.
+14 | bg=aura:#7a3cff c=0,0.32,1,0.31 | Segundo, el límite de Imu. Si Imu necesita volver a Tierra Santa para sobrevivir, entonces hay algo allá que lo mantiene vivo. Puede ser el árbol, el trono, o algo que todavía no conocemos.
+11 | bg=black c=0,0,1,0.8 | Y eso significa que Imu tiene un punto débil. El tiempo. Si Elbaph resiste lo suficiente, Imu tendrá que retirarse.
+11 | bg=paper c=0,0,1,0.8 | Tercero, la tecnología antigua de Elbaph. Harald sabía algo y se lo llevó a la tumba. Yo apuesto a que tiene que ver con el Siglo Vacío y con las armas que el Gobierno teme.
+7 | bg=black c=0.65,0.57,0.35,0.43 | Cuarto, Sanji. Rimoshifu dijo que su amigo no tiene oportunidad. Pero Sanji ahora es el escudo. Y si Imu va por Luffy, Sanji va a estar ahí.
+9 | bg=black c=0,0.05,1,0.95 | Y quinto, Loki. Cayó, pero no creo que esté muerto. Un dragón Nidhoggr no se acaba con un solo golpe. Loki todavía tiene un papel enorme en este arco.
+@ Cierre
+6 | bg=paper c=0.2,0.55,0.8,0.45 | Lo que más me gustó es que Luffy, en lugar de pelear contra el más fuerte, fue a salvar a los niños. Eso es ser el rey de los piratas.
+1 | bg=halftone:#e3262e c=0.07,0.28,0.88,0.63 | Y tú, ¿qué crees? ¿Luffy mono es la mejor forma de la historia? ¿Qué es la tecnología antigua de Elbaph? Déjanos tus teorías en los comentarios, y suscríbete, que este arco apenas empieza.

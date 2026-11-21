@@ -1,0 +1,140 @@
+# Boruto: Two Blue Vortex capitulo 39 "Masácralo" - Stormi Knows Anime, espanol LatAm v1, 20 Nov 2026
+# Format: PAGE | options | narration.  c=x,y,w,h normalised crop of that page; page = full page scroll; ai=file in 03 Frames/art
+# Voice: Kokoro em_santa 1.1, lang es. No intro (Pushpam).
+@ Gancho
+25 | bg=speed:#e3262e punch c=0,0.05,1,0.75 | Sarada por fin usa el poder de su Mangekyo Sharingan. Y lo primero que hace es aplastar a Code contra el suelo.
+39 | bg=black c=0.09,0.18,0.86,0.36 gif=anime-shocked_1 | Mientras tanto, un viejito librero le pide a Jura, el árbol divino más peligroso de todos, que mate a Boruto.
+12 | bg=aura:#2b4cff c=0.57,0.46,0.35,0.48 | Y Kashin Koji ve un futuro donde Boruto muere. Así, sin anestesia.
+1 | bg=halftone:#e3262e page | Esto es Boruto Two Blue Vortex, capítulo treinta y nueve. Masácralo. Y créeme, este capítulo está cargadísimo.
+@ Resumen rápido
+6 | bg=paper ch=38 page | Resumen rápido. Por la omnipotencia de Eida, todo el mundo cree que Boruto mató a Naruto. En realidad, fue Kawaki quien selló a Naruto y a Hinata.
+8 | bg=speed ch=38 page | Ahora los Árboles Divinos tienen forma humana, y cazan a los ninjas más fuertes. Y Code secuestró a Sarada entre sus raíces.
+16 | bg=black ch=38 page | En el capítulo anterior, Code estuvo a punto de arrancarle los ojos a Sarada.
+25 | bg=speed ch=38 page | Así que Boruto fue a rescatarla. Y aquí empieza el capítulo.
+@ La cena de Himawari
+2 | bg=paper c=0.33,0.06,0.59,0.46 | Empezamos tranquilos. Kawaki y Himawari cenando curry, como una familia normal. Bueno, lo más normal posible en esta casa.
+2 | bg=paper c=0.41,0.53,0.5,0.41 gif=anime-laughing_1 | Kawaki dice que está buenísimo, y Himawari presume que no le puso ni una gota de agua. Todo el líquido salió de las verduras.
+2 | bg=paper c=0.05,0.77,0.36,0.17 | Kawaki, el chico que sobrevivió a Kara y a Isshiki, se sorprende de que el curry se haga con agua.
+3 | bg=paper c=0.09,0.06,0.55,0.13 | Su defensa: soy experto en comer, no en cocinar. Honestamente, el mismo nivel que yo.
+3 | bg=paper ai=curry_chef.png | Himawari hizo curry para tres días. Gordon Ramsay estaría llorando, pero de orgullo.
+3 | bg=paper c=0.52,0.43,0.44,0.52 | Pero luego la cosa se pone triste. Himawari se pregunta si Boruto estará comiendo bien. Ojalá pudiera darle un poco a él también.
+4 | bg=paper c=0.28,0.06,0.63,0.35 | Kawaki le pregunta si todavía cree en él. Como siempre, a lo tonto.
+4 | bg=black c=0.61,0.42,0.3,0.52 | Y ella responde que sí. Que el Boruto que conoce jamás haría cosas tan horribles. Y que siente que sus papás siguen vivos en algún lugar.
+4 | bg=paper gif=anime-nervous_1 c=0.05,0.42,0.6,0.32 | Y aquí Kawaki suda frío, porque Naruto y Hinata no están muertos. Están sellados. Y adivina quién los selló.
+@ El trato de Kawaki
+5 | bg=paper c=0.09,0.06,0.86,0.2 | Himawari lo sabe. Boruto se metió en algo grande. Y si es así, ella quiere estar ahí para ayudarlo.
+5 | bg=aura:#7a3cff c=0.09,0.43,0.27,0.52 | Entonces Kawaki suelta la verdad. Está trabajando con Boruto para acabar con los Árboles Divinos.
+5 | bg=black c=0.49,0.53,0.47,0.41 punch | Pero él va a erradicar a todos los Otsutsuki. Y Himawari le recuerda lo obvio. Boruto es uno.
+6 | bg=black c=0.05,0.06,0.86,0.22 | Kawaki lo dice sin rodeos. Si ese maldito Momoshiki despierta dentro de Boruto, el trato se acaba. Y probablemente tendrá que matarlos a los dos.
+6 | bg=paper c=0.05,0.3,0.38,0.32 | Himawari le hace la pregunta del millón. ¿Vas a pelear contra él como defensor de Konoha, o vas a estar de su lado?
+6 | bg=paper c=0.05,0.64,0.86,0.3 | Y Kawaki, en modo hermano mayor tóxico, solo dice: deja de decir cosas absurdas.
+7 | bg=paper c=0.32,0.06,0.62,0.35 | Se levanta y se va. Mejor decide ahora, mientras puedas. Por tu propio bien.
+7 | bg=speed c=0.27,0.43,0.46,0.52 gif=anime-mind-blown_1 | Y en el pasillo lo espera un sapo. Sí, un sapo. Es de Koji. Y le dice que su instinto no se equivoca: se acaba el tiempo, y necesita su ayuda.
+@ Boruto contra Code
+8 | bg=speed:#e3262e punch c=0.05,0.06,0.87,0.19 | Ahora sí, cambiamos de escena. Code grita de dolor, porque Boruto acaba de llegar con todo.
+8 | bg=speed c=0.05,0.22,0.87,0.43 | Code está furioso. ¿Cómo te atreves? Y Boruto, con cara de lunes por la mañana, ni le contesta.
+9 | bg=black c=0.09,0.23,0.42,0.39 | Code promete que no tendrá una muerte fácil. Clásico villano que habla mucho y pega poco.
+9 | bg=paper c=0.09,0.62,0.86,0.32 | Mientras tanto, Boruto rescata a Sarada, que estaba atrapada en las raíces.
+10 | bg=speed page | Corte, salto, esquiva, y Boruto ya está fuera con Sarada en brazos. Esto ya parece una película de Marvel.
+11 | bg=aura:#2b8a3e c=0.09,0.06,0.53,0.22 | Koji les habla por radio. Concéntrate en el trébol de cuatro hojas. Quiere que Boruto se teletransporte cerca de Himawari para curar a Sarada.
+11 | bg=paper c=0.61,0.06,0.34,0.37 | Boruto dejó símbolos marcados. Puede entrar y salir cuando quiera. Misión cumplida, por ahora.
+11 | bg=paper c=0.09,0.42,0.52,0.52 stamp=¡ESPERA! | Pero Sarada lo detiene. Dice que aguantó el dolor esperando a que él llegara. Y que todavía no ha usado el Ohirume.
+11 | bg=speed c=0.09,0.42,0.86,0.5 | Lo más importante ahora, dice ella, es derrotar a Code. Aquí mismo.
+@ Los dos futuros de Koji
+12 | bg=black c=0.05,0.16,0.48,0.27 | Y aquí Koji suelta una bomba. Su precognición le mostró dos futuros.
+12 | bg=paper ai=two_futures.png | En el primero, Boruto y Sarada vuelven a Konoha sanos y salvos.
+12 | bg=speed:#e3262e punch c=0.57,0.46,0.35,0.48 | En el segundo, Jura regresa. Y Boruto muere en sus manos.
+12 | bg=paper c=0.05,0.54,0.54,0.4 | Pero Sarada tiene otra pregunta. El Árbol Divino basado en su papá, Sasuke. El que se llama Hidari.
+13 | bg=black c=0.09,0.46,0.68,0.3 | Cuando Code estaba a punto de arrancarle los ojos, Hidari lo detuvo. Le dijo que estaba siendo cruel.
+13 | bg=paper c=0.63,0.06,0.31,0.4 gif=anime-shocked_2 | Hidari, un Árbol Divino, la salvó. Sarada no entiende nada. ¿Qué le pasa a ese tipo?
+13 | bg=aura:#2b4cff c=0.09,0.77,0.65,0.17 | Y Koji dice algo inquietante. El futuro está cambiando otra vez, muchísimo. Y no sabe qué lo provocó.
+14 | bg=speed c=0.05,0.06,0.87,0.5 | Pero no hay tiempo. Code ataca con sus marcas de garra y llena todo de raíces.
+14 | bg=black c=0.33,0.57,0.41,0.37 | No te vas a escapar, Boruto.
+15 | bg=paper c=0.09,0.06,0.55,0.26 | Koji les da la regla: si las cosas se ponen feas, salgan hacia el sur y teletranspórtense. Y la prioridad es sentir los símbolos en Konoha.
+15 | bg=black c=0.09,0.49,0.86,0.45 | Porque si Jura se entera, puede volver en un instante. Así que el reloj está corriendo.
+@ Jura en la librería
+16 | bg=paper c=0.05,0.06,0.86,0.15 | Y hablando de Jura. ¿Dónde está el monstruo más peligroso del manga en este momento?
+16 | bg=paper c=0.32,0.65,0.59,0.29 gif=anime-laughing_2 | En una librería de segunda mano. Leyendo. Con un viejito. Hablando de animales.
+16 | bg=paper c=0.05,0.24,0.57,0.22 | El librero le explica que los herbívoros tienen los ojos a los lados para ver a los depredadores, y los carnívoros al frente para cazar.
+17 | bg=paper c=0.37,0.06,0.58,0.43 | Y luego viene lo mejor. Los gatos, según algunos, invirtieron toda su capacidad de supervivencia en ser lindos.
+17 | bg=paper ai=cat_bookstore.png | Hicieron que los humanos los amaran, y así consiguieron seguridad absoluta. Internet lleva veinte años diciéndolo.
+17 | bg=paper c=0.69,0.51,0.27,0.43 | Jura escucha todo y dice: qué astutos. Ojo con esto, porque Jura está estudiando cómo sobrevivir. Y eso da miedo.
+18 | bg=black c=0.38,0.06,0.53,0.48 | Entonces Hidari le habla a Jura telepáticamente. Boruto apareció. Y Sarada Uchiha también, Code la trajo.
+19 | bg=paper c=0.09,0.24,0.6,0.2 | Jura pregunta cuál es el motivo de Boruto. Rescatar a Sarada, al parecer. Code la estaba usando de carnada.
+19 | bg=black c=0.38,0.57,0.56,0.37 punch | Y Jura aprieta el puño. Dice que Code le faltó al respeto. Ojo, no Boruto. Code.
+@ Mangekyo Ohirume
+20 | bg=speed c=0.05,0.06,0.3,0.24 | De vuelta en la pelea. Boruto y Sarada contra Code.
+20 | bg=speed:#e3262e c=0.05,0.47,0.74,0.47 | Code lanza sus marcas de garra por todas partes, una telaraña de cortes.
+21 | bg=speed c=0.09,0.06,0.86,0.52 | Sarada esquiva, Boruto se mueve, y Code se ríe.
+21 | bg=black c=0.31,0.59,0.36,0.35 | Conozco tu secreto, Boruto. Para usar el Rasengan Uzuhiko necesitas tener los dos pies en el suelo. Y no te voy a dejar.
+22 | bg=speed c=0.27,0.06,0.64,0.62 | Code los arrastra hacia una caída. Boruto en el aire, sin poder apoyarse.
+22 | bg=black c=0.05,0.64,0.86,0.3 | Y Code se burla. Mostraste tu verdadera cara bajo presión.
+23 | bg=speed punch c=0.05,0.06,0.88,0.64 | Pero entonces, bum. Algo golpea a Code.
+24 | bg=paper c=0.09,0.65,0.86,0.29 | Es Sarada. Y sus ojos ya no son los mismos.
+25 | bg=aura:#e3262e c=0,0.05,1,0.75 stamp=OHIRUME | Mangekyo Sharingan. Ohirume.
+26 | bg=speed:#e3262e punch c=0.3,0.3,0.62,0.65 | Y Code sale disparado contra el suelo como si el planeta entero lo estuviera jalando.
+27 | bg=black c=0.09,0.06,0.86,0.15 | No puede moverse. ¿Qué fuerza gravitacional es esta?
+27 | bg=paper ai=gravity_meme.png | Básicamente, Sarada le hizo un Shinra Tensei al revés. Pain estaría orgulloso.
+27 | bg=speed c=0.09,0.31,0.86,0.5 | Y lo mejor: ahora Boruto está en el suelo. Con los dos pies.
+@ Rasengan Uzuhiko
+28 | bg=black c=0.05,0.06,0.86,0.2 | Sarada solo dice: adiós, basura.
+28 | bg=speed c=0.05,0.37,0.95,0.6 | Boruto aparece en el aire, cayendo directo sobre Code.
+29 | bg=speed:#e3262e punch c=0.05,0.06,0.88,0.17 gif=anime-angry_1 | Code grita que no.
+29 | bg=speed c=0,0.25,0.95,0.6 | Y Boruto lo golpea de lleno.
+30 | bg=aura:#2b4cff c=0.09,0.06,0.86,0.15 stamp=RASENGAN | Rasengan. Uzuhiko.
+30 | bg=speed punch c=0.09,0.35,0.86,0.6 | La explosión parte el bosque de raíces.
+31 | bg=speed c=0,0.25,0.95,0.7 | Code queda envuelto en el remolino. Esto ya es nivel final de temporada.
+32 | bg=paper c=0.05,0.3,0.86,0.17 | Sarada mira. Y Code queda tirado en el suelo.
+33 | bg=paper c=0.09,0.06,0.86,0.48 | Silencio total. Code está derrotado. Por ahora.
+34 | bg=black c=0.46,0.06,0.45,0.46 | Y Boruto le explica lo que hace el Uzuhiko. Es la fuerza de rotación del chakra del planeta, descontrolada dentro de tu cuerpo.
+34 | bg=speed:#2b4cff c=0.05,0.06,0.45,0.5 | Y esa energía no se disipa mientras el planeta siga girando. Incluso después de que dejes de respirar.
+34 | bg=black c=0.05,0.63,0.86,0.31 gif=anime-mind-blown_2 | Te di muchas oportunidades de vivir. Tú las desperdiciaste. Recuérdalo y arrepiéntete mientras mueres. Boruto ya no está jugando.
+@ Mitsuki y Shikamaru
+35 | bg=paper c=0.09,0.23,0.86,0.11 | Mientras tanto, en Konoha, Mitsuki está en un interrogatorio.
+35 | bg=paper c=0.09,0.36,0.45,0.2 | Un funcionario le ofrece inmunidad si coopera. Y le dice que el verdadero culpable, Nara Shikamaru, cargará con toda la culpa.
+35 | bg=black c=0.54,0.36,0.41,0.58 | Mitsuki solo responde: no sé nada. Leal como siempre.
+36 | bg=paper c=0.32,0.06,0.59,0.33 | Y entonces entra Shikamaru. El octavo Hokage. Con las mismas ojeras de siempre.
+36 | bg=paper c=0.05,0.56,0.86,0.38 gif=anime-facepalm_1 | Le pide perdón a Mitsuki, y se sienta. Parece que ahora el interrogado es él. Konoha y su política, de verdad.
+@ Masácralo
+37 | bg=paper c=0.45,0.06,0.49,0.49 | Volvemos a la librería. El viejito escuchó a Jura mencionar a Boruto.
+37 | bg=black c=0.09,0.57,0.53,0.27 | Jura dice que Boruto invadió su espacio. Que Konoha lo considera un enemigo. Y que espera matarlo si tiene la oportunidad.
+37 | bg=paper c=0.62,0.57,0.32,0.37 | El librero se pone nervioso. ¿Ese no es el criminal que mató al Hokage? ¿Tú tienes algo que ver con él?
+38 | bg=black c=0.55,0.06,0.37,0.44 | Y aquí viene el giro. Un flashback. Shikamaru visitó a este librero antes. Y le pidió que mantuviera ocupado a ese hombre el mayor tiempo posible, por cualquier medio.
+38 | bg=black c=0.05,0.2,0.5,0.3 gif=anime-shocked_1 | El librero hasta le pregunta si él ayuda en secreto a Boruto desde las sombras. Y Shikamaru dice: no puedo darte detalles. Es por tu seguridad.
+38 | bg=paper c=0.53,0.54,0.38,0.4 | Jura dice que ya se va. Y el viejito entra en pánico.
+39 | bg=speed:#e3262e punch c=0.09,0.18,0.86,0.36 | Lo agarra y le grita: ¡es una desgracia, una mancha en el nombre de Konoha! ¡Por favor, masácralo!
+39 | bg=paper ai=oscar_shopkeeper.png | Este señor se merece un Óscar. Está fingiendo odiar a Boruto solo para entretener a Jura unos segundos más.
+39 | bg=paper c=0.09,0.56,0.86,0.38 | Y Jura le da un pulgar arriba. El árbol divino más peligroso del manga, aprobando como abuelito de Facebook.
+@ Hiraishin
+40 | bg=paper c=0.05,0.06,0.86,0.18 | Por fin Boruto lo tiene. Siente los símbolos.
+40 | bg=aura:#ffd23d c=0.3,0.24,0.6,0.38 stamp=HIRAISHIN | Dios del Trueno Volador. El Hiraishin de su abuelo Minato. Boruto desaparece con Sarada en un destello.
+40 | bg=black c=0.05,0.8,0.86,0.14 | Code se queda tosiendo en el suelo. Ya verán. Maldita sea.
+41 | bg=speed c=0.09,0.06,0.86,0.34 | Y en el último segundo, Code lanza un ataque desesperado justo cuando Boruto se esfuma.
+41 | bg=black c=0.09,0.56,0.86,0.38 | Continuará.
+@ Teorías
+19 | bg=aura:#2b4cff c=0.38,0.57,0.56,0.37 | Ahora, mis teorías. Primero, Hidari. Un árbol divino basado en Sasuke que detiene a Code por ser cruel. Creo que Hidari está desarrollando algo parecido a la moral de Sasuke.
+12 | bg=black c=0.05,0.16,0.48,0.27 | Segundo. Koji dijo que el futuro cambió muchísimo. Y lo único nuevo es eso: Hidari salvando a Sarada. Hidari podría ser la pieza que cambia el destino de Boruto.
+17 | bg=paper c=0.69,0.51,0.27,0.43 | Tercero, Jura. Está aprendiendo de los humanos, de los gatos, de cómo sobrevivir. Un enemigo que estudia es mucho más peligroso que uno que solo pega.
+7 | bg=paper c=0.27,0.43,0.46,0.52 | Y cuarto, Kawaki. Koji lo está reclutando. Si Kawaki por fin se une de verdad a Boruto, esto se pone épico. Y si no, se viene la pelea más triste de la serie.
+@ Lo que viene
+25 | bg=aura:#e3262e c=0,0.05,1,0.75 | Hablemos del Ohirume. Ohirume es otro nombre de Amaterasu, la diosa del sol. Itachi y Sasuke tenían el Amaterasu de fuego negro. Sarada recibe gravedad. Los Uchiha están coleccionando a todo el panteón japonés.
+26 | bg=speed c=0.3,0.3,0.62,0.65 | Y fíjate en la sinergia. Code sabía que el Uzuhiko necesita los dos pies en el suelo. Así que la solución fue sencilla: si Boruto no puede llegar al suelo, Sarada trae a Code al suelo.
+28 | bg=speed c=0.05,0.37,0.95,0.6 gif=anime-thumbs-up_1 | Es el mismo trabajo en equipo de Naruto y Sasuke. Uno pone la trampa, el otro remata. La nueva generación por fin está a la altura.
+21 | bg=black c=0.31,0.59,0.36,0.35 | Pero ojo, esto también es un problema. Si Code conocía la debilidad del Uzuhiko, Jura y los demás Árboles Divinos también pueden conocerla.
+34 | bg=black c=0.05,0.63,0.86,0.31 | Y ahora, la gran pregunta. ¿Code está muerto? Boruto dijo que la energía del Uzuhiko no se disipa mientras el planeta gire. Eso suena a sentencia de muerte lenta.
+41 | bg=speed c=0.09,0.56,0.86,0.38 | Pero en la última página, Code todavía se mueve, todavía ataca, y todavía dice Boru. Los villanos de este manga son más difíciles de matar que una cucaracha en Minecraft.
+41 | bg=black c=0.09,0.06,0.86,0.34 | Mi apuesta: Code no muere aquí. O Jura lo encuentra y lo usa, o Code vuelve más desesperado que nunca.
+40 | bg=aura:#ffd23d c=0.3,0.24,0.6,0.38 | Ahora, el Hiraishin. Koji, un clon de Jiraiya, le preparó a Boruto la técnica de Minato. El nieto del Cuarto Hokage, usando su técnica, con ayuda del maestro de su papá. El fan service está en otro nivel.
+11 | bg=paper c=0.61,0.06,0.34,0.37 | Y esto cambia la estrategia. Boruto puede entrar y salir de Konoha cuando quiera. Ya no es solo un fugitivo. Es un fugitivo con teletransporte.
+36 | bg=paper c=0.32,0.06,0.59,0.33 | Sobre Shikamaru. Le pidió al librero que entretuviera a Jura. Eso significa que sabía que Boruto iba a actuar. Shikamaru está jugando ajedrez mientras todos juegan damas.
+35 | bg=paper c=0.09,0.36,0.45,0.2 gif=anime-angry_2 | Pero al mismo tiempo, hay gente en Konoha intentando culparlo de todo. Si Shikamaru cae, Boruto pierde a su único aliado dentro de la aldea.
+18 | bg=black c=0.38,0.06,0.53,0.48 | Y Jura. Hidari le contó todo. Boruto apareció, Sarada también. Y Jura solo dijo que Code le faltó al respeto.
+39 | bg=paper c=0.09,0.56,0.86,0.38 | ¿Jura está enojado con Boruto, o con Code? Yo creo que Jura ve a Code como un estorbo. Y eso podría hacer que Jura vaya primero por Code.
+12 | bg=speed:#e3262e c=0.57,0.46,0.35,0.48 | Pero recuerda el segundo futuro de Koji. Jura regresa, y Boruto muere en sus manos. Cada segundo que el librero lo entretuvo, fue un segundo que le compró vida a Boruto.
+6 | bg=black c=0.05,0.06,0.86,0.22 | Y Kawaki. Su trato con Boruto tiene fecha de caducidad. El día que Momoshiki despierte, Kawaki va a tener que elegir.
+7 | bg=paper c=0.27,0.43,0.46,0.52 | Y ahora Koji le pide ayuda justo a él. Creo que Koji está juntando a todos para la batalla contra Jura. Boruto, Sarada, Kawaki. El equipo siete versión dos punto cero.
+4 | bg=paper c=0.61,0.42,0.3,0.52 | Y no te olvides de Himawari. Ella es la única que todavía cree en Boruto sin pruebas. En una historia donde todos olvidaron la verdad, eso vale oro.
+13 | bg=aura:#2b4cff c=0.09,0.46,0.68,0.3 | Mi predicción para el capítulo cuarenta: Boruto y Sarada llegan con Himawari, Sarada se cura, y Jura por fin se mueve. Y Hidari empieza a dudar de qué lado está.
+@ Cierre
+3 | bg=paper c=0.52,0.43,0.44,0.52 | Lo que más me pegó fue Himawari. Todo el mundo odia a Boruto, y ella sigue guardándole curry.
+1 | bg=halftone:#e3262e c=0.3,0.15,0.5,0.45 | Y tú, ¿qué crees? ¿Hidari se está volviendo bueno? ¿Kawaki va a traicionar a Boruto? Déjalo en los comentarios. Y suscríbete, que el próximo capítulo viene fuerte.
