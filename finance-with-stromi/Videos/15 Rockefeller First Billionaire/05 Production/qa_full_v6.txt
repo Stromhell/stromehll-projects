@@ -1,0 +1,89 @@
+# qa_auto report: 15-Rockefeller-full_v6.mp4 (full)
+
+Result: **FAIL** - 39 fail, 16 warn, 21 to eyeball
+
+| level | check | detail | standard fix |
+|---|---|---|---|
+| FAIL | black / near-black | 0:54.17-1:01.12 (7.0s) | OK if it is a chapter/title card or fade; otherwise a missing shot/plate or bad cut |
+| FAIL | z-fighting / shimmer | 4:02.00-4:35.00 around top-centre (36 cells) | 3D: coplanar surfaces (board on frame, window on wall, door on desk plane) -> offset 1-2 cm or polygonOffset, raise near plane; 2D: per-frame random/texture swap -> fixed seed |
+| FAIL | cine: cut leak (old scene still on screen) | 2:21.2 16% of the frame unchanged across the cut while 72% changed | checklist B11 rows 67-75 |
+| FAIL | cine: cut leak (old scene still on screen) | 2:57.5 16% of the frame unchanged across the cut while 66% changed | checklist B11 rows 67-75 |
+| FAIL | cine: cut leak (old scene still on screen) | 3:34.5 16% of the frame unchanged across the cut while 72% changed | checklist B11 rows 67-75 |
+| FAIL | cine: cut leak (old scene still on screen) | 4:41.3 16% of the frame unchanged across the cut while 56% changed | checklist B11 rows 67-75 |
+| FAIL | cine: cut leak (old scene still on screen) | 10:57.5 19% of the frame unchanged across the cut while 56% changed | checklist B11 rows 67-75 |
+| FAIL | cine: cut leak (old scene still on screen) | 11:03.7 19% of the frame unchanged across the cut while 50% changed | checklist B11 rows 67-75 |
+| FAIL | cine: cut leak (old scene still on screen) | 13:37.0 16% of the frame unchanged across the cut while 62% changed | checklist B11 rows 67-75 |
+| FAIL | cine: cut leak (old scene still on screen) | 14:24.7 19% of the frame unchanged across the cut while 59% changed | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:41.2 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:42.3 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:43.7 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:45.5 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:46.7 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:47.8 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:49.0 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:50.5 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:51.7 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 0:53.2 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 2:57.5 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 2:58.8 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 3:00.0 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 3:01.3 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 3:03.0 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 3:04.7 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 3:05.8 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 3:07.0 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 7:58.0 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 8:06.8 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 8:08.2 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 8:09.3 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 11:52.3 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 16:19.5 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 16:20.7 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 16:21.8 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 16:23.0 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 16:24.2 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| FAIL | cine: edge exposed (camera past the background) | 16:25.3 black strip at the frame side: clamp camera/whip offset to the plate | checklist B11 rows 67-75 |
+| WARN | dark scene | 0:54.25-1:01.25 mean luma 9/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | dark scene | 2:21.25-2:24.75 mean luma 10/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | dark scene | 3:34.50-3:37.50 mean luma 7/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | dark scene | 5:15.75-5:18.75 mean luma 8/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | dark scene | 6:11.25-6:14.75 mean luma 11/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | dark scene | 8:36.75-8:39.75 mean luma 8/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | dark scene | 10:15.50-10:18.50 mean luma 10/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | dark scene | 10:42.25-10:43.75 mean luma 14/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | dark scene | 10:57.50-10:59.50 mean luma 24/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | dark scene | 11:02.00-11:03.75 mean luma 23/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | dark scene | 11:39.50-11:42.50 mean luma 8/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | dark scene | 12:45.25-12:48.25 mean luma 11/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | dark scene | 14:24.75-14:27.75 mean luma 8/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | dark scene | 15:42.00-15:45.25 mean luma 8/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | dark scene | 16:54.00-17:01.00 mean luma 13/255 | lift exposure/key light or add rim light + practical glow; subject must read on a phone |
+| WARN | cine: cut rhythm | 0:00.0 43% of shots are longer than 8 s (median 5.8 s) | checklist B11 rows 67-75 |
+| CHECK | black / near-black | 2:21.17-2:24.17 (3.0s) | OK if it is a chapter/title card or fade; otherwise a missing shot/plate or bad cut |
+| CHECK | black / near-black | 3:34.50-3:37.50 (3.0s) | OK if it is a chapter/title card or fade; otherwise a missing shot/plate or bad cut |
+| CHECK | black / near-black | 5:15.67-5:18.67 (3.0s) | OK if it is a chapter/title card or fade; otherwise a missing shot/plate or bad cut |
+| CHECK | black / near-black | 6:11.33-6:14.33 (3.0s) | OK if it is a chapter/title card or fade; otherwise a missing shot/plate or bad cut |
+| CHECK | black / near-black | 8:36.75-8:39.75 (3.0s) | OK if it is a chapter/title card or fade; otherwise a missing shot/plate or bad cut |
+| CHECK | black / near-black | 10:15.54-10:18.54 (3.0s) | OK if it is a chapter/title card or fade; otherwise a missing shot/plate or bad cut |
+| CHECK | black / near-black | 11:39.42-11:42.42 (3.0s) | OK if it is a chapter/title card or fade; otherwise a missing shot/plate or bad cut |
+| CHECK | black / near-black | 12:45.29-12:48.29 (3.0s) | OK if it is a chapter/title card or fade; otherwise a missing shot/plate or bad cut |
+| CHECK | black / near-black | 14:24.67-14:27.67 (3.0s) | OK if it is a chapter/title card or fade; otherwise a missing shot/plate or bad cut |
+| CHECK | black / near-black | 15:42.12-15:45.25 (3.1s) | OK if it is a chapter/title card or fade; otherwise a missing shot/plate or bad cut |
+| CHECK | local glitch/flicker | ~2:25.20 lower-left | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
+| CHECK | possible pop-in | ~3:53.20 lower-right, bottom-right | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | possible pop-in | ~7:44.50 bottom-mid-left | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | possible pop-in | ~8:39.80 bottom-mid-left | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | possible pop-in | ~9:38.50 upper-right | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | possible pop-in | ~10:41.80 upper-right | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | local glitch/flicker | ~13:28.80 lower-mid-left | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
+| CHECK | possible pop-in | ~13:28.80 upper-mid-left | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | possible pop-in | ~14:15.50 lower-right | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | possible pop-in | ~16:10.50 top-mid-left, top-mid-right | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | end screen | /home/user/w15/render/15-Rockefeller-full_v6_qa/zoom/last5s.jpg: last 5 s clean (no text/subtitles/characters in the YouTube end-screen element zones) |  |
+| PASS | decode check | decodes with 0 errors |  |
+| INFO | streams | 1920x1080 h264 yuv420p r=24.000 avg=24.000 fps, 1020.96 s, audio=1 |  |
+| INFO | loudness | I=-14.0 LUFS, true peak=-1.1 dBTP, LRA=3.6 LU |  |
+| INFO | levels | speech/peak windows -14.2 dBFS, floor -31.4 dBFS |  |
+| INFO | cine | still-camera share 0%, 124 shots, median shot 5.75 s |  |
+| INFO | contact sheets | 35 sheets in /home/user/w15/render/15-Rockefeller-full_v6_qa/sheets - READ EVERY ONE against RENDER-QA-CHECKLIST.md |  |
+
