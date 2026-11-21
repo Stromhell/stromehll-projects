@@ -1,0 +1,15 @@
+{
+ "channel": "dumdown",
+ "video": "secret-invasion-s1",
+ "state": "waiting_approval",
+ "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ8B3Lt9jiwLfkKDVZWDyhhp7",
+ "feedback": false,
+ "queue_pos": 0,
+ "booked_for": null,
+ "zernio_post": null,
+ "proposed_slot": "2026-12-05T16:00Z",
+ "source_drive": "165-_VaN57vyQsMMRDYhqy0KG2XI5OV7n",
+ "updated": "2026-11-21T12:55Z",
+ "note": "Storyboard v1 shared, waiting for Pushpam. Script v2.",
+ "storyboard": "https://claude.ai/artifact/DyoRBxWeKkWPf9X9VoAYim"
+}
