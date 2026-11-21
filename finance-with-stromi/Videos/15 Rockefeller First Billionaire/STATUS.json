@@ -1,12 +1,12 @@
 {
  "channel": "finance",
  "video": "15 Rockefeller First Billionaire",
- "state": "waiting_approval",
+ "state": "booked",
  "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ8CNjVGT5fbn5wUrs6a6qL4J",
  "feedback": false,
  "queue_pos": 0,
- "booked_for": null,
- "zernio_post": null,
- "updated": "2026-11-21T03:10Z",
- "note": "Pushpam's 7 review notes on v5 fixed + labels auto-moved off wall signs. Full video v6 (17:01, -14 LUFS) Drive 04 Renders/15-Rockefeller-full_v6.mp4 id 1B7i_CsbKybVo2Y0rV7IN93mov24WV--t; launch kit https://claude.ai/artifact/74sSXbpnbJGqUszPaygXxh (v2). v4/v5 superseded. Book 11 Dec 16:00 UTC after OK."
+ "booked_for": "2026-12-11T16:00:00Z",
+ "zernio_post": "6b01355804d30632d6d7faad",
+ "updated": "2026-11-21T06:20Z",
+ "note": "Pushpam OK'd v6 21 Nov 06:04 UTC; booked Finance Zernio 11 Dec 16:00 UTC. HANDOVER.md in 05 Production."
 }
