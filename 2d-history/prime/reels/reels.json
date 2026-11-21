@@ -1,0 +1,122 @@
+[
+ {
+  "id": 1,
+  "act": 0,
+  "t0": 0.4,
+  "t1": 29.97,
+  "hook": "They said they'd buy Coca-Cola.",
+  "kicker": "\"WE'LL BUY COKE\""
+ },
+ {
+  "id": 2,
+  "act": 7,
+  "t0": 0.4,
+  "t1": 22.05,
+  "hook": "A $100 million mistake, he says.",
+  "kicker": "$100M REGRET"
+ },
+ {
+  "id": 3,
+  "act": 1,
+  "t0": 0.4,
+  "t1": 30.02,
+  "hook": "They fought twice. Then they sold a drink.",
+  "kicker": "RIVALS"
+ },
+ {
+  "id": 4,
+  "act": 1,
+  "t0": 27.25,
+  "t1": 61.62,
+  "hook": "Britain queued at dawn for a drink.",
+  "kicker": "PRIME MANIA"
+ },
+ {
+  "id": 5,
+  "act": 1,
+  "t0": 17.72,
+  "t1": 44.02,
+  "hook": "Kids traded it like Pokémon cards.",
+  "kicker": "PLAYGROUND CURRENCY"
+ },
+ {
+  "id": 6,
+  "act": 2,
+  "t0": 0.4,
+  "t1": 22.41,
+  "hook": "Zero budget? Official drink of the UFC.",
+  "kicker": "$0 BUDGET"
+ },
+ {
+  "id": 7,
+  "act": 2,
+  "t0": 17.09,
+  "t1": 37.97,
+  "hook": "Every fan video was a free advert.",
+  "kicker": "FREE ADS"
+ },
+ {
+  "id": 8,
+  "act": 3,
+  "t0": 0.4,
+  "t1": 39.48,
+  "hook": "Read the label. It's mostly water.",
+  "kicker": "MOSTLY WATER"
+ },
+ {
+  "id": 9,
+  "act": 4,
+  "t0": 0.4,
+  "t1": 33.28,
+  "hook": "Two coffees of caffeine in one can.",
+  "kicker": "200MG CAFFEINE"
+ },
+ {
+  "id": 10,
+  "act": 4,
+  "t0": 17.51,
+  "t1": 52.89,
+  "hook": "A US senator called in the FDA.",
+  "kicker": "THE SENATOR"
+ },
+ {
+  "id": 11,
+  "act": 5,
+  "t0": 6.91,
+  "t1": 26.85,
+  "hook": "Prime versus Lionel Messi.",
+  "kicker": "PRIME v MESSI"
+ },
+ {
+  "id": 12,
+  "act": 5,
+  "t0": 27.12,
+  "t1": 55.8,
+  "hook": "Prime sued a boxer for defamation.",
+  "kicker": "THE LAWSUITS"
+ },
+ {
+  "id": 13,
+  "act": 5,
+  "t0": 56.07,
+  "t1": 76.41,
+  "hook": "Prime's own bottler is suing it.",
+  "kicker": "$68M CLAIM"
+ },
+ {
+  "id": 14,
+  "act": 6,
+  "t0": 0.4,
+  "t1": 42.28,
+  "hook": "UK sales down 70%.",
+  "kicker": "DOWN 70%"
+ },
+ {
+  "id": 15,
+  "act": 7,
+  "t0": 22.79,
+  "t1": 47.26,
+  "hook": "He blamed everyone but the drink.",
+  "kicker": "THE VILLAINS"
+ }
+]
