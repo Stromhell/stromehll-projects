@@ -1,5 +1,5 @@
 {
- "dur": 38.796,
+ "dur": 39.033,
  "cues": [
   {
    "t": 1.479,
@@ -52,137 +52,137 @@
    "gain": 0.2
   },
   {
-   "t": 10.38,
+   "t": 10.448,
    "name": "chime",
    "gain": 0.2
   },
   {
-   "t": 10.9,
+   "t": 10.848,
    "name": "pop",
    "gain": 0.15
   },
   {
-   "t": 12.6,
+   "t": 12.848,
    "name": "pop",
    "gain": 0.15
   },
   {
-   "t": 12.6,
+   "t": 12.908,
    "name": "pop",
    "gain": 0.15
   },
   {
-   "t": 12.98,
+   "t": 13.988,
    "name": "thud",
    "gain": 0.45
   },
   {
-   "t": 13.08,
+   "t": 14.088,
    "name": "drum",
    "gain": 0.3
   },
   {
-   "t": 14.36,
+   "t": 15.568,
    "name": "coins",
    "gain": 0.25
   },
   {
-   "t": 17.1,
+   "t": 18.688,
    "name": "coins_cascade",
    "gain": 0.25
   },
   {
-   "t": 18.675,
+   "t": 19.923,
    "name": "whoosh_soft",
    "gain": 0.5
   },
   {
-   "t": 19.596,
+   "t": 21.253,
    "name": "whoosh_soft",
    "gain": 0.2
   },
   {
-   "t": 23.676,
+   "t": 23.713,
    "name": "whoosh",
    "gain": 0.25
   },
   {
-   "t": 23.976,
+   "t": 24.013,
    "name": "crowd_cheer",
    "gain": 0.3
   },
   {
-   "t": 24.516,
+   "t": 25.733,
    "name": "pop",
    "gain": 0.2
   },
   {
-   "t": 26.296,
+   "t": 26.933,
    "name": "stamp",
    "gain": 0.4
   },
   {
-   "t": 27.836,
+   "t": 28.213,
    "name": "crowd_cheer",
    "gain": 0.2
   },
   {
-   "t": 29.071,
+   "t": 29.308,
    "name": "whoosh_soft",
    "gain": 0.5
   },
   {
-   "t": 29.246,
+   "t": 29.483,
    "name": "pop",
    "gain": 0.2
   },
   {
-   "t": 31.686,
+   "t": 31.923,
    "name": "paper",
    "gain": 0.3
   },
   {
-   "t": 32.246,
+   "t": 32.483,
    "name": "paper",
    "gain": 0.3
   },
   {
-   "t": 32.146,
+   "t": 32.383,
    "name": "paper",
    "gain": 0.3
   },
   {
-   "t": 34.086,
+   "t": 34.323,
    "name": "paper",
    "gain": 0.3
   },
   {
-   "t": 31.686,
+   "t": 31.923,
    "name": "stamp",
    "gain": 0.3
   },
   {
-   "t": 31.946,
+   "t": 32.183,
    "name": "stamp",
    "gain": 0.3
   },
   {
-   "t": 31.946,
+   "t": 32.183,
    "name": "stamp",
    "gain": 0.3
   },
   {
-   "t": 34.086,
+   "t": 34.323,
    "name": "scrape",
    "gain": 0.3
   },
   {
-   "t": 35.606,
+   "t": 35.843,
    "name": "tension",
    "gain": 0.25
   },
   {
-   "t": 37.366,
+   "t": 37.603,
    "name": "thud",
    "gain": 0.3
   }
@@ -196,31 +196,31 @@
   },
   {
    "start": 9.427,
-   "end": 19.375,
+   "end": 20.623,
    "name": "rain_loop",
    "gain": 0.3
   },
   {
    "start": 9.427,
-   "end": 19.375,
+   "end": 20.623,
    "name": "wind_loop",
    "gain": 0.08
   },
   {
-   "start": 18.575,
-   "end": 29.771,
+   "start": 19.823,
+   "end": 30.008,
    "name": "rain_loop",
    "gain": 0.2
   },
   {
-   "start": 18.575,
-   "end": 29.771,
+   "start": 19.823,
+   "end": 30.008,
    "name": "crowd_loop",
    "gain": 0.08
   },
   {
-   "start": 28.971,
-   "end": 39.596,
+   "start": 29.208,
+   "end": 39.833,
    "name": "office_loop",
    "gain": 0.1
   }
