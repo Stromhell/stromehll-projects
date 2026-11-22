@@ -17,6 +17,6 @@ Result: **PASS (machine checks)** - 0 fail, 2 warn, 8 to eyeball
 | INFO | streams | 1920x1080 h264 yuv420p r=30.000 avg=30.000 fps, 61.50 s, audio=1 |  |
 | INFO | loudness | I=-16.2 LUFS, true peak=-1.4 dBTP, LRA=4.3 LU |  |
 | INFO | levels | speech/peak windows -11.7 dBFS, floor -28.3 dBFS |  |
-| INFO | cine | still-camera share 7%, 7 shots, median shot 5.5 s |  |
+| INFO | cine | still-camera share 8%, 7 shots, median shot 5.5 s |  |
 | INFO | contact sheets | 3 sheets in gta6-story/production/acts/act1/act1_qa/sheets - READ EVERY ONE against RENDER-QA-CHECKLIST.md |  |
 

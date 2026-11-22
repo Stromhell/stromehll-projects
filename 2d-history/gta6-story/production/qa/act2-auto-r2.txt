@@ -1,6 +1,6 @@
 # qa_auto report: act2.mp4 (act)
 
-Result: **PASS (machine checks)** - 0 fail, 2 warn, 13 to eyeball
+Result: **PASS (machine checks)** - 0 fail, 2 warn, 12 to eyeball
 
 | level | check | detail | standard fix |
 |---|---|---|---|
@@ -11,7 +11,6 @@ Result: **PASS (machine checks)** - 0 fail, 2 warn, 13 to eyeball
 | CHECK | possible pop-in | ~0:01.00 top-mid-left | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
 | CHECK | local glitch/flicker | ~0:34.80 upper-mid-right | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
 | CHECK | local glitch/flicker | ~0:40.50 upper-mid-left | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
-| CHECK | possible pop-in | ~0:45.20 upper-left | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
 | CHECK | possible pop-in | ~1:04.50 top-mid-left | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
 | CHECK | local glitch/flicker | ~1:09.00 top-mid-left | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
 | CHECK | possible pop-in | ~1:09.20 top-right, upper-right | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |

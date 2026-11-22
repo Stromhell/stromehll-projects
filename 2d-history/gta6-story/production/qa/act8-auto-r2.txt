@@ -1,0 +1,41 @@
+# qa_auto report: act8.mp4 (act)
+
+Result: **PASS (machine checks)** - 0 fail, 2 warn, 27 to eyeball
+
+| level | check | detail | standard fix |
+|---|---|---|---|
+| WARN | loudness | -16.4 LUFS (target -14) | two-pass loudnorm I=-14:TP=-1.5 |
+| WARN | cine: cut rhythm | 0:00.0 62% of shots are longer than 8 s (median 10.8 s) | checklist B11 rows 67-75 |
+| CHECK | flash/flicker spike | ~0:37.25 (one-frame change then back) | look for texture/ground flicker, shadow-update throttle, variety flip, pop-in; keep cuts on purpose |
+| CHECK | possible pop-in | ~0:01.20 top-mid-left | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | possible pop-in | ~0:11.50 top-mid-left | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | local glitch/flicker | ~0:16.20 upper-mid-left | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
+| CHECK | possible pop-in | ~0:19.00 top-right | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | possible pop-in | ~0:21.20 upper-right | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | local glitch/flicker | ~0:24.50 upper-mid-left, lower-mid-left, bottom-mid-left | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
+| CHECK | possible pop-in | ~0:41.80 upper-mid-right | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | local glitch/flicker | ~0:58.50 upper-right, lower-right, bottom-right | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
+| CHECK | possible pop-in | ~1:00.00 top-mid-left | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | local glitch/flicker | ~1:03.00 upper-mid-left | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
+| CHECK | local glitch/flicker | ~1:03.80 upper-mid-left | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
+| CHECK | local glitch/flicker | ~1:04.50 upper-mid-right | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
+| CHECK | local glitch/flicker | ~1:05.20 upper-mid-right | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
+| CHECK | local glitch/flicker | ~1:05.80 upper-mid-left | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
+| CHECK | local glitch/flicker | ~1:07.20 upper-mid-right | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
+| CHECK | local glitch/flicker | ~1:08.00 upper-mid-right | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
+| CHECK | possible pop-in | ~1:08.80 top-mid-left, top-mid-right, upper-mid-left | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | local glitch/flicker | ~1:10.80 upper-mid-right | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
+| CHECK | local glitch/flicker | ~1:11.50 upper-mid-right | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
+| CHECK | local glitch/flicker | ~1:15.50 lower-left | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
+| CHECK | possible pop-in | ~1:16.50 top-mid-left | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | possible pop-in | ~1:20.20 top-mid-right | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | possible pop-in | ~1:23.20 top-left, top-mid-left | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | possible pop-in | ~1:24.80 top-mid-right, top-right | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | possible pop-in | ~1:27.80 top-mid-right, top-right | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | more local changes | 1 more spots, e.g. 1:35.20 | step through those seconds at 8 fps |
+| INFO | streams | 1920x1080 h264 yuv420p r=30.000 avg=30.000 fps, 110.53 s, audio=1 |  |
+| INFO | loudness | I=-16.4 LUFS, true peak=-1.4 dBTP, LRA=2.7 LU |  |
+| INFO | levels | speech/peak windows -12.1 dBFS, floor -29.8 dBFS |  |
+| INFO | cine | still-camera share 12%, 8 shots, median shot 10.75 s |  |
+| INFO | contact sheets | 4 sheets in gta6-story/production/acts/act8/act8_qa/sheets - READ EVERY ONE against RENDER-QA-CHECKLIST.md |  |
+

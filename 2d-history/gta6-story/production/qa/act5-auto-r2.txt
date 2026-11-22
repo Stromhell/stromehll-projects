@@ -1,0 +1,22 @@
+# qa_auto report: act5.mp4 (act)
+
+Result: **PASS (machine checks)** - 0 fail, 2 warn, 8 to eyeball
+
+| level | check | detail | standard fix |
+|---|---|---|---|
+| WARN | loudness | -16.2 LUFS (target -14) | two-pass loudnorm I=-14:TP=-1.5 |
+| WARN | cine: cut rhythm | 0:00.0 57% of shots are longer than 8 s (median 10.7 s) | checklist B11 rows 67-75 |
+| CHECK | possible pop-in | ~0:17.50 upper-mid-left | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | local glitch/flicker | ~0:22.00 upper-mid-left | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
+| CHECK | local glitch/flicker | ~0:26.20 upper-mid-right, lower-mid-right | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
+| CHECK | local glitch/flicker | ~0:40.00 top-mid-right, upper-mid-left, upper-mid-right | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
+| CHECK | local glitch/flicker | ~0:52.00 upper-right, lower-right | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
+| CHECK | possible pop-in | ~1:02.80 top-mid-left, top-mid-right | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | possible pop-in | ~1:03.20 top-mid-right | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | z-fighting / shimmer | 0:54.00-0:59.00 around middle-right (2 cells) | 3D: coplanar surfaces (board on frame, window on wall, door on desk plane) -> offset 1-2 cm or polygonOffset, raise near plane; 2D: per-frame random/texture swap -> fixed seed |
+| INFO | streams | 1920x1080 h264 yuv420p r=30.000 avg=30.000 fps, 102.93 s, audio=1 |  |
+| INFO | loudness | I=-16.2 LUFS, true peak=-1.4 dBTP, LRA=3.9 LU |  |
+| INFO | levels | speech/peak windows -11.9 dBFS, floor -29.4 dBFS |  |
+| INFO | cine | still-camera share 11%, 7 shots, median shot 10.67 s |  |
+| INFO | contact sheets | 4 sheets in gta6-story/production/acts/act5/act5_qa/sheets - READ EVERY ONE against RENDER-QA-CHECKLIST.md |  |
+
