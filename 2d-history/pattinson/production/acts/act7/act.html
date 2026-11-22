@@ -13,7 +13,7 @@ const endTitle = (secs) => { const T = window.TIMING; const last = T.shots[T.sho
 // RP act 7 - Why Hollywood keeps calling: the directors, both lanes, producer + internet, trust.
 // Plates: boardroom, road (stand-in rain_street), office (stand-in for arthouse producer scene), stage_blue (cinema).
 // STAND-INS: swap the values in P once road / arthouse plates exist.
-const P = { board: 'boardroom', road: 'rain_street', prod: 'office', cine: 'stage_blue' };
+const P = { board: 'boardroom', road: 'road', prod: 'office', cine: 'arthouse' };
 for (const n of new Set(Object.values(P))) K.load(n, PL + n + '.jpg');
 const rr = TW.rr, txt = TW.txt;
 // ---- name tag (world space): gold tile with a pointer
@@ -29,7 +29,7 @@ const dust = (c, lt, n = 40, col = '255,240,210') => { for (let k = 0; k < n; k+
 const coatStand = (c, x, y, lt, s = 1) => { c.save(); c.strokeStyle = '#3a2a1e'; c.lineWidth = 12 * s; c.lineCap = 'round'; c.beginPath(); c.moveTo(x, y); c.lineTo(x, y - 420 * s); c.moveTo(x - 60 * s, y); c.lineTo(x + 60 * s, y); c.moveTo(x, y - 400 * s); c.lineTo(x - 50 * s, y - 440 * s); c.moveTo(x, y - 400 * s); c.lineTo(x + 50 * s, y - 440 * s); c.stroke();
   const sw = Math.sin(lt * 1.3) * .05; c.translate(x + 50 * s, y - 440 * s); c.rotate(sw); c.strokeStyle = '#bbb'; c.lineWidth = 3; c.beginPath(); c.moveTo(0, 0); c.lineTo(0, 16 * s); c.moveTo(-40 * s, 46 * s); c.lineTo(0, 16 * s); c.lineTo(40 * s, 46 * s); c.lineTo(-40 * s, 46 * s); c.stroke(); RP.bowtie(c, 0, 58 * s, 1.1 * s, 0, .5 + .5 * Math.sin(lt * 2)); c.restore(); };
 const easeV = (lt, t0, a, b, d = .8) => a + (b - a) * E.io(K.seg(lt, t0, t0 + d));
-const signPost = (c, x, y, w, label, col, a) => { if (a <= 0) return; c.save(); c.globalAlpha = a; c.fillStyle = '#5a5e66'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(x - 8, y, 16, 1130 - y); c.strokeRect(x - 8, y, 16, 1130 - y); c.fillStyle = col; rr(c, x - w / 2, y - 120, w, 120, 12); c.fill(); c.stroke(); c.strokeStyle = 'rgba(255,255,255,.8)'; c.lineWidth = 3; rr(c, x - w / 2 + 10, y - 110, w - 20, 100, 8); c.stroke(); txt(c, label, x, y - 60, 52, '#fff', 'center', 'Anton'); c.restore(); };
+const signPost = (c, x, y, w, label, col, a) => { if (a <= 0) return; c.save(); c.globalAlpha = a; c.fillStyle = '#5a5e66'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(x - 8, y, 16, 1075 - y); c.strokeRect(x - 8, y, 16, 1075 - y); c.fillStyle = col; rr(c, x - w / 2, y - 120, w, 120, 12); c.fill(); c.stroke(); c.strokeStyle = 'rgba(255,255,255,.8)'; c.lineWidth = 3; rr(c, x - w / 2 + 10, y - 110, w - 20, 100, 8); c.stroke(); txt(c, label, x, y - 60, 52, '#fff', 'center', 'Anton'); c.restore(); };
 const reel = (c, x, y, s, lt) => { c.save(); c.translate(x, y); c.scale(s, s); c.rotate(lt * 1.5); c.fillStyle = '#2a2a30'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.arc(0, 0, 60, 0, 7); c.fill(); c.stroke(); c.fillStyle = '#9a9aa4'; for (let k = 0; k < 5; k++) { c.beginPath(); c.arc(Math.cos(k * 1.257) * 32, Math.sin(k * 1.257) * 32, 13, 0, 7); c.fill(); } c.restore(); };
 const DIRS = [['NOLAN ×2', 2], ['VILLENEUVE', 1], ['REEVES', 0], ['BONG JOON HO', 5], ['EGGERS', 4], ['THE SAFDIES', 3]];
 
@@ -49,18 +49,15 @@ window.SHOTS = [
         (c, lt) => K.card(c, 'THE BEST KEEP PICKING HIM', lt, { at: tP - .2, x: 1100, y: 140, px: 50, rot: -2, bg: JH.GOLD })];
       S.D.sfx = [[tW, 'whoosh_soft', .2], [tO, 'chime', .3], ...ws.map(t => [t - .5, 'footsteps', .15]), ...ws.map(t => [t, 'pop', .18]), [tP, 'whoosh', .25], [tM, 'chime', .25]]; } },
   // 7.01 the road: two lanes, SMALL FILMS and BLOCKBUSTERS; Rob in the middle wins both; other stars stuck in one
-  { plate: P.road, cam: { z: [1.1, 1.2], x: [1280, 1280], y: [880, 900] }, bed: [['city_loop', .12], ['rain_loop', .08]], light: { dir: -1, key: 'rgba(180,200,255,.12)' },
+  { plate: P.road, cam: { z: [1.1, 1.2], x: [1280, 1280], y: [880, 900] }, bed: [['birds_loop', .12], ['wind_loop', .06]], light: { dir: 1, key: 'rgba(255,240,210,.12)' },
     init: S => { const tR = A.at(S, 'two', .8), tL = A.at(S, 'lanes.', 2.5), tS = A.at(S, 'small', 3.3), tH = A.at(S, 'hit.', 5.9), tG = A.at(S, 'giant', 6.5), tSt = A.at(S, 'steals', 8.4), tMo = A.at(S, 'Most', 9.6), tOn = A.at(S, 'one.', 11.2);
       S.D.figs = [{ x: 1280, y: 1300, s: 1.9, ...RP.ROB('casual'), facing: 1, mood: 'neutral', anim: (o, lt) => { o.facing = lt < tG ? -1 : 1; if (lt > tS) { o.pose = 'point'; o.mood = 'happy'; } if (lt > tSt) { o.pose = 'cheer'; o.mood = 'smug'; } if (lt > tMo) { o.pose = 'stand'; o.facing = 1; } } },
         { x: 380, y: 1300, s: 1.8, ...RP.EXEC(1), facing: 1, mood: 'neutral', walk: { x0: -200, x1: 380, t0: tMo - 1.4, dur: 1.4 }, anim: (o, lt) => { if (lt > tOn - .3) { o.pose = 'shrug'; o.mood = 'sad'; } } },
         { x: 2200, y: 1300, s: 1.8, ...RP.EXEC(3), facing: -1, mood: 'neutral', walk: { x0: 2750, x1: 2200, t0: tMo - 1.4, dur: 1.4 }, anim: (o, lt) => { if (lt > tOn - .3) { o.pose = 'shrug'; o.mood = 'sad'; } } }];
-      S.D.live = [(c, lt) => { // marquee over the painted building sign + lane divider glow
-          c.save(); c.fillStyle = '#2a1a12'; c.strokeStyle = INK; c.lineWidth = 5; rr(c, 820, 760, 920, 110, 10); c.fill(); c.stroke(); for (let k = 0; k < 22; k++) { c.fillStyle = (k + Math.floor(lt * 6)) % 3 ? 'rgba(255,220,120,.9)' : 'rgba(255,220,120,.3)'; c.beginPath(); c.arc(845 + k * 41, 772, 6, 0, 7); c.fill(); c.beginPath(); c.arc(845 + k * 41, 858, 6, 0, 7); c.fill(); } txt(c, 'PICTURE HOUSE', 1280, 815, 56, '#ffe0a0', 'center', 'Anton'); c.restore();
-          TW.glow(c, 1280, 820, 500, '255,200,120', .18);
-          signPost(c, 600, 520, 520, '◀ SMALL FILMS', '#2a7a4a', pop(lt, tL - .4, .4)); signPost(c, 1960, 520, 560, 'BLOCKBUSTERS ▶', '#2a4a9a', pop(lt, tL - .2, .4));
+      S.D.live = [(c, lt) => { signPost(c, 600, 520, 520, '◀ SMALL FILMS', '#2a7a4a', pop(lt, tL - .4, .4)); signPost(c, 1960, 520, 560, 'BLOCKBUSTERS ▶', '#2a4a9a', pop(lt, tL - .2, .4));
           const sh = K.seg(lt, tS, tH); if (lt > tS) reel(c, 700, 1180, .9 + .3 * sh, lt);
           if (lt > tG) { const g = E.out(K.seg(lt, tG, tG + .8)); TW.glow(c, 1900, 900, 300 + 400 * g, '255,250,220', .35 * g); } }];
-      S.D.front = [(c, lt) => rain(c, lt, 80), (c, lt) => TW.stamp(c, 'HIT!', 700, 1000, lt, tH - .2, { px: 80, col: '#3ad06a' })];
+      S.D.front = [(c, lt) => TW.stamp(c, 'HIT!', 700, 1000, lt, tH - .2, { px: 80, col: '#3ad06a' })];
       S.D.over = [BOARD(.9), (c, lt) => K.card(c, 'REASON 2: BOTH LANES', lt, { at: tR, x: 960, y: 150, px: 54, rot: -2, bg: JH.GOLD, until: tMo - .2 }),
         (c, lt) => K.card(c, 'STEALS SCENES', lt, { at: tSt, x: 1420, y: 300, px: 46, rot: 3, until: tMo }),
         (c, lt) => K.card(c, 'MOST STARS: ONLY ONE', lt, { at: tMo, x: 960, y: 150, px: 52, rot: 2 })];
@@ -84,14 +81,14 @@ window.SHOTS = [
         (c, lt) => TW.stamp(c, 'FREE ADVERTISING', 1000, 790, lt, tFr, { px: 60 })];
       S.D.sfx = [[tT, 'chime', .3], [tPr - .2, 'footsteps', .2], [tY, 'paper', .3], [tF, 'chime', .3], [tI, 'pop', .25], [tI + .3, 'typing', .2], [tC, 'pop', .2], [tMe, 'pop', .2], [tFr, 'stamp', .35]]; } },
   // 7.03 cinema: TRUST; a critic is lukewarm, but the BORING meter never moves
-  { plate: P.cine, cam: { z: [1.2, 1.35], x: [1280, 1280], y: [700, 740] }, bed: [['crowd_loop', .05], ['hum_loop', .06]], light: { dir: 1, key: 'rgba(150,180,255,.12)' },
+  { plate: P.cine, cam: { z: [1.2, 1.32], x: [1280, 1280], y: [820, 860] }, bed: [['crowd_loop', .05], ['hum_loop', .06]], light: { dir: 1, key: 'rgba(150,180,255,.12)' },
     init: S => { const tB = A.at(S, 'biggest', .8), tTr = A.at(S, 'trust.', 2.3), tMi = A.at(S, 'might', 3.2), tL = A.at(S, 'love', 3.9), tAl = A.at(S, 'almost', 7.1), tBo = A.at(S, 'boring.', 8.0);
-      S.D.figs = [{ x: 1640, y: 890, s: 1.6, ...RP.ROB('casual'), facing: -1, mood: 'neutral', anim: (o, lt) => { if (lt > tTr) o.mood = 'happy'; if (lt > tBo) { o.pose = 'wave'; o.mood = 'smug'; } } },
-        { x: 900, y: 890, s: 1.55, ...RP.CRITIC(1), facing: 1, mood: 'neutral', anim: (o, lt) => { if (lt > tL) { o.arms = () => ({ shR: 70, elR: -60, handR: 'open' }); o.hold = { near: cc => RP.score(cc, 0, 0, .8, 6) }; } if (lt > tAl) o.mood = 'shocked'; } }];
-      S.D.live = [(c, lt) => { const f = .5 + .5 * Math.sin(lt * 9) * Math.sin(lt * 2.3); c.fillStyle = `rgba(200,220,255,${.08 + .06 * f})`; c.fillRect(520, 140, 1520, 600); TW.glow(c, 1280, 450, 800, '150,190,255', .15 + .08 * f);
+      S.D.figs = [{ x: 1640, y: 1250, s: 1.7, ...RP.ROB('casual'), facing: -1, mood: 'neutral', anim: (o, lt) => { if (lt > tTr) o.mood = 'happy'; if (lt > tBo) { o.pose = 'wave'; o.mood = 'smug'; } } },
+        { x: 900, y: 1250, s: 1.65, ...RP.CRITIC(1), facing: 1, mood: 'neutral', anim: (o, lt) => { if (lt > tL) { o.arms = () => ({ shR: 70, elR: -60, handR: 'open' }); o.hold = { near: cc => RP.score(cc, 0, 0, .8, 6) }; } if (lt > tAl) o.mood = 'shocked'; } }];
+      S.D.live = [(c, lt) => { const f = .5 + .5 * Math.sin(lt * 9) * Math.sin(lt * 2.3); c.fillStyle = `rgba(200,220,255,${.08 + .06 * f})`; c.fillRect(760, 120, 1040, 440); TW.glow(c, 1280, 340, 800, '150,190,255', .15 + .08 * f);
           // light beam from projector
-          c.save(); c.globalAlpha = .1 + .04 * f; c.fillStyle = '#dde8ff'; c.beginPath(); c.moveTo(1280, 1440); c.lineTo(560, 160); c.lineTo(2000, 160); c.closePath(); c.fill(); c.restore(); },
-        (c, lt) => { const a = pop(lt, tTr, .4); if (a > 0) { c.save(); c.translate(1280, 560); c.scale(a, a); txt(c, 'TRUST', 0, 0, 200, 'rgba(255,240,200,.9)', 'center', 'Anton'); c.restore(); } }];
+          c.save(); c.globalAlpha = .1 + .04 * f; c.fillStyle = '#dde8ff'; c.beginPath(); c.moveTo(1280, 1440); c.lineTo(780, 130); c.lineTo(1780, 130); c.closePath(); c.fill(); c.restore(); },
+        (c, lt) => { const a = pop(lt, tTr, .4); if (a > 0) { c.save(); c.translate(1280, 360); c.scale(a, a); txt(c, 'TRUST', 0, 0, 180, 'rgba(255,240,200,.9)', 'center', 'Anton'); c.restore(); } }];
       S.D.front = [];
       S.D.over = [BOARD(.9), (c, lt) => K.card(c, 'BIGGEST REASON: TRUST', lt, { at: tB, x: 960, y: 140, px: 54, rot: -2, bg: JH.GOLD }), (c, lt) => K.card(c, 'NOT ALWAYS LOVED…', lt, { at: tMi, x: 560, y: 280, px: 40, rot: -3, until: tAl }),
         (c, lt) => { const a = pop(lt, tAl - .4, .4); if (a <= 0) return; c.save(); c.translate(1700, 600); c.scale(a, a); c.fillStyle = '#1a1a22'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.arc(0, 0, 110, Math.PI, 0); c.closePath(); c.fill(); c.stroke();

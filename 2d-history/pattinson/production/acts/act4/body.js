@@ -59,13 +59,13 @@ window.SHOTS = [
       const xs = [380, 760, 1800, 2180], FY = 1260;
       S.D.figs = xs.map((x, k) => ({ x, y: FY, s: 1.7, ...RP.FAN(k + 1), facing: x < 1280 ? 1 : -1, mood: 'angry', seed: 400 + k,
         anim: (o, lt) => { const d = lt < tQ ? 0 : lt < tB - .4 ? 1 : 0; const up = lt > tB - .4 ? E.out(K.seg(lt, tB - .4 + k * .08, tB + .1 + k * .08)) : 1 - E.io(K.seg(lt, tQ - .2, tQ + .5));
-          o.pose = up > .5 ? 'cheer' : 'stand'; o.mood = lt < tQ ? 'neutral' : lt < tB ? 'worried' : 'happy'; } }));
+          o.pose = up > .5 ? 'cheer' : 'stand'; if (up <= .5) o.arms = () => ({ shR: 75, elR: -30, handR: 'fist' }); const uu = up; o.hold = { near: (cc, t) => { const m = cc.getTransform(), sc = Math.hypot(m.a, m.b); cc.save(); cc.setTransform(sc, 0, 0, sc, m.e, m.f); cc.translate(0, 150 * (1 - uu)); placard('NOT OUR|BATMAN', 'BATTINSON!', tB + k * .08)(cc, lt); cc.restore(); } }; o.mood = lt < tQ ? 'neutral' : lt < tB ? 'worried' : 'happy'; } }));
       const upv = (lt, k) => lt > tB - .4 ? E.out(K.seg(lt, tB - .4 + k * .08, tB + .1 + k * .08)) : 1 - E.io(K.seg(lt, tQ - .2, tQ + .5));
       S.D.live = [(c, lt) => { // marquee text + glowing doors + bow tie in the poster case
           TW.glow(c, 1280, 400, 600, '255,230,170', .2 + .04 * Math.sin(lt * 5)); txt(c, lt < tB ? 'THE BATMAN' : 'THE BATMAN · SOLD OUT', 1280, 400, 64, '#2a1a14', 'center', 'Anton'); TW.glow(c, 1280, 860, 500, '255,210,150', .18);
           c.fillStyle = '#1a1a22'; rr(c, 2010, 640, 150, 200, 6); c.fill(); RP.bowtie(c, 2085, 740, 1.2, .1, .5 + .5 * Math.sin(lt * 2)); txt(c, 'DINNER SUITS', 2085, 690, 18, '#e8d8b0', 'center', 'Oswald'); splash(c, lt, 1260, 20); }];
-      S.D.front = [(c, lt) => { xs.forEach((x, k) => { const u = upv(lt, k); c.save(); c.translate(x, FY + 60 - 560 * u); c.scale(1.7, 1.7); placard('NOT OUR|BATMAN', 'BATTINSON!', tB + k * .08)(c, lt); c.restore(); }); }, (c, lt) => rainF(c, lt, 120, .3), (c, lt) => { if (lt > tB && lt < tB + 1.4) for (let k = 0; k < 4; k++) TW.sparkle(c, xs[k], 520, lt * 3 + k, 1); }];
-      S.D.over = [brd(.1, .7, tB), (c, lt) => K.card(c, 'THE PETITION CROWD... WENT QUIET', lt, { at: tQ - .3, x: 1000, y: 560, px: 40, rot: -2, until: tB }),
+      S.D.front = [(c, lt) => rainF(c, lt, 120, .3), (c, lt) => { if (lt > tB && lt < tB + 1.4) for (let k = 0; k < 4; k++) TW.sparkle(c, xs[k], 520, lt * 3 + k, 1); }];
+      S.D.over = [brd(.1, .7, tB), (c, lt) => K.card(c, 'THE PETITION CROWD... WENT QUIET', lt, { at: tQ - .3, x: 1000, y: 430, px: 40, rot: -2, until: tB }),
         (c, lt) => K.card(c, '"BATTINSON"', lt, { at: tB, x: 1000, y: 540, px: 64, rot: 2, bg: JH.GOLD }),
         (c, lt) => TW.stamp(c, 'DOUBTERS: PROVEN WRONG', 1000, 700, lt, tW, { px: 56 })];
       S.D.sfx = [[tQ, 'whoosh_soft', .2], [tB - .3, 'whoosh', .25], [tB, 'crowd_cheer', .3], [tD, 'pop', .2], [tW, 'stamp', .4], [tWo, 'crowd_cheer', .2]]; } },

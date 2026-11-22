@@ -1,1 +1,474 @@
-window.TIMING={"dur": 39.57, "shots": [{"i": 0, "start": 0, "end": 7.83, "vo_start": 0.6, "vo_end": 7.58, "text": "Then in 2008 came the part that changed everything. Edward Cullen, the brooding vampire in Twilight."}, {"i": 1, "start": 7.83, "end": 17.48, "vo_start": 8.13, "vo_end": 17.23, "text": "Five films. More than three billion dollars at the box office. Screaming crowds at every premiere, and paparazzi outside his door."}, {"i": 2, "start": 17.48, "end": 28.69, "vo_start": 17.78, "vo_end": 28.44, "text": "And here's the strange part. He never really pretended to love it. In interviews he joked about the films so often that it became his trademark."}, {"i": 3, "start": 28.69, "end": 39.57, "vo_start": 28.99, "vo_end": 39.02, "text": "Critics, meanwhile, had him down as a pretty face who'd fade away when the franchise ended. Hollywood has seen that story a hundred times."}], "words": [{"w": "Then", "s": 0.6, "e": 0.94}, {"w": "in", "s": 0.99, "e": 1.26}, {"w": "2008", "s": 1.31, "e": 1.65}, {"w": "came", "s": 1.7, "e": 2.04}, {"w": "the", "s": 2.09, "e": 2.4}, {"w": "part", "s": 2.45, "e": 2.79}, {"w": "that", "s": 2.84, "e": 3.18}, {"w": "changed", "s": 3.23, "e": 3.67}, {"w": "everything.", "s": 3.72, "e": 4.31}, {"w": "Edward", "s": 4.36, "e": 4.77}, {"w": "Cullen", "s": 4.82, "e": 5.26}, {"w": "the", "s": 5.31, "e": 5.62}, {"w": "brooding", "s": 5.67, "e": 6.15}, {"w": "vampire", "s": 6.2, "e": 6.64}, {"w": "in", "s": 6.69, "e": 6.96}, {"w": "Twilight.", "s": 7.01, "e": 7.53}, {"w": "Five", "s": 8.13, "e": 8.47}, {"w": "films.", "s": 8.52, "e": 8.93}, {"w": "More", "s": 8.98, "e": 9.32}, {"w": "than", "s": 9.37, "e": 9.71}, {"w": "three", "s": 9.76, "e": 10.13}, {"w": "billion", "s": 10.18, "e": 10.63}, {"w": "dollars", "s": 10.68, "e": 11.12}, {"w": "at", "s": 11.17, "e": 11.44}, {"w": "the", "s": 11.49, "e": 11.8}, {"w": "box", "s": 11.85, "e": 12.15}, {"w": "office.", "s": 12.2, "e": 12.65}, {"w": "Screaming", "s": 12.7, "e": 13.21}, {"w": "crowds", "s": 13.26, "e": 13.67}, {"w": "at", "s": 13.72, "e": 13.99}, {"w": "every", "s": 14.04, "e": 14.42}, {"w": "premiere", "s": 14.47, "e": 14.98}, {"w": "and", "s": 15.03, "e": 15.34}, {"w": "paparazzi", "s": 15.39, "e": 15.9}, {"w": "outside", "s": 15.95, "e": 16.4}, {"w": "his", "s": 16.45, "e": 16.75}, {"w": "door.", "s": 16.8, "e": 17.18}, {"w": "And", "s": 17.78, "e": 18.08}, {"w": "here's", "s": 18.13, "e": 18.54}, {"w": "the", "s": 18.59, "e": 18.9}, {"w": "strange", "s": 18.95, "e": 19.39}, {"w": "part.", "s": 19.44, "e": 19.82}, {"w": "He", "s": 19.87, "e": 20.14}, {"w": "never", "s": 20.19, "e": 20.56}, {"w": "really", "s": 20.61, "e": 21.02}, {"w": "pretended", "s": 21.07, "e": 21.59}, {"w": "to", "s": 21.64, "e": 21.91}, {"w": "love", "s": 21.96, "e": 22.3}, {"w": "it.", "s": 22.35, "e": 22.65}, {"w": "In", "s": 22.7, "e": 22.97}, {"w": "interviews", "s": 23.02, "e": 23.57}, {"w": "he", "s": 23.62, "e": 23.89}, {"w": "joked", "s": 23.94, "e": 24.32}, {"w": "about", "s": 24.37, "e": 24.74}, {"w": "the", "s": 24.79, "e": 25.1}, {"w": "films", "s": 25.15, "e": 25.52}, {"w": "so", "s": 25.57, "e": 25.84}, {"w": "often", "s": 25.89, "e": 26.27}, {"w": "that", "s": 26.32, "e": 26.66}, {"w": "it", "s": 26.71, "e": 26.98}, {"w": "became", "s": 27.03, "e": 27.44}, {"w": "his", "s": 27.49, "e": 27.79}, {"w": "trademark.", "s": 27.84, "e": 28.39}, {"w": "Critics", "s": 28.99, "e": 29.47}, {"w": "meanwhile", "s": 29.52, "e": 30.07}, {"w": "had", "s": 30.12, "e": 30.43}, {"w": "him", "s": 30.48, "e": 30.78}, {"w": "down", "s": 30.83, "e": 31.17}, {"w": "as", "s": 31.22, "e": 31.49}, {"w": "a", "s": 31.54, "e": 31.78}, {"w": "pretty", "s": 31.83, "e": 32.24}, {"w": "face", "s": 32.29, "e": 32.63}, {"w": "who'd", "s": 32.68, "e": 33.05}, {"w": "fade", "s": 33.1, "e": 33.44}, {"w": "away", "s": 33.49, "e": 33.83}, {"w": "when", "s": 33.88, "e": 34.22}, {"w": "the", "s": 34.27, "e": 34.58}, {"w": "franchise", "s": 34.63, "e": 35.14}, {"w": "ended.", "s": 35.19, "e": 35.6}, {"w": "Hollywood", "s": 35.65, "e": 36.17}, {"w": "has", "s": 36.22, "e": 36.52}, {"w": "seen", "s": 36.57, "e": 36.91}, {"w": "that", "s": 36.96, "e": 37.3}, {"w": "story", "s": 37.35, "e": 37.73}, {"w": "a", "s": 37.78, "e": 38.01}, {"w": "hundred", "s": 38.06, "e": 38.51}, {"w": "times.", "s": 38.56, "e": 38.97}], "estimated": true}
+window.TIMING={
+"dur": 33.818,
+"shots": [
+{
+"i": 1,
+"start": 0.0,
+"vo_start": 0.6,
+"vo_end": 6.579,
+"text": "Then in 2008 came the part that changed everything. Edward Cullen, the brooding vampire in Twilight.",
+"end": 6.854
+},
+{
+"i": 2,
+"start": 6.854,
+"vo_start": 7.129,
+"vo_end": 17.088,
+"text": "Five films. More than three billion dollars at the box office. Screaming crowds at every premiere, and paparazzi outside his door.",
+"end": 17.363
+},
+{
+"i": 3,
+"start": 17.363,
+"vo_start": 17.638,
+"vo_end": 25.358,
+"text": "And here's the strange part. He never really pretended to love it. In interviews he joked about the films so often that it became his trademark.",
+"end": 25.633
+},
+{
+"i": 4,
+"start": 25.633,
+"vo_start": 25.908,
+"vo_end": 32.868,
+"text": "Critics, meanwhile, had him down as a pretty face who'd fade away when the franchise ended. Hollywood has seen that story a hundred times.",
+"end": 33.818
+}
+],
+"words": [
+{
+"w": "Then",
+"s": 0.6,
+"e": 0.8
+},
+{
+"w": "in",
+"s": 0.8,
+"e": 0.94
+},
+{
+"w": "2008",
+"s": 0.94,
+"e": 1.48
+},
+{
+"w": "came",
+"s": 1.48,
+"e": 1.72
+},
+{
+"w": "the",
+"s": 1.72,
+"e": 1.88
+},
+{
+"w": "part",
+"s": 1.88,
+"e": 2.1
+},
+{
+"w": "that",
+"s": 2.1,
+"e": 2.28
+},
+{
+"w": "changed",
+"s": 2.28,
+"e": 2.52
+},
+{
+"w": "everything.",
+"s": 2.52,
+"e": 3.02
+},
+{
+"w": "Edward",
+"s": 3.9,
+"e": 4.08
+},
+{
+"w": "Cullen,",
+"s": 4.08,
+"e": 4.42
+},
+{
+"w": "the",
+"s": 4.7,
+"e": 4.75
+},
+{
+"w": "brooding",
+"s": 4.74,
+"e": 5.04
+},
+{
+"w": "vampire",
+"s": 5.04,
+"e": 5.52
+},
+{
+"w": "in",
+"s": 5.52,
+"e": 5.76
+},
+{
+"w": "Twilight.",
+"s": 5.76,
+"e": 6.1
+},
+{
+"w": "Five",
+"s": 7.129,
+"e": 7.988
+},
+{
+"w": "films.",
+"s": 7.528,
+"e": 9.568
+},
+{
+"w": "More",
+"s": 8.968,
+"e": 9.568
+},
+{
+"w": "than",
+"s": 8.968,
+"e": 10.908
+},
+{
+"w": "three",
+"s": 10.848,
+"e": 11.348
+},
+{
+"w": "billion",
+"s": 11.128,
+"e": 11.608
+},
+{
+"w": "dollars",
+"s": 11.348,
+"e": 11.928
+},
+{
+"w": "at",
+"s": 11.608,
+"e": 12.208
+},
+{
+"w": "the",
+"s": 11.928,
+"e": 12.348
+},
+{
+"w": "box",
+"s": 12.208,
+"e": 12.488
+},
+{
+"w": "office.",
+"s": 12.348,
+"e": 12.808
+},
+{
+"w": "Screaming",
+"s": 12.488,
+"e": 13.908
+},
+{
+"w": "crowds",
+"s": 13.808,
+"e": 14.288
+},
+{
+"w": "at",
+"s": 13.908,
+"e": 14.468
+},
+{
+"w": "every",
+"s": 14.288,
+"e": 14.668
+},
+{
+"w": "premiere,",
+"s": 14.468,
+"e": 14.968
+},
+{
+"w": "and",
+"s": 14.668,
+"e": 15.508
+},
+{
+"w": "paparazzi",
+"s": 14.968,
+"e": 16.068
+},
+{
+"w": "outside",
+"s": 15.508,
+"e": 16.388
+},
+{
+"w": "his",
+"s": 16.068,
+"e": 16.628
+},
+{
+"w": "door.",
+"s": 16.388,
+"e": 16.868
+},
+{
+"w": "And",
+"s": 17.638,
+"e": 17.818
+},
+{
+"w": "here's",
+"s": 17.638,
+"e": 18.058
+},
+{
+"w": "the",
+"s": 17.818,
+"e": 18.138
+},
+{
+"w": "strange",
+"s": 18.058,
+"e": 18.378
+},
+{
+"w": "part.",
+"s": 18.138,
+"e": 18.718
+},
+{
+"w": "He",
+"s": 18.378,
+"e": 19.558
+},
+{
+"w": "never",
+"s": 19.178,
+"e": 19.818
+},
+{
+"w": "really",
+"s": 19.558,
+"e": 20.038
+},
+{
+"w": "pretended",
+"s": 19.818,
+"e": 20.378
+},
+{
+"w": "to",
+"s": 20.038,
+"e": 20.658
+},
+{
+"w": "love",
+"s": 20.378,
+"e": 20.818
+},
+{
+"w": "it.",
+"s": 20.658,
+"e": 21.258
+},
+{
+"w": "In",
+"s": 20.818,
+"e": 21.998
+},
+{
+"w": "interviews",
+"s": 21.838,
+"e": 22.358
+},
+{
+"w": "he",
+"s": 21.998,
+"e": 22.618
+},
+{
+"w": "joked",
+"s": 22.358,
+"e": 22.818
+},
+{
+"w": "about",
+"s": 22.618,
+"e": 23.078
+},
+{
+"w": "the",
+"s": 22.818,
+"e": 23.258
+},
+{
+"w": "films",
+"s": 23.078,
+"e": 23.678
+},
+{
+"w": "so",
+"s": 23.418,
+"e": 23.918
+},
+{
+"w": "often",
+"s": 23.678,
+"e": 24.118
+},
+{
+"w": "that",
+"s": 23.918,
+"e": 24.238
+},
+{
+"w": "it",
+"s": 24.118,
+"e": 24.498
+},
+{
+"w": "became",
+"s": 24.238,
+"e": 24.718
+},
+{
+"w": "his",
+"s": 24.498,
+"e": 25.058
+},
+{
+"w": "trademark.",
+"s": 24.718,
+"e": 25.058
+},
+{
+"w": "Critics,",
+"s": 25.908,
+"e": 26.568
+},
+{
+"w": "meanwhile,",
+"s": 26.268,
+"e": 26.928
+},
+{
+"w": "had",
+"s": 26.568,
+"e": 27.108
+},
+{
+"w": "him",
+"s": 26.928,
+"e": 27.328
+},
+{
+"w": "down",
+"s": 27.108,
+"e": 27.528
+},
+{
+"w": "as",
+"s": 27.328,
+"e": 27.608
+},
+{
+"w": "a",
+"s": 27.528,
+"e": 27.788
+},
+{
+"w": "pretty",
+"s": 27.608,
+"e": 28.108
+},
+{
+"w": "face",
+"s": 27.788,
+"e": 28.368
+},
+{
+"w": "who'd",
+"s": 28.108,
+"e": 28.568
+},
+{
+"w": "fade",
+"s": 28.368,
+"e": 28.808
+},
+{
+"w": "away",
+"s": 28.568,
+"e": 28.968
+},
+{
+"w": "when",
+"s": 28.808,
+"e": 29.088
+},
+{
+"w": "the",
+"s": 28.968,
+"e": 29.368
+},
+{
+"w": "franchise",
+"s": 29.088,
+"e": 29.868
+},
+{
+"w": "ended.",
+"s": 29.368,
+"e": 30.748
+},
+{
+"w": "Hollywood",
+"s": 30.528,
+"e": 31.008
+},
+{
+"w": "has",
+"s": 30.748,
+"e": 31.248
+},
+{
+"w": "seen",
+"s": 31.008,
+"e": 31.468
+},
+{
+"w": "that",
+"s": 31.248,
+"e": 31.768
+},
+{
+"w": "story",
+"s": 31.468,
+"e": 31.988
+},
+{
+"w": "a",
+"s": 31.768,
+"e": 32.228
+},
+{
+"w": "hundred",
+"s": 31.988,
+"e": 32.588
+},
+{
+"w": "times.",
+"s": 32.228,
+"e": 32.588
+}
+]
+}

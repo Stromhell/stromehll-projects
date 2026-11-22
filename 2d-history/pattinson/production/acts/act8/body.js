@@ -1,7 +1,7 @@
 // RP act 8 - Which brings us to Bond: Amazon MGM takes control, Villeneuve + Knight, Heyman full circle, the London screen test, official.
 // Plates: boardroom (stand-in for greyoffice), office, stage_blue (dimmed as test stage; stand-in for test_stage), stage_blue (announcement).
 // STAND-INS: swap values in P once greyoffice / test_stage exist.
-const P = { grey: 'boardroom', office: 'office', test: 'stage_blue', stage: 'stage_blue' };
+const P = { grey: 'greyoffice', office: 'office', test: 'test_stage', stage: 'stage_blue' };
 for (const n of new Set(Object.values(P))) K.load(n, PL + n + '.jpg');
 const rr = TW.rr, txt = TW.txt;
 // ---- name tag (world space): gold tile with a pointer
@@ -17,7 +17,7 @@ const dust = (c, lt, n = 40, col = '255,240,210') => { for (let k = 0; k < n; k+
 const coatStand = (c, x, y, lt, s = 1) => { c.save(); c.strokeStyle = '#3a2a1e'; c.lineWidth = 12 * s; c.lineCap = 'round'; c.beginPath(); c.moveTo(x, y); c.lineTo(x, y - 420 * s); c.moveTo(x - 60 * s, y); c.lineTo(x + 60 * s, y); c.moveTo(x, y - 400 * s); c.lineTo(x - 50 * s, y - 440 * s); c.moveTo(x, y - 400 * s); c.lineTo(x + 50 * s, y - 440 * s); c.stroke();
   const sw = Math.sin(lt * 1.3) * .05; c.translate(x + 50 * s, y - 440 * s); c.rotate(sw); c.strokeStyle = '#bbb'; c.lineWidth = 3; c.beginPath(); c.moveTo(0, 0); c.lineTo(0, 16 * s); c.moveTo(-40 * s, 46 * s); c.lineTo(0, 16 * s); c.lineTo(40 * s, 46 * s); c.lineTo(-40 * s, 46 * s); c.stroke(); RP.bowtie(c, 0, 58 * s, 1.1 * s, 0, .5 + .5 * Math.sin(lt * 2)); c.restore(); };
 const easeV = (lt, t0, a, b, d = .8) => a + (b - a) * E.io(K.seg(lt, t0, t0 + d));
-const CARD7 = { near: cc => RP.oo7(cc, 0, -10, .32) };
+const CARD7 = f => ({ near: cc => { cc.save(); const m = cc.getTransform(); cc.setTransform(Math.hypot(m.a, m.b), 0, 0, Math.hypot(m.c, m.d), m.e, m.f); RP.oo7(cc, 36, -10, .32); cc.restore(); } });
 const camRig = (c, x, y, lt) => { c.save(); c.strokeStyle = '#2a2a30'; c.lineWidth = 8; c.lineCap = 'round'; c.beginPath(); c.moveTo(x, y - 330); c.lineTo(x - 90, y); c.moveTo(x, y - 330); c.lineTo(x + 90, y); c.moveTo(x, y - 330); c.lineTo(x, y); c.stroke();
   c.fillStyle = '#26262c'; c.strokeStyle = INK; c.lineWidth = 4; rr(c, x - 90, y - 430, 160, 100, 10); c.fill(); c.stroke(); c.fillStyle = '#3a3a44'; rr(c, x + 70, y - 410, 50, 60, 6); c.fill(); c.stroke(); c.beginPath(); c.arc(x - 45, y - 455, 30, 0, 7); c.arc(x + 25, y - 455, 30, 0, 7); c.fill();
   c.fillStyle = `rgba(255,40,40,${.6 + .4 * Math.sin(lt * 5)})`; c.beginPath(); c.arc(x - 70, y - 410, 7, 0, 7); c.fill(); c.restore(); };
@@ -25,17 +25,17 @@ const RIVALS = [['CALLUM TURNER', 0, 'Callum'], ["JOSH O'CONNOR", 2, 'Josh'], ['
 
 window.SHOTS = [
   // 8.00 the deal: the family hands the 007 card to the new studio; director and writer arrive
-  { plate: P.grey, cam: { z: [1.15, 1.25], x: [1240, 1360], y: [960, 990] }, bed: [['office_loop', .08], ['hum_loop', .06]], light: { dir: 1, key: 'rgba(255,230,200,.12)' },
+  { plate: P.grey, cam: { z: [1.15, 1.25], x: [1240, 1360], y: [840, 870] }, bed: [['office_loop', .08], ['hum_loop', .06]], light: { dir: 1, key: 'rgba(255,230,200,.12)' },
     init: S => { const tB = A.at(S, 'Bond.', .9), t25 = A.at(S, '2025', 1.6), tH = A.at(S, 'handed', 3.4), tAm = A.at(S, 'Amazon', 5.6), tV = A.at(S, 'Villeneuve.', 8.0), tW = A.at(S, 'writer', 8.7), tK = A.at(S, 'Knight', 9.8), tPe = A.at(S, 'Peaky', 11.6);
       const pass = tH + .6;
-      S.D.figs = [{ x: 820, y: 1400, s: 1.85, ...RP.EXEC(3), facing: 1, mood: 'neutral', anim: (o, lt) => { o.hold = lt < pass ? CARD7 : null; if (lt > tH - .2 && lt < pass + .5) o.pose = 'present'; if (lt > pass + .5) { o.pose = 'stand'; o.mood = 'sad'; } } },
-        { x: 1200, y: 1400, s: 1.9, ...RP.EXEC(0), facing: -1, mood: 'neutral', anim: (o, lt) => { if (lt > pass) { o.hold = CARD7; o.mood = 'happy'; o.arms = () => ({ shR: 80, elR: -50 }); } if (lt > tV) o.facing = 1; } },
-        { x: 1620, y: 1400, s: 1.85, ...RP.DIR(1), facing: -1, mood: 'happy', walk: { x0: 2800, x1: 1620, t0: tV - 2.2, dur: 2.0 }, anim: (o, lt) => { if (lt > tV + .2) o.pose = 'wave'; if (lt > tW) o.pose = 'stand'; } },
-        { x: 1940, y: 1400, s: 1.85, ...RP.DIR(5), facing: -1, mood: 'neutral', walk: { x0: 2850, x1: 1940, t0: tW - 1.2, dur: 1.6 }, anim: (o, lt) => { if (lt > tPe) { o.pose = 'think'; o.mood = 'smug'; } } }];
-      S.D.live = [(c, lt) => { TW.glow(c, 1280, 500, 900, '120,160,255', .1 + .03 * Math.sin(lt)); dust(c, lt, 30); coatStand(c, 2330, 1400, lt, 1.05); }];
-      S.D.front = [(c, lt) => ntag(c, 'THE BROCCOLI FAMILY', 820, 820, lt, tH - .6, { px: 30, col: '#f2ead8', until: tV }), (c, lt) => ntag(c, 'AMAZON MGM', 1200, 800, lt, tAm, { px: 32, col: '#f2ead8', until: tV }),
-        (c, lt) => ntag(c, 'DIRECTOR: VILLENEUVE', 1620, 810, lt, tV, { px: 30 }), (c, lt) => ntag(c, 'STEVEN KNIGHT', 1940, 700, lt, tK, { px: 34 })];
-      S.D.over = [BOARD(.9), (c, lt) => K.card(c, '2025', lt, { at: t25, x: 400, y: 260, px: 60, rot: -3 }), (c, lt) => K.card(c, '007 CREATIVE CONTROL → AMAZON MGM', lt, { at: tAm - .3, x: 1060, y: 140, px: 46, rot: 1, bg: JH.GOLD, until: tPe - .2 }),
+      S.D.figs = [{ x: 880, y: 1250, s: 1.85, ...RP.EXEC(3), facing: 1, mood: 'neutral', anim: (o, lt) => { o.hold = lt < pass ? CARD7(1) : null; if (lt > tH - .2 && lt < pass + .5) o.pose = 'present'; if (lt > pass + .5) { o.pose = 'stand'; o.mood = 'sad'; } } },
+        { x: 1200, y: 1250, s: 1.9, ...RP.EXEC(0), facing: -1, mood: 'neutral', anim: (o, lt) => { o.hold = lt >= pass ? CARD7(o.facing) : null; if (lt > tH - .2 && lt < pass + .5) o.pose = 'present'; if (lt > pass) o.mood = 'happy'; if (lt > tV) { o.facing = 1; o.hold = CARD7(1); } } },
+        { x: 1620, y: 1250, s: 1.85, ...RP.DIR(1), facing: -1, mood: 'happy', walk: { x0: 2800, x1: 1620, t0: tV - 2.2, dur: 2.0 }, anim: (o, lt) => { if (lt > tV + .2) o.pose = 'wave'; if (lt > tW) o.pose = 'stand'; } },
+        { x: 1940, y: 1250, s: 1.85, ...RP.DIR(5), facing: -1, mood: 'neutral', walk: { x0: 2850, x1: 1940, t0: tW - 1.2, dur: 1.6 }, anim: (o, lt) => { if (lt > tPe) { o.pose = 'think'; o.mood = 'smug'; } } }];
+      S.D.live = [(c, lt) => { TW.glow(c, 1280, 500, 900, '120,160,255', .1 + .03 * Math.sin(lt)); dust(c, lt, 30); coatStand(c, 2470, 1250, lt, 1.05); }];
+      S.D.front = [(c, lt) => ntag(c, 'THE BROCCOLI FAMILY', 880, 640, lt, tH - .6, { px: 30, col: '#f2ead8', until: tV }), (c, lt) => ntag(c, 'AMAZON MGM', 1200, 600, lt, tAm, { px: 32, col: '#f2ead8', until: tV }),
+        (c, lt) => ntag(c, 'DIRECTOR: VILLENEUVE', 1620, 640, lt, tV, { px: 30 }), (c, lt) => ntag(c, 'STEVEN KNIGHT', 1940, 560, lt, tK, { px: 34 })];
+      S.D.over = [BOARD(.9), (c, lt) => K.card(c, '2025', lt, { at: t25, x: 230, y: 400, px: 60, rot: -3 }), (c, lt) => K.card(c, '007 CREATIVE CONTROL → AMAZON MGM', lt, { at: tAm - .3, x: 1060, y: 140, px: 46, rot: 1, bg: JH.GOLD, until: tPe - .2 }),
         (c, lt) => K.card(c, 'WRITER · CREATED PEAKY BLINDERS', lt, { at: tPe - .2, x: 1060, y: 140, px: 46, rot: -1, bg: JH.GOLD })];
       S.D.sfx = [[tB, 'riser', .2], [t25, 'chime', .3], [tH, 'whoosh_soft', .25], [pass, 'paper', .3], [tAm, 'pop', .2], [tV - 2.2, 'footsteps', .2], [tV, 'pop', .2], [tW - 1.2, 'footsteps', .18], [tK, 'pop', .2], [tPe, 'chime', .2]]; } },
   // 8.01 Heyman remembers: a warm memory glow, teen Cedric walks into it
@@ -49,14 +49,14 @@ window.SHOTS = [
       S.D.over = [BOARD(.9), (c, lt) => K.card(c, 'SAME PRODUCER', lt, { at: tP, x: 520, y: 150, px: 48, rot: -2, bg: JH.GOLD }), (c, lt) => K.card(c, '20 YEARS EARLIER', lt, { at: tY - .2, x: 1380, y: 150, px: 50, rot: 2 })];
       S.D.sfx = [[tD, 'pop', .2], [tW - .4, 'swell', .3], [tT - .6, 'footsteps', .18], [tC, 'chime', .3], [tY, 'whoosh_soft', .2]]; } },
   // 8.02 screen test: dim stage, camera rig, Rob in a tux with the bow tie loose; the rivals line up
-  { plate: P.test, cam: { z: [1.2, 1.25], x: [1150, 1500], y: [700, 720] }, bed: [['hum_loop', .1]], light: { dir: 1, key: 'rgba(255,255,230,.1)' },
+  { plate: P.test, cam: { z: [1.2, 1.25], x: [1150, 1500], y: [880, 900] }, bed: [['hum_loop', .1]], light: { dir: 1, key: 'rgba(255,255,230,.1)' },
     init: S => { const tHR = A.at(S, 'Hollywood', .8), tSc = A.at(S, 'screen-tested', 2.6), tL = A.at(S, 'London', 3.4), tTw = A.at(S, 'twenty-fourth', 5.9), tR = A.at(S, 'race.', 12.4);
       const rt = RIVALS.map(([n, k, w], i) => A.at(S, w, 7.5 + i * 1.1));
-      S.D.figs = [{ x: 1180, y: 890, s: 1.6, ...RP.ROB('tux', { bow: 0 }), facing: -1, mood: 'neutral', anim: (o, lt) => { if (lt > tSc) o.mood = 'smug'; if (lt > rt[0]) { o.facing = 1; o.mood = 'shocked'; } if (lt > tR) o.mood = 'neutral'; } },
-        ...RIVALS.map(([n, k, w], i) => ({ x: 1560 + i * 190, y: 890, s: 1.55, ...RP.FAN(k), facing: -1, mood: 'neutral', seed: 500 + i, walk: { x0: 2700, x1: 1560 + i * 190, t0: rt[i] - 1.6, dur: 1.6 }, anim: (o, lt) => { if (lt > tR) o.mood = 'smug'; } }))];
-      S.D.live = [(c, lt) => { c.fillStyle = 'rgba(20,24,34,.55)'; c.fillRect(520, 140, 1520, 600); txt(c, 'SCREEN TEST', 1280, 300, 90, 'rgba(200,210,230,.25)', 'center', 'Anton'); TW.glow(c, 1180, 700, 400, '255,250,230', .28 + .03 * Math.sin(lt * 3)); camRig(c, 700, 890, lt); dust(c, lt, 25); }];
-      S.D.front = [(c, lt) => { for (let i = 0; i < 4; i++) ntag(c, RIVALS[i][0], 1560 + i * 190, 520 + (i % 2) * 60, lt, rt[i], { px: 22, col: '#f2ead8' }); }];
-      S.D.over = [BOARD(.9), (c, lt) => JH.src(c, 'REPORTED: THR', 500, 210, lt, tHR, { px: 30 }), (c, lt) => K.card(c, 'SCREEN TEST · LONDON', lt, { at: tL - .3, x: 1020, y: 140, px: 50, rot: -2, bg: JH.GOLD, until: rt[0] - .2 }),
+      S.D.figs = [{ x: 1280, y: 1250, s: 1.7, ...RP.ROB('tux', { bow: 0 }), facing: -1, mood: 'neutral', anim: (o, lt) => { if (lt > tSc) o.mood = 'smug'; if (lt > rt[0]) { o.facing = 1; o.mood = 'shocked'; } if (lt > tR) o.mood = 'neutral'; } },
+        ...RIVALS.map(([n, k, w], i) => ({ x: 1720 + i * 210, y: 1250, s: 1.65, ...RP.FAN(k), facing: -1, mood: 'neutral', seed: 500 + i, walk: { x0: 2700, x1: 1720 + i * 210, t0: rt[i] - 1.6, dur: 1.6 }, anim: (o, lt) => { if (lt > tR) o.mood = 'smug'; } }))];
+      S.D.live = [(c, lt) => { TW.glow(c, 1280, 1000, 420, '255,250,230', .25 + .03 * Math.sin(lt * 3)); dust(c, lt, 25); }];
+      S.D.front = [(c, lt) => { for (let i = 0; i < 4; i++) ntag(c, RIVALS[i][0], 1720 + i * 210, 640 - (i % 2) * 60, lt, rt[i], { px: 22, col: '#f2ead8' }); }];
+      S.D.over = [BOARD(.9), (c, lt) => JH.src(c, 'THR', 500, 210, lt, tHR, { px: 30 }), (c, lt) => K.card(c, 'SCREEN TEST · LONDON', lt, { at: tL - .3, x: 1020, y: 140, px: 50, rot: -2, bg: JH.GOLD, until: rt[0] - .2 }),
         (c, lt) => K.card(c, 'WEEKEND OF 24 OCTOBER', lt, { at: tTw - .3, x: 1060, y: 250, px: 40, rot: 2, until: rt[0] - .2 }), (c, lt) => K.card(c, 'ALSO IN THE RACE', lt, { at: rt[0] - .2, x: 1100, y: 140, px: 50, rot: 2 })];
       S.D.sfx = [[tHR, 'paper', .25], [tSc, 'camera_shutter', .3], [tL, 'chime', .2], [tTw, 'tick', .25], ...rt.map(t => [t - 1.6, 'footsteps', .15]), ...rt.map(t => [t, 'pop', .18]), [tR, 'tension', .2]]; } },
   // 8.03 it's official: Rob ties the bow tie on the big stage, flashes, 007 on the screen
@@ -64,10 +64,10 @@ window.SHOTS = [
     init: S => { const tW = A.at(S, 'weeks', 1.0), tO = A.at(S, 'official.', 1.8), tHo = A.at(S, 'honour', 3.6), tSe = A.at(S, 'seventh', 6.4), tBo = A.at(S, 'Bond,', 8.6), tF = A.at(S, 'first', 9.4), tBr = A.at(S, 'Broccoli', 11.6);
       const bow = lt => E.io(K.seg(lt, tO - .4, tHo));
       S.D.figs = [{ x: 1280, y: 890, s: 1.7, ...RP.ROB('tux', { bow: 0 }), facing: 1, mood: 'neutral', anim: (o, lt) => { o.look = RP.ROB('tux', { bow: bow(lt) }).look; if (lt > tO - .4 && lt < tHo) o.arms = () => ({ shL: 120, elL: -120, shR: 120, elR: -120, handL: 'open', handR: 'open' }); if (lt > tHo) { o.mood = 'happy'; o.talk = [tHo - .3, tHo + 1.8]; } if (lt > tBo) { o.pose = 'wave'; o.mood = 'smug'; } } }];
-      S.D.live = [(c, lt) => { const g = E.out(K.seg(lt, tSe - .3, tSe + .5)); TW.glow(c, 1280, 450, 900, '255,220,140', .15 + .2 * g); RP.oo7(c, 1280, 430, 1.6 * g); flashes(c, lt, lt > tO ? 50 : 15, 940, 400); }];
+      S.D.live = [(c, lt) => { const g = E.out(K.seg(lt, tSe - .3, tSe + .5)); TW.glow(c, 1280, 450, 900, '255,220,140', .15 + .2 * g); RP.oo7(c, 1800, 330, 1.3 * g); flashes(c, lt, lt > tO ? 50 : 15, 940, 400); }];
       S.D.front = [];
-      S.D.over = [BOARD(lt => easeV(lt, tO, .9, 1)), (c, lt) => K.card(c, 'THREE WEEKS LATER', lt, { at: tW - .3, x: 520, y: 260, px: 42, rot: -3, until: tSe }), (c, lt) => K.card(c, 'OFFICIAL · 16 NOV 2026', lt, { at: tO, x: 1000, y: 140, px: 54, rot: 2, bg: JH.GOLD }),
+      S.D.over = [BOARD(lt => easeV(lt, tO, .9, 1)), (c, lt) => K.card(c, 'THREE WEEKS LATER', lt, { at: tW - .3, x: 520, y: 260, px: 42, rot: -3, until: tSe }), (c, lt) => K.card(c, 'OFFICIAL · 16 NOV 2026', lt, { at: tO, x: 560, y: 150, px: 54, rot: 2, bg: JH.GOLD }),
         (c, lt) => JH.quote(c, 'THE HONOUR OF|A LIFETIME', 'ROBERT PATTINSON', 1500, 380, lt, tHo, { px: 44, until: tSe }),
-        (c, lt) => K.card(c, 'THE 7TH JAMES BOND', lt, { at: tSe, x: 1520, y: 330, px: 48, rot: -2 }), (c, lt) => K.card(c, 'FIRST CHOSEN WITHOUT THE BROCCOLI FAMILY', lt, { at: tF, x: 960, y: 760, px: 38, rot: 1 })];
+        (c, lt) => K.card(c, 'THE 7TH JAMES BOND', lt, { at: tSe, x: 480, y: 290, px: 48, rot: -2 }), (c, lt) => K.card(c, 'FIRST CHOSEN WITHOUT THE BROCCOLI FAMILY', lt, { at: tF, x: 960, y: 760, px: 38, rot: 1 })];
       S.D.sfx = [[tW, 'whoosh', .2], [tO, 'drum', .35], [tO + .1, 'crowd_cheer', .3], [tO + .3, 'camera_shutter', .3], [tHo, 'chime', .3], [tSe, 'swell', .3], [tBo, 'crowd_cheer', .25], [tF, 'stamp', .25]]; } },
 ];
