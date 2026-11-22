@@ -23,7 +23,7 @@ S = [
   ("MED", "Here's the funny bit. Holding your phone at the wheel can cost you six points and a two-hundred-pound fine. But a carmaker bolting a fifteen-inch tablet to your dashboard? Apparently that's fine.",
    "Split: a police officer writes a ticket for a phone; on the right a salesman proudly unveils a giant screen in a showroom; nodding dog shakes its head.", "6 POINTS + £200",
    "bg:street|office;fig:.25,.86,point,uniform;fig:.75,.86,cheer,suit;prop:phone,.25,.6;prop:screen,.75,.55,1.4", "Ticket rips off the pad; the screen unveiling gets sparkles."),
-  ("TITLE", "", "Title card: a car dashboard morphing into a giant phone, with a home bar where the speedo was.", "YOUR CAR IS A PHONE NOW",
+  ("TITLE", "So how did your car turn into a phone? Who decided this? And why are some carmakers already quietly backing out?", "Title card: a car dashboard morphing into a giant phone, with a home bar where the speedo was.", "YOUR CAR IS A PHONE NOW",
    "bg:blank;prop:phone,.5,.5,3;txt:.5,.2,YOUR CAR IS A PHONE", "Dashboard melts into a phone; title stamps."),
  ]),
  ("How the tablet ate the dashboard", "act1-tablet", [
