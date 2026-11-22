@@ -416,5 +416,78 @@ window.PLATES = {
     ENV.rug(c, r, 900, 1330, 1000, 120, '#5a1420', '#c8a040');
     c.save(); c.globalCompositeOperation = 'soft-light'; vg(c, 0, 0, W, H, [[0, 'rgba(255,190,110,.3)'], [1, 'rgba(40,20,10,.4)']]); c.restore();
     done(c, r, W, H, P, { vig: .55 }); },
+  // CP v3. Night two-lane road through mangroves, Key Largo. Side-on: road runs left-right, road surface y 1060-1200, ground line (car wheels) y 1150.
+  // T-junction at x 1820-2080 (cross road recedes up to the horizon), stop sign at x 1760, flashing-light pole at x 1700 (lamp at 1700,560), verge beyond x 2120-2560 (parked SUV drawn live at ~2330,1150). Moon top-left.
+  night_road: (c, r, W, H, P) => { const hz = 820, fy = 1150;
+    vg(c, 0, 0, W, hz, [[0, '#04060f'], [.6, '#0d1630'], [1, '#1e2a48']]);
+    for (let i = 0; i < 260; i++) { c.fillStyle = `rgba(230,235,255,${r.range(.15, .7)})`; c.fillRect(r() * W, r() * hz * .7, r.range(1, 3), r.range(1, 3)); }
+    gl(c, 420, 200, 420, '200,210,255', .3); c.fillStyle = '#e8ecf8'; c.beginPath(); c.arc(420, 200, 56, 0, 7); c.fill(); c.fillStyle = 'rgba(160,170,200,.35)'; c.beginPath(); c.arc(404, 190, 14, 0, 7); c.arc(440, 214, 9, 0, 7); c.fill();
+    ENV.clouds(c, r, W, 120, 380, 7, '#2a3454', '#1a2240', '#0e1428', { scale: .8 });
+    // far mangroves: dense dark canopy band with rounded tops
+    for (const [col, top, amp, n] of [['#0c1a1e', hz - 170, 60, 70], ['#0a1416', hz - 110, 50, 90]]) { c.fillStyle = col; c.fillRect(0, top + amp, W, hz - top); for (let i = 0; i < n; i++) { const x = r() * W, rad = r.range(40, 110); c.beginPath(); c.ellipse(x, top + amp + r.range(-amp, amp * .5), rad * 1.3, rad, 0, 0, 7); c.fill(); } }
+    tex(c, r, 0, hz - 260, W, 260, '#13262a', { al: .2, len: [8, 26], ang: -1.2 });
+    // water glint between roots
+    vg(c, 0, hz - 10, W, 120, [[0, '#0e1a2a'], [1, '#081018']]); for (let i = 0; i < 500; i++) { c.fillStyle = `rgba(150,170,220,${r.range(.05, .2)})`; c.fillRect(r() * W, hz + r() * 110, r.range(10, 50), 2); }
+    // near mangroves with arching prop roots (left two thirds, behind the road)
+    for (let i = 0; i < 26; i++) { const x = r.range(-60, 1700), base = 1065, h = r.range(220, 380);
+      c.strokeStyle = '#0a0e0c'; c.lineWidth = r.range(5, 10); for (let k = 0; k < 6; k++) { const rx = x + r.range(-90, 90); c.beginPath(); c.moveTo(x + r.range(-10, 10), base - h * .45); c.quadraticCurveTo(rx, base - h * .5, rx + r.range(-30, 30), base); c.stroke(); }
+      c.fillStyle = '#0a1612'; for (let k = 0; k < 9; k++) { c.beginPath(); c.ellipse(x + r.range(-130, 130), base - h * r.range(.5, 1), r.range(60, 120), r.range(40, 80), 0, 0, 7); c.fill(); }
+      c.fillStyle = 'rgba(90,120,170,.12)'; for (let k = 0; k < 4; k++) { c.beginPath(); c.ellipse(x + r.range(-100, 60), base - h * r.range(.75, 1), r.range(30, 60), r.range(16, 30), 0, Math.PI, 0); c.fill(); } }
+    tex(c, r, 0, 680, 1760, 380, '#0e1c18', { al: .18, len: [6, 18], ang: -.6 });
+    // cross road receding to horizon (T-junction)
+    c.fillStyle = '#20232a'; poly(c, [[1900, hz], [1980, hz], [2120, 1200], [1820, 1200]]); c.fill(); tex(c, r, 1820, hz, 300, 380, '#262a30', { al: .2, len: [4, 12] });
+    c.fillStyle = 'rgba(230,200,90,.7)'; for (let i = 0; i < 10; i++) { const t0 = Math.pow(i / 10, 1.6), t1 = Math.pow((i + .5) / 10, 1.6); poly(c, [[1940 + 30 * t0 - 2, hz + (1060 - hz) * t0], [1940 + 30 * t0 + 2, hz + (1060 - hz) * t0], [1940 + 30 * t1 + 3, hz + (1060 - hz) * t1], [1940 + 30 * t1 - 3, hz + (1060 - hz) * t1]]); c.fill(); }
+    // verge beyond the junction: grass, gravel, low scrub, a single palm and a far streetlight
+    vg(c, 2100, 960, 460, 240, [[0, '#1a2418'], [1, '#121a10']]); tex(c, r, 2100, 960, 460, 240, '#26321e', { al: .25, len: [6, 18], ang: -1.4 });
+    palm(c, r, 2480, 1000, 560, -60, '170,190,255');
+    lampPost(c, 2180, 960, 300, '255,200,130', .8);
+    gl(c, 2180, 700, 260, '255,190,120', .25);
+    // main road (left-right) with verge strip above
+    vg(c, 0, 1040, 1830, 24, [[0, '#1a1e1a'], [1, '#262a26']]);
+    vg(c, 0, 1060, W, 140, [[0, '#24272e'], [1, '#1a1c22']]); tex(c, r, 0, 1060, W, 140, '#2a2d34', { al: .2, len: [4, 14] });
+    c.fillStyle = 'rgba(230,200,90,.75)'; for (let x = 0; x < 1800; x += 120) c.fillRect(x, 1126, 70, 6); c.fillStyle = 'rgba(235,235,225,.6)'; c.fillRect(0, 1066, 1810, 4); c.fillRect(0, 1192, W, 4);
+    // stop line + STOP painted at the junction mouth
+    c.fillStyle = 'rgba(240,240,232,.8)'; c.fillRect(1790, 1068, 14, 124); txt(c, 'STOP', 1730, 1160, 30, 'rgba(240,240,232,.55)', { f: 'Arial' });
+    // kerb / grass below road
+    vg(c, 0, 1200, W, H - 1200, [[0, '#141a12'], [1, '#080a08']]); tex(c, r, 0, 1200, W, 240, '#1c2618', { al: .25, len: [6, 22], ang: -1.4 });
+    // stop sign
+    c.fillStyle = '#6a6e74'; c.fillRect(1756, 820, 10, 245); const sx = 1761, sy = 790, R0 = 52; c.fillStyle = '#f2f2f2'; c.beginPath(); for (let k = 0; k < 8; k++) { const a = Math.PI / 8 + k * Math.PI / 4; c.lineTo(sx + Math.cos(a) * (R0 + 5), sy + Math.sin(a) * (R0 + 5)); } c.fill();
+    c.fillStyle = '#b8231c'; c.beginPath(); for (let k = 0; k < 8; k++) { const a = Math.PI / 8 + k * Math.PI / 4; c.lineTo(sx + Math.cos(a) * R0, sy + Math.sin(a) * R0); } c.fill(); txt(c, 'STOP', sx, sy + 2, 30, '#fff', { f: 'Arial' });
+    // flashing-light pole (lamp housing at 1700,560; lit live)
+    c.fillStyle = '#4a4e56'; c.fillRect(1694, 560, 12, 505); c.fillRect(1640, 540, 140, 10); c.fillStyle = '#16181c'; rr(c, 1676, 520, 48, 84, 8); c.fill(); c.fillStyle = '#5a4a10'; c.beginPath(); c.arc(1700, 562, 16, 0, 7); c.fill();
+    // cool moonlight wash + a little warm from the far lamp on the road
+    gl(c, 2180, 1120, 380, '255,180,110', .14);
+    c.save(); c.globalCompositeOperation = 'soft-light'; vg(c, 0, 0, W, H, [[0, 'rgba(70,100,180,.35)'], [1, 'rgba(10,20,40,.5)']]); c.restore();
+    done(c, r, W, H, P, { vig: .6, n: 50000 }); },
+
+  // CP v3. Courtroom interior (generic US). Floor y 1180. Judge's bench centre x 1080-1720 top y 640 (bench front to 1000), seal circle (1400,330) generic stars only.
+  // Jury box left: rail top y 930 x 120-860, 2 rows of painted silhouettes. Clear floor x 900-2300 in front of the bench for props/cards. Flag right x 2330.
+  courtroom: (c, r, W, H, P) => { const fy = 1180;
+    vg(c, 0, 0, W, fy, [[0, '#2e1e14'], [1, '#4a3020']]);
+    for (let x = 0; x < W; x += 280) { c.fillStyle = '#5a3a22'; c.fillRect(x + 14, 140, 252, 560); tex(c, r, x + 14, 140, 252, 560, '#5a3a22', { ang: Math.PI / 2, angJ: .05, al: .22, len: [60, 200] }); c.strokeStyle = 'rgba(0,0,0,.4)'; c.lineWidth = 6; c.strokeRect(x + 34, 160, 212, 520); c.strokeStyle = 'rgba(255,200,140,.12)'; c.lineWidth = 2; c.strokeRect(x + 40, 166, 200, 508); }
+    c.fillStyle = '#24160c'; c.fillRect(0, 0, W, 140); c.fillStyle = '#6a4626'; c.fillRect(0, 126, W, 18); c.fillStyle = '#3a2414'; c.fillRect(0, 700, W, fy - 700);
+    for (const lx of [500, 1400, 2300]) { gl(c, lx, 150, 420, '255,220,160', .28); c.fillStyle = '#c8a050'; rr(c, lx - 70, 136, 140, 22, 8); c.fill(); }
+    // seal (generic: ring + stars, no text)
+    gl(c, 1400, 330, 220, '255,220,150', .2); c.fillStyle = '#b08a3a'; c.beginPath(); c.arc(1400, 330, 132, 0, 7); c.fill(); c.fillStyle = '#1e2a4a'; c.beginPath(); c.arc(1400, 330, 112, 0, 7); c.fill(); c.fillStyle = '#e8d090';
+    for (let k = 0; k < 13; k++) { const a = k / 13 * Math.PI * 2, x = 1400 + Math.cos(a) * 80, y = 330 + Math.sin(a) * 80; c.beginPath(); for (let j = 0; j < 10; j++) { const rr2 = j % 2 ? 5 : 12, b = a + j * Math.PI / 5; c.lineTo(x + Math.cos(b) * rr2, y + Math.sin(b) * rr2); } c.fill(); }
+    c.fillStyle = '#e8d090'; poly(c, [[1400, 280], [1430, 340], [1400, 380], [1370, 340]]); c.fill();
+    // judge's high-backed chair + bench
+    c.fillStyle = '#1a0e08'; rr(c, 1330, 470, 140, 200, 30); c.fill(); c.fillStyle = '#5a1a1a'; rr(c, 1345, 485, 110, 170, 22); c.fill();
+    const bx = 1080, bw = 640; shadow(c, bx + bw / 2, fy, bw * .7, 30, .5); vg(c, bx, 640, bw, fy - 640, [[0, '#6a4224'], [1, '#3a2212']]); tex(c, r, bx, 640, bw, fy - 640, '#5a3a20', { ang: Math.PI / 2, angJ: .05, al: .2, len: [40, 160] });
+    c.fillStyle = '#8a5a30'; c.fillRect(bx - 30, 620, bw + 60, 30); c.fillStyle = 'rgba(255,220,160,.25)'; c.fillRect(bx - 30, 620, bw + 60, 5);
+    for (let k = 0; k < 4; k++) { c.strokeStyle = 'rgba(0,0,0,.35)'; c.lineWidth = 5; c.strokeRect(bx + 30 + k * 150, 700, 130, 400); }
+    c.fillStyle = '#c8a050'; c.fillRect(bx + 500, 600, 80, 22); c.fillStyle = '#4a2a14'; rr(c, bx + 80, 594, 40, 26, 4); c.fill(); c.fillRect(bx + 118, 602, 50, 10); // gavel
+    // witness box (right of bench)
+    vg(c, 1760, 820, 320, fy - 820, [[0, '#6a4224'], [1, '#3a2212']]); c.fillStyle = '#8a5a30'; c.fillRect(1745, 805, 350, 24); c.fillStyle = '#16181c'; c.fillRect(1900, 740, 8, 70); c.beginPath(); c.arc(1904, 736, 10, 0, 7); c.fill();
+    // jury box with silhouettes
+    const jx = 120, jw = 740; for (const [row, y0, s] of [[0, 760, 1], [1, 850, 1.08]]) { c.fillStyle = '#2a1a0e'; c.fillRect(jx, y0 + 40, jw, 30); for (let k = 0; k < 6; k++) { const x = jx + 70 + k * 120 + row * 40, y = y0; c.fillStyle = P2.rgb(P2.jitter('#1a1418', r, 10)); c.beginPath(); c.arc(x, y - 30 * s, 30 * s, 0, 7); c.fill(); rr(c, x - 48 * s, y - 2, 96 * s, 80, 26 * s); c.fill(); c.fillStyle = 'rgba(255,210,150,.14)'; c.beginPath(); c.arc(x, y - 34 * s, 28 * s, Math.PI * 1.1, Math.PI * 1.9); c.fill(); } }
+    vg(c, jx - 20, 930, jw + 40, fy - 930, [[0, '#6a4224'], [1, '#3a2212']]); c.fillStyle = '#8a5a30'; c.fillRect(jx - 30, 916, jw + 60, 24); c.fillStyle = 'rgba(255,220,160,.25)'; c.fillRect(jx - 30, 916, jw + 60, 4);
+    for (let k = 0; k < 5; k++) { c.strokeStyle = 'rgba(0,0,0,.35)'; c.lineWidth = 5; c.strokeRect(jx + 10 + k * 146, 960, 126, 190); }
+    // flag on a pole (right)
+    hangFlag(c, true, 2330, 260, 170, 300);
+    // floor: carpet with a centre aisle
+    vg(c, 0, fy, W, H - fy, [[0, '#4a1c1c'], [1, '#240c0c']]); tex(c, r, 0, fy, W, H - fy, '#4a1c1c', { al: .15, len: [4, 12] }); c.fillStyle = '#6a4a20'; c.fillRect(0, fy, W, 8); reflect(c, fy, 120, .12, 6);
+    c.save(); c.globalCompositeOperation = 'soft-light'; vg(c, 0, 0, W, H, [[0, 'rgba(255,200,130,.3)'], [1, 'rgba(30,15,10,.45)']]); c.restore();
+    done(c, r, W, H, P, { vig: .5 }); },
 };
 })();

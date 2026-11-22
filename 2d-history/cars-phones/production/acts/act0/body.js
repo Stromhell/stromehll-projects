@@ -1,6 +1,6 @@
-// CP act 0 - Cold open: wet M62 at 70, the 2005 demist button by feel, the tablet hunt + pothole jab, phone fine vs showroom tablet, title.
-// Plates: motorway (windscreen view, dash top 1000), rain_street, showroom, title.
-for (const n of ['motorway', 'rain_street', 'showroom', 'title']) K.load(n, PL + n + '.jpg');
+// CP act 0 (v3) - Cold open: Key Largo 2019 night crash (from a distance), the Miami verdict, phone fine vs showroom tablet, title.
+// Plates: night_road (side-on, road y 1150, T-junction x 1790+), courtroom (floor 1180), rain_street, showroom, title.
+for (const n of ['night_road', 'courtroom', 'rain_street', 'showroom', 'title']) K.load(n, PL + n + '.jpg');
 const rr = TW.rr, txt = TW.txt, clamp = K.clamp;
 const lerp = (a, b, u) => a + (b - a) * u;
 // ---- windscreen (motorway plate): glass outline, rain, spray, tail-light smear, condensation, wipers
@@ -42,44 +42,74 @@ const keyf = (lt, K0) => { // piecewise keyframes [[t,x,y]] -> {x,y} with ease
 const WH = { x: 2030, y: 1330, s: 7.5 }; // steering wheel (right-hand drive)
 const wheelAndRight = (c, lt, turn = 0) => { CP.analogDial(c, WH.x, 1105, 118, .62 + .02 * Math.sin(lt * 3), 'MPH'); CP.steering(c, WH.x, WH.y, WH.s, lt, { turn }); arm(c, 2640, 1760, WH.x + 300 * Math.cos(turn), WH.y + 300 * Math.sin(turn) - 10, 1.25); };
 
+// ---- night road helpers (night_road plate: road y 1150, stop line x 1790, flashing light lamp 1700,562)
+const CARCOL = '#a4adbf'; // moonlit white saloon (generic, no badge)
+const beam = (c, x, y, s, a = 1) => { c.save(); c.globalCompositeOperation = 'screen'; const fx = x + 480 * s, fy = y - 150 * s, g = c.createLinearGradient(fx, 0, fx + 900 * s, 0); g.addColorStop(0, `rgba(255,245,200,${.42 * a})`); g.addColorStop(1, 'rgba(255,245,200,0)'); c.fillStyle = g; c.beginPath(); c.moveTo(fx, fy - 14 * s); c.lineTo(fx + 900 * s, fy - 120 * s); c.lineTo(fx + 900 * s, y + 10); c.lineTo(fx, fy + 14 * s); c.closePath(); c.fill(); TW.glow(c, fx, fy, 70 * s, '255,245,210', .6 * a); c.restore(); };
+const blinker = (c, lt) => { const on = Math.floor(lt * 1.6) % 2 === 0; if (on) { TW.glow(c, 1700, 562, 120, '255,200,40', .55); c.fillStyle = '#ffd23a'; c.beginPath(); c.arc(1700, 562, 15, 0, 7); c.fill(); } };
+const nightShade = (c) => { c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = 'rgba(120,135,175,1)'; c.fillRect(0, 0, 2560, 1440); c.restore(); };
+const memorial = (c, x, y, lt, lit) => { // small table with flowers, a candle and a blank photo frame (no likeness). y = floor
+  CP.shadow(c, x, y, 120, .4); c.fillStyle = '#3a2414'; c.strokeStyle = INK; c.lineWidth = 4; for (const lx of [-80, 70]) { c.fillRect(x + lx, y - 170, 12, 170); c.strokeRect(x + lx, y - 170, 12, 170); } c.fillStyle = '#e8e0d0'; rr(c, x - 100, y - 186, 200, 20, 4); c.fill(); c.stroke();
+  c.save(); c.translate(x - 30, y - 186); c.rotate(-.06); c.fillStyle = '#b08a3a'; rr(c, -46, -128, 92, 120, 6); c.fill(); c.stroke(); const g = c.createLinearGradient(0, -116, 0, -20); g.addColorStop(0, '#e8d6b8'); g.addColorStop(1, '#c8b494'); c.fillStyle = g; c.fillRect(-34, -116, 68, 96); c.fillStyle = 'rgba(255,240,220,.6)'; c.beginPath(); c.arc(0, -70, 22, 0, 7); c.fill(); c.restore();
+  for (let k = 0; k < 5; k++) { const fx = x + 30 + k * 12, fh = 60 + (k % 2) * 16; c.strokeStyle = '#3a6a2a'; c.lineWidth = 3; c.beginPath(); c.moveTo(x + 50, y - 188); c.lineTo(fx, y - 186 - fh); c.stroke(); c.fillStyle = ['#f4f0ea', '#f2d0d8', '#fff', '#f4e8a0', '#f2d0d8'][k]; c.beginPath(); c.arc(fx, y - 186 - fh, 11, 0, 7); c.fill(); }
+  c.fillStyle = '#f4ecd8'; c.strokeStyle = INK; c.lineWidth = 3; rr(c, x + 72, y - 236, 18, 50, 3); c.fill(); c.stroke();
+  if (lit > 0) { const f = 1 + .12 * Math.sin(lt * 11) + .06 * Math.sin(lt * 23); c.save(); c.globalAlpha = lit; TW.glow(c, x + 81, y - 252, 120, '255,200,110', .45 * f); c.fillStyle = '#ffd27a'; c.beginPath(); c.ellipse(x + 81, y - 252, 7 * f, 15 * f, Math.sin(lt * 3) * .1, 0, 7); c.fill(); c.fillStyle = '#fff6d8'; c.beginPath(); c.ellipse(x + 81, y - 248, 3, 7, 0, 0, 7); c.fill(); c.restore(); } };
+
 window.SHOTS = [
-  // 0.00 dusk M62 in the rain from behind Dave's windscreen; wipers thrash; tail-lights smear; fog creeps in from the edges
-  { plate: 'motorway', cam: { z: [1.0, 1.14], x: [1280, 1280], y: [720, 700] }, bed: [['rain_loop', .35], ['hum_loop', .12]], light: { dir: 1, key: 'rgba(255,150,90,.12)' },
-    init: S => { const tM = A.at(S, 'M62.', 3.3), tS = A.at(S, 'Seventy', 3.7), tL = A.at(S, 'lorries', 5.4), tSt = A.at(S, 'steam', 9.0);
-      S.D.live = [(c, lt) => traffic(c, lt + (lt > tL ? 1 : 0)), (c, lt) => rain(c, lt), (c, lt) => fog(c, .15 + .55 * E.io(K.seg(lt, tSt - 2.2, tSt + .6))), (c, lt) => wipers(c, lt)];
-      S.D.front = [dashTop, (c, lt) => CP.dashOld(c, 840, 1010, 880, lt, { press: 0 }), (c, lt) => CP.dog(c, 1170, 1004, 4, lt, 'idle'),
-        (c, lt) => wheelAndRight(c, lt, .03 * Math.sin(lt * .8)), (c, lt) => arm(c, 1840, 1800, WH.x - 300, WH.y - 10 + 4 * Math.sin(lt), 1.25)];
-      S.D.over = [(c, lt) => K.card(c, 'M62 · 70 MPH', lt, { at: tM, x: 330, y: 110, px: 52, rot: -2 })];
-      S.D.sfx = [[.1, 'rain_loop', .3], [tS, 'whoosh', .25], [tL, 'whoosh_soft', .3], [tSt, 'breath', .2]]; } },
-  // 0.01 the 2005 estate: the hand drops from the wheel to the fat DEMIST button without looking; click; fog wipes; dog nods
-  { plate: 'motorway', cam: { z: [1.3, 1.36], x: [1450, 1430], y: [880, 870] }, bed: [['rain_loop', .3], ['hum_loop', .12]], light: { dir: 1, key: 'rgba(255,150,90,.12)' },
-    init: S => { const tD = A.at(S, "don't", 2.1), tH = A.at(S, 'hand', 4.1), tB = A.at(S, 'button', 6.1), tC = A.at(S, 'Click.', 7.3), tE = A.at(S, 'Eyes', 8.2);
-      const HP = [[tH - .3, WH.x - 300, WH.y - 10], [tB - .2, 1452, 1214], [tC, 1442, 1206], [tE + .4, 1442, 1206], [tE + 1.3, WH.x - 300, WH.y - 10]];
-      const fogA = lt => .7 * (1 - E.io(K.seg(lt, tC, tC + 1.1)));
-      S.D.live = [(c, lt) => traffic(c, lt + 10), (c, lt) => rain(c, lt + 10), (c, lt) => fog(c, fogA(lt)), (c, lt) => wipers(c, lt + 10)];
-      S.D.front = [dashTop, (c, lt) => CP.dashOld(c, 840, 1010, 880, lt, { press: lt > tC && lt < tC + .35 ? 1 : 0 }), (c, lt) => CP.dog(c, 1170, 1004, 4, lt, lt > tC ? 'nod' : 'idle', { t0: tC }),
-        (c, lt) => { if (lt > tC && lt < tC + .6) TW.glow(c, 1442, 1206, 160, '255,190,90', .5 * (1 - (lt - tC) / .6)); },
-        (c, lt) => wheelAndRight(c, lt + 10, .02 * Math.sin(lt * .8)), (c, lt) => { const p = keyf(lt, HP), press = lt > tC - .1 && lt < tC + .25 ? 10 : 0; arm(c, 1840, 1800, p.x + press * .5, p.y + press, 1.25); }];
-      S.D.over = [(c, lt) => { const a = K.seg(lt, tE, tE + .4) * (1 - K.seg(lt, tE + 2.2, tE + 2.6)); if (a <= 0) return; c.save(); c.globalAlpha = a; c.strokeStyle = '#7ad87a'; c.lineWidth = 8; c.setLineDash([22, 14]); c.lineDashOffset = -lt * 60; c.beginPath(); c.moveTo(960, 120); c.lineTo(960, 420); c.stroke(); c.restore(); }];
-      S.D.sfx = [[tH, 'whoosh_soft', .2], [tC, 'tick', .6], [tC + .05, 'pop', .3], [tC + .3, 'chime', .15]]; } },
-  // 0.02 brand-new car: dark tablet wakes, climate, swipe, hunt for the tiny demist toggle; pothole jolts the hand onto the wrong item; meter ticks up
-  { plate: 'motorway', cam: { z: [1.28, 1.38], x: [1360, 1340], y: [860, 880] }, bed: [['rain_loop', .3], ['hum_loop', .14]], light: { dir: -1, key: 'rgba(120,190,255,.14)' },
-    init: S => { const tW = A.at(S, 'Wake', 2.9), tCl = A.at(S, 'climate', 4.9), tSw = A.at(S, 'Swipe.', 5.8), tDm = A.at(S, 'demist', 7.3), tTic = A.at(S, 'Tic', 9.5), tP = A.at(S, 'pothole', 11.3), tJ = A.at(S, 'jab', 12.1);
-      const HP = [[tW - .5, WH.x - 300, WH.y - 10], [tW, 1300, 1170], [tCl - .2, 1440, 1040], [tCl + .3, 1440, 1036], [tSw, 1330, 1250], [tSw + .5, 1020, 1250], [tDm - .1, 995, 1318], [tDm + .4, 995, 1318], [tDm + 1.0, 1600, 1060], [tTic, 1630, 1012], [tP, 1625, 1020], [tP + .35, 1640, 1300], [tJ, 1626, 1298]];
-      const page = lt => lt < tCl ? 'home' : lt < tSw ? 'climate' : lt < tJ + .1 ? 'menu' : 'popup', t0 = lt => lt < tCl ? 0 : lt < tSw ? tCl : lt < tJ + .1 ? tSw : tJ + .1;
-      const shake = lt => { const u = lt - tP; return u > 0 && u < 1.2 ? Math.sin(u * 40) * 26 * Math.exp(-u * 3.5) : 0; };
-      const meter = lt => Math.floor(120 * E.io(K.seg(lt, tW, tJ + .6)) / 5) * 5;
-      S.D.live = [(c, lt) => { c.save(); c.translate(0, shake(lt) * .4); traffic(c, lt + 20); rain(c, lt + 20); fog(c, .25 + .35 * K.seg(lt, 0, tJ)); wipers(c, lt + 20); c.restore(); }];
-      S.D.front = [(c, lt) => { c.save(); c.translate(0, shake(lt)); dashTop(c);
-        CP.dashTablet(c, 860, 900, 840, lt, { page: page(lt), t0: t0(lt), glow: .15 + .85 * E.out(K.seg(lt, tW, tW + .5)), text: 'HEATED STEERING|WHEEL: ON' });
-        if (lt < tW) { c.fillStyle = `rgba(4,6,10,${.85 * (1 - K.seg(lt, tW - .1, tW + .2))})`; rr(c, 860, 900, 840, 525, 18); c.fill(); }
-        const ring = K.seg(lt, tTic - .3, tTic) * (1 - K.seg(lt, tP - .2, tP)); if (ring > 0) { c.save(); c.globalAlpha = ring; c.strokeStyle = '#ffd24a'; c.lineWidth = 7; c.beginPath(); c.arc(1624, 1003, 38 + 6 * Math.sin(lt * 9), 0, 7); c.stroke(); TW.glow(c, 1624, 1003, 90, '255,210,80', .3); c.restore(); }
-        if (lt > tJ) TW.glow(c, 1626, 1298, 140, '255,80,40', .45 * (1 - K.seg(lt, tJ, tJ + .8)));
-        CP.dog(c, 700, 1004, 4, lt, lt > tW ? 'shake' : 'idle', { t0: lt > tJ ? tJ : tW });
-        wheelAndRight(c, lt + 20, lt > tP && lt < tP + 1 ? .08 * Math.sin((lt - tP) * 20) : 0);
-        const p = keyf(lt, HP), pt = lt > tW - .4; arm(c, 1840, 1800, p.x, p.y, 1.25, { point: pt }); c.restore(); }];
-      S.D.over = [meterOv(meter)];
-      S.D.sfx = [[tW, 'chime', .2], [tCl, 'pop', .2], [tSw, 'whoosh_soft', .25], [tDm, 'pop', .15], [tTic, 'tick', .3], [tP, 'thud', .5], [tP + .05, 'hit', .25], [tJ, 'alarm', .15]]; } },
+  // 0.00 Key Largo 2019, night: a white saloon glides along the mangrove road on Autopilot; inset: phone slides off the seat, the driver's hand reaches down; meter ticks up
+  { plate: 'night_road', cam: { z: [1.32, 1.4], x: [990, 1180], y: [880, 900] }, bed: [['night_loop', .3], ['hum_loop', .1]], light: { dir: 1, key: 'rgba(90,120,200,.12)' },
+    init: S => { const tK = A.at(S, 'Key', 1.5), tN = A.at(S, 'nine', 4.3), tAp = A.at(S, 'Autopilot.', 7.1), tDr = A.at(S, 'drops', 8.6), tRe = A.at(S, 'reaches', 9.9);
+      const cx = lt => 420 + 70 * lt;
+      S.D.live = [(c, lt) => { blinker(c, lt); for (let k = 0; k < 6; k++) { const ph = (lt * .05 + k / 6) % 1; c.fillStyle = `rgba(200,255,180,${.5 * Math.sin(ph * Math.PI)})`; c.beginPath(); c.arc(200 + k * 260 + 40 * Math.sin(lt + k), 900 - 80 * Math.sin(lt * .7 + k), 4, 0, 7); c.fill(); } },
+        (c, lt) => { const x = cx(lt); beam(c, x, 1150, .62); c.save(); CP.car(c, x, 1150, .62, { kind: 'tesla_like', col: CARCOL, t: lt, speed: 900, lights: true, interior: true }); c.restore();
+          // tail-light glow + autopilot glow in the cabin
+          TW.glow(c, x - 300, 1060, 60, '255,40,30', .5); TW.glow(c, x + 70, 1020, 50, '120,220,255', .35 + .15 * Math.sin(lt * 4)); }];
+      S.D.over = [(c, lt) => K.card(c, 'KEY LARGO, FLORIDA · APRIL 2019', lt, { at: tK, x: 570, y: 105, px: 40, rot: -2 }),
+        (c, lt) => K.card(c, 'JUST AFTER 9 PM', lt, { at: tN, x: 470, y: 200, px: 32, rot: 2, bg: '#1c2a4a', color: '#f2ead8' }),
+        (c, lt) => K.card(c, 'TESLA MODEL S · AUTOPILOT ON', lt, { at: tAp - .3, x: 1380, y: 105, px: 34, rot: 2, bg: '#7ac8ff' }),
+        (c, lt) => { // cabin inset: the phone slides off the seat, a hand goes down after it
+          const a = E.out(K.seg(lt, tDr - .9, tDr - .4)); if (a <= 0) return; const X = 1560, Y = 400, R = 165; c.save(); c.globalAlpha = a; c.fillStyle = 'rgba(0,0,0,.4)'; c.beginPath(); c.arc(X + 8, Y + 10, R, 0, 7); c.fill(); c.fillStyle = '#0c1018'; c.beginPath(); c.arc(X, Y, R, 0, 7); c.fill(); c.save(); c.clip();
+          TW.glow(c, X - 60, Y - 120, 260, '120,200,255', .3); c.fillStyle = '#1a1c22'; c.fillRect(X - R, Y - 90, R * 2, 40); CP.dashTablet(c, X - 150, Y - 190, 170, lt, { page: 'home', glow: .8 });
+          c.fillStyle = '#2a2420'; rr(c, X - 30, Y - 10, 260, 90, 20); c.fill(); c.fillStyle = '#3a322c'; rr(c, X - 30, Y - 10, 260, 20, 10); c.fill(); c.fillStyle = '#0a0a0e'; c.fillRect(X - R, Y + 120, R * 2, 120);
+          const fall = E.inn(K.seg(lt, tDr, tDr + .8)), px = lerp(X + 80, X - 10, fall), py = lerp(Y - 22, Y + 150, fall); c.save(); c.translate(px, py); c.rotate(fall * 1.7); c.fillStyle = '#16161c'; c.strokeStyle = '#555'; c.lineWidth = 2; rr(c, -16, -30, 32, 58, 6); c.fill(); c.stroke(); c.fillStyle = '#4a9aff'; rr(c, -12, -25, 24, 46, 3); c.fill(); c.restore();
+          const reach = E.io(K.seg(lt, tRe - .3, tRe + .9)); arm(c, X - 260, Y - 260, lerp(X - 120, X - 30, reach), lerp(Y - 120, Y + 120, reach), .7, { point: reach > .5 });
+          c.restore(); c.strokeStyle = '#f2ead8'; c.lineWidth = 7; c.beginPath(); c.arc(X, Y, R, 0, 7); c.stroke(); c.restore(); },
+        (c, lt) => lt > tRe && meterOv(lt => Math.floor(120 * E.io(K.seg(lt, tRe, S.end - S.start)) / 5) * 5)(c, lt)];
+      S.D.sfx = [[.2, 'hum_loop', .1], [tK, 'pop', .15], [tAp, 'chime', .15], [tDr, 'thud', .2], [tRe, 'whoosh_soft', .2]]; } },
+  // 0.01 the road ends at a T: stop sign and flashing light slide past; the saloon runs straight through; impact as a white flash far off; debris, dust, then blue lights. No figures.
+  { plate: 'night_road', cam: { z: [1.28, 1.0], x: [1500, 1280], y: [900, 720] }, bed: [['night_loop', .3]], light: { dir: 1, key: 'rgba(90,120,200,.12)' },
+    init: S => { const tT = A.at(S, 'T-junction.', 2.0), tDs = A.at(S, 'stop.', 4.0), tSx = A.at(S, 'sixty', 5.6), tSt = A.at(S, 'straight', 7.4), tH = A.at(S, 'hits', 8.6), tCo = A.at(S, 'couple', 11.4);
+      const XS = 2330, XI = 1786, cs = .55; const cx = lt => lt < tH ? XI - (XI - 1290) * (1 - lt / tH) * (1 - .15 * Math.sin(lt / tH * Math.PI)) : XI + 40 * E.out(K.seg(lt, tH, tH + .5));
+      const hit = lt => lt - tH; const shove = lt => hit(lt) > 0 ? 110 * E.out(K.seg(lt, tH, tH + .7)) : 0;
+      const debris = []; for (let k = 0; k < 34; k++) debris.push([Math.cos(k * 2.4) * (200 + (k * 37) % 300), -260 - (k * 53) % 380, 6 + k % 9, (k % 3) ? '#c8ccd4' : '#2a2c30']);
+      S.D.live = [(c, lt) => { blinker(c, lt); const ring = K.seg(lt, tT - .2, tT + .2) * (1 - K.seg(lt, tSt, tSt + .4)); if (ring > 0) { c.save(); c.globalAlpha = ring; c.strokeStyle = '#ffd24a'; c.lineWidth = 7; c.beginPath(); c.arc(1761, 790, 78 + 6 * Math.sin(lt * 9), 0, 7); c.stroke(); c.restore(); } },
+        (c, lt) => { const sx = XS + shove(lt), rot = hit(lt) > 0 ? .07 * E.out(K.seg(lt, tH, tH + .6)) : 0; c.save(); c.translate(sx, 1150); c.rotate(rot); CP.car(c, 0, 0, cs, { kind: 'suv_screen', col: '#3a3a44', t: 0, dir: -1, interior: false }); c.restore();
+          const x = cx(lt); if (lt < tH) beam(c, x, 1150, cs); CP.car(c, x, 1150, cs, { kind: 'tesla_like', col: CARCOL, t: lt, speed: lt < tH ? 1800 : 0, lights: lt < tH, interior: true });
+          if (lt < tH) { TW.glow(c, x - 270, 1060, 50, '255,40,30', .5); for (let k = 0; k < 3; k++) { c.fillStyle = `rgba(200,210,230,${.12 - k * .03})`; c.fillRect(x - 320 - k * 120, 1000 + k * 20, 100, 6); } } },
+        (c, lt) => { const u = hit(lt); if (u < 0) return; // dust + debris (from a distance)
+          for (let k = 0; k < 10; k++) { const p = clamp(u / 2.5), r0 = 40 + 220 * p + k * 14; c.fillStyle = `rgba(150,150,160,${.22 * (1 - p * .6)})`; c.beginPath(); c.arc(2150 + Math.cos(k) * 90 * p, 1050 - 60 * p - (k % 4) * 30, r0 * .6, 0, 7); c.fill(); }
+          debris.forEach(([vx, vy, s, col], k) => { const tt = Math.min(u, 1.1), x = 2150 + vx * tt, y = Math.min(1180, 1040 + vy * tt + 600 * tt * tt); c.save(); c.translate(x, y); c.rotate(u * (3 + k % 5)); c.fillStyle = col; c.fillRect(-s, -s / 2, s * 2, s); c.restore(); }); },
+        (c, lt) => { if (lt < tH + 1.4) return; const p = Math.sin(lt * 9) > 0; TW.glow(c, 300, 1000, 700, p ? '40,90,255' : '255,40,40', .35); TW.glow(c, 2150, 1000, 420, p ? '40,90,255' : '255,40,40', .12); }];
+      S.D.over = [(c, lt) => K.card(c, 'T-JUNCTION · STOP SIGN · FLASHING LIGHT', lt, { at: tT, x: 960, y: 105, px: 34, rot: -1, until: tH }),
+        (c, lt) => K.card(c, '60+ MPH', lt, { at: tSx, x: 470, y: 230, px: 46, rot: -3, bg: '#c83a2a', color: '#fff', until: tH + 2 }),
+        (c, lt) => { const u = lt - tH; if (u < 0 || u > 1.2) return; c.save(); c.globalAlpha = Math.max(0, 1 - u / 1.2); c.fillStyle = '#fff'; c.fillRect(0, 0, 2560, 1440); c.restore(); },
+        (c, lt) => K.card(c, 'A YOUNG COUPLE WAS STANDING BESIDE IT', lt, { at: tCo, x: 960, y: 150, px: 38, rot: 0, bg: '#1c2a4a', color: '#f2ead8' })];
+      S.D.sfx = [[tT, 'tick', .25], [tSx, 'whoosh', .35], [tSt, 'whoosh', .3], [tH, 'hit', .6], [tH + .05, 'thud', .5], [tH + 1.4, 'tension', .2]]; } },
+  // 0.02 Miami courtroom: memorial candle lit (no likeness), jury silhouettes lit, pie 2/3 DRIVER, 1/3 TESLA, counter to $243M, verdict tag
+  { plate: 'courtroom', cam: { z: [1.0, 1.06], x: [1280, 1300], y: [720, 700] }, bed: [['hum_loop', .1]], light: { dir: 1, key: 'rgba(255,200,140,.1)' },
+    init: S => { const tNa = A.at(S, 'Naibel', 1.7), tBo = A.at(S, 'boyfriend', 4.2), tJu = A.at(S, 'jury', 7.3), tDr = A.at(S, 'driver', 9.0), tTh = A.at(S, 'third', 12.2), tBi = A.at(S, 'bill:', 13.6), tMi = A.at(S, 'million', 16.6);
+      S.D.live = [(c, lt) => { const j = K.seg(lt, tJu - .2, tJu + .5); if (j > 0) { TW.glow(c, 480, 780, 520, '255,220,160', .3 * j); } },
+        (c, lt) => { const a = E.out(K.seg(lt, tDr - .2, tDr + .4)); if (a <= 0) return; const X = 1400, Y = 340, R = 170 * a; // verdict pie over the seal
+          c.save(); c.fillStyle = 'rgba(0,0,0,.4)'; c.beginPath(); c.arc(X + 8, Y + 10, R, 0, 7); c.fill(); c.fillStyle = '#e8e0d0'; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.arc(X, Y, R, 0, 7); c.fill(); c.stroke();
+          const t3 = E.out(K.seg(lt, tTh - .2, tTh + .4)); if (t3 > 0) { c.fillStyle = '#c83a2a'; c.beginPath(); c.moveTo(X, Y); c.arc(X, Y, R + 12 * t3, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 / 3 * t3); c.closePath(); c.fill(); c.stroke(); }
+          if (a > .9) { txt(c, 'DRIVER', X - 60, Y + 30, 40, INK, 'center', 'Anton'); txt(c, '2/3', X - 60, Y + 72, 40, INK, 'center', 'Anton'); }
+          if (t3 > .8) { txt(c, 'TESLA', X + 78, Y - 40, 38, '#fff', 'center', 'Anton'); txt(c, '1/3', X + 78, Y + 2, 40, '#fff', 'center', 'Anton'); } c.restore(); },
+        (c, lt) => memorial(c, 2210, 1180, lt, E.io(K.seg(lt, .2, 1.4)))];
+      S.D.over = [(c, lt) => K.card(c, 'NAIBEL BENAVIDES, 22', lt, { at: tNa, x: 1590, y: 420, px: 34, rot: 2, bg: '#f2ead8' }),
+        (c, lt) => K.card(c, 'HER BOYFRIEND BADLY HURT', lt, { at: tBo, x: 1590, y: 510, px: 26, rot: -1, bg: '#1c2a4a', color: '#f2ead8' }),
+        (c, lt) => K.card(c, 'MIAMI JURY · 2025', lt, { at: tJu, x: 380, y: 420, px: 34, rot: -2 }),
+        (c, lt) => { if (lt < tBi - .3) return; c.save(); c.globalAlpha = E.out(K.seg(lt, tBi - .3, tBi)); PR.counter(c, 470, 170, .8, 0, 243, tBi, tMi + .4, lt, { pre: '$', suf: 'M' }); c.restore(); },
+        (c, lt) => PR.tag(c, 470, 265, .34, 'JURY VERDICT (TESLA APPEALING)', tMi + .3, lt)];
+      S.D.sfx = [[.4, 'tick', .1], [tJu, 'stamp', .25], [tDr, 'pop', .2], [tTh, 'stamp', .4], [tBi, 'riser', .2], [tMi + .3, 'stamp', .4]]; } },
   // 0.03 split: left, a copper tears off a ticket for Dave's phone in the rain; right, a salesman whips the cover off a car and its big screen; dog shakes
   { plate: 'rain_street', cam: { z: [1.22, 1.27], x: [1290, 1290], y: [860, 860] }, bed: [['rain_loop', .25], ['crowd_loop', .05]],
     init: S => { const tH = A.at(S, 'Holding', 1.6), tSx = A.at(S, 'six', 5.1), tF = A.at(S, 'fine.', 7.4), tCm = A.at(S, 'carmaker', 8.5), tBo = A.at(S, 'bolting', 9.0), tTa = A.at(S, 'tablet', 10.5), tAp = A.at(S, 'Apparently', 12.2);
@@ -104,26 +134,26 @@ window.SHOTS = [
         (c, lt) => K.card(c, '6 POINTS + £200', lt, { at: tSx, x: 560, y: 200, px: 54, rot: -2, bg: '#c83a2a', color: '#fff' }),
         (c, lt) => { const a = E.out(K.seg(lt, tCm - .3, tCm + .2)); if (a <= 0) return; c.save(); c.translate(960, 150); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.35)'; c.beginPath(); c.arc(6, 8, 104, 0, 7); c.fill(); c.fillStyle = '#1c2a3a'; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.arc(0, 0, 100, 0, 7); c.fill(); c.stroke(); c.save(); c.clip(); c.fillStyle = '#2a2622'; c.fillRect(-100, 40, 200, 70); CP.dog(c, 0, 42, 3.4, lt, lt > tAp ? 'shake' : 'idle', { t0: tAp }); c.restore(); c.strokeStyle = '#f2ead8'; c.lineWidth = 5; c.beginPath(); c.arc(0, 0, 100, 0, 7); c.stroke(); c.restore(); }];
       S.D.sfx = [[tH, 'phone_ring', .2], [tF - .2, 'paper_tear', .4], [tSx, 'stamp', .3], [tBo, 'whoosh', .35], [tBo + .6, 'crowd_cheer', .15], [tTa, 'chime', .25], [tAp, 'tension', .2]]; } },
-  // 0.04 TITLE: a 2005 dashboard melts into a giant phone (home bar where the speedo was); title stamps; buttons sneak back at "backing out"
+  // 0.04 TITLE: a 2005 dashboard melts into a giant phone (home bar where the speedo was); title stamps; a crack runs across the screen at "crashing"
   { plate: 'title', cam: { z: [1.0, 1.06], x: [1280, 1280], y: [720, 740] }, bed: [['hum_loop', .12]],
-    init: S => { const tPh = A.at(S, 'phone', 2.9), tWho = A.at(S, 'Who', 3.3), tBk = A.at(S, 'backing', 7.6), tCm = A.at(S, 'carmakers', 6.0);
+    init: S => { const tTe = A.at(S, 'Tesla', 1.0), tPh = A.at(S, 'phone?', 2.9), tWhy = A.at(S, 'why', 4.6), tCr = A.at(S, 'keep', 5.8);
       const PX = 1280, PY = 1010, PW = 1100, PH = 540;
-      S.D.live = [(c, lt) => { const m = E.io(K.seg(lt, tPh - 1.4, tPh)); TW.glow(c, PX, PY - 200, 900, '120,170,255', .18 + .1 * m);
-        // the old dash (fades + squashes)
+      const crack = [[-200, -270], [-150, -170], [-180, -90], [-60, -20], [-90, 60], [40, 110], [10, 200], [120, 270]], br = [[-60, -20, 140, -60], [-90, 60, -260, 120], [40, 110, 230, 170]];
+      S.D.live = [(c, lt) => { const m = E.io(K.seg(lt, tPh - 1.6, tPh)); TW.glow(c, PX, PY - 200, 900, '120,170,255', .18 + .1 * m);
         if (m < 1) { c.save(); c.globalAlpha = 1 - m; c.translate(PX, PY - 150); c.scale(1 - .2 * m, 1 + .3 * m); CP.dashOld(c, -600, -195, 1200, lt, { press: Math.floor(lt * 1.5) % 2 }); c.restore(); }
-        // the phone (grows out of it)
         if (m > 0) { c.save(); c.globalAlpha = m; c.translate(PX, PY - PH / 2); const s = .75 + .25 * m; c.scale(s, s);
           c.fillStyle = 'rgba(0,0,0,.35)'; rr(c, -PW / 2 + 14, -PH / 2 + 22, PW, PH, 80); c.fill();
           c.fillStyle = '#16161c'; c.strokeStyle = INK; c.lineWidth = 10; rr(c, -PW / 2, -PH / 2, PW, PH, 80); c.fill(); c.stroke(); c.strokeStyle = '#4a4a56'; c.lineWidth = 4; rr(c, -PW / 2 + 10, -PH / 2 + 10, PW - 20, PH - 20, 72); c.stroke();
-          c.save(); rr(c, -PW / 2 + 40, -PH / 2 + 40, PW - 80, PH - 80, 50); c.clip(); CP.dashTablet(c, -PW / 2 + 40, -PH / 2 + 40, PW - 80, lt, { page: 'home' }); c.restore();
+          c.save(); rr(c, -PW / 2 + 40, -PH / 2 + 40, PW - 80, PH - 80, 50); c.clip(); CP.dashTablet(c, -PW / 2 + 40, -PH / 2 + 40, PW - 80, lt, { page: 'home' });
+          const k = K.seg(lt, tCr - .1, tCr + .35); if (k > 0) { c.strokeStyle = 'rgba(255,255,255,.9)'; c.lineWidth = 5; c.lineJoin = 'miter'; const n = Math.max(1, Math.round(crack.length * k)); c.beginPath(); crack.slice(0, n).forEach((p, i) => i ? c.lineTo(p[0], p[1]) : c.moveTo(p[0], p[1])); c.stroke();
+            if (k >= 1) { c.lineWidth = 3; br.forEach(([a, b, d, e]) => { c.beginPath(); c.moveTo(a, b); c.lineTo(d, e); c.stroke(); }); c.fillStyle = 'rgba(0,0,0,.25)'; c.fillRect(-PW / 2, -PH / 2, PW, PH); } }
+          c.restore();
           c.fillStyle = '#0a0a0e'; rr(c, -90, -PH / 2 + 18, 180, 30, 15); c.fill(); c.fillStyle = 'rgba(255,255,255,.85)'; rr(c, -130, PH / 2 - 34, 260, 12, 6); c.fill(); c.restore(); }
         TW.sparkle(c, PX - 560, PY - 560, lt * 1.3, 1.5); TW.sparkle(c, PX + 600, PY - 120, lt * 1.1 + 2, 1.2); }];
-      S.D.front = [(c, lt) => { const m = E.io(K.seg(lt, tPh - 1.4, tPh)), s = .75 + .25 * m, top = PY - PH / 2 - PH / 2 * s;
-          // buttons sneaking back out of the phone's lower edge
-          const b = E.out(K.seg(lt, tBk - .2, tBk + .6)); if (b > 0) [['A/C', -380], ['DEMIST', -130], ['VOL', 120], ['HAZARD', 370]].forEach(([l, bx], i) => { const u = E.out(K.seg(lt, tBk - .2 + i * .15, tBk + .4 + i * .15)); c.save(); c.translate(PX + bx * s, PY - 4 + 76 * u); c.fillStyle = i === 3 ? '#c83a2a' : '#d8d2c2'; c.strokeStyle = INK; c.lineWidth = 6; rr(c, -95, -50, 190, 90, 16); c.fill(); c.stroke(); txt(c, l, 0, -4, 34, i === 3 ? '#fff' : INK, 'center', 'Anton'); c.restore(); });
-          CP.dog(c, lerp(PX + 380, PX + 470 * s, m), lerp(PY - 150 - 195, top, m) + 4, 5.5, lt, lt > tBk ? 'nod' : lt > tPh ? 'shake' : 'idle', { t0: lt > tBk ? tBk : tPh }); }];
+      S.D.front = [(c, lt) => { const m = E.io(K.seg(lt, tPh - 1.6, tPh)), s = .75 + .25 * m, top = PY - PH / 2 - PH / 2 * s;
+          CP.dog(c, lerp(PX + 380, PX + 470 * s, m), lerp(PY - 150 - 195, top, m) + 4, 5.5, lt, lt > tPh ? 'shake' : 'idle', { t0: tPh }); }];
       S.D.over = [(c, lt) => TW.stamp(c, 'YOUR CAR IS A PHONE NOW', 960, 150, lt, tPh, { px: 92, rot: -.03, col: '#ffd24a' }),
-        (c, lt) => K.card(c, 'WHO DECIDED THIS?', lt, { at: tWho, x: 330, y: 330, px: 40, rot: -3 }),
-        (c, lt) => K.card(c, 'SOME ARE BACKING OUT', lt, { at: tCm, x: 1610, y: 330, px: 40, rot: 2, bg: '#c83a2a', color: '#fff' })];
-      S.D.sfx = [[tPh - 1.4, 'riser', .3], [tPh, 'stamp', .5], [tWho, 'pop', .2], [tBk, 'tick', .4], [tBk + .2, 'pop', .25]]; } },
+        (c, lt) => K.card(c, 'DID TESLA DO THIS?', lt, { at: tTe, x: 1560, y: 420, px: 34, rot: 2 }),
+        (c, lt) => K.card(c, 'IS THAT WHY SOME CRASH?', lt, { at: tWhy, x: 360, y: 420, px: 34, rot: -3, bg: '#c83a2a', color: '#fff' })];
+      S.D.sfx = [[tPh - 1.6, 'riser', .3], [tPh, 'stamp', .5], [tTe, 'pop', .2], [tWhy, 'pop', .2], [tCr, 'hit', .3]]; } },
 ];

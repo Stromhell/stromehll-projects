@@ -1,0 +1,9 @@
+Then there's the name. Autopilot. To most people, that sounds like a plane that flies itself. In reality, it's a driver-assist system. You're meant to keep your eyes on the road and your hands on the wheel.
+
+America's road-safety regulator, NHTSA, spent about three years looking at nine hundred and fifty-six crashes. It found Tesla's system for checking drivers were paying attention was weak, and linked it to crashes that killed at least thirteen people.
+
+In December 2023, Tesla recalled more than two million cars, nearly every one it had sold in America, to update the software. The fix? More warnings. Delivered, of course, over the air. Like a phone update.
+
+Then California stepped in. In December 2025, a judge ruled that Tesla's Autopilot and Full Self-Driving marketing had been misleading. Tesla stopped using the word Autopilot in the state, and dropped Autopilot as a product in the US and Canada.
+
+And the questions haven't stopped. In 2026, the regulator stepped up its investigation into Full Self-Driving to cover more than three million Teslas, after reports of cars running red lights and drifting into the wrong lane.

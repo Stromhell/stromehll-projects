@@ -2,7 +2,7 @@
 
 Working title: **Is Tesla's Phone-on-Wheels Causing Crashes?**
 
-6 parts (cold open + 5 acts), 31 shots, 976 words, about 6:31 at 160 wpm.
+8 parts (cold open + 7 acts), 45 shots, 1410 words, about 9:25 at 160 wpm.
 
 **Running device:** Running 'EYES OFF ROAD' meter in the top-left corner: metres driven blind per task, ticking up whenever a screen is touched. Recurring symbol: Dave's nodding-dog dashboard toy, which nods happily at buttons and shakes its head at screens.
 
@@ -66,14 +66,38 @@ Working title: **Is Tesla's Phone-on-Wheels Causing Crashes?**
 | 4.04 | MED | 15.1 | Regulators have opened investigations into Tesla door handles, and US lawmakers are pushing for a rule that every car must have a mechanical door release anyone can find. Tesla's design chief says it's working on combining the two. | Capitol-style hearing room, a big red lever on a podium labelled 'MECHANICAL RELEASE'; a stylised designer nods and sketches a door with both a button and a pull handle. | NHTSA PROBES · BILL IN CONGRESS |
 | 4.05 | MED | 10.6 | That's the problem with treating a car like a phone. When a phone crashes, you restart it. When a car crashes, you need to get out. | Split: a frozen phone with a spinning wheel; a crashed car with the door handle glowing; nodding dog shakes its head slowly. |  |
 
-## The fightback  (0:47, 116 words)
+## Follow the money  (1:06, 164 words)
 
 | Shot | Type | Sec | VO | Visual | On screen |
 |---|---|---|---|---|---|
-| 5.01 | WIDE | 8.7 | So is there a way back? Volkswagen has already promised the buttons are returning. And Porsche just went one step further. | Design studio: a box of chunky buttons carried back in on a trolley; a workshop door rolls up revealing a covered sports car. |  |
-| 5.02 | MED | 15.1 | And what did Porsche show next? The Mission S concept. A mid-engined supercar with a real key, real buttons, round dials with a proper needle, and no central screen. Need sat nav? There's a holder for your phone. | A warm workshop; dust sheet off a low red concept; close-up: key turned, chunky toggles, an analogue rev needle sweeps; a phone clicks into a little holder; nodding dog nods wildly. | PORSCHE MISSION S (CONCEPT) |
-| 5.03 | MED | 12.4 | So maybe there's hope. Let carmakers build phones on wheels if they want. But we already have phones. When buyers stop paying for them, watch how fast the buttons come back. | Back on the M62, rain easing to golden dusk; Dave in a car with buttons presses demist by feel; nodding dog nods; EYES OFF ROAD meter resets to 0. | EYES OFF ROAD: 0 m |
-| 5.04 | MED | 10.6 | Would you trust a car that works like a phone? Tell me in the comments. And for more stories like this, subscribe to Stormi Explain Everything. | End card space: Stormi mascot beside the nodding dog, comment bubble icon and subscribe button; clean area for end screen. |  |
+| 5.01 | WIDE | 12.1 | And Tesla isn't the only one turning cars into phones. Mercedes went even further. Its MBUX Hyperscreen is glass from pillar to pillar, with a screen just for the passenger. | A glossy motor-show stand, a dashboard that is one wall of glowing glass; the passenger watches cat videos. | MERCEDES MBUX HYPERSCREEN |
+| 5.02 | MED | 15.8 | Some models even get a dashboard camera for video calls. Yes, you can join the Monday meeting from the driver's seat. And another camera watches your eyes, to check you're not distracted. In a cabin that glows like a nightclub. | Dave in a call grid with colleagues on the dash; a little eye-tracking camera blinks; the whole cabin pulses with purple ambient lighting. |  |
+| 5.03 | MED | 12.8 | So why push screens so hard? The honest answer is money. A good switch costs real engineering: moving parts, wiring, that lovely solid click. A touchscreen is one part that does everything. | Factory table: on the left a heap of switches, springs and looms with a big price; on the right one flat screen with a small price; an accountant smiles. | BUTTONS £££ · SCREEN £ |
+| 5.04 | MED | 12.4 | And once your car has a screen, it can show you anything. Ford has filed a patent for adverts inside the car, based on where you are and where you're going. | A patent document unrolls; Dave drives past a burger place and the dash flashes a cartoon ad with an arrow 'TURN LEFT FOR FRIES'. | FORD PATENT: IN-CAR ADS |
+| 5.05 | MED | 12.4 | Ford says a patent isn't a plan. But some Jeep owners have already reported full-screen pop-up ads at traffic lights. Don't like the ads? I'm sure there'll be an ad-free subscription. | At a red light a pop-up 'EXTENDED WARRANTY!' fills a Jeep-like dash; the driver groans; a little 'GO PREMIUM' button blinks. | POP-UP ADS (OWNER REPORTS) |
+
+## Pay monthly for your own seats  (1:09, 171 words)
+
+| Shot | Type | Sec | VO | Visual | On screen |
+|---|---|---|---|---|---|
+| 6.01 | WIDE | 7.5 | Which brings us to the sneakiest idea of all. Paying a subscription for things your car already has. | A kitchen table at night covered in bills: phone, TV, music, and a new one: CAR SEATS. Dave stares at a banking app. |  |
+| 6.02 | MED | 13.2 | In 2022, BMW owners in Britain found they could pay about fifteen pounds a month to switch on their heated seats. The heaters were already in the seat. You were renting the button. | A seat with glowing heating coils inside, padlocked; a coin slot; Dave feeds £15 and the seat warms; steam rises. | HEATED SEATS: ~£15/MONTH |
+| 6.03 | MED | 6.8 | People were so angry that BMW dropped it a year later. But the idea didn't die. | Angry crowd with pitchforks made of seatbelts; BMW-style exec retreats waving a white flag; a 'subscription' ghost floats away to another showroom. | BMW DROPPED IT (2023) |
+| 6.04 | MED | 12.8 | Mercedes sold extra acceleration on its electric EQS and EQE in America for twelve hundred dollars a year. Same motors, same battery. The power was there all along, locked behind a paywall. | A sleek EV with a speedo needle tied down by a chain and padlock; a key card swipes '$1,200/yr' and the car leaps forward. | +ACCELERATION: $1,200/YR (US) |
+| 6.05 | MED | 15.8 | And when the software stops being supported, the car can lose features you paid for. When America switched off 3G in 2022, early Teslas needed a two-hundred-dollar modem upgrade to stay connected. Some Hondas faced bills of around nine hundred. | A 3G phone mast powers down with sparks; a row of older cars' screens go grey 'NO SIGNAL'; repair invoices flutter down: $200, ~$900. | 3G SWITCH-OFF · 2022 |
+| 6.06 | MED | 12.8 | That's the phone business model. Rent you the features, then make the old one feel ancient. The difference is, a phone costs a few hundred pounds. A car costs a lot more. | Dave's old car in a scrapyard next to a pile of old phones; a crane lifts the car onto the phone pile; nodding dog shakes its head. |  |
+
+## The fightback  (1:26, 215 words)
+
+| Shot | Type | Sec | VO | Visual | On screen |
+|---|---|---|---|---|---|
+| 7.01 | WIDE | 14.7 | Even Ferrari got caught up in the screen craze. In May 2026, it showed its first fully electric car, the Luce, in Rome. The interior was designed with Jony Ive's studio. Yes, the man behind the iPhone. | A Rome launch stage at night, columns and spotlights; a veiled car; the cloth slides off; a stylised designer in round glasses gestures calmly at a minimalist cabin. | FERRARI LUCE · ROME 2026 |
+| 7.02 | MED | 11.3 | The reaction was brutal. Ferrari's shares fell about eight percent in Milan, billions wiped off in a day. One former Ferrari boss reportedly called it a historic mistake. | Milan stock board, a red line nosediving; traders clutching heads; a quote card 'HISTORIC MISTAKE'. | FERRARI SHARES -8% (MILAN) |
+| 7.03 | MED | 9.8 | Enzo Ferrari liked to say he sold engines, and the car came free. The Luce has no engine at all. Somewhere, Enzo is spinning. | Sepia portrait of a stern old man in dark glasses beside a roaring V12 engine; the engine fades; the portrait slowly rotates. |  |
+| 7.04 | MED | 8.7 | Porsche learnt the hard way too. After betting big on electric, its operating profit for 2025 fell by about ninety-three percent. | Porsche-style HQ boardroom; a bar chart crumbles from tall to tiny: €5.6bn to €0.4bn; execs stare. | PORSCHE 2025 PROFIT -93% |
+| 7.05 | MED | 15.1 | And what did Porsche show next? The Mission S concept. A mid-engined supercar with a real key, real buttons, round dials with a proper needle, and no central screen. Need sat nav? There's a holder for your phone. | A warm workshop; dust sheet off a low red concept; close-up: key turned, chunky toggles, an analogue rev needle sweeps; a phone clicks into a little holder; nodding dog nods wildly. | PORSCHE MISSION S (CONCEPT) |
+| 7.06 | MED | 12.4 | So maybe there's hope. Let carmakers build phones on wheels if they want. But we already have phones. When buyers stop paying for them, watch how fast the buttons come back. | Back on the M62, rain easing to golden dusk; Dave in a car with buttons presses demist by feel; nodding dog nods; EYES OFF ROAD meter resets to 0. | EYES OFF ROAD: 0 m |
+| 7.07 | MED | 14.3 | Would you trust a car that works like a phone? And would you pay monthly for your own heated seats? Tell me in the comments. And for more stories like this, subscribe to Stormi Explain Everything. | End card space: Stormi mascot beside the nodding dog, comment bubble icon and subscribe button; clean area for end screen. |  |
 
 ## Launch package
 
@@ -114,11 +138,12 @@ Working title: **Is Tesla's Phone-on-Wheels Causing Crashes?**
 - Piedmont Cybertruck crash Nov 2024: 3 students died; CHP blamed speed and impairment; families' lawsuits CLAIM doors trapped them (not ruled).
 - Vi Bilägare 2022: 2005 Volvo V70 10 s/306 m; MG Marvel R 44.9 s. VW Mindt 'never, ever' (Mar 2025). Porsche Mission S concept: key, buttons, analogue tach, phone holder.
 - UK hand-held phone penalty: 6 points + £200.
+- v1 facts kept: Mercedes $1,200/yr acceleration (US), BMW heated seats ~£15/month UK 2022 dropped 2023, Ford in-car ad patent (Ford: not a plan), Jeep pop-up ads (owner reports), 3G shutdown Tesla $200 / Honda ~$900, Ferrari Luce shares ~-8% Milan, Porsche 2025 operating profit -92.7%.
 - No gore: crashes shown at distance as flashes/lights; victims not depicted; memorial only.
 
 ## Removed from the transcript
 
-- v2 (Pushpam 22 Nov 05:45 UTC): re-angled around Tesla-linked crashes, blended with the v1 cars-into-phones script. Subscriptions, ads, Mercedes, Ferrari parts cut.
+- v3 (Pushpam 22 Nov 05:54 UTC): Tesla crash parts (v2) PLUS all v1 parts kept: money/ads, subscriptions, Ferrari/Porsche. 8 parts.
 - Rewritten from scratch in our own words (source ~1,950 words, ours ~1,250).
 - Crude jokes and clip audio cut; replaced with a British everyman driver (Dave) and a nodding-dog running gag.
 - Xiaomi recall and BMW 'Pro' naming jabs cut for length.

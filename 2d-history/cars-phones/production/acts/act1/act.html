@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><title>CP act 1 - act 1</title>
+<!doctype html><html><head><meta charset="utf-8"><title>CP act 1 - How the tablet ate the dashboard</title>
 <style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
 <body><canvas id="c" width="1920" height="1080"></canvas>
 <script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
@@ -134,6 +134,23 @@ window.SHOTS = [
           try { A.figure(c, { x: 1670, y: 1010, s: 2.6, ...CP.DAVE(), facing: 1, pose: 'stand', mood: down(lt) ? 'worried' : 'neutral', lean: down(lt) ? 8 : 0 }, lt, u, SS); } catch (e) { console.error('FIG', e.message); } c.restore(); c.strokeStyle = '#f2ead8'; c.lineWidth = 6; rr(c, 1480, 70, 380, 320, 24); c.stroke(); c.restore(); },
         (c, lt) => K.card(c, 'EYES ON THE ROAD', lt, { at: tRd - .3, x: 960, y: 200, px: 64, rot: -2, bg: '#7ad87a' })];
       S.D.sfx = [[tB, 'tick', .4], [tSc, 'chime', .15], [tSe, 'scrape', .35], [tSe + 1, 'scrape', .3], [tRd, 'hit', .3]]; } },
+  // 1.04 2021 screen recall: the dash screen glitches and dies; the windscreen fogs with no demister; the reversing-camera icon fades; recall stamp 135,000 CARS
+  { plate: 'motorway', cam: { z: [1.15, 1.25], x: [1280, 1300], y: [820, 860] }, bed: [['rain_loop', .22], ['hum_loop', .12]], light: { dir: -1, key: 'rgba(120,190,255,.12)' },
+    init: S => { const tDi = A.at(S, 'dies,', 1.6), tYr = A.at(S, '2021,', 4.0), tHu = A.at(S, 'hundred', 7.5), tCh = A.at(S, 'chip', 13.5), tDe = A.at(S, 'demister', 16.0), tRv = A.at(S, 'reversing', 17.2);
+      const dead = lt => K.seg(lt, tDi, tDi + .9), glitch = lt => lt > tDi - .2 && lt < tDi + .9 && Math.sin(lt * 53) > .2;
+      S.D.live = [(c, lt) => { traffic(c, lt + 40); rain(c, lt + 40, 70); fog(c, .1 + .75 * E.io(K.seg(lt, tDi + .5, tDe + 1.2))); wipers(c, lt + 40, 1.6); }];
+      S.D.front = [(c, lt) => { dashTop(c); const d = dead(lt); CP.dashTablet(c, 860, 900, 840, lt, { page: 'home', glow: glitch(lt) ? .2 : 1 - d });
+          if (glitch(lt)) { c.save(); for (let k = 0; k < 6; k++) { c.fillStyle = k % 2 ? 'rgba(255,40,120,.5)' : 'rgba(40,255,220,.5)'; c.fillRect(860, 900 + ((k * 97 + Math.floor(lt * 30) * 41) % 500), 840, 14); } c.restore(); }
+          if (d > 0) { c.fillStyle = `rgba(4,5,8,${.97 * d})`; rr(c, 860, 900, 840, 525, 18); c.fill(); }
+          CP.dog(c, 700, 1004, 4, lt, lt > tDi ? 'shake' : 'idle', { t0: tDi }); wheelAndRight(c, lt + 40, .02 * Math.sin(lt * .8)); arm(c, 1840, 1800, WH.x - 300, WH.y - 10 + 4 * Math.sin(lt), 1.25); }];
+      S.D.over = [(c, lt) => K.card(c, 'RECALL · 2021', lt, { at: tYr, x: 420, y: 110, px: 46, rot: -2, bg: '#c83a2a', color: '#fff' }),
+        (c, lt) => TW.stamp(c, '135,000 CARS', 960, 250, lt, tHu, { px: 80, rot: -.05, col: '#ffd24a' }),
+        (c, lt) => K.card(c, 'SCREEN MEMORY CHIP WEARS OUT', lt, { at: tCh, x: 1450, y: 110, px: 32, rot: 2 }),
+        (c, lt) => { const items = [['DEMISTER', tDe, 600], ['REVERSING CAMERA', tRv, 1320]]; items.forEach(([l, t0, x]) => { const a = K.seg(lt, t0 - .2, t0 + .2); if (a <= 0) return; const fade = 1 - .75 * K.seg(lt, t0 + .4, t0 + 1.4); c.save(); c.globalAlpha = a * fade; c.fillStyle = '#16181c'; c.strokeStyle = '#7ac8ff'; c.lineWidth = 5; rr(c, x - 150, 370, 300, 110, 18); c.fill(); c.stroke();
+            if (l === 'DEMISTER') { c.strokeStyle = '#ffb040'; c.lineWidth = 5; for (let k = 0; k < 3; k++) { c.beginPath(); c.moveTo(x - 40 + k * 40, 450); c.bezierCurveTo(x - 60 + k * 40, 420, x - 20 + k * 40, 410, x - 40 + k * 40, 385); c.stroke(); } }
+            else { c.fillStyle = '#7ac8ff'; rr(c, x - 50, 395, 70, 50, 8); c.fill(); c.beginPath(); c.moveTo(x + 20, 420); c.lineTo(x + 55, 398); c.lineTo(x + 55, 442); c.fill(); }
+            txt(c, l, x, 500, 26, '#f2ead8', 'center', 'Anton'); if (fade < .6) { c.globalAlpha = a; c.strokeStyle = '#ff4a3a'; c.lineWidth = 9; c.beginPath(); c.moveTo(x - 120, 380); c.lineTo(x + 120, 470); c.stroke(); } c.restore(); }); }];
+      S.D.sfx = [[tDi - .2, 'scrape', .3], [tDi + .5, 'thud', .3], [tYr, 'pop', .2], [tHu, 'stamp', .5], [tCh, 'tick', .3], [tDe, 'breath', .25], [tRv, 'pop', .2]]; } },
 ];
 const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
 A.build(); K.boot();

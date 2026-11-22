@@ -1,0 +1,169 @@
+// CP act 4 - Pay monthly for your own seats: the bills, the heated-seat coin slot, the backlash, paid acceleration, the 3G switch-off, the scrapyard.
+// Plates: kitchen, showroom, airfield, shopfront, scrapyard. EYES OFF ROAD meter hidden in this act (per brief).
+for (const n of ['kitchen', 'showroom', 'airfield', 'shopfront', 'scrapyard']) K.load(n, PL + n + '.jpg');
+const rr = TW.rr, txt = TW.txt, clamp = K.clamp;
+const FS = 1.35; // adult figure scale in plate px (~513 px tall); cars and seats use the same scale
+// ---- name tag (gold tile with pointer)
+const tag = (c, name, x, y, lt, at, o = {}) => { const a = pop(lt, at, .4), out = 1 - K.seg(lt, (o.until ?? 999) - .3, o.until ?? 999); if (a <= 0 || out <= 0) return; const px = o.px ?? 40; c.save(); c.globalAlpha = out; c.translate(x, y); c.scale(a, a); c.font = `${px}px Anton`;
+  const w = c.measureText(name).width + px * .9, h = px * 1.45; c.fillStyle = 'rgba(0,0,0,.35)'; rr(c, -w / 2 + 6, -h - 12, w, h, 10); c.fill(); c.fillStyle = o.col || JH.GOLD; c.strokeStyle = INK; c.lineWidth = 4; rr(c, -w / 2, -h - 18, w, h, 10); c.fill(); c.stroke();
+  c.beginPath(); c.moveTo(-14, -19); c.lineTo(0, 0); c.lineTo(14, -19); c.closePath(); c.fill(); c.stroke(); c.fillRect(-12, -24, 24, 7); txt(c, name, 0, -h / 2 - 16, px, INK, 'center', 'Anton'); c.restore(); };
+// ---- small source chip
+const chip = (c, label, x, y, lt, at, o = {}) => { const a = pop(lt, at, .35), out = 1 - K.seg(lt, (o.until ?? 999) - .3, o.until ?? 999); if (a <= 0 || out <= 0) return; c.save(); c.globalAlpha = out; c.translate(x, y); c.rotate(o.rot ?? -.03); c.scale(a, a); c.font = '28px Oswald'; const w = c.measureText(label).width + 40;
+  c.fillStyle = '#111'; rr(c, -w / 2, -22, w, 44, 8); c.fill(); c.fillStyle = JH.GOLD; c.fillRect(-w / 2, -22, 8, 44); txt(c, label, 4, 1, 28, '#f4efe2', 'center', 'Oswald'); c.restore(); };
+// ---- rain streaks inside a rect (world)
+const rain = (c, lt, x, y, w, h, n = 60, a = .35) => { c.save(); c.beginPath(); c.rect(x, y, w, h); c.clip(); c.strokeStyle = `rgba(200,215,235,${a})`; c.lineWidth = 2;
+  for (let k = 0; k < n; k++) { const px = x + ((k * 197.3) % w), py = y + (((k * 131.7) + lt * 900) % (h + 80)) - 40; c.beginPath(); c.moveTo(px, py); c.lineTo(px - 6, py + 34); c.stroke(); } c.restore(); };
+// ---- simple wooden kitchen chair (side view), seat at seatY
+const kChair = (c, x, floorY, seatY, facing = 1) => { c.save(); c.strokeStyle = INK; c.lineWidth = 4; c.fillStyle = '#7a4a26'; CP.shadow(c, x, floorY, 90, .35);
+  for (const dx of [-48, 48]) { rr(c, x + dx - 7, seatY, 14, floorY - seatY, 4); c.fill(); c.stroke(); }
+  const bx = x - facing * 52; rr(c, bx - 8, seatY - 190, 16, 200, 5); c.fill(); c.stroke(); c.fillStyle = '#8a5630'; rr(c, bx - 14, seatY - 200, 28, 40, 6); c.fill(); c.stroke();
+  c.fillStyle = '#93603a'; rr(c, x - 62, seatY - 6, 124, 20, 6); c.fill(); c.stroke(); c.restore(); };
+// ---- bill lying on a table top (flattened invoice), slides in from sx
+const tableBill = (c, x, y, text, lt, at, sx, rot) => { const u = E.out(K.seg(lt, at, at + .55)); if (lt < at) return; const px = sx + (x - sx) * u; c.save(); c.translate(px, y); c.scale(1, .42); CP.invoice(c, 0, -150 * .62, .62, text, rot + (1 - u) * .4); c.restore(); };
+// ---- bank app card (screen), rows appear at times
+const bankCard = (c, lt, rows, at0) => { const a = pop(lt, at0, .45); if (a <= 0) return; c.save(); c.translate(330, 300); c.scale(a, a); c.rotate(-.02);
+  c.fillStyle = 'rgba(0,0,0,.35)'; rr(c, -232, -192, 480, 400, 26); c.fill(); c.fillStyle = '#f7f5ef'; c.strokeStyle = INK; c.lineWidth = 5; rr(c, -240, -200, 480, 400, 26); c.fill(); c.stroke();
+  c.fillStyle = '#1f3a5a'; rr(c, -240, -200, 480, 70, 26); c.fill(); c.fillRect(-240, -150, 480, 20); txt(c, 'DIRECT DEBITS', 0, -164, 36, '#fff', 'center', 'Anton');
+  rows.forEach(([name, amt, t, hot], k) => { const r = pop(lt, t, .35); if (r <= 0) return; const y = -100 + k * 70; c.save(); c.translate(0, y); c.scale(1, r); c.fillStyle = hot ? '#ffe2dc' : '#ebe7dc'; rr(c, -215, -28, 430, 58, 12); c.fill();
+    if (hot) { c.strokeStyle = RED; c.lineWidth = 4; rr(c, -215, -28, 430, 58, 12); c.stroke(); }
+    txt(c, name, -195, 2, 32, hot ? RED : INK, 'left', 'Anton'); txt(c, amt, 195, 2, 32, hot ? RED : INK, 'right', 'Anton');
+    if (hot) { const b = pop(lt, t + .3, .3); c.save(); c.translate(70, -26); c.scale(b, b); c.rotate(.12); c.fillStyle = RED; rr(c, -36, -16, 72, 32, 8); c.fill(); txt(c, 'NEW', 0, 1, 24, '#fff', 'center', 'Anton'); c.restore(); }
+    c.restore(); }); c.restore(); };
+// ---- coin-slot meter post (world, bottom centre), h ~ 330*s
+const coinPost = (c, x, y, s, lt, paid) => { c.save(); CP.shadow(c, x, y, 60 * s, .35); c.translate(x, y); c.scale(s, s); c.strokeStyle = INK; c.lineWidth = 3;
+  c.fillStyle = '#5a5e66'; rr(c, -9, -230, 18, 230, 4); c.fill(); c.stroke(); c.fillStyle = '#3a3e46'; rr(c, -28, -8, 56, 10, 3); c.fill(); c.stroke();
+  const g = c.createLinearGradient(-50, 0, 50, 0); g.addColorStop(0, '#9aa0aa'); g.addColorStop(.5, '#d4d8e0'); g.addColorStop(1, '#7a808a'); c.fillStyle = g; rr(c, -52, -340, 104, 120, 18); c.fill(); c.stroke();
+  c.fillStyle = paid ? '#1a4a2a' : '#2a1414'; rr(c, -40, -326, 80, 44, 6); c.fill(); txt(c, paid ? 'PAID' : '£15/mo', 0, -303, paid ? 26 : 22, paid ? '#7aff9a' : '#ff7a6a', 'center', 'Anton');
+  if (paid) TW.glow(c, 0, -304, 70, '120,255,150', .25 + .1 * Math.sin(lt * 6));
+  c.fillStyle = '#1a1a1e'; rr(c, -18, -264, 36, 8, 3); c.fill(); c.restore(); };
+// ---- white flag (hold, upright at the hand)
+const FLAG = { near: (cc, t) => { cc.save(); cc.strokeStyle = '#6a4a2a'; cc.lineWidth = 5; cc.beginPath(); cc.moveTo(0, 20); cc.lineTo(0, -150); cc.stroke(); cc.fillStyle = '#f4f2ec'; cc.strokeStyle = INK; cc.lineWidth = 2.5; cc.beginPath(); cc.moveTo(0, -150);
+  for (let k = 0; k <= 8; k++) cc.lineTo(k * 11, -150 + Math.sin(t * 9 + k * .8) * 6 * k / 8); cc.lineTo(88, -96 + Math.sin(t * 9 + 7) * 6); for (let k = 8; k >= 0; k--) cc.lineTo(k * 11, -96 + Math.sin(t * 9 + k * .8) * 6 * k / 8); cc.closePath(); cc.fill(); cc.stroke(); cc.restore(); } };
+// ---- protest pitchfork made of seatbelts (hold)
+const BELTFORK = { near: (cc) => { cc.save(); cc.strokeStyle = '#3a3a42'; cc.lineWidth = 6; cc.beginPath(); cc.moveTo(0, 30); cc.lineTo(0, -120); cc.stroke(); cc.strokeStyle = '#2a2a30'; cc.lineWidth = 9; cc.lineCap = 'round';
+  for (const dx of [-26, 0, 26]) { cc.beginPath(); cc.moveTo(0, -120); cc.quadraticCurveTo(dx, -125, dx, -150); cc.lineTo(dx, -178); cc.stroke(); } cc.fillStyle = '#c8ccd4'; cc.strokeStyle = INK; cc.lineWidth = 2; for (const dx of [-26, 0, 26]) { rr(cc, dx - 8, -196, 16, 20, 3); cc.fill(); cc.stroke(); } cc.restore(); } };
+// ---- 'subscription' ghost (it floats on purpose)
+const ghost = (c, x, y, s, lt, a) => { if (a <= 0) return; c.save(); c.globalAlpha = a * .85; c.translate(x, y + Math.sin(lt * 3) * 12); c.scale(s, s); c.fillStyle = 'rgba(236,240,255,.92)'; c.strokeStyle = 'rgba(40,40,70,.8)'; c.lineWidth = 4;
+  c.beginPath(); c.moveTo(-90, 60); c.bezierCurveTo(-110, -40, -80, -150, 0, -150); c.bezierCurveTo(80, -150, 110, -40, 90, 60); for (let k = 0; k < 6; k++) c.quadraticCurveTo(90 - k * 30 - 15, 60 + 26 * Math.sin(lt * 8 + k), 90 - (k + 1) * 30, 60); c.closePath(); c.fill(); c.stroke();
+  c.fillStyle = '#20203a'; for (const dx of [-30, 30]) { c.beginPath(); c.ellipse(dx, -70, 12, 18, 0, 0, 7); c.fill(); } c.beginPath(); c.ellipse(0, -20, 18, 12, 0, 0, 7); c.fill();
+  txt(c, '£/MONTH', 0, 30, 30, '#5a3aa0', 'center', 'Anton'); c.restore(); };
+// ---- chain between two points with sag; broken -> two dangling halves
+const chain = (c, x0, y0, x1, y1, sag, lt, broken = 0) => { c.save(); c.strokeStyle = '#8a8e96'; c.lineWidth = 7; const n = 22;
+  const pts = []; for (let k = 0; k <= n; k++) { const u = k / n; pts.push([x0 + (x1 - x0) * u, y0 + (y1 - y0) * u + Math.sin(u * Math.PI) * sag]); }
+  pts.forEach(([x, y], k) => { if (broken && Math.abs(k - n / 2) < 2) return; const hang = broken ? (k < n / 2 ? (k / (n / 2)) : ((n - k) / (n / 2))) * 60 * E.out(clamp(broken)) : 0; c.save(); c.translate(x, y + hang); c.rotate(k % 2 ? 0 : Math.PI / 2); c.beginPath(); c.ellipse(0, 0, 13, 7, 0, 0, 7); c.stroke(); c.restore(); }); c.restore(); };
+// ---- key-card swipe in a reader (screen space, centre x,y)
+const reader = (c, x, y, lt, at, text) => { const a = pop(lt, at - .4, .35); if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a);
+  c.fillStyle = '#26262c'; c.strokeStyle = INK; c.lineWidth = 4; rr(c, -90, -120, 180, 240, 18); c.fill(); c.stroke(); c.fillStyle = '#0e1a14'; rr(c, -66, -96, 132, 60, 8); c.fill();
+  const ok = lt > at + .5; txt(c, ok ? 'APPROVED' : 'SWIPE', 0, -66, 26, ok ? '#7aff9a' : '#9ab0a0', 'center', 'Anton'); c.fillStyle = '#111'; c.fillRect(-6, -20, 12, 120);
+  const u = E.io(K.seg(lt, at, at + .5)); c.save(); c.translate(0, -60 + u * 150); c.fillStyle = '#d8b84a'; c.strokeStyle = INK; c.lineWidth = 3; rr(c, -150, -10, 150, 92, 10); c.fill(); c.stroke(); c.fillStyle = '#b08a2a'; c.fillRect(-140, 6, 40, 28); txt(c, text, -75, 62, 22, INK, 'center', 'Anton'); c.restore(); c.restore(); };
+// ---- speed lines behind a moving car (world)
+const speedLines = (c, x, y, s, a) => { if (a <= 0) return; c.save(); c.strokeStyle = `rgba(255,255,255,${.6 * a})`; c.lineCap = 'round'; for (let k = 0; k < 8; k++) { c.lineWidth = 4 + (k % 3) * 2; const yy = y - 40 * s - k * 38 * s, len = (220 + (k * 97) % 260) * s; c.beginPath(); c.moveTo(x - 520 * s - (k % 3) * 40, yy); c.lineTo(x - 520 * s - len, yy); c.stroke(); } c.restore(); };
+// ---- 'NO SIGNAL' car screen bubble (world, bottom centre of bubble at x,y)
+const screenBubble = (c, x, y, lt, tOff, k) => { c.save(); c.translate(x, y); const dead = clamp((lt - tOff) / .6);
+  c.fillStyle = '#f2efe6'; c.strokeStyle = INK; c.lineWidth = 4; rr(c, -130, -210, 260, 180, 20); c.fill(); c.stroke(); c.beginPath(); c.moveTo(-20, -32); c.lineTo(0, 0); c.lineTo(20, -32); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#f2efe6'; c.fillRect(-18, -36, 36, 8);
+  c.save(); c.translate(-110, -194); CP.dashTablet(c, 0, 0, 220, lt + k, { page: 'home', glow: 1 - dead }); c.restore();
+  if (dead > 0) { c.fillStyle = `rgba(60,62,68,${.92 * dead})`; rr(c, -110, -194, 220, 138, 8); c.fill(); for (let n = 0; n < 40 * dead; n++) { c.fillStyle = `rgba(255,255,255,${.15 + .2 * ((n * 7 + Math.floor(lt * 20)) % 3) / 3})`; c.fillRect(-108 + ((n * 53 + Math.floor(lt * 30) * 17) % 210), -190 + ((n * 37) % 130), 6, 2); }
+    c.globalAlpha = dead; txt(c, 'NO SIGNAL', 0, -125, 34, '#f4f4f4', 'center', 'Anton'); c.globalAlpha = 1; }
+  c.restore(); };
+// ---- falling invoice: falls from above, flutters, lands flat on the ground y
+const fallBill = (c, x, groundY, text, lt, at, s = .7) => { if (lt < at) return; const u = clamp((lt - at) / 1.4), e = u * u; const y = -400 + (groundY - 20 + 400) * e, rot = Math.sin((lt - at) * 6) * .4 * (1 - u);
+  if (u < 1) CP.invoice(c, x + Math.sin((lt - at) * 4) * 60 * (1 - u), y - 150 * s, s, text, rot); else { c.save(); c.translate(x, groundY); c.scale(1, .45); CP.invoice(c, 0, -150 * s, s, text, .05); c.restore(); } };
+// ---- heap of old phones (world, bottom centre), returns top y; wob = wobble amount
+const PH = Array.from({ length: 70 }, (_, k) => ({ dx: ((k * 263) % 760) - 380, row: Math.floor(k / 9), rot: ((k * 71) % 100) / 100 * 2.4 - 1.2, col: ['#2a2a30', '#d8d8de', '#3a4a6a', '#8a2a2a', '#c8a85a', '#1a1a1e'][k % 6], kind: k % 3 }));
+const phoneHeap = (c, x, y, s, lt, wob = 0) => { c.save(); CP.shadow(c, x, y, 460 * s, .45); c.translate(x, y); c.scale(s, s);
+  const g = c.createLinearGradient(0, -300, 0, 0); g.addColorStop(0, '#4a4a50'); g.addColorStop(1, '#2a2a2e'); c.fillStyle = g; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.moveTo(-420, 0); c.quadraticCurveTo(-260, -250, 0, -280); c.quadraticCurveTo(260, -250, 420, 0); c.closePath(); c.fill(); c.stroke();
+  PH.forEach((p, k) => { const hh = 1 - Math.abs(p.dx) / 420, py = -20 - Math.max(0, hh) * 250 * Math.min(1, (p.row + 1) / 8) - (k % 4) * 6; if (hh < .05) return; c.save(); c.translate(p.dx * .95, py + Math.sin(lt * 20 + k) * wob * 4); c.rotate(p.rot + Math.sin(lt * 15 + k) * wob * .05);
+    const w = p.kind === 2 ? 34 : 40, h = p.kind === 0 ? 70 : p.kind === 1 ? 52 : 62; c.fillStyle = p.col; c.strokeStyle = INK; c.lineWidth = 2.5; rr(c, -w / 2, -h / 2, w, h, p.kind === 1 ? 4 : 8); c.fill(); c.stroke();
+    c.fillStyle = p.kind === 1 ? '#7a8a6a' : '#1a2a3a'; rr(c, -w / 2 + 5, -h / 2 + 6, w - 10, p.kind === 1 ? h * .45 : h - 16, 3); c.fill(); if (p.kind === 1) { c.fillStyle = '#ccc'; for (let r = 0; r < 2; r++) for (let q = 0; q < 3; q++) c.fillRect(-w / 2 + 6 + q * 10, 6 + r * 8, 7, 5); } c.restore(); });
+  c.restore(); };
+const DOG_H = (mode, t0) => ({ near: (cc, t) => { CP.dog(cc, 0, 22, 2.6, t, mode, { t0 }); } });
+
+window.SHOTS = [
+  // 4.01 the kitchen table at night: bills slide in, one is new - CAR SEATS. Dave stares at the bank app.
+  { plate: 'kitchen', cam: { z: [1.12, 1.3], x: [1380, 1460], y: [860, 900] }, bed: [['rain_loop', .1], ['hum_loop', .06]], light: { dir: -1, key: 'rgba(255,214,160,.22)' },
+    init: S => { const tW = A.at(S, 'brings', 1), tS = A.at(S, 'sneakiest', 2.5), tP = A.at(S, 'subscription', 4.9), tA = A.at(S, 'already', 7.1);
+      const tB = [tW - .4, tW + .6, tS + .5, tP];
+      const PHONE_H = { near: cc => TW.phone(cc, 0, -12, .38, (p, w, h) => { p.fillStyle = '#f4f2ee'; p.fillRect(0, 0, w, h); p.fillStyle = '#1f3a5a'; p.fillRect(0, 0, w, 40); for (let k = 0; k < 4; k++) { p.fillStyle = k === 3 ? '#e04a3a' : '#c8c4bc'; p.fillRect(10, 56 + k * 40, w - 20, 26); } }) };
+      S.D.figs = [{ x: 1905, y: 1250, s: FS, ...CP.DAVE(), pose: 'sit', facing: -1, mood: 'neutral', seed: 7, hold: PHONE_H,
+        anim: (o, lt) => { o.arms = () => ({ shR: 40 + 3 * Math.sin(lt * 1.3), elR: -95, handR: 'fist', shL: 18, elL: -60 }); if (lt > tP + .3) o.mood = 'worried'; if (lt > tA) o.mood = 'shocked'; if (lt > tA + 1.2) o.mood = 'worried'; } }];
+      S.D.live = [(c, lt) => { rain(c, lt, 1620, 170, 600, 520, 50, .28); TW.glow(c, 1290, 440, 640, '255,206,140', .2 + .03 * Math.sin(lt * 9) * Math.sin(lt * 4)); kChair(c, 1905, 1250, 1250 - 63 * FS, -1); },
+        (c, lt) => { tableBill(c, 960, 1034, 'PHONE|£35/month', lt, tB[0], 700, -.05); tableBill(c, 1160, 1036, 'TV|£12/month', lt, tB[1], 700, .06); tableBill(c, 1360, 1034, 'MUSIC|£11/month', lt, tB[2], 700, -.03); tableBill(c, 1570, 1038, 'CAR SEATS|£15/month', lt, tB[3], 700, .04);
+          if (lt > tB[3] + .5) TW.glow(c, 1570, 1010, 120, '255,80,60', .25 + .1 * Math.sin(lt * 6)); }];
+      S.D.over = [(c, lt) => bankCard(c, lt, [['PHONE', '£35', tB[0]], ['TV', '£12', tB[1]], ['MUSIC', '£11', tB[2]], ['CAR SEATS', '£15', tB[3], 1]], tB[0] - .2),
+        (c, lt) => K.card(c, 'SUBSCRIPTIONS... FOR YOUR CAR?', lt, { at: tP + .2, x: 1180, y: 110, px: 50, rot: -2 })];
+      S.D.sfx = [[tB[0], 'paper', .3], [tB[1], 'paper', .3], [tB[2], 'paper', .3], [tB[3], 'paper', .35], [tB[3] + .3, 'pop', .3], [tA, 'tension', .2]]; } },
+  // 4.02 heated seats: padlocked seat on the turntable, Dave feeds £15 into the coin post, padlock clicks open, seat warms
+  { plate: 'showroom', cam: { z: [1.25, 1.45], x: [1420, 1430], y: [880, 900] }, bed: [['hum_loop', .1]], light: { dir: 1, key: 'rgba(240,248,255,.2)' },
+    init: S => { const tB = A.at(S, 'BMW', .7), tP = A.at(S, 'pay', 3.6), tF = A.at(S, 'fifteen', 4.4), tSw = A.at(S, 'switch', 6.4), tHe = A.at(S, 'heaters', 8.9), tR = A.at(S, 'renting', 12.1), tBt = A.at(S, 'button.', 13);
+      const tCoin = tP + .2, tOpen = tSw + .1; const COIN_H = { near: (cc, t) => { if (t < tCoin) { cc.fillStyle = '#e8c04a'; cc.strokeStyle = INK; cc.lineWidth = 2; cc.beginPath(); cc.ellipse(0, -4, 12, 12, 0, 0, 7); cc.fill(); cc.stroke(); } } };
+      S.D.figs = [{ x: 1830, y: 1190, s: FS, ...CP.DAVE(), facing: -1, mood: 'neutral', seed: 7, hold: COIN_H, walk: { x0: 2300, x1: 1830, t0: 0, dur: Math.max(1.2, tB + .6) },
+        anim: (o, lt) => { if (lt > tB + .6 && lt < tCoin + .5) { const u = E.io(K.seg(lt, tP - .6, tCoin)); o.arms = () => ({ shR: 30 + 50 * u, elR: -40 + 10 * u, handR: 'fist' }); }
+          if (lt > tOpen) o.mood = 'happy'; if (lt > tHe) { o.pose = 'point'; o.mood = 'neutral'; } if (lt > tR) { o.pose = 'shrug'; o.mood = 'smug'; } } }];
+      S.D.live = [(c, lt) => { const warm = E.io(K.seg(lt, tOpen + .2, tOpen + 2)); TW.glow(c, 1280, 1000, 360, '255,140,60', .3 * warm); CP.seatHeated(c, 1280, 1150, FS * .95, lt, { warm });
+          // padlock on the seat: shut, then open and drop to the turntable
+          const op = lt > tOpen, d = E.inn(K.seg(lt, tOpen + .3, tOpen + .9)); CP.padlock(c, 1280 + 20 * FS, 1150 - 160 * FS + d * 140 * FS, 1.4 * FS, op);
+          const paid = lt > tCoin + .35; coinPost(c, 1560, 1168, FS * .95, lt, paid);
+          if (lt > tCoin - .1 && lt < tCoin + .35) { const u = K.seg(lt, tCoin - .1, tCoin + .35); c.fillStyle = '#e8c04a'; c.strokeStyle = INK; c.lineWidth = 2; c.beginPath(); c.ellipse(1680 - 120 * u, 820 - 30 * u + 60 * u * u, 13 * (1 - u * .6), 13, 0, 0, 7); c.fill(); c.stroke(); }
+          if (lt > tHe && lt < tR + .5) { const a = fade(lt, tHe, .4) * (1 - K.seg(lt, tR, tR + .5)); c.save(); c.globalAlpha = a; c.setLineDash([12, 10]); c.strokeStyle = '#ffd06a'; c.lineWidth = 5; c.beginPath(); c.ellipse(1240, 1000, 150, 230, -.2, 0, 7); c.stroke(); c.restore(); } }];
+      S.D.over = [(c, lt) => chip(c, 'BMW · UK · 2022', 330, 120, lt, tB), (c, lt) => K.card(c, 'HEATED SEATS: ~£15/MONTH', lt, { at: tF, x: 960, y: 210, px: 54, rot: -2, until: tHe + .2 }),
+        (c, lt) => K.card(c, 'THE HEATERS WERE ALREADY FITTED', lt, { at: tHe + .3, x: 960, y: 210, px: 46, rot: 2, until: tR }),
+        (c, lt) => { const a = pop(lt, tR - .1, .45); if (a <= 0) return; c.save(); c.translate(560, 330); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.35)'; rr(c, -84, -76, 176, 160, 30); c.fill(); c.fillStyle = '#2a2a30'; c.strokeStyle = INK; c.lineWidth = 5; rr(c, -90, -82, 176, 160, 30); c.fill(); c.stroke();
+          const on = lt > tBt; c.fillStyle = on ? '#ff8a3a' : '#6a6a72'; if (on) TW.glow(c, -2, -2, 120, '255,140,60', .4); c.strokeStyle = c.fillStyle; c.lineWidth = 7; for (let k = 0; k < 3; k++) { c.beginPath(); const bx = -36 + k * 34; c.moveTo(bx, 40); c.quadraticCurveTo(bx + 12, 18, bx, -4); c.quadraticCurveTo(bx - 12, -26, bx, -50); c.stroke(); }
+          CP.priceTag(c, 90, -60, 1.3, '£15/mo', Math.sin(lt * 3) * .25); c.restore(); txt(c, 'RENTING THE BUTTON', 560, 470, 34 * a, '#fff', 'center', 'Anton'); }];
+      S.D.sfx = [[.2, 'footsteps', .2], [tB, 'pop', .2], [tCoin, 'coins', .4], [tOpen, 'tick', .4], [tOpen + .8, 'thud', .25], [tOpen + .4, 'hum_loop', .1], [tF, 'paper', .2], [tHe + .3, 'whoosh_soft', .2], [tR - .1, 'pop', .3], [tBt, 'chime', .3]]; } },
+  // 4.03 the backlash: angry owners with seatbelt pitchforks; the exec waves a white flag and walks off; the subscription ghost drifts away
+  { plate: 'showroom', cam: { z: [1.08, 1.0], x: [1300, 1280], y: [800, 760] }, bed: [['crowd_loop', .16]], light: { dir: 1, key: 'rgba(240,248,255,.2)' },
+    init: S => { const tAn = A.at(S, 'angry', 1.2), tD = A.at(S, 'dropped', 2.4), tY = A.at(S, 'year', 3.5), tBut = A.at(S, 'But', 4.3), tDie = A.at(S, 'die.', 5.9);
+      const pump = (k) => (o, lt) => { const p = Math.max(0, Math.sin(lt * 7 + k * 1.3)); o.arms = () => ({ shR: 130 + 25 * p, elR: -20 - 20 * p, handR: 'fist', shL: 20, elL: -50 }); o.talk = lt > tAn - .3 && lt < tD + 1 ? Math.sin(lt * 9 + k) > 0 : false; };
+      S.D.figs = [0, 1, 2, 3].map(k => ({ x: 170 + k * 215, y: 1170 + (k % 2) * 70, s: FS, ...CP.OWNER(k), facing: 1, mood: 'angry', seed: 20 + k, hold: BELTFORK, anim: pump(k) })).concat([
+        { x: 1980, y: 1170, s: FS, ...CP.EXEC(1), facing: -1, mood: 'worried', seed: 51, hold: FLAG, walk: { x0: 1980, x1: 2900, t0: tD + .1, dur: 3.2 },
+          anim: (o, lt) => { o.arms = () => ({ shR: 135 + 15 * Math.sin(lt * 8), elR: -15, handR: 'fist' }); } }]);
+      S.D.live = [(c, lt) => { CP.seatHeated(c, 1280, 1150, FS * .95, lt, { locked: true }); }];
+      S.D.front = [(c, lt) => { const u = E.io(K.seg(lt, tBut, tDie + 1.2)); ghost(c, 1280 + u * 1500, 880 - u * 160, 1.2, lt, fade(lt, tBut - .5, .5)); }];
+      S.D.over = [(c, lt) => K.card(c, 'BMW DROPPED IT (2023)', lt, { at: tD, x: 1280, y: 120, px: 54, rot: -2 }), (c, lt) => K.card(c, 'BUT THE IDEA DIDN\'T DIE', lt, { at: tBut + .2, x: 1300, y: 230, px: 40, rot: 2, bg: '#ffd83a' })];
+      S.D.sfx = [[.1, 'crowd_loop', .15], [tAn, 'crowd_cheer', .2], [tD, 'whoosh', .25], [tD + .2, 'footsteps', .2], [tBut, 'tension', .2], [tDie, 'whoosh_soft', .3]]; } },
+  // 4.04 paid acceleration: an EV chained to a bollard, needle tied down; key card swipe $1,200/YR; chain snaps, car surges
+  { plate: 'airfield', cam: { z: [1.1, 1.22], x: [1240, 1300], y: [860, 880] }, bed: [['wind_loop', .1], ['birds_loop', .05]], light: { dir: -1, key: 'rgba(255,210,220,.2)' },
+    init: S => { const tM = A.at(S, 'Mercedes', .2), tAc = A.at(S, 'acceleration', 1.4), tT = A.at(S, 'twelve', 5.5), tSm = A.at(S, 'Same', 7.6), tBa = A.at(S, 'battery.', 8.9), tPw = A.at(S, 'power', 9.8), tL = A.at(S, 'locked', 11.8), tPay = A.at(S, 'paywall.', 13);
+      const tSnap = tPay + .1, CX = 1250, CY = 1300, CS = FS * .95;
+      S.D.live = [(c, lt) => { const go = Math.max(0, lt - tSnap), x = CX + 900 * go * go + 300 * go, strain = lt > tAc && lt < tSnap ? Math.sin(lt * 40) * 4 : 0;
+        // bollard + chain to the rear tow eye
+        c.save(); CP.shadow(c, 330, CY, 50, .4); c.fillStyle = '#e8c23a'; c.strokeStyle = INK; c.lineWidth = 4; rr(c, 300, CY - 150, 60, 150, 10); c.fill(); c.stroke(); c.fillStyle = '#2a2a30'; c.fillRect(300, CY - 110, 60, 20); c.fillRect(300, CY - 60, 60, 20); c.restore();
+        const rear = x - 470 * CS; chain(c, 345, CY - 120, rear, CY - 95 * CS, lt < tSnap ? 20 : 60, lt, lt < tSnap ? 0 : (lt - tSnap) * 3);
+        if (lt < tSnap + .4) CP.padlock(c, (345 + rear) / 2, CY - 100 + 26, 1.3, lt > tSnap - .2);
+        speedLines(c, x, CY, CS, clamp(go * 3) * (1 - clamp((go - 2) / 1)));
+        CP.car(c, x + strain, CY, CS, { kind: 'saloon_ev', col: '#c8ccd4', t: lt, speed: lt > tSnap ? 600 + go * 1600 : (lt > tAc ? 60 : 0) });
+        if (go > 0 && go < 1) TW.glow(c, rear, CY - 80, 200, '255,255,255', .4 * (1 - go)); },
+        (c, lt) => { if (lt < tSnap + .5) { tag(c, 'SAME MOTORS', CX - 200, CY - 330 * CS, lt, tSm, { px: 34, until: tSnap }); tag(c, 'SAME BATTERY', CX + 220, CY - 330 * CS, lt, tBa - .3, { px: 34, until: tSnap }); } }];
+      S.D.over = [(c, lt) => chip(c, 'MERCEDES EQS · EQE (US)', 380, 120, lt, tM), (c, lt) => K.card(c, '+ACCELERATION: $1,200/YR (US)', lt, { at: tT, x: 1080, y: 120, px: 50, rot: -2 }),
+        (c, lt) => { const a = pop(lt, tAc, .45); if (a <= 0) return; c.save(); c.translate(1600, 400); c.scale(a, a); const v = lt < tSnap ? .2 + .03 * Math.sin(lt * 30) * (lt > tAc ? 1 : 0) : .2 + .75 * E.out(K.seg(lt, tSnap, tSnap + .8)); CP.analogDial(c, 0, 0, 140, v, 'km/h');
+          if (lt < tSnap + .6) { const b = clamp((lt - tSnap) * 2); c.save(); c.globalAlpha = 1 - b; c.translate(0, b * 80); chain(c, -160, -40, 160, 40, 10, lt); CP.padlock(c, 0, 26, 1.5, lt > tSnap - .2); c.restore(); }
+          txt(c, lt > tL && lt < tSnap ? 'PAYWALL' : '', 0, 190, 40, '#ff5a4a', 'center', 'Anton'); c.restore(); },
+        (c, lt) => reader(c, 1260, 420, lt, tT + .2, '$1,200/YR'), (c, lt) => { if (lt > tPw && lt < tL) K.card(c, 'THE POWER WAS THERE ALL ALONG', lt, { at: tPw, x: 900, y: 240, px: 36, rot: 2, until: tL }); }];
+      S.D.sfx = [[tM, 'pop', .2], [tAc, 'scrape', .25], [tT + .2, 'whoosh_soft', .3], [tT + .7, 'chime', .3], [tSm, 'pop', .2], [tBa - .3, 'pop', .2], [tL, 'tick', .3], [tSnap, 'hit', .45], [tSnap + .1, 'whoosh', .45]]; } },
+  // 4.05 3G switch-off: the mast sparks out, the parked cars' screens go grey NO SIGNAL, invoices flutter down
+  { plate: 'shopfront', cam: { z: [1.05, 1.18], x: [1280, 1330], y: [800, 840] }, bed: [['rain_loop', .12], ['city_loop', .06]], light: { dir: -1, key: 'rgba(255,200,170,.18)' },
+    init: S => { const tSo = A.at(S, 'software', .9), tL = A.at(S, 'lose', 4.1), tAm = A.at(S, 'America', 6.6), tOff = A.at(S, 'off', 7.6), tTe = A.at(S, 'Teslas', 9.5), tMo = A.at(S, 'modem', 11.5), tHo = A.at(S, 'Hondas', 14.2), tNi = A.at(S, 'nine', 16.3);
+      const CY = 1340, CS = .82, cars = [[520, 'tesla_like', '#c8ccd4'], [1420, 'saloon_ev', '#8a2a2a'], [2260, 'suv_screen', '#3a4a6a']];
+      S.D.live = [(c, lt) => { rain(c, lt, 0, 0, 2560, 1440, 120, .25); CP.mast(c, 2380, 1110, .62, lt, { off: lt > tOff }); },
+        (c, lt) => { cars.forEach(([x, k, col], i) => CP.car(c, x, CY, CS, { kind: k, col, t: lt })); },
+        (c, lt) => { fallBill(c, 760, 1420, '$200|MODEM UPGRADE', lt, tMo - .3, .62); fallBill(c, 1650, 1425, '~$900|BILL', lt, tNi - .4, .62); }];
+      S.D.front = [(c, lt) => { cars.forEach(([x], i) => { if (lt > tSo - .3) screenBubble(c, x, CY - 470 * CS, lt, i === 0 ? tTe : i === 1 ? tOff + .4 : tL, i); }); },
+        (c, lt) => { tag(c, 'EARLY TESLAS', 520, CY - 900 * CS, lt, tTe, { px: 34 }); tag(c, 'SOME HONDAS', 1420, CY - 900 * CS, lt, tHo, { px: 34 }); }];
+      S.D.over = [(c, lt) => K.card(c, '3G SWITCH-OFF · 2022', lt, { at: tAm, x: 960, y: 100, px: 50, rot: -2 }), (c, lt) => K.card(c, 'SOFTWARE SUPPORT ENDS', lt, { at: tSo, x: 960, y: 100, px: 46, rot: 2, until: tAm - .1 }), (c, lt) => chip(c, 'US · 2022', 1560, 200, lt, tAm + .3)];
+      S.D.sfx = [[tSo, 'pop', .2], [tL, 'tick', .25], [tOff, 'hit', .3], [tOff + .1, 'fire_loop', .08], [tOff + .4, 'tick', .25], [tTe, 'tick', .25], [tMo - .3, 'paper', .35], [tNi - .4, 'paper', .35], [tNi + .9, 'thud', .2]]; } },
+  // 4.06 the phone business model: in the scrapyard the crane lowers Dave's old car onto a heap of old phones; the dog in Dave's hands shakes its head
+  { plate: 'scrapyard', cam: { z: [1.12, 1.0], x: [1340, 1280], y: [820, 760] }, bed: [['wind_loop', .12]], light: { dir: -1, key: 'rgba(235,235,240,.18)' },
+    init: S => { const tPh = A.at(S, 'phone', .8), tR = A.at(S, 'Rent', 2.2), tAn = A.at(S, 'ancient.', 6.1), tD = A.at(S, 'difference', 7), tFew = A.at(S, 'few', 9.4), tCar = A.at(S, 'car', 11), tLot = A.at(S, 'lot', 12);
+      const lift0 = tR - .3, lift1 = tAn + .2, HX = 1560, HY = 1260, CS = FS * .85;
+      const carPos = lt => { const u = E.io(K.seg(lt, lift0, lift1)), up = Math.sin(u * Math.PI); return { x: 760 + (HX - 760) * u, y: 1320 + (HY - 120 - 1320) * u - up * 260 }; };
+      S.D.figs = [{ x: 2360, y: 1330, s: FS, ...CP.DAVE(), facing: -1, mood: 'sad', seed: 7, hold: DOG_H('shake', tLot - 1.2),
+        anim: (o, lt) => { o.arms = () => ({ shR: 55, elR: -80, handR: 'fist', shL: 10, elL: -40 }); if (lt > tFew) { o.mood = 'worried'; } if (lt > tLot) o.mood = 'shocked'; } }];
+      S.D.live = [(c, lt) => { const wob = Math.max(0, 1 - (lt - lift1) * 1.5) * (lt > lift1 ? 1 : 0); phoneHeap(c, HX, 1300, 1, lt, wob);
+        const p = carPos(lt), hanging = lt > lift0 - .4; if (hanging) { c.save(); c.strokeStyle = '#2a2a30'; c.lineWidth = 6; c.beginPath(); c.moveTo(p.x, -50); c.lineTo(p.x, p.y - 330 * CS); c.stroke(); c.lineWidth = 4; c.beginPath(); c.moveTo(p.x, p.y - 330 * CS); c.lineTo(p.x - 260 * CS, p.y - 250 * CS); c.moveTo(p.x, p.y - 330 * CS); c.lineTo(p.x + 260 * CS, p.y - 250 * CS); c.stroke(); c.fillStyle = '#e8c23a'; c.strokeStyle = INK; c.beginPath(); c.arc(p.x, p.y - 330 * CS, 14, 0, 7); c.fill(); c.stroke(); c.restore(); }
+        c.save(); c.translate(p.x, p.y); c.rotate(lt > lift0 && lt < lift1 ? Math.sin(lt * 2.2) * .03 : 0); CP.car(c, 0, 0, CS, { kind: 'estate2005', col: '#7a8a6a', t: lt, shadow: lt < lift0 }); c.restore(); }];
+      S.D.over = [(c, lt) => K.card(c, 'THE PHONE BUSINESS MODEL', lt, { at: tPh - .1, x: 960, y: 100, px: 50, rot: -2, until: tD }),
+        (c, lt) => { if (lt < tD) { chip(c, '1. RENT YOU THE FEATURES', 560, 210, lt, tR, { until: tD }); chip(c, '2. MAKE THE OLD ONE FEEL ANCIENT', 1340, 210, lt, tAn - .6, { until: tD }); } },
+        (c, lt) => { const a = pop(lt, tFew - .2, .45); if (a > 0) { c.save(); c.translate(560, 200); c.scale(a, a); CP.priceTag(c, 0, 0, 2, 'PHONE: £100s', Math.sin(lt * 2) * .1); c.restore(); } const b = pop(lt, tCar, .45); if (b > 0) { c.save(); c.translate(1360, 200); c.scale(b * (1 + .3 * pop(lt, tLot, .4)), b * (1 + .3 * pop(lt, tLot, .4))); CP.priceTag(c, 0, 0, 2, 'CAR: £££££', Math.sin(lt * 2 + 1) * .1); c.restore(); } }];
+      S.D.sfx = [[tPh, 'pop', .2], [lift0, 'creak', .3], [lift0 + .5, 'drone', .15], [lift1, 'thud', .45], [lift1 + .05, 'scrape', .3], [tFew, 'pop', .25], [tCar, 'pop', .3], [tLot, 'coins_cascade', .3]]; } },
+];

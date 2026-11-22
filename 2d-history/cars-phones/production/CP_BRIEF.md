@@ -30,3 +30,8 @@ Subject names highlighted on first mention (e.g. ANDREAS MINDT, VW design chief;
 
 ## Check your work (required)
 After building, snapshot frames from /home/user/repo/2d-history: `node shared/snap.js cars-phones/production/acts/actN/act.html /tmp/claude-0/cpN.jpg t1,t2,...` (2-3 times per shot from timing.js) and LOOK at it with Read. No [pageerror] lines. Fix every overlap, float, pop-in, plain frame, text over faces or in subtitle band, wrong scale. Two fix rounds minimum. Report: per act, shots built, what each shows, remaining weak spots (under 150 words per act).
+
+## v3 update (22 Nov): Tesla crash story added, 8 acts (0-7)
+Script v3 in cars-phones/build/data.py: act0 Cold open (NEW: Key Largo 2019 Autopilot crash, verdict, then phone-vs-tablet split + title), act1 tablet (+NEW shot 5: 2021 screen recall), act2 70 mph test (unchanged), act3 Autopilot name problem (NEW), act4 doors (NEW), act5 money (was act3), act6 subscriptions (was act4), act7 fightback (was act5). Extra plates copied from Prime: court_ext, fbi_office, gov_corridor, lineup, us_map, neon_club, tampa_street, podcast.
+SENSITIVE: real deaths. No gore, no victims depicted (memorial candle/flowers only), crashes shown from a distance as flashes, debris, blue lights. Lawsuits get a CLAIM tag; the Key Largo verdict gets a "JURY VERDICT (TESLA APPEALING)" tag. Tesla cars drawn as generic white/dark saloons (CP.car kind 'tesla_like'), no logos; brand as text only. Respectful tone in these shots (no jokes on the death beats; nodding dog absent there).
+EYES OFF ROAD meter: act3 shows on shot 1-2 (~300), act4 hidden.
