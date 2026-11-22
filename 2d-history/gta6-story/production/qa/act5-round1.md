@@ -1,0 +1,12 @@
+# act5 QA round 1 (qa_auto PASS machine checks; 4 sheets read)
+- HIGH 0:18 shot 2: "WHO DID YOU GET THIS FROM?" bubble placed above the frame top (clipped, collides with the MILITARY-GRADE card). Fixed: bubble moved down between Jason and Cal (world 1690,820), tail to Cal.
+- HIGH 0:22-0:25 shot 2 (antiques cut): "A BRONZE VENUS..." bubble clipped off the top-left edge. Fixed: bubble moved into frame between Lucia and the dealer (1490,700), tail to the dealer.
+- HIGH 1:18-1:20 shot 6: "ONE SLIP = LOCKED" stamp sits over Lucia's face. Fixed: stamp moved onto the vault door (430,470).
+- MED 0:31-0:34 shot 3: "ONE NAME." bubble overlaps the "BIG ENOUGH TO SELL THE DRIVE" card. Fixed: bubble now ends just before 'bank' when the card lands.
+- MED 1:24-1:26 shot 7: Lucia's cheering arm runs into Jason's face and the cash. Fixed: wider gap (Lucia 970, Jason 1350).
+- MED 1:41-1:42 last shot: "REMEMBER THIS LINE" card touches Lucia's head/ponytail. Fixed: card + pin moved up-right (1580,330).
+- LOW 1:28-1:30 rooftop cut: Lucia walks half-overlapping Jason. Fixed: her walk ends at 640 (was 760).
+- LOW 0:25 "IF IT'S REAL" stamp overlaps the ANTIQUES DEALER tag. Fixed: the tag goes out on 'real.'.
+- LOW (left) 0:36-0:42 Brian half cut at the left edge during the pan to Raul; 0:54-0:58 bank fronts look much the same from second to second (the sign, clock and alarm do change); "OLD-PEOPLE MASKS" card partly covers the bank sign.
+- CHECK qa_auto pop-ins (0:17.5, 1:02.8, 1:03.2, 1:27.5) are cards/bubbles/name tags popping on purpose; flicker flags are neon/glow animation. Running devices: TOMMY jar full with a name tag in the last shot (OK); no trust board/walk-away needed in act5.
+- INFO loudness -16.2 LUFS: fixed at full combine (-14).

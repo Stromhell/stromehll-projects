@@ -1,0 +1,18 @@
+# qa_auto report: act0.mp4 (act)
+
+Result: **PASS (machine checks)** - 0 fail, 2 warn, 4 to eyeball
+
+| level | check | detail | standard fix |
+|---|---|---|---|
+| WARN | loudness | -16.4 LUFS (target -14) | two-pass loudnorm I=-14:TP=-1.5 |
+| WARN | cine: cut rhythm | 0:00.0 100% of shots are longer than 8 s (median 45.2 s) | checklist B11 rows 67-75 |
+| CHECK | possible pop-in | ~0:00.80 top-mid-left, top-mid-right | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | local glitch/flicker | ~0:20.20 top-mid-right | background/door/window flicker: stable layer order, no per-frame random, no texture swap; fix the asset at that spot |
+| CHECK | possible pop-in | ~0:26.80 lower-mid-left, lower-mid-right | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| CHECK | possible pop-in | ~0:29.20 lower-left | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
+| INFO | streams | 1920x1080 h264 yuv420p r=30.000 avg=30.000 fps, 45.10 s, audio=1 |  |
+| INFO | loudness | I=-16.4 LUFS, true peak=-1.5 dBTP, LRA=2.8 LU |  |
+| INFO | levels | speech/peak windows -12.2 dBFS, floor -30.2 dBFS |  |
+| INFO | cine | still-camera share 3%, 1 shots, median shot 45.17 s |  |
+| INFO | contact sheets | 2 sheets in gta6-story/production/acts/act0/act0_qa/sheets - READ EVERY ONE against RENDER-QA-CHECKLIST.md |  |
+
