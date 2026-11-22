@@ -8,8 +8,8 @@ const tag = (c, name, x, y, lt, at, o = {}) => { const a = pop(lt, at, .4), out 
   const w = c.measureText(name).width + px * .9, h = px * 1.45; c.fillStyle = 'rgba(0,0,0,.35)'; rr(c, -w / 2 + 6, -h - 12, w, h, 10); c.fill(); c.fillStyle = o.col || JH.GOLD; c.strokeStyle = INK; c.lineWidth = 4; rr(c, -w / 2, -h - 18, w, h, 10); c.fill(); c.stroke();
   c.beginPath(); c.moveTo(-14, -19); c.lineTo(0, 0); c.lineTo(14, -19); c.closePath(); c.fill(); c.stroke(); c.fillRect(-12, -24, 24, 7); txt(c, name, 0, -h / 2 - 16, px, INK, 'center', 'Anton'); c.restore(); };
 // ---- small source chip
-const chip = (c, label, x, y, lt, at, o = {}) => { const a = pop(lt, at, .35), out = 1 - K.seg(lt, (o.until ?? 999) - .3, o.until ?? 999); if (a <= 0 || out <= 0) return; c.save(); c.globalAlpha = out; c.translate(x, y); c.rotate(o.rot ?? -.03); c.scale(a, a); c.font = '28px Oswald'; const w = c.measureText(label).width + 40;
-  c.fillStyle = '#111'; rr(c, -w / 2, -22, w, 44, 8); c.fill(); c.fillStyle = JH.GOLD; c.fillRect(-w / 2, -22, 8, 44); txt(c, label, 4, 1, 28, '#f4efe2', 'center', 'Oswald'); c.restore(); };
+const chip = (c, label, x, y, lt, at, o = {}) => { const a = pop(lt, at, .35), out = 1 - K.seg(lt, (o.until ?? 999) - .3, o.until ?? 999); if (a <= 0 || out <= 0) return; c.save(); c.globalAlpha = out; c.translate(x, y); c.rotate(o.rot ?? -.03); c.scale(a, a); c.font = '36px Oswald'; const w = c.measureText(label).width + 44;
+  c.fillStyle = '#111'; rr(c, -w / 2, -28, w, 56, 8); c.fill(); c.fillStyle = JH.GOLD; c.fillRect(-w / 2, -28, 8, 56); txt(c, label, 4, 1, 36, '#f4efe2', 'center', 'Oswald'); c.restore(); };
 // ---- rain streaks inside a rect (world)
 const rain = (c, lt, x, y, w, h, n = 60, a = .35) => { c.save(); c.beginPath(); c.rect(x, y, w, h); c.clip(); c.strokeStyle = `rgba(200,215,235,${a})`; c.lineWidth = 2;
   for (let k = 0; k < n; k++) { const px = x + ((k * 197.3) % w), py = y + (((k * 131.7) + lt * 900) % (h + 80)) - 40; c.beginPath(); c.moveTo(px, py); c.lineTo(px - 6, py + 34); c.stroke(); } c.restore(); };
@@ -67,7 +67,7 @@ const screenBubble = (c, x, y, lt, tOff, k) => { c.save(); c.translate(x, y); co
   c.restore(); };
 // ---- falling invoice: falls from above, flutters, lands flat on the ground y
 const fallBill = (c, x, groundY, text, lt, at, s = .7) => { if (lt < at) return; const u = clamp((lt - at) / 1.4), e = u * u; const y = -400 + (groundY - 20 + 400) * e, rot = Math.sin((lt - at) * 6) * .4 * (1 - u);
-  if (u < 1) CP.invoice(c, x + Math.sin((lt - at) * 4) * 60 * (1 - u), y - 150 * s, s, text, rot); else { c.save(); c.translate(x, groundY); c.scale(1, .45); CP.invoice(c, 0, -150 * s, s, text, .05); c.restore(); } };
+  if (u < 1) CP.invoice(c, x + Math.sin((lt - at) * 4) * 60 * (1 - u), y - 150 * s, s, text, rot); else { const fo = 1 - clamp((lt - at - 1.4 - .8) / .5); if (fo <= 0) return; c.save(); c.globalAlpha = fo; c.translate(x, groundY); c.scale(1, .45); CP.invoice(c, 0, -150 * s, s, text, .05); c.restore(); } };
 // ---- heap of old phones (world, bottom centre), returns top y; wob = wobble amount
 const PH = Array.from({ length: 70 }, (_, k) => ({ dx: ((k * 263) % 760) - 380, row: Math.floor(k / 9), rot: ((k * 71) % 100) / 100 * 2.4 - 1.2, col: ['#2a2a30', '#d8d8de', '#3a4a6a', '#8a2a2a', '#c8a85a', '#1a1a1e'][k % 6], kind: k % 3 }));
 const phoneHeap = (c, x, y, s, lt, wob = 0) => { c.save(); CP.shadow(c, x, y, 460 * s, .45); c.translate(x, y); c.scale(s, s);
@@ -80,7 +80,7 @@ const DOG_H = (mode, t0) => ({ near: (cc, t) => { CP.dog(cc, 0, 22, 2.6, t, mode
 
 window.SHOTS = [
   // 4.01 the kitchen table at night: bills slide in, one is new - CAR SEATS. Dave stares at the bank app.
-  { plate: 'kitchen', cam: { z: [1.12, 1.3], x: [1380, 1460], y: [860, 900] }, bed: [['rain_loop', .1], ['hum_loop', .06]], light: { dir: -1, key: 'rgba(255,214,160,.22)' },
+  { plate: 'kitchen', cam: { z: [1.18, 1.3], x: [1480, 1560], y: [860, 900] }, bed: [['rain_loop', .1], ['hum_loop', .06]], light: { dir: -1, key: 'rgba(255,214,160,.22)' },
     init: S => { const tW = A.at(S, 'brings', 1), tS = A.at(S, 'sneakiest', 2.5), tP = A.at(S, 'subscription', 4.9), tA = A.at(S, 'already', 7.1);
       const tB = [tW - .4, tW + .6, tS + .5, tP];
       const PHONE_H = { near: cc => TW.phone(cc, 0, -12, .38, (p, w, h) => { p.fillStyle = '#f4f2ee'; p.fillRect(0, 0, w, h); p.fillStyle = '#1f3a5a'; p.fillRect(0, 0, w, 40); for (let k = 0; k < 4; k++) { p.fillStyle = k === 3 ? '#e04a3a' : '#c8c4bc'; p.fillRect(10, 56 + k * 40, w - 20, 26); } }) };
@@ -112,10 +112,10 @@ window.SHOTS = [
           CP.priceTag(c, 90, -60, 1.3, '£15/mo', Math.sin(lt * 3) * .25); c.restore(); txt(c, 'RENTING THE BUTTON', 560, 470, 34 * a, '#fff', 'center', 'Anton'); }];
       S.D.sfx = [[.2, 'footsteps', .2], [tB, 'pop', .2], [tCoin, 'coins', .4], [tOpen, 'tick', .4], [tOpen + .8, 'thud', .25], [tOpen + .4, 'hum_loop', .1], [tF, 'paper', .2], [tHe + .3, 'whoosh_soft', .2], [tR - .1, 'pop', .3], [tBt, 'chime', .3]]; } },
   // 4.03 the backlash: angry owners with seatbelt pitchforks; the exec waves a white flag and walks off; the subscription ghost drifts away
-  { plate: 'showroom', cam: { z: [1.08, 1.0], x: [1300, 1280], y: [800, 760] }, bed: [['crowd_loop', .16]], light: { dir: 1, key: 'rgba(240,248,255,.2)' },
+  { plate: 'showroom', cam: { z: [1.2, 1.12], x: [1120, 1160], y: [840, 820] }, bed: [['crowd_loop', .16]], light: { dir: 1, key: 'rgba(240,248,255,.2)' },
     init: S => { const tAn = A.at(S, 'angry', 1.2), tD = A.at(S, 'dropped', 2.4), tY = A.at(S, 'year', 3.5), tBut = A.at(S, 'But', 4.3), tDie = A.at(S, 'die.', 5.9);
       const pump = (k) => (o, lt) => { const p = Math.max(0, Math.sin(lt * 7 + k * 1.3)); o.arms = () => ({ shR: 130 + 25 * p, elR: -20 - 20 * p, handR: 'fist', shL: 20, elL: -50 }); o.talk = lt > tAn - .3 && lt < tD + 1 ? Math.sin(lt * 9 + k) > 0 : false; };
-      S.D.figs = [0, 1, 2, 3].map(k => ({ x: 170 + k * 215, y: 1170 + (k % 2) * 70, s: FS, ...CP.OWNER(k), facing: 1, mood: 'angry', seed: 20 + k, hold: BELTFORK, anim: pump(k) })).concat([
+      S.D.figs = [0, 1, 2, 3].map(k => ({ x: 330 + k * 205, y: 1170 + (k % 2) * 70, s: FS, ...CP.OWNER(k), facing: 1, mood: 'angry', seed: 20 + k, hold: BELTFORK, anim: pump(k) })).concat([
         { x: 1980, y: 1170, s: FS, ...CP.EXEC(1), facing: -1, mood: 'worried', seed: 51, hold: FLAG, walk: { x0: 1980, x1: 2900, t0: tD + .1, dur: 3.2 },
           anim: (o, lt) => { o.arms = () => ({ shR: 135 + 15 * Math.sin(lt * 8), elR: -15, handR: 'fist' }); } }]);
       S.D.live = [(c, lt) => { CP.seatHeated(c, 1280, 1150, FS * .95, lt, { locked: true }); }];
@@ -134,12 +134,12 @@ window.SHOTS = [
         speedLines(c, x, CY, CS, clamp(go * 3) * (1 - clamp((go - 2) / 1)));
         CP.car(c, x + strain, CY, CS, { kind: 'saloon_ev', col: '#c8ccd4', t: lt, speed: lt > tSnap ? 600 + go * 1600 : (lt > tAc ? 60 : 0) });
         if (go > 0 && go < 1) TW.glow(c, rear, CY - 80, 200, '255,255,255', .4 * (1 - go)); },
-        (c, lt) => { if (lt < tSnap + .5) { tag(c, 'SAME MOTORS', CX - 200, CY - 330 * CS, lt, tSm, { px: 34, until: tSnap }); tag(c, 'SAME BATTERY', CX + 220, CY - 330 * CS, lt, tBa - .3, { px: 34, until: tSnap }); } }];
+        (c, lt) => { if (lt < tSnap + .5) { tag(c, 'SAME MOTORS', CX - 300, CY - 330 * CS, lt, tSm, { px: 50, until: tSnap }); tag(c, 'SAME BATTERY', CX + 320, CY - 330 * CS, lt, tBa - .3, { px: 50, until: tSnap }); } }];
       S.D.over = [(c, lt) => chip(c, 'MERCEDES EQS · EQE (US)', 380, 120, lt, tM), (c, lt) => K.card(c, '+ACCELERATION: $1,200/YR (US)', lt, { at: tT, x: 1080, y: 120, px: 50, rot: -2 }),
         (c, lt) => { const a = pop(lt, tAc, .45); if (a <= 0) return; c.save(); c.translate(1600, 400); c.scale(a, a); const v = lt < tSnap ? .2 + .03 * Math.sin(lt * 30) * (lt > tAc ? 1 : 0) : .2 + .75 * E.out(K.seg(lt, tSnap, tSnap + .8)); CP.analogDial(c, 0, 0, 140, v, 'km/h');
           if (lt < tSnap + .6) { const b = clamp((lt - tSnap) * 2); c.save(); c.globalAlpha = 1 - b; c.translate(0, b * 80); chain(c, -160, -40, 160, 40, 10, lt); CP.padlock(c, 0, 26, 1.5, lt > tSnap - .2); c.restore(); }
           txt(c, lt > tL && lt < tSnap ? 'PAYWALL' : '', 0, 190, 40, '#ff5a4a', 'center', 'Anton'); c.restore(); },
-        (c, lt) => reader(c, 1260, 420, lt, tT + .2, '$1,200/YR'), (c, lt) => { if (lt > tPw && lt < tL) K.card(c, 'THE POWER WAS THERE ALL ALONG', lt, { at: tPw, x: 900, y: 240, px: 36, rot: 2, until: tL }); }];
+        (c, lt) => { if (lt < tSm - .1) reader(c, 1260, 420, lt, tT + .2, '$1,200/YR'); }, (c, lt) => { if (lt > tPw && lt < tL) K.card(c, 'THE POWER WAS THERE ALL ALONG', lt, { at: tPw, x: 900, y: 240, px: 36, rot: 2, until: tL }); }];
       S.D.sfx = [[tM, 'pop', .2], [tAc, 'scrape', .25], [tT + .2, 'whoosh_soft', .3], [tT + .7, 'chime', .3], [tSm, 'pop', .2], [tBa - .3, 'pop', .2], [tL, 'tick', .3], [tSnap, 'hit', .45], [tSnap + .1, 'whoosh', .45]]; } },
   // 4.05 3G switch-off: the mast sparks out, the parked cars' screens go grey NO SIGNAL, invoices flutter down
   { plate: 'shopfront', cam: { z: [1.05, 1.18], x: [1280, 1330], y: [800, 840] }, bed: [['rain_loop', .12], ['city_loop', .06]], light: { dir: -1, key: 'rgba(255,200,170,.18)' },
@@ -149,15 +149,15 @@ window.SHOTS = [
         (c, lt) => { cars.forEach(([x, k, col], i) => CP.car(c, x, CY, CS, { kind: k, col, t: lt })); },
         (c, lt) => { fallBill(c, 760, 1420, '$200|MODEM UPGRADE', lt, tMo - .3, .62); fallBill(c, 1650, 1425, '~$900|BILL', lt, tNi - .4, .62); }];
       S.D.front = [(c, lt) => { cars.forEach(([x], i) => { if (lt > tSo - .3) screenBubble(c, x, CY - 470 * CS, lt, i === 0 ? tTe : i === 1 ? tOff + .4 : tL, i); }); },
-        (c, lt) => { tag(c, 'EARLY TESLAS', 520, CY - 900 * CS, lt, tTe, { px: 34 }); tag(c, 'SOME HONDAS', 1420, CY - 900 * CS, lt, tHo, { px: 34 }); }];
+        (c, lt) => { tag(c, 'EARLY TESLAS', 560, CY - 900 * CS, lt, tTe, { px: 52 }); tag(c, 'SOME HONDAS', 1420, CY - 900 * CS, lt, tHo, { px: 52 }); }];
       S.D.over = [(c, lt) => K.card(c, '3G SWITCH-OFF · 2022', lt, { at: tAm, x: 960, y: 100, px: 50, rot: -2 }), (c, lt) => K.card(c, 'SOFTWARE SUPPORT ENDS', lt, { at: tSo, x: 960, y: 100, px: 46, rot: 2, until: tAm - .1 }), (c, lt) => chip(c, 'US · 2022', 1560, 200, lt, tAm + .3)];
       S.D.sfx = [[tSo, 'pop', .2], [tL, 'tick', .25], [tOff, 'hit', .3], [tOff + .1, 'fire_loop', .08], [tOff + .4, 'tick', .25], [tTe, 'tick', .25], [tMo - .3, 'paper', .35], [tNi - .4, 'paper', .35], [tNi + .9, 'thud', .2]]; } },
   // 4.06 the phone business model: in the scrapyard the crane lowers Dave's old car onto a heap of old phones; the dog in Dave's hands shakes its head
-  { plate: 'scrapyard', cam: { z: [1.12, 1.0], x: [1340, 1280], y: [820, 760] }, bed: [['wind_loop', .12]], light: { dir: -1, key: 'rgba(235,235,240,.18)' },
+  { plate: 'scrapyard', cam: { z: [1.14, 1.06], x: [1400, 1360], y: [820, 790] }, bed: [['wind_loop', .12]], light: { dir: -1, key: 'rgba(235,235,240,.18)' },
     init: S => { const tPh = A.at(S, 'phone', .8), tR = A.at(S, 'Rent', 2.2), tAn = A.at(S, 'ancient.', 6.1), tD = A.at(S, 'difference', 7), tFew = A.at(S, 'few', 9.4), tCar = A.at(S, 'car', 11), tLot = A.at(S, 'lot', 12);
       const lift0 = tR - .3, lift1 = tAn + .2, HX = 1560, HY = 1260, CS = FS * .85;
       const carPos = lt => { const u = E.io(K.seg(lt, lift0, lift1)), up = Math.sin(u * Math.PI); return { x: 760 + (HX - 760) * u, y: 1320 + (HY - 120 - 1320) * u - up * 260 }; };
-      S.D.figs = [{ x: 2360, y: 1330, s: FS, ...CP.DAVE(), facing: -1, mood: 'sad', seed: 7, hold: DOG_H('shake', tLot - 1.2),
+      S.D.figs = [{ x: 2170, y: 1330, s: FS * 1.15, ...CP.DAVE(), facing: -1, mood: 'sad', seed: 7, hold: DOG_H('shake', tLot - 1.2),
         anim: (o, lt) => { o.arms = () => ({ shR: 55, elR: -80, handR: 'fist', shL: 10, elL: -40 }); if (lt > tFew) { o.mood = 'worried'; } if (lt > tLot) o.mood = 'shocked'; } }];
       S.D.live = [(c, lt) => { const wob = Math.max(0, 1 - (lt - lift1) * 1.5) * (lt > lift1 ? 1 : 0); phoneHeap(c, HX, 1300, 1, lt, wob);
         const p = carPos(lt), hanging = lt > lift0 - .4; if (hanging) { c.save(); c.strokeStyle = '#2a2a30'; c.lineWidth = 6; c.beginPath(); c.moveTo(p.x, -50); c.lineTo(p.x, p.y - 330 * CS); c.stroke(); c.lineWidth = 4; c.beginPath(); c.moveTo(p.x, p.y - 330 * CS); c.lineTo(p.x - 260 * CS, p.y - 250 * CS); c.moveTo(p.x, p.y - 330 * CS); c.lineTo(p.x + 260 * CS, p.y - 250 * CS); c.stroke(); c.fillStyle = '#e8c23a'; c.strokeStyle = INK; c.beginPath(); c.arc(p.x, p.y - 330 * CS, 14, 0, 7); c.fill(); c.stroke(); c.restore(); }

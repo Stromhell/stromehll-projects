@@ -62,6 +62,8 @@ const crowd = (c, lt, flash) => { for (let k = 0; k < 22; k++) { const x = 60 + 
   if (k % 2 === 0) { const px = x + 40, py = y - 140 + Math.sin(lt * 3 + k) * 8; c.strokeStyle = '#0a0e1c'; c.lineWidth = 26; c.lineCap = 'round'; c.beginPath(); c.moveTo(x + 30, y + 40); c.lineTo(px, py + 30); c.stroke(); c.fillStyle = '#111'; rr(c, px - 22, py - 38, 44, 76, 6); c.fill(); c.fillStyle = '#6ab0ff'; rr(c, px - 17, py - 32, 34, 62, 4); c.fill();
     const f = flash ? Math.max(0, Math.sin(lt * 7 + k * 2.3)) ** 12 : 0; if (f > .05) TW.glow(c, px, py - 20, 160, '255,255,255', .9 * f); } } };
 
+// integer-pixel camera pan (fixed zoom): snaps the plate translation to whole 1080p pixels so the fine motorway texture does not shimmer
+const snapEase = (z, x0, x1) => u => { const sc = z * .75, cx = x0 + (x1 - x0) * E.sine(u); return (Math.round(cx * sc) / sc - x0) / (x1 - x0); };
 window.SHOTS = [
   // 1.00 2012 launch: a sleek saloon rolls onto the stage, the giant portrait screen powers on behind it, a sea of phones films it
   { plate: 'stage_blue', cam: { z: [1.15, 1.32], x: [1200, 1320], y: [790, 760] }, bed: [['crowd_loop', .2], ['hum_loop', .1]], light: { dir: 1, key: 'rgba(120,170,255,.16)' },
@@ -119,11 +121,11 @@ window.SHOTS = [
           CP.dog(c, TX + 360, TOP - 2, 2.2, lt, lt > tSc ? 'shake' : lt > tMa ? 'nod' : 'idle', { t0: lt > tSc ? tSc : tMa }); }];
       S.D.sfx = [[tMa, 'pop', .3], [tAm, 'pop', .3], [tTw, 'pop', .3], [tTw + .5, 'pop', .25], [tTw + 1, 'pop', .25], [tRo, 'creak', .3], [tEv, 'pop', .3], [tSc, 'chime', .2], [tSw, 'whoosh', .4], [tSw + 1.2, 'thud', .3]]; } },
   // 1.03 CU: Dave's eyes flick down to the glow and back; the windscreen view drifts towards the hard shoulder; rumble strip
-  { plate: 'motorway', cam: { z: [1.2, 1.3], x: [1300, 1080], y: [820, 820] }, bed: [['rain_loop', .25], ['hum_loop', .14]], light: { dir: -1, key: 'rgba(120,190,255,.14)' },
+  { plate: 'motorway', cam: { z: [1.25, 1.25], x: [1300, 1100], y: [832, 832], ease: snapEase(1.25, 1300, 1100) }, bed: [['rain_loop', .25], ['hum_loop', .14]], light: { dir: -1, key: 'rgba(120,190,255,.14)' },
     init: S => { const tB = A.at(S, 'button', 2.4), tSc = A.at(S, 'screen', 4.3), tLk = A.at(S, 'look', 5.8), tSe = A.at(S, 'seventy', 7.2), tEy = A.at(S, 'eyes', 10.9), tRd = A.at(S, 'road.', 13.3);
       const down = lt => lt > tSc - .2 && lt < tRd - .2; const drift = lt => -260 * E.io(K.seg(lt, tSc, tRd - .3)) * (1 - E.io(K.seg(lt, tRd - .2, tRd + .6)));
-      const rumble = lt => lt > tSe && lt < tRd ? Math.sin(lt * 70) * 6 : 0;
-      S.D.live = [(c, lt) => { c.save(); c.translate(drift(lt) * .5, rumble(lt) * .5); traffic(c, lt + 30); rain(c, lt + 30); wipers(c, lt + 30, 2); c.restore(); }];
+      const rumble = lt => lt > tSe && lt < tRd ? Math.sin(lt * 21) * 5 : 0;
+      S.D.live = [(c, lt) => { c.save(); c.translate(drift(lt) * .5, rumble(lt) * .5); traffic(c, lt + 30); rain(c, lt + 30); wipers(c, 0, 2); c.restore(); }];
       S.D.front = [(c, lt) => { c.save(); c.translate(0, rumble(lt)); dashTop(c); CP.dashTablet(c, 860, 900, 840, lt, { page: 'climate' }); TW.glow(c, 1280, 1150, 500, '120,200,255', down(lt) ? .35 : .15);
           CP.dog(c, 700, 1004, 4, lt, lt > tSc ? 'shake' : lt > tB ? 'nod' : 'idle', { t0: lt > tSc ? tSc : tB }); wheelAndRight(c, lt + 30, drift(lt) / 2000); arm(c, 1840, 1800, WH.x - 300, WH.y - 10, 1.25);
           // eye-line arrow: down to the glow, back up to the road
@@ -135,10 +137,10 @@ window.SHOTS = [
         (c, lt) => K.card(c, 'EYES ON THE ROAD', lt, { at: tRd - .3, x: 960, y: 200, px: 64, rot: -2, bg: '#7ad87a' })];
       S.D.sfx = [[tB, 'tick', .4], [tSc, 'chime', .15], [tSe, 'scrape', .35], [tSe + 1, 'scrape', .3], [tRd, 'hit', .3]]; } },
   // 1.04 2021 screen recall: the dash screen glitches and dies; the windscreen fogs with no demister; the reversing-camera icon fades; recall stamp 135,000 CARS
-  { plate: 'motorway', cam: { z: [1.15, 1.25], x: [1280, 1300], y: [820, 860] }, bed: [['rain_loop', .22], ['hum_loop', .12]], light: { dir: -1, key: 'rgba(120,190,255,.12)' },
+  { plate: 'motorway', cam: { z: [1.2, 1.2], x: [1260, 1320], y: [850, 850], ease: snapEase(1.2, 1260, 1320) }, bed: [['rain_loop', .22], ['hum_loop', .12]], light: { dir: -1, key: 'rgba(120,190,255,.12)' },
     init: S => { const tDi = A.at(S, 'dies,', 1.6), tYr = A.at(S, '2021,', 4.0), tHu = A.at(S, 'hundred', 7.5), tCh = A.at(S, 'chip', 13.5), tDe = A.at(S, 'demister', 16.0), tRv = A.at(S, 'reversing', 17.2);
       const dead = lt => K.seg(lt, tDi, tDi + .9), glitch = lt => lt > tDi - .2 && lt < tDi + .9 && Math.sin(lt * 53) > .2;
-      S.D.live = [(c, lt) => { traffic(c, lt + 40); rain(c, lt + 40, 70); fog(c, .1 + .75 * E.io(K.seg(lt, tDi + .5, tDe + 1.2))); wipers(c, lt + 40, 1.6); }];
+      S.D.live = [(c, lt) => { traffic(c, lt + 40); rain(c, lt + 40, 70); fog(c, .1 + .75 * E.io(K.seg(lt, tDi + .5, tDe + 1.2))); wipers(c, 0, 1.6); }];
       S.D.front = [(c, lt) => { dashTop(c); const d = dead(lt); CP.dashTablet(c, 860, 900, 840, lt, { page: 'home', glow: glitch(lt) ? .2 : 1 - d });
           if (glitch(lt)) { c.save(); for (let k = 0; k < 6; k++) { c.fillStyle = k % 2 ? 'rgba(255,40,120,.5)' : 'rgba(40,255,220,.5)'; c.fillRect(860, 900 + ((k * 97 + Math.floor(lt * 8) * 41) % 500), 840, 14); } c.restore(); }
           if (d > 0) { c.fillStyle = `rgba(4,5,8,${.97 * d})`; rr(c, 860, 900, 840, 525, 18); c.fill(); }

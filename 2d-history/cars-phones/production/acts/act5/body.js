@@ -25,7 +25,7 @@ const FACE = (c, x, y, w, h, k, lt) => { const sk = ['#e8b48a', '#a8704a', '#f0c
 
 window.SHOTS = [
   // 3.0 motor-show stand: pillar-to-pillar glass dashboard on the turntable, passenger points at her own screen (cat videos)
-  { plate: 'showroom', cam: { z: [1.04, 1.14], x: [1240, 1320], y: [760, 780] }, bed: [['crowd_loop', .08], ['hum_loop', .08]], light: { dir: -1, key: 'rgba(170,140,255,.14)' },
+  { plate: 'showroom', cam: { z: [1.04, 1.14], x: [1300, 1420], y: [760, 780] }, bed: [['crowd_loop', .08], ['hum_loop', .08]], light: { dir: -1, key: 'rgba(170,140,255,.14)' },
     init: S => { const tM = A.at(S, 'Mercedes,', .3), tH = A.at(S, 'Hyperscreen', 3.4), tG = A.at(S, 'pillar', 5.0), tP = A.at(S, 'passenger.', 7.6), FL = 1150;
       S.D.figs = [{ x: 2230, y: FL, s: 1.55, ...CP.PASSENGER(), facing: -1, mood: 'happy', walk: { x0: 2700, x1: 2230, t0: .2, dur: 2.2 }, anim: (o, lt) => { if (lt > tP - .4) { o.pose = 'point'; o.mood = 'happy'; } } }];
       S.D.live = [(c, lt) => { const on = E.out(K.seg(lt, tG - .6, tG + .8));

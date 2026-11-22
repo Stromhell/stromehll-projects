@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><title>CP act 2 - act 2</title>
+<!doctype html><html><head><meta charset="utf-8"><title>CP act 2 - 70 mph test</title>
 <style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
 <body><canvas id="c" width="1920" height="1080"></canvas>
 <script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
@@ -14,10 +14,10 @@ const endTitle = (secs) => { const T = window.TIMING; const last = T.shots[T.sho
 for (const n of ['airfield', 'showroom', 'motorway', 'design_studio', 'boardroom']) K.load(n, PL + n + '.jpg');
 // ---------- act-local helpers ----------
 const METER = (m0, m1, a0 = 0, a1 = 1) => (c, lt, u) => CP.eyesMeter(c, 170, 96, .8, K.lerp(m0, m1, E.io(K.clamp((u - a0) / Math.max(.01, a1 - a0)))));
-const NAME = (c, lt, at, x, y, name, sub, until = 99) => { const a = pop(lt, at, .4) * (1 - K.seg(lt, until - .3, until)); if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.rotate(-.025); c.font = '40px Anton'; const w = Math.max(c.measureText(name).width, sub ? 300 : 0) + 44, h = sub ? 92 : 62;
+const NAME = (c, lt, at, x, y, name, sub, until = 99) => { const a = pop(lt, at, .4) * (1 - K.seg(lt, until - .3, until)); if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a * 1.5, a * 1.5); c.rotate(-.025); c.font = '40px Anton'; const w = Math.max(c.measureText(name).width, sub ? 300 : 0) + 44, h = sub ? 92 : 62;
   c.fillStyle = 'rgba(0,0,0,.35)'; TW.rr(c, -w / 2 + 6, -h / 2 + 8, w, h, 10); c.fill(); c.fillStyle = PR.GOLD || '#f4c430'; c.strokeStyle = INK; c.lineWidth = 5; TW.rr(c, -w / 2, -h / 2, w, h, 10); c.fill(); c.stroke();
   TW.txt(c, name, 0, sub ? -h / 2 + 30 : 2, 40, INK, 'center', 'Anton'); if (sub) TW.txt(c, sub, 0, h / 2 - 22, 24, '#3a2a10', 'center', 'Oswald'); c.restore(); };
-const SRC = (c, lt, at, x, y, text) => { const a = pop(lt, at, .35); if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.font = '26px Oswald'; const w = c.measureText(text).width + 30; c.fillStyle = 'rgba(10,14,20,.82)'; TW.rr(c, -w / 2, -22, w, 44, 8); c.fill(); TW.txt(c, text, 0, 1, 26, '#e8e4d8', 'center', 'Oswald'); c.restore(); };
+const SRC = (c, lt, at, x, y, text) => { const a = pop(lt, at, .35) * 1.5; if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.font = '26px Oswald'; const w = c.measureText(text).width + 30; c.fillStyle = 'rgba(10,14,20,.82)'; TW.rr(c, -w / 2, -22, w, 44, 8); c.fill(); TW.txt(c, text, 0, 1, 26, '#e8e4d8', 'center', 'Oswald'); c.restore(); };
 const ARM = (c, x0, y0, x1, y1, col = '#3a4a6a') => { c.save(); c.lineCap = 'round'; c.strokeStyle = INK; c.lineWidth = 92; c.beginPath(); c.moveTo(x0, y0); c.lineTo(x1, y1); c.stroke(); c.strokeStyle = col; c.lineWidth = 82; c.stroke();
   const a = Math.atan2(y1 - y0, x1 - x0); c.translate(x1, y1); c.rotate(a); c.fillStyle = '#e8b48a'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.ellipse(46, 0, 44, 34, 0, 0, 7); c.fill(); c.stroke(); c.beginPath(); c.ellipse(96, -6, 34, 11, 0, 0, 7); c.fill(); c.stroke(); c.restore(); };
 const rain = (c, lt, n = 60) => { c.strokeStyle = 'rgba(200,215,235,.35)'; c.lineWidth = 2; for (let k = 0; k < n; k++) { const x = (k * 431) % 2560, y = ((k * 211) + lt * 900) % 1000; c.beginPath(); c.moveTo(x, y); c.lineTo(x - 6, y + 30); c.stroke(); } };
@@ -29,6 +29,9 @@ const CABIN = (dash, opts = {}) => (c, lt) => { const t = lt;
   const g = c.createLinearGradient(0, 990, 0, 1440); g.addColorStop(0, '#2a2c32'); g.addColorStop(1, '#121318'); c.fillStyle = g; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.moveTo(0, 1010); c.quadraticCurveTo(1280, 960, 2560, 1010); c.lineTo(2560, 1440); c.lineTo(0, 1440); c.closePath(); c.fill(); c.stroke();
   c.fillStyle = 'rgba(255,255,255,.08)'; c.fillRect(0, 1000, 2560, 8);
   dash(c, t); CP.steering(c, 700, 1230, 6.2, t, { turn: Math.sin(t * .6) * .05 + (opts.turn ? opts.turn(t) : 0) }); };
+// runway rushing past: dashed centre line + cones sliding left, so the car really travels
+const RUNWAY = (c, lt) => { c.fillStyle = 'rgba(240,240,230,.85)'; for (let k = 0; k < 8; k++) { const x = 2700 - ((lt * 2600 + k * 420) % 3200); c.beginPath(); c.moveTo(x, 1330); c.lineTo(x + 220, 1330); c.lineTo(x + 240, 1350); c.lineTo(x + 20, 1350); c.fill(); }
+  for (let k = 0; k < 4; k++) { const x = 2800 - ((lt * 2600 + k * 800) % 3400), y = 1330; c.fillStyle = '#e86a1a'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(x - 34, y); c.lineTo(x, y - 90); c.lineTo(x + 34, y); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#fff'; c.fillRect(x - 18, y - 50, 36, 12); } };
 const lurch = (lt, at) => { const d = lt - at; return d > 0 && d < .8 ? Math.sin(d * 40) * 26 * (1 - d / .8) : 0; };
 
 window.SHOTS = [
@@ -36,7 +39,7 @@ window.SHOTS = [
   { plate: 'airfield', cam: { z: [1.05, 1.12], x: [1180, 1360], y: [760, 760] }, bed: [['birds_loop', .12], ['wind_loop', .08]], light: { dir: 1, key: 'rgba(255,190,200,.16)' },
     init: S => { const tS = A.at(S, 'Swedish', 1.3), tV = A.at(S, 'Vi', 2.4), tM = A.at(S, 'measure', 4.6), FL = 1300;
       const KINDS = ['estate2005', 'saloon_ev', 'tesla_like', 'suv_screen', 'mission_s', 'saloon_ev'], COLS = ['#3a5a7a', null, null, null, '#8a8e96', '#2a4a3a'];
-      S.D.figs = [{ x: 560, y: FL, s: 1.6, ...CP.TESTER({ helmet: false }), facing: 1, mood: 'focus', hold: { near: CP.clipboardHold }, talk: [tM, tM + 1.6],
+      S.D.figs = [{ x: 520, y: FL + 60, s: 2.0, ...CP.TESTER({ helmet: false }), facing: 1, mood: 'focus', hold: { near: CP.clipboardHold }, talk: [tM, tM + 1.6],
         anim: (o, lt) => { o.arms = () => lt > tM ? { shR: 70, elR: -60 } : { shR: 25, elR: -40 }; } }];
       S.D.live = [(c, lt) => { TW.glow(c, 1400, 380, 900, '255,170,190', .16 + .03 * Math.sin(lt)); },
         (c, lt) => { KINDS.forEach((k, i) => { const xt = 1000 + i * 260, a = E.out(K.seg(lt, tS - .8 + i * .35, tS + 1.4 + i * .35)), x = xt + (1 - a) * 1500, sp = a < 1 ? 600 : 0; CP.shadow(c, x, 1080, 140); CP.car(c, x, 1080, .26, { kind: k, col: COLS[i] || undefined, t: lt, speed: sp, dir: -1 }); }); }];
@@ -52,6 +55,7 @@ window.SHOTS = [
           // helmeted driver silhouette in the side glass
           c.save(); c.translate(x - 40, 1290 - 255); c.fillStyle = '#d8dce4'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.arc(0, 0, 34, 0, 7); c.fill(); c.stroke(); c.fillStyle = '#1a2a3a'; c.fillRect(4, -10, 28, 16); c.restore(); },
         (c, lt) => speedLines(c, lt, 0, 2560, 1120, 1360, 12)];
+      S.D.live.unshift(RUNWAY);
       S.D.front = [(c, lt) => { for (let k = 0; k < 6; k++) { const u = ((lt * 1.4 + k / 6) % 1); c.fillStyle = `rgba(160,150,140,${.35 * (1 - u)})`; c.beginPath(); c.arc(1240 - 560 - u * 500, 1270 - u * 40, 30 + u * 60, 0, 7); c.fill(); } }];
       S.D.over = [METER(0, 120, .35, 1),
         (c, lt) => NAME(c, lt, t12, 400, 300, '12 CARS', '~110 KM/H (70 MPH)'),
@@ -64,7 +68,7 @@ window.SHOTS = [
       S.D.sfx = [[t12, 'whoosh', .25], [tJ - .3, 'paper', .2], ...ticks.map(t => [t, 'tick', .3])]; } },
 
   // 2.2 winner: 2005 estate on the showroom turntable, rosette, button dash with nodding dog; 10 s / 306 m
-  { plate: 'showroom', cam: { z: [1.08, 1.16], x: [1280, 1280], y: [820, 800] }, bed: [['hum_loop', .08], ['crowd_loop', .05]], light: { dir: -1 },
+  { plate: 'showroom', cam: { z: [1.04, 1.24], x: [1240, 1320], y: [820, 790] }, bed: [['hum_loop', .08], ['crowd_loop', .05]], light: { dir: -1 },
     init: S => { const tW = A.at(S, 'winner?', .6), tV = A.at(S, 'Volvo', 2.2), tB = A.at(S, 'buttons.', 4.6), tT = A.at(S, 'ten', 6.6), tM = A.at(S, 'metres', 8.6);
       S.D.live = [(c, lt) => { const r = Math.sin(lt * .4) * .02; TW.glow(c, 1280, 700, 800, '255,240,200', .18);
           for (const x of [900, 1660]) { c.save(); c.globalCompositeOperation = 'screen'; const g = c.createLinearGradient(x, 0, x, 1150); g.addColorStop(0, 'rgba(255,240,200,.0)'); g.addColorStop(1, 'rgba(255,240,200,.18)'); c.fillStyle = g; c.beginPath(); c.moveTo(x - 30, 0); c.lineTo(x + 30, 0); c.lineTo(x + 260, 1150); c.lineTo(x - 260, 1150); c.fill(); c.restore(); }
@@ -81,10 +85,11 @@ window.SHOTS = [
 
   // 2.3 slowest: all-screen SUV; meter spins past 1,400 m, football pitches unroll in a row
   { plate: 'airfield', cam: { z: [1.15, 1.08], x: [1300, 1260], y: [860, 820] }, bed: [['wind_loop', .14], ['tension', .1]], light: { dir: 1 },
-    init: S => { const tSl = A.at(S, 'slowest', .4), tMG = A.at(S, 'MG', 1.0), tF = A.at(S, 'Forty-five', 4.6), tK = A.at(S, 'kilometres', 7.2), tBl = A.at(S, 'blind.', 9.6);
+    init: S => { const tSl = A.at(S, 'slowest', .4), tMG = A.at(S, 'MG', 1.0), tF = A.at(S, 'Forty-five', 4.6), tK = A.at(S, 'kilometres', 7.2), tBl = A.at(S, 'driven', 8.4);
       S.D.live = [(c, lt) => { const x = 1280 + Math.sin(lt * .7) * 50; CP.shadow(c, x, 1290, 600); CP.car(c, x, 1290, 1.1, { kind: 'suv_screen', t: lt, speed: 2200, lights: true });
           c.save(); c.translate(x - 20, 1290 - 300); c.globalCompositeOperation = 'screen'; TW.glow(c, 0, 0, 120, '90,170,255', .5 + .2 * Math.sin(lt * 4)); c.restore(); },
         (c, lt) => speedLines(c, lt, 0, 2560, 1120, 1360, 12)];
+      S.D.live.unshift(RUNWAY);
       S.D.over = [(c, lt) => CP.eyesMeter(c, 170, 96, .8 * (1 + .06 * Math.sin(lt * 10) * K.seg(lt, tF, tK)), lt < tF ? 306 : K.lerp(306, 1400, E.io(K.seg(lt, tF, tK + .6)))),
         (c, lt) => NAME(c, lt, tMG, 960, 130, 'MG MARVEL R', 'all-screen electric SUV'),
         (c, lt) => { const a = pop(lt, tF, .4); if (a <= 0) return; c.save(); c.translate(1640, 130); c.scale(a, a); PR.counter(c, 0, 0, .8, 10, 44.9, tF, tF + 1.4, lt, { pre: '', suf: ' s', dec: 1 }); c.restore(); },
@@ -150,7 +155,7 @@ window.SHOTS = [
   // 2.6 angry owners with placards; VW design boss at the press table; quote card; box of buttons carried back in
   { plate: 'boardroom', cam: { z: [1.0, 1.08], x: [1280, 1300], y: [800, 820] }, bed: [['crowd_loop', .1], ['office_loop', .06]], light: { dir: 1 },
     init: S => { const tO = A.at(S, 'hated', .8), t25 = A.at(S, '2025', 2.6), tAM = A.at(S, 'Andreas', 4.0), tBk = A.at(S, 'back,', 7.0), tN = A.at(S, 'never,', 9.2), FL = 1420;
-      S.D.figs = [0, 1].map(k => ({ x: 300 + k * 330, y: FL, s: 1.6, ...CP.OWNER(k), mood: 'angry', facing: 1, pose: 'cheer', talk: [tO, tO + 2] })).concat([
+      S.D.figs = [0, 1].map(k => ({ x: 330 + k * 390, y: FL, s: 1.9, ...CP.OWNER(k), mood: 'angry', facing: 1, pose: 'cheer', talk: [tO, tO + 2] })).concat([
         { x: 1600, y: FL, s: 1.7, ...CP.DESIGNER_VW(), facing: -1, mood: 'happy', talk: [tBk - .8, tN + 2.5], anim: (o, lt) => { o.pose = lt > tN ? 'present' : lt > tBk - .5 ? 'point' : 'stand'; } },
         { x: 2700, y: FL, s: 1.6, ...CP.ENGINEER(1), facing: -1, mood: 'happy', pose: 'carry', walk: { x0: 2750, x1: 2140, t0: tBk, dur: 2.6 },
           hold: { near: cc => { cc.fillStyle = '#a87a4a'; cc.strokeStyle = INK; cc.lineWidth = 3; cc.fillRect(-60, -40, 120, 70); cc.strokeRect(-60, -40, 120, 70); for (let k = 0; k < 6; k++) { cc.fillStyle = '#4a4a52'; TW.rr(cc, -50 + k * 17, -54, 14, 14, 3); cc.fill(); cc.stroke(); } TW.txt(cc, 'BUTTONS', 0, -6, 18, INK, 'center', 'Anton'); } } }]);
@@ -158,7 +163,7 @@ window.SHOTS = [
           // press table with microphones in front of the design boss
           c.fillStyle = '#2a2026'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(1380, 1160, 440, 30); c.strokeRect(1380, 1160, 440, 30); c.fillRect(1400, 1190, 24, FL - 1190); c.fillRect(1776, 1190, 24, FL - 1190);
           for (const mx of [1500, 1600, 1700]) { c.strokeStyle = '#222'; c.lineWidth = 6; c.beginPath(); c.moveTo(mx, 1160); c.lineTo(mx, 1080); c.stroke(); c.fillStyle = '#333'; c.beginPath(); c.arc(mx, 1070, 16, 0, 7); c.fill(); } }];
-      S.D.front = [(c, lt) => { [[300, 'GIVE US|BUTTONS'], [630, 'BRING BACK|THE CLICK']].forEach(([x, t], i) => { const b = Math.sin(lt * 4 + i * 2) * 12, a = K.seg(lt, tO - .4, tO); if (a <= 0) return; c.save(); c.translate(x + 110, 800 + b); c.globalAlpha = a; c.fillStyle = '#8a6a44'; c.fillRect(-6, 0, 12, 320); c.fillStyle = '#f6eedc'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(-120, -130, 240, 140); c.strokeRect(-120, -130, 240, 140); const L = t.split('|'); L.forEach((l, j) => TW.txt(c, l, 0, -88 + j * 50, 36, '#c8262e', 'center', 'Anton')); c.restore(); }); }];
+      S.D.front = [(c, lt) => { [[330, 'GIVE US|BUTTONS'], [720, 'BRING BACK|THE CLICK']].forEach(([x, t], i) => { const b = Math.sin(lt * 4 + i * 2) * 12, a = K.seg(lt, tO - .4, tO); if (a <= 0) return; c.save(); c.translate(x + 95, 640 + b); c.globalAlpha = a; c.fillStyle = '#8a6a44'; c.fillRect(-6, 0, 12, 300); c.fillStyle = '#f6eedc'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(-120, -130, 240, 140); c.strokeRect(-120, -130, 240, 140); const L = t.split('|'); L.forEach((l, j) => TW.txt(c, l, 0, -88 + j * 50, 36, '#c8262e', 'center', 'Anton')); c.restore(); }); }];
       S.D.over = [METER(1400, 1400),
         (c, lt) => NAME(c, lt, tAM, 1200, 230, 'ANDREAS MINDT', 'VW design chief · 2025'),
         (c, lt) => { const a = pop(lt, tN - .2, .35); if (a <= 0) return; c.save(); c.translate(1300, 470); c.scale(a, a); c.rotate(-.04); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(-310, -82, 640, 180); c.fillStyle = '#f6eedc'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-320, -90, 640, 180); c.strokeRect(-320, -90, 640, 180); TW.txt(c, '"NEVER, EVER"', 0, -20, 70, INK, 'center', 'Anton'); TW.txt(c, '- Andreas Mindt, VW', 0, 52, 30, '#4a3a20', 'center', 'Oswald'); c.restore(); }];
