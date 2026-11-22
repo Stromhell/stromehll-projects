@@ -1,14 +1,14 @@
 {
- "channel": "dumdown",
- "video": "avengers-mistakes-doomsday",
- "state": "making",
- "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ84kYndWLVBvCBkrKjCNjY4y",
- "feedback": false,
- "queue_pos": 0,
- "booked_for": null,
- "zernio_post": null,
- "proposed_slot": "2026-12-07T16:00Z",
- "source_youtube": "https://youtu.be/bR22cUvnMMs",
- "updated": "2026-11-22T16:00Z",
- "note": "script v2 (14 inline gags), building cast + voice"
+  "channel": "dumdown",
+  "video": "avengers-mistakes-doomsday",
+  "state": "waiting_approval",
+  "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ84kYndWLVBvCBkrKjCNjY4y",
+  "feedback": false,
+  "queue_pos": 0,
+  "booked_for": null,
+  "zernio_post": null,
+  "proposed_slot": "2026-12-07T16:00Z",
+  "source_youtube": "https://youtu.be/bR22cUvnMMs",
+  "updated": "2026-11-22T19:40Z",
+  "note": "FULL v2 (12:05) on Drive 1HdX8GSOWUlJhinMUr27BcNfhnAapGNV_; launch kit https://claude.ai/artifact/BrAAsVbQAJLL4uNUDqs5Vf; waiting for Pushpam OK + title/thumb pick, then book 2026-12-07T16:00Z"
 }

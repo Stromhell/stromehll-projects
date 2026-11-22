@@ -20,5 +20,5 @@ window.ACT = { timing: window.TIMING, meterEv: [{ p: 2, w: 'split themselves', n
  { p: 4, plate: 'sd_airport', cam: { frame: 'two', on: 0, on2: 1, push: [1, 1.04] }, chars: [
    { c: 'tony', seat: 1, x: 900, y: 1320, s: 1.4, view: 'side', dir: -1, expr: 'deadpan' },
    { c: 'steve', seat: 1, x: 1700, y: 1320, s: 1.4, view: 'side', dir: 1, expr: 'deadpan' }],
-   props: [{ k: 'bench', x: 900, y: 1320, s: 1.2, layer: 'back' }, { k: 'bench', x: 1700, y: 1320, s: 1.2, layer: 'back' }], pops: [{ t: 'FLIGHT 2016: CANCELLED', at: GS('GAG E', 0) + 1, dur: 3 }, { t: 'FOREVER', at: GS('GAG E', 1), dur: 1.8 }] },
+   props: [{ k: 'chairS', x: 900, y: 1320, s: 1.46, dir: -1, layer: 'back' }, { k: 'chairS', x: 1700, y: 1320, s: 1.46, dir: 1, layer: 'back' }], pops: [{ t: 'FLIGHT 2016: CANCELLED', at: GS('GAG E', 0) + 1, dur: 3 }, { t: 'FOREVER', at: GS('GAG E', 1), dur: 1.8 }] },
 ] };

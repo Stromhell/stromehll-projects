@@ -121,10 +121,10 @@ def build(g):
     mus = blank(dur + 4); mm = music(g['music'], dur - OPEN + .2, g['id']) if g['music'] else np.zeros(1); at(mus, mm * .055, OPEN - .1)
     mix = (mixv + mixs + mus)[:int(SR * dur)]; mix = mix / (np.abs(mix).max() or 1) * .89
     wavfile.write(os.path.join(OUT, f'gag{g["id"]:02d}.wav'), SR, (mix * 32767).astype(np.int16))
-    meta = {'id': g['id'], 'act': g['act'], 'at': g.get('at', 0), 'title': g['title'], 'set': g['set'], 'dur': dur, **ev}
+    meta = {'id': g['id'], 'act': g.get('act'), 'at': g.get('at', 0), 'title': g.get('title',g.get('key')), 'set': g.get('set'), 'dur': dur, **ev}
     json.dump(meta, open(os.path.join(OUT, f'gag{g["id"]:02d}.json'), 'w')); return meta
 if __name__ == '__main__':
     ids = [int(a) for a in sys.argv[1:]] or [g['id'] for g in G]; tot = 0
     for g in G:
-        if g['id'] in ids: m = build(g); tot += m['dur']; print(g['id'], g['set'], m['dur'], flush=True)
+        if g['id'] in ids: m = build(g); tot += m['dur']; print(g['id'], g.get('key'), m['dur'], flush=True)
     print('total', round(tot, 1))
