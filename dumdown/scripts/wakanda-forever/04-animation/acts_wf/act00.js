@@ -1,0 +1,8 @@
+// HOOK
+window.ACT = { timing: window.TIMING, shots: [
+ { p: 0, plate: 'deep_sea', cam: { z: [1.7, 1.3], x: 1280, y: [1000, 900] }, ease: 'lin', chars: [{ c: 'namor', x: 1280, y: 1300, s: 1.5, view: 'front', pose: 'fly', expr: 'deadpan' }], fx: ['flash'] },
+ { p: 0, f: .45, plate: 'wk_city', cam: { z: [1.05, 1.15], x: 1280, y: 720 }, props: [{ k: 'wave', x: 1280, y: 1440, s: 1, h: [200, 900], kk: [200, 900], layer: 'front' }, { k: 'whale', x: [400, 900], y: 1080, s: 1.1, layer: 'front', ph: 1 }, { k: 'whale', x: [2200, 1700], y: 1120, s: 1, dir: -1, layer: 'front' }], pops: [{ t: 'WHALE CAVALRY', w: 'nearly', dur: 2.4 }] },
+ { p: 0, f: .8, plate: 'wk_river', cam: { frame: 'med', on: 0, push: [1, 1.08] }, chars: [{ c: 'namor', x: 1280, y: 1320, s: 1.45, view: 'front', expr: 'smug', acts: [{ a: 'shrug', w: 'point' }] }] },
+ { p: 1, plate: 'wk_lab', cam: { frame: 'two', on: 0, on2: 1, push: [1, 1.06] }, chars: [{ c: 'shuri', x: 1000, y: 1320, s: 1.45, view: 'threequarter', dir: 1, expr: 'neutral', acts: [{ a: 'point', w: 'princess' }] }, { c: 'riri', x: 1600, y: 1320, s: 1.4, view: 'threequarter', dir: -1, expr: 'smug', acts: [{ a: 'shrug', w: 'genius' }] }], props: [{ k: 'griot', x: 1300, y: 760, s: .8 }], pops: [{ t: 'HOMEWORK SIDE-HUSTLE', w: 'homework', dur: 2.4 }] },
+ { p: 1, f: .62, plate: 'studio', cam: { frame: 'med', on: 0, push: [1, 1.12] }, chars: [{ c: 'mascot', x: 1280, y: 1320, s: 1.5, view: 'front', expr: 'happy', acts: [{ a: 'point', w: 'watched' }, { a: 'shrug', w: 'respectfully' }] }], pops: [{ t: "LET'S GET DUMB", w: 'dumb', dur: 2 }] },
+] };

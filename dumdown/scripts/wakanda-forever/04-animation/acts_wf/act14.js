@@ -1,0 +1,9 @@
+// LOOSE ENDS + GAG 15 COLONIZER IN CHAINS
+window.ACT = { timing: window.TIMING, shots: [
+ { p: 0, plate: 'wk_lab', title: ['AFTER', 'LOOSE ENDS'], cam: { frame: 'two', on: 0, on2: 1, push: [1, 1.04] }, chars: [{ c: 'riri', x: 1000, y: 1320, s: 1.38, view: 'threequarter', dir: 1, expr: 'happy', acts: [{ a: 'hug', w: 'aww' }] }, { c: 'shuri', x: 1600, y: 1320, s: 1.4, view: 'threequarter', dir: -1, expr: 'smile' }], props: [{ k: 'sedan', x: 1300, y: 1340, s: 1.4, col: '#4a6a9a', layer: 'back' }] },
+ { p: 1, plate: 'forest_rd', cam: { frame: 'two', on: 0, on2: 1, push: [1, 1.04] }, chars: [{ c: 'okoyeMA', x: 900, y: 1320, s: 1.4, view: 'threequarter', dir: 1, expr: 'smug', talk: true }, { c: 'ross', x: 1600, y: 1320, s: 1.38, view: 'front', expr: 'nervous' }], props: [{ k: 'chains', x: 1600, y: 1080, s: .7, layer: 'front' }] },
+ // GAG 15 COLONIZER IN CHAINS
+ { p: 2, plate: 'museum', cam: { frame: 'full', on: 0, push: [1, 1.03] }, chars: [{ c: 'ross', x: 1280, y: 1320, s: 1.35, view: 'front', expr: 'smile', talk: TK('GAG 15', [0]), acts: [{ a: 'raise', at: GS('GAG 15', 0) }] }, { c: 'okoyeMA', x: 600, y: 1320, s: 1.35, view: 'threequarter', dir: 1, expr: 'deadpan', talk: TK('GAG 15', [1]) }, { c: 'aneka', x: 2000, y: 1320, s: 1.33, view: 'threequarter', dir: -1, expr: 'smug', acts: [{ a: 'holdUp1', at: .4 }] }],
+   props: [{ k: 'glassBox', x: 1280, y: 1340, s: 1, label: 'RARE COLONIZER', label2: 'VERY POLITE', layer: 'front' }, { k: 'chains', x: 1280, y: 1080, s: .7, layer: 'front' }, { k: 'phone', on: 2, s: .7 }], pops: [{ t: 'COLONIZER IN CHAINS', at: .3, dur: 2 }] },
+ { p: 3, plate: 'wk_throne', cam: { frame: 'med', on: 0, push: [1, 1.1] }, chars: [{ c: 'mbaku', x: 1280, y: 1320, s: 1.42, view: 'front', expr: 'smug', acts: [{ a: 'raise', w: 'challenges' }] }], pops: [{ t: 'OF COURSE HE DOES', w: 'course', dur: 2 }] },
+] };

@@ -1,0 +1,12 @@
+// TAKEN + GAG 8 EIGHT HOUR RIDE
+window.ACT = { timing: window.TIMING, shots: [
+ { p: 0, plate: 'bridge', title: ['THE BRIDGE', 'TAKEN'], cam: { frame: 'two', on: 0, on2: 1, push: [1, 1.04] }, chars: [{ c: 'attuma', x: 1000, y: 1320, s: 1.4, view: 'threequarter', dir: 1, expr: 'angry', acts: [{ a: 'smash', w: 'strong' }] }, { c: 'okoye', x: 1650, y: 1320, s: 1.4, view: 'threequarter', dir: -1, expr: 'angry', acts: [{ a: 'block', w: 'fights' }] }], props: [{ k: 'spear', on: 1, s: .9 }] },
+ { p: 0, f: .6, plate: 'bridge', cam: { z: [1.15, 1.25], x: 1280, y: 850 }, chars: [{ c: 'shuri', x: [1100, 1250], y: [1320, 1500], s: 1.3, view: 'front', expr: 'shock' }, { c: 'riri', x: [1450, 1300], y: [1320, 1500], s: 1.3, view: 'front', expr: 'shock' }], props: [{ k: 'wave', x: 1280, y: 1440, s: 1, h: [150, 520], kk: [150, 520], layer: 'front' }] },
+ { p: 1, plate: 'wk_throne', noWhip: 0, cam: { frame: 'two', on: 0, on2: 1, push: [1, 1.04] }, chars: [{ c: 'okoye', x: 1000, y: 1320, s: 1.4, view: 'threequarter', dir: 1, expr: 'sad', pose: 'crouch' }, { c: 'ramondaBlk', x: 1600, y: 1320, s: 1.45, view: 'threequarter', dir: -1, expr: 'angry', acts: [{ a: 'pointHold', w: 'title' }] }], pops: [{ t: 'OUCH', w: 'ouch', dur: 1.6 }] },
+ { p: 2, plate: 'limo_int', cam: { frame: 'two', on: 0, on2: 1, push: [1, 1.04] }, chars: [{ c: 'ross', seat: 1, x: 1000, y: 1320, s: 1.4, view: 'side', dir: 1, expr: 'nervous' }, { c: 'val', seat: 1, x: 1600, y: 1320, s: 1.4, view: 'side', dir: -1, expr: 'smug', acts: [{ a: 'shrug', w: 'ex-wife' }] }] },
+ // GAG 8 EIGHT HOUR RIDE (time-lapse)
+ { p: 3, plate: 'limo_int', cam: { frame: 'two', on: 0, on2: 1, push: [1, 1.03] }, chars: [{ c: 'ross', seat: 1, x: 1000, y: 1320, s: 1.4, view: 'side', dir: 1, expr: 'sad', talk: TK('GAG 8', [0]) }, { c: 'val', seat: 1, x: 1600, y: 1320, s: 1.4, view: 'side', dir: -1, expr: 'happy', acts: [{ a: 'sip', at: .9 }, { a: 'sip', at: 1.9 }] }],
+   props: [{ k: 'sandwich', on: 1, s: .8, t1: 1.6 }, { k: 'chips', on: 1, s: .7, t0: 1.6, t1: 3.4 }],
+   pops: [{ t: 'HOUR 1', at: .5, dur: 1 }, { t: 'HOUR 3', at: 1.6, dur: 1 }, { t: 'HOUR 6', at: 2.7, dur: 1 }, { t: 'HOUR 8', at: 3.8, dur: 1.4 }] },
+ { p: 3, f: .62, plate: 'limo_int', cam: { frame: 'mcu', on: 0, push: [1, 1.08] }, chars: [{ c: 'ross', seat: 1, x: 1280, y: 1320, s: 1.4, view: 'front', expr: 'sad', talk: TK('GAG 8', [0], 0) }], cards: [{ c: 'val', name: 'THE DIRECTOR', sub: 'BOSS · EATS YOUR LUNCH', at: 1.4 }] },
+] };
