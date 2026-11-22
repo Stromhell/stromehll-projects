@@ -1,1 +1,609 @@
-window.TIMING={"dur": 51.18, "shots": [{"i": 0, "start": 0, "end": 14.63, "vo_start": 0.6, "vo_end": 14.38, "text": "Which brings us to Bond. In 2025 the Broccoli family handed creative control of 007 to Amazon MGM. Their pick for director? Denis Villeneuve. The writer? Steven Knight, who created Peaky Blinders."}, {"i": 1, "start": 14.63, "end": 24.42, "vo_start": 14.93, "vo_end": 24.17, "text": "And one of the producers is David Heyman, the same man who watched a teenage Pattinson play Cedric Diggory twenty years earlier."}, {"i": 2, "start": 24.42, "end": 38.0, "vo_start": 24.72, "vo_end": 37.75, "text": "The Hollywood Reporter said he screen-tested in London over the weekend of the twenty-fourth of October. Callum Turner, Josh O'Connor, Jack Lowden and Nicholas Hoult were all in the race."}, {"i": 3, "start": 38.0, "end": 51.18, "vo_start": 38.3, "vo_end": 50.63, "text": "Three weeks later, it was official. He called it the honour of a lifetime. The seventh actor to play James Bond, and the first ever chosen without the Broccoli family."}], "words": [{"w": "Which", "s": 0.6, "e": 0.97}, {"w": "brings", "s": 1.02, "e": 1.44}, {"w": "us", "s": 1.48, "e": 1.75}, {"w": "to", "s": 1.8, "e": 2.08}, {"w": "Bond.", "s": 2.12, "e": 2.5}, {"w": "In", "s": 2.55, "e": 2.82}, {"w": "2025", "s": 2.87, "e": 3.21}, {"w": "the", "s": 3.26, "e": 3.56}, {"w": "Broccoli", "s": 3.61, "e": 4.09}, {"w": "family", "s": 4.14, "e": 4.55}, {"w": "handed", "s": 4.6, "e": 5.01}, {"w": "creative", "s": 5.06, "e": 5.54}, {"w": "control", "s": 5.59, "e": 6.04}, {"w": "of", "s": 6.09, "e": 6.36}, {"w": "007", "s": 6.41, "e": 6.71}, {"w": "to", "s": 6.77, "e": 7.04}, {"w": "Amazon", "s": 7.09, "e": 7.5}, {"w": "MGM.", "s": 7.55, "e": 7.89}, {"w": "Their", "s": 7.94, "e": 8.31}, {"w": "pick", "s": 8.36, "e": 8.7}, {"w": "for", "s": 8.75, "e": 9.06}, {"w": "director", "s": 9.11, "e": 9.62}, {"w": "Denis", "s": 9.67, "e": 10.05}, {"w": "Villeneuve.", "s": 10.1, "e": 10.68}, {"w": "The", "s": 10.73, "e": 11.04}, {"w": "writer", "s": 11.09, "e": 11.53}, {"w": "Steven", "s": 11.58, "e": 11.99}, {"w": "Knight", "s": 12.04, "e": 12.49}, {"w": "who", "s": 12.54, "e": 12.84}, {"w": "created", "s": 12.89, "e": 13.34}, {"w": "Peaky", "s": 13.39, "e": 13.76}, {"w": "Blinders.", "s": 13.81, "e": 14.33}, {"w": "And", "s": 14.93, "e": 15.23}, {"w": "one", "s": 15.28, "e": 15.59}, {"w": "of", "s": 15.64, "e": 15.91}, {"w": "the", "s": 15.96, "e": 16.26}, {"w": "producers", "s": 16.31, "e": 16.83}, {"w": "is", "s": 16.88, "e": 17.15}, {"w": "David", "s": 17.2, "e": 17.57}, {"w": "Heyman", "s": 17.62, "e": 18.07}, {"w": "the", "s": 18.12, "e": 18.42}, {"w": "same", "s": 18.47, "e": 18.81}, {"w": "man", "s": 18.86, "e": 19.17}, {"w": "who", "s": 19.22, "e": 19.52}, {"w": "watched", "s": 19.57, "e": 20.02}, {"w": "a", "s": 20.07, "e": 20.3}, {"w": "teenage", "s": 20.35, "e": 20.8}, {"w": "Pattinson", "s": 20.85, "e": 21.36}, {"w": "play", "s": 21.41, "e": 21.75}, {"w": "Cedric", "s": 21.8, "e": 22.21}, {"w": "Diggory", "s": 22.26, "e": 22.71}, {"w": "twenty", "s": 22.76, "e": 23.17}, {"w": "years", "s": 23.22, "e": 23.59}, {"w": "earlier.", "s": 23.64, "e": 24.12}, {"w": "The", "s": 24.72, "e": 25.03}, {"w": "Hollywood", "s": 25.08, "e": 25.59}, {"w": "Reporter", "s": 25.64, "e": 26.12}, {"w": "said", "s": 26.17, "e": 26.51}, {"w": "he", "s": 26.56, "e": 26.83}, {"w": "screen-tested", "s": 26.88, "e": 27.54}, {"w": "in", "s": 27.59, "e": 27.86}, {"w": "London", "s": 27.91, "e": 28.32}, {"w": "over", "s": 28.37, "e": 28.71}, {"w": "the", "s": 28.76, "e": 29.06}, {"w": "weekend", "s": 29.11, "e": 29.56}, {"w": "of", "s": 29.61, "e": 29.88}, {"w": "the", "s": 29.93, "e": 30.23}, {"w": "twenty-fourth", "s": 30.28, "e": 30.94}, {"w": "of", "s": 30.99, "e": 31.26}, {"w": "October.", "s": 31.31, "e": 31.79}, {"w": "Callum", "s": 31.84, "e": 32.25}, {"w": "Turner", "s": 32.3, "e": 32.74}, {"w": "Josh", "s": 32.79, "e": 33.13}, {"w": "O'Connor", "s": 33.18, "e": 33.7}, {"w": "Jack", "s": 33.75, "e": 34.09}, {"w": "Lowden", "s": 34.14, "e": 34.55}, {"w": "and", "s": 34.6, "e": 34.9}, {"w": "Nicholas", "s": 34.95, "e": 35.43}, {"w": "Hoult", "s": 35.48, "e": 35.86}, {"w": "were", "s": 35.91, "e": 36.25}, {"w": "all", "s": 36.3, "e": 36.6}, {"w": "in", "s": 36.65, "e": 36.92}, {"w": "the", "s": 36.97, "e": 37.28}, {"w": "race.", "s": 37.33, "e": 37.7}, {"w": "Three", "s": 38.3, "e": 38.68}, {"w": "weeks", "s": 38.73, "e": 39.1}, {"w": "later", "s": 39.15, "e": 39.56}, {"w": "it", "s": 39.61, "e": 39.88}, {"w": "was", "s": 39.93, "e": 40.24}, {"w": "official.", "s": 40.29, "e": 40.8}, {"w": "He", "s": 40.85, "e": 41.12}, {"w": "called", "s": 41.17, "e": 41.58}, {"w": "it", "s": 41.63, "e": 41.9}, {"w": "the", "s": 41.95, "e": 42.26}, {"w": "honour", "s": 42.3, "e": 42.71}, {"w": "of", "s": 42.77, "e": 43.04}, {"w": "a", "s": 43.09, "e": 43.32}, {"w": "lifetime.", "s": 43.37, "e": 43.88}, {"w": "The", "s": 43.93, "e": 44.24}, {"w": "seventh", "s": 44.29, "e": 44.73}, {"w": "actor", "s": 44.78, "e": 45.16}, {"w": "to", "s": 45.21, "e": 45.48}, {"w": "play", "s": 45.53, "e": 45.87}, {"w": "James", "s": 45.92, "e": 46.29}, {"w": "Bond", "s": 46.34, "e": 46.72}, {"w": "and", "s": 46.77, "e": 47.07}, {"w": "the", "s": 47.12, "e": 47.43}, {"w": "first", "s": 47.48, "e": 47.85}, {"w": "ever", "s": 47.9, "e": 48.24}, {"w": "chosen", "s": 48.29, "e": 48.7}, {"w": "without", "s": 48.75, "e": 49.2}, {"w": "the", "s": 49.25, "e": 49.55}, {"w": "Broccoli", "s": 49.6, "e": 50.08}, {"w": "family.", "s": 50.13, "e": 50.58}], "estimated": true}
+window.TIMING={
+"dur": 44.99,
+"shots": [
+{
+"i": 1,
+"start": 0.0,
+"vo_start": 0.6,
+"vo_end": 16.16,
+"text": "Which brings us to Bond. In 2025 the Broccoli family handed creative control of 007 to Amazon MGM. Their pick for director? Denis Villeneuve. The writer? Steven Knight, who created Peaky Blinders.",
+"end": 16.435
+},
+{
+"i": 2,
+"start": 16.435,
+"vo_start": 16.71,
+"vo_end": 22.788,
+"text": "And one of the producers is David Heyman, the same man who watched a teenage Pattinson play Cedric Diggory twenty years earlier.",
+"end": 23.063
+},
+{
+"i": 3,
+"start": 23.063,
+"vo_start": 23.338,
+"vo_end": 33.61,
+"text": "The Hollywood Reporter said he screen-tested in London over the weekend of the twenty-fourth of October. Callum Turner, Josh O'Connor, Jack Lowden and Nicholas Hoult were all in the race.",
+"end": 33.885
+},
+{
+"i": 4,
+"start": 33.885,
+"vo_start": 34.16,
+"vo_end": 44.04,
+"text": "Three weeks later, it was official. He called it the honour of a lifetime. The seventh actor to play James Bond, and the first ever chosen without the Broccoli family.",
+"end": 44.99
+}
+],
+"words": [
+{
+"w": "Which",
+"s": 0.6,
+"e": 1.4
+},
+{
+"w": "brings",
+"s": 1.14,
+"e": 1.6
+},
+{
+"w": "us",
+"s": 1.4,
+"e": 1.76
+},
+{
+"w": "to",
+"s": 1.6,
+"e": 2.0
+},
+{
+"w": "Bond.",
+"s": 1.76,
+"e": 2.96
+},
+{
+"w": "In",
+"s": 2.9,
+"e": 3.58
+},
+{
+"w": "2025",
+"s": 2.96,
+"e": 3.58
+},
+{
+"w": "the",
+"s": 2.96,
+"e": 3.98
+},
+{
+"w": "Broccoli",
+"s": 3.92,
+"e": 4.32
+},
+{
+"w": "family",
+"s": 3.98,
+"e": 4.96
+},
+{
+"w": "handed",
+"s": 4.56,
+"e": 5.36
+},
+{
+"w": "creative",
+"s": 4.96,
+"e": 5.76
+},
+{
+"w": "control",
+"s": 5.36,
+"e": 6.06
+},
+{
+"w": "of",
+"s": 5.76,
+"e": 6.64
+},
+{
+"w": "007",
+"s": 6.06,
+"e": 6.88
+},
+{
+"w": "to",
+"s": 6.64,
+"e": 7.36
+},
+{
+"w": "Amazon",
+"s": 6.88,
+"e": 7.8
+},
+{
+"w": "MGM.",
+"s": 7.36,
+"e": 8.96
+},
+{
+"w": "Their",
+"s": 8.86,
+"e": 9.16
+},
+{
+"w": "pick",
+"s": 8.96,
+"e": 9.36
+},
+{
+"w": "for",
+"s": 9.16,
+"e": 9.68
+},
+{
+"w": "director?",
+"s": 9.36,
+"e": 10.76
+},
+{
+"w": "Denis",
+"s": 10.68,
+"e": 10.98
+},
+{
+"w": "Villeneuve.",
+"s": 10.76,
+"e": 11.6
+},
+{
+"w": "The",
+"s": 10.98,
+"e": 12.38
+},
+{
+"w": "writer?",
+"s": 12.2,
+"e": 12.6
+},
+{
+"w": "Steven",
+"s": 12.38,
+"e": 14.04
+},
+{
+"w": "Knight,",
+"s": 13.92,
+"e": 14.3
+},
+{
+"w": "who",
+"s": 14.04,
+"e": 14.66
+},
+{
+"w": "created",
+"s": 14.6,
+"e": 14.98
+},
+{
+"w": "Peaky",
+"s": 14.66,
+"e": 15.3
+},
+{
+"w": "Blinders.",
+"s": 14.98,
+"e": 15.72
+},
+{
+"w": "And",
+"s": 16.71,
+"e": 17.008
+},
+{
+"w": "one",
+"s": 16.71,
+"e": 17.128
+},
+{
+"w": "of",
+"s": 17.008,
+"e": 17.228
+},
+{
+"w": "the",
+"s": 17.128,
+"e": 17.348
+},
+{
+"w": "producers",
+"s": 17.228,
+"e": 17.668
+},
+{
+"w": "is",
+"s": 17.348,
+"e": 17.968
+},
+{
+"w": "David",
+"s": 17.668,
+"e": 18.148
+},
+{
+"w": "Heyman,",
+"s": 17.968,
+"e": 18.588
+},
+{
+"w": "the",
+"s": 18.148,
+"e": 18.888
+},
+{
+"w": "same",
+"s": 18.828,
+"e": 19.068
+},
+{
+"w": "man",
+"s": 18.888,
+"e": 19.308
+},
+{
+"w": "who",
+"s": 19.068,
+"e": 19.488
+},
+{
+"w": "watched",
+"s": 19.308,
+"e": 19.688
+},
+{
+"w": "a",
+"s": 19.488,
+"e": 19.688
+},
+{
+"w": "teenage",
+"s": 19.488,
+"e": 20.108
+},
+{
+"w": "Pattinson",
+"s": 19.868,
+"e": 20.548
+},
+{
+"w": "play",
+"s": 20.108,
+"e": 20.848
+},
+{
+"w": "Cedric",
+"s": 20.548,
+"e": 21.268
+},
+{
+"w": "Diggory",
+"s": 20.848,
+"e": 21.488
+},
+{
+"w": "twenty",
+"s": 21.268,
+"e": 22.048
+},
+{
+"w": "years",
+"s": 21.788,
+"e": 22.408
+},
+{
+"w": "earlier.",
+"s": 22.048,
+"e": 22.408
+},
+{
+"w": "The",
+"s": 23.338,
+"e": 23.49
+},
+{
+"w": "Hollywood",
+"s": 23.338,
+"e": 23.81
+},
+{
+"w": "Reporter",
+"s": 23.49,
+"e": 24.17
+},
+{
+"w": "said",
+"s": 23.81,
+"e": 24.49
+},
+{
+"w": "he",
+"s": 24.17,
+"e": 24.71
+},
+{
+"w": "screen-tested",
+"s": 24.49,
+"e": 25.25
+},
+{
+"w": "in",
+"s": 25.01,
+"e": 25.25
+},
+{
+"w": "London",
+"s": 25.01,
+"e": 25.75
+},
+{
+"w": "over",
+"s": 25.51,
+"e": 25.75
+},
+{
+"w": "the",
+"s": 25.51,
+"e": 26.17
+},
+{
+"w": "weekend",
+"s": 25.75,
+"e": 26.51
+},
+{
+"w": "of",
+"s": 26.29,
+"e": 26.51
+},
+{
+"w": "the",
+"s": 26.29,
+"e": 26.51
+},
+{
+"w": "twenty-fourth",
+"s": 26.29,
+"e": 27.85
+},
+{
+"w": "of",
+"s": 27.51,
+"e": 27.85
+},
+{
+"w": "October.",
+"s": 27.51,
+"e": 29.21
+},
+{
+"w": "Callum",
+"s": 28.99,
+"e": 29.41
+},
+{
+"w": "Turner,",
+"s": 29.21,
+"e": 30.09
+},
+{
+"w": "Josh",
+"s": 29.91,
+"e": 30.39
+},
+{
+"w": "O'Connor,",
+"s": 30.09,
+"e": 30.97
+},
+{
+"w": "Jack",
+"s": 30.81,
+"e": 31.35
+},
+{
+"w": "Lowden",
+"s": 30.97,
+"e": 31.57
+},
+{
+"w": "and",
+"s": 31.35,
+"e": 31.87
+},
+{
+"w": "Nicholas",
+"s": 31.57,
+"e": 32.23
+},
+{
+"w": "Hoult",
+"s": 31.87,
+"e": 32.73
+},
+{
+"w": "were",
+"s": 32.23,
+"e": 32.91
+},
+{
+"w": "all",
+"s": 32.73,
+"e": 33.03
+},
+{
+"w": "in",
+"s": 32.91,
+"e": 33.13
+},
+{
+"w": "the",
+"s": 33.03,
+"e": 33.31
+},
+{
+"w": "race.",
+"s": 33.13,
+"e": 33.31
+},
+{
+"w": "Three",
+"s": 34.16,
+"e": 34.36
+},
+{
+"w": "weeks",
+"s": 34.16,
+"e": 34.5
+},
+{
+"w": "later,",
+"s": 34.36,
+"e": 34.88
+},
+{
+"w": "it",
+"s": 34.5,
+"e": 35.18
+},
+{
+"w": "was",
+"s": 35.1,
+"e": 35.32
+},
+{
+"w": "official.",
+"s": 35.18,
+"e": 35.74
+},
+{
+"w": "He",
+"s": 35.32,
+"e": 36.82
+},
+{
+"w": "called",
+"s": 36.58,
+"e": 37.1
+},
+{
+"w": "it",
+"s": 36.82,
+"e": 37.28
+},
+{
+"w": "the",
+"s": 37.1,
+"e": 37.56
+},
+{
+"w": "honour",
+"s": 37.28,
+"e": 38.06
+},
+{
+"w": "of",
+"s": 37.8,
+"e": 38.2
+},
+{
+"w": "a",
+"s": 38.06,
+"e": 38.54
+},
+{
+"w": "lifetime.",
+"s": 38.2,
+"e": 39.5
+},
+{
+"w": "The",
+"s": 39.28,
+"e": 39.78
+},
+{
+"w": "seventh",
+"s": 39.5,
+"e": 39.78
+},
+{
+"w": "actor",
+"s": 39.5,
+"e": 40.06
+},
+{
+"w": "to",
+"s": 39.78,
+"e": 40.3
+},
+{
+"w": "play",
+"s": 40.06,
+"e": 40.5
+},
+{
+"w": "James",
+"s": 40.3,
+"e": 40.76
+},
+{
+"w": "Bond,",
+"s": 40.5,
+"e": 41.6
+},
+{
+"w": "and",
+"s": 41.04,
+"e": 41.72
+},
+{
+"w": "the",
+"s": 41.6,
+"e": 41.96
+},
+{
+"w": "first",
+"s": 41.72,
+"e": 42.2
+},
+{
+"w": "ever",
+"s": 41.96,
+"e": 42.48
+},
+{
+"w": "chosen",
+"s": 42.2,
+"e": 42.88
+},
+{
+"w": "without",
+"s": 42.48,
+"e": 43.06
+},
+{
+"w": "the",
+"s": 42.88,
+"e": 43.36
+},
+{
+"w": "Broccoli",
+"s": 43.06,
+"e": 43.6
+},
+{
+"w": "family.",
+"s": 43.36,
+"e": 43.6
+}
+]
+}

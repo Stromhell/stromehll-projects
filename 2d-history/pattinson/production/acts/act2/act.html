@@ -1,0 +1,84 @@
+<!doctype html><html><head><meta charset="utf-8"><title>RP act 2 - act 2</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../tw_kit.js"></script><script src="../../xu_kit.js"></script><script src="../../jh_kit.js"></script><script src="../../pr_kit.js"></script><script src="../../rp_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+const SW = 1920, SH = 1080, INK = TW.INK, RED = TW.RED, pop = TW.pop, fade = TW.fade;
+const backdrop = (name, b = .5, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const CARRY = () => ({ shL: 30, elL: -75, shR: 35, elR: -75 });
+const endTitle = (secs) => { const T = window.TIMING; const last = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length, start: last.end, end: last.end + secs, vo_start: last.end, vo_end: last.end, text: '' }); T.dur = last.end + secs; };
+// RP act 2 - The Twilight trap: Edward Cullen 2008, five films and $3bn, joking about it on chat shows, critics say he'll fade.
+// Plates: forest, premiere, chatshow, arthouse.
+const rr = TW.rr, txt = TW.txt;
+// plate loader with stand-in: if the real plate is not painted yet, swap in another so the act still renders
+const LP = (n, alt) => { const im = K.load(n, PL + n + '.jpg'); if (alt) im.onerror = () => { if (K.imgs[n] === im) K.load(n, PL + alt + '.jpg'); }; };
+// name tag (world space): gold tile with a pointer (Prime ntag)
+const ntag = (c, name, x, y, lt, at, opts = {}) => { const a = pop(lt, at, .4), o = 1 - K.seg(lt, (opts.until ?? 999) - .3, opts.until ?? 999); if (a <= 0 || o <= 0) return; const px = opts.px ?? 40; c.save(); c.globalAlpha = o; c.translate(x, y); c.scale(a, a); c.font = `${px}px Anton`;
+  const w = c.measureText(name).width + px * .9, h = px * 1.45; c.fillStyle = 'rgba(0,0,0,.35)'; rr(c, -w / 2 + 6, -h - 12, w, h, 10); c.fill(); c.fillStyle = opts.col || JH.GOLD; c.strokeStyle = INK; c.lineWidth = 4; rr(c, -w / 2, -h - 18, w, h, 10); c.fill(); c.stroke();
+  c.beginPath(); c.moveTo(-14, -19); c.lineTo(0, 0); c.lineTo(14, -19); c.closePath(); c.fill(); c.stroke(); c.fillRect(-12, -24, 24, 7); txt(c, name, 0, -h / 2 - 16, px, INK, 'center', 'Anton'); c.restore(); };
+// DOUBTERS vs BELIEVERS board, top-left (screen space); v number or fn(lt)
+const board = (v) => (c, lt) => RP.board(c, 200, 95, .8, typeof v === 'function' ? v(lt) : v);
+const ease = (lt, t0, a, b, d = .8) => a + (b - a) * E.io(K.seg(lt, t0, t0 + d));
+const rain = (c, lt, n = 140, a = .3) => { c.save(); c.strokeStyle = `rgba(200,215,235,${a})`; c.lineWidth = 2; for (let k = 0; k < n; k++) { const x = (k * 173 + lt * 300) % 2700 - 70, y = (k * 97 + lt * 1400) % 1500 - 60; c.beginPath(); c.moveTo(x, y); c.lineTo(x - 10, y + 40); c.stroke(); } c.restore(); };
+const flashes = (c, lt, n = 30, y0 = 280, h = 560) => { for (let k = 0; k < n; k++) { const ph = (lt * .5 + k * .37) % 1; if (ph < .25) TW.glow(c, (k * 397) % 2560, y0 + (k * 131) % h, 70, '255,255,255', .45 * Math.sin(ph / .25 * Math.PI)); } };
+const mist = (c, lt, y = 1000, a = .18, col = '220,230,240') => { for (let k = 0; k < 7; k++) { const x = ((k * 520 + lt * (20 + k * 6)) % 3400) - 400; TW.glow(c, x, y + (k % 3) * 70, 420, col, a); } };
+const shadowE = (c, x, y, w) => { c.fillStyle = 'rgba(0,0,0,.3)'; c.beginPath(); c.ellipse(x, y, w, w * .15, 0, 0, 7); c.fill(); };
+// placard on a stick held in a hand (hold.near local coords)
+const SIGN = (t, col = '#f6f2e8', tc = INK) => ({ near: cc => { cc.fillStyle = '#8a6a3a'; cc.strokeStyle = INK; cc.lineWidth = 3; cc.fillRect(-4, -150, 8, 170); cc.strokeRect(-4, -150, 8, 170); const L = t.split('|'); cc.fillStyle = col; cc.fillRect(-80, -150 - 40 * L.length - 20, 160, 40 * L.length + 20); cc.strokeRect(-80, -150 - 40 * L.length - 20, 160, 40 * L.length + 20); L.forEach((s, i) => txt(cc, s, 0, -150 - 40 * L.length + 20 + 40 * i, 30, tc, 'center', 'Anton')); } });
+// source tag with full label (e.g. 'SOURCE: VARIETY')
+const srcTag = (c, label, x, y, lt, at, px = 28) => { const a = pop(lt, at, .35); if (a <= 0) return; c.save(); c.translate(x, y); c.rotate(-.04); c.scale(a, a); c.font = `${px}px Oswald`; const w = c.measureText(label).width + 40; c.fillStyle = '#111'; rr(c, -w / 2, -px * .8, w, px * 1.6, 8); c.fill(); c.fillStyle = JH.GOLD; c.fillRect(-w / 2, -px * .8, 8, px * 1.6); txt(c, label, 4, 0, px, '#fff', 'center', 'Oswald'); c.restore(); };
+// placard held overhead by a figure in 'cheer' pose (front layer): x feet, y feet, s scale
+const placard = (c, x, y, s, t, lt, k = 0, col = '#f6f2e8', tc = INK) => { const b = Math.sin(lt * 3 + k) * 8, L = t.split('|'), w = 120 * s, h = (34 * L.length + 22) * s, by = y - 272 * s + b; c.save(); c.fillStyle = '#8a6a3a'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(x - 4, by - 10, 8, 40 * s); c.fillStyle = col; c.fillRect(x - w / 2, by - h - 10, w, h); c.strokeRect(x - w / 2, by - h - 10, w, h); L.forEach((l, i) => txt(c, l, x, by - h - 10 + (22 + 34 * i) * s, 30 * s, tc, 'center', 'Anton')); c.restore(); };
+for (const n of ['forest', 'premiere', 'chatshow', 'arthouse']) LP(n);
+const CAMERA = { near: cc => { cc.fillStyle = '#2a2a30'; cc.strokeStyle = INK; cc.lineWidth = 3; cc.fillRect(-34, -40, 68, 46); cc.strokeRect(-34, -40, 68, 46); cc.fillStyle = '#4a4a54'; cc.beginPath(); cc.arc(0, -17, 15, 0, 7); cc.fill(); cc.stroke(); cc.fillStyle = '#ddd'; cc.fillRect(-26, -56, 22, 16); cc.strokeRect(-26, -56, 22, 16); } };
+const SCORE = (v) => ({ near: cc => RP.score(cc, 0, 10, 1.2, v) });
+const POPCORN = { near: cc => { cc.fillStyle = '#e8403a'; cc.strokeStyle = INK; cc.lineWidth = 3; cc.beginPath(); cc.moveTo(-26, -50); cc.lineTo(26, -50); cc.lineTo(18, 14); cc.lineTo(-18, 14); cc.closePath(); cc.fill(); cc.stroke(); cc.fillStyle = '#fff6d0'; for (let k = 0; k < 6; k++) { cc.beginPath(); cc.arc(-20 + k * 8, -54 - (k % 2) * 6, 8, 0, 7); cc.fill(); } } };
+// mug with a tiny bow tie (on the chat-show desk)
+const mug = (c, x, y, lt) => { c.save(); c.fillStyle = '#f6f2e8'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(x - 30, y - 70, 60, 70); c.strokeRect(x - 30, y - 70, 60, 70); c.beginPath(); c.arc(x + 34, y - 36, 16, -1.5, 1.5); c.stroke(); RP.bowtie(c, x, y - 36, .6, 0, .5 + .5 * Math.sin(lt * 2)); for (let k = 0; k < 3; k++) { const p = (lt * .5 + k / 3) % 1; c.strokeStyle = `rgba(255,255,255,${.4 * (1 - p)})`; c.beginPath(); c.moveTo(x - 10 + k * 10, y - 80 - p * 60); c.quadraticCurveTo(x + k * 10, y - 100 - p * 60, x - 10 + k * 10, y - 120 - p * 60); c.stroke(); } c.restore(); };
+
+window.SHOTS = [
+  // 2.00 misty forest: a pale figure steps into a shaft of light; skin sparkles on 'vampire'
+  { plate: 'forest', cam: { z: [1.15, 1.4], x: [1280, 1360], y: [760, 860] }, bed: [['wind_loop', .1], ['birds_loop', .04]], light: { dir: -1, key: 'rgba(160,200,220,.15)' },
+    init: S => { const t08 = A.at(S, '2008', .4), tCh = A.at(S, 'changed', 2.4), tEd = A.at(S, 'Edward', 3.5), tBr = A.at(S, 'brooding', 4.7), tV = A.at(S, 'vampire', 5.2), tTw = A.at(S, 'Twilight.', 6.3);
+      S.D.figs = [{ x: 1400, y: 1260, s: 1.9, ...RP.ROB('vamp'), facing: -1, mood: 'neutral', walk: { x0: 2700, x1: 1400, t0: .3, dur: 2.6 }, anim: (o, lt) => { if (lt > tBr) o.mood = 'worried'; if (lt > tV + .4) o.mood = 'smug'; } }];
+      S.D.live = [(c, lt) => { c.save(); c.globalCompositeOperation = 'screen'; c.fillStyle = `rgba(230,245,255,${.1 + .04 * Math.sin(lt)})`; c.beginPath(); c.moveTo(1900, 0); c.lineTo(2150, 0); c.lineTo(1600, 1260); c.lineTo(1200, 1260); c.fill(); c.restore(); mist(c, lt, 1050, .14); }];
+      S.D.front = [(c, lt) => { if (lt > tV) for (let k = 0; k < 3; k++) TW.sparkle(c, 1380 + (k - 1) * 70, 720 + k * 120, lt * 2 + k, 1.1, '220,240,255'); }, (c, lt) => mist(c, lt, 1300, .1), (c, lt) => ntag(c, 'EDWARD CULLEN', 1400, 740, lt, tEd, { px: 32 })];
+      S.D.over = [board(.5), (c, lt) => K.card(c, '2008', lt, { at: t08, x: 760, y: 120, px: 64, rot: -3 }), (c, lt) => K.card(c, 'THE PART THAT CHANGED EVERYTHING', lt, { at: tCh, x: 640, y: 240, px: 36, rot: 2 }), (c, lt) => K.card(c, 'TWILIGHT', lt, { at: tTw - .2, x: 640, y: 360, px: 50, rot: -2, bg: '#c8d8e8' })];
+      S.D.sfx = [[.3, 'footsteps', .15], [t08, 'pop', .2], [tCh, 'swell', .2], [tEd, 'pop', .2], [tV, 'chime', .35]]; } },
+  // 2.01 premiere carpet: he waves, flashes pop, paparazzi snap; counter rolls to $3bn+
+  { plate: 'premiere', cam: { z: [1.2, 1.35], x: [1280, 1280], y: [820, 860] }, bed: [['crowd_loop', .25]], light: { dir: 1, key: 'rgba(255,230,200,.15)' },
+    init: S => { const tF = A.at(S, 'Five', .3), tB = A.at(S, 'billion', 2.3), tBo = A.at(S, 'box', 3.3), tSc = A.at(S, 'Screaming', 4.6), tPr = A.at(S, 'premiere', 6.2), tPa = A.at(S, 'paparazzi', 7.2), tD = A.at(S, 'door.', 8.6);
+      S.D.figs = [{ x: 1280, y: 1240, s: 1.9, ...RP.ROB('vamp'), facing: 1, mood: 'happy', anim: (o, lt) => { o.pose = lt > tSc ? 'wave' : 'stand'; if (lt > tPa + .3) { o.mood = 'worried'; o.pose = 'stand'; } } },
+        { x: 560, y: 1240, s: 1.8, ...RP.FAN(2), facing: 1, mood: 'neutral', hold: CAMERA, anim: (o, lt) => { o.arms = () => ({ shR: 80, elR: -90, handR: 'fist' }); o.lean = lt > tPa ? 6 * Math.sin(lt * 9) : 0; }, walk: { x0: -300, x1: 560, t0: tPa - 1.4, dur: 1.4 } },
+        { x: 2020, y: 1240, s: 1.8, ...RP.FAN(5), facing: -1, mood: 'neutral', hold: CAMERA, anim: (o, lt) => { o.arms = () => ({ shR: 80, elR: -90, handR: 'fist' }); }, walk: { x0: 2900, x1: 2020, t0: tPa - 1.2, dur: 1.3 } }];
+      S.D.live = [(c, lt) => flashes(c, lt, lt > tSc ? 60 : 25, 400, 600)];
+      S.D.front = [(c, lt) => { if (lt > tPa) for (const x of [700, 1880]) if (Math.sin(lt * 9 + x) > .6) TW.glow(c, x, 830, 160, '255,255,255', .8); }, (c, lt) => { if (lt > tSc) { const a = pop(lt, tSc, .3); TW.bubble(c, 520, 760, 'EEEEEE!', a, { px: 40, tail: 1 }); TW.bubble(c, 2060, 720, 'ROB!!', a, { px: 40, tail: -1 }); } }];
+      S.D.over = [board(.5), (c, lt) => { if (lt < tF - .2) return; const n = Math.min(5, Math.floor((lt - tF) / .25) + 1); for (let k = 0; k < n; k++) { c.save(); c.translate(560 + k * 120, 130); c.fillStyle = '#1a1a22'; c.strokeStyle = JH.GOLD; c.lineWidth = 3; c.fillRect(-48, -36, 96, 72); c.strokeRect(-48, -36, 96, 72); txt(c, String(k + 1), 0, 0, 40, '#fff', 'center', 'Anton'); c.restore(); } txt(c, 'FILMS', 1240, 130, 48, '#fff', 'center', 'Anton'); },
+        (c, lt) => { if (lt < tB - .3) return; c.save(); c.fillStyle = 'rgba(10,10,16,.75)'; rr(c, 1260, 220, 620, 150, 16); c.fill(); c.restore(); txt(c, 'BOX OFFICE', 1570, 250, 26, '#ffd27a', 'center', 'Oswald'); JH.counter(c, 0, 3000000000, 1570, 315, lt, tB - .3, tBo + .6, { px: 58, pre: '$', suf: '+' }); }];
+      S.D.sfx = [[tF, 'pop', .2], [tB, 'coins_cascade', .3], [tSc, 'crowd_cheer', .35], [tPr, 'camera_shutter', .3], [tPa, 'camera_shutter', .35], [tPa + .4, 'camera_shutter', .3], [tD, 'door_slam', .2]]; } },
+  // 2.02 chat-show sofa: he laughs and shrugs; the host is horrified; 'joke' bubbles float up
+  { plate: 'chatshow', cam: { z: [1.2, 1.35], x: [1180, 1240], y: [800, 840] }, bed: [['hum_loop', .08], ['crowd_loop', .06]], light: { dir: 1, key: 'rgba(255,200,170,.15)' },
+    init: S => { const tSt = A.at(S, 'strange', 1.0), tNe = A.at(S, 'never', 2.0), tLo = A.at(S, 'love', 3.4), tIn = A.at(S, 'interviews', 4.2), tJ = A.at(S, 'joked', 5.0), tTr = A.at(S, 'trademark.', 8.8);
+      S.D.figs = [{ x: 800, y: 1120, s: 1.9, ...RP.ROB('casual'), pose: 'sit', facing: 1, mood: 'happy', talk: [tIn, tTr], anim: (o, lt) => { if (lt > tLo) { o.arms = () => ({ shL: 70, elL: 60, shR: 70, elR: 60, handL: 'open', handR: 'open' }); o.mood = 'smug'; } if (lt > tJ) { o.arms = null; o.mood = 'happy'; o.lean = 4 * Math.sin(lt * 8); } } },
+        { x: 1450, y: 1250, s: 1.9, ...PR.HOST(0), pose: 'sit', facing: -1, mood: 'happy', anim: (o, lt) => { if (lt > tJ + .3) o.mood = 'shocked'; } }];
+      S.D.live = [(c, lt) => TW.chair(c, 1450, 1250, 1250 - 63 * 1.9, -1, '#4a3a5a'), (c, lt) => mug(c, 1800, 960, lt)];
+      S.D.front = [(c, lt) => { if (lt < tJ) return; const w = ['HA!', 'SO SILLY', 'HA HA', 'OOPS']; for (let k = 0; k < 4; k++) { const p = ((lt - tJ) * .35 + k * .25) % 1; if (lt - tJ < k * .6) continue; TW.bubble(c, 640 + k * 120, 620 - p * 380, w[k], 1 - p * .4, { px: 30, tail: 0 }); } }];
+      S.D.over = [board(.5), (c, lt) => K.card(c, 'THE STRANGE PART', lt, { at: tSt, x: 1300, y: 130, px: 46, rot: -2 }), (c, lt) => K.card(c, '"HE MOCKED HIS OWN HIT"', lt, { at: tJ, x: 1350, y: 250, px: 40, rot: 2 }), (c, lt) => TW.stamp(c, 'TRADEMARK', 1500, 420, lt, tTr - .3, { px: 64 })];
+      S.D.sfx = [[tSt, 'whoosh_soft', .2], [tLo, 'pop', .2], [tJ, 'crowd_cheer', .2], [tJ + .5, 'pop', .2], [tJ + 1.1, 'pop', .2], [tTr - .3, 'stamp', .35]]; } },
+  // 2.03 critics in the cinema hold up low scores; a 'TEEN IDOL' tombstone pinned on the noticeboard; board swings to DOUBTERS
+  { plate: 'arthouse', cam: { z: [1.15, 1.3], x: [1200, 1180], y: [820, 860] }, bed: [['hum_loop', .08]], light: { dir: 1, key: 'rgba(255,200,170,.12)' },
+    init: S => { const tC = A.at(S, 'Critics', .3), tPf = A.at(S, 'pretty', 2.3), tFa = A.at(S, 'fade', 3.6), tEn = A.at(S, 'ended.', 5.4), tHo = A.at(S, 'Hollywood', 6.0), tHu = A.at(S, 'hundred', 8.4);
+      const crit = (k, x, v, t, f) => ({ x, y: 1250, s: 1.8, ...RP.CRITIC(k), facing: f, mood: 'neutral', anim: (o, lt) => { if (lt > t) { o.pose = 'cheer'; o.mood = 'smug'; } } });
+      S.D.figs = [crit(0, 1000, 2, tPf, 1), crit(1, 1330, 3, tPf + .4, 1), crit(2, 1660, 2, tPf + .8, -1)];
+      S.D.front = [(c, lt) => { for (const [x, v, t] of [[1000, 2, tPf], [1330, 3, tPf + .4], [1660, 2, tPf + .8]]) { const a = pop(lt, t + .15, .3); if (a > 0) RP.score(c, x, 1250 - 1.8 * 262 + Math.sin(lt * 3 + x) * 5, 1.5 * a, v); } }];
+      S.D.live = [(c, lt) => { TW.glow(c, 1280, 340, 600, '230,235,255', .12 + .03 * Math.sin(lt * 7)); const a = E.back(K.seg(lt, tFa - .2, tFa + .3)); if (a > 0) { c.save(); c.translate(430, 560); c.scale(a, a); c.fillStyle = '#9a9aa2'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.moveTo(-130, 180); c.lineTo(-130, -60); c.arc(0, -60, 130, Math.PI, 0); c.lineTo(130, 180); c.closePath(); c.fill(); c.stroke(); txt(c, 'R.I.P.', 0, -70, 48, INK, 'center', 'Anton'); txt(c, 'TEEN IDOL', 0, 10, 40, INK, 'center', 'Anton'); txt(c, '2008-2012', 0, 70, 28, '#3a3a40', 'center', 'Oswald'); c.restore(); } }];
+      S.D.over = [board(lt => ease(lt, tFa, .5, .15, 1)), (c, lt) => K.card(c, 'THE CRITICS', lt, { at: tC, x: 760, y: 120, px: 50, rot: -2 }), (c, lt) => K.card(c, '"ONE-HIT HEARTTHROB"', lt, { at: tPf, x: 1320, y: 120, px: 40, rot: 2 }), (c, lt) => K.card(c, 'WILL FADE AWAY?', lt, { at: tFa, x: 760, y: 235, px: 38, rot: -2 }),
+        (c, lt) => K.card(c, 'SEEN IT 100 TIMES', lt, { at: tHu - .3, x: 1320, y: 235, px: 36, rot: 3 })];
+      S.D.sfx = [[tC, 'pop', .2], [tPf, 'paper', .25], [tPf + .4, 'paper', .25], [tPf + .8, 'paper', .25], [tFa, 'thud', .3], [tFa + .2, 'tension', .2], [tHu, 'pop', .2]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>

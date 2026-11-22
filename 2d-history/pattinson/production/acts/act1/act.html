@@ -1,0 +1,99 @@
+<!doctype html><html><head><meta charset="utf-8"><title>RP act 1 - act 1</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../tw_kit.js"></script><script src="../../xu_kit.js"></script><script src="../../jh_kit.js"></script><script src="../../pr_kit.js"></script><script src="../../rp_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+const SW = 1920, SH = 1080, INK = TW.INK, RED = TW.RED, pop = TW.pop, fade = TW.fade;
+const backdrop = (name, b = .5, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const CARRY = () => ({ shL: 30, elL: -75, shR: 35, elR: -75 });
+const endTitle = (secs) => { const T = window.TIMING; const last = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length, start: last.end, end: last.end + secs, vo_start: last.end, vo_end: last.end, text: '' }); T.dur = last.end + secs; };
+// RP act 1 - The London kid: Barnes 1986, amateur drama club, Cedric Diggory 2005, David Heyman.
+// Plates: barnes, hall, castle (stand-ins rain_street, stage_blue, greek_hall until painted).
+const rr = TW.rr, txt = TW.txt;
+// plate loader with stand-in: if the real plate is not painted yet, swap in another so the act still renders
+const LP = (n, alt) => { const im = K.load(n, PL + n + '.jpg'); if (alt) im.onerror = () => { if (K.imgs[n] === im) K.load(n, PL + alt + '.jpg'); }; };
+// name tag (world space): gold tile with a pointer (Prime ntag)
+const ntag = (c, name, x, y, lt, at, opts = {}) => { const a = pop(lt, at, .4), o = 1 - K.seg(lt, (opts.until ?? 999) - .3, opts.until ?? 999); if (a <= 0 || o <= 0) return; const px = opts.px ?? 40; c.save(); c.globalAlpha = o; c.translate(x, y); c.scale(a, a); c.font = `${px}px Anton`;
+  const w = c.measureText(name).width + px * .9, h = px * 1.45; c.fillStyle = 'rgba(0,0,0,.35)'; rr(c, -w / 2 + 6, -h - 12, w, h, 10); c.fill(); c.fillStyle = opts.col || JH.GOLD; c.strokeStyle = INK; c.lineWidth = 4; rr(c, -w / 2, -h - 18, w, h, 10); c.fill(); c.stroke();
+  c.beginPath(); c.moveTo(-14, -19); c.lineTo(0, 0); c.lineTo(14, -19); c.closePath(); c.fill(); c.stroke(); c.fillRect(-12, -24, 24, 7); txt(c, name, 0, -h / 2 - 16, px, INK, 'center', 'Anton'); c.restore(); };
+// DOUBTERS vs BELIEVERS board, top-left (screen space); v number or fn(lt)
+const board = (v) => (c, lt) => RP.board(c, 200, 95, .8, typeof v === 'function' ? v(lt) : v);
+const ease = (lt, t0, a, b, d = .8) => a + (b - a) * E.io(K.seg(lt, t0, t0 + d));
+const rain = (c, lt, n = 140, a = .3) => { c.save(); c.strokeStyle = `rgba(200,215,235,${a})`; c.lineWidth = 2; for (let k = 0; k < n; k++) { const x = (k * 173 + lt * 300) % 2700 - 70, y = (k * 97 + lt * 1400) % 1500 - 60; c.beginPath(); c.moveTo(x, y); c.lineTo(x - 10, y + 40); c.stroke(); } c.restore(); };
+const flashes = (c, lt, n = 30, y0 = 280, h = 560) => { for (let k = 0; k < n; k++) { const ph = (lt * .5 + k * .37) % 1; if (ph < .25) TW.glow(c, (k * 397) % 2560, y0 + (k * 131) % h, 70, '255,255,255', .45 * Math.sin(ph / .25 * Math.PI)); } };
+const mist = (c, lt, y = 1000, a = .18, col = '220,230,240') => { for (let k = 0; k < 7; k++) { const x = ((k * 520 + lt * (20 + k * 6)) % 3400) - 400; TW.glow(c, x, y + (k % 3) * 70, 420, col, a); } };
+const shadowE = (c, x, y, w) => { c.fillStyle = 'rgba(0,0,0,.3)'; c.beginPath(); c.ellipse(x, y, w, w * .15, 0, 0, 7); c.fill(); };
+// placard on a stick held in a hand (hold.near local coords)
+const SIGN = (t, col = '#f6f2e8', tc = INK) => ({ near: cc => { cc.fillStyle = '#8a6a3a'; cc.strokeStyle = INK; cc.lineWidth = 3; cc.fillRect(-4, -150, 8, 170); cc.strokeRect(-4, -150, 8, 170); const L = t.split('|'); cc.fillStyle = col; cc.fillRect(-80, -150 - 40 * L.length - 20, 160, 40 * L.length + 20); cc.strokeRect(-80, -150 - 40 * L.length - 20, 160, 40 * L.length + 20); L.forEach((s, i) => txt(cc, s, 0, -150 - 40 * L.length + 20 + 40 * i, 30, tc, 'center', 'Anton')); } });
+// source tag with full label (e.g. 'SOURCE: VARIETY')
+const srcTag = (c, label, x, y, lt, at, px = 28) => { const a = pop(lt, at, .35); if (a <= 0) return; c.save(); c.translate(x, y); c.rotate(-.04); c.scale(a, a); c.font = `${px}px Oswald`; const w = c.measureText(label).width + 40; c.fillStyle = '#111'; rr(c, -w / 2, -px * .8, w, px * 1.6, 8); c.fill(); c.fillStyle = JH.GOLD; c.fillRect(-w / 2, -px * .8, 8, px * 1.6); txt(c, label, 4, 0, px, '#fff', 'center', 'Oswald'); c.restore(); };
+// placard held overhead by a figure in 'cheer' pose (front layer): x feet, y feet, s scale
+const placard = (c, x, y, s, t, lt, k = 0, col = '#f6f2e8', tc = INK) => { const b = Math.sin(lt * 3 + k) * 8, L = t.split('|'), w = 120 * s, h = (34 * L.length + 22) * s, by = y - 272 * s + b; c.save(); c.fillStyle = '#8a6a3a'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(x - 4, by - 10, 8, 40 * s); c.fillStyle = col; c.fillRect(x - w / 2, by - h - 10, w, h); c.strokeRect(x - w / 2, by - h - 10, w, h); L.forEach((l, i) => txt(c, l, x, by - h - 10 + (22 + 34 * i) * s, 30 * s, tc, 'center', 'Anton')); c.restore(); };
+LP('barnes', 'rain_street'); LP('hall', 'stage_blue'); LP('castle', 'greek_hall');
+// vintage American car, side view facing left; x centre, y road contact, s scale, wheel turn w
+const oldCar = (c, x, y, s, w) => { c.save(); c.translate(x, y); c.scale(s, s); shadowE(c, 0, 0, 380); c.strokeStyle = INK; c.lineWidth = 5;
+  c.fillStyle = '#7ac8c0'; c.beginPath(); c.moveTo(-420, -60); c.lineTo(-420, -140); c.quadraticCurveTo(-400, -170, -300, -175); c.lineTo(-180, -180); c.lineTo(-120, -280); c.lineTo(120, -285); c.lineTo(200, -185); c.lineTo(400, -175); c.lineTo(440, -215); c.lineTo(440, -60); c.closePath(); c.fill(); c.stroke();
+  c.fillStyle = '#f4ecd8'; c.fillRect(-418, -128, 856, 36); c.strokeRect(-418, -128, 856, 36); c.fillStyle = '#bfe4f4'; c.beginPath(); c.moveTo(-105, -265); c.lineTo(-10, -265); c.lineTo(-10, -190); c.lineTo(-160, -190); c.closePath(); c.fill(); c.stroke(); c.beginPath(); c.moveTo(10, -265); c.lineTo(110, -268); c.lineTo(175, -190); c.lineTo(10, -190); c.closePath(); c.fill(); c.stroke();
+  c.fillStyle = '#d8d8dc'; c.fillRect(-440, -78, 50, 22); c.fillRect(400, -78, 50, 22); TW.glow(c, -430, -140, 40, '255,240,180', .5);
+  for (const wx of [-260, 270]) { c.fillStyle = '#1a1a1e'; c.beginPath(); c.arc(wx, -50, 58, 0, 7); c.fill(); c.stroke(); c.fillStyle = '#e8e8ec'; c.beginPath(); c.arc(wx, -50, 30, 0, 7); c.fill(); c.stroke(); c.strokeStyle = '#6a6a70'; c.lineWidth = 4; for (let k = 0; k < 3; k++) { const a = w + k * 2.09; c.beginPath(); c.moveTo(wx, -50); c.lineTo(wx + Math.cos(a) * 28, -50 + Math.sin(a) * 28); c.stroke(); } c.strokeStyle = INK; c.lineWidth = 5; }
+  c.restore(); };
+const PORTFOLIO = { near: cc => { cc.fillStyle = '#2a2a30'; cc.strokeStyle = INK; cc.lineWidth = 3; cc.fillRect(-30, -10, 60, 80); cc.strokeRect(-30, -10, 60, 80); cc.fillStyle = '#f2e8d8'; cc.fillRect(-22, 0, 44, 56); RP.bowtie(cc, 0, 30, .45); } };
+const SWORD = { near: cc => { cc.fillStyle = '#c8c8d0'; cc.strokeStyle = INK; cc.lineWidth = 3; cc.fillRect(-5, -130, 10, 120); cc.strokeRect(-5, -130, 10, 120); cc.fillStyle = '#b08a3a'; cc.fillRect(-22, -12, 44, 10); cc.strokeRect(-22, -12, 44, 10); } };
+const SCRIPT = { near: cc => { cc.fillStyle = '#f6f2e8'; cc.strokeStyle = INK; cc.lineWidth = 3; cc.fillRect(-26, -20, 52, 66); cc.strokeRect(-26, -20, 52, 66); } };
+const CUP = (g) => ({ near: (cc, t) => { cc.fillStyle = '#e8b830'; cc.strokeStyle = INK; cc.lineWidth = 3; cc.beginPath(); cc.moveTo(-34, -80); cc.lineTo(34, -80); cc.quadraticCurveTo(32, -30, 6, -24); cc.lineTo(6, 0); cc.lineTo(20, 10); cc.lineTo(-20, 10); cc.lineTo(-6, 0); cc.lineTo(-6, -24); cc.quadraticCurveTo(-32, -30, -34, -80); cc.closePath(); cc.fill(); cc.stroke(); for (const s of [-1, 1]) { cc.beginPath(); cc.arc(s * 36, -60, 14, -1.6, 1.6, s < 0); cc.stroke(); } if (g > 0) TW.glow(cc, 0, -50, 120, '255,220,120', .5 * g); } });
+const CLIPBOARD = (gl) => ({ near: (cc, t) => { cc.fillStyle = '#a07a4a'; cc.strokeStyle = INK; cc.lineWidth = 3; cc.fillRect(-34, -30, 68, 90); cc.strokeRect(-34, -30, 68, 90); cc.fillStyle = '#f6f2e8'; cc.fillRect(-28, -18, 56, 72); cc.fillStyle = '#888'; cc.fillRect(-12, -36, 24, 12); RP.bowtie(cc, 0, 30, .55, 0, gl); } });
+// costume rail on the stage with hangers; one holds a tiny bow tie
+const rail = (c, x, y, lt) => { shadowE(c, x, y + 4, 160); c.save(); c.strokeStyle = '#8a8a92'; c.lineWidth = 10; c.beginPath(); c.moveTo(x - 150, y); c.lineTo(x - 150, y - 420); c.lineTo(x + 150, y - 420); c.lineTo(x + 150, y); c.stroke(); for (const [dx, col] of [[-100, '#6a2a4a'], [-30, '#2a4a6a'], [40, '#4a6a2a']]) { const sw = Math.sin(lt * 1.3 + dx) * .04; c.save(); c.translate(x + dx, y - 420); c.rotate(sw); c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(0, 0); c.lineTo(-30, 30); c.lineTo(30, 30); c.closePath(); c.stroke(); c.fillStyle = col; c.fillRect(-30, 30, 60, 170); c.strokeRect(-30, 30, 60, 170); c.restore(); }
+  c.save(); c.translate(x + 110, y - 420); c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(0, 0); c.lineTo(0, 30); c.stroke(); RP.bowtie(c, 0, 46, .8, Math.sin(lt * 2) * .1, .5 + .5 * Math.sin(lt * 2)); c.restore(); c.restore(); };
+const bigCam = (c, x, y, lt) => { shadowE(c, x, y + 4, 130); c.save(); c.strokeStyle = '#2a2a30'; c.lineWidth = 9; for (const d of [-90, 0, 90]) { c.beginPath(); c.moveTo(x, y - 300); c.lineTo(x + d, y); c.stroke(); } c.fillStyle = '#2a2a32'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(x - 90, y - 400, 180, 110); c.strokeRect(x - 90, y - 400, 180, 110); c.fillStyle = '#18181e'; c.fillRect(x + 90, y - 380, 70, 70); c.strokeRect(x + 90, y - 380, 70, 70); c.beginPath(); c.arc(x - 40, y - 430, 34, 0, 7); c.arc(x + 40, y - 430, 34, 0, 7); c.fill(); c.stroke();
+  if (Math.sin(lt * 3) > 0) { c.fillStyle = '#ff3030'; c.beginPath(); c.arc(x - 70, y - 380, 7, 0, 7); c.fill(); } c.restore(); };
+
+window.SHOTS = [
+  // 1.00 Barnes street by the river: a boy at the kerb; Dad's shiny old American car rolls up; Mum with a modelling portfolio
+  { plate: 'barnes', cam: { z: [1.05, 1.18], x: [1280, 1320], y: [800, 840] }, bed: [['birds_loop', .12], ['city_loop', .05]], light: { dir: 1, key: 'rgba(255,200,130,.2)' },
+    init: S => { const tR = A.at(S, 'Robert', .3), tL = A.at(S, 'London', 2.0), tB = A.at(S, 'Barnes', 4.6), tTh = A.at(S, 'Thames.', 5.5), tD = A.at(S, 'dad', 6.4), tV = A.at(S, 'vintage', 7.2), tAm = A.at(S, 'America.', 8.6), tMu = A.at(S, 'mum', 9.6), tMo = A.at(S, 'modelling', 11.0);
+      const carX = (lt) => 3300 - 1550 * E.out(K.seg(lt, tD - .8, tV + .8));
+      S.D.figs = [{ x: 520, y: 1180, s: 1.6, ...RP.ROB('kid'), facing: 1, mood: 'happy', anim: (o, lt) => { if (lt > tV) { o.mood = 'shocked'; o.pose = 'point'; } if (lt > tAm + .5) o.mood = 'happy'; } },
+        { x: 1080, y: 1180, s: 1.5, ...RP.EXEC(0), facing: 1, mood: 'happy', walk: { x0: -300, x1: 1080, t0: tD - 1.6, dur: 1.6 }, anim: (o, lt) => { if (lt > tV + .4) o.pose = 'present'; } },
+        { x: 800, y: 1180, s: 1.5, ...RP.CRITIC(3), facing: 1, mood: 'happy', walk: { x0: -300, x1: 800, t0: tMu - 1.6, dur: 1.6 }, hold: PORTFOLIO }];
+      S.D.live = [(c, lt) => { for (let k = 0; k < 18; k++) { const x = 300 + (k * 211) % 2000, y = 830 + (k * 37) % 120; c.fillStyle = `rgba(255,230,170,${.2 + .25 * Math.max(0, Math.sin(lt * 2 + k))})`; c.fillRect(x, y, 20, 3); } for (let k = 0; k < 8; k++) { const ph = (lt * .15 + k * .13) % 1; c.fillStyle = '#c8902a'; c.save(); c.translate((k * 331 + ph * 300) % 2560, 200 + ph * 1000); c.rotate(lt * 2 + k); c.fillRect(-8, -4, 16, 8); c.restore(); } }];
+      S.D.front = [(c, lt) => { const x = carX(lt); oldCar(c, x, 1330, 1.15, -x / 60); }, (c, lt) => ntag(c, 'ROBERT PATTINSON', 520, 700, lt, tR, { px: 34 })];
+      S.D.over = [board(.5), (c, lt) => K.card(c, 'LONDON · MAY 1986', lt, { at: tL, x: 900, y: 120, px: 54, rot: -2 }), (c, lt) => K.card(c, 'BARNES, BY THE THAMES', lt, { at: tB, x: 980, y: 230, px: 38, rot: 2, until: tD }),
+        (c, lt) => K.card(c, 'DAD: VINTAGE CARS FROM AMERICA', lt, { at: tV, x: 1300, y: 240, px: 36, rot: 2 }), (c, lt) => K.card(c, 'MUM: MODELLING AGENCY', lt, { at: tMo - .3, x: 1300, y: 340, px: 36, rot: -2 })];
+      S.D.sfx = [[tR, 'pop', .2], [tL, 'chime', .2], [tD - .8, 'hum_loop', .2], [tV, 'whoosh_soft', .25], [tAm, 'pop', .2], [tMu - 1.5, 'footsteps', .2], [tMo, 'camera_shutter', .25]]; } },
+  // 1.01 church-hall stage: a teen in a too-big costume blinks in the spotlight; two girls rehearse; he shrugs
+  { plate: 'hall', cam: { z: [1.35, 1.5], x: [1280, 1300], y: [880, 900] }, bed: [['hum_loop', .08], ['creak', .05]], light: { dir: 1, key: 'rgba(255,230,180,.15)' },
+    init: S => { const tW = A.at(S, "wasn't", .3), tSt = A.at(S, 'stage-school', .9), tJ = A.at(S, 'joined', 2.6), tA = A.at(S, 'amateur', 3.6), tT = A.at(S, 'teenager', 4.9), tAc = A.at(S, 'account', 6.2), tG = A.at(S, 'girls', 9.4);
+      S.D.figs = [{ x: 1280, y: 1180, s: 1.9, ...RP.ROB('teen'), facing: 1, mood: 'worried', hold: SWORD, anim: (o, lt) => { if (lt > tA) o.mood = 'neutral'; if (lt > tG - .3) { o.pose = 'shrug'; o.mood = 'smug'; o.hold = null; } } },
+        { x: 780, y: 1180, s: 2.0, ...PR.KID(3), facing: 1, mood: 'happy', hold: SCRIPT, anim: (o, lt) => { if (lt > tG) o.pose = 'wave'; } },
+        { x: 1020, y: 1180, s: 2.0, ...PR.KID(4), facing: 1, mood: 'neutral', hold: SCRIPT, anim: (o, lt) => { if (lt > tG + .2) { o.mood = 'happy'; } } }];
+      S.D.live = [(c, lt) => rail(c, 1860, 1180, lt), (c, lt) => { const sx = 1280 + 500 * (1 - E.io(K.seg(lt, tJ - .4, tA + .2))); c.save(); c.globalCompositeOperation = 'screen'; c.fillStyle = 'rgba(255,240,190,.16)'; c.beginPath(); c.moveTo(sx - 60, 0); c.lineTo(sx + 60, 0); c.lineTo(sx + 260, 1180); c.lineTo(sx - 260, 1180); c.fill(); c.restore(); TW.glow(c, sx, 1170, 280, '255,240,190', .3); }];
+      S.D.front = [(c, lt) => { if (lt > tG) for (let k = 0; k < 4; k++) { const p = ((lt - tG) * .6 + k * .25) % 1; c.globalAlpha = 1 - p; txt(c, '♥', 900 + k * 60, 700 - p * 200, 40, '#ff6a8a', 'center', 'Anton'); c.globalAlpha = 1; } }];
+      S.D.over = [board(.5), (c, lt) => { K.card(c, 'STAGE SCHOOL', lt, { at: tSt, x: 1450, y: 130, px: 40, rot: -2, until: tJ + .5 }); if (lt > tSt + .3 && lt < tJ + .5) TW.stamp(c, '✗', 1450, 130, lt, tSt + .3, { px: 90 }); }, (c, lt) => K.card(c, 'LOCAL AMATEUR DRAMA CLUB', lt, { at: tA, x: 1150, y: 130, px: 42, rot: 2 }),
+        (c, lt) => srcTag(c, 'IN HIS OWN WORDS', 1500, 240, lt, tAc, 28), (c, lt) => K.card(c, '...WHERE THE GIRLS WERE', lt, { at: tG - .3, x: 1350, y: 330, px: 38, rot: -2 })];
+      S.D.sfx = [[tSt + .3, 'stamp', .3], [tJ - .4, 'creak', .25], [tA, 'pop', .2], [tAc, 'paper', .2], [tG, 'chime', .25]]; } },
+  // 1.02 castle film set: the golden champion lifts the cup, the camera rolls; the light dims on 'doesn't make it out'
+  { plate: 'castle', cam: { z: [1.2, 1.45], x: [1180, 1320], y: [760, 880] }, bed: [['wind_loop', .08], ['hum_loop', .06]], light: { dir: -1, key: 'rgba(220,220,240,.12)' },
+    init: S => { const t05 = A.at(S, '2005', .4), tHP = A.at(S, 'Potter.', 2.6), tCe = A.at(S, 'Cedric', 3.6), tGo = A.at(S, 'golden', 4.6), tGF = A.at(S, 'Goblet', 6.5), tD = A.at(S, "doesn't", 8.6), tO = A.at(S, 'out.', 9.6);
+      S.D.figs = [{ x: 1320, y: 1260, s: 1.9, ...RP.ROB('cedric'), facing: -1, mood: 'happy', anim: (o, lt) => { o.hold = CUP(lt > tGo && lt < tD ? 1 : 0); if (lt > tGo) o.pose = 'cheer'; if (lt > tD) { o.pose = 'stand'; o.mood = 'sad'; } } }];
+      S.D.live = [(c, lt) => bigCam(c, 1900, 1260, lt), (c, lt) => mist(c, lt, 1150, .1)];
+      S.D.front = [(c, lt) => ntag(c, 'CEDRIC DIGGORY', 1320, 640, lt, tCe, { px: 34 }), (c, lt) => { if (lt > tGo && lt < tD) TW.sparkle(c, 1300, 620, lt * 2, 1.2, '255,230,140'); }, (c, lt) => { const d = K.seg(lt, tD, tO + .3); if (d > 0) { c.fillStyle = `rgba(10,10,30,${.45 * d})`; c.fillRect(0, 0, 2560, 1440); TW.glow(c, 1320, 900, 300, '200,210,255', .2 * d); } }];
+      S.D.over = [board(.5), (c, lt) => K.card(c, '2005', lt, { at: t05, x: 760, y: 120, px: 64, rot: -3 }), (c, lt) => K.card(c, 'HARRY POTTER AND THE GOBLET OF FIRE', lt, { at: tHP - .3, x: 1060, y: 240, px: 36, rot: 2 }), (c, lt) => K.card(c, 'THE GOLDEN CHAMPION', lt, { at: tGo, x: 600, y: 360, px: 36, rot: -2, until: tD }),
+        (c, lt) => K.card(c, "...DOESN'T MAKE IT OUT", lt, { at: tD, x: 640, y: 360, px: 40, rot: 2, bg: '#c8c8d8' })];
+      S.D.sfx = [[t05, 'pop', .2], [tHP, 'chime', .25], [tCe, 'pop', .2], [tGo, 'crowd_cheer', .15], [tGo + .2, 'chime', .2], [tD, 'thud', .3], [tD + .2, 'tension', .25]]; } },
+  // 1.03 the producer with a clipboard by the camera: thumbs up; a tiny bow tie glints on his clipboard; 'see you at the end'
+  { plate: 'castle', cam: { z: [1.55, 1.7], x: [1500, 1560], y: [880, 900] }, bed: [['wind_loop', .06], ['hum_loop', .06]], light: { dir: -1, key: 'rgba(220,220,240,.12)' },
+    init: S => { const tRe = A.at(S, 'Remember', .3), tP = A.at(S, 'producer', 1.0), tDH = A.at(S, 'David', 2.4), tB = A.at(S, 'back', 4.4), tE = A.at(S, 'end', 5.6), tSt = A.at(S, 'story.', 6.6);
+      S.D.figs = [{ x: 1500, y: 1260, s: 1.9, ...RP.HEYMAN(false), facing: 1, mood: 'happy', anim: (o, lt) => { o.hold = CLIPBOARD(lt > tDH ? .5 + .5 * Math.sin(lt * 3) : 0); if (lt > tB) { o.pose = 'point'; o.hold = null; o.mood = 'smug'; } } }];
+      S.D.live = [(c, lt) => bigCam(c, 1900, 1260, lt), (c, lt) => mist(c, lt, 1150, .08)];
+      S.D.front = [(c, lt) => ntag(c, 'DAVID HEYMAN', 1500, 690, lt, tDH, { px: 32 })];
+      S.D.over = [board(.5), (c, lt) => K.card(c, 'REMEMBER HIM', lt, { at: tRe, x: 640, y: 130, px: 50, rot: -2 }), (c, lt) => K.card(c, 'PRODUCER', lt, { at: tP, x: 640, y: 240, px: 38, rot: 2 }),
+        (c, lt) => { const a = pop(lt, tB, .4); if (a <= 0) return; c.save(); c.translate(1450, 300); c.scale(a, a); c.fillStyle = 'rgba(10,10,16,.75)'; rr(c, -230, -60, 460, 120, 16); c.fill(); txt(c, '▶▶ 2026', 0, 0, 64, JH.GOLD, 'center', 'Anton'); c.restore(); }, (c, lt) => K.card(c, 'SEE YOU AT THE END', lt, { at: tE, x: 1450, y: 440, px: 36, rot: -2 })];
+      S.D.sfx = [[tRe, 'pop', .2], [tDH, 'chime', .25], [tB, 'whoosh', .3], [tE, 'tick', .2], [tSt, 'pop', .15]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>

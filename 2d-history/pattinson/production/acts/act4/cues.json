@@ -1,0 +1,228 @@
+{
+ "dur": 38.796,
+ "cues": [
+  {
+   "t": 1.479,
+   "name": "chime",
+   "gain": 0.2
+  },
+  {
+   "t": 2.959,
+   "name": "paper",
+   "gain": 0.35
+  },
+  {
+   "t": 3.559,
+   "name": "paper_tear",
+   "gain": 0.15
+  },
+  {
+   "t": 4.459,
+   "name": "pop",
+   "gain": 0.2
+  },
+  {
+   "t": 4.819,
+   "name": "whoosh_soft",
+   "gain": 0.2
+  },
+  {
+   "t": 7.559,
+   "name": "typing",
+   "gain": 0.25
+  },
+  {
+   "t": 7.759,
+   "name": "pop",
+   "gain": 0.2
+  },
+  {
+   "t": 8.159,
+   "name": "crowd_loop",
+   "gain": 0.15
+  },
+  {
+   "t": 9.527,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 9.702,
+   "name": "whoosh_soft",
+   "gain": 0.2
+  },
+  {
+   "t": 10.38,
+   "name": "chime",
+   "gain": 0.2
+  },
+  {
+   "t": 10.9,
+   "name": "pop",
+   "gain": 0.15
+  },
+  {
+   "t": 12.6,
+   "name": "pop",
+   "gain": 0.15
+  },
+  {
+   "t": 12.6,
+   "name": "pop",
+   "gain": 0.15
+  },
+  {
+   "t": 12.98,
+   "name": "thud",
+   "gain": 0.45
+  },
+  {
+   "t": 13.08,
+   "name": "drum",
+   "gain": 0.3
+  },
+  {
+   "t": 14.36,
+   "name": "coins",
+   "gain": 0.25
+  },
+  {
+   "t": 17.1,
+   "name": "coins_cascade",
+   "gain": 0.25
+  },
+  {
+   "t": 18.675,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 19.596,
+   "name": "whoosh_soft",
+   "gain": 0.2
+  },
+  {
+   "t": 23.676,
+   "name": "whoosh",
+   "gain": 0.25
+  },
+  {
+   "t": 23.976,
+   "name": "crowd_cheer",
+   "gain": 0.3
+  },
+  {
+   "t": 24.516,
+   "name": "pop",
+   "gain": 0.2
+  },
+  {
+   "t": 26.296,
+   "name": "stamp",
+   "gain": 0.4
+  },
+  {
+   "t": 27.836,
+   "name": "crowd_cheer",
+   "gain": 0.2
+  },
+  {
+   "t": 29.071,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 29.246,
+   "name": "pop",
+   "gain": 0.2
+  },
+  {
+   "t": 31.686,
+   "name": "paper",
+   "gain": 0.3
+  },
+  {
+   "t": 32.246,
+   "name": "paper",
+   "gain": 0.3
+  },
+  {
+   "t": 32.146,
+   "name": "paper",
+   "gain": 0.3
+  },
+  {
+   "t": 34.086,
+   "name": "paper",
+   "gain": 0.3
+  },
+  {
+   "t": 31.686,
+   "name": "stamp",
+   "gain": 0.3
+  },
+  {
+   "t": 31.946,
+   "name": "stamp",
+   "gain": 0.3
+  },
+  {
+   "t": 31.946,
+   "name": "stamp",
+   "gain": 0.3
+  },
+  {
+   "t": 34.086,
+   "name": "scrape",
+   "gain": 0.3
+  },
+  {
+   "t": 35.606,
+   "name": "tension",
+   "gain": 0.25
+  },
+  {
+   "t": 37.366,
+   "name": "thud",
+   "gain": 0.3
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 10.227,
+   "name": "office_loop",
+   "gain": 0.12
+  },
+  {
+   "start": 9.427,
+   "end": 19.375,
+   "name": "rain_loop",
+   "gain": 0.3
+  },
+  {
+   "start": 9.427,
+   "end": 19.375,
+   "name": "wind_loop",
+   "gain": 0.08
+  },
+  {
+   "start": 18.575,
+   "end": 29.771,
+   "name": "rain_loop",
+   "gain": 0.2
+  },
+  {
+   "start": 18.575,
+   "end": 29.771,
+   "name": "crowd_loop",
+   "gain": 0.08
+  },
+  {
+   "start": 28.971,
+   "end": 39.596,
+   "name": "office_loop",
+   "gain": 0.1
+  }
+ ]
+}

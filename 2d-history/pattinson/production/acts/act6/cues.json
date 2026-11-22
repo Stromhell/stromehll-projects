@@ -1,0 +1,166 @@
+{
+ "dur": 25.509,
+ "cues": [
+  {
+   "t": 1.659,
+   "name": "thud",
+   "gain": 0.2
+  },
+  {
+   "t": 2.119,
+   "name": "pop",
+   "gain": 0.2
+  },
+  {
+   "t": 2.419,
+   "name": "pop",
+   "gain": 0.15
+  },
+  {
+   "t": 2.719,
+   "name": "pop",
+   "gain": 0.15
+  },
+  {
+   "t": 3.559,
+   "name": "pop",
+   "gain": 0.2
+  },
+  {
+   "t": 4.579,
+   "name": "coins",
+   "gain": 0.3
+  },
+  {
+   "t": 5.059,
+   "name": "chime",
+   "gain": 0.2
+  },
+  {
+   "t": 7.619,
+   "name": "tick",
+   "gain": 0.2
+  },
+  {
+   "t": 8.374,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 8.549,
+   "name": "riser",
+   "gain": 0.2
+  },
+  {
+   "t": 9.229,
+   "name": "thud",
+   "gain": 0.3
+  },
+  {
+   "t": 10.929,
+   "name": "paper",
+   "gain": 0.3
+  },
+  {
+   "t": 11.929,
+   "name": "whoosh",
+   "gain": 0.3
+  },
+  {
+   "t": 13.129,
+   "name": "hit",
+   "gain": 0.35
+  },
+  {
+   "t": 13.309,
+   "name": "coins_cascade",
+   "gain": 0.25
+  },
+  {
+   "t": 14.829,
+   "name": "thud",
+   "gain": 0.2
+  },
+  {
+   "t": 15.881,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 16.736,
+   "name": "pop",
+   "gain": 0.2
+  },
+  {
+   "t": 18.916,
+   "name": "thud",
+   "gain": 0.2
+  },
+  {
+   "t": 19.516,
+   "name": "whoosh",
+   "gain": 0.25
+  },
+  {
+   "t": 19.966,
+   "name": "whoosh",
+   "gain": 0.25
+  },
+  {
+   "t": 20.416,
+   "name": "whoosh",
+   "gain": 0.25
+  },
+  {
+   "t": 20.216,
+   "name": "hit",
+   "gain": 0.3
+  },
+  {
+   "t": 20.666,
+   "name": "hit",
+   "gain": 0.3
+  },
+  {
+   "t": 21.116,
+   "name": "hit",
+   "gain": 0.3
+  },
+  {
+   "t": 22.196,
+   "name": "crowd_cheer",
+   "gain": 0.2
+  },
+  {
+   "t": 23.656,
+   "name": "chime",
+   "gain": 0.3
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 9.074,
+   "name": "hum_loop",
+   "gain": 0.12
+  },
+  {
+   "start": 0,
+   "end": 9.074,
+   "name": "wind_loop",
+   "gain": 0.06
+  },
+  {
+   "start": 8.274,
+   "end": 16.581,
+   "name": "trading_loop",
+   "gain": 0.1
+  },
+  {
+   "start": 15.781,
+   "end": 26.309,
+   "name": "office_loop",
+   "gain": 0.1
+  }
+ ]
+}
