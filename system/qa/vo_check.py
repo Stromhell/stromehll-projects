@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""vo_check.py (v1, 22 Nov 2026) - lesson L30 "VO cut before the sentence ends" (Pushpam, GTA 6 v2 9:25).
+"""vo_check.py (v2, 22 Nov 2026: re-checks every miss on its own window, so a Whisper gap is not reported as a VO cut) - lesson L30 "VO cut before the sentence ends" (Pushpam, GTA 6 v2 9:25).
 Transcribes the video's audio with Whisper (free, local) and aligns it to the script's VO text. Any script words missing
 from the audio (a cut sentence, a dropped line) are reported with the timestamp where they should have been.
   ~/.venvs/hf/bin/python /mnt/project-files/system/qa/vo_check.py VIDEO --script SCRIPT.md|.txt [--out DIR] [--model openai/whisper-small.en]
@@ -19,7 +19,10 @@ def script_words(paths):
             elif not any(l.startswith("|") for l in lines): txt.append(ln)
     return norm(" ".join(txt))
 
-def norm(s): return re.findall(r"[a-z0-9']+", s.lower().replace("’", "'"))
+def norm(s):
+    import unicodedata
+    s = unicodedata.normalize("NFKD", s).encode("ascii", "ignore").decode()   # Tomás -> tomas (was split into "tom s")
+    return re.findall(r"[a-z0-9']+", s.lower().replace("’", "'"))
 def fmt(t): return f"{int(t//60)}:{t%60:04.1f}"
 
 def main():
@@ -44,6 +47,19 @@ def main():
         if op in ("delete", "replace") and (i2 - i1) >= a.min and (i2 - i1) > 2 * (j2 - j1):
             t = times[min(j1, len(times) - 1)] if times else 0
             miss.append({"t": fmt(t), "missing": " ".join(want[i1:i2]), "heard_instead": " ".join(heard[j1:j2])})
+    # Re-check: Whisper sometimes drops a stretch at a 60 s piece boundary (GTA 6 v2 1:45, false alarm 22 Nov).
+    # Transcribe 45 s around each miss on its own; report it only if the words are still not heard.
+    confirmed = []
+    for m in miss:
+        mm, ss = m["t"].split(":"); t0 = max(int(mm) * 60 + float(ss) - 10, 0)
+        win = os.path.join(tmp, "w.wav")
+        subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-ss", str(t0), "-t", "45", "-i", wav, win], check=True)
+        again = norm(asr(win, chunk_length_s=30)["text"]); want_m = m["missing"].split()
+        hit = difflib.SequenceMatcher(None, want_m, again, autojunk=False)
+        found = sum(b.size for b in hit.get_matching_blocks()) / max(len(want_m), 1)
+        if found < 0.7: m["recheck_found"] = round(found, 2); confirmed.append(m)
+        else: print(f"[vo] {m['t']} was a transcription gap ({found:.0%} found on re-check), not a VO cut", file=sys.stderr)
+    miss = confirmed
     cover = sum(b.size for b in sm.get_matching_blocks()) / max(len(want), 1)
     L = [f"# VO check: {os.path.basename(a.video)}", f"Script words {len(want)}, heard {len(heard)}, matched {cover:.0%}.", "",
          f"## Script lines missing from the audio ({len(miss)}) - cut VO, dropped or re-worded lines"]
