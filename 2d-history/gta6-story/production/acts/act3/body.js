@@ -1,0 +1,179 @@
+// G6 act 3 - Chapter 1: The Bag. Car-home argument, family savings app + TOMMY jar, welcome party (Cat, Mattia), parole officer,
+// slaughterhouse (Donny), Brian retires, Mattia's locker job, the trap + Mendez, cops kill cops and blame Jason and Lucia.
+// Plates: keys_road_night, office, party_lawn, stilt_porch, slaughterhouse_dusk, cafe_int, payday_shop, prison_corridor.
+for (const n of ['keys_road_night', 'office', 'party_lawn', 'stilt_porch', 'slaughterhouse_dusk', 'cafe_int', 'payday_shop', 'prison_corridor']) K.load(n, PL + n + '.jpg');
+const rr = TW.rr, txt = TW.txt, GOLD = G6.GOLD;
+const F = (who, x, y, s, o = {}) => Object.assign({ x, y, s, ...(typeof who === 'function' ? who() : G6[who]()), facing: 1, mood: 'neutral' }, o);
+// name tag (world space): gold tile with a pointer, tip at x,y
+const ntag = (c, name, x, y, lt, at, opts = {}) => { const a = pop(lt, at, .4), o = 1 - K.seg(lt, (opts.until ?? 999) - .3, opts.until ?? 999); if (a <= 0 || o <= 0) return; const px = opts.px ?? 40; c.save(); c.globalAlpha = o; c.translate(x, y); c.scale(a, a); c.font = `${px}px Anton`;
+  const w = c.measureText(name).width + px * .9, h = px * 1.45; c.fillStyle = 'rgba(0,0,0,.35)'; rr(c, -w / 2 + 6, -h - 12, w, h, 10); c.fill(); c.fillStyle = opts.col || GOLD; c.strokeStyle = INK; c.lineWidth = 4; rr(c, -w / 2, -h - 18, w, h, 10); c.fill(); c.stroke();
+  c.beginPath(); c.moveTo(-14, -19); c.lineTo(0, 0); c.lineTo(14, -19); c.closePath(); c.fill(); c.stroke(); c.fillRect(-12, -24, 24, 7); txt(c, name, 0, -h / 2 - 16, px, INK, 'center', 'Anton'); c.restore(); };
+const tint = (col, al) => (c) => { c.save(); c.fillStyle = `rgba(${col},${al})`; c.fillRect(0, 0, SW, SH); c.restore(); };
+const vign = (c) => { const g = c.createRadialGradient(SW / 2, SH / 2, SH * .45, SW / 2, SH / 2, SH * 1.05); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,.45)'); c.fillStyle = g; c.fillRect(0, 0, SW, SH); };
+const talkArms = (lt, k = 0, amp = 1) => ({ shR: 50 + 22 * amp * Math.sin(lt * 5 + k), elR: -60 - 20 * amp * Math.sin(lt * 4.1 + k), shL: 30 + 14 * amp * Math.sin(lt * 4.4 + k + 1), elL: -70, handR: 'open', handL: 'open' });
+const HANDSUP = { shL: 160, elL: -20, shR: 165, elR: -25, handL: 'open', handR: 'open' };
+const glassProp = (cc) => { cc.save(); cc.fillStyle = 'rgba(220,240,255,.5)'; cc.strokeStyle = INK; cc.lineWidth = 2; cc.beginPath(); cc.moveTo(-9, 0); cc.lineTo(9, 0); cc.lineTo(7, 28); cc.lineTo(-7, 28); cc.closePath(); cc.fill(); cc.stroke(); cc.fillStyle = 'rgba(240,190,60,.8)'; cc.fillRect(-7, 10, 14, 16); cc.restore(); };
+const keyProp = (glint) => (cc) => { cc.save(); cc.strokeStyle = INK; cc.lineWidth = 2; cc.fillStyle = '#e8c45a'; cc.beginPath(); cc.arc(0, 8, 9, 0, 7); cc.fill(); cc.stroke(); cc.fillRect(-3, 16, 6, 26); cc.strokeRect(-3, 16, 6, 26); cc.fillRect(3, 32, 7, 4); cc.fillRect(3, 38, 5, 4);
+  cc.fillStyle = '#f6efdc'; cc.fillRect(-12, -16, 24, 16); cc.strokeRect(-12, -16, 24, 16); txt(cc, '17', 0, -8, 12, INK, 'center', 'Anton'); if (glint > 0) TW.sparkle(cc, 0, 20, glint * 3, .5); cc.restore(); };
+// front-view car (approaching camera), for the drive home. Draws in two passes: back (seats, dark cabin) and front (body with the windscreen cut out)
+const carBack = (c, cx, gy, lt) => { c.save(); c.fillStyle = '#16141c'; rr(c, cx - 290, gy - 440, 580, 260, 30); c.fill(); c.fillStyle = '#3a2a2a'; for (const dx of [-140, 140]) { rr(c, cx + dx - 85, gy - 420, 170, 200, 26); c.fill(); } c.restore(); };
+const carFront = (c, cx, gy, lt) => { const b = Math.sin(lt * 9) * 2; c.save(); c.translate(0, b);
+  c.beginPath(); rr(c, cx - 330, gy - 470, 660, 420, 60); c.moveTo(cx - 260, gy - 255); c.lineTo(cx - 220, gy - 430); c.lineTo(cx + 220, gy - 430); c.lineTo(cx + 260, gy - 255); c.closePath();
+  c.fillStyle = '#b8453a'; c.fill('evenodd'); c.strokeStyle = INK; c.lineWidth = 6; c.stroke();
+  c.fillStyle = 'rgba(160,200,230,.16)'; c.beginPath(); c.moveTo(cx - 260, gy - 255); c.lineTo(cx - 220, gy - 430); c.lineTo(cx + 220, gy - 430); c.lineTo(cx + 260, gy - 255); c.closePath(); c.fill(); c.stroke();
+  c.strokeStyle = 'rgba(255,255,255,.35)'; c.lineWidth = 6; c.beginPath(); c.moveTo(cx - 170, gy - 410); c.lineTo(cx - 210, gy - 290); c.moveTo(cx + 120, gy - 415); c.lineTo(cx + 100, gy - 360); c.stroke();
+  c.fillStyle = '#8a2e26'; c.fillRect(cx - 330, gy - 250, 660, 24); c.fillStyle = '#2a2a30'; rr(c, cx - 140, gy - 200, 280, 70, 12); c.fill(); c.strokeStyle = INK; c.lineWidth = 4; c.stroke(); c.strokeStyle = '#6a6e78'; c.lineWidth = 3; for (let k = 0; k < 5; k++) { c.beginPath(); c.moveTo(cx - 125, gy - 188 + k * 12); c.lineTo(cx + 125, gy - 188 + k * 12); c.stroke(); }
+  for (const dx of [-250, 250]) { c.fillStyle = '#fff6c8'; c.beginPath(); c.ellipse(cx + dx, gy - 170, 52, 32, 0, 0, 7); c.fill(); c.strokeStyle = INK; c.lineWidth = 4; c.stroke(); TW.glow(c, cx + dx, gy - 170, 220, '255,240,190', .55); }
+  c.fillStyle = '#c8ccd4'; rr(c, cx - 340, gy - 110, 680, 40, 14); c.fill(); c.strokeStyle = INK; c.stroke(); c.fillStyle = '#121216'; rr(c, cx - 320, gy - 70, 110, 70, 12); c.fill(); rr(c, cx + 210, gy - 70, 110, 70, 12); c.fill();
+  // steering wheel on the driver's side (viewer's right)
+  c.strokeStyle = '#1a1a1e'; c.lineWidth = 14; c.beginPath(); c.ellipse(cx + 130, gy - 285, 70, 26, 0, Math.PI * 1.05, Math.PI * 1.95); c.stroke(); c.restore(); };
+const sea = (c, lt, x0, x1, y0, y1, col = '255,245,220') => { for (let k = 0; k < 40; k++) { const x = x0 + (k * 157) % (x1 - x0), y = y0 + (k * 61) % (y1 - y0), a = .15 + .3 * Math.max(0, Math.sin(lt * 2 + k)); c.fillStyle = `rgba(${col},${a})`; c.fillRect(x, y, 16, 3); } };
+const fairy = (c, lt, pts) => pts.forEach(([x, y], k) => TW.glow(c, x, y, 26, '255,220,140', .45 + .35 * Math.sin(lt * 3 + k * 1.3)));
+const swingLamp = (c, x, y, lt, k) => { const a = Math.sin(lt * 1.6 + k) * .35, lx = x + Math.sin(a) * 120, ly = y + Math.cos(a) * 120; c.save(); c.strokeStyle = '#1a1410'; c.lineWidth = 4; c.beginPath(); c.moveTo(x, y); c.lineTo(lx, ly); c.stroke(); c.fillStyle = '#ffe6a0'; c.beginPath(); c.arc(lx, ly + 10, 14, 0, 7); c.fill(); c.restore(); TW.glow(c, lx, ly + 40, 340, '255,200,120', .35); };
+const desk = (c, x0, x1, top, floor, col = '#6a4a32') => { c.save(); c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(x0, top, x1 - x0, floor - top); c.strokeRect(x0, top, x1 - x0, floor - top); c.fillStyle = RIG.shadeHex(col, .25); c.fillRect(x0 - 16, top - 18, x1 - x0 + 32, 22); c.strokeRect(x0 - 16, top - 18, x1 - x0 + 32, 22); c.fillStyle = 'rgba(0,0,0,.15)'; c.fillRect(x0, top + 4, x1 - x0, 16); c.restore(); };
+const table = (c, x, top, floor, w = 240) => { c.save(); c.fillStyle = 'rgba(0,0,0,.25)'; c.beginPath(); c.ellipse(x, floor, w * .55, 16, 0, 0, 7); c.fill(); c.strokeStyle = INK; c.lineWidth = 5; c.fillStyle = '#3a3a40'; c.fillRect(x - 10, top, 20, floor - top); c.strokeRect(x - 10, top, 20, floor - top); c.fillRect(x - 70, floor - 10, 140, 12); c.strokeRect(x - 70, floor - 10, 140, 12);
+  c.fillStyle = '#e8e2d4'; c.beginPath(); c.ellipse(x, top, w / 2, 22, 0, 0, 7); c.fill(); c.stroke(); c.restore(); };
+const steam = (x, y) => (c, lt) => { for (let k = 0; k < 5; k++) { const p = (lt * .5 + k / 5) % 1; c.fillStyle = `rgba(255,255,255,${.25 * (1 - p)})`; c.beginPath(); c.arc(x + Math.sin(p * 6 + k) * 10, y - p * 90, 8 + p * 12, 0, 7); c.fill(); } };
+const coinDrop = (c, x, y, lt, t0, n = 4, s = 1) => { for (let k = 0; k < n; k++) { const u = K.seg(lt, t0 + k * .35, t0 + k * .35 + .4); if (u <= 0 || u >= 1) continue; c.fillStyle = '#f2c14a'; c.strokeStyle = INK; c.lineWidth = 2; c.beginPath(); c.ellipse(x, y - 160 * s * (1 - u * u), 9 * s, 5 * s, 0, 0, 7); c.fill(); c.stroke(); } };
+const lockers = (c, x0, y0, x1, y1, open, lt) => { const n = 7, w = (x1 - x0) / n; c.save(); c.fillStyle = '#5a7a8a'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(x0, y0, x1 - x0, y1 - y0); c.strokeRect(x0, y0, x1 - x0, y1 - y0);
+  for (let k = 0; k < n; k++) for (let r = 0; r < 2; r++) { const x = x0 + k * w + 8, y = y0 + r * (y1 - y0) / 2 + 8, h = (y1 - y0) / 2 - 16; if (k === 3 && r === 1 && open > 0) { c.fillStyle = '#1a1e24'; c.fillRect(x, y, w - 16, h); c.fillStyle = '#7a9aaa'; c.fillRect(x + (w - 16), y, -(w - 16) * (1 - open) - 30 * open, h); c.strokeRect(x, y, w - 16, h); continue; }
+    c.fillStyle = '#6e90a0'; c.fillRect(x, y, w - 16, h); c.strokeRect(x, y, w - 16, h); c.fillStyle = INK; for (let v = 0; v < 3; v++) c.fillRect(x + 14, y + 16 + v * 12, w - 44, 4); c.fillStyle = '#d8d8d0'; c.fillRect(x + w - 40, y + h / 2, 10, 24); txt(c, String(11 + k + r * 7), x + (w - 16) / 2, y + h - 22, 20, '#f6efdc', 'center', 'Anton'); }
+  c.restore(); };
+const gator = (c, x, y) => { c.save(); c.fillStyle = '#f6efdc'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(x - 130, y - 90, 260, 180); c.strokeRect(x - 130, y - 90, 260, 180); c.fillStyle = '#5a8a3a'; c.beginPath(); c.ellipse(x - 10, y + 10, 90, 22, 0, 0, 7); c.fill(); c.stroke(); c.beginPath(); c.moveTo(x + 70, y + 4); c.lineTo(x + 120, y + 2); c.lineTo(x + 76, y + 22); c.fill(); c.stroke();
+  c.beginPath(); c.moveTo(x - 95, y + 10); c.lineTo(x - 125, y + 30); c.lineTo(x - 90, y + 24); c.fill(); c.fillStyle = '#fff'; c.beginPath(); c.arc(x + 50, y - 4, 5, 0, 7); c.fill(); txt(c, 'MEET THE GATORS', x, y - 60, 26, '#2a5a2a', 'center', 'Anton'); c.restore(); };
+const torch = (c, x, y, dir, on, lt) => { if (on <= 0) return; c.save(); c.globalCompositeOperation = 'screen'; const g = c.createRadialGradient(x, y, 0, x, y, 700); g.addColorStop(0, `rgba(255,250,220,${.45 * on})`); g.addColorStop(1, 'rgba(255,250,220,0)'); c.fillStyle = g; c.beginPath(); c.moveTo(x, y); const a = Math.sin(lt * 1.3 + x) * .08; c.lineTo(x + dir * 700, y - 140 + a * 700); c.lineTo(x + dir * 700, y + 160 + a * 700); c.closePath(); c.fill(); c.restore(); };
+// frosted glass pane in front of the corridor: blurred, milky, with a door frame and an etched label
+const frost = (c, lt, flash) => { c.save(); c.fillStyle = `rgba(220,235,240,${.42 - .1 * flash})`; c.fillRect(0, 0, 2560, 1440); c.fillStyle = 'rgba(255,255,255,.08)'; for (let k = 0; k < 60; k++) c.fillRect((k * 211) % 2560, (k * 137) % 1440, 120, 3);
+  c.fillStyle = '#2a2e34'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(0, 0, 2560, 70); c.fillRect(0, 0, 70, 1440); c.fillRect(2490, 0, 70, 1440); c.fillRect(1250, 0, 60, 1440); c.fillRect(0, 1370, 2560, 70);
+  txt(c, 'AUTHORISED PERSONNEL ONLY', 640, 200, 44, 'rgba(60,70,80,.55)', 'center', 'Oswald'); c.restore(); };
+const mug = (c, x, y, look, name, lt, t0, tStamp) => { const a = pop(lt, t0, .4); if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.rotate(name === 'JASON' ? -.03 : .03);
+  c.fillStyle = 'rgba(0,0,0,.4)'; c.fillRect(-150, -200, 310, 420); c.fillStyle = '#d8dce0'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-160, -210, 310, 410); c.strokeRect(-160, -210, 310, 410);
+  c.strokeStyle = 'rgba(40,40,50,.5)'; c.lineWidth = 2; for (let k = 0; k < 7; k++) { c.beginPath(); c.moveTo(-160, -170 + k * 50); c.lineTo(150, -170 + k * 50); c.stroke(); }
+  c.save(); c.beginPath(); c.rect(-160, -210, 310, 410); c.clip(); A.figure(c, Object.assign({ x: -5, y: 160, s: .95, facing: 1, mood: 'worried' }, look), lt, 0, null); c.restore();
+  c.fillStyle = '#1a1a20'; c.fillRect(-120, 150, 230, 44); txt(c, name, -5, 172, 30, '#f6efdc', 'center', 'Anton'); c.restore(); if (lt > tStamp) TW.stamp(c, 'BLAMED', x, y + 90, lt, tStamp, { px: 70 }); };
+const trustOv = (xs) => (c, lt) => G6.trust(c, 1790, 175, .42, ['MATTIA', 'CAT', 'VALENTINA', 'ABE', 'GALLO'], typeof xs === 'function' ? xs(lt) : xs, lt);
+
+window.SHOTS = [
+  // 3.00 the drive home: front view of the car on the night causeway; Lucia talks with her hands, a yacht thought bubble, Jason grips the wheel
+  { plate: 'keys_road_night', cam: { z: [1.38, 1.5], x: [1460, 1480], y: [1010, 1040] }, bed: [['night_loop', .2], ['wind_loop', .12]], light: { dir: 1, key: 'rgba(200,210,255,.18)' },
+    init: S => { const tA = A.at(S, 'argument', 1.4), tC = A.at(S, 'Cat', 4.2), tY = A.at(S, 'yacht', 7.3), tW = A.at(S, 'want', 9.6), tJ = A.at(S, 'Jason', 10.8), tR = A.at(S, 'rich', 12.4), tB = A.at(S, 'being', 15.4); const CX = 1470, GY = 1420;
+      S.D.figs = [F('LUCIA', CX - 140, GY - 110, 1.2, { pose: 'sit', facing: 1, talk: [tC - .5, tJ - .2], anim: (o, lt) => { o.arms = () => talkArms(lt, 0, lt > tW - .3 && lt < tJ ? 1.6 : 1); o.mood = lt > tW - .2 ? 'happy' : lt > tJ + 1 ? 'worried' : 'neutral'; } }),
+        F('JASON', CX + 140, GY - 110, 1.2, { pose: 'sit', facing: -1, talk: [tJ, tB + 2], anim: (o, lt) => { o.arms = () => ({ shR: 70, elR: -40, shL: 60, elL: -50, handR: 'fist', handL: 'fist' }); o.mood = lt > tJ ? 'worried' : 'neutral'; o.lean = lt > tJ ? 3 : 0; } })];
+      S.D.live = [(c, lt) => { sea(c, lt, 150, 1100, 860, 1000); for (let k = 0; k < 7; k++) { const p = ((lt * .45 + k / 7) % 1), q = p * p, x = 1520 + (1960 - 1520) * q, y = 800 + 640 * q; c.fillStyle = `rgba(255,220,120,${.9 * p})`; c.fillRect(x - 4 - 10 * q, y, 8 + 20 * q, 10 + 40 * q); } }, (c, lt) => carBack(c, CX, GY, lt)];
+      S.D.front = [(c, lt) => carFront(c, CX, GY, lt)];
+      S.D.over = [vign, (c, lt) => K.card(c, 'THE ARGUMENT THE GAME IS BUILT ON', lt, { at: tA, x: 960, y: 90, px: 40, rot: -1, until: tY }),
+        (c, lt) => { const a = pop(lt, tC, .45) * (1 - K.seg(lt, tJ - .2, tJ + .15)); if (a <= .02) return; c.save(); c.translate(430, 300); c.scale(a, a); c.fillStyle = '#fffdf6'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.ellipse(0, 0, 300, 175, 0, 0, 7); c.fill(); c.stroke();
+          for (const [bx, by, r] of [[240, 190, 26], [300, 240, 16]]) { c.beginPath(); c.arc(bx, by, r, 0, 7); c.fill(); c.stroke(); }
+          c.save(); c.beginPath(); c.ellipse(0, 0, 290, 165, 0, 0, 7); c.clip(); c.fillStyle = '#7ac8e8'; c.fillRect(-300, -180, 600, 360); c.fillStyle = '#2a7ab0'; c.fillRect(-300, 50, 600, 140); G6.boat(c, -20, 70, .9, lt, { col: '#f4f4f6', water: false });
+          if (lt > tY) { for (let k = 0; k < 14; k++) { const p = ((lt - tY) * .8 + k / 14) % 1; c.fillStyle = ['#ffd84a', '#fff', '#ff8ab0'][k % 3]; c.fillRect(140 + Math.sin(k * 2.3) * 70 * p, -40 - p * 120, 7, 7); } TW.sparkle(c, 150, -60, lt, .8); }
+          txt(c, "CAT, MINUTES AFTER PRISON", 0, -120, 30, INK, 'center', 'Anton'); c.restore(); c.restore(); },
+        (c, lt) => { const a = pop(lt, tW - .1, .35) * (1 - K.seg(lt, tJ - .3, tJ)); if (a > 0) PR.bubble(c, 520, 700, a, 'I WANT THAT.', { px: 50, tail: [180, -10] }); },
+        (c, lt) => K.card(c, 'RICH ≠ WORKING FOR RICH', lt, { at: tR - .2, x: 1460, y: 160, px: 56, rot: 2, bg: GOLD })];
+      S.D.sfx = [[.2, 'whoosh_soft', .3], [tC, 'pop', .25], [tY, 'pop', .35], [tY + .3, 'chime', .25], [tW, 'pop', .3], [tJ - .1, 'pop', .2], [tR, 'thud', .3]]; } },
+  // 3.01 the bank says no; a family savings app (money in, never out); the TOMMY jar gets its first coins
+  { plate: 'office', cam: { z: [1.5, 1.6], x: [1360, 1300], y: [1000, 1010] }, bed: [['office_loop', .15]], light: { dir: -1, key: 'rgba(220,235,255,.2)' },
+    init: S => { const tB = A.at(S, 'bank', .5), tC = A.at(S, 'credit', 3.2), tApp = A.at(S, 'app', 5.3), tIn = A.at(S, 'in', 8.0), tOut = A.at(S, 'out', 9.4), tP = A.at(S, 'putting', 11.0), tT = A.at(S, 'Tommy', 12.6), tR = A.at(S, 'Remember', 13.6);
+      const clerk = F('DEALER', 1400, 1170, 1.55, { mood: 'neutral', anim: (o, lt) => { o.lean = lt > tB && lt < tApp ? Math.sin(lt * 7) * 4 : 0; o.mood = lt > tB + .3 && lt < tApp ? 'sad' : 'neutral'; o.talk = lt > tB && lt < tC + 1.5; if (lt > tB + .4 && lt < tApp) o.arms = () => ({ shR: 30, elR: -110, shL: 35, elL: -110 }); } });
+      S.D.figs = [F('JASON', 880, 1330, 1.7, { anim: (o, lt) => { o.mood = lt > tB && lt < tApp ? 'worried' : lt > tP ? 'happy' : 'neutral'; if (lt > tP - .3 && lt < tP + 2) o.arms = () => ({ shR: 75, elR: -10, handR: 'open' }); else if (lt > tB && lt < tApp) o.pose = 'shrug'; else o.pose = 'stand'; } }),
+        F('LUCIA', 1980, 1330, 1.7, { facing: -1, anim: (o, lt) => { o.mood = lt > tB && lt < tApp ? 'angry' : lt > tT ? 'happy' : 'neutral'; o.hold = lt > tApp - .4 ? { near: cc => G6.phone(cc, 0, 20, 1.25, 0) } : null; if (lt > tApp - .4) o.arms = () => ({ shR: 70, elR: -95, handR: 'open' }); } })];
+      S.D.live = [(c, lt) => { TW.glow(c, 1300, 500, 900, '200,220,255', .12); A.figure(c, clerk, lt, 0, S); desk(c, 1080, 1720, 1090, 1300); c.fillStyle = '#f6efdc'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(1500, 1050, 110, 22); c.strokeRect(1500, 1050, 110, 22);
+        txt(c, 'NEW ACCOUNTS', 1400, 1180, 34, '#f6efdc', 'center', 'Anton');
+        const f = lt < tP ? 0 : .08 * K.seg(lt, tP, tP + 2); G6.jar(c, 1170, 1072, 2.4, f); coinDrop(c, 1170, 1000, lt, tP, 5, 2); }];
+      S.D.over = [(c, lt) => TW.stamp(c, 'ACCOUNT DENIED', 1300, 100, lt, tC, { px: 60 }),
+        (c, lt) => { const a = pop(lt, tApp, .4); if (a <= 0) return; TW.phone(c, 170, 330, 1.3 * a, (p, pw, ph) => { p.fillStyle = '#eaf4ee'; p.fillRect(0, 0, pw, ph); p.fillStyle = '#2e9a4a'; p.fillRect(0, 0, pw, 40); txt(p, 'FAMILY SAVINGS', pw / 2, 20, 15, '#fff', 'center', 'Anton');
+          txt(p, 'IN', pw / 2 - 25, 85, 22, INK, 'center', 'Anton'); txt(p, '✓', pw / 2 + 25, 85, 28, '#2e9a4a', 'center', 'Anton'); if (lt > tOut - .2) { txt(p, 'OUT', pw / 2 - 25, 135, 22, INK, 'center', 'Anton'); txt(p, '✗', pw / 2 + 25, 135, 28, '#d8282e', 'center', 'Anton'); }
+          if (lt > tIn) { const n = Math.floor(K.clamp((lt - tIn) / 4) * 40); txt(p, '$' + n, pw / 2, 185, 26, '#2e9a4a', 'center', 'Anton'); } }); },
+        (c, lt) => K.card(c, "TOMMY'S SAVINGS", lt, { at: tT - .2, x: 1350, y: 140, px: 52, rot: 2, bg: GOLD }), (c, lt) => K.card(c, 'REMEMBER THIS ACCOUNT', lt, { at: tR, x: 1420, y: 250, px: 34, rot: -2 })];
+      S.D.sfx = [[tB, 'creak', .2], [tC, 'stamp', .4], [tApp, 'pop', .3], [tIn, 'chime', .2], [tOut, 'tick', .3], [tP, 'coins', .35], [tP + .7, 'coins', .3], [tT, 'chime', .25], [tR, 'pop', .2]]; } },
+  // 3.02 welcome party: Cat (pregnant) and Mattia arrive; Mattia talks up his private boss and what they carried
+  { plate: 'party_lawn', cam: { z: [1.35, 1.45], x: [1240, 1340], y: [940, 960] }, bed: [['crowd_loop', .12], ['night_loop', .1]], light: { dir: 1, key: 'rgba(255,220,160,.22)' },
+    init: S => { const tW = A.at(S, 'welcome', .8), tC = A.at(S, 'Cat', 2.0), tM = A.at(S, 'Mattia', 5.0), tV = A.at(S, 'Vice', 6.5), tBo = A.at(S, 'boss', 8.6), tPr = A.at(S, 'private', 10.0), tBr = A.at(S, 'brags', 11.0), tCa = A.at(S, 'carrying', 13.6);
+      S.D.figs = [F('JASON', 620, 1260, 1.7, { mood: 'happy', hold: { near: glassProp }, anim: (o, lt) => { o.mood = lt > tBr ? 'worried' : 'happy'; } }),
+        F('LUCIA', 900, 1270, 1.7, { mood: 'happy', anim: (o, lt) => { if (lt > tC && lt < tC + 2) o.pose = 'wave'; else o.pose = 'stand'; if (lt > tBr) o.mood = 'neutral'; } }),
+        F('CAT', 1450, 1270, 1.7, { facing: -1, mood: 'happy', walk: { x0: 2750, x1: 1450, t0: tC - 2.2, dur: 2.6 }, anim: (o, lt) => { if (lt > tC + .6 && lt < tC + 2.4) o.pose = 'wave'; } }),
+        F('MATTIA', 1760, 1260, 1.75, { facing: -1, mood: 'smug', walk: { x0: 3050, x1: 1760, t0: tC - 1.8, dur: 2.8 }, hold: { near: glassProp }, talk: [tBo - .4, tCa + 1.5], anim: (o, lt) => { if (lt > tBr) o.lean = -4; if (lt > tPr && lt < tBr) o.arms = () => ({ shL: 120, elL: -150, handL: 'open', shR: 40, elR: -80 }); } })];
+      const lights = []; for (let k = 0; k < 26; k++) { const u = k / 25; lights.push([430 + u * 1700, 420 + Math.sin(u * Math.PI * 3) * -40 + 60]); }
+      S.D.live = [(c, lt) => { fairy(c, lt, lights); TW.glow(c, 1280, 900, 1000, '255,200,130', .12); for (const x of [380, 2200]) TW.glow(c, x, 1000, 160, '255,170,90', .3 + .1 * Math.sin(lt * 5 + x)); }];
+      S.D.front = [(c, lt) => ntag(c, 'CAT', 1450, 690, lt, tC + .5, { px: 36, until: tBo }), (c, lt) => ntag(c, 'MATTIA', 1760, 680, lt, tM, { px: 36, until: tBr })];
+      S.D.over = [(c, lt) => K.card(c, "LUCIA'S WELCOME PARTY", lt, { at: tW, x: 560, y: 110, px: 44, rot: -2 }), (c, lt) => K.card(c, 'CAT · MATTIA', lt, { at: tM, x: 1000, y: 110, px: 50, rot: 2, bg: GOLD, until: tBr }),
+        (c, lt) => K.card(c, 'FROM VICE CITY', lt, { at: tV, x: 1000, y: 215, px: 34, rot: -2, until: tBr }),
+        (c, lt) => { const a = pop(lt, tPr - .2, .35) * (1 - K.seg(lt, tBr - .2, tBr)); if (a > 0) PR.bubble(c, 1450, 180, a, 'MY BOSS? VERY|PRIVATE PERSON.', { px: 40, tail: [60, 90] }); },
+        (c, lt) => { const a = pop(lt, tBr, .35); if (a > 0) PR.bubble(c, 1420, 190, a, "YOU SHOULD'VE SEEN WHAT|WE WERE CARRYING...", { px: 38, tail: [100, 90] }); }];
+      S.D.sfx = [[.3, 'crowd_cheer', .1], [tC - 1.6, 'footsteps', .25], [tC + .5, 'pop', .25], [tM, 'pop', .25], [tPr, 'pop', .2], [tBr, 'pop', .25], [tCa, 'tension', .2]]; } },
+  // 3.03 night porch: thirty missed calls; the parole officer and the ankle tag (a mile out at sea); custody threat
+  { plate: 'stilt_porch', cam: { z: [1.5, 1.62], x: [1360, 1420], y: [990, 1010] }, bed: [['night_loop', .2], ['ocean_loop', .12]], light: { dir: 1, key: 'rgba(255,200,140,.22)' },
+    init: S => { const tR = A.at(S, 'run', 1.2), tN = A.at(S, 'die', 2.6), tP = A.at(S, 'parole', 3.6), tTh = A.at(S, 'thirty', 5.0), tT = A.at(S, 'tag', 7.0), tSea = A.at(S, 'sea', 8.6), tG = A.at(S, 'good', 11.0), tCu = A.at(S, 'custody', 12.4), tBad = A.at(S, 'bad', 14.2);
+      S.D.figs = [F('LUCIA', 1050, 1330, 1.75, { mood: 'worried', anim: (o, lt) => { o.hold = { near: cc => G6.phone(cc, 0, 20, 1.25, lt > tTh - .5 ? 30 : 0, { buzz: lt > tTh - .5 && lt < tT ? lt : null }) }; o.arms = () => ({ shR: 75, elR: -100, handR: 'open' }); if (lt > tT) { o.lean = -5; o.mood = 'shocked'; } if (lt > tBad) o.mood = 'sad'; } }),
+        F('PAROLE', 1720, 1335, 1.75, { facing: -1, mood: 'angry', walk: { x0: 2800, x1: 1720, t0: tP - 2.2, dur: 2.6 }, talk: [tT - .3, tBad + 1], anim: (o, lt) => { if (lt > tT && lt < tG) o.pose = 'point'; else if (lt > tG) { o.arms = () => ({ shR: 60 + 30 * K.seg(lt, tG, tG + .4) - 60 * K.seg(lt, tBad, tBad + .3), elR: -40, handR: 'open' }); o.mood = lt > tBad ? 'angry' : 'smug'; } } })];
+      S.D.live = [(c, lt) => { sea(c, lt, 120, 1700, 840, 980, '255,200,150'); TW.glow(c, 2020, 560, 220, '255,230,170', .35 + .25 * (Math.sin(lt * 31) > .6 ? 0 : 1)); const d = K.seg(lt, tSea - .6, tSea); if (d > 0) { const pr = .5 + .5 * Math.sin(lt * 8); TW.glow(c, 640, 900, 90, '255,60,60', .8 * d * pr); c.fillStyle = `rgba(255,60,60,${d})`; c.beginPath(); c.arc(640, 900, 12, 0, 7); c.fill(); } }];
+      S.D.front = [(c, lt) => G6.ankleTag(c, 1068, 1300, 1.6, lt), (c, lt) => ntag(c, 'PAROLE OFFICER', 1720, 770, lt, tP + .3, { px: 34, until: tSea + 1 })];
+      S.D.over = [tint('20,30,70', .3), (c, lt) => K.card(c, 'A RUN WITH JASON · NEARLY DIED', lt, { at: tR, x: 600, y: 110, px: 38, rot: -2, until: tTh }),
+        (c, lt) => K.card(c, '30 MISSED CALLS', lt, { at: tTh, x: 560, y: 110, px: 54, rot: -3, bg: G6.RED, color: '#fff' }),
+        (c, lt) => K.card(c, 'TAG: 1 MILE OUT AT SEA', lt, { at: tSea - .4, x: 640, y: 230, px: 36, rot: 2, until: tG }),
+        (c, lt) => K.card(c, 'CUSTODY: A GOOD WORD...', lt, { at: tG, x: 1440, y: 110, px: 40, rot: 2, bg: '#2e9a4a', color: '#fff' }), (c, lt) => K.card(c, '...OR A BAD ONE', lt, { at: tBad, x: 1460, y: 220, px: 44, rot: -2, bg: G6.RED, color: '#fff' })];
+      S.D.sfx = [[tR, 'run_steps', .25], [tN, 'hit', .2], [tP - 2, 'footsteps', .3], [tTh, 'phone_ring', .35], [tTh + .8, 'phone_ring', .25], [tT, 'tick', .3], [tSea, 'alarm', .15], [tG, 'chime', .2], [tBad, 'thud', .35]]; } },
+  // 3.04 the slaughterhouse at dusk: Brian and Jason walk to a peace meeting; Brian looks at the pig pen; silence
+  { plate: 'slaughterhouse_dusk', cam: { z: [1.3, 1.75], x: [1280, 900], y: [900, 900] }, bed: [['wind_loop', .2], ['night_loop', .08]], light: { dir: 1, key: 'rgba(255,170,120,.22)' },
+    init: S => { const tB = A.at(S, 'Brian', .4), tK = A.at(S, 'King', 3.0), tW = A.at(S, 'where', 5.6), tL = A.at(S, 'looks', 7.6), tP = A.at(S, 'pen', 9.0), tCo = A.at(S, 'coming', 10.6);
+      S.D.figs = [F('BRIAN', 1100, 1250, 1.65, { walk: { x0: 2100, x1: 1100, t0: 0, dur: 3.6 }, facing: -1, talk: [tW - .2, tW + 1.4], anim: (o, lt) => { if (lt > tW - .2 && lt < tL) o.arms = () => ({ shR: 40, elR: -60, shL: 20, elL: -70, handR: 'open' }); if (lt > tL) { o.facing = -1; o.mood = 'shocked'; o.lean = -3; } if (lt > tCo) o.mood = 'sad'; } }),
+        F('JASON', 1450, 1260, 1.7, { walk: { x0: 2500, x1: 1450, t0: .3, dur: 3.6 }, facing: -1, anim: (o, lt) => { o.mood = lt > tP ? 'shocked' : 'neutral'; } })];
+      S.D.live = [(c, lt) => { for (let k = 0; k < 5; k++) swingLamp(c, 640 + k * 330, 640 + (k % 2) * 30, lt, k); TW.glow(c, 1280, 820, 300, '220,60,40', .15); const d = K.seg(lt, tP - .5, tP + .5); TW.glow(c, 300, 960, 300, '255,120,80', .3 * d); }];
+      S.D.over = [(c, lt) => K.card(c, 'PEACE MEETING · KING FISHERS', lt, { at: tK, x: 1300, y: 110, px: 40, rot: 2, until: tL }), (c, lt) => K.card(c, '"WHERE\'S DONNY?"', lt, { at: tW, x: 560, y: 120, px: 44, rot: -2, until: tCo }),
+        (c, lt) => { const d = K.seg(lt, tCo, tCo + .8); if (d > 0) { c.fillStyle = `rgba(0,0,0,${.35 * d})`; c.fillRect(0, 0, SW, SH); } }, vign];
+      S.D.sfx = [[.2, 'footsteps', .3], [tK, 'tension', .2], [tW, 'pop', .2], [tL, 'creak', .3], [tP, 'heartbeat', .35], [tCo, 'drone', .25]]; } },
+  // 3.05 Brian drops his keys on the table and walks out; Jason sits alone with a jar that has only a few coins
+  { plate: 'cafe_int', cam: { z: [1.55, 1.45], x: [1180, 1260], y: [960, 960] }, bed: [['office_loop', .08], ['city_loop', .08]], light: { dir: -1, key: 'rgba(255,240,210,.22)' },
+    init: S => { const tA = A.at(S, 'shoot-out', 1.2), tO = A.at(S, 'out', 2.4), tRe = A.at(S, 'retiring', 3.3), tH = A.at(S, 'hour', 5.0), tAs = A.at(S, 'asked', 6.0), tD = A.at(S, 'disappears', 8.6), tL = A.at(S, 'lawyer', 11.4);
+      S.D.figs = [F('JASON', 870, 1390, 1.6, { pose: 'sit', mood: 'neutral', talk: [tAs - .2, tAs + 1.2], anim: (o, lt) => { o.mood = lt > tRe ? (lt > tD ? 'sad' : 'shocked') : 'neutral'; if (lt > tAs - .2 && lt < tD) o.arms = () => ({ shR: 60, elR: -50, handR: 'open' }); } }),
+        F('BRIAN', 1560, 1400, 1.65, { facing: -1, talk: [tO - .3, tRe + .8], walk: { x0: 1560, x1: 2900, t0: tH - .2, dur: 4.2 }, anim: (o, lt) => { o.mood = lt < tH ? 'neutral' : 'happy'; if (lt > tRe - .5 && lt < tRe + .2) o.arms = () => ({ shR: 70, elR: -10, handR: 'open' }); } })];
+      S.D.live = [(c, lt) => { TW.chair(c, 860, 1390, 1390 - 63 * 1.6, 1, '#2e5a3e'); table(c, 1230, 1220, 1400, 260); steam(1300, 1190)(c, lt); c.fillStyle = '#f4f4f0'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(1280, 1188, 40, 30); c.strokeRect(1280, 1188, 40, 30);
+        const jitter = K.seg(lt, tRe, tRe + .6) < 1 && lt > tRe ? Math.sin(lt * 60) * 3 : 0; G6.jar(c, 1170 + jitter, 1214, 2.2, .1);
+        if (lt > tRe) { const u = E.out(K.seg(lt, tRe, tRe + .3)); c.save(); c.translate(1240, 1150 + 60 * u); c.fillStyle = '#c8ccd4'; c.strokeStyle = INK; c.lineWidth = 2; c.beginPath(); c.arc(0, 0, 12, 0, 7); c.fill(); c.stroke(); c.fillRect(10, -4, 34, 8); c.strokeRect(10, -4, 34, 8); c.restore(); } }];
+      S.D.over = [(c, lt) => K.card(c, "\"I'M OUT. I'M RETIRING.\"", lt, { at: tO - .2, x: 1380, y: 110, px: 44, rot: 2 }), (c, lt) => K.card(c, 'BRIAN RETIRES', lt, { at: tRe + .3, x: 1420, y: 220, px: 50, rot: -2, bg: GOLD }),
+        (c, lt) => K.card(c, 'ONLY INCOME: GONE', lt, { at: tD - .2, x: 560, y: 110, px: 44, rot: -2, bg: G6.RED, color: '#fff' }), (c, lt) => K.card(c, 'STILL NEEDED: CUSTODY LAWYER', lt, { at: tL - .5, x: 600, y: 220, px: 34, rot: 2 })];
+      S.D.sfx = [[tA, 'tension', .15], [tO, 'pop', .2], [tRe + .25, 'coins', .35], [tRe + .3, 'thud', .2], [tH, 'footsteps', .3], [tH + 3.2, 'door_slam', .3], [tD, 'whoosh', .25], [tL, 'paper', .25]]; } },
+  // 3.06 strip-mall car park: Mattia's sports car; he holds up a locker key; Jason asks why he isn't doing it himself; '?'
+  { plate: 'payday_shop', cam: { z: [1.38, 1.5], x: [1300, 1380], y: [960, 980] }, bed: [['city_loop', .15], ['birds_loop', .06]], light: { dir: 1, key: 'rgba(255,240,200,.22)' },
+    init: S => { const tJ = A.at(S, 'job', 2.0), tB = A.at(S, 'bag', 3.6), tLo = A.at(S, 'locker', 5.6), tV = A.at(S, 'visitor', 6.4), tR = A.at(S, 'right', 9.4), tWh = A.at(S, 'why', 10.8), tN = A.at(S, 'answer', 14.6);
+      S.D.figs = [F('MATTIA', 1300, 1360, 1.75, { mood: 'smug', talk: [tJ - .5, tV + 1.5], anim: (o, lt) => { if (lt > tLo - .3 && lt < tWh) { o.arms = () => ({ shR: 120, elR: -20, handR: 'open' }); o.hold = { near: keyProp(lt) }; } else o.hold = null; if (lt > tWh + .6) { o.mood = 'worried'; o.pose = 'shrug'; } } }),
+        F('JASON', 1760, 1360, 1.7, { facing: -1, talk: [tWh - .2, tWh + 1.6], anim: (o, lt) => { o.mood = lt > tR ? 'angry' : 'neutral'; if (lt > tWh && lt < tN) o.pose = 'point'; } }),
+        F('LUCIA', 2040, 1370, 1.7, { facing: -1, anim: (o, lt) => { o.mood = lt > tWh ? 'worried' : 'happy'; } })];
+      S.D.live = [(c, lt) => { G6.car(c, 760, 1210, 2.25, '#e8b43a', lt, {}); TW.glow(c, 1700, 600, 900, '255,250,220', .1); }];
+      S.D.over = [(c, lt) => K.card(c, "MATTIA'S JOB", lt, { at: tJ - .3, x: 520, y: 110, px: 50, rot: -2 }), (c, lt) => K.card(c, 'MOVE A BAG FROM A VISITOR-CENTRE LOCKER', lt, { at: tV - .2, x: 760, y: 220, px: 32, rot: 2, until: tWh }),
+        (c, lt) => K.card(c, 'WHY NOT YOU?', lt, { at: tWh, x: 1460, y: 130, px: 60, rot: 3, bg: GOLD }),
+        (c, lt) => { const a = pop(lt, tN - .4, .4); if (a <= 0) return; c.save(); c.translate(840, 290); c.rotate(Math.sin(lt * 4) * .12); c.scale(a, a); PR.bubble(c, 0, 0, 1, '?', { px: 110, tail: [40, 110] }); c.restore(); }];
+      S.D.sfx = [[tJ, 'pop', .2], [tLo, 'chime', .3], [tV, 'paper', .2], [tWh, 'pop', .3], [tN, 'tension', .3], [tN + .3, 'pop', .25]]; } },
+  // 3.07 the visitor-centre lockers: the door opens, officers swarm, torches on; Mendez strolls in and asks for the bag; the sergeant refuses
+  { plate: 'office', cam: { z: [1.45, 1.5], x: [1420, 1540], y: [940, 950] }, bed: [['hum_loop', .12], ['tension', .1]], light: { dir: -1, key: 'rgba(230,240,255,.2)' },
+    init: S => { const tO = A.at(S, 'opens', .9), tTr = A.at(S, 'trap', 2.2), tAr = A.at(S, 'arrest', 3.6), tM = A.at(S, 'Mendez', 6.2), tH = A.at(S, 'hand', 8.4), tS = A.at(S, 'sergeant', 7.8), tRf = A.at(S, 'refuses', 11.4);
+      const bagLt = (lt) => lt < tAr;
+      S.D.figs = [F('JASON', 1120, 1340, 1.7, { anim: (o, lt) => { o.hold = bagLt(lt) && lt > tO + .4 ? { far: cc => G6.duffel(cc, 0, 92, 1) } : null; if (lt > tAr) { o.pose = 'cheer'; o.mood = 'shocked'; } } }),
+        F('LUCIA', 1460, 1345, 1.7, { anim: (o, lt) => { if (lt > tTr) o.facing = -1; if (lt > tAr) { o.pose = 'cheer'; o.mood = 'angry'; } } }),
+        F(() => G6.COP(0), 260, 1350, 1.7, { walk: { x0: -200, x1: 800, t0: tTr - .3, dur: 2 }, anim: (o, lt) => { if (lt > tTr + 1.7) { o.facing = 1; o.pose = 'point'; } } }),
+        F('SERGEANT', 1750, 1350, 1.75, { facing: -1, walk: { x0: 2900, x1: 1750, t0: tTr - .4, dur: 2.4 }, talk: [tAr - .3, tAr + 1], anim: (o, lt) => { if (lt > tAr - .3 && lt < tM) o.pose = 'point'; if (lt > tH) { o.facing = 1; o.mood = 'angry'; } if (lt > tRf) o.arms = () => ({ shR: 70, elR: -5, handR: 'open' }); } }),
+        F('MENDEZ', 2250, 1345, 1.72, { facing: -1, mood: 'happy', walk: { x0: 3050, x1: 2250, t0: tM - 1.6, dur: 2.2 }, talk: [tH - .3, tH + 1.5], anim: (o, lt) => { if (lt > tH && lt < tRf) o.arms = () => ({ shR: 85, elR: -10, handR: 'open' }); if (lt > tRf + .2) o.mood = 'smug'; } })];
+      S.D.live = [(c, lt) => { lockers(c, 900, 760, 1720, 1210, E.out(K.seg(lt, tO - .3, tO + .3)), lt); gator(c, 620, 640); c.save(); c.fillStyle = '#2e6a4a'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(960, 600, 700, 110); c.strokeRect(960, 600, 700, 110); txt(c, 'WETLANDS VISITOR CENTRE', 1310, 655, 50, '#f6efdc', 'center', 'Anton'); c.restore();
+        if (lt > tAr) G6.duffel(c, 940, 1350, 1.2); }];
+      S.D.front = [(c, lt) => { const on = K.seg(lt, tTr + 1, tTr + 1.2); torch(c, 760, 1050, 1, on, lt); torch(c, 1680, 1040, -1, on * (lt < tH ? 1 : 0), lt); },
+        (c, lt) => ntag(c, 'SERGEANT', 1750, 790, lt, tS, { px: 32, until: tRf + 2 }), (c, lt) => ntag(c, 'MENDEZ', 2250, 790, lt, tM, { px: 36 })];
+      S.D.over = [(c, lt) => TW.stamp(c, 'TRAP', 560, 150, lt, tTr, { px: 80 }), (c, lt) => { const a = pop(lt, tAr - .2, .35) * (1 - K.seg(lt, tM - .5, tM)); if (a > 0) PR.bubble(c, 1350, 150, a, "YOU'RE UNDER ARREST!", { px: 44, tail: [60, 90] }); },
+        (c, lt) => { const a = pop(lt, tH, .35) * (1 - K.seg(lt, tRf - .3, tRf)); if (a > 0) PR.bubble(c, 1530, 150, a, 'HAND ME THE BAG.', { px: 40, tail: [80, 90] }); },
+        (c, lt) => TW.stamp(c, 'REFUSED', 1350, 160, lt, tRf, { px: 72 })];
+      S.D.sfx = [[tO, 'creak', .35], [tTr, 'stamp', .35], [tTr - .2, 'run_steps', .3], [tTr + 1, 'tick', .3], [tAr, 'pop', .25], [tAr + .1, 'thud', .25], [tM - 1.4, 'footsteps', .25], [tH, 'pop', .2], [tRf, 'stamp', .4]]; } },
+  // 3.08 through frosted glass: Mendez's men turn on the sergeant's team (flashes only), radio call, two mugshots stamped BLAMED; trust board (0)
+  { plate: 'prison_corridor', cam: { z: [1.2, 1.3], x: [1280, 1280], y: [820, 800] }, bed: [['hum_loop', .15], ['tension', .1]], light: { dir: 1, key: 'rgba(220,240,255,.18)' },
+    init: S => { const tL = A.at(S, 'leaves', .7), tSt = A.at(S, 'stay', 1.9), tSh = A.at(S, 'shoot', 3.0), tRa = A.at(S, 'radio', 4.8), tOD = A.at(S, 'officer', 5.6), tW = A.at(S, 'weapon', 7.4), tPo = A.at(S, 'Police', 8.4), tPi = A.at(S, 'pinned', 10.8), tJ = A.at(S, 'Jason', 12.0);
+      const fl = (lt) => lt > tSh && lt < tSh + 1.6 ? Math.max(0, Math.sin((lt - tSh) * 26)) : 0;
+      S.D.figs = [F('MENDEZ', 1650, 1300, 1.5, { facing: 1, walk: { x0: 1650, x1: 2900, t0: tL - .2, dur: 3 } }),
+        F(() => G6.COP(2), 1000, 1310, 1.55, { facing: 1, anim: (o, lt) => { if (lt > tSh - .4) o.pose = 'point'; } }),
+        F(() => G6.COP(3), 1500, 1250, 1.45, { facing: -1, anim: (o, lt) => { if (lt > tSh - .4) o.pose = 'point'; if (lt > tRa) o.arms = () => ({ shR: 110, elR: -150, handR: 'fist' }); } })];
+      S.D.live = [(c, lt) => { const f = fl(lt); TW.glow(c, 1280, 900, 900, '255,220,170', .7 * f); }];
+      S.D.front = [(c, lt) => frost(c, lt, fl(lt))];
+      S.D.over = [(c, lt) => { const f = fl(lt); if (f > 0) { c.fillStyle = `rgba(255,240,220,${.25 * f})`; c.fillRect(0, 0, SW, SH); } },
+        (c, lt) => { const a = pop(lt, tRa, .35) * (1 - K.seg(lt, tPo - .3, tPo)); if (a <= 0) return; c.save(); c.translate(330, 600); c.scale(a, a); c.fillStyle = '#2a2a30'; c.strokeStyle = INK; c.lineWidth = 5; rr(c, -45, -90, 90, 170, 12); c.fill(); c.stroke(); c.fillRect(20, -150, 12, 60); c.fillStyle = '#5a5e68'; for (let k = 0; k < 5; k++) c.fillRect(-30, -60 + k * 14, 60, 6);
+          c.fillStyle = (Math.sin(lt * 20) > 0) ? '#ff4040' : '#5a1a1a'; c.beginPath(); c.arc(-20, -76, 7, 0, 7); c.fill(); c.restore(); PR.bubble(c, 740, 330, a, 'OFFICER DOWN.|SUSPECT HAD A WEAPON.', { px: 42, tail: [-260, 140] }); },
+        (c, lt) => { if (lt < tPo - .3) return; const d = K.seg(lt, tPo - .3, tPo + .2); c.fillStyle = `rgba(20,16,14,${.6 * d})`; c.fillRect(0, 0, SW, SH); },
+        (c, lt) => K.card(c, 'COPS KILLED COPS', lt, { at: tPo, x: 960, y: 110, px: 60, rot: -2, bg: G6.RED, color: '#fff' }),
+        (c, lt) => mug(c, 720, 520, G6.JASON(), 'JASON', lt, tPi - .3, tJ), (c, lt) => mug(c, 1160, 520, G6.LUCIA(), 'LUCIA', lt, tPi, tJ + .5), trustOv(0)];
+      S.D.sfx = [[tL, 'footsteps', .3], [tSh, 'hit', .45], [tSh + .25, 'hit', .4], [tSh + .5, 'hit', .4], [tSh + .9, 'thud', .3], [tRa, 'tick', .3], [tOD, 'drone', .15], [tPo, 'drum', .3], [tPi, 'camera_shutter', .35], [tJ, 'stamp', .4], [tJ + .5, 'stamp', .4]]; } },
+];

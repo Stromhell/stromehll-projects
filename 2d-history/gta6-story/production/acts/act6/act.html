@@ -1,0 +1,211 @@
+<!doctype html><html><head><meta charset="utf-8"><title>G6 act 6 - Chapter 4: Vice City, Baby</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../../../prime/production/tw_kit.js"></script><script src="../../../../prime/production/pr_kit.js"></script><script src="../../g6_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+const SW = 1920, SH = 1080, INK = TW.INK, RED = TW.RED, pop = TW.pop, fade = TW.fade;
+const backdrop = (name, b = .5, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const CARRY = () => ({ shL: 30, elL: -75, shR: 35, elR: -75 });
+const endTitle = (secs) => { const T = window.TIMING; const last = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length, start: last.end, end: last.end + secs, vo_start: last.end, vo_end: last.end, text: '' }); T.dur = last.end + secs; };
+// G6 act 6 - Chapter 4: Vice City, Baby. Abe Gonzalez (WALK AWAY? #1), the kidnap job, Gallo traced, why the bag made them the fall guys,
+// KG's gym + Nate 'Juicy', the airport cash swap, the runway (Nate), the moving plane, Raul's boat: Valentina sold them (TRUST board X), SHOOT?, a trap.
+// Plates: boardroom, slaughterhouse_dusk, coastguard_base, chart, gym, airport_cargo, runway_dusk, keys_bay_day, boat_cabin.
+for (const n of ['boardroom', 'slaughterhouse_dusk', 'coastguard_base', 'chart', 'gym', 'airport_cargo', 'runway_dusk', 'keys_bay_day', 'boat_cabin']) K.load(n, PL + n + '.jpg');
+const rr = TW.rr, txt = TW.txt, GOLD = G6.GOLD;
+// ---------- act helpers ----------
+// word anchor with a proportional fallback (real timing replaces the estimate)
+const at = (S, w) => { const ws = S.text.split(/\s+/), n = s => s.toLowerCase().replace(/[^a-z0-9']/g, ''), k = Math.max(0, ws.findIndex(x => n(x) === n(w.split(' ')[0]))); return A.at(S, w, (S.vo_start - S.start) + (S.vo_end - S.vo_start) * k / ws.length); };
+// gold name tag (world space), pointer tip at x,y
+const ntag = (c, name, x, y, lt, t0, px = 40, until = 999) => { const a = pop(lt, t0, .4), o = 1 - K.seg(lt, until - .3, until); if (a <= 0 || o <= 0) return; c.save(); c.globalAlpha = o; c.translate(x, y); c.scale(a, a); c.font = `${px}px Anton`;
+  const w = c.measureText(name).width + px * .9, h = px * 1.45; c.fillStyle = 'rgba(0,0,0,.35)'; rr(c, -w / 2 + 6, -h - 12, w, h, 10); c.fill(); c.fillStyle = GOLD; c.strokeStyle = INK; c.lineWidth = 4; rr(c, -w / 2, -h - 18, w, h, 10); c.fill(); c.stroke();
+  c.beginPath(); c.moveTo(-14, -19); c.lineTo(0, 0); c.lineTo(14, -19); c.closePath(); c.fill(); c.stroke(); c.fillRect(-12, -24, 24, 7); txt(c, name, 0, -h / 2 - 16, px, INK, 'center', 'Anton'); c.restore(); };
+// speech bubble that pops in at t0 and out at t1 (centre x,y; tail [dx,dy] to the speaker's mouth)
+const say = (c, x, y, lt, t0, t1, text, o = {}) => { const a = pop(lt, t0, .35) * (1 - K.seg(lt, t1 - .3, t1)); if (a > 0.01) G6.bubble(c, x, y, a * (o.s || 1), text, o); };
+const card = (c, s, lt, t0, o = {}) => K.card(c, s, lt, Object.assign({ at: t0 }, o));
+// a cut inside a shot: from `t0` a second scene (own plate or bg fn, own camera, figures) wipes in over the shot (rect = inset panel)
+const cut = (t0, o) => (c, lt, u, S) => { if (lt < t0) return; const R2 = o.rect || [0, 0, SW, SH], d = (o.t1 ?? (S.end - S.start)) - t0, u2 = K.clamp((lt - t0) / d), w = E.io(K.clamp((lt - t0) / .4));
+  if (o.t1 != null && lt > o.t1) return; const S2 = o._S || (o._S = { D: { light: o.light || {} }, start: S.start, end: S.end });
+  c.save(); c.beginPath(); c.rect(R2[0], R2[1], R2[2] * w, R2[3]); c.clip(); c.translate(R2[0], R2[1]); c.scale(R2[2] / SW, R2[3] / SH);
+  const M = c.getTransform(); const m = K.camAt(o.cam || {}, u2); c.transform(m.sc, 0, 0, m.sc, m.tx, m.ty);
+  if (o.plate) c.drawImage(K.imgs[o.plate], 0, 0, 2560, 1440); if (o.bg) o.bg(c, lt);
+  for (const L of o.live || []) { c.save(); L(c, lt, u2, S2); c.restore(); }
+  for (const f of (o.figs || []).slice().sort((a, b) => a.y - b.y)) { c.save(); A.figure(c, f, lt, u2, S2); c.restore(); }
+  for (const L of o.front || []) { c.save(); L(c, lt, u2, S2); c.restore(); }
+  c.setTransform(M); c.restore();
+  c.save(); if (o.rect) { c.strokeStyle = '#f6efdc'; c.lineWidth = 10; c.strokeRect(R2[0], R2[1], R2[2] * w, R2[3]); c.strokeStyle = INK; c.lineWidth = 4; c.strokeRect(R2[0] - 5, R2[1] - 5, R2[2] * w + 10, R2[3] + 10); }
+  else if (w < 1) { c.fillStyle = '#fff'; c.fillRect(SW * w - 6, 0, 12, SH); } c.restore(); };
+const sweat = (c, x, y, lt, s = 1) => { for (let k = 0; k < 3; k++) { const p = (lt * .9 + k / 3) % 1; c.save(); c.globalAlpha = 1 - p; c.fillStyle = '#8ad0ff'; c.strokeStyle = INK; c.lineWidth = 2; c.beginPath(); const xx = x + (k - 1) * 26 * s, yy = y + p * 60 * s; c.moveTo(xx, yy - 12 * s); c.quadraticCurveTo(xx + 8 * s, yy, xx, yy + 6 * s); c.quadraticCurveTo(xx - 8 * s, yy, xx, yy - 12 * s); c.fill(); c.stroke(); c.restore(); } };
+const neon = (c, lt, x, y, r, col) => TW.glow(c, x, y, r, col, .25 + .12 * Math.sin(lt * 9) * (Math.sin(lt * 23) > .7 ? 0 : 1));
+const sparks = (c, x, y, lt, n = 14) => { for (let k = 0; k < n; k++) { const p = (lt * 2.2 + k * .37) % 1, a = k * 2.4; c.fillStyle = `rgba(255,${200 + (k % 3) * 20},120,${1 - p})`; c.fillRect(x + Math.cos(a) * p * 90, y + Math.sin(a) * p * 70 + p * p * 60, 6, 6); } TW.glow(c, x, y, 70, '255,220,150', .6 + .3 * Math.sin(lt * 30)); };
+const cafeChair = (c, x, fy, seatY, facing) => { c.save(); c.strokeStyle = INK; c.lineWidth = 4; c.fillStyle = '#2f5a44'; const bx = x - facing * 62; rr(c, bx - 10, seatY - 170, 20, 175, 6); c.fill(); c.stroke(); rr(c, x - 70, seatY, 140, 22, 6); c.fill(); c.stroke();
+  c.fillStyle = '#1e2a24'; for (const dx of [-60, 52]) { c.fillRect(x + dx, seatY + 20, 9, fy - seatY - 20); c.strokeRect(x + dx, seatY + 20, 9, fy - seatY - 20); } c.restore(); };
+const table = (c, x, fy, topY, w = 300, col = '#f4efe4') => { c.save(); c.fillStyle = 'rgba(0,0,0,.25)'; c.beginPath(); c.ellipse(x, fy, w * .45, 16, 0, 0, 7); c.fill(); c.fillStyle = '#3a3a40'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(x - 10, topY, 20, fy - topY); c.strokeRect(x - 10, topY, 20, fy - topY); c.fillRect(x - 70, fy - 10, 140, 10);
+  c.fillStyle = col; c.beginPath(); c.ellipse(x, topY, w / 2, 24, 0, 0, 7); c.fill(); c.stroke(); c.restore(); };
+const desk = (c, x, fy, topY, w) => { c.save(); c.fillStyle = '#6a4a32'; c.strokeStyle = INK; c.lineWidth = 4; rr(c, x - w / 2, topY, w, 26, 4); c.fill(); c.stroke(); c.fillStyle = '#4a3222'; for (const dx of [-w / 2 + 14, w / 2 - 34]) { c.fillRect(x + dx, topY + 26, 20, fy - topY - 26); c.strokeRect(x + dx, topY + 26, 20, fy - topY - 26); } c.restore(); };
+const MASK = (c, hx, hy) => G6.mask(c, hx + 12, hy + 4, 1.62);
+const trolley = (c, x, fy, n, lt) => { c.save(); c.strokeStyle = INK; c.lineWidth = 5; c.fillStyle = '#9aa0a8'; c.fillRect(x - 170, fy - 70, 340, 16); c.strokeRect(x - 170, fy - 70, 340, 16); c.beginPath(); c.moveTo(x + 170, fy - 62); c.lineTo(x + 200, fy - 180); c.stroke();
+  for (const dx of [-140, 140]) { c.fillStyle = '#1a1a1e'; c.beginPath(); c.arc(x + dx, fy - 18, 18, 0, 7); c.fill(); c.stroke(); } c.restore(); for (let k = 0; k < n; k++) G6.duffel(c, x - 90 + k * 100, fy - 70, .85, { cash: k % 2 === 0 }); };
+
+const police = (c, lt, x, y, r, a = 1) => { const ph = Math.floor(lt * 4) % 2; TW.glow(c, x, y, r, ph ? '255,40,40' : '40,90,255', .45 * a); TW.glow(c, x + 200, y, r * .8, ph ? '40,90,255' : '255,40,40', .35 * a); };
+const TRUST = ['VALENTINA', 'ABE', 'MATTIA', 'GALLO'];
+// trust board in betrayal order; the X slams onto VALENTINA (row 0) as xs animates 0 -> 1 from t0
+const trustVal = (c, x, y, s, lt, t0) => G6.trust(c, x, y, s, TRUST, K.clamp((lt - t0) / .6), lt);
+const curls = (lt, sp = 3) => ({ shR: 20, elR: -60 - 60 * (.5 + .5 * Math.sin(lt * sp)), handR: 'fist', shL: 10, elL: -20 });
+const bell = (c) => { c.fillStyle = '#3a3a44'; c.strokeStyle = INK; c.lineWidth = 2; c.fillRect(-4, 2, 8, 30); c.fillRect(-12, -2, 24, 10); c.strokeRect(-12, -2, 24, 10); c.fillRect(-12, 28, 24, 10); c.strokeRect(-12, 28, 24, 10); };
+
+window.SHOTS = [
+  // 6.0 Abe's glass office over the bay: ABE GONZALEZ; Jason sent out; 'give up your guy'; $500,000 for a TV story; WALK AWAY? #1 stamps.
+  { plate: 'boardroom', cam: { z: [1.28, 1.4], x: [1260, 1300], y: [880, 900] }, bed: [['office_loop', .1], ['hum_loop', .06]], light: { dir: 1, key: 'rgba(200,220,255,.2)' },
+    init: S => { const tA = at(S, 'Abe'), tN = at(S, 'Nothing'), tSe = at(S, 'sends'), tG = at(S, 'give'), tSc = at(S, 'scared'), tId = at(S, 'identity,'), tH = at(S, 'half'), tTV = at(S, 'TV.'), FY = 1390, CS = 1.8;
+      S.D.figs = [{ x: 760, y: FY, s: CS, ...G6.ABE(), pose: 'sit', facing: 1, mood: 'smug', talk: [tN, 99], anim: (o, lt) => { if (lt > tN && lt < tSe) o.arms = () => ({ shR: 110, elR: -30, handR: 'open', shL: 100, elL: -30, handL: 'open' }); if (lt > tSe && lt < tSe + 1.5) o.pose = 'sit', o.arms = () => ({ shR: 92, elR: -4, handR: 'point' }); if (lt > tG) o.lean = 8; if (lt > tH) o.arms = () => ({ shR: 70, elR: -20, handR: 'open' }); } },
+        { x: 1700, y: FY, s: CS, ...G6.LUCIA(), pose: 'sit', facing: -1, mood: 'neutral', anim: (o, lt) => { if (lt > tG) o.mood = 'shocked'; if (lt > tSc) o.mood = 'angry'; } },
+        { x: 2150, y: FY, s: CS, ...G6.JASON(), facing: -1, mood: 'neutral', walk: { x0: 2150, x1: 2950, t0: tSe + .5, dur: 2.6 }, anim: (o, lt) => { if (lt > tSe) o.mood = 'worried'; } }];
+      S.D.live = [(c, lt) => { for (let k = 0; k < 12; k++) TW.glow(c, 1500 + (k * 97) % 900, 300 + (k * 53) % 300, 40, '255,230,160', .15 + .15 * Math.sin(lt * 2 + k)); TW.chair(c, 760, FY, FY - 63 * CS, 1, '#e8dcc0'); TW.chair(c, 1700, FY, FY - 63 * CS, -1, '#2a2a34'); }];
+      S.D.front = [(c, lt) => ntag(c, 'ABE GONZALEZ', 790, FY - 520, lt, tA, 38), (c, lt) => say(c, 1200, 640, lt, tN + .2, tSe, 'NOTHING HAPPENS IN|VICE CITY WITHOUT ME.', { px: 32, tail: [-280, 140] }),
+        (c, lt) => say(c, 1220, 600, lt, tG, tH, 'GIVE UP YOUR GUY.|SAY HE SCARED YOU.', { px: 36, tail: [-300, 150] })];
+      S.D.over = [(c, lt) => card(c, 'CHAPTER 4: VICE CITY, BABY', lt, .2, { x: 520, y: 120, px: 50, rot: -2, until: tSe }), (c, lt) => card(c, 'NO NEW IDENTITY NEEDED', lt, tId - .5, { x: 1400, y: 120, px: 36, rot: 2, until: tTV + 3 }),
+        (c, lt) => { if (lt < tH) return; G6.counter(c, 1400, 250, .8, 0, 500000, tH, tH + 1.2, lt, { pre: '$' }); }, (c, lt) => card(c, 'FOR HER STORY ON TV', lt, tTV - .3, { x: 1400, y: 360, px: 34, rot: -2 }),
+        (c, lt) => { const a = pop(lt, tTV - .4, .4); if (a > 0) G6.walkAway(c, 470, 300, .6 * a, 1, tTV + .2, lt); }];
+      S.D.sfx = [[tA, 'pop', .25], [tN, 'swell', .15], [tSe + .5, 'footsteps', .25], [tSe + 2.6, 'door_slam', .3], [tG, 'tension', .25], [tH, 'coins', .3], [tTV - .4, 'whoosh', .25], [tTV + .2, 'stamp', .45]]; } },
+
+  // 6.1 close on Lucia: WHAT? NO. -> cut to the dusk-to-dawn barn: protecting a TV boss's family; a child's trainer in the dirt; Abe's voice on the phone; Jason + Lucia walk the child out as dawn rises.
+  { plate: 'slaughterhouse_dusk', cam: { z: [1.35, 1.45], x: [1500, 1620], y: [820, 840] }, bed: [['night_loop', .15], ['wind_loop', .08]], light: { dir: -1, key: 'rgba(255,190,140,.25)' },
+    init: S => { const tW = at(S, 'what?'), tNo = at(S, 'No.'), tSo = at(S, 'So'), tP = at(S, 'protecting'), tK = at(S, 'kidnapped'), tH = at(S, 'How'), tB = at(S, 'Bring'), tF = at(S, 'forget'), FY = 1020, FS = 1.05, dur = S.end - S.start;
+      const wk = { t0: tK + .4, dur: Math.max(5, dur - tK - 1) };
+      S.D.figs = [{ x: 0, y: FY, s: FS, ...G6.JASON(), mood: 'focus', walk: { x0: 1320, x1: 2150, ...wk } }, { x: 0, y: FY + 6, s: FS * .95, ...PR.KID(3), mood: 'sad', walk: { x0: 1220, x1: 2040, ...wk }, anim: (o, lt) => { if (lt > tB) o.mood = 'happy'; } },
+        { x: 0, y: FY + 10, s: FS, ...G6.LUCIA(), mood: 'focus', walk: { x0: 1080, x1: 1900, ...wk }, anim: (o, lt) => { if (lt > tF) o.mood = 'angry'; } }];
+      S.D.live = [(c, lt, u) => { TW.glow(c, 1370, 720, 260, '255,200,120', .35 + .05 * Math.sin(lt * 7)); const d = K.seg(lt, tK, S.end - S.start); TW.glow(c, 2200, 360, 900, '255,200,150', .35 * d); c.fillStyle = `rgba(255,190,140,${.12 * d})`; c.fillRect(0, 0, 2560, 1440);
+          // child's trainer in the dirt by the door
+          c.save(); c.translate(1600, 1060); c.rotate(-.15); c.fillStyle = '#e8503a'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(-30, 0); c.quadraticCurveTo(-30, -24, 0, -22); c.lineTo(10, -10); c.quadraticCurveTo(34, -8, 34, 0); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#fff'; c.fillRect(-30, -2, 64, 6); c.restore(); if (lt > tK && lt < tK + 2) TW.glow(c, 1600, 1050, 80, '255,255,220', .5); }];
+      S.D.over = [cut(0, { t1: tSo, plate: 'boardroom', cam: { z: [1.7, 1.75], x: [1600, 1620], y: [980, 980] }, light: { dir: 1, key: 'rgba(200,220,255,.2)' }, live: [(c) => TW.chair(c, 1700, 1390, 1390 - 63 * 1.8, -1, '#2a2a34')],
+          figs: [{ x: 1700, y: 1390, s: 1.8, ...G6.LUCIA(), pose: 'sit', facing: -1, mood: 'angry', talk: [0, 99], anim: (o, lt) => { if (lt > tNo) o.arms = () => ({ shR: 100, elR: -20, handR: 'open', shL: 90, elL: -20, handL: 'open' }); } }],
+          front: [(c, lt) => say(c, 1380, 720, lt, tW - .2, 99, 'WHAT?' + (lt > tNo ? '|NO.' : ''), { px: 56, tail: [220, 140] })] }),
+        (c, lt) => card(c, "PROTECT A TV BOSS'S FAMILY", lt, tP, { x: 560, y: 130, px: 40, rot: -2, until: tH }), (c, lt) => card(c, 'FIND A KIDNAPPED CHILD', lt, tK, { x: 600, y: 230, px: 40, rot: 2, until: tH + 1 }),
+        (c, lt) => { const a = pop(lt, tH - .2, .4); if (a <= 0) return; G6.phone(c, 240, 330, 2.4 * a, 0, { buzz: lt }); txt(c, 'ABE', 240, 250, 28 * a, '#fff', 'center', 'Anton'); G6.bubble(c, 640, 300, .8 * a, 'HOW MANY KIDS HAVE|YOU LOST SO FAR?', { px: 38, tail: [-300, 40] }); },
+        (c, lt) => card(c, '"BRING THIS ONE BACK,\nOR FORGET YOURS."', lt, tB, { x: 1460, y: 170, px: 44, rot: 2, bg: GOLD })];
+      S.D.sfx = [[tW, 'pop', .3], [tSo - .1, 'whoosh', .3], [tP, 'pop', .2], [tK, 'tension', .3], [tH - .2, 'phone_ring', .3], [tK + .6, 'footsteps', .25], [tB, 'swell', .25], [tF, 'thud', .3]]; } },
+
+  // 6.2 the port at night: Raul's tech guy's trace -> GIORGIO GALLO (portrait), Mattia's boss; his cargo ships with SEIZED banners; callback card TONNES, ON CARGO SHIPS.
+  { plate: 'coastguard_base', cam: { z: [1.55, 1.3], x: [1000, 1280], y: [820, 800] }, bed: [['ocean_loop', .15], ['wind_loop', .08]], light: { dir: -1, key: 'rgba(200,220,255,.2)' },
+    init: S => { const tT = at(S, 'traces'), tGG = at(S, 'Giorgio'), tM = at(S, "Mattia's"), tSh = at(S, 'shipping'), tDr = at(S, 'drugs,'), tSz = at(S, 'seized'), tR = at(S, 'Remember'), tTo = at(S, 'Tonnes,'), tTh = at(S, 'This'), FY = 1330;
+      const ship = (c, x, y, L, lt, k) => { c.save(); c.translate(x, y); c.fillStyle = '#2a3242'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.moveTo(-L / 2, -70); c.lineTo(L / 2 + 30, -70); c.lineTo(L / 2, 0); c.lineTo(-L / 2 + 20, 0); c.closePath(); c.fill(); c.stroke();
+        for (let j = 0; j < 7; j++) { c.fillStyle = ['#c84a3a', '#3a7ac8', '#d8a03a', '#3a9a5a'][(j + k) % 4]; c.fillRect(-L / 2 + 50 + j * (L - 170) / 7, -120, (L - 190) / 7, 50); c.strokeRect(-L / 2 + 50 + j * (L - 170) / 7, -120, (L - 190) / 7, 50); }
+        c.fillStyle = '#e8e4dc'; c.fillRect(L / 2 - 110, -180, 70, 110); c.strokeRect(L / 2 - 110, -180, 70, 110); c.restore(); TW.glow(c, x + L / 2 - 75, y - 150, 50, '255,230,150', .4);
+        const b = pop(lt, tSz + k * .3, .4); if (b > 0) { c.save(); c.translate(x - 40, y - 150); c.scale(b, b); c.rotate(Math.sin(lt * 3 + k) * .05); c.fillStyle = '#f6efdc'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(-130, -26); c.quadraticCurveTo(0, -26 + Math.sin(lt * 5 + k) * 8, 130, -26); c.lineTo(130, 26); c.quadraticCurveTo(0, 26 + Math.sin(lt * 5 + k) * 8, -130, 26); c.closePath(); c.fill(); c.stroke(); txt(c, 'SEIZED', 0, 2, 40, G6.RED, 'center', 'Anton'); c.restore(); } };
+      S.D.figs = [{ x: 900, y: FY, s: 1.55, ...G6.JASON(), facing: -1, mood: 'focus', anim: (o, lt) => { if (lt > tTo) o.mood = 'shocked'; } }, { x: 1150, y: FY, s: 1.55, ...G6.LUCIA(), facing: -1, mood: 'focus', anim: (o, lt) => { if (lt > tSz) o.pose = 'point'; } }];
+      S.D.live = [(c, lt) => { ship(c, 430, 800, 600, lt, 0); ship(c, 2350, 790, 520, lt, 1); for (let k = 0; k < 18; k++) { const x = (k * 151 + lt * 12) % 2560, y = 820 + (k * 37) % 120; c.fillStyle = `rgba(220,235,255,${.2 + .2 * Math.sin(lt * 2 + k)})`; c.fillRect(x, y, 24, 3); } police(c, lt, 1180, 760, 160, .7); }];
+      S.D.over = [(c, lt) => { if (lt > tSz) return; G6.laptopProgress(c, 1560, 470, 1.6, K.clamp((lt - tT) / 2.2), lt > tGG ? 'OWNER FOUND' : 'TRACING DRIVE'); },
+        (c, lt) => { const a = E.out(K.seg(lt, tGG - .2, tGG + .5)); if (a <= 0) return; const x = K.lerp(2200, 1700, a); c.save(); c.fillStyle = '#6a4426'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(x - 170, 40, 340, 540); c.strokeRect(x - 170, 40, 340, 540); const g = c.createLinearGradient(0, 60, 0, 560); g.addColorStop(0, '#7ab8d8'); g.addColorStop(1, '#2a5a7a'); c.fillStyle = g; c.fillRect(x - 150, 60, 300, 500);
+          c.beginPath(); c.rect(x - 150, 60, 300, 500); c.clip(); A.figure(c, { x, y: 545, s: 1.2, ...G6.GALLO(), facing: -1, mood: 'smug' }, lt, 0, S); c.restore(); },
+        (c, lt) => card(c, 'GIORGIO GALLO', lt, tGG, { x: 1700, y: 640, px: 46, rot: -2, bg: GOLD }), (c, lt) => card(c, "MATTIA'S BOSS", lt, tM, { x: 1700, y: 740, px: 32, rot: 2, until: tR }),
+        (c, lt) => card(c, 'SHIPPING BILLIONAIRE', lt, tSh, { x: 520, y: 130, px: 42, rot: -2 }), (c, lt) => card(c, 'SHIPS CAUGHT WITH DRUGS', lt, tDr - .4, { x: 520, y: 230, px: 34, rot: 2, until: tR }),
+        (c, lt) => card(c, '"TONNES, ON CARGO SHIPS."', lt, tTo, { x: 560, y: 330, px: 44, rot: -2, bg: G6.RED, color: '#fff' }), (c, lt) => TW.stamp(c, 'THIS IS THAT MAN', 1180, 440, lt, tTh, { px: 44 })];
+      S.D.sfx = [[tT, 'typing', .3], [tGG, 'chime', .3], [tGG, 'whoosh_soft', .25], [tSz, 'stamp', .35], [tSz + .3, 'stamp', .3], [tR, 'riser', .2], [tTo, 'pop', .3], [tTh, 'thud', .35]]; } },
+
+  // 6.3 the flowchart: BAG -> PAYOFF -> LOCKER (police eyes watching); two strangers walk into the trap box; the bars drop; WHY NOT YOU? ANSWERED.
+  { plate: 'chart', cam: { z: [1.05, 1.15], x: [1280, 1320], y: [720, 740] }, bed: [['hum_loop', .1]], light: {},
+    init: S => { const tB = at(S, 'bag'), tP = at(S, 'payoff'), tPo = at(S, 'police'), tW = at(S, 'watched'), tTw = at(S, 'two'), tC = at(S, 'caught,'), tTh = at(S, 'them.'), tQ = at(S, "Jason's"), tAn = at(S, 'answer.'), FY = 1180;
+      S.D.figs = [{ x: 0, y: FY, s: 1.15, ...G6.JASON(), mood: 'neutral', walk: { x0: -200, x1: 2050, t0: tTw - .5, dur: 4.2 }, anim: (o, lt) => { if (lt > tC + .3) { o.mood = 'shocked'; o.facing = -1; } } },
+        { x: 0, y: FY, s: 1.15, ...G6.LUCIA(), mood: 'happy', walk: { x0: -420, x1: 2280, t0: tTw - .5, dur: 4.2 }, anim: (o, lt) => { if (lt > tC + .3) { o.mood = 'angry'; o.facing = -1; } } }];
+      const node = (c, x, y, label, a, col = '#f6efdc') => { if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.fillStyle = 'rgba(0,0,0,.35)'; rr(c, -160 + 8, -70 + 10, 320, 140, 16); c.fill(); c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 6; rr(c, -160, -70, 320, 140, 16); c.fill(); c.stroke(); txt(c, label, 0, 4, 52, INK, 'center', 'Anton'); c.restore(); };
+      const arrow = (c, x0, x1, y, u) => { if (u <= 0) return; const x = K.lerp(x0, x1, u); c.save(); c.strokeStyle = '#f6efdc'; c.fillStyle = '#f6efdc'; c.lineWidth = 10; c.beginPath(); c.moveTo(x0, y); c.lineTo(x, y); c.stroke(); c.beginPath(); c.moveTo(x + 18, y); c.lineTo(x - 14, y - 20); c.lineTo(x - 14, y + 20); c.closePath(); c.fill(); c.restore(); };
+      S.D.live = [(c, lt) => { TW.glow(c, 1280, 700, 1300, '90,140,255', .2); c.fillStyle = '#1e2a48'; c.strokeStyle = '#6a8ad8'; c.lineWidth = 6; c.fillRect(0, FY, 2560, 40); c.beginPath(); c.moveTo(0, FY); c.lineTo(2560, FY); c.stroke();
+          node(c, 420, 420, 'THE BAG', pop(lt, tB - .3, .4), GOLD); arrow(c, 600, 900, 420, K.seg(lt, tP - .4, tP)); node(c, 1080, 420, 'PAYOFF', pop(lt, tP, .4)); arrow(c, 1260, 1560, 420, K.seg(lt, tPo - .4, tPo)); node(c, 1740, 420, 'LOCKER', pop(lt, tPo, .4), '#c8d8f0');
+          if (lt > tW) for (let k = 0; k < 3; k++) { const x = 1600 + k * 140, y = 220, b = Math.abs(Math.sin(lt * 1.5 + k)) > .97 ? .15 : 1; c.save(); c.fillStyle = '#fff'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.ellipse(x, y, 44, 26 * b, 0, 0, 7); c.fill(); c.stroke(); c.fillStyle = INK; c.beginPath(); c.arc(x + Math.sin(lt) * 10, y, 12 * b, 0, 7); c.fill(); c.restore(); }
+          if (lt > tW) txt(c, 'POLICE WATCHING', 1880, 140, 36, '#ffd84a', 'center', 'Anton'); arrow(c, 1740, 1740, 500, 0); },
+        (c, lt) => { c.save(); c.strokeStyle = '#f2c14a'; c.lineWidth = 8; c.strokeRect(1900, FY - 520, 520, 520); txt(c, 'TRAP', 2160, FY - 560, 54, '#f2c14a', 'center', 'Anton'); c.restore(); }];
+      S.D.front = [(c, lt) => { const d = E.out(K.seg(lt, tC, tC + .35)); if (d <= 0) return; const h = 520 * d; c.save(); c.strokeStyle = '#c8ccd4'; c.lineWidth = 12; for (let k = 0; k <= 10; k++) { c.beginPath(); c.moveTo(1900 + k * 52, FY - 520); c.lineTo(1900 + k * 52, FY - 520 + h); c.stroke(); } c.restore(); },
+        (c, lt) => { ntag(c, 'TWO STRANGERS', 2160, FY - 640, lt, tTw + 3.5, 34); }];
+      S.D.over = [(c, lt) => card(c, 'NOW THE BAG MAKES SENSE', lt, .3, { x: 520, y: 760, px: 40, rot: -2, until: tTw }), (c, lt) => card(c, 'IF ANYONE GETS CAUGHT: THEM', lt, tC, { x: 620, y: 760, px: 38, rot: 2, bg: G6.RED, color: '#fff' }),
+        (c, lt) => TW.stamp(c, 'WHY NOT YOU? ANSWERED', 960, 160, lt, tAn - .4, { px: 56, col: '#3ad06a' })];
+      S.D.sfx = [[tB - .3, 'pop', .25], [tP, 'pop', .25], [tPo, 'pop', .25], [tW, 'tension', .25], [tTw, 'footsteps', .25], [tC, 'gate_slam', .45], [tTh, 'thud', .3], [tAn - .4, 'stamp', .4]]; } },
+
+  // 6.4 KG's gym: Lucia undercover in the pink tank, KG curls, weeks flip by (same food, same lingo), Nate grins, points: JUICY.
+  { plate: 'gym', cam: { z: [1.3, 1.4], x: [1500, 1200], y: [900, 920] }, bed: [['crowd_loop', .06], ['hum_loop', .1]], light: { dir: -1, key: 'rgba(255,255,255,.2)' },
+    init: S => { const tK = at(S, 'KG,'), tBb = at(S, 'bodybuilders.'), tU = at(S, 'undercover'), tWk = at(S, 'weeks.'), tF = at(S, 'food,'), tLi = at(S, 'lingo.'), tN = at(S, 'Nate,'), tFr = at(S, 'friend'), tJ = at(S, 'Juicy.'), FY = 1350;
+      S.D.figs = [{ x: 0, y: FY, s: 1.75, ...G6.LUCIA_GYM(), mood: 'focus', walk: { x0: -200, x1: 700, t0: tU - 1.4, dur: 2.6 }, anim: (o, lt) => { if (lt > tU + 1.2) { o.arms = () => curls(lt + 1, 3.4); o.hold = { near: bell }; } if (lt > tFr) o.mood = 'happy'; } },
+        { x: 1260, y: FY, s: 1.6, ...G6.KG(), facing: -1, mood: 'angry', anim: (o, lt) => { o.arms = () => curls(lt, 2.6); o.hold = { near: bell }; } },
+        { x: 2000, y: FY, s: 1.75, ...G6.NATE(), facing: -1, mood: 'happy', talk: [tJ - .8, tJ + 1.5], anim: (o, lt) => { o.pose = lt > tJ - .8 ? 'point' : lt > tN ? 'wave' : 'stand'; } }];
+      S.D.live = [(c, lt) => { TW.glow(c, 1280, 300, 800, '255,255,255', .1); }];
+      S.D.front = [(c, lt) => ntag(c, 'KG', 1260, FY - 760, lt, tK, 40, tWk + 2), (c, lt) => ntag(c, 'NATE', 2000, FY - 640, lt, tN, 40),
+        (c, lt) => say(c, 1000, 520, lt, tLi - .4, tN, 'GAINS, BRO.', { px: 40, tail: [-240, 150] }),
+        (c, lt) => { const a = pop(lt, tJ - .2, .5); if (a <= 0) return; const b = 1 + .08 * Math.sin((lt - tJ) * 8) * Math.exp(-(lt - tJ)); c.save(); c.translate(1500, 520 - 20 * Math.abs(Math.sin(lt * 4))); c.scale(a * b, a * b); c.rotate(-.06); c.fillStyle = G6.PINK; c.strokeStyle = INK; c.lineWidth = 6; rr(c, -170, -60, 340, 120, 20); c.fill(); c.stroke(); txt(c, '"JUICY"', 0, 4, 70, '#fff', 'center', 'Anton'); c.restore(); }];
+      S.D.over = [(c, lt) => card(c, "RAUL'S REVENGE ON KG", lt, .3, { x: 480, y: 120, px: 44, rot: -2, until: tU + 1 }), (c, lt) => card(c, 'A CREW OF BODYBUILDERS', lt, tBb - .4, { x: 520, y: 220, px: 36, rot: 2, until: tU + 1 }),
+        (c, lt) => { if (lt < tU) return; const wk = 1 + Math.min(5, Math.floor((lt - tU) * 1.4)); card(c, 'UNDERCOVER · WEEK ' + wk, lt, tU, { x: 520, y: 140, px: 46, rot: -2, bg: G6.PINK, color: '#fff', until: tN }); },
+        (c, lt) => card(c, 'SAME FOOD', lt, tF - .3, { x: 1400, y: 130, px: 40, rot: 3, until: tN }), (c, lt) => card(c, 'SAME LINGO', lt, tLi - .3, { x: 1460, y: 230, px: 40, rot: -2, until: tN })];
+      S.D.sfx = [[.3, 'thud', .25], [1.6, 'thud', .2], [tK, 'pop', .25], [tU, 'footsteps', .25], [tWk, 'paper', .25], [tF, 'pop', .2], [tLi, 'pop', .2], [tN, 'pop', .25], [tJ, 'crowd_cheer', .15], [tJ, 'chime', .3]]; } },
+
+  // 6.5 airport cargo hangar: a trolley of cash bags; ~$10M a month; KG's crew will fly it to Colombia; Jason, crouched behind the crates, quietly swaps a bag for fake cash.
+  { plate: 'airport_cargo', cam: { z: [1.3, 1.45], x: [1200, 1250], y: [880, 900] }, bed: [['hum_loop', .15], ['wind_loop', .06]], light: { dir: 1, key: 'rgba(255,250,230,.2)' },
+    init: S => { const tTg = at(S, 'target'), tA = at(S, 'airport'), tTe = at(S, 'ten'), tM = at(S, 'month.'), tGr = at(S, 'grabs'), tCo = at(S, 'Colombia,'), tQ = at(S, 'quietly'), tSw = at(S, 'swaps'), tFk = at(S, 'fake'), FY = 1330, TX = 1300;
+      const sw = lt => E.io(K.seg(lt, tSw - .2, tSw + 1.2));
+      S.D.figs = [{ x: 720, y: FY, s: 1.75, ...G6.JASON(), facing: 1, pose: 'work', mood: 'focus', anim: (o, lt) => { if (lt > tQ - .3 && lt < tFk + 1) o.arms = () => ({ shR: 70, elR: -10, handR: 'open' }); } },
+        { x: 0, y: FY, s: 1.75, ...G6.CREW(0), mood: 'neutral', walk: { x0: 1700, x1: 2900, t0: tGr + .6, dur: 4 }, facing: 1, anim: (o, lt) => { if (lt < tGr + .6) { o.facing = 1; o.pose = 'point'; } } }];
+      S.D.live = [(c, lt) => { TW.glow(c, 2100, 600, 700, '200,230,255', .15); trolley(c, TX, FY, 0, lt); const s = sw(lt);
+          G6.duffel(c, TX - 100, FY - 70, .85, { cash: true }); G6.duffel(c, TX + 100, FY - 70, .85, { cash: true });
+          // the swap: the middle real bag slides out to Jason, an identical fake slides in
+          G6.duffel(c, K.lerp(TX, TX - 440, s), K.lerp(FY - 150, FY, s), .85, { cash: true }); if (s > 0) G6.duffel(c, K.lerp(TX - 440, TX, s), K.lerp(FY, FY - 150, s), .85, { col: '#26262e' }); }];
+      S.D.front = [(c, lt) => { if (lt > tFk) { c.save(); c.translate(TX, FY - 250); c.rotate(-.08); c.fillStyle = '#f6efdc'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-60, -24, 120, 48); c.strokeRect(-60, -24, 120, 48); txt(c, 'FAKE', 0, 2, 30, G6.RED, 'center', 'Anton'); c.restore(); } }];
+      S.D.over = [(c, lt) => card(c, 'AIRPORT VAULT', lt, tA - .3, { x: 480, y: 130, px: 48, rot: -2 }), (c, lt) => { if (lt > tTe) G6.counter(c, 560, 260, .8, 0, 10, tTe, tTe + 1.2, lt, { pre: '~$', suf: 'M' }); }, (c, lt) => card(c, 'EVERY MONTH', lt, tM, { x: 560, y: 370, px: 36, rot: 2 }),
+        (c, lt) => { const a = pop(lt, tCo - .3, .4); if (a <= 0) return; card(c, 'KG\'S CREW → COLOMBIA', lt, tCo - .3, { x: 1480, y: 140, px: 40, rot: 2, bg: G6.RED, color: '#fff' }); },
+        (c, lt) => card(c, 'THE SWAP', lt, tSw, { x: 1440, y: 260, px: 48, rot: -3, bg: GOLD })];
+      S.D.sfx = [[tTg, 'whoosh_soft', .2], [tTe, 'coins_cascade', .25], [tGr, 'scrape', .3], [tCo, 'whoosh', .2], [tSw - .2, 'scrape', .35], [tSw + 1, 'thud', .25], [tFk, 'pop', .3]]; } },
+
+  // 6.6 the runway at dusk: KG suspicious; Nate unzips a bag: no money; chaos (a flash, a bang, off-camera); Nate slumps; Lucia kneels; his last words; everything goes quiet.
+  { plate: 'runway_dusk', cam: { z: [1.35, 1.9], x: [1500, 1450], y: [960, 1020] }, bed: [['wind_loop', .2], ['drone', .1]], light: { dir: 1, key: 'rgba(255,170,120,.28)' },
+    init: S => { const tRu = at(S, 'runway,'), tSu = at(S, 'suspicious.'), tO = at(S, 'opens'), tNo = at(S, 'No'), tSh = at(S, 'shot'), tL = at(S, 'last'), tIt = at(S, 'it'), tLu = at(S, 'Lucia'), tHa = at(S, 'hang'), tD = at(S, "doesn't"), FY = 1250, FS = 1.7, BX = 1250;
+      S.D.figs = [{ x: 0, y: FY, s: 1.45, ...G6.KG(), facing: 1, mood: 'angry', walk: { x0: 900, x1: -400, t0: tSh + .3, dur: 2.4, pose: 'run' }, anim: (o, lt) => { if (lt < tSh + .3) { o.facing = 1; o.pose = lt > tNo ? 'point' : 'stand'; } } },
+        { x: 1520, y: FY, s: FS, ...G6.NATE(), facing: -1, pose: 'work', mood: 'focus', anim: (o, lt) => { if (lt > tNo) o.mood = 'shocked'; if (lt > tSh + .2) { o.pose = 'sit'; o.low = 20; o.mood = 'sad'; o.lean = -10; o.facing = 1; } } },
+        { x: 0, y: FY + 10, s: FS, ...G6.LUCIA(), mood: 'worried', walk: { x0: 2500, x1: 1840, t0: tSh + .6, dur: 1.8, pose: 'run' }, anim: (o, lt) => { if (lt > tSh + 2.5) { o.facing = -1; o.pose = 'work'; } if (lt > tD) o.mood = 'sad'; } }];
+      S.D.live = [(c, lt) => { const q = K.seg(lt, tD, tD + 2); TW.glow(c, 2200, 650, 900, '255,150,90', .3 * (1 - q)); for (let k = 0; k < 20; k++) TW.glow(c, 1420 + (k - 10) * 60 * (1 + k / 20), 790 + k * 22, 18, '255,240,180', .4 + .3 * Math.sin(lt * 3 + k)); },
+        (c, lt) => { G6.duffel(c, BX, FY, 1.0, {}); if (lt > tO) { c.fillStyle = '#1a1a1e'; c.beginPath(); c.ellipse(BX, FY - 110, 60, 14, 0, 0, 7); c.fill(); }
+          if (lt > tNo) for (let k = 0; k < 6; k++) { const p = ((lt - tNo) * .4 + k / 6) % 1; c.save(); c.translate(BX + p * 900, FY - 120 - p * 300 + Math.sin(lt * 4 + k) * 30); c.rotate(lt * 3 + k); c.fillStyle = '#f6efdc'; c.strokeStyle = INK; c.lineWidth = 2; c.fillRect(-26, -14, 52, 28); c.strokeRect(-26, -14, 52, 28); c.restore(); } }];
+      S.D.front = [(c, lt) => ntag(c, 'KG', 900, FY - 640, lt, tRu, 36, tSh), (c, lt) => say(c, 1250, 780, lt, tL + .2, tHa, "IT WASN'T YOU,|WAS IT, JUICY?", { px: 38, tail: [240, 150] }), (c, lt) => say(c, 1900, 760, lt, tHa - .1, tD, 'HANG IN THERE.', { px: 34, tail: [-80, 140] })];
+      S.D.over = [(c, lt) => { const f = K.seg(lt, tSh, tSh + .08) * (1 - K.seg(lt, tSh + .1, tSh + .6)); if (f > 0) { c.fillStyle = `rgba(255,250,235,${.85 * f})`; c.fillRect(0, 0, SW, SH); } },
+        (c, lt) => card(c, 'SUSPICIOUS', lt, tSu - .3, { x: 520, y: 140, px: 44, rot: -2, until: tSh }), (c, lt) => { if (lt < tL) TW.stamp(c, 'NO MONEY', 1300, 200, lt, tNo, { px: 70 }); },
+        (c, lt) => { const q = K.seg(lt, tD, tD + 1.5); if (q > 0) { c.fillStyle = `rgba(10,10,20,${.35 * q})`; c.fillRect(0, 0, SW, SH); } }];
+      S.D.sfx = [[tRu, 'wind_loop', .15], [tSu, 'tension', .3], [tO, 'scrape', .3], [tNo, 'stamp', .35], [tSh, 'hit', .5], [tSh + .1, 'thud', .3], [tSh + .6, 'run_steps', .3], [tL, 'heartbeat', .3], [tD, 'drone', .3]]; } },
+
+  // 6.7 the bay: the hijacked jet climbs out with Lucia clinging to the landing gear; later it skims down onto the water (splash) and floats; Raul climbs out: I OWE YOU.
+  { plate: 'keys_bay_day', cam: { z: [1.1, 1.25], x: [1280, 1300], y: [700, 760] }, bed: [['ocean_loop', .2], ['wind_loop', .12]], light: { dir: -1, key: 'rgba(255,250,230,.2)' },
+    init: S => { const tKG = at(S, 'KG'), tC = at(S, 'climbs'), tT = at(S, 'takes'), tY = at(S, 'Yes,'), tE = at(S, 'ends'), tLa = at(S, 'landing on'), tO = at(S, 'owe'), PS = 2.6;
+      const fly1 = lt => K.seg(lt, tKG - .5, tE - .2), fly2 = lt => K.seg(lt, tE - .2, tLa + 1.2);
+      const pose1 = lt => { const u = fly1(lt); return { x: K.lerp(-900, 3500, u), y: K.lerp(1050, 300, E.inn(u)), r: -.08 - .12 * E.inn(u) }; };
+      const pose2 = lt => { const u = E.out(fly2(lt)); return { x: K.lerp(-900, 1300, u), y: K.lerp(380, 790, u), r: .06 * (1 - u) }; };
+      const hang = (c, lt) => { c.save(); c.rotate(-.1); A.figure(c, { x: -156, y: 340, s: .5, ...G6.LUCIA(), facing: 1, mood: 'shocked', noSmooth: true, arms: () => ({ shL: -165, elL: -5, shR: 165, elR: -5, handL: 'fist', handR: 'fist' }), lean: Math.sin(lt * 8) * 4 }, lt, 0, S); c.restore(); };
+      S.D.live = [(c, lt) => { for (let k = 0; k < 30; k++) { const x = (k * 157 + lt * 20) % 2560, y = 820 + (k * 41) % 600; c.fillStyle = `rgba(255,255,255,${.2 + .25 * Math.sin(lt * 2 + k)})`; c.fillRect(x, y, 30, 3); } }];
+      S.D.front = [(c, lt) => { const u = fly1(lt); if (u > 0 && u < 1) { const p = pose1(lt); c.save(); c.translate(p.x, p.y); c.rotate(p.r); hang(c, lt); G6.plane(c, 0, 0, PS, { gear: true, col: '#3a6aa8' }); c.restore(); for (let k = 0; k < 8; k++) { c.strokeStyle = 'rgba(255,255,255,.5)'; c.lineWidth = 3; c.beginPath(); const yy = p.y - 80 + k * 30; c.moveTo(p.x - 800 - k * 40, yy + 120); c.lineTo(p.x - 1100 - k * 40, yy + 150); c.stroke(); } } },
+        (c, lt) => { const u = fly2(lt); if (u <= 0) return; const p = pose2(lt), fl = u >= 1, bob = fl ? Math.sin(lt * 2) * 6 : 0;
+          if (fl) { const rise = E.out(K.seg(lt, tO - 1.4, tO - .2)); c.save(); c.beginPath(); c.rect(0, 0, 2560, p.y - 30 * PS + bob); c.clip(); A.figure(c, { x: 1150, y: p.y - 30 * PS + bob + 220 * (1 - rise), s: .62, ...G6.RAUL(), facing: 1, mood: 'happy', pose: rise > .9 && lt > tO ? 'wave' : 'stand' }, lt, 0, S); A.figure(c, { x: 1420, y: p.y - 30 * PS + bob + 220 * (1 - rise), s: .62, ...G6.LUCIA(), facing: -1, mood: 'happy' }, lt, 0, S); c.restore(); }
+          c.save(); c.translate(p.x, p.y + bob); c.rotate(p.r); G6.plane(c, 0, 0, PS, { col: '#3a6aa8' }); c.restore(); c.fillStyle = 'rgba(40,120,140,.55)'; c.fillRect(p.x - 800, p.y + 40 * PS * .6 + bob, 1600, 30);
+          const sp = K.seg(lt, tLa + .9, tLa + 2.2); if (sp > 0 && sp < 1) for (let k = 0; k < 30; k++) { const a = -Math.PI * (k / 29), r = sp * (200 + (k * 37) % 160); c.fillStyle = `rgba(255,255,255,${1 - sp})`; c.beginPath(); c.arc(p.x - 300 + (k * 41) % 700 + Math.cos(a) * r * .4, p.y + 60 + Math.sin(a) * r, 14, 0, 7); c.fill(); } }];
+      S.D.over = [(c, lt) => card(c, 'KG HIJACKS THE PLANE', lt, tKG, { x: 520, y: 130, px: 46, rot: -2, until: tE }), (c, lt) => card(c, 'RAUL ON BOARD', lt, tKG + 1, { x: 520, y: 230, px: 34, rot: 2, until: tE }),
+        (c, lt) => card(c, 'LUCIA: IN THE LANDING GEAR', lt, tC, { x: 1380, y: 130, px: 38, rot: 2, until: tE }), (c, lt) => { if (lt < tE) TW.stamp(c, 'YES, A MOVING PLANE', 1300, 300, lt, tY, { px: 60, col: GOLD }); },
+        (c, lt) => card(c, 'A LANDING ON WATER', lt, tLa, { x: 520, y: 140, px: 44, rot: -2 }), (c, lt) => { const a = pop(lt, tO - .2, .4); if (a > 0) G6.bubble(c, 1100, 300, a, 'I OWE YOU.', { px: 56, tail: [0, 150] }); }];
+      S.D.sfx = [[tKG, 'tension', .25], [tC, 'wind_loop', .2], [tT, 'whoosh', .4], [tY, 'stamp', .3], [tE, 'whoosh', .35], [tLa + .9, 'hit', .3], [tLa + 1, 'rain_loop', .25], [tO, 'swell', .25]]; } },
+
+  // 6.8 Raul's wrecked boat cabin: a note; Raul tied to a chair; 'Mendez. Valentina gave me up.' (TRUST board: X on VALENTINA); 'end it' -> SHOOT? card, cut away;
+  // red/blue lights sweep the blinds: police outside. IT WAS A TRAP.
+  { plate: 'boat_cabin', cam: { z: [1.3, 1.5], x: [1250, 1300], y: [880, 900] }, bed: [['ocean_loop', .12], ['night_loop', .1]], light: { dir: 1, key: 'rgba(255,200,220,.2)' },
+    init: S => { const tW = at(S, 'Weeks'), tNo = at(S, 'note'), tTi = at(S, 'tied'), tMe = at(S, 'Mendez,'), tV = at(S, 'Valentina'), tE = at(S, 'end'), tTr = at(S, 'trigger'), tO = at(S, 'Outside,'), tPo = at(S, 'police'), tTp = at(S, 'trap.'), FY = 1320, CS = 1.85;
+      const RX = 1820;
+      S.D.figs = [{ x: RX, y: FY, s: CS, ...G6.RAUL(), pose: 'sit', facing: -1, mood: 'sad', talk: [tMe - .2, tTr], anim: (o, lt) => { o.lean = -6 + Math.sin(lt * 1.3) * 2; o.arms = () => ({ shR: -10, elR: -10, shL: -10, elL: -10 }); } },
+        { x: 0, y: FY, s: CS, ...G6.JASON(), mood: 'focus', walk: { x0: -300, x1: 1100, t0: tNo + .6, dur: 3.2 }, anim: (o, lt) => { if (lt > tTi) o.mood = 'shocked'; if (lt > tE) o.mood = 'sad'; if (lt > tO) { o.facing = -1; o.mood = 'shocked'; } } },
+        { x: 0, y: FY, s: CS, ...G6.LUCIA(), mood: 'focus', walk: { x0: -560, x1: 760, t0: tNo + .4, dur: 3.2 }, anim: (o, lt) => { if (lt > tV) o.mood = 'angry'; if (lt > tO) { o.facing = -1; o.mood = 'shocked'; } } }];
+      S.D.live = [(c, lt) => { for (const x of [1720, 2480]) TW.glow(c, x - 300, 330, 260, '255,120,200', .2); TW.chair(c, RX, FY, FY - 63 * CS, -1, '#4a3a2a'); const p = K.seg(lt, tO, tO + .6); if (p > 0) { police(c, lt, 1400, 330, 380, p); police(c, lt, 2200, 330, 380, p); } }];
+      S.D.front = [(c, lt) => { // rope coils around Raul and the chair
+          c.save(); c.strokeStyle = '#c8a46a'; c.lineWidth = 9; c.lineCap = 'round'; for (let k = 0; k < 3; k++) { c.beginPath(); c.ellipse(RX + 6, FY - 300 + k * 34, 80, 16, 0, .2, Math.PI - .2); c.stroke(); } c.restore();
+          ntag(c, 'RAUL', RX, FY - 640, lt, tTi, 36, tMe); say(c, 1500, 560, lt, tMe, tE, 'MENDEZ.|VALENTINA GAVE ME UP.', { px: 34, tail: [260, 130] }); say(c, 1500, 600, lt, tE, tTr + .3, 'END IT.', { px: 46, tail: [260, 120] }); }];
+      S.D.over = [(c, lt) => { const a = pop(lt, tW, .4) * (1 - K.seg(lt, tTi - .3, tTi)); if (a <= 0) return; c.save(); c.translate(560, 260); c.scale(a, a); c.rotate(-.05); c.fillStyle = '#fffdf6'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(-200, -90, 400, 180); c.strokeRect(-200, -90, 400, 180); txt(c, "COME TO RAUL'S", 0, -26, 44, INK, 'center', 'Caveat'); txt(c, 'BOAT. NOW.', 0, 30, 48, G6.RED, 'center', 'Caveat'); c.restore(); },
+        (c, lt) => card(c, 'WEEKS LATER', lt, .2, { x: 1460, y: 130, px: 42, rot: 2, until: tTi }), (c, lt) => card(c, 'TIED UP AND BEATEN', lt, tTi, { x: 520, y: 140, px: 40, rot: -2, until: tV }),
+        (c, lt) => { if (lt > tV - .6) trustVal(c, 1680, 290, .6, lt, tV + .2); }, (c, lt) => card(c, 'VALENTINA SOLD THEM', lt, tV + .4, { x: 560, y: 150, px: 46, rot: -2, bg: G6.RED, color: '#fff', until: tO }),
+        (c, lt) => { const a = pop(lt, tTr - .2, .4) * (1 - K.seg(lt, tO - .4, tO - .1)); if (a > 0) G6.shootPrompt(c, 960, 360, a, lt); },
+        (c, lt) => TW.stamp(c, 'IT WAS A TRAP', 900, 300, lt, tTp, { px: 74 })];
+      S.D.sfx = [[tNo, 'paper', .35], [tNo + .6, 'footsteps', .3], [tTi, 'creak', .3], [tMe, 'tension', .25], [tV + .2, 'stamp', .4], [tTr - .2, 'heartbeat', .35], [tO - .2, 'whoosh', .3], [tO, 'alarm', .3], [tPo, 'alarm', .3], [tTp, 'stamp', .45]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>

@@ -1,0 +1,110 @@
+// G6 act 1 - Prologue: the drive-off, "it's for my mum", names, the flat and the cash, Hamlet Correctional, the café and the payday-loan shop, Tomás.
+// Plates: keys_road_night, diner_ext, bedroom, prison_corridor, cafe_int, payday_shop.
+for (const n of ['keys_road_night', 'diner_ext', 'bedroom', 'prison_corridor', 'cafe_int', 'payday_shop']) K.load(n, PL + n + '.jpg');
+const rr = TW.rr, txt = TW.txt, GOLD = G6.GOLD;
+// ---- act helpers
+const ntag = (c, name, x, y, lt, at, opts = {}) => { const a = pop(lt, at, .4), o = 1 - K.seg(lt, (opts.until ?? 999) - .3, opts.until ?? 999); if (a <= 0 || o <= 0) return; const px = opts.px ?? 40; c.save(); c.globalAlpha = o; c.translate(x, y); c.scale(a, a); c.font = `${px}px Anton`;
+  const w = c.measureText(name).width + px * .9, h = px * 1.45; c.fillStyle = 'rgba(0,0,0,.35)'; rr(c, -w / 2 + 6, -h - 12, w, h, 10); c.fill(); c.fillStyle = opts.col || GOLD; c.strokeStyle = INK; c.lineWidth = 4; rr(c, -w / 2, -h - 18, w, h, 10); c.fill(); c.stroke();
+  c.beginPath(); c.moveTo(-14, -19); c.lineTo(0, 0); c.lineTo(14, -19); c.closePath(); c.fill(); c.stroke(); c.fillRect(-12, -24, 24, 7); txt(c, name, 0, -h / 2 - 16, px, INK, 'center', 'Anton'); c.restore(); };
+const copLights = (c, lt, x, y, a = 1, rad = 900) => { if (a <= 0) return; const ph = Math.floor(lt * 5) % 2, sw = Math.sin(lt * 3) * 260; TW.glow(c, x + sw, y, rad, ph ? '255,40,50' : '40,90,255', .42 * a); TW.glow(c, x - sw * .6, y + 80, rad * .7, ph ? '40,90,255' : '255,40,50', .25 * a); };
+const roadLive = (c, lt) => { for (const [x, y] of [[1621, 715], [1720, 699], [1888, 667], [2192, 619]]) TW.glow(c, x, y, 90, '255,200,120', .35 + .06 * Math.sin(lt * 9 + x));
+  for (let k = 0; k < 18; k++) { const x = 560 + (k * 53) % 180, y = 820 + (k * 37) % 250, a = .3 + .35 * Math.max(0, Math.sin(lt * 2.4 + k)); c.fillStyle = `rgba(255,250,230,${a})`; c.fillRect(x, y, 22, 3); } };
+const flash = (t0) => (c, lt) => { if (lt < t0) return; const u = 1 - K.seg(lt, t0, t0 + .35); if (u > 0) { c.fillStyle = `rgba(255,255,255,${.85 * u})`; c.fillRect(0, 0, SW, SH); } };
+const steam = (x, y, s = 1) => (c, lt) => { for (let k = 0; k < 5; k++) { const ph = (lt * .4 + k / 5) % 1, sx = x + Math.sin(ph * 6 + k) * 10 * s, sy = y - ph * 90 * s; c.fillStyle = `rgba(255,255,255,${.35 * (1 - ph)})`; c.beginPath(); c.arc(sx, sy, (6 + ph * 14) * s, 0, 7); c.fill(); } };
+// small wooden table, bottom centre (x, floor y), top at y - h
+const table = (c, x, y, w = 360, h = 230) => { G6.shadow(c, x, y, w * .6, .4); c.save(); c.strokeStyle = INK; c.lineWidth = 5; c.fillStyle = '#6a4428'; for (const dx of [-w / 2 + 24, w / 2 - 40]) { c.fillRect(x + dx, y - h, 16, h); c.strokeRect(x + dx, y - h, 16, h); }
+  c.fillStyle = '#8a5a34'; rr(c, x - w / 2, y - h - 22, w, 26, 6); c.fill(); c.stroke(); c.fillStyle = 'rgba(255,230,190,.25)'; c.fillRect(x - w / 2 + 10, y - h - 18, w - 20, 5); c.restore(); };
+// pram, bottom centre; hand 0..1 raises a tiny hand out of it
+const pram = (c, x, y, s, lt, hand = 0) => { G6.shadow(c, x, y, 160 * s, .4); c.save(); c.translate(x, y); c.scale(s, s); c.strokeStyle = INK; c.lineWidth = 5; c.lineJoin = 'round';
+  c.strokeStyle = '#2a2a30'; c.lineWidth = 7; c.beginPath(); c.moveTo(-80, -38); c.lineTo(80, -110); c.moveTo(80, -38); c.lineTo(-80, -110); c.moveTo(110, -120); c.lineTo(150, -250); c.lineTo(185, -250); c.stroke();
+  for (const wx of [-80, 80]) { c.fillStyle = '#26262c'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.arc(wx, -38, 36, 0, 7); c.fill(); c.stroke(); c.fillStyle = '#9a9aa4'; c.beginPath(); c.arc(wx, -38, 10, 0, 7); c.fill(); }
+  if (hand > 0) { const hy = -175 - 45 * hand + Math.sin(lt * 5) * 4; c.fillStyle = '#d8a27a'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(14, -150); c.lineTo(18, hy + 8); c.stroke(); c.beginPath(); c.arc(18, hy, 11, 0, 7); c.fill(); c.stroke(); for (let k = -1; k <= 1; k++) { c.beginPath(); c.arc(18 + k * 7, hy - 11, 4, 0, 7); c.fill(); c.stroke(); } }
+  c.strokeStyle = INK; c.lineWidth = 5; c.fillStyle = '#5aa8c8'; c.beginPath(); c.moveTo(-120, -190); c.lineTo(120, -190); c.quadraticCurveTo(120, -100, 60, -100); c.lineTo(-60, -100); c.quadraticCurveTo(-120, -100, -120, -190); c.closePath(); c.fill(); c.stroke();
+  c.fillStyle = '#3a88a8'; c.beginPath(); c.moveTo(-120, -190); c.quadraticCurveTo(-125, -290, -20, -290); c.lineTo(-20, -190); c.closePath(); c.fill(); c.stroke(); c.fillStyle = 'rgba(255,255,255,.3)'; c.fillRect(-100, -180, 200, 8); c.restore(); };
+const HANDSET = { near: cc => { cc.fillStyle = '#1e1e24'; cc.strokeStyle = INK; cc.lineWidth = 2; rr(cc, -9, -6, 18, 62, 8); cc.fill(); cc.stroke(); } };
+const CAR = '#8a6248';
+
+window.SHOTS = [
+  // 1.00 the officers walk back to check the plate; the fake couple drive off; round the corner: "why did you do it?"
+  { plate: 'keys_road_night', cam: { z: [1.05, 1.15], x: [1280, 1380], y: [880, 900] }, bed: [['night_loop', .25], ['wind_loop', .08]], light: { dir: -1, key: 'rgba(170,190,255,.22)' },
+    init: S => { const tOf = A.at(S, 'officers', .5), tChk = A.at(S, 'check', 1.6), tFk = A.at(S, 'fake', 4.2), tDr = A.at(S, 'drive', 5.6), tRo = A.at(S, 'Round', 8.0), tWhy = A.at(S, 'why', 9.4);
+      const carX = lt => 1750 + 1700 * E.inn(K.seg(lt, tDr, tDr + 3));
+      const cop = (k, x0, x1) => ({ x: x0, y: 1400, s: 1.85, ...G6.COP(k), facing: -1, mood: 'neutral', seed: 30 + k, walk: { x0, x1, t0: tOf + k * .3, dur: 2.2 }, anim: (o, lt) => { if (lt > tChk + 2 && lt < tDr + .6) { o.pose = 'reach'; o.facing = -1; } if (lt > tDr + .6) { o.facing = 1; o.mood = 'shocked'; o.pose = 'stand'; o.arms = () => ({ shR: 70, elR: -20, handR: 'open' }); } } });
+      S.D.figs = [cop(0, 1150, 760), cop(1, 1350, 1000)];
+      S.D.live = [roadLive, (c, lt) => { G6.policeCar(c, 250, 1340, 2.6, lt, {}); const x = carX(lt), mv = lt > tDr && lt < tDr + 3.2; G6.car(c, x, 1340, 2.7, CAR, lt, { wheelsTurning: mv });
+          c.fillStyle = 'rgba(10,10,20,.7)'; for (const dx of [-120, 180]) { c.beginPath(); c.arc(x + dx, 1000, 42, 0, 7); c.fill(); }
+          TW.glow(c, x + 760, 1210, 170, '255,240,200', .5); if (mv) for (let k = 0; k < 4; k++) { const ph = (lt * 2 + k / 4) % 1; c.fillStyle = `rgba(200,200,210,${.3 * (1 - ph)})`; c.beginPath(); c.arc(x - 780 - ph * 160, 1300 - ph * 40, 20 + ph * 40, 0, 7); c.fill(); }
+          TW.glow(c, 520, 1060, 140, '120,200,255', .3 * K.seg(lt, tChk + 1.5, tChk + 2)); }];
+      S.D.front = [(c, lt) => copLights(c, lt, 250, 900, 1, 700)];
+      S.D.over = [(c, lt) => K.card(c, 'THE PROLOGUE', lt, { at: .2, until: tFk, x: 960, y: 110, px: 56, rot: -2 }), (c, lt) => K.card(c, 'CHECKING THE PLATE…', lt, { at: tChk + .4, until: tDr + 1, x: 520, y: 260, px: 40, rot: -3, bg: GOLD }),
+        (c, lt) => K.card(c, 'THE FAKE COUPLE DRIVE OFF', lt, { at: tDr + .3, x: 1300, y: 120, px: 46, rot: 2 }),
+        (c, lt) => { const a = pop(lt, tWhy - .2, .35); if (a > 0) G6.bubble(c, 1560, 340, .85 * a, "WHY'D YOU|DO THAT?", { px: 40 }); }];
+      S.D.sfx = [[tOf, 'footsteps', .25], [tChk + 1.5, 'typing', .2], [tDr - .3, 'door_slam', .25], [tDr, 'whoosh', .4], [tDr + .5, 'scrape', .2], [tRo, 'whoosh_soft', .2], [tWhy, 'pop', .3]]; } },
+  // 1.01 parked by a roadside diner: "it's for my mum" (estate agent, look rich); then they swap names
+  { plate: 'diner_ext', cam: { z: [1.35, 1.48], x: [1600, 1700], y: [1050, 1080] }, bed: [['night_loop', .2], ['city_loop', .06]], light: { dir: 1, key: 'rgba(255,190,200,.2)' },
+    init: S => { const tMum = A.at(S, 'mum', .8), tEs = A.at(S, 'estate', 3.0), tRich = A.at(S, 'rich.', 6.2), tSw = A.at(S, 'swap', 7.2), tJ = A.at(S, 'Jason.', 8.6), tL = A.at(S, 'Lucia.', 9.4);
+      S.D.figs = [{ x: 1830, y: 1415, s: 1.85, ...G6.JASON(), facing: 1, mood: 'worried', seed: 11, anim: (o, lt) => { o.lean = Math.sin(lt * 1.4) * 1.5; if (lt > tEs) o.mood = 'neutral'; if (lt > tJ - .3) { o.mood = 'happy'; o.arms = () => ({ shR: 62 + 5 * Math.sin(lt * 12) * (lt < tL + .6 ? 1 : 0), elR: -18, handR: 'open' }); } } },
+        { x: 2230, y: 1415, s: 1.8, ...G6.LUCIA(), facing: -1, mood: 'neutral', seed: 12, walk: { x0: 2230, x1: 2090, t0: tSw - .2, dur: 1.1 }, anim: (o, lt) => { o.talk = lt < tSw; if (lt > tMum && lt < tEs + 1.5) o.pose = 'shrug'; if (lt > tRich - .4 && lt < tSw) { o.mood = 'smug'; o.arms = () => ({ shR: 40, elR: -110, handR: 'open', shL: 30, elL: -90 }); }
+          if (lt > tL - .3) { o.mood = 'happy'; o.arms = () => ({ shR: 62 + 5 * Math.sin(lt * 12) * (lt < tL + .6 ? 1 : 0), elR: -18, handR: 'open' }); } } }];
+      S.D.live = [(c, lt) => { TW.glow(c, 2850, 500, 300, '255,60,120', .25 + .08 * Math.sin(lt * 7)); TW.glow(c, 2810, 340, 260, '255,150,60', .2 + .05 * Math.sin(lt * 3)); G6.car(c, 900, 1415, 2.7, CAR, lt, {}); }];
+      S.D.front = [(c, lt) => ntag(c, 'JASON', 1830, 850, lt, tJ, { px: 40 }), (c, lt) => ntag(c, 'LUCIA', 2090, 870, lt, tL, { px: 40, col: G6.PINK })];
+      S.D.over = [(c, lt) => K.card(c, '"IT\'S FOR MY MUM"', lt, { at: tMum - .2, until: tSw, x: 640, y: 150, px: 50, rot: -3 }),
+        (c, lt) => { const a = pop(lt, tEs, .4) * (1 - K.seg(lt, tSw - .3, tSw)); if (a <= 0) return; G6.bubble(c, 1450, 260, .9 * a, 'MUM WANTS TO BE|AN ESTATE AGENT', { px: 34, thought: true }); },
+        (c, lt) => { const a = pop(lt, tEs + .5, .4) * (1 - K.seg(lt, tSw - .3, tSw)); if (a <= 0) return; c.save(); c.translate(700, 380); c.scale(a, a); c.rotate(-.05); c.fillStyle = '#7a4a2a'; c.fillRect(-6, 0, 12, 120); c.fillStyle = '#f6f2e6'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-120, -70, 240, 90); c.strokeRect(-120, -70, 240, 90); txt(c, 'SOLD', 0, -25, 60, G6.RED, 'center', 'Anton'); c.restore(); },
+        (c, lt) => { if (lt < tRich - .3 || lt > tSw) return; K.card(c, 'YOU HAVE TO LOOK RICH', lt, { at: tRich - .3, x: 700, y: 560, px: 40, rot: 3, bg: GOLD }); TW.sparkle(c, 700, 560, lt, 1.4, '255,230,120'); }];
+      S.D.sfx = [[tMum, 'pop', .2], [tEs, 'pop', .25], [tRich, 'coins', .3], [tSw, 'footsteps', .15], [tJ, 'chime', .25], [tL, 'chime', .25]]; } },
+  // 1.02 the flat, later: Jason comes home with bundles of cash; Lucia wants in; "this life isn't for you"
+  { plate: 'bedroom', cam: { z: [1.3, 1.42], x: [1350, 1460], y: [1020, 1040] }, bed: [['night_loop', .12], ['city_loop', .06]], light: { dir: 1, key: 'rgba(255,220,170,.2)' },
+    init: S => { const tJu = A.at(S, 'jumps', .9), tLiv = A.at(S, 'living', 2.6), tCm = A.at(S, 'comes', 6.4), tCash = A.at(S, 'cash.', 7.6), tIn = A.at(S, 'in.', 8.8), tNo = A.at(S, 'no', 9.8), tIsnt = A.at(S, "isn't", 10.6);
+      const BUND = { near: cc => G6.cashBundle(cc, 0, 30, 1.25, 2) };
+      S.D.figs = [{ x: 950, y: 1370, s: 1.8, ...G6.LUCIA(), facing: 1, mood: 'neutral', seed: 12, anim: (o, lt) => { o.lean = Math.sin(lt * 1.2) * 1.5; if (lt > tCash) o.mood = 'shocked'; if (lt > tIn - .5) { o.pose = 'point'; o.mood = 'happy'; o.talk = lt < tNo; } if (lt > tIsnt) { o.pose = 'stand'; o.mood = 'angry'; o.arms = () => ({ shR: 30, elR: -110, shL: 30, elL: -110, handR: 'fist', handL: 'fist' }); } } },
+        { x: 1830, y: 1375, s: 1.85, ...G6.JASON(), facing: -1, mood: 'neutral', seed: 11, walk: { x0: 2800, x1: 1830, t0: tCm - 3, dur: 3 }, anim: (o, lt) => { if (lt < tCash) { o.hold = BUND; if (lt > tCm) { o.pose = 'carry'; } } else o.hold = null;
+          if (lt > tNo - .2) { o.mood = 'angry'; o.talk = true; o.lean = 3 * Math.sin(lt * 9) * (lt < tNo + 1 ? 1 : 0); o.arms = () => ({ shR: 80, elR: -70, handR: 'open' }); } } }];
+      S.D.live = [(c, lt) => { TW.glow(c, 1830, 2150, 140, '255,210,140', .35); TW.glow(c, 1850, 900, 260, '255,200,130', .25 + .03 * Math.sin(lt * 4)); for (let k = 0; k < 12; k++) { const a = .3 + .4 * Math.max(0, Math.sin(lt * 1.5 + k * 1.7)); c.fillStyle = `rgba(255,220,150,${a})`; c.fillRect(1640 + (k * 47) % 440, 760 + (k * 71) % 260, 8, 10); } },
+        (c, lt) => { table(c, 1480, 1365); if (lt >= tCash) { const d = K.seg(lt, tCash, tCash + .25); G6.cashBundle(c, 1500, 1125 - 30 * (1 - d), 1.8, 3); } }];
+      S.D.over = [(c, lt) => K.card(c, 'LATER: LIVING TOGETHER', lt, { at: tJu, until: tCm, x: 960, y: 110, px: 50, rot: -2 }),
+        (c, lt) => K.card(c, 'JOBS = BUNDLES OF CASH', lt, { at: tCash, until: tNo, x: 1250, y: 120, px: 44, rot: 2, bg: GOLD }),
+        (c, lt) => { const a = pop(lt, tIn - .4, .35) * (1 - K.seg(lt, tNo - .2, tNo)); if (a > 0) G6.bubble(c, 520, 280, .85 * a, 'I WANT IN.', { px: 46 }); },
+        (c, lt) => K.card(c, '"THIS LIFE ISN\'T FOR YOU"', lt, { at: tIsnt - .2, x: 1150, y: 150, px: 58, rot: -3, bg: G6.RED, color: '#fff' })];
+      S.D.sfx = [[tJu, 'whoosh', .3], [tCm - 3, 'door_slam', .2], [tCm - 2.8, 'footsteps', .25], [tCash, 'thud', .4], [tCash + .1, 'coins', .3], [tIn, 'pop', .25], [tIsnt, 'hit', .3]]; } },
+  // 1.03 "fine, I'll do it on my own" - she walks out; HARD CUT: grey prison corridor, Lucia on the inmate phone
+  { cam: { z: [1.7, 1.8], x: [1700, 1780], y: [1000, 1000] }, bed: [['hum_loop', .15], ['night_loop', .06]], light: { dir: 1, key: 'rgba(230,240,255,.2)' },
+    init: S => { const tFi = A.at(S, 'Fine', .3), tOwn = A.at(S, 'own.', 2.0), tCut = A.at(S, 'Hard', 2.8), tRec = A.at(S, 'recorded', 3.9), tHam = A.at(S, 'Hamlet', 7.2), tPr = A.at(S, 'prison.', 9.2);
+      const camA = { z: [1.7, 1.8], x: [1700, 1780], y: [1000, 1000] }, camB = { z: [1.5, 1.62], x: [1650, 1707], y: [920, 940] };
+      const FA = [{ x: 1100, y: 1375, s: 1.85, ...G6.JASON(), facing: 1, mood: 'worried', seed: 11, anim: (o, lt) => { o.pose = lt > tOwn ? 'shrug' : 'stand'; } },
+        { x: 1900, y: 1370, s: 1.8, ...G6.LUCIA(), facing: -1, mood: 'angry', seed: 12, walk: { x0: 1900, x1: 2900, t0: tOwn - .3, dur: 1.6 }, anim: (o, lt) => { o.talk = lt < tOwn; } }];
+      const FB = [{ x: 2050, y: 1330, s: 1.8, ...G6.LUCIA_PRISON(), facing: 1, mood: 'sad', seed: 14, hold: HANDSET, anim: (o, lt) => { o.arms = () => ({ shR: -20, elR: -150, handR: 'fist', shL: 15, elL: -30 }); o.lean = Math.sin(lt * .9) * 1.5; if (lt > tPr) o.mood = 'worried'; } }];
+      S.D.draw = (c, lt, u, S2) => { const b = lt >= tCut; S.D.cam = b ? camB : camA; S.D.figs = b ? FB : FA; S._amb = null; K.plate(c, b ? 'prison_corridor' : 'bedroom', S.D.cam, u); K.screen(c); };
+      S.D.live = [(c, lt) => { if (lt < tCut) { table(c, 1480, 1365); G6.cashBundle(c, 1500, 1125, 1.8, 3); return; } const fl = Math.random() < .04 ? .1 : .3; TW.glow(c, 1280, 60, 300, '230,240,255', fl); TW.glow(c, 1280, 300, 200, '230,240,255', .2);
+          c.strokeStyle = '#1e1e24'; c.lineWidth = 6; c.beginPath(); c.moveTo(2290, 960); c.bezierCurveTo(2260, 1150, 2170, 1050, 2150, 960); c.stroke(); }];
+      S.D.over = [(c, lt) => { const a = pop(lt, tFi, .35) * (1 - K.seg(lt, tCut - .2, tCut)); if (a > 0) G6.bubble(c, 1300, 260, .85 * a, "FINE. I'LL DO IT|ON MY OWN.", { px: 40 }); }, flash(tCut),
+        (c, lt) => { const a = K.seg(lt, tRec - .2, tRec + .2); if (a <= 0 || lt < tCut) return; c.save(); c.globalAlpha = a; K.card(c, '"THIS IS A CALL FROM AN INMATE AT…"', lt, { at: tRec - .2, x: 760, y: 140, px: 40, rot: -2, fam: 'Oswald' }); c.strokeStyle = '#7ad0ff'; c.lineWidth = 5; c.beginPath(); for (let k = 0; k < 60; k++) { const x = 460 + k * 10, y = 250 + Math.sin(k * .9 + lt * 14) * 18 * Math.abs(Math.sin(k * .3 + lt * 3)); c[k ? 'lineTo' : 'moveTo'](x, y); } c.stroke(); c.restore(); },
+        (c, lt) => K.card(c, 'HAMLET CORRECTIONAL', lt, { at: tHam, x: 720, y: 360, px: 60, rot: 2, bg: '#3a4458', color: '#fff' }), (c, lt) => TW.stamp(c, 'LUCIA IS IN PRISON', 760, 520, lt, tPr, { px: 64 })];
+      S.D.sfx = [[tFi, 'pop', .25], [tOwn, 'footsteps', .25], [tCut, 'door_slam', .6], [tCut + .3, 'phone_ring', .35], [tRec, 'hum_loop', .1], [tHam, 'thud', .3], [tPr, 'stamp', .4]]; } },
+  // 1.04 how she got there: a café with no money ("my purse is in the car"), next door to the payday-loan shop; alarm, police lights
+  { cam: { z: [1.4, 1.5], x: [1000, 1100], y: [960, 980] }, bed: [['office_loop', .1], ['city_loop', .08]], light: { dir: -1, key: 'rgba(255,236,204,.2)' },
+    init: S => { const tHow = A.at(S, 'How', .3), tCa = A.at(S, 'café', 2.2), tMo = A.at(S, 'money,', 3.0), tPu = A.at(S, 'purse', 4.6), tWk = A.at(S, 'walked', 6.0), tNx = A.at(S, 'next', 6.6), tHe = A.at(S, 'held', 7.4), tPd = A.at(S, 'payday-loan', 8.4), tWr = A.at(S, 'badly', 10.0);
+      const camA = { z: [1.4, 1.5], x: [1000, 1100], y: [960, 980] }, camB = { z: [1.9, 2.0], x: [1180, 1260], y: [830, 840] };
+      const FA = [{ x: 1100, y: 1285, s: 1.8, ...G6.LUCIA(), facing: 1, mood: 'neutral', seed: 12, walk: { x0: 1100, x1: -300, t0: tWk - .1, dur: 2.6 }, anim: (o, lt) => { o.talk = lt > tCa && lt < tWk; if (lt > tMo - .3 && lt < tPu) o.pose = 'shrug'; if (lt > tPu && lt < tWk) { o.mood = 'smug'; o.arms = () => ({ shR: -40, elR: -60, handR: 'point' }); } } },
+        { x: 1560, y: 1290, s: 1.8, ...G6.CREW(1), facing: -1, mood: 'neutral', seed: 40, anim: (o, lt) => { if (lt > tMo) o.mood = 'worried'; if (lt > tPu + .4) o.mood = 'smug'; o.lean = Math.sin(lt * 1.1) * 1.5; } }];
+      const FB = [{ x: 0, y: 1098, s: 1.05, ...G6.LUCIA(), facing: 1, mood: 'angry', seed: 12, walk: { x0: 520, x1: 1120, t0: tNx - .1, dur: 1.6 }, anim: (o, lt) => { if (lt > tHe) { o.pose = 'point'; o.talk = true; } if (lt > tWr) { o.mood = 'shocked'; o.pose = 'stand'; o.facing = -1; } } }];
+      S.D.draw = (c, lt, u) => { const b = lt >= tNx; S.D.cam = b ? camB : camA; S.D.figs = b ? FB : FA; S._amb = null; K.plate(c, b ? 'payday_shop' : 'cafe_int', S.D.cam, u); K.screen(c); };
+      S.D.live = [(c, lt) => { if (lt < tNx) { steam(360, 1010)(c, lt); steam(507, 1005)(c, lt); TW.glow(c, 1590, 250, 160, '255,210,140', .3); TW.glow(c, 1990, 250, 160, '255,210,140', .3); return; }
+          TW.glow(c, 1300, 450, 220, '255,60,60', .25 + .1 * Math.sin(lt * 5)); if (lt > tHe) { const r = (lt * 6) % (Math.PI * 2); TW.glow(c, 1300 + Math.cos(r) * 120, 640, 260, '255,30,30', .55); c.fillStyle = '#c82020'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.arc(1300, 635, 16, Math.PI, 0); c.fill(); c.stroke(); } }];
+      S.D.front = [(c, lt) => { if (lt >= tNx && lt > tWr - .5) copLights(c, lt, 400, 900, K.seg(lt, tWr - .5, tWr + .5), 600); }];
+      S.D.over = [(c, lt) => K.card(c, 'HOW DID SHE GET THERE?', lt, { at: tHow, until: tCa + 1, x: 960, y: 110, px: 50, rot: -2 }),
+        (c, lt) => { if (lt >= tNx) return; K.card(c, 'NO MONEY', lt, { at: tMo, until: tPu, x: 1450, y: 150, px: 44, rot: 3, bg: GOLD }); const a = pop(lt, tPu, .35) * (1 - K.seg(lt, tWk, tWk + .3)); if (a > 0) G6.bubble(c, 820, 250, .8 * a, 'MY PURSE IS|IN THE CAR!', { px: 40 }); },
+        flash(tNx), (c, lt) => { if (lt >= tNx) K.card(c, 'NEXT DOOR: PAYDAY LOANS', lt, { at: tNx + .1, x: 560, y: 120, px: 44, rot: -3 }); }, (c, lt) => { if (lt >= tNx) TW.stamp(c, 'IT WENT BADLY WRONG', 1340, 200, lt, tWr, { px: 60 }); }];
+      S.D.sfx = [[tHow, 'whoosh_soft', .3], [tMo, 'coins', .15], [tPu, 'pop', .25], [tWk, 'footsteps', .25], [tNx, 'whoosh', .4], [tHe, 'alarm', .35], [tWr, 'stamp', .4], [tWr + .3, 'tension', .3]]; } },
+  // 1.05 back in the café: she escaped, went back, got caught - what she left wasn't a purse: a pram, her baby son Tomás
+  { plate: 'cafe_int', cam: { z: [1.45, 2.1], x: [1250, 1000], y: [980, 1060] }, bed: [['office_loop', .08]], light: { dir: -1, key: 'rgba(255,236,204,.2)' },
+    init: S => { const tEs = A.at(S, 'escaped.', 1.2), tBk = A.at(S, 'back,', 2.6), tCg = A.at(S, 'caught.', 3.6), tPu = A.at(S, 'purse.', 6.6), tBa = A.at(S, 'baby', 8.2), tTo = A.at(S, 'Tomás.', 9.2);
+      S.D.figs = [{ x: 560, y: 1335, s: 1.8, ...G6.CREW(1), facing: 1, mood: 'worried', seed: 40, anim: (o, lt) => { o.lean = 6 + Math.sin(lt) * 2; if (lt > tBa) o.mood = 'sad'; } },
+        { x: 1380, y: 1320, s: 1.85, ...G6.COP(1), facing: -1, mood: 'neutral', seed: 31, anim: (o, lt) => { o.lean = 5; if (lt > tBk + 1) { o.facing = 1; o.mood = 'angry'; o.arms = () => ({ shR: 75, elR: -10, handR: 'open' }); o.lean = 0; } if (lt > tPu) { o.facing = -1; o.arms = null; o.mood = 'sad'; o.lean = 5; } } },
+        { x: 2900, y: 1320, s: 1.8, ...G6.LUCIA(), facing: -1, mood: 'worried', seed: 12, walk: { x0: 2900, x1: 1780, t0: tBk - 1.6, dur: 1.8, pose: 'run' }, anim: (o, lt) => { if (lt > tCg) { o.mood = 'sad'; o.arms = () => ({ shR: 20, elR: -120, shL: 20, elL: -120 }); } } }];
+      S.D.live = [steam(360, 1010), steam(507, 1005)];
+      S.D.front = [(c, lt) => pram(c, 960, 1300, 1.05, lt, K.seg(lt, tBa, tBa + .8)), (c, lt) => ntag(c, 'TOMÁS', 980, 920, lt, tTo, { px: 40, col: '#7ad0ff' }), (c, lt) => { if (lt > tTo) TW.glow(c, 980, 1150, 260, '255,230,180', .25 * K.seg(lt, tTo, tTo + 1)); }];
+      S.D.over = [(c, lt) => K.card(c, 'ESCAPED', lt, { at: tEs - .2, until: tBk, x: 1500, y: 140, px: 50, rot: 3, bg: '#4aa86a', color: '#fff' }), (c, lt) => { const o = 1 - K.seg(lt, tPu - .6, tPu - .2); if (o <= 0) return; c.save(); c.globalAlpha = o; TW.stamp(c, 'CAUGHT', 1560, 150, lt, tCg, { px: 80 }); c.restore(); },
+        (c, lt) => { const a = pop(lt, tPu - .3, .35) * (1 - K.seg(lt, tBa - .3, tBa)); if (a <= 0) return; K.card(c, 'NOT A PURSE…', lt, { at: tPu - .3, x: 520, y: 150, px: 48, rot: -3 }); }];
+      S.D.sfx = [[tEs, 'run_steps', .3], [tBk - 1.6, 'run_steps', .3], [tCg, 'stamp', .45], [tPu, 'tension', .3], [tBa, 'swell', .3], [tTo, 'chime', .3]]; } },
+];
