@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""qwen_qa.py (v1, 22 Nov 2026) - Qwen3-VL-4B (free, local, CPU) watches a video.
+"""qwen_qa.py (v2, 22 Nov 2026: learns from FEEDBACK-LESSONS.json) - Qwen3-VL-4B (free, local, CPU) watches a video.
 Pushpam 22 Nov: "include qwen in qa process to identify the error, and when I send video use that to watch videos".
 
 Two modes (run with the Transformers venv: bash /mnt/project-files/tools/transformers/setup.sh first):
@@ -16,14 +16,19 @@ from PIL import Image, ImageDraw, ImageFont
 
 MODEL = os.environ.get("QWEN_VL", "Qwen/Qwen3-VL-4B-Instruct")  # beat Qwen2.5-VL-3B in the 22 Nov test
 
-DESCRIBE = ("Describe this frame from an animated video in 1-2 short sentences: what is shown, the on-screen text, AND the "
-  "visual quality (sharp or blurry/low-res, normal or squashed/stretched proportions, full scene or mostly empty/black, "
-  "anything odd, overlapping, floating, cut off or unfinished).")
-JUDGE = ("A frame from an animated YouTube video was described as:\n\"{d}\"\nDoes this description show a production ERROR "
-  "(black/blank/mostly empty frame, squashed or stretched image, blurry/low-resolution, text cut off or covering a face, "
-  "overlapping/clipping, floating objects, broken bodies, wrong sizes{extra})? A normal cartoon scene with text is OK. "
-  "Answer with one line: 'ERROR: <short reason>' or 'OK'.")
-EXTRA = {"reel": ", missing logo, end card not centred", "act": "", "full": ""}
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import qa_learn
+LESSONS = qa_learn.active("visual")   # every visual mistake Pushpam ever flagged
+DESCRIBE = ("Describe this frame from an animated video in 2-3 short sentences: what is shown, the on-screen text, the visual "
+  "quality, AND where every character's feet are (floor, road, wall, roof, table?), where every object rests (table, hand, "
+  "air?), sizes of cars vs people, which way roads run, whether images stay inside screens/frames, anything overlapping, "
+  "floating, cut off, dark or unfinished.")
+JUDGE = ("A frame from an animated YouTube video was described as:\n\"{d}\"\n\nThe channel owner has rejected videos for "
+  "these mistakes before:\n{lessons}\n- E0: black/blank frame, squashed or stretched image, blurry/low-resolution{extra}\n\n"
+  "{narr}Does the description show any of these mistakes? A normal scene is OK. Answer one line per mistake found, "
+  "'<id>: <short reason>', or exactly 'OK'. Only list a mistake you can actually see in the description; never list ids just to say they are fine.")
+LESSON_TXT = "\n".join(f"- {l['id']}: {l['look_for']}" for l in LESSONS)
+EXTRA = {"reel": ", missing logo top-right, end card not centred", "act": "", "full": ""}
 
 def probe(path):
     o = subprocess.run(["ffprobe","-v","error","-show_entries","format=duration","-of","csv=p=0",path],
@@ -70,11 +75,20 @@ def main():
     ap.add_argument("video"); ap.add_argument("--kind", choices=["act","full","reel"], default="act")
     ap.add_argument("--watch", metavar="QUESTION"); ap.add_argument("--transcript", action="store_true")
     ap.add_argument("--every", type=float, help="seconds between sampled frames (QA default 2, watch default 5)")
+    ap.add_argument("--at", help="only these timestamps, e.g. 0:48,1:23,95 (spot-check / tests)")
     ap.add_argument("--out"); a = ap.parse_args()
     out = a.out or os.path.join(os.path.dirname(os.path.abspath(a.video)), "qa_qwen")
     os.makedirs(out, exist_ok=True); dur = probe(a.video)
     every = a.every or (5.0 if a.watch else (2.0 if a.kind == 'reel' else 3.0))
-    tmp = tempfile.mkdtemp(prefix="qwenqa_"); fr = frames(a.video, every, tmp)
+    tmp = tempfile.mkdtemp(prefix="qwenqa_")
+    if a.at:
+        fr = []
+        for k, x in enumerate(a.at.split(",")):
+            t = sum(float(v) * 60 ** i for i, v in enumerate(reversed(x.split(":")))); fp = os.path.join(tmp, f"a_{k:03d}.jpg")
+            subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-ss", str(t), "-i", a.video, "-frames:v", "1", "-vf", "scale=448:-2", fp], check=True)
+            fr.append((t, fp))
+    else:
+        fr = frames(a.video, every, tmp)
     print(f"[qwen] {len(fr)} frames, every {every}s, duration {dur:.1f}s; loading {MODEL}", file=sys.stderr)
     t0 = time.time(); q = Qwen()
     if a.watch:
@@ -96,17 +110,25 @@ def main():
         lines += ["", "## Answer", summary]
         path = os.path.join(out, "qwen_watch.md")
     else:
-        issues = []
+        issues = []; words = []
+        wj = os.path.join(out, "vo_words.json")   # written by vo_check.py (run it first)
+        if os.path.exists(wj): words = json.load(open(wj))
+        def narration(t):
+            w = " ".join(x for x, tt in words if t - 4 <= tt <= t + 3)
+            return (f"Narration heard at this moment: \"{w}\". If the picture does not show the place or action this narration "
+                    "talks about, that is mistake L08.\n\n") if w else ""
         for n, (t, p) in enumerate(fr):
-            d = q.ask([Image.open(p)], DESCRIBE, 70)
-            j = q.ask([], JUDGE.format(d=d, extra=EXTRA[a.kind]), 25)
-            if j.upper().startswith("ERROR") and not re.search(r"not (a )?production error|intentional|stylistic", j, re.I):
-                issues.append({"t": ts(t), "issue": j[6:].strip(" :"), "seen": d})
+            d = q.ask([Image.open(p)], DESCRIBE, 100)
+            j = q.ask([], JUDGE.format(d=d, extra=EXTRA[a.kind], lessons=LESSON_TXT, narr=narration(t)), 60)
+            for ln in j.splitlines():
+                m = re.match(r"\W*(L\d+|E0)\s*[:\-]\s*(.+)", ln.strip())
+                if m and not re.search(r"^no\b|not (a )?(production )?(error|mistake)|intentional|stylistic|no (such|issue|indication|violation)|\bno \w+ (noted|shown|discrepanc)|acceptable|presumably|which is correct|not mentioned|we can'?t|cannot be determined|so no |is fine|looks fine", m.group(2), re.I):
+                    issues.append({"t": ts(t), "lesson": m.group(1), "issue": m.group(2).strip(), "seen": d})
             print(f"[qwen] {n+1}/{len(fr)} {ts(t)} {j[:90]}", file=sys.stderr)
         lines = [f"# Qwen QA: {os.path.basename(a.video)} ({a.kind}, {dur:.0f}s, frame every {every}s)",
                  f"Model {MODEL}, {time.time()-t0:.0f}s, 0 Claude credits. Second opinion: open each flagged timestamp "
                  "on the qa_auto 1 fps sheet and confirm before fixing.", "", f"## Suspected issues ({len(issues)})"]
-        lines += [f"- **{i['t']}** {i['issue']}  \n  _seen: {i['seen']}_" for i in issues] or ["- none flagged"]
+        lines += [f"- **{i['t']}** [{i.get('lesson','')}] {i['issue']}  \n  _seen: {i['seen']}_" for i in issues] or ["- none flagged"]
         json.dump({"video": a.video, "kind": a.kind, "model": MODEL, "issues": issues},
                   open(os.path.join(out, "qwen_qa.json"), "w"), indent=1)
         path = os.path.join(out, "qwen_qa.md")

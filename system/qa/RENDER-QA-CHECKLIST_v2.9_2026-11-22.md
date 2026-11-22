@@ -1,0 +1,202 @@
+# Render QA checklist + watch procedure (v2.9, 22 Nov 2026)
+
+Applies to EVERY line and channel: Stormi 2D, 2D dynamic, 3D, 3D low, DumDown, Finance with Stromi, reels, IG parts, shorts.
+Built from every mistake Pushpam caught by eye (29 Oct to 13 Nov). Each item says what to look for, how to catch it,
+and the standard fix. Any hit is at least MEDIUM. Nothing is handed over, combined, uploaded or booked until a round is clean.
+
+Files: `system/qa/RENDER-QA-CHECKLIST.md` (this), `system/qa/qa_auto.py` (machine checks + 1 fps sheets), `system/qa/voice_qa.py` (voice naturalness, run on every dry VO stem).
+Project files `/mnt/project-files/system/qa/`, repo `system/qa/` (branch claude/project-thread-s1uli2), Drive `AI/Tools/Render QA`.
+
+---
+
+## A0. LEAN QA = default from 22 Nov 2026 (Pushpam: "efficient and uses less credits")
+One command does the free work; Claude only looks at a small review pack.
+```
+bash /mnt/project-files/tools/transformers/setup.sh --qwen          # once per session (~4 min)
+python3 /mnt/project-files/system/qa/qa_lean.py FILE --kind act|full|reel --out QA_DIR
+```
+- Runs qa_auto.py (machine checks) and qwen_qa.py (Qwen3-VL-4B, 0 credits) in parallel, merges every flag by timestamp.
+- Read `QA_DIR/qa_lean.md` and ONLY the images it lists: flagged frames (labelled with the reason), one overview of the
+  whole video (~40 thumbnails), and for reels one image of logo / end-card / hook crops. Judge each flag real or false alarm.
+- Voice: still `voice_qa.py` on every dry VO stem (free). Listen pass unchanged.
+- Fix, re-render, re-run qa_lean until clean. Long runs: start it in the background (Qwen ~21 s per sampled frame; use
+  `--every 5` on long full videos to halve the time).
+- Use the DEEP procedure below (read every 1 fps sheet, /watch, design pass) only when: Pushpam's review finds something
+  lean QA missed, the final upload file of a long video (one deep pass), or Pushpam asks.
+
+## A. DEEP procedure (see A0 for when)
+
+1. **Machine pass:** `python3 /mnt/project-files/system/qa/qa_auto.py FILE --kind act|full|reel --out QA_DIR`
+   - Fix every FAIL before anything else. WARN = fix unless clearly intended. CHECK = look at that timestamp by eye.
+   - It writes `QA_DIR/qa_auto.md`, timestamped 1 fps contact sheets `QA_DIR/sheets/`, zoom crops `QA_DIR/zoom/`.
+1b. **Voice pass (Pushpam 14 Nov, every video, every channel, every voice):** `python3 /mnt/project-files/system/qa/voice_qa.py VO_FILES...` on the DRY voice of the narrator and every character/gag line, before mixing. Fix every FAIL, listen to every WARN timestamp. Then listen to the whole VO once at 1x for the items in B10 a machine can't hear.
+1c. **Qwen pass (Pushpam 22 Nov, free, 0 Claude credits):** `bash /mnt/project-files/tools/transformers/setup.sh` once, then
+   `~/.venvs/hf/bin/python /mnt/project-files/system/qa/qwen_qa.py FILE --kind act|full|reel --out QA_DIR` (run it in the
+   background while you do the other passes; reel ~2-3 min, 10-min full ~70 min on CPU). Qwen3-VL-4B describes every frame
+   (reel every 2 s, act/full every 3 s) and flags errors in `QA_DIR/qwen_qa.md`. Every flag gets checked by eye on that
+   timestamp's sheet; real ones go in the round note. It is a second opinion: it can miss things, so passes 2-4 still run.
+2. **/watch pass:** `python3 .claude/skills/watch/scripts/watch.py FILE --engine local --question "<paste section D>"`
+   (setup once: `bash tools/claude-video/setup-cloud.sh`, branch claude/project-thread-6cjl04). Local engine only.
+3. **Design pass:** run the taste + impeccable skills on one frame per shot for alignment, clipping and detail (Pushpam 13 Nov).
+4. **Eyes-on pass:** Read EVERY contact sheet and every zoom crop. For each frame walk the checklist in section B:
+   feet, what is under them, what is in the hands, what overlaps, is anything moving, does the scale make sense,
+   is the text clear. For every walk shot, vehicle crossing, prop hand-off and seated shot, also extract that
+   stretch at 4-10 fps (`ffmpeg -ss T -t 4 -i FILE -vf fps=8,scale=480:-2,tile=8x4 out.jpg`) and step through it.
+5. **Listen pass:** check the qa_auto audio lines, then listen to 3 random 10 s spots + the first 10 s: hiss, clicks,
+   VO cut mid-word, music audible, SFX on cuts.
+6. **Write the note** `05 Production/qa/<file>-roundN.md`: each hit = time, frame, severity, cause, fix (use the fix column).
+7. **Fix every hit, re-render, re-run 1-6.** Repeat until the round is clean. Only then hand over / combine / book.
+8. Full video only: after the final encode, `--kind full` again on the EXACT file that will be uploaded (decode + CFR).
+
+Severity: HIGH = broken/unwatchable or factual/map error or upload risk; MEDIUM = anything in section B; LOW = polish.
+
+---
+
+## B. The checklist (what Pushpam has flagged)
+
+### B1. Grounding and floating
+| # | Look for | How to catch | Standard fix |
+|---|---|---|---|
+| 1 | Characters standing ON desks/tables (looks like flying) | feet line at/above a desk top; body lifted above the floor plane | put feet on the floor behind the desk or hide them behind it |
+| 2 | Sitting on air | no seat under the hip in a seated pose | add chair/bench/rock; `VP.sit` on a real prop |
+| 3 | Walkers above buildings/roofs/sky | feet y vs the painted ground line | move the walk path onto the street plane |
+| 4 | Floating props: money, coins, papers, luggage on camels, crowns, flags | bottom edge not touching a surface and not in a hand | rest it on the surface (contact shadow) or attach to the hand |
+| 5 | Terrain/mountains/buildings not touching the ground | gap or hard edge between object base and ground | extend base into ground, add ground blend + contact shadow |
+| 6 | People walking across a big prop's body (planes, ships, tanks) | feet over the prop silhouette | walk on the ground in front/under it, or stairs to a door |
+
+### B2. Walks and motion
+| # | Look for | How to catch | Standard fix |
+|---|---|---|---|
+| 7 | Walk-in-place / gliding / sliding tyres | qa_auto "possible walk-in-place"; 8 fps strip: legs cycle but nothing travels, or travels with legs still | scroll the background with the walker or move the walker; small zoom-out on stop; walk phase follows real x travel |
+| 8 | Walk cycle too fast/slow or not starting/stopping on time | leg cycle vs distance per step; legs still moving after the stop | set `o.t = o.walkPhase = X.phase` in custom walks; cycle speed matched to movement; start/stop on the beat |
+| 9 | Wheels not turning | spokes identical frame to frame while vehicle moves | rotate wheels by distance / radius |
+| 10 | Still frames / frozen characters | qa_auto "frozen picture"; a character in one pose >2 s; whole frame static >5 s | idle breathing/sway, camera push, ambient motion (smoke, birds, water), motion-graphic tags (Finance: nothing static >5-7 s) |
+| 11 | Abrupt pose snaps / weird joints | prop or limb jumps between two frames | ~0.3 s in-between; time-smoothed pose angles; no pose switch faster than ~1.7 s |
+| 12 | Animation not following the VO | action happens before/after the line that names it | key the action to the VO word timing (wt.py timing) |
+
+### B3. Overlaps, clipping and layering
+| # | Look for | How to catch | Standard fix |
+|---|---|---|---|
+| 13 | Characters overlapping each other | two bodies sharing pixels without clear depth | spread them; riders/horses in a back layer; vary depth scale |
+| 14 | Props clipping bodies (book over legs, prop over trousers, door through a person) | prop drawn over the body where it should be behind/in hand | `holdBehind: true`; layer order; move the door/prop |
+| 15 | Seated legs in front of the torso | legs drawn over the body in sit poses | legs BEHIND the torso (rig_leo.js), legsFront only for squat/work |
+| 16 | Vehicles through architecture (train through arch, ship through bridge) | step every frame where a vehicle meets a structure | correct layering (goes behind) or change the path |
+| 17 | Animal teams overlapping (zebras, horses) | bodies merged | spread them or layer clearly |
+| 18 | Camera inside a head / near-clip in 3D | half faces, cut geometry at frame edge | pull camera back or adjust near plane |
+| 19 | Characters vanishing or popping in | person in frame N, gone in N+1 (or vice versa) without walking | walk in / walk out of frame; never appear from air |
+| 20 | Legs cut by a hard crop look "missing" | body ends at a crop line mid-shot | put grass/wheat/props in front instead of a hard clip; bodies complete |
+
+### B4. Scale, direction and realism
+| # | Look for | How to catch | Standard fix |
+|---|---|---|---|
+| 21 | Objects not at real-world size vs people | compare to a 1.75 m person: airliner fuselage ~4 m (door sill 3.4 m), fighter 16 m long, loco 4.3 m, tank 2.4 m, truck 3 m, drone 0.4-0.7 m | rescale (2D rig ~205 u/m vs RU props ~57 u/m: soldier s = prop s x 0.28); foreground person at most a bit bigger, never 2x |
+| 22 | Background people tiny next to foreground people | inconsistent scale in one plane | consistent scale per depth |
+| 23 | Vehicles on a road toward camera drawn side-on | side view on a perspective road | front or rear view |
+| 24 | Mics pointing the wrong way | grill not toward the speaker's mouth | rotate the mic to the speaker |
+| 25 | Identical rows of figures | same pose/look repeated | vary pose, gesture, look |
+
+### B5. Detail, light and texture
+| # | Look for | How to catch | Standard fix |
+|---|---|---|---|
+| 26 | Plain / blocky scenes (low detail, flat colour) | few props, big flat areas; war/train/era shots without period detail | add painted detail, dynamic shadows, period props; war = smoke, debris, fire glow, churned ground |
+| 27 | Blocky sea / textures / faceted close-ups | grid of squares, stepped gradients | animated detailed sea (`S.npSea`), smooth normals (`real.rbox`), higher-res texture |
+| 28 | Dark scenes (subject unreadable on a phone) | qa_auto "dark scene" (mean luma <28 for >1.5 s) | lift key light, add rim light/practicals, grade up |
+| 29 | Flicker: ground/road/texture, cloth, look-variety flips | qa_auto "flash/flicker spike"; same spot changing frame to frame | 3D: never throttle shadow updates (Caesar cloth flicker root cause); 2D: reset variety per frame; stable seeds |
+| 30 | THREE.Sprite black under post-fx; lamps blowing out paper | black boxes / white burnt areas | use planes not Sprites; move/dim lamps near paper |
+| 31 | Black frames / missing shots | qa_auto "black frames" | re-render the shot; check the cut list |
+
+### B6. Text, maps, branding, thumbnails
+| # | Look for | How to catch | Standard fix |
+|---|---|---|---|
+| 32 | Text/cards over subtitles or characters | card overlaps the subtitle band or a face/body | move cards above the subtitle line, off characters |
+| 33 | Signs/cards/titles cut off at frame edge | letters touching or past the edge, in 16:9 and in the 9:16 crop | keep text in the title-safe area; reframe per reel |
+| 34 | Spelling / wrong dates / names on screen | read every on-screen word on the sheets | fix the string |
+| 35 | Wrong maps (India) | J&K, Ladakh not fully Indian; north cut off | `world: 'ind', highlight: 'India'` (world_ind.js); keep the north in frame |
+| 36 | Reel logo missing / outside safe zone / over a face | qa_auto zoom/logo_*.jpg | Stormi watermark top-right inside the 9:16 safe zone |
+| 37 | Reel end card missing or off-centre | qa_auto zoom/endcard.jpg | centred "Watch the full video on our YouTube channel" card (IG parts: "Watch Part N+1") |
+| 38 | Reel hook weak | qa_auto zoom/first3s.jpg | shock line in the first second + subject face within 3 s |
+| 39 | Reel cover on an empty frame / cut-off card / text over faces | look at every cover in one montage | set tt/thx/tz/thy per reel; name slab; faces clear of the logo |
+| 40 | Thumbnail faces not fully visible (circles cropping faces) | each face fully inside its circle, forehead to chin | bigger circles, crop tight on faces, no circle overlaps |
+| 41 | DumDown: no subtitles, no channel intro | any subtitle text or intro sting | remove |
+
+### B7. Audio
+| # | Look for | How to catch | Standard fix |
+|---|---|---|---|
+| 42 | VO hiss / breath noise | qa_auto noise floor; listen to pauses | `arnndn sh.rnnn` + `afftdn nr=14`, trim the 1680-sample delay, before mixing |
+| 43 | Music/SFX too quiet or missing | qa_auto "music/SFX bed" + "dead air"; listen | whoosh on every cut, pop on each sentence, tick on numbers; SFX ~-4 dB, beds -17, music -15 under VO |
+| 44 | VO cut mid-word at act joins | listen to every join in the full | `ACT_TAIL_CUT=0` when acts end ~1 s after the VO; edge fades 0.06/0.2 s |
+| 45 | Wrong loudness / clipping | qa_auto loudness | two-pass loudnorm -14 LUFS, TP -1.5 |
+| 46 | Wrong voice for the line | Stormi = take P; DumDown Loki = Kokoro am_michael; no ElevenLabs except where allowed | re-voice with the right model |
+
+### B8. Final file and upload safety
+| # | Look for | How to catch | Standard fix |
+|---|---|---|---|
+| 47 | Stitched-encode file that YouTube abandons (VisionQuest, 13 Nov) | qa_auto `--kind full`: decode errors, VFR (r != avg frame rate), A/V length mismatch | re-encode the whole master ONCE: `ffmpeg -i in -vf fps=30 -c:v libx264 -crf 18 -pix_fmt yuv420p -c:a aac -b:a 192k -ar 48000 -movflags +faststart out.mp4`; never upload a `-c copy` concat of separately encoded parts |
+| 48 | No clean last 5 s for the end screen | qa_auto zoom/last5s.jpg | hold a clean 5 s end (no text/subtitles) |
+| 49 | Wrong size/codec | qa_auto streams | full 1920x1080 h264 yuv420p; reels 1080x1920 |
+
+### B9. Frozen Market review (Pushpam 13 Nov 19:19, Finance with Stromi) - misses that v2 must now catch
+| # | Look for | How to catch | Standard fix |
+|---|---|---|---|
+| 50 | Background / door / window glitching (2:40, 6:04, 13:54) | qa_auto "z-fighting / shimmer" FAIL (pixels flipping A-B-A every frame in one spot for 3+ s; tuned on Frozen Market, catches 2:40, 6:04, 13:54) and "local glitch/flicker" CHECK; step that second at 8 fps | stable layer order, no per-frame random, no texture/sprite swap, fixed seeds; 3D: no z-fighting (offset coplanar door/window planes), no shadow throttle |
+| 51 | Held props floating (chain at 4:24) | for every chain, rope, leash, bag, sign: is one end in a hand? | parent the prop to the hand joint, not to the scene |
+| 52 | Labels/tokens floating instead of resting (FOR/AGAINST at 11:59) | anything that "belongs on" a scale, table, shelf must touch it | place them on the pans/surface with a contact shadow; move with the object |
+| 53 | Stamps/graphics landing ON a building or prop (stamp at 6:12) | landing graphic overlaps the house/prop silhouette | land in clear space beside it; check the end frame of every slam/stamp animation |
+| 54 | Props clipping furniture or each other (rope through table 11:21, lock on door 13:17) | prop edge passes through another object's edge | move/raise the prop (lock a little up), layer behind/in front correctly, shorten the rope |
+| 55 | Characters clipping furniture (sofa 9:59, people 13:54) | body overlaps the sofa/chair/desk outline wrongly | seat into the sofa with the right layer order (legs behind cushion front), or move them apart |
+| 56 | Characters popping in from nowhere (all scenes) | qa_auto "possible pop-in"; any person in frame N not in N-1 without walking in | walk in from the frame edge or a door, or a deliberate fade + whoosh; never appear |
+| 57 | Any scene not highly detailed (8:21 and "all scenes") | rate every scene's set: props, texture, depth layers, light; 3D hybrid sets too | add set dressing, textures, depth layers, practical lights; rebuild plain sets |
+| 58 | Graphics misaligned / crowding characters | design pass with the taste + impeccable skills on one frame per shot | align cards/tags to a grid, keep clear of bodies and faces, consistent margins |
+
+Every stamp, tag, label, card or graphic that animates in gets its END frame checked: where it lands, what it touches, what it covers.
+
+### B10. Voice naturalness (Pushpam 14 Nov 2026: "make sure all the voices sound natural", all videos, all channels)
+Run `voice_qa.py` on the dry VO of EVERY voice (narrator, characters, gag voices; take P, Kokoro, Piper, ElevenLabs alike), then listen.
+| # | Look for | How to catch | Standard fix |
+|---|---|---|---|
+| 59 | Robotic / monotone delivery | voice_qa "intonation": pitch spread < 1.6 st FAIL, < 2.2 st WARN (natural 3-8); by ear: flat, same melody every sentence | more expressive settings (Kokoro/Piper: lower speed slightly, split long sentences; ElevenLabs: lower stability), add emphasis/punctuation, or switch to a more natural voice |
+| 60 | Pace too fast / too slow / sudden speed-ups | voice_qa "pace" 2.6-6.0 syl/s ok (FAIL < 2.2 or > 6.8) and "pace jump" (sentence 45% faster/40% slower than the clip) | set speed 0.9-1.1 so all lines match; regenerate the odd sentence |
+| 61 | Pitch glitches: cracks, warble, octave flips, metallic artefacts | voice_qa "pitch glitches" timestamps; listen there | regenerate that line (other seed, slightly slower); never pitch-shift a whole take |
+| 62 | Clipped words (first/last syllable cut, word stops dead) | voice_qa "clipped word" (no lead-in, no tail, 35 dB drop at full level) | regenerate or re-trim with 30-60 ms handles + 10 ms fades; keep 50-100 ms before and 100-200 ms after each line |
+| 63 | Hiss / noise / breath noise in pauses | voice_qa "noise in pauses" (floor > -58 dBFS WARN, > -50 FAIL; hiss share) | arnndn + afftdn nr=14 (trim 1680-sample delay), gate at -55 dBFS; de-breath loud breaths (-12 dB), keep soft natural ones |
+| 64 | No breathing room / wall of speech, or dead gaps | voice_qa "wall of speech" (> 22 s without a pause) and "long gap mid-clip" (> 1.6 s) | punctuation/SSML breaks: 0.25-0.5 s between sentences, 0.6-0.9 s at paragraph turns |
+| 65 | Wrong stress, mispronounced names/places, accent drift between lines, emotion not fitting the line | LISTEN (machine can't): read along with the script once | phonetic respell (e.g. 'Huang' -> 'Hwahng'), re-voice the line, keep one voice model + settings per character for the whole video |
+| 66 | Digital clipping / distortion in the voice | voice_qa "digital clipping" | lower TTS gain, re-export, limiter at -1.5 dBTP |
+
+---
+
+### B11. Animation quality: "feels like a slide show" (Pushpam 15 Nov 2026 20:03, DumDown Agatha v1, all channels)
+Run `python3 /mnt/project-files/system/qa/cine_qa.py FILE` (also run by qa_auto) and watch at real speed, not only sheets.
+| # | Look for | How to catch | Standard fix |
+|---|---|---|---|
+| 67 | Slideshow feel: held frames, one slow uniform zoom per shot, same cut rhythm everywhere | cine_qa "slideshow" (camera frozen >= 3 s WARN, >= 5 s FAIL, still share > 35 % FAIL); by eye: does each shot have a motivated move? | operator moves (two-push ease, truck, arc, pull-out reveal), coverage cuts (wide -> medium -> close on the speaker), punch-in on every hit, whip pans between rooms, handheld drift; MotionMaxx camera rules (motion.md section 6) |
+| 68 | Old scene still on screen after a cut (1:27) | cine_qa "cut leak"; scrub 3 frames after every cut | every scene fully covers the frame (no half-panels over old plates); kill leftover layers at the cut |
+| 69 | Props floating / not held: guitars, cymbals, mics, glasses, cards beside the hand (8:15) | every held prop: hand closed on it, fingers drawn OVER it, no gap; instruments sit on the body, hands on neck/body, strum moves | engine: `on: charIndex` = palm anchor + grip hand + body -> prop -> arms layering; instruments via IK (`play`); loose props rest on a surface or are clearly magic (glow, particles) |
+| 70 | Hands clipping or passing through objects | look at every frame where a hand is near a prop or furniture | IK the hand to a grip point; render log must have no IKREACH warnings |
+| 71 | Real-world scale wrong: people bigger than houses, cars tiny, people huge in rooms (2:05, 6:55) | compare person height with a door (2.0-2.1 m), counter (0.9 m), sofa back (0.85 m), car (1.45 m tall, 4.5 m long) in the same plane | per-plate scale table (PLATE_META k/fy); exterior plates framed close (porch, door, parked car near camera) so 1.7 m people fit |
+| 72 | Hair over the eyes, stray strands flying off the head, accessories glued over the eyes (2:53, 3:35) | close-up check of every character's face in the cast sheet and in 3 random frames | kit hair: tidy locks, bangs lifted; glowing eyes = glowing irises, never an opaque band |
+| 73 | Same hand gesture repeated, stiff arms while talking (3:33, 5:26) | watch any talking shot for 10 s: count distinct gestures (need >= 3) | acting.js gesture cycle (12+ gestures, 1.2-2.4 s each, eased with overshoot), explicit poses acted into and relaxed out of |
+| 74 | Weird-looking animation (1:08) | anything that reads as broken at real speed | replace the move, do not tweak it |
+| 75 | Backgrounds flat or low-detail compared with the characters | rate every plate: detail, light, depth; contact sheet of all plates | painted plates (free local SDXL-Turbo + up-res pass), depth of field on close shots |
+| 76 | Camera runs past the background (black strip on one side during a whip pan or drift) | cine_qa "edge exposed" FAIL | clamp the camera transform to the plate edges (engine camTf), never add whip offset after the clamp |
+| 77 | Character cards, titles or chyrons drawn over a character | watch every card/title moment; card side must be empty of people | stage everyone on the other half during the card, no talker reframe on card shots, titles at the top of frame |
+| 78 | Props parked in the air (signs, notes, tarot cards, brooms at knee height) | 1 fps sheet: every prop must be held, on a surface, hung on a wall, or clearly flying high | hold it (on: char), put it on a table/floor at the plate's real surface height, or fly it across the sky |
+| 79 | Placeholder-looking magic objects (flat glowing rectangle as a door) | would this read as a real object in a film still? | draw the real object (wood, stone, iron, light leak) at real size, standing on the floor |
+
+### B12. Pushpam's Rockefeller review (21 Nov 2026), 3D sets with 2D cards. Machine check: `node system/qa/scenecheck_3d.js [acts]` from the build folder (copy next to act page; ACT_PAGE=act15.html), must print PASS before any render
+| # | Problem | How to catch | Fix |
+|---|---|---|---|
+| 80 | Props floating above an empty counter/table (glasses, bottles, lamp, toy train, sign, microscope) | scenecheck_3d "FLOATING PROP" (nothing under the prop) + 1 fps sheet | put the prop ON the surface: y = surface top (probe it, never guess), x/z inside the table; check every shot that uses the same set |
+| 81 | Character card standing inside a desk, table, chair or podium | scenecheck_3d "CHAR-IN-PROP" | move the character behind/in front of the furniture (z outside its depth), hide a chair nobody uses; fix it in every shot on that set |
+| 82 | Character clipping a chair (chair back through the body) | scenecheck_3d "CHAR-IN-PROP" | hide or move the chair in the set (not per shot), or stage the person clear of the chair ring |
+| 83 | Face add-ons (mustache, glasses, monocle, goggles) in the wrong place on 3/4 or side views | snap each character in front, q and side view BEFORE building the cast; mustache centred under the nose, glasses centred on the eyes | compute add-on x from the SAME view table the rig uses (eyes x = fx*0.62R, nose x = fx*0.95R); never read a global the rig keeps private (Rockefeller bug: VIEW was out of scope, so fx was always 0) |
+| 84 | Text on a prop cut by another object (ledger title under the red spine, sign hidden behind a board) | read every on-screen word in the 1 fps sheets: is any word cut, covered or clipped | move the text into a clear area of the prop (left page), shrink/lower the board that covers the sign |
+| 85 | Tag/title placed over a sign, board or document text (text over text) | sheet review: no tag may overlap any other readable text | move the tag to an empty wall/floor area, pull the camera back if a document fills the frame |
+| 86 | Tag lands on a wall sign/board only part-way through a shot because the camera moves (passes the still-frame check, fails in motion) | `node system/qa/tagcheck_3d.js [acts]` (words + character hits over the whole life of every tag) + 1 fps sheets | engine `planTags`: mark every board with words `userData.txt = 1` (sets15 wraps `board()`); tags that touch words are moved once per shot to the nearest spot clear of words and characters, date chips stay put. Re-snap every moved tag and eyeball it |
+
+## C. Two worked fixes Pushpam asked for by name
+- **Walk-in-place (Mongols, 6 Nov):** scroll the painted background with the walker at walk speed, and add a small zoom-out when they stop.
+- **Upload "Processing abandoned" (VisionQuest, 13 Nov):** cause was a full stitched from separately encoded acts and gags without re-encode. Fix = single-pass CFR re-encode + decode check before upload.
+
+## D. /watch question (paste as --question)
+"Check against the Stormi render QA checklist. Report every hit with its timestamp and a fix: characters standing on furniture, sitting on air, walking above ground or over big props, floating props or luggage, terrain not touching the ground; walk-in-place, gliding, walk cycles too fast or not starting/stopping on time, wheels not turning, frozen characters or still shots over 5 s, abrupt pose snaps, action out of sync with the narration; overlapping characters or animals, props clipping bodies, seated legs in front of the torso, vehicles through buildings, camera inside heads, characters vanishing or popping in, legs cut off by crops; background, door or window glitching; held props (chains, ropes) not in a hand; labels not resting on their object; stamps or graphics landing on buildings; props clipping furniture (rope through table, lock through door); characters clipping sofas or chairs; graphics misaligned or crowding characters; wrong real-world scale, vehicles side-on on a road toward camera, mics facing away from the speaker, identical rows of figures; plain or blocky scenes, blocky sea or textures, scenes too dark, flicker; text over subtitles or characters, cut-off signs, spelling, wrong India map; reel logo top-right, centred end card, hook in the first 3 s; audio hiss, quiet music or SFX, dead air, words cut at joins; any voice that sounds robotic, monotone, too fast or slow, glitchy, clipped, mispronounced or out of character. Also (v2.6): props floating above an empty table/counter, any character inside a desk/table/chair/podium, mustache or glasses not centred on the nose/eyes in every view, any word on a prop cut or covered by another object, any tag over other readable text, at ANY moment of a moving shot."

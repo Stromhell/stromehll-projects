@@ -1,4 +1,4 @@
-# Render QA checklist + watch procedure (v2.9, 22 Nov 2026)
+# Render QA checklist + watch procedure (v3.0, 22 Nov 2026)
 
 Applies to EVERY line and channel: Stormi 2D, 2D dynamic, 3D, 3D low, DumDown, Finance with Stromi, reels, IG parts, shorts.
 Built from every mistake Pushpam caught by eye (29 Oct to 13 Nov). Each item says what to look for, how to catch it,
@@ -9,20 +9,29 @@ Project files `/mnt/project-files/system/qa/`, repo `system/qa/` (branch claude/
 
 ---
 
-## A0. LEAN QA = default from 22 Nov 2026 (Pushpam: "efficient and uses less credits")
-One command does the free work; Claude only looks at a small review pack.
+## A0. LEAN QA = default (22 Nov 2026, Pushpam: "efficient, fewer credits" + "QA must learn from my feedback")
 ```
 bash /mnt/project-files/tools/transformers/setup.sh --qwen          # once per session (~4 min)
-python3 /mnt/project-files/system/qa/qa_lean.py FILE --kind act|full|reel --out QA_DIR
+python3 /mnt/project-files/system/qa/qa_lean.py FILE --kind act|full|reel --script "<production script .md or VO .txt files>" --out QA_DIR
 ```
-- Runs qa_auto.py (machine checks) and qwen_qa.py (Qwen3-VL-4B, 0 credits) in parallel, merges every flag by timestamp.
-- Read `QA_DIR/qa_lean.md` and ONLY the images it lists: flagged frames (labelled with the reason), one overview of the
-  whole video (~40 thumbnails), and for reels one image of logo / end-card / hook crops. Judge each flag real or false alarm.
-- Voice: still `voice_qa.py` on every dry VO stem (free). Listen pass unchanged.
-- Fix, re-render, re-run qa_lean until clean. Long runs: start it in the background (Qwen ~21 s per sampled frame; use
-  `--every 5` on long full videos to halve the time).
-- Use the DEEP procedure below (read every 1 fps sheet, /watch, design pass) only when: Pushpam's review finds something
-  lean QA missed, the final upload file of a long video (one deep pass), or Pushpam asks.
+Runs free machine checks (qa_auto, VO vs script, voice glitches, cut audio jumps) + Qwen3-VL (0 credits) and writes
+`QA_DIR/qa_lean.md` with the list of images to Read: flagged frames, `shots_NN.jpg` (one frame per shot), `motion.jpg`
+(8 fps strips at glitch flags), `cuts.jpg` (6 cuts at 8 fps), reel crops. Claude reads ONLY those (~5-8k tokens for a
+15-min video) and checks every shot thumbnail against the lessons list printed in qa_lean.md.
+- Long video: run in the background (Qwen ~20 s per frame; `--every 5` halves it). `--no-qwen` if short on time:
+  the shot sheets + lessons catch more of Pushpam's notes than Qwen does (GTA 6 v2 test: Qwen 2 of 10, shot sheet 7 of 10).
+
+### A0.1 LEARNING LOOP (every thread, every review)
+The moment Pushpam sends review notes, BEFORE fixing anything, log each note so QA catches it on every future video:
+```
+python3 /mnt/project-files/system/qa/qa_learn.py list                       # is it already a lesson?
+python3 /mnt/project-files/system/qa/qa_learn.py example L03 "<video> 14:27 (date)"            # yes: add the example
+python3 /mnt/project-files/system/qa/qa_learn.py add --kind visual|audio|motion|edit \
+    --look "<the mistake, worded for ANY video>" --from "<video> <time> (date)" --fix "<standard fix>"   # no: new lesson
+```
+Lessons live in `system/qa/FEEDBACK-LESSONS.json` (readable copy FEEDBACK-LESSONS.md). Visual lessons go into Qwen's
+question for every frame and into qa_lean.md's checklist for the shot sheets; audio/motion/edit lessons drive the
+VO, voice, motion-strip and cut checks. Then fix, and re-run qa_lean: each note must now show as caught.
 
 ## A. DEEP procedure (see A0 for when)
 

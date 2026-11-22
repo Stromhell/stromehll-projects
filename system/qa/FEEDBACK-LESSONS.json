@@ -1,0 +1,152 @@
+{
+ "note": "Every mistake Pushpam has flagged, as checks the QA runs on every video. Add new ones with qa_learn.py add. Never delete; set active=false to retire.",
+ "lessons": [
+  {
+   "id": "L01",
+   "kind": "visual",
+   "look_for": "a character standing or walking ON a wall, roof, table, car or other object instead of the floor/road",
+   "from": "GTA 6 v2 1:23, 3:21, 3:23, 9:36 (22 Nov); checklist 1, 3, 6; DumDown Avengers Mistakes (Pushpam 22 Nov): characters hovering over objects",
+   "fix": "put feet on the floor plane; walk to the door along the ground"
+  },
+  {
+   "id": "L02",
+   "kind": "visual",
+   "look_for": "a character sitting on air, or seated without a chair/bed under them",
+   "from": "checklist 2; DumDown Avengers Mistakes (Pushpam 22 Nov): characters not sitting properly on chairs",
+   "fix": "add the seat, align hips to it"
+  },
+  {
+   "id": "L03",
+   "kind": "visual",
+   "look_for": "props, objects, papers, glasses, signs floating in the air instead of resting on a table/surface or held in a hand",
+   "from": "GTA 6 v2 14:27 (22 Nov); checklist 4, 51, 52, 69, 78, 80",
+   "fix": "seat the object on the table top with a contact shadow, or put it in the hand"
+  },
+  {
+   "id": "L04",
+   "kind": "visual",
+   "look_for": "a road, street or vehicles drawn at the wrong angle for the camera (road should run sideways across the frame, or a car facing the wrong way)",
+   "from": "GTA 6 v2 0:48, 6:03 (22 Nov); checklist 23",
+   "fix": "turn the road to run left-right across the frame, vehicles in side view on it"
+  },
+  {
+   "id": "L05",
+   "kind": "visual",
+   "look_for": "wrong real-world size: a car smaller than a person, people bigger than houses, giant cups, tiny background people",
+   "from": "GTA 6 v2 3:21 (22 Nov); checklist 21, 22, 71",
+   "fix": "scale to real sizes (car ~4.5 m, person ~1.75 m, door ~2 m)"
+  },
+  {
+   "id": "L06",
+   "kind": "visual",
+   "look_for": "characters overlapping each other or clipping through furniture, doors, desks, chairs or props",
+   "from": "checklist 13, 14, 54, 55, 70, 81, 82",
+   "fix": "separate on depth; move the prop; character in front of/behind furniture properly"
+  },
+  {
+   "id": "L07",
+   "kind": "visual",
+   "look_for": "a map, image or graphic spilling outside its TV/screen/frame instead of being masked inside it",
+   "from": "GTA 6 v2 12:16 (22 Nov)",
+   "fix": "clip the content to the screen rectangle (mask)"
+  },
+  {
+   "id": "L08",
+   "kind": "visual",
+   "look_for": "a scene that does not show the action the story needs (e.g. hospital scene without the patient sitting on a bed, no injection, generic background instead)",
+   "from": "GTA 6 v2 5:56, 6:39 (22 Nov); checklist 12",
+   "fix": "build the specific scene the VO describes, with the action shown"
+  },
+  {
+   "id": "L09",
+   "kind": "visual",
+   "look_for": "text, captions, titles or cards covering a character's face or body, cut off at the frame edge, or placed over other text",
+   "from": "checklist 32, 33, 77, 84, 85",
+   "fix": "move text to empty space inside the safe area"
+  },
+  {
+   "id": "L10",
+   "kind": "visual",
+   "look_for": "plain, empty, flat or low-detail background, blocky textures",
+   "from": "checklist 26, 27, 57, 75",
+   "fix": "add set detail, texture, props, light"
+  },
+  {
+   "id": "L11",
+   "kind": "visual",
+   "look_for": "very dark frame where the subject is hard to see, or a black/blank frame",
+   "from": "checklist 28, 31",
+   "fix": "lift key light / re-render the missing shot"
+  },
+  {
+   "id": "L12",
+   "kind": "visual",
+   "look_for": "broken bodies: missing or extra limbs, distorted faces, hair over the eyes, glasses or mustache in the wrong place",
+   "from": "checklist 11, 20, 72, 83",
+   "fix": "fix the rig / face add-on anchor"
+  },
+  {
+   "id": "L13",
+   "kind": "visual",
+   "look_for": "the previous scene still showing after a cut, or the camera past the edge of the background (black strip)",
+   "from": "checklist 68, 76",
+   "fix": "hard cut cleanly; keep camera inside the plate"
+  },
+  {
+   "id": "L14",
+   "kind": "visual",
+   "look_for": "a wrong or unofficial map of India, or wrong spelling/dates/names on screen",
+   "from": "checklist 34, 35",
+   "fix": "use the official map; fix the text"
+  },
+  {
+   "id": "L15",
+   "kind": "visual",
+   "look_for": "a vehicle passing through a building, bridge or arch, or wheels not on the ground",
+   "from": "checklist 5, 16",
+   "fix": "route the vehicle around; ground the wheels"
+  },
+  {
+   "id": "L20",
+   "kind": "repeat",
+   "look_for": "the same background or scene reused in different parts of the video",
+   "from": "GTA 6 v2 5:56 'the ocean looks same' (22 Nov); checklist 25, 67",
+   "fix": "build a new set for the new place"
+  },
+  {
+   "id": "L30",
+   "kind": "audio",
+   "look_for": "voice-over cut off before the sentence ends (hard stop in speech)",
+   "from": "GTA 6 v2 9:25 (22 Nov); checklist 44, 62",
+   "fix": "extend the shot or trim at a pause; never cut VO mid-sentence"
+  },
+  {
+   "id": "L31",
+   "kind": "visual",
+   "look_for": "a character's head, face or body cut off by the black bars / letterbox layout or the frame edge (bad framing)",
+   "from": "DumDown Avengers Mistakes (Pushpam 22 Nov)",
+   "fix": "reframe: keep heads and hands inside the picture area; use taste + impeccable for framing"
+  },
+  {
+   "id": "L32",
+   "kind": "audio",
+   "look_for": "voice glitching: crackle, warble, pitch jumps, robotic artefacts or clipped words in the voice",
+   "from": "DumDown Avengers Mistakes (Pushpam 22 Nov); checklist 59-66",
+   "fix": "re-generate the glitched line; run voice_qa.py on the dry VO"
+  },
+  {
+   "id": "L33",
+   "kind": "motion",
+   "look_for": "a graphic box, card or overlay glitching: flicker, jump, pop, wrong frame for a moment",
+   "from": "DumDown Avengers Mistakes (Pushpam 22 Nov); checklist 29, 50",
+   "fix": "fix the overlay's keyframes / z-order; ease in and out"
+  },
+  {
+   "id": "L34",
+   "kind": "edit",
+   "look_for": "rough, jarring cuts between gags and scenes (no transition, mid-motion jump, audio jump)",
+   "from": "DumDown Avengers Mistakes (Pushpam 22 Nov); checklist 67, 68",
+   "fix": "cut on action or a quick whip/match cut; crossfade audio over the cut"
+  }
+ ]
+}
