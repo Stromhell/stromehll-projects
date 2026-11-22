@@ -46,12 +46,12 @@ const torch = (c, x, y, dir, on, lt) => { if (on <= 0) return; c.save(); c.globa
 const frost = (c, lt, flash) => { c.save(); c.fillStyle = `rgba(220,235,240,${.42 - .1 * flash})`; c.fillRect(0, 0, 2560, 1440); c.fillStyle = 'rgba(255,255,255,.08)'; for (let k = 0; k < 60; k++) c.fillRect((k * 211) % 2560, (k * 137) % 1440, 120, 3);
   c.fillStyle = '#2a2e34'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(0, 0, 2560, 70); c.fillRect(0, 0, 70, 1440); c.fillRect(2490, 0, 70, 1440); c.fillRect(1250, 0, 60, 1440); c.fillRect(0, 1370, 2560, 70);
   txt(c, 'AUTHORISED PERSONNEL ONLY', 640, 200, 44, 'rgba(60,70,80,.55)', 'center', 'Oswald'); c.restore(); };
-const mug = (c, x, y, look, name, lt, t0, tStamp) => { const a = pop(lt, t0, .4); if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.rotate(name === 'JASON' ? -.03 : .03);
+const mug = (c, x, y, look, name, lt, t0, tStamp) => { const a = pop(lt, t0, .4); if (a <= 0) return; const g = 1 + .06 * K.clamp((lt - t0) / 5); c.save(); c.translate(x + (x < 960 ? -1 : 1) * 20 * K.clamp((lt - t0) / 5), y); c.scale(a * g, a * g); c.rotate(name === 'JASON' ? -.03 : .03);
   c.fillStyle = 'rgba(0,0,0,.4)'; c.fillRect(-150, -200, 310, 420); c.fillStyle = '#d8dce0'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-160, -210, 310, 410); c.strokeRect(-160, -210, 310, 410);
   c.strokeStyle = 'rgba(40,40,50,.5)'; c.lineWidth = 2; for (let k = 0; k < 7; k++) { c.beginPath(); c.moveTo(-160, -170 + k * 50); c.lineTo(150, -170 + k * 50); c.stroke(); }
   c.save(); c.beginPath(); c.rect(-160, -210, 310, 410); c.clip(); A.figure(c, Object.assign({ x: -5, y: 160, s: .95, facing: 1, mood: 'worried' }, look), lt, 0, null); c.restore();
   c.fillStyle = '#1a1a20'; c.fillRect(-120, 150, 230, 44); txt(c, name, -5, 172, 30, '#f6efdc', 'center', 'Anton'); c.restore(); if (lt > tStamp) TW.stamp(c, 'BLAMED', x, y + 90, lt, tStamp, { px: 70 }); };
-const trustOv = (xs) => (c, lt) => G6.trust(c, 1790, 175, .42, ['MATTIA', 'CAT', 'VALENTINA', 'ABE', 'GALLO'], typeof xs === 'function' ? xs(lt) : xs, lt);
+const trustOv = (xs) => (c, lt) => G6.trust(c, 1790, 175, .42, ['VALENTINA', 'ABE', 'MATTIA', 'GALLO'], typeof xs === 'function' ? xs(lt) : xs, lt);
 
 window.SHOTS = [
   // 3.00 the drive home: front view of the car on the night causeway; Lucia talks with her hands, a yacht thought bubble, Jason grips the wheel
@@ -96,7 +96,7 @@ window.SHOTS = [
       S.D.live = [(c, lt) => { fairy(c, lt, lights); TW.glow(c, 1280, 900, 1000, '255,200,130', .12); for (const x of [380, 2200]) TW.glow(c, x, 1000, 160, '255,170,90', .3 + .1 * Math.sin(lt * 5 + x)); }];
       S.D.front = [(c, lt) => ntag(c, 'CAT', 1450, 690, lt, tC + .5, { px: 36, until: tBo }), (c, lt) => ntag(c, 'MATTIA', 1760, 680, lt, tM, { px: 36, until: tBr })];
       S.D.over = [(c, lt) => K.card(c, "LUCIA'S WELCOME PARTY", lt, { at: tW, x: 560, y: 110, px: 44, rot: -2 }), (c, lt) => K.card(c, 'CAT · MATTIA', lt, { at: tM, x: 1000, y: 110, px: 50, rot: 2, bg: GOLD, until: tBr }),
-        (c, lt) => K.card(c, 'FROM VICE CITY', lt, { at: tV, x: 1000, y: 215, px: 34, rot: -2, until: tBr }),
+        (c, lt) => K.card(c, 'FROM VICE CITY', lt, { at: tV, x: 1360, y: 110, px: 34, rot: -2, until: tPr - .3 }),
         (c, lt) => { const a = pop(lt, tPr - .2, .35) * (1 - K.seg(lt, tBr - .2, tBr)); if (a > 0) PR.bubble(c, 1450, 180, a, 'MY BOSS? VERY|PRIVATE PERSON.', { px: 40, tail: [60, 90] }); },
         (c, lt) => { const a = pop(lt, tBr, .35); if (a > 0) PR.bubble(c, 1420, 190, a, "YOU SHOULD'VE SEEN WHAT|WE WERE CARRYING...", { px: 38, tail: [100, 90] }); }];
       S.D.sfx = [[.3, 'crowd_cheer', .1], [tC - 1.6, 'footsteps', .25], [tC + .5, 'pop', .25], [tM, 'pop', .25], [tPr, 'pop', .2], [tBr, 'pop', .25], [tCa, 'tension', .2]]; } },
@@ -149,19 +149,19 @@ window.SHOTS = [
       const bagLt = (lt) => lt < tAr;
       S.D.figs = [F('JASON', 1120, 1340, 1.7, { anim: (o, lt) => { o.hold = bagLt(lt) && lt > tO + .4 ? { far: cc => G6.duffel(cc, 0, 92, 1) } : null; if (lt > tAr) { o.pose = 'cheer'; o.mood = 'shocked'; } } }),
         F('LUCIA', 1460, 1345, 1.7, { anim: (o, lt) => { if (lt > tTr) o.facing = -1; if (lt > tAr) { o.pose = 'cheer'; o.mood = 'angry'; } } }),
-        F(() => G6.COP(0), 260, 1350, 1.7, { walk: { x0: -200, x1: 800, t0: tTr - .3, dur: 2 }, anim: (o, lt) => { if (lt > tTr + 1.7) { o.facing = 1; o.pose = 'point'; } } }),
-        F('SERGEANT', 1750, 1350, 1.75, { facing: -1, walk: { x0: 2900, x1: 1750, t0: tTr - .4, dur: 2.4 }, talk: [tAr - .3, tAr + 1], anim: (o, lt) => { if (lt > tAr - .3 && lt < tM) o.pose = 'point'; if (lt > tH) { o.facing = 1; o.mood = 'angry'; } if (lt > tRf) o.arms = () => ({ shR: 70, elR: -5, handR: 'open' }); } }),
-        F('MENDEZ', 2250, 1345, 1.72, { facing: -1, mood: 'happy', walk: { x0: 3050, x1: 2250, t0: tM - 1.6, dur: 2.2 }, talk: [tH - .3, tH + 1.5], anim: (o, lt) => { if (lt > tH && lt < tRf) o.arms = () => ({ shR: 85, elR: -10, handR: 'open' }); if (lt > tRf + .2) o.mood = 'smug'; } })];
+        F(() => G6.COP(0), 260, 1350, 1.7, { walk: { x0: -200, x1: 640, t0: tTr - .3, dur: 2 }, anim: (o, lt) => { if (lt > tTr + 1.7) { o.facing = 1; o.pose = 'point'; } } }),
+        F('SERGEANT', 1800, 1350, 1.75, { facing: -1, walk: { x0: 2900, x1: 1800, t0: tTr - .4, dur: 2.4 }, talk: [tAr - .3, tAr + 1], anim: (o, lt) => { if (lt > tAr - .3 && lt < tM) o.pose = 'point'; if (lt > tH) { o.facing = 1; o.mood = 'angry'; } if (lt > tRf) o.arms = () => ({ shR: 70, elR: -5, handR: 'open' }); } }),
+        F('MENDEZ', 2300, 1345, 1.72, { facing: -1, mood: 'happy', walk: { x0: 3050, x1: 2300, t0: tM - 1.6, dur: 2.2 }, talk: [tH - .3, tH + 1.5], anim: (o, lt) => { if (lt > tH && lt < tRf) o.arms = () => ({ shR: 85, elR: -10, handR: 'open' }); if (lt > tRf + .2) o.mood = 'smug'; } })];
       S.D.live = [(c, lt) => { lockers(c, 900, 760, 1720, 1210, E.out(K.seg(lt, tO - .3, tO + .3)), lt); gator(c, 620, 640); c.save(); c.fillStyle = '#2e6a4a'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(960, 600, 700, 110); c.strokeRect(960, 600, 700, 110); txt(c, 'WETLANDS VISITOR CENTRE', 1310, 655, 50, '#f6efdc', 'center', 'Anton'); c.restore();
         if (lt > tAr) G6.duffel(c, 940, 1350, 1.2); }];
       S.D.front = [(c, lt) => { const on = K.seg(lt, tTr + 1, tTr + 1.2); torch(c, 760, 1050, 1, on, lt); torch(c, 1680, 1040, -1, on * (lt < tH ? 1 : 0), lt); },
-        (c, lt) => ntag(c, 'SERGEANT', 1750, 790, lt, tS, { px: 32, until: tRf + 2 }), (c, lt) => ntag(c, 'MENDEZ', 2250, 790, lt, tM, { px: 36 })];
-      S.D.over = [(c, lt) => TW.stamp(c, 'TRAP', 560, 150, lt, tTr, { px: 80 }), (c, lt) => { const a = pop(lt, tAr - .2, .35) * (1 - K.seg(lt, tM - .5, tM)); if (a > 0) PR.bubble(c, 1350, 150, a, "YOU'RE UNDER ARREST!", { px: 44, tail: [60, 90] }); },
+        (c, lt) => ntag(c, 'SERGEANT', 1800, 790, lt, tS, { px: 32, until: tRf + 2 }), (c, lt) => ntag(c, 'MENDEZ', 2300, 790, lt, tM, { px: 36 })];
+      S.D.over = [(c, lt) => TW.stamp(c, 'TRAP', 560, 80, lt, tTr, { px: 80 }), (c, lt) => { const a = pop(lt, tAr - .2, .35) * (1 - K.seg(lt, tM - .5, tM)); if (a > 0) PR.bubble(c, 1350, 150, a, "YOU'RE UNDER ARREST!", { px: 44, tail: [60, 90] }); },
         (c, lt) => { const a = pop(lt, tH, .35) * (1 - K.seg(lt, tRf - .3, tRf)); if (a > 0) PR.bubble(c, 1530, 150, a, 'HAND ME THE BAG.', { px: 40, tail: [80, 90] }); },
         (c, lt) => TW.stamp(c, 'REFUSED', 1350, 160, lt, tRf, { px: 72 })];
       S.D.sfx = [[tO, 'creak', .35], [tTr, 'stamp', .35], [tTr - .2, 'run_steps', .3], [tTr + 1, 'tick', .3], [tAr, 'pop', .25], [tAr + .1, 'thud', .25], [tM - 1.4, 'footsteps', .25], [tH, 'pop', .2], [tRf, 'stamp', .4]]; } },
   // 3.08 through frosted glass: Mendez's men turn on the sergeant's team (flashes only), radio call, two mugshots stamped BLAMED; trust board (0)
-  { plate: 'prison_corridor', cam: { z: [1.2, 1.3], x: [1280, 1280], y: [820, 800] }, bed: [['hum_loop', .15], ['tension', .1]], light: { dir: 1, key: 'rgba(220,240,255,.18)' },
+  { plate: 'prison_corridor', cam: { z: [1.15, 1.4], x: [1240, 1320], y: [820, 790] }, bed: [['hum_loop', .15], ['tension', .1]], light: { dir: 1, key: 'rgba(220,240,255,.18)' },
     init: S => { const tL = A.at(S, 'leaves', .7), tSt = A.at(S, 'stay', 1.9), tSh = A.at(S, 'shoot', 3.0), tRa = A.at(S, 'radio', 4.8), tOD = A.at(S, 'officer', 5.6), tW = A.at(S, 'weapon', 7.4), tPo = A.at(S, 'Police', 8.4), tPi = A.at(S, 'pinned', 10.8), tJ = A.at(S, 'Jason', 12.0);
       const fl = (lt) => lt > tSh && lt < tSh + 1.6 ? Math.max(0, Math.sin((lt - tSh) * 26)) : 0;
       S.D.figs = [F('MENDEZ', 1650, 1300, 1.5, { facing: 1, walk: { x0: 1650, x1: 2900, t0: tL - .2, dur: 3 } }),

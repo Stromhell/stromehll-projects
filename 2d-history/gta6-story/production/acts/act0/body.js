@@ -15,6 +15,16 @@ const roadLive = (c, lt) => { for (const [x, y] of [[1621, 715], [1720, 699], [1
 const paper = (cc) => { cc.save(); cc.rotate(-.15); cc.fillStyle = '#f6f2e6'; cc.strokeStyle = INK; cc.lineWidth = 2.5; cc.fillRect(-22, 2, 44, 58); cc.strokeRect(-22, 2, 44, 58); cc.strokeStyle = 'rgba(40,40,60,.5)'; cc.lineWidth = 1.5; for (let k = 0; k < 5; k++) { cc.beginPath(); cc.moveTo(-15, 12 + k * 9); cc.lineTo(15, 12 + k * 9); cc.stroke(); } cc.restore(); };
 const ARGUE = (lt, k) => { const b = Math.sin(lt * 3.1 + k); return b > 0 ? { shR: 70 + 20 * b, elR: -10, handR: 'point', shL: 20, elL: -40 } : { shR: 40, elR: -70 - 30 * b, handR: 'open', shL: 40, elL: -70, handL: 'open' }; };
 const CAR = '#8a6248';
+// detective corkboard wall (painted over the plain card plate): cork speckle, pinned papers/photos, red string, vignette
+const corkWall = (c, lt) => { c.fillStyle = '#6b4a2e'; c.fillRect(0, 0, 2560, 1440);
+  for (let k = 0; k < 900; k++) { const x = (k * 977) % 2560, y = (k * 571) % 1440; c.fillStyle = k % 3 ? 'rgba(40,24,12,.35)' : 'rgba(170,120,70,.3)'; c.fillRect(x, y, 4 + k % 5, 3 + k % 4); }
+  const P = [[260, 230, -.08, 0], [560, 180, .06, 1], [330, 560, .05, 2], [180, 900, -.06, 0], [520, 1150, .04, 1], [2300, 220, .07, 2], [2020, 170, -.05, 0], [2260, 560, -.04, 1], [2380, 920, .06, 0], [2050, 1160, -.07, 2], [1000, 170, -.03, 1], [1580, 170, .04, 0], [880, 1230, .05, 2], [1700, 1240, -.04, 1]];
+  c.strokeStyle = 'rgba(200,30,40,.85)'; c.lineWidth = 4; c.beginPath(); for (let k = 0; k < P.length; k++) { const a = P[k], b = P[(k * 5 + 3) % P.length]; c.moveTo(a[0], a[1] - 70); c.lineTo(b[0], b[1] - 70); } c.stroke();
+  for (const [x, y, r, t] of P) { c.save(); c.translate(x, y); c.rotate(r + Math.sin(lt * .7 + x) * .004); c.fillStyle = 'rgba(0,0,0,.35)'; c.fillRect(-88, -72, 190, 150);
+    if (t === 1) { c.fillStyle = '#eee'; c.fillRect(-95, -80, 180, 150); c.fillStyle = '#3a4660'; c.fillRect(-82, -68, 154, 100); c.fillStyle = '#c9a27e'; c.beginPath(); c.arc(-5, -20, 26, 0, 7); c.fill(); c.fillRect(-35, 8, 60, 24); }
+    else { c.fillStyle = t ? '#f1e3a8' : '#f6f2e6'; c.fillRect(-95, -80, 180, 150); c.fillStyle = 'rgba(40,40,60,.45)'; for (let l = 0; l < 6; l++) c.fillRect(-78, -55 + l * 20, 130 - (l % 3) * 25, 5); }
+    c.fillStyle = '#d02a30'; c.beginPath(); c.arc(-5, -70, 10, 0, 7); c.fill(); c.restore(); }
+  const v = c.createRadialGradient(1280, 720, 300, 1280, 720, 1500); v.addColorStop(0, 'rgba(0,0,0,0)'); v.addColorStop(1, 'rgba(0,0,0,.7)'); c.fillStyle = v; c.fillRect(0, 0, 2560, 1440); };
 
 window.SHOTS = [
   // 0.00 night road in the Keys: battered saloon, two strangers screaming; an officer walks over under police lights
@@ -36,8 +46,8 @@ window.SHOTS = [
     init: S => { const tLe = A.at(S, 'leans', 1.0), tWh = A.at(S, 'whispers', 1.6), tNi = A.at(S, 'nicked', 4.0), tFo = A.at(S, 'follow', 4.8), tTu = A.at(S, 'turns', 7.0), tBf = A.at(S, 'boyfriend', 9.6);
       S.D.figs = [{ x: 1220, y: 1395, s: 1.85, ...G6.COP(0), facing: 1, mood: 'neutral', seed: 13, anim: (o, lt) => { o.lean = Math.sin(lt * 1.3) * 1.5; if (lt > tBf) { o.mood = 'smug'; o.arms = () => ({ shR: 30, elR: -100, handR: 'fist', shL: 30, elL: -100 }); } } },
         { x: 1640, y: 1350, s: 1.85, ...G6.JASON(), facing: 1, mood: 'shocked', seed: 11, anim: (o, lt) => { if (lt > tNi) o.mood = 'worried'; if (lt > tTu) o.facing = -1; if (lt > tBf + .3) o.mood = 'happy'; } },
-        { x: 1990, y: 1350, s: 1.8, ...G6.LUCIA(), facing: -1, mood: 'neutral', seed: 12, walk: { x0: 1990, x1: 1840, t0: tLe - .2, dur: 1.2 }, anim: (o, lt) => { const l = K.seg(lt, tLe, tLe + .6) * (1 - K.seg(lt, tTu - .3, tTu + .2)); o.lean = 12 * l; o.talk = lt > tWh && lt < tTu; if (lt > tWh) o.mood = 'smug';
-          if (lt > tTu) { o.mood = 'happy'; o.arms = () => ({ shR: 60, elR: -30, handR: 'open', shL: 35, elL: -50 }); o.talk = lt < tBf + 1; } } }];
+        { x: 1990, y: 1350, s: 1.8, ...G6.LUCIA(), facing: -1, mood: 'neutral', seed: 12, walk: { x0: 1990, x1: 1905, t0: tLe - .2, dur: 1.0 }, anim: (o, lt) => { const l = K.seg(lt, tLe, tLe + .6) * (1 - K.seg(lt, tTu - .3, tTu + .2)); o.lean = 8 * l; o.talk = lt > tWh && lt < tTu; if (lt > tWh) o.mood = 'smug';
+          if (lt > tTu) { o.mood = 'happy'; o.arms = () => ({ shR: 25, elR: -60, handR: 'open', shL: 35, elL: -50 }); o.talk = lt < tBf + 1; } } }];
       S.D.live = [roadLive, (c, lt) => { G6.car(c, 700, 1340, 2.7, CAR, lt, {}); TW.glow(c, 1440, 1210, 170, '255,240,200', .5); }];
       S.D.front = [(c, lt) => copLights(c, lt, 800, 950, 1),
         ];
@@ -45,10 +55,10 @@ window.SHOTS = [
         (c, lt) => K.card(c, '"HE\'S MY BOYFRIEND"', lt, { at: tBf - .1, x: 1100, y: 120, px: 64, rot: -3, bg: G6.PINK, color: '#fff' })];
       S.D.sfx = [[tWh, 'whoosh_soft', .3], [tWh + .2, 'breath', .25], [tTu, 'footsteps', .15], [tBf, 'pop', .35], [tBf + .1, 'chime', .2]]; } },
   // 0.02 the TRUST board: the lie comes true; four red X stamps for a boss, a friend, a lawyer, a billionaire
-  { plate: 'card', cam: { z: [1.0, 1.08], x: [1280, 1300], y: [720, 730] }, bed: [['hum_loop', .12]], light: {},
+  { plate: 'card', cam: { z: [1.0, 1.16], x: [1280, 1300], y: [720, 760] }, bed: [['hum_loop', .12]], light: {},
     init: S => { const tLie = A.at(S, 'lie', .6), tTr = A.at(S, 'true.', 2.0), tTs = A.at(S, 'trust', 6.2), tB = A.at(S, 'boss', 8.6), tF = A.at(S, 'friend', 9.4), tL = A.at(S, 'lawyer', 10.2), tBi = A.at(S, 'billionaire.', 11.0);
       const ts = [tB, tF, tL, tBi], lbl = ['A BOSS', 'A FRIEND', 'A LAWYER', 'A BILLIONAIRE'];
-      S.D.live = [A.dust(300, 100, 2000, 1200, 50), (c, lt) => { const sw = Math.sin(lt * 1.2) * 60; TW.glow(c, 1280 + sw, 200, 700, '255,220,170', .16); }];
+      S.D.live = [corkWall, A.dust(300, 100, 2000, 1200, 60), (c, lt) => { const sw = Math.sin(lt * 1.2) * 60; TW.glow(c, 1280 + sw, 200, 800, '255,220,170', .28); }];
       S.D.front = [(c, lt) => { const a = pop(lt, tTs - .3, .5); if (a <= 0) return; const xs = ts.reduce((s, t) => s + K.seg(lt, t, t + .4), 0); c.save(); c.translate(1280, 760); c.scale(a, a); c.rotate(Math.sin(lt * .8) * .01); G6.trust(c, 0, 0, 1.45, ['VALENTINA', 'ABE', 'MATTIA', 'GALLO'], xs, lt); c.restore(); }];
       S.D.over = [(c, lt) => { const o = 1 - K.seg(lt, tTs - .6, tTs - .2); if (o <= 0) return; c.save(); c.globalAlpha = o; K.card(c, '"HE\'S MY BOYFRIEND"', lt, { at: tLie, x: 960, y: 420, px: 70, rot: -3, bg: G6.PINK, color: '#fff' }); TW.stamp(c, 'IT COMES TRUE', 960, 600, lt, tTr, { px: 80 }); c.restore(); },
         ...ts.map((t, k) => (c, lt) => K.card(c, lbl[k], lt, { at: t, x: k % 2 ? 1640 : 280, y: 330 + Math.floor(k / 2) * 260, px: 46, rot: k % 2 ? 4 : -4, bg: k === 3 ? GOLD : '#f6eedc' })),
@@ -74,9 +84,9 @@ window.SHOTS = [
         { x: 2160, y: 1350, s: 1.75, ...G6.LUCIA(), facing: -1, mood: 'neutral', seed: 12, anim: (o, lt) => { if (lt > tL) { o.mood = 'smug'; o.arms = () => ({ shR: 25, elR: -120, handR: 'fist', shL: 40, elL: -60 }); } } }];
       S.D.live = [(c, lt) => { const g = c.createLinearGradient(0, 1150, 0, 1440); g.addColorStop(0, 'rgba(14,12,26,.0)'); g.addColorStop(.15, 'rgba(18,16,30,.95)'); g.addColorStop(1, '#0c0a14'); c.fillStyle = g; c.fillRect(0, 1150, 2560, 290);
           c.fillStyle = 'rgba(240,220,120,.7)'; for (let k = 0; k < 8; k++) { const x = ((k * 360 - lt * 40) % 2900 + 2900) % 2900 - 170; c.fillRect(x, 1400, 170, 10); }
-          const f = 1 + 1.4 * Math.max(0, 1 - Math.abs(lt - tOr - .3) / .6); G6.car(c, 1180, 1350, 2.7, CAR, lt, {}); TW.glow(c, 1930, 1250, 220 * f, '255,245,210', .55); c.save(); c.globalCompositeOperation = 'screen'; const gb = c.createLinearGradient(1930, 0, 2560, 0); gb.addColorStop(0, `rgba(255,245,210,${.3 * f})`); gb.addColorStop(1, 'rgba(255,245,210,0)'); c.fillStyle = gb; c.beginPath(); c.moveTo(1930, 1235); c.lineTo(2560, 1150); c.lineTo(2560, 1340); c.lineTo(1930, 1265); c.fill(); c.restore();
+          const f = 1 + 1.4 * Math.max(0, 1 - Math.abs(lt - tOr - .3) / .6); G6.car(c, 1180, 1350, 2.45, CAR, lt, {}); TW.glow(c, 1870, 1250, 200 * f, '255,245,210', .55); c.save(); c.globalCompositeOperation = 'screen'; const gb = c.createLinearGradient(1870, 0, 2560, 0); gb.addColorStop(0, `rgba(255,245,210,${.3 * f})`); gb.addColorStop(1, 'rgba(255,245,210,0)'); c.fillStyle = gb; c.beginPath(); c.moveTo(1870, 1240); c.lineTo(2560, 1290); c.lineTo(2560, 1400); c.lineTo(1870, 1265); c.fill(); c.restore();
           for (let k = 0; k < 10; k++) { const x = 700 + k * 130, a = .15 + .12 * Math.sin(lt * 2 + k); c.fillStyle = `rgba(255,240,210,${a})`; c.fillRect(x, 1370 + (k % 3) * 18, 60, 3); } }];
-      S.D.front = [(c, lt) => { G6.jar(c, 1500, 1002, .6, .25); TW.sparkle(c, 1500, 975, lt, .4); }, (c, lt) => ntag(c, 'JASON', 330, 780, lt, tJ, { px: 40 }), (c, lt) => ntag(c, 'LUCIA', 2160, 790, lt, tL, { px: 40, col: G6.PINK })];
+      S.D.front = [(c, lt) => { G6.jar(c, 1470, 1035, .95, .25); TW.sparkle(c, 1470, 995, lt, .5); }, (c, lt) => ntag(c, 'JASON', 330, 780, lt, tJ, { px: 40 }), (c, lt) => ntag(c, 'LUCIA', 2160, 790, lt, tL, { px: 40, col: G6.PINK })];
       S.D.over = [(c, lt) => { const a = K.seg(lt, tEv - .1, tEv + .25); if (a <= 0) return; const sc = 1 + 1.2 * (1 - E.out(a)); c.save(); c.translate(960, 230); c.scale(sc, sc); c.globalAlpha = a; K.outlined(c, 'GTA 6', 0, -70, 120, { fill: GOLD }); K.outlined(c, 'THE WHOLE STORY', 0, 60, 96, { fill: '#fff' }); c.restore(); }];
       S.D.sfx = [[tJ, 'pop', .25], [tL, 'pop', .25], [tEv - .2, 'riser', .3], [tEv + .1, 'hit', .45], [tOr, 'swell', .3], [tOr + .3, 'chime', .2]]; } },
 ];

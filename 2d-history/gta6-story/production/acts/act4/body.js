@@ -30,8 +30,8 @@ window.SHOTS = [
   { plate: 'rain_street', cam: { z: [1.4, 1.48], x: [1200, 1300], y: [900, 910] }, bed: [['rain_loop', .2], ['city_loop', .08]], light: { dir: -1, key: 'rgba(200,210,255,.2)' },
     init: S => { const tSh = A.at(S, 'shot', .7), tTo = A.at(S, 'told', 2.6), tFi = A.at(S, 'fights', 4.4), tH = A.at(S, 'hands', 5.6), tCal = A.at(S, 'Cal', 7.6), tHo = A.at(S, 'hospital', 8.4), tR = A.at(S, 'runs', 9.6), tCa = A.at(S, 'cash', 11.4);
       let gone = 0; const carX = (lt) => 1900 + Math.max(0, lt - tR - 1.3) ** 2 * 260;
-      S.D.figs = [F('JASON_SHOT', 660, 1300, 1.7, { mood: 'worried', walk: { x0: -400, x1: 660, t0: 0, dur: 3.6 }, anim: (o, lt) => { o.lean = 7; if (lt > tH) { const w = K.seg(lt, tH, tH + 4.5); o.x = 660 + w * 2400; o.pose = w > 0 && w < 1 ? 'walk' : 'stand'; o.t = lt; } } }),
-        F('LUCIA', 900, 1310, 1.7, { mood: 'angry', walk: { x0: -160, x1: 900, t0: 0, dur: 3.6 }, anim: (o, lt) => { o.hold = lt < tH - .6 ? { far: cc => G6.duffel(cc, 0, 92, 1) } : null; if (lt > tFi && lt < tH - .8) { o.arms = () => ({ shR: 80 + 40 * Math.max(0, Math.sin(lt * 9)), elR: -10, handR: 'fist' }); } if (lt > tR) { const w = K.seg(lt, tR, tR + 1.6); o.x = 900 - w * 1500; o.facing = -1; o.pose = w < 1 ? 'run' : 'stand'; o.t = lt; o.mood = 'focus'; } } }),
+      S.D.figs = [F('JASON_SHOT', 900, 1300, 1.7, { mood: 'worried', walk: { x0: -160, x1: 900, t0: 0, dur: 3.6 }, anim: (o, lt) => { o.lean = 7; if (lt > tH) { const w = K.seg(lt, tH, tH + 4.5); o.x = 900 + w * 2400; o.pose = w > 0 && w < 1 ? 'walk' : 'stand'; o.t = lt; } } }),
+        F('LUCIA', 660, 1310, 1.7, { mood: 'angry', walk: { x0: -400, x1: 660, t0: 0, dur: 3.6 }, anim: (o, lt) => { o.hold = lt < tH - .6 ? { far: cc => G6.duffel(cc, 0, 92, 1) } : null; if (lt > tFi && lt < tH - .8) { o.arms = () => ({ shR: 80 + 40 * Math.max(0, Math.sin(lt * 9)), elR: -10, handR: 'fist' }); } if (lt > tR) { const w = K.seg(lt, tR, tR + 1.6); o.x = 660 - w * 1500; o.facing = -1; o.pose = w < 1 ? 'run' : 'stand'; o.t = lt; o.mood = 'focus'; } } }),
         F('CAL', 1150, 1290, 1.6, { facing: -1, mood: 'worried', anim: (o, lt) => { if (lt < tH - .6) o.pose = 'wave'; o.hold = lt > tH - .6 ? { far: cc => G6.duffel(cc, 0, 92, 1) } : null; if (lt > tH - .6) { const w = K.seg(lt, tH - .6, tH + 3.4); o.x = 1150 + w * 1800; o.facing = 1; o.pose = w > 0 && w < 1 ? 'walk' : 'stand'; o.t = lt; } } })];
       S.D.live = [(c, lt) => { sirens(c, lt, 100, 900, lt < tR ? 1 : .5); TW.glow(c, 1280, 900, 400, '255,220,150', .15); }];
       S.D.front = [(c, lt) => G6.car(c, carX(lt), 1400, 2.3, '#6a6e78', lt, { wheelsTurning: lt > tR + 1.3 }), rain];
@@ -58,10 +58,10 @@ window.SHOTS = [
   // 4.02 the stolen ambulance tears along the causeway, sirens strobing; 'thanks for visiting'; end of chapter one checklist
   { plate: 'keys_road_night', cam: { z: [1.25, 1.3], x: [1400, 1200], y: [880, 890] }, bed: [['night_loop', .15], ['wind_loop', .15]], light: { dir: 1, key: 'rgba(200,210,255,.18)' },
     init: S => { const tE = A.at(S, 'escape', .5), tSt = A.at(S, 'stolen', 1.4), tT = A.at(S, 'thanks', 4.6), tC = A.at(S, 'Chapter', 6.6), tHo = A.at(S, 'house', 8.0), tBo = A.at(S, 'boss', 9.2), tPo = A.at(S, 'police', 10.6);
-      const ax = (lt) => -900 + lt * 390, px = (lt) => -1300 + Math.max(0, lt - 6) * 520;
+      const ax = (lt) => -900 + lt * 390, px = (lt) => -1300 + Math.max(0, lt - 7.5) * 520;
       S.D.live = [(c, lt) => { sea(c, lt, 100, 1100, 860, 1000); c.fillStyle = '#2a2a30'; c.fillRect(0, 1290, 2560, 150); c.fillStyle = 'rgba(255,255,255,.12)'; c.fillRect(0, 1290, 2560, 6); c.fillStyle = '#e8c45a'; for (let k = 0; k < 14; k++) c.fillRect(k * 200 - 40, 1368, 110, 10);
         G6.ambulance(c, ax(lt), 1425, 2.6, lt, { wheelsTurning: true }); TW.glow(c, ax(lt), 1000, 500, Math.floor(lt * 6) % 2 ? '255,60,60' : '60,120,255', .3);
-        if (lt > 6) G6.policeCar(c, px(lt), 1425, 2.2, lt, { wheelsTurning: true }); }];
+        if (lt > 7.5) G6.policeCar(c, px(lt), 1425, 2.2, lt, { wheelsTurning: true }); }];
       S.D.over = [vign, (c, lt) => K.card(c, 'A STOLEN AMBULANCE', lt, { at: tSt, x: 560, y: 110, px: 46, rot: -2, until: tC }),
         (c, lt) => { const a = pop(lt, tT - .2, .35) * (1 - K.seg(lt, tC - .3, tC)); if (a <= 0) return; const sx = (ax(lt) + 500 - (1400 - 200 * lt / 14)) * .94 + 960; PR.bubble(c, Math.min(1500, Math.max(420, sx)), 300, a, '"THANKS FOR|VISITING."', { px: 44, tail: [60, 110] }); },
         (c, lt) => K.card(c, 'END OF CHAPTER 1', lt, { at: tC, x: 960, y: 110, px: 64, rot: -1, bg: GOLD }),
@@ -91,11 +91,11 @@ window.SHOTS = [
       S.D.live = [(c, lt) => { TW.glow(c, 600, 120, 300, '255,80,200', .25 + .1 * Math.sin(lt * 7)); TW.glow(c, 600, 300, 200, '80,255,120', .2); for (let k = 0; k < 6; k++) TW.glow(c, 870 + k * 300, 870, 90, '255,210,140', .25 + .05 * Math.sin(lt * 3 + k)); }];
       S.D.front = [(c, lt) => G6.car(c, carX(lt), 1400, 2.3, '#2a8a9a', lt, { wheelsTurning: lt > tCa + 1.6 })];
       S.D.over = [(c, lt) => K.card(c, 'JASON: STUCK IN BED', lt, { at: tJ, x: 1400, y: 110, px: 40, rot: 2, until: tPa }), (c, lt) => K.card(c, 'LUCIA, ALONE', lt, { at: tAl, x: 520, y: 110, px: 54, rot: -2, bg: GOLD }),
-        (c, lt) => { if (lt > tRe && lt < tPa) { const a = pop(lt, tRe, .3); c.save(); c.translate(1400, 240); c.scale(a, a); G6.counter(c, 0, 0, .7, 300, 650, tRe, tRa + .8, lt, { pre: 'RENT $' }); c.restore(); } },
+        (c, lt) => { if (lt > tRe && lt < tPa) { const a = pop(lt, tRe, .3); c.save(); c.translate(1400, 300); c.scale(a, a); G6.counter(c, 0, 0, .7, 300, 650, tRe, tRa + .8, lt, { pre: 'RENT $' }); c.restore(); } },
         (c, lt) => K.card(c, 'PAINKILLERS: TAKEN', lt, { at: tG, x: 1400, y: 230, px: 40, rot: 2, until: tAll + 2 }), (c, lt) => K.card(c, 'CARS: STOLEN', lt, { at: tCa + .4, x: 1420, y: 120, px: 44, rot: -2, bg: G6.RED, color: '#fff' })];
       S.D.sfx = [[tRe, 'pop', .2], [tRa, 'coins', .25], [tPa - 1.4, 'footsteps', .25], [tG - .4, 'whoosh_soft', .3], [tCa, 'footsteps', .25], [tCa + 1.3, 'door_slam', .35], [tCa + 1.7, 'whoosh', .35]]; } },
   // 4.05 the drive is encrypted: a padlocked laptop on the motel bed; anything people kill for is worth something; a ticket prints out
-  { plate: 'bedroom', cam: { z: [1.9, 2.0], x: [1150, 1150], y: [880, 860] }, bed: [['hum_loop', .15]], light: { dir: -1, key: 'rgba(150,190,255,.25)' },
+  { plate: 'bedroom', cam: { z: [1.85, 2.05], x: [1100, 1200], y: [880, 850] }, bed: [['hum_loop', .15]], light: { dir: -1, key: 'rgba(150,190,255,.25)' },
     init: S => { const tE = A.at(S, 'encrypted', 1.0), tC = A.at(S, "can't", 2.0), tK = A.at(S, 'kill', 4.6), tW = A.at(S, 'worth', 5.8), tJ = A.at(S, "Jason's", 7.6), tT = A.at(S, 'ticket', 8.8), tWh = A.at(S, 'wherever', 9.6);
       S.D.figs = [F('JASON_SHOT', 780, 1120, 1.6, { pose: 'sit', mood: 'worried', talk: [tJ, tWh + 1.5], anim: (o, lt) => { if (lt > tW) o.mood = 'happy'; if (lt > tT) o.arms = () => ({ shR: 90, elR: -30, handR: 'open' }); } }),
         F('LUCIA', 1500, 1120, 1.6, { pose: 'sit', facing: -1, mood: 'focus', anim: (o, lt) => { if (lt < tK) o.arms = () => ({ shR: 60, elR: -50 + 20 * Math.sin(lt * 16), handR: 'open' }); if (lt > tC && lt < tW) o.mood = 'angry'; if (lt > tT) o.mood = 'happy'; } })];
@@ -111,12 +111,12 @@ window.SHOTS = [
     init: S => { const tW = A.at(S, 'waffles', 2.0), tMa = A.at(S, 'mask', 4.0), tRo = A.at(S, 'robbery', 6.4), tG = A.at(S, 'good', 8.6), tN = A.at(S, 'night', 10.0), tTr = A.at(S, 'Trust', 13.6);
       const night = (lt) => .5 * K.seg(lt, tN - .6, tN + .6);
       S.D.figs = [F('JASON', 1130, 1410, 1.75, { facing: -1, mood: 'happy', walk: { x0: 2500, x1: 1130, t0: 0, dur: 4 }, anim: (o, lt) => { if (lt > 4) o.facing = 1; if (lt > tMa + .7) { o.hold = { near: cc => G6.mask(cc, 0, 30, 1.1) }; o.arms = () => ({ shR: 60, elR: -60, handR: 'open' }); o.mood = 'shocked'; } if (lt > tG) { o.pose = 'cheer'; o.mood = 'happy'; o.hold = null; } if (lt > tN) { o.pose = 'stand'; o.mood = 'neutral'; } } }),
-        F('LUCIA', 1480, 1410, 1.75, { facing: -1, mood: 'smug', walk: { x0: 2800, x1: 1480, t0: .2, dur: 4 }, anim: (o, lt) => { if (lt < tMa + .7 && lt > 3) o.hold = { near: cc => G6.mask(cc, 0, 30, 1.1) }; else o.hold = null; if (lt > tMa - .2 && lt < tMa + .8) o.pose = 'present'; else o.pose = 'stand'; if (lt > tG) o.mood = 'happy'; if (lt > tN) o.mood = 'neutral'; } })];
+        F('LUCIA', 1570, 1410, 1.75, { facing: -1, mood: 'smug', walk: { x0: 2800, x1: 1570, t0: .2, dur: 4 }, anim: (o, lt) => { if (lt < tMa + .7 && lt > 3) o.hold = { near: cc => G6.mask(cc, 0, 30, 1.1) }; else o.hold = null; if (lt > tMa - .2 && lt < tMa + .8) o.pose = 'present'; else o.pose = 'stand'; if (lt > tG) o.mood = 'happy'; if (lt > tN) o.mood = 'neutral'; } })];
       S.D.live = [(c, lt) => { TW.glow(c, 1950, 500, 400, '255,80,90', .2 + .08 * Math.sin(lt * 9)); for (let k = 0; k < 6; k++) TW.glow(c, 640 + k * 260, 900, 100, '255,220,150', .25); A.smoke(2200, 600, .6, '240,235,230')(c, lt); }];
       S.D.front = [(c, lt) => { const a = pop(lt, tTr - .3, .5); if (a <= 0) return; TW.glow(c, 1305, 700, 260, '255,220,140', .6 * a); c.save(); c.translate(1305, 700); c.scale(a, a); txt(c, 'TRUST', 0, 0, 110, GOLD, 'center', 'Anton'); c.strokeStyle = INK; c.lineWidth = 3; c.font = '110px Anton'; c.strokeText('TRUST', 0, 0); c.restore(); }];
       S.D.over = [tint('255,140,120', (lt) => .12 * (1 - night(lt) * 2)), tint('15,20,60', night), (c, lt) => K.card(c, 'WAFFLES FIRST', lt, { at: tW, x: 480, y: 110, px: 44, rot: -2, until: tRo }),
         (c, lt) => K.card(c, 'FIRST ROBBERY TOGETHER', lt, { at: tRo, x: 640, y: 110, px: 46, rot: -2, bg: GOLD, until: tN }), (c, lt) => K.card(c, "THEY'RE GOOD AT IT", lt, { at: tG, x: 1400, y: 120, px: 44, rot: 2, until: tN }),
-        (c, lt) => K.card(c, 'THAT NIGHT', lt, { at: tN, x: 960, y: 110, px: 50, rot: -1 })];
+        (c, lt) => K.card(c, 'THAT NIGHT', lt, { at: tN, x: 520, y: 110, px: 50, rot: -1 })];
       S.D.sfx = [[.3, 'footsteps', .25], [tW, 'pop', .2], [tMa, 'whoosh_soft', .3], [tRo, 'alarm', .2], [tRo + .6, 'run_steps', .25], [tG, 'coins_cascade', .3], [tN, 'night_loop', .15], [tTr, 'swell', .35], [tTr + .2, 'chime', .3]]; } },
   // 4.07 ladies' night: Vicky offers the safe code; a dancer passes out; Jason is pushed into the spotlight while Lucia cracks the safe in the wings
   { plate: 'strip_stage', cam: { z: [1.32, 1.4], x: [1220, 1180], y: [800, 790] }, bed: [['crowd_loop', .15]], light: { dir: 1, key: 'rgba(255,120,220,.25)' },

@@ -16,7 +16,7 @@ Cast + props: `gta6-story/production/g6_kit.js` (window.G6). Read its header. Ca
 Kit test page: gta6-story/production/acts/kit_test/act.html.
 
 ## Running devices (keep consistent across acts)
-- TRUST board (G6.trust): names ['MATTIA','CAT','VALENTINA','ABE','GALLO'] and xs = how many have betrayed so far; shown small top-right on the beats that mention betrayal (act0 intro full-size; act3 end: 0; act6 last shot: Valentina -> xs advances; act7: Mattia; act8: Gallo; act9 penultimate shot full-size with all X and a gold JASON + LUCIA box if you can).
+- TRUST board (G6.trust): names ['VALENTINA','ABE','MATTIA','GALLO'] (betrayal order; G6.trust stamps X in list order) and xs = how many have betrayed so far; shown small top-right on the beats that mention betrayal (act0 intro full-size; act3 end: 0; act6 last shot: Valentina -> xs advances; act7: Mattia; act8: Gallo; act9 penultimate shot full-size with all X and a gold JASON + LUCIA box if you can).
 - WALK AWAY? card (G6.walkAway) stamps #1 in act6 shot 1 (Abe), #2 in act8 shot 4 (prosecutor), #3 in act9 shot 1 (Jason), cracking on Lucia's answer.
 - TOMMY savings jar (G6.jar): first coins in act3 shot 2, low in act3 shot 6, full in act5 last shot, shatters/empties in act7 shot 1, refills in act8 shot 1, full on the windowsill in act9 shot 4.
 
