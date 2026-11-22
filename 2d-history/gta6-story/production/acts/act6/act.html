@@ -71,22 +71,22 @@ window.SHOTS = [
         (c, lt) => { const a = pop(lt, tTV - .4, .4); if (a > 0) G6.walkAway(c, 470, 300, .6 * a, 1, tTV + .2, lt); }];
       S.D.sfx = [[tA, 'pop', .25], [tN, 'swell', .15], [tSe + .5, 'footsteps', .25], [tSe + 2.6, 'door_slam', .3], [tG, 'tension', .25], [tH, 'coins', .3], [tTV - .4, 'whoosh', .25], [tTV + .2, 'stamp', .45]]; } },
 
-  // 6.1 close on Lucia: WHAT? NO. -> cut to the dusk-to-dawn barn: protecting a TV boss's family; a child's trainer in the dirt; Abe's voice on the phone; Jason + Lucia walk the child out as dawn rises.
+  // 6.1 close on Lucia: NO. Straight away. -> cut to the dusk-to-dawn barn: protecting a TV boss's family; a child's trainer in the dirt; Abe's voice on the phone; Jason + Lucia walk the child out as dawn rises.
   { plate: 'slaughterhouse_dusk', cam: { z: [1.35, 1.45], x: [1500, 1620], y: [820, 840] }, bed: [['night_loop', .15], ['wind_loop', .08]], light: { dir: -1, key: 'rgba(255,190,140,.25)' },
-    init: S => { const tW = at(S, 'what?'), tNo = at(S, 'No.'), tSo = at(S, 'So'), tP = at(S, 'protecting'), tK = at(S, 'kidnapped'), tH = at(S, 'How'), tB = at(S, 'Bring'), tF = at(S, 'forget'), FY = 1020, FS = 1.05, dur = S.end - S.start;
+    init: S => { const tNo = at(S, 'no.'), tSt = at(S, 'Straight'), tSo = at(S, 'So'), tP = at(S, 'protecting'), tK = at(S, 'kidnapped'), tH = at(S, 'How'), tB = at(S, 'Bring'), tF = at(S, 'forget'), FY = 1020, FS = 1.05, dur = S.end - S.start;
       const wk = { t0: tK + .4, dur: Math.max(5, dur - tK - 1) };
-      S.D.figs = [{ x: 0, y: FY, s: FS, ...G6.JASON(), mood: 'focus', walk: { x0: 1320, x1: 2150, ...wk } }, { x: 0, y: FY + 6, s: FS * .95, ...PR.KID(3), mood: 'sad', walk: { x0: 1220, x1: 2040, ...wk }, anim: (o, lt) => { if (lt > tB) o.mood = 'happy'; } },
-        { x: 0, y: FY + 10, s: FS, ...G6.LUCIA(), mood: 'focus', walk: { x0: 1080, x1: 1900, ...wk }, anim: (o, lt) => { if (lt > tF) o.mood = 'angry'; } }];
+      S.D.figs = [{ x: 0, y: FY, s: FS, ...G6.JASON(), mood: 'focus', walk: { x0: 1320, x1: 1720, ...wk } }, { x: 0, y: FY + 6, s: FS * .95, ...PR.KID(3), mood: 'sad', walk: { x0: 1220, x1: 1610, ...wk }, anim: (o, lt) => { if (lt > tB) o.mood = 'happy'; } },
+        { x: 0, y: FY + 10, s: FS, ...G6.LUCIA(), mood: 'focus', walk: { x0: 1080, x1: 1480, ...wk }, anim: (o, lt) => { if (lt > tF) o.mood = 'angry'; } }];
       S.D.live = [(c, lt, u) => { TW.glow(c, 1370, 720, 260, '255,200,120', .35 + .05 * Math.sin(lt * 7)); const d = K.seg(lt, tK, S.end - S.start); TW.glow(c, 2200, 360, 900, '255,200,150', .35 * d); c.fillStyle = `rgba(255,190,140,${.12 * d})`; c.fillRect(0, 0, 2560, 1440);
           // child's trainer in the dirt by the door
           c.save(); c.translate(1600, 1060); c.rotate(-.15); c.fillStyle = '#e8503a'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(-30, 0); c.quadraticCurveTo(-30, -24, 0, -22); c.lineTo(10, -10); c.quadraticCurveTo(34, -8, 34, 0); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#fff'; c.fillRect(-30, -2, 64, 6); c.restore(); if (lt > tK && lt < tK + 2) TW.glow(c, 1600, 1050, 80, '255,255,220', .5); }];
       S.D.over = [cut(0, { t1: tSo, plate: 'boardroom', cam: { z: [1.7, 1.75], x: [1600, 1620], y: [980, 980] }, light: { dir: 1, key: 'rgba(200,220,255,.2)' }, live: [(c) => TW.chair(c, 1700, 1390, 1390 - 63 * 1.8, -1, '#2a2a34')],
           figs: [{ x: 1700, y: 1390, s: 1.8, ...G6.LUCIA(), pose: 'sit', facing: -1, mood: 'angry', talk: [0, 99], anim: (o, lt) => { if (lt > tNo) o.arms = () => ({ shR: 100, elR: -20, handR: 'open', shL: 90, elL: -20, handL: 'open' }); } }],
-          front: [(c, lt) => say(c, 1380, 720, lt, tW - .2, 99, 'WHAT?' + (lt > tNo ? '|NO.' : ''), { px: 56, tail: [220, 140] })] }),
+          front: [(c, lt) => say(c, 1380, 720, lt, tNo - .1, 99, 'NO.' + (lt > tSt ? '|STRAIGHT AWAY.' : ''), { px: 56, tail: [220, 140] })] }),
         (c, lt) => card(c, "PROTECT A TV BOSS'S FAMILY", lt, tP, { x: 560, y: 130, px: 40, rot: -2, until: tH }), (c, lt) => card(c, 'FIND A KIDNAPPED CHILD', lt, tK, { x: 600, y: 230, px: 40, rot: 2, until: tH - .1 }),
         (c, lt) => { const a = pop(lt, tH - .2, .4); if (a <= 0) return; G6.phone(c, 240, 330, 2.4 * a, 0, { buzz: lt }); txt(c, 'ABE', 240, 250, 28 * a, '#fff', 'center', 'Anton'); G6.bubble(c, 640, 300, .8 * a, 'HOW MANY KIDS HAVE|YOU LOST SO FAR?', { px: 38, tail: [-300, 40] }); },
         (c, lt) => card(c, '"BRING THIS ONE BACK,\nOR FORGET YOURS."', lt, tB, { x: 1460, y: 170, px: 44, rot: 2, bg: GOLD })];
-      S.D.sfx = [[tW, 'pop', .3], [tSo - .1, 'whoosh', .3], [tP, 'pop', .2], [tK, 'tension', .3], [tH - .2, 'phone_ring', .3], [tK + .6, 'footsteps', .25], [tB, 'swell', .25], [tF, 'thud', .3]]; } },
+      S.D.sfx = [[tNo, 'pop', .3], [tSo - .1, 'whoosh', .3], [tP, 'pop', .2], [tK, 'tension', .3], [tH - .2, 'phone_ring', .3], [tK + .6, 'footsteps', .25], [tB, 'swell', .25], [tF, 'thud', .3]]; } },
 
   // 6.2 the port at night: Raul's tech guy's trace -> GIORGIO GALLO (portrait), Mattia's boss; his cargo ships with SEIZED banners; callback card TONNES, ON CARGO SHIPS.
   { plate: 'coastguard_base', cam: { z: [1.55, 1.3], x: [1000, 1280], y: [820, 800] }, bed: [['ocean_loop', .15], ['wind_loop', .08]], light: { dir: -1, key: 'rgba(200,220,255,.2)' },

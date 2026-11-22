@@ -64,7 +64,7 @@ const carView = (c, x, y, w, col, t, o = {}) => { const h = w * .62, ph = Math.f
 const sweep = (c, lt, x, y, r = 700, a = .3) => { const ph = Math.floor(lt * 3) % 2; glow(c, x + Math.sin(lt * 5) * 200, y, r, ph ? '255,40,40' : '40,90,255', a); };
 const cup = (c, x, y, s = 1) => { c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = '#fff'; c.strokeStyle = INK; c.lineWidth = 2; c.beginPath(); c.moveTo(-10, -16); c.lineTo(10, -16); c.lineTo(8, 0); c.lineTo(-8, 0); c.closePath(); c.fill(); c.stroke(); c.beginPath(); c.arc(12, -9, 4, -1.5, 1.5); c.stroke(); c.fillStyle = '#5a3018'; c.fillRect(-9, -15, 18, 3); c.restore(); };
 const pen = { near: cc => { cc.strokeStyle = INK; cc.lineWidth = 3; cc.beginPath(); cc.moveTo(0, 6); cc.lineTo(0, 40); cc.stroke(); cc.strokeStyle = '#1e3a8a'; cc.lineWidth = 2; cc.stroke(); } };
-const folder = (c, x, y, s, label = 'IMMUNITY', open = 0) => { c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = '#d8b46a'; c.strokeStyle = INK; c.lineWidth = 3; rr(c, -60, -40, 120, 80, 5); c.fill(); c.stroke(); c.fillStyle = '#f6efdc'; c.fillRect(-50, -32, 100, 26); txt(c, label, 0, -19, 18, '#c8382e', 'center', 'Anton'); c.restore(); };
+const folder = (c, x, y, s, label = 'IMMUNITY', open = 0, flat = 0) => { c.save(); c.translate(x, y); if (flat) { c.fillStyle = 'rgba(0,0,0,.25)'; c.beginPath(); c.ellipse(0, 14 * s * flat / .3, 66 * s, 10, 0, 0, 7); c.fill(); } c.scale(s, flat ? s * flat : s); c.fillStyle = '#d8b46a'; c.strokeStyle = INK; c.lineWidth = 3; rr(c, -60, -40, 120, 80, 5); c.fill(); c.stroke(); c.fillStyle = '#f6efdc'; c.fillRect(-50, -32, 100, 26); txt(c, label, 0, -19, 18, '#c8382e', 'center', 'Anton'); c.restore(); };
 
 window.SHOTS = [
   // 8.00 Abe's office: drive traded to the senator for the ships; Abe offers a FULL PARDON + Tommy back; their cash pours into the TOMMY jar (refills)
@@ -122,7 +122,7 @@ window.SHOTS = [
         { x: 1920, y: 1290, s: 2.0, ...G6.PROSECUTOR(), facing: -1, mood: 'neutral', walk: { x0: 2700, x1: 1920, t0: 0, dur: 1.6 }, hold: { near: cc => folder(cc, 0, 30, 1, '') }, anim: (o, lt) => { o.talk = lt > tK - .2 && lt < tSo + 1; if (lt > tGi - .3 && lt < tIm + .6) o.pose = 'present'; if (lt > tBo) o.mood = 'smug'; } }];
       S.D.live = [(c, lt) => { glow(c, 1280, 760, 520, '255,250,220', .16 + .02 * Math.sin(lt * 30)); const cx = 1640, cy = 330; c.fillStyle = '#f6f4ee'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.arc(cx, cy, 48, 0, 7); c.fill(); c.stroke();
         for (const [a, l, w] of [[lt / 3, 26, 5], [Math.floor(lt) * Math.PI / 30, 38, 2.5]]) { c.lineWidth = w; c.beginPath(); c.moveTo(cx, cy); c.lineTo(cx + Math.sin(a) * l, cy - Math.cos(a) * l); c.stroke(); }
-        if (lt > tIm - .3) { const p = E.out(K.seg(lt, tIm - .3, tIm + .5)); folder(c, 1600 - 500 * p, 1010, 1.4, 'IMMUNITY'); } }];
+        if (lt > tIm - .3) { const p = E.out(K.seg(lt, tIm - .3, tIm + .5)); folder(c, 1600 - 500 * p, 1013, 1.4, 'IMMUNITY', 0, .3); } }];
       S.D.front = [(c, lt) => ntag(c, 'STATE PROSECUTOR', 1920, 640, lt, tPr, { px: 34 })];
       S.D.over = [(c, lt) => { if (lt > tOf - .4) { c.save(); c.globalAlpha = K.seg(lt, tOf - .4, tOf); G6.walkAway(c, 330, 170, .5, 2, tOf, lt); c.restore(); } },
         bub("MENDEZ'S PEOPLE WILL|KILL YOU WITHIN HOURS.", 1300, 300, tK - .2, tGi - .1, { tail: [140, 150], s: .7 }), bub('GIVE ME THE DRIVE.', 1300, 300, tGi, tBo - .1, { tail: [140, 150], s: .7 }),
@@ -134,7 +134,7 @@ window.SHOTS = [
     init: S => { const tAl = A.at(S, 'already', 1.0), tCo = A.at(S, 'copy', 3.4), tSe = A.at(S, 'search', 6.0), tGo = A.at(S, 'Good', 6.8), tNe = A.at(S, 'never', 9.4), tDe = A.at(S, 'deal', 11.0);
       S.D.figs = [{ x: 640, y: 1250, s: 2.0, ...G6.LUCIA_PRISON(), pose: 'sit', low: 170, facing: 1, mood: 'angry', anim: (o, lt) => { o.talk = lt > tNe - .2 && lt < tDe + .6; if (lt > tNe) o.mood = 'smug'; } },
         { x: 1580, y: 1300, s: 2.0, ...G6.PROSECUTOR(), facing: -1, mood: 'worried', walk: { x0: 1580, x1: 2800, t0: tGo + .9, dur: 3 }, hold: { near: cc => folder(cc, 0, 30, 1, '') }, anim: (o, lt) => { o.talk = lt > tGo - .1 && lt < tGo + .8; if (lt > tGo) o.mood = 'smug'; } }];
-      S.D.live = [(c, lt) => { glow(c, 1280, 760, 520, '255,250,220', .16 + .02 * Math.sin(lt * 30)); folder(c, 1100, 1010, 1.4, 'IMMUNITY'); }];
+      S.D.live = [(c, lt) => { glow(c, 1280, 760, 520, '255,250,220', .16 + .02 * Math.sin(lt * 30)); folder(c, 1100, 1013, 1.4, 'IMMUNITY', 0, .3); }];
       S.D.over = [(c, lt) => { const a = pop(lt, tAl - .2) * (1 - K.seg(lt, tGo - .3, tGo)); if (a <= 0) return; c.save(); c.translate(1200, 180); c.scale(a, a); c.fillStyle = '#f6efdc'; c.strokeStyle = INK; c.lineWidth = 5; rr(c, -330, -70, 660, 140, 10); c.fill(); c.stroke(); G6.drive(c, -250, 0, 2, lt); bigX(c, -250, 0, 50, lt, tAl + .4);
           txt(c, 'DRIVE: ALREADY HANDED OVER', 40, -22, 32, INK, 'center', 'Anton'); if (lt > tCo) txt(c, "COPY: GALLO'S PENTHOUSE", 40, 26, 32, '#2a5aa0', 'center', 'Anton'); c.restore(); if (lt > tSe) TW.stamp(c, "CAN'T SEARCH", 860, 360, lt, tSe, { px: 40 }); },
         card('GOOD LUCK', tGo, 1250, 200, { px: 60, rot: 3 }), bub("I'D NEVER HAVE|TAKEN THAT DEAL.", 520, 250, tNe - .2, 99, { tail: [60, 170] })];

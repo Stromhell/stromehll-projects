@@ -865,6 +865,79 @@ window.PLATES = {
     c.strokeStyle = '#3a2a18'; c.lineWidth = 8; c.strokeRect(40, 40, W - 80, H - 80); c.lineWidth = 2; c.strokeRect(58, 58, W - 116, H - 116);
     c.save(); c.globalCompositeOperation = 'multiply'; const v = c.createRadialGradient(W / 2, H / 2, H * .45, W / 2, H / 2, W * .65); v.addColorStop(0, 'rgba(255,255,255,0)'); v.addColorStop(1, 'rgba(120,80,30,.7)'); c.fillStyle = v; c.fillRect(0, 0, W, H); c.restore();
     done(c, r, W, H, P, { vig: .3, n: 30000 }); },
+  // 40. Side-on causeway road at night. Road runs straight left-right: back kerb y960, lanes y980-1270 (vehicle wheels ~y1200-1250), front kerb y1270-1300, pavement y1300-1440 (people feet ~y1380). Sea + rail behind.
+  road_side_night: (c, r, W, H, P) => { const hz = 700, rail = 900, kb = 960, rf = 1270;
+    vg(c, 0, 0, W, hz, [[0, '#050818'], [.5, '#111a3c'], [.82, '#2a2a54'], [1, '#5c3a62']]); stars(c, r, W, hz * .75, 300);
+    ENV.clouds(c, r, W, 120, 460, 7, '#3c4674', '#222a52', '#10142e', { scale: 1.1 }); moon(c, r, 1900, 230, 50);
+    gl(c, 600, hz, 700, '255,80,170', .26); gl(c, 500, hz - 20, 300, '255,160,90', .22);
+    for (let x = 0; x < 1200; x += r.range(14, 40)) { const h = r.range(8, 80) * (1 - Math.abs(x - 560) / 800); if (h <= 0) continue; c.fillStyle = '#1c1630'; c.fillRect(x, hz - h, r.range(10, 30), h); for (let k = 0; k < h / 8; k++) if (r() < .5) { c.fillStyle = r() < .5 ? 'rgba(255,120,200,.8)' : 'rgba(255,220,160,.8)'; c.fillRect(x + r() * 14, hz - h + k * 8, 2, 2); } }
+    for (let x = 1400; x < W; x += r.range(80, 180)) mangrove(c, r, x, hz + 4, r.range(60, 160), r.range(20, 40), { leaf: ['#0a0c18', '#100e20'], root: '#08080e' });
+    sea(c, r, hz, kb, '#22305a', '#0c1430', { n: 7000, glint: '150,170,230', gn: 900 }); shimmer(c, r, 1900, hz + 4, rail, 40, 260, '235,235,255', 700, .7);
+    // concrete causeway wall + railing
+    vg(c, 0, rail, W, kb - rail, [[0, '#5a5e6a'], [1, '#34363e']]); c.fillStyle = 'rgba(255,255,255,.18)'; c.fillRect(0, rail, W, 5);
+    c.fillStyle = '#9aa0ac'; c.fillRect(0, rail - 70, W, 10); c.fillRect(0, rail - 36, W, 6); for (let x = 10; x < W; x += 110) { c.fillStyle = '#7a808c'; c.fillRect(x, rail - 70, 10, 70); }
+    for (let x = 30; x < W; x += 320) { c.fillStyle = 'rgba(0,0,0,.25)'; c.fillRect(x, rail + 6, 3, kb - rail - 6); }
+    // palms + lamps behind the back kerb
+    for (const [x, h, l] of [[230, 560, -40], [980, 620, 50], [1560, 520, -30], [2330, 600, 40]]) palmC(c, r, x, kb - 4, h, l, '#14141c', ['#0c1016', '#10161c', '#141c22']);
+    for (const x of [600, 1280, 1960]) { lampPost(c, x, kb, 520, '255,180,90', 1); c.save(); c.globalCompositeOperation = 'screen'; const g = c.createLinearGradient(0, kb - 560, 0, H); g.addColorStop(0, 'rgba(255,170,80,.16)'); g.addColorStop(1, 'rgba(255,170,80,0)'); c.fillStyle = g; poly(c, [[x - 20, kb - 560], [x + 20, kb - 560], [x + 380, H], [x - 380, H]]); c.fill(); c.restore(); }
+    // back kerb, road, front kerb, pavement
+    c.fillStyle = '#6a6c74'; c.fillRect(0, kb, W, 20); c.fillStyle = 'rgba(255,255,255,.2)'; c.fillRect(0, kb, W, 4);
+    ground(c, r, 0, kb + 20, W, rf - kb - 20, '#24252e', 9000, { len: [10, 50], var: 10 });
+    c.fillStyle = 'rgba(235,235,225,.7)'; c.fillRect(0, kb + 34, W, 7); c.fillRect(0, rf - 18, W, 7);
+    c.fillStyle = 'rgba(240,200,60,.85)'; for (let x = -40; x < W; x += 260) c.fillRect(x, 1118, 150, 12);
+    for (const x of [600, 1280, 1960]) gl(c, x, 1120, 420, '255,180,100', .16);
+    c.fillStyle = '#7a7c84'; c.fillRect(0, rf, W, 30); c.fillStyle = 'rgba(255,255,255,.25)'; c.fillRect(0, rf, W, 5); c.fillStyle = '#4a4c54'; c.fillRect(0, rf + 30, W, 8);
+    ground(c, r, 0, rf + 38, W, H - rf - 38, '#4c4a50', 5000, { len: [8, 30], var: 12 }); c.strokeStyle = 'rgba(20,20,26,.5)'; c.lineWidth = 3; for (let x = 0; x < W; x += 180) { c.beginPath(); c.moveTo(x, rf + 38); c.lineTo(x - 40, H); c.stroke(); }
+    for (const x of [600, 1280, 1960]) gl(c, x, 1380, 300, '255,180,100', .12);
+    grade(c, 'rgba(60,70,150,.35)', 'rgba(20,20,50,.35)');
+    done(c, r, W, H, P, { vig: .45 }); },
+
+  // 41. Hospital room, full frame. Floor line fy=1060. Bed side-on centre (x 820-1720, mattress top y~860, so a person sitting on it: feet ~y1060 at x~1150-1400, s~1.8). Drip stand left of bed, monitor on wall arm right of bed, curtain far left, window back-left, door right (x2080-2420).
+  hospital_room: (c, r, W, H, P) => { const fy = 1060;
+    vg(c, 0, 0, W, fy, [[0, '#9cb8b0'], [1, '#c4d6cc']]); P2.fillStrokes(c, r, [0, 0, W, fy], () => true, { n: 9000, len: [20, 70], w: [3, 8], ang: Math.PI / 2, angJ: .2, al: .12, colFn: () => P2.jitter('#b4cac0', r, 12) });
+    c.fillStyle = '#7a9a90'; c.fillRect(0, 560, W, 14); vg(c, 0, 574, W, fy - 574, [[0, 'rgba(60,90,80,.12)'], [1, 'rgba(60,90,80,.25)']]);
+    // window (night) back-left
+    const wx = 520, wy = 180, ww = 560, wh = 420; c.fillStyle = '#e8eee8'; c.fillRect(wx - 24, wy - 24, ww + 48, wh + 48); vg(c, wx, wy, ww, wh, [[0, '#0a1030'], [1, '#3a2a5a']]); stars(c, r, 0, 0, 0);
+    c.save(); c.beginPath(); c.rect(wx, wy, ww, wh); c.clip(); for (let i = 0; i < 60; i++) { c.fillStyle = `rgba(255,255,255,${r.range(.2, .7)})`; c.fillRect(wx + r() * ww, wy + r() * wh * .5, 2, 2); } for (let x = wx; x < wx + ww; x += r.range(30, 70)) { const h = r.range(60, 200); c.fillStyle = '#141432'; c.fillRect(x, wy + wh - h, r.range(26, 60), h); for (let k = 0; k < 14; k++) if (r() < .4) { c.fillStyle = 'rgba(255,210,150,.8)'; c.fillRect(x + r() * 30, wy + wh - h + r() * h, 4, 4); } } c.restore();
+    c.fillStyle = '#e8eee8'; c.fillRect(wx + ww / 2 - 8, wy, 16, wh); c.fillRect(wx, wy + wh / 2 - 8, ww, 16); c.fillStyle = '#d8e0d8'; c.fillRect(wx - 40, wy + wh + 24, ww + 80, 20);
+    blinds(c, wx, wy, ww, 90, 14, 'rgba(230,235,230,.9)');
+    // curtain rail + curtain far left
+    c.fillStyle = '#c8ccd0'; c.fillRect(0, 90, 460, 12); for (let x = 0; x < 420; x += 40) { const g = c.createLinearGradient(x, 0, x + 40, 0); g.addColorStop(0, '#6aa8b0'); g.addColorStop(.5, '#a8d4d8'); g.addColorStop(1, '#5a98a0'); c.fillStyle = g; c.fillRect(x, 102, 40, fy - 140); }
+    c.fillStyle = 'rgba(0,0,0,.15)'; c.fillRect(0, fy - 60, 420, 20);
+    // door right
+    c.fillStyle = '#8a9a98'; c.fillRect(2060, 260, 380, fy - 260); vg(c, 2080, 280, 340, fy - 280, [[0, '#d8dcd6'], [1, '#b0b8b4']]); c.fillStyle = '#2a3440'; c.fillRect(2160, 340, 140, 200); c.fillStyle = 'rgba(180,210,230,.4)'; c.fillRect(2170, 350, 120, 180); c.fillStyle = '#8a9098'; c.fillRect(2110, 640, 70, 18); c.fillStyle = '#c0c4c0'; c.fillRect(2080, fy - 80, 340, 60);
+    // wall sign + hand sanitiser + outlets
+    c.fillStyle = '#f4f4ee'; rr(c, 1260, 240, 300, 130, 10); c.fill(); c.fillStyle = '#d83a3a'; c.fillRect(1300, 280, 50, 16); c.fillRect(1317, 263, 16, 50); txt(c, 'WARD 3', 1460, 305, 40, '#2a3a40');
+    c.fillStyle = '#e8eae8'; rr(c, 1900, 520, 70, 120, 8); c.fill(); c.fillStyle = '#3aa0c8'; c.fillRect(1912, 540, 46, 30);
+    c.fillStyle = '#d8dcd8'; c.fillRect(820, 640, 900, 40); for (let x = 860; x < 1700; x += 120) { c.fillStyle = '#4a5458'; c.fillRect(x, 652, 20, 16); }
+    // floor
+    c.fillStyle = '#7a9088'; c.fillRect(0, fy - 22, W, 22); tile(c, fy, H, 1280, 12, 7, '#b8c0b8', '#c8d0c8');
+    P2.fillStrokes(c, r, [0, fy, W, H - fy], () => true, { n: 5000, len: [10, 40], w: [3, 8], ang: 0, angJ: .3, al: .12, colFn: () => P2.jitter('#c0c8c0', r, 12) });
+    // overhead light
+    fluoro(c, 900, 30, 760); cone(c, 1280, 60, 700, 1800, 1100, '240,250,245', .08);
+    // bed (side-on, head at left)
+    const bx0 = 820, bx1 = 1720, mt = 860; shadow(c, 1270, fy, 560, 30, .5);
+    c.fillStyle = '#5a6068'; for (const x of [bx0 + 40, bx1 - 60]) { c.fillRect(x, mt + 80, 20, fy - mt - 110); c.fillStyle = '#2a2e34'; c.beginPath(); c.arc(x + 10, fy - 18, 18, 0, 7); c.fill(); c.fillStyle = '#5a6068'; }
+    c.fillRect(bx0 + 40, fy - 70, bx1 - bx0 - 80, 14);
+    vg(c, bx0, mt + 50, bx1 - bx0, 40, [[0, '#a8b0b8'], [1, '#6a727a']]);
+    vg(c, bx0, mt, bx1 - bx0, 54, [[0, '#f8faf8'], [1, '#d8dee0']]); c.fillStyle = 'rgba(0,0,0,.12)'; c.fillRect(bx0, mt + 46, bx1 - bx0, 8);
+    c.fillStyle = '#8ab4d0'; rr(c, bx0 + 300, mt - 6, bx1 - bx0 - 300, 60, 10); c.fill(); c.fillStyle = 'rgba(255,255,255,.3)'; c.fillRect(bx0 + 300, mt - 4, bx1 - bx0 - 300, 6);
+    c.fillStyle = '#ffffff'; rr(c, bx0 + 30, mt - 50, 220, 60, 26); c.fill(); c.fillStyle = 'rgba(0,0,0,.08)'; rr(c, bx0 + 30, mt - 10, 220, 16, 8); c.fill();
+    c.fillStyle = '#c8ccd0'; rr(c, bx0 - 30, mt - 180, 34, 300, 8); c.fill(); rr(c, bx1 - 4, mt - 100, 30, 220, 8); c.fill();
+    // side rail (lowered at the near middle so a sitter's legs are clear: rail only near head end)
+    c.strokeStyle = '#9aa2aa'; c.lineWidth = 10; c.strokeRect(bx0 + 20, mt - 70, 260, 60); c.lineWidth = 6; for (let x = bx0 + 70; x < bx0 + 280; x += 50) { c.beginPath(); c.moveTo(x, mt - 70); c.lineTo(x, mt - 10); c.stroke(); }
+    // drip stand left of bed
+    const dx = 700; c.strokeStyle = '#a8b0b8'; c.lineWidth = 8; c.beginPath(); c.moveTo(dx, fy - 20); c.lineTo(dx, 380); c.stroke(); c.beginPath(); c.moveTo(dx - 60, 380); c.lineTo(dx + 60, 380); c.stroke(); for (const k of [-70, 0, 70]) { c.beginPath(); c.moveTo(dx, fy - 30); c.lineTo(dx + k, fy - 6); c.stroke(); c.fillStyle = '#2a2e34'; c.beginPath(); c.arc(dx + k, fy - 6, 8, 0, 7); c.fill(); }
+    c.fillStyle = 'rgba(220,240,255,.85)'; rr(c, dx + 20, 390, 60, 100, 14); c.fill(); c.fillStyle = 'rgba(150,200,240,.6)'; c.fillRect(dx + 26, 440, 48, 44); c.strokeStyle = 'rgba(200,220,235,.8)'; c.lineWidth = 3; c.beginPath(); c.moveTo(dx + 50, 490); c.bezierCurveTo(dx + 60, 650, dx + 220, 700, bx0 + 200, mt - 20); c.stroke();
+    // heart monitor on wall arm right of bed
+    const mx = 1800, my = 420; c.fillStyle = '#8a9098'; c.fillRect(mx + 90, my + 220, 16, 140); c.fillRect(mx + 40, my + 340, 120, 16); c.fillStyle = '#2a2e34'; rr(c, mx - 30, my, 260, 220, 14); c.fill(); c.fillStyle = '#081812'; c.fillRect(mx - 10, my + 20, 220, 150);
+    c.strokeStyle = '#3aff8a'; c.lineWidth = 4; c.beginPath(); for (let i = 0; i <= 44; i++) { const x = mx - 6 + i * 5, k = i % 22, y = my + 80 + (k === 8 ? -40 : k === 9 ? 34 : k === 10 ? -10 : 0); i ? c.lineTo(x, y) : c.moveTo(x, y); } c.stroke(); gl(c, mx + 100, my + 90, 200, '60,255,140', .2);
+    txt(c, '72', mx + 170, my + 140, 34, '#3aff8a'); c.fillStyle = '#ff5050'; c.beginPath(); c.arc(mx + 200, my + 195, 8, 0, 7); c.fill();
+    // bedside cabinet
+    shadow(c, 1890, fy, 120, 14, .4); vg(c, 1820, 880, 150, fy - 880, [[0, '#e8e4dc'], [1, '#bab4aa']]); c.fillStyle = '#8a8478'; c.fillRect(1870, 940, 50, 10); c.fillStyle = '#e8e8f0'; c.fillRect(1840, 830, 30, 50); c.fillStyle = '#f4b040'; c.fillRect(1900, 850, 22, 30);
+    gl(c, 1280, 900, 900, '240,250,245', .1);
+    grade(c, 'rgba(180,220,210,.2)', 'rgba(30,50,60,.3)');
+    done(c, r, W, H, P, { vig: .45 }); },
 };
 })();
 // Caveat (subset, wght 600, OFL) for the map labels, embedded so the painter needs no network/font install.
