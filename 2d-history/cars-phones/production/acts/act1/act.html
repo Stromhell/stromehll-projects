@@ -1,0 +1,140 @@
+<!doctype html><html><head><meta charset="utf-8"><title>CP act 1 - How the tablet ate the dashboard</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../tw_kit.js"></script><script src="../../xu_kit.js"></script><script src="../../jh_kit.js"></script><script src="../../pr_kit.js"></script><script src="../../cp_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+const SW = 1920, SH = 1080, INK = TW.INK, RED = TW.RED, pop = TW.pop, fade = TW.fade;
+const backdrop = (name, b = .5, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const CARRY = () => ({ shL: 30, elL: -75, shR: 35, elR: -75 });
+const endTitle = (secs) => { const T = window.TIMING; const last = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length, start: last.end, end: last.end + secs, vo_start: last.end, vo_end: last.end, text: '' }); T.dur = last.end + secs; };
+// CP act 1 - How the tablet ate the dashboard: 2012 launch stage, phone logic, features pile up and the screen swallows them, eyes off the road.
+// Plates: stage_blue, card, design_studio, motorway.
+for (const n of ['stage_blue', 'card', 'design_studio', 'motorway']) K.load(n, PL + n + '.jpg');
+const rr = TW.rr, txt = TW.txt, clamp = K.clamp;
+const lerp = (a, b, u) => a + (b - a) * u;
+// ---- windscreen (motorway plate): glass outline, rain, spray, tail-light smear, condensation, wipers
+const glass = (c) => { c.beginPath(); c.moveTo(350, 108); c.lineTo(2210, 108); c.lineTo(2425, 975); c.lineTo(130, 975); c.closePath(); };
+const rain = (c, lt, n = 110) => { c.save(); glass(c); c.clip(); c.strokeStyle = 'rgba(210,220,235,.32)'; c.lineWidth = 2.5;
+  for (let k = 0; k < n; k++) { const x = 160 + (k * 977) % 2260, y = 100 + ((k * 131 + lt * 1500) % 900); c.beginPath(); c.moveTo(x, y); c.lineTo(x - 8, y + 44); c.stroke(); }
+  for (let k = 0; k < 70; k++) { const x = 220 + (k * 613) % 2140, y = 140 + (k * 293) % 800, a = .25 + .2 * Math.sin(lt * 1.3 + k); c.fillStyle = `rgba(230,236,245,${a})`; c.beginPath(); c.arc(x, y + ((lt * 18 + k * 7) % 30), 3 + (k % 3), 0, 7); c.fill(); }
+  c.restore(); };
+const traffic = (c, lt) => { // red tail-light smears + lorry spray
+  const p = .8 + .2 * Math.sin(lt * 3);
+  for (const [x, y, r] of [[1500, 728, 120], [1630, 728, 120], [850, 712, 70], [905, 712, 70], [1125, 680, 60], [1185, 680, 60], [1010, 640, 40]]) { TW.glow(c, x, y, r, '255,40,30', .55 * p); c.save(); c.globalAlpha = .18 * p; c.fillStyle = '#ff3a2a'; c.fillRect(x - 6, y, 12, 120 + r * .6); c.restore(); }
+  c.save(); glass(c); c.clip();
+  for (let k = 0; k < 16; k++) { const ph = (lt * .6 + k / 16) % 1, x = 1565 + Math.sin(k * 2.1) * 140 * ph, y = 760 - 90 * ph; c.fillStyle = `rgba(220,225,235,${.16 * (1 - ph)})`; c.beginPath(); c.ellipse(x, y, 60 + 140 * ph, 26 + 40 * ph, 0, 0, 7); c.fill(); }
+  c.restore(); };
+const fog = (c, a) => { if (a <= 0) return; c.save(); glass(c); c.clip(); const g = c.createRadialGradient(1280, 560, 120 + 600 * (1 - a), 1280, 560, 1500); g.addColorStop(0, 'rgba(205,212,222,0)'); g.addColorStop(.35, `rgba(205,212,222,${.55 * a})`); g.addColorStop(1, `rgba(215,220,228,${.92 * a})`); c.fillStyle = g; c.fillRect(0, 0, 2560, 1000);
+  c.fillStyle = `rgba(200,208,218,${.25 * a})`; for (let k = 0; k < 40; k++) { c.beginPath(); c.arc(200 + (k * 547) % 2200, 130 + (k * 197) % 820, 30 + (k % 5) * 12, 0, 7); c.fill(); } c.restore(); };
+const wipers = (c, lt, sp = 2.6) => { const a = -.06 - 1.5 * (.5 - .5 * Math.cos(lt * sp));
+  for (const [px, py, L] of [[760, 985, 860], [1600, 985, 800]]) { c.save(); c.translate(px, py); c.rotate(-a - (px > 1000 ? .05 : 0)); c.lineCap = 'round';
+    c.strokeStyle = INK; c.lineWidth = 20; c.beginPath(); c.moveTo(0, 0); c.lineTo(-L, 0); c.stroke(); c.strokeStyle = '#2a2a30'; c.lineWidth = 12; c.stroke();
+    c.strokeStyle = '#111'; c.lineWidth = 9; c.beginPath(); c.moveTo(-L * .25, -6); c.lineTo(-L, -6); c.stroke(); c.fillStyle = '#3a3a40'; c.beginPath(); c.arc(0, 0, 18, 0, 7); c.fill(); c.restore(); } };
+const dashTop = (c) => { const g = c.createLinearGradient(0, 975, 0, 1060); g.addColorStop(0, '#2a2622'); g.addColorStop(1, '#141210'); c.fillStyle = g; c.beginPath(); c.moveTo(0, 990); c.quadraticCurveTo(1280, 960, 2560, 990); c.lineTo(2560, 1060); c.lineTo(0, 1060); c.fill(); c.strokeStyle = 'rgba(255,255,255,.08)'; c.lineWidth = 3; c.beginPath(); c.moveTo(0, 992); c.quadraticCurveTo(1280, 962, 2560, 992); c.stroke(); };
+// Dave's arm (sleeve from off-frame elbow ex,ey to the hand at hx,hy). o.point: index finger out; o.grip: curled on a rim
+const arm = (c, ex, ey, hx, hy, s = 1, o = {}) => { const ang = Math.atan2(hy - ey, hx - ex), L = Math.hypot(hx - ex, hy - ey);
+  c.save(); c.translate(ex, ey); c.rotate(ang); c.lineCap = 'round';
+  c.strokeStyle = INK; c.lineWidth = 92 * s; c.beginPath(); c.moveTo(0, 0); c.lineTo(L - 50 * s, 0); c.stroke();
+  const g = c.createLinearGradient(0, -40 * s, 0, 40 * s); g.addColorStop(0, '#3a4a6e'); g.addColorStop(1, '#1a2238'); c.strokeStyle = g; c.lineWidth = 82 * s; c.stroke();
+  c.strokeStyle = 'rgba(255,255,255,.12)'; c.lineWidth = 8 * s; c.beginPath(); c.moveTo(20, -24 * s); c.lineTo(L - 70 * s, -24 * s); c.stroke();
+  c.fillStyle = '#9aa0a8'; c.strokeStyle = INK; c.lineWidth = 4; rr(c, L - 62 * s, -38 * s, 20 * s, 76 * s, 6); c.fill(); c.stroke();
+  c.translate(L, 0); const skin = '#f0c6a2', sd = '#d29e7a'; c.fillStyle = skin; c.strokeStyle = INK; c.lineWidth = 4;
+  if (o.point) { c.beginPath(); rr(c, 10 * s, -10 * s, 62 * s, 20 * s, 10 * s); c.fill(); c.stroke(); c.fillStyle = '#f6dcc6'; c.beginPath(); c.ellipse(64 * s, -2 * s, 6 * s, 5 * s, 0, 0, 7); c.fill(); c.fillStyle = skin; }
+  c.beginPath(); c.ellipse(0, 0, 44 * s, 34 * s, 0, 0, 7); c.fill(); c.stroke();
+  c.strokeStyle = sd; c.lineWidth = 3; for (let k = 0; k < 3; k++) { c.beginPath(); c.moveTo(18 * s, (-14 + k * 12) * s); c.lineTo(34 * s, (-12 + k * 12) * s); c.stroke(); }
+  c.fillStyle = skin; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.ellipse(-2 * s, (o.point ? -30 : -28) * s, 18 * s, 11 * s, -.5, 0, 7); c.fill(); c.stroke();
+  c.restore(); };
+const meterOv = (v) => (c, lt) => CP.eyesMeter(c, 178, 96, .62, typeof v === 'function' ? v(lt) : v);
+const keyf = (lt, K0) => { // piecewise keyframes [[t,x,y]] -> {x,y} with ease
+  if (lt <= K0[0][0]) return { x: K0[0][1], y: K0[0][2] }; for (let i = 1; i < K0.length; i++) { const [t1, x1, y1] = K0[i], [t0, x0, y0] = K0[i - 1]; if (lt <= t1) { const u = E.io(clamp((lt - t0) / Math.max(.01, t1 - t0))); return { x: lerp(x0, x1, u), y: lerp(y0, y1, u) }; } }
+  const L = K0[K0.length - 1]; return { x: L[1], y: L[2] }; };
+const WH = { x: 2030, y: 1330, s: 7.5 }; // steering wheel (right-hand drive)
+const wheelAndRight = (c, lt, turn = 0) => { CP.analogDial(c, WH.x, 1105, 118, .62 + .02 * Math.sin(lt * 3), 'MPH'); CP.steering(c, WH.x, WH.y, WH.s, lt, { turn }); arm(c, 2640, 1760, WH.x + 300 * Math.cos(turn), WH.y + 300 * Math.sin(turn) - 10, 1.25); };
+
+// popcorn: a button flying off from (x,y) with seed k, u seconds after launch
+const flyBtn = (c, x, y, k, u, w, h, label, col = '#d8d2c2') => { if (u < 0) { c.save(); c.translate(x, y); c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 3; rr(c, -w / 2, -h / 2, w, h, 8); c.fill(); c.stroke(); if (label) txt(c, label, 0, 1, h * .5, INK, 'center', 'Anton'); c.restore(); return; }
+  if (u > 1.6) return; const vx = Math.sin(k * 2.7) * 520, vy = -700 - 300 * Math.abs(Math.cos(k * 1.9)); c.save(); c.globalAlpha = 1 - K.seg(u, 1.1, 1.6); c.translate(x + vx * u, y + vy * u + 1400 * u * u); c.rotate(u * (4 + k % 3) * (k % 2 ? 1 : -1)); c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 3; rr(c, -w / 2, -h / 2, w, h, 8); c.fill(); c.stroke(); if (label) txt(c, label, 0, 1, h * .5, INK, 'center', 'Anton'); c.restore(); };
+const crowd = (c, lt, flash) => { for (let k = 0; k < 22; k++) { const x = 60 + k * 118 + (k % 3) * 20, y = 1340 + (k % 2) * 50 + Math.sin(lt * 2 + k) * 6;
+  c.fillStyle = '#0a0e1c'; c.beginPath(); c.ellipse(x, y, 52, 60, 0, 0, 7); c.fill(); c.fillRect(x - 80, y + 40, 160, 120);
+  if (k % 2 === 0) { const px = x + 40, py = y - 140 + Math.sin(lt * 3 + k) * 8; c.strokeStyle = '#0a0e1c'; c.lineWidth = 26; c.lineCap = 'round'; c.beginPath(); c.moveTo(x + 30, y + 40); c.lineTo(px, py + 30); c.stroke(); c.fillStyle = '#111'; rr(c, px - 22, py - 38, 44, 76, 6); c.fill(); c.fillStyle = '#6ab0ff'; rr(c, px - 17, py - 32, 34, 62, 4); c.fill();
+    const f = flash ? Math.max(0, Math.sin(lt * 7 + k * 2.3)) ** 12 : 0; if (f > .05) TW.glow(c, px, py - 20, 160, '255,255,255', .9 * f); } } };
+
+window.SHOTS = [
+  // 1.00 2012 launch: a sleek saloon rolls onto the stage, the giant portrait screen powers on behind it, a sea of phones films it
+  { plate: 'stage_blue', cam: { z: [1.18, 1.0], x: [1280, 1280], y: [760, 720] }, bed: [['crowd_loop', .2], ['hum_loop', .1]], light: { dir: 1, key: 'rgba(120,170,255,.16)' },
+    init: S => { const tR = A.at(S, 'Rewind', 2.1), t12 = A.at(S, '2012.', 2.9), tT = A.at(S, 'Tesla', 3.3), tTo = A.at(S, 'touchscreen', 6.8), tMi = A.at(S, 'middle', 8.1), tW = A.at(S, 'world', 10.4);
+      const carX = lt => lerp(2900, 1150, E.out(K.seg(lt, tT - .4, tT + 2.2)));
+      S.D.figs = [{ x: 1960, y: 905, s: 1.0, ...CP.EXEC(0), facing: -1, mood: 'happy', anim: (o, lt) => { o.pose = lt < tT ? 'stand' : lt < tW ? 'present' : 'cheer'; }, talk: [tT, tW] }];
+      S.D.live = [(c, lt) => { // rewind flicker, the big screen powering on with a portrait touchscreen
+          const on = E.out(K.seg(lt, tTo - .3, tTo + .5)); c.save(); c.fillStyle = `rgba(4,8,20,${.75 * (1 - on)})`; c.fillRect(520, 120, 1520, 620); c.restore();
+          if (on > 0) { TW.glow(c, 1280, 430, 700, '120,190,255', .35 * on); c.save(); c.globalAlpha = on; c.translate(1280, 430); c.rotate(Math.PI / 2); CP.dashTablet(c, -260, -165, 520, lt, { page: 'home' }); c.restore(); }
+          for (const bx of [700, 1860]) TW.glow(c, bx, 120, 380, '90,150,255', .2 + .1 * Math.sin(lt * 1.5 + bx));
+          CP.car(c, carX(lt), 905, 1.0, { kind: 'tesla_like', t: lt, speed: lt < tT + 2.2 ? 300 : 0, dir: -1, lights: true, interior: true, shadow: true });
+          if (lt > tMi) TW.glow(c, carX(lt) + 40, 760, 140, '120,200,255', .5 + .15 * Math.sin(lt * 4)); }];
+      S.D.front = [(c, lt) => crowd(c, lt, lt > tTo - .5)];
+      S.D.over = [(c, lt) => K.card(c, '2012', lt, { at: t12, x: 260, y: 110, px: 70, rot: -3 }), (c, lt) => K.card(c, 'TESLA MODEL S', lt, { at: tT, x: 1580, y: 110, px: 56, rot: 2, bg: '#ffd24a' })];
+      S.D.sfx = [[tR, 'whoosh', .35], [t12, 'stamp', .3], [tT, 'drone', .2], [tTo, 'swell', .3], [tW, 'crowd_cheer', .4], [tW + .2, 'camera_shutter', .4], [tW + .9, 'camera_shutter', .3]]; } },
+  // 1.01 phone logic: keypad phone sheds its buttons like popcorn and becomes a smartphone; arrow; the button dash does the same
+  { plate: 'card', cam: { z: [1.0, 1.05], x: [1280, 1280], y: [720, 730] }, bed: [['hum_loop', .1]],
+    init: S => { const tL = A.at(S, 'logic', .5), tP = A.at(S, 'Phones', 1.8), tLo = A.at(S, 'lost', 3.9), tSu = A.at(S, 'surely', 5.5), tC = A.at(S, 'cars', 6.0);
+      const PX = 640, PY = 820, DX = 1460, DY = 690;
+      const keys = []; for (let r = 0; r < 4; r++) for (let q = 0; q < 3; q++) keys.push([PX - 70 + q * 70, PY + 40 + r * 52, '123456789*0#'[r * 3 + q]]);
+      const dkeys = [[1660, 830, 'A/C'], [1980, 830, 'DEMIST'], [1660, 900, 'RECIRC'], [1980, 900, 'REAR'], [1560, 820, ''], [1820, 820, ''], [2100, 820, '']];
+      S.D.live = [(c, lt) => { TW.glow(c, 1280, 760, 1100, '90,120,200', .15);
+          const m = E.io(K.seg(lt, tLo + .3, tLo + 1.0));
+          // keypad phone -> smartphone
+          c.save(); c.globalAlpha = 1 - m; c.fillStyle = '#3a3e46'; c.strokeStyle = INK; c.lineWidth = 6; rr(c, PX - 130, PY - 280, 260, 560, 40); c.fill(); c.stroke(); c.fillStyle = '#9ac89a'; rr(c, PX - 95, PY - 230, 190, 180, 10); c.fill(); c.stroke(); txt(c, '12:40', PX, PY - 140, 44, '#2a4a2a', 'center', 'Oswald'); c.fillStyle = '#2a2e36'; rr(c, PX - 30, PY + 520 - 540, 60, 26, 10); c.restore();
+          keys.forEach(([x, y, l], i) => flyBtn(c, x, y, i, lt - (tLo - .2 + i * .04), 56, 40, l));
+          if (m > 0) { c.save(); c.globalAlpha = m; TW.phone(c, PX, PY, 2.45, (cc) => { cc.fillStyle = '#1e3a5a'; cc.fillRect(-52, -100, 104, 200); for (let k = 0; k < 8; k++) { cc.fillStyle = `hsl(${k * 45},60%,55%)`; rr(cc, -42 + (k % 3) * 30, -86 + Math.floor(k / 3) * 34, 22, 22, 5); cc.fill(); } }); c.restore(); if (lt > tLo + 1) TW.sparkle(c, PX + 140, PY - 260, lt * 2, 1.2); }
+          // button dash -> tablet
+          const d = E.io(K.seg(lt, tC + .3, tC + 1.0));
+          c.save(); c.globalAlpha = 1 - d; CP.dashOld(c, DX, DY, 820, lt, {}); c.restore(); dkeys.forEach(([x, y, l], i) => { if (lt > tC - .2) flyBtn(c, x, y, i + 3, lt - (tC - .2 + i * .06), 110, 46, l || 'FAN', '#9a968c'); });
+          if (d > 0) { c.save(); c.globalAlpha = d; CP.dashTablet(c, DX + 90, DY - 140, 640, lt, { page: 'home' }); c.restore(); }
+          // arrow
+          const a = E.out(K.seg(lt, tSu - .3, tSu + .3)); if (a > 0) { c.save(); c.globalAlpha = a; c.translate(1020, 780); c.scale(a, 1); c.fillStyle = '#ffd24a'; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.moveTo(0, -24); c.lineTo(250, -24); c.lineTo(250, -60); c.lineTo(340, 0); c.lineTo(250, 60); c.lineTo(250, 24); c.lineTo(0, 24); c.closePath(); c.fill(); c.stroke(); c.restore(); } }];
+      S.D.front = [(c, lt) => { const d = E.io(K.seg(lt, tC + .3, tC + 1.0)); CP.dog(c, lerp(1640, 1820, d), lerp(DY, DY - 154, d) + 2, 4.5, lt, lt > tC + .6 ? 'shake' : lt > tP ? 'nod' : 'idle', { t0: lt > tC + .6 ? tC + .6 : tP }); }];
+      S.D.over = [(c, lt) => K.card(c, 'PHONE LOGIC', lt, { at: tL, x: 960, y: 130, px: 76, rot: -2, bg: '#ffd24a' })];
+      S.D.sfx = [[tL, 'stamp', .3], [tLo, 'pop', .3], [tLo + .2, 'pop', .25], [tLo + .4, 'pop', .2], [tSu, 'whoosh_soft', .25], [tC, 'pop', .3], [tC + .2, 'pop', .25], [tC + .6, 'chime', .2]]; } },
+  // 1.02 design studio: engineers pile feature toggles onto a mock-up dash until it overflows; the screen opens wide and gulps the lot
+  { plate: 'design_studio', cam: { z: [1.12, 1.2], x: [1300, 1300], y: [860, 880] }, bed: [['office_loop', .15]],
+    init: S => { const tF = A.at(S, 'features.', 2.8), tMa = A.at(S, 'Massage', 3.3), tAm = A.at(S, 'ambient', 4.3), tTw = A.at(S, 'twelve', 5.3), tRo = A.at(S, 'room', 8.0), tEv = A.at(S, 'everything', 9.8), tSc = A.at(S, 'screen', 11.2), tSw = A.at(S, 'swallowed', 11.6);
+      const TX = 1300, TOP = 930, DW = 560;
+      const B = [['MASSAGE', tMa, '#e8a07a'], ['AMBIENT', tAm, '#b88aff'], ['DRIVE MODE 1', tTw, '#7ac0ff'], ['DRIVE MODE 2', tTw + .3, '#7ac0ff'], ['DRIVE MODE 3', tTw + .6, '#7ac0ff'], ['SPORT+', tTw + 1.0, '#ff8a6a'], ['ECO', tTw + 1.3, '#8ad88a'], ['PERFUME', tRo - .4, '#f0a0d0'], ['LANE ASSIST', tRo, '#ffd24a'], ['MOOD LIGHT', tRo + .5, '#b88aff'], ['SNOW MODE', tEv - .6, '#d8e8ff'], ['KARAOKE', tEv, '#ff7a9a']];
+      const slot = i => ({ x: TX - 180 + (i % 3) * 180 + (Math.floor(i / 3) % 2) * 40, y: TOP - 182 - 30 - Math.floor(i / 3) * 62 });
+      S.D.figs = [{ x: 760, y: 1250, s: 1.6, ...CP.ENGINEER(0), facing: 1, mood: 'happy', anim: (o, lt) => { o.pose = B.some(b => lt > b[1] - .5 && lt < b[1] + .2) ? 'reach' : lt > tSc ? 'shrug' : 'point'; if (lt > tSw) o.mood = 'worried'; }, talk: [tF, tRo] },
+        { x: 1880, y: 1250, s: 1.6, ...CP.ENGINEER(1), facing: -1, mood: 'neutral', anim: (o, lt) => { o.pose = lt > tRo && lt < tSc ? 'shrug' : lt > tSw ? 'cheer' : 'think'; if (lt > tRo) o.mood = 'worried'; if (lt > tSw) o.mood = 'happy'; } }];
+      S.D.live = [(c, lt) => { // trestle table
+          c.fillStyle = '#6a5a48'; c.strokeStyle = INK; c.lineWidth = 5; for (const lx of [TX - 360, TX + 340]) { c.fillRect(lx, TOP, 20, 320); c.strokeRect(lx, TOP, 20, 320); } CP.shadow(c, TX, 1250, 460, .35);
+          c.fillStyle = '#8a7458'; rr(c, TX - 400, TOP - 4, 800, 30, 6); c.fill(); c.stroke();
+          const sc = E.io(K.seg(lt, tSc - .3, tSc + .3));
+          c.save(); c.globalAlpha = 1 - sc; CP.dashOld(c, TX - DW / 2, TOP - 182, DW, lt, {}); c.restore();
+          if (sc > 0) { c.save(); c.globalAlpha = sc; CP.dashTablet(c, TX - 220, TOP - 290, 440, lt, { page: 'home' });
+            const mo = Math.sin(Math.PI * K.seg(lt, tSw - .2, tSw + 1.6)); if (mo > 0) { c.fillStyle = '#050608'; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.ellipse(TX, TOP - 152, 180 * mo, 110 * mo, 0, 0, 7); c.fill(); c.stroke(); c.fillStyle = '#fff'; for (let k = 0; k < 6; k++) { c.beginPath(); c.moveTo(TX - 120 * mo + k * 48 * mo, TOP - 152 - 100 * mo); c.lineTo(TX - 100 * mo + k * 48 * mo, TOP - 152 - 70 * mo); c.lineTo(TX - 80 * mo + k * 48 * mo, TOP - 152 - 100 * mo); c.fill(); } } c.restore(); } }];
+      S.D.front = [(c, lt) => { const wob = K.seg(lt, tRo - 1, tSc) * .05;
+          B.forEach(([l, t0, col], i) => { const u = E.out(K.seg(lt, t0, t0 + .4)); if (u <= 0) return; const p = slot(i), g = E.io(K.seg(lt, tSw + i * .06, tSw + .7 + i * .06)); if (g >= 1) return;
+            const x = lerp(p.x, TX, g), y = lerp(p.y - 500 * (1 - u), TOP - 152, g); c.save(); c.translate(x, y); c.rotate(Math.sin(lt * 5 + i) * wob * (1 + Math.floor(i / 3)) + g * 6); c.scale(1 - g, 1 - g); c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 4; rr(c, -80, -26, 160, 52, 10); c.fill(); c.stroke(); txt(c, l, 0, 2, l.length > 9 ? 20 : 24, INK, 'center', 'Anton'); c.restore(); });
+          CP.dog(c, TX + 360, TOP - 2, 2.2, lt, lt > tSc ? 'shake' : lt > tMa ? 'nod' : 'idle', { t0: lt > tSc ? tSc : tMa }); }];
+      S.D.sfx = [[tMa, 'pop', .3], [tAm, 'pop', .3], [tTw, 'pop', .3], [tTw + .5, 'pop', .25], [tTw + 1, 'pop', .25], [tRo, 'creak', .3], [tEv, 'pop', .3], [tSc, 'chime', .2], [tSw, 'whoosh', .4], [tSw + 1.2, 'thud', .3]]; } },
+  // 1.03 CU: Dave's eyes flick down to the glow and back; the windscreen view drifts towards the hard shoulder; rumble strip
+  { plate: 'motorway', cam: { z: [1.2, 1.3], x: [1300, 1080], y: [820, 820] }, bed: [['rain_loop', .25], ['hum_loop', .14]], light: { dir: -1, key: 'rgba(120,190,255,.14)' },
+    init: S => { const tB = A.at(S, 'button', 2.4), tSc = A.at(S, 'screen', 4.3), tLk = A.at(S, 'look', 5.8), tSe = A.at(S, 'seventy', 7.2), tEy = A.at(S, 'eyes', 10.9), tRd = A.at(S, 'road.', 13.3);
+      const down = lt => lt > tSc - .2 && lt < tRd - .2; const drift = lt => -260 * E.io(K.seg(lt, tSc, tRd - .3)) * (1 - E.io(K.seg(lt, tRd - .2, tRd + .6)));
+      const rumble = lt => lt > tSe && lt < tRd ? Math.sin(lt * 70) * 6 : 0;
+      S.D.live = [(c, lt) => { c.save(); c.translate(drift(lt) * .5, rumble(lt) * .5); traffic(c, lt + 30); rain(c, lt + 30); wipers(c, lt + 30, 2); c.restore(); }];
+      S.D.front = [(c, lt) => { c.save(); c.translate(0, rumble(lt)); dashTop(c); CP.dashTablet(c, 860, 900, 840, lt, { page: 'climate' }); TW.glow(c, 1280, 1150, 500, '120,200,255', down(lt) ? .35 : .15);
+          CP.dog(c, 700, 1004, 4, lt, lt > tSc ? 'shake' : lt > tB ? 'nod' : 'idle', { t0: lt > tSc ? tSc : tB }); wheelAndRight(c, lt + 30, drift(lt) / 2000); arm(c, 1840, 1800, WH.x - 300, WH.y - 10, 1.25);
+          // eye-line arrow: down to the glow, back up to the road
+          const a = down(lt) ? 1 : lt > tRd - .2 ? K.seg(lt, tRd - .2, tRd + .2) : 0; if (a > 0) { const up = lt > tRd - .2; c.save(); c.globalAlpha = Math.min(1, a * 2); c.strokeStyle = up ? '#7ad87a' : '#ff6a4a'; c.lineWidth = 12; c.setLineDash([30, 18]); c.lineDashOffset = (up ? 1 : -1) * lt * 120; c.beginPath(); c.moveTo(1280, 520); c.lineTo(1280, 960); c.stroke(); c.setLineDash([]); c.fillStyle = c.strokeStyle; c.beginPath(); if (up) { c.moveTo(1240, 540); c.lineTo(1280, 470); c.lineTo(1320, 540); } else { c.moveTo(1240, 940); c.lineTo(1280, 1010); c.lineTo(1320, 940); } c.fill(); c.restore(); }
+          c.restore(); }];
+      S.D.over = [meterOv(120),
+        (c, lt, u, SS) => { const a = E.out(K.seg(lt, 0, .5)); c.save(); c.globalAlpha = a; c.fillStyle = 'rgba(0,0,0,.4)'; rr(c, 1488, 78, 380, 320, 24); c.fill(); c.fillStyle = '#2a2622'; c.strokeStyle = '#f2ead8'; c.lineWidth = 6; rr(c, 1480, 70, 380, 320, 24); c.fill(); c.save(); c.clip(); TW.glow(c, 1670, 400, 300, '120,200,255', down(lt) ? .5 : .1);
+          try { A.figure(c, { x: 1670, y: 1010, s: 2.6, ...CP.DAVE(), facing: 1, pose: 'stand', mood: down(lt) ? 'worried' : 'neutral', lean: down(lt) ? 8 : 0 }, lt, u, SS); } catch (e) { console.error('FIG', e.message); } c.restore(); c.strokeStyle = '#f2ead8'; c.lineWidth = 6; rr(c, 1480, 70, 380, 320, 24); c.stroke(); c.restore(); },
+        (c, lt) => K.card(c, 'EYES ON THE ROAD', lt, { at: tRd - .3, x: 960, y: 200, px: 64, rot: -2, bg: '#7ad87a' })];
+      S.D.sfx = [[tB, 'tick', .4], [tSc, 'chime', .15], [tSe, 'scrape', .35], [tSe + 1, 'scrape', .3], [tRd, 'hit', .3]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>
