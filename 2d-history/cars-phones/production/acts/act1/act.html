@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><title>CP act 1 - How the tablet ate the dashboard</title>
+<!doctype html><html><head><meta charset="utf-8"><title>CP act 1 - act 1</title>
 <style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
 <body><canvas id="c" width="1920" height="1080"></canvas>
 <script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
@@ -17,8 +17,8 @@ const rr = TW.rr, txt = TW.txt, clamp = K.clamp;
 const lerp = (a, b, u) => a + (b - a) * u;
 // ---- windscreen (motorway plate): glass outline, rain, spray, tail-light smear, condensation, wipers
 const glass = (c) => { c.beginPath(); c.moveTo(350, 108); c.lineTo(2210, 108); c.lineTo(2425, 975); c.lineTo(130, 975); c.closePath(); };
-const rain = (c, lt, n = 110) => { c.save(); glass(c); c.clip(); c.strokeStyle = 'rgba(210,220,235,.32)'; c.lineWidth = 2.5;
-  for (let k = 0; k < n; k++) { const x = 160 + (k * 977) % 2260, y = 100 + ((k * 131 + lt * 1500) % 900); c.beginPath(); c.moveTo(x, y); c.lineTo(x - 8, y + 44); c.stroke(); }
+const rain = (c, lt, n = 60) => { c.save(); glass(c); c.clip(); c.strokeStyle = 'rgba(210,220,235,.14)'; c.lineWidth = 4;
+  for (let k = 0; k < n; k++) { const x = 160 + (k * 977) % 2260, y = 100 + ((k * 131 + lt * 380) % 900); c.beginPath(); c.moveTo(x, y); c.lineTo(x - 8, y + 44); c.stroke(); }
   for (let k = 0; k < 70; k++) { const x = 220 + (k * 613) % 2140, y = 140 + (k * 293) % 800, a = .25 + .2 * Math.sin(lt * 1.3 + k); c.fillStyle = `rgba(230,236,245,${a})`; c.beginPath(); c.arc(x, y + ((lt * 18 + k * 7) % 30), 3 + (k % 3), 0, 7); c.fill(); }
   c.restore(); };
 const traffic = (c, lt) => { // red tail-light smears + lorry spray
@@ -64,15 +64,15 @@ const crowd = (c, lt, flash) => { for (let k = 0; k < 22; k++) { const x = 60 + 
 
 window.SHOTS = [
   // 1.00 2012 launch: a sleek saloon rolls onto the stage, the giant portrait screen powers on behind it, a sea of phones films it
-  { plate: 'stage_blue', cam: { z: [1.18, 1.0], x: [1280, 1280], y: [760, 720] }, bed: [['crowd_loop', .2], ['hum_loop', .1]], light: { dir: 1, key: 'rgba(120,170,255,.16)' },
+  { plate: 'stage_blue', cam: { z: [1.15, 1.32], x: [1200, 1320], y: [790, 760] }, bed: [['crowd_loop', .2], ['hum_loop', .1]], light: { dir: 1, key: 'rgba(120,170,255,.16)' },
     init: S => { const tR = A.at(S, 'Rewind', 2.1), t12 = A.at(S, '2012.', 2.9), tT = A.at(S, 'Tesla', 3.3), tTo = A.at(S, 'touchscreen', 6.8), tMi = A.at(S, 'middle', 8.1), tW = A.at(S, 'world', 10.4);
-      const carX = lt => lerp(2900, 1150, E.out(K.seg(lt, tT - .4, tT + 2.2)));
-      S.D.figs = [{ x: 1960, y: 905, s: 1.0, ...CP.EXEC(0), facing: -1, mood: 'happy', anim: (o, lt) => { o.pose = lt < tT ? 'stand' : lt < tW ? 'present' : 'cheer'; }, talk: [tT, tW] }];
+      const carX = lt => lerp(2900, 1150, E.out(K.seg(lt, .3, tT + 2.2)));
+      S.D.figs = [{ x: 2020, y: 905, s: 1.3, ...CP.EXEC(0), facing: -1, mood: 'happy', anim: (o, lt) => { o.pose = lt < tT ? 'stand' : lt < tW ? 'present' : 'cheer'; }, talk: [tT, tW] }];
       S.D.live = [(c, lt) => { // rewind flicker, the big screen powering on with a portrait touchscreen
-          const on = E.out(K.seg(lt, tTo - .3, tTo + .5)); c.save(); c.fillStyle = `rgba(4,8,20,${.75 * (1 - on)})`; c.fillRect(520, 120, 1520, 620); c.restore();
+          const on = E.out(K.seg(lt, tTo - .3, tTo + .5)); c.save(); c.fillStyle = `rgba(4,8,20,${.4 * (1 - on)})`; c.fillRect(520, 120, 1520, 620); c.restore();
           if (on > 0) { TW.glow(c, 1280, 430, 700, '120,190,255', .35 * on); c.save(); c.globalAlpha = on; c.translate(1280, 430); c.rotate(Math.PI / 2); CP.dashTablet(c, -260, -165, 520, lt, { page: 'home' }); c.restore(); }
           for (const bx of [700, 1860]) TW.glow(c, bx, 120, 380, '90,150,255', .2 + .1 * Math.sin(lt * 1.5 + bx));
-          CP.car(c, carX(lt), 905, 1.0, { kind: 'tesla_like', t: lt, speed: lt < tT + 2.2 ? 300 : 0, dir: -1, lights: true, interior: true, shadow: true });
+          CP.car(c, carX(lt), 905, 1.3, { kind: 'tesla_like', t: lt, speed: lt < tT + 2.2 ? 300 : 0, dir: -1, lights: true, interior: true, shadow: true });
           if (lt > tMi) TW.glow(c, carX(lt) + 40, 760, 140, '120,200,255', .5 + .15 * Math.sin(lt * 4)); }];
       S.D.front = [(c, lt) => crowd(c, lt, lt > tTo - .5)];
       S.D.over = [(c, lt) => K.card(c, '2012', lt, { at: t12, x: 260, y: 110, px: 70, rot: -3 }), (c, lt) => K.card(c, 'TESLA MODEL S', lt, { at: tT, x: 1580, y: 110, px: 56, rot: 2, bg: '#ffd24a' })];
@@ -103,7 +103,7 @@ window.SHOTS = [
     init: S => { const tF = A.at(S, 'features.', 2.8), tMa = A.at(S, 'Massage', 3.3), tAm = A.at(S, 'ambient', 4.3), tTw = A.at(S, 'twelve', 5.3), tRo = A.at(S, 'room', 8.0), tEv = A.at(S, 'everything', 9.8), tSc = A.at(S, 'screen', 11.2), tSw = A.at(S, 'swallowed', 11.6);
       const TX = 1300, TOP = 930, DW = 560;
       const B = [['MASSAGE', tMa, '#e8a07a'], ['AMBIENT', tAm, '#b88aff'], ['DRIVE MODE 1', tTw, '#7ac0ff'], ['DRIVE MODE 2', tTw + .3, '#7ac0ff'], ['DRIVE MODE 3', tTw + .6, '#7ac0ff'], ['SPORT+', tTw + 1.0, '#ff8a6a'], ['ECO', tTw + 1.3, '#8ad88a'], ['PERFUME', tRo - .4, '#f0a0d0'], ['LANE ASSIST', tRo, '#ffd24a'], ['MOOD LIGHT', tRo + .5, '#b88aff'], ['SNOW MODE', tEv - .6, '#d8e8ff'], ['KARAOKE', tEv, '#ff7a9a']];
-      const slot = i => ({ x: TX - 180 + (i % 3) * 180 + (Math.floor(i / 3) % 2) * 40, y: TOP - 182 - 30 - Math.floor(i / 3) * 62 });
+      const slot = i => ({ x: TX - 240 + (i % 3) * 240 + (Math.floor(i / 3) % 2) * 40, y: TOP - 182 - 40 - Math.floor(i / 3) * 80 });
       S.D.figs = [{ x: 760, y: 1250, s: 1.6, ...CP.ENGINEER(0), facing: 1, mood: 'happy', anim: (o, lt) => { o.pose = B.some(b => lt > b[1] - .5 && lt < b[1] + .2) ? 'reach' : lt > tSc ? 'shrug' : 'point'; if (lt > tSw) o.mood = 'worried'; }, talk: [tF, tRo] },
         { x: 1880, y: 1250, s: 1.6, ...CP.ENGINEER(1), facing: -1, mood: 'neutral', anim: (o, lt) => { o.pose = lt > tRo && lt < tSc ? 'shrug' : lt > tSw ? 'cheer' : 'think'; if (lt > tRo) o.mood = 'worried'; if (lt > tSw) o.mood = 'happy'; } }];
       S.D.live = [(c, lt) => { // trestle table
@@ -115,7 +115,7 @@ window.SHOTS = [
             const mo = Math.sin(Math.PI * K.seg(lt, tSw - .2, tSw + 1.6)); if (mo > 0) { c.fillStyle = '#050608'; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.ellipse(TX, TOP - 152, 180 * mo, 110 * mo, 0, 0, 7); c.fill(); c.stroke(); c.fillStyle = '#fff'; for (let k = 0; k < 6; k++) { c.beginPath(); c.moveTo(TX - 120 * mo + k * 48 * mo, TOP - 152 - 100 * mo); c.lineTo(TX - 100 * mo + k * 48 * mo, TOP - 152 - 70 * mo); c.lineTo(TX - 80 * mo + k * 48 * mo, TOP - 152 - 100 * mo); c.fill(); } } c.restore(); } }];
       S.D.front = [(c, lt) => { const wob = K.seg(lt, tRo - 1, tSc) * .05;
           B.forEach(([l, t0, col], i) => { const u = E.out(K.seg(lt, t0, t0 + .4)); if (u <= 0) return; const p = slot(i), g = E.io(K.seg(lt, tSw + i * .06, tSw + .7 + i * .06)); if (g >= 1) return;
-            const x = lerp(p.x, TX, g), y = lerp(p.y - 500 * (1 - u), TOP - 152, g); c.save(); c.translate(x, y); c.rotate(Math.sin(lt * 5 + i) * wob * (1 + Math.floor(i / 3)) + g * 6); c.scale(1 - g, 1 - g); c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 4; rr(c, -80, -26, 160, 52, 10); c.fill(); c.stroke(); txt(c, l, 0, 2, l.length > 9 ? 20 : 24, INK, 'center', 'Anton'); c.restore(); });
+            const x = lerp(p.x, TX, g), y = lerp(p.y - 500 * (1 - u), TOP - 152, g); c.save(); c.translate(x, y); c.rotate(Math.sin(lt * 5 + i) * wob * (1 + Math.floor(i / 3)) + g * 6); c.scale(1.4 * (1 - g), 1.4 * (1 - g)); c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 4; rr(c, -80, -26, 160, 52, 10); c.fill(); c.stroke(); txt(c, l, 0, 2, l.length > 9 ? 20 : 24, INK, 'center', 'Anton'); c.restore(); });
           CP.dog(c, TX + 360, TOP - 2, 2.2, lt, lt > tSc ? 'shake' : lt > tMa ? 'nod' : 'idle', { t0: lt > tSc ? tSc : tMa }); }];
       S.D.sfx = [[tMa, 'pop', .3], [tAm, 'pop', .3], [tTw, 'pop', .3], [tTw + .5, 'pop', .25], [tTw + 1, 'pop', .25], [tRo, 'creak', .3], [tEv, 'pop', .3], [tSc, 'chime', .2], [tSw, 'whoosh', .4], [tSw + 1.2, 'thud', .3]]; } },
   // 1.03 CU: Dave's eyes flick down to the glow and back; the windscreen view drifts towards the hard shoulder; rumble strip
@@ -140,12 +140,12 @@ window.SHOTS = [
       const dead = lt => K.seg(lt, tDi, tDi + .9), glitch = lt => lt > tDi - .2 && lt < tDi + .9 && Math.sin(lt * 53) > .2;
       S.D.live = [(c, lt) => { traffic(c, lt + 40); rain(c, lt + 40, 70); fog(c, .1 + .75 * E.io(K.seg(lt, tDi + .5, tDe + 1.2))); wipers(c, lt + 40, 1.6); }];
       S.D.front = [(c, lt) => { dashTop(c); const d = dead(lt); CP.dashTablet(c, 860, 900, 840, lt, { page: 'home', glow: glitch(lt) ? .2 : 1 - d });
-          if (glitch(lt)) { c.save(); for (let k = 0; k < 6; k++) { c.fillStyle = k % 2 ? 'rgba(255,40,120,.5)' : 'rgba(40,255,220,.5)'; c.fillRect(860, 900 + ((k * 97 + Math.floor(lt * 30) * 41) % 500), 840, 14); } c.restore(); }
+          if (glitch(lt)) { c.save(); for (let k = 0; k < 6; k++) { c.fillStyle = k % 2 ? 'rgba(255,40,120,.5)' : 'rgba(40,255,220,.5)'; c.fillRect(860, 900 + ((k * 97 + Math.floor(lt * 8) * 41) % 500), 840, 14); } c.restore(); }
           if (d > 0) { c.fillStyle = `rgba(4,5,8,${.97 * d})`; rr(c, 860, 900, 840, 525, 18); c.fill(); }
           CP.dog(c, 700, 1004, 4, lt, lt > tDi ? 'shake' : 'idle', { t0: tDi }); wheelAndRight(c, lt + 40, .02 * Math.sin(lt * .8)); arm(c, 1840, 1800, WH.x - 300, WH.y - 10 + 4 * Math.sin(lt), 1.25); }];
-      S.D.over = [(c, lt) => K.card(c, 'RECALL · 2021', lt, { at: tYr, x: 420, y: 110, px: 46, rot: -2, bg: '#c83a2a', color: '#fff' }),
+      S.D.over = [(c, lt) => K.card(c, 'RECALL · 2021', lt, { at: tYr, x: 420, y: 110, px: 58, rot: -2, bg: '#c83a2a', color: '#fff' }),
         (c, lt) => TW.stamp(c, '135,000 CARS', 960, 250, lt, tHu, { px: 80, rot: -.05, col: '#ffd24a' }),
-        (c, lt) => K.card(c, 'SCREEN MEMORY CHIP WEARS OUT', lt, { at: tCh, x: 1450, y: 110, px: 32, rot: 2 }),
+        (c, lt) => K.card(c, 'SCREEN MEMORY CHIP WEARS OUT', lt, { at: tCh, x: 1450, y: 110, px: 50, rot: 2 }),
         (c, lt) => { const items = [['DEMISTER', tDe, 600], ['REVERSING CAMERA', tRv, 1320]]; items.forEach(([l, t0, x]) => { const a = K.seg(lt, t0 - .2, t0 + .2); if (a <= 0) return; const fade = 1 - .75 * K.seg(lt, t0 + .4, t0 + 1.4); c.save(); c.globalAlpha = a * fade; c.fillStyle = '#16181c'; c.strokeStyle = '#7ac8ff'; c.lineWidth = 5; rr(c, x - 150, 370, 300, 110, 18); c.fill(); c.stroke();
             if (l === 'DEMISTER') { c.strokeStyle = '#ffb040'; c.lineWidth = 5; for (let k = 0; k < 3; k++) { c.beginPath(); c.moveTo(x - 40 + k * 40, 450); c.bezierCurveTo(x - 60 + k * 40, 420, x - 20 + k * 40, 410, x - 40 + k * 40, 385); c.stroke(); } }
             else { c.fillStyle = '#7ac8ff'; rr(c, x - 50, 395, 70, 50, 8); c.fill(); c.beginPath(); c.moveTo(x + 20, 420); c.lineTo(x + 55, 398); c.lineTo(x + 55, 442); c.fill(); }

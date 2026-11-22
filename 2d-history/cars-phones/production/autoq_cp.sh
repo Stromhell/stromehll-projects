@@ -1,7 +1,7 @@
 #!/bin/bash
 # Wait for each act's voice, then time it, render it and make a 1 fps contact sheet. usage: autoq.sh 1 2 3 ...
 cd /home/user/repo/2d-history; V=cars-phones/production
-for n in "$@"; do
+for n in "$@"; do bash cars-phones/production/acts/mk.sh $n "act $n" >/dev/null 2>&1;
   want=$(python3 -c "print(len([p for p in open('$V/voice/act$n.txt').read().split('\n\n') if p.strip()]))")
   until [ "$(ls $V/voice/act$n/vo-*.wav 2>/dev/null | wc -l)" -ge "$want" ] && ! pgrep -f "act$n.say.txt" >/dev/null; do sleep 20; done
   bash $V/prep_act.sh $n "act $n" || { echo "PREPFAIL $n"; continue; }

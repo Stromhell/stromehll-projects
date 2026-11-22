@@ -1,11 +1,12 @@
 # CP remix (VO louder: Pushpam 21 Nov) (from JH) v2 (Pushpam 10 Nov 18:27: lots more SFX + louder bg music)
 import json, subprocess, os, shutil, sys
 V='/home/user/repo/2d-history/cars-phones/production/acts'; SH='/home/user/repo/2d-history/shared'
-MOOD='tense,warm,drive,tense,tense,drive'.split(',')
-acts=[int(a) for a in sys.argv[1].split(',')] if len(sys.argv)>1 else range(6)
+MOOD='tense,warm,drive,tense,sad,tense,tense,drive'.split(',')
+acts=[int(a) for a in sys.argv[1].split(',')] if len(sys.argv)>1 else range(8)
 for a in acts:
     D=f'{V}/act{a}'
-    if not os.path.exists(f'{D}/act{a}_dry.mp4'): os.rename(f'{D}/act{a}.mp4', f'{D}/act{a}_dry.mp4')
+    fresh = os.path.exists(f'{D}/act{a}.mp4') and (not os.path.exists(f'{D}/mix_plus.wav') or os.path.getmtime(f'{D}/act{a}.mp4') > os.path.getmtime(f'{D}/mix_plus.wav') + 5)
+    if fresh or not os.path.exists(f'{D}/act{a}_dry.mp4'): os.replace(f'{D}/act{a}.mp4', f'{D}/act{a}_dry.mp4')  # a new render replaces the old dry cut
     C=json.load(open(f'{D}/cues.json')); T=json.load(open(f'{D}/timing.json')); cues=C['cues']; ts=[c['t'] for c in cues]
     def add(t,n,g,gap):
         if t>0 and not any(abs(t-x)<gap for x in ts): cues.append({'t':round(t,3),'name':n,'gain':g}); ts.append(t)

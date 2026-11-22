@@ -35,3 +35,13 @@ After building, snapshot frames from /home/user/repo/2d-history: `node shared/sn
 Script v3 in cars-phones/build/data.py: act0 Cold open (NEW: Key Largo 2019 Autopilot crash, verdict, then phone-vs-tablet split + title), act1 tablet (+NEW shot 5: 2021 screen recall), act2 70 mph test (unchanged), act3 Autopilot name problem (NEW), act4 doors (NEW), act5 money (was act3), act6 subscriptions (was act4), act7 fightback (was act5). Extra plates copied from Prime: court_ext, fbi_office, gov_corridor, lineup, us_map, neon_club, tampa_street, podcast.
 SENSITIVE: real deaths. No gore, no victims depicted (memorial candle/flowers only), crashes shown from a distance as flashes, debris, blue lights. Lawsuits get a CLAIM tag; the Key Largo verdict gets a "JURY VERDICT (TESLA APPEALING)" tag. Tesla cars drawn as generic white/dark saloons (CP.car kind 'tesla_like'), no logos; brand as text only. Respectful tone in these shots (no jokes on the death beats; nodding dog absent there).
 EYES OFF ROAD meter: act3 shows on shot 1-2 (~300), act4 hidden.
+
+## QA + fix rounds (render checkup loop)
+Per act N (from /home/user/repo/2d-history):
+1. Real timing is already in acts/actN/timing.js (from the real VO). Rebuild page: `bash cars-phones/production/acts/mk.sh N "title"`.
+2. Render: `bash shared/render_act.sh cars-phones N 2` then remix `python3 cars-phones/production/remix_cp.py N` (final file acts/actN/actN.mp4; the dry one actN_dry.mp4).
+3. QA: `python3 /mnt/project-files/system/qa/qa_auto.py cars-phones/production/acts/actN/actN.mp4 --kind act`, read /mnt/project-files/system/qa/RENDER-QA-CHECKLIST.md, and make a 1 fps contact sheet (`ffmpeg -i actN.mp4 -vf "fps=1,scale=480:270,tile=6x6" /tmp/claude-0/qaN_%02d.jpg`) and LOOK at every sheet. Also zoom into a few full frames (ffmpeg -ss T -frames:v 1).
+4. Write findings to cars-phones/production/qa/actN-roundR.md (timestamp, issue, severity high/med/low, cause, fix).
+5. Fix every high/medium issue in body.js, re-render, re-check. Repeat until CLEAN (zero high/medium). Max 3 rounds; report what remains.
+Common issues already seen: on-screen text cards too small to read (min ~34 px cap height at 1080p for tags, ~60 px for headline cards); shots that hold the same composition > 3 s (add camera push/pan, motion, cutaway insets); tiny characters in wide shots (fill frame better, s ≥ 1.4 for main figures in MED shots); objects clipping out of frame; covers/props with odd scale (e.g. a car cover bigger than the car); z-fighting/shimmer flagged by qa_auto (per-frame random -> seed it).
+Never delete files: to replace a render, the scripts already overwrite only act outputs (allowed); keep body.js edits in place (git keeps history).
