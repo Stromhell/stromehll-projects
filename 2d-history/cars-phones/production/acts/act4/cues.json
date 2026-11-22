@@ -1,0 +1,164 @@
+{
+ "dur": 64.902,
+ "cues": [
+  {
+   "t": 3.74,
+   "name": "thud",
+   "gain": 0.25
+  },
+  {
+   "t": 7.6,
+   "name": "creak",
+   "gain": 0.3
+  },
+  {
+   "t": 10.5,
+   "name": "tick",
+   "gain": 0.3
+  },
+  {
+   "t": 11.86,
+   "name": "pop",
+   "gain": 0.2
+  },
+  {
+   "t": 14.575,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 15.927,
+   "name": "thud",
+   "gain": 0.2
+  },
+  {
+   "t": 16.927,
+   "name": "tick",
+   "gain": 0.2
+  },
+  {
+   "t": 18.367,
+   "name": "breath",
+   "gain": 0.2
+  },
+  {
+   "t": 22.387,
+   "name": "creak",
+   "gain": 0.2
+  },
+  {
+   "t": 22.627,
+   "name": "pop",
+   "gain": 0.15
+  },
+  {
+   "t": 30.836,
+   "name": "drone",
+   "gain": 0.15
+  },
+  {
+   "t": 34.816,
+   "name": "paper",
+   "gain": 0.2
+  },
+  {
+   "t": 39.876,
+   "name": "stamp",
+   "gain": 0.3
+  },
+  {
+   "t": 42.711,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 42.886,
+   "name": "pop",
+   "gain": 0.2
+  },
+  {
+   "t": 49.746,
+   "name": "thud",
+   "gain": 0.35
+  },
+  {
+   "t": 52.546,
+   "name": "paper",
+   "gain": 0.2
+  },
+  {
+   "t": 54.186,
+   "name": "pop",
+   "gain": 0.2
+  },
+  {
+   "t": 55.581,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 56.292,
+   "name": "drone",
+   "gain": 0.1
+  },
+  {
+   "t": 60.332,
+   "name": "chime",
+   "gain": 0.25
+  },
+  {
+   "t": 63.381,
+   "name": "thud",
+   "gain": 0.2
+  },
+  {
+   "t": 63.572,
+   "name": "swell",
+   "gain": 0.2
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 15.275,
+   "name": "hum_loop",
+   "gain": 0.08
+  },
+  {
+   "start": 14.475,
+   "end": 29.702,
+   "name": "night_loop",
+   "gain": 0.08
+  },
+  {
+   "start": 14.475,
+   "end": 29.702,
+   "name": "tension",
+   "gain": 0.06
+  },
+  {
+   "start": 28.902,
+   "end": 43.410999999999994,
+   "name": "night_loop",
+   "gain": 0.1
+  },
+  {
+   "start": 42.611,
+   "end": 56.281,
+   "name": "crowd_loop",
+   "gain": 0.06
+  },
+  {
+   "start": 42.611,
+   "end": 56.281,
+   "name": "office_loop",
+   "gain": 0.05
+  },
+  {
+   "start": 55.481,
+   "end": 65.702,
+   "name": "drone",
+   "gain": 0.06
+  }
+ ]
+}

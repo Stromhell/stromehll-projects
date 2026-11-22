@@ -1,0 +1,22 @@
+{
+ "video": "cars-phones/production/acts/act1/act1.mp4",
+ "findings": [
+  {
+   "level": "WARN",
+   "check": "slideshow (camera frozen)",
+   "t": 11.83,
+   "at": "0:11.8",
+   "detail": "camera still for 3.0 s"
+  },
+  {
+   "level": "WARN",
+   "check": "cut rhythm",
+   "t": 0,
+   "at": "0:00.0",
+   "detail": "67% of shots are longer than 8 s (median 18.5 s)"
+  }
+ ],
+ "still_share": 0.148,
+ "shots": 3,
+ "median_shot_s": 18.5
+}

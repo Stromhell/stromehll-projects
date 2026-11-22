@@ -1,0 +1,15 @@
+{
+ "video": "cars-phones/production/acts/act0/act0.mp4",
+ "findings": [
+  {
+   "level": "WARN",
+   "check": "cut rhythm",
+   "t": 0,
+   "at": "0:00.0",
+   "detail": "75% of shots are longer than 8 s (median 19.0 s)"
+  }
+ ],
+ "still_share": 0.144,
+ "shots": 4,
+ "median_shot_s": 19.0
+}

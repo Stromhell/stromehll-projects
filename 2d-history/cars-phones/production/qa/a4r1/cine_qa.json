@@ -1,0 +1,22 @@
+{
+ "video": "cars-phones/production/acts/act4/act4.mp4",
+ "findings": [
+  {
+   "level": "FAIL",
+   "check": "slideshow (camera frozen)",
+   "t": 56.33,
+   "at": "0:56.3",
+   "detail": "camera does not move for 6.8 s: add a push-in, truck, arc or cut to new coverage"
+  },
+  {
+   "level": "WARN",
+   "check": "cut rhythm",
+   "t": 0,
+   "at": "0:00.0",
+   "detail": "57% of shots are longer than 8 s (median 8.8 s)"
+  }
+ ],
+ "still_share": 0.348,
+ "shots": 7,
+ "median_shot_s": 8.83
+}

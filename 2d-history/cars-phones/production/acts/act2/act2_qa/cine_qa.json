@@ -1,0 +1,15 @@
+{
+ "video": "act2.mp4",
+ "findings": [
+  {
+   "level": "WARN",
+   "check": "cut rhythm",
+   "t": 0,
+   "at": "0:00.0",
+   "detail": "67% of shots are longer than 8 s (median 9.6 s)"
+  }
+ ],
+ "still_share": 0.043,
+ "shots": 6,
+ "median_shot_s": 9.58
+}
