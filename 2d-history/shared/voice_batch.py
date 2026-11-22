@@ -14,6 +14,9 @@ def year(y):
     hi, lo = divmod(y, 100)
     return two(hi) + ' ' + ('hundred' if lo == 0 else ('oh ' + ONES[lo] if lo < 10 else two(lo)))
 WORDS = [
+ (r"\b007\b", 'double-oh-seven'), (r"\bA24\b", 'A twenty-four'), (r"\bMGM\b", 'M G M'), (r"\bVilleneuve\b", 'Vil-nuhv'), (r"\bDafoe\b", 'Duh-foe'),
+ (r"\bAntinous\b", 'An-tin-oh-us'), (r"\bOdysseus's\b", 'Oh-diss-ee-us\'s'), (r"\bHeyman\b", 'Hay-man'), (r"\bSafdies\b", 'Saff-dees'), (r"\bZendaya\b", 'Zen-day-uh'),
+ (r"\bLowden\b", 'Low-den'), (r"\bHoult\b", 'Holt'), (r"\bBattinson\b", 'Bat-tinson'), (r"\bCronenberg\b", 'Crone-en-berg'), (r"\bBong Joon Ho\b", 'Bong Joon-ho'),
  (r"\bMegaspeed's\b", 'Mega-speed\'s'), (r"\bMegaspeed\b", 'Mega-speed'), (r"\bNvidia's\b", 'En-vidia\'s'), (r"\bNvidia\b", 'En-vidia'), (r"\bComputex\b", 'Com-pew-tex'),
  (r"\bHuang Le\b", 'Hwahng Luh'), (r"\bHuang\b", 'Wong'), (r"\bJensanity\b", 'Jen-sanity'), (r"\bH200\b", 'H two hundred'), (r"\bMar-a-Lago\b", 'Mar-uh-Lah-go'),
  (r"\bXi Jinping\b", 'Shee Jin-ping'), (r"\bXi\b", 'Shee'), (r"\bSwalwell\b", 'Swall-well'), (r"\bLeung\b", 'Lee-ung'), (r"\bShenzhen\b", 'Shen-jen'),
