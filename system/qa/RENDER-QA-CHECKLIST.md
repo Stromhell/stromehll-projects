@@ -1,4 +1,4 @@
-# Render QA checklist + watch procedure (v2.8, 22 Nov 2026)
+# Render QA checklist + watch procedure (v2.9, 22 Nov 2026)
 
 Applies to EVERY line and channel: Stormi 2D, 2D dynamic, 3D, 3D low, DumDown, Finance with Stromi, reels, IG parts, shorts.
 Built from every mistake Pushpam caught by eye (29 Oct to 13 Nov). Each item says what to look for, how to catch it,
@@ -9,7 +9,22 @@ Project files `/mnt/project-files/system/qa/`, repo `system/qa/` (branch claude/
 
 ---
 
-## A. Procedure (every act, every full combine, every reel/short/IG part)
+## A0. LEAN QA = default from 22 Nov 2026 (Pushpam: "efficient and uses less credits")
+One command does the free work; Claude only looks at a small review pack.
+```
+bash /mnt/project-files/tools/transformers/setup.sh --qwen          # once per session (~4 min)
+python3 /mnt/project-files/system/qa/qa_lean.py FILE --kind act|full|reel --out QA_DIR
+```
+- Runs qa_auto.py (machine checks) and qwen_qa.py (Qwen3-VL-4B, 0 credits) in parallel, merges every flag by timestamp.
+- Read `QA_DIR/qa_lean.md` and ONLY the images it lists: flagged frames (labelled with the reason), one overview of the
+  whole video (~40 thumbnails), and for reels one image of logo / end-card / hook crops. Judge each flag real or false alarm.
+- Voice: still `voice_qa.py` on every dry VO stem (free). Listen pass unchanged.
+- Fix, re-render, re-run qa_lean until clean. Long runs: start it in the background (Qwen ~21 s per sampled frame; use
+  `--every 5` on long full videos to halve the time).
+- Use the DEEP procedure below (read every 1 fps sheet, /watch, design pass) only when: Pushpam's review finds something
+  lean QA missed, the final upload file of a long video (one deep pass), or Pushpam asks.
+
+## A. DEEP procedure (see A0 for when)
 
 1. **Machine pass:** `python3 /mnt/project-files/system/qa/qa_auto.py FILE --kind act|full|reel --out QA_DIR`
    - Fix every FAIL before anything else. WARN = fix unless clearly intended. CHECK = look at that timestamp by eye.

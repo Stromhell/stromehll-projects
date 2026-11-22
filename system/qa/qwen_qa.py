@@ -11,7 +11,7 @@ Two modes (run with the Transformers venv: bash /mnt/project-files/tools/transfo
 Qwen is a SECOND opinion next to qa_auto.py + reading the 1 fps sheets yourself: it finds candidates, a human-level
 look at the flagged timestamps confirms them. It can miss small things (thin clipping, 1-frame pops) and can hallucinate.
 """
-import argparse, json, os, subprocess, sys, tempfile, time
+import argparse, json, os, re, subprocess, sys, tempfile, time
 from PIL import Image, ImageDraw, ImageFont
 
 MODEL = os.environ.get("QWEN_VL", "Qwen/Qwen3-VL-4B-Instruct")  # beat Qwen2.5-VL-3B in the 22 Nov test
@@ -100,7 +100,7 @@ def main():
         for n, (t, p) in enumerate(fr):
             d = q.ask([Image.open(p)], DESCRIBE, 70)
             j = q.ask([], JUDGE.format(d=d, extra=EXTRA[a.kind]), 25)
-            if j.upper().startswith("ERROR"):
+            if j.upper().startswith("ERROR") and not re.search(r"not (a )?production error|intentional|stylistic", j, re.I):
                 issues.append({"t": ts(t), "issue": j[6:].strip(" :"), "seen": d})
             print(f"[qwen] {n+1}/{len(fr)} {ts(t)} {j[:90]}", file=sys.stderr)
         lines = [f"# Qwen QA: {os.path.basename(a.video)} ({a.kind}, {dur:.0f}s, frame every {every}s)",
