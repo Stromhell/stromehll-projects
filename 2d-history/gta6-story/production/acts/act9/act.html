@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><title>G6 act 9 - The endings</title>
+<!doctype html><html><head><meta charset="utf-8"><title>G6 act 9 - act 9</title>
 <style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
 <body><canvas id="c" width="1920" height="1080"></canvas>
 <script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
@@ -12,7 +12,7 @@ const CARRY = () => ({ shL: 30, elL: -75, shR: 35, elR: -75 });
 const endTitle = (secs) => { const T = window.TIMING; const last = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length, start: last.end, end: last.end + secs, vo_start: last.end, vo_end: last.end, text: '' }); T.dur = last.end + secs; };
 // G6 act 9 - The endings: WALK AWAY? #3, the two choices, No Surrender, the jar, Swim For It (bad and good), the prison visit, how you played, Cal's last scene, the TRUST board, questions + clean end screen.
 // Plates: bridge_dusk, tampa_street, kitchen_window, visiting_booth, bedroom (Cal's room), card.
-for (const n of ['bridge_dusk', 'tampa_street', 'kitchen_window', 'visiting_booth', 'bedroom', 'card']) K.load(n, PL + n + '.jpg');
+for (const n of ['bridge_dusk', 'tampa_street', 'kitchen_window', 'visiting_booth', 'bedroom', 'card', 'office']) K.load(n, PL + n + '.jpg');
 endTitle(5);
 // ================= act helpers =================
 const rr = TW.rr, txt = TW.txt, glow = TW.glow;
@@ -157,7 +157,7 @@ window.SHOTS = [
         { x: 420, y: 1335, s: 2.05, ...G6.GUARD(), facing: 1, mood: 'neutral', walk: { x0: -300, x1: 420, t0: tGu - 1.4, dur: 1.6 }, anim: (o, lt) => { o.talk = lt > tGu && lt < tVi + .8; } }];
       S.D.live = [(c, lt) => { c.save(); c.beginPath(); c.rect(722, 60, 1116, 828); c.clip(); for (const f of vis) A.figure(c, f, lt, 0, S); c.restore(); glassPane(c, lt);
         if (lt > tPr2) { c.save(); c.globalAlpha = K.seg(lt, tPr2, tPr2 + .4); palm(c, 1185, 855, 1, '#e8b48c'); c.restore(); } glow(c, 1280, 40, 600, '230,240,255', .2 + .03 * Math.sin(lt * 40)); }];
-      S.D.over = [card('ENDING 3', tPr - .6, 520, 140, { px: 50, rot: -2, bg: '#f8e8a8' }), (c, lt) => { ['LONG HAIR', 'FULL BEARD', 'ORANGE JUMPSUIT'].forEach((s, i) => { const t = tLo + i * .8, a = pop(lt, t) * (1 - K.seg(lt, tGu - .5, tGu)); if (a > 0) { c.save(); c.translate(1520, 200 + i * 70); c.scale(a, a); c.fillStyle = '#f6efdc'; c.strokeStyle = INK; c.lineWidth = 3; rr(c, -150, -26, 300, 52, 6); c.fill(); c.stroke(); txt(c, s, 0, 2, 30, INK, 'center', 'Anton'); c.restore(); } }); },
+      S.D.over = [card('ENDING 3', tPr - .6, 520, 140, { px: 50, rot: -2, bg: '#f8e8a8', until: tSu + .3 }), (c, lt) => { ['LONG HAIR', 'FULL BEARD', 'ORANGE JUMPSUIT'].forEach((s, i) => { const t = tLo + i * .8, a = pop(lt, t) * (1 - K.seg(lt, tGu - .5, tGu)); if (a > 0) { c.save(); c.translate(1520, 200 + i * 70); c.scale(a, a); c.fillStyle = '#f6efdc'; c.strokeStyle = INK; c.lineWidth = 3; rr(c, -150, -26, 300, 52, 6); c.fill(); c.stroke(); txt(c, s, 0, 2, 30, INK, 'center', 'Anton'); c.restore(); } }); },
         bub("YOU'VE GOT|A VISITOR.", 330, 330, tGu, tBe + .4, { tail: [40, 180] }), bub('SURPRISE.', 1500, 240, tSu - .1, 99, { tail: [-60, 150] }), card('ENDING 3: "SURPRISE"', tSu + .4, 700, 140, { px: 46, rot: 2 })];
       S.D.sfx = [[.2, 'footsteps', .3], [tLo, 'pop', .2], [tGu - 1.4, 'footsteps', .3], [tVi, 'door_slam', .25], [tBe, 'footsteps', .2], [tPr2, 'thud', .2], [tSu, 'swell', .35]]; } },
 
@@ -169,7 +169,7 @@ window.SHOTS = [
         const p = E.io(K.seg(lt, .2, 1.4)); c.fillStyle = '#ee7a2a'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.moveTo(900 - 200 * (1 - p), 1000); c.lineTo(1110 - 200 * (1 - p), 900); c.lineTo(1160 - 200 * (1 - p), 930); c.lineTo(980 - 200 * (1 - p), 1040); c.closePath(); c.fill(); c.stroke(); palm(c, 1150 - 200 * (1 - p), 880, 1.5, '#e0b090');
         if (p >= 1) glow(c, 1160, 870, 140, '255,240,200', .3 + .1 * Math.sin(lt * 2)); }];
       S.D.over = [card('THE BOY ISN\'T NAMED', tNa, 520, 140, { px: 38, rot: -2, until: tPl }), card('TOMMY?', tTo, 820, 420, { px: 60, rot: 3, until: tPl }), card("FIRST TIME JASON SEES HIS SON", tFi, 760, 270, { px: 38, rot: -1, until: tPl }),
-        (c, lt) => { const a = K.seg(lt, tPl - .4, tPl); if (a <= 0) return; c.save(); c.globalAlpha = a; c.fillStyle = 'rgba(14,12,20,.55)'; c.fillRect(0, 0, SW, SH); c.fillStyle = '#f6efdc'; c.strokeStyle = INK; c.lineWidth = 6; rr(c, 460, 120, 1000, 520, 16); c.fill(); c.stroke(); txt(c, 'HOW YOU PLAYED DECIDES', 960, 190, 56, INK, 'center', 'Anton');
+        (c, lt) => { const a = K.seg(lt, tPl - .4, tPl); if (a <= 0) return; c.save(); c.globalAlpha = a; c.fillStyle = 'rgba(14,12,20,.55)'; c.fillRect(0, 0, SW, SH); { const k = lt - tPl, z = 1 + .006 * k; c.translate(960 + 6 * k, 380); c.scale(z, z); c.rotate(.004 * Math.sin(lt * .8)); c.translate(-960, -380); } c.fillStyle = '#f6efdc'; c.strokeStyle = INK; c.lineWidth = 6; rr(c, 460, 120, 1000, 520, 16); c.fill(); c.stroke(); txt(c, 'HOW YOU PLAYED DECIDES', 960, 190, 56, INK, 'center', 'Anton');
           [['RELATIONSHIP', tRe, .85, '#e84a7a'], ['SAVINGS', tSa, .6, '#e8b43a'], ['VIOLENCE', tVi, .3, '#d83a3a']].forEach(([lab, t, v, col], i) => { const y = 300 + i * 110, f = v * E.out(K.seg(lt, t, t + 1)); txt(c, lab, 520, y, 36, INK, 'left', 'Anton'); c.fillStyle = '#d8ccb0'; rr(c, 820, y - 26, 580, 52, 14); c.fill(); c.stroke(); c.fillStyle = col; rr(c, 824, y - 22, 572 * f, 44, 12); c.fill(); }); c.restore(); }];
       S.D.sfx = [[.3, 'thud', .2], [tTo, 'pop', .3], [tFi, 'swell', .3], [tPl, 'whoosh', .3], [tRe, 'riser', .2], [tSa, 'coins', .3], [tVi, 'hit', .25]]; } },
 
@@ -187,12 +187,13 @@ window.SHOTS = [
       S.D.sfx = [[tAf, 'swell', .2], [tAl, 'tick', .5], [tAl + 1, 'tick', .5], [tNi, 'night_loop', .2], [tDo, 'chime', .55], [tFr, 'crowd_cheer', .08]]; } },
 
   // 9.09 the TRUST board full-size, every X glowing red; the one clean gold box: JASON + LUCIA; three WALK AWAY? cards, never taken
-  { plate: 'card', cam: { z: [1.0, 1.08], x: [1280, 1280], y: [720, 720] }, bed: [['hum_loop', .08]], sub: 'top', light: {},
+  { plate: 'office', cam: { z: [1.0, 1.08], x: [1280, 1240], y: [720, 700] }, bed: [['hum_loop', .08]], sub: 'top', light: {},
     init: S => { const tLi = A.at(S, 'lie', 1.0), tBf = A.at(S, 'boyfriend', 1.8), tTr = A.at(S, 'truest', 3.8), tTo = A.at(S, 'together', 5.4), tEv = A.at(S, 'Everyone', 7.6), tSo = A.at(S, 'sold', 8.6), tMa = A.at(S, 'Mattia', 9.4), tVa = A.at(S, 'Valentina', 10.0), tAb = A.at(S, 'Abe', 10.8), tGa = A.at(S, 'Gallo', 11.4), tTh = A.at(S, 'Three', 12.4), tNe = A.at(S, 'never', 15.6);
       const rowAt = { 0: tVa, 1: tAb, 2: tMa, 3: tGa };
-      S.D.over = [(c, lt, u) => { const z = 1 + .05 * u; c.save(); c.translate(960, 540); c.scale(z, z); c.translate(-960, -540);
-          const a = K.seg(lt, 0, .5); c.globalAlpha = a; G6.trust(c, 960, 520, 1.25, NAMES, 4, lt);
-          for (let k = 0; k < 4; k++) { const t = rowAt[k], g = K.seg(lt, t, t + .3) * (1 - K.seg(lt, t + 1.2, t + 2)) + (lt > tSo ? .25 + .1 * Math.sin(lt * 4 + k) : 0); if (g > 0) glow(c, 1085, 520 + 1.25 * (-62 + 70 * k), 120, '255,40,40', Math.min(.8, g)); }
+      S.D.live = [(c, lt) => { c.fillStyle = 'rgba(12,10,22,.62)'; c.fillRect(0, 0, 2560, 1440); lamp(c, 1280, 180, lt, 520, '255,200,130'); for (let k = 0; k < 30; k++) { const x = 300 + (k * 97 + lt * 9) % 1960, y = 200 + (k * 61 + lt * (6 + k % 5)) % 1000; c.fillStyle = `rgba(255,240,210,${.15 + .2 * Math.sin(lt * 1.5 + k)})`; c.fillRect(x, y, 3, 3); } }];
+      S.D.over = [(c, lt, u) => { const z = 1 + .14 * u; c.save(); c.translate(960 + 20 * u, 540); c.scale(z, z); c.translate(-960, -540);
+          const a = K.seg(lt, 0, .5); c.globalAlpha = a; G6.trust(c, 960, 520, 1.25, NAMES, 0, lt); for (let k = 0; k < 4; k++) bigX(c, 1085, 520 + 1.25 * (-62 + 70 * k) + 2, 30, lt, rowAt[k]);
+          for (let k = 0; k < 4; k++) { const t = rowAt[k], g = K.seg(lt, t, t + .3) * (1 - K.seg(lt, t + 1.2, t + 2)) + (lt > tGa + .5 ? .25 + .1 * Math.sin(lt * 4 + k) : 0); if (g > 0) glow(c, 1085, 520 + 1.25 * (-62 + 70 * k), 120, '255,40,40', Math.min(.8, g)); }
           c.globalAlpha = 1; c.restore(); },
         card('"HE\'S MY BOYFRIEND"', tBf - .4, 300, 180, { px: 40, rot: -4 }), card('STARTS WITH A LIE', tLi, 300, 280, { px: 30, rot: 2 }), card('"WE\'RE IN THIS TOGETHER"', tTo - .3, 1620, 180, { px: 38, rot: 3, bg: '#f8e8a8' }),
         (c, lt) => { const a = pop(lt, tTo); if (a <= 0) return; c.save(); c.translate(1620, 470); c.scale(a, a); glow(c, 0, 0, 260, '255,210,90', .5 + .15 * Math.sin(lt * 3)); c.fillStyle = G6.GOLD; c.strokeStyle = INK; c.lineWidth = 6; rr(c, -190, -70, 380, 140, 14); c.fill(); c.stroke(); txt(c, 'JASON + LUCIA', 0, 2, 54, INK, 'center', 'Anton'); c.restore(); TW.sparkle(c, 1720, 420, lt, 1, '255,240,180'); },
@@ -211,7 +212,7 @@ window.SHOTS = [
       S.D.sfx = [[tWh, 'pop', .3], [tMe, 'pop', .3], [tAr, 'pop', .3], [tCa, 'pop', .3], [tWi, 'drum', .35], [tCo, 'chime', .4]]; } },
 
   // 9.11 clean end-screen frame (no text): the night bridge, slow drift, water shimmer
-  { plate: 'bridge_dusk', cam: { z: [1.2, 1.26], x: [1280, 1280], y: [760, 740] }, bed: [['night_loop', .15], ['ocean_loop', .12]], sub: 'off', inSfx: 'whoosh_soft', light: { dir: 1 },
+  { plate: 'bridge_dusk', cam: { z: [1.12, 1.3], x: [1240, 1320], y: [770, 730] }, bed: [['night_loop', .15], ['ocean_loop', .12]], sub: 'off', inSfx: 'whoosh_soft', light: { dir: 1 },
     init: S => { S.D.live = [night(.6), (c, lt) => bridgeAmb(c, lt, 1)]; } },
 ];
 const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };

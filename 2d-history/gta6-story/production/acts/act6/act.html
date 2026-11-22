@@ -83,7 +83,7 @@ window.SHOTS = [
       S.D.over = [cut(0, { t1: tSo, plate: 'boardroom', cam: { z: [1.7, 1.75], x: [1600, 1620], y: [980, 980] }, light: { dir: 1, key: 'rgba(200,220,255,.2)' }, live: [(c) => TW.chair(c, 1700, 1390, 1390 - 63 * 1.8, -1, '#2a2a34')],
           figs: [{ x: 1700, y: 1390, s: 1.8, ...G6.LUCIA(), pose: 'sit', facing: -1, mood: 'angry', talk: [0, 99], anim: (o, lt) => { if (lt > tNo) o.arms = () => ({ shR: 100, elR: -20, handR: 'open', shL: 90, elL: -20, handL: 'open' }); } }],
           front: [(c, lt) => say(c, 1380, 720, lt, tW - .2, 99, 'WHAT?' + (lt > tNo ? '|NO.' : ''), { px: 56, tail: [220, 140] })] }),
-        (c, lt) => card(c, "PROTECT A TV BOSS'S FAMILY", lt, tP, { x: 560, y: 130, px: 40, rot: -2, until: tH }), (c, lt) => card(c, 'FIND A KIDNAPPED CHILD', lt, tK, { x: 600, y: 230, px: 40, rot: 2, until: tH + 1 }),
+        (c, lt) => card(c, "PROTECT A TV BOSS'S FAMILY", lt, tP, { x: 560, y: 130, px: 40, rot: -2, until: tH }), (c, lt) => card(c, 'FIND A KIDNAPPED CHILD', lt, tK, { x: 600, y: 230, px: 40, rot: 2, until: tH - .1 }),
         (c, lt) => { const a = pop(lt, tH - .2, .4); if (a <= 0) return; G6.phone(c, 240, 330, 2.4 * a, 0, { buzz: lt }); txt(c, 'ABE', 240, 250, 28 * a, '#fff', 'center', 'Anton'); G6.bubble(c, 640, 300, .8 * a, 'HOW MANY KIDS HAVE|YOU LOST SO FAR?', { px: 38, tail: [-300, 40] }); },
         (c, lt) => card(c, '"BRING THIS ONE BACK,\nOR FORGET YOURS."', lt, tB, { x: 1460, y: 170, px: 44, rot: 2, bg: GOLD })];
       S.D.sfx = [[tW, 'pop', .3], [tSo - .1, 'whoosh', .3], [tP, 'pop', .2], [tK, 'tension', .3], [tH - .2, 'phone_ring', .3], [tK + .6, 'footsteps', .25], [tB, 'swell', .25], [tF, 'thud', .3]]; } },
@@ -120,7 +120,7 @@ window.SHOTS = [
       S.D.front = [(c, lt) => { const d = E.out(K.seg(lt, tC, tC + .35)); if (d <= 0) return; const h = 520 * d; c.save(); c.strokeStyle = '#c8ccd4'; c.lineWidth = 12; for (let k = 0; k <= 10; k++) { c.beginPath(); c.moveTo(1900 + k * 52, FY - 520); c.lineTo(1900 + k * 52, FY - 520 + h); c.stroke(); } c.restore(); },
         (c, lt) => { ntag(c, 'TWO STRANGERS', 2160, FY - 640, lt, tTw + 3.5, 34); }];
       S.D.over = [(c, lt) => card(c, 'NOW THE BAG MAKES SENSE', lt, .3, { x: 520, y: 760, px: 40, rot: -2, until: tTw }), (c, lt) => card(c, 'IF ANYONE GETS CAUGHT: THEM', lt, tC, { x: 620, y: 760, px: 38, rot: 2, bg: G6.RED, color: '#fff' }),
-        (c, lt) => TW.stamp(c, 'WHY NOT YOU? ANSWERED', 960, 160, lt, tAn - .4, { px: 56, col: '#3ad06a' })];
+        (c, lt) => TW.stamp(c, 'WHY NOT YOU? ANSWERED', 760, 520, lt, tAn - .4, { px: 56, col: '#3ad06a' })];
       S.D.sfx = [[tB - .3, 'pop', .25], [tP, 'pop', .25], [tPo, 'pop', .25], [tW, 'tension', .25], [tTw, 'footsteps', .25], [tC, 'gate_slam', .45], [tTh, 'thud', .3], [tAn - .4, 'stamp', .4]]; } },
 
   // 6.4 KG's gym: Lucia undercover in the pink tank, KG curls, weeks flip by (same food, same lingo), Nate grins, points: JUICY.
@@ -134,7 +134,7 @@ window.SHOTS = [
         (c, lt) => say(c, 1000, 520, lt, tLi - .4, tN, 'GAINS, BRO.', { px: 40, tail: [-240, 150] }),
         (c, lt) => { const a = pop(lt, tJ - .2, .5); if (a <= 0) return; const b = 1 + .08 * Math.sin((lt - tJ) * 8) * Math.exp(-(lt - tJ)); c.save(); c.translate(1500, 520 - 20 * Math.abs(Math.sin(lt * 4))); c.scale(a * b, a * b); c.rotate(-.06); c.fillStyle = G6.PINK; c.strokeStyle = INK; c.lineWidth = 6; rr(c, -170, -60, 340, 120, 20); c.fill(); c.stroke(); txt(c, '"JUICY"', 0, 4, 70, '#fff', 'center', 'Anton'); c.restore(); }];
       S.D.over = [(c, lt) => card(c, "RAUL'S REVENGE ON KG", lt, .3, { x: 480, y: 120, px: 44, rot: -2, until: tU + 1 }), (c, lt) => card(c, 'A CREW OF BODYBUILDERS', lt, tBb - .4, { x: 520, y: 220, px: 36, rot: 2, until: tU + 1 }),
-        (c, lt) => { if (lt < tU) return; const wk = 1 + Math.min(5, Math.floor((lt - tU) * 1.4)); card(c, 'UNDERCOVER · WEEK ' + wk, lt, tU, { x: 520, y: 140, px: 46, rot: -2, bg: G6.PINK, color: '#fff', until: tN }); },
+        (c, lt) => { if (lt < tU) return; const wk = 1 + Math.min(5, Math.floor((lt - tU) * 1.4)); card(c, 'UNDERCOVER · WEEK ' + wk, lt, tU, { x: 520, y: 140, px: 46, rot: -2, bg: G6.PINK, color: '#fff', until: tLi - .5 }); },
         (c, lt) => card(c, 'SAME FOOD', lt, tF - .3, { x: 1400, y: 130, px: 40, rot: 3, until: tN }), (c, lt) => card(c, 'SAME LINGO', lt, tLi - .3, { x: 1460, y: 230, px: 40, rot: -2, until: tN })];
       S.D.sfx = [[.3, 'thud', .25], [1.6, 'thud', .2], [tK, 'pop', .25], [tU, 'footsteps', .25], [tWk, 'paper', .25], [tF, 'pop', .2], [tLi, 'pop', .2], [tN, 'pop', .25], [tJ, 'crowd_cheer', .15], [tJ, 'chime', .3]]; } },
 
@@ -183,7 +183,7 @@ window.SHOTS = [
           c.save(); c.translate(p.x, p.y + bob); c.rotate(p.r); G6.plane(c, 0, 0, PS, { col: '#3a6aa8' }); c.restore(); c.fillStyle = 'rgba(40,120,140,.55)'; c.fillRect(p.x - 800, p.y + 40 * PS * .6 + bob, 1600, 30);
           const sp = K.seg(lt, tLa + .9, tLa + 2.2); if (sp > 0 && sp < 1) for (let k = 0; k < 30; k++) { const a = -Math.PI * (k / 29), r = sp * (200 + (k * 37) % 160); c.fillStyle = `rgba(255,255,255,${1 - sp})`; c.beginPath(); c.arc(p.x - 300 + (k * 41) % 700 + Math.cos(a) * r * .4, p.y + 60 + Math.sin(a) * r, 14, 0, 7); c.fill(); } }];
       S.D.over = [(c, lt) => card(c, 'KG HIJACKS THE PLANE', lt, tKG, { x: 520, y: 130, px: 46, rot: -2, until: tE }), (c, lt) => card(c, 'RAUL ON BOARD', lt, tKG + 1, { x: 520, y: 230, px: 34, rot: 2, until: tE }),
-        (c, lt) => card(c, 'LUCIA: IN THE LANDING GEAR', lt, tC, { x: 1380, y: 130, px: 38, rot: 2, until: tE }), (c, lt) => { if (lt < tE) TW.stamp(c, 'YES, A MOVING PLANE', 1300, 300, lt, tY, { px: 60, col: GOLD }); },
+        (c, lt) => card(c, 'LUCIA: IN THE LANDING GEAR', lt, tC, { x: 1380, y: 130, px: 38, rot: 2, until: tE }), (c, lt) => { if (lt < tE) TW.stamp(c, 'YES, A MOVING PLANE', 760, 340, lt, tY, { px: 60, col: GOLD }); },
         (c, lt) => card(c, 'A LANDING ON WATER', lt, tLa, { x: 520, y: 140, px: 44, rot: -2 }), (c, lt) => { const a = pop(lt, tO - .2, .4); if (a > 0) G6.bubble(c, 1100, 300, a, 'I OWE YOU.', { px: 56, tail: [0, 150] }); }];
       S.D.sfx = [[tKG, 'tension', .25], [tC, 'wind_loop', .2], [tT, 'whoosh', .4], [tY, 'stamp', .3], [tE, 'whoosh', .35], [tLa + .9, 'hit', .3], [tLa + 1, 'rain_loop', .25], [tO, 'swell', .25]]; } },
 
@@ -202,8 +202,9 @@ window.SHOTS = [
       S.D.over = [(c, lt) => { const a = pop(lt, tW, .4) * (1 - K.seg(lt, tTi - .3, tTi)); if (a <= 0) return; c.save(); c.translate(560, 260); c.scale(a, a); c.rotate(-.05); c.fillStyle = '#fffdf6'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(-200, -90, 400, 180); c.strokeRect(-200, -90, 400, 180); txt(c, "COME TO RAUL'S", 0, -26, 44, INK, 'center', 'Caveat'); txt(c, 'BOAT. NOW.', 0, 30, 48, G6.RED, 'center', 'Caveat'); c.restore(); },
         (c, lt) => card(c, 'WEEKS LATER', lt, .2, { x: 1460, y: 130, px: 42, rot: 2, until: tTi }), (c, lt) => card(c, 'TIED UP AND BEATEN', lt, tTi, { x: 520, y: 140, px: 40, rot: -2, until: tV }),
         (c, lt) => { if (lt > tV - .6) trustVal(c, 1680, 290, .6, lt, tV + .2); }, (c, lt) => card(c, 'VALENTINA SOLD THEM', lt, tV + .4, { x: 560, y: 150, px: 46, rot: -2, bg: G6.RED, color: '#fff', until: tO }),
-        (c, lt) => { const a = pop(lt, tTr - .2, .4) * (1 - K.seg(lt, tO - .4, tO - .1)); if (a > 0) G6.shootPrompt(c, 960, 360, a, lt); },
-        (c, lt) => TW.stamp(c, 'IT WAS A TRAP', 900, 300, lt, tTp, { px: 74 })];
+        (c, lt) => { const a = pop(lt, tTr - .2, .4) * (1 - K.seg(lt, tO - .4, tO - .1)); if (a > 0) G6.shootPrompt(c, 1120, 600, a, lt); },
+        (c, lt) => TW.stamp(c, 'IT WAS A TRAP', 1180, 600, lt, tTp, { px: 74 }),
+        (c, lt) => { const p = K.seg(lt, tO, tO + .5); if (p <= 0) return; c.save(); c.globalAlpha = p * (.14 + .06 * Math.sin(lt * 25)); c.fillStyle = Math.floor(lt * 4) % 2 ? '#ff2a2a' : '#2a5aff'; c.fillRect(0, 0, SW, SH); c.restore(); }];
       S.D.sfx = [[tNo, 'paper', .35], [tNo + .6, 'footsteps', .3], [tTi, 'creak', .3], [tMe, 'tension', .25], [tV + .2, 'stamp', .4], [tTr - .2, 'heartbeat', .35], [tO - .2, 'whoosh', .3], [tO, 'alarm', .3], [tPo, 'alarm', .3], [tTp, 'stamp', .45]]; } },
 ];
 const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
