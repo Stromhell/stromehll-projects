@@ -1,0 +1,14 @@
+{
+ "channel": "dumdown",
+ "video": "wakanda-forever",
+ "state": "queued",
+ "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ8Lg7A8xFPi5abNkaF1zhBpL",
+ "feedback": false,
+ "queue_pos": 1,
+ "booked_for": null,
+ "zernio_post": null,
+ "proposed_slot": "2026-12-09T16:00Z",
+ "source_drive": "https://drive.google.com/file/d/1tqBEgipR15rVSWl-TiwI3ObiQSX7aBOd/view",
+ "updated": "2026-11-22T19:20Z",
+ "note": "script v1 written (15 inline gags, respectful no-joke sections); waiting for slot before production"
+}
