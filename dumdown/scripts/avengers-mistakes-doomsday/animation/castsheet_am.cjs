@@ -1,0 +1,11 @@
+const { chromium } = require('playwright'); const path = require('path');
+(async () => { const [out, keys] = process.argv.slice(2); const K = keys.split(',');
+  const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: 2400, height: 1500 } });
+  await p.setContent('<body style="margin:0"></body>');
+  for (const f of ['kit.js', 'tbkit.js']) await p.addScriptTag({ path: path.resolve(f) });
+  await p.addScriptTag({ content: 'var module={exports:{}};var require=()=>window.DumDown;' });
+  await p.addScriptTag({ path: path.resolve('cast.cjs') }); await p.addScriptTag({ path: path.resolve('am_kit.js') });
+  const svg = await p.evaluate((K) => { const D = window.DumDown, C = module.exports.C; let s = ''; const n = Math.ceil(K.length / 2);
+    K.forEach((k, i) => { const x = 160 + (i % n) * (2240 / n), y = i < n ? 700 : 1440; s += D.drawCharacter(C[k], { x, y, scale: 1.05, view: i % 3 == 1 ? 'threequarter' : 'front', expr: C[k].defaultExpr }); s += `<text x="${x}" y="${y + 40}" font-size="26" text-anchor="middle" font-family="sans-serif">${k}</text>`; });
+    return D.svg(2400, 1500, s, '#c9c2b4'); }, K);
+  await p.setContent('<body style="margin:0">' + svg + '</body>'); await p.screenshot({ path: out }); await b.close(); })();
