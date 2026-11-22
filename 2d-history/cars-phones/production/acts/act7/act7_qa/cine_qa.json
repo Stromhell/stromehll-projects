@@ -6,7 +6,7 @@
    "check": "slideshow (camera frozen)",
    "t": 50.17,
    "at": "0:50.2",
-   "detail": "camera still for 3.2 s"
+   "detail": "camera still for 3.3 s"
   },
   {
    "level": "WARN",
@@ -23,7 +23,7 @@
    "detail": "50% of shots are longer than 8 s (median 20.8 s)"
   }
  ],
- "still_share": 0.164,
+ "still_share": 0.166,
  "shots": 4,
  "median_shot_s": 20.83
 }

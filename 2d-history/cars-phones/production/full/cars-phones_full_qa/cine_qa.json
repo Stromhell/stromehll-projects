@@ -1,0 +1,29 @@
+{
+ "video": "cars-phones_full.mp4",
+ "findings": [
+  {
+   "level": "WARN",
+   "check": "slideshow (camera frozen)",
+   "t": 72.0,
+   "at": "1:12.0",
+   "detail": "camera still for 3.0 s"
+  },
+  {
+   "level": "WARN",
+   "check": "slideshow (camera frozen)",
+   "t": 492.17,
+   "at": "8:12.2",
+   "detail": "camera still for 3.3 s"
+  },
+  {
+   "level": "WARN",
+   "check": "cut rhythm",
+   "t": 0,
+   "at": "0:00.0",
+   "detail": "52% of shots are longer than 8 s (median 8.8 s)"
+  }
+ ],
+ "still_share": 0.106,
+ "shots": 42,
+ "median_shot_s": 8.83
+}

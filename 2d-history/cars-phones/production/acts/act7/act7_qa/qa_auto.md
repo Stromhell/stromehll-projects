@@ -5,7 +5,7 @@ Result: **PASS (machine checks)** - 0 fail, 4 warn, 18 to eyeball
 | level | check | detail | standard fix |
 |---|---|---|---|
 | WARN | loudness | -16.5 LUFS (target -14) | two-pass loudnorm I=-14:TP=-1.5 |
-| WARN | cine: slideshow (camera frozen) | 0:50.2 camera still for 3.2 s | checklist B11 rows 67-75 |
+| WARN | cine: slideshow (camera frozen) | 0:50.2 camera still for 3.3 s | checklist B11 rows 67-75 |
 | WARN | cine: slideshow (camera frozen) | 1:20.2 camera still for 3.2 s | checklist B11 rows 67-75 |
 | WARN | cine: cut rhythm | 0:00.0 50% of shots are longer than 8 s (median 20.8 s) | checklist B11 rows 67-75 |
 | CHECK | possible pop-in | ~0:01.00 top-mid-left, top-mid-right | something appeared/vanished in one step: characters walk in/out, props slide/fade in (>=0.3 s), never pop (text cards popping on purpose are OK) |
@@ -29,5 +29,5 @@ Result: **PASS (machine checks)** - 0 fail, 4 warn, 18 to eyeball
 | INFO | streams | 1920x1080 h264 yuv420p r=30.000 avg=30.000 fps, 85.33 s, audio=1 |  |
 | INFO | loudness | I=-16.5 LUFS, true peak=-1.4 dBTP, LRA=3.7 LU |  |
 | INFO | levels | speech/peak windows -11.8 dBFS, floor -28.0 dBFS |  |
-| INFO | cine | still-camera share 16%, 4 shots, median shot 20.83 s |  |
+| INFO | cine | still-camera share 17%, 4 shots, median shot 20.83 s |  |
 | INFO | contact sheets | 3 sheets in act7_qa/sheets - READ EVERY ONE against RENDER-QA-CHECKLIST.md |  |
