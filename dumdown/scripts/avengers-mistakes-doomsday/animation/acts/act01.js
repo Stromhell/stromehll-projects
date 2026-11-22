@@ -16,8 +16,8 @@ window.ACT = { timing: window.TIMING, meterEv: [{ p: 2, w: 'cool bracelet', n: 1
    { c: 'steve', x: 1550, y: 1320, s: 1.4, view: 'threequarter', dir: -1, expr: 'smile', acts: [{ a: 'raise', w: 'cool bracelet' }] }], pops: [{ t: '"COOL BRACELET"', w: 'grown-ups', dur: 2.6 }] },
  // GAG 1 GRANDMA'S PARCEL
  { p: 3, plate: 'kate_door', noWhip: 0, cam: { frame: 'two', on: 0, on2: 1, push: [1, 1.05] }, chars: [
-   { c: 'doomPost', x: 1000, y: 1320, s: 1.45, view: 'threequarter', dir: 1, expr: 'deadpan', talk: TK('GAG 1', [0]), acts: [{ a: 'holdUp1', at: .8 }] },
-   { c: 'kamalaHome', x: 1560, y: 1320, s: 1.4, view: 'threequarter', dir: -1, expr: 'nervous', acts: [{ a: 'grab', at: 2.2 }] }],
+   { c: 'doomPost', x: 1000, y: 1320, s: 1.3, view: 'threequarter', dir: 1, expr: 'deadpan', talk: TK('GAG 1', [0]), acts: [{ a: 'holdUp1', at: .8 }] },
+   { c: 'kamalaHome', x: 1560, y: 1320, s: 1.6, view: 'threequarter', dir: -1, expr: 'nervous', acts: [{ a: 'grab', at: 2.2 }] }],
    props: [{ k: 'parcel', on: 0, side: 'R', s: .7, t1: 2.4 }, { k: 'parcel', on: 1, side: 'R', s: .7, t0: 2.4 }] },
  { p: 3, f: .62, plate: 'kate_door', cam: { frame: 'mcu', on: 0, push: [1, 1.15] }, chars: [{ c: 'doomPost', x: 1280, y: 1320, s: 1.45, view: 'threequarter', dir: -1, expr: 'deadpan', talk: [[0, 9]] }], pops: [{ t: '...THANK YOU', at: .5, dur: 1.8 }] },
  ...THX('THANKS 12', 1),

@@ -28,6 +28,11 @@ function build(ACT) {
   window.WORD_AT = wordAt;
   if (ACT.meterEv) ACT.meter = ACT.meterEv.map(e => [e.at != null ? e.at : wordAt(e.p, e.w, e.n_ || 0), e.n]);
   const SH = ACT.shots.map((s, i) => ({ s, a: s.t0 ?? at(s.p, s.f || 0) }));
+  // FRAMING v3 (Pushpam 22 Nov): feet at y 1320 sat behind the bottom letterbox bar. Lift every standing cast member and the floor props by 110 so whole bodies stay in the picture.
+  const FDY = window.FLOOR_DY ?? 110, up = v => Array.isArray(v) ? v.map(q => q - FDY) : v - FDY, big = v => (Array.isArray(v) ? Math.max(...v) : v) >= 700;
+  for (const s of ACT.shots) { if (s.noLift || s._lifted) continue; s._lifted = 1; for (const c of (s.chars || [])) if (typeof c.y === 'number' || Array.isArray(c.y)) { if (big(c.y)) c.y = up(c.y); } for (const p of (s.props || [])) if (p.on == null && p.onHead == null && p.y != null && big(p.y)) p.y = up(p.y); if (s.cam && typeof s.cam.y === 'number' && s.cam.y > 720) s.cam.y -= FDY; }
+  // GAG WIPES: a comic wipe covers every cut between narration and a gag (in and out) instead of a hard cut
+  { const K = T.kinds || []; SH.forEach((x, i) => { if (i && (K[x.s.p] === 'gag') !== (K[SH[i - 1].s.p] === 'gag')) { x.s._gx = 1; x.s.noWhip = 1; } }); }
   SH.forEach((x, i) => { x.b = i + 1 < SH.length ? SH[i + 1].a : LEAD + total; if (i === 0) x.a = 0; });
   const tOf = (q, s, a) => q.at != null ? q.at : wordAt(q.p ?? s.p, q.w, q.n || 0) - a + (q.d || 0);
   for (const { s, a } of SH) { for (const c of (s.chars || [])) if (c.swap) c._swap = c.swap.map(q => [tOf(q, s, a), q.to, q.dur]); for (const p of (s.props || [])) if (p.tw) p.t0 = wordAt(p.p ?? s.p, p.tw, p.n || 0) - a + (p.d || 0); for (const p of (s.pops || [])) if (p.w) p.at = wordAt(p.p ?? s.p, p.w, p.n || 0) - a + (p.d || 0); for (const c of (s.cards || [])) if (c.w) c.at = wordAt(c.p ?? s.p, c.w, c.n || 0) - a; }
@@ -37,15 +42,15 @@ function build(ACT) {
     const zr_ = [].concat(cm.z ?? 1), zk = !s.still && !cm.frame && (zr_.length < 2 || Math.abs(zr_[1] - zr_[0]) < .12) ? 1 + .07 * ue : 1;
     const cam = { z: val(cm.z ?? 1, ue) * zk, x: val(cm.x ?? 1280, ue), y: val(cm.y ?? 720, ue), rot: val(cm.rot ?? 0, ue) };
     // AUTO FRAMING (rule 2): frame = full | med | mcu | cu | ecu on chars[on] (or 'two' on chars[on] + chars[on2])
-    if (cm.frame) { const ch = (s.chars || [])[cm.on || 0], spc = C[ch.c] || {}, cy0 = val(ch.y, 0), fh = D.forehead(spc, { view: ch.view || 'front', dir: ch.dir || 1, x: val(ch.x, 0), y: cy0, scale: val(ch.s ?? 1.4, 0), fy: -30 }), h = Math.max(50, cy0 - fh.y);
-      const F = { full: [1.3, .5], med: [.85, .66], mcu: [.6, .76], cu: [.42, .86], ecu: [.26, .9] }[cm.frame === 'two' ? 'full' : cm.frame];
+    if (cm.frame) { const ch = (s.chars || [])[cm.on || 0], spc = C[ch.c] || {}, cy0 = val(ch.y, ch.lin ? ue : io(ue)), fh = D.forehead(spc, { view: ch.view || 'front', dir: ch.dir || 1, x: val(ch.x, 0), y: cy0, scale: val(ch.s ?? 1.4, 0), fy: -30 }), h0_ = Math.max(50, cy0 - fh.y), c2_ = cm.frame === 'two' ? (s.chars || [])[cm.on2 ?? 1] : null, fh2_ = c2_ ? D.forehead(C[c2_.c] || {}, { view: c2_.view || 'front', dir: c2_.dir || 1, x: val(c2_.x, 0), y: val(c2_.y, c2_.lin ? ue : io(ue)), scale: val(c2_.s ?? 1.4, 0), fy: -30 }) : null, h = fh2_ ? Math.max(h0_, cy0 - fh2_.y) : h0_;
+      const F = { full: [1.5, .53], med: [.85, .66], mcu: [.6, .76], cu: [.42, .86], ecu: [.26, .9] }[cm.frame === 'two' ? 'full' : cm.frame];
       const xNow = c_ => { if (!Array.isArray(c_.x)) return c_.x; const r_ = Math.abs(c_.x[1] - c_.x[0]), sp_ = (c_.t1 ?? d) - (c_.t0 || 0), we_ = r_ > 20 && r_ / sp_ < 140 ? (c_.t0 || 0) + Math.max(.8, r_ / 160) : (c_.t1 ?? d); const u_ = clamp((lt - (c_.t0 || 0)) / (we_ - (c_.t0 || 0))); return lerp(c_.x[0], c_.x[1], c_.lin ? u_ : io(u_)); };
       let z = 804 / (.75 * h * F[0]), cx = xNow(ch);
       if (cm.frame === 'two') { const c2 = s.chars[cm.on2 ?? 1]; const x2 = xNow(c2); cx = (cx + x2) / 2; const wneed = Math.abs(x2 - xNow(ch)) + 520 * val(ch.s ?? 1.4, 0); z = Math.min(z, 1920 / (.75 * wneed)); }
       const pz = [].concat(cm.push ?? [1, 1.1]); z *= val(pz.length > 1 ? pz : [pz[0], pz[0]], ue); cam.z = Math.max(1, z); cam.y = cy0 - h * F[1] + (cm.dy || 0); if (cm.x == null) cam.x = cx + (cm.dx || 0) / (Math.max(1, cam.z) * .75); }
     // keep every head (and horns) below the top letterbox: lower cam.y if needed (continuous in ue, so no jumps)
     const cam0y = cam.y;
-    if (!s.noHeadFit && !cm.frame) for (const c of (s.chars || [])) { const ch = (C[c.c] || {}).acc || {}, hs = ch.hornStyle, hx = ch.horns ? (hs === 'huge' ? 230 : hs === 'small' ? 70 : hs === 'broken' ? 90 : 150) : 0;
+    if (!s.noHeadFit) for (const c of (s.chars || [])) { const ch = (C[c.c] || {}).acc || {}, hs = ch.hornStyle, hx = ch.horns ? (hs === 'huge' ? 230 : hs === 'small' ? 70 : hs === 'broken' ? 90 : 150) : 0;
       const sc = val(c.s ?? 1.4, ue), cy = val(c.y, ue), lim = (165 - 540) / (cam.z * .75); let need = cy - (410 + hx) * sc - lim;
       if (cam0y - need > .3 * 720 / cam.z) need = cy - 410 * sc - lim; // close-up: keep the face framed, let horn tips leave the frame
       if (cam.y > need) cam.y = Math.max(need, 720 / cam.z); }
@@ -74,6 +79,8 @@ function build(ACT) {
       { const ci = (s.chars || []).indexOf(c), hs = (s.props || []).filter(q => q.on === ci).map(q => q.side || 'R'); if (hs.length) { if (fo.view === 'threequarter') fo.view = 'side'; const pf = JSON.parse(JSON.stringify(E.figPose(spec, lt + (c.ph || 0), fo))); for (const sd of hs) pf[sd] = Object.assign({}, pf[sd], { hand: 'fist' }); fo.poseFinal = pf; } }
       CO[(s.chars || []).indexOf(c)] = [spec, lt + (c.ph || 0), fo];
       { const sc = fo.s * (spec.scale || 1), [px, py] = worldPt(cam, fo.x, fo.y), m = E.camTf(cam).sc, hh = 440 * sc * m, ww = 230 * sc * m; BB.push([px - ww / 2, py - hh, px + ww / 2, py]); } const fg_ = fig(spec, lt + (c.ph || 0), fo); list.push(c.ghost ? `<g opacity="${typeof c.ghost === 'number' ? c.ghost : (Array.isArray(c.ghost) ? val(c.ghost, cue) : .62)}">${fg_}</g>` : fg_); }
+    // contact shadows (Pushpam 22 Nov: no hovering): soft ellipse under the feet of everyone standing on the floor
+    if (!s.noShadow && !/space|cosmos|sky|nebula|galaxy/.test(s.plate || '')) (s.chars || []).forEach((c, i) => { const k = CO[i]; if (!k || c.seat || c.noShadow || c.ghost || c.rot) return; const o = k[2]; if (o.y < 1080) return; apply(cam); ctx.save(); ctx.fillStyle = 'rgba(20,12,24,.30)'; ctx.beginPath(); ctx.ellipse(o.x, o.y + 6 * o.s, 105 * o.s, 15 * o.s, 0, 0, 6.2832); ctx.fill(); ctx.restore(); });
     if (list.length) await chars(list, cam, (s.cblur || 0) + Math.abs(whip) * 16);
     ctx.filter = whip ? `blur(${(Math.abs(whip) * 16).toFixed(1)}px)` : 'none';
     for (const p of (s.props || [])) if ((p.layer || (p.on != null || p.onHead != null ? 'front' : 'back')) === 'front' && lt >= (p.t0 || 0) && lt <= (p.t1 ?? 1e9)) { apply(cam); P[p.k](Object.assign({}, p, at(p) || { x: val(p.x, ue), y: val(p.y, ue) }, { s: val(p.s ?? 1, ue), rot: p.rot == null ? 0 : val(p.rot, ue), k: p.kk === undefined ? 1 : val(p.kk, ue) }), lt); }
@@ -87,6 +94,9 @@ function build(ACT) {
     for (const p of (s.pops || [])) { if (p.x == null && !p._xy && lt >= (p.at || 0) - .05) { ctx.font = '800 40px Inter'; const tw = Math.min(700, ctx.measureText(p.t).width + 60), th = tw >= 700 ? 136 : 86; p._xy = freeSpot(tw + 40, th + 40, BB, p.pref); BB.push([p._xy[0] - tw / 2 - 20, p._xy[1] - th / 2 - 20, p._xy[0] + tw / 2 + 20, p._xy[1] + th / 2 + 20]); } const q = p._xy ? Object.assign({}, p, { x: p._xy[0], y: p._xy[1] }) : p; pop(p.t, lt, p.at, p.dur || 2.6, q); }
     if (ACT.meter) { let n = null, at = -1; for (const [t_, v] of ACT.meter) if (tt >= t_) { n = v; at = t_; } if (n != null && tt - at < 3.6 && !s.noMeter) window.METER(n, tt - at); }
     if (s.big) bigText(s.big[0], lt, s.big[1], s.big[2], s.big[3], s.big[4], s.big[5]);
+    { const nx = SH[si + 1] && SH[si + 1].s; const WIN = .22, WOUT = .3; let k = null; if (s._gx && lt < WOUT) k = 1 + io(lt / WOUT); else if (nx && nx._gx && d - lt < WIN) k = io(1 - (d - lt) / WIN);
+      if (k != null) { screen(); const sl = 420, x0 = lerp(-W - 2 * sl, -sl, Math.min(k, 1)) + (k > 1 ? (k - 1) * (W + 2 * sl) : 0); ctx.save(); ctx.beginPath(); ctx.moveTo(x0 + sl, 0); ctx.lineTo(x0 + W + 2 * sl, 0); ctx.lineTo(x0 + W + sl, H); ctx.lineTo(x0, H); ctx.closePath(); ctx.fillStyle = '#ffd23d'; ctx.fill(); ctx.lineWidth = 16; ctx.strokeStyle = '#231A24'; ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(x0 + sl + 90, 0); ctx.lineTo(x0 + W + 2 * sl - 90, 0); ctx.lineTo(x0 + W + sl - 90, H); ctx.lineTo(x0 + 90, H); ctx.closePath(); ctx.fillStyle = '#231A24'; ctx.globalAlpha = .12; ctx.fill(); ctx.restore(); } }
     const fin = s.fin ?? (b - a > 1.2 ? .35 : 0);
     return { fade: (s.fadeIn ? io(lt / (s.fadeIn === true ? .5 : s.fadeIn)) : 1) * (s.fadeOut ? 1 - io(seg(lt, d - .6, d)) : 1) };
   } }));

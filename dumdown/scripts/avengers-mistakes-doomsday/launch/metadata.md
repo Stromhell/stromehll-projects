@@ -36,8 +36,8 @@ This is DumDown: Marvel, dumbed down, so anyone can get it. A funny cartoon coun
 8:00 #4 Keeping the five years
 8:56 #3 A robot because he was scared
 9:53 #2 The time heist
-10:41 #1 The Captain stays in the past
-11:25 So... whose fault is it?
+10:40 #1 The Captain stays in the past
+11:24 So... whose fault is it?
 
 💬 Which mistake is the WORST? Drop your number 👇
 🔔 Subscribe to DumDown for more Marvel movies and shows, dumbed down so anyone can get them.

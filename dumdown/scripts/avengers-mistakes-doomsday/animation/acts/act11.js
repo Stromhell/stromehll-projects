@@ -4,7 +4,7 @@ window.ACT = { timing: window.TIMING, meterEv: [{ p: 2, w: 'much power', n: 11 }
  { p: 1, plate: 'times_sq', cam: { frame: 'two', on: 0, on2: 1, push: [1, 1.05] }, chars: [
    { c: 'tonyArmor', x: 950, y: 1320, s: 1.4, view: 'threequarter', dir: 1, expr: 'nervous', acts: [{ a: 'fall', w: 'drop' }] },
    { c: 'loki', x: 1650, y: 1320, s: 1.4, view: 'threequarter', dir: -1, expr: 'smug', acts: [{ a: 'grab', w: 'grabs it' }] }], props: [{ k: 'cubeGlow', x: [1100, 1600], y: 1290, s: .8, t1: 4.5 }], pops: [{ t: 'OOPS.', w: 'drop', dur: 1.8 }] },
- { p: 1, f: .5, plate: 'tva_office', cam: { frame: 'med', on: 0, push: [1, 1.1] }, chars: [{ c: 'loki', x: 1280, y: 1320, s: 1.4, view: 'front', expr: 'shock', acts: [{ a: 'wince', w: 'kills' }] }], pops: [{ t: 'MULTIVERSE: WIDE OPEN', w: 'wide open', dur: 2.6 }] },
+ { p: 1, f: .5, plate: 'tva_office', cam: { frame: 'med', on: 0, push: [.92, 1], dy: -130 }, chars: [{ c: 'loki', x: 1280, y: 1320, s: 1.4, view: 'front', expr: 'shock', acts: [{ a: 'wince', w: 'kills' }] }], pops: [{ t: 'MULTIVERSE: WIDE OPEN', w: 'wide open', dur: 2.6 }] },
  { p: 2, plate: 'nebula', cam: { frame: 'two', on: 0, on2: 1, push: [1, 1.06] }, chars: [
    { c: 'thanos', x: 1000, y: 1320, s: 1.25, view: 'threequarter', dir: 1, expr: 'smug' },
    { c: 'tony', x: 1620, y: 1320, s: 1.4, view: 'threequarter', dir: -1, expr: 'shock', acts: [{ a: 'block', w: 'any loss' }] }], pops: [{ t: 'LESSON: ANYTHING CAN BE UNDONE', w: 'any loss', dur: 2.8 }] },
