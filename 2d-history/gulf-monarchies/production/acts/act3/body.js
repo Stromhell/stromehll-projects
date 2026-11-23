@@ -37,7 +37,7 @@ window.SHOTS = [
           c.save(); c.fillStyle = '#9ab0c8'; c.fillRect(2120, 520, 220, 260); c.strokeStyle = INK; c.lineWidth = 8; c.strokeRect(2120, 520, 220, 260); for (let k = 1; k < 5; k++) { c.beginPath(); c.moveTo(2120 + k * 44, 520); c.lineTo(2120 + k * 44, 780); c.stroke(); } c.restore();
           shaft(c, 2120, 520, 220, 720, .2); c.save(); c.globalAlpha = .25; c.fillStyle = '#000'; for (let k = 1; k < 5; k++) { c.beginPath(); c.moveTo(2120 + k * 44 + 250, FL - 20); c.lineTo(2130 + k * 44 + 280, FL - 20); c.lineTo(2130 + k * 44 + 290, FL + 20); c.lineTo(2120 + k * 44 + 260, FL + 20); c.fill(); } c.restore();
           ltable(c, 1460, FL, 260, FL - 200); c.save(); c.translate(1440, FL - 236); c.fillStyle = '#2a2a30'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.ellipse(0, 0, 60, 16, 0, 0, 7); c.fill(); c.stroke(); c.fillStyle = '#c8302a'; c.fillRect(-46, -32, 92, 26); c.strokeRect(-46, -32, 92, 26); c.fillStyle = '#e2b23a'; c.beginPath(); c.arc(0, -20, 8, 0, 7); c.fill(); c.restore(); motes(c, lt, 2100, 600, 500, 700); }];
-      S.D.front = [nt('QABOOS', 1850, FL - 640, tQ, 42), (c, lt) => { const a = TW.pop(lt, tSa, .4); if (a > 0) GM.ntag(c, 1440, FL - 300, 'SANDHURST', a, { px: 26, col: '#c8d4e8' }); }];
+      S.D.front = [nt('QABOOS', 1850, FL - 640, tQ, 42), (c, lt) => { const a = TW.pop(lt, tSa, .4); if (a > 0) GM.ntag(c, 1440, FL - 300, 'SANDHURST', a, { px: 26, bg: '#c8d4e8' }); }];
       S.D.over = [(c, lt) => { PR.counter(c, 560, 420, 1, 0, 670000, tSi - .2, tSi + 2, lt, { pre: '' }); if (lt > tSi) txt(c, 'OMANIS', 560, 510, 40, '#f6ecd2', 'center', 'Anton');
           PR.counter(c, 560, 620, 1, 0, 2, tTw - .2, tTw + .6, lt, { pre: '' }); if (lt > tTw) txt(c, 'HOSPITALS', 560, 710, 40, '#ff8a6a', 'center', 'Anton'); }, CR(), cap('VIRTUAL HOUSE ARREST', tH, 180)];
       S.D.sfx = [[tSi, 'tick', .3], [tSi + 1, 'tick', .3], [tTw, 'thud', .35], [tSc, 'tick', .2], [tQ, 'pop', .2], [tSa, 'chime', .2], [tH, 'gate_slam', .3]]; } },
@@ -74,7 +74,7 @@ window.SHOTS = [
       S.D.live = [(c, lt) => { const sign = (s, x, y, at) => { const a = TW.pop(lt, at, .4); if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.fillStyle = '#2a7a4a'; c.strokeStyle = INK; c.lineWidth = 4; rr(c, -110, -30, 220, 60, 8); c.fill(); c.stroke(); txt(c, s, 0, 0, 32, '#fff', 'center', 'Anton'); c.restore(); TW.sparkle(c, x, y, lt, 1); };
           sign('CLINIC', 880, 780, tSp); sign('SCHOOL', 1740, 720, tPe - .2); }];
       S.D.front = [(c, lt) => { const a = TW.pop(lt, tJb, .4); if (a <= 0) return; c.save(); c.translate(1470, FD - 360); c.scale(a, a); c.fillStyle = '#f6f2e6'; c.strokeStyle = INK; c.lineWidth = 3; rr(c, -30, -40, 60, 80, 6); c.fill(); c.stroke(); c.fillStyle = '#2a5aa8'; c.fillRect(-30, -40, 60, 18); c.fillStyle = '#888'; c.beginPath(); c.arc(0, 6, 12, 0, 7); c.fill(); c.restore(); },
-        (c, lt) => ['BRITAIN', 'IRAN', 'JORDAN'].forEach((s, k) => { const a = TW.pop(lt, [tBr, tIr, tJo][k] - .1, .4); if (a > 0) GM.ntag(c, 520 + k * 760, 470, s, a, { px: 42, col: '#c8d4e8' }); })];
+        (c, lt) => ['BRITAIN', 'IRAN', 'JORDAN'].forEach((s, k) => { const a = TW.pop(lt, [tBr, tIr, tJo][k] - .1, .4); if (a > 0) GM.ntag(c, 520 + k * 760, 470, s, a, { px: 42, bg: '#c8d4e8' }); })];
       S.D.over = [cap('REBELS → OFFICIALS', tJb, 200), CR(), cap('INSURGENCY BEATEN · 1975', tBe - .2, 300, '#9adf8a')];
       S.D.sfx = [[tSp, 'coins_cascade', .3], [tPe, 'hit', .2], [tBr, 'pop', .2], [tIr, 'pop', .2], [tJo, 'pop', .2], [tG - 1.8, 'footsteps', .35], [tG + .3, 'hit', .25], [tJb, 'stamp', .35], [tBe, 'crowd_cheer', .3]]; } },
 
@@ -86,7 +86,7 @@ window.SHOTS = [
         { x: 1740, y: FB, s: 1.65, ...GM.ROYAL(2), pose: 'sit', facing: -1, mood: 'neutral', anim: (o, lt) => { const u = mv(lt); if (lt > tLo) o.mood = 'sad'; if (u > 0) { o.x = 1740 - E.io(u) * 1300; o.facing = -1; o.pose = u < 1 ? 'walk' : 'sit'; o.t = lt; o.y = FB - 30 * E.io(u); } if (lt > tCi) o.mood = 'neutral'; } }];
       S.D.live = [(c, lt) => { const u = mv(lt); TW.chair(c, 820, FB, FB - 120, 1, '#4a2a1a'); TW.chair(c, 1740 - E.io(u) * 1300, FB - 30 * E.io(u), FB - 120 - 30 * E.io(u), -1, '#4a2a1a'); }];
       S.D.front = [(c, lt) => { c.save(); c.fillStyle = '#3a2416'; c.strokeStyle = INK; c.lineWidth = 5; rr(c, 960, FB - 210, 640, 40, 8); c.fill(); c.stroke(); c.fillRect(990, FB - 170, 24, 170); c.fillRect(1546, FB - 170, 24, 170); c.restore(); GM.pearl(c, 1280, FB - 222, .7, .5 + .5 * Math.sin(lt * 2));
-          if (lt > tLo - .3 && lt < tLi) { const a = TW.pop(lt, tLo - .3, .4); GM.ntag(c, 820, FB - 640, 'VOTE: WON', a, { px: 42, col: '#9adf8a' }); GM.ntag(c, 1740, FB - 640, 'VOTE: LOST', a, { px: 42, col: '#e88a7a' }); } }];
+          if (lt > tLo - .3 && lt < tLi) { const a = TW.pop(lt, tLo - .3, .4); GM.ntag(c, 820, FB - 640, 'VOTE: WON', a, { px: 42, bg: '#9adf8a' }); GM.ntag(c, 1740, FB - 640, 'VOTE: LOST', a, { px: 42, bg: '#e88a7a' }); } }];
       S.D.over = [dtag('THE FAMILY FIRM', tSe - .2), CR(), cap('CIVIL WAR = EVERYONE LOSES', tCi, 280, '#ff8a6a')];
       S.D.sfx = [[tCo, 'stamp', .3], [tLo, 'pop', .25], [tLi, 'scrape', .45], [tLi + 1.6, 'thud', .2], [tCi, 'tension', .25], [tEv, 'drum', .3]]; } },
 ];

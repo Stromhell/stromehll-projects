@@ -90,7 +90,7 @@ window.SHOTS = [
           [['AIRPORTS', 700, 620, tAi], ['REFINERIES', 1400, 560, tRe], ['US BASES', 2050, 620, tBa]].forEach(([n, x, y, t]) => GM.ntag(c, x, y, n, pop(lt, t, .4), { px: 40, bg: '#7a1e2a', col: '#fff' })); }];
       S.D.over = [(c, lt) => { const w = K.seg(lt, tWa, tWa + .5) * (1 - K.seg(lt, tSt, tFe + .5) * .85); GM.crowns(c, 735, 40, 1.5, [w, w, w, w, w, w], lt); },
         (c, lt) => card(c, '2026', lt, { at: t26 - .3, x: 420, y: 230, px: 60, rot: -3, bg: GOLD }), (c, lt) => card(c, 'USA vs IRAN', lt, { at: tWa, x: 1500, y: 230, px: 46, rot: 2, until: tEv }),
-        (c, lt) => lt < tEv && cnt(c, 0, 1000, 960, 330, lt, tTh - .2, tTh + 1.2, { fmt: v => Math.round(v).toLocaleString('en-GB') + 's OF MISSILES & DRONES', px: 46, col: '#ff8a6a' }),
+        (c, lt) => lt < tEv && cnt(c, 1000, 1000, 960, 330, lt, tTh - .2, tTh + 1.2, { fmt: v => Math.round(v).toLocaleString('en-GB') + 's OF MISSILES & DRONES', px: 46, col: '#ff8a6a' }),
         (c, lt) => JH.src(c, 'AL JAZEERA, 18 NOV 2026', 1450, 230, lt, tEv, { px: 26 }), (c, lt) => card(c, 'BAHRAIN + KUWAIT HIT AGAIN', lt, { at: tEv + .4, x: 1450, y: 310, px: 36, rot: -1, bg: '#7a1e2a', color: '#fff' }),
         (c, lt) => stamp(c, 'STILL STANDING', 960, 560, lt, tFe, { px: 84, col: '#3ad06a' })];
       S.D.sfx = [[t26, 'drum', .35], [tWa, 'alarm', .2], [tWa + .4, 'whoosh', .3], [tTh, 'hit', .3], [tTh + .8, 'whoosh', .25], [tAi, 'hit', .25], [tRe, 'hit', .25], [tBa, 'thud', .3], [tEv, 'alarm', .15], [tSt, 'tension', .25], [tFe, 'stamp', .35]]; } },
