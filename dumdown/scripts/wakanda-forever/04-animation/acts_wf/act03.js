@@ -10,5 +10,5 @@ window.ACT = { timing: window.TIMING, shots: [
    { c: 'sailor2', x: [1600, 2400], y: 1320, s: 1.3, view: 'side', dir: 1, expr: 'blank', t1: 2.6, lin: 1 }, { c: 'sailor', x: 1900, y: 1320, s: 1.3, view: 'front', expr: 'deadpan', talk: TK('GAG 2', [0, 1]), acts: [{ a: 'holdUp1', at: GS('GAG 2', 1) }] }],
    props: [{ k: 'sign', x: 2020, y: 1000, s: .7, text: 'NO.', t0: GS('GAG 2', 1), layer: 'front' }], pops: [{ t: 'SIREN SINGERS', at: .3, dur: 2 }] },
  { p: 3, plate: 'rig_deck', cam: { frame: 'med', on: 0, push: [1, 1.1] }, chars: [{ c: 'sailor', x: 1280, y: 1320, s: 1.4, view: 'front', expr: 'shock', talk: true, acts: [{ a: 'raise', w: 'blue' }] }], props: [{ k: 'phone', on: 0, s: .8 }], pops: [{ t: 'THEY WERE BLUE', w: 'blue', dur: 2.2 }] },
- { p: 3, f: .6, plate: 'rig_deck', cam: { z: [1.1, 1.25], x: 1280, y: 700, shake: 4 }, props: [{ k: 'plane', x: [1300, 1600], y: [500, 760], s: 1, rot: [0, 25] }, { k: 'wave', x: 1280, y: 1440, s: 1, h: 380, layer: 'front' }] },
+ { p: 3, f: .6, plate: 'rig_deck', cam: { z: [1.1, 1.25], x: 1280, y: 700 }, props: [{ k: 'plane', x: [1500, 2250], y: [380, 1250], s: .5, rot: [12, 40], layer: 'front' }, { k: 'wave', x: 1280, y: 1440, s: 1, h: 380, layer: 'front' }] },
 ] };

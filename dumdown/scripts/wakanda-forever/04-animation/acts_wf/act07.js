@@ -8,5 +8,5 @@ window.ACT = { timing: window.TIMING, shots: [
  { p: 2, f: .6, plate: 'sky_class', cam: { frame: 'med', on: 0, push: [1, 1.08] }, chars: [{ c: 'ririArmor', x: 1280, y: 1250, s: 1.4, view: 'front', pose: 'fly', expr: 'nervous', rot: [0, 160] }], pops: [{ t: 'OXYGEN: 0%', w: 'oxygen', dur: 2.4 }] },
  // GAG 7 FREE FALL HOMEWORK
  { p: 3, plate: 'sky_class', cam: { frame: 'full', on: 0, push: [1, 1.04] }, chars: [{ c: 'riri', x: 1000, y: 1200, s: 1.35, view: 'front', pose: 'fly', expr: 'nervous', talk: TK('GAG 7', [1]) }],
-   props: [{ k: 'clipboard', x: 1150, y: 980, s: 1, layer: 'front' }, { k: 'eagle', x: 1650, y: 900, s: 1.1, glasses: 1 }], pops: [{ t: 'SHOW YOUR WORKING', at: GS('GAG 7', 0) + .4, dur: 2.4 }] },
+   props: [{ k: 'clipboard', on: 0, s: .55, side: 'R' }, { k: 'eagle', x: 620, y: 760, s: 1.1, glasses: 1 }], pops: [{ t: 'SHOW YOUR WORKING', x: 470, y: 590, at: GS('GAG 7', 0) + .4, dur: 2.4 }] },
 ] };

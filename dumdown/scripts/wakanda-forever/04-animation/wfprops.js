@@ -50,7 +50,7 @@ P.seagull = (o, lt) => bird(o, lt, '#f4f4f0', '#b8bcc8', false);
 P.coconut = o => go(o, () => { ell(0, 0, 40, 36, '#6a4a2a'); ln(10, -30, 34, -70, '#ff5a8a', 6); });
 P.sandwich = o => go(o, () => { poly([[-70, 0], [70, 0], [0, -60]], '#e8c88a'); ln(-60, -6, 60, -6, '#4aa83a', 8); ln(-50, -14, 50, -14, '#e23a3a', 6); });
 P.chips = o => go(o, () => { rr(-50, -110, 100, 120, 12, '#e23a3a'); txt('CHIPS', 0, -40, '900 26px Inter', '#ffd23d'); });
-P.tourFlag = (o, lt) => go(o, () => { ln(0, 0, 0, -260, INK, 8); const w = Math.sin(lt * 4) * 8; ctx.beginPath(); ctx.moveTo(0, -260); ctx.quadraticCurveTo(60, -250 + w, 120, -240); ctx.lineTo(120, -180); ctx.quadraticCurveTo(60, -190 + w, 0, -190); ctx.closePath(); ctx.fillStyle = '#ffd23d'; ctx.fill(); ctx.strokeStyle = INK; ctx.lineWidth = 4; ctx.stroke(); });
+P.tourFlag = (o, lt) => go(o, () => { ln(0, 0, 0, -430, INK, 8); ctx.translate(0, -170); const w = Math.sin(lt * 4) * 8; ctx.beginPath(); ctx.moveTo(0, -260); ctx.quadraticCurveTo(60, -250 + w, 120, -240); ctx.lineTo(120, -180); ctx.quadraticCurveTo(60, -190 + w, 0, -190); ctx.closePath(); ctx.fillStyle = '#ffd23d'; ctx.fill(); ctx.strokeStyle = INK; ctx.lineWidth = 4; ctx.stroke(); });
 P.fish = (o, lt) => go(o, () => { const sw = Math.sin(lt * 6 + (o.ph || 0)) * 10; poly([[-70, 0], [-110, -30 + sw], [-110, 30 + sw]], o.col || '#ff8a2a', 4); ell(0, 0, 80, 44, o.col || '#ff8a2a'); ell(44, -10, 9, 9, '#fff', 3); ell(46, -10, 4, 4, INK, 0);
   if (o.camera) { rr(30, -90, 80, 54, 8, '#2a2a34', 4); ell(70, -63, 16, 16, '#9ae8ff', 3); if (o.flash != null && Math.abs(lt - o.flash) < .12) glow(70, -63, 260, 'rgba(255,255,255,A)', .9); } });
 P.oil = (o, lt) => go(o, () => { rr(-34, -190, 68, 190, 12, '#a8b83a'); rr(-14, -230, 28, 44, 4, '#2a2a2a'); rr(-30, -130, 60, 60, 4, '#f4ecd8', 3); txt('OIL', 0, -90, '900 22px Inter');
@@ -77,4 +77,8 @@ window.METER = (n, bump = 9) => { E.screen(); const x = W - 360, y = E.BAR + 24,
   ctx.fillStyle = INK; ctx.beginPath(); ctx.roundRect(6, 6, 300, 104, 18); ctx.fill(); ctx.fillStyle = '#0d1a2a'; ctx.beginPath(); ctx.roundRect(0, 0, 300, 104, 18); ctx.fill(); ctx.strokeStyle = INK; ctx.lineWidth = 5; ctx.stroke();
   ctx.fillStyle = '#9ae8ff'; ctx.font = '900 18px Inter'; ctx.textAlign = 'left'; ctx.fillText('CONFIDENCE RATE', 18, 30); ctx.font = '900 52px Inter'; ctx.fillStyle = pct > 90 ? '#7af0a0' : '#ff8a4a'; ctx.strokeStyle = INK; ctx.lineWidth = 8; const s_ = pct + '%'; ctx.strokeText(s_, 18, 90); ctx.fillText(s_, 18, 90);
   ctx.fillStyle = 'rgba(255,255,255,.15)'; ctx.fillRect(180, 60, 100, 18); ctx.fillStyle = pct > 90 ? '#7af0a0' : '#ff8a4a'; ctx.fillRect(180, 60, pct, 18); ctx.restore(); };
+// seats (QA L02): flat-topped boulder and a front-view armchair; seat top at -74 like siprops chairS, use s 1.46
+P.rock = o => go(o, () => { poly([[-110, 0], [-118, -40], [-96, -70], [-30, -80], [40, -78], [100, -66], [120, -30], [112, 0]], o.col || '#8a7a62', 5); ln(-70, -50, -20, -40, '#5e5242', 4); ln(30, -30, 80, -42, '#5e5242', 4); ell(0, 4, 120, 10, 'rgba(0,0,0,.25)', 0); });
+P.armchair = o => go(o, () => { const C = o.col || '#7a2a5a'; rr(-92, -250, 184, 190, 26, C, 5); rr(-112, -120, 44, 120, 14, C, 5); rr(68, -120, 44, 120, 14, C, 5); rr(-80, -86, 160, 30, 10, C, 5); ln(-80, 0, -80, -20, '#3a1a0a', 10); ln(80, 0, 80, -20, '#3a1a0a', 10); });
+P.counter = o => go(o, () => { rr(-360, -260, 720, 260, 6, o.col || '#8a6a4a'); rr(-380, -280, 760, 34, 6, '#a8825a'); if (o.t) txt(o.t, 0, -150, '900 52px Inter', '#f4ecd8'); });
 })();

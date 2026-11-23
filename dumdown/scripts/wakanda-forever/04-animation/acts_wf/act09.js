@@ -2,7 +2,7 @@
 window.ACT = { timing: window.TIMING, shots: [
  { p: 0, plate: 'glow_cave', title: ['UNDER THE SEA', 'THE UNDERWATER KINGDOM'], cam: { frame: 'two', on: 0, on2: 1, push: [1, 1.05] }, chars: [{ c: 'shuri', x: 1000, y: 1320, s: 1.4, view: 'threequarter', dir: 1, expr: 'nervous' }, { c: 'ririGown', x: 1600, y: 1320, s: 1.38, view: 'threequarter', dir: -1, expr: 'shock', acts: [{ a: 'shrug', w: 'classic' }] }] },
  // GAG 9 KIDNAP DRESS CODE
- { p: 1, plate: 'catwalk', cam: { frame: 'med', on: 0, push: [1, 1.04] }, chars: [{ c: 'ririGown', x: [1280, 1280], y: [1000, 1330], s: 1.35, view: 'front', expr: 'nervous', acts: [{ a: 'fall', at: GS('GAG 9', 1) + 1.3 }] }],
+ { p: 1, plate: 'catwalk', cam: { frame: 'full', on: 0, push: [1, 1.03] }, chars: [{ c: 'ririGown', x: [1280, 1280], y: [1000, 1330], s: 1.35, view: 'front', expr: 'nervous', acts: [{ a: 'wince', at: GS('GAG 9', 1) + 1.3 }] }],
    props: [{ k: 'flashes', x: 1280, y: 900, w: 1600, n: 14 }], pops: [{ t: 'CAPTIVE FASHION WEEK', at: .3, dur: 2.4 }] },
  { p: 2, plate: 'mayan_wall', cam: { frame: 'two', on: 0, on2: 1, push: [1, 1.04] }, chars: [{ c: 'namor', x: 1000, y: 1320, s: 1.42, view: 'threequarter', dir: 1, expr: 'sad', talk: true, acts: [{ a: 'point', w: 'plant' }] }, { c: 'shuri', x: 1600, y: 1320, s: 1.4, view: 'threequarter', dir: -1, expr: 'neutral' }] },
  { p: 2, f: .45, plate: 'mayan_wall', cam: { z: [1.4, 1.6], x: 1280, y: 700 }, props: [{ k: 'herb', x: 1280, y: 1000, s: 1.4, glow: .8, noDome: 1 }] },

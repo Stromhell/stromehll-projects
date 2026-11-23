@@ -68,7 +68,7 @@ def act(nn):
     GG = np.zeros(N); place(GG, gg * .95, .6, g=1, fi=0, fo=0)
     TJ = json.load(open(f'{SCR}/timing/act{nn}.json')); st = []; tt_ = 0
     for d_ in TJ['durs']: st.append(tt_); tt_ += d_ + TJ['gap']
-    GM = np.ones(N)
+    GM = np.ones(N); GPS = {g_['p'] for g_ in TJ['gags']}
     for g_ in TJ['gags']: a_ = int((.6 + st[g_['p']]) * SR); b_ = int((.6 + st[g_['p']] + g_['dur']) * SR); GM[max(0, a_ - SR // 4):b_ + SR // 4] = .15
     # score: merge consecutive shots with the same mood, crossfade 1.2 s
     ov = OVR.get(nn, {}); segs = []
@@ -85,7 +85,8 @@ def act(nn):
     X = np.zeros(N)
     for i, s in enumerate(cu['shots']):
         a, b = s['a'], s['b']
-        if i: place(X, S('whoosh_soft'), a - .15, g=.22)
+        if i and s.get('p') not in GPS: place(X, S('whoosh_soft'), a - .15, g=.22)
+        if i and (s.get('p') in GPS) != (cu['shots'][i - 1].get('p') in GPS): place(X, S('whoosh'), a - .25, g=.5); place(X, S('swipe'), a - .05, g=.3)
         amb = AMB.get(s.get('plate'))
         if amb: place(X, S(amb[0]), a, b, g=amb[1] * 1.6, fi=.25, fo=.25, loop=True)
         if s['title']: place(X, S('swell'), a + .1, g=.35); place(X, S('hit'), a + .45, g=.45)

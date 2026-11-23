@@ -1,7 +1,7 @@
 {
  "channel": "dumdown",
  "video": "wakanda-forever",
- "state": "queued",
+ "state": "waiting_approval",
  "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ8Lg7A8xFPi5abNkaF1zhBpL",
  "feedback": false,
  "queue_pos": 1,
@@ -9,6 +9,9 @@
  "zernio_post": null,
  "proposed_slot": "2026-12-09T16:00Z",
  "source_drive": "https://drive.google.com/file/d/1tqBEgipR15rVSWl-TiwI3ObiQSX7aBOd/view",
- "updated": "2026-11-22T20:56Z",
- "note": "PAUSED 22 Nov 20:56 UTC: Avengers Mistakes got feedback (v3) and takes the one making slot. Done so far: script v2, cast, props, 17 shot lists, all VO + gag VO, voice QA clean, 17 act mixes (/tmp/wfwork scratch + repo 04-animation). Background paintings finishing in this thread. Resume at: render acts -> proof frames -> lean QA -> assemble -> thumb + launch kit, once Avengers is waiting_approval again."
+ "updated": "2026-11-23T04:34Z",
+ "note": "Full v4 + launch kit shared; book only after Pushpam OK",
+ "full_video": "https://drive.google.com/file/d/1a2YEfgxsm74Ib5v_ts3i9pKACqYvOJlj/view",
+ "launch_kit": "https://claude.ai/artifact/U3wo9hVUoxZXA2fM4MbSk1",
+ "length": "12:46"
 }
