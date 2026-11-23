@@ -1,0 +1,57 @@
+<!doctype html><html><head><meta charset="utf-8"><title>GM thumb</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../tw_kit.js"></script><script src="../../xu_kit.js"></script><script src="../../jh_kit.js"></script><script src="../../pr_kit.js"></script><script src="../../gm_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+const SW = 1920, SH = 1080, INK = TW.INK, RED = TW.RED, pop = TW.pop, fade = TW.fade;
+const backdrop = (name, b = .5, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const CARRY = () => ({ shL: 30, elL: -75, shR: 35, elR: -75 });
+const endTitle = (secs) => { const T = window.TIMING; const last = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length, start: last.end, end: last.end + secs, vo_start: last.end, vo_end: last.end, text: '' }); T.dur = last.end + secs; };
+// GM thumbnail: shot 0 = v1 STILL / STANDING on gulf_night; shot 1 = v2 NOT ONE / FELL on palace_terrace. Static frames for snap.
+for (const n of ['gulf_night', 'palace_terrace']) K.load(n, PL + n + '.jpg');
+const GOLD = '#f2c21a';
+const big = (c, s, x, y, px, col) => { c.save(); c.font = `${px}px Anton`; c.textAlign = 'center'; c.textBaseline = 'middle'; c.lineJoin = 'round';
+  c.fillStyle = 'rgba(0,0,0,.75)'; c.fillText(s, x + 12, y + 14); c.strokeStyle = '#000'; c.lineWidth = px * .16; c.strokeText(s, x, y); c.fillStyle = col; c.fillText(s, x, y); c.restore(); };
+const tag = (c, s, x, y) => { c.save(); c.font = '58px Anton'; const w = c.measureText(s).width + 50; c.translate(x, y); c.rotate(-.03); c.fillStyle = '#000'; TW.rr(c, -w / 2 + 6, -40, w, 84, 12); c.fill(); c.fillStyle = '#d8231a'; TW.rr(c, -w / 2, -46, w, 84, 12); c.fill(); c.strokeStyle = '#000'; c.lineWidth = 5; c.stroke(); TW.txt(c, s, 0, -4, 58, '#fff', 'center', 'Anton'); c.restore(); };
+const sky = (c, lt) => { const g = c.createLinearGradient(0, 0, 0, 900); g.addColorStop(0, 'rgba(255,110,30,.55)'); g.addColorStop(1, 'rgba(255,60,20,0)'); c.fillStyle = g; c.fillRect(0, 0, 2560, 900);
+  [[900, 300, 1.25], [1500, 200, 1.2], [2200, 380, 1.3], [700, 520, 1.35], [1900, 600, 1.15]].forEach(([x, y, p], k) => { GM.streak(c, x - 700 + k * 120, 900, x, y, .98); TW.glow(c, x, y, 260, '255,200,90', .9); TW.glow(c, x, y, 90, '255,255,230', 1); }); };
+const throne = (c, x, fy) => { c.save(); c.fillStyle = GOLD; c.strokeStyle = '#000'; c.lineWidth = 10; c.beginPath(); c.moveTo(x - 380, fy); c.lineTo(x - 380, fy - 2050); c.quadraticCurveTo(x, fy - 2400, x + 380, fy - 2050); c.lineTo(x + 380, fy); c.closePath(); c.fill(); c.stroke();
+  c.fillStyle = '#8a1e2a'; c.beginPath(); c.moveTo(x - 290, fy - 300); c.lineTo(x - 290, fy - 1950); c.quadraticCurveTo(x, fy - 2230, x + 290, fy - 1950); c.lineTo(x + 290, fy - 300); c.closePath(); c.fill(); c.stroke(); TW.glow(c, x - 200, fy - 1900, 300, '255,240,180', .5); c.restore(); };
+const CUP = { near: cc => { cc.save(); const m = cc.getTransform(); cc.setTransform(Math.hypot(m.a, m.b) * 1, 0, 0, Math.hypot(m.c, m.d), m.e, m.f); cc.scale(4, 4); cc.fillStyle = '#f4efe2'; cc.strokeStyle = '#000'; cc.lineWidth = 2.5; cc.beginPath(); cc.moveTo(-16, -26); cc.lineTo(16, -26); cc.lineTo(11, 0); cc.lineTo(-11, 0); cc.closePath(); cc.fill(); cc.stroke(); cc.fillStyle = '#c8a23a'; cc.fillRect(-15, -22, 30, 4); cc.restore(); } };
+const KING = (x, fy, s) => ({ x, y: fy, s, ...GM.ROYAL(0), pose: 'sit', facing: 1, mood: 'smug', arms: () => ({ shR: 120, elR: -150, shL: 20, elL: -40 }) });
+const cup = (c, x, y) => { c.save(); c.translate(x, y); c.fillStyle = '#f4efe2'; c.strokeStyle = '#000'; c.lineWidth = 5; c.beginPath(); c.ellipse(0, 6, 70, 14, 0, 0, 7); c.fill(); c.stroke(); c.beginPath(); c.moveTo(-42, -70); c.lineTo(42, -70); c.lineTo(30, 0); c.lineTo(-30, 0); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#d8a83a'; c.fillRect(-40, -60, 80, 9); c.fillStyle = '#4a2a14'; c.beginPath(); c.ellipse(0, -70, 42, 8, 0, 0, 7); c.fill(); c.strokeStyle = 'rgba(255,255,255,.7)'; c.lineWidth = 5; for (const k of [-15, 12]) { c.beginPath(); c.moveTo(k, -90); c.quadraticCurveTo(k + 14, -115, k, -140); c.stroke(); } c.restore(); };
+const crowns6 = (c, x, y) => { for (let i = 0; i < 6; i++) GM.crown(c, x + (i - 2.5) * 150, y, 1.25, 0, 1); };
+const shot = (plate, line1, line2, c1, c2, tagT, kx) => ({ plate, sub: 'off', cam: { z: [1, 1], x: [1280, 1280], y: [720, 720] }, bed: [], light: {},
+  init: S => { S.D.figs = [KING(kx, 1540, 5.2)];
+    S.D.live = [(c, lt) => { sky(c, lt); throne(c, kx - 40, 1540); }];
+    S.D.front = [(c, lt) => { GM.crown(c, KX_HEAD.x, KX_HEAD.y, 2.6, -.08, 1); }];
+    S.D.over = [(c) => { tag(c, tagT, 1410, 170); big(c, line1, 1410, 400, 270, c1); big(c, line2, 1410, 690, 250, c2); crowns6(c, 1410, 970); cup(c, 640, 850); }]; } });
+const KX_HEAD = { x: 775, y: 250 };
+window.SHOTS = [shot('gulf_night', 'STILL', 'STANDING', '#fff', GOLD, 'IRAN FIRED 2,000+ MISSILES', 640), shot('palace_terrace', 'NOT ONE', 'FELL', GOLD, '#fff', 'IRAN FIRED 2,000+ MISSILES', 640)];
+// v3: bold missiles + bursts, cropped at mid-chest, half-lidded smug king, glowing crowns row
+const fire = (c, x0, y0, x1, y1, w) => { const n = 26; for (let k = 0; k < n; k++) { const u = k / n, x = x0 + (x1 - x0) * u, y = y0 + (y1 - y0) * u - Math.sin(u * Math.PI) * 120; c.fillStyle = `rgba(200,190,180,${.15 + .35 * u})`; c.beginPath(); c.arc(x, y, w * (1.6 - u), 0, 7); c.fill(); }
+  TW.glow(c, x1, y1, w * 9, '255,140,40', .9); TW.glow(c, x1, y1, w * 4, '255,240,200', 1); c.fillStyle = '#fff'; c.beginPath(); c.arc(x1, y1, w * 1.2, 0, 7); c.fill(); };
+const burst = (c, x, y, r) => { TW.glow(c, x, y, r * 2.2, '255,120,30', .8); TW.glow(c, x, y, r * 1.2, '255,200,90', 1); TW.glow(c, x, y, r * .5, '255,255,240', 1); c.save(); c.strokeStyle = 'rgba(255,230,150,.9)'; c.lineWidth = 8; for (let k = 0; k < 14; k++) { const a = k / 14 * 6.28; c.beginPath(); c.moveTo(x + Math.cos(a) * r * .45, y + Math.sin(a) * r * .45); c.lineTo(x + Math.cos(a) * r * 1.1, y + Math.sin(a) * r * 1.1); c.stroke(); } c.restore(); };
+SHOTS.push({ plate: 'gulf_night', sub: 'off', cam: { z: [1, 1], x: [1280, 1280], y: [720, 720] }, bed: [], light: {},
+  init: S => { S.D.figs = [Object.assign(KING(640, 1900, 5.2), { mood: 'smug', eyesClosed: .5 })];
+    S.D.live = [(c) => { const g = c.createLinearGradient(0, 0, 0, 1000); g.addColorStop(0, 'rgba(255,100,20,.5)'); g.addColorStop(1, 'rgba(255,140,40,.35)'); c.fillStyle = g; c.fillRect(0, 0, 2560, 1000); TW.glow(c, 1700, 850, 1200, '255,140,50', .45);
+      throne(c, 600, 1900); burst(c, 1060, 640, 230); }];
+    S.D.front = [(c) => GM.crown(c, 775, 610, 2.6, -.08, 1)];
+    S.D.over = [(c) => { const sm = (x0, y0, x1, y1, w) => { c.save(); c.lineCap = 'round'; c.strokeStyle = 'rgba(70,60,60,.55)'; c.lineWidth = w * 2.4; c.beginPath(); c.moveTo(x0, y0); c.quadraticCurveTo((x0 + x1) / 2, Math.min(y0, y1) - 60, x1, y1); c.stroke(); c.strokeStyle = 'rgba(255,170,60,.9)'; c.lineWidth = w * .8; c.stroke(); c.restore(); TW.glow(c, x1, y1, w * 7, '255,130,30', 1); TW.glow(c, x1, y1, w * 3, '255,250,220', 1); c.fillStyle = '#fff'; c.beginPath(); c.arc(x1, y1, w * .9, 0, 7); c.fill(); };
+      sm(1960, 520, 1500, 60, 20); sm(1960, 300, 1800, 40, 16); sm(700, 400, 1150, 70, 18); sm(1300, 330, 1880, 260, 14); burst(c, 1640, 70, 110); tag(c, 'IRAN FIRED 2,000+ MISSILES', 1410, 170); big(c, 'STILL', 1410, 400, 270, '#fff'); big(c, 'STANDING', 1410, 690, 250, GOLD); TW.glow(c, 1410, 940, 520, '255,200,80', .45); for (let i = 0; i < 6; i++) GM.crown(c, 1410 + (i - 2.5) * 155, 975, 1.6, 0, 1); }]; } });
+// v4: v1 king + rounded bisht lap + bold sky
+const sm4 = (c, x0, y0, x1, y1, w) => { c.save(); c.lineCap = 'round'; c.strokeStyle = 'rgba(60,50,50,.6)'; c.lineWidth = w * 2.6; c.beginPath(); c.moveTo(x0, y0); c.quadraticCurveTo((x0 + x1) / 2, Math.min(y0, y1) - 70, x1, y1); c.stroke(); c.strokeStyle = 'rgba(255,150,40,.95)'; c.lineWidth = w * 1.1; c.stroke(); c.strokeStyle = 'rgba(255,240,180,.95)'; c.lineWidth = w * .4; c.stroke(); c.restore(); TW.glow(c, x1, y1, w * 6, '255,120,20', 1); TW.glow(c, x1, y1, w * 2.6, '255,250,220', 1); c.fillStyle = '#fff'; c.beginPath(); c.arc(x1, y1, w * .8, 0, 7); c.fill(); };
+SHOTS.push({ plate: 'gulf_night', sub: 'off', cam: { z: [1, 1], x: [1280, 1280], y: [720, 720] }, bed: [], light: {},
+  init: S => { S.D.figs = [KING(640, 1540, 5.2)];
+    S.D.live = [(c) => { const g = c.createLinearGradient(0, 0, 0, 1000); g.addColorStop(0, 'rgba(255,100,20,.5)'); g.addColorStop(1, 'rgba(255,140,40,.35)'); c.fillStyle = g; c.fillRect(0, 0, 2560, 1000); TW.glow(c, 1700, 850, 1200, '255,140,50', .45); throne(c, 600, 1540); burst(c, 1080, 640, 360); }];
+    S.D.front = [(c) => GM.crown(c, 775, 250, 2.6, -.08, 1)];
+    S.D.over = [(c) => { sm4(c, 1960, 560, 1480, 60, 44); sm4(c, 1960, 330, 1820, 40, 36); sm4(c, 930, 470, 1150, 70, 36); sm4(c, 1250, 360, 1880, 250, 30); burst(c, 1640, 70, 130);
+      c.save(); c.fillStyle = '#2a2018'; c.strokeStyle = '#000'; c.lineWidth = 8; c.beginPath(); c.moveTo(300, 1090); c.quadraticCurveTo(310, 940, 470, 915); c.quadraticCurveTo(680, 895, 770, 960); c.quadraticCurveTo(810, 1020, 800, 1090); c.closePath(); c.fill(); c.stroke();
+      c.strokeStyle = GOLD; c.lineWidth = 16; c.beginPath(); c.moveTo(470, 917); c.quadraticCurveTo(505, 1000, 495, 1090); c.stroke(); c.strokeStyle = 'rgba(0,0,0,.25)'; c.lineWidth = 6; c.beginPath(); c.moveTo(640, 905); c.quadraticCurveTo(680, 1000, 670, 1090); c.stroke(); c.restore(); cup(c, 640, 915);
+      tag(c, 'IRAN FIRED 2,000+ MISSILES', 1410, 170); big(c, 'STILL', 1410, 400, 270, '#fff'); big(c, 'STANDING', 1410, 690, 250, GOLD); TW.glow(c, 1410, 940, 520, '255,200,80', .45); for (let i = 0; i < 6; i++) GM.crown(c, 1410 + (i - 2.5) * 155, 975, 1.6, 0, 1); }]; } });
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>

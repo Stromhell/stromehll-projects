@@ -1,0 +1,1 @@
+window.TIMING={"dur":8,"shots":[{"i":0,"start":0,"end":2,"vo_start":0,"vo_end":0,"text":""},{"i":1,"start":2,"end":4,"vo_start":2,"vo_end":2,"text":""},{"i":2,"start":4,"end":6,"vo_start":4,"vo_end":4,"text":""},{"i":3,"start":6,"end":8,"vo_start":6,"vo_end":6,"text":""}],"words":[]}
