@@ -1,17 +1,18 @@
 {
  "channel": "dumdown",
  "video": "wakanda-forever",
- "state": "waiting_approval",
+ "state": "queued",
  "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ8Lg7A8xFPi5abNkaF1zhBpL",
- "feedback": false,
+ "feedback": true,
  "queue_pos": 1,
  "booked_for": null,
  "zernio_post": null,
  "proposed_slot": "2026-12-09T16:00Z",
  "source_drive": "https://drive.google.com/file/d/1tqBEgipR15rVSWl-TiwI3ObiQSX7aBOd/view",
- "updated": "2026-11-23T11:55Z",
- "note": "v5b after Pushpam 23 Nov 10:09 review (gags rebuilt, floors, framing); book only after Pushpam OK",
+ "updated": "2026-11-23T19:28Z",
+ "note": "PAUSED 23 Nov 19:27 UTC by Pushpam: Doomsday trailer breakdown takes the slot first. v6 redo WIP: all scenes rebuilt (groundcheck 0 FAIL), gag VO + narrator v6 recorded (backup 03-audio/wf_audio_v6_wip.tgz, plates wf_plates_v6.tar). Resume: listen to narrator names (voicecheck_v6.md flags Okoye/Riri/Wakanda respellings), fix, then timing, mix, render, QA, send for OK.",
  "full_video": "https://drive.google.com/file/d/1Skb6zevzkVq4sUQ-1ER6roQDoX6cZY7a/view",
  "launch_kit": "https://claude.ai/artifact/U3wo9hVUoxZXA2fM4MbSk1",
- "length": "13:40"
+ "length": "13:40",
+ "position": 1
 }

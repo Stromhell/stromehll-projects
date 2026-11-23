@@ -26,10 +26,10 @@ for g in G:
             if not os.path.exists(f): rows.append(('GAG %d' % g['id'], it[0], it[1], 'MISSING', 1, 0)); continue
             t, d = hear(f); rows.append(('GAG %d' % g['id'], it[0], it[1], t, wer(it[1], t), len(it[1].split()) / max(.3, d)))
 if '--narr' in sys.argv:
-    for j in sorted(glob.glob('/tmp/wfwork/vo/act*.json')):
+    for j in sorted(glob.glob(os.environ.get('VO', '/tmp/wfwork/vo') + '/act*.json')):
         J = json.load(open(j)); a = os.path.basename(j)[:-5]
         for k, ch in enumerate(J.get('chunks', [])):
-            txt = ' '.join(c[2] for c in ch); t, d = hear(f'/tmp/wfwork/vo/{a}/p{k:02d}.wav'); rows.append((a, 'NARR p%02d' % k, txt, t, wer(txt, t), len(txt.split()) / max(.3, d)))
+            txt = ' '.join(c[2] for c in ch); t, d = hear(os.environ.get('VO', '/tmp/wfwork/vo') + f'/{a}/p{k:02d}.wav'); rows.append((a, 'NARR p%02d' % k, txt, t, wer(txt, t), len(txt.split()) / max(.3, d)))
 bad = [r for r in rows if r[4] > .3 or not (1.4 < r[5] < 4.6 or len(r[2].split()) < 3)]
 L = ['# voicecheck v6', '', f'{len(bad)} flagged of {len(rows)} lines (WER on non-name words > 0.3, or speaking rate outside 1.4-4.6 words/s)', '', '| where | who | script | heard | WER | w/s | flag |', '|---|---|---|---|---|---|---|']
 L += [f'| {r[0]} | {r[1]} | {r[2][:90]} | {r[3][:90]} | {r[4]:.2f} | {r[5]:.1f} | {"FLAG" if r in bad else ""} |' for r in rows]
