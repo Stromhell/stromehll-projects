@@ -9,7 +9,8 @@ m = ChatterboxTTS.from_pretrained(device='cpu'); REF = HERE + '/voice_ref/fenrir
 SCRIPT = os.environ.get('SCRIPT', '/mnt/project-files/dumdown/scripts/wakanda-forever/wakanda-forever-narrator-script-v2.md')
 txt = open(SCRIPT).read().split('\n---\n', 1)[1]
 secs = [s for s in re.split(r'\n## ', txt) if s.strip() and '🤡' not in s.split('\n')[0]]
-FIX = [('[CUT]', ''), ('...', ','), ('"', ''), ("T'Challa", 'Tuh-Challa'), ('Shuri', 'Shoo-ree'), ('Okoye', 'Oh-koy-ay'), ("M'Baku", 'Em-bah-koo'), ('Namor', 'Nay-mor'), ('Talokan', 'Tah-lo-kahn'), ('GRIOT', 'Gree-oh'), ('Nakia', 'Nah-kee-uh'), ('Toussaint', 'Too-san'), ('Ramonda', 'Rah-mon-da'), ('Aneka', 'Ah-neh-ka'), ('MCU', 'M C U'), ('U.S.', 'U S'), ('99%', 'ninety-nine percent'), ('one-in-a-billion', 'one in a billion'), ('favourite', 'favorite')]
+sys.path.insert(0, HERE + '/gags'); from names_wf import NAMES
+FIX = [('[CUT]', ''), ('...', ','), ('"', '')] + NAMES + [ ('MCU', 'M C U'), ('U.S.', 'U S'), ('99%', 'ninety-nine percent'), ('one-in-a-billion', 'one in a billion'), ('favourite', 'favorite')]
 GAP = 0.35; VO = os.environ.get('VO', '/tmp/wfwork/vo'); only = [int(x) for x in sys.argv[1:]] or None
 for i, s in enumerate(secs):
     if only and i not in only: continue
@@ -18,7 +19,10 @@ for i, s in enumerate(secs):
     d = f'{VO}/act{i:02d}'; os.makedirs(d, exist_ok=True); durs = []; allw = []; chunks = []
     for j, p in enumerate(paras):
         t = p
-        for a, b in FIX: t = t.replace(a, b)
+        def fx(q):
+            for a, b in FIX: q = q.replace(a, b)
+            return q
+        for a, b in FIX[:3]: t = t.replace(a, b)
         parts = []; sents = [x for x in re.split(r'(?<=[.!?])\s+', t) if x.strip()]
         ch = []; cur = ''
         for x in sents:
@@ -27,7 +31,7 @@ for i, s in enumerate(secs):
         if cur: ch.append(cur)
         pc = []; pos = .04
         for c in ch:
-            w = m.generate(c, audio_prompt_path=REF, exaggeration=0.75, cfg_weight=0.35); a = w.squeeze(0).numpy().astype(np.float32); sr = m.sr
+            w = m.generate(fx(c), audio_prompt_path=REF, exaggeration=float(os.environ.get('EXG', '0.55')), cfg_weight=float(os.environ.get('CFG', '0.45'))); a = w.squeeze(0).numpy().astype(np.float32); sr = m.sr
             f = int(.012 * sr); a[:f] *= np.linspace(0, 1, f); g = int(.06 * sr); a[-g:] *= np.cos(np.linspace(0, np.pi / 2, g)) ** 2
             parts += [a, np.zeros(int(.18 * sr), np.float32)]; pc.append([round(pos, 3), round(len(a) / sr, 3), c]); pos += len(a) / sr + .18
         a = np.concatenate([np.zeros(int(.04 * sr), np.float32)] + parts[:-1] + [np.zeros(int(.06 * sr), np.float32)])

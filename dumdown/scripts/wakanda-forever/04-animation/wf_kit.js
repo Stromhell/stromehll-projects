@@ -8,10 +8,12 @@ D.drawCharacter = (spec, o = {}) => {
   let post = '', pre = '';
   const t = o.t || 0;
   if (W_.wings) { // tiny feathered wings on both ankles (flutter fast)
-    const fl = Math.sin(t * 38) * 14, ay = y - 34 * sc;
-    const feet = side ? [x - 6 * sc * dir] : [x - 34 * sc, x + 34 * sc];
-    for (const fx0 of feet) { const sgn0 = side ? -dir : (fx0 < x ? -1 : 1), fx = fx0 + sgn0 * 3 * sc; const sgn = side ? -dir : (fx < x ? -1 : 1);
-      for (let k = 0; k < 4; k++) { const ang = (-62 + k * 14 + fl) * Math.PI / 180, L = (78 - k * 12) * sc, ex = fx + sgn * Math.cos(ang) * L, ey = ay + Math.sin(ang) * L, nx = -Math.sin(ang) * 15 * sc * sgn, ny_ = Math.cos(ang) * 15 * sc, mx = (fx + ex) / 2, my = (ay + ey) / 2;
+    // v6 (L37): wings are rooted on the real ankle joints of the current pose, so they stay on the feet while walking/flying
+    const fl = Math.sin(t * 38) * 14; let ank = [];
+    try { ank = ['L', 'R'].map(sd => D.wrist(spec, Object.assign({}, o, { joint: 'an' }), sd)); } catch (e) { ank = (side ? [x - 6 * sc * dir] : [x - 34 * sc, x + 34 * sc]).map(q => ({ x: q, y: y - 34 * sc })); }
+    if (side) ank = ank.slice(0, 2);
+    for (const A of ank) { const ay = A.y + 6 * sc; const sgn = side ? -dir : (A.x < x ? -1 : 1), fx = A.x + sgn * 4 * sc;
+      for (let k = 0; k < 4; k++) { const ang = (-62 + k * 14 + fl) * Math.PI / 180, L = (66 - k * 10) * sc, ex = fx + sgn * Math.cos(ang) * L, ey = ay + Math.sin(ang) * L, nx = -Math.sin(ang) * 15 * sc * sgn, ny_ = Math.cos(ang) * 15 * sc, mx = (fx + ex) / 2, my = (ay + ey) / 2;
         post += `<path d="M${fx},${ay} Q${mx + nx},${my + ny_} ${ex},${ey} Q${mx - nx},${my - ny_} ${fx},${ay}Z" fill="${k % 2 ? '#e8e0c8' : '#ffffff'}" stroke="${INK}" stroke-width="${2.4 * sc}"/>`; } } }
   if (W_.necklace && !back) { const cx = fh.x, ny = fh.y + 64 * sc, w = (side ? 26 : 44) * sc;
     post += `<path d="M${cx - w},${ny} Q${cx},${ny + 40 * sc} ${cx + w},${ny}" fill="none" stroke="${INK}" stroke-width="${7 * sc}"/><path d="M${cx - w},${ny} Q${cx},${ny + 40 * sc} ${cx + w},${ny}" fill="none" stroke="#2fbf7a" stroke-width="${4 * sc}"/>`;

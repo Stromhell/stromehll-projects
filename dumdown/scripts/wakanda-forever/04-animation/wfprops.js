@@ -36,7 +36,7 @@ P.judgeItem = (o, lt) => go(o, () => { ell(0, 0, 150, 30, '#e8e8ec'); const it =
   else if (it === 'duck') { ell(0, -45, 70, 44, '#ffd23d'); ell(46, -100, 38, 34, '#ffd23d'); poly([[78, -100], [112, -92], [78, -86]], '#ff8a2a', 3); ell(54, -108, 6, 6, INK, 0); }
   else if (it === 'spear') { ln(-170, -40, 160, -40, INK, 16); ln(-170, -40, 160, -40, '#8a5a2a', 9); poly([[230, -40], [160, -60], [130, -40], [160, -20]], '#d8dce8'); glow(0, -40, 220, 'rgba(255,220,90,A)', .35); } });
 // chalk/neon price board: o.lines (array), o.title
-P.board = (o, lt) => go(o, () => { const w = o.w || 620, lines = o.lines || [], h = 120 + lines.length * 70; rr(-w / 2, -h, w, h, 14, o.col || '#1e2a24', 7); if (o.title) txt(o.title, 0, -h + 70, '900 52px Inter', o.tc || '#ffd23d');
+P.board = (o, lt) => go(o, () => { const w = o.w || 620, lines = o.lines || [], h = 120 + lines.length * 70; if (o.stand) { ln(-w / 2 + 50, -20, -w / 2 + 10, o.stand, INK, 22); ln(-w / 2 + 50, -20, -w / 2 + 10, o.stand, '#7a5a3a', 12); ln(w / 2 - 50, -20, w / 2 - 10, o.stand, INK, 22); ln(w / 2 - 50, -20, w / 2 - 10, o.stand, '#7a5a3a', 12); } rr(-w / 2, -h, w, h, 14, o.col || '#1e2a24', 7); if (o.title) txt(o.title, 0, -h + 70, '900 52px Inter', o.tc || '#ffd23d');
   lines.forEach((l, i) => { const vis = !o.reveal || lt >= o.reveal[i] - 0; if (vis) txt(l, -w / 2 + 40, -h + 140 + i * 70, '800 40px Inter', i === lines.length - 1 && o.hot ? '#ff5a8a' : '#f4f1ea', 'left'); }); });
 // clipboard with pencil scribbles (writing)
 P.clipboard = (o, lt) => go(o, () => { rr(-80, -110, 160, 220, 8, '#c8946a'); rr(-66, -90, 132, 190, 4, '#f8f8f4', 3); rr(-30, -122, 60, 26, 6, '#a8acb8', 3); for (let i = 0; i < 6; i++) { const w = 40 + ((i * 53 + Math.floor(lt * 3) * 17) % 60); ln(-50, -60 + i * 26, -50 + w, -60 + i * 26, '#4a4a5a', 4); } });
@@ -102,5 +102,38 @@ P.carFront = (o, lt) => go(o, () => { const C = o.col || '#1a1a22', bob = Math.s
   rr(-920, -270, 1840, 330, 60, C, 7); rr(-880, -270, 1760, 40, 16, '#2e2e38', 0); ell(-680, -120, 90, 50, '#fff6c8', 5); ell(680, -120, 90, 50, '#fff6c8', 5); rr(-260, -170, 520, 90, 20, '#0c0c10', 5);
   for (let i = -3; i <= 3; i++) ln(i * 70, -160, i * 70, -90, '#3a3a44', 6); rr(-200, -40, 400, 60, 10, '#e8e4d4', 4); if (o.plate) txt(o.plate, 0, -2, '900 34px Inter', '#1a1a22'); });
 // stand legs under a board/whiteboard: o.w half-width, o.h leg length (top at y)
+// v6 car interior seen through the windscreen (L43): roof + pillars frame the two front seats, dashboard + wheel cover the laps. World coords, cam z 1.
+P.carInt = (o, lt) => { ctx.save(); const bob = Math.sin(lt * 7) * 3; ctx.translate(0, bob); const D = o.col || '#2a2a33';
+  const yD = o.y ?? 1120, wx = o.wx ?? 1560;
+  poly([[-40, -40], [2600, -40], [2600, 230], [2260, 300], [300, 300], [-40, 230]], D, 6);            // roof
+  poly([[-40, 200], [330, 270], [140, yD + 40], [-40, yD + 40]], D, 6); poly([[2600, 200], [2230, 270], [2420, yD + 40], [2600, yD + 40]], D, 6); // A-pillars
+  ctx.save(); ctx.globalAlpha = .10; poly([[600, 300], [900, 300], [500, yD], [200, yD]], '#ffffff', 0); poly([[1900, 300], [2000, 300], [1700, yD], [1600, yD]], '#ffffff', 0); ctx.restore(); // glass glare
+  rr(1180, 290, 200, 70, 12, '#3a3a44', 4);                                                           // mirror
+  ctx.lineWidth = 34; ctx.strokeStyle = INK; ctx.beginPath(); ctx.arc(wx, yD + 120, 230, Math.PI * 1.05, Math.PI * 1.95); ctx.stroke(); ctx.lineWidth = 22; ctx.strokeStyle = '#3a3a44'; ctx.stroke(); // wheel rim
+  poly([[-40, yD], [2600, yD], [2600, 1480], [-40, 1480]], '#3a3a44', 6); rr(-40, yD - 6, 2640, 40, 16, '#4a4a56', 5);   // dashboard
+  rr(wx - 150, yD + 40, 300, 90, 20, '#22222a', 4); ell(wx - 60, yD + 85, 34, 30, '#ffd23d', 3); ell(wx + 60, yD + 85, 34, 30, '#ffd23d', 3); // gauges
+  rr(1120, yD + 50, 320, 140, 14, '#1a1a22', 4); ctx.fillStyle = '#5ab8d8'; ctx.fillRect(1140, yD + 70, 280, 100);            // centre screen
+  ctx.restore(); };
+
 P.legs = o => go(o, () => { const w = o.w || 300, h = o.h || 220; ln(-w, 0, -w - 30, h, '#3a3a44', 14); ln(w, 0, w + 30, h, '#3a3a44', 14); ln(-w - 10, h * .6, w + 10, h * .6, '#3a3a44', 10); });
+
+// coffin seen END-ON (procession walking toward camera): origin = bottom centre of the near end; top recedes upward (v6, L42)
+P.coffinEnd = o => go(o, () => { poly([[-150, -130], [150, -130], [105, -215], [-105, -215]], '#e8e2d4', 5); ln(-120, -172, 120, -172, '#c8a04a', 5); poly([[-150, 0], [150, 0], [150, -130], [-150, -130]], '#f6f3ec', 6); poly([[-150, -18], [150, -18], [150, -6], [-150, -6]], '#c8a04a', 0); poly([[-150, -124], [150, -124], [150, -112], [-150, -112]], '#c8a04a', 0); ell(0, -66, 26, 26, '#c8a04a', 4); poly([[-140, 0], [140, 0], [140, 14], [-140, 14]], 'rgba(0,0,0,.25)', 0); });
+
+// v6 (L43/6:37): cars seen from BEHIND (driving away) and HEAD-ON, width 650 at s 1 = real car next to a person at s 1.4
+P.carRear = (o, lt) => go(o, () => { const C = o.col || '#e8e0d0', bob = Math.sin(lt * 14 + (o.ph || 0)) * 2;
+  rr(-300, -70, 120, 90, 20, '#141418', 5); rr(180, -70, 120, 90, 20, '#141418', 5); ctx.translate(0, bob);
+  poly([[-325, -60], [325, -60], [335, -250], [-335, -250]], C, 6); poly([[-250, -250], [250, -250], [195, -400], [-195, -400]], C, 6);
+  poly([[-220, -262], [220, -262], [175, -385], [-175, -385]], '#2a3a4a', 4); rr(-90, -150, 180, 50, 6, '#f4f1ea', 4);
+  for (const sx of [-1, 1]) { rr(sx * 255 - 55, -225, 110, 46, 10, '#e23a3a', 4); glow(sx * 255, -202, 170, 'rgba(255,40,40,A)', .5); }
+  rr(-340, -80, 680, 28, 12, '#2a2a32', 4); });
+P.carHead = (o, lt) => go(o, () => { const C = o.col || '#1a1a22', bob = Math.sin(lt * 14 + (o.ph || 0)) * 2;
+  rr(-300, -70, 120, 90, 20, '#141418', 5); rr(180, -70, 120, 90, 20, '#141418', 5); ctx.translate(0, bob);
+  poly([[-325, -60], [325, -60], [335, -240], [-335, -240]], C, 6); poly([[-250, -240], [250, -240], [195, -400], [-195, -400]], C, 6);
+  poly([[-220, -252], [220, -252], [175, -385], [-175, -385]], '#6a8aa8', 4); rr(-130, -170, 260, 70, 10, '#2a2a32', 4);
+  for (const sx of [-1, 1]) { rr(sx * 245 - 60, -215, 120, 50, 14, '#fff6c8', 4); glow(sx * 245, -190, 260, 'rgba(255,250,200,A)', .55); }
+  rr(-340, -80, 680, 28, 12, '#2a2a32', 4); });
+
+// car seat back + headrest (behind a seated driver/passenger, v6 car scene)
+P.carSeat = o => go(o, () => { rr(-190, -560, 380, 580, 70, o.col || '#3a3440', 6); rr(-110, -700, 220, 150, 40, o.col || '#3a3440', 6); ln(-60, -560, -60, -540, '#22222a', 10); ln(60, -560, 60, -540, '#22222a', 10); });
 })();

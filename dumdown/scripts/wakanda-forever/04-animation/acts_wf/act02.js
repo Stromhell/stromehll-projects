@@ -1,14 +1,16 @@
 // THE QUEEN'S MIC DROP + GAG 1 OKOYE REVIEWS (v5: diplomats seated, queen on the stage podium, items visible on the conveyor, held punchline)
 const G1 = k => GS('GAG 1', k);
+const UNSEATS = [[2187, 933, -1], [2267, 1000, -1], [2333, 1093, -1], [2400, 1187, -1], [440, 880, 1], [360, 960, 1], [293, 1040, 1], [240, 1133, 1]].map(([x, y, dir], i) => ({ c: 'diplomat', seat: 1, plateSeat: 1, x, y, s: .46 * (y - 707) / 440, view: 'side', dir, expr: i % 3 ? 'smug' : 'deadpan', ph: i * .37 }));
 const DIP = (x, dir, col) => [{ c: 'diplomat', seat: 1, x, y: 1400, s: 1.25, view: 'side', dir, expr: 'smug' }, { k: 'chairS', x, y: 1400, s: 1.3, dir, col: col || '#2a3a6a' }];
 window.ACT = { timing: window.TIMING, shots: [
- { p: 0, plate: 'un_hall', title: ['ONE YEAR LATER', "THE QUEEN'S MIC DROP"], cam: { z: [1.25, 1.32], x: 1280, y: 880 },
-   chars: [{ c: 'ramonda', x: [900, 1180], y: 1180, s: 1.05, view: 'side', dir: 1, expr: 'deadpan' }, DIP(700, 1)[0], DIP(1880, -1)[0]],
-   props: [{ k: 'podium', x: 1420, y: 1190, s: .75 }, DIP(700, 1)[1], DIP(1880, -1)[1]] },
- { p: 0, f: .35, plate: 'un_hall', cam: { frame: 'med', on: 0, push: [1, 1.1] }, chars: [{ c: 'diplomat', x: 1280, y: 1320, s: 1.4, view: 'threequarter', dir: -1, expr: 'smug', acts: [{ a: 'point', w: 'selfish' }] }], pops: [{ t: 'SHARE!', w: 'share', dur: 1.8 }] },
- { p: 0, f: .7, plate: 'un_hall', cam: { frame: 'mcu', on: 0, push: [1, 1.15] }, chars: [{ c: 'ramonda', x: 1280, y: 1320, s: 1.45, view: 'front', expr: 'deadpan', acts: [{ a: 'pointHold', w: 'because', n: 1 }] }], props: [{ k: 'podium', x: 1280, y: 1330, s: 1.1, layer: 'front' }] },
- { p: 1, plate: 'un_hall', cam: { frame: 'two', on: 0, on2: 1, push: [1, 1.05] }, chars: [{ c: 'okoye', x: [400, 1000], y: 1320, s: 1.4, view: 'side', dir: 1, expr: 'deadpan', anim: 'walk' }, { c: 'merc', x: [700, 1500], y: 1320, s: 1.35, view: 'side', dir: 1, expr: 'nervous', acts: [{ a: 'kneelHold', w: 'drops' }] }], props: [{ k: 'chains', on: 1, s: .7, side: 'R' }] },
- { p: 1, f: .65, plate: 'un_hall', cam: { frame: 'med', on: 0, push: [1, 1.1] }, chars: [{ c: 'diplomat', x: 1280, y: 1320, s: 1.4, view: 'front', expr: 'shock' }], pops: [{ t: 'DELIVERY', w: 'delivery', dur: 2 }] },
+ // v6 (L01/L41): movie-matched chamber, every chair arc filled with seated delegates on the set's own chairs, queen on the centre floor at true scale
+ { p: 0, plate: 'un_chamber', noLift: 1, title: ['ONE YEAR LATER', "THE QUEEN'S MIC DROP"], cam: { z: [1.0, 1.1], x: 1340, y: 860 },
+   chars: [{ c: 'ramonda', x: [1330, 1520], y: 985, s: .29, view: 'side', dir: 1, expr: 'deadpan', fullSpan: 1 }, ...UNSEATS],
+   props: [{ k: 'podium', x: 1560, y: 1000, s: .2 }] },
+ { p: 0, f: .35, plate: 'un_chamber', cam: { frame: 'med', on: 0, push: [1, 1.1] }, chars: [{ c: 'diplomat', seat: 1, x: 1280, y: 1320, s: 1.4, view: 'threequarter', dir: -1, expr: 'smug', acts: [{ a: 'point', w: 'selfish' }] }], props: [{ k: 'chairS', x: 1280, y: 1330, s: 1.45, dir: -1, col: '#4a7a9a' }], pops: [{ t: 'SHARE!', w: 'share', dur: 1.8 }] },
+ { p: 0, f: .7, plate: 'un_chamber', cam: { frame: 'mcu', on: 0, push: [1, 1.15] }, chars: [{ c: 'ramonda', x: 1280, y: 1320, s: 1.45, view: 'front', expr: 'deadpan', acts: [{ a: 'pointHold', w: 'because', n: 1 }] }], props: [{ k: 'podium', x: 1280, y: 1330, s: 1.1, layer: 'front' }] },
+ { p: 1, plate: 'un_chamber', cam: { frame: 'two', on: 0, on2: 1, push: [1, 1.05] }, noLift: 1, chars: [{ c: 'okoye', x: [1250, 1450], y: 990, s: .29, view: 'side', dir: 1, expr: 'deadpan', fullSpan: 1 }, { c: 'merc', x: [1360, 1600], y: 990, s: .28, fullSpan: 1, view: 'side', dir: 1, expr: 'nervous', acts: [{ a: 'kneelHold', w: 'drops' }] }], props: [{ k: 'chains', on: 1, s: .16, side: 'R' }] },
+ { p: 1, f: .65, plate: 'un_chamber', cam: { frame: 'med', on: 0, push: [1, 1.1] }, chars: [{ c: 'diplomat', seat: 1, x: 1280, y: 1320, s: 1.4, view: 'front', expr: 'shock' }], props: [{ k: 'chairS', x: 1280, y: 1330, s: 1.45, col: '#4a7a9a' }], pops: [{ t: 'DELIVERY', w: 'delivery', dur: 2 }] },
  { p: 2, plate: 'un_mercs', cam: { frame: 'two', on: 0, on2: 1, push: [1, 1.08] }, chars: [{ c: 'aneka', x: 1130, y: 1320, s: 1.45, view: 'threequarter', dir: 1, expr: 'excited', acts: [{ a: 'punch', w: 'claw' }] }, { c: 'okoye', x: 1450, y: 1320, s: 1.45, view: 'threequarter', dir: -1, expr: 'deadpan', acts: [{ a: 'block', w: 'impressed' }] }], props: [{ k: 'claws', on: 0, s: 1 }, { k: 'spear', on: 1, s: .9, side: 'R' }] },
  // GAG 1 OKOYE REVIEWS: judge desk left, conveyor table right; every item slides in on the host's line, her card flips on her verdict
  { p: 3, plate: 'cook_set', still: 1, cam: { z: [1.3, 1.34], x: 1330, y: 960 },

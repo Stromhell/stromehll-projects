@@ -23,7 +23,7 @@ FX = {'': 'anull', 'deep': 'rubberband=pitch=0.88', 'up': 'rubberband=pitch=1.1'
       'phone': 'highpass=f=380,lowpass=f=3400,acrusher=bits=11:mix=0.2,volume=1.3', 'old': 'highpass=f=450,lowpass=f=2800,acrusher=bits=8:mix=0.4,volume=1.5'}
 CB = os.environ.get('GAGCB', '/tmp/wfwork/gagvo')
 def voice(who, text):
-    ex_, pit, tem, fx = V[who]; h = hashlib.md5(f'{ex_}|{text}'.encode()).hexdigest()[:16]; src = os.path.join(CB, h + '.wav')
+    ex_, pit, tem, fx, rf = V[who]; h = hashlib.md5(f'{ex_}|{rf}|{text}'.encode()).hexdigest()[:16]; src = os.path.join(CB, h + '.wav')
     if not os.path.exists(src):
         if os.environ.get('DRAFT'): x = np.sin(np.arange(int(SR * .065 * len(text))) / SR * 2 * np.pi * 180) * .1; return x
         raise SystemExit(f'missing chatterbox line {who}: {text} (run gag_vo_cb.py)')
