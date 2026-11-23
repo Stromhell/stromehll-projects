@@ -20,7 +20,7 @@ const real = n => { const im = K.imgs[n]; return !!(im && im.src && im.src.index
 const at = (S, w, off = 0) => { const T = (S.text || '').split(/\s+/), i = Math.max(0, T.indexOf(w)), vs = (S.vo_start ?? S.start) - S.start, ve = (S.vo_end ?? S.end) - S.start; return A.at(S, w, vs + (ve - vs) * i / Math.max(1, T.length)) + off; };
 const ease = (lt, t0, a, b, d = .8) => a + (b - a) * E.io(K.seg(lt, t0, t0 + d));
 // CROWNS STANDING tracker, top-left; st(lt) -> 6 states
-const crowns = (st, x = 60, y = 50, s = 1.05) => (c, lt) => GM.crowns(c, x, y, s, typeof st === 'function' ? st(lt) : st, lt);
+const crowns = (st, x = 60, y = 50, s = 1.12) => (c, lt) => GM.crowns(c, x, y, s, typeof st === 'function' ? st(lt) : st, lt);
 const srcTag = (c, label, x, y, lt, t0, px = 26) => { const a = pop(lt, t0, .35); if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.font = `${px}px Oswald`; const w = c.measureText(label).width + 40; c.fillStyle = '#111'; rr(c, -w / 2, -px * .8, w, px * 1.6, 8); c.fill(); c.fillStyle = JH.GOLD; c.fillRect(-w / 2, -px * .8, 8, px * 1.6); txt(c, label, 4, 0, px, '#fff', 'center', 'Oswald'); c.restore(); };
 const dateTag = (c, s, x, y, lt, t0, px = 40) => { const a = E.back(K.seg(lt, t0, t0 + .35)); if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.font = `${px}px Anton`; const w = c.measureText(s).width + 36; c.fillStyle = '#f4ead2'; c.strokeStyle = INK; c.lineWidth = 4; rr(c, -w / 2, -px * .75, w, px * 1.5, 6); c.fill(); c.stroke(); txt(c, s, 0, 0, px, '#8a2a1a', 'center', 'Anton'); c.restore(); };
 

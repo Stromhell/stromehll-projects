@@ -17,12 +17,12 @@ const rr = TW.rr, txt = TW.txt;
 const LD = (n, alt) => { const im = K.load(n, PL + n + '.jpg'); if (alt) { if (!K.imgs[alt]) K.load(alt, PL + alt + '.jpg'); im.onerror = () => { K.imgs[n] = K.imgs[alt]; }; } };
 const FL = 1250; // floor line of the A-set plates (PLATE_BRIEF)
 // crowns tracker (screen space, top-left); st = fn(lt) -> 6 states
-const CR = (st) => (c, lt) => GM.crowns(c, 40, 40, 1.04, st(lt), lt);
+const CR = (st) => (c, lt) => GM.crowns(c, 40, 40, 1.12, st(lt), lt);
 const wob = (lt, t0, amp = .5, d = 1.6) => { const u = K.seg(lt, t0, t0 + d); return u <= 0 || u >= 1 ? 0 : amp * Math.sin(u * Math.PI); };
 const ALL = v => [v, v, v, v, v, v];
 // date / place tag: dark pill, top centre (screen space)
-const dtag = (s, at, y = 150) => (c, lt) => { const a = TW.pop(lt, at, .45); if (a <= 0) return; c.save(); c.translate(960, y); c.scale(a, a); c.font = '58px Anton'; const w = c.measureText(s).width + 70;
-  c.fillStyle = 'rgba(0,0,0,.35)'; rr(c, -w / 2 + 6, -42, w, 92, 16); c.fill(); c.fillStyle = '#1e1a16'; c.strokeStyle = '#e2b23a'; c.lineWidth = 5; rr(c, -w / 2, -48, w, 92, 16); c.fill(); c.stroke(); txt(c, s, 0, -2, 58, '#f6ecd2', 'center', 'Anton'); c.restore(); };
+const dtag = (s, at, y = 150) => (c, lt) => { const a = TW.pop(lt, at, .45), fo = 1 - K.seg(lt, at + 3.5, at + 4); if (a <= 0 || fo <= 0) return; c.save(); c.globalAlpha = fo; c.translate(960, y); c.scale(a, a); c.font = '44px Anton'; const w = c.measureText(s).width + 60;
+  c.fillStyle = 'rgba(0,0,0,.35)'; rr(c, -w / 2 + 6, -32, w, 72, 14); c.fill(); c.fillStyle = '#1e1a16'; c.strokeStyle = '#e2b23a'; c.lineWidth = 5; rr(c, -w / 2, -38, w, 72, 14); c.fill(); c.stroke(); txt(c, s, 0, -2, 44, '#f6ecd2', 'center', 'Anton'); c.restore(); };
 const nt = (s, x, y, at, px = 40) => (c, lt) => GM.ntag(c, x, y, s, TW.pop(lt, at, .4), { px });
 const dust = (c, lt, y0, col = '230,210,170', n = 40, a = .25) => { c.save(); for (let k = 0; k < n; k++) { const x = (k * 197 + lt * (20 + k % 5 * 8)) % 2700 - 70, y = y0 - (k * 61) % 700 + Math.sin(lt + k) * 12; c.fillStyle = `rgba(${col},${a * (.4 + .6 * ((k * 7) % 10) / 10)})`; c.beginPath(); c.arc(x, y, 2 + k % 3, 0, 7); c.fill(); } c.restore(); };
 const desk = (c, x, fy, w, top, col = '#5a3a22') => { c.save(); c.fillStyle = 'rgba(0,0,0,.3)'; c.beginPath(); c.ellipse(x, fy, w * .6, 16, 0, 0, 7); c.fill(); c.strokeStyle = INK; c.lineWidth = 5; c.fillStyle = col; rr(c, x - w / 2, top, w, fy - top, 6); c.fill(); c.stroke(); c.fillStyle = R.shadeHex(col, -.15); rr(c, x - w / 2 + 20, top + 40, w - 40, fy - top - 60, 4); c.fill(); c.fillStyle = R.shadeHex(col, .15); rr(c, x - w / 2 - 14, top - 16, w + 28, 22, 5); c.fill(); c.stroke(); c.restore(); };
@@ -60,7 +60,7 @@ window.SHOTS = [
           for (const k of [420, 1080, 1480, 2140]) TW.glow(c, k, 760, 60, '255,190,110', .25 + .2 * night * Math.abs(Math.sin(lt * 2 + k))); dust(c, lt, FL + 120, '210,180,140', 30, .22); }];
       S.D.front = [nt('ABDUL KARIM QASIM', 1180, FL - 560, tB + .2, 36), (c, lt) => { if (lt < tK - .2) return; // portrait frame of the young king that fades
           const a = TW.pop(lt, tK - .2, .4), o = 1 - K.seg(lt, tKi + .2, tKi + 1.2); if (o <= 0) return; c.save(); c.globalAlpha = o; c.translate(2250, 520); c.scale(a, a); c.fillStyle = '#d8a83a'; c.strokeStyle = INK; c.lineWidth = 5; rr(c, -120, -150, 240, 300, 12); c.fill(); c.stroke(); c.fillStyle = '#2a2420'; rr(c, -95, -125, 190, 250, 8); c.fill();
-          c.fillStyle = '#4a3a30'; c.beginPath(); c.arc(0, -30, 46, 0, 7); c.fill(); c.beginPath(); c.ellipse(0, 90, 70, 60, 0, Math.PI, 0); c.fill(); GM.crown(c, 0, -80, .55, 0, .5); c.restore(); GM.ntag(c, 2250, 340, 'KING FAISAL II', a * o, { px: 32 }); }];
+          c.fillStyle = '#4a3a30'; c.beginPath(); c.arc(0, -30, 46, 0, 7); c.fill(); c.beginPath(); c.ellipse(0, 90, 70, 60, 0, Math.PI, 0); c.fill(); GM.crown(c, 0, -80, .55, 0, .5); c.restore(); GM.ntag(c, 2250, 340, 'KING FAISAL II', a * o, { px: 42 }); }];
       S.D.over = [dtag('IRAQ · 14 JULY 1958', .3), crownsOK(.15, []), (c, lt) => { const a = TW.pop(lt, tR, .4); if (a > 0) { c.save(); c.translate(960, 270); c.scale(a, a); txt(c, 'REPUBLIC BY NIGHTFALL', 0, 0, 50, '#ffd27a', 'center', 'Anton'); c.restore(); } }];
       S.D.sfx = [[tJ, 'war_drums_loop', .2], [tJ + .3, 'scrape', .3], [tB, 'pop', .2], [tSe, 'hit', .35], [tKi, 'tension', .3], [tR, 'whoosh', .3], [tR + .2, 'crowd_cheer', .2]]; } },
 
@@ -93,15 +93,15 @@ window.SHOTS = [
           const arr = (x0, y0, at, s) => { const p = E.io(K.seg(lt, at, at + 1.2)); if (p <= 0) return; const x = x0 + (DH[0] - x0) * p, y = y0 + (DH[1] - y0) * p; c.save(); c.strokeStyle = '#c8302a'; c.lineWidth = 10; c.setLineDash([24, 16]); c.beginPath(); c.moveTo(x0, y0); c.lineTo(x, y); c.stroke(); c.setLineDash([]);
             const a = Math.atan2(DH[1] - y0, DH[0] - x0); c.translate(x, y); c.rotate(a); c.fillStyle = '#c8302a'; c.beginPath(); c.moveTo(20, 0); c.lineTo(-20, -18); c.lineTo(-20, 18); c.fill(); c.restore(); txt(c, s, x0, y0 - 40, 40, '#c8302a', 'center', 'Anton'); };
           arr(2450, 420, tC - .3, 'CHINA'); arr(1600, 420, tSo - .3, 'USSR'); }];
-      S.D.over = [dtag('DHOFAR · 1965', t65 - .2), (c, lt) => { const a = TW.fade(lt, tF - .2) * (1 - K.seg(lt, t65 - .6, t65 - .2)); if (a > 0) { c.globalAlpha = a; c.save(); c.translate(960, 150); c.font = '58px Anton'; c.fillStyle = '#1e1a16'; rr(c, -260, -48, 520, 92, 16); c.fill(); txt(c, 'YEMEN · 1962', 0, -2, 58, '#f6ecd2', 'center', 'Anton'); c.restore(); } }, crownsOK(.22, [tF, tM])];
+      S.D.over = [dtag('DHOFAR · 1965', t65 - .2), (c, lt) => { const a = TW.fade(lt, tF - .2) * (1 - K.seg(lt, t65 - .6, t65 - .2)); if (a > 0) { c.globalAlpha = a; c.save(); c.translate(960, 150); c.font = '58px Anton'; c.fillStyle = '#1e1a16'; rr(c, -200, -38, 400, 72, 14); c.fill(); txt(c, 'YEMEN · 1962', 0, -2, 44, '#f6ecd2', 'center', 'Anton'); c.restore(); } }, crownsOK(.22, [tF, tM])];
       S.D.sfx = [[tF, 'thud', .4], [tF + .3, 'scrape', .2], [tD, 'fire_loop', .2], [tM, 'alarm', .12], [tC, 'whoosh', .3], [tSo, 'whoosh', .3]]; } },
 
   // 2.4 January 1968: PM at the desk with a pipe reads the statement; a pound coin falls
   { plate: 'london_office', cam: { z: [1.3, 1.5], x: [1280, 1260], y: [820, 800] }, bed: [['rain_loop', .1], ['office_loop', .06]], light: { dir: -1, key: 'rgba(210,220,240,.14)' },
     init: S => { const tJ = A.at(S, 'January', 1), tH = A.at(S, 'Harold', 2.6), tBo = A.at(S, 'bombshell.', 4.6), tSh = A.at(S, 'short', 6), tP = A.at(S, 'pound,', 8), tPu = A.at(S, 'pull', 9.6), t71 = A.at(S, '1971.', 12.4);
-      S.D.figs = [{ x: 1280, y: 1180, s: 1.6, ...GM.PM({ pipe: true }), pose: 'sit', facing: 1, mood: 'neutral', talk: [tBo, t71 + .5], anim: (o, lt) => { o.lean = Math.sin(lt * 1.1) * 1.2; if (lt > tBo - .3) { o.arms = () => ({ shL: 50, elL: -70, shR: 50, elR: -70, handL: 'open', handR: 'open' }); } if (lt > tP) o.mood = 'worried'; } }];
-      S.D.live = [(c, lt) => { if (K.imgs.london_office === K.imgs.office) TW.chair(c, 1280, 1180, 1050, 1, '#4a2a1a'); }];
-      S.D.front = [(c, lt) => { desk(c, 1280, 1180, 680, 950, '#5a3a22'); // desk in front of the seated PM, green lamp, statement paper
+      S.D.figs = [{ x: 1280, y: 1070, s: 1.6, ...GM.PM({ pipe: true }), pose: 'sit', facing: 1, mood: 'neutral', talk: [tBo, t71 + .5], anim: (o, lt) => { o.lean = Math.sin(lt * 1.1) * 1.2; if (lt > tBo - .3) { o.arms = () => ({ shL: 50, elL: -70, shR: 50, elR: -70, handL: 'open', handR: 'open' }); } if (lt > tP) o.mood = 'worried'; } }];
+      
+      S.D.front = [(c, lt) => { { const im = K.imgs.london_office; if (im && im !== K.imgs.office) c.drawImage(im, 930, 940, 700, 250, 930, 940, 700, 250); else desk(c, 1280, 1180, 680, 950, '#5a3a22'); } // desk in front of the seated PM, green lamp, statement paper
                     TW.glow(c, 1500, 880, 220, '255,240,180', .35);
           const lift = K.seg(lt, tBo - .4, tBo); c.save(); c.translate(1060, 920 - lift * 20); c.rotate(-.1); c.fillStyle = '#f6f2e6'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-80, -50, 160, 100); c.strokeRect(-80, -50, 160, 100); for (let k = 0; k < 5; k++) c.fillRect(-60, -30 + k * 16, 120 - (k % 2) * 30, 4); c.restore();
           const u = K.seg(lt, tP - .3, tP + .9), cy = 420 + E.inn(u) * (930 - 420); if (lt > tP - .3) { c.save(); c.translate(1420, cy); c.rotate(u * 8); c.scale(Math.max(.2, Math.abs(Math.cos(u * 10))), 1); c.fillStyle = '#d8b04a'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.arc(0, 0, 44, 0, 7); c.fill(); c.stroke(); txt(c, '£', 0, 2, 50, '#7a5a1a', 'center', 'Anton'); c.restore(); }
@@ -123,7 +123,7 @@ window.SHOTS = [
           if (lt < tBa + .6) GM.suitcase(c, 1180, FL, 1, lt < tBa); }];
       S.D.front = [(c, lt) => { if (lt < tG - .3) return; const a = TW.pop(lt, tG - .3, .4), o = 1 - K.seg(lt, tBg - .2, tBg + .4); if (o <= 0) return; // small inset: Libya 1969, silhouette with a tag
           c.save(); c.globalAlpha = o; c.translate(1700, 600); c.scale(a, a); c.fillStyle = '#2a2018'; c.strokeStyle = '#e2b23a'; c.lineWidth = 6; rr(c, -220, -170, 440, 300, 14); c.fill(); c.stroke(); c.fillStyle = '#0e0a08'; c.beginPath(); c.arc(0, -40, 50, 0, 7); c.fill(); c.beginPath(); c.ellipse(0, 110, 110, 90, 0, Math.PI, 0); c.fill();
-          txt(c, 'LIBYA · 1969', 0, -135, 30, '#f6ecd2', 'center', 'Anton'); const u = K.seg(lt, tK - .3, tK + .5); GM.crown(c, 150 + u * 20, 60 + E.inn(u) * 50, .6, u * 1.5); c.restore(); GM.ntag(c, 1700, 420, 'GADDAFI', a * o, { px: 32 }); }];
+          txt(c, 'LIBYA · 1969', 0, 100, 30, '#f6ecd2', 'center', 'Anton'); const u = K.seg(lt, tK - .3, tK + .5); GM.crown(c, 150 + u * 20, 60 + E.inn(u) * 50, .6, u * 1.5); c.restore(); GM.ntag(c, 1700, 420, 'GADDAFI', a * o, { px: 42 }); }];
       S.D.over = [dtag('THE BODYGUARD LEAVES', tBg - .2), crownsOK(.45, [tBg, tR])];
       S.D.sfx = [[tG, 'pop', .2], [tK, 'thud', .3], [tPa, 'creak', .3], [tBa, 'door_slam', .3], [tBa + .7, 'footsteps', .4], [tR, 'tension', .3], [tN, 'war_drums_loop', .15]]; } },
 ];

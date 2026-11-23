@@ -2,10 +2,13 @@
 // Plates: map, ministry, pearl_square, causeway, card. Missing plates fall back to a stand-in (see PLATE) until painted.
 const PLATE = (n, alt) => { const im = K.load(n, PL + n + '.jpg'); im.onerror = () => { K.imgs[n] = K.load(n + '__alt', PL + alt + '.jpg'); }; return n; };
 const P = { map: PLATE('map', 'card'), min: PLATE('ministry', 'office'), sq: PLATE('pearl_square', 'skyline'), cw: PLATE('causeway', 'card'), card: PLATE('card', 'card') };
+const card = (c, t, lt, o = {}) => K.card(c, t, lt, Object.assign({}, o, { px: Math.min(46, Math.max(40, o.px ?? 44)), until: o.until ?? (o.at ?? 0) + 3.6 }));
+const cnt = (c, a, b, x, y, lt, t0, t1, o) => JH.counter(c, a, b, x, y, lt, t0, t1, Object.assign({}, o, { px: Math.min(46, o.px ?? 46) }));
+const stamp = (c, s, x, y, lt, at, o = {}) => TW.stamp(c, s, x, y, lt, at, Object.assign({}, o, { px: Math.min(46, o.px ?? 46) }));
 const txt = TW.txt, rr = TW.rr, GOLD = '#e2b23a';
 const ease = (lt, t0, a, b, d = .8) => a + (b - a) * E.io(K.seg(lt, t0, t0 + d));
 // crowns tracker, screen space top-left (centre ~200,95)
-const CROWNS = f => (c, lt) => GM.crowns(c, 50, 40, 1.04, f(lt), lt);
+const CROWNS = f => (c, lt) => GM.crowns(c, 40, 34, 1.12, f(lt), lt);
 const CALM = () => [0, 0, 0, 0, 0, 0];
 const dust = (c, lt, n = 40, col = '255,240,210') => { for (let k = 0; k < n; k++) { const x = (k * 263 + lt * 12 * (1 + k % 3)) % 2560, y = (k * 151 + Math.sin(lt * .7 + k) * 40) % 1300 + 60; c.fillStyle = `rgba(${col},${.1 + .08 * Math.sin(lt * 2 + k)})`; c.fillRect(x, y, 4, 4); } };
 const shimmer = (c, lt, y0, y1, a = .05) => { c.save(); for (let k = 0; k < 14; k++) { const y = y0 + (k / 14) * (y1 - y0) + Math.sin(lt * 3 + k) * 6; c.fillStyle = `rgba(255,240,210,${a})`; c.fillRect(0, y, 2560, 3); } c.restore(); };
@@ -41,9 +44,9 @@ window.SHOTS = [
           c.fillStyle = '#3a3226'; c.strokeStyle = INK; c.lineWidth = 5; rr(c, 1900, 800, 420, 50, 12); c.fill(); c.stroke(); txt(c, 'THE GULF', 2110, 880, 40, '#f2d06a', 'center', 'Anton');
           for (let i = 0; i < 6; i++) { const w = K.seg(lt, tYe + .4, tYe + 2.2), wob = Math.sin(lt * 14 + i) * .22 * (w > 0 && w < 1 ? 1 - w : 0); GM.crown(c, 1940 + i * 68, 800, .45, wob, .5 + .5 * Math.sin(lt * 2 + i)); }
           TW.glow(c, 2110, 770, 300, '255,210,120', .18 + .06 * Math.sin(lt * 2)); }];
-      S.D.front = [(c, lt) => TW.stamp(c, 'GONE', 960, 470, lt, tGo, { px: 110 })];
-      S.D.over = [(c, lt) => K.card(c, '2011', lt, { at: t20 - .2, x: 620, y: 150, px: 64, rot: -3, bg: GOLD }), (c, lt) => K.card(c, 'ARAB SPRING', lt, { at: tAS - .3, x: 1060, y: 150, px: 60, rot: 2 }),
-        (c, lt) => K.card(c, '4 RULERS OUT IN A YEAR', lt, { at: tGo, x: 960, y: 760, px: 44, rot: -1, bg: '#7a1e2a', color: '#fff' })];
+      S.D.front = [(c, lt) => stamp(c, 'GONE', 960, 470, lt, tGo, { px: 110 })];
+      S.D.over = [(c, lt) => card(c, '2011', lt, { at: t20 - .2, x: 620, y: 150, px: 64, rot: -3, bg: GOLD }), (c, lt) => card(c, 'ARAB SPRING', lt, { at: tAS - .3, x: 1060, y: 150, px: 60, rot: 2 }),
+        (c, lt) => card(c, '4 RULERS OUT IN A YEAR', lt, { at: tGo, x: 960, y: 760, px: 44, rot: -1, bg: '#7a1e2a', color: '#fff' })];
       S.D.sfx = [[t20, 'drum', .3], [tAS, 'whoosh', .25], [tTu + .3, 'hit', .3], [tEg + .3, 'hit', .3], [tLi + .3, 'hit', .3], [tYe + .3, 'thud', .35], [tYe + .5, 'tension', .2], [tGo, 'stamp', .35]]; } },
 
   // 6.01 the cash answer: a royal tips a bucket of coins into a pipe that runs to houses; counters roll
@@ -66,11 +69,11 @@ window.SHOTS = [
           txt(c, 'JOBS · WAGES · HOUSING', 1860, 300, 44, '#3a3440', 'center', 'Anton');
           // pledge bags for Oman and Bahrain slide onto the counter
           const u = E.out(K.seg(lt, tTen, tTen + .7)); if (u > 0) { bag(c, 2400 - 360 * u, 850, .9, 'OMAN $10B'); bag(c, 2560 - 250 * u + 120, 850, .9, 'BAHRAIN $10B'); } }];
-      S.D.over = [CROWNS(CALM), (c, lt) => K.card(c, 'ANSWER 1: CASH', lt, { at: tCa - .3, x: 640, y: 150, px: 50, rot: -2, bg: GOLD }),
-        (c, lt) => { if (lt < tOm) JH.counter(c, 0, 130, 1200, 170, lt, tHu - .2, tHu + 2.0, { fmt: v => '$' + Math.round(v) + ' BILLION', px: 76, col: '#f2d06a' }); },
-        (c, lt) => K.card(c, 'SAUDI ARABIA', lt, { at: tPl, x: 1200, y: 270, px: 36, rot: 1, until: tOm }),
-        (c, lt) => K.card(c, 'OMAN: TENS OF THOUSANDS OF PUBLIC JOBS', lt, { at: tTe, x: 1080, y: 160, px: 42, rot: 1, until: tTen - .1 }),
-        (c, lt) => K.card(c, '$10 BILLION EACH', lt, { at: tTen, x: 1120, y: 160, px: 54, rot: -1, bg: GOLD })];
+      S.D.over = [CROWNS(CALM), (c, lt) => card(c, 'ANSWER 1: CASH', lt, { at: tCa - .3, x: 640, y: 150, px: 50, rot: -2, bg: GOLD }),
+        (c, lt) => { if (lt < tOm) cnt(c, 0, 130, 1200, 170, lt, tHu - .2, tHu + 2.0, { fmt: v => '$' + Math.round(v) + ' BILLION', px: 76, col: '#f2d06a' }); },
+        (c, lt) => card(c, 'SAUDI ARABIA', lt, { at: tPl, x: 1200, y: 270, px: 36, rot: 1, until: tOm }),
+        (c, lt) => card(c, 'OMAN: TENS OF THOUSANDS OF PUBLIC JOBS', lt, { at: tTe, x: 1080, y: 160, px: 42, rot: 1, until: tTen - .1 }),
+        (c, lt) => card(c, '$10 BILLION EACH', lt, { at: tTen, x: 1120, y: 160, px: 54, rot: -1, bg: GOLD })];
       S.D.sfx = [[.2, 'footsteps', .2], [tCa, 'creak', .25], [tCa + .4, 'coins_cascade', .35], [tHu, 'tick', .2], [tHu + 2, 'chime', .25], [tJo, 'pop', .2], [tJo + .6, 'pop', .2], [tOm, 'coins', .3], [tTe, 'paper', .2], [tTen, 'scrape', .25], [tTen + .5, 'coins', .3], [tBa, 'thud', .2]]; } },
 
   // 6.02 Pearl Roundabout, 14 Feb: crowd around the pearl monument, flags (plain colour) and signs; BH crown wobbles hard
@@ -84,10 +87,10 @@ window.SHOTS = [
           // far crowd heads round the base, swaying
           const n = K.clamp(K.seg(lt, tFi - 1, tFi + 1.5)); for (let k = 0; k < 90 * n; k++) { const x = 120 + (k * 211) % 2340, y = 1040 + (k % 5) * 22 + Math.sin(lt * 3 + k) * 3; c.fillStyle = ['#3a2a22', '#5a3a2a', '#2a2a30'][k % 3]; c.beginPath(); c.arc(x, y - 30, 16, 0, 7); c.fill(); c.fillStyle = ['#f2f0ea', '#3a4a6a', '#7a2a2a', '#2a5a3a'][k % 4]; c.beginPath(); c.ellipse(x, y, 22, 20, 0, Math.PI, 0); c.fill(); }
           if (n > .5) [[360, 1060], [900, 1050], [1700, 1050], [2240, 1060]].forEach(([x, y], k) => GM.flag(c, x, y, .9, '#c8302a', '#f4f4f0', lt + k)); }];
-      S.D.front = [(c, lt) => GM.ntag(c, 560, 640, 'SHIA MAJORITY', pop(lt, tSh, .4), { px: 34 }), (c, lt) => GM.ntag(c, 2040, 640, 'SUNNI ROYALS: AL KHALIFA', pop(lt, tSu, .4), { px: 30 })];
-      S.D.over = [CROWNS(lt => [0, 0, lt > tBa && lt < tKi + 1 ? .9 * (1 - K.seg(lt, tKi, tKi + 1)) : 0, 0, 0, 0]), (c, lt) => K.card(c, 'ANSWER 2: FORCE', lt, { at: tFo - .3, x: 640, y: 150, px: 50, rot: -2, bg: '#7a1e2a', color: '#fff', until: tFi }),
-        (c, lt) => K.card(c, 'BAHRAIN · 14 FEB 2011', lt, { at: tFe - .6, x: 640, y: 150, px: 46, rot: -2, bg: GOLD }), (c, lt) => K.card(c, 'PEARL ROUNDABOUT', lt, { at: tFi, x: 1320, y: 150, px: 50, rot: 2 }),
-        (c, lt) => K.card(c, 'WANTED: A CONSTITUTIONAL MONARCHY', lt, { at: tCo, x: 960, y: 820, px: 40, rot: -1, bg: '#2a5a3a', color: '#fff' })];
+      S.D.front = [(c, lt) => GM.ntag(c, 560, 640, 'SHIA MAJORITY', pop(lt, tSh, .4), { px: 40 }), (c, lt) => GM.ntag(c, 1900, 640, 'AL KHALIFA (SUNNI)', pop(lt, tSu, .4), { px: 40 })];
+      S.D.over = [CROWNS(lt => [0, 0, lt > tBa && lt < tKi + 1 ? .9 * (1 - K.seg(lt, tKi, tKi + 1)) : 0, 0, 0, 0]), (c, lt) => card(c, 'ANSWER 2: FORCE', lt, { at: tFo - .3, x: 640, y: 150, px: 50, rot: -2, bg: '#7a1e2a', color: '#fff', until: tFi }),
+        (c, lt) => card(c, 'BAHRAIN · 14 FEB 2011', lt, { at: tFe - .6, x: 640, y: 150, px: 46, rot: -2, bg: GOLD }), (c, lt) => card(c, 'PEARL ROUNDABOUT', lt, { at: tFi, x: 1320, y: 150, px: 50, rot: 2 }),
+        (c, lt) => card(c, 'WANTED: A CONSTITUTIONAL MONARCHY', lt, { at: tCo, x: 960, y: 820, px: 40, rot: -1, bg: '#2a5a3a', color: '#fff' })];
       S.D.sfx = [[.3, 'footsteps', .2], [tFo, 'drum', .3], [tFi, 'crowd_cheer', .3], [tFi + .5, 'paper', .2], [tFe, 'stamp', .25], [tCo, 'chime', .25], [tKi, 'crowd_cheer', .2]]; } },
 
   // 6.03 14 March: armoured column crosses the causeway under a plain GCC banner; martial law; the monument comes down
@@ -109,10 +112,10 @@ window.SHOTS = [
           const f = E.io(K.seg(lt, tBu - .6, tBu + .8)); c.translate(X, Y + 110); c.scale(.32, .32); monument(c, 0, 0, lt, f); const px = f * 900, py = -560 * (1 - f) + 10 * f; GM.pearl(c, px, py - 60 * Math.sin(f * Math.PI), 2.2, .5); c.rotate(0);
           if (f > .6) { c.strokeStyle = 'rgba(40,30,20,.5)'; c.lineWidth = 16; c.setLineDash([24, 14]); c.beginPath(); c.moveTo(-800, 60); c.lineTo(800, 30); c.moveTo(-800, 120); c.lineTo(800, 90); c.stroke(); c.setLineDash([]); }
           c.restore(); txt(c, 'PEARL MONUMENT', X, Y + H / 2 + 34, 34, '#f2ead8', 'center', 'Anton'); }];
-      S.D.over = [CROWNS(lt => [0, 0, .6 * (1 - K.seg(lt, tBu, tBu + 1.5)), 0, 0, 0]), (c, lt) => K.card(c, '14 MARCH 2011', lt, { at: tMa - .4, x: 620, y: 150, px: 50, rot: -2, bg: GOLD }),
-        (c, lt) => { if (lt < tML) JH.counter(c, 0, 1000, 960, 270, lt, tTh - .3, tTh + 1.0, { fmt: v => '~' + Math.round(v).toLocaleString('en-GB') + ' SAUDI TROOPS', px: 52, col: '#fff' }); },
-        (c, lt) => { if (lt < tML) JH.counter(c, 0, 500, 960, 350, lt, tFi - .2, tFi + .9, { fmt: v => Math.round(v) + ' EMIRATI POLICE', px: 44, col: '#f2d06a' }); },
-        (c, lt) => TW.stamp(c, 'MARTIAL LAW', 640, 330, lt, tML, { px: 70 })];
+      S.D.over = [CROWNS(lt => [0, 0, .6 * (1 - K.seg(lt, tBu, tBu + 1.5)), 0, 0, 0]), (c, lt) => card(c, '14 MARCH 2011', lt, { at: tMa - .4, x: 620, y: 150, px: 50, rot: -2, bg: GOLD }),
+        (c, lt) => { if (lt < tML) cnt(c, 0, 1000, 960, 270, lt, tTh - .3, tTh + 1.0, { fmt: v => '~' + Math.round(v).toLocaleString('en-GB') + ' SAUDI TROOPS', px: 52, col: '#fff' }); },
+        (c, lt) => { if (lt < tML) cnt(c, 0, 500, 960, 350, lt, tFi - .2, tFi + .9, { fmt: v => Math.round(v) + ' EMIRATI POLICE', px: 44, col: '#f2d06a' }); },
+        (c, lt) => stamp(c, 'MARTIAL LAW', 640, 330, lt, tML, { px: 70 })];
       S.D.sfx = [[tMa, 'drum', .3], [tTh - .8, 'drone', .2], [tTh, 'tension', .25], [tFi, 'tick', .2], [tCr, 'whoosh', .2], [tGC, 'scrape', .2], [tML, 'stamp', .35], [tBu - .4, 'creak', .3], [tBu, 'thud', .4], [tBu + .3, 'hit', .25]]; } },
 
   // 6.04 the system in one picture: three panels slide in (money bag, two linked crowns, a protector looking away)
@@ -125,6 +128,6 @@ window.SHOTS = [
           let y = pan(c, lt, 0); if (y) { bag(c, 600, y + 700, 1.4, ''); GM.coins(c, 760, y + 760, .9, 10, lt); }
           y = pan(c, lt, 1); if (y) { const bob = Math.sin(lt * 2) * 4; GM.crown(c, 1170, y + 560 + bob, 1.1, -.1, .6); GM.crown(c, 1390, y + 560 - bob, 1.1, .1, .6); c.strokeStyle = '#a8a8b0'; c.lineWidth = 10; for (let k = 0; k < 3; k++) { c.beginPath(); c.ellipse(1230 + k * 60, y + 500, 34, 20, 0, 0, 7); c.stroke(); } txt(c, 'KINGS HELP KINGS', 1280, y + 700, 40, '#7a1e2a', 'center', 'Anton'); }
           y = pan(c, lt, 2); if (y) { const u = K.seg(lt, tLo - .3, tLo + .3); if (u > 0) { c.globalAlpha = u; txt(c, 'LOOKS THE OTHER WAY', 1960, y + 820, 34, '#7a1e2a', 'center', 'Anton'); c.globalAlpha = 1; } } }];
-      S.D.over = [(c, lt) => K.card(c, 'THE SYSTEM', lt, { at: tWh - .2, x: 960, y: 110, px: 56, rot: -2, bg: GOLD })];
+      S.D.over = [(c, lt) => card(c, 'THE SYSTEM', lt, { at: tWh - .2, x: 960, y: 110, px: 56, rot: -2, bg: GOLD })];
       S.D.sfx = [[tWh, 'drum', .3], [tMo - .2, 'whoosh', .25], [tMo + .4, 'coins', .3], [tNe - .2, 'whoosh', .25], [tNe + .4, 'chime', .2], [tOu - .2, 'whoosh', .25], [tOu + .3, 'footsteps', .2], [tLo, 'pop', .2]]; } },
 ];

@@ -1,0 +1,15 @@
+{
+ "video": "gulf-monarchies/production/acts/act1/act1.mp4",
+ "findings": [
+  {
+   "level": "WARN",
+   "check": "cut rhythm",
+   "t": 0,
+   "at": "0:00.0",
+   "detail": "100% of shots are longer than 8 s (median 66.5 s)"
+  }
+ ],
+ "still_share": 0.073,
+ "shots": 1,
+ "median_shot_s": 66.5
+}
