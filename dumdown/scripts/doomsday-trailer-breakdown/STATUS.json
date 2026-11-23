@@ -9,6 +9,7 @@
  "zernio_post": null,
  "proposed_slot": "2026-12-11T21:00Z or later (>=48h after Wakanda 9 Dec)",
  "source": "https://youtu.be/Wb8Tq_HD4E8 (Avengers: Doomsday Final Trailer)",
- "updated": "2026-11-23T18:22Z",
- "note": "Research/shot log/script only; Wakanda redo holds the shared slot (feedback 23 Nov 17:16). Build waits."
+ "updated": "2026-11-23T18:40Z",
+ "note": "Script v1 OK (23 Nov 18:26). Storyboard v1 shared. Build waits for Wakanda redo to free the slot.",
+ "storyboard": "https://claude.ai/artifact/K8DucocCAMrdHgu5tdjhny"
 }
