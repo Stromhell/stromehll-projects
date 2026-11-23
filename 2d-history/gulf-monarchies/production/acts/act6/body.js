@@ -5,18 +5,18 @@ const P = { map: PLATE('map', 'card'), min: PLATE('ministry', 'office'), sq: PLA
 const txt = TW.txt, rr = TW.rr, GOLD = '#e2b23a';
 const ease = (lt, t0, a, b, d = .8) => a + (b - a) * E.io(K.seg(lt, t0, t0 + d));
 // crowns tracker, screen space top-left (centre ~200,95)
-const CROWNS = f => (c, lt) => GM.crowns(c, 80, 56, .8, f(lt), lt);
+const CROWNS = f => (c, lt) => GM.crowns(c, 50, 40, 1.04, f(lt), lt);
 const CALM = () => [0, 0, 0, 0, 0, 0];
 const dust = (c, lt, n = 40, col = '255,240,210') => { for (let k = 0; k < n; k++) { const x = (k * 263 + lt * 12 * (1 + k % 3)) % 2560, y = (k * 151 + Math.sin(lt * .7 + k) * 40) % 1300 + 60; c.fillStyle = `rgba(${col},${.1 + .08 * Math.sin(lt * 2 + k)})`; c.fillRect(x, y, 4, 4); } };
 const shimmer = (c, lt, y0, y1, a = .05) => { c.save(); for (let k = 0; k < 14; k++) { const y = y0 + (k / 14) * (y1 - y0) + Math.sin(lt * 3 + k) * 6; c.fillStyle = `rgba(255,240,210,${a})`; c.fillRect(0, y, 2560, 3); } c.restore(); };
 // sign held up (unscaled, from a hand)
 const SIGN = (t, col = '#c8302a') => ({ near: cc => { cc.save(); const m = cc.getTransform(); cc.setTransform(Math.hypot(m.a, m.b), 0, 0, Math.hypot(m.c, m.d), m.e, m.f); cc.strokeStyle = '#6a4a2a'; cc.lineWidth = 7; cc.beginPath(); cc.moveTo(0, 30); cc.lineTo(0, -120); cc.stroke(); cc.fillStyle = '#f2ead8'; cc.strokeStyle = INK; cc.lineWidth = 4; cc.fillRect(-120, -230, 240, 110); cc.strokeRect(-120, -230, 240, 110); txt(cc, t[0], 0, -195, 32, col, 'center', 'Anton'); if (t[1]) txt(cc, t[1], 0, -155, 32, col, 'center', 'Anton'); cc.restore(); } });
 // domino portrait tile (stylised bust silhouette, no likeness); pivot = bottom-right corner
-const domino = (c, x, y, rot, label, lit) => { c.save(); c.translate(x + 90, y); c.rotate(rot); c.translate(-90, 0);
+const domino = (c, x, y, rot, label, lit, sc = .55) => { c.save(); c.translate(x, y); c.scale(sc, sc); c.translate(-x, -y); c.translate(x + 90, y); c.rotate(rot); c.translate(-90, 0);
   c.fillStyle = 'rgba(0,0,0,.35)'; rr(c, -84, -296, 180, 300, 14); c.fill(); c.fillStyle = '#efe4c8'; c.strokeStyle = INK; c.lineWidth = 5; rr(c, -90, -300, 180, 300, 14); c.fill(); c.stroke();
   c.fillStyle = '#3a3440'; c.beginPath(); c.arc(0, -200, 42, 0, 7); c.fill(); c.beginPath(); c.moveTo(-70, -40); c.quadraticCurveTo(-70, -140, 0, -145); c.quadraticCurveTo(70, -140, 70, -40); c.closePath(); c.fill();
   c.fillStyle = '#7a1e2a'; c.fillRect(-90, -36, 180, 20); c.restore();
-  txt(c, label, x, y + 46, 44, lit ? '#ff8a6a' : '#f2ead8', 'center', 'Anton'); };
+  txt(c, label, x, y + 34, 40, lit ? '#ff8a6a' : '#f2ead8', 'center', 'Anton'); };
 // money bag
 const bag = (c, x, y, s, label) => { c.save(); c.translate(x, y); c.scale(s, s); GM.shadow(c, 0, 0, 90); c.fillStyle = '#b8945a'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.moveTo(-30, -150); c.quadraticCurveTo(-95, -90, -85, -30); c.quadraticCurveTo(-80, 0, 0, 0); c.quadraticCurveTo(80, 0, 85, -30); c.quadraticCurveTo(95, -90, 30, -150); c.closePath(); c.fill(); c.stroke();
   c.fillStyle = '#8a6a3a'; c.fillRect(-34, -165, 68, 18); c.strokeRect(-34, -165, 68, 18); txt(c, '$', 0, -70, 80, '#3a2a10', 'center', 'Anton'); if (label) txt(c, label, 0, 40, 34, '#f2d06a', 'center', 'Anton'); c.restore(); };
@@ -31,17 +31,17 @@ const monument = (c, x, y, lt, fall = 0) => { c.save(); GM.shadow(c, x, y + 10, 
 
 window.SHOTS = [
   // 6.00 2011: four portrait dominoes topple west to east and stop at the edge of the Gulf, whose six crowns wobble but stand
-  { plate: P.map, cam: { z: [1.0, 1.1], x: [1240, 1340], y: [760, 740] }, bed: [['wind_loop', .1], ['hum_loop', .05]], light: { dir: 1, key: 'rgba(255,230,190,.1)' },
+  { plate: P.map, cam: { z: [1.0, 1.08], x: [1260, 1320], y: [740, 760] }, bed: [['wind_loop', .1], ['hum_loop', .05]], light: { dir: 1, key: 'rgba(255,230,190,.1)' },
     init: S => { const t20 = A.at(S, '2011.', .7), tAS = A.at(S, 'Spring.', 2.2), tTu = A.at(S, 'Tunisia', 4.4), tEg = A.at(S, 'Egypt', 5.0), tLi = A.at(S, 'Libya', 5.6), tYe = A.at(S, 'Yemen', 6.3), tGo = A.at(S, 'gone.', 7.2);
-      const DX = [420, 760, 1100, 1440], NM = ['TUNISIA', 'EGYPT', 'LIBYA', 'YEMEN'], TT = [tTu, tEg, tLi, tYe];
+      const DX = [235, 555, 1110, 1856], DY = [365, 660, 680, 1139], NM = ['TUNISIA', 'EGYPT', 'LIBYA', 'YEMEN'], TT = [tTu, tEg, tLi, tYe];
       S.D.live = [(c, lt) => { TW.glow(c, 1280, 700, 1100, '255,200,140', .08); dust(c, lt, 30);
-          c.strokeStyle = 'rgba(242,234,216,.35)'; c.lineWidth = 4; c.setLineDash([14, 12]); c.beginPath(); c.moveTo(300, 1060); c.lineTo(1660, 1060); c.stroke(); c.setLineDash([]);
-          DX.forEach((x, i) => { const u = K.seg(lt, TT[i], TT[i] + .45), r = i === 3 ? .72 * E.out(u) : 1.08 * (u * u); domino(c, x, 1050, r, NM[i], u > 0); });
+          
+          DX.forEach((x, i) => { const u = K.seg(lt, TT[i], TT[i] + .45), r = i === 3 ? .72 * E.out(u) : 1.08 * (u * u); domino(c, x, DY[i] + 80, r, NM[i], u > 0); });
           // the Gulf: six crowns on a plinth at the edge
-          c.fillStyle = '#3a3226'; c.strokeStyle = INK; c.lineWidth = 5; rr(c, 1800, 980, 600, 90, 14); c.fill(); c.stroke(); txt(c, 'THE GULF', 2100, 1120, 48, '#f2d06a', 'center', 'Anton');
-          for (let i = 0; i < 6; i++) { const w = K.seg(lt, tYe + .4, tYe + 2.2), wob = Math.sin(lt * 14 + i) * .22 * (w > 0 && w < 1 ? 1 - w : 0); GM.crown(c, 1860 + i * 96, 980, .62, wob, .5 + .5 * Math.sin(lt * 2 + i)); }
-          TW.glow(c, 2100, 940, 380, '255,210,120', .18 + .06 * Math.sin(lt * 2)); }];
-      S.D.front = [(c, lt) => TW.stamp(c, 'GONE', 930, 520, lt, tGo, { px: 110 })];
+          c.fillStyle = '#3a3226'; c.strokeStyle = INK; c.lineWidth = 5; rr(c, 1900, 800, 420, 50, 12); c.fill(); c.stroke(); txt(c, 'THE GULF', 2110, 880, 40, '#f2d06a', 'center', 'Anton');
+          for (let i = 0; i < 6; i++) { const w = K.seg(lt, tYe + .4, tYe + 2.2), wob = Math.sin(lt * 14 + i) * .22 * (w > 0 && w < 1 ? 1 - w : 0); GM.crown(c, 1940 + i * 68, 800, .45, wob, .5 + .5 * Math.sin(lt * 2 + i)); }
+          TW.glow(c, 2110, 770, 300, '255,210,120', .18 + .06 * Math.sin(lt * 2)); }];
+      S.D.front = [(c, lt) => TW.stamp(c, 'GONE', 960, 470, lt, tGo, { px: 110 })];
       S.D.over = [(c, lt) => K.card(c, '2011', lt, { at: t20 - .2, x: 620, y: 150, px: 64, rot: -3, bg: GOLD }), (c, lt) => K.card(c, 'ARAB SPRING', lt, { at: tAS - .3, x: 1060, y: 150, px: 60, rot: 2 }),
         (c, lt) => K.card(c, '4 RULERS OUT IN A YEAR', lt, { at: tGo, x: 960, y: 760, px: 44, rot: -1, bg: '#7a1e2a', color: '#fff' })];
       S.D.sfx = [[t20, 'drum', .3], [tAS, 'whoosh', .25], [tTu + .3, 'hit', .3], [tEg + .3, 'hit', .3], [tLi + .3, 'hit', .3], [tYe + .3, 'thud', .35], [tYe + .5, 'tension', .2], [tGo, 'stamp', .35]]; } },

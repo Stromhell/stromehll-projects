@@ -3,7 +3,7 @@
 const rr = TW.rr, txt = TW.txt;
 // plate with stand-in: if plates/<n>.jpg is missing the shot draws <alt> instead (switches automatically once painted)
 const LD = (n, alt) => { const im = K.load(n, PL + n + '.jpg'); if (alt) { if (!K.imgs[alt]) K.load(alt, PL + alt + '.jpg'); im.onerror = () => { K.imgs[n] = K.imgs[alt]; }; } };
-const CR = (st = () => [0, 0, 0, 0, 0, 0]) => (c, lt) => GM.crowns(c, 200, 95, .8, st(lt), lt);
+const CR = (st = () => [0, 0, 0, 0, 0, 0]) => (c, lt) => GM.crowns(c, 200, 95, 1.04, st(lt), lt);
 const tag = (c, x, y, s, lt, at, o) => GM.ntag(c, x, y, s, K.seg(lt, at, at + .4), o);
 // gift box with a label (bottom centre)
 const gbox = (c, x, y, w, h, col, lab) => { c.save(); c.fillStyle = 'rgba(0,0,0,.25)'; c.fillRect(x - w / 2 + 6, y - h + 6, w, h); c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(x - w / 2, y - h, w, h); c.strokeRect(x - w / 2, y - h, w, h);
@@ -28,19 +28,18 @@ const FC = 1260, FL = 1250, SC = 1.7;
 
 window.SHOTS = [
   // 4.00 oil field at sunset: 1971 independence tags, the price board rolls $3 -> $30, a young citizen cheers, tankers on the horizon
-  { plate: 'oil_field', cam: { z: [1.12, 1.28], x: [1250, 1330], y: [760, 800] }, bed: [['wind_loop', .14], ['hum_loop', .05]], light: { dir: -1, key: 'rgba(255,170,90,.18)' },
+  { plate: 'oil_field', cam: { z: [1.12, 1.28], x: [1150, 1250], y: [760, 800] }, bed: [['wind_loop', .14], ['hum_loop', .05]], light: { dir: -1, key: 'rgba(255,170,90,.18)' },
     init: S => { const t71 = A.at(S, '1971.', 1.2), tB = A.at(S, 'Bahrain', 2.0), tQ = A.at(S, 'Qatar', 2.6), tE = A.at(S, 'emirates', 3.8), tJ = A.at(S, 'jackpot.', 6.6), t72 = A.at(S, 'Between', 7.2), t30 = A.at(S, 'thirty.', 11.8);
-      S.D.figs = [{ x: 1180, y: FC, s: SC, ...GM.CITIZEN(0), facing: 1, mood: 'neutral', anim: (o, lt) => { o.lean = Math.sin(lt * 1.2) * 1.5; if (lt > tJ - .2) { o.pose = 'cheer'; o.mood = 'happy'; } if (lt > t72 + .4) { o.pose = 'point'; } if (lt > t30) { o.pose = 'cheer'; } } }];
-      S.D.live = [(c, lt) => { TW.glow(c, 600, 520, 700, '255,170,90', .22 + .03 * Math.sin(lt)); for (let k = 0; k < 3; k++) tanker(c, (300 + k * 700 + lt * 14) % 2700 - 100, 880 - k * 6, .7 - k * .1);
-          pump(c, 520, FC, 1.2, lt); pump(c, 2280, FC - 60, .8, lt + 1.3);
+      S.D.figs = [{ x: 900, y: FC, s: SC, ...GM.CITIZEN(0), facing: 1, mood: 'neutral', anim: (o, lt) => { o.lean = Math.sin(lt * 1.2) * 1.5; if (lt > tJ - .2) { o.pose = 'cheer'; o.mood = 'happy'; } if (lt > t72 + .4) { o.pose = 'point'; } if (lt > t30) { o.pose = 'cheer'; } } }];
+      S.D.live = [(c, lt) => { TW.glow(c, 600, 520, 700, '255,170,90', .22 + .03 * Math.sin(lt)); TW.glow(c, 960, 640, 120, '255,190,90', .5 + .2 * Math.sin(lt * 9));
           // price board on legs
-          c.save(); c.fillStyle = '#2a2a2a'; c.fillRect(1640, 640, 20, FC - 640); c.fillRect(2160, 640, 20, FC - 640); c.strokeStyle = INK; c.lineWidth = 6; c.fillStyle = '#1e1e24'; rr(c, 1560, 330, 700, 340, 16); c.fill(); c.stroke();
-          txt(c, 'OIL · PER BARREL', 1910, 380, 34, '#e8b44a', 'center', 'Anton'); const u = E.io(K.seg(lt, t72 + .3, t30)), yr = Math.round(1972 + 10 * u), v = 3 + 27 * u;
-          txt(c, '$' + v.toFixed(0), 1910, 520, 150, '#7ee07a', 'center', 'Anton'); txt(c, String(yr), 1910, 625, 40, '#f4efe2', 'center', 'Oswald'); c.restore(); GM.barrel(c, 1400, FC, 1.0); GM.barrel(c, 1480, FC + 10, 1.0); }];
+          c.save(); c.fillStyle = '#2a2a2a'; c.fillRect(1300, 640, 20, 180); c.fillRect(1760, 640, 20, 180); c.strokeStyle = INK; c.lineWidth = 6; c.fillStyle = '#1e1e24'; rr(c, 1190, 330, 700, 340, 16); c.fill(); c.stroke();
+          txt(c, 'OIL · PER BARREL', 1540, 380, 34, '#e8b44a', 'center', 'Anton'); const u = E.io(K.seg(lt, t72 + .3, t30)), yr = Math.round(1972 + 10 * u), v = 3 + 27 * u;
+          txt(c, '$' + v.toFixed(0), 1540, 520, 150, '#7ee07a', 'center', 'Anton'); txt(c, String(yr), 1540, 625, 40, '#f4efe2', 'center', 'Oswald'); c.restore(); }];
       S.D.front = [(c, lt) => dust(c, lt, 1300, 26)];
       S.D.over = [CR(), (c, lt) => K.card(c, 'BRITAIN LEAVES · 1971', lt, { at: t71 - .3, x: 760, y: 110, px: 46, rot: -2, until: tJ }),
         (c, lt) => { ['BAHRAIN', 'QATAR', 'U.A.E.'].forEach((w, i) => K.card(c, w + ' · INDEPENDENT', lt, { at: [tB, tQ, tE][i], x: 760, y: 220 + i * 70, px: 30, rot: i % 2 ? 2 : -2, bg: '#e8b44a', until: tJ + .4 })); },
-        (c, lt) => K.card(c, 'THE JACKPOT', lt, { at: tJ, x: 1100, y: 140, px: 60, rot: 3, bg: '#e8b44a' }), (c, lt) => K.card(c, '$3 → $30', lt, { at: t30 - .2, x: 1100, y: 260, px: 56, rot: -2 })];
+        (c, lt) => K.card(c, 'THE JACKPOT', lt, { at: tJ, x: 600, y: 330, px: 60, rot: 3, bg: '#e8b44a' }), (c, lt) => K.card(c, '$3 → $30', lt, { at: t30 - .2, x: 600, y: 440, px: 56, rot: -2 })];
       S.D.sfx = [[t71, 'chime', .25], [tB, 'pop', .2], [tQ, 'pop', .2], [tE, 'pop', .2], [tJ, 'coins_cascade', .35], [tJ, 'crowd_cheer', .15], [t72 + .3, 'tick', .25], [t30, 'coins', .35], [.3, 'creak', .12]]; } },
   // 4.01 ministry counter: a clerk hands a citizen gift boxes one by one: NO TAX, JOB, HEALTH, SCHOOL, POWER, LAND
   { plate: 'ministry', cam: { z: [1.3, 1.42], x: [1240, 1290], y: [860, 880] }, bed: [['office_loop', .12]], light: { dir: 1, key: 'rgba(230,230,255,.1)' },
@@ -48,7 +47,7 @@ window.SHOTS = [
       const CX = 1500, SX = 1020; // clerk x, stack x
       S.D.figs = [{ x: 860, y: FL, s: SC, ...GM.CITIZEN(2), facing: 1, mood: 'neutral', anim: (o, lt) => { o.lean = Math.sin(lt * 1.3); if (lt > ws[1][0]) o.mood = 'happy'; if (lt > ws[5][0] + .5) o.pose = 'cheer'; } },
         { x: CX, y: FL, s: SC, ...GM.CLERK(1), facing: -1, mood: 'happy', talk: [tD, ws[5][0]], anim: (o, lt) => { const g = ws.some(([t]) => lt > t - .5 && lt < t + .1); o.pose = g ? 'present' : 'stand'; } }];
-      S.D.live = [(c, lt) => { TW.glow(c, 1280, 400, 900, '255,250,230', .1); GM.pearl(c, 2100, 838, .6, .5 + .5 * Math.sin(lt * 2));
+      S.D.live = [(c, lt) => { TW.glow(c, 1280, 400, 900, '255,250,230', .1); GM.pearl(c, 1960, 830, 1.4, .5 + .5 * Math.sin(lt * 2));
           let y = FL; ws.forEach(([t, l, col], i) => { const u = E.io(K.seg(lt, t - .4, t + .1)); if (u <= 0) return; const w = 170 - i * 8, h = 80; const ty = y; const x = CX - 150 + (SX - (CX - 150)) * u, yy = (FL - 280) + (ty - (FL - 280)) * u - Math.sin(u * Math.PI) * 120;
             gbox(c, u < 1 ? x : SX, u < 1 ? yy : ty, w, h, col, l); y -= h; }); }];
       S.D.over = [CR(), (c, lt) => K.card(c, 'THE DEAL', lt, { at: tD - .3, x: 960, y: 110, px: 64, rot: -2, bg: '#e8b44a' })];
@@ -60,7 +59,7 @@ window.SHOTS = [
       S.D.figs = [{ x: SX, y: FL, s: SS, ...GM.CITIZEN(0), pose: 'sit', facing: 1, mood: 'happy', anim: (o, lt) => { o.arms = () => ({ shR: 70, elR: -40 + 10 * Math.sin(lt * 9), shL: 60, elL: -45 + 10 * Math.sin(lt * 8 + 1) }); if (lt > tS) o.mood = 'smug'; } }];
       S.D.live = [(c, lt) => { TW.chair(c, SX, FL, FL - 63 * SS, 1, '#3a3a4a'); }];
       S.D.front = [(c, lt) => { desk(c, 1020, FL, 340, 190); c.fillStyle = '#1e1e24'; rr(c, 970, FL - 340, 150, 110, 8); c.fill(); c.fillStyle = `rgba(120,200,255,${.6 + .1 * Math.sin(lt * 6)})`; rr(c, 980, FL - 330, 130, 90, 4); c.fill(); c.fillStyle = '#1e1e24'; c.fillRect(1035, FL - 230, 20, 26);
-          GM.pearl(c, 1150, FL - 216, .5, .5 + .5 * Math.sin(lt * 2.2)); txt(c, 'MINISTRY OF EVERYTHING', 1020, FL - 100, 22, '#f4efe2', 'center', 'Oswald'); }];
+          GM.pearl(c, 900, FL - 216, 1.2, .5 + .5 * Math.sin(lt * 2.2)); txt(c, 'MINISTRY OF EVERYTHING', 1020, FL - 100, 22, '#f4efe2', 'center', 'Oswald'); }];
       S.D.over = [CR(), (c, lt) => K.card(c, 'STATE JOBS', lt, { at: .3, x: 1350, y: 110, px: 54, rot: 2, bg: '#e8b44a' }),
         (c, lt) => { if (lt > tT - .4) bars(c, 1060, 190, 760, 'WORKING CITIZENS EMPLOYED BY THE STATE', [['SAUDIS', 66, tT], ['EMIRATIS', 90, tN, '#3a8a5a']], lt); }];
       S.D.sfx = [[.3, 'pop', .2], [tT, 'tick', .3], [tT + .2, 'riser', .15], [tN, 'tick', .3], [tS, 'stamp', .3]]; } },
@@ -99,22 +98,22 @@ window.SHOTS = [
       S.D.figs = [{ x: 1480, y: FL, s: SC, ...GM.LABOURER(1), facing: 1, mood: 'worried', anim: (o, lt) => { o.pose = lt > tTi - .3 && lt < tTi + 1.6 ? 'reach' : 'stand'; o.lean = Math.sin(lt * 1.1); } },
         { x: 2300, y: FL, s: SC, ...GM.BOSS(), pose: 'sit', facing: -1, mood: 'smug', anim: (o, lt) => { if (lt > tTi - .3) { o.arms = () => ({ shR: 80, elR: -60, handR: 'open' }); o.hold = { near: cc => GM.passport(cc, 0, 30, .7) }; } } }];
       S.D.live = [(c, lt) => TW.chair(c, 2300, FL, FL - 63 * SC, -1, '#2a2a30')];
-      S.D.front = [(c, lt) => { desk(c, 2300, FL, 350, 175, '#4a3a2a'); GM.pearl(c, 2190, FL - 200, .55, .5 + .5 * Math.sin(lt * 2.5)); TW.glow(c, 2190, FL - 200, 60, '255,250,230', .2 + .15 * Math.sin(lt * 2.5)); }];
-      S.D.over = [CR(), (c, lt) => K.card(c, "THE PEARL CAPTAIN'S RULE...", lt, { at: tRm, x: 560, y: 110, px: 36, rot: -2, bg: '#e8dcc0', until: tK + 1.2 }),
-        (c, lt) => K.card(c, 'KAFALA', lt, { at: tK, x: 560, y: 200, px: 64, rot: 2, bg: '#e8b44a' }), (c, lt) => K.card(c, 'WORKER TIED TO SPONSOR', lt, { at: tTi, x: 560, y: 300, px: 32, rot: -1, until: tO - .3 }),
-        (c, lt) => { if (lt > tO - .4) bars(c, 90, 250, 720, 'FOREIGNERS, SHARE OF POPULATION', [['OMAN', 40, tO], ['QATAR', 88, tQ, '#7a1e3a'], ['U.A.E.', 88, tU, '#3a8a5a']], lt); }];
+      S.D.front = [(c, lt) => { desk(c, 2300, FL, 350, 175, '#4a3a2a'); GM.pearl(c, 2190, FL - 210, 1.3, .5 + .5 * Math.sin(lt * 2.5)); TW.glow(c, 2190, FL - 200, 60, '255,250,230', .2 + .15 * Math.sin(lt * 2.5)); }];
+      S.D.over = [CR(), (c, lt) => K.card(c, "THE PEARL CAPTAIN'S RULE...", lt, { at: tRm, x: 800, y: 110, px: 36, rot: -2, bg: '#e8dcc0', until: tK + 1.2 }),
+        (c, lt) => K.card(c, 'KAFALA', lt, { at: tK, x: 800, y: 210, px: 64, rot: 2, bg: '#e8b44a' }), (c, lt) => K.card(c, 'WORKER TIED TO SPONSOR', lt, { at: tTi, x: 800, y: 310, px: 32, rot: -1, until: tO - .3 }),
+        (c, lt) => { if (lt > tO - .4) bars(c, 90, 260, 720, 'FOREIGNERS, SHARE OF POPULATION', [['OMAN', 40, tO], ['QATAR', 88, tQ, '#7a1e3a'], ['U.A.E.', 88, tU, '#3a8a5a']], lt); }];
       S.D.sfx = [[tRm, 'chime', .2], [tK, 'stamp', .35], [tTi, 'paper', .3], [tTi + .3, 'gate_slam', .15], [tO, 'tick', .25], [tQ, 'tick', .25], [tU, 'tick', .25], [2, 'pop', .1]]; } },
   // 4.06 the same site at dusk, other end: a crowd of workers below a rope; a few citizens on a raised terrace above; camera tilts up
-  { plate: 'construction', cam: { z: [1.3, 1.36], x: [760, 760], y: [860, 780] }, bed: [['wind_loop', .1], ['crowd_loop', .07]], light: { dir: -1, key: 'rgba(120,110,200,.22)' },
+  { plate: 'construction', cam: { z: [1.3, 1.36], x: [1060, 1060], y: [860, 780] }, bed: [['wind_loop', .1], ['crowd_loop', .07]], light: { dir: -1, key: 'rgba(120,110,200,.22)' },
     init: S => { const tV = A.at(S, 'vote,', 1.8), tOr = A.at(S, 'organise,', 2.8), tH = A.at(S, 'home.', 4.0), tC = A.at(S, 'citizens', 5.0), tL = A.at(S, 'lose', 7.2), tRv = A.at(S, 'revolution.', 8.6);
       const PY = 760;
-      S.D.figs = [...[0, 1, 2, 3, 4, 5].map(k => ({ x: 200 + k * 230, y: FC + (k % 2) * 20, s: SC * .8, ...GM.LABOURER(k), facing: k % 2 ? -1 : 1, mood: k % 3 ? 'worried' : 'neutral', seed: 70 + k, anim: (o, lt) => { o.lean = Math.sin(lt * 1.2 + k) * 2; } })),
-        ...[0, 1, 2].map(k => ({ x: 440 + k * 230, y: PY, s: SC * .8, ...GM.CITIZEN(k), facing: k === 1 ? -1 : 1, mood: 'smug', seed: 90 + k, anim: (o, lt) => { if (lt > tL) o.pose = k === 1 ? 'shrug' : 'stand'; o.lean = Math.sin(lt + k) * 1.5; } }))];
+      S.D.figs = [...[0, 1, 2, 3, 4, 5].map(k => ({ x: 500 + k * 230, y: FC + (k % 2) * 20, s: SC * .8, ...GM.LABOURER(k), facing: k % 2 ? -1 : 1, mood: k % 3 ? 'worried' : 'neutral', seed: 70 + k, anim: (o, lt) => { o.lean = Math.sin(lt * 1.2 + k) * 2; } })),
+        ...[0, 1, 2].map(k => ({ x: 760 + k * 230, y: PY, s: SC * .8, ...GM.CITIZEN(k), facing: k === 1 ? -1 : 1, mood: 'smug', seed: 90 + k, anim: (o, lt) => { if (lt > tL) o.pose = k === 1 ? 'shrug' : 'stand'; o.lean = Math.sin(lt + k) * 1.5; } }))];
       S.D.live = [(c, lt) => { // raised marble terrace behind the crowd (drawn first)
-          c.save(); c.fillStyle = '#d8ccb4'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(300, PY, 820, FC - PY); c.strokeRect(300, PY, 820, FC - PY); c.fillStyle = '#c0b49a'; c.fillRect(300, PY, 820, 20); for (let x = 340; x < 1110; x += 70) { c.fillStyle = '#efe6d2'; c.fillRect(x, PY - 70, 16, 70); } c.fillRect(300, PY - 80, 820, 14); c.strokeRect(300, PY - 80, 820, 14); c.restore();
-          TW.glow(c, 700, 780, 400, '255,220,140', .2); }];
-      S.D.front = [(c, lt) => rope(c, 160, 1360, FC - 160)];
-      S.D.over = [CR(), (c, lt) => { ["CAN'T VOTE", "CAN'T ORGANISE", 'CAN BE SENT HOME'].forEach((w, i) => TW.stamp(c, w, 1560, 300 + i * 100, lt, [tV, tOr, tH][i], { px: 44, rot: -.08 + i * .06 })); },
-        (c, lt) => K.card(c, 'TOO MUCH TO LOSE', lt, { at: tL - .2, x: 1400, y: 160, px: 60, rot: -2, bg: '#e8b44a' })];
+          c.save(); c.fillStyle = '#d8ccb4'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(600, PY, 820, FC - PY); c.strokeRect(600, PY, 820, FC - PY); c.fillStyle = '#c0b49a'; c.fillRect(600, PY, 820, 20); for (let x = 640; x < 1410; x += 70) { c.fillStyle = '#efe6d2'; c.fillRect(x, PY - 70, 16, 70); } c.fillRect(600, PY - 80, 820, 14); c.strokeRect(600, PY - 80, 820, 14); c.restore();
+          TW.glow(c, 1000, 780, 400, '255,220,140', .2); }];
+      S.D.front = [(c, lt) => rope(c, 460, 1660, FC - 160)];
+      S.D.over = [CR(), (c, lt) => { ["CAN'T VOTE", "CAN'T ORGANISE", 'CAN BE SENT HOME'].forEach((w, i) => TW.stamp(c, w, 1580, 330 + i * 100, lt, [tV, tOr, tH][i], { px: 44, rot: -.08 + i * .06 })); },
+        (c, lt) => K.card(c, 'TOO MUCH TO LOSE', lt, { at: tL - .2, x: 1500, y: 180, px: 60, rot: -2, bg: '#e8b44a' })];
       S.D.sfx = [[tV, 'stamp', .3], [tOr, 'stamp', .3], [tH, 'stamp', .3], [tC, 'whoosh_soft', .2], [tL, 'coins', .25], [tRv, 'thud', .25]]; } },
 ];

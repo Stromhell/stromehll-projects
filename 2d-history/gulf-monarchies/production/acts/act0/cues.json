@@ -1,0 +1,302 @@
+{
+ "dur": 45.747,
+ "cues": [
+  {
+   "t": 1.439,
+   "name": "alarm",
+   "gain": 0.25
+  },
+  {
+   "t": 2.039,
+   "name": "whoosh",
+   "gain": 0.3
+  },
+  {
+   "t": 2.179,
+   "name": "drone",
+   "gain": 0.25
+  },
+  {
+   "t": 3.179,
+   "name": "hit",
+   "gain": 0.3
+  },
+  {
+   "t": 3.879,
+   "name": "tick",
+   "gain": 0.25
+  },
+  {
+   "t": 6.099,
+   "name": "pop",
+   "gain": 0.2
+  },
+  {
+   "t": 6.859,
+   "name": "pop",
+   "gain": 0.2
+  },
+  {
+   "t": 7.259,
+   "name": "hit",
+   "gain": 0.3
+  },
+  {
+   "t": 8.199,
+   "name": "pop",
+   "gain": 0.2
+  },
+  {
+   "t": 10.139,
+   "name": "thud",
+   "gain": 0.35
+  },
+  {
+   "t": 10.539,
+   "name": "alarm",
+   "gain": 0.15
+  },
+  {
+   "t": 11.214,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 11.389,
+   "name": "whoosh_soft",
+   "gain": 0.2
+  },
+  {
+   "t": 12.369,
+   "name": "tick",
+   "gain": 0.2
+  },
+  {
+   "t": 13.649,
+   "name": "pop",
+   "gain": 0.2
+  },
+  {
+   "t": 13.769,
+   "name": "swell",
+   "gain": 0.2
+  },
+  {
+   "t": 15.289,
+   "name": "chime",
+   "gain": 0.45
+  },
+  {
+   "t": 16.444,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 16.799,
+   "name": "pop",
+   "gain": 0.2
+  },
+  {
+   "t": 18.819,
+   "name": "tension",
+   "gain": 0.2
+  },
+  {
+   "t": 20.239,
+   "name": "whoosh_soft",
+   "gain": 0.25
+  },
+  {
+   "t": 20.839,
+   "name": "thud",
+   "gain": 0.45
+  },
+  {
+   "t": 20.889,
+   "name": "hit",
+   "gain": 0.2
+  },
+  {
+   "t": 21.979,
+   "name": "whoosh_soft",
+   "gain": 0.25
+  },
+  {
+   "t": 22.579,
+   "name": "thud",
+   "gain": 0.45
+  },
+  {
+   "t": 22.629,
+   "name": "hit",
+   "gain": 0.2
+  },
+  {
+   "t": 23.799,
+   "name": "whoosh_soft",
+   "gain": 0.25
+  },
+  {
+   "t": 24.399,
+   "name": "thud",
+   "gain": 0.45
+  },
+  {
+   "t": 24.449,
+   "name": "hit",
+   "gain": 0.2
+  },
+  {
+   "t": 26.799,
+   "name": "whoosh_soft",
+   "gain": 0.25
+  },
+  {
+   "t": 27.399,
+   "name": "thud",
+   "gain": 0.45
+  },
+  {
+   "t": 27.449,
+   "name": "hit",
+   "gain": 0.2
+  },
+  {
+   "t": 29.114,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 28.969,
+   "name": "scrape",
+   "gain": 0.3
+  },
+  {
+   "t": 30.749,
+   "name": "thud",
+   "gain": 0.3
+  },
+  {
+   "t": 33.369,
+   "name": "paper_tear",
+   "gain": 0.3
+  },
+  {
+   "t": 36.509,
+   "name": "creak",
+   "gain": 0.3
+  },
+  {
+   "t": 37.089,
+   "name": "whoosh",
+   "gain": 0.3
+  },
+  {
+   "t": 37.489,
+   "name": "paper",
+   "gain": 0.3
+  },
+  {
+   "t": 40.109,
+   "name": "drum",
+   "gain": 0.25
+  },
+  {
+   "t": 40.709,
+   "name": "thud",
+   "gain": 0.25
+  },
+  {
+   "t": 41.149,
+   "name": "chime",
+   "gain": 0.3
+  },
+  {
+   "t": 42.304,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 42.404,
+   "name": "scrape",
+   "gain": 0.15
+  },
+  {
+   "t": 42.437,
+   "name": "hit",
+   "gain": 0.35
+  },
+  {
+   "t": 43.537,
+   "name": "chime",
+   "gain": 0.35
+  },
+  {
+   "t": 44.197,
+   "name": "swell",
+   "gain": 0.2
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 11.914000000000001,
+   "name": "night_loop",
+   "gain": 0.14
+  },
+  {
+   "start": 0,
+   "end": 11.914000000000001,
+   "name": "wind_loop",
+   "gain": 0.06
+  },
+  {
+   "start": 11.114,
+   "end": 17.144000000000002,
+   "name": "wind_loop",
+   "gain": 0.06
+  },
+  {
+   "start": 11.114,
+   "end": 17.144000000000002,
+   "name": "birds_loop",
+   "gain": 0.08
+  },
+  {
+   "start": 16.344,
+   "end": 29.814,
+   "name": "hum_loop",
+   "gain": 0.07
+  },
+  {
+   "start": 16.344,
+   "end": 29.814,
+   "name": "wind_loop",
+   "gain": 0.04
+  },
+  {
+   "start": 29.014,
+   "end": 43.004,
+   "name": "wind_loop",
+   "gain": 0.07
+  },
+  {
+   "start": 29.014,
+   "end": 43.004,
+   "name": "hum_loop",
+   "gain": 0.05
+  },
+  {
+   "start": 42.204,
+   "end": 46.547,
+   "name": "hum_loop",
+   "gain": 0.06
+  },
+  {
+   "start": 42.204,
+   "end": 46.547,
+   "name": "ocean_loop",
+   "gain": 0.05
+  }
+ ]
+}

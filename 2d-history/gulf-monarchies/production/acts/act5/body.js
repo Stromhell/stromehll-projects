@@ -2,10 +2,10 @@
 // ---- act helpers
 const rr = TW.rr, txt = TW.txt;
 const LD = (n, alt) => { const im = K.load(n, PL + n + '.jpg'); if (alt) { if (!K.imgs[alt]) K.load(alt, PL + alt + '.jpg'); im.onerror = () => { K.imgs[n] = K.imgs[alt]; }; } };
-const CR = (st = () => [0, 0, 0, 0, 0, 0]) => (c, lt) => GM.crowns(c, 200, 95, .8, st(lt), lt);
+const CR = (st = () => [0, 0, 0, 0, 0, 0]) => (c, lt) => GM.crowns(c, 200, 95, 1.04, st(lt), lt);
 const tag = (c, x, y, s, lt, at, o) => GM.ntag(c, x, y, s, K.seg(lt, at, at + .4), o);
 const smoke = (c, lt, x, y, n = 14, a = .35) => { c.save(); for (let k = 0; k < n; k++) { const ph = (lt * .12 + k / n) % 1, r = 30 + ph * 160; c.fillStyle = `rgba(70,64,66,${a * (1 - ph)})`; c.beginPath(); c.arc(x + Math.sin(k * 2.3 + lt * .3) * 30 + ph * 220, y - ph * 520, r, 0, 7); c.fill(); } c.restore(); };
-const ticker = (c, lt, s) => { c.save(); c.fillStyle = '#b02a2a'; c.fillRect(0, 790, 1920, 56); c.fillStyle = '#1e1e24'; c.fillRect(0, 790, 230, 56); txt(c, 'NEWS', 115, 818, 34, '#fff', 'center', 'Anton'); c.beginPath(); c.rect(230, 790, 1690, 56); c.clip(); const w = s.length * 19; txt(c, s + '   •   ' + s, 1920 - (lt * 140) % (w + 60), 818, 32, '#fff', 'left', 'Oswald'); c.restore(); };
+const ticker = (c, lt, s) => { c.save(); c.fillStyle = '#b02a2a'; c.fillRect(0, 790, 1920, 56); c.fillStyle = '#1e1e24'; c.fillRect(0, 790, 230, 56); txt(c, 'NEWS', 115, 818, 34, '#fff', 'center', 'Anton'); c.beginPath(); c.rect(230, 790, 1690, 56); c.clip(); c.font = '32px Oswald'; const u = s + '   •   ', w = c.measureText(u).width, x0 = 230 - (lt * 140) % w; for (let x = x0; x < 1920; x += w) txt(c, u, x, 818, 32, '#fff', 'left', 'Oswald'); c.restore(); };
 const silo = (c, x, y, s, a) => { if (a <= 0) return; c.save(); c.globalAlpha = a; c.translate(x, y); c.scale(s, s); c.fillStyle = '#1e1a1e'; c.beginPath(); c.arc(0, -150, 46, 0, 7); c.fill(); c.beginPath(); c.moveTo(-70, 0); c.quadraticCurveTo(-74, -96, 0, -104); c.quadraticCurveTo(74, -96, 70, 0); c.fill(); c.beginPath(); c.ellipse(0, -112, 60, 14, 0, 0, 7); c.fill(); c.restore(); };
 const car = (c, x, y, s, t, f = 1) => { c.save(); c.translate(x, y); c.scale(s * f, s); c.fillStyle = 'rgba(0,0,0,.3)'; c.beginPath(); c.ellipse(0, 0, 190, 14, 0, 0, 7); c.fill(); c.strokeStyle = INK; c.lineWidth = 5; c.fillStyle = '#e8e4da';
   c.beginPath(); c.moveTo(-180, -30); c.lineTo(-170, -80); c.lineTo(-90, -86); c.lineTo(-50, -140); c.lineTo(70, -140); c.lineTo(120, -86); c.lineTo(180, -76); c.lineTo(186, -30); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#9ac0d8'; c.fillRect(-36, -128, 50, 38); c.fillRect(24, -128, 46, 38);
@@ -41,14 +41,14 @@ window.SHOTS = [
   // 5.02 majlis: the king takes down a cinema poster and hands a big book to a cleric; a potted branch bends and springs back
   { plate: 'majlis', cam: { z: [1.3, 1.4], x: [1250, 1300], y: [860, 880] }, bed: [['hum_loop', .08]], light: { dir: 1, key: 'rgba(255,230,190,.12)' },
     init: S => { const tC = A.at(S, 'crush', .6), tQ = A.at(S, 'quietly,', 2.2), tW = A.at(S, 'Westernisation', 5.6), tCl = A.at(S, 'clerics', 7.4), tB = A.at(S, 'Bend,', 8.8);
-      const RX = 1000, CX = 1560;
+      const RX = 760, CX = 1840;
       S.D.figs = [{ x: RX, y: FL, s: SC, ...GM.ROYAL(1), facing: 1, mood: 'neutral', anim: (o, lt) => { o.facing = lt > tW - 1.2 && lt < tW + .4 ? -1 : 1; if (lt > tW - 1 && lt < tW + .2) o.pose = 'reach'; else if (lt > tCl - .6 && lt < tCl + .3) { o.pose = 'present'; o.hold = { near: book }; } else o.pose = 'stand'; } },
         { x: CX, y: FL, s: SC, ...GM.CLERIC(0), facing: -1, mood: 'neutral', anim: (o, lt) => { if (lt > tCl + .3) { o.pose = 'carry'; o.hold = { near: book }; o.mood = 'smug'; } } }];
-      S.D.live = [(c, lt) => { const u = E.io(K.seg(lt, tW - .6, tW + .3)); c.save(); c.translate(1280, 600 + u * 500); c.rotate(u * .3); c.globalAlpha = 1 - u; c.fillStyle = '#2a2a50'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-120, -170, 240, 340); c.strokeRect(-120, -170, 240, 340); txt(c, 'CINEMA', 0, -110, 44, '#ffd84a', 'center', 'Anton'); txt(c, 'TONIGHT', 0, -60, 30, '#fff', 'center', 'Oswald'); c.fillStyle = '#d84a6a'; c.beginPath(); c.arc(0, 40, 60, 0, 7); c.fill(); c.restore();
+      S.D.live = [(c, lt) => { const u = E.io(K.seg(lt, tW - .6, tW + .3)); c.save(); c.translate(560, 720 + u * 500); c.rotate(u * .3); c.globalAlpha = 1 - u; c.fillStyle = '#2a2a50'; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(-120, -170, 240, 340); c.strokeRect(-120, -170, 240, 340); txt(c, 'CINEMA', 0, -110, 44, '#ffd84a', 'center', 'Anton'); txt(c, 'TONIGHT', 0, -60, 30, '#fff', 'center', 'Oswald'); c.fillStyle = '#d84a6a'; c.beginPath(); c.arc(0, 40, 60, 0, 7); c.fill(); c.restore();
           // potted branch
           const b = K.seg(lt, tB - .2, tB + 2), bend = Math.sin(b * Math.PI) * .9 * (1 - b * .3) + Math.sin(lt * 1.3) * .04; c.save(); c.fillStyle = '#a05a3a'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.moveTo(2000, FL); c.lineTo(1960, FL - 120); c.lineTo(2140, FL - 120); c.lineTo(2100, FL); c.closePath(); c.fill(); c.stroke();
           c.strokeStyle = '#5a3a22'; c.lineWidth = 14; c.beginPath(); c.moveTo(2050, FL - 120); c.quadraticCurveTo(2050, FL - 320, 2050 + Math.sin(bend) * 320, FL - 120 - Math.cos(bend) * 380); c.stroke(); c.fillStyle = '#4a8a3a'; c.beginPath(); c.arc(2050 + Math.sin(bend) * 320, FL - 120 - Math.cos(bend) * 380, 50, 0, 7); c.fill(); c.restore(); }];
-      S.D.over = [CR(), (c, lt) => TW.stamp(c, 'REBELS CRUSHED', 620, 150, lt, tC, { px: 48 }), (c, lt) => K.card(c, '...THEN ADOPT THEIR AGENDA', lt, { at: tQ, x: 620, y: 260, px: 36, rot: 2 }),
+      S.D.over = [CR(), (c, lt) => TW.stamp(c, 'REBELS CRUSHED', 800, 150, lt, tC, { px: 48 }), (c, lt) => K.card(c, '...THEN ADOPT THEIR AGENDA', lt, { at: tQ, x: 800, y: 260, px: 36, rot: 2 }),
         (c, lt) => K.card(c, 'LESS WESTERNISATION', lt, { at: tW, x: 1350, y: 140, px: 36, rot: -2, bg: '#c8d0e0' }), (c, lt) => K.card(c, 'MORE POWER FOR CLERICS', lt, { at: tCl, x: 1350, y: 230, px: 36, rot: 2, bg: '#c8d0e0' }),
         (c, lt) => K.card(c, "BEND, DON'T BREAK", lt, { at: tB, x: 1350, y: 340, px: 52, rot: -2, bg: '#e8b44a' })];
       S.D.sfx = [[tC, 'stamp', .35], [tQ, 'whoosh_soft', .2], [tW - .5, 'paper_tear', .3], [tCl, 'paper', .25], [tB, 'creak', .35], [tB + 1.2, 'whoosh_soft', .2]]; } },
@@ -60,14 +60,14 @@ window.SHOTS = [
       S.D.live = [(c, lt) => { c.save(); c.beginPath(); c.rect(880, 170, 800, 410); c.clip(); c.fillStyle = '#1e2a3a'; c.fillRect(880, 170, 800, 410); const L = lt < tG ? ['SIX KINGS', 'ONE CLUB'] : lt < tP ? ['GULF COOPERATION', 'COUNCIL · 1981'] : lt < tPr ? ['ON PAPER:', 'A DEFENCE PACT'] : ['IN PRACTICE:', 'KINGS PROTECTING KINGS'];
           txt(c, L[0], 1280, 320, 56, '#e8b44a', 'center', 'Anton'); txt(c, L[1], 1280, 420, 56, '#f4efe2', 'center', 'Anton'); c.restore(); }];
       S.D.front = [(c, lt) => { c.save(); c.fillStyle = '#6a4a2e'; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.ellipse(1280, 1010, 560, 120, 0, 0, 7); c.fill(); c.stroke(); c.fillStyle = '#5a3e26'; c.fillRect(720, 1010, 1120, 40); c.strokeRect(720, 1010, 1120, 40);
-          c.fillStyle = '#d8d0c0'; c.beginPath(); c.ellipse(1280, 1000, 80, 22, 0, 0, 7); c.fill(); c.stroke(); c.restore(); GM.pearl(c, 1280, 985, .7, .5 + .5 * Math.sin(lt * 2)); }];
+          c.fillStyle = '#d8d0c0'; c.beginPath(); c.ellipse(1280, 1000, 80, 22, 0, 0, 7); c.fill(); c.stroke(); c.restore(); GM.pearl(c, 1280, 985, 1.5, .5 + .5 * Math.sin(lt * 2)); }];
       S.D.over = [CR(), (c, lt) => K.card(c, 'GCC · MAY 1981', lt, { at: tM - .2, x: 1500, y: 120, px: 50, rot: 2, bg: '#e8b44a' })];
       S.D.sfx = [[tCl, 'whoosh_soft', .25], [tM, 'chime', .25], [tG, 'hit', .35], [tP, 'paper', .25], [tPr, 'stamp', .3]]; } },
   // 5.04 Kuwait, 2 Aug 1990, 2 am: tanks roll along the highway; a white car speeds away the other way; KW crown falls
-  { plate: 'kuwait_night', cam: { z: [1.12, 1.22], x: [1250, 1350], y: [820, 860] }, bed: [['night_loop', .12], ['war_drums_loop', .08]], light: { dir: 1, key: 'rgba(120,140,220,.14)' },
+  { plate: 'kuwait_night', cam: { z: [1.12, 1.2], x: [1250, 1350], y: [880, 900] }, bed: [['night_loop', .12], ['war_drums_loop', .08]], light: { dir: 1, key: 'rgba(120,140,220,.14)' },
     init: S => { const tT = A.at(S, 'two', 1.0), tA = A.at(S, 'August', 2.6), tSd = A.at(S, 'Saddam', 3.8), tH = A.at(S, 'hundred', 5.4), tE = A.at(S, 'emir', 8.4), tN = A.at(S, 'nineteenth', 11.4);
-      S.D.live = [(c, lt) => { for (let k = 0; k < 4; k++) { const x = -400 + ((lt - k * 2.2) * 180); if (x > -400 && x < 2900) GM.tank(c, x, 1300 + (k % 2) * 40, .9, lt, 1); }
-          const cu = K.seg(lt, tE - .3, tE + 3.5); if (cu > 0 && cu < 1) car(c, 2700 - cu * 3400, 1230, .7, lt, -1); }];
+      S.D.live = [(c, lt) => { for (let k = 0; k < 4; k++) { const x = -600 + ((lt - k * 4.5) * 220); if (x > -600 && x < 3100) GM.tank(c, x, 1240, 1.15, lt, 1); }
+          const cu = K.seg(lt, tE - .3, tE + 3.5); if (cu > 0 && cu < 1) car(c, 2900 - cu * 3600, 1150, 1.0, lt, -1); }];
       S.D.front = [(c, lt) => { silo(c, 1900, 760, 1.3, K.seg(lt, tSd - .3, tSd + .3)); tag(c, 1900, 520, 'SADDAM HUSSEIN', lt, tSd); }];
       S.D.over = [CR(KWst(tN, 999)), (c, lt) => K.card(c, 'KUWAIT · 2 AUG 1990 · 2 AM', lt, { at: tT - .3, x: 1000, y: 110, px: 46, rot: -2, bg: '#e8b44a' }),
         (c, lt) => { if (lt > tH - .2) { JH.counter(c, 0, 100000, 1000, 240, lt, tH, tH + 1.6, { px: 70 }); K.card(c, 'TROOPS', lt, { at: tH + .3, x: 1000, y: 320, px: 30, rot: 2 }); } },
