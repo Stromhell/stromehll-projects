@@ -60,4 +60,23 @@ P.parkBench = (o, lt) => { ctx.save(); ctx.translate(o.x, o.y); const s = o.s ??
   for (const x of [-200, 200]) { ctx.fillStyle = '#3a3a3e'; ctx.fillRect(x - 10, -150, 20, 150); ctx.strokeRect(x - 10, -150, 20, 150); ctx.fillRect(x - 10, -300, 20, 150); }
   ctx.fillStyle = '#9a6a3a'; for (let i = 0; i < 3; i++) { ctx.beginPath(); ctx.roundRect(-240, -165 + i * 0 - i * 14, 480, 14, 4); ctx.fill(); ctx.stroke(); }
   for (let i = 0; i < 3; i++) { ctx.beginPath(); ctx.roundRect(-240, -300 + i * 36, 480, 26, 4); ctx.fill(); ctx.stroke(); } ctx.restore(); };
+
+})();
+(function () {
+const E = window.E, { ctx, clamp, lerp, io } = E, P = window.PROPS = window.PROPS || {};
+const INK = '#231A24';
+function go(o, f) { ctx.save(); ctx.translate(o.x, o.y); ctx.rotate(((o.rot || 0) * Math.PI) / 180); const s = o.s ?? 1; ctx.scale(s * (o.dir || 1), s); f(); ctx.restore(); }
+function glow(x, y, r, col, a) { ctx.save(); ctx.globalCompositeOperation = 'screen'; const g = ctx.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, col.replace('A', a)); g.addColorStop(1, col.replace('A', 0)); ctx.fillStyle = g; ctx.fillRect(x - r, y - r, 2 * r, 2 * r); ctx.restore(); }
+// detailed planet (overrides the flat one): ocean gradient, seeded continents, cloud bands, night side, atmosphere glow. o.col 'red' = other universe world
+P.planet = (o, lt) => go(o, () => { const red = o.col === 'red', R = 200; let sd = o.seed || (red ? 31 : 117); const rnd = () => (sd = (sd * 16807) % 2147483647) / 2147483647;
+  glow(0, 0, R * 1.5, red ? 'rgba(255,120,90,A)' : 'rgba(120,200,255,A)', .35);
+  ctx.save(); ctx.beginPath(); ctx.arc(0, 0, R, 0, 7); ctx.clip();
+  const g = ctx.createRadialGradient(-60, -70, 20, 0, 0, R); g.addColorStop(0, red ? '#e88a5a' : '#5ab8f0'); g.addColorStop(.7, red ? '#a83a2a' : '#1f5aa8'); g.addColorStop(1, red ? '#5a1a16' : '#0e2a5a'); ctx.fillStyle = g; ctx.fillRect(-R, -R, 2 * R, 2 * R);
+  const spin = (lt || 0) * 6;
+  for (let i = 0; i < 9; i++) { const cx = ((rnd() * 2.4 - 1.2) * R + spin + 3 * R) % (2.4 * R) - 1.2 * R, cy = (rnd() * 1.6 - .8) * R, cr = R * (.12 + rnd() * .22); ctx.fillStyle = red ? (i % 2 ? '#c8783a' : '#8a3a22') : (i % 3 ? '#4a9a52' : '#b89a5a'); ctx.beginPath();
+    for (let k = 0; k < 12; k++) { const a = k / 12 * 6.283, rr2 = cr * (.7 + rnd() * .5); ctx[k ? 'lineTo' : 'moveTo'](cx + Math.cos(a) * rr2 * 1.3, cy + Math.sin(a) * rr2); } ctx.closePath(); ctx.fill(); }
+  ctx.fillStyle = 'rgba(255,255,255,.55)'; for (let i = 0; i < 10; i++) { const cx = ((rnd() * 2.4 - 1.2) * R + spin * 1.6 + 3 * R) % (2.4 * R) - 1.2 * R, cy = (rnd() * 1.8 - .9) * R; ctx.beginPath(); ctx.ellipse(cx, cy, R * (.15 + rnd() * .25), R * .05, -.15, 0, 7); ctx.fill(); }
+  ctx.fillStyle = 'rgba(255,255,255,.7)'; ctx.beginPath(); ctx.ellipse(0, -R * .95, R * .5, R * .12, 0, 0, 7); ctx.fill();
+  const n = ctx.createLinearGradient(-R, -R, R, R); n.addColorStop(0, 'rgba(0,0,20,0)'); n.addColorStop(.55, 'rgba(0,0,20,.05)'); n.addColorStop(1, 'rgba(0,0,25,.75)'); ctx.fillStyle = n; ctx.fillRect(-R, -R, 2 * R, 2 * R);
+  ctx.restore(); ctx.strokeStyle = red ? 'rgba(255,170,140,.8)' : 'rgba(170,225,255,.8)'; ctx.lineWidth = 8; ctx.beginPath(); ctx.arc(0, 0, R + 2, 0, 7); ctx.stroke(); ctx.strokeStyle = INK; ctx.lineWidth = 5; ctx.beginPath(); ctx.arc(0, 0, R + 7, 0, 7); ctx.stroke(); });
 })();

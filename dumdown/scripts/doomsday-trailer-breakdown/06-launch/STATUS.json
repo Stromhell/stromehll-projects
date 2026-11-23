@@ -1,0 +1,17 @@
+{
+ "channel": "dumdown",
+ "video": "doomsday-trailer-breakdown",
+ "state": "waiting_approval",
+ "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ8XxcU4poC1ZWQ4K1D86xgLm",
+ "feedback": false,
+ "queue_pos": null,
+ "booked_for": null,
+ "zernio_post": null,
+ "proposed_slot": "Wed 25 Nov 2026 16:00 UTC (earliest, 48 h after Agatha); push later DumDown bookings +48 h each",
+ "source": "https://youtu.be/Wb8Tq_HD4E8 (Avengers: Doomsday Final Trailer)",
+ "updated": "2026-11-23T22:50Z",
+ "note": "Sent to Pushpam for OK 23 Nov 22:50 UTC. Wakanda (queued) resumes now.",
+ "storyboard": "https://claude.ai/artifact/K8DucocCAMrdHgu5tdjhny",
+ "full_video": "https://drive.google.com/file/d/1v35H0JiYeumr20WfLm-RgLOTq7O5GRoR/view (FULL_v2, 13:11)",
+ "launch_kit": "https://claude.ai/artifact/RKrkAWShzQR5TGKQxeKDpy"
+}

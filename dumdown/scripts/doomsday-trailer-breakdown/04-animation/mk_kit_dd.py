@@ -29,7 +29,7 @@ Fan-made parody and commentary. Not affiliated with Marvel or Disney. All charac
 #AvengersDoomsday #Marvel #MCU"""
 TAGS = "DumDown, Marvel explained, MCU explained, Marvel recap, funny Marvel, Marvel for beginners, Marvel for teens, MCU recap, superhero explained, Marvel cartoon, Marvel funny, Marvel movie explained, Avengers Doomsday trailer, Doomsday trailer breakdown, Avengers Doomsday final trailer, Doomsday easter eggs, Doctor Doom, Fantastic Four Avengers, X-Men MCU, Avengers Doomsday theory, Doomsday trailer reaction"
 PIN = "Old Cap with the hammer again, or Thor's slides? What was the best moment of the trailer? 👇"
-open(L + 'metadata_v1.md', 'w').write(f"# DumDown: Avengers: Doomsday Final Trailer Breakdown, launch metadata (v1)\n\n## Title + thumbnail options\n| # | Title | Thumbnail |\n|---|---|---|\n" + "\n".join(f"| {o}{' (recommended)' if o=='A' else ''} | {t} | {f}: {d} |" for o, t, f, d in OPTS) + f"\n\n**Length:** {LEN} (last 7 s clean end screen).\n\n**Schedule (proposed, not booked):** Wed 25 Nov 2026 16:00 UTC (9:30 PM IST), the earliest DumDown slot 48 h after Agatha (23 Nov). Every later DumDown booking moves +48 h (Deadpool & Wolverine 27 Nov ... Avengers Mistakes 9 Dec). Public, category 24, not made for kids.\n\n## Description\n{DESC}\n\n## Tags\n{TAGS}\n\n## Pinned first comment\n{PIN}\n")
+open(L + 'metadata_v2.md', 'w').write(f"# DumDown: Avengers: Doomsday Final Trailer Breakdown, launch metadata (v2)\n\n## Title + thumbnail options\n| # | Title | Thumbnail |\n|---|---|---|\n" + "\n".join(f"| {o}{' (recommended)' if o=='A' else ''} | {t} | {f}: {d} |" for o, t, f, d in OPTS) + f"\n\n**Length:** {LEN} (last 7 s clean end screen).\n\n**Schedule (proposed, not booked):** Wed 25 Nov 2026 16:00 UTC (9:30 PM IST), the earliest DumDown slot 48 h after Agatha (23 Nov). Every later DumDown booking moves +48 h (Deadpool & Wolverine 27 Nov ... Avengers Mistakes 9 Dec). Public, category 24, not made for kids.\n\n## Description\n{DESC}\n\n## Tags\n{TAGS}\n\n## Pinned first comment\n{PIN}\n")
 def b64(f):
     im = Image.open(L + f).convert('RGB'); bio = io.BytesIO(); im.resize((960, 540)).save(bio, 'JPEG', quality=82); return 'data:image/jpeg;base64,' + base64.b64encode(bio.getvalue()).decode()
 e = html.escape
@@ -43,7 +43,7 @@ page = f"""<title>Doomsday Trailer Launch Kit</title>
 <main>
 <header><div class="eyebrow">DumDown · Doomsday final trailer breakdown · launch kit</div><h1>Avengers: Doomsday final trailer, broken down</h1></header>
 <div class="facts"><span class="chip">Length <b>{LEN}</b></span><span class="chip">Proposed slot <b>Wed 25 Nov, 16:00 UTC</b> (9:30 PM IST)</span><span class="chip">Status <b>not booked, waiting for your OK</b></span><span class="chip">Public · Entertainment · not for kids</span></div>
-<section class="ask"><h2>Your call</h2><p>Watch the full video: <a href="{URL}">DumDown_DoomsdayTrailer_FULL on Drive</a>. Reply "ok" with A, B or C and I'll book it for the earliest slot above and move the later DumDown videos back 48 h each so the spacing stays. A is my pick: Old Cap with the hammer is the trailer's big moment and reads at phone size.</p></section>
+<section class="ask"><h2>Your call</h2><p>Watch the full video: <a href="{URL}">DumDown_DoomsdayTrailer_FULL_v2 on Drive</a>. Reply "ok" with A, B or C and I'll book it for the earliest slot above and move the later DumDown videos back 48 h each so the spacing stays. A is my pick: Old Cap with the hammer is the trailer's big moment and reads at phone size.</p></section>
 {cards}
 {blk('Description (chapters included)', DESC)}{blk('Tags', TAGS)}{blk('Pinned first comment', PIN)}
 <section><h2>What's in it</h2><ul>
@@ -55,4 +55,4 @@ page = f"""<title>Doomsday Trailer Launch Kit</title>
 <p class="eyebrow">Fan-made parody. Our own cartoon cast; no Marvel artwork.</p>
 </main>
 <script>document.querySelectorAll('button[data-c]').forEach(b=>b.onclick=()=>{{navigator.clipboard.writeText(b.dataset.c).then(()=>{{const o=b.textContent;b.textContent='Copied';setTimeout(()=>b.textContent=o,1200)}}).catch(()=>{{}})}})</script>"""
-open(L + 'doomsday-trailer-launch-kit-v1.html', 'w').write(page); print('ok')
+open(L + 'doomsday-trailer-launch-kit-v2.html', 'w').write(page); print('ok')
