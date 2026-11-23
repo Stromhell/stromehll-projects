@@ -1,0 +1,114 @@
+# The Greatest Estate Developer - Episodio 3 - Stormi Knows Anime, espanol LatAm v1, 23 Nov 2026
+# Format: PANEL[@anchor] | opts | text  (panels of ep 3; ep2:pNNN = panel from episode 2 for the recap)
+# Facts from the official WEBTOON EN Episode 3 (read panel by panel, 23 Nov). Opens with a recap of Episode 2.
+@ Gancho
+p080@m | bg=aura:#e3262e punch | Dos prestamistas entran a la casa del barón a exigir dinero. Y Lloyd sonríe y dice: córtale el brazo a este intruso.
+p083@m | bg=speed:#e3262e punch | Y Javier saca la espada.
+p048@m | bg=black | Además, Lloyd por fin usa sus puntos RP. Y le duele. Mucho.
+title | bg=halftone:#e3262e | Esto es The Greatest Estate Developer. Episodio tres. El día que el vago le ganó a los prestamistas con la ley.
+@ Resumen del episodio 2
+ep2:p004@m | bg=aura:#3c7aff | Resumen rápido. Lloyd descubrió que Javier le tiene una aprobación de menos treinta.
+ep2:p053@t | bg=speed:#e3262e | Construyó su primera casa con ayuda de Javier, que corta troncos en el aire como si nada.
+ep2:p081@m | bg=aura:#ffd23d | El piso con ondol fue un éxito. La abuelita del tabernero nunca había estado tan feliz.
+ep2:p103@m | bg=paper | Y empezó a vender: estilo A, estilo B, y descuento si pides los dos.
+ep2:p107@m | bg=aura:#7a3cff punch | Hasta que llegó su papá, el barón Arcos Frontera. Con una aprobación de menos veinte.
+@ La cena incómoda
+p004@b | bg=paper | Esa noche, la cena. Una mesa enorme. Padre e hijo, cada uno en una punta.
+p006@m | bg=black gif=awkward | Lloyd piensa: lo estuve evitando hasta ahora... ¿y si me prohíbe construir?
+p008@m | bg=paper | El barón pregunta: ¿qué estás tramando esta vez?
+p009@m | bg=paper | Y Lloyd contesta con su mejor voz de vago grosero: el tabernero pidió un cuarto con ondol, así que se lo construí.
+p010@m | bg=paper | ¿Y la demás gente también te está haciendo pedidos? Parece que ya lo sabes todo.
+p011@m | bg=black | Y el barón le advierte: son personas que debemos cuidar. No voy a tolerar que les mientas o los engañes.
+p012@m | bg=paper | No pensaba hacerlo. Ya me imaginaba. Haga lo que haga, todos piensan lo peor.
+p013@m | bg=speed:#e3262e | Así que Lloyd intenta escapar: si ya terminamos, me retiro. ¡Corre, corre, vete de aquí!
+@ Lo que el padre no dice
+p014@m | bg=paper | Pero entonces: ¿todo esto es por la situación de nuestra familia?
+p015@m | bg=aura:#7a3cff | Y el barón le dice: no te preocupes. Voy a sacarnos de este problema pronto. No te metas demasiado.
+p017 | bg=black | Y Lloyd piensa: ya escuché esas palabras antes.
+p018@m | bg=paper | Su papá de su vida pasada, en Corea: Suho, todo va a estar bien. No es nada. Tú solo concéntrate en estudiar.
+p019 | bg=black | De verdad creí que todo iba a estar bien.
+p020@b | bg=aura:#2a2350 | Mentiroso. Yo sé que no está bien.
+p021 | bg=black punch | Y esta vez no va a volver a sufrir por culpa del estúpido dinero.
+p022@b | bg=aura:#ff9a3c | Por favor, no se rinda. Porque yo tampoco me voy a rendir.
+p023@m | bg=aura:#3c7aff | Las palabras que hace unos años quiso decirle a su papá... y nunca pudo.
+@ Llegan los prestamistas
+p024@m | bg=paper | Unos días después, Lloyd hace cuentas: treinta y dos pedidos estilo A, cincuenta y siete estilo B. Y ya cobró la mitad.
+p026@m | bg=halftone:#e3262e punch | Y entonces aparecen. Los prestamistas Meatloaf y Shiloh.
+p027@m | bg=paper | ¿Qué es esto? Soy el hijo del señor, ¿y ni siquiera me saludan?
+p030@m | bg=paper | En el despacho: ¡Barón! ¿Cuánto más va a seguir dando largas? Ya pasaron cinco días de la fecha acordada.
+p031@m | bg=black | Si sigue así, no vamos a tener otra opción más que actuar.
+p032@m | bg=speed:#e3262e | ¿Le comieron la lengua los ratones? Seguro que si vende las cosas de esta casa saca algo de dinero.
+p033@b | bg=black | Y Lloyd, escondido detrás de la puerta: llegaron justo a tiempo.
+p034@m | bg=aura:#e3262e punch gif=grin | Momento perfecto.
+@ El sistema RP
+p035 | bg=aura:#3c7aff | Pero antes, retrocedamos un poco. Lloyd tiene treinta y seis puntos RP. ¿Y cómo se usan?
+p037@m | bg=aura:#3c7aff | Ding. Puedes invertir tus RP para obtener habilidades. Wow, por fin la ventanita explica algo.
+p038@b | bg=black | Y Lloyd: perdón, perdón, ya no te molesto.
+p041@m | bg=aura:#3c7aff punch | Y de repente, un círculo de luz bajo sus pies.
+p042@m | bg=aura:#3c7aff | Habilidad detectada: mecánica de suelos. Hidráulica. Mecánica estructural.
+p043@m | bg=aura:#3c7aff gif=mindblown | Abastecimiento de agua y alcantarillado. Diseño de estructuras de acero y concreto. Todo lo que estudió en la universidad.
+p044@b | bg=speed:#e3262e | ¿Sabes más de lo que aparentas? ¿Era necesario decirlo? ¡Tenía una beca, por favor!
+p045@m | bg=aura:#3c7aff | Habilidades disponibles: Topografía básica, quince RP. Diseño básico, veinte RP.
+p047@m | bg=aura:#3c7aff punch | Bueno, tengo suficiente. Vamos a darle clic a ver qué pasa.
+p048@m | bg=black punch gif=scream | Topografía básica. Y Lloyd: ¡Aaaaaaaah! ¿Qué es esto?
+p049@m | bg=aura:#3cc8ff | ¿En serio? No necesito un GPS. Puedo ver el terreno con mis propios ojos.
+p050@b | bg=paper | Y con Diseño básico, los planos se dibujan solos en el aire. Y él que se había partido la espalda dibujando los canales a mano.
+@ El juego de invocación
+p051@m | bg=paper | Pero hay un problema. ¿Javier solo va a alcanzar para toda la construcción?
+p052@m | bg=paper | Ojalá pudiera invocar maquinaria pesada con mis conocimientos.
+p053@m | bg=aura:#3c7aff | Ding. Si quieres una invocación, hay algo. ¿Qué? ¿En serio?
+p055@m | bg=aura:#3c7aff punch | ¡Juego de invocación aleatoria! Personalidades únicas, muchas habilidades. ¡Consigue tu compañero leal ahora!
+p055@b | bg=aura:#3c7aff gif=gacha | Y Lloyd: ¿qué es esto, un anuncio de juego para el celular?
+p057 | bg=aura:#3c7aff | Un giro: cincuenta RP. Y a Lloyd solo le queda un RP.
+ai:ged3_joke_gacha.png | bg=halftone:#ff6ec7 | Sí. El protagonista reencarnó en otro mundo... y aun así terminó atrapado en un gacha. Algunos destinos no se pueden evitar.
+p060@m | bg=stars | Pero si es lo que creo... una invocación podría ser tan útil como maquinaria pesada.
+p061@m | bg=black punch | ¡Necesito RP!
+p062 | bg=black | Y para eso, necesito que los personajes clave me quieran.
+@ La ley del vago
+p063@b | bg=speed:#e3262e punch | De vuelta al despacho. ¡Barón Frontera!
+p064@b | bg=paper | Si no tiene dinero, permítame hacerle una sugerencia.
+p065@m | bg=aura:#e3262e | Si vende a la baronesa y a sus damas a un lugar muy bonito... le darían una buena suma.
+p066@m | bg=black punch | ¡Cómo te atreves!
+p067 | bg=paper | Y aparece Lloyd: que sea prestamista no significa que tenga que ser maleducado, ¿no?
+p069@m | bg=paper gif=scared | ¿Y tú quién eres?
+p070@b | bg=paper | Ah, el hijo mayor de modales peculiares. ¿Por eso interrumpe así nuestra conversación?
+p071@m | bg=paper | Y Lloyd: lo que sea. Ahora muéstrame tu orden judicial.
+p073@m | bg=aura:#ffd23d punch | La Ley de la Familia Real y la Nobleza. Artículo tres, cláusula seis.
+p073@b | bg=paper | Todos los nobles pueden ejercer su derecho a proteger sus intereses como vasallos del rey.
+p074@m | bg=aura:#e3262e punch gif=objection | Entrar a la residencia de una familia noble sin orden judicial se considera allanamiento. Esa es la parte clave.
+ai:ged3_joke_lawyer.png | bg=speed:#e3262e | El vago más odiado del pueblo acaba de convertirse en abogado. Phoenix Wright estaría orgulloso.
+p075@m | bg=paper | ¿De qué estás hablando? ¡Nunca he oído de esa ley!
+p076@m | bg=paper | ¿Ah, no la conocen? Entonces vamos a averiguarlo juntos.
+@ Entra Javier
+p077@m | bg=speed:#e3262e punch | ¡Javier!
+p079@m | bg=aura:#3c7aff | Sí, joven amo Lloyd.
+p080@m | bg=aura:#e3262e punch | Córtale el brazo a este intruso.
+p082@b | bg=paper | Como dije, vamos a averiguar de qué lado se pone el juez.
+p084@m | bg=speed:#e3262e | Y los prestamistas, en pánico.
+p085@m | bg=paper | ¿Crees que te vas a salir con la tuya? ¡Te vas a arrepentir!
+p087@b | bg=paper | Y Lloyd: qué absurdo.
+@ El dinero de los pedidos
+p089@m | bg=paper | Pero el barón no está feliz. ¿Qué acabas de hacer? No tenemos suficiente para pagarles.
+p090@m | bg=paper punch | Y Lloyd pone una bolsa de dinero sobre la mesa.
+p091@m | bg=aura:#ffd23d | Pensaba dárselo cuando cobrara todos los pedidos. Pero esto debería cubrir buena parte de los intereses de este mes.
+p092@m | bg=paper | ¿Dinero de los pedidos? ¿Le estás sacando dinero a nuestra gente?
+p093@b | bg=paper | Y Javier interviene: no se preocupe, mi señor.
+p094@m | bg=aura:#3c7aff | Yo me aseguraré de que el joven amo Lloyd cumpla con los pedidos.
+p095@b | bg=paper | Y Lloyd lo nota: por su cara, mi papá confía completamente en Javier.
+@ El spoiler del libro
+p098@m | bg=paper | ¿Cómo sabías de esa ley? Siempre pensé que eras un ignorante.
+p098@b | bg=paper | La aprendí por ahí, ¿contento?
+p099 | bg=black | Y es verdad. La aprendió de ti, Javier. En el libro.
+p100@m | bg=aura:#2a2350 | En la novela original, después de que el barón y la baronesa murieron...
+p101@m | bg=aura:#2a2350 | los dos prestamistas vinieron a quitarle todo lo que quedaba a la familia.
+p102@b | bg=black | Y Javier les recitó la misma ley. Artículo tres, cláusula seis.
+p103@b | bg=black punch | Y después de decirlo, sacó la espada.
+p104@b | bg=paper | Y cuando lo llevaron ante el juez... lo declararon inocente.
+p105@m | bg=aura:#ffd23d | Conocer la historia es una gran ventaja.
+@ Llueven los RP
+p106@m | bg=paper | Bueno. Ya debería aparecer una ventanita en cualquier momento.
+p107@m | bg=aura:#3c7aff punch | Ding. La aprobación del barón Frontera subió seis puntos.
+p108@m | bg=aura:#3c7aff | Ganaste sesenta RP por mejorar tu relación con un personaje clave.
+p109 | bg=aura:#3c7aff punch | RP actuales: sesenta y uno. Suficiente para un giro.
+p110@m | bg=aura:#ffd23d stamp=CONTINUARÁ | Justo como lo planeé. ¡Allá voy, invocación!
+title | bg=halftone:#e3262e | Suscríbete para el episodio cuatro. Y dime en los comentarios: ¿qué invocación le va a salir a Lloyd? ¿Un dragón, una bestia, o algo mucho más raro?

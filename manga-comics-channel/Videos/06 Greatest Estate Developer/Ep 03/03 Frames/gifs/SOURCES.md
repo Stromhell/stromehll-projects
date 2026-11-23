@@ -1,0 +1,7 @@
+- ged3-awkward.mp4 <- https://media.tenor.com/lkYdTD_iDbAAAAAC/akko-little-witch-academia.gif (search "anime awkward dinner")
+- ged3-mindblown.mp4 <- https://media.tenor.com/Ro0WNYgJDdkAAAAC/chrome-dr-stone.gif (search "anime mind blown")
+- ged3-scream.mp4 <- https://media.tenor.com/PsqxUcwTMQoAAAAC/kihachi-sakamoto-sparks-of-tomorrow.gif (search "anime screaming")
+- ged3-gacha.mp4 <- https://media.tenor.com/0q-WT3qfYAoAAAAC/gacha-verse-vii.gif (search "anime gacha")
+- ged3-objection.mp4 <- https://media.tenor.com/n0Qv7EH4QHkAAAAC/objection.gif (search "anime objection")
+- ged3-scared.mp4 <- https://media.tenor.com/n5piTJODnFIAAAAC/scared-screaming.gif (search "anime running away scared")
+- ged3-grin.mp4 <- https://media.tenor.com/LkzKaQE1f8EAAAAC/reaction.gif (search "anime evil grin")

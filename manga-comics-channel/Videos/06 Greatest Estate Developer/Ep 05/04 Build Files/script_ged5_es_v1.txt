@@ -1,0 +1,89 @@
+# The Greatest Estate Developer - Episodio 5 - Stormi Knows Anime, espanol LatAm v1, 23 Nov 2026
+# Format: PANEL[@anchor] | opts | text  (panels of ep 5; ep4:pNNN = panel from episode 4 for the recap)
+# Facts from the official WEBTOON EN Episode 5 (read panel by panel, 23 Nov). Opens with a recap of Episode 4.
+@ Gancho
+p030@m | bg=aura:#3cc8ff punch | El caballero más fuerte del pueblo no puede dormir. Y Lloyd lo cura... leyéndole un libro de concreto armado.
+p047@m | bg=speed:#e3262e | Cincuenta vueltas corriendo, sin quejarse.
+p075@m | bg=black punch | Y un caballero que planea algo mucho peor que un duelo.
+title | bg=halftone:#e3262e | Esto es The Greatest Estate Developer. Episodio cinco. Un mes para aprender a pelear.
+@ Resumen del episodio 4
+ep4:p039@b | bg=aura:#3cc8ff | Resumen rápido. Lloyd usó sus RP en el juego de invocación y le salió Ppodong, un hámster que crece a más de nueve metros con semillas de girasol.
+ep4:p049@m | bg=aura:#ffd23d | Excavación, compactar tierra, cachetes de bolsillo. Su propia maquinaria pesada.
+ep4:p056@m | bg=speed:#e3262e | Puso a trabajar a los treinta soldados de la baronía. Seguridad primero.
+ep4:p093@b | bg=black punch | Y le echó tierra en la cara a Neumann, el caballero principal. Que ahora quiere un duelo.
+@ Un mes para el duelo
+p003@m | bg=paper | Así que vas a pelear con el señor Neumann en un mes. ¿Estás seguro de que puedes ganar?
+p005@m | bg=speed:#e3262e gif=nope | ¿Qué? ¿Estás tonto? ¡Claro que no!
+p006@m | bg=paper | Es un caballero Experto de la espada de nivel bajo que puede usar la habilidad Corazón de maná. Y yo no soy nadie. ¿Estás pensando con esa cabeza?
+p007@m | bg=black | Y Javier piensa: estuve así de cerca de cortarlo.
+p008@m | bg=paper | De repente le tira tierra en la cara al señor Neumann y lo reta a duelo. Pensé que había vuelto a ser el vago de siempre...
+p009@m | bg=aura:#3c7aff | Pero todo parece demasiado calculado. Le pidió al barón que nos separara para pelear con él. Y nombró al señor Bayern como supervisor sustituto de los soldados.
+p010@m | bg=paper | Y ahora dice que no confía en ganar el duelo. No lo entiendo para nada.
+p011@m | bg=paper | Así que, señor Javier. Necesito que hagas algo por mí.
+p012@m | bg=aura:#ffd23d punch | Enséñame a usar la espada.
+p013@m | bg=paper | Me niego.
+p014@m | bg=speed:#e3262e | ¿Por quéeee?
+p015@m | bg=paper | Primero, mi trabajo es solo vigilarte. Y segundo, si una basura humana como tú aprende a usar la espada, la gente a tu alrededor va a estar en más peligro.
+@ El insomnio de Javier
+p017@m | bg=paper | ¿Y si enseñarme a pelear significa que voy a curar tu insomnio?
+p018@m | bg=aura:#3cc8ff punch | ¿Cómo sabe eso?
+p019@m | bg=speed:#e3262e | ¡Está en el libro! Y también sé la causa de tu insomnio.
+p020@t | bg=aura:#2a2350 | En el libro El Caballero de Sangre y Hierro, los caballeros se dividen en cuatro rangos. Experto de la espada de nivel bajo, medio y alto. Y arriba de todos, Maestro de la espada.
+p020@b | bg=aura:#2a2350 | Y Javier está a punto de pasar de Experto de nivel alto a Maestro de la espada. Está en el límite entre humano y sobrehumano. Con los sentidos tan afilados, no hay forma de que duerma.
+p021 | bg=black punch gif=sleepy | O sea, es un efecto secundario de ser un maestro de la espada.
+p022@m | bg=paper | Entonces, ¿tenemos un trato o no? Tienes el insomnio escrito en toda la cara.
+p024@m | bg=paper | Está bien. Intentémoslo. ¡Ah! ¿En serio? ¡Sin arrepentirse!
+p025@m | bg=paper | Claro. Sé con certeza que vas a fallar. No hay remedio que no haya probado. Terapia cognitiva, hierbas, aromaterapia, ejercicio, y hasta medicina oriental.
+p027@m | bg=aura:#ffd23d gif=snore | Y... ronquidos. Javier dormido como bebé.
+p028@m | bg=paper | Jajaja. Te tengo bien estudiado. También sabía cómo te iban a curar el insomnio.
+p029@m | bg=paper | En el libro, la primera vez que durmiste profundo fue escuchando un hechizo mágico. ¿Y qué hice yo?
+p030@m | bg=paper | Te leí mi libro de concreto armado. Por lo menos dieciocho veces más soporífero que cualquier hechizo.
+ai:ged5_joke_asmr.png | bg=halftone:#3cc8ff | Olvídense de la lluvia y del ruido blanco. El mejor ASMR para dormir es el coeficiente de dilatación térmica del concreto.
+p031@m | bg=speed:#e3262e punch | ¡Ahora tu técnica con la espada es mía!
+@ El entrenamiento
+p033@m | bg=paper | Y la primera lección del gran maestro: cincuenta vueltas alrededor del campo. Ve.
+p035@m | bg=paper | Y Lloyd... empieza a correr.
+p036@m | bg=paper | Y Javier piensa: ¿está corriendo? ¿Sin quejarse? ¿Él?
+p039@m | bg=speed:#e3262e | ¡Ugh, no me gusta esto! ¡Enséñame técnicas!
+p041@m | bg=speed:#e3262e | Pensaste que no lo iba a hacer, ¿verdad? Pensaste que me iba a rendir, ¿no?
+p043@m | bg=speed:#e3262e | Y luego ibas a decir: no tienes lo que se necesita. Y no me ibas a enseñar, ¿eh?
+p044@m | bg=aura:#3c7aff punch gif=bullseye | Y Javier: ugh. En el blanco.
+p045@m | bg=speed:#e3262e | ¡Jajaja! ¿Y ahora qué? ¡Voy a terminar de correr!
+p045@b | bg=aura:#3c7aff | Ding. La habilidad pasiva Mocoso fastidioso subió a nivel cuatro. Esa cabeza está pidiendo una cachetada.
+p046@m | bg=speed:#e3262e | ¡Sé que eso lo acabas de inventar! ¡Lárgate!
+ai:ged5_joke_rocky.png | bg=halftone:#e3262e | Pongan la música de Rocky. Lloyd Frontera, el campeón del pueblo, vuelta número treinta y siete.
+@ El dolor de antes
+p047@m | bg=paper | Esto es duro, la verdad. Mentiría si dijera que no. Pero...
+p048@m | bg=aura:#2a2350 | Sin una familia que lo recibiera, Suho despertaba cada día en un cuartito de una casa de huéspedes.
+p049@m | bg=aura:#2a2350 | Pasaba todo el día subiendo ladrillos al techo de un edificio de cuatro pisos. Y toda la noche cargando y descargando camiones de reparto.
+p050@m | bg=aura:#2a2350 | Todo para no morirse de hambre. Con la esperanza de que algún día las cosas iban a mejorar.
+p052@b | bg=black | Aguanta un poco más, Suho. Algún día va a mejorar.
+p054@m | bg=aura:#ff9a3c | Trabajas muy duro. Te lo mereces.
+p055@m | bg=aura:#ffd23d | Un poquito más. Un poquito más.
+p058@m | bg=black | Y se cayó con todos los ladrillos.
+p059@m | bg=speed:#e3262e punch | ¡Comparado con ese dolor! ¡Con esa desesperación!
+p060@m | bg=stars | ¡Esto no es nada!
+@ Javier acepta
+p061@m | bg=paper | Y Lloyd sigue corriendo hasta la noche.
+p062@m | bg=aura:#3c7aff | Si estás tan decidido, te voy a enseñar... mis técnicas de espada.
+p063 | bg=aura:#3c7aff punch | Ding. Tu aprobación con Javier subió un punto. Menos veintiocho.
+p065 | bg=aura:#3c7aff gif=yay | Ganaste dieciocho RP. RP actuales: veintinueve.
+@ El plan de Neumann
+p068@m | bg=black | Mientras tanto, en el despacho del barón. No puedo creer su falta de respeto, cuando hemos protegido a su familia por cinco generaciones.
+p069@m | bg=paper | El barón: pensé que había entrado en razón, pero veo que me equivoqué.
+p070@b | bg=paper | No tengo razones para detener este duelo. Pero como es mi heredero, no sea demasiado duro con él.
+p071@m | bg=paper | Lo suficiente para no lastimarlo en serio, pero para que entre en razón.
+p072@m | bg=paper | Como desee, mi señor.
+p073@m | bg=black | Pero los duelos no siempre salen como uno quiere.
+p074@m | bg=aura:#2a2350 | Y Neumann, caminando por el pasillo: si le corto la cabeza a ese vago creído... ¿y si al barón no le gusta?
+p075@m | bg=aura:#e3262e punch gif=villain | Entonces también me encargo del barón y la baronesa. Y hago que parezca otra cosa.
+p076@m | bg=aura:#2a2350 | Y como estaba planeado, me voy de este pueblito a algún lugar más grande. Gracias a ese vago, todo se está acelerando.
+@ El día del duelo
+p077@b | bg=aura:#3cc8ff | Un mes después.
+p078@m | bg=paper | Todo el pueblo reunido para ver el duelo.
+p079@m | bg=paper | Javier, el barón, la baronesa y Lloyd, en primera fila.
+p080@m | bg=aura:#7a3cff | ¿Está listo, joven amo?
+p082@m | bg=speed:#e3262e punch | Y Lloyd levanta su pala con una patada.
+p083@m | bg=speed:#e3262e | ¡Claro que sí!
+p084@m | bg=aura:#ffd23d stamp=CONTINUARÁ | ¡Listo para apagarte las luces!
+title | bg=halftone:#e3262e | Suscríbete para el episodio seis. Y dime en los comentarios: ¿Lloyd gana el duelo con una pala, o Neumann le gana a la mala?

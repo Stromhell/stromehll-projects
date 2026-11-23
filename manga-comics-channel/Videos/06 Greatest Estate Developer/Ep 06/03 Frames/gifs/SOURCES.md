@@ -1,0 +1,5 @@
+- ged6-tooth.mp4 <- https://media.tenor.com/50kolu0weLgAAAAC/major-anime-major-s4.gif (search "anime shocked jaw drop")
+- ged6-facepalm.mp4 <- https://media.tenor.com/j-tn9FNz2DQAAAAC/higuruma-hiromi-higuruma.gif (search "anime facepalm")
+- ged6-salute.mp4 <- https://media.tenor.com/63f1FDKJdDYAAAAC/anime-girl.gif (search "anime military salute")
+- ged6-power.mp4 <- https://media.tenor.com/aEIHsDQDL0kAAAAd/zenitsu-anime.gif (search "anime power up aura")
+- ged6-beatdown.mp4 <- https://media.tenor.com/npOCRHwmgScAAAAC/punch.gif (search "anime beat up")

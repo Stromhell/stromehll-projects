@@ -1,0 +1,103 @@
+# The Greatest Estate Developer - Episodio 4 - Stormi Knows Anime, espanol LatAm v2 (crop fixes), 23 Nov 2026
+# Format: PANEL[@anchor] | opts | text  (panels of ep 4; ep3:pNNN = panel from episode 3 for the recap)
+# Facts from the official WEBTOON EN Episode 4 (read panel by panel, 23 Nov). Opens with a recap of Episode 3.
+@ Gancho
+p015@m | bg=aura:#3cc8ff punch | Lloyd gastó todos sus puntos en una invocación. Y le salió... un hámster.
+p039@b | bg=speed:#e3262e punch | Un hámster de más de nueve metros de alto.
+p093@m | bg=black | Y al final del episodio, Lloyd reta a duelo al caballero más importante del barón. Con una pala.
+title | bg=halftone:#e3262e | Esto es The Greatest Estate Developer. Episodio cuatro. El día que el vago consiguió su maquinaria pesada.
+@ Resumen del episodio 3
+ep3:p011@m | bg=aura:#7a3cff | Resumen rápido. El barón le advirtió a Lloyd que no engañara a la gente del pueblo.
+ep3:p043@m | bg=aura:#3c7aff | Lloyd descubrió que puede cambiar sus RP por habilidades de ingeniería. Topografía básica y diseño básico.
+ep3:p080@m | bg=aura:#e3262e punch | Echó a los prestamistas con una ley que aprendió del libro. Y con la espada de Javier.
+ep3:p109 | bg=aura:#3c7aff | Y terminó con sesenta y un RP. Justo lo que cuesta un giro del juego de invocación.
+@ El giro
+p003@m | bg=stars | Esa noche, bajo la luna, Lloyd se va a un campo vacío.
+p005@m | bg=paper | No hay nadie, ¿verdad? Muéstrame el juego de invocación.
+p007@m | bg=aura:#3c7aff punch | ¡Empezar!
+p009@m | bg=aura:#3cc8ff | Engranajes de luz verde girando por todas partes.
+p011@m | bg=paper | ¿Eso es un círculo mágico?
+p012@b | bg=aura:#3cc8ff | Esto es demasiado exagerado.
+p013@m | bg=speed:#e3262e | Y además, hace muchísimo ruido. Crank crank, bzzt bzzt, bip bup, wom wom.
+p015@m | bg=aura:#3cc8ff punch | Y aparece...
+p017@m | bg=paper | ...un hámster chiquitito.
+p018@m | bg=paper | Que cae al suelo, plop, y se para muy contento.
+p020@m | bg=black gif=dud | Y Lloyd: o sea que es un fracaso. Tsk.
+p021@m | bg=speed:#e3262e | Y el hámster casi se ahoga del coraje.
+@ Ppodong
+p022@m | bg=paper | ¡Ppo-dong! ¡Ppo-do-dong! ¿Qué? ¿No eres un fracaso? ¿Me puedes ayudar?
+p023@m | bg=paper | ¿Con qué? ¿Disparando bellotas? Piu, piu. No lo necesito.
+p023@b | bg=paper | Está bien, entonces muéstrame qué puedes hacer.
+p025@m | bg=speed:#e3262e gif=gross | Y el hámster escupe un papelito todo babeado. Iugh, qué asco.
+p026@m | bg=paper | Es el manual de usuario de Ppodong.
+p027@m | bg=halftone:#ff6ec7 | Ppodong es un hámster adorable. Por favor dale mucho amor.
+p028@m | bg=paper | Dale una de las semillas de girasol incluidas... y su tamaño va a cambiar.
+p029@m | bg=paper | Semillas rojas: Ppodong crece a tamaño gigante. Dura máximo doce horas.
+p030@m | bg=paper | Semillas azules: Ppodong vuelve a su tamaño normal. Hay que dárselas antes de las doce horas.
+p031@m | bg=paper | Un juego de semillas de los dos colores cuesta un RP. Y a Lloyd le queda justo uno.
+p033@m | bg=paper | Los hámsters son buenos cavando. Si Ppodong pudiera ser tan grande como una persona, sería bastante útil.
+@ El hámster gigante
+p034@m | bg=speed:#e3262e | Ñam, ñam.
+p035@m | bg=aura:#3cc8ff punch | Y de repente, un destello.
+p036@m | bg=speed:#e3262e punch | ¡Pum! Lloyd sale volando.
+p037@m | bg=speed:#e3262e | ¡Aaaah!
+p038@m | bg=paper | ¿Qué?
+p039@t | bg=aura:#3cc8ff punch gif=kaiju | ¿Qué es eso? ¿Cinco metros? No. ¡Mide más de nueve metros!
+ai:ged4_joke_kaiju.png | bg=halftone:#e3262e | Olvídense de Godzilla. Aquí tenemos a Hamsterzilla. Y lo único que quiere destruir es una bolsa de semillas.
+p040@m | bg=aura:#ffd23d gif=smug | Y Ppodong pone cara de presumido. Mírenlo, qué creído.
+@ Las habilidades de Ppodong
+p041 | bg=aura:#3c7aff | Habilidad de Ppodong: Excavación, nivel uno.
+p042@m | bg=speed:#e3262e punch | ¡Ppodong! Y cava a toda velocidad.
+p043 | bg=aura:#3c7aff | Habilidad: Compactar tierra, nivel dos.
+p044@m | bg=speed:#e3262e | Gira, gira y gira, y deja la tierra bien apretada.
+p045 | bg=aura:#3c7aff | Habilidad: Cachetes de bolsillo, nivel uno.
+p046@m | bg=paper | Y guarda toda la tierra en sus cachetes...
+p048@m | bg=speed:#e3262e punch | ¡y la escupe en un montón! Splash.
+p049@m | bg=aura:#ffd23d punch | ¡Premio mayor! ¡Ya tengo mi maquinaria pesada!
+ai:ged4_joke_hamster_digger.png | bg=halftone:#3cc8ff | Excavadora, compactadora y camión de volteo. Todo en uno. Y funciona con semillas de girasol.
+p050@m | bg=paper | Pero si alguien ve una cosa así de enorme de repente, van a sospechar.
+p051@m | bg=halftone:#ff6ec7 | Así que el plan: llevar un libro de invocación. Y si alguien pregunta: ¡ah, es que soy maestro invocador!
+p051@b | bg=paper | Problema resuelto. ¿Por qué soy tan listo? No lo puedo creer.
+p052@m | bg=aura:#ffd23d | Siguiente: resolver la mano de obra de nuestro proyecto de construcción.
+@ El ejército de la pala
+p055@m | bg=paper | Al día siguiente, al lado del río. ¡Repitan conmigo!
+p056@m | bg=speed:#e3262e punch | ¡Seguridad! ¡Primero!
+p057@m | bg=paper gif=confused | Se-seguridad... ¿primero? Son los treinta soldados de la baronía del señor Frontera.
+p058@m | bg=paper | Y Lloyd piensa: qué frustrante. Son soldados a los que les pagan por no hacer nada. El barón tiene un montón de deudas, ¿por qué no los ha despedido?
+p059@m | bg=paper | Bueno, gracias a él tengo mano de obra gratis. Qué bueno que los puedo poner a trabajar.
+p060@m | bg=paper | ¡Escuchen! ¡Todos ustedes son soldados! ¡Y esto de aquí es el ejército!
+p061@m | bg=speed:#e3262e | ¿Y para qué sirve un ejército? ¡Para trabajar! Cuando yo estuve en el ejército, cavé más hoyos y arranqué más hierba de la que entrené.
+p062@m | bg=paper | ¿Ven ese montón de arcilla? Es la arcilla que estuve sacando toda la noche.
+p063@m | bg=aura:#ffd23d gif=laugh | Bueno, en realidad Ppodong la sacó en treinta minutos. Pero aun así.
+p064@m | bg=speed:#e3262e | ¡Vamos a empezar el renacimiento de nuestra baronía! El negocio de construcción con ondol para el pueblo.
+p064@b | bg=paper | Y para eso, necesito que lleven toda esa arcilla a la obra.
+p065@m | bg=paper | Y los soldados, deprimidos.
+@ El caballero Neumann
+p067@m | bg=paper | Joven amo Lloyd.
+p068@m | bg=aura:#7a3cff punch | ¿Qué le está pidiendo hacer a mis hombres? Es Neumann, el caballero de más rango de la baronía.
+p069@m | bg=paper | Y Lloyd sonríe: ya me esperaba que viniera a reclamar.
+p070@m | bg=aura:#3c7aff | En este lugar hay tres caballeros. Neumann, el de aquí. Debajo de él, Bayern. Y el protagonista de la novela, Javier Asrahan.
+p071@m | bg=paper | Cuando la baronía se va a la ruina al principio del libro, Javier y Bayern se quedan leales hasta el final.
+p071@b | bg=black | Pero nuestro amigo Neumann es el primero en traicionar al barón y huir.
+p073@m | bg=aura:#e3262e punch | Porque Neumann les vende información del barón a los estafadores... y lo deja con una deuda gigante.
+p074@m | bg=black | No puede ser que este tipo sea el caballero más importante de estas tierras.
+@ Apretando botones
+p076@m | bg=paper | Ordenó a estos hombres honorables que se llenaran de tierra. Como su comandante, no lo voy a tolerar.
+p077@m | bg=paper | Y Lloyd piensa: mentira. Estás molesto porque estoy cerca de ganar dinero para pagar las deudas. Tengo el permiso de mi padre.
+p078@m | bg=paper | No sé cómo engañó a su señoría. ¿Pero me permite recordarle su comportamiento anterior, joven amo?
+p080@m | bg=paper | No se me ocurre otra razón para que use a mis hombres más que su beneficio personal. ¿Me equivoco?
+p081@m | bg=paper | No, suena correcto...
+p082@m | bg=aura:#e3262e punch | Si quieres una paliza.
+p083@m | bg=speed:#e3262e gif=rage | Y Neumann explota. Miren a este hombrecito frágil. Si alguna vez jugara un juego en línea, sus dedos volarían por el teclado.
+p084@m | bg=paper | Ahora sí, vamos a apretarle los botones.
+p085@m | bg=speed:#e3262e punch | Y Lloyd le lanza una palada de tierra directo a la cara.
+p086@m | bg=paper | Los soldados no lo pueden creer.
+p088@m | bg=speed:#e3262e | Y Neumann, lleno de tierra de pies a cabeza.
+@ El duelo
+p090@m | bg=aura:#e3262e punch | ¡Sinvergüenza! ¿Acabas de insultar el honor de un caballero? ¡No eres más que el hijo de un barón pobre que pronto va a estar en la ruina!
+p091@m | bg=paper | ¿Eh? ¿Qué dijiste? ¿Olvidamos los rangos y lo arreglamos peleando?
+p092@m | bg=speed:#e3262e | Y Lloyd gira la pala como si fuera una lanza...
+p093@b | bg=black punch | y le apunta a la cara.
+p094@m | bg=aura:#ffd23d | Hagámoslo. Un duelo, quiero decir.
+p096@m | bg=aura:#7a3cff stamp=CONTINUARÁ | Te vas a arrepentir, sinvergüenza.
+title | bg=halftone:#e3262e | Suscríbete para el episodio cinco. Y dime en los comentarios: ¿cómo va a ganar un duelo el tipo más débil del pueblo? ¿Javier, Ppodong, o algún truco de ingeniero?

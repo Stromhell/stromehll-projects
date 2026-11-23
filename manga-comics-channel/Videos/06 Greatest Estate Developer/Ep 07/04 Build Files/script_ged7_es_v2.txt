@@ -1,0 +1,97 @@
+# The Greatest Estate Developer - Episodio 7 - Stormi Knows Anime, espanol LatAm v2 (crop fixes), 23 Nov 2026
+# Format: PANEL[@anchor] | opts | text  (panels of ep 7; ep6:pNNN = panel from episode 6 for the recap)
+# Facts from the official WEBTOON EN Episode 7 (read panel by panel, 23 Nov). Opens with a recap of Episode 6.
+@ Gancho
+p070@m | bg=aura:#3cc8ff punch | Lloyd lanza un hámster al cielo.
+p079@m | bg=speed:#e3262e punch | Y el hámster cae... con más de nueve metros de alto.
+p044@m | bg=black | Y debajo de un mantel, las cartas que destruyen a un traidor.
+title | bg=halftone:#e3262e | Esto es The Greatest Estate Developer. Episodio siete. El castigo del ratón.
+@ Resumen del episodio 6
+ep6:p023@m | bg=paper | Resumen rápido. Lloyd peleó con Neumann usando una pala y entrenamiento de bayoneta del servicio militar.
+ep6:p037@m | bg=aura:#3c7aff | Compró la habilidad Paleo: la pala y yo somos uno.
+ep6:p066@b | bg=aura:#3c7aff | Y absorbió el maná de Neumann con la técnica central de los Asrahan.
+ep6:p073@m | bg=aura:#3cc8ff punch | Le voló un diente, ganó el duelo... y siguió pegándole.
+@ Después del duelo
+p003@m | bg=speed:#e3262e | ¡Ya basta, joven amo Lloyd! ¡El duelo terminó!
+p004@m | bg=paper | ¿Perdió la cabeza?
+p005@m | bg=paper | ¿Será? No lo sé...
+p006@m | bg=paper | Está bien, está bien. Suéltenme.
+p008@m | bg=speed:#e3262e punch | Y en cuanto lo sueltan... ¡pum, pum! ¡Joven amo Lloyd, deténgase!
+p009@m | bg=paper | Pero Javier lo ve diferente. Desde mi punto de vista...
+p010@m | bg=aura:#e3262e | ...le está pegando con precisión, para lastimar cada parte de su cuerpo.
+p011@m | bg=paper | Esa cara tan tranquila. Como si ya supiera lo que va a pasar.
+p012@m | bg=aura:#3c7aff | Como si ya lo supiera todo.
+@ Quince días antes
+p013@b | bg=stars | Quince días antes del duelo. Ahora, enséñame la técnica central de los Asrahan.
+p014@m | bg=paper | ¿Qué? ¿Por qué me miras como si fuera un fugitivo? ¿Te pedí que me enseñaras a robar?
+p015@m | bg=aura:#2a2350 | El método central absorbe maná de los alrededores. No solo el maná que crea uno mismo, ¿verdad?
+p016@m | bg=paper | ¿Cómo sabe eso? Es una técnica que todavía no le he contado a nadie. Y ni siquiera está terminada.
+p017@m | bg=paper gif=shameless | Hablas dormido. Cada vez que te duermo con mi canción de cuna.
+p018@m | bg=paper | Y Javier: ¿soy yo, o tiene la cara más dura del mundo? Aparte de hablar dormido, no hay forma de que lo sepa.
+p019@m | bg=paper | Perdóname, pero no te puedo enseñar eso. La técnica todavía no está... ¿terminada?
+p020@m | bg=aura:#ffd23d | Entonces, ¿me la enseñas si te ayudo a perfeccionarla?
+p021@m | bg=paper | Si es posible, sí. ¿Y de dónde viene esa confianza?
+@ El ingeniero de maná
+p023@m | bg=paper | Supongo que intentas tomar el maná de afuera y mezclarlo con el Corazón de maná que tienes adentro.
+p024@m | bg=speed:#e3262e | Y como resultado, ¡boing! Rebota. Para tu Corazón de maná, es un objeto extraño, ¿no?
+p025@m | bg=aura:#2a2350 | Así que es cuestión de cambiar el enfoque. No lo mezcles con tu Corazón de maná...
+p026@m | bg=aura:#3cc8ff | ...condénsalo por separado, cerca...
+p028@m | bg=black | ...y úsalo alrededor de ti, por fuera.
+p029@m | bg=aura:#3c7aff punch | Es como tener un motor auxiliar junto al motor principal. Como si fueran uno, pero separados. ¿Qué te parece?
+ai:ged7_joke_engine.png | bg=halftone:#3cc8ff | Ingeniería mecánica aplicada a la magia. Básicamente, Lloyd le acaba de poner un turbo a un caballero.
+p030@m | bg=paper | Definitivamente suena... posible. Aunque no sé qué es un motor.
+p031@m | bg=speed:#e3262e gif=clap | Y Lloyd: ¿eh? Solo estaba improvisando. ¿Tuvo sentido? ¡Bien!
+p032@m | bg=aura:#3c7aff | Y en ese momento, Javier perfeccionó la técnica central de los Asrahan, que lo tenía atormentado desde hacía mucho.
+p033@m | bg=aura:#3cc8ff punch | En el primer intento, logró subir a tres círculos.
+p032@b | bg=paper | Con más entrenamiento, seguro que puedo llegar a cuatro, cinco o más.
+p035 | bg=aura:#3c7aff punch gif=levelup | Ding. Tu aprobación con Javier subió cinco puntos.
+p036@m | bg=speed:#e3262e | ¿Qué? ¿Crees que no tengo nada mejor que hacer que aprender Corazón de maná? Solo enséñame la parte de absorber. ¡Solo el maná que toca mi cuerpo!
+p039@t | bg=paper | Lloyd sabía que con esto podía vencer a Neumann.
+p039@b | bg=aura:#ffd23d punch | Y ganó. Fácil.
+@ Las cartas
+p040@m | bg=aura:#e3262e punch | De vuelta al duelo. ¡Lloyd! ¿No me oyes? ¡No voy a tolerar que manches el honor de este caballero!
+p042@b | bg=paper | ¿El honor de este caballero, mi señor?
+p043@m | bg=paper | Mire debajo de ese mantel y después decida si esas palabras le quedan al señor Neumann.
+p044@m | bg=paper | ¿Cartas?
+p045@m | bg=paper | ¿Q-qué es esto?
+p046@m | bg=aura:#e3262e punch | Son cartas entre el señor Neumann y Tordes. El hombre que lo estafó en un negocio de tierras.
+p047@m | bg=paper | El estado financiero de la baronía, las preferencias del señor, planes para falsificar escrituras... todo está en esas cartas.
+p048@m | bg=speed:#e3262e | ¡Las escondí en una pared! ¿Cómo las...?
+p049@m | bg=aura:#ffd23d gif=gotcha | Sí. Javier las encuentra más adelante en el libro.
+p050@m | bg=aura:#3cc8ff | Anoche mandé a Ppodong a buscarlas.
+ai:ged7_joke_spy.png | bg=halftone:#2a2350 | Misión imposible: versión hámster. El agente secreto más esponjoso de la baronía.
+@ El castigo
+p051@m | bg=paper | Y el barón se deja caer en la silla.
+p052@m | bg=paper | Lloyd piensa: de verdad es una buena persona, como dice el libro. Cualquier otro estaría pidiendo su cabeza ahora mismo.
+p052@b | bg=black | Lo siento, pero...
+p054@m | bg=black | ...un líder bondadoso y un buen líder son dos cosas muy diferentes.
+p055@m | bg=paper | Si está pensando en qué hacer con este hombre, me gustaría hacerle una sugerencia.
+p056@m | bg=halftone:#ff6ec7 | Dejemos caer un ratón malvado sobre su cabeza. Si el ratón lo lastima, que lo destierren. Si no, que lo degraden a soldado raso y le den la oportunidad de arrepentirse.
+p057@m | bg=paper | ¿Un ratón? ¿Por qué un ratón? El señor Neumann nunca saldría lastimado por un ratón.
+p058@b | bg=paper | El barón piensa: le da la oportunidad de arrepentirse... sabiendo que puede recibir un castigo mayor en cualquier momento.
+p059@m | bg=paper | Esto es sabio. Es generoso, y también es una advertencia para los demás.
+p060@m | bg=paper | Muy bien. Hagamos lo que dices, Lloyd.
+p061@m | bg=paper | Señor Neumann, ¿tiene alguna objeción? N-no, le agradezco su misericordia.
+p062@m | bg=black | ¿Misericordia, dices?
+p063@m | bg=aura:#2a2350 | Si le ofreces misericordia a un culpable, ¿va a cambiar y arrepentirse?
+p064@m | bg=aura:#e3262e punch gif=evil | No. Va a pensar: qué blando es. Y se va a volver más terco y más astuto, buscando cómo superarte.
+p066@m | bg=aura:#e3262e | Y efectivamente: se va a arrepentir, barón Frontera. Me voy a vengar de usted y de su hijo vago.
+p067@m | bg=paper | Ay, qué bueno verte sonreír. Aunque va a ser la última vez.
+p068@m | bg=paper | ¿Q-qué quiere decir eso?
+p069@m | bg=aura:#ffd23d punch | ¿Tú qué crees? Y Ppodong, con una semilla roja.
+@ El ratón malvado
+p070@m | bg=aura:#3cc8ff | Lloyd lanza a Ppodong al cielo.
+p071@m | bg=aura:#e3262e | La mejor forma de pedir perdón... es recordar que no existe.
+p072@m | bg=speed:#e3262e | Crunch. Se come la semilla.
+p073@m | bg=aura:#ffd23d punch | Y un destello.
+p074@m | bg=paper | El barón, la baronesa, Javier... todos con la boca abierta.
+p075@m | bg=paper | Y el pueblo entero mirando al cielo.
+p076@m | bg=aura:#3cc8ff | Un hámster gigante cayendo.
+p078@m | bg=speed:#e3262e punch gif=doom | Y Neumann ve lo que viene.
+p079@b | bg=aura:#3cc8ff punch | ¡Plaf!
+p080@m | bg=speed:#e3262e punch | ¡Aaaaargh!
+ai:ged7_joke_mouse.png | bg=halftone:#ffd23d | Técnicamente, Lloyd no mintió. Dijo un ratón. Nunca dijo de qué tamaño.
+p081@m | bg=paper | Qué lástima.
+p082@m | bg=aura:#ffd23d punch | ¡Destierro! Y con esto, la manzana podrida de la baronía se fue.
+p082@b | bg=aura:#7a3cff stamp=CONTINUARÁ | Y aquí termina el episodio siete. Pero la historia de Lloyd Frontera apenas empieza.
+title | bg=halftone:#e3262e | Suscríbete para no perderte el siguiente capítulo. Y dime en los comentarios: ¿cuál fue el mejor momento de Ppodong hasta ahora?

@@ -1,0 +1,97 @@
+# The Greatest Estate Developer - Episodio 6 - Stormi Knows Anime, espanol LatAm v2 (crop fixes), 23 Nov 2026
+# Format: PANEL[@anchor] | opts | text  (panels of ep 6; ep5:pNNN = panel from episode 5 for the recap)
+# Facts from the official WEBTOON EN Episode 6 (read panel by panel, 23 Nov). Opens with a recap of Episode 5.
+@ Gancho
+p069@m | bg=speed:#e3262e punch | Un caballero con espada. Contra un vago con una pala.
+p070@m | bg=aura:#3cc8ff | Y adivinen qué salió volando.
+p073@t | bg=paper gif=tooth | ¿Eso es... mi diente?
+title | bg=halftone:#e3262e | Esto es The Greatest Estate Developer. Episodio seis. El duelo de la pala.
+@ Resumen del episodio 5
+ep5:p027@m | bg=aura:#ffd23d | Resumen rápido. Lloyd curó el insomnio de Javier leyéndole su libro de concreto armado.
+ep5:p033@m | bg=paper | A cambio, Javier lo entrenó durante un mes. Empezando con cincuenta vueltas al campo.
+ep5:p075@m | bg=aura:#e3262e | Mientras tanto, Neumann planeaba usar el duelo para deshacerse de Lloyd... y después del barón.
+ep5:p084@m | bg=aura:#ffd23d punch | Y llegó el día. Lloyd, listo para apagarle las luces.
+@ ¿Una pala?
+p003@m | bg=paper | ¿Qué es eso? ¿Una pala? ¿Va a pelear con el señor Neumann con eso?
+p005@m | bg=paper | Una pala de hierro sólido. Para eso le pidió algo al herrero.
+p006@m | bg=paper gif=facepalm | El barón, con la mano en la cara: ese muchacho... al final todo era una broma.
+p007@m | bg=paper | Pero Javier no lo cree. Cuando piensa en lo que le mostró este último mes...
+p008@m | bg=aura:#2a2350 | Entrenamiento básico en la madrugada sin quejarse. Correr por las obras para enseñarle a los ingenieros del pueblo sobre el ondol.
+p008@b | bg=stars | Y práctica de espada hasta que se iba a dormir.
+p009@m | bg=paper | Esa no era la actitud de alguien que prepara una broma. El joven amo Lloyd va más en serio que nunca.
+p010@m | bg=speed:#e3262e punch | ¡Que comience el duelo entre Lloyd Frontera y el señor Neumann!
+@ El combate
+p012@m | bg=paper | Y Lloyd toma una postura... rarísima.
+p013@m | bg=paper | ¿Qué es esa pose tan floja?
+p014@m | bg=speed:#e3262e punch | ¿Estás jugando conmigo? Y Neumann se lanza.
+p016@m | bg=speed:#e3262e punch | ¡Clang! Lloyd lo bloquea.
+p017@m | bg=aura:#3cc8ff | Y todos: ¿qué?
+p018@m | bg=speed:#e3262e | ¡La suerte no llega dos veces!
+p019@m | bg=speed:#e3262e punch | ¡Clang! Otra vez.
+p020@m | bg=paper | Y Javier lo ve: su movimiento es tan eficiente. Es una técnica adaptada para pelear en la vida real.
+p021 | bg=black | Es como si la esgrima hubiera evolucionado con los siglos.
+@ La técnica coreana
+p023@m | bg=paper | ¿Por qué tan sorprendidos? Cualquier hombre coreano sabe hacer esto.
+p024@m | bg=aura:#2a2350 gif=salute | Es la esencia del combate cuerpo a cuerpo moderno. ¡Entrenamiento de bayoneta! Gracias, servicio militar.
+p025@m | bg=speed:#e3262e | Además, la pala es un arma mucho más temible de lo que uno cree.
+p026@m | bg=paper | La hoja ancha sirve como escudo.
+p027@m | bg=speed:#e3262e punch | Puede cortar raíces gruesas de árbol.
+p028@m | bg=paper | Y si hago esto...
+p029@t | bg=halftone:#ffd23d punch | ¡La puedo usar como pogo saltarín! ¡Jajaja! ¡Ven por mí!
+ai:ged6_joke_pogo.png | bg=halftone:#3cc8ff | Un caballero con veinte años de entrenamiento... contra un ingeniero en pogo. La historia de la esgrima nunca estuvo preparada para esto.
+p030@m | bg=paper | Y Javier: espera, ¿todo esto era una broma?
+p032@m | bg=paper | ¿O no?
+@ La explicación
+p033@m | bg=speed:#e3262e | ¡Aaaah!
+p034@b | bg=paper | La primera arma que preparé para destruirte, Neumann, fue esta pala.
+p035@m | bg=speed:#e3262e punch | Y la segunda, los pasos básicos de esgrima que me enseñó Javier.
+p036@m | bg=aura:#e3262e | ¡Vago borracho! ¿De dónde sacas esta fuerza?
+p037@m | bg=aura:#3c7aff punch | Y mi tercera arma es esta. Expansión de habilidad: Paleo, nivel uno.
+p037@b | bg=aura:#3c7aff | La pala y yo somos uno. Todas tus estadísticas físicas suben cuando sostienes una pala.
+ai:ged6_joke_excalibur.png | bg=halftone:#ffd23d | Arturo sacó una espada de la piedra. Lloyd sacó una pala de la tierra. Cada quien con su leyenda.
+p038@m | bg=paper | El punto de aprobación que ganó entrenando con Javier... más los dos y tres que le dieron el barón y la baronesa al ver a su hijo trabajar duro por primera vez en su vida...
+p039 | bg=aura:#3c7aff | ...subieron sus RP a noventa y siete.
+p040@m | bg=aura:#3c7aff | ¿Quieres aprender la habilidad Paleo? Cuarenta RP. Sí. La habilidad más bonita del mundo.
+@ Corazón de maná
+p042@m | bg=paper | Y Neumann respira hondo.
+p043@m | bg=black | No tengo otra opción. Contra un civil, no pensé que tendría que hacer esto.
+p046@m | bg=aura:#3c7aff punch | Y su cuerpo se llena de luz azul.
+p047@m | bg=paper | Lloyd: está invocando...
+p046@b | bg=black punch | ¡Corazón de maná!
+p051@m | bg=aura:#7a3cff | Apenas estamos empezando, vago.
+p054@m | bg=paper | Javier sabe lo que significa. Sin talento, se necesitan más de diez años. Para una persona normal, al menos cinco para invocar Corazón de maná.
+p054@b | bg=paper | Sería imposible que el joven amo Lloyd bloqueara un ataque con tanto maná...
+p056@m | bg=black punch | ...normalmente.
+@ La cuarta arma
+p058@m | bg=aura:#e3262e | ¡Tonto! ¡Voy a partir esa hoja y tu cabeza de un solo golpe!
+p059@m | bg=paper | Y el barón y la baronesa, aterrados.
+p060@m | bg=speed:#e3262e punch | ¡Pum!
+p061@m | bg=paper | Y Neumann: ¿qué es esto?
+p062@b | bg=paper | Es como si toda la fuerza de mi cuerpo se estuviera escapando.
+p063@m | bg=aura:#ffd23d punch gif=power | Y ahora, la cuarta arma que preparé...
+p064@m | bg=aura:#3c7aff | Y Javier no lo puede creer: la habilidad para manejar el maná que convirtió a Javier en el hombre más fuerte de la historia...
+p066@t | bg=black punch | ¡La técnica central de los Asrahan!
+p066@b | bg=aura:#3c7aff | Lloyd absorbe el maná de Neumann a través de la pala.
+p067@m | bg=speed:#e3262e | ¡Aaargh! ¿Absorbiste mi maná?
+@ El diente
+p068@m | bg=speed:#e3262e punch | Y Lloyd lanza el golpe.
+p069@m | bg=speed:#e3262e punch | ¡Plaf!
+p070@m | bg=aura:#3cc8ff | Algo vuela por el cielo azul...
+p070@t | bg=paper | ¿Eh? ¿Qué es eso?
+p073@m | bg=paper | ¿Eso es mi diente?
+ai:ged6_joke_tooth.png | bg=halftone:#ff6ec7 | Neumann vino a defender su honor. Y se va sin honor... y sin un diente. El Ratón Pérez va a tener trabajo esta noche.
+p075@m | bg=speed:#e3262e punch | ¡Clang!
+p076@m | bg=aura:#3cc8ff | Lloyd levanta la pala bien alto...
+p078@m | bg=speed:#e3262e punch | ¡y lo estampa contra el suelo!
+@ Ganó el vago
+p079 | bg=paper | Silencio total.
+p081@m | bg=paper | ¿Q-qué? ¿Ganó el joven amo Lloyd? ¿De qué hablas? Qué raro.
+p082@m | bg=paper | Declaro... a Lloyd Frontera... ganador de... este duelo.
+p083@m | bg=black | Y Neumann: ¿qué acaba de decir? ¿Yo, un Experto de la espada, perdí contra ese vago?
+p084@m | bg=paper | ¿Oíste? Gané el duelo.
+p085@m | bg=paper | Bueno. Ya que terminó...
+p086@m | bg=aura:#e3262e punch | ...es hora de darte tu paliza.
+p088@m | bg=speed:#e3262e | ¡Lloyd! ¿Qué haces? ¡El duelo ya terminó!
+p089@m | bg=speed:#e3262e punch gif=beatdown | ¡Grr! ¡Toma esto! Pum, pum, pum.
+p090@m | bg=aura:#e3262e stamp=CONTINUARÁ | ¡Lloyd!
+title | bg=halftone:#e3262e | Suscríbete para el episodio siete. Y dime en los comentarios: ¿cuál fue la mejor arma de Lloyd? ¿La pala, el pogo, o la técnica Asrahan?

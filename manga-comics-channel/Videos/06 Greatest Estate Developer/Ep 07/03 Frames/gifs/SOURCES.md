@@ -1,0 +1,6 @@
+- ged7-shameless.mp4 <- https://media.tenor.com/y1MiHtdl-asAAAAC/konosuba-aqua.gif (search "anime innocent whistle")
+- ged7-clap.mp4 <- https://media.tenor.com/i0etD7OfeawAAAAC/kita-bocchi-the-rock.gif (search "anime clapping")
+- ged7-levelup.mp4 <- https://media.tenor.com/FR8tb3ArfpMAAAAC/level-up-fantasy-bishoujo-juniku-ojisan-to.gif (search "anime level up")
+- ged7-gotcha.mp4 <- https://media.tenor.com/RojV0v9rgQAAAAAC/anime-animes.gif (search "anime gotcha")
+- ged7-evil.mp4 <- https://media.tenor.com/Kblvkfvq0ywAAAAC/princess-mononoke-moro.gif (search "anime evil laugh villain")
+- ged7-doom.mp4 <- https://media.tenor.com/gBmX8hN06lgAAAAC/sora-harewataru-hirogaru-sky-precure.gif (search "anime falling sky terrified")

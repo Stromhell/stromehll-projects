@@ -1,0 +1,7 @@
+- ged4-dud.mp4 <- https://media.tenor.com/MUh5wIdD-E0AAAAC/nokotan-nokotan-anime.gif (search "anime disappointed")
+- ged4-gross.mp4 <- https://media.tenor.com/A9ofy1jzf2sAAAAC/maomao-disgusted-apothecary-maomao.gif (search "anime disgusted")
+- ged4-kaiju.mp4 <- https://media.tenor.com/518IkQmfq0kAAAAC/saint-shepherd-ju-peter-gorosei-dinner-time-lunch-on-the-table-breakfast-snack-snacc.gif (search "anime giant monster")
+- ged4-smug.mp4 <- https://media.tenor.com/LzUPgX7KmzsAAAAC/anime-smirk.gif (search "anime smug grin")
+- ged4-confused.mp4 <- https://media.tenor.com/QvDvq49Uvq8AAAAC/anime-aot.gif (search "anime confused soldiers")
+- ged4-laugh.mp4 <- https://media.tenor.com/a8Oka7vimh0AAAAd/tsugumomo-laugh.gif (search "anime laughing hard")
+- ged4-rage.mp4 <- https://media.tenor.com/VBw7YA6Ih-UAAAAC/jujutsu-kaisen.gif (search "anime angry rage")

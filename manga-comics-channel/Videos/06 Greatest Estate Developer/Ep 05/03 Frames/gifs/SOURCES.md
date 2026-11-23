@@ -1,0 +1,6 @@
+- ged5-nope.mp4 <- https://media.tenor.com/X19y0lOmF7EAAAAC/shocked-gasp.gif (search "anime no way")
+- ged5-sleepy.mp4 <- https://media.tenor.com/S0cm75aomsAAAAAC/anime-cant-sleep.gif (search "anime insomnia")
+- ged5-snore.mp4 <- https://media.tenor.com/vCXSUt_0UFUAAAAC/anime-snore.gif (search "anime sleeping snore")
+- ged5-bullseye.mp4 <- https://media.tenor.com/FSgpuddefAYAAAAC/love-blushing.gif (search "anime critical hit")
+- ged5-yay.mp4 <- https://media.tenor.com/GTrMJsHKlF8AAAAC/happy-japanese-anime.gif (search "anime celebrate")
+- ged5-villain.mp4 <- https://media.tenor.com/ExTGZ605FFcAAAAC/brunhild-anime.gif (search "anime villain smile")
