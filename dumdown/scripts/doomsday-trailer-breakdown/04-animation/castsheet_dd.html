@@ -1,0 +1,7 @@
+<!doctype html><html><body style="margin:0;background:#efe9dc"><div id="o"></div>
+<script src="kit.js"></script><script>var module = { exports: {} }; var require = () => window.DumDown;</script>
+<script src="cast.cjs"></script><script src="am_kit.js"></script><script>window.CAST = module.exports.C;</script><script src="wf_kit.js"></script><script src="wf_cast.js"></script><script src="dd_cast.js"></script>
+<script>(function(){const DD=window.DumDown,CC=window.CAST;const keys=['oldCap', 'agentPeg', 'kid', 'stretch', 'glowSue', 'flameKid', 'rockBen', 'doomH', 'maskMonk', 'thunderBro', 'thunderTee', 'love', 'newCap', 'yelenaD', 'ringGuy', 'antGuy', 'laserEyes', 'bigBlue', 'blueLady', 'cardGuy', 'puff', 'profX', 'princess', 'mountain', 'ankles', 'dora', 'stormi', 'shopkeep'];
+const per=10,W=per*190+80,rows=Math.ceil(keys.length/per),H=rows*640;let s=`<rect width="${W}" height="${H}" fill="#efe9dc"/>`;
+keys.forEach((k,i)=>{const x=110+(i%per)*190,y=560+Math.floor(i/per)*640;if(!CC[k]){console.error('missing',k);return;}s+=DD.drawCharacter(CC[k],{x,y,scale:.95,view:i%3===2?'threequarter':(i%3===1?'side':'front'),expr:CC[k].defaultExpr,t:.3});s+=`<text x="${x}" y="${y+50}" text-anchor="middle" font-family="Inter" font-weight="700" font-size="15" fill="#231A24">${CC[k].name}</text>`;});
+document.getElementById('o').innerHTML=DD.svg(W,H,s);})();</script></body></html>

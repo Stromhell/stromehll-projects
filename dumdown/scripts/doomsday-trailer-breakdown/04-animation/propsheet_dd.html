@@ -1,0 +1,11 @@
+<!doctype html><html><body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="kit.js"></script><script src="tbkit.js"></script><script>var module = { exports: {} }; var require = () => window.DumDown;</script>
+<script src="cast.cjs"></script><script src="am_kit.js"></script><script src="wf_kit.js"></script><script>window.CAST = module.exports.C;</script><script src="dd_cast.js"></script>
+<script>window.PLATE_NAMES=[];window.LEAD=.6;window.TIMING={durs:[1],gap:.3,paras:['x'],chunks:[],gags:[]};</script>
+<script src="acting.js"></script><script src="actions.js"></script><script src="engine.js"></script><script src="fx.js"></script><script src="cards.js"></script><script src="props.js"></script><script src="agprops.js"></script><script src="dwprops.js"></script><script src="tbprops.js"></script><script src="mvprops.js"></script><script src="siprops.js"></script><script src="sbprops.js"></script><script src="amprops.js"></script><script src="am_help.js"></script><script src="wfprops.js"></script>
+<script src="ddprops.js"></script>
+<script>
+const KS="stoneHammer roundShield trunk cereal crayon wreath goldMask maskShelf nameTag forceWall bolt card timeCard".split(" ");
+const {ctx}=window.E; ctx.fillStyle='#bcc';ctx.fillRect(0,0,1920,1080);
+KS.forEach((k,i)=>{const x=110+(i%10)*190,y=230+Math.floor(i/10)*260; ctx.save(); ctx.setTransform(.5,0,0,.5,0,0); try{ (window.PROPS[k])({x:x*2,y:y*2,s:.8,t:'TXT',text:'TXT',n:3},2);}catch(e){console.error(k+': '+e.message)} ctx.restore(); ctx.setTransform(1,0,0,1,0,0); ctx.fillStyle='#000';ctx.font='18px sans-serif';ctx.fillText(k,x-50,y+30);});
+</script></body></html>

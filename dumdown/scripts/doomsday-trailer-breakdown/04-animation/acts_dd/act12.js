@@ -1,0 +1,14 @@
+// THE STORY (full prediction) + OUTRO
+window.ACT = { timing: window.TIMING, shots: [
+ { p: 0, plate: 'dd_nyc_night', noWhip: 1, title: ['MY FULL PREDICTION', 'THE STORY'], cam: { z: [1.0, 1.1], x: 1280, y: 700 }, pops: [{ t: 'UNIVERSES CRASHING', w: 'crashing', dur: 2.2 }] },
+ { p: 0, f: .15, plate: 'dd_doom_hall', grade: ['#0a3a1a', .25, 'multiply'], cam: { frame: 'med', on: 0, push: [1, 1.06] }, chars: [{ c: 'doomH', x: 1280, y: 1300, s: 1.4, view: 'front', expr: 'smug', acts: [{ a: 'pointHold', w: 'stole' }] }], pops: [{ t: 'TAKE BACK THE "STOLEN" LIVES', w: 'stole', dur: 2.8 }] },
+ { p: 0, f: .38, plate: 'dd_farm_yard', cam: { frame: 'med', on: 0, push: [1, 1.06] }, chars: [{ c: 'oldCap', x: 1280, y: 1300, s: 1.4, view: 'threequarter', dir: 1, expr: 'sad', acts: [{ a: 'stride', w: 'retirement' }] }] },
+ { p: 0, f: .5, plate: 'dd_dark_room', grade: ['#0a1a3a', .3, 'multiply'], cam: { frame: 'two', on: 0, on2: 1 }, chars: [{ c: 'thunderTee', x: 1080, y: 1300, s: 1.35, view: 'threequarter', dir: 1, expr: 'angry' }, { c: 'love', x: 1460, y: 1300, s: 1.35, view: 'threequarter', dir: -1, expr: 'happy', acts: [{ a: 'hug', w: 'daughter' }] }] },
+ { p: 0, f: .6, plate: 'dd_ship_corridor', cam: { frame: 'full', on: 0 }, chars: [{ c: 'stretch', x: 900, y: 1300, s: 1.3, view: 'front', expr: 'smug', acts: [{ a: 'pointHold', w: 'science' }] }, { c: 'glowSue', x: 1200, y: 1300, s: 1.25, view: 'front' }, { c: 'flameKid', x: 1480, y: 1300, s: 1.25, view: 'front' }, { c: 'rockBen', x: 1800, y: 1300, s: 1.3, view: 'front' }], pops: [{ t: 'SCIENCE', w: 'science', dur: 1.6 }] },
+ { p: 0, f: .7, plate: 'dd_battlefield', cam: { frame: 'full', on: 0 }, chars: [{ c: 'laserEyes', x: 900, y: 1300, s: 1.3, view: 'front', expr: 'angry', acts: [{ a: 'scream', w: 'drama' }] }, { c: 'bigBlue', x: 1250, y: 1300, s: 1.3, view: 'front' }, { c: 'cardGuy', x: 1600, y: 1300, s: 1.3, view: 'front', expr: 'smug' }], pops: [{ t: 'DRAMA', w: 'drama', dur: 1.6 }] },
+ { p: 0, f: .82, plate: 'dd_plaza_beam', cam: { z: [1.0, 1.15], x: 1280, y: 700 }, pops: [{ t: 'DECEMBER → SECRET WARS', w: 'Secret', dur: 2.4 }] },
+ { p: 1, plate: 'dd_balcony', grade: ['#3a1a0a', .2, 'multiply'], cam: { frame: 'two', on: 0, on2: 1, push: [1, 1.05] }, chars: [{ c: 'oldCap', x: 1060, y: 1300, s: 1.4, view: 'threequarter', dir: 1, expr: 'smile' }, { c: 'thunderBro', x: 1520, y: 1300, s: 1.4, view: 'threequarter', dir: -1, expr: 'happy' }],
+   pops: [{ t: 'WHO IS UNDER THE GOLD MASKS?', w: 'masks', dur: 2.6 }, { t: 'TELL ME IN THE COMMENTS', w: 'comments', dur: 2.4 }] },
+ { p: 2, plate: 'dd_studio_board', cam: { frame: 'med', on: 0, push: [1, 1.05] }, chars: [{ c: 'stormi', x: 1280, y: 1300, s: 1.4, view: 'front', expr: 'happy', talk: true, acts: [{ a: 'holdUp2', w: 'snacks' }, { a: 'raise', w: 'Bye' }] }],
+   props: [{ k: 'popcorn', on: 0, s: .7 }], pops: [{ t: 'IN CINEMAS 18 DECEMBER', w: 'December', dur: 2.6 }] },
+] };
