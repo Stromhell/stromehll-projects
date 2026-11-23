@@ -1,0 +1,8 @@
+- ged2-cringe.mp4 <- https://media.tenor.com/yNNcz0nZl98AAAAC/my-dress-up-darling-sono-bisque-doll-wa-koi-wo-suru.gif (search "anime awkward")
+- ged2-laugh.mp4 <- https://media.tenor.com/uENM90q1cLEAAAAC/kuroo-laughing.gif (search "anime laughing at someone")
+- ged2-evil.mp4 <- https://media.tenor.com/Hr3P81y-vZ4AAAAC/anime-smile.gif (search "anime menacing smile")
+- ged2-smug.mp4 <- https://media.tenor.com/7lXpuCpDObwAAAAC/gintama-smug.gif (search "anime smug face")
+- ged2-tired.mp4 <- https://media.tenor.com/FMAlXvpnnzsAAAAC/anime-tired-lucky-star.gif (search "anime exhausted")
+- ged2-wow.mp4 <- https://media.tenor.com/usIaQYVhNjcAAAAC/suzuki-iruma-iruma-kun.gif (search "anime amazed wow")
+- ged2-relax.mp4 <- https://media.tenor.com/JELGZ2OetfUAAAAC/winry-fullmetal-alchemist.gif (search "anime relaxing bath")
+- ged2-money.mp4 <- https://media.tenor.com/WZiCGSnZKwUAAAAC/kid-tsunade-naruto.gif (search "anime counting money")

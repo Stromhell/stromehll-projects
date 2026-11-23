@@ -1,0 +1,87 @@
+# The Greatest Estate Developer - Episodio 2 - Stormi Knows Anime, espanol LatAm v1, 22 Nov 2026
+# Format: PANEL[@anchor] | opts | text  (panels of ep 2; ep1:pNNN = panel from episode 1 for the recap)
+# Facts from the official WEBTOON EN Episode 2 (read panel by panel, 22 Nov). Opens with a recap of Episode 1.
+@ Gancho
+p081@m | bg=aura:#ffd23d punch | Una abuelita acostada en el piso, echando vapor, diciendo que sus articulaciones nunca se habían sentido tan bien.
+p053 | bg=speed:#e3262e | Un caballero que corta troncos en el aire como si fueran mantequilla.
+p107@m | bg=black punch | Y un papá que llega a preguntar: ¿qué crees que estás haciendo?
+title | bg=halftone:#e3262e | Esto es The Greatest Estate Developer. Episodio dos. El día que el vago del pueblo construyó su primera casa.
+@ Resumen del episodio 1
+ep1:p041@m | bg=speed:#e3262e | Resumen rápido. Suho Kim, estudiante de ingeniería civil, despertó dentro de una novela como Lloyd Frontera, el vago más odiado del pueblo.
+ep1:p058@m | bg=black | Sabe que su familia va a perderlo todo por las deudas. Así que necesita dinero. Mucho dinero.
+ep1:p122@b | bg=stars | Y encontró la idea: en este mundo no existen los pisos con ondol, la calefacción coreana por debajo del piso.
+ep1:p133@m | bg=aura:#3c7aff | Y justo al final, se activó el sistema RP. Puntos de relación.
+@ Puntos de relación
+p001@b | bg=paper | ¿RP? ¿Como puntos de experiencia? No hay instrucciones. Solo que se ganan mejorando la relación con personajes clave.
+p003@b | bg=paper | Y de repente, aparece algo encima de Javier.
+p004@m | bg=aura:#3c7aff punch | Tu índice de aprobación: menos treinta. Menos treinta.
+p004@b | bg=paper gif=cringe | ¿Eso es bajo, verdad? Seguro que es súper bajo.
+p006@m | bg=halftone:#ff6ec7 | Así que Lloyd hace lo único que se le ocurre: Javier, de verdad creo que eres muy guapo.
+p006@b | bg=aura:#3c7aff | Y la ventanita lo delata: Lloyd está intentando comprar el favor de Javier.
+p007@m | bg=speed:#e3262e punch gif=laugh | La aprobación de Javier baja un punto. Menos treinta y uno. ¿Por qué bajó?
+p008@m | bg=paper | Mejor dejarlo para después. Si lo apresura, lo va a empeorar.
+@ El contrato
+p012@m | bg=paper | En la taberna, Lloyd le presenta su plan al dueño. Tú compras, y yo construyo.
+p013@m | bg=paper | Todo el costo de la construcción se descuenta de los muebles que rompí. Ahora, firme aquí.
+p015@b | bg=aura:#ffd23d | Pero el señor usa la habilidad Corazón de muro de piedra. Nadie confía en este tipo.
+p016@m | bg=black | Y Lloyd piensa: no quería llegar a esto, pero mi gran plan no puede fallar desde el principio...
+p017 | bg=speed:#e3262e punch | Vamos a usar mi imagen de vago.
+p018@b | bg=black gif=evil | Vamos, que nos vamos a ver seguido. Confiemos el uno en el otro, ¿sí? ¿Verdad?
+p019@m | bg=paper | Y funciona. El señor firma temblando. Y la ventanita: vaya, eres basura absoluta.
+p021@m | bg=aura:#ffd23d punch | Pero a Lloyd no le importa. ¡Consiguió su primer pedido!
+@ Prejuicio o estadística
+p026@m | bg=paper | Javier no se lo cree. Amenazaste al dueño para que firmara. ¿Ahora qué nueva forma de causar problemas inventaste?
+p029@m | bg=paper | Y Lloyd le suelta una clase de psicología: ¿has oído de la distorsión cognitiva? Creer que alguien va a hacer algo solo por lo que hizo en el pasado.
+p030@m | bg=paper | Javier responde: no es prejuicio, es experiencia y estadística.
+p031@m | bg=halftone:#3cc8ff gif=smug | Y Lloyd: ¿y la experiencia y la estadística no vienen también del pasado? Jaque mate.
+p034@m | bg=paper | Voy a hacer que sonrían. El dueño de la taberna y su mamá.
+p036@m | bg=speed:#ffd23d punch | Porque esas sonrisas van a ser los cimientos de mi negocio.
+@ La construcción
+p037@m | bg=paper | Y empieza la obra. Sacar la tierra, moverla, compactarla, y repetir.
+p038@m | bg=paper | La madera sale del almacén de la residencia del barón. Va a ser una estructura tradicional de vigas de madera.
+p039@m | bg=aura:#ffd23d | Las paredes, con arcilla que sacó del río. Y... ¡ta-da!
+p040@m | bg=speed:#e3262e gif=tired | Y Lloyd tirado en el suelo. Este cuerpo es demasiado débil.
+p041@b | bg=paper | Javier: eso no tomó mucho tiempo. Y Lloyd: ¡me tomó una semana!
+p042@m | bg=black | Y Javier no lo entiende. De verdad está construyendo algo. ¿Dónde aprendió esto? ¿De verdad va a cumplir el contrato? ¿El vago de Lloyd Frontera?
+@ El espadachín leñador
+p044@m | bg=paper | Lloyd intenta cortar leña, pero apenas puede levantar el hacha.
+p047@m | bg=speed:#e3262e | Hasta que Javier le quita el hacha. ¿Qué necesitas que haga?
+p050@b | bg=paper | Tablitas delgadas. Cada una de dos manos de alto, una mano de ancho y un dedo de grosor.
+p052@m | bg=aura:#3cc8ff punch | Y Javier lanza los troncos al aire y...
+p053@t | bg=speed:#e3262e punch | ¡Zas, zas, zas! Tablitas perfectas. Como un Fruit Ninja de la vida real.
+p058 | bg=aura:#ffd23d gif=wow | Wow. De verdad este tipo va a ser un maestro espadachín. ¿Quién necesita herramientas modernas?
+p060@m | bg=paper | Y entonces Lloyd le dice: cuando termines, ¿por qué no me ayudas a cavar?
+p061@m | bg=speed:#e3262e | ¿En vez de darme las gracias me da más trabajo? Este hombre no tiene remedio. Y la ventanita: Javier se arrepiente de su decisión.
+p062@m | bg=paper | Pero Lloyd lo lee perfecto: me ayudas porque tienes curiosidad. Quieres ver cómo los voy a estafar.
+p063@m | bg=black | Entonces, si el trabajo tiene que terminar más rápido... hay que hacerlo juntos.
+p064 | bg=black | Y Javier piensa: no se equivoca. Cambió por completo hace unos días. Pero su pasado hace imposible confiar en él.
+p066@m | bg=paper | Así que solo le queda una opción: terminar rápido y ver qué pasa.
+@ La magia del ondol
+p072@m | bg=aura:#ffd23d punch | Y la casa está... ¡terminada!
+p074@m | bg=paper | ¿Esas son letras? Es el logo de mi marca. ¿Un logo? Es una cosa que existe.
+p079 | bg=black | Encienden el fuego...
+p081@m | bg=paper | Y la mamá del dueño se acuesta en el piso. Es precioso... es tan bueno...
+p082@m | bg=aura:#ffd23d gif=relax | Todas mis articulaciones tiesas se sienten tan relajadas.
+p083@m | bg=paper | ¿Cómo es posible? El piso está caliente.
+p085@b | bg=aura:#ff9a3c | Y Lloyd sonríe. Esto debe ser increíble para la gente de este mundo. El poder del piso con ondol. Es como magia.
+ai:ged2_joke_spa.png | bg=aura:#ffd23d | Básicamente, Lloyd acaba de inventar el spa medieval. Y la abuelita es su primera clienta feliz.
+p086@m | bg=paper | Gracias, joven amo. Hace tanto que no veía sonreír a mi madre.
+p088@m | bg=black | Y Javier ve el cambio. Primero fue la forma de hablar. Ahora trabaja duro y cumple su promesa.
+p093 | bg=aura:#3c7aff punch | Notificación: tu aprobación con Javier subió dos puntos. Menos veintinueve. Y ganaste treinta y seis RP.
+p097@m | bg=paper | Ya sé lo que piensas: este tipo no es tan basura después de todo. No. Yo creo que sí. Que no.
+@ La casa modelo
+p098@m | bg=paper | Solo con lo que costó la madera, fue pérdida total. Pero eso no importa.
+p099@b | bg=black | Porque esta casa es solo su casa modelo. Para mostrar.
+ai:ged2_joke_showroom.png | bg=halftone:#3cc8ff gif=money | Lloyd no construyó una casa. Construyó una tienda de muestra. Como cuando vas al centro comercial y te dejan probar el colchón.
+p100@m | bg=speed:#ffd23d | Unos días después: fila de aldeanos esperando para entrar.
+p101@m | bg=paper | Wow, pensé que me iba a derretir.
+p102@m | bg=paper | Y Lloyd vendiendo como vendedor de teletienda: ¿apuesto a que quieres un cuarto así en tu casa, verdad?
+p103@m | bg=aura:#ffd23d punch | Estilo A, un anexo en el patio. Estilo B, remodelar tu casa actual. Y si pides los dos, diez por ciento de descuento.
+p104@m | bg=paper gif=cringe | Pero ventanita: los aldeanos no confían en ti. Vamos, confiemos el uno en el otro, ¿sí?
+p105@b | bg=paper | A este precio, prácticamente lo estoy regalando.
+@ Llega el padre
+p106@b | bg=black punch | Lloyd.
+p107@m | bg=aura:#7a3cff | Es su padre. Arcos Frontera. ¿Qué crees que estás haciendo?
+p107@b | bg=speed:#e3262e punch | Y la ventanita: tu índice de aprobación con él: menos veinte.
+p108@m | bg=aura:#7a3cff stamp=CONTINUARÁ | ¿Qué va a pasar cuando el barón descubra que su hijo vago se metió al negocio de la construcción?
+title | bg=halftone:#e3262e | Suscríbete para el episodio tres. Y dime en los comentarios: ¿Javier va a terminar siendo el mejor amigo de Lloyd, o su peor enemigo?

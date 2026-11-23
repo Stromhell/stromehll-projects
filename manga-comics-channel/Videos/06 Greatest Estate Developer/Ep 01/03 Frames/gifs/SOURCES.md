@@ -1,0 +1,8 @@
+- ged1-cold.mp4 <- - anime-cold-shivering_2.mp4: https://media.tenor.com/thStHyPD1loAAAAC/anime-shiver-anime-cold.gif (search "anime cold shivering")
+- ged1-cringe.mp4 <- - anime-cringe_2.mp4: https://media.tenor.com/cP1-3vcY8oEAAAAC/higuruma-facepalm.gif (search "anime cringe")
+- ged1-laugh.mp4 <- - anime-evil-laugh_3.mp4: https://media.tenor.com/DMOtpMiC50cAAAAd/boku-no.gif (search "anime evil laugh")
+- ged1-idea.mp4 <- - anime-light-bulb-idea_2.mp4: https://media.tenor.com/7t66-AKDjuEAAAAC/anime-idea.gif (search "anime light bulb idea")
+- ged1-money.mp4 <- - anime-money-eyes_1.mp4: https://media.tenor.com/68Ncceu1BVkAAAAC/nami-cat-burglar.gif (search "anime money eyes")
+- ged1-scared.mp4 <- - anime-scared-shaking_3.mp4: https://media.tenor.com/qJAIpf8kIDEAAAAC/gachiakuta-rudo-gachiakuta.gif (search "anime scared shaking")
+- ged1-smug.mp4 <- - anime-smug_2.mp4: https://media.tenor.com/A-3DyUJYw-kAAAAC/anime-smug.gif (search "anime smug")
+- ged1-wake.mp4 <- - anime-waking-up-confused_3.mp4: https://media.tenor.com/R9lGKA0QTaYAAAAC/waguri-waguri-anime.gif (search "anime waking up confused")

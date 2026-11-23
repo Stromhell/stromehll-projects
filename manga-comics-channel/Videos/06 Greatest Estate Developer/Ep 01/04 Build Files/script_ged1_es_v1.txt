@@ -1,0 +1,92 @@
+# The Greatest Estate Developer - Episodio 1 - Stormi Knows Anime, espanol LatAm v1, 22 Nov 2026
+# Format: PANEL[@anchor] | opts | text     PANEL = p### (Tools/webtooncut panels of ep 1) or ai:<file in 03 Frames/art>
+# anchor = t | m | b | 0.0-1.0 (where the 16:9-ish window sits inside a tall panel; default = busiest part)
+# Facts from the official WEBTOON EN Episode 1 (read panel by panel, 22 Nov). First episode: no recap, opens with a hook.
+@ Gancho
+p006 | bg=aura:#3cc8ff punch | Un tipo con una pala. Un caballero con una bandera. Y cuatro bolitas de pelo que parecen sacadas de un peluche.
+p009 | bg=stars | Y con un solo palazo en el suelo, el mapa del mundo entero se ilumina como si fuera un plano de ingeniero.
+p010 | bg=speed:#3cc8ff | Esta es la historia de cómo un estudiante promedio de ingeniería civil puso un mundo de fantasía completo patas arriba.
+p014 | bg=halftone:#ffd23d gif=money | Y su frase favorita es esta: Javier, todo esto es... dinero.
+p015@m | bg=paper gif=laugh | Y el caballero solo le pregunta: señor, ¿por fin perdió la cabeza?
+p016 | bg=halftone:#e3262e | Esto es The Greatest Estate Developer. El mejor desarrollador de tierras. Episodio uno. Y créeme, este es el isekai más tacaño que vas a ver.
+@ Un deseo que nadie pidió
+p018@m | bg=black | Pero vamos unos años atrás. Una noche oscura, en medio del campo.
+p019 | bg=aura:#3c7aff | Y aparece una ventanita azul. Alarma: has sido elegido para que el Absoluto te conceda un deseo al azar.
+p020 | bg=aura:#3c7aff | Felicidades. Aplausos, aplausos, aplausos. Así, con carita feliz y todo.
+p022 | bg=black | Ahora eres un personaje de El Caballero de Sangre y Hierro.
+p023 | bg=paper | Y nuestro protagonista dice: ¿El Caballero de Sangre y Hierro? ¿El libro que leí anoche?
+p025 | bg=speed:#3cc8ff | ¿Un deseo? Si yo no pedí nada. Ni siquiera había tomado nada.
+p028@b | bg=black gif=wake | Y el detalle: se despierta boca abajo, tirado en un camino de tierra, en plena noche.
+p029 | bg=paper gif=cold | Muerto de frío.
+p031 | bg=aura:#e3262e punch | Y otra ventanita: alerta de salud. Se te zafó la mandíbula por dormir en el suelo. Y entre paréntesis: risas.
+p032 | bg=speed:#e3262e punch | Hasta el sistema se burla de él. Así que le da un manotazo a la ventanita.
+p033 | bg=paper | Ok. Ya entendió. Le tocó ser un personaje de esta historia. Pero, ¿quién? ¿Quién es el único personaje que vive en medio de la nada y se duerme en el suelo?
+@ El caballero y el vago
+p034 | bg=black | Maestro Lloyd. Lo estaba buscando por todas partes.
+p038@m | bg=stars | Y frente a él aparece el protagonista del libro. Javier Asrahan.
+p040@t | bg=aura:#3c7aff | En la novela, Javier es un espadachín legendario. Pero al principio solo es un caballero desconocido que trabaja para el señor de estas tierras, Arcos Frontera.
+p040@b | bg=paper | Y el hijo mayor del barón Frontera es...
+p041@m | bg=speed:#e3262e punch | ¿Yo soy el vago? ¿El bueno para nada de Lloyd Frontera?
+p043 | bg=paper | Y Javier, con toda la calma del mundo: yo dije su nombre. Nunca lo llamé vago.
+p044 | bg=halftone:#3cc8ff gif=smug | La ventanita dice: Javier parece estar de buen humor. Y Lloyd le grita: ¡ya lo vi, cállate!
+@ La vida de un vago
+p047@m | bg=paper | De vuelta en la mansión, Javier le cuenta su día. Empezó a tomar en la tarde, se emborrachó, destrozó los muebles de la taberna...
+p047@b | bg=paper | Y se desmayó en el camino de vuelta a casa. Un día normal en la vida de un vago.
+p048@b | bg=black | Su papá estaba preocupado y mandó a Javier. Porque podrás ser un vago, pero eres su hijo. Y si te mueres en el camino con la mandíbula zafada, él va a estar triste.
+p048@t | bg=paper | Y Lloyd piensa: este tipo sí que ataca a traición.
+p049@m | bg=paper gif=cold | Y Lloyd, temblando, solo piensa en una cosa: ay, si el piso tuviera ondol. La calefacción por debajo del piso de las casas coreanas.
+ai:ged1_joke_ondol.png | bg=aura:#ffd23d | Porque en Corea, el piso calientito es sagrado. Pero claro, esto es una novela de fantasía medieval. Aquí no hay nada de eso.
+p052@m | bg=black | Antes de que Javier se vaya, Lloyd le pregunta: nuestra familia... tiene muchas deudas, ¿verdad?
+p053 | bg=paper | Y Javier solo dice: qué cosa tan rara de decir.
+@ El final que ya conoce
+p055 | bg=black | Pero Suho Kim sabe exactamente lo que pasa en esta historia.
+p056@m | bg=black | Porque anoche, en su cuarto diminuto de pensión, leyó el último capítulo. Y sabe lo que le pasa a Lloyd.
+p057@m | bg=aura:#7a3cff punch | Primera parte: el barón y la baronesa caen en la trampa de un estafador. Pierden todas sus tierras, toda su fortuna, y se quitan la vida.
+p058@m | bg=black | Lloyd termina de mendigo, tomando todo el día. Más cerveza, más cerveza.
+p059@m | bg=speed:#e3262e punch gif=scared | Hasta que tose sangre y muere. Fin. Así de feo.
+p060@m | bg=speed:#ffd23d punch | Y Suho explota: ¿entonces para qué ser aristócrata? ¡Es la misma vida miserable que tenía en Corea!
+p061@b | bg=aura:#3c7aff | ¿Qué clase de deseo es este? ¿Ponerme en el cuerpo de alguien con un final así?
+@ Operación limpiar la imagen
+p064@m | bg=paper | A la mañana siguiente, aparece su mamá, Marbella Frontera. ¿Rompiste cosas en la taberna anoche?
+p065@m | bg=paper | Y Lloyd, muy tranquilo: no, anoche estaba leyendo un libro.
+p066@m | bg=paper | Ella le ruega que esta vez vaya a la taberna y pida perdón. Y él dice: está bien, lo haré.
+p068@m | bg=halftone:#3cc8ff gif=cringe | La ventanita: estas dos personas están muy confundidas por tu respuesta. Imagínate lo malo que era Lloyd, que decir que sí ya es sospechoso.
+p072@m | bg=paper | Y salen al pueblo. Y apenas lo ven, la gente se esconde.
+p078@m | bg=speed:#e3262e | ¡No lo mires a los ojos! Le gritan a un niño. Como si Lloyd fuera un monstruo de Pokémon salvaje.
+p080 | bg=aura:#3c7aff | Ventanita: los aldeanos te detestan absolutamente. Gracias, sistema. Muy útil.
+p083@m | bg=paper | Y resulta que Javier no lo acompaña para cuidarlo a él. Lo acompaña para proteger a los aldeanos de Lloyd. O sea, Lloyd es el villano del pueblo.
+p084@m | bg=paper | Así que el plan es claro. Primero, quitarse esta imagen de basura. Así, por lo menos, cuando sea mendigo alguien le dará comida.
+p085 | bg=black | No. Mejor todavía. Si arregla las deudas de la familia antes de que llegue la tragedia...
+p086@m | bg=aura:#ffd23d | Puede vivir tranquilo como heredero de un barón de campo. Una vida dulce y cómoda hasta viejito.
+p087@m | bg=paper | ¿Y no hay algún truco? ¿Algún código de trampa? Y ding: resulta que sí tiene habilidades.
+p088 | bg=aura:#3c7aff gif=cringe | Habilidades de Lloyd. Basura humana: una pasiva que hace que todos frunzan el ceño. Y Borracho escandaloso: cuando la usas, te vuelves un completo patán. Las peores habilidades de la historia del isekai.
+@ La disculpa
+p098@m | bg=paper | En la taberna, Lloyd se inclina: ¡perdóneme! ¡Todo lo que pasó anoche fue mi culpa!
+p100@m | bg=speed:#e3262e gif=scared | Y el dueño de la taberna entra en estado de alerta máxima. Está más asustado porque el vago, de repente, es amable.
+p102@m | bg=paper | Entonces Lloyd piensa: ok, seré un poquito más grosero. Bueno, supongo que lo siento.
+p102@b | bg=halftone:#3cc8ff | Ventanita: tu disculpa no parece muy sincera. ¡Pues qué quieres que haga!
+p103@m | bg=paper | Y el pobre señor: está bien, no tiene que disculparse.
+@ La idea de un millón
+p107@m | bg=paper | De regreso, Javier le explica: todo lo que destruiste, los muebles, la decoración, lo compró el dueño con su dinero ganado con esfuerzo.
+p108@m | bg=paper | Y no va a estar contento hasta que se lo pagues. ¿Pagarle? ¿Con tantas deudas?
+ai:ged1_joke_debt.png | bg=aura:#7a3cff | Porque, seamos honestos, la familia Frontera está más endeudada que yo después del Black Friday.
+p110@m | bg=paper | Y encima, la mamá del dueño está enferma desde el último frío del invierno.
+p111@m | bg=black | Y Lloyd recuerda algo. Adentro de la taberna hacía frío. Una sola chimenea no alcanza para calentar todo el edificio.
+p112@m | bg=paper | Los ancianos no aguantan ese frío mucho tiempo. A menos que tengan... piso con ondol.
+p119 | bg=speed:#ffd23d punch | Y ahí... ¡pum! Se le prende el foco.
+p120@m | bg=aura:#ffd23d gif=idea | Literalmente. Un foco en la cabeza. Como en las caricaturas.
+p122@m | bg=stars | ¡Aquí no existen los pisos con ondol! Y si los construye en este mundo... se van a vender solos.
+p126@m | bg=black | El vago de Lloyd Frontera jamás podría soñar con algo así.
+p126@b | bg=aura:#3c7aff punch | Pero el verdadero yo, Suho Kim, sí puede.
+p127@t | bg=paper | En la universidad estudió ingeniería civil. En el ejército fue ingeniero militar y construyó una casa él solo.
+p128@m | bg=black | Y trabajó día y noche en obras de construcción.
+ai:ged1_joke_builder.png | bg=halftone:#ffd23d gif=money | O sea, este hombre no recibió poderes de dragón ni una espada legendaria. Recibió un casco de obra y una pala. Y está feliz.
+p129@m | bg=speed:#ffd23d punch | ¡Con esto puedo pagar todas las deudas del barón!
+p130@t | bg=paper | ¡Javier! ¡Volvamos a la taberna! ¿Y para qué?
+p131@m | bg=aura:#e3262e punch gif=laugh | ¡Para conseguir mi primer pedido!
+@ Comienza el viaje
+p132 | bg=aura:#3c7aff | Ding. Notificación: tu verdadero viaje ha comenzado.
+p133@m | bg=aura:#3c7aff | Se activa el sistema RP. Puntos de relación. Los ganas mejorando tu relación con los personajes clave.
+p133@b | bg=halftone:#3cc8ff | Puntos actuales: cero. Cero. Como su reputación en el pueblo.
+p134@b | bg=aura:#7a3cff stamp=CONTINUARÁ | ¿Podrá un ingeniero civil salvar a una familia en bancarrota con calefacción coreana? ¿Y quiénes son esas cuatro bolitas de pelo del principio?
+p016 | bg=halftone:#e3262e | Suscríbete para el episodio dos. Y dime en los comentarios: si tú despertaras en una novela, ¿qué invento de nuestro mundo venderías primero?
