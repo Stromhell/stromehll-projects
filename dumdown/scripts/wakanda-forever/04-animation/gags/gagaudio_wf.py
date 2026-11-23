@@ -113,13 +113,14 @@ def build(g):
         elif k == 'slam': ev['slam'].append({'t': round(t, 3), 'txt': it[1], 'd': it[2]})
         elif k == 'laugh': x = sfx('laugh_' + it[1]); SF.append((t + .05, x * .55)); ev['laugh'].append({'t': round(t, 3), 'k': it[1], 'd': round(len(x) / SR, 2)})
         else:
-            x = voice(k, it[1]); V_.append((t, x)); d = len(x) / SR; ev['speech'].append({'who': k, 't0': round(t, 3), 't1': round(t + d, 3), 'lv': levels(x, t)}); t += d + .14
+            x = voice(k, it[1]); fz = min(len(x), int(SR * .06)); x = x.copy(); x[-fz:] *= np.linspace(1, 0, fz); V_.append((t, x)); d = len(x) / SR; ev['speech'].append({'who': k, 't0': round(t, 3), 't1': round(t + d, 3), 'lv': levels(x, t)}); t += d + .14
     dur = round(t + .35, 3)
     mixv = blank(dur + 4); [at(mixv, x, tt) for tt, x in V_]
     mixs = blank(dur + 4); [at(mixs, x * .3, tt) for tt, x in SF]
     at(mixs, sfx('scratch') * .35, 0.0); at(mixs, sfx('whoosh') * .25, .12); at(mixs, sfx('whoosh') * .25, dur - .45)
     mus = blank(dur + 4); mm = music(g['music'], dur - OPEN + .2, g['id']) if g['music'] else np.zeros(1); at(mus, mm * .055, OPEN - .1)
     mix = (mixv + mixs + mus)[:int(SR * dur)]; mix = mix / (np.abs(mix).max() or 1) * .89
+    fo = int(SR * .6); mix[-fo:] *= np.linspace(1, 0, fo) ** 2  # v5: laugh/music fade out over the held punchline instead of a hard stop (L30/L35)
     wavfile.write(os.path.join(OUT, f'gag{g["id"]:02d}.wav'), SR, (mix * 32767).astype(np.int16))
     meta = {'id': g['id'], 'act': g.get('act'), 'at': g.get('at', 0), 'title': g.get('title',g.get('key')), 'set': g.get('set'), 'dur': dur, **ev}
     json.dump(meta, open(os.path.join(OUT, f'gag{g["id"]:02d}.json'), 'w')); return meta

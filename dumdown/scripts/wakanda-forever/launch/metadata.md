@@ -27,20 +27,20 @@ This is DumDown: Marvel, dumbed down, so anyone can get it. A funny cartoon reca
 0:00 Whale cavalry?!
 0:32 Goodbye, King
 1:10 The Queen's mic drop
-1:58 Something in the water
-2:47 The lab and the river
-4:10 The roast council
-4:50 The kid genius
-5:47 The Boston chase
-6:33 Taken
-7:09 The underwater kingdom
-8:22 The cost
-8:49 Plan: dry him out
-9:49 The ancestor call
-10:38 The big battle
-11:25 Loose ends
-11:57 Haiti
-12:14 Outro
+2:07 Something in the water
+3:03 The lab and the river
+4:34 The roast council
+5:18 The kid genius
+6:20 The Boston chase
+7:08 Taken
+7:48 The underwater kingdom
+9:06 The cost
+9:32 Plan: dry him out
+10:38 The ancestor call
+11:28 The big battle
+12:19 Loose ends
+12:51 Haiti
+13:09 Outro
 
 💬 Who should have won: Shuri or the fish man? 👇
 🔔 Subscribe to DumDown for more Marvel movies and shows, dumbed down so anyone can get them.

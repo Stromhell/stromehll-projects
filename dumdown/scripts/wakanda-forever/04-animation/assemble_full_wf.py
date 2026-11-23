@@ -11,7 +11,7 @@ for n in range(17):
     v = f'{SCR}/acts/act{n:02d}.mp4'; a = f'{SCR}/mix/act{n:02d}.wav'; tot = round(min(dur(v), dur(a)) * 24); t = f'{SCR}/acts/title{n:02d}.mp4'
     import soundfile as _sf, numpy as _np
     _x, _sr = _sf.read(a); _m = _np.abs(_x).max(1) if _x.ndim > 1 else _np.abs(_x); _i = _np.where(_m > 10 ** (-45 / 20))[0]
-    tot = min(tot, round((_i[-1] / _sr + .45) * 24))  # trim silent act tail (qa dead air), keep 0.45 s
+    tot = min(tot, round((_i[-1] / _sr + .9) * 24))  # trim silent act tail, keep 0.9 s so scenes breathe before the next cut (L34)
     if os.path.exists(t): segs += [(t, a, 0, 100), (v, a, 100, tot - 100)]  # section title re-rendered into the letterbox bar
     else: segs.append((v, a, 0, tot))
 es = f'{SCR}/acts/endscreen.mp4'; segs.append((es, es, 0, round(dur(es) * 24)))  # clean end screen (no graphics, music tail)

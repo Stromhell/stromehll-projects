@@ -81,4 +81,26 @@ window.METER = (n, bump = 9) => { E.screen(); const x = W - 360, y = E.BAR + 24,
 P.rock = o => go(o, () => { poly([[-110, 0], [-118, -40], [-96, -70], [-30, -80], [40, -78], [100, -66], [120, -30], [112, 0]], o.col || '#8a7a62', 5); ln(-70, -50, -20, -40, '#5e5242', 4); ln(30, -30, 80, -42, '#5e5242', 4); ell(0, 4, 120, 10, 'rgba(0,0,0,.25)', 0); });
 P.armchair = o => go(o, () => { const C = o.col || '#7a2a5a'; rr(-92, -250, 184, 190, 26, C, 5); rr(-112, -120, 44, 120, 14, C, 5); rr(68, -120, 44, 120, 14, C, 5); rr(-80, -86, 160, 30, 10, C, 5); ln(-80, 0, -80, -20, '#3a1a0a', 10); ln(80, 0, 80, -20, '#3a1a0a', 10); });
 P.counter = o => go(o, () => { rr(-360, -260, 720, 260, 6, o.col || '#8a6a4a'); rr(-380, -280, 760, 34, 6, '#a8825a'); if (o.t) txt(o.t, 0, -150, '900 52px Inter', '#f4ecd8'); });
+// v5 gag props
+// pool sunk into the stage floor; o.sp = [t, ...] splash bursts
+P.pool = (o, lt) => go(o, () => { const w = o.w || 640; ell(0, 0, w / 2 + 22, 64, '#c8ccd4'); ell(0, 0, w / 2, 52, '#3aa8e8'); ctx.save(); ctx.globalAlpha = .5; for (let i = 0; i < 4; i++) ell(-w / 4 + i * w / 6, -4 + Math.sin(lt * 3 + i) * 4, 40, 6, '#bfe8ff', 0); ctx.restore();
+  for (const t of (o.sp || [])) { const a = lt - t; if (a < 0 || a > .9) continue; const k = a / .9; ctx.save(); ctx.globalAlpha = 1 - k; for (let j = 0; j < 9; j++) { const an = -Math.PI * (.15 + .7 * j / 8), r = 60 + 260 * k; ell((o.sx || 0) + Math.cos(an) * r * .8, -30 + Math.sin(an) * r * (1.4 - k), 22 - 12 * k, 30 - 16 * k, '#9ad8ff', 3); } ctx.restore(); } });
+// judges' desk with a little name plate
+P.judgeDesk = o => go(o, () => { rr(-420, -230, 840, 230, 10, o.col || '#3a2a5a', 6); rr(-440, -250, 880, 30, 8, '#d8b46a', 5); if (o.t) txt(o.t, 0, -120, '900 46px Inter', '#ffd23d'); });
+// T-shirt on a hanger for the Talokan gift shop
+P.tshirt = o => go(o, () => { poly([[-90, -200], [-40, -220], [0, -200], [40, -220], [90, -200], [130, -150], [90, -125], [80, -140], [80, 0], [-80, 0], [-80, -140], [-90, -125], [-130, -150]], o.col || '#f4f1ea', 5); if (o.t) { const L = o.t.split('|'); L.forEach((l, i) => txt(l, 0, -120 + i * 30, '900 22px Inter', '#1a3a6a')); } });
+// fridge (opens: o.open 0..1 via kk)
+P.fridge = (o, lt) => go(o, () => { rr(-150, -560, 300, 560, 14, '#e8e4d4', 6); ln(-150, -330, 150, -330, '#9a9688', 4); const k = o.k ?? 0; if (k > .05) { ctx.save(); rr(-150, -560, 300, 560, 14, '#1a1a22', 0); ctx.restore(); ctx.fillStyle = 'rgba(200,240,255,.6)'; ctx.fillRect(-140, -550, 280, 540); poly([[150, -560], [150 + 220 * k, -600], [150 + 220 * k, 40], [150, 0]], '#d8d4c4', 6); } else { rr(110, -500, 14, 120, 6, '#8a8a8a', 3); rr(110, -300, 14, 120, 6, '#8a8a8a', 3); } });
+// milk carton + cheese wedge held by agents
+P.milk = o => go(o, () => { rr(-34, -120, 68, 120, 4, '#f4f4f4', 4); poly([[-34, -120], [0, -160], [34, -120]], '#6aa8e8', 4); txt('MILK', 0, -60, '900 20px Inter', '#2a5aa8'); });
+// car interior cutaway: long bench seat + window frame (side view)
+P.carBench = o => go(o, () => { const w = o.w || 1500; rr(-w / 2, -300, w, 230, 40, '#2a2a30', 6); rr(-w / 2 + 20, -90, w - 40, 90, 24, '#3a3a44', 6); });
+// car seen from the front (cutaway): roof, pillars, wheel, dashboard/hood with headlights. Characters sit behind it (front view), so no seats show.
+P.carFront = (o, lt) => go(o, () => { const C = o.col || '#1a1a22', bob = Math.sin(lt * 9) * 3; ctx.translate(0, bob);
+  rr(-720, -940, 1440, 70, 30, C, 6); poly([[-720, -900], [-660, -900], [-760, -250], [-860, -250]], C, 6); poly([[720, -900], [660, -900], [760, -250], [860, -250]], C, 6);
+  ell(o.wx ?? -290, -300, 120, 120, 'rgba(0,0,0,0)', 0); ctx.lineWidth = 26; ctx.strokeStyle = '#111'; ctx.beginPath(); ctx.arc(o.wx ?? -290, -300, 110, 0, Math.PI * 2); ctx.stroke(); ctx.lineWidth = 12; ctx.strokeStyle = '#3a3a44'; ctx.beginPath(); ctx.arc(o.wx ?? -290, -300, 110, 0, Math.PI * 2); ctx.stroke();
+  rr(-920, -270, 1840, 330, 60, C, 7); rr(-880, -270, 1760, 40, 16, '#2e2e38', 0); ell(-680, -120, 90, 50, '#fff6c8', 5); ell(680, -120, 90, 50, '#fff6c8', 5); rr(-260, -170, 520, 90, 20, '#0c0c10', 5);
+  for (let i = -3; i <= 3; i++) ln(i * 70, -160, i * 70, -90, '#3a3a44', 6); rr(-200, -40, 400, 60, 10, '#e8e4d4', 4); if (o.plate) txt(o.plate, 0, -2, '900 34px Inter', '#1a1a22'); });
+// stand legs under a board/whiteboard: o.w half-width, o.h leg length (top at y)
+P.legs = o => go(o, () => { const w = o.w || 300, h = o.h || 220; ln(-w, 0, -w - 30, h, '#3a3a44', 14); ln(w, 0, w + 30, h, '#3a3a44', 14); ln(-w - 10, h * .6, w + 10, h * .6, '#3a3a44', 10); });
 })();
