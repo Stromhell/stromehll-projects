@@ -1,7 +1,7 @@
 {
  "channel": "dumdown",
  "video": "avengers-mistakes-doomsday",
- "state": "waiting_approval",
+ "state": "booked",
  "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ84kYndWLVBvCBkrKjCNjY4y",
  "feedback": false,
  "queue_pos": 0,
@@ -10,5 +10,5 @@
  "proposed_slot": "2026-12-07T16:00Z",
  "source_youtube": "https://youtu.be/bR22cUvnMMs",
  "updated": "2026-11-22T20:45Z",
- "note": "FULL v3 (12:05) shared 22 Nov 22:2x UTC after Pushpam 20:43 review fixes; Drive 1AB5WLwkXAsMNJopWhqZyzWCXvK_hr_p7; kit v2 https://claude.ai/artifact/BrAAsVbQAJLL4uNUDqs5Vf; waiting OK + A/B/C pick, slot 7 Dec 16:00 UTC"
+ "note": "BOOKED Mon 7 Dec 2026 16:00 UTC, Zernio post 6b04010e43e8ea9481eb6541, thumb A, FULL v3"
 }
