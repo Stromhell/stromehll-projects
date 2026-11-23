@@ -1,0 +1,90 @@
+{
+ "post": {
+  "_id": "6b0466074016ef3326c8a946",
+  "userId": "6b00ba00f0e8042b55f15b31",
+  "workspaceId": "6b00ba00f0e8042b55f15b33",
+  "title": "",
+  "content": "¡LLOYD USA SUS RP EN EL JUEGO DE INVOCACIÓN Y LE SALE PPODONG, UN HÁMSTER QUE CRECE A MÁS DE NUEVE METROS! En el episodio 4 de The Greatest Estate Developer conocemos a Ppodong y su manual de usuario babeado, las semillas de girasol rojas y azules, y sus habilidades: Excavación, Compactar tierra y Cachetes de bolsillo. Lloyd por fin tiene su maquinaria pesada, pone a trabajar a los treinta soldados de la baronía (¡seguridad primero!) y se enfrenta a Neumann, el caballero principal que en la novela traiciona al barón.\n\n¿Cómo va a ganar un duelo el tipo más débil del pueblo? ¿Y qué esconde Neumann?\n\n¡Déjanos tus teorías en los comentarios!\nSuscríbete a Stormi Knows Anime para más webtoon y manga explicado en español.\n\n#TheGreatestEstateDeveloper #LloydFrontera #Webtoon\n\nCréditos: The Greatest Estate Developer © BK_Moon (historia original), Lee Hyun Min (adaptación), Kim Hyunsoo (arte) / WEBTOON. Usado con fines de comentario y análisis.\n\n#anime #manga #animeenespañol\n\n0:00 ¡Un hámster de nueve metros!\n0:18 Resumen del episodio 3\n0:39 El giro\n1:09 Ppodong\n1:53 El hámster gigante\n2:11 Las habilidades de Ppodong\n2:54 El ejército de la pala\n3:47 El caballero Neumann\n4:24 Apretando botones\n5:08 El duelo",
+  "mediaItems": [
+   {
+    "_id": "6b0466134016ef3326c8a99c",
+    "url": "https://media.zernio.com/media/1795450364842_9a873c4da329103c_GED4_ES_v1.mp4",
+    "type": "video",
+    "thumbnail": "https://media.zernio.com/media/1795450374428_cafe4f4bab433985_GED4_thumb_ES_v1.jpg"
+   }
+  ],
+  "scheduledFor": "2026-12-09T23:00:00.000Z",
+  "timezone": "UTC",
+  "status": "scheduled",
+  "tags": [
+   "the greatest estate developer",
+   "the greatest estate developer episodio 4",
+   "the greatest estate developer español",
+   "el mejor desarrollador de tierras",
+   "lloyd frontera",
+   "javier asrahan",
+   "ppodong",
+   "hámster gigante",
+   "neumann",
+   "invocación",
+   "semillas de girasol",
+   "maquinaria pesada",
+   "webtoon",
+   "webtoon en español",
+   "manhwa",
+   "manhwa en español",
+   "manhwa resumen",
+   "isekai",
+   "isekai manhwa",
+   "reencarnado en una novela",
+   "the greatest estate developer capitulo 4",
+   "manhwa recomendado"
+  ],
+  "hashtags": [],
+  "mentions": [],
+  "visibility": "public",
+  "crosspostingEnabled": true,
+  "metadata": {
+   "usageCounted": true
+  },
+  "recycling": {
+   "enabled": false,
+   "gapFreq": "month",
+   "recycleCount": 0,
+   "contentVariations": [],
+   "contentVariationIndex": 0
+  },
+  "createdAt": "2026-11-23T16:13:07.154Z",
+  "updatedAt": "2026-11-23T16:13:07.158Z",
+  "platforms": [
+   {
+    "_id": "6b0466134016ef3326c8a99a",
+    "platform": "youtube",
+    "accountId": {
+     "_id": "6b00ba86a42f4cf9f57677a1",
+     "platform": "youtube",
+     "username": "stormiknowsanime",
+     "displayName": "Stormi Knows Anime",
+     "profilePicture": "https://yt3.ggpht.com/4kyAJamFAdkP-LVGVBJlZHCysPnEyDIJAs_O7mQq_gbj5pYkIJbsBJEfUkj2CvoLeBeywa9n=s88-c-k-c0x00ffffff-no-rj",
+     "isActive": true,
+     "profileId": "6b00ba00f0e8042b55f15b35"
+    },
+    "profileId": "6b00ba00f0e8042b55f15b35",
+    "customMedia": [],
+    "scheduledFor": "2026-12-09T23:00:00.000Z",
+    "platformSpecificData": {
+     "title": "¡LE SALIÓ UN HÁMSTER EN LA INVOCACIÓN! Pero mide 9 METROS | The Greatest Estate Developer Ep. 4",
+     "categoryId": "1",
+     "visibility": "public",
+     "madeForKids": false,
+     "firstComment": "¿Ppodong es la mejor invocación del isekai o la más rara? 👇 ¿Y cómo crees que Lloyd va a ganar el duelo? El episodio 5 sale en dos días.",
+     "containsSyntheticMedia": false
+    },
+    "status": "pending",
+    "publishAttempts": 0,
+    "contentHash": "e144449480d878547634368d19942738"
+   }
+  ]
+ },
+ "message": "Post scheduled successfully"
+}

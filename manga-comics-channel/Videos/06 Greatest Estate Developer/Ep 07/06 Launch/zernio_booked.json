@@ -1,0 +1,91 @@
+{
+ "post": {
+  "_id": "6b04664c1cb97450e2ce8fad",
+  "userId": "6b00ba00f0e8042b55f15b31",
+  "workspaceId": "6b00ba00f0e8042b55f15b33",
+  "title": "",
+  "content": "¡LLOYD DESCUBRE LA TRAICIÓN DE NEUMANN Y LE PROPONE AL BARÓN UN CASTIGO CON UN RATÓN! En el episodio 7 de The Greatest Estate Developer vemos cómo Lloyd ayudó a Javier a perfeccionar la técnica central de los Asrahan quince días antes del duelo (con un motor auxiliar de maná), las cartas secretas entre Neumann y Tordes que Ppodong encontró en la pared, la diferencia entre un líder bondadoso y un buen líder, y el castigo más esponjoso de la historia: dejar caer un ratón sobre su cabeza.\n\n¿Fue justo el castigo de Neumann? ¿Y qué va a construir Lloyd ahora?\n\n¡Déjanos tus teorías en los comentarios!\nSuscríbete a Stormi Knows Anime para más webtoon y manga explicado en español.\n\n#TheGreatestEstateDeveloper #LloydFrontera #Webtoon\n\nCréditos: The Greatest Estate Developer © BK_Moon (historia original), Lee Hyun Min (adaptación), Kim Hyunsoo (arte) / WEBTOON. Usado con fines de comentario y análisis.\n\n#anime #manga #animeenespañol\n\n0:00 ¡Un hámster cayendo del cielo!\n0:12 Resumen del episodio 6\n0:28 Después del duelo\n0:52 Quince días antes\n1:33 El ingeniero de maná\n2:40 Las cartas\n3:20 El castigo\n4:35 El ratón malvado",
+  "mediaItems": [
+   {
+    "_id": "6b0466531cb97450e2ce8fc0",
+    "url": "https://media.zernio.com/media/1795450434072_336392234aeab416_GED7_ES_v1.mp4",
+    "type": "video",
+    "thumbnail": "https://media.zernio.com/media/1795450443438_f87fa4496c723f65_GED7_thumb_ES_v2.jpg"
+   }
+  ],
+  "scheduledFor": "2026-12-15T23:00:00.000Z",
+  "timezone": "UTC",
+  "status": "scheduled",
+  "tags": [
+   "the greatest estate developer",
+   "the greatest estate developer episodio 7",
+   "the greatest estate developer español",
+   "el mejor desarrollador de tierras",
+   "lloyd frontera",
+   "javier asrahan",
+   "neumann",
+   "tordes",
+   "traición",
+   "técnica asrahan",
+   "ppodong",
+   "castigo",
+   "destierro",
+   "webtoon",
+   "webtoon en español",
+   "manhwa",
+   "manhwa en español",
+   "manhwa resumen",
+   "isekai",
+   "isekai manhwa",
+   "reencarnado en una novela",
+   "the greatest estate developer capitulo 7",
+   "the greatest estate developer resumen"
+  ],
+  "hashtags": [],
+  "mentions": [],
+  "visibility": "public",
+  "crosspostingEnabled": true,
+  "metadata": {
+   "usageCounted": true
+  },
+  "recycling": {
+   "enabled": false,
+   "gapFreq": "month",
+   "recycleCount": 0,
+   "contentVariations": [],
+   "contentVariationIndex": 0
+  },
+  "createdAt": "2026-11-23T16:14:11.165Z",
+  "updatedAt": "2026-11-23T16:14:11.177Z",
+  "platforms": [
+   {
+    "_id": "6b0466531cb97450e2ce8fbe",
+    "platform": "youtube",
+    "accountId": {
+     "_id": "6b00ba86a42f4cf9f57677a1",
+     "platform": "youtube",
+     "username": "stormiknowsanime",
+     "displayName": "Stormi Knows Anime",
+     "profilePicture": "https://yt3.ggpht.com/4kyAJamFAdkP-LVGVBJlZHCysPnEyDIJAs_O7mQq_gbj5pYkIJbsBJEfUkj2CvoLeBeywa9n=s88-c-k-c0x00ffffff-no-rj",
+     "isActive": true,
+     "profileId": "6b00ba00f0e8042b55f15b35"
+    },
+    "profileId": "6b00ba00f0e8042b55f15b35",
+    "customMedia": [],
+    "scheduledFor": "2026-12-15T23:00:00.000Z",
+    "platformSpecificData": {
+     "title": "¡LE CAYÓ UN HÁMSTER DE 9 METROS ENCIMA! El castigo del TRAIDOR | The Greatest Estate Developer Ep. 7",
+     "categoryId": "1",
+     "visibility": "public",
+     "madeForKids": false,
+     "firstComment": "¿Fue justo el castigo de Neumann? 🐹 👇 Dinos qué parte quieres ver en el próximo capítulo.",
+     "containsSyntheticMedia": false
+    },
+    "status": "pending",
+    "publishAttempts": 0,
+    "contentHash": "ca508c8e10820176da1ea22c25a079f8"
+   }
+  ]
+ },
+ "message": "Post scheduled successfully"
+}
