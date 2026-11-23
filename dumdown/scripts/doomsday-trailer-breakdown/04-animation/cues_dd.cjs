@@ -14,6 +14,6 @@ const r3 = x => +x.toFixed(3);
 const meter = (ACT.meterEv || []).map(e => r3(e.at != null ? e.at : wordAt(e.p, e.w, 0)));
 console.log(JSON.stringify({ dur: LEAD + total, meter, shots: SH.map(({ s, a, b }) => ({ a: r3(a), b: r3(b), p: s.p, plate: s.plate, shake: !!(s.cam && s.cam.shake), fx: s.fx || [], title: !!s.title,
   pops: (s.pops || []).map(p => r3(p.w ? W(p, s) : a + (p.at || 0))), cards: (s.cards || []).map(c => r3(c.w ? W(c, s) : a + (c.at ?? .4))),
-  props: (s.props || []).filter(p => p.tw || p.t0).map(p => [p.k, r3(p.tw ? W(p, s) : a + p.t0)]),
+  props: (s.props || []).filter(p => p.tw || p.t0).map(p => [p.k, r3(p.tw ? W(Object.assign({}, p, { w: p.tw }), s) : a + p.t0)]),
   acts: [].concat(...(s.chars || []).map(c => (c.acts || []).map(q => [q.a, r3(q.at != null ? a + q.at : W(q, s))]))),
   walk: (s.chars || []).some(c => Array.isArray(c.x) && Math.abs(c.x[1] - c.x[0]) > 20), run: (s.chars || []).some(c => c.anim === 'run'), limp: (s.chars || []).some(c => c.anim === 'limp') })) }));

@@ -46,3 +46,18 @@ P.timeCard = (o, lt) => go(o, () => { rr(-330, -70, 660, 140, 10, '#ffd23d', 6);
 // sad trombone-ish phone exploding: sparkle burst at o.at
 P.sparkBurst = (o, lt) => { const k = clamp((lt - (o.at || 0)) / .8); if (k <= 0 || k >= 1) return; ctx.save(); ctx.globalCompositeOperation = 'screen'; for (let i = 0; i < 18; i++) { const a = i * .349, r = 40 + 260 * io(k); ctx.fillStyle = `rgba(255,${200 + (i % 3) * 20},120,${1 - k})`; ctx.beginPath(); ctx.arc(o.x + Math.cos(a) * r, o.y + Math.sin(a) * r, 14 * (1 - k) + 3, 0, 7); ctx.fill(); } ctx.restore(); };
 })();
+(function () { const E = window.E, { ctx } = E, P = window.PROPS;
+// giant standing wall of ocean water across the background (o.y = base line, o.top = top y)
+P.waterWall = (o, lt) => { const y0 = o.by || 600, top = o.top ?? -40, x0 = -200, x1 = 2760; ctx.save(); const g = ctx.createLinearGradient(0, top, 0, y0); g.addColorStop(0, '#9fe4e8'); g.addColorStop(.35, '#2aa8b8'); g.addColorStop(1, '#0e5a74'); ctx.fillStyle = g;
+  ctx.beginPath(); ctx.moveTo(x0, y0); for (let x = x0; x <= x1; x += 40) ctx.lineTo(x, top + 18 * Math.sin(x * .01 + lt * 1.5) + 10 * Math.sin(x * .031 - lt * 2)); ctx.lineTo(x1, y0); ctx.closePath(); ctx.fill();
+  ctx.globalAlpha = .18; ctx.strokeStyle = '#e8ffff'; ctx.lineWidth = 6; for (let x = x0; x < x1; x += 70) { const ph = (lt * 120 + x * 3) % (y0 - top); ctx.beginPath(); ctx.moveTo(x, top + ph); ctx.lineTo(x + 8, top + ph + 120); ctx.stroke(); }
+  ctx.globalAlpha = .9; ctx.fillStyle = '#f4ffff'; for (let x = x0; x <= x1; x += 26) { const yy = top + 18 * Math.sin(x * .01 + lt * 1.5) + 10 * Math.sin(x * .031 - lt * 2); ctx.beginPath(); ctx.arc(x, yy, 14 + 6 * Math.sin(x + lt * 4), 0, 7); ctx.fill(); }
+  ctx.globalAlpha = .5; ctx.fillStyle = '#d8f8ff'; ctx.fillRect(x0, y0 - 14, x1 - x0, 18); ctx.restore(); };
+})();
+(function () { const { ctx } = window.E, P = window.PROPS, INK = '#231A24';
+// wooden park bench, origin = seat front centre at floor level (y = floor); seat height ~ 150*s
+P.parkBench = (o, lt) => { ctx.save(); ctx.translate(o.x, o.y); const s = o.s ?? 1; ctx.scale(s * (o.dir || 1), s); ctx.lineWidth = 5; ctx.strokeStyle = INK;
+  for (const x of [-200, 200]) { ctx.fillStyle = '#3a3a3e'; ctx.fillRect(x - 10, -150, 20, 150); ctx.strokeRect(x - 10, -150, 20, 150); ctx.fillRect(x - 10, -300, 20, 150); }
+  ctx.fillStyle = '#9a6a3a'; for (let i = 0; i < 3; i++) { ctx.beginPath(); ctx.roundRect(-240, -165 + i * 0 - i * 14, 480, 14, 4); ctx.fill(); ctx.stroke(); }
+  for (let i = 0; i < 3; i++) { ctx.beginPath(); ctx.roundRect(-240, -300 + i * 36, 480, 26, 4); ctx.fill(); ctx.stroke(); } ctx.restore(); };
+})();

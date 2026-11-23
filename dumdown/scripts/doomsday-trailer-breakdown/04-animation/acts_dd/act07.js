@@ -25,7 +25,7 @@ window.ACT = { timing: window.TIMING, shots: [
    props: [{ k: 'nameTag', x: 1560, y: 1180, s: .25, t: 'ANT' }], pops: [{ t: '...ANT?', x: 640, y: 300, at: .4, dur: 1.4 }, { t: 'ANT-MAN!!', x: 1400, y: 300, at: G5(2) - G5(1) + .4, dur: 1.8 }] },
  { p: 4, plate: 'dd_hangar', cam: { z: [1.0, 1.1], x: 1280, y: 820 }, chars: [{ c: 'yelenaD', x: [900, 1300], y: [1300, 1200], s: [1.1, .9], view: 'back', anim: 'walk', lin: 1 }, { c: 'alexei', x: [1100, 1500], y: [1300, 1200], s: [1.15, .95], view: 'back', anim: 'walk', lin: 1, ph: .4 }],
    pops: [{ t: 'NEW AVENGERS TOWER', w: 'tower', dur: 2.4 }] },
- { p: 4, f: .6, plate: 'dd_studio_board', cam: { frame: 'med', on: 0 }, chars: [{ c: 'stormi', x: 900, y: 1300, s: 1.4, view: 'threequarter', dir: 1, expr: 'smug', talk: true, acts: [{ a: 'pointHold', w: 'globes' }] }],
+ { p: 4, f: .6, plate: 'dd_studio_board', cam: { z: [1.05, 1.1], x: 1350, y: 800 }, chars: [{ c: 'stormi', x: 900, y: 1300, s: 1.4, view: 'threequarter', dir: 1, expr: 'smug', talk: true, acts: [{ a: 'pointHold', w: 'globes' }] }],
    props: [{ k: 'planet', x: 1500, y: 900, s: .5 }, { k: 'planet', x: 1720, y: 900, s: .5 }, { k: 'planet', x: 1610, y: 1080, s: .5 }], pops: [{ t: '3 GLOBES = 3 WORLDS', w: 'globes', dur: 2.6 }] },
  { p: 5, plate: 'dd_library', cam: { frame: 'med', on: 0, push: [1, 1.08] }, chars: [{ c: 'profX', x: 1280, y: 1300, s: 1.4, view: 'threequarter', dir: 1, expr: 'neutral', seat: 1 }], props: [{ k: 'armchair', x: 1280, y: 1300, s: 1.3 }],
    cards: [{ c: 'profX', name: 'THE PROFESSOR', sub: 'PROFESSOR X · BALD · HAS A MANSION', w: 'Professor', dur: 2.8 }] },

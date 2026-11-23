@@ -29,7 +29,7 @@ ACTS = {'punch': [('punch', .7, 0), ('whoosh_soft', .4, -.12)], 'smash': [('hit'
   'dive': [('whoosh', .5, 0), ('thud', .5, .4)], 'duck': [('whoosh_soft', .4, 0)], 'wince': [('creak', .6, 0)], 'powerUp': [('riser', .5, -.6), ('fwoosh', .5, 0)],
   'scream': [('braam', .3, 0)], 'fire': [('fwoosh', .6, 0)], 'morph': [('phase', .5, -.1), ('boing', .15, .1)], 'sip': [('slurp', .45, .1)], 'toss': [('whoosh_soft', .4, 0)],
   'tossFolder': [('paper', .6, 0), ('thud', .3, .4)], 'openCase': [('clang', .4, 0)], 'movePiece': [('tick', .6, 0)], 'grab': [('swipe', .35, 0)], 'hug': [('aww', .25, .2)],
-  'freeze': [('scratch', .35, 0)], 'facepalm': [('kick', .3, 0)], 'pat': [('pop', .2, 0)], 'raise': [('swipe', .2, 0)], 'stride': [('footsteps', .3, 0)], 'run': [], 'dance': [],
+  'freeze': [('scratch', .35, 0)], 'facepalm': [('kick', .3, 0)], 'pat': [('pop', .2, 0)], 'raise': [('swipe', .2, 0)], 'raiseHold': [('swipe', .3, 0), ('zap', .4, .05)], 'stride': [('footsteps', .3, 0)], 'run': [], 'dance': [],
   'shrug': [], 'point': [], 'pointHold': [('swipe', .2, 0)], 'holdUp1': [], 'holdUp2': [], 'rubEye': [], 'plop': [('thud', .4, 0), ('creak', .3, .05)], 'sit': [], 'limp': [], 'rollBad': [('thud', .5, .3)]}
 PROPS = {'morph': [('phase', .4, 0)], 'shatter': [('glass', .6, 0)], 'fireBall': [('fwoosh', .5, 0)], 'iceBurst': [('crunch', .5, 0)], 'vineArm': [('whirr', .4, 0)],
   'glowRing': [('zap', .35, 0), ('phase', .3, 0)], 'folder': [('paper', .4, 0)], 'case': [('clang', .3, 0)],

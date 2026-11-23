@@ -17,8 +17,8 @@ window.ACT = { timing: window.TIMING, shots: [
    pops: [{ t: 'NOT IN THE TRAILER', w: 'not', dur: 2 }, { t: 'JUST PHYSICS', w: 'physics', dur: 2 }] },
  { p: 3, plate: 'dd_farm_living', cam: { frame: 'two', on: 0, on2: 1, push: [1, 1.05] }, chars: [{ c: 'stretch', x: 1040, y: 1300, s: 1.4, view: 'threequarter', dir: 1, expr: 'sad', talk: true, acts: [{ a: 'shrug', w: 'consequences' }] }, { c: 'glowSue', x: 1500, y: 1300, s: 1.35, view: 'threequarter', dir: -1, expr: 'neutral' }],
    pops: [{ t: '"WE DIDN\'T KNOW THE CONSEQUENCES"', w: 'consequences', dur: 2.6 }] },
- { p: 3, f: .5, plate: 'dd_studio_board', cam: { frame: 'med', on: 0, push: [1, 1.06] }, chars: [{ c: 'stormi', x: 1100, y: 1300, s: 1.4, view: 'threequarter', dir: 1, expr: 'smug', talk: true, acts: [{ a: 'pointHold', w: 'heist' }] }],
-   props: [{ k: 'board', x: 1750, y: 1000, s: 1, t: 'TIME HEIST + STEVE STAYS = CRACKS' }], pops: [{ t: 'THEORY', w: 'theory', dur: 1.6 }] },
+ { p: 3, f: .5, plate: 'dd_studio_board', cam: { z: [1.05, 1.1], x: 1350, y: 800 }, chars: [{ c: 'stormi', x: 1100, y: 1300, s: 1.4, view: 'threequarter', dir: 1, expr: 'smug', talk: true, acts: [{ a: 'pointHold', w: 'heist' }] }],
+   props: [{ k: 'board', x: 1750, y: 1000, s: 1, w: 760, title: 'STORMI\'S THEORY', lines: ['TIME HEIST + STEVE', 'STAYS = CRACKS'] }], pops: [{ t: 'THEORY', w: 'theory', dur: 1.6 }] },
  { p: 4, plate: 'dd_farm_living', cam: { frame: 'mcu', on: 0, push: [1, 1.1] }, chars: [{ c: 'kid', x: 1280, y: 1310, s: 1.4, view: 'front', expr: 'happy', t0: .3, talk: true, acts: [{ a: 'point', w: 'superhero' }] }], pops: [{ t: '"DAD, WERE YOU A SUPERHERO?"', w: 'superhero', dur: 2.4 }] },
  { p: 5, plate: 'dd_farm_living', cam: { frame: 'mcu', on: 0, push: [1, 1.08] }, chars: [{ c: 'oldCap', x: 1280, y: 1300, s: 1.4, view: 'threequarter', dir: 1, expr: 'smile', talk: true, acts: [{ a: 'holdUp2', w: 'six' }] }] },
  { p: 5, f: .35, plate: 'dd_studio_board', still: 1, cam: { z: [1.0, 1.04], x: 1280, y: 820 }, chars: [
@@ -30,9 +30,9 @@ window.ACT = { timing: window.TIMING, shots: [
  // GAG 2 SIX OF US: kitchen, Cap counts on fingers, long pause, "eat your cereal", kid's suspicious crunch
  { p: 6, plate: 'dd_farm_kitchen', cam: { frame: 'two', on: 0, on2: 1, push: [1, 1.04] }, chars: [
    { c: 'oldCap', x: 1000, y: 1330, s: 1.35, view: 'threequarter', dir: 1, seat: 1, expr: 'happy', talk: TK('GAG 2', [0, 2]), acts: [{ a: 'holdUp1', at: .4 }, { a: 'holdUp2', at: 1.6 }, { a: 'point', at: G2(2) }] }, { c: 'kid', x: 1560, y: 1330, s: 1.3, view: 'threequarter', dir: -1, seat: 1, expr: 'neutral', talk: TK('GAG 2', [1]) }],
-   props: [{ k: 'chairS', x: 1000, y: 1330, s: 1.3, dir: 1 }, { k: 'chairS', x: 1560, y: 1330, s: 1.3, dir: -1 }, { k: 'table', x: 1280, y: 1340, s: 1.2, layer: 'front' }, { k: 'cereal', x: 1440, y: 1130, s: .9, layer: 'front' }] },
+   props: [{ k: 'chairS', x: 1000, y: 1330, s: 1.3, dir: 1 }, { k: 'chairS', x: 1560, y: 1330, s: 1.3, dir: -1 }, { k: 'cereal', on: 1, s: .5 }] },
  { p: 6, f: (G2(1) + 1.2) / DUR(GP('GAG 2')), plate: 'dd_farm_kitchen', cam: { frame: 'mcu', on: 0, push: [1, 1.12] }, chars: [{ c: 'oldCap', x: 1280, y: 1330, s: 1.4, view: 'front', seat: 1, expr: 'nervous', talk: TK('GAG 2', [2], G2(1) + 1.2) }], props: [{ k: 'chairS', x: 1280, y: 1330, s: 1.35 }],
    pops: [{ t: '...', x: 640, y: 300, at: .2, dur: 1.2 }] },
- { p: 6, f: (G2(2) + 1.1) / DUR(GP('GAG 2')), plate: 'dd_farm_kitchen', cam: { frame: 'mcu', on: 0, push: [1, 1.08] }, chars: [{ c: 'kid', x: 1280, y: 1330, s: 1.4, view: 'front', seat: 1, expr: 'deadpan', acts: [{ a: 'sip', at: .1 }] }], props: [{ k: 'chairS', x: 1280, y: 1330, s: 1.35 }, { k: 'cereal', x: 1280, y: 1180, s: 1, layer: 'front' }],
+ { p: 6, f: (G2(2) + 1.1) / DUR(GP('GAG 2')), plate: 'dd_farm_kitchen', cam: { frame: 'mcu', on: 0, push: [1, 1.08] }, chars: [{ c: 'kid', x: 1280, y: 1330, s: 1.4, view: 'front', expr: 'deadpan', acts: [{ a: 'sip', at: .1 }] }], props: [{ k: 'cereal', on: 0, s: .55 }],
    pops: [{ t: 'SUSPICIOUS CRUNCH', x: 1300, y: 300, at: .4, dur: 1.6 }] },
 ] };

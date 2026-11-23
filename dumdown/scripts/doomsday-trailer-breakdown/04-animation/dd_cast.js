@@ -52,3 +52,5 @@ Object.assign(C, {
   C.doombot = Object.assign({}, b, { hoodBack: null, name: 'Doombot', skin: '#a8b0ba', eyes: '#5aff6a', scale: 1.5, body: { shoulder: 54, hip: 28, torso: 126, upper: 70, fore: 68, thigh: 96, shin: 92 }, hair: { style: 'buzz', color: '#a8b0ba', seed: 4181, volume: 0 },
     acc: { faceplate: '#b8c0ca', glowEyes: '#5aff6a' }, top: { type: 'jacket', color: '#2a5a32', shirt: '#9aa2ac', tie: null, accent: '#9aa2ac', cuff: '#9aa2ac', hem: 40, sleeves: 'long' }, gloves: { color: '#a8b0ba' }, belt: '#5a6068', bottom: { color: '#8a929c' }, shoes: { color: '#8a929c', sole: '#3a3e44', lace: '#8a929c', type: 'boot' }, defaultExpr: 'deadpan' });
 })();
+// some reused designs have no hair spec, which crashes side/threequarter views: give them an invisible buzz
+(function () { const C = window.CAST; for (const k in C) if (C[k] && typeof C[k] === 'object' && C[k].skin && !C[k].hair) C[k].hair = { style: 'buzz', color: C[k].skin, seed: 4199, volume: 0 }; })();
