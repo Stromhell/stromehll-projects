@@ -1,0 +1,95 @@
+{
+ "post": {
+  "_id": "6b0411a521ae6f0c6bdb48ad",
+  "userId": "6b00ba00f0e8042b55f15b31",
+  "workspaceId": "6b00ba00f0e8042b55f15b33",
+  "title": "",
+  "content": "¡LLOYD FRONTERA CONSTRUYE SU PRIMERA CASA CON PISO ONDOL Y TODO EL PUEBLO HACE FILA! En el episodio 2 de The Greatest Estate Developer, Lloyd descubre el sistema RP, ve que Javier Asrahan le tiene una aprobación de menos treinta, y usa su imagen de vago para conseguir su primer contrato con el dueño de la taberna.\n\nVemos la construcción con vigas de madera y arcilla del río, a Javier cortando troncos en el aire como un maestro espadachín, la magia del ondol que hace sonreír a la mamá del dueño, la casa modelo, los estilos A y B con descuento, y la llegada del barón Arcos Frontera.\n\n¿Javier va a terminar confiando en Lloyd? ¿Y qué va a decir el barón del nuevo negocio de su hijo?\n\n¡Déjanos tus teorías en los comentarios!\nSuscríbete a Stormi Knows Anime para más webtoon y manga explicado en español.\n\n#TheGreatestEstateDeveloper #LloydFrontera #Webtoon\n\nCréditos: The Greatest Estate Developer © BK_Moon (historia original), Lee Hyun Min (adaptación), Kim Hyunsoo (arte) / WEBTOON. Usado con fines de comentario y análisis.\n\n#anime #manga #animeenespañol\n\n0:00 ¡Una abuelita, un espadachín y un papá enojado!\n0:20 Lo que pasó en el episodio 1\n0:43 ¡Javier le tiene menos treinta!\n1:16 El contrato más sospechoso del pueblo\n1:50 ¿Prejuicio o estadística?\n2:20 ¡Construye una casa en una semana!\n2:49 Javier, el espadachín leñador\n3:46 La magia del piso ondol\n4:36 La casa modelo y la fila de clientes\n5:17 ¡Llega el barón Arcos Frontera!",
+  "mediaItems": [
+   {
+    "_id": "6b0411ac21ae6f0c6bdb48f9",
+    "url": "https://media.zernio.com/media/1795428762717_ad88e102a5b4a131_GED2_ES_v2.mp4",
+    "type": "video",
+    "thumbnail": "https://media.zernio.com/media/1795428772258_dd2af5132de8ddba_GED2_thumb_ES_v2.jpg"
+   }
+  ],
+  "scheduledFor": "2026-12-05T23:00:00.000Z",
+  "timezone": "UTC",
+  "status": "scheduled",
+  "tags": [
+   "the greatest estate developer",
+   "the greatest estate developer episodio 2",
+   "the greatest estate developer español",
+   "el mejor desarrollador de tierras",
+   "lloyd frontera",
+   "javier asrahan",
+   "arcos frontera",
+   "webtoon",
+   "webtoon en español",
+   "manhwa",
+   "manhwa en español",
+   "manhwa resumen",
+   "isekai",
+   "isekai manhwa",
+   "reencarnado en una novela",
+   "the greatest estate developer capitulo 2",
+   "the greatest estate developer resumen",
+   "the greatest estate developer anime",
+   "ondol",
+   "manhwa recomendado",
+   "webtoon resumen",
+   "ingeniero isekai",
+   "anime recap español",
+   "Stormi Knows Anime",
+   "manga explicado",
+   "resumen manhwa español",
+   "the greatest estate developer explicado"
+  ],
+  "hashtags": [],
+  "mentions": [],
+  "visibility": "public",
+  "crosspostingEnabled": true,
+  "metadata": {
+   "usageCounted": true
+  },
+  "recycling": {
+   "enabled": false,
+   "gapFreq": "month",
+   "recycleCount": 0,
+   "contentVariations": [],
+   "contentVariationIndex": 0
+  },
+  "createdAt": "2026-11-23T10:13:00.022Z",
+  "updatedAt": "2026-11-23T10:13:00.028Z",
+  "platforms": [
+   {
+    "_id": "6b0411ac21ae6f0c6bdb48f7",
+    "platform": "youtube",
+    "accountId": {
+     "_id": "6b00ba86a42f4cf9f57677a1",
+     "platform": "youtube",
+     "username": "stormiknowsanime",
+     "displayName": "Stormi Knows Anime",
+     "profilePicture": "https://yt3.ggpht.com/4kyAJamFAdkP-LVGVBJlZHCysPnEyDIJAs_O7mQq_gbj5pYkIJbsBJEfUkj2CvoLeBeywa9n=s88-c-k-c0x00ffffff-no-rj",
+     "isActive": true,
+     "profileId": "6b00ba00f0e8042b55f15b35"
+    },
+    "profileId": "6b00ba00f0e8042b55f15b35",
+    "customMedia": [],
+    "scheduledFor": "2026-12-05T23:00:00.000Z",
+    "platformSpecificData": {
+     "title": "¡EL VAGO CONSTRUYÓ SU PRIMERA CASA! Y su PADRE lo descubrió | The Greatest Estate Developer Ep. 2",
+     "categoryId": "1",
+     "visibility": "public",
+     "madeForKids": false,
+     "firstComment": "¿Javier va a terminar siendo el mejor amigo de Lloyd o su peor enemigo? 👇 Y tú, ¿le comprarías un cuarto con ondol? El episodio 3 sale en dos días.",
+     "containsSyntheticMedia": false
+    },
+    "status": "pending",
+    "publishAttempts": 0,
+    "contentHash": "6beb8806ebf4eea3a5f1a962cf8f2a8f"
+   }
+  ]
+ },
+ "message": "Post scheduled successfully"
+}
