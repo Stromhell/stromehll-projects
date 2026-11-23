@@ -1,0 +1,114 @@
+<!doctype html><html><head><meta charset="utf-8"><title>GM act 1 - Pearls and Protectors</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../tw_kit.js"></script><script src="../../xu_kit.js"></script><script src="../../jh_kit.js"></script><script src="../../pr_kit.js"></script><script src="../../gm_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+const SW = 1920, SH = 1080, INK = TW.INK, RED = TW.RED, pop = TW.pop, fade = TW.fade;
+const backdrop = (name, b = .5, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const CARRY = () => ({ shL: 30, elL: -75, shR: 35, elR: -75 });
+const endTitle = (secs) => { const T = window.TIMING; const last = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length, start: last.end, end: last.end + secs, vo_start: last.end, vo_end: last.end, text: '' }); T.dur = last.end + secs; };
+// GM act 1 - Pearls and Protectors: pearl coast, cousin families, British treaties, the captain's rule, oil 1932, the bodyguard question.
+// Plates: pearl_coast, fort_town, treaty_tent (x2), dhow_deck, oil_field (stand-ins while unpainted: dhofar, card, construction).
+const rr = TW.rr, txt = TW.txt;
+const LP = (n, alt) => { const im = K.load(n, PL + n + '.jpg'); if (alt) im.onerror = () => { if (K.imgs[n] === im) K.load(n, PL + alt + '.jpg'); }; };
+const real = n => { const im = K.imgs[n]; return !!(im && im.src && im.src.indexOf(n + '.jpg') >= 0 && im.complete && im.naturalWidth); };
+// word anchor with a fallback estimated from the word's place in the VO text
+const at = (S, w, off = 0) => { const T = (S.text || '').split(/\s+/), i = Math.max(0, T.indexOf(w)), vs = (S.vo_start ?? S.start) - S.start, ve = (S.vo_end ?? S.end) - S.start; return A.at(S, w, vs + (ve - vs) * i / Math.max(1, T.length)) + off; };
+const ease = (lt, t0, a, b, d = .8) => a + (b - a) * E.io(K.seg(lt, t0, t0 + d));
+// CROWNS STANDING tracker, top-left; st(lt) -> 6 states
+const crowns = (st, x = 60, y = 50, s = .8) => (c, lt) => GM.crowns(c, x, y, s, typeof st === 'function' ? st(lt) : st, lt);
+const srcTag = (c, label, x, y, lt, t0, px = 26) => { const a = pop(lt, t0, .35); if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.font = `${px}px Oswald`; const w = c.measureText(label).width + 40; c.fillStyle = '#111'; rr(c, -w / 2, -px * .8, w, px * 1.6, 8); c.fill(); c.fillStyle = JH.GOLD; c.fillRect(-w / 2, -px * .8, 8, px * 1.6); txt(c, label, 4, 0, px, '#fff', 'center', 'Oswald'); c.restore(); };
+const dateTag = (c, s, x, y, lt, t0, px = 40) => { const a = E.back(K.seg(lt, t0, t0 + .35)); if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.font = `${px}px Anton`; const w = c.measureText(s).width + 36; c.fillStyle = '#f4ead2'; c.strokeStyle = INK; c.lineWidth = 4; rr(c, -w / 2, -px * .75, w, px * 1.5, 6); c.fill(); c.stroke(); txt(c, s, 0, 0, px, '#8a2a1a', 'center', 'Anton'); c.restore(); };
+for (const [n, a] of [['pearl_coast', 'dhofar'], ['fort_town', 'dhofar'], ['treaty_tent', 'card'], ['dhow_deck', 'card'], ['oil_field', 'construction']]) LP(n, a);
+const ntag = (c, x, y, s, lt, t0) => GM.ntag(c, x, y, s, E.back(K.seg(lt, t0, t0 + .4)));
+// small wobble on a threat word
+const calmCrowns = (tw) => crowns(lt => [0, 1, 2, 3, 4, 5].map(k => tw != null && lt > tw && lt < tw + 1.6 ? .35 * Math.sin((lt - tw) / 1.6 * Math.PI) * (.6 + .4 * Math.sin(lt * 6 + k)) : 0));
+const waves = (c, lt, y0 = 860, y1 = 1150, a = .25) => { c.save(); c.strokeStyle = `rgba(255,255,255,${a})`; c.lineWidth = 3; for (let k = 0; k < 26; k++) { const y = y0 + (k * 53) % (y1 - y0), x = ((k * 389 + lt * (30 + k % 5 * 8)) % 2900) - 200; c.beginPath(); c.moveTo(x, y); c.quadraticCurveTo(x + 30, y - 8, x + 60, y); c.stroke(); } c.restore(); };
+const gulls = (c, lt) => { c.save(); c.strokeStyle = '#2a2a2a'; c.lineWidth = 4; for (let k = 0; k < 5; k++) { const x = ((k * 600 + lt * 90) % 3000) - 200, y = 220 + k * 50 + Math.sin(lt * 2 + k) * 20, f = Math.sin(lt * 8 + k) * 12; c.beginPath(); c.moveTo(x - 30, y + f); c.quadraticCurveTo(x - 12, y - 14, x, y); c.quadraticCurveTo(x + 12, y - 14, x + 30, y + f); c.stroke(); } c.restore(); };
+const haze = (c, lt, a = .12) => { for (let k = 0; k < 5; k++) TW.glow(c, ((k * 640 + lt * 25) % 3200) - 300, 1000 + (k % 2) * 80, 500, '255,235,190', a); };
+const PEARL = { near: (cc, t) => GM.pearl(cc, 0, -12, .9, .6 + .4 * Math.sin(t * 4)) };
+const LIST = (n) => ({ near: cc => { cc.fillStyle = '#f2e6c8'; cc.strokeStyle = INK; cc.lineWidth = 3; cc.fillRect(-40, -120, 80, 110); cc.strokeRect(-40, -120, 80, 110); for (let k = 0; k < 4; k++) { cc.fillStyle = '#8a7a5a'; cc.fillRect(-30, -105 + k * 24, 40, 5); if (k < n) { cc.strokeStyle = '#2a8a3a'; cc.lineWidth = 5; cc.beginPath(); cc.moveTo(16, -103 + k * 24); cc.lineTo(22, -97 + k * 24); cc.lineTo(32, -112 + k * 24); cc.stroke(); cc.strokeStyle = INK; cc.lineWidth = 3; } } } });
+
+window.SHOTS = [
+  // 1.00 early-1800s coast: dhows bob, gulls, a diver walks up the jetty with a pearl in his palm
+  { plate: 'pearl_coast', cam: { z: [1.0, 1.2], x: [1280, 1180], y: [720, 760] }, bed: [['ocean_loop', .16], ['birds_loop', .1]], light: { dir: 1, key: 'rgba(255,220,150,.14)' },
+    init: S => { const tR = at(S, 'Rewind'), tH = at(S, 'hot,'), tP = at(S, 'poor'), tSm = at(S, 'small.'), tSt = at(S, 'string'), tPe = at(S, 'pearl'), tF = at(S, 'family.');
+      S.D.live = [(c, lt) => { GM.dhow(c, 520, 900, .55, lt); GM.dhow(c, 2050, 870, .45, lt + 2); haze(c, lt); waves(c, lt); if (!real('pearl_coast')) { c.fillStyle = '#d8c090'; c.fillRect(0, 1250, 2560, 190); } },
+        (c, lt) => { const sp = (lt * .5) % 1; if (sp < .4) { c.strokeStyle = `rgba(255,255,255,${.6 - sp})`; c.lineWidth = 4; c.beginPath(); c.ellipse(900, 1010, 30 + sp * 200, 8 + sp * 40, 0, 0, 7); c.stroke(); } },
+        (c, lt) => { const towns = [['TOWN', 380, 700], ['TOWN', 1300, 660], ['TOWN', 2200, 700]]; if (lt < tSt) return; towns.forEach(([n, x, y], k) => { const a = E.back(K.seg(lt, tSt + k * .3, tSt + k * .3 + .4)); if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.fillStyle = JH.GOLD; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.arc(0, 0, 18, 0, 7); c.fill(); c.stroke(); txt(c, 'FAMILY ' + (k + 1), 0, -40, 30, '#fff', 'center', 'Anton'); c.restore(); }); }, gulls];
+      S.D.figs = [{ x: 1300, y: 1260, s: 1.7, ...GM.DIVER(0), facing: -1, mood: 'happy', walk: { x0: 2500, x1: 1500, t0: tR, dur: 3.2 }, anim: (o, lt) => { if (lt > tPe - .2) { o.pose = 'present'; o.hold = PEARL; } } },
+        { x: 820, y: 1260, s: 1.7, ...GM.CAPTAIN(), facing: 1, mood: 'neutral', anim: (o, lt) => { o.lean = Math.sin(lt * 1.4) * 2; if (lt > tPe + .4) { o.mood = 'happy'; o.pose = 'point'; } } }];
+      S.D.over = [calmCrowns(), (c, lt) => K.card(c, 'EARLY 1800s', lt, { at: tR, x: 960, y: 130, px: 64, rot: -2 }), (c, lt) => K.card(c, 'HOT', lt, { at: tH, x: 560, y: 260, px: 38, rot: -3 }), (c, lt) => K.card(c, 'POOR', lt, { at: tP, x: 900, y: 270, px: 38, rot: 2 }), (c, lt) => K.card(c, 'SMALL', lt, { at: tSm, x: 1240, y: 260, px: 38, rot: -2 }),
+        (c, lt) => K.card(c, 'PEARLS + TRADE', lt, { at: tPe, x: 1480, y: 380, px: 36, rot: 2 })];
+      S.D.sfx = [[tR, 'whoosh', .3], [tR + .2, 'footsteps', .2], [tH, 'pop', .15], [tP, 'pop', .15], [tSm, 'pop', .15], [tSt, 'tick', .2], [tPe, 'chime', .3], [tF, 'drum', .2]]; } },
+  // 1.01 fort courtyard: two cousin sheikhs walk together and embrace; a family vine grows between their name tags
+  { plate: 'fort_town', cam: { z: [1.25, 1.1], x: [1280, 1280], y: [820, 780] }, bed: [['wind_loop', .08], ['birds_loop', .05]], light: { dir: -1, key: 'rgba(255,210,150,.12)' },
+    init: S => { const tC = at(S, 'cousins.'), tK = at(S, 'Khalifa,'), tB = at(S, 'Bahrain'), tY = at(S, '1783'), tT = at(S, 'today,'), tRl = at(S, 'related'), tS = at(S, 'Sabah'), tKw = at(S, 'Kuwait.');
+      S.D.live = [(c, lt) => { haze(c, lt, .08); if (!real('fort_town')) { c.fillStyle = '#c8a878'; c.fillRect(0, 1250, 2560, 190); } GM.dallah(c, 1280, 1250, 1.3); GM.pearl(c, 1280, 1140, .6, .6 + .4 * Math.sin(lt * 3)); },
+        (c, lt) => { const u = E.out(K.seg(lt, tRl - .2, tS + .4)); if (u <= 0) return; c.save(); c.strokeStyle = '#3a7a2a'; c.lineWidth = 10; c.lineCap = 'round'; c.beginPath(); const n = 40; for (let i = 0; i <= n * u; i++) { const f = i / n, x = 820 + (1740 - 820) * f, y = 360 - Math.sin(f * Math.PI) * 90 + Math.sin(f * 18) * 10; i ? c.lineTo(x, y) : c.moveTo(x, y); } c.stroke();
+          c.fillStyle = '#5aa83a'; for (let k = 1; k < 10 * u; k++) { const f = k / 10, x = 820 + 920 * f, y = 360 - Math.sin(f * Math.PI) * 90; c.beginPath(); c.ellipse(x, y - 14, 16, 8, k, 0, 7); c.fill(); } c.restore(); }];
+      const hug = (o, lt) => { if (lt > tRl) { o.pose = 'reach'; o.mood = 'happy'; } else if (lt > tK) o.pose = 'wave'; };
+      S.D.figs = [{ x: 820, y: 1250, s: 1.7, ...GM.SHEIKH(0, { old: true }), facing: 1, mood: 'neutral', walk: { x0: 300, x1: 820, t0: 0, dur: 2.2 }, anim: (o, lt) => { hug(o, lt); if (lt > tRl) o.x = 820 + 180 * E.io(K.seg(lt, tRl, tRl + 1)); } },
+        { x: 1740, y: 1250, s: 1.7, ...GM.SHEIKH(1, { old: true, check: true }), facing: -1, mood: 'neutral', walk: { x0: 2300, x1: 1740, t0: .3, dur: 2.2 }, anim: (o, lt) => { hug(o, lt); if (lt > tRl) o.x = 1740 - 180 * E.io(K.seg(lt, tRl, tRl + 1)); } }];
+      S.D.front = [(c, lt) => ntag(c, 820, 300, 'AL KHALIFA', lt, tK), (c, lt) => dateTag(c, 'BAHRAIN · 1783', 820, 180, lt, tY, 34), (c, lt) => ntag(c, 1740, 300, 'AL SABAH', lt, tS), (c, lt) => dateTag(c, 'KUWAIT', 1740, 180, lt, tKw, 34)];
+      S.D.over = [calmCrowns(), (c, lt) => K.card(c, 'COUSINS', lt, { at: tC, x: 960, y: 140, px: 64, rot: -2 }), (c, lt) => K.card(c, 'STILL RULING TODAY', lt, { at: tT, x: 1500, y: 140, px: 34, rot: 3 })];
+      S.D.sfx = [[0, 'footsteps', .2], [tC, 'pop', .25], [tK, 'chime', .3], [tY, 'stamp', .3], [tRl, 'whoosh_soft', .25], [tRl + .8, 'breath', .2], [tS, 'chime', .3], [tKw, 'pop', .2]]; } },
+  // 1.02 beach tent: a British officer and a sheikh sign; treaty scrolls stack up with dates 1820 -> 1916
+  { plate: 'treaty_tent', cam: { z: [1.3, 1.15], x: [1280, 1300], y: [860, 820] }, bed: [['ocean_loop', .12], ['wind_loop', .06]], light: { dir: 1, key: 'rgba(255,230,170,.1)' },
+    init: S => { const tBr = at(S, 'British'), tCo = at(S, 'conquer.'), tRo = at(S, 'road'), tIn = at(S, 'India,'), tFr = at(S, 'friend'), tSi = at(S, 'signed,'), tOne = at(S, 'one,'), tY1 = at(S, '1820'), tQ = at(S, 'Qatar'), tY2 = at(S, '1916.');
+      const D = ['1820', '1853', '1861', '1880', '1899', '1916'];
+      S.D.live = [(c, lt) => { waves(c, lt, 820, 1000, .2); if (!real('treaty_tent')) { c.fillStyle = '#d8c090'; c.fillRect(0, 1250, 2560, 190); c.fillStyle = '#efe6d0'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.moveTo(500, 620); c.lineTo(1280, 400); c.lineTo(2060, 620); c.closePath(); c.fill(); c.stroke(); c.fillStyle = '#8a6a3a'; for (const x of [560, 2000]) c.fillRect(x, 620, 16, 630); }
+          TW.chair(c, 900, 1250, 1250 - 63 * 1.7, 1, '#6a4a2a'); TW.chair(c, 1660, 1250, 1250 - 63 * 1.7, -1, '#6a4a2a'); c.fillStyle = '#7a5232'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(1100, 1030, 360, 24); c.strokeRect(1100, 1030, 360, 24); c.fillRect(1130, 1054, 18, 196); c.fillRect(1412, 1054, 18, 196);
+          const n = Math.min(D.length, Math.floor(K.seg(lt, tSi - .2, tY2 + .2) * D.length + (lt > tSi - .2 ? 1 : 0))); for (let k = 0; k < n; k++) { const x = 1200 + (k % 2) * 160, y = 1030 - Math.floor(k / 2) * 30; c.save(); c.translate(x, y); c.rotate((k % 3 - 1) * .05); c.scale(.4, .4); GM.scroll(c, 0, 0, 1); c.restore(); }
+          if (lt > tRo) { const u = E.out(K.seg(lt, tRo, tIn + .5)); c.save(); c.setLineDash([24, 16]); c.strokeStyle = '#fff'; c.lineWidth = 8; c.beginPath(); c.moveTo(200, 900); c.lineTo(200 + 2000 * u, 900 - 60 * u); c.stroke(); c.restore(); if (u >= 1) txt(c, 'TO INDIA →', 2150, 840, 48, '#fff', 'center', 'Anton'); } }];
+      S.D.figs = [{ x: 900, y: 1250, s: 1.7, ...GM.OFFICER('1820'), facing: 1, mood: 'neutral', pose: 'sit', anim: (o, lt) => { if (lt > tSi) { o.mood = 'happy'; o.pose = Math.sin(lt * 6) > 0 && lt < tY2 ? 'work' : 'sit'; } } },
+        { x: 1660, y: 1250, s: 1.7, ...GM.SHEIKH(0, { old: true }), facing: -1, mood: 'neutral', pose: 'sit', anim: (o, lt) => { if (lt > tFr) o.mood = 'happy'; if (lt > tOne) o.pose = Math.sin(lt * 6 + 2) > 0 && lt < tY2 ? 'work' : 'sit'; } }];
+      S.D.front = [(c, lt) => ntag(c, 900, 520, 'BRITAIN', lt, tBr), (c, lt) => D.forEach((d, k) => dateTag(c, d, 700 + k * 230, 1380, lt, tY1 + (tY2 - tY1) * k / 5, 34))];
+      S.D.over = [calmCrowns(), (c, lt) => K.card(c, 'TREATIES', lt, { at: tSi - .3, x: 960, y: 130, px: 60, rot: -2 }), (c, lt) => K.card(c, 'NO CONQUEST', lt, { at: tCo, x: 520, y: 260, px: 36, rot: -3, until: tSi }), (c, lt) => K.card(c, 'A POWERFUL FRIEND', lt, { at: tFr, x: 1400, y: 260, px: 36, rot: 2, until: tY1 }),
+        (c, lt) => K.card(c, '1820 → 1916', lt, { at: tY1, x: 1400, y: 260, px: 46, rot: 2, bg: JH.GOLD }), (c, lt) => K.card(c, 'QATAR LAST', lt, { at: tQ, x: 1400, y: 360, px: 30, rot: -2 })];
+      S.D.sfx = [[tBr, 'drum', .25], [tCo, 'whoosh_soft', .2], [tRo, 'whoosh', .25], [tFr, 'pop', .2], [tSi, 'paper', .3], [tSi + .6, 'stamp', .3], [tOne, 'paper', .25], [tY1, 'stamp', .3], [tQ, 'paper', .25], [tY2, 'stamp', .35]]; } },
+  // 1.03 pearl dhow deck: the captain ticks names as foreign divers board; a SPONSOR tag sticks to him
+  { plate: 'dhow_deck', cam: { z: [1.15, 1.3], x: [1280, 1360], y: [800, 820] }, bed: [['ocean_loop', .15], ['creak', .05]], light: { dir: 1, key: 'rgba(255,220,160,.1)' },
+    init: S => { const tL = at(S, 'late'), tLe = at(S, 'lets'), tFo = at(S, 'foreign'), tHo = at(S, 'home'), tSe = at(S, 'season.'), tRe = at(S, 'Remember'), tRu = at(S, 'rule.'), tHu = at(S, 'huge.');
+      S.D.live = [(c, lt) => { c.save(); c.translate(0, Math.sin(lt * 1.3) * 6); if (!real('dhow_deck')) { c.fillStyle = '#8a5a32'; c.fillRect(0, 1180, 2560, 260); c.strokeStyle = '#5a3a1a'; c.lineWidth = 4; for (let y = 1200; y < 1440; y += 40) { c.beginPath(); c.moveTo(0, y); c.lineTo(2560, y); c.stroke(); } } c.restore(); waves(c, lt, 700, 1000, .18); },
+        (c, lt) => { if (lt < tHo) return; const u = E.io(K.seg(lt, tHo, tSe + .8)); GM.dhow(c, 2300 - 900 * u, 780, .3, lt); txt(c, 'HOME →', 2300 - 900 * u, 640, 34, '#fff', 'center', 'Anton'); }];
+      const ticks = lt => Math.min(4, Math.max(0, Math.floor((lt - tFo) / .7) + 1));
+      S.D.figs = [{ x: 820, y: 1250, s: 1.7, ...GM.CAPTAIN(), facing: 1, mood: 'neutral', pose: 'present', anim: (o, lt) => { o.hold = LIST(lt > tFo ? ticks(lt) : 0); if (lt > tRe) o.mood = 'smug'; } },
+        ...[1, 2, 3].map(k => ({ x: 1250 + k * 330, y: 1250, s: 1.7, ...GM.DIVER(k), facing: -1, mood: k === 2 ? 'happy' : 'neutral', walk: { x0: 2800 + k * 200, x1: 1250 + k * 330, t0: tFo - .4 + k * .4, dur: 2.6 } }))];
+      S.D.front = [(c, lt) => { const a = E.back(K.seg(lt, tRe, tRe + .4)); if (a <= 0) return; c.save(); c.translate(780, 900); c.rotate(-.12); c.scale(a, a); c.fillStyle = '#e8403a'; c.strokeStyle = INK; c.lineWidth = 4; rr(c, -110, -32, 220, 64, 8); c.fill(); c.stroke(); txt(c, 'SPONSOR', 0, 0, 42, '#fff', 'center', 'Anton'); c.restore(); }];
+      S.D.over = [calmCrowns(), (c, lt) => K.card(c, 'LATE 1920s · BAHRAIN', lt, { at: tL, x: 960, y: 130, px: 50, rot: -2, until: tRe }), (c, lt) => K.card(c, "THE CAPTAIN'S RULE", lt, { at: tRe, x: 960, y: 130, px: 58, rot: 2, bg: JH.GOLD }),
+        (c, lt) => K.card(c, 'SEND THEM HOME AFTER THE SEASON', lt, { at: tHo, x: 1200, y: 250, px: 32, rot: -2, until: tRe + .3 }), (c, lt) => K.card(c, 'REMEMBER THIS', lt, { at: tRu, x: 1300, y: 250, px: 36, rot: 3 }), (c, lt) => TW.stamp(c, 'IT GROWS', 1400, 380, lt, tHu - .2, { px: 60 })];
+      S.D.sfx = [[tL, 'pop', .2], [tLe, 'paper', .2], [tFo, 'footsteps', .25], [tFo + .3, 'tick', .3], [tFo + 1, 'tick', .3], [tFo + 1.7, 'tick', .3], [tHo, 'whoosh_soft', .2], [tRe, 'stamp', .35], [tHu, 'swell', .3]]; } },
+  // 1.04 oil field: market pearls turn grey; a derrick gushes in 1932; coins pour into the sheikh's chest
+  { plate: 'oil_field', cam: { z: [1.1, 1.25], x: [1180, 1340], y: [760, 780] }, bed: [['wind_loop', .1], ['hum_loop', .05]], light: { dir: -1, key: 'rgba(255,160,90,.14)' },
+    init: S => { const tCo = at(S, 'collapses,'), tDe = at(S, 'Depression'), tCu = at(S, 'cultured'), tY = at(S, '1932,'), tOi = at(S, 'oil'), tMo = at(S, 'money'), tFl = at(S, 'flows'), tPr = at(S, 'protects.');
+      S.D.live = [(c, lt) => { haze(c, lt, .1); if (!real('oil_field')) { c.fillStyle = '#c89a60'; c.fillRect(0, 1260, 2560, 180); }
+          // market table with a bowl of pearls that go grey
+          c.fillStyle = '#7a5232'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(260, 1080, 300, 22); c.strokeRect(260, 1080, 300, 22); c.fillRect(280, 1102, 16, 158); c.fillRect(524, 1102, 16, 158); c.fillStyle = '#b8864a'; c.beginPath(); c.ellipse(410, 1060, 90, 28, 0, 0, Math.PI); c.fill(); c.stroke();
+          const g = K.seg(lt, tCo, tCu + .6); for (let k = 0; k < 7; k++) { c.save(); c.filter = `grayscale(${g}) brightness(${1 - .45 * g})`; GM.pearl(c, 350 + (k % 4) * 38, 1048 - Math.floor(k / 4) * 22, .5, 1 - g); c.restore(); }
+          // derrick (drawn live) at right
+          const x = 2000, b = 1260; c.strokeStyle = '#3a2a1a'; c.lineWidth = 10; c.beginPath(); c.moveTo(x - 140, b); c.lineTo(x, b - 620); c.lineTo(x + 140, b); for (let k = 1; k < 6; k++) { const y = b - k * 110, w = 140 * (1 - k * 110 / 620); c.moveTo(x - w, y); c.lineTo(x + w, y); } c.stroke();
+          const gu = K.seg(lt, tY, tY + .5); if (gu > 0) { for (let k = 0; k < 50; k++) { const ph = (lt * 1.5 + k * .37) % 1, h = 820 * gu; c.fillStyle = '#141010'; c.beginPath(); c.arc(x + Math.sin(k * 7) * 140 * ph, b - 620 - h * Math.sin(ph * Math.PI) + 0, 16 - ph * 8, 0, 7); c.fill(); } TW.glow(c, x, b - 700, 300, '255,180,80', .2 * gu); } },
+        (c, lt) => { GM.chest(c, 1420, 1260, 1.5, lt > tMo - .3 ? 1 : 0); if (lt > tFl) { GM.coins(c, 1420, 1220, 1.3, Math.min(14, Math.floor((lt - tFl) * 4)), lt); for (let k = 0; k < 8; k++) { const ph = (lt * 1.6 + k / 8) % 1; GM.pearl; c.fillStyle = JH.GOLD; c.strokeStyle = INK; c.lineWidth = 2; c.beginPath(); c.ellipse(1420 + Math.sin(k) * 30, 900 + ph * 300, 14, 6, 0, 0, 7); c.fill(); c.stroke(); } } }];
+      S.D.figs = [{ x: 1150, y: 1260, s: 1.7, ...GM.SHEIKH(1, { bisht: '#5a3a1a' }), facing: 1, mood: 'sad', anim: (o, lt) => { if (lt > tCo) o.pose = 'shrug'; if (lt > tY) { o.pose = 'point'; o.mood = 'shocked'; } if (lt > tFl) { o.pose = 'cheer'; o.mood = 'happy'; } } }];
+      S.D.front = [(c, lt) => dateTag(c, '1932 · BAHRAIN', 2000, 520, lt, tY, 40)];
+      S.D.over = [calmCrowns(), (c, lt) => K.card(c, 'PEARL TRADE COLLAPSES', lt, { at: tCo, x: 700, y: 140, px: 44, rot: -2, until: tY }), (c, lt) => K.card(c, 'THE DEPRESSION', lt, { at: tDe, x: 500, y: 250, px: 32, rot: 2, until: tY }), (c, lt) => K.card(c, 'CULTURED PEARLS', lt, { at: tCu, x: 900, y: 260, px: 32, rot: -2, until: tY }),
+        (c, lt) => K.card(c, '1932 · OIL', lt, { at: tY, x: 960, y: 140, px: 64, rot: 2, bg: JH.GOLD }), (c, lt) => K.card(c, 'STRAIGHT TO THE PROTECTED FAMILIES', lt, { at: tMo, x: 960, y: 250, px: 32, rot: -2 })];
+      S.D.sfx = [[tCo, 'thud', .3], [tDe, 'tension', .2], [tCu, 'pop', .2], [tY - .3, 'drone', .2], [tY, 'whoosh', .35], [tOi, 'fire_loop', .15], [tMo, 'creak', .25], [tFl, 'coins_cascade', .4], [tPr, 'coins', .3]]; } },
+  // 1.05 the tent again at dusk: the sheikh stands behind a big British officer like a shield; the officer checks his watch
+  { plate: 'treaty_tent', cam: { z: [1.2, 1.3], x: [1500, 1460], y: [820, 800] }, bed: [['ocean_loop', .1], ['night_loop', .06]], light: { dir: -1, key: 'rgba(255,120,80,.2)' },
+    init: S => { const tSt = at(S, 'strong'), tPr = at(S, 'protected'), tQ = at(S, 'question.'), tBo = at(S, 'bodyguard'), tLe = at(S, 'leaves?');
+      S.D.live = [(c, lt) => { c.fillStyle = 'rgba(80,30,60,.18)'; c.fillRect(0, 0, 2560, 1440); TW.glow(c, 2200, 600, 700, '255,130,70', .2); if (!real('treaty_tent')) { c.fillStyle = '#b89a70'; c.fillRect(0, 1250, 2560, 190); } }];
+      S.D.figs = [{ x: 1700, y: 1250, s: 1.62, ...GM.SHEIKH(0, { old: true }), facing: -1, mood: 'neutral', anim: (o, lt) => { o.lean = Math.sin(lt * 1.2) * 2; if (lt > tBo) { o.mood = 'shocked'; o.pose = 'shrug'; } } },
+        { x: 1360, y: 1250, s: 1.85, ...GM.OFFICER('1820'), facing: 1, mood: 'smug', anim: (o, lt) => { if (lt > tQ - .3) o.pose = 'think'; if (lt > tLe) o.mood = 'neutral'; } }];
+      S.D.front = [(c, lt) => { if (lt < tQ - .3) return; const a = E.back(K.seg(lt, tQ - .3, tQ)); c.save(); c.translate(880, 760); c.scale(a, a); c.fillStyle = '#f4ead2'; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.arc(0, 0, 80, 0, 7); c.fill(); c.stroke(); const h = lt * 2; c.lineWidth = 6; c.beginPath(); c.moveTo(0, 0); c.lineTo(Math.sin(h) * 60, -Math.cos(h) * 60); c.moveTo(0, 0); c.lineTo(Math.sin(h / 12) * 40, -Math.cos(h / 12) * 40); c.stroke(); c.restore(); },
+        (c, lt) => GM.pearl(c, 1900, 1240, .5, .5)];
+      S.D.over = [calmCrowns(tBo), (c, lt) => K.card(c, 'NOT STRONG STATES', lt, { at: tSt, x: 960, y: 130, px: 46, rot: -2 }), (c, lt) => TW.stamp(c, 'PROTECTED', 420, 260, lt, tPr, { px: 64 }), (c, lt) => K.card(c, 'WHAT IF HE LEAVES?', lt, { at: tBo, x: 1500, y: 260, px: 54, rot: 2, bg: JH.GOLD })];
+      S.D.sfx = [[tSt, 'pop', .2], [tPr, 'stamp', .4], [tQ - .3, 'tick', .3], [tQ + .2, 'tick', .3], [tBo, 'tension', .3], [tLe, 'tick', .35], [tLe + .5, 'tick', .35]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>

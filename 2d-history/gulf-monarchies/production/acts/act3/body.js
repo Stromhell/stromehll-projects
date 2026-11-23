@@ -1,0 +1,92 @@
+// GM act 3 - Remove the King, Save the Crown: Said bin Taimur hoards, Qaboos's 1970 coup, Qatar 1972, Dhofar won, the family firm.
+// Plates: old_palace (x2, different framing), palace_night, majlis (stand-ins card/skyline until painted), dhofar, boardroom.
+// ---- act helpers
+const rr = TW.rr, txt = TW.txt;
+const LD = (n, alt) => { const im = K.load(n, PL + n + '.jpg'); if (alt) { if (!K.imgs[alt]) K.load(alt, PL + alt + '.jpg'); im.onerror = () => { K.imgs[n] = K.imgs[alt]; }; } };
+const FL = 1250, FD = 1260, FB = 1290; // floor lines: A plates, dhofar, boardroom
+const wob = (lt, t0, amp = .5, d = 1.6) => { const u = K.seg(lt, t0, t0 + d); return u <= 0 || u >= 1 ? 0 : amp * Math.sin(u * Math.PI); };
+const CR = (om) => (c, lt) => GM.crowns(c, 40, 40, .8, [0, 0, 0, 0, 0, om ? om(lt) : 0], lt);
+const dtag = (s, at, y = 150) => (c, lt) => { const a = TW.pop(lt, at, .45); if (a <= 0) return; c.save(); c.translate(960, y); c.scale(a, a); c.font = '58px Anton'; const w = c.measureText(s).width + 70;
+  c.fillStyle = 'rgba(0,0,0,.35)'; rr(c, -w / 2 + 6, -42, w, 92, 16); c.fill(); c.fillStyle = '#1e1a16'; c.strokeStyle = '#e2b23a'; c.lineWidth = 5; rr(c, -w / 2, -48, w, 92, 16); c.fill(); c.stroke(); txt(c, s, 0, -2, 58, '#f6ecd2', 'center', 'Anton'); c.restore(); };
+const cap = (s, at, y = 270, col = '#ffd27a') => (c, lt) => { const a = TW.pop(lt, at, .45); if (a <= 0) return; c.save(); c.translate(960, y); c.scale(a, a); c.font = '46px Anton'; const w = c.measureText(s).width + 60; c.fillStyle = 'rgba(20,16,12,.72)'; rr(c, -w / 2, -40, w, 80, 14); c.fill(); txt(c, s, 0, 0, 46, col, 'center', 'Anton'); c.restore(); };
+const nt = (s, x, y, at, px = 38) => (c, lt) => GM.ntag(c, x, y, s, TW.pop(lt, at, .4), { px });
+const motes = (c, lt, x0, w, y0, h) => { c.save(); for (let k = 0; k < 30; k++) { const x = x0 + (k * 97 + lt * 14) % w, y = y0 + (k * 53 + lt * 9) % h; c.fillStyle = `rgba(255,240,200,${.15 + .15 * Math.sin(lt * 2 + k)})`; c.beginPath(); c.arc(x, y, 2 + k % 3, 0, 7); c.fill(); } c.restore(); };
+const shaft = (c, x, y, w, h, a = .18) => { c.save(); c.globalCompositeOperation = 'screen'; const g = c.createLinearGradient(x, y, x + 200, y + h); g.addColorStop(0, `rgba(255,235,190,${a})`); g.addColorStop(1, 'rgba(255,235,190,0)'); c.fillStyle = g; c.beginPath(); c.moveTo(x, y); c.lineTo(x + w, y); c.lineTo(x + w + 260, y + h); c.lineTo(x + 260, y + h); c.fill(); c.restore(); };
+const cushion = (c, x, fy, w = 300, col = '#8a2a2a') => { c.save(); c.fillStyle = 'rgba(0,0,0,.3)'; c.beginPath(); c.ellipse(x, fy, w * .6, 16, 0, 0, 7); c.fill(); c.strokeStyle = INK; c.lineWidth = 4; c.fillStyle = col; rr(c, x - w / 2, fy - 110, w, 110, 22); c.fill(); c.stroke(); c.fillStyle = R.shadeHex(col, .15); rr(c, x - w / 2 + 10, fy - 130, w - 20, 34, 14); c.fill(); c.stroke(); c.restore(); };
+const ltable = (c, x, fy, w, top, col = '#4a2e1c') => { c.save(); c.strokeStyle = INK; c.lineWidth = 5; c.fillStyle = col; for (const dx of [-.42, .42]) { c.fillRect(x + dx * w - 10, top, 20, fy - top); c.strokeRect(x + dx * w - 10, top, 20, fy - top); } rr(c, x - w / 2, top - 22, w, 26, 6); c.fill(); c.stroke(); c.restore(); };
+
+for (const [n, alt] of [['old_palace', 'card'], ['palace_night', 'skyline'], ['majlis', 'card'], ['dhofar', 'card'], ['boardroom', 'card']]) LD(n, alt);
+const BOSSA = () => ({ shL: 55, elL: -60, shR: 55, elR: -60, handL: 'open', handR: 'open' });
+
+window.SHOTS = [
+  // 3.0 old sultan on a cushion counts coins into a chest that locks
+  { plate: 'old_palace', cam: { z: [1.3, 1.45], x: [1200, 1250], y: [860, 880] }, bed: [['hum_loop', .1], ['wind_loop', .06]], light: { dir: -1, key: 'rgba(255,220,160,.2)' },
+    init: S => { const tO = A.at(S, "Oman's", 3.5), tSa = A.at(S, 'Said', 4.2), tSi = A.at(S, 'sitting', 5.6), tOi = A.at(S, 'oil', 6.4), tN = A.at(S, 'none', 9.2);
+      S.D.figs = [{ x: 1000, y: FL, s: 1.7, ...GM.SULTAN(true), pose: 'sit', facing: 1, mood: 'smug', anim: (o, lt) => { if (lt < tN) o.arms = () => ({ shL: 30, elL: -40, shR: 50 + 14 * Math.sin(lt * 5), elR: -50, handL: 'open', handR: 'fist' }); else o.mood = 'happy'; } }];
+      S.D.live = [(c, lt) => { shaft(c, 700, 200, 120, 1000); shaft(c, 1500, 200, 120, 1000, .12); cushion(c, 1000, FL, 320); motes(c, lt, 600, 1300, 300, 800); TW.glow(c, 1900, FL - 260, 200, '255,190,110', .3 + .08 * Math.sin(lt * 7)); }];
+      S.D.front = [(c, lt) => { GM.chest(c, 1420, FL, 1.3, lt < tN ? 1 : 0); if (lt > tOi - .5 && lt < tN) GM.coins(c, 1420, FL - 120, .8, 10, lt); GM.pearl(c, 1580, FL - 12, .7, .5 + .5 * Math.sin(lt * 2));
+          if (lt > tN) TW.lock(c, 1420, FL - 150, .5, 0); }, nt('SULTAN SAID BIN TAIMUR', 1000, FL - 470, tSa, 34)];
+      S.D.over = [dtag('OMAN · 1960s', .3), CR(), cap('SPENDING: ALMOST NOTHING', tN - .2)];
+      S.D.sfx = [[tSi, 'coins', .4], [tOi, 'coins_cascade', .3], [tOi + 1.5, 'coins', .3], [tN, 'gate_slam', .3], [tN + .2, 'stamp', .25]]; } },
+
+  // 3.1 Qaboos at a barred window; counters 670,000 / 2 hospitals; Sandhurst cap on the table
+  { plate: 'old_palace', cam: { z: [1.45, 1.55], x: [1720, 1700], y: [840, 850] }, bed: [['wind_loop', .1]], light: { dir: 1, key: 'rgba(200,210,255,.14)' },
+    init: S => { const tSi = A.at(S, 'six', 1.3), tTw = A.at(S, 'two', 4.6), tSc = A.at(S, 'schools.', 6.8), tQ = A.at(S, 'Qaboos,', 8.6), tSa = A.at(S, 'Sandhurst,', 9.6), tH = A.at(S, 'house', 11.6);
+      S.D.figs = [{ x: 1850, y: FL, s: 1.75, ...GM.SULTAN(false, { uniform: true }), facing: 1, mood: 'sad', anim: (o, lt) => { o.lean = Math.sin(lt * 1.3) * 1.5; if (lt > tH) { o.pose = 'think'; o.facing = -1; } } }];
+      S.D.live = [(c, lt) => { // high barred window with bar shadows on the floor
+          c.save(); c.fillStyle = '#9ab0c8'; c.fillRect(2120, 520, 220, 260); c.strokeStyle = INK; c.lineWidth = 8; c.strokeRect(2120, 520, 220, 260); for (let k = 1; k < 5; k++) { c.beginPath(); c.moveTo(2120 + k * 44, 520); c.lineTo(2120 + k * 44, 780); c.stroke(); } c.restore();
+          shaft(c, 2120, 520, 220, 720, .2); c.save(); c.globalAlpha = .25; c.fillStyle = '#000'; for (let k = 1; k < 5; k++) { c.beginPath(); c.moveTo(2120 + k * 44 + 250, FL - 20); c.lineTo(2130 + k * 44 + 280, FL - 20); c.lineTo(2130 + k * 44 + 290, FL + 20); c.lineTo(2120 + k * 44 + 260, FL + 20); c.fill(); } c.restore();
+          ltable(c, 1460, FL, 260, FL - 200); c.save(); c.translate(1440, FL - 236); c.fillStyle = '#2a2a30'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.ellipse(0, 0, 60, 16, 0, 0, 7); c.fill(); c.stroke(); c.fillStyle = '#c8302a'; c.fillRect(-46, -32, 92, 26); c.strokeRect(-46, -32, 92, 26); c.fillStyle = '#e2b23a'; c.beginPath(); c.arc(0, -20, 8, 0, 7); c.fill(); c.restore(); motes(c, lt, 2100, 600, 500, 700); }];
+      S.D.front = [nt('QABOOS', 1850, FL - 490, tQ), (c, lt) => { const a = TW.pop(lt, tSa, .4); if (a > 0) GM.ntag(c, 1440, FL - 300, 'SANDHURST', a, { px: 26, col: '#c8d4e8' }); }];
+      S.D.over = [(c, lt) => { PR.counter(c, 560, 420, 1, 0, 670000, tSi - .2, tSi + 2, lt, { pre: '' }); if (lt > tSi) txt(c, 'OMANIS', 560, 510, 40, '#f6ecd2', 'center', 'Anton');
+          PR.counter(c, 560, 620, 1, 0, 2, tTw - .2, tTw + .6, lt, { pre: '' }); if (lt > tTw) txt(c, 'HOSPITALS', 560, 710, 40, '#ff8a6a', 'center', 'Anton'); }, CR(), cap('VIRTUAL HOUSE ARREST', tH, 180)];
+      S.D.sfx = [[tSi, 'tick', .3], [tSi + 1, 'tick', .3], [tTw, 'thud', .35], [tSc, 'tick', .2], [tQ, 'pop', .2], [tSa, 'chime', .2], [tH, 'gate_slam', .3]]; } },
+
+  // 3.2 23 July 1970: Qaboos walks in with British officers; the RAF plane takes the old sultan away
+  { plate: 'palace_night', cam: { z: [1.2, 1.32], x: [1280, 1380], y: [820, 800] }, bed: [['night_loop', .14], ['wind_loop', .06]], light: { dir: -1, key: 'rgba(255,180,110,.18)' },
+    init: S => { const tT = A.at(S, 'twenty-third', 1), tO = A.at(S, 'overthrows', 4.8), tC = A.at(S, 'coup,', 6.5), tB = A.at(S, 'British', 7.4), tF = A.at(S, 'flown', 10), tN = A.at(S, 'never', 12.4);
+      S.D.figs = [{ x: 0, y: FL, s: 1.72, ...GM.SULTAN(false, { uniform: true }), facing: 1, mood: 'angry', walk: { x0: -300, x1: 900, t0: tO - 2, dur: 2.2 }, anim: (o, lt) => { if (lt > tC) o.pose = 'point'; if (lt > tF) { o.pose = 'stand'; o.mood = 'neutral'; } } },
+        ...[0, 1].map(k => ({ x: 0, y: FL + 14 + k * 10, s: 1.7, ...GM.OFFICER('1960', { cap: k === 0 }), facing: 1, mood: 'neutral', walk: { x0: -700 - k * 300, x1: 520 - k * 330, t0: tB - 2, dur: 2.4 } }))];
+      S.D.live = [(c, lt) => { for (const x of [700, 1500, 2100]) TW.glow(c, x, 700, 130, '255,170,80', .35 + .15 * Math.sin(lt * 9 + x)); }];
+      S.D.front = [(c, lt) => { const u = K.seg(lt, tF, tF + 3.5); if (lt < tF - .5) { GM.cargo(c, 2300, FL - 300, .45); return; } // plane rolls then climbs out right
+          const x = 2300 + E.inn(u) * 900, y = FL - 300 - E.inn(K.seg(u, .4, 1)) * 500; c.save(); c.translate(x, y); c.rotate(-.2 * K.seg(u, .4, .6)); GM.cargo(c, 0, 0, .45); c.restore(); if (u > .3 && u < 1) TW.glow(c, x - 140, y - 30, 60, '255,200,140', .4); },
+        (c, lt) => { const a = TW.pop(lt, tF + .3, .4) * (1 - K.seg(lt, tN + 1.5, tN + 2)); if (a > 0) GM.ntag(c, 2300, FL - 520, 'OLD SULTAN OUT', a, { px: 30 }); }];
+      S.D.over = [dtag('23 JULY 1970', .3), CR(lt => wob(lt, tO, .8, 2.4)), cap('NEVER CAME BACK', tN, 270)];
+      S.D.sfx = [[tO - 1.8, 'footsteps', .45], [tO, 'door_slam', .35], [tC, 'drum', .3], [tB - 1.5, 'footsteps', .3], [tF, 'drone', .4], [tF + 1, 'whoosh', .35], [tN, 'tension', .2]]; } },
+
+  // 3.3 Qatar 1972: one ruler leaves the majlis seat, another sits; name plate flips
+  { plate: 'majlis', cam: { z: [1.3, 1.42], x: [1280, 1300], y: [850, 860] }, bed: [['hum_loop', .08]], light: { dir: 1, key: 'rgba(255,225,170,.18)' },
+    init: S => { const tFa = A.at(S, 'family', .6), tK = A.at(S, 'king', 2.2), tTw = A.at(S, 'Two', 3.2), tKh = A.at(S, 'Khalifa', 6.2), tPu = A.at(S, 'pushes', 6.8), tAb = A.at(S, 'abroad,', 8.6), tSh = A.at(S, 'shot', 9.8);
+      const out = lt => K.seg(lt, tPu - .3, tPu + 2.2), inn = lt => K.seg(lt, tPu + .6, tAb + .4);
+      S.D.figs = [{ x: 1280, y: FL, s: 1.72, ...GM.ROYAL(0), facing: 1, pose: 'sit', mood: 'neutral', anim: (o, lt) => { const u = out(lt); if (u > 0) { o.pose = u < 1 ? 'walk' : 'stand'; o.facing = 1; o.x = 1280 + E.io(u) * 1600; o.t = lt; o.mood = 'worried'; } } },
+        { x: -300, y: FL + 4, s: 1.72, ...GM.ROYAL(1), facing: 1, mood: 'smug', anim: (o, lt) => { const u = inn(lt); o.x = -300 + E.io(u) * 1580; o.pose = u <= 0 ? 'stand' : u < 1 ? 'walk' : 'sit'; o.t = lt; } }];
+      S.D.live = [(c, lt) => { for (const x of [600, 1960]) TW.glow(c, x, 300, 200, '255,210,140', .3 + .05 * Math.sin(lt * 3 + x)); c.save(); c.fillStyle = '#7a1c1e'; c.fillRect(200, FL - 6, 2160, 30); c.restore(); cushion(c, 1280, FL, 340, '#6a2a5a'); GM.dallah(c, 1860, FL, 1.1); GM.dallah(c, 620, FL, .9); }];
+      S.D.front = [(c, lt) => { const u = K.seg(lt, tAb - .2, tAb + .3), sx = Math.abs(Math.cos(u * Math.PI)) || .03; c.save(); c.translate(1280, FL - 520); c.scale(sx, 1); c.fillStyle = '#e2b23a'; c.strokeStyle = INK; c.lineWidth = 4; rr(c, -170, -36, 340, 66, 10); c.fill(); c.stroke(); txt(c, u < .5 ? 'THE EMIR' : 'SHEIKH KHALIFA', 0, -2, 34, INK, 'center', 'Anton'); c.restore(); }];
+      S.D.over = [dtag('QATAR · 1972', tTw - .2), cap('SAME FAMILY · NEW RULER', tFa, 270), CR(), (c, lt) => { const a = TW.pop(lt, tSh - .2, .4); if (a > 0) { c.save(); c.translate(1560, 420); c.scale(a, a); txt(c, 'NO SHOTS FIRED', 0, 0, 40, '#9adf8a', 'center', 'Anton'); c.restore(); } }];
+      S.D.sfx = [[tK, 'chime', .2], [tPu, 'scrape', .35], [tPu + .4, 'footsteps', .35], [tAb, 'pop', .3], [tAb + .3, 'thud', .2], [tSh, 'whoosh_soft', .2]]; } },
+
+  // 3.4 Dhofar: clinic and school go up, helpers arrive, an ex-rebel gets an ID badge and a handshake
+  { plate: 'dhofar', cam: { z: [1.12, 1.28], x: [1280, 1300], y: [820, 860] }, bed: [['wind_loop', .1], ['birds_loop', .1]], light: { dir: 1, key: 'rgba(255,240,200,.18)' },
+    init: S => { const tSp = A.at(S, 'spends', 2.4), tPe = A.at(S, 'people,', 4), tBr = A.at(S, 'Britain,', 6), tIr = A.at(S, 'Iran', 6.7), tJo = A.at(S, 'Jordan,', 7.4), tG = A.at(S, 'gives', 8.2), tJb = A.at(S, 'jobs', 9.8), tBe = A.at(S, 'beaten.', 14);
+      S.D.figs = [{ x: 1050, y: FD, s: 1.7, ...GM.SULTAN(false), facing: 1, mood: 'happy', talk: [tSp, tPe + .6], anim: (o, lt) => { if (lt > tG && lt < tBe) o.arms = () => ({ shR: 72, elR: -6, handR: 'open', shL: -3, elL: -8 }); if (lt > tBe) o.pose = 'cheer'; } },
+        { x: 0, y: FD + 6, s: 1.7, ...GM.REBEL(), facing: -1, mood: 'worried', walk: { x0: 2900, x1: 1420, t0: tG - 2, dur: 2 }, anim: (o, lt) => { if (lt > tG && lt < tBe) o.arms = () => ({ shR: 72, elR: -6, handR: 'open', shL: -3, elL: -8 }); if (lt > tJb) o.mood = 'happy';
+          if (lt > tJb) o.hold = null; } }];
+      S.D.live = [(c, lt) => { const sign = (s, x, y, at) => { const a = TW.pop(lt, at, .4); if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.fillStyle = '#2a7a4a'; c.strokeStyle = INK; c.lineWidth = 4; rr(c, -110, -30, 220, 60, 8); c.fill(); c.stroke(); txt(c, s, 0, 0, 32, '#fff', 'center', 'Anton'); c.restore(); TW.sparkle(c, x, y, lt, 1); };
+          sign('CLINIC', 880, 780, tSp); sign('SCHOOL', 1740, 720, tPe - .2); }];
+      S.D.front = [(c, lt) => { const a = TW.pop(lt, tJb, .4); if (a <= 0) return; c.save(); c.translate(1470, FD - 360); c.scale(a, a); c.fillStyle = '#f6f2e6'; c.strokeStyle = INK; c.lineWidth = 3; rr(c, -30, -40, 60, 80, 6); c.fill(); c.stroke(); c.fillStyle = '#2a5aa8'; c.fillRect(-30, -40, 60, 18); c.fillStyle = '#888'; c.beginPath(); c.arc(0, 6, 12, 0, 7); c.fill(); c.restore(); },
+        (c, lt) => ['BRITAIN', 'IRAN', 'JORDAN'].forEach((s, k) => { const a = TW.pop(lt, [tBr, tIr, tJo][k] - .1, .4); if (a > 0) GM.ntag(c, 520 + k * 760, 470, s, a, { px: 34, col: '#c8d4e8' }); })];
+      S.D.over = [cap('REBELS → OFFICIALS', tJb, 200), CR(), cap('INSURGENCY BEATEN · 1975', tBe - .2, 300, '#9adf8a')];
+      S.D.sfx = [[tSp, 'coins_cascade', .3], [tPe, 'hit', .2], [tBr, 'pop', .2], [tIr, 'pop', .2], [tJo, 'pop', .2], [tG - 1.8, 'footsteps', .35], [tG + .3, 'hit', .25], [tJb, 'stamp', .35], [tBe, 'crowd_cheer', .3]]; } },
+
+  // 3.5 the family firm: royals around a long table, a vote, the loser moves his chair behind the winner
+  { plate: 'boardroom', cam: { z: [1.2, 1.35], x: [1280, 1280], y: [860, 880] }, bed: [['office_loop', .08]], light: { dir: -1, key: 'rgba(255,230,190,.14)' },
+    init: S => { const tSe = A.at(S, 'secret', 1), tCo = A.at(S, 'company.', 4.6), tLo = A.at(S, 'Lose', 5.6), tLi = A.at(S, 'line', 7.4), tCi = A.at(S, 'civil', 9.8), tEv = A.at(S, 'everything.', 12);
+      const mv = lt => K.seg(lt, tLi - .3, tLi + 1.6);
+      S.D.figs = [{ x: 820, y: FB, s: 1.65, ...GM.ROYAL(0), pose: 'sit', facing: 1, mood: 'smug', anim: (o, lt) => { if (lt > tLo && lt < tLi) o.pose = 'cheer'; } },
+        { x: 1740, y: FB, s: 1.65, ...GM.ROYAL(2), pose: 'sit', facing: -1, mood: 'neutral', anim: (o, lt) => { const u = mv(lt); if (lt > tLo) o.mood = 'sad'; if (u > 0) { o.x = 1740 - E.io(u) * 1300; o.facing = -1; o.pose = u < 1 ? 'walk' : 'sit'; o.t = lt; o.y = FB - 30 * E.io(u); } if (lt > tCi) o.mood = 'neutral'; } }];
+      S.D.live = [(c, lt) => { const u = mv(lt); TW.chair(c, 820, FB, FB - 120, 1, '#4a2a1a'); TW.chair(c, 1740 - E.io(u) * 1300, FB - 30 * E.io(u), FB - 120 - 30 * E.io(u), -1, '#4a2a1a'); }];
+      S.D.front = [(c, lt) => { c.save(); c.fillStyle = '#3a2416'; c.strokeStyle = INK; c.lineWidth = 5; rr(c, 960, FB - 210, 640, 40, 8); c.fill(); c.stroke(); c.fillRect(990, FB - 170, 24, 170); c.fillRect(1546, FB - 170, 24, 170); c.restore(); GM.pearl(c, 1280, FB - 222, .7, .5 + .5 * Math.sin(lt * 2));
+          if (lt > tLo - .3 && lt < tLi) { const a = TW.pop(lt, tLo - .3, .4); GM.ntag(c, 820, FB - 520, 'VOTE: WON', a, { px: 30, col: '#9adf8a' }); GM.ntag(c, 1740, FB - 470, 'VOTE: LOST', a, { px: 30, col: '#e88a7a' }); } }];
+      S.D.over = [dtag('THE FAMILY FIRM', tSe - .2), CR(), cap('CIVIL WAR = EVERYONE LOSES', tCi, 280, '#ff8a6a')];
+      S.D.sfx = [[tCo, 'stamp', .3], [tLo, 'pop', .25], [tLi, 'scrape', .45], [tLi + 1.6, 'thud', .2], [tCi, 'tension', .25], [tEv, 'drum', .3]]; } },
+];
