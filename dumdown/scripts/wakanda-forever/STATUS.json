@@ -1,18 +1,18 @@
 {
  "channel": "dumdown",
  "video": "wakanda-forever",
- "state": "queued",
+ "state": "waiting_approval",
  "thread": "cmsg_01Lc5CubZ5khWkxFXSFZXKQ8Lg7A8xFPi5abNkaF1zhBpL",
- "feedback": true,
- "queue_pos": 1,
+ "feedback": false,
+ "queue_pos": null,
  "booked_for": null,
  "zernio_post": null,
- "proposed_slot": "2026-12-09T16:00Z",
+ "proposed_slot": "Fri 11 Dec 2026 16:00 UTC if trailer plan OK (first free DumDown slot after reshuffle), else Wed 9 Dec 16:00 UTC",
  "source_drive": "https://drive.google.com/file/d/1tqBEgipR15rVSWl-TiwI3ObiQSX7aBOd/view",
- "updated": "2026-11-23T19:28Z",
- "note": "PAUSED 23 Nov 19:27 UTC by Pushpam: Doomsday trailer breakdown takes the slot first. v6 redo WIP: all scenes rebuilt (groundcheck 0 FAIL), gag VO + narrator v6 recorded (backup 03-audio/wf_audio_v6_wip.tgz, plates wf_plates_v6.tar). Resume: listen to narrator names (voicecheck_v6.md flags Okoye/Riri/Wakanda respellings), fix, then timing, mix, render, QA, send for OK.",
- "full_video": "https://drive.google.com/file/d/1Skb6zevzkVq4sUQ-1ER6roQDoX6cZY7a/view",
+ "updated": "2026-11-24T01:40Z",
+ "note": "v6 sent for OK 24 Nov 01:40 UTC (fixes Pushpam 23 Nov 17:16 review). Kit v3.",
+ "full_video": "https://drive.google.com/file/d/1D-8pbvarXqPN8coRl29wQ38D2K6Se9bY/view (FULL_v6)",
  "launch_kit": "https://claude.ai/artifact/U3wo9hVUoxZXA2fM4MbSk1",
- "length": "13:40",
- "position": 1
+ "length": "13:36",
+ "position": null
 }

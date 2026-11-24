@@ -2,7 +2,7 @@
 import re, json, os, sys, numpy as np, soundfile as sf
 from scipy.signal import resample
 SCRIPT = '/mnt/project-files/dumdown/scripts/wakanda-forever/wakanda-forever-narrator-script-v2.md'
-VO = '/tmp/wfwork/vo'; GO = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'gags', 'out_wf'); OUT = '/tmp/wfwork/timing'; os.makedirs(OUT, exist_ok=True)
+VO = os.environ.get('VO', '/tmp/wfwork/vo'); GO = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'gags', 'out_wf'); OUT = '/tmp/wfwork/timing'; os.makedirs(OUT, exist_ok=True)
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), 'gags')); from gags_data_wf import G, SPEAKERS
 GK = {g['key']: g for g in G}
 txt = open(SCRIPT).read().split('\n---\n', 1)[1]
