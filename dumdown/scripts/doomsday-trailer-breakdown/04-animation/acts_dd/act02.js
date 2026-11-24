@@ -21,10 +21,10 @@ window.ACT = { timing: window.TIMING, shots: [
    props: [{ k: 'board', x: 1750, y: 1000, s: 1, w: 760, title: 'STORMI\'S THEORY', lines: ['TIME HEIST + STEVE', 'STAYS = CRACKS'] }], pops: [{ t: 'THEORY', w: 'theory', dur: 1.6 }] },
  { p: 4, plate: 'dd_farm_living', cam: { frame: 'mcu', on: 0, push: [1, 1.1] }, chars: [{ c: 'kid', x: 1280, y: 1310, s: 1.4, view: 'front', expr: 'happy', t0: .3, talk: true, acts: [{ a: 'point', w: 'superhero' }] }], pops: [{ t: '"DAD, WERE YOU A SUPERHERO?"', w: 'superhero', dur: 2.4 }] },
  { p: 5, plate: 'dd_farm_living', cam: { frame: 'mcu', on: 0, push: [1, 1.08] }, chars: [{ c: 'oldCap', x: 1280, y: 1300, s: 1.4, view: 'threequarter', dir: 1, expr: 'smile', talk: true, acts: [{ a: 'holdUp2', w: 'six' }] }] },
- { p: 5, f: .35, plate: 'dd_studio_board', still: 1, cam: { z: [1.0, 1.04], x: 1280, y: 820 }, chars: [
+ { p: 5, f: .35, plate: 'dd_hangar', still: 1, cam: { z: [1.0, 1.04], x: 1280, y: 820 }, chars: [
    { c: 'steve', x: 560, y: 1300, s: 1.1, view: 'front', expr: 'smile' }, { c: 'tony', x: 860, y: 1300, s: 1.1, view: 'front', expr: 'smug', ghost: 1 }, { c: 'thunderBro', x: 1140, y: 1300, s: 1.15, view: 'front', expr: 'happy' },
    { c: 'hulk', x: 1460, y: 1300, s: 1.15, view: 'front', expr: 'neutral' }, { c: 'agent', x: 1760, y: 1300, s: 1.05, view: 'front', expr: 'smile', ghost: 1 }, { c: 'merc', x: 2040, y: 1300, s: 1.05, view: 'front', expr: 'neutral' }],
-   props: [{ k: 'nameTag', x: 560, y: 700, s: .6, t: 'STEVE' }, { k: 'nameTag', x: 860, y: 700, s: .6, t: 'TONY' }, { k: 'nameTag', x: 1140, y: 700, s: .6, t: 'THOR' }, { k: 'nameTag', x: 1460, y: 700, s: .6, t: 'HULK' }, { k: 'nameTag', x: 1760, y: 700, s: .6, t: 'NAT' }, { k: 'nameTag', x: 2040, y: 700, s: .6, t: 'CLINT' }],
+   props: [{ k: 'nameTag', x: 560, y: 520, s: .6, t: 'STEVE' }, { k: 'nameTag', x: 860, y: 520, s: .6, t: 'TONY' }, { k: 'nameTag', x: 1140, y: 520, s: .6, t: 'THOR' }, { k: 'nameTag', x: 1460, y: 520, s: .6, t: 'HULK' }, { k: 'nameTag', x: 1760, y: 520, s: .6, t: 'NAT' }, { k: 'nameTag', x: 2040, y: 520, s: .6, t: 'CLINT' }],
    pops: [{ t: 'STEVE · TONY · THOR · HULK · NAT · CLINT', w: 'Tony', dur: 3.4 }] },
  { p: 5, f: .75, plate: 'dd_studio_board', cam: { frame: 'med', on: 0 }, chars: [{ c: 'stormi', x: 1280, y: 1300, s: 1.4, view: 'front', expr: 'sad', talk: true, acts: [{ a: 'shrug', w: 'available' }] }], pops: [{ t: '3 OF 6: UNAVAILABLE', w: 'available', dur: 2.2 }] },
  // GAG 2 SIX OF US: kitchen, Cap counts on fingers, long pause, "eat your cereal", kid's suspicious crunch

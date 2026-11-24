@@ -2,7 +2,7 @@
 import re, json, os, sys, numpy as np, soundfile as sf
 from scipy.signal import resample
 SCRIPT = '/mnt/project-files/dumdown/scripts/doomsday-trailer-breakdown/01-script/doomsday-trailer-breakdown-script-v2.md'
-VO = '/tmp/ddw/vo'; GO = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'gags', 'out_dd'); OUT = '/tmp/ddw/timing'; os.makedirs(OUT, exist_ok=True)
+VO = os.environ.get('VO', '/tmp/ddw/vo'); GO = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'gags', 'out_dd'); OUT = '/tmp/ddw/timing'; os.makedirs(OUT, exist_ok=True)
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), 'gags')); from gags_data_dd import G, SPEAKERS
 GK = {g['key']: g for g in G}
 txt = open(SCRIPT).read().split('\n---\n', 1)[1]

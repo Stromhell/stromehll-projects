@@ -15,11 +15,11 @@ window.ACT = { timing: window.TIMING, shots: [
  { p: 2, plate: 'dd_mask_shop', cam: { frame: 'two', on: 0, on2: 1, push: [1, 1.04] }, chars: [
    { c: 'shopkeep', x: 1500, y: 1300, s: 1.35, view: 'threequarter', dir: -1, expr: 'happy', talk: TK('GAG 3', [0]), acts: [{ a: 'holdUp1', at: .6 }] },
    { c: 'maskMonk', x: 900, y: 1300, s: 1.35, view: 'threequarter', dir: 1, expr: 'neutral' }, { c: 'doomH', x: [2400, 2080], y: 1300, s: 1.4, view: 'side', dir: -1, expr: 'angry', t0: G3(1) - .9, lin: 1, talk: TK('GAG 3', [1]) }],
-   props: [{ k: 'maskShelf', x: 1300, y: 1000, s: .9, layer: 'back' }, { k: 'counter', x: 1500, y: 1360, s: .75, layer: 'front', t: 'MASKS' }, { k: 'goldMask', on: 0, s: .5, smile: 1 }],
+   props: [{ k: 'goldMask', on: 0, s: .5, smile: 1 }],
    pops: [{ t: 'THE DOOM · DELUXE · WITH A SMILE', x: 640, y: 300, at: .5, dur: 3 }] },
  { p: 2, f: (G3(1) + .2) / DUR(GP('GAG 3')), plate: 'dd_mask_shop', cam: { frame: 'mcu', on: 0, push: [1, 1.1] }, chars: [{ c: 'doomH', x: 1280, y: 1300, s: 1.4, view: 'front', expr: 'angry', talk: TK('GAG 3', [1], G3(1) + .2) }], pops: [{ t: 'NO SMILING.', x: 1400, y: 300, at: .6, dur: 1.8 }] },
  { p: 2, f: (G3(1) + 2.4) / DUR(GP('GAG 3')), plate: 'dd_mask_shop', cam: { frame: 'med', on: 0, push: [1, 1.05] }, chars: [{ c: 'shopkeep', x: 1280, y: 1300, s: 1.4, view: 'front', expr: 'nervous', acts: [{ a: 'toss', at: .2 }] }],
-   props: [{ k: 'goldMask', x: [1400, 1560], y: [1000, 1300], s: .55, smile: 1, rot: [0, 80], t1: .7 }, { k: 'bin', x: 1600, y: 1330, s: 1 }, { k: 'counter', x: 1280, y: 1360, s: 1.1, layer: 'front', t: 'MASKS' }] },
+   props: [{ k: 'goldMask', x: [1400, 1560], y: [1000, 1300], s: .55, smile: 1, rot: [0, 80], t1: .7 }, { k: 'bin', x: 1600, y: 1330, s: 1 }] },
  { p: 3, plate: 'dd_doom_hall', grade: GRN, cam: { frame: 'mcu', on: 0, push: [1, 1.1] }, chars: [{ c: 'doomH', x: 1280, y: 1290, s: 1.4, view: 'front', expr: 'deadpan', acts: [{ a: 'pointHold', w: 'back' }] }], pops: [{ t: '"GIVE THEM BACK"', w: 'back', dur: 2.2 }] },
  { p: 3, f: .4, plate: 'dd_studio_board', cam: { z: [1.05, 1.1], x: 1350, y: 800 }, chars: [{ c: 'stormi', x: 1100, y: 1300, s: 1.4, view: 'threequarter', dir: 1, expr: 'neutral', talk: true, acts: [{ a: 'holdUp1', w: 'Steve' }, { a: 'holdUp2', w: 'Fantastic' }, { a: 'shrug', w: 'snap' }] }],
    props: [{ k: 'board', x: 1760, y: 1000, s: 1, w: 760, title: 'STORMI\'S THEORY', lines: ['WHO STOLE A LIFE?', 'STEVE \u00b7 F4 \u00b7 THE', 'SNAP'] }] },

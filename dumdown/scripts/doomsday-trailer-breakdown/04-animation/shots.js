@@ -1,0 +1,140 @@
+// Data-driven shot interpreter for the Deadpool 2 acts. window.ACT = { timing, shots:[...] } -> FILM.setup(SH)
+(function () {
+const E = window.E, { D, C, W, H, BAR, IM, ctx, cv, clamp, lerp, io, out3, seg, apply, plate, chars, fig, screen, grade, glowS, rainFx, worldPt, hand } = E;
+const FX = window.FX, P = window.PROPS;
+const LEAD = window.LEAD ?? .6;
+const val = (v, u) => Array.isArray(v) ? lerp(v[0], v[1], u) : v;
+const outBack = u => { u = clamp(u); const k = 1.70158; return 1 + (k + 1) * Math.pow(u - 1, 3) + k * Math.pow(u - 1, 2); };
+function pop(text, lt, a, dur = 2.6, o = {}) { if (lt < a || lt > a + dur) return; const k = outBack(seg(lt, a, a + .35)), ko = io(seg(lt, a + dur - .3, a + dur)); screen(); ctx.save();
+  const x = o.x ?? W - 470, y = o.y ?? BAR + 120; ctx.translate(x, y); ctx.rotate(-.05 + Math.sin(lt * 3) * .015); ctx.scale(k * (1 - ko), k * (1 - ko)); ctx.font = '800 40px Inter';
+  const lines = []; let line = ''; for (const w of text.split(' ')) { const t = line ? line + ' ' + w : w; if (ctx.measureText(t).width > 640 && line) { lines.push(line); line = w; } else line = t; } lines.push(line);
+  const bw = Math.max(...lines.map(l => ctx.measureText(l).width)) + 60, bh = lines.length * 50 + 36; ctx.fillStyle = '#231A24'; ctx.fillRect(-bw / 2 + 10, -bh / 2 + 10, bw, bh); ctx.fillStyle = '#ffd23d'; ctx.fillRect(-bw / 2, -bh / 2, bw, bh); ctx.strokeStyle = '#231A24'; ctx.lineWidth = 5; ctx.strokeRect(-bw / 2, -bh / 2, bw, bh);
+  ctx.fillStyle = '#231A24'; ctx.textAlign = 'center'; lines.forEach((l, i) => ctx.fillText(l, 0, -bh / 2 + 62 + i * 50)); ctx.restore(); }
+function bigText(text, lt, a, b, col = '#f4ecd8', bx = null, by = null) { const al = io(seg(lt, a, a + .3)) * (1 - io(seg(lt, b - .3, b))); if (al <= 0) return; if (by == null) { window.POSTBAR = () => bigText(text, lt, a, b, col, bx, -1); return; } if (by === -1) by = null; screen(); ctx.globalAlpha = al; ctx.textAlign = 'center'; ctx.font = '900 92px "Inter Display"'; ctx.letterSpacing = '6px'; ctx.lineWidth = 14; ctx.strokeStyle = '#231A24'; ctx.strokeText(text, bx ?? W / 2, by ?? H - 36); ctx.fillStyle = col; ctx.fillText(text, bx ?? W / 2, by ?? H - 36); ctx.letterSpacing = '0px'; ctx.globalAlpha = 1; }
+window.LK = { pop, bigText };
+// framing rule (Pushpam 21 Nov): graphics never overlap a character and stay inside a safe frame
+const SAFE = { x0: 150, x1: W - 150, y0: BAR + 24, y1: H - BAR - 24 };
+const hit = (r, BB) => BB.reduce((a, b) => a + Math.max(0, Math.min(r[2], b[2]) - Math.max(r[0], b[0])) * Math.max(0, Math.min(r[3], b[3]) - Math.max(r[1], b[1])), 0);
+function freeSpot(w, h, BB, pref) { const cands = [[W - 150 - w / 2, SAFE.y0 + h / 2 + 10], [150 + w / 2, SAFE.y0 + h / 2 + 10], [W / 2, SAFE.y0 + h / 2 + 10], [W - 150 - w / 2, H / 2], [150 + w / 2, H / 2], [W - 150 - w / 2, SAFE.y1 - h / 2 - 10], [150 + w / 2, SAFE.y1 - h / 2 - 10], [W / 2, SAFE.y1 - h / 2 - 10]];
+  if (pref === 'L') cands.unshift(cands.splice(1, 1)[0]); BB = BB.concat([[W - 380, 0, W, BAR + 190]]); let best = cands[0], bv = 1e18; for (const [x, y] of cands) { const v = hit([x - w / 2, y - h / 2, x + w / 2, y + h / 2], BB); if (v < bv - 1) { bv = v; best = [x, y]; } if (v === 0) break; } return best; }
+window.FREESPOT = freeSpot;
+function build(ACT) {
+  const T = ACT.timing, starts = []; let t = 0; T.durs.forEach(d => { starts.push(t); t += d + T.gap; }); const total = t + (ACT.tail ?? 1.2);
+  const at = (p, f = 0) => LEAD + (p >= starts.length ? total : starts[p] + (p < T.durs.length ? T.durs[p] * f : 0));
+  // word clock: chunk timings from the VO json (Chatterbox chunks), char-proportional inside a chunk
+  const norm = x => x.toLowerCase().replace(/[^a-z0-9' -]/g, '');
+  const wordAt = (p, w, nth = 0) => { const ch = (T.chunks || [])[p]; const ww = norm(w); if (ch) { let k = 0; for (const [cs, cd, tx] of ch) { const n = norm(tx); let i = -1, from = 0; while ((i = n.indexOf(ww, from)) >= 0) { if (k++ === nth) return LEAD + starts[p] + cs + cd * (i / Math.max(1, n.length)); from = i + 1; } } }
+    const para = norm((T.paras || [])[p] || ''); const i = para.indexOf(ww); console.error('word not found', p, w); return LEAD + starts[p] + (i >= 0 ? T.durs[p] * i / para.length : 0); };
+  window.WORD_AT = wordAt;
+  if (ACT.meterEv) ACT.meter = ACT.meterEv.map(e => [e.at != null ? e.at : wordAt(e.p, e.w, e.n_ || 0), e.n]);
+  const SH = ACT.shots.map((s, i) => ({ s, a: s.t0 ?? at(s.p, s.f || 0) }));
+  // FRAMING v3 (Pushpam 22 Nov): feet at y 1320 sat behind the bottom letterbox bar. Lift every standing cast member and the floor props by 110 so whole bodies stay in the picture.
+  const FDY = window.FLOOR_DY ?? 110, up = v => Array.isArray(v) ? v.map(q => q - FDY) : v - FDY, big = v => (Array.isArray(v) ? Math.max(...v) : v) >= 700;
+  for (const s of ACT.shots) { if (s.noLift || s._lifted) continue; s._lifted = 1; for (const c of (s.chars || [])) if (typeof c.y === 'number' || Array.isArray(c.y)) { if (big(c.y)) c.y = up(c.y); } for (const p of (s.props || [])) if (p.on == null && p.onHead == null && p.y != null && big(p.y)) p.y = up(p.y); if (s.cam && typeof s.cam.y === 'number' && s.cam.y > 720) s.cam.y -= FDY; }
+  // REAL SCALE v6 (L01/L05): each shot's cast + props + camera are scaled as one group about the cast's feet so a person is
+  // k*(feetY - horizon) px tall on that set (window.FLOOR_MODEL), and feet are clamped onto the walkable floor (y0..1430).
+  { const FM = window.FLOOR_MODEL || {}, sv = (v, f) => Array.isArray(v) ? v.map(f) : f(v), mx = v => Array.isArray(v) ? Math.max(...v) : v, mean = a => a.reduce((x, y) => x + y, 0) / a.length;
+    for (const s of ACT.shots) { const m = FM[s.plate]; if (!m || m.free || m.est || s.noScale || s._scaled) continue; s._scaled = 1; if (s.cam && /^(med|mcu|cu|ecu)$/.test(s.cam.frame || '')) { s._close = 1; continue; } // close frames: authored size, plate capped + soft (ZOOM CAP)
+      const fly = c => c.pose === 'fly' || c.fly || c.swim || c.noGround || c.rot != null;
+      const g = (s.chars || []).filter(c => !fly(c) && c.y != null);
+      const fp = (s.props || []).filter(p => p.on == null && p.onHead == null && p.y != null && mx(p.y) >= 900);
+      let ay = g.length ? mean(g.map(c => mx(c.y))) : (fp.length ? mean(fp.map(p => mx(p.y))) : 1210), so = g.length ? mean(g.map(c => mx(c.s ?? 1.4))) : 1.4;
+      const ay2 = Math.min(m.y1 || 1430, Math.max(m.y0, ay)), dy = ay2 - ay; ay = ay2;
+      let r = (m.k * (ay - m.hz)) / 440 / so; if (!(r > 0)) continue; r = Math.max(.25, Math.min(2.2, r)); s._r = r;
+      const xs = (s.chars || []).map(c => mx(c.x)).filter(v => v != null), ax = xs.length ? mean(xs) : 1280;
+      const TX = x => ax + (x - ax) * r, TY = y => ay + (y + dy - ay) * r;
+      for (const c of (s.chars || [])) { if (c.x != null) c.x = sv(c.x, TX); if (c.y != null) c.y = sv(c.y, TY); c.s = sv(c.s ?? 1.4, v => v * r); if (!fly(c)) c.y = sv(c.y, v => Math.min(m.y1 || 1432, Math.max(m.y0, v))); }
+      for (const p of (s.props || [])) { if (p.onHead != null) continue; if (p.on != null) { p.s = sv(p.s ?? 1, v => v * r); if (p.dx) p.dx *= r; if (p.dy) p.dy *= r; continue; } if (p.x != null) p.x = sv(p.x, TX); if (p.y != null) p.y = sv(p.y, TY); p.s = sv(p.s ?? 1, v => v * r); }
+      const cm = s.cam; if (cm && !cm.frame) { if (cm.z != null) cm.z = sv(cm.z, z => Math.max(1, Math.min(3.4, z / r))); else cm.z = Math.max(1, Math.min(3.4, 1 / r)); if (cm.x != null) cm.x = sv(cm.x, TX); else cm.x = TX(1280); if (cm.y != null) cm.y = sv(cm.y, TY); else cm.y = TY(720); } } }
+  // AUTO FACING v6 (L38): moving creatures/vehicles always face where they travel (whale head is at -x, birds/fish at +x)
+  { const FACE = { whale: -1, fish: 1, seagull: 1, eagle: 1, limo: 1, car: 1, boat: 1 }; for (const s of ACT.shots) for (const p of (s.props || [])) if (FACE[p.k] && Array.isArray(p.x) && Math.abs(p.x[1] - p.x[0]) > 30 && !p.keepDir) p.dir = Math.sign(p.x[1] - p.x[0]) * FACE[p.k]; }
+  // GAG WIPES: a comic wipe covers every cut between narration and a gag (in and out) instead of a hard cut
+  { const K = T.kinds || []; SH.forEach((x, i) => { if (i && (K[x.s.p] === 'gag') !== (K[SH[i - 1].s.p] === 'gag')) { x.s._gx = 1; x.s.noWhip = 1; } }); }
+  SH.forEach((x, i) => { x.b = i + 1 < SH.length ? SH[i + 1].a : LEAD + total; if (i === 0) x.a = 0; });
+  const tOf = (q, s, a) => q.at != null ? q.at : wordAt(q.p ?? s.p, q.w, q.n || 0) - a + (q.d || 0);
+  for (const { s, a } of SH) { for (const c of (s.chars || [])) if (c.swap) c._swap = c.swap.map(q => [tOf(q, s, a), q.to, q.dur]); for (const p of (s.props || [])) if (p.tw) p.t0 = wordAt(p.p ?? s.p, p.tw, p.n || 0) - a + (p.d || 0); for (const p of (s.pops || [])) if (p.w) p.at = wordAt(p.p ?? s.p, p.w, p.n || 0) - a + (p.d || 0); for (const c of (s.cards || [])) if (c.w) c.at = wordAt(c.p ?? s.p, c.w, c.n || 0) - a; }
+  for (const { s, a } of SH) for (const c of (s.chars || [])) if (c.acts || c.seat) c._acts = (c.acts || []).map(q => [q.a, q.at != null ? q.at : wordAt(q.p ?? s.p, q.w, q.n || 0) - a + (q.d || 0)]);
+  /* LONG-HOLD SPLIT (L46, Pushpam 24 Nov): any narration shot over 7 s is cut into 2-3 angles (wide / closer on the talker / other char) so no scene sits too long */
+  { const K = T.kinds || [], mv = o => ['x', 'y', 's'].some(k => Array.isArray(o[k]));
+    const alt = (s, k) => { const cs = s.chars || [], cm = s.cam || {}, n = cs.length; let ti = cs.findIndex(c => c.talk && !c.ghost); if (ti < 0) ti = Math.max(0, cs.findIndex(c => !c.ghost));
+      if (!n) { const z = [].concat(cm.z ?? 1), z1 = z[z.length - 1]; return Object.assign({}, cm, { z: [z1 * 1.18, z1 * 1.26], x: (cm.x ?? 1280) + (k % 2 ? 240 : -240), frame: undefined }); }
+      if (k % 2 === 0) return n > 1 && !/^(med|mcu|cu)$/.test(cm.frame || '') ? { frame: 'med', on: (ti + 1) % n, push: [1, 1.05] } : Object.assign({}, cm, { push: [1.04, 1] });
+      if (/^(med|mcu|cu)$/.test(cm.frame || '')) return { frame: cm.frame === 'mcu' ? 'med' : 'mcu', on: cm.on || 0, push: [1, 1.06] };
+      return { frame: (s._r || 1) < .6 ? 'full' : 'mcu', on: ti, push: [1, 1.06] }; };
+    for (let i = SH.length - 1; i >= 0; i--) { const x = SH[i], s = x.s, d = x.b - x.a; if (d <= 7 || K[s.p] === 'gag' || s.noSplit || (s.chars || []).some(mv) || (s.props || []).some(mv) || (s.chars || []).some(c => c.t1 != null || (c.t0 || 0) > d / 3)) continue;
+      const nP = Math.min(3, Math.ceil(d / 5)), add = [];
+      for (let k = 1; k < nP; k++) { const off = d * k / nP, sh = q => q == null ? q : q - off;
+        const s2 = Object.assign({}, s, { cam: alt(s, k), _gx: 0, noWhip: 1, still: s.still, _split: k,
+          chars: (s.chars || []).map(c => Object.assign({}, c, { t0: undefined, _acts: c._acts && c._acts.map(([q, t]) => [q, t - off]), _swap: c._swap && c._swap.map(([t, q, dd]) => [t - off, q, dd]) })),
+          title: undefined, props: (s.props || []).filter(p => !(k % 2 && /^(board|nameTag)$/.test(p.k))).map(p => Object.assign({}, p, p.t0 != null ? { t0: p.t0 - off } : {})),
+          pops: (s.pops || []).map(p => Object.assign({}, p, { at: (p.at ?? 0) - off })), cards: (s.cards || []).map(c => Object.assign({}, c, { at: (c.at ?? 0) - off })) });
+        add.push({ s: s2, a: x.a + off, b: k + 1 < nP ? x.a + d * (k + 1) / nP : x.b }); }
+      x.b = x.a + d / nP; SH.splice(i + 1, 0, ...add); } }
+  return SH.map(({ s, a, b }, si) => ({ a, b, async draw(tt, lt, u) {
+    const d = b - a, ue = s.ease === 'lin' ? u : io(u), cm = s.cam || {};
+    const zr_ = [].concat(cm.z ?? 1), zk = !s.still && !cm.frame && (zr_.length < 2 || Math.abs(zr_[1] - zr_[0]) < .12) ? 1 + .07 * ue : 1;
+    const cam = { z: val(cm.z ?? 1, ue) * zk, x: val(cm.x ?? 1280, ue), y: val(cm.y ?? 720, ue), rot: val(cm.rot ?? 0, ue) };
+    // AUTO FRAMING (rule 2): frame = full | med | mcu | cu | ecu on chars[on] (or 'two' on chars[on] + chars[on2])
+    if (cm.frame) { const ch = (s.chars || [])[cm.on || 0], spc = C[ch.c] || {}, cy0 = val(ch.y, ch.lin ? ue : io(ue)), fh = D.forehead(spc, { view: ch.view || 'front', dir: ch.dir || 1, x: val(ch.x, 0), y: cy0, scale: val(ch.s ?? 1.4, 0), fy: -30 }), h0_ = Math.max(50, cy0 - fh.y), c2_ = cm.frame === 'two' ? (s.chars || [])[cm.on2 ?? 1] : null, fh2_ = c2_ ? D.forehead(C[c2_.c] || {}, { view: c2_.view || 'front', dir: c2_.dir || 1, x: val(c2_.x, 0), y: val(c2_.y, c2_.lin ? ue : io(ue)), scale: val(c2_.s ?? 1.4, 0), fy: -30 }) : null, h = fh2_ ? Math.max(h0_, cy0 - fh2_.y) : h0_;
+      const F = { full: [1.5, .53], med: [.85, .66], mcu: [.6, .76], cu: [.42, .86], ecu: [.26, .9] }[cm.frame === 'two' ? 'full' : cm.frame];
+      const xNow = c_ => { if (!Array.isArray(c_.x)) return c_.x; const r_ = Math.abs(c_.x[1] - c_.x[0]), sp_ = (c_.t1 ?? d) - (c_.t0 || 0), we_ = r_ > 20 && r_ / sp_ < 140 ? (c_.t0 || 0) + Math.max(.8, r_ / 160) : (c_.t1 ?? d); const u_ = clamp((lt - (c_.t0 || 0)) / (we_ - (c_.t0 || 0))); return lerp(c_.x[0], c_.x[1], c_.lin ? u_ : io(u_)); };
+      let z = 804 / (.75 * h * F[0]), cx = xNow(ch);
+      if (cm.frame === 'two') { const c2 = s.chars[cm.on2 ?? 1]; const x2 = xNow(c2); cx = (cx + x2) / 2; const wneed = Math.abs(x2 - xNow(ch)) + 520 * val(ch.s ?? 1.4, 0); z = Math.min(z, 1920 / (.75 * wneed)); }
+      const pz = [].concat(cm.push ?? [1, 1.1]); z *= val(pz.length > 1 ? pz : [pz[0], pz[0]], ue); cam.z = Math.max(1, z); cam.y = cy0 - h * F[1] + (cm.dy || 0); if (cm.x == null) cam.x = cx + (cm.dx || 0) / (Math.max(1, cam.z) * .75); }
+    // keep every head (and horns) below the top letterbox: lower cam.y if needed (continuous in ue, so no jumps)
+    const cam0y = cam.y;
+    if (!s.noHeadFit) for (const c of (s.chars || [])) { const ch = (C[c.c] || {}).acc || {}, hs = ch.hornStyle, hx = ch.horns ? (hs === 'huge' ? 230 : hs === 'small' ? 70 : hs === 'broken' ? 90 : 150) : 0;
+      const sc = val(c.s ?? 1.4, ue), cy = val(c.y, ue), lim = (165 - 540) / (cam.z * .75); let need = cy - (410 + hx) * sc - lim;
+      if (cam0y - need > .3 * 720 / cam.z) need = cy - 410 * sc - lim; // close-up: keep the face framed, let horn tips leave the frame
+      if (cam.y > need) cam.y = Math.max(need, 720 / cam.z); }
+    // CINEMATIC v2 (Pushpam 15 Nov: no slideshow): every shot keeps moving (dolly drift + push-in), plates parallax behind
+    // the cast, and cuts to a new place whip-pan (blurred slide in/out) instead of hard-cutting.
+    if (!s.still) { const dirv = s.drift ?? (si % 2 ? -1 : 1);
+      if (!Array.isArray(cm.x)) cam.x += dirv * lerp(-120, 120, ue) / Math.max(1, cam.z * .9);
+      cam.sy = (cam.sy || 0) + Math.sin(lt * 1.3 + si) * 3; }
+    let whip = 0; const prevS = si ? SH[si - 1].s : null, nextS = SH[si + 1] ? SH[si + 1].s : null, WD = .22;
+    if (prevS && prevS.plate !== s.plate && !s.noWhip && lt < WD) whip = (si % 2 ? -1 : 1) * (1 - io(lt / WD));
+    if (nextS && nextS.plate !== s.plate && !nextS.noWhip && d - lt < WD) whip = ((si + 1) % 2 ? 1 : -1) * io(1 - (d - lt) / WD);
+    if (whip) { const m = Math.max(0, (2560 - 2560 / cam.z) / 2) * cam.z * .75; cam.sx = (cam.sx || 0) + whip * Math.min(m * .6, 150); }
+    if (cm.shake) { cam.sx = Math.sin(lt * 41) * cm.shake; cam.sy = Math.cos(lt * 33) * cm.shake * .7; }
+    if (s.plate) { const ZM = s.zmax ?? 2.2, over = !s.noZcap && cam.z > ZM; /* ZOOM CAP v6: SD plates go soft past ~2.2x, so close frames keep the plate at ZM and add depth-of-field blur */ plate(s.plate, over ? Object.assign({}, cam, { z: ZM }) : cam, (s.blur || 0) + Math.abs(whip) * 22 + (over ? Math.min(6, 2.5 + (cam.z - ZM) * 2) : 0), s.par ?? 1); } else { screen(); ctx.fillStyle = s.bg || '#000'; ctx.fillRect(0, 0, W, H); }
+    if (s.pre) await s.pre(lt, cam, u, d);
+    const list = [], fronts = [], CO = [], BB = [], PUFF = [];
+    const at = p => { if (p.onHead != null) { const k = CO[p.onHead]; if (!k) return null; const o = k[2], f = D.forehead(k[0], { view: o.view || 'front', dir: o.dir || 1, x: o.x, y: o.y, scale: o.s, pose: E.figPose(k[0], k[1], o), fy: p.fy ?? 36 }); return { x: f.x + (p.dx || 0), y: f.y + (p.dy || 0), s: (p.s ?? 1) * f.sc / 1.9 }; } if (p.on == null) return null; const k = CO[p.on]; if (!k) return null; const w = hand(k[0], k[1], k[2], p.side || 'R'); return { x: w.x + (p.dx || 0), y: w.y + (p.dy || 0) }; };
+    ctx.filter = whip ? `blur(${(Math.abs(whip) * 16).toFixed(1)}px)` : 'none';
+    for (const p of (s.props || [])) if ((p.layer || (p.on != null || p.onHead != null ? 'front' : 'back')) === 'back' && lt >= (p.t0 || 0) && lt <= (p.t1 ?? 1e9)) { apply(cam); P[p.k](Object.assign({}, p, at(p) || { x: val(p.x, (p.mv ? Math.max(0, Math.min(1, (lt - p.mv[0]) / (p.mv[1] - p.mv[0]))) : ue)), y: val(p.y, (p.mv ? Math.max(0, Math.min(1, (lt - p.mv[0]) / (p.mv[1] - p.mv[0]))) : ue)) }, { s: val(p.s ?? 1, (p.mv ? Math.max(0, Math.min(1, (lt - p.mv[0]) / (p.mv[1] - p.mv[0]))) : ue)), rot: p.rot == null ? 0 : val(p.rot, (p.mv ? Math.max(0, Math.min(1, (lt - p.mv[0]) / (p.mv[1] - p.mv[0]))) : ue)), k: p.kk === undefined ? 1 : val(p.kk, (p.mv ? Math.max(0, Math.min(1, (lt - p.mv[0]) / (p.mv[1] - p.mv[0]))) : ue)) }), lt); }
+    ctx.filter = 'none';
+    for (const c of (s.chars || [])) { if (lt < (c.t0 || 0) || lt > (c.t1 ?? 1e9)) continue; const rng_ = Array.isArray(c.x) ? Math.abs(c.x[1] - c.x[0]) : 0, span = (c.t1 ?? d) - (c.t0 || 0), sz_ = (Array.isArray(c.s) ? Math.max(...c.s) : (c.s ?? 1.4)) * ((C[c.c] || {}).scale || 1), vw_ = 220 * sz_, wEnd = rng_ > 20 && !c.fullSpan ? Math.min(c.t1 ?? d, (c.t0 || 0) + Math.max(.8, rng_ / vw_)) : (c.t1 ?? d); const cu = c.t0 || c.t1 || wEnd < d ? clamp((lt - (c.t0 || 0)) / (wEnd - (c.t0 || 0))) : ue; const cue = c.lin ? cu : io(cu);
+      let spec = C[c.c]; if (c._swap) for (const [t_, to, du] of c._swap) if (lt >= t_ && (du == null || lt < t_ + du)) spec = C[to] || spec;
+      const x = val(c.x, cue), moving = Array.isArray(c.x) && Math.abs(c.x[1] - c.x[0]) > 20 && cu > 0 && cu < 1;
+      const talk = c.talk && (Array.isArray(c.talk) ? c.talk.some(([p, q]) => lt >= p && lt <= q) : true);
+      const fo = { x, y: val(c.y, cue), s: val(c.s ?? 1.4, cue), view: c.view || 'front', dir: c.dir || 1, expr: (typeof c.expr === 'function' ? c.expr(lt) : c.expr) || (talk ? 'talk' : undefined), anim: (c.anim === 'walk' && Array.isArray(c.x) && !moving) ? (talk ? 'talk' : null) : (c.anim || (moving ? 'walk' : (talk ? 'talk' : null))), dist: (c.anim === 'walk' && !Array.isArray(c.x)) ? lt * 200 * sz_ : undefined, pose: c.pose ? D.POSES[c.pose] : undefined, lean: c.lean, tilt: c.tilt, rot: c.rot == null ? 0 : val(c.rot, cue) }; if (c._acts) { const base = JSON.parse(JSON.stringify(E.figPose(spec, lt + (c.ph || 0), fo))); if (c.seat) { base.L = { sh: 4, el: 66, wr: 0, hand: 'relaxed' }; base.R = { sh: 0, el: 70, wr: 0, hand: 'relaxed' }; } const r = D.ACT.apply(base, c._acts, lt); if (c.seat && r.pose) { const sp = D.ACT.apply(JSON.parse(JSON.stringify(base)), [['sitS', -5]], lt).pose; r.pose.legL = sp.legL; r.pose.legR = sp.legR; r.pose.bob = sp.bob; r.pose.lean = Math.min(r.pose.lean || 0, 4) - 3; } const sc = fo.s * (spec.scale || 1); fo.poseFinal = r.pose; fo.x += r.body.dx * sc * fo.dir; fo.y += r.body.dy * sc; fo.rot = (fo.rot || 0) + r.body.rot; if (r.expr && !c.exprLock) fo.exprForce = r.expr; }
+      { const ci = (s.chars || []).indexOf(c), hs = (s.props || []).filter(q => q.on === ci).map(q => q.side || 'R'); if (hs.length) { if (fo.view === 'threequarter') fo.view = 'side'; const pf = JSON.parse(JSON.stringify(E.figPose(spec, lt + (c.ph || 0), fo))); for (const sd of hs) pf[sd] = Object.assign({}, pf[sd], { hand: 'fist' }); fo.poseFinal = pf; } }
+      CO[(s.chars || []).indexOf(c)] = [spec, lt + (c.ph || 0), fo];
+      { const sc = fo.s * (spec.scale || 1), [px, py] = worldPt(cam, fo.x, fo.y), m = E.camTf(cam).sc, hh = 440 * sc * m, ww = 230 * sc * m; BB.push([px - ww / 2, py - hh, px + ww / 2, py]); } const ent_ = (c.t0 || 0) > .3 && !Array.isArray(c.x) && c.enter !== 'none' ? clamp((lt - c.t0) / .45) : 1; if (ent_ < 1) { fo.s *= .88 + .12 * io(ent_); PUFF.push([fo.x, fo.y, fo.s, ent_, c.enterCol || 'rgba(255,255,255,A)']); } // ENTRANCE v6 (L40): fade + puff, never a pop-in
+      const fg_ = fig(spec, lt + (c.ph || 0), fo); if (ent_ < 1) { list.push(`<g opacity="${io(ent_).toFixed(3)}">${fg_}</g>`); continue; } list.push(c.ghost ? `<g opacity="${typeof c.ghost === 'number' ? c.ghost : (Array.isArray(c.ghost) ? val(c.ghost, cue) : .62)}">${fg_}</g>` : fg_); }
+    // contact shadows (Pushpam 22 Nov: no hovering): soft ellipse under the feet of everyone standing on the floor
+    if (!s.noShadow && !/space|cosmos|sky|nebula|galaxy/.test(s.plate || '')) (s.chars || []).forEach((c, i) => { const k = CO[i]; if (!k || c.seat || c.noShadow || c.ghost || c.rot) return; const o = k[2]; if (o.y < 1080) return; apply(cam); ctx.save(); ctx.fillStyle = 'rgba(20,12,24,.30)'; ctx.beginPath(); ctx.ellipse(o.x, o.y + 6 * o.s, 105 * o.s, 15 * o.s, 0, 0, 6.2832); ctx.fill(); ctx.restore(); });
+    if (list.length) await chars(list, cam, (s.cblur || 0) + Math.abs(whip) * 16);
+    for (const [px, py, ps, pu, pc] of PUFF) { apply(cam); for (let k = 0; k < 9; k++) { const a = k * .7 + 1, rr_ = (60 + 220 * pu) * ps, al = .55 * (1 - pu); const g = ctx.createRadialGradient(px + Math.cos(a) * rr_ * .7, py - 200 * ps + Math.sin(a) * rr_ * .9, 0, px + Math.cos(a) * rr_ * .7, py - 200 * ps + Math.sin(a) * rr_ * .9, 90 * ps); g.addColorStop(0, pc.replace('A', al)); g.addColorStop(1, pc.replace('A', 0)); ctx.fillStyle = g; ctx.fillRect(px - 600 * ps, py - 700 * ps, 1200 * ps, 1000 * ps); } }
+    ctx.filter = whip ? `blur(${(Math.abs(whip) * 16).toFixed(1)}px)` : 'none';
+    for (const p of (s.props || [])) if ((p.layer || (p.on != null || p.onHead != null ? 'front' : 'back')) === 'front' && lt >= (p.t0 || 0) && lt <= (p.t1 ?? 1e9)) { apply(cam); P[p.k](Object.assign({}, p, at(p) || { x: val(p.x, (p.mv ? Math.max(0, Math.min(1, (lt - p.mv[0]) / (p.mv[1] - p.mv[0]))) : ue)), y: val(p.y, (p.mv ? Math.max(0, Math.min(1, (lt - p.mv[0]) / (p.mv[1] - p.mv[0]))) : ue)) }, { s: val(p.s ?? 1, (p.mv ? Math.max(0, Math.min(1, (lt - p.mv[0]) / (p.mv[1] - p.mv[0]))) : ue)), rot: p.rot == null ? 0 : val(p.rot, (p.mv ? Math.max(0, Math.min(1, (lt - p.mv[0]) / (p.mv[1] - p.mv[0]))) : ue)), k: p.kk === undefined ? 1 : val(p.kk, (p.mv ? Math.max(0, Math.min(1, (lt - p.mv[0]) / (p.mv[1] - p.mv[0]))) : ue)) }), lt); }
+    ctx.filter = 'none';
+    if (s.fg && IM[s.fg]) { apply(cam); ctx.drawImage(IM[s.fg], 0, 0, 2560, 1440); }
+    if (s.post) await s.post(lt, cam, u, d);
+    for (const f of (s.fx || [])) { if (f === 'rain') rainFx(lt, .35); else if (f === 'snow') FX.snow(lt); else if (f === 'sparks') FX.sparks(W / 2, H / 2, lt); else if (f === 'flash') FX.white(1 - seg(lt, 0, .5)); else if (f === 'whiteout') FX.white(seg(lt, d - 1.2, d)); }
+    if (s.grade) grade(s.grade[0], s.grade[1], s.grade[2] || 'soft-light');
+    if (s.title) { const _p = window.POSTBAR, _t = s.title, _d = Math.min(3.2, d - .6); window.POSTBAR = () => { if (_p) _p(); screen(); const al = io(seg(lt, .4, 1)) * (1 - seg(lt, _d, _d + .6)); if (al <= 0) return; ctx.globalAlpha = al; ctx.textAlign = 'center'; ctx.fillStyle = '#ffd23d'; ctx.font = '600 20px Inter'; ctx.letterSpacing = '12px'; ctx.fillText(_t[0], W / 2, H - 138 + 40); ctx.fillStyle = '#f4ecd8'; ctx.font = '700 50px Georgia'; ctx.letterSpacing = '4px'; ctx.fillText(_t[1], W / 2, H - 138 + 100); ctx.letterSpacing = '0px'; ctx.globalAlpha = 1; }; }
+    for (const c of (s.cards || [])) { let side = c.side; if (!side) { const r = [W / 2 + 600 - 180, H / 2 - 255, W / 2 + 600 + 180, H / 2 + 255], l = [W / 2 - 600 - 180, H / 2 - 255, W / 2 - 600 + 180, H / 2 + 255]; side = hit(r, BB) <= hit(l, BB) ? 'R' : 'L'; c.side = side; } await FX.intro(c.c ? C[c.c] : null, c.name, c.sub, lt, c.at ?? .4, Object.assign({ dur: c.dur || 3.6, dx: 600 }, c, { side })); }
+    for (const p of (s.pops || [])) { if (p.x == null && !p._xy && lt >= (p.at || 0) - .05) { ctx.font = '800 40px Inter'; const tw = Math.min(700, ctx.measureText(p.t).width + 60), th = tw >= 700 ? 136 : 86; p._xy = freeSpot(tw + 40, th + 40, BB, p.pref); BB.push([p._xy[0] - tw / 2 - 20, p._xy[1] - th / 2 - 20, p._xy[0] + tw / 2 + 20, p._xy[1] + th / 2 + 20]); } const q = p._xy ? Object.assign({}, p, { x: p._xy[0], y: p._xy[1] }) : p; pop(p.t, lt, p.at, p.dur || 2.6, q); }
+    if (ACT.meter) { let n = null, at = -1; for (const [t_, v] of ACT.meter) if (tt >= t_) { n = v; at = t_; } if (n != null && tt - at < 3.6 && !s.noMeter) window.METER(n, tt - at); }
+    if (s.big) bigText(s.big[0], lt, s.big[1], s.big[2], s.big[3], s.big[4], s.big[5]);
+    { const nx = SH[si + 1] && SH[si + 1].s; const WIN = .22, WOUT = .3; let k = null; if (s._gx && lt < WOUT) k = 1 + io(lt / WOUT); else if (nx && nx._gx && d - lt < WIN) k = io(1 - (d - lt) / WIN);
+      if (k != null) { screen(); const sl = 420, x0 = lerp(-W - 2 * sl, -sl, Math.min(k, 1)) + (k > 1 ? (k - 1) * (W + 2 * sl) : 0); ctx.save(); ctx.beginPath(); ctx.moveTo(x0 + sl, 0); ctx.lineTo(x0 + W + 2 * sl, 0); ctx.lineTo(x0 + W + sl, H); ctx.lineTo(x0, H); ctx.closePath(); ctx.fillStyle = '#ffd23d'; ctx.fill(); ctx.lineWidth = 16; ctx.strokeStyle = '#231A24'; ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(x0 + sl + 90, 0); ctx.lineTo(x0 + W + 2 * sl - 90, 0); ctx.lineTo(x0 + W + sl - 90, H); ctx.lineTo(x0 + 90, H); ctx.closePath(); ctx.fillStyle = '#231A24'; ctx.globalAlpha = .12; ctx.fill(); ctx.restore(); } }
+    const fin = s.fin ?? (b - a > 1.2 ? .35 : 0);
+    return { fade: (s.fadeIn ? io(lt / (s.fadeIn === true ? .5 : s.fadeIn)) : 1) * (s.fadeOut ? 1 - io(seg(lt, d - .6, d)) : 1) };
+  } }));
+}
+FILM.setup(build(window.ACT));
+})();
