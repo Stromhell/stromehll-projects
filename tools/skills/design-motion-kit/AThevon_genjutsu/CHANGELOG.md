@@ -1,0 +1,1250 @@
+# Changelog
+
+All notable changes to this plugin are documented here. Format inspired by [Keep a Changelog](https://keepachangelog.com/).
+
+## v4.2.1 - 2026-11-16
+
+bunshin follows Impeccable 4.9.1. A redesign of a site that already had a DESIGN.md used to end
+without a new one: since Impeccable 4.9.0 its documenter writes nothing over an existing
+DESIGN.md until it is told what to do with the old file, and bunshin never told it. bunshin now
+decides that itself, and nobody running it is asked. Nothing changes for a project that has no
+DESIGN.md yet, nor for cast or paint.
+
+### Fixed
+
+- **bunshin's SEAL passes the documenter its choice for an existing DESIGN.md.** The choice is
+  `overwrite`: a direction round replaces the visual world, and git keeps the old file. The one
+  exception is a world seeded by `impeccable world` on its first build, where it is `refresh`.
+  A "No changes" that names a choice owed is a wrong packet, fixed and sent to a fresh
+  documenter, never patched by hand.
+
+### Changed
+
+- **A world seeded with `impeccable world <id>` is respected.** When DESIGN.md's frontmatter names
+  a catalogue `world:` that no code carries yet, the user has already chosen it, and the draw runs
+  without `--replace-world`. When a redesign replaces a world the site already carries, the draw
+  and every re-roll pass `--replace-world`, and the documenter is told the world was replaced.
+- **`references/impeccable.md` says what a signed-in Impeccable CLI uploads**: from 4.9.0, with
+  `impeccable login`, each DESIGN.md and saved critique report in full, and the counts of a full
+  `detect`. Signed out, none of it. The off switches are Impeccable's own.
+- **The finish reviewer is no longer described as having no browser.** Its 4.9 definition takes
+  away the writing tools instead of listing the ones it keeps, so it may reach a browser through
+  MCP; what holds is that it writes nothing.
+- `VERSIONS.md`: the Impeccable row is read against skill 4.9.1, launcher 0.1.24 and npm 4.9.1,
+  dated 2026-11-16, with what changed since 4.8.0. The verbs bunshin calls are unchanged.
+
+## v4.2.0 - 2026-11-13
+
+A `paint` run with nobody to answer used to come out empty: a title, a button, and nothing only
+this product could show. The thesis now has to name a first screen, the job of each colour and
+the one motion, and to say what stands in place of anything an assumption takes out. When the
+brief says to invent no figure, the example on that first screen carries none. On our one minimal
+landing brief the pages are no longer empty. On SwiftUI, the modules now teach the system zoom
+transition for a row that opens a screen, which keeps the navigation stack and the swipe back,
+and cast reads its thesis against the loaded modules before any code. Of five runs of one case on
+those modules, four used the system transition and one built it by hand, and nothing shows yet
+that the new text caused the four. A run costs more than before, not less.
+
+### Changed
+
+- **paint clears the ground before the theses.** It names the page this category publishes by
+  routine and its predictable opposite, lists five worlds the design could draw from, sets the
+  first two aside and writes both theses from one of the other three. What the user brought or
+  confirmed is kept as given. The outcome is one line, `Set aside: ... Kept: ...`, under the
+  theses and in the final report. Light scope and preserve mode skip it.
+- **The visual thesis has a fifth point, `First screen:`**, a labelled line under the identity
+  sentence: the one thing the screen shows that only this product could show, what it is made of
+  (the project's own material, or an example labelled as an example), what takes the width on a
+  wide frame, the form it takes on the narrowest frame, and that it already shows the idea at
+  rest. The colour point gives each colour its job, the typography point asks for the reason
+  behind a system face, the spacing point names the edges and columns every section answers to.
+- **An example on the first screen takes its values from the brief or the project**, and is
+  named in `Allowed patterns:`. When the brief says to invent no figure, the example carries no
+  figure the brief does not give: it shows the mechanism with the brief's own material and words
+  (the names of the things compared, the kinds of mismatch, the states), unless the thesis says
+  otherwise with its reason.
+- **The interaction thesis has a fifth point, `The one motion:`**: the moment where the interface
+  does what the product does, with its trigger, what is on screen if it never runs and its
+  reduced-motion form, or `none` with what states the idea in its place. Not asked on light scope.
+- **Phase 4 has two more rules, for what the run writes.** A block wider than a line of text gets
+  its narrowest-frame form in the same edit that writes it. A stretch left empty is a decision
+  the thesis states, or it is closed, and a section that only restates an earlier one is merged
+  into it. A section that was already in the project is never merged or closed by these rules.
+- **Phase 5 reads the page from the code before the checklist**, outside light scope: six
+  labelled entries, each with its `file:line` (`First screen:`, `Sections:`, `Narrowest frame:`,
+  `Empty stretches:`, `Colour roles:`, `The one motion:`). What comes back `not found` is built
+  from the thesis, in one round, on the lines the run wrote. With someone answering, merging a
+  validated section or taking a decision the validated thesis does not hold is proposed first.
+  The entries open the checked group of the report and are not counted in its checks.
+- **The audit of cast, paint and bunshin has one more check, "Loaded modules against code".**
+  For each module the run loaded, it walks the rules that bear on the lines the run wrote and
+  reports each departure with its `file:line`. A departure is licensed by a sentence of the
+  validated thesis, quoted, or it is a problem. A thesis marked UNVALIDATED licenses nothing.
+- **cast and paint read the thesis against the modules right after loading them, before any
+  code.** The thesis is written before the modules load, so the audit check above could only
+  list a departure once the code existed. Where the thesis builds by hand what a module says the
+  platform or the library provides, or gives up something a module rule protects (a system
+  gesture, reduced motion, a frame budget), the run now says so first. A value the thesis chose
+  inside a module's range is a decision, left to the audit. With someone there it asks once,
+  revise or keep per gap, shows the thesis with every change in it and waits for a yes: an
+  approved thesis is never changed silently. With nobody answering, a thesis the request gave
+  or approved is built as approved and its gaps are listed; otherwise the run rewrites the
+  thesis on the module's way, prints it with a `Revised after LOAD:` line and builds that. A
+  departure stays only when the request asks, in its own words, for a result the module's way
+  cannot give, and words that rule a technique out ("not a push") are read as what the person
+  sees and can do, not as an API name. The step runs once. In paint, a revision that changes a
+  value `MASTER.md` or a token file holds is written into them in the same step. bunshin is
+  unchanged.
+- **Two lines of the scan no longer fail under zsh.** The legacy-bridge line and the Apple
+  project line were an `ls` on several globs, which zsh refuses as soon as one matches nothing:
+  a project with an `.xcodeproj` and no `.xcworkspace` lost its Apple line. Both are a `find`
+  now. The Gradle lines and the `pbxproj` line still pass globs to `grep`.
+- **The headless region, shared by cast, paint and bunshin, has one more sentence.** A
+  prohibition in the brief is read at the scope it states, never wider, and when an assumption
+  takes something out (a picture, a motion, a chosen typeface), the thesis says what stands in
+  its place.
+- **`tells` loads once the thesis is written and, when someone is there to answer, validated;
+  never before.** The load region of the three orchestrators and the module's protocol say so.
+  The region also said the module weighs "about 20,000 characters" with its web reference: it
+  is close to 25,000.
+- **tells: a tell taken out leaves a place.** An empty place is a default too, so the thesis says
+  what stands there, or that nothing does and why. The module still names no replacement. "Fake
+  product drawn in divs" now means boxes passed off as the product, and its question asks first
+  whether the project's own material shows what the product does.
+- **paint lost text other rules already state**: eight lines of the red-flag table (one new line
+  replaces them: "the safest thesis is the one that promises least"), the two one-line thesis
+  examples, the `--persist` paragraph and the long form of the MCP tools section. `SKILL.md`
+  still grew, from 68,075 to 78,596 characters.
+
+### Changed, on SwiftUI
+
+- **swiftui-motion teaches the system zoom transition first.** When a row or card opens a pushed
+  or presented screen, it starts from `navigationTransition(.zoom(sourceID:in:))` with
+  `matchedTransitionSource(id:in:)` (iOS 18+), which keeps the stack, the bar and the back
+  gesture. `matchedGeometryEffect` stays the tool inside one hierarchy. The module lists what a
+  hand-built overlay gives up, and how to gate the modifiers below iOS 18.
+- **A drag that moves its own view reads in a stable coordinate space.** A `DragGesture` inside
+  the `.offset` its translation drives takes `coordinateSpace: .global` or a named ancestor. In
+  the default `.local` space the view flickers between two positions. The examples of
+  swiftui-motion and mobile-principles now do so.
+- **mobile-principles: giving up the swipe back is a stated cost.** "Never override" became
+  "keep it by default". A thesis that replaces the navigation stack says what is lost (the edge
+  swipe, the bar, its back button) and what replaces each.
+- **`VERSIONS.md` has two new rows**, read in Apple's documentation on 2026-11-13: the zoom
+  navigation transition and the `DragGesture` coordinate space, with their availability.
+
+### Measured, on the web
+
+One brief, `minimal-saas`: a landing page for an invoice-matching product, with an explicit
+request for a minimal, restrained style, run headless with `claude plugin eval` on
+`claude-opus-5-5`. Two runs per arm. The 4.1.3, frontend-design and no-plugin pages are the
+baseline runs of the same week. The pages were scored blind on stills, out of 10, by one model
+in three reviewer roles. No human panel.
+
+**Rounds 1 to 3, the last one reported.** The new arm ran on this branch at `5e3f9c4`, before
+the review edits and before the rule on example values.
+
+| Set | This branch | 4.1.3 | Anthropic's frontend-design | No plugin |
+|---|---|---|---|---|
+| M1 (new run 1, 4.1.3 run 2, the others run 1) | 7.50 | 5.17 | 7.33 | 5.83 |
+| M2 (new run 2, 4.1.3 run 1, the others run 2) | 7.67 | 4.33 | 7.17 | 5.67 |
+
+- **Above the 4.1.3 pages by 2.3 and 3.3 points, above the no-plugin pages by 1.7 and 2.0.** All
+  six votes agree on both.
+- **Level with frontend-design.** The new pages lead by 0.2 and 0.5 points, and the same
+  unchanged pages moved by up to 0.8 between judging rounds. That lead is inside the noise.
+- **Both new pages showed an example invoice with invented quantities and prices**, labelled as
+  illustrative, on a brief that asked to invent no other figure. The rule on example values
+  above was written for that.
+- **The run behind the M2 score failed the `paint-loaded` grader** (score 0.67): its trace does
+  not show that the modules `paint` asks for were loaded.
+- **Two other briefs, one run each, were held to watch for a regression** (`etale-landing` 7.50
+  against 7.17 for the earlier page, `nocturne-planetarium` 6.83 against 5.33). The judges saw
+  none. That is too few runs to say more: the earlier nocturne page, unchanged, moved by 1.5
+  points between judging rounds.
+
+**Round 4, the rule on example values.** Two arms, two runs each, on the same brief: the paint
+text of this release without the rule, and with it. This time the three reviewer roles were told
+to weigh the brief's "invent no figure" as its author would, and saw two stills per page where
+the earlier rounds saw three. Rounds 1 to 3 did not give that instruction, so these scores do
+not compare with the table above, and the instruction counts against any page that invents
+figures. Each set holds one page of each arm and two baseline pages. Means recomputed from the
+raw votes, three per page.
+
+| Set | With the rule | Without the rule | 4.1.3 | Anthropic's frontend-design | No plugin |
+|---|---|---|---|---|---|
+| M1 (run 1 of each arm, the others run 1) | 8.00 | 6.50 | not in this set | 6.67 | 7.33 |
+| M2 (run 2 of each arm, 4.1.3 run 1, frontend-design run 2) | 7.83 | 6.83 | 7.00 | 6.33 | not in this set |
+
+- **No invented figure on the two pages run with the rule.** Each shows an example table made
+  of words (the kinds of mismatch, the states), and every figure on the page is in the brief.
+  The two pages run without it, and the two frontend-design pages, invent quantities and prices.
+- **The pages with the rule come first in both sets, on all three votes**, 1.5 and 1.0 points
+  above the pages without it, and 0.67 and 0.83 above the next page.
+- **Judged that way, the text without the rule is below the no-plugin page in M1 (6.50 against
+  7.33) and no higher than the 4.1.3 page in M2 (6.83 against 7.00, one vote of three apart).**
+  The lead over 4.1.3 and no plugin in rounds 1 to 3 does not hold for a reader who
+  counts the invented figures.
+- **All four runs built on the first try, with no human edit, and passed the three graders.**
+
+Runs, receipts, stills and the comparison:
+[genjutsu-examples, baseline-2026-11](https://github.com/AThevon/genjutsu-examples/tree/main/baseline-2026-11).
+
+### Measured, on SwiftUI
+
+One case, `etale-ios`: `cast` asked, headless, to make a list row open into its detail "as one
+surface, not a push". Six runs, same prompt, same model, same starting app, on four commits. Each
+was written without a compiler, then built with `xcodebuild`, unchanged, on the first try, and
+filmed in the simulator. Every run made is in the table; none was run again.
+
+| Run | genjutsu | Cost | Swift lines | Transition | Stack and swipe back |
+|---|---|---|---|---|---|
+| 1 | 4.1.3, `5e00595` | 3.42 USD | +487 -78 | built by hand | given up |
+| 2 | 4.1.4 plus the module fixes, `3e0d6d3` | 1.53 USD | +78 -0 | system zoom | kept |
+| 3 | this release before the step, `5105f53` | 2.46 USD | +434 -59 | built by hand | given up |
+| 4 | this release with the step, `844f375` | 1.36 USD | +15 -0 | system zoom | kept |
+| 5 | the same | 1.30 USD | +13 -0 | system zoom | kept |
+| 6 | the same | 1.31 USD | +22 -1 | system zoom | kept |
+
+"The step" is the one that reads the thesis against the loaded modules before any code.
+
+- **Used the system transition: 0 of 1 on 4.1.3, 1 of 2 on the fixed modules without the step, 3
+  of 3 with the step.**
+- **The step was not seen doing what it was written for.** Runs 4, 5 and 6 each named the zoom
+  transition in the thesis they wrote before loading any module, as run 2 had. None wrote a
+  hand-built thesis, so the step never had one to bring back to the system transition. That path
+  is untested.
+- **Three of three does not prove the step.** At the 1 of 2 seen without it, three in a row
+  happens one time in eight by chance. The step's text sits in cast's `SKILL.md`, which a run
+  reads before it writes its thesis, and may have steered the three theses. Nothing here shows
+  it.
+- **What the step printed.** Run 4: `Thesis against modules: no gap`. Run 5: one revision, the
+  Reduce Motion fallback, which left the code with no Reduce Motion guard at all. Run 6: one
+  revision, a duration, which the step's own text calls a decision and not a gap; it did not
+  raise the Reduce Motion question, which its audit then listed as a problem and left unfixed. In
+  all three the output is in the final report only, not between the load and the first line of
+  code.
+- **Run 3 is why the step exists.** On the fixed modules it read them before it wrote code, kept
+  its hand-built surface on the brief's "not a push" and wrote what that costs into its thesis.
+  Its audit printed "Loaded modules against code" with three problems, all true, the first being
+  the hand-built surface, and changed nothing. On screen the time lands on the wrong row, the
+  large time sits under the Dynamic Island and the list shows under the detail.
+- **The module fixes alone are not proven either.** On the fixed modules four runs of five used
+  the system transition, and each of the four named it before it read a module. The modules did
+  not stop run 3.
+- **No drag flickers in the four zoom runs**, where run 1's drag to close flickers on every
+  frame. They have defects of their own: a white box around the row on return in runs 2, 4 and 5,
+  larger in 4 and 5, and in run 6 a line draw the thesis promises that cannot be seen. Reduce
+  Motion was filmed for run 2 only.
+- **The graders do not tell these runs apart.** All six score 5 of 5: the graders check that the
+  skill fired, loaded its module and touched the list, not what the transition is.
+
+The six runs, their code, films and receipt:
+[genjutsu-examples, etale-ios](https://github.com/AThevon/genjutsu-examples/tree/main/etale-ios).
+
+### What did not move, and what is not measured
+
+- **Cost.** A paint run on this brief costs about 2 USD (1.95 and 1.93 with the rule, 1.93 to
+  3.07 over the ten candidate runs), against 1.64 to 1.73 on 4.1.3, 0.64 to 0.68 with
+  frontend-design and 0.46 with no plugin: about 4.2 times the no-plugin run, where 4.1.3 was at
+  about 3.7.
+- **The six reading entries do not open the final report.** The brief asks for a short report,
+  and a line now says a short report keeps them. In round 4, with that line, none of the four
+  reports opens on them, and the report of the web smoke run below does not hold them at all.
+- **Tuned on this brief.** The rules were adjusted over four rounds on `minimal-saas`, against
+  the same baseline pages. Every run of every round is kept. No other brief was run in round 4.
+- **Small samples, one judge model.** Two runs per arm on the web, six runs of one case on
+  SwiftUI (one before the module fixes, two on them without the step, three with it), one model
+  in three roles, no human panel. Claude Code was 2.1.325 in round 4 and in SwiftUI runs 3 to 6,
+  against 2.1.323 before.
+- **The release was run once on each side, before its last step.** Round 4 ran paint without the
+  new audit check, so a smoke run was made at `5105f53`, which holds everything in this release
+  but the step that reads the thesis against the modules. On the web (`minimal-saas`, paint, one
+  run, not scored by the judges): 2.37 USD, no figure outside the brief, built on the first try,
+  3 of 3 graders. Its report does not print the "Loaded modules against code" check under its
+  name, and the six reading entries are absent from it. On SwiftUI it is run 3 above. The step
+  itself then ran three times in cast (runs 4 to 6) and never in paint.
+- **Not measured at all**: a conversation with someone answering, where the thesis to approve is
+  now longer; bunshin, and cast on the web, with the new headless sentence; Compose, which has
+  no recorded run; motion on the web, which stills do not show; any web brief that is not a
+  minimal landing page.
+
+## v4.1.4 - 2026-11-13
+
+A door for feedback. A finished run of `cast`, `paint` or `bunshin` now ends its report with a
+link to a one-minute form: which skill, how it came out. The README says what is tested and what
+is not. Nothing else a skill loads or does changed.
+
+### Added
+
+- **A one-minute form, "How did it come out?"**, first in the issue chooser. Two answers are
+  required: which skill, and whether the result came out better than expected, fine, plain or
+  generic, or wrong or broken. The request, the version, where it ran, the model, a capture and
+  the permission to feature it are optional. Until now the only forms asked for a bug with its
+  resolution error or a correction with its primary source, and nobody could simply say "it came
+  out plain". Output that came out wrong is as useful as output that came out well.
+- **A finished run ends its report with the link to that form**: two fixed lines, once per
+  conversation, on the first report of a run that wrote code into the project, in a headless run
+  too, and never on a run that wrote none. The link fills in the skill, and the genjutsu version,
+  the host and the model when the run knows them: the version is only known on a Claude Code
+  plugin install, where the install path carries it. Nothing from your project goes in the URL
+  (no request, name, path or content). The skill is told to print the link and stop there: never
+  to open it, file the issue or fill the form itself. Nothing is sent unless you open the link
+  and submit the form. The block is a new shared region, `feedback`, byte-identical in the three
+  orchestrators and guarded by `scripts/check-shared-blocks.sh`, which also fails when the link
+  names a form or a text field that does not exist.
+
+### Changed
+
+- **The README says what has been tested, and no more.** The Compose and SwiftUI modules ship,
+  but every recorded example is web: no native run has been compiled and recorded yet. genjutsu
+  is developed and run on Claude Code with Claude models. The claude.ai bundle was last checked
+  by hand on 2026-09-28, `cast` only; no Cowork run is logged; bunshin has only been run on
+  Claude Code; other agents and other models are not tested. `PLATFORM-CONTRACT.md` said that
+  Claude Code, claude.ai and Cowork "are tested by the maintainer before a release", which
+  `docs/claude-ai-testing.md` does not back: it now says what that log holds. The eval table
+  carries its date: measured on 2026-09-28, on commit `ef31234` of the branch that became
+  v4.0.0, and not rerun since.
+- The README gives the install command to hand to an agent, says once that this is not Higgsfield
+  Genjutsu, the video tool, and replaces "Show what you cast" with "Tell us how it came out",
+  which leads with the form.
+- The issue forms are numbered so the chooser lists them in order: `1-output.yml`,
+  `2-pipeline-bug.yml`, `3-wrong-claim.yml`, `4-stale-version.yml`. A link carrying an old
+  `template=` name no longer finds its form: update it.
+- `plugin.json` names Cowork next to Claude Code and claude.ai, mentions bunshin, and carries the
+  listing fields Claude Code documents for Anthropic's directory: `documentationUrl`,
+  `supportUrl` and `icon`.
+
+### Fixed
+
+- The bug form listed `/genjutsu:cast` and `/genjutsu:paint` only. `/genjutsu:bunshin` is in the
+  list, and in the family list of the wrong-claim form.
+
+## v4.1.3 - 2026-11-01
+
+A maintenance release: the resolver tests no longer share a file in the system temp directory,
+and CI moves off the deprecated Node 20 runtime. Nothing a skill loads or says changed.
+
+### Fixed
+
+- **The resolver tests isolate their cache fixture per run.** Tests 3c and 8 planted and watched
+  a fixed `genjutsu-skill-base` file in the shared `TMPDIR`, so two runs side by side could
+  collide, and a run could leave the file behind. `run_block` now gives the resolver its own
+  `TMPDIR` inside the run's work directory, removed on exit, and both fixtures use it: the file
+  stays the one a resolver would really read, so a cache read creeping back into the block still
+  fails 3c. Thanks to @dajiaohuang (#34).
+
+### Changed
+
+- **CI runs every action on Node 24.** `actions/checkout` v7.0.1, `actions/setup-python` v7.1.0,
+  `actions/setup-node` v7.1.0 and `softprops/action-gh-release` v3.0.3, still pinned by commit.
+  GitHub was forcing the Node 20 releases onto Node 24 and warning on every run (#36).
+
+## v4.1.2 - 2026-10-31
+
+A re-verification pass: every dated row of `skills/_jutsu/VERSIONS.md` was checked again against
+its primary source, and the module text that had gone stale follows. The biggest move is on the
+web: Firefox 159 shipped scroll-driven animations on 27 October, so all three engines now have
+them. The `@supports` guard stays.
+
+### Fixed
+
+- **Scroll-driven animations are no longer "Firefox: not shipped".** Firefox 159 enables them by
+  default, `animation-range-start`, `animation-range-end` and `timeline-scope` included.
+  `css-native` and its `modern-css.md` say so, and the share of visitors who get nothing drops
+  from one in six to about one in eight. Coverage figures across `modern-css.md` follow caniuse
+  data of 2026-10-29, and the reference stable versions are now Chrome 156, Edge 156,
+  Firefox 159 and Safari 27.2.
+- **`<Canvas shadows>` now logs a warning.** three r186 removed `PCFSoftShadowMap`, which a bare
+  `shadows` asks for: the renderer falls back to `PCFShadowMap`, soft now. `scene-setup.md` says
+  to write `shadows="percentage"`. `threejs-r3f` targets r187, gives the widened R3F peer range
+  (`>=19 <19.4`), and says why `state.clock` warns in every R3F app (three deprecated `Clock` in
+  r183, R3F 9.8 still creates one).
+- **motion is at v14.** `framer-motion` publishes 14.9.0, and `motion` now pins it exactly. No
+  public API the skill teaches changed.
+- **Android 16 makes predictive back opt-out.** Apps targeting API 36 get it by default on
+  Android 16 devices, and `onBackPressed` is no longer called. `mobile-principles` says so.
+- **material3 1.5.0 is in beta, still not stable**, and `MaterialShapes` is still
+  `@ExperimentalMaterial3ExpressiveApi`. `compose-graphics` and `m3-expressive-deep.md` no longer
+  say "alpha only". The Compose baseline is 1.12.1 (BOM 2026.09.00), navigation 2.10.2,
+  navigation3 1.2.0, Compose Multiplatform 1.12.2. Two dates in `VERSIONS.md` were wrong:
+  material3 1.4.0 shipped on 2025-09-24, and Compose Multiplatform had a 1.11 line after 1.10.3.
+- **iOS 27 shipped on 14 September, and the SwiftUI rows are re-read against it.** No SwiftUI
+  symbol the modules cite carries a beta flag any more. `MagnificationGesture` and
+  `RotationGesture` are deprecated as of 27.2, and the gesture references say so.
+- **bunshin follows Impeccable 4.8.0.** The direction contract's FORM block now carries the seed
+  reference (`seed:` and 16 hex), never the raw seed key: Impeccable's finish reviewer flags a
+  raw key as a material fix. A re-roll passes `--register` when the answer carries one, and the
+  brief is read back before building.
+- `VERSIONS.md`: every row that could be checked without a human is dated 2026-10-31, whether or
+  not its value moved. The rows still marked `VERIFY-NEEDED` need a session or a browser this
+  pass did not have: the subagent tool on claude.ai and Cowork, a logged-out social profile
+  harvest, four build traps, and the tells catalogue, which waits on an eval ablation.
+
+## v4.1.1 - 2026-10-04
+
+Typing a request after the slash command broke module loading. `/genjutsu:cast make the pricing
+cards feel physical` now loads its modules like a bare `/genjutsu:cast` does. Two more fixes come
+from the runs behind the new examples: the tells audit now sees a glow drawn with a radial
+gradient, and paint keeps an approved web font it cannot render in its sandbox.
+
+### Fixed
+
+- **The words typed after `/genjutsu:cast`, `/genjutsu:paint` or `/genjutsu:bunshin` were
+  pasted into the resolver.** Claude Code replaces `$ARGUMENTS`, `$ARGUMENTS[N]` and `$N` in an
+  invoked skill with the arguments typed after the command, before the model reads the skill.
+  The shell functions of the resolver block (`genjutsu_is_jutsu`, `load_skill`, `load_ref`) and
+  of the bundle's router read their arguments as `$1` and `$2`, so with
+  `/genjutsu:cast make the pricing cards feel physical` the model received
+  `[ -f "the/motion-principles/$d.md" ]`: no install layout resolved, and the pipeline stopped
+  with "could not find the genjutsu modules", unless the model noticed and repaired the code
+  itself. A bare command, or a single word after it, was not affected. Every function now reads
+  its arguments with a bare `for name; do`, which never writes a positional parameter out, and
+  the block says why.
+- New check, `scripts/check-skill-placeholders.sh`, run in CI with a `--self-test`: it fails
+  when `skills/*/SKILL.md` or the router carries a positional token (`$N`, `${N}`,
+  `$ARGUMENTS`, `$@`, `$*`), a named argument declared in frontmatter, a braced `CLAUDE_`
+  variable other than `CLAUDE_SKILL_DIR` and `CLAUDE_PLUGIN_ROOT`, or a `!` and a backtick that
+  Claude Code would run as a command when the skill loads.
+- `scripts/test-resolver.sh` runs the resolver and the router again after simulating that
+  substitution with a six-word request, on the repository and on the packaged bundle. On the
+  v4.1.0 files those 15 cases fail; they pass now.
+- **The tells audit missed a blob drawn without a blur.** `tell-blob` matched `blur-2xl`,
+  `blur-3xl` and `filter: blur(40px)` and up, line by line. A paint run drew its glow as a
+  positioned element painted with a `radial-gradient` fading from a colour to transparent, the
+  position in one rule and a gradient spread over six lines in another, and its own audit
+  reported zero tells. The check now reads whole rules across the project's stylesheets,
+  `<style>` blocks, Tailwind class lists (`bg-[radial-gradient(...)]`, `bg-radial from-...
+  to-transparent`), `style` attributes and JSX style objects, and flags that disc on a
+  positioned element. It leaves alone a vignette (transparent centre), a radial light over an
+  opaque ground, the page ground itself, a button, a hard-edged dot, a tiled pattern, an element
+  of 120px or less, a mask and `repeating-radial-gradient`. A `filter: "blur(80px)"` in a JSX
+  style object is caught too. Like every tell it is filed at `nice-to-have` for the thesis to
+  confront: that run's thesis listed the glow among its allowed patterns. The tells reference
+  names the technique. Across nine local web projects (76 `radial-gradient` uses, some in files
+  the audit does not scan) it flagged 24, the shipped one included: each is a soft decorative
+  glow, halo, light or shade, and the lit grounds and dot grids among the rest were left alone.
+- **paint gave up an approved web font because the sandbox could not render it.** The client
+  agreed to a Google Fonts face; paint kept the system face because it could neither fetch nor
+  preview the font in its session. paint now keeps a face the user approved or the project
+  already loads: it loads it with a fallback stack matched in width, x-height and figure style,
+  checks the features the thesis needs from the face's published data or says which are
+  unchecked, and writes in the design-system message, the preview and the final report that the
+  face was not rendered in this session. The preview gate shared by cast, paint and bunshin
+  shows such a face in its fallback under its own name, labelled, and the handed-over audit rows
+  gain the check to run online.
+
+## v4.1.0 - 2026-09-30
+
+genjutsu gets a third pipeline: `bunshin` builds a whole website or web app with a team of
+subagents under one art director, asks the human twice, and loops fixes and verdicts until
+nothing above minor is left, the round cap of the tier picked at the start is reached, or a round
+fixes nothing. Run `/genjutsu:bunshin`, or ask `cast` or `paint` for a whole site: they propose
+it, with its cost, and switch only on a yes.
+
+### Added
+
+- **`bunshin`, the shadow clones.** A third orchestrator, `skills/bunshin/SKILL.md`
+  (`/genjutsu:bunshin`), for one job: a whole site, first version, from the client's real
+  material. Twelve phases: read the project and the host; summon (the first gate); harvest the
+  material; research with four clones and a synthesis; the direction (the second gate); type and
+  assets by evidence; the foundation, every route and the signature surface, built by the main
+  agent itself; one clone per page on files no other clone touches, each capturing its own page;
+  captures and scripted tests; independent review lenses and a fix plan; refine rounds with a
+  verdict and a cold-eyes art director; then DESIGN.md, an AGENTS.md for the AI that will
+  maintain the site, a launch guard for the facts still missing, the audit and the report.
+
+  The human is asked twice, and once more only to go past the tier's round cap. The summoning
+  gate carries the read of the project, what the host can do, whether Impeccable is installed,
+  the stack and the scaffold it installs, the cost of each tier and the product questions, in one
+  call. The direction gate validates the visual and the
+  interaction thesis together: every direction card carries genjutsu's interaction thesis and its
+  `Allowed patterns:` line. bunshin never opens the preview menu: that would be a third question.
+  Everything else is decided from evidence and written in the report.
+
+  When [Impeccable](https://impeccable.style) is installed, it leads the product interview and
+  draws the visual direction (seven worlds ordered before the draw, challengers, its decision
+  page), and brings its quality floor, its detector, image provenance, its shipped finish
+  reviewer, spawned by agent type and answering in its own contract, and its documenter. bunshin
+  always builds code-led. genjutsu never bundles Impeccable and never installs it without a yes;
+  without it, bunshin runs its own direction round and says that it is the weaker path.
+
+  bunshin announces its cost before anything heavier than reading runs. It has been measured on
+  one run, a seven-page site in two languages built from a professional's social profile with
+  two human touches: about 10.5M subagent tokens over six to eight hours, with one review, three
+  refine rounds and two verdicts. The three tiers (lean, standard, full: at most one, two or four
+  refine rounds; about 6M, 8 to 9M and 12 to 13M subagent tokens) are estimates built from that
+  run's per-unit costs, and the skill says so every time it quotes them. A headless run spends
+  nothing unless the request names a tier.
+
+  It steps down on its own: to `cast` or `paint` when the request is smaller than a site, to
+  `paint` when the host can spawn no subagent (claude.ai, as far as the repository knows; not
+  verified there yet), and to `paint` on Compose and SwiftUI, which it declares not covered yet.
+  It never starts a dev server, and never commits, pushes or deploys without being asked.
+
+- **`orchestration`, the seventeenth module.** `skills/_jutsu/orchestration/` holds what bunshin
+  needs to make ten agents produce one site instead of ten opinions: the six parts of a clone
+  brief, one owner per file with shared needs sent back as requests, builds in isolated copies
+  with the framework's own binary (never the package manager) and `node_modules` linked entry by
+  entry so parallel builds never write into the project's own caches, the evidence packet, the
+  five review lenses, a plan clone that verifies and rejects with reasons, the verdict and the
+  cold eyes, and the stop rule, dispositions first. Its references cover the harvest, images and
+  type (`material.md`: a logged-out social profile, contact sheets, palette sampling, circle
+  cutouts fitted to the object's own edge, grain), the captures and tests (`evidence.md`, with
+  the traps the measured run hit), and the Impeccable verbs bunshin relies on (`impeccable.md`).
+
+- **Five workflow templates, run by CI.** `research.js`, `build.js`, `review.js`, `refine.js` and
+  `verdict.js` are the fan-outs, parameterised by `args` and passed to a host's workflow tool by
+  path. Each returns what the next decision needs and writes the rest to disk: every lens writes
+  its own review, the plan file points to them, refine clones read their fixes from it, and from
+  round 2 `verdict.js` builds the next plan itself from the finish reviewer's remaining points.
+  The build and refine templates quote every path, print the build's real exit code, and refuse
+  a package manager as the build command, a scratch directory inside the project, or duplicate
+  owner keys. `scripts/check-workflows.mjs` holds every template to the host's contract (a pure
+  `meta` literal, declared phases, no `Date.now()`, `Math.random()` or argless `new Date()`,
+  satisfiable schemas) and runs it to the end against stubbed agents with its fixtures, then again
+  with every agent answering null; it fails on a prompt that received `undefined`, on a thunk or
+  a pipeline stage that throws, on a template that starts with empty `args`, and when the
+  isolated-build block of `build.js` and `refine.js` drifts. `--self-test` proves twenty-five of
+  those checks can still fail. The run bunshin comes from lost a whole fan-out to that class of
+  bug: a placeholder string where a script expected an array. On a host with a subagent tool and
+  no workflow tool, `orchestration/scripts/brief.mjs` prints the exact prompt, schema and agent
+  type of every clone a template would spawn, and the check runs it on every template.
+
+- **`shoot.mjs`, captures without a server.** A zero-dependency harness (Node 22 and a Chrome
+  binary) that opens headless Chrome over the DevTools protocol and answers every request to a
+  fake origin from the static build on disk. No dev server and no fixed port (the browser's
+  DevTools endpoint takes a free port the OS picks), so every clone can capture at once with its
+  own browser. First screens, full pages cut into readable segments, desktop scaled to 1000 px,
+  reduced motion, scripted `before` and `measure` expressions for functional tests, and per shot:
+  overflow, console errors, uncaught exceptions, every request the build could not answer, and
+  an `error` when that shot failed, without stopping the others. Nothing outside the build root
+  is served. `--self-test` serves a fixture and checks all of that; CI runs it.
+
+- **cast and paint propose bunshin.** A seventh guarded region, `escalate`, identical in both:
+  right after the stack scan, when the target is a whole site, the stack is web or there is no
+  project yet, and the session can spawn subagents, plus one of real material to harvest, two
+  audiences or languages, a first version for a client, or a request for the full treatment, they
+  propose bunshin once with its cost and switch only on a yes. With nobody answering they name it
+  in one line and in the report, and carry on.
+
+- **Two eval cases for the routing.** `bunshin-escalates` runs paint headless on a whole-site
+  brief: bunshin must be named in the last message, and no subagent may be spawned, no bunshin
+  invoked, no `.bunshin/` written. `bunshin-steps-down` runs bunshin on one button: it must step
+  down to cast, spawn nothing and write no `.bunshin/`, and the button must get its interaction.
+  Both are in the release gate. A full bunshin run is never part of the suite: it costs millions
+  of tokens.
+
+- **`VERSIONS.md` gains an "Orchestration" section**: the workflow and subagent tool contract,
+  the Impeccable verbs and versions, the DevTools protocol domains `shoot.mjs` uses, Node's
+  built-in WebSocket, and the traps of `evidence.md` with their sources or reproductions. Rows
+  nobody could check are marked `VERIFY-NEEDED`, among them whether claude.ai and Cowork give
+  skills a subagent tool.
+
+### Changed
+
+- **The router has three routes.** `cast` stays the default and `paint` keeps its signals.
+  `bunshin` is picked only when asked for by name or accepted from a proposal, never on a guess:
+  a whole-site request without the word goes to `paint`, which proposes it.
+- `check-shared-blocks.sh` guards three orchestrators: cast and paint share seven regions,
+  bunshin carries six of them byte-identical to cast (never `escalate`), and the router's three
+  blocks must match once their `p=` line is normalised. Its test covers each new way to drift.
+  `PLATFORM-CONTRACT.md` counts the wiring again: eleven sites across the three orchestrators,
+  seven of them inside four byte-identical regions.
+- `validate-skills.py` finds the orchestrators in the tree instead of a list, so bunshin's
+  `load_ref` calls are scanned; the bundle ships `bunshin/` and the seventeenth module; the
+  resolver and router fixtures learn the third pipeline and run on the packaged bundle too; CI
+  sets up Node 22 and runs the workflow templates and the capture harness.
+- `check-evals.py` accepts a case that invokes exactly one of the three pipelines, and rejects a
+  `tool_used` grader on a tool the run is never given (a `max: 0` on it would always pass) and a
+  `file_exists` path that could never match.
+- The resolver's failure message names genjutsu's pipelines instead of two of them.
+- Both manifests and this file move to 4.1.0.
+
+### Not covered yet
+
+- **Native stacks.** bunshin's evidence harness is web: on Compose and SwiftUI it steps down to
+  paint rather than review what it cannot capture.
+- **Hosts without subagents.** bunshin cannot run there, and says so instead of playing ten
+  clones in one context.
+- **A measured comparison.** The cost figures come from one run, and no ablation compares a
+  bunshin site with a paint site yet. The evals measure the routing only.
+
+## v4.0.0 - 2026-09-28
+
+genjutsu names the slop instead of promising it, cleans it up before it reports, proves it, and
+installs anywhere.
+
+### Added
+
+- **`tells`, a module that names the slop.** v3 promised "anti-AI-slop" and never said what slop
+  was. `skills/_jutsu/tells/` writes it down: forty-two defaults a model produces when nobody
+  asked for them, in four families. Invented information: a weather-and-clock strip, a build
+  status such as `v0.6.2-rc.1`, `ESTD. 2018`, `John Doe`, `99.99%`, a product drawn in divs.
+  Decorative filler: `00 / INDEX` eyebrows, `Stage 1 / 2 / 3`, scroll cues, status dots that
+  report nothing, glass panels, glows and blurred blobs, animations that never stop. Reflex
+  convergence: three equal cards, a display serif taken as the creative default, gradient text,
+  U+2014 (em dash). Hollow copy: `Elevate`, `Seamless`, one intent under three CTA labels, a
+  register that changes from one section to the next.
+
+  Every entry has three fields and never a fourth: the marker, why a model produces it, and a
+  question that sends you back to the thesis. None names a replacement, because a replacement
+  would only be the next default: the validated thesis is the only authority. `cast` and `paint`
+  now write an `Allowed patterns:` line under every thesis, and a pattern is allowed only when
+  that line names it. A mood word such as "editorial" names nothing, since most tells are
+  exactly the clichés of an agency portfolio, and something the brief asks for has to be carried
+  onto that line by name. Each finding ends in one of three ways: allowed, with the line that
+  allows it; "not this tell", only when the match contradicts the entry's own condition and with
+  the `file:line` that proves it, never on taste; or a problem.
+
+  The web is covered in `references/web.md`, published entry by entry as the field guide at
+  genjutsu.athevon.dev/docs/tells. Compose and SwiftUI are declared not covered yet rather than
+  filled with invented material. `cast` loads the module after the thesis gate on a web stack at
+  medium or full scope; `paint` loads it in Phase 3, before the design intelligence runs, because
+  Phase 3 is where palette and type get fixed. Each time in a shell call of its own (see Fixed).
+
+- **The run cleans up before it reports.** Every tell the run wrote and the thesis does not allow
+  is fixed before the final report, in two passes at most, and only on the lines the run wrote,
+  read off `git diff` when the project has one. A tell that was in the project before the run is listed and never changed
+  by the audit, and nothing on the protected list below is ever changed automatically.
+
+- **`paint` inventories an existing project first.** On a web project that already has a look,
+  Phase 1 runs the tells audit over it and shows the result as one short block, **What this
+  project already does by reflex**, counted by family with two or three `file:line` examples
+  each, before it asks which mode you want. The mode settles every finding in the theses:
+  preserve keeps them by default, on the `Allowed patterns:` line as the brand's own; partial
+  takes them out by default inside the areas you named; redesign takes them out everywhere. Any
+  one of them can be kept or dropped by name at the thesis gate.
+
+- **The audit sees the text and the markup.** `audit.py` gains a `tells` group of eighteen
+  checks. Thirteen read the text a page actually displays (between tags, and in `alt`, `title`,
+  `aria-label` and `placeholder`, never in a class or a style object) and its markup; five read
+  the source for gradient text, glass panels, glows, blurred blobs and animations that never
+  stop. A capitalised JSX tag is a component, never a void element, and a TypeScript generic is
+  never read as a tag. `.html` files are scanned now. Three inventories join durations and
+  easings (distinct colours, radii and font families), and every value keeps a bounded list of
+  `file:line`. Tells are reported at `nice-to-have` in a section of their own, counted apart on
+  the summary line, and none counts until it has been confronted with the thesis. `--group
+  tells` runs them alone, with no model involved:
+  `python3 ~/.agents/skills/genjutsu/_jutsu/design-audit/scripts/audit.py . --group tells`.
+
+- **The audit holds the thesis against the code first.** For every promise of the thesis
+  (durations, easing, springs, palette, type, layout family): the `file:line` that keeps it, or
+  its absence. If the promised motion cannot ship working, the fallback is to ship it static and
+  say so, never half-broken. The report now ends with two required lines, `Modules loaded:` and
+  `Modules not loaded:`, because a module that failed to load used to leave no trace in the
+  result.
+
+- **`npx skills add https://genjutsu.athevon.dev -g`.** The site publishes a well-known index,
+  `/.well-known/agent-skills/index.json` (discovery schema 0.2.0), that points at this release's
+  `genjutsu.zip` with its sha256 digest, both taken from one download of the release at build
+  time. The install is recorded in the npx lock, so `npx skills update -g` sees each new release.
+  After an npx install the entry point is `/genjutsu`, the router.
+
+- **An eval suite, with and without genjutsu.** `evals/` holds four cases for
+  `claude plugin eval` with an ablation arm: two landings where the tells have to go, one where
+  the thesis asks for a tell and it has to stay (a studio genuinely split between Paris and Tokyo
+  keeps its two clocks), and a SwiftUI screen where `tells` must never be requested. Run by hand
+  before each major release and never in CI, since every run is a billed session. The numbers
+  are under Measured.
+
+- **Process grafts.** A declared read before the first question (what, for whom, heading where,
+  on which stack), so a wrong assumption gets corrected before it costs a question. A vague brief
+  gets options drawn from the product's own moments, never from a famous brand's site, and a
+  thesis that could have been written from the product category alone is rewritten. A display
+  face stays only when the visual thesis names it and says why that one; the thesis may leave it
+  undecided, and then the design-system gate settles it with its reason. Three dials in `paint`,
+  variance, motion and density, derived from the validated theses and passed to the design
+  intelligence, never read off the raw brief. An existing-project mode asked in Phase 1: preserve
+  the brand, change part of it, or redesign; public token names, URLs, navigation labels, form
+  field names, the logo and legal text never change without agreement, whatever the mode. And
+  the dataset's proposals now go through the thesis and `tells` before they reach you.
+
+- **Sessions with no human.** A sixth guarded region, `headless`, identical in both pipelines:
+  take the announced preview default, take the proposed thesis and mark it UNVALIDATED in the
+  report, and never install a dependency.
+
+- Checks and release helpers: `check-version.sh` (both manifests, the first entry of this file
+  and, under a release, the tag agree), `check-dashes.sh`, `check-no-verbatim.sh`,
+  `check-tells.py`, a test of the resolver as it ships inside the packaged bundle,
+  `release-notes.sh` and `wait-for-release.sh` with their tests, `showcase-section.py`, and
+  `verify-npx-install.sh`, which installs through the real `npx skills` in a throwaway HOME and
+  checks what the installed block resolves.
+
+### Changed
+
+- **The resolver looks in the skill's own directory first.** `GENJUTSU_SKILL_DIR`, defaulting to
+  `${CLAUDE_SKILL_DIR}`, then `${CLAUDE_PLUGIN_ROOT}`, then bounded probes: the working
+  directory's ancestors, `~/.agents/skills` (npx's global directory), `~/.claude/skills`,
+  `~/.codex/skills`, `~/.cursor/skills` and the Cowork roots. The Claude Code plugin cache comes
+  last, so an old plugin install never wins over a newer bundle. A `_jutsu` directory is accepted
+  only if it holds `motion-principles`: npx's shared directory serves dozens of agents, and a
+  folder called `cast` proves nothing. claude.ai keeps its priority, and the resolver and the
+  router now look under `/mnt/skills/plugins`, where claude.ai mounts uploaded skills since
+  September 2026 (v3 only probed `/mnt/skills/user`, and found nothing there any more). The
+  unconditional `/mnt/skills/user` fallback is gone: it accepted a directory without checking
+  what was in it.
+- **When the modules cannot be found, the pipeline stops**, printing the install commands and
+  every root it tried, instead of running on empty. A single missing module is still reported by
+  name and skipped.
+- **One claude.ai ZIP.** The release publishes a single `genjutsu.zip`: a router `SKILL.md`, and
+  the pipelines and modules as `GUIDE.md` files, so they never show as skills of their own. The
+  per-skill ZIPs are gone.
+- **The sixteen modules carry `metadata.internal: true`.** `npx skills add AThevon/genjutsu`
+  offers only `cast` and `paint`, and installed that way they stop and print the well-known
+  command.
+- **Host neutrality.** The preview gate describes its first mode by capability: an HTML rendering
+  tool if the session has one (Artifact on Claude), otherwise a throwaway HTML file. The skills say
+  "shell call" instead of naming a tool. Claude hosts are detected as before, and an unknown host
+  gets the generic behaviour.
+- **The preview message names the thesis in plain text**, whatever the mode, so a thesis shown
+  inside a rendered page is never mistaken for the page's own copy.
+- `ui-ux-pro-max` calls its search engine by absolute path, `$UIUX_DIR/scripts/search.py`, instead
+  of a path relative to a working directory nothing had set. The vendored files are untouched.
+- The release notes are this file's entry for the tag, not GitHub's list of PR titles. The release
+  workflow then waits until GitHub serves the new release and its `genjutsu.zip`, and only then
+  calls the site's deploy hook, so the install index always names the release just published.
+- U+2014 (em dash) is gone from every file genjutsu writes: 193 occurrences in 14 files, and
+  `check-dashes.sh` keeps it out.
+
+### Fixed
+
+- **A full web `cast` loaded more than the model could see.** Past about 30,000 characters, the
+  output of one shell call no longer arrives inline: the model gets a 2,000-character preview and
+  a file path. motion-principles, desktop-principles, design-audit and framer-motion come to about
+  34,500 characters together, so a full-scope web cast had been reading a preview of its own
+  modules since v3. Loading is now batched under 25,000 characters per call, one call per heavy
+  module, `validate-skills.py` flags any module over 25,000, and a load is never piped into
+  `head`, `tail`, `sed` or `grep`.
+- `load_skill` said "continuing without it" and carried on; a missing module is now named, and
+  the report's `Modules not loaded:` line keeps the list across shell calls.
+
+### Measured
+
+<!-- genjutsu:showcase:start -->
+| Brief | Tells, without genjutsu | Tells, with genjutsu | Grader score, with minus without |
+|---|---|---|---|
+| Independent design studio landing | 2 | 0 | +0.20 |
+| Invoicing SaaS landing | 2 | 0 | +0.10 |
+
+Tells are the findings of `audit.py --group tells` on the page of the first run of each arm. Scores come from `claude plugin eval --ablation with-without --runs 2` on genjutsu `ef31234`, over the suite in [`evals/`](https://github.com/AThevon/genjutsu/tree/v4.0.0/evals). The graders are ours: read this as genjutsu measured against what it set out to do, not as an independent benchmark.
+
+#### Invoicing SaaS landing
+
+| Without genjutsu | With genjutsu |
+|---|---|
+| <img src="https://raw.githubusercontent.com/AThevon/genjutsu/v4.0.0/assets/v4/saas-landing-without-desktop.png" alt="Invoicing SaaS landing, without genjutsu, desktop" width="400" /> | <img src="https://raw.githubusercontent.com/AThevon/genjutsu/v4.0.0/assets/v4/saas-landing-with-desktop.png" alt="Invoicing SaaS landing, with genjutsu, desktop" width="400" /> |
+| <img src="https://raw.githubusercontent.com/AThevon/genjutsu/v4.0.0/assets/v4/saas-landing-without-mobile.png" alt="Invoicing SaaS landing, without genjutsu, mobile" width="180" /> | <img src="https://raw.githubusercontent.com/AThevon/genjutsu/v4.0.0/assets/v4/saas-landing-with-mobile.png" alt="Invoicing SaaS landing, with genjutsu, mobile" width="180" /> |
+<!-- genjutsu:showcase:end -->
+
+What moved, over the runs kept in each arm: on both landings, the judge that fails a product
+screen faked in divs or a page stuck on one layout family (studio 0/2 to 2/2, SaaS 0/2 to 1/2),
+and the U+2014 (em dash) check (1/2 to 2/2 on each); on the studio page, the numbered eyebrow
+(1/2 to 2/2). The other checks already passed without genjutsu.
+
+The control cases held: in `thesis-allows` the two clocks the thesis names stayed on every run,
+and in `swiftui-skip`, measured on `5735e65`, `tells` was never requested or read.
+
+### Notes
+
+- Credit: tells catalogue inspired by taste-skill (MIT, Leonxlnx). What came from it is the idea of
+  writing a model's reflexes down, and a set of observed markers. Every entry is rewritten as
+  detection with no prescribed replacement, and nothing is copied: no passage, no asset, no module
+  named after it. `scripts/check-no-verbatim.sh` compares ten-word windows against the pinned
+  upstream commit.
+- npx installs genjutsu for Codex, Cursor and the other agents it knows, and it runs there. It is
+  not tested by the maintainer and not supported; a bug that does not reproduce under Claude Code
+  is labelled `community`.
+- Not in this release: behaviour written for one host, native Codex or Cursor plugin manifests,
+  tells for Compose and SwiftUI (they need observation first, not invention), and the
+  ui-ux-pro-max v2.15.0 sync.
+
+## v3.6.0 - 2026-09-08
+
+The audit greps become a script with tests, and the resolver loses the cache that served the
+previous release.
+
+This entry was written after the release: v3.6.0 was tagged and published with `plugin.json` and
+`marketplace.json` still reading 3.5.0 and no CHANGELOG entry. Both manifests now read 3.6.0.
+
+### Changed
+
+- **`design-audit` runs a script instead of nineteen greps.** Fifteen of the greps were anchored
+  on `src/`, which a default Next.js app-router or Nuxt 3 project does not have, so they matched
+  nothing, and the pipeline read the empty output as a clean bill of health right before
+  delivery. A grep cannot tell "I looked and found nothing" from "there was nothing here to look
+  at": both print zero lines. Every check now declares what its own zero result means, and a
+  project with no `.tsx` files gets NOT APPLICABLE rather than a pass. The report ends with all
+  three counts.
+- **The `$SKILL_BASE` cache is gone.** It was added in v3.4.0 and it was a staleness bug: after a
+  plugin update the previous version directory is still on disk, so a cached path passed the "is
+  it a directory" guard and the current orchestrator silently loaded the previous release's
+  sub-skills. Reproduced against a two-version fixture: the cache served 3.1.0 while 3.5.0 was
+  installed. The block already says to re-emit it in the same shell call as the loads, and
+  resolution is a handful of depth-capped finds. Being right is cheaper than being fast here.
+- **`design-audit/SKILL.md` drops from 298 lines to 101.** The greps moved into the script. What
+  remains is how to run it, how to read the three statuses, the contrast computation the script
+  deliberately does not do, and the device handoffs it cannot do.
+
+### Added
+
+- **`design-audit/scripts/audit.py`.** Ten checks, root detection, `node_modules` and build
+  output skipped, `.vue`, `.svelte` and `.astro` alongside JSX and CSS, and findings that carry
+  `file:line` and the matched text, so the caller reports evidence rather than a verdict.
+  Markdown or JSON. The exit status is 0 unless the audit itself failed to run: findings are not
+  errors. Each check carries an `unless` clause, which is where the false positives die: a
+  `:hover` next to a `transition` is not a finding.
+- **`design-audit/scripts/tests/test_audit.py`**, wired into CI. Every check has a fixture that
+  must make it fire and one that must not, and a check added without a fixture fails the suite. A
+  check that goes silently inert breaks the build instead of reporting a clean audit.
+- **`scripts/test-resolver.sh`**, wired into CI. It extracts the guarded resolver block from
+  `cast/SKILL.md` and runs it byte for byte against fixture layouts: `$CLAUDE_PLUGIN_ROOT` wins
+  when substituted, the versioned cache is the fallback, the newest version wins and ordering is
+  numeric (3.10.0 beats 3.9.0), a skills directory under `$HOME` and a session root above `$PWD`
+  both resolve, nothing installed resolves empty, a plugin root pointing nowhere is discarded, no
+  cache file is written, and a stale cache file left on disk is never consulted. The block had
+  shipped two silent total failures with zero tests: nothing resolved on Cowork in v3.3.0, and the
+  wrong version resolved in v3.4.0.
+
+### Fixed
+
+- **The duration inventory missed the common case.** It keyed on `duration:`, so it skipped
+  `transition: width 300ms`. It now reads times in an animation context, normalises them, and
+  ignores `maxAge: 3600s`.
+
+## v3.5.0 - 2026-09-08
+
+The audit stops asserting and starts reporting, and the design intelligence actually runs.
+
+### Changed
+
+- **The closing audit is split in two, and neither half is a tick.** Both pipelines ended in
+  twenty-five checkboxes, several of which name a tool the agent cannot run: Chrome DevTools,
+  Macrobenchmark on a device, Instruments Hitches. Ticking "60fps verified via Chrome DevTools"
+  without opening Chrome turns "I did not look" into "I looked and it is fine", and it was the
+  last thing the user read.
+
+  What can be established from the code is now reported **with the evidence used**: the grep and
+  its hits, the computed value, the `file:line`. Contrast is computed from the emitted tokens
+  rather than eyeballed, so a finding reads `#831843 on #FDF2F8 = 9.4:1`. An item that could not
+  be checked is reported as **not checked**, never as passed.
+
+  What needs a profiler, a device or a pointer becomes a **handoff table** with the exact
+  invocation and the pass condition, marked UNVERIFIED. The agent may not tick those, soften
+  them, or drop the section because the rest looked clean. The report ends with the counts of
+  both groups, because "9 checked, 2 problems, 8 handed over" is an audit and a list of ticks is
+  not. Two new Red Flags rows in each orchestrator guard the two ways this gets undone.
+
+  Where a dev server or preview is already running and the user agrees, driving it to collect the
+  web rows beats handing them over. Nothing is started or installed for an audit.
+
+- **`paint` Phase 3 now runs the design intelligence instead of hoping.** It loaded
+  `ui-ux-pro-max` and stopped, so whether the search engine behind it ever ran was left to the
+  model. 1.8 MB of vendored data, 55% of the tracked repo, sat behind a judgement nobody
+  measured. Phase 3 now invokes `search.py --design-system -f markdown` directly, queried with
+  the **validated visual thesis** rather than the raw user request, since the thesis is what was
+  approved.
+
+  The result is framed as a proposal, not an answer: it is a lookup against a static dataset that
+  has never seen the project, so keep what serves the thesis, discard what fights it, and say in
+  one line what was taken and what was dropped. If `python3` is unavailable the pipeline says so
+  and derives the system by hand rather than stopping.
+
+- **`-f markdown` is mandatory on `--design-system`**, applied to all six invocations. The
+  default `ascii` emits about 7,000 bytes carrying raw ANSI colour escapes - `hex_to_ansi` has no
+  isatty guard, so they survive the pipe and land in context as garbage. Markdown returns the
+  same content in about 2,100 bytes. A 3.3x token reduction on the most-run command in the skill.
+
+### Added
+
+- **`CONTRIBUTING.md`.** The evidence standard, stated once: a correction needs a primary source,
+  the acceptable one is named per platform, and a blog post, your memory and a model's output are
+  not among them. It also says what a test proves and what it does not, with three real examples
+  from the v3.4.0 pass, because the worst class of error here throws nothing at all. Plus a
+  private security path, which the repo lacked despite having taken one vulnerability report.
+- **`PLATFORM-CONTRACT.md`.** What a platform family must answer, with the reference
+  implementation for each of ten questions; the ten wiring sites across `cast` and `paint` and
+  which four are compared byte for byte; an honest quarterly cost written to let someone decline;
+  and how a family gets removed, because the plugin that is right about three platforms beats the
+  plugin that is stale about six.
+- Four issue forms and a pull-request template. The wrong-claim form requires the source URL and
+  asks separately how you established it, since a URL is easy to paste and a method is not.
+- **`VERIFY-NEEDED`** as a marker in `VERSIONS.md`: one public list of unconfirmed rows rather
+  than a second tracker that would drift from the first. Two genuinely unverified rows are marked.
+
+### Notes
+
+- No CODEOWNERS. It silently ignores owners without write access, GitHub never requests a review
+  from the pull-request author, and only organisation teams can own a path, so on a personal repo
+  with one maintainer it would document a routing guarantee it does not provide.
+- `docs/superpowers/` is no longer tracked. Agent working notes are not part of a plugin.
+- The vendored dataset question is settled in `UPSTREAM.md`: load-bearing, keep it, and the
+  v2.11.1 to v2.15.0 sync is worth taking when there is an afternoon. The eight out-of-scope
+  stack CSVs stay, because the clean-mirror property is worth more than the 184 KB.
+
+## v3.4.0 - 2026-09-08
+
+Correctness release. The pipelines were fine; the knowledge base underneath them had started
+to lie. 78 corrections across the skill tree, each verified against a primary source - MDN
+browser-compat-data, caniuse, `api/current.txt` in androidx-main, Apple's DocC JSON, the npm
+registry - plus a handful found while checking, and the machinery to stop the class of error
+coming back. What was verified against what, and when, is now recorded in
+`skills/_jutsu/VERSIONS.md`.
+
+### Fixed - the pipeline
+
+- **Sub-skills silently failed to load in `paint`.** `$SKILL_BASE` and `load_skill` are shell
+  state, and shell state does not survive between Bash tool calls. `paint` resolved them once
+  and then dereferenced them in Phase 3 and Phase 5, both separated from the definition by
+  mandatory user-validation gates. Those `cat`s resolved to `/ui-ux-pro-max/SKILL.md` and
+  `/design-audit/SKILL.md`, failed, and the run carried on without the sub-skill - so the
+  design system was generated without the design intelligence, and the final audit ran without
+  the audit module. Every raw `cat "$SKILL_BASE/..."` is now a `load_skill` call, the
+  resolution block states the constraint in the text and caches its result so re-emitting it is
+  cheap, and each loading phase says out loud that it must re-emit it.
+  `packaging/genjutsu-router.md` had documented this exact hazard since v3.1.0, for the router
+  and not for the two files that needed it more.
+- **`design-audit` reported a clean bill of health on code it had never read.** 15 of its 19
+  greps ended in `src/`. A default Next.js app-router or Nuxt 3 project has no `src/`, so they
+  matched nothing, and the pipeline treats "no findings" as a passing gate immediately before
+  delivery. The greps now go through two helpers that own the root and the noise directories,
+  and pass their arguments as `"$@"` rather than through an unquoted variable - zsh does not
+  word-split those, so the usual `$SRC` / `$EXCL` idiom collapses into one bogus argument.
+- `.vue`, `.svelte` and `.astro` are now included wherever the audit looks for a CSS or JSX
+  pattern. SCAN has always detected those stacks; the audit had zero coverage of them.
+- The duration histogram never worked: `uniq -c -f2` skips two whitespace-separated fields and
+  the line has none, so every value collapsed into one empty group.
+
+### Fixed - symbols that do not compile
+
+Each of these made the agent emit code that fails to build.
+
+- `Modifier.recomposeHighlighter()` is not an androidx API at any version - it is a sample in
+  `android/snippets`. Replaced with Layout Inspector's **Show Recomposition Counts**, in the
+  reference, in `design-audit` and in both orchestrator checklists.
+- `Morph.toPath().asAndroidPath().asComposePath()`: `androidx.graphics.shapes.Morph.toPath()`
+  already returns an `android.graphics.Path`, which has no `asAndroidPath()`. There are two
+  `Morph.toPath` extensions with the same shape and different return types, so the import now
+  names which one. Also: `MaterialShapes` are normalized to a 0..1 box, so dropping the path
+  into `GenericShape` rendered a ~1px shape in the corner.
+- `UIBlurEffect.systemMaterial()` is not a Kotlin/Native binding.
+- `IOSKeyboardEventListener` does not exist in Compose Multiplatform, at any version. The real
+  knob is `ComposeUIViewControllerConfiguration.onFocusBehavior`.
+- `.hoverEffect(.highlight)` is `@available(macOS, unavailable)` - a compile error in a macOS
+  target, not the no-op the comment claimed. It is now gated with `#if os(macOS)`.
+- `sharedElement` / `sharedBounds` take `sharedContentState`, not `state` - renamed in
+  compose-animation 1.8.0-alpha06, and stable Compose is now 1.12.0.
+- Spring constants were shifted by one rung: the real values are `StiffnessVeryLow` 50f,
+  `StiffnessLow` 200f, `StiffnessMediumLow` 400f, `StiffnessMedium` 1500f, `StiffnessHigh`
+  10000f. An agent trusting "MediumLow 700" picked a spring 1.75x stiffer than it meant to,
+  and the recipe table above it uses the symbolic names.
+
+### Fixed - claims that were wrong in the dangerous direction
+
+- **Firefox does not support scroll-driven animations.** The table said "Firefox 128+,
+  Supported (shipped July 2024)". No stable Firefox ships them - Nightly only, behind
+  `layout.css.scroll-driven-animations.enabled`. The false claim invited the agent to drop the
+  `@supports` guard, which serves a static page to roughly one visitor in six. Safari shipped
+  them in 26, not 18.4. Every browser-support table in `modern-css.md` was re-derived: View
+  Transitions (Firefox 144, not 133), anchor positioning (Firefox 147, shipped, not "Nightly"),
+  container style queries (Firefox 151, shipped, not "Not yet"), and the coverage percentages.
+- `transition-behavior: allow-discrete` is Baseline, but *transitioning `display`* with it is
+  not implemented in Firefox. The exit animation silently does not run there, which the file
+  never said.
+- The anchor-positioning example could not anchor anything: it used the non-standard HTML
+  `anchor` attribute, on the wrong element, pointing at an id that did not exist, with no
+  `anchor-name` declared anywhere.
+- WCAG target sizes: 2.5.8 Target Size (Minimum) is AA at 24x24 CSS px; 2.5.5 Enhanced is AAA
+  at 44x44. The "BAD" Compose example also overstated its case - Material 3's `IconButton`
+  applies `minimumInteractiveComponentSize()` itself, so the target stays 48dp there.
+- `response` in a SwiftUI spring is the period, not the settling time.
+
+### Changed - Motion and Framer Motion
+
+`framer-motion` and `motion` are the same library under two package names, both publishing
+13.2.0: `motion` depends on `framer-motion` and `motion/react` re-exports it. Plenty of
+projects still have the old name and nothing is broken.
+
+- SCAN detects both, and reports which one is installed - the import path differs.
+- The sub-skill leads with a table mapping each package name to its import and install line,
+  and says to follow what `package.json` already has. Iron rule 8 in `cast` / 10 in `paint`
+  now states it explicitly: **do not migrate a project from `framer-motion` to `motion`
+  uninvited.** If both are present, the project is mid-migration - say so and follow whichever
+  the file being edited imports.
+- `staggerChildren` and `staggerDirection` were deprecated in Motion 12.22 in favour of
+  `delayChildren: stagger(...)`. The skill taught the old form in four places; `stagger()`
+  returns `startDelay + duration * distance`, so the rewrites preserve the timing exactly.
+- The sub-skill directory keeps the name `framer-motion` this release. Renaming it breaks
+  anyone who uploaded the individual ZIP, and packaging is not being touched here.
+
+### Added
+
+- **`skills/_jutsu/VERSIONS.md`** - 42 rows: what each library, SDK and browser feature was
+  verified against, on what date, with the caveats. Every sub-skill now opens with a pointer to
+  it. v3.1.0 corrected a batch of stale references and deleted the "April 2026 baseline"
+  labels in the same pass, which turned dated claims into evergreen-looking ones. This is the
+  fix for the class, not the instance.
+- **`scripts/check-denylist.sh`** - the other half of that contract: the exact strings that
+  were wrong once and must not come back. Entries carry an optional exemption pattern, because
+  the best place to document a non-existent API is next to its name.
+- **`scripts/validate-skills.py`** - checks all 17 `SKILL.md` against the Agent Skills spec:
+  the six allowed frontmatter fields, `name` matching its directory, the length limits, no
+  duplicate names. genjutsu already used only `name`, `description` and `allowed-tools`, so the
+  tree runs unmodified on any runtime that reads the open spec; this keeps it that way. A field
+  outside the six is a hard error on the claude.ai upload path, not a warning.
+- **`.github/workflows/checks.yml`**, called by the release workflow. `release.yml` triggers on
+  `push: tags: v*` and the only existing check triggered on `pull_request` and
+  `push: branches: [main]` - a tag push matched neither, so **cutting a release ran zero
+  checks**. The suite now runs the drift check, the denylist, the spec validator, the dataset
+  validator, the 16 unittest cases that had never run in CI, and a packaging assertion that
+  `genjutsu.zip` contains exactly one `SKILL.md`.
+- **A fifth guarded region, `audit`.** 34 lines of the audit checklist were duplicated between
+  `cast` and `paint`, differed on one, and were the block most likely to be touched by any
+  future platform work - and the only duplicated block CI did not watch. The differing line is
+  reconciled. `check-shared-blocks.sh` also fails now if the markers found in the files do not
+  match its `REGIONS` list, in either direction, so a region cannot be added and forgotten.
+- `skills/_jutsu/css-native`: `sibling-index()` / `sibling-count()`, Baseline since 18 Aug
+  2026, and `interpolate-size` / `calc-size()`. The decision table used to route "stagger
+  across a dynamic list of unknown count" to GSAP or Framer Motion; that is a CSS-native case
+  now.
+- `LICENSE-upstream.txt` under `ui-ux-pro-max`, and a scope section in the root `LICENSE`. The
+  repo asserted MIT (c) Adrien Thevon over the whole tree, including 1.5 MB of Next Level
+  Builder's MIT-licensed data and code whose permission notice was vendored nowhere.
+
+### Changed
+
+- `paint`'s Iron Rules 3 and 8 named the light-scope exception. Rule 3 said "never proceed
+  without both theses validated" while the light-scope table says "interaction thesis only";
+  rule 8 said the audit always runs while light scope substitutes a quick check. v3.3.0 patched
+  rules 1 and 4 and stopped. A weaker model weights a numbered "Never" over a table thirty
+  lines below it.
+- `UPSTREAM.md` was wrong on the one thing it exists to record. The vendored tree is upstream
+  **v2.11.1**, not v2.11.0 - verified by comparing git blob hashes file by file, not by reading
+  a version string. v2.11.0 has no `references/`, no `validate_data.py` and no `tests/`; a sync
+  described as v2.11.0 would have deleted all three. The same blobs are unchanged upstream
+  through v2.14.0, so despite the tag gap the mirror is not drifting: v2.15.0 is the first
+  release that actually diverges, and it is an engine rewrite (`core.py` 464 -> 993 lines) plus
+  a new module. The re-sync instructions now verify by hash.
+
+### Notes
+
+- No new platform, framework or language. No pipeline restructuring. No sub-skill renames.
+- Known follow-ups, found while verifying and deliberately left out of this release: three r182
+  deprecated `PCFSoftShadowMap` for `PCFShadowMap`; `swiftui-motion` does not mention
+  `navigationTransition` / `matchedTransitionSource` (iOS 18+); the `MaterialShapes` list is
+  incomplete; Motion 13.2 added a `motion/three` entry point; the Compose "since 1.6+/1.7+"
+  markers read as "this is new" against a 1.12.0 baseline. Three items that were on this list
+  when it was first drafted are not on it any more: `.pointerStyle` and `.onContinuousHover`
+  landed in `desktop-principles` as part of this release's Apple corrections, and `yoyoEase`
+  turned out not to appear anywhere in the tree, so there was nothing to deprecate.
+
+## v3.3.0 - 2026-07-31
+
+Cowork compatibility: the pipelines now find themselves on a third surface, and stop being too heavy for it.
+
+### Fixed
+
+- **Sub-skill resolution on Cowork.** `cast` and `paint` resolved `$SKILL_BASE` from two fixed layouts only: `/mnt/skills/user` (claude.ai) and `${CLAUDE_PLUGIN_ROOT}` / `~/.claude/plugins/cache` (Claude Code). Cowork mounts the tree under a per-session root instead, for example `/sessions/<session-id>/mnt/.claude/skills/genjutsu/_jutsu`, so the `find` returned nothing, `$SKILL_BASE` stayed empty and every `load_skill` call failed. The pipeline ran without a single one of its fifteen sub-skills. A fourth branch now probes for `*/.claude/skills/*/_jutsu`: `$PWD` and its ancestors first, then `~/.claude/skills`, `/mnt/.claude/skills` and `/sessions`. Every probe is depth-capped, so none of them can walk the filesystem.
+- The same fix landed in the claude.ai bundle router, which hardcoded `find /mnt/skills/user -path '*/cast/SKILL.md'` for both pipelines.
+- Resolution failure is now explicit. The error message names each root that was tried and what to do per host, instead of leaving a silent `cat` of an empty path.
+
+### Added
+
+- **Preview gate host mapping.** The gate offered "artifact / live preview / inline" as if every surface implemented them the same way. It now detects the host before `LOAD` runs and maps each option: on Cowork, artifact means the host's persistent artifact and inline means its inline widget, while live preview is usually unavailable because there is no project checkout to write into. Cowork is tested before Claude Code, since both can have a `~/.claude` tree and only Cowork has the session-rooted mount.
+- **Light scope in `paint`.** The five-phase pipeline is disproportionate for the short requests that dominate on Cowork. When the target is one isolated component, no visual identity is at stake, and nothing downstream depends on the result being systematised, `paint` now shortens to a single brainstorm question, the interaction thesis alone, and no `MASTER.md`. It announces the shortened path in one line so it can be overruled. The gates themselves stay: only their number goes down.
+
+### Changed
+
+- `cast` is now the documented default entry point. The bundle router used to spend a question on ambiguous intent; it now runs `cast` and says so in one line, since a `paint` that turns out to be a single component has its own shortened path.
+- Iron rules 1 and 4 in `paint` name the light-scope exception rather than reading as absolutes that the shortened path would contradict.
+- Cowork is named as a supported surface in the README: the badge, the opening line, its own install section, and a `Cowork compatibility` section documenting the resolution order and the preview mapping.
+- Both ancestor walks are hard-bounded and guard against a `.` or empty `$PWD`, which would otherwise never reach `/` and spin the shell. The fixed skills roots are capped at depth 2, where `_jutsu` actually sits; only a session root gets more.
+
+### Notes
+
+- No change to claude.ai or Claude Code resolution. The new branch runs only after both existing ones miss, and the `genjutsu:shared:skill-base` and `genjutsu:shared:preview` regions stay byte-identical between the two orchestrators, enforced by the CI drift check.
+
+## v3.2.0 - 2026-07-31
+
+Presentation release: the validation gates now show their work instead of describing it.
+
+### Added
+
+- **The preview gate.** `cast` and `paint` stop at a handful of points to have you approve something visual - an interaction thesis, a set of variants, a visual identity, a design system. Until now each was described in prose and rendered as plain text in the transcript, which meant approving an easing curve you could not see and a palette you could not look at. Both skills now ask **how you want to see it** before the first of those gates:
+  - **Artifact** - a live page: the easing curve plotted with its exact value, an element actually performing the motion with a replay button, the raw numbers (duration, delay, stagger, spring parameters), a reduced-motion toggle. For a design system: swatches with their contrast ratios, a real type specimen, the five states of every component, light and dark side by side.
+  - **Live preview** - a throwaway route in your own project with your real stack and tokens; a `@Preview` / `#Preview` scratch file on Compose / SwiftUI, where an HTML page can only approximate.
+  - **Inline** - the existing behavior, and still the recommended default for a 150ms hover.
+
+  The question is asked **once**. The choice holds for the session, later gates only announce the mode in one line, and you switch by saying so.
+- The gate is a cross-cutting protocol rather than a new pipeline stage, so `cast` keeps its seven steps and `paint` its five phases. It ships as a new `genjutsu:shared:preview` guarded region, byte-identical in both orchestrators and enforced by the existing CI drift check.
+- New iron rule in both skills: **the preview is throwaway and never becomes the implementation.** This matters most on Compose / SwiftUI, where an HTML preview approximates timing and curve only, not rendering - and now says so on the page. Supporting rules: the live-preview route is deleted after validation, no dependency is installed to build a preview, no dev server is started without asking, and only values that are already in the thesis may appear in it (otherwise the preview becomes a second, unvalidated thesis).
+
+### Changed
+
+- `allowed-tools` in `cast` and `paint` now includes `Artifact`. Artifact production degrades cleanly across surfaces: native on claude.ai, the `Artifact` tool on Claude Code, and a self-contained HTML file written to a temp path when neither is available.
+
+### Notes
+
+- `paint`'s page-by-page validation (Phase 4) is deliberately excluded - it is judged in the real project, where a preview would only add a copy step.
+- The docs site ([genjutsu.athevon.dev](https://genjutsu.athevon.dev)) lives in a separate repository; its `cast` and `paint` pages do not describe the gate yet.
+
+## v3.1.0 - 2026-07-24
+
+Correctness + reach release: the design dataset is refreshed, the technical guidance is more accurate across every stack, and claude.ai now installs in a single upload.
+
+### Added
+
+- **Single-upload claude.ai bundle.** `package-for-claude-ai.sh` now produces `genjutsu.zip` - one self-contained skill (a router `SKILL.md` + `cast` + `paint` + every sub-skill) that installs in **one** upload instead of ~18. It resolves its sub-skills from its own bundled `_jutsu/`; the à-la-carte individual ZIPs still work unchanged. New install section + `docs/claude-ai-testing.md`. (#13)
+
+### Changed
+
+- **`ui-ux-pro-max` synced to upstream v2.11.0** ([nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill), MIT). Data roughly doubled: 84 styles, 192 palettes, 74 font pairings, 161 UI-reasoning rows, 192 products, plus new `google-fonts` (1923) and `motion` datasets and 22 stacks. The engine gains the design dials (`--variance` / `--motion` / `--density`), `--force`, and a test suite. Now properly attributed (README credits + `UPSTREAM.md`). (#8)
+- Item counts stated across the skill and README corrected to match the shipped data. (#8)
+
+### Fixed
+
+- **API accuracy across the sub-skills** (#7): Liquid Glass used non-existent `.glassEffect(.thin/.thick)` (iOS 26 `Glass` exposes only `.regular` / `.clear` / `.identity`); the Android reduce-motion signal `AccessibilityManager.areTransitionsEnabled()` does not exist (now `ValueAnimator.areAnimatorsEnabled()`); the `@Animatable` macro is iOS 26+, not 17+; CSS `inset-area` renamed to `position-area`; GSAP `ScrollTrigger.matchMedia()` deprecated (now `gsap.matchMedia()`) and all former Club plugins are free since 3.13; `.snappy` spring duration corrected.
+- **claude.ai sub-skill resolution hardened** (#9): detect the mount robustly, warn instead of failing on a missing sub-skill, and stop the cache fallback from picking a stale clone.
+- **`/cast`'s audit checklist drift** with `/paint` (missing web checks) fixed, plus a CI guard so the shared cast/paint blocks can no longer diverge silently. (#11)
+
+### Security / hygiene
+
+- Removed the agent-run `sudo` / `brew` / `winget` install commands from `ui-ux-pro-max` (supply-chain trust). (#8)
+- Pinned CI actions to commit SHAs and added `homepage` / `repository` / `license` / `keywords` to `plugin.json`. (#10)
+
+## v3.0.3 - 2026-07-23
+
+### Fixed
+
+- `paint`: the brainstorm question shown when the user tries to skip brainstorming was still in French and got emitted verbatim to the user. It is now English, matching the rest of the skill (same class of leak as #3, one occurrence had been missed).
+
+### Changed
+
+- Translated the `gsap` reference docs (`_jutsu/gsap/references/core.md` and `timeline.md`) from French to English, so the sub-skill is fully English like the rest of the plugin. Translation only, no API or code changes (the remaining French flagged in #3).
+
+## v3.0.2 - 2026-07-23
+
+### Security
+
+- `ui-ux-pro-max`: the `--persist` flow no longer lets `--project-name` or `--page` escape the output directory. Both values were turned into filesystem paths with only lowercase + space-to-dash, so a `../` or an absolute value could write outside `design-system/` (an arbitrary-write primitive when the script is agent-driven). They now pass through a shared `safe_path_component()` that collapses each value to a single safe path segment. Thanks to @reevesc88 (#4).
+
+### Fixed
+
+- `cast` and `paint` now resolve `_jutsu` sub-skills from the installed plugin version via `${CLAUDE_PLUGIN_ROOT}`, instead of a `find | head -1` that could pick the marketplace clone (a stale version after `/plugin marketplace update`). A guarded, cache-restricted fallback covers the case where the placeholder is not substituted. Thanks to @malle-van-moa (#3).
+- Removed a stale v2.0 rollout note in `cast` and `paint` that told the agent to skip the Compose/SwiftUI sub-skills; those shipped in v3.0.1 and the note contradicted the LOAD table above it. (#3)
+
+### Changed
+
+- Translated the remaining French user-facing strings in `cast` and `paint` (the legacy-bridge question and one DISCOVER example) to English. (#3)
+
+## v3.0.1 - 2026-07-18
+
+### Fixed
+
+- Sub-skill resolution in `cast` and `paint` now works when genjutsu is installed via the marketplace. The `PLUGIN_ROOT` lookup is version-tolerant and matches the versioned cache layout (`~/.claude/plugins/cache/genjutsu/genjutsu/<version>/skills/`) in addition to git-clone installs. Previously the versioned path never matched, so all 15 `_jutsu` sub-skills failed to load on marketplace installs. Thanks to @SatishRockzz (#2).
+
+## v3.0.0 - 2026-04-26
+
+**BREAKING CHANGE - Rebrand**: `creative-excellence` is now `genjutsu`. The two orchestrators have new names that match the new theme.
+
+### Renamed
+
+- Plugin: `creative-excellence` -> `genjutsu`
+- Orchestrator (creative coding): `creative-excellence` -> `cast` (The Illusionist)
+- Orchestrator (design pipeline): `design-excellence` -> `paint` (The Master Painter)
+- Internal sub-skills directory: `_creative/` -> `_jutsu/`
+- GitHub repository: `AThevon/creative-excellence` -> `AThevon/genjutsu`
+
+### Migration guide
+
+**For users on Claude Code:**
+
+```bash
+# 1. Uninstall the old plugin
+/plugin uninstall creative-excellence
+
+# 2. Remove the old marketplace
+/plugin marketplace remove creative-excellence
+
+# 3. Add the new marketplace
+/plugin marketplace add git@github.com:AThevon/genjutsu.git
+
+# 4. Install
+/plugin install genjutsu
+```
+
+Old invocations -> new invocations:
+
+| Old | New |
+|---|---|
+| `/creative-excellence:creative-excellence` | `/genjutsu:cast` |
+| `/creative-excellence:design-excellence` | `/genjutsu:paint` |
+
+**For users on claude.ai:**
+
+1. Remove the old `creative-excellence` and `design-excellence` skills from your skills list.
+2. Re-download the latest release ZIPs (now named `cast.zip`, `paint.zip`, plus the renamed `genjutsu-all.zip`).
+3. Re-upload everything.
+
+**For users with the dotfiles submodule pattern:**
+
+```bash
+cd ~/.dotfiles
+
+# Deinit the old submodule
+git submodule deinit -f claude/plugins/creative-excellence
+git rm -rf claude/plugins/creative-excellence
+rm -rf .git/modules/claude/plugins/creative-excellence
+
+# Re-add with the new URL
+git submodule add git@github.com:AThevon/genjutsu.git claude/plugins/genjutsu
+
+# Update install.sh and settings.json (replace creative-excellence with genjutsu)
+# Then run install
+./install.sh
+```
+
+### Added
+
+- Voice rules in both `cast/SKILL.md` and `paint/SKILL.md`: light ninja flair during execution, plain factual reports at the end (no mystic prose in summaries).
+
+### Notes
+
+- Zero functional change. All sub-skills (`motion-principles`, `gsap`, `compose-motion`, `swiftui-graphics`, etc.) work identically. Only naming and voice changed.
+- The old GitHub URL `github.com/AThevon/creative-excellence` automatically redirects to the new one.
+
+## v2.0.0 - 2026-04-25
+
+Major release: cross-platform expansion. The plugin now covers Web, Android (Jetpack Compose / Compose Multiplatform), and Apple (SwiftUI iOS + macOS) in addition to the existing web stacks.
+
+### Added
+
+- New shared layer `mobile-principles` (touch targets, no-hover doctrine, thumb zones, safe areas, gestures, mobile perf budgets) with 2 deep-dive references (`gestures-deep.md`, `accessibility-mobile.md`).
+- New shared layer `desktop-principles` (hover-mandatory, pointer precision, keyboard shortcuts, multi-window, focus management) with 2 deep-dive references (`keyboard-patterns.md`, `multi-window.md`).
+- New stack `compose-motion` (Jetpack Compose animation foundations: `animate*AsState`, `AnimatedVisibility`, `SharedTransitionLayout`, springs, gestures) with 3 deep-dives (`shared-transitions.md`, `gestures-compose.md`, `recomposition-and-anim.md`).
+- New stack `compose-graphics` (advanced Compose visuals: M3 Expressive motion physics, AGSL shaders Android 13+, Canvas/DrawScope generative) with 3 deep-dives (`agsl-recipes.md`, `m3-expressive-deep.md`, `canvas-generative.md`).
+- New stack `compose-multiplatform` (KMP/CMP patterns, expect/actual, iOS/Android/Desktop interop) with 2 deep-dives (`cmp-interop.md`, `cmp-platform-quirks.md`).
+- New stack `swiftui-motion` (`withAnimation`, transitions, `matchedGeometryEffect`, `PhaseAnimator`, `KeyframeAnimator`, gestures) with 3 deep-dives (`springs-cheatsheet.md`, `phase-keyframe-deep.md`, `gestures-swiftui.md`).
+- New stack `swiftui-graphics` (Metal shaders, `.visualEffect`, Liquid Glass iOS 26, Canvas) with 3 deep-dives (`metal-recipes.md`, `liquid-glass-deep.md`, `canvas-swiftui.md`).
+- Stack-aware MASTER.md generation in `design-excellence` (now `genjutsu:paint`): produces Tailwind/CSS for web, Kotlin Theme.kt for Compose, Swift extensions for SwiftUI, KMP commonMain for CMP.
+- Cross-platform AUDIT checklist in both orchestrators (Layout Inspector, Macrobenchmark, Instruments Time Profiler, Hitches Instrument, GPU Frame Capture).
+- Conditional DISCOVER question for legacy bridge integration (XIB / storyboard / layout XML / setContentView detection).
+
+### Changed
+
+- Phase SCAN extended in both orchestrators to detect Android Compose (`androidx.compose`), Compose Multiplatform (`org.jetbrains.compose` + `kotlin-multiplatform`), SwiftUI (Package.swift / xcodeproj / @main App), and to distinguish iOS vs macOS targets.
+- Phase LOAD restructured into layered tables (foundation always / context layers by detection / stack-specific by SCAN). Advanced sub-skills (`compose-graphics`, `swiftui-graphics`) only loaded for advanced thesis containing terms like "shader", "Metal", "AGSL", "Liquid Glass", "M3 Expressive".
+- IRON RULES 7-8 generalized to be stack-agnostic (previously React/GSAP-specific).
+- THESIS examples extended with cross-platform examples (SwiftUI matchedGeometryEffect, Compose SharedTransitionLayout, macOS hover, AGSL shader).
+- `motion-principles` reduced-motion section now covers 5 platforms (Web CSS, Web JS, SwiftUI, UIKit, Compose) with code examples.
+- `motion-principles` Universal Do Not Rules now include native (SwiftUI + Compose) BAD/GOOD examples in addition to CSS/JS/GSAP.
+- `design-audit` now greps multi-stack (web + Compose + SwiftUI), reports bundle sizes for native libs (Lottie/Rive), and includes a stack-specific audit subsection (Layout Inspector / Macrobenchmark / Instruments Time Profiler / Hitches / GPU Frame Capture).
+
+### Notes
+
+- Zero web regression: existing web sub-skills (`gsap`, `framer-motion`, `css-native`, `threejs-r3f`, `canvas-generative`) and `ui-ux-pro-max` are unchanged.
+- The plugin grows from 8 sub-skills to 15. The `package-for-claude-ai.sh` script automatically picks up new sub-skills (no script change needed).
+
+## v1.1.0 and earlier
+
+See git tags for details on previous releases.
