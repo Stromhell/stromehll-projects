@@ -129,7 +129,7 @@
 63. Fíjense en sus ojos. En esta forma, Luffy tiene una mirada extraña, casi como la de Imu. Y no habla. Solo hace sonidos de mono.  
    _[c1199-007 crop 0.6,0.68,0.4,0.32, bg aura:#7a3cff]_
 64. Mi teoría es que algo está mal. Puede ser que esta forma esté descontrolada, como un poder demasiado nuevo.  
-   _[c1199-011 crop 0,0.3,1,0.17, bg black]_
+   _[c1199-011, bg black]_
 65. O puede ser algo más simple. Luffy está jugando. Para Nika, todo es un juego. Y lanzar casas es su forma de divertirse.  
    _[ai:monkey_drum.png, bg paper]_
 66. Pero hay una tercera opción. Luffy vio las sombras de Imu antes que nadie, y no va por Dorry y Brogy. Va por lo que viene detrás de ellos.  
@@ -163,7 +163,7 @@
 80. Ahora, hablemos de los personajes. Sanji sigue en su mejor arco. Coeur Fortress, una patada directa al corazón del enemigo.  
    _[c1199-009 crop 0.55,0,0.45,0.48, bg speed:#e3262e]_
 81. Y me encanta que, aunque Luffy le arruinó el tiro, Sanji no se enoja. Solo se preocupa por su capitán.  
-   _[c1199-009 crop 0,0,0.55,0.23, bg black]_
+   _[c1199-009 crop 0,0,1,0.5, bg paper]_
 82. Dorry y Brogy. Después de tantos años, verlos volar en un barco para salvar a los niños es precioso. Y Dorry corta una casa en dos sin despeinarse.  
    _[c1199-009 crop 0,0.51,1,0.49, bg black]_
 83. Los niños gigantes. No esperan a que los rescaten. Se quitan lo pesado y deciden nadar. Valientes.  
@@ -179,21 +179,21 @@
 88. Segundo, las sombras de Imu entre los niños. Alguien tiene que llegar a tiempo. Y el que nada hacia ellos es su hermano mayor.  
    _[c1199-011 crop 0.36,0.5,0.64,0.5, bg aura:#7a3cff]_
 89. Tercero, la carta de Lili. Si Oda nos deja leerla, el mundo de One Piece cambia.  
-   _[c1199-013 crop 0,0.69,1,0.31, bg paper]_
+   _[c1199-013, bg paper]_
 90. Y cuarto, Imu. Si de verdad tiene un límite de tiempo, cada minuto que pasa en Elbaph juega en su contra.  
-   _[c1199-011 crop 0,0.3,1,0.17, bg black]_
+   _[c1199-012, bg speed]_
 91. Mi predicción: el capítulo mil doscientos abre con la carta, y la pelea de Luffy se aclara al final. Oda ama los números redondos.  
    _[c1199-003, bg speed]_
 92. Antes de irnos, mi top tres de momentos de este capítulo.  
    _[c1199-001 crop 0.05,0.03,0.9,0.25, bg halftone:#e3262e]_
 93. Número tres. Los vecinos gigantes quejándose de su casa en plena guerra. Comedia pura.  
-   _[c1199-005 crop 0,0.34,1,0.2, bg paper]_
+   _[c1199-005, bg paper]_
 94. Número dos. Luffy agarrando una casa y lanzándola como pelota. Treinta años de One Piece y Oda todavía nos sorprende.  
    _[c1199-008 crop 0,0.6,1,0.4, bg speed:#e3262e, gif anime-monkey-dance_1]_
 95. Y número uno. Robin con la carta de Lili en las manos. Nefertari en Elbaph. Ese momento me dejó sin aire.  
    _[c1199-013 crop 0,0.69,1,0.31, bg paper]_
 96. Porque One Piece no es solo peleas. Es una historia que lleva ochocientos años esperando a ser contada.  
-   _[c1199-013 crop 0,0.69,1,0.31, bg black]_
+   _[ai:ancient_letter.png, bg black]_
 97. Y tú, ¿qué crees? ¿Por qué Luffy ataca a Dorry y Brogy? ¿Qué dice la carta de Lili?  
    _[c1199-006 crop 0,0,1,0.68, bg speed:#ffd23d]_
 98. Déjanos tus teorías en los comentarios, y suscríbete, que el capítulo mil doscientos viene con todo.  

@@ -1,0 +1,119 @@
+# One Piece capitulo 1199 "Lo que el pueblo ha transmitido a traves de los siglos" - Stormi Knows Anime, espanol LatAm v2 (26 Nov 2026: QA fixes - edge strip at 7:21, fewer repeats of Imu-eyes/Robin/neighbour panels, GIF off a speech bubble)
+# Format: PAGE | options | narration. ch=1198 for recap pages. c=x,y,w,h normalised crop; page = full page scroll; ai=file in 03 Frames/art
+# Voice: Kokoro em_santa 1.1, lang es. No intro. Recap of 1198 first.
+@ Gancho
+12 | bg=black punch c=0,0,1,0.76 | Luffy ahora es un mono. Un mono gigante, con un rayo en una mano y una nube en la otra.
+12 | bg=speed:#e3262e c=0,0.79,1,0.21 gif=anime-surprised_1 | Y está a punto de atacar a Dorry y Brogy. Sí. A sus propios amigos.
+11 | bg=aura:#7a3cff punch c=0,0.3,1,0.17 | Mientras tanto, los ojos de Imu aparecen en el cielo. Y unas sombras negras llegan al barco de los niños.
+13 | bg=paper c=0,0.69,1,0.31 | Y en la biblioteca, Robin encuentra una carta de hace ochocientos años con un nombre que nadie esperaba. Nefertari.
+1 | bg=halftone:#e3262e c=0.05,0.03,0.9,0.25 | Esto es One Piece, capítulo mil ciento noventa y nueve. Lo que el pueblo ha transmitido a través de los siglos. Y amigos, este capítulo está cargadísimo.
+@ Resumen rápido
+11 | bg=black ch=1198 page | Resumen rápido del capítulo anterior. Imu llegó a Elbaph en persona y derribó a Loki de un solo golpe.
+14 | bg=aura:#7a3cff ch=1198 c=0,0.32,1,0.31 | Pero vimos algo nuevo. Imu está cansado, y piensa que si no vuelve pronto a Tierra Santa, su vida corre peligro.
+6 | bg=paper ch=1198 c=0.2,0.55,0.8,0.45 | Mientras tanto, el Dios de la Lluvia, Zaza, intentaba llevarse en un barco a los niños gigantes.
+15 | bg=speed:#ffd23d ch=1198 c=0.25,0.57,0.75,0.43 | Y apareció un monito blanco, rebotando por los techos. Uk uk uk.
+17 | bg=speed:#e3262e ch=1198 punch c=0,0,1,0.71 | Ese monito era Luffy. Y le pegó tal golpe a Zaza que la mandó a volar. Así terminó el capítulo mil ciento noventa y ocho.
+@ La explosión de agua
+1 | bg=paper c=0.08,0.28,0.86,0.66 | Antes de empezar, la portada. Vivi le pide a Morgans una foto para su cartel de recompensa, con su traje de Miss Wednesday. Guarden este detalle, porque Alabasta vuelve al final.
+2 | bg=black c=0,0,0.46,1 | Y arrancamos con caos. El cuerpo de Zaza está hecho de agua. Y cuando Luffy la golpea, toda esa agua cae sobre el pueblo.
+2 | bg=paper c=0.53,0,0.47,0.27 gif=anime-scared_2 | Los gigantes gritan: ¡corran, es una masa enorme de agua!
+2 | bg=speed c=0.53,0.31,0.47,0.36 | Una burbuja gigante de agua, del tamaño de una colina, rodando sobre las casas.
+2 | bg=speed:#ffd23d c=0.53,0.7,0.47,0.3 | Y Luffy, feliz de la vida. Uk uk. Como si fuera un día en la playa.
+3 | bg=speed:#e3262e punch page | Y explota. Una ola que arrasa con medio pueblo. Imagina que tu vecino te inunda la casa, pero tu vecino es un mono dios.
+4 | bg=black c=0,0,1,0.27 | El agua lo arrastra todo. Barriles, techos, gigantes.
+4 | bg=paper c=0,0.3,1,0.2 | Y en el barco, se escucha otra explosión. ¿Qué fue ese sonido? Viene del pueblo.
+4 | bg=speed c=0,0.52,1,0.48 | El agua de Zaza que estaba en el barco también explota. Y los niños quedan libres. El agua explotó, gritan.
+5 | bg=paper c=0,0,1,0.33 | Y arriba, en los techos, el monito sigue bailando. Iiik iiik.
+5 | bg=paper c=0,0.34,1,0.2 gif=anime-confused_2 | Y aquí viene mi parte favorita. Dos gigantes se quejan. ¡Oye, mono, me lavaste la casa! ¡Y la mía también, soy su vecino!
+5 | bg=paper c=0,0.34,1,0.2 | Elbaph está bajo ataque del Gobierno Mundial, y a ellos lo que les duele es la casa. Muy realista, la verdad.
+@ Los tambores de la liberación
+5 | bg=black c=0,0.55,1,0.45 | Y entonces se escucha algo. Don, don, don, dongaka.
+6 | bg=speed:#ffd23d punch c=0,0,1,0.68 gif=anime-drums_1 | Luffy se golpea el pecho como un gorila y suena un tambor. Los tambores de la liberación.
+6 | bg=paper c=0,0.69,1,0.31 | Los gigantes no lo pueden creer. ¡Ese no puede ser Nika! Digo, ese no es Sombrero de Paja.
+6 | bg=paper c=0.6,0.69,0.4,0.31 | Pero uno de ellos se da cuenta. No, el ritmo es diferente. ¿Los tambores de la liberación? Entonces eso significa...
+6 | bg=aura:#ffd23d ai=monkey_drum.png | Es decir, el mono no solo es gracioso. Es la leyenda de Nika, con otro ritmo.
+7 | bg=paper c=0.7,0,0.3,0.38 | Y alguien lo dice claro. Se parece mucho a él, y los tambores están sonando. ¿Qué otra explicación puede haber?
+@ Dorry y Brogy
+7 | bg=speed:#e3262e punch c=0,0,0.7,0.38 | Y llegan los capitanes. Dorry y Brogy. Los guerreros gigantes de Little Garden.
+7 | bg=paper c=0,0,0.7,0.38 gif=anime-cheering_1 | Están felices. Ese mono se deshizo del monstruo de la lluvia. Ahora podemos rescatar a los niños.
+7 | bg=paper c=0,0.4,0.5,0.27 | Mientras tanto, el monito camina tranquilo, como si nada.
+7 | bg=black c=0.5,0.4,0.5,0.27 | Y el caballero sagrado Killingham se pone nervioso. Maldición, tengo que darme prisa.
+@ Sanji contra Killingham
+7 | bg=black c=0,0.68,0.6,0.32 | Pero Sanji no lo deja ir. Le dice: cuando haya esparcido los pedazos de tu corazón por todo el lugar.
+7 | bg=aura:#7a3cff c=0.6,0.68,0.4,0.32 | Y Sanji remata: no, tú ya estás acabado. Pero justo entonces, el monito voltea, con una sonrisa que da miedo.
+8 | bg=speed punch c=0,0,1,0.37 | Luffy estira el brazo y agarra una casa entera. Una casa.
+8 | bg=paper c=0,0.4,1,0.17 | Y Sanji lo ve. ¡Se estiró! Es de goma. Ya no hay duda.
+8 | bg=speed:#e3262e punch c=0,0.6,1,0.4 | Y Luffy lanza la casa como si fuera una pelota de béisbol.
+9 | bg=black c=0,0,0.55,0.23 | Y eso arruina el ataque de Sanji. Maldición, fallé el tiro.
+9 | bg=speed:#e3262e punch c=0.55,0,0.45,0.48 stamp=¡COEUR_FORTRESS! | Pero el golpe igual le llega a Killingham. Coeur Fortress. Fortaleza del corazón. Y el caballero grita de dolor.
+9 | bg=paper c=0,0.26,0.55,0.22 gif=anime-confused_1 gpos=bl | Y entonces Sanji se pregunta lo mismo que todos nosotros. ¿Ese es Luffy, después de todo?
+@ La casa voladora
+9 | bg=speed punch c=0,0.51,1,0.49 | Porque la casa va directo al barco volador de Dorry y Brogy. ¡Cuidado, capitanes!
+9 | bg=black c=0,0.51,1,0.49 | Y Dorry, sin pestañear, la corta en dos con su espada. Cien años de duelo en Little Garden no se olvidan.
+10 | bg=paper c=0,0,0.5,0.37 | Y los dos lo confirman. Creo que ese sí es Sombrero de Paja. Pensaba lo mismo, gaba ba ba.
+10 | bg=aura:#e3262e c=0.5,0,0.5,0.37 gif=anime-scared_1 | Pero el mono no está contento. Uuuk. Y esa cara de enojo no promete nada bueno.
+@ Los niños escapan
+10 | bg=paper c=0,0.39,0.85,0.27 | En el barco, los niños se organizan. Ahora es nuestra oportunidad. No hay nadie. Solo un caracol transpondedor. Quítense lo pesado, vamos a nadar.
+10 | bg=speed c=0,0.67,0.55,0.33 | Y en el agua aparece un gigante nadando a toda velocidad. ¡Señorita Ange! ¡El hermano mayor viene a salvarte!
+10 | bg=paper c=0.55,0.67,0.45,0.33 | Los niños gritan de emoción. ¡Hermano mayor!
+11 | bg=paper c=0,0,0.66,0.28 | Y miran al cielo. ¡Estamos salvados!
+11 | bg=speed:#ffd23d c=0.66,0,0.34,0.28 gif=anime-cheering_1 | Los capitanes vienen en camino. Por un segundo, parece que todo va a salir bien.
+@ Las sombras de Imu
+11 | bg=black punch c=0,0.3,1,0.17 | Pero esto es One Piece. Y ese segundo dura poco. Unos ojos enormes aparecen. Los ojos de Imu.
+11 | bg=black c=0,0.5,0.36,0.5 | Los gigantes lo notan. Algo anda mal con ese barco. Y arriba, lo mismo, Brogy.
+11 | bg=aura:#7a3cff c=0.36,0.5,0.64,0.5 | Y entre los niños aparece una sombra negra, con cuernos y una sonrisa enorme. Doron, dan don. El mismo ritmo de tambor que acompaña a Imu.
+11 | bg=black c=0.36,0.5,0.64,0.5 gif=anime-scared_2 | Uno de los niños solo alcanza a decir: ¿eh, Collun? Y todos gritan.
+@ Luffy contra los capitanes
+12 | bg=speed:#e3262e punch c=0,0,1,0.76 | Y ahora la última gran imagen. Luffy, más grande, salta hacia el barco de Dorry y Brogy.
+12 | bg=aura:#ffd23d c=0,0,1,0.76 | En una mano, un rayo más grande que el barco. En la otra, una nube como escudo. Uk iik iik.
+12 | bg=paper c=0,0.79,1,0.21 | Y Sanji le grita: ¿qué te pasa, hombre? ¿Qué crees que haces, Luffy? ¡Son Dorry y Brogy!
+13 | bg=paper c=0,0,1,0.24 | Hasta Zoro abre los ojos. Y los caballeros sagrados también reaccionan.
+13 | bg=speed c=0,0.27,1,0.23 | Los gigantes señalan al cielo. Esa pose, con el rayo y la nube, es la pose de los murales de Nika.
+@ La carta de Lili
+13 | bg=black c=0,0.52,1,0.17 | Y el capítulo cierra en la biblioteca de Elbaph.
+13 | bg=paper c=0,0.52,1,0.17 | Alguien lee un nombre en un documento antiguo. ¿Nefertari? ¿Ese no es el nombre de Alabasta? ¿Por qué está aquí?
+13 | bg=paper c=0,0.69,1,0.31 gif=anime-reading_1 | Y Robin, nerviosa, traga saliva. Aquí voy. Voy a leer la carta. Continuará.
+@ Teoría uno: ¿por qué ataca a sus amigos?
+12 | bg=black c=0,0,1,0.76 | Ahora, mis teorías. Primero, la gran pregunta. ¿Por qué Luffy ataca a Dorry y Brogy?
+7 | bg=aura:#7a3cff c=0.6,0.68,0.4,0.32 | Fíjense en sus ojos. En esta forma, Luffy tiene una mirada extraña, casi como la de Imu. Y no habla. Solo hace sonidos de mono.
+11 | bg=black page | Mi teoría es que algo está mal. Puede ser que esta forma esté descontrolada, como un poder demasiado nuevo.
+12 | bg=paper ai=monkey_drum.png | O puede ser algo más simple. Luffy está jugando. Para Nika, todo es un juego. Y lanzar casas es su forma de divertirse.
+11 | bg=aura:#7a3cff c=0.36,0.5,0.64,0.5 | Pero hay una tercera opción. Luffy vio las sombras de Imu antes que nadie, y no va por Dorry y Brogy. Va por lo que viene detrás de ellos.
+12 | bg=speed:#e3262e c=0,0.79,1,0.21 gif=anime-cool_1 | Yo me quedo con esa. Luffy nunca atacaría a sus amigos sin una razón. Lo veremos en el capítulo mil doscientos.
+@ Teoría dos: Nika y los tambores
+6 | bg=speed:#ffd23d c=0,0,1,0.68 | Segundo, los tambores. Los gigantes dicen algo clave. El ritmo es diferente.
+6 | bg=paper c=0.6,0.69,0.4,0.31 | En Wano y en Egghead, el tambor de Luffy era el tambor de la liberación. Pero aquí suena distinto. Más salvaje.
+11 | bg=aura:#7a3cff c=0.36,0.5,0.64,0.5 | Y las sombras de Imu también vienen con tambores. Doron, dan don.
+3 | bg=speed page | Creo que Oda nos está diciendo que hay dos tambores en esta guerra. El de Nika, que libera. Y el de Imu, que controla.
+12 | bg=aura:#ffd23d c=0,0,1,0.76 | Y el rayo y la nube no son al azar. Nika, en las leyendas, es un dios del sol que trae alegría. Pero en los murales de Elbaph aparece con el poder del cielo.
+13 | bg=speed c=0,0.27,1,0.23 gif=anime-surprised_2 | Los gigantes de Elbaph conocen la leyenda. Por eso el título del capítulo. Lo que el pueblo ha transmitido a través de los siglos.
+@ Teoría tres: Nefertari D. Lili
+13 | bg=black c=0,0.69,1,0.31 | Y tercero, lo más importante para la historia. La carta.
+1 | bg=paper c=0.08,0.28,0.86,0.66 | Recuerden la portada con Vivi. No es casualidad. Oda nos pone a Vivi al inicio, y al final aparece el apellido de su familia.
+13 | bg=paper c=0,0.52,1,0.17 | En el Reverie, Cobra descubrió que una antigua reina de Alabasta, Nefertari D. Lili, no se fue a vivir a Mary Geoise como los demás reyes fundadores.
+13 | bg=aura:#7a3cff c=0,0.69,1,0.31 | Y ahora aparece una carta de Lili en Elbaph. Ochocientos años después. Eso significa que Lili estuvo aquí, o tenía aliados aquí.
+11 | bg=black c=0,0.3,1,0.17 | Yo creo que esa carta explica qué pasó en el Siglo Vacío, y por qué Imu le tiene tanto miedo a la tecnología antigua de Elbaph.
+13 | bg=paper ai=ancient_letter.png | Y si la D. de Lili tiene que ver con Joy Boy, esta carta puede ser la revelación más grande desde Egghead.
+@ Los personajes del capítulo
+9 | bg=speed:#e3262e c=0.55,0,0.45,0.48 | Ahora, hablemos de los personajes. Sanji sigue en su mejor arco. Coeur Fortress, una patada directa al corazón del enemigo.
+9 | bg=paper c=0,0,1,0.5 | Y me encanta que, aunque Luffy le arruinó el tiro, Sanji no se enoja. Solo se preocupa por su capitán.
+9 | bg=black c=0,0.51,1,0.49 | Dorry y Brogy. Después de tantos años, verlos volar en un barco para salvar a los niños es precioso. Y Dorry corta una casa en dos sin despeinarse.
+10 | bg=paper c=0,0.39,0.85,0.27 gif=anime-cool_2 | Los niños gigantes. No esperan a que los rescaten. Se quitan lo pesado y deciden nadar. Valientes.
+7 | bg=black c=0.5,0.4,0.5,0.27 | Killingham. El caballero que presumía su armadura de Imu, ahora huyendo con prisa. Mucha armadura divina, poca confianza.
+5 | bg=paper c=0,0.34,1,0.2 gif=anime-confused_2 | Y los vecinos gigantes. Los verdaderos héroes. Ellos solo querían su casa seca.
+@ Lo que viene
+12 | bg=black c=0,0,1,0.76 | Entonces, ¿qué viene en el capítulo mil doscientos?
+12 | bg=speed:#e3262e c=0,0,1,0.76 | Primero, el choque. Un rayo de Nika contra los capitanes gigantes. O Luffy cambia de objetivo en el último segundo.
+11 | bg=aura:#7a3cff c=0.36,0.5,0.64,0.5 | Segundo, las sombras de Imu entre los niños. Alguien tiene que llegar a tiempo. Y el que nada hacia ellos es su hermano mayor.
+13 | bg=paper page | Tercero, la carta de Lili. Si Oda nos deja leerla, el mundo de One Piece cambia.
+12 | bg=speed page | Y cuarto, Imu. Si de verdad tiene un límite de tiempo, cada minuto que pasa en Elbaph juega en su contra.
+3 | bg=speed punch page | Mi predicción: el capítulo mil doscientos abre con la carta, y la pelea de Luffy se aclara al final. Oda ama los números redondos.
+@ Top 3 del capítulo
+1 | bg=halftone:#e3262e c=0.05,0.03,0.9,0.25 | Antes de irnos, mi top tres de momentos de este capítulo.
+5 | bg=paper page | Número tres. Los vecinos gigantes quejándose de su casa en plena guerra. Comedia pura.
+8 | bg=speed:#e3262e c=0,0.6,1,0.4 gif=anime-monkey-dance_1 | Número dos. Luffy agarrando una casa y lanzándola como pelota. Treinta años de One Piece y Oda todavía nos sorprende.
+13 | bg=paper c=0,0.69,1,0.31 | Y número uno. Robin con la carta de Lili en las manos. Nefertari en Elbaph. Ese momento me dejó sin aire.
+13 | bg=black ai=ancient_letter.png | Porque One Piece no es solo peleas. Es una historia que lleva ochocientos años esperando a ser contada.
+@ Cierre
+6 | bg=speed:#ffd23d c=0,0,1,0.68 | Y tú, ¿qué crees? ¿Por qué Luffy ataca a Dorry y Brogy? ¿Qué dice la carta de Lili?
+1 | bg=halftone:#e3262e c=0.05,0.03,0.9,0.25 | Déjanos tus teorías en los comentarios, y suscríbete, que el capítulo mil doscientos viene con todo.

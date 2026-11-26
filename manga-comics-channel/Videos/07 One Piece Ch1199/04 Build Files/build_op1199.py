@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""One Piece 1199 (ES), copied from Boruto build_ch39.py build: script_op1198_es.txt -> per-line Kokoro VO (em_santa 1.1, es) + shots_op1199_es.json + script md + chapters.
+"""One Piece 1199 (ES), copied from Boruto build_ch39.py build: script_op1198_es.txt -> per-line Kokoro VO (em_santa 1.1, es) + shots_op1199_es_v2.json + script md + chapters.
 Adapted from 02 Demon Slayer Full Story/04 Build Files/build_full.py, but single chapter: first column = PAGE number, and every
 line gives its own crop (c=x,y,w,h, normalised) so panels are hand-picked. Render with Tools/mangacut/mangacut_v5.py, mix with mix.py.
 Usage: python3 build_ch39.py [--vo] [--force]"""
@@ -13,7 +13,7 @@ import hashlib
 vo_name = lambda t: 'l_' + hashlib.md5(t.encode()).hexdigest()[:10] + '.wav'
 GAP = 0.22
 rows, sec = [], None
-for ln in open(os.path.join(HERE, os.environ.get('OP_SCRIPT', 'script_op1199_es_v1.txt'))):
+for ln in open(os.path.join(HERE, os.environ.get('OP_SCRIPT', 'script_op1199_es_v2.txt'))):
     ln = ln.rstrip('\n')
     if not ln or ln.startswith('#'): continue
     if ln.startswith('@'): sec = ln[1:].strip(); continue
@@ -61,7 +61,7 @@ for i, r in enumerate(rows):
     md.append(f'{i + 1}. {r["text"]}  \n   _[{vis}, bg {sh["bg"]}{", gif " + o["gif"] if "gif" in o else ""}{", stamp " + o["stamp"] if "stamp" in o else ""}]_')
 shots.append({'dur': 5.0, 'bg': 'halftone:#e3262e', 'img': f'{BR}/01 Drafts v2/ska_logo_1024.png', 'fit': 'height', 'margin': 0.55, 'move': 'in', 'amount': 0.04})
 sf.write(os.path.join(VO, 'vo_full.wav'), np.concatenate(parts), sr)
-json.dump({'assets': os.path.join(V, '03 Frames'), 'watermark': f'{BR}/01 Drafts v1/ska_watermark_600.png', 'shots': shots}, open(os.path.join(HERE, 'shots_op1199_es.json'), 'w'), indent=1)
+json.dump({'assets': os.path.join(V, '03 Frames'), 'watermark': f'{BR}/01 Drafts v1/ska_watermark_600.png', 'shots': shots}, open(os.path.join(HERE, 'shots_op1199_es_v2.json'), 'w'), indent=1)
 words = sum(len(r['text'].split()) for r in rows); total = sum(s['dur'] for s in shots)
 fmt = lambda s: f'{int(s // 60)}:{int(s % 60):02d}'
 open(os.path.join(V, '01 Script', 'OP1199_chapters_ES_v1.txt'), 'w').write('\n'.join(f'{fmt(t)} {n}' for t, n in chapters) + '\n')
