@@ -1,0 +1,86 @@
+[
+ {
+  "n": 1,
+  "file": "sc01.html",
+  "dur": 17.402,
+  "start": 0.0
+ },
+ {
+  "n": 2,
+  "file": "sc02.html",
+  "dur": 13.222,
+  "start": 17.402
+ },
+ {
+  "n": 3,
+  "file": "sc03.html",
+  "dur": 9.399,
+  "start": 30.624
+ },
+ {
+  "n": 4,
+  "file": "sc04.html",
+  "dur": 6.611,
+  "start": 40.023
+ },
+ {
+  "n": 5,
+  "file": "sc05.html",
+  "dur": 19.897,
+  "start": 46.634
+ },
+ {
+  "n": 6,
+  "file": "sc06.html",
+  "dur": 12.739,
+  "start": 66.531
+ },
+ {
+  "n": 7,
+  "file": "sc07.html",
+  "dur": 10.465,
+  "start": 79.27
+ },
+ {
+  "n": 8,
+  "file": "sc08.html",
+  "dur": 13.698,
+  "start": 89.735
+ },
+ {
+  "n": 9,
+  "file": "sc09.html",
+  "dur": 8.097,
+  "start": 103.433
+ },
+ {
+  "n": 10,
+  "file": "sc10.html",
+  "dur": 16.771,
+  "start": 111.53
+ },
+ {
+  "n": 11,
+  "file": "sc11.html",
+  "dur": 13.239,
+  "start": 128.301
+ },
+ {
+  "n": 12,
+  "file": "sc12.html",
+  "dur": 25.24,
+  "start": 141.54
+ },
+ {
+  "n": 13,
+  "file": "sc13.html",
+  "dur": 6.611,
+  "start": 166.78
+ },
+ {
+  "n": 14,
+  "file": "sc14.html",
+  "dur": 6.611,
+  "start": 173.391
+ }
+]
