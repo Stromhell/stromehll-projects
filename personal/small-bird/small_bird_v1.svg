@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="1000" height="1000" viewBox="0 0 1000 1000">
+  <title>Small Bird</title>
+  <g id="Background" inkscape:groupmode="layer" inkscape:label="Background">
+    <rect width="1000" height="1000" fill="#FFF6E9"/>
+    <circle cx="500" cy="470" r="330" fill="#FDE3C4"/>
+  </g>
+  <g id="Branch" inkscape:groupmode="layer" inkscape:label="Branch">
+    <path d="M90 760 C300 730 600 740 920 700" stroke="#7A4E2D" stroke-width="34" stroke-linecap="round" fill="none"/>
+    <path d="M760 718 C800 670 840 650 880 640" stroke="#7A4E2D" stroke-width="18" stroke-linecap="round" fill="none"/>
+    <ellipse cx="885" cy="625" rx="40" ry="20" transform="rotate(-25 885 625)" fill="#7FBF6A"/>
+    <ellipse cx="180" cy="735" rx="44" ry="20" transform="rotate(20 180 735)" fill="#7FBF6A"/>
+  </g>
+  <g id="Shadow" inkscape:groupmode="layer" inkscape:label="Shadow">
+    <ellipse cx="500" cy="742" rx="150" ry="16" fill="#5A3A20" opacity="0.25"/>
+  </g>
+  <g id="Feet" inkscape:groupmode="layer" inkscape:label="Feet">
+    <path d="M455 660 L445 742 M445 742 L420 752 M445 742 L450 756 M445 742 L470 752" stroke="#F08A24" stroke-width="12" stroke-linecap="round" fill="none"/>
+    <path d="M545 660 L555 742 M555 742 L530 752 M555 742 L560 756 M555 742 L580 752" stroke="#F08A24" stroke-width="12" stroke-linecap="round" fill="none"/>
+  </g>
+  <g id="Tail" inkscape:groupmode="layer" inkscape:label="Tail">
+    <path d="M300 560 L170 520 L210 580 L160 610 L310 610 Z" fill="#2E7FB8" stroke-linejoin="round"/>
+  </g>
+  <g id="Body" inkscape:groupmode="layer" inkscape:label="Body">
+    <ellipse cx="500" cy="530" rx="210" ry="180" fill="#3D9BE0"/>
+    <ellipse cx="520" cy="590" rx="140" ry="110" fill="#FFF1D6"/>
+  </g>
+  <g id="Wing" inkscape:groupmode="layer" inkscape:label="Wing">
+    <path d="M360 500 C380 430 470 430 500 500 C520 560 470 640 380 630 C330 620 340 560 360 500 Z" fill="#2E7FB8"/>
+    <path d="M385 560 C410 580 440 585 470 575 M380 600 C405 615 435 618 460 610" stroke="#22659A" stroke-width="8" stroke-linecap="round" fill="none"/>
+  </g>
+  <g id="Crest" inkscape:groupmode="layer" inkscape:label="Crest">
+    <path d="M555 320 C555 250 600 230 612 290 C625 245 665 250 650 320 Z" fill="#2E7FB8"/>
+  </g>
+  <g id="Head" inkscape:groupmode="layer" inkscape:label="Head">
+    <circle cx="590" cy="400" r="120" fill="#3D9BE0"/>
+  </g>
+  <g id="Face" inkscape:groupmode="layer" inkscape:label="Face">
+    <circle cx="625" cy="385" r="26" fill="#1E1E2A"/>
+    <circle cx="634" cy="375" r="9" fill="#FFFFFF"/>
+    <circle cx="618" cy="394" r="4" fill="#FFFFFF"/>
+    <ellipse cx="630" cy="445" rx="26" ry="15" fill="#FF8FA3" opacity="0.7"/>
+  </g>
+  <g id="Beak" inkscape:groupmode="layer" inkscape:label="Beak">
+    <path d="M700 395 L760 412 L700 430 Z" fill="#FFB62E" stroke="#F08A24" stroke-width="6" stroke-linejoin="round"/>
+  </g>
+</svg>
