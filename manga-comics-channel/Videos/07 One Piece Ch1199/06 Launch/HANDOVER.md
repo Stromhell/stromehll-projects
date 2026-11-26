@@ -1,0 +1,6 @@
+# One Piece 1199 (ES) handover, 26 Nov 2026
+- BOOKED Fri 27 Nov 2026 23:00 UTC (4:30 AM IST Sat) on Stormi Knows Anime Zernio (YouTube 6b00ba86a42f4cf9f57677a1), post 6b0897bccba9a4bbde670a21. Pushpam OK 26 Nov 20:33 UTC. Response zernio_booked.json.
+- Upload = Renders OP1199_ES_v2.mp4 (9:06, Drive 1MmPISmdQWWMYh7aHJSg_71CWzv5t1w9v). Thumb thumb/OP1199_thumb_ES_v3.jpg (v1/v2 crop tests). Metadata OP1199_launch_ES_v1.md, kit https://claude.ai/artifact/2yM8wLgP9wTX1sqWFzBswR.
+- To make room, all other anime bookings moved +48 h (zernio_anime_shift_plus48h.json): Black Clover P1 29 Nov, P2 1 Dec, P3 3 Dec; GED Ep1-7 5,7,9,11,13,15,17 Dec, all 23:00 UTC. Next free anime slot 19 Dec 23:00 UTC (One Piece 1200 will likely need to jump in front again).
+- Pipeline: 04 Build Files/build_op1199.py (script_op1199_es_v2.txt, hash VO in 05 Production/voice_es), mangacut_v5, mix.py (music bed 05 Production/OP1199_music_v1.wav, Kevin MacLeod CC BY), Tools/zernio_book.py. Thumb: thumb/thumb_v1.py (LP/LBOX/RP/RBOX/duotone env, HL = yellow word).
+- Next chapter: copy this folder to NN One Piece Ch1200, swap numbers, recap = 1199. Daily check trig_01Xpt8EVzJETodSAyT6gZGtA. Adobe tools now connected (use for thumbnail/audio per Pushpam 26 Nov).
