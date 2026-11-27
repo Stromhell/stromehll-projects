@@ -1,0 +1,1146 @@
+[
+ {
+  "scene": 1,
+  "file": "f01a",
+  "text": "Two customer records. Similar name.",
+  "vo": 2.3253333333333335,
+  "wav": "/mnt/attach/project-files/freelance/tigergraph-explainer/script5/production/vo/af_heart/f01a.wav",
+  "dur": 3.325,
+  "start": 0.0,
+  "words": [
+   [
+    "two",
+    0.3
+   ],
+   [
+    "customer",
+    0.5
+   ],
+   [
+    "records",
+    0.86
+   ],
+   [
+    "similar",
+    1.84
+   ],
+   [
+    "name",
+    1.96
+   ]
+  ]
+ },
+ {
+  "scene": 1,
+  "file": "f01b",
+  "text": "Same address. A fuzzy-match score of 93%.",
+  "vo": 3.456,
+  "wav": "/mnt/attach/project-files/freelance/tigergraph-explainer/script5/production/vo/af_heart/f01b.wav",
+  "dur": 4.956,
+  "start": 3.325,
+  "words": [
+   [
+    "same",
+    0.3
+   ],
+   [
+    "address",
+    0.6
+   ],
+   [
+    "a",
+    1.48
+   ],
+   [
+    "fuzzy",
+    1.6
+   ],
+   [
+    "match",
+    1.82
+   ],
+   [
+    "score",
+    2.1
+   ],
+   [
+    "of",
+    2.42
+   ],
+   [
+    "93",
+    2.62
+   ],
+   [
+    "percent",
+    3.16
+   ]
+  ]
+ },
+ {
+  "scene": 1,
+  "file": "f01c",
+  "text": "Would you merge them?",
+  "vo": 1.088,
+  "wav": "/mnt/attach/project-files/freelance/tigergraph-explainer/script5/production/vo/af_heart/f01c.wav",
+  "dur": 2.388,
+  "start": 8.281,
+  "words": [
+   [
+    "would",
+    0.3
+   ],
+   [
+    "you",
+    0.48
+   ],
+   [
+    "merge",
+    0.62
+   ],
+   [
+    "them",
+    0.88
+   ]
+  ]
+ },
+ {
+  "scene": 2,
+  "file": "f02a",
+  "text": "",
+  "vo": 0.0,
+  "wav": null,
+  "dur": 2.3,
+  "start": 10.669,
+  "words": []
+ },
+ {
+  "scene": 2,
+  "file": "f02b",
+  "text": "",
+  "vo": 0.0,
+  "wav": null,
+  "dur": 2.5,
+  "start": 12.969,
+  "words": []
+ },
+ {
+  "scene": 3,
+  "file": "f03a",
+  "text": "So, how do you decide between fuzzy matching and graph-based entity resolution for KYC?",
+  "vo": 5.888,
+  "wav": "/mnt/attach/project-files/freelance/tigergraph-explainer/script5/production/vo/af_heart/f03a.wav",
+  "dur": 6.888,
+  "start": 15.469,
+  "words": [
+   [
+    "so",
+    0.3
+   ],
+   [
+    "how",
+    0.76
+   ],
+   [
+    "do",
+    0.98
+   ],
+   [
+    "you",
+    1.1
+   ],
+   [
+    "decide",
+    1.2
+   ],
+   [
+    "between",
+    1.52
+   ],
+   [
+    "fuzzy",
+    1.9
+   ],
+   [
+    "matching",
+    2.24
+   ],
+   [
+    "and",
+    2.72
+   ],
+   [
+    "graph",
+    3.32
+   ],
+   [
+    "-based",
+    3.58
+   ],
+   [
+    "entity",
+    3.88
+   ],
+   [
+    "resolution",
+    4.24
+   ],
+   [
+    "for",
+    4.82
+   ],
+   [
+    "kyc",
+    5.32
+   ]
+  ]
+ },
+ {
+  "scene": 4,
+  "file": "f04",
+  "text": "",
+  "vo": 0.0,
+  "wav": null,
+  "dur": 5.2,
+  "start": 22.357,
+  "words": []
+ },
+ {
+  "scene": 5,
+  "file": "f05a",
+  "text": "Look at what surrounds the two Reyes records. Different devices.",
+  "vo": 3.541333333333333,
+  "wav": "/mnt/attach/project-files/freelance/tigergraph-explainer/script5/production/vo/af_heart/f05a.wav",
+  "dur": 4.541,
+  "start": 27.557,
+  "words": [
+   [
+    "look",
+    0.3
+   ],
+   [
+    "at",
+    0.48
+   ],
+   [
+    "what",
+    0.64
+   ],
+   [
+    "surrounds",
+    0.82
+   ],
+   [
+    "the",
+    1.26
+   ],
+   [
+    "two",
+    1.46
+   ],
+   [
+    "ray's",
+    1.66
+   ],
+   [
+    "records",
+    1.92
+   ],
+   [
+    "different",
+    2.86
+   ],
+   [
+    "devices",
+    3.06
+   ]
+  ]
+ },
+ {
+  "scene": 5,
+  "file": "f05b",
+  "text": "Different phones. Different employers.",
+  "vo": 2.005333333333333,
+  "wav": "/mnt/attach/project-files/freelance/tigergraph-explainer/script5/production/vo/af_heart/f05b.wav",
+  "dur": 3.005,
+  "start": 32.099,
+  "words": [
+   [
+    "different",
+    0.3
+   ],
+   [
+    "phones",
+    0.56
+   ],
+   [
+    "different",
+    1.34
+   ],
+   [
+    "employers",
+    1.54
+   ]
+  ]
+ },
+ {
+  "scene": 5,
+  "file": "f05c",
+  "text": "Completely different transactions. The graph says: keep them separate.",
+  "vo": 3.8186666666666667,
+  "wav": "/mnt/attach/project-files/freelance/tigergraph-explainer/script5/production/vo/af_heart/f05c.wav",
+  "dur": 5.219,
+  "start": 35.104,
+  "words": [
+   [
+    "completely",
+    0.3
+   ],
+   [
+    "different",
+    0.74
+   ],
+   [
+    "transactions",
+    1.16
+   ],
+   [
+    "the",
+    2.32
+   ],
+   [
+    "graph",
+    2.42
+   ],
+   [
+    "says",
+    2.62
+   ],
+   [
+    "keep",
+    3.22
+   ],
+   [
+    "them",
+    3.42
+   ],
+   [
+    "separate",
+    3.62
+   ]
+  ]
+ },
+ {
+  "scene": 6,
+  "file": "f06a",
+  "text": "That matters, because a wrong merge blends risk signals.",
+  "vo": 3.2,
+  "wav": "/mnt/attach/project-files/freelance/tigergraph-explainer/script5/production/vo/af_heart/f06a.wav",
+  "dur": 4.2,
+  "start": 40.323,
+  "words": [
+   [
+    "that",
+    0.3
+   ],
+   [
+    "matters",
+    0.46
+   ],
+   [
+    "because",
+    0.82
+   ],
+   [
+    "a",
+    1.38
+   ],
+   [
+    "wrong",
+    1.56
+   ],
+   [
+    "merge",
+    1.82
+   ],
+   [
+    "blends",
+    2.18
+   ],
+   [
+    "risk",
+    2.52
+   ],
+   [
+    "signals",
+    2.86
+   ]
+  ]
+ },
+ {
+  "scene": 6,
+  "file": "f06b",
+  "text": "It can even hide a fraud alert that should have fired.",
+  "vo": 2.517333333333333,
+  "wav": "/mnt/attach/project-files/freelance/tigergraph-explainer/script5/production/vo/af_heart/f06b.wav",
+  "dur": 4.017,
+  "start": 44.523,
+  "words": [
+   [
+    "it",
+    0.3
+   ],
+   [
+    "can",
+    0.42
+   ],
+   [
+    "even",
+    0.56
+   ],
+   [
+    "hide",
+    0.76
+   ],
+   [
+    "a",
+    0.96
+   ],
+   [
+    "fraud",
+    1.12
+   ],
+   [
+    "alert",
+    1.4
+   ],
+   [
+    "that",
+    1.72
+   ],
+   [
+    "should",
+    2.06
+   ],
+   [
+    "have",
+    2.2
+   ],
+   [
+    "fired",
+    2.3
+   ]
+  ]
+ },
+ {
+  "scene": 7,
+  "file": "f07",
+  "text": "Now the opposite. 'Lena Novak' and 'L. Novakova'. A 58% match. Fuzzy matching lets them go.",
+  "vo": 6.954666666666666,
+  "wav": "/mnt/attach/project-files/freelance/tigergraph-explainer/script5/production/vo/af_heart/f07.wav",
+  "dur": 7.955,
+  "start": 48.54,
+  "words": [
+   [
+    "now",
+    0.3
+   ],
+   [
+    "the",
+    0.54
+   ],
+   [
+    "opposite",
+    0.74
+   ],
+   [
+    "lena",
+    1.88
+   ],
+   [
+    "novak",
+    1.88
+   ],
+   [
+    "and",
+    2.24
+   ],
+   [
+    "el",
+    2.42
+   ],
+   [
+    "novakova",
+    2.7
+   ],
+   [
+    "a",
+    3.8
+   ],
+   [
+    "58",
+    3.94
+   ],
+   [
+    "%",
+    4.38
+   ],
+   [
+    "match",
+    4.68
+   ],
+   [
+    "fuzzy",
+    5.74
+   ],
+   [
+    "matching",
+    5.98
+   ],
+   [
+    "lets",
+    6.2
+   ],
+   [
+    "them",
+    6.54
+   ],
+   [
+    "go",
+    6.76
+   ]
+  ]
+ },
+ {
+  "scene": 8,
+  "file": "f08a",
+  "text": "They share a verified phone, device, and company. Investigate before merging.",
+  "vo": 4.842666666666666,
+  "wav": "/mnt/attach/project-files/freelance/tigergraph-explainer/script5/production/vo/af_heart/f08a.wav",
+  "dur": 5.843,
+  "start": 56.495,
+  "words": [
+   [
+    "they",
+    0.3
+   ],
+   [
+    "share",
+    0.44
+   ],
+   [
+    "a",
+    0.64
+   ],
+   [
+    "verified",
+    0.84
+   ],
+   [
+    "phone",
+    1.22
+   ],
+   [
+    "device",
+    2.04
+   ],
+   [
+    "and",
+    2.52
+   ],
+   [
+    "company",
+    2.6
+   ],
+   [
+    "investigate",
+    3.86
+   ],
+   [
+    "before",
+    4.24
+   ],
+   [
+    "merging",
+    4.52
+   ]
+  ]
+ },
+ {
+  "scene": 8,
+  "file": "f08b",
+  "text": "Different names. Same person.",
+  "vo": 1.8346666666666667,
+  "wav": "/mnt/attach/project-files/freelance/tigergraph-explainer/script5/production/vo/af_heart/f08b.wav",
+  "dur": 3.135,
+  "start": 62.337,
+  "words": [
+   [
+    "different",
+    0.3
+   ],
+   [
+    "names",
+    0.58
+   ],
+   [
+    "same",
+    1.3
+   ],
+   [
+    "person",
+    1.4
+   ]
+  ]
+ },
+ {
+  "scene": 9,
+  "file": "f09",
+  "text": "That's how fraud hides: activity split across records that never get connected.",
+  "vo": 4.586666666666667,
+  "wav": "/mnt/attach/project-files/freelance/tigergraph-explainer/script5/production/vo/af_heart/f09.wav",
+  "dur": 6.287,
+  "start": 65.472,
+  "words": [
+   [
+    "that's",
+    0.3
+   ],
+   [
+    "how",
+    0.56
+   ],
+   [
+    "fraud",
+    0.76
+   ],
+   [
+    "hides",
+    1.06
+   ],
+   [
+    "activities",
+    2.5
+   ],
+   [
+    "split",
+    2.5
+   ],
+   [
+    "across",
+    2.84
+   ],
+   [
+    "records",
+    3.1
+   ],
+   [
+    "that",
+    3.52
+   ],
+   [
+    "never",
+    3.76
+   ],
+   [
+    "get",
+    4.0
+   ],
+   [
+    "connected",
+    4.24
+   ]
+  ]
+ },
+ {
+  "scene": 10,
+  "file": "f10a",
+  "text": "And when a regulator asks why two records were merged, a score isn't an answer.",
+  "vo": 4.373333333333333,
+  "wav": "/mnt/attach/project-files/freelance/tigergraph-explainer/script5/production/vo/af_heart/f10a.wav",
+  "dur": 6.473,
+  "start": 71.759,
+  "words": [
+   [
+    "and",
+    0.3
+   ],
+   [
+    "when",
+    0.42
+   ],
+   [
+    "a",
+    0.5
+   ],
+   [
+    "regulator",
+    0.64
+   ],
+   [
+    "asks",
+    0.94
+   ],
+   [
+    "why",
+    1.46
+   ],
+   [
+    "two",
+    1.74
+   ],
+   [
+    "records",
+    1.98
+   ],
+   [
+    "were",
+    2.28
+   ],
+   [
+    "merged",
+    2.48
+   ],
+   [
+    "a",
+    3.36
+   ],
+   [
+    "score",
+    3.42
+   ],
+   [
+    "isn't",
+    3.72
+   ],
+   [
+    "an",
+    4.04
+   ],
+   [
+    "answer",
+    4.16
+   ]
+  ]
+ },
+ {
+  "scene": 10,
+  "file": "f10b",
+  "text": "A graph keeps the evidence: which identifiers matched, and which relationships confirmed it.",
+  "vo": 5.376,
+  "wav": "/mnt/attach/project-files/freelance/tigergraph-explainer/script5/production/vo/af_heart/f10b.wav",
+  "dur": 7.176,
+  "start": 78.232,
+  "words": [
+   [
+    "a",
+    0.3
+   ],
+   [
+    "graph",
+    0.44
+   ],
+   [
+    "keeps",
+    0.68
+   ],
+   [
+    "the",
+    1.0
+   ],
+   [
+    "evidence",
+    1.22
+   ],
+   [
+    "which",
+    2.12
+   ],
+   [
+    "identifiers",
+    2.32
+   ],
+   [
+    "matched",
+    2.88
+   ],
+   [
+    "and",
+    3.78
+   ],
+   [
+    "which",
+    3.92
+   ],
+   [
+    "relationships",
+    4.08
+   ],
+   [
+    "confirmed",
+    4.76
+   ],
+   [
+    "it",
+    5.44
+   ]
+  ]
+ },
+ {
+  "scene": 11,
+  "file": "f11",
+  "text": "So how do you decide? Use them in order. Exact identifiers first. Fuzzy matching to find likely candidates. Then the graph to confirm or reject.",
+  "vo": 9.728,
+  "wav": "/mnt/attach/project-files/freelance/tigergraph-explainer/script5/production/vo/af_heart/f11.wav",
+  "dur": 11.628,
+  "start": 85.408,
+  "words": [
+   [
+    "so",
+    0.3
+   ],
+   [
+    "how",
+    0.46
+   ],
+   [
+    "do",
+    0.64
+   ],
+   [
+    "you",
+    0.76
+   ],
+   [
+    "decide",
+    0.86
+   ],
+   [
+    "use",
+    1.74
+   ],
+   [
+    "them",
+    1.86
+   ],
+   [
+    "in",
+    2.06
+   ],
+   [
+    "order",
+    2.22
+   ],
+   [
+    "exact",
+    3.08
+   ],
+   [
+    "identifiers",
+    3.32
+   ],
+   [
+    "first",
+    3.94
+   ],
+   [
+    "fuzzy",
+    5.1
+   ],
+   [
+    "matching",
+    5.38
+   ],
+   [
+    "to",
+    5.68
+   ],
+   [
+    "find",
+    5.96
+   ],
+   [
+    "likely",
+    6.2
+   ],
+   [
+    "candidates",
+    6.54
+   ],
+   [
+    "then",
+    7.66
+   ],
+   [
+    "the",
+    7.84
+   ],
+   [
+    "graph",
+    8.0
+   ],
+   [
+    "to",
+    8.2
+   ],
+   [
+    "confirm",
+    8.44
+   ],
+   [
+    "or",
+    8.88
+   ],
+   [
+    "reject",
+    9.32
+   ]
+  ]
+ },
+ {
+  "scene": 12,
+  "file": "f12a",
+  "text": "Fuzzy matching on its own is fine for clean, low-stakes data, like deduplicating a mailing list.",
+  "vo": 5.824,
+  "wav": "/mnt/attach/project-files/freelance/tigergraph-explainer/script5/production/vo/af_heart/f12a.wav",
+  "dur": 8.324,
+  "start": 97.036,
+  "words": [
+   [
+    "fuzzy",
+    0.3
+   ],
+   [
+    "matching",
+    0.68
+   ],
+   [
+    "on",
+    0.92
+   ],
+   [
+    "its",
+    1.16
+   ],
+   [
+    "own",
+    1.3
+   ],
+   [
+    "is",
+    1.56
+   ],
+   [
+    "fine",
+    1.78
+   ],
+   [
+    "for",
+    2.16
+   ],
+   [
+    "clean",
+    2.44
+   ],
+   [
+    "low",
+    2.96
+   ],
+   [
+    "-stakes",
+    3.18
+   ],
+   [
+    "data",
+    3.46
+   ],
+   [
+    "like",
+    4.24
+   ],
+   [
+    "deduplicating",
+    4.5
+   ],
+   [
+    "a",
+    5.18
+   ],
+   [
+    "mailing",
+    5.4
+   ],
+   [
+    "list",
+    5.6
+   ]
+  ]
+ },
+ {
+  "scene": 12,
+  "file": "f12b",
+  "text": "But you've got to add graph when the decision affects KYC or AML, when people deliberately change their details, when households and companies share addresses, and when you have to explain every merge.",
+  "vo": 12.394666666666666,
+  "wav": "/mnt/attach/project-files/freelance/tigergraph-explainer/script5/production/vo/af_heart/f12b.wav",
+  "dur": 14.495,
+  "start": 105.36,
+  "words": [
+   [
+    "but",
+    0.3
+   ],
+   [
+    "you've",
+    0.42
+   ],
+   [
+    "got",
+    0.6
+   ],
+   [
+    "to",
+    0.74
+   ],
+   [
+    "add",
+    0.88
+   ],
+   [
+    "graph",
+    1.14
+   ],
+   [
+    "when",
+    1.42
+   ],
+   [
+    "the",
+    1.7
+   ],
+   [
+    "decision",
+    1.82
+   ],
+   [
+    "affects",
+    2.22
+   ],
+   [
+    "kyc",
+    2.64
+   ],
+   [
+    "or",
+    3.68
+   ],
+   [
+    "a",
+    4.12
+   ],
+   [
+    "ml",
+    4.28
+   ],
+   [
+    "when",
+    5.18
+   ],
+   [
+    "people",
+    5.3
+   ],
+   [
+    "deliberately",
+    5.62
+   ],
+   [
+    "change",
+    6.08
+   ],
+   [
+    "their",
+    6.52
+   ],
+   [
+    "details",
+    6.76
+   ],
+   [
+    "when",
+    7.84
+   ],
+   [
+    "households",
+    7.94
+   ],
+   [
+    "and",
+    8.4
+   ],
+   [
+    "companies",
+    8.72
+   ],
+   [
+    "share",
+    9.16
+   ],
+   [
+    "addresses",
+    9.5
+   ],
+   [
+    "and",
+    10.42
+   ],
+   [
+    "when",
+    10.68
+   ],
+   [
+    "you",
+    10.84
+   ],
+   [
+    "have",
+    10.98
+   ],
+   [
+    "to",
+    11.18
+   ],
+   [
+    "explain",
+    11.34
+   ],
+   [
+    "every",
+    11.76
+   ],
+   [
+    "merge",
+    12.14
+   ]
+  ]
+ },
+ {
+  "scene": 13,
+  "file": "f13",
+  "text": "",
+  "vo": 0.0,
+  "wav": null,
+  "dur": 6.6,
+  "start": 119.855,
+  "words": []
+ },
+ {
+  "scene": 14,
+  "file": "f14",
+  "text": "",
+  "vo": 0.0,
+  "wav": null,
+  "dur": 6.6,
+  "start": 126.455,
+  "words": []
+ }
+]
