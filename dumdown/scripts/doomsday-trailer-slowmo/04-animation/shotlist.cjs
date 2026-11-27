@@ -1,0 +1,3 @@
+const { chromium } = require('playwright'); const path = require('path');
+(async () => { const b = await chromium.launch({ args: ['--allow-file-access-from-files'] }); const p = await b.newPage(); await p.goto('file://' + path.resolve('page_act' + process.argv[2] + '.html')); await p.evaluate(() => FILM.load());
+ const r = await p.evaluate(() => (window.ACT.shots).map((s, i) => i + ' ' + s.plate + ' ' + JSON.stringify(s.cam).slice(0,80) + ' ' + (s.chars || []).map(c => c.c + '@' + JSON.stringify(c.x) + ',' + JSON.stringify(c.y)).join(' ') + ' | ' + (s.props||[]).map(q=>q.k).join(','))); console.log(r.join('\n')); await b.close(); })();

@@ -1,0 +1,44 @@
+# Assemble the Doomsday trailer breakdown full video with ONE lossy video encode (CFR 24 fps).
+# Segments (act pieces + gags spliced in at their act points) are decoded one at a time and piped as raw frames
+# into a single x264 encoder, so memory stays flat (a 42-input filter graph ran out of memory).
+# Audio is cut at the same frame boundaries (2000 samples per frame at 48 kHz), joined as PCM, then two-pass loudnorm -14.
+import json, subprocess, sys, os, wave
+SCR = os.environ.get('SCR', '/tmp/dsw')
+OUT = os.environ.get('OUT', f'{SCR}/full/DumDown_DoomsdaySlowMo_FULL_v1.mp4'); os.makedirs(f'{SCR}/full', exist_ok=True)
+def dur(f): return float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', f], capture_output=True, text=True).stdout)
+segs = []
+for n in range(13):
+    v = f'{SCR}/acts/act{n:02d}.mp4'; a = f'{SCR}/mix/act{n:02d}.wav'; tot = round(min(dur(v), dur(a)) * 24); t = f'{SCR}/acts/title{n:02d}.mp4'
+    import soundfile as _sf, numpy as _np
+    _x, _sr = _sf.read(a); _m = _np.abs(_x).max(1) if _x.ndim > 1 else _np.abs(_x); _i = _np.where(_m > 10 ** (-45 / 20))[0]
+    tot = min(tot, round((_i[-1] / _sr + .6) * 24))  # trim silent act tail, keep 0.9 s so scenes breathe before the next cut (L34)
+    if os.path.exists(t): segs += [(t, a, 0, 100), (v, a, 100, tot - 100)]  # section title re-rendered into the letterbox bar
+    else: segs.append((v, a, 0, tot))
+es = f'{SCR}/acts/endscreen.mp4'; segs.append((es, es, 0, round(dur(es) * 24)))  # clean end screen (no graphics, music tail)
+W, H, FB = 1920, 1080, 1920 * 1080 * 3 // 2
+# audio: one PCM track cut at the same frame boundaries
+wav = f'{SCR}/full/_audio.wav'; wo = wave.open(wav, 'wb'); wo.setnchannels(2); wo.setsampwidth(2); wo.setframerate(48000)
+for (v, a, s, nf) in segs:
+    raw = subprocess.run(['ffmpeg', '-v', 'error', '-ss', f'{s/24:.6f}', '-i', a, '-vn', '-f', 's16le', '-ar', '48000', '-ac', '2', '-'], capture_output=True).stdout
+    need = nf * 2000 * 4; raw = raw[:need] + b'\0' * max(0, need - len(raw)); wo.writeframes(raw)
+wo.close()
+tmp = f'{SCR}/full/_pass1.mkv'
+enc = subprocess.Popen(['ffmpeg', '-y', '-loglevel', 'error', '-f', 'rawvideo', '-pix_fmt', 'yuv420p', '-s', f'{W}x{H}', '-r', '24', '-i', '-', '-i', wav,
+                        '-map', '0:v', '-map', '1:a', '-c:v', 'libx264', '-preset', 'medium', '-crf', '18', '-pix_fmt', 'yuv420p', '-r', '24', '-fps_mode', 'cfr', '-g', '48', '-c:a', 'pcm_s16le', tmp], stdin=subprocess.PIPE)
+total = 0
+for (v, a, s, nf) in segs:
+    dec = subprocess.Popen(['ffmpeg', '-v', 'error', '-ss', f'{s/24:.6f}', '-i', v, '-an', '-vf', f'fps=24,scale={W}:{H},setsar=1', '-frames:v', str(nf), '-pix_fmt', 'yuv420p', '-f', 'rawvideo', '-'], stdout=subprocess.PIPE)
+    got, last = 0, None
+    while got < nf:
+        fr = dec.stdout.read(FB)
+        if len(fr) < FB: break
+        enc.stdin.write(fr); last = fr; got += 1
+    dec.wait()
+    while got < nf and last: enc.stdin.write(last); got += 1  # pad a short segment with its last frame (keeps A/V locked)
+    total += got
+enc.stdin.close(); assert enc.wait() == 0
+m = subprocess.run(['ffmpeg', '-hide_banner', '-i', tmp, '-af', 'loudnorm=I=-14:TP=-1.5:LRA=11:print_format=json', '-f', 'null', '-'], capture_output=True, text=True).stderr
+j = json.loads(m[m.rindex('{'):m.rindex('}') + 1])
+ln = f"loudnorm=I=-14:TP=-1.5:LRA=11:measured_I={j['input_i']}:measured_TP={j['input_tp']}:measured_LRA={j['input_lra']}:measured_thresh={j['input_thresh']}:offset={j['target_offset']}:linear=true"
+subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-i', tmp, '-map', '0:v', '-map', '0:a', '-c:v', 'copy', '-af', ln + ',alimiter=limit=0.7:level=0,aresample=48000', '-c:a', 'aac', '-b:a', '192k', '-ar', '48000', '-ac', '2', '-movflags', '+faststart', OUT], check=True)
+print('full', dur(OUT), len(segs), 'segments', total, 'frames')

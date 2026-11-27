@@ -1,0 +1,19 @@
+// CASE 4: GREEN EYES + GAG 4 THE FINGER
+const P4 = GP('GAG 4'), G4 = i => GS('GAG 4', i);
+window.ACT = { timing: window.TIMING, shots: [
+ { p: 0, plate: 'ds_palace', title: ['CASE 4', 'GREEN EYES'], cam: { z: [1.0, 1.08], x: 1280, y: 760 }, chars: [{ c: 'doomH', x: 1280, y: 760, s: .7, view: 'front', expr: 'smug', acts: [{ a: 'raiseHold', w: 'fan' }] },
+   { c: 'maskMonk', x: 700, y: 1330, s: 1.1, view: 'back' }, { c: 'maskMonk', x: 1000, y: 1350, s: 1.15, view: 'back' }, { c: 'maskMonk', x: 1600, y: 1340, s: 1.12, view: 'back' }, { c: 'maskMonk', x: 1900, y: 1330, s: 1.1, view: 'back' }], pops: [{ t: "DOOM'S FAN CLUB", w: 'fan', dur: 2 }] },
+ { p: 1, plate: 'dd_doom_hall', cam: { frame: 'full', on: 1, push: [1, 1.05] }, chars: [{ c: 'witchO', x: 900, y: 1300, s: 1.35, view: 'front', expr: 'sad' }, { c: 'witchG', x: 1280, y: 1300, s: 1.4, view: 'front', expr: 'deadpan' }, { c: 'witchP', x: 1660, y: 1300, s: 1.35, view: 'front', expr: 'sad' }],
+   cards: [{ c: 'witchG', name: 'THE THREE WITCHES', sub: 'GREEN ONE: 3 GOLD CHAINS', w: 'witches', dur: 2.8 }] },
+ { p: 1, f: .6, plate: 'dd_doom_hall', cam: { frame: 'mcu', on: 0, push: [1, 1.1] }, chars: [{ c: 'witchG', x: 1280, y: 1300, s: 1.45, view: 'front', expr: 'smug' }], pops: [{ t: 'A PROMOTION', w: 'promotion', dur: 2 }] },
+ { p: 2, plate: 'dd_doom_hall', still: 1, cam: { z: [1.8, 1.95], x: 1280, y: 860 }, chars: [{ c: 'witchO', x: 1280, y: 1300, s: 1.45, view: 'front', expr: 'sad' }], grade: ['#0a3a14', .2, 'screen'], pops: [{ t: 'SCARED EYES', w: 'scared', dur: 2 }] },
+ { p: 2, f: .45, plate: 'dd_doom_hall', cam: { frame: 'mcu', on: 0, push: [1, 1.1] }, chars: [{ c: 'doomH', x: 1280, y: 1300, s: 1.45, view: 'front', expr: 'smug', acts: [{ a: 'shrug', w: 'argument' }] }] },
+ { p: 2, f: .75, plate: 'dd_doom_hall', cam: { frame: 'full', on: 1, push: [1, 1.05] }, chars: [{ c: 'witchO', x: 900, y: 1300, s: 1.35, view: 'front', expr: 'sad' }, { c: 'witchG', x: 1280, y: 1300, s: 1.4, view: 'front', expr: 'sad' }, { c: 'witchP', x: 1660, y: 1300, s: 1.35, view: 'front', expr: 'sad' }], props: [{ k: 'chains', x: 1280, y: 1250, s: 1 }], pops: [{ t: 'PRISONERS?', w: 'prisoners', dur: 2 }] },
+ { p: 3, plate: 'ds_ruins', cam: { frame: 'full', on: 0, push: [1, 1.05], shake: 1 }, chars: [{ c: 'laserEyes', x: 900, y: 1320, s: 1.3, view: 'threequarter', dir: 1, expr: 'angry', acts: [{ a: 'fire', w: 'robots' }] }, { c: 'robot', x: 1800, y: 1320, s: 1, view: 'threequarter', dir: -1, expr: 'angry' }],
+   props: [{ k: 'beam', x: 1000, y: 760, x2: 1700, y2: 700, col: '255,70,60', t0: 1.0 }], pops: [{ t: 'GREEN EYES = DOOM DRIVING', w: 'driving', dur: 2.4 }] },
+ { p: 4, plate: 'ds_ruins', still: 1, cam: { z: [1.6, 1.75], x: 1700, y: 800 }, chars: [{ c: 'robot', x: 1800, y: 1320, s: 1, view: 'threequarter', dir: -1, expr: 'deadpan', acts: [{ a: 'fire', w: 'late' }] }], pops: [{ t: 'MISSING FINGER', w: 'finger', dur: 2 }, { t: 'FIRES LATE', w: 'late', dur: 1.8 }] },
+ { p: 4, f: .65, plate: 'ds_office', cam: { frame: 'mcu', on: 0, push: [1, 1.08] }, chars: [{ c: 'stormiDet', x: 1280, y: 1300, s: 1.4, view: 'front', expr: 'happy', talk: true, acts: [{ a: 'raise', w: 'respect' }] }] },
+ // GAG 4 THE FINGER
+ { p: P4, plate: 'ds_ruins', cam: { frame: 'two', on: 0, on2: 1, push: [1, 1.04] }, chars: [{ c: 'robot', x: 1000, y: 1320, s: .9, view: 'threequarter', dir: 1, expr: 'happy', acts: [{ a: 'raise', at: .3 }] }, { c: 'robot', x: 1700, y: 1320, s: .9, view: 'threequarter', dir: -1, expr: 'deadpan' }], pops: [{ t: 'THE FINGER', x: 640, y: 300, at: .2, dur: 1.6 }] },
+ { p: P4, f: (G4(0) - .3) / DUR(P4), plate: 'ds_ruins', cam: { frame: 'mcu', on: 0, push: [1, 1.08] }, chars: [{ c: 'robot', x: 1280, y: 1320, s: .95, view: 'front', expr: 'deadpan', talk: TK('GAG 4', [0], G4(0) - .3), acts: [{ a: 'shrug', at: .4 }] }] },
+] };
