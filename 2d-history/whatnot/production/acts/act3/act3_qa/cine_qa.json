@@ -1,0 +1,22 @@
+{
+ "video": "act3.mp4",
+ "findings": [
+  {
+   "level": "WARN",
+   "check": "slideshow (camera frozen)",
+   "t": 34.83,
+   "at": "0:34.8",
+   "detail": "camera still for 3.5 s"
+  },
+  {
+   "level": "WARN",
+   "check": "cut rhythm",
+   "t": 0,
+   "at": "0:00.0",
+   "detail": "50% of shots are longer than 8 s (median 5.3 s)"
+  }
+ ],
+ "still_share": 0.2,
+ "shots": 10,
+ "median_shot_s": 5.33
+}

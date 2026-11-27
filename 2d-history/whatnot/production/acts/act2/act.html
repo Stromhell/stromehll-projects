@@ -1,0 +1,145 @@
+<!doctype html><html><head><meta charset="utf-8"><title>GM act 2 - act 2</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../tw_kit.js"></script><script src="../../xu_kit.js"></script><script src="../../jh_kit.js"></script><script src="../../pr_kit.js"></script><script src="../../wn_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+const SW = 1920, SH = 1080, INK = TW.INK, RED = TW.RED, pop = TW.pop, fade = TW.fade;
+const backdrop = (name, b = .5, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const CARRY = () => ({ shL: 30, elL: -75, shR: 35, elR: -75 });
+const endTitle = (secs) => { const T = window.TIMING; const last = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length, start: last.end, end: last.end + secs, vo_start: last.end, vo_end: last.end, text: '' }); T.dur = last.end + secs; };
+// WN act 2 - The Golden Ticket: the 2022 1-of-1 hunt, celebrity box rips, the supercar promise, three strangers win, $2.4M auction, 'the hobby's form of gambling'.
+// Plates: card_shop, premiere, lambo_showroom, break_studio, auction_house, chatshow.
+const rr = TW.rr, txt = TW.txt;
+for (const n of ['card_shop', 'premiere', 'lambo_showroom', 'break_studio', 'auction_house', 'chatshow']) K.load(n, PL + n + '.jpg');
+const FL = 1250, SC = 1.7;
+// gold name tile with pointer (world or screen space)
+const ntag = (c, name, x, y, lt, at, opts = {}) => { const a = pop(lt, at, .4), o = 1 - K.seg(lt, (opts.until ?? 999) - .3, opts.until ?? 999); if (a <= 0 || o <= 0) return; const px = opts.px ?? 40; c.save(); c.globalAlpha = o; c.translate(x, y); c.scale(a, a); c.font = `${px}px Anton`;
+  const w = c.measureText(name).width + px * .9, h = px * 1.45; c.fillStyle = 'rgba(0,0,0,.35)'; rr(c, -w / 2 + 6, -h - 12, w, h, 10); c.fill(); c.fillStyle = opts.col || JH.GOLD; c.strokeStyle = INK; c.lineWidth = 4; rr(c, -w / 2, -h - 18, w, h, 10); c.fill(); c.stroke();
+  c.beginPath(); c.moveTo(-14, -19); c.lineTo(0, 0); c.lineTo(14, -19); c.closePath(); c.fill(); c.stroke(); c.fillRect(-12, -24, 24, 7); txt(c, name, 0, -h / 2 - 16, px, INK, 'center', 'Anton'); c.restore(); };
+// rolling money counter (screen space, centre)
+const money = (c, v, x, y, px, col = '#7ee07a') => { c.save(); c.font = `${px}px Anton`; const s = '$' + Math.round(v).toLocaleString('en-GB'), w = c.measureText(s).width + 60, h = px * 1.4; c.fillStyle = 'rgba(0,0,0,.35)'; rr(c, x - w / 2 + 8, y - h / 2 + 10, w, h, 16); c.fill(); c.fillStyle = '#16161c'; c.strokeStyle = INK; c.lineWidth = 5; rr(c, x - w / 2, y - h / 2, w, h, 16); c.fill(); c.stroke(); txt(c, s, x, y + 2, px, col, 'center', 'Anton'); c.restore(); };
+const dust = (c, lt, y0, n = 26, col = '255,220,150') => { c.save(); for (let k = 0; k < n; k++) { const x = (k * 211 + lt * (16 + k % 5 * 7)) % 2700 - 70, y = y0 - (k * 37) % 600 + Math.sin(lt + k) * 14; c.fillStyle = `rgba(${col},${.14 + .1 * Math.sin(lt * 2 + k)})`; c.beginPath(); c.arc(x, y, 2 + k % 3, 0, 7); c.fill(); } c.restore(); };
+const flashes = (c, lt, n = 24, y0 = 300, h = 600) => { for (let k = 0; k < n; k++) { const ph = (lt * .6 + k * .37) % 1; if (ph < .2) TW.glow(c, (k * 397) % 2560, y0 + (k * 131) % h, 80, '255,255,255', .5 * Math.sin(ph / .2 * Math.PI)); } };
+const HOLDCARD = (s = .7, g = .5) => ({ near: cc => WN.goldCard(cc, 0, 20, s, 0, g) });
+const MAG = { near: cc => { cc.strokeStyle = INK; cc.lineWidth = 7; cc.beginPath(); cc.moveTo(0, 10); cc.lineTo(0, -30); cc.stroke(); cc.strokeStyle = '#6a4a2a'; cc.lineWidth = 4; cc.stroke(); cc.fillStyle = 'rgba(200,235,255,.5)'; cc.strokeStyle = INK; cc.lineWidth = 5; cc.beginPath(); cc.arc(0, -58, 28, 0, 7); cc.fill(); cc.stroke(); } };
+// mini viewer webcam window (screen space)
+const camWin = (c, x, y, w, h, k, team, joy, lt) => { const sh = joy ? Math.sin(lt * 30 + k) * 6 * joy : 0; c.save(); c.translate(x + sh, y + (joy ? Math.cos(lt * 26 + k) * 4 * joy : 0)); c.fillStyle = 'rgba(0,0,0,.35)'; rr(c, 8, 10, w, h, 12); c.fill();
+  c.fillStyle = ['#2a3a5a', '#3a2a4a', '#2a4a3a'][k]; c.strokeStyle = INK; c.lineWidth = 5; rr(c, 0, 0, w, h, 12); c.fill(); c.stroke(); c.save(); rr(c, 0, 0, w, h, 12); c.clip();
+  RIG6.figure(c, { x: w / 2, y: h + 30, s: .55, ...WN.VIEWER(k * 3 + 1), facing: 1, pose: joy > .5 ? 'cheer' : 'stand', mood: joy > .5 ? 'happy' : 'neutral', t: lt, seed: 300 + k }); c.restore();
+  c.fillStyle = '#e2342e'; rr(c, 10, 10, 64, 26, 6); c.fill(); txt(c, 'LIVE', 42, 23, 18, '#fff', 'center', 'Anton'); c.fillStyle = '#111'; rr(c, 0, h - 40, w, 40, 0); c.fill(); txt(c, 'TEAM ' + team, w / 2, h - 20, 24, JH.GOLD, 'center', 'Anton');
+  if (joy > .5) { WN.heart(c, w - 30, 40 - (lt * 80 % 40), 12); WN.fire(c, w - 60, 60, 12); } c.restore(); };
+
+window.SHOTS = [
+  // 2.00 card shop: collectors with magnifiers lean in at a WANTED poster of the 1-of-1 pinned to the corkboard
+  { plate: 'card_shop', cam: { z: [1.25, 1.42], x: [1450, 1650], y: [800, 760] }, bed: [['crowd_loop', .06], ['hum_loop', .05]], light: { dir: 1, key: 'rgba(255,210,150,.14)' },
+    init: S => { const t22 = A.at(S, 'twenty-two,', 1.6), tOne = A.at(S, 'one-of-one', 4.6), tP = A.at(S, 'patches', 7.0), tT = A.at(S, 'three', 7.8), tG = A.at(S, 'golden', 11.4);
+      S.D.figs = [
+        { x: 1360, y: FL, s: SC, ...WN.COLLECTOR(0), facing: 1, mood: 'neutral', walk: { x0: 1000, x1: 1360, t0: .1, dur: 2.6 }, anim: (o, lt) => { o.lean = lt > tOne ? 6 + Math.sin(lt * 1.3) * 2 : 0; if (lt > tOne) { o.hold = MAG; o.arms = () => ({ shR: 110, elR: -60 }); o.mood = 'surprised'; } if (lt > tG) o.mood = 'happy'; } },
+        { x: 2350, y: FL, s: SC, ...WN.COLLECTOR(1), facing: -1, mood: 'neutral', anim: (o, lt) => { o.lean = Math.sin(lt * 1.1) * 2 + (lt > tP ? 5 : 0); if (lt > tP) o.pose = 'point'; if (lt > tG) { o.pose = 'cheer'; o.mood = 'happy'; } } },
+        { x: 1120, y: FL + 10, s: SC, ...WN.COLLECTOR(3), facing: 1, mood: 'neutral', anim: (o, lt) => { o.lean = Math.sin(lt * 1.4 + 1) * 2; if (lt > tT) { o.pose = 'think'; o.mood = 'surprised'; } } }];
+      S.D.live = [(c, lt) => { TW.glow(c, 1900, 560, 380, '255,215,120', .18 + .08 * Math.sin(lt * 3));
+        // poster on corkboard, fluttering corner
+        const fl = Math.sin(lt * 4) * .03; c.save(); c.translate(1900, 390); c.rotate(fl); c.fillStyle = '#f4ead2'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(-170, 0, 340, 360); c.strokeRect(-170, 0, 340, 360);
+        txt(c, 'WANTED', 0, 40, 50, '#c8282e', 'center', 'Anton'); WN.goldCard(c, 0, 290, 1.25, 0, .5 + .5 * Math.sin(lt * 2.4)); txt(c, '1 OF 1', 0, 330, 30, INK, 'center', 'Anton'); c.fillStyle = '#c8282e'; c.beginPath(); c.arc(0, 8, 9, 0, 7); c.fill(); c.restore();
+        if (lt > tP) { const u = E.out(K.seg(lt, tP, tP + .6)); ['#4a2a8a', '#c8282e', '#2a5aa8'].forEach((col, i) => { c.save(); c.globalAlpha = u; c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 3; rr(c, 1690 + i * 150 - 30 * (1 - u), 800, 120, 60, 10); c.fill(); c.stroke(); txt(c, 'PATCH ' + (i + 1), 1750 + i * 150, 830, 22, '#fff', 'center', 'Anton'); c.restore(); }); }
+        TW.glow(c, 1410, 870, 70, '120,255,140', .25 + .2 * Math.sin(lt * 5)); }];
+      S.D.front = [(c, lt) => dust(c, lt, 1150, 24)];
+      S.D.over = [(c, lt) => K.card(c, '2022', lt, { at: t22 - .2, until: tOne - .2, x: 360, y: 120, px: 50, rot: -2, bg: '#e8b44a' }),
+        (c, lt) => K.card(c, 'THE 1-OF-1 CARD', lt, { at: tOne - .1, until: tG - .2, x: 520, y: 120, px: 48, rot: -2, bg: '#e8b44a' }),
+        (c, lt) => K.card(c, '3 TEAM LOGO PATCHES', lt, { at: tT, until: tG - .2, x: 520, y: 230, px: 38, rot: 2 }),
+        (c, lt) => K.card(c, '"THE GOLDEN TICKET"', lt, { at: tG - .1, x: 560, y: 120, px: 52, rot: -1, bg: '#f2c14a' })];
+      S.D.sfx = [[.2, 'footsteps', .2], [t22, 'chime', .25], [tOne, 'pop', .3], [tOne + .1, 'swell', .2], [tP, 'paper', .25], [tT, 'tick', .25], [tG, 'coins_cascade', .3], [tG, 'crowd_cheer', .1]]; } },
+
+  // 2.01 premiere stage: a celebrity rips hobby boxes, wrappers pile up, flashes everywhere
+  { plate: 'premiere', cam: { z: [1.2, 1.34], x: [1280, 1320], y: [820, 800] }, bed: [['crowd_loop', .1]], light: { dir: -1, key: 'rgba(255,200,220,.12)' },
+    init: S => { const tR = A.at(S, 'ripped', 1.0), tW = A.at(S, 'world.', 2.4), tC = A.at(S, 'celebrities', 3.6), tS = A.at(S, 'six', 5.6), tL = A.at(S, 'live', 7.0), tF = A.at(S, 'find', 8.8);
+      const rips = [tC + .6, tC + 1.8, tS + .6, tL + .4, tL + 1.6, tF];
+      S.D.figs = [{ x: 1180, y: FL, s: SC, ...WN.CELEB(), facing: 1, mood: 'smug', anim: (o, lt) => { const r = rips.find(t => lt > t - .5 && lt < t + .3); o.pose = r ? 'reach' : 'stand'; o.lean = Math.sin(lt * 1.6) * 2; if (lt > tF) o.mood = 'happy'; if (lt > tC) o.hold = { near: cc => WN.pack(cc, 0, 20, .45, '#3a78c8', r ? K.seg(lt, r - .4, r) : 0) }; } },
+        { x: 2200, y: FL, s: SC * .95, ...WN.VIEWER(2), facing: -1, mood: 'happy', walk: { x0: 2700, x1: 2200, t0: tR, dur: 2.5 }, anim: (o, lt) => { if (lt > tR + 2.6) { o.pose = 'point'; o.hold = { near: cc => { cc.fillStyle = '#222'; rr(cc, -14, -40, 28, 50, 5); cc.fill(); } }; } } }];
+      S.D.live = [(c, lt) => { flashes(c, lt, 28, 250, 520); TW.glow(c, 1280, 700, 600, '255,190,210', .1);
+        // table with boxes
+        c.save(); c.fillStyle = '#1a1a22'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(1320, FL - 220, 520, 220); c.strokeRect(1320, FL - 220, 520, 220); c.fillStyle = '#c8a030'; c.fillRect(1310, FL - 236, 540, 18); c.strokeRect(1310, FL - 236, 540, 18); c.restore();
+        const opened = rips.filter(t => lt > t).length; for (let k = 0; k < 4; k++) WN.box(c, 1400 + k * 125, FL - 236, .8, ['#1e2a4a', '#6a1e2a', '#1e4a2a', '#4a3a1e'][k], k < opened / 1.5 ? 1 : 0);
+        // wrapper pile grows on the floor
+        for (let k = 0; k < opened * 6; k++) { c.save(); c.translate(1500 + (k * 53) % 300, FL - 10 - (k * 7) % 50); c.rotate(k); c.fillStyle = ['#3a78c8', '#c8302a', '#c8a030'][k % 3]; c.strokeStyle = INK; c.lineWidth = 2; c.fillRect(-18, -8, 36, 16); c.strokeRect(-18, -8, 36, 16); c.restore(); }
+        rips.forEach(t => { const u = K.seg(lt, t, t + 1.2); if (u <= 0 || u >= 1) return; for (let k = 0; k < 4; k++) { c.save(); c.translate(1260 + k * 30 + u * 200 * (k - 1.5), FL - 360 - Math.sin(u * Math.PI) * 220); c.rotate(u * 8 + k); c.fillStyle = ['#3a78c8', '#c8a030'][k % 2]; c.fillRect(-16, -7, 32, 14); c.restore(); } }); }];
+      S.D.front = [(c, lt) => flashes(c, lt, 8, 900, 300)];
+      S.D.over = [(c, lt) => K.card(c, 'BOXES RIPPED WORLDWIDE', lt, { at: tR - .1, until: tC - .2, x: 960, y: 120, px: 44, rot: -2 }),
+        (c, lt) => K.card(c, 'SIX-FIGURE BOXES', lt, { at: tS - .1, x: 600, y: 120, px: 50, rot: -2, bg: '#e8b44a' }),
+        (c, lt) => { if (lt > tS) money(c, 100000 * E.out(K.seg(lt, tS, tS + 1.4)) + (lt > tS + 1.4 ? 0 : 0), 600, 250, 60); },
+        (c, lt) => K.card(c, 'LIVE ONLINE', lt, { at: tL, x: 1500, y: 140, px: 40, rot: 3, bg: '#e2342e', color: '#fff' })];
+      S.D.sfx = [[tR, 'paper_tear', .3], [tW, 'whoosh', .2], ...rips.map(t => [t, 'paper_tear', .3]), [tC, 'camera_shutter', .3], [tC + .5, 'camera_shutter', .25], [tS, 'coins', .3], [tL, 'pop', .25], [tF, 'camera_shutter', .3], [tF + .3, 'crowd_cheer', .12]]; } },
+
+  // 2.02 showroom: supercar on a turntable with a big bow; promise card; the seller's jaw drops
+  { plate: 'lambo_showroom', cam: { z: [1.15, 1.28], x: [1280, 1200], y: [820, 840] }, bed: [['hum_loop', .08], ['city_loop', .04]], light: { dir: 1, key: 'rgba(180,200,255,.12)' },
+    init: S => { const tPr = A.at(S, 'promise.', 1.8), tPu = A.at(S, 'pulled', 3.4), tW = A.at(S, 'win', 6.6), tL = A.at(S, 'Lamborghini.', 8.4);
+      S.D.figs = [{ x: 560, y: FL - 4, s: SC, ...WN.HOST(0), facing: 1, mood: 'neutral', anim: (o, lt) => { o.lean = Math.sin(lt * 1.3) * 2; if (lt > tPu) o.hold = HOLDCARD(.6, .6); if (lt > tPu) o.arms = () => ({ shR: 120, elR: -30 }); if (lt > tL - .3) { o.mood = 'surprised'; o.pose = 'cheer'; o.hold = null; o.arms = null; } } },
+        { x: 2100, y: FL - 4, s: SC, ...WN.SPOKES(), facing: -1, mood: 'happy', talk: [tPr - .5, tL], anim: (o, lt) => { o.pose = lt > tW - .3 ? 'present' : 'stand'; } }];
+      S.D.live = [(c, lt) => { for (const sx of [820, 1280, 1740]) { const a = Math.sin(lt * .8 + sx) * .25; c.save(); c.globalCompositeOperation = 'screen'; c.fillStyle = 'rgba(255,250,220,.08)'; c.beginPath(); c.moveTo(sx, 60); c.lineTo(sx - 260 + a * 400, 1200); c.lineTo(sx + 260 + a * 400, 1200); c.fill(); c.restore(); }
+        const rev = E.out(K.seg(lt, tW - .6, tW + .8)); c.save(); c.globalAlpha = .4 + .6 * rev; WN.supercar(c, 1280, 1180, 1.35, 0, 0); c.restore();
+        TW.glow(c, 1280, 1100, 500, '255,60,60', .12 * rev);
+        // ribbon bow on the roof, fluttering tails
+        c.save(); c.translate(1280, 1180 - 1.35 * 150); const f = Math.sin(lt * 6) * 8; c.fillStyle = '#e2342e'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.ellipse(-50, -20, 50, 28, -.3, 0, 7); c.fill(); c.stroke(); c.beginPath(); c.ellipse(50, -20, 50, 28, .3, 0, 7); c.fill(); c.stroke();
+        c.beginPath(); c.moveTo(-10, 0); c.lineTo(-50 + f, 70); c.lineTo(-24, 66); c.closePath(); c.moveTo(10, 0); c.lineTo(54 - f, 70); c.lineTo(28, 66); c.closePath(); c.fill(); c.stroke(); c.beginPath(); c.arc(0, -16, 16, 0, 7); c.fill(); c.stroke(); c.restore(); }];
+      S.D.over = [(c, lt) => K.card(c, 'THE PROMISE', lt, { at: tPr - .3, until: tW - .3, x: 960, y: 120, px: 48, rot: -2, bg: '#e8b44a' }),
+        (c, lt) => K.card(c, 'PULL IT = WIN A SUPERCAR', lt, { at: tW - .2, x: 960, y: 120, px: 50, rot: 2, bg: '#e2342e', color: '#fff' }),
+        (c, lt) => { if (lt > tPu) WN.goldCard(c, 1660, 440, 1.3, Math.sin(lt * 2) * .1, .7); }];
+      S.D.sfx = [[tPr, 'chime', .3], [tPu, 'whoosh_soft', .2], [tW - .4, 'riser', .25], [tW, 'swell', .25], [tL, 'crowd_cheer', .15], [tL, 'pop', .3]]; } },
+
+  // 2.03 break studio at night: host pulls a card, it glows gold; three viewer webcams go wild
+  { plate: 'break_studio', cam: { z: [1.2, 1.4], x: [1280, 1280], y: [760, 780] }, bed: [['hum_loop', .08], ['crowd_loop', .03]], light: { dir: 1, key: 'rgba(200,120,255,.12)' },
+    init: S => { const tH = A.at(S, 'happened.', 1.4), tS = A.at(S, 'strangers,', 3.4), tR = A.at(S, 'random', 4.8), tPl = A.at(S, 'pull', 7.4), tA = A.at(S, 'all', 9.6), tTh = A.at(S, 'teams.', 11.4);
+      S.D.figs = [{ x: 1280, y: FL, s: SC, ...WN.HOST(2), facing: 1, mood: 'neutral', anim: (o, lt) => { const up = E.out(K.seg(lt, tPl - .6, tPl + .4)); o.arms = () => ({ shR: 40 + up * 100, elR: -70 + up * 40, shL: 50, elL: -60 }); if (lt > tPl - .6) o.hold = HOLDCARD(.75, up); if (lt > tPl + .2) o.mood = 'surprised'; if (lt > tA) o.mood = 'happy'; } }];
+      S.D.live = [(c, lt) => { TW.glow(c, 380, 300, 260, '255,255,255', .25 + .05 * Math.sin(lt * 9)); TW.glow(c, 2180, 300, 260, '255,255,255', .25 + .05 * Math.sin(lt * 8));
+        }];
+      S.D.front = [(c, lt) => { WN.chat(c, 1695, 885, 150, 110, lt, 3);
+        const g = E.out(K.seg(lt, tPl, tPl + .6)); if (g > 0) { TW.glow(c, 1400, 700, 500 * g, '255,210,90', .45 * g); for (let k = 0; k < 14; k++) { const a = k / 14 * 7 + lt * .4; c.save(); c.globalAlpha = .25 * g; c.strokeStyle = '#ffe58a'; c.lineWidth = 10; c.beginPath(); c.moveTo(1400, 700); c.lineTo(1400 + Math.cos(a) * 700 * g, 700 + Math.sin(a) * 700 * g); c.stroke(); c.restore(); } } }];
+      S.D.over = [(c, lt) => { const wins = [[60, 'A', 330], [60, 'B', 610], [1570, 'C', 420]]; wins.forEach(([x, tm, wy], k) => { const a = pop(lt, tS + k * .3, .4); if (a <= 0) return; c.save(); c.globalAlpha = Math.min(1, a); camWin(c, x, wy + (1 - a) * 200, 290, 230, k, tm, lt > tPl ? 1 : 0, lt); c.restore(); }); },
+        (c, lt) => K.card(c, 'THREE STRANGERS', lt, { at: tS, until: tPl - .3, x: 960, y: 120, px: 46, rot: -2, bg: '#e8b44a' }),
+        (c, lt) => K.card(c, 'RANDOM TEAMS', lt, { at: tR, until: tPl - .3, x: 960, y: 230, px: 36, rot: 2 }),
+        (c, lt) => K.card(c, 'PULLED LIVE!', lt, { at: tPl, x: 960, y: 120, px: 56, rot: -2, bg: '#f2c14a' }),
+        (c, lt) => K.card(c, 'ALL THREE TEAMS ON ONE CARD', lt, { at: tA, x: 960, y: 230, px: 36, rot: 1, bg: '#e2342e', color: '#fff' })];
+      S.D.sfx = [[tH, 'tension', .25], [tS, 'pop', .25], [tS + .3, 'pop', .25], [tS + .6, 'pop', .25], [tR, 'tick', .2], [tPl - .6, 'riser', .3], [tPl, 'swell', .35], [tPl, 'crowd_cheer', .3], [tA, 'coins_cascade', .3], [tTh, 'crowd_cheer', .15]]; } },
+
+  // 2.04 auction house: paddles up, gavel, counter rolls to $2.4M, splits into three stacks
+  { plate: 'auction_house', cam: { z: [1.15, 1.3], x: [1350, 1450], y: [780, 800] }, bed: [['crowd_loop', .07]], light: { dir: -1, key: 'rgba(255,210,160,.12)' },
+    init: S => { const tSo = A.at(S, 'sold', 1.0), tA = A.at(S, 'auction', 1.8), tM = A.at(S, 'million', 4.4), tSp = A.at(S, 'split', 5.2), tTh = A.at(S, 'ways.', 6.0), tL = A.at(S, 'Life-changing', 6.8), tFr = A.at(S, 'fraction', 9.8);
+      const hits = [tM + .1, tM + .5];
+      S.D.figs = [{ x: 1950, y: FL, s: SC, ...WN.AUCTIONEER(), facing: -1, mood: 'happy', talk: [0, tM], anim: (o, lt) => { o.pose = lt > tA && lt < tM ? 'point' : 'stand'; o.arms = lt > tM - .3 && lt < tM + .8 ? () => ({ shR: 120 + 40 * Math.sin(lt * 20), elR: -40 }) : null; } },
+        ...[0, 1, 2].map(k => ({ x: 600 + k * 330, y: FL, s: SC * .95, ...WN.COLLECTOR(k), facing: 1, mood: 'neutral', seed: 40 + k, anim: (o, lt) => { const up = lt > tA + k * .5 && lt < tM; o.pose = up ? 'cheer' : 'stand'; if (up) o.hold = { near: cc => WN.paddle(cc, 0, 10, .9, 12 + k * 7) }; else o.hold = null; if (lt > tL) o.mood = 'happy'; } }))];
+      S.D.live = [(c, lt) => { TW.glow(c, 500, 140, 160, '255,230,170', .3); TW.glow(c, 1100, 140, 160, '255,230,170', .3); TW.glow(c, 1700, 140, 160, '255,230,170', .3);
+        // screen shows the card
+        c.save(); c.fillStyle = '#0e1018'; c.fillRect(720, 280, 760, 400); WN.goldCard(c, 1100, 620, 1.9, 0, .5 + .5 * Math.sin(lt * 2)); txt(c, 'LOT 1 · 1/1', 1100, 320, 34, '#f4efe2', 'center', 'Anton'); c.restore();
+      }];
+      S.D.front = [(c, lt) => { WN.lectern(c, 1950, FL, 1.05); XU.gavel(c, 1840, FL - 235, .7, lt, hits); dust(c, lt, 1150, 20); }];
+      S.D.over = [(c, lt) => { if (lt > tA) { const v = 2400000 * E.out(K.seg(lt, tA, tM)); if (lt < tSp + .4) money(c, v, 960, 140, 80); } },
+        (c, lt) => { const u = E.io(K.seg(lt, tSp, tTh + .4)); if (u <= 0) return; [0, 1, 2].forEach(k => { const x = 960 + (k - 1) * 560 * u; c.save(); c.globalAlpha = Math.min(1, u * 2); money(c, 800000, x, 140, 52); TW.cash(c, x - 60, 260, 3 + Math.floor(u * 4), .8); c.restore(); }); },
+        (c, lt) => K.card(c, 'AROUND $2.4 MILLION', lt, { at: tM - .1, until: tSp, x: 960, y: 260, px: 40, rot: -2, bg: '#e8b44a' }),
+        (c, lt) => K.card(c, 'LIFE-CHANGING MONEY', lt, { at: tL, until: tFr - .2, x: 960, y: 400, px: 42, rot: 2, bg: '#f2c14a' }),
+        (c, lt) => K.card(c, 'FROM SPOTS COSTING A TINY FRACTION', lt, { at: tFr - .1, x: 960, y: 400, px: 38, rot: -1 })];
+      S.D.sfx = [[tSo, 'chime', .2], [tA, 'tick', .25], [tA + .5, 'tick', .25], [tA + 1, 'tick', .25], [hits[0], 'hit', .4], [hits[1], 'hit', .4], [tM, 'coins_cascade', .35], [tSp, 'whoosh', .3], [tTh, 'coins', .3], [tL, 'crowd_cheer', .15], [tFr, 'pop', .2]]; } },
+
+  // 2.05 documentary set: presenter to camera; behind her a card box morphs into a dice cube that tumbles
+  { plate: 'chatshow', cam: { z: [1.2, 1.36], x: [1280, 1380], y: [800, 790] }, bed: [['hum_loop', .07], ['city_loop', .03]], light: { dir: 1, key: 'rgba(160,170,255,.12)' },
+    init: S => { const tW = A.at(S, 'advert', 1.6), tD = A.at(S, 'documentary', 5.2), tPr = A.at(S, 'presenter', 6.8), tPl = A.at(S, 'plainly:', 8.2), tG = A.at(S, 'gambling.', 12.6), tHo = A.at(S, "hobby's", 11.2);
+      S.D.figs = [{ x: 860, y: FL, s: SC, ...WN.PRESENTER(), facing: 1, mood: 'neutral', talk: [tD - .3, tG + .5], anim: (o, lt) => { o.pose = lt > tPl && lt < tG ? 'present' : 'stand'; o.lean = Math.sin(lt * 1.2) * 1.5; if (lt > tG) o.mood = 'worried'; } }];
+      S.D.live = [(c, lt) => { TW.glow(c, 1280, 400, 900, '140,150,255', .08);
+        // big billboard ad: gold card + YOU COULD WIN (on 'advert')
+        const a = pop(lt, tW - .2, .5); if (a > 0 && lt < tD) { c.save(); c.translate(1800, 520); c.scale(a, a); c.fillStyle = '#1a1a26'; c.strokeStyle = INK; c.lineWidth = 6; rr(c, -260, -200, 520, 330, 18); c.fill(); c.stroke(); WN.goldCard(c, -120, 110, 1.4, -.1, .8); txt(c, 'YOU', 110, -90, 64, '#f2c14a', 'center', 'Anton'); txt(c, 'COULD', 110, -10, 64, '#f2c14a', 'center', 'Anton'); txt(c, 'WIN!', 110, 70, 64, '#e2342e', 'center', 'Anton'); c.restore(); }
+        // box -> dice morph and tumble
+        if (lt > tD - .2) { const m = E.io(K.seg(lt, tHo - .4, tHo + .8)); const X = 1820 + (lt > tG ? (lt - tG) * 60 : 0), Y = 1060;
+          if (m < 1) { c.save(); c.globalAlpha = 1 - m; WN.box(c, X, Y, 1.4, '#6a1e2a', 0); c.restore(); }
+          if (m > 0) { c.save(); c.globalAlpha = m; c.translate(X, Y - 120); c.rotate(lt > tG ? (lt - tG) * 3 : Math.sin(lt * 2) * .05); WN.dice(c, 0, 120, 1.6 * m, 6, 1 + Math.floor(lt * 3) % 6); c.restore(); } }
+        WN.goldCard(c, 1300, 1000, .7, 0, .4 + .4 * Math.sin(lt * 3)); }];
+      S.D.over = [(c, lt) => K.card(c, 'THE BEST ADVERT', lt, { at: tW - .2, until: tD - .2, x: 640, y: 120, px: 46, rot: -2, bg: '#e8b44a' }),
+        (c, lt) => K.card(c, 'DOCUMENTARY ON THE HUNT', lt, { at: tD, until: tPl, x: 640, y: 120, px: 40, rot: 2 }),
+        (c, lt) => JH.quote(c, '"Box breaks are the hobby\'s form of gambling."', 'DOCUMENTARY PRESENTER', 1300, 260, lt, tPl, { px: 36 }),
+        (c, lt) => K.card(c, 'GAMBLING?', lt, { at: tG, x: 520, y: 120, px: 56, rot: -3, bg: '#e2342e', color: '#fff' })];
+      S.D.sfx = [[tW, 'pop', .3], [tW + .2, 'chime', .2], [tD, 'whoosh', .2], [tPl, 'tension', .25], [tHo, 'swell', .2], [tG, 'stamp', .35], [tG + .3, 'thud', .25], [tG + .6, 'drum', .2]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>

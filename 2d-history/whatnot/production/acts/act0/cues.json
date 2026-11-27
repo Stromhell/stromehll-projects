@@ -1,0 +1,316 @@
+{
+ "dur": 42.412,
+ "cues": [
+  {
+   "t": 0.4,
+   "name": "whoosh_soft",
+   "gain": 0.25
+  },
+  {
+   "t": 0.96,
+   "name": "pop",
+   "gain": 0.25
+  },
+  {
+   "t": 2.62,
+   "name": "tick",
+   "gain": 0.2
+  },
+  {
+   "t": 4.98,
+   "name": "whoosh_soft",
+   "gain": 0.3
+  },
+  {
+   "t": 5.58,
+   "name": "chime",
+   "gain": 0.3
+  },
+  {
+   "t": 2.82,
+   "name": "coins_cascade",
+   "gain": 0.3
+  },
+  {
+   "t": 5.22,
+   "name": "thud",
+   "gain": 0.3
+  },
+  {
+   "t": 7.4,
+   "name": "scrape",
+   "gain": 0.25
+  },
+  {
+   "t": 9.1,
+   "name": "scrape",
+   "gain": 0.25
+  },
+  {
+   "t": 9.8,
+   "name": "pop",
+   "gain": 0.25
+  },
+  {
+   "t": 11.16,
+   "name": "paper",
+   "gain": 0.3
+  },
+  {
+   "t": 11.56,
+   "name": "whoosh_soft",
+   "gain": 0.2
+  },
+  {
+   "t": 12.575,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 12.649,
+   "name": "alarm",
+   "gain": 0.12
+  },
+  {
+   "t": 13.299,
+   "name": "scrape",
+   "gain": 0.3
+  },
+  {
+   "t": 14.529,
+   "name": "phone_ring",
+   "gain": 0.15
+  },
+  {
+   "t": 15.179,
+   "name": "thud",
+   "gain": 0.3
+  },
+  {
+   "t": 16.309,
+   "name": "whoosh_soft",
+   "gain": 0.2
+  },
+  {
+   "t": 17.449,
+   "name": "chime",
+   "gain": 0.4
+  },
+  {
+   "t": 18.109,
+   "name": "typing",
+   "gain": 0.2
+  },
+  {
+   "t": 18.649,
+   "name": "coins",
+   "gain": 0.3
+  },
+  {
+   "t": 19.73,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 20.172,
+   "name": "swell",
+   "gain": 0.25
+  },
+  {
+   "t": 20.472,
+   "name": "chime",
+   "gain": 0.3
+  },
+  {
+   "t": 22.452,
+   "name": "pop",
+   "gain": 0.25
+  },
+  {
+   "t": 23.732,
+   "name": "riser",
+   "gain": 0.25
+  },
+  {
+   "t": 24.032,
+   "name": "tick",
+   "gain": 0.2
+  },
+  {
+   "t": 24.492,
+   "name": "crowd_cheer",
+   "gain": 0.3
+  },
+  {
+   "t": 24.592,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "t": 23.952,
+   "name": "footsteps",
+   "gain": 0.25
+  },
+  {
+   "t": 26.652,
+   "name": "camera_shutter",
+   "gain": 0.3
+  },
+  {
+   "t": 27.452,
+   "name": "pop",
+   "gain": 0.25
+  },
+  {
+   "t": 28.578,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 28.578,
+   "name": "footsteps",
+   "gain": 0.2
+  },
+  {
+   "t": 28.753,
+   "name": "paper",
+   "gain": 0.25
+  },
+  {
+   "t": 30.753,
+   "name": "tension",
+   "gain": 0.2
+  },
+  {
+   "t": 33.233,
+   "name": "tick",
+   "gain": 0.25
+  },
+  {
+   "t": 33.433,
+   "name": "whoosh_soft",
+   "gain": 0.2
+  },
+  {
+   "t": 33.933,
+   "name": "tick",
+   "gain": 0.25
+  },
+  {
+   "t": 35.733,
+   "name": "hit",
+   "gain": 0.3
+  },
+  {
+   "t": 36.083,
+   "name": "hit",
+   "gain": 0.25
+  },
+  {
+   "t": 36.493,
+   "name": "thud",
+   "gain": 0.3
+  },
+  {
+   "t": 36.843,
+   "name": "thud",
+   "gain": 0.25
+  },
+  {
+   "t": 37.193,
+   "name": "thud",
+   "gain": 0.25
+  },
+  {
+   "t": 37.393,
+   "name": "alarm",
+   "gain": 0.12
+  },
+  {
+   "t": 38.688,
+   "name": "whoosh_soft",
+   "gain": 0.5
+  },
+  {
+   "t": 38.788,
+   "name": "swell",
+   "gain": 0.2
+  },
+  {
+   "t": 39.142,
+   "name": "whoosh_soft",
+   "gain": 0.2
+  },
+  {
+   "t": 39.322,
+   "name": "hit",
+   "gain": 0.4
+  },
+  {
+   "t": 39.622,
+   "name": "chime",
+   "gain": 0.35
+  },
+  {
+   "t": 40.402,
+   "name": "coins",
+   "gain": 0.2
+  }
+ ],
+ "beds": [
+  {
+   "start": 0,
+   "end": 13.275,
+   "name": "night_loop",
+   "gain": 0.12
+  },
+  {
+   "start": 0,
+   "end": 13.275,
+   "name": "hum_loop",
+   "gain": 0.06
+  },
+  {
+   "start": 12.475,
+   "end": 20.43,
+   "name": "night_loop",
+   "gain": 0.1
+  },
+  {
+   "start": 12.475,
+   "end": 20.43,
+   "name": "hum_loop",
+   "gain": 0.08
+  },
+  {
+   "start": 19.63,
+   "end": 29.278000000000002,
+   "name": "office_loop",
+   "gain": 0.1
+  },
+  {
+   "start": 19.63,
+   "end": 29.278000000000002,
+   "name": "crowd_loop",
+   "gain": 0.05
+  },
+  {
+   "start": 28.478,
+   "end": 39.388,
+   "name": "hum_loop",
+   "gain": 0.08
+  },
+  {
+   "start": 28.478,
+   "end": 39.388,
+   "name": "crowd_loop",
+   "gain": 0.04
+  },
+  {
+   "start": 38.588,
+   "end": 43.211999999999996,
+   "name": "hum_loop",
+   "gain": 0.08
+  }
+ ]
+}

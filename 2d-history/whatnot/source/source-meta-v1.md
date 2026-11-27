@@ -1,0 +1,22 @@
+# Source (research only)
+- URL: https://youtu.be/wA2DRkzGfr4
+- Title: "The Worst New YouTube Sponsor" by fern, 37:11 (2,231 s), ~2.79M views (27 Nov 2026)
+- Based on Wall Street Journal reporting (Hannah Krueger, Sarah Nassau) + NYT May 2026 interview with Zachary Kapp
+- Transcript pulled 27 Nov 2026 19:48 UTC via Pushpam's Chrome (Show transcript panel + get_page_text).
+## Key facts used
+- Whatnot founded 2019; valuation $11.5bn (Oct 2025) -> $20bn (Oct 2026); 20M new users in 2025; claims 650k join weekly.
+- Commission up to 8%; available US, CA, AU, UK, 5 EU countries (maybe Japan).
+- Box breaks, randomised team breaks, mystery repacks; min 1 card per break; empty envelope -> refund via buyer protection.
+- 2022 LeBron James triple-logoman 1/1 hunt; Whatnot promised a Lamborghini to the seller if pulled on Whatnot; pulled in a Whatnot randomised break (Kapp, Parker, Hickey); sold ~$2.4M at auction, split.
+- Documentary presenter: box breaks "the hobby form of gambling".
+- Arbitration demands allege unregulated casino; ToS arbitration with 30-day opt-out; Whatnot: faster/cheaper.
+- Paul Lesko, 70 claimants (Sept 2026), California Penal Code 319: consideration, prize, chance; turkey/broccoli analogy.
+- July 2025 California complaint vs Whatnot + Fanatics Live; state didn't prosecute; no criminal charges.
+- Whatnot: gambling not allowed, strictly enforced; account controls (total spend, watch time, limits, PIN) introduced Dec 2025; bids binding past limit; limits editable; randomiser open-source library.
+- 18+ accounts; minors 13+ may operate a guardian's account with permission.
+- Dr Mark Leiser (digital/platform regulation): dark patterns, degradation of consent, dynamic friction.
+- Sean (former user): started Oct 2024, maxed cards/loans by Dec-Jan, company credit card, emails $6.45 ... $25,000 single purchase on last day (22 Feb), ~$1.4M spent, ~$0.5M won; cards in basement box; GA then Collectors MD; ~200 days without a break.
+- Zachary Kapp: rehab spring 2024 (NYT May 2026). Kevin Parker civil suit Nov 2025: >$10M purchases, ~98% lost, 2022-2025, Utah.
+- China: Taobao Live 2016; 617M livestream users by 2020 (~2/3 e-commerce); rules: seller verification, monitoring, recordings, card unboxings must disclose draw probabilities; penalties since Feb 2026.
+- US/UK/EU lag; hobby sellers vs trader status; randomised breaks grey area like loot boxes.
+- MrBeast Super Bowl Sunday stream (Feb), $1M of goods; Logan Paul early investor; #whatnotpartner thousands of ads.

@@ -1,0 +1,163 @@
+<!doctype html><html><head><meta charset="utf-8"><title>GM act 5 - act 5</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../tw_kit.js"></script><script src="../../xu_kit.js"></script><script src="../../jh_kit.js"></script><script src="../../pr_kit.js"></script><script src="../../wn_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+const SW = 1920, SH = 1080, INK = TW.INK, RED = TW.RED, pop = TW.pop, fade = TW.fade;
+const backdrop = (name, b = .5, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const CARRY = () => ({ shL: 30, elL: -75, shR: 35, elR: -75 });
+const endTitle = (secs) => { const T = window.TIMING; const last = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length, start: last.end, end: last.end + secs, vo_start: last.end, vo_end: last.end, text: '' }); T.dur = last.end + secs; };
+// WN act 5 - Chasing the Dragon: Sean's story ($6 -> $25,000 in one purchase, ~$1.4M), the basement boxes, chasing the dragon, Kapp + Parker. Red SPENT tracker top-left all act.
+// ---- act helpers
+const rr = TW.rr, txt = TW.txt;
+const LD = (n, alt) => { const im = K.load(n, PL + n + '.jpg'); if (alt) { if (!K.imgs[alt]) K.load(alt, PL + alt + '.jpg'); im.onerror = () => { K.imgs[n] = K.imgs[alt]; }; } };
+const unscale = cc => { const m = cc.getTransform(); cc.setTransform(Math.hypot(m.a, m.b), 0, 0, Math.hypot(m.c, m.d), m.e, m.f); };
+const PHONE = (col = '#8ad0ff') => ({ near: cc => { cc.save(); unscale(cc); cc.fillStyle = '#1a1a22'; cc.strokeStyle = INK; cc.lineWidth = 3; rr(cc, -18, -34, 36, 62, 6); cc.fill(); cc.stroke(); cc.fillStyle = col; cc.fillRect(-13, -28, 26, 46); cc.restore(); } });
+const ntag = (c, x, y, text, a = 1, o = {}) => { a = K.clamp(a); if (a <= 0) return; const px = o.px ?? 34; c.save(); c.globalAlpha = Math.min(1, a * 1.4); c.translate(x, y); c.scale(.7 + .3 * a, .7 + .3 * a);
+  c.font = `${px}px Anton`; const w = c.measureText(text).width + px * .9, h = px * 1.45; c.fillStyle = 'rgba(0,0,0,.3)'; rr(c, -w / 2 + 4, -h / 2 + 5, w, h, h / 2); c.fill();
+  c.fillStyle = o.bg || '#f2c14a'; rr(c, -w / 2, -h / 2, w, h, h / 2); c.fill(); c.strokeStyle = INK; c.lineWidth = 4; c.stroke(); txt(c, text, 0, 2, px, o.col || INK, 'center', 'Anton'); c.restore(); };
+const tagAt = (c, x, y, text, lt, at, until = 99, o) => ntag(c, x, y, text, K.seg(lt, at, at + .4) * (1 - K.seg(lt, until - .3, until)), o);
+const dust = (c, lt, y0, n = 26, col = '255,240,210') => { c.save(); for (let k = 0; k < n; k++) { const x = (k * 211 + lt * (14 + k % 5 * 7)) % 2700 - 70, y = y0 - (k * 37) % 700 + Math.sin(lt + k) * 14; c.fillStyle = `rgba(${col},${.1 + .08 * Math.sin(lt * 2 + k)})`; c.beginPath(); c.arc(x, y, 2 + k % 3, 0, 7); c.fill(); } c.restore(); };
+// SPENT tracker: value v, pop = 0..1 bounce
+const SP = (c, v, pop = 0) => { const s = .85 * (1 + .18 * pop); c.save(); c.translate(60, 60); c.scale(s / .85, s / .85); WN.spent(c, 0, 0, .85, v); c.restore(); };
+const climb = (lt, keys) => { let v = keys[0][1]; for (let i = 1; i < keys.length; i++) { const [t0, v0] = keys[i - 1], [t1, v1] = keys[i]; if (lt >= t0) v = v0 + (v1 - v0) * E.io(K.seg(lt, t0, t1)); } return v; };
+const desk = (c, x, fy, w = 300, top = 160, col = '#6a5038', drawer = 0) => { c.save(); c.fillStyle = 'rgba(0,0,0,.3)'; c.beginPath(); c.ellipse(x, fy, w * .6, 16, 0, 0, 7); c.fill(); c.strokeStyle = INK; c.lineWidth = 5; c.fillStyle = col;
+  c.fillRect(x - w / 2, fy - top, w, top); c.strokeRect(x - w / 2, fy - top, w, top); c.fillStyle = R.shadeHex(col, .15); c.fillRect(x - w / 2 - 12, fy - top - 16, w + 24, 18); c.strokeRect(x - w / 2 - 12, fy - top - 16, w + 24, 18);
+  if (drawer >= 0) { c.fillStyle = R.shadeHex(col, -.1); const dx = x - w / 2 + 30 - drawer * 60; c.fillRect(dx, fy - top + 20, 150, 50); c.strokeRect(dx, fy - top + 20, 150, 50); c.fillStyle = '#c8a030'; c.fillRect(dx + 60, fy - top + 40, 30, 8); } c.restore(); };
+const paper = (c, x, y, w, h, amt, rot, big) => { c.save(); c.translate(x, y); c.rotate(rot); c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(-w / 2 + 6, -h / 2 + 8, w, h); c.fillStyle = '#fbfaf4'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-w / 2, -h / 2, w, h); c.strokeRect(-w / 2, -h / 2, w, h);
+  TW.txt(c, 'ORDER CONFIRMED', -w / 2 + 14, -h / 2 + 22, 16, '#6a6a7a', 'left', 'Oswald'); c.fillStyle = '#d0d0d8'; for (let k = 0; k < 3; k++) c.fillRect(-w / 2 + 14, -h / 2 + 40 + k * 12, w * .6, 5); txt(c, amt, 0, h / 2 - 34, big ? 64 : 40, big ? '#c8282e' : INK, 'center', 'Anton'); c.restore(); };
+
+for (const n of ['bedroom', 'office', 'kitchen_night', 'court']) K.load(n, PL + n + '.jpg');
+LD('card_shop', 'shelf'); LD('basement', 'warehouse'); LD('ga_room', 'office');
+const FL = 1250, SC = 1.65;
+// tracker values at shot boundaries
+const V1 = 4200, V2 = 160000, V3 = 420000, V4 = 1400000;
+
+window.SHOTS = [
+  // 5.00 card shop in warm light: Sean grins at the counter; a flashback bubble shows him as a boy with cards; SPENT tracker appears at $0
+  { plate: 'card_shop', cam: { z: [1.2, 1.3], x: [1350, 1420], y: [800, 790] }, bed: [['hum_loop', .08], ['city_loop', .04]], light: { dir: -1, key: 'rgba(255,200,130,.16)' },
+    init: S => { const tB = A.at(S, 'boy.', 2.4), tF = A.at(S, 'forties,', 4.4), tL = A.at(S, 'love', 5.6), tO = A.at(S, 'October', 8.0), tW = A.at(S, 'Whatnot.', 11.4);
+      S.D.figs = [{ x: 950, y: FL, s: SC, ...WN.SEAN(), facing: 1, mood: 'happy', anim: (o, lt) => { o.lean = Math.sin(lt * 1.2) * 1.4; if (lt > tL && lt < tO) o.pose = 'present'; if (lt > tW - .4) { o.arms = () => ({ shR: 30, elR: -115 }); o.hold = PHONE('#ffd23a'); o.mood = 'shocked'; } } }];
+      S.D.live = [(c, lt) => { TW.glow(c, 1400, 600, 600, '255,200,120', .16 + .03 * Math.sin(lt * 2)); WN.slab(c, 1300, 905, .8, '10', true); WN.cardFan(c, 1500, 905, .6, 5, false); TW.glow(c, 1300, 800, 120, '255,230,140', .3 + .2 * Math.sin(lt * 3));
+          // flashback bubble with the boy
+          const bu = E.out(K.seg(lt, tB - .4, tB + .1)) * (1 - K.seg(lt, tO - .2, tO + .3)); if (bu <= 0) return; c.save(); c.globalAlpha = Math.min(1, bu * 1.5);
+          c.fillStyle = '#f6efe2'; c.strokeStyle = INK; c.lineWidth = 6; for (const [x, y, r] of [[1120, 640, 18], [1230, 560, 30]]) { c.beginPath(); c.arc(x, y, r * bu, 0, 7); c.fill(); c.stroke(); }
+          c.translate(1900, 560); c.scale(bu, bu); c.beginPath(); c.ellipse(0, 0, 420, 300, 0, 0, 7); c.fill(); c.stroke(); c.clip(); c.fillStyle = '#7ab85a'; c.fillRect(-420, 160, 840, 200); c.fillStyle = '#d8c8a0'; c.fillRect(-420, -300, 840, 20);
+          txt(c, '1990s', -260, -170, 40, '#8a6a4a', 'center', 'Caveat'); A.figure(c, { x: -60, y: 200, s: 1.3, ...WN.SEAN('boy'), facing: 1, mood: 'happy', pose: Math.sin(lt * 2) > 0 ? 'cheer' : 'present' }, lt);
+          WN.cardFan(c, 160, 160, .8, 5, false); c.restore(); }];
+      S.D.front = [(c, lt) => dust(c, lt, 1150, 20, '255,220,160')];
+      S.D.over = [(c, lt) => { const a = K.seg(lt, .3, .8); if (a <= 0) return; c.save(); c.globalAlpha = a; SP(c, 0); c.restore(); },
+        (c, lt) => tagAt(c, 520, 340, 'SEAN', lt, .6),
+        (c, lt) => K.card(c, 'BASEBALL CARDS AS A BOY', lt, { at: tB - .2, until: tF, x: 1150, y: 110, px: 36, rot: -2 }),
+        (c, lt) => K.card(c, 'BACK IN HIS FORTIES', lt, { at: tF, until: tO - .2, x: 1150, y: 110, px: 40, rot: 2 }),
+        (c, lt) => K.card(c, 'SEAN · OCT 2024', lt, { at: tO - .1, x: 1150, y: 110, px: 46, rot: -2, bg: '#f2c14a' }),
+        (c, lt) => K.card(c, 'WHATNOT', lt, { at: tW, x: 1150, y: 210, px: 40, rot: 2 })];
+      S.D.sfx = [[.4, 'pop', .2], [.6, 'chime', .2], [tB - .3, 'swell', .2], [tB, 'pop', .3], [tL, 'chime', .15], [tO, 'stamp', .3], [tW - .3, 'phone_ring', .25]]; } },
+
+  // 5.01 bedroom (bed side, not the desk side): Sean on the bed edge with his phone; single cards drop in; then a randomiser wheel; SPENT climbs
+  { plate: 'bedroom', cam: { z: [1.25, 1.35], x: [1000, 1060], y: [820, 840] }, bed: [['night_loop', .12]], light: { dir: 1, key: 'rgba(140,150,255,.14)' },
+    init: S => { const tSi = A.at(S, 'single', 1.2), tH = A.at(S, 'hundred', 2.8), tG = A.at(S, 'game', 5.4), tBr = A.at(S, 'breaks', 8.2), tCl = A.at(S, 'climb.', 12.2);
+      const DR = [tSi, tSi + .8, tH, tH + .9];
+      S.D.figs = [{ x: 900, y: 1140, s: 1.6, ...WN.SEAN(), pose: 'sit', facing: 1, mood: 'happy', arms: () => ({ shR: 30, elR: -115 }), hold: PHONE(), anim: (o, lt) => { o.lean = Math.sin(lt * 1.3) * 1.5; if (lt > tBr) o.mood = 'shocked'; if (lt > tCl) o.mood = 'worried'; } }];
+      S.D.live = [(c, lt) => { TW.glow(c, 1840, 760, 240, '255,210,140', .25); DR.forEach((t, i) => { const u = E.out(K.seg(lt, t - .4, t)); if (u > 0) WN.card(c, 1180 + i * 40, 1010 - (1 - u) * 300, .7, ['#3a78c8', '#2a9a5a', '#c8302a', '#8a4ac8'][i], -.2 + i * .12); }); }];
+      S.D.front = [(c, lt) => TW.glow(c, 1010, 880, 110, '140,210,255', .3 + .1 * Math.sin(lt * 8))];
+      S.D.over = [(c, lt) => SP(c, climb(lt, [[0, 0], [tSi, 0], [tH + 1, 300], [tBr, 900], [tCl + 1.5, V1]]), Math.max(0, Math.sin(lt * 8)) * K.seg(lt, tBr, tBr + 1) * (1 - K.seg(lt, tCl + 1, tCl + 1.5))),
+        (c, lt) => { const u = E.out(K.seg(lt, .1, .6)); c.save(); c.translate((1 - u) * 600, 0); WN.phone(c, 1480, 860, .7, (cc, w, h) => { cc.fillStyle = '#1c1830'; cc.fillRect(0, 0, w, h);
+            if (lt < tBr) { DR.forEach((t, i) => { const v = E.out(K.seg(lt, t - .3, t)); if (v > 0) WN.card(cc, 90 + (i % 2) * 180, 330 + Math.floor(i / 2) * 260 - (1 - v) * 200, 1, ['#3a78c8', '#2a9a5a', '#c8302a', '#8a4ac8'][i], 0); }); txt(cc, 'SINGLES · BUY NOW', w / 2, 60, 26, '#fff', 'center', 'Anton'); }
+            else { txt(cc, 'BREAK · RANDOM TEAM', w / 2, 60, 26, '#ffd23a', 'center', 'Anton'); WN.wheel(cc, w / 2, 330, .75, (lt - tBr) * (6 - Math.min(5, (lt - tBr) * .5)), 12); WN.pack(cc, w / 2 - 80, 700, .6, '#c8302a', 0); WN.pack(cc, w / 2 + 80, 700, .6, '#3a78c8', 0); } }); c.restore(); },
+        (c, lt) => K.card(c, '$100-$200 A WEEK', lt, { at: tH, until: tBr - .2, x: 800, y: 110, px: 44, rot: -2, bg: '#f2c14a' }),
+        (c, lt) => K.card(c, 'A GAME?', lt, { at: tG, until: tBr - .2, x: 800, y: 220, px: 46, rot: 2 }),
+        (c, lt) => K.card(c, 'BREAKS · UNOPENED PACKS', lt, { at: tBr, x: 800, y: 110, px: 40, rot: -2, bg: '#e2342e', color: '#fff' })];
+      S.D.sfx = [...DR.map(t => [t, 'pop', .25]), [tH, 'coins', .2], [tG, 'chime', .2], [tBr, 'whoosh', .3], [tBr + .2, 'tick', .25], [tBr + .6, 'tick', .25], [tBr + 1, 'tick', .25], [tCl, 'riser', .25], [tCl + .5, 'coins_cascade', .2]]; } },
+
+  // 5.02 office: Sean at his work desk; maxed credit cards stack with stamps; a chat bubble 'DEAL FOR YOU?'; the company card slides out of the drawer
+  { plate: 'office', cam: { z: [1.25, 1.35], x: [1250, 1300], y: [860, 880] }, bed: [['office_loop', .14], ['typing', .05]], light: { dir: -1, key: 'rgba(200,220,255,.1)' },
+    init: S => { const tCr = A.at(S, 'credit', 3.0), tLo = A.at(S, 'loans', 4.6), tMx = A.at(S, 'maxed', 5.6), tSt = A.at(S, 'streamer', 7.6), tDe = A.at(S, 'deal', 8.8), tCo = A.at(S, 'company', 12.2);
+      const SX = 950;
+      S.D.figs = [{ x: SX, y: FL, s: SC, ...WN.SEAN('polo'), pose: 'sit', facing: 1, mood: 'worried', anim: (o, lt) => { o.arms = () => ({ shR: 70, elR: -40 + 8 * Math.sin(lt * 7), shL: 60, elL: -45 }); if (lt > tCo - .4) { o.arms = () => ({ shR: 80, elR: -20, shL: 60, elL: -45 }); o.mood = 'shocked'; } } }];
+      S.D.live = [(c, lt) => { TW.chair(c, SX, FL, FL - 63 * SC, 1, '#2a2a34'); TW.glow(c, 1300, 600, 500, '180,200,255', .1); }];
+      S.D.front = [(c, lt) => { const dr = E.out(K.seg(lt, tCo - .6, tCo)); desk(c, 1300, FL, 420, 200, '#5a5a66', dr);
+          c.fillStyle = '#1e1e24'; rr(c, 1300, FL - 400, 200, 150, 8); c.fill(); c.fillStyle = `rgba(120,200,255,${.6 + .1 * Math.sin(lt * 6)})`; rr(c, 1310, FL - 390, 180, 130, 4); c.fill(); c.fillStyle = '#1e1e24'; c.fillRect(1390, FL - 250, 20, 34);
+          [tCr, tLo, tMx].forEach((t, i) => { const u = E.out(K.seg(lt, t - .4, t)); if (u > 0) { WN.creditCard(c, 1170 + i * 8, FL - 226 - i * 14 - (1 - u) * 200, .45, ['#2a3a8a', '#2a7a4a', '#7a2a6a'][i], lt > t + .3); } });
+          if (dr > 0) { const cu = E.out(K.seg(lt, tCo, tCo + .8)); WN.creditCard(c, 1110 - dr * 60, FL - 150 - cu * 140, .4 + .1 * cu, '#1a1a1a', false); TW.glow(c, 1050, FL - 290, 90, '255,230,140', .5 * cu * (.6 + .4 * Math.sin(lt * 6))); if (cu > .5) txt(c, 'COMPANY', 1050, FL - 330, 26, '#ffd23a', 'center', 'Anton'); } }];
+      S.D.over = [(c, lt) => SP(c, climb(lt, [[0, V1], [tMx, 60000], [tCo, 110000], [S.end - S.start - .5, V2]]), K.seg(lt, tMx, tMx + .3) * (1 - K.seg(lt, tMx + .3, tMx + .6))),
+        (c, lt) => { if (lt > tMx) STP(c, lt, tMx); },
+        (c, lt) => K.card(c, '~3 MONTHS', lt, { at: .3, until: tMx - .2, x: 960, y: 110, px: 44, rot: -2 }),
+        (c, lt) => K.card(c, 'MAXED OUT', lt, { at: tMx, until: tCo - .2, x: 960, y: 110, px: 46, rot: 2, bg: '#e2342e', color: '#fff' }),
+        (c, lt) => { const u = E.out(K.seg(lt, tSt - .2, tSt + .2)); if (u > 0) PR.bubble(c, 1500, 330, u * .75, 'DEAL FOR YOU?|FILL MY BREAK', { px: 40 }); },
+        (c, lt) => K.card(c, 'COMPANY CARD', lt, { at: tCo, x: 960, y: 110, px: 46, rot: -2, bg: '#f2c14a' })];
+      S.D.sfx = [[tCr, 'thud', .25], [tCr + .3, 'stamp', .3], [tLo, 'thud', .25], [tLo + .3, 'stamp', .3], [tMx, 'thud', .25], [tMx + .3, 'stamp', .35], [tSt, 'pop', .3], [tDe, 'chime', .2], [tCo - .6, 'scrape', .35], [tCo + .3, 'chime', .3]]; } },
+
+  // 5.03 kitchen at night: order emails fan out above the table, amounts growing; the last is $25,000; the flag stays down
+  { plate: 'kitchen_night', cam: { z: [1.25, 1.33], x: [1500, 1460], y: [830, 850] }, bed: [['night_loop', .1], ['hum_loop', .06]], light: { dir: 1, key: 'rgba(110,130,220,.2)' },
+    init: S => { const tE = A.at(S, 'emails', 1.2), W = [['Six', 3.0, '$6'], ['Fourteen.', 4.0, '$14'], ['four', 5.6, '$450'], ['Two', 7.2, '$2,000'], ['Six', 8.4, '$6,000']].map(([w, d, a], i) => [i === 4 ? A.at(S, 'thousand.', d) - .4 : A.at(S, w, d), a]);
+      // 'Six' appears twice: second one is found by the 'thousand.' fallback above
+      const tLd = A.at(S, 'last', 10.2), tTw = A.at(S, 'twenty-five', 11.2), tNf = A.at(S, 'flag.', 13.6);
+      S.D.figs = [{ x: 1080, y: FL, s: SC, ...WN.SEAN(), pose: 'sit', facing: 1, mood: 'worried', anim: (o, lt) => { o.arms = () => ({ shR: 70, elR: -50, shL: 60, elL: -50 }); o.lean = Math.sin(lt) * 1.2; if (lt > tTw) o.mood = 'shocked'; } }];
+      S.D.live = [(c, lt) => { TW.chair(c, 1080, FL, FL - 63 * SC, 1, '#4a3a2a'); TW.glow(c, 1600, 400, 500, '150,170,255', .1); }];
+      S.D.front = [(c, lt) => { c.save(); c.fillStyle = 'rgba(0,0,0,.3)'; c.beginPath(); c.ellipse(1500, FL, 360, 20, 0, 0, 7); c.fill(); c.fillStyle = '#6a4a30'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(1200, FL - 230, 600, 22); c.strokeRect(1200, FL - 230, 600, 22); c.fillRect(1230, FL - 208, 24, 208); c.strokeRect(1230, FL - 208, 24, 208); c.fillRect(1746, FL - 208, 24, 208); c.strokeRect(1746, FL - 208, 24, 208); c.restore();
+          WN.laptop(c, 1450, FL - 230, .7, (cc, w, h) => { cc.fillStyle = '#e8eef8'; cc.fillRect(0, 0, w, h); cc.fillStyle = '#c8302a'; for (let k = 0; k < 5; k++) cc.fillRect(10, 10 + k * 22, w - 20, 12); });
+          TW.glow(c, 1450, FL - 320, 160, '200,220,255', .3 + .05 * Math.sin(lt * 9)); for (let k = 0; k < 5; k++) if (lt > W[k][0]) WN.card(c, 1620 + k * 14, FL - 230, .3, '#3a78c8', -.3 + k * .15); }];
+      S.D.over = [(c, lt) => { const keys = [[0, V2]]; let v = V2; W.forEach(([t]) => { v += 20000; keys.push([t, v]); }); keys.push([tTw, 380000]); keys.push([tTw + .4, 405000]); keys.push([S.end - S.start - .5, V3]);
+          const pop = [...W.map(w => w[0]), tTw].reduce((m, t) => Math.max(m, lt > t && lt < t + .4 ? 1 - (lt - t) / .4 : 0), 0); SP(c, climb(lt, keys), pop);
+          if (lt > tTw) { const u = K.seg(lt, tTw, tTw + 1.6); c.save(); c.globalAlpha = 1 - u; txt(c, '+$25,000', 300, 200 + u * 40, 46, '#ff5a4a', 'center', 'Anton'); c.restore(); } },
+        (c, lt) => W.forEach(([t, a], i) => { const u = E.out(K.seg(lt, t - .3, t)); if (u <= 0) return; paper(c, 620 + i * 190 + (1 - u) * 300, 330 + (i % 2) * 40, 200, 150, a, -.1 + i * .05, false); }),
+        (c, lt) => { const u = E.out(K.seg(lt, tTw - .3, tTw + .1)); if (u <= 0) return; c.save(); c.translate(1300, 560); c.scale(.6 + .4 * u, .6 + .4 * u); paper(c, 0, 0, 380, 220, '$25,000', .04, true); c.restore(); },
+        (c, lt) => K.card(c, 'ORDER EMAILS', lt, { at: tE - .2, until: tLd, x: 960, y: 110, px: 44, rot: -2 }),
+        (c, lt) => K.card(c, '$6 → $25,000', lt, { at: tLd, x: 960, y: 110, px: 46, rot: 2, bg: '#f2c14a' }),
+        (c, lt) => { if (lt < tNf - .3) return; const p = K.seg(lt, tNf - .3, tNf); c.save(); c.translate(1660, 720); c.globalAlpha = p; c.fillStyle = '#9aa0aa'; c.strokeStyle = INK; c.lineWidth = 4; c.fillRect(-120, -8, 240, 14); c.strokeRect(-120, -8, 240, 14); c.fillStyle = '#e2342e'; c.fillRect(60, -8 - 8, 60, -50 + 50); c.beginPath(); c.moveTo(-110, 6); c.lineTo(-110, 60); c.lineTo(-30, 50 + Math.sin(lt * 3) * 4); c.lineTo(-110, 6); c.fill(); c.stroke(); txt(c, 'NO FLAG', 0, -50, 44, '#fff', 'center', 'Anton'); c.restore(); }];
+      S.D.sfx = [[tE, 'paper', .3], ...W.map(([t]) => [t - .3, 'paper', .3]), ...W.map(([t]) => [t, 'coins', .15]), [tLd, 'tension', .2], [tTw - .3, 'whoosh', .3], [tTw, 'thud', .35], [tTw + .1, 'coins_cascade', .3], [tNf, 'drone', .2]]; } },
+
+  // 5.04 dim basement: towers of card boxes grow around a small Sean; bulb sways; SPENT rolls to ~$1.4M
+  { plate: 'basement', cam: { z: [1.1, 1.25], x: [1280, 1290], y: [780, 760] }, bed: [['hum_loop', .1], ['drone', .05]], light: { dir: -1, key: 'rgba(255,200,120,.12)' },
+    init: S => { const tT = A.at(S, 'total,', .8), tOne = A.at(S, 'million', 3.6), tBx = A.at(S, 'boxes', 7.6), tTh = A.at(S, 'thrill', 10.8), tNo = A.at(S, 'cards.', 13.6);
+      S.D.figs = [{ x: 1300, y: FL, s: SC, ...WN.SEAN(), facing: -1, mood: 'sad', hold: { near: cc => { cc.save(); unscale(cc); WN.goldCard(cc, 0, 40, .35, 0, .2); cc.restore(); } }, arms: () => ({ shR: 30, elR: -100 }), anim: (o, lt) => { o.lean = Math.sin(lt * .9) * 1.5; if (lt > tTh) { o.mood = 'neutral'; o.facing = 1; } } }];
+      S.D.live = [(c, lt) => { const sw = Math.sin(lt * 1.3) * 30; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(1280, 0); c.lineTo(1280 + sw, 290); c.stroke(); TW.glow(c, 1280 + sw, 300, 500, '255,210,130', .3 + .04 * Math.sin(lt * 17));
+          const n = Math.round(3 + 5 * K.seg(lt, tBx - .5, tBx + 2)); WN.basementBoxes(c, 860, FL, 1.4, n); WN.basementBoxes(c, 1760, FL, 1.5, Math.min(8, n + 1)); }];
+      S.D.front = [(c, lt) => dust(c, lt, 1200, 34, '255,220,170')];
+      S.D.over = [(c, lt) => SP(c, climb(lt, [[0, V3], [tT, V3], [tOne + .5, V4]]), K.seg(lt, tOne + .4, tOne + .6) * (1 - K.seg(lt, tOne + .6, tOne + 1))),
+        (c, lt) => { if (lt > tT - .2) PR.counter(c, 960, 230, .9, 0, 1.4, tT, tOne + .5, lt, { pre: '~$', suf: 'M', dec: 1 }); },
+        (c, lt) => K.card(c, 'BOXES IN THE BASEMENT', lt, { at: tBx, until: tTh - .2, x: 960, y: 360, px: 40, rot: -2 }),
+        (c, lt) => K.card(c, '"THE PROCESS, NOT THE CARDS"', lt, { at: tTh, x: 960, y: 360, px: 40, rot: 2, bg: '#f2c14a' })];
+      S.D.sfx = [[tT, 'riser', .2], [tT + .3, 'tick', .25], [tOne, 'coins_cascade', .3], [tOne + .5, 'thud', .3], [tBx, 'thud', .25], [tBx + .6, 'thud', .25], [tBx + 1.2, 'thud', .25], [tTh, 'creak', .2], [tNo, 'drone', .15]]; } },
+
+  // 5.05 support-group circle: the counsellor talks; a paper dragon with the gold card loops past; Zachary Kapp reaches and misses
+  { plate: 'ga_room', cam: { z: [1.15, 1.22], x: [1280, 1290], y: [760, 780] }, bed: [['hum_loop', .08], ['birds_loop', .04]], light: { dir: -1, key: 'rgba(255,240,200,.12)' },
+    init: S => { const tCh = A.at(S, 'chasing', 2.0), tRe = A.at(S, 'recreate', 4.6), tOd = A.at(S, 'odds.', 7.4), tZ = A.at(S, 'Zachary', 8.2), tGo = A.at(S, 'golden-ticket', 10.6), tSp = A.at(S, 'spiralled', 12.8), tRh = A.at(S, 'rehab.', 15.0);
+      const s5 = 1.75;
+      S.D.figs = [{ x: 590, y: 1240, s: s5, ...WN.COUNSELLOR(), pose: 'sit', facing: 1, mood: 'neutral', talk: [0, tOd], anim: (o, lt) => { o.lean = Math.sin(lt * 1.1) * 1.2; if (lt > tCh && lt < tOd) o.arms = () => ({ shR: 60, elR: -40 + 10 * Math.sin(lt * 3) }); } },
+        { x: 1550, y: 1020, s: 1.3, ...WN.VIEWER(1), pose: 'sit', facing: -1, mood: 'neutral', anim: (o, lt) => { o.lean = Math.sin(lt * .8) * 1.2; } },
+        { x: 1970, y: 1240, s: s5, ...WN.VIEWER(0), pose: 'sit', facing: -1, mood: 'sad', anim: (o, lt) => { o.lean = Math.sin(lt * 1.3) * 1.5; const reach = (lt > tRe - .3 && lt < tOd + .3) || (lt > tSp - .3 && lt < tRh); if (reach) { o.arms = () => ({ shR: 150, elR: -10 }); o.mood = 'worried'; } if (lt > tRh) o.mood = 'sad'; } }];
+      S.D.live = [(c, lt) => TW.glow(c, 1280, 400, 700, '255,240,200', .12)];
+      S.D.front = [(c, lt) => { const u = K.seg(lt, tCh - 1, tCh + 1.5); if (u <= 0) return; const ph = (lt - tCh) * .35, x = 300 + ((ph % 1.2) / 1.2) * 2200, y = 560 + Math.sin(lt * 1.6) * 60 - (x > 1700 && x < 2100 ? 80 : 0); WN.dragon(c, x, y, 1.2, lt); }];
+      S.D.over = [(c, lt) => SP(c, V4),
+        (c, lt) => K.card(c, 'CHASING THE DRAGON', lt, { at: tCh - .2, x: 960, y: 110, px: 46, rot: -2, bg: '#f2c14a' }),
+        (c, lt) => K.card(c, 'RECREATE ONE HUGE WIN', lt, { at: tRe, until: tZ, x: 960, y: 210, px: 36, rot: 1 }),
+        (c, lt) => { tagAt(c, 1500, 350, 'ZACHARY KAPP', lt, tZ); tagAt(c, 1500, 410, 'GOLDEN-TICKET WINNER', lt, tGo, 99, { px: 24, bg: '#f4f1ea' }); },
+        (c, lt) => K.card(c, 'SPIRALLED · REHAB', lt, { at: tSp, x: 960, y: 210, px: 40, rot: -2, bg: '#e2342e', color: '#fff' })];
+      S.D.sfx = [[tCh - 1, 'whoosh', .25], [tCh, 'swell', .2], [tRe, 'whoosh_soft', .25], [tOd, 'thud', .15], [tZ, 'chime', .2], [tSp, 'heartbeat', .25], [tRh, 'door_slam', .15]]; } },
+
+  // 5.06 courthouse plaza: Kevin Parker and his lawyer; lawsuit binder thumps (ALLEGED); pie fills 98% red; NO COMMENT tag swings on a podium
+  { plate: 'court', cam: { z: [1.15, 1.22], x: [1350, 1300], y: [800, 790] }, bed: [['city_loop', .1], ['wind_loop', .05]], light: { dir: 1, key: 'rgba(255,240,210,.1)' },
+    init: S => { const tKP = A.at(S, 'Kevin', 1.6), tSu = A.at(S, 'suing', 3.0), tAl = A.at(S, 'alleging', 4.4), tTe = A.at(S, 'ten', 8.6), tNi = A.at(S, 'ninety-eight', 11.2), tCm = A.at(S, 'comment', 14.8);
+      S.D.figs = [{ x: 1600, y: 1360, s: SC, ...WN.LAWYER(2), facing: -1, mood: 'neutral', talk: [tSu, tCm - .5], anim: (o, lt) => { o.pose = lt > tAl && lt < tTe ? 'point' : 'stand'; } },
+        { x: 1880, y: 1360, s: SC, ...WN.COLLECTOR(3), facing: -1, mood: 'angry', anim: (o, lt) => { o.lean = Math.sin(lt) * 1.2; if (lt > tNi) { o.mood = 'sad'; o.pose = 'shrug'; } } }];
+      S.D.live = [(c, lt) => TW.glow(c, 1700, 400, 700, '255,240,210', .12)];
+      S.D.front = [(c, lt) => { const sw = Math.sin((lt - tCm) * 5) * Math.exp(-Math.max(0, lt - tCm) * .8) * .5 * (lt > tCm ? 1 : 0); if (lt < tCm - .3) return; c.save(); c.translate(870, 1030); c.rotate(sw); c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); c.moveTo(-60, 0); c.lineTo(-80, 40); c.moveTo(60, 0); c.lineTo(80, 40); c.stroke(); c.fillStyle = '#f6efe2'; c.lineWidth = 4; rr(c, -130, 40, 260, 66, 10); c.fill(); c.stroke(); txt(c, 'NO COMMENT', 0, 74, 38, '#c8282e', 'center', 'Anton'); c.restore(); }];
+      S.D.over = [(c, lt) => SP(c, V4),
+        (c, lt) => tagAt(c, 1430, 450, 'KEVIN PARKER', lt, tKP),
+        (c, lt) => { const u = E.inn(K.seg(lt, tSu - .5, tSu)); if (u <= 0) return; c.save(); c.translate(520, 120 + 300 * u); c.rotate(-.05); c.fillStyle = 'rgba(0,0,0,.3)'; rr(c, -150, -100, 310, 210, 12); c.fill(); c.fillStyle = '#2a3a6a'; c.strokeStyle = INK; c.lineWidth = 5; rr(c, -156, -108, 310, 210, 12); c.fill(); c.stroke(); c.fillStyle = '#f6efe2'; rr(c, -116, -70, 230, 90, 8); c.fill(); c.stroke(); txt(c, 'LAWSUIT', 0, -25, 44, INK, 'center', 'Anton'); c.restore(); PR.tag(c, 520, 560, .8, 'ALLEGED', tAl, lt); },
+        (c, lt) => K.card(c, 'ILLEGAL GAMBLING ENTERPRISE?', lt, { at: tAl + .2, until: tTe - .2, x: 1100, y: 110, px: 38, rot: -2 }),
+        (c, lt) => { if (lt < tTe - .2) return; PR.counter(c, 1150, 140, .75, 0, 10, tTe, tTe + 1.2, lt, { suf: 'M+' });
+          const u = E.out(K.seg(lt, tNi - .3, tNi + 1.2)), a = K.seg(lt, tTe, tTe + .4); c.save(); c.globalAlpha = a; c.translate(1600, 280); c.fillStyle = 'rgba(0,0,0,.3)'; c.beginPath(); c.arc(8, 10, 100, 0, 7); c.fill(); c.fillStyle = '#e8e2d2'; c.beginPath(); c.arc(0, 0, 100, 0, 7); c.fill(); c.fillStyle = '#d8282e'; c.beginPath(); c.moveTo(0, 0); c.arc(0, 0, 100, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * .98 * u); c.fill(); c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.arc(0, 0, 100, 0, 7); c.stroke(); txt(c, Math.round(98 * u) + '%', 0, 4, 48, '#fff', 'center', 'Anton'); txt(c, 'LOST', 0, 130, 30, '#fff', 'center', 'Anton'); c.restore(); },
+        (c, lt) => K.card(c, '$10M+ · 98% LOST (ALLEGED)', lt, { at: tNi + 1.2, x: 1100, y: 250, px: 34, rot: 2, bg: '#f2c14a' })];
+      S.D.sfx = [[tKP, 'chime', .2], [tSu - .5, 'whoosh', .25], [tSu, 'thud', .4], [tAl, 'stamp', .35], [tTe, 'riser', .2], [tTe + 1.2, 'coins', .25], [tNi, 'tick', .25], [tNi + 1.2, 'tension', .25], [tCm, 'creak', .3], [tCm + .1, 'pop', .2]]; } },
+];
+// stamp helper used in 5.02 (MAXED on the card stack)
+function STP(c, lt, at) { TW.stamp(c, 'MAXED', 820, 470, lt, at, { px: 48 }); }
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>

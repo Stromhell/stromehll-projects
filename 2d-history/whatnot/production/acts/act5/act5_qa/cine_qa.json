@@ -1,0 +1,29 @@
+{
+ "video": "act5.mp4",
+ "findings": [
+  {
+   "level": "WARN",
+   "check": "slideshow (camera frozen)",
+   "t": 23.83,
+   "at": "0:23.8",
+   "detail": "camera still for 3.0 s"
+  },
+  {
+   "level": "WARN",
+   "check": "slideshow (camera frozen)",
+   "t": 31.83,
+   "at": "0:31.8",
+   "detail": "camera still for 3.2 s"
+  },
+  {
+   "level": "WARN",
+   "check": "cut rhythm",
+   "t": 0,
+   "at": "0:00.0",
+   "detail": "100% of shots are longer than 8 s (median 83.8 s)"
+  }
+ ],
+ "still_share": 0.311,
+ "shots": 1,
+ "median_shot_s": 83.83
+}

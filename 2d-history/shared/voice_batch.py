@@ -14,6 +14,7 @@ def year(y):
     hi, lo = divmod(y, 100)
     return two(hi) + ' ' + ('hundred' if lo == 0 else ('oh ' + ONES[lo] if lo < 10 else two(lo)))
 WORDS = [
+ (r"\bLeBron\b", 'Luh-Bron'), (r"\bLeiser\b", 'Lie-zer'), (r"\bDr\b", 'Doctor'), (r"\bTaobao\b", 'Tow-bow'), (r"\bLesko\b", 'Less-koh'), (r"\bKapp\b", 'Kap'),
  (r"\b007\b", 'double-oh-seven'), (r"\bA24\b", 'A twenty-four'), (r"\bMGM\b", 'M G M'), (r"\bVilleneuve\b", 'Vil-nuhv'), (r"\bDafoe\b", 'Duh-foe'),
  (r"\bAntinous\b", 'An-tin-oh-us'), (r"\bOdysseus's\b", 'Oh-diss-ee-us\'s'), (r"\bHeyman\b", 'Hay-man'), (r"\bSafdies\b", 'Saff-dees'), (r"\bZendaya\b", 'Zen-day-uh'),
  (r"\bLowden\b", 'Low-den'), (r"\bHoult\b", 'Holt'), (r"\bBattinson\b", 'Bat-tinson'), (r"\bCronenberg\b", 'Crone-en-berg'), (r"\bBong Joon Ho\b", 'Bong Joon-ho'),
