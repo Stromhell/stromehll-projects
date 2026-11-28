@@ -1,0 +1,195 @@
+// Shared steps: voice + timeline, the page state the engine loads, and a
+// session that runs the engine in headless Chrome.
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import { ensureFonts } from './fonts.js';
+import { synthesize } from './voice.js';
+import { buildTimeline } from './timeline.js';
+import { listAssets, loadProject } from './project.js';
+import { startServer, ROOT } from './server.js';
+import { launch, openEngine } from './browser.js';
+import { readVersions, sha256File } from './history.js';
+import { checkRecordingScript, logPath, oldLogPath, readLog, scriptHash, scriptPath, wholeHash } from './record.js';
+
+export const VERSION = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8')).version;
+
+export async function prepare(project, { log = () => {}, ...voice } = {}) {
+  await ensureFonts(project.config.language, { log });
+  const voices = await synthesize(project, { log, ...voice });
+  const timeline = buildTimeline(project, voices);
+  fs.mkdirSync(project.paths.build, { recursive: true });
+  fs.writeFileSync(path.join(project.paths.build, 'timeline.json'), JSON.stringify(timeline, null, 2));
+  return { voices, timeline };
+}
+
+function fileStamp(p) {
+  try {
+    const st = fs.statSync(p);
+    return `${st.mtimeMs}:${st.size}`;
+  } catch {
+    return 'missing';
+  }
+}
+
+export function makeState(project, timeline) {
+  const assets = listAssets(project.dir);
+  const stamp = [
+    fileStamp(project.paths.scenes),
+    ...(project.paths.look ? [fileStamp(project.paths.look)] : []),
+    ...assets.map((a) => a + '@' + fileStamp(path.join(project.dir, a))),
+    ...fs.readdirSync(project.dir).filter((f) => f.endsWith('.js') || f.endsWith('.mjs')).map((f) => f + '@' + fileStamp(path.join(project.dir, f))),
+  ].join('|');
+  // The on-screen text of this language for s.str(). The page never reads JSON
+  // from the project, so it comes with the state. A video in one language
+  // without strings keeps the state and version it always had.
+  const text = textState(project);
+  // The step logs of the recordings, for s.recording. A project without
+  // recordings keeps the state it always had.
+  const recordings = recordingState(project.dir, assets);
+  const version = crypto.createHash('sha1').update(stamp + JSON.stringify(timeline) + JSON.stringify(project.config) + (text ? JSON.stringify(text) : '') + (recordings ? JSON.stringify(recordings) : '')).digest('hex').slice(0, 12);
+  return { config: project.config, timeline, assets, version, title: project.config.title, ...(text ? { text } : {}), ...(recordings ? { recordings } : {}) };
+}
+
+// Each recording with a video and a readable log, <name>.log.json, or
+// <name>.json from before the log had its own name. "changed" says that its
+// script in recordings/ is no longer the one it was recorded from.
+function recordingState(dir, assets) {
+  const out = {};
+  for (const rel of assets) {
+    const m = /^assets\/recordings\/([a-z0-9][a-z0-9-]*)\.webm$/i.exec(rel);
+    if (!m) continue;
+    const name = m[1];
+    const file = [logPath(dir, name), oldLogPath(dir, name)].find((f) => assets.includes(path.relative(dir, f).split(path.sep).join('/')));
+    const log = file && readLog(file);
+    if (!log) continue;
+    let changed = false;
+    let steps = log.steps;
+    try {
+      const raw = JSON.parse(fs.readFileSync(scriptPath(dir, name), 'utf8'));
+      changed = log.script !== scriptHash(raw) && log.script !== wholeHash(raw);
+      // The cues come from the script as it is now, as playback is where they
+      // count, so a new cue plays without a new recording.
+      if (!changed) {
+        let script = null;
+        try { script = checkRecordingScript(raw); } catch { changed = true; }
+        if (script) {
+          steps = log.steps.map((st) => {
+            const copy = { ...st };
+            const cue = script.steps[st.step - 1]?.cue;
+            if (cue === undefined) delete copy.cue;
+            else copy.cue = cue;
+            return copy;
+          });
+        }
+      }
+    } catch {}
+    out[name] = { ...log, steps, ...(changed ? { changed: true } : {}) };
+  }
+  return Object.keys(out).length ? out : null;
+}
+
+function textState(project) {
+  const several = (project.languages?.length ?? 1) > 1;
+  if (!project.strings && !several) return null;
+  return {
+    strings: project.strings ?? null,
+    files: { script: path.basename(project.paths.script), strings: path.basename(project.paths.strings) },
+    ...(several ? { languages: project.languages } : {}),
+  };
+}
+
+// The Node files that shape frames and sound, next to the page engine.
+const RENDER_FILES = ['src/render.js', 'src/ffmpeg.js', 'src/pipeline.js', 'src/sounds.js'];
+// Folders in a project that no scene imports from.
+const NOT_SCRIPTS = new Set(['build', 'out', 'history', 'assets']);
+
+function filesUnder(root, folder = '', skip = () => false) {
+  return fs.readdirSync(path.join(root, folder), { withFileTypes: true }).sort((a, b) => (a.name < b.name ? -1 : 1)).flatMap((entry) => {
+    const rel = folder ? `${folder}/${entry.name}` : entry.name;
+    if (entry.isDirectory()) return skip(entry.name, folder) ? [] : filesUnder(root, rel, skip);
+    return entry.isFile() ? [rel] : [];
+  });
+}
+
+function hashFiles(hash, root, files) {
+  for (const rel of files) hash.update(rel).update('\0').update(fs.readFileSync(path.join(root, rel)));
+  return hash;
+}
+
+const codeHashes = new Map();
+
+export function renderingCodeHash(root = ROOT, version = VERSION) {
+  const id = `${root}\0${version}`;
+  if (!codeHashes.has(id) || root !== ROOT) codeHashes.set(id, hashFiles(crypto.createHash('sha256').update(version), root, [...filesUnder(root, 'engine'), ...RENDER_FILES]).digest('hex'));
+  return codeHashes.get(id);
+}
+
+// Says whether an existing video still matches its project. makeState().version
+// only has to reload files in the page: it misses helpers in subfolders and the
+// engine's own code. Narration stays out of this, so a new engine version renders
+// frames again and makes no voice again.
+// The cover is a picture next to the video, so a new cover leaves the video's
+// identity as it is, and package makes only the new cover.
+export function renderIdentity(project, timeline) {
+  const skip = (name, folder) => name === 'node_modules' || name.startsWith('.') || (!folder && NOT_SCRIPTS.has(name));
+  const scripts = filesUnder(project.dir, '', skip).filter((f) => /\.m?js$/.test(f));
+  const { cover, ...frames } = project.config;
+  const hash = crypto.createHash('sha256').update(makeState({ ...project, config: frames }, timeline).version).update('\0').update(renderingCodeHash()).update('\0');
+  return hashFiles(hash, project.dir, scripts).digest('hex').slice(0, 32);
+}
+
+// Runs fn(page, ctx) with the engine loaded at `scale`, then cleans up.
+export async function withEngine(project, timeline, { scale = 1, pages = 1, transparent = false, log = () => {} } = {}, fn) {
+  const state = makeState(project, timeline);
+  const server = await startServer({ projectDir: project.dir, getState: () => state, log });
+  let browser = null;
+  try {
+    browser = await launch();
+    const list = [];
+    for (let i = 0; i < pages; i++) {
+      list.push(await openEngine(browser, server.url, { scale, transparent, onConsole: (type, text) => { if (type === 'error') log(`page: ${text}`); } }));
+    }
+    return await fn(pages === 1 ? list[0] : list, { server, state });
+  } finally {
+    if (browser) await browser.close();
+    await server.close();
+  }
+}
+
+// A short hash of what the narration says: the shown and the spoken words of
+// each scene. Markers, pauses and stars leave it as it is. Every render records
+// it, so a size made from another script can be found later.
+export function scriptStamp(project) {
+  return crypto.createHash('sha256').update(JSON.stringify(project.script.scenes.map((s) => [s.id, s.text, s.spoken]))).digest('hex').slice(0, 16);
+}
+
+// The finished renders of the other sizes of this video, in its language, that
+// say an older script, as [{ file, size, platform }]. Only the newest render of
+// each file counts, and only while the file is still that render. A render from
+// before the record had the script is left out, because nobody can tell.
+export function outdatedRenders(project) {
+  const stamp = scriptStamp(project);
+  const newest = new Map();
+  for (const line of readVersions(project.dir)) {
+    if (typeof line.file === 'string' && line.draft === false && line.full === true) newest.set(line.file, line);
+  }
+  const out = [];
+  for (const line of newest.values()) {
+    if (typeof line.script !== 'string' || line.script === stamp || line.lang !== project.language || line.size === project.config.size) continue;
+    const file = path.resolve(project.dir, line.file);
+    if (!fs.existsSync(file) || sha256File(file) !== line.sha256) continue;
+    out.push({ file: line.file, size: line.size, ...(line.event === 'package' ? { platform: line.platform } : {}) });
+  }
+  return out;
+}
+
+// "out/video.mp4 (16:9) was made from the old script. Render it again so both say the same."
+export function outdatedLine(render) {
+  const again = render.platform ? `Package it again with --platform ${render.platform}` : 'Render it again';
+  return `${render.file} (${render.size}) was made from the old script. ${again} so both say the same.`;
+}
+
+export function reloadProject(project) {
+  return loadProject(project.dir, project.overrides ?? { size: project.sizeOverride, lang: project.language });
+}

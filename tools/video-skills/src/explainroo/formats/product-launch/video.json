@@ -1,0 +1,11 @@
+{
+  "title": "Acme Notes",
+  "theme": "studio",
+  "size": "16:9",
+  "voice": "af_heart",
+  "music": true,
+  "captions": "auto",
+  "transition": "push",
+  "cover": "hook@end",
+  "defaults": "0.6"
+}

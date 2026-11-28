@@ -1,0 +1,368 @@
+{
+  "steps": [
+    { "id": "voice", "name": "Voice", "what": "Who reads the narration aloud." },
+    { "id": "timing", "name": "Timing", "what": "What notes when each word is spoken, so that pictures can appear on a word." },
+    { "id": "images", "name": "Images", "what": "Where the pictures in a scene come from." },
+    { "id": "clips", "name": "Clips", "what": "Where short pieces of video come from." },
+    { "id": "presenters", "name": "Presenters", "what": "Who appears on screen and talks next to the product, if anyone." },
+    { "id": "music", "name": "Music", "what": "What plays under the voice." },
+    { "id": "sharing", "name": "Sharing", "what": "How other people get to watch the video.", "command": "share" },
+    { "id": "posting", "name": "Posting", "what": "How the video gets onto a platform.", "command": "publish" }
+  ],
+  "services": [
+    {
+      "id": "kokoro",
+      "step": "voice",
+      "name": "Kokoro",
+      "about": "A voice model that runs on this computer. It is the default voice. It speaks every language explainroo has, except German.",
+      "free": true,
+      "partner": false,
+      "status": "available",
+      "cost": "Free.",
+      "data_leaves": "Nothing leaves your computer.",
+      "setup": {
+        "env": [],
+        "steps": ["Nothing to set up. The model downloads the first time it is needed."],
+        "use": "Run \"explainroo voices\" to see the voices, then set \"voice\" in video.json."
+      },
+      "voice": { "keys": ["id"] }
+    },
+    {
+      "id": "recording",
+      "step": "voice",
+      "name": "Your own recording",
+      "about": "You read the script yourself, and explainroo uses that sound. It works in every language explainroo has, German included.",
+      "free": true,
+      "partner": false,
+      "status": "available",
+      "cost": "Free.",
+      "data_leaves": "Nothing leaves your computer.",
+      "setup": {
+        "env": [],
+        "steps": ["Nothing to set up. Record the narration in a quiet room and put the file in assets/."],
+        "use": "Set \"voice\": { \"provider\": \"recording\", \"src\": \"assets/narration.m4a\" } in video.json."
+      },
+      "voice": { "keys": ["src"] }
+    },
+    {
+      "id": "elevenlabs",
+      "step": "voice",
+      "name": "ElevenLabs",
+      "about": "A company that turns text into speech. It has its own voices and can clone one. It speaks every language explainroo has, German included.",
+      "free": false,
+      "partner": false,
+      "status": "available",
+      "cost": "Paid per character on your ElevenLabs account.",
+      "data_leaves": "The narration text goes to ElevenLabs.",
+      "setup": {
+        "env": ["ELEVENLABS_API_KEY"],
+        "url": "https://elevenlabs.io",
+        "steps": [
+          "Make an account at elevenlabs.io.",
+          "Open the API keys page in your account settings.",
+          "Make a key that may read voices and make speech, and copy it."
+        ],
+        "use": "Run \"explainroo voices --provider elevenlabs\" to see the voices, then set \"voice\": { \"provider\": \"elevenlabs\", \"id\": \"<voice id>\" } in video.json."
+      },
+      "voice": { "keys": ["id", "model"], "defaults": { "model": "eleven_multilingual_v2" } }
+    },
+    {
+      "id": "cartesia",
+      "step": "voice",
+      "name": "Cartesia",
+      "about": "A company that turns text into speech with its Sonic voices. It reads everything between two pauses at once, so the sentences sound connected. It speaks every language explainroo has, German included.",
+      "free": false,
+      "partner": false,
+      "status": "available",
+      "cost": "Paid per character on your Cartesia account.",
+      "data_leaves": "The narration text goes to Cartesia.",
+      "setup": {
+        "env": ["CARTESIA_API_KEY"],
+        "url": "https://play.cartesia.ai/keys",
+        "steps": [
+          "Make an account at play.cartesia.ai.",
+          "Open play.cartesia.ai/keys and make a new API key.",
+          "Copy the key."
+        ],
+        "use": "Run \"explainroo voices --provider cartesia\" to see the voices, then set \"voice\": { \"provider\": \"cartesia\", \"id\": \"<voice id>\" } in video.json."
+      },
+      "voice": { "keys": ["id", "model"], "defaults": { "model": "sonic-3.6" } }
+    },
+    {
+      "id": "whisper",
+      "step": "timing",
+      "name": "Whisper",
+      "about": "A speech model that runs on this computer. It listens to the narration and notes when each word is spoken.",
+      "free": true,
+      "partner": false,
+      "status": "available",
+      "cost": "Free.",
+      "data_leaves": "Nothing leaves your computer.",
+      "setup": {
+        "env": [],
+        "steps": ["Nothing to set up. The model downloads the first time it is needed."],
+        "use": "It always runs. Cue a picture on a spoken word with at: 'word' in scenes.js."
+      }
+    },
+    {
+      "id": "own-images",
+      "step": "images",
+      "name": "Built-in icons and your own image files",
+      "about": "More than 1,800 icons come with explainroo, and any image you put in assets/ works too.",
+      "free": true,
+      "partner": false,
+      "status": "available",
+      "cost": "Free.",
+      "data_leaves": "Nothing leaves your computer.",
+      "setup": {
+        "env": [],
+        "steps": ["Nothing to set up."],
+        "use": "Search the icons with \"explainroo icons <word>\". Draw them with s.icon, and your own files with s.image."
+      }
+    },
+    {
+      "id": "own-footage",
+      "step": "clips",
+      "name": "Your own footage",
+      "about": "Any video file you put in assets/ can play in a scene.",
+      "free": true,
+      "partner": false,
+      "status": "available",
+      "cost": "Free.",
+      "data_leaves": "Nothing leaves your computer.",
+      "setup": {
+        "env": [],
+        "steps": ["Nothing to set up. Put the video file in assets/."],
+        "use": "Play it in a scene with s.clip('assets/name.mp4')."
+      }
+    },
+    {
+      "id": "openrouter",
+      "step": ["images", "clips"],
+      "name": "OpenRouter",
+      "about": "A company that gives one account access to many AI models. explainroo uses one OpenRouter key for illustrations and for short AI video clips.",
+      "free": false,
+      "partner": false,
+      "status": "available",
+      "per_step": {
+        "images": {
+          "cost": "Paid per image on your OpenRouter account, roughly 7 to 13 cents.",
+          "data_leaves": "The prompt and any reference images go to OpenRouter and to the company that runs the image model.",
+          "use": "Make an image with: explainroo image <project> <name> \"<what to draw>\"."
+        },
+        "clips": {
+          "cost": "Paid per second on your OpenRouter account. \"explainroo clip \"<what it shows>\" --seconds 6 --dry-run\" shows the price of one clip, with no key and no project. A failed try may cost money too.",
+          "price_range": "On 2026-11-07 the video models explainroo can price cost from about half a cent to 60 cents a second. Six silent seconds at 720p on the default model came to about 18 cents.",
+          "data_leaves": "The prompt goes to OpenRouter and to the company that runs the video model. Video jobs are not covered by OpenRouter's zero data retention.",
+          "use": "See the price first with: explainroo clip <project> \"<what it shows>\" --seconds 6 --dry-run. Run \"explainroo docs clips\" for what clips are good and bad at."
+        }
+      },
+      "setup": {
+        "env": ["OPENROUTER_API_KEY"],
+        "url": "https://openrouter.ai/keys",
+        "steps": [
+          "Make an account at openrouter.ai and add some credit.",
+          "Open openrouter.ai/keys and make a new key.",
+          "Copy the key."
+        ]
+      }
+    },
+    {
+      "id": "own-presenter",
+      "step": "presenters",
+      "name": "Film yourself",
+      "about": "You record yourself talking with a camera or a phone, and the clip plays in a scene next to the product.",
+      "free": true,
+      "partner": false,
+      "status": "available",
+      "cost": "Free.",
+      "data_leaves": "Nothing leaves your computer.",
+      "setup": {
+        "env": [],
+        "steps": ["Nothing to set up. Film yourself saying the narration of a scene, and put the file in assets/."],
+        "use": "Play it in a scene with s.clip('assets/me.mp4', { volume: 1 }). Run \"explainroo docs presenters\" for more."
+      }
+    },
+    {
+      "id": "presenter",
+      "step": "presenters",
+      "name": "An AI presenter service",
+      "about": "A service that makes a clip of a talking AI person who speaks the narration of a scene. explainroo has the code for this kind of service and its consent rule: no real person's face or voice without the service's consent flow. No presenter service is built in yet.",
+      "free": false,
+      "partner": false,
+      "status": "coming",
+      "cost": "Paid per second of clip on your account at the presenter service. \"explainroo presenter --dry-run\" shows the price first.",
+      "data_leaves": "The narration of the scene, as sound, and the id of the avatar go to the presenter service, and only when you run \"explainroo presenter\".",
+      "setup": {
+        "env": ["PRESENTER_API_KEY"],
+        "steps": ["No presenter service is built in yet. A service that speaks the API in \"explainroo docs presenters\" works when EXPLAINROO_PRESENTER_URL names it and PRESENTER_API_KEY holds its key."],
+        "use": "List the avatars with: explainroo presenter <project> --avatars. See the plan first with: explainroo presenter <project> <scene> --avatar <id> --dry-run."
+      }
+    },
+    {
+      "id": "built-in-music",
+      "step": "music",
+      "name": "Built-in music",
+      "about": "explainroo makes music on this computer while it renders, and each look has its own style.",
+      "free": true,
+      "partner": false,
+      "status": "available",
+      "cost": "Free.",
+      "data_leaves": "Nothing leaves your computer.",
+      "setup": {
+        "env": [],
+        "steps": ["Nothing to set up."],
+        "use": "It is on by default. Set \"music\" in video.json to pick a style or to turn it off."
+      }
+    },
+    {
+      "id": "own-music",
+      "step": "music",
+      "name": "Your own music file",
+      "about": "Any music file you are allowed to use plays under the voice, at the same level as the built-in music.",
+      "free": true,
+      "partner": false,
+      "status": "available",
+      "cost": "Free.",
+      "data_leaves": "Nothing leaves your computer.",
+      "setup": {
+        "env": [],
+        "steps": ["Nothing to set up. Put the file in assets/."],
+        "use": "Set \"music\": { \"src\": \"assets/track.mp3\", \"credit\": \"Who made it\" } in video.json. Run \"explainroo docs music\" for more."
+      }
+    },
+    {
+      "id": "soundroo",
+      "step": "music",
+      "name": "Soundroo",
+      "about": "A free, open-source tool at soundroo.com. Your agent writes original music as a score, and its engine renders that to a WAV file on this computer.",
+      "free": true,
+      "partner": false,
+      "status": "available",
+      "cost": "Free.",
+      "data_leaves": "Nothing leaves your computer unless you run Soundroo's own share command.",
+      "setup": {
+        "env": [],
+        "url": "https://www.soundroo.com",
+        "steps": ["It needs Node 22 or newer, which is newer than explainroo needs. Run \"explainroo docs music\" for the steps."],
+        "use": "Render a track with Soundroo, copy the WAV file to assets/, and set \"music\": { \"src\": \"assets/track.wav\" } in video.json."
+      }
+    },
+    {
+      "id": "web-player",
+      "step": "sharing",
+      "name": "Web player for your own site",
+      "about": "\"explainroo export\" writes a folder with a player, and you put that folder on your own website.",
+      "free": true,
+      "partner": false,
+      "status": "available",
+      "cost": "Free.",
+      "data_leaves": "Nothing leaves your computer until you copy the folder to your site.",
+      "setup": {
+        "env": [],
+        "steps": ["Nothing to set up."],
+        "use": "Run \"explainroo export <project>\" and copy out/player/ to your site."
+      }
+    },
+    {
+      "id": "cloud",
+      "step": "sharing",
+      "name": "Hosted link on explainroo.com",
+      "about": "\"explainroo share\" uploads a finished video to explainroo.com and gives back a page that anyone with the link can watch, and a link to the file that posting tools can use. The service is coming. Until it runs, the command sends nothing and says so.",
+      "free": true,
+      "partner": false,
+      "status": "coming",
+      "cost": "Free. A link shared without an account expires, and the command says when.",
+      "data_leaves": "Nothing yet, because the service is coming. Once it runs, the video file and its title go to explainroo.com, and only when you run \"explainroo share\".",
+      "setup": {
+        "env": [],
+        "url": "https://www.explainroo.com",
+        "steps": ["Nothing to set up. A key from an explainroo.com account in EXPLAINROO_CLOUD_KEY makes the link part of that account, so it does not expire."],
+        "use": "Run \"explainroo share <project>\" to share out/video.mp4, or add --platform tiktok to share a package. Run \"explainroo docs publishing\" for more."
+      }
+    },
+    {
+      "id": "package",
+      "step": "posting",
+      "name": "A package to upload by hand",
+      "about": "\"explainroo package\" writes a folder with everything needed to post the video on one platform. You upload it yourself.",
+      "free": true,
+      "partner": false,
+      "status": "available",
+      "cost": "Free.",
+      "data_leaves": "Nothing leaves your computer until you upload the files.",
+      "setup": {
+        "env": [],
+        "steps": ["Nothing to set up."],
+        "use": "Run \"explainroo package <project> --platform tiktok\" and upload what is in out/package/tiktok/. The platforms are youtube, shorts, tiktok, reels, linkedin and x. Run \"explainroo docs publishing\" for more."
+      }
+    },
+    {
+      "id": "youtube",
+      "step": "posting",
+      "name": "YouTube with your own Google client",
+      "about": "\"explainroo publish --via youtube\" uploads a youtube or shorts package to your channel. It signs in with a Google client that you make in your own Google Cloud project, so the video and your login go only to Google.",
+      "free": true,
+      "partner": false,
+      "status": "available",
+      "cost": "Free. On 2026-11-07 YouTube let each Google Cloud project upload 100 videos a day through its API.",
+      "data_leaves": "The video, its title and its description go to YouTube, and only when you run \"explainroo publish\".",
+      "setup": {
+        "env": ["YOUTUBE_CLIENT_ID", "YOUTUBE_CLIENT_SECRET", "YOUTUBE_REFRESH_TOKEN"],
+        "login": "oauth",
+        "url": "https://console.cloud.google.com/apis/credentials",
+        "steps": [
+          "Open console.cloud.google.com and make a project, or pick one of yours.",
+          "Turn on the YouTube Data API v3 for that project.",
+          "Set up the OAuth consent screen, and add your own Google account as a test user.",
+          "Under Credentials, make an OAuth client ID of the type Desktop app.",
+          "Copy its client id and client secret."
+        ],
+        "use": "See the post first with: explainroo publish <project> --via youtube --dry-run. Run \"explainroo docs publishing\" for more."
+      }
+    },
+    {
+      "id": "buffer",
+      "step": "posting",
+      "name": "Buffer",
+      "about": "A company that posts to social networks for you. \"explainroo publish --via buffer\" sends a package to one of your Buffer channels on YouTube, TikTok, Instagram, LinkedIn or X. Buffer needs a public https link to the package's video.mp4: put the file on a host you choose and pass the link with --media-url. The link has to work until the post goes out, and putting the file there makes the video public.",
+      "free": true,
+      "partner": false,
+      "status": "available",
+      "cost": "Free on Buffer's free plan, which limits how many channels and posts you have. Bigger plans cost money on your Buffer account.",
+      "data_leaves": "The title, the text and a link to the video go to Buffer, which fetches the video from that link and posts it.",
+      "setup": {
+        "env": ["BUFFER_ACCESS_TOKEN", "BUFFER_REFRESH_TOKEN"],
+        "login": "oauth",
+        "url": "https://buffer.com",
+        "steps": [
+          "Make an account at buffer.com and connect the channels you want to post to.",
+          "Run \"explainroo connect buffer\", open the link it prints and approve.",
+          "Give the address the browser lands on to \"explainroo connect buffer --callback-url\"."
+        ],
+        "use": "See the post first with: explainroo publish <project> --via buffer --platform tiktok --dry-run. Run \"explainroo docs publishing\" for more."
+      }
+    },
+    {
+      "id": "blotato",
+      "step": "posting",
+      "name": "Blotato",
+      "about": "A company that posts to social networks for you. \"explainroo publish --via blotato\" uploads a package to Blotato and posts it to one of your accounts on YouTube, TikTok, Instagram, LinkedIn or X.",
+      "free": false,
+      "partner": true,
+      "status": "available",
+      "cost": "Paid. It needs a paid Blotato plan, and the Starter plan cost $29 a month on 2026-11-07. Creating an API key ends Blotato's free trial and starts that plan on your account.",
+      "data_leaves": "The video, its title and its text go to Blotato, which posts them to the network, and only when you run \"explainroo publish\".",
+      "setup": {
+        "env": ["BLOTATO_API_KEY"],
+        "url": "https://blotato.com/?ref=vincentvf",
+        "steps": [
+          "Creating an API key ends Blotato's free trial and starts its paid Starter plan on your account. Only go on if you want that.",
+          "Make an account at https://blotato.com/?ref=vincentvf (partner link). Connect the accounts you want to post to.",
+          "Open the API settings in your Blotato account, make a key, and copy all of it, including any \"=\" at the end."
+        ],
+        "use": "See the post first with: explainroo publish <project> --via blotato --platform tiktok --dry-run. Run \"explainroo docs publishing\" for more."
+      }
+    }
+  ]
+}

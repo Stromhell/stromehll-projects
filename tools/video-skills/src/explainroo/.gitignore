@@ -1,0 +1,14 @@
+node_modules/
+.DS_Store
+*.log
+# video projects created locally (examples/ stays tracked)
+videos/
+# build output inside any project
+build/
+out/
+# a render of an example adds to its record
+examples/*/history/
+formats/*/history/
+.cache/
+.scratch/
+.env

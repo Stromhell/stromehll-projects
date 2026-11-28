@@ -1,0 +1,317 @@
+{
+  "version": 1,
+  "url": "http://127.0.0.1:4500/#/invoices",
+  "width": 982,
+  "height": 540,
+  "duration": 23.36,
+  "start": 3.003,
+  "end": 20.977,
+  "cursor": {
+    "x": 491,
+    "y": 270
+  },
+  "script": "0f94a86d0e6f7190",
+  "changes": true,
+  "steps": [
+    {
+      "step": 1,
+      "do": "click",
+      "start": 0.982,
+      "text": "Accept",
+      "before": true,
+      "box": {
+        "x": 667,
+        "y": 470,
+        "w": 94,
+        "h": 48
+      },
+      "match": {
+        "tag": "button",
+        "text": "Accept",
+        "selector": "#accept"
+      },
+      "move": {
+        "t0": 0.993,
+        "t1": 1.598,
+        "x0": 491,
+        "y0": 270,
+        "x1": 667,
+        "y1": 470
+      },
+      "click": 1.821,
+      "t": 1.821,
+      "changed": true,
+      "end": 2.601
+    },
+    {
+      "step": 2,
+      "do": "hover",
+      "start": 3.003,
+      "text": "Total",
+      "cue": "#list",
+      "box": {
+        "x": 621,
+        "y": 399,
+        "w": 610,
+        "h": 30
+      },
+      "match": {
+        "tag": "p",
+        "text": "Total $2,430",
+        "selector": "p.total"
+      },
+      "move": {
+        "t0": 3.01,
+        "t1": 3.327,
+        "x0": 667,
+        "y0": 470,
+        "x1": 621,
+        "y1": 399
+      },
+      "t": 3.327,
+      "changed": false,
+      "end": 4.03
+    },
+    {
+      "step": 3,
+      "do": "click",
+      "start": 4.031,
+      "text": "New invoice",
+      "cue": "#new",
+      "box": {
+        "x": 857,
+        "y": 64,
+        "w": 138,
+        "h": 48
+      },
+      "match": {
+        "tag": "button",
+        "text": "New invoice",
+        "selector": "#new"
+      },
+      "move": {
+        "t0": 4.035,
+        "t1": 4.649,
+        "x0": 621,
+        "y0": 399,
+        "x1": 857,
+        "y1": 64
+      },
+      "click": 4.871,
+      "t": 4.871,
+      "changed": true,
+      "end": 5.658
+    },
+    {
+      "step": 4,
+      "do": "type",
+      "start": 5.658,
+      "text": "Customer",
+      "cue": "#customer",
+      "box": {
+        "x": 621,
+        "y": 227,
+        "w": 552,
+        "h": 44
+      },
+      "match": {
+        "tag": "select",
+        "text": "Customer",
+        "selector": "#customer"
+      },
+      "move": {
+        "t0": 5.662,
+        "t1": 6.273,
+        "x0": 857,
+        "y0": 64,
+        "x1": 621,
+        "y1": 227
+      },
+      "click": 6.493,
+      "t": 6.823,
+      "until": 7.358,
+      "end": 8.077
+    },
+    {
+      "step": 5,
+      "do": "type",
+      "start": 8.079,
+      "text": "Amount",
+      "cue": "#amount",
+      "box": {
+        "x": 621,
+        "y": 318,
+        "w": 552,
+        "h": 45
+      },
+      "match": {
+        "tag": "input",
+        "text": "Amount",
+        "selector": "#amount"
+      },
+      "move": {
+        "t0": 8.085,
+        "t1": 8.69,
+        "x0": 621,
+        "y0": 227,
+        "x1": 621,
+        "y1": 318
+      },
+      "click": 8.91,
+      "t": 9.234,
+      "until": 9.511,
+      "end": 10.231
+    },
+    {
+      "step": 6,
+      "do": "type",
+      "start": 10.232,
+      "text": "Note",
+      "cue": "#note",
+      "box": {
+        "x": 621,
+        "y": 409,
+        "w": 552,
+        "h": 45
+      },
+      "match": {
+        "tag": "input",
+        "text": "Note",
+        "selector": "#note"
+      },
+      "move": {
+        "t0": 10.237,
+        "t1": 10.841,
+        "x0": 621,
+        "y0": 318,
+        "x1": 621,
+        "y1": 409
+      },
+      "click": 11.061,
+      "t": 11.385,
+      "until": 12.396,
+      "end": 13.115
+    },
+    {
+      "step": 7,
+      "do": "zoom",
+      "start": 13.116,
+      "selector": "form",
+      "cue": "#check",
+      "box": {
+        "x": 621,
+        "y": 337,
+        "w": 610,
+        "h": 378
+      },
+      "match": {
+        "tag": "form",
+        "text": "Customer Harbor Books Maple Bakery Ridge Cycling Acme Studio Amount Note Save...",
+        "selector": "#form"
+      },
+      "t": 13.119,
+      "end": 14.419
+    },
+    {
+      "step": 8,
+      "do": "click",
+      "start": 14.423,
+      "text": "Save invoice",
+      "cue": "#save",
+      "box": {
+        "x": 415,
+        "y": 473,
+        "w": 140,
+        "h": 48
+      },
+      "match": {
+        "tag": "button",
+        "text": "Save invoice",
+        "selector": "#form > div > button"
+      },
+      "move": {
+        "t0": 14.427,
+        "t1": 15.03,
+        "x0": 621,
+        "y0": 409,
+        "x1": 415,
+        "y1": 473
+      },
+      "click": 15.252,
+      "t": 15.252,
+      "changed": true,
+      "end": 16.029
+    },
+    {
+      "step": 9,
+      "do": "zoom",
+      "start": 16.03,
+      "t": 16.03,
+      "end": 17.331
+    },
+    {
+      "step": 10,
+      "do": "hover",
+      "start": 17.333,
+      "text": "#1044",
+      "cue": "#lands",
+      "box": {
+        "x": 385,
+        "y": 390,
+        "w": 138,
+        "h": 55
+      },
+      "match": {
+        "tag": "td",
+        "text": "#1044",
+        "selector": "tr:nth-of-type(4) > td:nth-of-type(1)"
+      },
+      "move": {
+        "t0": 17.34,
+        "t1": 17.943,
+        "x0": 415,
+        "y0": 473,
+        "x1": 385,
+        "y1": 390
+      },
+      "t": 17.943,
+      "changed": true,
+      "end": 18.645
+    },
+    {
+      "step": 11,
+      "do": "hover",
+      "start": 18.647,
+      "selector": "#total",
+      "cue": "#total",
+      "box": {
+        "x": 398,
+        "y": 453,
+        "w": 63,
+        "h": 27
+      },
+      "match": {
+        "tag": "b",
+        "text": "$4,830",
+        "selector": "#total"
+      },
+      "move": {
+        "t0": 18.652,
+        "t1": 19.269,
+        "x0": 385,
+        "y0": 390,
+        "x1": 398,
+        "y1": 453
+      },
+      "t": 19.269,
+      "changed": false,
+      "end": 19.974
+    }
+  ],
+  "blur": [
+    {
+      "selector": ".email",
+      "found": true
+    }
+  ]
+}
