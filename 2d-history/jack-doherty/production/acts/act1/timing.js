@@ -1,1 +1,737 @@
-window.TIMING={"dur": 62.0, "shots": [{"i": 0, "start": 0, "end": 15.73, "vo_start": 0.6, "vo_end": 15.48, "text": "June twenty seventeen. A teenager and his friend Ricky film a floor-is-lava challenge inside a giant American supermarket. They leap from shelf to shelf, staff come running, and the two of them are thrown out."}, {"i": 1, "start": 15.73, "end": 27.79, "vo_start": 16.03, "vo_end": 27.54, "text": "The video passes fifteen million views. And Jack learns the lesson that will shape the next nine years. Getting kicked out isn't the punishment. It's the product."}, {"i": 2, "start": 27.79, "end": 39.88, "vo_start": 28.09, "vo_end": 39.63, "text": "Seven of his fifteen biggest videos have the supermarket or kicked out right in the title. His kicked-out uploads alone have pulled in around ninety million views."}, {"i": 3, "start": 39.88, "end": 50.81, "vo_start": 40.18, "vo_end": 50.56, "text": "The formula never changes. Do the stunt. Get removed. Post the clip. The security guard isn't the villain of the video. He's the free co-star."}, {"i": 4, "start": 50.81, "end": 62.0, "vo_start": 51.11, "vo_end": 61.45, "text": "By his twenties he has fifteen million subscribers, a garage of supercars, and a reputation. And the reputation is growing faster than the channel."}], "words": [{"w": "June", "s": 0.6, "e": 0.94}, {"w": "twenty", "s": 0.99, "e": 1.4}, {"w": "seventeen.", "s": 1.45, "e": 2.0}, {"w": "A", "s": 2.05, "e": 2.28}, {"w": "teenager", "s": 2.33, "e": 2.81}, {"w": "and", "s": 2.87, "e": 3.17}, {"w": "his", "s": 3.22, "e": 3.53}, {"w": "friend", "s": 3.58, "e": 3.99}, {"w": "Ricky", "s": 4.04, "e": 4.41}, {"w": "film", "s": 4.46, "e": 4.8}, {"w": "a", "s": 4.85, "e": 5.08}, {"w": "floor-is-lava", "s": 5.13, "e": 5.79}, {"w": "challenge", "s": 5.84, "e": 6.36}, {"w": "inside", "s": 6.41, "e": 6.82}, {"w": "a", "s": 6.87, "e": 7.1}, {"w": "giant", "s": 7.15, "e": 7.53}, {"w": "American", "s": 7.58, "e": 8.05}, {"w": "supermarket.", "s": 8.11, "e": 8.73}, {"w": "They", "s": 8.78, "e": 9.12}, {"w": "leap", "s": 9.17, "e": 9.51}, {"w": "from", "s": 9.56, "e": 9.9}, {"w": "shelf", "s": 9.95, "e": 10.32}, {"w": "to", "s": 10.37, "e": 10.64}, {"w": "shelf", "s": 10.69, "e": 11.1}, {"w": "staff", "s": 11.15, "e": 11.53}, {"w": "come", "s": 11.58, "e": 11.92}, {"w": "running", "s": 11.97, "e": 12.45}, {"w": "and", "s": 12.5, "e": 12.8}, {"w": "the", "s": 12.85, "e": 13.16}, {"w": "two", "s": 13.21, "e": 13.51}, {"w": "of", "s": 13.56, "e": 13.83}, {"w": "them", "s": 13.88, "e": 14.22}, {"w": "are", "s": 14.27, "e": 14.58}, {"w": "thrown", "s": 14.63, "e": 15.04}, {"w": "out.", "s": 15.09, "e": 15.43}, {"w": "The", "s": 16.03, "e": 16.33}, {"w": "video", "s": 16.38, "e": 16.76}, {"w": "passes", "s": 16.81, "e": 17.22}, {"w": "fifteen", "s": 17.27, "e": 17.71}, {"w": "million", "s": 17.76, "e": 18.21}, {"w": "views.", "s": 18.26, "e": 18.67}, {"w": "And", "s": 18.72, "e": 19.02}, {"w": "Jack", "s": 19.07, "e": 19.41}, {"w": "learns", "s": 19.46, "e": 19.87}, {"w": "the", "s": 19.92, "e": 20.23}, {"w": "lesson", "s": 20.28, "e": 20.69}, {"w": "that", "s": 20.74, "e": 21.08}, {"w": "will", "s": 21.13, "e": 21.47}, {"w": "shape", "s": 21.52, "e": 21.89}, {"w": "the", "s": 21.94, "e": 22.25}, {"w": "next", "s": 22.3, "e": 22.64}, {"w": "nine", "s": 22.69, "e": 23.03}, {"w": "years.", "s": 23.08, "e": 23.49}, {"w": "Getting", "s": 23.54, "e": 23.98}, {"w": "kicked", "s": 24.03, "e": 24.44}, {"w": "out", "s": 24.49, "e": 24.8}, {"w": "isn't", "s": 24.85, "e": 25.22}, {"w": "the", "s": 25.27, "e": 25.58}, {"w": "punishment.", "s": 25.63, "e": 26.21}, {"w": "It's", "s": 26.26, "e": 26.6}, {"w": "the", "s": 26.65, "e": 26.96}, {"w": "product.", "s": 27.01, "e": 27.49}, {"w": "Seven", "s": 28.09, "e": 28.46}, {"w": "of", "s": 28.51, "e": 28.78}, {"w": "his", "s": 28.83, "e": 29.14}, {"w": "fifteen", "s": 29.19, "e": 29.63}, {"w": "biggest", "s": 29.68, "e": 30.13}, {"w": "videos", "s": 30.18, "e": 30.59}, {"w": "have", "s": 30.64, "e": 30.98}, {"w": "the", "s": 31.03, "e": 31.33}, {"w": "supermarket", "s": 31.38, "e": 31.97}, {"w": "or", "s": 32.02, "e": 32.29}, {"w": "kicked", "s": 32.34, "e": 32.75}, {"w": "out", "s": 32.8, "e": 33.1}, {"w": "right", "s": 33.15, "e": 33.53}, {"w": "in", "s": 33.58, "e": 33.85}, {"w": "the", "s": 33.9, "e": 34.2}, {"w": "title.", "s": 34.25, "e": 34.66}, {"w": "His", "s": 34.71, "e": 35.02}, {"w": "kicked-out", "s": 35.07, "e": 35.62}, {"w": "uploads", "s": 35.67, "e": 36.11}, {"w": "alone", "s": 36.16, "e": 36.54}, {"w": "have", "s": 36.59, "e": 36.93}, {"w": "pulled", "s": 36.98, "e": 37.39}, {"w": "in", "s": 37.44, "e": 37.71}, {"w": "around", "s": 37.76, "e": 38.17}, {"w": "ninety", "s": 38.22, "e": 38.63}, {"w": "million", "s": 38.68, "e": 39.12}, {"w": "views.", "s": 39.17, "e": 39.58}, {"w": "The", "s": 40.18, "e": 40.49}, {"w": "formula", "s": 40.54, "e": 40.98}, {"w": "never", "s": 41.03, "e": 41.41}, {"w": "changes.", "s": 41.46, "e": 41.94}, {"w": "Do", "s": 41.99, "e": 42.26}, {"w": "the", "s": 42.31, "e": 42.61}, {"w": "stunt.", "s": 42.66, "e": 43.07}, {"w": "Get", "s": 43.12, "e": 43.43}, {"w": "removed.", "s": 43.48, "e": 43.96}, {"w": "Post", "s": 44.01, "e": 44.35}, {"w": "the", "s": 44.4, "e": 44.7}, {"w": "clip.", "s": 44.75, "e": 45.13}, {"w": "The", "s": 45.18, "e": 45.48}, {"w": "security", "s": 45.53, "e": 46.01}, {"w": "guard", "s": 46.06, "e": 46.44}, {"w": "isn't", "s": 46.48, "e": 46.86}, {"w": "the", "s": 46.91, "e": 47.21}, {"w": "villain", "s": 47.26, "e": 47.71}, {"w": "of", "s": 47.76, "e": 48.03}, {"w": "the", "s": 48.08, "e": 48.38}, {"w": "video.", "s": 48.43, "e": 48.84}, {"w": "He's", "s": 48.89, "e": 49.23}, {"w": "the", "s": 49.28, "e": 49.59}, {"w": "free", "s": 49.64, "e": 49.98}, {"w": "co-star.", "s": 50.03, "e": 50.51}, {"w": "By", "s": 51.11, "e": 51.38}, {"w": "his", "s": 51.43, "e": 51.73}, {"w": "twenties", "s": 51.78, "e": 52.26}, {"w": "he", "s": 52.31, "e": 52.58}, {"w": "has", "s": 52.63, "e": 52.94}, {"w": "fifteen", "s": 52.99, "e": 53.43}, {"w": "million", "s": 53.48, "e": 53.93}, {"w": "subscribers", "s": 53.98, "e": 54.6}, {"w": "a", "s": 54.65, "e": 54.88}, {"w": "garage", "s": 54.93, "e": 55.34}, {"w": "of", "s": 55.39, "e": 55.66}, {"w": "supercars", "s": 55.71, "e": 56.26}, {"w": "and", "s": 56.31, "e": 56.62}, {"w": "a", "s": 56.67, "e": 56.9}, {"w": "reputation.", "s": 56.95, "e": 57.54}, {"w": "And", "s": 57.59, "e": 57.89}, {"w": "the", "s": 57.94, "e": 58.25}, {"w": "reputation", "s": 58.3, "e": 58.85}, {"w": "is", "s": 58.9, "e": 59.17}, {"w": "growing", "s": 59.22, "e": 59.66}, {"w": "faster", "s": 59.71, "e": 60.12}, {"w": "than", "s": 60.17, "e": 60.51}, {"w": "the", "s": 60.56, "e": 60.87}, {"w": "channel.", "s": 60.92, "e": 61.4}], "estimated": true}
+window.TIMING={
+"dur": 55.815,
+"shots": [
+{
+"i": 1,
+"start": 0.0,
+"vo_start": 0.6,
+"vo_end": 13.788,
+"text": "June twenty seventeen. A teenager and his friend Ricky film a floor-is-lava challenge inside a giant American supermarket. They leap from shelf to shelf, staff come running, and the two of them are thrown out.",
+"end": 14.063
+},
+{
+"i": 2,
+"start": 14.063,
+"vo_start": 14.338,
+"vo_end": 25.457,
+"text": "The video passes fifteen million views. And Jack learns the lesson that will shape the next nine years. Getting kicked out isn't the punishment. It's the product.",
+"end": 25.732
+},
+{
+"i": 3,
+"start": 25.732,
+"vo_start": 26.007,
+"vo_end": 35.167,
+"text": "Seven of his fifteen biggest videos have the supermarket or kicked out right in the title. His kicked-out uploads alone have pulled in around ninety million views.",
+"end": 35.442
+},
+{
+"i": 4,
+"start": 35.442,
+"vo_start": 35.717,
+"vo_end": 46.545,
+"text": "The formula never changes. Do the stunt. Get removed. Post the clip. The security guard isn't the villain of the video. He's the free co-star.",
+"end": 46.82
+},
+{
+"i": 5,
+"start": 46.82,
+"vo_start": 47.095,
+"vo_end": 54.865,
+"text": "By his twenties he has fifteen million subscribers, a garage of supercars, and a reputation. And the reputation is growing faster than the channel.",
+"end": 55.815
+}
+],
+"words": [
+{
+"w": "June",
+"s": 0.6,
+"e": 0.848
+},
+{
+"w": "twenty",
+"s": 0.6,
+"e": 2.768
+},
+{
+"w": "seventeen.",
+"s": 2.308,
+"e": 3.028
+},
+{
+"w": "A",
+"s": 2.768,
+"e": 3.268
+},
+{
+"w": "teenager",
+"s": 3.028,
+"e": 3.688
+},
+{
+"w": "and",
+"s": 3.428,
+"e": 3.688
+},
+{
+"w": "his",
+"s": 3.428,
+"e": 4.048
+},
+{
+"w": "friend",
+"s": 3.688,
+"e": 4.508
+},
+{
+"w": "Ricky",
+"s": 4.048,
+"e": 4.968
+},
+{
+"w": "film",
+"s": 4.668,
+"e": 5.868
+},
+{
+"w": "a",
+"s": 4.968,
+"e": 5.868
+},
+{
+"w": "floor-is-lava",
+"s": 4.968,
+"e": 6.568
+},
+{
+"w": "challenge",
+"s": 6.128,
+"e": 7.028
+},
+{
+"w": "inside",
+"s": 6.568,
+"e": 7.448
+},
+{
+"w": "a",
+"s": 7.228,
+"e": 7.908
+},
+{
+"w": "giant",
+"s": 7.448,
+"e": 7.908
+},
+{
+"w": "American",
+"s": 7.448,
+"e": 8.428
+},
+{
+"w": "supermarket.",
+"s": 7.908,
+"e": 9.808
+},
+{
+"w": "They",
+"s": 9.648,
+"e": 10.008
+},
+{
+"w": "leap",
+"s": 9.808,
+"e": 10.228
+},
+{
+"w": "from",
+"s": 10.008,
+"e": 10.428
+},
+{
+"w": "shelf",
+"s": 10.228,
+"e": 10.888
+},
+{
+"w": "to",
+"s": 10.628,
+"e": 10.888
+},
+{
+"w": "shelf,",
+"s": 10.628,
+"e": 11.308
+},
+{
+"w": "staff",
+"s": 11.128,
+"e": 11.568
+},
+{
+"w": "come",
+"s": 11.308,
+"e": 11.808
+},
+{
+"w": "running,",
+"s": 11.568,
+"e": 12.428
+},
+{
+"w": "and",
+"s": 11.808,
+"e": 12.528
+},
+{
+"w": "the",
+"s": 12.428,
+"e": 12.668
+},
+{
+"w": "two",
+"s": 12.528,
+"e": 12.788
+},
+{
+"w": "of",
+"s": 12.668,
+"e": 12.948
+},
+{
+"w": "them",
+"s": 12.788,
+"e": 13.088
+},
+{
+"w": "are",
+"s": 12.948,
+"e": 13.288
+},
+{
+"w": "thrown",
+"s": 13.088,
+"e": 13.568
+},
+{
+"w": "out.",
+"s": 13.288,
+"e": 13.568
+},
+{
+"w": "The",
+"s": 14.338,
+"e": 14.717
+},
+{
+"w": "video",
+"s": 14.537,
+"e": 15.097
+},
+{
+"w": "passes",
+"s": 14.717,
+"e": 15.537
+},
+{
+"w": "fifteen",
+"s": 15.097,
+"e": 15.757
+},
+{
+"w": "million",
+"s": 15.537,
+"e": 17.217
+},
+{
+"w": "views.",
+"s": 16.257,
+"e": 17.417
+},
+{
+"w": "And",
+"s": 17.217,
+"e": 17.697
+},
+{
+"w": "Jack",
+"s": 17.417,
+"e": 17.957
+},
+{
+"w": "learns",
+"s": 17.697,
+"e": 18.177
+},
+{
+"w": "the",
+"s": 17.957,
+"e": 18.417
+},
+{
+"w": "lesson",
+"s": 18.177,
+"e": 18.817
+},
+{
+"w": "that",
+"s": 18.557,
+"e": 18.997
+},
+{
+"w": "will",
+"s": 18.817,
+"e": 19.217
+},
+{
+"w": "shape",
+"s": 18.997,
+"e": 19.457
+},
+{
+"w": "the",
+"s": 19.217,
+"e": 19.897
+},
+{
+"w": "next",
+"s": 19.457,
+"e": 20.797
+},
+{
+"w": "nine",
+"s": 20.637,
+"e": 20.797
+},
+{
+"w": "years.",
+"s": 20.637,
+"e": 21.017
+},
+{
+"w": "Getting",
+"s": 20.797,
+"e": 21.577
+},
+{
+"w": "kicked",
+"s": 21.457,
+"e": 22.057
+},
+{
+"w": "out",
+"s": 21.697,
+"e": 22.057
+},
+{
+"w": "isn't",
+"s": 21.697,
+"e": 22.057
+},
+{
+"w": "the",
+"s": 21.697,
+"e": 23.377
+},
+{
+"w": "punishment.",
+"s": 23.217,
+"e": 23.857
+},
+{
+"w": "It's",
+"s": 23.537,
+"e": 24.597
+},
+{
+"w": "the",
+"s": 24.357,
+"e": 24.757
+},
+{
+"w": "product.",
+"s": 24.597,
+"e": 25.017
+},
+{
+"w": "Seven",
+"s": 26.007,
+"e": 26.307
+},
+{
+"w": "of",
+"s": 26.007,
+"e": 26.427
+},
+{
+"w": "his",
+"s": 26.307,
+"e": 26.587
+},
+{
+"w": "fifteen",
+"s": 26.427,
+"e": 27.367
+},
+{
+"w": "biggest",
+"s": 26.947,
+"e": 27.787
+},
+{
+"w": "videos",
+"s": 27.367,
+"e": 28.127
+},
+{
+"w": "have",
+"s": 27.787,
+"e": 28.287
+},
+{
+"w": "the",
+"s": 28.127,
+"e": 28.707
+},
+{
+"w": "supermarket",
+"s": 28.287,
+"e": 29.367
+},
+{
+"w": "or",
+"s": 28.707,
+"e": 29.567
+},
+{
+"w": "kicked",
+"s": 29.367,
+"e": 29.787
+},
+{
+"w": "out",
+"s": 29.567,
+"e": 30.047
+},
+{
+"w": "right",
+"s": 29.787,
+"e": 30.207
+},
+{
+"w": "in",
+"s": 30.047,
+"e": 30.287
+},
+{
+"w": "the",
+"s": 30.207,
+"e": 30.587
+},
+{
+"w": "title.",
+"s": 30.287,
+"e": 31.387
+},
+{
+"w": "His",
+"s": 31.127,
+"e": 31.387
+},
+{
+"w": "kicked-out",
+"s": 31.127,
+"e": 31.887
+},
+{
+"w": "uploads",
+"s": 31.647,
+"e": 32.567
+},
+{
+"w": "alone",
+"s": 31.887,
+"e": 32.707
+},
+{
+"w": "have",
+"s": 32.567,
+"e": 33.007
+},
+{
+"w": "pulled",
+"s": 32.707,
+"e": 33.247
+},
+{
+"w": "in",
+"s": 33.007,
+"e": 33.467
+},
+{
+"w": "around",
+"s": 33.247,
+"e": 33.747
+},
+{
+"w": "ninety",
+"s": 33.467,
+"e": 34.347
+},
+{
+"w": "million",
+"s": 34.147,
+"e": 34.747
+},
+{
+"w": "views.",
+"s": 34.347,
+"e": 34.747
+},
+{
+"w": "The",
+"s": 35.717,
+"e": 36.216
+},
+{
+"w": "formula",
+"s": 35.916,
+"e": 36.476
+},
+{
+"w": "never",
+"s": 36.216,
+"e": 36.936
+},
+{
+"w": "changes.",
+"s": 36.476,
+"e": 38.056
+},
+{
+"w": "Do",
+"s": 37.896,
+"e": 38.196
+},
+{
+"w": "the",
+"s": 38.056,
+"e": 38.476
+},
+{
+"w": "stunt.",
+"s": 38.196,
+"e": 39.756
+},
+{
+"w": "Get",
+"s": 39.516,
+"e": 40.216
+},
+{
+"w": "removed.",
+"s": 39.756,
+"e": 41.176
+},
+{
+"w": "Post",
+"s": 40.836,
+"e": 41.176
+},
+{
+"w": "the",
+"s": 40.836,
+"e": 41.396
+},
+{
+"w": "clip.",
+"s": 41.176,
+"e": 41.636
+},
+{
+"w": "The",
+"s": 41.396,
+"e": 42.896
+},
+{
+"w": "security",
+"s": 42.616,
+"e": 43.216
+},
+{
+"w": "guard",
+"s": 42.896,
+"e": 43.496
+},
+{
+"w": "isn't",
+"s": 43.216,
+"e": 43.616
+},
+{
+"w": "the",
+"s": 43.496,
+"e": 43.816
+},
+{
+"w": "villain",
+"s": 43.616,
+"e": 44.016
+},
+{
+"w": "of",
+"s": 43.816,
+"e": 44.116
+},
+{
+"w": "the",
+"s": 44.016,
+"e": 44.396
+},
+{
+"w": "video.",
+"s": 44.116,
+"e": 45.416
+},
+{
+"w": "He's",
+"s": 45.176,
+"e": 45.556
+},
+{
+"w": "the",
+"s": 45.416,
+"e": 45.756
+},
+{
+"w": "free",
+"s": 45.556,
+"e": 45.956
+},
+{
+"w": "co-star.",
+"s": 45.756,
+"e": 46.176
+},
+{
+"w": "By",
+"s": 47.095,
+"e": 47.305
+},
+{
+"w": "his",
+"s": 47.095,
+"e": 47.445
+},
+{
+"w": "twenties",
+"s": 47.305,
+"e": 48.105
+},
+{
+"w": "he",
+"s": 48.005,
+"e": 48.225
+},
+{
+"w": "has",
+"s": 48.105,
+"e": 48.545
+},
+{
+"w": "fifteen",
+"s": 48.225,
+"e": 48.745
+},
+{
+"w": "million",
+"s": 48.545,
+"e": 49.245
+},
+{
+"w": "subscribers,",
+"s": 48.745,
+"e": 50.025
+},
+{
+"w": "a",
+"s": 49.765,
+"e": 50.025
+},
+{
+"w": "garage",
+"s": 49.765,
+"e": 50.665
+},
+{
+"w": "of",
+"s": 50.205,
+"e": 50.665
+},
+{
+"w": "supercars,",
+"s": 50.205,
+"e": 51.465
+},
+{
+"w": "and",
+"s": 51.365,
+"e": 51.825
+},
+{
+"w": "a",
+"s": 51.465,
+"e": 51.825
+},
+{
+"w": "reputation.",
+"s": 51.465,
+"e": 52.825
+},
+{
+"w": "And",
+"s": 52.705,
+"e": 52.925
+},
+{
+"w": "the",
+"s": 52.825,
+"e": 53.145
+},
+{
+"w": "reputation",
+"s": 52.925,
+"e": 53.485
+},
+{
+"w": "is",
+"s": 53.145,
+"e": 53.705
+},
+{
+"w": "growing",
+"s": 53.485,
+"e": 53.965
+},
+{
+"w": "faster",
+"s": 53.705,
+"e": 54.245
+},
+{
+"w": "than",
+"s": 53.965,
+"e": 54.365
+},
+{
+"w": "the",
+"s": 54.245,
+"e": 54.545
+},
+{
+"w": "channel.",
+"s": 54.365,
+"e": 54.545
+}
+]
+}

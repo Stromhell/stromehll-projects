@@ -73,7 +73,7 @@ window.SHOTS = [
       S.D.sfx = [[tCo, 'pop', .2], [tSi, 'paper', .35], [tSi + .6, 'paper_tear', .1], [tRe, 'paper', .3], [tCl, 'chime', .25], [tPo, 'breath', .3], [tJo, 'tick', .2], [tEn, 'hit', .3], [tEn + .1, 'thud', .2]]; } },
 
   // 6.03 boardroom: the CEO smiles holding a phone; post 'Yes, it's real. 6-month term.'; list gets SHUFFLE (PAID); CONTRACT NOT PUBLIC
-  { plate: 'boardroom', cam: { z: [1.3, 1.4], x: [1800, 1760], y: [900, 920] }, bed: [['hum_loop', .07], ['night_loop', .04]], light: { dir: 1, key: 'rgba(200,220,255,.18)' },
+  { plate: 'boardroom', cam: { z: [1.45, 1.6], x: [1960, 2040], y: [960, 980] }, bed: [['hum_loop', .07], ['night_loop', .04]], light: { dir: 1, key: 'rgba(200,220,255,.18)' },
     init: S => { const tHo = at(S, 'hour'), tBo = at(S, 'boss'), tSi = at(S, 'Six'), tMo = at(S, 'Money'), tPu = at(S, 'public'), tLa = at(S, 'lawyers'), tSc = at(S, 'scrapped.');
       S.D.figs = [{ x: 2200, y: 1400, s: 1.3, ...JD.CEO(), facing: -1, mood: 'smug', hold: HPHONE(1.1, '#ffd23a'), arms: () => ({ shR: 45, elR: -105 }), talk: [tBo, tMo + 1.5], anim: (o, lt) => { o.lean = Math.sin(lt * .9) * 2; if (lt > tMo) o.mood = 'happy'; } }];
       S.D.live = [(c, lt) => { TW.glow(c, 1300, 300, 600, '120,160,255', .12); for (let k = 0; k < 6; k++) { const x = 1300 + k * 34, n = 3 + (k % 3) + Math.floor(K.seg(lt, tMo, tMo + 1) * 3); for (let j = 0; j < n; j++) { c.fillStyle = ['#c8302a', '#2a5ab0', '#f2c14a'][k % 3]; c.strokeStyle = INK; c.lineWidth = 2; c.beginPath(); c.ellipse(x, 1030 - j * 7, 15, 5, 0, 0, 7); c.fill(); c.stroke(); } } }];
@@ -100,7 +100,7 @@ window.SHOTS = [
       S.D.sfx = [[.2, 'crowd_cheer', .1], [tWe, 'drum', .3], [tWo - .1, 'whoosh', .3], [tWo, 'hit', .55], [tWo + .3, 'thud', .4], [tWo + .5, 'crowd_cheer', .35], [tTh, 'chime', .3], [tTh + .2, 'crowd_cheer', .3]]; } },
 
   // 6.05 chart: three bars as a staircase 15M -> 8.4M -> 125K; Jack slides down them
-  { plate: 'chart', cam: { z: [1.05, 1.0], x: [1280, 1280], y: [700, 720] }, bed: [['hum_loop', .06], ['trading_loop', .05]], light: { dir: -1, key: 'rgba(180,220,255,.15)' },
+  { plate: 'chart', cam: { z: [1.0, 1.08], x: [1230, 1320], y: [800, 820] }, bed: [['hum_loop', .06], ['trading_loop', .05]], light: { dir: -1, key: 'rgba(180,220,255,.15)' },
     init: S => { const t17 = at(S, 'seventeen'), tFi = at(S, 'fifteen'), tIs = at(S, 'Island'), tEi = at(S, 'eight'), tNo = at(S, 'nothing'), tLa = at(S, 'latest'), tHu = at(S, 'hundred');
       const B = [[700, 380, 15e6, '2017', 'SUPERMARKET', t17], [1280, 700, 8.4e6, '2023', 'ISLAND BOYS', tIs], [1860, 1130, 125e3, '2026', 'LATEST', tLa]], BASE = 1150, W = 380;
       const grow = (lt, k) => E.out(K.seg(lt, B[k][5] - .5, B[k][5] + .5));
@@ -127,7 +127,7 @@ window.SHOTS = [
       S.D.sfx = [[tSu, 'tick', .2], [tFi, 'chime', .3], [tPa, 'paper', .2], [tVi, 'drone', .25], [tVi + .3, 'hum_loop', .05]]; } },
 
   // 6.07 the supermarket at dusk: Jack and Ricky walk past; Jack points at the doors; KICKED OUT stamp hovers; camera pulls back
-  { plate: 'shopfront', cam: { z: [1.55, 1.05], x: [1200, 1280], y: [980, 760], ease: E.io }, bed: [['rain_loop', .06], ['city_loop', .06]], light: { dir: 1, key: 'rgba(255,190,140,.2)' },
+  { plate: 'shopfront', cam: { z: [1.75, 1.35], x: [850, 1150], y: [1020, 900], ease: E.io }, bed: [['rain_loop', .06], ['city_loop', .06]], light: { dir: 1, key: 'rgba(255,190,140,.2)' },
     init: S => { const tLa = at(S, 'latest'), tCh = at(S, 'chill,'), tWa = at(S, 'walks'), tBa = at(S, 'banned'), tTh = at(S, 'They'), tNi = at(S, 'Nine'), tWh = at(S, 'why.');
       S.D.figs = [{ x: 1000, y: 1240, s: 1.0, ...JD.JACK(), facing: 1, mood: 'happy', walk: { x0: -200, x1: 1000, t0: .3, dur: Math.max(3, tBa - .5) }, talk: [tTh, tTh + 2], anim: (o, lt) => { if (lt > tBa) { o.pose = 'point'; o.facing = 1; o.mood = 'smug'; } if (lt > tNi) { o.pose = 'shrug'; o.mood = 'neutral'; } } },
         { x: 760, y: 1250, s: 1.0, ...JD.RICKY(), facing: 1, mood: 'neutral', walk: { x0: -450, x1: 760, t0: .5, dur: Math.max(3, tBa - .5) } }];

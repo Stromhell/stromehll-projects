@@ -1,1 +1,1048 @@
-window.TIMING={"dur": 87.86, "shots": [{"i": 0, "start": 0, "end": 11.16, "vo_start": 0.6, "vo_end": 10.91, "text": "When Jack went live, he went to Kick. A platform launched in twenty twenty-two that sold itself to creators on one big promise. Fewer rules."}, {"i": 1, "start": 11.16, "end": 22.12, "vo_start": 11.46, "vo_end": 21.87, "text": "But even Kick had a line. Weeks before what came next, after reports of its streamers harassing people at TwitchCon, several accounts were suspended."}, {"i": 2, "start": 22.12, "end": 34.11, "vo_start": 22.42, "vo_end": 33.86, "text": "Then, on the fifth of October twenty twenty-four, Jack went live from the driver's seat of a roughly two-hundred-thousand-dollar McLaren. On a wet highway near Miami."}, {"i": 3, "start": 34.11, "end": 45.25, "vo_start": 34.41, "vo_end": 45.0, "text": "According to NBC News, the stream appeared to show him glancing down at the phone in his hand. Moments later, the car veered into a guardrail."}, {"i": 4, "start": 45.25, "end": 60.5, "vo_start": 45.55, "vo_end": 60.25, "text": "He posted the wreck himself. Crashed my McLaren, glad we're both okay. Viewers noticed he seemed more upset about the car than his cameraman, who needed stitches in his head. Jack later apologised to him."}, {"i": 5, "start": 60.5, "end": 75.53, "vo_start": 60.8, "vo_end": 75.28, "text": "Kick banned him within hours, saying it doesn't condone illegal activity. And a Florida Highway Patrol crash report, obtained by the Miami New Times, gave him a citation for using his phone while driving."}, {"i": 6, "start": 75.53, "end": 87.86, "vo_start": 75.83, "vo_end": 87.31, "text": "Days later he was live on TikTok, asking viewers to send him gifts, and explaining that he'd simply hydroplaned. Pouring rain. A McLaren. What did people expect?"}], "words": [{"w": "When", "s": 0.6, "e": 0.94}, {"w": "Jack", "s": 0.99, "e": 1.33}, {"w": "went", "s": 1.38, "e": 1.72}, {"w": "live", "s": 1.77, "e": 2.15}, {"w": "he", "s": 2.19, "e": 2.46}, {"w": "went", "s": 2.51, "e": 2.85}, {"w": "to", "s": 2.9, "e": 3.17}, {"w": "Kick.", "s": 3.22, "e": 3.6}, {"w": "A", "s": 3.65, "e": 3.88}, {"w": "platform", "s": 3.93, "e": 4.42}, {"w": "launched", "s": 4.46, "e": 4.95}, {"w": "in", "s": 5.0, "e": 5.27}, {"w": "twenty", "s": 5.32, "e": 5.73}, {"w": "twenty-two", "s": 5.78, "e": 6.33}, {"w": "that", "s": 6.38, "e": 6.71}, {"w": "sold", "s": 6.76, "e": 7.1}, {"w": "itself", "s": 7.15, "e": 7.56}, {"w": "to", "s": 7.61, "e": 7.88}, {"w": "creators", "s": 7.93, "e": 8.41}, {"w": "on", "s": 8.46, "e": 8.73}, {"w": "one", "s": 8.79, "e": 9.09}, {"w": "big", "s": 9.14, "e": 9.45}, {"w": "promise.", "s": 9.5, "e": 9.98}, {"w": "Fewer", "s": 10.03, "e": 10.4}, {"w": "rules.", "s": 10.45, "e": 10.86}, {"w": "But", "s": 11.46, "e": 11.77}, {"w": "even", "s": 11.82, "e": 12.16}, {"w": "Kick", "s": 12.21, "e": 12.55}, {"w": "had", "s": 12.6, "e": 12.9}, {"w": "a", "s": 12.95, "e": 13.19}, {"w": "line.", "s": 13.24, "e": 13.61}, {"w": "Weeks", "s": 13.66, "e": 14.04}, {"w": "before", "s": 14.09, "e": 14.5}, {"w": "what", "s": 14.55, "e": 14.89}, {"w": "came", "s": 14.94, "e": 15.28}, {"w": "next", "s": 15.33, "e": 15.7}, {"w": "after", "s": 15.75, "e": 16.13}, {"w": "reports", "s": 16.18, "e": 16.62}, {"w": "of", "s": 16.67, "e": 16.94}, {"w": "its", "s": 16.99, "e": 17.3}, {"w": "streamers", "s": 17.35, "e": 17.86}, {"w": "harassing", "s": 17.91, "e": 18.43}, {"w": "people", "s": 18.48, "e": 18.89}, {"w": "at", "s": 18.94, "e": 19.21}, {"w": "TwitchCon", "s": 19.26, "e": 19.81}, {"w": "several", "s": 19.86, "e": 20.3}, {"w": "accounts", "s": 20.35, "e": 20.83}, {"w": "were", "s": 20.88, "e": 21.22}, {"w": "suspended.", "s": 21.27, "e": 21.82}, {"w": "Then", "s": 22.42, "e": 22.8}, {"w": "on", "s": 22.85, "e": 23.12}, {"w": "the", "s": 23.17, "e": 23.47}, {"w": "fifth", "s": 23.52, "e": 23.9}, {"w": "of", "s": 23.95, "e": 24.22}, {"w": "October", "s": 24.27, "e": 24.71}, {"w": "twenty", "s": 24.76, "e": 25.17}, {"w": "twenty-four", "s": 25.22, "e": 25.84}, {"w": "Jack", "s": 25.89, "e": 26.23}, {"w": "went", "s": 26.28, "e": 26.62}, {"w": "live", "s": 26.67, "e": 27.01}, {"w": "from", "s": 27.06, "e": 27.4}, {"w": "the", "s": 27.45, "e": 27.76}, {"w": "driver's", "s": 27.81, "e": 28.29}, {"w": "seat", "s": 28.34, "e": 28.68}, {"w": "of", "s": 28.73, "e": 29.0}, {"w": "a", "s": 29.05, "e": 29.28}, {"w": "roughly", "s": 29.33, "e": 29.78}, {"w": "two-hundred-thousand-dollar", "s": 29.83, "e": 30.97}, {"w": "McLaren.", "s": 31.02, "e": 31.5}, {"w": "On", "s": 31.55, "e": 31.82}, {"w": "a", "s": 31.87, "e": 32.11}, {"w": "wet", "s": 32.16, "e": 32.46}, {"w": "highway", "s": 32.51, "e": 32.96}, {"w": "near", "s": 33.01, "e": 33.35}, {"w": "Miami.", "s": 33.4, "e": 33.81}, {"w": "According", "s": 34.41, "e": 34.92}, {"w": "to", "s": 34.97, "e": 35.24}, {"w": "NBC", "s": 35.29, "e": 35.6}, {"w": "News", "s": 35.65, "e": 36.02}, {"w": "the", "s": 36.07, "e": 36.38}, {"w": "stream", "s": 36.43, "e": 36.84}, {"w": "appeared", "s": 36.89, "e": 37.37}, {"w": "to", "s": 37.42, "e": 37.69}, {"w": "show", "s": 37.74, "e": 38.08}, {"w": "him", "s": 38.13, "e": 38.43}, {"w": "glancing", "s": 38.48, "e": 38.96}, {"w": "down", "s": 39.01, "e": 39.35}, {"w": "at", "s": 39.4, "e": 39.67}, {"w": "the", "s": 39.72, "e": 40.03}, {"w": "phone", "s": 40.08, "e": 40.45}, {"w": "in", "s": 40.5, "e": 40.77}, {"w": "his", "s": 40.82, "e": 41.13}, {"w": "hand.", "s": 41.18, "e": 41.55}, {"w": "Moments", "s": 41.6, "e": 42.05}, {"w": "later", "s": 42.09, "e": 42.5}, {"w": "the", "s": 42.55, "e": 42.86}, {"w": "car", "s": 42.91, "e": 43.21}, {"w": "veered", "s": 43.26, "e": 43.67}, {"w": "into", "s": 43.72, "e": 44.06}, {"w": "a", "s": 44.11, "e": 44.35}, {"w": "guardrail.", "s": 44.4, "e": 44.95}, {"w": "He", "s": 45.55, "e": 45.82}, {"w": "posted", "s": 45.87, "e": 46.28}, {"w": "the", "s": 46.33, "e": 46.63}, {"w": "wreck", "s": 46.68, "e": 47.06}, {"w": "himself.", "s": 47.11, "e": 47.59}, {"w": "Crashed", "s": 47.64, "e": 48.08}, {"w": "my", "s": 48.13, "e": 48.4}, {"w": "McLaren", "s": 48.45, "e": 48.93}, {"w": "glad", "s": 48.98, "e": 49.32}, {"w": "we're", "s": 49.37, "e": 49.75}, {"w": "both", "s": 49.8, "e": 50.14}, {"w": "okay.", "s": 50.19, "e": 50.56}, {"w": "Viewers", "s": 50.61, "e": 51.06}, {"w": "noticed", "s": 51.11, "e": 51.55}, {"w": "he", "s": 51.6, "e": 51.87}, {"w": "seemed", "s": 51.92, "e": 52.33}, {"w": "more", "s": 52.38, "e": 52.72}, {"w": "upset", "s": 52.77, "e": 53.15}, {"w": "about", "s": 53.2, "e": 53.57}, {"w": "the", "s": 53.62, "e": 53.93}, {"w": "car", "s": 53.98, "e": 54.28}, {"w": "than", "s": 54.33, "e": 54.67}, {"w": "his", "s": 54.72, "e": 55.03}, {"w": "cameraman", "s": 55.08, "e": 55.63}, {"w": "who", "s": 55.68, "e": 55.98}, {"w": "needed", "s": 56.03, "e": 56.44}, {"w": "stitches", "s": 56.49, "e": 56.97}, {"w": "in", "s": 57.02, "e": 57.29}, {"w": "his", "s": 57.34, "e": 57.65}, {"w": "head.", "s": 57.7, "e": 58.07}, {"w": "Jack", "s": 58.12, "e": 58.46}, {"w": "later", "s": 58.51, "e": 58.89}, {"w": "apologised", "s": 58.94, "e": 59.49}, {"w": "to", "s": 59.54, "e": 59.81}, {"w": "him.", "s": 59.86, "e": 60.2}, {"w": "Kick", "s": 60.8, "e": 61.14}, {"w": "banned", "s": 61.19, "e": 61.6}, {"w": "him", "s": 61.65, "e": 61.95}, {"w": "within", "s": 62.0, "e": 62.41}, {"w": "hours", "s": 62.46, "e": 62.87}, {"w": "saying", "s": 62.92, "e": 63.33}, {"w": "it", "s": 63.38, "e": 63.65}, {"w": "doesn't", "s": 63.7, "e": 64.15}, {"w": "condone", "s": 64.2, "e": 64.64}, {"w": "illegal", "s": 64.69, "e": 65.14}, {"w": "activity.", "s": 65.19, "e": 65.7}, {"w": "And", "s": 65.75, "e": 66.06}, {"w": "a", "s": 66.11, "e": 66.34}, {"w": "Florida", "s": 66.39, "e": 66.84}, {"w": "Highway", "s": 66.89, "e": 67.33}, {"w": "Patrol", "s": 67.38, "e": 67.79}, {"w": "crash", "s": 67.84, "e": 68.22}, {"w": "report", "s": 68.27, "e": 68.71}, {"w": "obtained", "s": 68.76, "e": 69.24}, {"w": "by", "s": 69.29, "e": 69.56}, {"w": "the", "s": 69.61, "e": 69.92}, {"w": "Miami", "s": 69.97, "e": 70.34}, {"w": "New", "s": 70.39, "e": 70.7}, {"w": "Times", "s": 70.75, "e": 71.16}, {"w": "gave", "s": 71.21, "e": 71.55}, {"w": "him", "s": 71.6, "e": 71.9}, {"w": "a", "s": 71.95, "e": 72.19}, {"w": "citation", "s": 72.24, "e": 72.72}, {"w": "for", "s": 72.77, "e": 73.07}, {"w": "using", "s": 73.12, "e": 73.5}, {"w": "his", "s": 73.55, "e": 73.85}, {"w": "phone", "s": 73.9, "e": 74.28}, {"w": "while", "s": 74.33, "e": 74.7}, {"w": "driving.", "s": 74.75, "e": 75.23}, {"w": "Days", "s": 75.83, "e": 76.17}, {"w": "later", "s": 76.22, "e": 76.6}, {"w": "he", "s": 76.65, "e": 76.92}, {"w": "was", "s": 76.97, "e": 77.27}, {"w": "live", "s": 77.32, "e": 77.66}, {"w": "on", "s": 77.71, "e": 77.98}, {"w": "TikTok", "s": 78.03, "e": 78.48}, {"w": "asking", "s": 78.53, "e": 78.94}, {"w": "viewers", "s": 78.99, "e": 79.43}, {"w": "to", "s": 79.48, "e": 79.75}, {"w": "send", "s": 79.8, "e": 80.14}, {"w": "him", "s": 80.19, "e": 80.5}, {"w": "gifts", "s": 80.55, "e": 80.96}, {"w": "and", "s": 81.01, "e": 81.31}, {"w": "explaining", "s": 81.36, "e": 81.91}, {"w": "that", "s": 81.96, "e": 82.3}, {"w": "he'd", "s": 82.35, "e": 82.69}, {"w": "simply", "s": 82.74, "e": 83.15}, {"w": "hydroplaned.", "s": 83.2, "e": 83.82}, {"w": "Pouring", "s": 83.87, "e": 84.32}, {"w": "rain.", "s": 84.37, "e": 84.74}, {"w": "A", "s": 84.79, "e": 85.03}, {"w": "McLaren.", "s": 85.08, "e": 85.56}, {"w": "What", "s": 85.61, "e": 85.95}, {"w": "did", "s": 86.0, "e": 86.3}, {"w": "people", "s": 86.35, "e": 86.76}, {"w": "expect", "s": 86.81, "e": 87.26}], "estimated": true}
+window.TIMING={
+"dur": 73.315,
+"shots": [
+{
+"i": 1,
+"start": 0.0,
+"vo_start": 0.6,
+"vo_end": 9.734,
+"text": "When Jack went live, he went to Kick. A platform launched in twenty twenty-two that sold itself to creators on one big promise. Fewer rules.",
+"end": 10.009
+},
+{
+"i": 2,
+"start": 10.009,
+"vo_start": 10.284,
+"vo_end": 17.964,
+"text": "But even Kick had a line. Weeks before what came next, after reports of its streamers harassing people at TwitchCon, several accounts were suspended.",
+"end": 18.239
+},
+{
+"i": 3,
+"start": 18.239,
+"vo_start": 18.514,
+"vo_end": 27.074,
+"text": "Then, on the fifth of October twenty twenty-four, Jack went live from the driver's seat of a roughly two-hundred-thousand-dollar McLaren. On a wet highway near Miami.",
+"end": 27.349
+},
+{
+"i": 4,
+"start": 27.349,
+"vo_start": 27.624,
+"vo_end": 35.7,
+"text": "According to NBC News, the stream appeared to show him glancing down at the phone in his hand. Moments later, the car veered into a guardrail.",
+"end": 35.975
+},
+{
+"i": 5,
+"start": 35.975,
+"vo_start": 36.25,
+"vo_end": 49.085,
+"text": "He posted the wreck himself. Crashed my McLaren, glad we're both okay. Viewers noticed he seemed more upset about the car than his cameraman, who needed stitches in his head. Jack later apologised to him.",
+"end": 49.36
+},
+{
+"i": 6,
+"start": 49.36,
+"vo_start": 49.635,
+"vo_end": 60.834,
+"text": "Kick banned him within hours, saying it doesn't condone illegal activity. And a Florida Highway Patrol crash report, obtained by the Miami New Times, gave him a citation for using his phone while driving.",
+"end": 61.109
+},
+{
+"i": 7,
+"start": 61.109,
+"vo_start": 61.384,
+"vo_end": 72.365,
+"text": "Days later he was live on TikTok, asking viewers to send him gifts, and explaining that he'd simply hydroplaned. Pouring rain. A McLaren. What did people expect?",
+"end": 73.315
+}
+],
+"words": [
+{
+"w": "When",
+"s": 0.6,
+"e": 0.854
+},
+{
+"w": "Jack",
+"s": 0.6,
+"e": 1.054
+},
+{
+"w": "went",
+"s": 0.854,
+"e": 1.294
+},
+{
+"w": "live,",
+"s": 1.054,
+"e": 1.574
+},
+{
+"w": "he",
+"s": 1.294,
+"e": 1.954
+},
+{
+"w": "went",
+"s": 1.914,
+"e": 2.114
+},
+{
+"w": "to",
+"s": 1.954,
+"e": 2.114
+},
+{
+"w": "Kick.",
+"s": 1.954,
+"e": 2.474
+},
+{
+"w": "A",
+"s": 2.314,
+"e": 2.474
+},
+{
+"w": "platform",
+"s": 2.314,
+"e": 3.794
+},
+{
+"w": "launched",
+"s": 3.414,
+"e": 4.114
+},
+{
+"w": "in",
+"s": 3.794,
+"e": 4.114
+},
+{
+"w": "twenty",
+"s": 3.794,
+"e": 4.914
+},
+{
+"w": "twenty-two",
+"s": 4.394,
+"e": 5.894
+},
+{
+"w": "that",
+"s": 5.634,
+"e": 6.234
+},
+{
+"w": "sold",
+"s": 5.894,
+"e": 6.234
+},
+{
+"w": "itself",
+"s": 5.894,
+"e": 6.754
+},
+{
+"w": "to",
+"s": 6.454,
+"e": 6.754
+},
+{
+"w": "creators",
+"s": 6.454,
+"e": 7.234
+},
+{
+"w": "on",
+"s": 7.034,
+"e": 7.234
+},
+{
+"w": "one",
+"s": 7.034,
+"e": 7.414
+},
+{
+"w": "big",
+"s": 7.234,
+"e": 7.874
+},
+{
+"w": "promise.",
+"s": 7.414,
+"e": 8.994
+},
+{
+"w": "Fewer",
+"s": 8.574,
+"e": 9.294
+},
+{
+"w": "rules.",
+"s": 8.994,
+"e": 9.294
+},
+{
+"w": "But",
+"s": 10.284,
+"e": 10.484
+},
+{
+"w": "even",
+"s": 10.484,
+"e": 10.744
+},
+{
+"w": "Kick",
+"s": 10.744,
+"e": 10.964
+},
+{
+"w": "had",
+"s": 10.964,
+"e": 11.144
+},
+{
+"w": "a",
+"s": 11.144,
+"e": 11.244
+},
+{
+"w": "line.",
+"s": 11.244,
+"e": 11.464
+},
+{
+"w": "Weeks",
+"s": 12.104,
+"e": 12.244
+},
+{
+"w": "before",
+"s": 12.244,
+"e": 12.584
+},
+{
+"w": "what",
+"s": 12.584,
+"e": 12.784
+},
+{
+"w": "came",
+"s": 12.784,
+"e": 12.964
+},
+{
+"w": "next,",
+"s": 12.964,
+"e": 13.384
+},
+{
+"w": "after",
+"s": 13.704,
+"e": 13.844
+},
+{
+"w": "reports",
+"s": 13.844,
+"e": 14.204
+},
+{
+"w": "of",
+"s": 14.204,
+"e": 14.404
+},
+{
+"w": "its",
+"s": 14.404,
+"e": 14.524
+},
+{
+"w": "streamers",
+"s": 14.524,
+"e": 14.944
+},
+{
+"w": "harassing",
+"s": 14.944,
+"e": 15.224
+},
+{
+"w": "people",
+"s": 15.224,
+"e": 15.544
+},
+{
+"w": "at",
+"s": 15.544,
+"e": 15.724
+},
+{
+"w": "TwitchCon,",
+"s": 15.724,
+"e": 16.164
+},
+{
+"w": "several",
+"s": 16.584,
+"e": 16.724
+},
+{
+"w": "accounts",
+"s": 16.724,
+"e": 17.104
+},
+{
+"w": "were",
+"s": 17.104,
+"e": 17.324
+},
+{
+"w": "suspended.",
+"s": 17.324,
+"e": 17.684
+},
+{
+"w": "Then,",
+"s": 18.514,
+"e": 18.814
+},
+{
+"w": "on",
+"s": 18.514,
+"e": 19.334
+},
+{
+"w": "the",
+"s": 19.074,
+"e": 19.454
+},
+{
+"w": "fifth",
+"s": 19.334,
+"e": 19.854
+},
+{
+"w": "of",
+"s": 19.454,
+"e": 19.854
+},
+{
+"w": "October",
+"s": 19.854,
+"e": 20.134
+},
+{
+"w": "twenty",
+"s": 19.854,
+"e": 20.914
+},
+{
+"w": "twenty-four,",
+"s": 20.134,
+"e": 21.594
+},
+{
+"w": "Jack",
+"s": 21.334,
+"e": 21.594
+},
+{
+"w": "went",
+"s": 21.334,
+"e": 21.874
+},
+{
+"w": "live",
+"s": 21.594,
+"e": 22.134
+},
+{
+"w": "from",
+"s": 21.874,
+"e": 22.254
+},
+{
+"w": "the",
+"s": 22.134,
+"e": 22.634
+},
+{
+"w": "driver's",
+"s": 22.254,
+"e": 22.634
+},
+{
+"w": "seat",
+"s": 22.254,
+"e": 22.794
+},
+{
+"w": "of",
+"s": 22.634,
+"e": 22.954
+},
+{
+"w": "a",
+"s": 22.794,
+"e": 22.954
+},
+{
+"w": "roughly",
+"s": 22.794,
+"e": 23.274
+},
+{
+"w": "two-hundred-thousand-dollar",
+"s": 23.074,
+"e": 24.654
+},
+{
+"w": "McLaren.",
+"s": 24.314,
+"e": 25.914
+},
+{
+"w": "On",
+"s": 25.714,
+"e": 25.914
+},
+{
+"w": "a",
+"s": 25.714,
+"e": 26.214
+},
+{
+"w": "wet",
+"s": 25.914,
+"e": 26.214
+},
+{
+"w": "highway",
+"s": 25.914,
+"e": 26.474
+},
+{
+"w": "near",
+"s": 26.214,
+"e": 26.814
+},
+{
+"w": "Miami.",
+"s": 26.474,
+"e": 26.814
+},
+{
+"w": "According",
+"s": 27.624,
+"e": 27.94
+},
+{
+"w": "to",
+"s": 27.94,
+"e": 28.14
+},
+{
+"w": "NBC",
+"s": 28.14,
+"e": 28.52
+},
+{
+"w": "News,",
+"s": 28.52,
+"e": 28.92
+},
+{
+"w": "the",
+"s": 29.5,
+"e": 29.55
+},
+{
+"w": "stream",
+"s": 29.52,
+"e": 29.8
+},
+{
+"w": "appeared",
+"s": 29.8,
+"e": 30.08
+},
+{
+"w": "to",
+"s": 30.08,
+"e": 30.26
+},
+{
+"w": "show",
+"s": 30.26,
+"e": 30.46
+},
+{
+"w": "him",
+"s": 30.46,
+"e": 30.6
+},
+{
+"w": "glancing",
+"s": 30.6,
+"e": 30.96
+},
+{
+"w": "down",
+"s": 30.96,
+"e": 31.26
+},
+{
+"w": "at",
+"s": 31.26,
+"e": 31.44
+},
+{
+"w": "the",
+"s": 31.44,
+"e": 31.54
+},
+{
+"w": "phone",
+"s": 31.54,
+"e": 31.74
+},
+{
+"w": "in",
+"s": 31.74,
+"e": 31.88
+},
+{
+"w": "his",
+"s": 31.88,
+"e": 32.02
+},
+{
+"w": "hand.",
+"s": 32.02,
+"e": 32.34
+},
+{
+"w": "Moments",
+"s": 33.26,
+"e": 33.34
+},
+{
+"w": "later,",
+"s": 33.34,
+"e": 33.78
+},
+{
+"w": "the",
+"s": 34.14,
+"e": 34.24
+},
+{
+"w": "car",
+"s": 34.24,
+"e": 34.46
+},
+{
+"w": "veered",
+"s": 34.46,
+"e": 34.8
+},
+{
+"w": "into",
+"s": 34.8,
+"e": 35.0
+},
+{
+"w": "a",
+"s": 35.0,
+"e": 35.26
+},
+{
+"w": "guardrail.",
+"s": 35.26,
+"e": 35.52
+},
+{
+"w": "He",
+"s": 36.25,
+"e": 36.447
+},
+{
+"w": "posted",
+"s": 36.447,
+"e": 36.727
+},
+{
+"w": "the",
+"s": 36.727,
+"e": 36.967
+},
+{
+"w": "wreck",
+"s": 36.967,
+"e": 37.127
+},
+{
+"w": "himself.",
+"s": 37.127,
+"e": 37.627
+},
+{
+"w": "Crashed",
+"s": 38.487,
+"e": 38.647
+},
+{
+"w": "my",
+"s": 38.647,
+"e": 38.847
+},
+{
+"w": "McLaren,",
+"s": 38.847,
+"e": 39.207
+},
+{
+"w": "glad",
+"s": 39.927,
+"e": 40.047
+},
+{
+"w": "we're",
+"s": 40.047,
+"e": 40.327
+},
+{
+"w": "both",
+"s": 40.327,
+"e": 40.507
+},
+{
+"w": "okay.",
+"s": 40.507,
+"e": 40.847
+},
+{
+"w": "Viewers",
+"s": 41.687,
+"e": 41.947
+},
+{
+"w": "noticed",
+"s": 41.947,
+"e": 42.187
+},
+{
+"w": "he",
+"s": 42.187,
+"e": 42.547
+},
+{
+"w": "seemed",
+"s": 42.547,
+"e": 42.767
+},
+{
+"w": "more",
+"s": 42.767,
+"e": 43.007
+},
+{
+"w": "upset",
+"s": 43.007,
+"e": 43.287
+},
+{
+"w": "about",
+"s": 43.287,
+"e": 43.547
+},
+{
+"w": "the",
+"s": 43.547,
+"e": 43.747
+},
+{
+"w": "car",
+"s": 43.747,
+"e": 43.987
+},
+{
+"w": "than",
+"s": 43.987,
+"e": 44.207
+},
+{
+"w": "his",
+"s": 44.207,
+"e": 44.387
+},
+{
+"w": "cameraman,",
+"s": 44.387,
+"e": 44.887
+},
+{
+"w": "who",
+"s": 45.107,
+"e": 45.287
+},
+{
+"w": "needed",
+"s": 45.287,
+"e": 45.527
+},
+{
+"w": "stitches",
+"s": 45.527,
+"e": 45.847
+},
+{
+"w": "in",
+"s": 45.847,
+"e": 46.107
+},
+{
+"w": "his",
+"s": 46.107,
+"e": 46.227
+},
+{
+"w": "head.",
+"s": 46.227,
+"e": 46.507
+},
+{
+"w": "Jack",
+"s": 47.607,
+"e": 47.657
+},
+{
+"w": "later",
+"s": 47.647,
+"e": 47.987
+},
+{
+"w": "apologised",
+"s": 47.987,
+"e": 48.407
+},
+{
+"w": "to",
+"s": 48.407,
+"e": 48.727
+},
+{
+"w": "him.",
+"s": 48.727,
+"e": 48.867
+},
+{
+"w": "Kick",
+"s": 49.635,
+"e": 49.934
+},
+{
+"w": "banned",
+"s": 49.934,
+"e": 50.314
+},
+{
+"w": "him",
+"s": 50.314,
+"e": 50.514
+},
+{
+"w": "within",
+"s": 50.514,
+"e": 50.714
+},
+{
+"w": "hours,",
+"s": 50.714,
+"e": 51.154
+},
+{
+"w": "saying",
+"s": 51.394,
+"e": 51.694
+},
+{
+"w": "it",
+"s": 51.694,
+"e": 51.894
+},
+{
+"w": "doesn't",
+"s": 51.894,
+"e": 52.234
+},
+{
+"w": "condone",
+"s": 52.234,
+"e": 52.534
+},
+{
+"w": "illegal",
+"s": 52.534,
+"e": 52.934
+},
+{
+"w": "activity.",
+"s": 52.934,
+"e": 53.494
+},
+{
+"w": "And",
+"s": 54.634,
+"e": 54.754
+},
+{
+"w": "a",
+"s": 54.754,
+"e": 54.834
+},
+{
+"w": "Florida",
+"s": 54.834,
+"e": 55.014
+},
+{
+"w": "Highway",
+"s": 55.014,
+"e": 55.274
+},
+{
+"w": "Patrol",
+"s": 55.274,
+"e": 55.634
+},
+{
+"w": "crash",
+"s": 55.634,
+"e": 55.914
+},
+{
+"w": "report,",
+"s": 55.914,
+"e": 56.274
+},
+{
+"w": "obtained",
+"s": 56.554,
+"e": 56.894
+},
+{
+"w": "by",
+"s": 56.894,
+"e": 57.094
+},
+{
+"w": "the",
+"s": 57.094,
+"e": 57.214
+},
+{
+"w": "Miami",
+"s": 57.214,
+"e": 57.374
+},
+{
+"w": "New",
+"s": 57.374,
+"e": 57.594
+},
+{
+"w": "Times,",
+"s": 57.594,
+"e": 57.914
+},
+{
+"w": "gave",
+"s": 58.394,
+"e": 58.474
+},
+{
+"w": "him",
+"s": 58.474,
+"e": 58.614
+},
+{
+"w": "a",
+"s": 58.614,
+"e": 58.734
+},
+{
+"w": "citation",
+"s": 58.734,
+"e": 59.054
+},
+{
+"w": "for",
+"s": 59.054,
+"e": 59.334
+},
+{
+"w": "using",
+"s": 59.334,
+"e": 59.574
+},
+{
+"w": "his",
+"s": 59.574,
+"e": 59.814
+},
+{
+"w": "phone",
+"s": 59.814,
+"e": 60.054
+},
+{
+"w": "while",
+"s": 60.054,
+"e": 60.254
+},
+{
+"w": "driving.",
+"s": 60.254,
+"e": 60.554
+},
+{
+"w": "Days",
+"s": 61.384,
+"e": 61.645
+},
+{
+"w": "later",
+"s": 61.384,
+"e": 61.965
+},
+{
+"w": "he",
+"s": 61.645,
+"e": 62.145
+},
+{
+"w": "was",
+"s": 61.965,
+"e": 62.285
+},
+{
+"w": "live",
+"s": 62.145,
+"e": 62.545
+},
+{
+"w": "on",
+"s": 62.285,
+"e": 62.765
+},
+{
+"w": "TikTok,",
+"s": 62.545,
+"e": 63.705
+},
+{
+"w": "asking",
+"s": 63.185,
+"e": 64.025
+},
+{
+"w": "viewers",
+"s": 63.705,
+"e": 64.265
+},
+{
+"w": "to",
+"s": 64.025,
+"e": 64.485
+},
+{
+"w": "send",
+"s": 64.265,
+"e": 64.485
+},
+{
+"w": "him",
+"s": 64.265,
+"e": 64.665
+},
+{
+"w": "gifts,",
+"s": 64.485,
+"e": 65.305
+},
+{
+"w": "and",
+"s": 64.945,
+"e": 65.705
+},
+{
+"w": "explaining",
+"s": 65.305,
+"e": 66.005
+},
+{
+"w": "that",
+"s": 65.705,
+"e": 66.265
+},
+{
+"w": "he'd",
+"s": 66.005,
+"e": 66.665
+},
+{
+"w": "simply",
+"s": 66.265,
+"e": 67.765
+},
+{
+"w": "hydroplaned.",
+"s": 66.665,
+"e": 67.765
+},
+{
+"w": "Pouring",
+"s": 66.665,
+"e": 68.905
+},
+{
+"w": "rain.",
+"s": 68.565,
+"e": 69.845
+},
+{
+"w": "A",
+"s": 69.805,
+"e": 70.205
+},
+{
+"w": "McLaren.",
+"s": 69.845,
+"e": 71.285
+},
+{
+"w": "What",
+"s": 71.005,
+"e": 71.445
+},
+{
+"w": "did",
+"s": 71.285,
+"e": 71.765
+},
+{
+"w": "people",
+"s": 71.445,
+"e": 72.145
+},
+{
+"w": "expect?",
+"s": 71.765,
+"e": 72.145
+}
+]
+}

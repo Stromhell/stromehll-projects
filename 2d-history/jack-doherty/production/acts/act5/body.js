@@ -81,7 +81,7 @@ window.SHOTS = [
       S.D.sfx = [[.2, 'whoosh_soft', .3], [tHa, 'pop', .2], [tMa - 1.2, 'scrape', .1], [tMa, 'pop', .35], [tMa + .2, 'crowd_cheer', .12], [tCu, 'chime', .25], [tSl, 'crowd_cheer', .08]]; } },
 
   // 5.03 the BANNED list fills the frame; costs climb from a supermarket to a sport; the pen adds another line
-  { plate: 'title', cam: { z: [1.1, 1.2], x: [1280, 1300], y: [720, 740] }, bed: [['hum_loop', .07], ['drone', .04]], light: {},
+  { plate: 'title', cam: { z: [1.0, 1.28], x: [1200, 1360], y: [700, 760] }, bed: [['hum_loop', .07], ['drone', .04]], light: {},
     init: S => { const tBi = at(S, 'bill.'), tSu = at(S, 'supermarket'), tSp = at(S, 'sport.'), tPt = at(S, 'pattern'), tDi = at(S, 'difference'), tLi = at(S, 'list.');
       S.D.live = [(c, lt) => { c.fillStyle = 'rgba(10,6,20,.45)'; c.fillRect(0, 0, 2560, 1440); for (let k = 0; k < 14; k++) TW.sparkle(c, (k * 331) % 2560, (k * 197) % 1440, lt * .4 + k, .4); }];
       S.D.over = [(c, lt) => card(c, 'THE LIST', lt, { at: .2, x: 960, y: 70, px: 48, rot: 0, bg: '#e2342e', color: '#fff', until: 99 }),
