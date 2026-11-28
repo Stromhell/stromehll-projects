@@ -92,9 +92,24 @@
    "gain": 0.2
   },
   {
+   "t": 21.43,
+   "name": "coins_cascade",
+   "gain": 0.25
+  },
+  {
    "t": 21.87,
    "name": "whoosh_soft",
    "gain": 0.2
+  },
+  {
+   "t": 22.49,
+   "name": "coins",
+   "gain": 0.3
+  },
+  {
+   "t": 22.59,
+   "name": "pop",
+   "gain": 0.25
   },
   {
    "t": 23.405,

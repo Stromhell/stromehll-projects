@@ -18,6 +18,25 @@ const desk = (c, x, fy, w = 300, top = 160, col = '#6a5038', drawer = 0) => { c.
 const paper = (c, x, y, w, h, amt, rot, big) => { c.save(); c.translate(x, y); c.rotate(rot); c.fillStyle = 'rgba(0,0,0,.3)'; c.fillRect(-w / 2 + 6, -h / 2 + 8, w, h); c.fillStyle = '#fbfaf4'; c.strokeStyle = INK; c.lineWidth = 3; c.fillRect(-w / 2, -h / 2, w, h); c.strokeRect(-w / 2, -h / 2, w, h);
   TW.txt(c, 'ORDER CONFIRMED', -w / 2 + 14, -h / 2 + 22, 16, '#6a6a7a', 'left', 'Oswald'); c.fillStyle = '#d0d0d8'; for (let k = 0; k < 3; k++) c.fillRect(-w / 2 + 14, -h / 2 + 40 + k * 12, w * .6, 5); txt(c, amt, 0, h / 2 - 34, big ? 64 : 40, big ? '#c8282e' : INK, 'center', 'Anton'); c.restore(); };
 
+// ---- support-group room fix: the ga_room plate's painted chairs face the wrong way and are far too tall for the rig's sitting height.
+// GA_CLEAN paints them out with plate strips copied from the same rows (feathered), then SEAT draws a side-view chair under each sitter:
+// seat top = feet y - 47.5*s (the rig's thigh line in pose 'sit'), back rest behind the sitter (opposite to the way they face).
+const GA_CLEAN = (() => { let cv = null; const F = 16;
+  // [dest x, dest y, w, h, source x (same rows), feather l, r, t, b]
+  const P = [[924, 780, 96, 292, 860, 1, 0, 1, 1], [1020, 780, 65, 292, 1200, 0, 1, 1, 1], [1475, 780, 85, 292, 1285, 1, 0, 1, 1], [1560, 780, 80, 292, 1624, 0, 1, 1, 1],
+    [660, 855, 155, 317, 1150, 1, 1, 1, 1], [1728, 855, 172, 317, 1140, 1, 1, 1, 1], [505, 940, 175, 370, 1150, 1, 1, 1, 1], [1858, 940, 200, 370, 1140, 1, 1, 1, 1]];
+  return c => { const im = K.imgs.ga_room; if (!cv) { if (!im || !im.complete || !im.naturalWidth) return; cv = document.createElement('canvas'); cv.width = 2560; cv.height = 1440; const x = cv.getContext('2d'), k = im.naturalWidth / 2560;
+      for (const [dx, dy, w, h, sx, l, r, t, b] of P) { const tc = document.createElement('canvas'); tc.width = w; tc.height = h; const y = tc.getContext('2d'); y.drawImage(im, sx * k, dy * k, w * k, h * k, 0, 0, w, h); y.globalCompositeOperation = 'destination-in';
+        for (const [len, a0, a1, hor] of [[w, l, r, 1], [h, t, b, 0]]) { const g = hor ? y.createLinearGradient(0, 0, w, 0) : y.createLinearGradient(0, 0, 0, h); g.addColorStop(0, a0 ? 'rgba(0,0,0,0)' : '#000'); g.addColorStop(F / len, '#000'); g.addColorStop(1 - F / len, '#000'); g.addColorStop(1, a1 ? 'rgba(0,0,0,0)' : '#000'); y.fillStyle = g; y.fillRect(0, 0, w, h); }
+        x.drawImage(tc, dx, dy); } }
+    c.drawImage(cv, 0, 0); }; })();
+const SEAT = (c, x, y, s, f, col = '#3a6ab0') => { const st = y - 47.5 * s, dk = R.shadeHex(col, -.3); c.save(); c.fillStyle = 'rgba(20,12,6,.3)'; c.beginPath(); c.ellipse(x, y, 62 * s, 9 * s, 0, 0, 7); c.fill(); c.lineCap = 'round';
+  c.strokeStyle = '#2a2c32'; c.lineWidth = 4.5 * s; for (const [dx, dy] of [[-30, -5], [36, -5]]) { c.beginPath(); c.moveTo(x + f * (dx + 6) * s, st + 6 * s); c.lineTo(x + f * (dx + 8) * s, y + dy * s); c.stroke(); }
+  c.strokeStyle = '#3a3c42'; c.lineWidth = 5 * s; for (const dx of [-36, 34]) { c.beginPath(); c.moveTo(x + f * dx * s, st + 6 * s); c.lineTo(x + f * dx * s, y + 2 * s); c.stroke(); }
+  c.beginPath(); c.moveTo(x - f * 38 * s, st); c.lineTo(x - f * 48 * s, st - 62 * s); c.stroke();
+  c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 3; c.save(); c.translate(x - f * 50 * s, st - 78 * s); c.rotate(-f * .12); TW.rr(c, -8 * s, -34 * s, 16 * s, 64 * s, 6 * s); c.fill(); c.stroke(); c.restore();
+  const g = c.createLinearGradient(0, st - 3 * s, 0, st + 9 * s); g.addColorStop(0, R.shadeHex(col, .15)); g.addColorStop(1, dk); c.fillStyle = g; TW.rr(c, x - 46 * s, st - 3 * s, 92 * s, 12 * s, 5 * s); c.fill(); c.stroke(); c.restore(); };
+
 for (const n of ['bedroom', 'office', 'kitchen_night', 'court']) K.load(n, PL + n + '.jpg');
 LD('card_shop', 'shelf'); LD('basement', 'warehouse'); LD('ga_room', 'office');
 const FL = 1250, SC = 1.65;
@@ -49,9 +68,9 @@ window.SHOTS = [
   { plate: 'bedroom', cam: { z: [1.25, 1.35], x: [1000, 1060], y: [820, 840] }, bed: [['night_loop', .12]], light: { dir: 1, key: 'rgba(140,150,255,.14)' },
     init: S => { const tSi = A.at(S, 'single', 1.2), tH = A.at(S, 'hundred', 2.8), tG = A.at(S, 'game', 5.4), tBr = A.at(S, 'breaks', 8.2), tCl = A.at(S, 'climb.', 12.2);
       const DR = [tSi, tSi + .8, tH, tH + .9];
-      S.D.figs = [{ x: 900, y: 1140, s: 1.6, ...WN.SEAN(), pose: 'sit', facing: 1, mood: 'happy', arms: () => ({ shR: 30, elR: -115 }), hold: PHONE(), anim: (o, lt) => { o.lean = Math.sin(lt * 1.3) * 1.5; if (lt > tBr) o.mood = 'shocked'; if (lt > tCl) o.mood = 'worried'; } }];
+      S.D.figs = [{ x: 900, y: 1204, s: 1.6, ...WN.SEAN(), pose: 'sit', facing: 1, mood: 'happy', arms: () => ({ shR: 30, elR: -115 }), hold: PHONE(), anim: (o, lt) => { o.lean = Math.sin(lt * 1.3) * 1.5; if (lt > tBr) o.mood = 'shocked'; if (lt > tCl) o.mood = 'worried'; } }];
       S.D.live = [(c, lt) => { TW.glow(c, 1840, 760, 240, '255,210,140', .25); DR.forEach((t, i) => { const u = E.out(K.seg(lt, t - .4, t)); if (u > 0) WN.card(c, 1180 + i * 40, 1010 - (1 - u) * 300, .7, ['#3a78c8', '#2a9a5a', '#c8302a', '#8a4ac8'][i], -.2 + i * .12); }); }];
-      S.D.front = [(c, lt) => TW.glow(c, 1010, 880, 110, '140,210,255', .3 + .1 * Math.sin(lt * 8))];
+      S.D.front = [(c, lt) => TW.glow(c, 1010, 944, 110, '140,210,255', .3 + .1 * Math.sin(lt * 8))];
       S.D.over = [(c, lt) => SP(c, climb(lt, [[0, 0], [tSi, 0], [tH + 1, 300], [tBr, 900], [tCl + 1.5, V1]]), Math.max(0, Math.sin(lt * 8)) * K.seg(lt, tBr, tBr + 1) * (1 - K.seg(lt, tCl + 1, tCl + 1.5))),
         (c, lt) => { const u = E.out(K.seg(lt, .1, .6)); c.save(); c.translate((1 - u) * 600, 0); WN.phone(c, 1480, 860, .7, (cc, w, h) => { cc.fillStyle = '#1c1830'; cc.fillRect(0, 0, w, h);
             if (lt < tBr) { DR.forEach((t, i) => { const v = E.out(K.seg(lt, t - .3, t)); if (v > 0) WN.card(cc, 90 + (i % 2) * 180, 330 + Math.floor(i / 2) * 260 - (1 - v) * 200, 1, ['#3a78c8', '#2a9a5a', '#c8302a', '#8a4ac8'][i], 0); }); txt(cc, 'SINGLES · BUY NOW', w / 2, 60, 26, '#fff', 'center', 'Anton'); }
@@ -66,7 +85,7 @@ window.SHOTS = [
     init: S => { const tCr = A.at(S, 'credit', 3.0), tLo = A.at(S, 'loans', 4.6), tMx = A.at(S, 'maxed', 5.6), tSt = A.at(S, 'streamer', 7.6), tDe = A.at(S, 'deal', 8.8), tCo = A.at(S, 'company', 12.2);
       const SX = 950;
       S.D.figs = [{ x: SX, y: FL, s: SC, ...WN.SEAN('polo'), pose: 'sit', facing: 1, mood: 'worried', anim: (o, lt) => { o.arms = () => ({ shR: 70, elR: -40 + 8 * Math.sin(lt * 7), shL: 60, elL: -45 }); if (lt > tCo - .4) { o.arms = () => ({ shR: 80, elR: -20, shL: 60, elL: -45 }); o.mood = 'shocked'; } } }];
-      S.D.live = [(c, lt) => { TW.chair(c, SX, FL, FL - 63 * SC, 1, '#2a2a34'); TW.glow(c, 1300, 600, 500, '180,200,255', .1); }];
+      S.D.live = [(c, lt) => { TW.chair(c, SX, FL, FL - 50 * SC, 1, '#2a2a34'); TW.glow(c, 1300, 600, 500, '180,200,255', .1); }];
       S.D.front = [(c, lt) => { const dr = E.out(K.seg(lt, tCo - .6, tCo)); desk(c, 1300, FL, 420, 200, '#5a5a66', dr);
           c.fillStyle = '#1e1e24'; rr(c, 1300, FL - 400, 200, 150, 8); c.fill(); c.fillStyle = `rgba(120,200,255,${.6 + .1 * Math.sin(lt * 6)})`; rr(c, 1310, FL - 390, 180, 130, 4); c.fill(); c.fillStyle = '#1e1e24'; c.fillRect(1390, FL - 250, 20, 34);
           [tCr, tLo, tMx].forEach((t, i) => { const u = E.out(K.seg(lt, t - .4, t)); if (u > 0) { WN.creditCard(c, 1170 + i * 8, FL - 226 - i * 14 - (1 - u) * 200, .45, ['#2a3a8a', '#2a7a4a', '#7a2a6a'][i], lt > t + .3); } });
@@ -85,7 +104,7 @@ window.SHOTS = [
       // 'Six' appears twice: second one is found by the 'thousand.' fallback above
       const tLd = A.at(S, 'last', 10.2), tTw = A.at(S, 'twenty-five', 11.2), tNf = A.at(S, 'flag.', 13.6);
       S.D.figs = [{ x: 1080, y: FL, s: SC, ...WN.SEAN(), pose: 'sit', facing: 1, mood: 'worried', anim: (o, lt) => { o.arms = () => ({ shR: 70, elR: -50, shL: 60, elL: -50 }); o.lean = Math.sin(lt) * 1.2; if (lt > tTw) o.mood = 'shocked'; } }];
-      S.D.live = [(c, lt) => { TW.chair(c, 1080, FL, FL - 63 * SC, 1, '#4a3a2a'); TW.glow(c, 1600, 400, 500, '150,170,255', .1); }];
+      S.D.live = [(c, lt) => { TW.chair(c, 1080, FL, FL - 50 * SC, 1, '#4a3a2a'); TW.glow(c, 1600, 400, 500, '150,170,255', .1); }];
       S.D.front = [(c, lt) => { c.save(); c.fillStyle = 'rgba(0,0,0,.3)'; c.beginPath(); c.ellipse(1500, FL, 360, 20, 0, 0, 7); c.fill(); c.fillStyle = '#6a4a30'; c.strokeStyle = INK; c.lineWidth = 5; c.fillRect(1200, FL - 230, 600, 22); c.strokeRect(1200, FL - 230, 600, 22); c.fillRect(1230, FL - 208, 24, 208); c.strokeRect(1230, FL - 208, 24, 208); c.fillRect(1746, FL - 208, 24, 208); c.strokeRect(1746, FL - 208, 24, 208); c.restore();
           WN.laptop(c, 1450, FL - 230, .7, (cc, w, h) => { cc.fillStyle = '#e8eef8'; cc.fillRect(0, 0, w, h); cc.fillStyle = '#c8302a'; for (let k = 0; k < 5; k++) cc.fillRect(10, 10 + k * 22, w - 20, 12); });
           TW.glow(c, 1450, FL - 320, 160, '200,220,255', .3 + .05 * Math.sin(lt * 9)); for (let k = 0; k < 5; k++) if (lt > W[k][0]) WN.card(c, 1620 + k * 14, FL - 230, .3, '#3a78c8', -.3 + k * .15); }];
@@ -116,10 +135,10 @@ window.SHOTS = [
   { plate: 'ga_room', cam: { z: [1.15, 1.22], x: [1280, 1290], y: [760, 780] }, bed: [['hum_loop', .08], ['birds_loop', .04]], light: { dir: -1, key: 'rgba(255,240,200,.12)' },
     init: S => { const tCh = A.at(S, 'chasing', 2.0), tRe = A.at(S, 'recreate', 4.6), tOd = A.at(S, 'odds.', 7.4), tZ = A.at(S, 'Zachary', 8.2), tGo = A.at(S, 'golden-ticket', 10.6), tSp = A.at(S, 'spiralled', 12.8), tRh = A.at(S, 'rehab.', 15.0);
       const s5 = 1.75;
-      S.D.figs = [{ x: 590, y: 1240, s: s5, ...WN.COUNSELLOR(), pose: 'sit', facing: 1, mood: 'neutral', talk: [0, tOd], anim: (o, lt) => { o.lean = Math.sin(lt * 1.1) * 1.2; if (lt > tCh && lt < tOd) o.arms = () => ({ shR: 60, elR: -40 + 10 * Math.sin(lt * 3) }); } },
-        { x: 1550, y: 1020, s: 1.3, ...WN.VIEWER(1), pose: 'sit', facing: -1, mood: 'neutral', anim: (o, lt) => { o.lean = Math.sin(lt * .8) * 1.2; } },
-        { x: 1970, y: 1240, s: s5, ...WN.VIEWER(0), pose: 'sit', facing: -1, mood: 'sad', anim: (o, lt) => { o.lean = Math.sin(lt * 1.3) * 1.5; const reach = (lt > tRe - .3 && lt < tOd + .3) || (lt > tSp - .3 && lt < tRh); if (reach) { o.arms = () => ({ shR: 150, elR: -10 }); o.mood = 'worried'; } if (lt > tRh) o.mood = 'sad'; } }];
-      S.D.live = [(c, lt) => TW.glow(c, 1280, 400, 700, '255,240,200', .12)];
+      S.D.figs = [{ x: 590, y: 1230, s: s5, ...WN.COUNSELLOR(), pose: 'sit', facing: 1, mood: 'neutral', talk: [0, tOd], anim: (o, lt) => { o.lean = Math.sin(lt * 1.1) * 1.2; if (lt > tCh && lt < tOd) o.arms = () => ({ shR: 60, elR: -40 + 10 * Math.sin(lt * 3) }); } },
+        { x: 1550, y: 1045, s: 1.3, ...WN.VIEWER(1), pose: 'sit', facing: -1, mood: 'neutral', anim: (o, lt) => { o.lean = Math.sin(lt * .8) * 1.2; } },
+        { x: 1970, y: 1230, s: s5, ...WN.VIEWER(0), pose: 'sit', facing: -1, mood: 'sad', anim: (o, lt) => { o.lean = Math.sin(lt * 1.3) * 1.5; const reach = (lt > tRe - .3 && lt < tOd + .3) || (lt > tSp - .3 && lt < tRh); if (reach) { o.arms = () => ({ shR: 150, elR: -10 }); o.mood = 'worried'; } if (lt > tRh) o.mood = 'sad'; } }];
+      S.D.live = [(c, lt) => { GA_CLEAN(c); TW.glow(c, 1280, 400, 700, '255,240,200', .12); SEAT(c, 1010, 1045, 1.3, 1); SEAT(c, 1550, 1045, 1.3, -1); SEAT(c, 590, 1230, s5, 1); SEAT(c, 1970, 1230, s5, -1); }];
       S.D.front = [(c, lt) => { const u = K.seg(lt, tCh - 1, tCh + 1.5); if (u <= 0) return; const ph = (lt - tCh) * .35, x = 300 + ((ph % 1.2) / 1.2) * 2200, y = 560 + Math.sin(lt * 1.6) * 60 - (x > 1700 && x < 2100 ? 80 : 0); WN.dragon(c, x, y, 1.2, lt); }];
       S.D.over = [(c, lt) => SP(c, V4),
         (c, lt) => K.card(c, 'CHASING THE DRAGON', lt, { at: tCh - .2, x: 960, y: 110, px: 46, rot: -2, bg: '#f2c14a' }),

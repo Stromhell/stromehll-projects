@@ -82,23 +82,24 @@ window.SHOTS = [
           const a = pop(lt, tWn - .3, .4); if (a > 0) { c.save(); c.translate(1280, 330); c.scale(a, a); txt(c, 'WHATNOT', 0, 0, 110, '#7affd0', 'center', 'Anton'); c.restore(); }
           if (lt > tVa - .2) JH.counter(c, 0, 20, 1280, 520, lt, tVa, tDo + .3, { px: 120, fmt: v => '$' + Math.round(v) + ' BILLION', col: GOLD });
           if (lt > tDo) txt(c, 'VALUATION', 1280, 640, 40, '#bfe', 'center', 'Oswald'); c.restore();
-          ringLight(c, 470, FL, 520, lt); ringLight(c, 2090, FL, 520, lt + 1.3);
+          WN.shadow(c, 600, 1262, 90, .3); WN.shadow(c, 1960, 1262, 90, .3); ringLight(c, 600, 1262, 520, lt); ringLight(c, 1960, 1262, 520, lt + 1.3);
           dust(c, lt, 26, '255,255,255', 0, 2560, 100, 1100); },
         (c, lt) => { if (lt < tDo) return; const u = lt - tDo; for (const p of conf) { const y = 180 + (u - p.d) * p.v; if (y < 180 || y > FL) continue; c.save(); c.translate(p.x + Math.sin(u * 3 + p.x) * 30, y); c.rotate(u * 4 + p.x); c.fillStyle = p.col; c.fillRect(-9, -5, 18, 10); c.restore(); } }];
       const heartsFrom = (x, y) => (c, lt) => { if (lt < tYT) return; for (let k = 0; k < 4; k++) { const ph = ((lt - tYT) * .7 + k / 4) % 1; c.globalAlpha = 1 - ph; WN.heart(c, x + Math.sin(ph * 6 + k) * 30, y - ph * 260, 16); c.globalAlpha = 1; } };
-      S.D.figs = [{ x: 620, y: FL, s: 1.55, ...WN.CREATOR(0), facing: 1, mood: 'happy', walk: { x0: -250, x1: 620, t0: tCh - 1.6, dur: 1.8 }, hold: HPHONE(1.2), anim: (o, lt) => { if (lt > tYT) { o.pose = 'wave'; } } },
+      const CY = 1335, tWk = tCh - 2.4, dWk = 2.6;
+      S.D.figs = [{ x: 780, y: CY, s: 1.62, ...WN.CREATOR(0), facing: 1, mood: 'happy', walk: { x0: -200, x1: 780, t0: tWk, dur: dWk }, hold: HPHONE(1.2), anim: (o, lt) => { if (o.pose === 'walk') return; if (lt > tYT) { o.pose = 'wave'; } } },
         { x: 1280, y: 1212, s: 1.55, ...WN.CREATOR(1), facing: 1, mood: 'happy', anim: (o, lt) => { o.pose = lt > tYT + .3 ? 'cheer' : lt > tDo ? 'wave' : 'present'; } },
-        { x: 1940, y: FL, s: 1.55, ...WN.CREATOR(2), facing: -1, mood: 'happy', walk: { x0: 2800, x1: 1940, t0: tCh - 1.4, dur: 1.8 }, hold: HPHONE(1.2), anim: (o, lt) => { if (lt > tPr) o.pose = 'point'; else if (lt > tYT + .2) o.pose = 'wave'; } }];
-      S.D.front = [heartsFrom(700, 820), heartsFrom(1860, 820)];
+        { x: 1780, y: CY, s: 1.62, ...WN.CREATOR(2), facing: -1, mood: 'happy', walk: { x0: 2760, x1: 1780, t0: tWk + .2, dur: dWk }, hold: HPHONE(1.2), anim: (o, lt) => { if (o.pose === 'walk') return; if (lt > tPr) o.pose = 'point'; else if (lt > tYT + .2) o.pose = 'wave'; } }];
+      S.D.front = [heartsFrom(860, 900), heartsFrom(1700, 900)];
       S.D.over = [(c, lt) => dateTag(c, 'FOUNDED 2019', 360, 110, lt, tLa, 40), (c, lt) => K.card(c, 'VALUED $20BN', lt, { at: tBi, x: 1560, y: 110, px: 44, rot: 2, bg: GOLD }),
         (c, lt) => K.card(c, 'PROMOTED BY YOUR FAVOURITE YOUTUBERS', lt, { at: tYT, x: 960, y: 210, px: 34, rot: -1 })];
-      S.D.sfx = [[tWn - .3, 'swell', .25], [tWn, 'chime', .3], [tNi, 'pop', .25], [tVa, 'riser', .25], [tVa + .3, 'tick', .2], [tDo, 'crowd_cheer', .3], [tDo + .1, 'pop', .3], [tCh - 1.6, 'footsteps', .25], [tYT, 'camera_shutter', .3], [tPr, 'pop', .25]]; } },
+      S.D.sfx = [[tWn - .3, 'swell', .25], [tWn, 'chime', .3], [tNi, 'pop', .25], [tVa, 'riser', .25], [tVa + .3, 'tick', .2], [tDo, 'crowd_cheer', .3], [tDo + .1, 'pop', .3], [tWk, 'footsteps', .25], [tYT, 'camera_shutter', .3], [tPr, 'pop', .25]]; } },
 
   // 0.03 courtroom: a lawyer holds up a trading card like evidence, a former user beside him; slot reels of cards spin and stop on '?'; gavel taps
   { plate: 'courtroom', cam: { z: [1.08, 1.22], x: [1280, 1320], y: [800, 820] }, bed: [['hum_loop', .08], ['crowd_loop', .04]], light: { dir: -1, key: 'rgba(255,220,170,.12)' },
     init: S => { const tLw = at(S, 'lawyers'), tFo = at(S, 'former'), tAw = at(S, 'awkward'), tSh = at(S, 'shopping'), tOr = at(S, 'Or,'), tAl = at(S, 'allege,'), tCa = at(S, 'casino'), tLi = at(S, 'licensed?');
       const CF = 1330;
-      S.D.figs = [{ x: 820, y: CF, s: 1.65, ...WN.LAWYER(0), facing: 1, mood: 'neutral', walk: { x0: 520, x1: 820, t0: 0, dur: 1.2 }, anim: (o, lt) => { if (lt > tLw) { o.pose = 'present'; o.hold = { near: cc => { cc.save(); unscale(cc); WN.card(cc, 0, 30, .5, '#2a9a5a', -.1); cc.restore(); } }; } if (lt > tCa) o.mood = 'angry'; } },
+      S.D.figs = [{ x: 820, y: CF, s: 1.65, ...WN.LAWYER(0), facing: 1, mood: 'neutral', walk: { x0: 1220, x1: 820, t0: .55, dur: 2.0 }, anim: (o, lt) => { if (o.pose === 'walk') return; if (lt > 2.55) o.facing = 1; if (lt > Math.max(tLw, 2.6)) { o.pose = 'present'; o.hold = { near: cc => { cc.save(); unscale(cc); WN.card(cc, 0, 30, .5, '#2a9a5a', -.1); cc.restore(); } }; } if (lt > tCa) o.mood = 'angry'; } },
         { x: 520, y: CF, s: 1.55, ...WN.VIEWER(1), facing: 1, mood: 'worried', anim: (o, lt) => { o.lean = Math.sin(lt * 1.4) * 2; if (lt > tFo) o.pose = 'think'; if (lt > tCa) { o.pose = 'shrug'; o.mood = 'sad'; } } }];
       // slot machine screen on a stand
       const SXc = 1830, SYc = 780;
@@ -111,11 +112,11 @@ window.SHOTS = [
             if (lt >= stop) sym(c, 3, x, SYc); else { const off = (sp % 1) * 180; for (let j = -1; j < 3; j++) sym(c, (Math.floor(sp) + j + r) % 3, x, SYc - 180 + j * 180 + off); }
             c.restore(); c.strokeStyle = INK; c.lineWidth = 5; c.strokeRect(x - 85, SYc - 170, 170, 340); }
           // gavel on the bench
-          const g = lt > tAl && lt < tAl + 1.2 ? Math.abs(Math.sin((lt - tAl) * 9)) * .7 : .1; WN.gavel(c, 1290, 668, .8, g); }];
+          const g = lt > tAl && lt < tAl + 1.2 ? Math.abs(Math.sin((lt - tAl) * 9)) * .7 : 0; WN.gavel(c, 1290, 646, .8, g); }];
       S.D.over = [(c, lt) => K.card(c, 'LAWYERS + FORMER USERS', lt, { at: tLw, x: 520, y: 120, px: 36, rot: -2, until: tSh }),
         (c, lt) => K.card(c, 'SHOP...', lt, { at: tSh - .2, x: 560, y: 120, px: 58, rot: -3 }), (c, lt) => K.card(c, '...OR CASINO?', lt, { at: tCa - .2, x: 960, y: 120, px: 58, rot: 3, bg: '#e2342e', color: '#fff' }),
         (c, lt) => tag(c, 'ALLEGED', 1420, 125, lt, tAl, .8), (c, lt) => K.card(c, 'NOBODY LICENSED IT?', lt, { at: tLi - .2, x: 1460, y: 250, px: 34, rot: -2, bg: GOLD })];
-      S.D.sfx = [[.1, 'footsteps', .2], [tLw, 'paper', .25], [tAw, 'tension', .2], [tSh - .2, 'tick', .25], [tSh, 'whoosh_soft', .2], [tOr, 'tick', .25], [tAl, 'hit', .3], [tAl + .35, 'hit', .25], [tCa, 'thud', .3], [tCa + .35, 'thud', .25], [tCa + .7, 'thud', .25], [tLi, 'alarm', .12]]; } },
+      S.D.sfx = [[.55, 'footsteps', .2], [tLw, 'paper', .25], [tAw, 'tension', .2], [tSh - .2, 'tick', .25], [tSh, 'whoosh_soft', .2], [tOr, 'tick', .25], [tAl, 'hit', .3], [tAl + .35, 'hit', .25], [tCa, 'thud', .3], [tCa + .35, 'thud', .25], [tCa + .7, 'thud', .25], [tLi, 'alarm', .12]]; } },
 
   // 0.04 TITLE: the golden chase card spins under a spotlight, a phone glowing behind; title slams in
   { plate: 'title', cam: { z: [1.0, 1.1], x: [1280, 1280], y: [720, 700] }, bed: [['hum_loop', .08]], light: {},

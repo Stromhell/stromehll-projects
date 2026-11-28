@@ -37,6 +37,25 @@ const trestle = (c, x, top, floor, w) => { WN.shadow(c, x, floor, w * .6); c.str
   c.fillStyle = '#6a5038'; c.strokeStyle = INK; c.lineWidth = 4; rr(c, x - w / 2, top, w, 26, 6); c.fill(); c.stroke(); };
 const fog = (c, lt, y, a = .35) => { for (let k = 0; k < 9; k++) { const x = ((k * 340 + lt * (30 + k * 6)) % 3200) - 320; c.fillStyle = `rgba(200,204,210,${a * (.5 + .5 * Math.sin(k + lt * .4))})`; c.beginPath(); c.ellipse(x, y + (k % 3) * 50, 380, 70, 0, 0, 7); c.fill(); } };
 
+// ---- support-group room fix: the ga_room plate's painted chairs face the wrong way and are far too tall for the rig's sitting height.
+// GA_CLEAN paints them out with plate strips copied from the same rows (feathered), then SEAT draws a side-view chair under each sitter:
+// seat top = feet y - 47.5*s (the rig's thigh line in pose 'sit'), back rest behind the sitter (opposite to the way they face).
+const GA_CLEAN = (() => { let cv = null; const F = 16;
+  // [dest x, dest y, w, h, source x (same rows), feather l, r, t, b]
+  const P = [[924, 780, 96, 292, 860, 1, 0, 1, 1], [1020, 780, 65, 292, 1200, 0, 1, 1, 1], [1475, 780, 85, 292, 1285, 1, 0, 1, 1], [1560, 780, 80, 292, 1624, 0, 1, 1, 1],
+    [660, 855, 155, 317, 1150, 1, 1, 1, 1], [1728, 855, 172, 317, 1140, 1, 1, 1, 1], [505, 940, 175, 370, 1150, 1, 1, 1, 1], [1858, 940, 200, 370, 1140, 1, 1, 1, 1]];
+  return c => { const im = K.imgs.ga_room; if (!cv) { if (!im || !im.complete || !im.naturalWidth) return; cv = document.createElement('canvas'); cv.width = 2560; cv.height = 1440; const x = cv.getContext('2d'), k = im.naturalWidth / 2560;
+      for (const [dx, dy, w, h, sx, l, r, t, b] of P) { const tc = document.createElement('canvas'); tc.width = w; tc.height = h; const y = tc.getContext('2d'); y.drawImage(im, sx * k, dy * k, w * k, h * k, 0, 0, w, h); y.globalCompositeOperation = 'destination-in';
+        for (const [len, a0, a1, hor] of [[w, l, r, 1], [h, t, b, 0]]) { const g = hor ? y.createLinearGradient(0, 0, w, 0) : y.createLinearGradient(0, 0, 0, h); g.addColorStop(0, a0 ? 'rgba(0,0,0,0)' : '#000'); g.addColorStop(F / len, '#000'); g.addColorStop(1 - F / len, '#000'); g.addColorStop(1, a1 ? 'rgba(0,0,0,0)' : '#000'); y.fillStyle = g; y.fillRect(0, 0, w, h); }
+        x.drawImage(tc, dx, dy); } }
+    c.drawImage(cv, 0, 0); }; })();
+const SEAT = (c, x, y, s, f, col = '#3a6ab0') => { const st = y - 47.5 * s, dk = R.shadeHex(col, -.3); c.save(); c.fillStyle = 'rgba(20,12,6,.3)'; c.beginPath(); c.ellipse(x, y, 62 * s, 9 * s, 0, 0, 7); c.fill(); c.lineCap = 'round';
+  c.strokeStyle = '#2a2c32'; c.lineWidth = 4.5 * s; for (const [dx, dy] of [[-30, -5], [36, -5]]) { c.beginPath(); c.moveTo(x + f * (dx + 6) * s, st + 6 * s); c.lineTo(x + f * (dx + 8) * s, y + dy * s); c.stroke(); }
+  c.strokeStyle = '#3a3c42'; c.lineWidth = 5 * s; for (const dx of [-36, 34]) { c.beginPath(); c.moveTo(x + f * dx * s, st + 6 * s); c.lineTo(x + f * dx * s, y + 2 * s); c.stroke(); }
+  c.beginPath(); c.moveTo(x - f * 38 * s, st); c.lineTo(x - f * 48 * s, st - 62 * s); c.stroke();
+  c.fillStyle = col; c.strokeStyle = INK; c.lineWidth = 3; c.save(); c.translate(x - f * 50 * s, st - 78 * s); c.rotate(-f * .12); TW.rr(c, -8 * s, -34 * s, 16 * s, 64 * s, 6 * s); c.fill(); c.stroke(); c.restore();
+  const g = c.createLinearGradient(0, st - 3 * s, 0, st + 9 * s); g.addColorStop(0, R.shadeHex(col, .15)); g.addColorStop(1, dk); c.fillStyle = g; TW.rr(c, x - 46 * s, st - 3 * s, 92 * s, 12 * s, 5 * s); c.fill(); c.stroke(); c.restore(); };
+
 window.SHOTS = [
   // 6.00 MAP: live commerce starts in China. Pulse over eastern China, phone icons multiply; 2016 -> 2020
   { plate: 'asia_map', cam: { z: [1.08, 1.4], x: [1280, 1460], y: [720, 560] }, bed: [['hum_loop', .08], ['city_loop', .05]],
@@ -149,7 +168,8 @@ window.SHOTS = [
       const sitter = (x, y, s, look, facing, k) => ({ x, y, s, ...look, pose: 'sit', facing, mood: 'neutral', seed: 880 + k, anim: (o, lt) => { clap(o, lt); o.lean = Math.sin(lt * .8 + k) * 2; if (lt > tSu) o.mood = 'happy'; } });
       S.D.figs = [sitter(590, 1262, 1.3, WN.COUNSELLOR(), 1, 0), sitter(1970, 1262, 1.3, WN.VIEWER(1), -1, 1), sitter(735, 1135, 1.12, WN.PARENT(1), 1, 2), sitter(1825, 1135, 1.12, WN.COLLECTOR(2), -1, 3),
         { x: 1270, y: 1270, s: 1.5, ...WN.SEAN(), facing: 1, mood: 'neutral', anim: (o, lt) => { o.hold = lt < tDe + 1.2 ? PHONE((cc, w, h) => { if (lt < tDe) icon(cc, w, h); }) : null; o.arms = lt < tDe + 1.2 ? () => ({ shR: 30, elR: -115 }) : null; if (lt > tDe) o.mood = 'happy'; if (lt > tSu + .3) { o.pose = 'wave'; } if (lt > tSu + 2.5) o.pose = 'stand'; if (lt > tTw) { o.pose = 'cheer'; o.mood = 'happy'; } } }];
-      S.D.live = [(c, lt) => { for (let k = 0; k < 4; k++) TW.glow(c, [430, 830, 1950, 2280][k], 420, 280, '255,250,220', .14 + .03 * Math.sin(lt + k)); dust(c, lt, 30, '255,250,230', 300, 700);
+      S.D.live = [(c, lt) => { GA_CLEAN(c); SEAT(c, 1010, 1050, .98, 1); SEAT(c, 1550, 1050, .98, -1); SEAT(c, 735, 1135, 1.12, 1); SEAT(c, 1825, 1135, 1.12, -1); SEAT(c, 590, 1262, 1.3, 1); SEAT(c, 1970, 1262, 1.3, -1);
+          for (let k = 0; k < 4; k++) TW.glow(c, [430, 830, 1950, 2280][k], 420, 280, '255,250,220', .14 + .03 * Math.sin(lt + k)); dust(c, lt, 30, '255,250,230', 300, 700);
           // steam from the urn
           for (let k = 0; k < 4; k++) { const p = (lt * .4 + k / 4) % 1; c.fillStyle = `rgba(255,255,255,${.25 * (1 - p)})`; c.beginPath(); c.arc(2215 + Math.sin(p * 6 + k) * 14, 700 - p * 160, 14 + p * 20, 0, 7); c.fill(); }
           // gold card pinned on the noticeboard, crossed out
