@@ -1,0 +1,84 @@
+
+@font-face{font-family:Urbane;font-weight:300;src:url(../../../fonts/Urbane-Light.woff2)}
+@font-face{font-family:Urbane;font-weight:500;src:url(../../../fonts/Urbane-Medium.woff2)}
+@font-face{font-family:Urbane;font-weight:600;src:url(../../../fonts/Urbane-Demi-Bold.woff2)}
+@font-face{font-family:Urbane;font-weight:700;src:url(../../../fonts/Urbane-Bold.woff2)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{width:1920px;height:1080px;overflow:hidden;position:relative;font-family:Urbane,sans-serif;color:#0a2647}
+.bg{position:absolute;inset:0}
+.light .bg{background:radial-gradient(900px 620px at 50% 115%,rgba(67,164,220,.55),transparent 70%),linear-gradient(180deg,#ffffff 0%,#e6f3fb 55%,#bfe2f6 100%)}
+.dark .bg{background:radial-gradient(1200px 800px at 50% -10%,rgba(67,164,220,.45),transparent 65%),linear-gradient(180deg,#0a2647 0%,#04101f 70%,#02070f 100%)}
+.blue .bg{background:radial-gradient(1000px 700px at 50% 0%,rgba(255,255,255,.45),transparent 70%),linear-gradient(180deg,#6cc0ec 0%,#43a4dc 50%,#1f6fa3 100%)}
+.dark{color:#fff} .blue{color:#fff}
+.orb{position:absolute;border-radius:50%;filter:blur(2px)}
+.horizon{position:absolute;left:-10%;width:120%;border-radius:50% 50% 0 0}
+.light .horizon{background:radial-gradient(ellipse at 50% 0%,#5cb4e6 0%,#1f6fa3 55%,#0a2647 100%)}
+.dark .horizon{background:radial-gradient(ellipse at 50% 0%,#2a7fb5 0%,#0d3a66 45%,#04101f 100%);box-shadow:0 -10px 80px rgba(67,164,220,.45)}
+.blue .horizon{background:radial-gradient(ellipse at 50% 0%,#ffffff 0%,#d8eefa 40%,#9fd3f2 100%)}
+.glass{position:absolute;border-radius:30px;background:linear-gradient(150deg,rgba(255,255,255,.97),rgba(222,240,251,.9));border:1.5px solid rgba(255,255,255,.95);box-shadow:0 34px 80px rgba(10,38,71,.22),inset 0 2px 0 #fff,0 0 0 1px rgba(67,164,220,.18);color:#0a2647}
+.dark .glass{background:linear-gradient(150deg,rgba(255,255,255,.16),rgba(67,164,220,.10));border:1.5px solid rgba(190,230,255,.55);box-shadow:0 40px 90px rgba(0,0,0,.55),inset 0 2px 0 rgba(255,255,255,.35),0 0 60px rgba(190,235,255,.30);color:#fff}
+.blue .glass{box-shadow:0 34px 80px rgba(8,40,70,.35),inset 0 2px 0 #fff,0 0 60px rgba(255,255,255,.55)}
+.rec{width:560px;padding:34px 40px}
+.rec .k{font-size:18px;letter-spacing:3px;text-transform:uppercase;font-weight:600;color:#43a4dc}
+.rec .n{font-size:46px;font-weight:700;margin-top:10px;line-height:1.05}
+.rec .a{font-size:28px;font-weight:300;margin-top:10px;opacity:.85}
+.rec .row{display:flex;gap:14px;margin-top:20px}
+.chip{display:inline-flex;align-items:center;gap:10px;padding:10px 18px;border-radius:30px;font-size:20px;font-weight:600;background:rgba(67,164,220,.14);color:#1f6fa3}
+.dark .chip{background:rgba(160,215,245,.16);color:#bfe6ff}
+.kick{position:absolute;font-size:22px;letter-spacing:5px;text-transform:uppercase;font-weight:600;color:#43a4dc}
+.dark .kick,.blue .kick{color:#bfe6ff}
+.big{position:absolute;font-weight:700;letter-spacing:-1.5px;line-height:1.02}
+.big em{font-style:normal;color:#ec6408}
+.blue .big em{color:#0a2647}
+.light .big{color:#0a2647}
+.tile{position:absolute;width:118px;height:118px;border-radius:32px;display:flex;align-items:center;justify-content:center;
+ background:linear-gradient(150deg,#7fcaf2 0%,#43a4dc 45%,#1f6fa3 100%);box-shadow:0 22px 40px rgba(10,38,71,.35),inset 0 3px 0 rgba(255,255,255,.55),inset 0 -6px 14px rgba(10,38,71,.35)}
+.tile.o{background:linear-gradient(150deg,#ffb27a 0%,#ec6408 50%,#b84a00 100%)}
+.tile.w{background:linear-gradient(150deg,#ffffff 0%,#e3f1fa 60%,#bcdff3 100%)}
+.tile.n{background:linear-gradient(150deg,#2a5d8c 0%,#0a2647 60%,#04101f 100%)}
+.tile small{position:absolute;top:128px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:19px;font-weight:600}
+.dark .tile small{color:#d6eefb}
+.stamp{position:absolute;padding:18px 44px;border:8px solid #ec6408;border-radius:22px;color:#ec6408;font-size:84px;font-weight:700;letter-spacing:6px;text-transform:uppercase;transform:rotate(-10deg);background:rgba(255,255,255,.75)}
+.pill{position:absolute;padding:16px 30px;border-radius:50px;font-size:30px;font-weight:600;color:#fff;background:#0a2647;white-space:nowrap}
+.pill.b{background:#43a4dc}.pill.o{background:#ec6408}.pill.w{background:#fff;color:#0a2647}
+svg{position:absolute;left:0;top:0;overflow:visible}
+.logo{position:absolute}
+
+.cam{position:absolute;inset:0;transform-style:preserve-3d}
+.fx{position:absolute;pointer-events:none}
+.ghost{position:absolute;inset:0}
+.dof{position:absolute;border-radius:50%;filter:blur(18px)}
+.tag{position:absolute;font-size:18px;letter-spacing:3px;text-transform:uppercase;font-weight:600;padding:8px 14px;border-radius:8px}
+.demo{position:absolute;border-radius:22px;overflow:hidden;background:#fff}
+.demo .bar{height:40px;background:linear-gradient(180deg,#f4f8fb,#e6eff6);display:flex;align-items:center;gap:9px;padding:0 16px;font-size:17px;font-weight:600;color:#0a2647}
+.demo .bar i{width:11px;height:11px;border-radius:50%;background:#c9d6e0}
+.demo img{display:block;width:100%}
+.dark .demo,.blue .demo{box-shadow:0 50px 110px rgba(0,0,0,.55),0 0 0 2px rgba(190,230,255,.7),0 0 80px rgba(190,235,255,.45)}
+.light .demo{box-shadow:0 40px 100px rgba(20,60,100,.25),0 0 0 2px rgba(67,164,220,.5),0 0 70px rgba(67,164,220,.35)}
+
+.w{position:absolute;transform-style:preserve-3d;will-change:transform,opacity,filter}
+.in{position:relative;transform-style:preserve-3d}
+#world{position:absolute;inset:0;perspective:1800px;transform-origin:50% 50%}
+#cam{position:absolute;inset:0;transform-style:preserve-3d}
+#front{position:absolute;inset:0;pointer-events:none}
+#orbs{position:absolute;inset:0}
+.dot{position:absolute;border-radius:50%}
+.lay{position:absolute;left:0;top:0;overflow:visible}
+.ring{position:absolute;border-radius:50%;box-sizing:border-box}
+.flash{position:absolute;inset:0;opacity:0}
+.sweep{position:absolute;top:-20%;left:0;width:40%;height:140%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-18deg);pointer-events:none;mix-blend-mode:screen}
+.glass,.pill,.tile{overflow:visible}
+.super .wd{display:inline-block}
+.tag{position:absolute}
+.tag{white-space:nowrap}
+.super{line-height:1.22}
+/* v3: theme grounds usable as overlays (gradient reveal between light and dark), light rays, light patches */
+.bg-light{background:radial-gradient(900px 620px at 50% 115%,rgba(67,164,220,.55),transparent 70%),linear-gradient(180deg,#ffffff 0%,#e6f3fb 55%,#bfe2f6 100%)}
+.bg-dark{background:radial-gradient(1200px 800px at 50% -10%,rgba(67,164,220,.45),transparent 65%),linear-gradient(180deg,#0a2647 0%,#04101f 70%,#02070f 100%)}
+.bg-blue{background:radial-gradient(1000px 700px at 50% 0%,rgba(255,255,255,.45),transparent 70%),linear-gradient(180deg,#6cc0ec 0%,#43a4dc 50%,#1f6fa3 100%)}
+.veil{position:absolute;inset:0;z-index:50;-webkit-mask-image:radial-gradient(circle at var(--cx,50%) var(--cy,50%),transparent calc(var(--r,0) * 1px),#000 calc(var(--r,0) * 1px + 260px))}
+.ray{position:absolute;top:-300px;width:220px;height:1700px;filter:blur(30px);transform-origin:50% 0}
+.light .ray{background:linear-gradient(180deg,rgba(255,255,255,.9),rgba(255,255,255,0))}
+.dark .ray{background:linear-gradient(180deg,rgba(120,200,250,.20),rgba(67,164,220,0))}
+.blue .ray{background:linear-gradient(180deg,rgba(255,255,255,.45),rgba(255,255,255,0))}
+.patch{position:absolute;border-radius:50%;filter:blur(60px)}
