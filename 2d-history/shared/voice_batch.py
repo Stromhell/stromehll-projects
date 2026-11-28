@@ -39,6 +39,8 @@ WORDS = [
  (r"\bEmirati\b", 'Emi-rah-tee'), (r"\bkafala\b", 'ka-fah-la'), (r"\bHouse of Saud\b", 'House of Sah-ood'), (r"\bAl Udeid\b", 'Al Oo-dade'), (r"\bShia\b", 'Shee-ah'),
  (r"\bSunni\b", 'Soo-nee'), (r"\bRiyadh\b", 'Ree-yahd'), (r"\bbin Salman\b", 'bin Sal-mahn'), (r"\bRitz-Carlton\b", 'Ritz Carlton'), (r"\bOmanis\b", 'Oh-mah-nees'),
  (r"\bOman's\b", 'Oh-mahn\'s'), (r"\bOman\b", 'Oh-mahn'), (r"\bQatar's\b", 'Kat-ar\'s'), (r"\bQatar\b", 'Kat-ar'), (r"\bRAF\b", 'R A F'), (r"\bAbdul Karim\b", 'Abdul Ka-reem'),
+ (r"\bN3on's\b", 'Neon\'s'), (r"\bN3on\b", 'Neon'), (r"\bArlovski\b", 'Ar-lov-ski'), (r"\bDexerto\b", 'Dex-erto'), (r"\bIBTimes\b", 'I B Times'), (r"\bUFC\b", 'U F C'),
+ (r"\bWM\b", 'W M'), (r"\bPGA\b", 'P G A'), (r"\bNBC\b", 'N B C'), (r"\bTwitchCon\b", 'Twitch Con'), (r"\bDoherty\b", 'Doh-er-tee'),
  (r"\bGIUK\b", 'G I U K'), (r"\bTallinn\b", 'Tah-lin'),
 (r"\bCUDA\b", 'Kooda'), (r"\bIrimajiri\b", 'Eeri-mah-jeeri'), (r"\bWiessner\b", 'Weess-ner'), (r"\bHadza\b", 'Hahd-za'),
  (r"Ju/'hoansi", 'Zhu-twa-see'), (r"\bHohle Fels\b", 'Hoh-leh Fels'), (r"\bBlombos\b", 'Blom-boss'), (r"\bDobe\b", 'Doh-bay'),

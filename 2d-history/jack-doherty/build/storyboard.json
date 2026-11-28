@@ -1,0 +1,526 @@
+{
+ "meta": {
+  "slug": "jack-doherty",
+  "prefix": "JD",
+  "title": "The YouTuber a Casino Paid to Stop Posting",
+  "working_title": "A Casino Paid This YouTuber to Stop Posting",
+  "device": "A red 'KICKED OUT' stamp thumps onto the screen every time a door closes on Jack (supermarket, Kick, Kick again, PGA Tour, Shuffle), and a running BANNED list (a clipboard top-right) gains one line each time. The list is the spine of the video.",
+  "style": "Stormi 2D house style (Gumball-style rig characters on painted plates, same engine as Prime/Pattinson/Gulf Kings/Whatnot). Real people stylised, no likeness, no real logos (no Kick, Shuffle, McLaren, PGA or Walmart logos; names only as plain text in our own font). Allegations always phrased as allegations; outcomes not reported are said to be unreported. No slurs shown or spoken.",
+  "char_style": "Gumball",
+  "source": "YouTube reference (Sid Montage, 'Why the Internet Hates Jack Doherty', youtu.be/TvpFRx2klyk, transcript pulled via Pushpam's Chrome 28 Nov 2026), itself based on NBC News, Car Throttle/Miami New Times, Tubefilter, Dexerto, Golf Magic, IBTimes UK, MyMMANews. Research only; original script, en-GB."
+ },
+ "stats": {
+  "shots": 40,
+  "words": 1127,
+  "runtime": "7:35",
+  "acts": 7
+ },
+ "acts": [
+  {
+   "name": "Cold open",
+   "folder": "act0-coldopen",
+   "shots": [
+    {
+     "id": "0.01",
+     "type": "MED",
+     "sec": 10.2,
+     "vo": "In October twenty twenty-six, a casino company did something no sponsor had ever done. It paid a YouTuber with fifteen million subscribers... to stop posting.",
+     "visual": "Casino-style boardroom at night: a briefcase of cash slides across a table towards a phone that shows a YouTube-style channel page (15M); the phone screen goes dark.",
+     "onscreen": "PAID TO STOP POSTING",
+     "anim": "Briefcase slides, cash flutters; phone screen fades to black; '15M SUBSCRIBERS' counter.",
+     "img": ""
+    },
+    {
+     "id": "0.02",
+     "type": "MED",
+     "sec": 13.2,
+     "vo": "The YouTuber was Jack Doherty. And when the casino's boss was asked if the deal was real, he answered in public. Yes. Six months. Money well spent to get this off the internet.",
+     "visual": "Jack (stylised, blond hair, chain, sunglasses) stares at his phone in a gaming room; a big social-post card slides in beside him: 'Yes, it's real. 6-month term.'",
+     "onscreen": "YES, IT'S REAL \u00b7 6 MONTHS",
+     "anim": "Post card slides in; Jack's jaw drops; like counter starts climbing.",
+     "img": ""
+    },
+    {
+     "id": "0.03",
+     "type": "MED",
+     "sec": 7.5,
+     "vo": "That reply got around two hundred and forty thousand likes. Roughly twenty-three times more than Jack's own post.",
+     "visual": "Two post cards side by side as a bar race: the CEO's post bar shoots up to 241K, Jack's stays tiny at ~10K.",
+     "onscreen": "241K LIKES \u00b7 23x HIS POST",
+     "anim": "Bars race; hearts burst from the tall one.",
+     "img": ""
+    },
+    {
+     "id": "0.04",
+     "type": "MED",
+     "sec": 9.8,
+     "vo": "So how does someone become so disliked that paying him to disappear looks like good marketing? It starts, of all places, in a supermarket.",
+     "visual": "Exterior of a big supermarket at dusk; trolleys; Jack's silhouette walks towards the doors; a red KICKED OUT stamp waits above the door.",
+     "onscreen": "HOW DID IT COME TO THIS?",
+     "anim": "Camera pushes towards the doors; neon flickers.",
+     "img": ""
+    },
+    {
+     "id": "0.05",
+     "type": "TITLE",
+     "sec": 6.8,
+     "vo": "This is the story of how getting kicked out became a business. And then a bill.",
+     "visual": "Title card: KICKED OUT FOR A LIVING; the BANNED clipboard appears top-right, empty.",
+     "onscreen": "KICKED OUT FOR A LIVING",
+     "anim": "Title slams in; stamp thump; clipboard slides in.",
+     "img": ""
+    }
+   ],
+   "sec": 47.5,
+   "words": 116
+  },
+  {
+   "name": "Kicked Out for a Living",
+   "folder": "act1-kickedout",
+   "shots": [
+    {
+     "id": "1.01",
+     "type": "MED",
+     "sec": 13.9,
+     "vo": "June twenty seventeen. A teenager and his friend Ricky film a floor-is-lava challenge inside a giant American supermarket. They leap from shelf to shelf, staff come running, and the two of them are thrown out.",
+     "visual": "Supermarket aisle: teen Jack and Ricky hop between shelf edges and a trolley; a staff member in a vest runs in waving; they get walked out.",
+     "onscreen": "JUNE 2017 \u00b7 FLOOR IS LAVA",
+     "anim": "Lava-red glow on the floor; boxes wobble; staff chase.",
+     "img": ""
+    },
+    {
+     "id": "1.02",
+     "type": "MED",
+     "sec": 10.9,
+     "vo": "The video passes fifteen million views. And Jack learns the lesson that will shape the next nine years. Getting kicked out isn't the punishment. It's the product.",
+     "visual": "Teen bedroom: teen Jack at a laptop; a view counter rockets to 15,000,000; the red KICKED OUT stamp lands and turns gold like a trophy.",
+     "onscreen": "15,000,000 VIEWS",
+     "anim": "Counter rolls; stamp flips to gold.",
+     "img": ""
+    },
+    {
+     "id": "1.03",
+     "type": "MED",
+     "sec": 10.9,
+     "vo": "Seven of his fifteen biggest videos have the supermarket or kicked out right in the title. His kicked-out uploads alone have pulled in around ninety million views.",
+     "visual": "A wall of video thumbnails (generic, no faces) in the creator room; seven of fifteen light up red; a counter adds to 90M.",
+     "onscreen": "7 OF HIS TOP 15 \u00b7 ~90M VIEWS",
+     "anim": "Thumbnails flip red one by one; counter climbs.",
+     "img": ""
+    },
+    {
+     "id": "1.04",
+     "type": "MED",
+     "sec": 10.2,
+     "vo": "The formula never changes. Do the stunt. Get removed. Post the clip. The security guard isn't the villain of the video. He's the free co-star.",
+     "visual": "Three-step loop on a shop floor: STUNT (Jack dances on a display), REMOVED (guard walks him out), POST (phone uploads); the guard gets a little 'CO-STAR' star badge.",
+     "onscreen": "STUNT \u00b7 REMOVED \u00b7 POST",
+     "anim": "Loop arrows spin; star badge pops on the guard.",
+     "img": ""
+    },
+    {
+     "id": "1.05",
+     "type": "MED",
+     "sec": 9.8,
+     "vo": "By his twenties he has fifteen million subscribers, a garage of supercars, and a reputation. And the reputation is growing faster than the channel.",
+     "visual": "Glossy supercar showroom: adult Jack leans on a sleek orange supercar (no badge); a subscriber counter at 15M; a red REPUTATION bar overtakes the subscriber bar.",
+     "onscreen": "15M SUBSCRIBERS",
+     "anim": "Bars race; showroom lights sweep.",
+     "img": ""
+    }
+   ],
+   "sec": 55.7,
+   "words": 138
+  },
+  {
+   "name": "The Bodyguard Years",
+   "folder": "act2-bodyguards",
+   "shots": [
+    {
+     "id": "2.01",
+     "type": "MED",
+     "sec": 10.2,
+     "vo": "Slowly, the videos changed. Less pranking, more picking fights. He'd needle strangers in public, mocking them and their families, until somebody finally swung at him.",
+     "visual": "Shopping-mall concourse / street at day: Jack with a phone on a gimbal taunts a big man; speech bubbles of '!!!' and '#@%'; the man swings; Jack ducks behind the camera.",
+     "onscreen": "MORE FIGHTS, FEWER PRANKS",
+     "anim": "Swing whoosh; camera shake.",
+     "img": ""
+    },
+    {
+     "id": "2.02",
+     "type": "MED",
+     "sec": 12.1,
+     "vo": "When one clip appeared to show him using a racial slur, he insisted the word was actually hater. Not long after, he aimed a different slur at his own fans.",
+     "visual": "A big clip-player frame on a dark background with a waveform bleeped out (a red BLEEP block); Jack beside it shrugs; a 'HE SAYS: \"HATER\"' tag.",
+     "onscreen": "HE SAYS: 'HATER'",
+     "anim": "Waveform pulses; bleep block slams down.",
+     "img": ""
+    },
+    {
+     "id": "2.03",
+     "type": "MED",
+     "sec": 16.2,
+     "vo": "Around Halloween one year, a confrontation ended with a man knocked out. Jack posted that his security had done it. A lawsuit later alleged his guard was involved in the attack. His lawyers pushed back, and no outcome has been reported.",
+     "visual": "Courtroom: a lawsuit document marked ALLEGED slides onto the bench; Jack's lawyer pushes back with a hand; an 'OUTCOME: NOT REPORTED' tag.",
+     "onscreen": "ALLEGED \u00b7 OUTCOME NOT REPORTED",
+     "anim": "Paper slap; tag stamps.",
+     "img": ""
+    },
+    {
+     "id": "2.04",
+     "type": "MED",
+     "sec": 12.4,
+     "vo": "More and more, he stood behind a wall of muscle. Before one stream, he told his security that if his guests tried to touch him, they shouldn't leave the property breathing.",
+     "visual": "Night, neon street: Jack peeks out from behind two huge bodyguards in black; a quote card slides in.",
+     "onscreen": "'...CAN'T LET THEM LEAVE'",
+     "anim": "Guards crack knuckles; neon buzz.",
+     "img": ""
+    },
+    {
+     "id": "2.05",
+     "type": "MED",
+     "sec": 10.9,
+     "vo": "In June twenty twenty-four, he brawled with fellow streamer N3on at a fight night in Florida. The platform banned them both. N3on's verdict? Everyone just hates him.",
+     "visual": "Boxing arena with a ring: two streamers grapple ringside, phones flying; a ref pulls them apart; two BANNED tags drop.",
+     "onscreen": "JUNE 2024 \u00b7 BOTH BANNED",
+     "anim": "Crowd roar; flashbulbs.",
+     "img": ""
+    },
+    {
+     "id": "2.06",
+     "type": "MED",
+     "sec": 11.3,
+     "vo": "And the muscle never left. In December twenty twenty-five, his crew clashed with former UFC heavyweight champion Andrei Arlovski at a boxing event. Each side blamed the other.",
+     "visual": "Same arena, different angle: a huge fighter (Arlovski, stylised) faces Jack's bodyguards; Jack points from behind; 'EACH SIDE BLAMES THE OTHER' tag.",
+     "onscreen": "DEC 2025 \u00b7 EACH SIDE BLAMES THE OTHER",
+     "anim": "Push-in; tension bass.",
+     "img": ""
+    }
+   ],
+   "sec": 73.1,
+   "words": 182
+  },
+  {
+   "name": "The McLaren",
+   "folder": "act3-mclaren",
+   "shots": [
+    {
+     "id": "3.01",
+     "type": "MED",
+     "sec": 10.2,
+     "vo": "When Jack went live, he went to Kick. A platform launched in twenty twenty-two that sold itself to creators on one big promise. Fewer rules.",
+     "visual": "Bright tech-company atrium with a giant green LED wall reading KICK (plain text) and 'FEWER RULES'; streamers cheer.",
+     "onscreen": "KICK \u00b7 FEWER RULES",
+     "anim": "LED wall pulses green; confetti.",
+     "img": ""
+    },
+    {
+     "id": "3.02",
+     "type": "MED",
+     "sec": 9.8,
+     "vo": "But even Kick had a line. Weeks before what came next, after reports of its streamers harassing people at TwitchCon, several accounts were suspended.",
+     "visual": "Same atrium: a red velvet rope line is drawn across the floor; three streamer silhouettes get SUSPENDED tags.",
+     "onscreen": "ACCOUNTS SUSPENDED",
+     "anim": "Rope snaps taut; tags thump.",
+     "img": ""
+    },
+    {
+     "id": "3.03",
+     "type": "MED",
+     "sec": 10.6,
+     "vo": "Then, on the fifth of October twenty twenty-four, Jack went live from the driver's seat of a roughly two-hundred-thousand-dollar McLaren. On a wet highway near Miami.",
+     "visual": "Night highway in the rain, palm trees, guardrail; an orange supercar speeds past; LIVE badge pulses on a phone mount.",
+     "onscreen": "5 OCT 2024 \u00b7 LIVE AT THE WHEEL",
+     "anim": "Rain streaks; headlights; tyre spray.",
+     "img": ""
+    },
+    {
+     "id": "3.04",
+     "type": "MED",
+     "sec": 10.6,
+     "vo": "According to NBC News, the stream appeared to show him glancing down at the phone in his hand. Moments later, the car veered into a guardrail.",
+     "visual": "Inside-car style framing: Jack looks down at his phone; then the car slides and hits the guardrail; glass sparkles; screen shakes.",
+     "onscreen": "EYES ON THE PHONE?",
+     "anim": "Skid squeal, crash impact, glass.",
+     "img": ""
+    },
+    {
+     "id": "3.05",
+     "type": "MED",
+     "sec": 13.9,
+     "vo": "He posted the wreck himself. Crashed my McLaren, glad we're both okay. Viewers noticed he seemed more upset about the car than his cameraman, who needed stitches in his head. Jack later apologised to him.",
+     "visual": "Hospital bay: the cameraman with a head bandage on a bed; Jack stands looking at a phone photo of the crushed car; a post card 'Crashed my McLaren. Glad we're both okay.'",
+     "onscreen": "THE CAMERAMAN NEEDED STITCHES",
+     "anim": "Heart monitor beeps; post card slides.",
+     "img": ""
+    },
+    {
+     "id": "3.06",
+     "type": "MED",
+     "sec": 13.6,
+     "vo": "Kick banned him within hours, saying it doesn't condone illegal activity. And a Florida Highway Patrol crash report, obtained by the Miami New Times, gave him a citation for using his phone while driving.",
+     "visual": "Back at the atrium: the LED wall flips to BANNED; the clipboard gets line 1: KICK; a police citation slip flutters down.",
+     "onscreen": "BANNED \u00b7 CITATION: PHONE WHILE DRIVING",
+     "anim": "Stamp thump; clipboard tick; paper flutter.",
+     "img": ""
+    },
+    {
+     "id": "3.07",
+     "type": "MED",
+     "sec": 10.9,
+     "vo": "Days later he was live on TikTok, asking viewers to send him gifts, and explaining that he'd simply hydroplaned. Pouring rain. A McLaren. What did people expect?",
+     "visual": "Creator room: Jack streams on a vertical phone; gift icons (stars, galaxies) float up; a weather icon of pouring rain beside him.",
+     "onscreen": "LIVE AGAIN \u00b7 'I HYDROPLANED'",
+     "anim": "Gift sparkle sfx; rain icon.",
+     "img": ""
+    }
+   ],
+   "sec": 79.6,
+   "words": 197
+  },
+  {
+   "name": "Second Chances",
+   "folder": "act4-second",
+   "shots": [
+    {
+     "id": "4.01",
+     "type": "MED",
+     "sec": 14.3,
+     "vo": "Kick had called the ban permanent. It lasted three months. On the ninth of January twenty twenty-five, his channel was simply back, with no clear explanation. By then, Saturday Night Live had already parodied the crash.",
+     "visual": "TV studio stage: an actor in a blond wig in a cardboard car on a sketch set; studio audience laughs; a calendar flips to 9 JAN 2025; the clipboard's KICK line gets crossed out.",
+     "onscreen": "9 JAN 2025 \u00b7 BACK",
+     "anim": "Laugh track; calendar flip.",
+     "img": ""
+    },
+    {
+     "id": "4.02",
+     "type": "MED",
+     "sec": 7.5,
+     "vo": "Nine days later, he was streaming in the street when a stranger walked straight up and slapped him.",
+     "visual": "Miami street by day: Jack streaming on a gimbal; a stranger walks in from the right and slaps him; phone wobbles.",
+     "onscreen": "9 DAYS LATER",
+     "anim": "Slap crack; camera shake.",
+     "img": ""
+    },
+    {
+     "id": "4.03",
+     "type": "MED",
+     "sec": 9.1,
+     "vo": "According to Dexerto, Jack and his security chased the man down and beat him up. Kick banned him again. The same day.",
+     "visual": "Same street, wider: guards chase the stranger off-frame left; dust; the clipboard gets 'KICK (AGAIN)'.",
+     "onscreen": "BANNED AGAIN \u00b7 SAME DAY",
+     "anim": "Chase footsteps; stamp.",
+     "img": ""
+    },
+    {
+     "id": "4.04",
+     "type": "MED",
+     "sec": 12.4,
+     "vo": "His version? He'd defended himself, and the one time he stood up for himself, he got banned. His appeal was rejected. Two hundred thousand followers, and nowhere to stream to them.",
+     "visual": "Jack's bedroom studio at night: he types an appeal email; a REJECTED reply bounces back; a 200,000 follower counter greys out.",
+     "onscreen": "APPEAL REJECTED \u00b7 200,000 FOLLOWERS",
+     "anim": "Email whoosh; reject buzz; counter greys.",
+     "img": ""
+    },
+    {
+     "id": "4.05",
+     "type": "MED",
+     "sec": 6.0,
+     "vo": "So in February twenty twenty-six, he took the routine somewhere new. A golf tournament.",
+     "visual": "Sunny golf course with grandstands; Jack strolls in with sunglasses and a phone; polite golf crowd.",
+     "onscreen": "FEB 2026 \u00b7 PHOENIX",
+     "anim": "Birdsong; crowd murmur.",
+     "img": ""
+    }
+   ],
+   "sec": 49.3,
+   "words": 121
+  },
+  {
+   "name": "Banned From Golf",
+   "folder": "act5-golf",
+   "shots": [
+    {
+     "id": "5.01",
+     "type": "MED",
+     "sec": 13.2,
+     "vo": "At the WM Phoenix Open, golf's rowdiest week, Jack offered a fan a hundred dollars to shout an insult in the middle of a player's backswing. The fan did it. Jack paid up.",
+     "visual": "Golf tee with a gallery rope: a golfer at the top of his backswing; a fan beside Jack cups his hands and shouts; a $100 note changes hands.",
+     "onscreen": "$100 TO HECKLE A BACKSWING",
+     "anim": "Swing whoosh; shout; crowd gasp.",
+     "img": ""
+    },
+    {
+     "id": "5.02",
+     "type": "MED",
+     "sec": 12.8,
+     "vo": "Security and police walked him out. An official told him, on camera, that he was trespassed from every future PGA Tour event. Jack asked: forever? For the foreseeable future, came the answer.",
+     "visual": "Golf course path: a police officer and a tournament official in a blazer walk Jack out; a TRESPASSED card; the clipboard gets 'PGA TOUR'.",
+     "onscreen": "TRESPASSED FROM ALL PGA TOUR EVENTS",
+     "anim": "Stamp thump; clipboard tick.",
+     "img": ""
+    },
+    {
+     "id": "5.03",
+     "type": "MED",
+     "sec": 11.3,
+     "vo": "Jack called it the most harmless prank he could have done. The golfer, Mackenzie Hughes, still made the cut, and said he didn't lose much sleep over it.",
+     "visual": "Split: Jack in his creator room shrugging to camera; the golfer on the green tips his cap; MADE THE CUT tag.",
+     "onscreen": "HE STILL MADE THE CUT",
+     "anim": "Gentle applause; putt drop.",
+     "img": ""
+    },
+    {
+     "id": "5.04",
+     "type": "MED",
+     "sec": 15.1,
+     "vo": "But look at the bill. A supermarket stunt costs you a supermarket. This one cost him an entire sport. Same pattern as twenty seventeen. The difference is that the places kicking him out had started keeping a list.",
+     "visual": "The BANNED clipboard fills the frame: SUPERMARKET, KICK, KICK (AGAIN), PGA TOUR; a pen adds a line; the paper keeps scrolling.",
+     "onscreen": "THEY STARTED KEEPING A LIST",
+     "anim": "Pen scratch; list scrolls.",
+     "img": ""
+    }
+   ],
+   "sec": 52.4,
+   "words": 131
+  },
+  {
+   "name": "Paid to Disappear",
+   "folder": "act6-paid",
+   "shots": [
+    {
+     "id": "6.01",
+     "type": "MED",
+     "sec": 12.8,
+     "vo": "In late September twenty twenty-six, Jack asked on X whether he should stream on Kick and trade meme coins. The online casino Shuffle replied that it would pay him to stop talking.",
+     "visual": "Creator room: a big social post card from Jack ('Should I stream on Kick and trade meme coins?') and a reply card from SHUFFLE (plain text) 'We'll pay you to stop talking'.",
+     "onscreen": "'WE'LL PAY YOU TO STOP TALKING'",
+     "anim": "Notification pings; reply slides.",
+     "img": ""
+    },
+    {
+     "id": "6.02",
+     "type": "MED",
+     "sec": 10.9,
+     "vo": "According to IBTimes UK, a meme coin linked to Jack had fallen short of his hopes, and he went looking for sponsors to get his money up.",
+     "visual": "Chart: a meme-coin line (cartoon dog-free coin) rockets then nosedives; Jack's wallet empties; he scrolls sponsor offers.",
+     "onscreen": "MEME COIN FELL SHORT",
+     "anim": "Line drop whoosh; coin clatter.",
+     "img": ""
+    },
+    {
+     "id": "6.03",
+     "type": "MED",
+     "sec": 14.3,
+     "vo": "Days later he posted a confession. He'd signed a contract with Shuffle without reading it fully. One clause said he couldn't post online any more. He thought it was a joke. Now they were enforcing it.",
+     "visual": "Law office: a long contract unrolls across the desk to the floor; a magnifier finds a clause 'NO POSTING'; Jack slaps his forehead.",
+     "onscreen": "'I DIDN'T READ THE CONTRACT FULLY'",
+     "anim": "Paper unroll; gulp.",
+     "img": ""
+    },
+    {
+     "id": "6.04",
+     "type": "MED",
+     "sec": 13.6,
+     "vo": "Within an hour, Shuffle's boss confirmed it. Six months. Money well spent. The contract isn't public, so how far it really reaches is unclear, and Jack's lawyers are reportedly trying to get it scrapped.",
+     "visual": "Casino boardroom: the CEO (stylised, suit) smiles holding a phone; a post card 'Yes, it's real. 6-month term.'; the clipboard gets 'SHUFFLE (PAID)'; tag 'CONTRACT NOT PUBLIC'.",
+     "onscreen": "6 MONTHS \u00b7 CONTRACT NOT PUBLIC",
+     "anim": "Chip stack clink; stamp.",
+     "img": ""
+    },
+    {
+     "id": "6.05",
+     "type": "MED",
+     "sec": 8.3,
+     "vo": "To be fair, he didn't vanish. A week later, he won a boxing match in Miami in about thirty seconds.",
+     "visual": "Boxing ring: Jack in gloves; opponent drops; ref waves it off; a 0:30 timer.",
+     "onscreen": "WON IN ~30 SECONDS",
+     "anim": "Bell; punch; crowd roar.",
+     "img": ""
+    },
+    {
+     "id": "6.06",
+     "type": "MED",
+     "sec": 15.1,
+     "vo": "But look at the numbers. His twenty seventeen supermarket video, fifteen million views. His twenty twenty-three Island Boys video, eight point four million, and nothing since has beaten it. His latest upload? Around a hundred and twenty-five thousand.",
+     "visual": "Chart: three bars drop like a staircase: 15M (2017), 8.4M (2023), 125K (2026); Jack slides down them.",
+     "onscreen": "15M \u2192 8.4M \u2192 125K",
+     "anim": "Bars fall; descending tones.",
+     "img": ""
+    },
+    {
+     "id": "6.07",
+     "type": "MED",
+     "sec": 6.4,
+     "vo": "His subscriber count still says fifteen million. The subscribers stayed on paper. The views didn't.",
+     "visual": "Creator room at night: a plaque-like big 15M counter on the wall glows while a small view counter beside it flickers low; dust drifts.",
+     "onscreen": "15M ON PAPER",
+     "anim": "Low hum; flicker.",
+     "img": ""
+    },
+    {
+     "id": "6.08",
+     "type": "MED",
+     "sec": 15.8,
+     "vo": "And in his latest video, where he insists he's actually pretty chill, he walks a friend past a spot he's banned from. They just hate when I film here, he says. Nine years on, he still hasn't worked out why.",
+     "visual": "Back at the supermarket exterior at dusk: Jack and Ricky walk past; Jack points at the doors; the KICKED OUT stamp hovers; camera pulls back.",
+     "onscreen": "'THEY JUST HATE WHEN I FILM HERE'",
+     "anim": "Slow pull-back; music resolves.",
+     "img": ""
+    }
+   ],
+   "sec": 97.2,
+   "words": 242
+  }
+ ],
+ "hooks": [
+  [
+   "A casino paid a YouTuber with 15M subscribers to stop posting",
+   9.1
+  ],
+  [
+   "Getting kicked out was the business model. Then came the bill",
+   8.4
+  ],
+  [
+   "He crashed a $200,000 McLaren live, then asked for gifts",
+   8.2
+  ]
+ ],
+ "launch": {
+  "titles": [
+   "A Casino Paid This YouTuber to Stop Posting",
+   "Why Everyone Hates Jack Doherty",
+   "The YouTuber Who Got Paid to Disappear"
+  ],
+  "thumb": "Jack-like stylised streamer (blond, sunglasses, chain) holding a phone, a briefcase of cash pushed at him, his phone screen crossed out; text 'PAID TO QUIT'.",
+  "reels": [
+   "Paid to stop posting",
+   "241K likes vs his post",
+   "Floor is lava, kicked out",
+   "The free co-star",
+   "Behind the bodyguards",
+   "Both banned",
+   "The McLaren crash live",
+   "Crashed my McLaren",
+   "Hydroplaned, send gifts",
+   "Permanent ban, 3 months",
+   "Slapped, banned same day",
+   "$100 heckle",
+   "Trespassed from golf",
+   "Didn't read the contract",
+   "15M on paper"
+  ]
+ },
+ "fixes": [
+  "All legal claims phrased as allegations; unreported outcomes stated as unreported (security-guard lawsuit, phone citation).",
+  "Slurs never spoken or shown (bleep block); 'jackass' heckle softened to 'an insult'.",
+  "Shuffle CEO quote paraphrased short ('Yes. Six months. Money well spent to get this off the internet'); contract scope unclear and lawyers reportedly pressing to scrap it.",
+  "No real logos: Kick, Shuffle, PGA Tour, McLaren as plain text only; supermarket unnamed."
+ ],
+ "cuts": [
+  "Original script in our own words (source ~2,300 words, ours ~1,350).",
+  "Cut: Island Boys stream detail, Kick CEO quote, golf reply-post stats, Brand Risk event name.",
+  "UK angle: British spelling, plain explanations of US platforms."
+ ]
+}
