@@ -1,0 +1,121 @@
+// JD act 6 - Paid to Disappear: the Shuffle reply, the meme coin, the unread contract, the CEO confirms 6 months, a 30-second win, views fall, back at the supermarket. Ends with the 5 s end card.
+// Plates: creator_room (x2: ring-light side by day, shelf close at night), chart (x2: coin line, bars), law_office, boardroom, ring, shopfront, title.
+endTitle(5);
+for (const n of ['creator_room', 'chart', 'law_office', 'boardroom', 'ring', 'shopfront', 'title']) K.load(n, PL + n + '.jpg');
+const GLOVE = { near: cc => { cc.save(); unscale(cc); cc.fillStyle = '#d8262a'; cc.strokeStyle = INK; cc.lineWidth = 3; cc.beginPath(); cc.arc(0, 4, 17, 0, 7); cc.fill(); cc.stroke(); cc.restore(); }, far: cc => { cc.save(); unscale(cc); cc.fillStyle = '#b81e22'; cc.strokeStyle = INK; cc.lineWidth = 3; cc.beginPath(); cc.arc(0, 4, 17, 0, 7); cc.fill(); cc.stroke(); cc.restore(); } };
+const GLOVEB = { near: cc => { cc.save(); unscale(cc); cc.fillStyle = '#2f5ab0'; cc.strokeStyle = INK; cc.lineWidth = 3; cc.beginPath(); cc.arc(0, 4, 17, 0, 7); cc.fill(); cc.stroke(); cc.restore(); }, far: cc => { cc.save(); unscale(cc); cc.fillStyle = '#24488c'; cc.strokeStyle = INK; cc.lineWidth = 3; cc.beginPath(); cc.arc(0, 4, 17, 0, 7); cc.fill(); cc.stroke(); cc.restore(); } };
+const stage = (c, y = 1250) => { const g = c.createLinearGradient(0, y, 0, 1440); g.addColorStop(0, '#1a2440'); g.addColorStop(1, '#0a0e1a'); c.fillStyle = g; c.fillRect(0, y, 2560, 1440 - y); c.strokeStyle = '#4a8aff'; c.lineWidth = 4; c.beginPath(); c.moveTo(0, y); c.lineTo(2560, y); c.stroke(); };
+
+window.SHOTS = [
+  // 6.00 creator room by day: Jack posts the question; Shuffle replies 'We'll pay you to stop talking'
+  { plate: 'creator_room', cam: { z: [1.3, 1.42], x: [1700, 1760], y: [900, 920] }, bed: [['hum_loop', .07]], light: { dir: 1, key: 'rgba(255,220,255,.2)' },
+    init: S => { const tSe = at(S, 'September'), tAs = at(S, 'asked'), tSt = at(S, 'stream'), tSh = at(S, 'Shuffle'), tPa = at(S, 'pay'), tTa = at(S, 'talking.');
+      S.D.figs = [{ x: 2000, y: 1320, s: 1.35, ...JD.JACK(), facing: -1, mood: 'happy', hold: HPHONE(1.1), arms: () => ({ shR: 45, elR: -105 }), anim: (o, lt) => { o.lean = Math.sin(lt * 1.2) * 2; if (lt > tPa) { o.mood = 'shock'; o.lean = -6; } } }];
+      S.D.live = [(c, lt) => { TW.glow(c, 2240, 560, 300, '255,250,235', .3 + .05 * Math.sin(lt * 23)); dust(c, lt, 24, '255,220,255', 1100, 1400, 300, 900); }];
+      S.D.over = [(c, lt) => dateTag(c, 'LATE SEPT 2026', 300, 90, lt, tSe, 40),
+        (c, lt) => { const a = E.back(K.seg(lt, tAs, tAs + .4)); if (a <= 0) return; c.save(); c.translate(80, 170 + (1 - a) * 60); c.globalAlpha = Math.min(1, a); JD.post(c, 0, 0, .95, 'Jack', '@jack', 'Should I stream on Kick and trade meme coins?', 1200 + Math.min(40000, (lt - tAs) * 9000)); c.restore(); },
+        (c, lt) => { const a = E.back(K.seg(lt, tSh, tSh + .4)); if (a <= 0) return; c.save(); c.translate(170 + (1 - a) * 300, 420); c.globalAlpha = Math.min(1, a); c.strokeStyle = '#9aa4b4'; c.lineWidth = 4; c.beginPath(); c.moveTo(-40, -30); c.lineTo(-40, 80); c.lineTo(-10, 80); c.stroke(); JD.post(c, 0, 0, .95, 'SHUFFLE', '@shuffle', "We'll pay you to stop talking.", lt > tTa ? 88000 : 0); c.restore(); },
+        (c, lt) => card(c, "'WE'LL PAY YOU TO STOP TALKING'", lt, { at: tPa, x: 420, y: 720, px: 38, rot: -1, bg: GOLD, until: 99 })];
+      S.D.sfx = [[tSe, 'pop', .2], [tAs, 'chime', .3], [tSt, 'typing', .2], [tSh, 'chime', .4], [tPa, 'whoosh_soft', .3], [tTa, 'coins', .2]]; } },
+
+  // 6.01 chart: meme-coin line rockets then nosedives; Jack's wallet empties; he scrolls sponsor offers
+  { plate: 'chart', cam: { z: [1.0, 1.08], x: [1280, 1300], y: [720, 740] }, bed: [['trading_loop', .08], ['hum_loop', .05]], light: { dir: -1, key: 'rgba(180,220,255,.15)' },
+    init: S => { const tIB = at(S, 'IBTimes'), tCo = at(S, 'coin'), tFa = at(S, 'fallen'), tSp = at(S, 'sponsors'), tMo = at(S, 'money');
+      S.D.figs = [{ x: 1980, y: 1250, s: 1.2, ...JD.JACK(), facing: -1, mood: 'happy', hold: HPHONE(1.1), arms: () => ({ shR: 45, elR: -105 }), anim: (o, lt) => { if (lt > tFa) o.mood = 'shock'; if (lt > tSp) o.mood = 'neutral'; } }];
+      const P = []; for (let k = 0; k <= 40; k++) { const f = k / 40; P.push([200 + f * 1400, f < .5 ? 1100 - 700 * Math.pow(f * 2, 2) : 400 + 700 * Math.pow((f - .5) * 2, .6)]); }
+      S.D.live = [(c, lt) => { stage(c); const u = K.seg(lt, tCo - 1, tFa + 1.2), n = Math.floor(u * 40); c.lineJoin = 'round'; c.lineWidth = 12; for (let k = 1; k <= n; k++) { c.strokeStyle = k < 20 ? '#3ad070' : '#e2342e'; c.beginPath(); c.moveTo(...P[k - 1]); c.lineTo(...P[k]); c.stroke(); }
+          if (n > 0) { const [x, y] = P[n]; c.fillStyle = '#e8b830'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.arc(x, y, 42, 0, 7); c.fill(); c.stroke(); txt(c, 'MEME', x, y, 22, INK, 'center', 'Anton'); TW.glow(c, x, y, 120, n < 20 ? '80,255,120' : '255,60,60', .4); } }];
+      S.D.over = [(c, lt) => tag(c, 'reported', 300, 90, lt, tIB - .3, .8), (c, lt) => card(c, 'IBTIMES UK', lt, { at: tIB, x: 560, y: 90, px: 32, rot: 0, until: tSp }),
+        (c, lt) => card(c, 'MEME COIN FELL SHORT', lt, { at: tFa, x: 800, y: 190, px: 44, rot: -2, bg: '#e2342e', color: '#fff', until: 99 }),
+        (c, lt) => { const e = K.seg(lt, tFa, tFa + 2); const a = E.back(K.seg(lt, tCo, tCo + .4)); if (a <= 0) return; c.save(); c.translate(1120, 420); c.scale(a, a); c.fillStyle = '#6a3a1a'; c.strokeStyle = INK; c.lineWidth = 5; rr(c, -90, -60, 180, 120, 14); c.fill(); c.stroke(); for (let k = 0; k < 5; k++) { const p = K.seg(e, k * .15, k * .15 + .5); if (p >= 1) continue; c.save(); c.translate(p * (k - 2) * 60, -50 - p * 160); c.rotate(p * 4); c.globalAlpha = 1 - p; c.fillStyle = '#7ab86a'; rr(c, -30, -14, 60, 28, 3); c.fill(); c.restore(); } txt(c, e > .9 ? 'EMPTY' : 'WALLET', 0, 8, 28, '#f4ead2', 'center', 'Anton'); c.restore(); },
+        (c, lt) => { const a = E.out(K.seg(lt, tSp - .3, tSp + .3)); if (a <= 0) return; c.save(); c.globalAlpha = a; c.translate(1120, 620); const sc = (lt * 60) % 80; c.fillStyle = 'rgba(10,14,30,.85)'; rr(c, -220, -60, 440, 260, 16); c.fill(); c.save(); rr(c, -220, -60, 440, 260, 16); c.clip(); for (let k = 0; k < 5; k++) { c.fillStyle = '#fff'; rr(c, -200, -40 + k * 80 - sc, 400, 64, 10); c.fill(); txt(c, ['SPONSOR OFFER?', 'DEAL PENDING', 'SPONSOR OFFER?', 'GET YOUR MONEY UP', 'DEAL PENDING'][k], 0, -8 + k * 80 - sc, 26, INK, 'center', 'Anton'); } c.restore(); c.restore(); }];
+      S.D.sfx = [[tIB, 'paper', .2], [tCo, 'riser', .2], [tFa, 'whoosh', .35], [tFa + .4, 'thud', .3], [tFa + .8, 'coins', .2], [tSp, 'typing', .2], [tMo, 'tick', .2]]; } },
+
+  // 6.02 law office: a long contract unrolls to the floor; a magnifier finds NO POSTING; Jack slaps his forehead
+  { plate: 'law_office', cam: { z: [1.25, 1.36], x: [1240, 1280], y: [900, 920] }, bed: [['office_loop', .08]], light: { dir: 1, key: 'rgba(255,230,190,.2)' },
+    init: S => { const tCo = at(S, 'confession.'), tSi = at(S, 'signed'), tRe = at(S, 'reading'), tCl = at(S, 'clause'), tPo = at(S, 'post'), tJo = at(S, 'joke.'), tEn = at(S, 'enforcing');
+      S.D.figs = [{ x: 720, y: 1330, s: 1.35, ...JD.JACK('nosun'), facing: 1, mood: 'smug', talk: [tCo, tJo + .5], anim: (o, lt) => { if (lt > tRe) o.mood = 'neutral'; if (lt > tPo) { o.mood = 'shock'; o.pose = 'think'; } if (lt > tEn) { o.arms = () => ({ shR: 160, elR: -140, shL: 20, elL: -20 }); o.mood = 'sad'; o.pose = 'stand'; } } },
+        { x: 2000, y: 1340, s: 1.35, ...JD.LAWYER(2), facing: -1, mood: 'neutral', anim: (o, lt) => { if (lt > tCl) { o.pose = 'point'; } if (lt > tEn) o.mood = 'angry'; } }];
+      S.D.live = [(c, lt) => { TW.glow(c, 1630, 940, 220, '255,220,140', .25); }];
+      S.D.front = [(c, lt) => { const u = E.io(K.seg(lt, tSi, tCl)); if (u <= 0) return; const L = 1600 * u; c.fillStyle = '#f8f4e8'; c.strokeStyle = INK; c.lineWidth = 3; // down the desk front then across the floor
+          const d1 = Math.min(L, 320), d2 = Math.max(0, L - 320); c.fillRect(1100, 1010, 160, d1); c.strokeRect(1100, 1010, 160, d1); if (d2 > 0) { c.save(); c.translate(1100, 1330); c.beginPath(); c.moveTo(0, 0); c.lineTo(160, 0); c.lineTo(160 + d2 * .5, 100); c.lineTo(-d2 * .4, 100); c.closePath(); c.fill(); c.stroke(); c.restore(); }
+          c.fillStyle = 'rgba(60,60,70,.5)'; for (let y = 1030; y < 1010 + d1; y += 16) c.fillRect(1112, y, 120 - (y % 48), 4);
+          c.fillStyle = '#e8e0cc'; c.beginPath(); c.arc(1180 + d2 * .05, 1330 + Math.min(100, d2 * .2), 30, 0, 7); c.fill(); c.stroke(); }];
+      S.D.over = [(c, lt) => card(c, "'I DIDN'T READ THE CONTRACT FULLY'", lt, { at: tRe - .3, x: 960, y: 80, px: 42, rot: -1, bg: '#fff', until: 99 }),
+        (c, lt) => { const a = E.back(K.seg(lt, tCl - .3, tCl + .2)); if (a <= 0) return; const x = 1250 + Math.sin(lt * 1.5) * 20; c.save(); c.translate(x, 330); c.scale(a, a); c.fillStyle = 'rgba(255,255,255,.95)'; c.strokeStyle = '#6a4a20'; c.lineWidth = 14; c.beginPath(); c.arc(0, 0, 130, 0, 7); c.fill(); c.stroke(); c.strokeStyle = '#6a4a20'; c.lineWidth = 26; c.beginPath(); c.moveTo(92, 92); c.lineTo(200, 200); c.stroke();
+          txt(c, 'CLAUSE 14', 0, -50, 26, '#555', 'center', 'Oswald'); txt(c, 'NO', 0, 0, 52, '#e2342e', 'center', 'Anton'); txt(c, 'POSTING', 0, 52, 46, '#e2342e', 'center', 'Anton'); c.restore(); },
+        (c, lt) => card(c, 'HE THOUGHT IT WAS A JOKE', lt, { at: tJo - .4, x: 520, y: 200, px: 36, rot: 2, bg: GOLD, until: tEn + .2 }),
+        (c, lt) => card(c, 'NOW IT IS ENFORCED', lt, { at: tEn, x: 520, y: 200, px: 40, rot: -2, bg: '#e2342e', color: '#fff', until: 99 })];
+      S.D.sfx = [[tCo, 'pop', .2], [tSi, 'paper', .35], [tSi + .6, 'paper_tear', .1], [tRe, 'paper', .3], [tCl, 'chime', .25], [tPo, 'breath', .3], [tJo, 'tick', .2], [tEn, 'hit', .3], [tEn + .1, 'thud', .2]]; } },
+
+  // 6.03 boardroom: the CEO smiles holding a phone; post 'Yes, it's real. 6-month term.'; list gets SHUFFLE (PAID); CONTRACT NOT PUBLIC
+  { plate: 'boardroom', cam: { z: [1.3, 1.4], x: [1800, 1760], y: [900, 920] }, bed: [['hum_loop', .07], ['night_loop', .04]], light: { dir: 1, key: 'rgba(200,220,255,.18)' },
+    init: S => { const tHo = at(S, 'hour'), tBo = at(S, 'boss'), tSi = at(S, 'Six'), tMo = at(S, 'Money'), tPu = at(S, 'public'), tLa = at(S, 'lawyers'), tSc = at(S, 'scrapped.');
+      S.D.figs = [{ x: 2200, y: 1400, s: 1.3, ...JD.CEO(), facing: -1, mood: 'smug', hold: HPHONE(1.1, '#ffd23a'), arms: () => ({ shR: 45, elR: -105 }), talk: [tBo, tMo + 1.5], anim: (o, lt) => { o.lean = Math.sin(lt * .9) * 2; if (lt > tMo) o.mood = 'happy'; } }];
+      S.D.live = [(c, lt) => { TW.glow(c, 1300, 300, 600, '120,160,255', .12); for (let k = 0; k < 6; k++) { const x = 1300 + k * 34, n = 3 + (k % 3) + Math.floor(K.seg(lt, tMo, tMo + 1) * 3); for (let j = 0; j < n; j++) { c.fillStyle = ['#c8302a', '#2a5ab0', '#f2c14a'][k % 3]; c.strokeStyle = INK; c.lineWidth = 2; c.beginPath(); c.ellipse(x, 1030 - j * 7, 15, 5, 0, 0, 7); c.fill(); c.stroke(); } } }];
+      S.D.over = [(c, lt) => { const a = E.back(K.seg(lt, tHo - .2, tHo + .2)); if (a <= 0) return; c.save(); c.translate(240, 130); c.scale(a, a); c.fillStyle = '#fff'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.arc(0, 0, 70, 0, 7); c.fill(); c.stroke(); c.lineWidth = 6; c.beginPath(); c.moveTo(0, 0); c.lineTo(0, -50); c.stroke(); const ang = lt * 3; c.beginPath(); c.moveTo(0, 0); c.lineTo(Math.sin(ang) * 40, -Math.cos(ang) * 40); c.stroke(); c.restore(); txt(c, 'WITHIN AN HOUR', 240, 230, 30, '#fff', 'center', 'Anton'); },
+        (c, lt) => { const a = E.back(K.seg(lt, tSi - .3, tSi + .1)); if (a <= 0) return; c.save(); c.translate(420, 290); c.scale(a, a); JD.post(c, 0, 0, .9, 'Shuffle CEO', '@ceo', "Yes, it's real. 6-month term. Money well spent.", lt > tMo ? 241000 : 0); c.restore(); },
+        (c, lt) => ntag(c, 1350, 300, 'SHUFFLE CEO', nameOn(lt, tBo, 3)),
+        (c, lt) => JD.stamp(c, 1150, 600, .8, 'PAID TO STOP', K.seg(lt, tMo, tMo + 1)),
+        (c, lt) => card(c, 'CONTRACT NOT PUBLIC', lt, { at: tPu - .3, x: 560, y: 520, px: 38, rot: -1, bg: GOLD, until: 99 }),
+        (c, lt) => { tag(c, 'reported', 360, 630, lt, tLa - .3, .7); card(c, 'LAWYERS TRYING TO SCRAP IT', lt, { at: tLa, x: 720, y: 720, px: 32, rot: 1, until: 99 }); },
+        (c, lt) => clip(c, lt, 4, 5, tSi + .2, tSi + 1.4, tSi - .4)];
+      S.D.sfx = [[tHo, 'tick', .3], [tBo, 'chime', .25], [tSi, 'pop', .25], [tSi + .4, 'paper', .2], [tMo, 'coins', .35], [tMo + .2, 'stamp', .5], [tPu, 'paper', .2], [tLa, 'typing', .15], [tSc, 'paper_tear', .2]]; } },
+
+  // 6.04 boxing ring: Jack in gloves; opponent drops; ref waves it off; 0:30 timer
+  { plate: 'ring', cam: { z: [1.25, 1.4], x: [1280, 1280], y: [880, 920] }, bed: [['crowd_loop', .14]], light: { dir: -1, key: 'rgba(255,250,235,.25)' },
+    init: S => { const tVa = at(S, 'vanish.'), tWe = at(S, 'week'), tWo = at(S, 'won'), tMi = at(S, 'Miami'), tTh = at(S, 'thirty');
+      S.D.figs = [{ x: 1050, y: 1260, s: 1.3, ...JD.JACK('glove'), facing: 1, mood: 'angry', hold: GLOVE, arms: lt => ({ shL: 70 + Math.sin(lt * 6) * 8, elL: -120, shR: 60 - Math.sin(lt * 6) * 8, elR: -120 }), anim: (o, lt) => { o.x = 1050 + Math.sin(lt * 3) * 15; if (lt > tWo - .3 && lt < tWo + .2) { o.pose = 'reach'; o.arms = null; } if (lt > tMi) { o.pose = 'cheer'; o.arms = null; o.mood = 'happy'; } } },
+        { x: 1480, y: 1250, s: 1.3, ...JD.OPPONENT(), facing: -1, mood: 'angry', hold: GLOVEB, arms: () => ({ shL: 70, elL: -120, shR: 60, elR: -120 }), anim: (o, lt) => { if (lt > tWo) { o.pose = 'lie'; o.arms = null; o.hold = null; o.mood = 'shock'; o.x = 1560; } } },
+        { x: 1900, y: 1240, s: 1.2, ...WN.VIEWER(5), look: Object.assign({}, WN.VIEWER(5).look, { top: 'shirt', topCol: '#f4f4f0', legs: '#16161c' }), facing: -1, mood: 'neutral', anim: (o, lt) => { if (lt > tWo + .4) { o.pose = 'wave'; o.mood = 'angry'; } } }];
+      S.D.live = [(c, lt) => { for (let k = 0; k < 40; k++) if (Math.sin(lt * 5 + k * 9.1) > .93) TW.glow(c, (k * 211) % 2560, 300 + (k * 53) % 500, 40, '255,255,255', .8); }];
+      S.D.front = [(c, lt) => { const u = K.seg(lt, tWo - .1, tWo + .4); if (u <= 0 || u >= 1) return; c.save(); c.translate(1420, 920); c.scale(.5 + u, .5 + u); c.globalAlpha = 1 - u; c.fillStyle = '#fff3a0'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); for (let k = 0; k < 16; k++) { const r = k % 2 ? 30 : 80, a = k * Math.PI / 8; c.lineTo(Math.cos(a) * r, Math.sin(a) * r); } c.closePath(); c.fill(); c.stroke(); c.restore(); }];
+      S.D.over = [(c, lt) => card(c, "HE DIDN'T VANISH", lt, { at: tVa - .4, x: 400, y: 100, px: 40, rot: -2, until: tMi }), (c, lt) => dateTag(c, 'A WEEK LATER · MIAMI', 400, 200, lt, tWe, 36),
+        (c, lt) => { if (lt < tWe) return; const v = Math.min(30, Math.max(0, (lt - tWe) * 30 / Math.max(.5, tTh - tWe))); c.save(); c.fillStyle = 'rgba(10,10,20,.8)'; rr(c, 1460, 60, 300, 120, 16); c.fill(); txt(c, '0:' + String(Math.floor(v)).padStart(2, '0'), 1610, 122, 80, '#ff5a4a', 'center', 'Anton'); c.restore(); },
+        (c, lt) => card(c, 'WON IN ~30 SECONDS', lt, { at: tTh - .2, x: 1610, y: 250, px: 42, rot: 1, bg: GOLD, until: 99 })];
+      S.D.sfx = [[.2, 'crowd_cheer', .1], [tWe, 'drum', .3], [tWo - .1, 'whoosh', .3], [tWo, 'hit', .55], [tWo + .3, 'thud', .4], [tWo + .5, 'crowd_cheer', .35], [tTh, 'chime', .3], [tTh + .2, 'crowd_cheer', .3]]; } },
+
+  // 6.05 chart: three bars as a staircase 15M -> 8.4M -> 125K; Jack slides down them
+  { plate: 'chart', cam: { z: [1.05, 1.0], x: [1280, 1280], y: [700, 720] }, bed: [['hum_loop', .06], ['trading_loop', .05]], light: { dir: -1, key: 'rgba(180,220,255,.15)' },
+    init: S => { const t17 = at(S, 'seventeen'), tFi = at(S, 'fifteen'), tIs = at(S, 'Island'), tEi = at(S, 'eight'), tNo = at(S, 'nothing'), tLa = at(S, 'latest'), tHu = at(S, 'hundred');
+      const B = [[700, 380, 15e6, '2017', 'SUPERMARKET', t17], [1280, 700, 8.4e6, '2023', 'ISLAND BOYS', tIs], [1860, 1130, 125e3, '2026', 'LATEST', tLa]], BASE = 1150, W = 380;
+      const grow = (lt, k) => E.out(K.seg(lt, B[k][5] - .5, B[k][5] + .5));
+      // Jack stands on bar tops, slides down ramps between them
+      const pos = lt => { const s1 = K.seg(lt, tIs + .4, tIs + 1.4), s2 = K.seg(lt, tLa + .3, tLa + 1.3); if (s2 > 0) return [B[1][0] + 100 + (B[2][0] - B[1][0]) * s2, B[1][1] + (B[2][1] - B[1][1]) * s2, s2 > 0 && s2 < 1]; return [B[0][0] + 100 + (B[1][0] - B[0][0]) * s1, B[0][1] + (B[1][1] - B[0][1]) * s1, s1 > 0 && s1 < 1]; };
+      S.D.figs = [{ x: 800, y: 380, s: .95, ...JD.JACK(), facing: 1, mood: 'happy', anim: (o, lt) => { const [x, y, sl] = pos(lt); o.x = x; o.y = y; if (sl) { o.pose = 'squat'; o.mood = 'shock'; } else if (lt > tLa + 1.3) { o.pose = 'shrug'; o.mood = 'sad'; } else if (lt > tIs + 1.4) o.mood = 'neutral'; o.shadowAlpha = lt < t17 - .3 ? 0 : .3; } }];
+      S.D.live = [(c, lt) => { stage(c, BASE); B.forEach(([x, top, v, yr, nm, t0], k) => { const g = k ? grow(lt, k) : 1, h = (BASE - top) * g; c.fillStyle = ['#3ad070', '#e8b830', '#e2342e'][k]; c.strokeStyle = INK; c.lineWidth = 6; c.fillRect(x - W / 2, BASE - h, W, h); c.strokeRect(x - W / 2, BASE - h, W, h);
+          if (g > .3) { txt(c, yr, x, BASE + 50, 44, '#fff', 'center', 'Anton'); txt(c, nm, x, BASE + 100, 30, '#9ac', 'center', 'Oswald'); JD.counter(c, x, k === 2 ? top - 240 : top + 90, 76, v * E.out(K.seg(lt, t0, t0 + 1.2)), v >= 1e6 ? 'm' : 'k'); } });
+          // slide ramps
+          c.strokeStyle = 'rgba(255,255,255,.5)'; c.lineWidth = 8; c.setLineDash([16, 12]); for (let k = 0; k < 2; k++) if (grow(lt, k + 1) >= 1) { c.beginPath(); c.moveTo(B[k][0] + W / 2, B[k][1]); c.lineTo(B[k + 1][0] - W / 2 + 20, B[k + 1][1]); c.stroke(); } c.setLineDash([]); }];
+      S.D.over = [(c, lt) => card(c, 'VIEWS', lt, { at: .2, x: 960, y: 60, px: 44, bg: GOLD, until: 99 }), (c, lt) => card(c, 'NOTHING SINCE HAS BEATEN IT', lt, { at: tNo, x: 1440, y: 170, px: 34, rot: 2, until: tLa + .3 })];
+      S.D.sfx = [[t17, 'riser', .2], [tFi, 'chime', .3], [tIs, 'tick', .3], [tIs + .4, 'whoosh', .3], [tEi, 'chime', .2], [tLa + .3, 'whoosh', .3], [tLa + 1.3, 'thud', .35], [tHu, 'tick', .25]]; } },
+
+  // 6.06 creator room at night: the 15M plaque glows on the wall; a small view counter flickers low
+  { plate: 'creator_room', cam: { z: [1.5, 1.62], x: [1250, 1230], y: [820, 840] }, bed: [['hum_loop', .1], ['night_loop', .05]], light: { dir: -1, key: 'rgba(255,210,120,.15)' },
+    init: S => { const tSu = at(S, 'subscriber'), tFi = at(S, 'fifteen'), tPa = at(S, 'paper.'), tVi = at(S, "didn't.");
+      S.D.figs = [{ x: 1500, y: 1300, s: 1.15, ...JD.JACK('nosun'), pose: 'sit', facing: -1, mood: 'neutral', anim: (o, lt) => { o.lean = -4 + Math.sin(lt * .9) * 2; if (lt > tVi) o.mood = 'sad'; } }];
+      S.D.live = [(c, lt) => { c.fillStyle = 'rgba(6,4,24,.5)'; c.fillRect(0, 0, 2560, 1440); TW.chair(c, 1500, 1300, 1300 - 63 * 1.15, -1, '#3a2a5a'); dust(c, lt, 30, '255,230,200', 700, 1100, 300, 900);
+          // plaque on the wall
+          const g = .5 + .2 * K.seg(lt, tFi, tFi + 1); TW.glow(c, 1000, 640, 360, '255,210,100', g * .5); c.fillStyle = '#3a2a18'; c.strokeStyle = INK; c.lineWidth = 6; rr(c, 830, 460, 340, 360, 14); c.fill(); c.stroke(); c.fillStyle = '#e8c050'; rr(c, 860, 490, 280, 300, 8); c.fill(); c.stroke(); JD.counter(c, 1000, 600, 110, 15e6 * E.out(K.seg(lt, tSu - .3, tFi + .6)), 'm'); txt(c, 'SUBSCRIBERS', 1000, 720, 34, '#3a2a18', 'center', 'Anton');
+          // small view counter flickering
+          const f = Math.sin(lt * 17) * Math.sin(lt * 5.3) > .3 ? .35 : 1; c.globalAlpha = f; c.fillStyle = '#101018'; rr(c, 1700, 600, 200, 90, 10); c.fill(); c.stroke(); txt(c, '125K', 1800, 638, 44, '#ff5a4a', 'center', 'Anton'); txt(c, 'VIEWS', 1800, 676, 20, '#aaa', 'center', 'Anton'); c.globalAlpha = 1; }];
+      S.D.over = [(c, lt) => card(c, '15M ON PAPER', lt, { at: tPa - .4, x: 640, y: 110, px: 46, rot: -2, bg: GOLD, until: 99 }), (c, lt) => card(c, "THE VIEWS DIDN'T STAY", lt, { at: tVi - .4, x: 1300, y: 110, px: 40, rot: 2, bg: '#e2342e', color: '#fff', until: 99 })];
+      S.D.sfx = [[tSu, 'tick', .2], [tFi, 'chime', .3], [tPa, 'paper', .2], [tVi, 'drone', .25], [tVi + .3, 'hum_loop', .05]]; } },
+
+  // 6.07 the supermarket at dusk: Jack and Ricky walk past; Jack points at the doors; KICKED OUT stamp hovers; camera pulls back
+  { plate: 'shopfront', cam: { z: [1.55, 1.05], x: [1200, 1280], y: [980, 760], ease: E.io }, bed: [['rain_loop', .06], ['city_loop', .06]], light: { dir: 1, key: 'rgba(255,190,140,.2)' },
+    init: S => { const tLa = at(S, 'latest'), tCh = at(S, 'chill,'), tWa = at(S, 'walks'), tBa = at(S, 'banned'), tTh = at(S, 'They'), tNi = at(S, 'Nine'), tWh = at(S, 'why.');
+      S.D.figs = [{ x: 1000, y: 1240, s: 1.0, ...JD.JACK(), facing: 1, mood: 'happy', walk: { x0: -200, x1: 1000, t0: .3, dur: Math.max(3, tBa - .5) }, talk: [tTh, tTh + 2], anim: (o, lt) => { if (lt > tBa) { o.pose = 'point'; o.facing = 1; o.mood = 'smug'; } if (lt > tNi) { o.pose = 'shrug'; o.mood = 'neutral'; } } },
+        { x: 760, y: 1250, s: 1.0, ...JD.RICKY(), facing: 1, mood: 'neutral', walk: { x0: -450, x1: 760, t0: .5, dur: Math.max(3, tBa - .5) } }];
+      S.D.live = [(c, lt) => { c.fillStyle = 'rgba(60,20,60,.18)'; c.fillRect(0, 0, 2560, 1440); TW.glow(c, 1290, 750, 300, '255,240,200', .25 + .03 * Math.sin(lt * 2)); for (const x of [150, 2400]) TW.glow(c, x, 330, 160, '255,210,140', .35 + .05 * Math.sin(lt * 7 + x)); }];
+      S.D.front = [(c, lt) => JD.stamp(c, 1290, 640 + Math.sin(lt * 1.5) * 10, .9, 'KICKED OUT', K.seg(lt, tBa + .2, tBa + 1.2))];
+      S.D.over = [(c, lt) => card(c, '"ACTUALLY PRETTY CHILL"', lt, { at: tCh - .5, x: 420, y: 100, px: 38, rot: -2, bg: '#fff', until: tTh }),
+        (c, lt) => card(c, "'THEY JUST HATE WHEN I FILM HERE'", lt, { at: tTh - .2, x: 960, y: 100, px: 42, rot: 1, bg: GOLD, until: 99 }),
+        (c, lt) => card(c, "9 YEARS ON · STILL DOESN'T KNOW WHY", lt, { at: tNi, x: 960, y: 200, px: 36, rot: -1, until: 99 })];
+      S.D.sfx = [[.3, 'footsteps', .3], [tWa, 'footsteps', .3], [tBa, 'pop', .2], [tBa + .3, 'stamp', .45], [tTh, 'chime', .2], [tNi, 'swell', .3], [tWh, 'drone', .15]]; } },
+
+  // 6.08 end card: clean 5 s, no VO, no subtitles, slow drift; subscribe card
+  { plate: 'title', cam: { z: [1.2, 1.26], x: [1300, 1260], y: [720, 710] }, bed: [['hum_loop', .05]], sub: 'off', light: {},
+    init: S => { S.D.live = [(c, lt) => { for (let k = 0; k < 20; k++) TW.sparkle(c, (k * 331) % 2560, (k * 197) % 1440, lt * .3 + k, .4 + .2 * Math.sin(lt * .5 + k)); }];
+      S.D.over = [(c, lt) => { const a = K.seg(lt, .2, 1.2); c.save(); c.globalAlpha = a; JD.list(c, 960 - 110, 150, .7, LIST, 5, 0); txt(c, 'STORMI EXPLAIN EVERYTHING', 960, 470, 84, '#f2d06a', 'center', 'Anton'); c.fillStyle = '#c8302a'; c.strokeStyle = INK; c.lineWidth = 6; rr(c, 760, 550, 400, 100, 20); c.fill(); c.stroke(); txt(c, '▶ SUBSCRIBE', 960, 602, 52, '#fff', 'center', 'Anton'); c.restore(); }]; } },
+];

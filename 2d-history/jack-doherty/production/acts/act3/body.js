@@ -1,0 +1,152 @@
+// JD act 3 - The McLaren: Kick and 'fewer rules', TwitchCon suspensions, live at the wheel on a wet highway, eyes on the phone + guardrail crash, hospital (cameraman stitches), Kick ban + citation, live again: 'I hydroplaned'.
+// Plates: wn_hq (x3: wide, tight left with red rope, tight right red-lit), night_highway (x2: wide road, close car-interior framing), hospital, creator_room.
+for (const n of ['wn_hq', 'night_highway', 'hospital', 'creator_room']) K.load(n, PL + n + '.jpg');
+const rr = TW.rr, txt = TW.txt, GOLD = '#f2c14a';
+// word anchor with a fallback estimated from the word's place in the VO text
+const at = (S, w, off = 0) => { const T = (S.text || '').split(/\s+/), i = Math.max(0, T.indexOf(w.split(' ')[0])), vs = (S.vo_start ?? S.start) - S.start, ve = (S.vo_end ?? S.end) - S.start; return A.at(S, w, vs + (ve - vs) * i / Math.max(1, T.length)) + off; };
+const ease = (lt, t0, a, b, d = .8) => a + (b - a) * E.io(K.seg(lt, t0, t0 + d));
+const dateTag = (c, s, x, y, lt, t0, px = 40) => { const a = E.back(K.seg(lt, t0, t0 + .35)); if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.rotate(-.03); c.font = `${px}px Anton`; const w = c.measureText(s).width + 36; c.fillStyle = '#f4ead2'; c.strokeStyle = INK; c.lineWidth = 4; rr(c, -w / 2, -px * .75, w, px * 1.5, 6); c.fill(); c.stroke(); txt(c, s, 0, 0, px, '#8a2a1a', 'center', 'Anton'); c.restore(); };
+const ntag = (c, name, x, y, lt, t0, opts = {}) => { const a = pop(lt, t0, .4), o = 1 - K.seg(lt, (opts.until ?? 999) - .3, opts.until ?? 999); if (a <= 0 || o <= 0) return; const px = opts.px ?? 38; c.save(); c.globalAlpha = o; c.translate(x, y); c.scale(a, a); c.font = `${px}px Anton`;
+  const w = c.measureText(name).width + px * .9, h = px * 1.45; c.fillStyle = 'rgba(0,0,0,.35)'; rr(c, -w / 2 + 6, -h / 2 + 6, w, h, 10); c.fill(); c.fillStyle = GOLD; c.strokeStyle = INK; c.lineWidth = 4; rr(c, -w / 2, -h / 2, w, h, 10); c.fill(); c.stroke(); txt(c, name, 0, 2, px, INK, 'center', 'Anton'); c.restore(); };
+const srcTag = (c, s, x, y, lt, t0) => { const a = K.seg(lt, t0, t0 + .3); if (a <= 0) return; c.save(); c.globalAlpha = a; c.font = '28px Oswald'; const w = c.measureText(s).width + 30; c.fillStyle = 'rgba(12,12,20,.78)'; rr(c, x - w / 2, y - 22, w, 44, 8); c.fill(); txt(c, s, x, y, 28, '#e8eef8', 'center', 'Oswald'); c.restore(); };
+const cross = (c, x, y, r, u) => { if (u <= 0) return; c.save(); c.strokeStyle = '#e2342e'; c.lineCap = 'round'; c.lineWidth = r * .16; const a = Math.min(1, u * 2), b = K.clamp(u * 2 - 1); c.beginPath(); c.moveTo(x - r, y - r); c.lineTo(x - r + 2 * r * a, y - r + 2 * r * a); if (b > 0) { c.moveTo(x + r, y - r); c.lineTo(x + r - 2 * r * b, y - r + 2 * r * b); } c.stroke(); c.restore(); };
+const dust = (c, lt, n, col, x0, w, y0, h) => { for (let k = 0; k < n; k++) { const x = x0 + (k * 263 + lt * 14 * (1 + k % 3)) % w, y = y0 + (k * 151 + Math.sin(lt * .7 + k) * 40 + 4000) % h; c.fillStyle = `rgba(${col},${.12 + .1 * Math.sin(lt * 2 + k)})`; c.fillRect(x, y, 5, 5); } };
+const unscale = cc => { const m = cc.getTransform(); cc.setTransform(Math.hypot(m.a, m.b), 0, 0, Math.hypot(m.c, m.d), m.e, m.f); };
+const HPHONE = (s = 1, live = false) => ({ near: cc => { cc.save(); unscale(cc); cc.scale(s, s); cc.fillStyle = '#1a1a22'; cc.strokeStyle = INK; cc.lineWidth = 3; rr(cc, -14, -30, 28, 52, 6); cc.fill(); cc.stroke(); cc.fillStyle = '#9ad8ff'; cc.fillRect(-10, -25, 20, 40); if (live) { cc.fillStyle = '#e2342e'; cc.fillRect(-9, -23, 12, 6); } cc.restore(); } });
+const ITEMS = ['SUPERMARKET', 'KICK', 'KICK (AGAIN)', 'PGA TOUR', 'SHUFFLE (PAID)'];
+// camera shake: mutate the shot cam each frame from a live layer (one-frame lag is fine)
+const shaker = (S, base, fn) => (c, lt) => { const k = fn(lt); if (!S.D.cam) return; S.D.cam.x = [base.x[0] + Math.sin(lt * 61) * k * 14, base.x[1] + Math.sin(lt * 61) * k * 14]; S.D.cam.y = [base.y[0] + Math.cos(lt * 47) * k * 10, base.y[1] + Math.cos(lt * 47) * k * 10]; };
+const camOf = (z, x, y) => ({ z: z.slice(), x: x.slice(), y: y.slice() });
+const rain = (c, lt, n, x0, w, y0, h, al = .35, sl = 6) => { c.save(); c.strokeStyle = `rgba(200,215,255,${al})`; c.lineWidth = 2.5; c.beginPath(); for (let k = 0; k < n; k++) { const sp = 1400 + (k % 5) * 160, x = x0 + (k * 173.3 + lt * sp * .12) % w, y = y0 + (k * 97.7 + lt * sp) % h; c.moveTo(x, y); c.lineTo(x - sl, y + 38); } c.stroke(); c.restore(); };
+const flashes = (c, lt, n, x0, w, y0, h, rate = 1) => { for (let k = 0; k < n; k++) { const ph = (lt * rate * (.7 + (k % 4) * .2) + k * .377) % 1; if (ph < .06) { const x = x0 + (k * 211) % w, y = y0 + (k * 89) % h; TW.glow(c, x, y, 60, '255,255,240', .9 * (1 - ph / .06)); c.fillStyle = '#fff'; c.fillRect(x - 3, y - 3, 6, 6); } } };
+const LED = (c, lt, body, tint = '80,255,140') => { c.save(); c.beginPath(); c.rect(760, 200, 1040, 520); c.clip(); const g = c.createLinearGradient(760, 200, 1800, 720); g.addColorStop(0, '#08200e'); g.addColorStop(1, '#0c1a14'); c.fillStyle = g; c.fillRect(760, 200, 1040, 520);
+  for (let k = 0; k < 14; k++) { c.fillStyle = `rgba(${tint},${.04 + .04 * Math.sin(lt * 2 + k)})`; c.fillRect(760 + k * 80, 200, 40, 520); } body(c); c.restore(); TW.glow(c, 1280, 460, 700, tint, .14 + .04 * Math.sin(lt * 3)); };
+const conf = []; for (let k = 0; k < 90; k++) conf.push({ x: 600 + (k * 137) % 1400, v: 160 + (k * 53) % 200, d: (k * 7) % 10 / 10, col: ['#53fc18', '#f2c14a', '#fff', '#2ac89a'][k % 4] });
+const confetti = (c, lt, t0) => { if (lt < t0) return; const u = lt - t0; for (const p of conf) { const y = 180 + (u - p.d) * p.v; if (y < 180 || y > 1300) continue; c.save(); c.translate(p.x + Math.sin(u * 3 + p.x) * 30, y); c.rotate(u * 4 + p.x); c.fillStyle = p.col; c.fillRect(-9, -5, 18, 10); c.restore(); } };
+const gift = (c, x, y, k, s = 1) => { c.save(); c.translate(x, y); c.scale(s, s); if (k % 3 === 0) { c.fillStyle = '#ffd23a'; c.strokeStyle = INK; c.lineWidth = 3; c.beginPath(); for (let i = 0; i < 10; i++) { const r = i % 2 ? 12 : 28, a = i * Math.PI / 5 - Math.PI / 2; c.lineTo(Math.cos(a) * r, Math.sin(a) * r); } c.closePath(); c.fill(); c.stroke(); }
+  else if (k % 3 === 1) { const g = c.createRadialGradient(0, 0, 2, 0, 0, 30); g.addColorStop(0, '#fff'); g.addColorStop(.4, '#b07aff'); g.addColorStop(1, 'rgba(60,20,160,0)'); c.fillStyle = g; c.beginPath(); c.ellipse(0, 0, 34, 16, -.4, 0, 7); c.fill(); }
+  else { c.fillStyle = '#e2345a'; c.strokeStyle = INK; c.lineWidth = 3; rr(c, -20, -16, 40, 34, 4); c.fill(); c.stroke(); c.fillStyle = '#ffd23a'; c.fillRect(-4, -16, 8, 34); } c.restore(); };
+const cloud = (c, x, y, s, lt) => { c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = '#c8d0dc'; c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.arc(-40, 0, 36, 0, 7); c.arc(0, -22, 46, 0, 7); c.arc(44, 0, 34, 0, 7); c.fill(); c.stroke(); c.strokeStyle = '#4a9aff'; c.lineWidth = 5; c.lineCap = 'round'; for (let k = 0; k < 6; k++) { const ph = (lt * 2 + k / 6) % 1; c.beginPath(); c.moveTo(-60 + k * 24, 40 + ph * 70); c.lineTo(-66 + k * 24, 58 + ph * 70); c.stroke(); } c.restore(); };
+const jackHead = (c, x, y, r) => { c.fillStyle = '#f0c09a'; c.strokeStyle = INK; c.lineWidth = 2; c.beginPath(); c.arc(x, y, r, 0, 7); c.fill(); c.stroke(); c.fillStyle = '#e2c878'; c.beginPath(); c.arc(x, y - r * .4, r * .9, Math.PI, 0); c.fill(); c.fillStyle = '#111'; c.fillRect(x - r * .2, y - r * .15, r * 1.1, r * .3); };
+
+window.SHOTS = [
+  // 3.00 bright atrium: a giant green LED wall reads KICK, EST. 2022, FEWER RULES; streamers walk in and cheer; confetti
+  { plate: 'wn_hq', cam: { z: [1.0, 1.12], x: [1280, 1280], y: [720, 760] }, bed: [['office_loop', .1], ['crowd_loop', .05]], light: { dir: -1, key: 'rgba(200,255,210,.14)' },
+    init: S => { const tLi = at(S, 'live,'), tKi = at(S, 'Kick.'), tLa = at(S, 'launched'), tCr = at(S, 'creators'), tPr = at(S, 'promise.'), tFe = at(S, 'Fewer'), CY = 1330;
+      S.D.live = [(c, lt) => { LED(c, lt, c => { const a = pop(lt, tKi - .3, .4); if (a > 0) { c.save(); c.translate(1280, 400); c.scale(a, a); txt(c, 'KICK', 0, 0, 200, '#53fc18', 'center', 'Anton'); c.restore(); } if (lt > tLa) txt(c, 'EST. 2022', 1280, 560, 54, '#bfffd0', 'center', 'Oswald'); if (lt > tFe) { const b = pop(lt, tFe, .35); c.save(); c.translate(1280, 650); c.scale(b, b); txt(c, 'FEWER RULES', 0, 0, 70, '#fff', 'center', 'Anton'); c.restore(); } }); dust(c, lt, 26, '255,255,255', 0, 2560, 100, 1100); },
+        (c, lt) => confetti(c, lt, tFe)];
+      const tWk = Math.max(.3, tCr - 2.2);
+      S.D.figs = [{ x: 760, y: CY, s: 1.6, ...WN.CREATOR(0), facing: 1, mood: 'happy', walk: { x0: -200, x1: 760, t0: tWk, dur: 2.4 }, hold: HPHONE(1.2, true), anim: (o, lt) => { if (o.pose === 'walk') return; o.pose = lt > tFe ? 'cheer' : 'wave'; } },
+        { x: 1800, y: CY, s: 1.6, ...WN.CREATOR(2), facing: -1, mood: 'happy', walk: { x0: 2760, x1: 1800, t0: tWk + .3, dur: 2.4 }, anim: (o, lt) => { if (o.pose === 'walk') return; o.pose = lt > tFe + .2 ? 'cheer' : 'point'; } },
+        { x: 1290, y: 1250, s: 1.5, ...JD.JACK(), facing: 1, mood: 'smug', walk: { x0: 1290, x1: 1290.1, t0: 0, dur: .01 }, hold: HPHONE(1.2, true), arms: () => ({ shR: 70, elR: -40 }), anim: (o, lt) => { o.lean = Math.sin(lt * 1.5) * 2; if (lt > tFe) { o.pose = 'cheer'; o.mood = 'happy'; } } }];
+      S.D.over = [(c, lt) => K.card(c, 'WHERE JACK WENT LIVE', lt, { at: tLi, x: 380, y: 110, px: 38, rot: -3 }), (c, lt) => dateTag(c, 'LAUNCHED 2022', 1580, 110, lt, tLa, 40),
+        (c, lt) => K.card(c, 'ONE BIG PROMISE:', lt, { at: tPr - .3, x: 380, y: 210, px: 34, rot: 2, bg: GOLD })];
+      S.D.sfx = [[tKi - .3, 'swell', .3], [tKi, 'chime', .35], [tLa, 'pop', .25], [tWk, 'footsteps', .25], [tPr, 'pop', .25], [tFe, 'crowd_cheer', .35], [tFe + .1, 'pop', .3]]; } },
+
+  // 3.01 atrium, tight on the left: a red velvet rope is drawn across the floor; three streamers get SUSPENDED stamps
+  { plate: 'wn_hq', cam: { z: [1.45, 1.55], x: [880, 920], y: [960, 960] }, bed: [['office_loop', .08], ['tension', .08]], light: { dir: 1, key: 'rgba(255,140,140,.16)' },
+    init: S => { const tLn = at(S, 'line.'), tWe = at(S, 'Weeks'), tRe = at(S, 'reports'), tHa = at(S, 'harassing'), tTw = at(S, 'TwitchCon'), tSu = at(S, 'suspended.'), FL = 1330;
+      const xs = [480, 820, 1160];
+      S.D.figs = xs.map((x, k) => ({ x, y: FL, s: 1.45, ...WN.CREATOR(k), facing: k === 2 ? -1 : 1, mood: 'happy', anim: (o, lt) => { o.lean = Math.sin(lt * 1.4 + k) * 2; o.pose = lt > tHa ? (k === 1 ? 'point' : 'cheer') : 'wave'; if (lt > tSu + k * .3) { o.pose = 'shrug'; o.mood = 'shocked'; } } }));
+      S.D.live = [(c, lt) => { LED(c, lt, c => { if (lt > tLn) txt(c, 'RULES', 1280, 640, 120, '#ff5a4a', 'center', 'Anton'); }, lt > tLn ? '255,80,60' : '80,255,140'); dust(c, lt, 20, '255,220,220', 0, 1800, 300, 1000); }];
+      S.D.front = [(c, lt) => { const u = E.out(K.seg(lt, tLn - .4, tLn + .2)); const pY = FL + 40; for (const px of [240, 1400]) { c.fillStyle = '#c8a040'; c.strokeStyle = INK; c.lineWidth = 4; rr(c, px - 10, pY - 170, 20, 170, 4); c.fill(); c.stroke(); c.beginPath(); c.arc(px, pY - 176, 16, 0, 7); c.fill(); c.stroke(); rr(c, px - 34, pY - 10, 68, 14, 4); c.fill(); c.stroke(); }
+          if (u > 0) { const x1 = 240 + 1160 * u, sag = 60 * (1 - .4 * u) + Math.sin(lt * 9) * 4 * (1 - K.seg(lt, tLn, tLn + 1)); c.strokeStyle = '#8a1a24'; c.lineWidth = 16; c.lineCap = 'round'; c.beginPath(); c.moveTo(240, pY - 150); c.quadraticCurveTo((240 + x1) / 2, pY - 150 + sag, x1, pY - 150); c.stroke(); c.strokeStyle = '#c8303a'; c.lineWidth = 6; c.stroke(); } }];
+      S.D.over = [(c, lt) => K.card(c, 'EVEN KICK HAD A LINE', lt, { at: tLn - .3, x: 960, y: 110, px: 44, rot: -2, bg: GOLD, until: tRe }),
+        (c, lt) => K.card(c, 'REPORTS: STREAMERS HARASSING PEOPLE AT TWITCHCON', lt, { at: tRe, x: 960, y: 110, px: 34, rot: 1, until: tSu }),
+        (c, lt) => { for (let k = 0; k < 3; k++) JD.stamp(c, 500 + k * 370, 250, .62, 'SUSPENDED', K.seg(lt, tSu + k * .3, tSu + k * .3 + .5)); },
+        (c, lt) => K.card(c, 'ACCOUNTS SUSPENDED', lt, { at: tSu + 1, x: 960, y: 110, px: 44, rot: -2, bg: '#e2342e', color: '#fff' })];
+      S.D.sfx = [[tLn - .4, 'whoosh', .35], [tLn, 'creak', .35], [tWe, 'tick', .2], [tRe, 'paper', .3], [tTw, 'pop', .25], [tSu, 'stamp', .45], [tSu + .3, 'stamp', .45], [tSu + .6, 'stamp', .45]]; } },
+
+  // 3.02 night highway in the rain: the orange supercar speeds in along the near lane, headlights and spray; LIVE phone mount UI; date + price
+  { plate: 'night_highway', cam: { z: [1.15, 1.28], x: [1000, 1380], y: [900, 940] }, bed: [['rain_loop', .25], ['wind_loop', .08]], light: { dir: 1, key: 'rgba(180,200,255,.12)' },
+    init: S => { const tTh = at(S, 'Then,'), tFi = at(S, 'fifth'), tJa = at(S, 'Jack'), tLi = at(S, 'live'), tDr = at(S, "driver's"), tTw = at(S, 'two-hundred-thousand-dollar'), tMc = at(S, 'McLaren.'), tWe = at(S, 'wet'), tMi = at(S, 'Miami.'), CS = 1.5;
+      const carX = lt => -500 + 2000 * E.out(K.seg(lt, .2, tDr + .5)) + (lt - tDr) * 30 * (lt > tDr ? 1 : 0);
+      S.D.live = [(c, lt) => { for (const lx of [560, 1460, 2240]) TW.glow(c, lx, 440, 260, '255,220,160', .25 + .03 * Math.sin(lt * 9 + lx)); rain(c, lt, 160, 0, 2560, 0, 1440, .3, 8);
+          // road sheen + reflections
+          for (let k = 0; k < 8; k++) { c.fillStyle = `rgba(255,200,140,${.05 + .03 * Math.sin(lt * 3 + k)})`; c.fillRect(k * 330 + 60, 1200, 80, 220); } },
+        (c, lt) => { const x = carX(lt), y = 1400, sp = K.seg(lt, .2, tDr + .5) < 1 ? 1 : .3;
+          // headlight cones
+          c.save(); c.globalCompositeOperation = 'screen'; const g = c.createLinearGradient(x + 450, 0, x + 1300, 0); g.addColorStop(0, 'rgba(255,240,190,.45)'); g.addColorStop(1, 'rgba(255,240,190,0)'); c.fillStyle = g; c.beginPath(); c.moveTo(x + 440, y - 85); c.lineTo(x + 1300, y - 200); c.lineTo(x + 1300, y + 40); c.closePath(); c.fill(); c.restore();
+          // spray
+          for (let k = 0; k < 18; k++) { const ph = (lt * 3 + k / 18) % 1; c.fillStyle = `rgba(220,230,255,${.35 * (1 - ph)})`; c.beginPath(); c.arc(x - 300 * CS * .3 - ph * 260 * (sp + .3), y - 20 - ph * 90 + (k % 3) * 10, 8 + ph * 22, 0, 7); c.fill(); }
+          JD.mclaren(c, x, y, CS, lt * (sp + .2), 0, 0); jackHead(c, x + 10 * CS, y - 122 * CS, 15);
+          // tiny LIVE dot on the dash phone
+          if (lt > tLi) { c.fillStyle = `rgba(226,52,46,${.6 + .4 * Math.sin(lt * 8)})`; c.beginPath(); c.arc(x + 70 * CS, y - 110 * CS, 6, 0, 7); c.fill(); } }];
+      const scr = lt => (c, w, h) => { const g = c.createLinearGradient(0, 0, 0, h); g.addColorStop(0, '#1a1c2a'); g.addColorStop(1, '#06060c'); c.fillStyle = g; c.fillRect(0, 0, w, h); for (let k = 0; k < 30; k++) { c.strokeStyle = 'rgba(200,215,255,.3)'; c.lineWidth = 2; const x = (k * 53 + lt * 80) % w, y = (k * 97 + lt * 900) % h; c.beginPath(); c.moveTo(x, y); c.lineTo(x - 4, y + 30); c.stroke(); }
+        c.fillStyle = '#2a2a34'; c.fillRect(0, h * .55, w, h * .45); TW.glow(c, w * .5, h * .5, 200, '255,230,180', .4); jackHead(c, w * .5, h * .42, 70);
+        c.fillStyle = '#e2342e'; rr(c, 18, 22, 84, 36, 8); c.fill(); txt(c, 'LIVE', 60, 41, 26, '#fff', 'center', 'Anton'); c.fillStyle = 'rgba(0,0,0,.5)'; rr(c, 110, 22, 130, 36, 8); c.fill(); txt(c, '👁 ' + (31200 + Math.floor(lt * 97)), 175, 41, 22, '#fff', 'center', 'Oswald'); WN.chat(c, 10, h * .62, w * .7, h * .3, lt, 4); };
+      S.D.over = [(c, lt) => { const a = E.out(K.seg(lt, tLi - .3, tLi + .3)); if (a <= 0) return; c.save(); c.translate((1 - a) * 400, 0); c.strokeStyle = '#1a1a22'; c.lineWidth = 14; c.beginPath(); c.moveTo(1890, 660); c.lineTo(1760, 600); c.stroke(); WN.phone(c, 1680, 780, .62, scr(lt)); c.restore(); },
+        (c, lt) => dateTag(c, '5 OCT 2024', 280, 110, lt, tFi, 44), (c, lt) => K.card(c, 'LIVE AT THE WHEEL', lt, { at: tDr, x: 760, y: 110, px: 40, rot: 2, bg: '#e2342e', color: '#fff' }),
+        (c, lt) => { if (lt < tTw - .2) return; PR.counter(c, 400, 250, .7, 0, 200000, tTw - .1, tMc, lt, { pre: '$' }); }, (c, lt) => K.card(c, 'McLAREN', lt, { at: tMc - .2, x: 400, y: 350, px: 36, rot: -2, bg: '#f07a1a' }),
+        (c, lt) => K.card(c, 'WET HIGHWAY, NEAR MIAMI', lt, { at: tWe, x: 1000, y: 230, px: 36, rot: -1, fam: 'Oswald' })];
+      S.D.sfx = [[.2, 'whoosh', .5], [.4, 'wind_loop', .1], [tFi, 'pop', .25], [tLi, 'chime', .3], [tDr, 'pop', .2], [tTw, 'coins', .3], [tMc, 'swell', .2], [tWe, 'rain_loop', .1]]; } },
+
+  // 3.03 inside the car: Jack in the driver's seat glances down at the phone in his hand; the car slides and hits the guardrail; glass and sparks; screen shakes
+  { plate: 'night_highway', cam: { z: [1.12, 1.18], x: [1400, 1440], y: [760, 780] }, bed: [['rain_loop', .3]], light: { dir: 1, key: 'rgba(120,200,255,.18)' },
+    init: S => { const tNB = at(S, 'NBC'), tSt = at(S, 'stream'), tGl = at(S, 'glancing'), tPh = at(S, 'phone'), tMo = at(S, 'Moments'), tVe = at(S, 'veered'), tGr = at(S, 'guardrail.'), FL = 1500, JS = 2.1;
+      const base = camOf([1.12, 1.18], [1400, 1440], [760, 780]); S.D.cam = camOf(base.z, base.x, base.y); const tHit = tGr;
+      S.D.figs = [{ x: 1180, y: FL, s: JS, ...JD.JACK(), pose: 'sit', facing: 1, mood: 'neutral', hold: HPHONE(1.3, true), arms: () => ({ shR: 25, elR: -95, shL: 70, elL: -60 }), anim: (o, lt) => { o.lean = Math.sin(lt * 1.5) * 1.5; if (lt > tGl) { o.lean = 14; o.mood = 'happy'; } if (lt > tVe - .2) { o.lean = -10 + Math.sin(lt * 30) * 6; o.mood = 'shocked'; } if (lt > tHit + .6) o.lean = 4; } }];
+      S.D.live = [shaker(S, base, lt => Math.max(0, lt > tVe - .2 ? 1 - (lt - tHit) * .9 : 0) * (lt > tHit + 1.2 ? 0 : 1)), (c, lt) => { rain(c, lt, 200, 0, 2560, 0, 1440, .35, 4);
+          // passing streetlights streak across the glass
+          for (let k = 0; k < 3; k++) { const x = 2700 - ((lt * 900 + k * 900) % 3400); TW.glow(c, x, 500, 200, '255,210,140', .3); }
+          // seat back behind Jack
+          c.fillStyle = '#1a1a1e'; c.strokeStyle = INK; c.lineWidth = 6; rr(c, 820, 780, 240, 720, 60); c.fill(); c.stroke(); rr(c, 870, 660, 150, 150, 40); c.fill(); c.stroke(); c.fillStyle = '#f07a1a'; c.fillRect(900, 840, 30, 600); }];
+      S.D.front = [(c, lt) => { // A-pillar, roof, dashboard, wheel
+          c.fillStyle = '#121216'; c.beginPath(); c.moveTo(0, 0); c.lineTo(2560, 0); c.lineTo(2560, 230); c.lineTo(0, 300); c.closePath(); c.fill(); c.beginPath(); c.moveTo(2560, 0); c.lineTo(2360, 0); c.lineTo(1860, 1440); c.lineTo(2560, 1440); c.closePath(); c.fill();
+          c.fillStyle = '#1e1e24'; c.strokeStyle = INK; c.lineWidth = 6; c.beginPath(); c.moveTo(1320, 1440); c.quadraticCurveTo(1500, 1040, 2400, 1010); c.lineTo(2560, 1440); c.closePath(); c.fill(); c.stroke();
+          TW.glow(c, 1800, 1110, 160, '120,200,255', .3); c.fillStyle = '#6ac8ff'; rr(c, 1720, 1080, 160, 60, 10); c.fill();
+          c.save(); c.translate(1560, 1060); c.rotate(-.3 + (lt > tVe ? Math.sin((lt - tVe) * 8) * .6 * Math.max(0, 1 - (lt - tVe)) : Math.sin(lt * .8) * .05)); c.strokeStyle = '#26262c'; c.lineWidth = 34; c.beginPath(); c.ellipse(0, 0, 70, 190, 0, 0, 7); c.stroke(); c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.ellipse(0, 0, 88, 208, 0, 0, 7); c.stroke(); c.fillStyle = '#f07a1a'; c.beginPath(); c.arc(0, 0, 26, 0, 7); c.fill(); c.restore();
+          // crash: cracks + glass shards + sparks
+          if (lt > tHit) { const u = K.seg(lt, tHit, tHit + .3); c.save(); c.strokeStyle = 'rgba(240,250,255,.85)'; c.lineWidth = 4; for (let k = 0; k < 12; k++) { const a = k * .52 + .2; c.beginPath(); c.moveTo(1700, 500); c.lineTo(1700 + Math.cos(a) * 520 * u, 500 + Math.sin(a) * 420 * u); c.stroke(); } c.restore();
+            for (let k = 0; k < 30; k++) { const p = lt - tHit, x = 1700 + Math.cos(k * 2.3) * (200 + k * 18) * Math.min(1, p * 2), y = 500 + Math.sin(k * 2.3) * 160 * Math.min(1, p * 2) + p * p * 400; if (y > 1440) continue; c.fillStyle = `rgba(220,240,255,${.9 * Math.max(0, 1 - p / 2.5)})`; c.save(); c.translate(x, y); c.rotate(k + p * 6); c.fillRect(-7, -4, 14, 8); c.restore(); }
+            for (let k = 0; k < 16; k++) { const p = (lt - tHit) * 2 + k * .07; if (p > 2) continue; c.fillStyle = `rgba(255,${200 - k * 6},80,${1 - p / 2})`; c.beginPath(); c.arc(2300 - p * 300 - k * 10, 900 - Math.sin(p * 2 + k) * 120, 5, 0, 7); c.fill(); } } }];
+      S.D.over = [(c, lt) => srcTag(c, 'ACCORDING TO NBC NEWS', 300, 100, lt, tNB), (c, lt) => K.card(c, 'EYES ON THE PHONE?', lt, { at: tGl, x: 380, y: 210, px: 48, rot: -3, bg: GOLD }),
+        (c, lt) => { const f = Math.max(0, 1 - (lt - tHit) * 3); if (lt > tHit && f > 0) { c.fillStyle = `rgba(255,255,255,${f * .8})`; c.fillRect(0, 0, 1920, 1080); } },
+        (c, lt) => K.card(c, 'INTO THE GUARDRAIL', lt, { at: tHit + .2, x: 1000, y: 140, px: 50, rot: 2, bg: '#e2342e', color: '#fff' })];
+      S.D.sfx = [[tNB, 'pop', .2], [tSt, 'tick', .2], [tGl, 'phone_ring', .12], [tMo, 'tension', .3], [tVe - .3, 'scrape', .6], [tHit, 'hit', .7], [tHit + .05, 'thud', .6], [tHit + .1, 'arrow_hit', .35], [tHit + .3, 'paper_tear', .3]]; } },
+
+  // 3.04 hospital bay: the cameraman with a bandaged head sits on the bed; Jack stares sadly at a photo of the wrecked car; his post; STITCHES; later apologised
+  { plate: 'hospital', cam: { z: [1.15, 1.28], x: [1000, 1060], y: [860, 860] }, bed: [['hum_loop', .12]], light: { dir: -1, key: 'rgba(200,255,240,.14)' },
+    init: S => { const tPo = at(S, 'posted'), tCr = at(S, 'Crashed'), tVi = at(S, 'Viewers'), tUp = at(S, 'upset'), tCa = at(S, 'car'), tCm = at(S, 'cameraman,'), tSt = at(S, 'stitches'), tAp = at(S, 'apologised'), FL = 1250, BS = 1.45;
+      S.D.figs = [{ x: 600, y: 1090, s: BS, ...JD.CAMERAMAN(), pose: 'sit', facing: 1, mood: 'sad', anim: (o, lt) => { o.lean = Math.sin(lt * 1.1) * 1.5; if (lt > tAp) o.mood = 'neutral'; } },
+        { x: 1500, y: FL, s: 1.55, ...JD.JACK(), facing: -1, mood: 'neutral', hold: HPHONE(1.2), arms: () => ({ shR: 40, elR: -110 }), anim: (o, lt) => { o.lean = 6 + Math.sin(lt * 1.3) * 2; if (lt > tUp) o.mood = 'sad'; if (lt > tAp) { o.pose = 'shrug'; o.mood = 'worried'; o.lean = 0; } } }];
+      S.D.live = [(c, lt) => { // ECG on the monitor
+          c.save(); c.beginPath(); c.rect(935, 650, 150, 100); c.clip(); c.fillStyle = '#04140e'; c.fillRect(935, 650, 150, 100); c.strokeStyle = '#4aff8a'; c.lineWidth = 3; c.beginPath(); for (let x = 0; x < 150; x++) { const ph = ((x / 150) + lt * .9) % 1, y = ph > .45 && ph < .5 ? -30 : ph > .5 && ph < .53 ? 20 : 0; c.lineTo(935 + x, 700 + y); } c.stroke(); c.restore(); TW.glow(c, 1010, 700, 160, '80,255,140', .2 + .1 * Math.sin(lt * 6));
+          TW.glow(c, 1280, 120, 1000, '220,255,250', .1); dust(c, lt, 20, '220,255,250', 0, 2560, 200, 1000); }];
+      S.D.front = [(c, lt) => JD.bandage(c, 578, 805, 52)];
+      S.D.over = [(c, lt) => { const a = E.out(K.seg(lt, tCr - .4, tCr)); if (a <= 0 || lt > tVi + .4) return; c.save(); c.globalAlpha = a; JD.post(c, 1150, 110 - (1 - a) * 80, .95, 'Jack', '@jack', "Crashed my McLaren. Glad we're both okay.", 0); c.restore(); },
+        (c, lt) => { const a = pop(lt, tCa - .3, .35); if (a <= 0) return; c.save(); c.translate(1500, 230); c.scale(a, a); c.rotate(.04); c.fillStyle = '#fff'; c.strokeStyle = INK; c.lineWidth = 5; rr(c, -200, -110, 400, 220, 12); c.fill(); c.stroke(); c.fillStyle = '#1a1c2a'; c.fillRect(-184, -94, 368, 188); JD.mclaren(c, 0, 70, .5, 0, .06, 1); c.restore(); if (lt > tCa) txt(c, 'MORE UPSET ABOUT THE CAR?', 1500, 380, 34, '#fff', 'center', 'Anton'); },
+        (c, lt) => K.card(c, 'THE CAMERAMAN NEEDED STITCHES', lt, { at: tSt - .2, x: 560, y: 120, px: 40, rot: -2, bg: '#e2342e', color: '#fff' }),
+        (c, lt) => K.card(c, 'JACK LATER APOLOGISED', lt, { at: tAp, x: 560, y: 220, px: 36, rot: 2, bg: GOLD })];
+      S.D.sfx = [[.3, 'heartbeat', .2], [tPo, 'whoosh_soft', .3], [tCr - .4, 'pop', .3], [tUp, 'tick', .25], [tCa - .3, 'camera_shutter', .3], [tSt, 'stamp', .35], [tAp, 'chime', .25], [2, 'tick', .1], [4, 'tick', .1]]; } },
+
+  // 3.05 atrium again, tight on the right under red light: the wall flips to BANNED; clipboard line 2 KICK; a patrol officer walks in and a citation slip flutters down
+  { plate: 'wn_hq', cam: { z: [1.3, 1.4], x: [1500, 1460], y: [860, 880] }, bed: [['office_loop', .06], ['drone', .1]], light: { dir: -1, key: 'rgba(255,100,90,.18)' },
+    init: S => { const tKi = at(S, 'Kick'), tBa = at(S, 'banned'), tHo = at(S, 'hours,'), tCo = at(S, 'condone'), tFl = at(S, 'Florida'), tRe = at(S, 'report,'), tMi = at(S, 'Miami'), tCi = at(S, 'citation'), tPh = at(S, 'phone'), FL = 1320;
+      S.D.figs = [{ x: 1960, y: FL, s: 1.55, ...JD.POLICE(), facing: -1, mood: 'neutral', walk: { x0: 2800, x1: 1960, t0: tFl - 1.5, dur: 2.2 }, anim: (o, lt) => { if (o.pose === 'walk') return; o.pose = lt > tCi - .3 ? 'present' : 'stand'; o.lean = Math.sin(lt * 1.2) * 1.5; } }];
+      S.D.live = [(c, lt) => { c.fillStyle = 'rgba(60,0,10,.18)'; c.fillRect(0, 0, 2560, 1440); const b = lt > tBa; LED(c, lt, c => { if (!b) txt(c, 'KICK', 1280, 560, 150, '#53fc18', 'center', 'Anton'); else { const f = K.seg(lt, tBa, tBa + .3); c.save(); c.translate(1280, 560); c.scale(1, Math.abs(Math.cos(f * Math.PI)) * (f < .5 ? 1 : 1)); txt(c, f < .5 ? 'KICK' : 'BANNED', 0, 0, 150, f < .5 ? '#53fc18' : '#ff4a3a', 'center', 'Anton'); c.restore(); } if (lt > tHo) txt(c, 'WITHIN HOURS', 1280, 680, 50, '#ffd0c8', 'center', 'Oswald'); }, b ? '255,60,50' : '80,255,140');
+          if (lt > tFl) { const fl = Math.floor(lt * 4) % 2; TW.glow(c, 2400, 600, 400, fl ? '255,40,40' : '60,90,255', .2); } dust(c, lt, 20, '255,210,210', 800, 1760, 300, 1000); }];
+      S.D.over = [(c, lt) => { if (lt < tBa - .6) return; const a = E.out(K.seg(lt, tBa - .6, tBa - .1)); c.save(); c.translate((1 - a) * 500, 0); JD.list(c, 1560, 40, .75, ITEMS, 1 + K.seg(lt, tBa, tBa + 1), lt); c.restore(); },
+        (c, lt) => { if (lt > tFl) return; JD.stamp(c, 640, 480, .8, 'BANNED', K.seg(lt, tBa + .2, tBa + .7)); },
+        (c, lt) => K.card(c, "'DOESN'T CONDONE ILLEGAL ACTIVITY'", lt, { at: tCo - .3, x: 640, y: 140, px: 38, rot: -2, until: tRe }),
+        (c, lt) => srcTag(c, 'FLORIDA HIGHWAY PATROL CRASH REPORT', 560, 700, lt, tRe), (c, lt) => srcTag(c, 'VIA MIAMI NEW TIMES', 560, 760, lt, tMi),
+        (c, lt) => { const u = K.seg(lt, tCi - .4, tCi + 1.2); if (u <= 0) return; const y = 120 + 300 * E.out(u), x = 620 + Math.sin(u * 9) * 60 * (1 - u); c.save(); c.translate(x, y); c.rotate(Math.sin(u * 7) * .25 * (1 - u) - .05); c.fillStyle = '#fff8e0'; c.strokeStyle = INK; c.lineWidth = 4; rr(c, -230, -110, 460, 220, 8); c.fill(); c.stroke(); c.fillStyle = '#1a2440'; c.fillRect(-230, -110, 460, 50); txt(c, 'CITATION', 0, -84, 34, '#fff', 'center', 'Anton'); txt(c, 'USING PHONE', 0, -10, 40, '#d8262a', 'center', 'Anton'); txt(c, 'WHILE DRIVING', 0, 46, 40, '#d8262a', 'center', 'Anton'); c.restore(); }];
+      S.D.sfx = [[tKi, 'tick', .2], [tBa, 'whoosh', .4], [tBa + .2, 'stamp', .5], [tBa + .3, 'alarm', .12], [tBa + .5, 'tick', .3], [tCo, 'pop', .25], [tFl - 1.5, 'footsteps', .3], [tRe, 'paper', .3], [tCi - .4, 'paper', .45], [tPh, 'stamp', .3]]; } },
+
+  // 3.06 creator room: Jack is live again on a vertical phone; gifts float up; a rain cloud for 'I hydroplaned'; POURING RAIN. A McLAREN.
+  { plate: 'creator_room', cam: { z: [1.15, 1.26], x: [1180, 1220], y: [860, 880] }, bed: [['hum_loop', .1], ['rain_loop', .06]], light: { dir: 1, key: 'rgba(255,140,230,.16)' },
+    init: S => { const tDa = at(S, 'Days'), tLi = at(S, 'live'), tGi = at(S, 'gifts,'), tHy = at(S, 'hydroplaned.'), tPo = at(S, 'Pouring'), tMc = at(S, 'McLaren.'), tWh = at(S, 'What'), FL = 1370;
+      S.D.figs = [{ x: 1180, y: FL, s: 1.7, ...JD.JACK(), facing: 1, mood: 'happy', hold: HPHONE(1.3, true), arms: () => ({ shR: 80, elR: -20 }), anim: (o, lt) => { o.lean = Math.sin(lt * 1.6) * 2; if (lt > tGi - .5 && lt < tHy) o.pose = 'wave'; if (lt > tHy) { o.pose = 'shrug'; o.mood = 'smug'; } if (lt > tWh) o.pose = 'present'; } }];
+      S.D.live = [(c, lt) => { TW.glow(c, 2420, 920, 300, '255,250,240', .3 + .05 * Math.sin(lt * 17)); TW.glow(c, 740, 600, 400, '255,60,180', .2 + .05 * Math.sin(lt * 4)); dust(c, lt, 26, '255,200,240', 0, 2560, 200, 1100); }];
+      const scr = lt => (c, w, h) => { const g = c.createLinearGradient(0, 0, 0, h); g.addColorStop(0, '#3a1a5a'); g.addColorStop(1, '#0c0a18'); c.fillStyle = g; c.fillRect(0, 0, w, h); jackHead(c, w / 2, h * .38, 90);
+        c.fillStyle = '#e2342e'; rr(c, 18, 22, 84, 36, 8); c.fill(); txt(c, 'LIVE', 60, 41, 26, '#fff', 'center', 'Anton'); c.fillStyle = 'rgba(0,0,0,.5)'; rr(c, 110, 22, 130, 36, 8); c.fill(); txt(c, '👁 ' + (8400 + Math.floor(lt * 61)), 175, 41, 22, '#fff', 'center', 'Oswald');
+        if (lt > tGi - .3) for (let k = 0; k < 9; k++) { const ph = ((lt - tGi) * .45 + k / 9) % 1; c.globalAlpha = Math.min(1, (1 - ph) * 2); gift(c, 60 + (k * 97) % (w - 120), h - 80 - ph * (h - 160), k, 1.3); c.globalAlpha = 1; }
+        WN.chat(c, 10, h * .6, w * .65, h * .3, lt, 6); if (lt > tGi) { c.fillStyle = GOLD; rr(c, 40, h - 70, w - 80, 50, 25); c.fill(); txt(c, 'SEND A GIFT', w / 2, h - 44, 28, INK, 'center', 'Anton'); } };
+      S.D.over = [(c, lt) => { const a = E.out(K.seg(lt, tLi - .4, tLi + .2)); if (a <= 0) return; c.save(); c.translate(0, (1 - a) * 400); WN.phone(c, 1600, 840, .78, scr(lt)); c.restore(); },
+        (c, lt) => dateTag(c, 'DAYS LATER', 260, 110, lt, tDa, 42), (c, lt) => K.card(c, 'LIVE AGAIN', lt, { at: tLi, x: 600, y: 110, px: 44, rot: 2, bg: '#e2342e', color: '#fff' }),
+        (c, lt) => { const a = pop(lt, tHy - .3, .35); if (a <= 0) return; c.save(); c.translate(260, 330); c.scale(a, a); cloud(c, 0, 0, 1.1, lt); c.restore(); },
+        (c, lt) => K.card(c, "'I HYDROPLANED'", lt, { at: tHy, x: 560, y: 240, px: 44, rot: -3, bg: GOLD }),
+        (c, lt) => K.card(c, 'POURING RAIN.', lt, { at: tPo, x: 330, y: 470, px: 34, rot: 2 }), (c, lt) => K.card(c, 'A McLAREN.', lt, { at: tMc, x: 330, y: 560, px: 34, rot: -2, bg: '#f07a1a' }),
+        (c, lt) => K.card(c, 'WHAT DID PEOPLE EXPECT?', lt, { at: tWh, x: 900, y: 380, px: 40, rot: 2, bg: '#fff' })];
+      S.D.sfx = [[tDa, 'pop', .25], [tLi - .4, 'whoosh_soft', .3], [tLi, 'chime', .3], [tGi, 'coins', .3], [tGi + .8, 'chime', .2], [tHy - .3, 'rain_loop', .15], [tHy, 'pop', .3], [tPo, 'pop', .25], [tMc, 'pop', .25], [tWh, 'tension', .2]]; } },
+];

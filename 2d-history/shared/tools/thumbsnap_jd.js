@@ -1,0 +1,3 @@
+const { chromium } = require('playwright'); (async () => { const [html, out, t] = process.argv.slice(2); const b = await chromium.launch({ args: ['--allow-file-access-from-files'] }); const p = await b.newPage({ viewport: { width: 1920, height: 1080 } });
+await p.goto('file://' + require('path').resolve(html)); await p.waitForFunction(() => window.KIT_READY === true, null, { timeout: 120000 }); const u = await p.evaluate(t => { KIT.frame(+t); return document.getElementById('c').toDataURL('image/jpeg', .92); }, t);
+require('fs').writeFileSync(out, Buffer.from(u.split(',')[1], 'base64')); await b.close(); })();

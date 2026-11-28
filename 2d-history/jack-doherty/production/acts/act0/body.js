@@ -1,0 +1,89 @@
+// JD act 0 - Cold open: casino pays a YouTuber to stop posting, CEO's public 'yes', 241K vs ~10K likes, walk to the supermarket, title.
+// Plates: boardroom, creator_room, chart, shopfront, title.
+for (const n of ['boardroom', 'creator_room', 'chart', 'shopfront', 'title']) K.load(n, PL + n + '.jpg');
+const rr = TW.rr, txt = TW.txt, GOLD = '#f2c14a';
+const ITEMS = ['SUPERMARKET', 'KICK', 'KICK (AGAIN)', 'PGA TOUR', 'SHUFFLE (PAID)'];
+const at = (S, w, off = 0) => { const T = (S.text || '').split(/\s+/), i = Math.max(0, T.indexOf(w.split(' ')[0])), vs = (S.vo_start ?? S.start) - S.start, ve = (S.vo_end ?? S.end) - S.start; return A.at(S, w, vs + (ve - vs) * i / Math.max(1, T.length)) + off; };
+const dateTag = (c, s, x, y, lt, t0, px = 40) => { const a = E.back(K.seg(lt, t0, t0 + .35)); if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.rotate(-.03); c.font = `${px}px Anton`; const w = c.measureText(s).width + 36; c.fillStyle = '#f4ead2'; c.strokeStyle = INK; c.lineWidth = 4; rr(c, -w / 2, -px * .75, w, px * 1.5, 6); c.fill(); c.stroke(); txt(c, s, 0, 0, px, '#8a2a1a', 'center', 'Anton'); c.restore(); };
+const ntag = (c, name, x, y, lt, t0, px = 38) => { const a = pop(lt, t0, .4); if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.font = `${px}px Anton`; const w = c.measureText(name).width + px * .9, h = px * 1.45; c.fillStyle = 'rgba(0,0,0,.35)'; rr(c, -w / 2 + 6, -h / 2 + 6, w, h, 10); c.fill(); c.fillStyle = GOLD; c.strokeStyle = INK; c.lineWidth = 4; rr(c, -w / 2, -h / 2, w, h, 10); c.fill(); c.stroke(); txt(c, name, 0, 2, px, INK, 'center', 'Anton'); c.restore(); };
+const dust = (c, lt, n, col, x0, w, y0, h) => { for (let k = 0; k < n; k++) { const x = x0 + (k * 263 + lt * 14 * (1 + k % 3)) % w, y = y0 + (k * 151 + Math.sin(lt * .7 + k) * 40 + 4000) % h; c.fillStyle = `rgba(${col},${.12 + .1 * Math.sin(lt * 2 + k)})`; c.fillRect(x, y, 5, 5); } };
+const rain = (c, lt, x0, w, y0, h, n = 160) => { c.save(); c.strokeStyle = 'rgba(200,215,240,.35)'; c.lineWidth = 2; c.beginPath(); for (let k = 0; k < n; k++) { const x = x0 + (k * 197) % w, y = y0 + ((k * 331) + lt * 1400) % h; c.moveTo(x, y); c.lineTo(x - 8, y + 34); } c.stroke(); c.restore(); };
+const unscale = cc => { const m = cc.getTransform(); cc.setTransform(Math.hypot(m.a, m.b), 0, 0, Math.hypot(m.c, m.d), m.e, m.f); };
+const HPHONE = (s = 1, lit = 1) => ({ near: cc => { cc.save(); unscale(cc); cc.scale(s, s); cc.fillStyle = '#1a1a22'; cc.strokeStyle = INK; cc.lineWidth = 3; rr(cc, -16, -32, 32, 58, 6); cc.fill(); cc.stroke(); cc.fillStyle = lit ? '#9ad8ff' : '#111'; cc.fillRect(-12, -27, 24, 44); cc.restore(); } });
+// channel page on a phone screen (generic, no logo)
+const chanScr = (lt, dark) => (c, w, h) => { c.fillStyle = '#16161c'; c.fillRect(0, 0, w, h); c.fillStyle = '#3a3f4a'; c.fillRect(0, 0, w, 170); c.fillStyle = '#c99068'; c.beginPath(); c.arc(w / 2, 220, 70, 0, 7); c.fill(); c.strokeStyle = '#fff'; c.lineWidth = 6; c.stroke();
+  txt(c, 'THE CHANNEL', w / 2, 330, 40, '#fff', 'center', 'Anton'); txt(c, '15M subscribers', w / 2, 380, 28, '#aab', 'center', 'Oswald'); c.fillStyle = '#e2342e'; rr(c, w / 2 - 110, 410, 220, 56, 28); c.fill(); txt(c, 'SUBSCRIBE', w / 2, 440, 28, '#fff', 'center', 'Anton');
+  for (let k = 0; k < 4; k++) { c.fillStyle = `hsl(${(k * 70 + lt * 20) % 360},35%,35%)`; rr(c, 24 + (k % 2) * (w / 2 - 12), 500 + Math.floor(k / 2) * 140, w / 2 - 36, 120, 10); c.fill(); }
+  if (dark > 0) { c.fillStyle = `rgba(0,0,0,${dark})`; c.fillRect(0, 0, w, h); if (dark > .8) txt(c, 'NO NEW VIDEOS', w / 2, h / 2, 34, `rgba(120,120,130,${dark})`, 'center', 'Anton'); } };
+
+window.SHOTS = [
+  // 0.00 boardroom at night: the casino boss slides a briefcase of cash along the table towards a phone showing a 15M channel; the screen goes dark
+  { plate: 'boardroom', cam: { z: [1.25, 1.42], x: [1560, 1520], y: [900, 920] }, bed: [['night_loop', .1], ['hum_loop', .07]], light: { dir: -1, key: 'rgba(255,210,150,.1)' },
+    init: S => { const tO = at(S, 'October'), tCa = at(S, 'casino'), tSp = at(S, 'sponsor'), tPa = at(S, 'paid'), tFi = at(S, 'fifteen'), tSt = at(S, 'stop'), tPo = at(S, 'posting.');
+      const FL = 1345, slide0 = tCa, slide1 = tPa + .6;
+      S.D.figs = [{ x: 2150, y: FL, s: 1.5, ...JD.CEO(), facing: -1, mood: 'smug', walk: { x0: 2750, x1: 2150, t0: .2, dur: 2.2 }, anim: (o, lt) => { if (o.pose === 'walk') return; o.lean = Math.sin(lt * 1.2) * 2; o.pose = lt > slide0 && lt < slide1 ? 'reach' : lt > tSt ? 'point' : 'stand'; if (lt > tPo) o.mood = 'happy'; } }];
+      S.D.live = [(c, lt) => { c.fillStyle = 'rgba(8,10,30,.25)'; c.fillRect(0, 0, 2560, 1440); TW.glow(c, 1300, 700, 700, '255,200,130', .12 + .02 * Math.sin(lt * 2)); dust(c, lt, 24, '255,220,180', 600, 1600, 300, 900);
+          // city lights twinkle in the window
+          for (let k = 0; k < 30; k++) { const on = Math.sin(lt * (1 + k % 4) + k * 3) > .6; if (on) { c.fillStyle = 'rgba(255,230,150,.8)'; c.fillRect(500 + (k * 211) % 1700, 450 + (k * 97) % 300, 8, 10); } } },
+        (c, lt) => { // briefcase slides, phone on the table
+          const u = E.io(K.seg(lt, slide0, slide1)), bx = 1800 - 560 * u, ty = 905; const op = K.seg(lt, tFi, tFi + .8);
+          c.save(); c.translate(1080, ty); c.fillStyle = '#16161c'; c.strokeStyle = INK; c.lineWidth = 3; rr(c, -40, -12, 80, 14, 4); c.fill(); c.stroke(); const dark = K.seg(lt, tSt, tPo + .3); TW.glow(c, 0, -10, 90, '140,200,255', .45 * (1 - dark)); c.restore();
+          JD.briefcase(c, bx, ty, .55, op);
+          if (op > .5) for (let k = 0; k < 6; k++) { const ph = (lt * .6 + k / 6) % 1; c.save(); c.globalAlpha = (1 - ph) * .9; c.translate(bx - 60 + k * 24 + Math.sin(lt * 3 + k) * 20, ty - 90 - ph * 180); c.rotate(Math.sin(lt * 4 + k)); c.fillStyle = '#6ab05a'; c.strokeStyle = '#2a5a24'; c.lineWidth = 2; c.fillRect(-18, -8, 36, 16); c.strokeRect(-18, -8, 36, 16); c.restore(); } }];
+      S.D.over = [(c, lt) => dateTag(c, 'OCTOBER 2026', 260, 110, lt, tO, 42),
+        (c, lt) => { const a = E.out(K.seg(lt, tFi - .6, tFi)); if (a <= 0) return; c.save(); c.translate((1 - a) * 500, 0); WN.phone(c, 1180, 560, .5, chanScr(lt, K.seg(lt, tSt, tPo + .3))); c.restore(); },
+        (c, lt) => { if (lt < tFi) return; JD.counter(c, 1180, 115, 70, 15e6 * E.io(K.seg(lt, tFi, tFi + 1.2)), 'm'); txt(c, 'SUBSCRIBERS', 1180, 170, 30, '#fff', 'center', 'Oswald'); },
+        (c, lt) => K.card(c, 'PAID TO STOP POSTING', lt, { at: tSt, x: 560, y: 230, px: 56, rot: -2, bg: '#e2342e', color: '#fff' }),
+        (c, lt) => K.card(c, 'NO SPONSOR HAD EVER DONE THIS', lt, { at: tSp, x: 560, y: 340, px: 30, rot: 2, until: tSt })];
+      S.D.sfx = [[.2, 'footsteps', .2], [tO, 'pop', .25], [slide0, 'scrape', .35], [slide1 - .1, 'thud', .3], [tPa, 'coins', .3], [tFi, 'whoosh_soft', .25], [tFi + .1, 'tick', .2], [tSt, 'stamp', .35], [tPo, 'swell', .2]]; } },
+
+  // 0.01 creator room: Jack stares at his phone; the boss's post card slides in: 'Yes, it's real. 6-month term.'; likes climb
+  { plate: 'creator_room', cam: { z: [1.3, 1.45], x: [1050, 1120], y: [860, 860] }, bed: [['hum_loop', .08], ['night_loop', .05]], light: { dir: 1, key: 'rgba(220,120,255,.12)' },
+    init: S => { const tJ = at(S, 'Jack'), tBo = at(S, 'boss'), tAs = at(S, 'asked'), tPu = at(S, 'public.'), tY = at(S, 'Yes.'), tSi = at(S, 'Six'), tMo = at(S, 'Money'), tIn = at(S, 'internet.');
+      const FL = 1250;
+      S.D.figs = [{ x: 760, y: FL, s: 1.55, ...JD.JACK(), facing: 1, mood: 'neutral', walk: { x0: -250, x1: 760, t0: .1, dur: 2.2 }, hold: HPHONE(1.1), arms: () => ({ shR: 40, elR: -110 }), anim: (o, lt) => { if (o.pose === 'walk') return; o.lean = Math.sin(lt * 1.5) * 2; if (lt > tAs) o.mood = 'worried'; if (lt > tY) o.mood = 'surprised'; if (lt > tMo) { o.mood = 'angry'; o.pose = 'shrug'; } } }];
+      S.D.live = [(c, lt) => { TW.glow(c, 1210, 300, 300, '255,80,200', .25 + .1 * Math.sin(lt * 9) * Math.sin(lt * 2.3)); TW.glow(c, 1880, 560, 260, '255,255,255', .15); dust(c, lt, 26, '255,180,255', 200, 2000, 200, 900);
+          TW.glow(c, 860, FL - 400, 160, '140,200,255', .3 + .1 * Math.sin(lt * 5)); }];
+      S.D.over = [(c, lt) => ntag(c, 'JACK DOHERTY', 420, 130, lt, tJ),
+        (c, lt) => { const a = E.back(K.seg(lt, tPu - .2, tPu + .4)); if (a <= 0) return; const L = lt < tY ? 0 : 2000 + 9000 * E.io(K.seg(lt, tY, tIn + .5)); c.save(); c.translate((1 - a) * 900, 0); JD.post(c, 1060, 260, .9, 'Casino CEO', '@the_boss', "Yes, it's real. 6-month term. Money well spent to get this off the internet.", Math.round(L)); c.restore(); },
+        (c, lt) => K.card(c, "YES, IT'S REAL", lt, { at: tY, x: 1340, y: 560, px: 46, rot: -2, bg: GOLD }),
+        (c, lt) => K.card(c, '6 MONTHS', lt, { at: tSi, x: 1580, y: 660, px: 46, rot: 3, bg: '#e2342e', color: '#fff' })];
+      S.D.sfx = [[.1, 'footsteps', .2], [tJ, 'pop', .3], [tBo, 'tick', .2], [tPu - .2, 'whoosh', .3], [tY, 'chime', .3], [tSi, 'pop', .3], [tMo, 'coins', .25], [tIn, 'thud', .3]]; } },
+
+  // 0.02 chart: like-bar race - the boss's reply shoots to 241K, Jack's post stays tiny; hearts burst
+  { plate: 'chart', cam: { z: [1.0, 1.08], x: [1280, 1300], y: [720, 740] }, bed: [['hum_loop', .08]], light: {},
+    init: S => { const tRe = at(S, 'reply'), tTw = at(S, 'two'), tLi = at(S, 'likes.'), tTt = at(S, 'twenty-three'), tOw = at(S, 'own');
+      const BASE = 1080, HMAX = 640;
+      S.D.live = [(c, lt) => { dust(c, lt, 30, '140,190,255', 0, 2560, 100, 1200); c.strokeStyle = 'rgba(255,255,255,.5)'; c.lineWidth = 4; c.beginPath(); c.moveTo(500, BASE); c.lineTo(2060, BASE); c.stroke();
+          const u = E.io(K.seg(lt, tTw - .2, tLi + .3)), v = 241000 * u, h = HMAX * u, jh = HMAX * (10500 / 241000) * E.io(K.seg(lt, tTt - .3, tTt + .5));
+          const bar = (x, hh, col, lab) => { const g = c.createLinearGradient(0, BASE - hh, 0, BASE); g.addColorStop(0, col); g.addColorStop(1, 'rgba(20,20,40,.8)'); c.fillStyle = g; c.strokeStyle = INK; c.lineWidth = 6; rr(c, x - 150, BASE - hh, 300, hh, 12); c.fill(); if (hh > 4) c.stroke(); txt(c, lab, x, BASE + 60, 46, '#fff', 'center', 'Anton'); };
+          bar(900, h, '#e2345a', "THE BOSS'S REPLY"); bar(1660, Math.max(6, jh), '#6a8ad0', "JACK'S POST");
+          if (lt > tTw - .2) JD.counter(c, 900, BASE - h - 70, 90, v, 'k'); if (lt > tTt - .3) JD.counter(c, 1660, BASE - jh - 70, 70, 10500 * E.io(K.seg(lt, tTt - .3, tTt + .5)), 'k');
+          if (lt > tLi) for (let k = 0; k < 10; k++) { const ph = ((lt - tLi) * .8 + k / 10) % 1; c.globalAlpha = 1 - ph; WN.heart(c, 900 + Math.sin(ph * 7 + k) * 140, BASE - h - 120 - ph * 300, 20); c.globalAlpha = 1; } }];
+      S.D.over = [(c, lt) => K.card(c, '241,000 LIKES', lt, { at: tLi, x: 700, y: 120, px: 56, rot: -2, bg: GOLD }),
+        (c, lt) => { const a = E.back(K.seg(lt, tTt, tTt + .4)); if (a <= 0) return; c.save(); c.translate(1360, 300); c.scale(a, a); c.rotate(.06); txt(c, '23x', 6, 6, 150, 'rgba(0,0,0,.5)', 'center', 'Anton'); txt(c, '23x', 0, 0, 150, '#e2342e', 'center', 'Anton'); txt(c, 'HIS OWN POST', 0, 100, 40, '#fff', 'center', 'Anton'); c.restore(); }];
+      S.D.sfx = [[tRe, 'whoosh_soft', .25], [tTw - .2, 'riser', .3], [tLi, 'crowd_cheer', .2], [tLi + .1, 'pop', .3], [tTt, 'hit', .35], [tOw, 'tick', .2]]; } },
+
+  // 0.03 supermarket at dusk in the rain: Jack walks towards the doors; a KICKED OUT stamp waits above the entrance
+  { plate: 'shopfront', cam: { z: [1.05, 1.4], x: [1280, 1300], y: [800, 760] }, bed: [['rain_loop', .14], ['city_loop', .06]], light: { dir: -1, key: 'rgba(255,200,150,.1)' },
+    init: S => { const tDi = at(S, 'disliked'), tDis = at(S, 'disappear'), tMa = at(S, 'marketing?'), tSt = at(S, 'starts,'), tSu = at(S, 'supermarket.');
+      const FL = 1175;
+      S.D.figs = [{ x: 1120, y: FL, s: 1.2, ...JD.JACK(), facing: 1, mood: 'smug', walk: { x0: 150, x1: 1120, t0: .3, dur: Math.max(3, tSu - 1) }, anim: (o, lt) => { if (o.pose === 'walk') return; o.pose = 'stand'; o.facing = -1; o.mood = 'happy'; } },
+        { x: 2200, y: FL + 40, s: 1.15, ...JD.STRANGER(1), facing: -1, mood: 'neutral', walk: { x0: 2750, x1: 1900, t0: .5, dur: 5 } }];
+      S.D.live = [(c, lt) => { c.fillStyle = 'rgba(30,20,50,.18)'; c.fillRect(0, 0, 2560, 1440); const f = Math.sin(lt * 31) > -.7 ? 1 : .3; TW.glow(c, 1900, 460, 420, '120,255,170', .14 * f); TW.glow(c, 1920, 800, 300, '255,240,200', .25); TW.glow(c, 140, 300, 160, '255,220,150', .3); TW.glow(c, 2520, 300, 160, '255,220,150', .3);
+          for (let k = 0; k < 8; k++) { const ph = (lt * .5 + k / 8) % 1; c.strokeStyle = `rgba(220,230,255,${.4 * (1 - ph)})`; c.lineWidth = 2; c.beginPath(); c.ellipse(1600 + (k * 271) % 1200 - 600, 1250 + (k * 53) % 120, 10 + ph * 40, 3 + ph * 10, 0, 0, 7); c.stroke(); } },
+        (c, lt) => { const t0 = tSt; if (lt < t0) return; const u = K.seg(lt, t0, t0 + .6); c.save(); c.globalAlpha = .4 + .6 * (lt > tSu ? 1 : .5 + .5 * Math.sin(lt * 6)); JD.stamp(c, 1920, 450, .9, 'KICKED OUT', u); c.restore(); }];
+      S.D.front = [(c, lt) => rain(c, lt, 0, 2560, -100, 1600, 220)];
+      S.D.over = [(c, lt) => K.card(c, 'HOW DID IT COME TO THIS?', lt, { at: tDi, x: 960, y: 120, px: 50, rot: -1 }), (c, lt) => K.card(c, 'GOOD MARKETING?', lt, { at: tMa - .3, x: 1460, y: 230, px: 36, rot: 3, bg: GOLD, until: tSt })];
+      S.D.sfx = [[.3, 'footsteps', .25], [tDis, 'whoosh_soft', .2], [tMa, 'tick', .2], [tSt, 'tension', .2], [tSu, 'stamp', .4], [tSu + .2, 'thud', .25]]; } },
+
+  // 0.04 TITLE: KICKED OUT FOR A LIVING slams in; stamp thump; the empty BANNED clipboard slides in top-right
+  { plate: 'title', cam: { z: [1.0, 1.1], x: [1280, 1280], y: [720, 700] }, bed: [['hum_loop', .08]], light: {},
+    init: S => { const tSto = at(S, 'story'), tKi = at(S, 'kicked'), tBu = at(S, 'business.'), tBi = at(S, 'bill.');
+      S.D.live = [(c, lt) => { dust(c, lt, 40, '255,220,255', 0, 2560, 0, 1440); TW.sparkle(c, 700, 300, lt * 2, 1); TW.sparkle(c, 1900, 1050, lt * 2 + 1, .8); TW.glow(c, 1280, 720, 800, '255,90,140', .1 + .04 * Math.sin(lt * 2)); }];
+      S.D.over = [(c, lt) => { const a = E.back(K.seg(lt, tKi - .3, tKi + .1)); if (a <= 0) return; c.save(); c.translate(900, 430); c.scale(a, a); c.rotate(-.02);
+          txt(c, 'KICKED OUT', 8, -62, 150, 'rgba(0,0,0,.5)', 'center', 'Anton'); txt(c, 'KICKED OUT', 0, -70, 150, '#fff', 'center', 'Anton'); txt(c, 'FOR A LIVING', 8, 88, 110, 'rgba(0,0,0,.5)', 'center', 'Anton'); txt(c, 'FOR A LIVING', 0, 80, 110, GOLD, 'center', 'Anton'); c.restore(); },
+        (c, lt) => { if (lt < tBu) return; c.save(); JD.stamp(c, 900, 720, .75, lt > tBi ? 'AND THEN A BILL' : 'A BUSINESS', K.seg(lt, lt > tBi ? tBi : tBu, (lt > tBi ? tBi : tBu) + .5)); c.restore(); },
+        (c, lt) => { const u = E.out(K.seg(lt, tSto, tSto + .7)); if (u <= 0) return; JD.list(c, 1560 + (1 - u) * 500, 40, .75, ITEMS, 0, lt); }];
+      S.D.sfx = [[.2, 'swell', .2], [tSto, 'whoosh', .25], [tKi - .3, 'hit', .45], [tBu, 'stamp', .4], [tBi, 'stamp', .45], [tBi + .1, 'coins', .2]]; } },
+];

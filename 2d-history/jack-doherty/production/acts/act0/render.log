@@ -1,0 +1,14 @@
+frames 150/1384  59 ms/frame
+frames 300/1384  60 ms/frame
+frames 450/1384  61 ms/frame
+frames 600/1384  62 ms/frame
+frames 750/1384  61 ms/frame
+frames 900/1384  58 ms/frame
+frames 1050/1384  60 ms/frame
+frames 1200/1384  64 ms/frame
+frames 1350/1384  61 ms/frame
+DONE 1384 frames 46.13s
+/home/user/repo/2d-history/shared/mix.py:14: WavFileWarning: Chunk (non-data) not understood, skipping it.
+  sr, x = wavfile.read(p); x = x.astype(np.float32)
+mixed jack-doherty/production/acts/act0/mix.wav 46.13s
+WROTE jack-doherty/production/acts/act0/act0.mp4

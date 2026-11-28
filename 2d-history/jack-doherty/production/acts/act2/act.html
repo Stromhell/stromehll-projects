@@ -1,0 +1,150 @@
+<!doctype html><html><head><meta charset="utf-8"><title>JD act 2 - The Bodyguard Years</title>
+<style>@font-face{font-family:Anton;src:url(../../../../shared/fonts/Anton.ttf)}@font-face{font-family:Oswald;src:url(../../../../shared/fonts/Oswald.ttf)}@font-face{font-family:Caveat;src:url(../../../../shared/fonts/Caveat.ttf)}@font-face{font-family:SourceSerif;src:url(../../../../shared/fonts/SourceSerif4.ttf)}body{margin:0;background:#000}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="../../../../shared/rig_v5.js"></script><script src="../../../../shared/rig_leo.js"></script><script>window.RIGSTYLE = "gumball";</script><script src="../../../../shared/kit.js"></script><script src="../../../../shared/anim.js"></script>
+<script src="../../../../whatnot/production/tw_kit.js"></script><script src="../../../../whatnot/production/xu_kit.js"></script><script src="../../../../whatnot/production/jh_kit.js"></script><script src="../../../../whatnot/production/pr_kit.js"></script><script src="../../../../whatnot/production/wn_kit.js"></script>
+<script src="../../jd_kit.js"></script>
+<script src="timing.js"></script>
+<script>
+const K = KIT, A = ANIM, R = RIG, E = K.E, PL = '../../plates/';
+const SW = 1920, SH = 1080, INK = TW.INK, RED = TW.RED, pop = TW.pop, fade = TW.fade;
+const backdrop = (name, b = .5, blur = 8) => (c) => { c.save(); c.filter = `blur(${blur}px) brightness(${b})`; const s2 = 1.06 * SW / 2560; c.setTransform(s2, 0, 0, s2, SW / 2 - 1280 * s2, SH / 2 - 720 * s2); c.drawImage(K.imgs[name], 0, 0, 2560, 1440); c.restore(); K.screen(c); };
+const CARRY = () => ({ shL: 30, elL: -75, shR: 35, elR: -75 });
+const endTitle = (secs) => { const T = window.TIMING; const last = T.shots[T.shots.length - 1]; T.shots.push({ i: T.shots.length, start: last.end, end: last.end + secs, vo_start: last.end, vo_end: last.end, text: '' }); T.dur = last.end + secs; };
+// JD act 2 - The Bodyguard Years: street taunt + swing, bleeped clip ('hater'), Halloween knockout lawsuit (ALLEGED), wall of muscle, N3on brawl + both banned, Arlovski clash.
+// Plates: tampa_street, studio, courtroom, neon_club, ring (x2, second framed tighter on the left with red light).
+for (const n of ['tampa_street', 'studio', 'courtroom', 'neon_club', 'ring']) K.load(n, PL + n + '.jpg');
+const rr = TW.rr, txt = TW.txt, GOLD = '#f2c14a';
+// word anchor with a fallback estimated from the word's place in the VO text
+const at = (S, w, off = 0) => { const T = (S.text || '').split(/\s+/), i = Math.max(0, T.indexOf(w.split(' ')[0])), vs = (S.vo_start ?? S.start) - S.start, ve = (S.vo_end ?? S.end) - S.start; return A.at(S, w, vs + (ve - vs) * i / Math.max(1, T.length)) + off; };
+const ease = (lt, t0, a, b, d = .8) => a + (b - a) * E.io(K.seg(lt, t0, t0 + d));
+const dateTag = (c, s, x, y, lt, t0, px = 40) => { const a = E.back(K.seg(lt, t0, t0 + .35)); if (a <= 0) return; c.save(); c.translate(x, y); c.scale(a, a); c.rotate(-.03); c.font = `${px}px Anton`; const w = c.measureText(s).width + 36; c.fillStyle = '#f4ead2'; c.strokeStyle = INK; c.lineWidth = 4; rr(c, -w / 2, -px * .75, w, px * 1.5, 6); c.fill(); c.stroke(); txt(c, s, 0, 0, px, '#8a2a1a', 'center', 'Anton'); c.restore(); };
+const ntag = (c, name, x, y, lt, t0, opts = {}) => { const a = pop(lt, t0, .4), o = 1 - K.seg(lt, (opts.until ?? 999) - .3, opts.until ?? 999); if (a <= 0 || o <= 0) return; const px = opts.px ?? 38; c.save(); c.globalAlpha = o; c.translate(x, y); c.scale(a, a); c.font = `${px}px Anton`;
+  const w = c.measureText(name).width + px * .9, h = px * 1.45; c.fillStyle = 'rgba(0,0,0,.35)'; rr(c, -w / 2 + 6, -h / 2 + 6, w, h, 10); c.fill(); c.fillStyle = GOLD; c.strokeStyle = INK; c.lineWidth = 4; rr(c, -w / 2, -h / 2, w, h, 10); c.fill(); c.stroke(); txt(c, name, 0, 2, px, INK, 'center', 'Anton'); c.restore(); };
+const srcTag = (c, s, x, y, lt, t0) => { const a = K.seg(lt, t0, t0 + .3); if (a <= 0) return; c.save(); c.globalAlpha = a; c.font = '28px Oswald'; const w = c.measureText(s).width + 30; c.fillStyle = 'rgba(12,12,20,.78)'; rr(c, x - w / 2, y - 22, w, 44, 8); c.fill(); txt(c, s, x, y, 28, '#e8eef8', 'center', 'Oswald'); c.restore(); };
+const cross = (c, x, y, r, u) => { if (u <= 0) return; c.save(); c.strokeStyle = '#e2342e'; c.lineCap = 'round'; c.lineWidth = r * .16; const a = Math.min(1, u * 2), b = K.clamp(u * 2 - 1); c.beginPath(); c.moveTo(x - r, y - r); c.lineTo(x - r + 2 * r * a, y - r + 2 * r * a); if (b > 0) { c.moveTo(x + r, y - r); c.lineTo(x + r - 2 * r * b, y - r + 2 * r * b); } c.stroke(); c.restore(); };
+const dust = (c, lt, n, col, x0, w, y0, h) => { for (let k = 0; k < n; k++) { const x = x0 + (k * 263 + lt * 14 * (1 + k % 3)) % w, y = y0 + (k * 151 + Math.sin(lt * .7 + k) * 40 + 4000) % h; c.fillStyle = `rgba(${col},${.12 + .1 * Math.sin(lt * 2 + k)})`; c.fillRect(x, y, 5, 5); } };
+const unscale = cc => { const m = cc.getTransform(); cc.setTransform(Math.hypot(m.a, m.b), 0, 0, Math.hypot(m.c, m.d), m.e, m.f); };
+const HPHONE = (s = 1, live = false) => ({ near: cc => { cc.save(); unscale(cc); cc.scale(s, s); cc.fillStyle = '#1a1a22'; cc.strokeStyle = INK; cc.lineWidth = 3; rr(cc, -14, -30, 28, 52, 6); cc.fill(); cc.stroke(); cc.fillStyle = '#9ad8ff'; cc.fillRect(-10, -25, 20, 40); if (live) { cc.fillStyle = '#e2342e'; cc.fillRect(-9, -23, 12, 6); } cc.restore(); } });
+const ITEMS = ['SUPERMARKET', 'KICK', 'KICK (AGAIN)', 'PGA TOUR', 'SHUFFLE (PAID)'];
+// camera shake: mutate the shot cam each frame from a live layer (one-frame lag is fine)
+const shaker = (S, base, fn) => (c, lt) => { const k = fn(lt); if (!S.D.cam) return; S.D.cam.x = [base.x[0] + Math.sin(lt * 61) * k * 14, base.x[1] + Math.sin(lt * 61) * k * 14]; S.D.cam.y = [base.y[0] + Math.cos(lt * 47) * k * 10, base.y[1] + Math.cos(lt * 47) * k * 10]; };
+const camOf = (z, x, y) => ({ z: z.slice(), x: x.slice(), y: y.slice() });
+const rain = (c, lt, n, x0, w, y0, h, al = .35, sl = 6) => { c.save(); c.strokeStyle = `rgba(200,215,255,${al})`; c.lineWidth = 2.5; c.beginPath(); for (let k = 0; k < n; k++) { const sp = 1400 + (k % 5) * 160, x = x0 + (k * 173.3 + lt * sp * .12) % w, y = y0 + (k * 97.7 + lt * sp) % h; c.moveTo(x, y); c.lineTo(x - sl, y + 38); } c.stroke(); c.restore(); };
+const flashes = (c, lt, n, x0, w, y0, h, rate = 1) => { for (let k = 0; k < n; k++) { const ph = (lt * rate * (.7 + (k % 4) * .2) + k * .377) % 1; if (ph < .06) { const x = x0 + (k * 211) % w, y = y0 + (k * 89) % h; TW.glow(c, x, y, 60, '255,255,240', .9 * (1 - ph / .06)); c.fillStyle = '#fff'; c.fillRect(x - 3, y - 3, 6, 6); } } };
+const bubble = (c, x, y, s, a, rot = 0) => { if (a <= 0) return; c.save(); c.translate(x, y); c.rotate(rot); c.scale(a, a); c.font = '54px Anton'; const w = c.measureText(s).width + 50; c.fillStyle = '#fff'; c.strokeStyle = INK; c.lineWidth = 5; c.beginPath(); c.ellipse(0, 0, w / 2 + 10, 50, 0, 0, 7); c.fill(); c.stroke(); c.beginPath(); c.moveTo(-20, 40); c.lineTo(-44, 84); c.lineTo(6, 46); c.fill(); txt(c, s, 0, 4, 54, '#d8262a', 'center', 'Anton'); c.restore(); };
+const pumpkin = (c, x, y, s) => { c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = '#e8742a'; c.strokeStyle = INK; c.lineWidth = 4; for (const dx of [-22, 22, 0]) { c.beginPath(); c.ellipse(dx, 0, 30, 34, 0, 0, 7); c.fill(); c.stroke(); } c.fillStyle = '#3a6a2a'; c.fillRect(-5, -44, 10, 14); c.fillStyle = '#ffd23a'; c.beginPath(); c.moveTo(-18, -8); c.lineTo(-8, -18); c.lineTo(-2, -6); c.fill(); c.beginPath(); c.moveTo(18, -8); c.lineTo(8, -18); c.lineTo(2, -6); c.fill(); c.fillRect(-16, 10, 32, 8); c.restore(); };
+const miniPhone = (c, x, y, r, s = 1) => { c.save(); c.translate(x, y); c.rotate(r); c.scale(s, s); c.fillStyle = '#1a1a22'; c.strokeStyle = INK; c.lineWidth = 3; rr(c, -14, -26, 28, 52, 5); c.fill(); c.stroke(); c.fillStyle = '#9ad8ff'; c.fillRect(-10, -21, 20, 38); c.restore(); };
+
+window.SHOTS = [
+  // 2.00 street by day: Jack films with a phone gimbal and taunts a big stranger; insult bubbles; the man swings, Jack ducks
+  { plate: 'tampa_street', cam: { z: [1.3, 1.42], x: [1260, 1330], y: [900, 900] }, bed: [['city_loop', .12], ['birds_loop', .05]], light: { dir: -1, key: 'rgba(255,240,210,.2)' },
+    init: S => { const tSl = at(S, 'Slowly,'), tLe = at(S, 'Less'), tMo = at(S, 'more'), tNe = at(S, "He'd"), tMk = at(S, 'mocking'), tFa = at(S, 'families,'), tSw = at(S, 'swung'), FL = 1330;
+      const base = camOf([1.3, 1.42], [1260, 1330], [900, 900]); S.D.cam = camOf(base.z, base.x, base.y);
+      S.D.figs = [{ x: 1040, y: FL, s: 1.6, ...JD.JACK(), facing: 1, mood: 'smug', hold: HPHONE(1.25, true), arms: () => ({ shR: 70, elR: -40 }), anim: (o, lt) => { o.lean = Math.sin(lt * 1.6) * 2; if (lt > tMk) { o.pose = 'point'; o.mood = 'happy'; o.lean = 6 + Math.sin(lt * 9) * 3; } if (lt > tSw - .1) { o.pose = 'shrug'; o.mood = 'shocked'; o.lean = -16; o.x = 1040 - 60 * E.out(K.seg(lt, tSw - .1, tSw + .3)); } } },
+        { x: 1560, y: FL, s: 1.72, ...JD.STRANGER(1), facing: -1, mood: 'neutral', walk: { x0: 2500, x1: 1560, t0: .3, dur: Math.max(2, tNe - .6) }, anim: (o, lt) => { if (o.pose === 'walk') return; o.facing = -1; o.pose = 'stand'; if (lt > tMk) { o.mood = 'angry'; o.pose = 'think'; } if (lt > tFa) o.pose = 'stand'; if (lt > tSw - .3) { o.pose = 'reach'; o.lean = 10 * Math.sin(K.seg(lt, tSw - .3, tSw + .3) * Math.PI); } } }];
+      S.D.live = [shaker(S, base, lt => Math.max(0, 1 - Math.abs(lt - tSw - .15) * 2.5)), (c, lt) => { TW.glow(c, 600, 200, 900, '255,240,200', .18); dust(c, lt, 20, '255,250,230', 0, 2560, 400, 900);
+          // leaves drifting from the trees
+          for (let k = 0; k < 14; k++) { const ph = (lt * .12 + k / 14) % 1, x = (k * 211 + ph * 400) % 2560, y = 500 + ph * 800; c.save(); c.translate(x, y); c.rotate(lt * 2 + k); c.fillStyle = k % 2 ? '#6a9a3a' : '#a8b84a'; c.beginPath(); c.ellipse(0, 0, 10, 5, 0, 0, 7); c.fill(); c.restore(); }
+          // a car rolls past far back
+          const cx = ((lt * 180) % 3400) - 400; c.save(); c.translate(cx, 1150); c.fillStyle = '#3a6ab0'; c.strokeStyle = INK; c.lineWidth = 4; rr(c, -110, -60, 220, 46, 12); c.fill(); c.stroke(); rr(c, -60, -96, 120, 40, 12); c.fill(); c.stroke(); c.fillStyle = '#16161c'; for (const wx of [-62, 62]) { c.beginPath(); c.arc(wx, -12, 18, 0, 7); c.fill(); } c.restore();
+          // gimbal light from his phone
+          TW.glow(c, 1150, FL - 330, 160, '160,220,255', .25 + .08 * Math.sin(lt * 7)); }];
+      S.D.front = [(c, lt) => { // swing whoosh arc
+          const u = K.seg(lt, tSw - .3, tSw + .3); if (u > 0 && u < 1) { c.save(); c.strokeStyle = `rgba(255,255,255,${.8 * (1 - u)})`; c.lineWidth = 14; c.lineCap = 'round'; c.beginPath(); c.arc(1360, FL - 470, 170, -2.4 + u * 1.2, -1.2 + u * 1.6); c.stroke(); c.restore(); } }];
+      S.D.over = [(c, lt) => K.card(c, 'LESS PRANKING', lt, { at: tLe, x: 420, y: 140, px: 42, rot: -3 }), (c, lt) => cross(c, 420, 140, 60, K.seg(lt, tMo - .1, tMo + .3)),
+        (c, lt) => K.card(c, 'MORE FIGHTS, FEWER PRANKS', lt, { at: tMo, x: 1380, y: 140, px: 46, rot: 2, bg: '#e2342e', color: '#fff' }),
+        (c, lt) => { if (lt < tMk || lt > tSw + .6) return; bubble(c, 820, 330, '!!!', pop(lt, tMk, .3), -.08); bubble(c, 1040, 260, '#@%!', pop(lt, tMk + .7, .3), .06); if (lt > tFa) bubble(c, 760, 450, 'YOUR MUM!', pop(lt, tFa, .3), -.04); },
+        (c, lt) => { const a = pop(lt, tSw + .15, .3); if (a <= 0) return; c.save(); c.translate(1300, 320); c.scale(a, a); c.rotate(-.1); txt(c, 'SWING!', 0, 0, 90, '#ffd23a', 'center', 'Anton'); c.restore(); }];
+      S.D.sfx = [[tSl, 'footsteps', .25], [tLe, 'paper', .25], [tMo - .1, 'scrape', .25], [tMo, 'stamp', .3], [tMk, 'pop', .3], [tMk + .7, 'pop', .3], [tFa, 'pop', .3], [tSw - .3, 'whoosh', .5], [tSw + .05, 'hit', .4], [tSw + .1, 'crowd_cheer', .12]]; } },
+
+  // 2.01 dark studio: a clip player with a waveform; a red BLEEP block slams over it; Jack shrugs; HE SAYS: 'HATER'; second bleep aimed at his own fans
+  { plate: 'studio', cam: { z: [1.15, 1.25], x: [1240, 1280], y: [880, 860] }, bed: [['hum_loop', .1]], light: { dir: 1, key: 'rgba(160,200,255,.14)' },
+    init: S => { const tCl = at(S, 'clip'), tSl = at(S, 'slur,'), tIn = at(S, 'insisted'), tHa = at(S, 'hater.'), tNo = at(S, 'Not'), tDi = at(S, 'different'), tFn = at(S, 'fans.'), FL = 1270;
+      S.D.figs = [{ x: 560, y: FL, s: 1.55, ...JD.JACK(), facing: 1, mood: 'neutral', anim: (o, lt) => { o.lean = Math.sin(lt * 1.3) * 2; if (lt > tIn) { o.pose = 'shrug'; o.mood = 'smug'; } if (lt > tHa + .6) { o.pose = 'present'; } if (lt > tDi) { o.pose = 'stand'; o.mood = 'angry'; } } }];
+      S.D.live = [(c, lt) => { c.fillStyle = 'rgba(8,8,20,.55)'; c.fillRect(0, 0, 2560, 1440); TW.glow(c, 1600, 500, 900, '120,160,255', .15 + .04 * Math.sin(lt * 3)); dust(c, lt, 26, '170,190,255', 0, 2560, 200, 1100); }];
+      const bars = 46, X0 = 780, X1 = 1800, Y0 = 130, Y1 = 640;
+      S.D.over = [(c, lt) => { const a = E.out(K.seg(lt, .2, .8)); if (a <= 0) return; c.save(); c.globalAlpha = a; c.translate(0, (1 - a) * 60);
+          c.fillStyle = 'rgba(0,0,0,.4)'; rr(c, X0 + 10, Y0 + 14, X1 - X0, Y1 - Y0, 18); c.fill(); c.fillStyle = '#14141e'; c.strokeStyle = INK; c.lineWidth = 6; rr(c, X0, Y0, X1 - X0, Y1 - Y0, 18); c.fill(); c.stroke();
+          c.fillStyle = '#22222e'; rr(c, X0 + 20, Y0 + 20, X1 - X0 - 40, 56, 10); c.fill(); txt(c, 'CLIP', X0 + 50, Y0 + 48, 34, '#e8eef8', 'left', 'Anton'); c.fillStyle = '#e2342e'; c.beginPath(); c.arc(X1 - 60, Y0 + 48, 12 + 3 * Math.sin(lt * 6), 0, 7); c.fill();
+          const mid = (Y0 + Y1) / 2 + 20, w = (X1 - X0 - 80) / bars, ph = K.seg(lt, 0, S.end - S.start);
+          for (let k = 0; k < bars; k++) { const x = X0 + 40 + k * w, h = 30 + 120 * Math.abs(Math.sin(k * .9 + lt * 7) * Math.sin(k * .37 + lt * 3)); c.fillStyle = (k / bars) < ph ? '#7affd0' : '#4a5a6a'; rr(c, x + 3, mid - h / 2, w - 6, h, 4); c.fill(); }
+          // bleep blocks
+          for (const [tb, bx] of [[tSl, X0 + 330], [tDi + .5, X0 + 640]]) { const u = K.seg(lt, tb - .15, tb + .1); if (u <= 0) continue; const yy = mid - 260 * (1 - E.inn(u)); c.save(); c.translate(bx, yy); const sq = 1 + .2 * Math.exp(-(lt - tb - .1) * 12) * Math.cos((lt - tb) * 30); c.scale(sq, 1 / sq); c.fillStyle = '#d8262a'; c.strokeStyle = INK; c.lineWidth = 5; rr(c, -130, -95, 260, 190, 12); c.fill(); c.stroke(); txt(c, 'BLEEP', 0, 4, 64, '#fff', 'center', 'Anton'); c.restore(); }
+          // play head
+          c.fillStyle = '#3a3a4a'; c.fillRect(X0 + 40, Y1 - 50, X1 - X0 - 80, 10); c.fillStyle = '#e2342e'; c.fillRect(X0 + 40, Y1 - 50, (X1 - X0 - 80) * ph, 10); c.beginPath(); c.arc(X0 + 40 + (X1 - X0 - 80) * ph, Y1 - 45, 12, 0, 7); c.fill(); c.restore(); },
+        (c, lt) => K.card(c, 'HE SAYS: "HATER"', lt, { at: tHa, x: 1290, y: 760, px: 52, rot: -2, bg: GOLD, until: tDi + .2 }),
+        (c, lt) => K.card(c, 'A DIFFERENT SLUR, AT HIS OWN FANS', lt, { at: tFn - .4, x: 1290, y: 760, px: 40, rot: 2, bg: '#e2342e', color: '#fff' }),
+        (c, lt) => { if (lt < tNo) return; for (let k = 0; k < 6; k++) { const ph = ((lt - tNo) * .5 + k / 6) % 1, x = 860 + k * 160; c.globalAlpha = (1 - ph) * K.seg(lt, tNo, tNo + .5); WN.heart(c, x, 120 - ph * 60 + 560, 16); c.globalAlpha = 1; if (lt > tFn) { c.strokeStyle = INK; c.lineWidth = 4; c.beginPath(); c.moveTo(x - 6, 660 - ph * 60 - 16); c.lineTo(x + 4, 660 - ph * 60); c.stroke(); } } }];
+      S.D.sfx = [[.3, 'whoosh_soft', .3], [tCl, 'tick', .25], [tSl - .15, 'whoosh', .4], [tSl + .05, 'alarm', .18], [tSl + .1, 'thud', .45], [tIn, 'pop', .2], [tHa, 'stamp', .4], [tDi + .35, 'whoosh', .4], [tDi + .55, 'alarm', .18], [tDi + .6, 'thud', .45], [tFn, 'tension', .25]]; } },
+
+  // 2.02 courtroom: Halloween, a man knocked out; Jack's post blames his security; a lawsuit slides onto the bench (ALLEGED); his lawyer pushes back; OUTCOME NOT REPORTED
+  { plate: 'courtroom', cam: { z: [1.12, 1.26], x: [1280, 1230], y: [900, 920] }, bed: [['hum_loop', .08], ['crowd_loop', .04]], light: { dir: -1, key: 'rgba(255,220,170,.14)' },
+    init: S => { const tHw = at(S, 'Halloween'), tKo = at(S, 'knocked'), tPo = at(S, 'posted'), tSe = at(S, 'security'), tLs = at(S, 'lawsuit'), tAl = at(S, 'alleged'), tLw = at(S, 'lawyers'), tPu = at(S, 'pushed'), tOu = at(S, 'outcome'), FL = 1350;
+      S.D.figs = [{ x: 860, y: FL, s: 1.6, ...JD.LAWYER(1), facing: 1, mood: 'neutral', walk: { x0: -150, x1: 860, t0: tPo, dur: 2.6 }, hold: { far: cc => { cc.save(); unscale(cc); WN.files(cc, 0, 40, .3, 3); cc.restore(); } }, anim: (o, lt) => { if (o.pose === 'walk') return; o.facing = 1; o.pose = lt > tPu ? 'reach' : 'stand'; o.mood = lt > tPu ? 'angry' : 'neutral'; o.lean = lt > tPu ? 8 + Math.sin(lt * 3) * 2 : 0; } }];
+      S.D.live = [(c, lt) => { TW.glow(c, 1280, 300, 900, '255,220,160', .12); dust(c, lt, 30, '255,230,190', 200, 2200, 200, 1000);
+          // lawsuit document slides along the bench top
+          const u = E.out(K.seg(lt, tLs - .3, tLs + .4)); if (u > 0) { c.save(); c.translate(2100 - 700 * u, 860); c.rotate(-.05 + .05 * u); c.fillStyle = '#f6f2e6'; c.strokeStyle = INK; c.lineWidth = 4; rr(c, -110, -70, 220, 140, 6); c.fill(); c.stroke(); txt(c, 'LAWSUIT', 0, -38, 30, INK, 'center', 'Anton'); c.fillStyle = '#b8b4a8'; for (let k = 0; k < 4; k++) c.fillRect(-80, -10 + k * 18, 160 - k * 20, 6); c.restore(); }
+          const g = lt > tOu && lt < tOu + 1 ? Math.abs(Math.sin((lt - tOu) * 9)) * .7 : 0; WN.gavel(c, 1520, 846, .8, g); }];
+      S.D.over = [(c, lt) => { const a = pop(lt, tHw - .2, .35); if (a <= 0) return; c.save(); c.translate(240, 120); c.scale(a, a); pumpkin(c, 0, 0, 1.1); c.restore(); dateTag(c, 'HALLOWEEN', 420, 120, lt, tHw, 40); },
+        (c, lt) => { if (lt < tKo - .2 || lt > tPo + 1.5) return; K.card(c, 'A MAN KNOCKED OUT', lt, { at: tKo - .2, x: 330, y: 250, px: 38, rot: -3 }); const a = K.seg(lt, tKo, tKo + .5); for (let k = 0; k < 3; k++) { c.globalAlpha = a * (.5 + .5 * Math.sin(lt * 4 + k)); txt(c, 'z', 560 + k * 34, 230 - k * 30 - (lt * 20 % 20), 34 + k * 8, '#fff', 'center', 'Anton'); } c.globalAlpha = 1; },
+        (c, lt) => K.card(c, "JACK'S POST: HIS SECURITY DID IT", lt, { at: tPo, x: 1300, y: 140, px: 38, rot: 2, until: tLs + .2 }),
+        (c, lt) => { if (lt < tLs) return; const m = K.camAt(S.D.cam, K.clamp(lt / (S.end - S.start))); PR.tag(c, 1450 * m.sc + m.tx + 0, 860 * m.sc + m.ty - 150, .8, 'ALLEGED', tAl, lt); },
+        (c, lt) => K.card(c, 'LAWSUIT: HIS GUARD WAS INVOLVED', lt, { at: tAl + .2, x: 1300, y: 140, px: 36, rot: -2, until: tOu }),
+        (c, lt) => K.card(c, 'HIS LAWYERS PUSH BACK', lt, { at: tPu, x: 420, y: 250, px: 36, rot: -2, bg: GOLD }),
+        (c, lt) => K.card(c, 'OUTCOME NOT REPORTED', lt, { at: tOu, x: 1300, y: 140, px: 44, rot: 2, bg: '#7a7a80', color: '#fff' })];
+      S.D.sfx = [[tHw, 'pop', .3], [tKo, 'hit', .4], [tPo, 'chime', .25], [tSe, 'pop', .2], [tLs - .3, 'paper', .5], [tAl, 'stamp', .4], [tPo, 'footsteps', .3], [tPu, 'scrape', .3], [tOu, 'stamp', .35], [tOu + .1, 'thud', .3]]; } },
+
+  // 2.03 neon street at night: Jack peeks out from behind two huge guards; they crack knuckles; a phone on a tripod is LIVE; quote card
+  { plate: 'neon_club', cam: { z: [1.2, 1.34], x: [1280, 1280], y: [960, 980] }, bed: [['night_loop', .1], ['hum_loop', .08]], light: { dir: 1, key: 'rgba(255,120,220,.18)' },
+    init: S => { const tMm = at(S, 'more,'), tWa = at(S, 'wall'), tMu = at(S, 'muscle.'), tSt = at(S, 'stream,'), tTo = at(S, 'touch'), tLe = at(S, 'leave'), tBr = at(S, 'breathing.'), FL = 1330;
+      S.D.figs = [{ x: 1280, y: FL - 30, s: 1.45, ...JD.JACK(), facing: 1, mood: 'smug', anim: (o, lt) => { const pk = Math.sin(lt * 1.1); o.x = 1280 + 40 * pk; o.lean = 10 * pk; if (lt > tTo) { o.pose = 'point'; o.mood = 'angry'; } } },
+        { x: 1060, y: FL, s: 1.55, ...JD.GUARD(0), facing: 1, mood: 'angry', walk: { x0: 400, x1: 1060, t0: .2, dur: Math.max(1.5, tWa - .4) }, anim: (o, lt) => { if (o.pose === 'walk') return; o.facing = 1; o.pose = lt > tTo ? 'present' : 'stand'; o.lean = lt > tTo ? Math.sin(lt * 8) * 2 : 0; } },
+        { x: 1500, y: FL, s: 1.55, ...JD.GUARD(1), facing: -1, mood: 'angry', walk: { x0: 2200, x1: 1500, t0: .4, dur: Math.max(1.5, tWa - .6) }, anim: (o, lt) => { if (o.pose === 'walk') return; o.facing = 1; o.pose = lt > tTo + .3 ? 'present' : 'stand'; o.lean = lt > tTo ? Math.sin(lt * 8 + 1) * 2 : 0; } }];
+      S.D.live = [(c, lt) => { const f = .75 + .25 * (Math.sin(lt * 31) > -.85 ? 1 : 0) * (.8 + .2 * Math.sin(lt * 5)); TW.glow(c, 1280, 650, 520, '255,90,200', .35 * f); TW.glow(c, 1280, 1000, 900, '120,60,200', .18);
+          dust(c, lt, 30, '255,180,240', 0, 2560, 300, 1000);
+          // tripod phone, LIVE
+          const tx = 1900; c.strokeStyle = '#16161c'; c.lineWidth = 7; c.beginPath(); c.moveTo(tx, FL - 360); c.lineTo(tx - 60, FL); c.moveTo(tx, FL - 360); c.lineTo(tx + 60, FL); c.moveTo(tx, FL - 360); c.lineTo(tx, FL); c.stroke(); c.fillStyle = '#1a1a22'; c.strokeStyle = INK; c.lineWidth = 4; rr(c, tx - 30, FL - 430, 60, 100, 8); c.fill(); c.stroke(); c.fillStyle = '#6ac8ff'; c.fillRect(tx - 24, FL - 422, 48, 84);
+          if (lt > tSt) { const b = .7 + .3 * Math.sin(lt * 6); c.fillStyle = `rgba(226,52,46,${b})`; rr(c, tx - 48, FL - 486, 96, 40, 8); c.fill(); txt(c, 'LIVE', tx, FL - 466, 28, '#fff', 'center', 'Anton'); TW.glow(c, tx, FL - 380, 200, '120,200,255', .3); } }];
+      S.D.front = [(c, lt) => { // knuckle crack sparks
+          if (lt < tTo) return; for (const [x, d] of [[1150, 0], [1410, .3]]) { const ph = ((lt - tTo - d) * 1.2) % 1; if (ph < 0 || ph > .2) continue; c.strokeStyle = `rgba(255,255,255,${1 - ph * 5})`; c.lineWidth = 4; for (let k = 0; k < 5; k++) { const a = k * 1.25; c.beginPath(); c.moveTo(x + Math.cos(a) * 20, FL - 480 + Math.sin(a) * 20); c.lineTo(x + Math.cos(a) * 46, FL - 480 + Math.sin(a) * 46); c.stroke(); } } }];
+      S.D.over = [(c, lt) => K.card(c, 'A WALL OF MUSCLE', lt, { at: tMu - .2, x: 420, y: 140, px: 46, rot: -3, bg: GOLD }),
+        (c, lt) => K.card(c, "'...CAN'T LET THEM LEAVE'", lt, { at: tBr - .3, x: 1360, y: 140, px: 48, rot: 2, bg: '#e2342e', color: '#fff' }),
+        (c, lt) => K.card(c, 'TO HIS SECURITY, BEFORE A STREAM', lt, { at: tSt, x: 420, y: 250, px: 30, rot: 2, fam: 'Oswald' })];
+      S.D.sfx = [[.3, 'footsteps', .3], [tMu, 'thud', .3], [tSt, 'chime', .2], [tTo, 'knap', .5], [tTo + .3, 'knap', .5], [tLe, 'tension', .3], [tBr, 'stamp', .35], [1.2, 'hum_loop', .05]]; } },
+
+  // 2.04 boxing arena: Jack and N3on grapple in the ring, phones flying; a ref pulls them apart; two BANNED stamps; quote card
+  { plate: 'ring', cam: { z: [1.25, 1.38], x: [1280, 1300], y: [880, 880] }, bed: [['crowd_loop', .2]], light: { dir: -1, key: 'rgba(255,255,240,.2)' },
+    init: S => { const tJu = at(S, 'June'), tBw = at(S, 'brawled'), tN3 = at(S, 'N3on'), tFi = at(S, 'fight'), tBa = at(S, 'banned'), tVe = at(S, 'verdict?'), tHa = at(S, 'hates'), FL = 1220, tRef = tBa - 1.6, tApart = tBa - .2;
+      const base = camOf([1.25, 1.38], [1280, 1300], [880, 880]); S.D.cam = camOf(base.z, base.x, base.y);
+      const sep = lt => E.out(K.seg(lt, tApart, tApart + .6));
+      S.D.figs = [{ x: 1200, y: FL, s: 1.3, ...JD.JACK(), facing: 1, mood: 'angry', anim: (o, lt) => { const g = lt > tBw && lt < tApart; o.pose = g ? 'reach' : 'stand'; o.x = 1200 - 120 * sep(lt) + (g ? Math.sin(lt * 13) * 10 : 0); o.lean = g ? 10 + Math.sin(lt * 11) * 5 : 0; if (lt > tApart) { o.pose = 'point'; } if (lt > tHa) { o.pose = 'shrug'; o.mood = 'smug'; } } },
+        { x: 1380, y: FL, s: 1.3, ...JD.N3ON(), facing: -1, mood: 'angry', anim: (o, lt) => { const g = lt > tBw && lt < tApart; o.pose = g ? 'reach' : 'stand'; o.x = 1380 + 140 * sep(lt) - (g ? Math.sin(lt * 13) * 10 : 0); o.lean = g ? 10 + Math.sin(lt * 11 + 1) * 5 : 0; if (lt > tApart) o.pose = 'point'; if (lt > tVe) { o.pose = 'present'; o.mood = 'smug'; } } },
+        { x: 1290, y: FL - 70, s: 1.25, ...WN.OFFICIAL(0), facing: -1, mood: 'worried', walk: { x0: 1750, x1: 1290, t0: tRef, dur: 1.4 }, anim: (o, lt) => { if (o.pose === 'walk') return; o.pose = lt > tApart - .1 ? 'cheer' : 'stand'; } }];
+      S.D.live = [shaker(S, base, lt => (lt > tBw && lt < tApart ? .35 : 0)), (c, lt) => { flashes(c, lt, 26, 100, 2360, 380, 520, .9); TW.glow(c, 1280, 400, 900, '255,255,230', .12); dust(c, lt, 30, '255,255,240', 200, 2200, 200, 900); }];
+      S.D.front = [(c, lt) => { if (lt < tBw || lt > tApart + 1) return; for (let k = 0; k < 4; k++) { const ph = ((lt - tBw) * .8 + k / 4) % 1, x = 1290 + (k % 2 ? 1 : -1) * ph * (300 + k * 60), y = FL - 420 - Math.sin(ph * Math.PI) * 260 + ph * 300; miniPhone(c, x, y, lt * 8 + k, 1.2); } }];
+      S.D.over = [(c, lt) => dateTag(c, 'JUNE 2024', 260, 110, lt, tJu, 42), (c, lt) => ntag(c, 'N3ON', 1250, 250, lt, tN3, { until: tBa }),
+        (c, lt) => K.card(c, 'FIGHT NIGHT, FLORIDA', lt, { at: tFi, x: 600, y: 210, px: 34, rot: -2, fam: 'Oswald', until: tBa }),
+        (c, lt) => { if (lt > tVe - .2) return; JD.stamp(c, 720, 190, .55, 'BANNED', K.seg(lt, tBa, tBa + .5)); JD.stamp(c, 1240, 190, .55, 'BANNED', K.seg(lt, tBa + .35, tBa + .85)); },
+        (c, lt) => K.card(c, 'BOTH BANNED', lt, { at: tBa + .9, x: 1640, y: 120, px: 40, rot: 3, until: tVe }),
+        (c, lt) => K.card(c, "N3ON: 'EVERYONE JUST HATES HIM'", lt, { at: tVe, x: 980, y: 150, px: 44, rot: -2, bg: GOLD })];
+      S.D.sfx = [[.2, 'crowd_cheer', .25], [tJu, 'pop', .25], [tBw, 'hit', .45], [tBw + .4, 'whoosh', .3], [tBw + .8, 'hit', .4], [tBw + 1.4, 'camera_shutter', .3], [tN3, 'pop', .3], [tRef, 'run_steps', .3], [tApart, 'whoosh', .3], [tBa, 'stamp', .5], [tBa + .35, 'stamp', .5], [tVe, 'pop', .3], [tHa, 'crowd_cheer', .15]]; } },
+
+  // 2.05 same arena, tighter on the left under red light: Arlovski squares up to Jack's guards; Jack points from behind; EACH SIDE BLAMES THE OTHER
+  { plate: 'ring', cam: { z: [1.55, 1.72], x: [1020, 1080], y: [1000, 990] }, bed: [['crowd_loop', .12], ['drone', .1]], light: { dir: 1, key: 'rgba(255,90,70,.22)' },
+    init: S => { const tMu = at(S, 'muscle'), tDe = at(S, 'December'), tCr = at(S, 'crew'), tCl = at(S, 'clashed'), tFo = at(S, 'former'), tAn = at(S, 'Andrei'), tBo = at(S, 'boxing'), tEa = at(S, 'Each'), tBl = at(S, 'blamed'), FL = 1240;
+      S.D.figs = [{ x: 640, y: FL, s: 1.3, ...JD.ARLOVSKI(), facing: 1, mood: 'angry', walk: { x0: 200, x1: 640, t0: tCr - 1.4, dur: 1.4 }, anim: (o, lt) => { if (o.pose === 'walk') return; o.pose = lt > tCl ? 'reach' : 'stand'; o.lean = lt > tCl && lt < tEa ? 6 + Math.sin(lt * 9) * 4 : 0; if (lt > tEa) { o.pose = 'point'; } } },
+        { x: 1000, y: FL, s: 1.3, ...JD.GUARD(1), facing: -1, mood: 'angry', anim: (o, lt) => { o.pose = lt > tCl ? 'reach' : 'stand'; o.lean = lt > tCl && lt < tEa ? 6 + Math.sin(lt * 9 + 1) * 4 : Math.sin(lt * 1.2) * 1.5; if (lt > tEa) o.pose = 'point'; } },
+        { x: 1210, y: FL - 10, s: 1.3, ...JD.GUARD(2), facing: -1, mood: 'angry', anim: (o, lt) => { o.pose = lt > tCl + .3 ? 'present' : 'stand'; o.lean = Math.sin(lt * 1.4) * 1.5; } },
+        { x: 1450, y: FL - 30, s: 1.22, ...JD.JACK(), facing: -1, mood: 'smug', anim: (o, lt) => { o.pose = lt > tCl ? 'point' : 'stand'; o.lean = Math.sin(lt * 2) * 3; if (lt > tEa) { o.pose = 'shrug'; o.mood = 'angry'; } } }];
+      S.D.live = [(c, lt) => { c.fillStyle = 'rgba(60,0,10,.28)'; c.fillRect(0, 0, 2560, 1440); flashes(c, lt, 20, 100, 2360, 380, 520, 1.1); TW.glow(c, 900, 700, 900, '255,60,60', .12 + .05 * Math.sin(lt * 2)); dust(c, lt, 30, '255,200,200', 200, 1800, 500, 800); }];
+      S.D.over = [(c, lt) => dateTag(c, 'DEC 2025', 260, 110, lt, tDe, 42), (c, lt) => ntag(c, 'ANDREI ARLOVSKI', 520, 230, lt, tAn, { until: tEa + .2 }),
+        (c, lt) => K.card(c, 'FORMER UFC HEAVYWEIGHT CHAMPION', lt, { at: tFo, x: 1280, y: 120, px: 32, rot: 2, fam: 'Oswald', until: tEa }),
+        (c, lt) => K.card(c, 'EACH SIDE BLAMES THE OTHER', lt, { at: tEa, x: 960, y: 140, px: 50, rot: -2, bg: GOLD }),
+        (c, lt) => { const a = K.seg(lt, tBl, tBl + .4); if (a <= 0) return; c.save(); c.globalAlpha = a; c.strokeStyle = '#e2342e'; c.fillStyle = '#e2342e'; c.lineWidth = 12; c.lineCap = 'round'; const w = Math.sin(lt * 6) * 10;
+          for (const [x0, x1] of [[700 + w, 1100], [1220 - w, 820]]) { c.beginPath(); c.moveTo(x0, x0 < x1 ? 250 : 290); c.lineTo(x1, x0 < x1 ? 250 : 290); c.stroke(); const d = Math.sign(x1 - x0), y = x0 < x1 ? 250 : 290; c.beginPath(); c.moveTo(x1 + d * 24, y); c.lineTo(x1 - d * 10, y - 22); c.lineTo(x1 - d * 10, y + 22); c.closePath(); c.fill(); } c.restore(); }];
+      S.D.sfx = [[.1, 'tension', .3], [tMu, 'drum', .3], [tDe, 'pop', .25], [tCr - 1.4, 'footsteps', .3], [tCl, 'hit', .4], [tCl + .4, 'crowd_cheer', .2], [tAn, 'pop', .3], [tBo, 'camera_shutter', .25], [tEa, 'stamp', .35], [tBl, 'whoosh', .3]]; } },
+];
+const _build = A.build; A.build = () => { const T2 = window.TIMING; K.setWords(T2.words); T2.shots.forEach((S, i) => { const D = window.SHOTS[i]; if (!D) return; D.live = D.live || []; D.front = D.front || []; D.over = D.over || []; S.D = D; S.vo_start = S.vo_start ?? S.start; if (D.init) D.init(S); }); _build(); };
+A.build(); K.boot();
+</script></body></html>
