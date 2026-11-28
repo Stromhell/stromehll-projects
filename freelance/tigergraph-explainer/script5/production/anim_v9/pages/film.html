@@ -1,0 +1,1157 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../style.css"><style>#BG,#NET,.scn{position:absolute;inset:0}#BG{background:#0a2647;overflow:hidden}.bgl{overflow:hidden}#NET{pointer-events:none}#STAGE{position:absolute;inset:0;perspective:1800px;perspective-origin:50% 50%}#DOLLY,#RIG{position:absolute;inset:0;transform-style:preserve-3d}#RIG .scn{width:1920px;height:1080px}#CARRY{position:absolute;inset:0;z-index:45;pointer-events:none}</style><script src="../gsap.min.js"></script><script src="../lib.js"></script><script src="../film.js"></script></head><body><div id="BG"></div><div id="NET"></div><div id="STAGE"><div id="DOLLY"><div id="RIG"></div></div></div><div id="CARRY"></div><script>beginScene({"n": 1, "dur": 14.566, "tail": 0.6, "start": 0.0, "beats": [0.0, 4.353, 10.279], "words": [{"w": "two", "t": 0.35}, {"w": "customer", "t": 0.63}, {"w": "records", "t": 1.03}, {"w": "similar", "t": 2.11}, {"w": "name", "t": 2.23}, {"w": "same", "t": 4.703}, {"w": "address", "t": 5.043}, {"w": "a", "t": 6.083}, {"w": "fuzzy", "t": 6.103}, {"w": "match", "t": 6.323}, {"w": "score", "t": 6.603}, {"w": "of", "t": 6.923}, {"w": "93%", "t": 7.183}, {"w": "would", "t": 10.629}, {"w": "you", "t": 10.849}, {"w": "merge", "t": 11.009}, {"w": "them", "t": 11.269}], "prev": ""});
+(function(){
+// Scene 1 (light): records glide in from the sides and settle, a slow vertical scanner plus a horizontal data scan read them,
+// matching fields glow blue, Name/Address scores count up early, 93% counts inside a drawing ring, the ring becomes MERGE?, the cursor presses.
+const T = window.TOTAL, B3 = window.BEATS[2];
+world('light', {particles: 30});
+const card = (k, n, a, rot) => `<div class="glass" style="position:relative;width:540px;padding:32px 38px;transform:rotateY(${rot}deg)">
+  <div style="display:flex;gap:22px;align-items:center"><div class="av" style="width:96px;height:96px;border-radius:24px;background:radial-gradient(circle at 35% 30%,#fff,#8fd0f5 45%,#2a7fb5);flex:none;box-shadow:inset 0 -8px 16px rgba(10,38,71,.25)"></div>
+  <div><div style="font-size:17px;letter-spacing:3px;font-weight:600;color:${BLUE}">${k}</div><div class="nm fld" style="font-size:44px;font-weight:700;line-height:1.05;margin-top:4px;border-radius:10px;padding:0 6px;margin-left:-6px">${n}</div></div></div>
+  <div class="ad fld" style="margin-top:20px;font-size:26px;font-weight:300;border-radius:10px;padding:4px 6px;margin-left:-6px">${a}</div>
+  <div class="bar1" style="margin-top:16px;height:10px;border-radius:5px;background:linear-gradient(90deg,rgba(67,164,220,.4),rgba(67,164,220,.08));width:70%"></div>
+  <div class="bar2" style="margin-top:10px;height:10px;border-radius:5px;background:rgba(67,164,220,.14);width:45%"></div></div>`;
+const A = W_(card('RECORD A', 'Daniel Reyes', '14 Harbor View Apts', 8), 170, 330);
+const Bc = W_(card('RECORD B', 'Dan Reyes', '14 Harbour View Apartments', -8), 1210, 330);
+gsap.set([A.in, Bc.in], {scale: 1.05, transformOrigin: '50% 50%'});
+[A, Bc].forEach(c => ['.nm', '.ad'].forEach(s => { const e = c.querySelector(s); e.innerHTML = [...e.textContent].map(ch => `<span class="ch">${ch === ' ' ? '&nbsp;' : ch}</span>`).join(''); }));
+// v4 top-down neural cascade: a parent node ignites, curved edges branch down with a travelling spark,
+// each record card blooms at its branch end with a 3D settle, then its details cascade in.
+const cs = svgLayer($('#cam'));
+const PN = [960, 150];
+const pn = svgDot(cs, PN[0], PN[1], 22, BLUE); const pnG = svgDot(cs, PN[0], PN[1], 46, 'rgba(67,164,220,.25)');
+tl.fromTo([pn, pnG], {attr: {r: 0}}, {attr: {r: (i, e) => e === pn ? 22 : 46}, duration: .45, ease: EZO}, .15);
+tl.fromTo(pnG, {opacity: 1}, {opacity: .35, duration: .6, yoyo: true, repeat: 7, ease: 'sine.inOut'}, .6);
+cue(.15, 'tink', .5);
+const br = [[`M960,172 C960,260 440,220 440,318`, 440], [`M960,172 C960,260 1480,220 1480,318`, 1480]];
+br.forEach(([d, x], i) => {
+  const p = svgPath(cs, d, BLUE, 3, .85); trim(p, .4 + i * .12, .55, 'power2.inOut');
+  const L = p.getTotalLength(), sp = svgDot(cs, 960, 172, 9, '#fff'); sp.style.filter = 'drop-shadow(0 0 10px #43a4dc)';
+  const o = {u: 0}; tl.fromTo(o, {u: 0}, {u: 1, duration: .55, ease: 'power2.inOut', onUpdate: () => { const q = p.getPointAtLength(L * o.u); sp.setAttribute('cx', q.x); sp.setAttribute('cy', q.y); }}, .4 + i * .12);
+  tl.fromTo(sp, {opacity: 1}, {opacity: 0, duration: .25}, .95 + i * .12);
+  cue(.4 + i * .12, 'whoosh_s', .3, i ? .5 : -.5);
+});
+[A, Bc].forEach((c, i) => {
+  const t = .9 + i * .14;
+  tl.fromTo(c, {opacity: 0, scale: .55, y: -90, rotationY: -12, filter: 'blur(8px)'}, {opacity: 1, scale: 1, y: 0, rotationY: 0, filter: 'blur(0px)', duration: .7, ease: EZO}, t);
+  cue(t, 'pop', .35, i ? .5 : -.5);
+  const det = [...c.querySelectorAll('.av, .nm, .ad, .bar1, .bar2')];
+  det.forEach((e, j) => tl.fromTo(e, {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: .45, ease: EZO}, t + .3 + j * .13));
+  float(c, 1.8, T, 4, 6);
+});
+tl.to(cs, {opacity: .35, duration: 1.2}, 2.4);
+// letter-level data read (no scan bar): matching letters light up in a cascade, the matching field glows
+const glowOn = (els, t) => tl.fromTo(els, {backgroundColor: 'rgba(67,164,220,0)', boxShadow: '0 0 0 rgba(67,164,220,0)'}, {backgroundColor: 'rgba(67,164,220,.14)', boxShadow: '0 0 28px rgba(67,164,220,.55)', duration: .45, ease: 'power2.out'}, t);
+const scan = (t0, d, sel) => {
+  [A, Bc].forEach((c, k) => {
+    const chs = [...c.querySelectorAll(sel + ' .ch')];
+    chs.forEach((ch, i) => {
+      const tt = t0 + d * ((k ? 1040 : 0) + 260 + i * 17) / 1900;
+      tl.fromTo(ch, {color: NAVY}, {color: BLUE, duration: .15}, tt).to(ch, {color: NAVY, duration: .6}, tt + .3);
+    });
+    glowOn(c.querySelector(sel), t0 + d * ((k ? 1040 : 0) + 480) / 1900);
+    cue(t0 + d * ((k ? 1040 : 0) + 260) / 1900, 'tick', .25, k ? .5 : -.5);
+  });
+};
+const svg = svgLayer($('#cam'));
+const nameLine = edge(svg, 720, 422, 1250, 422, BLUE, 3, '3 10', false);
+const addrLine = edge(svg, 660, 520, 1250, 520, BLUE, 3, '3 10', false);
+const tag = (bg, label) => `<div class="tag" style="position:relative;background:${bg};color:#fff;font-size:22px">${label} ≈ <b class="v">0.00</b></div>`;
+const tagN = W_(tag(NAVY, 'Name'), 885, 262), tagA = W_(tag(BLUE, 'Address'), 860, 558);
+gsap.set([tagN, tagA], {opacity: 0});
+const v2 = v => v.toFixed(2);
+// name: scanned from 0.9 s, score counts while "similar name" is said
+scan(1.6, 2.0, '.nm'); nameLine.draw(2.2, .8, 'power2.inOut'); rise(tagN, 2.3, .5); count(tagN.querySelector('.v'), 2.3, .5, .91, 1.0, v2);
+// address: earlier and slower; counts up to 0.95 as "same address" is spoken
+const tA = at('address');
+scan(2.7, 2.0, '.ad'); addrLine.draw(tA - .2, .8, 'power2.inOut'); rise(tagA, tA - .2, .5); count(tagA.querySelector('.v'), tA - .2, .6, .95, 1.3, v2);
+tl.fromTo(tagA.in, {boxShadow: '0 0 0 rgba(67,164,220,0)'}, {boxShadow: '0 0 30px rgba(67,164,220,.9)', duration: .4}, tA + 1.1);
+cue(tA + 1.1, 'chime1', .45);
+nameLine.pulse(3.2, 3, BLUE, 2.2); addrLine.pulse(tA + 1.2, 2, BLUE, 2.2);
+
+// 93%: cards rise to the top, the score counts inside a ring that draws around it, then a very subtle scale-up
+const tSc = at('score'), t93 = at('93');
+tl.to([tagN, tagA, svg, cs], {opacity: 0, y: -30, duration: .45, ease: 'power2.in'}, tSc - .55);
+tl.to(A, {x: 160, y: -250, scale: .7, duration: 1.0, ease: 'power3.inOut'}, tSc - .55);
+tl.to(Bc, {x: -160, y: -250, scale: .7, duration: 1.0, ease: 'power3.inOut'}, tSc - .55);
+const RC = [960, 640], RR = 290;
+const ringSvg = svgLayer($('#cam'));
+const track = svgDot(ringSvg, RC[0], RC[1], RR, 'none'); track.setAttribute('stroke', 'rgba(236,100,8,.15)'); track.setAttribute('stroke-width', 10);
+const ring = svgPath(ringSvg, `M${RC[0]},${RC[1] - RR} a${RR},${RR} 0 1,1 -0.1,0`, ORANGE, 10);
+gsap.set(ringSvg, {opacity: 0});
+tl.to(ringSvg, {opacity: 1, duration: .3}, tSc - .1);
+const kick = W_(`<div class="kick" style="position:relative;font-size:22px;width:1920px;text-align:center">Fuzzy-match score</div>`, 0, 520);
+const big = W_(`<div class="num" style="position:relative;width:1920px;text-align:center;font-size:170px;font-weight:700;color:${ORANGE};letter-spacing:-4px;line-height:1">0%</div>`, 0, 562);
+const num = big.querySelector('.num');
+rise(kick, tSc, .5);
+tl.fromTo(big, {opacity: 0, y: 40, filter: 'blur(10px)'}, {opacity: 1, y: 0, filter: 'blur(0px)', duration: .6, ease: EZO}, tSc);
+count(num, tSc, 0, 93, t93 - tSc + .6);
+trim(ring, tSc, t93 - tSc + .6, 'power2.out');
+for (let i = 0; i < 8; i++) cue(tSc + .1 + i * (t93 - tSc + .5) / 8, 'tick', .22);
+tl.to(big.in, {scale: 1.04, duration: .9, ease: 'sine.out'}, t93 + .5);
+cue(t93 + .5, 'chime', .5);
+
+// the ring closes into the MERGE? button (no wobble: one smooth morph)
+const tB = B3 - .25;
+tl.to([big, kick], {opacity: 0, scale: .9, filter: 'blur(8px)', duration: .4, ease: 'power2.in'}, tB);
+tl.to(ringSvg, {scale: .32, opacity: 0, transformOrigin: `${RC[0]}px ${RC[1]}px`, duration: .55, ease: 'power3.in'}, tB);
+const btn = W_(`<div class="mb" style="position:relative;overflow:hidden;padding:34px 84px;border-radius:70px;font-size:64px;font-weight:700;letter-spacing:3px;color:#fff;background:linear-gradient(180deg,#7cc8f2,${BLUE} 55%,#2a7fb5);box-shadow:0 26px 60px rgba(10,38,71,.35),inset 0 3px 0 rgba(255,255,255,.55)"><div class="og" style="position:absolute;inset:0;background:linear-gradient(180deg,#ff9a4d,${ORANGE} 55%,#c85000);-webkit-mask-image:radial-gradient(circle at 50% 50%,#000 calc(var(--r,0) * 1%),transparent calc(var(--r,0) * 1% + 14%));--r:-20"></div><div class="sw" style="position:absolute;top:-20%;bottom:-20%;width:26%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg)"></div><span style="position:relative">MERGE?</span></div>`, 960, 600, {z: 5, parent: $('#front')});
+gsap.set(btn, {xPercent: -50, yPercent: -50});
+tl.fromTo(btn, {scale: .5, opacity: 0, filter: 'blur(8px)'}, {scale: 1, opacity: 1, filter: 'blur(0px)', duration: .6, ease: EZO}, tB + .35);
+tl.fromTo(btn.querySelector('.sw'), {xPercent: -150, left: '0%'}, {left: '100%', xPercent: 50, duration: .9, ease: 'power2.inOut'}, tB + .7);
+cue(tB + .35, 'pop', .7);
+tl.to(A, {x: 330, y: -230, scale: .62, duration: 2.2, ease: 'sine.inOut'}, tB);
+tl.to(Bc, {x: -330, y: -230, scale: .62, duration: 2.2, ease: 'sine.inOut'}, tB);
+const q = words('Would you merge them?', 0, 790, {size: 58});
+gsap.set(q, {color: NAVY});
+q.ws.forEach((w, i) => rise(w, at(['would', 'you', 'merge', 'them'][i]) - .05, .45));
+// cursor enters oversize, parks, presses; the button answers with a squash and one light ripple
+const cur = W_(`<svg style="position:static" width="58" height="72" viewBox="0 0 24 30"><path d="M2 2v22l6-6 4 9 4-2-4-9h8z" fill="#fff" stroke="${NAVY}" stroke-width="1.6" stroke-linejoin="round"/></svg>`, 1010, 610, {z: 9, parent: $('#front')});
+const tPress = T - .55;
+tl.fromTo(cur, {x: 640, y: 360, scale: 3, opacity: 0}, {x: 0, y: 0, scale: 1, opacity: 1, duration: .8, ease: EZO}, tPress - 1.0);
+tl.to(cur, {scale: .85, duration: .07, ease: 'power2.in'}, tPress).to(cur, {scale: 1, duration: .12}, tPress + .07);
+// hover: letters track out, the orange energy wave floods outward from the cursor; press 100 -> 96 -> 104 -> 100
+tl.to(btn.querySelector('span'), {letterSpacing: '9px', duration: .6, ease: 'power2.out'}, tPress - .55);
+tl.fromTo(btn.querySelector('.og'), {'--r': -20}, {'--r': 120, duration: .7, ease: 'power2.inOut', immediateRender: true}, tPress - .45);
+tl.to(btn.querySelector('.mb'), {boxShadow: '0 26px 70px rgba(236,100,8,.5)', duration: .5}, tPress - .4);
+tl.to(btn.in, {scale: .96, duration: .08, ease: 'power2.in'}, tPress + .03).to(btn.in, {scale: 1.04, duration: .14, ease: 'power2.out'}, tPress + .11).to(btn.in, {scale: 1, duration: .25, ease: 'power2.inOut'}, tPress + .25);
+cue(tPress - .45, 'shimmer', .35);
+const rip = node(`<div class="ring" style="left:${960 - 260}px;top:${600 - 260}px;width:520px;height:520px;border:3px solid rgba(236,100,8,.7);opacity:0"></div>`, $('#front'));
+tl.fromTo(rip, {scale: .3, opacity: .8}, {scale: 1.1, opacity: 0, duration: .6, ease: EZO, immediateRender: false}, tPress + .05);
+cue(tPress, 'click', 1);
+// everything but the button clears, so the next scene starts on the same frame
+tl.to([q, cur], {opacity: 0, y: 30, duration: .45, ease: 'power2.in'}, tPress + .15); tl.set([A, Bc], {opacity: 0}, tPress + .14);
+const headBg = c => c === 'blue' ? 'radial-gradient(circle at 35% 30%,#ffffff 0%,#8fd0f5 45%,#2a7fb5 100%)' : 'radial-gradient(circle at 35% 30%,#ffe1c9 0%,#ff9c55 45%,#b84a00 100%)';
+// v6 carry: each record card folds into a glowing identity disc; the discs become the two people's heads in the next scene
+[[A, 'blue', 760], [Bc, 'orange', 1160]].forEach(([c, col, x], k) => {
+  const ch = chipOf(c, 'border-radius:24px'); ch.style.overflow = 'hidden'; ch.keepClip = true;
+  const hg = document.createElement('div'); hg.className = 'hg'; hg.style.cssText = `position:absolute;inset:0;background:${headBg(col)};opacity:0`; ch.appendChild(hg);
+  morph(ch, c, pose(x, 330, 150, 150), tPress + .1, .62, 'power3.inOut', 40);
+  tl.fromTo(ch, {opacity: 0}, {opacity: 1, duration: .08, immediateRender: true}, tPress + .1);
+  // v9: the card stays a card; its corners round off slowly until it is a circle (the colour arrives as it rounds)
+  tl.to(ch, {borderRadius: '50%', duration: 1.5, ease: 'sine.inOut'}, tPress + .2);
+  tl.to(hg, {opacity: 1, duration: 1.1, ease: 'sine.inOut'}, tPress + .45);
+  tl.to(ch, {boxShadow: `0 0 46px ${col === 'blue' ? 'rgba(143,208,245,.85)' : 'rgba(255,156,85,.85)'}`, duration: .8}, tPress + .8);
+});
+closeMove('push', .32, 960, 600);
+finish(); SC.tl = tl;
+
+})();
+endScene();</script>
+<script>beginScene({"n": 2, "dur": 6.2, "tail": 0.6, "start": 14.566, "beats": [0.0, 3.0], "words": [], "prev": "push"});
+(function(){
+// Scene 2 (dark, no VO, short): the pressed MERGE? cracks and bursts into fragments and data particles while the white ground
+// opens into moving navy (gradient reveal). The particles stream left and right, the two people glide in from the sides,
+// stop with a clear gap, a thin divider grows between them, labels and "Two different people" land last.
+const T = window.TOTAL;
+world('dark', {particles: 36, horizon: 900, from: 'light', reveal: 1.3});
+gsap.set(HORIZON, {opacity: 0});
+// moving radial glow behind the burst
+const glow = node('<div class="w" style="left:360px;top:0;width:1200px;height:1200px;border-radius:50%;background:radial-gradient(circle,rgba(150,215,255,.5),rgba(67,164,220,.22) 35%,transparent 65%)"></div>');
+tl.fromTo(glow, {scale: .5, opacity: 0, x: 0}, {scale: 1.25, opacity: .8, x: 80, duration: 1.6, ease: EZO}, .1);
+tl.to(glow, {x: -60, y: 40, scale: 1.1, opacity: .45, duration: T - 1.7, ease: 'sine.inOut'}, 1.7);
+// the button, same place as the last frame of scene 1
+const btnHtml = clip => `<div style="position:relative;padding:34px 84px;border-radius:70px;font-size:64px;font-weight:700;letter-spacing:3px;color:#fff;background:linear-gradient(180deg,#ff9a4d,${ORANGE} 55%,#c85000);box-shadow:0 26px 60px rgba(236,100,8,.45),inset 0 3px 0 rgba(255,255,255,.55);clip-path:${clip}">MERGE?</div>`;
+const hL = W_(btnHtml('polygon(0 0,52% 0,47% 100%,0 100%)'), 960, 600, {parent: $('#front')}), hR = W_(btnHtml('polygon(53% 0,100% 0,100% 100%,48% 100%)'), 960, 600, {parent: $('#front')});
+gsap.set([hL, hR], {xPercent: -50, yPercent: -50});
+cue(0, 'crack', .9);
+tl.to(hL, {x: -420, y: -90, rotation: -24, opacity: 0, filter: 'blur(8px)', duration: 1.1, ease: 'power3.out'}, .18);
+tl.to(hR, {x: 440, y: 110, rotation: 22, opacity: 0, filter: 'blur(8px)', duration: 1.1, ease: 'power3.out'}, .18);
+// fragments with directional motion blur (stretched along their path)
+for (let i = 0; i < 14; i++) {
+  const a = R() * Math.PI * 2, r = 380 + R() * 700, s = 10 + R() * 34, ang = a * 180 / Math.PI;
+  const f = node(`<div class="w" style="left:${950 + (R() - .5) * 150}px;top:${590 + (R() - .5) * 60}px;width:${s}px;height:${s * .8}px;transform-origin:50% 50%"><div style="width:100%;height:100%;clip-path:polygon(${R() * 40}% 0,100% ${R() * 40}%,${60 + R() * 40}% 100%,0 ${60 + R() * 40}%);background:${R() < .55 ? `linear-gradient(140deg,#ffb27a,${ORANGE})` : 'linear-gradient(140deg,#fff,rgba(190,230,255,.7))'}"></div></div>`, $('#front'));
+  tl.fromTo(f, {x: 0, y: 0, rotation: ang, scaleX: 3.2, opacity: 0, filter: 'blur(3px)'}, {x: Math.cos(a) * r, y: Math.sin(a) * r * .65, scaleX: 1, opacity: 1, filter: 'blur(0px)', duration: 1.3, ease: EZO}, .2 + R() * .08);
+  tl.to(f, {opacity: 0, duration: .5}, 1.0 + R() * .5);
+}
+for (let i = 0; i < 6; i++) cue(.22 + i * .1, 'tink', .22, (R() - .5) * 1.2);
+cue(.2, 'whomp', .5);
+// letters become data particles: they burst, then stream to the left (blue) and right (orange) edges
+const side = i => i % 2 ? 1 : -1;
+for (let i = 0; i < 18; i++) {
+  const k = side(i), s = 4 + R() * 6, col = k < 0 ? '#8fd0f5' : '#ffb27a';
+  const d = node(`<div class="dot" style="left:960px;top:600px;width:${s}px;height:${s}px;background:${col};box-shadow:0 0 10px ${col}"></div>`, $('#front'));
+  const a = R() * Math.PI * 2, r = 120 + R() * 260;
+  tl.fromTo(d, {x: 0, y: 0, opacity: 0}, {x: Math.cos(a) * r, y: Math.sin(a) * r * .6, opacity: 1, duration: .7, ease: EZO}, .25);
+  tl.to(d, {x: k * (1000 + R() * 120), y: 160 + (R() - .5) * 220, opacity: 0, duration: .9, ease: 'power2.in'}, .95 + R() * .25);
+}
+// the ground: horizon rises, light drifts
+tl.fromTo(HORIZON, {opacity: 0, yPercent: 25}, {opacity: 1, yPercent: 0, duration: 1.2, ease: EZO}, .7);
+// the two people glide in from the sides (staggered 7 frames), stop with a gap
+const pA = person(760, 900, 1.35, 'blue', {z: 2}), pB = person(1160, 900, 1.35, 'orange', {z: 2});
+const tIn = 1.75;
+// v9: the circle lands first, then it gets its eyes, then the body grows out from under it
+[pA, pB].forEach((p, k) => {
+  gsap.set(p.body, {transformOrigin: '50% 0%'});
+  tl.fromTo(p.body, {scaleY: 0, scaleX: .35, opacity: 0}, {scaleY: 1, scaleX: 1, opacity: 1, duration: 1.0, ease: 'power3.out'}, 2.0 + k * .08);
+  tl.fromTo(p.head.querySelectorAll('.eye'), {scaleY: 0}, {scaleY: 1, duration: .35, ease: 'power2.out'}, 1.72 + k * .08);
+});
+cue(tIn, 'whoosh', .5, -.6); cue(tIn + .23, 'whoosh', .5, .6);
+tl.to(pA.head.querySelectorAll('.eye'), {x: 8, duration: .3}, tIn + .9); tl.to(pB.head.querySelectorAll('.eye'), {x: -8, duration: .3}, tIn + 1.0);
+float(pA, tIn + 1, T, 3, 5); float(pB, tIn + 1.1, T, 3, 5.6);
+// divider grows in the gap, then widens when "different" lands
+const div = node(`<div class="w" style="left:958px;top:520px;width:4px;height:380px;border-radius:2px;background:linear-gradient(180deg,transparent,#bfe6ff,transparent);box-shadow:0 0 18px rgba(190,230,255,.8);transform-origin:50% 50%"></div>`);
+tl.fromTo(div, {scaleY: 0, opacity: 0}, {scaleY: 1, opacity: 1, duration: .6, ease: 'power3.out'}, tIn + .9);
+// labels, one after the other
+const tag = (bg, t) => `<div class="tag" style="position:relative;background:${bg};color:#fff;font-size:20px">${t}</div>`;
+const tagA = W_(tag('rgba(255,255,255,.16)', 'Daniel · Harbor View'), 0, 0, {parent: pA}), tagB = W_(tag('rgba(236,100,8,.92)', 'Dan · Harbour View'), 0, 0, {parent: pB});
+gsap.set([tagA, tagB], {left: 10, top: -64});
+rise(tagA, tIn + 1.05, .45, 18); rise(tagB, tIn + 1.2, .45, 18);
+cue(tIn + 1.05, 'pop', .4, -.4); cue(tIn + 1.2, 'pop', .4, .4);
+const sup = words('Two <em>different</em> people', 0, 170, {size: 104});
+sup.ws.forEach((w, i) => tl.fromTo(w, {x: (i - 1) * 60, opacity: 0, filter: 'blur(10px)'}, {x: 0, opacity: 1, filter: 'blur(0px)', duration: .5, ease: EZO}, tIn + 1.4 + i * .16));
+cue(tIn + 1.4, 'thump', .5);
+tl.to(div, {scaleY: 1.25, scaleX: 2, duration: .5, ease: 'power2.out'}, tIn + 1.56);
+tl.to([pA], {x: -30, duration: .5, ease: 'power2.out'}, tIn + 1.56); tl.to([pB], {x: 30, duration: .5, ease: 'power2.out'}, tIn + 1.56);
+const headBg = c => c === 'blue' ? 'radial-gradient(circle at 35% 30%,#ffffff 0%,#8fd0f5 45%,#2a7fb5 100%)' : 'radial-gradient(circle at 35% 30%,#ffe1c9 0%,#ff9c55 45%,#b84a00 100%)';
+// v6 carry in: the two identity discs from the record cards drop onto the bodies and become the heads
+[[pA, 'blue', 760], [pB, 'orange', 1160]].forEach(([p, col, x], k) => {
+  const ch = chip(`border-radius:75px;background:${headBg(col)};box-shadow:0 0 46px ${col === 'blue' ? 'rgba(143,208,245,.85)' : 'rgba(255,156,85,.85)'}`);
+  gsap.set(p.head, {opacity: 0});
+  morph(ch, pose(x, 330, 150, 150), p.head, .6 + k * .06, 1.05, 'sine.inOut', -40);
+  tl.set(p.head, {opacity: 1}, 1.65 + k * .08); tl.to(ch, {opacity: 0, duration: .12}, 1.65 + k * .08);
+});
+// v6 carry out: each person folds into a record card that lands on the orbit ring of the next scene (same colours)
+const tX = T - .65;
+if (0) tl.to([sup, div], {opacity: 0, y: -30, filter: 'blur(8px)', duration: .4, ease: 'power2.in'}, tX);
+[[pA, 'blue', pose(640, 800, 250, 104), '<div style="padding:13px 18px;text-align:left;color:#fff"><div style="font-size:11px;letter-spacing:3px;font-weight:600;color:#bfe6ff">RECORD</div><div style="font-size:22px;font-weight:700;margin-top:3px">Daniel Reyes</div><div style="font-size:15px;opacity:.75;margin-top:2px">14 Harbor View Apts</div></div>'], [pB, 'orange', pose(1280, 800, 250, 104), '<div style="padding:13px 18px;text-align:left;color:#fff"><div style="font-size:11px;letter-spacing:3px;font-weight:600;color:#bfe6ff">RECORD</div><div style="font-size:22px;font-weight:700;margin-top:3px">Dan Reyes</div><div style="font-size:15px;opacity:.75;margin-top:2px">14 Harbour View Apartments</div></div>']].forEach(([p, col, P, tx], k) => {
+  const ch = chip(`border-radius:75px;background:${headBg(col)}`, `<div class="cg" style="position:absolute;inset:0;background:linear-gradient(150deg,rgba(40,80,130,.95),rgba(18,40,70,.95));border:1.5px solid ${col === 'blue' ? 'rgba(143,208,245,.8)' : 'rgba(255,156,85,.8)'};border-radius:18px;opacity:0">${tx}</div>`);
+  morph(ch, p.head, P, tX + k * .05, .62, 'power3.inOut', 60);
+  tl.fromTo(ch, {opacity: 0}, {opacity: 1, duration: .05, immediateRender: true}, tX + k * .05);
+  tl.set(p.head, {opacity: 0}, tX + k * .05 + .02);
+  tl.to(p.body, {scaleY: 0, scaleX: .35, opacity: 0, duration: .5, ease: 'power2.in'}, tX - .35);   // v9: the body tucks back under the circle before it leaves
+  tl.to(ch, {borderRadius: '18px', duration: .5}, tX + .1); tl.to(ch.querySelector('.cg'), {opacity: 1, duration: .4}, tX + .2);
+});
+closeMove('tilt');
+finish(); SC.tl = tl;
+
+})();
+endScene();</script>
+<script>beginScene({"n": 3, "dur": 8.906, "tail": 0.6, "start": 20.766, "beats": [0.0], "words": [{"w": "so", "t": 0.35}, {"w": "how", "t": 0.95}, {"w": "do", "t": 1.17}, {"w": "you", "t": 1.31}, {"w": "decide", "t": 1.41}, {"w": "between", "t": 1.77}, {"w": "fuzzy", "t": 2.15}, {"w": "matching", "t": 2.53}, {"w": "and", "t": 3.07}, {"w": "graph", "t": 3.79}, {"w": "-based", "t": 4.09}, {"w": "entity", "t": 4.43}, {"w": "resolution", "t": 4.89}, {"w": "for", "t": 5.51}, {"w": "kyc", "t": 6.01}], "prev": "tilt"});
+(function(){
+// Scene 3 (v4, deep navy, high contrast): the question builds in three lines of crisp white type over a dark vignette.
+// Key phrases get glowing pill highlights as they are spoken. Below, record cards orbit slowly on a dotted 3D ring above a
+// glowing horizon; a faint neural network grows behind as "graph-based entity resolution" is said.
+const T = window.TOTAL;
+world('dark', {particles: 30, horizon: 930});
+SC.customBg = true; Q('.bg').style.background = 'radial-gradient(1100px 700px at 50% 0%,rgba(67,164,220,.30),transparent 65%),linear-gradient(180deg,#0A1628 0%,#060e1c 100%)';
+node('<div style="position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse 70% 60% at 50% 32%,transparent 40%,rgba(2,6,14,.75) 100%)"></div>', SC.bg);
+neuralNet($('#cam'), [{t: at('graph') - .1, n: 10}, {t: at('resolution'), n: 26}, {t: at('kyc'), n: 40}], {op: .16, gap: .04, box: [120, 60, 1680, 520]});
+// title zone (nothing crosses it): three lines, each word lands as it is spoken
+const L1 = words('How do you decide between', 0, 140, {size: 72}), L2 = words('<em class="f">fuzzy matching</em>|and', 0, 236, {size: 72}), L3 = words('<em class="g">graph-based entity resolution</em>|for KYC?', 0, 332, {size: 72});
+[L1, L2, L3].forEach(l => { l.style.color = '#fff'; l.style.textShadow = '0 2px 24px rgba(0,0,0,.6)'; });
+const tw = (box, ts) => box.ws.forEach((w, i) => tl.fromTo(w, {y: 30, opacity: 0, filter: 'blur(8px)'}, {y: 0, opacity: 1, filter: 'blur(0px)', duration: .55, ease: EZO}, ts[i] - .06));
+tw(L1, [at('how'), at('do'), at('you'), at('decide'), at('between')]);
+tw(L2, [at('fuzzy'), at('and')]);
+tw(L3, [at('graph'), at('for')]);
+// glowing pill highlights behind the two key phrases
+[[L2, 'fuzzy', '236,100,8', ORANGE], [L3, 'graph', '67,164,220', '#fff']].forEach(([l, w, rgb, col]) => {
+  const em = l.querySelector('em'); Object.assign(em.style, {color: col, padding: '0 18px', borderRadius: '40px', fontStyle: 'normal'});
+  tl.fromTo(em, {backgroundColor: `rgba(${rgb},0)`, boxShadow: `0 0 0 rgba(${rgb},0)`}, {backgroundColor: `rgba(${rgb},.16)`, boxShadow: `0 0 40px rgba(${rgb},.45), inset 0 0 0 1px rgba(${rgb},.6)`, duration: .6, ease: 'power2.out'}, at(w) + .35);
+  cue(at(w) + .35, 'shimmer', .3);
+});
+// dotted 3D ring with orbiting record cards
+const RCX = 960, RCY = 700, RX = 640, RY = 120;
+const rs = svgLayer($('#cam'));
+const ring = svgPath(rs, `M${RCX - RX},${RCY} a${RX},${RY} 0 1,0 ${2 * RX},0 a${RX},${RY} 0 1,0 ${-2 * RX},0`, 'rgba(190,230,255,.55)', 2.5);
+ring.setAttribute('stroke-dasharray', '2 12'); ring.setAttribute('stroke-linecap', 'round');
+tl.fromTo(rs, {opacity: 0, scaleX: .6, transformOrigin: `${RCX}px ${RCY}px`}, {opacity: 1, scaleX: 1, duration: 1.1, ease: EZO}, .2);
+const recs = [['Dan Reyes', '14 Harbour View Apartments'], ['Daniel Reyes', '14 Harbor View Apts'], ['Lena Novak', 'Novak Trading Ltd'], ['L. Novakova', 'verified phone ···0482'], ['D. Reyes-Ortiz', 'same device'], ['Anna Lee', '12 Elm Street']];
+const A0 = Math.PI / 3, orbit = {a: A0}, fade = recs.map(() => ({v: 0}));
+const cards = recs.map(([n, s]) => node(`<div class="glass" style="position:absolute;left:0;top:0;width:270px;padding:16px 20px;border-radius:18px"><div style="font-size:12px;letter-spacing:3px;font-weight:600;color:#bfe6ff">RECORD</div><div style="font-size:24px;font-weight:700;margin-top:4px">${n}</div><div style="font-size:16px;opacity:.75;margin-top:2px">${s}</div></div>`));
+const place = () => cards.forEach((c, i) => {
+  const a = orbit.a + i * Math.PI * 2 / cards.length, z = Math.sin(a);   // z: -1 back, +1 front
+  gsap.set(c, {x: RCX + Math.cos(a) * RX - 135, y: RCY + z * RY - 48, scale: .72 + .28 * (z + 1) / 2, zIndex: Math.round(10 + z * 5), opacity: (.7 + .3 * (z + 1) / 2) * fade[i].v, filter: `blur(${(1 - z) * .7}px)`});
+});
+tl.fromTo(orbit, {a: A0}, {a: A0 - Math.PI * .9, duration: T + .6, ease: 'none', onUpdate: place, immediateRender: true}, 0); place();
+fade.forEach((f, i) => tl.fromTo(f, {v: 0}, {v: 1, duration: i < 2 ? .2 : .6, ease: 'power1.out', onUpdate: place, immediateRender: false}, i < 2 ? 1.02 : .4 + i * .12));
+// v6 carry in: the two cards the people became home onto their places on the ring (Dan front right, Daniel front left)
+[[cards[0], pose(1280, 800, 250, 104), 'rgba(255,156,85,.8)'], [cards[1], pose(640, 800, 250, 104), 'rgba(143,208,245,.8)']].forEach(([c, P, rim]) => {
+  const ch = chipOf(c, `border-radius:18px;background:linear-gradient(150deg,rgba(40,80,130,.95),rgba(18,40,70,.95));border:1.5px solid ${rim}`);
+  morph(ch, P, c, .6, .5, 'power2.inOut'); tl.to(ch, {opacity: 0, duration: .2}, 1.1);
+});
+cue(.3, 'whoosh_s', .35);
+tl.fromTo([L1, L2, L3], {scale: .99}, {scale: 1.02, duration: T, ease: 'sine.inOut'}, 0);
+// v6 carry out: Daniel and Dan leave the ring, fly toward camera and open into the two comparison lenses
+const tX = T - .75;
+if (0) tl.to([L1, L2, L3], {opacity: 0, y: -40, filter: 'blur(8px)', duration: .45, ease: 'power2.in'}, tX);
+[[cards[1], pose(550, 430, 620, 620)], [cards[0], pose(1370, 430, 620, 620)]].forEach(([c, P], k) => {
+  const ch = chip('border-radius:18px;background:rgba(255,255,255,.14);border:1.5px solid rgba(190,230,255,.7)');
+  morph(ch, c, P, tX + k * .06, .7, 'power3.inOut', 50);
+  tl.fromTo(ch, {opacity: 0}, {opacity: 1, duration: .08, immediateRender: true}, tX + k * .06);
+  tl.to(ch, {borderRadius: '310px', background: 'rgba(255,255,255,.78)', boxShadow: '0 34px 80px rgba(10,38,71,.25), inset 0 2px 0 #fff', duration: .6, ease: 'power2.inOut'}, tX + .1);
+});
+closeMove('push', .35, 960, 620);
+finish(); SC.tl = tl;
+
+})();
+endScene();</script>
+<script>beginScene({"n": 4, "dur": 7.0, "tail": 0.6, "start": 29.672, "beats": [0.0], "words": [], "prev": "push"});
+(function(){
+// Scene 4 (light, music only): two glass lenses roll in. Left scans the letters, right grows a network tile by tile.
+const T = window.TOTAL;
+world('light', {particles: 30});
+const lens = (x, inner) => W_(`<div class="glass" style="position:relative;width:620px;height:620px;border-radius:50%;overflow:hidden">${inner}</div>`, x, 120);
+const L = lens(240, `<div class="txt" style="position:absolute;left:100px;top:210px;font-size:46px;font-weight:600;line-height:1.5">Daniel Reyes<br><span class="hl">Dan</span> Reyes</div>
+  <div style="position:absolute;left:100px;top:390px;font-size:28px;font-weight:300;line-height:1.5">Harbo<span class="hl">u</span>r View Ap<span class="hl">artmen</span>ts</div>
+  <div class="scan" style="position:absolute;top:0;left:0;width:90px;height:620px;background:linear-gradient(90deg,transparent,rgba(67,164,220,.45),transparent)"></div>`);
+const Rl = lens(1060, '');
+// roll in like glass discs
+tl.fromTo(L, {opacity: 0}, {opacity: 1, duration: .35}, .8);
+tl.fromTo(Rl, {opacity: 0}, {opacity: 1, duration: .35}, .84);
+[[L, pose(550, 430, 620, 620)], [Rl, pose(1370, 430, 620, 620)]].forEach(([el, P]) => {
+  const ch = chip('border-radius:310px;background:rgba(255,255,255,.78);border:1.5px solid rgba(190,230,255,.7);box-shadow:0 34px 80px rgba(10,38,71,.25), inset 0 2px 0 #fff');
+  morph(ch, P, el, .6, .45, 'power2.out'); tl.to(ch, {opacity: 0, duration: .3}, 1.05);
+});
+cue(.1, 'whoosh', .6, -.5); cue(.3, 'whoosh', .6, .5);
+float(L, 1, T, 4, 6); float(Rl, 1.2, T, 4, 6.4);
+// left: scan beam sweeps, differing letters light orange
+const scan = L.querySelector('.scan');
+tl.fromTo(scan, {x: -100}, {x: 640, duration: 1.6, ease: 'power1.inOut', repeat: 1, repeatDelay: .8}, 1.0);
+L.querySelectorAll('.hl').forEach((h, i) => tl.fromTo(h, {color: NAVY}, {color: ORANGE, duration: .2}, 1.3 + i * .35));
+for (let i = 0; i < 3; i++) cue(1.3 + i * .35, 'tick', .4, -.4);
+// right: network grows outward
+const net = svgLayer(Rl.in.firstElementChild);
+const C = [310, 310], ends = [[150, 160, 'phone'], [470, 150, 'device'], [150, 460, 'work'], [470, 460, 'card']];
+const center = tile(310, 310, 'id', '', 'n', 118, {parent: Rl.in.firstElementChild});
+pop(center, 1.1);
+ends.forEach(([x, y, ic], i) => {
+  const t = 1.6 + i * .32;
+  edge(net, C[0], C[1], x, y, BLUE, 4).draw(t, .35).pulse(t + .4, T - t - .6, '#fff', 1.3);
+  const tl_ = tile(x, y, ic, '', '', 96, {parent: Rl.in.firstElementChild}); pop(tl_, t + .25);
+  float(tl_, t + .7, T, 5, 2.4 + i * .3);
+});
+// small data points travel around the left profile (comparing text), the right side keeps growing links
+for (let i = 0; i < 6; i++) {
+  const d = node(`<div class="dot" style="left:0;top:0;width:12px;height:12px;background:${BLUE};box-shadow:0 0 10px ${BLUE}"></div>`, L.in.firstElementChild);
+  const o = {a: i * 1.05};
+  const put = () => gsap.set(d, {x: 304 + Math.cos(o.a) * 282, y: 304 + Math.sin(o.a) * 282});
+  tl.fromTo(o, {a: i * 1.05}, {a: i * 1.05 + 3.2, duration: T, ease: 'none', onUpdate: put, immediateRender: true}, 0); put();
+  tl.fromTo(d, {opacity: 0}, {opacity: 1, duration: .4}, 1.1 + i * .08);
+}
+[[150, 160, 470, 150], [150, 460, 470, 460], [150, 160, 150, 460]].forEach(([x1, y1, x2, y2], i) => edge(net, x1, y1, x2, y2, 'rgba(67,164,220,.55)', 3, '4 8', false).draw(3.0 + i * .25, .6, 'power2.inOut'));
+// vs pill bounces in, captions rise
+// v4 VS: a clean frosted-glass disc with a 1 px specular rim (vector, no matte edges)
+const vs = W_(`<div style="position:relative;width:120px;height:120px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:700;color:${NAVY};background:linear-gradient(150deg,rgba(255,255,255,.95),rgba(220,238,250,.75));border:1px solid rgba(255,255,255,1);box-shadow:0 18px 40px rgba(10,38,71,.18),inset 0 1px 0 #fff">vs</div>`, 900, 370, {z: 5});
+pop(vs, 1.5);
+tl.fromTo(vs.in.firstElementChild, {boxShadow: '0 18px 40px rgba(10,38,71,.18), 0 0 0 rgba(67,164,220,0)'}, {boxShadow: '0 18px 40px rgba(10,38,71,.18), 0 0 46px rgba(67,164,220,.55)', duration: .6}, 1.8);
+const cap = (x, t1, t2) => W_(`<div style="position:relative;width:620px;text-align:center"><div style="font-size:44px;font-weight:700">${t1}</div><div style="font-size:26px;font-weight:300;margin-top:6px">${t2}</div></div>`, x, 770);
+const c1 = cap(240, 'Look alike?', 'Fuzzy matching compares the text'), c2 = cap(1060, 'Belong together?', 'Graph looks at the network around it');
+tl.fromTo([c1, c2], {y: 50, opacity: 0, filter: 'blur(8px)'}, {y: 0, opacity: 1, filter: 'blur(0px)', duration: .55, ease: EZO, stagger: .5}, 2.0);
+// the camera pushes toward the right lens: the network becomes the next scene's graph interface
+// v4 node-through push: the camera dives into the Graph lens; its inside turns deep navy and becomes the next scene's network space
+const deep = node(`<div style="position:absolute;inset:0;border-radius:50%;background:#fff url(../../../storyboard/build/demo/schema.png) 46% 52%/260% auto no-repeat;opacity:0"></div>`, Rl.in.firstElementChild);
+tl.to(deep, {opacity: 1, duration: .45, ease: 'power1.inOut'}, T - .6);   // v5: the schema appears inside the Graph lens as the camera dives in
+tl.to([L, c1, c2, vs], {opacity: 0, duration: .4}, T - .3);
+closeMove('portal', .5, 1370, 430);
+finish(); SC.tl = tl;
+
+})();
+endScene();</script>
+<script>beginScene({"n": 5, "dur": 17.051, "tail": 0.6, "start": 36.672, "beats": [0.0, 6.095, 10.206], "words": [{"w": "look", "t": 0.35}, {"w": "at", "t": 0.63}, {"w": "what", "t": 0.81}, {"w": "surrounds", "t": 0.97}, {"w": "the", "t": 1.43}, {"w": "two", "t": 1.65}, {"w": "reyes", "t": 1.95}, {"w": "records", "t": 2.31}, {"w": "different", "t": 3.45}, {"w": "devices", "t": 3.67}, {"w": "different", "t": 6.445}, {"w": "phones", "t": 6.805}, {"w": "different", "t": 7.625}, {"w": "employers", "t": 7.825}, {"w": "completely", "t": 10.556}, {"w": "different", "t": 11.036}, {"w": "transactions", "t": 11.476}, {"w": "the", "t": 12.816}, {"w": "graph", "t": 12.956}, {"w": "says", "t": 13.156}, {"w": "keep", "t": 13.836}, {"w": "them", "t": 14.056}, {"w": "separate", "t": 14.276}], "prev": "portal"});
+(function(){
+// Scene 5 (dark): the camera pushes into the real TigerGraph schema (relevant area large), pulls out to the two Reyes records.
+// Each side grows a DIFFERENT network, node by node, each node lighting as its line reaches it. On "completely different
+// transactions" the networks slide together, a temporary link tests them, mismatches flag, the link breaks, they move apart.
+const T = window.TOTAL;
+world('dark', {particles: 36});
+gsap.set($('#cam'), {scale: .84, transformOrigin: '960px 600px'});   // v5: networks smaller so the type has room
+const demo = demoWin(260, 110, 1400, 'schema.png', 'TigerGraph · Entity_Resolution schema');
+gsap.set(demo.in, {rotationY: -9, rotationX: 4, transformPerspective: 1800});
+// v5: continues the dive through the Graph lens: the schema is already close, still settling, then the camera eases back to frame the Party hub
+tl.fromTo(demo, {scale: 2.08, x: -80, y: 120, filter: 'blur(3px)'}, {scale: 1.9, x: -80, y: 120, filter: 'blur(0px)', duration: 2.0, ease: 'sine.out'}, 0);
+tl.fromTo(demo.in, {rotationY: -6, rotationX: 5}, {rotationY: 0, rotationX: 0, duration: 1.8, ease: 'sine.inOut'}, 0);
+const sweepG = node('<div style="position:absolute;top:-10%;bottom:-10%;width:22%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-18deg)"></div>', demo.in.firstElementChild);
+gsap.set(demo.in.firstElementChild, {overflow: 'hidden'});
+tl.fromTo(sweepG, {left: '-30%'}, {left: '120%', duration: 1.2, ease: 'power2.inOut'}, .5);
+// zoom toward the Party hub so the identifiers read
+const lbl = pill(960, 900, 'Party → Phone · Device · Email · DOB', 'o', {z: 4, parent: $('#front')});
+gsap.set(lbl.in.firstElementChild, {fontSize: 28});
+rise(lbl, .9, .5);
+const tOut = at('records') + .1;
+tl.to(demo, {scale: 2.15, opacity: 0, filter: 'blur(4px)', duration: .8, ease: 'sine.inOut'}, tOut - .6);
+tl.to(lbl, {y: 60, opacity: 0, duration: .3, ease: 'power2.in'}, tOut - .4);
+cue(tOut - .4, 'whoosh', .6);
+// different structures on each side
+const TA = [[-300, -200, 'phone', '+1 415 ··· 2210'], [-340, 90, 'device', 'iPhone · A71F'], [40, -290, 'home', 'Harbor View, Apt 4'], [-180, 280, 'work', 'Northwind Logistics'], [110, 290, 'tx', 'Payroll, rent']];
+const TB = [[-260, -250, 'phone', '+1 628 ··· 9034'], [-360, 20, 'device', 'Android · 9C2E'], [60, -300, 'mail', 'dreyes@mailbox.io'], [-250, 270, 'work', 'Bayline Dental'], [90, 300, 'tx', 'Crypto, cash-outs']];
+const tm = [at('devices') - .9, at('devices'), at('phones'), at('employers'), at('transactions')];
+tm[0] = tOut + .6;
+const nA = network(560, 540, 'Daniel Reyes', TA, 1, [tm[2], tm[1], tm[0], tm[3], tm[4]]), nB = network(1360, 540, 'Dan Reyes', TB, -1, [tm[2], tm[1], tm[0], tm[3], tm[4]].map(t => t + .15));
+slideIn(nA.name, tOut - .1, -1, .7, 400); slideIn(nB.name, tOut + .05, 1, .7, 400);
+// slow camera push on the whole network
+tl.fromTo([nA.g, nB.g], {scale: .94, transformOrigin: '960px 540px'}, {scale: 1, duration: 7, ease: 'sine.inOut'}, tOut);
+// the test: networks drift together, a temporary link forms between the names
+const tC = at('completely') - .1;
+tl.to(nA.g, {x: 120, duration: 1.0, ease: 'power2.inOut'}, tC); tl.to(nB.g, {x: -120, duration: 1.0, ease: 'power2.inOut'}, tC);
+const ls = svgLayer($('#cam'));
+const link = svgPath(ls, 'M830,540 L1090,540', '#fff', 4, .9); link.setAttribute('stroke-dasharray', '10 10');
+gsap.set(ls, {opacity: 0}); tl.set(ls, {opacity: 1}, tC + .6);
+tl.fromTo(link, {attr: {d: 'M830,540 L830,540'}}, {attr: {d: 'M830,540 L1090,540'}, duration: .6, ease: 'power2.inOut'}, tC + .6);
+cue(tC + .6, 'shimmer', .4);
+// mismatches flag on each attribute pair
+[0, 1, 3, 4].forEach((k, i) => {
+  const t = tC + 1.1 + i * .22;
+  [nA, nB].forEach(n => { const x = n.tiles[k]; const b = W_(`<div style="position:relative;width:38px;height:38px;border-radius:50%;background:${ORANGE};color:#fff;font-size:24px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 0 18px rgba(236,100,8,.8)">✕</div>`, 84, -12, {parent: x.in.firstElementChild}); pop(b, t, .35); tl.to(b, {opacity: 0, duration: .3}, at('separate') - .2); });
+  cue(t, 'tick2', .35);
+});
+// the link breaks: two halves fall away
+const tBk = at('graph') - .2;
+tl.to(link, {attr: {d: 'M830,540 L930,575'}, opacity: 0, duration: .45, ease: 'power2.in'}, tBk);
+const link2 = svgPath(ls, 'M990,540 L1090,540', '#fff', 4, 0); link2.setAttribute('stroke-dasharray', '10 10');
+tl.fromTo(link2, {opacity: .9}, {attr: {d: 'M1000,505 L1090,540'}, opacity: 0, duration: .45, ease: 'power2.in'}, tBk);
+cue(tBk, 'crack', .45);
+// they move apart
+const tK = at('keep') - .1;
+tl.to(nA.g, {x: -10, duration: .9, ease: 'power3.inOut'}, tK); tl.to(nB.g, {x: 10, duration: .9, ease: 'power3.inOut'}, tK);
+cue(tK, 'whoosh_s', .5);
+const sup = words('Similar names.|<em>Separate lives.</em>', 0, 60, {size: 72});
+sup.ws.forEach((w, i) => rise(w, at('graph') + .1 + i * .35, .5));
+const ks = pill(960, 560, `${checkSvg(30, NAVY)} Keep separate`, 'w', {z: 6});
+gsap.set(ks.in.firstElementChild, {display: 'flex', alignItems: 'center', gap: '10px'});
+rise(ks, at('separate') - .15, .5, 30); drawCheck(ks, at('separate') + .2, .4);
+cue(at('separate'), 'lock', .6);
+// tail: every attribute collapses into its name label, which carries into the next scene's risk cards
+const tE = T - .65;
+[nA, nB].forEach((n, k) => {
+  n.tiles.forEach(x => tl.to(x, {x: (k ? 1360 : 560) - (x.offsetLeft + 59) + (k ? 40 : -40) - (k ? 40 : -40), y: 540 - (x.offsetTop + 59), scale: .2, opacity: 0, duration: .5, ease: 'power3.in'}, tE));
+  tl.to(n.svg, {opacity: 0, duration: .4}, tE);
+});
+tl.to([sup, ks, ls], {opacity: 0, y: -20, duration: .35, ease: 'power2.in'}, tE);
+cue(tE, 'whoosh_s', .4);
+// v6 carry out: each name label stretches into its risk card (the cards of the next scene)
+[[nA.name, pose(470, 495, 640, 190), 'Daniel Reyes'], [nB.name, pose(1450, 495, 640, 190), 'Dan Reyes']].forEach(([nm, P, tx], k) => {
+  const ch = chip('display:flex;align-items:flex-start;padding:26px 34px;font-size:22px;letter-spacing:3px;text-transform:uppercase;font-weight:600;color:#fff;white-space:nowrap;border-radius:40px;background:linear-gradient(150deg,rgba(255,255,255,.16),rgba(67,164,220,.12));border:1.5px solid rgba(190,230,255,.6);box-shadow:0 40px 90px rgba(0,0,0,.45)', tx);
+  morph(ch, nm, P, tE + .05 + k * .05, .6, 'power3.inOut', 30);
+  tl.fromTo(ch, {opacity: 0}, {opacity: 1, duration: .06, immediateRender: true}, tE + .05 + k * .05);
+  tl.set(nm, {opacity: 0}, tE + .08 + k * .05);
+  tl.to(ch, {borderRadius: '30px', duration: .5}, tE + .1);
+});
+closeMove('pull');
+finish(); SC.tl = tl;
+
+})();
+endScene();</script>
+<script>beginScene({"n": 6, "dur": 10.892, "tail": 0.6, "start": 53.723, "beats": [0.0, 5.434], "words": [{"w": "that", "t": 0.35}, {"w": "matters", "t": 0.59}, {"w": "because", "t": 0.99}, {"w": "a", "t": 1.59}, {"w": "wrong", "t": 1.75}, {"w": "merge", "t": 2.05}, {"w": "blends", "t": 2.47}, {"w": "risk", "t": 2.79}, {"w": "signals", "t": 3.13}, {"w": "it", "t": 5.784}, {"w": "can", "t": 5.964}, {"w": "even", "t": 6.104}, {"w": "hide", "t": 6.364}, {"w": "a", "t": 6.644}, {"w": "fraud", "t": 6.844}, {"w": "alert", "t": 7.164}, {"w": "that", "t": 7.524}, {"w": "should", "t": 7.884}, {"w": "have", "t": 8.024}, {"w": "fired", "t": 8.124}], "prev": "pull"});
+(function(){
+// Scene 6 (dark): the two name labels grow into risk cards; the old network lines fly in and become the risk bars.
+// "Wrong merge": the cards start moving together and a link forms, but an orange warning stops it; the link splits, they return.
+// "Hide a fraud alert": a ghost merged card shows the alert swallowed; "should have fired": back apart, Dan's alert bar fills once.
+const T = window.TOTAL;
+world('dark', {particles: 34});
+gsap.set($('#cam'), {scale: .88, transformOrigin: '960px 500px'});
+const card = (cx, label, val, col) => {
+  const b = glass(cx - 320, 400, 640, `<div class="nm" style="font-size:22px;letter-spacing:3px;text-transform:uppercase;font-weight:600;opacity:.8">${label}</div>
+    <div style="margin-top:18px;height:30px;border-radius:18px;background:rgba(255,255,255,.08);overflow:hidden"><div class="fill" style="height:100%;width:0%;border-radius:18px;background:linear-gradient(90deg,${col},${col === ORANGE ? '#ff8a3d' : '#8fd0f5'});box-shadow:0 0 26px rgba(190,235,255,.3)"></div></div>
+    <div class="val" style="margin-top:14px;font-size:28px;font-weight:600">${val}</div>`, 'padding:28px 34px');
+  b.fill = b.querySelector('.fill'); b.val = b.querySelector('.val'); return b;
+};
+const A = card(470, 'Daniel Reyes · risk', 'Low', BLUE), Bc = card(1450, 'Dan Reyes · risk', 'High: fraud alert pending', ORANGE);
+// v4: frosted glass body; orange only as a thin rim glow on the high-risk card
+gsap.set(Bc.in.firstElementChild, {borderColor: 'rgba(255,138,61,.55)', boxShadow: '0 40px 90px rgba(0,0,0,.5), 0 0 40px rgba(236,100,8,.22), inset 0 2px 0 rgba(255,255,255,.3)'});
+// labels grow into cards (same spot as the last frame of the network scene)
+[[A, pose(470, 495, 640, 190)], [Bc, pose(1450, 495, 640, 190)]].forEach(([c, P], k) => {
+  const ch = chipOf(c, 'border-radius:30px');
+  morph(ch, P, c, .6, .45, 'power2.out'); tl.fromTo(c, {opacity: 0}, {opacity: 1, duration: .3}, .85 + k * .05); tl.to(ch, {opacity: 0, duration: .25}, 1.05 + k * .05);
+});
+cue(.05, 'whoosh_s', .5);
+// network lines fly in from where the attributes were and become horizontal data indicators
+const ls = svgLayer($('#cam'));
+[[470, 0], [1450, 1]].forEach(([cx, k]) => {
+  for (let i = 0; i < 5; i++) {
+    const a = -Math.PI / 2 + (i - 2) * .7 + (k ? Math.PI : 0), sx = cx + Math.cos(a) * 340, sy = 470 + Math.sin(a) * 300;
+    const p = svgPath(ls, `M${sx},${sy} L${cx - 300 + i * 120},${485}`, 'rgba(190,230,255,.55)', 2, .8); trim(p, .25 + i * .06, .5, 'power2.in');
+    tl.to(p, {opacity: 0, duration: .3}, .75 + i * .06);
+  }
+});
+tl.to(A.fill, {width: '32%', duration: 1.0, ease: 'power2.out'}, .8); tl.to(Bc.fill, {width: '88%', duration: 1.2, ease: 'power2.out'}, .9);
+cue(.8, 'riser', .25);
+const al = W_(`<div style="position:relative;width:60px;height:60px;border-radius:50%;background:${ORANGE};display:flex;align-items:center;justify-content:center;box-shadow:0 0 34px rgba(236,100,8,.8)">${icon('alert', 34)}</div>`, 1700, 372, {z: 5});
+tl.fromTo(al, {scale: .4, opacity: 0}, {scale: 1, opacity: 1, duration: .45, ease: EZO}, 1.3);
+float(A, 1.2, T, 3, 6); float(Bc, 1.3, T, 3, 6.4);
+// the merge attempt, interrupted
+const tW = at('wrong') - .1;
+tl.to(A, {x: 120, duration: 1.1, ease: 'power2.inOut'}, tW); tl.to([Bc, al], {x: -120, duration: 1.1, ease: 'power2.inOut'}, tW);
+const link = svgPath(ls, 'M790,520 L1130,520', '#fff', 4, .9); link.setAttribute('stroke-dasharray', '10 10'); gsap.set(link, {opacity: 0});
+tl.set(link, {opacity: .9}, tW + .3);
+tl.fromTo(link, {attr: {d: 'M910,520 L910,520'}}, {attr: {d: 'M910,520 L960,520'}, duration: .5, ease: 'power2.out'}, tW + .3);
+const warn = W_(`<div style="position:relative;width:96px;height:96px;border-radius:50%;background:${ORANGE};display:flex;align-items:center;justify-content:center;box-shadow:0 0 60px rgba(236,100,8,.9)">${icon('alert', 54)}</div>`, 912, 472, {z: 8});
+const tWarn = at('risk') - .2;
+tl.fromTo(warn, {scale: .5, opacity: 0}, {scale: 1, opacity: 1, duration: .4, ease: EZO}, tWarn);
+cue(tWarn, 'alarm', .45);
+tl.to(link, {opacity: 0, attr: {d: 'M810,540 L880,560'}, duration: .35, ease: 'power2.in'}, tWarn + .25);
+tl.to(A, {x: 0, duration: .8, ease: 'power3.out'}, tWarn + .35); tl.to([Bc, al], {x: 0, duration: .8, ease: 'power3.out'}, tWarn + .35);
+tl.to(warn, {scale: .7, opacity: 0, duration: .35, ease: 'power2.in'}, tWarn + 1.3);
+const sup = words('Wrong merge =|<em>hidden risk</em>', 0, 150, {size: 72});
+rise(sup.ws[0], tWarn + .3, .5); rise(sup.ws[1], tWarn + .75, .5);
+cue(tWarn + .75, 'thump', .5);
+// what a merge would hide: a ghost merged card swallows the alert
+const tH = at('hide') - .3;
+wordsOut(sup, tH - .2);
+tl.to([A, Bc, al], {opacity: .25, filter: 'blur(4px)', duration: .4}, tH);
+const M = glass(620, 660, 680, `<div style="font-size:22px;letter-spacing:3px;text-transform:uppercase;font-weight:600;opacity:.8">If merged · risk</div>
+  <div style="margin-top:18px;height:30px;border-radius:18px;background:rgba(255,255,255,.08);overflow:hidden"><div class="mf" style="height:100%;width:0%;border-radius:18px;background:linear-gradient(90deg,${BLUE},#7fc4ea 55%,#ff8a3d)"></div></div>
+  <div style="margin-top:14px;font-size:28px;font-weight:600">Medium… the alert never fires</div>`, 'padding:28px 34px;border-style:dashed');
+rise(M, tH + .1, .55, 40);
+tl.to(M.querySelector('.mf'), {width: '58%', duration: .9, ease: 'power2.out'}, tH + .3);
+tl.to(al, {opacity: 1, filter: 'blur(0px)', x: -600, y: 330, scale: .3, duration: .8, ease: 'power3.in'}, tH + .5);
+tl.to(al, {opacity: 0, duration: .2}, tH + 1.25);
+cue(tH + 1.2, 'whomp', .6);
+// back apart: the alert fires once on Dan's card
+const tF = at('should') - .2;
+tl.to(M, {opacity: 0, y: 40, filter: 'blur(8px)', duration: .4, ease: 'power2.in'}, tF);
+tl.to([A, Bc], {opacity: 1, filter: 'blur(0px)', duration: .4}, tF);
+tl.set(al, {x: 0, y: 0, scale: .4}, tF);
+tl.to(Bc.fill, {width: '100%', duration: .6, ease: 'power2.inOut'}, tF + .3);
+tl.to(al, {opacity: 1, scale: 1.15, duration: .4, ease: EZO}, tF + .5).to(al, {scale: 1, duration: .4, ease: 'sine.out'}, tF + .9);
+tl.fromTo(al.in.firstElementChild, {boxShadow: '0 0 34px rgba(236,100,8,.8)'}, {boxShadow: '0 0 80px rgba(255,140,60,1)', duration: .5, ease: 'power2.out'}, tF + .5);
+tl.to(Bc.val, {opacity: 0, duration: .15}, tF + .45).call(() => { Bc.val.textContent = '⚠ Fraud alert fired'; }, null, tF + .6).to(Bc.val, {opacity: 1, color: '#ffb27a', duration: .25}, tF + .6);
+tl.call(() => { Bc.val.textContent = 'High: fraud alert pending'; }, null, tF + .59);
+cue(tF + .5, 'alarm', .55);
+const sup2 = words('Keep them apart and the|<em>alert fires</em>', 0, 150, {size: 68});
+rise(sup2.ws[0], tF + .2, .5); rise(sup2.ws[1], tF + .7, .5);
+// v6 carry out: both risk cards travel up into the record cards of the next scene; the orange risk bar drops to seed the gauge
+const tX = T - .7;
+if (0) tl.to(sup2, {opacity: 0, y: -30, filter: 'blur(8px)', duration: .4, ease: 'power2.in'}, tX);
+[[A, pose(450, 295, 560, 250)], [Bc, pose(1470, 295, 560, 250)]].forEach(([c, P], k) => {
+  const ch = chipOf(c, 'border-radius:30px');
+  morph(ch, c, P, tX + k * .05, .7, 'power3.inOut', 40);
+  tl.fromTo(ch, {opacity: 0}, {opacity: 1, duration: .06, immediateRender: true}, tX + k * .05); tl.to(c, {opacity: 0, duration: .15}, tX + .06);
+});
+const bar = chip(`border-radius:15px;background:linear-gradient(90deg,${ORANGE},#ff8a3d);box-shadow:0 0 26px rgba(236,100,8,.6)`);
+morph(bar, Bc.fill, pose(960, 760, 420, 28), tX + .05, .7, 'power3.inOut', -60);
+tl.fromTo(bar, {opacity: 0}, {opacity: 1, duration: .06, immediateRender: true}, tX + .05); tl.to(al, {opacity: 0, scale: .6, duration: .3}, tX);
+closeMove('pull');
+finish(); SC.tl = tl;
+
+})();
+endScene();</script>
+<script>beginScene({"n": 7, "dur": 10.307, "tail": 0.6, "start": 64.615, "beats": [0.0], "words": [{"w": "now", "t": 0.35}, {"w": "the", "t": 0.67}, {"w": "opposite", "t": 0.87}, {"w": "lena", "t": 2.19}, {"w": "novak", "t": 2.19}, {"w": "and", "t": 2.69}, {"w": "l", "t": 2.89}, {"w": "novakova", "t": 3.13}, {"w": "a", "t": 4.45}, {"w": "58", "t": 4.59}, {"w": "%", "t": 5.13}, {"w": "match", "t": 5.43}, {"w": "fuzzy", "t": 6.61}, {"w": "matching", "t": 6.89}, {"w": "lets", "t": 7.31}, {"w": "them", "t": 7.47}, {"w": "go", "t": 7.75}], "prev": "pull"});
+(function(){
+// Scene 7 (light): Lena Novak from the left, L. Novakova from the right, details revealed line by line. A dotted link checks them,
+// the gauge rises smoothly to 58%, the differences light up orange (why the match fails), "No match" lands, the link breaks.
+const T = window.TOTAL;
+world('light', {particles: 30});
+// v4 depth stage: a dot-grid floor in perspective, soft bokeh orbs, tilted glass cards
+const floor = node(`<div style="position:absolute;left:-600px;top:640px;width:3120px;height:900px;background-image:radial-gradient(circle,rgba(67,164,220,.55) 2px,transparent 2.5px);background-size:46px 46px;transform:rotateX(74deg);transform-origin:50% 0;-webkit-mask-image:linear-gradient(180deg,transparent,#000 30%,#000 70%,transparent)"></div>`);
+tl.fromTo(floor, {backgroundPosition: '0px 0px'}, {backgroundPosition: '0px 140px', duration: T + .6, ease: 'none'}, 0);
+for (let i = 0; i < 5; i++) { const b = node(`<div style="position:absolute;left:${[120, 1500, 820, 300, 1700][i]}px;top:${[140, 120, 60, 820, 760][i]}px;width:${[180, 240, 120, 150, 200][i]}px;height:${[180, 240, 120, 150, 200][i]}px;border-radius:50%;background:radial-gradient(circle,rgba(67,164,220,.35),transparent 70%);filter:blur(6px)"></div>`, $('#orbs')); tl.fromTo(b, {y: 0, x: 0}, {y: -60 - i * 10, x: (i % 2 ? 40 : -40), duration: T + .6, ease: 'sine.inOut'}, 0); }
+const rec = (k, n, a) => `<div class="glass rec" style="position:relative"><div class="k">${k}</div><div class="n">${n}</div><div class="a">${a}</div><div class="row"><span class="chip">KYC</span><span class="chip">Business</span></div></div>`;
+const A = W_(rec('Record C', 'Lena Novak', 'Account opened <span class="df">online</span>'), 170, 170), Bc = W_(rec('Record D', 'L. Novak<span class="df">ova</span>', 'Account opened <span class="df">in branch</span>'), 1190, 170);
+[[A, pose(450, 295, 560, 250)], [Bc, pose(1470, 295, 560, 250)]].forEach(([c, P], k) => {
+  const ch = chipOf(c, 'border-radius:30px');
+  morph(ch, P, c, .6, .5, 'power2.out'); tl.fromTo(c, {opacity: 0}, {opacity: 1, duration: .3}, .9 + k * .05); tl.to(ch, {opacity: 0, duration: .25}, 1.12 + k * .05);
+});
+// the orange risk bar from the last scene waits, then opens into the gauge card
+const bar = chip(`border-radius:15px;background:linear-gradient(90deg,${ORANGE},#ff8a3d);box-shadow:0 0 26px rgba(236,100,8,.6)`);
+morph(bar, pose(960, 760, 420, 28), pose(960, 760, 420, 28), 0, .1);
+gsap.set(A.in, {rotationY: 10, transformPerspective: 1400}); gsap.set(Bc.in, {rotationY: -10, transformPerspective: 1400});
+[A, Bc].forEach((c, i) => { c.querySelectorAll('.k,.n,.a,.row').forEach((e, j) => rise(e, .45 + i * .2 + j * .14, .45, 16)); float(c, 1.2, T, 3, 6); });
+// dotted link with a checking pulse travelling along it
+const svg = svgLayer($('#cam'));
+const link = svgPath(svg, 'M720,300 L1200,300', BLUE, 3, .9); link.setAttribute('stroke-dasharray', '3 11');
+tl.fromTo(link, {attr: {d: 'M720,300 L720,300'}}, {attr: {d: 'M720,300 L1200,300'}, duration: .7, ease: 'power2.inOut'}, at('novakova') - .3);
+const pk = svgDot(svg, 720, 300, 9, BLUE, 0);
+tl.fromTo(pk, {attr: {cx: 720}, opacity: 0}, {attr: {cx: 1200}, opacity: 1, duration: .9, ease: 'sine.inOut', repeat: 2, yoyo: true}, at('novakova') + .4);
+cue(at('novakova') - .3, 'shimmer', .3);
+// gauge: rises smoothly to 58% and settles (no stall jitter)
+const r = 210, Lr = Math.PI * (r - 26);
+const g = W_(`<div class="glass" style="position:relative;width:${2 * r + 80}px;height:${r + 210}px">
+ <svg style="left:40px;top:40px" width="${2 * r}" height="${r}"><path d="M26,${r} A${r - 26},${r - 26} 0 0 1 ${2 * r - 26},${r}" stroke="rgba(10,38,71,.12)" stroke-width="34" fill="none" stroke-linecap="round"/>
+ <path class="arc" d="M26,${r} A${r - 26},${r - 26} 0 0 1 ${2 * r - 26},${r}" stroke="${BLUE}" stroke-width="34" fill="none" stroke-linecap="round" stroke-dasharray="0 2000"/>
+ <g><line class="ndl" x1="${r}" y1="${r}" x2="${40}" y2="${r}" stroke="${NAVY}" stroke-width="9" stroke-linecap="round"/></g><circle cx="${r}" cy="${r}" r="16" fill="${NAVY}"/></svg>
+ <div class="num" style="position:absolute;left:0;right:0;top:${r + 50}px;text-align:center;font-size:84px;font-weight:700;color:${BLUE};line-height:1">0%</div>
+ <div style="position:absolute;left:0;right:0;top:${r + 158}px;text-align:center;font-size:18px;letter-spacing:3px;text-transform:uppercase;font-weight:600;opacity:.7">Fuzzy-match score</div></div>`, 710, 520);
+morph(bar, pose(960, 760, 420, 28), g, 1.0, .6, 'power3.inOut');
+tl.to(bar, {borderRadius: '30px', background: 'rgba(255,255,255,0)', boxShadow: '0 0 0 3px rgba(236,100,8,.8)', duration: .5}, 1.05);
+tl.fromTo(g, {opacity: 0}, {opacity: 1, duration: .35}, 1.4); tl.to(bar, {opacity: 0, duration: .3}, 1.65);
+gsap.set(g, {y: -20});
+const t58 = at('58'), ndl = g.querySelector('.ndl'), arc = g.querySelector('.arc'), o = {p: 0};
+const setP = () => { const an = Math.PI * (1 - o.p / 100); ndl.setAttribute('x2', r + (r - 40) * Math.cos(an)); ndl.setAttribute('y2', r - (r - 40) * Math.sin(an)); arc.setAttribute('stroke-dasharray', `${Lr * o.p / 100} 2000`); };
+tl.fromTo(o, {p: 0}, {p: 61, duration: 1.5, ease: 'power2.out', onUpdate: setP, immediateRender: true}, t58 - .6).to(o, {p: 58, duration: .8, ease: 'sine.inOut', onUpdate: setP}, t58 + .9);
+count(g.querySelector('.num'), t58 - .6, 0, 58, 1.6);
+for (let i = 0; i < 6; i++) cue(t58 - .5 + i * .22, 'tick', .2);
+cue(t58 + 1.0, 'meh', .6);
+float(g, t58 + 1.2, T, 3, 6);
+// at 58%: the differences light up
+const dfs = [...QA('.df')];
+tl.fromTo(dfs, {color: NAVY, backgroundColor: 'rgba(236,100,8,0)'}, {color: '#fff', backgroundColor: ORANGE, borderRadius: 6, duration: .35, stagger: .15, ease: 'power2.out'}, t58 + 1.0);
+cue(t58 + 1.0, 'tick2', .4, -.3); cue(t58 + 1.3, 'tick2', .4, .3);
+// No match, the link breaks, the cards ease apart
+const tG = at('lets') - .3;
+const nm = pill(1400, 740, `No match ✕`, '', {z: 5}); rise(nm, tG, .5);
+tl.to(link, {attr: {d: 'M720,300 L900,330'}, opacity: 0, duration: .45, ease: 'power2.in'}, tG + .3);
+tl.to(pk, {opacity: 0, duration: .2}, tG + .3);
+cue(tG + .3, 'crack', .35);
+// v5 "lets them go": the two records are released and drift away from each other, losing focus as they go
+tl.to(A, {x: -170, y: 30, scale: .92, opacity: .5, filter: 'blur(2px)', duration: 2.2, ease: 'power2.out'}, tG + .35);
+tl.to(Bc, {x: 170, y: 30, scale: .92, opacity: .5, filter: 'blur(2px)', duration: 2.2, ease: 'power2.out'}, tG + .35);
+tl.to(A.in, {rotationY: 22, duration: 2.2, ease: 'power2.out'}, tG + .35); tl.to(Bc.in, {rotationY: -22, duration: 2.2, ease: 'power2.out'}, tG + .35);
+tl.to(g, {opacity: .6, duration: 1.2}, tG + .6);
+cue(tG + .35, 'whoosh_s', .35);
+// v6 carry out: the two names lift off the records and fly to where they become the graph's centre labels
+const tX = T - .7;
+[[A, 'Lena Novak', pose(548, 501, 230, 60)], [Bc, 'L. Novakova', pose(1372, 501, 240, 60)]].forEach(([c, nm, P], k) => {
+  const ch = chip(`border-radius:30px;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;white-space:nowrap;color:${NAVY}`, nm);
+  morph(ch, c.querySelector('.n'), P, tX + k * .05, .68, 'power3.inOut', 50);
+  tl.fromTo(ch, {opacity: 0}, {opacity: 1, duration: .06, immediateRender: true}, tX + k * .05); tl.to(c.querySelector('.n'), {opacity: 0, duration: .06}, tX + k * .05 + .02);
+  tl.to(ch, {color: '#fff', background: 'linear-gradient(150deg,#2a5d8c,#0a2647)', boxShadow: '0 0 30px rgba(67,164,220,.5)', duration: .5}, tX + .12);
+});
+if (0) tl.to([g, nm], {opacity: 0, scale: .9, duration: .4, ease: 'power2.in'}, tX);
+closeMove('push', .32, 960, 640);
+finish(); SC.tl = tl;
+
+})();
+endScene();</script>
+<script>beginScene({"n": 8, "dur": 12.502, "tail": 0.6, "start": 74.922, "beats": [0.0, 7.433], "words": [{"w": "they", "t": 0.35}, {"w": "share", "t": 0.55}, {"w": "a", "t": 0.81}, {"w": "verified", "t": 1.45}, {"w": "phone", "t": 1.45}, {"w": "device", "t": 2.35}, {"w": "and", "t": 2.89}, {"w": "company", "t": 2.97}, {"w": "investigate", "t": 4.39}, {"w": "before", "t": 4.79}, {"w": "merging", "t": 5.13}, {"w": "different", "t": 7.783}, {"w": "names", "t": 8.163}, {"w": "same", "t": 9.123}, {"w": "person", "t": 9.203}], "prev": "push"});
+(function(){
+// Scene 8 (dark): the Novak networks grow; the shared phone, device and company slide in from both sides and collide
+// in the centre, edges turn orange; on "Different names. Same person." the records lock together.
+const T = window.TOTAL, B2 = window.BEATS[1];
+world('dark', {particles: 34});
+gsap.set($('#cam'), {scale: .84, transformOrigin: '960px 400px'});   // v5: networks smaller so the type has room
+const NA = [[-300, -200, 'mail', 'lena.n@···'], [-320, 120, 'card', 'Visa ··· 2290'], [-120, 300, 'tx', 'Small transfers']];
+const NB = [[-300, -200, 'home', 'Branch: Riverside'], [-320, 120, 'bank', 'Acct ··· 5531'], [-120, 300, 'tx', 'Cash-outs']];
+const svg = svgLayer($('#cam'));
+const nA = network(470, 520, 'Lena Novak', NA, 1, [.6, .85, 1.1]), nB = network(1450, 520, 'L. Novakova', NB, -1, [.7, .95, 1.2]);
+[[nA.name, 'Lena Novak', pose(548, 501, 230, 60)], [nB.name, 'L. Novakova', pose(1372, 501, 240, 60)]].forEach(([n, nm, P], k) => {
+  const ch = chip('border-radius:30px;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;white-space:nowrap;color:#fff;background:linear-gradient(150deg,#2a5d8c,#0a2647);box-shadow:0 0 30px rgba(67,164,220,.5)', nm);
+  morph(ch, P, n, .6, .4, 'power2.out'); tl.fromTo(n, {opacity: 0}, {opacity: 1, duration: .2}, .85); tl.to(ch, {opacity: 0, duration: .2}, 1.0);
+});
+const S = [[960, 300, 'phone', 'Same verified phone', at('phone')], [960, 520, 'device', 'Same device', at('device')], [960, 740, 'director', 'Director · Novak Trading Ltd', at('company')]];
+const OT = [];
+S.forEach(([x, y, ic, lab, t], i) => {
+  // two copies, one from each record, meet in the middle and become one orange tile
+  const l = tile(x, y, ic, '', '', 118), r = tile(x, y, ic, '', '', 118);
+  tl.fromTo(l, {x: -490, y: 520 - y, opacity: 0, scale: .6}, {x: 0, y: 0, opacity: 1, scale: 1, duration: .95, ease: 'sine.inOut'}, t - .95);
+  tl.fromTo(r, {x: 490, y: 520 - y, opacity: 0, scale: .6}, {x: 0, y: 0, opacity: 1, scale: 1, duration: .95, ease: 'sine.inOut'}, t - .95);
+  tl.set([l, r], {opacity: 0}, t);
+  const o = tile(x, y, ic, lab, 'o', 118, {z: 4}); OT.push(o);
+  tl.fromTo(o, {opacity: 0, scale: 1.15}, {opacity: 1, scale: 1, duration: .45, ease: EZO}, t); tl.fromTo(o, {opacity: 0}, {opacity: 1, duration: .12}, t);
+  tl.fromTo(o.in.firstElementChild, {boxShadow: '0 0 0 rgba(236,100,8,0)'}, {boxShadow: '0 0 54px rgba(255,150,70,.8)', duration: .7, yoyo: true, repeat: 1, ease: 'sine.inOut'}, t + .05); cue(t, 'clack', .7); shock(x, y, t, 'rgba(255,138,61,.6)', 170);
+  edge(svg, 470, 520, x, y, ORANGE, 5).draw(t + .05, .6, 'power2.inOut');
+  edge(svg, 1450, 520, x, y, ORANGE, 5).draw(t + .1, .6, 'power2.inOut');
+  float(o, t + .5, T, 3, 6);
+});
+// name glows warm once linked
+[nA, nB].forEach(n => tl.to(n.name.in.firstElementChild, {boxShadow: '0 0 40px rgba(236,100,8,.45)', borderColor: 'rgba(255,178,122,.9)', duration: .6}, at('company') + .3));
+const inv = pill(960, 960, '🔍 Investigate before merging', 'w', {z: 6});
+gsap.set(inv.in.firstElementChild, {fontSize: 26});
+rise(inv, at('investigate') - .1, .5);
+// one orange connection travels from Lena through every shared node to Novakova
+const tP = at('merging') + .1;
+const path = svgPath(svg, 'M590,520 C760,420 900,300 960,300 C1020,300 1000,520 960,520 C920,520 900,740 960,740 C1040,740 1180,620 1330,520', '#ffb27a', 7);
+path.style.filter = 'drop-shadow(0 0 10px rgba(236,100,8,.9))';
+trim(path, tP, 1.3, 'power1.inOut'); cue(tP, 'shimmer', .5);
+tl.to(path, {opacity: .3, duration: .6}, tP + 1.4);
+const comet = svgDot(svg, 590, 520, 12, '#fff', 0); comet.style.filter = 'drop-shadow(0 0 12px #ffb27a)';
+const cp = {p: 0}, Lp = path.getTotalLength();
+tl.fromTo(cp, {p: 0}, {p: 1, duration: 1.3, ease: 'power1.inOut', onUpdate: () => { const q = path.getPointAtLength(cp.p * Lp); comet.setAttribute('cx', q.x); comet.setAttribute('cy', q.y); }, immediateRender: false}, tP);
+tl.fromTo(comet, {opacity: 0}, {opacity: 1, duration: .15}, tP).to(comet, {opacity: 0, duration: .3}, tP + 1.2);
+const tL = at('different');
+tl.to(inv, {opacity: 0, y: 30, duration: .3}, tL - .6);
+tl.to(nA.g, {x: 60, duration: 1.2, ease: 'power2.inOut'}, tL - .7); tl.to(nB.g, {x: -60, duration: 1.2, ease: 'power2.inOut'}, tL - .7);
+[nA, nB].forEach(n => tl.to(n.name.in.firstElementChild, {borderColor: '#ff8a3d', boxShadow: '0 0 60px rgba(236,100,8,.6), inset 0 0 0 1px rgba(255,138,61,.7)', duration: .5}, tL));
+cue(tL - .05, 'lock', .6);
+const sup = words('Different names.|<em>Same person.</em>', 0, 930, {size: 64});
+sup.ws.forEach((w, i) => rise(w, [at('different'), at('same')][i] - .1, .5));
+// v6 carry out: each orange evidence node becomes one transaction card of the next scene (the camera follows them)
+const tX = T - .72;
+if (0) tl.to([sup, svg, nA.g, nB.g], {opacity: .25, duration: .5}, tX);
+[[0, pose(280, 278, 260, 96)], [1, pose(550, 468, 260, 96)], [2, pose(300, 648, 260, 96)]].forEach(([i, P]) => {
+  const o = OT[i], ch = chip(`border-radius:32px;background:linear-gradient(150deg,#ff9c55,${ORANGE});box-shadow:0 0 40px rgba(236,100,8,.6)`, '<div class="cg" style="position:absolute;inset:0;background:linear-gradient(150deg,rgba(255,255,255,.16),rgba(67,164,220,.10));border:1.5px solid rgba(190,230,255,.55);border-radius:30px;opacity:0"></div>');
+  morph(ch, o.in.firstElementChild, P, tX + i * .05, .68, 'power3.inOut', 50);
+  tl.fromTo(ch, {opacity: 0}, {opacity: 1, duration: .06, immediateRender: true}, tX + i * .05); tl.to(o, {opacity: 0, duration: .1}, tX + i * .05 + .03);
+  tl.to(ch, {borderRadius: '30px', background: 'rgba(255,255,255,.06)', boxShadow: '0 0 24px rgba(236,100,8,.55), inset 0 0 0 1.5px rgba(255,138,61,.8)', duration: .55}, tX + .15); tl.to(ch.querySelector('.cg'), {opacity: 1, duration: .45}, tX + .2);
+});
+closeMove('orbit');
+finish(); SC.tl = tl;
+
+})();
+endScene();</script>
+<script>beginScene({"n": 9, "dur": 7.727, "tail": 0.6, "start": 87.424, "beats": [0.0], "words": [{"w": "that's", "t": 0.35}, {"w": "how", "t": 0.73}, {"w": "fraud", "t": 0.91}, {"w": "hides", "t": 1.25}, {"w": "activity", "t": 2.0}, {"w": "split", "t": 2.85}, {"w": "across", "t": 3.21}, {"w": "records", "t": 3.47}, {"w": "that", "t": 3.93}, {"w": "never", "t": 4.23}, {"w": "get", "t": 4.49}, {"w": "connected", "t": 4.71}], "prev": "orbit"});
+(function(){
+// Scene 9 (dark): transaction cards arrive one by one; each sends a line to the evidence panel, travels along it while the line
+// shortens, shrinks and is absorbed. Then the chart builds: bars one by one, a line drawn through them, the repeated deposits
+// get orange points and a bracket, and "Pattern: structured deposits" lands once the pattern is visible.
+const T = window.TOTAL;
+world('dark', {particles: 30});
+const F = [[150, 230, 'ACCT ··· 5531', '$900 in'], [420, 420, 'ACCT ··· 2290', '$880 in'], [170, 600, 'ACCT ··· 7740', '$950 in'], [440, 780, 'ACCT ··· 5531', '$1,700 out']];
+const frs = F.map(([x, y, a, t], i) => {
+  const f = glass(x, y, 260, `<div style="font-size:17px;letter-spacing:2px;font-weight:600;opacity:.7">${a}</div><div style="font-size:28px;font-weight:600;margin-top:6px">${t}</div>`, 'padding:18px 22px');
+  if (i < 3) {
+    const ch = chipOf(f, 'border-radius:30px');
+    morph(ch, pose([280, 550, 300][i], [278, 468, 648][i], 260, 96), f, .6, .45, 'power2.out'); tl.fromTo(f, {opacity: 0}, {opacity: 1, duration: .3}, .85); tl.to(ch, {opacity: 0, duration: .25}, 1.05);
+  } else slideIn(f, .15 + i * .22, -1, .55, 360);
+  float(f, .8, T, 3, 5 + i * .4); return f;
+});
+const PX = 1020, PY = 190, PW = 760, PH = 560;
+const prof = glass(PX, PY, PW, `<div style="font-size:18px;letter-spacing:3px;font-weight:600;color:#bfe6ff">ONE PROFILE · NOVAK</div><div style="height:${PH - 70}px"></div>`, 'padding:30px 36px');
+slideIn(prof, .6, 1, .7, 500);
+const tA = at('activit') - 1.2, svg = svgLayer($('#cam'));
+frs.forEach((f, i) => {
+  const x0 = F[i][0] + 260, y0 = F[i][1] + 45, x1 = PX + 30, y1 = PY + 120 + i * 90, t = tA + i * .32;
+  const ln = svgPath(svg, `M${x0},${y0} L${x1},${y1}`, '#bfe6ff', 3, .9); ln.setAttribute('stroke-dasharray', '4 10');
+  tl.fromTo(ln, {attr: {d: `M${x0},${y0} L${x0},${y0}`}}, {attr: {d: `M${x0},${y0} L${x1},${y1}`}, duration: .35, ease: 'power2.out'}, t);
+  // the card travels along its line; the line's tail follows it, so the line gets shorter as the card goes in
+  const o = {p: 0};
+  tl.fromTo(o, {p: 0}, {p: 1, duration: .75, ease: 'power2.in', immediateRender: false, onUpdate: () => {
+    const sx = x0 + (x1 - x0) * o.p, sy = y0 + (y1 - y0) * o.p; ln.setAttribute('d', `M${sx},${sy} L${x1},${y1}`); }}, t + .35);
+  tl.to(f, {x: x1 - x0 + 20, y: y1 - y0, scale: .15, opacity: 0, duration: .75, ease: 'power2.in'}, t + .35);
+  tl.to(ln, {opacity: 0, duration: .1}, t + 1.1);
+  tl.fromTo(prof.in.firstElementChild, {boxShadow: '0 0 0 rgba(190,235,255,0)'}, {boxShadow: '0 0 60px rgba(190,235,255,.55)', duration: .2, yoyo: true, repeat: 1}, t + 1.05);
+  cue(t + 1.05, 'chime1', .3, .3);
+});
+// v4 connected graph: faint axes draw first, each absorbed card feeds a curved data trail down into its point on the chart,
+// then a smooth line draws left to right with a glowing orb leading it and a soft gradient fill underneath;
+// the repeated just-under deposits pulse orange with small callout tags.
+const tC = tA + 3 * .32 + 1.2, cs = svgLayer(prof.in.firstElementChild);
+cs.insertAdjacentHTML('afterbegin', '<defs><linearGradient id="af" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#43a4dc" stop-opacity=".55"/><stop offset="1" stop-color="#43a4dc" stop-opacity="0"/></linearGradient><clipPath id="wipe"><rect class="wr" x="0" y="0" width="0" height="600"/></clipPath></defs>');
+const by = 480, k = .2, X = i => 90 + i * 118;
+[0, 1, 2, 3].forEach(i => { const g = svgPath(cs, `M60,${by - i * 95} L720,${by - i * 95}`, 'rgba(190,230,255,.2)', 1.5); trim(g, tA - .4 + i * .08, .6); });
+const ax = svgPath(cs, `M60,${by} L720,${by}`, 'rgba(190,230,255,.45)', 2); trim(ax, tA - .5, .7);
+const vals = [900, 880, 950, 920, 1700, 890], Q = vals.map((v, i) => [X(i), by - v * k]);
+// smooth curve through the points (catmull-rom to bezier)
+let d = `M${Q[0][0]},${Q[0][1]}`;
+for (let i = 0; i < Q.length - 1; i++) { const p0 = Q[Math.max(0, i - 1)], p1 = Q[i], p2 = Q[i + 1], p3 = Q[Math.min(Q.length - 1, i + 2)];
+  d += ` C${p1[0] + (p2[0] - p0[0]) / 6},${p1[1] + (p2[1] - p0[1]) / 6} ${p2[0] - (p3[0] - p1[0]) / 6},${p2[1] - (p3[1] - p1[1]) / 6} ${p2[0]},${p2[1]}`; }
+const area = svgPath(cs, d + ` L${Q[Q.length - 1][0]},${by} L${Q[0][0]},${by} Z`, 'none', 0); area.setAttribute('fill', 'url(#af)'); area.setAttribute('clip-path', 'url(#wipe)');
+const wr = cs.querySelector('.wr');
+const line = svgPath(cs, d, '#fff', 4, .95); line.style.filter = 'drop-shadow(0 0 8px rgba(67,164,220,.9))';
+const DUR = 1.6, Ll = line.getTotalLength();
+trim(line, tC, DUR, 'power1.inOut');
+tl.fromTo(wr, {attr: {width: 0}}, {attr: {width: 760}, duration: DUR, ease: 'power1.inOut'}, tC);
+const orb = svgDot(cs, Q[0][0], Q[0][1], 10, '#fff', 0); orb.style.filter = 'drop-shadow(0 0 14px #43a4dc)';
+const ob = {u: 0};
+tl.fromTo(ob, {u: 0}, {u: 1, duration: DUR, ease: 'power1.inOut', immediateRender: false, onUpdate: () => { const q = line.getPointAtLength(ob.u * Ll); orb.setAttribute('cx', q.x); orb.setAttribute('cy', q.y); }}, tC);
+tl.fromTo(orb, {opacity: 0}, {opacity: 1, duration: .15}, tC).to(orb, {opacity: 0, duration: .4}, tC + DUR + .3);
+cue(tC, 'riser', .3);
+// anomaly vertices + callout tags on the repeated just-under deposits
+[0, 1, 2, 3, 5].forEach((j, i) => {
+  const t = tC + DUR * j / 5 + .1;
+  const dt = svgDot(cs, Q[j][0], Q[j][1], 0, ORANGE); dt.style.filter = 'drop-shadow(0 0 10px rgba(255,138,61,.95))';
+  tl.to(dt, {attr: {r: 10}, duration: .3, ease: EZO}, t);
+  const tg = W_(`<div style="position:relative;padding:4px 10px;border-radius:10px;background:rgba(236,100,8,.9);color:#fff;font-size:16px;font-weight:600">$${vals[j]}</div>`, PX + Q[j][0] - 30, PY + Q[j][1] - 52, {z: 7});
+  rise(tg, t + .1, .4, 12); cue(t, 'tink', .25);
+});
+const lab = W_(`<div class="pill o" style="position:relative">Pattern: structured deposits</div>`, PX + 40, PY + PH - 40, {z: 6});
+rise(lab, tC + 1.5, .5); cue(tC + 1.5, 'pop', .5);
+const sup = words('Missed match =|<em>hidden activity</em>', 0, 900, {size: 64});
+sup.ws.forEach((w, i) => rise(w, at('never') - .2 + i * .4, .5));
+// v6 carry out: the profile panel, chart and all, pulls in to the centre and becomes the 92% score card
+const tX = T - .72;
+if (0) tl.to([sup, lab, svg], {opacity: 0, duration: .35}, tX);
+const ch = chip('border-radius:30px;background:linear-gradient(150deg,rgba(255,255,255,.16),rgba(67,164,220,.10));border:1.5px solid rgba(190,230,255,.55)', '<div class="cg" style="position:absolute;inset:0;padding:35px 0;box-sizing:border-box;background:linear-gradient(150deg,rgba(255,255,255,.97),rgba(222,240,251,.9));opacity:0"><div style="height:400px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#0a2647;font-family:inherit"><div style="font-size:24px;letter-spacing:3px;text-transform:uppercase;font-weight:600;opacity:.6">Match score</div><div style="font-size:150px;font-weight:700;color:#43a4dc;line-height:1.15">92%</div><div style="font-size:28px;opacity:.7">…because?</div></div></div>');
+morph(ch, prof, pose(960, 490, 460, 470), tX, .7, 'power3.inOut', 30);
+tl.fromTo(ch, {opacity: 0}, {opacity: 1, duration: .06, immediateRender: true}, tX); tl.to(prof, {opacity: 0, duration: .25}, tX + .05);
+if (0) tl.to(QA('.w'), {opacity: 0, duration: .3}, tX + .1);
+tl.to(ch.querySelector('.cg'), {opacity: 1, duration: .5}, tX + .2);
+closeMove('pull');
+finish(); SC.tl = tl;
+
+})();
+endScene();</script>
+<script>beginScene({"n": 10, "dur": 15.923, "tail": 0.6, "start": 95.151, "beats": [0.0, 7.385], "words": [{"w": "and", "t": 0.35}, {"w": "when", "t": 0.53}, {"w": "a", "t": 0.63}, {"w": "regulator", "t": 0.77}, {"w": "asks", "t": 1.13}, {"w": "why", "t": 1.69}, {"w": "two", "t": 1.99}, {"w": "records", "t": 2.27}, {"w": "were", "t": 2.63}, {"w": "merged", "t": 2.83}, {"w": "a", "t": 3.83}, {"w": "score", "t": 3.93}, {"w": "isn't", "t": 4.27}, {"w": "an", "t": 4.63}, {"w": "answer", "t": 4.73}, {"w": "a", "t": 7.735}, {"w": "graph", "t": 7.895}, {"w": "keeps", "t": 8.155}, {"w": "the", "t": 8.495}, {"w": "evidence", "t": 8.735}, {"w": "which", "t": 9.795}, {"w": "identifiers", "t": 9.975}, {"w": "matched", "t": 10.595}, {"w": "and", "t": 11.155}, {"w": "which", "t": 11.715}, {"w": "relationships", "t": 11.895}, {"w": "confirmed", "t": 12.635}, {"w": "it", "t": 13.355}], "prev": "pull"});
+(function(){
+// Scene 10 (light): the 92% card sits centre; a magnifier enters from the right and scans it, each stop revealing what the
+// score is made of (text similarity only). The score fades back; "A score" then "isn't a reason" come forward.
+// Then three evidence cards arrive around the score, linked to it by thin lines; the real graph interface grows from a thumbnail,
+// zooms into the matching nodes, and the "kept in the graph" panel lands line by line.
+const T = window.TOTAL, B2 = window.BEATS[1];
+world('light', {particles: 28});
+// v5: a living neural network around the scene (grows in stages, drifts slower than the cards = depth)
+const nn = neuralNet($('#cam'), [{t: .1, n: 16}, {t: 3, n: 32}, {t: 7, n: 48}, {t: 11, n: 60}], {op: .32, col: BLUE, gap: .05, box: [20, 20, 1880, 1040]});
+tl.fromTo(nn, {x: -50, y: 10, scale: 1.04, transformOrigin: '960px 540px'}, {x: 50, y: -10, scale: 1, duration: T + .6, ease: 'sine.inOut'}, 0);
+const sc = glass(730, 260, 460, `<div style="height:400px;display:flex;flex-direction:column;align-items:center;justify-content:center">
+  <div style="font-size:24px;letter-spacing:3px;text-transform:uppercase;font-weight:600;opacity:.6">Match score</div>
+  <div class="sv" style="font-size:150px;font-weight:700;color:${BLUE}">92%</div><div class="bc" style="font-size:28px;opacity:.7">…because?</div></div>`);
+{ const ch = chipOf(sc, 'border-radius:30px');
+  morph(ch, pose(960, 490, 460, 470), sc, .6, .4, 'power2.out'); tl.fromTo(sc, {opacity: 0}, {opacity: 1, duration: .3}, .8); tl.to(ch, {opacity: 0, duration: .25}, 1.0); }
+float(sc, .9, T, 3, 6);
+// magnifier: from the right, scans three spots; each spot reveals a factor chip
+const mag = W_(`<div style="position:relative;width:190px;height:190px;border-radius:50%;border:10px solid ${NAVY};background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.7),rgba(191,226,246,.35));box-shadow:0 20px 50px rgba(10,38,71,.3)"><div style="position:absolute;left:160px;top:160px;width:110px;height:24px;border-radius:12px;background:${NAVY};transform:rotate(45deg);transform-origin:0 50%"></div></div>`, 870, 380, {z: 6});
+const tR = at('regulator');
+tl.fromTo(mag, {x: 1100, y: 60, opacity: 0}, {x: 0, y: 0, opacity: 1, duration: .9, ease: 'power3.out'}, tR - .3);
+cue(tR - .3, 'whoosh_s', .5, .6);
+const stops = [[-150, -110, 'Name ≈ 0.94', 430, 250], [150, -40, 'Address ≈ 0.90', 1230, 330], [-60, 150, 'DOB · not checked', 470, 640]];
+stops.forEach(([dx, dy, lab, cx, cy], i) => {
+  const t = tR + .8 + i * .75;
+  tl.to(mag, {x: dx, y: dy, duration: .6, ease: 'power2.inOut'}, t);
+  const ch = W_(`<div class="tag" style="position:relative;background:#fff;color:${NAVY};font-size:22px;box-shadow:0 10px 30px rgba(10,38,71,.18)">${lab}</div>`, cx, cy, {z: 5});
+  rise(ch, t + .45, .45, 16); cue(t + .45, 'tick2', .35, (cx - 960) / 1000);
+  tl.to(ch, {opacity: 0, y: -10, duration: .35}, at('score') + .4 + i * .05);
+});
+tl.to(mag, {x: 700, y: 300, opacity: 0, duration: .5, ease: 'power3.in'}, at('score') - .35);
+// the score steps back
+const tS = at('score');
+tl.to(sc.querySelector('.sv'), {color: '#a9bccb', duration: .6}, tS); tl.to(sc, {scale: .86, duration: .9, ease: 'power2.inOut'}, tS);
+tl.to(sc.querySelector('.bc'), {color: ORANGE, opacity: 1, duration: .4}, tS + .3);
+// "A score" first, pushed back; "isn't a reason" forward, "reason" orange
+const s1 = words('A score', 0, 760, {size: 64}), s2 = words("isn't a <em>reason.</em>", 0, 840, {size: 84});
+rise(s1, tS - .05, .5); tl.to(s1, {opacity: .45, scale: .85, y: -14, duration: .5, ease: 'power2.inOut'}, at('isn') + .2);
+tl.fromTo(s2, {opacity: 0, scale: 1.25, filter: 'blur(10px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: .55, ease: EZO}, at('isn') + .1);
+cue(at('isn') + .1, 'thump', .5);
+// part 2: evidence cards around the score, linked by thin lines
+const tE = B2 - .2;
+tl.to([s1, s2], {opacity: 0, y: 30, filter: 'blur(8px)', duration: .35, ease: 'power2.in'}, tE);
+tl.to(sc.querySelector('.sv'), {color: BLUE, duration: .5}, tE + .3);
+const ev = [['phone', 'Verified phone number', 'matches on both records', 210, 240, at('evidence')], ['device', 'Same device fingerprint', 'seen on both accounts', 1270, 300, at('identifiers')], ['director', 'Shared relationships', 'same director · 2 hops', 260, 660, at('relationships')]];
+const ls = svgLayer($('#cam'));
+const evc = ev.map(([ic, h, sub, x, y, t]) => {
+  const c = glass(x, y, 450, `<div style="display:flex;gap:18px;align-items:center"><div class="tile ${ic === 'director' ? 'o' : ''}" style="position:relative;width:70px;height:70px;border-radius:20px;flex:none">${icon(ic, 34)}</div><div><div style="font-size:24px;font-weight:700;white-space:nowrap">${h}</div><div style="font-size:20px;opacity:.65;margin-top:4px">${sub}</div></div></div>`, 'padding:22px 26px');
+  slideIn(c, t - .35, x < 900 ? -1 : 1, .6, 360);
+  const ex = x < 900 ? x + 450 : x, ey = y + 57;
+  trim(svgPath(ls, `M${ex},${ey} L${x < 900 ? 760 : 1160},${460}`, BLUE, 2.5, .9), t + .05, .5);
+  cue(t + .2, 'chime1', .35, (x - 960) / 1000);
+  return c;
+});
+// the real graph interface grows from a thumbnail and zooms into the matching nodes
+const tG = at('confirmed') - .2;
+tl.to([sc, ls, ...evc], {opacity: 0, scale: .9, filter: 'blur(10px)', duration: .45, ease: 'power2.in'}, tG);
+const dm = demoWin(140, 150, 1080, 'party.png', 'TigerGraph · Party attributes');
+tl.fromTo(dm, {scale: .22, x: 600, y: 360, opacity: 0}, {scale: 1, x: 0, y: 0, opacity: 1, duration: .8, ease: 'power3.inOut'}, tG + .1);
+cue(tG + .1, 'whoosh', .5);
+tl.to(dm, {scale: 1.1, x: 40, y: 20, duration: T - tG - .9, ease: 'sine.inOut'}, tG + .9);
+const hl = node(`<div class="ring" style="left:520px;top:300px;width:300px;height:300px;border:5px solid ${ORANGE};opacity:0;box-shadow:0 0 30px rgba(236,100,8,.6)"></div>`, dm.in.firstElementChild);
+tl.fromTo(hl, {scale: .5, opacity: 0}, {scale: 1, opacity: 1, duration: .45, ease: EZO}, tG + 1.0);
+const kc = glass(1270, 330, 520, `<div style="font-size:22px;letter-spacing:3px;font-weight:600;color:${BLUE}">KEPT IN THE GRAPH</div><div style="font-size:34px;font-weight:600;margin-top:16px;line-height:1.45"><span class="kw">Every identifier.</span><br><span class="kw">Every relationship.</span><br><span class="kw">Every merge decision.</span></div>`, 'padding:34px 38px', {z: 5});
+slideIn(kc, tG + .6, 1, .6, 400);
+kc.querySelectorAll('.kw').forEach((k, i) => { rise(k, tG + .9 + i * .3, .4, 14); });
+// v6 carry out: the three "kept in the graph" lines lift out and stretch into the three empty workflow slots
+const tX = T - .75;
+if (0) tl.to([dm, kc.in.firstElementChild], {opacity: .2, duration: .5}, tX + .1);
+[...kc.querySelectorAll('.kw')].forEach((k, i) => {
+  const P = [pose(960, 255, 1200, 170), pose(960, 505, 900, 170), pose(960, 755, 640, 170)][i];
+  const ch = chip('border-radius:10px;background:rgba(67,164,220,.2);border:3px dashed rgba(67,164,220,1)');
+  morph(ch, k, P, tX + i * .05, .7, 'power3.inOut', 30);
+  tl.fromTo(ch, {opacity: 0}, {opacity: 1, duration: .06, immediateRender: true}, tX + i * .05); tl.to(k, {opacity: 0, duration: .1}, tX + i * .05 + .03);
+  tl.to(ch, {borderRadius: '85px', background: 'rgba(67,164,220,.2)', borderColor: 'rgba(67,164,220,.9)', duration: .55}, tX + .15);
+});
+closeMove('rise');
+finish(); SC.tl = tl;
+
+})();
+endScene();</script>
+<script>beginScene({"n": 11, "dur": 13.786, "tail": 0.6, "start": 111.074, "beats": [0.0], "words": [{"w": "so", "t": 0.35}, {"w": "how", "t": 0.55}, {"w": "do", "t": 0.73}, {"w": "you", "t": 0.87}, {"w": "decide", "t": 0.97}, {"w": "use", "t": 1.95}, {"w": "them", "t": 2.13}, {"w": "in", "t": 2.35}, {"w": "order", "t": 2.53}, {"w": "exact", "t": 3.57}, {"w": "identifiers", "t": 3.91}, {"w": "first", "t": 4.57}, {"w": "fuzzy", "t": 5.99}, {"w": "matching", "t": 6.25}, {"w": "to", "t": 6.59}, {"w": "find", "t": 6.91}, {"w": "likely", "t": 7.21}, {"w": "candidates", "t": 7.53}, {"w": "then", "t": 8.85}, {"w": "the", "t": 9.07}, {"w": "graph", "t": 9.23}, {"w": "to", "t": 9.47}, {"w": "confirm", "t": 9.71}, {"w": "or", "t": 10.23}, {"w": "reject", "t": 10.73}], "prev": "rise"});
+(function(){
+// Scene 11 (blue): the three-stage funnel drops in line by line; record dots pour through, fewer at each stage;
+// at stage 3 the survivors link into a mini graph.
+const T = window.TOTAL;
+world('blue', {particles: 24});
+const kick = W_('<div class="kick" style="position:relative;width:1920px;text-align:center">Use them in order</div>', 0, 80);
+tl.fromTo(kick, {opacity: 0, y: -30, letterSpacing: '20px'}, {opacity: 1, y: 0, letterSpacing: '5px', duration: .6, ease: EZO}, at('order') - .3);
+const step = (x, y, w, n, t, sub, cls) => {
+  const bg = {w: 'linear-gradient(150deg,#fff,#e3f1fa)', b: 'linear-gradient(150deg,#7fcaf2,#43a4dc)', n: `linear-gradient(150deg,#2a5d8c,${NAVY})`}[cls], col = cls === 'w' ? NAVY : '#fff';
+  return W_(`<div style="position:relative;width:${w}px;height:170px;border-radius:85px;background:${bg};color:${col};box-shadow:0 30px 60px rgba(8,40,70,.35),inset 0 3px 0 rgba(255,255,255,.6),0 0 50px rgba(255,255,255,.35);display:flex;align-items:center;gap:30px;padding:0 50px">
+   <div style="font-size:84px;font-weight:700;opacity:.9">${n}</div><div><div style="font-size:42px;font-weight:700">${t}</div><div style="font-size:24px;font-weight:300;margin-top:4px">${sub}</div></div></div>`, x, y);
+};
+const st = [step(360, 170, 1200, 1, 'Exact identifiers', 'Tax ID, passport, verified phone: instant matches', 'w'),
+            step(510, 420, 900, 2, 'Fuzzy matching', 'Finds likely candidates', 'b'),
+            step(640, 670, 640, 3, 'Graph confirms', 'or rejects, with evidence', 'n')];
+const ts = [at('exact'), at('fuzzy'), at('then')];
+const SL = [];
+[[360, 170, 1200], [510, 420, 900], [640, 670, 640]].forEach(([x, y, w], i) => { const sl = W_(`<div style="position:relative;width:${w}px;height:170px;border-radius:85px;border:3px dashed rgba(255,255,255,.55);background:rgba(255,255,255,.06)"></div>`, x, y); SL.push(sl); tl.fromTo(sl, {opacity: 0}, {opacity: 1, duration: .25}, .82 + i * .05); cue(.15 + i * .15, 'pop', .3); tl.to(sl, {opacity: 0, duration: .3}, ts[i] + .2); });
+const q = words('So how do you decide?', 0, 900, {size: 60}); wordsIn(q, at('so') - .05, .16); wordsOut(q, at('use') - .1);
+gsap.set(q, {zIndex: 2});
+const net = neuralNet($('#cam'), [{t: ts[0], n: 7}, {t: ts[1], n: 18}, {t: ts[2], n: 36}], {op: .28, blur: 1.5, gap: .05, box: [80, 60, 1760, 960]});
+gsap.set(net, {zIndex: 0});
+const from = [{x: -900}, {x: 900}, {y: 300, scale: .7}];
+st.forEach((s, i) => {
+  tl.fromTo(s, Object.assign({opacity: 0, filter: 'blur(10px)'}, from[i]), {x: 0, y: 0, scale: 1, opacity: 1, filter: 'blur(0px)', duration: .7, ease: 'power3.out'}, ts[i] - .25);
+  cue(ts[i] - .25, 'whoosh_s', .45, [-.6, .6, 0][i]);
+  if (i) tl.to(st[i - 1], {opacity: .55, scale: .97, duration: .5, ease: 'power2.out'}, ts[i] - .1);
+  tl.fromTo(s.in.firstElementChild, {boxShadow: '0 30px 60px rgba(8,40,70,.35),0 0 0 rgba(255,255,255,0)'}, {boxShadow: '0 30px 60px rgba(8,40,70,.35),0 0 70px rgba(255,255,255,.75)', duration: .5}, ts[i] + .3);
+  float(s, ts[i] + .6, T, 3, 6);
+});
+// small graphics per stage: an ID with a drawn check, two strings compared, (stage 3 becomes the graph below)
+const g1 = W_(`<div style="position:relative;display:flex;gap:10px;align-items:center">${icon('id', 64, NAVY)}${checkSvg(46, GREEN)}</div>`, 1400, 222); rise(g1, ts[0] + .4, .45); drawCheck(g1, at('first'), .4);
+const g2 = W_(`<div style="position:relative;font-size:24px;font-weight:700;color:#fff;line-height:1.3;text-align:right">D. Reyes<br>Dan Reyes <span style="color:${NAVY}">≈</span></div>`, 1210, 470); rise(g2, at('likely'), .45);
+const svg = svgLayer($('#cam'));
+edge(svg, 960, 345, 960, 415, '#fff', 6, '4 12', false).draw(ts[1] + .2, .4);
+edge(svg, 960, 595, 960, 665, '#fff', 6, '4 12', false).draw(ts[2] + .2, .4);
+edge(svg, 960, 845, 960, 900, '#fff', 6, '4 12', false).draw(at('confirm') - .4, .35);
+// survivors link into a mini graph inside stage 3
+const tC = at('confirm');
+const G = [[760, 960], [880, 915], [1040, 975], [1160, 920], [960, 1010], [700, 1010], [1230, 1000], [1110, 1030]];
+const gg = node('<div class="w" style="left:0;top:0;width:1920px;height:1080px;z-index:6"></div>');   // v5: the mini graph lives in the camera space, so it stays joined to the slate line
+const gsvg = svgLayer(gg);
+[pose(960, 255, 1200, 170), pose(960, 505, 900, 170), pose(960, 755, 640, 170)].forEach((P, i) => {
+  const ch = chip('border-radius:85px;background:rgba(67,164,220,.2);border:3px dashed rgba(67,164,220,1)');
+  morph(ch, P, SL[i], .6, .4, 'power2.out'); tl.to(ch, {opacity: 0, duration: .25}, 1.0);
+});
+const GN = [];
+[[0, 1], [1, 2], [2, 3], [1, 4], [2, 4], [0, 5], [3, 6], [2, 7]].forEach(([a, b], i) => edge(gsvg, G[a][0], G[a][1], G[b][0], G[b][1], i > 4 ? '#ffb27a' : '#bfe6ff', 3).draw(i > 4 ? at('reject') + (i - 5) * .15 : tC + i * .12, .4, 'power2.inOut'));
+edge(gsvg, 960, 900, 880, 915, '#bfe6ff', 3).draw(tC - .1, .3);
+G.forEach(([x, y], i) => { const n = node(`<div class="dot" style="left:${x - 9}px;top:${y - 9}px;width:18px;height:18px;background:#fff;box-shadow:0 0 14px #bfe6ff"></div>`, gg); if (i > 4) n.style.background = '#ffb27a'; GN.push(n); tl.fromTo(n, {scale: 0}, {scale: 1, duration: .35, ease: EZO}, i > 4 ? at('reject') + .25 + (i - 5) * .15 : tC - .1 + i * .08); });
+cue(tC, 'chime', .5);
+// v5 hand-off: the graph group grows toward camera, then one line leaves it and races right; the next scene's camera picks it up
+const tG = T - 1.5;
+tl.to(st, {opacity: .25, filter: 'blur(4px)', duration: .6}, tG);
+tl.to([g1, g2, kick], {opacity: 0, duration: .4}, tG);
+tl.to(gg, {scale: 2.1, y: -430, transformOrigin: '960px 980px', duration: 1.1, ease: 'power2.inOut'}, tG);
+// v6 carry out: the confirming node detaches from the graph and comes to the centre of frame; it becomes the Anna Lee record
+const nd = chip('border-radius:50%;background:#fff;box-shadow:0 0 30px #bfe6ff, 0 0 60px rgba(255,255,255,.6)');
+morph(nd, GN[2], pose(960, 505, 44, 44), T - .6, .6, 'power3.inOut', 40);
+tl.fromTo(nd, {opacity: 0}, {opacity: 1, duration: .06, immediateRender: true}, T - .6); tl.set(GN[2], {opacity: 0}, T - .58);
+cue(T - .6, 'whoosh', .45);
+closeMove('push', .32, 960, 505);
+finish(); SC.tl = tl;
+
+})();
+endScene();</script>
+<script>beginScene({"n": 12, "dur": 25.738, "tail": 0.6, "start": 124.86, "beats": [0.0, 9.285], "words": [{"w": "fuzzy", "t": 0.35}, {"w": "matching", "t": 0.77}, {"w": "on", "t": 1.05}, {"w": "its", "t": 1.31}, {"w": "own", "t": 1.47}, {"w": "is", "t": 1.73}, {"w": "fine", "t": 1.97}, {"w": "for", "t": 2.41}, {"w": "clean", "t": 2.71}, {"w": "low", "t": 3.31}, {"w": "-stakes", "t": 3.55}, {"w": "data", "t": 3.87}, {"w": "like", "t": 4.79}, {"w": "deduplicating", "t": 5.03}, {"w": "a", "t": 5.83}, {"w": "mailing", "t": 6.11}, {"w": "list", "t": 6.65}, {"w": "but", "t": 9.635}, {"w": "you've", "t": 9.755}, {"w": "got", "t": 9.975}, {"w": "to", "t": 10.115}, {"w": "add", "t": 10.275}, {"w": "graph", "t": 10.535}, {"w": "when", "t": 10.835}, {"w": "the", "t": 11.155}, {"w": "decision", "t": 11.275}, {"w": "affects", "t": 11.655}, {"w": "kyc", "t": 12.115}, {"w": "or", "t": 13.175}, {"w": "aml", "t": 13.775}, {"w": "when", "t": 15.215}, {"w": "people", "t": 15.335}, {"w": "deliberately", "t": 15.715}, {"w": "change", "t": 16.715}, {"w": "their", "t": 16.715}, {"w": "details", "t": 16.995}, {"w": "when", "t": 18.135}, {"w": "households", "t": 18.335}, {"w": "and", "t": 18.835}, {"w": "companies", "t": 19.115}, {"w": "share", "t": 19.575}, {"w": "addresses", "t": 19.995}, {"w": "and", "t": 21.095}, {"w": "when", "t": 21.255}, {"w": "you", "t": 21.415}, {"w": "have", "t": 21.555}, {"w": "to", "t": 21.815}, {"w": "explain", "t": 21.935}, {"w": "every", "t": 22.415}, {"w": "merge", "t": 22.815}], "prev": "push"});
+(function(){
+// Scene 12 (light). Part 1: one record copies itself into duplicates, they line up, slide together and merge into one clean
+// master record, then "Clean, low-stakes data". Part 2: the "Add graph when" checklist sits left; each item rises with a drawn
+// check while a matching visual builds on the right (shield, a record whose details change, two records sharing an address),
+// and on "merges must be explained" everything links into one network that stays visible before the cut.
+const T = window.TOTAL, B2 = window.BEATS[1];
+world('light', {particles: 26});
+gsap.set($('#cam'), {scale: .92, transformOrigin: '900px 540px'});
+// slow push-in through part 1 (no frozen camera), easing back out as the card becomes the checklist
+gsap.set($('#world'), {transformOrigin: '960px 500px'});
+tl.fromTo($('#world'), {scale: 1}, {scale: 1.05, duration: B2 - .6, ease: 'sine.inOut'}, 0);
+tl.to($('#world'), {scale: 1, duration: 1.2, ease: 'power2.inOut'}, B2 - .5);
+// v5 opening: still on the blue ground, the line from the last scene's graph races in from the left and plugs into the Anna Lee card;
+// the moment it touches, the light ground opens outward from the card.
+const bv = node(`<div class="veil bg-blue" style="--cx:960px;--cy:500px;z-index:auto"></div>`, SC.fg); SC.fg.insertBefore(bv, $('#world')); bv.style.display = 'none';
+tl.set(bv, {"--r": -280}, 0); tl.fromTo(bv, {"--r": -280}, {'--r': 1600, duration: 1.1, ease: 'power2.inOut', immediateRender: false}, 1.0); 
+const inL = svgLayer($('#cam')); gsap.set(inL, {zIndex: 3});
+const il = svgPath(inL, 'M-200,520 C200,520 420,505 700,505', '#fff', 5, .95); il.style.filter = 'drop-shadow(0 0 12px #bfe6ff)';
+gsap.set(il, {opacity: 0});
+
+cue(.5, 'chime', .4);
+const recHtml = (n, e, a, w = 520) => `<div class="glass" style="position:relative;width:${w}px;padding:26px 32px"><div style="display:flex;gap:18px;align-items:center"><div class="tile w" style="position:relative;width:70px;height:70px;border-radius:20px;flex:none">${icon('mail', 34, NAVY)}</div><div><div class="rn" style="font-size:32px;font-weight:700">${n}</div><div style="font-size:22px;opacity:.7;margin-top:4px">${e}</div><div style="font-size:22px;opacity:.7">${a}</div></div></div></div>`;
+// part 1: one record, then copies
+const master = W_(recHtml('Anna Lee', 'anna.lee@mail.com', '12 Elm Street'), 700, 430, {z: 5});
+tl.fromTo(master, {opacity: 0}, {opacity: 1, duration: .3}, .9);
+const nd = chipOf(master, 'border-radius:22px');
+morph(nd, pose(960, 505, 44, 44), master, .6, .5, 'power3.inOut'); tl.to(nd, {borderRadius: '30px', duration: .4}, .65); tl.to(nd, {opacity: 0, duration: .25}, 1.15);
+tl.fromTo(master.in.firstElementChild, {boxShadow: '0 0 0 rgba(67,164,220,0)'}, {boxShadow: '0 0 80px rgba(190,230,255,.9)', duration: .3, yoyo: true, repeat: 1}, .55);
+cue(.2, 'whoosh_s', .4);
+const offs = [[-360, -170, -4], [380, -120, 3], [-300, 200, 3]];
+const dups = offs.map(([dx, dy, r], i) => {
+  const d = W_(recHtml('Anna Lee', 'anna.lee@mail.com', '12 Elm Street'), 700, 430, {z: 4 - i});
+  tl.fromTo(d, {x: 0, y: 0, rotation: 0, opacity: 0}, {x: dx, y: dy, rotation: r, opacity: .92, duration: 1.15, ease: 'power2.inOut'}, at('fine') - .5 + i * .3);
+  cue(at('fine') - .35 + i * .3, 'whoosh_s', .3, dx / 900);
+  float(d, at('fine') + .6, at('deduplicating'), 3, 5);
+  return d;
+});
+const dupTag = W_(`<div class="tag" style="position:relative;background:${ORANGE};color:#fff;font-size:20px">3 duplicates</div>`, 1180, 300, {z: 6}); rise(dupTag, at('fine') + .6, .45);
+// header for part 1
+const h1 = words('Fuzzy alone is fine for', 0, 120, {size: 34}), h2 = words('<em>Clean, low-stakes data</em>', 0, 165, {size: 64});
+gsap.set(h1, {color: BLUE}); h2.querySelector('em').style.color = NAVY;
+rise(h1, at('fuzzy'), .5); h2.ws.forEach(w => rise(w, at('clean') - .05, .55));
+// align, slide together, merge into the master record
+const tD = at('deduplicating') - .3;
+dups.forEach((d, i) => { tl.to(d, {x: 0, y: (i + 1) * 22, rotation: 0, duration: .8, ease: 'power2.inOut'}, tD + i * .1); tl.to(d, {y: 0, opacity: 0, scale: .96, duration: .55, ease: 'power2.inOut'}, tD + .8 + i * .1); });
+tl.to(dupTag, {opacity: 0, y: -10, duration: .3}, tD + .4);
+tl.fromTo(master.in.firstElementChild, {boxShadow: '0 34px 80px rgba(10,38,71,.22)'}, {boxShadow: '0 0 70px rgba(67,164,220,.8)', duration: .3, yoyo: true, repeat: 1}, tD + 1.25);
+cue(tD + 1.25, 'chime', .45);
+const mt = W_(`<div class="tag" style="position:relative;background:${GREEN};color:#fff;font-size:20px;display:flex;gap:8px;align-items:center">${checkSvg(20)} 1 clean record</div>`, 1060, 395, {z: 6});
+rise(mt, tD + 1.35, .45); drawCheck(mt, tD + 1.5, .35);
+const cap = words('e.g. de-duplicating a mailing list', 0, 700, {size: 32}); gsap.set(cap, {color: NAVY, opacity: .75}); rise(cap, at('mailing') - .2, .5);
+// part 2: checklist left, visuals right
+const tO = B2 - .4;
+tl.to([mt, cap, h1, h2], {opacity: 0, y: -40, filter: 'blur(8px)', duration: .45, ease: 'power2.in', stagger: .03}, tO);
+cue(tO, 'whoosh', .45);
+const items = ['KYC or AML decisions', 'Details deliberately changed', 'Shared addresses (households, companies)', 'Merges must be explained'];
+const C = glass(110, 230, 760, `<div class="hd" style="font-size:22px;letter-spacing:3px;text-transform:uppercase;font-weight:600;color:${BLUE}">Add graph when</div>
+  ${items.map(t => `<div class="it" style="display:flex;align-items:center;gap:22px;margin-top:26px;font-size:34px;font-weight:600;border-radius:16px;padding:8px 10px;margin-left:-10px"><div class="tile" style="position:relative;width:64px;height:64px;border-radius:18px;flex:none;opacity:.35">${checkSvg(34)}</div><span class="tx">${t}</span></div>`).join('')}`, 'padding:40px 46px');
+// v5: the Anna Lee card itself becomes the checklist card: its text fades, the glass slides left and resizes into C, then C's content rises in it
+const mg = master.in.firstElementChild, mIn = mg.firstElementChild, cg = C.in.firstElementChild, cH = cg.offsetHeight;
+gsap.set(master, {transformOrigin: '0 0'});
+tl.to(mIn, {opacity: 0, filter: 'blur(4px)', duration: .35, ease: 'power2.in'}, tO);
+tl.to(master, {x: 110 - 700, y: 230 - 430, duration: .85, ease: 'power3.inOut'}, tO + .15);
+tl.fromTo(mg, {width: 520, height: mg.offsetHeight}, {width: 760, height: cH, duration: .85, ease: 'power3.inOut', immediateRender: false}, tO + .15);
+cue(tO + .15, 'whoosh_s', .4);
+tl.fromTo(C, {opacity: 0}, {opacity: 1, duration: .01}, tO + 1);
+tl.set(master, {opacity: 0}, tO + 1.02);
+gsap.set(cg.querySelector('.hd'), {opacity: 0}); tl.fromTo(cg.querySelector('.hd'), {opacity: 0, y: 12}, {opacity: 1, y: 0, duration: .4, ease: EZO}, tO + 1);
+// on "graph": huge faint lines sweep slowly behind everything, so the ground itself feels like a live graph
+const bgL = svgLayer($('#cam')); gsap.set(bgL, {zIndex: 0});
+const tGr = at('graph', 1, B2 + .4);
+[0, 1, 2, 3, 4, 5].forEach(i => {
+  const y = 120 + i * 170, p = svgPath(bgL, `M-400,${y} C300,${y - 260} 900,${y + 300} 1500,${y - 120} S2300,${y + 160} 2500,${y}`, BLUE, 2 + (i % 2) * 2, .13 + (i % 3) * .04);
+  trim(p, tGr + i * .12, 1.4, 'power2.out');
+  tl.fromTo(p, {x: 0, y: 0}, {x: (i % 2 ? -260 : 260), y: (i % 2 ? 40 : -40), duration: T - tGr + (window.TAIL || 0), ease: 'sine.inOut'}, tGr);
+  const dot = svgDot(bgL, 0, 0, 6, BLUE, 0); const ob = {u: 0}, L = p.getTotalLength();
+  tl.fromTo(ob, {u: 0}, {u: 1, duration: 4 + i, ease: 'none', repeat: 3, immediateRender: false, onUpdate: () => { const q = p.getPointAtLength(ob.u * L); dot.setAttribute('cx', q.x); dot.setAttribute('cy', q.y); }}, tGr + .6);
+  tl.to(dot, {opacity: .35, duration: .4}, tGr + .6);
+});
+const rows = [...C.querySelectorAll('.it')];
+gsap.set(rows, {opacity: 0});
+const tick = (i, t) => {
+  const r = rows[i];
+  tl.fromTo(r, {opacity: .3}, {opacity: 1, duration: .45, ease: EZO, immediateRender: false}, t);
+  tl.to(r.querySelector('.tile'), {opacity: 1, duration: .3}, t + .2); drawCheck(r, t + .3, .4);
+  tl.fromTo(r, {backgroundColor: 'rgba(67,164,220,0)'}, {backgroundColor: 'rgba(67,164,220,.12)', duration: .35}, t + .1);
+  if (i) tl.to(rows[i - 1], {backgroundColor: 'rgba(67,164,220,0)', duration: .35}, t + .1);
+};
+// v7: the card is never blank: all four rows land faint as soon as the card forms, each one lights up when it is spoken
+rows.forEach((r, i) => tl.fromTo(r, {y: 16, opacity: 0}, {y: 0, opacity: .3, duration: .5, ease: EZO, immediateRender: false}, tO + 1.05 + i * .1));
+float(C, B2 + 1, T, 3, 6);
+const vs = svgLayer($('#cam'));
+const lv = node('<svg width="1920" height="1080" style="position:absolute;left:0;top:0;z-index:30;pointer-events:none;overflow:visible"></svg>', SC.fg);
+// 1. KYC / AML: a shield
+const t1 = at('kyc') - .2; tick(0, t1);
+const shield = W_(`<div style="position:relative;width:170px;height:170px;border-radius:44px;background:linear-gradient(150deg,#7fcaf2,${BLUE});display:flex;align-items:center;justify-content:center;box-shadow:0 30px 60px rgba(10,38,71,.25)"><svg style="position:static" width="96" height="96" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8.2-7 10-4-1.8-7-5.5-7-10V6z"/><path class="ck" d="M8.5 12.5l2.5 2.5 4.5-5" stroke-dasharray="24" stroke-dashoffset="24"/></svg></div>`, 1300, 410);
+tl.fromTo(shield, {scale: .6, opacity: 0, y: 30}, {scale: 1, opacity: 1, y: 0, duration: .6, ease: EZO}, t1 + .2);
+drawCheck(shield, t1 + .7, .45);
+const kl = W_(`<div class="kick" style="position:relative;width:400px;text-align:center">KYC · AML</div>`, 1185, 600); rise(kl, t1 + .5, .45);
+// 2. details deliberately changed: a record whose name and phone are rewritten; its graph link holds
+const t2 = at('people') - .2; tick(1, t2);
+tl.to(shield, {x: 330, y: -190, scale: .55, duration: .8, ease: 'power3.inOut'}, t2); tl.to(kl, {opacity: 0, duration: .3}, t2);
+const pr = W_(`<div class="glass" style="position:relative;width:460px;padding:26px 30px"><div style="font-size:18px;letter-spacing:3px;font-weight:600;color:${BLUE}">PROFILE</div>
+  <div style="font-size:30px;font-weight:700;margin-top:8px">Name: <span class="f1 cf">Daniel Reyes</span></div><div style="font-size:26px;margin-top:6px">Phone: <span class="f2 cf">+1 415 ··· 2210</span></div></div>`, 1040, 470);
+tl.fromTo(pr, {x: 120, opacity: 0}, {x: 0, opacity: 1, duration: .6, ease: EZO}, t2 + .15);
+const phN = tile(1640, 760, 'device', 'Same device', '', 96);
+pop(phN, t2 + .5); const pl = liveLink(lv, pr, phN, BLUE, 4, t2 + .5, .5); pl.g = pl.ls;
+const swap = (el, txt, t) => { tl.to(el, {opacity: 0, y: -8, duration: .2}, t).call(() => { el.textContent = txt; }, null, t + .2).fromTo(el, {y: 8}, {opacity: 1, y: 0, color: ORANGE, duration: .3}, t + .2); tl.call(() => { el.textContent = el === pr.querySelector('.f1') ? 'Daniel Reyes' : '+1 415 ··· 2210'; }, null, t + .19); };
+swap(pr.querySelector('.f1'), 'D. Reyes-Ortiz', at('change') - .1); swap(pr.querySelector('.f2'), '+1 628 ··· 9034', at('details'));
+cue(at('change') - .1, 'tick2', .4); cue(at('details'), 'tick2', .4);
+tl.fromTo(pl.ls, {attr: {stroke: BLUE}}, {attr: {stroke: ORANGE}, duration: .3, yoyo: true, repeat: 1}, at('details') + .4);
+tl.fromTo(phN.in.firstElementChild, {boxShadow: '0 0 0 rgba(236,100,8,0)'}, {boxShadow: '0 0 50px rgba(236,100,8,.9)', duration: .3, yoyo: true, repeat: 1}, at('details') + .4);
+// 3. shared addresses: two records meet at one address node
+const t3 = at('households') - .2; tick(2, t3);
+tl.to(pr, {x: -60, y: -200, scale: .8, duration: .8, ease: 'power3.inOut'}, t3); tl.to(phN, {x: 40, y: -350, scale: .8, duration: .8, ease: 'power3.inOut'}, t3);
+tl.to(pl.g, {opacity: 0, duration: .3}, t3);
+const rc = (n, x, y) => W_(`<div class="glass" style="position:relative;width:300px;padding:20px 24px;font-size:26px;font-weight:700">${icon('id', 30, NAVY)} ${n}</div>`, x, y);
+const r1 = rc('Reyes Household', 980, 790), r2 = rc('Novak Trading Ltd', 1500, 790);
+slideIn(r1, t3 + .2, -1, .6, 300); slideIn(r2, t3 + .35, 1, .6, 300);
+const ad = tile(1390, 650, 'home', 'Shared address', 'o', 100);
+pop(ad, at('addresses') - .2);
+liveLink(lv, r1, ad, ORANGE, 4, at('addresses'), .5); liveLink(lv, r2, ad, ORANGE, 4, at('addresses') + .15, .5);
+cue(at('addresses'), 'chime1', .4);
+// 4. merges must be explained: everything links into one network, one line at a time
+const t4 = at('explain') - .3; tick(3, t4);
+[[pr, phN], [phN, shield], [pr, ad], [phN, ad], [r1, pr]].forEach(([a, b], i) => liveLink(lv, a, b, BLUE, 3, t4 + .3 + i * .22, .5));
+for (let i = 0; i < 5; i++) cue(t4 + .3 + i * .22, 'tick', .2);
+tl.fromTo([shield, pr, phN, ad, r1, r2], {filter: 'brightness(1)'}, {filter: 'brightness(1.08)', duration: .4, stagger: .08}, t4 + 1.4);
+tl.to(lv, {opacity: 0, duration: .3}, T - .2);
+// v6 carry out: the camera travels into the orange shared-address node; it opens into the dashboard window of the next scene
+const tX = T - .75;
+const dn = chip(`border-radius:28px;background:linear-gradient(150deg,#ff9c55,${ORANGE})`, '<div class="cg" style="position:absolute;inset:0;background:#0d2c4d;opacity:0"><img src="../../../storyboard/build/demo/dashboard.png" style="position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;object-position:top"></div>');
+dn.style.boxShadow = '0 0 0 1.5px rgba(191,230,255,.55), 0 0 60px rgba(67,164,220,.45)';
+morph(dn, ad, pose(960, 560, 1164, 815), tX, .75, 'power2.inOut');
+tl.fromTo(dn, {opacity: 0}, {opacity: 1, duration: .06, immediateRender: true}, tX);
+tl.to(ad, {opacity: 0, duration: .15}, tX + .04);
+tl.to(dn.querySelector('.cg'), {opacity: 1, duration: .3}, tX + .08); tl.to(dn, {borderRadius: '22px', duration: .5}, tX + .2);
+window.PORTAL = 1.6; window.PORTAL_SLOW = .9; window.PORTAL_EASE = 'sine.inOut';
+closeMove('portal', .32, 1390, 650);
+finish(); SC.tl = tl;
+
+})();
+endScene();</script>
+<script>beginScene({"n": 13, "dur": 7.5, "tail": 0.6, "start": 150.598, "beats": [0.0], "words": [], "prev": "portal"});
+(function(){
+// Scene 13 (dark, silent): start on the real dashboard, the camera zooms into its analytics area (the dashboard itself never
+// tilts or drifts), the background darkens and the comparison panel comes forward. Both rings fill from 0: 28% left, then the
+// larger 90% right; labels stay; once the numbers settle a connecting line joins them. Source line last.
+const T = window.TOTAL;
+world('dark', {particles: 36});
+// v5: the real dashboard arrives inside a tilted glass browser window flying up out of depth (refs: UI planes seen at an angle,
+// camera gliding over them). A light sweep crosses the glass, the window settles flat while the camera pushes into the analytics
+// area, then the ground racks out of focus and the comparison panel comes forward with a slight tilt.
+const dash = W_(`<div class="demo" style="position:relative;width:1455px;border-radius:22px;overflow:hidden;box-shadow:0 60px 140px rgba(0,0,0,.55),0 0 0 1.5px rgba(191,230,255,.45),0 0 60px rgba(67,164,220,.35)">
+  <div style="height:44px;background:linear-gradient(180deg,#f4f8fb,#e3ecf3);display:flex;align-items:center;gap:10px;padding:0 20px"><i style="width:13px;height:13px;border-radius:50%;background:#ff6159"></i><i style="width:13px;height:13px;border-radius:50%;background:#ffbd2e"></i><i style="width:13px;height:13px;border-radius:50%;background:#28c941"></i><div style="margin-left:24px;height:22px;width:420px;border-radius:11px;background:rgba(10,38,71,.08)"></div></div>
+  <img src="../../../storyboard/build/demo/dashboard.png" style="display:block;width:100%">
+  <div class="sw" style="position:absolute;top:0;left:0;width:40%;height:100%;background:linear-gradient(100deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.55) 50%,rgba(255,255,255,0) 100%);mix-blend-mode:screen"></div></div>`, 232, 60);
+gsap.set(dash, {transformOrigin: '70% 45%', transformStyle: 'flat'}); gsap.set(dash.in, {transformOrigin: '50% 50%', transformPerspective: 1800});
+tl.fromTo(dash, {opacity: 0}, {opacity: 1, duration: .35}, .55);
+{ const ch = chip('border-radius:22px;overflow:hidden;background:#0d2c4d;box-shadow:0 0 0 1.5px rgba(191,230,255,.55), 0 0 60px rgba(67,164,220,.45)', '<img src="../../../storyboard/build/demo/dashboard.png" style="position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;object-position:top">'); morph(ch, pose(960, 560, 1164, 815), dash, .6, .35, 'power2.out'); tl.to(ch, {opacity: 0, duration: .3}, .8); }
+tl.fromTo(dash, {scale: .8}, {scale: 1, duration: 1.5, ease: 'sine.inOut', immediateRender: true}, 0);
+tl.fromTo(dash.querySelector('.sw'), {xPercent: -120}, {xPercent: 320, duration: .9, ease: 'power2.inOut'}, .8);
+tl.to(dash, {scale: 1.14, duration: 1.6, ease: 'sine.inOut'}, 1.5);
+// v8: the floating side panes are gone (they flew sideways and made the move feel forced)
+
+// rack focus: the blurred plate + navy shade come up behind the panel (no filter on the zoomed dashboard: that dropped frames)
+const plate = node('<div class="w" style="left:-80px;top:-60px;width:2080px;height:1200px;background:url(../../adobe/dashboard_expand_lensblur_adobe.png) center/cover"></div>');
+const shade = node('<div class="w" style="left:-200px;top:-200px;width:2320px;height:1480px;background:#0a2647"></div>');
+tl.fromTo(plate, {opacity: 0, scale: 1.2}, {opacity: 1, scale: 1.15, duration: 1.1, ease: 'sine.inOut'}, 1.35);
+tl.fromTo(shade, {opacity: 0}, {opacity: .86, duration: 1.1, ease: 'sine.inOut'}, 1.35);
+cue(0, 'whoosh', .45); cue(.4, 'shimmer', .3);
+const card = W_('<div class="glass" style="position:relative;width:1400px;height:780px"></div>', 260, 150, {z: 3});
+gsap.set(card, {transformStyle: 'flat'}); gsap.set(card.in, {transformPerspective: 1600});
+tl.fromTo(card, {opacity: 0, filter: 'blur(6px)'}, {opacity: 1, filter: 'blur(0px)', duration: 1.1, ease: 'sine.out'}, 1.5);
+tl.fromTo(card.in, {z: -160, rotationX: 5, rotationY: -3}, {z: 0, rotationX: 0, rotationY: 0, duration: 1.3, ease: 'sine.out'}, 1.5);
+tl.to(card.in, {rotationY: 1.2, rotationX: -.6, duration: T - 2.8, ease: 'sine.inOut'}, 2.8);
+cue(1.5, 'whoosh', .4);
+const kick = W_('<div class="kick" style="position:relative;width:1920px;text-align:center">Nubank fraud-detection recall</div>', 0, 200, {z: 4}); rise(kick, 1.7, .45);
+const svg = svgLayer($('#cam'), 4);
+const ring = (cx, cy, r, w, col, glow) => {
+  const L = 2 * Math.PI * r;
+  svg.insertAdjacentHTML('beforeend', `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="rgba(255,255,255,.10)" stroke-width="${w}"/>` +
+    (glow ? `<circle class="g${cx}" cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="rgba(67,164,220,.4)" stroke-width="46" stroke-dasharray="0 ${L}" transform="rotate(-90 ${cx} ${cy})" style="filter:blur(10px)"/>` : '') +
+    `<circle class="a${cx}" cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${col}" stroke-width="${w}" stroke-linecap="round" stroke-dasharray="0 ${L}" transform="rotate(-90 ${cx} ${cy})"/>`);
+  return L;
+};
+svg.insertAdjacentHTML('beforeend', '<defs><linearGradient id="tgb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#bfe6ff"/><stop offset="1" stop-color="#43a4dc"/></linearGradient></defs>');
+const L1 = ring(660, 540, 170, 20, 'rgba(255,255,255,.5)', false), L2 = ring(1270, 540, 230, 30, 'url(#tgb)', true);
+tl.fromTo(svg, {opacity: 0}, {opacity: 1, duration: .4}, 1.8);
+const a1 = svg.querySelector('.a660'), a2 = svg.querySelector('.a1270'), g2 = svg.querySelector('.g1270');
+const o1 = {p: 0}, o2 = {p: 0};
+tl.to(o1, {p: 28, duration: 1.0, ease: 'power2.out', onUpdate: () => a1.setAttribute('stroke-dasharray', `${L1 * o1.p / 100} ${L1}`)}, 2.0);
+tl.to(o2, {p: 90, duration: 1.5, ease: 'power2.out', onUpdate: () => { const d = `${L2 * o2.p / 100} ${L2}`; a2.setAttribute('stroke-dasharray', d); g2.setAttribute('stroke-dasharray', d); }}, 2.6);
+const lab = (cx, cy, r, label, hot) => W_(`<div style="position:relative;width:${2 * r + 160}px;text-align:center"><div class="nv" style="height:${2 * r}px;display:flex;align-items:center;justify-content:center;font-size:${hot ? 140 : 88}px;font-weight:${hot ? 700 : 300};color:${hot ? '#fff' : 'rgba(255,255,255,.65)'}">0%</div><div style="margin-top:34px;font-size:24px;letter-spacing:3px;font-weight:600;color:${hot ? '#bfe6ff' : 'rgba(255,255,255,.6)'}">${label}</div></div>`, cx - r - 80, cy - r, {z: 5});
+const l1 = lab(660, 540, 170, 'WITHOUT GRAPH FEATURES', false), l2 = lab(1270, 540, 230, 'WITH GRAPH FEATURES', true);
+rise(l1, 1.95, .45); rise(l2, 2.5, .45);
+l1.querySelector('.nv').textContent = '28%'; tl.fromTo(l1.querySelector('.nv'), {scale: .96}, {scale: 1, duration: .6, ease: EZO}, 1.95); count(l2.querySelector('.nv'), 2.6, 0, 90, 1.5);
+cue(2.0, 'tick', .3); cue(2.6, 'riser', .5); cue(4.1, 'chime', .55);
+tl.fromTo(l2.querySelector('.nv'), {textShadow: '0 0 0 rgba(191,230,255,0)'}, {textShadow: '0 0 40px rgba(191,230,255,.9)', duration: .4, yoyo: true, repeat: 1}, 4.1);
+// connecting line once both numbers have settled
+{ const arc = svgPath(svg, 'M800,440 Q930,330 1060,420', '#bfe6ff', 4, .9); arc.setAttribute('stroke-dasharray', '2 12'); arc.setAttribute('stroke-linecap', 'round'); arc.style.filter = 'drop-shadow(0 0 8px #43a4dc)'; tl.fromTo(arc, {opacity: 0}, {opacity: 1, duration: .5}, 4.3); }
+const src = W_('<div style="position:relative;width:1400px;text-align:center;font-size:22px;color:rgba(255,255,255,.65)">Source: TigerGraph, Real-Time Graph Analytics: Transforming Entity Resolution in Banking</div>', 260, 860, {z: 5});
+rise(src, 3.6, .5, 14);
+// v6 carry out: the 90% ring pulls away from the panel; it becomes the glowing arc of the end card
+const tX = T - .7;
+const rg = chip('border-radius:50%;border:12px solid #8fd0f5;box-shadow:0 0 50px rgba(67,164,220,.8), inset 0 0 40px rgba(67,164,220,.5)');
+morph(rg, a2, pose(960, 600, 560, 560), tX, .7, 'power3.inOut');
+tl.fromTo(rg, {opacity: 0}, {opacity: 1, duration: .1, immediateRender: true}, tX);
+if (0) tl.to([card, l1, l2, svg, src, kick], {opacity: 0, filter: 'blur(6px)', duration: .45}, tX + .05);
+closeMove('pull');
+finish(); SC.tl = tl;
+
+})();
+endScene();</script>
+<script>beginScene({"n": 14, "dur": 5.2, "tail": 0, "start": 158.098, "beats": [0.0], "words": [], "prev": "pull"});
+(function(){
+// Scene 14 (v4 end slate, storyboard v5 centred lockup): glowing TG Blue horizon, centred white logo, "Look alike vs belong
+// together" beneath, centred CTA pill, tigergraph.com at the bottom. Horizon particles converge, the whole lockup settles
+// 96% -> 100%, then a clean hold with only a light sweep across the CTA.
+const T = window.TOTAL;
+world('dark', {particles: 24, horizon: 860});
+SC.customBg = true; Q('.bg').style.background = 'radial-gradient(1200px 700px at 50% 110%,rgba(67,164,220,.55),transparent 60%),linear-gradient(180deg,#0A1628 0%,#0a2647 100%)';
+// particles converge toward the centre axis along the horizon
+for (let i = 0; i < 26; i++) {
+  const side = i % 2 ? 1 : -1, x0 = 960 + side * (420 + R() * 600), y0 = 820 + R() * 90;
+  const p = node(`<div class="dot" style="left:${x0}px;top:${y0}px;width:5px;height:5px;background:#bfe6ff;box-shadow:0 0 8px #43a4dc"></div>`);
+  tl.fromTo(p, {x: 0, opacity: 0}, {x: (960 - x0) * .85, opacity: .9, duration: 1.6 + R() * .6, ease: 'power2.inOut'}, .1 + R() * .5);
+  tl.to(p, {opacity: 0, duration: .4}, 2.0 + R() * .3);
+}
+// v6 carry in: the 90% ring sweeps past camera and settles as the glowing horizon arc under the brand
+{ const rg = chip('border-radius:50%;border:12px solid #8fd0f5;box-shadow:0 0 50px rgba(67,164,220,.8), inset 0 0 40px rgba(67,164,220,.5)');
+  morph(rg, pose(960, 600, 560, 560), pose(960, 860 + 1700, 3400, 3400), .6, 1.8, 'sine.inOut');
+  tl.to(rg, {borderWidth: '5px', duration: 1.6, ease: 'sine.inOut'}, .6); tl.to(rg, {opacity: 0, duration: .8, ease: 'sine.inOut'}, 1.9); }
+const lock = node('<div class="w" style="left:0;top:0;width:1920px;height:1080px"></div>');
+gsap.set(lock, {transformOrigin: '960px 430px', y: 70});
+tl.fromTo(lock, {scale: .96}, {scale: 1, duration: 1.2, ease: 'sine.out'}, .6);
+tl.to(lock, {scale: 1.03, duration: T - 1.8, ease: 'sine.inOut'}, 1.8);
+const logo = W_('<img src="../../../storyboard/build/logo_white.png" style="width:460px;display:block">', 730, 190, {z: 4, parent: lock});
+tl.fromTo(logo, {opacity: 0, scale: .9, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: .8, ease: EZO}, .5);
+cue(.5, 'shimmer', .45);
+const s1 = W_(`<div style="position:relative;width:1920px;text-align:center;font-size:64px;font-weight:700;color:#fff">Look alike <span style="font-weight:300;opacity:.85">vs</span> <span class="bt" style="color:${ORANGE}">belong together</span></div>`, 0, 380, {parent: lock});
+const bt = s1.querySelector('.bt');
+tl.fromTo(s1, {opacity: 0, y: 24}, {opacity: 1, y: 0, duration: .6, ease: EZO}, 1.0);
+tl.fromTo(bt, {opacity: 0}, {opacity: 1, duration: .5}, 1.45);
+const cta = pill(960, 560, 'See entity resolution in action →', 'w', {z: 5, parent: lock}); rise(cta, 1.9, .55, 30);
+gsap.set(cta.in.firstElementChild, {overflow: 'hidden', fontSize: 30, padding: '20px 44px'});
+const sw = node('<div class="sweep" style="width:30%"></div>', cta.in.firstElementChild);
+tl.fromTo(sw, {xPercent: -200}, {xPercent: 400, duration: 1.1, ease: 'power2.inOut'}, 3.4);
+const url = W_('<div style="position:relative;width:1920px;text-align:center;font-size:30px;font-weight:500;color:#d6eefb">tigergraph.com</div>', 0, 650, {parent: lock});
+rise(url, 2.2, .5, 24);
+tl.fromTo(logo.in, {filter: 'drop-shadow(0 0 0 rgba(67,164,220,0))'}, {filter: 'drop-shadow(0 0 22px rgba(67,164,220,.8))', duration: 1.2, ease: 'sine.inOut', yoyo: true, repeat: 1}, 2.4);
+cue(1.9, 'pop', .35);
+finish(); SC.tl = tl;
+
+})();
+endScene();</script><script>finalizeFilm();</script></body></html>

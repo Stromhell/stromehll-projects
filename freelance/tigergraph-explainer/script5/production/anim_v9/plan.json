@@ -1,0 +1,100 @@
+[
+ {
+  "n": 1,
+  "file": "film.html",
+  "dur": 14.566,
+  "tail": 0.6,
+  "start": 0.0
+ },
+ {
+  "n": 2,
+  "file": "film.html",
+  "dur": 6.2,
+  "tail": 0.6,
+  "start": 14.566
+ },
+ {
+  "n": 3,
+  "file": "film.html",
+  "dur": 8.906,
+  "tail": 0.6,
+  "start": 20.766
+ },
+ {
+  "n": 4,
+  "file": "film.html",
+  "dur": 7.0,
+  "tail": 0.6,
+  "start": 29.672
+ },
+ {
+  "n": 5,
+  "file": "film.html",
+  "dur": 17.051,
+  "tail": 0.6,
+  "start": 36.672
+ },
+ {
+  "n": 6,
+  "file": "film.html",
+  "dur": 10.892,
+  "tail": 0.6,
+  "start": 53.723
+ },
+ {
+  "n": 7,
+  "file": "film.html",
+  "dur": 10.307,
+  "tail": 0.6,
+  "start": 64.615
+ },
+ {
+  "n": 8,
+  "file": "film.html",
+  "dur": 12.502,
+  "tail": 0.6,
+  "start": 74.922
+ },
+ {
+  "n": 9,
+  "file": "film.html",
+  "dur": 7.727,
+  "tail": 0.6,
+  "start": 87.424
+ },
+ {
+  "n": 10,
+  "file": "film.html",
+  "dur": 15.923,
+  "tail": 0.6,
+  "start": 95.151
+ },
+ {
+  "n": 11,
+  "file": "film.html",
+  "dur": 13.786,
+  "tail": 0.6,
+  "start": 111.074
+ },
+ {
+  "n": 12,
+  "file": "film.html",
+  "dur": 25.738,
+  "tail": 0.6,
+  "start": 124.86
+ },
+ {
+  "n": 13,
+  "file": "film.html",
+  "dur": 7.5,
+  "tail": 0.6,
+  "start": 150.598
+ },
+ {
+  "n": 14,
+  "file": "film.html",
+  "dur": 5.2,
+  "tail": 0,
+  "start": 158.098
+ }
+]
